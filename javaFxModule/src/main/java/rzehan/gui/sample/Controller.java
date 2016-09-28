@@ -3,6 +3,7 @@ package rzehan.gui.sample;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
+import rzehan.shared.Os;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -79,10 +80,9 @@ public class Controller {
     }
 
     public void detectOs(ActionEvent actionEvent) {
-        //http://stackoverflow.com/questions/228477/how-do-i-programmatically-determine-operating-system-in-java
-        String osName = System.getProperty("os.name");
-        detectOsLabel.setText("OS: " + osName);
-        LOGGER.info("os: " + osName);
+        Os os = Os.detectOs();
+        detectOsLabel.setText(os.toReadableString());
+        LOGGER.info("os: " + os.toString());
     }
 
     public void logProperties(ActionEvent actionEvent) {
