@@ -52,5 +52,6 @@ apply plugin: 'javafx-gradle-plugin'
 
 
 jfx {
-    mainClass = 'rzehan.gui.SomeClass'
+    //mainClass = 'rzehan.gui.SomeClass'
+    mainClass = 'rzehan.gui.sample.Main'
 }

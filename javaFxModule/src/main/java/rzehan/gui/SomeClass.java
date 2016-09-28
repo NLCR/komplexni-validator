@@ -1,6 +1,7 @@
 package rzehan.gui;
 
 //import org.controlsfx.dialog.Dialog;
+
 import rzehan.shared.SharedClass;
 
 import javafx.application.Application;
@@ -12,7 +13,7 @@ import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 
 
-public class SomeClass extends Application{
+public class SomeClass extends Application {
 
     /*public static String neco() {
         return "neco woe";
@@ -37,7 +38,7 @@ public class SomeClass extends Application{
         Button btn = new Button();
 
         //String shared = "TODO";
-        String shared =new SharedClass().toString();
+        String shared = new SharedClass().toString();
         String text = "Hello from GUI, shared: " + shared;
 
         //btn.setText("Say 'Hello World'");

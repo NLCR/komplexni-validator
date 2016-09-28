@@ -1,4 +1,6 @@
-package rzehan.gui; /**
+package rzehan.gui;
+
+/**
  * Created by Martin Řehánek on 27.9.16.
  */
 
