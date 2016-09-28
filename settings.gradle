@@ -1,0 +1,6 @@
+rootProject.name = 'PspValidator'
+include 'sharedModule'
+include 'javaFxModule'
+include 'cliModule'
+//findProject(':version.gradle')?.name = 'version.gradle'
+

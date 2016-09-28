@@ -1,0 +1,3 @@
+include 'sharedModule'
+project(':sharedModule').projectDir = new File('../sharedModule')
+

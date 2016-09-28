@@ -1,0 +1,30 @@
+
+apply plugin: 'java'
+apply plugin: 'application'
+
+//sourceCompatibility = 1.5
+
+//For plugin application, see https://docs.gradle.org/current/userguide/application_plugin.html
+//use target "run"
+mainClassName = "rzehan.cli.Main"
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    testCompile group: 'junit', name: 'junit', version: '4.11'
+    compile project(':sharedModule')
+}
+
+
+/*sourceSets {
+    main {
+        java {
+            //srcDirs = ['src/main/java/module1']
+            srcDir 'src/main/java'
+            srcDir '../../sharedModule/src/main/java/module2'
+            //srcDir 'src/main/java/module3'
+        }
+    }
+}*/
