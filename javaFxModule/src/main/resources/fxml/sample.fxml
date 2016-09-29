@@ -31,10 +31,11 @@
                GridPane.columnIndex="0"
         />
 
-        <Button text="Detect OS" onAction="#detectOs"
-                GridPane.rowIndex="1"
-                GridPane.columnIndex="0"/>
-        <Label fx:id="detectOsLabel"
+        <Label GridPane.rowIndex="1"
+               GridPane.columnIndex="0"
+               text="OS:"/>
+
+        <Label fx:id="osLabel"
                GridPane.rowIndex="1"
                GridPane.columnIndex="1"
                GridPane.columnSpan="3"/>

@@ -23,7 +23,7 @@ public class Controller {
 
 
     @FXML
-    Label detectOsLabel;
+    Label osLabel;
     @FXML
     Label logLabel;
 
@@ -46,6 +46,18 @@ public class Controller {
     Label detectKakaduVersionLabel;
     @FXML
     Label runKakaduLabel;
+
+
+    private final Os os;
+
+    public Controller() {
+        os = Os.detectOs();
+        LOGGER.info("os: " + os.toString());
+    }
+
+    public void initialize() {
+        osLabel.setText(os.toReadableString());
+    }
 
 
     private CmlCommandResult executeCliCommand(String command) throws IOException, InterruptedException {
@@ -77,12 +89,6 @@ public class Controller {
 
         int exitValue = pr.waitFor();
         return new CmlCommandResult(exitValue, stdoutBuilder.toString(), stderrBuilder.toString());
-    }
-
-    public void detectOs(ActionEvent actionEvent) {
-        Os os = Os.detectOs();
-        detectOsLabel.setText(os.toReadableString());
-        LOGGER.info("os: " + os.toString());
     }
 
     public void logProperties(ActionEvent actionEvent) {
