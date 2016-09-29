@@ -1,5 +1,7 @@
 package rzehan.shared.imageUtils;
 
+import rzehan.shared.OperatingSystem;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -68,25 +70,6 @@ public class ImageUtil {
         }
     }
 
-    public static class Installation {
-        private final String platform;
-        private final Execution execution;
-
-        public Installation(String platform, Execution execution) {
-            this.platform = platform;
-            this.execution = execution;
-        }
-
-        public String getPlatform() {
-            return platform;
-        }
-
-        public Execution getExecution() {
-            return execution;
-        }
-
-    }
-
     public static class Run {
         private final String platform;
         private final Execution execution;
@@ -112,9 +95,8 @@ public class ImageUtil {
     }
 
     private final String name;
-    private final Map<String, VersionDetection> versionDetectionByPlatform = new HashMap<>();
-    private final Map<String, Installation> installationByPlatform = new HashMap<>();
-    private final Map<String, VersionDetection> runByPlatform = new HashMap<>();
+    private final Map<OperatingSystem, VersionDetection> versionDetectionByPlatform = new HashMap<>();
+    private final Map<OperatingSystem, VersionDetection> runByPlatform = new HashMap<>();
 
     public ImageUtil(String name) {
         this.name = name;
@@ -124,15 +106,11 @@ public class ImageUtil {
         return name;
     }
 
-    public Map<String, VersionDetection> getVersionDetectionByPlatform() {
+    public Map<OperatingSystem, VersionDetection> getVersionDetectionByPlatform() {
         return versionDetectionByPlatform;
     }
 
-    public Map<String, Installation> getInstallationByPlatform() {
-        return installationByPlatform;
-    }
-
-    public Map<String, VersionDetection> getRunByPlatform() {
+    public Map<OperatingSystem, VersionDetection> getRunByPlatform() {
         return runByPlatform;
     }
 }

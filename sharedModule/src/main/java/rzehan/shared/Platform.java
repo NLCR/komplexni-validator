@@ -3,40 +3,28 @@ package rzehan.shared;
 /**
  * Created by Martin Řehánek on 28.9.16.
  */
-public class Os {
+public class Platform {
 
-    public enum OsType {
-
-        LINUX, WINDOWS, MAC, UNKNOWN;
-
-    }
-
-    public enum Architecture {
-
-        B32, B64, UNKNOWN;
-
-    }
-
-    private final OsType osType;
-    private final Architecture architecture;
+    private final OperatingSystem operatingSystem;
+    private final OsArchitecture osArchitecture;
 
     private final String sysPropertyOsName;
     private final String sysPropertyOsArch;
 
 
-    public Os(OsType osType, Architecture architecture, String sysPropertyOsName, String sysPropertyOsArch) {
-        this.osType = osType;
-        this.architecture = architecture;
+    public Platform(OperatingSystem operatingSystem, OsArchitecture osArchitecture, String sysPropertyOsName, String sysPropertyOsArch) {
+        this.operatingSystem = operatingSystem;
+        this.osArchitecture = osArchitecture;
         this.sysPropertyOsName = sysPropertyOsName;
         this.sysPropertyOsArch = sysPropertyOsArch;
     }
 
-    public OsType getOsType() {
-        return osType;
+    public OperatingSystem getOperatingSystem() {
+        return operatingSystem;
     }
 
-    public Architecture getArchitecture() {
-        return architecture;
+    public OsArchitecture getOsArchitecture() {
+        return osArchitecture;
     }
 
     public String getSysPropertyOsName() {
@@ -47,55 +35,57 @@ public class Os {
         return sysPropertyOsArch;
     }
 
-    public static Os detectOs() {
+    public static Platform detectOs() {
         //http://stackoverflow.com/questions/228477/how-do-i-programmatically-determine-operating-system-in-java
         String osName = System.getProperty("os.name");
-        OsType osType = OsType.UNKNOWN;
+        OperatingSystem operatingSystem = null;
 
         if (osName.startsWith("Windows")) {
-            osType = OsType.WINDOWS;
+            operatingSystem = OperatingSystem.WINDOWS;
         } else if (osName.startsWith("Linux")) {
-            osType = OsType.LINUX;
+            operatingSystem = OperatingSystem.LINUX;
         } else if (osName.startsWith("Mac")) {
-            osType = OsType.MAC;
+            operatingSystem = OperatingSystem.MAC;
         }
 
         //http://stackoverflow.com/questions/10846105/all-possible-values-os-arch-in-32bit-jre-and-in-64bit-jre
         String osArch = System.getProperty("os.arch");
-        Architecture architecture = Architecture.UNKNOWN;
+        OsArchitecture osArchitecture = null;
         if (osArch.contains("32")) {
-            architecture = Architecture.B32;
+            osArchitecture = OsArchitecture.B32;
         } else if (osArch.contains("64")) {
-            architecture = Architecture.B64;
+            osArchitecture = OsArchitecture.B64;
         }
 
-        return new Os(osType, architecture, osName, osArch);
+        return new Platform(operatingSystem, osArchitecture, osName, osArch);
 
     }
 
     @Override
     public String toString() {
-        return "Os{" +
-                "osType=" + osType +
-                ", architecture=" + architecture +
+        return "Platform{" +
+                "operatingSystem=" + operatingSystem +
+                ", osArchitecture=" + osArchitecture +
                 ", sysPropertyOsName='" + sysPropertyOsName + '\'' +
                 ", sysPropertyOsArch='" + sysPropertyOsArch + '\'' +
                 '}';
     }
 
     public String toReadableString() {
-        switch (osType) {
+        switch (operatingSystem) {
             case LINUX:
                 return "Linux; " + toArchitectureString();
             case WINDOWS:
                 return "Windows; " + toArchitectureString();
+            case MAC:
+                return "Mac; " + toArchitectureString();
             default:
                 return "Unknown (" + sysPropertyOsName + "); " + toArchitectureString();
         }
     }
 
     private String toArchitectureString() {
-        switch (architecture) {
+        switch (osArchitecture) {
             case B32:
                 return "32b";
             case B64:

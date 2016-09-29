@@ -3,12 +3,10 @@ package rzehan.gui.sample;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
-import rzehan.shared.Os;
+import rzehan.shared.Platform;
 import rzehan.shared.imageUtils.CliCommand;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -49,15 +47,15 @@ public class Controller {
     Label runKakaduLabel;
 
 
-    private final Os os;
+    private final Platform platform;
 
     public Controller() {
-        os = Os.detectOs();
-        LOGGER.info("os: " + os.toString());
+        platform = Platform.detectOs();
+        LOGGER.info("platform: " + platform.toString());
     }
 
     public void initialize() {
-        osLabel.setText(os.toReadableString());
+        osLabel.setText(platform.toReadableString());
     }
 
 
@@ -194,7 +192,7 @@ public class Controller {
             String dir = System.getProperty("user.dir");
             //String file = dir + File.separator + "res" + File.separator + "bin"
             String file = null;
-            switch (os.getOsType()) {
+            switch (platform.getOperatingSystem()) {
                 case WINDOWS:
                     file = dir + "\\resources\\bin\\ImageMagick-7.0.2-4-Q16-x64-dll.exe";
                     break;
