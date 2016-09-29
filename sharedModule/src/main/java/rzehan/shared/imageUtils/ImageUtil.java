@@ -1,9 +1,14 @@
 package rzehan.shared.imageUtils;
 
 import rzehan.shared.OperatingSystem;
+import rzehan.shared.Platform;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * Created by Martin Řehánek on 29.9.16.
@@ -47,18 +52,19 @@ public class ImageUtil {
     }
 
     public static class VersionDetection {
-        private final String platform;
+        // TODO: 29.9.16 replace with OperatingSystem object
+        private final OperatingSystem operatingSystem;
         private final Execution execution;
         private final Parsing parsing;
 
-        public VersionDetection(String platform, Execution execution, Parsing parsing) {
-            this.platform = platform;
+        public VersionDetection(OperatingSystem operatingSystem, Execution execution, Parsing parsing) {
+            this.operatingSystem = operatingSystem;
             this.execution = execution;
             this.parsing = parsing;
         }
 
-        public String getPlatform() {
-            return platform;
+        public OperatingSystem getOperatingSystem() {
+            return operatingSystem;
         }
 
         public Execution getExecution() {
@@ -113,4 +119,49 @@ public class ImageUtil {
     public Map<OperatingSystem, VersionDetection> getRunByPlatform() {
         return runByPlatform;
     }
+
+    public String runVersionDetection(Platform platform) throws IOException, InterruptedException {
+        VersionDetection versionDetection = versionDetectionByPlatform.get(platform.getOperatingSystem());
+        String command = constructCommand(versionDetection);
+        CliCommand.Result result = new CliCommand(command).execute();
+        // TODO: 29.9.16 parsovat vysledek
+        String rawOutput = null;
+        Stream stream = versionDetection.getParsing().getStream();
+        switch (stream) {
+            case STDERR:
+                rawOutput = result.getStderr();
+                break;
+            case STDOUT:
+                rawOutput = result.getStdout();
+                break;
+            default:
+                throw new IOException(String.format("empty response from '%s' (%s)", command, stream));
+        }
+        String parsed = parseData(rawOutput, versionDetection.getParsing());
+        return parsed == null || parsed.isEmpty() ? rawOutput : parsed;
+    }
+
+    private String constructCommand(VersionDetection versionDetection) {
+        String path = versionDetection.getExecution().getPath();
+        return path != null ?
+                path + File.separator + versionDetection.getExecution().getCommand() :
+                versionDetection.getExecution().getCommand();
+    }
+
+    private String parseData(String rawOutput, Parsing parsing) {
+        if (parsing.getRegexp() == null) {
+            return rawOutput;
+        } else {
+            Matcher m = Pattern.compile(parsing.getRegexp()).matcher(rawOutput);
+            if (m.find()) {
+                //first appearance
+                return m.group(0);
+            } else {
+                // TODO: 29.9.16 not found
+                return null;
+            }
+        }
+    }
+
+
 }

@@ -1,7 +1,7 @@
 <imageUtil name="jpylyzer">
 
     <versionDetection>
-        <platform name="Linux">
+        <operatingSystem name="Linux">
             <execution>
                 <path>/usr/bin</path>
                 <command>jpylyzer --version</command>
@@ -12,8 +12,8 @@
                 <regexp>*</regexp>
             </parsing>
             <!--todo: pravidlo, ktere z parsovaneho vystupu rozhodne, jestli nastroj instalovany je-->
-        </platform>
-        <platform name="Windows">
+        </operatingSystem>
+        <operatingSystem name="Windows">
             <execution>
                 <path>C:\Program Files\jpylyzer</path>
                 <command>jpylyzer --version</command>
@@ -23,11 +23,11 @@
                 <type>text</type>
                 <regexp>*</regexp>
             </parsing>
-        </platform>
+        </operatingSystem>
     </versionDetection>
 
     <run>
-        <platform name="Linux">
+        <operatingSystem name="Linux">
             <execution>
                 <path>/usr/bin</path>
                 <command>jpylyzer jp2In ${IMAGE_FILE}</command>
@@ -37,8 +37,8 @@
                 <type>xml</type>
                 <regexp>*</regexp>
             </parsing>
-        </platform>
-        <platform name="Windows">
+        </operatingSystem>
+        <operatingSystem name="Windows">
             <execution>
                 <path>C:\Program Files\jpylyzer</path>
                 <command>jpylyzer jp2In ${IMAGE_FILE}</command>
@@ -48,7 +48,7 @@
                 <type>xml</type>
                 <regexp>*</regexp>
             </parsing>
-        </platform>
+        </operatingSystem>
     </run>
 
 </imageUtil>

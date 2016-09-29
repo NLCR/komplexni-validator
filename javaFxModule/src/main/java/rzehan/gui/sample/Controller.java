@@ -5,6 +5,8 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import rzehan.shared.Platform;
 import rzehan.shared.imageUtils.CliCommand;
+import rzehan.shared.imageUtils.ImageUtil;
+import rzehan.shared.imageUtils.ImageUtilRegistry;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -75,24 +77,32 @@ public class Controller {
         installImageMagick(actionEvent);
     }
 
-
-    public void detectJpylyzerVersion(ActionEvent actionEvent) {
-        detectJpylyzerVersionLabel.setText("checking jplyzer ...");
+    public void detectUtilVersion(String utilName, Label label) {
+        label.setText(String.format("checking %s ...", utilName));
         try {
-            CliCommand.Result output = new CliCommand("jpylyzer --version").execute();
-            output.print();
-            //jediny radek STDERR obsahuje verzi typu "1.17.0"
-            detectJpylyzerVersionLabel.setText(output.getStderr());
+            ImageUtil imageUtil = ImageUtilRegistry.getImageUtilByName().get(utilName);
+            if (imageUtil == null) {
+                label.setText(String.format("util '%s' not defined", utilName));
+            } else {
+                String version = imageUtil.runVersionDetection(platform);
+                label.setText("\"" + version + "\"");
+            }
         } catch (IOException e) {
             //program probably does not exist
-            //e.printStackTrace() throws IOEXception on Windows
+            // e.printStackTrace() here throws IOEXception on Windows
             // e.printStackTrace();
-            detectJpylyzerVersionLabel.setText("not found");
+            label.setText("not found");
         } catch (InterruptedException e) {
-            detectJpylyzerVersionLabel.setText("process interrupted");
+            // e.printStackTrace() here throws IOEXception on Windows
             //e.printStackTrace();
+            label.setText("process interrupted");
         }
     }
+
+    public void detectJpylyzerVersion(ActionEvent actionEvent) {
+        detectUtilVersion("jpylyzer", detectJpylyzerVersionLabel);
+    }
+
 
     public void runJpylyzer(ActionEvent actionEvent) {
         String imageFile = MC_FILE;
@@ -117,23 +127,7 @@ public class Controller {
     }
 
     public void detectJhoveVersion(ActionEvent actionEvent) {
-        detectJhoveVersionLabel.setText("checking jhove ...");
-        try {
-
-            CliCommand.Result output = new CliCommand("jhove --version").execute();
-            output.print();
-            //prvni radek STDOUT obsahuje text typu "Jhove (Rel. 1.6, 2011-01-04)"
-            String version = output.getStdout();
-            String firstLine = version.split("\n")[0];
-            detectJhoveVersionLabel.setText(firstLine);
-        } catch (IOException e) {
-            //program probably does not exist
-            //e.printStackTrace();
-            detectJhoveVersionLabel.setText("not found");
-        } catch (InterruptedException e) {
-            detectJhoveVersionLabel.setText("process interrupted");
-            //e.printStackTrace();
-        }
+        detectUtilVersion("jhove", detectJhoveVersionLabel);
     }
 
     public void runJhove(ActionEvent actionEvent) {
@@ -158,23 +152,7 @@ public class Controller {
 
 
     public void detectImageMagickVersion(ActionEvent actionEvent) {
-        detectImageMagickVersionLabel.setText("checking imageMagick ...");
-        try {
-            CliCommand.Result output = new CliCommand("convert -version").execute();
-            output.print();
-            //prvni radek STDOUT obsahuje text typu " ImageMagick 6.7.7-10 2016-06-01 Q16 http://www.imagemagick.org"
-            String version = output.getStdout();
-            String firstLine = version.split("\n")[0];
-            System.out.println(firstLine);
-            detectImageMagickVersionLabel.setText(firstLine);
-        } catch (IOException e) {
-            //program probably does not exist
-            //e.printStackTrace();
-            detectImageMagickVersionLabel.setText("not found");
-        } catch (InterruptedException e) {
-            detectImageMagickVersionLabel.setText("process interrupted");
-            //e.printStackTrace();
-        }
+        detectUtilVersion("imageMagick", detectImageMagickVersionLabel);
     }
 
     public void installImageMagick(ActionEvent actionEvent) {
@@ -253,22 +231,7 @@ public class Controller {
 
 
     public void detectKakaduVersion(ActionEvent actionEvent) {
-        detectKakaduVersionLabel.setText("checking kakadu ...");
-        try {
-            //TODO: zjistovani verze poradne
-            CliCommand.Result output = new CliCommand("kdu_expand").execute();
-            output.print();
-            /*String version = output.getStdout();
-            detectKakaduVersionLabel.setText(version);*/
-            detectKakaduVersionLabel.setText("Kakadu available, cannot determine version");
-        } catch (IOException e) {
-            //program probably does not exist
-            //e.printStackTrace();
-            detectKakaduVersionLabel.setText("not available");
-        } catch (InterruptedException e) {
-            detectKakaduVersionLabel.setText("process interrupted");
-            //e.printStackTrace();
-        }
+        detectUtilVersion("kakadu", detectKakaduVersionLabel);
     }
 
     public void runKakadu(ActionEvent actionEvent) {
