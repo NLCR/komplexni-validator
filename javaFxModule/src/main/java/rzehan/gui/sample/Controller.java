@@ -4,6 +4,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import rzehan.shared.Os;
+import rzehan.shared.imageUtils.CliCommand;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -60,37 +61,6 @@ public class Controller {
     }
 
 
-    private CmlCommandResult executeCliCommand(String command) throws IOException, InterruptedException {
-        //https://gist.github.com/Lammerink/3926636
-        Process pr = Runtime.getRuntime().exec(command);
-
-
-        //read standard error stream
-        BufferedReader stderrReader = new BufferedReader(new InputStreamReader(pr.getErrorStream()));
-        StringBuilder stderrBuilder = new StringBuilder();
-        if (stderrReader != null) {
-            String line;
-            while ((line = stderrReader.readLine()) != null) {
-                stderrBuilder.append(line).append('\n');
-            }
-            stderrReader.close();
-        }
-
-        //read standard output stream
-        BufferedReader stdoutReader = new BufferedReader(new InputStreamReader(pr.getInputStream()));
-        StringBuilder stdoutBuilder = new StringBuilder();
-        if (stdoutReader != null) {
-            String line;
-            while ((line = stdoutReader.readLine()) != null) {
-                stdoutBuilder.append(line).append('\n');
-            }
-            stdoutReader.close();
-        }
-
-        int exitValue = pr.waitFor();
-        return new CmlCommandResult(exitValue, stdoutBuilder.toString(), stderrBuilder.toString());
-    }
-
     public void logProperties(ActionEvent actionEvent) {
         StringBuilder builder = new StringBuilder();
         Properties properties = System.getProperties();
@@ -111,7 +81,7 @@ public class Controller {
     public void detectJpylyzerVersion(ActionEvent actionEvent) {
         detectJpylyzerVersionLabel.setText("checking jplyzer ...");
         try {
-            CmlCommandResult output = executeCliCommand("jpylyzer --version");
+            CliCommand.Result output = new CliCommand("jpylyzer --version").execute();
             output.print();
             //jediny radek STDERR obsahuje verzi typu "1.17.0"
             detectJpylyzerVersionLabel.setText(output.getStderr());
@@ -130,7 +100,7 @@ public class Controller {
         String imageFile = MC_FILE;
         runJpylyzerLabel.setText("running jplyzer ...");
         try {
-            CmlCommandResult output = executeCliCommand("jpylyzer jp2In " + imageFile);
+            CliCommand.Result output = new CliCommand("jpylyzer jp2In " + imageFile).execute();
             output.print();
             //v STDERR nesmyslna hlaska "jp2In does not exist"
             String outStr = output.getStdout();
@@ -151,7 +121,8 @@ public class Controller {
     public void detectJhoveVersion(ActionEvent actionEvent) {
         detectJhoveVersionLabel.setText("checking jhove ...");
         try {
-            CmlCommandResult output = executeCliCommand("jhove --version");
+
+            CliCommand.Result output = new CliCommand("jhove --version").execute();
             output.print();
             //prvni radek STDOUT obsahuje text typu "Jhove (Rel. 1.6, 2011-01-04)"
             String version = output.getStdout();
@@ -171,7 +142,7 @@ public class Controller {
         String imageFile = MC_FILE;
         runJhoveLabel.setText("running jhove ...");
         try {
-            CmlCommandResult output = executeCliCommand("jhove -h XML -m jpeg2000-hul -k " + imageFile);
+            CliCommand.Result output = new CliCommand("jhove -h XML -m jpeg2000-hul -k " + imageFile).execute();
             output.print();
             String outStr = output.getStdout();
             outStr = outStr.replace("\n", "");
@@ -191,7 +162,7 @@ public class Controller {
     public void detectImageMagickVersion(ActionEvent actionEvent) {
         detectImageMagickVersionLabel.setText("checking imageMagick ...");
         try {
-            CmlCommandResult output = executeCliCommand("convert -version");
+            CliCommand.Result output = new CliCommand("convert -version").execute();
             output.print();
             //prvni radek STDOUT obsahuje text typu " ImageMagick 6.7.7-10 2016-06-01 Q16 http://www.imagemagick.org"
             String version = output.getStdout();
@@ -210,16 +181,16 @@ public class Controller {
 
     public void installImageMagick(ActionEvent actionEvent) {
         try {
-            //String outStr = executeCliCommand("sudo aptitude search imageMagick");
-            //String outStr = executeCliCommand("totem");
-            //String outStr = executeCliCommand("/home/martin/IdeaProjects/NkpValidator/res/bin/pomodoro/Pomodoro");
+            //String outStr = new CliCommand("sudo aptitude search imageMagick");
+            //String outStr = new CliCommand("totem");
+            //String outStr = new CliCommand("/home/martin/IdeaProjects/NkpValidator/res/bin/pomodoro/Pomodoro");
 
 
             //URL url = getClass().getResource("res/bin");
             //LOGGER.info(url.getFile());
 
-            //String outStr = executeCliCommand("/home/martin/IdeaProjects/NkpValidator/res/bin/pomodoro/Pomodoro");
-            //String outStr = executeCliCommand("/home/martin/IdeaProjects/NkpValidator/res/bin/imagemagick.deb");
+            //String outStr = new CliCommand("/home/martin/IdeaProjects/NkpValidator/res/bin/pomodoro/Pomodoro");
+            //String outStr = new CliCommand("/home/martin/IdeaProjects/NkpValidator/res/bin/imagemagick.deb");
             String dir = System.getProperty("user.dir");
             //String file = dir + File.separator + "res" + File.separator + "bin"
             String file = null;
@@ -233,8 +204,8 @@ public class Controller {
             }
 
 
-            //String outStr = executeCliCommand("/home/martin/IdeaProjects/NkpValidator/res/bin/fuckyou.sh");
-            CmlCommandResult output = executeCliCommand(file);
+            //String outStr = new CliCommand("/home/martin/IdeaProjects/NkpValidator/res/bin/fuckyou.sh");
+            CliCommand.Result output = new CliCommand(file).execute();
             output.print();
             String outStr = output.getStdout();
 
@@ -264,7 +235,7 @@ public class Controller {
         String imageFile = MC_FILE;
         runImageMagickLabel.setText("running imageMagick ...");
         try {
-            CmlCommandResult output = executeCliCommand("identify -verbose " + imageFile);
+            CliCommand.Result output = new CliCommand("identify -verbose " + imageFile).execute();
             output.print();
             String outStr = output.getStdout();
             // TODO: 17.8.16 Sehnat priklady s chybama
@@ -287,7 +258,7 @@ public class Controller {
         detectKakaduVersionLabel.setText("checking kakadu ...");
         try {
             //TODO: zjistovani verze poradne
-            CmlCommandResult output = executeCliCommand("kdu_expand");
+            CliCommand.Result output = new CliCommand("kdu_expand").execute();
             output.print();
             /*String version = output.getStdout();
             detectKakaduVersionLabel.setText(version);*/
@@ -307,7 +278,7 @@ public class Controller {
         runKakaduLabel.setText("running kakadu ...");
         try {
             // TODO: 18.8.16 kdu_expand nebyva na PATH
-            CmlCommandResult output = executeCliCommand("kdu_expand -i " + imageFile);
+            CliCommand.Result output = new CliCommand("kdu_expand -i " + imageFile).execute();
             output.print();
             String outStr = output.getStdout().replace("\n", "");
             // TODO: 17.8.16 Sehnat priklady s chybama

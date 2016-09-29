@@ -1,0 +1,69 @@
+<imageUtil name="jpylyzer">
+
+    <versionDetection>
+        <platform name="Linux">
+            <execution>
+                <path>/usr/bin</path>
+                <command>jpylyzer --version</command>
+            </execution>
+            <parsing>
+                <stream>stderr</stream>
+                <type>text</type>
+                <regexp>*</regexp>
+            </parsing>
+            <!--todo: pravidlo, ktere z parsovaneho vystupu rozhodne, jestli nastroj instalovany je-->
+        </platform>
+        <platform name="Windows">
+            <execution>
+                <path>C:\Program Files\jpylyzer</path>
+                <command>jpylyzer --version</command>
+            </execution>
+            <parsing>
+                <stream>stderr</stream>
+                <type>text</type>
+                <regexp>*</regexp>
+            </parsing>
+        </platform>
+    </versionDetection>
+
+    <installation>
+        <platform name="Linux">
+            <execution>
+                <path>/resources/bin</path>
+                <command>jpylyzer-installer.sh</command>
+            </execution>
+        </platform>
+        <platform name="Windows">
+            <execution>
+                <path>\\resources\\bin</path>
+                <command>jpylyzer-installer.exe</command>
+            </execution>
+        </platform>
+    </installation>
+
+    <run>
+        <platform name="Linux">
+            <execution>
+                <path>/usr/bin</path>
+                <command>jpylyzer jp2In ${IMAGE_FILE}</command>
+            </execution>
+            <parsing>
+                <stream>stdout</stream>
+                <type>xml</type>
+                <regexp>*</regexp>
+            </parsing>
+        </platform>
+        <platform name="Windows">
+            <execution>
+                <path>C:\Program Files\jpylyzer</path>
+                <command>jpylyzer jp2In ${IMAGE_FILE}</command>
+            </execution>
+            <parsing>
+                <stream>stdout</stream>
+                <type>xml</type>
+                <regexp>*</regexp>
+            </parsing>
+        </platform>
+    </run>
+
+</imageUtil>
