@@ -219,7 +219,16 @@ public class Controller {
             //String outStr = executeCliCommand("/home/martin/IdeaProjects/NkpValidator/res/bin/imagemagick.deb");
             String dir = System.getProperty("user.dir");
             //String file = dir + File.separator + "res" + File.separator + "bin"
-            String file = dir + "\\res\\bin\\ImageMagick-7.0.2-4-Q16-x64-dll.exe";
+            String file = null;
+            switch (os.getOsType()) {
+                case WINDOWS:
+                    file = dir + "\\resources\\bin\\ImageMagick-7.0.2-4-Q16-x64-dll.exe";
+                    break;
+                case LINUX:
+                    file = dir + "/resources/bin/ImageMagick.deb";
+                    break;
+            }
+
 
             //String outStr = executeCliCommand("/home/martin/IdeaProjects/NkpValidator/res/bin/fuckyou.sh");
             CmlCommandResult output = executeCliCommand(file);
