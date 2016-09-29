@@ -85,15 +85,40 @@ public class Controller {
                 label.setText(String.format("util '%s' not defined", utilName));
             } else {
                 String version = imageUtil.runVersionDetection(platform);
-                label.setText("\"" + version + "\"");
+                System.out.println(version);
+                label.setText(version);
             }
         } catch (IOException e) {
             //program probably does not exist
-            // e.printStackTrace() here throws IOEXception on Windows
-            // e.printStackTrace();
+            //e.printStackTrace() here throws IOEXception on Windows
+            //e.printStackTrace();
             label.setText("not found");
         } catch (InterruptedException e) {
-            // e.printStackTrace() here throws IOEXception on Windows
+            //e.printStackTrace() here throws IOEXception on Windows
+            //e.printStackTrace();
+            label.setText("process interrupted");
+        }
+    }
+
+    public void runUtil(String utilName, Label label, String imageFile) {
+        label.setText(String.format("running %s ...", utilName));
+        try {
+            ImageUtil imageUtil = ImageUtilRegistry.getImageUtilByName().get(utilName);
+            if (imageUtil == null) {
+                label.setText(String.format("util '%s' not defined", utilName));
+            } else {
+                String output = imageUtil.runUtil(platform, imageFile);
+                System.out.println(output);
+                String partial = output.replace("\n", " ").substring(0, Math.min(output.length(), MAX_OUTPUT_LENGTH)) + " ...";
+                label.setText(partial);
+            }
+        } catch (IOException e) {
+            //program probably does not exist
+            //e.printStackTrace() here throws IOEXception on Windows
+            //e.printStackTrace();
+            label.setText("not found");
+        } catch (InterruptedException e) {
+            //e.printStackTrace() here throws IOEXception on Windows
             //e.printStackTrace();
             label.setText("process interrupted");
         }
@@ -105,25 +130,7 @@ public class Controller {
 
 
     public void runJpylyzer(ActionEvent actionEvent) {
-        String imageFile = MC_FILE;
-        runJpylyzerLabel.setText("running jplyzer ...");
-        try {
-            CliCommand.Result output = new CliCommand("jpylyzer jp2In " + imageFile).execute();
-            output.print();
-            //v STDERR nesmyslna hlaska "jp2In does not exist"
-            String outStr = output.getStdout();
-            outStr = outStr.replace("\n", "");
-            int length = Math.min(outStr.length(), MAX_OUTPUT_LENGTH);
-            runJpylyzerLabel.setText(outStr.substring(0, length) + " ...");
-        } catch (IOException e) {
-            //program probably does not exist
-            //e.printStackTrace() throws IOEXception on Windows
-            //e.printStackTrace();
-            runJpylyzerLabel.setText("not found");
-        } catch (InterruptedException e) {
-            runJpylyzerLabel.setText("process interrupted");
-            //e.printStackTrace();
-        }
+        runUtil("jpylyzer", runJpylyzerLabel, MC_FILE);
     }
 
     public void detectJhoveVersion(ActionEvent actionEvent) {
@@ -131,23 +138,7 @@ public class Controller {
     }
 
     public void runJhove(ActionEvent actionEvent) {
-        String imageFile = MC_FILE;
-        runJhoveLabel.setText("running jhove ...");
-        try {
-            CliCommand.Result output = new CliCommand("jhove -h XML -m jpeg2000-hul -k " + imageFile).execute();
-            output.print();
-            String outStr = output.getStdout();
-            outStr = outStr.replace("\n", "");
-            int length = Math.min(outStr.length(), 150);
-            runJhoveLabel.setText(outStr.substring(0, length) + " ...");
-        } catch (IOException e) {
-            //program probably does not exist
-            //e.printStackTrace();
-            runJhoveLabel.setText("not found");
-        } catch (InterruptedException e) {
-            runJhoveLabel.setText("process interrupted");
-            //e.printStackTrace();
-        }
+        runUtil("jhove", runJhoveLabel, MC_FILE);
     }
 
 
@@ -208,25 +199,7 @@ public class Controller {
     }
 
     public void runImageMagick(ActionEvent actionEvent) {
-        String imageFile = MC_FILE;
-        runImageMagickLabel.setText("running imageMagick ...");
-        try {
-            CliCommand.Result output = new CliCommand("identify -verbose " + imageFile).execute();
-            output.print();
-            String outStr = output.getStdout();
-            // TODO: 17.8.16 Sehnat priklady s chybama
-            System.out.println(outStr);
-            outStr = outStr.replace("\n", "");
-            int length = Math.min(outStr.length(), 150);
-            runImageMagickLabel.setText(outStr.substring(0, length) + " ...");
-        } catch (IOException e) {
-            //program probably does not exist
-            //e.printStackTrace();
-            runImageMagickLabel.setText("not found");
-        } catch (InterruptedException e) {
-            runImageMagickLabel.setText("process interrupted");
-            //e.printStackTrace();
-        }
+        runUtil("imageMagick", runImageMagickLabel, MC_FILE);
     }
 
 
@@ -235,24 +208,6 @@ public class Controller {
     }
 
     public void runKakadu(ActionEvent actionEvent) {
-        String imageFile = MC_FILE;
-        runKakaduLabel.setText("running kakadu ...");
-        try {
-            // TODO: 18.8.16 kdu_expand nebyva na PATH
-            CliCommand.Result output = new CliCommand("kdu_expand -i " + imageFile).execute();
-            output.print();
-            String outStr = output.getStdout().replace("\n", "");
-            // TODO: 17.8.16 Sehnat priklady s chybama
-            System.out.println(outStr);
-            int length = Math.min(outStr.length(), 150);
-            runKakaduLabel.setText(outStr.substring(0, length) + " ...");
-        } catch (IOException e) {
-            //program probably does not exist
-            //e.printStackTrace();
-            runKakaduLabel.setText("not found");
-        } catch (InterruptedException e) {
-            runKakaduLabel.setText("process interrupted");
-            //e.printStackTrace();
-        }
+        runUtil("kakadu", runKakaduLabel, MC_FILE);
     }
 }

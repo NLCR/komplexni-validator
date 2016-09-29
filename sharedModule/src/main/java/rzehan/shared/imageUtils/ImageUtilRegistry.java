@@ -38,25 +38,24 @@ public class ImageUtilRegistry {
                 new ImageUtil.Parsing(Stream.STDERR, REGEXP_FIRST_LINE)
         ));
         //no installer available
-        util.getRunByPlatform().put(OperatingSystem.LINUX,
-                new ImageUtil.VersionDetection(
-                        OperatingSystem.LINUX,
-                        new ImageUtil.Execution("/usr/bin", "jpylyzer jp2In ${IMAGE_FILE}"),
-                        new ImageUtil.Parsing(Stream.STDOUT, "*")
-                ));
+        util.getRunByPlatform().put(OperatingSystem.LINUX, new ImageUtil.Run(
+                OperatingSystem.LINUX,
+                new ImageUtil.Execution("/usr/bin", "jpylyzer jp2In ${IMAGE_FILE}"),
+                new ImageUtil.Parsing(Stream.STDOUT, null)
+        ));
 
         //Windows
         util.getVersionDetectionByPlatform().put(OperatingSystem.WINDOWS, new ImageUtil.VersionDetection(
                 OperatingSystem.WINDOWS,
                 new ImageUtil.Execution("C:\\Program Files\\jpylyzer", "jpylyzer --version"),
                 //jediny radek STDERR obsahuje verzi typu "1.17.0"
-                new ImageUtil.Parsing(Stream.STDERR, "*")
+                new ImageUtil.Parsing(Stream.STDERR, REGEXP_FIRST_LINE)
         ));
         //no installer available
-        util.getRunByPlatform().put(OperatingSystem.WINDOWS, new ImageUtil.VersionDetection(
+        util.getRunByPlatform().put(OperatingSystem.WINDOWS, new ImageUtil.Run(
                 OperatingSystem.WINDOWS,
                 new ImageUtil.Execution("C:\\Program Files\\jpylyzer", "jpylyzer jp2In ${IMAGE_FILE}"),
-                new ImageUtil.Parsing(Stream.STDOUT, "*")
+                new ImageUtil.Parsing(Stream.STDOUT, null)
         ));
 
         //Mac
@@ -77,14 +76,10 @@ public class ImageUtilRegistry {
                         //Version: ImageMagick 6.7.7-10 2016-06-01 Q16 http://www.imagemagick.org
                         new ImageUtil.Parsing(Stream.STDOUT, "ImageMagick\\s\\S*\\s\\S*")
                 ));
-        util.getRunByPlatform().put(OperatingSystem.LINUX, new ImageUtil.VersionDetection(
+        util.getRunByPlatform().put(OperatingSystem.LINUX, new ImageUtil.Run(
                 OperatingSystem.LINUX,
                 new ImageUtil.Execution("/usr/bin", "identify -verbose ${IMAGE_FILE}"),
-                // TODO: 29.9.16 poradne parsovat
-                //prvni radek STDOUT obsahuje text typu " ImageMagick 6.7.7-10 2016-06-01 Q16 http://www.imagemagick.org"
-                //String version = output.getStdout();
-                //String firstLine = version.split("\n")[0];
-                new ImageUtil.Parsing(Stream.STDOUT, "*")
+                new ImageUtil.Parsing(Stream.STDOUT, null)
         ));
 
         //Windows
@@ -95,10 +90,10 @@ public class ImageUtilRegistry {
                 //Version: ImageMagick 6.7.7-10 2016-06-01 Q16 http://www.imagemagick.org
                 new ImageUtil.Parsing(Stream.STDOUT, "ImageMagick\\s\\S*\\s\\S*")
         ));
-        util.getRunByPlatform().put(OperatingSystem.WINDOWS, new ImageUtil.VersionDetection(
+        util.getRunByPlatform().put(OperatingSystem.WINDOWS, new ImageUtil.Run(
                 OperatingSystem.WINDOWS,
                 new ImageUtil.Execution("C:\\Program Files\\imageMagick", "identify -verbose ${IMAGE_FILE}"),
-                new ImageUtil.Parsing(Stream.STDOUT, "*")
+                new ImageUtil.Parsing(Stream.STDOUT, null)
         ));
 
         //Mac
@@ -116,13 +111,9 @@ public class ImageUtilRegistry {
                 //first line of STDOUT looks like "Jhove (Rel. 1.6, 2011-01-04)"
                 new ImageUtil.Parsing(Stream.STDOUT, REGEXP_FIRST_LINE)
         ));
-        util.getRunByPlatform().put(OperatingSystem.LINUX, new ImageUtil.VersionDetection(
+        util.getRunByPlatform().put(OperatingSystem.LINUX, new ImageUtil.Run(
                 OperatingSystem.LINUX,
                 new ImageUtil.Execution("/usr/bin", "jhove -h XML -m jpeg2000-hul -k ${IMAGE_FILE}"),
-                // TODO: 29.9.16 poradne parsovat
-                //prvni radek STDOUT obsahuje text typu "Jhove (Rel. 1.6, 2011-01-04)"
-                //String version = output.getStdout();
-                //String firstLine = version.split("\n")[0];
                 new ImageUtil.Parsing(Stream.STDOUT, null)
         ));
 
@@ -133,7 +124,7 @@ public class ImageUtilRegistry {
                 //first line of STDOUT looks like "Jhove (Rel. 1.6, 2011-01-04)"
                 new ImageUtil.Parsing(Stream.STDOUT, REGEXP_FIRST_LINE)
         ));
-        util.getRunByPlatform().put(OperatingSystem.WINDOWS, new ImageUtil.VersionDetection(
+        util.getRunByPlatform().put(OperatingSystem.WINDOWS, new ImageUtil.Run(
                 OperatingSystem.WINDOWS,
                 new ImageUtil.Execution("C:\\Program Files\\jhove", "jhove -h XML -m jpeg2000-hul -k ${IMAGE_FILE}"),
                 new ImageUtil.Parsing(Stream.STDOUT, null)
@@ -155,13 +146,9 @@ public class ImageUtilRegistry {
                 // Current core system version is v7.8
                 new ImageUtil.Parsing(Stream.STDOUT, "Current core system version is \\S*")
         ));
-        util.getRunByPlatform().put(OperatingSystem.LINUX, new ImageUtil.VersionDetection(
+        util.getRunByPlatform().put(OperatingSystem.LINUX, new ImageUtil.Run(
                 OperatingSystem.LINUX,
                 new ImageUtil.Execution(null, "kdu_expand -i ${IMAGE_FILE}"),
-                // TODO: 29.9.16 poradne parsovat
-                //prvni radek STDOUT obsahuje text typu "Jhove (Rel. 1.6, 2011-01-04)"
-                //String version = output.getStdout();
-                //String firstLine = version.split("\n")[0];
                 new ImageUtil.Parsing(Stream.STDOUT, null)
         ));
 
@@ -173,7 +160,7 @@ public class ImageUtilRegistry {
                 // Current core system version is v7.8
                 new ImageUtil.Parsing(Stream.STDOUT, "Current core system version is \\S*")
         ));
-        util.getRunByPlatform().put(OperatingSystem.WINDOWS, new ImageUtil.VersionDetection(
+        util.getRunByPlatform().put(OperatingSystem.WINDOWS, new ImageUtil.Run(
                 OperatingSystem.WINDOWS,
                 new ImageUtil.Execution("C:\\Program Files\\kakadu", "kdu_expand -i ${IMAGE_FILE}"),
                 new ImageUtil.Parsing(Stream.STDOUT, null)

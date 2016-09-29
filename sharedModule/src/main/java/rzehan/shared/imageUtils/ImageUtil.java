@@ -77,18 +77,18 @@ public class ImageUtil {
     }
 
     public static class Run {
-        private final String platform;
+        private final OperatingSystem operatingSystem;
         private final Execution execution;
         private final Parsing parsing;
 
-        public Run(String platform, Execution execution, Parsing parsing) {
-            this.platform = platform;
+        public Run(OperatingSystem operatingSystem, Execution execution, Parsing parsing) {
+            this.operatingSystem = operatingSystem;
             this.execution = execution;
             this.parsing = parsing;
         }
 
-        public String getPlatform() {
-            return platform;
+        public OperatingSystem getOperatingSystem() {
+            return operatingSystem;
         }
 
         public Execution getExecution() {
@@ -102,7 +102,7 @@ public class ImageUtil {
 
     private final String name;
     private final Map<OperatingSystem, VersionDetection> versionDetectionByPlatform = new HashMap<>();
-    private final Map<OperatingSystem, VersionDetection> runByPlatform = new HashMap<>();
+    private final Map<OperatingSystem, Run> runByPlatform = new HashMap<>();
 
     public ImageUtil(String name) {
         this.name = name;
@@ -116,15 +116,14 @@ public class ImageUtil {
         return versionDetectionByPlatform;
     }
 
-    public Map<OperatingSystem, VersionDetection> getRunByPlatform() {
+    public Map<OperatingSystem, Run> getRunByPlatform() {
         return runByPlatform;
     }
 
     public String runVersionDetection(Platform platform) throws IOException, InterruptedException {
         VersionDetection versionDetection = versionDetectionByPlatform.get(platform.getOperatingSystem());
-        String command = constructCommand(versionDetection);
+        String command = constructCommand(versionDetection.getExecution());
         CliCommand.Result result = new CliCommand(command).execute();
-        // TODO: 29.9.16 parsovat vysledek
         String rawOutput = null;
         Stream stream = versionDetection.getParsing().getStream();
         switch (stream) {
@@ -138,14 +137,24 @@ public class ImageUtil {
                 throw new IOException(String.format("empty response from '%s' (%s)", command, stream));
         }
         String parsed = parseData(rawOutput, versionDetection.getParsing());
-        return parsed == null || parsed.isEmpty() ? rawOutput : parsed;
+        return parsed == null || parsed.isEmpty() ? rawOutput.trim() : parsed.trim();
     }
 
-    private String constructCommand(VersionDetection versionDetection) {
-        String path = versionDetection.getExecution().getPath();
+    private String constructCommand(Execution execution) {
+        String path = execution.getPath();
         return path != null ?
-                path + File.separator + versionDetection.getExecution().getCommand() :
-                versionDetection.getExecution().getCommand();
+                path + File.separator + execution.getCommand() :
+                execution.getCommand();
+    }
+
+
+    private String constructCommand(Execution execution, String imageFile) {
+        String path = execution.getPath();
+        String command = path != null ? path + File.separator + execution.getCommand() :
+                execution.getCommand();
+        command = command.replace("${IMAGE_FILE}", imageFile);
+        System.out.println(command);
+        return command;
     }
 
     private String parseData(String rawOutput, Parsing parsing) {
@@ -161,6 +170,27 @@ public class ImageUtil {
                 return null;
             }
         }
+    }
+
+
+    public String runUtil(Platform platform, String imageFile) throws IOException, InterruptedException {
+        Run run = runByPlatform.get(platform.getOperatingSystem());
+        String command = constructCommand(run.getExecution(), imageFile);
+        CliCommand.Result result = new CliCommand(command).execute();
+        String rawOutput = null;
+        Stream stream = run.getParsing().getStream();
+        switch (stream) {
+            case STDERR:
+                rawOutput = result.getStderr();
+                break;
+            case STDOUT:
+                rawOutput = result.getStdout();
+                break;
+            default:
+                throw new IOException(String.format("empty response from '%s' (%s)", command, stream));
+        }
+        String parsed = parseData(rawOutput, run.getParsing());
+        return parsed == null || parsed.isEmpty() ? rawOutput.trim() : parsed.trim();
     }
 
 
