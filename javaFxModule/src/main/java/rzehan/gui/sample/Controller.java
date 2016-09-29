@@ -117,11 +117,12 @@ public class Controller {
             detectJpylyzerVersionLabel.setText(output.getStderr());
         } catch (IOException e) {
             //program probably does not exist
-            e.printStackTrace();
+            //e.printStackTrace() throws IOEXception on Windows
+            // e.printStackTrace();
             detectJpylyzerVersionLabel.setText("not found");
         } catch (InterruptedException e) {
             detectJpylyzerVersionLabel.setText("process interrupted");
-            e.printStackTrace();
+            //e.printStackTrace();
         }
     }
 
@@ -138,11 +139,12 @@ public class Controller {
             runJpylyzerLabel.setText(outStr.substring(0, length) + " ...");
         } catch (IOException e) {
             //program probably does not exist
-            e.printStackTrace();
+            //e.printStackTrace() throws IOEXception on Windows
+            //e.printStackTrace();
             runJpylyzerLabel.setText("not found");
         } catch (InterruptedException e) {
             runJpylyzerLabel.setText("process interrupted");
-            e.printStackTrace();
+            //e.printStackTrace();
         }
     }
 
@@ -157,11 +159,11 @@ public class Controller {
             detectJhoveVersionLabel.setText(firstLine);
         } catch (IOException e) {
             //program probably does not exist
-            e.printStackTrace();
+            //e.printStackTrace();
             detectJhoveVersionLabel.setText("not found");
         } catch (InterruptedException e) {
             detectJhoveVersionLabel.setText("process interrupted");
-            e.printStackTrace();
+            //e.printStackTrace();
         }
     }
 
@@ -177,31 +179,32 @@ public class Controller {
             runJhoveLabel.setText(outStr.substring(0, length) + " ...");
         } catch (IOException e) {
             //program probably does not exist
-            e.printStackTrace();
+            //e.printStackTrace();
             runJhoveLabel.setText("not found");
         } catch (InterruptedException e) {
             runJhoveLabel.setText("process interrupted");
-            e.printStackTrace();
+            //e.printStackTrace();
         }
     }
 
 
     public void detectImageMagickVersion(ActionEvent actionEvent) {
-        detectImageMagickVersionLabel.setText("checking magick ...");
+        detectImageMagickVersionLabel.setText("checking imageMagick ...");
         try {
             CmlCommandResult output = executeCliCommand("convert -version");
             output.print();
             //prvni radek STDOUT obsahuje text typu " ImageMagick 6.7.7-10 2016-06-01 Q16 http://www.imagemagick.org"
             String version = output.getStdout();
             String firstLine = version.split("\n")[0];
+            System.out.println(firstLine);
             detectImageMagickVersionLabel.setText(firstLine);
         } catch (IOException e) {
             //program probably does not exist
-            e.printStackTrace();
+            //e.printStackTrace();
             detectImageMagickVersionLabel.setText("not found");
         } catch (InterruptedException e) {
             detectImageMagickVersionLabel.setText("process interrupted");
-            e.printStackTrace();
+            //e.printStackTrace();
         }
     }
 
@@ -250,10 +253,10 @@ public class Controller {
             String output = e.getMessage();
             int length = Math.min(output.length(), MAX_OUTPUT_LENGTH);
             installImageMagickLabel.setText(output.substring(0, length) + " ...");
-            e.printStackTrace();
+            //e.printStackTrace();
         } catch (InterruptedException e) {
-            //detectImageMagickVersionLabel.setText("process interrupted");
-            e.printStackTrace();
+            installImageMagickLabel.setText("process interrupted");
+            //e.printStackTrace();
         }
     }
 
@@ -271,11 +274,11 @@ public class Controller {
             runImageMagickLabel.setText(outStr.substring(0, length) + " ...");
         } catch (IOException e) {
             //program probably does not exist
-            e.printStackTrace();
+            //e.printStackTrace();
             runImageMagickLabel.setText("not found");
         } catch (InterruptedException e) {
             runImageMagickLabel.setText("process interrupted");
-            e.printStackTrace();
+            //e.printStackTrace();
         }
     }
 
@@ -291,11 +294,11 @@ public class Controller {
             detectKakaduVersionLabel.setText("Kakadu available, cannot determine version");
         } catch (IOException e) {
             //program probably does not exist
-            e.printStackTrace();
+            //e.printStackTrace();
             detectKakaduVersionLabel.setText("not available");
         } catch (InterruptedException e) {
             detectKakaduVersionLabel.setText("process interrupted");
-            e.printStackTrace();
+            //e.printStackTrace();
         }
     }
 
@@ -313,11 +316,11 @@ public class Controller {
             runKakaduLabel.setText(outStr.substring(0, length) + " ...");
         } catch (IOException e) {
             //program probably does not exist
-            e.printStackTrace();
+            //e.printStackTrace();
             runKakaduLabel.setText("not found");
         } catch (InterruptedException e) {
             runKakaduLabel.setText("process interrupted");
-            e.printStackTrace();
+            //e.printStackTrace();
         }
     }
 }
