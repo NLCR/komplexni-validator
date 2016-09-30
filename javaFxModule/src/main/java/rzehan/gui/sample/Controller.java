@@ -20,7 +20,8 @@ public class Controller {
     private static final Logger LOGGER = Logger.getLogger(Controller.class.getSimpleName());
 
     private static final int MAX_OUTPUT_LENGTH = 100;
-    private static final String MC_FILE = "/home/martin/zakazky/NKP-validator/data/monografie_1.2/b50eb6b0-f0a4-11e3-b72e-005056827e52/mastercopy/mc_b50eb6b0-f0a4-11e3-b72e-005056827e52_0001.jp2";
+    private static final String MC_FILE_LINUX = "/home/martin/zakazky/NKP-validator/data/monografie_1.2/b50eb6b0-f0a4-11e3-b72e-005056827e52/mastercopy/mc_b50eb6b0-f0a4-11e3-b72e-005056827e52_0001.jp2";
+    private static final String MC_FILE_WINDOWS = "C:\\Users\\Martin\\Documents\\PspValidator\\mc_b50eb6b0-f0a4-11e3-b72e-005056827e52_0001.jp2";
 
 
     @FXML
@@ -124,26 +125,50 @@ public class Controller {
         }
     }
 
-    public void detectJpylyzerVersion(ActionEvent actionEvent) {
-        detectUtilVersion("jpylyzer", detectJpylyzerVersionLabel);
+    private String getMcFile() {
+        switch (platform.getOperatingSystem()) {
+            case LINUX:
+                return MC_FILE_LINUX;
+            case WINDOWS:
+                return MC_FILE_WINDOWS;
+            default:
+                throw new IllegalStateException("Unsupported platform");
+        }
     }
 
-
-    public void runJpylyzer(ActionEvent actionEvent) {
-        runUtil("jpylyzer", runJpylyzerLabel, MC_FILE);
+    public void detectJpylyzerVersion(ActionEvent actionEvent) {
+        detectUtilVersion("jpylyzer", detectJpylyzerVersionLabel);
     }
 
     public void detectJhoveVersion(ActionEvent actionEvent) {
         detectUtilVersion("jhove", detectJhoveVersionLabel);
     }
 
-    public void runJhove(ActionEvent actionEvent) {
-        runUtil("jhove", runJhoveLabel, MC_FILE);
+    public void detectImageMagickVersion(ActionEvent actionEvent) {
+        detectUtilVersion("imageMagick", detectImageMagickVersionLabel);
+    }
+
+    public void detectKakaduVersion(ActionEvent actionEvent) {
+        detectUtilVersion("kakadu", detectKakaduVersionLabel);
     }
 
 
-    public void detectImageMagickVersion(ActionEvent actionEvent) {
-        detectUtilVersion("imageMagick", detectImageMagickVersionLabel);
+    public void runJpylyzer(ActionEvent actionEvent) {
+        runUtil("jpylyzer", runJpylyzerLabel, getMcFile());
+    }
+
+
+    public void runJhove(ActionEvent actionEvent) {
+        runUtil("jhove", runJhoveLabel, getMcFile());
+    }
+
+
+    public void runImageMagick(ActionEvent actionEvent) {
+        runUtil("imageMagick", runImageMagickLabel, getMcFile());
+    }
+
+    public void runKakadu(ActionEvent actionEvent) {
+        runUtil("kakadu", runKakaduLabel, getMcFile());
     }
 
     public void installImageMagick(ActionEvent actionEvent) {
@@ -198,16 +223,4 @@ public class Controller {
         }
     }
 
-    public void runImageMagick(ActionEvent actionEvent) {
-        runUtil("imageMagick", runImageMagickLabel, MC_FILE);
-    }
-
-
-    public void detectKakaduVersion(ActionEvent actionEvent) {
-        detectUtilVersion("kakadu", detectKakaduVersionLabel);
-    }
-
-    public void runKakadu(ActionEvent actionEvent) {
-        runUtil("kakadu", runKakaduLabel, MC_FILE);
-    }
 }
