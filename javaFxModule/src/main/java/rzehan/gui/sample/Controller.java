@@ -1,5 +1,6 @@
 package rzehan.gui.sample;
 
+import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
@@ -78,7 +79,13 @@ public class Controller {
         installImageMagick(actionEvent);
     }
 
+
     public void detectUtilVersion(String utilName, Label label) {
+        //detectUtilVersionOnFxThread(utilName,label);
+        detectUtilVersionOnWorkerThread(utilName, label);
+    }
+
+    public void detectUtilVersionOnFxThread(String utilName, Label label) {
         label.setText(String.format("checking %s ...", utilName));
         try {
             ImageUtil imageUtil = ImageUtilRegistry.getImageUtilByName().get(utilName);
@@ -101,7 +108,47 @@ public class Controller {
         }
     }
 
+
+    public void detectUtilVersionOnWorkerThread(String utilName, Label label) {
+        label.setText(String.format("checking %s ...", utilName));
+        Task task = new Task<Void>() {
+            @Override
+            protected Void call() throws Exception {
+                try {
+                    ImageUtil imageUtil = ImageUtilRegistry.getImageUtilByName().get(utilName);
+                    if (imageUtil == null) {
+                        updateMessage(String.format("util '%s' not defined", utilName));
+                    } else {
+                        String version = imageUtil.runVersionDetection(platform);
+                        System.out.println(version);
+                        updateMessage(version);
+                    }
+                } catch (IOException e) {
+                    //program probably does not exist
+                    //e.printStackTrace() here throws IOEXception on Windows
+                    //e.printStackTrace();
+                    updateMessage("not found");
+                } catch (InterruptedException e) {
+                    //e.printStackTrace() here throws IOEXception on Windows
+                    //e.printStackTrace();
+                    updateMessage("process interrupted");
+                }
+                return null;
+            }
+        };
+
+        new Thread(task).start();
+        task.messageProperty().addListener((obs, oldMessage, newMessage) -> label.setText(newMessage));
+    }
+
+
     public void runUtil(String utilName, Label label, String imageFile) {
+        runUtilOnWorkerThread(utilName, label, imageFile);
+        //runUtilOnFxThread(utilName, label, imageFile);
+    }
+
+
+    public void runUtilOnFxThread(String utilName, Label label, String imageFile) {
         label.setText(String.format("running %s ...", utilName));
         try {
             ImageUtil imageUtil = ImageUtilRegistry.getImageUtilByName().get(utilName);
@@ -123,6 +170,43 @@ public class Controller {
             //e.printStackTrace();
             label.setText("process interrupted");
         }
+    }
+
+    public void runUtilOnWorkerThread(String utilName, Label label, String imageFile) {
+        label.setText(String.format("running %s ...", utilName));
+        Task task = new Task<Void>() {
+
+            @Override
+            protected Void call() throws Exception {
+                if (isCancelled()) {
+                    updateMessage("canceled");
+                    return null;
+                }
+                try {
+                    ImageUtil imageUtil = ImageUtilRegistry.getImageUtilByName().get(utilName);
+                    if (imageUtil == null) {
+                        updateMessage(String.format("util '%s' not defined", utilName));
+                    } else {
+                        String output = imageUtil.runUtil(platform, imageFile);
+                        System.out.println(output);
+                        String partial = output.replace("\n", " ").substring(0, Math.min(output.length(), MAX_OUTPUT_LENGTH)) + " ...";
+                        updateMessage(partial);
+                    }
+                } catch (IOException e) {
+                    //program probably does not exist
+                    //e.printStackTrace() here throws IOEXception on Windows
+                    //e.printStackTrace();
+                    updateMessage("not found");
+                } catch (InterruptedException e) {
+                    //e.printStackTrace() here throws IOEXception on Windows
+                    //e.printStackTrace();
+                    updateMessage("process interrupted");
+                }
+                return null;
+            }
+        };
+        new Thread(task).start();
+        task.messageProperty().addListener((obs, oldMessage, newMessage) -> label.setText(newMessage));
     }
 
     private String getMcFile() {
