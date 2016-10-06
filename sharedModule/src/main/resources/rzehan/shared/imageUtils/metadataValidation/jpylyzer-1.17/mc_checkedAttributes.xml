@@ -1,0 +1,170 @@
+<checkedAttributes>
+    <extractions>
+        <defaultNamespace>http://openpreservation.org/ns/jpylyzer/</defaultNamespace>
+    </extractions>
+
+    <attribute id="file_name">
+        <extraction>
+            <singlePath>
+                <xpath>fileInfo/fileName</xpath>
+            </singlePath>
+        </extraction>
+        <validation>
+            <validValue>
+                <!--povolen jakykoliv retezec znaku-->
+                <any/>
+            </validValue>
+        </validation>
+    </attribute>
+
+    <attribute id="last_modified"/>
+    <attribute id="file_size_in_bytes"/>
+    <attribute id="tool_name"/>
+    <attribute id="tool_version"/>
+
+    <!--neni definovano, proto kontrolovany atribut zde chybi-->
+    <!--<attribute id="format_identification"/>-->
+
+    <attribute id="valid">
+        <extraction>
+            <singlePath>
+                <xpath>statusInfo/isValidJP2</xpath>
+            </singlePath>
+        </extraction>
+        <validation>
+            <validValue>
+                <constant>True</constant>
+            </validValue>
+        </validation>
+    </attribute>
+
+    <attribute id="height"/>
+    <attribute id="width"/>
+
+    <attribute id="number_of_color_components">
+        <extraction>
+            <singlePath>
+                <xpath>properties/jp2HeaderBox/imageHeaderBox/nC</xpath>
+            </singlePath>
+        </extraction>
+        <validation>
+            <!--povolene hodnoty "1" nebo "3"-->
+            <validValue>
+                <constant>1</constant>
+            </validValue>
+            <validValue>
+                <constant>3</constant>
+            </validValue>
+        </validation>
+    </attribute>
+
+    <attribute id="color_depth"/>
+
+    <attribute id="color_space_1">
+        <extraction>
+            <singlePath>
+                <xpath>properties/jp2HeaderBox/colourSpecificationBox/enumCS</xpath>
+            </singlePath>
+        </extraction>
+        <validation>
+            <!--povolene hodnoty "sRGB" nebo "greyscale"-->
+            <validValue>
+                <constant>sRGB</constant>
+            </validValue>
+            <validValue>
+                <constant>greyscale</constant>
+            </validValue>
+        </validation>
+    </attribute>
+
+    <attribute id="color_space_2"/>
+
+    <attribute id="resolution_vertical" type="Float">
+        <extraction>
+            <!--muze se nachazet na nekolika mistech, pouzije se prvni dostupna hodnota-->
+            <firstPathAvailable>
+                <xpath>Properties/jp2HeaderBox/resolutionBox/captureResolutionBox/vResdInPixelsPerMeter</xpath>
+                <xpath>Properties/jp2HeaderBox/resolutionBox/displayResolutionBox/vResdInPixelsPerMeter</xpath>
+            </firstPathAvailable>
+        </extraction>
+        <validation>
+            <!--rozsah hodnot, zde realná čísla-->
+            <validValue>
+                <range type="Float">
+                    <min>11810</min>
+                    <max>11812</max>
+                </range>
+            </validValue>
+        </validation>
+    </attribute>
+
+    <attribute id="resolution_horizontal"/>
+
+    <attribute id="number_of_tiles">
+        <extraction>
+            <singlePath>
+                <xpath>Properties/contiguousCodestreamBox/siz/numberOfTiles</xpath>
+            </singlePath>
+        </extraction>
+        <validation>
+            <!--jakékoliv přirozené číslo-->
+            <validValue>
+                <range type="Integer">
+                    <min>1</min>
+                    <!--maximum nedefinovano, tedy nekonecno-->
+                </range>
+            </validValue>
+        </validation>
+    </attribute>
+
+    <attribute id="size_of_tiles_1"/>
+    <attribute id="size_of_tiles_2"/>
+    <attribute id="precints"/>
+
+    <attribute id="size_of_precints_1">
+        <extraction>
+            <!--typ je "pole", pokud neuvedeno, použije se "hodnota", ať už pro singlePath anebo firstPathAvailable -->
+            <singlePath type="array">
+                <xpath>Properties/contiguousCodestreamBox/cod/precintSizeX</xpath>
+            </singlePath>
+        </extraction>
+        <validation>
+            <!--2krát hodnota 256; zbylé precints 128-->
+            <validValue>
+                <nTimesXRemainingY>
+                    <n>2</n>
+                    <x>256</x>
+                    <y>128</y>
+                </nTimesXRemainingY>
+            </validValue>
+        </validation>
+    </attribute>
+
+    <attribute id="size_of_precints_2"/>
+    <attribute id="sop"/>
+    <attribute id="eph"/>
+    <attribute id="order"/>
+    <attribute id="layers"/>
+    <attribute id="levels"/>
+    <attribute id="code_block_width"/>
+    <attribute id="code_block_height"/>
+    <attribute id="bypass"/>
+    <attribute id="transformation"/>
+    <attribute id="compression_ratio"/>
+    <attribute id="migration_software"/>
+
+    <attribute id="regions_of_interest">
+        <extraction>
+            <singlePath>
+                <xpath>rgn</xpath>
+            </singlePath>
+        </extraction>
+        <validation>
+            <!--element se nesmi vyskytovat, jakakoliv hodnota je nepovolena-->
+            <invalidValue>
+                <regexp>*</regexp>
+            </invalidValue>
+        </validation>
+    </attribute>
+
+</checkedAttributes>

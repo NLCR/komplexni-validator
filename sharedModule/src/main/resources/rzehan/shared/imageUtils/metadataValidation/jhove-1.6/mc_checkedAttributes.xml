@@ -1,0 +1,146 @@
+<checkedAttributes>
+    <extractions>
+        <defaultNamespace>http://hul.harvard.edu/ois/xml/ns/jhove</defaultNamespace>
+        <namespace prefix="mix">http://www.loc.gov/mix/v20</namespace>
+    </extractions>
+
+    <!--neni definovano, proto kontrolovany atribut zde chybi-->
+    <!--<attribute id="file_name"/>-->
+
+    <attribute id="last_modified">
+        <extraction>
+            <singlePath>
+                <xpath>repInfo/lastModified</xpath>
+            </singlePath>
+        </extraction>
+        <validation>
+            <validValue>
+                <!--povolen jakykoliv retezec znaku-->
+                <any/>
+            </validValue>
+        </validation>
+    </attribute>
+
+    <attribute id="file_size_in_bytes"/>
+    <attribute id="tool_name"/>
+    <attribute id="tool_version"/>
+
+    <!--neni definovano, proto kontrolovany atribut zde chybi-->
+    <!--<attribute id="format_identification"/>-->
+
+    <attribute id="valid">
+        <extraction>
+            <singlePath>
+                <xpath>repInfo/status</xpath>
+            </singlePath>
+        </extraction>
+        <validation>
+            <validValue>
+                <constant>True</constant>
+            </validValue>
+        </validation>
+    </attribute>
+
+    <attribute id="height"/>
+    <attribute id="width"/>
+
+    <attribute id="number_of_color_components">
+        <extraction>
+            <!--muze se nachazet na nekolika mistech, pouzije se prvni dostupna hodnota-->
+            <firstPathAvailable>
+                <xpath>Properties/property/name=CSize/value</xpath>
+                <xpath>mix:ImageColorEncoding/mix:samplesPerPixel</xpath>
+            </firstPathAvailable>
+        </extraction>
+        <validation>
+            <!--povolene hodnoty "1" nebo "3"-->
+            <validValue>
+                <constant>1</constant>
+            </validValue>
+            <validValue>
+                <constant>3</constant>
+            </validValue>
+        </validation>
+    </attribute>
+
+    <attribute id="color_depth"/>
+
+    <attribute id="color_space_1">
+        <extraction>
+            <singlePath>
+                <xpath>properties/property[./name/text()='EnumCS']/values/value</xpath>
+            </singlePath>
+        </extraction>
+        <validation>
+            <!--povolene hodnoty "sRGB" nebo "greyscale"-->
+            <validValue>
+                <constant>sRGB</constant>
+            </validValue>
+            <validValue>
+                <constant>greyscale</constant>
+            </validValue>
+        </validation>
+    </attribute>
+
+    <attribute id="color_space_2"/>
+
+    <attribute id="resolution_vertical" type="Float">
+        <extraction>
+            <singlePath>
+                <xpath>Properties/property/name=VertResolution/property/name=Numerator/value</xpath>
+            </singlePath>
+        </extraction>
+        <validation>
+            <!--rozsah hodnot, zde realná čísla-->
+            <validValue>
+                <range type="Float">
+                    <min>11810</min>
+                    <max>11812</max>
+                </range>
+            </validValue>
+        </validation>
+    </attribute>
+
+    <attribute id="resolution_horizontal"/>
+
+    <attribute id="number_of_tiles">
+        <extraction>
+            <singlePath>
+                <xpath>count(.//name[text()='TilePart'])</xpath>
+            </singlePath>
+        </extraction>
+        <validation>
+            <!--jakékoliv přirozené číslo-->
+            <validValue>
+                <range type="Integer">
+                    <min>1</min>
+                    <!--maximum nedefinovano, tedy nekonecno-->
+                </range>
+            </validValue>
+        </validation>
+    </attribute>
+
+    <attribute id="size_of_tiles_1"/>
+    <attribute id="size_of_tiles_2"/>
+
+    <!--nedefinovano-->
+    <!--<attribute id="precints"/>
+    <attribute id="size_of_precints_1"/>
+    <attribute id="size_of_precints_2"/>
+    <attribute id="sop"/>
+    <attribute id="eph"/>-->
+
+    <attribute id="order"/>
+    <attribute id="layers"/>
+    <attribute id="levels"/>
+    <attribute id="code_block_width"/>
+    <attribute id="code_block_height"/>
+    <attribute id="bypass"/>
+    <attribute id="transformation"/>
+    <attribute id="compression_ratio"/>
+    <attribute id="migration_software"/>
+
+    <!--nedefinovano-->
+    <!--<attribute id="regions_of_interest"/>-->
+
+</checkedAttributes>

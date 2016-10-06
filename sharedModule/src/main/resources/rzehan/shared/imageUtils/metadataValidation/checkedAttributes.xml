@@ -1,0 +1,36 @@
+<checkedAttributes>
+    <attribute id="file_name" description="název souboru"/>
+    <attribute id="last_modified"/>
+    <attribute id="file_size_in_bytes"/>
+    <attribute id="tool_name"/>
+    <attribute id="tool_version"/>
+    <attribute id="format_identification"/>
+    <attribute id="valid"/>
+    <attribute id="height"/>
+    <attribute id="width"/>
+    <attribute id="number_of_color_components"/>
+    <attribute id="color_depth"/>
+    <attribute id="color_space_1"/>
+    <attribute id="color_space_2"/>
+    <attribute id="resolution_vertical"/>
+    <attribute id="resolution_horizontal"/>
+    <attribute id="number_of_tiles"/>
+    <attribute id="size_of_tiles_1"/>
+    <attribute id="size_of_tiles_2"/>
+    <attribute id="precints"/>
+    <attribute id="size_of_precints_1"/>
+    <attribute id="size_of_precints_2"/>
+    <attribute id="sop"/>
+    <attribute id="eph"/>
+    <attribute id="order"/>
+    <attribute id="layers"/>
+    <attribute id="levels"/>
+    <attribute id="code_block_width"/>
+    <attribute id="code_block_height"/>
+    <attribute id="bypass"/>
+    <attribute id="transformation"/>
+    <attribute id="compression_ratio"/>
+    <attribute id="migration_software"/>
+    <attribute id="regions_of_interest"/>
+
+</checkedAttributes>

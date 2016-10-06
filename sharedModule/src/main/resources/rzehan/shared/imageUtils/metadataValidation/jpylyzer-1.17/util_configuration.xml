@@ -1,4 +1,4 @@
-<imageUtil name="jpylyzer">
+<imageUtil name="jpylyzer" version="1.17">
 
     <versionDetection>
         <operatingSystem name="Linux">
