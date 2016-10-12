@@ -1,0 +1,80 @@
+<variables>
+
+    <variable name="INFO_XML_FILES" type="LIST<FILE>">
+        <evaluation>
+            <name>FIND_FILES_IN_DIR_BY_PATTERN</name>
+            <param>$PSP_DIR</param>
+            <param>$INFO_XML_PATTERN</param>
+        </evaluation>
+    </variable>
+
+    <!--
+        podobne
+        MAIN_METS_FILES
+        MD5_FILES
+        TOLERATED_FILES
+    -->
+
+    <variable name="INFO_XML_FILE" type="FILE">
+        <evaluation>
+            <name>RETURN_FIRST_ITEM</name>
+            <param>INFO_XML_FILES</param>
+        </evaluation>
+    </variable>
+
+    <!--
+        podobne
+        MAIN_METS_FILE
+        MD5_FILE
+    -->
+
+
+    <variable name="SEC_METS_DIRS" type="LIST<FILE>">
+        <evaluation>
+            <name>FIND_FILES_IN_DIR_BY_PATTERN</name>
+            <param>$PSP_DIR</param>
+            <param>$SEC_METS_DIR_PATTERN</param>
+        </evaluation>
+    </variable>
+
+    <!--
+    podobne
+    OCR_TEXT_DIRS
+    OCR_ALTO_DIRS
+    MC_DIRS
+    UC_DIRS
+    -->
+
+    <variable name="SEC_METS_DIR" type="FILE">
+        <evaluation>
+            <name>RETURN_FIRST_ITEM</name>
+            <param>SEC_METS_DIRS</param>
+        </evaluation>
+    </variable>
+
+    <!--
+    podobne
+    OCR_TEXT_DIR
+    OCR_ALTO_DIR
+    MC_DIR
+    UC_DIR
+    -->
+
+    <variable name="SEC_METS_FILES" type="LIST<FILE>">
+        <evaluation>
+            <name>FIND_FILES_IN_DIR_BY_PATTERN</name>
+            <param>$SEC_METS_DIR</param>
+            <param>$SEC_METS_FILE_PATTERN</param>
+        </evaluation>
+    </variable>
+
+    <!--
+    podobne
+    OCR_TEXT_FILES
+    OCR_ALTO_FILES
+    MC_FILES
+    UC_FILES
+    -->
+
+
+</variables>

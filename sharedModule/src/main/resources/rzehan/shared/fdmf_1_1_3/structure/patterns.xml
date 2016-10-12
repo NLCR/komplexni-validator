@@ -1,0 +1,78 @@
+<patterns>
+    <pattern id="FILENAME_CHARS_PATTERN">
+        <expression>
+            <value>a-zA-Z_-.</value>
+        </expression>
+    </pattern>
+
+    <!--<pattern id="PSP_ID_DETECTION_FILE_PATTERN">
+        <expression>
+            <outputVars>
+                <var>PSP_ID</var>
+            </outputVars>
+            <value>METS_%{PSP_ID}.xml</value>
+        </expression>
+    </pattern>-->
+
+    <pattern id="PSP_ID_DETECTION_INFO_XML_FILE_PATTERN">
+        <expression>
+            <value>INFO_!{STRING}.xml</value>
+        </expression>
+        <expression>
+            <value>INFO.xml</value>
+        </expression>
+    </pattern>
+
+    <pattern id="INFO_XML_FILE_PATTERN">
+        <expression caseSensitive="true">
+            <!--regulerni vyraz nemusi byt nutne case-sensitive-->
+            <inputVars>
+                <var>PSP_ID</var>
+            </inputVars>
+            <value>INFO_${PSP_ID}.xml</value>
+        </expression>
+        <expression>
+            <value>INFO.xml</value>
+        </expression>
+    </pattern>
+
+    <pattern id="MAIN_METS_FILE_PATTERN">
+        <expression>
+            <inputVars>
+                <var>PSP_ID</var>
+            </inputVars>
+            <value>METS_${PSP_ID}.xml</value>
+        </expression>
+    </pattern>
+
+    <!--jako predchozi podobne i
+    MD5_FILE_PATTERN
+    TOLERATED_FILE_PATTERN-->
+
+    <pattern id="SEC_METS_FILE_PATTERN">
+        <expression>
+            <inputVars>
+                <var>PSP_ID</var>
+            </inputVars>
+            <value>AMD_METS_${PSP_ID}_!{NUM}.xml</value>
+        </expression>
+    </pattern>
+
+    <!--podobne i
+    OCR_TEXT_FILE_PATTERN
+    OCR_ALTO_FILE_PATTERN
+    MC_FILE_PATTERN
+    UC_FILE_PATTERN-->
+
+
+    <pattern id="SEC_METS_FILE_PATTERN">
+        <expression>
+            <inputVars>
+                <var>PSP_ID</var>
+            </inputVars>
+            <value>AMD_METS_${PSP_ID}_!{NUMBER}.xml</value>
+        </expression>
+    </pattern>
+
+
+</patterns>

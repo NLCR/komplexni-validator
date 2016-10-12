@@ -1,0 +1,236 @@
+<rules>
+    <section name="Struktura souboru" description="Struktura PSP balicku na urovni soboru">
+
+        <rule id="SINGLE_INFO_XML_EXISTS" enabled="true" level="severe">
+            <description>Musi existovat nanejvyse jeden soubor info-xml</description>
+            <implementation>
+                <name>CHECK_LIST_EXACT_SIZE</name>
+                <params>
+                    <param>$INFO_XML_FILES</param>
+                    <param>1</param>
+                </params>
+            </implementation>
+        </rule>
+
+        <rule id="SINGLE_MAIN_METS_EXISTS" enabled="true" level="severe">
+            <description>Musi existovat nanejvyse jeden soubor hlavni-mets</description>
+            <implementation>
+                <name>CHECK_LIST_EXACT_SIZE</name>
+                <params>
+                    <param>$MAIN_METS_FILES</param>
+                    <param>1</param>
+                </params>
+            </implementation>
+        </rule>
+
+        <!--
+        podobne
+        SINGLE_MD5_EXISTS
+        -->
+
+        <rule id="NONE_TOLERATED_FILE_EXISTS" enabled="true" level="warning">
+            <description>Nemel by existovat zadny tolerovany soubor (napr. LTP_MD.xml)</description>
+            <implementation>
+                <name>CHECK_LIST_EXACT_SIZE</name>
+                <params>
+                    <param>$TOLERATED_FILES</param>
+                    <param>0</param>
+                </params>
+            </implementation>
+        </rule>
+
+        <rule id="SINGLE_SEC_METS_DIR_EXISTS" enabled="true" level="severe">
+            <description>Musi existovat nanejvyse jeden soubor (adresar) se sekundarnimi mets soubory</description>
+            <implementation>
+                <name>CHECK_LIST_EXACT_SIZE</name>
+                <params>
+                    <param>$SEC_METS_DIRS</param>
+                    <param>1</param>
+                </params>
+            </implementation>
+        </rule>
+
+        <!--
+        podobne
+        SEC_METS_DIR_IS_DIR
+        SINGLE_OCR_TEXT_DIR_EXISTS
+        SINGLE_OCR_ALTO_DIR_EXISTS
+        SINGLE_MC_DIR_EXISTS
+        SINGLE_UC_DIR_EXISTS
+        -->
+
+        <rule id="SEC_METS_DIR_IS_DIR" enabled="true" level="severe">
+            <description>Adresar se sekundarnimi mets soubory musi byt opravdu adresar a ne obycejny soubor
+            </description>
+            <implementation>
+                <name>CHECK_IS_DIR</name>
+                <params>
+                    <param>$SEC_METS_DIR</param>
+                </params>
+            </implementation>
+        </rule>
+
+        <!--
+        podobne
+        SEC_METS_DIR_IS_DIR
+        OCR_DIR_IS_DIR
+        OCR_ALTO_IS_DIR
+        MC_DIR_IS_DIR
+        UC_DIR_IS_DIR
+        -->
+
+
+        <rule id="NO_EXTRA_TOP_LEVEL_FILES" enabled="true" level="severe">
+            <description>Krome definovanych top-level souboru a adresaru nesmi v korenovem adresari existovat zadny jiny
+                soubor/adresar.
+            </description>
+            <implementation>
+                <name>CHECK_NO_OTHER_FILES</name>
+                <params>
+                    <param>$PSP_DIR</param>
+                    <param>$INFO_XML_FILE</param>
+                    <param>$MAIN_METS_FILE</param>
+                    <param>$MD5_FILE</param>
+                    <param>$TOLERATED_FILES</param>
+                    <param>$SEC_METS_DIR</param>
+                    <param>$OCR_TEXT_DIR</param>
+                    <param>$OCR_ALTO_DIR</param>
+                    <param>$MC_DIR</param>
+                    <param>$UC_DIR</param>
+                </params>
+            </implementation>
+        </rule>
+
+        <rule id="NUMBER_OF_FILES_IN_DIRS_MATCH" enabled="true" level="severe">
+            <description>Pocet souboru v adresarich se musi shodovat</description>
+            <implementation>
+                <name>CHECK_LISTS_SAME_SIZE</name>
+                <params>
+                    <param>$SEC_METS_FILES</param>
+                    <param>$OCR_TEXT_FILES</param>
+                    <param>$OCR_ALTO_FILES</param>
+                    <param>$MC_FILES</param>
+                    <param>$UC_FILES</param>
+                </params>
+            </implementation>
+        </rule>
+
+
+        <rule id="SEC_METS_FILENAME_SIZES_MATCH" enabled="true" level="severe">
+            <description>Delka nazvu souboru vsech sekundarnich mets se musi shodovat (tj. cisla vsech stran zarovnana
+                stejne).
+            </description>
+            <implementation>
+                <name>CHECK_LIST_ITEMS_SAME_SIZE</name>
+                <params>
+                    <param>$SEC_METS_FILES</param>
+                </params>
+            </implementation>
+        </rule>
+
+        <!--
+        OCR_TEXT_FILENAME_SIZES_MATCH
+        OCR_ALTO_FILENAME_SIZES_MATCH
+        MC_FILENAME_SIZES_MATCH
+        UC_FILENAME_SIZES_MATCH
+        -->
+
+        <rule id="INFO_XML_FILENAME_VALID" enabled="true" level="severe">
+            <description>Nazev souboru info-xml obsahuje jen povolene znaky.</description>
+            <implementation>
+                <name>CHECK_FILENAME_MATCHES_PATTERN</name>
+                <params>
+                    <param>$INFO_XML_FILE</param>
+                    <param>$FILENAME_CHARS_PATTERN</param>
+                </params>
+            </implementation>
+        </rule>
+
+        <!--
+        MAIN_METS_FILENAME_VALID
+        MD5_FILENAME_VALID
+        TOLERATED_FILENAME_VALID
+        -->
+
+        <rule id="SEC_METS_DIRNAME_VALID" enabled="true" level="severe">
+            <description>Nazev adresare se sekundarnimi mets obsahuje jen povolene znaky.</description>
+            <implementation>
+                <name>CHECK_FILENAME_MATCHES_PATTERN</name>
+                <params>
+                    <param>$INFO_XML_FILE</param>
+                    <param>$FILENAME_CHARS_PATTERN</param>
+                </params>
+            </implementation>
+        </rule>
+
+        <!--
+        OCR_TEXT_DIRNAME_VALID
+        OCR_ALTO_DIRNAME_VALID
+        MC_DIRNAME_VALID
+        UC_DIRNAME_VALID
+        -->
+
+        <rule id="SEC_METS_FILENAMES_VALID" enabled="true" level="severe">
+            <description>Nazvy vsech souboru musi obsahovat jen povolene znaky.</description>
+            <implementation>
+                <name>CHECK_ALL_FILENAMES_MATCH_PATTERN</name>
+                <params>
+                    <param>SEC_METS_FILES</param>
+                    <param>$FILENAME_CHARS_PATTERN</param>
+                </params>
+            </implementation>
+        </rule>
+
+        <!--
+
+            OCR_TEXT_FILENAMES_VALID
+            OCR_ALTO_FILENAMES_VALID
+            MC_FILENAMES_VALID
+            UC_FILENAMES_VALID
+        -->
+
+
+        <rule id="NO_EXTRA_SEC_METS_FILES" enabled="true" level="severe">
+            <description>Krome sekundarnich mets soboru nesmi adresar obsahovat zadne dalsi soubory.</description>
+            <implementation>
+                <name>CHECK_NO_OTHER_FILES</name>
+                <params>
+                    <param>$SEC_METS_DIRNAME</param>
+                    <param>$SEC_METS_FILENAMES</param>
+                </params>
+            </implementation>
+        </rule>
+
+        <!--
+
+            NO_EXTRA_OCR_TEXT_FILES
+            NO_EXTRA_OCR_ALTO_FILES
+            NO_EXTRA_MC_FILES
+            NO_EXTRA_UC_FILES
+        -->
+
+        <rule id="MD5_CHECKS_OUT" enabled="true" level="severe">
+            <description>MD5 soubor obsahuje zaznamy pro vsechny definove soubory a zadny dalsi a kontrolni soucty
+                souhlasi.
+            </description>
+            <implementation>
+                <name>CHECK_MD5</name>
+                <params>
+                    <param>$MAIN_METS_FILE</param>
+                    <param>$SEC_METS_FILES</param>
+                    <param>$OCR_TEXT_FILES</param>
+                    <param>$OCR_ALTO_FILES</param>
+                    <param>$MC_FILES</param>
+                    <param>$UC_FILES</param>
+                </params>
+            </implementation>
+        </rule>
+
+    </section>
+
+    <section name="info-xml" description="Validace info-xml souboru a jeho odkazu">
+
+    </section>
+
+
+</rules>
