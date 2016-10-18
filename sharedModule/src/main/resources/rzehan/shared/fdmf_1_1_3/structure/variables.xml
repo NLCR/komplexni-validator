@@ -1,11 +1,33 @@
 <variables>
 
-    <variable name="INFO_XML_FILES" type="LIST<FILE>">
-        <evaluation>
-            <name>FIND_FILES_IN_DIR_BY_PATTERN</name>
-            <param>$PSP_DIR</param>
-            <param>$INFO_XML_PATTERN</param>
-        </evaluation>
+    <description>
+        Zde jsou definovány proměnné. K jejich vyhodnocení jsou použity funkce, další proměnné, vzory a
+        konstanty.
+        Proměnné je možné dynamicky doplňovat/upravovat.
+        Nesmí ale nastat situace cyklu, tedy že by hodnota proměnné X závisela na proměnné/vzoru Y, která by závisela na
+        proměnné X.
+    </description>
+
+    <variable name="PSP_DIR" type="File">
+        <evaluationFunction name="PROVIDED">
+            <!--tj. musi byt dodano pres GUI nebo CLI-->
+            <params>
+                <param name="var_name">PSP_DIR</param>
+            </params>
+        </evaluationFunction>
+    </variable>
+
+    <variable name="INFO_FILES" type="List<File>">
+        <evaluationFunction name="FIND_FILES_IN_DIR_BY_PATTERN">
+            <params>
+                <param name="dir">
+                    <variable name="PSP_DIR"/>
+                </param>
+                <param name="pattern">
+                    <pattern name="INFO_XML_PATTERN"/>
+                </param>
+            </params>
+        </evaluationFunction>
     </variable>
 
     <!--
@@ -15,11 +37,15 @@
         TOLERATED_FILES
     -->
 
-    <variable name="INFO_XML_FILE" type="FILE">
-        <evaluation>
-            <name>RETURN_FIRST_ITEM</name>
-            <param>INFO_XML_FILES</param>
-        </evaluation>
+
+    <variable name="INFO_FILE" type="File">
+        <evaluationFunction name="RETURN_FIRST_ITEM">
+            <params>
+                <param name="list">
+                    <variable name="INFO_XML_FILES"/>
+                </param>
+            </params>
+        </evaluationFunction>
     </variable>
 
     <!--
@@ -29,12 +55,17 @@
     -->
 
 
-    <variable name="SEC_METS_DIRS" type="LIST<FILE>">
-        <evaluation>
-            <name>FIND_FILES_IN_DIR_BY_PATTERN</name>
-            <param>$PSP_DIR</param>
-            <param>$SEC_METS_DIR_PATTERN</param>
-        </evaluation>
+    <variable name="SEC_METS_DIRS" type="List<File>">
+        <evaluationFunction name="FIND_FILES_IN_DIR_BY_PATTERN">
+            <params>
+                <param name="dir">
+                    <variable name="PSP_DIR"/>
+                </param>
+                <param name="pattern">
+                    <pattern name="SEC_METS_DIR_PATTERN"/>
+                </param>
+            </params>
+        </evaluationFunction>
     </variable>
 
     <!--
@@ -45,11 +76,15 @@
     UC_DIRS
     -->
 
-    <variable name="SEC_METS_DIR" type="FILE">
-        <evaluation>
-            <name>RETURN_FIRST_ITEM</name>
-            <param>SEC_METS_DIRS</param>
-        </evaluation>
+
+    <variable name="SEC_METS_DIR" type="File">
+        <evaluationFunction name="RETURN_FIRST_ITEM">
+            <params>
+                <param name="list">
+                    <variable name="SEC_METS_DIRS"/>
+                </param>
+            </params>
+        </evaluationFunction>
     </variable>
 
     <!--
@@ -60,12 +95,17 @@
     UC_DIR
     -->
 
-    <variable name="SEC_METS_FILES" type="LIST<FILE>">
-        <evaluation>
-            <name>FIND_FILES_IN_DIR_BY_PATTERN</name>
-            <param>$SEC_METS_DIR</param>
-            <param>$SEC_METS_FILE_PATTERN</param>
-        </evaluation>
+    <variable name="SEC_METS_FILES" type="List<File>">
+        <evaluationFunction name="FIND_FILES_IN_DIR_BY_PATTERN">
+            <params>
+                <param name="dir">
+                    <variable name="SEC_METS_DIR"/>
+                </param>
+                <param name="pattern">
+                    <pattern name="SEC_METS_FILE_PATTERN"/>
+                </param>
+            </params>
+        </evaluationFunction>
     </variable>
 
     <!--

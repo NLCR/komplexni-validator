@@ -1,11 +1,11 @@
 <variables>
 
-    <variable name="PSP_DIR" type="File">
+    <!--<variable name="PSP_DIR" type="File">
         <evaluation>
             <name>PROVIDED</name>
-            <!--tj. musi byt dodano pres GUI nebo CLI-->
+            &lt;!&ndash;tj. musi byt dodano pres GUI nebo CLI&ndash;&gt;
         </evaluation>
-    </variable>
+    </variable>-->
 
     <variable name="DMF_TYPE_BY_USER" type="String">
         <evaluation>

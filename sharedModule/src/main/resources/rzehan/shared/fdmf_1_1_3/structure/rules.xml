@@ -1,234 +1,761 @@
 <rules>
-    <section name="Struktura souboru" description="Struktura PSP balicku na urovni soboru">
 
-        <rule id="SINGLE_INFO_XML_EXISTS" enabled="true" level="severe">
-            <description>Musi existovat nanejvyse jeden soubor info-xml</description>
-            <implementation>
-                <name>CHECK_LIST_EXACT_SIZE</name>
-                <params>
-                    <param>$INFO_XML_FILES</param>
-                    <param>1</param>
-                </params>
-            </implementation>
-        </rule>
-
-        <rule id="SINGLE_MAIN_METS_EXISTS" enabled="true" level="severe">
-            <description>Musi existovat nanejvyse jeden soubor hlavni-mets</description>
-            <implementation>
-                <name>CHECK_LIST_EXACT_SIZE</name>
-                <params>
-                    <param>$MAIN_METS_FILES</param>
-                    <param>1</param>
-                </params>
-            </implementation>
-        </rule>
-
-        <!--
-        podobne
-        SINGLE_MD5_EXISTS
-        -->
-
-        <rule id="NONE_TOLERATED_FILE_EXISTS" enabled="true" level="warning">
-            <description>Nemel by existovat zadny tolerovany soubor (napr. LTP_MD.xml)</description>
-            <implementation>
-                <name>CHECK_LIST_EXACT_SIZE</name>
-                <params>
-                    <param>$TOLERATED_FILES</param>
-                    <param>0</param>
-                </params>
-            </implementation>
-        </rule>
-
-        <rule id="SINGLE_SEC_METS_DIR_EXISTS" enabled="true" level="severe">
-            <description>Musi existovat nanejvyse jeden soubor (adresar) se sekundarnimi mets soubory</description>
-            <implementation>
-                <name>CHECK_LIST_EXACT_SIZE</name>
-                <params>
-                    <param>$SEC_METS_DIRS</param>
-                    <param>1</param>
-                </params>
-            </implementation>
-        </rule>
-
-        <!--
-        podobne
-        SEC_METS_DIR_IS_DIR
-        SINGLE_OCR_TEXT_DIR_EXISTS
-        SINGLE_OCR_ALTO_DIR_EXISTS
-        SINGLE_MC_DIR_EXISTS
-        SINGLE_UC_DIR_EXISTS
-        -->
-
-        <rule id="SEC_METS_DIR_IS_DIR" enabled="true" level="severe">
-            <description>Adresar se sekundarnimi mets soubory musi byt opravdu adresar a ne obycejny soubor
-            </description>
-            <implementation>
-                <name>CHECK_IS_DIR</name>
-                <params>
-                    <param>$SEC_METS_DIR</param>
-                </params>
-            </implementation>
-        </rule>
-
-        <!--
-        podobne
-        SEC_METS_DIR_IS_DIR
-        OCR_DIR_IS_DIR
-        OCR_ALTO_IS_DIR
-        MC_DIR_IS_DIR
-        UC_DIR_IS_DIR
-        -->
+    <description>
+        Zde jsou definovány validační pravidla. K samotným validacím se používají validační funkce, jejichž parametry
+        jsou definované proměnné, vzory a konstanty.
+        Pravidla je možné dynamicky doplňovat/upravovat, ale je vždy nutné používat existující proměnné a vzory.
+    </description>
 
 
-        <rule id="NO_EXTRA_TOP_LEVEL_FILES" enabled="true" level="severe">
-            <description>Krome definovanych top-level souboru a adresaru nesmi v korenovem adresari existovat zadny jiny
-                soubor/adresar.
-            </description>
-            <implementation>
-                <name>CHECK_NO_OTHER_FILES</name>
-                <params>
-                    <param>$PSP_DIR</param>
-                    <param>$INFO_XML_FILE</param>
-                    <param>$MAIN_METS_FILE</param>
-                    <param>$MD5_FILE</param>
-                    <param>$TOLERATED_FILES</param>
-                    <param>$SEC_METS_DIR</param>
-                    <param>$OCR_TEXT_DIR</param>
-                    <param>$OCR_ALTO_DIR</param>
-                    <param>$MC_DIR</param>
-                    <param>$UC_DIR</param>
-                </params>
-            </implementation>
-        </rule>
-
-        <rule id="NUMBER_OF_FILES_IN_DIRS_MATCH" enabled="true" level="severe">
-            <description>Pocet souboru v adresarich se musi shodovat</description>
-            <implementation>
-                <name>CHECK_LISTS_SAME_SIZE</name>
-                <params>
-                    <param>$SEC_METS_FILES</param>
-                    <param>$OCR_TEXT_FILES</param>
-                    <param>$OCR_ALTO_FILES</param>
-                    <param>$MC_FILES</param>
-                    <param>$UC_FILES</param>
-                </params>
-            </implementation>
-        </rule>
+    <section name="PSP ID" description="Identifikátor PSP">
 
 
-        <rule id="SEC_METS_FILENAME_SIZES_MATCH" enabled="true" level="severe">
-            <description>Delka nazvu souboru vsech sekundarnich mets se musi shodovat (tj. cisla vsech stran zarovnana
-                stejne).
-            </description>
-            <implementation>
-                <name>CHECK_LIST_ITEMS_SAME_SIZE</name>
-                <params>
-                    <param>$SEC_METS_FILES</param>
-                </params>
-            </implementation>
-        </rule>
+        <!--psp id-->
 
-        <!--
-        OCR_TEXT_FILENAME_SIZES_MATCH
-        OCR_ALTO_FILENAME_SIZES_MATCH
-        MC_FILENAME_SIZES_MATCH
-        UC_FILENAME_SIZES_MATCH
-        -->
-
-        <rule id="INFO_XML_FILENAME_VALID" enabled="true" level="severe">
-            <description>Nazev souboru info-xml obsahuje jen povolene znaky.</description>
-            <implementation>
-                <name>CHECK_FILENAME_MATCHES_PATTERN</name>
-                <params>
-                    <param>$INFO_XML_FILE</param>
-                    <param>$FILENAME_CHARS_PATTERN</param>
-                </params>
-            </implementation>
-        </rule>
-
-        <!--
-        MAIN_METS_FILENAME_VALID
-        MD5_FILENAME_VALID
-        TOLERATED_FILENAME_VALID
-        -->
-
-        <rule id="SEC_METS_DIRNAME_VALID" enabled="true" level="severe">
-            <description>Nazev adresare se sekundarnimi mets obsahuje jen povolene znaky.</description>
-            <implementation>
-                <name>CHECK_FILENAME_MATCHES_PATTERN</name>
-                <params>
-                    <param>$INFO_XML_FILE</param>
-                    <param>$FILENAME_CHARS_PATTERN</param>
-                </params>
-            </implementation>
-        </rule>
-
-        <!--
-        OCR_TEXT_DIRNAME_VALID
-        OCR_ALTO_DIRNAME_VALID
-        MC_DIRNAME_VALID
-        UC_DIRNAME_VALID
-        -->
-
-        <rule id="SEC_METS_FILENAMES_VALID" enabled="true" level="severe">
-            <description>Nazvy vsech souboru musi obsahovat jen povolene znaky.</description>
-            <implementation>
-                <name>CHECK_ALL_FILENAMES_MATCH_PATTERN</name>
-                <params>
-                    <param>SEC_METS_FILES</param>
-                    <param>$FILENAME_CHARS_PATTERN</param>
-                </params>
-            </implementation>
-        </rule>
-
-        <!--
-
-            OCR_TEXT_FILENAMES_VALID
-            OCR_ALTO_FILENAMES_VALID
-            MC_FILENAMES_VALID
-            UC_FILENAMES_VALID
-        -->
-
-
-        <rule id="NO_EXTRA_SEC_METS_FILES" enabled="true" level="severe">
-            <description>Krome sekundarnich mets soboru nesmi adresar obsahovat zadne dalsi soubory.</description>
-            <implementation>
-                <name>CHECK_NO_OTHER_FILES</name>
-                <params>
-                    <param>$SEC_METS_DIRNAME</param>
-                    <param>$SEC_METS_FILENAMES</param>
-                </params>
-            </implementation>
-        </rule>
-
-        <!--
-
-            NO_EXTRA_OCR_TEXT_FILES
-            NO_EXTRA_OCR_ALTO_FILES
-            NO_EXTRA_MC_FILES
-            NO_EXTRA_UC_FILES
-        -->
-
-        <rule id="MD5_CHECKS_OUT" enabled="true" level="severe">
-            <description>MD5 soubor obsahuje zaznamy pro vsechny definove soubory a zadny dalsi a kontrolni soucty
-                souhlasi.
-            </description>
-            <implementation>
-                <name>CHECK_MD5</name>
-                <params>
-                    <param>$MAIN_METS_FILE</param>
-                    <param>$SEC_METS_FILES</param>
-                    <param>$OCR_TEXT_FILES</param>
-                    <param>$OCR_ALTO_FILES</param>
-                    <param>$MC_FILES</param>
-                    <param>$UC_FILES</param>
-                </params>
-            </implementation>
+        <rule name="PSP_ID_DERIVED_FROM_TITLE_ID" level="warning">
+            <description>PSP-ID musí být odvozen od některého z povolených identifikátorů.</description>
+            <!--TODO-->
         </rule>
 
     </section>
 
-    <section name="info-xml" description="Validace info-xml souboru a jeho odkazu">
+
+    <section name="Struktura souborů" description="Struktura PSP balicku na urovni soboru">
+
+
+        <!--psp dir-->
+
+        <rule name="PSP_DIR_MATCHES_PSP_ID" level="warning">
+            <description>Název kořenového adresáře musí být schodný s PSP-ID.</description>
+            <validationFunction name="CHECK_FILENAME_MATCHES_STRING">
+                <params>
+                    <param name="file">
+                        <variable name="PSP_DIR"/>
+                    </param>
+                    <param name="string">
+                        <variable name="PSP_ID"/>
+                    </param>
+                </params>
+            </validationFunction>
+        </rule>
+
+
+        <!--právě jeden každý top-level soubor-->
+
+        <rule name="SINGLE_INFO_FILE_EXISTS" level="severe">
+            <description>Musí existovat nanejvýše jeden soubor INFO.</description>
+            <validationFunction name="CHECK_LIST_EXACT_SIZE">
+                <params>
+                    <param name="list">
+                        <variable name="INFO_FILES"/>
+                    </param>
+                    <param name="size">1</param>
+                </params>
+            </validationFunction>
+        </rule>
+
+        <rule name="SINGLE_MAIN_METS_FILE_EXISTS" level="severe">
+            <description>Musí existovat nanejvýše jeden soubor HLAVNI-METS.</description>
+            <validationFunction name="CHECK_LIST_EXACT_SIZE">
+                <params>
+                    <param name="list">
+                        <variable name="MAIN_METS_FILES"/>
+                    </param>
+                    <param name="size">1</param>
+                </params>
+            </validationFunction>
+        </rule>
+
+        <rule name="SINGLE_MD5_FILE_EXISTS" level="severe">
+            <description>Musí existovat nanejvýše jeden soubor MD5.</description>
+            <validationFunction name="CHECK_LIST_EXACT_SIZE">
+                <params>
+                    <param name="list">
+                        <variable name="MD5_FILES"/>
+                    </param>
+                    <param name="size">1</param>
+                </params>
+            </validationFunction>
+        </rule>
+
+
+        <!--názvy top-level souborů obsahují povolené znaky-->
+
+        <rule name="INFO_FILE_FILENAME_VALID" level="severe">
+            <description>Název souboru INFO obsahuje jen povolené znaky.</description>
+            <validationFunction name="CHECK_FILENAME_MATCHES_PATTERN">
+                <params>
+                    <param name="file">
+                        <variable name="INFO_FILE"/>
+                    </param>
+                    <param name="pattern">
+                        <pattern name="FILENAME_CHARS_PATTERN"/>
+                    </param>
+                </params>
+            </validationFunction>
+        </rule>
+
+        <rule name="MAIN_METS_FILE_FILENAME_VALID" level="severe">
+            <description>Název souboru HLAVNI-METS obsahuje jen povolené znaky.</description>
+            <validationFunction name="CHECK_FILENAME_MATCHES_PATTERN">
+                <params>
+                    <param name="file">
+                        <variable name="MAIN_METS_FILE"/>
+                    </param>
+                    <param name="pattern">
+                        <pattern name="FILENAME_CHARS_PATTERN"/>
+                    </param>
+                </params>
+            </validationFunction>
+        </rule>
+
+        <rule name="MD5_FILE_FILENAME_VALID" level="severe">
+            <description>Název souboru MD5 obsahuje jen povolené znaky.</description>
+            <validationFunction name="CHECK_FILENAME_MATCHES_PATTERN">
+                <params>
+                    <param name="file">
+                        <variable name="MD5_FILE"/>
+                    </param>
+                    <param name="pattern">
+                        <pattern name="FILENAME_CHARS_PATTERN"/>
+                    </param>
+                </params>
+            </validationFunction>
+        </rule>
+
+
+        <!--top-level soubory nejsou adresáře-->
+
+        <rule name="INFO_FILE_IS_NOT_DIR" level="severe">
+            <description>Soubor INFO není adresář, ale obyčejný soubor.</description>
+            <validationFunction name="CHECK_FILE_IS_NOT_DIR">
+                <params>
+                    <param name="file">
+                        <variable name="INFO_FILE"/>
+                    </param>
+                </params>
+            </validationFunction>
+        </rule>
+
+        <rule name="MAIN_METS_FILE_IS_NOT_DIR" level="severe">
+            <description>Soubor HLAVNI-METS není adresář, ale obyčejný soubor.</description>
+            <validationFunction name="CHECK_FILE_IS_NOT_DIR">
+                <params>
+                    <param name="file">
+                        <variable name="MAIN_METS_FILE"/>
+                    </param>
+                </params>
+            </validationFunction>
+        </rule>
+
+        <rule name="MD5_FILE_IS_NOT_DIR" level="severe">
+            <description>Soubor MD5 není adresář, ale obyčejný soubor.</description>
+            <validationFunction name="CHECK_FILE_IS_NOT_DIR">
+                <params>
+                    <param name="file">
+                        <variable name="MD5_FILE"/>
+                    </param>
+                </params>
+            </validationFunction>
+        </rule>
+
+
+        <!--žádné top-level soubory/adresáře kromě očekávaných a tolerovaných-->
+
+        <rule name="TOLERATED_TL_FILES_ARE_NOT_DIRS" level="severe">
+            <description>Žádný tolerovaný soubor v kořenovém adresáři nesmí být adresář.</description>
+            <validationFunction name="CHECK_NO_FILE_IS_DIR">
+                <params>
+                    <param name="file_list">
+                        <variable name="TOLERATED_TL_FILES"/>
+                    </param>
+                </params>
+            </validationFunction>
+        </rule>
+
+        <rule name="NO_TOLERATED_TL_FILES_EXIST" level="warning">
+            <description>Neměl by existovat žádný tolerovaný soubor.</description>
+            <validationFunction name="CHECK_LIST_EMPTY">
+                <params>
+                    <param name="list">
+                        <variable name="TOLERATED_TL_FILES"/>
+                    </param>
+                </params>
+            </validationFunction>
+        </rule>
+
+        <rule name="NO_OTHER_TOP_LEVEL_FILES_EXIST" level="severe">
+            <description>Krome definovaných top-level souborů a adresářů nesmí v kořenovém adresáři existovat žádný jiný
+                soubor nebo adresář.
+            </description>
+            <validationFunction name="CHECK_NO_OTHER_FILES_IN_DIR">
+                <params>
+                    <param name="root_dir">
+                        <variable name="PSP_DIR"/>
+                    </param>
+                    <param name="file">
+                        <variable name="INFO_FILE"/>
+                    </param>
+                    <param name="file">
+                        <variable name="MAIN_METS_FILE"/>
+                    </param>
+                    <param name="file">
+                        <variable name="MD5_FILE"/>
+                    </param>
+                    <param name="file_list">
+                        <variable name="TOLERATED_TL_FILES"/>
+                    </param>
+                    <param name="file">
+                        <variable name="SEC_METS_DIR"/>
+                    </param>
+                    <param name="file">
+                        <variable name="OCR_TEXT_DIR"/>
+                    </param>
+                    <param name="file">
+                        <variable name="OCR_ALTO_DIR"/>
+                    </param>
+                    <param name="file">
+                        <variable name="MC_DIR"/>
+                    </param>
+                    <param name="file">
+                        <variable name="UC_DIR"/>
+                    </param>
+                </params>
+            </validationFunction>
+        </rule>
+
+
+        <!--právě jeden každý top-level adresář-->
+
+
+        <rule name="SINGLE_SEC_METS_DIR_EXISTS" level="severe">
+            <description>Musí existovat nanejvýše jeden soubor (adresář) se sekundarními mets soubory.</description>
+            <validationFunction name="CHECK_LIST_EXACT_SIZE">
+                <params>
+                    <param name="list">
+                        <variable name="SEC_METS_DIRS"/>
+                    </param>
+                    <param name="size">1</param>
+                </params>
+            </validationFunction>
+        </rule>
+
+        <rule name="SINGLE_OCR_TEXT_DIR_EXISTS" level="severe">
+            <description>Musí existovat nanejvýše jeden soubor (adresář) s textovými ocr soubory.</description>
+            <validationFunction name="CHECK_LIST_EXACT_SIZE">
+                <params>
+                    <param name="list">
+                        <variable name="OCR_TEXT_DIRS"/>
+                    </param>
+                    <param name="size">1</param>
+                </params>
+            </validationFunction>
+        </rule>
+
+        <rule name="SINGLE_OCR_ALTO_DIR_EXISTS" level="severe">
+            <description>Musí existovat nanejvýše jeden soubor (adresář) s alto ocr soubory.</description>
+            <validationFunction name="CHECK_LIST_EXACT_SIZE">
+                <params>
+                    <param name="list">
+                        <variable name="OCR_ALTO_DIRS"/>
+                    </param>
+                    <param name="size">1</param>
+                </params>
+            </validationFunction>
+        </rule>
+
+        <rule name="SINGLE_MC_DIR_EXISTS" level="severe">
+            <description>Musí existovat nanejvýše jeden soubor (adresář) s master-copy obrazovými soubory.
+            </description>
+            <validationFunction name="CHECK_LIST_EXACT_SIZE">
+                <params>
+                    <param name="list">
+                        <variable name="MC_DIRS"/>
+                    </param>
+                    <param name="size">1</param>
+                </params>
+            </validationFunction>
+        </rule>
+
+        <rule name="SINGLE_UC_DIR_EXISTS" level="severe">
+            <description>Musí existovat nanejvýše jeden soubor (adresář) s user-copy obrazovými soubory.
+            </description>
+            <validationFunction name="CHECK_LIST_EXACT_SIZE">
+                <params>
+                    <param name="list">
+                        <variable name="UC_DIRS"/>
+                    </param>
+                    <param name="size">1</param>
+                </params>
+            </validationFunction>
+        </rule>
+
+
+        <!--názvy top-level adresářů obsahují povolené znaky-->
+
+        <rule name="SEC_METS_DIR_FILENAME_VALID" level="severe">
+            <description>Název adresáře se sekundárními mets soubory musí obsahovat jen povolené znaky.</description>
+            <validationFunction name="CHECK_FILENAME_MATCHES_PATTERN">
+                <params>
+                    <param name="file">
+                        <variable name="SEC_METS_DIR"/>
+                    </param>
+                    <param name="pattern">
+                        <pattern name="FILENAME_CHARS_PATTERN"/>
+                    </param>
+                </params>
+            </validationFunction>
+        </rule>
+
+        <rule name="OCR_TEXT_DIR_FILENAME_VALID" level="severe">
+            <description>Název adresáře s textovými ocr soubory musí obsahovat jen povolené znaky.</description>
+            <validationFunction name="CHECK_FILENAME_MATCHES_PATTERN">
+                <params>
+                    <param name="file">
+                        <variable name="OCR_TEXT_DIR"/>
+                    </param>
+                    <param name="pattern">
+                        <pattern name="FILENAME_CHARS_PATTERN"/>
+                    </param>
+                </params>
+            </validationFunction>
+        </rule>
+
+        <rule name="OCR_ALTO_DIR_FILENAME_VALID" level="severe">
+            <description>Název adresáře s alto ocr soubory musí obsahovat jen povolené znaky.</description>
+            <validationFunction name="CHECK_FILENAME_MATCHES_PATTERN">
+                <params>
+                    <param name="file">
+                        <variable name="OCR_ALTO_DIR"/>
+                    </param>
+                    <param name="pattern">
+                        <pattern name="FILENAME_CHARS_PATTERN"/>
+                    </param>
+                </params>
+            </validationFunction>
+        </rule>
+
+        <rule name="MC_DIR_FILENAME_VALID" level="severe">
+            <description>Název adresáře s master-copy obrazovými soubory musí obsahovat jen povolené znaky.
+            </description>
+            <validationFunction name="CHECK_FILENAME_MATCHES_PATTERN">
+                <params>
+                    <param name="file">
+                        <variable name="MC_DIR"/>
+                    </param>
+                    <param name="pattern">
+                        <pattern name="FILENAME_CHARS_PATTERN"/>
+                    </param>
+                </params>
+            </validationFunction>
+        </rule>
+
+        <rule name="UC_DIR_FILENAME_VALID" level="severe">
+            <description>Název adresáře s user-copy obrazovými soubory musí obsahovat jen povolené znaky.
+            </description>
+            <validationFunction name="CHECK_FILENAME_MATCHES_PATTERN">
+                <params>
+                    <param name="file">
+                        <variable name="UC_DIR"/>
+                    </param>
+                    <param name="pattern">
+                        <pattern name="FILENAME_CHARS_PATTERN"/>
+                    </param>
+                </params>
+            </validationFunction>
+        </rule>
+
+
+        <!--top-level adresáře jsou adresáře (ne obyčejné soubory)-->
+
+        <rule name="SEC_METS_DIR_IS_DIR" level="severe">
+            <description>Adresář se sekundárními mets soubory musí být opravdu adresář a ne obyčejný soubor
+            </description>
+            <validationFunction name="CHECK_FILE_IS_DIR">
+                <params>
+                    <param name="file">
+                        <variable name="SEC_METS_DIR"/>
+                    </param>
+                </params>
+            </validationFunction>
+        </rule>
+
+        <rule name="OCR_TEXT_DIR_IS_DIR" level="severe">
+            <description>Adresář s textovýmí ocr soubory musí být opravdu adresář a ne obyčejný soubor
+            </description>
+            <validationFunction name="CHECK_FILE_IS_DIR">
+                <params>
+                    <param name="file">
+                        <variable name="OCR_TEXT_DIR"/>
+                    </param>
+                </params>
+            </validationFunction>
+        </rule>
+
+        <rule name="OCR_ALTO_DIR_IS_DIR" level="severe">
+            <description>Adresář s alto ocr soubory musí být opravdu adresář a ne obyčejný soubor
+            </description>
+            <validationFunction name="CHECK_FILE_IS_DIR">
+                <params>
+                    <param name="file">
+                        <variable name="OCR_ALTO_DIR"/>
+                    </param>
+                </params>
+            </validationFunction>
+        </rule>
+
+        <rule name="MC_DIR_IS_DIR" level="severe">
+            <description>Adresář s master-copy obrazovými soubory musí být opravdu adresář a ne obyčejný soubor
+            </description>
+            <validationFunction name="CHECK_FILE_IS_DIR">
+                <params>
+                    <param name="file">
+                        <variable name="MC_DIR"/>
+                    </param>
+                </params>
+            </validationFunction>
+        </rule>
+
+        <rule name="UC_DIR_IS_DIR" level="severe">
+            <description>Adresář s user-copy obrazovými soubory musí být opravdu adresář a ne obyčejný soubor
+            </description>
+            <validationFunction name="CHECK_FILE_IS_DIR">
+                <params>
+                    <param name="file">
+                        <variable name="UC_DIR"/>
+                    </param>
+                </params>
+            </validationFunction>
+        </rule>
+
+
+        <!--názvy souborů v top-level adresářích obsahují jen povolené znaky-->
+
+
+        <rule name="SEC_METS_FILENAMES_VALID" level="severe">
+            <description>Všechny sekundárními mets soubory musí obsahovat jen povolené znaky.</description>
+            <validationFunction name="CHECK_ALL_FILENAMES_MATCH_PATTERN">
+                <params>
+                    <param name="file_list">
+                        <variable name="SEC_METS_FILES"/>
+                    </param>
+                    <param name="pattern">
+                        <pattern name="FILENAME_CHARS_PATTERN"/>
+                    </param>
+                </params>
+            </validationFunction>
+        </rule>
+
+        <rule name="OCR_TEXT_FILENAMES_VALID" level="severe">
+            <description>Všechny textové ocr soubory musí obsahovat jen povolené znaky.</description>
+            <validationFunction name="CHECK_ALL_FILENAMES_MATCH_PATTERN">
+                <params>
+                    <param name="file_list">
+                        <variable name="OCR_TEXT_FILES"/>
+                    </param>
+                    <param name="pattern">
+                        <pattern name="FILENAME_CHARS_PATTERN"/>
+                    </param>
+                </params>
+            </validationFunction>
+        </rule>
+
+        <rule name="OCR_ALTO_FILENAMES_VALID" level="severe">
+            <description>Všechny alto ocr soubory musí obsahovat jen povolené znaky.</description>
+            <validationFunction name="CHECK_ALL_FILENAMES_MATCH_PATTERN">
+                <params>
+                    <param name="file_list">
+                        <variable name="OCR_ALTO_FILES"/>
+                    </param>
+                    <param name="pattern">
+                        <pattern name="FILENAME_CHARS_PATTERN"/>
+                    </param>
+                </params>
+            </validationFunction>
+        </rule>
+
+        <rule name="MC_FILENAMES_VALID" level="severe">
+            <description>Všechny master-copy obrazové soubory musí obsahovat jen povolené znaky.</description>
+            <validationFunction name="CHECK_ALL_FILENAMES_MATCH_PATTERN">
+                <params>
+                    <param name="file_list">
+                        <variable name="MC_FILES"/>
+                    </param>
+                    <param name="pattern">
+                        <pattern name="FILENAME_CHARS_PATTERN"/>
+                    </param>
+                </params>
+            </validationFunction>
+        </rule>
+
+        <rule name="UC_FILENAMES_VALID" level="severe">
+            <description>Všechny user-copy obrazové soubory musí obsahovat jen povolené znaky.</description>
+            <validationFunction name="CHECK_ALL_FILENAMES_MATCH_PATTERN">
+                <params>
+                    <param name="file_list">
+                        <variable name="UC_FILES"/>
+                    </param>
+                    <param name="pattern">
+                        <pattern name="FILENAME_CHARS_PATTERN"/>
+                    </param>
+                </params>
+            </validationFunction>
+        </rule>
+
+
+        <!--počty souborů a délky názvů soborů v top-level adesářích-->
+
+        <rule name="NUMBER_OF_FILES_IN_DIRS_MATCH" level="severe">
+            <description>Počet souborů ve všech adresářích se musí shodovat.</description>
+            <validationFunction name="CHECK_ALL_LISTS_SAME_SIZE">
+                <params>
+                    <param name="list">
+                        <variable name="SEC_METS_FILES"/>
+                    </param>
+                    <param name="list">
+                        <variable name="OCR_TEXT_FILES"/>
+                    </param>
+                    <param name="list">
+                        <variable name="OCR_ALTO_FILES"/>
+                    </param>
+                    <param name="list">
+                        <variable name="MC_FILES"/>
+                    </param>
+                    <param name="list">
+                        <variable name="UC_FILES"/>
+                    </param>
+                </params>
+            </validationFunction>
+        </rule>
+
+        <rule name="SEC_METS_FILENAMES_LENGTHS_SAME" level="severe">
+            <description>Délka názvů všech sekundárních mets souborů musí být stejná. Tj. čísla všech stran jsou
+                zarovnaná
+                stejně.
+            </description>
+            <validationFunction name="CHECK_FILENAMES_LENGTHS_SAME">
+                <params>
+                    <param name="file_list">
+                        <variable name="SEC_METS_FILES"/>
+                    </param>
+                </params>
+            </validationFunction>
+        </rule>
+
+        <rule name="OCR_TEXT_FILENAMES_LENGTHS_SAME" level="severe">
+            <description>Délka názvů všech textových ocr souborů musí být stejná. Tj. čísla všech stran jsou zarovnaná
+                stejně.
+            </description>
+            <validationFunction name="CHECK_FILENAMES_LENGTHS_SAME">
+                <params>
+                    <param name="file_list">
+                        <variable name="OCR_TEXT_FILES"/>
+                    </param>
+                </params>
+            </validationFunction>
+        </rule>
+
+        <rule name="OCR_ALTO_FILENAMES_LENGTHS_SAME" level="severe">
+            <description>Délka názvů všech alto ocr souborů musí být stejná. Tj. čísla všech stran jsou zarovnaná
+                stejně.
+            </description>
+            <validationFunction name="CHECK_FILENAMES_LENGTHS_SAME">
+                <params>
+                    <param name="file_list">
+                        <variable name="OCR_ALTO_FILES"/>
+                    </param>
+                </params>
+            </validationFunction>
+        </rule>
+
+        <rule name="MC_FILENAMES_LENGTHS_SAME" level="severe">
+            <description>Délka názvů všech master-copy obrazových souborů musí být stejná. Tj. čísla všech stran jsou
+                zarovnaná
+                stejně.
+            </description>
+            <validationFunction name="CHECK_FILENAMES_LENGTHS_SAME">
+                <params>
+                    <param name="file_list">
+                        <variable name="MC_FILES"/>
+                    </param>
+                </params>
+            </validationFunction>
+        </rule>
+
+        <rule name="UC_FILENAMES_LENGTHS_SAME" level="severe">
+            <description>Délka názvů všech user-copy obrazových souborů musí být stejná. Tj. čísla všech stran jsou
+                zarovnaná
+                stejně.
+            </description>
+            <validationFunction name="CHECK_FILENAMES_LENGTHS_SAME">
+                <params>
+                    <param name="file_list">
+                        <variable name="UC_FILES"/>
+                    </param>
+                </params>
+            </validationFunction>
+        </rule>
+
+
+        <!--žádný ze souborů v top-level adresářích není adresář-->
+
+        <rule name="SEC_METS_FILES_ARE_NOT_DIRS" level="severe">
+            <description>Žádný sekundární mets soubor nesmí být adresář.</description>
+            <validationFunction name="CHECK_NO_FILE_IS_DIR">
+                <params>
+                    <param name="file_list">
+                        <variable name="SEC_METS_FILES"/>
+                    </param>
+                </params>
+            </validationFunction>
+        </rule>
+
+        <rule name="OCR_TEXT_FILES_ARE_NOT_DIRS" level="severe">
+            <description>Žádný textový ocr soubor nesmí být adresář.</description>
+            <validationFunction name="CHECK_NO_FILE_IS_DIR">
+                <params>
+                    <param name="file_list">
+                        <variable name="OCR_TEXT_FILES"/>
+                    </param>
+                </params>
+            </validationFunction>
+        </rule>
+
+        <rule name="OCR_ALTO_FILES_ARE_NOT_DIRS" level="severe">
+            <description>Žádný alto ocr soubor nesmí být adresář.</description>
+            <validationFunction name="CHECK_NO_FILE_IS_DIR">
+                <params>
+                    <param name="file_list">
+                        <variable name="OCR_ALTO_FILES"/>
+                    </param>
+                </params>
+            </validationFunction>
+        </rule>
+
+        <rule name="MC_FILES_ARE_NOT_DIRS" level="severe">
+            <description>Žádný master-copy obrazový soubor nesmí být adresář.</description>
+            <validationFunction name="CHECK_NO_FILE_IS_DIR">
+                <params>
+                    <param name="file_list">
+                        <variable name="MC_FILES"/>
+                    </param>
+                </params>
+            </validationFunction>
+        </rule>
+
+        <rule name="UC_FILES_ARE_NOT_DIRS" level="severe">
+            <description>Žádný user-copy obrazový soubor nesmí být adresář.</description>
+            <validationFunction name="CHECK_NO_FILE_IS_DIR">
+                <params>
+                    <param name="file_list">
+                        <variable name="UC_FILES"/>
+                    </param>
+                </params>
+            </validationFunction>
+        </rule>
+
+
+        <!--žádné další soubory v top-level adresářích-->
+
+
+        <rule name="NO_EXTRA_SEC_METS_FILES" level="severe">
+            <description>Kromě sekundárních mets souborů nesmí adresář obsahovat žádné další soubory.</description>
+            <validationFunction name="CHECK_NO_OTHER_FILES_IN_DIR">
+                <params>
+                    <param name="root_dir">
+                        <variable name="SEC_METS_DIR"/>
+                    </param>
+                    <param name="file_list">
+                        <variable name="SEC_METS_FILES"/>
+                    </param>
+                </params>
+            </validationFunction>
+        </rule>
+
+        <rule name="NO_EXTRA_OCR_TEXT_FILES" level="severe">
+            <description>Kromě textových ocr souborů nesmí adresář obsahovat žádné další soubory.</description>
+            <validationFunction name="CHECK_NO_OTHER_FILES_IN_DIR">
+                <params>
+                    <param name="root_dir">
+                        <variable name="OCR_TEXT_DIR"/>
+                    </param>
+                    <param name="file_list">
+                        <variable name="OCR_TEXT_FILES"/>
+                    </param>
+                </params>
+            </validationFunction>
+        </rule>
+
+        <rule name="NO_EXTRA_OCR_ALTO_FILES" level="severe">
+            <description>Kromě alto ocr souborů nesmí adresář obsahovat žádné další soubory.</description>
+            <validationFunction name="CHECK_NO_OTHER_FILES_IN_DIR">
+                <params>
+                    <param name="root_dir">
+                        <variable name="OCR_ALTO_DIR"/>
+                    </param>
+                    <param name="file_list">
+                        <variable name="OCR_ALTO_FILES"/>
+                    </param>
+                </params>
+            </validationFunction>
+        </rule>
+
+        <rule name="NO_EXTRA_MC_FILES" level="severe">
+            <description>Kromě master-copy obrazových souborů nesmí adresář obsahovat žádné další soubory.</description>
+            <validationFunction name="CHECK_NO_OTHER_FILES_IN_DIR">
+                <params>
+                    <param name="root_dir">
+                        <variable name="MC_DIR"/>
+                    </param>
+                    <param name="file_list">
+                        <variable name="MC_FILES"/>
+                    </param>
+                </params>
+            </validationFunction>
+        </rule>
+
+        <rule name="NO_EXTRA_UC_FILES" level="severe">
+            <description>Kromě user-copy obrazových souborů nesmí adresář obsahovat žádné další soubory.</description>
+            <validationFunction name="CHECK_NO_OTHER_FILES_IN_DIR">
+                <params>
+                    <param name="root_dir">
+                        <variable name="UC_DIR"/>
+                    </param>
+                    <param name="file_list">
+                        <variable name="UC_FILES"/>
+                    </param>
+                </params>
+            </validationFunction>
+        </rule>
+
+    </section>
+
+    <section name="Soubor INFO" description="Validace souboru INFO a odkazování na ostatní soubory.">
+
+        <!--TODO-->
+
+    </section>
+
+    <section name="Soubor MD5" description="Validace souboru MD5, odkazů na další soubory a kontrolní součty.">
+
+        <!--TODO-->
+        <!--<rule name="MD5_CHECKS_OUT" level="severe">
+            <description>MD5 soubor obsahuje zaznamy pro vsechny definove soubory a zadny dalsi a kontrolni soucty
+                souhlasi.
+            </description>
+            
+   <validationFunction name="CHECK_MD5">
+                <params>
+                    <param><variable name="MAIN_METS_FILE</param>
+                    <param><variable name="SEC_METS_FILES</param>
+                    <param><variable name="OCR_TEXT_FILES</param>
+                    <param><variable name="OCR_ALTO_FILES</param>
+                    <param><variable name="MC_FILES</param>
+                    <param><variable name="UC_FILES</param>
+                </params>
+            </validationFunction>
+        </rule>-->
+
 
     </section>
 

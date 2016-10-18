@@ -1,47 +1,94 @@
 <patterns>
-    <pattern id="FILENAME_CHARS_PATTERN">
-        <expression>
-            <value>a-zA-Z_-.</value>
-        </expression>
-    </pattern>
 
-    <!--<pattern id="PSP_ID_DETECTION_FILE_PATTERN">
-        <expression>
-            <outputVars>
-                <var>PSP_ID</var>
-            </outputVars>
-            <value>METS_%{PSP_ID}.xml</value>
-        </expression>
-    </pattern>-->
+    <description>
+        Zde jsou definovány vzory. K jejich vyhodnocení jsou použity reguární výrazi a případně proměnné.
+        Vzory je možné dynamicky doplňovat/upravovat.
+        Nesmí ale nastat situace cyklu, tedy že by hodnota vzoru X závisela na vzoru/proměnné Y, který by závisel na
+        vzoru X.
+        Vzor (pattern) má jeden nebo více výrazů (expression). Hodnota (typick proměnné) odpovídá vzoru, pokud odpovídá
+        alespoň jednomu výrazu. Výrazy vzoru jsou tedy vždy ve vztahu OR.
+        Výraz může mít vstupní promměnné, v tom případě se např. pro proměnnou X nahradí všechny výskyty ${X} za hodnotu
+        proměnné X před samotným vyhodnocením výrazu. Podporovány jsou pouze proměnné typu String.
+        TODO: nahradit !{STRING}, !{NUMBER} apod. korektnim regexp zapisem
+    </description>
 
-    <pattern id="PSP_ID_DETECTION_INFO_XML_FILE_PATTERN">
-        <expression>
-            <value>INFO_!{STRING}.xml</value>
-        </expression>
-        <expression>
-            <value>INFO.xml</value>
-        </expression>
-    </pattern>
 
-    <pattern id="INFO_XML_FILE_PATTERN">
+    <pattern name="FILENAME_CHARS_PATTERN">
+        <!--per<=1.4, mon<=1.0-->
+        <!--<expression caseSensitive="false">
+            <value>[a-z_-.]+</value>
+        </expression>-->
+
+        <!--per>=1.5, mon>=1.1-->
         <expression caseSensitive="true">
-            <!--regulerni vyraz nemusi byt nutne case-sensitive-->
-            <inputVars>
-                <var>PSP_ID</var>
-            </inputVars>
-            <value>INFO_${PSP_ID}.xml</value>
-        </expression>
-        <expression>
-            <value>INFO.xml</value>
+            <value>[a-z_-.]+</value>
         </expression>
     </pattern>
 
-    <pattern id="MAIN_METS_FILE_PATTERN">
+    <pattern name="INFO_FILE_PATTERN_FOR_PSP_ID_DETECTION">
+        <description>Vzor pro nalezení souboru INFO pouze za účelem získání PSP-ID z jeho obsahu.</description>
+
+        <!--per<=1.4, mon<=1.0-->
+        <!--<expression caseSensitive="false">
+            <value>info_!{STRING}.xml</value>
+        </expression>
+        <expression caseSensitive="false">
+            <value>info.xml</value>
+        </expression>-->
+
+        <!--per>=1.5, mon>=1.1-->
+        <expression caseSensitive="true">
+            <value>info_!{STRING}.xml</value>
+        </expression>
+        <expression caseSensitive="true">
+            <value>info.xml</value>
+        </expression>
+
+
+    </pattern>
+
+    <pattern name="INFO_XML_FILE_PATTERN">
+
+        <!--per<=1.4, mon<=1.0-->
+        <!--<expression caseSensitive="false">
+            <inputVariables>
+                <variable name="PSP_ID"/>
+            </inputVariables>
+            <value>info_${PSP_ID}.xml</value>
+        </expression>
         <expression>
-            <inputVars>
-                <var>PSP_ID</var>
-            </inputVars>
-            <value>METS_${PSP_ID}.xml</value>
+            <value>info.xml</value>
+        </expression>-->
+
+        <!--per>=1.5, mon>=1.1-->
+        <expression caseSensitive="true">
+            <inputVariables>
+                <variable name="PSP_ID"/>
+            </inputVariables>
+            <value>info_${PSP_ID}.xml</value>
+        </expression>
+        <expression>
+            <value>info.xml</value>
+        </expression>
+
+    </pattern>
+
+    <pattern name="MAIN_METS_FILE_PATTERN">
+
+        <!--per<=1.4, mon<=1.0-->
+        <!--<expression caseSensitive="false">
+            <inputVariables>
+                <variable name="PSP_ID"/>
+            </inputVariables>
+            <value>mets_${PSP_ID}.xml</value>
+        </expression>-->
+
+        <!--per>=1.5, mon>=1.1-->
+        <expression caseSensitive="true">
+            <inputVariables>
+                <variable name="PSP_ID"/>
+            </inputVariables>
+            <value>mets_${PSP_ID}.xml</value>
         </expression>
     </pattern>
 
@@ -49,13 +96,25 @@
     MD5_FILE_PATTERN
     TOLERATED_FILE_PATTERN-->
 
-    <pattern id="SEC_METS_FILE_PATTERN">
-        <expression>
-            <inputVars>
-                <var>PSP_ID</var>
-            </inputVars>
-            <value>AMD_METS_${PSP_ID}_!{NUM}.xml</value>
+    <pattern name="SEC_METS_FILE_PATTERN">
+
+        <!--per<=1.4, mon<=1.0-->
+        <!--<expression caseSensitive="false">
+            <inputVariables>
+                <variable name="PSP_ID"/>
+            </inputVariables>
+            <value>amd_mets_${PSP_ID}_!{NUM}.xml</value>
+        </expression>-->
+
+        <!--per>=1.5, mon>=1.1-->
+        <expression caseSensitive="true">
+            <inputVariables>
+                <variable name="PSP_ID"/>
+            </inputVariables>
+            <value>amd_mets_${PSP_ID}_!{NUM}.xml</value>
         </expression>
+
+
     </pattern>
 
     <!--podobne i
@@ -63,16 +122,6 @@
     OCR_ALTO_FILE_PATTERN
     MC_FILE_PATTERN
     UC_FILE_PATTERN-->
-
-
-    <pattern id="SEC_METS_FILE_PATTERN">
-        <expression>
-            <inputVars>
-                <var>PSP_ID</var>
-            </inputVars>
-            <value>AMD_METS_${PSP_ID}_!{NUMBER}.xml</value>
-        </expression>
-    </pattern>
 
 
 </patterns>
