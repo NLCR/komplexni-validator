@@ -1,0 +1,64 @@
+<mods:mods
+        xmlns:mods="http://www.loc.gov/mods/v3"
+        ID="MODS_VOLUME_0001" version="3.5">
+    <mods:titleInfo>
+        <mods:title>Karpatská Rus a hranice našeho státu</mods:title>
+    </mods:titleInfo>
+    <mods:name type="personal" usage="primary">
+        <mods:namePart>Hora, Alois</mods:namePart>
+        <mods:namePart type="date">1885-1942</mods:namePart>
+        <mods:role>
+            <mods:roleTerm authority="marcrelator" type="code">aut</mods:roleTerm>
+        </mods:role>
+    </mods:name>
+    <mods:typeOfResource>text</mods:typeOfResource>
+    <mods:genre>volume</mods:genre>
+    <mods:originInfo>
+        <mods:place>
+            <mods:placeTerm authority="marccountry" type="code">xr</mods:placeTerm>
+        </mods:place>
+        <mods:place>
+            <mods:placeTerm type="text">Praha</mods:placeTerm>
+        </mods:place>
+        <mods:publisher>Čsl. cizinecký úřad</mods:publisher>
+        <mods:issuance>single unit</mods:issuance>
+        <mods:dateIssued>1919</mods:dateIssued>
+    </mods:originInfo>
+    <mods:language>
+        <mods:languageTerm authority="iso639-2b" type="code">cze</mods:languageTerm>
+    </mods:language>
+    <mods:physicalDescription>
+        <mods:form authority="marcform">print</mods:form>
+        <mods:extent>8 s. ; 8°</mods:extent>
+        <mods:note>desky nejsou k dispozici</mods:note>
+    </mods:physicalDescription>
+    <mods:note type="statement of responsibility">Alois Hora</mods:note>
+    <mods:subject authority="Konspekt">
+        <mods:topic>propagace</mods:topic>
+    </mods:subject>
+    <mods:classification authority="udc" edition="Konspekt">004</mods:classification>
+    <mods:classification authority="Konspekt">23</mods:classification>
+    <mods:location>
+        <mods:physicalLocation authority="siglaADR">ABA001</mods:physicalLocation>
+        <mods:shelfLocator>II 026293</mods:shelfLocator>
+    </mods:location>
+    <mods:relatedItem type="series">
+        <mods:titleInfo>
+            <mods:title>Propagační knih. Čsl. cizinec. úřadu</mods:title>
+        </mods:titleInfo>
+    </mods:relatedItem>
+    <mods:identifier type="urnnbn">urn:nbn:cz:nk-00172f</mods:identifier>
+    <mods:identifier type="barCode">1002701148</mods:identifier>
+    <mods:identifier type="uuid">b50eb6b0-f0a4-11e3-b72e-005056827e52</mods:identifier>
+    <mods:identifier type="ccnb">cnb000572615</mods:identifier>
+    <mods:recordInfo>
+        <mods:recordContentSource authority="marcorg">ABA001</mods:recordContentSource>
+        <mods:recordCreationDate encoding="iso8601">2000-03-07T00:00Z</mods:recordCreationDate>
+        <mods:recordChangeDate encoding="iso8601">2007-03-12T15:54:01Z</mods:recordChangeDate>
+        <mods:recordIdentifier source="CZ-PrNK">nos190115002</mods:recordIdentifier>
+        <mods:recordOrigin>machine generated</mods:recordOrigin>
+        <mods:languageOfCataloging>
+            <mods:languageTerm authority="iso639-2b" type="code">cze</mods:languageTerm>
+        </mods:languageOfCataloging>
+    </mods:recordInfo>
+</mods:mods>

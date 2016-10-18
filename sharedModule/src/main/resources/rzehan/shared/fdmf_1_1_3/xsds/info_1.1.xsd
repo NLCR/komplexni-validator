@@ -3,14 +3,14 @@
         <xs:complexType>
             <xs:sequence>
                 <xs:element type="xs:dateTime" name="created"/>
-                <xs:element type="xs:string" name="metadataversion" />
+                <xs:element type="xs:string" name="metadataversion"/>
                 <xs:element type="xs:string" name="packageid"/>
-                <xs:element type="xs:string" name="mainmets" />
+                <xs:element type="xs:string" name="mainmets"/>
                 <xs:element name="validation">
                     <xs:complexType>
                         <xs:simpleContent>
                             <xs:extension base="xs:string">
-                                <xs:attribute name="version" type="xs:string" use="required" />
+                                <xs:attribute name="version" type="xs:string" use="required"/>
                             </xs:extension>
                         </xs:simpleContent>
                     </xs:complexType>
@@ -42,7 +42,7 @@
                         <xs:sequence>
                             <xs:element type="xs:anyURI" name="item" maxOccurs="unbounded" minOccurs="1"/>
                         </xs:sequence>
-                        <xs:attribute type="xs:integer" name="itemtotal" use="required" />
+                        <xs:attribute type="xs:integer" name="itemtotal" use="required"/>
                     </xs:complexType>
                 </xs:element>
                 <xs:element name="checksum">
