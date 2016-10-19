@@ -13,7 +13,8 @@
     </description>
 
 
-    <pattern name="FILENAME_CHARS_PATTERN">
+    <pattern name="FILENAME">
+        <description>Vzor pro obecný soubor/adresář. Určuje povolené znaky v názvech souborů/adresářů.</description>
         <!--per<=1.4, mon<=1.0-->
         <!--<expression caseSensitive="false">
             <value>[a-z_-.]+</value>
@@ -25,7 +26,7 @@
         </expression>
     </pattern>
 
-    <pattern name="INFO_FILE_PATTERN_FOR_PSP_ID_DETECTION">
+    <pattern name="INFO_FILENAME_FOR_PSP_ID_DETECTION">
         <description>Vzor pro nalezení souboru INFO pouze za účelem získání PSP-ID z jeho obsahu.</description>
 
         <!--per<=1.4, mon<=1.0-->
@@ -47,7 +48,8 @@
 
     </pattern>
 
-    <pattern name="INFO_XML_FILE_PATTERN">
+    <pattern name="INFO_FILENAME">
+        <description>Vzor pro jméno souboru INFO.</description>
 
         <!--per<=1.4, mon<=1.0-->
         <!--<expression caseSensitive="false">
@@ -73,7 +75,8 @@
 
     </pattern>
 
-    <pattern name="MAIN_METS_FILE_PATTERN">
+    <pattern name="PRIMARY-METS_FILENAME">
+        <description>Vzor pro jméno souboru PRIMARY-METS.</description>
 
         <!--per<=1.4, mon<=1.0-->
         <!--<expression caseSensitive="false">
@@ -93,10 +96,35 @@
     </pattern>
 
     <!--jako predchozi podobne i
-    MD5_FILE_PATTERN
-    TOLERATED_FILE_PATTERN-->
+    CHECKSUM_FILENAME
+    TOLERATED_TL_FILENAME
+    -->
 
-    <pattern name="SEC_METS_FILE_PATTERN">
+    <pattern name="SECONDARY-METS-DIR_FILENAME">
+        <description>Vzor pro jméno adresáře SECONDARY-METS-DIR.</description>
+
+        <!--per<=1.4, mon<=1.0-->
+        <!--<expression caseSensitive="false">
+            <value>amdsec</value>
+        </expression>-->
+
+        <!--per>=1.5, mon>=1.1-->
+        <expression caseSensitive="true">
+            <value>amdsec</value>
+        </expression>
+
+    </pattern>
+
+    <!--podobne i
+    OCR-TEXT-DIR_FILENAME
+    OCR-ALTO-DIR_FILENAME
+    MASTER-COPY-DIR_FILENAME
+    USER-COPY-DIR_FILENAME
+    -->
+
+
+    <pattern name="SECONDARY-METS_FILENAME">
+        <description>Vzor pro jména souborŮ SECONDARY-METS v rámci adresáře SECONDARY-METS-DIR.</description>
 
         <!--per<=1.4, mon<=1.0-->
         <!--<expression caseSensitive="false">
@@ -118,10 +146,11 @@
     </pattern>
 
     <!--podobne i
-    OCR_TEXT_FILE_PATTERN
-    OCR_ALTO_FILE_PATTERN
-    MC_FILE_PATTERN
-    UC_FILE_PATTERN-->
+    OCR-TEXT_FILENAME
+    OCR-ALTO_FILENAME
+    MASTER-COPY_FILENAME
+    USER-COPY_FILENAME
+    -->
 
 
 </patterns>

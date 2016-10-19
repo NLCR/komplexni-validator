@@ -24,7 +24,7 @@
                     <variable name="PSP_DIR"/>
                 </param>
                 <param name="pattern">
-                    <pattern name="INFO_XML_PATTERN"/>
+                    <pattern name="INFO_FILENAME"/>
                 </param>
             </params>
         </evaluationFunction>
@@ -32,9 +32,9 @@
 
     <!--
         podobne
-        MAIN_METS_FILES
-        MD5_FILES
-        TOLERATED_FILES
+        PRIMARY-METS_FILES
+        CHECKSUM_FILES
+        TOLERATED_TL_FILES
     -->
 
 
@@ -42,7 +42,7 @@
         <evaluationFunction name="RETURN_FIRST_ITEM">
             <params>
                 <param name="list">
-                    <variable name="INFO_XML_FILES"/>
+                    <variable name="INFO_FILES"/>
                 </param>
             </params>
         </evaluationFunction>
@@ -50,19 +50,19 @@
 
     <!--
         podobne
-        MAIN_METS_FILE
-        MD5_FILE
+        PRIMARY-METS_FILE
+        CHECKSUM_FILE
     -->
 
 
-    <variable name="SEC_METS_DIRS" type="List<File>">
+    <variable name="SECONDARY-METS-DIR_FILES" type="List<File>">
         <evaluationFunction name="FIND_FILES_IN_DIR_BY_PATTERN">
             <params>
                 <param name="dir">
                     <variable name="PSP_DIR"/>
                 </param>
                 <param name="pattern">
-                    <pattern name="SEC_METS_DIR_PATTERN"/>
+                    <pattern name="SECONDARY-METS-DIR_FILENAME"/>
                 </param>
             </params>
         </evaluationFunction>
@@ -70,18 +70,18 @@
 
     <!--
     podobne
-    OCR_TEXT_DIRS
-    OCR_ALTO_DIRS
-    MC_DIRS
-    UC_DIRS
+    OCR-TEXT-DIR_FILES
+    OCR-ALTO-DIR_FILES
+    MASTER-COPY-DIR_FILES
+    USER-COPY-DIR_FILES
     -->
 
 
-    <variable name="SEC_METS_DIR" type="File">
+    <variable name="SECONDARY-METS-DIR_FILE" type="File">
         <evaluationFunction name="RETURN_FIRST_ITEM">
             <params>
                 <param name="list">
-                    <variable name="SEC_METS_DIRS"/>
+                    <variable name="SECONDARY-METS-DIR_FILES"/>
                 </param>
             </params>
         </evaluationFunction>
@@ -89,20 +89,20 @@
 
     <!--
     podobne
-    OCR_TEXT_DIR
-    OCR_ALTO_DIR
-    MC_DIR
-    UC_DIR
+    OCR-TEXT-DIR_FILE
+    OCR-ALTO-DIR_FILE
+    MASTER-COPY-DIR_FILE
+    USER-COPY-DIR_FILE
     -->
 
-    <variable name="SEC_METS_FILES" type="List<File>">
+    <variable name="SECONDARY-METS_FILES" type="List<File>">
         <evaluationFunction name="FIND_FILES_IN_DIR_BY_PATTERN">
             <params>
                 <param name="dir">
-                    <variable name="SEC_METS_DIR"/>
+                    <variable name="SECONDARY-METS-DIR_FILE"/>
                 </param>
                 <param name="pattern">
-                    <pattern name="SEC_METS_FILE_PATTERN"/>
+                    <pattern name="SECONDARY-METS_FILENAME"/>
                 </param>
             </params>
         </evaluationFunction>
@@ -110,10 +110,10 @@
 
     <!--
     podobne
-    OCR_TEXT_FILES
-    OCR_ALTO_FILES
-    MC_FILES
-    UC_FILES
+    OCR-TEXT_FILES
+    OCR-ALTO_FILES
+    MASTER-COPY_FILES
+    USER-COPY_FILES
     -->
 
 
