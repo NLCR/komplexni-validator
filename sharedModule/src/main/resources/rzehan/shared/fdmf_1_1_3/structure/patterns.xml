@@ -32,15 +32,15 @@
 
         <!--per<=1.4, mon<=1.0-->
         <!--<expression caseSensitive="false">
-            <value>info_!{STRING}.xml</value>
+            <value>info_.+\.xml</value>
         </expression>
         <expression caseSensitive="false">
-            <value>info.xml</value>
+            <value>info\.xml</value>
         </expression>-->
 
         <!--per>=1.5, mon>=1.1-->
         <expression caseSensitive="true">
-            <value>info_!{STRING}\.xml</value>
+            <value>info_.+\.xml</value>
         </expression>
         <expression caseSensitive="true">
             <value>info\.xml</value>
@@ -57,10 +57,10 @@
             <inputVariables>
                 <variable name="PSP_ID"/>
             </inputVariables>
-            <value>info_${PSP_ID}.xml</value>
+            <value>info_${PSP_ID}\.xml</value>
         </expression>
         <expression>
-            <value>info.xml</value>
+            <value>info\.xml</value>
         </expression>-->
 
         <!--per>=1.5, mon>=1.1-->
@@ -84,7 +84,7 @@
             <inputVariables>
                 <variable name="PSP_ID"/>
             </inputVariables>
-            <value>mets_${PSP_ID}.xml</value>
+            <value>mets_${PSP_ID}\.xml</value>
         </expression>-->
 
         <!--per>=1.5, mon>=1.1-->
@@ -92,7 +92,7 @@
             <inputVariables>
                 <variable name="PSP_ID"/>
             </inputVariables>
-            <value>mets_${PSP_ID}.xml</value>
+            <value>mets_${PSP_ID}\.xml</value>
         </expression>
     </pattern>
 
@@ -132,7 +132,7 @@
             <inputVariables>
                 <variable name="PSP_ID"/>
             </inputVariables>
-            <value>amd_mets_${PSP_ID}_!{NUM}.xml</value>
+            <value>amd_mets_${PSP_ID}_[0-9]+\.xml</value>
         </expression>-->
 
         <!--per>=1.5, mon>=1.1-->
@@ -140,7 +140,7 @@
             <inputVariables>
                 <variable name="PSP_ID"/>
             </inputVariables>
-            <value>amd_mets_${PSP_ID}_!{NUM}.xml</value>
+            <value>amd_mets_${PSP_ID}_[0-9]+\.xml</value>
         </expression>
 
 
