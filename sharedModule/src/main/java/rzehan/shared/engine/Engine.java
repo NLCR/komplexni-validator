@@ -1,5 +1,7 @@
 package rzehan.shared.engine;
 
+import rzehan.shared.engine.exceptions.VariableNotDefinedException;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -27,7 +29,7 @@ public class Engine {
         variables.put(name, var);
     }
 
-    public String evaluateStringVariable(String variableName) {
+    public Object evaluateVariable(String variableName) {
         Variable variable = variables.get(variableName);
         if (variable == null) {
             throw new VariableNotDefinedException(variableName);

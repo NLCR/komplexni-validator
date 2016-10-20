@@ -1,4 +1,4 @@
-package rzehan.shared.engine;
+package rzehan.shared.engine.exceptions;
 
 /**
  * Created by martin on 20.10.16.

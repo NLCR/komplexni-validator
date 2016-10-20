@@ -1,5 +1,7 @@
 package rzehan.shared.engine;
 
+import rzehan.shared.engine.exceptions.InvalidVariableTypeException;
+
 import java.util.*;
 import java.util.regex.Matcher;
 
@@ -128,10 +130,12 @@ public class Pattern {
         }
 
         private void evaluateAllVariables() {
-            for (String name : variableNames) {
-                String value = engine.evaluateStringVariable(name);
-                //TODO: pokud neni vhodneho typu (asi jen String), vyjimku.
-                variableValues.put(name, value);
+            for (String varName : variableNames) {
+                Object varValue = engine.evaluateVariable(varName);
+                if (!(varValue instanceof String)) {
+                    throw new InvalidVariableTypeException(varName, "String");
+                }
+                variableValues.put(varName, (String) varValue);
             }
         }
 

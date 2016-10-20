@@ -1,6 +1,8 @@
 package rzehan.shared.engine;
 
 import org.junit.Test;
+import rzehan.shared.engine.exceptions.InvalidVariableTypeException;
+import rzehan.shared.engine.exceptions.VariableNotDefinedException;
 
 import static junit.framework.TestCase.fail;
 import static org.junit.Assert.assertEquals;
@@ -57,6 +59,7 @@ public class PatternTest {
 
         mgr.defineVariable("VAR1", new Variable("neco"));
         mgr.defineVariable("VAR2", new Variable("nic"));
+        mgr.defineVariable("NUM", new Variable(Integer.valueOf(6)));
         assertTrue(mgr.newPattern(mgr.newExpression(true, "prefix_${VAR1}_suffix")).matches("prefix_neco_suffix"));
         assertTrue(mgr.newPattern(mgr.newExpression(true, "prefix_${VAR1}\\+${VAR2}_suffix")).matches("prefix_neco+nic_suffix"));
 
@@ -66,6 +69,14 @@ public class PatternTest {
         } catch (VariableNotDefinedException e) {
 
         }
+
+        try {
+            mgr.newPattern(mgr.newExpression(true, "prefix_${NUM}_suffix")).matches("prefix_3_suffix");
+            fail();
+        } catch (InvalidVariableTypeException e) {
+
+        }
+
 
         mgr.newPattern(mgr.newExpression(true, "prefix_${VAR1}_suffix")).matches("prefix_neco_suffix");
 

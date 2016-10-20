@@ -8,8 +8,7 @@
         Vzor (pattern) má jeden nebo více výrazů (expression). Hodnota (typick proměnné) odpovídá vzoru, pokud odpovídá
         alespoň jednomu výrazu. Výrazy vzoru jsou tedy vždy ve vztahu OR.
         Výraz může mít vstupní promměnné, v tom případě se např. pro proměnnou X nahradí všechny výskyty ${X} za hodnotu
-        proměnné X před samotným vyhodnocením výrazu. Podporovány jsou pouze proměnné typu String.
-        TODO: nahradit !{STRING}, !{NUMBER} apod. korektnim regexp zapisem
+        proměnné X před samotným vyhodnocením výrazu. Lze použít pouze proměnné typu String.
     </description>
 
     <!--TODO: pro vzory bez vstupních proměných, které jsou jen jednou použité je rovnou zapisovat do definic proměnných-->
