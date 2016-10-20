@@ -5,16 +5,14 @@
         a počtů parametrů, návratové hodnoty a zejména samotné implementace jsou definovány v kódu validátoru.
     </description>
 
-    <function name="PROVIDED"
-              resultType="Object">
+    <function name="PROVIDED" resultType="Object">
         <description>Hodnota proměnné bude poskytnuta volajícím programem.</description>
         <params>
             <param name="var_name" type="String"/>
         </params>
     </function>
 
-    <function name="FIND_FILES_IN_DIR_BY_PATTERN"
-              resultType="List<File>">
+    <function name="FIND_FILES_IN_DIR_BY_PATTERN" resultType="List<File>">
         <description>Vrátí seznam souborů v adresáři, které odpovídají vzoru.</description>
         <params>
             <param name="dir" type="File"/>
@@ -22,11 +20,27 @@
         </params>
     </function>
 
-    <function name="RETURN_FIRST_ITEM"
-              resultType="Object">
+    <function name="RETURN_FIRST_ITEM" resultType="Object">
         <description>Vrátí první položku ze seznamu.</description>
         <params>
             <param name="list" type="List"/>
+        </params>
+    </function>
+
+    <function name="GET_INT_BY_XPATH" resultType="Integer">
+        <description>Vrátí číslo z xml souboru podle xpath.</description>
+        <params>
+            <param name="file" type="File"/>
+            <param name="xpath" type="Xpath"/>
+        </params>
+    </function>
+
+
+    <function name="GET_STRING_LIST_BY_XPATH" resultType="List<String>">
+        <description>Vrátí seznam Stringů z xml souboru podle xpath.</description>
+        <params>
+            <param name="file" type="File"/>
+            <param name="xpath" type="Xpath"/>
         </params>
     </function>
 

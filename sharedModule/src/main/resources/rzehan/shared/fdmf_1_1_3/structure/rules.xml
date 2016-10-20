@@ -25,7 +25,12 @@
 
         <!--psp dir-->
 
+        <!--mozna tohle patri spise k INFO?-->
         <rule name="PSP_DIR_MATCHES_PSP_ID" level="warning">
+            <!--Tady warning, protože to zadání vyžaduje, nicméně DMF mluví jasně:
+            <packageid> název kořenového adresáře balíčku viz kap. 6
+            a METS Profil taky:
+            There must be <packageid> element that contains name of package root directory.-->
             <description>Název kořenového adresáře musí být schodný s PSP-ID.</description>
             <validationFunction name="CHECK_FILENAME_MATCHES_STRING">
                 <params>
@@ -731,7 +736,7 @@
 
         <rule name="CHECKSUM_GENERATED_BY_GRAMMAR" level="warning">
             <description>Soubor CHECKSUM by měl být generován předepsanou ABNF gramatikou.</description>
-            <validationFunction name="CHECKSUM_GENERATED_BY_GRAMMAR">
+            <validationFunction name="CHECK_CHECKSUM_GENERATED_BY_GRAMMAR">
                 <params>
                     <param name="checksum_file">
                         <variable name="CHECKSUM_FILE"/>
@@ -740,9 +745,9 @@
             </validationFunction>
         </rule>
 
-        <rule name="CHECKSUM_ALL_PATHS_MATCH_FILES" level="warning">
+        <rule name="CHECKSUM_ALL_PATHS_MATCH_FILES" level="severe">
             <description>Soubor CHECKSUM musí obsahovat záznamy pro každý uvedený soubor a žádný jiný.</description>
-            <validationFunction name="CHECKSUM_ALL_PATHS_MATCH_FILES">
+            <validationFunction name="CHECK_CHECKSUM_ALL_PATHS_MATCH_FILES">
                 <params>
                     <param name="checksum_file">
                         <variable name="CHECKSUM_FILE"/>
@@ -769,9 +774,9 @@
             </validationFunction>
         </rule>
 
-        <rule name="CHECKSUM_ALL_CHECKSUMS_MATCH" level="warning">
-            <description>Všechny kontrolní součty v souboru CHECKSUM souhlasí.</description>
-            <validationFunction name="CHECKSUM_ALL_CHECKSUMS_MATCH">
+        <rule name="CHECKSUM_ALL_CHECKSUMS_MATCH" level="severe">
+            <description>Všechny kontrolní součty v souboru CHECKSUM musí souhlasit.</description>
+            <validationFunction name="CHECK_CHECKSUM_ALL_CHECKSUMS_MATCH">
                 <params>
                     <param name="checksum_file">
                         <variable name="CHECKSUM_FILE"/>
@@ -801,9 +806,123 @@
 
     </section>
 
-    <section name="Soubor INFO" description="Validace souboru INFO a odkazování na ostatní soubory.">
+    <section name="Soubor INFO"
+             description="Validace souboru INFO - odkazování na ostatní soubory, kontrolní součet pro soubor CHECKSUM, atd.">
 
-        <!--TODO-->
+        <rule name="INFO_XML_WELL_BUILT" level="severe">
+            <description>Soubor INFO musí být korektní (well built) xml soubor.</description>
+            <validationFunction name="CHECK_XML_WELL_BUILT">
+                <params>
+                    <param name="file">
+                        <variable name="INFO_FILE"/>
+                    </param>
+                </params>
+            </validationFunction>
+        </rule>
+
+
+        <rule name="INFO_XML_VALID_BY_XSD" level="severe">
+            <description>Soubor INFO musí být validní podle XML Schema.</description>
+            <validationFunction name="CHECK_XML_VALID_BY_XSD">
+                <params>
+                    <param name="file">
+                        <variable name="INFO_FILE"/>
+                    </param>
+                    <param name="xsd_file">
+                        <variable name="INFO_XSD_FILE"/>
+                    </param>
+                </params>
+            </validationFunction>
+        </rule>
+
+        <rule name="INFO_REFERENCES_PRIMARY-METS" level="severe">
+            <!--METS Profile requirement id infoxml6-->
+            <description>Soubor INFO se musí odkazovat na soubor PRIMARY-METS přes element mainMets.</description>
+            <validationFunction name="CHECK_INFO_REFERENCES_PRIMARY-METS">
+                <params>
+                    <param name="info_file">
+                        <variable name="INFO_FILE"/>
+                    </param>
+                    <param name="primary-mets_file">
+                        <variable name="PRIMARY-METS_FILE"/>
+                    </param>
+                </params>
+            </validationFunction>
+        </rule>
+
+
+        <rule name="INFO_ITEMTOTAL_MATCHES_ITEMS_COUNT" level="severe">
+            <!--METS Profile requirement id infoxml13-->
+            <description>Soubor INFO musí počet elementů item souhlasit s hodnotou atributu itemtotal elementu
+                itemlist..
+            </description>
+            <validationFunction name="CHECK_LIST_EXACT_SIZE">
+                <params>
+                    <param name="list">
+                        <variable name="INFO_ITEMS"/>
+                    </param>
+                    <param name="size">
+                        <variable name="INFO_ITELMTOTAL"/>
+                    </param>
+                </params>
+            </validationFunction>
+        </rule>
+
+
+        <rule name="INFO_ITEMLIST_REFERENCES_ALL_FILES" level="severe">
+            <!--METS Profile requirement id infoxml13-->
+            <description>Soubor INFO se musí odkazovat na všechny soubory přes elementy item.</description>
+            <validationFunction name="CHECK_INFO_ITEMLIST_REFERENCES_ALL_FILES">
+                <params>
+                    <param name="items">
+                        <variable name="INFO_ITEMS"/>
+                    </param>
+                    <param name="file">
+                        <variable name="INFO_FILE"/>
+                    </param>
+                    <param name="file">
+                        <variable name="CHECKSUM_FILE"/>
+                    </param>
+                    <param name="file">
+                        <variable name="PRIMARY-METS_FILE"/>
+                    </param>
+                    <param name="file_list">
+                        <variable name="SECONDARY-METS_FILES"/>
+                    </param>
+                    <param name="file_list">
+                        <variable name="OCR-TEXT_FILES"/>
+                    </param>
+                    <param name="file_list">
+                        <variable name="OCR-ALTO_FILES"/>
+                    </param>
+                    <param name="file_list">
+                        <variable name="MASTER-COPY_FILES"/>
+                    </param>
+                    <param name="file_list">
+                        <variable name="USER-COPY_FILES"/>
+                    </param>
+                </params>
+            </validationFunction>
+        </rule>
+
+
+        <rule name="INFO_CHECKSUM_FILE_CHECKSUM_MATCHES" level="severe">
+            <!--METS Profile requirement id infoxml14-->
+            <description>Soubor INFO se musí odkazovat na existující soubor CHECKSUM přes element checksum a kontrolní
+                součet se musí shodovat.
+            </description>
+            <validationFunction name="CHECK_INFO_CHECKSUM_FILE_CHECKSUM_MATCHES">
+                <params>
+                    <param name="file_info">
+                        <variable name="FILE_INFO"/>
+                    </param>
+                    <param name="file_checksum">
+                        <variable name="FILE_CHECKSUM"/>
+                    </param>
+                </params>
+            </validationFunction>
+        </rule>
+
 
     </section>
 

@@ -15,12 +15,12 @@ public class Main {
         System.out.println("Hello from CLI, shared: " + shared);*/
 
 
-        //info - TODO: problem s validaci bez namespacu
+        //info - ok
         File infoXml = new File("/home/martin/IdeaProjects/PspValidator/sharedModule/src/main/resources/rzehan/shared/fdmf_1_1_3/xsds/examples/info.xml");
-        File infoXsd = new File("/home/martin/IdeaProjects/PspValidator/sharedModule/src/main/resources/rzehan/shared/fdmf_1_1_3/xsds/alto_2.0.xsd");
+        File infoXsd = new File("/home/martin/IdeaProjects/PspValidator/sharedModule/src/main/resources/rzehan/shared/fdmf_1_1_3/xsds/info_1.1.xsd");
         XsdValidator.validate("INFO", infoXsd, infoXml);
 
-        //mix - ok
+       /* //mix - ok
         File mixXsd = new File("/home/martin/IdeaProjects/PspValidator/sharedModule/src/main/resources/rzehan/shared/fdmf_1_1_3/xsds/mix_2.0.xsd");
         File mixXml = new File("/home/martin/IdeaProjects/PspValidator/sharedModule/src/main/resources/rzehan/shared/fdmf_1_1_3/xsds/examples/mix.xml");
         XsdValidator.validate("MIX", mixXsd, mixXml);
@@ -43,7 +43,7 @@ public class Main {
         //mets - ok
         File metsXsd = new File("/home/martin/IdeaProjects/PspValidator/sharedModule/src/main/resources/rzehan/shared/fdmf_1_1_3/xsds/mets_1.9.1.xsd");
         File metsXml = new File("/home/martin/IdeaProjects/PspValidator/sharedModule/src/main/resources/rzehan/shared/fdmf_1_1_3/xsds/examples/mets.xml");
-        XsdValidator.validate("METS", metsXsd, metsXml);
+        XsdValidator.validate("METS", metsXsd, metsXml);*/
 
 
     }

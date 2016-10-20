@@ -42,8 +42,8 @@ public class XsdValidator {
             System.out.println(label + ": VALID");
             //return true;
         } catch (SAXException | IOException e) {
-            //e.printStackTrace();
             System.out.println(label + ": NOT VALID");
+            e.printStackTrace();
         } finally {
             System.out.println();
         }

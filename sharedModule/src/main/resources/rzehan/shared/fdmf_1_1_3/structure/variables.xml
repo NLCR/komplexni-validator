@@ -117,4 +117,48 @@
     -->
 
 
+    <!--soubory XSD-->
+
+    <variable name="INFO_XSD_FILE" type="File">
+        <evaluationFunction name="PROVIDED">
+            <!--tj. musi byt dodano pres GUI nebo CLI na zaklade konkretni fDMF-->
+            <params>
+                <param name="var_name">INFO_XSD_FILE</param>
+            </params>
+        </evaluationFunction>
+    </variable>
+
+    <!--TODO: podobne ostatni XSD-->
+
+
+    <!--zpracování INFO-->
+    <variable name="INFO_ITEMTOTAL" type="Integer">
+        <description>hodnota /info/itemlist/@itemtotal ze souboru INFO</description>
+        <evaluationFunction name="GET_INT_BY_XPATH">
+            <params>
+                <param name="file">
+                    <variable name="INFO_FILE"/>
+                </param>
+                <param name="xpath">
+                    <xpath>/info/itemlist/@itemtotal</xpath>
+                </param>
+            </params>
+        </evaluationFunction>
+    </variable>
+
+    <variable name="INFO_ITEMS" type="List<String>">
+        <description>seznam hodnot /info/itemlist/item ze souboru INFO</description>
+        <evaluationFunction name="GET_STRING_LIST_BY_XPATH">
+            <params>
+                <param name="file">
+                    <variable name="INFO_FILE"/>
+                </param>
+                <param name="xpath">
+                    <xpath>/info/itemlist/item</xpath>
+                </param>
+            </params>
+        </evaluationFunction>
+    </variable>
+
+
 </variables>

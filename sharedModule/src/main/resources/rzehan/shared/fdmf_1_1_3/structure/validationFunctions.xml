@@ -92,14 +92,14 @@
         </params>
     </function>
 
-    <function name="CHECKSUM_GENERATED_BY_GRAMMAR">
+    <function name="CHECK_CHECKSUM_GENERATED_BY_GRAMMAR">
         <description>Zkontroluje, že předepsaná gramatika pro CHECKSUM generuje obsah souboru.</description>
         <params>
             <param name="checksum_file" type="File"/>
         </params>
     </function>
 
-    <function name="CHECKSUM_ALL_PATHS_MATCH_FILES">
+    <function name="CHECK_CHECKSUM_ALL_PATHS_MATCH_FILES">
         <description>Zkontroluje, že soubor CHECKSUM obsahuje záznamy pro každý uvedený soubor a žádný jiný.
         </description>
         <params>
@@ -109,13 +109,58 @@
         </params>
     </function>
 
-    <function name="CHECKSUM_ALL_CHECKSUMS_MATCH">
+    <function name="CHECK_CHECKSUM_ALL_CHECKSUMS_MATCH">
         <description>Zkontroluje, že provedené kontrolní součty pro každý soubor souhlasí se záznamy v souboru CHECKSUM.
         </description>
         <params>
             <param name="checksum_file" type="File"/>
             <param name="file" type="File" min="0" max="unbound"/>
             <param name="file_list" type="List<File>" min="0" max="unbound"/>
+        </params>
+    </function>
+
+    <function name="CHECK_XML_WELL_BUILT">
+        <description>Zkontroluje, že soubor obsahuje korektní xml (well built).</description>
+        <params>
+            <param name="file" type="File"/>
+        </params>
+    </function>
+
+    <function name="CHECK_XML_VALID_BY_XSD">
+        <description>Zkontroluje, že soubor obsahuje xml validní podle XML Schema.</description>
+        <params>
+            <param name="file" type="File"/>
+            <param name="xsd_file" type="File"/>
+        </params>
+    </function>
+
+
+    <function name="CHECK_INFO_REFERENCES_PRIMARY-METS">
+        <description>Zkontroluje, že se soubor INFO odkazuje na soubor PRIMARY-METS přes element mainMets.</description>
+        <!--v elementu musi byt pouze samotne jmeno souboru-->
+        <params>
+            <param name="info_file" type="File"/>
+            <param name="primary-mets_file" type="File"/>
+        </params>
+    </function>
+
+    <function name="CHECK_INFO_ITEMLIST_REFERENCES_ALL_FILES">
+        <description>Zkontroluje, že se soubor INFO odkazuje na soubor všechny soubory přes elementy item.</description>
+        <params>
+            <param name="items" type="List<String>"/>
+            <param name="file" type="File" min="0" max="unbound"/>
+            <param name="file_list" type="List<File>" min="0" max="unbound"/>
+        </params>
+    </function>
+
+
+    <function name="CHECK_INFO_CHECKSUM_FILE_CHECKSUM_MATCHES">
+        <description>Zkontroluje, že se soubor INFO odkazuje na existující soubor CHECKSUM přes element checksum a že se
+            kontrolní součet shoduje.
+        </description>
+        <params>
+            <param name="file_info" type="File"/>
+            <param name="file_checksum" type="File"/>
         </params>
     </function>
 
