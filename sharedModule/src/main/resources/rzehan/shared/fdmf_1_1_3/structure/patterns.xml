@@ -17,34 +17,22 @@
     <pattern name="FILENAME">
         <description>Vzor pro obecný soubor/adresář. Určuje povolené znaky v názvech souborů/adresářů.</description>
         <!--per<=1.4, mon<=1.0-->
-        <!--<expression caseSensitive="false">
-            <value>[a-z_-.]+</value>
-        </expression>-->
+        <!--<expression caseSensitive="false">[a-z_\-\.]+</expression>-->
 
         <!--per>=1.5, mon>=1.1-->
-        <expression caseSensitive="true">
-            <value>[a-z_\-\.]+</value>
-        </expression>
+        <expression caseSensitive="true">[a-z_\-\.]+</expression>
     </pattern>
 
     <pattern name="INFO_FILENAME_FOR_PSP_ID_DETECTION">
         <description>Vzor pro nalezení souboru INFO pouze za účelem získání PSP-ID z jeho obsahu.</description>
 
         <!--per<=1.4, mon<=1.0-->
-        <!--<expression caseSensitive="false">
-            <value>info_.+\.xml</value>
-        </expression>
-        <expression caseSensitive="false">
-            <value>info\.xml</value>
-        </expression>-->
+        <!--<expression caseSensitive="false">info_.+\.xml</expression>
+        <expression caseSensitive="false">info\.xml</expression>-->
 
         <!--per>=1.5, mon>=1.1-->
-        <expression caseSensitive="true">
-            <value>info_.+\.xml</value>
-        </expression>
-        <expression caseSensitive="true">
-            <value>info\.xml</value>
-        </expression>
+        <expression caseSensitive="true">info_.+\.xml</expression>
+        <expression caseSensitive="true">info\.xml</expression>
 
 
     </pattern>
@@ -53,26 +41,12 @@
         <description>Vzor pro jméno souboru INFO.</description>
 
         <!--per<=1.4, mon<=1.0-->
-        <!--<expression caseSensitive="false">
-            <inputVariables>
-                <variable name="PSP_ID"/>
-            </inputVariables>
-            <value>info_${PSP_ID}\.xml</value>
-        </expression>
-        <expression>
-            <value>info\.xml</value>
-        </expression>-->
+        <!--<expression caseSensitive="false">info_${PSP_ID}\.xml</expression>
+        <expression>info\.xml</expression>-->
 
         <!--per>=1.5, mon>=1.1-->
-        <expression caseSensitive="true">
-            <inputVariables>
-                <variable name="PSP_ID"/>
-            </inputVariables>
-            <value>info_${PSP_ID}\.xml</value>
-        </expression>
-        <expression>
-            <value>info\.xml</value>
-        </expression>
+        <expression caseSensitive="true">info_${PSP_ID}\.xml</expression>
+        <expression>info\.xml</expression>
 
     </pattern>
 
@@ -80,20 +54,10 @@
         <description>Vzor pro jméno souboru PRIMARY-METS.</description>
 
         <!--per<=1.4, mon<=1.0-->
-        <!--<expression caseSensitive="false">
-            <inputVariables>
-                <variable name="PSP_ID"/>
-            </inputVariables>
-            <value>mets_${PSP_ID}\.xml</value>
-        </expression>-->
+        <!--<expression caseSensitive="false">mets_${PSP_ID}\.xml</expression>-->
 
         <!--per>=1.5, mon>=1.1-->
-        <expression caseSensitive="true">
-            <inputVariables>
-                <variable name="PSP_ID"/>
-            </inputVariables>
-            <value>mets_${PSP_ID}\.xml</value>
-        </expression>
+        <expression caseSensitive="true">mets_${PSP_ID}\.xml</expression>
     </pattern>
 
     <!--jako predchozi podobne i
@@ -105,14 +69,10 @@
         <description>Vzor pro jméno adresáře SECONDARY-METS-DIR.</description>
 
         <!--per<=1.4, mon<=1.0-->
-        <!--<expression caseSensitive="false">
-            <value>amdsec</value>
-        </expression>-->
+        <!--<expression caseSensitive="false">amdsec</expression>-->
 
         <!--per>=1.5, mon>=1.1-->
-        <expression caseSensitive="true">
-            <value>amdsec</value>
-        </expression>
+        <expression caseSensitive="true">amdsec</expression>
 
     </pattern>
 
@@ -128,20 +88,10 @@
         <description>Vzor pro jména souborŮ SECONDARY-METS v rámci adresáře SECONDARY-METS-DIR.</description>
 
         <!--per<=1.4, mon<=1.0-->
-        <!--<expression caseSensitive="false">
-            <inputVariables>
-                <variable name="PSP_ID"/>
-            </inputVariables>
-            <value>amd_mets_${PSP_ID}_[0-9]+\.xml</value>
-        </expression>-->
+        <!--<expression caseSensitive="false">amd_mets_${PSP_ID}_[0-9]+\.xml</expression>-->
 
         <!--per>=1.5, mon>=1.1-->
-        <expression caseSensitive="true">
-            <inputVariables>
-                <variable name="PSP_ID"/>
-            </inputVariables>
-            <value>amd_mets_${PSP_ID}_[0-9]+\.xml</value>
-        </expression>
+        <expression caseSensitive="true">amd_mets_${PSP_ID}_[0-9]+\.xml</expression>
 
 
     </pattern>

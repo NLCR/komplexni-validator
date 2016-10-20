@@ -44,12 +44,11 @@ public class Pattern {
     }
 
     public static class Expression {
-        /*todo: input vars*/
 
         private final Engine engine;
         private final boolean caseSensitive;
 
-        private final List<String> variableNames;
+        private final Set<String> variableNames;
         private final Map<String, String> variableValues = new HashMap<>();
 
         private final String regexpWithPlaceholders;
@@ -60,14 +59,19 @@ public class Pattern {
             this.engine = engine;
             this.caseSensitive = caseSensitive;
             this.regexpWithPlaceholders = regexpWithPlaceholders;
-            this.variableNames = Collections.<String>emptyList();
+            this.variableNames = extractVariableNames();
         }
 
-        public Expression(Engine engine, boolean caseSensitive, String regexpWithPlaceholders, String... variableNames) {
-            this.engine = engine;
-            this.caseSensitive = caseSensitive;
-            this.regexpWithPlaceholders = regexpWithPlaceholders;
-            this.variableNames = Arrays.asList(variableNames);
+        private Set<String> extractVariableNames() {
+            Set<String> result = new HashSet<>();
+            java.util.regex.Pattern pattern = java.util.regex.Pattern.compile("\\$\\{(.[A-Z0-9_\\-]*?)\\}");
+            Matcher matcher = pattern.matcher(regexpWithPlaceholders);
+            while (matcher.find()) {
+                String placeholder = matcher.group();
+                String varName = placeholder.substring(2, placeholder.length() - 1);
+                result.add(varName);
+            }
+            return result;
         }
 
         private java.util.regex.Pattern compile() {
@@ -89,15 +93,6 @@ public class Pattern {
                     String varValue = escapeRegexpSpecialChars(variableValues.get(varName));
                     regexpFinal = regexpFinal.replace(placeholder, varValue);
                 }
-            }
-            //if still placeholder present, throw exception
-            if (regexpFinal.matches(".*\\$\\{.*\\}.*")) {
-                java.util.regex.Pattern pattern = java.util.regex.Pattern.compile("\\$\\{(.*?)\\}");
-                Matcher matcher = pattern.matcher(regexpFinal);
-                matcher.find();
-                String placeholder = matcher.group();
-                placeholder = placeholder.substring(2, placeholder.length() - 1);
-                throw new VariableNotDeclaredException(placeholder, regexpWithPlaceholders);
             }
         }
 
@@ -135,7 +130,7 @@ public class Pattern {
         private void evaluateAllVariables() {
             for (String name : variableNames) {
                 String value = engine.evaluateStringVariable(name);
-                //TODO: pokud neni vhodneho typu, vyjimku.
+                //TODO: pokud neni vhodneho typu (asi jen String), vyjimku.
                 variableValues.put(name, value);
             }
         }

@@ -57,36 +57,28 @@ public class PatternTest {
 
         mgr.defineVariable("VAR1", new Variable("neco"));
         mgr.defineVariable("VAR2", new Variable("nic"));
-        assertTrue(mgr.newPattern(mgr.newExpression(true, "prefix_${VAR1}_suffix", "VAR1")).matches("prefix_neco_suffix"));
-        assertTrue(mgr.newPattern(mgr.newExpression(true, "prefix_${VAR1}\\+${VAR2}_suffix", "VAR1", "VAR2")).matches("prefix_neco+nic_suffix"));
+        assertTrue(mgr.newPattern(mgr.newExpression(true, "prefix_${VAR1}_suffix")).matches("prefix_neco_suffix"));
+        assertTrue(mgr.newPattern(mgr.newExpression(true, "prefix_${VAR1}\\+${VAR2}_suffix")).matches("prefix_neco+nic_suffix"));
 
         try {
-            mgr.newPattern(mgr.newExpression(true, "prefix_${VAR3}_suffix", "VAR3")).matches("prefix_vsechno_suffix");
+            mgr.newPattern(mgr.newExpression(true, "prefix_${VAR3}_suffix")).matches("prefix_vsechno_suffix");
             fail();
         } catch (VariableNotDefinedException e) {
 
         }
 
-        try {
-            //TODO: deklaraci potrebnych promennych odstranit, nema valny smysl
-            mgr.newPattern(mgr.newExpression(true, "prefix_${VAR1}_suffix")).matches("prefix_neco_suffix");
-            fail();
-        } catch (VariableNotDeclaredException e) {
-
-        }
+        mgr.newPattern(mgr.newExpression(true, "prefix_${VAR1}_suffix")).matches("prefix_neco_suffix");
 
         mgr.defineVariable("PSP_ID", new Variable("b50eb6b0-f0a4-11e3-b72e-005056827e52"));
-        assertTrue(mgr.newPattern(mgr.newExpression(true, "info_${PSP_ID}\\.xml", "PSP_ID")).matches("info_b50eb6b0-f0a4-11e3-b72e-005056827e52.xml"));
-        assertTrue(mgr.newPattern(mgr.newExpression(true, "amd_mets_${PSP_ID}_[0-9]+\\.xml", "PSP_ID")).matches("amd_mets_b50eb6b0-f0a4-11e3-b72e-005056827e52_0.xml"));
-        assertTrue(mgr.newPattern(mgr.newExpression(true, "amd_mets_${PSP_ID}_[0-9]+\\.xml", "PSP_ID")).matches("amd_mets_b50eb6b0-f0a4-11e3-b72e-005056827e52_123.xml"));
-        assertFalse(mgr.newPattern(mgr.newExpression(true, "amd_mets_${PSP_ID}_[0-9]+\\.xml", "PSP_ID")).matches("amd_mets_b50eb6b0-f0a4-11e3-b72e-005056827e52_.xml"));
+        assertTrue(mgr.newPattern(mgr.newExpression(true, "info_${PSP_ID}\\.xml")).matches("info_b50eb6b0-f0a4-11e3-b72e-005056827e52.xml"));
+        assertTrue(mgr.newPattern(mgr.newExpression(true, "amd_mets_${PSP_ID}_[0-9]+\\.xml")).matches("amd_mets_b50eb6b0-f0a4-11e3-b72e-005056827e52_0.xml"));
+        assertTrue(mgr.newPattern(mgr.newExpression(true, "amd_mets_${PSP_ID}_[0-9]+\\.xml")).matches("amd_mets_b50eb6b0-f0a4-11e3-b72e-005056827e52_123.xml"));
+        assertFalse(mgr.newPattern(mgr.newExpression(true, "amd_mets_${PSP_ID}_[0-9]+\\.xml")).matches("amd_mets_b50eb6b0-f0a4-11e3-b72e-005056827e52_.xml"));
 
         //escaping special charachters in variables - \\.[]{}()*+-?^$|
         mgr.defineVariable("DOT", new Variable("."));
-        assertTrue(mgr.newPattern(mgr.newExpression(true, "${DOT}co${DOT}uk", "DOT")).matches(".co.uk"));
-        assertFalse(mgr.newPattern(mgr.newExpression(true, "${DOT}co${DOT}uk", "DOT")).matches("0coXuk"));
-
-
+        assertTrue(mgr.newPattern(mgr.newExpression(true, "${DOT}co${DOT}uk")).matches(".co.uk"));
+        assertFalse(mgr.newPattern(mgr.newExpression(true, "${DOT}co${DOT}uk")).matches("0coXuk"));
     }
 
 

@@ -6,6 +6,7 @@
         Proměnné je možné dynamicky doplňovat/upravovat.
         Nesmí ale nastat situace cyklu, tedy že by hodnota proměnné X závisela na proměnné/vzoru Y, která by závisela na
         proměnné X.
+        Proměnné mohou obsahovat pouze velká písmena latinské abecedy, číslice a znaky '-','_';
     </description>
 
     <variable name="PSP_DIR" type="File">

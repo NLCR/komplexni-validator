@@ -17,14 +17,9 @@ public class Engine {
         return new Pattern.Expression(this, caseSensitive, originalRegexp);
     }
 
-    public Pattern.Expression newExpression(boolean caseSensitive, String originalRegexp, String... variableNames) {
-        return new Pattern.Expression(this, caseSensitive, originalRegexp, variableNames);
-    }
-
     public Pattern newPattern(Pattern.Expression... expressions) {
         return new Pattern(this, expressions);
     }
-
 
     private final Map<String, Variable> variables = new HashMap<>();
 
