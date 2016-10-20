@@ -725,17 +725,85 @@
 
     </section>
 
-    <section name="Soubor INFO" description="Validace souboru INFO a odkazování na ostatní soubory.">
 
-        <!--TODO-->
+    <section name="Soubor CHECKSUM"
+             description="Kontrola souboru CHECKSUM, odkazů na další soubory a shody kontrolních součtů.">
+
+        <rule name="CHECKSUM_GENERATED_BY_GRAMMAR" level="warning">
+            <description>Soubor CHECKSUM by měl být generován předepsanou ABNF gramatikou.</description>
+            <validationFunction name="CHECKSUM_GENERATED_BY_GRAMMAR">
+                <params>
+                    <param name="checksum_file">
+                        <variable name="CHECKSUM_FILE"/>
+                    </param>
+                </params>
+            </validationFunction>
+        </rule>
+
+        <rule name="CHECKSUM_ALL_PATHS_MATCH_FILES" level="warning">
+            <description>Soubor CHECKSUM musí obsahovat záznamy pro každý uvedený soubor a žádný jiný.</description>
+            <validationFunction name="CHECKSUM_ALL_PATHS_MATCH_FILES">
+                <params>
+                    <param name="checksum_file">
+                        <variable name="CHECKSUM_FILE"/>
+                    </param>
+                    <param name="file">
+                        <variable name="PRIMARY-METS_FILE"/>
+                    </param>
+                    <param name="file_list">
+                        <variable name="SECONDARY-METS_FILES"/>
+                    </param>
+                    <param name="file_list">
+                        <variable name="OCR-TEXT_FILES"/>
+                    </param>
+                    <param name="file_list">
+                        <variable name="OCR-ALTO_FILES"/>
+                    </param>
+                    <param name="file_list">
+                        <variable name="MASTER-COPY_FILES"/>
+                    </param>
+                    <param name="file_list">
+                        <variable name="USER-COPY_FILES"/>
+                    </param>
+                </params>
+            </validationFunction>
+        </rule>
+
+        <rule name="CHECKSUM_ALL_CHECKSUMS_MATCH" level="warning">
+            <description>Všechny kontrolní součty v souboru CHECKSUM souhlasí.</description>
+            <validationFunction name="CHECKSUM_ALL_CHECKSUMS_MATCH">
+                <params>
+                    <param name="checksum_file">
+                        <variable name="CHECKSUM_FILE"/>
+                    </param>
+                    <param name="file">
+                        <variable name="PRIMARY-METS_FILE"/>
+                    </param>
+                    <param name="file_list">
+                        <variable name="SECONDARY-METS_FILES"/>
+                    </param>
+                    <param name="file_list">
+                        <variable name="OCR-TEXT_FILES"/>
+                    </param>
+                    <param name="file_list">
+                        <variable name="OCR-ALTO_FILES"/>
+                    </param>
+                    <param name="file_list">
+                        <variable name="MASTER-COPY_FILES"/>
+                    </param>
+                    <param name="file_list">
+                        <variable name="USER-COPY_FILES"/>
+                    </param>
+                </params>
+            </validationFunction>
+        </rule>
+
 
     </section>
 
-    <section name="Soubor CHECKSUM"
-             description="Validace souboru CHECKSUM, odkazů na další soubory a kontrolní součty.">
+    <section name="Soubor INFO" description="Validace souboru INFO a odkazování na ostatní soubory.">
 
         <!--TODO-->
-
 
     </section>
 

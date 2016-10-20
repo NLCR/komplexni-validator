@@ -76,13 +76,12 @@
 
     <function name="CHECK_NO_OTHER_FILES_IN_DIR">
         <description>Zkontroluje, že adresář neobsahuje žádné další soubory kromě vyjmenovaných. Všechny vyjmenované
-            soubory ale nemusí nutně
-            patřit do adresáře.
+            soubory ale nemusí nutně patřit do adresáře.
         </description>
         <params>
             <param name="root_dir" type="File" description="root dir"/>
-            <param name="file" type="File" description="root dir" min="0" max="unbound"/>
-            <param name="file_list" type="List<File>" description="root dir" min="0" max="unbound"/>
+            <param name="file" type="File" min="0" max="unbound"/>
+            <param name="file_list" type="List<File>" min="0" max="unbound"/>
         </params>
     </function>
 
@@ -90,6 +89,33 @@
         <description>Zkontroluje, že jména všech souborů mají stejnou délku.</description>
         <params>
             <param name="file_list" type="List<File>"/>
+        </params>
+    </function>
+
+    <function name="CHECKSUM_GENERATED_BY_GRAMMAR">
+        <description>Zkontroluje, že předepsaná gramatika pro CHECKSUM generuje obsah souboru.</description>
+        <params>
+            <param name="checksum_file" type="File"/>
+        </params>
+    </function>
+
+    <function name="CHECKSUM_ALL_PATHS_MATCH_FILES">
+        <description>Zkontroluje, že soubor CHECKSUM obsahuje záznamy pro každý uvedený soubor a žádný jiný.
+        </description>
+        <params>
+            <param name="checksum_file" type="File"/>
+            <param name="file" type="File" min="0" max="unbound"/>
+            <param name="file_list" type="List<File>" min="0" max="unbound"/>
+        </params>
+    </function>
+
+    <function name="CHECKSUM_ALL_CHECKSUMS_MATCH">
+        <description>Zkontroluje, že provedené kontrolní součty pro každý soubor souhlasí se záznamy v souboru CHECKSUM.
+        </description>
+        <params>
+            <param name="checksum_file" type="File"/>
+            <param name="file" type="File" min="0" max="unbound"/>
+            <param name="file_list" type="List<File>" min="0" max="unbound"/>
         </params>
     </function>
 
