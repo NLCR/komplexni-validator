@@ -1,0 +1,168 @@
+<validationFunctions>
+    <description>
+        Zde jsou definovány validační funkce, které využívají jednotlivá validační pravidla.
+        Tento soubor je jen informativní a neměl by být měněn ani doplňován. Samotné validace včetně jmen, typů
+        a počtů parametrů a zejména samotné implementace jsou definovány v kódu validátoru.
+    </description>
+
+    <function name="CHECK_LIST_EXACT_SIZE">
+        <description>Zkontroluje, že má seznam očekávanou velikost.</description>
+        <params>
+            <param name="list" type="List"/>
+            <param name="size" type="Integer" description="Expected size of list"/>
+        </params>
+    </function>
+
+    <function name="CHECK_LIST_EMPTY">
+        <description>Zkontroluje, že je seznam prázdný.</description>
+        <!--specialni pripad CHECK_LIST_EXACT_SIZE kvuli lepsimu popisu chyby (vypiso se polozky, pokud nejake jsou)-->
+        <!--todo: mozna udelat specialni i pro jednu polozku-->
+        <params>
+            <param name="list" type="List"/>
+        </params>
+    </function>
+
+    <function name="CHECK_ALL_LISTS_SAME_SIZE">
+        <description>Zkontroluje, že mají všechny seznamy stejnou velikost.</description>
+        <params>
+            <param name="list" type="List" description="List of files" min="2" max="unbound"/>
+        </params>
+    </function>
+
+    <function name="CHECK_FILENAME_MATCHES_PATTERN">
+        <description>Zkontroluje, že název souboru odpovídá vzoru.</description>
+        <params>
+            <param name="file" type="File"/>
+            <param name="pattern" type="Pattern" description="Pattern to match"/>
+        </params>
+    </function>
+
+    <function name="CHECK_FILENAME_MATCHES_STRING">
+        <description>Zkontroluje, že název souboru odpovídá textovému řetězci.</description>
+        <params>
+            <param name="file" type="File"/>
+            <param name="string" type="String" description="String to match"/>
+        </params>
+    </function>
+
+    <function name="CHECK_ALL_FILENAMES_MATCH_PATTERN">
+        <description>Zkontroluje, že jména všech souborů odpovídají vzoru.</description>
+        <params>
+            <param name="file_list" type="List<File>"/>
+            <param name="pattern" type="Pattern" description="Pattern to match"/>
+        </params>
+    </function>
+
+    <function name="CHECK_FILE_IS_NOT_DIR">
+        <description>Zkontroluje, že soubor není adresář (tedy zda je obyčejný soubor).</description>
+        <params>
+            <param name="file" type="File"/>
+        </params>
+    </function>
+
+    <function name="CHECK_NO_FILE_IS_DIR">
+        <description>Zkontroluje, že žádný ze souborů není adresář (tedy zda je obyčejný soubor).</description>
+        <params>
+            <param name="file_list" type="List<File>"/>
+        </params>
+    </function>
+
+    <function name="CHECK_FILE_IS_DIR">
+        <description>Zkontroluje, že soubor je adresář (tedy zda není obyčejný soubor).</description>
+        <params>
+            <param name="file" type="File"/>
+        </params>
+    </function>
+
+    <function name="CHECK_NO_OTHER_FILES_IN_DIR">
+        <description>Zkontroluje, že adresář neobsahuje žádné další soubory kromě vyjmenovaných. Všechny vyjmenované
+            soubory ale nemusí nutně patřit do adresáře.
+        </description>
+        <params>
+            <param name="root_dir" type="File" description="root dir"/>
+            <param name="file" type="File" min="0" max="unbound"/>
+            <param name="file_list" type="List<File>" min="0" max="unbound"/>
+        </params>
+    </function>
+
+    <function name="CHECK_FILENAMES_LENGTHS_SAME">
+        <description>Zkontroluje, že jména všech souborů mají stejnou délku.</description>
+        <params>
+            <param name="file_list" type="List<File>"/>
+        </params>
+    </function>
+
+    <function name="CHECK_CHECKSUM_GENERATED_BY_GRAMMAR">
+        <description>Zkontroluje, že předepsaná gramatika pro CHECKSUM generuje obsah souboru.</description>
+        <params>
+            <param name="checksum_file" type="File"/>
+        </params>
+    </function>
+
+    <function name="CHECK_CHECKSUM_ALL_PATHS_MATCH_FILES">
+        <description>Zkontroluje, že soubor CHECKSUM obsahuje záznamy pro každý uvedený soubor a žádný jiný.
+        </description>
+        <params>
+            <param name="checksum_file" type="File"/>
+            <param name="file" type="File" min="0" max="unbound"/>
+            <param name="file_list" type="List<File>" min="0" max="unbound"/>
+        </params>
+    </function>
+
+    <function name="CHECK_CHECKSUM_ALL_CHECKSUMS_MATCH">
+        <description>Zkontroluje, že provedené kontrolní součty pro každý soubor souhlasí se záznamy v souboru CHECKSUM.
+        </description>
+        <params>
+            <param name="checksum_file" type="File"/>
+            <param name="file" type="File" min="0" max="unbound"/>
+            <param name="file_list" type="List<File>" min="0" max="unbound"/>
+        </params>
+    </function>
+
+    <function name="CHECK_XML_WELL_BUILT">
+        <description>Zkontroluje, že soubor obsahuje korektní xml (well built).</description>
+        <params>
+            <param name="file" type="File"/>
+        </params>
+    </function>
+
+    <function name="CHECK_XML_VALID_BY_XSD">
+        <description>Zkontroluje, že soubor obsahuje xml validní podle XML Schema.</description>
+        <params>
+            <param name="file" type="File"/>
+            <param name="xsd_file" type="File"/>
+        </params>
+    </function>
+
+
+    <function name="CHECK_INFO_REFERENCES_PRIMARY-METS">
+        <description>Zkontroluje, že se soubor INFO odkazuje na soubor PRIMARY-METS přes element mainMets.</description>
+        <!--v elementu musi byt pouze samotne jmeno souboru-->
+        <params>
+            <param name="info_file" type="File"/>
+            <param name="primary-mets_file" type="File"/>
+        </params>
+    </function>
+
+    <function name="CHECK_INFO_ITEMLIST_REFERENCES_ALL_FILES">
+        <description>Zkontroluje, že se soubor INFO odkazuje na soubor všechny soubory přes elementy item.</description>
+        <params>
+            <param name="items" type="List<String>"/>
+            <param name="file" type="File" min="0" max="unbound"/>
+            <param name="file_list" type="List<File>" min="0" max="unbound"/>
+        </params>
+    </function>
+
+
+    <function name="CHECK_INFO_CHECKSUM_FILE_CHECKSUM_MATCHES">
+        <description>Zkontroluje, že se soubor INFO odkazuje na existující soubor CHECKSUM přes element checksum a že se
+            kontrolní součet shoduje.
+        </description>
+        <params>
+            <param name="file_info" type="File"/>
+            <param name="file_checksum" type="File"/>
+        </params>
+    </function>
+
+
+</validationFunctions>

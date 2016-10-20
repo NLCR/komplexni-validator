@@ -1,0 +1,164 @@
+<variables>
+
+    <description>
+        Zde jsou definovány proměnné. K jejich vyhodnocení jsou použity funkce, další proměnné, vzory a
+        konstanty.
+        Proměnné je možné dynamicky doplňovat/upravovat.
+        Nesmí ale nastat situace cyklu, tedy že by hodnota proměnné X závisela na proměnné/vzoru Y, která by závisela na
+        proměnné X.
+    </description>
+
+    <variable name="PSP_DIR" type="File">
+        <evaluationFunction name="PROVIDED">
+            <!--tj. musi byt dodano pres GUI nebo CLI-->
+            <params>
+                <param name="var_name">PSP_DIR</param>
+            </params>
+        </evaluationFunction>
+    </variable>
+
+    <variable name="INFO_FILES" type="List<File>">
+        <evaluationFunction name="FIND_FILES_IN_DIR_BY_PATTERN">
+            <params>
+                <param name="dir">
+                    <variable name="PSP_DIR"/>
+                </param>
+                <param name="pattern">
+                    <pattern name="INFO_FILENAME"/>
+                </param>
+            </params>
+        </evaluationFunction>
+    </variable>
+
+    <!--
+        podobne
+        PRIMARY-METS_FILES
+        CHECKSUM_FILES
+        TOLERATED_TL_FILES
+    -->
+
+
+    <variable name="INFO_FILE" type="File">
+        <evaluationFunction name="RETURN_FIRST_ITEM">
+            <params>
+                <param name="list">
+                    <variable name="INFO_FILES"/>
+                </param>
+            </params>
+        </evaluationFunction>
+    </variable>
+
+    <!--
+        podobne
+        PRIMARY-METS_FILE
+        CHECKSUM_FILE
+    -->
+
+
+    <variable name="SECONDARY-METS-DIR_FILES" type="List<File>">
+        <evaluationFunction name="FIND_FILES_IN_DIR_BY_PATTERN">
+            <params>
+                <param name="dir">
+                    <variable name="PSP_DIR"/>
+                </param>
+                <param name="pattern">
+                    <pattern name="SECONDARY-METS-DIR_FILENAME"/>
+                </param>
+            </params>
+        </evaluationFunction>
+    </variable>
+
+    <!--
+    podobne
+    OCR-TEXT-DIR_FILES
+    OCR-ALTO-DIR_FILES
+    MASTER-COPY-DIR_FILES
+    USER-COPY-DIR_FILES
+    -->
+
+
+    <variable name="SECONDARY-METS-DIR_FILE" type="File">
+        <evaluationFunction name="RETURN_FIRST_ITEM">
+            <params>
+                <param name="list">
+                    <variable name="SECONDARY-METS-DIR_FILES"/>
+                </param>
+            </params>
+        </evaluationFunction>
+    </variable>
+
+    <!--
+    podobne
+    OCR-TEXT-DIR_FILE
+    OCR-ALTO-DIR_FILE
+    MASTER-COPY-DIR_FILE
+    USER-COPY-DIR_FILE
+    -->
+
+    <variable name="SECONDARY-METS_FILES" type="List<File>">
+        <evaluationFunction name="FIND_FILES_IN_DIR_BY_PATTERN">
+            <params>
+                <param name="dir">
+                    <variable name="SECONDARY-METS-DIR_FILE"/>
+                </param>
+                <param name="pattern">
+                    <pattern name="SECONDARY-METS_FILENAME"/>
+                </param>
+            </params>
+        </evaluationFunction>
+    </variable>
+
+    <!--
+    podobne
+    OCR-TEXT_FILES
+    OCR-ALTO_FILES
+    MASTER-COPY_FILES
+    USER-COPY_FILES
+    -->
+
+
+    <!--soubory XSD-->
+
+    <variable name="INFO_XSD_FILE" type="File">
+        <evaluationFunction name="PROVIDED">
+            <!--tj. musi byt dodano pres GUI nebo CLI na zaklade konkretni fDMF-->
+            <params>
+                <param name="var_name">INFO_XSD_FILE</param>
+            </params>
+        </evaluationFunction>
+    </variable>
+
+    <!--TODO: podobne ostatni XSD-->
+
+
+    <!--zpracování INFO-->
+    <variable name="INFO_ITEMTOTAL" type="Integer">
+        <description>hodnota /info/itemlist/@itemtotal ze souboru INFO</description>
+        <evaluationFunction name="GET_INT_BY_XPATH">
+            <params>
+                <param name="file">
+                    <variable name="INFO_FILE"/>
+                </param>
+                <param name="xpath">
+                    <xpath>/info/itemlist/@itemtotal</xpath>
+                </param>
+            </params>
+        </evaluationFunction>
+    </variable>
+
+    <variable name="INFO_ITEMS" type="List<String>">
+        <description>seznam hodnot /info/itemlist/item ze souboru INFO</description>
+        <evaluationFunction name="GET_STRING_LIST_BY_XPATH">
+            <params>
+                <param name="file">
+                    <variable name="INFO_FILE"/>
+                </param>
+                <param name="xpath">
+                    <xpath>/info/itemlist/item</xpath>
+                </param>
+            </params>
+        </evaluationFunction>
+    </variable>
+
+
+</variables>
