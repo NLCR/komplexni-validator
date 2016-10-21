@@ -1,5 +1,6 @@
 package rzehan.shared.engine;
 
+import rzehan.shared.engine.evaluationFunctions.*;
 import rzehan.shared.engine.exceptions.VariableNotDefinedException;
 
 import java.util.HashMap;
@@ -36,5 +37,20 @@ public class Engine {
         }
         return variable.getValue();
     }
+
+    public EvaluationFunction getEvaluationFunction(String name) {
+        if (name.equals("PROVIDED_FILE")) {
+            return new EfProvidedFile(this);
+        } else if (name.equals("PROVIDED_STRING")) {
+            return new EfProvidedString(this);
+        } else if (name.equals("RETURN_FIRST_FILE_FROM_LIST")) {
+            return new EfReturnFirstFileFromList(this);
+        } else if (name.equals("FIND_FILES_IN_DIR_BY_PATTERN")) {
+            return new EfFindFilesInDirByPattern(this);
+        } else {
+            throw new RuntimeException(String.format("vyhodnocovací funkce %s neexistuje", name));
+        }
+    }
+
 
 }
