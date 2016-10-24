@@ -1,8 +1,11 @@
-package rzehan.shared.engine.evaluationFunctions;
+package rzehan.shared.engine.evaluationFunctions.impl;
 
 import rzehan.shared.engine.Engine;
 import rzehan.shared.engine.Pattern;
 import rzehan.shared.engine.ValueType;
+import rzehan.shared.engine.evaluationFunctions.EvaluationFunction;
+import rzehan.shared.engine.evaluationFunctions.PatternParam;
+import rzehan.shared.engine.evaluationFunctions.ValueParam;
 
 import java.io.File;
 import java.util.ArrayList;
