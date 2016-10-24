@@ -7,40 +7,57 @@ import rzehan.shared.engine.ProvidedVarsManagerImpl;
 import rzehan.shared.engine.ValueType;
 
 import java.io.File;
+import java.util.List;
 
 import static junit.framework.TestCase.fail;
 import static org.junit.Assert.assertEquals;
 
 /**
- * Created by martin on 21.10.16.
+ * Created by martin on 24.10.16.
  */
-public class EfProvidedFileTest {
+public class EfFindFilesInDirByPatternTest {
 
-    private static final String FUNCTION_NAME = "PROVIDED_FILE";
-    private static final String PARAM_NAME = "file_id";
+    private static final String FUNCTION_NAME = "FIND_FILES_IN_DIR_BY_PATTERN";
+    private static final String PARAM_DIR = "dir";
 
-    private static Engine engine;
-    private static String PSP_DIR_FILEID = "PSP_DIR";
     /*TODO: paths relative to available resource dir*/
     private static File PSP_DIR_FILE = new File("/home/martin/zakazky/NKP-validator/data/monografie_1.2/b50eb6b0-f0a4-11e3-b72e-005056827e52");
+    private static String PSP_VAR = "PSP_DIR";
+
+    private static Engine engine;
 
 
     @BeforeClass
     public static void setup() {
         ProvidedVarsManagerImpl pvMgr = new ProvidedVarsManagerImpl();
-        pvMgr.addFile(PSP_DIR_FILEID, PSP_DIR_FILE);
+        pvMgr.addFile(PSP_VAR, PSP_DIR_FILE);
         engine = new Engine(pvMgr);
+        //
+        TestUtils.defineProvidedFileVar(engine, PSP_VAR);
     }
 
 
     @Test
-    public void ok() {
+    public void paramDirFromConstantOk() {
         EvaluationFunction evFunction = engine.getEvaluationFunction(FUNCTION_NAME);
         EvaluationFunction.ValueParams params = new EvaluationFunction.ValueParams();
-        params.addParam(PARAM_NAME, new EvaluationFunction.ValueParamConstant(ValueType.STRING, PSP_DIR_FILEID));
+        params.addParam(PARAM_DIR, new EvaluationFunction.ValueParamConstant(ValueType.FILE, PSP_DIR_FILE));
         evFunction.setValueParams(params);
-        assertEquals(PSP_DIR_FILE, evFunction.evaluate());
+        List<File> files = (List<File>) evFunction.evaluate();
+        assertEquals(8, files.size());
     }
+
+
+    @Test
+    public void paramDirFromReferenceOk() {
+        EvaluationFunction evFunction = engine.getEvaluationFunction(FUNCTION_NAME);
+        EvaluationFunction.ValueParams params = new EvaluationFunction.ValueParams();
+        params.addParam(PARAM_DIR, new EvaluationFunction.ValueParamReference(engine, ValueType.FILE, PSP_VAR));
+        evFunction.setValueParams(params);
+        List<File> files = (List<File>) evFunction.evaluate();
+        assertEquals(8, files.size());
+    }
+
 
     @Test
     public void paramsNotSet() {
@@ -54,7 +71,7 @@ public class EfProvidedFileTest {
     }
 
     @Test
-    public void missingParam() {
+    public void paramDirMissing() {
         EvaluationFunction evFunction = engine.getEvaluationFunction(FUNCTION_NAME);
         EvaluationFunction.ValueParams params = new EvaluationFunction.ValueParams();
         evFunction.setValueParams(params);
@@ -67,11 +84,11 @@ public class EfProvidedFileTest {
     }
 
     @Test
-    public void duplicateParam() {
+    public void paramDirDuplicate() {
         EvaluationFunction evFunction = engine.getEvaluationFunction(FUNCTION_NAME);
         EvaluationFunction.ValueParams params = new EvaluationFunction.ValueParams();
-        params.addParam(PARAM_NAME, new EvaluationFunction.ValueParamConstant(ValueType.STRING, PSP_DIR_FILEID));
-        params.addParam(PARAM_NAME, new EvaluationFunction.ValueParamConstant(ValueType.STRING, "XYZ_DIR"));
+        params.addParam(PARAM_DIR, new EvaluationFunction.ValueParamConstant(ValueType.FILE, PSP_DIR_FILE));
+        params.addParam(PARAM_DIR, new EvaluationFunction.ValueParamReference(engine, ValueType.FILE, PSP_VAR));
         evFunction.setValueParams(params);
         try {
             evFunction.evaluate();
@@ -83,10 +100,10 @@ public class EfProvidedFileTest {
 
 
     @Test
-    public void invalidParamType() {
+    public void paramDirFromConstantInvalidParamType() {
         EvaluationFunction evFunction = engine.getEvaluationFunction(FUNCTION_NAME);
         EvaluationFunction.ValueParams params = new EvaluationFunction.ValueParams();
-        params.addParam(PARAM_NAME, new EvaluationFunction.ValueParamConstant(ValueType.FILE, PSP_DIR_FILEID));
+        params.addParam(PARAM_DIR, new EvaluationFunction.ValueParamConstant(ValueType.STRING, PSP_DIR_FILE));
         evFunction.setValueParams(params);
         try {
             evFunction.evaluate();
@@ -95,4 +112,22 @@ public class EfProvidedFileTest {
             //parametr ... není očekávaného typu ...
         }
     }
+
+    @Test
+    public void paramDirFromReferenceInvalidParamType() {
+        EvaluationFunction evFunction = engine.getEvaluationFunction(FUNCTION_NAME);
+        EvaluationFunction.ValueParams params = new EvaluationFunction.ValueParams();
+        params.addParam(PARAM_DIR, new EvaluationFunction.ValueParamReference(engine, ValueType.STRING, PSP_VAR));
+        evFunction.setValueParams(params);
+        try {
+            evFunction.evaluate();
+            fail();
+        } catch (RuntimeException e) {
+            //parametr file_id není očekávaného typu STRING
+        }
+    }
+
+    //TODO: pattern
+    //TODO: test exceptions: file is not dir, dir does not exist, dir cannot be read, etc
+
 }

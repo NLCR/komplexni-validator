@@ -62,8 +62,8 @@ public class UtilsTest {
 
         //List<String>
         assertTrue(Utils.instanceOf("List<String>", new ArrayList<String>()));
-        //assertFalse(Utils.instanceOf("List<String>", new ArrayList<Integer>()));
-        //assertFalse(Utils.instanceOf("List<String>", new ArrayList()));
+        //assertFalse(TestUtils.instanceOf("List<String>", new ArrayList<Integer>()));
+        //assertFalse(TestUtils.instanceOf("List<String>", new ArrayList()));
 
         assertTrue(Utils.instanceOf("List<String>", strings));
         assertFalse(Utils.instanceOf("List<String>", integers));
@@ -71,8 +71,8 @@ public class UtilsTest {
 
         //List<File>
         assertTrue(Utils.instanceOf("List<File>", new ArrayList<File>()));
-        //assertFalse(Utils.instanceOf("List<File>", new ArrayList<Integer>()));
-        //assertFalse(Utils.instanceOf("List<File>", new ArrayList()));
+        //assertFalse(TestUtils.instanceOf("List<File>", new ArrayList<Integer>()));
+        //assertFalse(TestUtils.instanceOf("List<File>", new ArrayList()));
 
         assertTrue(Utils.instanceOf("List<File>", files));
         assertFalse(Utils.instanceOf("List<File>", strings));

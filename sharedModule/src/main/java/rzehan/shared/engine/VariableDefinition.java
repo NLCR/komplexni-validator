@@ -22,7 +22,7 @@ public class VariableDefinition {
         this.evaluationFunction = evaluationFunction;
         this.efValueParams = efValueParams;
         if (evaluationFunction.getResultType() != resultType) {
-            throw new RuntimeException("nesouhlasí typ výsledku pro definici proměnné a vyhodnocovací funkci");
+            throw new RuntimeException(String.format("nesouhlasí typ výsledku pro definici proměnné (%s) a vyhodnocovací funkci (%s)", resultType, evaluationFunction.getResultType()));
         }
     }
 

@@ -3,6 +3,7 @@ package rzehan.shared.engine;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import rzehan.shared.engine.evaluationFunctions.EvaluationFunction;
+import rzehan.shared.engine.evaluationFunctions.TestUtils;
 import rzehan.shared.engine.exceptions.InvalidVariableTypeException;
 import rzehan.shared.engine.exceptions.VariableNotDefinedException;
 
@@ -67,8 +68,8 @@ public class PatternTest {
 
     @Test
     public void variableRegexp() {
-        defineProvidedStringVar("STR1");
-        defineProvidedStringVar("STR2");
+        TestUtils.defineProvidedStringVar(engine, "STR1");
+        TestUtils.defineProvidedStringVar(engine, "STR2");
 
         assertTrue(engine.newPattern(engine.newExpression(true, "prefix_${STR1}_suffix")).matches("prefix_neco_suffix"));
         assertTrue(engine.newPattern(engine.newExpression(true, "prefix_${STR1}\\+${STR2}_suffix")).matches("prefix_neco+nic_suffix"));
@@ -79,7 +80,7 @@ public class PatternTest {
 
         }
 
-        defineProvidedIntegerVar("NUM1");
+        TestUtils.defineProvidedIntegerVar(engine, "NUM1");
         try {
             engine.newPattern(engine.newExpression(true, "prefix_${NUM1}_suffix")).matches("prefix_3_suffix");
             fail();
@@ -87,28 +88,16 @@ public class PatternTest {
 
         }
 
-        defineProvidedStringVar("PSP_ID");
+        TestUtils.defineProvidedStringVar(engine, "PSP_ID");
         assertTrue(engine.newPattern(engine.newExpression(true, "info_${PSP_ID}\\.xml")).matches("info_b50eb6b0-f0a4-11e3-b72e-005056827e52.xml"));
         assertTrue(engine.newPattern(engine.newExpression(true, "amd_mets_${PSP_ID}_[0-9]+\\.xml")).matches("amd_mets_b50eb6b0-f0a4-11e3-b72e-005056827e52_0.xml"));
         assertTrue(engine.newPattern(engine.newExpression(true, "amd_mets_${PSP_ID}_[0-9]+\\.xml")).matches("amd_mets_b50eb6b0-f0a4-11e3-b72e-005056827e52_123.xml"));
         assertFalse(engine.newPattern(engine.newExpression(true, "amd_mets_${PSP_ID}_[0-9]+\\.xml")).matches("amd_mets_b50eb6b0-f0a4-11e3-b72e-005056827e52_.xml"));
 
         //escaping special characters in variables - \\.[]{}()*+-?^$|
-        defineProvidedStringVar("DOT");
+        TestUtils.defineProvidedStringVar(engine, "DOT");
         assertTrue(engine.newPattern(engine.newExpression(true, "${DOT}co${DOT}uk")).matches(".co.uk"));
         assertFalse(engine.newPattern(engine.newExpression(true, "${DOT}co${DOT}uk")).matches("0coXuk"));
-    }
-
-    private void defineProvidedIntegerVar(String varName) {
-        EvaluationFunction.ValueParams params = new EvaluationFunction.ValueParams();
-        params.addParam("int_id", new EvaluationFunction.ValueParamConstant(ValueType.STRING, varName));
-        engine.defineVariable(varName, ValueType.INTEGER, "PROVIDED_INTEGER", params);
-    }
-
-    private void defineProvidedStringVar(String varName) {
-        EvaluationFunction.ValueParams params = new EvaluationFunction.ValueParams();
-        params.addParam("string_id", new EvaluationFunction.ValueParamConstant(ValueType.STRING, varName));
-        engine.defineVariable(varName, ValueType.STRING, "PROVIDED_STRING", params);
     }
 
 

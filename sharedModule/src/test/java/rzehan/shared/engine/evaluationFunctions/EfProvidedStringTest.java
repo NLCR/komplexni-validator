@@ -59,7 +59,7 @@ public class EfProvidedStringTest {
             evFunction.evaluate();
             fail();
         } catch (RuntimeException e) {
-            //chybí parametr file_id
+            //chybí parametr ...
         }
     }
 
@@ -74,7 +74,7 @@ public class EfProvidedStringTest {
             evFunction.evaluate();
             //fail();
         } catch (RuntimeException e) {
-            //parametr file_id musí být jen jeden
+            //parametr ... musí být jen jeden
         }
     }
 
@@ -89,7 +89,7 @@ public class EfProvidedStringTest {
             evFunction.evaluate();
             fail();
         } catch (RuntimeException e) {
-            //parametr string_id není očekávaného typu FILE
+            //parametr ... není očekávaného typu ...
         }
     }
 }

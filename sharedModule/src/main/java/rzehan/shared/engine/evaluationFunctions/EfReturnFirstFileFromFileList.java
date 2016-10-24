@@ -9,11 +9,11 @@ import java.util.List;
 /**
  * Created by martin on 21.10.16.
  */
-public class EfReturnFirstFileFromList extends EvaluationFunction {
+public class EfReturnFirstFileFromFileList extends EvaluationFunction {
 
     private static final String PARAM_FILE_LIST = "file_list";
 
-    public EfReturnFirstFileFromList(Engine engine) {
+    public EfReturnFirstFileFromFileList(Engine engine) {
         super(engine, ValueType.FILE);
     }
 
@@ -40,8 +40,13 @@ public class EfReturnFirstFileFromList extends EvaluationFunction {
         }
 
         ValueParam param = varNameValues.get(0);
-        //todo: kontrola typu
+        //TODO: tohle se opakuje, abstraktni metodu
+        //kontrola typu
+        if (param.getType() != ValueType.LIST_OF_FILES) {
+            throw new RuntimeException(String.format("parametr %s není očekávaného typu %s", PARAM_FILE_LIST, ValueType.LIST_OF_FILES.toString()));
+        }
         return (List<File>) param.getValue();
+
     }
 
 }

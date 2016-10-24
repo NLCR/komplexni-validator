@@ -60,7 +60,7 @@ public class Engine {
         } else if (name.equals("PROVIDED_INTEGER")) {
             return new EfProvidedInteger(this);
         } else if (name.equals("RETURN_FIRST_FILE_FROM_LIST")) {
-            return new EfReturnFirstFileFromList(this);
+            return new EfReturnFirstFileFromFileList(this);
         } else if (name.equals("FIND_FILES_IN_DIR_BY_PATTERN")) {
             return new EfFindFilesInDirByPattern(this);
         } else {

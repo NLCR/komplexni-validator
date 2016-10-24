@@ -26,7 +26,7 @@ public class EfFindFilesInDirByPattern extends EvaluationFunction {
         if (valueParams == null) {
             throw new IllegalStateException("Nebyly zadány parametry");
         }
-        File dir = getValueDir();
+        File dir = getDirFromparams();
         if (!dir.exists()) {
             throw new RuntimeException("soubor " + dir.getAbsolutePath() + " neexistuje");
         } else if (!dir.isDirectory()) {
@@ -39,7 +39,7 @@ public class EfFindFilesInDirByPattern extends EvaluationFunction {
         }
     }
 
-    public File getValueDir() {
+    public File getDirFromparams() {
         List<ValueParam> varNameValues = valueParams.getParams(PARAM_DIR);
         if (varNameValues == null || varNameValues.size() == 0) {
             throw new RuntimeException("chybí parametr " + PARAM_DIR);
@@ -48,7 +48,12 @@ public class EfFindFilesInDirByPattern extends EvaluationFunction {
         }
 
         ValueParam param = varNameValues.get(0);
-        //todo: kontrola typu
-        return (File) param.getValue();
+        //TODO: tohle se opakuje, abstraktni metodu
+        //kontrola typu
+        if (param.getType() != ValueType.FILE) {
+            throw new RuntimeException(String.format("parametr %s není očekávaného typu %s", PARAM_DIR, ValueType.FILE.toString()));
+        }
+        File result = (File) param.getValue();
+        return result;
     }
 }

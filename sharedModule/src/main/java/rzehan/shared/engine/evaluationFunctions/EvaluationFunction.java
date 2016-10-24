@@ -69,18 +69,19 @@ public abstract class EvaluationFunction {
     }
 
     public static class ValueParamReference extends ValueParam {
+        protected final Engine engine;
         //nazev promenne
         private final String varName;
 
-        public ValueParamReference(ValueType type, String varName) {
+        public ValueParamReference(Engine engine, ValueType type, String varName) {
             super(type);
+            this.engine = engine;
             this.varName = varName;
         }
 
         @Override
         public Object getValue() {
-            //todo: engine vrati promennou podle jmena;
-            return null;
+            return engine.evaluateVariable(varName);
         }
     }
 
