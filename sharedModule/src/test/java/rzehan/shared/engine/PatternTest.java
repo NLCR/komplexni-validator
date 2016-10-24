@@ -17,7 +17,7 @@ public class PatternTest {
 
     @Test
     public void noVariableRegexpConstant() {
-        Engine mgr = new Engine();
+        Engine mgr = new Engine(new ProvidedVarsManagerImpl());
 
         assertTrue(mgr.newPattern(mgr.newExpression(true, "amdsec")).matches("amdsec"));
         assertTrue(mgr.newPattern(mgr.newExpression(true, "AMDSEC")).matches("AMDSEC"));
@@ -36,7 +36,7 @@ public class PatternTest {
 
     @Test
     public void noVariableRegexp() {
-        Engine mgr = new Engine();
+        Engine mgr = new Engine(new ProvidedVarsManagerImpl());
         assertTrue(mgr.newPattern(mgr.newExpression(true, "info_.+\\.xml")).matches("info_SOMETHING.xml"));
         assertFalse(mgr.newPattern(mgr.newExpression(true, "info_.+\\.xml")).matches("info_SOMETHINGxml"));
         assertFalse(mgr.newPattern(mgr.newExpression(true, "info_.+\\.xml")).matches("info_.xml"));
@@ -55,7 +55,7 @@ public class PatternTest {
 
     @Test
     public void variableRegexp() {
-        Engine mgr = new Engine();
+        Engine mgr = new Engine(new ProvidedVarsManagerImpl());
 
         mgr.defineVariable("VAR1", new Variable("neco"));
         mgr.defineVariable("VAR2", new Variable("nic"));

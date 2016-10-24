@@ -24,10 +24,11 @@ public class EfProvidedFile extends EvaluationFunction {
             throw new IllegalStateException("nebyly zadány parametry");
         }
         String fileId = getFileIdFromParams();
-        if (fileId == "PSP_DIR") {
-            return new File("/home/martin/zakazky/NKP-validator/data/monografie_1.2/b50eb6b0-f0a4-11e3-b72e-005056827e52");
-        } else {
+        File file = engine.getProvidedVarsManager().getProvidedFile(fileId);
+        if (file == null) {
             throw new RuntimeException("soubor s id " + fileId + " není poskytován");
+        } else {
+            return file;
         }
     }
 

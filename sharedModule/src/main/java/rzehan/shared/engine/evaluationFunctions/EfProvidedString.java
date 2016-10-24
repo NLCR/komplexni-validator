@@ -3,7 +3,6 @@ package rzehan.shared.engine.evaluationFunctions;
 import rzehan.shared.engine.Engine;
 import rzehan.shared.engine.ValueType;
 
-import java.io.File;
 import java.util.List;
 
 /**
@@ -21,13 +20,14 @@ public class EfProvidedString extends EvaluationFunction {
     @Override
     public String evaluate() {
         if (valueParams == null) {
-            throw new IllegalStateException("Nebyly vlozeny parametry");
+            throw new IllegalStateException("nebyly zadány parametry");
         }
         String stringId = getStringIdFromParams();
-        if (stringId == "PSP_ID") {
-            return "b50eb6b0-f0a4-11e3-b72e-005056827e52";
-        } else {
+        String string = engine.getProvidedVarsManager().getProvidedString(stringId);
+        if (string == null) {
             throw new RuntimeException("řetězec s id " + stringId + " není poskytován");
+        } else {
+            return string;
         }
     }
 
@@ -40,7 +40,10 @@ public class EfProvidedString extends EvaluationFunction {
             throw new RuntimeException("parametr " + PARAM_STRING_ID + " musí být jen jeden");
         }
         ValueParam param = varNameValues.get(0);
-        //todo: kontrola typu
+        //kontrola typu
+        if (param.getType() != ValueType.STRING) {
+            throw new RuntimeException(String.format("parametr %s není očekávaného typu %s", PARAM_STRING_ID, ValueType.STRING.toString()));
+        }
         return (String) param.getValue();
     }
 }

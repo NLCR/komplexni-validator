@@ -11,6 +11,15 @@ import java.util.Map;
  */
 public class Engine {
 
+    private final ProvidedVarsManager providedVarsManager;
+
+    public Engine(ProvidedVarsManager providedVarsManager) {
+        this.providedVarsManager = providedVarsManager;
+    }
+
+    public ProvidedVarsManager getProvidedVarsManager() {
+        return providedVarsManager;
+    }
 
     public Variable getVariable(String name) {
         return null;

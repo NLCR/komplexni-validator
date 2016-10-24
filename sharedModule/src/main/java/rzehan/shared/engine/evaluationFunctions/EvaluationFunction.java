@@ -13,7 +13,7 @@ import java.util.Map;
  * Created by martin on 20.10.16.
  */
 public abstract class EvaluationFunction {
-    private final Engine engine;
+    protected final Engine engine;
     private final ValueType resultType;
     protected ValueParams valueParams;
 
