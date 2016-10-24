@@ -5,7 +5,6 @@ import org.junit.Test;
 import rzehan.shared.engine.Engine;
 import rzehan.shared.engine.ProvidedVarsManagerImpl;
 import rzehan.shared.engine.ValueType;
-import rzehan.shared.engine.evaluationFunctions.EvaluationFunction;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -49,7 +48,7 @@ public class EfReturnFirstFileFromFileListTest {
         EvaluationFunction.ValueParams params = new EvaluationFunction.ValueParams();
         File dirFile = new File("src/test/resources/monografie_1.2/b50eb6b0-f0a4-11e3-b72e-005056827e52");
         //first file is somehow "txt"
-        params.addParam("dir", new EvaluationFunction.ValueParamConstant(ValueType.FILE, dirFile));
+        params.addParam("dir", new ValueParamConstant(ValueType.FILE, dirFile));
         engine.defineVariable(LIST_VAR, ValueType.LIST_OF_FILES, "FIND_FILES_IN_DIR_BY_PATTERN", params);
     }
 
@@ -58,7 +57,7 @@ public class EfReturnFirstFileFromFileListTest {
     public void listFromConstantOk() {
         EvaluationFunction evFunction = engine.getEvaluationFunction(FUNCTION_NAME);
         EvaluationFunction.ValueParams params = new EvaluationFunction.ValueParams();
-        params.addParam(PARAM_FILE_LIST, new EvaluationFunction.ValueParamConstant(ValueType.LIST_OF_FILES, LIST));
+        params.addParam(PARAM_FILE_LIST, new ValueParamConstant(ValueType.LIST_OF_FILES, LIST));
         evFunction.setValueParams(params);
         assertEquals(LIST.get(0), evFunction.evaluate());
     }
@@ -67,7 +66,7 @@ public class EfReturnFirstFileFromFileListTest {
     public void listFromReferenceOk() {
         EvaluationFunction evFunction = engine.getEvaluationFunction(FUNCTION_NAME);
         EvaluationFunction.ValueParams params = new EvaluationFunction.ValueParams();
-        params.addParam(PARAM_FILE_LIST, new EvaluationFunction.ValueParamReference(engine, ValueType.LIST_OF_FILES, LIST_VAR));
+        params.addParam(PARAM_FILE_LIST, new ValueParamReference(engine, ValueType.LIST_OF_FILES, LIST_VAR));
         evFunction.setValueParams(params);
         assertEquals("txt", ((File) evFunction.evaluate()).getName());
     }
@@ -101,9 +100,9 @@ public class EfReturnFirstFileFromFileListTest {
     public void paramDirDuplicate() {
         EvaluationFunction evFunction = engine.getEvaluationFunction(FUNCTION_NAME);
         EvaluationFunction.ValueParams params = new EvaluationFunction.ValueParams();
-        params.addParam(PARAM_FILE_LIST, new EvaluationFunction.ValueParamConstant(ValueType.LIST_OF_FILES, LIST));
+        params.addParam(PARAM_FILE_LIST, new ValueParamConstant(ValueType.LIST_OF_FILES, LIST));
         //todo: druhy odkazem na promennou
-        params.addParam(PARAM_FILE_LIST, new EvaluationFunction.ValueParamConstant(ValueType.LIST_OF_FILES, LIST));
+        params.addParam(PARAM_FILE_LIST, new ValueParamConstant(ValueType.LIST_OF_FILES, LIST));
         evFunction.setValueParams(params);
         try {
             evFunction.evaluate();
@@ -118,7 +117,7 @@ public class EfReturnFirstFileFromFileListTest {
     public void paramListFromConstantInvalidParamType() {
         EvaluationFunction evFunction = engine.getEvaluationFunction(FUNCTION_NAME);
         EvaluationFunction.ValueParams params = new EvaluationFunction.ValueParams();
-        params.addParam(PARAM_FILE_LIST, new EvaluationFunction.ValueParamConstant(ValueType.FILE, LIST));
+        params.addParam(PARAM_FILE_LIST, new ValueParamConstant(ValueType.FILE, LIST));
         evFunction.setValueParams(params);
         try {
             evFunction.evaluate();
@@ -133,7 +132,7 @@ public class EfReturnFirstFileFromFileListTest {
         EvaluationFunction evFunction = engine.getEvaluationFunction(FUNCTION_NAME);
         EvaluationFunction.ValueParams params = new EvaluationFunction.ValueParams();
         //params.addParam(PARAM_FILE_LIST, new EvaluationFunction.ValueParamConstant(ValueType.FILE, LIST));
-        params.addParam(PARAM_FILE_LIST, new EvaluationFunction.ValueParamReference(engine, ValueType.FILE, LIST_VAR));
+        params.addParam(PARAM_FILE_LIST, new ValueParamReference(engine, ValueType.FILE, LIST_VAR));
         evFunction.setValueParams(params);
         try {
             evFunction.evaluate();

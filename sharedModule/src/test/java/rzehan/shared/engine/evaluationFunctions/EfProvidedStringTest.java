@@ -34,7 +34,7 @@ public class EfProvidedStringTest {
     public void ok() {
         EvaluationFunction evFunction = engine.getEvaluationFunction(FUNCTION_NAME);
         EvaluationFunction.ValueParams params = new EvaluationFunction.ValueParams();
-        params.addParam(PARAM_NAME, new EvaluationFunction.ValueParamConstant(ValueType.STRING, PSP_ID_STRINGID));
+        params.addParam(PARAM_NAME, new ValueParamConstant(ValueType.STRING, PSP_ID_STRINGID));
         evFunction.setValueParams(params);
         assertEquals(PSP_ID_VALUE, evFunction.evaluate());
     }
@@ -67,8 +67,8 @@ public class EfProvidedStringTest {
     public void duplicateParam() {
         EvaluationFunction evFunction = engine.getEvaluationFunction(FUNCTION_NAME);
         EvaluationFunction.ValueParams params = new EvaluationFunction.ValueParams();
-        params.addParam(PARAM_NAME, new EvaluationFunction.ValueParamConstant(ValueType.STRING, PSP_ID_STRINGID));
-        params.addParam(PARAM_NAME, new EvaluationFunction.ValueParamConstant(ValueType.STRING, "XYZ_DIR"));
+        params.addParam(PARAM_NAME, new ValueParamConstant(ValueType.STRING, PSP_ID_STRINGID));
+        params.addParam(PARAM_NAME, new ValueParamConstant(ValueType.STRING, "XYZ_DIR"));
         evFunction.setValueParams(params);
         try {
             evFunction.evaluate();
@@ -83,7 +83,7 @@ public class EfProvidedStringTest {
     public void invalidParamType() {
         EvaluationFunction evFunction = engine.getEvaluationFunction(FUNCTION_NAME);
         EvaluationFunction.ValueParams params = new EvaluationFunction.ValueParams();
-        params.addParam(PARAM_NAME, new EvaluationFunction.ValueParamConstant(ValueType.FILE, PSP_ID_STRINGID));
+        params.addParam(PARAM_NAME, new ValueParamConstant(ValueType.FILE, PSP_ID_STRINGID));
         evFunction.setValueParams(params);
         try {
             evFunction.evaluate();

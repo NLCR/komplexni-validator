@@ -17,7 +17,6 @@ public abstract class EvaluationFunction {
     private final ValueType resultType;
     protected ValueParams valueParams;
 
-
     public EvaluationFunction(Engine engine, ValueType resultType) {
         this.engine = engine;
         this.resultType = resultType;
@@ -50,91 +49,5 @@ public abstract class EvaluationFunction {
             return data.get(name);
         }
     }
-
-
-    public static abstract class ValueParam {
-
-        private final ValueType type;
-
-        protected ValueParam(ValueType type) {
-            this.type = type;
-        }
-
-        public ValueType getType() {
-            return type;
-        }
-
-        public abstract Object getValue();
-
-    }
-
-    public static class ValueParamReference extends ValueParam {
-        protected final Engine engine;
-        //nazev promenne
-        private final String varName;
-
-        public ValueParamReference(Engine engine, ValueType type, String varName) {
-            super(type);
-            this.engine = engine;
-            this.varName = varName;
-        }
-
-        @Override
-        public Object getValue() {
-            return engine.evaluateVariable(varName);
-        }
-    }
-
-    public static final class ValueParamConstant extends ValueParam {
-        //hodnota, treba i xpath
-        private final Object value;
-
-        public ValueParamConstant(ValueType type, Object value) {
-            super(type);
-            this.value = value;
-        }
-
-        @Override
-        public Object getValue() {
-            return value;
-        }
-    }
-
-
-    public static abstract class PatternParam {
-
-        public abstract boolean matches(String value);
-
-    }
-
-
-    public static class PatternParamConstant extends PatternParam {
-
-        private final Pattern pattern;
-
-        public PatternParamConstant(Pattern pattern) {
-            this.pattern = pattern;
-        }
-
-        @Override
-        public boolean matches(String value) {
-            return pattern.matches(value);
-        }
-    }
-
-    public static class PatternParamReference extends PatternParam {
-        private final String patternName;
-
-        public PatternParamReference(String patternName) {
-            this.patternName = patternName;
-        }
-
-        @Override
-        public boolean matches(String value) {
-            //todo: engine vrati pattern podle jmena;
-            return false;
-        }
-    }
-
-
+    
 }
