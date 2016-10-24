@@ -16,6 +16,8 @@ public class Engine {
     private final Map<String, VariableDefinition> varDefinitions = new HashMap<>();
     private final Map<String, Object> varValues = new HashMap<>();
 
+    private final Map<String, Pattern> patterns = new HashMap<>();
+
 
     public Engine(ProvidedVarsManager providedVarsManager) {
         this.providedVarsManager = providedVarsManager;
@@ -29,8 +31,17 @@ public class Engine {
         return new Pattern.Expression(this, caseSensitive, originalRegexp);
     }
 
+    //TODO: tohle nepouzivat, nebo jen pro testy
     public Pattern newPattern(Pattern.Expression... expressions) {
         return new Pattern(this, expressions);
+    }
+
+    public void definePattern(String name, Pattern pattern) {
+        patterns.put(name, pattern);
+    }
+
+    public Pattern getPattern(String name) {
+        return patterns.get(name);
     }
 
 
@@ -69,10 +80,10 @@ public class Engine {
     }
 
 
-    public void defineVariable(String name, ValueType type, String efName, EvaluationFunction.ValueParams valueParams) {
+    public void defineVariable(String name, ValueType type, String efName, EvaluationFunction.ValueParams valueParams, EvaluationFunction.PatternParams patternParams) {
         //TODO: check if not defined already
         EvaluationFunction evaluationFunction = getEvaluationFunction(efName);
-        VariableDefinition definition = new VariableDefinition(type, evaluationFunction, valueParams);
+        VariableDefinition definition = new VariableDefinition(type, evaluationFunction, valueParams, patternParams);
         varDefinitions.put(name, definition);
     }
 

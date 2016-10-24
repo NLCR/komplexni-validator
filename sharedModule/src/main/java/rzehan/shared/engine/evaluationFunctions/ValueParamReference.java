@@ -18,6 +18,10 @@ public class ValueParamReference extends ValueParam {
 
     @Override
     public Object getValue() {
-        return engine.evaluateVariable(varName);
+        Object value = engine.evaluateVariable(varName);
+        if (value == null) {
+            throw new RuntimeException("proměnná " + varName + " není definována");
+        }
+        return value;
     }
 }

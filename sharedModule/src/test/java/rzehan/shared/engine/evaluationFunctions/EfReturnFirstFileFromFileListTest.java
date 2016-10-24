@@ -3,6 +3,7 @@ package rzehan.shared.engine.evaluationFunctions;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import rzehan.shared.engine.Engine;
+import rzehan.shared.engine.Pattern;
 import rzehan.shared.engine.ProvidedVarsManagerImpl;
 import rzehan.shared.engine.ValueType;
 
@@ -45,11 +46,16 @@ public class EfReturnFirstFileFromFileListTest {
     }
 
     private static void defineListVar() {
-        EvaluationFunction.ValueParams params = new EvaluationFunction.ValueParams();
+        EvaluationFunction.ValueParams valueParams = new EvaluationFunction.ValueParams();
         File dirFile = new File("src/test/resources/monografie_1.2/b50eb6b0-f0a4-11e3-b72e-005056827e52");
+        valueParams.addParam("dir", new ValueParamConstant(ValueType.FILE, dirFile));
+
+        EvaluationFunction.PatternParams patternParams = new EvaluationFunction.PatternParams();
+        Pattern patternAllFiles = engine.newPattern(engine.newExpression(false, ".+"));
+        patternParams.addParam("pattern", new PatternParamConstant(patternAllFiles));
+
         //first file is somehow "txt"
-        params.addParam("dir", new ValueParamConstant(ValueType.FILE, dirFile));
-        engine.defineVariable(LIST_VAR, ValueType.LIST_OF_FILES, "FIND_FILES_IN_DIR_BY_PATTERN", params);
+        engine.defineVariable(LIST_VAR, ValueType.LIST_OF_FILES, "FIND_FILES_IN_DIR_BY_PATTERN", valueParams, patternParams);
     }
 
 

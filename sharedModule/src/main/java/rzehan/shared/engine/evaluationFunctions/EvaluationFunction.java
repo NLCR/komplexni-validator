@@ -16,6 +16,7 @@ public abstract class EvaluationFunction {
     protected final Engine engine;
     private final ValueType resultType;
     protected ValueParams valueParams;
+    protected PatternParams patternParams;
 
     public EvaluationFunction(Engine engine, ValueType resultType) {
         this.engine = engine;
@@ -26,6 +27,9 @@ public abstract class EvaluationFunction {
         this.valueParams = valueParams;
     }
 
+    public void setPatternParams(PatternParams patternParams) {
+        this.patternParams = patternParams;
+    }
 
     public ValueType getResultType() {
         return resultType;
@@ -49,5 +53,19 @@ public abstract class EvaluationFunction {
             return data.get(name);
         }
     }
-    
+
+    public static class PatternParams {
+        private final Map<String, PatternParam> data = new HashMap<>();
+
+        public void addParam(String name, PatternParam value) {
+            //TODO: error if pattern already is defined
+            data.put(name, value);
+        }
+
+        public PatternParam getParam(String name) {
+            return data.get(name);
+        }
+    }
+
+
 }
