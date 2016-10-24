@@ -20,8 +20,7 @@ public class EfFindFilesInDirByPatternTest {
     private static final String FUNCTION_NAME = "FIND_FILES_IN_DIR_BY_PATTERN";
     private static final String PARAM_DIR = "dir";
 
-    /*TODO: paths relative to available resource dir*/
-    private static File PSP_DIR_FILE = new File("/home/martin/zakazky/NKP-validator/data/monografie_1.2/b50eb6b0-f0a4-11e3-b72e-005056827e52");
+    private static File PSP_DIR_FILE = new File("src/test/resources/monografie_1.2/b50eb6b0-f0a4-11e3-b72e-005056827e52");
     private static String PSP_VAR = "PSP_DIR";
 
     private static Engine engine;

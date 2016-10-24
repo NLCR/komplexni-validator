@@ -47,8 +47,7 @@ public class EfReturnFirstFileFromFileListTest {
 
     private static void defineListVar() {
         EvaluationFunction.ValueParams params = new EvaluationFunction.ValueParams();
-        /*TODO: paths relative to available resource dir*/
-        File dirFile = new File("/home/martin/zakazky/NKP-validator/data/monografie_1.2/b50eb6b0-f0a4-11e3-b72e-005056827e52");
+        File dirFile = new File("src/test/resources/monografie_1.2/b50eb6b0-f0a4-11e3-b72e-005056827e52");
         //first file is somehow "txt"
         params.addParam("dir", new EvaluationFunction.ValueParamConstant(ValueType.FILE, dirFile));
         engine.defineVariable(LIST_VAR, ValueType.LIST_OF_FILES, "FIND_FILES_IN_DIR_BY_PATTERN", params);

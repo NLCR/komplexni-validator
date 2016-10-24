@@ -1,0 +1,448 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+
+<mets:mets xmlns:mets="http://www.loc.gov/METS/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:mods="http://www.loc.gov/mods/v3" xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/" xmlns:premis="info:lc/xmlns/premis-v2" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" LABEL="Hlasy ze Siona, 1861-1916" TYPE="Periodical" xsi:schemaLocation="http://www.w3.org/2001/XMLSchema-instance http://www.w3.org/2001/XMLSchema.xsd http://www.loc.gov/METS/ http://www.loc.gov/standards/mets/mets.xsd http://www.loc.gov/mods/v3 http://www.loc.gov/standards/mods/v3/mods-3-5.xsd http://www.openarchives.org/OAI/2.0/oai_dc/ http://www.openarchives.org/OAI/2.0/oai_dc.xsd">  
+  <mets:metsHdr CREATEDATE="2015-09-12T16:14:22" LASTMODDATE="2016-02-29T11:59:25"> 
+    <mets:agent ROLE="CREATOR" TYPE="ORGANIZATION"> 
+      <mets:name>ABA001</mets:name> 
+    </mets:agent>  
+    <mets:agent ROLE="ARCHIVIST" TYPE="ORGANIZATION"> 
+      <mets:name>ABA001</mets:name> 
+    </mets:agent> 
+  </mets:metsHdr>  
+  <mets:dmdSec ID="MODSMD_TITLE_0001"> 
+    <mets:mdWrap MDTYPE="MODS" MDTYPEVERSION="3.5" MIMETYPE="text/xml"> 
+      <mets:xmlData> 
+        <mods:mods ID="MODS_TITLE_0001" version="3.5"> 
+          <mods:titleInfo> 
+            <mods:title>Hlasy ze Siona</mods:title>  
+            <mods:subTitle>časopis pro lid evanjelický</mods:subTitle> 
+          </mods:titleInfo>  
+          <mods:name type="personal"> 
+            <mods:namePart>Šubert, Václav</mods:namePart>  
+            <mods:namePart type="date">ca 1825-1885</mods:namePart>  
+            <mods:role> 
+              <mods:roleTerm authority="marcrelator" type="code">edt</mods:roleTerm> 
+            </mods:role>  
+            <mods:role> 
+              <mods:roleTerm authority="marcrelator" type="code">pbl</mods:roleTerm> 
+            </mods:role> 
+          </mods:name>  
+          <mods:typeOfResource>text</mods:typeOfResource>  
+          <mods:genre>title</mods:genre>  
+          <mods:originInfo> 
+            <mods:place> 
+              <mods:placeTerm authority="marccountry" type="code">xr</mods:placeTerm> 
+            </mods:place>  
+            <mods:place> 
+              <mods:placeTerm type="text">V Praze</mods:placeTerm> 
+            </mods:place>  
+            <mods:publisher>Karel Seyfried</mods:publisher>  
+            <mods:dateIssued>1861-1916</mods:dateIssued>  
+            <mods:dateIssued encoding="marc" point="start">1861</mods:dateIssued>  
+            <mods:dateIssued encoding="marc" point="end">1916</mods:dateIssued>
+            <mods:issuance>continuing</mods:issuance>  
+            <mods:frequency authority="marcfrequency">2x měsíčně 1862-1874,1876-</mods:frequency>  
+            <mods:frequency authority="marcfrequency">1x týdně 1861-1862,1875</mods:frequency>  
+            <mods:frequency>Weekly</mods:frequency> 
+          </mods:originInfo>  
+          <mods:language> 
+            <mods:languageTerm authority="iso639-2b" type="code">cze</mods:languageTerm> 
+          </mods:language>  
+          <mods:physicalDescription> 
+            <mods:form authority="marcform">print</mods:form>  
+            <mods:extent>56 sv.</mods:extent> 
+          </mods:physicalDescription>  
+          <mods:note type="date/sequential designation">Roč. 1 (1861)-roč. 56 (1916)</mods:note>  
+          <mods:note>Změny podnázvu: Evanjelický časopis, Časopis reformované církve (od 1873), později bez podnázvu</mods:note>  
+          <mods:note>Zanikl v červenci 1865 po sebevraždě tiskaře Seyfrieda, znovu vychází od srpna 1865 v Hořátvi u Nymburka</mods:note>  
+          <mods:note>Změny vydavatele: Václav Šubert, pak Bedřich Fleischer (od 1868), Čeněk Dušek (od 1873), pak Richard Novák, Fr. Hoblík (od 1881)</mods:note>  
+          <mods:note>Změny místa vydání: Kolín, Choceň, Pardubice, Hořátev u Nymburka</mods:note>  
+          <mods:note>Příloha: Evangelické besedy pro zábavu</mods:note>  
+          <mods:classification authority="udc">050</mods:classification>  
+          <mods:location> 
+            <mods:physicalLocation authority="siglaADR">ABA001</mods:physicalLocation>  
+            <mods:shelfLocator>54 B 294</mods:shelfLocator> 
+          </mods:location>  
+          <mods:identifier type="urnnbn">urn:nbn:cz:nk-0016ke</mods:identifier>  
+          <mods:identifier type="barCode">1001149769</mods:identifier>  
+          <mods:identifier type="ccnb">cnb001315579</mods:identifier>  
+          <mods:recordInfo> 
+            <mods:recordContentSource authority="marcorg">ABA001</mods:recordContentSource>  
+            <mods:recordCreationDate encoding="iso8601">2004-05-17T00:00:00Z</mods:recordCreationDate>  
+            <mods:recordChangeDate encoding="iso8601">2004-05-17T10:34:21Z</mods:recordChangeDate>  
+            <mods:recordIdentifier source="CZ-PrNK">cps20041315579</mods:recordIdentifier>  
+            <mods:recordOrigin>machine generated</mods:recordOrigin>  
+            <mods:languageOfCataloging> 
+              <mods:languageTerm authority="iso639-2b" type="code">cze</mods:languageTerm> 
+            </mods:languageOfCataloging> 
+          </mods:recordInfo>  
+          <mods:identifier type="uuid">470f8af0-0377-11e4-9789-005056827e52</mods:identifier> 
+        </mods:mods> 
+      </mets:xmlData> 
+    </mets:mdWrap> 
+  </mets:dmdSec>  
+  <mets:dmdSec ID="DCMD_TITLE_0001"> 
+    <mets:mdWrap MDTYPE="DC" MIMETYPE="text/xml"> 
+      <mets:xmlData> 
+        <oai_dc:dc> 
+          <dc:title>Hlasy ze Siona: časopis pro lid evanjelický</dc:title>  
+          <dc:contributor>Šubert, Václav</dc:contributor>  
+          <dc:date>1861-1916</dc:date>  
+          <dc:date>1861-1916</dc:date>  
+          <dc:date>1861</dc:date>  
+          <dc:date>1916</dc:date>
+          <dc:publisher>Karel Seyfried</dc:publisher>  
+          <dc:language>cze</dc:language>  
+          <dc:format>56 sv.</dc:format>  
+          <dc:format>print</dc:format>  
+          <dc:description>Roč. 1 (1861)-roč. 56 (1916)</dc:description>  
+          <dc:description>Změny podnázvu: Evanjelický časopis, Časopis reformované církve (od 1873), později bez podnázvu</dc:description>  
+          <dc:description>Zanikl v červenci 1865 po sebevraždě tiskaře Seyfrieda, znovu vychází od srpna 1865 v Hořátvi u Nymburka</dc:description>  
+          <dc:description>Změny vydavatele: Václav Šubert, pak Bedřich Fleischer (od 1868), Čeněk Dušek (od 1873), pak Richard Novák, Fr. Hoblík (od 1881)</dc:description>  
+          <dc:description>Změny místa vydání: Kolín, Choceň, Pardubice, Hořátev u Nymburka</dc:description>  
+          <dc:description>Příloha: Evangelické besedy pro zábavu</dc:description>  
+          <dc:subject>050</dc:subject>  
+          <dc:type>model:periodical</dc:type>  
+          <dc:identifier>urnnbn:urn:nbn:cz:nk-0016ke</dc:identifier>  
+          <dc:identifier>uuid:470f8af0-0377-11e4-9789-005056827e52</dc:identifier>  
+          <dc:identifier>barCode:1001149769</dc:identifier>  
+          <dc:identifier>ccnb:cnb001315579</dc:identifier> 
+		  <dc:source>ABA001</dc:source>
+		  <dc:source>54 B 294</dc:source>
+        </oai_dc:dc> 
+      </mets:xmlData> 
+    </mets:mdWrap> 
+  </mets:dmdSec>  
+  <mets:dmdSec ID="MODSMD_VOLUME_0001"> 
+    <mets:mdWrap MDTYPE="MODS" MDTYPEVERSION="3.5" MIMETYPE="text/xml"> 
+      <mets:xmlData> 
+        <mods:mods ID="MODS_VOLUME_0001" version="3.5"> 
+          <mods:genre>volume</mods:genre>  
+          <mods:titleInfo> 
+            <mods:partNumber>29-30</mods:partNumber> 
+          </mods:titleInfo>  
+          <mods:originInfo> 
+            <mods:dateIssued>1889-1890</mods:dateIssued> 
+          </mods:originInfo>  
+          <mods:identifier type="uuid">6d5a1810-0377-11e4-9806-005056825209</mods:identifier> 
+        </mods:mods> 
+      </mets:xmlData> 
+    </mets:mdWrap> 
+  </mets:dmdSec>  
+  <mets:dmdSec ID="MODSMD_ISSUE_0001"> 
+    <mets:mdWrap MDTYPE="MODS" MDTYPEVERSION="3.5" MIMETYPE="text/xml"> 
+      <mets:xmlData> 
+        <mods:mods ID="MODS_ISSUE_0001" version="3.5"> 
+          <mods:genre type="normal">issue</mods:genre>  
+          <mods:titleInfo> 
+            <mods:title>Hlasy ze Siona</mods:title>  
+            <mods:partNumber>1</mods:partNumber> 
+          </mods:titleInfo>  
+          <mods:originInfo> 
+            <mods:place> 
+              <mods:placeTerm>V Praze</mods:placeTerm> 
+            </mods:place>  
+            <mods:publisher>Karel Seyfried</mods:publisher>  
+            <mods:dateIssued>10.1.1889</mods:dateIssued> 
+          </mods:originInfo>  
+          <mods:language> 
+            <mods:languageTerm authority="iso639-2b" type="code">cze</mods:languageTerm> 
+          </mods:language>  
+          <mods:identifier type="urnnbn">urn:nbn:cz:nk-0016ke</mods:identifier>  
+          <mods:identifier type="uuid">7033d800-0935-11e4-beed-5ef3fc9ae867</mods:identifier>  
+          <mods:identifier type="ccnb">cnb001315579</mods:identifier>  
+          <mods:location> 
+            <mods:physicalLocation>ABA001</mods:physicalLocation>  
+            <mods:shelfLocator>54 B 294</mods:shelfLocator> 
+          </mods:location> 
+        </mods:mods> 
+      </mets:xmlData> 
+    </mets:mdWrap> 
+  </mets:dmdSec>  
+  <mets:dmdSec ID="DCMD_ISSUE_0001"> 
+    <mets:mdWrap MDTYPE="DC" MIMETYPE="text/xml"> 
+      <mets:xmlData> 
+        <oai_dc:dc> 
+          <dc:type>model:periodicalitem</dc:type>  
+          <dc:title>Hlasy ze Siona</dc:title>
+		  <dc:description>1</dc:description>
+          <dc:date>10.1.1889</dc:date>  
+          <dc:publisher>Karel Seyfried</dc:publisher>  
+          <dc:language>cze</dc:language>  
+          <dc:identifier>urnnbn:urn:nbn:cz:nk-0016ke</dc:identifier>
+          <dc:identifier>uuid:7033d800-0935-11e4-beed-5ef3fc9ae867</dc:identifier>  
+          <dc:identifier>ccnb:cnb001315579</dc:identifier> 
+		  <dc:source>ABA001</dc:source>
+		  <dc:source>54 B 294</dc:source>
+        </oai_dc:dc> 
+      </mets:xmlData> 
+    </mets:mdWrap> 
+  </mets:dmdSec>  
+  <mets:dmdSec ID="DCMD_VOLUME_0001"> 
+    <mets:mdWrap MDTYPE="DC" MIMETYPE="text/xml"> 
+      <mets:xmlData> 
+        <oai_dc:dc> 
+          <dc:type>model:periodicalvolume</dc:type>  
+          <dc:description>29-30</dc:description>
+          <dc:date>1889-1890</dc:date>  
+          <dc:identifier>uuid:6d5a1810-0377-11e4-9806-005056825209</dc:identifier> 
+        </oai_dc:dc> 
+      </mets:xmlData> 
+    </mets:mdWrap> 
+  </mets:dmdSec>  
+  <mets:fileSec> 
+    <mets:fileGrp ID="MC_IMGGRP" USE="Images"> 
+      <mets:file CHECKSUM="e258931db9f4044b9dc2267a2f2d7e6d" CHECKSUMTYPE="MD5" CREATED="2014-07-05T23:57:50" ID="MC_0001" MIMETYPE="image/jp2" SEQ="0" SIZE="9264304"> 
+        <mets:FLocat LOCTYPE="URL" xlink:href="mastercopy/mc_7033d800-0935-11e4-beed-5ef3fc9ae867_0001.jp2"/> 
+      </mets:file>  
+      <mets:file CHECKSUM="61bc065544747cf54f36215c635dace0" CHECKSUMTYPE="MD5" CREATED="2014-07-05T23:58:04" ID="MC_0002" MIMETYPE="image/jp2" SEQ="1" SIZE="9839569"> 
+        <mets:FLocat LOCTYPE="URL" xlink:href="mastercopy/mc_7033d800-0935-11e4-beed-5ef3fc9ae867_0002.jp2"/> 
+      </mets:file>  
+      <mets:file CHECKSUM="4b43276fcb8a0e26000381792b120ebc" CHECKSUMTYPE="MD5" CREATED="2014-07-05T23:58:11" ID="MC_0003" MIMETYPE="image/jp2" SEQ="2" SIZE="9768613"> 
+        <mets:FLocat LOCTYPE="URL" xlink:href="mastercopy/mc_7033d800-0935-11e4-beed-5ef3fc9ae867_0003.jp2"/> 
+      </mets:file>  
+      <mets:file CHECKSUM="68bf0739ec998955dce6b17745ba7a8e" CHECKSUMTYPE="MD5" CREATED="2014-07-05T23:58:22" ID="MC_0004" MIMETYPE="image/jp2" SEQ="3" SIZE="9730204"> 
+        <mets:FLocat LOCTYPE="URL" xlink:href="mastercopy/mc_7033d800-0935-11e4-beed-5ef3fc9ae867_0004.jp2"/> 
+      </mets:file>  
+      <mets:file CHECKSUM="326670802eae7b5888206797762ade43" CHECKSUMTYPE="MD5" CREATED="2014-07-05T23:58:34" ID="MC_0005" MIMETYPE="image/jp2" SEQ="4" SIZE="10007164"> 
+        <mets:FLocat LOCTYPE="URL" xlink:href="mastercopy/mc_7033d800-0935-11e4-beed-5ef3fc9ae867_0005.jp2"/> 
+      </mets:file>  
+      <mets:file CHECKSUM="e0b24cbb29d9d6eb2f10ee049ed19b1a" CHECKSUMTYPE="MD5" CREATED="2014-07-05T23:58:43" ID="MC_0006" MIMETYPE="image/jp2" SEQ="5" SIZE="10031727"> 
+        <mets:FLocat LOCTYPE="URL" xlink:href="mastercopy/mc_7033d800-0935-11e4-beed-5ef3fc9ae867_0006.jp2"/> 
+      </mets:file>  
+      <mets:file CHECKSUM="d933d5d221cae3042c4604f675f09201" CHECKSUMTYPE="MD5" CREATED="2014-07-05T23:58:54" ID="MC_0007" MIMETYPE="image/jp2" SEQ="6" SIZE="10023213"> 
+        <mets:FLocat LOCTYPE="URL" xlink:href="mastercopy/mc_7033d800-0935-11e4-beed-5ef3fc9ae867_0007.jp2"/> 
+      </mets:file>  
+      <mets:file CHECKSUM="0f632cff70495b1a52669b48b98a1ace" CHECKSUMTYPE="MD5" CREATED="2014-07-05T23:59:02" ID="MC_0008" MIMETYPE="image/jp2" SEQ="7" SIZE="10264745"> 
+        <mets:FLocat LOCTYPE="URL" xlink:href="mastercopy/mc_7033d800-0935-11e4-beed-5ef3fc9ae867_0008.jp2"/> 
+      </mets:file>  
+      <mets:file CHECKSUM="2c5dbef921ac4b8a1ca52fbf6dc655db" CHECKSUMTYPE="MD5" CREATED="2014-07-05T23:59:14" ID="MC_0009" MIMETYPE="image/jp2" SEQ="8" SIZE="9810439"> 
+        <mets:FLocat LOCTYPE="URL" xlink:href="mastercopy/mc_7033d800-0935-11e4-beed-5ef3fc9ae867_0009.jp2"/> 
+      </mets:file>  
+      <mets:file CHECKSUM="c6804710789af30e665436d6eff80cd8" CHECKSUMTYPE="MD5" CREATED="2014-07-05T23:59:26" ID="MC_0010" MIMETYPE="image/jp2" SEQ="9" SIZE="9718064"> 
+        <mets:FLocat LOCTYPE="URL" xlink:href="mastercopy/mc_7033d800-0935-11e4-beed-5ef3fc9ae867_0010.jp2"/> 
+      </mets:file> 
+    </mets:fileGrp>  
+    <mets:fileGrp ID="UC_IMGGRP" USE="Images"> 
+      <mets:file CHECKSUM="da84c17dec364c4799b3514dfe6860f3" CHECKSUMTYPE="MD5" CREATED="2014-07-06T01:20:07" ID="UC_0001" MIMETYPE="image/jp2" SEQ="0" SIZE="3338208"> 
+        <mets:FLocat LOCTYPE="URL" xlink:href="usercopy/uc_7033d800-0935-11e4-beed-5ef3fc9ae867_0001.jp2"/> 
+      </mets:file>  
+      <mets:file CHECKSUM="00d60b59e6983bc04d16f676c1da3a3a" CHECKSUMTYPE="MD5" CREATED="2014-07-06T01:20:09" ID="UC_0002" MIMETYPE="image/jp2" SEQ="1" SIZE="3298022"> 
+        <mets:FLocat LOCTYPE="URL" xlink:href="usercopy/uc_7033d800-0935-11e4-beed-5ef3fc9ae867_0002.jp2"/> 
+      </mets:file>  
+      <mets:file CHECKSUM="014911a4e4ed020025d9b36d60106eb3" CHECKSUMTYPE="MD5" CREATED="2014-07-06T01:20:13" ID="UC_0003" MIMETYPE="image/jp2" SEQ="2" SIZE="3338261"> 
+        <mets:FLocat LOCTYPE="URL" xlink:href="usercopy/uc_7033d800-0935-11e4-beed-5ef3fc9ae867_0003.jp2"/> 
+      </mets:file>  
+      <mets:file CHECKSUM="e2fde93ee434c79b303b7b60265d4567" CHECKSUMTYPE="MD5" CREATED="2014-07-06T01:20:15" ID="UC_0004" MIMETYPE="image/jp2" SEQ="3" SIZE="3298022"> 
+        <mets:FLocat LOCTYPE="URL" xlink:href="usercopy/uc_7033d800-0935-11e4-beed-5ef3fc9ae867_0004.jp2"/> 
+      </mets:file>  
+      <mets:file CHECKSUM="98065a2a59a3b7af086b9782c0c22700" CHECKSUMTYPE="MD5" CREATED="2014-07-06T01:20:17" ID="UC_0005" MIMETYPE="image/jp2" SEQ="4" SIZE="3338213"> 
+        <mets:FLocat LOCTYPE="URL" xlink:href="usercopy/uc_7033d800-0935-11e4-beed-5ef3fc9ae867_0005.jp2"/> 
+      </mets:file>  
+      <mets:file CHECKSUM="0b8ac72c9b320ae33fc22cd87397b9c7" CHECKSUMTYPE="MD5" CREATED="2014-07-06T01:20:19" ID="UC_0006" MIMETYPE="image/jp2" SEQ="5" SIZE="3297848"> 
+        <mets:FLocat LOCTYPE="URL" xlink:href="usercopy/uc_7033d800-0935-11e4-beed-5ef3fc9ae867_0006.jp2"/> 
+      </mets:file>  
+      <mets:file CHECKSUM="75579d9327453e15e4a75196a1b3f21f" CHECKSUMTYPE="MD5" CREATED="2014-07-06T01:20:21" ID="UC_0007" MIMETYPE="image/jp2" SEQ="6" SIZE="3338242"> 
+        <mets:FLocat LOCTYPE="URL" xlink:href="usercopy/uc_7033d800-0935-11e4-beed-5ef3fc9ae867_0007.jp2"/> 
+      </mets:file>  
+      <mets:file CHECKSUM="080a6c98908d5879ad3208192b874f0b" CHECKSUMTYPE="MD5" CREATED="2014-07-06T01:20:23" ID="UC_0008" MIMETYPE="image/jp2" SEQ="7" SIZE="3383330"> 
+        <mets:FLocat LOCTYPE="URL" xlink:href="usercopy/uc_7033d800-0935-11e4-beed-5ef3fc9ae867_0008.jp2"/> 
+      </mets:file>  
+      <mets:file CHECKSUM="953d573f3715bf0ed49a638a345f9339" CHECKSUMTYPE="MD5" CREATED="2014-07-06T01:20:25" ID="UC_0009" MIMETYPE="image/jp2" SEQ="8" SIZE="3338173"> 
+        <mets:FLocat LOCTYPE="URL" xlink:href="usercopy/uc_7033d800-0935-11e4-beed-5ef3fc9ae867_0009.jp2"/> 
+      </mets:file>  
+      <mets:file CHECKSUM="9d4a1c752f2968a28d69f89d2ced6be8" CHECKSUMTYPE="MD5" CREATED="2014-07-06T01:20:27" ID="UC_0010" MIMETYPE="image/jp2" SEQ="9" SIZE="3297971"> 
+        <mets:FLocat LOCTYPE="URL" xlink:href="usercopy/uc_7033d800-0935-11e4-beed-5ef3fc9ae867_0010.jp2"/> 
+      </mets:file> 
+    </mets:fileGrp>  
+    <mets:fileGrp ID="ALTOGRP" USE="Layout"> 
+      <mets:file CHECKSUM="a65c46920066c298151642e7196179e7" CHECKSUMTYPE="MD5" CREATED="2014-07-09T23:34:20" ID="ALTO_0001" MIMETYPE="text/xml" SEQ="0" SIZE="90238"> 
+        <mets:FLocat LOCTYPE="URL" xlink:href="alto/alto_7033d800-0935-11e4-beed-5ef3fc9ae867_0001.xml"/> 
+      </mets:file>  
+      <mets:file CHECKSUM="40c79ffaca11b8408001f3eac63adcd2" CHECKSUMTYPE="MD5" CREATED="2014-07-09T23:34:21" ID="ALTO_0002" MIMETYPE="text/xml" SEQ="1" SIZE="116801"> 
+        <mets:FLocat LOCTYPE="URL" xlink:href="alto/alto_7033d800-0935-11e4-beed-5ef3fc9ae867_0002.xml"/> 
+      </mets:file>  
+      <mets:file CHECKSUM="a3d716d379d60ede1790e4340af0b890" CHECKSUMTYPE="MD5" CREATED="2014-07-09T23:34:22" ID="ALTO_0003" MIMETYPE="text/xml" SEQ="2" SIZE="126086"> 
+        <mets:FLocat LOCTYPE="URL" xlink:href="alto/alto_7033d800-0935-11e4-beed-5ef3fc9ae867_0003.xml"/> 
+      </mets:file>  
+      <mets:file CHECKSUM="48b12ade87435ad93e4591c4836461cf" CHECKSUMTYPE="MD5" CREATED="2014-07-09T23:34:24" ID="ALTO_0004" MIMETYPE="text/xml" SEQ="3" SIZE="135152"> 
+        <mets:FLocat LOCTYPE="URL" xlink:href="alto/alto_7033d800-0935-11e4-beed-5ef3fc9ae867_0004.xml"/> 
+      </mets:file>  
+      <mets:file CHECKSUM="6902ac048836db360cc26ddd6f17e497" CHECKSUMTYPE="MD5" CREATED="2014-07-09T23:34:24" ID="ALTO_0005" MIMETYPE="text/xml" SEQ="4" SIZE="143019"> 
+        <mets:FLocat LOCTYPE="URL" xlink:href="alto/alto_7033d800-0935-11e4-beed-5ef3fc9ae867_0005.xml"/> 
+      </mets:file>  
+      <mets:file CHECKSUM="f049b674282a26a5f2c5093be215318e" CHECKSUMTYPE="MD5" CREATED="2014-07-09T23:34:25" ID="ALTO_0006" MIMETYPE="text/xml" SEQ="5" SIZE="142860"> 
+        <mets:FLocat LOCTYPE="URL" xlink:href="alto/alto_7033d800-0935-11e4-beed-5ef3fc9ae867_0006.xml"/> 
+      </mets:file>  
+      <mets:file CHECKSUM="d852fc88c8d7f1699f9e04fa80bac969" CHECKSUMTYPE="MD5" CREATED="2014-07-09T23:34:25" ID="ALTO_0007" MIMETYPE="text/xml" SEQ="6" SIZE="151301"> 
+        <mets:FLocat LOCTYPE="URL" xlink:href="alto/alto_7033d800-0935-11e4-beed-5ef3fc9ae867_0007.xml"/> 
+      </mets:file>  
+      <mets:file CHECKSUM="a72c2ece89f5ebe1abfa1fe9da8b25f5" CHECKSUMTYPE="MD5" CREATED="2014-07-09T23:34:27" ID="ALTO_0008" MIMETYPE="text/xml" SEQ="7" SIZE="146920"> 
+        <mets:FLocat LOCTYPE="URL" xlink:href="alto/alto_7033d800-0935-11e4-beed-5ef3fc9ae867_0008.xml"/> 
+      </mets:file>  
+      <mets:file CHECKSUM="bfedefcffa4ddbbcc886a97d9f7fc939" CHECKSUMTYPE="MD5" CREATED="2014-07-09T23:34:28" ID="ALTO_0009" MIMETYPE="text/xml" SEQ="8" SIZE="176343"> 
+        <mets:FLocat LOCTYPE="URL" xlink:href="alto/alto_7033d800-0935-11e4-beed-5ef3fc9ae867_0009.xml"/> 
+      </mets:file>  
+      <mets:file CHECKSUM="e30a62ad60344ccbfac1bad589950777" CHECKSUMTYPE="MD5" CREATED="2014-07-09T23:34:29" ID="ALTO_0010" MIMETYPE="text/xml" SEQ="9" SIZE="169667"> 
+        <mets:FLocat LOCTYPE="URL" xlink:href="alto/alto_7033d800-0935-11e4-beed-5ef3fc9ae867_0010.xml"/> 
+      </mets:file> 
+    </mets:fileGrp>  
+    <mets:fileGrp ID="TXTGRP" USE="Text"> 
+      <mets:file CHECKSUM="faeba5cd4c11149aa9483fff78788d97" CHECKSUMTYPE="MD5" CREATED="2014-07-09T23:13:57" ID="TXT_0001" MIMETYPE="text/plain" SEQ="0" SIZE="4523"> 
+        <mets:FLocat LOCTYPE="URL" xlink:href="txt/txt_7033d800-0935-11e4-beed-5ef3fc9ae867_0001.txt"/> 
+      </mets:file>  
+      <mets:file CHECKSUM="687e97228a9a095e7415b34ccfe5c6a0" CHECKSUMTYPE="MD5" CREATED="2014-07-09T23:13:58" ID="TXT_0002" MIMETYPE="text/plain" SEQ="1" SIZE="6878"> 
+        <mets:FLocat LOCTYPE="URL" xlink:href="txt/txt_7033d800-0935-11e4-beed-5ef3fc9ae867_0002.txt"/> 
+      </mets:file>  
+      <mets:file CHECKSUM="cf07c7fb9fef6c9f5aaa33e306bcaa72" CHECKSUMTYPE="MD5" CREATED="2014-07-09T23:13:58" ID="TXT_0003" MIMETYPE="text/plain" SEQ="2" SIZE="7226"> 
+        <mets:FLocat LOCTYPE="URL" xlink:href="txt/txt_7033d800-0935-11e4-beed-5ef3fc9ae867_0003.txt"/> 
+      </mets:file>  
+      <mets:file CHECKSUM="19aec6de5d9461681fc84de23d70f5e7" CHECKSUMTYPE="MD5" CREATED="2014-07-09T23:14:00" ID="TXT_0004" MIMETYPE="text/plain" SEQ="3" SIZE="7426"> 
+        <mets:FLocat LOCTYPE="URL" xlink:href="txt/txt_7033d800-0935-11e4-beed-5ef3fc9ae867_0004.txt"/> 
+      </mets:file>  
+      <mets:file CHECKSUM="df0ecaebb25c6b8ba25ddd093f27300a" CHECKSUMTYPE="MD5" CREATED="2014-07-09T23:14:01" ID="TXT_0005" MIMETYPE="text/plain" SEQ="4" SIZE="8734"> 
+        <mets:FLocat LOCTYPE="URL" xlink:href="txt/txt_7033d800-0935-11e4-beed-5ef3fc9ae867_0005.txt"/> 
+      </mets:file>  
+      <mets:file CHECKSUM="8f4214201f8b4d58a3425007d1433529" CHECKSUMTYPE="MD5" CREATED="2014-07-09T23:14:01" ID="TXT_0006" MIMETYPE="text/plain" SEQ="5" SIZE="8657"> 
+        <mets:FLocat LOCTYPE="URL" xlink:href="txt/txt_7033d800-0935-11e4-beed-5ef3fc9ae867_0006.txt"/> 
+      </mets:file>  
+      <mets:file CHECKSUM="7d46a89a8368c74817036bcfc5724ba1" CHECKSUMTYPE="MD5" CREATED="2014-07-09T23:14:03" ID="TXT_0007" MIMETYPE="text/plain" SEQ="6" SIZE="8764"> 
+        <mets:FLocat LOCTYPE="URL" xlink:href="txt/txt_7033d800-0935-11e4-beed-5ef3fc9ae867_0007.txt"/> 
+      </mets:file>  
+      <mets:file CHECKSUM="1228f10933082152c0043882b56b5a11" CHECKSUMTYPE="MD5" CREATED="2014-07-09T23:14:04" ID="TXT_0008" MIMETYPE="text/plain" SEQ="7" SIZE="8472"> 
+        <mets:FLocat LOCTYPE="URL" xlink:href="txt/txt_7033d800-0935-11e4-beed-5ef3fc9ae867_0008.txt"/> 
+      </mets:file>  
+      <mets:file CHECKSUM="f92428818a34addafb1c611535b86056" CHECKSUMTYPE="MD5" CREATED="2014-07-09T23:14:12" ID="TXT_0009" MIMETYPE="text/plain" SEQ="8" SIZE="8923"> 
+        <mets:FLocat LOCTYPE="URL" xlink:href="txt/txt_7033d800-0935-11e4-beed-5ef3fc9ae867_0009.txt"/> 
+      </mets:file>  
+      <mets:file CHECKSUM="e985dc57aaecade4488e146ec08ca426" CHECKSUMTYPE="MD5" CREATED="2014-07-09T23:14:24" ID="TXT_0010" MIMETYPE="text/plain" SEQ="9" SIZE="8303"> 
+        <mets:FLocat LOCTYPE="URL" xlink:href="txt/txt_7033d800-0935-11e4-beed-5ef3fc9ae867_0010.txt"/> 
+      </mets:file> 
+    </mets:fileGrp>  
+    <mets:fileGrp ID="TECHMDGRP" USE="Technical Metadata"> 
+      <mets:file CHECKSUM="164c9e8c34c9e2b9908393d14911ca06" CHECKSUMTYPE="MD5" CREATED="2014-07-11T21:59:34" ID="AMD_0001" MIMETYPE="text/xml" SEQ="0" SIZE="39588"> 
+        <mets:FLocat LOCTYPE="URL" xlink:href="amdsec/amd_mets_7033d800-0935-11e4-beed-5ef3fc9ae867_0001.xml"/> 
+      </mets:file>  
+      <mets:file CHECKSUM="7919ebc4f9da2facaa358f4b3650badf" CHECKSUMTYPE="MD5" CREATED="2014-07-11T21:59:40" ID="AMD_0002" MIMETYPE="text/xml" SEQ="1" SIZE="39590"> 
+        <mets:FLocat LOCTYPE="URL" xlink:href="amdsec/amd_mets_7033d800-0935-11e4-beed-5ef3fc9ae867_0002.xml"/> 
+      </mets:file>  
+      <mets:file CHECKSUM="d1d5c855c18df975ce1743643b60e80e" CHECKSUMTYPE="MD5" CREATED="2014-07-11T21:59:45" ID="AMD_0003" MIMETYPE="text/xml" SEQ="2" SIZE="39590"> 
+        <mets:FLocat LOCTYPE="URL" xlink:href="amdsec/amd_mets_7033d800-0935-11e4-beed-5ef3fc9ae867_0003.xml"/> 
+      </mets:file>  
+      <mets:file CHECKSUM="39e4af7a546f72d74635b1a5c06e9e50" CHECKSUMTYPE="MD5" CREATED="2014-07-11T21:59:49" ID="AMD_0004" MIMETYPE="text/xml" SEQ="3" SIZE="39590"> 
+        <mets:FLocat LOCTYPE="URL" xlink:href="amdsec/amd_mets_7033d800-0935-11e4-beed-5ef3fc9ae867_0004.xml"/> 
+      </mets:file>  
+      <mets:file CHECKSUM="e0a05cde78e28cbd90bb2f9f9dad35e9" CHECKSUMTYPE="MD5" CREATED="2014-07-11T21:59:54" ID="AMD_0005" MIMETYPE="text/xml" SEQ="4" SIZE="39592"> 
+        <mets:FLocat LOCTYPE="URL" xlink:href="amdsec/amd_mets_7033d800-0935-11e4-beed-5ef3fc9ae867_0005.xml"/> 
+      </mets:file>  
+      <mets:file CHECKSUM="74588848ce2a5531b3b23f8214439e45" CHECKSUMTYPE="MD5" CREATED="2014-07-11T21:59:59" ID="AMD_0006" MIMETYPE="text/xml" SEQ="5" SIZE="39592"> 
+        <mets:FLocat LOCTYPE="URL" xlink:href="amdsec/amd_mets_7033d800-0935-11e4-beed-5ef3fc9ae867_0006.xml"/> 
+      </mets:file>  
+      <mets:file CHECKSUM="df4ec96fb4542ef84a50f1b70295f150" CHECKSUMTYPE="MD5" CREATED="2014-07-11T22:00:08" ID="AMD_0007" MIMETYPE="text/xml" SEQ="6" SIZE="39592"> 
+        <mets:FLocat LOCTYPE="URL" xlink:href="amdsec/amd_mets_7033d800-0935-11e4-beed-5ef3fc9ae867_0007.xml"/> 
+      </mets:file>  
+      <mets:file CHECKSUM="4a5994ace6d8062daf0e085d1d49336e" CHECKSUMTYPE="MD5" CREATED="2014-07-11T22:00:11" ID="AMD_0008" MIMETYPE="text/xml" SEQ="7" SIZE="39592"> 
+        <mets:FLocat LOCTYPE="URL" xlink:href="amdsec/amd_mets_7033d800-0935-11e4-beed-5ef3fc9ae867_0008.xml"/> 
+      </mets:file>  
+      <mets:file CHECKSUM="a907c87bab0be1fd727bd26774ccc4d5" CHECKSUMTYPE="MD5" CREATED="2014-07-11T22:00:18" ID="AMD_0009" MIMETYPE="text/xml" SEQ="8" SIZE="39590"> 
+        <mets:FLocat LOCTYPE="URL" xlink:href="amdsec/amd_mets_7033d800-0935-11e4-beed-5ef3fc9ae867_0009.xml"/> 
+      </mets:file>  
+      <mets:file CHECKSUM="d42f9b15ab023c9fb199983484b79d76" CHECKSUMTYPE="MD5" CREATED="2014-07-11T22:00:24" ID="AMD_0010" MIMETYPE="text/xml" SEQ="9" SIZE="39590"> 
+        <mets:FLocat LOCTYPE="URL" xlink:href="amdsec/amd_mets_7033d800-0935-11e4-beed-5ef3fc9ae867_0010.xml"/> 
+      </mets:file> 
+    </mets:fileGrp> 
+  </mets:fileSec>  
+  <mets:structMap LABEL="Physical_Structure" TYPE="PHYSICAL"> 
+    <mets:div DMDID="MODSMD_ISSUE_0001" ID="DIV_P_0000" LABEL="Hlasy ze Siona" TYPE="Periodical"> 
+      <mets:div ID="DIV_P_PAGE_0000" ORDER="5" ORDERLABEL="[1]" TYPE="titlePage"> 
+        <mets:fptr FILEID="MC_0001"/>  
+        <mets:fptr FILEID="UC_0001"/>  
+        <mets:fptr FILEID="ALTO_0001"/>  
+        <mets:fptr FILEID="TXT_0001"/>  
+        <mets:fptr FILEID="AMD_0001"/> 
+      </mets:div>  
+      <mets:div ID="DIV_P_PAGE_0001" ORDER="6" ORDERLABEL="2" TYPE="normalPage"> 
+        <mets:fptr FILEID="MC_0002"/>  
+        <mets:fptr FILEID="UC_0002"/>  
+        <mets:fptr FILEID="ALTO_0002"/>  
+        <mets:fptr FILEID="TXT_0002"/>  
+        <mets:fptr FILEID="AMD_0002"/> 
+      </mets:div>  
+      <mets:div ID="DIV_P_PAGE_0002" ORDER="7" ORDERLABEL="3" TYPE="normalPage"> 
+        <mets:fptr FILEID="MC_0003"/>  
+        <mets:fptr FILEID="UC_0003"/>  
+        <mets:fptr FILEID="ALTO_0003"/>  
+        <mets:fptr FILEID="TXT_0003"/>  
+        <mets:fptr FILEID="AMD_0003"/> 
+      </mets:div>  
+      <mets:div ID="DIV_P_PAGE_0003" ORDER="8" ORDERLABEL="4" TYPE="normalPage"> 
+        <mets:fptr FILEID="MC_0004"/>  
+        <mets:fptr FILEID="UC_0004"/>  
+        <mets:fptr FILEID="ALTO_0004"/>  
+        <mets:fptr FILEID="TXT_0004"/>  
+        <mets:fptr FILEID="AMD_0004"/> 
+      </mets:div>  
+      <mets:div ID="DIV_P_PAGE_0004" ORDER="9" ORDERLABEL="5" TYPE="normalPage"> 
+        <mets:fptr FILEID="MC_0005"/>  
+        <mets:fptr FILEID="UC_0005"/>  
+        <mets:fptr FILEID="ALTO_0005"/>  
+        <mets:fptr FILEID="TXT_0005"/>  
+        <mets:fptr FILEID="AMD_0005"/> 
+      </mets:div>  
+      <mets:div ID="DIV_P_PAGE_0005" ORDER="10" ORDERLABEL="6" TYPE="normalPage"> 
+        <mets:fptr FILEID="MC_0006"/>  
+        <mets:fptr FILEID="UC_0006"/>  
+        <mets:fptr FILEID="ALTO_0006"/>  
+        <mets:fptr FILEID="TXT_0006"/>  
+        <mets:fptr FILEID="AMD_0006"/> 
+      </mets:div>  
+      <mets:div ID="DIV_P_PAGE_0006" ORDER="11" ORDERLABEL="7" TYPE="normalPage"> 
+        <mets:fptr FILEID="MC_0007"/>  
+        <mets:fptr FILEID="UC_0007"/>  
+        <mets:fptr FILEID="ALTO_0007"/>  
+        <mets:fptr FILEID="TXT_0007"/>  
+        <mets:fptr FILEID="AMD_0007"/> 
+      </mets:div>  
+      <mets:div ID="DIV_P_PAGE_0007" ORDER="12" ORDERLABEL="8" TYPE="normalPage"> 
+        <mets:fptr FILEID="MC_0008"/>  
+        <mets:fptr FILEID="UC_0008"/>  
+        <mets:fptr FILEID="ALTO_0008"/>  
+        <mets:fptr FILEID="TXT_0008"/>  
+        <mets:fptr FILEID="AMD_0008"/> 
+      </mets:div>  
+      <mets:div ID="DIV_P_PAGE_0008" ORDER="13" ORDERLABEL="[8a]" TYPE="normalPage"> 
+        <mets:fptr FILEID="MC_0009"/>  
+        <mets:fptr FILEID="UC_0009"/>  
+        <mets:fptr FILEID="ALTO_0009"/>  
+        <mets:fptr FILEID="TXT_0009"/>  
+        <mets:fptr FILEID="AMD_0009"/> 
+      </mets:div>  
+      <mets:div ID="DIV_P_PAGE_0009" ORDER="14" ORDERLABEL="[8b]" TYPE="normalPage"> 
+        <mets:fptr FILEID="MC_0010"/>  
+        <mets:fptr FILEID="UC_0010"/>  
+        <mets:fptr FILEID="ALTO_0010"/>  
+        <mets:fptr FILEID="TXT_0010"/>  
+        <mets:fptr FILEID="AMD_0010"/> 
+      </mets:div> 
+    </mets:div> 
+  </mets:structMap>  
+  <mets:structMap LABEL="Logical_Structure" TYPE="LOGICAL"> 
+    <mets:div DMDID="MODSMD_TITLE_0001" ID="TITLE_0001" LABEL="Hlasy ze Siona" TYPE="PERIODICAL_TITLE"> 
+      <mets:div DMDID="MODSMD_VOLUME_0001" ID="VOLUME_0001" LABEL="Hlasy ze Siona" TYPE="PERIODICAL_VOLUME"> 
+        <mets:div DMDID="MODSMD_ISSUE_0001" ID="ISSUE_0001" LABEL="Hlasy ze Siona" TYPE="ISSUE"/> 
+      </mets:div> 
+    </mets:div> 
+  </mets:structMap>  
+  <mets:structLink> 
+    <mets:smLink xlink:from="ISSUE_1" xlink:to="DIV_P_PAGE_0000"/>  
+    <mets:smLink xlink:from="ISSUE_1" xlink:to="DIV_P_PAGE_0001"/>  
+    <mets:smLink xlink:from="ISSUE_1" xlink:to="DIV_P_PAGE_0002"/>  
+    <mets:smLink xlink:from="ISSUE_1" xlink:to="DIV_P_PAGE_0003"/>  
+    <mets:smLink xlink:from="ISSUE_1" xlink:to="DIV_P_PAGE_0004"/>  
+    <mets:smLink xlink:from="ISSUE_1" xlink:to="DIV_P_PAGE_0005"/>  
+    <mets:smLink xlink:from="ISSUE_1" xlink:to="DIV_P_PAGE_0006"/>  
+    <mets:smLink xlink:from="ISSUE_1" xlink:to="DIV_P_PAGE_0007"/>  
+    <mets:smLink xlink:from="ISSUE_1" xlink:to="DIV_P_PAGE_0008"/>  
+    <mets:smLink xlink:from="ISSUE_1" xlink:to="DIV_P_PAGE_0009"/> 
+  </mets:structLink> 
+</mets:mets>

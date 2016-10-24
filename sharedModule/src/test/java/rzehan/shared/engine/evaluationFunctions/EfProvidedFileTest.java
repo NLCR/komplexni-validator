@@ -21,8 +21,7 @@ public class EfProvidedFileTest {
 
     private static Engine engine;
     private static String PSP_DIR_FILEID = "PSP_DIR";
-    /*TODO: paths relative to available resource dir*/
-    private static File PSP_DIR_FILE = new File("/home/martin/zakazky/NKP-validator/data/monografie_1.2/b50eb6b0-f0a4-11e3-b72e-005056827e52");
+    private static File PSP_DIR_FILE = new File("src/test/resources/monografie_1.2/b50eb6b0-f0a4-11e3-b72e-005056827e52");
 
 
     @BeforeClass

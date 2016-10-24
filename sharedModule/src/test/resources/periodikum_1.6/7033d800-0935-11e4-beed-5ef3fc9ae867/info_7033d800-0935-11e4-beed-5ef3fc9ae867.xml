@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<info xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://www.ndk.cz/standardy-digitalizace/info11.xsd">
+    <created>2015-09-12T13:12:59</created>
+	<metadataversion>1.6</metadataversion>
+    <packageid>7033d800-0935-11e4-beed-5ef3fc9ae867</packageid>
+	<mainmets>mets_7033d800-0935-11e4-beed-5ef3fc9ae867.xml</mainmets>
+	<validation version="validation_templates_version:file_sec:1.0;periodical_issue:1.0;amd_sec_mix:1.0;physical_map_amd:1.0;periodical_title:1.0;amd_file_sec:1.0;amd_sec:1.0;periodical_logical_map:1.0;periodical_supplement:1.0;physical_map:1.0;periodical_volume:1.0"/>
+    <titleid type="ccnb">cnb001315579</titleid>
+	<titleid type="urnnbn">urn:nbn:cz:nk-0016ke</titleid>
+    <collection>Digitalizace národní knihovny</collection>
+    <institution>Česká národní knihovna</institution>
+    <creator>ABA001</creator>
+    <size>162782</size>
+    <itemlist itemtotal="52">
+        <item>\usercopy\uc_7033d800-0935-11e4-beed-5ef3fc9ae867_0001.jp2</item>
+        <item>\usercopy\uc_7033d800-0935-11e4-beed-5ef3fc9ae867_0002.jp2</item>
+        <item>\usercopy\uc_7033d800-0935-11e4-beed-5ef3fc9ae867_0003.jp2</item>
+        <item>\usercopy\uc_7033d800-0935-11e4-beed-5ef3fc9ae867_0004.jp2</item>
+        <item>\usercopy\uc_7033d800-0935-11e4-beed-5ef3fc9ae867_0005.jp2</item>
+        <item>\usercopy\uc_7033d800-0935-11e4-beed-5ef3fc9ae867_0006.jp2</item>
+        <item>\usercopy\uc_7033d800-0935-11e4-beed-5ef3fc9ae867_0007.jp2</item>
+        <item>\usercopy\uc_7033d800-0935-11e4-beed-5ef3fc9ae867_0008.jp2</item>
+        <item>\usercopy\uc_7033d800-0935-11e4-beed-5ef3fc9ae867_0009.jp2</item>
+        <item>\usercopy\uc_7033d800-0935-11e4-beed-5ef3fc9ae867_0010.jp2</item>
+        <item>\mastercopy\mc_7033d800-0935-11e4-beed-5ef3fc9ae867_0001.jp2</item>
+        <item>\mastercopy\mc_7033d800-0935-11e4-beed-5ef3fc9ae867_0002.jp2</item>
+        <item>\mastercopy\mc_7033d800-0935-11e4-beed-5ef3fc9ae867_0003.jp2</item>
+        <item>\mastercopy\mc_7033d800-0935-11e4-beed-5ef3fc9ae867_0004.jp2</item>
+        <item>\mastercopy\mc_7033d800-0935-11e4-beed-5ef3fc9ae867_0005.jp2</item>
+        <item>\mastercopy\mc_7033d800-0935-11e4-beed-5ef3fc9ae867_0006.jp2</item>
+        <item>\mastercopy\mc_7033d800-0935-11e4-beed-5ef3fc9ae867_0007.jp2</item>
+        <item>\mastercopy\mc_7033d800-0935-11e4-beed-5ef3fc9ae867_0008.jp2</item>
+        <item>\mastercopy\mc_7033d800-0935-11e4-beed-5ef3fc9ae867_0009.jp2</item>
+        <item>\mastercopy\mc_7033d800-0935-11e4-beed-5ef3fc9ae867_0010.jp2</item>
+        <item>\alto\alto_7033d800-0935-11e4-beed-5ef3fc9ae867_0001.xml</item>
+        <item>\alto\alto_7033d800-0935-11e4-beed-5ef3fc9ae867_0002.xml</item>
+        <item>\alto\alto_7033d800-0935-11e4-beed-5ef3fc9ae867_0003.xml</item>
+        <item>\alto\alto_7033d800-0935-11e4-beed-5ef3fc9ae867_0004.xml</item>
+        <item>\alto\alto_7033d800-0935-11e4-beed-5ef3fc9ae867_0005.xml</item>
+        <item>\alto\alto_7033d800-0935-11e4-beed-5ef3fc9ae867_0006.xml</item>
+        <item>\alto\alto_7033d800-0935-11e4-beed-5ef3fc9ae867_0007.xml</item>
+        <item>\alto\alto_7033d800-0935-11e4-beed-5ef3fc9ae867_0008.xml</item>
+        <item>\alto\alto_7033d800-0935-11e4-beed-5ef3fc9ae867_0009.xml</item>
+        <item>\alto\alto_7033d800-0935-11e4-beed-5ef3fc9ae867_0010.xml</item>
+        <item>\amdsec\amd_mets_7033d800-0935-11e4-beed-5ef3fc9ae867_0001.xml</item>
+        <item>\amdsec\amd_mets_7033d800-0935-11e4-beed-5ef3fc9ae867_0002.xml</item>
+        <item>\amdsec\amd_mets_7033d800-0935-11e4-beed-5ef3fc9ae867_0003.xml</item>
+        <item>\amdsec\amd_mets_7033d800-0935-11e4-beed-5ef3fc9ae867_0004.xml</item>
+        <item>\amdsec\amd_mets_7033d800-0935-11e4-beed-5ef3fc9ae867_0005.xml</item>
+        <item>\amdsec\amd_mets_7033d800-0935-11e4-beed-5ef3fc9ae867_0006.xml</item>
+        <item>\amdsec\amd_mets_7033d800-0935-11e4-beed-5ef3fc9ae867_0007.xml</item>
+        <item>\amdsec\amd_mets_7033d800-0935-11e4-beed-5ef3fc9ae867_0008.xml</item>
+        <item>\amdsec\amd_mets_7033d800-0935-11e4-beed-5ef3fc9ae867_0009.xml</item>
+        <item>\amdsec\amd_mets_7033d800-0935-11e4-beed-5ef3fc9ae867_0010.xml</item>
+        <item>\txt\txt_7033d800-0935-11e4-beed-5ef3fc9ae867_0001.txt</item>
+        <item>\txt\txt_7033d800-0935-11e4-beed-5ef3fc9ae867_0002.txt</item>
+        <item>\txt\txt_7033d800-0935-11e4-beed-5ef3fc9ae867_0003.txt</item>
+        <item>\txt\txt_7033d800-0935-11e4-beed-5ef3fc9ae867_0004.txt</item>
+        <item>\txt\txt_7033d800-0935-11e4-beed-5ef3fc9ae867_0005.txt</item>
+        <item>\txt\txt_7033d800-0935-11e4-beed-5ef3fc9ae867_0006.txt</item>
+        <item>\txt\txt_7033d800-0935-11e4-beed-5ef3fc9ae867_0007.txt</item>
+        <item>\txt\txt_7033d800-0935-11e4-beed-5ef3fc9ae867_0008.txt</item>
+        <item>\txt\txt_7033d800-0935-11e4-beed-5ef3fc9ae867_0009.txt</item>
+        <item>\txt\txt_7033d800-0935-11e4-beed-5ef3fc9ae867_0010.txt</item>
+        <item>\mets_7033d800-0935-11e4-beed-5ef3fc9ae867.xml</item>
+		<item>\md5_7033d800-0935-11e4-beed-5ef3fc9ae867.md5</item>
+    </itemlist>
+    <checksum type="MD5" checksum="DCB9850489C55F03D67111F5C9A4BB20">\md5_7033d800-0935-11e4-beed-5ef3fc9ae867.md5</checksum>
+</info>

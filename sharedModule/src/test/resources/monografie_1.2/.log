@@ -1,0 +1,79 @@
+INFO 	- budu validovat: /home/martin/zakazky/NKP-validator/data/monografie_1.2/
+INFO 	- validator: validace hlavniho METS souboru                                              *01_mets*
+ERROR 	- Traceback (most recent call last):
+  File "/home/martin/zakazky/NKP-validator/NLCR_NDK-validator/psp-validator/lib/python2.7/validator/__init__.py", line 90, in validate
+    result = m()
+  File "/home/martin/zakazky/NKP-validator/NLCR_NDK-validator/psp-validator/lib/python2.7/validator/__init__.py", line 102, in validate_01_mets
+    mets = self.psp.mets
+  File "/home/martin/zakazky/NKP-validator/NLCR_NDK-validator/psp-validator/lib/python2.7/psp/__init__.py", line 53, in mets
+    raise NoMetsException(self.dirname)
+NoMetsException: /home/martin/zakazky/NKP-validator/data/monografie_1.2/
+
+INFO 	- validator: validace vnitrku METS souboru, specifikace DC                               *01_mets_dc*
+ERROR 	- Traceback (most recent call last):
+  File "/home/martin/zakazky/NKP-validator/NLCR_NDK-validator/psp-validator/lib/python2.7/validator/__init__.py", line 90, in validate
+    result = m()
+  File "/home/martin/zakazky/NKP-validator/NLCR_NDK-validator/psp-validator/lib/python2.7/validator/__init__.py", line 134, in validate_01_mets_dc
+    mets = self.psp.mets
+  File "/home/martin/zakazky/NKP-validator/NLCR_NDK-validator/psp-validator/lib/python2.7/psp/__init__.py", line 53, in mets
+    raise NoMetsException(self.dirname)
+NoMetsException: /home/martin/zakazky/NKP-validator/data/monografie_1.2/
+
+INFO 	- validator: validace vnitrku hlavniho METS souboru, specifikace MODS                    *01_mets_mods*
+ERROR 	- Traceback (most recent call last):
+  File "/home/martin/zakazky/NKP-validator/NLCR_NDK-validator/psp-validator/lib/python2.7/validator/__init__.py", line 90, in validate
+    result = m()
+  File "/home/martin/zakazky/NKP-validator/NLCR_NDK-validator/psp-validator/lib/python2.7/validator/__init__.py", line 114, in validate_01_mets_mods
+    mets = self.psp.mets
+  File "/home/martin/zakazky/NKP-validator/NLCR_NDK-validator/psp-validator/lib/python2.7/psp/__init__.py", line 53, in mets
+    raise NoMetsException(self.dirname)
+NoMetsException: /home/martin/zakazky/NKP-validator/data/monografie_1.2/
+
+INFO 	- validator: kontrola CHECKSUM vsech souboru na ktere se v hlavnim METS souboru odkazuje *02_links_checksums*
+ERROR 	- Traceback (most recent call last):
+  File "/home/martin/zakazky/NKP-validator/NLCR_NDK-validator/psp-validator/lib/python2.7/validator/__init__.py", line 90, in validate
+    result = m()
+  File "/home/martin/zakazky/NKP-validator/NLCR_NDK-validator/psp-validator/lib/python2.7/validator/__init__.py", line 169, in validate_02_links_checksums
+    mets_files = self.psp.mets.xpath("//mets:file", namespaces=self.catalog.namespaces)
+  File "/home/martin/zakazky/NKP-validator/NLCR_NDK-validator/psp-validator/lib/python2.7/psp/__init__.py", line 53, in mets
+    raise NoMetsException(self.dirname)
+NoMetsException: /home/martin/zakazky/NKP-validator/data/monografie_1.2/
+
+INFO 	- validator: validace linek v hlavnim METS souboru                                       *02_links_exist*
+ERROR 	- Traceback (most recent call last):
+  File "/home/martin/zakazky/NKP-validator/NLCR_NDK-validator/psp-validator/lib/python2.7/validator/__init__.py", line 90, in validate
+    result = m()
+  File "/home/martin/zakazky/NKP-validator/NLCR_NDK-validator/psp-validator/lib/python2.7/validator/__init__.py", line 155, in validate_02_links_exist
+    hrefs = self.psp.mets.xpath("//mets:file/mets:FLocat/@xlink:href", namespaces=self.catalog.namespaces)
+  File "/home/martin/zakazky/NKP-validator/NLCR_NDK-validator/psp-validator/lib/python2.7/psp/__init__.py", line 53, in mets
+    raise NoMetsException(self.dirname)
+NoMetsException: /home/martin/zakazky/NKP-validator/data/monografie_1.2/
+
+INFO 	- validator: validace souboru ve slozce amdSec                                           *03_techspecs*
+ERROR 	- Traceback (most recent call last):
+  File "/home/martin/zakazky/NKP-validator/NLCR_NDK-validator/psp-validator/lib/python2.7/validator/__init__.py", line 90, in validate
+    result = m()
+  File "/home/martin/zakazky/NKP-validator/NLCR_NDK-validator/psp-validator/lib/python2.7/validator/__init__.py", line 193, in validate_03_techspecs
+    paths = self.psp.mets.xpath("//mets:fileGrp[@ID='TECHMDGRP']/mets:file/mets:FLocat/@xlink:href",
+  File "/home/martin/zakazky/NKP-validator/NLCR_NDK-validator/psp-validator/lib/python2.7/psp/__init__.py", line 53, in mets
+    raise NoMetsException(self.dirname)
+NoMetsException: /home/martin/zakazky/NKP-validator/data/monografie_1.2/
+
+INFO 	- validator: validace souboru ve slozce amdSec na technicka metadata                     *03_techspecs_premis_mix*
+ERROR 	- Traceback (most recent call last):
+  File "/home/martin/zakazky/NKP-validator/NLCR_NDK-validator/psp-validator/lib/python2.7/validator/__init__.py", line 90, in validate
+    result = m()
+  File "/home/martin/zakazky/NKP-validator/NLCR_NDK-validator/psp-validator/lib/python2.7/validator/__init__.py", line 225, in validate_03_techspecs_premis_mix
+    paths = self.psp.mets.xpath("//mets:fileGrp[@ID='TECHMDGRP']/mets:file/mets:FLocat/@xlink:href",
+  File "/home/martin/zakazky/NKP-validator/NLCR_NDK-validator/psp-validator/lib/python2.7/psp/__init__.py", line 53, in mets
+    raise NoMetsException(self.dirname)
+NoMetsException: /home/martin/zakazky/NKP-validator/data/monografie_1.2/
+
+INFO 	- vysledky validace:
+	01_mets                : Error
+	01_mets_dc             : Error
+	01_mets_mods           : Error
+	02_links_checksums     : Error
+	02_links_exist         : Error
+	03_techspecs           : Error
+	03_techspecs_premis_mix: Error
