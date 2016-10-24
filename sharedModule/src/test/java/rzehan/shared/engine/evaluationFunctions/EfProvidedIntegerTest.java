@@ -12,21 +12,20 @@ import static org.junit.Assert.assertEquals;
 /**
  * Created by martin on 21.10.16.
  */
-public class EfProvidedStringTest {
+public class EfProvidedIntegerTest {
 
-    private static final String FUNCTION_NAME = "PROVIDED_STRING";
-    private static final String PARAM_NAME = "string_id";
+    private static final String FUNCTION_NAME = "PROVIDED_INTEGER";
+    private static final String PARAM_NAME = "int_id";
 
     private static Engine engine;
-
-    private static String PSP_ID_STRINGID = "PSP_ID";
-    private static String PSP_ID_VALUE = "b50eb6b0-f0a4-11e3-b72e-005056827e52";
+    private static String YEAR_INTID = "YEAR";
+    private static Integer YEAR_VALUE = 2016;
 
 
     @BeforeClass
     public static void setup() {
         ProvidedVarsManagerImpl pvMgr = new ProvidedVarsManagerImpl();
-        pvMgr.addString(PSP_ID_STRINGID, PSP_ID_VALUE);
+        pvMgr.addInteger(YEAR_INTID, YEAR_VALUE);
         engine = new Engine(pvMgr);
     }
 
@@ -34,9 +33,9 @@ public class EfProvidedStringTest {
     public void ok() {
         EvaluationFunction evFunction = engine.getEvaluationFunction(FUNCTION_NAME);
         EvaluationFunction.ValueParams params = new EvaluationFunction.ValueParams();
-        params.addParam(PARAM_NAME, new EvaluationFunction.ValueParamConstant(ValueType.STRING, PSP_ID_STRINGID));
+        params.addParam(PARAM_NAME, new EvaluationFunction.ValueParamConstant(ValueType.STRING, YEAR_INTID));
         evFunction.setValueParams(params);
-        assertEquals(PSP_ID_VALUE, evFunction.evaluate());
+        assertEquals(YEAR_VALUE, evFunction.evaluate());
     }
 
     @Test
@@ -67,7 +66,7 @@ public class EfProvidedStringTest {
     public void duplicateParam() {
         EvaluationFunction evFunction = engine.getEvaluationFunction(FUNCTION_NAME);
         EvaluationFunction.ValueParams params = new EvaluationFunction.ValueParams();
-        params.addParam(PARAM_NAME, new EvaluationFunction.ValueParamConstant(ValueType.STRING, PSP_ID_STRINGID));
+        params.addParam(PARAM_NAME, new EvaluationFunction.ValueParamConstant(ValueType.STRING, YEAR_INTID));
         params.addParam(PARAM_NAME, new EvaluationFunction.ValueParamConstant(ValueType.STRING, "XYZ_DIR"));
         evFunction.setValueParams(params);
         try {
@@ -83,7 +82,7 @@ public class EfProvidedStringTest {
     public void invalidParamType() {
         EvaluationFunction evFunction = engine.getEvaluationFunction(FUNCTION_NAME);
         EvaluationFunction.ValueParams params = new EvaluationFunction.ValueParams();
-        params.addParam(PARAM_NAME, new EvaluationFunction.ValueParamConstant(ValueType.FILE, PSP_ID_STRINGID));
+        params.addParam(PARAM_NAME, new EvaluationFunction.ValueParamConstant(ValueType.FILE, YEAR_INTID));
         evFunction.setValueParams(params);
         try {
             evFunction.evaluate();

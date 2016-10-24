@@ -11,4 +11,6 @@ public interface ProvidedVarsManager {
 
     public String getProvidedString(String stringId);
 
+    public Integer getProvidedInteger(String intId);
+
 }

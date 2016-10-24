@@ -13,16 +13,16 @@ public class Engine {
 
     private final ProvidedVarsManager providedVarsManager;
 
+    private final Map<String, VariableDefinition> varDefinitions = new HashMap<>();
+    private final Map<String, Object> varValues = new HashMap<>();
+
+
     public Engine(ProvidedVarsManager providedVarsManager) {
         this.providedVarsManager = providedVarsManager;
     }
 
     public ProvidedVarsManager getProvidedVarsManager() {
         return providedVarsManager;
-    }
-
-    public Variable getVariable(String name) {
-        return null;
     }
 
     public Pattern.Expression newExpression(boolean caseSensitive, String originalRegexp) {
@@ -33,25 +33,32 @@ public class Engine {
         return new Pattern(this, expressions);
     }
 
-    private final Map<String, Variable> variables = new HashMap<>();
-
-    public void defineVariable(String name, Variable var) {
-        variables.put(name, var);
-    }
 
     public Object evaluateVariable(String variableName) {
-        Variable variable = variables.get(variableName);
-        if (variable == null) {
-            throw new VariableNotDefinedException(variableName);
+        Object value = varValues.get(variableName);
+        if (value != null) {
+            return value;
+        } else {//not evaluated yet
+            VariableDefinition definition = varDefinitions.get(variableName);
+            if (definition == null) {
+                throw new VariableNotDefinedException(variableName);
+            } else {
+                value = definition.evaluate();
+                varValues.put(variableName, value);
+                return value;
+            }
         }
-        return variable.getValue();
     }
 
+
+    //TODO: limit usage, probably just here and in tests
     public EvaluationFunction getEvaluationFunction(String name) {
         if (name.equals("PROVIDED_FILE")) {
             return new EfProvidedFile(this);
         } else if (name.equals("PROVIDED_STRING")) {
             return new EfProvidedString(this);
+        } else if (name.equals("PROVIDED_INTEGER")) {
+            return new EfProvidedInteger(this);
         } else if (name.equals("RETURN_FIRST_FILE_FROM_LIST")) {
             return new EfReturnFirstFileFromList(this);
         } else if (name.equals("FIND_FILES_IN_DIR_BY_PATTERN")) {
@@ -59,6 +66,14 @@ public class Engine {
         } else {
             throw new RuntimeException(String.format("vyhodnocovací funkce %s neexistuje", name));
         }
+    }
+
+
+    public void defineVariable(String name, ValueType type, String efName, EvaluationFunction.ValueParams valueParams) {
+        //TODO: check if not defined already
+        EvaluationFunction evaluationFunction = getEvaluationFunction(efName);
+        VariableDefinition definition = new VariableDefinition(type, evaluationFunction, valueParams);
+        varDefinitions.put(name, definition);
     }
 
 

@@ -27,6 +27,11 @@ public abstract class EvaluationFunction {
         this.valueParams = valueParams;
     }
 
+
+    public ValueType getResultType() {
+        return resultType;
+    }
+
     public abstract Object evaluate();
 
     public static class ValueParams {

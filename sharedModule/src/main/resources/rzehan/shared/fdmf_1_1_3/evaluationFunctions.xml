@@ -5,6 +5,8 @@
         a počtů parametrů, návratové hodnoty a zejména samotné implementace jsou definovány v kódu validátoru.
     </description>
 
+    <!--todo: zmenit na PROVIDED_FILE a PROVIDED_STRING-->
+
     <function name="PROVIDED" resultType="Object">
         <description>Hodnota proměnné bude poskytnuta volajícím programem.</description>
         <params>
@@ -20,6 +22,8 @@
         </params>
     </function>
 
+
+    <!--todo: zmenit na RETURN_FIRST_FILE_FROM_LIST etc-->
     <function name="RETURN_FIRST_ITEM" resultType="Object">
         <description>Vrátí první položku ze seznamu.</description>
         <params>
@@ -41,6 +45,23 @@
         <params>
             <param name="file" type="File"/>
             <param name="xpath" type="Xpath"/>
+        </params>
+    </function>
+
+    <!--TEST: novy zapis-->
+    <function name="GET_FILES_BLABLA" resultType="List<File>">
+        <!--Navratove hodnoty mouzu byt jen String, File, Integer, List<String>, List<File>, List<Integer>-->
+
+        <params>
+            <param-value name="name" type="String"/>
+            <param-value name="xpath" type="String"/>
+            <param-value name="count" type="Integer"/>
+            <param-value name="file" type="File"/>
+            <param-value name="dir" type="File"/>
+            <param-value name="dir_list" type="List<File>"/>
+            <param-value name="name_list" type="List<String>"/>
+
+            <param-pattern name="name_pattern"/>
         </params>
     </function>
 

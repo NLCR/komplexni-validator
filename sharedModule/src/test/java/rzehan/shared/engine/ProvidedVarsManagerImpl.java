@@ -11,6 +11,7 @@ public class ProvidedVarsManagerImpl implements ProvidedVarsManager {
 
     private final Map<String, File> files = new HashMap<>();
     private final Map<String, String> strings = new HashMap<>();
+    private final Map<String, Integer> integers = new HashMap<>();
 
     @Override
     public File getProvidedFile(String fileId) {
@@ -22,6 +23,10 @@ public class ProvidedVarsManagerImpl implements ProvidedVarsManager {
         return strings.get(stringId);
     }
 
+    @Override
+    public Integer getProvidedInteger(String intId) {
+        return integers.get(intId);
+    }
 
     public void addFile(String fileId, File file) {
         files.put(fileId, file);
@@ -29,6 +34,10 @@ public class ProvidedVarsManagerImpl implements ProvidedVarsManager {
 
     public void addString(String stringId, String value) {
         strings.put(stringId, value);
+    }
+
+    public void addInteger(String intId, Integer value) {
+        integers.put(intId, value);
     }
 
 

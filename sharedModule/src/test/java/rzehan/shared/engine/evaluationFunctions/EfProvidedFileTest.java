@@ -17,6 +17,7 @@ import static org.junit.Assert.assertEquals;
 public class EfProvidedFileTest {
 
     private static final String FUNCTION_NAME = "PROVIDED_FILE";
+    private static final String PARAM_NAME = "file_id";
 
     private static Engine engine;
     private static String PSP_DIR_FILEID = "PSP_DIR";
@@ -27,7 +28,6 @@ public class EfProvidedFileTest {
     public static void setup() {
         ProvidedVarsManagerImpl pvMgr = new ProvidedVarsManagerImpl();
         pvMgr.addFile(PSP_DIR_FILEID, PSP_DIR_FILE);
-
         engine = new Engine(pvMgr);
     }
 
@@ -36,7 +36,7 @@ public class EfProvidedFileTest {
     public void ok() {
         EvaluationFunction evFunction = engine.getEvaluationFunction(FUNCTION_NAME);
         EvaluationFunction.ValueParams params = new EvaluationFunction.ValueParams();
-        params.addParam("file_id", new EvaluationFunction.ValueParamConstant(ValueType.STRING, PSP_DIR_FILEID));
+        params.addParam(PARAM_NAME, new EvaluationFunction.ValueParamConstant(ValueType.STRING, PSP_DIR_FILEID));
         evFunction.setValueParams(params);
         assertEquals(PSP_DIR_FILE, evFunction.evaluate());
     }
@@ -69,8 +69,8 @@ public class EfProvidedFileTest {
     public void duplicateParam() {
         EvaluationFunction evFunction = engine.getEvaluationFunction(FUNCTION_NAME);
         EvaluationFunction.ValueParams params = new EvaluationFunction.ValueParams();
-        params.addParam("file_id", new EvaluationFunction.ValueParamConstant(ValueType.STRING, PSP_DIR_FILEID));
-        params.addParam("file_id", new EvaluationFunction.ValueParamConstant(ValueType.STRING, "XYZ_DIR"));
+        params.addParam(PARAM_NAME, new EvaluationFunction.ValueParamConstant(ValueType.STRING, PSP_DIR_FILEID));
+        params.addParam(PARAM_NAME, new EvaluationFunction.ValueParamConstant(ValueType.STRING, "XYZ_DIR"));
         evFunction.setValueParams(params);
         try {
             evFunction.evaluate();
@@ -85,7 +85,7 @@ public class EfProvidedFileTest {
     public void invalidParamType() {
         EvaluationFunction evFunction = engine.getEvaluationFunction(FUNCTION_NAME);
         EvaluationFunction.ValueParams params = new EvaluationFunction.ValueParams();
-        params.addParam("file_id", new EvaluationFunction.ValueParamConstant(ValueType.FILE, PSP_DIR_FILEID));
+        params.addParam(PARAM_NAME, new EvaluationFunction.ValueParamConstant(ValueType.FILE, PSP_DIR_FILEID));
         evFunction.setValueParams(params);
         try {
             evFunction.evaluate();

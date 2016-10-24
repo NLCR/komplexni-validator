@@ -1,6 +1,9 @@
-package rzehan.shared.engine;
+package rzehan.shared.engine.evaluationFunctions;
 
 import org.junit.Test;
+import rzehan.shared.engine.Engine;
+import rzehan.shared.engine.ProvidedVarsManagerImpl;
+import rzehan.shared.engine.ValueType;
 import rzehan.shared.engine.evaluationFunctions.EvaluationFunction;
 
 import java.io.File;
