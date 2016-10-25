@@ -1,8 +1,10 @@
 package rzehan.shared.engine.evaluationFunctions;
 
 import rzehan.shared.engine.Engine;
+import rzehan.shared.engine.Pattern;
 import rzehan.shared.engine.ValueType;
 
+import java.io.File;
 import java.util.*;
 
 /**
@@ -11,20 +13,12 @@ import java.util.*;
 public abstract class EvaluationFunction {
     protected final Engine engine;
     protected final Contract contract;
-    protected ValueParams valueParams;
-    protected PatternParams patternParams;
+    protected final ValueParams valueParams = new ValueParams();
+    protected final PatternParams patternParams = new PatternParams();
 
     public EvaluationFunction(Engine engine, Contract contract) {
         this.engine = engine;
         this.contract = contract;
-    }
-
-    public void setValueParams(ValueParams valueParams) {
-        this.valueParams = valueParams;
-    }
-
-    public void setPatternParams(PatternParams patternParams) {
-        this.patternParams = patternParams;
     }
 
     public ValueType getResultType() {
@@ -32,6 +26,36 @@ public abstract class EvaluationFunction {
     }
 
     public abstract Object evaluate();
+
+    public EvaluationFunction withValue(String paramName, ValueType valueType, Object value) {
+        valueParams.addParam(paramName, new ValueParamConstant(valueType, value));
+        return this;
+    }
+
+    public EvaluationFunction withValueReference(String paramName, ValueType valueType, String varName) {
+        valueParams.addParam(paramName, new ValueParamReference(engine, valueType, varName));
+        return this;
+    }
+
+    public EvaluationFunction withPattern(String paramName, Pattern pattern) {
+        patternParams.addParam(paramName, new PatternParamConstant(pattern));
+        return this;
+    }
+
+    public EvaluationFunction withPatternReference(String paramName, String varName) {
+        patternParams.addParam(paramName, new PatternParamReference(engine, varName));
+        return this;
+    }
+
+    public void addValueParams(ValueParams valueParams) {
+        this.valueParams.addAll(valueParams);
+
+    }
+
+    public void addPatternParams(PatternParams patternParams) {
+        this.patternParams.addAll(patternParams);
+    }
+
 
     public static class ValueParams {
         private final Map<String, List<ValueParam>> data = new HashMap<>();
@@ -45,6 +69,22 @@ public abstract class EvaluationFunction {
             values.add(value);
         }
 
+        public void addAll(ValueParams valueParams) {
+            for (String paramName : valueParams.keySet()) {
+                List<ValueParam> params = valueParams.getParams(paramName);
+                addParams(paramName, params);
+            }
+        }
+
+        private void addParams(String paramName, List<ValueParam> params) {
+            List<ValueParam> values = data.get(paramName);
+            if (values == null) {
+                values = new ArrayList<>();
+                data.put(paramName, values);
+            }
+            values.addAll(params);
+        }
+
         public List<ValueParam> getParams(String name) {
             return data.get(name);
         }
@@ -52,6 +92,8 @@ public abstract class EvaluationFunction {
         public Set<String> keySet() {
             return data.keySet();
         }
+
+
     }
 
     public static class PatternParams {
@@ -69,6 +111,12 @@ public abstract class EvaluationFunction {
 
         public Set<String> keySet() {
             return data.keySet();
+        }
+
+        public void addAll(PatternParams patternParams) {
+            for (String paramName : patternParams.keySet()) {
+                addParam(paramName, patternParams.getParam(paramName));
+            }
         }
     }
 

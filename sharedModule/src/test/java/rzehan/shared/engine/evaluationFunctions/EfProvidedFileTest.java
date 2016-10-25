@@ -34,29 +34,14 @@ public class EfProvidedFileTest {
 
     @Test
     public void ok() {
-        EvaluationFunction evFunction = engine.buildEvaluationFunction(FUNCTION_NAME);
-        EvaluationFunction.ValueParams params = new EvaluationFunction.ValueParams();
-        params.addParam(PARAM_NAME, new ValueParamConstant(ValueType.STRING, PSP_DIR_FILEID));
-        evFunction.setValueParams(params);
+        EvaluationFunction evFunction = engine.buildEvaluationFunction(FUNCTION_NAME)
+                .withValue(PARAM_NAME, ValueType.STRING, PSP_DIR_FILEID);
         assertEquals(PSP_DIR_FILE, evFunction.evaluate());
-    }
-
-    @Test
-    public void paramsNotSet() {
-        EvaluationFunction evFunction = engine.buildEvaluationFunction(FUNCTION_NAME);
-        try {
-            evFunction.evaluate();
-            fail();
-        } catch (RuntimeException e) {
-            //nebyly zadány parametry
-        }
     }
 
     @Test
     public void missingParam() {
         EvaluationFunction evFunction = engine.buildEvaluationFunction(FUNCTION_NAME);
-        EvaluationFunction.ValueParams params = new EvaluationFunction.ValueParams();
-        evFunction.setValueParams(params);
         try {
             evFunction.evaluate();
             fail();
@@ -67,11 +52,9 @@ public class EfProvidedFileTest {
 
     @Test
     public void duplicateParam() {
-        EvaluationFunction evFunction = engine.buildEvaluationFunction(FUNCTION_NAME);
-        EvaluationFunction.ValueParams params = new EvaluationFunction.ValueParams();
-        params.addParam(PARAM_NAME, new ValueParamConstant(ValueType.STRING, PSP_DIR_FILEID));
-        params.addParam(PARAM_NAME, new ValueParamConstant(ValueType.STRING, "XYZ_DIR"));
-        evFunction.setValueParams(params);
+        EvaluationFunction evFunction = engine.buildEvaluationFunction(FUNCTION_NAME)
+                .withValue(PARAM_NAME, ValueType.STRING, PSP_DIR_FILEID)
+                .withValue(PARAM_NAME, ValueType.STRING, "XYZ_DIR");
         try {
             evFunction.evaluate();
             //fail();
@@ -83,10 +66,8 @@ public class EfProvidedFileTest {
 
     @Test
     public void invalidParamType() {
-        EvaluationFunction evFunction = engine.buildEvaluationFunction(FUNCTION_NAME);
-        EvaluationFunction.ValueParams params = new EvaluationFunction.ValueParams();
-        params.addParam(PARAM_NAME, new ValueParamConstant(ValueType.FILE, PSP_DIR_FILEID));
-        evFunction.setValueParams(params);
+        EvaluationFunction evFunction = engine.buildEvaluationFunction(FUNCTION_NAME)
+                .withValue(PARAM_NAME, ValueType.FILE, PSP_DIR_FILEID);
         try {
             evFunction.evaluate();
             fail();

@@ -32,29 +32,14 @@ public class EfProvidedStringTest {
 
     @Test
     public void ok() {
-        EvaluationFunction evFunction = engine.buildEvaluationFunction(FUNCTION_NAME);
-        EvaluationFunction.ValueParams params = new EvaluationFunction.ValueParams();
-        params.addParam(PARAM_NAME, new ValueParamConstant(ValueType.STRING, PSP_ID_STRINGID));
-        evFunction.setValueParams(params);
+        EvaluationFunction evFunction = engine.buildEvaluationFunction(FUNCTION_NAME)
+                .withValue(PARAM_NAME, ValueType.STRING, PSP_ID_STRINGID);
         assertEquals(PSP_ID_VALUE, evFunction.evaluate());
-    }
-
-    @Test
-    public void paramsNotSet() {
-        EvaluationFunction evFunction = engine.buildEvaluationFunction(FUNCTION_NAME);
-        try {
-            evFunction.evaluate();
-            fail();
-        } catch (RuntimeException e) {
-            //nebyly zadány parametry
-        }
     }
 
     @Test
     public void missingParam() {
         EvaluationFunction evFunction = engine.buildEvaluationFunction(FUNCTION_NAME);
-        EvaluationFunction.ValueParams params = new EvaluationFunction.ValueParams();
-        evFunction.setValueParams(params);
         try {
             evFunction.evaluate();
             fail();
@@ -65,11 +50,9 @@ public class EfProvidedStringTest {
 
     @Test
     public void duplicateParam() {
-        EvaluationFunction evFunction = engine.buildEvaluationFunction(FUNCTION_NAME);
-        EvaluationFunction.ValueParams params = new EvaluationFunction.ValueParams();
-        params.addParam(PARAM_NAME, new ValueParamConstant(ValueType.STRING, PSP_ID_STRINGID));
-        params.addParam(PARAM_NAME, new ValueParamConstant(ValueType.STRING, "XYZ_DIR"));
-        evFunction.setValueParams(params);
+        EvaluationFunction evFunction = engine.buildEvaluationFunction(FUNCTION_NAME)
+                .withValue(PARAM_NAME, ValueType.STRING, PSP_ID_STRINGID)
+                .withValue(PARAM_NAME, ValueType.STRING, "PSPID");
         try {
             evFunction.evaluate();
             //fail();
@@ -81,10 +64,8 @@ public class EfProvidedStringTest {
 
     @Test
     public void invalidParamType() {
-        EvaluationFunction evFunction = engine.buildEvaluationFunction(FUNCTION_NAME);
-        EvaluationFunction.ValueParams params = new EvaluationFunction.ValueParams();
-        params.addParam(PARAM_NAME, new ValueParamConstant(ValueType.FILE, PSP_ID_STRINGID));
-        evFunction.setValueParams(params);
+        EvaluationFunction evFunction = engine.buildEvaluationFunction(FUNCTION_NAME)
+                .withValue(PARAM_NAME, ValueType.FILE, PSP_ID_STRINGID);
         try {
             evFunction.evaluate();
             fail();

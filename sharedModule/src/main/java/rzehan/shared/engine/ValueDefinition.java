@@ -30,14 +30,10 @@ public class ValueDefinition {
 
     public Object evaluate() {
         if (efValueParams != null) {
-            evaluationFunction.setValueParams(efValueParams);
-        } else {
-            evaluationFunction.setValueParams(new EvaluationFunction.ValueParams());
+            evaluationFunction.addValueParams(efValueParams);
         }
         if (efPatternParams != null) {
-            evaluationFunction.setPatternParams(efPatternParams);
-        } else {
-            evaluationFunction.setPatternParams(new EvaluationFunction.PatternParams());
+            evaluationFunction.addPatternParams(efPatternParams);
         }
         return evaluationFunction.evaluate();
     }

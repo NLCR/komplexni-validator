@@ -53,45 +53,28 @@ public class EfReturnFirstFileFromFileListTest {
 
         //first file is somehow "txt"
         ValueDefinition filesInDir = engine.buildValueDefinition(ValueType.LIST_OF_FILES, "FIND_FILES_IN_DIR_BY_PATTERN", valueParams, patternParams);
+
         engine.registerValueDefinition(LIST_VAR, filesInDir);
     }
 
 
     @Test
     public void listFromConstantOk() {
-        EvaluationFunction evFunction = engine.buildEvaluationFunction(FUNCTION_NAME);
-        EvaluationFunction.ValueParams params = new EvaluationFunction.ValueParams();
-        params.addParam(PARAM_FILE_LIST, new ValueParamConstant(ValueType.LIST_OF_FILES, LIST));
-        evFunction.setValueParams(params);
+        EvaluationFunction evFunction = engine.buildEvaluationFunction(FUNCTION_NAME)
+                .withValue(PARAM_FILE_LIST, ValueType.LIST_OF_FILES, LIST);
         assertEquals(LIST.get(0), evFunction.evaluate());
     }
 
     @Test
     public void listFromReferenceOk() {
-        EvaluationFunction evFunction = engine.buildEvaluationFunction(FUNCTION_NAME);
-        EvaluationFunction.ValueParams params = new EvaluationFunction.ValueParams();
-        params.addParam(PARAM_FILE_LIST, new ValueParamReference(engine, ValueType.LIST_OF_FILES, LIST_VAR));
-        evFunction.setValueParams(params);
+        EvaluationFunction evFunction = engine.buildEvaluationFunction(FUNCTION_NAME)
+                .withValueReference(PARAM_FILE_LIST, ValueType.LIST_OF_FILES, LIST_VAR);
         assertEquals("txt", ((File) evFunction.evaluate()).getName());
-    }
-
-
-    @Test
-    public void paramsNotSet() {
-        EvaluationFunction evFunction = engine.buildEvaluationFunction(FUNCTION_NAME);
-        try {
-            evFunction.evaluate();
-            fail();
-        } catch (RuntimeException e) {
-            //nebyly zadány parametry
-        }
     }
 
     @Test
     public void paramDirMissing() {
         EvaluationFunction evFunction = engine.buildEvaluationFunction(FUNCTION_NAME);
-        EvaluationFunction.ValueParams params = new EvaluationFunction.ValueParams();
-        evFunction.setValueParams(params);
         try {
             evFunction.evaluate();
             fail();
@@ -102,12 +85,9 @@ public class EfReturnFirstFileFromFileListTest {
 
     @Test
     public void paramDirDuplicate() {
-        EvaluationFunction evFunction = engine.buildEvaluationFunction(FUNCTION_NAME);
-        EvaluationFunction.ValueParams params = new EvaluationFunction.ValueParams();
-        params.addParam(PARAM_FILE_LIST, new ValueParamConstant(ValueType.LIST_OF_FILES, LIST));
-        //todo: druhy odkazem na promennou
-        params.addParam(PARAM_FILE_LIST, new ValueParamConstant(ValueType.LIST_OF_FILES, LIST));
-        evFunction.setValueParams(params);
+        EvaluationFunction evFunction = engine.buildEvaluationFunction(FUNCTION_NAME)
+                .withValue(PARAM_FILE_LIST, ValueType.LIST_OF_FILES, LIST)
+                .withValueReference(PARAM_FILE_LIST, ValueType.LIST_OF_FILES, LIST_VAR);
         try {
             evFunction.evaluate();
             //fail();
@@ -119,10 +99,8 @@ public class EfReturnFirstFileFromFileListTest {
 
     @Test
     public void paramListFromConstantInvalidParamType() {
-        EvaluationFunction evFunction = engine.buildEvaluationFunction(FUNCTION_NAME);
-        EvaluationFunction.ValueParams params = new EvaluationFunction.ValueParams();
-        params.addParam(PARAM_FILE_LIST, new ValueParamConstant(ValueType.FILE, LIST));
-        evFunction.setValueParams(params);
+        EvaluationFunction evFunction = engine.buildEvaluationFunction(FUNCTION_NAME)
+                .withValue(PARAM_FILE_LIST, ValueType.FILE, LIST);
         try {
             evFunction.evaluate();
             fail();
@@ -133,11 +111,8 @@ public class EfReturnFirstFileFromFileListTest {
 
     @Test
     public void paramListFromReferenceInvalidParamType() {
-        EvaluationFunction evFunction = engine.buildEvaluationFunction(FUNCTION_NAME);
-        EvaluationFunction.ValueParams params = new EvaluationFunction.ValueParams();
-        //params.addParam(PARAM_FILE_LIST, new EvaluationFunction.ValueParamConstant(ValueType.FILE, LIST));
-        params.addParam(PARAM_FILE_LIST, new ValueParamReference(engine, ValueType.FILE, LIST_VAR));
-        evFunction.setValueParams(params);
+        EvaluationFunction evFunction = engine.buildEvaluationFunction(FUNCTION_NAME)
+                .withValueReference(PARAM_FILE_LIST, ValueType.FILE, LIST_VAR);
         try {
             evFunction.evaluate();
             fail();
