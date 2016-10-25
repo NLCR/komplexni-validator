@@ -8,7 +8,7 @@ import java.util.Map;
 /**
  * Created by martin on 24.10.16.
  */
-public class VariableDefinition {
+public class ValueDefinition {
 
     //only for checking if matches result type of evaluation function
     private final ValueType resultType;
@@ -18,13 +18,13 @@ public class VariableDefinition {
     private final EvaluationFunction.PatternParams efPatternParams;
 
 
-    public VariableDefinition(ValueType resultType, EvaluationFunction evaluationFunction, EvaluationFunction.ValueParams efValueParams, EvaluationFunction.PatternParams efPatternParams) {
+    public ValueDefinition(ValueType resultType, EvaluationFunction evaluationFunction, EvaluationFunction.ValueParams efValueParams, EvaluationFunction.PatternParams efPatternParams) {
         this.resultType = resultType;
         this.evaluationFunction = evaluationFunction;
         this.efValueParams = efValueParams;
         this.efPatternParams = efPatternParams;
         if (evaluationFunction.getResultType() != resultType) {
-            throw new RuntimeException(String.format("nesouhlasí typ výsledku pro definici proměnné (%s) a vyhodnocovací funkci (%s)", resultType, evaluationFunction.getResultType()));
+            throw new RuntimeException(String.format("nesouhlasí typ výsledku pro definici hodnoty (%s) a vyhodnocovací funkci (%s)", resultType, evaluationFunction.getResultType()));
         }
     }
 

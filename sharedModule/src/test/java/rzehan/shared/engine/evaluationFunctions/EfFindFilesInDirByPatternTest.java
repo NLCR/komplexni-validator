@@ -41,17 +41,17 @@ public class EfFindFilesInDirByPatternTest {
         engine = new Engine(pvMgr);
 
         TestUtils.defineProvidedFileVar(engine, PSP_VAR);
-        patternAllFiles = engine.newPattern(engine.newExpression(false, ".+"));
-        patternXmlFiles = engine.newPattern(engine.newExpression(false, ".+\\.xml"));
+        patternAllFiles = engine.buildPattern(engine.buildExpression(false, ".+"));
+        patternXmlFiles = engine.buildPattern(engine.buildExpression(false, ".+\\.xml"));
         //define pattern for referencing
-        Pattern containsUnderscore = engine.newPattern(engine.newExpression(true, ".*_.*"));
-        engine.definePattern(PATTERN_CONTAINS_UNDERSCORE_VARIABLE, containsUnderscore);
+        Pattern containsUnderscore = engine.buildPattern(engine.buildExpression(true, ".*_.*"));
+        engine.registerPattern(PATTERN_CONTAINS_UNDERSCORE_VARIABLE, containsUnderscore);
     }
 
 
     @Test
     public void paramDirFromConstantOk() {
-        EvaluationFunction evFunction = engine.getEvaluationFunction(FUNCTION_NAME);
+        EvaluationFunction evFunction = engine.buildEvaluationFunction(FUNCTION_NAME);
 
         EvaluationFunction.ValueParams params = new EvaluationFunction.ValueParams();
         params.addParam(PARAM_DIR, new ValueParamConstant(ValueType.FILE, PSP_DIR_FILE));
@@ -68,7 +68,7 @@ public class EfFindFilesInDirByPatternTest {
 
     @Test
     public void paramDirFromReferenceOk() {
-        EvaluationFunction evFunction = engine.getEvaluationFunction(FUNCTION_NAME);
+        EvaluationFunction evFunction = engine.buildEvaluationFunction(FUNCTION_NAME);
 
         EvaluationFunction.ValueParams valueParams = new EvaluationFunction.ValueParams();
         valueParams.addParam(PARAM_DIR, new ValueParamReference(engine, ValueType.FILE, PSP_VAR));
@@ -85,7 +85,7 @@ public class EfFindFilesInDirByPatternTest {
 
     @Test
     public void valueParamsNotSet() {
-        EvaluationFunction evFunction = engine.getEvaluationFunction(FUNCTION_NAME);
+        EvaluationFunction evFunction = engine.buildEvaluationFunction(FUNCTION_NAME);
 
         EvaluationFunction.PatternParams patternParams = new EvaluationFunction.PatternParams();
         patternParams.addParam(PARAM_PATTERN, new PatternParamConstant(patternAllFiles));
@@ -101,7 +101,7 @@ public class EfFindFilesInDirByPatternTest {
 
     @Test
     public void patternParamsNotSet() {
-        EvaluationFunction evFunction = engine.getEvaluationFunction(FUNCTION_NAME);
+        EvaluationFunction evFunction = engine.buildEvaluationFunction(FUNCTION_NAME);
 
         EvaluationFunction.ValueParams valueParams = new EvaluationFunction.ValueParams();
         valueParams.addParam(PARAM_DIR, new ValueParamReference(engine, ValueType.FILE, PSP_VAR));
@@ -117,7 +117,7 @@ public class EfFindFilesInDirByPatternTest {
 
     @Test
     public void paramDirMissing() {
-        EvaluationFunction evFunction = engine.getEvaluationFunction(FUNCTION_NAME);
+        EvaluationFunction evFunction = engine.buildEvaluationFunction(FUNCTION_NAME);
 
         EvaluationFunction.ValueParams valueParams = new EvaluationFunction.ValueParams();
         evFunction.setValueParams(valueParams);
@@ -136,7 +136,7 @@ public class EfFindFilesInDirByPatternTest {
 
     @Test
     public void paramPatternMissing() {
-        EvaluationFunction evFunction = engine.getEvaluationFunction(FUNCTION_NAME);
+        EvaluationFunction evFunction = engine.buildEvaluationFunction(FUNCTION_NAME);
 
         EvaluationFunction.ValueParams valueParams = new EvaluationFunction.ValueParams();
         valueParams.addParam(PARAM_DIR, new ValueParamReference(engine, ValueType.FILE, PSP_VAR));
@@ -155,7 +155,7 @@ public class EfFindFilesInDirByPatternTest {
 
     @Test
     public void paramDirDuplicate() {
-        EvaluationFunction evFunction = engine.getEvaluationFunction(FUNCTION_NAME);
+        EvaluationFunction evFunction = engine.buildEvaluationFunction(FUNCTION_NAME);
         EvaluationFunction.ValueParams params = new EvaluationFunction.ValueParams();
         params.addParam(PARAM_DIR, new ValueParamConstant(ValueType.FILE, PSP_DIR_FILE));
         params.addParam(PARAM_DIR, new ValueParamReference(engine, ValueType.FILE, PSP_VAR));
@@ -171,7 +171,7 @@ public class EfFindFilesInDirByPatternTest {
 
     @Test
     public void paramDirFromConstantInvalidParamType() {
-        EvaluationFunction evFunction = engine.getEvaluationFunction(FUNCTION_NAME);
+        EvaluationFunction evFunction = engine.buildEvaluationFunction(FUNCTION_NAME);
         EvaluationFunction.ValueParams params = new EvaluationFunction.ValueParams();
         params.addParam(PARAM_DIR, new ValueParamConstant(ValueType.STRING, PSP_DIR_FILE));
         evFunction.setValueParams(params);
@@ -185,7 +185,7 @@ public class EfFindFilesInDirByPatternTest {
 
     @Test
     public void paramDirFromReferenceInvalidParamType() {
-        EvaluationFunction evFunction = engine.getEvaluationFunction(FUNCTION_NAME);
+        EvaluationFunction evFunction = engine.buildEvaluationFunction(FUNCTION_NAME);
         EvaluationFunction.ValueParams params = new EvaluationFunction.ValueParams();
         params.addParam(PARAM_DIR, new ValueParamReference(engine, ValueType.STRING, PSP_VAR));
         evFunction.setValueParams(params);
@@ -199,7 +199,7 @@ public class EfFindFilesInDirByPatternTest {
 
     @Test
     public void paramDirFromConstantDirDoesNotExist() {
-        EvaluationFunction evFunction = engine.getEvaluationFunction(FUNCTION_NAME);
+        EvaluationFunction evFunction = engine.buildEvaluationFunction(FUNCTION_NAME);
 
         EvaluationFunction.ValueParams params = new EvaluationFunction.ValueParams();
         params.addParam(PARAM_DIR, new ValueParamConstant(ValueType.FILE, PSP_DIR_FILE_UNKNOWN));
@@ -219,7 +219,7 @@ public class EfFindFilesInDirByPatternTest {
 
     @Test
     public void paramDirFromConstantDirDoesNotDir() {
-        EvaluationFunction evFunction = engine.getEvaluationFunction(FUNCTION_NAME);
+        EvaluationFunction evFunction = engine.buildEvaluationFunction(FUNCTION_NAME);
 
         EvaluationFunction.ValueParams params = new EvaluationFunction.ValueParams();
         params.addParam(PARAM_DIR, new ValueParamConstant(ValueType.FILE, PSP_DIR_FILE_NOT_DIR));
@@ -243,7 +243,7 @@ public class EfFindFilesInDirByPatternTest {
 
     @Test
     public void paramDirFromConstantPatternXmlFiles() {
-        EvaluationFunction evFunction = engine.getEvaluationFunction(FUNCTION_NAME);
+        EvaluationFunction evFunction = engine.buildEvaluationFunction(FUNCTION_NAME);
 
         EvaluationFunction.ValueParams params = new EvaluationFunction.ValueParams();
         params.addParam(PARAM_DIR, new ValueParamConstant(ValueType.FILE, PSP_DIR_FILE));
@@ -260,7 +260,7 @@ public class EfFindFilesInDirByPatternTest {
 
     @Test
     public void patternFromReference() {
-        EvaluationFunction evFunction = engine.getEvaluationFunction(FUNCTION_NAME);
+        EvaluationFunction evFunction = engine.buildEvaluationFunction(FUNCTION_NAME);
 
         EvaluationFunction.ValueParams params = new EvaluationFunction.ValueParams();
         params.addParam(PARAM_DIR, new ValueParamConstant(ValueType.FILE, PSP_DIR_FILE));
@@ -278,7 +278,7 @@ public class EfFindFilesInDirByPatternTest {
     //TODO: presunout, tohle je na vyhodnocovani obecne, nejspis do tridy Engine, az to uklidim
     @Test
     public void valueFromReferenceNotDefined() {
-        EvaluationFunction evFunction = engine.getEvaluationFunction(FUNCTION_NAME);
+        EvaluationFunction evFunction = engine.buildEvaluationFunction(FUNCTION_NAME);
 
         EvaluationFunction.ValueParams valueParams = new EvaluationFunction.ValueParams();
         valueParams.addParam(PARAM_DIR, new ValueParamReference(engine, ValueType.FILE, "UKNOWN"));
@@ -299,7 +299,7 @@ public class EfFindFilesInDirByPatternTest {
     //TODO: presunout, tohle je na vyhodnocovani obecne, nejspis do tridy Engine, az to uklidim
     @Test
     public void patternFromReferenceNotDefined() {
-        EvaluationFunction evFunction = engine.getEvaluationFunction(FUNCTION_NAME);
+        EvaluationFunction evFunction = engine.buildEvaluationFunction(FUNCTION_NAME);
 
         EvaluationFunction.ValueParams params = new EvaluationFunction.ValueParams();
         params.addParam(PARAM_DIR, new ValueParamConstant(ValueType.FILE, PSP_DIR_FILE));

@@ -17,7 +17,7 @@ public class PatternParamReference extends PatternParam {
 
     @Override
     public boolean matches(String value) {
-        Pattern pattern = engine.getPattern(patternName);
+        Pattern pattern = engine.getPatternFromVariable(patternName);
         if (pattern == null) {
             throw new RuntimeException("vzor " + patternName + " není definován");
         }

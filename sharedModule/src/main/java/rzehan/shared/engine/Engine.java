@@ -14,10 +14,9 @@ public class Engine {
 
     private final ProvidedVarsManager providedVarsManager;
 
-    private final Map<String, VariableDefinition> varDefinitions = new HashMap<>();
-    private final Map<String, Object> varValues = new HashMap<>();
-
-    private final Map<String, Pattern> patterns = new HashMap<>();
+    private final Map<String, ValueDefinition> valueDefinitionsByVarName = new HashMap<>();
+    private final Map<String, Object> valuesByVarName = new HashMap<>();
+    private final Map<String, Pattern> patternsByVarName = new HashMap<>();
 
 
     public Engine(ProvidedVarsManager providedVarsManager) {
@@ -28,43 +27,16 @@ public class Engine {
         return providedVarsManager;
     }
 
-    public Pattern.Expression newExpression(boolean caseSensitive, String originalRegexp) {
+    public Pattern.Expression buildExpression(boolean caseSensitive, String originalRegexp) {
         return new Pattern.Expression(this, caseSensitive, originalRegexp);
     }
 
-    //TODO: tohle nepouzivat, nebo jen pro testy
-    public Pattern newPattern(Pattern.Expression... expressions) {
+    public Pattern buildPattern(Pattern.Expression... expressions) {
         return new Pattern(this, expressions);
     }
 
-    public void definePattern(String name, Pattern pattern) {
-        patterns.put(name, pattern);
-    }
-
-    public Pattern getPattern(String name) {
-        return patterns.get(name);
-    }
-
-
-    public Object evaluateVariable(String variableName) {
-        Object value = varValues.get(variableName);
-        if (value != null) {
-            return value;
-        } else {//not evaluated yet
-            VariableDefinition definition = varDefinitions.get(variableName);
-            if (definition == null) {
-                throw new VariableNotDefinedException(variableName);
-            } else {
-                value = definition.evaluate();
-                varValues.put(variableName, value);
-                return value;
-            }
-        }
-    }
-
-
     //TODO: limit usage, probably just here and in tests
-    public EvaluationFunction getEvaluationFunction(String name) {
+    public EvaluationFunction buildEvaluationFunction(String name) {
         if (name.equals("PROVIDED_FILE")) {
             return new EfProvidedFile(this);
         } else if (name.equals("PROVIDED_STRING")) {
@@ -80,12 +52,41 @@ public class Engine {
         }
     }
 
+    public ValueDefinition buildValueDefinition(ValueType type, String efName, EvaluationFunction.ValueParams valueParams, EvaluationFunction.PatternParams patternParams) {
+        EvaluationFunction evaluationFunction = buildEvaluationFunction(efName);
+        ValueDefinition definition = new ValueDefinition(type, evaluationFunction, valueParams, patternParams);
+        return definition;
+    }
 
-    public void defineVariable(String name, ValueType type, String efName, EvaluationFunction.ValueParams valueParams, EvaluationFunction.PatternParams patternParams) {
+    public void registerPattern(String patternVariableName, Pattern pattern) {
         //TODO: check if not defined already
-        EvaluationFunction evaluationFunction = getEvaluationFunction(efName);
-        VariableDefinition definition = new VariableDefinition(type, evaluationFunction, valueParams, patternParams);
-        varDefinitions.put(name, definition);
+        patternsByVarName.put(patternVariableName, pattern);
+    }
+
+    public void registerValueDefinition(String valueVariableName, ValueDefinition definition) {
+        //TODO: check if not defined already
+        valueDefinitionsByVarName.put(valueVariableName, definition);
+    }
+
+
+    public Pattern getPatternFromVariable(String patternVariableName) {
+        return patternsByVarName.get(patternVariableName);
+    }
+
+    public Object getValueFromVariable(String valueVariableName) {
+        Object value = valuesByVarName.get(valueVariableName);
+        if (value != null) {
+            return value;
+        } else {//not evaluated yet
+            ValueDefinition definition = valueDefinitionsByVarName.get(valueVariableName);
+            if (definition == null) {
+                throw new VariableNotDefinedException(valueVariableName);
+            } else {
+                value = definition.evaluate();
+                valuesByVarName.put(valueVariableName, value);
+                return value;
+            }
+        }
     }
 
 

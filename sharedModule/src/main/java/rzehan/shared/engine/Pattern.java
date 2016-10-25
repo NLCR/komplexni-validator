@@ -131,7 +131,7 @@ public class Pattern {
 
         private void evaluateAllVariables() {
             for (String varName : variableNames) {
-                Object varValue = engine.evaluateVariable(varName);
+                Object varValue = engine.getValueFromVariable(varName);
                 if (!(varValue instanceof String)) {
                     throw new InvalidVariableTypeException(varName, "String");
                 }

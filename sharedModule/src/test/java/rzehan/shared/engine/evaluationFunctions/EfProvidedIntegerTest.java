@@ -31,7 +31,7 @@ public class EfProvidedIntegerTest {
 
     @Test
     public void ok() {
-        EvaluationFunction evFunction = engine.getEvaluationFunction(FUNCTION_NAME);
+        EvaluationFunction evFunction = engine.buildEvaluationFunction(FUNCTION_NAME);
         EvaluationFunction.ValueParams params = new EvaluationFunction.ValueParams();
         params.addParam(PARAM_NAME, new ValueParamConstant(ValueType.STRING, YEAR_INTID));
         evFunction.setValueParams(params);
@@ -40,7 +40,7 @@ public class EfProvidedIntegerTest {
 
     @Test
     public void paramsNotSet() {
-        EvaluationFunction evFunction = engine.getEvaluationFunction(FUNCTION_NAME);
+        EvaluationFunction evFunction = engine.buildEvaluationFunction(FUNCTION_NAME);
         try {
             evFunction.evaluate();
             fail();
@@ -51,7 +51,7 @@ public class EfProvidedIntegerTest {
 
     @Test
     public void missingParam() {
-        EvaluationFunction evFunction = engine.getEvaluationFunction(FUNCTION_NAME);
+        EvaluationFunction evFunction = engine.buildEvaluationFunction(FUNCTION_NAME);
         EvaluationFunction.ValueParams params = new EvaluationFunction.ValueParams();
         evFunction.setValueParams(params);
         try {
@@ -64,7 +64,7 @@ public class EfProvidedIntegerTest {
 
     @Test
     public void duplicateParam() {
-        EvaluationFunction evFunction = engine.getEvaluationFunction(FUNCTION_NAME);
+        EvaluationFunction evFunction = engine.buildEvaluationFunction(FUNCTION_NAME);
         EvaluationFunction.ValueParams params = new EvaluationFunction.ValueParams();
         params.addParam(PARAM_NAME, new ValueParamConstant(ValueType.STRING, YEAR_INTID));
         params.addParam(PARAM_NAME, new ValueParamConstant(ValueType.STRING, "XYZ_DIR"));
@@ -80,7 +80,7 @@ public class EfProvidedIntegerTest {
 
     @Test
     public void invalidParamType() {
-        EvaluationFunction evFunction = engine.getEvaluationFunction(FUNCTION_NAME);
+        EvaluationFunction evFunction = engine.buildEvaluationFunction(FUNCTION_NAME);
         EvaluationFunction.ValueParams params = new EvaluationFunction.ValueParams();
         params.addParam(PARAM_NAME, new ValueParamConstant(ValueType.FILE, YEAR_INTID));
         evFunction.setValueParams(params);

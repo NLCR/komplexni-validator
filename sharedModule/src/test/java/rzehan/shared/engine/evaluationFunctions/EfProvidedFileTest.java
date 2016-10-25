@@ -34,7 +34,7 @@ public class EfProvidedFileTest {
 
     @Test
     public void ok() {
-        EvaluationFunction evFunction = engine.getEvaluationFunction(FUNCTION_NAME);
+        EvaluationFunction evFunction = engine.buildEvaluationFunction(FUNCTION_NAME);
         EvaluationFunction.ValueParams params = new EvaluationFunction.ValueParams();
         params.addParam(PARAM_NAME, new ValueParamConstant(ValueType.STRING, PSP_DIR_FILEID));
         evFunction.setValueParams(params);
@@ -43,7 +43,7 @@ public class EfProvidedFileTest {
 
     @Test
     public void paramsNotSet() {
-        EvaluationFunction evFunction = engine.getEvaluationFunction(FUNCTION_NAME);
+        EvaluationFunction evFunction = engine.buildEvaluationFunction(FUNCTION_NAME);
         try {
             evFunction.evaluate();
             fail();
@@ -54,7 +54,7 @@ public class EfProvidedFileTest {
 
     @Test
     public void missingParam() {
-        EvaluationFunction evFunction = engine.getEvaluationFunction(FUNCTION_NAME);
+        EvaluationFunction evFunction = engine.buildEvaluationFunction(FUNCTION_NAME);
         EvaluationFunction.ValueParams params = new EvaluationFunction.ValueParams();
         evFunction.setValueParams(params);
         try {
@@ -67,7 +67,7 @@ public class EfProvidedFileTest {
 
     @Test
     public void duplicateParam() {
-        EvaluationFunction evFunction = engine.getEvaluationFunction(FUNCTION_NAME);
+        EvaluationFunction evFunction = engine.buildEvaluationFunction(FUNCTION_NAME);
         EvaluationFunction.ValueParams params = new EvaluationFunction.ValueParams();
         params.addParam(PARAM_NAME, new ValueParamConstant(ValueType.STRING, PSP_DIR_FILEID));
         params.addParam(PARAM_NAME, new ValueParamConstant(ValueType.STRING, "XYZ_DIR"));
@@ -83,7 +83,7 @@ public class EfProvidedFileTest {
 
     @Test
     public void invalidParamType() {
-        EvaluationFunction evFunction = engine.getEvaluationFunction(FUNCTION_NAME);
+        EvaluationFunction evFunction = engine.buildEvaluationFunction(FUNCTION_NAME);
         EvaluationFunction.ValueParams params = new EvaluationFunction.ValueParams();
         params.addParam(PARAM_NAME, new ValueParamConstant(ValueType.FILE, PSP_DIR_FILEID));
         evFunction.setValueParams(params);
