@@ -16,7 +16,9 @@ public class EfProvidedString extends EvaluationFunction {
 
 
     public EfProvidedString(Engine engine) {
-        super(engine, ValueType.STRING);
+        super(engine, new Contract()
+                .withReturnType(ValueType.STRING)
+                .withValueParam(PARAM_STRING_ID, ValueType.STRING, 1, 1));
     }
 
     @Override
@@ -24,7 +26,9 @@ public class EfProvidedString extends EvaluationFunction {
         if (valueParams == null) {
             throw new IllegalStateException("nebyly zadány parametry");
         }
-        String stringId = getStringIdFromParams();
+        contract.checkComplience(valueParams, null);
+
+        String stringId = (String) valueParams.getParams(PARAM_STRING_ID).get(0).getValue();
         String string = engine.getProvidedVarsManager().getProvidedString(stringId);
         if (string == null) {
             throw new RuntimeException("řetězec s id " + stringId + " není poskytován");
@@ -33,19 +37,4 @@ public class EfProvidedString extends EvaluationFunction {
         }
     }
 
-
-    public String getStringIdFromParams() {
-        List<ValueParam> varNameValues = valueParams.getParams(PARAM_STRING_ID);
-        if (varNameValues == null || varNameValues.size() == 0) {
-            throw new RuntimeException("chybí parametr " + PARAM_STRING_ID);
-        } else if (varNameValues.size() > 1) {
-            throw new RuntimeException("parametr " + PARAM_STRING_ID + " musí být jen jeden");
-        }
-        ValueParam param = varNameValues.get(0);
-        //kontrola typu
-        if (param.getType() != ValueType.STRING) {
-            throw new RuntimeException(String.format("parametr %s není očekávaného typu %s", PARAM_STRING_ID, ValueType.STRING.toString()));
-        }
-        return (String) param.getValue();
-    }
 }

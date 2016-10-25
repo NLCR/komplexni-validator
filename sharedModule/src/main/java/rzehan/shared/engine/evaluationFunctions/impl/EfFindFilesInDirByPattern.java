@@ -1,16 +1,13 @@
 package rzehan.shared.engine.evaluationFunctions.impl;
 
 import rzehan.shared.engine.Engine;
-import rzehan.shared.engine.Pattern;
 import rzehan.shared.engine.ValueType;
 import rzehan.shared.engine.evaluationFunctions.EvaluationFunction;
 import rzehan.shared.engine.evaluationFunctions.PatternParam;
 import rzehan.shared.engine.evaluationFunctions.ValueParam;
 
 import java.io.File;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 
 /**
  * Created by martin on 21.10.16.
@@ -21,7 +18,10 @@ public class EfFindFilesInDirByPattern extends EvaluationFunction {
     private static final String PARAM_PATTERN = "pattern";
 
     public EfFindFilesInDirByPattern(Engine engine) {
-        super(engine, ValueType.LIST_OF_FILES);
+        super(engine, new Contract()
+                .withReturnType(ValueType.LIST_OF_FILES)
+                .withPatternParam(PARAM_PATTERN)
+                .withValueParam(PARAM_DIR, ValueType.FILE, 1, 1));
     }
 
     @Override
@@ -32,8 +32,9 @@ public class EfFindFilesInDirByPattern extends EvaluationFunction {
         if (patternParams == null) {
             throw new IllegalStateException("nebyly zadány parametry (vzory)");
         }
+        contract.checkComplience(valueParams, patternParams);
 
-        File dir = getDirFromValueParams();
+        File dir = (File) valueParams.getParams(PARAM_DIR).get(0).getValue();
         if (!dir.exists()) {
             throw new RuntimeException("soubor " + dir.getAbsolutePath() + " neexistuje");
         } else if (!dir.isDirectory()) {
@@ -41,8 +42,7 @@ public class EfFindFilesInDirByPattern extends EvaluationFunction {
         } else if (!dir.canRead()) {
             throw new RuntimeException("nemám práva číst adresář " + dir.getAbsolutePath());
         } else {
-            PatternParam pattern = getPatternFromPatternParams();
-            //TODO: use pattern
+            PatternParam pattern = patternParams.getParam(PARAM_PATTERN);
             File[] files = dir.listFiles();
             List<File> filesMatching = new ArrayList<>(files.length);
             for (File file : files) {
@@ -54,29 +54,4 @@ public class EfFindFilesInDirByPattern extends EvaluationFunction {
         }
     }
 
-    public File getDirFromValueParams() {
-        List<ValueParam> varNameValues = valueParams.getParams(PARAM_DIR);
-        if (varNameValues == null || varNameValues.size() == 0) {
-            throw new RuntimeException("chybí parametr " + PARAM_DIR);
-        } else if (varNameValues.size() > 1) {
-            throw new RuntimeException("parametr " + PARAM_DIR + " musí být jen jeden");
-        }
-
-        ValueParam param = varNameValues.get(0);
-        //TODO: tohle se opakuje, abstraktni metodu
-        //kontrola typu
-        if (param.getType() != ValueType.FILE) {
-            throw new RuntimeException(String.format("parametr %s není očekávaného typu %s", PARAM_DIR, ValueType.FILE.toString()));
-        }
-        File result = (File) param.getValue();
-        return result;
-    }
-
-    public PatternParam getPatternFromPatternParams() {
-        PatternParam param = patternParams.getParam(PARAM_PATTERN);
-        if (param == null) {
-            throw new RuntimeException("parametr " + PARAM_PATTERN + " není definován");
-        }
-        return param;
-    }
 }

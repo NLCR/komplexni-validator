@@ -17,7 +17,9 @@ public class EfProvidedFile extends EvaluationFunction {
 
 
     public EfProvidedFile(Engine engine) {
-        super(engine, ValueType.FILE);
+        super(engine, new Contract()
+                .withReturnType(ValueType.FILE)
+                .withValueParam(PARAM_FILE_ID, ValueType.STRING, 1, 1));
     }
 
     @Override
@@ -25,7 +27,9 @@ public class EfProvidedFile extends EvaluationFunction {
         if (valueParams == null) {
             throw new IllegalStateException("nebyly zadány parametry");
         }
-        String fileId = getFileIdFromParams();
+        contract.checkComplience(valueParams, null);
+
+        String fileId = (String) valueParams.getParams(PARAM_FILE_ID).get(0).getValue();
         File file = engine.getProvidedVarsManager().getProvidedFile(fileId);
         if (file == null) {
             throw new RuntimeException("soubor s id " + fileId + " není poskytován");
@@ -34,19 +38,4 @@ public class EfProvidedFile extends EvaluationFunction {
         }
     }
 
-
-    public String getFileIdFromParams() {
-        List<ValueParam> varNameValues = valueParams.getParams(PARAM_FILE_ID);
-        if (varNameValues == null || varNameValues.size() == 0) {
-            throw new RuntimeException("chybí parametr " + PARAM_FILE_ID);
-        } else if (varNameValues.size() > 1) {
-            throw new RuntimeException("parametr " + PARAM_FILE_ID + " musí být jen jeden");
-        }
-        ValueParam param = varNameValues.get(0);
-        //kontrola typu
-        if (param.getType() != ValueType.STRING) {
-            throw new RuntimeException(String.format("parametr %s není očekávaného typu %s", PARAM_FILE_ID, ValueType.STRING.toString()));
-        }
-        return (String) param.getValue();
-    }
 }
