@@ -23,6 +23,8 @@ public abstract class ValidationFunction {
 
     public abstract ValidationResult validate();
 
+    public abstract String getName();
+
     public ValidationFunction withValue(String paramName, ValueType valueType, Object value) {
         valueParams.addParam(paramName, new ValueParamConstant(valueType, value));
         return this;

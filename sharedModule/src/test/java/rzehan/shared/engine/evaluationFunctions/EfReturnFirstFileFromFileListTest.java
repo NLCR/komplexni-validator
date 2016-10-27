@@ -45,18 +45,12 @@ public class EfReturnFirstFileFromFileListTest {
     }
 
     private static void defineListVar() {
-        EvaluationFunction.ValueParams valueParams = new EvaluationFunction.ValueParams();
-        File dirFile = new File("src/test/resources/monografie_1.2/b50eb6b0-f0a4-11e3-b72e-005056827e52");
-        valueParams.addParam("dir", new ValueParamConstant(ValueType.FILE, dirFile));
-
-        EvaluationFunction.PatternParams patternParams = new EvaluationFunction.PatternParams();
-        Pattern patternAllFiles = engine.buildPattern(engine.buildExpression(false, ".+"));
-        patternParams.addParam("pattern", new PatternParamConstant(patternAllFiles));
-
-        //first file is somehow "txt"
-        ValueDefinition filesInDir = engine.buildValueDefinition(ValueType.LIST_OF_FILES, "FIND_FILES_IN_DIR_BY_PATTERN", valueParams, patternParams);
-
-        engine.registerValueDefinition(LIST_VAR, filesInDir);
+        engine.registerValueDefinition(LIST_VAR,
+                engine.buildValueDefinition(ValueType.LIST_OF_FILES,
+                        engine.buildEvaluationFunction("FIND_FILES_IN_DIR_BY_PATTERN")
+                                .withValue("dir", ValueType.FILE, new File("src/test/resources/monografie_1.2/b50eb6b0-f0a4-11e3-b72e-005056827e52"))
+                                .withPattern("pattern", engine.buildPattern(engine.buildExpression(false, ".+")))
+                ));
     }
 
 

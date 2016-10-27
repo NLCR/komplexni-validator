@@ -32,4 +32,9 @@ public class EfProvidedFile extends EvaluationFunction {
         }
     }
 
+    @Override
+    public String getName() {
+        return "PROVIDED_FILE";
+    }
+
 }

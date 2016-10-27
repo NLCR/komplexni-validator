@@ -30,4 +30,9 @@ public class EfProvidedString extends EvaluationFunction {
         }
     }
 
+    @Override
+    public String getName() {
+        return "PROVIDED_STRING";
+    }
+
 }

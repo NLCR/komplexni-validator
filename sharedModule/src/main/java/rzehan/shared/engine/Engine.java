@@ -2,6 +2,8 @@ package rzehan.shared.engine;
 
 import rzehan.shared.engine.evaluationFunctions.*;
 import rzehan.shared.engine.exceptions.VariableNotDefinedException;
+import rzehan.shared.engine.validationFunctions.ValidationFunction;
+import rzehan.shared.engine.validationFunctions.VfChecFileListExactSize;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -51,9 +53,17 @@ public class Engine {
         }
     }
 
-    public ValueDefinition buildValueDefinition(ValueType type, String efName, EvaluationFunction.ValueParams valueParams, EvaluationFunction.PatternParams patternParams) {
-        EvaluationFunction evaluationFunction = buildEvaluationFunction(efName);
-        ValueDefinition definition = new ValueDefinition(type, evaluationFunction, valueParams, patternParams);
+
+    public ValidationFunction buildValidationFunction(String name) {
+        if (name.equals("CHECK_FILE_LIST_EXACT_SIZE")) {
+            return new VfChecFileListExactSize(this);
+        } else {
+            throw new RuntimeException(String.format("validační funkce %s neexistuje", name));
+        }
+    }
+
+    public ValueDefinition buildValueDefinition(ValueType type, EvaluationFunction evaluationFunction) {
+        ValueDefinition definition = new ValueDefinition(type, evaluationFunction);
         return definition;
     }
 

@@ -27,6 +27,8 @@ public abstract class EvaluationFunction {
 
     public abstract Object evaluate();
 
+    public abstract String getName();
+
     public EvaluationFunction withValue(String paramName, ValueType valueType, Object value) {
         valueParams.addParam(paramName, new ValueParamConstant(valueType, value));
         return this;

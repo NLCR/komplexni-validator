@@ -30,4 +30,9 @@ public class EfProvidedInteger extends EvaluationFunction {
         }
     }
 
+    @Override
+    public String getName() {
+        return "PROVIDED_INTEGER";
+    }
+
 }

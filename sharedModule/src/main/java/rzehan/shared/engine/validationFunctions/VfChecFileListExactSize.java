@@ -39,4 +39,9 @@ public class VfChecFileListExactSize extends ValidationFunction {
             return new ValidationResult(true).withMessage(String.format("seznam obsahuje %d souborů", expectedSize));
         }
     }
+
+    @Override
+    public String getName() {
+        return "CHECK_FILE_LIST_EXACT_SIZE";
+    }
 }

@@ -32,4 +32,9 @@ public class EfReturnFirstFileFromFileList extends EvaluationFunction {
         }
     }
 
+    @Override
+    public String getName() {
+        return "RETURN_FIRST_FILE_FROM_LIST";
+    }
+
 }

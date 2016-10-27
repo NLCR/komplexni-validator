@@ -11,24 +11,33 @@ import rzehan.shared.engine.params.ValueParamConstant;
 public class TestUtils {
 
     public static void defineProvidedIntegerVar(Engine engine, String varName) {
-        EvaluationFunction.ValueParams params = new EvaluationFunction.ValueParams();
-        params.addParam("int_id", new ValueParamConstant(ValueType.STRING, varName));
-        ValueDefinition valueDefinition = engine.buildValueDefinition(ValueType.INTEGER, "PROVIDED_INTEGER", params, null);
-        engine.registerValueDefinition(varName, valueDefinition);
+        engine.registerValueDefinition(varName,
+                engine.buildValueDefinition(ValueType.INTEGER,
+                        engine.buildEvaluationFunction("PROVIDED_INTEGER")
+                                .withValue("int_id", ValueType.STRING, varName)
+
+                )
+        );
     }
 
     public static void defineProvidedStringVar(Engine engine, String varName) {
-        EvaluationFunction.ValueParams params = new EvaluationFunction.ValueParams();
-        params.addParam("string_id", new ValueParamConstant(ValueType.STRING, varName));
-        ValueDefinition valueDefinition = engine.buildValueDefinition(ValueType.STRING, "PROVIDED_STRING", params, null);
-        engine.registerValueDefinition(varName, valueDefinition);
+        engine.registerValueDefinition(varName,
+                engine.buildValueDefinition(ValueType.STRING,
+                        engine.buildEvaluationFunction("PROVIDED_STRING")
+                                .withValue("string_id", ValueType.STRING, varName)
+
+                )
+        );
     }
 
     public static void defineProvidedFileVar(Engine engine, String varName) {
-        EvaluationFunction.ValueParams params = new EvaluationFunction.ValueParams();
-        params.addParam("file_id", new ValueParamConstant(ValueType.STRING, varName));
-        ValueDefinition valueDefinition = engine.buildValueDefinition(ValueType.FILE, "PROVIDED_FILE", params, null);
-        engine.registerValueDefinition(varName, valueDefinition);
+        engine.registerValueDefinition(varName,
+                engine.buildValueDefinition(ValueType.FILE,
+                        engine.buildEvaluationFunction("PROVIDED_FILE")
+                                .withValue("file_id", ValueType.STRING, varName)
+
+                )
+        );
     }
 
 
