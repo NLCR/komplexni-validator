@@ -1,4 +1,4 @@
-package rzehan.shared.engine.evaluationFunctions;
+package rzehan.shared.engine.validationFunctions;
 
 import rzehan.shared.engine.Engine;
 import rzehan.shared.engine.Pattern;
@@ -10,39 +10,35 @@ import java.util.*;
 /**
  * Created by martin on 20.10.16.
  */
-public abstract class EvaluationFunction {
+public abstract class ValidationFunction {
     protected final Engine engine;
     protected final Contract contract;
     protected final ValueParams valueParams = new ValueParams();
     protected final PatternParams patternParams = new PatternParams();
 
-    public EvaluationFunction(Engine engine, Contract contract) {
+    public ValidationFunction(Engine engine, Contract contract) {
         this.engine = engine;
         this.contract = contract;
     }
 
-    public ValueType getResultType() {
-        return contract.getReturnType();
-    }
+    public abstract ValidationResult validate();
 
-    public abstract Object evaluate();
-
-    public EvaluationFunction withValue(String paramName, ValueType valueType, Object value) {
+    public ValidationFunction withValue(String paramName, ValueType valueType, Object value) {
         valueParams.addParam(paramName, new ValueParamConstant(valueType, value));
         return this;
     }
 
-    public EvaluationFunction withValueReference(String paramName, ValueType valueType, String varName) {
+    public ValidationFunction withValueReference(String paramName, ValueType valueType, String varName) {
         valueParams.addParam(paramName, new ValueParamReference(engine, valueType, varName));
         return this;
     }
 
-    public EvaluationFunction withPattern(String paramName, Pattern pattern) {
+    public ValidationFunction withPattern(String paramName, Pattern pattern) {
         patternParams.addParam(paramName, new PatternParamConstant(pattern));
         return this;
     }
 
-    public EvaluationFunction withPatternReference(String paramName, String varName) {
+    public ValidationFunction withPatternReference(String paramName, String varName) {
         patternParams.addParam(paramName, new PatternParamReference(engine, varName));
         return this;
     }
@@ -122,14 +118,8 @@ public abstract class EvaluationFunction {
 
     public static class Contract {
 
-        private ValueType returnType;
         private final Set<String> expectedPatternParams = new HashSet<>();
         private final Map<String, ValueParamSpec> valueParamsSpec = new HashMap<>();
-
-        public Contract withReturnType(ValueType returnType) {
-            this.returnType = returnType;
-            return this;
-        }
 
         public Contract withPatternParam(String paramName) {
             expectedPatternParams.add(paramName);
@@ -141,11 +131,6 @@ public abstract class EvaluationFunction {
             return this;
         }
 
-        public ValueType getReturnType() {
-            return returnType;
-        }
-
-        //FIXME: typo - comliAnce
         public void checkComplience(ValueParams valueParams, PatternParams patternParams) {
             if (valueParams != null) {
                 checkValueParamComplience(valueParams);
@@ -204,7 +189,6 @@ public abstract class EvaluationFunction {
 
         public static class ValueParamSpec {
             private final ValueType type;
-            //TODO: prejmenovat na minOccurs, maxOccurs, u integer to muze byt matouci
             private final Integer minValues;
             private final Integer maxValues;
 

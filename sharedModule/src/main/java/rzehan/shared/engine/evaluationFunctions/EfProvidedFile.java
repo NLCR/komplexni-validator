@@ -22,6 +22,7 @@ public class EfProvidedFile extends EvaluationFunction {
 
     @Override
     public File evaluate() {
+        //TODO: tohle odstranit, vzdy jsou definiovany
         if (valueParams == null) {
             throw new IllegalStateException("nebyly zadány parametry");
         }
