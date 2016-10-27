@@ -52,6 +52,10 @@ public abstract class ValidationFunction {
         this.patternParams.addAll(patternParams);
     }
 
+    protected void checkContractCompliance() {
+        contract.checkCompliance(this);
+    }
+
 
     public static class ValueParams {
         private final Map<String, List<ValueParam>> data = new HashMap<>();
@@ -131,13 +135,9 @@ public abstract class ValidationFunction {
             return this;
         }
 
-        public void checkComplience(ValueParams valueParams, PatternParams patternParams) {
-            if (valueParams != null) {
-                checkValueParamComplience(valueParams);
-            }
-            if (patternParams != null) {
-                checkPatternParamComplience(patternParams);
-            }
+        public void checkCompliance(ValidationFunction function) {
+            checkValueParamComplience(function.valueParams);
+            checkPatternParamCompliance(function.patternParams);
         }
 
         private void checkValueParamComplience(ValueParams valueParams) {
@@ -155,11 +155,11 @@ public abstract class ValidationFunction {
                     throw new RuntimeException(String.format("nelezen očekávaný parametr (vzor) %s", expectedParamName));
                 }
                 ValueParamSpec spec = valueParamsSpec.get(expectedParamName);
-                if (spec.getMinValues() != null && paramValues.size() < spec.getMinValues()) {
-                    throw new RuntimeException(String.format("parametr %s musí mít alespoň %d hodnot, nalezeno %d", expectedParamName, spec.getMinValues(), paramValues.size()));
+                if (spec.getMinOccurs() != null && paramValues.size() < spec.getMinOccurs()) {
+                    throw new RuntimeException(String.format("parametr %s musí mít alespoň %d hodnot, nalezeno %d", expectedParamName, spec.getMinOccurs(), paramValues.size()));
                 }
-                if (spec.getMaxValues() != null && paramValues.size() > spec.getMaxValues()) {
-                    throw new RuntimeException(String.format("parametr %s musí mít nejvýše %d hodnot, nalezeno %d", expectedParamName, spec.getMaxValues(), paramValues.size()));
+                if (spec.getMaxOccurs() != null && paramValues.size() > spec.getMaxOccurs()) {
+                    throw new RuntimeException(String.format("parametr %s musí mít nejvýše %d hodnot, nalezeno %d", expectedParamName, spec.getMaxOccurs(), paramValues.size()));
                 }
                 for (ValueParam param : paramValues) {
                     if (param.getType() != spec.getType()) {
@@ -170,7 +170,7 @@ public abstract class ValidationFunction {
 
         }
 
-        private void checkPatternParamComplience(PatternParams patternParams) {
+        private void checkPatternParamCompliance(PatternParams patternParams) {
             //all actual params are expected
             for (String actualParam : patternParams.keySet()) {
                 if (!expectedPatternParams.contains(actualParam)) {
@@ -189,31 +189,43 @@ public abstract class ValidationFunction {
 
         public static class ValueParamSpec {
             private final ValueType type;
-            private final Integer minValues;
-            private final Integer maxValues;
+            private final Integer minOccurs;
+            private final Integer maxOccurs;
 
-            public ValueParamSpec(ValueType type, Integer minValues, Integer maxValues) {
+            /**
+             * @param type
+             * @param minOccurs null value means 0
+             * @param maxOccurs null value means "unbound"
+             */
+            public ValueParamSpec(ValueType type, Integer minOccurs, Integer maxOccurs) {
                 this.type = type;
                 if (type == null) {
-                    throw new IllegalArgumentException("musí být uvedent typ parametru");
+                    throw new IllegalArgumentException("musí být uveden typ parametru");
                 }
-                this.minValues = minValues;
-                this.maxValues = maxValues;
-                if (minValues != null && maxValues != null && minValues > maxValues) {
-                    throw new IllegalArgumentException(String.format("minimální počet hodnot (%d) je větší, než maximální počet hodnot (%d)", minValues, maxValues));
+                if (minOccurs < 0) {
+                    throw new IllegalArgumentException("minimální počet výskytů musí být kladné číslo");
                 }
+                if (maxOccurs < 1) {
+                    throw new IllegalArgumentException("minimální počet výskytů musí být alespoň 1");
+                }
+                if (minOccurs != null && maxOccurs != null && minOccurs > maxOccurs) {
+                    throw new IllegalArgumentException(String.format("minimální počet hodnot (%d) je větší, než maximální počet hodnot (%d)", minOccurs, maxOccurs));
+                }
+                this.minOccurs = minOccurs;
+                this.maxOccurs = maxOccurs;
+
             }
 
             public ValueType getType() {
                 return type;
             }
 
-            public Integer getMinValues() {
-                return minValues;
+            public Integer getMinOccurs() {
+                return minOccurs;
             }
 
-            public Integer getMaxValues() {
-                return maxValues;
+            public Integer getMaxOccurs() {
+                return maxOccurs;
             }
         }
 

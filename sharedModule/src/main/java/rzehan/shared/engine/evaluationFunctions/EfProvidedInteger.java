@@ -2,7 +2,6 @@ package rzehan.shared.engine.evaluationFunctions;
 
 import rzehan.shared.engine.Engine;
 import rzehan.shared.engine.ValueType;
-import rzehan.shared.engine.evaluationFunctions.EvaluationFunction;
 
 /**
  * Created by martin on 20.10.16.
@@ -20,10 +19,7 @@ public class EfProvidedInteger extends EvaluationFunction {
 
     @Override
     public Integer evaluate() {
-        if (valueParams == null) {
-            throw new IllegalStateException("nebyly zadány parametry");
-        }
-        contract.checkComplience(valueParams, null);
+        checkContractCompliance();
 
         String intId = (String) valueParams.getParams(PARAM_INT_ID).get(0).getValue();
         Integer value = engine.getProvidedVarsManager().getProvidedInteger(intId);

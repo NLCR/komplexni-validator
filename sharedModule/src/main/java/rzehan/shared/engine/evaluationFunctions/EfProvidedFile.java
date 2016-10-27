@@ -2,7 +2,6 @@ package rzehan.shared.engine.evaluationFunctions;
 
 import rzehan.shared.engine.Engine;
 import rzehan.shared.engine.ValueType;
-import rzehan.shared.engine.evaluationFunctions.EvaluationFunction;
 
 import java.io.File;
 
@@ -22,11 +21,7 @@ public class EfProvidedFile extends EvaluationFunction {
 
     @Override
     public File evaluate() {
-        //TODO: tohle odstranit, vzdy jsou definiovany
-        if (valueParams == null) {
-            throw new IllegalStateException("nebyly zadány parametry");
-        }
-        contract.checkComplience(valueParams, null);
+        checkContractCompliance();
 
         String fileId = (String) valueParams.getParams(PARAM_FILE_ID).get(0).getValue();
         File file = engine.getProvidedVarsManager().getProvidedFile(fileId);

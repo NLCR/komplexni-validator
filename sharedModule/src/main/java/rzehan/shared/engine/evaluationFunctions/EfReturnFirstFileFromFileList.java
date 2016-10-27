@@ -2,7 +2,6 @@ package rzehan.shared.engine.evaluationFunctions;
 
 import rzehan.shared.engine.Engine;
 import rzehan.shared.engine.ValueType;
-import rzehan.shared.engine.evaluationFunctions.EvaluationFunction;
 
 import java.io.File;
 import java.util.List;
@@ -23,10 +22,7 @@ public class EfReturnFirstFileFromFileList extends EvaluationFunction {
 
     @Override
     public Object evaluate() {
-        if (valueParams == null) {
-            throw new IllegalStateException("Nebyly zadány parametry");
-        }
-        contract.checkComplience(valueParams, null);
+        checkContractCompliance();
 
         List<File> files = (List<File>) valueParams.getParams(PARAM_FILE_LIST).get(0).getValue();
         if (files.isEmpty()) {

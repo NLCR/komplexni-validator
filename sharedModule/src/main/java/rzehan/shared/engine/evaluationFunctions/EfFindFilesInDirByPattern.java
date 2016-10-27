@@ -2,7 +2,6 @@ package rzehan.shared.engine.evaluationFunctions;
 
 import rzehan.shared.engine.Engine;
 import rzehan.shared.engine.ValueType;
-import rzehan.shared.engine.evaluationFunctions.EvaluationFunction;
 import rzehan.shared.engine.params.PatternParam;
 
 import java.io.File;
@@ -25,13 +24,7 @@ public class EfFindFilesInDirByPattern extends EvaluationFunction {
 
     @Override
     public List<File> evaluate() {
-        if (valueParams == null) {
-            throw new IllegalStateException("nebyly zadány parametry (hodnotové)");
-        }
-        if (patternParams == null) {
-            throw new IllegalStateException("nebyly zadány parametry (vzory)");
-        }
-        contract.checkComplience(valueParams, patternParams);
+        checkContractCompliance();
 
         File dir = (File) valueParams.getParams(PARAM_DIR).get(0).getValue();
         if (!dir.exists()) {

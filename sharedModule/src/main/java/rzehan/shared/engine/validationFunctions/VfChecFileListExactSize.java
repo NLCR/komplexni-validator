@@ -24,10 +24,7 @@ public class VfChecFileListExactSize extends ValidationFunction {
 
     @Override
     public ValidationResult validate() {
-        if (valueParams == null) {
-            throw new IllegalStateException("nebyly zadány parametry");
-        }
-        contract.checkComplience(valueParams, null);
+        checkContractCompliance();
 
         List<File> fileList = (List<File>) valueParams.getParams(PARAM_LIST).get(0).getValue();
         Integer expectedSize = (Integer) valueParams.getParams(PARAM_SIZE).get(0).getValue();
