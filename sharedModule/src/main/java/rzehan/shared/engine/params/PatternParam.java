@@ -1,4 +1,4 @@
-package rzehan.shared.engine.evaluationFunctions;
+package rzehan.shared.engine.params;
 
 /**
  * Created by martin on 24.10.16.

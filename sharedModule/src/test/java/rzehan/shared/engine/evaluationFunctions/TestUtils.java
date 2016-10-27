@@ -3,6 +3,7 @@ package rzehan.shared.engine.evaluationFunctions;
 import rzehan.shared.engine.Engine;
 import rzehan.shared.engine.ValueDefinition;
 import rzehan.shared.engine.ValueType;
+import rzehan.shared.engine.params.ValueParamConstant;
 
 /**
  * Created by martin on 24.10.16.

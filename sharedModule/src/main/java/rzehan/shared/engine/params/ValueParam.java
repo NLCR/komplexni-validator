@@ -1,4 +1,4 @@
-package rzehan.shared.engine.evaluationFunctions;
+package rzehan.shared.engine.params;
 
 import rzehan.shared.engine.ValueType;
 

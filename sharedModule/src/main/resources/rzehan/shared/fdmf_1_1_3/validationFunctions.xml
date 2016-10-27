@@ -22,6 +22,7 @@
         </params>
     </function>
 
+    <!--todo: verze pro List<File> a List<String>-->
     <function name="CHECK_ALL_LISTS_SAME_SIZE">
         <description>Zkontroluje, že mají všechny seznamy stejnou velikost.</description>
         <params>
@@ -38,6 +39,7 @@
     </function>
 
     <function name="CHECK_FILENAME_MATCHES_STRING">
+        <!--TODO: nebude potreba, staci explicitne zadany pattern-->
         <description>Zkontroluje, že název souboru odpovídá textovému řetězci.</description>
         <params>
             <param name="file" type="File"/>

@@ -1,9 +1,8 @@
-package rzehan.shared.engine.evaluationFunctions.impl;
+package rzehan.shared.engine.evaluationFunctions;
 
 import rzehan.shared.engine.Engine;
 import rzehan.shared.engine.ValueType;
 import rzehan.shared.engine.evaluationFunctions.EvaluationFunction;
-import rzehan.shared.engine.evaluationFunctions.ValueParam;
 
 import java.io.File;
 import java.util.List;
