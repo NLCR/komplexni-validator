@@ -11,6 +11,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import static javafx.scene.input.KeyCode.V;
+
 /**
  * Created by martin on 20.10.16.
  */
@@ -64,6 +66,7 @@ public class Engine {
     }
 
     public ValidationFunction buildValidationFunction(String name) {
+        //TODO: vlasnte java 8 umi switch pres Stringy
         if (name.equals("CHECK_FILE_LIST_EXACT_SIZE")) {
             return new VfCheckFileListExactSize(this);
         } else if (name.equals("CHECK_FILENAME_MATCHES_PATTERN")) {
@@ -88,6 +91,10 @@ public class Engine {
             return new VfCheckChecksumAllPathsMatchFiles(this);
         } else if (name.equals("CHECK_CHECKSUM_ALL_CHECKSUMS_MATCH")) {
             return new VfCheckChecksumAllChecksumsMatch(this);
+        } else if (name.equals("CHECK_XML_WELL_BUILT")) {
+            return new VfCheckXmlWellBuilt(this);
+        } else if (name.equals("CHECK_XML_VALID_BY_XSD")) {
+            return new VfCheckXmlValidByXsd(this);
         } else {
             throw new RuntimeException(String.format("validační funkce %s neexistuje", name));
         }

@@ -838,7 +838,7 @@
             <description>Soubor INFO musí být korektní (well built) xml soubor.</description>
             <validation functionName="CHECK_XML_WELL_BUILT">
                 <params>
-                    <value-param name="file">
+                    <value-param name="file" type="FILE">
                         <value-ref name="INFO_FILE"/>
                     </value-param>
                 </params>
@@ -850,10 +850,10 @@
             <description>Soubor INFO musí být validní podle XML Schema.</description>
             <validation functionName="CHECK_XML_VALID_BY_XSD">
                 <params>
-                    <value-param name="file">
+                    <value-param name="file" type="FILE">
                         <value-ref name="INFO_FILE"/>
                     </value-param>
-                    <value-param name="xsd_file">
+                    <value-param name="xsd_file" type="FILE">
                         <value-ref name="INFO_XSD_FILE"/>
                     </value-param>
                 </params>

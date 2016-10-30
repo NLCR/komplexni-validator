@@ -125,15 +125,15 @@
     <function name="CHECK_XML_WELL_BUILT">
         <description>Zkontroluje, že soubor obsahuje korektní xml (well built).</description>
         <params>
-            <param name="file" type="File"/>
+            <param name="file" type="FILE"/>
         </params>
     </function>
 
     <function name="CHECK_XML_VALID_BY_XSD">
         <description>Zkontroluje, že soubor obsahuje xml validní podle XML Schema.</description>
         <params>
-            <param name="file" type="File"/>
-            <param name="xsd_file" type="File"/>
+            <param name="file" type="FILE"/>
+            <param name="xsd_file" type="FILE"/>
         </params>
     </function>
 
