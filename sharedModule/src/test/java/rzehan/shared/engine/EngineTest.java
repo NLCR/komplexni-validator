@@ -47,22 +47,20 @@ public class EngineTest {
                 ));
 
 
-        //TODO: poradi definice INFO_FILENAME a INFO_FILES ma vyznam, i kdyz by nemelo
-        //patterns
-        engine.registerPattern("INFO_FILENAME",
-                engine.buildPattern(
-                        engine.buildExpression(true, "info_${PSP_ID}\\.xml"),
-                        engine.buildExpression(true, "info.xml")
-                )
-        );
-
-
         //other VARS
         engine.registerValueDefinition("INFO_FILES",
                 engine.buildValueDefinition(ValueType.FILE_LIST,
                         engine.buildEvaluationFunction(EF_FIND_FILES_IN_DIR_BY_PATTERN)
                                 .withValue("dir", ValueType.FILE, engine.getValueFromVariable("PSP_DIR"))
-                                .withPattern("pattern", engine.getPatternFromVariable("INFO_FILENAME"))
+                                .withPatternReference("pattern", "INFO_FILENAME")
+                )
+        );
+
+        //patterns
+        engine.registerPattern("INFO_FILENAME",
+                engine.buildPattern(
+                        engine.buildExpression(true, "info_${PSP_ID}\\.xml"),
+                        engine.buildExpression(true, "info.xml")
                 )
         );
 

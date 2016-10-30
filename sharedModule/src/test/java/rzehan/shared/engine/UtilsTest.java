@@ -20,19 +20,19 @@ public class UtilsTest {
 
     @Test
     public void simpleTypes() {
-        assertTrue(Utils.instanceOf("String", "neco"));
-        assertFalse(Utils.instanceOf("String", 3));
-        assertFalse(Utils.instanceOf("String", new File("/something")));
+        assertTrue(Utils.instanceOf("string", "neco"));
+        assertFalse(Utils.instanceOf("string", 3));
+        assertFalse(Utils.instanceOf("string", new File("/something")));
 
-        assertTrue(Utils.instanceOf("Integer", 3));
-        assertTrue(Utils.instanceOf("Integer", 0));
-        assertTrue(Utils.instanceOf("Integer", -3));
-        assertFalse(Utils.instanceOf("Integer", "6"));
-        assertFalse(Utils.instanceOf("Integer", new File("/something")));
+        assertTrue(Utils.instanceOf("integer", 3));
+        assertTrue(Utils.instanceOf("integer", 0));
+        assertTrue(Utils.instanceOf("integer", -3));
+        assertFalse(Utils.instanceOf("integer", "6"));
+        assertFalse(Utils.instanceOf("integer", new File("/something")));
 
-        assertTrue(Utils.instanceOf("File", new File("/something")));
-        assertFalse(Utils.instanceOf("File", "/something"));
-        assertFalse(Utils.instanceOf("File", 3));
+        assertTrue(Utils.instanceOf("file", new File("/something")));
+        assertFalse(Utils.instanceOf("file", "/something"));
+        assertFalse(Utils.instanceOf("file", 3));
     }
 
     @Test
@@ -47,9 +47,9 @@ public class UtilsTest {
 
     @Test
     public void collections() {
-        assertTrue(Utils.instanceOf("List", new ArrayList()));
-        assertTrue(Utils.instanceOf("List", new ArrayList<String>()));
-        assertFalse(Utils.instanceOf("List", new HashSet()));
+        assertTrue(Utils.instanceOf("list", new ArrayList()));
+        assertTrue(Utils.instanceOf("list", new ArrayList<String>()));
+        assertFalse(Utils.instanceOf("list", new HashSet()));
     }
 
     @Test
@@ -62,22 +62,22 @@ public class UtilsTest {
         files.add(new File("/something"));
 
         //List<String>
-        assertTrue(Utils.instanceOf("List<String>", new ArrayList<String>()));
-        //assertFalse(TestUtils.instanceOf("List<String>", new ArrayList<Integer>()));
-        //assertFalse(TestUtils.instanceOf("List<String>", new ArrayList()));
+        assertTrue(Utils.instanceOf("string_list", new ArrayList<String>()));
+        //assertFalse(TestUtils.instanceOf("string_list", new ArrayList<Integer>()));
+        //assertFalse(TestUtils.instanceOf("string_list", new ArrayList()));
 
-        assertTrue(Utils.instanceOf("List<String>", strings));
-        assertFalse(Utils.instanceOf("List<String>", integers));
-        assertFalse(Utils.instanceOf("List<String>", files));
+        assertTrue(Utils.instanceOf("string_list", strings));
+        assertFalse(Utils.instanceOf("string_list", integers));
+        assertFalse(Utils.instanceOf("string_list", files));
 
         //List<File>
-        assertTrue(Utils.instanceOf("List<File>", new ArrayList<File>()));
-        //assertFalse(TestUtils.instanceOf("List<File>", new ArrayList<Integer>()));
-        //assertFalse(TestUtils.instanceOf("List<File>", new ArrayList()));
+        assertTrue(Utils.instanceOf("file_list", new ArrayList<File>()));
+        //assertFalse(TestUtils.instanceOf("file_list", new ArrayList<Integer>()));
+        //assertFalse(TestUtils.instanceOf("file_list", new ArrayList()));
 
-        assertTrue(Utils.instanceOf("List<File>", files));
-        assertFalse(Utils.instanceOf("List<File>", strings));
-        assertFalse(Utils.instanceOf("List<File>", integers));
+        assertTrue(Utils.instanceOf("file_list", files));
+        assertFalse(Utils.instanceOf("file_list", strings));
+        assertFalse(Utils.instanceOf("file_list", integers));
     }
 
 }

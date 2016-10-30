@@ -2,6 +2,7 @@ package rzehan.shared.engine.evaluationFunctions;
 
 import rzehan.shared.engine.Engine;
 import rzehan.shared.engine.ValueType;
+import rzehan.shared.engine.exceptions.ValidatorException;
 import rzehan.shared.engine.params.PatternParam;
 
 import java.io.File;
@@ -34,11 +35,11 @@ public class EfFindFilesInDirByPattern extends EvaluationFunction {
         } else if (!dir.canRead()) {
             throw new RuntimeException("nemám práva číst adresář " + dir.getAbsolutePath());
         } else {
-            PatternParam pattern = patternParams.getParam(PARAM_PATTERN);
+            PatternParam patternParam = patternParams.getParam(PARAM_PATTERN);
             File[] files = dir.listFiles();
             List<File> filesMatching = new ArrayList<>(files.length);
             for (File file : files) {
-                if (pattern.matches(file.getName())) {
+                if (patternParam.matches(file.getName())) {
                     filesMatching.add(file);
                 }
             }
