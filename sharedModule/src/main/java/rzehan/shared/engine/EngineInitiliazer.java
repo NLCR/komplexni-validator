@@ -2,11 +2,10 @@ package rzehan.shared.engine;
 
 import com.mycila.xmltool.XMLDoc;
 import com.mycila.xmltool.XMLTag;
-import com.sun.xml.internal.bind.v2.TODO;
 import org.w3c.dom.Element;
-import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import rzehan.shared.engine.evaluationFunctions.EvaluationFunction;
+import rzehan.shared.engine.exceptions.ValidatorException;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -27,7 +26,7 @@ public class EngineInitiliazer {
         XMLTag doc = XMLDoc.from(patternsFile, true);
         String currentTagName = doc.getCurrentTagName();
         if (!"dmf".equals(doc.getCurrentTagName())) {
-            throw new RuntimeException("root element není dmf");
+            throw new ValidatorException("root element není dmf");
         }
 
         for (Element childEl : doc.getChildElement()) {
@@ -39,12 +38,21 @@ public class EngineInitiliazer {
                 case "value-def":
                     registerValue(childEl);
                     break;
+                case "rules-secion":
+                    processRulesSection(childEl);
+                    break;
                 default:
                     //nothing
                     System.out.println(String.format("ignoring element %s", elementName));
-                    //throw new RuntimeException("unexpected element '" + childEl.getTagName() + "'");
+                    //throw new ValidatorException("unexpected element '" + childEl.getTagName() + "'");
             }
         }
+    }
+
+    private void processRulesSection(Element childEl) {
+
+
+
     }
 
 
@@ -57,13 +65,6 @@ public class EngineInitiliazer {
         for (int i = 0; i < expressionEls.getLength(); i++) {
             expressions.add(toExpression((Element) expressionEls.item(i)));
         }
-/*
-        for (int i = 0; i < childNodes.getLength(); i++) {
-            Node node = childNodes.item(i);
-            if (node.getNodeType() == Node.ELEMENT_NODE) {
-                expressions.add(toExpression((Element) node));
-            }
-        }*/
         Pattern pattern = engine.buildPattern(expressions);
         engine.registerPattern(varName, pattern);
     }
@@ -110,7 +111,7 @@ public class EngineInitiliazer {
                 return Integer.valueOf(varEl.getTextContent());
             default:
                 //todo: lepsi chybovou hlasku
-                throw new RuntimeException("cannot use " + paramType + " here");
+                throw new ValidatorException("cannot use " + paramType + " here");
         }
     }
 

@@ -2,11 +2,11 @@ package rzehan.shared.engine.evaluationFunctions;
 
 import rzehan.shared.engine.Engine;
 import rzehan.shared.engine.ValueType;
-import rzehan.shared.engine.exceptions.ValidatorException;
 import rzehan.shared.engine.params.PatternParam;
 
 import java.io.File;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by martin on 21.10.16.

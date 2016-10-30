@@ -1,4 +1,4 @@
-<rules>
+<dmf>
 
     <description>
         Zde jsou definovány validační pravidla. K samotným validacím se používají validační funkce, jejichž parametry
@@ -7,20 +7,19 @@
     </description>
 
 
-    <section name="PSP ID" description="Identifikátor PSP">
+    <rules-section name="PSP ID" description="Identifikátor PSP">
 
 
         <!--psp id-->
 
-        <rule name="PSP_ID_DERIVED_FROM_TITLE_ID" level="warning">
+        <!--<rule name="PSP_ID_DERIVED_FROM_TITLE_ID" level="warning">
             <description>PSP-ID musí být odvozen od některého z povolených identifikátorů.</description>
-            <!--TODO-->
-        </rule>
+        </rule>-->
 
-    </section>
+    </rules-section>
 
 
-    <section name="Struktura souborů" description="Struktura PSP balicku na urovni soboru">
+    <rules-section name="Struktura souborů" description="Struktura PSP balicku na urovni soboru">
 
 
         <!--psp dir-->
@@ -728,11 +727,11 @@
             </validationFunction>
         </rule>
 
-    </section>
+    </rules-section>
 
 
-    <section name="Soubor CHECKSUM"
-             description="Kontrola souboru CHECKSUM, odkazů na další soubory a shody kontrolních součtů.">
+    <rules-section name="Soubor CHECKSUM"
+                  description="Kontrola souboru CHECKSUM, odkazů na další soubory a shody kontrolních součtů.">
 
         <rule name="CHECKSUM_GENERATED_BY_GRAMMAR" level="warning">
             <description>Soubor CHECKSUM by měl být generován předepsanou ABNF gramatikou.</description>
@@ -804,10 +803,10 @@
         </rule>
 
 
-    </section>
+    </rules-section>
 
-    <section name="Soubor INFO"
-             description="Validace souboru INFO - odkazování na ostatní soubory, kontrolní součet pro soubor CHECKSUM, atd.">
+    <rules-section name="Soubor INFO"
+                  description="Validace souboru INFO - odkazování na ostatní soubory, kontrolní součet pro soubor CHECKSUM, atd.">
 
         <rule name="INFO_XML_WELL_BUILT" level="severe">
             <description>Soubor INFO musí být korektní (well built) xml soubor.</description>
@@ -924,7 +923,7 @@
         </rule>
 
 
-    </section>
+    </rules-section>
 
 
-</rules>
+</dmf>

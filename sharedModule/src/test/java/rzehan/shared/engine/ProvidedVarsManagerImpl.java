@@ -7,7 +7,7 @@ import java.util.Map;
 /**
  * Created by martin on 24.10.16.
  */
-public class ProvidedVarsManagerImpl implements ProvidedVarsManager {
+public class ProvidedVarsManagerImpl implements Engine.ProvidedVarsManager {
 
     private final Map<String, File> files = new HashMap<>();
     private final Map<String, String> strings = new HashMap<>();

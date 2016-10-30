@@ -1,7 +1,5 @@
 package rzehan.shared.engine.exceptions;
 
-import rzehan.shared.imageUtils.ImageUtil;
-
 /**
  * Created by martin on 20.10.16.
  */

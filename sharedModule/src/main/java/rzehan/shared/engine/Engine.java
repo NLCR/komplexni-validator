@@ -1,10 +1,13 @@
 package rzehan.shared.engine;
 
 import rzehan.shared.engine.evaluationFunctions.*;
+import rzehan.shared.engine.exceptions.ValidatorException;
 import rzehan.shared.engine.exceptions.VariableNotDefinedException;
 import rzehan.shared.engine.validationFunctions.ValidationFunction;
 import rzehan.shared.engine.validationFunctions.VfChecFileListExactSize;
 
+import java.io.File;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -19,14 +22,18 @@ public class Engine {
     private final Map<String, ValueDefinition> valueDefinitionsByVarName = new HashMap<>();
     private final Map<String, Object> valuesByVarName = new HashMap<>();
     private final Map<String, Pattern> patternsByVarName = new HashMap<>();
-
+    private final RulesManager rulesManager = new RulesManager();
 
     public Engine(ProvidedVarsManager providedVarsManager) {
         this.providedVarsManager = providedVarsManager;
     }
 
-    public ProvidedVarsManager getProvidedVarsManager() {
-        return providedVarsManager;
+
+    //build methods for creating stuff
+
+    public ValueDefinition buildValueDefinition(ValueType type, EvaluationFunction evaluationFunction) {
+        ValueDefinition definition = new ValueDefinition(type, evaluationFunction);
+        return definition;
     }
 
     public Pattern.Expression buildExpression(boolean caseSensitive, String originalRegexp) {
@@ -41,8 +48,6 @@ public class Engine {
         return new Pattern(this, expressions);
     }
 
-
-    //TODO: limit usage, probably just here and in tests
     public EvaluationFunction buildEvaluationFunction(String name) {
         if (name.equals("PROVIDED_FILE")) {
             return new EfProvidedFile(this);
@@ -59,7 +64,6 @@ public class Engine {
         }
     }
 
-
     public ValidationFunction buildValidationFunction(String name) {
         if (name.equals("CHECK_FILE_LIST_EXACT_SIZE")) {
             return new VfChecFileListExactSize(this);
@@ -68,14 +72,19 @@ public class Engine {
         }
     }
 
-    public ValueDefinition buildValueDefinition(ValueType type, EvaluationFunction evaluationFunction) {
-        ValueDefinition definition = new ValueDefinition(type, evaluationFunction);
-        return definition;
+    public RulesSection buildRuleSection(String sectionName) {
+        return new RulesSection(sectionName);
     }
 
-    public void registerPattern(String patternVariableName, Pattern pattern) {
+    public Rule buildRule(String ruleName, Rule.Level error, ValidationFunction function) {
+        return new Rule(ruleName, error, function);
+    }
+
+    //register methods for defining variables (values, patterns, ruleSections, rules)
+
+    public void registerValue(String valueVariableName, Object value) {
         //TODO: check if not defined already
-        patternsByVarName.put(patternVariableName, pattern);
+        valuesByVarName.put(valueVariableName, value);
     }
 
     public void registerValueDefinition(String valueVariableName, ValueDefinition definition) {
@@ -83,14 +92,24 @@ public class Engine {
         valueDefinitionsByVarName.put(valueVariableName, definition);
     }
 
-    public void registerValue(String valueVariableName, Object value) {
+    public void registerPattern(String patternVariableName, Pattern pattern) {
         //TODO: check if not defined already
-        valuesByVarName.put(valueVariableName, value);
+        patternsByVarName.put(patternVariableName, pattern);
     }
 
 
-    public Pattern getPatternFromVariable(String patternVariableName) {
-        return patternsByVarName.get(patternVariableName);
+    public void registerRuleSection(RulesSection section) {
+        rulesManager.addSection(section);
+    }
+
+    public void registerRule(RulesSection section, Rule rule) {
+        rulesManager.addRule(section, rule);
+    }
+
+    //get methods for obtaining values, paterns, rule-sections, rules, etc
+
+    public ProvidedVarsManager getProvidedVarsManager() {
+        return providedVarsManager;
     }
 
     public Object getValueFromVariable(String valueVariableName) {
@@ -109,8 +128,60 @@ public class Engine {
         }
     }
 
-
-    public Rule buildRule(String ruleName, Rule.Level error, ValidationFunction function) {
-        return new Rule(ruleName, error, function);
+    public Pattern getPatternFromVariable(String patternVariableName) {
+        return patternsByVarName.get(patternVariableName);
     }
+
+    public List<RulesSection> getRuleSections() {
+        return rulesManager.getSections();
+    }
+
+    public List<Rule> getRules(RulesSection section) {
+        return rulesManager.getRules(section);
+    }
+
+    //helper classes, interfaces
+
+    public interface ProvidedVarsManager {
+
+        File getProvidedFile(String fileId);
+
+        String getProvidedString(String stringId);
+
+        Integer getProvidedInteger(String intId);
+
+    }
+
+    private static class RulesManager {
+        private final List<RulesSection> sections = new ArrayList<>();
+        private final Map<RulesSection, List<Rule>> rulesBySection = new HashMap<>();
+
+
+        void addSection(RulesSection section) {
+            if (sections.contains(section)) {
+                throw new ValidatorException(String.format("rules section %s already added", section.getName()));
+            } else {
+                sections.add(section);
+                rulesBySection.put(section, new ArrayList<>());
+            }
+        }
+
+        void addRule(RulesSection section, Rule rule) {
+            if (!rulesBySection.keySet().contains(section)) {
+                throw new ValidatorException(String.format("rules section %s not added yet", section.getName()));
+            } else {
+                rulesBySection.get(section).add(rule);
+            }
+        }
+
+        List<RulesSection> getSections() {
+            return sections;
+        }
+
+        List<Rule> getRules(RulesSection section) {
+            return rulesBySection.get(section);
+        }
+    }
+
+
 }
