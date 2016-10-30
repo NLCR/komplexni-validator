@@ -18,12 +18,12 @@ public class RulesSection {
     }
 
 
-    public RulesSection withDescription(String description) {
+    public RulesSection setDescription(String description) {
         this.description = description;
         return this;
     }
 
-    public RulesSection withEnabled(boolean enabled) {
+    public RulesSection setEnabled(boolean enabled) {
         this.enabled = enabled;
         return this;
     }

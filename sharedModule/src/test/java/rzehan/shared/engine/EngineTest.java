@@ -78,7 +78,7 @@ public class EngineTest {
                         engine.buildValidationFunction("CHECK_FILE_LIST_EXACT_SIZE")
                                 .withValueReference("list", ValueType.FILE_LIST, "INFO_FILES")
                                 .withValue("size", ValueType.INTEGER, 1))
-                        .withDescription("musi existovat prave jeden soubor info");
+                        .setDescription("musi existovat prave jeden soubor info");
         ValidationResult ruleSingleInfoResult = ruleSingleInfo.getResult();
         assertTrue(ruleSingleInfoResult.getMessage(), ruleSingleInfoResult.isValid());
 
@@ -88,7 +88,7 @@ public class EngineTest {
                         engine.buildValidationFunction("CHECK_FILE_LIST_EXACT_SIZE")
                                 .withValueReference("list", ValueType.FILE_LIST, "INFO_FILES")
                                 .withValue("size", ValueType.INTEGER, 2))
-                        .withDescription("dva soubory info");
+                        .setDescription("dva soubory info");
         ValidationResult ruleTwoInfosResult = ruleTwoInfos.getResult();
         assertFalse(ruleTwoInfosResult.getMessage(), ruleTwoInfosResult.isValid());
     }

@@ -12,7 +12,7 @@
 
         <!--psp id-->
 
-        <!--<rule name="PSP_ID_DERIVED_FROM_TITLE_ID" level="warning">
+        <!--<rule name="PSP_ID_DERIVED_FROM_TITLE_ID" level="WARNING">
             <description>PSP-ID musí být odvozen od některého z povolených identifikátorů.</description>
         </rule>-->
 
@@ -25,901 +25,902 @@
         <!--psp dir-->
 
         <!--mozna tohle patri spise k INFO?-->
-        <rule name="PSP_DIR_MATCHES_PSP_ID" level="warning">
+        <!--TODO: spis pouzit pattern a CHECK_FILENAME_MATCHES_PATTERN, kdyz matches-->
+        <rule name="PSP_DIR_MATCHES_PSP_ID" level="WARNING">
             <!--Tady warning, protože to zadání vyžaduje, nicméně DMF mluví jasně:
             <packageid> název kořenového adresáře balíčku viz kap. 6
             a METS Profil taky:
             There must be <packageid> element that contains name of package root directory.-->
             <description>Název kořenového adresáře musí být schodný s PSP-ID.</description>
-            <validationFunction name="CHECK_FILENAME_MATCHES_STRING">
+            <validation functionName="CHECK_FILENAME_MATCHES_STRING">
                 <params>
-                    <param name="file">
-                        <variable name="PSP_DIR"/>
-                    </param>
-                    <param name="string">
-                        <variable name="PSP_ID"/>
-                    </param>
+                    <value-param name="file" type="FILE">
+                        <value-ref name="PSP_DIR"/>
+                    </value-param>
+                    <value-param name="string" type="STRING">
+                        <value-ref name="PSP_ID"/>
+                    </value-param>
                 </params>
-            </validationFunction>
+            </validation>
         </rule>
 
 
         <!--právě jeden každý top-level soubor-->
 
-        <rule name="SINGLE_INFO_FILE_EXISTS" level="severe">
+        <rule name="SINGLE_INFO_FILE_EXISTS" level="ERROR">
             <description>Musí existovat nanejvýše jeden soubor INFO.</description>
-            <validationFunction name="CHECK_LIST_EXACT_SIZE">
+            <validation functionName="CHECK_FILE_LIST_EXACT_SIZE">
                 <params>
-                    <param name="list">
-                        <variable name="INFO_FILES"/>
-                    </param>
-                    <param name="size">1</param>
+                    <value-param name="files" type="FILE_LIST">
+                        <value-ref name="INFO_FILES"/>
+                    </value-param>
+                    <value-param name="size" type="INTEGER">1</value-param>
                 </params>
-            </validationFunction>
+            </validation>
         </rule>
 
-        <rule name="SINGLE_PRIMARY-METS_FILE_EXISTS" level="severe">
+        <rule name="SINGLE_PRIMARY-METS_FILE_EXISTS" level="ERROR">
             <description>Musí existovat nanejvýše jeden soubor PRIMARY-METS.</description>
-            <validationFunction name="CHECK_LIST_EXACT_SIZE">
+            <validation functionName="CHECK_FILE_LIST_EXACT_SIZE">
                 <params>
-                    <param name="list">
-                        <variable name="PRIMARY-METS_FILES"/>
-                    </param>
-                    <param name="size">1</param>
+                    <value-param name="files" type="FILE_LIST">
+                        <value-ref name="PRIMARY-METS_FILES"/>
+                    </value-param>
+                    <value-param name="size" type="INTEGER">1</value-param>
                 </params>
-            </validationFunction>
+            </validation>
         </rule>
 
-        <rule name="SINGLE_CHECKSUM_FILE_EXISTS" level="severe">
+        <rule name="SINGLE_CHECKSUM_FILE_EXISTS" level="ERROR">
             <description>Musí existovat nanejvýše jeden soubor CHECKSUM.</description>
-            <validationFunction name="CHECK_LIST_EXACT_SIZE">
+            <validation functionName="CHECK_FILE_LIST_EXACT_SIZE">
                 <params>
-                    <param name="list">
-                        <variable name="CHECKSUM_FILES"/>
-                    </param>
-                    <param name="size">1</param>
+                    <value-param name="files" type="FILE_LIST">
+                        <value-ref name="CHECKSUM_FILES"/>
+                    </value-param>
+                    <value-param name="size" type="INTEGER">1</value-param>
                 </params>
-            </validationFunction>
+            </validation>
         </rule>
 
 
         <!--názvy top-level souborů obsahují povolené znaky-->
 
-        <rule name="INFO_FILENAME_VALID" level="severe">
+        <rule name="INFO_FILENAME_VALID" level="ERROR">
             <description>Název souboru INFO obsahuje jen povolené znaky.</description>
-            <validationFunction name="CHECK_FILENAME_MATCHES_PATTERN">
+            <validation functionName="CHECK_FILENAME_MATCHES_PATTERN">
                 <params>
-                    <param name="file">
-                        <variable name="INFO_FILE"/>
-                    </param>
-                    <param name="pattern">
-                        <pattern name="FILENAME"/>
-                    </param>
+                    <value-param name="file" type="FILE">
+                        <value-ref name="INFO_FILE"/>
+                    </value-param>
+                    <pattern-param name="pattern">
+                        <pattern-ref name="FILENAME"/>
+                    </pattern-param>
                 </params>
-            </validationFunction>
+            </validation>
         </rule>
 
-        <rule name="PRIMARY-METS_FILENAME_VALID" level="severe">
+        <rule name="PRIMARY-METS_FILENAME_VALID" level="ERROR">
             <description>Název souboru PRIMARY-METS obsahuje jen povolené znaky.</description>
-            <validationFunction name="CHECK_FILENAME_MATCHES_PATTERN">
+            <validation functionName="CHECK_FILENAME_MATCHES_PATTERN">
                 <params>
-                    <param name="file">
-                        <variable name="PRIMARY-METS_FILE"/>
-                    </param>
-                    <param name="pattern">
-                        <pattern name="FILENAME"/>
-                    </param>
+                    <value-param name="file" type="FILE">
+                        <value-ref name="PRIMARY-METS_FILE"/>
+                    </value-param>
+                    <pattern-param name="pattern">
+                        <pattern-ref name="FILENAME"/>
+                    </pattern-param>
                 </params>
-            </validationFunction>
+            </validation>
         </rule>
 
-        <rule name="CHECKSUM_FILENAME_VALID" level="severe">
+        <rule name="CHECKSUM_FILENAME_VALID" level="ERROR">
             <description>Název souboru CHECKSUM obsahuje jen povolené znaky.</description>
-            <validationFunction name="CHECK_FILENAME_MATCHES_PATTERN">
+            <validation functionName="CHECK_FILENAME_MATCHES_PATTERN">
                 <params>
-                    <param name="file">
-                        <variable name="CHECKSUM_FILE"/>
-                    </param>
-                    <param name="pattern">
-                        <pattern name="FILENAME"/>
-                    </param>
+                    <value-param name="file" type="FILE">
+                        <value-ref name="CHECKSUM_FILE"/>
+                    </value-param>
+                    <pattern-param name="pattern">
+                        <pattern-ref name="FILENAME"/>
+                    </pattern-param>
                 </params>
-            </validationFunction>
+            </validation>
         </rule>
 
 
         <!--top-level soubory nejsou adresáře-->
 
-        <rule name="INFO_IS_NOT_DIR" level="severe">
+        <rule name="INFO_IS_NOT_DIR" level="ERROR">
             <description>Soubor INFO není adresář, ale obyčejný soubor.</description>
-            <validationFunction name="CHECK_FILE_IS_NOT_DIR">
+            <validation functionName="CHECK_FILE_IS_NOT_DIR">
                 <params>
-                    <param name="file">
-                        <variable name="INFO_FILE"/>
-                    </param>
+                    <value-param name="file" type="FILE">
+                        <value-ref name="INFO_FILE"/>
+                    </value-param>
                 </params>
-            </validationFunction>
+            </validation>
         </rule>
 
-        <rule name="PRIMARY-METS_IS_NOT_DIR" level="severe">
+        <rule name="PRIMARY-METS_IS_NOT_DIR" level="ERROR">
             <description>Soubor PRIMARY-METS není adresář, ale obyčejný soubor.</description>
-            <validationFunction name="CHECK_FILE_IS_NOT_DIR">
+            <validation functionName="CHECK_FILE_IS_NOT_DIR">
                 <params>
-                    <param name="file">
-                        <variable name="PRIMARY-METS_FILE"/>
-                    </param>
+                    <value-param name="file" type="FILE">
+                        <value-ref name="PRIMARY-METS_FILE"/>
+                    </value-param>
                 </params>
-            </validationFunction>
+            </validation>
         </rule>
 
-        <rule name="CHECKSUM_IS_NOT_DIR" level="severe">
+        <rule name="CHECKSUM_IS_NOT_DIR" level="ERROR">
             <description>Soubor CHECKSUM není adresář, ale obyčejný soubor.</description>
-            <validationFunction name="CHECK_FILE_IS_NOT_DIR">
+            <validation functionName="CHECK_FILE_IS_NOT_DIR">
                 <params>
-                    <param name="file">
-                        <variable name="CHECKSUM_FILE"/>
-                    </param>
+                    <value-param name="file" type="FILE">
+                        <value-ref name="CHECKSUM_FILE"/>
+                    </value-param>
                 </params>
-            </validationFunction>
+            </validation>
         </rule>
 
 
         <!--žádné top-level soubory/adresáře kromě očekávaných a tolerovaných-->
 
-        <rule name="TOLERATED_TL_FILES_ARE_NOT_DIRS" level="severe">
+        <rule name="TOLERATED_TL_FILES_ARE_NOT_DIRS" level="ERROR">
             <description>Žádný tolerovaný soubor v kořenovém adresáři nesmí být adresář.</description>
-            <validationFunction name="CHECK_NO_FILE_IS_DIR">
+            <validation functionName="CHECK_NO_FILE_IS_DIR">
                 <params>
-                    <param name="file_list">
-                        <variable name="TOLERATED_TL_FILES"/>
-                    </param>
+                    <value-param name="files" type="FILE_LIST">
+                        <value-ref name="TOLERATED_TL_FILES"/>
+                    </value-param>
                 </params>
-            </validationFunction>
+            </validation>
         </rule>
 
-        <rule name="NO_TOLERATED_TL_FILES_EXIST" level="warning">
+        <rule name="NO_TOLERATED_TL_FILES_EXIST" level="WARNING">
             <description>Neměl by existovat žádný tolerovaný soubor.</description>
-            <validationFunction name="CHECK_LIST_EMPTY">
+            <validation functionName="CHECK_FILE_LIST_EMPTY">
                 <params>
-                    <param name="list">
-                        <variable name="TOLERATED_TL_FILES"/>
-                    </param>
+                    <value-param name="files" type="FILE_LIST">
+                        <value-ref name="TOLERATED_TL_FILES"/>
+                    </value-param>
                 </params>
-            </validationFunction>
+            </validation>
         </rule>
 
-        <rule name="NO_OTHER_TOP_LEVEL_FILES_EXIST" level="severe">
+        <rule name="NO_OTHER_TOP_LEVEL_FILES_EXIST" level="ERROR">
             <description>Krome definovaných souborů a adresářů nesmí v kořenovém adresáři existovat žádný jiný soubor
                 nebo adresář.
             </description>
-            <validationFunction name="CHECK_NO_OTHER_FILES_IN_DIR">
+            <validation functionName="CHECK_NO_OTHER_FILES_IN_DIR">
                 <params>
-                    <param name="root_dir">
-                        <variable name="PSP_DIR"/>
-                    </param>
-                    <param name="file">
-                        <variable name="INFO_FILE"/>
-                    </param>
-                    <param name="file">
-                        <variable name="PRIMARY-METS_FILE"/>
-                    </param>
-                    <param name="file">
-                        <variable name="CHECKSUM_FILE"/>
-                    </param>
-                    <param name="file_list">
-                        <variable name="TOLERATED_TL_FILES"/>
-                    </param>
-                    <param name="file">
-                        <variable name="SECONDARY-METS-DIR_FILE"/>
-                    </param>
-                    <param name="file">
-                        <variable name="OCR-TEXT-DIR_FILE"/>
-                    </param>
-                    <param name="file">
-                        <variable name="OCR-ALTO-DIR_FILE"/>
-                    </param>
-                    <param name="file">
-                        <variable name="MASTER-COPY-DIR_FILE"/>
-                    </param>
-                    <param name="file">
-                        <variable name="USER-COPY-DIR_FILE"/>
-                    </param>
+                    <value-param name="root_dir" type="FILE">
+                        <value-ref name="PSP_DIR"/>
+                    </value-param>
+                    <value-param name="file" type="FILE">
+                        <value-ref name="INFO_FILE"/>
+                    </value-param>
+                    <value-param name="file" type="FILE">
+                        <value-ref name="PRIMARY-METS_FILE"/>
+                    </value-param>
+                    <value-param name="file" type="FILE">
+                        <value-ref name="CHECKSUM_FILE"/>
+                    </value-param>
+                    <value-param name="file_list" type="FILE">
+                        <value-ref name="TOLERATED_TL_FILES"/>
+                    </value-param>
+                    <value-param name="file" type="FILE">
+                        <value-ref name="SECONDARY-METS-DIR_FILE"/>
+                    </value-param>
+                    <value-param name="file" type="FILE">
+                        <value-ref name="OCR-TEXT-DIR_FILE"/>
+                    </value-param>
+                    <value-param name="file" type="FILE">
+                        <value-ref name="OCR-ALTO-DIR_FILE"/>
+                    </value-param>
+                    <value-param name="file" type="FILE">
+                        <value-ref name="MASTER-COPY-DIR_FILE"/>
+                    </value-param>
+                    <value-param name="file" type="FILE">
+                        <value-ref name="USER-COPY-DIR_FILE"/>
+                    </value-param>
                 </params>
-            </validationFunction>
+            </validation>
         </rule>
 
 
         <!--právě jeden každý top-level adresář-->
 
 
-        <rule name="SINGLE_SECONDARY-METS-DIR_FILE_EXISTS" level="severe">
+        <rule name="SINGLE_SECONDARY-METS-DIR_FILE_EXISTS" level="ERROR">
             <description>Musí existovat nanejvýše jeden soubor (adresář) SECONDARY-METS-DIR.</description>
-            <validationFunction name="CHECK_LIST_EXACT_SIZE">
+            <validation functionName="CHECK_FILE_LIST_EXACT_SIZE">
                 <params>
-                    <param name="list">
-                        <variable name="SECONDARY-METS-DIR_FILES"/>
-                    </param>
-                    <param name="size">1</param>
+                    <value-param name="files" type="FILE_LIST">
+                        <value-ref name="SECONDARY-METS-DIR_FILES"/>
+                    </value-param>
+                    <value-param name="size" type="INTEGER">1</value-param>
                 </params>
-            </validationFunction>
+            </validation>
         </rule>
 
-        <rule name="SINGLE_OCR-TEXT-DIR_FILE_EXISTS" level="severe">
+        <rule name="SINGLE_OCR-TEXT-DIR_FILE_EXISTS" level="ERROR">
             <description>Musí existovat nanejvýše jeden soubor (adresář) SINGLE_OCR-TEXT.</description>
-            <validationFunction name="CHECK_LIST_EXACT_SIZE">
+            <validation functionName="CHECK_FILE_LIST_EXACT_SIZE">
                 <params>
-                    <param name="list">
-                        <variable name="OCR-TEXT_FILES"/>
-                    </param>
-                    <param name="size">1</param>
+                    <value-param name="files" type="FILE_LIST">
+                        <value-ref name="OCR-TEXT_FILES"/>
+                    </value-param>
+                    <param name="size" type="INTEGER">1</param>
                 </params>
-            </validationFunction>
+            </validation>
         </rule>
 
-        <rule name="SINGLE_OCR-ALTO-DIR_FILE_EXISTS" level="severe">
+        <rule name="SINGLE_OCR-ALTO-DIR_FILE_EXISTS" level="ERROR">
             <description>Musí existovat nanejvýše jeden soubor (adresář) OCR-ALTO-DIR.</description>
-            <validationFunction name="CHECK_LIST_EXACT_SIZE">
+            <validation functionName="CHECK_FILE_LIST_EXACT_SIZE">
                 <params>
-                    <param name="list">
-                        <variable name="OCR-ALTO-DIR_FILES"/>
-                    </param>
-                    <param name="size">1</param>
+                    <value-param name="files" type="FILE_LIST">
+                        <value-ref name="OCR-ALTO-DIR_FILES"/>
+                    </value-param>
+                    <value-param name="size" type="INTEGER">1</value-param>
                 </params>
-            </validationFunction>
+            </validation>
         </rule>
 
-        <rule name="SINGLE_MASTER-COPY-DIR_FILE_EXISTS" level="severe">
+        <rule name="SINGLE_MASTER-COPY-DIR_FILE_EXISTS" level="ERROR">
             <description>Musí existovat nanejvýše jeden soubor (adresář) MASTER-COPY-DIR.</description>
-            <validationFunction name="CHECK_LIST_EXACT_SIZE">
+            <validation functionName="CHECK_FILE_LIST_EXACT_SIZE">
                 <params>
-                    <param name="list">
-                        <variable name="MASTER-COPY-DIR_FILES"/>
-                    </param>
-                    <param name="size">1</param>
+                    <value-param name="files" type="FILE_LIST">
+                        <value-ref name="MASTER-COPY-DIR_FILES"/>
+                    </value-param>
+                    <value-param name="size" type="INTEGER">1</value-param>
                 </params>
-            </validationFunction>
+            </validation>
         </rule>
 
-        <rule name="SINGLE_USER-COPY-DIR_FILE_EXISTS" level="severe">
+        <rule name="SINGLE_USER-COPY-DIR_FILE_EXISTS" level="ERROR">
             <description>Musí existovat nanejvýše jeden soubor (adresář) USER-COPY-DIR.</description>
-            <validationFunction name="CHECK_LIST_EXACT_SIZE">
+            <validation functionName="CHECK_FILE_LIST_EXACT_SIZE">
                 <params>
-                    <param name="list">
-                        <variable name="USER-COPY-DIR_FILES"/>
-                    </param>
-                    <param name="size">1</param>
+                    <value-param name="files" type="FILE_LIST">
+                        <value-ref name="USER-COPY-DIR_FILES"/>
+                    </value-param>
+                    <value-param name="size" type="INTEGER">1</value-param>
                 </params>
-            </validationFunction>
+            </validation>
         </rule>
 
 
         <!--názvy top-level adresářů obsahují povolené znaky-->
 
-        <rule name="SECONDARY-METS-DIR_FILENAME_VALID" level="severe">
+        <rule name="SECONDARY-METS-DIR_FILENAME_VALID" level="ERROR">
             <description>Název adresáře SECONDARY-METS-DIR musí obsahovat jen povolené znaky.</description>
-            <validationFunction name="CHECK_FILENAME_MATCHES_PATTERN">
+            <validation functionName="CHECK_FILENAME_MATCHES_PATTERN">
                 <params>
-                    <param name="file">
-                        <variable name="SECONDARY-METS-DIR_FILE"/>
-                    </param>
-                    <param name="pattern">
-                        <pattern name="FILENAME"/>
-                    </param>
+                    <value-param name="file">
+                        <value-ref name="SECONDARY-METS-DIR_FILE"/>
+                    </value-param>
+                    <pattern-param name="pattern">
+                        <pattern-ref name="FILENAME"/>
+                    </pattern-param>
                 </params>
-            </validationFunction>
+            </validation>
         </rule>
 
-        <rule name="OCR-TEXT-DIR_FILENAME_VALID" level="severe">
+        <rule name="OCR-TEXT-DIR_FILENAME_VALID" level="ERROR">
             <description>Název adresáře OCR-TEXT-DIR musí obsahovat jen povolené znaky.</description>
-            <validationFunction name="CHECK_FILENAME_MATCHES_PATTERN">
+            <validation functionName="CHECK_FILENAME_MATCHES_PATTERN">
                 <params>
-                    <param name="file">
-                        <variable name="OCR-TEXT-DIR_FILE"/>
-                    </param>
-                    <param name="pattern">
-                        <pattern name="FILENAME"/>
-                    </param>
+                    <value-param name="file">
+                        <value-ref name="OCR-TEXT-DIR_FILE"/>
+                    </value-param>
+                    <pattern-param name="pattern">
+                        <pattern-ref name="FILENAME"/>
+                    </pattern-param>
                 </params>
-            </validationFunction>
+            </validation>
         </rule>
 
-        <rule name="OCR-ALTO-DIR_FILENAME_VALID" level="severe">
+        <rule name="OCR-ALTO-DIR_FILENAME_VALID" level="ERROR">
             <description>Název adresáře OCR-ALTO-DIR musí obsahovat jen povolené znaky.</description>
-            <validationFunction name="CHECK_FILENAME_MATCHES_PATTERN">
+            <validation functionName="CHECK_FILENAME_MATCHES_PATTERN">
                 <params>
-                    <param name="file">
-                        <variable name="OCR-ALTO-DIR_FILE"/>
-                    </param>
-                    <param name="pattern">
-                        <pattern name="FILENAME"/>
-                    </param>
+                    <value-param name="file">
+                        <value-ref name="OCR-ALTO-DIR_FILE"/>
+                    </value-param>
+                    <pattern-param name="pattern">
+                        <pattern-ref name="FILENAME"/>
+                    </pattern-param>
                 </params>
-            </validationFunction>
+            </validation>
         </rule>
 
-        <rule name="MASTER-COPY-DIR_FILENAME_VALID" level="severe">
+        <rule name="MASTER-COPY-DIR_FILENAME_VALID" level="ERROR">
             <description>Název adresáře MASTER-COPY-DIR musí obsahovat jen povolené znaky.
             </description>
-            <validationFunction name="CHECK_FILENAME_MATCHES_PATTERN">
+            <validation functionName="CHECK_FILENAME_MATCHES_PATTERN">
                 <params>
-                    <param name="file">
-                        <variable name="MASTER-COPY-DIR_FILE"/>
-                    </param>
-                    <param name="pattern">
-                        <pattern name="FILENAME"/>
-                    </param>
+                    <value-param name="file">
+                        <value-ref name="MASTER-COPY-DIR_FILE"/>
+                    </value-param>
+                    <pattern-param name="pattern">
+                        <pattern-ref name="FILENAME"/>
+                    </pattern-param>
                 </params>
-            </validationFunction>
+            </validation>
         </rule>
 
-        <rule name="USER-COPY-DIR_FILENAME_VALID" level="severe">
+        <rule name="USER-COPY-DIR_FILENAME_VALID" level="ERROR">
             <description>Název adresáře USER-COPY-DIR musí obsahovat jen povolené znaky.
             </description>
-            <validationFunction name="CHECK_FILENAME_MATCHES_PATTERN">
+            <validation functionName="CHECK_FILENAME_MATCHES_PATTERN">
                 <params>
-                    <param name="file">
-                        <variable name="USER-COPY-DIR_FILE"/>
-                    </param>
-                    <param name="pattern">
-                        <pattern name="FILENAME"/>
-                    </param>
+                    <value-param name="file">
+                        <value-ref name="USER-COPY-DIR_FILE"/>
+                    </value-param>
+                    <pattern-param name="pattern">
+                        <pattern-ref name="FILENAME"/>
+                    </pattern-param>
                 </params>
-            </validationFunction>
+            </validation>
         </rule>
 
 
         <!--top-level adresáře jsou adresáře (ne obyčejné soubory)-->
 
-        <rule name="SECONDARY-METS-DIR_IS_DIR" level="severe">
+        <rule name="SECONDARY-METS-DIR_IS_DIR" level="ERROR">
             <description>Soubor SECONDARY-METS-DIR musí být adresář a ne obyčejný soubor.</description>
-            <validationFunction name="CHECK_FILE_IS_DIR">
+            <validation functionName="CHECK_FILE_IS_DIR">
                 <params>
-                    <param name="file">
-                        <variable name="SECONDARY-METS-DIR_FILE"/>
-                    </param>
+                    <value-param name="file">
+                        <value-ref name="SECONDARY-METS-DIR_FILE"/>
+                    </value-param>
                 </params>
-            </validationFunction>
+            </validation>
         </rule>
 
-        <rule name="OCR-TEXT-DIR_IS_DIR" level="severe">
+        <rule name="OCR-TEXT-DIR_IS_DIR" level="ERROR">
             <description>Soubor OCR-TEXT-DIR musí být adresář a ne obyčejný soubor.</description>
-            <validationFunction name="CHECK_FILE_IS_DIR">
+            <validation functionName="CHECK_FILE_IS_DIR">
                 <params>
-                    <param name="file">
-                        <variable name="OCR-TEXT-DIR_FILE"/>
-                    </param>
+                    <value-param name="file">
+                        <value-ref name="OCR-TEXT-DIR_FILE"/>
+                    </value-param>
                 </params>
-            </validationFunction>
+            </validation>
         </rule>
 
-        <rule name="OCR-ALTO-DIR_IS_DIR" level="severe">
+        <rule name="OCR-ALTO-DIR_IS_DIR" level="ERROR">
             <description>Soubor OCR-ALTO-DIR musí být adresář a ne obyčejný soubor.</description>
-            <validationFunction name="CHECK_FILE_IS_DIR">
+            <validation functionName="CHECK_FILE_IS_DIR">
                 <params>
-                    <param name="file">
-                        <variable name="OCR-ALTO-DIR_FILE"/>
-                    </param>
+                    <value-param name="file">
+                        <value-ref name="OCR-ALTO-DIR_FILE"/>
+                    </value-param>
                 </params>
-            </validationFunction>
+            </validation>
         </rule>
 
-        <rule name="MASTER-COPY-DIR_IS_DIR" level="severe">
+        <rule name="MASTER-COPY-DIR_IS_DIR" level="ERROR">
             <description>Soubor MASTER-COPY-DIR musí být adresář a ne obyčejný soubor.</description>
-            <validationFunction name="CHECK_FILE_IS_DIR">
+            <validation functionName="CHECK_FILE_IS_DIR">
                 <params>
-                    <param name="file">
-                        <variable name="MASTER-COPY-DIR_FILE"/>
-                    </param>
+                    <value-param name="file">
+                        <value-ref name="MASTER-COPY-DIR_FILE"/>
+                    </value-param>
                 </params>
-            </validationFunction>
+            </validation>
         </rule>
 
-        <rule name="USER-COPY-DIR_IS_DIR" level="severe">
+        <rule name="USER-COPY-DIR_IS_DIR" level="ERROR">
             <description>Soubor USER-COPY-DIR musí být adresář a ne obyčejný soubor.</description>
-            <validationFunction name="CHECK_FILE_IS_DIR">
+            <validation functionName="CHECK_FILE_IS_DIR">
                 <params>
-                    <param name="file">
-                        <variable name="USER-COPY-DIR_FILE"/>
-                    </param>
+                    <value-param name="file">
+                        <value-ref name="USER-COPY-DIR_FILE"/>
+                    </value-param>
                 </params>
-            </validationFunction>
+            </validation>
         </rule>
 
 
         <!--názvy souborů v top-level adresářích obsahují jen povolené znaky-->
 
 
-        <rule name="SECONDARY-METS_FILENAMES_VALID" level="severe">
+        <rule name="SECONDARY-METS_FILENAMES_VALID" level="ERROR">
             <description>Všechny soubory SECONDARY-METS musí obsahovat jen povolené znaky.</description>
-            <validationFunction name="CHECK_ALL_FILENAMES_MATCH_PATTERN">
+            <validation functionName="CHECK_ALL_FILENAMES_MATCH_PATTERN">
                 <params>
-                    <param name="file_list">
-                        <variable name="SECONDARY-METS_FILES"/>
-                    </param>
-                    <param name="pattern">
-                        <pattern name="FILENAME"/>
-                    </param>
+                    <value-param name="file_list">
+                        <value-ref name="SECONDARY-METS_FILES"/>
+                    </value-param>
+                    <pattern-param name="pattern">
+                        <pattern-ref name="FILENAME"/>
+                    </pattern-param>
                 </params>
-            </validationFunction>
+            </validation>
         </rule>
 
-        <rule name="OCR-TEXT_FILENAMES_VALID" level="severe">
+        <rule name="OCR-TEXT_FILENAMES_VALID" level="ERROR">
             <description>Všechny soubory OCR-TEXT musí obsahovat jen povolené znaky.</description>
-            <validationFunction name="CHECK_ALL_FILENAMES_MATCH_PATTERN">
+            <validation functionName="CHECK_ALL_FILENAMES_MATCH_PATTERN">
                 <params>
-                    <param name="file_list">
-                        <variable name="OCR-TEXT_FILES"/>
-                    </param>
-                    <param name="pattern">
-                        <pattern name="FILENAME"/>
-                    </param>
+                    <value-param name="file_list">
+                        <value-ref name="OCR-TEXT_FILES"/>
+                    </value-param>
+                    <pattern-param name="pattern">
+                        <pattern-ref name="FILENAME"/>
+                    </pattern-param>
                 </params>
-            </validationFunction>
+            </validation>
         </rule>
 
-        <rule name="OCR-ALTO_FILENAMES_VALID" level="severe">
+        <rule name="OCR-ALTO_FILENAMES_VALID" level="ERROR">
             <description>Všechny soubory OCR-ALTO musí obsahovat jen povolené znaky.</description>
-            <validationFunction name="CHECK_ALL_FILENAMES_MATCH_PATTERN">
+            <validation functionName="CHECK_ALL_FILENAMES_MATCH_PATTERN">
                 <params>
-                    <param name="file_list">
-                        <variable name="OCR-ALTO_FILES"/>
-                    </param>
-                    <param name="pattern">
-                        <pattern name="FILENAME"/>
-                    </param>
+                    <value-param name="file_list">
+                        <value-ref name="OCR-ALTO_FILES"/>
+                    </value-param>
+                    <pattern-param name="pattern">
+                        <pattern-ref name="FILENAME"/>
+                    </pattern-param>
                 </params>
-            </validationFunction>
+            </validation>
         </rule>
 
-        <rule name="MASTER-COPY_FILENAMES_VALID" level="severe">
+        <rule name="MASTER-COPY_FILENAMES_VALID" level="ERROR">
             <description>Všechny soubory MASTER-COPY musí obsahovat jen povolené znaky.</description>
-            <validationFunction name="CHECK_ALL_FILENAMES_MATCH_PATTERN">
+            <validation functionName="CHECK_ALL_FILENAMES_MATCH_PATTERN">
                 <params>
-                    <param name="file_list">
-                        <variable name="MASTER-COPY_FILES"/>
-                    </param>
-                    <param name="pattern">
-                        <pattern name="FILENAME"/>
-                    </param>
+                    <value-param name="file_list">
+                        <value-ref name="MASTER-COPY_FILES"/>
+                    </value-param>
+                    <pattern-param name="pattern">
+                        <pattern-ref name="FILENAME"/>
+                    </pattern-param>
                 </params>
-            </validationFunction>
+            </validation>
         </rule>
 
-        <rule name="USER-COPY_FILENAMES_VALID" level="severe">
+        <rule name="USER-COPY_FILENAMES_VALID" level="ERROR">
             <description>Všechny soubory USER-COPY musí obsahovat jen povolené znaky.</description>
-            <validationFunction name="CHECK_ALL_FILENAMES_MATCH_PATTERN">
+            <validation functionName="CHECK_ALL_FILENAMES_MATCH_PATTERN">
                 <params>
-                    <param name="file_list">
-                        <variable name="USER-COPY_FILES"/>
-                    </param>
-                    <param name="pattern">
-                        <pattern name="FILENAME"/>
-                    </param>
+                    <value-param name="file_list">
+                        <value-ref name="USER-COPY_FILES"/>
+                    </value-param>
+                    <pattern-param name="pattern">
+                        <pattern-ref name="FILENAME"/>
+                    </pattern-param>
                 </params>
-            </validationFunction>
+            </validation>
         </rule>
 
 
         <!--počty souborů a délky názvů soborů v top-level adesářích-->
 
-        <rule name="NUMBER_OF_FILES_IN_DIRS_MATCH" level="severe">
+        <rule name="NUMBER_OF_FILES_IN_DIRS_MATCH" level="ERROR">
             <description>Počet souborů ve všech adresářích se musí shodovat.</description>
-            <validationFunction name="CHECK_ALL_LISTS_SAME_SIZE">
+            <validation functionName="CHECK_ALL_LISTS_SAME_SIZE">
                 <params>
-                    <param name="list">
-                        <variable name="SECONDARY-METS_FILES"/>
-                    </param>
-                    <param name="list">
-                        <variable name="OCR-TEXT_FILES"/>
-                    </param>
-                    <param name="list">
-                        <variable name="OCR-ALTO_FILES"/>
-                    </param>
-                    <param name="list">
-                        <variable name="MASTER-COPY_FILES"/>
-                    </param>
-                    <param name="list">
-                        <variable name="USER-COPY_FILES"/>
-                    </param>
+                    <value-param name="list">
+                        <value-ref name="SECONDARY-METS_FILES"/>
+                    </value-param>
+                    <value-param name="list">
+                        <value-ref name="OCR-TEXT_FILES"/>
+                    </value-param>
+                    <value-param name="list">
+                        <value-ref name="OCR-ALTO_FILES"/>
+                    </value-param>
+                    <value-param name="list">
+                        <value-ref name="MASTER-COPY_FILES"/>
+                    </value-param>
+                    <value-param name="list">
+                        <value-ref name="USER-COPY_FILES"/>
+                    </value-param>
                 </params>
-            </validationFunction>
+            </validation>
         </rule>
 
         <!--fadfad-->
 
-        <rule name="SECONDARY-METS_FILENAMES_LENGTHS_SAME" level="severe">
+        <rule name="SECONDARY-METS_FILENAMES_LENGTHS_SAME" level="ERROR">
             <description>Délky názvů všech souborů SECONDARY-METS musí být stejné. Tedy čísla stran jsou zarovnaná na
                 stejný počet nul.
             </description>
-            <validationFunction name="CHECK_FILENAMES_LENGTHS_SAME">
+            <validation functionName="CHECK_FILENAMES_LENGTHS_SAME">
                 <params>
-                    <param name="file_list">
-                        <variable name="SECONDARY-METS_FILES"/>
-                    </param>
+                    <value-param name="file_list">
+                        <value-ref name="SECONDARY-METS_FILES"/>
+                    </value-param>
                 </params>
-            </validationFunction>
+            </validation>
         </rule>
 
-        <rule name="OCR-TEXT_FILENAMES_LENGTHS_SAME" level="severe">
+        <rule name="OCR-TEXT_FILENAMES_LENGTHS_SAME" level="ERROR">
             <description>Délky názvů všech souborů OCR-TEXT musí být stejné. Tedy čísla stran jsou zarovnaná na stejný
                 počet nul.
             </description>
-            <validationFunction name="CHECK_FILENAMES_LENGTHS_SAME">
+            <validation functionName="CHECK_FILENAMES_LENGTHS_SAME">
                 <params>
-                    <param name="file_list">
-                        <variable name="OCR-TEXT_FILES"/>
-                    </param>
+                    <value-param name="file_list">
+                        <value-ref name="OCR-TEXT_FILES"/>
+                    </value-param>
                 </params>
-            </validationFunction>
+            </validation>
         </rule>
 
-        <rule name="OCR-ALTO_FILENAMES_LENGTHS_SAME" level="severe">
+        <rule name="OCR-ALTO_FILENAMES_LENGTHS_SAME" level="ERROR">
             <description>Délky názvů všech souborů OCR-ALTO musí být stejné. Tedy čísla stran jsou zarovnaná na stejný
                 počet nul.
             </description>
-            <validationFunction name="CHECK_FILENAMES_LENGTHS_SAME">
+            <validation functionName="CHECK_FILENAMES_LENGTHS_SAME">
                 <params>
-                    <param name="file_list">
-                        <variable name="OCR-ALTO_FILES"/>
-                    </param>
+                    <value-param name="file_list">
+                        <value-ref name="OCR-ALTO_FILES"/>
+                    </value-param>
                 </params>
-            </validationFunction>
+            </validation>
         </rule>
 
-        <rule name="MASTER-COPY_FILENAMES_LENGTHS_SAME" level="severe">
+        <rule name="MASTER-COPY_FILENAMES_LENGTHS_SAME" level="ERROR">
             <description>Délky názvů všech souborů MASTER-COPY musí být stejné. Tedy čísla stran jsou zarovnaná na
                 stejný počet nul.
             </description>
-            <validationFunction name="CHECK_FILENAMES_LENGTHS_SAME">
+            <validation functionName="CHECK_FILENAMES_LENGTHS_SAME">
                 <params>
-                    <param name="file_list">
-                        <variable name="MASTER-COPY_FILES"/>
-                    </param>
+                    <value-param name="file_list">
+                        <value-ref name="MASTER-COPY_FILES"/>
+                    </value-param>
                 </params>
-            </validationFunction>
+            </validation>
         </rule>
 
-        <rule name="USER-COPY_FILENAMES_LENGTHS_SAME" level="severe">
+        <rule name="USER-COPY_FILENAMES_LENGTHS_SAME" level="ERROR">
             <description>Délky názvů všech souborů USER-COPY musí být stejné. Tedy čísla stran jsou zarovnaná na stejný
                 počet nul.
             </description>
-            <validationFunction name="CHECK_FILENAMES_LENGTHS_SAME">
+            <validation functionName="CHECK_FILENAMES_LENGTHS_SAME">
                 <params>
-                    <param name="file_list">
-                        <variable name="USER-COPY_FILES"/>
-                    </param>
+                    <value-param name="file_list">
+                        <value-ref name="USER-COPY_FILES"/>
+                    </value-param>
                 </params>
-            </validationFunction>
+            </validation>
         </rule>
 
 
         <!--žádný ze souborů v top-level adresářích není adresář-->
 
-        <rule name="SECONDARY-METS_FILES_ARE_NOT_DIRS" level="severe">
+        <rule name="SECONDARY-METS_FILES_ARE_NOT_DIRS" level="ERROR">
             <description>Žádný soubor SECONDARY-METS nesmí být adresář.</description>
-            <validationFunction name="CHECK_NO_FILE_IS_DIR">
+            <validation functionName="CHECK_NO_FILE_IS_DIR">
                 <params>
-                    <param name="file_list">
-                        <variable name="SECONDARY-METS_FILES"/>
-                    </param>
+                    <value-param name="file_list">
+                        <value-ref name="SECONDARY-METS_FILES"/>
+                    </value-param>
                 </params>
-            </validationFunction>
+            </validation>
         </rule>
 
-        <rule name="OCR-TEXT_FILES_ARE_NOT_DIRS" level="severe">
+        <rule name="OCR-TEXT_FILES_ARE_NOT_DIRS" level="ERROR">
             <description>Žádný soubor OCR-TEXT nesmí být adresář.</description>
-            <validationFunction name="CHECK_NO_FILE_IS_DIR">
+            <validation functionName="CHECK_NO_FILE_IS_DIR">
                 <params>
-                    <param name="file_list">
-                        <variable name="OCR-TEXT_FILES"/>
-                    </param>
+                    <value-param name="file_list">
+                        <value-ref name="OCR-TEXT_FILES"/>
+                    </value-param>
                 </params>
-            </validationFunction>
+            </validation>
         </rule>
 
-        <rule name="OCR-ALTO_FILES_ARE_NOT_DIRS" level="severe">
+        <rule name="OCR-ALTO_FILES_ARE_NOT_DIRS" level="ERROR">
             <description>Žádný soubor OCR-ALTO nesmí být adresář.</description>
-            <validationFunction name="CHECK_NO_FILE_IS_DIR">
+            <validation functionName="CHECK_NO_FILE_IS_DIR">
                 <params>
-                    <param name="file_list">
-                        <variable name="OCR-ALTO_FILES"/>
-                    </param>
+                    <value-param name="file_list">
+                        <value-ref name="OCR-ALTO_FILES"/>
+                    </value-param>
                 </params>
-            </validationFunction>
+            </validation>
         </rule>
 
-        <rule name="MASTER-COPY_FILES_ARE_NOT_DIRS" level="severe">
+        <rule name="MASTER-COPY_FILES_ARE_NOT_DIRS" level="ERROR">
             <description>Žádný soubor MASTER-COPY nesmí být adresář.</description>
-            <validationFunction name="CHECK_NO_FILE_IS_DIR">
+            <validation functionName="CHECK_NO_FILE_IS_DIR">
                 <params>
-                    <param name="file_list">
-                        <variable name="MASTER-COPY_FILES"/>
-                    </param>
+                    <value-param name="file_list">
+                        <value-ref name="MASTER-COPY_FILES"/>
+                    </value-param>
                 </params>
-            </validationFunction>
+            </validation>
         </rule>
 
-        <rule name="USER-COPY_FILES_ARE_NOT_DIRS" level="severe">
+        <rule name="USER-COPY_FILES_ARE_NOT_DIRS" level="ERROR">
             <description>Žádný soubor USER-COPY nesmí být adresář.</description>
-            <validationFunction name="CHECK_NO_FILE_IS_DIR">
+            <validation functionName="CHECK_NO_FILE_IS_DIR">
                 <params>
-                    <param name="file_list">
-                        <variable name="USER-COPY_FILES"/>
-                    </param>
+                    <value-param name="file_list">
+                        <value-ref name="USER-COPY_FILES"/>
+                    </value-param>
                 </params>
-            </validationFunction>
+            </validation>
         </rule>
 
 
         <!--žádné další soubory v top-level adresářích-->
 
 
-        <rule name="NO_EXTRA_FILES_IN_SECONDARY-METS-DIR" level="severe">
+        <rule name="NO_EXTRA_FILES_IN_SECONDARY-METS-DIR" level="ERROR">
             <description>Kromě souborů SECONDARY-METS nesmí adresář SECONDARY-METS-DIR obsahovat žádné další soubory.
             </description>
-            <validationFunction name="CHECK_NO_OTHER_FILES_IN_DIR">
+            <validation functionName="CHECK_NO_OTHER_FILES_IN_DIR">
                 <params>
-                    <param name="root_dir">
-                        <variable name="SECONDARY-METS-DIR_FILE"/>
-                    </param>
-                    <param name="file_list">
-                        <variable name="SECONDARY-METS_FILES"/>
-                    </param>
+                    <value-param name="root_dir">
+                        <value-ref name="SECONDARY-METS-DIR_FILE"/>
+                    </value-param>
+                    <value-param name="file_list">
+                        <value-ref name="SECONDARY-METS_FILES"/>
+                    </value-param>
                 </params>
-            </validationFunction>
+            </validation>
         </rule>
 
-        <rule name="NO_EXTRA_FILES_IN_OCR-TEXT-DIR" level="severe">
+        <rule name="NO_EXTRA_FILES_IN_OCR-TEXT-DIR" level="ERROR">
             <description>Kromě souborů OCR-TEXT nesmí adresář OCR-TEXT-DIR obsahovat žádné další soubory.</description>
-            <validationFunction name="CHECK_NO_OTHER_FILES_IN_DIR">
+            <validation functionName="CHECK_NO_OTHER_FILES_IN_DIR">
                 <params>
-                    <param name="root_dir">
-                        <variable name="OCR-TEXT-DIR_FILE"/>
-                    </param>
-                    <param name="file_list">
-                        <variable name="OCR-TEXT_FILES"/>
-                    </param>
+                    <value-param name="root_dir">
+                        <value-ref name="OCR-TEXT-DIR_FILE"/>
+                    </value-param>
+                    <value-param name="file_list">
+                        <value-ref name="OCR-TEXT_FILES"/>
+                    </value-param>
                 </params>
-            </validationFunction>
+            </validation>
         </rule>
 
-        <rule name="NO_EXTRA_FILES_IN_OCR-ALTO-DIR" level="severe">
+        <rule name="NO_EXTRA_FILES_IN_OCR-ALTO-DIR" level="ERROR">
             <description>Kromě souborů OCR-ALTO nesmí adresář OCR-ALTO-DIR obsahovat žádné další soubory.</description>
-            <validationFunction name="CHECK_NO_OTHER_FILES_IN_DIR">
+            <validation functionName="CHECK_NO_OTHER_FILES_IN_DIR">
                 <params>
-                    <param name="root_dir">
-                        <variable name="OCR-ALTO-DIR_FILE"/>
-                    </param>
-                    <param name="file_list">
-                        <variable name="OCR-ALTO_FILES"/>
-                    </param>
+                    <value-param name="root_dir">
+                        <value-ref name="OCR-ALTO-DIR_FILE"/>
+                    </value-param>
+                    <value-param name="file_list">
+                        <value-ref name="OCR-ALTO_FILES"/>
+                    </value-param>
                 </params>
-            </validationFunction>
+            </validation>
         </rule>
 
-        <rule name="NO_EXTRA_FILES_IN_MASTER-COPY-DIR" level="severe">
+        <rule name="NO_EXTRA_FILES_IN_MASTER-COPY-DIR" level="ERROR">
             <description>Kromě souborů MASTER-COPY nesmí adresář MASTER-COPY-DIR obsahovat žádné další soubory.
             </description>
-            <validationFunction name="CHECK_NO_OTHER_FILES_IN_DIR">
+            <validation functionName="CHECK_NO_OTHER_FILES_IN_DIR">
                 <params>
-                    <param name="root_dir">
-                        <variable name="MASTER-COPY-DIR_FILE"/>
-                    </param>
-                    <param name="file_list">
-                        <variable name="MASTER-COPY_FILES"/>
-                    </param>
+                    <value-param name="root_dir">
+                        <value-ref name="MASTER-COPY-DIR_FILE"/>
+                    </value-param>
+                    <value-param name="file_list">
+                        <value-ref name="MASTER-COPY_FILES"/>
+                    </value-param>
                 </params>
-            </validationFunction>
+            </validation>
         </rule>
 
-        <rule name="NO_EXTRA_FILES_IN_USER-COPY-DIR" level="severe">
+        <rule name="NO_EXTRA_FILES_IN_USER-COPY-DIR" level="ERROR">
             <description>Kromě souborů USER-COPY nesmí adresář USER-COPY-DIR obsahovat žádné další soubory.
             </description>
-            <validationFunction name="CHECK_NO_OTHER_FILES_IN_DIR">
+            <validation functionName="CHECK_NO_OTHER_FILES_IN_DIR">
                 <params>
-                    <param name="root_dir">
-                        <variable name="USER-COPY-DIR_FILE"/>
-                    </param>
-                    <param name="file_list">
-                        <variable name="USER-COPY_FILES"/>
-                    </param>
+                    <value-param name="root_dir">
+                        <value-ref name="USER-COPY-DIR_FILE"/>
+                    </value-param>
+                    <value-param name="file_list">
+                        <value-ref name="USER-COPY_FILES"/>
+                    </value-param>
                 </params>
-            </validationFunction>
+            </validation>
         </rule>
 
     </rules-section>
 
 
     <rules-section name="Soubor CHECKSUM"
-                  description="Kontrola souboru CHECKSUM, odkazů na další soubory a shody kontrolních součtů.">
+                   description="Kontrola souboru CHECKSUM, odkazů na další soubory a shody kontrolních součtů.">
 
-        <rule name="CHECKSUM_GENERATED_BY_GRAMMAR" level="warning">
+        <rule name="CHECKSUM_GENERATED_BY_GRAMMAR" level="WARNING">
             <description>Soubor CHECKSUM by měl být generován předepsanou ABNF gramatikou.</description>
-            <validationFunction name="CHECK_CHECKSUM_GENERATED_BY_GRAMMAR">
+            <validation functionName="CHECK_CHECKSUM_GENERATED_BY_GRAMMAR">
                 <params>
-                    <param name="checksum_file">
-                        <variable name="CHECKSUM_FILE"/>
-                    </param>
+                    <value-param name="checksum_file">
+                        <value-ref name="CHECKSUM_FILE"/>
+                    </value-param>
                 </params>
-            </validationFunction>
+            </validation>
         </rule>
 
-        <rule name="CHECKSUM_ALL_PATHS_MATCH_FILES" level="severe">
+        <rule name="CHECKSUM_ALL_PATHS_MATCH_FILES" level="ERROR">
             <description>Soubor CHECKSUM musí obsahovat záznamy pro každý uvedený soubor a žádný jiný.</description>
-            <validationFunction name="CHECK_CHECKSUM_ALL_PATHS_MATCH_FILES">
+            <validation functionName="CHECK_CHECKSUM_ALL_PATHS_MATCH_FILES">
                 <params>
-                    <param name="checksum_file">
-                        <variable name="CHECKSUM_FILE"/>
-                    </param>
-                    <param name="file">
-                        <variable name="PRIMARY-METS_FILE"/>
-                    </param>
-                    <param name="file_list">
-                        <variable name="SECONDARY-METS_FILES"/>
-                    </param>
-                    <param name="file_list">
-                        <variable name="OCR-TEXT_FILES"/>
-                    </param>
-                    <param name="file_list">
-                        <variable name="OCR-ALTO_FILES"/>
-                    </param>
-                    <param name="file_list">
-                        <variable name="MASTER-COPY_FILES"/>
-                    </param>
-                    <param name="file_list">
-                        <variable name="USER-COPY_FILES"/>
-                    </param>
+                    <value-param name="checksum_file">
+                        <value-ref name="CHECKSUM_FILE"/>
+                    </value-param>
+                    <value-param name="file">
+                        <value-ref name="PRIMARY-METS_FILE"/>
+                    </value-param>
+                    <value-param name="file_list">
+                        <value-ref name="SECONDARY-METS_FILES"/>
+                    </value-param>
+                    <value-param name="file_list">
+                        <value-ref name="OCR-TEXT_FILES"/>
+                    </value-param>
+                    <value-param name="file_list">
+                        <value-ref name="OCR-ALTO_FILES"/>
+                    </value-param>
+                    <value-param name="file_list">
+                        <value-ref name="MASTER-COPY_FILES"/>
+                    </value-param>
+                    <value-param name="file_list">
+                        <value-ref name="USER-COPY_FILES"/>
+                    </value-param>
                 </params>
-            </validationFunction>
+            </validation>
         </rule>
 
-        <rule name="CHECKSUM_ALL_CHECKSUMS_MATCH" level="severe">
+        <rule name="CHECKSUM_ALL_CHECKSUMS_MATCH" level="ERROR">
             <description>Všechny kontrolní součty v souboru CHECKSUM musí souhlasit.</description>
-            <validationFunction name="CHECK_CHECKSUM_ALL_CHECKSUMS_MATCH">
+            <validation functionName="CHECK_CHECKSUM_ALL_CHECKSUMS_MATCH">
                 <params>
-                    <param name="checksum_file">
-                        <variable name="CHECKSUM_FILE"/>
-                    </param>
-                    <param name="file">
-                        <variable name="PRIMARY-METS_FILE"/>
-                    </param>
-                    <param name="file_list">
-                        <variable name="SECONDARY-METS_FILES"/>
-                    </param>
-                    <param name="file_list">
-                        <variable name="OCR-TEXT_FILES"/>
-                    </param>
-                    <param name="file_list">
-                        <variable name="OCR-ALTO_FILES"/>
-                    </param>
-                    <param name="file_list">
-                        <variable name="MASTER-COPY_FILES"/>
-                    </param>
-                    <param name="file_list">
-                        <variable name="USER-COPY_FILES"/>
-                    </param>
+                    <value-param name="checksum_file">
+                        <value-ref name="CHECKSUM_FILE"/>
+                    </value-param>
+                    <value-param name="file">
+                        <value-ref name="PRIMARY-METS_FILE"/>
+                    </value-param>
+                    <value-param name="file_list">
+                        <value-ref name="SECONDARY-METS_FILES"/>
+                    </value-param>
+                    <value-param name="file_list">
+                        <value-ref name="OCR-TEXT_FILES"/>
+                    </value-param>
+                    <value-param name="file_list">
+                        <value-ref name="OCR-ALTO_FILES"/>
+                    </value-param>
+                    <value-param name="file_list">
+                        <value-ref name="MASTER-COPY_FILES"/>
+                    </value-param>
+                    <value-param name="file_list">
+                        <value-ref name="USER-COPY_FILES"/>
+                    </value-param>
                 </params>
-            </validationFunction>
+            </validation>
         </rule>
 
 
     </rules-section>
 
     <rules-section name="Soubor INFO"
-                  description="Validace souboru INFO - odkazování na ostatní soubory, kontrolní součet pro soubor CHECKSUM, atd.">
+                   description="Validace souboru INFO - odkazování na ostatní soubory, kontrolní součet pro soubor CHECKSUM, atd.">
 
-        <rule name="INFO_XML_WELL_BUILT" level="severe">
+        <rule name="INFO_XML_WELL_BUILT" level="ERROR">
             <description>Soubor INFO musí být korektní (well built) xml soubor.</description>
-            <validationFunction name="CHECK_XML_WELL_BUILT">
+            <validation functionName="CHECK_XML_WELL_BUILT">
                 <params>
-                    <param name="file">
-                        <variable name="INFO_FILE"/>
-                    </param>
+                    <value-param name="file">
+                        <value-ref name="INFO_FILE"/>
+                    </value-param>
                 </params>
-            </validationFunction>
+            </validation>
         </rule>
 
 
-        <rule name="INFO_XML_VALID_BY_XSD" level="severe">
+        <rule name="INFO_XML_VALID_BY_XSD" level="ERROR">
             <description>Soubor INFO musí být validní podle XML Schema.</description>
-            <validationFunction name="CHECK_XML_VALID_BY_XSD">
+            <validation functionName="CHECK_XML_VALID_BY_XSD">
                 <params>
-                    <param name="file">
-                        <variable name="INFO_FILE"/>
-                    </param>
-                    <param name="xsd_file">
-                        <variable name="INFO_XSD_FILE"/>
-                    </param>
+                    <value-param name="file">
+                        <value-ref name="INFO_FILE"/>
+                    </value-param>
+                    <value-param name="xsd_file">
+                        <value-ref name="INFO_XSD_FILE"/>
+                    </value-param>
                 </params>
-            </validationFunction>
+            </validation>
         </rule>
 
-        <rule name="INFO_REFERENCES_PRIMARY-METS" level="severe">
+        <rule name="INFO_REFERENCES_PRIMARY-METS" level="ERROR">
             <!--METS Profile requirement id infoxml6-->
             <description>Soubor INFO se musí odkazovat na soubor PRIMARY-METS přes element mainMets.</description>
-            <validationFunction name="CHECK_INFO_REFERENCES_PRIMARY-METS">
+            <validation functionName="CHECK_INFO_REFERENCES_PRIMARY-METS">
                 <params>
-                    <param name="info_file">
-                        <variable name="INFO_FILE"/>
-                    </param>
-                    <param name="primary-mets_file">
-                        <variable name="PRIMARY-METS_FILE"/>
-                    </param>
+                    <value-param name="info_file">
+                        <value-ref name="INFO_FILE"/>
+                    </value-param>
+                    <value-param name="primary-mets_file">
+                        <value-ref name="PRIMARY-METS_FILE"/>
+                    </value-param>
                 </params>
-            </validationFunction>
+            </validation>
         </rule>
 
 
-        <rule name="INFO_ITEMTOTAL_MATCHES_ITEMS_COUNT" level="severe">
+        <rule name="INFO_ITEMTOTAL_MATCHES_ITEMS_COUNT" level="ERROR">
             <!--METS Profile requirement id infoxml13-->
             <description>Soubor INFO musí počet elementů item souhlasit s hodnotou atributu itemtotal elementu
                 itemlist..
             </description>
-            <validationFunction name="CHECK_LIST_EXACT_SIZE">
+            <validation functionName="CHECK_FILE_LIST_EXACT_SIZE">
                 <params>
-                    <param name="list">
-                        <variable name="INFO_ITEMS"/>
-                    </param>
-                    <param name="size">
-                        <variable name="INFO_ITELMTOTAL"/>
-                    </param>
+                    <value-param name="files" type="FILE_LIST">
+                        <value-ref name="INFO_ITEMS"/>
+                    </value-param>
+                    <value-param name="size" type="INTEGER">
+                        <value-ref name="INFO_ITELMTOTAL"/>
+                    </value-param>
                 </params>
-            </validationFunction>
+            </validation>
         </rule>
 
 
-        <rule name="INFO_ITEMLIST_REFERENCES_ALL_FILES" level="severe">
+        <rule name="INFO_ITEMLIST_REFERENCES_ALL_FILES" level="ERROR">
             <!--METS Profile requirement id infoxml13-->
             <description>Soubor INFO se musí odkazovat na všechny soubory přes elementy item.</description>
-            <validationFunction name="CHECK_INFO_ITEMLIST_REFERENCES_ALL_FILES">
+            <validation functionName="CHECK_INFO_ITEMLIST_REFERENCES_ALL_FILES">
                 <params>
-                    <param name="items">
-                        <variable name="INFO_ITEMS"/>
-                    </param>
-                    <param name="file">
-                        <variable name="INFO_FILE"/>
-                    </param>
-                    <param name="file">
-                        <variable name="CHECKSUM_FILE"/>
-                    </param>
-                    <param name="file">
-                        <variable name="PRIMARY-METS_FILE"/>
-                    </param>
-                    <param name="file_list">
-                        <variable name="SECONDARY-METS_FILES"/>
-                    </param>
-                    <param name="file_list">
-                        <variable name="OCR-TEXT_FILES"/>
-                    </param>
-                    <param name="file_list">
-                        <variable name="OCR-ALTO_FILES"/>
-                    </param>
-                    <param name="file_list">
-                        <variable name="MASTER-COPY_FILES"/>
-                    </param>
-                    <param name="file_list">
-                        <variable name="USER-COPY_FILES"/>
-                    </param>
+                    <value-param name="items">
+                        <value-ref name="INFO_ITEMS"/>
+                    </value-param>
+                    <value-param name="file">
+                        <value-ref name="INFO_FILE"/>
+                    </value-param>
+                    <value-param name="file">
+                        <value-ref name="CHECKSUM_FILE"/>
+                    </value-param>
+                    <value-param name="file">
+                        <value-ref name="PRIMARY-METS_FILE"/>
+                    </value-param>
+                    <value-param name="file_list">
+                        <value-ref name="SECONDARY-METS_FILES"/>
+                    </value-param>
+                    <value-param name="file_list">
+                        <value-ref name="OCR-TEXT_FILES"/>
+                    </value-param>
+                    <value-param name="file_list">
+                        <value-ref name="OCR-ALTO_FILES"/>
+                    </value-param>
+                    <value-param name="file_list">
+                        <value-ref name="MASTER-COPY_FILES"/>
+                    </value-param>
+                    <value-param name="file_list">
+                        <value-ref name="USER-COPY_FILES"/>
+                    </value-param>
                 </params>
-            </validationFunction>
+            </validation>
         </rule>
 
 
-        <rule name="INFO_CHECKSUM_FILE_CHECKSUM_MATCHES" level="severe">
+        <rule name="INFO_CHECKSUM_FILE_CHECKSUM_MATCHES" level="ERROR">
             <!--METS Profile requirement id infoxml14-->
             <description>Soubor INFO se musí odkazovat na existující soubor CHECKSUM přes element checksum a kontrolní
                 součet se musí shodovat.
             </description>
-            <validationFunction name="CHECK_INFO_CHECKSUM_FILE_CHECKSUM_MATCHES">
+            <validation functionName="CHECK_INFO_CHECKSUM_FILE_CHECKSUM_MATCHES">
                 <params>
-                    <param name="file_info">
-                        <variable name="FILE_INFO"/>
-                    </param>
-                    <param name="file_checksum">
-                        <variable name="FILE_CHECKSUM"/>
-                    </param>
+                    <value-param name="file_info">
+                        <value-ref name="FILE_INFO"/>
+                    </value-param>
+                    <value-param name="file_checksum">
+                        <value-ref name="FILE_CHECKSUM"/>
+                    </value-param>
                 </params>
-            </validationFunction>
+            </validation>
         </rule>
 
 

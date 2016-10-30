@@ -22,7 +22,7 @@ public class Rule {
         this.function = function;
     }
 
-    public Rule withDescription(String description) {
+    public Rule setDescription(String description) {
         this.description = description;
         return this;
     }

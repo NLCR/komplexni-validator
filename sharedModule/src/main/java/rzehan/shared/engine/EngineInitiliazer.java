@@ -6,6 +6,7 @@ import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 import rzehan.shared.engine.evaluationFunctions.EvaluationFunction;
 import rzehan.shared.engine.exceptions.ValidatorException;
+import rzehan.shared.engine.validationFunctions.ValidationFunction;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -33,13 +34,13 @@ public class EngineInitiliazer {
             String elementName = childEl.getTagName();
             switch (elementName) {
                 case "pattern-def":
-                    registerPattern(childEl);
+                    processPatternDefinition(childEl);
                     break;
                 case "value-def":
-                    registerValue(childEl);
+                    processValueDefinition(childEl);
                     break;
-                case "rules-secion":
-                    processRulesSection(childEl);
+                case "rules-section":
+                    processRulesSectionDefinition(childEl);
                     break;
                 default:
                     //nothing
@@ -49,14 +50,62 @@ public class EngineInitiliazer {
         }
     }
 
-    private void processRulesSection(Element childEl) {
+    private void processRulesSectionDefinition(Element rulesSectionEl) {
+        String name = rulesSectionEl.getAttribute("name");
+        RulesSection section = engine.buildRuleSection(name);
+        String description = rulesSectionEl.getAttribute("description");
+        if (description != null && !description.isEmpty()) {
+            section.setDescription(description);
+        }
+        section.setEnabled(parseBooleanAttribute("enabled", true));
+        System.out.println(String.format("registering rule-section '%s'", name));
+        engine.registerRuleSection(section);
+        //rules
+        NodeList ruleEls = rulesSectionEl.getElementsByTagName("rule");
+        for (int i = 0; i < ruleEls.getLength(); i++) {
+            Element ruleEl = (Element) ruleEls.item(i);
+            processRule(section, ruleEl);
+        }
+    }
 
+    private void processRule(RulesSection section, Element ruleEl) {
+        String name = ruleEl.getAttribute("name");
+        Rule.Level level = parseLevel(ruleEl.getAttribute("level"), Rule.Level.ERROR);
 
+        Element validationEl = (Element) ruleEl.getElementsByTagName("validation").item(0);
+        ValidationFunction function = parseValidationFunction(validationEl);
+
+        Rule rule = new Rule(name, level, function);
+        //description
+        NodeList descriptionEls = ruleEl.getElementsByTagName("description");
+        if (descriptionEls.getLength() != 0) {
+            Element descEl = (Element) descriptionEls.item(0);
+            rule.setDescription(descEl.getTextContent());
+        }
+        System.out.println(String.format("registering rule '%s' (%s)", name, level));
+        engine.registerRule(section, rule);
 
     }
 
+    private ValidationFunction parseValidationFunction(Element validationEl) {
+        String name = validationEl.getAttribute("functionName");
 
-    private void registerPattern(Element patternEl) {
+        return null;
+
+        //engine.buildValidationFunction(name)
+
+    }
+
+    private Rule.Level parseLevel(String levelStr, Rule.Level defaultLevel) {
+        if (levelStr == null || levelStr.isEmpty()) {
+            return defaultLevel;
+        } else {
+            return Rule.Level.valueOf(levelStr);
+        }
+    }
+
+
+    private void processPatternDefinition(Element patternEl) {
         String varName = patternEl.getAttribute("name");
         System.out.println("registering pattern " + varName);
         List<Pattern.Expression> expressions = new ArrayList<>();
@@ -83,7 +132,7 @@ public class EngineInitiliazer {
         }
     }
 
-    private void registerValue(Element valueDefEl) {
+    private void processValueDefinition(Element valueDefEl) {
         String varName = valueDefEl.getAttribute("name");
         ValueType varType = ValueType.valueOf(valueDefEl.getAttribute("type"));
         System.out.println(String.format("registering value %s (%s) ", varName, varType));
