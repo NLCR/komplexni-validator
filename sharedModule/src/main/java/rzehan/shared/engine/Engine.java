@@ -110,4 +110,7 @@ public class Engine {
     }
 
 
+    public Rule buildRule(String ruleName, Rule.Level error, ValidationFunction function) {
+        return new Rule(ruleName, error, function);
+    }
 }

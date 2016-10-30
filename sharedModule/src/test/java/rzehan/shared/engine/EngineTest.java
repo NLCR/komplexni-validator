@@ -7,6 +7,7 @@ import rzehan.shared.engine.validationFunctions.ValidationResult;
 
 import java.io.File;
 
+import static junit.framework.TestCase.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 /**
@@ -46,15 +47,7 @@ public class EngineTest {
                 ));
 
 
-        //other VARS
-        engine.registerValueDefinition("INFO_FILES",
-                engine.buildValueDefinition(ValueType.FILE_LIST,
-                        engine.buildEvaluationFunction(EF_FIND_FILES_IN_DIR_BY_PATTERN)
-                                .withValue("dir", ValueType.FILE, engine.getValueFromVariable("PSP_DIR"))
-                                .withPattern("pattern", engine.getPatternFromVariable("INFO_FILENAME"))
-                )
-        );
-
+        //TODO: poradi definice INFO_FILENAME a INFO_FILES ma vyznam, i kdyz by nemelo
         //patterns
         engine.registerPattern("INFO_FILENAME",
                 engine.buildPattern(
@@ -64,14 +57,42 @@ public class EngineTest {
         );
 
 
-        ValidationFunction singleInfoFile = engine.buildValidationFunction("CHECK_FILE_LIST_EXACT_SIZE")
+        //other VARS
+        engine.registerValueDefinition("INFO_FILES",
+                engine.buildValueDefinition(ValueType.FILE_LIST,
+                        engine.buildEvaluationFunction(EF_FIND_FILES_IN_DIR_BY_PATTERN)
+                                .withValue("dir", ValueType.FILE, engine.getValueFromVariable("PSP_DIR"))
+                                .withPattern("pattern", engine.getPatternFromVariable("INFO_FILENAME"))
+                )
+        );
+
+
+        //validation functions directly
+        ValidationFunction singleInfoFileVf = engine.buildValidationFunction("CHECK_FILE_LIST_EXACT_SIZE")
                 .withValueReference("list", ValueType.FILE_LIST, "INFO_FILES")
                 .withValue("size", ValueType.INTEGER, 1);
-        ValidationResult result = singleInfoFile.validate();
+        ValidationResult singleInfoFileResult = singleInfoFileVf.validate();
+        assertTrue(singleInfoFileResult.getMessage(), singleInfoFileResult.isValid());
 
-        assertTrue(result.getMessage(), result.isValid());
+        //through validation rule
+        Rule ruleSingleInfo =
+                engine.buildRule("SINGLE_INFO", Rule.Level.ERROR,
+                        engine.buildValidationFunction("CHECK_FILE_LIST_EXACT_SIZE")
+                                .withValueReference("list", ValueType.FILE_LIST, "INFO_FILES")
+                                .withValue("size", ValueType.INTEGER, 1))
+                        .withDescription("musi existovat prave jeden soubor info");
+        ValidationResult ruleSingleInfoResult = ruleSingleInfo.getResult();
+        assertTrue(ruleSingleInfoResult.getMessage(), ruleSingleInfoResult.isValid());
 
-
+        //through validation rule
+        Rule ruleTwoInfos =
+                engine.buildRule("SINGLE_INFO", Rule.Level.ERROR,
+                        engine.buildValidationFunction("CHECK_FILE_LIST_EXACT_SIZE")
+                                .withValueReference("list", ValueType.FILE_LIST, "INFO_FILES")
+                                .withValue("size", ValueType.INTEGER, 2))
+                        .withDescription("dva soubory info");
+        ValidationResult ruleTwoInfosResult = ruleTwoInfos.getResult();
+        assertFalse(ruleTwoInfosResult.getMessage(), ruleTwoInfosResult.isValid());
     }
 
 
