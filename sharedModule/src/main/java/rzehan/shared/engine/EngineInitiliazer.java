@@ -167,57 +167,10 @@ public class EngineInitiliazer {
 
     private EvaluationFunction buildEf(Element efEl) {
         String efName = efEl.getAttribute("functionName");
-        System.out.println("buildEf (" + efName + ")");
+        //System.out.println("buildEf (" + efName + ")");
         EvaluationFunction ef = engine.buildEvaluationFunction(efName);
         Element paramsEl = (Element) efEl.getElementsByTagName("params").item(0);
         addParams(ef, paramsEl);
-
-       /* // value params
-        NodeList valueParamEls = paramsEl.getElementsByTagName("value-param");
-        for (int i = 0; i < valueParamEls.getLength(); i++) {
-            Element valueParamEl = (Element) valueParamEls.item(i);
-            String paramName = valueParamEl.getAttribute("name");
-            System.out.println("processing value param " + paramName);
-            ValueType paramType = ValueType.valueOf(valueParamEl.getAttribute("type"));
-            NodeList valueRefEls = valueParamEl.getElementsByTagName("value-ref");
-            NodeList evaluationEls = valueParamEl.getElementsByTagName("evaluation");
-            if (valueRefEls.getLength() != 0) { //param is reference
-                Element valueRefEl = (Element) valueRefEls.item(0);
-                String valueRefName = valueRefEl.getAttribute("name");
-                ef.withValueParamByReference(paramName, paramType, valueRefName);
-            } else if (evaluationEls.getLength() > 0) { //param anonymous definition
-                Element evaluationEl = (Element) evaluationEls.item(0);
-                EvaluationFunction valueParamEf = buildEf(evaluationEl);
-                Object paramValue = valueParamEf.evaluate();
-                ef.withValueParam(paramName, paramType, paramValue);
-            } else {//param is constant
-                Object paramValue = parseConstantValueDefinition(valueParamEl, paramType);
-                ef.withValueParam(paramName, paramType, paramValue);
-            }
-        }
-        //pattern params
-        NodeList patternParamEls = paramsEl.getElementsByTagName("pattern-param");
-        for (int i = 0; i < patternParamEls.getLength(); i++) {
-            Element patternParamEl = (Element) patternParamEls.item(i);
-            String paramName = patternParamEl.getAttribute("name");
-            System.out.println("processing pattern param " + paramName);
-            NodeList referenceEls = patternParamEl.getElementsByTagName("pattern-ref");
-            NodeList expressionsEls = patternParamEl.getElementsByTagName("expressions");
-            if (referenceEls.getLength() != 0) {
-                Element referenceEl = (Element) referenceEls.item(0);
-                String varName = referenceEl.getAttribute("name");
-                ef.withPatternParamByReference(paramName, varName);
-            } else if (expressionsEls.getLength() != 0) {
-                Element expressionsEl = (Element) expressionsEls.item(0);
-                NodeList expressionEls = expressionsEl.getElementsByTagName("expression");
-                List<Pattern.Expression> expressions = new ArrayList<>();
-                for (int j = 0; j < expressionEls.getLength(); j++) {
-                    expressions.add(toExpression((Element) expressionEls.item(j)));
-                }
-                Pattern pattern = engine.buildPattern(expressions);
-                ef.withPatternParam(paramName, pattern);
-            }
-        }*/
         return ef;
     }
 
@@ -227,7 +180,7 @@ public class EngineInitiliazer {
         for (int i = 0; i < valueParamEls.getLength(); i++) {
             Element valueParamEl = (Element) valueParamEls.item(i);
             String paramName = valueParamEl.getAttribute("name");
-            System.out.println("processing value param " + paramName);
+            //System.out.println("processing value param " + paramName);
             ValueType paramType = ValueType.valueOf(valueParamEl.getAttribute("type"));
             NodeList valueRefEls = valueParamEl.getElementsByTagName("value-ref");
             NodeList evaluationEls = valueParamEl.getElementsByTagName("evaluation");
@@ -250,7 +203,7 @@ public class EngineInitiliazer {
         for (int i = 0; i < patternParamEls.getLength(); i++) {
             Element patternParamEl = (Element) patternParamEls.item(i);
             String paramName = patternParamEl.getAttribute("name");
-            System.out.println("processing pattern param " + paramName);
+            //System.out.println("processing pattern param " + paramName);
             NodeList referenceEls = patternParamEl.getElementsByTagName("pattern-ref");
             NodeList expressionsEls = patternParamEl.getElementsByTagName("expressions");
             if (referenceEls.getLength() != 0) {

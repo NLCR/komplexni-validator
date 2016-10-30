@@ -11,7 +11,7 @@ import java.util.List;
  */
 public class EfReturnFirstFileFromFileList extends EvaluationFunction {
 
-    private static final String PARAM_FILE_LIST = "file_list";
+    private static final String PARAM_FILE_LIST = "files";
 
     public EfReturnFirstFileFromFileList(Engine engine) {
         super(engine, new Contract()

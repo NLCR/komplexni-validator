@@ -18,7 +18,7 @@ public class VfCheckAllFileListsSameSize extends ValidationFunction {
 
     public VfCheckAllFileListsSameSize(Engine engine) {
         super(engine, new Contract()
-                .withValueParam(PARAM_FILES, ValueType.FILE, 2, null)
+                .withValueParam(PARAM_FILES, ValueType.FILE_LIST, 2, null)
         );
     }
 

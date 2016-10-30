@@ -5,14 +5,28 @@
         a počtů parametrů, návratové hodnoty a zejména samotné implementace jsou definovány v kódu validátoru.
     </description>
 
-    <!--todo: zmenit na PROVIDED_FILE a PROVIDED_STRING-->
 
-    <function name="PROVIDED" resultType="Object">
-        <description>Hodnota proměnné bude poskytnuta volajícím programem.</description>
+    <function name="PROVIDED_STRING" resultType="STRING">
+        <description>Hodnota proměnné typue STRING bude poskytnuta volajícím programem.</description>
         <params>
-            <param name="var_name" type="String"/>
+            <param name="string_id" type="STRING"/>
         </params>
     </function>
+
+    <function name="PROVIDED_FILE" resultType="FILE">
+        <description>Hodnota proměnné typue FILE bude poskytnuta volajícím programem.</description>
+        <params>
+            <param name="file_id" type="STRING"/>
+        </params>
+    </function>
+
+    <function name="PROVIDED_INTEGER" resultType="INTEGER">
+        <description>Hodnota proměnné typue INTEGER bude poskytnuta volajícím programem.</description>
+        <params>
+            <param name="int_id" type="STRING"/>
+        </params>
+    </function>
+
 
     <function name="FIND_FILES_IN_DIR_BY_PATTERN" resultType="List<File>">
         <description>Vrátí seznam souborů v adresáři, které odpovídají vzoru.</description>

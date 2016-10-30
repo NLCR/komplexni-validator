@@ -277,7 +277,7 @@
                     <value-param name="files" type="FILE_LIST">
                         <value-ref name="OCR-TEXT_FILES"/>
                     </value-param>
-                    <param name="size" type="INTEGER">1</param>
+                    <value-param name="size" type="INTEGER">1</value-param>
                 </params>
             </validation>
         </rule>
@@ -532,19 +532,19 @@
             <description>Počet souborů ve všech adresářích se musí shodovat.</description>
             <validation functionName="CHECK_ALL_FILE_LISTS_SAME_SIZE">
                 <params>
-                    <value-param name="list" type="FILE_LIST">
+                    <value-param name="files" type="FILE_LIST">
                         <value-ref name="SECONDARY-METS_FILES"/>
                     </value-param>
-                    <value-param name="list" type="FILE_LIST">
+                    <value-param name="files" type="FILE_LIST">
                         <value-ref name="OCR-TEXT_FILES"/>
                     </value-param>
-                    <value-param name="list" type="FILE_LIST">
+                    <value-param name="files" type="FILE_LIST">
                         <value-ref name="OCR-ALTO_FILES"/>
                     </value-param>
-                    <value-param name="list" type="FILE_LIST">
+                    <value-param name="files" type="FILE_LIST">
                         <value-ref name="MASTER-COPY_FILES"/>
                     </value-param>
-                    <value-param name="list" type="FILE_LIST">
+                    <value-param name="files" type="FILE_LIST">
                         <value-ref name="USER-COPY_FILES"/>
                     </value-param>
                 </params>

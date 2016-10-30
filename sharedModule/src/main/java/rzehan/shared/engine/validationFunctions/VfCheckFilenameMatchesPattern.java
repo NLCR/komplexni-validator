@@ -35,7 +35,7 @@ public class VfCheckFilenameMatchesPattern extends ValidationFunction {
         } else if (paternParam == null) {
             return new ValidationResult(false).withMessage(String.format("hodnota parametru %s funkce %s je null", PARAM_PATTERN, getName()));
         } else if (!paternParam.matches(file.getName())) {
-            return new ValidationResult(false).withMessage(String.format("Název souboru %d neodpovídá vzoru %d", file.getName(), paternParam.toString()));
+            return new ValidationResult(false).withMessage(String.format("Název souboru %s neodpovídá vzoru %s", file.getName(), paternParam.toString()));
         } else {
             return new ValidationResult(true);
         }

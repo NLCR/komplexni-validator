@@ -11,8 +11,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static javafx.scene.input.KeyCode.V;
-
 /**
  * Created by martin on 20.10.16.
  */
@@ -73,7 +71,7 @@ public class Engine {
             case "CHECK_FILENAME_MATCHES_PATTERN":
                 return new VfCheckFilenameMatchesPattern(this);
             case "CHECK_ALL_FILENAMES_MATCH_PATTERN":
-                return new VfCheckAllFilenamesMatchePattern(this);
+                return new VfCheckAllFilenamesMatchPattern(this);
             case "CHECK_FILE_IS_DIR":
                 return new VfCheckFileIsDir(this);
             case "CHECK_FILE_IS_NOT_DIR":

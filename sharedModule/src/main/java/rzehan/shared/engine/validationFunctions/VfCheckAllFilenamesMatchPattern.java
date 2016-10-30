@@ -11,13 +11,13 @@ import java.util.List;
 /**
  * Created by martin on 27.10.16.
  */
-public class VfCheckAllFilenamesMatchePattern extends ValidationFunction {
+public class VfCheckAllFilenamesMatchPattern extends ValidationFunction {
 
     public static final String PARAM_FILES = "files";
     public static final String PARAM_PATTERN = "pattern";
 
 
-    public VfCheckAllFilenamesMatchePattern(Engine engine) {
+    public VfCheckAllFilenamesMatchPattern(Engine engine) {
         super(engine, new Contract()
                 .withValueParam(PARAM_FILES, ValueType.FILE_LIST, 1, 1)
                 .withPatternParam(PARAM_PATTERN)
@@ -38,7 +38,7 @@ public class VfCheckAllFilenamesMatchePattern extends ValidationFunction {
         } else {
             for (File file : files) {
                 if (!paternParam.matches(file.getName())) {
-                    return new ValidationResult(false).withMessage(String.format("Název souboru %d neodpovídá vzoru %d", file.getName(), paternParam.toString()));
+                    return new ValidationResult(false).withMessage(String.format("Název souboru %s neodpovídá vzoru %s", file.getName(), paternParam.toString()));
                 }
             }
             return new ValidationResult(true);

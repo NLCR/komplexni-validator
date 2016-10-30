@@ -32,7 +32,7 @@
     <function name="CHECK_FILENAME_MATCHES_PATTERN">
         <description>Zkontroluje, že název souboru odpovídá vzoru.</description>
         <params>
-            <param name="file" type="File"/>
+            <param name="file" type="FILE"/>
             <param name="pattern" type="Pattern" description="Pattern to match"/>
         </params>
     </function>

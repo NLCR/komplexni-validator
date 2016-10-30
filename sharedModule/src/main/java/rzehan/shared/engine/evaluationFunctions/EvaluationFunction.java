@@ -4,6 +4,7 @@ import rzehan.shared.engine.Engine;
 import rzehan.shared.engine.Function;
 import rzehan.shared.engine.Pattern;
 import rzehan.shared.engine.ValueType;
+import rzehan.shared.engine.exceptions.ValidatorException;
 import rzehan.shared.engine.params.*;
 
 import java.util.*;
@@ -158,53 +159,51 @@ public abstract class EvaluationFunction implements Function {
         }
 
         public void checkCompliance(EvaluationFunction function) {
-            checkValueParamCompliance(function.valueParams);
-            checkPatternParamCompliance(function.patternParams);
+            checkValueParamCompliance(function.valueParams, function.getName());
+            checkPatternParamCompliance(function.patternParams, function.getName());
         }
 
-        private void checkValueParamCompliance(ValueParams valueParams) {
+        private void checkValueParamCompliance(ValueParams valueParams, String functionName) {
             //all actual params are expected
             for (String actualParam : valueParams.keySet()) {
                 if (!valueParamsSpec.keySet().contains(actualParam)) {
                     //TODO: other exception
-                    throw new RuntimeException(String.format("nalezen neočekávaný parametr (hodnota) %s", actualParam));
+                    throw new ValidatorException(String.format("%s: nalezen neočekávaný parametr (hodnota) %s", functionName, actualParam));
                 }
             }
             //all expected params found and comply to spec
             for (String expectedParamName : valueParamsSpec.keySet()) {
                 List<ValueParam> paramValues = valueParams.getParams(expectedParamName);
                 if (paramValues == null) {
-                    throw new RuntimeException(String.format("nelezen očekávaný parametr (vzor) %s", expectedParamName));
+                    throw new ValidatorException(String.format("%s: nelezen očekávaný parametr (hodnota) %s", functionName, expectedParamName));
                 }
                 ValueParamSpec spec = valueParamsSpec.get(expectedParamName);
                 if (spec.getMinOccurs() != null && paramValues.size() < spec.getMinOccurs()) {
-                    throw new RuntimeException(String.format("parametr %s musí mít alespoň %d hodnot, nalezeno %d", expectedParamName, spec.getMinOccurs(), paramValues.size()));
+                    throw new ValidatorException(String.format("%s: parametr %s musí mít alespoň %d hodnot, nalezeno %d", functionName, expectedParamName, spec.getMinOccurs(), paramValues.size()));
                 }
                 if (spec.getMaxOccurs() != null && paramValues.size() > spec.getMaxOccurs()) {
-                    throw new RuntimeException(String.format("parametr %s musí mít nejvýše %d hodnot, nalezeno %d", expectedParamName, spec.getMaxOccurs(), paramValues.size()));
+                    throw new ValidatorException(String.format("%s: parametr %s musí mít nejvýše %d hodnot, nalezeno %d", functionName, expectedParamName, spec.getMaxOccurs(), paramValues.size()));
                 }
                 for (ValueParam param : paramValues) {
                     if (param.getType() != spec.getType()) {
-                        throw new RuntimeException(String.format("parametr %s musí být vždy typu %s, nalezen typ %s", expectedParamName, spec.getType(), param.getType()));
+                        throw new ValidatorException(String.format("%s: parametr %s musí být vždy typu %s, nalezen typ %s", functionName, expectedParamName, spec.getType(), param.getType()));
                     }
                 }
             }
 
         }
 
-        private void checkPatternParamCompliance(PatternParams patternParams) {
+        private void checkPatternParamCompliance(PatternParams patternParams, String functionName) {
             //all actual params are expected
             for (String actualParam : patternParams.keySet()) {
                 if (!expectedPatternParams.contains(actualParam)) {
-                    //TODO: other exception
-                    throw new RuntimeException(String.format("nalezen neočekávaný parametr (vzor) %s", actualParam));
+                    throw new ValidatorException(String.format("%s: nalezen neočekávaný parametr (vzor) %s", functionName, actualParam));
                 }
             }
             //all expected params found
             for (String expectedParam : expectedPatternParams) {
                 if (!patternParams.keySet().contains(expectedParam)) {
-                    //TODO: other exception
-                    throw new RuntimeException(String.format("nelezen očekávaný parametr (vzor) %s", expectedParam));
+                    throw new ValidatorException(String.format("%s: nelezen očekávaný parametr (vzor) %s", functionName, expectedParam));
                 }
             }
         }

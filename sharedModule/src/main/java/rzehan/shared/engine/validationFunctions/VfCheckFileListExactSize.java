@@ -11,13 +11,13 @@ import java.util.List;
  */
 public class VfCheckFileListExactSize extends ValidationFunction {
 
-    public static final String PARAM_LIST = "list";
+    public static final String PARAM_FILES = "files";
     public static final String PARAM_SIZE = "size";
 
 
     public VfCheckFileListExactSize(Engine engine) {
         super(engine, new Contract()
-                .withValueParam(PARAM_LIST, ValueType.FILE_LIST, 1, 1)
+                .withValueParam(PARAM_FILES, ValueType.FILE_LIST, 1, 1)
                 .withValueParam(PARAM_SIZE, ValueType.INTEGER, 1, 1)
         );
     }
@@ -26,7 +26,7 @@ public class VfCheckFileListExactSize extends ValidationFunction {
     public ValidationResult validate() {
         checkContractCompliance();
 
-        List<File> fileList = (List<File>) valueParams.getParams(PARAM_LIST).get(0).getValue();
+        List<File> fileList = (List<File>) valueParams.getParams(PARAM_FILES).get(0).getValue();
         Integer expectedSize = (Integer) valueParams.getParams(PARAM_SIZE).get(0).getValue();
 
         if (fileList == null) {
