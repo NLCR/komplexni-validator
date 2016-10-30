@@ -9,13 +9,13 @@ import java.util.List;
 /**
  * Created by martin on 27.10.16.
  */
-public class VfChecFileListExactSize extends ValidationFunction {
+public class VfCheckFileListExactSize extends ValidationFunction {
 
     public static final String PARAM_LIST = "list";
     public static final String PARAM_SIZE = "size";
 
 
-    public VfChecFileListExactSize(Engine engine) {
+    public VfCheckFileListExactSize(Engine engine) {
         super(engine, new Contract()
                 .withValueParam(PARAM_LIST, ValueType.FILE_LIST, 1, 1)
                 .withValueParam(PARAM_SIZE, ValueType.INTEGER, 1, 1)

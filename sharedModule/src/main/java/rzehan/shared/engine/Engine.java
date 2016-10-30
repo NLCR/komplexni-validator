@@ -65,13 +65,15 @@ public class Engine {
 
     public ValidationFunction buildValidationFunction(String name) {
         if (name.equals("CHECK_FILE_LIST_EXACT_SIZE")) {
-            return new VfChecFileListExactSize(this);
+            return new VfCheckFileListExactSize(this);
         } else if (name.equals("CHECK_FILENAME_MATCHES_PATTERN")) {
             return new VfCheckFilenameMatchesPattern(this);
         } else if (name.equals("CHECK_FILE_IS_NOT_DIR")) {
             return new VfCheckFileIsNotDir(this);
         } else if (name.equals("CHECK_NO_FILE_IS_DIR")) {
             return new VfCheckNoFileIsDir(this);
+        } else if (name.equals("CHECK_NO_OTHER_FILES_IN_DIR")) {
+            return new VfCheckNoOtherFilesInDir(this);
         } else {
             throw new RuntimeException(String.format("validační funkce %s neexistuje", name));
         }

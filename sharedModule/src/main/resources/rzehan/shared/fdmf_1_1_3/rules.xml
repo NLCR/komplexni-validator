@@ -232,7 +232,7 @@
                     <value-param name="file" type="FILE">
                         <value-ref name="CHECKSUM_FILE"/>
                     </value-param>
-                    <value-param name="file_list" type="FILE">
+                    <value-param name="files" type="FILE_LIST">
                         <value-ref name="TOLERATED_TL_FILES"/>
                     </value-param>
                     <value-param name="file" type="FILE">
@@ -325,7 +325,7 @@
             <description>Název adresáře SECONDARY-METS-DIR musí obsahovat jen povolené znaky.</description>
             <validation functionName="CHECK_FILENAME_MATCHES_PATTERN">
                 <params>
-                    <value-param name="file">
+                    <value-param name="file" type="FILE">
                         <value-ref name="SECONDARY-METS-DIR_FILE"/>
                     </value-param>
                     <pattern-param name="pattern">
@@ -339,7 +339,7 @@
             <description>Název adresáře OCR-TEXT-DIR musí obsahovat jen povolené znaky.</description>
             <validation functionName="CHECK_FILENAME_MATCHES_PATTERN">
                 <params>
-                    <value-param name="file">
+                    <value-param name="file" type="FILE">
                         <value-ref name="OCR-TEXT-DIR_FILE"/>
                     </value-param>
                     <pattern-param name="pattern">
@@ -353,7 +353,7 @@
             <description>Název adresáře OCR-ALTO-DIR musí obsahovat jen povolené znaky.</description>
             <validation functionName="CHECK_FILENAME_MATCHES_PATTERN">
                 <params>
-                    <value-param name="file">
+                    <value-param name="file" type="FILE">
                         <value-ref name="OCR-ALTO-DIR_FILE"/>
                     </value-param>
                     <pattern-param name="pattern">
@@ -368,7 +368,7 @@
             </description>
             <validation functionName="CHECK_FILENAME_MATCHES_PATTERN">
                 <params>
-                    <value-param name="file">
+                    <value-param name="file" type="FILE">
                         <value-ref name="MASTER-COPY-DIR_FILE"/>
                     </value-param>
                     <pattern-param name="pattern">
@@ -383,7 +383,7 @@
             </description>
             <validation functionName="CHECK_FILENAME_MATCHES_PATTERN">
                 <params>
-                    <value-param name="file">
+                    <value-param name="file" type="FILE">
                         <value-ref name="USER-COPY-DIR_FILE"/>
                     </value-param>
                     <pattern-param name="pattern">
@@ -685,10 +685,10 @@
             </description>
             <validation functionName="CHECK_NO_OTHER_FILES_IN_DIR">
                 <params>
-                    <value-param name="root_dir">
+                    <value-param name="root_dir" type="FILE">
                         <value-ref name="SECONDARY-METS-DIR_FILE"/>
                     </value-param>
-                    <value-param name="file_list">
+                    <value-param name="files" type="FILE_LIST">
                         <value-ref name="SECONDARY-METS_FILES"/>
                     </value-param>
                 </params>
@@ -699,10 +699,10 @@
             <description>Kromě souborů OCR-TEXT nesmí adresář OCR-TEXT-DIR obsahovat žádné další soubory.</description>
             <validation functionName="CHECK_NO_OTHER_FILES_IN_DIR">
                 <params>
-                    <value-param name="root_dir">
+                    <value-param name="root_dir" type="FILE">
                         <value-ref name="OCR-TEXT-DIR_FILE"/>
                     </value-param>
-                    <value-param name="file_list">
+                    <value-param name="files" type="FILE_LIST">
                         <value-ref name="OCR-TEXT_FILES"/>
                     </value-param>
                 </params>
@@ -713,10 +713,10 @@
             <description>Kromě souborů OCR-ALTO nesmí adresář OCR-ALTO-DIR obsahovat žádné další soubory.</description>
             <validation functionName="CHECK_NO_OTHER_FILES_IN_DIR">
                 <params>
-                    <value-param name="root_dir">
+                    <value-param name="root_dir" type="FILE">
                         <value-ref name="OCR-ALTO-DIR_FILE"/>
                     </value-param>
-                    <value-param name="file_list">
+                    <value-param name="files" type="FILE_LIST">
                         <value-ref name="OCR-ALTO_FILES"/>
                     </value-param>
                 </params>
@@ -728,10 +728,10 @@
             </description>
             <validation functionName="CHECK_NO_OTHER_FILES_IN_DIR">
                 <params>
-                    <value-param name="root_dir">
+                    <value-param name="root_dir" type="FILE">
                         <value-ref name="MASTER-COPY-DIR_FILE"/>
                     </value-param>
-                    <value-param name="file_list">
+                    <value-param name="files" type="FILE_LIST">
                         <value-ref name="MASTER-COPY_FILES"/>
                     </value-param>
                 </params>
@@ -743,10 +743,10 @@
             </description>
             <validation functionName="CHECK_NO_OTHER_FILES_IN_DIR">
                 <params>
-                    <value-param name="root_dir">
+                    <value-param name="root_dir" type="FILE">
                         <value-ref name="USER-COPY-DIR_FILE"/>
                     </value-param>
-                    <value-param name="file_list">
+                    <value-param name="files" type="FILE_LIST">
                         <value-ref name="USER-COPY_FILES"/>
                     </value-param>
                 </params>

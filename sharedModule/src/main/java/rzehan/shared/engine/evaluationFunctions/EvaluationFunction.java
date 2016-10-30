@@ -224,18 +224,24 @@ public abstract class EvaluationFunction implements Function {
                 if (type == null) {
                     throw new IllegalArgumentException("musí být uveden typ parametru");
                 }
-                if (minOccurs < 0) {
+                if (minOccurs == null) {
+                    this.minOccurs = 0;
+                } else if (minOccurs < 0) {
                     throw new IllegalArgumentException("minimální počet výskytů musí být kladné číslo");
+
+                } else {
+                    this.minOccurs = minOccurs;
                 }
-                if (maxOccurs < 1) {
-                    throw new IllegalArgumentException("minimální počet výskytů musí být alespoň 1");
+                if (maxOccurs == null) {
+                    this.maxOccurs = null;
+                } else if (maxOccurs < 1) {
+                    throw new IllegalArgumentException("maximální počet výskytů musí být alespoň 1");
+                } else {
+                    this.maxOccurs = maxOccurs;
                 }
                 if (minOccurs != null && maxOccurs != null && minOccurs > maxOccurs) {
-                    throw new IllegalArgumentException(String.format("minimální počet hodnot (%d) je větší, než maximální počet hodnot (%d)", minOccurs, maxOccurs));
+                    throw new IllegalArgumentException(String.format("minimální počet výskytů (%d) je větší, než maximální počet výskytů (%d)", minOccurs, maxOccurs));
                 }
-                this.minOccurs = minOccurs;
-                this.maxOccurs = maxOccurs;
-
             }
 
             public ValueType getType() {
