@@ -22,11 +22,10 @@
         </params>
     </function>
 
-    <!--todo: verze pro List<File> a List<String>-->
-    <function name="CHECK_ALL_LISTS_SAME_SIZE">
-        <description>Zkontroluje, že mají všechny seznamy stejnou velikost.</description>
+    <function name="CHECK_ALL_FILE_LISTS_SAME_SIZE">
+        <description>Zkontroluje, že mají všechny seznamy souborů stejnou velikost.</description>
         <params>
-            <param name="list" type="List" description="List of files" min="2" max="unbound"/>
+            <param name="files" type="FILE_LIST" description="List of files" min="2" max="unbound"/>
         </params>
     </function>
 

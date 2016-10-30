@@ -78,6 +78,8 @@ public class Engine {
             return new VfCheckNoFileIsDir(this);
         } else if (name.equals("CHECK_NO_OTHER_FILES_IN_DIR")) {
             return new VfCheckNoOtherFilesInDir(this);
+        } else if (name.equals("CHECK_ALL_FILE_LISTS_SAME_SIZE")) {
+            return new VfCheckAllFileListsSameSize(this);
         } else {
             throw new RuntimeException(String.format("validační funkce %s neexistuje", name));
         }

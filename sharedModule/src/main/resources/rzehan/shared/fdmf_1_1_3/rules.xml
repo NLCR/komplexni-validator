@@ -530,21 +530,21 @@
 
         <rule name="NUMBER_OF_FILES_IN_DIRS_MATCH" level="ERROR">
             <description>Počet souborů ve všech adresářích se musí shodovat.</description>
-            <validation functionName="CHECK_ALL_LISTS_SAME_SIZE">
+            <validation functionName="CHECK_ALL_FILE_LISTS_SAME_SIZE">
                 <params>
-                    <value-param name="list">
+                    <value-param name="list" type="FILE_LIST">
                         <value-ref name="SECONDARY-METS_FILES"/>
                     </value-param>
-                    <value-param name="list">
+                    <value-param name="list" type="FILE_LIST">
                         <value-ref name="OCR-TEXT_FILES"/>
                     </value-param>
-                    <value-param name="list">
+                    <value-param name="list" type="FILE_LIST">
                         <value-ref name="OCR-ALTO_FILES"/>
                     </value-param>
-                    <value-param name="list">
+                    <value-param name="list" type="FILE_LIST">
                         <value-ref name="MASTER-COPY_FILES"/>
                     </value-param>
-                    <value-param name="list">
+                    <value-param name="list" type="FILE_LIST">
                         <value-ref name="USER-COPY_FILES"/>
                     </value-param>
                 </params>
