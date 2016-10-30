@@ -50,53 +50,54 @@ public class Engine {
     }
 
     public EvaluationFunction buildEvaluationFunction(String name) {
-        if (name.equals("PROVIDED_FILE")) {
-            return new EfProvidedFile(this);
-        } else if (name.equals("PROVIDED_STRING")) {
-            return new EfProvidedString(this);
-        } else if (name.equals("PROVIDED_INTEGER")) {
-            return new EfProvidedInteger(this);
-        } else if (name.equals("RETURN_FIRST_FILE_FROM_LIST")) {
-            return new EfReturnFirstFileFromFileList(this);
-        } else if (name.equals("FIND_FILES_IN_DIR_BY_PATTERN")) {
-            return new EfFindFilesInDirByPattern(this);
-        } else {
-            throw new RuntimeException(String.format("vyhodnocovací funkce %s neexistuje", name));
+        switch (name) {
+            case "PROVIDED_FILE":
+                return new EfProvidedFile(this);
+            case "PROVIDED_STRING":
+                return new EfProvidedString(this);
+            case "PROVIDED_INTEGER":
+                return new EfProvidedInteger(this);
+            case "RETURN_FIRST_FILE_FROM_LIST":
+                return new EfReturnFirstFileFromFileList(this);
+            case "FIND_FILES_IN_DIR_BY_PATTERN":
+                return new EfFindFilesInDirByPattern(this);
+            default:
+                throw new RuntimeException(String.format("vyhodnocovací funkce %s neexistuje", name));
         }
     }
 
     public ValidationFunction buildValidationFunction(String name) {
-        //TODO: vlasnte java 8 umi switch pres Stringy
-        if (name.equals("CHECK_FILE_LIST_EXACT_SIZE")) {
-            return new VfCheckFileListExactSize(this);
-        } else if (name.equals("CHECK_FILENAME_MATCHES_PATTERN")) {
-            return new VfCheckFilenameMatchesPattern(this);
-        } else if (name.equals("CHECK_ALL_FILENAMES_MATCH_PATTERN")) {
-            return new VfCheckAllFilenamesMatchePattern(this);
-        } else if (name.equals("CHECK_FILE_IS_DIR")) {
-            return new VfCheckFileIsDir(this);
-        } else if (name.equals("CHECK_FILE_IS_NOT_DIR")) {
-            return new VfCheckFileIsNotDir(this);
-        } else if (name.equals("CHECK_NO_FILE_IS_DIR")) {
-            return new VfCheckNoFileIsDir(this);
-        } else if (name.equals("CHECK_NO_OTHER_FILES_IN_DIR")) {
-            return new VfCheckNoOtherFilesInDir(this);
-        } else if (name.equals("CHECK_ALL_FILE_LISTS_SAME_SIZE")) {
-            return new VfCheckAllFileListsSameSize(this);
-        } else if (name.equals("CHECK_FILENAMES_LENGTHS_SAME")) {
-            return new VfCheckFilenamesLengthsSame(this);
-        } else if (name.equals("CHECK_CHECKSUM_GENERATED_BY_GRAMMAR")) {
-            return new VfCheckChecksumGeneratedByGrammar(this);
-        } else if (name.equals("CHECK_CHECKSUM_ALL_PATHS_MATCH_FILES")) {
-            return new VfCheckChecksumAllPathsMatchFiles(this);
-        } else if (name.equals("CHECK_CHECKSUM_ALL_CHECKSUMS_MATCH")) {
-            return new VfCheckChecksumAllChecksumsMatch(this);
-        } else if (name.equals("CHECK_XML_WELL_BUILT")) {
-            return new VfCheckXmlWellBuilt(this);
-        } else if (name.equals("CHECK_XML_VALID_BY_XSD")) {
-            return new VfCheckXmlValidByXsd(this);
-        } else {
-            throw new RuntimeException(String.format("validační funkce %s neexistuje", name));
+        switch (name) {
+            case "CHECK_FILE_LIST_EXACT_SIZE":
+                return new VfCheckFileListExactSize(this);
+            case "CHECK_FILENAME_MATCHES_PATTERN":
+                return new VfCheckFilenameMatchesPattern(this);
+            case "CHECK_ALL_FILENAMES_MATCH_PATTERN":
+                return new VfCheckAllFilenamesMatchePattern(this);
+            case "CHECK_FILE_IS_DIR":
+                return new VfCheckFileIsDir(this);
+            case "CHECK_FILE_IS_NOT_DIR":
+                return new VfCheckFileIsNotDir(this);
+            case "CHECK_NO_FILE_IS_DIR":
+                return new VfCheckNoFileIsDir(this);
+            case "CHECK_NO_OTHER_FILES_IN_DIR":
+                return new VfCheckNoOtherFilesInDir(this);
+            case "CHECK_ALL_FILE_LISTS_SAME_SIZE":
+                return new VfCheckAllFileListsSameSize(this);
+            case "CHECK_FILENAMES_LENGTHS_SAME":
+                return new VfCheckFilenamesLengthsSame(this);
+            case "CHECK_CHECKSUM_GENERATED_BY_GRAMMAR":
+                return new VfCheckChecksumGeneratedByGrammar(this);
+            case "CHECK_CHECKSUM_ALL_PATHS_MATCH_FILES":
+                return new VfCheckChecksumAllPathsMatchFiles(this);
+            case "CHECK_CHECKSUM_ALL_CHECKSUMS_MATCH":
+                return new VfCheckChecksumAllChecksumsMatch(this);
+            case "CHECK_XML_WELL_BUILT":
+                return new VfCheckXmlWellBuilt(this);
+            case "CHECK_XML_VALID_BY_XSD":
+                return new VfCheckXmlValidByXsd(this);
+            default:
+                throw new RuntimeException(String.format("validační funkce %s neexistuje", name));
         }
     }
 
