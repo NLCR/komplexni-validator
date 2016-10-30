@@ -66,7 +66,7 @@
             soubor).
         </description>
         <params>
-            <param name="file_list" type="List<File>"/>
+            <param name="files" type="FILE_LIST"/>
         </params>
     </function>
 

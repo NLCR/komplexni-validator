@@ -625,7 +625,7 @@
             <description>Žádný soubor SECONDARY-METS nesmí být adresář.</description>
             <validation functionName="CHECK_NO_FILE_IS_DIR">
                 <params>
-                    <value-param name="file_list">
+                    <value-param name="files" type="FILE_LIST">
                         <value-ref name="SECONDARY-METS_FILES"/>
                     </value-param>
                 </params>
@@ -636,7 +636,7 @@
             <description>Žádný soubor OCR-TEXT nesmí být adresář.</description>
             <validation functionName="CHECK_NO_FILE_IS_DIR">
                 <params>
-                    <value-param name="file_list">
+                    <value-param name="files" type="FILE_LIST">
                         <value-ref name="OCR-TEXT_FILES"/>
                     </value-param>
                 </params>
@@ -647,7 +647,7 @@
             <description>Žádný soubor OCR-ALTO nesmí být adresář.</description>
             <validation functionName="CHECK_NO_FILE_IS_DIR">
                 <params>
-                    <value-param name="file_list">
+                    <value-param name="files" type="FILE_LIST">
                         <value-ref name="OCR-ALTO_FILES"/>
                     </value-param>
                 </params>
@@ -658,7 +658,7 @@
             <description>Žádný soubor MASTER-COPY nesmí být adresář.</description>
             <validation functionName="CHECK_NO_FILE_IS_DIR">
                 <params>
-                    <value-param name="file_list">
+                    <value-param name="files" type="FILE_LIST">
                         <value-ref name="MASTER-COPY_FILES"/>
                     </value-param>
                 </params>
@@ -669,7 +669,7 @@
             <description>Žádný soubor USER-COPY nesmí být adresář.</description>
             <validation functionName="CHECK_NO_FILE_IS_DIR">
                 <params>
-                    <value-param name="file_list">
+                    <value-param name="files" type="FILE_LIST">
                         <value-ref name="USER-COPY_FILES"/>
                     </value-param>
                 </params>
