@@ -2,7 +2,6 @@ package rzehan.shared.engine.validationFunctions;
 
 import rzehan.shared.engine.Engine;
 import rzehan.shared.engine.ValueType;
-import rzehan.shared.engine.params.PatternParam;
 import rzehan.shared.engine.params.ValueParam;
 
 import java.io.File;

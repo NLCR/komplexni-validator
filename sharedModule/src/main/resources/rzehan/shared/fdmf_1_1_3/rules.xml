@@ -763,7 +763,7 @@
             <description>Soubor CHECKSUM by měl být generován předepsanou ABNF gramatikou.</description>
             <validation functionName="CHECK_CHECKSUM_GENERATED_BY_GRAMMAR">
                 <params>
-                    <value-param name="checksum_file">
+                    <value-param name="checksum_file" type="FILE">
                         <value-ref name="CHECKSUM_FILE"/>
                     </value-param>
                 </params>
@@ -774,25 +774,25 @@
             <description>Soubor CHECKSUM musí obsahovat záznamy pro každý uvedený soubor a žádný jiný.</description>
             <validation functionName="CHECK_CHECKSUM_ALL_PATHS_MATCH_FILES">
                 <params>
-                    <value-param name="checksum_file">
+                    <value-param name="checksum_file" type="FILE">
                         <value-ref name="CHECKSUM_FILE"/>
                     </value-param>
-                    <value-param name="file">
+                    <value-param name="file" type="FILE">
                         <value-ref name="PRIMARY-METS_FILE"/>
                     </value-param>
-                    <value-param name="file_list">
+                    <value-param name="files" type="FILE_LIST">
                         <value-ref name="SECONDARY-METS_FILES"/>
                     </value-param>
-                    <value-param name="file_list">
+                    <value-param name="files" type="FILE_LIST">
                         <value-ref name="OCR-TEXT_FILES"/>
                     </value-param>
-                    <value-param name="file_list">
+                    <value-param name="files" type="FILE_LIST">
                         <value-ref name="OCR-ALTO_FILES"/>
                     </value-param>
-                    <value-param name="file_list">
+                    <value-param name="files" type="FILE_LIST">
                         <value-ref name="MASTER-COPY_FILES"/>
                     </value-param>
-                    <value-param name="file_list">
+                    <value-param name="files" type="FILE_LIST">
                         <value-ref name="USER-COPY_FILES"/>
                     </value-param>
                 </params>
@@ -803,25 +803,25 @@
             <description>Všechny kontrolní součty v souboru CHECKSUM musí souhlasit.</description>
             <validation functionName="CHECK_CHECKSUM_ALL_CHECKSUMS_MATCH">
                 <params>
-                    <value-param name="checksum_file">
+                    <value-param name="checksum_file" type="FILE">
                         <value-ref name="CHECKSUM_FILE"/>
                     </value-param>
-                    <value-param name="file">
+                    <value-param name="file" type="FILE">
                         <value-ref name="PRIMARY-METS_FILE"/>
                     </value-param>
-                    <value-param name="file_list">
+                    <value-param name="files" type="FILE_LIST">
                         <value-ref name="SECONDARY-METS_FILES"/>
                     </value-param>
-                    <value-param name="file_list">
+                    <value-param name="files" type="FILE_LIST">
                         <value-ref name="OCR-TEXT_FILES"/>
                     </value-param>
-                    <value-param name="file_list">
+                    <value-param name="files" type="FILE_LIST">
                         <value-ref name="OCR-ALTO_FILES"/>
                     </value-param>
-                    <value-param name="file_list">
+                    <value-param name="files" type="FILE_LIST">
                         <value-ref name="MASTER-COPY_FILES"/>
                     </value-param>
-                    <value-param name="file_list">
+                    <value-param name="files" type="FILE_LIST">
                         <value-ref name="USER-COPY_FILES"/>
                     </value-param>
                 </params>

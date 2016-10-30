@@ -82,6 +82,12 @@ public class Engine {
             return new VfCheckAllFileListsSameSize(this);
         } else if (name.equals("CHECK_FILENAMES_LENGTHS_SAME")) {
             return new VfCheckFilenamesLengthsSame(this);
+        } else if (name.equals("CHECK_CHECKSUM_GENERATED_BY_GRAMMAR")) {
+            return new VfCheckChecksumGeneratedByGrammar(this);
+        } else if (name.equals("CHECK_CHECKSUM_ALL_PATHS_MATCH_FILES")) {
+            return new VfCheckChecksumAllPathsMatchFiles(this);
+        } else if (name.equals("CHECK_CHECKSUM_ALL_CHECKSUMS_MATCH")) {
+            return new VfCheckChecksumAllChecksumsMatch(this);
         } else {
             throw new RuntimeException(String.format("validační funkce %s neexistuje", name));
         }

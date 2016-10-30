@@ -98,7 +98,7 @@
     <function name="CHECK_CHECKSUM_GENERATED_BY_GRAMMAR">
         <description>Zkontroluje, že předepsaná gramatika pro CHECKSUM generuje obsah souboru.</description>
         <params>
-            <param name="checksum_file" type="File"/>
+            <param name="checksum_file" type="FILE"/>
         </params>
     </function>
 
@@ -106,9 +106,9 @@
         <description>Zkontroluje, že soubor CHECKSUM obsahuje záznamy pro každý uvedený soubor a žádný jiný.
         </description>
         <params>
-            <param name="checksum_file" type="File"/>
-            <param name="file" type="File" min="0" max="unbound"/>
-            <param name="file_list" type="List<File>" min="0" max="unbound"/>
+            <param name="checksum_file" type="FILE"/>
+            <param name="file" type="FILE" min="0" max="unbound"/>
+            <param name="files" type="FILE_LIST" min="0" max="unbound"/>
         </params>
     </function>
 
@@ -116,9 +116,9 @@
         <description>Zkontroluje, že provedené kontrolní součty pro každý soubor souhlasí se záznamy v souboru CHECKSUM.
         </description>
         <params>
-            <param name="checksum_file" type="File"/>
-            <param name="file" type="File" min="0" max="unbound"/>
-            <param name="file_list" type="List<File>" min="0" max="unbound"/>
+            <param name="checksum_file" type="FILE"/>
+            <param name="file" type="FILE" min="0" max="unbound"/>
+            <param name="files" type="FILE_LIST" min="0" max="unbound"/>
         </params>
     </function>
 
