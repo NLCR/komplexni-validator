@@ -46,8 +46,8 @@ public class EfReturnFirstFileFromFileListTest {
         engine.registerValueDefinition(LIST_VAR,
                 engine.buildValueDefinition(ValueType.FILE_LIST,
                         engine.buildEvaluationFunction("FIND_FILES_IN_DIR_BY_PATTERN")
-                                .withValue("dir", ValueType.FILE, new File("src/test/resources/monografie_1.2/b50eb6b0-f0a4-11e3-b72e-005056827e52"))
-                                .withPattern("pattern", engine.buildPattern(engine.buildExpression(false, ".+")))
+                                .withValueParam("dir", ValueType.FILE, new File("src/test/resources/monografie_1.2/b50eb6b0-f0a4-11e3-b72e-005056827e52"))
+                                .withPatternParam("pattern", engine.buildPattern(engine.buildExpression(false, ".+")))
                 ));
     }
 
@@ -55,14 +55,14 @@ public class EfReturnFirstFileFromFileListTest {
     @Test
     public void listFromConstantOk() {
         EvaluationFunction evFunction = engine.buildEvaluationFunction(FUNCTION_NAME)
-                .withValue(PARAM_FILE_LIST, ValueType.FILE_LIST, LIST);
+                .withValueParam(PARAM_FILE_LIST, ValueType.FILE_LIST, LIST);
         assertEquals(LIST.get(0), evFunction.evaluate());
     }
 
     @Test
     public void listFromReferenceOk() {
         EvaluationFunction evFunction = engine.buildEvaluationFunction(FUNCTION_NAME)
-                .withValueReference(PARAM_FILE_LIST, ValueType.FILE_LIST, LIST_VAR);
+                .withValueParamByReference(PARAM_FILE_LIST, ValueType.FILE_LIST, LIST_VAR);
         assertEquals("txt", ((File) evFunction.evaluate()).getName());
     }
 
@@ -80,8 +80,8 @@ public class EfReturnFirstFileFromFileListTest {
     @Test
     public void paramDirDuplicate() {
         EvaluationFunction evFunction = engine.buildEvaluationFunction(FUNCTION_NAME)
-                .withValue(PARAM_FILE_LIST, ValueType.FILE_LIST, LIST)
-                .withValueReference(PARAM_FILE_LIST, ValueType.FILE_LIST, LIST_VAR);
+                .withValueParam(PARAM_FILE_LIST, ValueType.FILE_LIST, LIST)
+                .withValueParamByReference(PARAM_FILE_LIST, ValueType.FILE_LIST, LIST_VAR);
         try {
             evFunction.evaluate();
             //fail();
@@ -94,7 +94,7 @@ public class EfReturnFirstFileFromFileListTest {
     @Test
     public void paramListFromConstantInvalidParamType() {
         EvaluationFunction evFunction = engine.buildEvaluationFunction(FUNCTION_NAME)
-                .withValue(PARAM_FILE_LIST, ValueType.FILE, LIST);
+                .withValueParam(PARAM_FILE_LIST, ValueType.FILE, LIST);
         try {
             evFunction.evaluate();
             fail();
@@ -106,7 +106,7 @@ public class EfReturnFirstFileFromFileListTest {
     @Test
     public void paramListFromReferenceInvalidParamType() {
         EvaluationFunction evFunction = engine.buildEvaluationFunction(FUNCTION_NAME)
-                .withValueReference(PARAM_FILE_LIST, ValueType.FILE, LIST_VAR);
+                .withValueParamByReference(PARAM_FILE_LIST, ValueType.FILE, LIST_VAR);
         try {
             evFunction.evaluate();
             fail();

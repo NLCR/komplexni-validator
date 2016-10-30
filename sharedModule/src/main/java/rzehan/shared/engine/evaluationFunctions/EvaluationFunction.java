@@ -1,6 +1,7 @@
 package rzehan.shared.engine.evaluationFunctions;
 
 import rzehan.shared.engine.Engine;
+import rzehan.shared.engine.Function;
 import rzehan.shared.engine.Pattern;
 import rzehan.shared.engine.ValueType;
 import rzehan.shared.engine.params.*;
@@ -10,7 +11,7 @@ import java.util.*;
 /**
  * Created by martin on 20.10.16.
  */
-public abstract class EvaluationFunction {
+public abstract class EvaluationFunction implements Function {
     protected final Engine engine;
     protected final Contract contract;
     protected final ValueParams valueParams = new ValueParams();
@@ -21,6 +22,10 @@ public abstract class EvaluationFunction {
         this.contract = contract;
     }
 
+    protected void checkContractCompliance() {
+        contract.checkCompliance(this);
+    }
+
     public ValueType getResultType() {
         return contract.getReturnType();
     }
@@ -29,26 +34,30 @@ public abstract class EvaluationFunction {
 
     public abstract String getName();
 
-    public EvaluationFunction withValue(String paramName, ValueType valueType, Object value) {
+    @Override
+    public EvaluationFunction withValueParam(String paramName, ValueType valueType, Object value) {
         valueParams.addParam(paramName, new ValueParamConstant(valueType, value));
         return this;
     }
 
-    public EvaluationFunction withValueReference(String paramName, ValueType valueType, String varName) {
+    @Override
+    public EvaluationFunction withValueParamByReference(String paramName, ValueType valueType, String varName) {
         valueParams.addParam(paramName, new ValueParamReference(engine, valueType, varName));
         return this;
     }
 
-    public EvaluationFunction withPattern(String paramName, Pattern pattern) {
+    @Override
+    public EvaluationFunction withPatternParam(String paramName, Pattern pattern) {
         patternParams.addParam(paramName, new PatternParamConstant(pattern));
         return this;
     }
 
-    public EvaluationFunction withPatternReference(String paramName, String varName) {
+    @Override
+    public EvaluationFunction withPatternParamByReference(String paramName, String varName) {
         patternParams.addParam(paramName, new PatternParamReference(engine, varName));
         return this;
     }
-
+/*
     public void addValueParams(ValueParams valueParams) {
         this.valueParams.addAll(valueParams);
 
@@ -57,10 +66,8 @@ public abstract class EvaluationFunction {
     public void addPatternParams(PatternParams patternParams) {
         this.patternParams.addAll(patternParams);
     }
+    */
 
-    protected void checkContractCompliance() {
-        contract.checkCompliance(this);
-    }
 
     public static class ValueParams {
         private final Map<String, List<ValueParam>> data = new HashMap<>();

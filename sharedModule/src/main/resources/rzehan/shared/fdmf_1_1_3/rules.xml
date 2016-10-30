@@ -32,7 +32,8 @@
             a METS Profil taky:
             There must be <packageid> element that contains name of package root directory.-->
             <description>Název kořenového adresáře musí být schodný s PSP-ID.</description>
-            <validation functionName="CHECK_FILENAME_MATCHES_STRING">
+
+            <!--<validation functionName="CHECK_FILENAME_MATCHES_STRING">
                 <params>
                     <value-param name="file" type="FILE">
                         <value-ref name="PSP_DIR"/>
@@ -41,7 +42,22 @@
                         <value-ref name="PSP_ID"/>
                     </value-param>
                 </params>
+            </validation>-->
+
+            <validation functionName="CHECK_FILENAME_MATCHES_PATTERN">
+                <params>
+                    <value-param name="file" type="FILE">
+                        <value-ref name="PSP_DIR"/>
+                    </value-param>
+                    <pattern-param name="pattern">
+                        <expressions>
+                            <expression caseSensitive="true">${PSP_ID}</expression>
+                        </expressions>
+                    </pattern-param>
+                </params>
             </validation>
+
+
         </rule>
 
 
@@ -180,13 +196,22 @@
 
         <rule name="NO_TOLERATED_TL_FILES_EXIST" level="WARNING">
             <description>Neměl by existovat žádný tolerovaný soubor.</description>
-            <validation functionName="CHECK_FILE_LIST_EMPTY">
+            <validation functionName="CHECK_FILE_LIST_EXACT_SIZE">
                 <params>
                     <value-param name="files" type="FILE_LIST">
                         <value-ref name="TOLERATED_TL_FILES"/>
                     </value-param>
+                    <value-param name="size" type="INTEGER">0</value-param>
                 </params>
             </validation>
+            <!--
+                        <validation functionName="CHECK_FILE_LIST_EMPTY">
+                            <params>
+                                <value-param name="files" type="FILE_LIST">
+                                    <value-ref name="TOLERATED_TL_FILES"/>
+                                </value-param>
+                            </params>
+                        </validation>-->
         </rule>
 
         <rule name="NO_OTHER_TOP_LEVEL_FILES_EXIST" level="ERROR">

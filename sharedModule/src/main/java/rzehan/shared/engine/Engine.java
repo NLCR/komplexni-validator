@@ -3,8 +3,7 @@ package rzehan.shared.engine;
 import rzehan.shared.engine.evaluationFunctions.*;
 import rzehan.shared.engine.exceptions.ValidatorException;
 import rzehan.shared.engine.exceptions.VariableNotDefinedException;
-import rzehan.shared.engine.validationFunctions.ValidationFunction;
-import rzehan.shared.engine.validationFunctions.VfChecFileListExactSize;
+import rzehan.shared.engine.validationFunctions.*;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -67,6 +66,12 @@ public class Engine {
     public ValidationFunction buildValidationFunction(String name) {
         if (name.equals("CHECK_FILE_LIST_EXACT_SIZE")) {
             return new VfChecFileListExactSize(this);
+        } else if (name.equals("CHECK_FILENAME_MATCHES_PATTERN")) {
+            return new VfCheckFilenameMatchesPattern(this);
+        } else if (name.equals("CHECK_FILE_IS_NOT_DIR")) {
+            return new VfCheckFileIsNotDir(this);
+        } else if (name.equals("CHECK_NO_FILE_IS_DIR")) {
+            return new VfCheckNoFileIsDir(this);
         } else {
             throw new RuntimeException(String.format("validační funkce %s neexistuje", name));
         }

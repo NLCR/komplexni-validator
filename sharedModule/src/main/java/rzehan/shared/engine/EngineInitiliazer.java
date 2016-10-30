@@ -89,11 +89,11 @@ public class EngineInitiliazer {
 
     private ValidationFunction parseValidationFunction(Element validationEl) {
         String name = validationEl.getAttribute("functionName");
-
-        return null;
-
-        //engine.buildValidationFunction(name)
-
+        Element paramsEl = (Element) validationEl.getElementsByTagName("params").item(0);
+        ValidationFunction function = engine.buildValidationFunction(name);
+        //params
+        addParams(function, paramsEl);
+        return function;
     }
 
     private Rule.Level parseLevel(String levelStr, Rule.Level defaultLevel) {
@@ -170,7 +170,9 @@ public class EngineInitiliazer {
         System.out.println("buildEf (" + efName + ")");
         EvaluationFunction ef = engine.buildEvaluationFunction(efName);
         Element paramsEl = (Element) efEl.getElementsByTagName("params").item(0);
-        // value params
+        addParams(ef, paramsEl);
+
+       /* // value params
         NodeList valueParamEls = paramsEl.getElementsByTagName("value-param");
         for (int i = 0; i < valueParamEls.getLength(); i++) {
             Element valueParamEl = (Element) valueParamEls.item(i);
@@ -182,15 +184,15 @@ public class EngineInitiliazer {
             if (valueRefEls.getLength() != 0) { //param is reference
                 Element valueRefEl = (Element) valueRefEls.item(0);
                 String valueRefName = valueRefEl.getAttribute("name");
-                ef.withValueReference(paramName, paramType, valueRefName);
+                ef.withValueParamByReference(paramName, paramType, valueRefName);
             } else if (evaluationEls.getLength() > 0) { //param anonymous definition
                 Element evaluationEl = (Element) evaluationEls.item(0);
                 EvaluationFunction valueParamEf = buildEf(evaluationEl);
                 Object paramValue = valueParamEf.evaluate();
-                ef.withValue(paramName, paramType, paramValue);
+                ef.withValueParam(paramName, paramType, paramValue);
             } else {//param is constant
                 Object paramValue = parseConstantValueDefinition(valueParamEl, paramType);
-                ef.withValue(paramName, paramType, paramValue);
+                ef.withValueParam(paramName, paramType, paramValue);
             }
         }
         //pattern params
@@ -204,7 +206,7 @@ public class EngineInitiliazer {
             if (referenceEls.getLength() != 0) {
                 Element referenceEl = (Element) referenceEls.item(0);
                 String varName = referenceEl.getAttribute("name");
-                ef.withPatternReference(paramName, varName);
+                ef.withPatternParamByReference(paramName, varName);
             } else if (expressionsEls.getLength() != 0) {
                 Element expressionsEl = (Element) expressionsEls.item(0);
                 NodeList expressionEls = expressionsEl.getElementsByTagName("expression");
@@ -213,10 +215,60 @@ public class EngineInitiliazer {
                     expressions.add(toExpression((Element) expressionEls.item(j)));
                 }
                 Pattern pattern = engine.buildPattern(expressions);
-                ef.withPattern(paramName, pattern);
+                ef.withPatternParam(paramName, pattern);
+            }
+        }*/
+        return ef;
+    }
+
+    private void addParams(Function function, Element paramsEl) {
+        // value params
+        NodeList valueParamEls = paramsEl.getElementsByTagName("value-param");
+        for (int i = 0; i < valueParamEls.getLength(); i++) {
+            Element valueParamEl = (Element) valueParamEls.item(i);
+            String paramName = valueParamEl.getAttribute("name");
+            System.out.println("processing value param " + paramName);
+            ValueType paramType = ValueType.valueOf(valueParamEl.getAttribute("type"));
+            NodeList valueRefEls = valueParamEl.getElementsByTagName("value-ref");
+            NodeList evaluationEls = valueParamEl.getElementsByTagName("evaluation");
+            if (valueRefEls.getLength() != 0) { //param is reference
+                Element valueRefEl = (Element) valueRefEls.item(0);
+                String valueRefName = valueRefEl.getAttribute("name");
+                function.withValueParamByReference(paramName, paramType, valueRefName);
+            } else if (evaluationEls.getLength() > 0) { //param anonymous definition
+                Element evaluationEl = (Element) evaluationEls.item(0);
+                EvaluationFunction valueParamEf = buildEf(evaluationEl);
+                Object paramValue = valueParamEf.evaluate();
+                function.withValueParam(paramName, paramType, paramValue);
+            } else {//param is constant
+                Object paramValue = parseConstantValueDefinition(valueParamEl, paramType);
+                function.withValueParam(paramName, paramType, paramValue);
             }
         }
-        return ef;
+        //pattern params
+        NodeList patternParamEls = paramsEl.getElementsByTagName("pattern-param");
+        for (int i = 0; i < patternParamEls.getLength(); i++) {
+            Element patternParamEl = (Element) patternParamEls.item(i);
+            String paramName = patternParamEl.getAttribute("name");
+            System.out.println("processing pattern param " + paramName);
+            NodeList referenceEls = patternParamEl.getElementsByTagName("pattern-ref");
+            NodeList expressionsEls = patternParamEl.getElementsByTagName("expressions");
+            if (referenceEls.getLength() != 0) {
+                Element referenceEl = (Element) referenceEls.item(0);
+                String varName = referenceEl.getAttribute("name");
+                function.withPatternParamByReference(paramName, varName);
+            } else if (expressionsEls.getLength() != 0) {
+                Element expressionsEl = (Element) expressionsEls.item(0);
+                NodeList expressionEls = expressionsEl.getElementsByTagName("expression");
+                List<Pattern.Expression> expressions = new ArrayList<>();
+                for (int j = 0; j < expressionEls.getLength(); j++) {
+                    expressions.add(toExpression((Element) expressionEls.item(j)));
+                }
+                Pattern pattern = engine.buildPattern(expressions);
+                function.withPatternParam(paramName, pattern);
+            }
+        }
+
     }
 
 

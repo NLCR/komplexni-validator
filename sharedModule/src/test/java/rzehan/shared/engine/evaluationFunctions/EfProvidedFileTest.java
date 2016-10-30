@@ -35,7 +35,7 @@ public class EfProvidedFileTest {
     @Test
     public void ok() {
         EvaluationFunction evFunction = engine.buildEvaluationFunction(FUNCTION_NAME)
-                .withValue(PARAM_NAME, ValueType.STRING, PSP_DIR_FILEID);
+                .withValueParam(PARAM_NAME, ValueType.STRING, PSP_DIR_FILEID);
         assertEquals(PSP_DIR_FILE, evFunction.evaluate());
     }
 
@@ -53,8 +53,8 @@ public class EfProvidedFileTest {
     @Test
     public void duplicateParam() {
         EvaluationFunction evFunction = engine.buildEvaluationFunction(FUNCTION_NAME)
-                .withValue(PARAM_NAME, ValueType.STRING, PSP_DIR_FILEID)
-                .withValue(PARAM_NAME, ValueType.STRING, "XYZ_DIR");
+                .withValueParam(PARAM_NAME, ValueType.STRING, PSP_DIR_FILEID)
+                .withValueParam(PARAM_NAME, ValueType.STRING, "XYZ_DIR");
         try {
             evFunction.evaluate();
             //fail();
@@ -67,7 +67,7 @@ public class EfProvidedFileTest {
     @Test
     public void invalidParamType() {
         EvaluationFunction evFunction = engine.buildEvaluationFunction(FUNCTION_NAME)
-                .withValue(PARAM_NAME, ValueType.FILE, PSP_DIR_FILEID);
+                .withValueParam(PARAM_NAME, ValueType.FILE, PSP_DIR_FILEID);
         try {
             evFunction.evaluate();
             fail();

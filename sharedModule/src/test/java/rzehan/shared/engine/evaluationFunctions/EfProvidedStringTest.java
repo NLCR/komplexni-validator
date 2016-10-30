@@ -33,7 +33,7 @@ public class EfProvidedStringTest {
     @Test
     public void ok() {
         EvaluationFunction evFunction = engine.buildEvaluationFunction(FUNCTION_NAME)
-                .withValue(PARAM_NAME, ValueType.STRING, PSP_ID_STRINGID);
+                .withValueParam(PARAM_NAME, ValueType.STRING, PSP_ID_STRINGID);
         assertEquals(PSP_ID_VALUE, evFunction.evaluate());
     }
 
@@ -51,8 +51,8 @@ public class EfProvidedStringTest {
     @Test
     public void duplicateParam() {
         EvaluationFunction evFunction = engine.buildEvaluationFunction(FUNCTION_NAME)
-                .withValue(PARAM_NAME, ValueType.STRING, PSP_ID_STRINGID)
-                .withValue(PARAM_NAME, ValueType.STRING, "PSPID");
+                .withValueParam(PARAM_NAME, ValueType.STRING, PSP_ID_STRINGID)
+                .withValueParam(PARAM_NAME, ValueType.STRING, "PSPID");
         try {
             evFunction.evaluate();
             //fail();
@@ -65,7 +65,7 @@ public class EfProvidedStringTest {
     @Test
     public void invalidParamType() {
         EvaluationFunction evFunction = engine.buildEvaluationFunction(FUNCTION_NAME)
-                .withValue(PARAM_NAME, ValueType.FILE, PSP_ID_STRINGID);
+                .withValueParam(PARAM_NAME, ValueType.FILE, PSP_ID_STRINGID);
         try {
             evFunction.evaluate();
             fail();

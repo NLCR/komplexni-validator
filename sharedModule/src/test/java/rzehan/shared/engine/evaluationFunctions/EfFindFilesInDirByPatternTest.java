@@ -52,8 +52,8 @@ public class EfFindFilesInDirByPatternTest {
     @Test
     public void paramDirFromConstantOk() {
         EvaluationFunction evFunction = engine.buildEvaluationFunction(FUNCTION_NAME)
-                .withValue(PARAM_DIR, ValueType.FILE, PSP_DIR_FILE)
-                .withPattern(PARAM_PATTERN, patternAllFiles);
+                .withValueParam(PARAM_DIR, ValueType.FILE, PSP_DIR_FILE)
+                .withPatternParam(PARAM_PATTERN, patternAllFiles);
         List<File> files = (List<File>) evFunction.evaluate();
         assertEquals(8, files.size());
     }
@@ -62,8 +62,8 @@ public class EfFindFilesInDirByPatternTest {
     @Test
     public void paramDirFromReferenceOk() {
         EvaluationFunction evFunction = engine.buildEvaluationFunction(FUNCTION_NAME)
-                .withValueReference(PARAM_DIR, ValueType.FILE, PSP_VAR)
-                .withPattern(PARAM_PATTERN, patternAllFiles);
+                .withValueParamByReference(PARAM_DIR, ValueType.FILE, PSP_VAR)
+                .withPatternParam(PARAM_PATTERN, patternAllFiles);
         List<File> files = (List<File>) evFunction.evaluate();
         assertEquals(8, files.size());
     }
@@ -71,7 +71,7 @@ public class EfFindFilesInDirByPatternTest {
     @Test
     public void paramDirMissing() {
         EvaluationFunction evFunction = engine.buildEvaluationFunction(FUNCTION_NAME)
-                .withPattern(PARAM_PATTERN, patternAllFiles);
+                .withPatternParam(PARAM_PATTERN, patternAllFiles);
         try {
             evFunction.evaluate();
             fail();
@@ -83,7 +83,7 @@ public class EfFindFilesInDirByPatternTest {
     @Test
     public void paramPatternMissing() {
         EvaluationFunction evFunction = engine.buildEvaluationFunction(FUNCTION_NAME)
-                .withValueReference(PARAM_DIR, ValueType.FILE, PSP_VAR);
+                .withValueParamByReference(PARAM_DIR, ValueType.FILE, PSP_VAR);
         try {
             evFunction.evaluate();
             fail();
@@ -95,8 +95,8 @@ public class EfFindFilesInDirByPatternTest {
     @Test
     public void paramDirDuplicate() {
         EvaluationFunction evFunction = engine.buildEvaluationFunction(FUNCTION_NAME)
-                .withValue(PARAM_DIR, ValueType.FILE, PSP_DIR_FILE)
-                .withValueReference(PARAM_DIR, ValueType.FILE, PSP_VAR);
+                .withValueParam(PARAM_DIR, ValueType.FILE, PSP_DIR_FILE)
+                .withValueParamByReference(PARAM_DIR, ValueType.FILE, PSP_VAR);
         try {
             evFunction.evaluate();
             //fail();
@@ -109,8 +109,8 @@ public class EfFindFilesInDirByPatternTest {
     @Test
     public void paramDirFromConstantInvalidParamType() {
         EvaluationFunction evFunction = engine.buildEvaluationFunction(FUNCTION_NAME)
-                .withValue(PARAM_DIR, ValueType.STRING, PSP_DIR_FILE)
-                .withPattern(PARAM_PATTERN, patternAllFiles);
+                .withValueParam(PARAM_DIR, ValueType.STRING, PSP_DIR_FILE)
+                .withPatternParam(PARAM_PATTERN, patternAllFiles);
         try {
             evFunction.evaluate();
             fail();
@@ -122,8 +122,8 @@ public class EfFindFilesInDirByPatternTest {
     @Test
     public void paramDirFromReferenceInvalidParamType() {
         EvaluationFunction evFunction = engine.buildEvaluationFunction(FUNCTION_NAME)
-                .withValueReference(PARAM_DIR, ValueType.STRING, PSP_VAR)
-                .withPattern(PARAM_PATTERN, patternAllFiles);
+                .withValueParamByReference(PARAM_DIR, ValueType.STRING, PSP_VAR)
+                .withPatternParam(PARAM_PATTERN, patternAllFiles);
         try {
             evFunction.evaluate();
             fail();
@@ -135,8 +135,8 @@ public class EfFindFilesInDirByPatternTest {
     @Test
     public void paramDirFromConstantDirDoesNotExist() {
         EvaluationFunction evFunction = engine.buildEvaluationFunction(FUNCTION_NAME)
-                .withValue(PARAM_DIR, ValueType.FILE, PSP_DIR_FILE_UNKNOWN)
-                .withPattern(PARAM_PATTERN, patternAllFiles);
+                .withValueParam(PARAM_DIR, ValueType.FILE, PSP_DIR_FILE_UNKNOWN)
+                .withPatternParam(PARAM_PATTERN, patternAllFiles);
         try {
             evFunction.evaluate();
             fail();
@@ -148,8 +148,8 @@ public class EfFindFilesInDirByPatternTest {
     @Test
     public void paramDirFromConstantDirDoesNotDir() {
         EvaluationFunction evFunction = engine.buildEvaluationFunction(FUNCTION_NAME)
-                .withValue(PARAM_DIR, ValueType.FILE, PSP_DIR_FILE_NOT_DIR)
-                .withPattern(PARAM_PATTERN, patternAllFiles);
+                .withValueParam(PARAM_DIR, ValueType.FILE, PSP_DIR_FILE_NOT_DIR)
+                .withPatternParam(PARAM_PATTERN, patternAllFiles);
         try {
             evFunction.evaluate();
             fail();
@@ -165,8 +165,8 @@ public class EfFindFilesInDirByPatternTest {
     @Test
     public void paramDirFromConstantPatternXmlFiles() {
         EvaluationFunction evFunction = engine.buildEvaluationFunction(FUNCTION_NAME)
-                .withValue(PARAM_DIR, ValueType.FILE, PSP_DIR_FILE)
-                .withPattern(PARAM_PATTERN, patternXmlFiles);
+                .withValueParam(PARAM_DIR, ValueType.FILE, PSP_DIR_FILE)
+                .withPatternParam(PARAM_PATTERN, patternXmlFiles);
         List<File> files = (List<File>) evFunction.evaluate();
         assertEquals(2, files.size());
     }
@@ -175,8 +175,8 @@ public class EfFindFilesInDirByPatternTest {
     @Test
     public void patternFromReference() {
         EvaluationFunction evFunction = engine.buildEvaluationFunction(FUNCTION_NAME)
-                .withValue(PARAM_DIR, ValueType.FILE, PSP_DIR_FILE)
-                .withPatternReference(PARAM_PATTERN, PATTERN_CONTAINS_UNDERSCORE_VARIABLE);
+                .withValueParam(PARAM_DIR, ValueType.FILE, PSP_DIR_FILE)
+                .withPatternParamByReference(PARAM_PATTERN, PATTERN_CONTAINS_UNDERSCORE_VARIABLE);
         List<File> files = (List<File>) evFunction.evaluate();
         assertEquals(3, files.size());
     }
@@ -186,8 +186,8 @@ public class EfFindFilesInDirByPatternTest {
     @Test
     public void valueFromReferenceNotDefined() {
         EvaluationFunction evFunction = engine.buildEvaluationFunction(FUNCTION_NAME)
-                .withValueReference(PARAM_DIR, ValueType.FILE, "UKNOWN")
-                .withPattern(PARAM_PATTERN, patternAllFiles);
+                .withValueParamByReference(PARAM_DIR, ValueType.FILE, "UKNOWN")
+                .withPatternParam(PARAM_PATTERN, patternAllFiles);
         try {
             evFunction.evaluate();
             fail();
@@ -200,8 +200,8 @@ public class EfFindFilesInDirByPatternTest {
     @Test
     public void patternFromReferenceNotDefined() {
         EvaluationFunction evFunction = engine.buildEvaluationFunction(FUNCTION_NAME)
-                .withValue(PARAM_DIR, ValueType.FILE, PSP_DIR_FILE)
-                .withPatternReference(PARAM_PATTERN, "UKNOWN");
+                .withValueParam(PARAM_DIR, ValueType.FILE, PSP_DIR_FILE)
+                .withPatternParamByReference(PARAM_PATTERN, "UKNOWN");
         try {
             evFunction.evaluate();
             fail();

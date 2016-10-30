@@ -32,7 +32,7 @@ public class EfProvidedIntegerTest {
     @Test
     public void ok() {
         EvaluationFunction evFunction = engine.buildEvaluationFunction(FUNCTION_NAME)
-                .withValue(PARAM_NAME, ValueType.STRING, YEAR_INTID);
+                .withValueParam(PARAM_NAME, ValueType.STRING, YEAR_INTID);
         assertEquals(YEAR_VALUE, evFunction.evaluate());
     }
 
@@ -61,8 +61,8 @@ public class EfProvidedIntegerTest {
     @Test
     public void duplicateParam() {
         EvaluationFunction evFunction = engine.buildEvaluationFunction(FUNCTION_NAME)
-                .withValue(PARAM_NAME, ValueType.STRING, YEAR_INTID)
-                .withValue(PARAM_NAME, ValueType.STRING, "YEAR_2");
+                .withValueParam(PARAM_NAME, ValueType.STRING, YEAR_INTID)
+                .withValueParam(PARAM_NAME, ValueType.STRING, "YEAR_2");
         try {
             evFunction.evaluate();
             //fail();
@@ -75,7 +75,7 @@ public class EfProvidedIntegerTest {
     @Test
     public void invalidParamType() {
         EvaluationFunction evFunction = engine.buildEvaluationFunction(FUNCTION_NAME)
-                .withValue(PARAM_NAME, ValueType.FILE, YEAR_INTID);
+                .withValueParam(PARAM_NAME, ValueType.FILE, YEAR_INTID);
         try {
             evFunction.evaluate();
             fail();

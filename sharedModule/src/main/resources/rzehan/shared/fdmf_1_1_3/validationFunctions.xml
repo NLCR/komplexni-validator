@@ -63,7 +63,9 @@
     </function>
 
     <function name="CHECK_NO_FILE_IS_DIR">
-        <description>Zkontroluje, že žádný ze souborů není adresář (tedy zda je obyčejný soubor).</description>
+        <description>Zkontroluje, že každý ze souborů existuje a žádný z nich není adresář (tedy zda je obyčejný
+            soubor).
+        </description>
         <params>
             <param name="file_list" type="List<File>"/>
         </params>

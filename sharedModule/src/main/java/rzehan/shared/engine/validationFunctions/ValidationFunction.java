@@ -1,6 +1,7 @@
 package rzehan.shared.engine.validationFunctions;
 
 import rzehan.shared.engine.Engine;
+import rzehan.shared.engine.Function;
 import rzehan.shared.engine.Pattern;
 import rzehan.shared.engine.ValueType;
 import rzehan.shared.engine.params.*;
@@ -10,7 +11,7 @@ import java.util.*;
 /**
  * Created by martin on 20.10.16.
  */
-public abstract class ValidationFunction {
+public abstract class ValidationFunction implements Function {
     protected final Engine engine;
     protected final Contract contract;
     protected final ValueParams valueParams = new ValueParams();
@@ -21,30 +22,39 @@ public abstract class ValidationFunction {
         this.contract = contract;
     }
 
+    protected void checkContractCompliance() {
+        contract.checkCompliance(this);
+    }
+
     public abstract ValidationResult validate();
 
     public abstract String getName();
 
-    public ValidationFunction withValue(String paramName, ValueType valueType, Object value) {
+    @Override
+    public ValidationFunction withValueParam(String paramName, ValueType valueType, Object value) {
         valueParams.addParam(paramName, new ValueParamConstant(valueType, value));
         return this;
     }
 
-    public ValidationFunction withValueReference(String paramName, ValueType valueType, String varName) {
+    @Override
+    public ValidationFunction withValueParamByReference(String paramName, ValueType valueType, String varName) {
         valueParams.addParam(paramName, new ValueParamReference(engine, valueType, varName));
         return this;
     }
 
-    public ValidationFunction withPattern(String paramName, Pattern pattern) {
+    @Override
+    public ValidationFunction withPatternParam(String paramName, Pattern pattern) {
         patternParams.addParam(paramName, new PatternParamConstant(pattern));
         return this;
     }
 
-    public ValidationFunction withPatternReference(String paramName, String varName) {
+    @Override
+    public ValidationFunction withPatternParamByReference(String paramName, String varName) {
         patternParams.addParam(paramName, new PatternParamReference(engine, varName));
         return this;
     }
 
+    /*
     public void addValueParams(ValueParams valueParams) {
         this.valueParams.addAll(valueParams);
 
@@ -54,9 +64,7 @@ public abstract class ValidationFunction {
         this.patternParams.addAll(patternParams);
     }
 
-    protected void checkContractCompliance() {
-        contract.checkCompliance(this);
-    }
+*/
 
 
     public static class ValueParams {
