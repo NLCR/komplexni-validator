@@ -400,7 +400,7 @@
             <description>Soubor SECONDARY-METS-DIR musí být adresář a ne obyčejný soubor.</description>
             <validation functionName="CHECK_FILE_IS_DIR">
                 <params>
-                    <value-param name="file">
+                    <value-param name="file" type="FILE">
                         <value-ref name="SECONDARY-METS-DIR_FILE"/>
                     </value-param>
                 </params>
@@ -411,7 +411,7 @@
             <description>Soubor OCR-TEXT-DIR musí být adresář a ne obyčejný soubor.</description>
             <validation functionName="CHECK_FILE_IS_DIR">
                 <params>
-                    <value-param name="file">
+                    <value-param name="file" type="FILE">
                         <value-ref name="OCR-TEXT-DIR_FILE"/>
                     </value-param>
                 </params>
@@ -422,7 +422,7 @@
             <description>Soubor OCR-ALTO-DIR musí být adresář a ne obyčejný soubor.</description>
             <validation functionName="CHECK_FILE_IS_DIR">
                 <params>
-                    <value-param name="file">
+                    <value-param name="file" type="FILE">
                         <value-ref name="OCR-ALTO-DIR_FILE"/>
                     </value-param>
                 </params>
@@ -433,7 +433,7 @@
             <description>Soubor MASTER-COPY-DIR musí být adresář a ne obyčejný soubor.</description>
             <validation functionName="CHECK_FILE_IS_DIR">
                 <params>
-                    <value-param name="file">
+                    <value-param name="file" type="FILE">
                         <value-ref name="MASTER-COPY-DIR_FILE"/>
                     </value-param>
                 </params>
@@ -444,7 +444,7 @@
             <description>Soubor USER-COPY-DIR musí být adresář a ne obyčejný soubor.</description>
             <validation functionName="CHECK_FILE_IS_DIR">
                 <params>
-                    <value-param name="file">
+                    <value-param name="file" type="FILE">
                         <value-ref name="USER-COPY-DIR_FILE"/>
                     </value-param>
                 </params>
@@ -459,7 +459,7 @@
             <description>Všechny soubory SECONDARY-METS musí obsahovat jen povolené znaky.</description>
             <validation functionName="CHECK_ALL_FILENAMES_MATCH_PATTERN">
                 <params>
-                    <value-param name="file_list">
+                    <value-param name="files" type="FILE_LIST">
                         <value-ref name="SECONDARY-METS_FILES"/>
                     </value-param>
                     <pattern-param name="pattern">
@@ -473,7 +473,7 @@
             <description>Všechny soubory OCR-TEXT musí obsahovat jen povolené znaky.</description>
             <validation functionName="CHECK_ALL_FILENAMES_MATCH_PATTERN">
                 <params>
-                    <value-param name="file_list">
+                    <value-param name="files" type="FILE_LIST">
                         <value-ref name="OCR-TEXT_FILES"/>
                     </value-param>
                     <pattern-param name="pattern">
@@ -487,7 +487,7 @@
             <description>Všechny soubory OCR-ALTO musí obsahovat jen povolené znaky.</description>
             <validation functionName="CHECK_ALL_FILENAMES_MATCH_PATTERN">
                 <params>
-                    <value-param name="file_list">
+                    <value-param name="files" type="FILE_LIST">
                         <value-ref name="OCR-ALTO_FILES"/>
                     </value-param>
                     <pattern-param name="pattern">
@@ -501,7 +501,7 @@
             <description>Všechny soubory MASTER-COPY musí obsahovat jen povolené znaky.</description>
             <validation functionName="CHECK_ALL_FILENAMES_MATCH_PATTERN">
                 <params>
-                    <value-param name="file_list">
+                    <value-param name="files" type="FILE_LIST">
                         <value-ref name="MASTER-COPY_FILES"/>
                     </value-param>
                     <pattern-param name="pattern">
@@ -515,7 +515,7 @@
             <description>Všechny soubory USER-COPY musí obsahovat jen povolené znaky.</description>
             <validation functionName="CHECK_ALL_FILENAMES_MATCH_PATTERN">
                 <params>
-                    <value-param name="file_list">
+                    <value-param name="files" type="FILE_LIST">
                         <value-ref name="USER-COPY_FILES"/>
                     </value-param>
                     <pattern-param name="pattern">

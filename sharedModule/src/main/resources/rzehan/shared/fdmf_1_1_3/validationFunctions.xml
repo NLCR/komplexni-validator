@@ -56,7 +56,7 @@
     </function>
 
     <function name="CHECK_FILE_IS_NOT_DIR">
-        <description>Zkontroluje, že soubor není adresář (tedy zda je obyčejný soubor).</description>
+        <description>Zkontroluje, že soubor exsituje a není adresář (tedy zda je obyčejný soubor).</description>
         <params>
             <param name="file" type="File"/>
         </params>
@@ -72,7 +72,7 @@
     </function>
 
     <function name="CHECK_FILE_IS_DIR">
-        <description>Zkontroluje, že soubor je adresář (tedy zda není obyčejný soubor).</description>
+        <description>Zkontroluje, že soubor existuje a je adresář (tedy zda není obyčejný soubor).</description>
         <params>
             <param name="file" type="File"/>
         </params>

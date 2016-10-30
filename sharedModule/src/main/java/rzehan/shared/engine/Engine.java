@@ -68,6 +68,10 @@ public class Engine {
             return new VfCheckFileListExactSize(this);
         } else if (name.equals("CHECK_FILENAME_MATCHES_PATTERN")) {
             return new VfCheckFilenameMatchesPattern(this);
+        } else if (name.equals("CHECK_ALL_FILENAMES_MATCH_PATTERN")) {
+            return new VfCheckAllFilenamesMatchePattern(this);
+        } else if (name.equals("CHECK_FILE_IS_DIR")) {
+            return new VfCheckFileIsDir(this);
         } else if (name.equals("CHECK_FILE_IS_NOT_DIR")) {
             return new VfCheckFileIsNotDir(this);
         } else if (name.equals("CHECK_NO_FILE_IS_DIR")) {
