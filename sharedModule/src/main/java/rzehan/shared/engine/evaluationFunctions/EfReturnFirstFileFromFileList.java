@@ -16,7 +16,7 @@ public class EfReturnFirstFileFromFileList extends EvaluationFunction {
     public EfReturnFirstFileFromFileList(Engine engine) {
         super(engine, new Contract()
                 .withReturnType(ValueType.FILE)
-                .withValueParam(PARAM_FILE_LIST, ValueType.LIST_OF_FILES, 1, 1)
+                .withValueParam(PARAM_FILE_LIST, ValueType.FILE_LIST, 1, 1)
         );
     }
 

@@ -15,9 +15,9 @@ public class Pattern {
     private final List<Expression> expressions;
 
 
-    public Pattern(Engine engine, String description, List<Expression> expressions) {
+    public Pattern(Engine engine, List<Expression> expressions) {
         this.engine = engine;
-        this.description = description;
+        this.description = null;
         this.expressions = expressions;
     }
 

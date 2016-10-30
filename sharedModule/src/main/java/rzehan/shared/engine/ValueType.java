@@ -5,5 +5,7 @@ package rzehan.shared.engine;
  */
 public enum ValueType {
 
-    STRING, INTEGER, FILE, LIST_OF_STRINGS, LIST_OF_FILES;
+    STRING, INTEGER, FILE, STRING_LIST, FILE_LIST;
+
+
 }

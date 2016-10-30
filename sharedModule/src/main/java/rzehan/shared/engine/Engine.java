@@ -6,6 +6,7 @@ import rzehan.shared.engine.validationFunctions.ValidationFunction;
 import rzehan.shared.engine.validationFunctions.VfChecFileListExactSize;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -35,6 +36,11 @@ public class Engine {
     public Pattern buildPattern(Pattern.Expression... expressions) {
         return new Pattern(this, expressions);
     }
+
+    public Pattern buildPattern(List<Pattern.Expression> expressions) {
+        return new Pattern(this, expressions);
+    }
+
 
     //TODO: limit usage, probably just here and in tests
     public EvaluationFunction buildEvaluationFunction(String name) {
@@ -75,6 +81,11 @@ public class Engine {
     public void registerValueDefinition(String valueVariableName, ValueDefinition definition) {
         //TODO: check if not defined already
         valueDefinitionsByVarName.put(valueVariableName, definition);
+    }
+
+    public void registerValue(String valueVariableName, Object value) {
+        //TODO: check if not defined already
+        valuesByVarName.put(valueVariableName, value);
     }
 
 

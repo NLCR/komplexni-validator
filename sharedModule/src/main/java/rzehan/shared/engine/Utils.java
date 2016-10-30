@@ -17,15 +17,15 @@ public class Utils {
      * @return
      */
     public static boolean instanceOf(String type, Object object) {
-        if (type.equals("String")) {
+        if (type.equals("string")) {
             return object instanceof String;
-        } else if (type.equals("Integer")) {
+        } else if (type.equals("integer")) {
             return object instanceof Integer;
-        } else if (type.equals("File")) {
+        } else if (type.equals("file")) {
             return object instanceof File;
-        } else if (type.equals("List")) {
+        } else if (type.equals("list")) {
             return object instanceof List;
-        } else if (type.equals("List<String>")) {
+        } else if (type.equals("string_list")) {
             //tohle neni uplne korektni
             if (object instanceof List) {
                 List list = (List) object;
@@ -51,7 +51,7 @@ public class Utils {
             } else {
                 return false;
             }
-        } else if (type.equals("List<File>")) {
+        } else if (type.equals("file_list")) {
             if (object instanceof List) {
                 List list = (List) object;
                 if (list.isEmpty()) {
@@ -67,6 +67,8 @@ public class Utils {
             throw new RuntimeException("Neznámý typ " + type);
         }
     }
+
+
 
 
 }

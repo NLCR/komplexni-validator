@@ -2,8 +2,6 @@ package rzehan.shared.engine;
 
 import org.junit.BeforeClass;
 import org.junit.Test;
-import rzehan.shared.engine.evaluationFunctions.*;
-import rzehan.shared.engine.params.ValueParamConstant;
 import rzehan.shared.engine.validationFunctions.ValidationFunction;
 import rzehan.shared.engine.validationFunctions.ValidationResult;
 
@@ -49,6 +47,15 @@ public class EngineTest {
 
 
         //other VARS
+        engine.registerValueDefinition("INFO_FILES",
+                engine.buildValueDefinition(ValueType.FILE_LIST,
+                        engine.buildEvaluationFunction(EF_FIND_FILES_IN_DIR_BY_PATTERN)
+                                .withValue("dir", ValueType.FILE, engine.getValueFromVariable("PSP_DIR"))
+                                .withPattern("pattern", engine.getPatternFromVariable("INFO_FILENAME"))
+                )
+        );
+
+        //patterns
         engine.registerPattern("INFO_FILENAME",
                 engine.buildPattern(
                         engine.buildExpression(true, "info_${PSP_ID}\\.xml"),
@@ -56,17 +63,9 @@ public class EngineTest {
                 )
         );
 
-        engine.registerValueDefinition("INFO_FILES",
-                engine.buildValueDefinition(ValueType.LIST_OF_FILES,
-                        engine.buildEvaluationFunction(EF_FIND_FILES_IN_DIR_BY_PATTERN)
-                                .withValue("dir", ValueType.FILE, engine.getValueFromVariable("PSP_DIR"))
-                                .withPattern("pattern", engine.getPatternFromVariable("INFO_FILENAME"))
-                )
-        );
-
 
         ValidationFunction singleInfoFile = engine.buildValidationFunction("CHECK_FILE_LIST_EXACT_SIZE")
-                .withValueReference("list", ValueType.LIST_OF_FILES, "INFO_FILES")
+                .withValueReference("list", ValueType.FILE_LIST, "INFO_FILES")
                 .withValue("size", ValueType.INTEGER, 1);
         ValidationResult result = singleInfoFile.validate();
 

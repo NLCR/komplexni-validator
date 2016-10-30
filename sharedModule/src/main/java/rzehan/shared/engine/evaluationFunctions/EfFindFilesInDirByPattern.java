@@ -17,7 +17,7 @@ public class EfFindFilesInDirByPattern extends EvaluationFunction {
 
     public EfFindFilesInDirByPattern(Engine engine) {
         super(engine, new Contract()
-                .withReturnType(ValueType.LIST_OF_FILES)
+                .withReturnType(ValueType.FILE_LIST)
                 .withPatternParam(PARAM_PATTERN)
                 .withValueParam(PARAM_DIR, ValueType.FILE, 1, 1));
     }

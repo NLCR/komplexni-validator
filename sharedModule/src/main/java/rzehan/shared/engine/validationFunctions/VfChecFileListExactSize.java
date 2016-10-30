@@ -17,7 +17,7 @@ public class VfChecFileListExactSize extends ValidationFunction {
 
     public VfChecFileListExactSize(Engine engine) {
         super(engine, new Contract()
-                .withValueParam(PARAM_LIST, ValueType.LIST_OF_FILES, 1, 1)
+                .withValueParam(PARAM_LIST, ValueType.FILE_LIST, 1, 1)
                 .withValueParam(PARAM_SIZE, ValueType.INTEGER, 1, 1)
         );
     }
