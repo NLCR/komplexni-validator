@@ -12,21 +12,12 @@
 
     <!--tj. musi byt dodano pres GUI nebo CLI-->
     <value-def name="PSP_DIR" type="FILE">
-        <evaluation functionName="PROVIDED_FILE">
+        <evaluation functionName="getProvidedFile">
             <params>
                 <value name="file_id" type="STRING">PSP_DIR</value>
             </params>
         </evaluation>
     </value-def>
-
-    <!--TODO: jen docasne, dokud nebude implementovano ziskavani ze souboru INFO-->
-    <!--<value-def name="PSP_ID" type="STRING">
-        <evaluation functionName="PROVIDED_STRING">
-            <params>
-                <value name="string_id" type="STRING">PSP_ID</value>
-            </params>
-        </evaluation>
-    </value-def>-->
 
     <value-def name="PSP_ID" type="STRING">
         <evaluation functionName="getStringByXpath">
@@ -36,11 +27,11 @@
                     Protoze PSP_ID teprve zjistujeme, nemuzeme pouzit vzor INFO_FILENAME, ten ma hodnotu promenne PSP_ID
                     jako svuj paramer.-->
                     <!--jeden kandidat na soubor INFO-->
-                    <evaluation functionName="RETURN_FIRST_FILE_FROM_LIST">
+                    <evaluation functionName="getFirstFileFromFileList">
                         <params>
                             <value name="files" type="FILE_LIST">
                                 <!--kandidati na soubor INFO podle vzoru a v danem adresari-->
-                                <evaluation functionName="FIND_FILES_IN_DIR_BY_PATTERN">
+                                <evaluation functionName="findFilesInDirByPattern">
                                     <params>
                                         <value name="dir" type="FILE">
                                             <value-ref name="PSP_DIR"/>
@@ -61,7 +52,7 @@
 
 
     <value-def name="INFO_FILES" type="FILE_LIST">
-        <evaluation functionName="FIND_FILES_IN_DIR_BY_PATTERN">
+        <evaluation functionName="findFilesInDirByPattern">
             <params>
                 <value name="dir" type="FILE">
                     <value-ref name="PSP_DIR"/>
@@ -74,7 +65,7 @@
     </value-def>
 
     <value-def name="PRIMARY-METS_FILES" type="FILE_LIST">
-        <evaluation functionName="FIND_FILES_IN_DIR_BY_PATTERN">
+        <evaluation functionName="findFilesInDirByPattern">
             <params>
                 <value name="dir" type="FILE">
                     <value-ref name="PSP_DIR"/>
@@ -87,7 +78,7 @@
     </value-def>
 
     <value-def name="CHECKSUM_FILES" type="FILE_LIST">
-        <evaluation functionName="FIND_FILES_IN_DIR_BY_PATTERN">
+        <evaluation functionName="findFilesInDirByPattern">
             <params>
                 <value name="dir" type="FILE">
                     <value-ref name="PSP_DIR"/>
@@ -101,7 +92,7 @@
 
 
     <value-def name="TOLERATED_TL_FILES" type="FILE_LIST">
-        <evaluation functionName="FIND_FILES_IN_DIR_BY_PATTERN">
+        <evaluation functionName="findFilesInDirByPattern">
             <params>
                 <value name="dir" type="FILE">
                     <value-ref name="PSP_DIR"/>
@@ -114,7 +105,7 @@
     </value-def>
 
     <value-def name="INFO_FILE" type="FILE">
-        <evaluation functionName="RETURN_FIRST_FILE_FROM_LIST">
+        <evaluation functionName="getFirstFileFromFileList">
             <params>
                 <value name="files" type="FILE_LIST">
                     <value-ref name="INFO_FILES"/>
@@ -124,7 +115,7 @@
     </value-def>
 
     <value-def name="PRIMARY-METS_FILE" type="FILE">
-        <evaluation functionName="RETURN_FIRST_FILE_FROM_LIST">
+        <evaluation functionName="getFirstFileFromFileList">
             <params>
                 <value name="files" type="FILE_LIST">
                     <value-ref name="PRIMARY-METS_FILES"/>
@@ -134,7 +125,7 @@
     </value-def>
 
     <value-def name="CHECKSUM_FILE" type="FILE">
-        <evaluation functionName="RETURN_FIRST_FILE_FROM_LIST">
+        <evaluation functionName="getFirstFileFromFileList">
             <params>
                 <value name="files" type="FILE_LIST">
                     <value-ref name="CHECKSUM_FILES"/>
@@ -144,7 +135,7 @@
     </value-def>
 
     <value-def name="SECONDARY-METS-DIR_FILES" type="FILE_LIST">
-        <evaluation functionName="FIND_FILES_IN_DIR_BY_PATTERN">
+        <evaluation functionName="findFilesInDirByPattern">
             <params>
                 <value name="dir" type="FILE">
                     <value-ref name="PSP_DIR"/>
@@ -157,7 +148,7 @@
     </value-def>
 
     <value-def name="OCR-TEXT-DIR_FILES" type="FILE_LIST">
-        <evaluation functionName="FIND_FILES_IN_DIR_BY_PATTERN">
+        <evaluation functionName="findFilesInDirByPattern">
             <params>
                 <value name="dir" type="FILE">
                     <value-ref name="PSP_DIR"/>
@@ -170,7 +161,7 @@
     </value-def>
 
     <value-def name="OCR-ALTO-DIR_FILES" type="FILE_LIST">
-        <evaluation functionName="FIND_FILES_IN_DIR_BY_PATTERN">
+        <evaluation functionName="findFilesInDirByPattern">
             <params>
                 <value name="dir" type="FILE">
                     <value-ref name="PSP_DIR"/>
@@ -184,7 +175,7 @@
 
 
     <value-def name="MASTER-COPY-DIR_FILES" type="FILE_LIST">
-        <evaluation functionName="FIND_FILES_IN_DIR_BY_PATTERN">
+        <evaluation functionName="findFilesInDirByPattern">
             <params>
                 <value name="dir" type="FILE">
                     <value-ref name="PSP_DIR"/>
@@ -197,7 +188,7 @@
     </value-def>
 
     <value-def name="USER-COPY-DIR_FILES" type="FILE_LIST">
-        <evaluation functionName="FIND_FILES_IN_DIR_BY_PATTERN">
+        <evaluation functionName="findFilesInDirByPattern">
             <params>
                 <value name="dir" type="FILE">
                     <value-ref name="PSP_DIR"/>
@@ -210,7 +201,7 @@
     </value-def>
 
     <value-def name="SECONDARY-METS-DIR_FILE" type="FILE">
-        <evaluation functionName="RETURN_FIRST_FILE_FROM_LIST">
+        <evaluation functionName="getFirstFileFromFileList">
             <params>
                 <value name="files" type="FILE_LIST">
                     <value-ref name="SECONDARY-METS-DIR_FILES"/>
@@ -220,7 +211,7 @@
     </value-def>
 
     <value-def name="OCR-TEXT-DIR_FILE" type="FILE">
-        <evaluation functionName="RETURN_FIRST_FILE_FROM_LIST">
+        <evaluation functionName="getFirstFileFromFileList">
             <params>
                 <value name="files" type="FILE_LIST">
                     <value-ref name="OCR-TEXT-DIR_FILES"/>
@@ -230,7 +221,7 @@
     </value-def>
 
     <value-def name="OCR-ALTO-DIR_FILE" type="FILE">
-        <evaluation functionName="RETURN_FIRST_FILE_FROM_LIST">
+        <evaluation functionName="getFirstFileFromFileList">
             <params>
                 <value name="files" type="FILE_LIST">
                     <value-ref name="OCR-ALTO-DIR_FILES"/>
@@ -240,7 +231,7 @@
     </value-def>
 
     <value-def name="MASTER-COPY-DIR_FILE" type="FILE">
-        <evaluation functionName="RETURN_FIRST_FILE_FROM_LIST">
+        <evaluation functionName="getFirstFileFromFileList">
             <params>
                 <value name="files" type="FILE_LIST">
                     <value-ref name="MASTER-COPY-DIR_FILES"/>
@@ -250,7 +241,7 @@
     </value-def>
 
     <value-def name="USER-COPY-DIR_FILE" type="FILE">
-        <evaluation functionName="RETURN_FIRST_FILE_FROM_LIST">
+        <evaluation functionName="getFirstFileFromFileList">
             <params>
                 <value name="files" type="FILE_LIST">
                     <value-ref name="USER-COPY-DIR_FILES"/>
@@ -260,7 +251,7 @@
     </value-def>
 
     <value-def name="SECONDARY-METS_FILES" type="FILE_LIST">
-        <evaluation functionName="FIND_FILES_IN_DIR_BY_PATTERN">
+        <evaluation functionName="findFilesInDirByPattern">
             <params>
                 <value name="dir" type="FILE">
                     <value-ref name="SECONDARY-METS-DIR_FILE"/>
@@ -273,7 +264,7 @@
     </value-def>
 
     <value-def name="OCR-TEXT_FILES" type="FILE_LIST">
-        <evaluation functionName="FIND_FILES_IN_DIR_BY_PATTERN">
+        <evaluation functionName="findFilesInDirByPattern">
             <params>
                 <value name="dir" type="FILE">
                     <value-ref name="OCR-TEXT-DIR_FILE"/>
@@ -286,7 +277,7 @@
     </value-def>
 
     <value-def name="OCR-ALTO_FILES" type="FILE_LIST">
-        <evaluation functionName="FIND_FILES_IN_DIR_BY_PATTERN">
+        <evaluation functionName="findFilesInDirByPattern">
             <params>
                 <value name="dir" type="FILE">
                     <value-ref name="OCR-ALTO-DIR_FILE"/>
@@ -299,7 +290,7 @@
     </value-def>
 
     <value-def name="MASTER-COPY_FILES" type="FILE_LIST">
-        <evaluation functionName="FIND_FILES_IN_DIR_BY_PATTERN">
+        <evaluation functionName="findFilesInDirByPattern">
             <params>
                 <value name="dir" type="FILE">
                     <value-ref name="MASTER-COPY-DIR_FILE"/>
@@ -312,7 +303,7 @@
     </value-def>
 
     <value-def name="USER-COPY_FILES" type="FILE_LIST">
-        <evaluation functionName="FIND_FILES_IN_DIR_BY_PATTERN">
+        <evaluation functionName="findFilesInDirByPattern">
             <params>
                 <value name="dir" type="FILE">
                     <value-ref name="USER-COPY-DIR_FILE"/>
@@ -327,7 +318,7 @@
     <!--soubory XSD-->
 
     <value-def name="INFO_XSD_FILE" type="FILE">
-        <evaluation functionName="PROVIDED_FILE">
+        <evaluation functionName="getProvidedFile">
             <!--tj. musi byt dodano pres GUI nebo CLI na zaklade konkretni fDMF-->
             <params>
                 <value name="file_id" type="STRING">INFO_XSD_FILE</value>

@@ -24,6 +24,12 @@ public class VfCheckAllFilenamesMatchPattern extends ValidationFunction {
         );
     }
 
+
+    @Override
+    public String getName() {
+        return "checkAllFilenamesMatchPattern";
+    }
+
     @Override
     public ValidationResult validate() {
         checkContractCompliance();
@@ -45,8 +51,4 @@ public class VfCheckAllFilenamesMatchPattern extends ValidationFunction {
         }
     }
 
-    @Override
-    public String getName() {
-        return "CHECK_ALL_FILENAMES_MATCH_PATTERN";
-    }
 }

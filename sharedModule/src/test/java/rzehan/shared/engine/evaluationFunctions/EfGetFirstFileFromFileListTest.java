@@ -2,7 +2,9 @@ package rzehan.shared.engine.evaluationFunctions;
 
 import org.junit.BeforeClass;
 import org.junit.Test;
-import rzehan.shared.engine.*;
+import rzehan.shared.engine.Engine;
+import rzehan.shared.engine.ProvidedVarsManagerImpl;
+import rzehan.shared.engine.ValueType;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -10,16 +12,14 @@ import java.util.List;
 
 import static junit.framework.TestCase.fail;
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
 
 /**
  * Created by martin on 21.10.16.
  */
-public class EfReturnFirstFileFromFileListTest {
+public class EfGetFirstFileFromFileListTest {
 
 
-    private static final String FUNCTION_NAME = "RETURN_FIRST_FILE_FROM_LIST";
+    private static final String FUNCTION_NAME = "getFirstFileFromFileList";
     private static final String PARAM_FILE_LIST = "files";
 
 
@@ -45,7 +45,7 @@ public class EfReturnFirstFileFromFileListTest {
     private static void defineListVar() {
         engine.registerValueDefinition(LIST_VAR,
                 engine.buildValueDefinition(ValueType.FILE_LIST,
-                        engine.buildEvaluationFunction("FIND_FILES_IN_DIR_BY_PATTERN")
+                        engine.buildEvaluationFunction("findFilesInDirByPattern")
                                 .withValueParam("dir", ValueType.FILE, new File("src/test/resources/monografie_1.2/b50eb6b0-f0a4-11e3-b72e-005056827e52"))
                                 .withPatternParam("pattern", engine.buildPattern(engine.buildExpression(false, ".+")))
                 ));

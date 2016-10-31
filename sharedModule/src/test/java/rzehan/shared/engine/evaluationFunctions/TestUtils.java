@@ -11,7 +11,7 @@ public class TestUtils {
     public static void defineProvidedIntegerVar(Engine engine, String varName) {
         engine.registerValueDefinition(varName,
                 engine.buildValueDefinition(ValueType.INTEGER,
-                        engine.buildEvaluationFunction("PROVIDED_INTEGER")
+                        engine.buildEvaluationFunction("getProvidedInteger")
                                 .withValueParam("int_id", ValueType.STRING, varName)
 
                 )
@@ -21,7 +21,7 @@ public class TestUtils {
     public static void defineProvidedStringVar(Engine engine, String varName) {
         engine.registerValueDefinition(varName,
                 engine.buildValueDefinition(ValueType.STRING,
-                        engine.buildEvaluationFunction("PROVIDED_STRING")
+                        engine.buildEvaluationFunction("getProvidedString")
                                 .withValueParam("string_id", ValueType.STRING, varName)
 
                 )
@@ -31,7 +31,7 @@ public class TestUtils {
     public static void defineProvidedFileVar(Engine engine, String varName) {
         engine.registerValueDefinition(varName,
                 engine.buildValueDefinition(ValueType.FILE,
-                        engine.buildEvaluationFunction("PROVIDED_FILE")
+                        engine.buildEvaluationFunction("getProvidedFile")
                                 .withValueParam("file_id", ValueType.STRING, varName)
 
                 )

@@ -1,6 +1,5 @@
 package rzehan.shared.engine.validationFunctions;
 
-import com.sun.xml.internal.bind.v2.TODO;
 import rzehan.shared.engine.Engine;
 import rzehan.shared.engine.ValueType;
 import rzehan.shared.engine.params.ValueParam;
@@ -14,7 +13,7 @@ import java.util.Set;
 /**
  * Created by martin on 27.10.16.
  */
-public class VfCheckChecksumAllPathsMatchFiles extends ValidationFunction {
+public class VfCheckChecksumFileAllPathsMatchFiles extends ValidationFunction {
 
     public static final String PARAM_CHECKSUM_FILE = "checksum_file";
     public static final String PARAM_PSP_ROOT_DIR = "psp_root_dir";
@@ -23,7 +22,7 @@ public class VfCheckChecksumAllPathsMatchFiles extends ValidationFunction {
 
 
     /*TODO: vlastne PARAM_PSP_ROOT_DIR nepotrebuju, zjistim to  PARAM_CHECKSUM_FILE - jeho adresa*/
-    public VfCheckChecksumAllPathsMatchFiles(Engine engine) {
+    public VfCheckChecksumFileAllPathsMatchFiles(Engine engine) {
         super(engine, new Contract()
                 .withValueParam(PARAM_CHECKSUM_FILE, ValueType.FILE, 1, 1)
                 .withValueParam(PARAM_PSP_ROOT_DIR, ValueType.FILE, 1, 1)
@@ -34,7 +33,7 @@ public class VfCheckChecksumAllPathsMatchFiles extends ValidationFunction {
 
     @Override
     public String getName() {
-        return "CHECK_CHECKSUM_ALL_PATHS_MATCH_FILES";
+        return "checkChecksumFileAllPathsMatchFiles";
     }
 
     @Override

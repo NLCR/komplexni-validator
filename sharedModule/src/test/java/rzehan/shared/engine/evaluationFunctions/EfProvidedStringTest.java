@@ -14,7 +14,7 @@ import static org.junit.Assert.assertEquals;
  */
 public class EfProvidedStringTest {
 
-    private static final String FUNCTION_NAME = "PROVIDED_STRING";
+    private static final String FUNCTION_NAME = "getProvidedString";
     private static final String PARAM_NAME = "string_id";
 
     private static Engine engine;

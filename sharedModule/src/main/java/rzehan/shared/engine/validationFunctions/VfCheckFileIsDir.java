@@ -21,6 +21,11 @@ public class VfCheckFileIsDir extends ValidationFunction {
     }
 
     @Override
+    public String getName() {
+        return "checkFileIsDir";
+    }
+
+    @Override
     public ValidationResult validate() {
         checkContractCompliance();
 
@@ -37,8 +42,4 @@ public class VfCheckFileIsDir extends ValidationFunction {
         }
     }
 
-    @Override
-    public String getName() {
-        return "CHECK_FILE_IS_DIR";
-    }
 }

@@ -4,10 +4,6 @@ import rzehan.shared.engine.Engine;
 import rzehan.shared.engine.ValueType;
 
 import java.io.*;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-import java.security.DigestInputStream;
-import java.security.MessageDigest;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -15,13 +11,13 @@ import java.util.Set;
 /**
  * Created by martin on 27.10.16.
  */
-public class VfCheckChecksumAllChecksumsMatch extends ValidationFunction {
+public class VfCheckChecksumFileAllChecksumsMatch extends ValidationFunction {
 
     public static final String PARAM_CHECKSUM_FILE = "checksum_file";
     public static final String PARAM_PSP_ROOT_DIR = "psp_root_dir";
 
-    /*TODO: vlastne PARAM_PSP_ROOT_DIR nepotrebuju, zjistim to  PARAM_CHECKSUM_FILE - jeho adresa*/
-    public VfCheckChecksumAllChecksumsMatch(Engine engine) {
+    /*TODO: vlastne PARAM_PSP_ROOT_DIR nepotrebuju, zjistim to  PARAM_CHECKSUM_FILE - jeho adresar*/
+    public VfCheckChecksumFileAllChecksumsMatch(Engine engine) {
         super(engine, new Contract()
                 .withValueParam(PARAM_CHECKSUM_FILE, ValueType.FILE, 1, 1)
                 .withValueParam(PARAM_PSP_ROOT_DIR, ValueType.FILE, 1, 1)
@@ -30,7 +26,7 @@ public class VfCheckChecksumAllChecksumsMatch extends ValidationFunction {
 
     @Override
     public String getName() {
-        return "CHECK_CHECKSUM_ALL_CHECKSUMS_MATCH";
+        return "checkChecksumFileAllChecksumsMatch";
     }
 
     @Override

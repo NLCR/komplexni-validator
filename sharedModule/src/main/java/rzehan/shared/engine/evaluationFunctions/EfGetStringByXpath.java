@@ -59,5 +59,4 @@ public class EfGetStringByXpath extends EvaluationFunction {
         }
     }
 
-
 }

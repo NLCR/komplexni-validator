@@ -3,7 +3,6 @@ package rzehan.shared.engine;
 import com.mycila.xmltool.XMLDoc;
 import com.mycila.xmltool.XMLTag;
 import org.w3c.dom.Element;
-import org.w3c.dom.NodeList;
 import rzehan.shared.engine.evaluationFunctions.EvaluationFunction;
 import rzehan.shared.engine.exceptions.ValidatorException;
 import rzehan.shared.engine.validationFunctions.ValidationFunction;
@@ -11,8 +10,6 @@ import rzehan.shared.engine.validationFunctions.ValidationFunction;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
-
-import static javafx.scene.input.KeyCode.X;
 
 /**
  * Created by martin on 29.10.16.

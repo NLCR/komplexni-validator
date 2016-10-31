@@ -5,7 +5,7 @@
         a počtů parametrů a zejména samotné implementace jsou definovány v kódu validátoru.
     </description>
 
-    <validationfunction name="CHECK_FILE_LIST_EXACT_SIZE">
+    <validationfunction name="checkFilelistHasExactSize">
         <description>Zkontroluje, že má seznam souborů očekávanou velikost.</description>
         <params-def>
             <value name="files" type="FILE_LIST"/>
@@ -21,14 +21,14 @@
         </params-def>
     </validationfunction>
 
-    <validationfunction name="CHECK_ALL_FILE_LISTS_SAME_SIZE">
+    <validationfunction name="checkAllFileListsHaveSameSize">
         <description>Zkontroluje, že mají všechny seznamy souborů stejnou velikost.</description>
         <params-def>
             <value name="files" type="FILE_LIST" description="List of files" min="2" max="unbound"/>
         </params-def>
     </validationfunction>
 
-    <validationfunction name="CHECK_FILENAME_MATCHES_PATTERN">
+    <validationfunction name="checkFilenameMatchesPattern">
         <description>Zkontroluje, že název souboru odpovídá vzoru.</description>
         <params-def>
             <value name="file" type="FILE"/>
@@ -36,7 +36,7 @@
         </params-def>
     </validationfunction>
 
-    <validationfunction name="CHECK_ALL_FILENAMES_MATCH_PATTERN">
+    <validationfunction name="checkAllFilenamesMatchPattern">
         <description>Zkontroluje, že jména všech souborů odpovídají vzoru.</description>
         <params-def>
             <value name="files" type="FILE_LIST"/>
@@ -45,21 +45,21 @@
     </validationfunction>
 
 
-    <validationfunction name="CHECK_FILE_IS_DIR">
+    <validationfunction name="checkFileIsDir">
         <description>Zkontroluje, že soubor existuje a je adresář (tedy zda není obyčejný soubor).</description>
         <params-def>
             <value name="file" type="FILE"/>
         </params-def>
     </validationfunction>
 
-    <validationfunction name="CHECK_FILE_IS_NOT_DIR">
+    <validationfunction name="checkFileIsNotDir">
         <description>Zkontroluje, že soubor existuje a není adresář (tedy zda je obyčejný soubor).</description>
         <params-def>
             <value name="file" type="FILE"/>
         </params-def>
     </validationfunction>
 
-    <validationfunction name="CHECK_NO_FILE_IS_DIR">
+    <validationfunction name="checkNoFileIsDir">
         <description>Zkontroluje, že každý ze souborů existuje a žádný z nich není adresář (tedy zda je obyčejný
             soubor).
         </description>
@@ -68,7 +68,7 @@
         </params-def>
     </validationfunction>
 
-    <validationfunction name="CHECK_NO_OTHER_FILES_IN_DIR">
+    <validationfunction name="checkNoOtherFilesInDir">
         <description>Zkontroluje, že adresář neobsahuje žádné další soubory kromě vyjmenovaných. Všechny vyjmenované
             soubory ale nemusí nutně patřit do adresáře.
         </description>
@@ -79,21 +79,21 @@
         </params-def>
     </validationfunction>
 
-    <validationfunction name="CHECK_FILENAMES_LENGTHS_SAME">
+    <validationfunction name="checkFilenamesLengthsSame">
         <description>Zkontroluje, že všechny soubory existují a jejich jména mají stejnou délku.</description>
         <params-def>
             <value name="files" type="FILE_LIST"/>
         </params-def>
     </validationfunction>
 
-    <validationfunction name="CHECK_CHECKSUM_GENERATED_BY_GRAMMAR">
+    <validationfunction name="checkChecksumFileGeneratedByGrammar">
         <description>Zkontroluje, že předepsaná gramatika pro CHECKSUM generuje obsah souboru.</description>
         <params-def>
             <value name="checksum_file" type="FILE"/>
         </params-def>
     </validationfunction>
 
-    <validationfunction name="CHECK_CHECKSUM_ALL_PATHS_MATCH_FILES">
+    <validationfunction name="checkChecksumFileAllPathsMatchFiles">
         <description>Zkontroluje, že soubor CHECKSUM obsahuje záznamy pro každý uvedený soubor a žádný jiný.
         </description>
         <params-def>
@@ -104,7 +104,7 @@
         </params-def>
     </validationfunction>
 
-    <validationfunction name="CHECK_CHECKSUM_ALL_CHECKSUMS_MATCH">
+    <validationfunction name="checkChecksumFileAllChecksumsMatch">
         <description>Zkontroluje, že provedené kontrolní součty, pro každý soubor uvedený v souboru CHECKSUM,
             souhlasí.
         </description>
@@ -114,14 +114,14 @@
         </params-def>
     </validationfunction>
 
-    <validationfunction name="CHECK_XML_WELL_BUILT">
+    <validationfunction name="checkXmlIsWellBuilt">
         <description>Zkontroluje, že soubor obsahuje korektní xml (well-built).</description>
         <params-def>
             <value name="file" type="FILE"/>
         </params-def>
     </validationfunction>
 
-    <validationfunction name="CHECK_XML_VALID_BY_XSD">
+    <validationfunction name="checkXmlIsValidByXsd">
         <description>Zkontroluje, že soubor obsahuje xml validní podle XML Schema (XSD).</description>
         <params-def>
             <value name="file" type="FILE"/>

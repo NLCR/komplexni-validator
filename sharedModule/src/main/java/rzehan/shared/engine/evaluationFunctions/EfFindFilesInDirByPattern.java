@@ -25,7 +25,7 @@ public class EfFindFilesInDirByPattern extends EvaluationFunction {
 
     @Override
     public String getName() {
-        return "FIND_FILES_IN_DIR_BY_PATTERN";
+        return "findFilesInDirByPattern";
     }
 
     @Override

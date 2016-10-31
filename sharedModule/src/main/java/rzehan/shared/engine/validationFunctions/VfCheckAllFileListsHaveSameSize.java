@@ -11,15 +11,20 @@ import java.util.List;
 /**
  * Created by martin on 27.10.16.
  */
-public class VfCheckAllFileListsSameSize extends ValidationFunction {
+public class VfCheckAllFileListsHaveSameSize extends ValidationFunction {
 
     public static final String PARAM_FILES = "files";
 
 
-    public VfCheckAllFileListsSameSize(Engine engine) {
+    public VfCheckAllFileListsHaveSameSize(Engine engine) {
         super(engine, new Contract()
                 .withValueParam(PARAM_FILES, ValueType.FILE_LIST, 2, null)
         );
+    }
+
+    @Override
+    public String getName() {
+        return "checkAllFileListsHaveSameSize";
     }
 
     @Override
@@ -44,8 +49,5 @@ public class VfCheckAllFileListsSameSize extends ValidationFunction {
         return new ValidationResult(true);
     }
 
-    @Override
-    public String getName() {
-        return "CHECK_ALL_FILE_LISTS_SAME_SIZE";
-    }
+
 }

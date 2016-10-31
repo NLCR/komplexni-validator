@@ -142,7 +142,7 @@ public class Pattern {
             }
         }
 
-        public String toString(){
+        public String toString() {
             return regexpFinal;
         }
 

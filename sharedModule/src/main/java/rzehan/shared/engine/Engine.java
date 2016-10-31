@@ -49,15 +49,15 @@ public class Engine {
 
     public EvaluationFunction buildEvaluationFunction(String name) {
         switch (name) {
-            case "PROVIDED_FILE":
-                return new EfProvidedFile(this);
-            case "PROVIDED_STRING":
+            case "getProvidedFile":
+                return new EfGetProvidedFile(this);
+            case "getProvidedString":
                 return new EfProvidedString(this);
-            case "PROVIDED_INTEGER":
-                return new EfProvidedInteger(this);
-            case "RETURN_FIRST_FILE_FROM_LIST":
-                return new EfReturnFirstFileFromFileList(this);
-            case "FIND_FILES_IN_DIR_BY_PATTERN":
+            case "getProvidedInteger":
+                return new EfGetProvidedInteger(this);
+            case "getFirstFileFromFileList":
+                return new EfGetFirstFileFromFileList(this);
+            case "findFilesInDirByPattern":
                 return new EfFindFilesInDirByPattern(this);
             case "getStringByXpath":
                 return new EfGetStringByXpath(this);
@@ -68,34 +68,34 @@ public class Engine {
 
     public ValidationFunction buildValidationFunction(String name) {
         switch (name) {
-            case "CHECK_FILE_LIST_EXACT_SIZE":
-                return new VfCheckFileListExactSize(this);
-            case "CHECK_FILENAME_MATCHES_PATTERN":
+            case "checkFilelistHasExactSize":
+                return new VfCheckFileListHasExactSize(this);
+            case "checkFilenameMatchesPattern":
                 return new VfCheckFilenameMatchesPattern(this);
-            case "CHECK_ALL_FILENAMES_MATCH_PATTERN":
+            case "checkAllFilenamesMatchPattern":
                 return new VfCheckAllFilenamesMatchPattern(this);
-            case "CHECK_FILE_IS_DIR":
+            case "checkFileIsDir":
                 return new VfCheckFileIsDir(this);
-            case "CHECK_FILE_IS_NOT_DIR":
+            case "checkFileIsNotDir":
                 return new VfCheckFileIsNotDir(this);
-            case "CHECK_NO_FILE_IS_DIR":
+            case "checkNoFileIsDir":
                 return new VfCheckNoFileIsDir(this);
-            case "CHECK_NO_OTHER_FILES_IN_DIR":
+            case "checkNoOtherFilesInDir":
                 return new VfCheckNoOtherFilesInDir(this);
-            case "CHECK_ALL_FILE_LISTS_SAME_SIZE":
-                return new VfCheckAllFileListsSameSize(this);
-            case "CHECK_FILENAMES_LENGTHS_SAME":
+            case "checkAllFileListsHaveSameSize":
+                return new VfCheckAllFileListsHaveSameSize(this);
+            case "checkFilenamesLengthsSame":
                 return new VfCheckFilenamesLengthsSame(this);
-            case "CHECK_CHECKSUM_GENERATED_BY_GRAMMAR":
-                return new VfCheckChecksumGeneratedByGrammar(this);
-            case "CHECK_CHECKSUM_ALL_PATHS_MATCH_FILES":
-                return new VfCheckChecksumAllPathsMatchFiles(this);
-            case "CHECK_CHECKSUM_ALL_CHECKSUMS_MATCH":
-                return new VfCheckChecksumAllChecksumsMatch(this);
-            case "CHECK_XML_WELL_BUILT":
-                return new VfCheckXmlWellBuilt(this);
-            case "CHECK_XML_VALID_BY_XSD":
-                return new VfCheckXmlValidByXsd(this);
+            case "checkChecksumFileGeneratedByGrammar":
+                return new VfCheckChecksumFileGeneratedByGrammar(this);
+            case "checkChecksumFileAllPathsMatchFiles":
+                return new VfCheckChecksumFileAllPathsMatchFiles(this);
+            case "checkChecksumFileAllChecksumsMatch":
+                return new VfCheckChecksumFileAllChecksumsMatch(this);
+            case "checkXmlIsWellBuilt":
+                return new VfCheckXmlIsWellBuilt(this);
+            case "checkXmlIsValidByXsd":
+                return new VfCheckXmlIsValidByXsd(this);
             default:
                 throw new RuntimeException(String.format("validační funkce %s neexistuje", name));
         }

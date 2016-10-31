@@ -18,6 +18,11 @@ public class EfProvidedString extends EvaluationFunction {
     }
 
     @Override
+    public String getName() {
+        return "getProvidedString";
+    }
+
+    @Override
     public String evaluate() {
         checkContractCompliance();
 
@@ -28,11 +33,6 @@ public class EfProvidedString extends EvaluationFunction {
         } else {
             return string;
         }
-    }
-
-    @Override
-    public String getName() {
-        return "PROVIDED_STRING";
     }
 
 }

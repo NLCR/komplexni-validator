@@ -9,17 +9,20 @@ import java.io.File;
 /**
  * Created by martin on 27.10.16.
  */
-public class VfCheckXmlValidByXsd extends ValidationFunction {
+public class VfCheckXmlIsWellBuilt extends ValidationFunction {
 
     public static final String PARAM_FILE = "file";
-    public static final String PARAM_XSD_FILE = "xsd_file";
 
 
-    public VfCheckXmlValidByXsd(Engine engine) {
+    public VfCheckXmlIsWellBuilt(Engine engine) {
         super(engine, new Contract()
                 .withValueParam(PARAM_FILE, ValueType.FILE, 1, 1)
-                .withValueParam(PARAM_XSD_FILE, ValueType.FILE, 1, 1)
         );
+    }
+
+    @Override
+    public String getName() {
+        return "checkXmlIsWellBuilt";
     }
 
     @Override
@@ -27,7 +30,6 @@ public class VfCheckXmlValidByXsd extends ValidationFunction {
         checkContractCompliance();
 
         File file = (File) valueParams.getParams(PARAM_FILE).get(0).getValue();
-        File xsdFile = (File) valueParams.getParams(PARAM_XSD_FILE).get(0).getValue();
 
         if (file == null) {
             return new ValidationResult(false).withMessage(String.format("hodnota parametru %s funkce %s je null", PARAM_FILE, getName()));
@@ -37,22 +39,10 @@ public class VfCheckXmlValidByXsd extends ValidationFunction {
             return new ValidationResult(false).withMessage(String.format("soubor %s je adresář", file.getAbsoluteFile()));
         } else if (!file.canRead()) {
             return new ValidationResult(false).withMessage(String.format("nelze číst soubor %s", file.getAbsoluteFile()));
-        } else if (xsdFile == null) {
-            return new ValidationResult(false).withMessage(String.format("hodnota parametru %s funkce %s je null", PARAM_XSD_FILE, getName()));
-        } else if (!xsdFile.exists()) {
-            return new ValidationResult(false).withMessage(String.format("soubor %s neexistuje", xsdFile.getAbsoluteFile()));
-        } else if (xsdFile.isDirectory()) {
-            return new ValidationResult(false).withMessage(String.format("soubor %s je adresář", xsdFile.getAbsoluteFile()));
-        } else if (!xsdFile.canRead()) {
-            return new ValidationResult(false).withMessage(String.format("nelze číst soubor %s", xsdFile.getAbsoluteFile()));
         } else {
             /*TODO: implement*/
             return new ValidationResult(false).withMessage("TODO: implement");
         }
     }
 
-    @Override
-    public String getName() {
-        return "CHECK_XML_VALID_BY_XSD";
-    }
 }

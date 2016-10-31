@@ -9,15 +9,20 @@ import java.io.*;
 /**
  * Created by martin on 27.10.16.
  */
-public class VfCheckChecksumGeneratedByGrammar extends ValidationFunction {
+public class VfCheckChecksumFileGeneratedByGrammar extends ValidationFunction {
 
     public static final String PARAM_CHECKSUM_FILE = "checksum_file";
 
 
-    public VfCheckChecksumGeneratedByGrammar(Engine engine) {
+    public VfCheckChecksumFileGeneratedByGrammar(Engine engine) {
         super(engine, new Contract()
                 .withValueParam(PARAM_CHECKSUM_FILE, ValueType.FILE, 1, 1)
         );
+    }
+
+    @Override
+    public String getName() {
+        return "checkChecksumFileGeneratedByGrammar";
     }
 
     @Override
@@ -100,8 +105,4 @@ public class VfCheckChecksumGeneratedByGrammar extends ValidationFunction {
         return true;
     }
 
-    @Override
-    public String getName() {
-        return "CHECK_CHECKSUM_GENERATED_BY_GRAMMAR";
-    }
 }

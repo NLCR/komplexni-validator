@@ -22,6 +22,11 @@ public class VfCheckNoFileIsDir extends ValidationFunction {
     }
 
     @Override
+    public String getName() {
+        return "checkNoFileIsDir";
+    }
+
+    @Override
     public ValidationResult validate() {
         checkContractCompliance();
 
@@ -42,8 +47,5 @@ public class VfCheckNoFileIsDir extends ValidationFunction {
         return new ValidationResult(true);
     }
 
-    @Override
-    public String getName() {
-        return "CHECK_NO_FILE_IS_DIR";
-    }
+
 }

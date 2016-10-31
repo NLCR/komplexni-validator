@@ -6,37 +6,45 @@ import rzehan.shared.engine.Engine;
 import rzehan.shared.engine.ProvidedVarsManagerImpl;
 import rzehan.shared.engine.ValueType;
 
-import java.io.File;
-
 import static junit.framework.TestCase.fail;
 import static org.junit.Assert.assertEquals;
 
 /**
  * Created by martin on 21.10.16.
  */
-public class EfProvidedFileTest {
+public class EfGetProvidedIntegerTest {
 
-    private static final String FUNCTION_NAME = "PROVIDED_FILE";
-    private static final String PARAM_NAME = "file_id";
+    private static final String FUNCTION_NAME = "getProvidedInteger";
+    private static final String PARAM_NAME = "int_id";
 
     private static Engine engine;
-    private static String PSP_DIR_FILEID = "PSP_DIR";
-    private static File PSP_DIR_FILE = new File("src/test/resources/monografie_1.2/b50eb6b0-f0a4-11e3-b72e-005056827e52");
+    private static String YEAR_INTID = "YEAR";
+    private static Integer YEAR_VALUE = 2016;
 
 
     @BeforeClass
     public static void setup() {
         ProvidedVarsManagerImpl pvMgr = new ProvidedVarsManagerImpl();
-        pvMgr.addFile(PSP_DIR_FILEID, PSP_DIR_FILE);
+        pvMgr.addInteger(YEAR_INTID, YEAR_VALUE);
         engine = new Engine(pvMgr);
     }
-
 
     @Test
     public void ok() {
         EvaluationFunction evFunction = engine.buildEvaluationFunction(FUNCTION_NAME)
-                .withValueParam(PARAM_NAME, ValueType.STRING, PSP_DIR_FILEID);
-        assertEquals(PSP_DIR_FILE, evFunction.evaluate());
+                .withValueParam(PARAM_NAME, ValueType.STRING, YEAR_INTID);
+        assertEquals(YEAR_VALUE, evFunction.evaluate());
+    }
+
+    @Test
+    public void paramsNotSet() {
+        EvaluationFunction evFunction = engine.buildEvaluationFunction(FUNCTION_NAME);
+        try {
+            evFunction.evaluate();
+            fail();
+        } catch (RuntimeException e) {
+            //nebyly zadány parametry
+        }
     }
 
     @Test
@@ -53,8 +61,8 @@ public class EfProvidedFileTest {
     @Test
     public void duplicateParam() {
         EvaluationFunction evFunction = engine.buildEvaluationFunction(FUNCTION_NAME)
-                .withValueParam(PARAM_NAME, ValueType.STRING, PSP_DIR_FILEID)
-                .withValueParam(PARAM_NAME, ValueType.STRING, "XYZ_DIR");
+                .withValueParam(PARAM_NAME, ValueType.STRING, YEAR_INTID)
+                .withValueParam(PARAM_NAME, ValueType.STRING, "YEAR_2");
         try {
             evFunction.evaluate();
             //fail();
@@ -67,7 +75,7 @@ public class EfProvidedFileTest {
     @Test
     public void invalidParamType() {
         EvaluationFunction evFunction = engine.buildEvaluationFunction(FUNCTION_NAME)
-                .withValueParam(PARAM_NAME, ValueType.FILE, PSP_DIR_FILEID);
+                .withValueParam(PARAM_NAME, ValueType.FILE, YEAR_INTID);
         try {
             evFunction.evaluate();
             fail();

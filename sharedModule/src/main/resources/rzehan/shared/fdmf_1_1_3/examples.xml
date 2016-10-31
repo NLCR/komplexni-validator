@@ -29,7 +29,7 @@
 
                 <!--hodnota primou definici-->
                 <value-param name="psp_dir" type="FILE">
-                    <evaluation functionName="PROVIDED_FILE">
+                    <evaluation functionName="getProvidedFile">
                         <!--tj. musi byt dodano pres GUI nebo CLI-->
                         <params>
                             <value-param name="file_id" type="STRING">PSP_DIR</value-param>

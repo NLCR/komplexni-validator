@@ -2,10 +2,7 @@ package rzehan.shared.engine;
 
 import org.junit.Test;
 
-import java.io.File;
-
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
 
 /**
  * Created by martin on 31.10.16.

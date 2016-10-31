@@ -15,11 +15,11 @@ import static org.junit.Assert.assertTrue;
  */
 public class EngineTest {
 
-    private static final String EF_PROVIDED_STRING = "PROVIDED_STRING";
-    private static final String EF_PROVIDED_FILE = "PROVIDED_FILE";
-    private static final String EF_PROVIDED_INTEGER = "PROVIDED_INTEGER";
-    private static final String EF_RETURN_FIRST_FILE_FROM_LIST = "RETURN_FIRST_FILE_FROM_LIST";
-    private static final String EF_FIND_FILES_IN_DIR_BY_PATTERN = "FIND_FILES_IN_DIR_BY_PATTERN";
+    private static final String EF_PROVIDED_STRING = "getProvidedString";
+    private static final String EF_PROVIDED_FILE = "getProvidedFile";
+    private static final String EF_PROVIDED_INTEGER = "getProvidedInteger";
+    private static final String EF_RETURN_FIRST_FILE_FROM_LIST = "getFirstFileFromFileList";
+    private static final String EF_FIND_FILES_IN_DIR_BY_PATTERN = "findFilesInDirByPattern";
 
     private static Engine engine;
 
@@ -66,7 +66,7 @@ public class EngineTest {
 
 
         //validation functions directly
-        ValidationFunction singleInfoFileVf = engine.buildValidationFunction("CHECK_FILE_LIST_EXACT_SIZE")
+        ValidationFunction singleInfoFileVf = engine.buildValidationFunction("checkFilelistHasExactSize")
                 .withValueParamByReference("files", ValueType.FILE_LIST, "INFO_FILES")
                 .withValueParam("size", ValueType.INTEGER, 1);
         ValidationResult singleInfoFileResult = singleInfoFileVf.validate();
@@ -75,7 +75,7 @@ public class EngineTest {
         //through validation rule
         Rule ruleSingleInfo =
                 engine.buildRule("SINGLE_INFO", Rule.Level.ERROR,
-                        engine.buildValidationFunction("CHECK_FILE_LIST_EXACT_SIZE")
+                        engine.buildValidationFunction("checkFilelistHasExactSize")
                                 .withValueParamByReference("files", ValueType.FILE_LIST, "INFO_FILES")
                                 .withValueParam("size", ValueType.INTEGER, 1))
                         .setDescription("musi existovat prave jeden soubor info");
@@ -85,7 +85,7 @@ public class EngineTest {
         //through validation rule
         Rule ruleTwoInfos =
                 engine.buildRule("SINGLE_INFO", Rule.Level.ERROR,
-                        engine.buildValidationFunction("CHECK_FILE_LIST_EXACT_SIZE")
+                        engine.buildValidationFunction("checkFilelistHasExactSize")
                                 .withValueParamByReference("files", ValueType.FILE_LIST, "INFO_FILES")
                                 .withValueParam("size", ValueType.INTEGER, 2))
                         .setDescription("dva soubory info");

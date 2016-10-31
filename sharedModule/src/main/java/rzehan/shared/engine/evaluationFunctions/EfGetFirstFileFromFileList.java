@@ -9,11 +9,11 @@ import java.util.List;
 /**
  * Created by martin on 21.10.16.
  */
-public class EfReturnFirstFileFromFileList extends EvaluationFunction {
+public class EfGetFirstFileFromFileList extends EvaluationFunction {
 
     private static final String PARAM_FILE_LIST = "files";
 
-    public EfReturnFirstFileFromFileList(Engine engine) {
+    public EfGetFirstFileFromFileList(Engine engine) {
         super(engine, new Contract()
                 .withReturnType(ValueType.FILE)
                 .withValueParam(PARAM_FILE_LIST, ValueType.FILE_LIST, 1, 1)
@@ -34,7 +34,7 @@ public class EfReturnFirstFileFromFileList extends EvaluationFunction {
 
     @Override
     public String getName() {
-        return "RETURN_FIRST_FILE_FROM_LIST";
+        return "getFirstFileFromFileList";
     }
 
 }

@@ -37,21 +37,21 @@
     </description>
 
 
-    <evaluationFunction name="PROVIDED_STRING" resultType="STRING">
+    <evaluationFunction name="getProvidedString" resultType="STRING">
         <description>Hodnota proměnné typue STRING bude poskytnuta volajícím programem.</description>
         <params-def>
             <value name="string_id" type="STRING"/>
         </params-def>
     </evaluationFunction>
 
-    <evaluationFunction name="PROVIDED_FILE" resultType="FILE">
+    <evaluationFunction name="getProvidedFile" resultType="FILE">
         <description>Hodnota proměnné typue FILE bude poskytnuta volajícím programem.</description>
         <params-def>
             <value name="file_id" type="STRING"/>
         </params-def>
     </evaluationFunction>
 
-    <evaluationFunction name="PROVIDED_INTEGER" resultType="INTEGER">
+    <evaluationFunction name="getProvidedInteger" resultType="INTEGER">
         <description>Hodnota proměnné typue INTEGER bude poskytnuta volajícím programem.</description>
         <params>
             <value name="int_id" type="STRING"/>
@@ -65,7 +65,7 @@
         </params>
     </evaluationFunction>-->
 
-    <evaluationFunction name="FIND_FILES_IN_DIR_BY_PATTERN" resultType="FILE_LIST">
+    <evaluationFunction name="findFilesInDirByPattern" resultType="FILE_LIST">
         <description>Vrátí seznam souborů v adresáři, které odpovídají vzoru.</description>
         <params-def>
             <value name="dir" type="FILE"/>
@@ -74,11 +74,19 @@
     </evaluationFunction>
 
 
-    <evaluationFunction name="RETURN_FIRST_FILE_FROM_LIST" resultType="FILE">
+    <evaluationFunction name="getFirstFileFromFileList" resultType="FILE">
         <description>Vrátí první položku ze seznamu.</description>
         <params-def>
             <value name="files" type="FILE_LIST"/>
         </params-def>
+    </evaluationFunction>
+
+    <evaluationFunction name="getStringByXpath" resultType="STRING">
+        <description>Vrátí textový řetězec z xml souboru podle xpath.</description>
+        <params>
+            <value name="xml_file" type="FILE"/>
+            <value name="xpath" type="STRING"/>
+        </params>
     </evaluationFunction>
 
     <!--TODO: implement-->
@@ -98,15 +106,6 @@
             <value name="xpath" type="STRING"/>
         </params-def>
     </evaluationFunction>
-
-    <evaluationFunction name="getStringByXpath" resultType="STRING">
-        <description>Vrátí textový řetězec z xml souboru podle xpath.</description>
-        <params>
-            <value name="xml_file" type="FILE"/>
-            <value name="xpath" type="STRING"/>
-        </params>
-    </evaluationFunction>
-
 
     <!--TODO: pridat do dokumentace v hlavicce-->
     <evaluationFunction name="GET_FILES_BLABLA" resultType="FILE_LIST">

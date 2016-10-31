@@ -30,6 +30,11 @@ public class VfCheckNoOtherFilesInDir extends ValidationFunction {
     }
 
     @Override
+    public String getName() {
+        return "checkNoOtherFilesInDir";
+    }
+
+    @Override
     public ValidationResult validate() {
         checkContractCompliance();
         File rootDir = (File) valueParams.getParams(PARAM_ROOT_DIR).get(0).getValue();
@@ -77,8 +82,4 @@ public class VfCheckNoOtherFilesInDir extends ValidationFunction {
         return result;
     }
 
-    @Override
-    public String getName() {
-        return "CHECK_NO_OTHER_FILES_IN_DIR";
-    }
 }

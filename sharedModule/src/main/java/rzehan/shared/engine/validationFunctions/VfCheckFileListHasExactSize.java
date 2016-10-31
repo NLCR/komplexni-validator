@@ -9,17 +9,22 @@ import java.util.List;
 /**
  * Created by martin on 27.10.16.
  */
-public class VfCheckFileListExactSize extends ValidationFunction {
+public class VfCheckFileListHasExactSize extends ValidationFunction {
 
     public static final String PARAM_FILES = "files";
     public static final String PARAM_SIZE = "size";
 
 
-    public VfCheckFileListExactSize(Engine engine) {
+    public VfCheckFileListHasExactSize(Engine engine) {
         super(engine, new Contract()
                 .withValueParam(PARAM_FILES, ValueType.FILE_LIST, 1, 1)
                 .withValueParam(PARAM_SIZE, ValueType.INTEGER, 1, 1)
         );
+    }
+
+    @Override
+    public String getName() {
+        return "checkFilelistHasExactSize";
     }
 
     @Override
@@ -38,10 +43,5 @@ public class VfCheckFileListExactSize extends ValidationFunction {
         } else {
             return new ValidationResult(true).withMessage(String.format("seznam obsahuje %d souborů", expectedSize));
         }
-    }
-
-    @Override
-    public String getName() {
-        return "CHECK_FILE_LIST_EXACT_SIZE";
     }
 }

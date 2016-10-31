@@ -22,6 +22,11 @@ public class VfCheckFilenamesLengthsSame extends ValidationFunction {
     }
 
     @Override
+    public String getName() {
+        return "checkFilenamesLengthsSame";
+    }
+
+    @Override
     public ValidationResult validate() {
         checkContractCompliance();
 
@@ -49,8 +54,4 @@ public class VfCheckFilenamesLengthsSame extends ValidationFunction {
         }
     }
 
-    @Override
-    public String getName() {
-        return "CHECK_FILENAMES_LENGTHS_SAME";
-    }
 }

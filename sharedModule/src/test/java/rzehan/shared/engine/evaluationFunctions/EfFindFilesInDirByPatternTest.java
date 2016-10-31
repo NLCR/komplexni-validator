@@ -18,7 +18,7 @@ import static org.junit.Assert.assertEquals;
  */
 public class EfFindFilesInDirByPatternTest {
 
-    private static final String FUNCTION_NAME = "FIND_FILES_IN_DIR_BY_PATTERN";
+    private static final String FUNCTION_NAME = "findFilesInDirByPattern";
     private static final String PARAM_DIR = "dir";
     private static final String PARAM_PATTERN = "pattern";
 
