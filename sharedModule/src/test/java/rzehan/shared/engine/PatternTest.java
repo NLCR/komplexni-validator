@@ -101,6 +101,14 @@ public class PatternTest {
         assertFalse(engine.buildPattern(engine.buildExpression(true, "${DOT}co${DOT}uk")).matches("0coXuk"));
     }
 
+    @Test
+    public void other() {
+        assertTrue(engine.buildPattern(
+                engine.buildExpression(true, "info_.+\\.xml"),
+                engine.buildExpression(true, "info\\.xml")
+        ).matches("info_b50eb6b0-f0a4-11e3-b72e-005056827e52.xml"));
+    }
+
 
 }
 

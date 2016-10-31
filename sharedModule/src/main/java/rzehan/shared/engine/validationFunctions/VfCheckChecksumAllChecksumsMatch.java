@@ -20,7 +20,7 @@ public class VfCheckChecksumAllChecksumsMatch extends ValidationFunction {
     public static final String PARAM_CHECKSUM_FILE = "checksum_file";
     public static final String PARAM_PSP_ROOT_DIR = "psp_root_dir";
 
-
+    /*TODO: vlastne PARAM_PSP_ROOT_DIR nepotrebuju, zjistim to  PARAM_CHECKSUM_FILE - jeho adresa*/
     public VfCheckChecksumAllChecksumsMatch(Engine engine) {
         super(engine, new Contract()
                 .withValueParam(PARAM_CHECKSUM_FILE, ValueType.FILE, 1, 1)

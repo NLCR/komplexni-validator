@@ -23,4 +23,9 @@ public class PatternParamConstant extends PatternParam {
         }
         return pattern.matches(value);
     }
+
+    @Override
+    public String toString() {
+        return pattern.toString();
+    }
 }

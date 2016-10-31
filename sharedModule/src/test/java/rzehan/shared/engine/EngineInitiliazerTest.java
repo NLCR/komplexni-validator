@@ -19,7 +19,7 @@ public class EngineInitiliazerTest {
         //TODO: relativni cesta
         pvMgr.addFile("INFO_XSD_FILE", new File("/home/martin/ssd/IdeaProjects/PspValidator/sharedModule/src/main/resources/rzehan/shared/fdmf_1_1_3/xsds/info_1.1.xsd"));
 
-        pvMgr.addString("PSP_ID", "b50eb6b0-f0a4-11e3-b72e-005056827e52");
+        //pvMgr.addString("PSP_ID", "b50eb6b0-f0a4-11e3-b72e-005056827e52");
         Engine engine = new Engine(pvMgr);
 
         System.out.println("INITILIZING");

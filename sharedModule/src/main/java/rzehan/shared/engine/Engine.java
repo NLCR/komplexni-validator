@@ -59,6 +59,8 @@ public class Engine {
                 return new EfReturnFirstFileFromFileList(this);
             case "FIND_FILES_IN_DIR_BY_PATTERN":
                 return new EfFindFilesInDirByPattern(this);
+            case "getStringByXpath":
+                return new EfGetStringByXpath(this);
             default:
                 throw new RuntimeException(String.format("vyhodnocovací funkce %s neexistuje", name));
         }

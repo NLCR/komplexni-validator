@@ -23,4 +23,11 @@ public class PatternParamReference extends PatternParam {
         }
         return pattern.matches(value);
     }
+
+    @Override
+    public String toString() {
+        Pattern pattern = engine.getPatternFromVariable(patternName);
+        return pattern.toString();
+    }
+
 }

@@ -58,6 +58,12 @@
         </params>
     </evaluationFunction>
 
+    <!--<evaluationFunction name="getPspIdFromInfoFile" resultType="STRING">
+        <description>Vrátí hodnotu PSP-ID z obsahu souboru INFO.</description>
+        <params>
+            <value name="info_file" type="FILE"/>
+        </params>
+    </evaluationFunction>-->
 
     <evaluationFunction name="FIND_FILES_IN_DIR_BY_PATTERN" resultType="FILE_LIST">
         <description>Vrátí seznam souborů v adresáři, které odpovídají vzoru.</description>
@@ -92,6 +98,15 @@
             <value name="xpath" type="STRING"/>
         </params-def>
     </evaluationFunction>
+
+    <evaluationFunction name="getStringByXpath" resultType="STRING">
+        <description>Vrátí textový řetězec z xml souboru podle xpath.</description>
+        <params>
+            <value name="xml_file" type="FILE"/>
+            <value name="xpath" type="STRING"/>
+        </params>
+    </evaluationFunction>
+
 
     <!--TODO: pridat do dokumentace v hlavicce-->
     <evaluationFunction name="GET_FILES_BLABLA" resultType="FILE_LIST">

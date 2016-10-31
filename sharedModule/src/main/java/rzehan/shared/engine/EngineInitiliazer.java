@@ -12,6 +12,8 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
+import static javafx.scene.input.KeyCode.X;
+
 /**
  * Created by martin on 29.10.16.
  */
@@ -62,9 +64,8 @@ public class EngineInitiliazer {
         //System.out.println(String.format("registering rule-section '%s'", name));
         engine.registerRuleSection(section);
         //rules
-        NodeList ruleEls = rulesSectionEl.getElementsByTagName("rule");
-        for (int i = 0; i < ruleEls.getLength(); i++) {
-            Element ruleEl = (Element) ruleEls.item(i);
+        List<Element> ruleEls = XmlUtils.getChildrenElementsByName(rulesSectionEl, "rule");
+        for (Element ruleEl : ruleEls) {
             processRule(section, ruleEl);
         }
     }
@@ -73,15 +74,15 @@ public class EngineInitiliazer {
         String name = ruleEl.getAttribute("name");
         Rule.Level level = parseLevel(ruleEl.getAttribute("level"), Rule.Level.ERROR);
 
-        Element validationEl = (Element) ruleEl.getElementsByTagName("validation").item(0);
+        Element validationEl = XmlUtils.getChildrenElementsByName(ruleEl, "validation").get(0);
+
         ValidationFunction function = parseValidationFunction(validationEl);
 
         Rule rule = new Rule(name, level, function);
         //description
-        NodeList descriptionEls = ruleEl.getElementsByTagName("description");
-        if (descriptionEls.getLength() != 0) {
-            Element descEl = (Element) descriptionEls.item(0);
-            rule.setDescription(descEl.getTextContent());
+        List<Element> descriptionEls = XmlUtils.getChildrenElementsByName(ruleEl, "description");
+        if (!descriptionEls.isEmpty()) {
+            rule.setDescription(descriptionEls.get(0).getTextContent());
         }
         //System.out.println(String.format("registering rule '%s' (%s)", name, level));
         engine.registerRule(section, rule);
@@ -90,7 +91,7 @@ public class EngineInitiliazer {
 
     private ValidationFunction parseValidationFunction(Element validationEl) {
         String name = validationEl.getAttribute("functionName");
-        Element paramsEl = (Element) validationEl.getElementsByTagName("params").item(0);
+        Element paramsEl = XmlUtils.getChildrenElementsByName(validationEl, "params").get(0);
         ValidationFunction function = engine.buildValidationFunction(name);
         //params
         addParams(function, paramsEl);
@@ -110,9 +111,9 @@ public class EngineInitiliazer {
         String varName = patternEl.getAttribute("name");
         //System.out.println("registering pattern " + varName);
         List<Pattern.Expression> expressions = new ArrayList<>();
-        NodeList expressionEls = patternEl.getElementsByTagName("expression");
-        for (int i = 0; i < expressionEls.getLength(); i++) {
-            expressions.add(toExpression((Element) expressionEls.item(i)));
+        List<Element> expressionEls = XmlUtils.getChildrenElementsByName(patternEl, "expression");
+        for (Element expressionEl : expressionEls) {
+            expressions.add(toExpression(expressionEl));
         }
         Pattern pattern = engine.buildPattern(expressions);
         engine.registerPattern(varName, pattern);
@@ -136,10 +137,10 @@ public class EngineInitiliazer {
         String varName = valueDefEl.getAttribute("name");
         ValueType varType = ValueType.valueOf(valueDefEl.getAttribute("type"));
         //System.out.println(String.format("registering value %s (%s) ", varName, varType));
-        NodeList efEls = valueDefEl.getElementsByTagName("evaluation");
-        if (efEls.getLength() != 0) {//evaluation function
+        List<Element> efEls = XmlUtils.getChildrenElementsByName(valueDefEl, "evaluation");
+        if (!efEls.isEmpty()) {//evaluation function
             //System.out.println("registerig value - reference");
-            Element efEl = (Element) efEls.item(0);
+            Element efEl = efEls.get(0);
             EvaluationFunction ef = buildEf(efEl);
             ValueDefinition valueDefinition = engine.buildValueDefinition(varType, ef);
             engine.registerValueDefinition(varName, valueDefinition);
@@ -169,53 +170,51 @@ public class EngineInitiliazer {
         String efName = efEl.getAttribute("functionName");
         //System.out.println("buildEf (" + efName + ")");
         EvaluationFunction ef = engine.buildEvaluationFunction(efName);
-        Element paramsEl = (Element) efEl.getElementsByTagName("params").item(0);
+        Element paramsEl = XmlUtils.getChildrenElementsByName(efEl, "params").get(0);
         addParams(ef, paramsEl);
         return ef;
     }
 
     private void addParams(Function function, Element paramsEl) {
         // value params
-        NodeList valueParamEls = paramsEl.getElementsByTagName("value");
-        for (int i = 0; i < valueParamEls.getLength(); i++) {
-            Element valueParamEl = (Element) valueParamEls.item(i);
-            String paramName = valueParamEl.getAttribute("name");
+        List<Element> valueEls = XmlUtils.getChildrenElementsByName(paramsEl, "value");
+        for (Element valueEl : valueEls) {
+            String paramName = valueEl.getAttribute("name");
             //System.out.println("processing value param " + paramName);
-            ValueType paramType = ValueType.valueOf(valueParamEl.getAttribute("type"));
-            NodeList valueRefEls = valueParamEl.getElementsByTagName("value-ref");
-            NodeList evaluationEls = valueParamEl.getElementsByTagName("evaluation");
-            if (valueRefEls.getLength() != 0) { //param is reference
-                Element valueRefEl = (Element) valueRefEls.item(0);
+            ValueType paramType = ValueType.valueOf(valueEl.getAttribute("type"));
+            List<Element> valueRefEls = XmlUtils.getChildrenElementsByName(valueEl, "value-ref");
+            List<Element> evaluationEls = XmlUtils.getChildrenElementsByName(valueEl, "evaluation");
+            if (!valueRefEls.isEmpty()) { //param is reference
+                Element valueRefEl = valueRefEls.get(0);
                 String valueRefName = valueRefEl.getAttribute("name");
                 function.withValueParamByReference(paramName, paramType, valueRefName);
-            } else if (evaluationEls.getLength() > 0) { //param anonymous definition
-                Element evaluationEl = (Element) evaluationEls.item(0);
+            } else if (!evaluationEls.isEmpty()) { //param anonymous definition
+                Element evaluationEl = evaluationEls.get(0);
                 EvaluationFunction valueParamEf = buildEf(evaluationEl);
                 Object paramValue = valueParamEf.evaluate();
                 function.withValueParam(paramName, paramType, paramValue);
             } else {//param is constant
-                Object paramValue = parseConstantValueDefinition(valueParamEl, paramType);
+                Object paramValue = parseConstantValueDefinition(valueEl, paramType);
                 function.withValueParam(paramName, paramType, paramValue);
             }
         }
         //pattern params
-        NodeList patternParamEls = paramsEl.getElementsByTagName("pattern");
-        for (int i = 0; i < patternParamEls.getLength(); i++) {
-            Element patternParamEl = (Element) patternParamEls.item(i);
-            String paramName = patternParamEl.getAttribute("name");
+        List<Element> patternEls = XmlUtils.getChildrenElementsByName(paramsEl, "pattern");
+        for (Element patternEl : patternEls) {
+            String paramName = patternEl.getAttribute("name");
             //System.out.println("processing pattern param " + paramName);
-            NodeList referenceEls = patternParamEl.getElementsByTagName("pattern-ref");
-            NodeList expressionsEls = patternParamEl.getElementsByTagName("expressions");
-            if (referenceEls.getLength() != 0) {
-                Element referenceEl = (Element) referenceEls.item(0);
+            List<Element> referenceEls = XmlUtils.getChildrenElementsByName(patternEl, "pattern-ref");
+            List<Element> expressionsEls = XmlUtils.getChildrenElementsByName(patternEl, "expressions");
+            if (!referenceEls.isEmpty()) {
+                Element referenceEl = referenceEls.get(0);
                 String varName = referenceEl.getAttribute("name");
                 function.withPatternParamByReference(paramName, varName);
-            } else if (expressionsEls.getLength() != 0) {
-                Element expressionsEl = (Element) expressionsEls.item(0);
-                NodeList expressionEls = expressionsEl.getElementsByTagName("expression");
+            } else if (!expressionsEls.isEmpty()) {
+                Element expressionsEl = expressionsEls.get(0);
+                List<Element> expressionEls = XmlUtils.getChildrenElementsByName(expressionsEl, "expression");
                 List<Pattern.Expression> expressions = new ArrayList<>();
-                for (int j = 0; j < expressionEls.getLength(); j++) {
-                    expressions.add(toExpression((Element) expressionEls.item(j)));
+                for (Element expressionEl : expressionEls) {
+                    expressions.add(toExpression(expressionEl));
                 }
                 Pattern pattern = engine.buildPattern(expressions);
                 function.withPatternParam(paramName, pattern);

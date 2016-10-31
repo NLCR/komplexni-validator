@@ -24,6 +24,11 @@ public class EfFindFilesInDirByPattern extends EvaluationFunction {
     }
 
     @Override
+    public String getName() {
+        return "FIND_FILES_IN_DIR_BY_PATTERN";
+    }
+
+    @Override
     public List<File> evaluate() {
         checkContractCompliance();
 
@@ -43,13 +48,10 @@ public class EfFindFilesInDirByPattern extends EvaluationFunction {
                     filesMatching.add(file);
                 }
             }
+            //System.out.println("FIND_FILES_IN_DIR_BY_PATTERN: found " + filesMatching.size() + " files in " + dir.getAbsolutePath() + ", pattern: " + patternParam.toString());
             return filesMatching;
         }
     }
 
-    @Override
-    public String getName() {
-        return "FIND_FILES_IN_DIR_BY_PATTERN";
-    }
 
 }

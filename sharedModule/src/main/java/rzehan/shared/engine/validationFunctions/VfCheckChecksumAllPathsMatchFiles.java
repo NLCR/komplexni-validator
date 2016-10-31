@@ -1,5 +1,6 @@
 package rzehan.shared.engine.validationFunctions;
 
+import com.sun.xml.internal.bind.v2.TODO;
 import rzehan.shared.engine.Engine;
 import rzehan.shared.engine.ValueType;
 import rzehan.shared.engine.params.ValueParam;
@@ -21,6 +22,7 @@ public class VfCheckChecksumAllPathsMatchFiles extends ValidationFunction {
     public static final String PARAM_FILES = "files";
 
 
+    /*TODO: vlastne PARAM_PSP_ROOT_DIR nepotrebuju, zjistim to  PARAM_CHECKSUM_FILE - jeho adresa*/
     public VfCheckChecksumAllPathsMatchFiles(Engine engine) {
         super(engine, new Contract()
                 .withValueParam(PARAM_CHECKSUM_FILE, ValueType.FILE, 1, 1)

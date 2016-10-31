@@ -142,5 +142,32 @@ public class Pattern {
             }
         }
 
+        public String toString(){
+            return regexpFinal;
+        }
+
+    }
+
+    @Override
+    public String toString() {
+        return toString(expressions);
+    }
+
+    private String toString(List<Expression> expressions) {
+        if (expressions == null) {
+            return null;
+        }
+        StringBuilder builder = new StringBuilder();
+        {
+            builder.append("[");
+            for (int i = 0; i < expressions.size(); i++) {
+                if (i != 0) {
+                    builder.append(';');
+                }
+                builder.append(expressions.get(i).toString());
+            }
+            builder.append("]");
+        }
+        return builder.toString();
     }
 }
