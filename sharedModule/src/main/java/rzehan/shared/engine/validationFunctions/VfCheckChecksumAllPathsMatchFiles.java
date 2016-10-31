@@ -41,6 +41,7 @@ public class VfCheckChecksumAllPathsMatchFiles extends ValidationFunction {
 
         File checksumFile = (File) valueParams.getParams(PARAM_CHECKSUM_FILE).get(0).getValue();
         File pspRootDir = (File) valueParams.getParams(PARAM_PSP_ROOT_DIR).get(0).getValue();
+
         if (checksumFile == null) {
             return new ValidationResult(false).withMessage(String.format("hodnota parametru %s funkce %s je null", PARAM_CHECKSUM_FILE, getName()));
         } else if (!checksumFile.exists()) {
@@ -90,11 +91,13 @@ public class VfCheckChecksumAllPathsMatchFiles extends ValidationFunction {
                 if (parts.length == 1) {
                     return new ValidationResult(false).withMessage(String.format("chybí oddělovač (mezera/tabulátor) na řádku '%s'", line));
                 }
+                String hash = parts[0];
+                String filepath = parts[1];
                 try {
-                    File file = toAbsoluteFile(parts[1], pspRootDir);
+                    File file = toAbsoluteFile(filepath, pspRootDir);
                     filesFromFile.add(file);
-                } catch (Exception e) {
-                    return new ValidationResult(false).withMessage(String.format("cesta k souboru není zapsána korektně: '%s'", parts[0]));
+                } catch (PathInvalidException e) {
+                    return new ValidationResult(false).withMessage(String.format("cesta k souboru není zapsána korektně: '%s'", filepath));
                 }
             }
             br.close();
@@ -131,13 +134,18 @@ public class VfCheckChecksumAllPathsMatchFiles extends ValidationFunction {
         return new ValidationResult(true);
     }
 
-    private File toAbsoluteFile(String filePath, File pspRootDir) {
+    private File toAbsoluteFile(String filePath, File pspRootDir) throws PathInvalidException {
         //prevod do "zakladni formy", tj. zacinajici rovnou nazvem souboru/adresare
         //tj. "neco", "\neco", "/neco", "./neco", ".\neco" -> "neco"
         if (filePath.startsWith("./") || filePath.startsWith(".\\")) {
             filePath = filePath.substring(2, filePath.length());
         } else if (filePath.startsWith("/") || filePath.startsWith("\\")) {
             filePath = filePath.substring(1, filePath.length());
+        }
+        // tenhle tvar nesmi ale zacinat na tecky ani lomitka
+        if (filePath.matches("^[\\./\\\\]+.*")) {
+            System.out.println(filePath);
+            throw new PathInvalidException();
         }
         String[] segments = filePath.split("[\\\\/]");
         File file = new File(pspRootDir, buildFileFromSegments(segments));
@@ -153,6 +161,9 @@ public class VfCheckChecksumAllPathsMatchFiles extends ValidationFunction {
             builder.append(segments[i]);
         }
         return builder.toString();
+    }
+
+    private static class PathInvalidException extends Exception {
     }
 
 

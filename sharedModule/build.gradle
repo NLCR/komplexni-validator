@@ -13,6 +13,8 @@ dependencies {
     compile group: 'com.mycila', name: 'mycila-xmltool', version: '4.4.ga'
     // https://mvnrepository.com/artifact/com.github.nradov/abnffuzzer
     // compile group: 'com.github.nradov', name: 'abnffuzzer', version: '0.1.11'
+    compile 'commons-codec:commons-codec:1.10'
+
 }
 
 //tohle udela zip, ale asi shared-logic.zip, asi na nic

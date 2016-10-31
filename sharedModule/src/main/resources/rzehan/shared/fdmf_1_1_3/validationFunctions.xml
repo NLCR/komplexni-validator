@@ -105,12 +105,12 @@
     </validationfunction>
 
     <validationfunction name="CHECK_CHECKSUM_ALL_CHECKSUMS_MATCH">
-        <description>Zkontroluje, že provedené kontrolní součty pro každý soubor souhlasí se záznamy v souboru CHECKSUM.
+        <description>Zkontroluje, že provedené kontrolní součty, pro každý soubor uvedený v souboru CHECKSUM,
+            souhlasí.
         </description>
         <params-def>
             <value name="checksum_file" type="FILE"/>
-            <value name="file" type="FILE" minOccurs="0" maxOccurs="unbound"/>
-            <value name="files" type="FILE_LIST" minOccurs="0" maxOccurs="unbound"/>
+            <value name="psp_root_dir" type="FILE"/>
         </params-def>
     </validationfunction>
 

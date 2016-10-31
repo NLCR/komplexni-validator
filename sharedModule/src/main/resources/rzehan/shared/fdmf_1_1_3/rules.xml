@@ -803,29 +803,15 @@
         </rule>
 
         <rule name="CHECKSUM_ALL_CHECKSUMS_MATCH" level="ERROR">
-            <description>Všechny kontrolní součty v souboru CHECKSUM musí souhlasit.</description>
+            <description>Všechny kontrolní součty v souborů odkazovaných v souboru CHECKSUM musí souhlasit.
+            </description>
             <validation functionName="CHECK_CHECKSUM_ALL_CHECKSUMS_MATCH">
                 <params>
                     <value name="checksum_file" type="FILE">
                         <value-ref name="CHECKSUM_FILE"/>
                     </value>
-                    <value name="file" type="FILE">
-                        <value-ref name="PRIMARY-METS_FILE"/>
-                    </value>
-                    <value name="files" type="FILE_LIST">
-                        <value-ref name="SECONDARY-METS_FILES"/>
-                    </value>
-                    <value name="files" type="FILE_LIST">
-                        <value-ref name="OCR-TEXT_FILES"/>
-                    </value>
-                    <value name="files" type="FILE_LIST">
-                        <value-ref name="OCR-ALTO_FILES"/>
-                    </value>
-                    <value name="files" type="FILE_LIST">
-                        <value-ref name="MASTER-COPY_FILES"/>
-                    </value>
-                    <value name="files" type="FILE_LIST">
-                        <value-ref name="USER-COPY_FILES"/>
+                    <value name="psp_root_dir" type="FILE">
+                        <value-ref name="PSP_DIR"/>
                     </value>
                 </params>
             </validation>
