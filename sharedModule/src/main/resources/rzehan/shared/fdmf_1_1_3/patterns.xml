@@ -19,7 +19,7 @@
         <!--<expression caseSensitive="false">[a-z_\-\.]+</expression>-->
 
         <!--per>=1.5, mon>=1.1-->
-        <expression caseSensitive="true">[a-z_\-\.]+</expression>
+        <expression caseSensitive="true">[a-z0-9_\-\.]+</expression>
     </pattern-def>
 
     <pattern-def name="INFO_FILENAME_FOR_PSP_ID_DETECTION">

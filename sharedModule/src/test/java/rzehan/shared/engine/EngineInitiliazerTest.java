@@ -39,9 +39,14 @@ public class EngineInitiliazerTest {
             System.out.println("Running section " + section.getName());
             List<Rule> rules = engine.getRules(section);
             for (Rule rule : rules) {
-                System.out.println("Running rule " + rule.getName());
+                //System.out.println("Running rule " + rule.getName());
                 ValidationResult result = rule.getResult();
-                //TODO
+                if (result.isValid()) {
+                    System.out.println(String.format("rule %s: valid", rule.getName()));
+                } else {
+                    System.out.println(String.format("rule %s: invalid: %s", rule.getName(), result.getMessage()));
+                    System.out.println(String.format("\t%s", rule.getDescription()));
+                }
             }
         }
 

@@ -62,6 +62,8 @@ public class PatternTest {
         assertTrue(engine.buildPattern(engine.buildExpression(true, "[a-z_\\-\\.]+")).matches("x.y_z-a"));
         assertFalse(engine.buildPattern(engine.buildExpression(true, "[a-z_\\-\\.]+")).matches(""));
         assertTrue(engine.buildPattern(engine.buildExpression(false, "[a-z_\\-\\.]+")).matches("X.y_Z-a"));
+
+        assertTrue(engine.buildPattern(engine.buildExpression(false, "[a-z0-9_\\-\\.]+")).matches("info_b50eb6b0-f0a4-11e3-b72e-005056827e52.xml"));
     }
 
 

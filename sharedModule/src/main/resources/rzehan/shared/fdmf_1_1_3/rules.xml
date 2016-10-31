@@ -103,7 +103,7 @@
         <!--názvy top-level souborů obsahují povolené znaky-->
 
         <rule name="INFO_FILENAME_VALID" level="ERROR">
-            <description>Název souboru INFO obsahuje jen povolené znaky.</description>
+            <description>Název souboru INFO smí obsahovat jen povolené znaky.</description>
             <validation functionName="CHECK_FILENAME_MATCHES_PATTERN">
                 <params>
                     <value-param name="file" type="FILE">
@@ -117,7 +117,7 @@
         </rule>
 
         <rule name="PRIMARY-METS_FILENAME_VALID" level="ERROR">
-            <description>Název souboru PRIMARY-METS obsahuje jen povolené znaky.</description>
+            <description>Název souboru PRIMARY-METS smí obsahovat jen povolené znaky.</description>
             <validation functionName="CHECK_FILENAME_MATCHES_PATTERN">
                 <params>
                     <value-param name="file" type="FILE">
@@ -131,7 +131,7 @@
         </rule>
 
         <rule name="CHECKSUM_FILENAME_VALID" level="ERROR">
-            <description>Název souboru CHECKSUM obsahuje jen povolené znaky.</description>
+            <description>Název souboru CHECKSUM smí obsahovat jen povolené znaky.</description>
             <validation functionName="CHECK_FILENAME_MATCHES_PATTERN">
                 <params>
                     <value-param name="file" type="FILE">
@@ -148,7 +148,7 @@
         <!--top-level soubory nejsou adresáře-->
 
         <rule name="INFO_IS_NOT_DIR" level="ERROR">
-            <description>Soubor INFO není adresář, ale obyčejný soubor.</description>
+            <description>Soubor INFO nesmí být adresář, ale obyčejný soubor.</description>
             <validation functionName="CHECK_FILE_IS_NOT_DIR">
                 <params>
                     <value-param name="file" type="FILE">
@@ -159,7 +159,7 @@
         </rule>
 
         <rule name="PRIMARY-METS_IS_NOT_DIR" level="ERROR">
-            <description>Soubor PRIMARY-METS není adresář, ale obyčejný soubor.</description>
+            <description>Soubor PRIMARY-METS nesmí být adresář, ale obyčejný soubor.</description>
             <validation functionName="CHECK_FILE_IS_NOT_DIR">
                 <params>
                     <value-param name="file" type="FILE">
@@ -170,7 +170,7 @@
         </rule>
 
         <rule name="CHECKSUM_IS_NOT_DIR" level="ERROR">
-            <description>Soubor CHECKSUM není adresář, ale obyčejný soubor.</description>
+            <description>Soubor CHECKSUM nesmí být adresář, ale obyčejný soubor.</description>
             <validation functionName="CHECK_FILE_IS_NOT_DIR">
                 <params>
                     <value-param name="file" type="FILE">
@@ -275,7 +275,7 @@
             <validation functionName="CHECK_FILE_LIST_EXACT_SIZE">
                 <params>
                     <value-param name="files" type="FILE_LIST">
-                        <value-ref name="OCR-TEXT_FILES"/>
+                        <value-ref name="OCR-TEXT-DIR_FILES"/>
                     </value-param>
                     <value-param name="size" type="INTEGER">1</value-param>
                 </params>
