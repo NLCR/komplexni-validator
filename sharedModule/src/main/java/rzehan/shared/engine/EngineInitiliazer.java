@@ -176,7 +176,7 @@ public class EngineInitiliazer {
 
     private void addParams(Function function, Element paramsEl) {
         // value params
-        NodeList valueParamEls = paramsEl.getElementsByTagName("value-param");
+        NodeList valueParamEls = paramsEl.getElementsByTagName("value");
         for (int i = 0; i < valueParamEls.getLength(); i++) {
             Element valueParamEl = (Element) valueParamEls.item(i);
             String paramName = valueParamEl.getAttribute("name");
@@ -199,7 +199,7 @@ public class EngineInitiliazer {
             }
         }
         //pattern params
-        NodeList patternParamEls = paramsEl.getElementsByTagName("pattern-param");
+        NodeList patternParamEls = paramsEl.getElementsByTagName("pattern");
         for (int i = 0; i < patternParamEls.getLength(); i++) {
             Element patternParamEl = (Element) patternParamEls.item(i);
             String paramName = patternParamEl.getAttribute("name");
