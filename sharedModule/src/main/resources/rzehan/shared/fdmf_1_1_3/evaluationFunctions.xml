@@ -1,83 +1,113 @@
 <evaluationFunctions>
     <description>
-        Zde jsou definovány funkce, které jsou využívány k vyhodnocování proměnných.
+        Zde jsou zdokumentovány definované funkce, které jsou využívány k vyhodnocování proměnných.
         Tento soubor je jen informativní a neměl by být měněn ani doplňován. Samotné funkce včetně jmen, typů
         a počtů parametrů, návratové hodnoty a zejména samotné implementace jsou definovány v kódu validátoru.
+
+        Návratové typy a typy parametrů-hodnot
+        --------------------------------------
+        Element evaluationFunction musí vždy přes atribut resultType definovat typ návratové hodnoty. Každý
+        parametr-hodnota musí
+        v atributu type elementu value definovat očekávanou hodnotu.
+
+        Typy parametrů
+        ------------------
+        Element value označuje očekávaný parametr-hodnotu. Povolený počet výskytu hodnot je určen pomocí atributů
+        minOccurs a maxOccurs.
+        Při volání lze použít buď odkaz na pojmenovanou hodnotu (value-ref), přímý zápis hodnoty (jen pro
+        vybrané typy), nebo zápis vyhodnocení (anonymní definice pomocí evaluation).
+
+        Element pattern označuje očekávaný parametr-vzor. Při volání je nutné poskytnout práve jednu hodnotu vzoru
+        daného jména.
+
+        Počet výskotů parametrů-hodnot
+        ------------------------------
+        Parametry typu hodnota (param-value) se mohou v rámci volání opakovat, pokud je to u konkrétního parametru
+        umožněno přes hodnoty atributů minOccurs a maxOccurs. Ty fungují podobně, jako u XSD. Pokud není uveden jeden
+        nebo oba atributy, platí defaultní hodnoty minOccurs=1 a maxOccurs=1, tedy hodnota se musí vyskytnout práve
+        jednou. Příklady:
+
+        minOccurs=1, maxOccurs=1 - povolen právě jeden výskyt parametru. Toto jsou defaultní hodnoty
+        minOccurs=0, maxOccurs=1 - žádný nebo jeden výskyt
+        minOccurs=0, maxOccurs=unbound - žádný nebo několik výskytů
+        minOccurs=1, maxOccurs=unbound - jeden nebo několik výskytů
+        minOccurs=3, maxOccurs=5 - tři, čtyři, nebo pět výskytů
+
+        Opakování znamená více výskytů parametrů stejného jména.
     </description>
 
 
-    <function name="PROVIDED_STRING" resultType="STRING">
+    <evaluationFunction name="PROVIDED_STRING" resultType="STRING">
         <description>Hodnota proměnné typue STRING bude poskytnuta volajícím programem.</description>
-        <params>
-            <param name="string_id" type="STRING"/>
-        </params>
-    </function>
+        <params-def>
+            <value name="string_id" type="STRING"/>
+        </params-def>
+    </evaluationFunction>
 
-    <function name="PROVIDED_FILE" resultType="FILE">
+    <evaluationFunction name="PROVIDED_FILE" resultType="FILE">
         <description>Hodnota proměnné typue FILE bude poskytnuta volajícím programem.</description>
-        <params>
-            <param name="file_id" type="STRING"/>
-        </params>
-    </function>
+        <params-def>
+            <value name="file_id" type="STRING"/>
+        </params-def>
+    </evaluationFunction>
 
-    <function name="PROVIDED_INTEGER" resultType="INTEGER">
+    <evaluationFunction name="PROVIDED_INTEGER" resultType="INTEGER">
         <description>Hodnota proměnné typue INTEGER bude poskytnuta volajícím programem.</description>
         <params>
-            <param name="int_id" type="STRING"/>
+            <value name="int_id" type="STRING"/>
         </params>
-    </function>
+    </evaluationFunction>
 
 
-    <function name="FIND_FILES_IN_DIR_BY_PATTERN" resultType="List<File>">
+    <evaluationFunction name="FIND_FILES_IN_DIR_BY_PATTERN" resultType="FILE_LIST">
         <description>Vrátí seznam souborů v adresáři, které odpovídají vzoru.</description>
-        <params>
-            <param name="dir" type="File"/>
-            <param name="pattern" type="Pattern"/>
-        </params>
-    </function>
+        <params-def>
+            <value name="dir" type="FILE"/>
+            <pattern name="pattern"/>
+        </params-def>
+    </evaluationFunction>
 
 
-    <!--todo: zmenit na RETURN_FIRST_FILE_FROM_LIST etc-->
-    <function name="RETURN_FIRST_ITEM" resultType="Object">
+    <evaluationFunction name="RETURN_FIRST_FILE_FROM_LIST" resultType="FILE">
         <description>Vrátí první položku ze seznamu.</description>
-        <params>
-            <param name="list" type="List"/>
-        </params>
-    </function>
+        <params-def>
+            <value name="files" type="FILE_LIST"/>
+        </params-def>
+    </evaluationFunction>
 
-    <function name="GET_INT_BY_XPATH" resultType="Integer">
+    <!--TODO: implement-->
+    <evaluationFunction name="GET_INT_BY_XPATH" resultType="INTEGER">
         <description>Vrátí číslo z xml souboru podle xpath.</description>
-        <params>
-            <param name="file" type="File"/>
-            <param name="xpath" type="Xpath"/>
-        </params>
-    </function>
+        <params-def>
+            <value name="file" type="FILE"/>
+            <value name="xpath" type="STRING"/>
+        </params-def>
+    </evaluationFunction>
 
-
-    <function name="GET_STRING_LIST_BY_XPATH" resultType="List<String>">
+    <!--TODO: implement-->
+    <evaluationFunction name="GET_STRING_LIST_BY_XPATH" resultType="STRING_LIST">
         <description>Vrátí seznam Stringů z xml souboru podle xpath.</description>
-        <params>
-            <param name="file" type="File"/>
-            <param name="xpath" type="Xpath"/>
-        </params>
-    </function>
+        <params-def>
+            <value name="file" type="FILE"/>
+            <value name="xpath" type="STRING"/>
+        </params-def>
+    </evaluationFunction>
 
-    <!--TEST: novy zapis-->
-    <function name="GET_FILES_BLABLA" resultType="List<File>">
+    <!--TODO: pridat do dokumentace v hlavicce-->
+    <evaluationFunction name="GET_FILES_BLABLA" resultType="FILE_LIST">
         <!--Navratove hodnoty mouzu byt jen String, File, Integer, List<String>, List<File>, List<Integer>-->
 
-        <params>
-            <param-value name="name" type="String"/>
-            <param-value name="xpath" type="String"/>
-            <param-value name="count" type="Integer"/>
-            <param-value name="file" type="File"/>
-            <param-value name="dir" type="File"/>
-            <param-value name="dir_list" type="List<File>"/>
-            <param-value name="name_list" type="List<String>"/>
-
-            <param-pattern name="name_pattern"/>
-        </params>
-    </function>
+        <params-def>
+            <value name="name" type="STRING"/>
+            <value name="xpath" type="STRING"/>
+            <value name="count" type="INTEGER"/>
+            <value name="file" type="FILE"/>
+            <value name="dir" type="FILE"/>
+            <value name="dir_list" type="FILE_LIST"/>
+            <value name="name_list" type="STRING_LIST"/>
+            <pattern name="name_pattern"/>
+        </params-def>
+    </evaluationFunction>
 
 
 </evaluationFunctions>

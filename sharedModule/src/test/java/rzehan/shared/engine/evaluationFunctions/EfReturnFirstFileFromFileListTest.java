@@ -20,7 +20,7 @@ public class EfReturnFirstFileFromFileListTest {
 
 
     private static final String FUNCTION_NAME = "RETURN_FIRST_FILE_FROM_LIST";
-    private static final String PARAM_FILE_LIST = "file_list";
+    private static final String PARAM_FILE_LIST = "files";
 
 
     private static List<File> LIST = new ArrayList<File>() {

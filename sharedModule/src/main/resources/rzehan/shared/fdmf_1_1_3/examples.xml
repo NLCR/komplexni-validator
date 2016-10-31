@@ -1,6 +1,10 @@
 <dmf>
 
 
+
+
+
+
     <!--prima definice - pouze String, Integer-->
 
     <value-def name="int1" type="INTEGER">3</value-def>

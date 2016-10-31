@@ -1,6 +1,5 @@
 package rzehan.shared.engine;
 
-import com.github.nradov.abnffuzzer.Fuzzer;
 import org.junit.Test;
 
 import java.io.File;
@@ -33,7 +32,6 @@ public class AbnfFuzzerTest {
 
         assertEquals(2, "neco nic".split("[\\t ]").length);
         assertEquals(2, "neco\tnic".split("[\\t ]").length);
-
 
 
     }
