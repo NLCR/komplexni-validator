@@ -18,6 +18,7 @@ public class VfCheckXmlValidByXsd extends ValidationFunction {
     public VfCheckXmlValidByXsd(Engine engine) {
         super(engine, new Contract()
                 .withValueParam(PARAM_FILE, ValueType.FILE, 1, 1)
+                .withValueParam(PARAM_XSD_FILE, ValueType.FILE, 1, 1)
         );
     }
 
