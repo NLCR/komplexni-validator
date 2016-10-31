@@ -42,9 +42,9 @@ public class EngineInitiliazerTest {
                 //System.out.println("Running rule " + rule.getName());
                 ValidationResult result = rule.getResult();
                 if (result.isValid()) {
-                    System.out.println(String.format("rule %s: valid", rule.getName()));
+                    System.out.println(String.format("rule %s: OK", rule.getName()));
                 } else {
-                    System.out.println(String.format("rule %s: invalid: %s", rule.getName(), result.getMessage()));
+                    System.out.println(String.format("rule %s: %s: %s", rule.getName(), rule.getLevel(), result.getMessage()));
                     System.out.println(String.format("\t%s", rule.getDescription()));
                 }
             }

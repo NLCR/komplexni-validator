@@ -1,11 +1,5 @@
 package rzehan.shared.engine;
 
-import rzehan.shared.engine.params.PatternParamConstant;
-import rzehan.shared.engine.params.PatternParamReference;
-import rzehan.shared.engine.params.ValueParamConstant;
-import rzehan.shared.engine.params.ValueParamReference;
-import rzehan.shared.engine.validationFunctions.ValidationFunction;
-
 /**
  * Created by martin on 30.10.16.
  */
