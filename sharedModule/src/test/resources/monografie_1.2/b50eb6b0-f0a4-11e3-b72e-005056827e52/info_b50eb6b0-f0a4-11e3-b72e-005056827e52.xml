@@ -1,14 +1,15 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
 
 <info xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-xsi:noNamespaceSchemaLocation="http://www.ndk.cz/standardy-digitalizace/info11.xsd">
+      xsi:noNamespaceSchemaLocation="http://www.ndk.cz/standardy-digitalizace/info11.xsd">
     <created>2015-09-21T21:06:13</created>
-	<metadataversion>1.2</metadataversion>
+    <metadataversion>1.2</metadataversion>
     <packageid>b50eb6b0-f0a4-11e3-b72e-005056827e52</packageid>
-	<mainmets>mets_b50eb6b0-f0a4-11e3-b72e-005056827e52.xml</mainmets>
-	<validation version="validation_templates_version:file_sec:1.0;amd_sec_mix:1.0;physical_map_amd:1.0;amd_file_sec:1.0;monographic_volume:1.0;amd_sec:1.0;monographic_logical_map:1.0;physical_map:1.0"/>
+    <mainmets>mets_b50eb6b0-f0a4-11e3-b72e-005056827e52.xml</mainmets>
+    <validation
+            version="validation_templates_version:file_sec:1.0;amd_sec_mix:1.0;physical_map_amd:1.0;amd_file_sec:1.0;monographic_volume:1.0;amd_sec:1.0;monographic_logical_map:1.0;physical_map:1.0"/>
     <titleid type="ccnb">cnb000572615</titleid>
-	<titleid type="urnnbn">urn:nbn:cz:nk-00172f</titleid>
+    <titleid type="urnnbn">urn:nbn:cz:nk-00172f</titleid>
     <collection>Digitalizace národní knihovny</collection>
     <institution>Česká národní knihovna</institution>
     <creator>ABA001</creator>
@@ -55,7 +56,8 @@ xsi:noNamespaceSchemaLocation="http://www.ndk.cz/standardy-digitalizace/info11.x
         <item>\txt\txt_b50eb6b0-f0a4-11e3-b72e-005056827e52_0006.txt</item>
         <item>\txt\txt_b50eb6b0-f0a4-11e3-b72e-005056827e52_0007.txt</item>
         <item>\txt\txt_b50eb6b0-f0a4-11e3-b72e-005056827e52_0008.txt</item>
-		<item>\md5_b50eb6b0-f0a4-11e3-b72e-005056827e52.md5</item>
+        <item>\md5_b50eb6b0-f0a4-11e3-b72e-005056827e52.md5</item>
     </itemlist>
-    <checksum type="MD5" checksum="D2D72701EF4A57C1C3D5D7CAD9B41631">\md5_b50eb6b0-f0a4-11e3-b72e-005056827e52.md5</checksum>
+    <checksum type="MD5" checksum="D2D72701EF4A57C1C3D5D7CAD9B41631">\md5_b50eb6b0-f0a4-11e3-b72e-005056827e52.md5
+    </checksum>
 </info>

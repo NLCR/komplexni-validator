@@ -1,9 +1,20 @@
 package rzehan.shared.engine.validationFunctions;
 
+import org.w3c.dom.Document;
+import org.xml.sax.SAXException;
 import rzehan.shared.engine.Engine;
 import rzehan.shared.engine.ValueType;
+import rzehan.shared.engine.exceptions.ValidatorException;
 
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.xpath.XPath;
+import javax.xml.xpath.XPathConstants;
+import javax.xml.xpath.XPathFactory;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
 
 
 /**
@@ -11,7 +22,7 @@ import java.io.File;
  */
 public class VfCheckXmlIsWellBuilt extends ValidationFunction {
 
-    public static final String PARAM_FILE = "file";
+    public static final String PARAM_FILE = "xml_file";
 
 
     public VfCheckXmlIsWellBuilt(Engine engine) {
@@ -29,19 +40,35 @@ public class VfCheckXmlIsWellBuilt extends ValidationFunction {
     public ValidationResult validate() {
         checkContractCompliance();
 
-        File file = (File) valueParams.getParams(PARAM_FILE).get(0).getValue();
+        File xmlFile = (File) valueParams.getParams(PARAM_FILE).get(0).getValue();
 
-        if (file == null) {
+        if (xmlFile == null) {
             return new ValidationResult(false).withMessage(String.format("hodnota parametru %s funkce %s je null", PARAM_FILE, getName()));
-        } else if (!file.exists()) {
-            return new ValidationResult(false).withMessage(String.format("soubor %s neexistuje", file.getAbsoluteFile()));
-        } else if (file.isDirectory()) {
-            return new ValidationResult(false).withMessage(String.format("soubor %s je adresář", file.getAbsoluteFile()));
-        } else if (!file.canRead()) {
-            return new ValidationResult(false).withMessage(String.format("nelze číst soubor %s", file.getAbsoluteFile()));
+        } else if (!xmlFile.exists()) {
+            return new ValidationResult(false).withMessage(String.format("soubor %s neexistuje", xmlFile.getAbsoluteFile()));
+        } else if (xmlFile.isDirectory()) {
+            return new ValidationResult(false).withMessage(String.format("soubor %s je adresář", xmlFile.getAbsoluteFile()));
+        } else if (!xmlFile.canRead()) {
+            return new ValidationResult(false).withMessage(String.format("nelze číst soubor %s", xmlFile.getAbsoluteFile()));
         } else {
-            /*TODO: implement*/
-            return new ValidationResult(false).withMessage("TODO: implement");
+            return validate(xmlFile);
+        }
+    }
+
+    private ValidationResult validate(File file) {
+        try {
+            DocumentBuilder builder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
+            builder.parse(new FileInputStream(file));
+            return new ValidationResult(true);
+        } catch (ParserConfigurationException e) {
+            return new ValidationResult(false).withMessage(
+                    String.format("ParserConfigurationException při zpracování souboru %s: %s", file.getAbsolutePath(), e.getMessage()));
+        } catch (SAXException e) {
+            return new ValidationResult(false).withMessage(
+                    String.format("Nebyl nalezen well-built xml dokument v souboru %s: %s", file.getAbsolutePath(), e.getMessage()));
+        } catch (IOException e) {
+            return new ValidationResult(false).withMessage(
+                    String.format("I/O chyba při zpracování souboru %s: %s", file.getAbsolutePath(), e.getMessage()));
         }
     }
 

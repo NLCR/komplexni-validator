@@ -821,7 +821,7 @@
             <description>Soubor INFO musí být korektní (well-built) xml soubor.</description>
             <validation functionName="checkXmlIsWellBuilt">
                 <params>
-                    <value name="file" type="FILE">
+                    <value name="xml_file" type="FILE">
                         <value-ref name="INFO_FILE"/>
                     </value>
                 </params>

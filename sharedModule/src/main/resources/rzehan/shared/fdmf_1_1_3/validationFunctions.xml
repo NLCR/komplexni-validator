@@ -115,7 +115,7 @@
     <validationfunction name="checkXmlIsWellBuilt">
         <description>Zkontroluje, že soubor obsahuje korektní xml (well-built).</description>
         <params-def>
-            <value name="file" type="FILE"/>
+            <value name="xml_file" type="FILE"/>
         </params-def>
     </validationfunction>
 
