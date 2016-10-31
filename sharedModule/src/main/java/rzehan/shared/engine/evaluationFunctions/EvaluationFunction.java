@@ -98,8 +98,13 @@ public abstract class EvaluationFunction implements Function {
             values.addAll(params);
         }
 
+        /**
+         * @param name
+         * @return never null, possibly empty list
+         */
         public List<ValueParam> getParams(String name) {
-            return data.get(name);
+            List<ValueParam> params = data.get(name);
+            return params != null ? params : Collections.emptyList();
         }
 
         public Set<String> keySet() {
@@ -167,16 +172,12 @@ public abstract class EvaluationFunction implements Function {
             //all actual params are expected
             for (String actualParam : valueParams.keySet()) {
                 if (!valueParamsSpec.keySet().contains(actualParam)) {
-                    //TODO: other exception
                     throw new ValidatorException(String.format("%s: nalezen neočekávaný parametr (hodnota) %s", functionName, actualParam));
                 }
             }
             //all expected params found and comply to spec
             for (String expectedParamName : valueParamsSpec.keySet()) {
                 List<ValueParam> paramValues = valueParams.getParams(expectedParamName);
-                if (paramValues == null) {
-                    throw new ValidatorException(String.format("%s: nelezen očekávaný parametr (hodnota) %s", functionName, expectedParamName));
-                }
                 ValueParamSpec spec = valueParamsSpec.get(expectedParamName);
                 if (spec.getMinOccurs() != null && paramValues.size() < spec.getMinOccurs()) {
                     throw new ValidatorException(String.format("%s: parametr %s musí mít alespoň %d hodnot, nalezeno %d", functionName, expectedParamName, spec.getMinOccurs(), paramValues.size()));
