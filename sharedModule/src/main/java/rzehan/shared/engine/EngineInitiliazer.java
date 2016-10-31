@@ -17,6 +17,7 @@ import java.util.List;
  */
 public class EngineInitiliazer {
 
+    /*TODO: logovani*/
     private final Engine engine;
 
     public EngineInitiliazer(Engine engine) {
@@ -44,7 +45,7 @@ public class EngineInitiliazer {
                     break;
                 default:
                     //nothing
-                    System.out.println(String.format("ignoring element %s", elementName));
+                    //System.out.println(String.format("ignoring element %s", elementName));
                     //throw new ValidatorException("unexpected element '" + childEl.getTagName() + "'");
             }
         }
@@ -58,7 +59,7 @@ public class EngineInitiliazer {
             section.setDescription(description);
         }
         section.setEnabled(parseBooleanAttribute("enabled", true));
-        System.out.println(String.format("registering rule-section '%s'", name));
+        //System.out.println(String.format("registering rule-section '%s'", name));
         engine.registerRuleSection(section);
         //rules
         NodeList ruleEls = rulesSectionEl.getElementsByTagName("rule");
@@ -82,7 +83,7 @@ public class EngineInitiliazer {
             Element descEl = (Element) descriptionEls.item(0);
             rule.setDescription(descEl.getTextContent());
         }
-        System.out.println(String.format("registering rule '%s' (%s)", name, level));
+        //System.out.println(String.format("registering rule '%s' (%s)", name, level));
         engine.registerRule(section, rule);
 
     }
@@ -107,9 +108,8 @@ public class EngineInitiliazer {
 
     private void processPatternDefinition(Element patternEl) {
         String varName = patternEl.getAttribute("name");
-        System.out.println("registering pattern " + varName);
+        //System.out.println("registering pattern " + varName);
         List<Pattern.Expression> expressions = new ArrayList<>();
-        //  NodeList childNodes = patternEl.getChildNodes();
         NodeList expressionEls = patternEl.getElementsByTagName("expression");
         for (int i = 0; i < expressionEls.getLength(); i++) {
             expressions.add(toExpression((Element) expressionEls.item(i)));
@@ -135,16 +135,16 @@ public class EngineInitiliazer {
     private void processValueDefinition(Element valueDefEl) {
         String varName = valueDefEl.getAttribute("name");
         ValueType varType = ValueType.valueOf(valueDefEl.getAttribute("type"));
-        System.out.println(String.format("registering value %s (%s) ", varName, varType));
+        //System.out.println(String.format("registering value %s (%s) ", varName, varType));
         NodeList efEls = valueDefEl.getElementsByTagName("evaluation");
         if (efEls.getLength() != 0) {//evaluation function
-            System.out.println("registerig value - reference");
+            //System.out.println("registerig value - reference");
             Element efEl = (Element) efEls.item(0);
             EvaluationFunction ef = buildEf(efEl);
             ValueDefinition valueDefinition = engine.buildValueDefinition(varType, ef);
             engine.registerValueDefinition(varName, valueDefinition);
         } else {//constant
-            System.out.println("registerig value - constant");
+            //System.out.println("registerig value - constant");
             System.out.println(valueDefEl.toString());
             Object value = parseConstantValueDefinition(valueDefEl, varType);
             engine.registerValue(varName, value);
