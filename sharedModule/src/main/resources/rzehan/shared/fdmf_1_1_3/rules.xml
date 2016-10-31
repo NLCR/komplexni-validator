@@ -777,9 +777,6 @@
                     <value name="checksum_file" type="FILE">
                         <value-ref name="CHECKSUM_FILE"/>
                     </value>
-                    <value name="psp_root_dir" type="FILE">
-                        <value-ref name="PSP_DIR"/>
-                    </value>
                     <value name="file" type="FILE">
                         <value-ref name="PRIMARY-METS_FILE"/>
                     </value>
@@ -809,9 +806,6 @@
                 <params>
                     <value name="checksum_file" type="FILE">
                         <value-ref name="CHECKSUM_FILE"/>
-                    </value>
-                    <value name="psp_root_dir" type="FILE">
-                        <value-ref name="PSP_DIR"/>
                     </value>
                 </params>
             </validation>

@@ -98,7 +98,6 @@
         </description>
         <params-def>
             <value name="checksum_file" type="FILE"/>
-            <value name="psp_root_dir" type="FILE"/>
             <value name="file" type="FILE" minOccurs="0" maxOccurs="unbound"/>
             <value name="files" type="FILE_LIST" minOccurs="0" maxOccurs="unbound"/>
         </params-def>
@@ -110,7 +109,6 @@
         </description>
         <params-def>
             <value name="checksum_file" type="FILE"/>
-            <value name="psp_root_dir" type="FILE"/>
         </params-def>
     </validationfunction>
 

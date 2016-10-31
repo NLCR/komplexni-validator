@@ -14,13 +14,10 @@ import java.util.Set;
 public class VfCheckChecksumFileAllChecksumsMatch extends ValidationFunction {
 
     public static final String PARAM_CHECKSUM_FILE = "checksum_file";
-    public static final String PARAM_PSP_ROOT_DIR = "psp_root_dir";
 
-    /*TODO: vlastne PARAM_PSP_ROOT_DIR nepotrebuju, zjistim to  PARAM_CHECKSUM_FILE - jeho adresar*/
     public VfCheckChecksumFileAllChecksumsMatch(Engine engine) {
         super(engine, new Contract()
                 .withValueParam(PARAM_CHECKSUM_FILE, ValueType.FILE, 1, 1)
-                .withValueParam(PARAM_PSP_ROOT_DIR, ValueType.FILE, 1, 1)
         );
     }
 
@@ -34,7 +31,7 @@ public class VfCheckChecksumFileAllChecksumsMatch extends ValidationFunction {
         checkContractCompliance();
 
         File checksumFile = (File) valueParams.getParams(PARAM_CHECKSUM_FILE).get(0).getValue();
-        File pspRootDir = (File) valueParams.getParams(PARAM_PSP_ROOT_DIR).get(0).getValue();
+        File pspRootDir = checksumFile.getParentFile();
 
         if (checksumFile == null) {
             return new ValidationResult(false).withMessage(String.format("hodnota parametru %s funkce %s je null", PARAM_CHECKSUM_FILE, getName()));
@@ -42,8 +39,6 @@ public class VfCheckChecksumFileAllChecksumsMatch extends ValidationFunction {
             return new ValidationResult(false).withMessage(String.format("soubor %s neexistuje", checksumFile.getAbsoluteFile()));
         } else if (checksumFile.isDirectory()) {
             return new ValidationResult(false).withMessage(String.format("soubor %s je adresář", checksumFile.getAbsoluteFile()));
-        } else if (pspRootDir == null) {
-            return new ValidationResult(false).withMessage(String.format("hodnota parametru %s funkce %s je null", PARAM_PSP_ROOT_DIR, getName()));
         } else if (!pspRootDir.exists()) {
             return new ValidationResult(false).withMessage(String.format("soubor %s neexistuje", pspRootDir.getAbsoluteFile()));
         } else if (!pspRootDir.isDirectory()) {
