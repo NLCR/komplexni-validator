@@ -1,11 +1,19 @@
 package rzehan.shared.engine.validationFunctions;
 
+import org.xml.sax.SAXException;
 import rzehan.shared.engine.Engine;
 import rzehan.shared.engine.ValueEvaluation;
 import rzehan.shared.engine.ValueType;
 import rzehan.shared.engine.exceptions.ContractException;
 
+import javax.xml.XMLConstants;
+import javax.xml.transform.Source;
+import javax.xml.transform.stream.StreamSource;
+import javax.xml.validation.Schema;
+import javax.xml.validation.SchemaFactory;
+import javax.xml.validation.Validator;
 import java.io.File;
+import java.io.IOException;
 
 
 /**
@@ -60,8 +68,24 @@ public class VfCheckXmlIsValidByXsd extends ValidationFunction {
             return invalidCannotReadFile(xsdFile);
         }
 
-        /*TODO: implement*/
-        return invalid("TODO: implement");
+        return validate(xmlFile, xsdFile);
+    }
+
+    private ValidationResult validate(File xmlFileF, File xsdFile) {
+        try {
+            Source xmlFile = new StreamSource(xmlFileF);
+            SchemaFactory schemaFactory = SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
+            Schema schema = schemaFactory.newSchema(xsdFile);
+            Validator validator = schema.newValidator();
+            validator.validate(xmlFile);
+            return valid();
+        } catch (SAXException e) {
+            return invalid(String.format("obsah souboru %s není validní podle Xml schema ze souboru %s: %s",
+                    xmlFileF.getAbsolutePath(), xsdFile.getAbsolutePath(), e.getMessage()));
+        } catch (IOException e) {
+            return invalid(String.format("I/O chyba při čtení souboru %s: %s",
+                    xmlFileF.getAbsolutePath(), e.getMessage()));
+        }
     }
 
 }

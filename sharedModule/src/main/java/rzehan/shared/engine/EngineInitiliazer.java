@@ -49,7 +49,7 @@ public class EngineInitiliazer {
 
     private void processRulesSectionDefinition(Element rulesSectionEl) throws ValidatorConfigurationException {
         String name = rulesSectionEl.getAttribute("name");
-        System.out.println(String.format("processing rule-section %s'", name));
+        //System.out.println(String.format("processing rule-section %s'", name));
         RulesSection section = engine.buildRuleSection(name);
         String description = rulesSectionEl.getAttribute("description");
         if (description != null && !description.isEmpty()) {
@@ -100,7 +100,7 @@ public class EngineInitiliazer {
 
     private void processNamedPatternDefinition(Element patternEl) {
         String varName = patternEl.getAttribute("name");
-        System.out.println("processing named-pattern " + varName);
+        //System.out.println("processing named-pattern " + varName);
         List<Element> expressionEls = XmlUtils.getChildrenElementsByName(patternEl, "expression");
         PatternDefinition patternDefinition = engine.buildPatternDefinition();
         for (Element expressionEl : expressionEls) {
@@ -126,20 +126,20 @@ public class EngineInitiliazer {
     private void processNamedValueDefinition(Element valueDefEl) throws ValidatorConfigurationException {
         String varName = valueDefEl.getAttribute("name");
         ValueType varType = ValueType.valueOf(valueDefEl.getAttribute("type"));
-        System.out.println(String.format("processing named-value %s (%s) ", varName, varType));
+        //System.out.println(String.format("processing named-value %s (%s) ", varName, varType));
         List<Element> efEls = XmlUtils.getChildrenElementsByName(valueDefEl, "evaluation");
         if (!efEls.isEmpty()) {//evaluation function
-            System.out.println("processing named-value - by definition");
+            //System.out.println("processing named-value - by definition");
             Element efEl = efEls.get(0);
             EvaluationFunction ef = buildEf(efEl);
             ValueDefinition valueDefinition = engine.buildValueDefinition(varType, ef);
-            System.out.println(String.format("registering named-value (by definition) %s", varName));
+            //System.out.println(String.format("registering named-value (by definition) %s", varName));
             engine.registerValueDefinition(varName, valueDefinition);
         } else {//constant
-            System.out.println("processing named-value - by constant");
-            System.out.println(valueDefEl.toString());
+            //System.out.println("processing named-value - by constant");
+            //System.out.println(valueDefEl.toString());
             Object value = parseConstantValueDefinition(valueDefEl, varType);
-            System.out.println(String.format("registering named-value (by constant)"));
+            //System.out.println(String.format("registering named-value (by constant)"));
             engine.registerValue(varName, new ValueEvaluation(value));
         }
     }
