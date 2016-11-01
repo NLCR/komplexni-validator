@@ -38,39 +38,39 @@ public abstract class EvaluationFunction implements Function {
     }
 
     ValueEvaluation errorResult(String errorMessage) {
-        return new ValueEvaluation(null, errorMessage);
+        return new ValueEvaluation(null, String.format("%s: %s", getName(), errorMessage));
     }
 
     ValueEvaluation errorResultContractNotMet(ContractException e) {
-        return new ValueEvaluation(null, String.format("nesplněn kontrakt vyhodnocovací funkce %s: %s", getName(), e.getMessage()));
+        return new ValueEvaluation(null, String.format("%s: nesplněn kontrakt vyhodnocovací funkce: %s", getName(), e.getMessage()));
     }
 
     ValueEvaluation errorResultParamNull(String paramName, ValueEvaluation paramEvaluation) {
-        return new ValueEvaluation(null, String.format("neznámá hodnota parametru %s: %s", paramName, paramEvaluation.getErrorMessage()));
+        return new ValueEvaluation(null, String.format("%s: neznámá hodnota parametru %s: %s", getName(), paramName, paramEvaluation.getErrorMessage()));
     }
 
     ValueEvaluation errorResultPatternParamNull(String paramName, PatternEvaluation paramEvaluation) {
-        return new ValueEvaluation(null, String.format("neznámá hodnota parametru (vzor) %s: %s", paramName, paramEvaluation.getErrorMessage()));
+        return new ValueEvaluation(null, String.format("%s: neznámá hodnota parametru (vzor) %s: %s", getName(), paramName, paramEvaluation.getErrorMessage()));
     }
 
     ValueEvaluation errorResultFileDoesNotExist(File file) {
-        return new ValueEvaluation(null, String.format("soubor %s neexistuje", file.getAbsolutePath()));
+        return new ValueEvaluation(null, String.format("%s: soubor %s neexistuje", getName(), file.getAbsolutePath()));
     }
 
     ValueEvaluation errorResultFileIsNotDir(File file) {
-        return new ValueEvaluation(null, String.format("soubor %s není adresář", file.getAbsolutePath()));
+        return new ValueEvaluation(null, String.format("%s: soubor %s není adresář", getName(), file.getAbsolutePath()));
     }
 
     ValueEvaluation errorResultFileIsDir(File file) {
-        return new ValueEvaluation(null, String.format("soubor %s je adresář", file.getAbsolutePath()));
+        return new ValueEvaluation(null, String.format("%s: soubor %s je adresář", getName(), file.getAbsolutePath()));
     }
 
     ValueEvaluation errorResultCannotReadDir(File file) {
-        return new ValueEvaluation(null, String.format("nelze číst adresář %s", file.getAbsolutePath()));
+        return new ValueEvaluation(null, String.format("%s: nelze číst adresář %s", getName(), file.getAbsolutePath()));
     }
 
     ValueEvaluation errorResultCannotReadFile(File file) {
-        return new ValueEvaluation(null, String.format("nelze číst soubor %s", file.getAbsolutePath()));
+        return new ValueEvaluation(null, String.format("%s: nelze číst soubor %s", getName(), file.getAbsolutePath()));
     }
 
 
@@ -192,15 +192,15 @@ public abstract class EvaluationFunction implements Function {
         }
 
         public void checkCompliance(EvaluationFunction function) throws ContractException {
-            checkValueParamCompliance(function.valueParams, function.getName());
-            checkPatternParamCompliance(function.patternParams, function.getName());
+            checkValueParamCompliance(function.valueParams);
+            checkPatternParamCompliance(function.patternParams);
         }
 
-        private void checkValueParamCompliance(ValueParams valueParams, String functionName) throws ContractException {
+        private void checkValueParamCompliance(ValueParams valueParams) throws ContractException {
             //all actual params are expected
             for (String actualParam : valueParams.keySet()) {
                 if (!valueParamsSpec.keySet().contains(actualParam)) {
-                    throw new ContractException(String.format("%s: nalezen neočekávaný parametr (hodnota) %s", functionName, actualParam));
+                    throw new ContractException(String.format("nalezen neočekávaný parametr (hodnota) %s", actualParam));
                 }
             }
             //all expected params found and comply to spec
@@ -208,31 +208,31 @@ public abstract class EvaluationFunction implements Function {
                 List<ValueParam> paramValues = valueParams.getParams(expectedParamName);
                 ValueParamSpec spec = valueParamsSpec.get(expectedParamName);
                 if (spec.getMinOccurs() != null && paramValues.size() < spec.getMinOccurs()) {
-                    throw new ContractException(String.format("%s: parametr %s musí mít alespoň %d hodnot, nalezeno %d", functionName, expectedParamName, spec.getMinOccurs(), paramValues.size()));
+                    throw new ContractException(String.format("%parametr %s musí mít alespoň %d hodnot, nalezeno %d", expectedParamName, spec.getMinOccurs(), paramValues.size()));
                 }
                 if (spec.getMaxOccurs() != null && paramValues.size() > spec.getMaxOccurs()) {
-                    throw new ContractException(String.format("%s: parametr %s musí mít nejvýše %d hodnot, nalezeno %d", functionName, expectedParamName, spec.getMaxOccurs(), paramValues.size()));
+                    throw new ContractException(String.format("%parametr %s musí mít nejvýše %d hodnot, nalezeno %d", expectedParamName, spec.getMaxOccurs(), paramValues.size()));
                 }
                 for (ValueParam param : paramValues) {
                     if (param.getType() != spec.getType()) {
-                        throw new ContractException(String.format("%s: parametr %s musí být vždy typu %s, nalezen typ %s", functionName, expectedParamName, spec.getType(), param.getType()));
+                        throw new ContractException(String.format("parametr %s musí být vždy typu %s, nalezen typ %s", expectedParamName, spec.getType(), param.getType()));
                     }
                 }
             }
 
         }
 
-        private void checkPatternParamCompliance(PatternParams patternParams, String functionName) throws ContractException {
+        private void checkPatternParamCompliance(PatternParams patternParams) throws ContractException {
             //all actual params are expected
             for (String actualParam : patternParams.keySet()) {
                 if (!expectedPatternParams.contains(actualParam)) {
-                    throw new ContractException(String.format("%s: nalezen neočekávaný parametr (vzor) %s", functionName, actualParam));
+                    throw new ContractException(String.format("nalezen neočekávaný parametr (vzor) %s", actualParam));
                 }
             }
             //all expected params found
             for (String expectedParam : expectedPatternParams) {
                 if (!patternParams.keySet().contains(expectedParam)) {
-                    throw new ContractException(String.format("%s: nenalezen očekávaný parametr (vzor) %s", functionName, expectedParam));
+                    throw new ContractException(String.format("nenalezen očekávaný parametr (vzor) %s", expectedParam));
                 }
             }
         }
