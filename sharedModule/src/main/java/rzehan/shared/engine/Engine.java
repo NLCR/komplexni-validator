@@ -112,6 +112,8 @@ public class Engine {
                 return new VfCheckXmlIsValidByXsd(this);
             case "checkInfoFileReferencesPrimaryMets":
                 return new VfCheckInfoFileReferencesPrimaryMets(this);
+            case "checkInfoFileItemsCountMatchesItemtotal":
+                return new VfCheckInfoFileItemsCountMatchesItemtotal(this);
             default:
                 throw new ValidatorConfigurationException(String.format("validační funkce %s neexistuje", name));
         }

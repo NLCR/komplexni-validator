@@ -135,6 +135,16 @@
         </params-def>
     </validationfunction>
 
+    <validationfunction name="checkInfoFileItemsCountMatchesItemtotal">
+        <description>Zkontroluje, že v souboru INFO počet elementů item souhlasí s hodnotou atributu itemtotal elementu
+            itemlist.
+        </description>
+        <params-def>
+            <value name="info_file" type="FILE"/>
+        </params-def>
+    </validationfunction>
+
+
     <!--TODO: implement-->
     <validationfunction name="CHECK_INFO_ITEMLIST_REFERENCES_ALL_FILES">
         <description>Zkontroluje, že se soubor INFO odkazuje na všechny soubory přes elementy item.</description>

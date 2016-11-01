@@ -14,24 +14,24 @@ import javax.xml.xpath.XPathExpression;
 import javax.xml.xpath.XPathExpressionException;
 import java.io.File;
 
+import static rzehan.shared.engine.validationFunctions.VfCheckInfoFileReferencesPrimaryMets.PARAM_PRIMARY_METS_FILE;
+
 /**
  * Created by martin on 1.11.16.
  */
-public class VfCheckInfoFileReferencesPrimaryMets extends ValidationFunction {
+public class VfCheckInfoFileItemsCountMatchesItemtotal extends ValidationFunction {
 
     public static final String PARAM_INFO_FILE = "info_file";
-    public static final String PARAM_PRIMARY_METS_FILE = "primary-mets_file";
 
-    public VfCheckInfoFileReferencesPrimaryMets(Engine engine) {
+    public VfCheckInfoFileItemsCountMatchesItemtotal(Engine engine) {
         super(engine, new Contract()
                 .withValueParam(PARAM_INFO_FILE, ValueType.FILE, 1, 1)
-                .withValueParam(PARAM_PRIMARY_METS_FILE, ValueType.FILE, 1, 1)
         );
     }
 
     @Override
     public String getName() {
-        return "checkInfoFileReferencesPrimaryMets";
+        return "checkInfoFileItemsCountMatchesItemtotal";
     }
 
     @Override
@@ -52,24 +52,19 @@ public class VfCheckInfoFileReferencesPrimaryMets extends ValidationFunction {
             return invalidCannotReadDir(infoFile);
         }
 
-        ValueEvaluation paramPrimaryMetsFile = valueParams.getParams(PARAM_PRIMARY_METS_FILE).get(0).getEvaluation();
-        File primaryMetsFile = (File) paramPrimaryMetsFile.getData();
-        if (primaryMetsFile == null) {
-            return invalidValueParamNull(PARAM_PRIMARY_METS_FILE, paramPrimaryMetsFile);
-        }
-
-        return validate(infoFile, primaryMetsFile);
+        return validate(infoFile);
     }
 
-    private ValidationResult validate(File infoFile, File primaryMetsFile) {
+    private ValidationResult validate(File infoFile) {
         try {
             Document infoDoc = engine.getXmlDocument(infoFile);
-            XPathExpression exp = engine.buildExpath("/info/mainmets");
-            String primaryMetsFilenameFound = (String) exp.evaluate(infoDoc, XPathConstants.STRING);
-            if (primaryMetsFilenameFound == null || primaryMetsFilenameFound.isEmpty()) {
-                return invalid("soubor INFO neobsahuje odkaz na soubor PRIMARY-METS");
-            } else if (!primaryMetsFilenameFound.equals(primaryMetsFile.getName())) {
-                return invalid(String.format("nalezený název souboru PRIMARY-METS (%s) se neshoduje se skutečným názvem (%s)", primaryMetsFilenameFound, primaryMetsFile.getName()));
+            XPathExpression itemTotalExp = engine.buildExpath("/info/itemlist/@itemtotal");
+            Integer itemTotal = Integer.valueOf((String) itemTotalExp.evaluate(infoDoc, XPathConstants.STRING));
+            XPathExpression itemsExp = engine.buildExpath("count(/info/itemlist/item)");
+            Integer items = Integer.valueOf((String) itemsExp.evaluate(infoDoc, XPathConstants.STRING));
+
+            if (items != itemTotal) {
+                return invalid(String.format("počet elementů item (%s) nesouhlasí s obsahem atributu itemtotal (%s)", items, itemTotal));
             } else {
                 return valid();
             }
@@ -80,6 +75,8 @@ public class VfCheckInfoFileReferencesPrimaryMets extends ValidationFunction {
         } catch (XPathExpressionException e) {
             return invalid(e.getMessage());
         } catch (Throwable e) {
+            //TODO: tohle u absolutne kazdeho pravidla, muze byt nejake xml nevalidni, tak at spadne jenom pravidlo, ne vsechno
+            //plati pro validacni i vyhodnocovaci pravidla
             return invalid("neočekávaná chyba: " + e.getMessage());
         }
     }
