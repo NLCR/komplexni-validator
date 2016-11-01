@@ -127,10 +127,8 @@
         </params-def>
     </validationfunction>
 
-    <!--TODO: implement-->
-    <validationfunction name="CHECK_INFO_REFERENCES_PRIMARY-METS">
+    <validationfunction name="checkInfoFileReferencesPrimaryMets">
         <description>Zkontroluje, že se soubor INFO odkazuje na soubor PRIMARY-METS přes element mainMets.</description>
-        <!--v elementu musi byt pouze samotne jmeno souboru-->
         <params-def>
             <value name="info_file" type="FILE"/>
             <value name="primary-mets_file" type="FILE"/>

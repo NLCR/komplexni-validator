@@ -1,10 +1,22 @@
 package rzehan.shared.engine;
 
+import org.w3c.dom.Document;
+import org.xml.sax.SAXException;
 import rzehan.shared.engine.evaluationFunctions.*;
+import rzehan.shared.engine.exceptions.InvalidXPathExpressionException;
 import rzehan.shared.engine.exceptions.ValidatorConfigurationException;
+import rzehan.shared.engine.exceptions.XmlParsingException;
 import rzehan.shared.engine.validationFunctions.*;
 
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.xpath.XPath;
+import javax.xml.xpath.XPathExpression;
+import javax.xml.xpath.XPathExpressionException;
+import javax.xml.xpath.XPathFactory;
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -68,7 +80,7 @@ public class Engine {
         }
     }
 
-    public ValidationFunction buildValidationFunction(String name) {
+    public ValidationFunction buildValidationFunction(String name) throws ValidatorConfigurationException {
         switch (name) {
             case "checkFilelistHasExactSize":
                 return new VfCheckFileListHasExactSize(this);
@@ -98,8 +110,10 @@ public class Engine {
                 return new VfCheckXmlIsWellBuilt(this);
             case "checkXmlIsValidByXsd":
                 return new VfCheckXmlIsValidByXsd(this);
+            case "checkInfoFileReferencesPrimaryMets":
+                return new VfCheckInfoFileReferencesPrimaryMets(this);
             default:
-                throw new RuntimeException(String.format("validační funkce %s neexistuje", name));
+                throw new ValidatorConfigurationException(String.format("validační funkce %s neexistuje", name));
         }
     }
 
@@ -234,5 +248,31 @@ public class Engine {
         }
     }
 
+
+    public Document getXmlDocument(File file) throws XmlParsingException {
+        //TODO: cachovani DOMu
+        try {
+            DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+            DocumentBuilder builder = factory.newDocumentBuilder();
+            return builder.parse(file.getAbsoluteFile());
+        } catch (SAXException e) {
+            throw new XmlParsingException(file, String.format("chyba parsování xml v souboru %s: %s", file.getAbsolutePath(), e.getMessage()));
+        } catch (IOException e) {
+            throw new XmlParsingException(file, String.format("chyba čtení v souboru %s: %s", file.getAbsolutePath(), e.getMessage()));
+        } catch (ParserConfigurationException e) {
+            throw new XmlParsingException(file, String.format("chyba konfigurace parseru při zpracování souboru %s: %s", file.getAbsolutePath(), e.getMessage()));
+        }
+    }
+
+    public XPathExpression buildExpath(String xpathExpression) throws InvalidXPathExpressionException {
+        try {
+            //TODO: doplnit namespacy
+            XPathFactory xPathfactory = XPathFactory.newInstance();
+            XPath xpath = xPathfactory.newXPath();
+            return xpath.compile(xpathExpression);
+        } catch (XPathExpressionException e) {
+            throw new InvalidXPathExpressionException(xpathExpression, String.format("chyba v zápisu Xpath '%s': %s", xpathExpression, e.getMessage()));
+        }
+    }
 
 }

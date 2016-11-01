@@ -845,19 +845,19 @@
 
 
         <!--METS Profile requirement id infoxml6-->
-        <!--<rule name="INFO_REFERENCES_PRIMARY-METS" level="ERROR">
-            <description>Soubor INFO se musí odkazovat na soubor PRIMARY-METS přes element mainMets.</description>
-            <validation functionName="CHECK_INFO_REFERENCES_PRIMARY-METS">
+        <rule name="INFO_REFERENCES_PRIMARY-METS" level="ERROR">
+            <description>Soubor INFO se musí odkazovat na soubor PRIMARY-METS přes element mainmets.</description>
+            <validation functionName="checkInfoFileReferencesPrimaryMets">
                 <params>
-                    <value name="info_file">
+                    <value name="info_file" type="FILE">
                         <value-ref name="INFO_FILE"/>
                     </value>
-                    <value name="primary-mets_file">
+                    <value name="primary-mets_file" type="FILE">
                         <value-ref name="PRIMARY-METS_FILE"/>
                     </value>
                 </params>
             </validation>
-        </rule>-->
+        </rule>
 
         <!--METS Profile requirement id infoxml13-->
         <!--<rule name="INFO_ITEMTOTAL_MATCHES_ITEMS_COUNT" level="ERROR">

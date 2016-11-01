@@ -2,6 +2,7 @@ package rzehan.shared.engine;
 
 import org.junit.BeforeClass;
 import org.junit.Test;
+import rzehan.shared.engine.exceptions.ValidatorConfigurationException;
 import rzehan.shared.engine.validationFunctions.ValidationFunction;
 import rzehan.shared.engine.validationFunctions.ValidationResult;
 
@@ -32,7 +33,7 @@ public class EngineTest {
     }
 
     @Test
-    public void testAll() {
+    public void testAll() throws ValidatorConfigurationException {
         //provided VARS
         engine.registerValueDefinition("PSP_DIR",
                 engine.buildValueDefinition(ValueType.FILE,

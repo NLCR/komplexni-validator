@@ -73,6 +73,7 @@ public class VfCheckXmlIsValidByXsd extends ValidationFunction {
 
     private ValidationResult validate(File xmlFileF, File xsdFile) {
         try {
+            //TODO: mozna namespacy
             Source xmlFile = new StreamSource(xmlFileF);
             SchemaFactory schemaFactory = SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
             Schema schema = schemaFactory.newSchema(xsdFile);
