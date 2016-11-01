@@ -1,7 +1,9 @@
 package rzehan.shared.engine.validationFunctions;
 
 import rzehan.shared.engine.Engine;
+import rzehan.shared.engine.ValueEvaluation;
 import rzehan.shared.engine.ValueType;
+import rzehan.shared.engine.exceptions.ContractException;
 
 import java.io.File;
 import java.util.List;
@@ -29,19 +31,28 @@ public class VfCheckFileListHasExactSize extends ValidationFunction {
 
     @Override
     public ValidationResult validate() {
-        checkContractCompliance();
+        try {
+            checkContractCompliance();
+        } catch (ContractException e) {
+            return invalidContractNotMet(e);
+        }
 
-        List<File> fileList = (List<File>) valueParams.getParams(PARAM_FILES).get(0).getValue();
-        Integer expectedSize = (Integer) valueParams.getParams(PARAM_SIZE).get(0).getValue();
-
+        ValueEvaluation paramFiles = valueParams.getParams(PARAM_FILES).get(0).getValueEvaluation();
+        List<File> fileList = (List<File>) paramFiles.getData();
         if (fileList == null) {
-            return new ValidationResult(false).withMessage("seznam souborů je null");
-        } else if (expectedSize == null) {
-            return new ValidationResult(false).withMessage("očekávaná velikost seznamu je null");
-        } else if (fileList.size() != expectedSize) {
-            return new ValidationResult(false).withMessage(String.format("seznam obsahuje %d souborů namísto očekávaných %d", fileList.size(), expectedSize));
+            return invalidParamNull(PARAM_FILES, paramFiles);
+        }
+
+        ValueEvaluation paramSize = valueParams.getParams(PARAM_SIZE).get(0).getValueEvaluation();
+        Integer expectedSize = (Integer) paramSize.getData();
+        if (expectedSize == null) {
+            return invalidParamNull(PARAM_SIZE, paramSize);
+        }
+
+        if (fileList.size() != expectedSize) {
+            return invalid(String.format("seznam obsahuje %d souborů namísto očekávaných %d", fileList.size(), expectedSize));
         } else {
-            return new ValidationResult(true).withMessage(String.format("seznam obsahuje %d souborů", expectedSize));
+            return valid();
         }
     }
 }

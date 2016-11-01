@@ -1,7 +1,10 @@
 package rzehan.shared.engine.validationFunctions;
 
 import rzehan.shared.engine.Engine;
+import rzehan.shared.engine.ValueEvaluation;
 import rzehan.shared.engine.ValueType;
+import rzehan.shared.engine.exceptions.ContractException;
+import rzehan.shared.engine.exceptions.EmptyParamEvaluationException;
 import rzehan.shared.engine.params.ValueParam;
 
 import java.io.File;
@@ -36,24 +39,35 @@ public class VfCheckNoOtherFilesInDir extends ValidationFunction {
 
     @Override
     public ValidationResult validate() {
-        checkContractCompliance();
-        File rootDir = (File) valueParams.getParams(PARAM_ROOT_DIR).get(0).getValue();
+        try {
+            checkContractCompliance();
+        } catch (ContractException e) {
+            return invalidContractNotMet(e);
+        }
+
+        ValueEvaluation paramRootDir = valueParams.getParams(PARAM_ROOT_DIR).get(0).getValueEvaluation();
+        File rootDir = (File) paramRootDir.getData();
         if (rootDir == null) {
-            return new ValidationResult(false).withMessage(String.format("hodnota parametru %s funkce %s je null", PARAM_ROOT_DIR, getName()));
+            return invalidParamNull(PARAM_ROOT_DIR, paramRootDir);
         } else if (!rootDir.isDirectory()) {
-            return new ValidationResult(false).withMessage(String.format("soubor %s není adresář", rootDir.getAbsoluteFile()));
+            return invalidFileIsNotDir(rootDir);
         } else if (!rootDir.canRead()) {
-            return new ValidationResult(false).withMessage(String.format("nelze číst soubory v adresáři %s", rootDir.getAbsoluteFile()));
-        } else {
-            List<File> filesInDir = listAbsoluteFiles(rootDir);
+            return invalidCannotReadDir(rootDir);
+        }
+
+        List<File> filesInDir = listAbsoluteFiles(rootDir);
+        try {
             Set<File> filesExpected = mergeAbsolutFilesFromParams();
             for (File file : filesInDir) {
                 if (!filesExpected.contains(file)) {
-                    return new ValidationResult(false).withMessage(String.format("nalezen nečekaný soubor %s v adresáři %s", file.getName(), rootDir.getAbsolutePath()));
+                    return invalid(String.format("nalezen nečekaný soubor %s v adresáři %s", file.getName(), rootDir.getAbsolutePath()));
                 }
             }
-            return new ValidationResult(true);
+        } catch (EmptyParamEvaluationException e) {
+            return invalidParamNull(e.getParamName(), e.getEvaluation());
         }
+
+        return valid();
     }
 
     private List<File> listAbsoluteFiles(File rootDir) {
@@ -65,16 +79,24 @@ public class VfCheckNoOtherFilesInDir extends ValidationFunction {
         return result;
     }
 
-    private Set<File> mergeAbsolutFilesFromParams() {
+    private Set<File> mergeAbsolutFilesFromParams() throws EmptyParamEvaluationException {
         Set<File> result = new HashSet<>();
         List<ValueParam> fileParams = valueParams.getParams(PARAM_FILE);
         for (ValueParam param : fileParams) {
-            File file = (File) param.getValue();
+            ValueEvaluation evaluation = param.getValueEvaluation();
+            File file = (File) evaluation.getData();
+            if (file == null) {
+                throw new EmptyParamEvaluationException(PARAM_FILE, evaluation);
+            }
             result.add(file.getAbsoluteFile());
         }
         List<ValueParam> filesParams = valueParams.getParams(PARAM_FILES);
         for (ValueParam param : filesParams) {
-            List<File> files = (List<File>) param.getValue();
+            ValueEvaluation evaluation = param.getValueEvaluation();
+            List<File> files = (List<File>) evaluation.getData();
+            if (files == null) {
+                throw new EmptyParamEvaluationException(PARAM_FILES, evaluation);
+            }
             for (File file : files) {
                 result.add(file.getAbsoluteFile());
             }

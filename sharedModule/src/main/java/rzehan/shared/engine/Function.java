@@ -5,7 +5,7 @@ package rzehan.shared.engine;
  */
 public interface Function {
 
-    public Function withValueParam(String paramName, ValueType valueType, Object value);
+    public Function withValueParam(String paramName, ValueType valueType, ValueEvaluation valueEvaluation);
 
     public Function withValueParamByReference(String paramName, ValueType valueType, String varName);
 

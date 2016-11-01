@@ -1,7 +1,7 @@
 package rzehan.shared.engine;
 
 import rzehan.shared.engine.evaluationFunctions.*;
-import rzehan.shared.engine.exceptions.ValidatorException;
+import rzehan.shared.engine.exceptions.ValidatorConfigurationException;
 import rzehan.shared.engine.exceptions.VariableNotDefinedException;
 import rzehan.shared.engine.validationFunctions.*;
 
@@ -19,7 +19,7 @@ public class Engine {
     private final ProvidedVarsManager providedVarsManager;
 
     private final Map<String, ValueDefinition> valueDefinitionsByVarName = new HashMap<>();
-    private final Map<String, Object> valuesByVarName = new HashMap<>();
+    private final Map<String, ValueEvaluation> valueEvaluationsByVarName = new HashMap<>();
     private final Map<String, Pattern> patternsByVarName = new HashMap<>();
     private final RulesManager rulesManager = new RulesManager();
 
@@ -52,7 +52,7 @@ public class Engine {
             case "getProvidedFile":
                 return new EfGetProvidedFile(this);
             case "getProvidedString":
-                return new EfProvidedString(this);
+                return new EfGetProvidedString(this);
             case "getProvidedInteger":
                 return new EfGetProvidedInteger(this);
             case "getFirstFileFromFileList":
@@ -111,9 +111,9 @@ public class Engine {
 
     //register methods for defining variables (values, patterns, ruleSections, rules)
 
-    public void registerValue(String valueVariableName, Object value) {
+    public void registerValue(String valueVariableName, ValueEvaluation valueEvaluation) {
         //TODO: check if not defined already
-        valuesByVarName.put(valueVariableName, value);
+        valueEvaluationsByVarName.put(valueVariableName, valueEvaluation);
     }
 
     public void registerValueDefinition(String valueVariableName, ValueDefinition definition) {
@@ -127,31 +127,31 @@ public class Engine {
     }
 
 
-    public void registerRuleSection(RulesSection section) {
+    public void registerRuleSection(RulesSection section) throws ValidatorConfigurationException {
         rulesManager.addSection(section);
     }
 
-    public void registerRule(RulesSection section, Rule rule) {
+    public void registerRule(RulesSection section, Rule rule) throws ValidatorConfigurationException {
         rulesManager.addRule(section, rule);
     }
 
-    //get methods for obtaining values, paterns, rule-sections, rules, etc
+    //get methods for obtaining values, patterns, rule-sections, rules, etc
 
     public ProvidedVarsManager getProvidedVarsManager() {
         return providedVarsManager;
     }
 
-    public Object getValueFromVariable(String valueVariableName) {
-        Object value = valuesByVarName.get(valueVariableName);
+    public ValueEvaluation getValueEvaluationByVariable(String valueVariableName) {
+        ValueEvaluation value = valueEvaluationsByVarName.get(valueVariableName);
         if (value != null) {
             return value;
         } else {//not evaluated yet
             ValueDefinition definition = valueDefinitionsByVarName.get(valueVariableName);
             if (definition == null) {
-                throw new VariableNotDefinedException(valueVariableName);
+                return new ValueEvaluation(null, String.format("Proměnná %s není definována", valueVariableName));
             } else {
                 value = definition.evaluate();
-                valuesByVarName.put(valueVariableName, value);
+                valueEvaluationsByVarName.put(valueVariableName, value);
                 return value;
             }
         }
@@ -186,18 +186,18 @@ public class Engine {
         private final Map<RulesSection, List<Rule>> rulesBySection = new HashMap<>();
 
 
-        void addSection(RulesSection section) {
+        void addSection(RulesSection section) throws ValidatorConfigurationException {
             if (sections.contains(section)) {
-                throw new ValidatorException(String.format("rules section %s already added", section.getName()));
+                throw new ValidatorConfigurationException(String.format("rules section %s already added", section.getName()));
             } else {
                 sections.add(section);
                 rulesBySection.put(section, new ArrayList<>());
             }
         }
 
-        void addRule(RulesSection section, Rule rule) {
+        void addRule(RulesSection section, Rule rule) throws ValidatorConfigurationException {
             if (!rulesBySection.keySet().contains(section)) {
-                throw new ValidatorException(String.format("rules section %s not added yet", section.getName()));
+                throw new ValidatorConfigurationException(String.format("rules section %s not added yet", section.getName()));
             } else {
                 rulesBySection.get(section).add(rule);
             }

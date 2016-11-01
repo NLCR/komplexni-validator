@@ -1,6 +1,7 @@
 package rzehan.shared.engine.params;
 
 import rzehan.shared.engine.Engine;
+import rzehan.shared.engine.ValueEvaluation;
 import rzehan.shared.engine.ValueType;
 
 /**
@@ -16,9 +17,8 @@ public class ValueParamReference extends ValueParam {
         this.varName = varName;
     }
 
-    @Override
-    public Object getValue() {
-        Object value = engine.getValueFromVariable(varName);
+    public ValueEvaluation getValueEvaluation() {
+        ValueEvaluation value = engine.getValueEvaluationByVariable(varName);
         if (value == null) {
             throw new RuntimeException("proměnná " + varName + " není definována");
         }

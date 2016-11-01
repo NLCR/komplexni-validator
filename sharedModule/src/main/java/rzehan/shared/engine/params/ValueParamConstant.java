@@ -1,21 +1,20 @@
 package rzehan.shared.engine.params;
 
+import rzehan.shared.engine.ValueEvaluation;
 import rzehan.shared.engine.ValueType;
 
 /**
  * Created by martin on 24.10.16.
  */
 public final class ValueParamConstant extends ValueParam {
-    //hodnota, treba i xpath
-    private final Object value;
+    private final ValueEvaluation valueEvaluation;
 
-    public ValueParamConstant(ValueType type, Object value) {
+    public ValueParamConstant(ValueType type, ValueEvaluation valueEvaluation) {
         super(type);
-        this.value = value;
+        this.valueEvaluation = valueEvaluation;
     }
 
-    @Override
-    public Object getValue() {
-        return value;
+    public ValueEvaluation getValueEvaluation() {
+        return valueEvaluation;
     }
 }

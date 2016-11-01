@@ -1,7 +1,9 @@
 package rzehan.shared.engine.evaluationFunctions;
 
 import rzehan.shared.engine.Engine;
+import rzehan.shared.engine.ValueEvaluation;
 import rzehan.shared.engine.ValueType;
+import rzehan.shared.engine.exceptions.ContractException;
 import rzehan.shared.engine.params.PatternParam;
 
 import java.io.File;
@@ -29,28 +31,40 @@ public class EfFindFilesInDirByPattern extends EvaluationFunction {
     }
 
     @Override
-    public List<File> evaluate() {
-        checkContractCompliance();
-
-        File dir = (File) valueParams.getParams(PARAM_DIR).get(0).getValue();
-        if (!dir.exists()) {
-            throw new RuntimeException("soubor " + dir.getAbsolutePath() + " neexistuje");
-        } else if (!dir.isDirectory()) {
-            throw new RuntimeException("soubor " + dir.getAbsolutePath() + " není adresář");
-        } else if (!dir.canRead()) {
-            throw new RuntimeException("nemám práva číst adresář " + dir.getAbsolutePath());
-        } else {
-            PatternParam patternParam = patternParams.getParam(PARAM_PATTERN);
-            File[] files = dir.listFiles();
-            List<File> filesMatching = new ArrayList<>(files.length);
-            for (File file : files) {
-                if (patternParam.matches(file.getName())) {
-                    filesMatching.add(file);
-                }
-            }
-            //System.out.println("FIND_FILES_IN_DIR_BY_PATTERN: found " + filesMatching.size() + " files in " + dir.getAbsolutePath() + ", pattern: " + patternParam.toString());
-            return filesMatching;
+    public ValueEvaluation evaluate() {
+        try {
+            checkContractCompliance();
+        } catch (ContractException e) {
+            return errorResultContractNotMet(e);
         }
+
+        ValueEvaluation paramDir = valueParams.getParams(PARAM_DIR).get(0).getValueEvaluation();
+        File dir = (File) paramDir.getData();
+        if (dir == null) {
+            return errorResultParamNull(PARAM_DIR, paramDir);
+        } else if (!dir.exists()) {
+            return errorResultFileDoesNotExist(dir);
+        } else if (!dir.isDirectory()) {
+            return errorResultFileIsNotDir(dir);
+        } else if (!dir.canRead()) {
+            return errorResultCannotReadDir(dir);
+        }
+
+        //TODO: opravit i patterny
+        PatternParam patternParam = patternParams.getParam(PARAM_PATTERN);
+        if (patternParam == null) {
+            return errorResult(String.format("hodnota parametru %s je null", PARAM_PATTERN));
+        }
+
+        File[] files = dir.listFiles();
+        List<File> filesMatching = new ArrayList<>(files.length);
+        for (File file : files) {
+            if (patternParam.matches(file.getName())) {
+                filesMatching.add(file);
+            }
+        }
+        //System.out.println("FIND_FILES_IN_DIR_BY_PATTERN: found " + filesMatching.size() + " files in " + dir.getAbsolutePath() + ", pattern: " + patternParam.toString());
+        return okResult(filesMatching);
     }
 
 

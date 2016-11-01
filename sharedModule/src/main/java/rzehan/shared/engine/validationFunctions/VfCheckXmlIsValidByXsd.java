@@ -1,7 +1,9 @@
 package rzehan.shared.engine.validationFunctions;
 
 import rzehan.shared.engine.Engine;
+import rzehan.shared.engine.ValueEvaluation;
 import rzehan.shared.engine.ValueType;
+import rzehan.shared.engine.exceptions.ContractException;
 
 import java.io.File;
 
@@ -11,13 +13,13 @@ import java.io.File;
  */
 public class VfCheckXmlIsValidByXsd extends ValidationFunction {
 
-    public static final String PARAM_FILE = "file";
+    public static final String PARAM_XML_FILE = "xml_file";
     public static final String PARAM_XSD_FILE = "xsd_file";
 
 
     public VfCheckXmlIsValidByXsd(Engine engine) {
         super(engine, new Contract()
-                .withValueParam(PARAM_FILE, ValueType.FILE, 1, 1)
+                .withValueParam(PARAM_XML_FILE, ValueType.FILE, 1, 1)
                 .withValueParam(PARAM_XSD_FILE, ValueType.FILE, 1, 1)
         );
     }
@@ -29,31 +31,37 @@ public class VfCheckXmlIsValidByXsd extends ValidationFunction {
 
     @Override
     public ValidationResult validate() {
-        checkContractCompliance();
-
-        File file = (File) valueParams.getParams(PARAM_FILE).get(0).getValue();
-        File xsdFile = (File) valueParams.getParams(PARAM_XSD_FILE).get(0).getValue();
-
-        if (file == null) {
-            return new ValidationResult(false).withMessage(String.format("hodnota parametru %s funkce %s je null", PARAM_FILE, getName()));
-        } else if (!file.exists()) {
-            return new ValidationResult(false).withMessage(String.format("soubor %s neexistuje", file.getAbsoluteFile()));
-        } else if (file.isDirectory()) {
-            return new ValidationResult(false).withMessage(String.format("soubor %s je adresář", file.getAbsoluteFile()));
-        } else if (!file.canRead()) {
-            return new ValidationResult(false).withMessage(String.format("nelze číst soubor %s", file.getAbsoluteFile()));
-        } else if (xsdFile == null) {
-            return new ValidationResult(false).withMessage(String.format("hodnota parametru %s funkce %s je null", PARAM_XSD_FILE, getName()));
-        } else if (!xsdFile.exists()) {
-            return new ValidationResult(false).withMessage(String.format("soubor %s neexistuje", xsdFile.getAbsoluteFile()));
-        } else if (xsdFile.isDirectory()) {
-            return new ValidationResult(false).withMessage(String.format("soubor %s je adresář", xsdFile.getAbsoluteFile()));
-        } else if (!xsdFile.canRead()) {
-            return new ValidationResult(false).withMessage(String.format("nelze číst soubor %s", xsdFile.getAbsoluteFile()));
-        } else {
-            /*TODO: implement*/
-            return new ValidationResult(false).withMessage("TODO: implement");
+        try {
+            checkContractCompliance();
+        } catch (ContractException e) {
+            return invalidContractNotMet(e);
         }
+
+        ValueEvaluation paramXmlFile = valueParams.getParams(PARAM_XML_FILE).get(0).getValueEvaluation();
+        File xmlFile = (File) paramXmlFile.getData();
+        if (xmlFile == null) {
+            return invalidParamNull(PARAM_XML_FILE, paramXmlFile);
+        } else if (!xmlFile.exists()) {
+            return invalidFileDoesNotExist(xmlFile);
+        } else if (xmlFile.isDirectory()) {
+            return invalidFileIsDir(xmlFile);
+        } else if (!xmlFile.canRead()) {
+            return invalidCannotReadFile(xmlFile);
+        }
+
+        ValueEvaluation paramXsdFile = valueParams.getParams(PARAM_XSD_FILE).get(0).getValueEvaluation();
+        File xsdFile = (File) paramXsdFile.getData();
+        if (xsdFile == null) {
+        } else if (!xsdFile.exists()) {
+            return invalidFileDoesNotExist(xsdFile);
+        } else if (xsdFile.isDirectory()) {
+            return invalidFileIsDir(xsdFile);
+        } else if (!xsdFile.canRead()) {
+            return invalidCannotReadFile(xsdFile);
+        }
+
+        /*TODO: implement*/
+        return invalid("TODO: implement");
     }
 
 }

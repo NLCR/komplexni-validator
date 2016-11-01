@@ -4,12 +4,15 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import rzehan.shared.engine.Engine;
 import rzehan.shared.engine.ProvidedVarsManagerImpl;
+import rzehan.shared.engine.ValueEvaluation;
 import rzehan.shared.engine.ValueType;
 
 import java.io.File;
 
 import static junit.framework.TestCase.fail;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
 
 /**
  * Created by martin on 21.10.16.
@@ -35,26 +38,24 @@ public class EfGetProvidedFileTest {
     @Test
     public void ok() {
         EvaluationFunction evFunction = engine.buildEvaluationFunction(FUNCTION_NAME)
-                .withValueParam(PARAM_NAME, ValueType.STRING, PSP_DIR_FILEID);
-        assertEquals(PSP_DIR_FILE, evFunction.evaluate());
+                .withValueParam(PARAM_NAME, ValueType.STRING, new ValueEvaluation(PSP_DIR_FILEID));
+        ValueEvaluation evaluation = evFunction.evaluate();
+        assertEquals(PSP_DIR_FILE, evaluation.getData());
     }
 
     @Test
     public void missingParam() {
         EvaluationFunction evFunction = engine.buildEvaluationFunction(FUNCTION_NAME);
-        try {
-            evFunction.evaluate();
-            fail();
-        } catch (RuntimeException e) {
-            //chybí parametr ...
-        }
+        ValueEvaluation evaluation = evFunction.evaluate();
+        assertNull(evaluation.getData());
+        assertNotNull(evaluation.getErrorMessage());
     }
 
     @Test
     public void duplicateParam() {
         EvaluationFunction evFunction = engine.buildEvaluationFunction(FUNCTION_NAME)
-                .withValueParam(PARAM_NAME, ValueType.STRING, PSP_DIR_FILEID)
-                .withValueParam(PARAM_NAME, ValueType.STRING, "XYZ_DIR");
+                .withValueParam(PARAM_NAME, ValueType.STRING, new ValueEvaluation(PSP_DIR_FILEID))
+                .withValueParam(PARAM_NAME, ValueType.STRING, new ValueEvaluation("XYZ_DIR"));
         try {
             evFunction.evaluate();
             //fail();
@@ -67,12 +68,9 @@ public class EfGetProvidedFileTest {
     @Test
     public void invalidParamType() {
         EvaluationFunction evFunction = engine.buildEvaluationFunction(FUNCTION_NAME)
-                .withValueParam(PARAM_NAME, ValueType.FILE, PSP_DIR_FILEID);
-        try {
-            evFunction.evaluate();
-            fail();
-        } catch (RuntimeException e) {
-            //parametr ... není očekávaného typu ...
-        }
+                .withValueParam(PARAM_NAME, ValueType.FILE, new ValueEvaluation(PSP_DIR_FILEID));
+        ValueEvaluation evaluation = evFunction.evaluate();
+        assertNull(evaluation.getData());
+        assertNotNull(evaluation.getErrorMessage());
     }
 }

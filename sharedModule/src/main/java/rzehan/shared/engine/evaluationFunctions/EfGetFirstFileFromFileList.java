@@ -1,7 +1,9 @@
 package rzehan.shared.engine.evaluationFunctions;
 
 import rzehan.shared.engine.Engine;
+import rzehan.shared.engine.ValueEvaluation;
 import rzehan.shared.engine.ValueType;
+import rzehan.shared.engine.exceptions.ContractException;
 
 import java.io.File;
 import java.util.List;
@@ -21,20 +23,26 @@ public class EfGetFirstFileFromFileList extends EvaluationFunction {
     }
 
     @Override
-    public Object evaluate() {
-        checkContractCompliance();
-
-        List<File> files = (List<File>) valueParams.getParams(PARAM_FILE_LIST).get(0).getValue();
-        if (files.isEmpty()) {
-            throw new IllegalStateException("Seznam souborů je prázdný");
-        } else {
-            return files.get(0);
-        }
-    }
-
-    @Override
     public String getName() {
         return "getFirstFileFromFileList";
     }
 
+    @Override
+    public ValueEvaluation evaluate() {
+        try {
+            checkContractCompliance();
+        } catch (ContractException e) {
+            return errorResultContractNotMet(e);
+        }
+
+        ValueEvaluation paramFiles = valueParams.getParams(PARAM_FILE_LIST).get(0).getValueEvaluation();
+        List<File> files = (List<File>) paramFiles.getData();
+        if (files == null) {
+            return errorResultParamNull(PARAM_FILE_LIST, paramFiles);
+        } else if (files.isEmpty()) {
+            return errorResult("seznam souborů je prázdný");
+        } else {
+            return okResult(files.get(0));
+        }
+    }
 }

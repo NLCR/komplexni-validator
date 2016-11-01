@@ -1,7 +1,9 @@
 package rzehan.shared.engine.validationFunctions;
 
 import rzehan.shared.engine.Engine;
+import rzehan.shared.engine.ValueEvaluation;
 import rzehan.shared.engine.ValueType;
+import rzehan.shared.engine.exceptions.ContractException;
 
 import java.io.*;
 
@@ -27,18 +29,22 @@ public class VfCheckChecksumFileGeneratedByGrammar extends ValidationFunction {
 
     @Override
     public ValidationResult validate() {
-        checkContractCompliance();
+        try {
+            checkContractCompliance();
+        } catch (ContractException e) {
+            return invalidContractNotMet(e);
+        }
 
-        File file = (File) valueParams.getParams(PARAM_CHECKSUM_FILE).get(0).getValue();
-
-        if (file == null) {
-            return new ValidationResult(false).withMessage(String.format("hodnota parametru %s funkce %s je null", PARAM_CHECKSUM_FILE, getName()));
-        } else if (!file.exists()) {
-            return new ValidationResult(false).withMessage(String.format("soubor %s neexistuje", file.getAbsoluteFile()));
-        } else if (file.isDirectory()) {
-            return new ValidationResult(false).withMessage(String.format("soubor %s je adresář", file.getAbsoluteFile()));
+        ValueEvaluation paramChecksumFile = valueParams.getParams(PARAM_CHECKSUM_FILE).get(0).getValueEvaluation();
+        File checksumFile = (File) paramChecksumFile.getData();
+        if (checksumFile == null) {
+            return invalidParamNull(PARAM_CHECKSUM_FILE, paramChecksumFile);
+        } else if (!checksumFile.exists()) {
+            return invalidFileDoesNotExist(checksumFile);
+        } else if (checksumFile.isDirectory()) {
+            return invalidFileIsDir(checksumFile);
         } else {
-            return validate(file);
+            return validate(checksumFile);
         }
     }
 
@@ -53,19 +59,19 @@ public class VfCheckChecksumFileGeneratedByGrammar extends ValidationFunction {
             while ((line = br.readLine()) != null) {
                 String[] parts = line.split("[ \\t]");//space or tabulator
                 if (parts.length == 1) {
-                    return new ValidationResult(false).withMessage(String.format("chybí oddělovač (mezera/tabulátor) na řádku '%s'", line));
+                    return invalid(String.format("chybí oddělovač (mezera/tabulátor) na řádku '%s'", line));
                 }
                 if (!is32bHex(parts[0])) {
-                    return new ValidationResult(false).withMessage(String.format("kontrolní součet není v 32B hexadecimálním zápisu, řádek: '%s'", line));
+                    return invalid(String.format("kontrolní součet není v 32B hexadecimálním zápisu, řádek: '%s'", line));
                 }
                 if (!isValidPath(parts[1])) {
-                    return new ValidationResult(false).withMessage(String.format("cesta k souboru není zapsána korektně, řádek: '%s'", line));
+                    return invalid(String.format("cesta k souboru není zapsána korektně, řádek: '%s'", line));
                 }
             }
             br.close();
-            return new ValidationResult(true);
+            return valid();
         } catch (IOException e) {
-            return new ValidationResult(false).withMessage(String.format("chyba při čtení souboru %s: %s", file.getAbsolutePath(), e.getMessage()));
+            return invalid(String.format("chyba při čtení souboru %s: %s", file.getAbsolutePath(), e.getMessage()));
         } finally {
             try {
                 if (br != null) {

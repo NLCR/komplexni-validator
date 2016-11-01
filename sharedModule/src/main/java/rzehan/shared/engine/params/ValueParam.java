@@ -1,5 +1,6 @@
 package rzehan.shared.engine.params;
 
+import rzehan.shared.engine.ValueEvaluation;
 import rzehan.shared.engine.ValueType;
 
 /**
@@ -17,6 +18,6 @@ public abstract class ValueParam {
         return type;
     }
 
-    public abstract Object getValue();
+    public abstract ValueEvaluation getValueEvaluation();
 
 }

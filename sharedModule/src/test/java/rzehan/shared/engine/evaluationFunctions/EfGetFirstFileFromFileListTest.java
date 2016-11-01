@@ -4,6 +4,7 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import rzehan.shared.engine.Engine;
 import rzehan.shared.engine.ProvidedVarsManagerImpl;
+import rzehan.shared.engine.ValueEvaluation;
 import rzehan.shared.engine.ValueType;
 
 import java.io.File;
@@ -12,6 +13,8 @@ import java.util.List;
 
 import static junit.framework.TestCase.fail;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
 
 /**
  * Created by martin on 21.10.16.
@@ -46,7 +49,7 @@ public class EfGetFirstFileFromFileListTest {
         engine.registerValueDefinition(LIST_VAR,
                 engine.buildValueDefinition(ValueType.FILE_LIST,
                         engine.buildEvaluationFunction("findFilesInDirByPattern")
-                                .withValueParam("dir", ValueType.FILE, new File("src/test/resources/monografie_1.2/b50eb6b0-f0a4-11e3-b72e-005056827e52"))
+                                .withValueParam("dir", ValueType.FILE, new ValueEvaluation(new File("src/test/resources/monografie_1.2/b50eb6b0-f0a4-11e3-b72e-005056827e52")))
                                 .withPatternParam("pattern", engine.buildPattern(engine.buildExpression(false, ".+")))
                 ));
     }
@@ -55,32 +58,31 @@ public class EfGetFirstFileFromFileListTest {
     @Test
     public void listFromConstantOk() {
         EvaluationFunction evFunction = engine.buildEvaluationFunction(FUNCTION_NAME)
-                .withValueParam(PARAM_FILE_LIST, ValueType.FILE_LIST, LIST);
-        assertEquals(LIST.get(0), evFunction.evaluate());
+                .withValueParam(PARAM_FILE_LIST, ValueType.FILE_LIST, new ValueEvaluation(LIST));
+        ValueEvaluation evaluation = evFunction.evaluate();
+        assertEquals(LIST.get(0), evaluation.getData());
     }
 
     @Test
     public void listFromReferenceOk() {
         EvaluationFunction evFunction = engine.buildEvaluationFunction(FUNCTION_NAME)
                 .withValueParamByReference(PARAM_FILE_LIST, ValueType.FILE_LIST, LIST_VAR);
-        assertEquals("txt", ((File) evFunction.evaluate()).getName());
+        ValueEvaluation result = evFunction.evaluate();
+        assertEquals("txt", ((File) result.getData()).getName());
     }
 
     @Test
     public void paramDirMissing() {
         EvaluationFunction evFunction = engine.buildEvaluationFunction(FUNCTION_NAME);
-        try {
-            evFunction.evaluate();
-            fail();
-        } catch (RuntimeException e) {
-            //chybí parametr ...
-        }
+        ValueEvaluation evaluation = evFunction.evaluate();
+        assertNull(evaluation.getData());
+        assertNotNull(evaluation.getErrorMessage());
     }
 
     @Test
     public void paramDirDuplicate() {
         EvaluationFunction evFunction = engine.buildEvaluationFunction(FUNCTION_NAME)
-                .withValueParam(PARAM_FILE_LIST, ValueType.FILE_LIST, LIST)
+                .withValueParam(PARAM_FILE_LIST, ValueType.FILE_LIST, new ValueEvaluation(LIST))
                 .withValueParamByReference(PARAM_FILE_LIST, ValueType.FILE_LIST, LIST_VAR);
         try {
             evFunction.evaluate();
@@ -94,25 +96,20 @@ public class EfGetFirstFileFromFileListTest {
     @Test
     public void paramListFromConstantInvalidParamType() {
         EvaluationFunction evFunction = engine.buildEvaluationFunction(FUNCTION_NAME)
-                .withValueParam(PARAM_FILE_LIST, ValueType.FILE, LIST);
-        try {
-            evFunction.evaluate();
-            fail();
-        } catch (RuntimeException e) {
-            //parametr ... není očekávaného typu ...
-        }
+                .withValueParam(PARAM_FILE_LIST, ValueType.FILE, new ValueEvaluation(LIST));
+
+        ValueEvaluation evaluation = evFunction.evaluate();
+        assertNull(evaluation.getData());
+        assertNotNull(evaluation.getErrorMessage());
     }
 
     @Test
     public void paramListFromReferenceInvalidParamType() {
         EvaluationFunction evFunction = engine.buildEvaluationFunction(FUNCTION_NAME)
                 .withValueParamByReference(PARAM_FILE_LIST, ValueType.FILE, LIST_VAR);
-        try {
-            evFunction.evaluate();
-            fail();
-        } catch (RuntimeException e) {
-            //parametr ... není očekávaného typu ...
-        }
+        ValueEvaluation evaluation = evFunction.evaluate();
+        assertNull(evaluation.getData());
+        assertNotNull(evaluation.getErrorMessage());
     }
 
 }

@@ -37,13 +37,13 @@ public class EngineTest {
         engine.registerValueDefinition("PSP_DIR",
                 engine.buildValueDefinition(ValueType.FILE,
                         engine.buildEvaluationFunction(EF_PROVIDED_FILE)
-                                .withValueParam("file_id", ValueType.STRING, "PSP_DIR")
+                                .withValueParam("file_id", ValueType.STRING, new ValueEvaluation("PSP_DIR"))
                 ));
         //this one is provided just temporarily
         engine.registerValueDefinition("PSP_ID",
                 engine.buildValueDefinition(ValueType.STRING,
                         engine.buildEvaluationFunction(EF_PROVIDED_STRING)
-                                .withValueParam("string_id", ValueType.STRING, "PSP_ID")
+                                .withValueParam("string_id", ValueType.STRING, new ValueEvaluation("PSP_ID"))
                 ));
 
 
@@ -51,7 +51,7 @@ public class EngineTest {
         engine.registerValueDefinition("INFO_FILES",
                 engine.buildValueDefinition(ValueType.FILE_LIST,
                         engine.buildEvaluationFunction(EF_FIND_FILES_IN_DIR_BY_PATTERN)
-                                .withValueParam("dir", ValueType.FILE, engine.getValueFromVariable("PSP_DIR"))
+                                .withValueParam("dir", ValueType.FILE, engine.getValueEvaluationByVariable("PSP_DIR"))
                                 .withPatternParamByReference("pattern", "INFO_FILENAME")
                 )
         );
@@ -68,7 +68,7 @@ public class EngineTest {
         //validation functions directly
         ValidationFunction singleInfoFileVf = engine.buildValidationFunction("checkFilelistHasExactSize")
                 .withValueParamByReference("files", ValueType.FILE_LIST, "INFO_FILES")
-                .withValueParam("size", ValueType.INTEGER, 1);
+                .withValueParam("size", ValueType.INTEGER, new ValueEvaluation(1));
         ValidationResult singleInfoFileResult = singleInfoFileVf.validate();
         assertTrue(singleInfoFileResult.getMessage(), singleInfoFileResult.isValid());
 
@@ -77,7 +77,7 @@ public class EngineTest {
                 engine.buildRule("SINGLE_INFO", Rule.Level.ERROR,
                         engine.buildValidationFunction("checkFilelistHasExactSize")
                                 .withValueParamByReference("files", ValueType.FILE_LIST, "INFO_FILES")
-                                .withValueParam("size", ValueType.INTEGER, 1))
+                                .withValueParam("size", ValueType.INTEGER, new ValueEvaluation(1)))
                         .setDescription("musi existovat prave jeden soubor info");
         ValidationResult ruleSingleInfoResult = ruleSingleInfo.getResult();
         assertTrue(ruleSingleInfoResult.getMessage(), ruleSingleInfoResult.isValid());
@@ -87,7 +87,7 @@ public class EngineTest {
                 engine.buildRule("SINGLE_INFO", Rule.Level.ERROR,
                         engine.buildValidationFunction("checkFilelistHasExactSize")
                                 .withValueParamByReference("files", ValueType.FILE_LIST, "INFO_FILES")
-                                .withValueParam("size", ValueType.INTEGER, 2))
+                                .withValueParam("size", ValueType.INTEGER, new ValueEvaluation(2)))
                         .setDescription("dva soubory info");
         ValidationResult ruleTwoInfosResult = ruleTwoInfos.getResult();
         assertFalse(ruleTwoInfosResult.getMessage(), ruleTwoInfosResult.isValid());

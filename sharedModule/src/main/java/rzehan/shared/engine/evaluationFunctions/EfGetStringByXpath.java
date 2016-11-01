@@ -1,12 +1,11 @@
 package rzehan.shared.engine.evaluationFunctions;
 
-import com.sun.xml.internal.bind.v2.TODO;
 import org.w3c.dom.Document;
 import org.xml.sax.SAXException;
 import rzehan.shared.engine.Engine;
+import rzehan.shared.engine.ValueEvaluation;
 import rzehan.shared.engine.ValueType;
-import rzehan.shared.engine.exceptions.ValidatorException;
-import rzehan.shared.engine.validationFunctions.ValidationResult;
+import rzehan.shared.engine.exceptions.ContractException;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -42,42 +41,53 @@ public class EfGetStringByXpath extends EvaluationFunction {
     }
 
     @Override
-    public String evaluate() {
-        checkContractCompliance();
+    public ValueEvaluation evaluate() {
+        try {
+            checkContractCompliance();
+        } catch (ContractException e) {
+            return errorResultContractNotMet(e);
+        }
 
-        File file = (File) valueParams.getParams(PARAM_XML_FILE).get(0).getValue();
-        String xpathStr = (String) valueParams.getParams(PARAM_XPATH).get(0).getValue();
+        ValueEvaluation paramXmlFile = valueParams.getParams(PARAM_XML_FILE).get(0).getValueEvaluation();
+        File xmlFile = (File) paramXmlFile.getData();
+        if (xmlFile == null) {
+            return errorResultParamNull(PARAM_XML_FILE, paramXmlFile);
+        } else if (!xmlFile.exists()) {
+            return errorResultFileDoesNotExist(xmlFile);
+        } else if (xmlFile.isDirectory()) {
+            return errorResultFileIsDir(xmlFile);
+        } else if (!xmlFile.canRead()) {
+            return errorResultCannotReadFile(xmlFile);
+        }
 
-        return evaluate(file, xpathStr);
+        ValueEvaluation paramXpath = valueParams.getParams(PARAM_XPATH).get(0).getValueEvaluation();
+        String xpathStr = (String) paramXpath.getData();
+        if (xpathStr == null) {
+            return errorResultParamNull(PARAM_XPATH, paramXpath);
+        } else if (xpathStr.isEmpty()) {
+            return errorResult(String.format("hodnota parametru %s je prázdná", PARAM_XPATH));
+        }
+
+        return evaluate(xmlFile, xpathStr);
     }
 
-    private String evaluate(File file, String xpathStr) {
+    private ValueEvaluation evaluate(File file, String xpathStr) {
         try {
             //TODO: pouzivat cache pro ziskavani dokumentu
             DocumentBuilder b = DocumentBuilderFactory.newInstance().newDocumentBuilder();
             Document doc = b.parse(new FileInputStream(file));
 
             XPath xPath = XPathFactory.newInstance().newXPath();
-            String result = (String) xPath.evaluate(xpathStr, doc.getDocumentElement(), XPathConstants.STRING);
-            return result;
+            String string = (String) xPath.evaluate(xpathStr, doc.getDocumentElement(), XPathConstants.STRING);
+            return okResult(string);
         } catch (ParserConfigurationException e) {
-            /*TODO: ve vysledku vracet pripadnou chybu*/
-            return null;
-            /*return new ValidationResult(false).withMessage(
-                    String.format("ParserConfigurationException při zpracování souboru %s: %s", file.getAbsolutePath(), e.getMessage()));*/
+            return errorResult(String.format("ParserConfigurationException při zpracování souboru %s: %s", file.getAbsolutePath(), e.getMessage()));
         } catch (SAXException e) {
-            /*TODO: ve vysledku vracet pripadnou chybu*/
-            return null;
-            /*return new ValidationResult(false).withMessage(
-                    String.format("Nebyl nalezen well-built xml dokument v souboru %s: %s", file.getAbsolutePath(), e.getMessage()));*/
+            return errorResult(String.format("Nebyl nalezen well-built xml dokument v souboru %s: %s", file.getAbsolutePath(), e.getMessage()));
         } catch (IOException e) {
-            /*TODO: ve vysledku vracet pripadnou chybu*/
-            return null;
-            /*return new ValidationResult(false).withMessage(
-                    String.format("I/O chyba při zpracování souboru %s: %s", file.getAbsolutePath(), e.getMessage()));*/
+            return errorResult(String.format("I/O chyba při zpracování souboru %s: %s", file.getAbsolutePath(), e.getMessage()));
         } catch (XPathExpressionException e) {
-            /*TODO: ve vysledku vracet pripadnou chybu*/
-            return null;
+            return errorResult(String.format("Neplatný xpath výraz '%s': %s", file.getAbsolutePath(), e.getMessage()));
         }
     }
 

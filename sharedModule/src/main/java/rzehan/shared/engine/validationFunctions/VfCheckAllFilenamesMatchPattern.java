@@ -1,7 +1,9 @@
 package rzehan.shared.engine.validationFunctions;
 
 import rzehan.shared.engine.Engine;
+import rzehan.shared.engine.ValueEvaluation;
 import rzehan.shared.engine.ValueType;
+import rzehan.shared.engine.exceptions.ContractException;
 import rzehan.shared.engine.params.PatternParam;
 
 import java.io.File;
@@ -32,22 +34,29 @@ public class VfCheckAllFilenamesMatchPattern extends ValidationFunction {
 
     @Override
     public ValidationResult validate() {
-        checkContractCompliance();
+        try {
+            checkContractCompliance();
+        } catch (ContractException e) {
+            return invalidContractNotMet(e);
+        }
 
-        List<File> files = (List<File>) valueParams.getParams(PARAM_FILES).get(0).getValue();
-        PatternParam paternParam = patternParams.getParam(PARAM_PATTERN);
-
+        ValueEvaluation paramFiles = valueParams.getParams(PARAM_FILES).get(0).getValueEvaluation();
+        List<File> files = (List<File>) paramFiles.getData();
         if (files == null) {
-            return new ValidationResult(false).withMessage(String.format("hodnota parametru %s funkce %s je null", PARAM_FILES, getName()));
-        } else if (paternParam == null) {
-            return new ValidationResult(false).withMessage(String.format("hodnota parametru %s funkce %s je null", PARAM_PATTERN, getName()));
+            return invalidParamNull(PARAM_FILES, paramFiles);
+        }
+
+
+        PatternParam paternParam = patternParams.getParam(PARAM_PATTERN);
+        if (paternParam == null) {
+            return invalidParamNull(PARAM_PATTERN, null);
         } else {
             for (File file : files) {
                 if (!paternParam.matches(file.getName())) {
-                    return new ValidationResult(false).withMessage(String.format("Název souboru %s neodpovídá vzoru %s", file.getName(), paternParam.toString()));
+                    return invalid(String.format("Název souboru %s neodpovídá vzoru %s", file.getName(), paternParam.toString()));
                 }
             }
-            return new ValidationResult(true);
+            return valid();
         }
     }
 

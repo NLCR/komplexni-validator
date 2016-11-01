@@ -20,7 +20,7 @@ public class ValueDefinition {
     }
 
 
-    public Object evaluate() {
+    public ValueEvaluation evaluate() {
         return evaluationFunction.evaluate();
     }
 

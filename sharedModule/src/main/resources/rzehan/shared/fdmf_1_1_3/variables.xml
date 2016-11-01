@@ -19,7 +19,7 @@
         </evaluation>
     </value-def>
 
-    <value-def name="PSP_ID" type="STRING">
+    <value-def name="PSP_IDX" type="STRING">
         <evaluation functionName="getStringByXpath">
             <params>
                 <value name="xml_file" type="FILE">

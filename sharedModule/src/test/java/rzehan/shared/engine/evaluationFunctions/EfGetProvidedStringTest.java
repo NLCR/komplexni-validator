@@ -4,15 +4,18 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import rzehan.shared.engine.Engine;
 import rzehan.shared.engine.ProvidedVarsManagerImpl;
+import rzehan.shared.engine.ValueEvaluation;
 import rzehan.shared.engine.ValueType;
 
 import static junit.framework.TestCase.fail;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
 
 /**
  * Created by martin on 21.10.16.
  */
-public class EfProvidedStringTest {
+public class EfGetProvidedStringTest {
 
     private static final String FUNCTION_NAME = "getProvidedString";
     private static final String PARAM_NAME = "string_id";
@@ -33,26 +36,23 @@ public class EfProvidedStringTest {
     @Test
     public void ok() {
         EvaluationFunction evFunction = engine.buildEvaluationFunction(FUNCTION_NAME)
-                .withValueParam(PARAM_NAME, ValueType.STRING, PSP_ID_STRINGID);
-        assertEquals(PSP_ID_VALUE, evFunction.evaluate());
+                .withValueParam(PARAM_NAME, ValueType.STRING, new ValueEvaluation(PSP_ID_STRINGID));
+        assertEquals(PSP_ID_VALUE, evFunction.evaluate().getData());
     }
 
     @Test
     public void missingParam() {
         EvaluationFunction evFunction = engine.buildEvaluationFunction(FUNCTION_NAME);
-        try {
-            evFunction.evaluate();
-            fail();
-        } catch (RuntimeException e) {
-            //chybí parametr ...
-        }
+        ValueEvaluation evaluation = evFunction.evaluate();
+        assertNull(evaluation.getData());
+        assertNotNull(evaluation.getErrorMessage());
     }
 
     @Test
     public void duplicateParam() {
         EvaluationFunction evFunction = engine.buildEvaluationFunction(FUNCTION_NAME)
-                .withValueParam(PARAM_NAME, ValueType.STRING, PSP_ID_STRINGID)
-                .withValueParam(PARAM_NAME, ValueType.STRING, "PSPID");
+                .withValueParam(PARAM_NAME, ValueType.STRING, new ValueEvaluation(PSP_ID_STRINGID))
+                .withValueParam(PARAM_NAME, ValueType.STRING, new ValueEvaluation("PSPID"));
         try {
             evFunction.evaluate();
             //fail();
@@ -65,12 +65,9 @@ public class EfProvidedStringTest {
     @Test
     public void invalidParamType() {
         EvaluationFunction evFunction = engine.buildEvaluationFunction(FUNCTION_NAME)
-                .withValueParam(PARAM_NAME, ValueType.FILE, PSP_ID_STRINGID);
-        try {
-            evFunction.evaluate();
-            fail();
-        } catch (RuntimeException e) {
-            //parametr ... není očekávaného typu ...
-        }
+                .withValueParam(PARAM_NAME, ValueType.FILE, new ValueEvaluation(PSP_ID_STRINGID));
+        ValueEvaluation evaluation = evFunction.evaluate();
+        assertNull(evaluation.getData());
+        assertNotNull(evaluation.getErrorMessage());
     }
 }

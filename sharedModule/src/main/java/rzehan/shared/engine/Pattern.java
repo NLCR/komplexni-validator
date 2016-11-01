@@ -1,7 +1,7 @@
 package rzehan.shared.engine;
 
 import rzehan.shared.engine.exceptions.InvalidVariableTypeException;
-import rzehan.shared.engine.exceptions.ValidatorException;
+import rzehan.shared.engine.exceptions.TemporaryValidatorException;
 
 import java.util.*;
 import java.util.regex.Matcher;
@@ -131,9 +131,10 @@ public class Pattern {
 
         private void evaluateAllVariables() {
             for (String varName : variableNames) {
-                Object varValue = engine.getValueFromVariable(varName);
+                ValueEvaluation evaluation = engine.getValueEvaluationByVariable(varName);
+                Object varValue = evaluation.getData();
                 if (varValue == null) {
-                    throw new ValidatorException("proměnná " + varName + " je null");
+                    throw new TemporaryValidatorException("proměnná " + varName + " je null");
                 }
                 if (!(varValue instanceof String)) {
                     throw new InvalidVariableTypeException(varName, "String");

@@ -1,7 +1,9 @@
 package rzehan.shared.engine.validationFunctions;
 
 import rzehan.shared.engine.Engine;
+import rzehan.shared.engine.ValueEvaluation;
 import rzehan.shared.engine.ValueType;
+import rzehan.shared.engine.exceptions.ContractException;
 
 import java.io.File;
 import java.util.List;
@@ -28,30 +30,34 @@ public class VfCheckFilenamesLengthsSame extends ValidationFunction {
 
     @Override
     public ValidationResult validate() {
-        checkContractCompliance();
+        try {
+            checkContractCompliance();
+        } catch (ContractException e) {
+            return invalidContractNotMet(e);
+        }
 
-        List<File> files = (List<File>) valueParams.getParams(PARAM_FILES).get(0).getValue();
-
+        ValueEvaluation paramFiles = valueParams.getParams(PARAM_FILES).get(0).getValueEvaluation();
+        List<File> files = (List<File>) paramFiles.getData();
         if (files == null) {
-            return new ValidationResult(false).withMessage(String.format("hodnota parametru %s funkce %s je null", PARAM_FILES, getName()));
-        } else {
-            Integer expectedLength = null;
-            for (File file : files) {
-                if (!file.exists()) {
-                    return new ValidationResult(true).withMessage(String.format("soubor %d neexistuje", file.getAbsolutePath()));
-                } else {
-                    int length = file.getName().length();
-                    if (expectedLength == null) {
-                        expectedLength = length;
-                    } else if (length != expectedLength) {
-                        return new ValidationResult(true).withMessage(
-                                String.format("název souboru %s má odlišnou délku (%d) od ostatních názvů (%d)", file.getName(), length, expectedLength)
-                        );
-                    }
+            return invalidParamNull(PARAM_FILES, paramFiles);
+        }
+
+        Integer expectedLength = null;
+        for (File file : files) {
+            if (!file.exists()) {
+                return invalidFileDoesNotExist(file);
+            } else {
+                int length = file.getName().length();
+                if (expectedLength == null) {
+                    expectedLength = length;
+                } else if (length != expectedLength) {
+                    return invalid(String.format("název souboru %s má odlišnou délku (%d) od ostatních názvů (%d)",
+                            file.getName(), length, expectedLength)
+                    );
                 }
             }
-            return new ValidationResult(true);
         }
+        return valid();
     }
 
 }

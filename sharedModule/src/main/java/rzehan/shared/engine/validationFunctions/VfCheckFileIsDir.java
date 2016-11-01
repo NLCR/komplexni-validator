@@ -1,7 +1,9 @@
 package rzehan.shared.engine.validationFunctions;
 
 import rzehan.shared.engine.Engine;
+import rzehan.shared.engine.ValueEvaluation;
 import rzehan.shared.engine.ValueType;
+import rzehan.shared.engine.exceptions.ContractException;
 
 import java.io.File;
 
@@ -27,18 +29,22 @@ public class VfCheckFileIsDir extends ValidationFunction {
 
     @Override
     public ValidationResult validate() {
-        checkContractCompliance();
+        try {
+            checkContractCompliance();
+        } catch (ContractException e) {
+            return invalidContractNotMet(e);
+        }
 
-        File file = (File) valueParams.getParams(PARAM_FILE).get(0).getValue();
-
+        ValueEvaluation paramFile = valueParams.getParams(PARAM_FILE).get(0).getValueEvaluation();
+        File file = (File) paramFile.getData();
         if (file == null) {
-            return new ValidationResult(false).withMessage(String.format("hodnota parametru %s funkce %s je null", PARAM_FILE, getName()));
+            return invalidParamNull(PARAM_FILE, paramFile);
         } else if (!file.exists()) {
-            return new ValidationResult(false).withMessage(String.format("soubor %s neexistuje", file.getAbsoluteFile()));
+            return invalidFileDoesNotExist(file);
         } else if (!file.isDirectory()) {
-            return new ValidationResult(false).withMessage(String.format("soubor %s není adresář", file.getAbsoluteFile()));
+            return invalidFileIsNotDir(file);
         } else {
-            return new ValidationResult(true);
+            return valid();
         }
     }
 

@@ -4,7 +4,7 @@ import com.mycila.xmltool.XMLDoc;
 import com.mycila.xmltool.XMLTag;
 import org.w3c.dom.Element;
 import rzehan.shared.engine.evaluationFunctions.EvaluationFunction;
-import rzehan.shared.engine.exceptions.ValidatorException;
+import rzehan.shared.engine.exceptions.ValidatorConfigurationException;
 import rzehan.shared.engine.validationFunctions.ValidationFunction;
 
 import java.io.File;
@@ -23,21 +23,20 @@ public class EngineInitiliazer {
         this.engine = engine;
     }
 
-    public void processFile(File patternsFile) {
+    public void processFile(File patternsFile) throws ValidatorConfigurationException {
         XMLTag doc = XMLDoc.from(patternsFile, true);
-        String currentTagName = doc.getCurrentTagName();
         if (!"dmf".equals(doc.getCurrentTagName())) {
-            throw new ValidatorException("root element není dmf");
+            throw new ValidatorConfigurationException("root element není dmf");
         }
 
         for (Element childEl : doc.getChildElement()) {
             String elementName = childEl.getTagName();
             switch (elementName) {
                 case "pattern-def":
-                    processPatternDefinition(childEl);
+                    processNamedPatternDefinition(childEl);
                     break;
                 case "value-def":
-                    processValueDefinition(childEl);
+                    processNamedValueDefinition(childEl);
                     break;
                 case "rules-section":
                     processRulesSectionDefinition(childEl);
@@ -45,20 +44,20 @@ public class EngineInitiliazer {
                 default:
                     //nothing
                     //System.out.println(String.format("ignoring element %s", elementName));
-                    //throw new ValidatorException("unexpected element '" + childEl.getTagName() + "'");
+                    //throw new TemporaryValidatorException("unexpected element '" + childEl.getTagName() + "'");
             }
         }
     }
 
-    private void processRulesSectionDefinition(Element rulesSectionEl) {
+    private void processRulesSectionDefinition(Element rulesSectionEl) throws ValidatorConfigurationException {
         String name = rulesSectionEl.getAttribute("name");
+        System.out.println(String.format("processing rule-section %s'", name));
         RulesSection section = engine.buildRuleSection(name);
         String description = rulesSectionEl.getAttribute("description");
         if (description != null && !description.isEmpty()) {
             section.setDescription(description);
         }
         section.setEnabled(parseBooleanAttribute("enabled", true));
-        //System.out.println(String.format("registering rule-section '%s'", name));
         engine.registerRuleSection(section);
         //rules
         List<Element> ruleEls = XmlUtils.getChildrenElementsByName(rulesSectionEl, "rule");
@@ -67,7 +66,7 @@ public class EngineInitiliazer {
         }
     }
 
-    private void processRule(RulesSection section, Element ruleEl) {
+    private void processRule(RulesSection section, Element ruleEl) throws ValidatorConfigurationException {
         String name = ruleEl.getAttribute("name");
         Rule.Level level = parseLevel(ruleEl.getAttribute("level"), Rule.Level.ERROR);
 
@@ -86,7 +85,7 @@ public class EngineInitiliazer {
 
     }
 
-    private ValidationFunction parseValidationFunction(Element validationEl) {
+    private ValidationFunction parseValidationFunction(Element validationEl) throws ValidatorConfigurationException {
         String name = validationEl.getAttribute("functionName");
         Element paramsEl = XmlUtils.getChildrenElementsByName(validationEl, "params").get(0);
         ValidationFunction function = engine.buildValidationFunction(name);
@@ -104,9 +103,9 @@ public class EngineInitiliazer {
     }
 
 
-    private void processPatternDefinition(Element patternEl) {
+    private void processNamedPatternDefinition(Element patternEl) {
         String varName = patternEl.getAttribute("name");
-        //System.out.println("registering pattern " + varName);
+        System.out.println("processing named-pattern " + varName);
         List<Pattern.Expression> expressions = new ArrayList<>();
         List<Element> expressionEls = XmlUtils.getChildrenElementsByName(patternEl, "expression");
         for (Element expressionEl : expressionEls) {
@@ -130,40 +129,41 @@ public class EngineInitiliazer {
         }
     }
 
-    private void processValueDefinition(Element valueDefEl) {
+    private void processNamedValueDefinition(Element valueDefEl) throws ValidatorConfigurationException {
         String varName = valueDefEl.getAttribute("name");
         ValueType varType = ValueType.valueOf(valueDefEl.getAttribute("type"));
-        //System.out.println(String.format("registering value %s (%s) ", varName, varType));
+        System.out.println(String.format("processing named-value %s (%s) ", varName, varType));
         List<Element> efEls = XmlUtils.getChildrenElementsByName(valueDefEl, "evaluation");
         if (!efEls.isEmpty()) {//evaluation function
-            //System.out.println("registerig value - reference");
+            System.out.println("processing named-value - by definition");
             Element efEl = efEls.get(0);
             EvaluationFunction ef = buildEf(efEl);
             ValueDefinition valueDefinition = engine.buildValueDefinition(varType, ef);
+            System.out.println(String.format("registering named-value (by definition) %s",varName));
             engine.registerValueDefinition(varName, valueDefinition);
         } else {//constant
-            //System.out.println("registerig value - constant");
+            System.out.println("processing named-value - by constant");
             System.out.println(valueDefEl.toString());
             Object value = parseConstantValueDefinition(valueDefEl, varType);
-            engine.registerValue(varName, value);
+            System.out.println(String.format("registering named-value (by constant)"));
+            engine.registerValue(varName, new ValueEvaluation(value));
         }
     }
 
 
-    private Object parseConstantValueDefinition(Element varEl, ValueType paramType) {
+    private Object parseConstantValueDefinition(Element varEl, ValueType paramType) throws ValidatorConfigurationException {
         switch (paramType) {
             case STRING:
                 return varEl.getTextContent();
             case INTEGER:
                 return Integer.valueOf(varEl.getTextContent());
             default:
-                //todo: lepsi chybovou hlasku
-                throw new ValidatorException("cannot use " + paramType + " here");
+                throw new ValidatorConfigurationException(String.format("není zde možné použít parametr typu %s", paramType));
         }
     }
 
 
-    private EvaluationFunction buildEf(Element efEl) {
+    private EvaluationFunction buildEf(Element efEl) throws ValidatorConfigurationException {
         String efName = efEl.getAttribute("functionName");
         //System.out.println("buildEf (" + efName + ")");
         EvaluationFunction ef = engine.buildEvaluationFunction(efName);
@@ -172,7 +172,7 @@ public class EngineInitiliazer {
         return ef;
     }
 
-    private void addParams(Function function, Element paramsEl) {
+    private void addParams(Function function, Element paramsEl) throws ValidatorConfigurationException {
         // value params
         List<Element> valueEls = XmlUtils.getChildrenElementsByName(paramsEl, "value");
         for (Element valueEl : valueEls) {
@@ -188,11 +188,11 @@ public class EngineInitiliazer {
             } else if (!evaluationEls.isEmpty()) { //param anonymous definition
                 Element evaluationEl = evaluationEls.get(0);
                 EvaluationFunction valueParamEf = buildEf(evaluationEl);
-                Object paramValue = valueParamEf.evaluate();
-                function.withValueParam(paramName, paramType, paramValue);
+                ValueEvaluation evaluation = valueParamEf.evaluate();
+                function.withValueParam(paramName, paramType, evaluation);
             } else {//param is constant
                 Object paramValue = parseConstantValueDefinition(valueEl, paramType);
-                function.withValueParam(paramName, paramType, paramValue);
+                function.withValueParam(paramName, paramType, new ValueEvaluation(paramValue));
             }
         }
         //pattern params

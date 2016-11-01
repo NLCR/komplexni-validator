@@ -1,6 +1,7 @@
 package rzehan.shared.engine.evaluationFunctions;
 
 import rzehan.shared.engine.Engine;
+import rzehan.shared.engine.ValueEvaluation;
 import rzehan.shared.engine.ValueType;
 
 /**
@@ -12,7 +13,7 @@ public class TestUtils {
         engine.registerValueDefinition(varName,
                 engine.buildValueDefinition(ValueType.INTEGER,
                         engine.buildEvaluationFunction("getProvidedInteger")
-                                .withValueParam("int_id", ValueType.STRING, varName)
+                                .withValueParam("int_id", ValueType.STRING, new ValueEvaluation(varName))
 
                 )
         );
@@ -22,7 +23,7 @@ public class TestUtils {
         engine.registerValueDefinition(varName,
                 engine.buildValueDefinition(ValueType.STRING,
                         engine.buildEvaluationFunction("getProvidedString")
-                                .withValueParam("string_id", ValueType.STRING, varName)
+                                .withValueParam("string_id", ValueType.STRING, new ValueEvaluation(varName))
 
                 )
         );
@@ -32,7 +33,7 @@ public class TestUtils {
         engine.registerValueDefinition(varName,
                 engine.buildValueDefinition(ValueType.FILE,
                         engine.buildEvaluationFunction("getProvidedFile")
-                                .withValueParam("file_id", ValueType.STRING, varName)
+                                .withValueParam("file_id", ValueType.STRING, new ValueEvaluation(varName))
 
                 )
         );

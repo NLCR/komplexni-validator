@@ -1,12 +1,10 @@
 package rzehan.shared.engine.validationFunctions;
 
-import rzehan.shared.engine.Engine;
-import rzehan.shared.engine.Function;
-import rzehan.shared.engine.Pattern;
-import rzehan.shared.engine.ValueType;
-import rzehan.shared.engine.exceptions.ValidatorException;
+import rzehan.shared.engine.*;
+import rzehan.shared.engine.exceptions.ContractException;
 import rzehan.shared.engine.params.*;
 
+import java.io.File;
 import java.util.*;
 
 /**
@@ -23,7 +21,7 @@ public abstract class ValidationFunction implements Function {
         this.contract = contract;
     }
 
-    protected void checkContractCompliance() {
+    protected void checkContractCompliance() throws ContractException {
         contract.checkCompliance(this);
     }
 
@@ -31,9 +29,47 @@ public abstract class ValidationFunction implements Function {
 
     public abstract String getName();
 
+    ValidationResult valid() {
+        return new ValidationResult(true);
+    }
+
+    ValidationResult invalid(String message) {
+        return new ValidationResult(false).withMessage(message);
+    }
+
+    ValidationResult invalidContractNotMet(ContractException e) {
+        return new ValidationResult(false).withMessage(String.format("nesplněn kontrakt validační funkce %s: %s", getName(), e.getMessage()));
+    }
+
+    ValidationResult invalidParamNull(String paramName, ValueEvaluation paramEvaluation) {
+        String message = paramEvaluation != null ? paramEvaluation.getErrorMessage() : null;
+        return new ValidationResult(false).withMessage(String.format("neznámá hodnota parametru %s: %s", paramName, message));
+    }
+
+    ValidationResult invalidFileDoesNotExist(File file) {
+        return new ValidationResult(false).withMessage(String.format("soubor %s neexistuje", file.getAbsoluteFile()));
+    }
+
+    ValidationResult invalidFileIsDir(File file) {
+        return new ValidationResult(false).withMessage(String.format("soubor %s je adresář", file.getAbsoluteFile()));
+    }
+
+    ValidationResult invalidFileIsNotDir(File file) {
+        return new ValidationResult(false).withMessage(String.format("soubor %s není adresář", file.getAbsoluteFile()));
+    }
+
+    ValidationResult invalidCannotReadFile(File file) {
+        return new ValidationResult(false).withMessage(String.format("nelze číst soubor %s", file.getAbsoluteFile()));
+    }
+
+    ValidationResult invalidCannotReadDir(File dir) {
+        return new ValidationResult(false).withMessage(String.format("nelze číst adresář %s", dir.getAbsoluteFile()));
+    }
+
+
     @Override
-    public ValidationFunction withValueParam(String paramName, ValueType valueType, Object value) {
-        valueParams.addParam(paramName, new ValueParamConstant(valueType, value));
+    public ValidationFunction withValueParam(String paramName, ValueType valueType, ValueEvaluation valueEvaluation) {
+        valueParams.addParam(paramName, new ValueParamConstant(valueType, valueEvaluation));
         return this;
     }
 
@@ -151,16 +187,16 @@ public abstract class ValidationFunction implements Function {
             return this;
         }
 
-        public void checkCompliance(ValidationFunction function) {
+        public void checkCompliance(ValidationFunction function) throws ContractException {
             checkValueParamComplience(function.valueParams, function.getName());
             checkPatternParamCompliance(function.patternParams, function.getName());
         }
 
-        private void checkValueParamComplience(ValueParams valueParams, String functionName) {
+        private void checkValueParamComplience(ValueParams valueParams, String functionName) throws ContractException {
             //all actual params are expected
             for (String actualParam : valueParams.keySet()) {
                 if (!valueParamsSpec.keySet().contains(actualParam)) {
-                    throw new ValidatorException(String.format("%s: nalezen neočekávaný parametr (hodnota) %s", functionName, actualParam));
+                    throw new ContractException(String.format("%s: nalezen neočekávaný parametr (hodnota) %s", functionName, actualParam));
                 }
             }
             //all expected params found and comply to spec
@@ -168,31 +204,31 @@ public abstract class ValidationFunction implements Function {
                 List<ValueParam> paramValues = valueParams.getParams(expectedParamName);
                 ValueParamSpec spec = valueParamsSpec.get(expectedParamName);
                 if (spec.getMinOccurs() != null && paramValues.size() < spec.getMinOccurs()) {
-                    throw new ValidatorException(String.format("%s: parametr %s musí mít alespoň %d hodnot, nalezeno %d", functionName, expectedParamName, spec.getMinOccurs(), paramValues.size()));
+                    throw new ContractException(String.format("%s: parametr %s musí mít alespoň %d hodnot, nalezeno %d", functionName, expectedParamName, spec.getMinOccurs(), paramValues.size()));
                 }
                 if (spec.getMaxOccurs() != null && paramValues.size() > spec.getMaxOccurs()) {
-                    throw new ValidatorException(String.format("%s: parametr %s musí mít nejvýše %d hodnot, nalezeno %d", functionName, expectedParamName, spec.getMaxOccurs(), paramValues.size()));
+                    throw new ContractException(String.format("%s: parametr %s musí mít nejvýše %d hodnot, nalezeno %d", functionName, expectedParamName, spec.getMaxOccurs(), paramValues.size()));
                 }
                 for (ValueParam param : paramValues) {
                     if (param.getType() != spec.getType()) {
-                        throw new ValidatorException(String.format("%s: parametr %s musí být vždy typu %s, nalezen typ %s", functionName, expectedParamName, spec.getType(), param.getType()));
+                        throw new ContractException(String.format("%s: parametr %s musí být vždy typu %s, nalezen typ %s", functionName, expectedParamName, spec.getType(), param.getType()));
                     }
                 }
             }
 
         }
 
-        private void checkPatternParamCompliance(PatternParams patternParams, String functionName) {
+        private void checkPatternParamCompliance(PatternParams patternParams, String functionName) throws ContractException {
             //all actual params are expected
             for (String actualParam : patternParams.keySet()) {
                 if (!expectedPatternParams.contains(actualParam)) {
-                    throw new ValidatorException(String.format("%s: nalezen neočekávaný parametr (vzor) %s", functionName, actualParam));
+                    throw new ContractException(String.format("%s: nalezen neočekávaný parametr (vzor) %s", functionName, actualParam));
                 }
             }
             //all expected params found
             for (String expectedParam : expectedPatternParams) {
                 if (!patternParams.keySet().contains(expectedParam)) {
-                    throw new ValidatorException(String.format("%s: nenalezen očekávaný parametr (vzor) %s", functionName, expectedParam));
+                    throw new ContractException(String.format("%s: nenalezen očekávaný parametr (vzor) %s", functionName, expectedParam));
                 }
             }
         }

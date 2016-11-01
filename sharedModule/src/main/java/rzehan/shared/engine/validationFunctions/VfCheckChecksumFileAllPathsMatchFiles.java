@@ -1,7 +1,11 @@
 package rzehan.shared.engine.validationFunctions;
 
 import rzehan.shared.engine.Engine;
+import rzehan.shared.engine.ValueEvaluation;
 import rzehan.shared.engine.ValueType;
+import rzehan.shared.engine.exceptions.ContractException;
+import rzehan.shared.engine.exceptions.EmptyParamEvaluationException;
+import rzehan.shared.engine.exceptions.InvalidPathException;
 import rzehan.shared.engine.params.ValueParam;
 
 import java.io.*;
@@ -34,37 +38,56 @@ public class VfCheckChecksumFileAllPathsMatchFiles extends ValidationFunction {
 
     @Override
     public ValidationResult validate() {
-        checkContractCompliance();
+        try {
+            checkContractCompliance();
+        } catch (ContractException e) {
+            return invalidContractNotMet(e);
+        }
 
-        File checksumFile = (File) valueParams.getParams(PARAM_CHECKSUM_FILE).get(0).getValue();
-        File pspRootDir = checksumFile.getParentFile();
-
+        ValueEvaluation paramChecksumFile = valueParams.getParams(PARAM_CHECKSUM_FILE).get(0).getValueEvaluation();
+        File checksumFile = (File) paramChecksumFile.getData();
         if (checksumFile == null) {
-            return new ValidationResult(false).withMessage(String.format("hodnota parametru %s funkce %s je null", PARAM_CHECKSUM_FILE, getName()));
+            return invalidParamNull(PARAM_CHECKSUM_FILE, paramChecksumFile);
         } else if (!checksumFile.exists()) {
-            return new ValidationResult(false).withMessage(String.format("soubor %s neexistuje", checksumFile.getAbsoluteFile()));
+            return invalidFileDoesNotExist(checksumFile);
         } else if (checksumFile.isDirectory()) {
-            return new ValidationResult(false).withMessage(String.format("soubor %s je adresář", checksumFile.getAbsoluteFile()));
-        } else if (!pspRootDir.exists()) {
-            return new ValidationResult(false).withMessage(String.format("soubor %s neexistuje", pspRootDir.getAbsoluteFile()));
+            return invalidFileIsDir(checksumFile);
+        }
+
+        File pspRootDir = checksumFile.getParentFile();
+        if (!pspRootDir.exists()) {
+            return invalidFileDoesNotExist(pspRootDir);
         } else if (!pspRootDir.isDirectory()) {
-            return new ValidationResult(false).withMessage(String.format("soubor %s není adresář", pspRootDir.getAbsoluteFile()));
+            return invalidFileIsNotDir(pspRootDir);
         } else {
-            Set<File> files = mergeAbsolutFilesFromParams();
-            return validate(checksumFile, pspRootDir, files);
+            try {
+                Set<File> files = mergeAbsolutFilesFromParams();
+                return validate(checksumFile, pspRootDir, files);
+            } catch (EmptyParamEvaluationException e) {
+                return invalidParamNull(e.getParamName(), e.getEvaluation());
+            }
         }
     }
 
-    private Set<File> mergeAbsolutFilesFromParams() {
+    private Set<File> mergeAbsolutFilesFromParams() throws EmptyParamEvaluationException {
         Set<File> result = new HashSet<>();
         List<ValueParam> fileParams = valueParams.getParams(PARAM_FILE);
         for (ValueParam param : fileParams) {
-            File file = (File) param.getValue();
+            ValueEvaluation evaluation = param.getValueEvaluation();
+            File file = (File) evaluation.getData();
+            if (file == null) {
+                throw new EmptyParamEvaluationException(PARAM_FILE, evaluation);
+            }
+
             result.add(file.getAbsoluteFile());
         }
         List<ValueParam> filesParams = valueParams.getParams(PARAM_FILES);
         for (ValueParam param : filesParams) {
-            List<File> files = (List<File>) param.getValue();
+            ValueEvaluation evaluation = param.getValueEvaluation();
+            List<File> files = (List<File>) evaluation.getData();
+            if (files == null) {
+                throw new EmptyParamEvaluationException(PARAM_FILES, evaluation);
+            }
             for (File file : files) {
                 result.add(file.getAbsoluteFile());
             }
@@ -91,15 +114,15 @@ public class VfCheckChecksumFileAllPathsMatchFiles extends ValidationFunction {
                 try {
                     File file = toAbsoluteFile(filepath, pspRootDir);
                     filesFromFile.add(file);
-                } catch (PathInvalidException e) {
-                    return new ValidationResult(false).withMessage(String.format("cesta k souboru není zapsána korektně: '%s'", filepath));
+                } catch (InvalidPathException e) {
+                    return invalid(String.format("cesta k souboru není zapsána korektně: '%s'", e.getPath()));
                 }
             }
             br.close();
-            return same(filesFromParams, filesFromFile);
+            return setsAreSame(filesFromParams, filesFromFile);
             //return new ValidationResult(true);
         } catch (IOException e) {
-            return new ValidationResult(false).withMessage(String.format("chyba při čtení souboru %s: %s", checksumFile.getAbsolutePath(), e.getMessage()));
+            return invalid(String.format("chyba při čtení souboru %s: %s", checksumFile.getAbsolutePath(), e.getMessage()));
         } finally {
             try {
                 if (br != null) {
@@ -114,22 +137,22 @@ public class VfCheckChecksumFileAllPathsMatchFiles extends ValidationFunction {
         }
     }
 
-    private ValidationResult same(Set<File> filesFromParams, Set<File> filesFromFile) {
+    private ValidationResult setsAreSame(Set<File> filesFromParams, Set<File> filesFromFile) {
         for (File file : filesFromParams) {
             if (!filesFromFile.contains(file)) {
-                return new ValidationResult(false).withMessage(String.format("nenalezen záznam pro soubor %s", file.getAbsolutePath()));
+                return invalid(String.format("nenalezen záznam pro soubor %s", file.getAbsolutePath()));
             }
         }
 
         for (File file : filesFromFile) {
             if (!filesFromParams.contains(file)) {
-                return new ValidationResult(false).withMessage(String.format("nalezený soubor nebyl očekáván: %s", file.getAbsolutePath()));
+                return invalid(String.format("nalezený soubor nebyl očekáván: %s", file.getAbsolutePath()));
             }
         }
-        return new ValidationResult(true);
+        return valid();
     }
 
-    private File toAbsoluteFile(String filePath, File pspRootDir) throws PathInvalidException {
+    private File toAbsoluteFile(String filePath, File pspRootDir) throws InvalidPathException {
         //prevod do "zakladni formy", tj. zacinajici rovnou nazvem souboru/adresare
         //tj. "neco", "\neco", "/neco", "./neco", ".\neco" -> "neco"
         if (filePath.startsWith("./") || filePath.startsWith(".\\")) {
@@ -140,7 +163,7 @@ public class VfCheckChecksumFileAllPathsMatchFiles extends ValidationFunction {
         // tenhle tvar nesmi ale zacinat na tecky ani lomitka
         if (filePath.matches("^[\\./\\\\]+.*")) {
             System.out.println(filePath);
-            throw new PathInvalidException();
+            throw new InvalidPathException(filePath);
         }
         String[] segments = filePath.split("[\\\\/]");
         File file = new File(pspRootDir, buildFileFromSegments(segments));
@@ -156,9 +179,6 @@ public class VfCheckChecksumFileAllPathsMatchFiles extends ValidationFunction {
             builder.append(segments[i]);
         }
         return builder.toString();
-    }
-
-    private static class PathInvalidException extends Exception {
     }
 
 

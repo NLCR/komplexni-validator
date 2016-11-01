@@ -1,7 +1,9 @@
 package rzehan.shared.engine.validationFunctions;
 
 import rzehan.shared.engine.Engine;
+import rzehan.shared.engine.ValueEvaluation;
 import rzehan.shared.engine.ValueType;
+import rzehan.shared.engine.exceptions.ContractException;
 import rzehan.shared.engine.params.PatternParam;
 
 import java.io.File;
@@ -30,19 +32,25 @@ public class VfCheckFilenameMatchesPattern extends ValidationFunction {
 
     @Override
     public ValidationResult validate() {
-        checkContractCompliance();
+        try {
+            checkContractCompliance();
+        } catch (ContractException e) {
+            return invalidContractNotMet(e);
+        }
 
-        File file = (File) valueParams.getParams(PARAM_FILE).get(0).getValue();
-        PatternParam paternParam = patternParams.getParam(PARAM_PATTERN);
-
+        ValueEvaluation paramFile = valueParams.getParams(PARAM_FILE).get(0).getValueEvaluation();
+        File file = (File) paramFile.getData();
         if (file == null) {
-            return new ValidationResult(false).withMessage(String.format("hodnota parametru %s funkce %s je null", PARAM_FILE, getName()));
-        } else if (paternParam == null) {
-            return new ValidationResult(false).withMessage(String.format("hodnota parametru %s funkce %s je null", PARAM_PATTERN, getName()));
+            return invalidParamNull(PARAM_FILE, paramFile);
+        }
+
+        PatternParam paternParam = patternParams.getParam(PARAM_PATTERN);
+        if (paternParam == null) {
+            return invalidParamNull(PARAM_PATTERN, null);
         } else if (!paternParam.matches(file.getName())) {
-            return new ValidationResult(false).withMessage(String.format("Název souboru %s neodpovídá vzoru %s", file.getName(), paternParam.toString()));
+            return invalid(String.format("Název souboru %s neodpovídá vzoru %s", file.getName(), paternParam.toString()));
         } else {
-            return new ValidationResult(true);
+            return valid();
         }
     }
 
