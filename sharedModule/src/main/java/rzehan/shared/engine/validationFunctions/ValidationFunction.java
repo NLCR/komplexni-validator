@@ -43,11 +43,11 @@ public abstract class ValidationFunction implements Function {
 
     ValidationResult invalidValueParamNull(String paramName, ValueEvaluation paramEvaluation) {
         String message = paramEvaluation != null ? paramEvaluation.getErrorMessage() : null;
-        return new ValidationResult(false).withMessage(String.format("%s: neznámá hodnota parametru %s: %s", getName(), paramName, message));
+        return new ValidationResult(false).withMessage(String.format("%s: neznámá hodnota parametru '%s': %s", getName(), paramName, message));
     }
 
     ValidationResult invalidPatternParamNull(String paramName, PatternEvaluation paramEvaluation) {
-        return new ValidationResult(false).withMessage(String.format("%s: neznámá hodnota parametru (vzor) %s: %s", getName(), paramName, paramEvaluation.getErrorMessage()));
+        return new ValidationResult(false).withMessage(String.format("%s: neznámá hodnota parametru (vzor) '%s': %s", getName(), paramName, paramEvaluation.getErrorMessage()));
     }
 
     ValidationResult invalidFileDoesNotExist(File file) {
@@ -187,7 +187,7 @@ public abstract class ValidationFunction implements Function {
             //all actual params are expected
             for (String actualParam : valueParams.keySet()) {
                 if (!valueParamsSpec.keySet().contains(actualParam)) {
-                    throw new ContractException(String.format("nalezen neočekávaný parametr (hodnota) %s", actualParam));
+                    throw new ContractException(String.format("nalezen neočekávaný parametr (hodnota) '%s'", actualParam));
                 }
             }
             //all expected params found and comply to spec
@@ -195,14 +195,14 @@ public abstract class ValidationFunction implements Function {
                 List<ValueParam> paramValues = valueParams.getParams(expectedParamName);
                 ValueParamSpec spec = valueParamsSpec.get(expectedParamName);
                 if (spec.getMinOccurs() != null && paramValues.size() < spec.getMinOccurs()) {
-                    throw new ContractException(String.format("parametr %s musí mít alespoň %d hodnot, nalezeno %d", expectedParamName, spec.getMinOccurs(), paramValues.size()));
+                    throw new ContractException(String.format("parametr '%s' musí mít alespoň %d hodnot, nalezeno %d", expectedParamName, spec.getMinOccurs(), paramValues.size()));
                 }
                 if (spec.getMaxOccurs() != null && paramValues.size() > spec.getMaxOccurs()) {
-                    throw new ContractException(String.format("parametr %s musí mít nejvýše %d hodnot, nalezeno %d", expectedParamName, spec.getMaxOccurs(), paramValues.size()));
+                    throw new ContractException(String.format("parametr '%s' musí mít nejvýše %d hodnot, nalezeno %d", expectedParamName, spec.getMaxOccurs(), paramValues.size()));
                 }
                 for (ValueParam param : paramValues) {
                     if (param.getType() != spec.getType()) {
-                        throw new ContractException(String.format("parametr %s musí být vždy typu %s, nalezen typ %s", expectedParamName, spec.getType(), param.getType()));
+                        throw new ContractException(String.format("parametr '%s' musí být vždy typu %s, nalezen typ %s", expectedParamName, spec.getType(), param.getType()));
                     }
                 }
             }
@@ -213,13 +213,13 @@ public abstract class ValidationFunction implements Function {
             //all actual params are expected
             for (String actualParam : patternParams.keySet()) {
                 if (!expectedPatternParams.contains(actualParam)) {
-                    throw new ContractException(String.format("nalezen neočekávaný parametr (vzor) %s", actualParam));
+                    throw new ContractException(String.format("nalezen neočekávaný parametr (vzor) '%s'", actualParam));
                 }
             }
             //all expected params found
             for (String expectedParam : expectedPatternParams) {
                 if (!patternParams.keySet().contains(expectedParam)) {
-                    throw new ContractException(String.format("nenalezen očekávaný parametr (vzor) %s", expectedParam));
+                    throw new ContractException(String.format("nenalezen očekávaný parametr (vzor) '%s'", expectedParam));
                 }
             }
         }
