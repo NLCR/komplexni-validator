@@ -49,6 +49,10 @@ public abstract class EvaluationFunction implements Function {
         return new ValueEvaluation(null, String.format("neznámá hodnota parametru %s: %s", paramName, paramEvaluation.getErrorMessage()));
     }
 
+    ValueEvaluation errorResultPatternParamNull(String paramName, PatternEvaluation paramEvaluation) {
+        return new ValueEvaluation(null, String.format("neznámá hodnota parametru (vzor) %s: %s", paramName, paramEvaluation.getErrorMessage()));
+    }
+
     ValueEvaluation errorResultFileDoesNotExist(File file) {
         return new ValueEvaluation(null, String.format("soubor %s neexistuje", file.getAbsolutePath()));
     }
@@ -70,8 +74,6 @@ public abstract class EvaluationFunction implements Function {
     }
 
 
-
-
     @Override
     public EvaluationFunction withValueParam(String paramName, ValueType valueType, ValueEvaluation valueEvaluation) {
         valueParams.addParam(paramName, new ValueParamConstant(valueType, valueEvaluation));
@@ -85,8 +87,8 @@ public abstract class EvaluationFunction implements Function {
     }
 
     @Override
-    public EvaluationFunction withPatternParam(String paramName, Pattern pattern) {
-        patternParams.addParam(paramName, new PatternParamConstant(pattern));
+    public EvaluationFunction withPatternParam(String paramName, PatternEvaluation patternEvaluation) {
+        patternParams.addParam(paramName, new PatternParamConstant(patternEvaluation));
         return this;
     }
 

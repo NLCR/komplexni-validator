@@ -37,16 +37,16 @@ public class VfCheckFileListHasExactSize extends ValidationFunction {
             return invalidContractNotMet(e);
         }
 
-        ValueEvaluation paramFiles = valueParams.getParams(PARAM_FILES).get(0).getValueEvaluation();
+        ValueEvaluation paramFiles = valueParams.getParams(PARAM_FILES).get(0).getEvaluation();
         List<File> fileList = (List<File>) paramFiles.getData();
         if (fileList == null) {
-            return invalidParamNull(PARAM_FILES, paramFiles);
+            return invalidValueParamNull(PARAM_FILES, paramFiles);
         }
 
-        ValueEvaluation paramSize = valueParams.getParams(PARAM_SIZE).get(0).getValueEvaluation();
+        ValueEvaluation paramSize = valueParams.getParams(PARAM_SIZE).get(0).getEvaluation();
         Integer expectedSize = (Integer) paramSize.getData();
         if (expectedSize == null) {
-            return invalidParamNull(PARAM_SIZE, paramSize);
+            return invalidValueParamNull(PARAM_SIZE, paramSize);
         }
 
         if (fileList.size() != expectedSize) {

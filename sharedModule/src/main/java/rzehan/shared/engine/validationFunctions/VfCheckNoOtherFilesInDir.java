@@ -45,10 +45,10 @@ public class VfCheckNoOtherFilesInDir extends ValidationFunction {
             return invalidContractNotMet(e);
         }
 
-        ValueEvaluation paramRootDir = valueParams.getParams(PARAM_ROOT_DIR).get(0).getValueEvaluation();
+        ValueEvaluation paramRootDir = valueParams.getParams(PARAM_ROOT_DIR).get(0).getEvaluation();
         File rootDir = (File) paramRootDir.getData();
         if (rootDir == null) {
-            return invalidParamNull(PARAM_ROOT_DIR, paramRootDir);
+            return invalidValueParamNull(PARAM_ROOT_DIR, paramRootDir);
         } else if (!rootDir.isDirectory()) {
             return invalidFileIsNotDir(rootDir);
         } else if (!rootDir.canRead()) {
@@ -64,7 +64,7 @@ public class VfCheckNoOtherFilesInDir extends ValidationFunction {
                 }
             }
         } catch (EmptyParamEvaluationException e) {
-            return invalidParamNull(e.getParamName(), e.getEvaluation());
+            return invalidValueParamNull(e.getParamName(), e.getEvaluation());
         }
 
         return valid();
@@ -83,7 +83,7 @@ public class VfCheckNoOtherFilesInDir extends ValidationFunction {
         Set<File> result = new HashSet<>();
         List<ValueParam> fileParams = valueParams.getParams(PARAM_FILE);
         for (ValueParam param : fileParams) {
-            ValueEvaluation evaluation = param.getValueEvaluation();
+            ValueEvaluation evaluation = param.getEvaluation();
             File file = (File) evaluation.getData();
             if (file == null) {
                 throw new EmptyParamEvaluationException(PARAM_FILE, evaluation);
@@ -92,7 +92,7 @@ public class VfCheckNoOtherFilesInDir extends ValidationFunction {
         }
         List<ValueParam> filesParams = valueParams.getParams(PARAM_FILES);
         for (ValueParam param : filesParams) {
-            ValueEvaluation evaluation = param.getValueEvaluation();
+            ValueEvaluation evaluation = param.getEvaluation();
             List<File> files = (List<File>) evaluation.getData();
             if (files == null) {
                 throw new EmptyParamEvaluationException(PARAM_FILES, evaluation);

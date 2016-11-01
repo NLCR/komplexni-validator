@@ -106,19 +106,25 @@ public class EngineInitiliazer {
     private void processNamedPatternDefinition(Element patternEl) {
         String varName = patternEl.getAttribute("name");
         System.out.println("processing named-pattern " + varName);
-        List<Pattern.Expression> expressions = new ArrayList<>();
+        //List<Pattern.Expression> expressions = new ArrayList<>();
         List<Element> expressionEls = XmlUtils.getChildrenElementsByName(patternEl, "expression");
+        //List<PatternExpression> expressions = new ArrayList<>(expressionEls.size());
+        PatternDefinition patternDefinition = engine.buildPatternDefinition();
         for (Element expressionEl : expressionEls) {
-            expressions.add(toExpression(expressionEl));
+            patternDefinition.withRawExpression(toExpression(expressionEl));
         }
-        Pattern pattern = engine.buildPattern(expressions);
-        engine.registerPattern(varName, pattern);
+
+        engine.registerPatternDefinition(varName, patternDefinition);
+
+        /*Pattern pattern = engine.buildPattern(expressions);
+        engine.registerPattern(varName, pattern);*/
     }
 
-    private Pattern.Expression toExpression(Element expressionEl) {
+    private PatternExpression toExpression(Element expressionEl) {
         boolean caseSensitive = parseBooleanAttribute(expressionEl.getAttribute("caseSensitive"), true);
         String regexp = expressionEl.getTextContent();
-        return engine.buildExpression(caseSensitive, regexp);
+        return new PatternExpression(caseSensitive, regexp);
+        //return engine.buildExpression(caseSensitive, regexp);
     }
 
     private boolean parseBooleanAttribute(String attrValue, boolean defaultValue) {
@@ -139,7 +145,7 @@ public class EngineInitiliazer {
             Element efEl = efEls.get(0);
             EvaluationFunction ef = buildEf(efEl);
             ValueDefinition valueDefinition = engine.buildValueDefinition(varType, ef);
-            System.out.println(String.format("registering named-value (by definition) %s",varName));
+            System.out.println(String.format("registering named-value (by definition) %s", varName));
             engine.registerValueDefinition(varName, valueDefinition);
         } else {//constant
             System.out.println("processing named-value - by constant");
@@ -209,12 +215,14 @@ public class EngineInitiliazer {
             } else if (!expressionsEls.isEmpty()) {
                 Element expressionsEl = expressionsEls.get(0);
                 List<Element> expressionEls = XmlUtils.getChildrenElementsByName(expressionsEl, "expression");
-                List<Pattern.Expression> expressions = new ArrayList<>();
+                PatternDefinition patternDefinition = engine.buildPatternDefinition();
                 for (Element expressionEl : expressionEls) {
-                    expressions.add(toExpression(expressionEl));
+                    patternDefinition.withRawExpression(toExpression(expressionEl));
                 }
-                Pattern pattern = engine.buildPattern(expressions);
-                function.withPatternParam(paramName, pattern);
+
+                //TODO: co, kdyz se uz tady bude odkazovat na promenne? Uz tady se bude vyhodnocovat, to neni dobry
+                //Pattern pattern = engine.buildPattern(expressions);
+                function.withPatternParam(paramName, patternDefinition.evaluate());
             }
         }
 

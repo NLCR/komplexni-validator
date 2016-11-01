@@ -17,11 +17,7 @@ public class ValueParamReference extends ValueParam {
         this.varName = varName;
     }
 
-    public ValueEvaluation getValueEvaluation() {
-        ValueEvaluation value = engine.getValueEvaluationByVariable(varName);
-        if (value == null) {
-            throw new RuntimeException("proměnná " + varName + " není definována");
-        }
-        return value;
+    public ValueEvaluation getEvaluation() {
+        return engine.getValueEvaluationByVariable(varName);
     }
 }

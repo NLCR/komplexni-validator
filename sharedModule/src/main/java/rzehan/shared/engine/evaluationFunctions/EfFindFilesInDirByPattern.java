@@ -1,6 +1,7 @@
 package rzehan.shared.engine.evaluationFunctions;
 
 import rzehan.shared.engine.Engine;
+import rzehan.shared.engine.PatternEvaluation;
 import rzehan.shared.engine.ValueEvaluation;
 import rzehan.shared.engine.ValueType;
 import rzehan.shared.engine.exceptions.ContractException;
@@ -38,7 +39,7 @@ public class EfFindFilesInDirByPattern extends EvaluationFunction {
             return errorResultContractNotMet(e);
         }
 
-        ValueEvaluation paramDir = valueParams.getParams(PARAM_DIR).get(0).getValueEvaluation();
+        ValueEvaluation paramDir = valueParams.getParams(PARAM_DIR).get(0).getEvaluation();
         File dir = (File) paramDir.getData();
         if (dir == null) {
             return errorResultParamNull(PARAM_DIR, paramDir);
@@ -50,10 +51,9 @@ public class EfFindFilesInDirByPattern extends EvaluationFunction {
             return errorResultCannotReadDir(dir);
         }
 
-        //TODO: opravit i patterny
-        PatternParam patternParam = patternParams.getParam(PARAM_PATTERN);
-        if (patternParam == null) {
-            return errorResult(String.format("hodnota parametru %s je null", PARAM_PATTERN));
+        PatternEvaluation patternParam = patternParams.getParam(PARAM_PATTERN).getEvaluation();
+        if (!patternParam.isOk()) {
+            return errorResultPatternParamNull(PARAM_PATTERN, patternParam);
         }
 
         File[] files = dir.listFiles();

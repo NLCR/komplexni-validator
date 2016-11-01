@@ -1,5 +1,6 @@
 package rzehan.shared.engine;
 
+import com.sun.istack.internal.NotNull;
 import rzehan.shared.engine.evaluationFunctions.*;
 import rzehan.shared.engine.exceptions.ValidatorConfigurationException;
 import rzehan.shared.engine.exceptions.VariableNotDefinedException;
@@ -20,7 +21,12 @@ public class Engine {
 
     private final Map<String, ValueDefinition> valueDefinitionsByVarName = new HashMap<>();
     private final Map<String, ValueEvaluation> valueEvaluationsByVarName = new HashMap<>();
-    private final Map<String, Pattern> patternsByVarName = new HashMap<>();
+
+    private final Map<String, PatternDefinition> patternDefinitionsByVarName = new HashMap<>();
+    private final Map<String, PatternEvaluation> patternEvaluationsByVarName = new HashMap<>();
+
+
+    //private final Map<String, Pattern> patternsByVarName = new HashMap<>();
     private final RulesManager rulesManager = new RulesManager();
 
     public Engine(ProvidedVarsManager providedVarsManager) {
@@ -35,7 +41,21 @@ public class Engine {
         return definition;
     }
 
-    public Pattern.Expression buildExpression(boolean caseSensitive, String originalRegexp) {
+    public PatternDefinition buildPatternDefinition() {
+        return new PatternDefinition(this);
+    }
+
+    public PatternDefinition buildPatternDefinition(PatternExpression ... expressions) {
+        PatternDefinition patternDefinition = new PatternDefinition(this);
+        for(PatternExpression expression : expressions){
+            patternDefinition.withRawExpression(expression);
+        }
+        return patternDefinition;
+    }
+
+
+
+   /* public Pattern.Expression buildExpression(boolean caseSensitive, String originalRegexp) {
         return new Pattern.Expression(this, caseSensitive, originalRegexp);
     }
 
@@ -45,7 +65,7 @@ public class Engine {
 
     public Pattern buildPattern(List<Pattern.Expression> expressions) {
         return new Pattern(this, expressions);
-    }
+    }*/
 
     public EvaluationFunction buildEvaluationFunction(String name) {
         switch (name) {
@@ -121,17 +141,27 @@ public class Engine {
         valueDefinitionsByVarName.put(valueVariableName, definition);
     }
 
-    public void registerPattern(String patternVariableName, Pattern pattern) {
+    public void registerPatternDefinition(String patternName, PatternDefinition definition) {
+        //TODO: check if not defined already
+        //nejlepe ValidatorConfigurationException
+        patternDefinitionsByVarName.put(patternName, definition);
+    }
+
+    /*public void registerPattern(String patternVariableName, Pattern pattern) {
         //TODO: check if not defined already
         patternsByVarName.put(patternVariableName, pattern);
-    }
+    }*/
 
 
     public void registerRuleSection(RulesSection section) throws ValidatorConfigurationException {
+        //TODO: check if not defined already
+        //nejlepe ValidatorConfigurationException
         rulesManager.addSection(section);
     }
 
     public void registerRule(RulesSection section, Rule rule) throws ValidatorConfigurationException {
+        //TODO: check if not defined already
+        //nejlepe ValidatorConfigurationException
         rulesManager.addRule(section, rule);
     }
 
@@ -141,25 +171,43 @@ public class Engine {
         return providedVarsManager;
     }
 
-    public ValueEvaluation getValueEvaluationByVariable(String valueVariableName) {
-        ValueEvaluation value = valueEvaluationsByVarName.get(valueVariableName);
-        if (value != null) {
-            return value;
+    @NotNull
+    public ValueEvaluation getValueEvaluationByVariable(String varName) {
+        ValueEvaluation evaluation = valueEvaluationsByVarName.get(varName);
+        if (evaluation != null) {
+            return evaluation;
         } else {//not evaluated yet
-            ValueDefinition definition = valueDefinitionsByVarName.get(valueVariableName);
+            ValueDefinition definition = valueDefinitionsByVarName.get(varName);
             if (definition == null) {
-                return new ValueEvaluation(null, String.format("Proměnná %s není definována", valueVariableName));
+                return new ValueEvaluation(null, String.format("proměnná pro hodnotu %s není definována", varName));
             } else {
-                value = definition.evaluate();
-                valueEvaluationsByVarName.put(valueVariableName, value);
-                return value;
+                evaluation = definition.evaluate();
+                valueEvaluationsByVarName.put(varName, evaluation);
+                return evaluation;
             }
         }
     }
 
-    public Pattern getPatternFromVariable(String patternVariableName) {
-        return patternsByVarName.get(patternVariableName);
+    @NotNull
+    public PatternEvaluation getPatternEvaluationByVariable(String varName) {
+        PatternEvaluation evaluation = patternEvaluationsByVarName.get(varName);
+        if (evaluation != null) {
+            return evaluation;
+        } else {
+            PatternDefinition definition = patternDefinitionsByVarName.get(varName);
+            if (definition == null) {
+                return new PatternEvaluation(null, String.format("proměnná pro vzor %s není definována", varName));
+            } else {
+                evaluation = definition.evaluate();
+                patternEvaluationsByVarName.put(varName, evaluation);
+                return evaluation;
+            }
+        }
     }
+
+    /*public Pattern getPatternFromVariable(String patternVariableName) {
+        return patternsByVarName.get(patternVariableName);
+    }*/
 
     public List<RulesSection> getRuleSections() {
         return rulesManager.getSections();
@@ -167,6 +215,10 @@ public class Engine {
 
     public List<Rule> getRules(RulesSection section) {
         return rulesManager.getRules(section);
+    }
+
+    public PatternExpression buildRawPatternExpression(boolean caseSensitive, String regexp) {
+        return new PatternExpression(caseSensitive, regexp);
     }
 
     //helper classes, interfaces

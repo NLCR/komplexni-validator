@@ -41,10 +41,10 @@ public class VfCheckXmlIsWellBuilt extends ValidationFunction {
             return invalidContractNotMet(e);
         }
 
-        ValueEvaluation paramXmlFile = valueParams.getParams(PARAM_XML_FILE).get(0).getValueEvaluation();
+        ValueEvaluation paramXmlFile = valueParams.getParams(PARAM_XML_FILE).get(0).getEvaluation();
         File xmlFile = (File) paramXmlFile.getData();
         if (xmlFile == null) {
-            return invalidParamNull(PARAM_XML_FILE, paramXmlFile);
+            return invalidValueParamNull(PARAM_XML_FILE, paramXmlFile);
         } else if (!xmlFile.exists()) {
             return invalidFileDoesNotExist(xmlFile);
         } else if (xmlFile.isDirectory()) {

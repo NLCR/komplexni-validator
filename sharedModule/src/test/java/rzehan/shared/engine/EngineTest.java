@@ -57,11 +57,10 @@ public class EngineTest {
         );
 
         //patterns
-        engine.registerPattern("INFO_FILENAME",
-                engine.buildPattern(
-                        engine.buildExpression(true, "info_${PSP_ID}\\.xml"),
-                        engine.buildExpression(true, "info.xml")
-                )
+        engine.registerPatternDefinition("INFO_FILENAME",
+                engine.buildPatternDefinition()
+                        .withRawExpression(engine.buildRawPatternExpression(true, "info_${PSP_ID}\\.xml"))
+                        .withRawExpression(engine.buildRawPatternExpression(true, "info.xml"))
         );
 
 

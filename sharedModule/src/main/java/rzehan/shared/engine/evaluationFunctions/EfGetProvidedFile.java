@@ -34,7 +34,7 @@ public class EfGetProvidedFile extends EvaluationFunction {
             return errorResultContractNotMet(e);
         }
 
-        ValueEvaluation paramFileId = valueParams.getParams(PARAM_FILE_ID).get(0).getValueEvaluation();
+        ValueEvaluation paramFileId = valueParams.getParams(PARAM_FILE_ID).get(0).getEvaluation();
         String fileId = (String) paramFileId.getData();
         if (fileId == null) {
             return errorResultParamNull(PARAM_FILE_ID, paramFileId);

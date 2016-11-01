@@ -36,10 +36,10 @@ public class VfCheckChecksumFileAllChecksumsMatch extends ValidationFunction {
             return invalidContractNotMet(e);
         }
 
-        ValueEvaluation paramChecksumFile = valueParams.getParams(PARAM_CHECKSUM_FILE).get(0).getValueEvaluation();
+        ValueEvaluation paramChecksumFile = valueParams.getParams(PARAM_CHECKSUM_FILE).get(0).getEvaluation();
         File checksumFile = (File) paramChecksumFile.getData();
         if (checksumFile == null) {
-            return invalidParamNull(PARAM_CHECKSUM_FILE, paramChecksumFile);
+            return invalidValueParamNull(PARAM_CHECKSUM_FILE, paramChecksumFile);
         } else if (!checksumFile.exists()) {
             return invalidFileDoesNotExist(checksumFile);
         } else if (checksumFile.isDirectory()) {

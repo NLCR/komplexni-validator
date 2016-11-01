@@ -18,6 +18,6 @@ public abstract class ValueParam {
         return type;
     }
 
-    public abstract ValueEvaluation getValueEvaluation();
+    public abstract ValueEvaluation getEvaluation();
 
 }

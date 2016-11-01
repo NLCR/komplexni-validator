@@ -35,7 +35,7 @@ public class EfGetFirstFileFromFileList extends EvaluationFunction {
             return errorResultContractNotMet(e);
         }
 
-        ValueEvaluation paramFiles = valueParams.getParams(PARAM_FILE_LIST).get(0).getValueEvaluation();
+        ValueEvaluation paramFiles = valueParams.getParams(PARAM_FILE_LIST).get(0).getEvaluation();
         List<File> files = (List<File>) paramFiles.getData();
         if (files == null) {
             return errorResultParamNull(PARAM_FILE_LIST, paramFiles);

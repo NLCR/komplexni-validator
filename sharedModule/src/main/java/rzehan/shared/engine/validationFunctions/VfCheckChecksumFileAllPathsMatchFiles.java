@@ -44,10 +44,10 @@ public class VfCheckChecksumFileAllPathsMatchFiles extends ValidationFunction {
             return invalidContractNotMet(e);
         }
 
-        ValueEvaluation paramChecksumFile = valueParams.getParams(PARAM_CHECKSUM_FILE).get(0).getValueEvaluation();
+        ValueEvaluation paramChecksumFile = valueParams.getParams(PARAM_CHECKSUM_FILE).get(0).getEvaluation();
         File checksumFile = (File) paramChecksumFile.getData();
         if (checksumFile == null) {
-            return invalidParamNull(PARAM_CHECKSUM_FILE, paramChecksumFile);
+            return invalidValueParamNull(PARAM_CHECKSUM_FILE, paramChecksumFile);
         } else if (!checksumFile.exists()) {
             return invalidFileDoesNotExist(checksumFile);
         } else if (checksumFile.isDirectory()) {
@@ -64,7 +64,7 @@ public class VfCheckChecksumFileAllPathsMatchFiles extends ValidationFunction {
                 Set<File> files = mergeAbsolutFilesFromParams();
                 return validate(checksumFile, pspRootDir, files);
             } catch (EmptyParamEvaluationException e) {
-                return invalidParamNull(e.getParamName(), e.getEvaluation());
+                return invalidValueParamNull(e.getParamName(), e.getEvaluation());
             }
         }
     }
@@ -73,7 +73,7 @@ public class VfCheckChecksumFileAllPathsMatchFiles extends ValidationFunction {
         Set<File> result = new HashSet<>();
         List<ValueParam> fileParams = valueParams.getParams(PARAM_FILE);
         for (ValueParam param : fileParams) {
-            ValueEvaluation evaluation = param.getValueEvaluation();
+            ValueEvaluation evaluation = param.getEvaluation();
             File file = (File) evaluation.getData();
             if (file == null) {
                 throw new EmptyParamEvaluationException(PARAM_FILE, evaluation);
@@ -83,7 +83,7 @@ public class VfCheckChecksumFileAllPathsMatchFiles extends ValidationFunction {
         }
         List<ValueParam> filesParams = valueParams.getParams(PARAM_FILES);
         for (ValueParam param : filesParams) {
-            ValueEvaluation evaluation = param.getValueEvaluation();
+            ValueEvaluation evaluation = param.getEvaluation();
             List<File> files = (List<File>) evaluation.getData();
             if (files == null) {
                 throw new EmptyParamEvaluationException(PARAM_FILES, evaluation);

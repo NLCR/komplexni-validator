@@ -36,10 +36,10 @@ public class VfCheckFilenamesLengthsSame extends ValidationFunction {
             return invalidContractNotMet(e);
         }
 
-        ValueEvaluation paramFiles = valueParams.getParams(PARAM_FILES).get(0).getValueEvaluation();
+        ValueEvaluation paramFiles = valueParams.getParams(PARAM_FILES).get(0).getEvaluation();
         List<File> files = (List<File>) paramFiles.getData();
         if (files == null) {
-            return invalidParamNull(PARAM_FILES, paramFiles);
+            return invalidValueParamNull(PARAM_FILES, paramFiles);
         }
 
         Integer expectedLength = null;

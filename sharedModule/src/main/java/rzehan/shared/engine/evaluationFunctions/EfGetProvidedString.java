@@ -32,7 +32,7 @@ public class EfGetProvidedString extends EvaluationFunction {
             return errorResultContractNotMet(e);
         }
 
-        ValueEvaluation paramStringId = valueParams.getParams(PARAM_STRING_ID).get(0).getValueEvaluation();
+        ValueEvaluation paramStringId = valueParams.getParams(PARAM_STRING_ID).get(0).getEvaluation();
         String stringId = (String) paramStringId.getData();
         if (stringId == null) {
             return errorResultParamNull(PARAM_STRING_ID, paramStringId);

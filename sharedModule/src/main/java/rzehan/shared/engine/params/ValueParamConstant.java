@@ -7,14 +7,14 @@ import rzehan.shared.engine.ValueType;
  * Created by martin on 24.10.16.
  */
 public final class ValueParamConstant extends ValueParam {
-    private final ValueEvaluation valueEvaluation;
+    private final ValueEvaluation evaluation;
 
-    public ValueParamConstant(ValueType type, ValueEvaluation valueEvaluation) {
+    public ValueParamConstant(ValueType type, ValueEvaluation evaluation) {
         super(type);
-        this.valueEvaluation = valueEvaluation;
+        this.evaluation = evaluation;
     }
 
-    public ValueEvaluation getValueEvaluation() {
-        return valueEvaluation;
+    public ValueEvaluation getEvaluation() {
+        return evaluation;
     }
 }

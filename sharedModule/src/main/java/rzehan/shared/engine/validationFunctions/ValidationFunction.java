@@ -41,9 +41,13 @@ public abstract class ValidationFunction implements Function {
         return new ValidationResult(false).withMessage(String.format("nesplněn kontrakt validační funkce %s: %s", getName(), e.getMessage()));
     }
 
-    ValidationResult invalidParamNull(String paramName, ValueEvaluation paramEvaluation) {
+    ValidationResult invalidValueParamNull(String paramName, ValueEvaluation paramEvaluation) {
         String message = paramEvaluation != null ? paramEvaluation.getErrorMessage() : null;
         return new ValidationResult(false).withMessage(String.format("neznámá hodnota parametru %s: %s", paramName, message));
+    }
+
+    ValidationResult invalidPatternParamNull(String paramName, PatternEvaluation paramEvaluation) {
+        return new ValidationResult(false).withMessage(String.format("neznámá hodnota parametru (vzor) %s: %s", paramName, paramEvaluation.getErrorMessage()));
     }
 
     ValidationResult invalidFileDoesNotExist(File file) {
@@ -80,8 +84,8 @@ public abstract class ValidationFunction implements Function {
     }
 
     @Override
-    public ValidationFunction withPatternParam(String paramName, Pattern pattern) {
-        patternParams.addParam(paramName, new PatternParamConstant(pattern));
+    public ValidationFunction withPatternParam(String paramName, PatternEvaluation patternEvaluation) {
+        patternParams.addParam(paramName, new PatternParamConstant(patternEvaluation));
         return this;
     }
 

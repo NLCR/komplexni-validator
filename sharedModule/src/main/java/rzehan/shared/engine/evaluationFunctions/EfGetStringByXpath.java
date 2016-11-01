@@ -48,7 +48,7 @@ public class EfGetStringByXpath extends EvaluationFunction {
             return errorResultContractNotMet(e);
         }
 
-        ValueEvaluation paramXmlFile = valueParams.getParams(PARAM_XML_FILE).get(0).getValueEvaluation();
+        ValueEvaluation paramXmlFile = valueParams.getParams(PARAM_XML_FILE).get(0).getEvaluation();
         File xmlFile = (File) paramXmlFile.getData();
         if (xmlFile == null) {
             return errorResultParamNull(PARAM_XML_FILE, paramXmlFile);
@@ -60,7 +60,7 @@ public class EfGetStringByXpath extends EvaluationFunction {
             return errorResultCannotReadFile(xmlFile);
         }
 
-        ValueEvaluation paramXpath = valueParams.getParams(PARAM_XPATH).get(0).getValueEvaluation();
+        ValueEvaluation paramXpath = valueParams.getParams(PARAM_XPATH).get(0).getEvaluation();
         String xpathStr = (String) paramXpath.getData();
         if (xpathStr == null) {
             return errorResultParamNull(PARAM_XPATH, paramXpath);

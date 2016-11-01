@@ -35,10 +35,10 @@ public class VfCheckFileIsDir extends ValidationFunction {
             return invalidContractNotMet(e);
         }
 
-        ValueEvaluation paramFile = valueParams.getParams(PARAM_FILE).get(0).getValueEvaluation();
+        ValueEvaluation paramFile = valueParams.getParams(PARAM_FILE).get(0).getEvaluation();
         File file = (File) paramFile.getData();
         if (file == null) {
-            return invalidParamNull(PARAM_FILE, paramFile);
+            return invalidValueParamNull(PARAM_FILE, paramFile);
         } else if (!file.exists()) {
             return invalidFileDoesNotExist(file);
         } else if (!file.isDirectory()) {
