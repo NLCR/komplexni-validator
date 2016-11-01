@@ -3,10 +3,7 @@ package rzehan.shared.engine;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import rzehan.shared.engine.evaluationFunctions.TestUtils;
-import rzehan.shared.engine.exceptions.InvalidVariableTypeException;
-import rzehan.shared.engine.exceptions.VariableNotDefinedException;
 
-import static junit.framework.TestCase.fail;
 import static org.junit.Assert.*;
 
 /**

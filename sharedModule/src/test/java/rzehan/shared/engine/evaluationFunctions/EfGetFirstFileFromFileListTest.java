@@ -11,10 +11,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
-import static junit.framework.TestCase.fail;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
+import static org.junit.Assert.*;
 
 /**
  * Created by martin on 21.10.16.
@@ -84,6 +81,7 @@ public class EfGetFirstFileFromFileListTest {
         EvaluationFunction evFunction = engine.buildEvaluationFunction(FUNCTION_NAME)
                 .withValueParam(PARAM_FILE_LIST, ValueType.FILE_LIST, new ValueEvaluation(LIST))
                 .withValueParamByReference(PARAM_FILE_LIST, ValueType.FILE_LIST, LIST_VAR);
+        //TODO: to by melo byt v ramci kontroly kotraktu, tj. zadna vyjimka
         try {
             evFunction.evaluate();
             //fail();

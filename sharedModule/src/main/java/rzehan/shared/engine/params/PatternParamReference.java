@@ -1,7 +1,6 @@
 package rzehan.shared.engine.params;
 
 import rzehan.shared.engine.Engine;
-import rzehan.shared.engine.Pattern;
 import rzehan.shared.engine.PatternEvaluation;
 
 /**
@@ -16,24 +15,14 @@ public class PatternParamReference extends PatternParam {
         this.varName = varName;
     }
 
-   /* @Override
-    public boolean matches(String value) {
-        Pattern pattern = engine.getPatternFromVariable(varName);
-        if (pattern == null) {
-            throw new RuntimeException("vzor " + varName + " není definován");
-        }
-        return pattern.matches(value);
-    }*/
-
-    @Override
-    public String toString() {
-       /* Pattern pattern = engine.getPatternFromVariable(varName);
-        return pattern.toString();*/
-        return engine.getPatternEvaluationByVariable(varName).toString();
-    }
-
     @Override
     public PatternEvaluation getEvaluation() {
         return engine.getPatternEvaluationByVariable(varName);
     }
+
+    @Override
+    public String toString() {
+        return engine.getPatternEvaluationByVariable(varName).toString();
+    }
+
 }

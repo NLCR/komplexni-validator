@@ -5,7 +5,6 @@ import rzehan.shared.engine.PatternEvaluation;
 import rzehan.shared.engine.ValueEvaluation;
 import rzehan.shared.engine.ValueType;
 import rzehan.shared.engine.exceptions.ContractException;
-import rzehan.shared.engine.params.PatternParam;
 
 import java.io.File;
 import java.util.ArrayList;

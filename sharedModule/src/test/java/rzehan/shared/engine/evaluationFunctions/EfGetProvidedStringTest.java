@@ -7,10 +7,7 @@ import rzehan.shared.engine.ProvidedVarsManagerImpl;
 import rzehan.shared.engine.ValueEvaluation;
 import rzehan.shared.engine.ValueType;
 
-import static junit.framework.TestCase.fail;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
+import static org.junit.Assert.*;
 
 /**
  * Created by martin on 21.10.16.
@@ -53,6 +50,7 @@ public class EfGetProvidedStringTest {
         EvaluationFunction evFunction = engine.buildEvaluationFunction(FUNCTION_NAME)
                 .withValueParam(PARAM_NAME, ValueType.STRING, new ValueEvaluation(PSP_ID_STRINGID))
                 .withValueParam(PARAM_NAME, ValueType.STRING, new ValueEvaluation("PSPID"));
+        //TODO: to by melo byt v ramci kontroly kotraktu, tj. zadna vyjimka
         try {
             evFunction.evaluate();
             //fail();

@@ -9,10 +9,7 @@ import rzehan.shared.engine.ValueType;
 
 import java.io.File;
 
-import static junit.framework.TestCase.fail;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
+import static org.junit.Assert.*;
 
 /**
  * Created by martin on 21.10.16.
@@ -56,6 +53,7 @@ public class EfGetProvidedFileTest {
         EvaluationFunction evFunction = engine.buildEvaluationFunction(FUNCTION_NAME)
                 .withValueParam(PARAM_NAME, ValueType.STRING, new ValueEvaluation(PSP_DIR_FILEID))
                 .withValueParam(PARAM_NAME, ValueType.STRING, new ValueEvaluation("XYZ_DIR"));
+        //TODO: to by melo byt v ramci kontroly kotraktu, tj. zadna vyjimka
         try {
             evFunction.evaluate();
             //fail();

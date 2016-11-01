@@ -7,10 +7,7 @@ import rzehan.shared.engine.*;
 import java.io.File;
 import java.util.List;
 
-import static junit.framework.TestCase.fail;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
+import static org.junit.Assert.*;
 
 /**
  * Created by martin on 24.10.16.
@@ -99,6 +96,7 @@ public class EfFindFilesInDirByPatternTest {
         EvaluationFunction evFunction = engine.buildEvaluationFunction(FUNCTION_NAME)
                 .withValueParam(PARAM_DIR, ValueType.FILE, new ValueEvaluation(PSP_DIR_FILE))
                 .withValueParamByReference(PARAM_DIR, ValueType.FILE, PSP_VAR);
+        //TODO: to by melo byt v ramci kontroly kotraktu, tj. zadna vyjimka
         try {
             evFunction.evaluate();
             //fail();
@@ -154,7 +152,6 @@ public class EfFindFilesInDirByPatternTest {
         EvaluationFunction evFunction = engine.buildEvaluationFunction(FUNCTION_NAME)
                 .withValueParam(PARAM_DIR, ValueType.FILE, new ValueEvaluation(PSP_DIR_FILE))
                 .withPatternParam(PARAM_PATTERN, patternXmlFiles.evaluate());
-
 
         List<File> files = (List<File>) evFunction.evaluate().getData();
         assertEquals(2, files.size());

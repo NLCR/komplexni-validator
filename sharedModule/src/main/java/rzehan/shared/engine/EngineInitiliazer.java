@@ -8,7 +8,6 @@ import rzehan.shared.engine.exceptions.ValidatorConfigurationException;
 import rzehan.shared.engine.validationFunctions.ValidationFunction;
 
 import java.io.File;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -44,7 +43,6 @@ public class EngineInitiliazer {
                 default:
                     //nothing
                     //System.out.println(String.format("ignoring element %s", elementName));
-                    //throw new TemporaryValidatorException("unexpected element '" + childEl.getTagName() + "'");
             }
         }
     }
@@ -69,11 +67,8 @@ public class EngineInitiliazer {
     private void processRule(RulesSection section, Element ruleEl) throws ValidatorConfigurationException {
         String name = ruleEl.getAttribute("name");
         Rule.Level level = parseLevel(ruleEl.getAttribute("level"), Rule.Level.ERROR);
-
         Element validationEl = XmlUtils.getChildrenElementsByName(ruleEl, "validation").get(0);
-
         ValidationFunction function = parseValidationFunction(validationEl);
-
         Rule rule = new Rule(name, level, function);
         //description
         List<Element> descriptionEls = XmlUtils.getChildrenElementsByName(ruleEl, "description");
@@ -106,25 +101,18 @@ public class EngineInitiliazer {
     private void processNamedPatternDefinition(Element patternEl) {
         String varName = patternEl.getAttribute("name");
         System.out.println("processing named-pattern " + varName);
-        //List<Pattern.Expression> expressions = new ArrayList<>();
         List<Element> expressionEls = XmlUtils.getChildrenElementsByName(patternEl, "expression");
-        //List<PatternExpression> expressions = new ArrayList<>(expressionEls.size());
         PatternDefinition patternDefinition = engine.buildPatternDefinition();
         for (Element expressionEl : expressionEls) {
             patternDefinition.withRawExpression(toExpression(expressionEl));
         }
-
         engine.registerPatternDefinition(varName, patternDefinition);
-
-        /*Pattern pattern = engine.buildPattern(expressions);
-        engine.registerPattern(varName, pattern);*/
     }
 
     private PatternExpression toExpression(Element expressionEl) {
         boolean caseSensitive = parseBooleanAttribute(expressionEl.getAttribute("caseSensitive"), true);
         String regexp = expressionEl.getTextContent();
         return new PatternExpression(caseSensitive, regexp);
-        //return engine.buildExpression(caseSensitive, regexp);
     }
 
     private boolean parseBooleanAttribute(String attrValue, boolean defaultValue) {
@@ -221,7 +209,6 @@ public class EngineInitiliazer {
                 }
 
                 //TODO: co, kdyz se uz tady bude odkazovat na promenne? Uz tady se bude vyhodnocovat, to neni dobry
-                //Pattern pattern = engine.buildPattern(expressions);
                 function.withPatternParam(paramName, patternDefinition.evaluate());
             }
         }
