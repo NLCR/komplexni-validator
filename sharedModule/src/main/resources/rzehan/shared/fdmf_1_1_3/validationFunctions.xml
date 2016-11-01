@@ -122,7 +122,7 @@
     <validationfunction name="checkXmlIsValidByXsd">
         <description>Zkontroluje, že soubor obsahuje xml validní podle XML Schema (XSD).</description>
         <params-def>
-            <value name="file" type="FILE"/>
+            <value name="xml_file" type="FILE"/>
             <value name="xsd_file" type="FILE"/>
         </params-def>
     </validationfunction>

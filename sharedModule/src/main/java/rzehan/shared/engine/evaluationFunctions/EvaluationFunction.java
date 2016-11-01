@@ -208,10 +208,10 @@ public abstract class EvaluationFunction implements Function {
                 List<ValueParam> paramValues = valueParams.getParams(expectedParamName);
                 ValueParamSpec spec = valueParamsSpec.get(expectedParamName);
                 if (spec.getMinOccurs() != null && paramValues.size() < spec.getMinOccurs()) {
-                    throw new ContractException(String.format("%parametr %s musí mít alespoň %d hodnot, nalezeno %d", expectedParamName, spec.getMinOccurs(), paramValues.size()));
+                    throw new ContractException(String.format("parametr %s musí mít alespoň %d hodnot, nalezeno %d", expectedParamName, spec.getMinOccurs(), paramValues.size()));
                 }
                 if (spec.getMaxOccurs() != null && paramValues.size() > spec.getMaxOccurs()) {
-                    throw new ContractException(String.format("%parametr %s musí mít nejvýše %d hodnot, nalezeno %d", expectedParamName, spec.getMaxOccurs(), paramValues.size()));
+                    throw new ContractException(String.format("parametr %s musí mít nejvýše %d hodnot, nalezeno %d", expectedParamName, spec.getMaxOccurs(), paramValues.size()));
                 }
                 for (ValueParam param : paramValues) {
                     if (param.getType() != spec.getType()) {
