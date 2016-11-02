@@ -1,5 +1,7 @@
 package rzehan.shared.engine;
 
+import rzehan.shared.engine.exceptions.InvalidPathException;
+
 import java.io.File;
 import java.util.List;
 
@@ -15,6 +17,7 @@ public class Utils {
      * @param object
      * @return
      */
+    @Deprecated
     public static boolean instanceOf(String type, Object object) {
         if (type.equals("string")) {
             return object instanceof String;
@@ -65,6 +68,35 @@ public class Utils {
         } else {
             throw new RuntimeException("Neznámý typ " + type);
         }
+    }
+
+    public static File buildAbsoluteFile(File parentDir, String filePath) throws InvalidPathException {
+        //prevod do "zakladni formy", tj. zacinajici rovnou nazvem souboru/adresare
+        //tj. "neco", "\neco", "/neco", "./neco", ".\neco" -> "neco"
+        if (filePath.startsWith("./") || filePath.startsWith(".\\")) {
+            filePath = filePath.substring(2, filePath.length());
+        } else if (filePath.startsWith("/") || filePath.startsWith("\\")) {
+            filePath = filePath.substring(1, filePath.length());
+        }
+        // tenhle tvar nesmi ale zacinat na tecky ani lomitka
+        if (filePath.matches("^[\\./\\\\]+.*")) {
+            System.out.println(filePath);
+            throw new InvalidPathException(filePath);
+        }
+        String[] segments = filePath.split("[\\\\/]");
+        File file = new File(parentDir, buildPathFromSegments(segments));
+        return file.getAbsoluteFile();
+    }
+
+    private static String buildPathFromSegments(String[] segments) {
+        StringBuilder builder = new StringBuilder();
+        for (int i = 0; i < segments.length; i++) {
+            if (i != 0) {//prvni soubor/adresar by nemel zacinat oddelovacem
+                builder.append(File.separatorChar);
+            }
+            builder.append(segments[i]);
+        }
+        return builder.toString();
     }
 
 

@@ -144,12 +144,11 @@
         </params-def>
     </validationfunction>
 
-
-    <!--TODO: implement-->
-    <validationfunction name="CHECK_INFO_ITEMLIST_REFERENCES_ALL_FILES">
-        <description>Zkontroluje, že se soubor INFO odkazuje na všechny soubory přes elementy item.</description>
+    <validationfunction name="checkInfoFileItemlistReferencesAllFiles">
+        <description>Zkontroluje, že se soubor INFO odkazuje na všechny uvedené soubory přes elementy item a na žádné
+            další.
+        </description>
         <params-def>
-            <!--<value name="items" type="List<String>"/>-->
             <value name="info_file" type="FILE"/>
             <value name="file" type="FILE" min="0" max="unbound"/>
             <value name="files" type="FILE_LIST" min="0" max="unbound"/>

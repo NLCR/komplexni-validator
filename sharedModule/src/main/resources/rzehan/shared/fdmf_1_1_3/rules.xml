@@ -864,6 +864,7 @@
             <description>V souboru INFO musí počet elementů item souhlasit s hodnotou atributu itemtotal elementu
                 itemlist.
             </description>
+            <!--mozne delat i nejak takhle, zatim ale asi neni potreba takova variabilita-->
             <!--<validation functionName="checkFilelistHasExactSize">
                 <params>
                     <value name="files" type="FILE_LIST">
@@ -884,42 +885,39 @@
 
         </rule>
 
-
         <!--METS Profile requirement id infoxml13-->
-        <!--<rule name="INFO_ITEMLIST_REFERENCES_ALL_FILES" level="ERROR">
-            <description>Soubor INFO se musí odkazovat na všechny soubory přes elementy item.</description>
-            <validation functionName="CHECK_INFO_ITEMLIST_REFERENCES_ALL_FILES">
+        <rule name="INFO_ITEMLIST_REFERENCES_ALL_FILES" level="ERROR">
+            <description>Soubor INFO se musí odkazovat na všechny uvedené soubory přes elementy item a na žádné další.
+            </description>
+            <validation functionName="checkInfoFileItemlistReferencesAllFiles">
                 <params>
-                    <value name="items">
-                        <value-ref name="INFO_ITEMS"/>
-                    </value>
-                    <value name="file">
+                    <value name="info_file" type="FILE">
                         <value-ref name="INFO_FILE"/>
                     </value>
-                    <value name="file">
+                    <value name="file" type="FILE">
                         <value-ref name="CHECKSUM_FILE"/>
                     </value>
-                    <value name="file">
+                    <value name="file" type="FILE">
                         <value-ref name="PRIMARY-METS_FILE"/>
                     </value>
-                    <value name="file_list">
+                    <value name="files" type="FILE_LIST">
                         <value-ref name="SECONDARY-METS_FILES"/>
                     </value>
-                    <value name="file_list">
+                    <value name="files" type="FILE_LIST">
                         <value-ref name="OCR-TEXT_FILES"/>
                     </value>
-                    <value name="file_list">
+                    <value name="files" type="FILE_LIST">
                         <value-ref name="OCR-ALTO_FILES"/>
                     </value>
-                    <value name="file_list">
+                    <value name="files" type="FILE_LIST">
                         <value-ref name="MASTER-COPY_FILES"/>
                     </value>
-                    <value name="file_list">
+                    <value name="files" type="FILE_LIST">
                         <value-ref name="USER-COPY_FILES"/>
                     </value>
                 </params>
             </validation>
-        </rule>-->
+        </rule>
 
         <!--METS Profile requirement id infoxml14-->
         <!--<rule name="INFO_CHECKSUM_FILE_CHECKSUM_MATCHES" level="ERROR">

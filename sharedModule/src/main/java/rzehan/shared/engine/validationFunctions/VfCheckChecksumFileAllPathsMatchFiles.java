@@ -1,6 +1,7 @@
 package rzehan.shared.engine.validationFunctions;
 
 import rzehan.shared.engine.Engine;
+import rzehan.shared.engine.Utils;
 import rzehan.shared.engine.ValueEvaluation;
 import rzehan.shared.engine.ValueType;
 import rzehan.shared.engine.exceptions.ContractException;
@@ -112,7 +113,7 @@ public class VfCheckChecksumFileAllPathsMatchFiles extends ValidationFunction {
                 String hash = parts[0];
                 String filepath = parts[1];
                 try {
-                    File file = toAbsoluteFile(filepath, pspRootDir);
+                    File file = Utils.buildAbsoluteFile(pspRootDir, filepath);
                     filesFromFile.add(file);
                 } catch (InvalidPathException e) {
                     return invalid(String.format("cesta k souboru není zapsána korektně: '%s'", e.getPath()));
@@ -150,35 +151,6 @@ public class VfCheckChecksumFileAllPathsMatchFiles extends ValidationFunction {
             }
         }
         return valid();
-    }
-
-    private File toAbsoluteFile(String filePath, File pspRootDir) throws InvalidPathException {
-        //prevod do "zakladni formy", tj. zacinajici rovnou nazvem souboru/adresare
-        //tj. "neco", "\neco", "/neco", "./neco", ".\neco" -> "neco"
-        if (filePath.startsWith("./") || filePath.startsWith(".\\")) {
-            filePath = filePath.substring(2, filePath.length());
-        } else if (filePath.startsWith("/") || filePath.startsWith("\\")) {
-            filePath = filePath.substring(1, filePath.length());
-        }
-        // tenhle tvar nesmi ale zacinat na tecky ani lomitka
-        if (filePath.matches("^[\\./\\\\]+.*")) {
-            System.out.println(filePath);
-            throw new InvalidPathException(filePath);
-        }
-        String[] segments = filePath.split("[\\\\/]");
-        File file = new File(pspRootDir, buildFileFromSegments(segments));
-        return file.getAbsoluteFile();
-    }
-
-    private String buildFileFromSegments(String[] segments) {
-        StringBuilder builder = new StringBuilder();
-        for (int i = 0; i < segments.length; i++) {
-            if (i != 0) {//prvni soubor/adresar by nemel zacinat oddelovacem
-                builder.append(File.separatorChar);
-            }
-            builder.append(segments[i]);
-        }
-        return builder.toString();
     }
 
 
