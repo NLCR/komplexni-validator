@@ -319,15 +319,67 @@
 
     <value-def name="INFO_XSD_FILE" type="FILE">
         <evaluation functionName="getProvidedFile">
-            <!--tj. musi byt dodano pres GUI nebo CLI na zaklade konkretni fDMF-->
             <params>
                 <value name="file_id" type="STRING">INFO_XSD_FILE</value>
             </params>
         </evaluation>
     </value-def>
 
-    <!--TODO: podobne ostatni XSD-->
+    <value-def name="ALTO_XSD_FILE" type="FILE">
+        <evaluation functionName="getProvidedFile">
+            <params>
+                <value name="file_id" type="STRING">ALTO_XSD_FILE</value>
+            </params>
+        </evaluation>
+    </value-def>
 
+    <value-def name="CMD_XSD_FILE" type="FILE">
+        <evaluation functionName="getProvidedFile">
+            <params>
+                <value name="file_id" type="STRING">CMD_XSD_FILE</value>
+            </params>
+        </evaluation>
+    </value-def>
+
+    <value-def name="DC_XSD_FILE" type="FILE">
+        <evaluation functionName="getProvidedFile">
+            <params>
+                <value name="file_id" type="STRING">DC_XSD_FILE</value>
+            </params>
+        </evaluation>
+    </value-def>
+
+    <value-def name="METS_XSD_FILE" type="FILE">
+        <evaluation functionName="getProvidedFile">
+            <params>
+                <value name="file_id" type="STRING">METS_XSD_FILE</value>
+            </params>
+        </evaluation>
+    </value-def>
+
+    <value-def name="MIX_XSD_FILE" type="FILE">
+        <evaluation functionName="getProvidedFile">
+            <params>
+                <value name="file_id" type="STRING">MIX_XSD_FILE</value>
+            </params>
+        </evaluation>
+    </value-def>
+
+    <value-def name="MODS_XSD_FILE" type="FILE">
+        <evaluation functionName="getProvidedFile">
+            <params>
+                <value name="file_id" type="STRING">MODS_XSD_FILE</value>
+            </params>
+        </evaluation>
+    </value-def>
+
+    <value-def name="PREMIS_XSD_FILE" type="FILE">
+        <evaluation functionName="getProvidedFile">
+            <params>
+                <value name="file_id" type="STRING">PREMIS_XSD_FILE</value>
+            </params>
+        </evaluation>
+    </value-def>
 
     <!--zpracování INFO-->
     <!--todo: implementovat ef-->

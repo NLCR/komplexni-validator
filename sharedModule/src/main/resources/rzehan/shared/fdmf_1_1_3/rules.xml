@@ -941,5 +941,12 @@
 
     </rules-section>
 
+    <rules-section name="Struktura METS"
+                   description="Kontrola METS, TODO: doplnit popis.">
+
+        <!--TODO-->
+
+    </rules-section>
+
 
 </dmf>

@@ -21,7 +21,15 @@ public class EngineInitiliazerTest {
             //pvMgr.addFile("PSP_DIR", new File("/home/martin/zakazky/DMF-validator/data/monografie_1.2/b50eb6b0-f0a4-11e3-b72e-005056827e52"));
 
             //TODO: relativni cesta
-            pvMgr.addFile("INFO_XSD_FILE", new File("/home/martin/ssd/IdeaProjects/PspValidator/sharedModule/src/main/resources/rzehan/shared/fdmf_1_1_3/xsds/info_1.1.xsd"));
+            File fdmfRoot = new File("/home/martin/ssd/IdeaProjects/PspValidator/sharedModule/src/main/resources/rzehan/shared/fdmf_1_1_3");
+            pvMgr.addFile("INFO_XSD_FILE", new File(fdmfRoot, "xsds/info_1.1.xsd"));
+            pvMgr.addFile("ALTO_XSD_FILE", new File(fdmfRoot, "xsds/alto_2.0.xsd"));
+            pvMgr.addFile("CMD_XSD_FILE", new File(fdmfRoot, "xsds/cmd_0.91.xsd"));
+            pvMgr.addFile("DC_XSD_FILE", new File(fdmfRoot, "xsds/dc_1.1.xsd"));
+            pvMgr.addFile("METS_XSD_FILE", new File(fdmfRoot, "xsds/mets_1.9.1.xsd"));
+            pvMgr.addFile("MIX_XSD_FILE", new File(fdmfRoot, "xsds/mix_2.0.xsd"));
+            pvMgr.addFile("MODS_XSD_FILE", new File(fdmfRoot, "xsds/mods_3.5.xsd"));
+            pvMgr.addFile("PREMIS_XSD_FILE", new File(fdmfRoot, "xsds/premis_2.2.xsd"));
 
             //pvMgr.addString("PSP_ID", "b50eb6b0-f0a4-11e3-b72e-005056827e52");
             Engine engine = new Engine(pvMgr);
