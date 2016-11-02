@@ -1,0 +1,320 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+
+<mets:mets xmlns:mets="http://www.loc.gov/METS/"
+           xmlns:dc="http://purl.org/dc/elements/1.1/"
+           xmlns:mods="http://www.loc.gov/mods/v3"
+           xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/"
+           xmlns:premis="info:lc/xmlns/premis-v2"
+           xmlns:xlink="http://www.w3.org/1999/xlink"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" LABEL="Karpatská Rus a hranice našeho státu, 1919" TYPE="Book" xsi:schemaLocation="http://www.w3.org/2001/XMLSchema-instance http://www.w3.org/2001/XMLSchema.xsd http://www.loc.gov/METS/ http://www.loc.gov/standards/mets/mets.xsd http://www.loc.gov/mods/v3 http://www.loc.gov/standards/mods/v3/mods-3-5.xsd http://www.openarchives.org/OAI/2.0/oai_dc/ http://www.openarchives.org/OAI/2.0/oai_dc.xsd">
+  <mets:metsHdr CREATEDATE="2015-09-21T21:39:56" LASTMODDATE="2016-02-29T10:39:56"> 
+    <mets:agent ROLE="CREATOR" TYPE="ORGANIZATION"> 
+      <mets:name>ABA001</mets:name> 
+    </mets:agent>  
+    <mets:agent ROLE="ARCHIVIST" TYPE="ORGANIZATION"> 
+      <mets:name>ABA001</mets:name> 
+    </mets:agent> 
+  </mets:metsHdr>  
+  <mets:dmdSec ID="MODSMD_VOLUME_0001"> 
+    <mets:mdWrap MDTYPE="MODS" MDTYPEVERSION="3.5" MIMETYPE="text/xml"> 
+      <mets:xmlData> 
+        <mods:mods ID="MODS_VOLUME_0001" version="3.5"> 
+          <mods:titleInfo> 
+            <mods:title>Karpatská Rus a hranice našeho státu</mods:title> 
+          </mods:titleInfo>  
+          <mods:name type="personal" usage="primary"> 
+            <mods:namePart>Hora, Alois</mods:namePart>  
+            <mods:namePart type="date">1885-1942</mods:namePart>  
+            <mods:role>  
+              <mods:roleTerm authority="marcrelator" type="code">aut</mods:roleTerm> 
+            </mods:role> 
+          </mods:name>  
+          <mods:typeOfResource>text</mods:typeOfResource>  
+          <mods:genre>volume</mods:genre>  
+          <mods:originInfo> 
+            <mods:place> 
+              <mods:placeTerm authority="marccountry" type="code">xr</mods:placeTerm> 
+            </mods:place>  
+            <mods:place> 
+              <mods:placeTerm type="text">Praha</mods:placeTerm> 
+            </mods:place>  
+            <mods:publisher>Čsl. cizinecký úřad</mods:publisher>  
+            <mods:issuance>single unit</mods:issuance>  
+            <mods:dateIssued>1919</mods:dateIssued> 
+          </mods:originInfo>  
+          <mods:language> 
+            <mods:languageTerm authority="iso639-2b" type="code">cze</mods:languageTerm> 
+          </mods:language>  
+          <mods:physicalDescription> 
+            <mods:form authority="marcform">print</mods:form>  
+            <mods:extent>8 s. ; 8°</mods:extent>  
+            <mods:note>desky nejsou k dispozici</mods:note> 
+          </mods:physicalDescription>  
+          <mods:note type="statement of responsibility">Alois Hora</mods:note>
+		  <mods:subject authority="Konspekt">
+			<topic>propagace</topic>
+		  </mods:subject>
+		  <classification authority="udc" edition="Konspekt">004</classification>
+		  <classification authority="Konspekt">23</classification>
+          <mods:location> 
+            <mods:physicalLocation authority="siglaADR">ABA001</mods:physicalLocation>  
+            <mods:shelfLocator>II 026293</mods:shelfLocator> 
+          </mods:location>  
+          <mods:relatedItem type="series"> 
+            <mods:titleInfo> 
+              <mods:title>Propagační knih. Čsl. cizinec. úřadu</mods:title> 
+            </mods:titleInfo> 
+          </mods:relatedItem>  
+          <mods:identifier type="urnnbn">urn:nbn:cz:nk-00172f</mods:identifier>  
+          <mods:identifier type="barCode">1002701148</mods:identifier>  
+          <mods:identifier type="uuid">b50eb6b0-f0a4-11e3-b72e-005056827e52</mods:identifier>  
+          <mods:identifier type="ccnb">cnb000572615</mods:identifier>  
+          <mods:recordInfo> 
+            <mods:recordContentSource authority="marcorg">ABA001</mods:recordContentSource>  
+            <mods:recordCreationDate encoding="iso8601">2000-03-07T00:00Z</mods:recordCreationDate> 
+            <mods:recordChangeDate encoding="iso8601">2007-03-12T15:54:01Z</mods:recordChangeDate>  
+            <mods:recordIdentifier source="CZ-PrNK">nos190115002</mods:recordIdentifier>  
+            <mods:recordOrigin>machine generated</mods:recordOrigin>  
+            <mods:languageOfCataloging> 
+              <mods:languageTerm authority="iso639-2b" type="code">cze</mods:languageTerm> 
+            </mods:languageOfCataloging> 
+          </mods:recordInfo> 
+        </mods:mods> 
+      </mets:xmlData> 
+    </mets:mdWrap> 
+  </mets:dmdSec>  
+  <mets:dmdSec ID="DCMD_VOLUME_0001"> 
+    <mets:mdWrap MDTYPE="DC" MIMETYPE="text/xml"> 
+      <mets:xmlData> 
+        <oai_dc:dc> 
+          <dc:title>Karpatská Rus a hranice našeho státu</dc:title>  
+          <dc:creator>Hora, Alois</dc:creator>  
+          <dc:date>1919</dc:date>  
+          <dc:publisher>Čsl. cizinecký úřad</dc:publisher>  
+          <dc:language>cze</dc:language>  
+          <dc:format>8 s. ; 8°</dc:format>  
+          <dc:format>print</dc:format>  
+          <dc:description>Alois Hora</dc:description>  
+          <dc:type>model:monograph</dc:type>
+		  <dc:coverage>xr</dc:coverage>
+          <dc:identifier>urnnbn:urn:nbn:cz:nk-00172f</dc:identifier>
+          <dc:identifier>uuid:b50eb6b0-f0a4-11e3-b72e-005056827e52</dc:identifier>  
+          <dc:identifier>barCode:1002701148</dc:identifier>  
+          <dc:identifier>ccnb:cnb000572615</dc:identifier>
+		  <dc:subject>propagace</dc:subject>
+		  <dc:subject>23</dc:subject>
+		  <dc:subject>004</dc:subject>
+		  <dc:source>ABA001</dc:source>
+		  <dc:source>II 026293</dc:source>
+        </oai_dc:dc> 
+      </mets:xmlData> 
+    </mets:mdWrap> 
+  </mets:dmdSec>  
+  <mets:fileSec> 
+    <mets:fileGrp ID="MC_IMGGRP" USE="Images"> 
+      <mets:file CHECKSUM="a0faf6bcf61919ea7037d6528befcc60" CHECKSUMTYPE="MD5" CREATED="2014-07-11T21:08:20" ID="MC_0001" MIMETYPE="image/jp2" SEQ="0" SIZE="5329138"> 
+        <mets:FLocat LOCTYPE="URL" xlink:href="mastercopy/mc_b50eb6b0-f0a4-11e3-b72e-005056827e52_0001.jp2"/> 
+      </mets:file>  
+      <mets:file CHECKSUM="7864cc080ac52fb92a40446f372b9a03" CHECKSUMTYPE="MD5" CREATED="2014-07-11T21:08:23" ID="MC_0002" MIMETYPE="image/jp2" SEQ="1" SIZE="5049822"> 
+        <mets:FLocat LOCTYPE="URL" xlink:href="mastercopy/mc_b50eb6b0-f0a4-11e3-b72e-005056827e52_0002.jp2"/> 
+      </mets:file>  
+      <mets:file CHECKSUM="8e6577233acab6763208ac304a436d2c" CHECKSUMTYPE="MD5" CREATED="2014-07-11T21:08:28" ID="MC_0003" MIMETYPE="image/jp2" SEQ="2" SIZE="5760965"> 
+        <mets:FLocat LOCTYPE="URL" xlink:href="mastercopy/mc_b50eb6b0-f0a4-11e3-b72e-005056827e52_0003.jp2"/> 
+      </mets:file>  
+      <mets:file CHECKSUM="3741f257d6a6ae6034081d41d22b7936" CHECKSUMTYPE="MD5" CREATED="2014-07-11T21:08:31" ID="MC_0004" MIMETYPE="image/jp2" SEQ="3" SIZE="6039375"> 
+        <mets:FLocat LOCTYPE="URL" xlink:href="mastercopy/mc_b50eb6b0-f0a4-11e3-b72e-005056827e52_0004.jp2"/> 
+      </mets:file>  
+      <mets:file CHECKSUM="dfcc37772a7396f62aeda2e240b13496" CHECKSUMTYPE="MD5" CREATED="2014-07-11T21:08:34" ID="MC_0005" MIMETYPE="image/jp2" SEQ="4" SIZE="7004562"> 
+        <mets:FLocat LOCTYPE="URL" xlink:href="mastercopy/mc_b50eb6b0-f0a4-11e3-b72e-005056827e52_0005.jp2"/> 
+      </mets:file>  
+      <mets:file CHECKSUM="c3a0115d182cf0cacbfc8a71f52b5da2" CHECKSUMTYPE="MD5" CREATED="2014-07-11T21:08:36" ID="MC_0006" MIMETYPE="image/jp2" SEQ="5" SIZE="6084002"> 
+        <mets:FLocat LOCTYPE="URL" xlink:href="mastercopy/mc_b50eb6b0-f0a4-11e3-b72e-005056827e52_0006.jp2"/> 
+      </mets:file>  
+      <mets:file CHECKSUM="1cc609217da388ddfb21c045654c21e2" CHECKSUMTYPE="MD5" CREATED="2014-07-11T21:08:37" ID="MC_0007" MIMETYPE="image/jp2" SEQ="6" SIZE="6957551"> 
+        <mets:FLocat LOCTYPE="URL" xlink:href="mastercopy/mc_b50eb6b0-f0a4-11e3-b72e-005056827e52_0007.jp2"/> 
+      </mets:file>  
+      <mets:file CHECKSUM="b8cccdc51508feb3efc4ac6dcbb1184b" CHECKSUMTYPE="MD5" CREATED="2014-07-11T21:08:39" ID="MC_0008" MIMETYPE="image/jp2" SEQ="7" SIZE="5535812"> 
+        <mets:FLocat LOCTYPE="URL" xlink:href="mastercopy/mc_b50eb6b0-f0a4-11e3-b72e-005056827e52_0008.jp2"/> 
+      </mets:file> 
+    </mets:fileGrp>  
+    <mets:fileGrp ID="UC_IMGGRP" USE="Images"> 
+      <mets:file CHECKSUM="ef87c4f1f15f8bbe576faa9b55afec48" CHECKSUMTYPE="MD5" CREATED="2014-07-11T21:46:36" ID="UC_0001" MIMETYPE="image/jp2" SEQ="0" SIZE="1712536"> 
+        <mets:FLocat LOCTYPE="URL" xlink:href="usercopy/uc_b50eb6b0-f0a4-11e3-b72e-005056827e52_0001.jp2"/> 
+      </mets:file>  
+      <mets:file CHECKSUM="c3dc5eb5dba099dbf1c8fb5765c5cc82" CHECKSUMTYPE="MD5" CREATED="2014-07-11T21:46:38" ID="UC_0002" MIMETYPE="image/jp2" SEQ="1" SIZE="1645539"> 
+        <mets:FLocat LOCTYPE="URL" xlink:href="usercopy/uc_b50eb6b0-f0a4-11e3-b72e-005056827e52_0002.jp2"/> 
+      </mets:file>  
+      <mets:file CHECKSUM="441997242abf7cabddfa147b0d41172e" CHECKSUMTYPE="MD5" CREATED="2014-07-11T21:46:43" ID="UC_0003" MIMETYPE="image/jp2" SEQ="2" SIZE="1727315"> 
+        <mets:FLocat LOCTYPE="URL" xlink:href="usercopy/uc_b50eb6b0-f0a4-11e3-b72e-005056827e52_0003.jp2"/> 
+      </mets:file>  
+      <mets:file CHECKSUM="63d15c5dfa2ed2441939abd6482bff88" CHECKSUMTYPE="MD5" CREATED="2014-07-11T21:46:45" ID="UC_0004" MIMETYPE="image/jp2" SEQ="3" SIZE="1748514"> 
+        <mets:FLocat LOCTYPE="URL" xlink:href="usercopy/uc_b50eb6b0-f0a4-11e3-b72e-005056827e52_0004.jp2"/> 
+      </mets:file>  
+      <mets:file CHECKSUM="62bb1403e7622730397d1b71618de4fb" CHECKSUMTYPE="MD5" CREATED="2014-07-11T21:46:48" ID="UC_0005" MIMETYPE="image/jp2" SEQ="4" SIZE="1743448"> 
+        <mets:FLocat LOCTYPE="URL" xlink:href="usercopy/uc_b50eb6b0-f0a4-11e3-b72e-005056827e52_0005.jp2"/> 
+      </mets:file>  
+      <mets:file CHECKSUM="83884d72fa1bb9c0170b8f0d85d4e6d3" CHECKSUMTYPE="MD5" CREATED="2014-07-11T21:46:49" ID="UC_0006" MIMETYPE="image/jp2" SEQ="5" SIZE="1752343"> 
+        <mets:FLocat LOCTYPE="URL" xlink:href="usercopy/uc_b50eb6b0-f0a4-11e3-b72e-005056827e52_0006.jp2"/> 
+      </mets:file>  
+      <mets:file CHECKSUM="167d13be725f3ee5c0fe32a46caf50e7" CHECKSUMTYPE="MD5" CREATED="2014-07-11T21:46:51" ID="UC_0007" MIMETYPE="image/jp2" SEQ="6" SIZE="1732338"> 
+        <mets:FLocat LOCTYPE="URL" xlink:href="usercopy/uc_b50eb6b0-f0a4-11e3-b72e-005056827e52_0007.jp2"/> 
+      </mets:file>  
+      <mets:file CHECKSUM="bf221b16eca90f5651b6ddb719ca4051" CHECKSUMTYPE="MD5" CREATED="2014-07-11T21:46:52" ID="UC_0008" MIMETYPE="image/jp2" SEQ="7" SIZE="1651936"> 
+        <mets:FLocat LOCTYPE="URL" xlink:href="usercopy/uc_b50eb6b0-f0a4-11e3-b72e-005056827e52_0008.jp2"/> 
+      </mets:file> 
+    </mets:fileGrp>  
+    <mets:fileGrp ID="ALTOGRP" USE="Layout"> 
+      <mets:file CHECKSUM="2322328516b6c5e4a428479325ce80bf" CHECKSUMTYPE="MD5" CREATED="2014-07-19T05:17:59" ID="ALTO_0001" MIMETYPE="text/xml" SEQ="0" SIZE="8218"> 
+        <mets:FLocat LOCTYPE="URL" xlink:href="alto/alto_b50eb6b0-f0a4-11e3-b72e-005056827e52_0001.xml"/> 
+      </mets:file>  
+      <mets:file CHECKSUM="6149cdb510139f436157ff448e80d677" CHECKSUMTYPE="MD5" CREATED="2014-07-19T05:17:59" ID="ALTO_0002" MIMETYPE="text/xml" SEQ="1" SIZE="1681"> 
+        <mets:FLocat LOCTYPE="URL" xlink:href="alto/alto_b50eb6b0-f0a4-11e3-b72e-005056827e52_0002.xml"/> 
+      </mets:file>  
+      <mets:file CHECKSUM="2139ba6c273ae4150ce52efacdd2f8d6" CHECKSUMTYPE="MD5" CREATED="2014-07-19T05:17:59" ID="ALTO_0003" MIMETYPE="text/xml" SEQ="2" SIZE="38906"> 
+        <mets:FLocat LOCTYPE="URL" xlink:href="alto/alto_b50eb6b0-f0a4-11e3-b72e-005056827e52_0003.xml"/> 
+      </mets:file>  
+      <mets:file CHECKSUM="155fc3b2872a7accf6b322ef1a8f84a0" CHECKSUMTYPE="MD5" CREATED="2014-07-19T05:18:00" ID="ALTO_0004" MIMETYPE="text/xml" SEQ="3" SIZE="48674"> 
+        <mets:FLocat LOCTYPE="URL" xlink:href="alto/alto_b50eb6b0-f0a4-11e3-b72e-005056827e52_0004.xml"/> 
+      </mets:file>  
+      <mets:file CHECKSUM="b8e7c3c8ccec71e231d252a836d17023" CHECKSUMTYPE="MD5" CREATED="2014-07-19T05:18:00" ID="ALTO_0005" MIMETYPE="text/xml" SEQ="4" SIZE="49092"> 
+        <mets:FLocat LOCTYPE="URL" xlink:href="alto/alto_b50eb6b0-f0a4-11e3-b72e-005056827e52_0005.xml"/> 
+      </mets:file>  
+      <mets:file CHECKSUM="02db337c01778d3889217990ca68e8e3" CHECKSUMTYPE="MD5" CREATED="2014-07-19T05:18:00" ID="ALTO_0006" MIMETYPE="text/xml" SEQ="5" SIZE="54518"> 
+        <mets:FLocat LOCTYPE="URL" xlink:href="alto/alto_b50eb6b0-f0a4-11e3-b72e-005056827e52_0006.xml"/> 
+      </mets:file>  
+      <mets:file CHECKSUM="71a774b8ce7530e771ef7c7e7483005a" CHECKSUMTYPE="MD5" CREATED="2014-07-19T05:18:01" ID="ALTO_0007" MIMETYPE="text/xml" SEQ="6" SIZE="51196"> 
+        <mets:FLocat LOCTYPE="URL" xlink:href="alto/alto_b50eb6b0-f0a4-11e3-b72e-005056827e52_0007.xml"/> 
+      </mets:file>  
+      <mets:file CHECKSUM="99da3cfd9ca4d85e685780fc60d04d3f" CHECKSUMTYPE="MD5" CREATED="2014-07-19T05:18:02" ID="ALTO_0008" MIMETYPE="text/xml" SEQ="7" SIZE="30270"> 
+        <mets:FLocat LOCTYPE="URL" xlink:href="alto/alto_b50eb6b0-f0a4-11e3-b72e-005056827e52_0008.xml"/> 
+      </mets:file> 
+    </mets:fileGrp>  
+    <mets:fileGrp ID="TXTGRP" USE="Text"> 
+      <mets:file CHECKSUM="91002201df9db0066306add3bc2b115c" CHECKSUMTYPE="MD5" CREATED="2014-07-19T05:16:25" ID="TXT_0001" MIMETYPE="text/plain" SEQ="0" SIZE="234"> 
+        <mets:FLocat LOCTYPE="URL" xlink:href="txt/txt_b50eb6b0-f0a4-11e3-b72e-005056827e52_0001.txt"/> 
+      </mets:file>  
+      <mets:file CHECKSUM="4968bfabed4113b39f269890c114d19e" CHECKSUMTYPE="MD5" CREATED="2014-07-19T05:16:25" ID="TXT_0002" MIMETYPE="text/plain" SEQ="1" SIZE="6"> 
+        <mets:FLocat LOCTYPE="URL" xlink:href="txt/txt_b50eb6b0-f0a4-11e3-b72e-005056827e52_0002.txt"/> 
+      </mets:file>  
+      <mets:file CHECKSUM="f68bf88a1a900885025ee480600d03f2" CHECKSUMTYPE="MD5" CREATED="2014-07-19T05:16:26" ID="TXT_0003" MIMETYPE="text/plain" SEQ="2" SIZE="2283"> 
+        <mets:FLocat LOCTYPE="URL" xlink:href="txt/txt_b50eb6b0-f0a4-11e3-b72e-005056827e52_0003.txt"/> 
+      </mets:file>  
+      <mets:file CHECKSUM="981d67098b37c8d307971ea4c3aaeccc" CHECKSUMTYPE="MD5" CREATED="2014-07-19T05:16:27" ID="TXT_0004" MIMETYPE="text/plain" SEQ="3" SIZE="2941"> 
+        <mets:FLocat LOCTYPE="URL" xlink:href="txt/txt_b50eb6b0-f0a4-11e3-b72e-005056827e52_0004.txt"/> 
+      </mets:file>  
+      <mets:file CHECKSUM="e86adcba27e372399c22307b06b81a3b" CHECKSUMTYPE="MD5" CREATED="2014-07-19T05:16:27" ID="TXT_0005" MIMETYPE="text/plain" SEQ="4" SIZE="3025"> 
+        <mets:FLocat LOCTYPE="URL" xlink:href="txt/txt_b50eb6b0-f0a4-11e3-b72e-005056827e52_0005.txt"/> 
+      </mets:file>  
+      <mets:file CHECKSUM="b7320f7f0ea6c7cd6070f9e867b7273c" CHECKSUMTYPE="MD5" CREATED="2014-07-19T05:16:28" ID="TXT_0006" MIMETYPE="text/plain" SEQ="5" SIZE="3283"> 
+        <mets:FLocat LOCTYPE="URL" xlink:href="txt/txt_b50eb6b0-f0a4-11e3-b72e-005056827e52_0006.txt"/> 
+      </mets:file>  
+      <mets:file CHECKSUM="f413ad1041b785c0284e512b96a02011" CHECKSUMTYPE="MD5" CREATED="2014-07-19T05:16:27" ID="TXT_0007" MIMETYPE="text/plain" SEQ="6" SIZE="2990"> 
+        <mets:FLocat LOCTYPE="URL" xlink:href="txt/txt_b50eb6b0-f0a4-11e3-b72e-005056827e52_0007.txt"/> 
+      </mets:file>  
+      <mets:file CHECKSUM="ad89fac3d077594721b2ce7b0c18b8f9" CHECKSUMTYPE="MD5" CREATED="2014-07-19T05:16:26" ID="TXT_0008" MIMETYPE="text/plain" SEQ="7" SIZE="1722"> 
+        <mets:FLocat LOCTYPE="URL" xlink:href="txt/txt_b50eb6b0-f0a4-11e3-b72e-005056827e52_0008.txt"/> 
+      </mets:file> 
+    </mets:fileGrp>  
+    <mets:fileGrp ID="TECHMDGRP" USE="Technical Metadata"> 
+      <mets:file CHECKSUM="e55c4cb46edf9318bab503b7bfb18b21" CHECKSUMTYPE="MD5" CREATED="2014-07-21T20:27:13" ID="AMD_0001" MIMETYPE="text/xml" SEQ="0" SIZE="32172"> 
+        <mets:FLocat LOCTYPE="URL" xlink:href="amdsec/amd_mets_b50eb6b0-f0a4-11e3-b72e-005056827e52_0001.xml"/> 
+      </mets:file>  
+      <mets:file CHECKSUM="660fb31939bb08508dc0cd3b4e774c6a" CHECKSUMTYPE="MD5" CREATED="2014-07-21T20:27:15" ID="AMD_0002" MIMETYPE="text/xml" SEQ="1" SIZE="32170"> 
+        <mets:FLocat LOCTYPE="URL" xlink:href="amdsec/amd_mets_b50eb6b0-f0a4-11e3-b72e-005056827e52_0002.xml"/> 
+      </mets:file>  
+      <mets:file CHECKSUM="002a87509dae56ad797ff03be3fedccc" CHECKSUMTYPE="MD5" CREATED="2014-07-21T20:27:17" ID="AMD_0003" MIMETYPE="text/xml" SEQ="2" SIZE="32175"> 
+        <mets:FLocat LOCTYPE="URL" xlink:href="amdsec/amd_mets_b50eb6b0-f0a4-11e3-b72e-005056827e52_0003.xml"/> 
+      </mets:file>  
+      <mets:file CHECKSUM="ba04e5e8619f270d043ddc20cc380e4a" CHECKSUMTYPE="MD5" CREATED="2014-07-21T20:27:19" ID="AMD_0004" MIMETYPE="text/xml" SEQ="3" SIZE="32175"> 
+        <mets:FLocat LOCTYPE="URL" xlink:href="amdsec/amd_mets_b50eb6b0-f0a4-11e3-b72e-005056827e52_0004.xml"/> 
+      </mets:file>  
+      <mets:file CHECKSUM="9a83e7e807356a4de827e6878f0ee186" CHECKSUMTYPE="MD5" CREATED="2014-07-21T20:27:20" ID="AMD_0005" MIMETYPE="text/xml" SEQ="4" SIZE="32175"> 
+        <mets:FLocat LOCTYPE="URL" xlink:href="amdsec/amd_mets_b50eb6b0-f0a4-11e3-b72e-005056827e52_0005.xml"/> 
+      </mets:file>  
+      <mets:file CHECKSUM="46f51d87129ca184c3521aed09a21f1f" CHECKSUMTYPE="MD5" CREATED="2014-07-21T20:27:22" ID="AMD_0006" MIMETYPE="text/xml" SEQ="5" SIZE="32175"> 
+        <mets:FLocat LOCTYPE="URL" xlink:href="amdsec/amd_mets_b50eb6b0-f0a4-11e3-b72e-005056827e52_0006.xml"/> 
+      </mets:file>  
+      <mets:file CHECKSUM="0f7ab5bf2b7aa11c3ab6fb27609edc15" CHECKSUMTYPE="MD5" CREATED="2014-07-21T20:27:23" ID="AMD_0007" MIMETYPE="text/xml" SEQ="6" SIZE="32175"> 
+        <mets:FLocat LOCTYPE="URL" xlink:href="amdsec/amd_mets_b50eb6b0-f0a4-11e3-b72e-005056827e52_0007.xml"/> 
+      </mets:file>  
+      <mets:file CHECKSUM="4109062549f77d99f585de9b6b8ed321" CHECKSUMTYPE="MD5" CREATED="2014-07-21T20:27:27" ID="AMD_0008" MIMETYPE="text/xml" SEQ="7" SIZE="32175"> 
+        <mets:FLocat LOCTYPE="URL" xlink:href="amdsec/amd_mets_b50eb6b0-f0a4-11e3-b72e-005056827e52_0008.xml"/> 
+      </mets:file> 
+    </mets:fileGrp> 
+  </mets:fileSec>  
+  <mets:structMap LABEL="Physical_Structure" TYPE="PHYSICAL"> 
+    <mets:div DMDID="MODSMD_VOLUME_0001" ID="DIV_P_0000" LABEL="Karpatská Rus a hranice našeho státu, 1919" TYPE="Monograph"> 
+	  <mets:div ID="DIV_P_PAGE_0000" ORDER="1" ORDERLABEL="[1]" TYPE="titlePage"> 
+        <mets:fptr FILEID="MC_0001"/>  
+        <mets:fptr FILEID="UC_0001"/>  
+        <mets:fptr FILEID="ALTO_0001"/>  
+        <mets:fptr FILEID="TXT_0001"/>  
+        <mets:fptr FILEID="AMD_0001"/> 
+      </mets:div>  
+      <mets:div ID="DIV_P_PAGE_0001" ORDER="2" ORDERLABEL="[2]" TYPE="normalPage"> 
+        <mets:fptr FILEID="MC_0002"/>  
+        <mets:fptr FILEID="UC_0002"/>  
+        <mets:fptr FILEID="ALTO_0002"/>  
+        <mets:fptr FILEID="TXT_0002"/>  
+        <mets:fptr FILEID="AMD_0002"/> 
+      </mets:div>  
+      <mets:div ID="DIV_P_PAGE_0002" ORDER="3" ORDERLABEL="[3]" TYPE="normalPage"> 
+        <mets:fptr FILEID="MC_0003"/>  
+        <mets:fptr FILEID="UC_0003"/>  
+        <mets:fptr FILEID="ALTO_0003"/>  
+        <mets:fptr FILEID="TXT_0003"/>  
+        <mets:fptr FILEID="AMD_0003"/> 
+      </mets:div>  
+      <mets:div ID="DIV_P_PAGE_0003" ORDER="4" ORDERLABEL="4" TYPE="normalPage"> 
+        <mets:fptr FILEID="MC_0004"/>  
+        <mets:fptr FILEID="UC_0004"/>  
+        <mets:fptr FILEID="ALTO_0004"/>  
+        <mets:fptr FILEID="TXT_0004"/>  
+        <mets:fptr FILEID="AMD_0004"/> 
+      </mets:div>  
+      <mets:div ID="DIV_P_PAGE_0004" ORDER="5" ORDERLABEL="5" TYPE="normalPage"> 
+        <mets:fptr FILEID="MC_0005"/>  
+        <mets:fptr FILEID="UC_0005"/>  
+        <mets:fptr FILEID="ALTO_0005"/>  
+        <mets:fptr FILEID="TXT_0005"/>  
+        <mets:fptr FILEID="AMD_0005"/> 
+      </mets:div>  
+      <mets:div ID="DIV_P_PAGE_0005" ORDER="6" ORDERLABEL="6" TYPE="normalPage"> 
+        <mets:fptr FILEID="MC_0006"/>  
+        <mets:fptr FILEID="UC_0006"/>  
+        <mets:fptr FILEID="ALTO_0006"/>  
+        <mets:fptr FILEID="TXT_0006"/>  
+        <mets:fptr FILEID="AMD_0006"/> 
+      </mets:div>  
+      <mets:div ID="DIV_P_PAGE_0006" ORDER="7" ORDERLABEL="7" TYPE="normalPage"> 
+        <mets:fptr FILEID="MC_0007"/>  
+        <mets:fptr FILEID="UC_0007"/>  
+        <mets:fptr FILEID="ALTO_0007"/>  
+        <mets:fptr FILEID="TXT_0007"/>  
+        <mets:fptr FILEID="AMD_0007"/> 
+      </mets:div>  
+      <mets:div ID="DIV_P_PAGE_0007" ORDER="8" ORDERLABEL="8" TYPE="normalPage"> 
+        <mets:fptr FILEID="MC_0008"/>  
+        <mets:fptr FILEID="UC_0008"/>  
+        <mets:fptr FILEID="ALTO_0008"/>  
+        <mets:fptr FILEID="TXT_0008"/>  
+        <mets:fptr FILEID="AMD_0008"/> 
+      </mets:div> 
+    </mets:div> 
+  </mets:structMap>  
+  <mets:structMap LABEL="Logical_Structure" TYPE="LOGICAL"> 
+    <mets:div ID="MONOGRAPH_0001" LABEL="Karpatská Rus a hranice našeho státu, 1919" TYPE="Monograph"> 
+      <mets:div DMDID="MODSMD_VOLUME_0001" ID="VOLUME_0001" LABEL="Karpatská Rus a hranice našeho státu, 1919" TYPE="VOLUME"/> 
+    </mets:div> 
+  </mets:structMap>  
+  <mets:structLink> 
+    <mets:smLink xlink:from="VOLUME_0001" xlink:to="DIV_P_PAGE_0000"/>  
+    <mets:smLink xlink:from="VOLUME_0001" xlink:to="DIV_P_PAGE_0001"/>  
+    <mets:smLink xlink:from="VOLUME_0001" xlink:to="DIV_P_PAGE_0002"/>  
+    <mets:smLink xlink:from="VOLUME_0001" xlink:to="DIV_P_PAGE_0003"/>  
+    <mets:smLink xlink:from="VOLUME_0001" xlink:to="DIV_P_PAGE_0004"/>  
+    <mets:smLink xlink:from="VOLUME_0001" xlink:to="DIV_P_PAGE_0005"/>  
+    <mets:smLink xlink:from="VOLUME_0001" xlink:to="DIV_P_PAGE_0006"/>  
+    <mets:smLink xlink:from="VOLUME_0001" xlink:to="DIV_P_PAGE_0007"/> 
+  </mets:structLink> 
+</mets:mets>

@@ -46,7 +46,7 @@ public class EfGetFirstFileFromFileListTest {
         engine.registerValueDefinition(LIST_VAR,
                 engine.buildValueDefinition(ValueType.FILE_LIST,
                         engine.buildEvaluationFunction("findFilesInDirByPattern")
-                                .withValueParam("dir", ValueType.FILE, new ValueEvaluation(new File("src/test/resources/monografie_1.2/b50eb6b0-f0a4-11e3-b72e-005056827e52")))
+                                .withValueParam("dir", ValueType.FILE, new ValueEvaluation(new File("src/test/resources/monograph_1.2/b50eb6b0-f0a4-11e3-b72e-005056827e52")))
                                 .withPatternParam("pattern", engine.buildPatternDefinition(engine.buildRawPatternExpression(false, ".+")).evaluate())
                 ));
     }

@@ -19,7 +19,7 @@ public class EfFindFilesInDirByPatternTest {
     private static final String PARAM_PATTERN = "pattern";
 
     private static String PSP_VAR = "PSP_DIR";
-    private static File PSP_DIR_FILE = new File("src/test/resources/monografie_1.2/b50eb6b0-f0a4-11e3-b72e-005056827e52");
+    private static File PSP_DIR_FILE = new File("src/test/resources/monograph_1.2/b50eb6b0-f0a4-11e3-b72e-005056827e52");
     private static File PSP_DIR_FILE_UNKNOWN = new File("src/test/resources/monografie_1.2/b50eb6b0-f0a4-11e3-b72e-005056827e52/unknown");
     private static File PSP_DIR_FILE_NOT_DIR = new File("src/test/resources/monografie_1.2/b50eb6b0-f0a4-11e3-b72e-005056827e52/info_b50eb6b0-f0a4-11e3-b72e-005056827e52.xml");
 

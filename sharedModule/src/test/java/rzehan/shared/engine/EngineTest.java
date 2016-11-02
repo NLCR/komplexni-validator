@@ -27,7 +27,7 @@ public class EngineTest {
     @BeforeClass
     public static void setup() {
         ProvidedVarsManagerImpl pvMgr = new ProvidedVarsManagerImpl();
-        pvMgr.addFile("PSP_DIR", new File("src/test/resources/monografie_1.2/b50eb6b0-f0a4-11e3-b72e-005056827e52"));
+        pvMgr.addFile("PSP_DIR", new File("src/test/resources/monograph_1.2/b50eb6b0-f0a4-11e3-b72e-005056827e52"));
         pvMgr.addString("PSP_ID", "b50eb6b0-f0a4-11e3-b72e-005056827e52");
         engine = new Engine(pvMgr);
     }

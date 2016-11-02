@@ -1,7 +1,10 @@
 package rzehan.shared.engine;
 
 import org.junit.Test;
+import rzehan.shared.engine.exceptions.InvalidXPathExpressionException;
+import rzehan.shared.engine.exceptions.PspDataException;
 import rzehan.shared.engine.exceptions.ValidatorConfigurationException;
+import rzehan.shared.engine.exceptions.XmlParsingException;
 import rzehan.shared.engine.validationFunctions.ValidationResult;
 
 import java.io.File;
@@ -15,9 +18,11 @@ public class EngineInitiliazerTest {
 
     @Test
     public void initPatterns() {
+        File pspRootDir = new File("src/test/resources/monograph_1.2/b50eb6b0-f0a4-11e3-b72e-005056827e52");
+
         try {
             ProvidedVarsManagerImpl pvMgr = new ProvidedVarsManagerImpl();
-            pvMgr.addFile("PSP_DIR", new File("src/test/resources/monografie_1.2/b50eb6b0-f0a4-11e3-b72e-005056827e52"));
+            pvMgr.addFile("PSP_DIR", pspRootDir);
             //pvMgr.addFile("PSP_DIR", new File("/home/martin/zakazky/DMF-validator/data/monografie_1.2/b50eb6b0-f0a4-11e3-b72e-005056827e52"));
 
             //TODO: relativni cesta
@@ -64,5 +69,24 @@ public class EngineInitiliazerTest {
         } catch (ValidatorConfigurationException e) {
             System.out.println("chyba v konfiguraci: " + e.getMessage());
         }
+
+
+        FdmfManager fdmfManager = new FdmfManager();
+        try {
+            //monograph
+            FdmfManager.DmfType dmfType = fdmfManager.detectDmfType(pspRootDir);
+            System.out.println(dmfType);
+            //peridodical
+
+
+
+        } catch (PspDataException e) {
+            e.printStackTrace();
+        } catch (XmlParsingException e) {
+            e.printStackTrace();
+        } catch (InvalidXPathExpressionException e) {
+            e.printStackTrace();
+        }
+
     }
 }

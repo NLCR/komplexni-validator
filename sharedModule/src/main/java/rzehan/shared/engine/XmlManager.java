@@ -76,6 +76,7 @@ public class XmlManager {
         }
     }
 
+
     public XPathExpression buildXpath(String xpathExpression) throws InvalidXPathExpressionException {
         try {
             //TODO: doplnit namespacy
