@@ -14,8 +14,6 @@ import javax.xml.xpath.XPathExpression;
 import javax.xml.xpath.XPathExpressionException;
 import java.io.File;
 
-import static rzehan.shared.engine.validationFunctions.VfCheckInfoFileReferencesPrimaryMets.PARAM_PRIMARY_METS_FILE;
-
 /**
  * Created by martin on 1.11.16.
  */
@@ -58,9 +56,9 @@ public class VfCheckInfoFileItemsCountMatchesItemtotal extends ValidationFunctio
     private ValidationResult validate(File infoFile) {
         try {
             Document infoDoc = engine.getXmlDocument(infoFile);
-            XPathExpression itemTotalExp = engine.buildExpath("/info/itemlist/@itemtotal");
+            XPathExpression itemTotalExp = engine.buildXpath("/info/itemlist/@itemtotal");
             Integer itemTotal = Integer.valueOf((String) itemTotalExp.evaluate(infoDoc, XPathConstants.STRING));
-            XPathExpression itemsExp = engine.buildExpath("count(/info/itemlist/item)");
+            XPathExpression itemsExp = engine.buildXpath("count(/info/itemlist/item)");
             Integer items = Integer.valueOf((String) itemsExp.evaluate(infoDoc, XPathConstants.STRING));
 
             if (items != itemTotal) {

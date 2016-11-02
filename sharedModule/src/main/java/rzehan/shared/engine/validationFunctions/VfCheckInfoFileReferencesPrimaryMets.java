@@ -64,7 +64,7 @@ public class VfCheckInfoFileReferencesPrimaryMets extends ValidationFunction {
     private ValidationResult validate(File infoFile, File primaryMetsFile) {
         try {
             Document infoDoc = engine.getXmlDocument(infoFile);
-            XPathExpression exp = engine.buildExpath("/info/mainmets");
+            XPathExpression exp = engine.buildXpath("/info/mainmets");
             String primaryMetsFilenameFound = (String) exp.evaluate(infoDoc, XPathConstants.STRING);
             if (primaryMetsFilenameFound == null || primaryMetsFilenameFound.isEmpty()) {
                 return invalid("soubor INFO neobsahuje odkaz na soubor PRIMARY-METS");

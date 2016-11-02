@@ -1,22 +1,14 @@
 package rzehan.shared.engine;
 
 import org.w3c.dom.Document;
-import org.xml.sax.SAXException;
 import rzehan.shared.engine.evaluationFunctions.*;
 import rzehan.shared.engine.exceptions.InvalidXPathExpressionException;
 import rzehan.shared.engine.exceptions.ValidatorConfigurationException;
 import rzehan.shared.engine.exceptions.XmlParsingException;
 import rzehan.shared.engine.validationFunctions.*;
 
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.xpath.XPath;
 import javax.xml.xpath.XPathExpression;
-import javax.xml.xpath.XPathExpressionException;
-import javax.xml.xpath.XPathFactory;
 import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -27,7 +19,6 @@ import java.util.Map;
  */
 public class Engine {
 
-    private final ProvidedVarsManager providedVarsManager;
 
     private final Map<String, ValueDefinition> valueDefinitionsByVarName = new HashMap<>();
     private final Map<String, ValueEvaluation> valueEvaluationsByVarName = new HashMap<>();
@@ -36,6 +27,8 @@ public class Engine {
     private final Map<String, PatternEvaluation> patternEvaluationsByVarName = new HashMap<>();
 
     private final RulesManager rulesManager = new RulesManager();
+    private final XmlManager xmlManager = new XmlManager(true);
+    private final ProvidedVarsManager providedVarsManager;
 
     public Engine(ProvidedVarsManager providedVarsManager) {
         this.providedVarsManager = providedVarsManager;
@@ -252,29 +245,11 @@ public class Engine {
 
 
     public Document getXmlDocument(File file) throws XmlParsingException {
-        //TODO: cachovani DOMu
-        try {
-            DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-            DocumentBuilder builder = factory.newDocumentBuilder();
-            return builder.parse(file.getAbsoluteFile());
-        } catch (SAXException e) {
-            throw new XmlParsingException(file, String.format("chyba parsování xml v souboru %s: %s", file.getAbsolutePath(), e.getMessage()));
-        } catch (IOException e) {
-            throw new XmlParsingException(file, String.format("chyba čtení v souboru %s: %s", file.getAbsolutePath(), e.getMessage()));
-        } catch (ParserConfigurationException e) {
-            throw new XmlParsingException(file, String.format("chyba konfigurace parseru při zpracování souboru %s: %s", file.getAbsolutePath(), e.getMessage()));
-        }
+        return xmlManager.getXmlDocument(file);
     }
 
-    public XPathExpression buildExpath(String xpathExpression) throws InvalidXPathExpressionException {
-        try {
-            //TODO: doplnit namespacy
-            XPathFactory xPathfactory = XPathFactory.newInstance();
-            XPath xpath = xPathfactory.newXPath();
-            return xpath.compile(xpathExpression);
-        } catch (XPathExpressionException e) {
-            throw new InvalidXPathExpressionException(xpathExpression, String.format("chyba v zápisu Xpath '%s': %s", xpathExpression, e.getMessage()));
-        }
+    public XPathExpression buildXpath(String xpathExpression) throws InvalidXPathExpressionException {
+        return xmlManager.buildXpath(xpathExpression);
     }
 
 }
