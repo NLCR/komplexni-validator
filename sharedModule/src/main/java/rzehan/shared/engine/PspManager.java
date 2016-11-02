@@ -18,7 +18,11 @@ import java.util.regex.Pattern;
 /**
  * Created by martin on 2.11.16.
  */
-public class FdmfManager {
+public class PspManager {
+
+
+    public static final String DEFAULT_MONOGRAPH_VERSION = "1.0";
+    public static final String DEFAULT_PERIODICAL_VERSION = "1.4";
 
 
     public static enum DmfType {
@@ -39,7 +43,7 @@ public class FdmfManager {
             File primaryMetsFile = findPrimaryMetsFile(pspRootDir);
             Document metsDoc = loadDocument(primaryMetsFile);
             XPathExpression xPathExpression = buildXpathIgnoringNamespaces("/mets/@TYPE");
-            String docType = (String) xPathExpression.evaluate(metsDoc, XPathConstants.STRING);
+            String docType = ((String) xPathExpression.evaluate(metsDoc, XPathConstants.STRING)).trim();
             if ("Monograph".equals(docType)) {
                 return DmfType.MONOGRAPH;
             } else if ("Periodical".equals(docType)) {
@@ -96,5 +100,42 @@ public class FdmfManager {
         }
     }
 
+
+    /**
+     * Validátor zkontroluje soubor info_{identifikator}.xml, konkrétně element <metadataversion>. Platí:
+     * Pokud element nenalezne, předpokládá, že je balíček zpracován podle starších DMF, než je 1.5 pro periodika a 1.1 pro monografie (a validuje podle 1.4 pro periodika a 1.0 pro monografie).
+     * Pokud element nalezne, podívá se na jeho hodnotu a validuje podle této hodnoty.
+     */
+    public String detectDmfVersion(File pspRootDir) throws PspDataException, XmlParsingException, InvalidXPathExpressionException {
+
+        try {
+            File infoFile = findInfoFile(pspRootDir);
+            Document infoDoc = loadDocument(infoFile);
+            XPathExpression xPathExpression = buildXpathIgnoringNamespaces("/info/metadataversion");
+            return ((String) xPathExpression.evaluate(infoDoc, XPathConstants.STRING)).trim();
+        } catch (XPathExpressionException e) {
+            throw new InvalidXPathExpressionException("", String.format("chyba v zápisu Xpath: %s", e.getMessage()));
+        }
+    }
+
+    private File findInfoFile(File pspRootDir) throws PspDataException {
+        Pattern pattern = Pattern.compile("info.*\\.xml", java.util.regex.Pattern.CASE_INSENSITIVE | java.util.regex.Pattern.UNICODE_CASE);
+
+        File[] infoCandidates = pspRootDir.listFiles(new FilenameFilter() {
+            @Override
+            public boolean accept(File dir, String name) {
+                return pattern.matcher(name).matches();
+            }
+        });
+        if (infoCandidates.length >= 2) {
+            throw new PspDataException(pspRootDir,
+                    String.format("nalezeno více možných souborů INFO, není jasné, který použít pro zjištění verze standardu DMF"));
+        } else if (infoCandidates.length == 0) {
+            throw new PspDataException(pspRootDir,
+                    String.format("nenalezen soubor INFO pro zjištění verze standardu DMF"));
+        } else {
+            return infoCandidates[0];
+        }
+    }
 
 }

@@ -71,13 +71,12 @@ public class EngineInitiliazerTest {
         }
 
 
-        FdmfManager fdmfManager = new FdmfManager();
+        PspManager pspManager = new PspManager();
         try {
             //monograph
-            FdmfManager.DmfType dmfType = fdmfManager.detectDmfType(pspRootDir);
+            PspManager.DmfType dmfType = pspManager.detectDmfType(pspRootDir);
             System.out.println(dmfType);
             //peridodical
-
 
 
         } catch (PspDataException e) {
