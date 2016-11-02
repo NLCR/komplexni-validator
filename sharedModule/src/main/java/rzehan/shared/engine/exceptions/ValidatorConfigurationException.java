@@ -5,6 +5,8 @@ package rzehan.shared.engine.exceptions;
  */
 public class ValidatorConfigurationException extends Exception {
 
+
+    //TODO: asi prejmenovat na FdmfConfigurationException
     public ValidatorConfigurationException(String message) {
         super(message);
     }

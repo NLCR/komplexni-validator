@@ -26,14 +26,32 @@ public class Engine {
     private final Map<String, PatternDefinition> patternDefinitionsByVarName = new HashMap<>();
     private final Map<String, PatternEvaluation> patternEvaluationsByVarName = new HashMap<>();
 
-    private final RulesManager rulesManager = new RulesManager();
-    private final XmlManager xmlManager = new XmlManager(true);
-    private final ProvidedVarsManager providedVarsManager;
 
-    public Engine(ProvidedVarsManager providedVarsManager) {
-        this.providedVarsManager = providedVarsManager;
+    private final ProvidedVarsManager providedVarsManager = new ProvidedVarsManager();
+    private final ConfigProcessor configProcessor = new ConfigProcessor();
+    private final XmlManager xmlManager = new XmlManager(true);
+
+    private final RulesManager rulesManager = new RulesManager();
+
+
+    //provided vars
+
+    public void setProvidedString(String stringId, String value) {
+        providedVarsManager.addString(stringId, value);
     }
 
+    public void setProvidedInteger(String intId, Integer value) {
+        providedVarsManager.addInteger(intId, value);
+    }
+
+    public void setProvidedFile(String fileId, File value) {
+        providedVarsManager.addFile(fileId, value);
+    }
+
+    //config files
+    public void processConfigFile(File configFile) throws ValidatorConfigurationException {
+        configProcessor.processConfigFile(this, configFile);
+    }
 
     //build methods for creating stuff
 
@@ -207,13 +225,35 @@ public class Engine {
 
     //helper classes, interfaces
 
-    public interface ProvidedVarsManager {
+    public class ProvidedVarsManager {
 
-        File getProvidedFile(String fileId);
+        private final Map<String, File> files = new HashMap<>();
+        private final Map<String, String> strings = new HashMap<>();
+        private final Map<String, Integer> integers = new HashMap<>();
 
-        String getProvidedString(String stringId);
+        public File getProvidedFile(String fileId) {
+            return files.get(fileId);
+        }
 
-        Integer getProvidedInteger(String intId);
+        public String getProvidedString(String stringId) {
+            return strings.get(stringId);
+        }
+
+        public Integer getProvidedInteger(String intId) {
+            return integers.get(intId);
+        }
+
+        public void addFile(String fileId, File file) {
+            files.put(fileId, file);
+        }
+
+        public void addString(String stringId, String value) {
+            strings.put(stringId, value);
+        }
+
+        public void addInteger(String intId, Integer value) {
+            integers.put(intId, value);
+        }
 
     }
 

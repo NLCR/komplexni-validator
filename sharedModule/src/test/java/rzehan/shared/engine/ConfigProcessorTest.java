@@ -1,6 +1,8 @@
 package rzehan.shared.engine;
 
 import org.junit.Test;
+import rzehan.shared.Fdmf;
+import rzehan.shared.FdmfDetector;
 import rzehan.shared.engine.exceptions.InvalidXPathExpressionException;
 import rzehan.shared.engine.exceptions.PspDataException;
 import rzehan.shared.engine.exceptions.ValidatorConfigurationException;
@@ -13,7 +15,7 @@ import java.util.List;
 /**
  * Created by martin on 29.10.16.
  */
-public class EngineInitiliazerTest {
+public class ConfigProcessorTest {
 
 
     @Test
@@ -21,31 +23,31 @@ public class EngineInitiliazerTest {
         File pspRootDir = new File("src/test/resources/monograph_1.2/b50eb6b0-f0a4-11e3-b72e-005056827e52");
 
         try {
-            ProvidedVarsManagerImpl pvMgr = new ProvidedVarsManagerImpl();
-            pvMgr.addFile("PSP_DIR", pspRootDir);
+            Engine engine = new Engine();
+            engine.setProvidedFile("PSP_DIR", pspRootDir);
             //pvMgr.addFile("PSP_DIR", new File("/home/martin/zakazky/DMF-validator/data/monografie_1.2/b50eb6b0-f0a4-11e3-b72e-005056827e52"));
 
             //TODO: relativni cesta
-            File fdmfRoot = new File("/home/martin/ssd/IdeaProjects/PspValidator/sharedModule/src/main/resources/rzehan/shared/fdmf_1_1_3");
-            pvMgr.addFile("INFO_XSD_FILE", new File(fdmfRoot, "xsds/info_1.1.xsd"));
-            pvMgr.addFile("ALTO_XSD_FILE", new File(fdmfRoot, "xsds/alto_2.0.xsd"));
-            pvMgr.addFile("CMD_XSD_FILE", new File(fdmfRoot, "xsds/cmd_0.91.xsd"));
-            pvMgr.addFile("DC_XSD_FILE", new File(fdmfRoot, "xsds/dc_1.1.xsd"));
-            pvMgr.addFile("METS_XSD_FILE", new File(fdmfRoot, "xsds/mets_1.9.1.xsd"));
-            pvMgr.addFile("MIX_XSD_FILE", new File(fdmfRoot, "xsds/mix_2.0.xsd"));
-            pvMgr.addFile("MODS_XSD_FILE", new File(fdmfRoot, "xsds/mods_3.5.xsd"));
-            pvMgr.addFile("PREMIS_XSD_FILE", new File(fdmfRoot, "xsds/premis_2.2.xsd"));
+            File fdmfRoot = new File("/home/martin/ssd/IdeaProjects/PspValidator/sharedModule/src/main/resources/rzehan/shared/fDMF/monograph_1.2");
+            engine.setProvidedFile("INFO_XSD_FILE", new File(fdmfRoot, "xsd/info_1.1.xsd"));
+            engine.setProvidedFile("ALTO_XSD_FILE", new File(fdmfRoot, "xsd/alto_2.0.xsd"));
+            engine.setProvidedFile("CMD_XSD_FILE", new File(fdmfRoot, "xsd/cmd_0.91.xsd"));
+            engine.setProvidedFile("DC_XSD_FILE", new File(fdmfRoot, "xsd/dc_1.1.xsd"));
+            engine.setProvidedFile("METS_XSD_FILE", new File(fdmfRoot, "xsd/mets_1.9.1.xsd"));
+            engine.setProvidedFile("MIX_XSD_FILE", new File(fdmfRoot, "xsd/mix_2.0.xsd"));
+            engine.setProvidedFile("MODS_XSD_FILE", new File(fdmfRoot, "xsd/mods_3.5.xsd"));
+            engine.setProvidedFile("PREMIS_XSD_FILE", new File(fdmfRoot, "xsd/premis_2.2.xsd"));
 
             //pvMgr.addString("PSP_ID", "b50eb6b0-f0a4-11e3-b72e-005056827e52");
-            Engine engine = new Engine(pvMgr);
+
 
             System.out.println("INITILIZING");
             System.out.println("-----------");
-            EngineInitiliazer initiliazer = new EngineInitiliazer(engine);
-            initiliazer.processFile(new File("/home/martin/ssd/IdeaProjects/PspValidator/sharedModule/src/main/resources/rzehan/shared/fdmf_1_1_3/patterns.xml"));
-            initiliazer.processFile(new File("/home/martin/ssd/IdeaProjects/PspValidator/sharedModule/src/main/resources/rzehan/shared/fdmf_1_1_3/variables.xml"));
-            //initiliazer.processFile(new File("/home/martin/ssd/IdeaProjects/PspValidator/sharedModule/src/main/resources/rzehan/shared/fdmf_1_1_3/examples.xml"));
-            initiliazer.processFile(new File("/home/martin/ssd/IdeaProjects/PspValidator/sharedModule/src/main/resources/rzehan/shared/fdmf_1_1_3/rules.xml"));
+
+            engine.processConfigFile(new File(fdmfRoot, "patterns.xml"));
+            engine.processConfigFile(new File(fdmfRoot, "variables.xml"));
+            engine.processConfigFile(new File(fdmfRoot, "rules.xml"));
+
             System.out.println("-----------");
             System.out.println();
 
@@ -71,10 +73,10 @@ public class EngineInitiliazerTest {
         }
 
 
-        PspManager pspManager = new PspManager();
+        FdmfDetector fdmfDetector = new FdmfDetector();
         try {
             //monograph
-            PspManager.DmfType dmfType = pspManager.detectDmfType(pspRootDir);
+            Fdmf.Type dmfType = fdmfDetector.detectDmfType(pspRootDir);
             System.out.println(dmfType);
             //peridodical
 

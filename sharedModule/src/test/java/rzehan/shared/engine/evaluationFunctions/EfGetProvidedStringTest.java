@@ -3,7 +3,6 @@ package rzehan.shared.engine.evaluationFunctions;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import rzehan.shared.engine.Engine;
-import rzehan.shared.engine.ProvidedVarsManagerImpl;
 import rzehan.shared.engine.ValueEvaluation;
 import rzehan.shared.engine.ValueType;
 
@@ -25,9 +24,8 @@ public class EfGetProvidedStringTest {
 
     @BeforeClass
     public static void setup() {
-        ProvidedVarsManagerImpl pvMgr = new ProvidedVarsManagerImpl();
-        pvMgr.addString(PSP_ID_STRINGID, PSP_ID_VALUE);
-        engine = new Engine(pvMgr);
+        engine = new Engine();
+        engine.setProvidedString(PSP_ID_STRINGID, PSP_ID_VALUE);
     }
 
     @Test

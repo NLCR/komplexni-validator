@@ -3,7 +3,6 @@ package rzehan.shared.engine.evaluationFunctions;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import rzehan.shared.engine.Engine;
-import rzehan.shared.engine.ProvidedVarsManagerImpl;
 import rzehan.shared.engine.ValueEvaluation;
 import rzehan.shared.engine.ValueType;
 
@@ -24,9 +23,8 @@ public class EfGetProvidedIntegerTest {
 
     @BeforeClass
     public static void setup() {
-        ProvidedVarsManagerImpl pvMgr = new ProvidedVarsManagerImpl();
-        pvMgr.addInteger(YEAR_INTID, YEAR_VALUE);
-        engine = new Engine(pvMgr);
+        engine = new Engine();
+        engine.setProvidedInteger(YEAR_INTID, YEAR_VALUE);
     }
 
     @Test

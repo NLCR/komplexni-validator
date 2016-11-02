@@ -3,7 +3,6 @@ package rzehan.shared.engine.evaluationFunctions;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import rzehan.shared.engine.Engine;
-import rzehan.shared.engine.ProvidedVarsManagerImpl;
 import rzehan.shared.engine.ValueEvaluation;
 import rzehan.shared.engine.ValueType;
 
@@ -38,7 +37,7 @@ public class EfGetFirstFileFromFileListTest {
 
     @BeforeClass
     public static void setup() {
-        engine = new Engine(new ProvidedVarsManagerImpl());
+        engine = new Engine();
         defineListVar();
     }
 

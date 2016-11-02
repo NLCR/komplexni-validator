@@ -1,6 +1,10 @@
 package rzehan.cli;
 
-import rzehan.shared.SharedClass;
+import rzehan.shared.*;
+import rzehan.shared.engine.exceptions.InvalidXPathExpressionException;
+import rzehan.shared.engine.exceptions.PspDataException;
+import rzehan.shared.engine.exceptions.ValidatorConfigurationException;
+import rzehan.shared.engine.exceptions.XmlParsingException;
 import rzehan.shared.xsdValidation.XsdValidator;
 
 import java.io.File;
@@ -9,43 +13,68 @@ import java.io.File;
  * Created by Martin Řehánek on 27.9.16.
  */
 public class Main {
-    public static void main(String[] args) {
-        //String shared = "TODO";
-        /*String shared = new SharedClass().toString();
-        System.out.println("Hello from CLI, shared: " + shared);*/
+    public static void main(String[] args) throws PspDataException, XmlParsingException, InvalidXPathExpressionException, FdmfRegistry.UnknownFdmfVersionException, ValidatorConfigurationException {
+        validate(new Fdmf(Fdmf.Type.MONOGRAPH, "1.3"),
+                new File("/home/martin/IdeaProjects/PspValidator/sharedModule/src/main/resources/rzehan/shared/fDMF"),
+                new File("/home/martin/IdeaProjects/PspValidator/sharedModule/src/test/resources/monograph_1.2/b50eb6b0-f0a4-11e3-b72e-005056827e52")
 
 
+        );
+    }
+
+    private static void validate(Fdmf fdmfPrefered, File fdmfsRoot, File pspRoot) throws PspDataException, InvalidXPathExpressionException, XmlParsingException, FdmfRegistry.UnknownFdmfVersionException, ValidatorConfigurationException {
+        checkReadableDir(pspRoot);
+        checkReadableDir(fdmfsRoot);
+        System.out.println(String.format("Zpracovávám PSP balík %s", pspRoot.getAbsolutePath()));
+        Fdmf fdmfResolved = new FdmfDetector().resolveFdmf(fdmfPrefered, pspRoot);
+        System.out.println(String.format("Bude použita verze standardu %s", fdmfResolved));
+        File fdmfRoot = new FdmfRegistry(fdmfsRoot).getFdmfDir(fdmfResolved);
+        System.out.println(String.format("Kořenový adresář fDMF: %s", fdmfRoot.getAbsolutePath()));
+        Validator validator = ValidatorFactory.buildValidator(fdmfRoot, pspRoot);
+        System.out.println(String.format("Validátor inicializován, spouštím validace"));
+        validator.run(false);
+    }
+
+    private static void checkReadableDir(File pspRoot) {
+        if (!pspRoot.exists()) {
+            throw new IllegalStateException(String.format("soubor %s neexistuje", pspRoot.getAbsolutePath()));
+        } else if (!pspRoot.isDirectory()) {
+            throw new IllegalStateException(String.format("soubor %s není adresář", pspRoot.getAbsolutePath()));
+        } else if (!pspRoot.canRead()) {
+            throw new IllegalStateException(String.format("nelze číst adresář %s", pspRoot.getAbsolutePath()));
+        }
+    }
+
+    private static void testXsds() {
         //info - ok
-        File infoXml = new File("/home/martin/IdeaProjects/PspValidator/sharedModule/src/main/resources/rzehan/shared/fdmf_1_1_3/xsds/examples/info.xml");
-        File infoXsd = new File("/home/martin/IdeaProjects/PspValidator/sharedModule/src/main/resources/rzehan/shared/fdmf_1_1_3/xsds/info_1.1.xsd");
+        File infoXml = new File("/home/martin/IdeaProjects/PspValidator/sharedModule/src/main/resources/rzehan/shared/fdmf_1_1_3/xsd/examples/info.xml");
+        File infoXsd = new File("/home/martin/IdeaProjects/PspValidator/sharedModule/src/main/resources/rzehan/shared/fdmf_1_1_3/xsd/info_1.1.xsd");
         XsdValidator.validate("INFO", infoXsd, infoXml);
 
        /* //mix - ok
-        File mixXsd = new File("/home/martin/IdeaProjects/PspValidator/sharedModule/src/main/resources/rzehan/shared/fdmf_1_1_3/xsds/mix_2.0.xsd");
-        File mixXml = new File("/home/martin/IdeaProjects/PspValidator/sharedModule/src/main/resources/rzehan/shared/fdmf_1_1_3/xsds/examples/mix.xml");
+        File mixXsd = new File("/home/martin/IdeaProjects/PspValidator/sharedModule/src/main/resources/rzehan/shared/fdmf_1_1_3/xsd/mix_2.0.xsd");
+        File mixXml = new File("/home/martin/IdeaProjects/PspValidator/sharedModule/src/main/resources/rzehan/shared/fdmf_1_1_3/xsd/examples/mix.xml");
         XsdValidator.validate("MIX", mixXsd, mixXml);
 
         //premis - ok
-        File premisXsd = new File("/home/martin/IdeaProjects/PspValidator/sharedModule/src/main/resources/rzehan/shared/fdmf_1_1_3/xsds/premis_2.2.xsd");
-        File premisXml = new File("/home/martin/IdeaProjects/PspValidator/sharedModule/src/main/resources/rzehan/shared/fdmf_1_1_3/xsds/examples/premis.xml");
+        File premisXsd = new File("/home/martin/IdeaProjects/PspValidator/sharedModule/src/main/resources/rzehan/shared/fdmf_1_1_3/xsd/premis_2.2.xsd");
+        File premisXml = new File("/home/martin/IdeaProjects/PspValidator/sharedModule/src/main/resources/rzehan/shared/fdmf_1_1_3/xsd/examples/premis.xml");
         XsdValidator.validate("PREMIS", premisXsd, premisXml);
 
         //dc - TODO, jak je to s tim root elementem a jeste import xml.xsd v xsd
-        File dcXsd = new File("/home/martin/IdeaProjects/PspValidator/sharedModule/src/main/resources/rzehan/shared/fdmf_1_1_3/xsds/dc_1.1.xsd");
-        File dcXml = new File("/home/martin/IdeaProjects/PspValidator/sharedModule/src/main/resources/rzehan/shared/fdmf_1_1_3/xsds/examples/dc.xml");
+        File dcXsd = new File("/home/martin/IdeaProjects/PspValidator/sharedModule/src/main/resources/rzehan/shared/fdmf_1_1_3/xsd/dc_1.1.xsd");
+        File dcXml = new File("/home/martin/IdeaProjects/PspValidator/sharedModule/src/main/resources/rzehan/shared/fdmf_1_1_3/xsd/examples/dc.xml");
         XsdValidator.validate("DC", dcXsd, dcXml);
 
         //mods - TODO: problem s importem xml.xsd
-        File modsXsd = new File("/home/martin/IdeaProjects/PspValidator/sharedModule/src/main/resources/rzehan/shared/fdmf_1_1_3/xsds/mods_3.5.xsd");
-        File modsXml = new File("/home/martin/IdeaProjects/PspValidator/sharedModule/src/main/resources/rzehan/shared/fdmf_1_1_3/xsds/examples/mods.xml");
+        File modsXsd = new File("/home/martin/IdeaProjects/PspValidator/sharedModule/src/main/resources/rzehan/shared/fdmf_1_1_3/xsd/mods_3.5.xsd");
+        File modsXml = new File("/home/martin/IdeaProjects/PspValidator/sharedModule/src/main/resources/rzehan/shared/fdmf_1_1_3/xsd/examples/mods.xml");
         XsdValidator.validate("MODS", modsXsd, modsXml);
 
         //mets - ok
-        File metsXsd = new File("/home/martin/IdeaProjects/PspValidator/sharedModule/src/main/resources/rzehan/shared/fdmf_1_1_3/xsds/mets_1.9.1.xsd");
-        File metsXml = new File("/home/martin/IdeaProjects/PspValidator/sharedModule/src/main/resources/rzehan/shared/fdmf_1_1_3/xsds/examples/mets.xml");
+        File metsXsd = new File("/home/martin/IdeaProjects/PspValidator/sharedModule/src/main/resources/rzehan/shared/fdmf_1_1_3/xsd/mets_1.9.1.xsd");
+        File metsXml = new File("/home/martin/IdeaProjects/PspValidator/sharedModule/src/main/resources/rzehan/shared/fdmf_1_1_3/xsd/examples/mets.xml");
         XsdValidator.validate("METS", metsXsd, metsXml);*/
-
-
     }
 
 }

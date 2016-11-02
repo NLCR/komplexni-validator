@@ -13,17 +13,12 @@ import java.util.List;
 /**
  * Created by martin on 29.10.16.
  */
-public class EngineInitiliazer {
+public class ConfigProcessor {
 
     /*TODO: logovani*/
-    private final Engine engine;
 
-    public EngineInitiliazer(Engine engine) {
-        this.engine = engine;
-    }
-
-    public void processFile(File patternsFile) throws ValidatorConfigurationException {
-        XMLTag doc = XMLDoc.from(patternsFile, true);
+    public void processConfigFile(Engine engine, File configFile) throws ValidatorConfigurationException {
+        XMLTag doc = XMLDoc.from(configFile, true);
         if (!"dmf".equals(doc.getCurrentTagName())) {
             throw new ValidatorConfigurationException("root element není dmf");
         }
@@ -32,13 +27,13 @@ public class EngineInitiliazer {
             String elementName = childEl.getTagName();
             switch (elementName) {
                 case "pattern-def":
-                    processNamedPatternDefinition(childEl);
+                    processNamedPatternDefinition(engine, childEl);
                     break;
                 case "value-def":
-                    processNamedValueDefinition(childEl);
+                    processNamedValueDefinition(engine, childEl);
                     break;
                 case "rules-section":
-                    processRulesSectionDefinition(childEl);
+                    processRulesSectionDefinition(engine, childEl);
                     break;
                 default:
                     //nothing
@@ -47,7 +42,7 @@ public class EngineInitiliazer {
         }
     }
 
-    private void processRulesSectionDefinition(Element rulesSectionEl) throws ValidatorConfigurationException {
+    private void processRulesSectionDefinition(Engine engine, Element rulesSectionEl) throws ValidatorConfigurationException {
         String name = rulesSectionEl.getAttribute("name");
         //System.out.println(String.format("processing rule-section %s'", name));
         RulesSection section = engine.buildRuleSection(name);
@@ -60,15 +55,15 @@ public class EngineInitiliazer {
         //rules
         List<Element> ruleEls = XmlUtils.getChildrenElementsByName(rulesSectionEl, "rule");
         for (Element ruleEl : ruleEls) {
-            processRule(section, ruleEl);
+            processRule(engine, section, ruleEl);
         }
     }
 
-    private void processRule(RulesSection section, Element ruleEl) throws ValidatorConfigurationException {
+    private void processRule(Engine engine, RulesSection section, Element ruleEl) throws ValidatorConfigurationException {
         String name = ruleEl.getAttribute("name");
         Rule.Level level = parseLevel(ruleEl.getAttribute("level"), Rule.Level.ERROR);
         Element validationEl = XmlUtils.getChildrenElementsByName(ruleEl, "validation").get(0);
-        ValidationFunction function = parseValidationFunction(validationEl);
+        ValidationFunction function = parseValidationFunction(engine, validationEl);
         Rule rule = new Rule(name, level, function);
         //description
         List<Element> descriptionEls = XmlUtils.getChildrenElementsByName(ruleEl, "description");
@@ -80,12 +75,12 @@ public class EngineInitiliazer {
 
     }
 
-    private ValidationFunction parseValidationFunction(Element validationEl) throws ValidatorConfigurationException {
+    private ValidationFunction parseValidationFunction(Engine engine, Element validationEl) throws ValidatorConfigurationException {
         String name = validationEl.getAttribute("functionName");
         Element paramsEl = XmlUtils.getChildrenElementsByName(validationEl, "params").get(0);
         ValidationFunction function = engine.buildValidationFunction(name);
         //params
-        addParams(function, paramsEl);
+        addParams(engine, function, paramsEl);
         return function;
     }
 
@@ -98,7 +93,7 @@ public class EngineInitiliazer {
     }
 
 
-    private void processNamedPatternDefinition(Element patternEl) {
+    private void processNamedPatternDefinition(Engine engine, Element patternEl) {
         String varName = patternEl.getAttribute("name");
         //System.out.println("processing named-pattern " + varName);
         List<Element> expressionEls = XmlUtils.getChildrenElementsByName(patternEl, "expression");
@@ -123,7 +118,7 @@ public class EngineInitiliazer {
         }
     }
 
-    private void processNamedValueDefinition(Element valueDefEl) throws ValidatorConfigurationException {
+    private void processNamedValueDefinition(Engine engine, Element valueDefEl) throws ValidatorConfigurationException {
         String varName = valueDefEl.getAttribute("name");
         ValueType varType = ValueType.valueOf(valueDefEl.getAttribute("type"));
         //System.out.println(String.format("processing named-value %s (%s) ", varName, varType));
@@ -131,7 +126,7 @@ public class EngineInitiliazer {
         if (!efEls.isEmpty()) {//evaluation function
             //System.out.println("processing named-value - by definition");
             Element efEl = efEls.get(0);
-            EvaluationFunction ef = buildEf(efEl);
+            EvaluationFunction ef = buildEf(engine, efEl);
             ValueDefinition valueDefinition = engine.buildValueDefinition(varType, ef);
             //System.out.println(String.format("registering named-value (by definition) %s", varName));
             engine.registerValueDefinition(varName, valueDefinition);
@@ -157,16 +152,16 @@ public class EngineInitiliazer {
     }
 
 
-    private EvaluationFunction buildEf(Element efEl) throws ValidatorConfigurationException {
+    private EvaluationFunction buildEf(Engine engine, Element efEl) throws ValidatorConfigurationException {
         String efName = efEl.getAttribute("functionName");
         //System.out.println("buildEf (" + efName + ")");
         EvaluationFunction ef = engine.buildEvaluationFunction(efName);
         Element paramsEl = XmlUtils.getChildrenElementsByName(efEl, "params").get(0);
-        addParams(ef, paramsEl);
+        addParams(engine, ef, paramsEl);
         return ef;
     }
 
-    private void addParams(Function function, Element paramsEl) throws ValidatorConfigurationException {
+    private void addParams(Engine engine, Function function, Element paramsEl) throws ValidatorConfigurationException {
         // value params
         List<Element> valueEls = XmlUtils.getChildrenElementsByName(paramsEl, "value");
         for (Element valueEl : valueEls) {
@@ -181,7 +176,7 @@ public class EngineInitiliazer {
                 function.withValueParamByReference(paramName, paramType, valueRefName);
             } else if (!evaluationEls.isEmpty()) { //param anonymous definition
                 Element evaluationEl = evaluationEls.get(0);
-                EvaluationFunction valueParamEf = buildEf(evaluationEl);
+                EvaluationFunction valueParamEf = buildEf(engine, evaluationEl);
                 ValueEvaluation evaluation = valueParamEf.evaluate();
                 function.withValueParam(paramName, paramType, evaluation);
             } else {//param is constant

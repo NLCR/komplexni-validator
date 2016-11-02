@@ -15,13 +15,12 @@ public class PatternTest {
 
     @BeforeClass
     public static void setup() {
-        ProvidedVarsManagerImpl pvMgr = new ProvidedVarsManagerImpl();
-        pvMgr.addString("STR1", "neco");
-        pvMgr.addString("STR2", "nic");
-        pvMgr.addInteger("NUM1", 6);
-        pvMgr.addString("PSP_ID", "b50eb6b0-f0a4-11e3-b72e-005056827e52");
-        pvMgr.addString("DOT", ".");
-        engine = new Engine(pvMgr);
+        engine = new Engine();
+        engine.setProvidedString("STR1", "neco");
+        engine.setProvidedString("STR2", "nic");
+        engine.setProvidedInteger("NUM1", 6);
+        engine.setProvidedString("PSP_ID", "b50eb6b0-f0a4-11e3-b72e-005056827e52");
+        engine.setProvidedString("DOT", ".");
     }
 
 

@@ -2,7 +2,10 @@ package rzehan.shared.engine.evaluationFunctions;
 
 import org.junit.BeforeClass;
 import org.junit.Test;
-import rzehan.shared.engine.*;
+import rzehan.shared.engine.Engine;
+import rzehan.shared.engine.PatternDefinition;
+import rzehan.shared.engine.ValueEvaluation;
+import rzehan.shared.engine.ValueType;
 
 import java.io.File;
 import java.util.List;
@@ -32,9 +35,8 @@ public class EfFindFilesInDirByPatternTest {
 
     @BeforeClass
     public static void setup() {
-        ProvidedVarsManagerImpl pvMgr = new ProvidedVarsManagerImpl();
-        pvMgr.addFile(PSP_VAR, PSP_DIR_FILE);
-        engine = new Engine(pvMgr);
+        engine = new Engine();
+        engine.setProvidedFile(PSP_VAR, PSP_DIR_FILE);
 
         TestUtils.defineProvidedFileVar(engine, PSP_VAR);
         patternAllFiles = engine.buildPatternDefinition()
