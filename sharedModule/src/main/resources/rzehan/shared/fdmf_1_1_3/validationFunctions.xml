@@ -155,8 +155,7 @@
         </params-def>
     </validationfunction>
 
-    <!--TODO: implement-->
-    <validationfunction name="CHECK_INFO_CHECKSUM_FILE_CHECKSUM_MATCHES">
+    <validationfunction name="checkInfoFileChecksumMatches">
         <description>Zkontroluje, že se soubor INFO odkazuje na existující soubor CHECKSUM přes element checksum a že se
             kontrolní součet shoduje.
         </description>

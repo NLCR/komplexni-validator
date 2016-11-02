@@ -109,6 +109,8 @@ public class Engine {
                 return new VfCheckInfoFileItemsCountMatchesItemtotal(this);
             case "checkInfoFileItemlistReferencesAllFiles":
                 return new VfCheckInfoFileItemlistReferencesAllFiles(this);
+            case "checkInfoFileChecksumMatches":
+                return new VfCheckInfoFileChecksumMatches(this);
 
             default:
                 throw new ValidatorConfigurationException(String.format("validační funkce %s neexistuje", name));

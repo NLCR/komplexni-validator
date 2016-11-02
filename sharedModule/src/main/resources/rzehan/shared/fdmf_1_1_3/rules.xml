@@ -920,21 +920,23 @@
         </rule>
 
         <!--METS Profile requirement id infoxml14-->
-        <!--<rule name="INFO_CHECKSUM_FILE_CHECKSUM_MATCHES" level="ERROR">
+        <rule name="INFO_CHECKSUM_FILE_CHECKSUM_MATCHES" level="ERROR">
             <description>Soubor INFO se musí odkazovat na existující soubor CHECKSUM přes element checksum a kontrolní
                 součet se musí shodovat.
             </description>
-            <validation functionName="CHECK_INFO_CHECKSUM_FILE_CHECKSUM_MATCHES">
+            <validation functionName="checkInfoFileChecksumMatches">
                 <params>
-                    <value name="file_info">
-                        <value-ref name="FILE_INFO"/>
+                    <value name="info_file" type="FILE">
+                        <value-ref name="INFO_FILE"/>
                     </value>
-                    <value name="file_checksum">
-                        <value-ref name="FILE_CHECKSUM"/>
+                    <value name="checksum_file" type="FILE">
+                        <value-ref name="CHECKSUM_FILE"/>
                     </value>
                 </params>
             </validation>
-        </rule>-->
+        </rule>
+
+        <!--TODO:identifikatory v INFO-->
 
 
     </rules-section>

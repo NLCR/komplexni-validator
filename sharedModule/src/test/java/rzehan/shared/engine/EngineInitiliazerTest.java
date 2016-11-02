@@ -18,6 +18,8 @@ public class EngineInitiliazerTest {
         try {
             ProvidedVarsManagerImpl pvMgr = new ProvidedVarsManagerImpl();
             pvMgr.addFile("PSP_DIR", new File("src/test/resources/monografie_1.2/b50eb6b0-f0a4-11e3-b72e-005056827e52"));
+            //pvMgr.addFile("PSP_DIR", new File("/home/martin/zakazky/DMF-validator/data/monografie_1.2/b50eb6b0-f0a4-11e3-b72e-005056827e52"));
+
             //TODO: relativni cesta
             pvMgr.addFile("INFO_XSD_FILE", new File("/home/martin/ssd/IdeaProjects/PspValidator/sharedModule/src/main/resources/rzehan/shared/fdmf_1_1_3/xsds/info_1.1.xsd"));
 

@@ -1,8 +1,11 @@
 package rzehan.shared.engine;
 
+import rzehan.shared.engine.exceptions.HashComputationException;
 import rzehan.shared.engine.exceptions.InvalidPathException;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.util.List;
 
 /**
@@ -97,6 +100,26 @@ public class Utils {
             builder.append(segments[i]);
         }
         return builder.toString();
+    }
+
+    public static String computeHash(File file) throws HashComputationException {
+        FileInputStream fis = null;
+        try {
+            fis = new FileInputStream(file);
+            String md5 = org.apache.commons.codec.digest.DigestUtils.md5Hex(fis);
+            fis.close();
+            return md5.toUpperCase();
+        } catch (Exception e) {
+            throw new HashComputationException(e.getMessage());
+        } finally {
+            if (fis != null) {
+                try {
+                    fis.close();
+                } catch (IOException e) {
+                    //e.printStackTrace();
+                }
+            }
+        }
     }
 
 
