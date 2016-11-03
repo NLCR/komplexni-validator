@@ -956,6 +956,16 @@
             </validation>
         </rule>
 
+        <rule name="DC_IDENTIFIERS_NO_WHITE_SPACES" level="WARNING">
+            <description>Identifikátory v Dublin Core záznamech by neměly obsahovat bílé znaky.</description>
+            <validation functionName="checkDcIdentifiersDoNotContainWhiteSpaces">
+                <params>
+                    <value name="primaryMets_file" type="FILE">
+                        <value-ref name="PRIMARY-METS_FILE"/>
+                    </value>
+                </params>
+            </validation>
+        </rule>
 
         <!--TODO-->
 

@@ -6,7 +6,9 @@
            xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/"
            xmlns:premis="info:lc/xmlns/premis-v2"
            xmlns:xlink="http://www.w3.org/1999/xlink"
-           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" LABEL="Karpatská Rus a hranice našeho státu, 1919" TYPE="Monograph" xsi:schemaLocation="http://www.w3.org/2001/XMLSchema-instance http://www.w3.org/2001/XMLSchema.xsd http://www.loc.gov/METS/ http://www.loc.gov/standards/mets/mets.xsd http://www.loc.gov/mods/v3 http://www.loc.gov/standards/mods/v3/mods-3-5.xsd http://www.openarchives.org/OAI/2.0/oai_dc/ http://www.openarchives.org/OAI/2.0/oai_dc.xsd">
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           LABEL="Karpatská Rus a hranice našeho státu, 1919" TYPE="Monograph"
+           xsi:schemaLocation="http://www.w3.org/2001/XMLSchema-instance http://www.w3.org/2001/XMLSchema.xsd http://www.loc.gov/METS/ http://www.loc.gov/standards/mets/mets.xsd http://www.loc.gov/mods/v3 http://www.loc.gov/standards/mods/v3/mods-3-5.xsd http://www.openarchives.org/OAI/2.0/oai_dc/ http://www.openarchives.org/OAI/2.0/oai_dc.xsd">
   <mets:metsHdr CREATEDATE="2015-09-21T21:39:56" LASTMODDATE="2016-02-29T10:39:56"> 
     <mets:agent ROLE="CREATOR" TYPE="ORGANIZATION"> 
       <mets:name>ABA001</mets:name> 

@@ -135,6 +135,8 @@ public class Engine {
                 return new VfCheckInfoFileChecksumMatches(this);
             case "checkNoDuplicateIdentifiers":
                 return new VfCheckNoDuplicateIdentifiers(this);
+            case "checkDcIdentifiersDoNotContainWhiteSpaces":
+                return new VfCheckDcIdentifiersDoNotContainWhiteSpaces(this);
             default:
                 throw new ValidatorConfigurationException(String.format("validační funkce %s neexistuje", name));
         }
@@ -300,6 +302,10 @@ public class Engine {
 
     public XPathExpression buildXpath(String xpathExpression) throws InvalidXPathExpressionException {
         return xmlManager.buildXpath(xpathExpression);
+    }
+
+    public void defineNamespace(String prefix, String uri) {
+        xmlManager.setNamespaceUri(prefix, uri);
     }
 
 }
