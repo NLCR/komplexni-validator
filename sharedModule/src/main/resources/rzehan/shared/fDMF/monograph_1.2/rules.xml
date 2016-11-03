@@ -941,8 +941,21 @@
 
     </rules-section>
 
-    <rules-section name="Struktura METS"
-                   description="Kontrola METS, TODO: doplnit popis.">
+    <rules-section name="Identifikátory" description="">
+
+        <rule name="INFO_NO_DUPLICATE_IDENTIFIERS" level="ERROR">
+            <description>Soubor INFO nesmí obsahovat duplikované identifikátory (tedy více identifikátorů stejného
+                typu).
+            </description>
+            <validation functionName="checkNoDuplicateIdentifiers">
+                <params>
+                    <value name="identifiers" type="IDENTIFIER_LIST">
+                        <value-ref name="INFO_IDENTIFIERS"/>
+                    </value>
+                </params>
+            </validation>
+        </rule>
+
 
         <!--TODO-->
 

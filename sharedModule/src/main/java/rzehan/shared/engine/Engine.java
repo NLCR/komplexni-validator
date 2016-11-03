@@ -86,6 +86,10 @@ public class Engine {
                 return new EfFindFilesInDirByPattern(this);
             case "getStringByXpath":
                 return new EfGetStringByXpath(this);
+            case "getIdentifiersFromInfoFile":
+                return new EfGetIdentifiersFromInfoFile(this);
+            case "buildListOfStrings":
+                return new EfBuildListOfStrings(this);
             default:
                 throw new RuntimeException(String.format("vyhodnocovací funkce %s neexistuje", name));
         }
@@ -129,7 +133,8 @@ public class Engine {
                 return new VfCheckInfoFileItemlistReferencesAllFiles(this);
             case "checkInfoFileChecksumMatches":
                 return new VfCheckInfoFileChecksumMatches(this);
-
+            case "checkNoDuplicateIdentifiers":
+                return new VfCheckNoDuplicateIdentifiers(this);
             default:
                 throw new ValidatorConfigurationException(String.format("validační funkce %s neexistuje", name));
         }

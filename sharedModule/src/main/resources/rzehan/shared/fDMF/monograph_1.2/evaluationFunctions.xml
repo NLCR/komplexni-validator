@@ -89,6 +89,13 @@
         </params>
     </evaluationFunction>
 
+    <evaluationFunction name="buildListOfStrings" resultType="STRING_LIST">
+        <description>Z více paramatrů typu STRING vytvoří seznam.</description>
+        <params-def>
+            <value name="string" type="STRING" minOccurs="0" maxOccurs="unbound"/>
+        </params-def>
+    </evaluationFunction>
+
     <!--TODO: implement-->
     <evaluationFunction name="GET_INT_BY_XPATH" resultType="INTEGER">
         <description>Vrátí číslo z xml souboru podle xpath.</description>
