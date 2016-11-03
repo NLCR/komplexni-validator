@@ -65,20 +65,20 @@ public class FdmfRegistry {
         return periodicalFdmfByVersion.get(dmfVersion);
     }
 
-    public File getFdmfDir(Fdmf fdmf) throws UnknownFdmfVersionException {
-        switch (fdmf.getType()) {
+    public File getFdmfDir(Dmf dmf) throws UnknownFdmfException {
+        switch (dmf.getType()) {
             case MONOGRAPH: {
-                File file = monographFdmfByVersion.get(fdmf.getVersion());
+                File file = monographFdmfByVersion.get(dmf.getVersion());
                 if (file == null) {
-                    throw new UnknownFdmfVersionException(fdmf);
+                    throw new UnknownFdmfException(dmf);
                 } else {
                     return file;
                 }
             }
             case PERIODICAL: {
-                File file = periodicalFdmfByVersion.get(fdmf.getVersion());
+                File file = periodicalFdmfByVersion.get(dmf.getVersion());
                 if (file == null) {
-                    throw new UnknownFdmfVersionException(fdmf);
+                    throw new UnknownFdmfException(dmf);
                 } else {
                     return file;
                 }
@@ -89,12 +89,11 @@ public class FdmfRegistry {
     }
 
 
-    public static class UnknownFdmfVersionException extends Exception {
+    public static class UnknownFdmfException extends Exception {
 
-        public UnknownFdmfVersionException(Fdmf fdmf) {
-            super(String.format("neznámá verze pro DMF %s: %s", fdmf.getType(), fdmf.getVersion()));
+        public UnknownFdmfException(Dmf dmf) {
+            super(String.format("Není definována fDMF (formalizovaná DMF) pro: %s", dmf));
         }
-
 
     }
 

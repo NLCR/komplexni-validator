@@ -1,12 +1,7 @@
 package rzehan.shared.engine;
 
 import org.junit.Test;
-import rzehan.shared.Fdmf;
-import rzehan.shared.FdmfDetector;
-import rzehan.shared.engine.exceptions.InvalidXPathExpressionException;
-import rzehan.shared.engine.exceptions.PspDataException;
 import rzehan.shared.engine.exceptions.ValidatorConfigurationException;
-import rzehan.shared.engine.exceptions.XmlParsingException;
 import rzehan.shared.engine.validationFunctions.ValidationResult;
 
 import java.io.File;
@@ -71,23 +66,5 @@ public class ConfigProcessorTest {
         } catch (ValidatorConfigurationException e) {
             System.out.println("chyba v konfiguraci: " + e.getMessage());
         }
-
-
-        FdmfDetector fdmfDetector = new FdmfDetector();
-        try {
-            //monograph
-            Fdmf.Type dmfType = fdmfDetector.detectDmfType(pspRootDir);
-            System.out.println(dmfType);
-            //peridodical
-
-
-        } catch (PspDataException e) {
-            e.printStackTrace();
-        } catch (XmlParsingException e) {
-            e.printStackTrace();
-        } catch (InvalidXPathExpressionException e) {
-            e.printStackTrace();
-        }
-
     }
 }

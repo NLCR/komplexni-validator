@@ -14,29 +14,36 @@ import java.io.File;
  * Created by Martin Řehánek on 27.9.16.
  */
 public class Main {
-    public static void main(String[] args) throws PspDataException, XmlParsingException, InvalidXPathExpressionException, FdmfRegistry.UnknownFdmfVersionException, ValidatorConfigurationException {
+    public static void main(String[] args) throws PspDataException, XmlParsingException, InvalidXPathExpressionException, FdmfRegistry.UnknownFdmfException, ValidatorConfigurationException {
 
         //https://commons.apache.org/proper/commons-cli/usage.html
         Options options = new Options();
         options.addOption(OptionBuilder
-                .withDescription("použít vybranou verzi standardu, např. 'Monograph_1.2' nebo 'Periodical_1.6'")
+                .withDescription("Typ typu standardu pro validaci.")
+                .hasArg()
+                .withArgName("Monograph|Periodical")
+                .withLongOpt("dmf-type")
+                .create("dt"));
+        options.addOption(OptionBuilder
+                .withDescription("Verze standardu pro validaci.")
                 .hasArg()
                 .withArgName("DMF_VERSION")
                 .withLongOpt("dmf-version")
                 .create("dv"));
+
         options.addOption(OptionBuilder
-                .withDescription("adresář obsahující formalizované DMF pro jednotlivé verze standardu")
+                .withDescription("Adresář obsahující formalizované DMF pro jednotlivé verze standardu.")
                 .hasArg()
-                .withArgName("CONFIG_DIR")
-                .withLongOpt("config-dir")
-                .create("c"));
+                .withArgName("FDMF_DIR")
+                .withLongOpt("fdmf-dir")
+                .create("fd"));
         options.addOption(OptionBuilder
-                .withDescription("adresář PSP balíku")
+                .withDescription("Adresář PSP balíku, který má být validován.")
                 //.isRequired()
                 .hasArg()
                 .withArgName("PSP_DIR")
-                .withLongOpt("psp")
-                .create("p"));
+                .withLongOpt("psp-dir")
+                .create("pd"));
 
         /*options.addOption(OptionBuilder
                 .withDescription("soubor se zabaleným PSP balíkem")
@@ -46,67 +53,72 @@ public class Main {
                 .create("z"));*/
 
         options.addOption(OptionBuilder.withLongOpt("help")
-                .withDescription("zobrazit tuto nápovědu")
-                .create('h'));
+                .withDescription("Zobrazit tuto nápovědu.")
+                .create());
         options.addOption(OptionBuilder.withLongOpt("version")
-                .withDescription("zobrazit informace o verzi")
-                .create('v'));
+                .withDescription("Zobrazit informace o verzi.")
+                .create());
 
         CommandLineParser parser = new DefaultParser();
         try {
             // parse the command line arguments
             CommandLine line = parser.parse(options, args);
-            if (line.hasOption("h")) {
+            if (line.hasOption("help")) {
                 printHelp(options);
-            } else if (line.hasOption("v")) {
+            } else if (line.hasOption("version")) {
                 //TODO
                 System.out.println("pspValidator for CLI verze 0.1");
             } else {
-                if (!line.hasOption("c")) {
-                    System.err.println("pro spuštění validace je nutné určit konfiguraci validátoru");
+                if (!line.hasOption("fd")) {
+                    System.err.println("pro spuštění validace je nutné určit adresář obsahující formalizované DMF");
                     printHelp(options);
                     return;
                 }
-                if (!line.hasOption("p")) {
+                if (!line.hasOption("pd")) {
                     System.err.println("pro spuštění validace je nutné zadat PSP balík");
                     printHelp(options);
                     return;
                 }
-                String fdmfsDir = line.getOptionValue("c");
-                String pspDir = line.getOptionValue('p');
-                //TODO; parsovat a pouzit
-                String fdmfVersionStr = line.getOptionValue("dv");
-                validate(new Fdmf(Fdmf.Type.MONOGRAPH, "1.3"), new File(fdmfsDir), new File(pspDir));
+                Dmf.Type dmfType = line.hasOption("dt") ? Dmf.Type.valueOf(line.getOptionValue("dt").toUpperCase()) : null;
+                String dmfVersion = line.hasOption("dv") ? line.getOptionValue("dv") : null;
+
+
+                String fdmfsDir = line.getOptionValue("fd");
+                String pspDir = line.getOptionValue("pd");
+                validate(new Dmf(dmfType, dmfVersion), new File(fdmfsDir), new File(pspDir));
             }
         } catch (ParseException exp) {
             // oops, something went wrong
             System.err.println("Parsing failed.  Reason: " + exp.getMessage());
             printHelp(options);
         }
-        /*validate(new Fdmf(Fdmf.Type.MONOGRAPH, "1.3"),
+        /*validate(new Dmf(Dmf.Type.MONOGRAPH, "1.3"),
                 new File("/home/martin/IdeaProjects/PspValidator/sharedModule/src/main/resources/rzehan/shared/fDMF"),
                 new File("/home/martin/IdeaProjects/PspValidator/sharedModule/src/test/resources/monograph_1.2/b50eb6b0-f0a4-11e3-b72e-005056827e52")
         );*/
     }
 
     private static void printHelp(Options options) {
-        String header = "Validuje PSP balík, nebo sadu PSP balíků podle DMF*. Verze DMF může být buď zadána přes parametr dmf-version, " +
-                "anebo je odvozena z dat PSP balíků.\n\n";
+        String header = "Validuje PSP balík, nebo sadu PSP balíků podle DMF*." +
+                " Verze a typ DMF lze vynutit parametry --dmf-type a/nebo --dmf-version, případně jsou odvozeny z dat PSP balíku." +
+                " Dále je potřeba pomocí --fdmf-dir uvést adresář, který obsahuje definice fDMF," +
+                " typicky adresáře monograph_1.0, monograph_1.2, periodical_1.4 a periodical 1.6.\n\n";
         String footer = "\n*Definice metadatových formátů. Více na http://www.ndk.cz/standardy-digitalizace/metadata.\n" +
                 "Více informací o validátoru najdete na http://TODO ";
 
         HelpFormatter formatter = new HelpFormatter();
+        formatter.setOptionComparator(null);
         formatter.printHelp("pspValidator", header, options, footer, true);
     }
 
 
-    private static void validate(Fdmf fdmfPrefered, File fdmfsRoot, File pspRoot) throws PspDataException, InvalidXPathExpressionException, XmlParsingException, FdmfRegistry.UnknownFdmfVersionException, ValidatorConfigurationException {
+    private static void validate(Dmf dmfPrefered, File fdmfsRoot, File pspRoot) throws PspDataException, InvalidXPathExpressionException, XmlParsingException, FdmfRegistry.UnknownFdmfException, ValidatorConfigurationException {
         checkReadableDir(pspRoot);
         checkReadableDir(fdmfsRoot);
         System.out.println(String.format("Zpracovávám PSP balík %s", pspRoot.getAbsolutePath()));
-        Fdmf fdmfResolved = new FdmfDetector().resolveFdmf(fdmfPrefered, pspRoot);
-        System.out.println(String.format("Bude použita verze standardu %s", fdmfResolved));
-        File fdmfRoot = new FdmfRegistry(fdmfsRoot).getFdmfDir(fdmfResolved);
+        Dmf dmfResolved = new DmfDetector().resolveDmf(dmfPrefered, pspRoot);
+        System.out.println(String.format("Bude použita verze standardu %s", dmfResolved));
+        File fdmfRoot = new FdmfRegistry(fdmfsRoot).getFdmfDir(dmfResolved);
         System.out.println(String.format("Kořenový adresář fDMF: %s", fdmfRoot.getAbsolutePath()));
         Validator validator = ValidatorFactory.buildValidator(fdmfRoot, pspRoot);
         System.out.println(String.format("Validátor inicializován, spouštím validace"));

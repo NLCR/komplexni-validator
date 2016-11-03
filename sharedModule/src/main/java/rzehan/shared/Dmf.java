@@ -3,7 +3,7 @@ package rzehan.shared;
 /**
  * Created by martin on 2.11.16.
  */
-public class Fdmf {
+public class Dmf {
 
     public static enum Type {
         MONOGRAPH, PERIODICAL;
@@ -25,7 +25,7 @@ public class Fdmf {
     private final String version;
 
 
-    public Fdmf(Type type, String version) {
+    public Dmf(Type type, String version) {
         this.type = type;
         this.version = version;
     }

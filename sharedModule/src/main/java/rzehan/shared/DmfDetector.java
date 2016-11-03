@@ -15,13 +15,13 @@ import java.io.FilenameFilter;
 import java.io.IOException;
 import java.util.regex.Pattern;
 
-import static rzehan.shared.Fdmf.Type.MONOGRAPH;
-import static rzehan.shared.Fdmf.Type.PERIODICAL;
+import static rzehan.shared.Dmf.Type.MONOGRAPH;
+import static rzehan.shared.Dmf.Type.PERIODICAL;
 
 /**
  * Created by martin on 2.11.16.
  */
-public class FdmfDetector {
+public class DmfDetector {
 
 
     public static final String DEFAULT_MONOGRAPH_VERSION = "1.0";
@@ -35,7 +35,7 @@ public class FdmfDetector {
      * Pokud se vyskytuje hodnota „Monograph“, zachází validátor s balíčkem jako s monografií.
      * Pokud se vyskytuje hodnota „Periodical“, zachází validátor s balíčkem jako s periodikem.
      */
-    public Fdmf.Type detectDmfType(File pspRootDir) throws PspDataException, XmlParsingException, InvalidXPathExpressionException {
+    public Dmf.Type detectDmfType(File pspRootDir) throws PspDataException, XmlParsingException, InvalidXPathExpressionException {
 
         try {
             File primaryMetsFile = findPrimaryMetsFile(pspRootDir);
@@ -103,7 +103,7 @@ public class FdmfDetector {
      * Pokud element nenalezne, předpokládá, že je balíček zpracován podle starších DMF, než je 1.5 pro periodika a 1.1 pro monografie (a validuje podle 1.4 pro periodika a 1.0 pro monografie).
      * Pokud element nalezne, podívá se na jeho hodnotu a validuje podle této hodnoty.
      */
-    public String detectDmfVersion(Fdmf.Type dmfType, File pspRootDir) throws PspDataException, XmlParsingException, InvalidXPathExpressionException {
+    public String detectDmfVersion(Dmf.Type dmfType, File pspRootDir) throws PspDataException, XmlParsingException, InvalidXPathExpressionException {
 
         try {
             File infoFile = findInfoFile(pspRootDir);
@@ -147,28 +147,27 @@ public class FdmfDetector {
         }
     }
 
-    public Fdmf resolveFdmf(Fdmf fdmfPrefered, File pspRoot) throws PspDataException, InvalidXPathExpressionException, XmlParsingException {
-        if (fdmfPrefered == null) {//both missing (wrapper is null)
-            Fdmf.Type type = detectDmfType(pspRoot);
+    public Dmf resolveDmf(Dmf dmfPrefered, File pspRoot) throws PspDataException, InvalidXPathExpressionException, XmlParsingException {
+        if (dmfPrefered == null) {//both missing (wrapper is null)
+            Dmf.Type type = detectDmfType(pspRoot);
             String version = detectDmfVersion(type, pspRoot);
-            return new Fdmf(type, version);
+            return new Dmf(type, version);
         } else {
-            if (fdmfPrefered.getType() == null) {//type missing
-                if (fdmfPrefered.getVersion() != null) {
-                    System.err.println(String.format("uvedena požadovaná verze DMF (%s), ale neuveden typ (Monografie/Periodikum); verzi ignoruji", fdmfPrefered.getVersion()));
-                }
-                Fdmf.Type type = detectDmfType(pspRoot);
+            if (dmfPrefered.getType() != null && dmfPrefered.getVersion() != null) { //both present
+                return dmfPrefered;
+            } else if (dmfPrefered.getType() == null && dmfPrefered.getVersion() == null) { //both missing
+                Dmf.Type type = detectDmfType(pspRoot);
                 String version = detectDmfVersion(type, pspRoot);
-                return new Fdmf(type, version);
-            } else { //type present
-                if (fdmfPrefered.getVersion() == null) {
-                    String version = detectDmfVersion(fdmfPrefered.getType(), pspRoot);
-                    return new Fdmf(fdmfPrefered.getType(), version);
-                } else { //both missing
-                    Fdmf.Type type = detectDmfType(pspRoot);
-                    String version = detectDmfVersion(type, pspRoot);
-                    return new Fdmf(type, version);
-                }
+                return new Dmf(type, version);
+            } else if (dmfPrefered.getType() == null) { //only type missing
+                //TODO: logger
+                System.err.println(String.format("Požadována verze DMF (%s), ale neuveden typ (monografie/periodikum). Požadovanou verzi ignoruji.", dmfPrefered.getVersion()));
+                Dmf.Type type = detectDmfType(pspRoot);
+                String version = detectDmfVersion(type, pspRoot);
+                return new Dmf(type, version);
+            } else { //only version missing
+                String version = detectDmfVersion(dmfPrefered.getType(), pspRoot);
+                return new Dmf(dmfPrefered.getType(), version);
             }
         }
     }
