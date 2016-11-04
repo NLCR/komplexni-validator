@@ -1,4 +1,4 @@
-<dmf>
+<fDMF>
 
     <description>
         Zde jsou definovány validační pravidla. K samotným validacím se používají validační funkce, jejichž parametry
@@ -956,6 +956,10 @@
             </validation>
         </rule>
 
+        <!--TODO: neni pritomen identifikator zakazaneho typu, warning-->
+
+        TODO: identifikatory z INFO pouzit na "psp-id musi byt odvozen od nektereho z nich"
+
         <rule name="DC_IDENTIFIERS_NO_WHITE_SPACES" level="WARNING">
             <description>Identifikátory v Dublin Core záznamech by neměly obsahovat bílé znaky.</description>
             <validation functionName="checkDcIdentifiersDoNotContainWhiteSpaces">
@@ -967,9 +971,10 @@
             </validation>
         </rule>
 
-        <!--TODO-->
+        <!--TODO: pro kazdou uroven musi byt shoda id v DC a v  MODS-->
+
 
     </rules-section>
 
 
-</dmf>
+</fDMF>

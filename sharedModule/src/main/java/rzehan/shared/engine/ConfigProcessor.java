@@ -19,7 +19,7 @@ public class ConfigProcessor {
 
     public void processConfigFile(Engine engine, File configFile) throws ValidatorConfigurationException {
         XMLTag doc = XMLDoc.from(configFile, true);
-        if (!"dmf".equals(doc.getCurrentTagName())) {
+        if (!"fDMF".equals(doc.getCurrentTagName())) {
             throw new ValidatorConfigurationException("root element není dmf");
         }
 
@@ -35,11 +35,34 @@ public class ConfigProcessor {
                 case "rules-section":
                     processRulesSectionDefinition(engine, childEl);
                     break;
+                case "namespaces":
+                    processNamespaces(engine, childEl);
                 default:
                     //nothing
                     //System.out.println(String.format("ignoring element %s", elementName));
             }
         }
+    }
+
+    private void processNamespaces(Engine engine, Element childEl) {
+        Element altoEl = XmlUtils.getChildrenElementsByName(childEl, "namespace-alto").get(0);
+        engine.defineNamespace("alto", altoEl.getTextContent());
+        Element cmdEl = XmlUtils.getChildrenElementsByName(childEl, "namespace-copyright_md").get(0);
+        engine.defineNamespace("cmd", cmdEl.getTextContent());
+        Element cdEl = XmlUtils.getChildrenElementsByName(childEl, "namespace-dublin_core").get(0);
+        engine.defineNamespace("dc", cdEl.getTextContent());
+        Element metsEl = XmlUtils.getChildrenElementsByName(childEl, "namespace-mets").get(0);
+        engine.defineNamespace("mets", metsEl.getTextContent());
+        Element mixEl = XmlUtils.getChildrenElementsByName(childEl, "namespace-mix").get(0);
+        engine.defineNamespace("mix", mixEl.getTextContent());
+        Element modsEl = XmlUtils.getChildrenElementsByName(childEl, "namespace-mods").get(0);
+        engine.defineNamespace("mods", modsEl.getTextContent());
+        Element oaiDcEl = XmlUtils.getChildrenElementsByName(childEl, "namespace-oai_dc").get(0);
+        engine.defineNamespace("oai_dc", oaiDcEl.getTextContent());
+        Element premisEl = XmlUtils.getChildrenElementsByName(childEl, "namespace-premis").get(0);
+        engine.defineNamespace("premis", premisEl.getTextContent());
+        Element xlinkEl = XmlUtils.getChildrenElementsByName(childEl, "namespace-xlink").get(0);
+        engine.defineNamespace("xlink", xlinkEl.getTextContent());
     }
 
     private void processRulesSectionDefinition(Engine engine, Element rulesSectionEl) throws ValidatorConfigurationException {

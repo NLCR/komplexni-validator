@@ -1,4 +1,4 @@
-<dmf>
+<fDMF>
 
     <description>
         Zde jsou definovány proměnné. K jejich vyhodnocení jsou použity funkce, další proměnné, vzory a
@@ -522,4 +522,4 @@
         </evaluation>
     </value-def>
 
-</dmf>
+</fDMF>

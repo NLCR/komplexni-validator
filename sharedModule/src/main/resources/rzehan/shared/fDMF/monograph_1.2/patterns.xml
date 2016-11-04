@@ -1,4 +1,4 @@
-<dmf>
+<fDMF>
 
     <description>
         Zde jsou definovány vzory. K jejich vyhodnocení jsou použity reguární výrazi a případně proměnné.
@@ -185,4 +185,4 @@
     </pattern-def>
 
 
-</dmf>
+</fDMF>

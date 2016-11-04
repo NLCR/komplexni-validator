@@ -25,9 +25,9 @@ public class ValidatorFactory {
         engine.setProvidedFile("MIX_XSD_FILE", findXsdFile(xsdRoot, "MIX", "mix_[0-9]+(\\.([0-9])+)*\\.xsd"));
         engine.setProvidedFile("MODS_XSD_FILE", findXsdFile(xsdRoot, "MODS", "mods_[0-9]+(\\.([0-9])+)*\\.xsd"));
         engine.setProvidedFile("PREMIS_XSD_FILE", findXsdFile(xsdRoot, "PREMIS", "premis_[0-9]+(\\.([0-9])+)*\\.xsd"));
-        //TODO: jeste namespacy
         //nacteni patternu, promennych, pravidel etc.
         //TODO: kontroly, ze jsou soubory dostupne, daji se cist, etc
+        engine.processConfigFile(new File(fdmfRoot, "namespaces.xml"));
         engine.processConfigFile(new File(fdmfRoot, "patterns.xml"));
         engine.processConfigFile(new File(fdmfRoot, "variables.xml"));
         engine.processConfigFile(new File(fdmfRoot, "rules.xml"));

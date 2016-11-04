@@ -22,16 +22,6 @@ public class ConfigProcessorTest {
             engine.setProvidedFile("PSP_DIR", pspRootDir);
             //pvMgr.addFile("PSP_DIR", new File("/home/martin/zakazky/DMF-validator/data/monografie_1.2/b50eb6b0-f0a4-11e3-b72e-005056827e52"));
 
-            //TODO: nacitat namespacy z xml
-            engine.defineNamespace("mets", "http://www.loc.gov/METS/");
-            engine.defineNamespace("dc", "http://purl.org/dc/elements/1.1/");
-            engine.defineNamespace("mods", "http://www.loc.gov/mods/v3");
-            engine.defineNamespace("oai_dc", "http://www.openarchives.org/OAI/2.0/oai_dc/");
-            engine.defineNamespace("premis", "info:lc/xmlns/premis-v2");
-            engine.defineNamespace("xlink", "http://www.w3.org/1999/xlink");
-            engine.defineNamespace("xsi", "http://www.w3.org/2001/XMLSchema-instance");
-
-
             File fdmfRoot = new File("/home/martin/ssd/IdeaProjects/PspValidator/sharedModule/src/main/resources/rzehan/shared/fDMF/monograph_1.2");
             engine.setProvidedFile("INFO_XSD_FILE", new File(fdmfRoot, "xsd/info_1.1.xsd"));
             engine.setProvidedFile("ALTO_XSD_FILE", new File(fdmfRoot, "xsd/alto_2.0.xsd"));
@@ -48,9 +38,12 @@ public class ConfigProcessorTest {
             System.out.println("INITILIZING");
             System.out.println("-----------");
 
+
+            engine.processConfigFile(new File(fdmfRoot, "namespaces.xml"));
             engine.processConfigFile(new File(fdmfRoot, "patterns.xml"));
             engine.processConfigFile(new File(fdmfRoot, "variables.xml"));
             engine.processConfigFile(new File(fdmfRoot, "rules.xml"));
+
 
             System.out.println("-----------");
             System.out.println();

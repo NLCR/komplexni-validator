@@ -1,17 +1,26 @@
-<namespaces>
-    <!--Zde jsou definovány jednotlivé jmenné prostory pro různé formáty. Musí být vždy právě jeden element namespace pro
-    každý z následujících kódů:
-    ALTO, CMD, DC, METS, MIX, MODS, OAI_DC, PREMIS, XLINK
-    Prefixy se povinně používají ve veškerých Xpath výrazech-->
+<fDMF>
 
-    <namespace code="ALTO" prefix="alto">http://www.loc.gov/standards/alto/ns-v2#</namespace>
-    <namespace code="CMD" prefix="cmd">http://www.cdlib.org/inside/diglib/copyrightMD</namespace>
-    <namespace code="DC" prefix="dc">http://purl.org/dc/elements/1.1/</namespace>
-    <namespace code="METS" prefix="mets">http://www.loc.gov/METS/</namespace>
-    <namespace code="MIX" prefix="mix">http://www.loc.gov/mix/v20</namespace>
-    <namespace code="MODS" prefix="mods">http://www.loc.gov/mods/v3</namespace>
-    <namespace code="OAI_DC" prefix="oai_dc">http://www.openarchives.org/OAI/2.0/oai_dc/</namespace>
-    <namespace code="PREMIS" prefix="premis">info:lc/xmlns/premis-v2</namespace>
-    <namespace code="XLINK" prefix="xlink">http://www.w3.org/1999/xlink</namespace>
+    <namespaces>
+        <!--Zde jsou definovány jednotlivé jmenné prostory pro různé formáty. Uvedené prefixy musí být použité ve všech pravidlech. -->
 
-</namespaces>
+        <!--prefix alto-->
+        <namespace-alto>http://www.loc.gov/standards/alto/ns-v2#</namespace-alto>
+        <!--prefix cmd-->
+        <namespace-copyright_md>http://www.cdlib.org/inside/diglib/copyrightMD</namespace-copyright_md>
+        <!--prefix dc-->
+        <namespace-dublin_core>http://purl.org/dc/elements/1.1/</namespace-dublin_core>
+        <!--prefix mets-->
+        <namespace-mets>http://www.loc.gov/METS/</namespace-mets>
+        <!--prefix mix-->
+        <namespace-mix>http://www.loc.gov/mix/v20</namespace-mix>
+        <!--prefix mods-->
+        <namespace-mods>http://www.loc.gov/mods/v3</namespace-mods>
+        <!--prefix oai_dc-->
+        <namespace-oai_dc>http://www.openarchives.org/OAI/2.0/oai_dc/</namespace-oai_dc>
+        <!--prefix premis-->
+        <namespace-premis>info:lc/xmlns/premis-v2</namespace-premis>
+        <!--prefix xlink-->
+        <namespace-xlink>http://www.w3.org/1999/xlink</namespace-xlink>
+
+    </namespaces>
+</fDMF>
