@@ -384,8 +384,8 @@
     <!--identifikátory-->
 
     <!--volume-->
-    <value-def name="ID_TYPES_VOLUME_MANDATORY" type="STRING_LIST"
-               description="seznam povinných typů identifikátorů pro úroveň VOLUME">
+    <value-def name="ID_TYPES_VOLUME_MANDATORY" type="STRING_LIST">
+        <description>seznam povinných typů identifikátorů pro úroveň VOLUME</description>
         <evaluation functionName="buildListOfStrings">
             <params>
                 <value name="string" type="STRING">uuid</value>
@@ -394,8 +394,8 @@
         </evaluation>
     </value-def>
 
-    <value-def name="ID_TYPES_VOLUME_OPTIONAL" type="STRING_LIST"
-               description="seznam volitelných typů identifikátorů pro úroveň VOLUME">
+    <value-def name="ID_TYPES_VOLUME_OPTIONAL" type="STRING_LIST">
+        <description>seznam volitelných typů identifikátorů pro úroveň VOLUME</description>
         <evaluation functionName="buildListOfStrings">
             <params>
                 <value name="string" type="STRING">isbn</value>
@@ -405,8 +405,8 @@
         </evaluation>
     </value-def>
 
-    <value-def name="ID_TYPES_VOLUME_PROHIBITED" type="STRING_LIST"
-               description="seznam zakázaných typů identifikátorů pro úroveň VOLUME">
+    <value-def name="ID_TYPES_VOLUME_PROHIBITED" type="STRING_LIST">
+        <description>seznam zakázaných typů identifikátorů pro úroveň VOLUME</description>
         <evaluation functionName="buildListOfStrings">
             <params>
                 <value name="string" type="STRING">issn</value>
@@ -415,8 +415,8 @@
     </value-def>
 
     <!--title-->
-    <value-def name="ID_TYPES_TITLE_MANDATORY" type="STRING_LIST"
-               description="seznam povinných typů identifikátorů pro úroveň TITLE">
+    <value-def name="ID_TYPES_TITLE_MANDATORY" type="STRING_LIST">
+        <description>seznam povinných typů identifikátorů pro úroveň TITLE</description>
         <evaluation functionName="buildListOfStrings">
             <params>
                 <value name="string" type="STRING">uuid</value>
@@ -424,8 +424,8 @@
         </evaluation>
     </value-def>
 
-    <value-def name="ID_TYPES_TITLE_OPTIONAL" type="STRING_LIST"
-               description="seznam volitelných typů identifikátorů pro úroveň TITLE">
+    <value-def name="ID_TYPES_TITLE_OPTIONAL" type="STRING_LIST">
+        <description>seznam volitelných typů identifikátorů pro úroveň TITLE</description>
         <evaluation functionName="buildListOfStrings">
             <params>
                 <value name="string" type="STRING">isbn</value>
@@ -436,8 +436,8 @@
         </evaluation>
     </value-def>
 
-    <value-def name="ID_TYPES_TITLE_PROHIBITED" type="STRING_LIST"
-               description="seznam zakázaných typů identifikátorů pro úroveň TITLE">
+    <value-def name="ID_TYPES_TITLE_PROHIBITED" type="STRING_LIST">
+        <description>seznam zakázaných typů identifikátorů pro úroveň TITLE</description>
         <evaluation functionName="buildListOfStrings">
             <params>
                 <value name="string" type="STRING">issn</value>
@@ -446,8 +446,8 @@
     </value-def>
 
     <!--internal part-->
-    <value-def name="ID_TYPES_INTERNAL-PART_MANDATORY" type="STRING_LIST"
-               description="seznam povinných typů identifikátorů pro úroveň INTERNAL-PART">
+    <value-def name="ID_TYPES_INTERNAL-PART_MANDATORY" type="STRING_LIST">
+        <description>seznam povinných typů identifikátorů pro úroveň INTERNAL-PART</description>
         <evaluation functionName="buildListOfStrings">
             <params>
                 <value name="string" type="STRING">uuid</value>
@@ -455,8 +455,8 @@
         </evaluation>
     </value-def>
 
-    <value-def name="ID_TYPES_INTERNAL-PART_OPTIONAL" type="STRING_LIST"
-               description="seznam volitelných typů identifikátorů pro úroveň INTERNAL-PART">
+    <value-def name="ID_TYPES_INTERNAL-PART_OPTIONAL" type="STRING_LIST">
+        <description>seznam volitelných typů identifikátorů pro úroveň INTERNAL-PART</description>
         <evaluation functionName="buildListOfStrings">
             <params>
                 <value name="string" type="STRING">urnnbn</value>
@@ -466,8 +466,8 @@
         </evaluation>
     </value-def>
 
-    <value-def name="ID_TYPES_INTERNAL-PART_PROHIBITED" type="STRING_LIST"
-               description="seznam zakázaných typů identifikátorů pro úroveň INTERNAL-PART">
+    <value-def name="ID_TYPES_INTERNAL-PART_PROHIBITED" type="STRING_LIST">
+        <description>seznam zakázaných typů identifikátorů pro úroveň INTERNAL-PART</description>
         <evaluation functionName="buildListOfStrings">
             <params>
                 <value name="string" type="STRING">issn</value>
@@ -479,8 +479,8 @@
     </value-def>
 
     <!--supplement-->
-    <value-def name="ID_TYPES_SUPPLEMENT_MANDATORY" type="STRING_LIST"
-               description="seznam povinných typů identifikátorů pro úroveň SUPPLEMENT">
+    <value-def name="ID_TYPES_SUPPLEMENT_MANDATORY" type="STRING_LIST">
+        <description>seznam povinných typů identifikátorů pro úroveň SUPPLEMENT</description>
         <evaluation functionName="buildListOfStrings">
             <params>
                 <value name="string" type="STRING">uuid</value>
@@ -488,8 +488,8 @@
         </evaluation>
     </value-def>
 
-    <value-def name="ID_TYPES_SUPPLEMENT_OPTIONAL" type="STRING_LIST"
-               description="seznam volitelných typů identifikátorů pro úroveň SUPPLEMENT">
+    <value-def name="ID_TYPES_SUPPLEMENT_OPTIONAL" type="STRING_LIST">
+        <description>seznam volitelných typů identifikátorů pro úroveň SUPPLEMENT</description>
         <evaluation functionName="buildListOfStrings">
             <params>
                 <value name="string" type="STRING">urnnbn</value>
@@ -499,8 +499,8 @@
         </evaluation>
     </value-def>
 
-    <value-def name="ID_TYPES_SUPPLEMENT_PROHIBITED" type="STRING_LIST"
-               description="seznam zakázaných typů identifikátorů pro úroveň SUPPLEMENT">
+    <value-def name="ID_TYPES_SUPPLEMENT_PROHIBITED" type="STRING_LIST">
+        <description>seznam zakázaných typů identifikátorů pro úroveň SUPPLEMENT</description>
         <evaluation functionName="buildListOfStrings">
             <params>
                 <value name="string" type="STRING">issn</value>
@@ -511,8 +511,8 @@
         </evaluation>
     </value-def>
 
-    <value-def name="INFO_IDENTIFIERS" type="IDENTIFIER_LIST"
-               description="seznam identifikátorů ze souboru INFO">
+    <value-def name="INFO_IDENTIFIERS" type="IDENTIFIER_LIST">
+        <description>seznam identifikátorů ze souboru INFO</description>
         <evaluation functionName="getIdentifiersFromInfoFile">
             <params>
                 <value name="info_file" type="FILE">
