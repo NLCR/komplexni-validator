@@ -22,7 +22,12 @@ public abstract class ValidationFunction implements Function {
     }
 
     protected void checkContractCompliance() throws ContractException {
-        contract.checkCompliance(this);
+        if (contract != null) {
+            contract.checkCompliance(this);
+        } else {
+            //TODO: logging
+            System.err.println("No contract for " + getName());
+        }
     }
 
     public abstract ValidationResult validate();

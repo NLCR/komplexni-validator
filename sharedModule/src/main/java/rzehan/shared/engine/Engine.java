@@ -90,6 +90,8 @@ public class Engine {
                 return new EfGetIdentifiersFromInfoFile(this);
             case "buildListOfStrings":
                 return new EfBuildListOfStrings(this);
+            case "filterIdentifersByTypes":
+                return new EfFilterIdentifersByTypes(this);
             default:
                 throw new RuntimeException(String.format("vyhodnocovací funkce %s neexistuje", name));
         }
@@ -137,6 +139,8 @@ public class Engine {
                 return new VfCheckNoDuplicateIdentifiers(this);
             case "checkDcIdentifiersDoNotContainWhiteSpaces":
                 return new VfCheckDcIdentifiersDoNotContainWhiteSpaces(this);
+            case "checkStringDerivedFromOneOfIdentifiers":
+                return new VfCheckStringDerivedFromOneOfIdentifiers(this);
             default:
                 throw new ValidatorConfigurationException(String.format("validační funkce %s neexistuje", name));
         }

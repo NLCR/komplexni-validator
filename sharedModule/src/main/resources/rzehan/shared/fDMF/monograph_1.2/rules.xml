@@ -6,19 +6,6 @@
         Pravidla je možné dynamicky doplňovat/upravovat, ale je vždy nutné používat existující proměnné a vzory.
     </description>
 
-
-    <rules-section name="PSP ID" description="Identifikátor PSP">
-
-
-        <!--psp id-->
-
-        <!--<rule name="PSP_ID_DERIVED_FROM_TITLE_ID" level="WARNING">
-            <description>PSP-ID musí být odvozen od některého z povolených identifikátorů.</description>
-        </rule>-->
-
-    </rules-section>
-
-
     <rules-section name="Struktura souborů" description="Struktura PSP balicku na urovni soboru">
 
 
@@ -33,17 +20,6 @@
             There must be <packageid> element that contains name of package root directory.-->
             <description>Název kořenového adresáře musí být schodný s PSP-ID.</description>
 
-            <!--<validation functionName="CHECK_FILENAME_MATCHES_STRING">
-                <params>
-                    <value name="file" type="FILE">
-                        <value-ref name="PSP_DIR"/>
-                    </value>
-                    <value name="string" type="STRING">
-                        <value-ref name="PSP_ID"/>
-                    </value>
-                </params>
-            </validation>-->
-
             <validation functionName="checkFilenameMatchesPattern">
                 <params>
                     <value name="file" type="FILE">
@@ -56,8 +32,6 @@
                     </pattern>
                 </params>
             </validation>
-
-
         </rule>
 
 
@@ -942,6 +916,55 @@
     </rules-section>
 
     <rules-section name="Identifikátory" description="">
+
+        <!--psp id-->
+
+        <rule name="PSP_ID_DERIVED_FROM_TITLE_ID" level="WARNING">
+            <description>PSP-ID musí být odvozen od některého z identifikátorů titulu, navíc pouze typu 'urnnbn' nebo
+                'uuid'.
+            </description>
+            <validation functionName="checkStringDerivedFromOneOfIdentifiers">
+                <params>
+                    <value name="string" type="STRING">
+                        <value-ref name="PSP_ID"/>
+                    </value>
+                    <!--seznam identifikatoru-->
+                    <value name="identifiers" type="IDENTIFIER_LIST">
+                        <!--jeste omezeni na konkretni typy identifikatoru titulu, ze kterych muze byt psp-id odvozen-->
+                        <evaluation functionName="filterIdentifersByTypes">
+                            <params>
+                                <!--seznam identifikatoru (bere se zde z identifikatoru nalezenych v souboru INFO (tj. jen identifikatory titulu)-->
+                                <value name="identifiers" type="IDENTIFIER_LIST">
+                                    <value-ref name="INFO_IDENTIFIERS"/>
+                                </value>
+                                <value name="types" type="STRING_LIST">
+                                    <evaluation functionName="buildListOfStrings">
+                                        <params>
+                                            <value name="string" type="STRING">uuid</value>
+                                            <value name="string" type="STRING">urnnbn</value>
+                                        </params>
+                                    </evaluation>
+                                </value>
+                            </params>
+                        </evaluation>
+                        <!--<value-ref name="INFO_IDENTIFIERS"/>-->
+                    </value>
+                    <!--seznam prefixu, ktere se odstranuji z hodnot identifikatoru pred hledanim shody-->
+                    <value name="id_prefixes" type="STRING_LIST">
+                        <evaluation functionName="buildListOfStrings">
+                            <params>
+                                <value name="string" type="STRING">cnb</value>
+                                <value name="string" type="STRING">uuid:</value>
+                                <value name="string" type="STRING">urn:nbn:cz:</value>
+                            </params>
+                        </evaluation>
+                    </value>
+                    <value name="min_match_length" type="INTEGER">6</value>>
+                </params>
+            </validation>
+        </rule>
+
+        <!--info-->
 
         <rule name="INFO_NO_DUPLICATE_IDENTIFIERS" level="ERROR">
             <description>Soubor INFO nesmí obsahovat duplikované identifikátory (tedy více identifikátorů stejného

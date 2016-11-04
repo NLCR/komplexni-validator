@@ -6,7 +6,9 @@ import rzehan.shared.engine.exceptions.InvalidPathException;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  * Created by martin on 21.10.16.
@@ -119,6 +121,48 @@ public class Utils {
                     //e.printStackTrace();
                 }
             }
+        }
+    }
+
+    /**
+     * Returns longest common substrings (dynamic programming)
+     * https://en.wikipedia.org/wiki/Longest_common_substring_problem
+     *
+     * @param s
+     * @param t
+     * @return
+     */
+    public static Set<String> findLongestCommonSubstrings(String s, String t) {
+        int[][] table = new int[s.length()][t.length()];
+        int longest = 0;
+        Set<String> result = new HashSet<>();
+
+        for (int i = 0; i < s.length(); i++) {
+            for (int j = 0; j < t.length(); j++) {
+                if (s.charAt(i) != t.charAt(j)) {
+                    continue;
+                }
+
+                table[i][j] = (i == 0 || j == 0) ? 1
+                        : 1 + table[i - 1][j - 1];
+                if (table[i][j] > longest) {
+                    longest = table[i][j];
+                    result.clear();
+                }
+                if (table[i][j] == longest) {
+                    result.add(s.substring(i - longest + 1, i + 1));
+                }
+            }
+        }
+        return result;
+    }
+
+    public static int getLongestCommonSubstringLength(String s, String t) {
+        Set<String> longestCommonSubstrings = findLongestCommonSubstrings(s, t);
+        if (longestCommonSubstrings.isEmpty()) {
+            return 0;
+        } else {
+            return longestCommonSubstrings.iterator().next().length();
         }
     }
 

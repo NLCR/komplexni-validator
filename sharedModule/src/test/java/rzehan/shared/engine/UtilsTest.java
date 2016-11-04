@@ -9,6 +9,7 @@ import java.util.List;
 
 import static junit.framework.TestCase.assertFalse;
 import static junit.framework.TestCase.fail;
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 /**
@@ -77,6 +78,27 @@ public class UtilsTest {
         assertTrue(Utils.instanceOf("file_list", files));
         assertFalse(Utils.instanceOf("file_list", strings));
         assertFalse(Utils.instanceOf("file_list", integers));
+    }
+
+
+    @Test
+    public void findLongestCommonSubstrings() {
+
+        assertTrue(Utils.findLongestCommonSubstrings("abab", "baba").contains("aba"));
+        assertTrue(Utils.findLongestCommonSubstrings("abab", "baba").contains("bab"));
+        assertEquals(2, Utils.findLongestCommonSubstrings("abab", "baba").size());
+
+        assertTrue(Utils.findLongestCommonSubstrings("abcde", "bcd").contains("bcd"));
+        assertTrue(Utils.findLongestCommonSubstrings("bcd", "abcde").contains("bcd"));
+        assertEquals(1, Utils.findLongestCommonSubstrings("one", "chosenone").size());
+
+        assertEquals(0, Utils.findLongestCommonSubstrings("abc", "xyz").size());
+    }
+
+    @Test
+    public void getLongestCommonSubstringLength() {
+        String uuid = "b50eb6b0-f0a4-11e3-b72e-005056827e52";
+        assertEquals(uuid.length(), Utils.getLongestCommonSubstringLength("uuid:" + uuid, uuid));
     }
 
 }
