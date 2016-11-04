@@ -141,6 +141,8 @@ public class Engine {
                 return new VfCheckDcIdentifiersDoNotContainWhiteSpaces(this);
             case "checkStringDerivedFromOneOfIdentifiers":
                 return new VfCheckStringDerivedFromOneOfIdentifiers(this);
+            case "checkPrimaryMetsFilesecContainsAllFilegroups":
+                return new VfCheckPrimaryMetsFilesecContainsAllFilegroups(this);
             default:
                 throw new ValidatorConfigurationException(String.format("validační funkce %s neexistuje", name));
         }

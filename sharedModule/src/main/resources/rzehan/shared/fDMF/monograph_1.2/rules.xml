@@ -981,7 +981,7 @@
 
         <!--TODO: neni pritomen identifikator zakazaneho typu, warning-->
 
-        TODO: identifikatory z INFO pouzit na "psp-id musi byt odvozen od nektereho z nich"
+        <!--DC-->
 
         <rule name="DC_IDENTIFIERS_NO_WHITE_SPACES" level="WARNING">
             <description>Identifikátory v Dublin Core záznamech by neměly obsahovat bílé znaky.</description>
@@ -996,6 +996,23 @@
 
         <!--TODO: pro kazdou uroven musi byt shoda id v DC a v  MODS-->
 
+
+    </rules-section>
+
+    <rules-section name="Primary METS filesec" description="">
+
+        <rule name="PRIMARY-METS_FILESEC_ALL_FILEGROUPS_PRESENT" level="ERROR">
+            <description>Element mets:fileSec v souboru PRIMARY-METS musí obsahovat elementy mets:fileGrp s definovanými
+                hodnotami ID a USE a žádné další.
+            </description>
+            <validation functionName="checkPrimaryMetsFilesecContainsAllFilegroups">
+                <params>
+                    <value name="primaryMets_file" type="FILE">
+                        <value-ref name="PRIMARY-METS_FILE"/>
+                    </value>
+                </params>
+            </validation>
+        </rule>
 
     </rules-section>
 

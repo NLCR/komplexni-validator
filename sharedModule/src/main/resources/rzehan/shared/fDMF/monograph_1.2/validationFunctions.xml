@@ -188,5 +188,17 @@
         </params-def>
     </validationfunction>
 
+    <validationfunction name="checkDcIdentifiersDoNotContainWhiteSpaces">
+        <params-def>
+            <value name="primaryMets_file" type="FILE"/>
+        </params-def>
+    </validationfunction>
+
+    <validationfunction name="checkPrimaryMetsFilesecContainsAllFilegroups">
+        <params-def>
+            <value name="primaryMets_file" type="FILE"/>
+        </params-def>
+    </validationfunction>
+
 
 </validationFunctions>

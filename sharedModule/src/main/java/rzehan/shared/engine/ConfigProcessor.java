@@ -91,7 +91,7 @@ public class ConfigProcessor {
         //description
         List<Element> descriptionEls = XmlUtils.getChildrenElementsByName(ruleEl, "description");
         if (!descriptionEls.isEmpty()) {
-            rule.setDescription(descriptionEls.get(0).getTextContent());
+            rule.setDescription(descriptionEls.get(0).getTextContent().replaceAll("\\s+", " "));
         }
         //System.out.println(String.format("registering rule '%s' (%s)", name, level));
         engine.registerRule(section, rule);
