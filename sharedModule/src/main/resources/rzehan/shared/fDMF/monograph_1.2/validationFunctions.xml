@@ -208,5 +208,18 @@
         </params-def>
     </validationfunction>
 
+    <validationfunction functionName="checkMetsFilesecSizesMatch">
+        <params-def>
+            <value name="psp_dir" type="FILE"/>
+            <value name="mets_file" type="FILE_LIST"/>
+        </params-def>
+    </validationfunction>
+
+    <validationfunction functionName="checkMetsFilesecChecksumsMatch">
+        <params-def>
+            <value name="psp_dir" type="FILE"/>
+            <value name="mets_file" type="FILE_LIST"/>
+        </params-def>
+    </validationfunction>
 
 </validationFunctions>

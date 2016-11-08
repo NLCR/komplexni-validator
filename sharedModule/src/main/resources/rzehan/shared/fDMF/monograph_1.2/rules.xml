@@ -1189,9 +1189,25 @@
 
         <rule name="PRIMARY-METS_FILESEC_SIZES_MATCH" level="WARNING">
             <description>Velikosti souborů v bytech uvedené v atributu SIZE všech elementů mets:file se musí shodovat se
-                skoutečnými velikostmi souborů odkazovanými v elementech mets:FLocat.
+                skutečnými velikostmi souborů odkazovaných v elementech mets:FLocat.
             </description>
             <validation functionName="checkMetsFilesecSizesMatch">
+                <params>
+                    <value name="psp_dir" type="FILE">
+                        <value-ref name="PSP_DIR"/>
+                    </value>
+                    <value name="mets_file" type="FILE">
+                        <value-ref name="PRIMARY-METS_FILE"/>
+                    </value>
+                </params>
+            </validation>
+        </rule>
+
+        <rule name="PRIMARY-METS_FILESEC_CHECKSUMS_MATCH" level="WARNING">
+            <description>Kontrolní součty souborů uvedené v atributu CHECKSUM všech elementů mets:file se musí shodovat
+                s vypočítanými kontrolními součty souborů odkazovaných v elementech mets:FLocat.
+            </description>
+            <validation functionName="checkMetsFilesecChecksumsMatch">
                 <params>
                     <value name="psp_dir" type="FILE">
                         <value-ref name="PSP_DIR"/>
