@@ -81,6 +81,8 @@
         </params-def>
     </evaluationFunction>
 
+    <!--data from xml by xpath-->
+
     <evaluationFunction name="getStringByXpath" resultType="STRING">
         <description>Vrátí textový řetězec z xml souboru podle xpath.</description>
         <params>
@@ -89,11 +91,13 @@
         </params>
     </evaluationFunction>
 
-    <evaluationFunction name="buildListOfStrings" resultType="STRING_LIST">
-        <description>Z více paramatrů typu STRING vytvoří seznam.</description>
-        <params-def>
-            <value name="string" type="STRING" minOccurs="0" maxOccurs="unbound"/>
-        </params-def>
+    <evaluationFunction name="getFileListByXpath" resultType="FILE_LIST">
+        <description>Vrátí textový řetězec z xml souboru podle xpath.</description>
+        <params>
+            <value name="psp_dir" type="FILE"/>
+            <value name="xml_file" type="FILE"/>
+            <value name="xpath" type="STRING"/>
+        </params>
     </evaluationFunction>
 
     <!--TODO: implement-->
@@ -113,6 +117,15 @@
             <value name="xpath" type="STRING"/>
         </params-def>
     </evaluationFunction>
+
+
+    <evaluationFunction name="buildListOfStrings" resultType="STRING_LIST">
+        <description>Z více paramatrů typu STRING vytvoří seznam.</description>
+        <params-def>
+            <value name="string" type="STRING" minOccurs="0" maxOccurs="unbound"/>
+        </params-def>
+    </evaluationFunction>
+
 
     <!--TODO: pridat do dokumentace v hlavicce-->
     <evaluationFunction name="GET_FILES_BLABLA" resultType="FILE_LIST">

@@ -135,9 +135,9 @@
       <mets:file CHECKSUM="1cc609217da388ddfb21c045654c21e2" CHECKSUMTYPE="MD5" CREATED="2014-07-11T21:08:37" ID="MC_0007" MIMETYPE="image/jp2" SEQ="6" SIZE="6957551"> 
         <mets:FLocat LOCTYPE="URL" xlink:href="mastercopy/mc_b50eb6b0-f0a4-11e3-b72e-005056827e52_0007.jp2"/> 
       </mets:file>  
-      <mets:file CHECKSUM="b8cccdc51508feb3efc4ac6dcbb1184b" CHECKSUMTYPE="MD5" CREATED="2014-07-11T21:08:39" ID="MC_0008" MIMETYPE="image/jp2" SEQ="7" SIZE="5535812"> 
+      <mets:file CHECKSUM="b8cccdc51508feb3efc4ac6dcbb1184b" CHECKSUMTYPE="MD5" CREATED="2014-07-11T21:08:39" ID="MC_0008" MIMETYPE="image/jp2" SEQ="7" SIZE="5535812">
         <mets:FLocat LOCTYPE="URL" xlink:href="mastercopy/mc_b50eb6b0-f0a4-11e3-b72e-005056827e52_0008.jp2"/> 
-      </mets:file> 
+      </mets:file>
     </mets:fileGrp>  
     <mets:fileGrp ID="UC_IMGGRP" USE="Images"> 
       <mets:file CHECKSUM="ef87c4f1f15f8bbe576faa9b55afec48" CHECKSUMTYPE="MD5" CREATED="2014-07-11T21:46:36" ID="UC_0001" MIMETYPE="image/jp2" SEQ="0" SIZE="1712536"> 

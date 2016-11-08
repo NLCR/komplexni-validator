@@ -80,7 +80,7 @@ public class VfCheckInfoFileChecksumMatches extends ValidationFunction {
             XPathExpression hashExp = engine.buildXpath("/info/checksum/@checksum");
             String hashFound = (String) hashExp.evaluate(infoDoc, XPathConstants.STRING);
             String hashComputed = Utils.computeHash(checksumFileExisting);
-            if (!hashComputed.equals(hashFound)) {
+            if (!hashComputed.toUpperCase().equals(hashFound.toUpperCase())) {
                 return invalid(String.format("uvedený kontrolní součet '%s' nesouhlasí s vypočítaným kontrolním součtem '%s' pro soubor %s",
                         hashFound, hashComputed, checksumFileExisting.getAbsolutePath()));
             }

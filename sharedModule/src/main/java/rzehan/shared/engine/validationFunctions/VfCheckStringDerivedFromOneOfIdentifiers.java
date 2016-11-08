@@ -78,7 +78,7 @@ public class VfCheckStringDerivedFromOneOfIdentifiers extends ValidationFunction
                 return valid();
             }
         }
-        return invalid(String.format("nenalezena shoda pro žádný z %d identifikátorů (%s)", identifiers.size(), buildIdTypeList(identifiers)));
+        return invalid(String.format("nenalezena shoda pro žádný z %d povolených identifikátorů (%s)", identifiers.size(), buildIdTypeList(identifiers)));
     }
 
     private String buildIdTypeList(List<Identifier> identifiers) {

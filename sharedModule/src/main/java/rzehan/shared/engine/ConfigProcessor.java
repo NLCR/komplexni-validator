@@ -156,21 +156,22 @@ public class ConfigProcessor {
         } else {//constant
             //System.out.println("processing named-value - by constant");
             //System.out.println(valueDefEl.toString());
-            Object value = parseConstantValueDefinition(valueDefEl, varType);
+            Object value = parseConstantValueDefinition(varName, valueDefEl, varType);
             //System.out.println(String.format("registering named-value (by constant)"));
             engine.registerValue(varName, new ValueEvaluation(value));
         }
     }
 
 
-    private Object parseConstantValueDefinition(Element varEl, ValueType paramType) throws ValidatorConfigurationException {
+    private Object parseConstantValueDefinition(String varName, Element varEl, ValueType paramType) throws ValidatorConfigurationException {
         switch (paramType) {
             case STRING:
                 return varEl.getTextContent();
             case INTEGER:
                 return Integer.valueOf(varEl.getTextContent());
             default:
-                throw new ValidatorConfigurationException(String.format("není zde možné použít parametr typu %s", paramType));
+                throw new ValidatorConfigurationException(
+                        String.format("parametr %s: není zde možné použít parametr typu %s", varName, paramType));
         }
     }
 
@@ -203,7 +204,7 @@ public class ConfigProcessor {
                 ValueEvaluation evaluation = valueParamEf.evaluate();
                 function.withValueParam(paramName, paramType, evaluation);
             } else {//param is constant
-                Object paramValue = parseConstantValueDefinition(valueEl, paramType);
+                Object paramValue = parseConstantValueDefinition(paramName, valueEl, paramType);
                 function.withValueParam(paramName, paramType, new ValueEvaluation(paramValue));
             }
         }

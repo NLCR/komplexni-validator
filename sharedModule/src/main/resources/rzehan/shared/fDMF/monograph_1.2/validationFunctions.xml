@@ -200,5 +200,13 @@
         </params-def>
     </validationfunction>
 
+    <validationfunction name="checkFileListsMatch">
+        <description>Zkontroluje, že dva seznamy souborů obsahují stejné soubory.</description>
+        <params-def>
+            <value name="expected_files" type="FILE_LIST"/>
+            <value name="found_files" type="FILE_LIST"/>
+        </params-def>
+    </validationfunction>
+
 
 </validationFunctions>

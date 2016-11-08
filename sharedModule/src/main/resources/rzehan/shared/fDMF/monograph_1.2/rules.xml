@@ -860,6 +860,7 @@
         </rule>
 
         <!--METS Profile requirement id infoxml13-->
+        <!--TODO: nahradit pozitim checkFileListsMatch a getFileListByXpath a nove funkce na spojeni souborů a seznamů souborů do jednoho seznamu podobně, jako u PRIMARY-METS_FILESEC_ALL_MASTER_COPY_FILES_REFERENCED-->
         <rule name="INFO_ITEMLIST_REFERENCES_ALL_FILES" level="ERROR">
             <description>Soubor INFO se musí odkazovat na všechny uvedené soubory přes elementy item a na žádné další.
             </description>
@@ -1009,6 +1010,150 @@
                 <params>
                     <value name="primaryMets_file" type="FILE">
                         <value-ref name="PRIMARY-METS_FILE"/>
+                    </value>
+                </params>
+            </validation>
+        </rule>
+
+        <rule name="PRIMARY-METS_FILESEC_ALL_MASTER_COPY_FILES_REFERENCED" level="ERROR">
+            <description>Element mets:fileSec v souboru PRIMARY-METS musí v elementu mets:fileGroup s atributem
+                ID="MC_IMGGRP" obsahovat odkazy na všechny soubory MASTER-COPY a žádné jiné.
+            </description>
+            <validation functionName="checkFileListsMatch">
+                <params>
+                    <value name="expected_files" type="FILE_LIST">
+                        <value-ref name="MASTER-COPY_FILES"/>
+                    </value>
+                    <value name="found_files" type="FILE_LIST">
+                        <evaluation functionName="getFileListByXpath">
+                            <params>
+                                <value name="psp_dir" type="FILE">
+                                    <value-ref name="PSP_DIR"/>
+                                </value>
+
+                                <value name="xml_file" type="FILE">
+                                    <value-ref name="PRIMARY-METS_FILE"/>
+                                </value>
+                                <value name="xpath" type="STRING">
+                                    /mets:mets/mets:fileSec/mets:fileGrp[@ID='MC_IMGGRP']/mets:file/mets:FLocat[@LOCTYPE='URL']/@xlink:href
+                                </value>
+                            </params>
+                        </evaluation>
+                    </value>
+                </params>
+            </validation>
+        </rule>
+
+        <rule name="PRIMARY-METS_FILESEC_ALL_USER_COPY_FILES_REFERENCED" level="ERROR">
+            <description>Element mets:fileSec v souboru PRIMARY-METS musí v elementu mets:fileGroup s atributem
+                ID="UC_IMGGRP" obsahovat odkazy na všechny soubory USER-COPY a žádné jiné.
+            </description>
+            <validation functionName="checkFileListsMatch">
+                <params>
+                    <value name="expected_files" type="FILE_LIST">
+                        <value-ref name="USER-COPY_FILES"/>
+                    </value>
+                    <value name="found_files" type="FILE_LIST">
+                        <evaluation functionName="getFileListByXpath">
+                            <params>
+                                <value name="psp_dir" type="FILE">
+                                    <value-ref name="PSP_DIR"/>
+                                </value>
+
+                                <value name="xml_file" type="FILE">
+                                    <value-ref name="PRIMARY-METS_FILE"/>
+                                </value>
+                                <value name="xpath" type="STRING">
+                                    /mets:mets/mets:fileSec/mets:fileGrp[@ID='UC_IMGGRP']/mets:file/mets:FLocat[@LOCTYPE='URL']/@xlink:href
+                                </value>
+                            </params>
+                        </evaluation>
+                    </value>
+                </params>
+            </validation>
+        </rule>
+
+        <rule name="PRIMARY-METS_FILESEC_ALL_OCR_TEXT_FILES_REFERENCED" level="ERROR">
+            <description>Element mets:fileSec v souboru PRIMARY-METS musí v elementu mets:fileGroup s atributem
+                ID="TXTGRP" obsahovat odkazy na všechny soubory OCR-TEXT a žádné jiné.
+            </description>
+            <validation functionName="checkFileListsMatch">
+                <params>
+                    <value name="expected_files" type="FILE_LIST">
+                        <value-ref name="OCR-TEXT_FILES"/>
+                    </value>
+                    <value name="found_files" type="FILE_LIST">
+                        <evaluation functionName="getFileListByXpath">
+                            <params>
+                                <value name="psp_dir" type="FILE">
+                                    <value-ref name="PSP_DIR"/>
+                                </value>
+
+                                <value name="xml_file" type="FILE">
+                                    <value-ref name="PRIMARY-METS_FILE"/>
+                                </value>
+                                <value name="xpath" type="STRING">
+                                    /mets:mets/mets:fileSec/mets:fileGrp[@ID='TXTGRP']/mets:file/mets:FLocat[@LOCTYPE='URL']/@xlink:href
+                                </value>
+                            </params>
+                        </evaluation>
+                    </value>
+                </params>
+            </validation>
+        </rule>
+
+        <rule name="PRIMARY-METS_FILESEC_ALL_OCR_ALTO_FILES_REFERENCED" level="ERROR">
+            <description>Element mets:fileSec v souboru PRIMARY-METS musí v elementu mets:fileGroup s atributem
+                ID="ALTOGRP" obsahovat odkazy na všechny soubory OCR-ALTO a žádné jiné.
+            </description>
+            <validation functionName="checkFileListsMatch">
+                <params>
+                    <value name="expected_files" type="FILE_LIST">
+                        <value-ref name="OCR-ALTO_FILES"/>
+                    </value>
+                    <value name="found_files" type="FILE_LIST">
+                        <evaluation functionName="getFileListByXpath">
+                            <params>
+                                <value name="psp_dir" type="FILE">
+                                    <value-ref name="PSP_DIR"/>
+                                </value>
+
+                                <value name="xml_file" type="FILE">
+                                    <value-ref name="PRIMARY-METS_FILE"/>
+                                </value>
+                                <value name="xpath" type="STRING">
+                                    /mets:mets/mets:fileSec/mets:fileGrp[@ID='ALTOGRP']/mets:file/mets:FLocat[@LOCTYPE='URL']/@xlink:href
+                                </value>
+                            </params>
+                        </evaluation>
+                    </value>
+                </params>
+            </validation>
+        </rule>
+
+        <rule name="PRIMARY-METS_FILESEC_ALL_SECONDARY_METS_FILES_REFERENCED" level="ERROR">
+            <description>Element mets:fileSec v souboru PRIMARY-METS musí v elementu mets:fileGroup s atributem
+                ID="TECHMDGRP" obsahovat odkazy na všechny soubory SECONDARY-METS a žádné jiné.
+            </description>
+            <validation functionName="checkFileListsMatch">
+                <params>
+                    <value name="expected_files" type="FILE_LIST">
+                        <value-ref name="SECONDARY-METS_FILES"/>
+                    </value>
+                    <value name="found_files" type="FILE_LIST">
+                        <evaluation functionName="getFileListByXpath">
+                            <params>
+                                <value name="psp_dir" type="FILE">
+                                    <value-ref name="PSP_DIR"/>
+                                </value>
+                                <value name="xml_file" type="FILE">
+                                    <value-ref name="PRIMARY-METS_FILE"/>
+                                </value>
+                                <value name="xpath" type="STRING">
+                                    /mets:mets/mets:fileSec/mets:fileGrp[@ID='TECHMDGRP']/mets:file/mets:FLocat[@LOCTYPE='URL']/@xlink:href
+                                </value>
+                            </params>
+                        </evaluation>
                     </value>
                 </params>
             </validation>

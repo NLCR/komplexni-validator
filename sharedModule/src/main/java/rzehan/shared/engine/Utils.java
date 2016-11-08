@@ -110,7 +110,7 @@ public class Utils {
             fis = new FileInputStream(file);
             String md5 = org.apache.commons.codec.digest.DigestUtils.md5Hex(fis);
             fis.close();
-            return md5.toUpperCase();
+            return md5;
         } catch (Exception e) {
             throw new HashComputationException(e.getMessage());
         } finally {

@@ -92,6 +92,8 @@ public class Engine {
                 return new EfBuildListOfStrings(this);
             case "filterIdentifersByTypes":
                 return new EfFilterIdentifersByTypes(this);
+            case "getFileListByXpath":
+                return new EfGetFileListByXpath(this);
             default:
                 throw new RuntimeException(String.format("vyhodnocovací funkce %s neexistuje", name));
         }
@@ -143,6 +145,8 @@ public class Engine {
                 return new VfCheckStringDerivedFromOneOfIdentifiers(this);
             case "checkPrimaryMetsFilesecContainsAllFilegroups":
                 return new VfCheckPrimaryMetsFilesecContainsAllFilegroups(this);
+            case "checkFileListsMatch":
+                return new VfCheckFileListsMatch(this);
             default:
                 throw new ValidatorConfigurationException(String.format("validační funkce %s neexistuje", name));
         }
