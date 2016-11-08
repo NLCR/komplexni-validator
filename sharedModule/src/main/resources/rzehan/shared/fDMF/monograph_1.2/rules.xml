@@ -1223,19 +1223,19 @@
 
     <rules-section name="Secondary METS filesec" description="">
 
-        <!--<rule name="SECONDARY-METS_FILESEC_ALL_FILEGROUPS_PRESENT" level="ERROR">
-            <description>Element mets:fileSec v souboru PRIMARY-METS musí obsahovat elementy mets:fileGrp s definovanými
-                hodnotami ID a USE a žádné další.
+        <rule name="SECONDARY-METS_FILESEC_ALL_FILEGROUPS_PRESENT" level="ERROR">
+            <description>Element mets:fileSec v každém souboru SECONDARY-METS musí obsahovat elementy mets:fileGrp s
+                definovanými hodnotami ID a USE a žádné další.
             </description>
             <validation functionName="checkSecondaryMetsFilesecContainsAllFilegroups">
                 <params>
-                    <value name="secondary-mets_file" type="FILE">
-                        <value-ref name="PRIMARY-METS_FILE"/>
+                    <value name="secondary-mets_files" type="FILE_LIST">
+                        <value-ref name="SECONDARY-METS_FILES"/>
                     </value>
                 </params>
             </validation>
-        </rule>-->
-
+        </rule>
+        
 
     </rules-section>
 
