@@ -147,6 +147,8 @@ public class Engine {
                 return new VfCheckPrimaryMetsFilesecContainsAllFilegroups(this);
             case "checkFileListsMatch":
                 return new VfCheckFileListsMatch(this);
+            case "checkMetsFilesecSizesMatch":
+                return new VfCheckMetsFilesecSizesMatch(this);
             default:
                 throw new ValidatorConfigurationException(String.format("validační funkce %s neexistuje", name));
         }

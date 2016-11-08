@@ -218,9 +218,9 @@
       </mets:file> 
     </mets:fileGrp>  
     <mets:fileGrp ID="TECHMDGRP" USE="Technical Metadata"> 
-      <mets:file CHECKSUM="e55c4cb46edf9318bab503b7bfb18b21" CHECKSUMTYPE="MD5" CREATED="2014-07-21T20:27:13" ID="AMD_0001" MIMETYPE="text/xml" SEQ="0" SIZE="32172"> 
+      <mets:file CHECKSUM="e55c4cb46edf9318bab503b7bfb18b21" CHECKSUMTYPE="MD5" CREATED="2014-07-21T20:27:13" ID="AMD_0001" MIMETYPE="text/xml" SEQ="0" SIZE="32172">
         <mets:FLocat LOCTYPE="URL" xlink:href="amdsec/amd_mets_b50eb6b0-f0a4-11e3-b72e-005056827e52_0001.xml"/> 
-      </mets:file>  
+      </mets:file>
       <mets:file CHECKSUM="660fb31939bb08508dc0cd3b4e774c6a" CHECKSUMTYPE="MD5" CREATED="2014-07-21T20:27:15" ID="AMD_0002" MIMETYPE="text/xml" SEQ="1" SIZE="32170"> 
         <mets:FLocat LOCTYPE="URL" xlink:href="amdsec/amd_mets_b50eb6b0-f0a4-11e3-b72e-005056827e52_0002.xml"/> 
       </mets:file>  

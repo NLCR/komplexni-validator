@@ -143,5 +143,11 @@
         </params-def>
     </evaluationFunction>
 
+    <evaluationFunction functionName="checkMetsFilesecSizesMatch">
+        <params-def>
+            <value name="psp_dir" type="FILE"/>
+            <value name="mets_file" type="FILE_LIST"/>
+        </params-def>
+    </evaluationFunction>
 
 </evaluationFunctions>
