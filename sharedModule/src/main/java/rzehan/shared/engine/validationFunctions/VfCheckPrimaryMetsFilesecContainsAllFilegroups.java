@@ -20,7 +20,7 @@ import java.io.File;
  */
 public class VfCheckPrimaryMetsFilesecContainsAllFilegroups extends ValidationFunction {
 
-    public static final String PARAM_PRIMARY_METS_FILE = "primaryMets_file";
+    public static final String PARAM_PRIMARY_METS_FILE = "primary-mets_file";
 
     public VfCheckPrimaryMetsFilesecContainsAllFilegroups(Engine engine) {
         super(engine, new Contract()

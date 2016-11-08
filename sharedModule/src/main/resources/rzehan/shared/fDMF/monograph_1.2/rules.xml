@@ -988,7 +988,7 @@
             <description>Identifikátory v Dublin Core záznamech by neměly obsahovat bílé znaky.</description>
             <validation functionName="checkDcIdentifiersDoNotContainWhiteSpaces">
                 <params>
-                    <value name="primaryMets_file" type="FILE">
+                    <value name="primary-mets_file" type="FILE">
                         <value-ref name="PRIMARY-METS_FILE"/>
                     </value>
                 </params>
@@ -1008,7 +1008,7 @@
             </description>
             <validation functionName="checkPrimaryMetsFilesecContainsAllFilegroups">
                 <params>
-                    <value name="primaryMets_file" type="FILE">
+                    <value name="primary-mets_file" type="FILE">
                         <value-ref name="PRIMARY-METS_FILE"/>
                     </value>
                 </params>
@@ -1218,6 +1218,24 @@
                 </params>
             </validation>
         </rule>
+
+    </rules-section>
+
+    <rules-section name="Secondary METS filesec" description="">
+
+        <!--<rule name="SECONDARY-METS_FILESEC_ALL_FILEGROUPS_PRESENT" level="ERROR">
+            <description>Element mets:fileSec v souboru PRIMARY-METS musí obsahovat elementy mets:fileGrp s definovanými
+                hodnotami ID a USE a žádné další.
+            </description>
+            <validation functionName="checkSecondaryMetsFilesecContainsAllFilegroups">
+                <params>
+                    <value name="secondary-mets_file" type="FILE">
+                        <value-ref name="PRIMARY-METS_FILE"/>
+                    </value>
+                </params>
+            </validation>
+        </rule>-->
+
 
     </rules-section>
 

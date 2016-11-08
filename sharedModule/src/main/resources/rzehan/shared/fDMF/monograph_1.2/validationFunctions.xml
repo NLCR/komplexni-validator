@@ -190,13 +190,13 @@
 
     <validationFunction name="checkDcIdentifiersDoNotContainWhiteSpaces">
         <params-def>
-            <value name="primaryMets_file" type="FILE"/>
+            <value name="primary-mets_file" type="FILE"/>
         </params-def>
     </validationFunction>
 
     <validationFunction name="checkPrimaryMetsFilesecContainsAllFilegroups">
         <params-def>
-            <value name="primaryMets_file" type="FILE"/>
+            <value name="primary-mets_file" type="FILE"/>
         </params-def>
     </validationFunction>
 
