@@ -8,6 +8,8 @@
         <!--prefix cmd-->
         <namespace-copyright_md>http://www.cdlib.org/inside/diglib/copyrightMD</namespace-copyright_md>
         <!--prefix dc-->
+        <!--http://dublincore.org/schemas/xmls/simpledc20021212.xsd-->
+        <!--http://dublincore.org/schemas/xmls/qdc/dc.xsd-->
         <namespace-dublin_core>http://purl.org/dc/elements/1.1/</namespace-dublin_core>
         <!--prefix mets-->
         <namespace-mets>http://www.loc.gov/METS/</namespace-mets>

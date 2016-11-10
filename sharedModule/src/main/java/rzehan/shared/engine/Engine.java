@@ -86,6 +86,8 @@ public class Engine {
                 return new EfFindFilesInDirByPattern(this);
             case "getStringByXpath":
                 return new EfGetStringByXpath(this);
+            case "getStringListByXpath":
+                return new EfGetStringListByXpath(this);
             case "getIdentifiersFromInfoFile":
                 return new EfGetIdentifiersFromInfoFile(this);
             case "buildListOfStrings":
@@ -94,6 +96,10 @@ public class Engine {
                 return new EfFilterIdentifersByTypes(this);
             case "getFileListByXpath":
                 return new EfGetFileListByXpath(this);
+            case "getDcIdentifiersForEachDmdsecId":
+                return new EfGetDcIdentifiersForEachDmdsecId(this);
+            case "mergeIdentifiers":
+                return new EfMergeIdentifiers(this);
             default:
                 throw new RuntimeException(String.format("vyhodnocovací funkce %s neexistuje", name));
         }

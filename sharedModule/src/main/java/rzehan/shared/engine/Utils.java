@@ -1,14 +1,14 @@
 package rzehan.shared.engine;
 
 import rzehan.shared.engine.exceptions.HashComputationException;
+import rzehan.shared.engine.exceptions.InvalidIdException;
 import rzehan.shared.engine.exceptions.InvalidPathException;
+import rzehan.shared.engine.types.Identifier;
 
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 /**
  * Created by martin on 21.10.16.
@@ -164,6 +164,43 @@ public class Utils {
         } else {
             return longestCommonSubstrings.iterator().next().length();
         }
+    }
+
+    public static Identifier extractIdentifierFromDcString(String string) throws InvalidIdException {
+        if (string == null) {
+            throw new InvalidIdException("identifikátor je null");
+        } else if (string.isEmpty()) {
+            throw new InvalidIdException("identifikátor je prázdný");
+        } else if (!string.contains(":")) {
+            throw new InvalidIdException("identifikátor neobsahuje oddělovač ':'");
+        } else {
+            String[] tokens = string.split(":");
+            String type = tokens[0];
+            String value = null;
+            if (tokens.length == 2) {
+                value = tokens[1];
+            } else {
+                List<String> valueTokens = new LinkedList<>();
+                valueTokens.addAll(Arrays.asList(tokens));
+                valueTokens.remove(0);
+                value = mergeStrings(valueTokens);
+            }
+            if (type.isEmpty()) {
+                throw new InvalidIdException("typ identifikátoru je prázdný");
+            }
+            if (value.isEmpty()) {
+                throw new InvalidIdException("hodnota identifikátoru je prázdná");
+            }
+            return new Identifier(type, value);
+        }
+    }
+
+    public static String mergeStrings(List<String> list) {
+        StringBuilder builder = new StringBuilder();
+        for (String string : list) {
+            builder.append(string);
+        }
+        return builder.toString();
     }
 
 

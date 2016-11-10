@@ -948,7 +948,6 @@
                                 </value>
                             </params>
                         </evaluation>
-                        <!--<value-ref name="INFO_IDENTIFIERS"/>-->
                     </value>
                     <!--seznam prefixu, ktere se odstranuji z hodnot identifikatoru pred hledanim shody-->
                     <value name="id_prefixes" type="STRING_LIST">
@@ -973,7 +972,7 @@
             </description>
             <validation functionName="checkNoDuplicateIdentifiers">
                 <params>
-                    <value name="identifiers" type="IDENTIFIER_LIST">
+                    <value name="identifier_list" type="IDENTIFIER_LIST">
                         <value-ref name="INFO_IDENTIFIERS"/>
                     </value>
                 </params>
@@ -995,12 +994,48 @@
             </validation>
         </rule>
 
+        <rule name="DC_IDENTIFIERS_NO_DUPLICATE_IDENTIFIERS_DC" level="WARNING">
+            <description>Identifikátory v jednotlivých Dublin Core záznamech by měly být unikátní.
+                Neměly by se tedy objevit dva přesně stejné identifikátory, ani dva identifikátory stejného typu ale
+                různé hodnoty.
+            </description>
+
+            <validation functionName="checkNoDuplicateIdentifiers">
+                <params>
+                    <value name="identifier_list_list" type="IDENTIFIER_LIST_LIST">
+                        <!--seznam obsahujici seznam identifikatoru DC pro kazdy zaznam dmdSec pro dc-->
+                        <evaluation functionName="getDcIdentifiersForEachDmdsecId">
+                            <params>
+                                <value name="dmdsec_ids" type="STRING_LIST">
+                                    <!--seznam identifikatoru (dmdSec ID)-->
+                                    <evaluation functionName="getStringListByXpath">
+                                        <params>
+                                            <value name="xml_file" type="FILE">
+                                                <value-ref name="PRIMARY-METS_FILE"/>
+                                            </value>
+                                            <value name="xpath" type="STRING">
+                                                /mets:mets/mets:dmdSec[starts-with(@ID, "DCMD")]/@ID
+                                            </value>
+                                        </params>
+                                    </evaluation>
+                                </value>
+                                <value name="mets_file" type="FILE">
+                                    <value-ref name="PRIMARY-METS_FILE"/>
+                                </value>
+                            </params>
+                        </evaluation>
+                    </value>
+                </params>
+            </validation>
+        </rule>
+
+
         <!--TODO: pro kazdou uroven musi byt shoda id v DC a v  MODS-->
 
 
     </rules-section>
 
-    <rules-section name="Primary METS filesec" description="">
+    <!--<rules-section name="Primary METS filesec" description="">
 
         <rule name="PRIMARY-METS_FILESEC_ALL_FILEGROUPS_PRESENT" level="ERROR">
             <description>Element mets:fileSec v souboru PRIMARY-METS musí obsahovat elementy mets:fileGrp s definovanými
@@ -1219,9 +1254,9 @@
             </validation>
         </rule>
 
-    </rules-section>
+    </rules-section>-->
 
-    <rules-section name="Secondary METS filesec" description="">
+    <!--<rules-section name="Secondary METS filesec" description="">
 
         <rule name="SECONDARY-METS_FILESEC_ALL_FILEGROUPS_PRESENT" level="ERROR">
             <description>Element mets:fileSec v každém souboru SECONDARY-METS musí obsahovat elementy mets:fileGrp s
@@ -1235,9 +1270,9 @@
                 </params>
             </validation>
         </rule>
-        
 
-    </rules-section>
+
+    </rules-section>-->
 
 
 </fDMF>

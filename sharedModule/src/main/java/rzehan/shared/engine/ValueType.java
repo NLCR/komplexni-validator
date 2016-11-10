@@ -6,7 +6,8 @@ package rzehan.shared.engine;
 public enum ValueType {
 
     STRING, INTEGER, FILE, IDENTIFIER,//
-    STRING_LIST, FILE_LIST, IDENTIFIER_LIST;
+    STRING_LIST, FILE_LIST, IDENTIFIER_LIST, //lists
+    STRING_LIST_LIST, FILE_LIST_LIST, IDENTIFIER_LIST_LIST;  //lists of lists
 
 
 }
