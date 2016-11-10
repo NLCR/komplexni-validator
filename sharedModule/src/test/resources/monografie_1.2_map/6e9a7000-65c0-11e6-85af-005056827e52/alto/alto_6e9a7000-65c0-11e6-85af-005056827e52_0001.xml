@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<alto xmlns="http://www.loc.gov/standards/alto/ns-v2#" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+<Description>
+<MeasurementUnit>pixel</MeasurementUnit>
+<OCRProcessing ID="IdOcr"><ocrProcessingStep><processingDateTime>2016-09-01</processingDateTime><processingSoftware><softwareCreator>ABBYY</softwareCreator><softwareName>ABBYY Recognition Server</softwareName><softwareVersion>4.0</softwareVersion></processingSoftware></ocrProcessingStep></OCRProcessing>
+</Description>
+<Styles>
+<ParagraphStyle ID="StyleId-FFFFFFFF-FFFF-FFFF-FFFF-FFFFFFFFFFFF-" ALIGN="Left" LEFT="0." RIGHT="0." FIRSTLINE="0."/>
+</Styles>
+<Layout>
+<Page ID="Page1" PHYSICAL_IMG_NR="1" HEIGHT="2424" WIDTH="1701">
+<TopMargin HEIGHT="70" WIDTH="1701" VPOS="0" HPOS="0">
+</TopMargin>
+<LeftMargin HEIGHT="1701" WIDTH="10" VPOS="70" HPOS="0">
+</LeftMargin>
+<RightMargin HEIGHT="1701" WIDTH="107" VPOS="70" HPOS="1594">
+</RightMargin>
+<BottomMargin HEIGHT="653" WIDTH="1701" VPOS="1771" HPOS="0">
+</BottomMargin>
+<PrintSpace HEIGHT="1701" WIDTH="1584" VPOS="70" HPOS="10"><Illustration ID="Page1_Block1" HEIGHT="274" WIDTH="576" VPOS="70" HPOS="10"/><Illustration ID="Page1_Block2" HEIGHT="1138" WIDTH="1519" VPOS="633" HPOS="75"/>
+<ComposedBlock ID="Page1_Block3" HEIGHT="212" WIDTH="559" VPOS="132" HPOS="10" TYPE="separatorsBox"><GraphicalElement ID="Page1_Block4" HEIGHT="19" WIDTH="557" VPOS="132" HPOS="10"/><GraphicalElement ID="Page1_Block5" HEIGHT="15" WIDTH="548" VPOS="329" HPOS="13"/><GraphicalElement ID="Page1_Block6" HEIGHT="204" WIDTH="10" VPOS="140" HPOS="10"/><GraphicalElement ID="Page1_Block7" HEIGHT="204" WIDTH="10" VPOS="132" HPOS="559"/></ComposedBlock><GraphicalElement ID="Page1_Block8" HEIGHT="7" WIDTH="502" VPOS="70" HPOS="74"/><GraphicalElement ID="Page1_Block9" HEIGHT="202" WIDTH="11" VPOS="140" HPOS="123"/><Illustration ID="Page1_Block10" HEIGHT="212" WIDTH="559" VPOS="132" HPOS="10"/>
+</PrintSpace>
+</Page>
+</Layout>
+</alto>

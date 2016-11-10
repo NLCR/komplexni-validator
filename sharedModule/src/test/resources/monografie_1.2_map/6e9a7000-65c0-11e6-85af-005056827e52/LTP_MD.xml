@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ltp xmlns="http://www.aipsafe.cz/ltp/aip/v1">
+    <metadataVersion>1.2</metadataVersion>
+    <aipVersion>1</aipVersion>
+    <id>NDK-000000443323</id>
+    <validationID>file_sec:1.0;amd_sec_mix:1.0;physical_map_amd:1.0;amd_file_sec:1.0;monographic_volume:1.0;amd_sec:1.0;monographic_logical_map:1.0;physical_map:1.0</validationID>
+    <exports>
+        <export>
+            <processId>791be7e5-f552-4cd8-8306-c251df33e814</processId>
+            <processType>ndk_dip</processType>
+            <note>data_pro_test</note>
+            <subType/>
+            <date>2016-10-11T11:54:29</date>
+            <aipVersion>1</aipVersion>
+        </export>
+    </exports>
+</ltp>

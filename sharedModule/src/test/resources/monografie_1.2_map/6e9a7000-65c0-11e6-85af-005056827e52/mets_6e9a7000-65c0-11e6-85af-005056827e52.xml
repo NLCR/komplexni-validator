@@ -1,0 +1,259 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+
+<mets:mets xmlns:mets="http://www.loc.gov/METS/" xmlns:copyrightMD="http://www.cdlib.org/inside/diglib/copyrightMD" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:mods="http://www.loc.gov/mods/v3" xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/" xmlns:premis="info:lc/xmlns/premis-v2" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" LABEL="Josef Ruszelák, 2000" TYPE="Monograph" xsi:schemaLocation="http://www.w3.org/2001/XMLSchema-instance http://www.w3.org/2001/XMLSchema.xsd http://www.loc.gov/METS/ http://www.loc.gov/standards/mets/mets.xsd http://www.loc.gov/mods/v3 http://www.loc.gov/standards/mods/v3/mods-3-5.xsd http://www.openarchives.org/OAI/2.0/oai_dc/ http://www.openarchives.org/OAI/2.0/oai_dc.xsd http://www.w3.org/1999/xlink http://www.w3.org/1999/xlink.xsd http://www.cdlib.org/groups/rmg/docs/copyrightMD.xsd">  
+  <mets:metsHdr CREATEDATE="2016-08-19T05:53:05" LASTMODDATE="2016-09-01T19:43:13"> 
+    <mets:agent ROLE="CREATOR" TYPE="ORGANIZATION"> 
+      <mets:name>BOA001</mets:name> 
+    </mets:agent>  
+    <mets:agent ROLE="ARCHIVIST" TYPE="ORGANIZATION"> 
+      <mets:name>BOA001</mets:name> 
+    </mets:agent> 
+  </mets:metsHdr>  
+  <mets:dmdSec ID="MODSMD_VOLUME_0001"> 
+    <mets:mdWrap MDTYPE="MODS" MDTYPEVERSION="3.5" MIMETYPE="text/xml"> 
+      <mets:xmlData> 
+        <mods:mods ID="MODS_VOLUME_0001"> 
+          <mods:titleInfo> 
+            <mods:title>MAPA A</mods:title> 
+          </mods:titleInfo>  
+          <mods:titleInfo type="alternative"> 
+            <mods:title>Pyromachie a reliéfní tisky</mods:title> 
+          </mods:titleInfo>  
+          <mods:name type="personal" usage="primary"> 
+            <mods:namePart>Ruszelák, Josef</mods:namePart>  
+            <mods:namePart type="date">1938-</mods:namePart>  
+            <mods:role> 
+              <mods:roleTerm authority="marcrelator" type="code">hnr</mods:roleTerm> 
+            </mods:role> 
+          </mods:name>  
+          <mods:name type="personal"> 
+            <mods:namePart>Kundera, Ludvík</mods:namePart>  
+            <mods:namePart type="date">1920-2010</mods:namePart>  
+            <mods:role> 
+              <mods:roleTerm authority="marcrelator" type="code">aui</mods:roleTerm> 
+            </mods:role> 
+          </mods:name>  
+          <mods:name type="personal"> 
+            <mods:namePart>Turnovský, Evžen</mods:namePart>  
+            <mods:namePart type="date">1929-2010</mods:namePart>  
+            <mods:role> 
+              <mods:roleTerm authority="marcrelator" type="code">aui</mods:roleTerm> 
+            </mods:role> 
+          </mods:name>  
+          <mods:typeOfResource>cartographic</mods:typeOfResource>  
+          <mods:genre>volume</mods:genre>  
+          <mods:originInfo> 
+            <mods:place> 
+              <mods:placeTerm authority="marccountry" type="code">xr</mods:placeTerm> 
+            </mods:place>  
+            <mods:place> 
+              <mods:placeTerm type="text">Brno</mods:placeTerm> 
+            </mods:place>  
+            <mods:publisher>Kulturní a informační centrum města Brna</mods:publisher>  
+            <mods:issuance>single unit</mods:issuance>  
+            <mods:dateIssued>2000</mods:dateIssued> 
+          </mods:originInfo>  
+          <mods:language> 
+            <mods:languageTerm authority="iso639-2b" type="code">cze</mods:languageTerm> 
+          </mods:language>  
+          <mods:physicalDescription> 
+            <mods:form authority="marcform">print</mods:form>  
+            <mods:extent>1 složený list : barev, il. ; 21 x 30 cm</mods:extent> 
+          </mods:physicalDescription>  
+          <mods:targetAudience authority="marctarget">adult</mods:targetAudience>  
+          <mods:note type="statement of responsibility">text Evžen Turnovský, Ludvík Kundera]</mods:note>  
+          <mods:note type="acquisition">Brno, Sdružení Q</mods:note>  
+          <mods:subject> 
+            <mods:geographicCode authority="marcgac">e-xr---</mods:geographicCode> 
+          </mods:subject>  
+          <mods:subject authority="czenas"> 
+            <mods:name type="personal"> 
+              <mods:namePart>Ruszelák, Josef</mods:namePart>  
+              <mods:namePart type="date">1938-</mods:namePart> 
+            </mods:name> 
+          </mods:subject>  
+          <mods:subject authority="czenas"> 
+            <mods:temporal>20.-21. století</mods:temporal> 
+          </mods:subject>  
+          <mods:subject authority="czenas"> 
+            <mods:topic>české malířství</mods:topic>  
+            <mods:temporal>20.-21. stol</mods:temporal> 
+          </mods:subject>  
+          <mods:subject authority="czenas"> 
+            <mods:topic>česká grafika</mods:topic>  
+            <mods:temporal>20.-21. stol</mods:temporal> 
+          </mods:subject>  
+          <mods:subject authority="czenas"> 
+            <mods:topic>moderní malířství</mods:topic>  
+            <mods:geographic>Česko</mods:geographic> 
+          </mods:subject>  
+          <mods:classification authority="udc" edition="Konspekt">75(437.3)</mods:classification>  
+          <mods:classification authority="udc" edition="Konspekt">76(437.3)</mods:classification>  
+          <mods:classification authority="udc" edition="Konspekt">75.036/.038</mods:classification>  
+          <mods:classification authority="udc" edition="Konspekt">(437.3)</mods:classification>  
+          <mods:classification authority="udc" edition="Konspekt">(083.824)</mods:classification>  
+          <mods:location> 
+            <mods:physicalLocation authority="siglaADR">BOA001</mods:physicalLocation>  
+            <mods:shelfLocator>2-1101.629</mods:shelfLocator> 
+          </mods:location>  
+          <mods:recordInfo> 
+            <mods:descriptionStandard>aacr</mods:descriptionStandard>  
+            <mods:recordContentSource authority="marcorg">BOA001</mods:recordContentSource>  
+            <mods:recordCreationDate encoding="iso8601">2001-10-29T00:00:00Z</mods:recordCreationDate>  
+            <mods:recordChangeDate encoding="iso8601">2016-08-16T07:49:02Z</mods:recordChangeDate>  
+            <mods:recordIdentifier source="CZ-BrMZK">000576281</mods:recordIdentifier>  
+            <mods:recordOrigin>machine generated</mods:recordOrigin>  
+            <mods:languageOfCataloging> 
+              <mods:languageTerm authority="iso639-2b" type="code">cze</mods:languageTerm> 
+            </mods:languageOfCataloging> 
+          </mods:recordInfo>  
+          <mods:identifier type="urnnbn">urn:nbn:cz:mzk-004xu6</mods:identifier>  
+          <mods:identifier type="barCode">2610161505</mods:identifier>  
+          <mods:identifier type="uuid">6e9a7000-65c0-11e6-85af-005056827e52</mods:identifier> 
+        </mods:mods> 
+      </mets:xmlData> 
+    </mets:mdWrap> 
+  </mets:dmdSec>  
+  <mets:dmdSec ID="DCMD_VOLUME_0001"> 
+    <mets:mdWrap MDTYPE="DC" MIMETYPE="text/xml"> 
+      <mets:xmlData> 
+        <oai_dc:dc> 
+          <dc:title>MAPA A</dc:title>  
+          <dc:title>Pyromachie a reliéfní tisky</dc:title>  
+          <dc:contributor>Ruszelák, Josef</dc:contributor>  
+          <dc:contributor>Kundera, Ludvík</dc:contributor>  
+          <dc:contributor>Turnovský, Evžen</dc:contributor>  
+          <dc:date>2000</dc:date>  
+          <dc:publisher>Kulturní a informační centrum města Brna</dc:publisher>  
+          <dc:language>cze</dc:language>  
+          <dc:format>1 složený list : barev, il. ; 21 x 30 cm</dc:format>  
+          <dc:format>print</dc:format>  
+          <dc:description>text Evžen Turnovský, Ludvík Kundera]</dc:description>  
+          <dc:description>Brno, Sdružení Q</dc:description>  
+          <dc:subject>Ruszelák, Josef</dc:subject>  
+          <dc:subject/>  
+          <dc:coverage>20.-21. století</dc:coverage>  
+          <dc:subject>české malířství</dc:subject>  
+          <dc:coverage>20.-21. stol</dc:coverage>  
+          <dc:subject>české malířství--20.-21. stol</dc:subject>  
+          <dc:subject>česká grafika</dc:subject>  
+          <dc:coverage>20.-21. stol</dc:coverage>  
+          <dc:subject>česká grafika--20.-21. stol</dc:subject>  
+          <dc:subject>moderní malířství</dc:subject>  
+          <dc:coverage>Česko</dc:coverage>  
+          <dc:subject>moderní malířství--Česko</dc:subject>  
+          <dc:subject>75(437.3)</dc:subject>  
+          <dc:subject>76(437.3)</dc:subject>  
+          <dc:subject>75.036/.038</dc:subject>  
+          <dc:subject>(437.3)</dc:subject>  
+          <dc:subject>(083.824)</dc:subject>  
+          <dc:type>model:map</dc:type>  
+          <dc:identifier>urnnbn:urn:nbn:cz:mzk-004xu6</dc:identifier>
+          <dc:identifier>uuid:6e9a7000-65c0-11e6-85af-005056827e52</dc:identifier>  
+          <dc:identifier>barCode:2610161505</dc:identifier> 
+        </oai_dc:dc> 
+      </mets:xmlData> 
+    </mets:mdWrap> 
+  </mets:dmdSec>  
+  <mets:amdSec> 
+    <mets:rightsMD ID="RIGHTS_0001"> 
+      <mets:mdWrap MDTYPE="OTHER" MIMETYPE="text/xml" OTHERMDTYPE="CopyrightMD"> 
+        <mets:xmlData> 
+          <copyrightMD:copyright copyright.status="unknown" publication.status="unknown"/> 
+        </mets:xmlData> 
+      </mets:mdWrap> 
+    </mets:rightsMD> 
+  </mets:amdSec>  
+  <mets:fileSec> 
+    <mets:fileGrp ID="MC_IMGGRP" USE="Images"> 
+      <mets:file CHECKSUM="4bc537162c0fe145685fe12cc5f8caf3" CHECKSUMTYPE="MD5" CREATED="2016-08-31T07:49:05" ID="mc_0001" MIMETYPE="image/jp2" SEQ="0" SIZE="5616991"> 
+        <mets:FLocat LOCTYPE="URL" xlink:href="mastercopy/mc_6e9a7000-65c0-11e6-85af-005056827e52_0001.jp2"/> 
+      </mets:file>  
+      <mets:file CHECKSUM="009f015b8cc31dd05a66bfd861802cfc" CHECKSUMTYPE="MD5" CREATED="2016-08-31T07:49:06" ID="mc_0002" MIMETYPE="image/jp2" SEQ="1" SIZE="11239398"> 
+        <mets:FLocat LOCTYPE="URL" xlink:href="mastercopy/mc_6e9a7000-65c0-11e6-85af-005056827e52_0002.jp2"/> 
+      </mets:file>  
+      <mets:file CHECKSUM="5286ec9260049266f5b9142019955b31" CHECKSUMTYPE="MD5" CREATED="2016-08-31T07:49:04" ID="mc_0003" MIMETYPE="image/jp2" SEQ="2" SIZE="6069338"> 
+        <mets:FLocat LOCTYPE="URL" xlink:href="mastercopy/mc_6e9a7000-65c0-11e6-85af-005056827e52_0003.jp2"/> 
+      </mets:file> 
+    </mets:fileGrp>  
+    <mets:fileGrp ID="UC_IMGGRP" USE="Images"> 
+      <mets:file CHECKSUM="10bf9f32656ec9b8e1059760a8f7bac8" CHECKSUMTYPE="MD5" CREATED="2016-08-31T07:49:10" ID="uc_0001" MIMETYPE="image/jp2" SEQ="0" SIZE="1546704"> 
+        <mets:FLocat LOCTYPE="URL" xlink:href="usercopy/uc_6e9a7000-65c0-11e6-85af-005056827e52_0001.jp2"/> 
+      </mets:file>  
+      <mets:file CHECKSUM="ad0bfde6132ffe29802de33e4024bc00" CHECKSUMTYPE="MD5" CREATED="2016-08-31T07:49:10" ID="uc_0002" MIMETYPE="image/jp2" SEQ="1" SIZE="3146219"> 
+        <mets:FLocat LOCTYPE="URL" xlink:href="usercopy/uc_6e9a7000-65c0-11e6-85af-005056827e52_0002.jp2"/> 
+      </mets:file>  
+      <mets:file CHECKSUM="5bffa7a2d121afaeb6b32addc48da1d9" CHECKSUMTYPE="MD5" CREATED="2016-08-31T07:49:09" ID="uc_0003" MIMETYPE="image/jp2" SEQ="2" SIZE="1546919"> 
+        <mets:FLocat LOCTYPE="URL" xlink:href="usercopy/uc_6e9a7000-65c0-11e6-85af-005056827e52_0003.jp2"/> 
+      </mets:file> 
+    </mets:fileGrp>  
+    <mets:fileGrp ID="ALTOGRP" USE="Layout"> 
+      <mets:file CHECKSUM="f4ac2af18ba4aec997f2e4535fe9176d" CHECKSUMTYPE="MD5" CREATED="2016-09-01T17:01:30" ID="alto_0001" MIMETYPE="text/xml" SEQ="0" SIZE="2037"> 
+        <mets:FLocat LOCTYPE="URL" xlink:href="alto/alto_6e9a7000-65c0-11e6-85af-005056827e52_0001.xml"/> 
+      </mets:file>  
+      <mets:file CHECKSUM="ba0b1da7b5bc6b6dd53388d425f5d655" CHECKSUMTYPE="MD5" CREATED="2016-09-01T17:01:31" ID="alto_0002" MIMETYPE="text/xml" SEQ="1" SIZE="50668"> 
+        <mets:FLocat LOCTYPE="URL" xlink:href="alto/alto_6e9a7000-65c0-11e6-85af-005056827e52_0002.xml"/> 
+      </mets:file>  
+      <mets:file CHECKSUM="600747d89b10eb34b7f124011a8c02dd" CHECKSUMTYPE="MD5" CREATED="2016-09-01T17:01:30" ID="alto_0003" MIMETYPE="text/xml" SEQ="2" SIZE="72695"> 
+        <mets:FLocat LOCTYPE="URL" xlink:href="alto/alto_6e9a7000-65c0-11e6-85af-005056827e52_0003.xml"/> 
+      </mets:file> 
+    </mets:fileGrp>  
+    <mets:fileGrp ID="TXTGRP" USE="Text"> 
+      <mets:file CHECKSUM="ecaa88f7fa0bf610a5a26cf545dcd3aa" CHECKSUMTYPE="MD5" CREATED="2016-09-01T16:59:49" ID="txt_0001" MIMETYPE="text/plain" SEQ="0" SIZE="3"> 
+        <mets:FLocat LOCTYPE="URL" xlink:href="txt/txt_6e9a7000-65c0-11e6-85af-005056827e52_0001.txt"/> 
+      </mets:file>  
+      <mets:file CHECKSUM="fc1491208a2fddea0b182544779c3c22" CHECKSUMTYPE="MD5" CREATED="2016-09-01T16:59:54" ID="txt_0002" MIMETYPE="text/plain" SEQ="1" SIZE="2776"> 
+        <mets:FLocat LOCTYPE="URL" xlink:href="txt/txt_6e9a7000-65c0-11e6-85af-005056827e52_0002.txt"/> 
+      </mets:file>  
+      <mets:file CHECKSUM="599ef7038aa50f4b00128791e5473999" CHECKSUMTYPE="MD5" CREATED="2016-09-01T16:59:57" ID="txt_0003" MIMETYPE="text/plain" SEQ="2" SIZE="3936"> 
+        <mets:FLocat LOCTYPE="URL" xlink:href="txt/txt_6e9a7000-65c0-11e6-85af-005056827e52_0003.txt"/> 
+      </mets:file> 
+    </mets:fileGrp>  
+    <mets:fileGrp ID="TECHMDGRP" USE="Technical Metadata"> 
+      <mets:file CHECKSUM="56f9a81d49fc7ab74cbd1be78d242cda" CHECKSUMTYPE="MD5" CREATED="2016-09-01T19:43:11" ID="amd_0001" MIMETYPE="text/xml" SEQ="0" SIZE="32131"> 
+        <mets:FLocat LOCTYPE="URL" xlink:href="amdsec/amd_mets_6e9a7000-65c0-11e6-85af-005056827e52_0001.xml"/> 
+      </mets:file>  
+      <mets:file CHECKSUM="378b2e1c2e31066edacf976c4fc28cd7" CHECKSUMTYPE="MD5" CREATED="2016-09-01T19:43:12" ID="amd_0002" MIMETYPE="text/xml" SEQ="1" SIZE="32093"> 
+        <mets:FLocat LOCTYPE="URL" xlink:href="amdsec/amd_mets_6e9a7000-65c0-11e6-85af-005056827e52_0002.xml"/> 
+      </mets:file>  
+      <mets:file CHECKSUM="e67b324ec50930dc59dd76e0d3b126d3" CHECKSUMTYPE="MD5" CREATED="2016-09-01T19:43:13" ID="amd_0003" MIMETYPE="text/xml" SEQ="2" SIZE="32136"> 
+        <mets:FLocat LOCTYPE="URL" xlink:href="amdsec/amd_mets_6e9a7000-65c0-11e6-85af-005056827e52_0003.xml"/> 
+      </mets:file> 
+    </mets:fileGrp> 
+  </mets:fileSec>  
+  <mets:structMap LABEL="Physical_Structure" TYPE="PHYSICAL"> 
+    <mets:div DMDID="MODSMD_VOLUME_0001" ID="DIV_P_0000" LABEL="Josef Ruszelák, 2000" TYPE="Monograph"> 
+      <mets:div ID="DIV_P_PAGE_0000" ORDER="1" ORDERLABEL="[1]" TYPE="titlePage"> 
+        <mets:fptr FILEID="mc_0001"/>  
+        <mets:fptr FILEID="uc_0001"/>  
+        <mets:fptr FILEID="alto_0001"/>  
+        <mets:fptr FILEID="txt_0001"/>  
+        <mets:fptr FILEID="amd_0001"/> 
+      </mets:div>  
+      <mets:div ID="DIV_P_PAGE_0001" ORDER="2" ORDERLABEL="[2],[3]" TYPE="normalPage"> 
+        <mets:fptr FILEID="mc_0002"/>  
+        <mets:fptr FILEID="uc_0002"/>  
+        <mets:fptr FILEID="alto_0002"/>  
+        <mets:fptr FILEID="txt_0002"/>  
+        <mets:fptr FILEID="amd_0002"/> 
+      </mets:div>  
+      <mets:div ID="DIV_P_PAGE_0002" ORDER="3" ORDERLABEL="[4]" TYPE="normalPage"> 
+        <mets:fptr FILEID="mc_0003"/>  
+        <mets:fptr FILEID="uc_0003"/>  
+        <mets:fptr FILEID="alto_0003"/>  
+        <mets:fptr FILEID="txt_0003"/>  
+        <mets:fptr FILEID="amd_0003"/> 
+      </mets:div> 
+    </mets:div> 
+  </mets:structMap>  
+  <mets:structMap LABEL="Logical_Structure" TYPE="LOGICAL"> 
+    <mets:div ID="MONOGRAPH_0001" LABEL="Josef Ruszelák, 2000" TYPE="Monograph"> 
+      <mets:div DMDID="MODSMD_VOLUME_0001" ID="VOLUME_0001" LABEL="Josef Ruszelák, 2000" TYPE="VOLUME"/> 
+    </mets:div> 
+  </mets:structMap>  
+  <mets:structLink> 
+    <mets:smLink xlink:from="VOLUME_0001" xlink:to="DIV_P_PAGE_0000"/>  
+    <mets:smLink xlink:from="VOLUME_0001" xlink:to="DIV_P_PAGE_0001"/>  
+    <mets:smLink xlink:from="VOLUME_0001" xlink:to="DIV_P_PAGE_0002"/> 
+  </mets:structLink> 
+</mets:mets>

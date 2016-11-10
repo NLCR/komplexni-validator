@@ -994,9 +994,9 @@
             </validation>
         </rule>
 
-        <rule name="DC_IDENTIFIERS_NO_DUPLICATE_IDENTIFIERS_DC" level="WARNING">
-            <description>Identifikátory v jednotlivých Dublin Core záznamech by měly být unikátní.
-                Neměly by se tedy objevit dva přesně stejné identifikátory, ani dva identifikátory stejného typu ale
+        <rule name="DC_IDENTIFIERS_NO_DUPLICATES_WITHIN_DMDSEC" level="ERROR">
+            <description>Identifikátory v jednotlivých Dublin Core záznamech by musí být unikátní.
+                Nesmí se tedy objevit dva přesně stejné identifikátory, ani dva identifikátory stejného typu ale
                 různé hodnoty.
             </description>
 
@@ -1021,6 +1021,48 @@
                                 </value>
                                 <value name="mets_file" type="FILE">
                                     <value-ref name="PRIMARY-METS_FILE"/>
+                                </value>
+                            </params>
+                        </evaluation>
+                    </value>
+                </params>
+            </validation>
+        </rule>
+
+        <rule name="DC_IDENTIFIERS_NO_DUPLICATES_WITHIN_DMDSEC" level="ERROR">
+            <description>Identifikátory napříš Dublin Core záznamech by měly být unikátní.
+                Neměly by se tedy objevit dva přesně stejné identifikátory, ani dva identifikátory stejného typu ale
+                různé hodnoty.
+            </description>
+
+            <validation functionName="checkNoDuplicateIdentifiers">
+                <params>
+                    <value name="identifier_list" type="IDENTIFIER_LIST">
+                        <!--spojeni vsech identifikatoru do jednoho seznamu-->
+                        <evaluation functionName="mergeIdentifiers">
+                            <params>
+                                <value name="identifier_list_list" type="IDENTIFIER_LIST_LIST">
+                                    <!--seznam obsahujici seznam identifikatoru DC pro kazdy zaznam dmdSec pro dc-->
+                                    <evaluation functionName="getDcIdentifiersForEachDmdsecId">
+                                        <params>
+                                            <value name="dmdsec_ids" type="STRING_LIST">
+                                                <!--seznam identifikatoru (dmdSec ID)-->
+                                                <evaluation functionName="getStringListByXpath">
+                                                    <params>
+                                                        <value name="xml_file" type="FILE">
+                                                            <value-ref name="PRIMARY-METS_FILE"/>
+                                                        </value>
+                                                        <value name="xpath" type="STRING">
+                                                            /mets:mets/mets:dmdSec[starts-with(@ID, "DCMD")]/@ID
+                                                        </value>
+                                                    </params>
+                                                </evaluation>
+                                            </value>
+                                            <value name="mets_file" type="FILE">
+                                                <value-ref name="PRIMARY-METS_FILE"/>
+                                            </value>
+                                        </params>
+                                    </evaluation>
                                 </value>
                             </params>
                         </evaluation>

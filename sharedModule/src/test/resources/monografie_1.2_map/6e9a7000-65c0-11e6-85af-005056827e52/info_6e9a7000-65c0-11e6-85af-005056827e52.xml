@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?><info xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://www.ndk.cz/standardy-digitalizace/info11.xsd">
+    <created>2016-09-01T19:43:31</created>
+    <metadataversion>1.2</metadataversion>
+    <packageid>6e9a7000-65c0-11e6-85af-005056827e52</packageid>
+    <mainmets>mets_6e9a7000-65c0-11e6-85af-005056827e52.xml</mainmets>
+    <validation version="file_sec:1.0;amd_sec_mix:1.0;physical_map_amd:1.0;amd_file_sec:1.0;monographic_volume:1.0;amd_sec:1.0;monographic_logical_map:1.0;physical_map:1.0">Valid</validation>
+    <titleid type="urnnbn">urn:nbn:cz:mzk-004xu6</titleid>
+    <collection>Digitalizace národní knihovny</collection>
+    <institution>Česká národní knihovna</institution>
+    <creator>BOA001</creator>
+    <size>33120</size>
+    <itemlist itemtotal="18">
+        <item>\usercopy\uc_6e9a7000-65c0-11e6-85af-005056827e52_0001.jp2</item>
+        <item>\usercopy\uc_6e9a7000-65c0-11e6-85af-005056827e52_0002.jp2</item>
+        <item>\usercopy\uc_6e9a7000-65c0-11e6-85af-005056827e52_0003.jp2</item>
+        <item>\mets_6e9a7000-65c0-11e6-85af-005056827e52.xml</item>
+        <item>\txt\txt_6e9a7000-65c0-11e6-85af-005056827e52_0001.txt</item>
+        <item>\txt\txt_6e9a7000-65c0-11e6-85af-005056827e52_0002.txt</item>
+        <item>\txt\txt_6e9a7000-65c0-11e6-85af-005056827e52_0003.txt</item>
+        <item>\md5_6e9a7000-65c0-11e6-85af-005056827e52.md5</item>
+        <item>\mastercopy\mc_6e9a7000-65c0-11e6-85af-005056827e52_0001.jp2</item>
+        <item>\mastercopy\mc_6e9a7000-65c0-11e6-85af-005056827e52_0002.jp2</item>
+        <item>\mastercopy\mc_6e9a7000-65c0-11e6-85af-005056827e52_0003.jp2</item>
+        <item>\info_6e9a7000-65c0-11e6-85af-005056827e52.xml</item>
+        <item>\amdsec\amd_mets_6e9a7000-65c0-11e6-85af-005056827e52_0001.xml</item>
+        <item>\amdsec\amd_mets_6e9a7000-65c0-11e6-85af-005056827e52_0002.xml</item>
+        <item>\amdsec\amd_mets_6e9a7000-65c0-11e6-85af-005056827e52_0003.xml</item>
+        <item>\alto\alto_6e9a7000-65c0-11e6-85af-005056827e52_0001.xml</item>
+        <item>\alto\alto_6e9a7000-65c0-11e6-85af-005056827e52_0002.xml</item>
+        <item>\alto\alto_6e9a7000-65c0-11e6-85af-005056827e52_0003.xml</item>
+    </itemlist>
+    <checksum checksum="d2d9c40780e7953c4aafcc05ad687422" type="MD5">md5_6e9a7000-65c0-11e6-85af-005056827e52.md5</checksum>
+</info>
