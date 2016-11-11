@@ -1029,7 +1029,7 @@
             </validation>
         </rule>
 
-        <rule name="DC_IDENTIFIERS_NO_DUPLICATES_WITHIN_DMDSEC" level="ERROR">
+        <rule name="DC_IDENTIFIERS_NO_DUPLICATES_ACROSS_DMDSECS" level="ERROR">
             <description>Identifikátory napříš Dublin Core záznamech by měly být unikátní.
                 Neměly by se tedy objevit dva přesně stejné identifikátory, ani dva identifikátory stejného typu ale
                 různé hodnoty.

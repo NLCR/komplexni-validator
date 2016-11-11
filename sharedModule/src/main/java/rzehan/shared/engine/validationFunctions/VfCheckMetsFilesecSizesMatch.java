@@ -8,10 +8,7 @@ import rzehan.shared.engine.Engine;
 import rzehan.shared.engine.Utils;
 import rzehan.shared.engine.ValueEvaluation;
 import rzehan.shared.engine.ValueType;
-import rzehan.shared.engine.exceptions.ContractException;
-import rzehan.shared.engine.exceptions.InvalidPathException;
-import rzehan.shared.engine.exceptions.InvalidXPathExpressionException;
-import rzehan.shared.engine.exceptions.XmlParsingException;
+import rzehan.shared.engine.exceptions.*;
 
 import javax.xml.xpath.XPathConstants;
 import javax.xml.xpath.XPathExpression;
@@ -42,29 +39,31 @@ public class VfCheckMetsFilesecSizesMatch extends ValidationFunction {
     public ValidationResult validate() {
         try {
             checkContractCompliance();
+
+            ValueEvaluation paramMetsFileEval = valueParams.getParams(PARAM_METS_FILE).get(0).getEvaluation();
+            File metsFile = (File) paramMetsFileEval.getData();
+            if (metsFile == null) {
+                return invalidValueParamNull(PARAM_METS_FILE, paramMetsFileEval);
+            } else if (metsFile.isDirectory()) {
+                return invalidFileIsDir(metsFile);
+            } else if (!metsFile.canRead()) {
+                return invalidCannotReadDir(metsFile);
+            }
+
+            ValueEvaluation paramPspDirEval = valueParams.getParams(PARAM_PSP_DIR).get(0).getEvaluation();
+            File pspDir = (File) paramPspDirEval.getData();
+            if (pspDir == null) {
+                return invalidValueParamNull(PARAM_PSP_DIR, paramPspDirEval);
+            } else if (!pspDir.isDirectory()) {
+                return invalidFileIsNotDir(pspDir);
+            }
+
+            return validate(pspDir, metsFile);
         } catch (ContractException e) {
             return invalidContractNotMet(e);
+        } catch (Throwable e) {
+            return invalidUnexpectedError(e);
         }
-
-        ValueEvaluation paramMetsFileEval = valueParams.getParams(PARAM_METS_FILE).get(0).getEvaluation();
-        File metsFile = (File) paramMetsFileEval.getData();
-        if (metsFile == null) {
-            return invalidValueParamNull(PARAM_METS_FILE, paramMetsFileEval);
-        } else if (metsFile.isDirectory()) {
-            return invalidFileIsDir(metsFile);
-        } else if (!metsFile.canRead()) {
-            return invalidCannotReadDir(metsFile);
-        }
-
-        ValueEvaluation paramPspDirEval = valueParams.getParams(PARAM_PSP_DIR).get(0).getEvaluation();
-        File pspDir = (File) paramPspDirEval.getData();
-        if (pspDir == null) {
-            return invalidValueParamNull(PARAM_PSP_DIR, paramPspDirEval);
-        } else if (!pspDir.isDirectory()) {
-            return invalidFileIsNotDir(pspDir);
-        }
-
-        return validate(pspDir, metsFile);
     }
 
     private ValidationResult validate(File pspdir, File metsFile) {
@@ -86,8 +85,6 @@ public class VfCheckMetsFilesecSizesMatch extends ValidationFunction {
             return invalid(e.getMessage());
         } catch (SizeDifferenceException e) {
             return invalid(e.getMessage());
-        } catch (Throwable e) {
-            return invalid("neočekávaná chyba: " + e.getMessage());
         }
     }
 
@@ -99,12 +96,6 @@ public class VfCheckMetsFilesecSizesMatch extends ValidationFunction {
         long sizeComputed = file.length();
         if (sizeComputed != sizeExpected) {
             throw new SizeDifferenceException(String.format("uvedená velikost (%d B) se liší od zjištěné velikosti (%d B) souboru %s", sizeExpected, sizeComputed, file.getAbsolutePath()));
-        }
-    }
-
-    public static class SizeDifferenceException extends Exception {
-        public SizeDifferenceException(String message) {
-            super(message);
         }
     }
 

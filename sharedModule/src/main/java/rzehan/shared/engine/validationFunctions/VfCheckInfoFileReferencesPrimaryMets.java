@@ -38,27 +38,29 @@ public class VfCheckInfoFileReferencesPrimaryMets extends ValidationFunction {
     public ValidationResult validate() {
         try {
             checkContractCompliance();
+
+            ValueEvaluation paramInfoFile = valueParams.getParams(PARAM_INFO_FILE).get(0).getEvaluation();
+            File infoFile = (File) paramInfoFile.getData();
+            if (infoFile == null) {
+                return invalidValueParamNull(PARAM_INFO_FILE, paramInfoFile);
+            } else if (infoFile.isDirectory()) {
+                return invalidFileIsDir(infoFile);
+            } else if (!infoFile.canRead()) {
+                return invalidCannotReadDir(infoFile);
+            }
+
+            ValueEvaluation paramPrimaryMetsFile = valueParams.getParams(PARAM_PRIMARY_METS_FILE).get(0).getEvaluation();
+            File primaryMetsFile = (File) paramPrimaryMetsFile.getData();
+            if (primaryMetsFile == null) {
+                return invalidValueParamNull(PARAM_PRIMARY_METS_FILE, paramPrimaryMetsFile);
+            }
+
+            return validate(infoFile, primaryMetsFile);
         } catch (ContractException e) {
             return invalidContractNotMet(e);
+        } catch (Throwable e) {
+            return invalidUnexpectedError(e);
         }
-
-        ValueEvaluation paramInfoFile = valueParams.getParams(PARAM_INFO_FILE).get(0).getEvaluation();
-        File infoFile = (File) paramInfoFile.getData();
-        if (infoFile == null) {
-            return invalidValueParamNull(PARAM_INFO_FILE, paramInfoFile);
-        } else if (infoFile.isDirectory()) {
-            return invalidFileIsDir(infoFile);
-        } else if (!infoFile.canRead()) {
-            return invalidCannotReadDir(infoFile);
-        }
-
-        ValueEvaluation paramPrimaryMetsFile = valueParams.getParams(PARAM_PRIMARY_METS_FILE).get(0).getEvaluation();
-        File primaryMetsFile = (File) paramPrimaryMetsFile.getData();
-        if (primaryMetsFile == null) {
-            return invalidValueParamNull(PARAM_PRIMARY_METS_FILE, paramPrimaryMetsFile);
-        }
-
-        return validate(infoFile, primaryMetsFile);
     }
 
     private ValidationResult validate(File infoFile, File primaryMetsFile) {
@@ -79,8 +81,6 @@ public class VfCheckInfoFileReferencesPrimaryMets extends ValidationFunction {
             return invalid(e.getMessage());
         } catch (XPathExpressionException e) {
             return invalid(e.getMessage());
-        } catch (Throwable e) {
-            return invalid("neočekávaná chyba: " + e.getMessage());
         }
     }
 

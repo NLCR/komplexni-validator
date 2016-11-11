@@ -41,39 +41,41 @@ public class VfCheckXmlIsValidByXsd extends ValidationFunction {
     public ValidationResult validate() {
         try {
             checkContractCompliance();
+
+            ValueEvaluation paramXmlFile = valueParams.getParams(PARAM_XML_FILE).get(0).getEvaluation();
+            File xmlFile = (File) paramXmlFile.getData();
+            if (xmlFile == null) {
+                return invalidValueParamNull(PARAM_XML_FILE, paramXmlFile);
+            } else if (!xmlFile.exists()) {
+                return invalidFileDoesNotExist(xmlFile);
+            } else if (xmlFile.isDirectory()) {
+                return invalidFileIsDir(xmlFile);
+            } else if (!xmlFile.canRead()) {
+                return invalidCannotReadFile(xmlFile);
+            }
+
+            ValueEvaluation paramXsdFile = valueParams.getParams(PARAM_XSD_FILE).get(0).getEvaluation();
+            File xsdFile = (File) paramXsdFile.getData();
+            if (xsdFile == null) {
+            } else if (!xsdFile.exists()) {
+                return invalidFileDoesNotExist(xsdFile);
+            } else if (xsdFile.isDirectory()) {
+                return invalidFileIsDir(xsdFile);
+            } else if (!xsdFile.canRead()) {
+                return invalidCannotReadFile(xsdFile);
+            }
+
+            return validate(xmlFile, xsdFile);
         } catch (ContractException e) {
             return invalidContractNotMet(e);
+        } catch (Throwable e) {
+            return invalidUnexpectedError(e);
         }
-
-        ValueEvaluation paramXmlFile = valueParams.getParams(PARAM_XML_FILE).get(0).getEvaluation();
-        File xmlFile = (File) paramXmlFile.getData();
-        if (xmlFile == null) {
-            return invalidValueParamNull(PARAM_XML_FILE, paramXmlFile);
-        } else if (!xmlFile.exists()) {
-            return invalidFileDoesNotExist(xmlFile);
-        } else if (xmlFile.isDirectory()) {
-            return invalidFileIsDir(xmlFile);
-        } else if (!xmlFile.canRead()) {
-            return invalidCannotReadFile(xmlFile);
-        }
-
-        ValueEvaluation paramXsdFile = valueParams.getParams(PARAM_XSD_FILE).get(0).getEvaluation();
-        File xsdFile = (File) paramXsdFile.getData();
-        if (xsdFile == null) {
-        } else if (!xsdFile.exists()) {
-            return invalidFileDoesNotExist(xsdFile);
-        } else if (xsdFile.isDirectory()) {
-            return invalidFileIsDir(xsdFile);
-        } else if (!xsdFile.canRead()) {
-            return invalidCannotReadFile(xsdFile);
-        }
-
-        return validate(xmlFile, xsdFile);
     }
 
     private ValidationResult validate(File xmlFileF, File xsdFile) {
         try {
-            //TODO: mozna namespacy
+            //TODO: mozna obe xml tahat z engine.getXml()
             Source xmlFile = new StreamSource(xmlFileF);
             SchemaFactory schemaFactory = SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
             Schema schema = schemaFactory.newSchema(xsdFile);

@@ -45,6 +45,14 @@ public abstract class EvaluationFunction implements Function {
         return new ValueEvaluation(null, String.format("%s: nesplněn kontrakt vyhodnocovací funkce: %s", getName(), e.getMessage()));
     }
 
+    ValueEvaluation errorResultUnexpectedError(Throwable e) {
+        return new ValueEvaluation(null, String.format("nečekaná chyba: %s", e.getMessage()));
+    }
+
+    ValueEvaluation errorResult(Exception e) {
+        return new ValueEvaluation(null, e.getMessage());
+    }
+
     ValueEvaluation errorResultParamNull(String paramName, ValueEvaluation paramEvaluation) {
         return new ValueEvaluation(null, String.format("%s: neznámá hodnota parametru '%s': %s", getName(), paramName, paramEvaluation.getErrorMessage()));
     }

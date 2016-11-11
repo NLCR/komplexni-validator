@@ -7,6 +7,7 @@ import rzehan.shared.engine.Engine;
 import rzehan.shared.engine.ValueEvaluation;
 import rzehan.shared.engine.ValueType;
 import rzehan.shared.engine.exceptions.ContractException;
+import rzehan.shared.engine.exceptions.InvalidDataException;
 import rzehan.shared.engine.exceptions.InvalidXPathExpressionException;
 import rzehan.shared.engine.exceptions.XmlParsingException;
 
@@ -44,17 +45,26 @@ public class VfCheckSecondaryMetsFilesecContainsAllFilegroups extends Validation
             if (files == null) {
                 return invalidValueParamNull(PARAM_PRIMARY_METS_FILES, paramEvaluation);
             }
+
+            return validate(files);
+        } catch (ContractException e) {
+            return invalidContractNotMet(e);
+        } catch (Throwable e) {
+            return invalidUnexpectedError(e);
+        }
+    }
+
+    private ValidationResult validate(List<File> files) {
+        try {
             for (File file : files) {
                 if (file.isDirectory()) {
                     return invalidFileIsDir(file);
                 } else if (!file.canRead()) {
                     return invalidCannotReadDir(file);
                 }
-                validate(file);
+                checkFileValid(file);
             }
             return valid();
-        } catch (ContractException e) {
-            return invalidContractNotMet(e);
         } catch (InvalidXPathExpressionException e) {
             return invalid(e.getMessage());
         } catch (XPathExpressionException e) {
@@ -63,12 +73,10 @@ public class VfCheckSecondaryMetsFilesecContainsAllFilegroups extends Validation
             return invalid(e.getMessage());
         } catch (InvalidDataException e) {
             return invalid(e.getMessage());
-        } catch (Throwable e) {
-            return invalid("neočekávaná chyba: " + e.getMessage());
         }
     }
 
-    private void validate(File file) throws InvalidDataException, XPathExpressionException, InvalidXPathExpressionException, XmlParsingException {
+    private void checkFileValid(File file) throws XmlParsingException, InvalidDataException, XPathExpressionException, InvalidXPathExpressionException {
         Document doc = engine.getXmlDocument(file);
         checkFileGroupOk(doc, "MC_IMGGRP", "Images");
         checkFileGroupOk(doc, "UC_IMGGRP", "Images");
@@ -96,12 +104,6 @@ public class VfCheckSecondaryMetsFilesecContainsAllFilegroups extends Validation
                 throw new InvalidDataException(String.format(
                         "element mets:fileGrp s atributem ID=\"%s\" obsahuje nepovolenou hodnotu atributu USE: '%s' namísto očekávané '%s'", id, useFound, useExpected));
             }
-        }
-    }
-
-    public static class InvalidDataException extends Exception {
-        public InvalidDataException(String message) {
-            super(message);
         }
     }
 

@@ -66,7 +66,7 @@ public class VfCheckNoDuplicateIdentifiers extends ValidationFunction {
         } catch (ContractException e) {
             return invalidContractNotMet(e);
         } catch (Throwable e) {
-            return invalid("neočekávaná chyba: " + e.getMessage());
+            return invalidUnexpectedError(e);
         }
     }
 

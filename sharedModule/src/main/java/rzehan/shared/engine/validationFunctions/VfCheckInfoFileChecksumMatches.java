@@ -37,32 +37,33 @@ public class VfCheckInfoFileChecksumMatches extends ValidationFunction {
     public ValidationResult validate() {
         try {
             checkContractCompliance();
+
+            ValueEvaluation paramInfoFile = valueParams.getParams(PARAM_INFO_FILE).get(0).getEvaluation();
+            File infoFile = (File) paramInfoFile.getData();
+            if (infoFile == null) {
+                return invalidValueParamNull(PARAM_INFO_FILE, paramInfoFile);
+            } else if (infoFile.isDirectory()) {
+                return invalidFileIsDir(infoFile);
+            } else if (!infoFile.canRead()) {
+                return invalidCannotReadDir(infoFile);
+            }
+
+            ValueEvaluation paramChecksumFile = valueParams.getParams(PARAM_CHECKSUM_FILE).get(0).getEvaluation();
+            File checksumFile = (File) paramChecksumFile.getData();
+            if (checksumFile == null) {
+                return invalidValueParamNull(PARAM_CHECKSUM_FILE, paramChecksumFile);
+            } else if (checksumFile.isDirectory()) {
+                return invalidFileIsDir(checksumFile);
+            } else if (!checksumFile.canRead()) {
+                return invalidCannotReadDir(checksumFile);
+            }
+
+            return validate(infoFile, checksumFile);
         } catch (ContractException e) {
             return invalidContractNotMet(e);
+        } catch (Throwable e) {
+            return invalidUnexpectedError(e);
         }
-
-        ValueEvaluation paramInfoFile = valueParams.getParams(PARAM_INFO_FILE).get(0).getEvaluation();
-        File infoFile = (File) paramInfoFile.getData();
-        if (infoFile == null) {
-            return invalidValueParamNull(PARAM_INFO_FILE, paramInfoFile);
-        } else if (infoFile.isDirectory()) {
-            return invalidFileIsDir(infoFile);
-        } else if (!infoFile.canRead()) {
-            return invalidCannotReadDir(infoFile);
-        }
-
-        ValueEvaluation paramChecksumFile = valueParams.getParams(PARAM_CHECKSUM_FILE).get(0).getEvaluation();
-        File checksumFile = (File) paramChecksumFile.getData();
-        if (checksumFile == null) {
-            return invalidValueParamNull(PARAM_CHECKSUM_FILE, paramChecksumFile);
-        } else if (checksumFile.isDirectory()) {
-            return invalidFileIsDir(checksumFile);
-        } else if (!checksumFile.canRead()) {
-            return invalidCannotReadDir(checksumFile);
-        }
-
-
-        return validate(infoFile, checksumFile);
     }
 
     private ValidationResult validate(File infoFile, File checksumFileExisting) {
@@ -96,10 +97,6 @@ public class VfCheckInfoFileChecksumMatches extends ValidationFunction {
             return invalid(String.format("cesta k souboru není zapsána korektně: '%s'", e.getPath()));
         } catch (HashComputationException e) {
             return invalid(String.format("chyba výpočtu kontrolního součtu souboru %s: %s", checksumFileExisting.getAbsolutePath(), e.getMessage()));
-        } catch (Throwable e) {
-            //TODO: tohle u absolutne kazdeho pravidla, muze byt nejake xml nevalidni, tak at spadne jenom pravidlo, ne vsechno
-            //plati pro validacni i vyhodnocovaci pravidla
-            return invalid("neočekávaná chyba: " + e.getMessage());
         }
     }
 

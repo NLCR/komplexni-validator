@@ -41,22 +41,24 @@ public class EfGetIdentifiersFromInfoFile extends EvaluationFunction {
     public ValueEvaluation evaluate() {
         try {
             checkContractCompliance();
+
+            ValueEvaluation paramInfoFile = valueParams.getParams(PARAM_INFO_FILE).get(0).getEvaluation();
+            File infoFile = (File) paramInfoFile.getData();
+            if (infoFile == null) {
+                return errorResultParamNull(PARAM_INFO_FILE, paramInfoFile);
+            } else if (!infoFile.exists()) {
+                return errorResultFileDoesNotExist(infoFile);
+            } else if (infoFile.isDirectory()) {
+                return errorResultFileIsDir(infoFile);
+            } else if (!infoFile.canRead()) {
+                return errorResultCannotReadFile(infoFile);
+            } else {
+                return evaluate(infoFile);
+            }
         } catch (ContractException e) {
             return errorResultContractNotMet(e);
-        }
-
-        ValueEvaluation paramInfoFile = valueParams.getParams(PARAM_INFO_FILE).get(0).getEvaluation();
-        File infoFile = (File) paramInfoFile.getData();
-        if (infoFile == null) {
-            return errorResultParamNull(PARAM_INFO_FILE, paramInfoFile);
-        } else if (!infoFile.exists()) {
-            return errorResultFileDoesNotExist(infoFile);
-        } else if (infoFile.isDirectory()) {
-            return errorResultFileIsDir(infoFile);
-        } else if (!infoFile.canRead()) {
-            return errorResultCannotReadFile(infoFile);
-        } else {
-            return evaluate(infoFile);
+        } catch (Throwable e) {
+            return errorResultUnexpectedError(e);
         }
     }
 
@@ -74,13 +76,11 @@ public class EfGetIdentifiersFromInfoFile extends EvaluationFunction {
             }
             return okResult(identifiers);
         } catch (XmlParsingException e) {
-            return errorResult(e.getMessage());
+            return errorResult(e);
         } catch (InvalidXPathExpressionException e) {
-            return errorResult(e.getMessage());
+            return errorResult(e);
         } catch (XPathExpressionException e) {
-            return errorResult(e.getMessage());
-        } catch (Throwable e) {
-            return errorResult(e.getMessage());
+            return errorResult(e);
         }
     }
 }

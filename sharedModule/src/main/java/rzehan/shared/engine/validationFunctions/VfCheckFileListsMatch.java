@@ -35,53 +35,49 @@ public class VfCheckFileListsMatch extends ValidationFunction {
     public ValidationResult validate() {
         try {
             checkContractCompliance();
+
+            ValueEvaluation paramFilesExpected = valueParams.getParams(PARAM_FILES_EXPECTED).get(0).getEvaluation();
+            List<File> filesExpected = (List<File>) paramFilesExpected.getData();
+            if (filesExpected == null) {
+                return invalidValueParamNull(PARAM_FILES_EXPECTED, paramFilesExpected);
+            }
+
+            ValueEvaluation paramFilesFound = valueParams.getParams(PARAM_FILES_FOUND).get(0).getEvaluation();
+            List<File> filesFound = (List<File>) paramFilesFound.getData();
+            if (filesFound == null) {
+                return invalidValueParamNull(PARAM_FILES_FOUND, paramFilesFound);
+            }
+
+            return validate(filesExpected, filesFound);
         } catch (ContractException e) {
             return invalidContractNotMet(e);
+        } catch (Throwable e) {
+            return invalidUnexpectedError(e);
         }
-
-        ValueEvaluation paramFilesExpected = valueParams.getParams(PARAM_FILES_EXPECTED).get(0).getEvaluation();
-        List<File> filesExpected = (List<File>) paramFilesExpected.getData();
-        if (filesExpected == null) {
-            return invalidValueParamNull(PARAM_FILES_EXPECTED, paramFilesExpected);
-        }
-
-        ValueEvaluation paramFilesFound = valueParams.getParams(PARAM_FILES_FOUND).get(0).getEvaluation();
-        List<File> filesFound = (List<File>) paramFilesFound.getData();
-        if (filesFound == null) {
-            return invalidValueParamNull(PARAM_FILES_FOUND, paramFilesFound);
-        }
-
-        return validate(filesExpected, filesFound);
-
-
     }
 
     private ValidationResult validate(List<File> filesExpectedList, List<File> filesFoundList) {
-        try {
-            Set<File> filesExpectedSet = new HashSet<>(filesExpectedList.size());
-            for (File file : filesExpectedList) {
-                filesExpectedSet.add(file.getAbsoluteFile());
-            }
-            Set<File> filesFoundSet = new HashSet<>(filesFoundList.size());
-            for (File file : filesFoundList) {
-                filesFoundSet.add(file.getAbsoluteFile());
-            }
-
-            if (!filesExpectedSet.equals(filesFoundSet)) {//something is different
-                for (File foundFile : filesFoundSet) {
-                    if (!filesExpectedSet.contains(foundFile)) {
-                        return invalid(String.format("nalezen neočekávaný soubor %s", foundFile.getAbsolutePath()));
-                    }
-                }
-                for (File expectedFile : filesExpectedSet) {
-                    if (!filesFoundSet.contains(expectedFile)) {
-                        return invalid(String.format("nenalezen očekávaný soubor %s", expectedFile.getAbsolutePath()));
-                    }
-                }
-            }
-            return valid();
-        } catch (Throwable e) {
-            return invalid("neočekávaná chyba: " + e.getMessage());
+        Set<File> filesExpectedSet = new HashSet<>(filesExpectedList.size());
+        for (File file : filesExpectedList) {
+            filesExpectedSet.add(file.getAbsoluteFile());
         }
+        Set<File> filesFoundSet = new HashSet<>(filesFoundList.size());
+        for (File file : filesFoundList) {
+            filesFoundSet.add(file.getAbsoluteFile());
+        }
+
+        if (!filesExpectedSet.equals(filesFoundSet)) {//something is different
+            for (File foundFile : filesFoundSet) {
+                if (!filesExpectedSet.contains(foundFile)) {
+                    return invalid(String.format("nalezen neočekávaný soubor %s", foundFile.getAbsolutePath()));
+                }
+            }
+            for (File expectedFile : filesExpectedSet) {
+                if (!filesFoundSet.contains(expectedFile)) {
+                    return invalid(String.format("nenalezen očekávaný soubor %s", expectedFile.getAbsolutePath()));
+                }
+            }
+        }
+        return valid();
     }
 }

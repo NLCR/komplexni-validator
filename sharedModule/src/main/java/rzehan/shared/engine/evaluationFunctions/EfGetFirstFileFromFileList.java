@@ -31,18 +31,20 @@ public class EfGetFirstFileFromFileList extends EvaluationFunction {
     public ValueEvaluation evaluate() {
         try {
             checkContractCompliance();
+
+            ValueEvaluation paramFiles = valueParams.getParams(PARAM_FILE_LIST).get(0).getEvaluation();
+            List<File> files = (List<File>) paramFiles.getData();
+            if (files == null) {
+                return errorResultParamNull(PARAM_FILE_LIST, paramFiles);
+            } else if (files.isEmpty()) {
+                return errorResult("seznam souborů je prázdný");
+            } else {
+                return okResult(files.get(0));
+            }
         } catch (ContractException e) {
             return errorResultContractNotMet(e);
-        }
-
-        ValueEvaluation paramFiles = valueParams.getParams(PARAM_FILE_LIST).get(0).getEvaluation();
-        List<File> files = (List<File>) paramFiles.getData();
-        if (files == null) {
-            return errorResultParamNull(PARAM_FILE_LIST, paramFiles);
-        } else if (files.isEmpty()) {
-            return errorResult("seznam souborů je prázdný");
-        } else {
-            return okResult(files.get(0));
+        } catch (Throwable e) {
+            return errorResultUnexpectedError(e);
         }
     }
 }

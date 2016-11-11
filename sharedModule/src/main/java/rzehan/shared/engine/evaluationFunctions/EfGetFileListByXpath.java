@@ -7,6 +7,7 @@ import rzehan.shared.engine.Utils;
 import rzehan.shared.engine.ValueEvaluation;
 import rzehan.shared.engine.ValueType;
 import rzehan.shared.engine.exceptions.ContractException;
+import rzehan.shared.engine.exceptions.InvalidPathException;
 import rzehan.shared.engine.exceptions.InvalidXPathExpressionException;
 import rzehan.shared.engine.exceptions.XmlParsingException;
 
@@ -44,41 +45,43 @@ public class EfGetFileListByXpath extends EvaluationFunction {
     public ValueEvaluation evaluate() {
         try {
             checkContractCompliance();
+
+            ValueEvaluation paramRootDirEval = valueParams.getParams(PARAM_PSP_ROOT_DIR).get(0).getEvaluation();
+            File rootDir = (File) paramRootDirEval.getData();
+            if (rootDir == null) {
+                return errorResultParamNull(PARAM_PSP_ROOT_DIR, paramRootDirEval);
+            } else if (!rootDir.exists()) {
+                return errorResultFileDoesNotExist(rootDir);
+            } else if (!rootDir.isDirectory()) {
+                return errorResultFileIsNotDir(rootDir);
+            }
+
+            ValueEvaluation paramXmlFile = valueParams.getParams(PARAM_XML_FILE).get(0).getEvaluation();
+            File xmlFile = (File) paramXmlFile.getData();
+            if (xmlFile == null) {
+                return errorResultParamNull(PARAM_XML_FILE, paramXmlFile);
+            } else if (!xmlFile.exists()) {
+                return errorResultFileDoesNotExist(xmlFile);
+            } else if (xmlFile.isDirectory()) {
+                return errorResultFileIsDir(xmlFile);
+            } else if (!xmlFile.canRead()) {
+                return errorResultCannotReadFile(xmlFile);
+            }
+
+            ValueEvaluation paramXpath = valueParams.getParams(PARAM_XPATH).get(0).getEvaluation();
+            String xpathStr = (String) paramXpath.getData();
+            if (xpathStr == null) {
+                return errorResultParamNull(PARAM_XPATH, paramXpath);
+            } else if (xpathStr.isEmpty()) {
+                return errorResult(String.format("hodnota parametru %s je prázdná", PARAM_XPATH));
+            }
+
+            return evaluate(rootDir, xmlFile, xpathStr);
         } catch (ContractException e) {
             return errorResultContractNotMet(e);
+        } catch (Throwable e) {
+            return errorResultUnexpectedError(e);
         }
-
-        ValueEvaluation paramRootDirEval = valueParams.getParams(PARAM_PSP_ROOT_DIR).get(0).getEvaluation();
-        File rootDir = (File) paramRootDirEval.getData();
-        if (rootDir == null) {
-            return errorResultParamNull(PARAM_PSP_ROOT_DIR, paramRootDirEval);
-        } else if (!rootDir.exists()) {
-            return errorResultFileDoesNotExist(rootDir);
-        } else if (!rootDir.isDirectory()) {
-            return errorResultFileIsNotDir(rootDir);
-        }
-
-        ValueEvaluation paramXmlFile = valueParams.getParams(PARAM_XML_FILE).get(0).getEvaluation();
-        File xmlFile = (File) paramXmlFile.getData();
-        if (xmlFile == null) {
-            return errorResultParamNull(PARAM_XML_FILE, paramXmlFile);
-        } else if (!xmlFile.exists()) {
-            return errorResultFileDoesNotExist(xmlFile);
-        } else if (xmlFile.isDirectory()) {
-            return errorResultFileIsDir(xmlFile);
-        } else if (!xmlFile.canRead()) {
-            return errorResultCannotReadFile(xmlFile);
-        }
-
-        ValueEvaluation paramXpath = valueParams.getParams(PARAM_XPATH).get(0).getEvaluation();
-        String xpathStr = (String) paramXpath.getData();
-        if (xpathStr == null) {
-            return errorResultParamNull(PARAM_XPATH, paramXpath);
-        } else if (xpathStr.isEmpty()) {
-            return errorResult(String.format("hodnota parametru %s je prázdná", PARAM_XPATH));
-        }
-
-        return evaluate(rootDir, xmlFile, xpathStr);
     }
 
     private ValueEvaluation evaluate(File rootDir, File xmlFile, String xpathStr) {
@@ -95,13 +98,13 @@ public class EfGetFileListByXpath extends EvaluationFunction {
             }
             return okResult(fileList);
         } catch (XPathExpressionException e) {
-            return errorResult(String.format("Neplatný xpath výraz '%s': %s", xmlFile.getAbsolutePath(), e.getMessage()));
+            return errorResult(String.format("neplatný xpath výraz '%s': %s", xmlFile.getAbsolutePath(), e.getMessage()));
         } catch (XmlParsingException e) {
-            return errorResult(e.getMessage());
+            return errorResult(e);
         } catch (InvalidXPathExpressionException e) {
-            return errorResult(e.getMessage());
-        } catch (Throwable e) {
-            return errorResult(String.format("Nečekaná chyba: %s", e.getMessage()));
+            return errorResult(e);
+        } catch (InvalidPathException e) {
+            return errorResult(e);
         }
     }
 

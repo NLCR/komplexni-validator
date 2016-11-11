@@ -41,33 +41,35 @@ public class VfCheckNoOtherFilesInDir extends ValidationFunction {
     public ValidationResult validate() {
         try {
             checkContractCompliance();
+
+            ValueEvaluation paramRootDir = valueParams.getParams(PARAM_ROOT_DIR).get(0).getEvaluation();
+            File rootDir = (File) paramRootDir.getData();
+            if (rootDir == null) {
+                return invalidValueParamNull(PARAM_ROOT_DIR, paramRootDir);
+            } else if (!rootDir.isDirectory()) {
+                return invalidFileIsNotDir(rootDir);
+            } else if (!rootDir.canRead()) {
+                return invalidCannotReadDir(rootDir);
+            }
+
+            List<File> filesInDir = listAbsoluteFiles(rootDir);
+            try {
+                Set<File> filesExpected = mergeAbsolutFilesFromParams();
+                for (File file : filesInDir) {
+                    if (!filesExpected.contains(file)) {
+                        return invalid(String.format("nalezen nečekaný soubor %s v adresáři %s", file.getName(), rootDir.getAbsolutePath()));
+                    }
+                }
+            } catch (EmptyParamEvaluationException e) {
+                return invalidValueParamNull(e.getParamName(), e.getEvaluation());
+            }
+
+            return valid();
         } catch (ContractException e) {
             return invalidContractNotMet(e);
+        } catch (Throwable e) {
+            return invalidUnexpectedError(e);
         }
-
-        ValueEvaluation paramRootDir = valueParams.getParams(PARAM_ROOT_DIR).get(0).getEvaluation();
-        File rootDir = (File) paramRootDir.getData();
-        if (rootDir == null) {
-            return invalidValueParamNull(PARAM_ROOT_DIR, paramRootDir);
-        } else if (!rootDir.isDirectory()) {
-            return invalidFileIsNotDir(rootDir);
-        } else if (!rootDir.canRead()) {
-            return invalidCannotReadDir(rootDir);
-        }
-
-        List<File> filesInDir = listAbsoluteFiles(rootDir);
-        try {
-            Set<File> filesExpected = mergeAbsolutFilesFromParams();
-            for (File file : filesInDir) {
-                if (!filesExpected.contains(file)) {
-                    return invalid(String.format("nalezen nečekaný soubor %s v adresáři %s", file.getName(), rootDir.getAbsolutePath()));
-                }
-            }
-        } catch (EmptyParamEvaluationException e) {
-            return invalidValueParamNull(e.getParamName(), e.getEvaluation());
-        }
-
-        return valid();
     }
 
     private List<File> listAbsoluteFiles(File rootDir) {

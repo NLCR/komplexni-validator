@@ -39,31 +39,33 @@ public class EfGetStringByXpath extends EvaluationFunction {
     public ValueEvaluation evaluate() {
         try {
             checkContractCompliance();
+
+            ValueEvaluation paramXmlFile = valueParams.getParams(PARAM_XML_FILE).get(0).getEvaluation();
+            File xmlFile = (File) paramXmlFile.getData();
+            if (xmlFile == null) {
+                return errorResultParamNull(PARAM_XML_FILE, paramXmlFile);
+            } else if (!xmlFile.exists()) {
+                return errorResultFileDoesNotExist(xmlFile);
+            } else if (xmlFile.isDirectory()) {
+                return errorResultFileIsDir(xmlFile);
+            } else if (!xmlFile.canRead()) {
+                return errorResultCannotReadFile(xmlFile);
+            }
+
+            ValueEvaluation paramXpath = valueParams.getParams(PARAM_XPATH).get(0).getEvaluation();
+            String xpathStr = (String) paramXpath.getData();
+            if (xpathStr == null) {
+                return errorResultParamNull(PARAM_XPATH, paramXpath);
+            } else if (xpathStr.isEmpty()) {
+                return errorResult(String.format("hodnota parametru %s je prázdná", PARAM_XPATH));
+            }
+
+            return evaluate(xmlFile, xpathStr);
         } catch (ContractException e) {
             return errorResultContractNotMet(e);
+        } catch (Throwable e) {
+            return errorResultUnexpectedError(e);
         }
-
-        ValueEvaluation paramXmlFile = valueParams.getParams(PARAM_XML_FILE).get(0).getEvaluation();
-        File xmlFile = (File) paramXmlFile.getData();
-        if (xmlFile == null) {
-            return errorResultParamNull(PARAM_XML_FILE, paramXmlFile);
-        } else if (!xmlFile.exists()) {
-            return errorResultFileDoesNotExist(xmlFile);
-        } else if (xmlFile.isDirectory()) {
-            return errorResultFileIsDir(xmlFile);
-        } else if (!xmlFile.canRead()) {
-            return errorResultCannotReadFile(xmlFile);
-        }
-
-        ValueEvaluation paramXpath = valueParams.getParams(PARAM_XPATH).get(0).getEvaluation();
-        String xpathStr = (String) paramXpath.getData();
-        if (xpathStr == null) {
-            return errorResultParamNull(PARAM_XPATH, paramXpath);
-        } else if (xpathStr.isEmpty()) {
-            return errorResult(String.format("hodnota parametru %s je prázdná", PARAM_XPATH));
-        }
-
-        return evaluate(xmlFile, xpathStr);
     }
 
     private ValueEvaluation evaluate(File file, String xpathStr) {
@@ -73,13 +75,11 @@ public class EfGetStringByXpath extends EvaluationFunction {
             String string = (String) xPathExpression.evaluate(doc, XPathConstants.STRING);
             return okResult(string);
         } catch (XPathExpressionException e) {
-            return errorResult(String.format("Neplatný xpath výraz '%s': %s", file.getAbsolutePath(), e.getMessage()));
+            return errorResult(String.format("neplatný xpath výraz '%s': %s", file.getAbsolutePath(), e.getMessage()));
         } catch (XmlParsingException e) {
-            return errorResult(e.getMessage());
+            return errorResult(e);
         } catch (InvalidXPathExpressionException e) {
-            return errorResult(e.getMessage());
-        } catch (Throwable e) {
-            return errorResult(String.format("Nečekaná chyba: %s", e.getMessage()));
+            return errorResult(e);
         }
     }
 

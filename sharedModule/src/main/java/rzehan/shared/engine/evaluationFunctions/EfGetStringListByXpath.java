@@ -65,7 +65,7 @@ public class EfGetStringListByXpath extends EvaluationFunction {
         } catch (ContractException e) {
             return errorResultContractNotMet(e);
         } catch (Throwable e) {
-            return errorResult(String.format("Nečekaná chyba: %s", e.getMessage()));
+            return errorResultUnexpectedError(e);
         }
     }
 
@@ -82,11 +82,11 @@ public class EfGetStringListByXpath extends EvaluationFunction {
             }
             return okResult(list);
         } catch (XPathExpressionException e) {
-            return errorResult(String.format("Neplatný xpath výraz '%s': %s", xmlFile.getAbsolutePath(), e.getMessage()));
+            return errorResult(String.format("neplatný xpath výraz '%s': %s", xmlFile.getAbsolutePath(), e.getMessage()));
         } catch (XmlParsingException e) {
-            return errorResult(e.getMessage());
+            return errorResult(e);
         } catch (InvalidXPathExpressionException e) {
-            return errorResult(e.getMessage());
+            return errorResult(e);
         }
     }
 

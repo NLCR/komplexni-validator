@@ -9,6 +9,7 @@ import rzehan.shared.engine.Utils;
 import rzehan.shared.engine.ValueEvaluation;
 import rzehan.shared.engine.ValueType;
 import rzehan.shared.engine.exceptions.ContractException;
+import rzehan.shared.engine.exceptions.InvalidPathException;
 import rzehan.shared.engine.exceptions.InvalidXPathExpressionException;
 import rzehan.shared.engine.exceptions.XmlParsingException;
 import rzehan.shared.engine.params.ValueParam;
@@ -48,47 +49,49 @@ public class VfCheckInfoFileItemlistReferencesAllFiles extends ValidationFunctio
     public ValidationResult validate() {
         try {
             checkContractCompliance();
-        } catch (ContractException e) {
-            return invalidContractNotMet(e);
-        }
 
-        ValueEvaluation paramInfoFile = valueParams.getParams(PARAM_INFO_FILE).get(0).getEvaluation();
-        File infoFile = (File) paramInfoFile.getData();
-        if (infoFile == null) {
-            return invalidValueParamNull(PARAM_INFO_FILE, paramInfoFile);
-        } else if (infoFile.isDirectory()) {
-            return invalidFileIsDir(infoFile);
-        } else if (!infoFile.canRead()) {
-            return invalidCannotReadDir(infoFile);
-        }
-
-        Set<File> expectedFiles = new HashSet<>();
-
-        List<ValueParam> fileParams = valueParams.getParams(PARAM_FILE);
-        for (ValueParam fileParam : fileParams) {
-            ValueEvaluation fileEvaluation = fileParam.getEvaluation();
-            File file = (File) fileEvaluation.getData();
-            if (file == null) {
-                return invalidValueParamNull(PARAM_FILE, fileEvaluation);
-            } else {
-                expectedFiles.add(file.getAbsoluteFile());
+            ValueEvaluation paramInfoFile = valueParams.getParams(PARAM_INFO_FILE).get(0).getEvaluation();
+            File infoFile = (File) paramInfoFile.getData();
+            if (infoFile == null) {
+                return invalidValueParamNull(PARAM_INFO_FILE, paramInfoFile);
+            } else if (infoFile.isDirectory()) {
+                return invalidFileIsDir(infoFile);
+            } else if (!infoFile.canRead()) {
+                return invalidCannotReadDir(infoFile);
             }
-        }
 
-        List<ValueParam> filesParams = valueParams.getParams(PARAM_FILES);
-        for (ValueParam fileParam : filesParams) {
-            ValueEvaluation filesEvaluation = fileParam.getEvaluation();
-            List<File> files = (List<File>) filesEvaluation.getData();
-            if (files == null) {
-                return invalidValueParamNull(PARAM_FILES, filesEvaluation);
-            } else {
-                for (File file : files) {
+            Set<File> expectedFiles = new HashSet<>();
+
+            List<ValueParam> fileParams = valueParams.getParams(PARAM_FILE);
+            for (ValueParam fileParam : fileParams) {
+                ValueEvaluation fileEvaluation = fileParam.getEvaluation();
+                File file = (File) fileEvaluation.getData();
+                if (file == null) {
+                    return invalidValueParamNull(PARAM_FILE, fileEvaluation);
+                } else {
                     expectedFiles.add(file.getAbsoluteFile());
                 }
             }
-        }
 
-        return validate(infoFile, expectedFiles);
+            List<ValueParam> filesParams = valueParams.getParams(PARAM_FILES);
+            for (ValueParam fileParam : filesParams) {
+                ValueEvaluation filesEvaluation = fileParam.getEvaluation();
+                List<File> files = (List<File>) filesEvaluation.getData();
+                if (files == null) {
+                    return invalidValueParamNull(PARAM_FILES, filesEvaluation);
+                } else {
+                    for (File file : files) {
+                        expectedFiles.add(file.getAbsoluteFile());
+                    }
+                }
+            }
+
+            return validate(infoFile, expectedFiles);
+        } catch (ContractException e) {
+            return invalidContractNotMet(e);
+        } catch (Throwable e) {
+            return invalidUnexpectedError(e);
+        }
     }
 
     private ValidationResult validate(File infoFile, Set<File> expectedFiles) {
@@ -125,8 +128,8 @@ public class VfCheckInfoFileItemlistReferencesAllFiles extends ValidationFunctio
             return invalid(e.getMessage());
         } catch (XPathExpressionException e) {
             return invalid(e.getMessage());
-        } catch (Throwable e) {
-            return invalid("neočekávaná chyba: " + e.getMessage());
+        } catch (InvalidPathException e) {
+            return invalid(e.getMessage());
         }
     }
 

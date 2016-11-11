@@ -42,8 +42,16 @@ public abstract class ValidationFunction implements Function {
         return new ValidationResult(false).withMessage(String.format("%s: %s", getName(), errorMessage));
     }
 
+    ValidationResult invalid(Exception e) {
+        return new ValidationResult(false).withMessage(e.getMessage());
+    }
+
     ValidationResult invalidContractNotMet(ContractException e) {
         return new ValidationResult(false).withMessage(String.format("%s: nesplněn kontrakt validační funkce: %s", getName(), e.getMessage()));
+    }
+
+    ValidationResult invalidUnexpectedError(Throwable e) {
+        return new ValidationResult(false).withMessage(String.format("nečekaná chyba: %s", e.getMessage()));
     }
 
     ValidationResult invalidValueParamNull(String paramName, ValueEvaluation paramEvaluation) {

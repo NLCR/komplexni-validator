@@ -36,21 +36,23 @@ public class VfCheckInfoFileItemsCountMatchesItemtotal extends ValidationFunctio
     public ValidationResult validate() {
         try {
             checkContractCompliance();
+
+            ValueEvaluation paramInfoFile = valueParams.getParams(PARAM_INFO_FILE).get(0).getEvaluation();
+            File infoFile = (File) paramInfoFile.getData();
+            if (infoFile == null) {
+                return invalidValueParamNull(PARAM_INFO_FILE, paramInfoFile);
+            } else if (infoFile.isDirectory()) {
+                return invalidFileIsDir(infoFile);
+            } else if (!infoFile.canRead()) {
+                return invalidCannotReadDir(infoFile);
+            }
+
+            return validate(infoFile);
         } catch (ContractException e) {
             return invalidContractNotMet(e);
+        } catch (Throwable e) {
+            return invalidUnexpectedError(e);
         }
-
-        ValueEvaluation paramInfoFile = valueParams.getParams(PARAM_INFO_FILE).get(0).getEvaluation();
-        File infoFile = (File) paramInfoFile.getData();
-        if (infoFile == null) {
-            return invalidValueParamNull(PARAM_INFO_FILE, paramInfoFile);
-        } else if (infoFile.isDirectory()) {
-            return invalidFileIsDir(infoFile);
-        } else if (!infoFile.canRead()) {
-            return invalidCannotReadDir(infoFile);
-        }
-
-        return validate(infoFile);
     }
 
     private ValidationResult validate(File infoFile) {
@@ -72,10 +74,6 @@ public class VfCheckInfoFileItemsCountMatchesItemtotal extends ValidationFunctio
             return invalid(e.getMessage());
         } catch (XPathExpressionException e) {
             return invalid(e.getMessage());
-        } catch (Throwable e) {
-            //TODO: tohle u absolutne kazdeho pravidla, muze byt nejake xml nevalidni, tak at spadne jenom pravidlo, ne vsechno
-            //plati pro validacni i vyhodnocovaci pravidla
-            return invalid("neočekávaná chyba: " + e.getMessage());
         }
     }
 

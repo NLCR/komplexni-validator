@@ -82,7 +82,7 @@ public class EfMergeIdentifiers extends EvaluationFunction {
         } catch (ContractException e) {
             return errorResultContractNotMet(e);
         } catch (Throwable e) {
-            return errorResult(String.format("Nečekaná chyba: %s", e.getMessage()));
+            return errorResultUnexpectedError(e);
         }
     }
 

@@ -30,23 +30,25 @@ public class EfGetProvidedFile extends EvaluationFunction {
     public ValueEvaluation evaluate() {
         try {
             checkContractCompliance();
+
+            ValueEvaluation paramFileId = valueParams.getParams(PARAM_FILE_ID).get(0).getEvaluation();
+            String fileId = (String) paramFileId.getData();
+            if (fileId == null) {
+                return errorResultParamNull(PARAM_FILE_ID, paramFileId);
+            } else if (fileId.isEmpty()) {
+                return errorResult(String.format("hodnota parametru %s je prázdná", PARAM_FILE_ID));
+            }
+
+            File file = engine.getProvidedVarsManager().getProvidedFile(fileId);
+            if (file == null) {
+                return errorResult(String.format("soubor s id %s není poskytován", fileId));
+            } else {
+                return okResult(file);
+            }
         } catch (ContractException e) {
             return errorResultContractNotMet(e);
-        }
-
-        ValueEvaluation paramFileId = valueParams.getParams(PARAM_FILE_ID).get(0).getEvaluation();
-        String fileId = (String) paramFileId.getData();
-        if (fileId == null) {
-            return errorResultParamNull(PARAM_FILE_ID, paramFileId);
-        } else if (fileId.isEmpty()) {
-            return errorResult(String.format("hodnota parametru %s je prázdná", PARAM_FILE_ID));
-        }
-
-        File file = engine.getProvidedVarsManager().getProvidedFile(fileId);
-        if (file == null) {
-            return errorResult(String.format("soubor s id %s není poskytován", fileId));
-        } else {
-            return okResult(file);
+        } catch (Throwable e) {
+            return errorResultUnexpectedError(e);
         }
     }
 

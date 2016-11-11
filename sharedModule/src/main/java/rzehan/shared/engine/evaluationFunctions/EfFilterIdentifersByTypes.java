@@ -34,23 +34,25 @@ public class EfFilterIdentifersByTypes extends EvaluationFunction {
     public ValueEvaluation evaluate() {
         try {
             checkContractCompliance();
+
+            ValueEvaluation paramIdsEval = valueParams.getParams(PARAM_IDENTIFIERS).get(0).getEvaluation();
+            List<Identifier> identifiers = (List<Identifier>) paramIdsEval.getData();
+            if (identifiers == null) {
+                return errorResultParamNull(PARAM_IDENTIFIERS, paramIdsEval);
+            }
+
+            ValueEvaluation paramTypesEval = valueParams.getParams(PARAM_TYPES).get(0).getEvaluation();
+            List<String> types = (List<String>) paramTypesEval.getData();
+            if (types == null) {
+                return errorResultParamNull(PARAM_TYPES, paramTypesEval);
+            }
+
+            return evaluate(identifiers, types);
         } catch (ContractException e) {
             return errorResultContractNotMet(e);
+        } catch (Throwable e) {
+            return errorResultUnexpectedError(e);
         }
-
-        ValueEvaluation paramIdsEval = valueParams.getParams(PARAM_IDENTIFIERS).get(0).getEvaluation();
-        List<Identifier> identifiers = (List<Identifier>) paramIdsEval.getData();
-        if (identifiers == null) {
-            return errorResultParamNull(PARAM_IDENTIFIERS, paramIdsEval);
-        }
-
-        ValueEvaluation paramTypesEval = valueParams.getParams(PARAM_TYPES).get(0).getEvaluation();
-        List<String> types = (List<String>) paramTypesEval.getData();
-        if (types == null) {
-            return errorResultParamNull(PARAM_TYPES, paramTypesEval);
-        }
-
-        return evaluate(identifiers, types);
     }
 
     protected ValueEvaluation evaluate(List<Identifier> identifiers, List<String> types) {

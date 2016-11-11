@@ -33,26 +33,28 @@ public class VfCheckFileListHasExactSize extends ValidationFunction {
     public ValidationResult validate() {
         try {
             checkContractCompliance();
+
+            ValueEvaluation paramFiles = valueParams.getParams(PARAM_FILES).get(0).getEvaluation();
+            List<File> fileList = (List<File>) paramFiles.getData();
+            if (fileList == null) {
+                return invalidValueParamNull(PARAM_FILES, paramFiles);
+            }
+
+            ValueEvaluation paramSize = valueParams.getParams(PARAM_SIZE).get(0).getEvaluation();
+            Integer expectedSize = (Integer) paramSize.getData();
+            if (expectedSize == null) {
+                return invalidValueParamNull(PARAM_SIZE, paramSize);
+            }
+
+            if (fileList.size() != expectedSize) {
+                return invalid(String.format("seznam obsahuje %d souborů namísto očekávaných %d", fileList.size(), expectedSize));
+            } else {
+                return valid();
+            }
         } catch (ContractException e) {
             return invalidContractNotMet(e);
-        }
-
-        ValueEvaluation paramFiles = valueParams.getParams(PARAM_FILES).get(0).getEvaluation();
-        List<File> fileList = (List<File>) paramFiles.getData();
-        if (fileList == null) {
-            return invalidValueParamNull(PARAM_FILES, paramFiles);
-        }
-
-        ValueEvaluation paramSize = valueParams.getParams(PARAM_SIZE).get(0).getEvaluation();
-        Integer expectedSize = (Integer) paramSize.getData();
-        if (expectedSize == null) {
-            return invalidValueParamNull(PARAM_SIZE, paramSize);
-        }
-
-        if (fileList.size() != expectedSize) {
-            return invalid(String.format("seznam obsahuje %d souborů namísto očekávaných %d", fileList.size(), expectedSize));
-        } else {
-            return valid();
+        } catch (Throwable e) {
+            return invalidUnexpectedError(e);
         }
     }
 }

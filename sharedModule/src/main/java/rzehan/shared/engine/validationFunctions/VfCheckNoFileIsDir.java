@@ -32,26 +32,28 @@ public class VfCheckNoFileIsDir extends ValidationFunction {
     public ValidationResult validate() {
         try {
             checkContractCompliance();
+
+            ValueEvaluation paramFiles = valueParams.getParams(PARAM_FILES).get(0).getEvaluation();
+            List<File> files = (List<File>) paramFiles.getData();
+            if (files == null) {
+                return invalidValueParamNull(PARAM_FILES, paramFiles);
+            }
+
+
+            for (File file : files) {
+                if (!file.exists()) {
+                    return invalidFileDoesNotExist(file);
+                } else if (file.isDirectory()) {
+                    return invalidFileIsDir(file);
+                }
+            }
+
+            return valid();
         } catch (ContractException e) {
             return invalidContractNotMet(e);
+        } catch (Throwable e) {
+            return invalidUnexpectedError(e);
         }
-
-        ValueEvaluation paramFiles = valueParams.getParams(PARAM_FILES).get(0).getEvaluation();
-        List<File> files = (List<File>) paramFiles.getData();
-        if (files == null) {
-            return invalidValueParamNull(PARAM_FILES, paramFiles);
-        }
-
-
-        for (File file : files) {
-            if (!file.exists()) {
-                return invalidFileDoesNotExist(file);
-            } else if (file.isDirectory()) {
-                return invalidFileIsDir(file);
-            }
-        }
-
-        return valid();
     }
 
 

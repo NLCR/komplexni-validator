@@ -39,29 +39,31 @@ public class VfCheckMetsFilesecChecksumsMatch extends ValidationFunction {
     public ValidationResult validate() {
         try {
             checkContractCompliance();
+
+            ValueEvaluation paramMetsFileEval = valueParams.getParams(PARAM_METS_FILE).get(0).getEvaluation();
+            File metsFile = (File) paramMetsFileEval.getData();
+            if (metsFile == null) {
+                return invalidValueParamNull(PARAM_METS_FILE, paramMetsFileEval);
+            } else if (metsFile.isDirectory()) {
+                return invalidFileIsDir(metsFile);
+            } else if (!metsFile.canRead()) {
+                return invalidCannotReadDir(metsFile);
+            }
+
+            ValueEvaluation paramPspDirEval = valueParams.getParams(PARAM_PSP_DIR).get(0).getEvaluation();
+            File pspDir = (File) paramPspDirEval.getData();
+            if (pspDir == null) {
+                return invalidValueParamNull(PARAM_PSP_DIR, paramPspDirEval);
+            } else if (!pspDir.isDirectory()) {
+                return invalidFileIsNotDir(pspDir);
+            }
+
+            return validate(pspDir, metsFile);
         } catch (ContractException e) {
             return invalidContractNotMet(e);
+        } catch (Throwable e) {
+            return invalidUnexpectedError(e);
         }
-
-        ValueEvaluation paramMetsFileEval = valueParams.getParams(PARAM_METS_FILE).get(0).getEvaluation();
-        File metsFile = (File) paramMetsFileEval.getData();
-        if (metsFile == null) {
-            return invalidValueParamNull(PARAM_METS_FILE, paramMetsFileEval);
-        } else if (metsFile.isDirectory()) {
-            return invalidFileIsDir(metsFile);
-        } else if (!metsFile.canRead()) {
-            return invalidCannotReadDir(metsFile);
-        }
-
-        ValueEvaluation paramPspDirEval = valueParams.getParams(PARAM_PSP_DIR).get(0).getEvaluation();
-        File pspDir = (File) paramPspDirEval.getData();
-        if (pspDir == null) {
-            return invalidValueParamNull(PARAM_PSP_DIR, paramPspDirEval);
-        } else if (!pspDir.isDirectory()) {
-            return invalidFileIsNotDir(pspDir);
-        }
-
-        return validate(pspDir, metsFile);
     }
 
     private ValidationResult validate(File pspdir, File metsFile) {
@@ -85,8 +87,6 @@ public class VfCheckMetsFilesecChecksumsMatch extends ValidationFunction {
             return invalid(e.getMessage());
         } catch (HashMismatchException e) {
             return invalid(e.getMessage());
-        } catch (Throwable e) {
-            return invalid("neočekávaná chyba: " + e.getMessage());
         }
     }
 
@@ -98,12 +98,6 @@ public class VfCheckMetsFilesecChecksumsMatch extends ValidationFunction {
         String hashComputed = Utils.computeHash(file);
         if (!hashComputed.toUpperCase().equals(hashExpected.toUpperCase())) {
             throw new HashMismatchException(String.format("uvedený kontrolní součet (%s) se liší od vypočítaného kontrolního součtu (%s) souboru %s", hashExpected, hashComputed, file.getAbsolutePath()));
-        }
-    }
-
-    public static class HashMismatchException extends Exception {
-        public HashMismatchException(String message) {
-            super(message);
         }
     }
 

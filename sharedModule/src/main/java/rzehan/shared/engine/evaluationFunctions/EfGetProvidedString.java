@@ -28,23 +28,25 @@ public class EfGetProvidedString extends EvaluationFunction {
     public ValueEvaluation evaluate() {
         try {
             checkContractCompliance();
+
+            ValueEvaluation paramStringId = valueParams.getParams(PARAM_STRING_ID).get(0).getEvaluation();
+            String stringId = (String) paramStringId.getData();
+            if (stringId == null) {
+                return errorResultParamNull(PARAM_STRING_ID, paramStringId);
+            } else if (stringId.isEmpty()) {
+                return errorResult(String.format("hodnota parametru %s je prázdná", PARAM_STRING_ID));
+            }
+
+            String string = engine.getProvidedVarsManager().getProvidedString(stringId);
+            if (string == null) {
+                return errorResult(String.format("řetězec s id %s není poskytován", stringId));
+            } else {
+                return okResult(string);
+            }
         } catch (ContractException e) {
             return errorResultContractNotMet(e);
-        }
-
-        ValueEvaluation paramStringId = valueParams.getParams(PARAM_STRING_ID).get(0).getEvaluation();
-        String stringId = (String) paramStringId.getData();
-        if (stringId == null) {
-            return errorResultParamNull(PARAM_STRING_ID, paramStringId);
-        } else if (stringId.isEmpty()) {
-            return errorResult(String.format("hodnota parametru %s je prázdná", PARAM_STRING_ID));
-        }
-
-        String string = engine.getProvidedVarsManager().getProvidedString(stringId);
-        if (string == null) {
-            return errorResult(String.format("řetězec s id %s není poskytován", stringId));
-        } else {
-            return okResult(string);
+        } catch (Throwable e) {
+            return errorResultUnexpectedError(e);
         }
     }
 

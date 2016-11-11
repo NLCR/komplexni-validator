@@ -37,21 +37,23 @@ public class VfCheckPrimaryMetsFilesecContainsAllFilegroups extends ValidationFu
     public ValidationResult validate() {
         try {
             checkContractCompliance();
+
+            ValueEvaluation paramEvaluation = valueParams.getParams(PARAM_PRIMARY_METS_FILE).get(0).getEvaluation();
+            File file = (File) paramEvaluation.getData();
+            if (file == null) {
+                return invalidValueParamNull(PARAM_PRIMARY_METS_FILE, paramEvaluation);
+            } else if (file.isDirectory()) {
+                return invalidFileIsDir(file);
+            } else if (!file.canRead()) {
+                return invalidCannotReadDir(file);
+            }
+
+            return validate(file);
         } catch (ContractException e) {
             return invalidContractNotMet(e);
+        } catch (Throwable e) {
+            return invalidUnexpectedError(e);
         }
-
-        ValueEvaluation paramEvaluation = valueParams.getParams(PARAM_PRIMARY_METS_FILE).get(0).getEvaluation();
-        File file = (File) paramEvaluation.getData();
-        if (file == null) {
-            return invalidValueParamNull(PARAM_PRIMARY_METS_FILE, paramEvaluation);
-        } else if (file.isDirectory()) {
-            return invalidFileIsDir(file);
-        } else if (!file.canRead()) {
-            return invalidCannotReadDir(file);
-        }
-
-        return validate(file);
     }
 
     private ValidationResult validate(File file) {
@@ -72,10 +74,6 @@ public class VfCheckPrimaryMetsFilesecContainsAllFilegroups extends ValidationFu
             return invalid(e.getMessage());
         } catch (InvalidDataException e) {
             return invalid(e.getMessage());
-        } catch (Throwable e) {
-            //TODO: tohle u absolutne kazdeho pravidla, muze byt nejake xml nevalidni, tak at spadne jenom pravidlo, ne vsechno
-            //plati pro validacni i vyhodnocovaci pravidla
-            return invalid("neočekávaná chyba: " + e.getMessage());
         }
     }
 

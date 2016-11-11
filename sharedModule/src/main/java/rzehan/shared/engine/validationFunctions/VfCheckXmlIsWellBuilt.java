@@ -37,23 +37,25 @@ public class VfCheckXmlIsWellBuilt extends ValidationFunction {
     public ValidationResult validate() {
         try {
             checkContractCompliance();
+
+            ValueEvaluation paramXmlFile = valueParams.getParams(PARAM_XML_FILE).get(0).getEvaluation();
+            File xmlFile = (File) paramXmlFile.getData();
+            if (xmlFile == null) {
+                return invalidValueParamNull(PARAM_XML_FILE, paramXmlFile);
+            } else if (!xmlFile.exists()) {
+                return invalidFileDoesNotExist(xmlFile);
+            } else if (xmlFile.isDirectory()) {
+                return invalidFileIsDir(xmlFile);
+            } else if (!xmlFile.canRead()) {
+                return invalidCannotReadFile(xmlFile);
+            }
+
+            return validate(xmlFile);
         } catch (ContractException e) {
             return invalidContractNotMet(e);
+        } catch (Throwable e) {
+            return invalidUnexpectedError(e);
         }
-
-        ValueEvaluation paramXmlFile = valueParams.getParams(PARAM_XML_FILE).get(0).getEvaluation();
-        File xmlFile = (File) paramXmlFile.getData();
-        if (xmlFile == null) {
-            return invalidValueParamNull(PARAM_XML_FILE, paramXmlFile);
-        } else if (!xmlFile.exists()) {
-            return invalidFileDoesNotExist(xmlFile);
-        } else if (xmlFile.isDirectory()) {
-            return invalidFileIsDir(xmlFile);
-        } else if (!xmlFile.canRead()) {
-            return invalidCannotReadFile(xmlFile);
-        }
-
-        return validate(xmlFile);
     }
 
     private ValidationResult validate(File file) {

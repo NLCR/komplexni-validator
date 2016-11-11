@@ -39,34 +39,36 @@ public class VfCheckStringDerivedFromOneOfIdentifiers extends ValidationFunction
     public ValidationResult validate() {
         try {
             checkContractCompliance();
+            ValueEvaluation paramStringEval = valueParams.getParams(PARAM_STRING).get(0).getEvaluation();
+            String string = (String) paramStringEval.getData();
+            if (string == null) {
+                return invalidValueParamNull(PARAM_STRING, paramStringEval);
+            }
+
+            ValueEvaluation paramMinMatchLengthEVal = valueParams.getParams(PARAM_MIN_MATCH_LENGTH).get(0).getEvaluation();
+            Integer minMatchLength = (Integer) paramMinMatchLengthEVal.getData();
+            if (minMatchLength == null) {
+                return invalidValueParamNull(PARAM_MIN_MATCH_LENGTH, paramMinMatchLengthEVal);
+            }
+
+            ValueEvaluation paramIdPrefixesEval = valueParams.getParams(PARAM_ID_PREFIXES).get(0).getEvaluation();
+            List<String> idPrefixes = (List<String>) paramIdPrefixesEval.getData();
+            if (idPrefixes == null) {
+                return invalidValueParamNull(PARAM_ID_PREFIXES, paramIdPrefixesEval);
+            }
+
+            ValueEvaluation paramIdentifiersEval = valueParams.getParams(PARAM_IDENTIFIERS).get(0).getEvaluation();
+            List<Identifier> identifiers = (List<Identifier>) paramIdentifiersEval.getData();
+            if (idPrefixes == null) {
+                return invalidValueParamNull(PARAM_IDENTIFIERS, paramIdentifiersEval);
+            }
+
+            return validate(string, minMatchLength, identifiers, idPrefixes);
         } catch (ContractException e) {
             return invalidContractNotMet(e);
+        } catch (Throwable e) {
+            return invalidUnexpectedError(e);
         }
-        ValueEvaluation paramStringEval = valueParams.getParams(PARAM_STRING).get(0).getEvaluation();
-        String string = (String) paramStringEval.getData();
-        if (string == null) {
-            return invalidValueParamNull(PARAM_STRING, paramStringEval);
-        }
-
-        ValueEvaluation paramMinMatchLengthEVal = valueParams.getParams(PARAM_MIN_MATCH_LENGTH).get(0).getEvaluation();
-        Integer minMatchLength = (Integer) paramMinMatchLengthEVal.getData();
-        if (minMatchLength == null) {
-            return invalidValueParamNull(PARAM_MIN_MATCH_LENGTH, paramMinMatchLengthEVal);
-        }
-
-        ValueEvaluation paramIdPrefixesEval = valueParams.getParams(PARAM_ID_PREFIXES).get(0).getEvaluation();
-        List<String> idPrefixes = (List<String>) paramIdPrefixesEval.getData();
-        if (idPrefixes == null) {
-            return invalidValueParamNull(PARAM_ID_PREFIXES, paramIdPrefixesEval);
-        }
-
-        ValueEvaluation paramIdentifiersEval = valueParams.getParams(PARAM_IDENTIFIERS).get(0).getEvaluation();
-        List<Identifier> identifiers = (List<Identifier>) paramIdentifiersEval.getData();
-        if (idPrefixes == null) {
-            return invalidValueParamNull(PARAM_IDENTIFIERS, paramIdentifiersEval);
-        }
-
-        return validate(string, minMatchLength, identifiers, idPrefixes);
     }
 
     protected ValidationResult validate(String string, Integer minMatchLength, List<Identifier> identifiers, List<String> idPrefixes) {

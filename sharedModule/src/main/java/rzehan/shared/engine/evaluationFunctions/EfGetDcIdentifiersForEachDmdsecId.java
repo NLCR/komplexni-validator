@@ -65,11 +65,10 @@ public class EfGetDcIdentifiersForEachDmdsecId extends EvaluationFunction {
             }
 
             return evaluate(dmdsecIds, metsFile);
-
         } catch (ContractException e) {
             return errorResultContractNotMet(e);
         } catch (Throwable e) {
-            return errorResult(String.format("nečekaná chyba: %s", e.getMessage()));
+            return errorResultUnexpectedError(e);
         }
     }
 
@@ -102,9 +101,9 @@ public class EfGetDcIdentifiersForEachDmdsecId extends EvaluationFunction {
         } catch (XPathExpressionException e) {
             return errorResult(String.format("neplatný xpath výraz '%s': %s", xmlFile.getAbsolutePath(), e.getMessage()));
         } catch (XmlParsingException e) {
-            return errorResult(e.getMessage());
+            return errorResult(e);
         } catch (InvalidXPathExpressionException e) {
-            return errorResult(e.getMessage());
+            return errorResult(e);
         }
     }
 

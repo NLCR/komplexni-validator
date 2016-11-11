@@ -33,28 +33,30 @@ public class VfCheckAllFileListsHaveSameSize extends ValidationFunction {
     public ValidationResult validate() {
         try {
             checkContractCompliance();
-        } catch (ContractException e) {
-            return invalidContractNotMet(e);
-        }
 
-        Integer size = null;
+            Integer size = null;
 
-        List<ValueParam> params = valueParams.getParams(PARAM_FILES);
-        for (ValueParam param : params) {
-            ValueEvaluation paramEvaluation = param.getEvaluation();
-            List<File> files = (List<File>) paramEvaluation.getData();
-            if (files == null) {
-                return invalidValueParamNull(PARAM_FILES, paramEvaluation);
-            }
-            if (size == null) {
-                size = files.size();
-            } else {
-                if (size != files.size()) {
-                    return invalid(String.format("nalezeny různé velikosti seznamů soborů, např. %d a %d", size, files.size()));
+            List<ValueParam> params = valueParams.getParams(PARAM_FILES);
+            for (ValueParam param : params) {
+                ValueEvaluation paramEvaluation = param.getEvaluation();
+                List<File> files = (List<File>) paramEvaluation.getData();
+                if (files == null) {
+                    return invalidValueParamNull(PARAM_FILES, paramEvaluation);
+                }
+                if (size == null) {
+                    size = files.size();
+                } else {
+                    if (size != files.size()) {
+                        return invalid(String.format("nalezeny různé velikosti seznamů soborů, např. %d a %d", size, files.size()));
+                    }
                 }
             }
+            return valid();
+        } catch (ContractException e) {
+            return invalidContractNotMet(e);
+        } catch (Throwable e) {
+            return invalidUnexpectedError(e);
         }
-        return valid();
     }
 
 

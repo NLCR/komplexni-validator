@@ -31,20 +31,22 @@ public class VfCheckFileIsDir extends ValidationFunction {
     public ValidationResult validate() {
         try {
             checkContractCompliance();
+
+            ValueEvaluation paramFile = valueParams.getParams(PARAM_FILE).get(0).getEvaluation();
+            File file = (File) paramFile.getData();
+            if (file == null) {
+                return invalidValueParamNull(PARAM_FILE, paramFile);
+            } else if (!file.exists()) {
+                return invalidFileDoesNotExist(file);
+            } else if (!file.isDirectory()) {
+                return invalidFileIsNotDir(file);
+            } else {
+                return valid();
+            }
         } catch (ContractException e) {
             return invalidContractNotMet(e);
-        }
-
-        ValueEvaluation paramFile = valueParams.getParams(PARAM_FILE).get(0).getEvaluation();
-        File file = (File) paramFile.getData();
-        if (file == null) {
-            return invalidValueParamNull(PARAM_FILE, paramFile);
-        } else if (!file.exists()) {
-            return invalidFileDoesNotExist(file);
-        } else if (!file.isDirectory()) {
-            return invalidFileIsNotDir(file);
-        } else {
-            return valid();
+        } catch (Throwable e) {
+            return invalidUnexpectedError(e);
         }
     }
 

@@ -35,27 +35,29 @@ public class VfCheckChecksumFileAllChecksumsMatch extends ValidationFunction {
     public ValidationResult validate() {
         try {
             checkContractCompliance();
+
+            ValueEvaluation paramChecksumFile = valueParams.getParams(PARAM_CHECKSUM_FILE).get(0).getEvaluation();
+            File checksumFile = (File) paramChecksumFile.getData();
+            if (checksumFile == null) {
+                return invalidValueParamNull(PARAM_CHECKSUM_FILE, paramChecksumFile);
+            } else if (!checksumFile.exists()) {
+                return invalidFileDoesNotExist(checksumFile);
+            } else if (checksumFile.isDirectory()) {
+                return invalidFileIsDir(checksumFile);
+            }
+
+            File pspRootDir = checksumFile.getParentFile();
+            if (!pspRootDir.exists()) {
+                return invalidFileDoesNotExist(pspRootDir);
+            } else if (!pspRootDir.isDirectory()) {
+                return invalidFileIsNotDir(pspRootDir);
+            } else {
+                return validate(checksumFile, pspRootDir);
+            }
         } catch (ContractException e) {
             return invalidContractNotMet(e);
-        }
-
-        ValueEvaluation paramChecksumFile = valueParams.getParams(PARAM_CHECKSUM_FILE).get(0).getEvaluation();
-        File checksumFile = (File) paramChecksumFile.getData();
-        if (checksumFile == null) {
-            return invalidValueParamNull(PARAM_CHECKSUM_FILE, paramChecksumFile);
-        } else if (!checksumFile.exists()) {
-            return invalidFileDoesNotExist(checksumFile);
-        } else if (checksumFile.isDirectory()) {
-            return invalidFileIsDir(checksumFile);
-        }
-
-        File pspRootDir = checksumFile.getParentFile();
-        if (!pspRootDir.exists()) {
-            return invalidFileDoesNotExist(pspRootDir);
-        } else if (!pspRootDir.isDirectory()) {
-            return invalidFileIsNotDir(pspRootDir);
-        } else {
-            return validate(checksumFile, pspRootDir);
+        } catch (Throwable e) {
+            return invalidUnexpectedError(e);
         }
     }
 

@@ -34,27 +34,28 @@ public class VfCheckFilenameMatchesPattern extends ValidationFunction {
     public ValidationResult validate() {
         try {
             checkContractCompliance();
+
+            ValueEvaluation paramFile = valueParams.getParams(PARAM_FILE).get(0).getEvaluation();
+            File file = (File) paramFile.getData();
+            if (file == null) {
+                return invalidValueParamNull(PARAM_FILE, paramFile);
+            }
+
+            PatternEvaluation paramPattern = patternParams.getParam(PARAM_PATTERN).getEvaluation();
+            if (!paramPattern.isOk()) {
+                return invalidPatternParamNull(PARAM_PATTERN, paramPattern);
+            }
+
+            if (!paramPattern.matches(file.getName())) {
+                return invalid(String.format("název souboru %s neodpovídá vzoru %s", file.getName(), paramPattern));
+            } else {
+                return valid();
+            }
         } catch (ContractException e) {
             return invalidContractNotMet(e);
-        }
-
-        ValueEvaluation paramFile = valueParams.getParams(PARAM_FILE).get(0).getEvaluation();
-        File file = (File) paramFile.getData();
-        if (file == null) {
-            return invalidValueParamNull(PARAM_FILE, paramFile);
-        }
-
-        PatternEvaluation paramPattern = patternParams.getParam(PARAM_PATTERN).getEvaluation();
-        if (!paramPattern.isOk()) {
-            return invalidPatternParamNull(PARAM_PATTERN, paramPattern);
-        }
-
-        if (!paramPattern.matches(file.getName())) {
-            return invalid(String.format("název souboru %s neodpovídá vzoru %s", file.getName(), paramPattern));
-        } else {
-            return valid();
+        } catch (Throwable e) {
+            return invalidUnexpectedError(e);
         }
     }
-
 
 }
