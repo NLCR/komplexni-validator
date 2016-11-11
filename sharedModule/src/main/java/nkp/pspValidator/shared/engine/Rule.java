@@ -9,16 +9,14 @@ import nkp.pspValidator.shared.engine.validationFunctions.ValidationResult;
 public class Rule {
 
     private final String name;
-    private final Level level;
     private final ValidationFunction function;
 
     private String description;
 
     private ValidationResult result;
 
-    public Rule(String name, Level level, ValidationFunction function) {
+    public Rule(String name, ValidationFunction function) {
         this.name = name;
-        this.level = level;
         this.function = function;
     }
 
@@ -36,10 +34,6 @@ public class Rule {
 
     public String getName() {
         return name;
-    }
-
-    public Level getLevel() {
-        return level;
     }
 
     public String getDescription() {

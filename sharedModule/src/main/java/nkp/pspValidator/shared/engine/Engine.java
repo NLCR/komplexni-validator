@@ -168,8 +168,8 @@ public class Engine {
         return new RulesSection(sectionName);
     }
 
-    public Rule buildRule(String ruleName, Level error, ValidationFunction function) {
-        return new Rule(ruleName, error, function);
+    public Rule buildRule(String ruleName, ValidationFunction function) {
+        return new Rule(ruleName, function);
     }
 
     //register methods for defining variables (values, patterns, ruleSections, rules)

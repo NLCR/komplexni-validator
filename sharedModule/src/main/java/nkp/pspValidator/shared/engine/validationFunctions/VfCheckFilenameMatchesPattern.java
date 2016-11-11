@@ -2,8 +2,10 @@ package nkp.pspValidator.shared.engine.validationFunctions;
 
 import nkp.pspValidator.shared.engine.*;
 import nkp.pspValidator.shared.engine.exceptions.ContractException;
+import nkp.pspValidator.shared.engine.params.ValueParam;
 
 import java.io.File;
+import java.util.List;
 
 
 /**
@@ -13,12 +15,14 @@ public class VfCheckFilenameMatchesPattern extends ValidationFunction {
 
     public static final String PARAM_FILE = "file";
     public static final String PARAM_PATTERN = "pattern";
+    public static final String PARAM_LEVEL = "level";
 
 
     public VfCheckFilenameMatchesPattern(Engine engine) {
         super(engine, new Contract()
                 .withValueParam(PARAM_FILE, ValueType.FILE, 1, 1)
                 .withPatternParam(PARAM_PATTERN)
+                .withValueParam(PARAM_LEVEL, ValueType.LEVEL, 0, 1)
         );
     }
 
@@ -43,7 +47,19 @@ public class VfCheckFilenameMatchesPattern extends ValidationFunction {
                 return invalidPatternParamNull(PARAM_PATTERN, paramPattern);
             }
 
-            return validate(file, paramPattern);
+            Level level = Level.ERROR;
+            List<ValueParam> paramsLevel = valueParams.getParams(PARAM_LEVEL);
+            if (!paramsLevel.isEmpty()) {
+                ValueParam paramLevel = paramsLevel.get(0);
+                ValueEvaluation evaluation = paramLevel.getEvaluation();
+                if (evaluation.getData() == null) {
+                    return invalidValueParamNull(PARAM_LEVEL, evaluation);
+                } else {
+                    level = (Level) evaluation.getData();
+                }
+            }
+
+            return validate(file, paramPattern, level);
         } catch (ContractException e) {
             return invalidContractNotMet(e);
         } catch (Throwable e) {
@@ -51,9 +67,9 @@ public class VfCheckFilenameMatchesPattern extends ValidationFunction {
         }
     }
 
-    private ValidationResult validate(File file, PatternEvaluation paramPattern) {
+    private ValidationResult validate(File file, PatternEvaluation paramPattern, Level level) {
         if (!paramPattern.matches(file.getName())) {
-            return singlErrorResult(invalid(Level.ERROR, "název souboru %s neodpovídá vzoru %s", file.getName(), paramPattern));
+            return singlErrorResult(invalid(level, "název souboru %s neodpovídá vzoru %s", file.getName(), paramPattern));
         } else {
             return new ValidationResult();
         }

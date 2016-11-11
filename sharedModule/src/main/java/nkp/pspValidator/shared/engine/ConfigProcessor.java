@@ -84,10 +84,9 @@ public class ConfigProcessor {
 
     private void processRule(Engine engine, RulesSection section, Element ruleEl) throws ValidatorConfigurationException {
         String name = ruleEl.getAttribute("name");
-        Level level = parseLevel(ruleEl.getAttribute("level"), Level.ERROR);
         Element validationEl = XmlUtils.getChildrenElementsByName(ruleEl, "validation").get(0);
         ValidationFunction function = parseValidationFunction(engine, validationEl);
-        Rule rule = new Rule(name, level, function);
+        Rule rule = new Rule(name, function);
         //description
         List<Element> descriptionEls = XmlUtils.getChildrenElementsByName(ruleEl, "description");
         if (!descriptionEls.isEmpty()) {
@@ -169,6 +168,8 @@ public class ConfigProcessor {
                 return varEl.getTextContent();
             case INTEGER:
                 return Integer.valueOf(varEl.getTextContent());
+            case LEVEL:
+                return Level.valueOf(varEl.getTextContent());
             default:
                 throw new ValidatorConfigurationException(
                         String.format("parametr %s: není zde možné použít parametr typu %s", varName, paramType));

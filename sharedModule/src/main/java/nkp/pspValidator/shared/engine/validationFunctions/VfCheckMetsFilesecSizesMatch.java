@@ -1,10 +1,7 @@
 package nkp.pspValidator.shared.engine.validationFunctions;
 
 
-import nkp.pspValidator.shared.engine.Engine;
-import nkp.pspValidator.shared.engine.Utils;
-import nkp.pspValidator.shared.engine.ValueEvaluation;
-import nkp.pspValidator.shared.engine.ValueType;
+import nkp.pspValidator.shared.engine.*;
 import nkp.pspValidator.shared.engine.exceptions.*;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -75,6 +72,8 @@ public class VfCheckMetsFilesecSizesMatch extends ValidationFunction {
             for (int i = 0; i < fileElements.getLength(); i++) {
                 try {
                     checkFile(pspdir, (Element) fileElements.item(i));
+                } catch (SizeDifferenceException e) {
+                    result.addError(invalid(Level.WARNING, e.getMessage()));
                 } catch (Exception e) {
                     result.addError(invalid(e));
                 }

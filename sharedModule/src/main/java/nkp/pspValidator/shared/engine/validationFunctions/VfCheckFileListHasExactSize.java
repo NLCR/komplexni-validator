@@ -5,6 +5,7 @@ import nkp.pspValidator.shared.engine.Level;
 import nkp.pspValidator.shared.engine.ValueEvaluation;
 import nkp.pspValidator.shared.engine.ValueType;
 import nkp.pspValidator.shared.engine.exceptions.ContractException;
+import nkp.pspValidator.shared.engine.params.ValueParam;
 
 import java.io.File;
 import java.util.List;
@@ -16,12 +17,13 @@ public class VfCheckFileListHasExactSize extends ValidationFunction {
 
     public static final String PARAM_FILES = "files";
     public static final String PARAM_SIZE = "size";
-
+    public static final String PARAM_LEVEL = "level";
 
     public VfCheckFileListHasExactSize(Engine engine) {
         super(engine, new Contract()
                 .withValueParam(PARAM_FILES, ValueType.FILE_LIST, 1, 1)
                 .withValueParam(PARAM_SIZE, ValueType.INTEGER, 1, 1)
+                .withValueParam(PARAM_LEVEL, ValueType.LEVEL, 0, 1)
         );
     }
 
@@ -47,7 +49,19 @@ public class VfCheckFileListHasExactSize extends ValidationFunction {
                 return invalidValueParamNull(PARAM_SIZE, paramSize);
             }
 
-            return validate(expectedSize, fileList);
+            Level level = Level.ERROR;
+            List<ValueParam> paramsLevel = valueParams.getParams(PARAM_LEVEL);
+            if (!paramsLevel.isEmpty()) {
+                ValueParam paramLevel = paramsLevel.get(0);
+                ValueEvaluation evaluation = paramLevel.getEvaluation();
+                if (evaluation.getData() == null) {
+                    return invalidValueParamNull(PARAM_LEVEL, evaluation);
+                } else {
+                    level = (Level) evaluation.getData();
+                }
+            }
+
+            return validate(expectedSize, fileList, level);
         } catch (ContractException e) {
             return invalidContractNotMet(e);
         } catch (Throwable e) {
@@ -55,9 +69,9 @@ public class VfCheckFileListHasExactSize extends ValidationFunction {
         }
     }
 
-    private ValidationResult validate(Integer expectedSize, List<File> fileList) {
+    private ValidationResult validate(Integer expectedSize, List<File> fileList, Level level) {
         if (fileList.size() != expectedSize) {
-            return singlErrorResult(invalid(Level.ERROR, "seznam obsahuje %d souborů namísto očekávaných %d", fileList.size(), expectedSize));
+            return singlErrorResult(invalid(level, "seznam obsahuje %d souborů namísto očekávaných %d", fileList.size(), expectedSize));
         } else {
             return new ValidationResult();
         }

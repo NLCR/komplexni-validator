@@ -10,6 +10,7 @@
         <params-def>
             <value name="files" type="FILE_LIST"/>
             <value name="size" type="INTEGER" description="Expected size of list"/>
+            <value name="level" type="LEVEL"/>
         </params-def>
     </validationFunction>
 
@@ -31,6 +32,7 @@
     <validationFunction name="checkFilenameMatchesPattern">
         <description>Zkontroluje, že název souboru odpovídá vzoru.</description>
         <params-def>
+            <value name="level" type="LEVEL"/>
             <value name="file" type="FILE"/>
             <pattern name="pattern" description="Pattern to match"/>
         </params-def>

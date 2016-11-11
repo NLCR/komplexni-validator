@@ -152,7 +152,6 @@
             <xs:element type="validationType" name="validation"/>
         </xs:sequence>
         <xs:attribute type="xs:string" name="name"/>
-        <xs:attribute type="ruleLevelType" name="level" use="optional"/>
     </xs:complexType>
 
     <xs:complexType name="validationType">
@@ -161,7 +160,6 @@
         </xs:sequence>
         <xs:attribute type="xs:string" name="functionName"/>
     </xs:complexType>
-
 
     <xs:simpleType name="dataValueType">
         <xs:restriction base="xs:string">
@@ -175,14 +173,5 @@
             <xs:enumeration value="IDENTIFIER_LIST"/>
         </xs:restriction>
     </xs:simpleType>
-
-    <xs:simpleType name="ruleLevelType">
-        <xs:restriction base="xs:string">
-            <xs:enumeration value="WARNING"/>
-            <xs:enumeration value="ERROR"/>
-            <xs:enumeration value="INFO"/>
-        </xs:restriction>
-    </xs:simpleType>
-
 
 </xs:schema>

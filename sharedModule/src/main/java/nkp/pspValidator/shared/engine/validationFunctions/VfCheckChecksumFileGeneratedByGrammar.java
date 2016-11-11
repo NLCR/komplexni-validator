@@ -65,7 +65,7 @@ public class VfCheckChecksumFileGeneratedByGrammar extends ValidationFunction {
                 if (parts.length == 1) {
                     result.addError(invalid(Level.ERROR, "chybí oddělovač (mezera/tabulátor) na řádku '%s'", line));
                 } else if (!is32bHex(parts[0])) {
-                    result.addError(invalid(Level.ERROR, "kontrolní součet není v 32B hexadecimálním zápisu, řádek: '%s'", line));
+                    result.addError(invalid(Level.INFO, "kontrolní součet není v 32B hexadecimálním zápisu, řádek: '%s'", line));
                 } else if (!isValidPath(parts[1])) {
                     result.addError(invalid(Level.WARNING, "cesta k souboru není zapsána korektně, řádek: '%s'", line));
                 }
