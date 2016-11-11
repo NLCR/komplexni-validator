@@ -8,7 +8,7 @@ import java.util.List;
  */
 public class RulesSection {
     private final String name;
-    private final List<Rule> rules = new ArrayList<>();
+    //private final List<Rule> rules = new ArrayList<>();
 
     private String description;
     private boolean enabled = true;
@@ -32,9 +32,9 @@ public class RulesSection {
         return name;
     }
 
-    public List<Rule> getRules() {
+    /*public List<Rule> getRules() {
         return rules;
-    }
+    }*/
 
     public String getDescription() {
         return description;
