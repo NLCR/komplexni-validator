@@ -9,7 +9,7 @@ repositories {
 }
 
 dependencies {
-    testCompile group: 'junit', name: 'junit', version: '4.12'
+    testCompile 'junit:junit:4.12'
     compile group: 'com.mycila', name: 'mycila-xmltool', version: '4.4.ga'
     // https://mvnrepository.com/artifact/com.github.nradov/abnffuzzer
     // compile group: 'com.github.nradov', name: 'abnffuzzer', version: '0.1.11'

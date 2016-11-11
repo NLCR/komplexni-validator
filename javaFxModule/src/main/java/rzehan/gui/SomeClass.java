@@ -2,7 +2,7 @@ package rzehan.gui;
 
 //import org.controlsfx.dialog.Dialog;
 
-import rzehan.shared.SharedClass;
+import nkp.pspValidator.shared.SharedClass;
 
 import javafx.application.Application;
 import javafx.event.ActionEvent;

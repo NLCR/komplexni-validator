@@ -4,10 +4,10 @@ import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
-import rzehan.shared.Platform;
-import rzehan.shared.imageUtils.CliCommand;
-import rzehan.shared.imageUtils.ImageUtil;
-import rzehan.shared.imageUtils.ImageUtilRegistry;
+import nkp.pspValidator.shared.Platform;
+import nkp.pspValidator.shared.imageUtils.CliCommand;
+import nkp.pspValidator.shared.imageUtils.ImageUtil;
+import nkp.pspValidator.shared.imageUtils.ImageUtilRegistry;
 
 import java.io.IOException;
 import java.util.ArrayList;
