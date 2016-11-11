@@ -36,17 +36,23 @@ public class VfCheckFileIsDir extends ValidationFunction {
             File file = (File) paramFile.getData();
             if (file == null) {
                 return invalidValueParamNull(PARAM_FILE, paramFile);
-            } else if (!file.exists()) {
-                return invalidFileDoesNotExist(file);
-            } else if (!file.isDirectory()) {
-                return invalidFileIsNotDir(file);
-            } else {
-                return valid();
             }
+
+            return validate(file);
         } catch (ContractException e) {
             return invalidContractNotMet(e);
         } catch (Throwable e) {
             return invalidUnexpectedError(e);
+        }
+    }
+
+    private ValidationResult validate(File file) {
+        if (!file.exists()) {
+            return singlErrorResult(invalidFileDoesNotExist(file));
+        } else if (!file.isDirectory()) {
+            return singlErrorResult(invalidFileIsNotDir(file));
+        } else {
+            return new ValidationResult();
         }
     }
 

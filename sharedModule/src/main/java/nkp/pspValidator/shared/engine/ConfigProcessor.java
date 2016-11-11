@@ -2,10 +2,10 @@ package nkp.pspValidator.shared.engine;
 
 import com.mycila.xmltool.XMLDoc;
 import com.mycila.xmltool.XMLTag;
-import org.w3c.dom.Element;
 import nkp.pspValidator.shared.engine.evaluationFunctions.EvaluationFunction;
 import nkp.pspValidator.shared.engine.exceptions.ValidatorConfigurationException;
 import nkp.pspValidator.shared.engine.validationFunctions.ValidationFunction;
+import org.w3c.dom.Element;
 
 import java.io.File;
 import java.util.List;
@@ -84,7 +84,7 @@ public class ConfigProcessor {
 
     private void processRule(Engine engine, RulesSection section, Element ruleEl) throws ValidatorConfigurationException {
         String name = ruleEl.getAttribute("name");
-        Rule.Level level = parseLevel(ruleEl.getAttribute("level"), Rule.Level.ERROR);
+        Level level = parseLevel(ruleEl.getAttribute("level"), Level.ERROR);
         Element validationEl = XmlUtils.getChildrenElementsByName(ruleEl, "validation").get(0);
         ValidationFunction function = parseValidationFunction(engine, validationEl);
         Rule rule = new Rule(name, level, function);
@@ -107,11 +107,11 @@ public class ConfigProcessor {
         return function;
     }
 
-    private Rule.Level parseLevel(String levelStr, Rule.Level defaultLevel) {
+    private Level parseLevel(String levelStr, Level defaultLevel) {
         if (levelStr == null || levelStr.isEmpty()) {
             return defaultLevel;
         } else {
-            return Rule.Level.valueOf(levelStr);
+            return Level.valueOf(levelStr);
         }
     }
 

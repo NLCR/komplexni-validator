@@ -1,12 +1,12 @@
 package npk.pspValidator.cli;
 
-import org.apache.commons.cli.*;
 import nkp.pspValidator.shared.*;
 import nkp.pspValidator.shared.engine.exceptions.InvalidXPathExpressionException;
 import nkp.pspValidator.shared.engine.exceptions.PspDataException;
 import nkp.pspValidator.shared.engine.exceptions.ValidatorConfigurationException;
 import nkp.pspValidator.shared.engine.exceptions.XmlParsingException;
 import nkp.pspValidator.shared.xsdValidation.XsdValidator;
+import org.apache.commons.cli.*;
 
 import java.io.File;
 
@@ -122,7 +122,7 @@ public class Main {
         System.out.println(String.format("Kořenový adresář fDMF: %s", fdmfRoot.getAbsolutePath()));
         Validator validator = ValidatorFactory.buildValidator(fdmfRoot, pspRoot);
         System.out.println(String.format("Validátor inicializován, spouštím validace"));
-        validator.run(false);
+        validator.run(false, false, true);
     }
 
     private static void checkReadableDir(File pspRoot) {

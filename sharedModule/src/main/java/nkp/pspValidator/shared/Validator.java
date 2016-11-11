@@ -3,6 +3,7 @@ package nkp.pspValidator.shared;
 import nkp.pspValidator.shared.engine.Engine;
 import nkp.pspValidator.shared.engine.Rule;
 import nkp.pspValidator.shared.engine.RulesSection;
+import nkp.pspValidator.shared.engine.validationFunctions.ValidationError;
 import nkp.pspValidator.shared.engine.validationFunctions.ValidationResult;
 
 import java.util.List;
@@ -19,7 +20,7 @@ public class Validator {
         this.engine = engine;
     }
 
-    public void run(boolean printValid) {
+    public void run(boolean printValid, boolean printRuleDescription, boolean printErrors) {
         List<RulesSection> rulesSections = engine.getRuleSections();
         for (RulesSection section : rulesSections) {
             System.out.println("Running section " + section.getName());
@@ -32,8 +33,15 @@ public class Validator {
                         System.out.println(String.format("rule %s: OK", rule.getName()));
                     }
                 } else {
-                    System.out.println(String.format("rule %s: %s: %s", rule.getName(), rule.getLevel(), result.getMessage()));
-                    System.out.println(String.format("\t%s", rule.getDescription()));
+                    System.out.println(String.format("rule %s: %s: %s", rule.getName(), rule.getLevel(), StringUtils.declineErrorNumber(result.getErrors().size())));
+                    if (printRuleDescription) {
+                        System.out.println(String.format("\t%s", rule.getDescription()));
+                    }
+                    if (printErrors) {
+                        for (ValidationError error : result.getErrors()) {
+                            System.out.println(String.format("\t%s: %s", error.getLevel(), error.getMessage()));
+                        }
+                    }
                 }
             }
         }

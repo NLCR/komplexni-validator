@@ -1,13 +1,14 @@
 package nkp.pspValidator.shared.engine.validationFunctions;
 
 
-import org.w3c.dom.Document;
 import nkp.pspValidator.shared.engine.Engine;
+import nkp.pspValidator.shared.engine.Level;
 import nkp.pspValidator.shared.engine.ValueEvaluation;
 import nkp.pspValidator.shared.engine.ValueType;
 import nkp.pspValidator.shared.engine.exceptions.ContractException;
 import nkp.pspValidator.shared.engine.exceptions.InvalidXPathExpressionException;
 import nkp.pspValidator.shared.engine.exceptions.XmlParsingException;
+import org.w3c.dom.Document;
 
 import javax.xml.xpath.XPathConstants;
 import javax.xml.xpath.XPathExpression;
@@ -44,9 +45,9 @@ public class VfCheckInfoFileReferencesPrimaryMets extends ValidationFunction {
             if (infoFile == null) {
                 return invalidValueParamNull(PARAM_INFO_FILE, paramInfoFile);
             } else if (infoFile.isDirectory()) {
-                return invalidFileIsDir(infoFile);
+                return singlErrorResult(invalidFileIsDir(infoFile));
             } else if (!infoFile.canRead()) {
-                return invalidCannotReadDir(infoFile);
+                return singlErrorResult(invalidCannotReadDir(infoFile));
             }
 
             ValueEvaluation paramPrimaryMetsFile = valueParams.getParams(PARAM_PRIMARY_METS_FILE).get(0).getEvaluation();
@@ -64,23 +65,26 @@ public class VfCheckInfoFileReferencesPrimaryMets extends ValidationFunction {
     }
 
     private ValidationResult validate(File infoFile, File primaryMetsFile) {
+        ValidationResult result = new ValidationResult();
         try {
             Document infoDoc = engine.getXmlDocument(infoFile);
             XPathExpression exp = engine.buildXpath("/info/mainmets");
             String primaryMetsFilenameFound = (String) exp.evaluate(infoDoc, XPathConstants.STRING);
             if (primaryMetsFilenameFound == null || primaryMetsFilenameFound.isEmpty()) {
-                return invalid("soubor INFO neobsahuje odkaz na soubor PRIMARY-METS");
+                result.addError(invalid(Level.ERROR, "soubor INFO neobsahuje odkaz na soubor PRIMARY-METS"));
             } else if (!primaryMetsFilenameFound.equals(primaryMetsFile.getName())) {
-                return invalid(String.format("nalezený název souboru PRIMARY-METS (%s) se neshoduje se skutečným názvem (%s)", primaryMetsFilenameFound, primaryMetsFile.getName()));
-            } else {
-                return valid();
+                result.addError(invalid(Level.ERROR,
+                        "nalezený název souboru PRIMARY-METS (%s) se neshoduje se skutečným názvem (%s)",
+                        primaryMetsFilenameFound, primaryMetsFile.getName()));
             }
         } catch (XmlParsingException e) {
-            return invalid(e);
+            result.addError(invalid(e));
         } catch (InvalidXPathExpressionException e) {
-            return invalid(e);
+            result.addError(invalid(e));
         } catch (XPathExpressionException e) {
-            return invalid(e);
+            result.addError(invalid(e));
+        } finally {
+            return result;
         }
     }
 

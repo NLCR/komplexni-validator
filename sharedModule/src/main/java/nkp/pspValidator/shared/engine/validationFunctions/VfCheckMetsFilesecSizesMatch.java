@@ -1,14 +1,14 @@
 package nkp.pspValidator.shared.engine.validationFunctions;
 
 
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-import org.w3c.dom.NodeList;
 import nkp.pspValidator.shared.engine.Engine;
 import nkp.pspValidator.shared.engine.Utils;
 import nkp.pspValidator.shared.engine.ValueEvaluation;
 import nkp.pspValidator.shared.engine.ValueType;
 import nkp.pspValidator.shared.engine.exceptions.*;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.NodeList;
 
 import javax.xml.xpath.XPathConstants;
 import javax.xml.xpath.XPathExpression;
@@ -45,9 +45,9 @@ public class VfCheckMetsFilesecSizesMatch extends ValidationFunction {
             if (metsFile == null) {
                 return invalidValueParamNull(PARAM_METS_FILE, paramMetsFileEval);
             } else if (metsFile.isDirectory()) {
-                return invalidFileIsDir(metsFile);
+                return singlErrorResult(invalidFileIsDir(metsFile));
             } else if (!metsFile.canRead()) {
-                return invalidCannotReadDir(metsFile);
+                return singlErrorResult(invalidCannotReadDir(metsFile));
             }
 
             ValueEvaluation paramPspDirEval = valueParams.getParams(PARAM_PSP_DIR).get(0).getEvaluation();
@@ -55,7 +55,7 @@ public class VfCheckMetsFilesecSizesMatch extends ValidationFunction {
             if (pspDir == null) {
                 return invalidValueParamNull(PARAM_PSP_DIR, paramPspDirEval);
             } else if (!pspDir.isDirectory()) {
-                return invalidFileIsNotDir(pspDir);
+                return singlErrorResult(invalidFileIsNotDir(pspDir));
             }
 
             return validate(pspDir, metsFile);
@@ -67,24 +67,26 @@ public class VfCheckMetsFilesecSizesMatch extends ValidationFunction {
     }
 
     private ValidationResult validate(File pspdir, File metsFile) {
+        ValidationResult result = new ValidationResult();
         try {
             Document doc = engine.getXmlDocument(metsFile);
             XPathExpression xpath = engine.buildXpath("//mets:fileSec/mets:fileGrp/mets:file");
             NodeList fileElements = (NodeList) xpath.evaluate(doc, XPathConstants.NODESET);
             for (int i = 0; i < fileElements.getLength(); i++) {
-                checkFile(pspdir, (Element) fileElements.item(i));
+                try {
+                    checkFile(pspdir, (Element) fileElements.item(i));
+                } catch (Exception e) {
+                    result.addError(invalid(e));
+                }
             }
-            return valid();
         } catch (XmlParsingException e) {
-            return invalid(e);
+            result.addError(invalid(e));
         } catch (InvalidXPathExpressionException e) {
-            return invalid(e);
+            result.addError(invalid(e));
         } catch (XPathExpressionException e) {
-            return invalid(e);
-        } catch (InvalidPathException e) {
-            return invalid(e);
-        } catch (SizeDifferenceException e) {
-            return invalid(e);
+            result.addError(invalid(e));
+        } finally {
+            return result;
         }
     }
 

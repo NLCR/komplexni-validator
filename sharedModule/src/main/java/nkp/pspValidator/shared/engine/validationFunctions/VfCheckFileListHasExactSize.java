@@ -1,6 +1,7 @@
 package nkp.pspValidator.shared.engine.validationFunctions;
 
 import nkp.pspValidator.shared.engine.Engine;
+import nkp.pspValidator.shared.engine.Level;
 import nkp.pspValidator.shared.engine.ValueEvaluation;
 import nkp.pspValidator.shared.engine.ValueType;
 import nkp.pspValidator.shared.engine.exceptions.ContractException;
@@ -46,15 +47,19 @@ public class VfCheckFileListHasExactSize extends ValidationFunction {
                 return invalidValueParamNull(PARAM_SIZE, paramSize);
             }
 
-            if (fileList.size() != expectedSize) {
-                return invalid(String.format("seznam obsahuje %d souborů namísto očekávaných %d", fileList.size(), expectedSize));
-            } else {
-                return valid();
-            }
+            return validate(expectedSize, fileList);
         } catch (ContractException e) {
             return invalidContractNotMet(e);
         } catch (Throwable e) {
             return invalidUnexpectedError(e);
+        }
+    }
+
+    private ValidationResult validate(Integer expectedSize, List<File> fileList) {
+        if (fileList.size() != expectedSize) {
+            return singlErrorResult(invalid(Level.ERROR, "seznam obsahuje %d souborů namísto očekávaných %d", fileList.size(), expectedSize));
+        } else {
+            return new ValidationResult();
         }
     }
 }

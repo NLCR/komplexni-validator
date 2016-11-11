@@ -1,16 +1,11 @@
 package nkp.pspValidator.shared.engine.validationFunctions;
 
-import nkp.pspValidator.shared.engine.Engine;
-import nkp.pspValidator.shared.engine.Utils;
-import nkp.pspValidator.shared.engine.ValueEvaluation;
-import nkp.pspValidator.shared.engine.ValueType;
+import nkp.pspValidator.shared.engine.*;
 import nkp.pspValidator.shared.engine.exceptions.ContractException;
 import nkp.pspValidator.shared.engine.exceptions.HashComputationException;
 import nkp.pspValidator.shared.engine.exceptions.InvalidPathException;
 
 import java.io.*;
-import java.util.HashSet;
-import java.util.Set;
 
 
 /**
@@ -41,19 +36,12 @@ public class VfCheckChecksumFileAllChecksumsMatch extends ValidationFunction {
             if (checksumFile == null) {
                 return invalidValueParamNull(PARAM_CHECKSUM_FILE, paramChecksumFile);
             } else if (!checksumFile.exists()) {
-                return invalidFileDoesNotExist(checksumFile);
+                return singlErrorResult(invalidFileDoesNotExist(checksumFile));
             } else if (checksumFile.isDirectory()) {
-                return invalidFileIsDir(checksumFile);
+                return singlErrorResult(invalidFileIsDir(checksumFile));
             }
 
-            File pspRootDir = checksumFile.getParentFile();
-            if (!pspRootDir.exists()) {
-                return invalidFileDoesNotExist(pspRootDir);
-            } else if (!pspRootDir.isDirectory()) {
-                return invalidFileIsNotDir(pspRootDir);
-            } else {
-                return validate(checksumFile, pspRootDir);
-            }
+            return validate(checksumFile);
         } catch (ContractException e) {
             return invalidContractNotMet(e);
         } catch (Throwable e) {
@@ -61,52 +49,62 @@ public class VfCheckChecksumFileAllChecksumsMatch extends ValidationFunction {
         }
     }
 
-    private ValidationResult validate(File checksumFile, File pspRootDir) {
-        FileInputStream fis = null;
-        BufferedReader br = null;
-        try {
-            fis = new FileInputStream(checksumFile);
-            br = new BufferedReader(new InputStreamReader(fis));
+    private ValidationResult validate(File checksumFile) {
+        ValidationResult result = new ValidationResult();
 
-            String line = null;
-            Set<File> filesFromFile = new HashSet<>();
-            while ((line = br.readLine()) != null) {
-                String[] parts = line.split("[ \\t]");//space or tabulator
-                if (parts.length == 1) {
-                    return invalid(String.format("chybí oddělovač (mezera/tabulátor) na řádku '%s'", line));
-                }
-                String hashExpected = parts[0];
-                String filepath = parts[1];
-                try {
-                    File file = Utils.buildAbsoluteFile(pspRootDir, filepath);
-                    String hashComputed = Utils.computeHash(file);
-                    if (!hashComputed.toUpperCase().equals(hashExpected.toUpperCase())) {
-                        return invalid(String.format("uvedený kontrolní součet '%s' nesouhlasí s vypočítaným kontrolním součtem '%s' pro soubor %s",
-                                hashExpected, hashComputed, file.getAbsolutePath()));
-                    }
-                    filesFromFile.add(file);
-                } catch (InvalidPathException e) {
-                    return invalid(String.format("cesta k souboru není zapsána korektně: '%s'", e.getPath()));
-                } catch (HashComputationException e) {
-                    return invalid(String.format("chyba výpočtu kontrolního součtu souboru %s: %s", checksumFile.getAbsolutePath(), e.getMessage()));
-                }
-            }
-            br.close();
-            return valid();
-        } catch (IOException e) {
-            return invalid(String.format("chyba při čtení souboru %s: %s", checksumFile.getAbsolutePath(), e.getMessage()));
-        } finally {
+        File pspRootDir = checksumFile.getParentFile();
+        if (!pspRootDir.exists()) {
+            result.addError(invalidFileDoesNotExist(pspRootDir));
+        } else if (!pspRootDir.isDirectory()) {
+            result.addError(invalidFileIsNotDir(pspRootDir));
+        } else {
+            FileInputStream fis = null;
+            BufferedReader br = null;
             try {
-                if (br != null) {
-                    br.close();
+                fis = new FileInputStream(checksumFile);
+                br = new BufferedReader(new InputStreamReader(fis));
+
+                String line = null;
+                while ((line = br.readLine()) != null) {
+                    String[] parts = line.split("[ \\t]");//space or tabulator
+                    if (parts.length == 1) {
+                        result.addError(invalid(Level.ERROR, "chybí oddělovač (mezera/tabulátor) na řádku '%s'", line));
+                    } else {
+                        String hashExpected = parts[0];
+                        String filepath = parts[1];
+                        try {
+                            File file = Utils.buildAbsoluteFile(pspRootDir, filepath);
+                            String hashComputed = Utils.computeHash(file);
+                            if (!hashComputed.toUpperCase().equals(hashExpected.toUpperCase())) {
+                                result.addError(invalid(Level.ERROR, "uvedený kontrolní součet '%s' nesouhlasí s vypočítaným kontrolním součtem '%s' pro soubor %s", hashExpected, hashComputed, file.getAbsolutePath()));
+                            }
+                        } catch (InvalidPathException e) {
+                            //TODO: tohle se vyskytuje vickrat, udelat pro to metodu
+                            result.addError(invalid(Level.ERROR, "cesta k souboru není zapsána korektně: '%s'", e.getPath()));
+
+                        } catch (HashComputationException e) {
+                            //TODO: tohle se vyskytuje vickrat, udelat pro to metodu
+                            result.addError(invalid(Level.ERROR, "chyba výpočtu kontrolního součtu souboru %s: %s", checksumFile.getAbsolutePath(), e.getMessage()));
+                        }
+                    }
                 }
-                if (fis != null) {
-                    fis.close();
-                }
+                br.close();
             } catch (IOException e) {
-                //e.printStackTrace();
+                result.addError(invalid(Level.ERROR, "chyba při čtení souboru %s: %s", checksumFile.getAbsolutePath(), e.getMessage()));
+            } finally {
+                try {
+                    if (br != null) {
+                        br.close();
+                    }
+                    if (fis != null) {
+                        fis.close();
+                    }
+                } catch (IOException e) {
+                    result.addError(invalid(e));
+                }
             }
         }
+        return result;
     }
 
 }

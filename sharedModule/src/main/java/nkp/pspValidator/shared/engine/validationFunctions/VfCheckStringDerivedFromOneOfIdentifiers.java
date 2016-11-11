@@ -1,9 +1,6 @@
 package nkp.pspValidator.shared.engine.validationFunctions;
 
-import nkp.pspValidator.shared.engine.Engine;
-import nkp.pspValidator.shared.engine.Utils;
-import nkp.pspValidator.shared.engine.ValueEvaluation;
-import nkp.pspValidator.shared.engine.ValueType;
+import nkp.pspValidator.shared.engine.*;
 import nkp.pspValidator.shared.engine.exceptions.ContractException;
 import nkp.pspValidator.shared.engine.types.Identifier;
 
@@ -77,10 +74,12 @@ public class VfCheckStringDerivedFromOneOfIdentifiers extends ValidationFunction
             int longestCommonSubstringLength = Utils.getLongestCommonSubstringLength(idValue, string);
             if (longestCommonSubstringLength >= minMatchLength) {
                 //System.out.println(String.format("match: %s, %s", string, idValue));
-                return valid();
+                return new ValidationResult();
             }
         }
-        return invalid(String.format("nenalezena shoda pro žádný z %d povolených identifikátorů (%s)", identifiers.size(), buildIdTypeList(identifiers)));
+        return singlErrorResult(invalid(Level.ERROR,
+                "nenalezena shoda pro žádný z %d povolených identifikátorů (%s)",
+                identifiers.size(), buildIdTypeList(identifiers)));
     }
 
     private String buildIdTypeList(List<Identifier> identifiers) {

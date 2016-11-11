@@ -1,10 +1,11 @@
 package nkp.pspValidator.shared.engine.validationFunctions;
 
-import org.xml.sax.SAXException;
 import nkp.pspValidator.shared.engine.Engine;
+import nkp.pspValidator.shared.engine.Level;
 import nkp.pspValidator.shared.engine.ValueEvaluation;
 import nkp.pspValidator.shared.engine.ValueType;
 import nkp.pspValidator.shared.engine.exceptions.ContractException;
+import org.xml.sax.SAXException;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -43,11 +44,11 @@ public class VfCheckXmlIsWellBuilt extends ValidationFunction {
             if (xmlFile == null) {
                 return invalidValueParamNull(PARAM_XML_FILE, paramXmlFile);
             } else if (!xmlFile.exists()) {
-                return invalidFileDoesNotExist(xmlFile);
+                return singlErrorResult(invalidFileDoesNotExist(xmlFile));
             } else if (xmlFile.isDirectory()) {
-                return invalidFileIsDir(xmlFile);
+                return singlErrorResult(invalidFileIsDir(xmlFile));
             } else if (!xmlFile.canRead()) {
-                return invalidCannotReadFile(xmlFile);
+                return singlErrorResult(invalidCannotReadFile(xmlFile));
             }
 
             return validate(xmlFile);
@@ -59,17 +60,18 @@ public class VfCheckXmlIsWellBuilt extends ValidationFunction {
     }
 
     private ValidationResult validate(File file) {
+        ValidationResult result = new ValidationResult();
         try {
             DocumentBuilder builder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
             builder.parse(new FileInputStream(file));
-            return valid();
         } catch (ParserConfigurationException e) {
-            return invalid(String.format("ParserConfigurationException při zpracování souboru %s: %s", file.getAbsolutePath(), e.getMessage()));
+            result.addError(invalid(Level.ERROR, "ParserConfigurationException při zpracování souboru %s: %s", file.getAbsolutePath(), e.getMessage()));
         } catch (SAXException e) {
-            return invalid(String.format("Nebyl nalezen well-built xml dokument v souboru %s: %s", file.getAbsolutePath(), e.getMessage()));
+            result.addError(invalid(Level.ERROR, "Nebyl nalezen well-built xml dokument v souboru %s: %s", file.getAbsolutePath(), e.getMessage()));
         } catch (IOException e) {
-            return invalid(String.format("I/O chyba při zpracování souboru %s: %s", file.getAbsolutePath(), e.getMessage()));
+            result.addError(invalid(Level.ERROR, "I/O chyba při zpracování souboru %s: %s", file.getAbsolutePath(), e.getMessage()));
         }
+        return result;
     }
 
 }

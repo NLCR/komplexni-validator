@@ -34,53 +34,76 @@ public abstract class ValidationFunction implements Function {
 
     public abstract String getName();
 
+   /* @Deprecated
     ValidationResult valid() {
-        return new ValidationResult(true);
+        return new ValidationResult();
+    }*/
+
+
+    ValidationResult singlErrorResult(ValidationError error) {
+        ValidationResult result = new ValidationResult();
+        result.addError(error);
+        return result;
     }
 
-    ValidationResult invalid(String errorMessage) {
-        return new ValidationResult(false).withMessage(String.format("%s: %s", getName(), errorMessage));
-    }
-
-    ValidationResult invalid(Exception e) {
-        return new ValidationResult(false).withMessage(e.getMessage());
-    }
+    //TODO: prejmenovat metody
 
     ValidationResult invalidContractNotMet(ContractException e) {
-        return new ValidationResult(false).withMessage(String.format("%s: nesplněn kontrakt validační funkce: %s", getName(), e.getMessage()));
+        ValidationResult result = new ValidationResult();
+        result.addError(Level.ERROR, String.format("%s: nesplněn kontrakt validační funkce: %s", getName(), e.getMessage()));
+        return result;
     }
 
     ValidationResult invalidUnexpectedError(Throwable e) {
-        return new ValidationResult(false).withMessage(String.format("nečekaná chyba: %s", e.getMessage()));
+        ValidationResult result = new ValidationResult();
+        result.addError(Level.ERROR, String.format("nečekaná chyba: %s", e.getMessage()));
+        return result;
     }
 
     ValidationResult invalidValueParamNull(String paramName, ValueEvaluation paramEvaluation) {
+        ValidationResult result = new ValidationResult();
+
         String message = paramEvaluation != null ? paramEvaluation.getErrorMessage() : null;
-        return new ValidationResult(false).withMessage(String.format("%s: neznámá hodnota parametru '%s': %s", getName(), paramName, message));
+        result.addError(Level.ERROR, String.format("%s: neznámá hodnota povinného parametru '%s': %s", getName(), paramName, message));
+        return result;
     }
 
     ValidationResult invalidPatternParamNull(String paramName, PatternEvaluation paramEvaluation) {
-        return new ValidationResult(false).withMessage(String.format("%s: neznámá hodnota parametru (vzor) '%s': %s", getName(), paramName, paramEvaluation.getErrorMessage()));
+        ValidationResult result = new ValidationResult();
+        result.addError(Level.ERROR, String.format("%s: neznámá hodnota poviného parametru (vzor) '%s': %s", getName(), paramName, paramEvaluation.getErrorMessage()));
+        return result;
     }
 
-    ValidationResult invalidFileDoesNotExist(File file) {
-        return new ValidationResult(false).withMessage(String.format("%s: soubor %s neexistuje", getName(), file.getAbsoluteFile()));
+    ValidationError invalidFileDoesNotExist(File file) {
+        return new ValidationError(Level.ERROR, String.format("%s: soubor %s neexistuje", getName(), file.getAbsoluteFile()));
     }
 
-    ValidationResult invalidFileIsDir(File file) {
-        return new ValidationResult(false).withMessage(String.format("%s: soubor %s je adresář", getName(), file.getAbsoluteFile()));
+    ValidationError invalidFileIsDir(File file) {
+        return new ValidationError(Level.ERROR, String.format("%s: soubor %s je adresář", getName(), file.getAbsoluteFile()));
     }
 
-    ValidationResult invalidFileIsNotDir(File file) {
-        return new ValidationResult(false).withMessage(String.format("%s: soubor %s není adresář", getName(), file.getAbsoluteFile()));
+    ValidationError invalidFileIsNotDir(File file) {
+        return new ValidationError(Level.ERROR, String.format("%s: soubor %s není adresář", getName(), file.getAbsoluteFile()));
     }
 
-    ValidationResult invalidCannotReadFile(File file) {
-        return new ValidationResult(false).withMessage(String.format("nelze číst soubor %s", file.getAbsoluteFile()));
+    ValidationError invalidCannotReadFile(File file) {
+        return new ValidationError(Level.ERROR, String.format("nelze číst soubor %s", file.getAbsoluteFile()));
     }
 
-    ValidationResult invalidCannotReadDir(File dir) {
-        return new ValidationResult(false).withMessage(String.format("%s: nelze číst adresář %s", getName(), dir.getAbsoluteFile()));
+    ValidationError invalidCannotReadDir(File dir) {
+        return new ValidationError(Level.ERROR, String.format("%s: nelze číst adresář %s", getName(), dir.getAbsoluteFile()));
+    }
+
+    ValidationError invalid(Exception e) {
+        return new ValidationError(Level.ERROR, e.getMessage());
+    }
+
+    ValidationError invalid(Level level, String errorMessage) {
+        return new ValidationError(level, String.format("%s: %s", getName(), errorMessage));
+    }
+
+    ValidationError invalid(Level level, String errorMessage, Object... errorMsgParams) {
+        return new ValidationError(level, String.format("%s: %s", getName(), String.format(errorMessage, errorMsgParams)));
     }
 
 

@@ -1,14 +1,15 @@
 package nkp.pspValidator.shared.engine.validationFunctions;
 
 
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
 import nkp.pspValidator.shared.engine.Engine;
+import nkp.pspValidator.shared.engine.Level;
 import nkp.pspValidator.shared.engine.ValueEvaluation;
 import nkp.pspValidator.shared.engine.ValueType;
 import nkp.pspValidator.shared.engine.exceptions.ContractException;
 import nkp.pspValidator.shared.engine.exceptions.InvalidXPathExpressionException;
 import nkp.pspValidator.shared.engine.exceptions.XmlParsingException;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
 
 import javax.xml.xpath.XPathConstants;
 import javax.xml.xpath.XPathExpression;
@@ -43,9 +44,9 @@ public class VfCheckPrimaryMetsFilesecContainsAllFilegroups extends ValidationFu
             if (file == null) {
                 return invalidValueParamNull(PARAM_PRIMARY_METS_FILE, paramEvaluation);
             } else if (file.isDirectory()) {
-                return invalidFileIsDir(file);
+                return singlErrorResult(invalidFileIsDir(file));
             } else if (!file.canRead()) {
-                return invalidCannotReadDir(file);
+                return singlErrorResult(invalidCannotReadDir(file));
             }
 
             return validate(file);
@@ -57,51 +58,46 @@ public class VfCheckPrimaryMetsFilesecContainsAllFilegroups extends ValidationFu
     }
 
     private ValidationResult validate(File file) {
+        ValidationResult result = new ValidationResult();
         try {
             Document doc = engine.getXmlDocument(file);
-            checkFileGroupOk(doc, "MC_IMGGRP", "Images");
-            checkFileGroupOk(doc, "UC_IMGGRP", "Images");
-            checkFileGroupOk(doc, "ALTOGRP", "Layout");
-            checkFileGroupOk(doc, "TXTGRP", "Text");
-            checkFileGroupOk(doc, "TECHMDGRP", "Technical Metadata");
-            checkFilegroupsCount(doc, 5);
-            return valid();
+            checkFileGroupOk(doc, "MC_IMGGRP", "Images", result);
+            checkFileGroupOk(doc, "UC_IMGGRP", "Images", result);
+            checkFileGroupOk(doc, "ALTOGRP", "Layout", result);
+            checkFileGroupOk(doc, "TXTGRP", "Text", result);
+            checkFileGroupOk(doc, "TECHMDGRP", "Technical Metadata", result);
+            checkFilegroupsCount(doc, 5, result);
         } catch (XmlParsingException e) {
-            return invalid(e);
+            result.addError(invalid(e));
         } catch (InvalidXPathExpressionException e) {
-            return invalid(e);
+            result.addError(invalid(e));
         } catch (XPathExpressionException e) {
-            return invalid(e);
-        } catch (InvalidDataException e) {
-            return invalid(e);
+            result.addError(invalid(e));
+        } finally {
+            return result;
         }
     }
 
-    private void checkFilegroupsCount(Document doc, int expectedCount) throws InvalidXPathExpressionException, XPathExpressionException, InvalidDataException {
+    private void checkFilegroupsCount(Document doc, int expectedCount, ValidationResult result) throws InvalidXPathExpressionException, XPathExpressionException {
         XPathExpression xpath = engine.buildXpath("count(/mets:mets/mets:fileSec/mets:fileGrp)");
         int count = Integer.valueOf((String) xpath.evaluate(doc, XPathConstants.STRING));
         if (count != expectedCount) {
-            throw new InvalidDataException(String.format("neočekávaný počet elementů mets:fileGrp"));
+            result.addError(invalid(Level.ERROR, "neočekávaný počet elementů mets:fileGrp (%d namísto %d)", count, expectedCount));
         }
     }
 
-    private void checkFileGroupOk(Document doc, String id, String useExpected) throws InvalidXPathExpressionException, XPathExpressionException, InvalidDataException {
+    private void checkFileGroupOk(Document doc, String id, String useExpected, ValidationResult result) throws InvalidXPathExpressionException, XPathExpressionException {
         XPathExpression xpath = engine.buildXpath("/mets:mets/mets:fileSec/mets:fileGrp[@ID='" + id + "']");
         Element fileGrpEl = (Element) xpath.evaluate(doc, XPathConstants.NODE);
         if (fileGrpEl == null) {
-            throw new InvalidDataException(String.format("nenalezen element mets:fileGrp s atributem ID=\"%s\"", id));
+            result.addError(invalid(Level.ERROR, "nenalezen element mets:fileGrp s atributem ID=\"%s\"", id));
         } else {
             String useFound = fileGrpEl.getAttribute("USE");
             if (!useExpected.equals(useFound)) {
-                throw new InvalidDataException(String.format(
-                        "element mets:fileGrp s atributem ID=\"%s\" obsahuje nepovolenou hodnotu atributu USE: '%s' namísto očekávané '%s'", id, useFound, useExpected));
+                result.addError(invalid(Level.ERROR,
+                        "element mets:fileGrp s atributem ID=\"%s\" obsahuje nepovolenou hodnotu atributu USE: '%s' namísto očekávané '%s'",
+                        id, useFound, useExpected));
             }
-        }
-    }
-
-    public static class InvalidDataException extends Exception {
-        public InvalidDataException(String message) {
-            super(message);
         }
     }
 

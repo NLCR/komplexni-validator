@@ -1,10 +1,11 @@
 package nkp.pspValidator.shared.engine.validationFunctions;
 
-import org.xml.sax.SAXException;
 import nkp.pspValidator.shared.engine.Engine;
+import nkp.pspValidator.shared.engine.Level;
 import nkp.pspValidator.shared.engine.ValueEvaluation;
 import nkp.pspValidator.shared.engine.ValueType;
 import nkp.pspValidator.shared.engine.exceptions.ContractException;
+import org.xml.sax.SAXException;
 
 import javax.xml.XMLConstants;
 import javax.xml.transform.Source;
@@ -47,22 +48,22 @@ public class VfCheckXmlIsValidByXsd extends ValidationFunction {
             if (xmlFile == null) {
                 return invalidValueParamNull(PARAM_XML_FILE, paramXmlFile);
             } else if (!xmlFile.exists()) {
-                return invalidFileDoesNotExist(xmlFile);
+                return singlErrorResult(invalidFileDoesNotExist(xmlFile));
             } else if (xmlFile.isDirectory()) {
-                return invalidFileIsDir(xmlFile);
+                return singlErrorResult(invalidFileIsDir(xmlFile));
             } else if (!xmlFile.canRead()) {
-                return invalidCannotReadFile(xmlFile);
+                return singlErrorResult(invalidCannotReadFile(xmlFile));
             }
 
             ValueEvaluation paramXsdFile = valueParams.getParams(PARAM_XSD_FILE).get(0).getEvaluation();
             File xsdFile = (File) paramXsdFile.getData();
             if (xsdFile == null) {
             } else if (!xsdFile.exists()) {
-                return invalidFileDoesNotExist(xsdFile);
+                return singlErrorResult(invalidFileDoesNotExist(xsdFile));
             } else if (xsdFile.isDirectory()) {
-                return invalidFileIsDir(xsdFile);
+                return singlErrorResult(invalidFileIsDir(xsdFile));
             } else if (!xsdFile.canRead()) {
-                return invalidCannotReadFile(xsdFile);
+                return singlErrorResult(invalidCannotReadFile(xsdFile));
             }
 
             return validate(xmlFile, xsdFile);
@@ -75,19 +76,18 @@ public class VfCheckXmlIsValidByXsd extends ValidationFunction {
 
     private ValidationResult validate(File xmlFileF, File xsdFile) {
         try {
-            //TODO: mozna obe xml tahat z engine.getXml()
             Source xmlFile = new StreamSource(xmlFileF);
             SchemaFactory schemaFactory = SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
             Schema schema = schemaFactory.newSchema(xsdFile);
             Validator validator = schema.newValidator();
             validator.validate(xmlFile);
-            return valid();
+            return new ValidationResult();
         } catch (SAXException e) {
-            return invalid(String.format("obsah souboru %s není validní podle Xml schema ze souboru %s: %s",
+            return singlErrorResult(invalid(Level.ERROR,
+                    "obsah souboru %s není validní podle Xml schema ze souboru %s: %s",
                     xmlFileF.getAbsolutePath(), xsdFile.getAbsolutePath(), e.getMessage()));
         } catch (IOException e) {
-            return invalid(String.format("I/O chyba při čtení souboru %s: %s",
-                    xmlFileF.getAbsolutePath(), e.getMessage()));
+            return singlErrorResult(invalid(Level.ERROR, "I/O chyba při čtení souboru %s: %s", xmlFileF.getAbsolutePath(), e.getMessage()));
         }
     }
 

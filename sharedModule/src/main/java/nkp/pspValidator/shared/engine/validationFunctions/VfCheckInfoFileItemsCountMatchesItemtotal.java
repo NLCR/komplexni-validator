@@ -1,13 +1,14 @@
 package nkp.pspValidator.shared.engine.validationFunctions;
 
 
-import org.w3c.dom.Document;
 import nkp.pspValidator.shared.engine.Engine;
+import nkp.pspValidator.shared.engine.Level;
 import nkp.pspValidator.shared.engine.ValueEvaluation;
 import nkp.pspValidator.shared.engine.ValueType;
 import nkp.pspValidator.shared.engine.exceptions.ContractException;
 import nkp.pspValidator.shared.engine.exceptions.InvalidXPathExpressionException;
 import nkp.pspValidator.shared.engine.exceptions.XmlParsingException;
+import org.w3c.dom.Document;
 
 import javax.xml.xpath.XPathConstants;
 import javax.xml.xpath.XPathExpression;
@@ -42,9 +43,9 @@ public class VfCheckInfoFileItemsCountMatchesItemtotal extends ValidationFunctio
             if (infoFile == null) {
                 return invalidValueParamNull(PARAM_INFO_FILE, paramInfoFile);
             } else if (infoFile.isDirectory()) {
-                return invalidFileIsDir(infoFile);
+                return singlErrorResult(invalidFileIsDir(infoFile));
             } else if (!infoFile.canRead()) {
-                return invalidCannotReadDir(infoFile);
+                return singlErrorResult(invalidCannotReadDir(infoFile));
             }
 
             return validate(infoFile);
@@ -56,6 +57,7 @@ public class VfCheckInfoFileItemsCountMatchesItemtotal extends ValidationFunctio
     }
 
     private ValidationResult validate(File infoFile) {
+        ValidationResult result = new ValidationResult();
         try {
             Document infoDoc = engine.getXmlDocument(infoFile);
             XPathExpression itemTotalExp = engine.buildXpath("/info/itemlist/@itemtotal");
@@ -64,16 +66,16 @@ public class VfCheckInfoFileItemsCountMatchesItemtotal extends ValidationFunctio
             Integer items = Integer.valueOf((String) itemsExp.evaluate(infoDoc, XPathConstants.STRING));
 
             if (items != itemTotal) {
-                return invalid(String.format("počet elementů item (%s) nesouhlasí s obsahem atributu itemtotal (%s)", items, itemTotal));
-            } else {
-                return valid();
+                return singlErrorResult(invalid(Level.ERROR, "počet elementů item (%s) nesouhlasí s obsahem atributu itemtotal (%s)", items, itemTotal));
             }
         } catch (XmlParsingException e) {
-            return invalid(e);
+            result.addError(invalid(e));
         } catch (InvalidXPathExpressionException e) {
-            return invalid(e);
+            result.addError(invalid(e));
         } catch (XPathExpressionException e) {
-            return invalid(e);
+            result.addError(invalid(e));
+        } finally {
+            return result;
         }
     }
 

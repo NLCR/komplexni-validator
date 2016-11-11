@@ -1,15 +1,16 @@
 package nkp.pspValidator.shared.engine.validationFunctions;
 
 
-import org.w3c.dom.Document;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
 import nkp.pspValidator.shared.engine.Engine;
+import nkp.pspValidator.shared.engine.Level;
 import nkp.pspValidator.shared.engine.ValueEvaluation;
 import nkp.pspValidator.shared.engine.ValueType;
 import nkp.pspValidator.shared.engine.exceptions.ContractException;
 import nkp.pspValidator.shared.engine.exceptions.InvalidXPathExpressionException;
 import nkp.pspValidator.shared.engine.exceptions.XmlParsingException;
+import org.w3c.dom.Document;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
 
 import javax.xml.xpath.XPathConstants;
 import javax.xml.xpath.XPathExpression;
@@ -44,9 +45,9 @@ public class VfCheckDcIdentifiersDoNotContainWhiteSpaces extends ValidationFunct
             if (file == null) {
                 return invalidValueParamNull(PARAM_PRIMARY_METS_FILE, paramEvaluation);
             } else if (file.isDirectory()) {
-                return invalidFileIsDir(file);
+                return singlErrorResult(invalidFileIsDir(file));
             } else if (!file.canRead()) {
-                return invalidCannotReadDir(file);
+                return singlErrorResult(invalidCannotReadDir(file));
             }
 
             return validate(file);
@@ -58,6 +59,7 @@ public class VfCheckDcIdentifiersDoNotContainWhiteSpaces extends ValidationFunct
     }
 
     private ValidationResult validate(File file) {
+        ValidationResult result = new ValidationResult();
         try {
             Document doc = engine.getXmlDocument(file);
             XPathExpression xpath = engine.buildXpath("//dc:identifier");
@@ -66,16 +68,17 @@ public class VfCheckDcIdentifiersDoNotContainWhiteSpaces extends ValidationFunct
                 Node node = nodes.item(i);
                 String identifier = node.getTextContent();
                 if (identifier.matches(".*\\s.*")) {
-                    return invalid(String.format("identifikátor '%s' obsahuje bílé znaky", identifier));
+                    result.addError(invalid(Level.WARNING, "identifikátor '%s' obsahuje bílé znaky", identifier));
                 }
             }
-            return valid();
         } catch (XmlParsingException e) {
-            return invalid(e);
+            result.addError(invalid(e));
         } catch (InvalidXPathExpressionException e) {
-            return invalid(e);
+            result.addError(invalid(e));
         } catch (XPathExpressionException e) {
-            return invalid(e);
+            result.addError(invalid(e));
+        } finally {
+            return result;
         }
     }
 

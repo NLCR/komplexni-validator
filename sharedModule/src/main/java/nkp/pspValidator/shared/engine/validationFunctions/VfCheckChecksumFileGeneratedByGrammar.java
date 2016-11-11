@@ -1,6 +1,7 @@
 package nkp.pspValidator.shared.engine.validationFunctions;
 
 import nkp.pspValidator.shared.engine.Engine;
+import nkp.pspValidator.shared.engine.Level;
 import nkp.pspValidator.shared.engine.ValueEvaluation;
 import nkp.pspValidator.shared.engine.ValueType;
 import nkp.pspValidator.shared.engine.exceptions.ContractException;
@@ -37,12 +38,12 @@ public class VfCheckChecksumFileGeneratedByGrammar extends ValidationFunction {
             if (checksumFile == null) {
                 return invalidValueParamNull(PARAM_CHECKSUM_FILE, paramChecksumFile);
             } else if (!checksumFile.exists()) {
-                return invalidFileDoesNotExist(checksumFile);
+                return singlErrorResult(invalidFileDoesNotExist(checksumFile));
             } else if (checksumFile.isDirectory()) {
-                return invalidFileIsDir(checksumFile);
-            } else {
-                return validate(checksumFile);
+                return singlErrorResult(invalidFileIsDir(checksumFile));
             }
+
+            return validate(checksumFile);
         } catch (ContractException e) {
             return invalidContractNotMet(e);
         } catch (Throwable e) {
@@ -51,29 +52,27 @@ public class VfCheckChecksumFileGeneratedByGrammar extends ValidationFunction {
     }
 
     private ValidationResult validate(File file) {
+        ValidationResult result = new ValidationResult();
         FileInputStream fis = null;
         BufferedReader br = null;
         try {
             fis = new FileInputStream(file);
             br = new BufferedReader(new InputStreamReader(fis));
 
-            String line = null;
+            String line;
             while ((line = br.readLine()) != null) {
                 String[] parts = line.split("[ \\t]");//space or tabulator
                 if (parts.length == 1) {
-                    return invalid(String.format("chybí oddělovač (mezera/tabulátor) na řádku '%s'", line));
-                }
-                if (!is32bHex(parts[0])) {
-                    return invalid(String.format("kontrolní součet není v 32B hexadecimálním zápisu, řádek: '%s'", line));
-                }
-                if (!isValidPath(parts[1])) {
-                    return invalid(String.format("cesta k souboru není zapsána korektně, řádek: '%s'", line));
+                    result.addError(invalid(Level.ERROR, "chybí oddělovač (mezera/tabulátor) na řádku '%s'", line));
+                } else if (!is32bHex(parts[0])) {
+                    result.addError(invalid(Level.ERROR, "kontrolní součet není v 32B hexadecimálním zápisu, řádek: '%s'", line));
+                } else if (!isValidPath(parts[1])) {
+                    result.addError(invalid(Level.WARNING, "cesta k souboru není zapsána korektně, řádek: '%s'", line));
                 }
             }
             br.close();
-            return valid();
         } catch (IOException e) {
-            return invalid(String.format("chyba při čtení souboru %s: %s", file.getAbsolutePath(), e.getMessage()));
+            result.addError(invalid(Level.ERROR, "chyba při čtení souboru %s: %s", file.getAbsolutePath(), e.getMessage()));
         } finally {
             try {
                 if (br != null) {
@@ -83,7 +82,9 @@ public class VfCheckChecksumFileGeneratedByGrammar extends ValidationFunction {
                     fis.close();
                 }
             } catch (IOException e) {
-                //e.printStackTrace();
+                result.addError(invalid(e));
+            } finally {
+                return result;
             }
         }
     }
@@ -109,8 +110,6 @@ public class VfCheckChecksumFileGeneratedByGrammar extends ValidationFunction {
                 }
             }
         }
-
         return true;
     }
-
 }

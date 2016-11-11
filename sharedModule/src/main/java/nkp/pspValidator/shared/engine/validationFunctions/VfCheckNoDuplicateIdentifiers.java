@@ -1,6 +1,7 @@
 package nkp.pspValidator.shared.engine.validationFunctions;
 
 import nkp.pspValidator.shared.engine.Engine;
+import nkp.pspValidator.shared.engine.Level;
 import nkp.pspValidator.shared.engine.ValueEvaluation;
 import nkp.pspValidator.shared.engine.ValueType;
 import nkp.pspValidator.shared.engine.exceptions.ContractException;
@@ -15,6 +16,8 @@ import java.util.Map;
 /**
  * Created by martin on 27.10.16.
  */
+//TODO: prejmenovat, aby se oddelila shoda typu a shoda celkova
+//treba 2 ruzne urovne popisu muzou mit obe uuid:..., ale uz ne uuid:1
 public class VfCheckNoDuplicateIdentifiers extends ValidationFunction {
 
     public static final String PARAM_IDENTIFIER_LIST = "identifier_list";
@@ -71,17 +74,17 @@ public class VfCheckNoDuplicateIdentifiers extends ValidationFunction {
     }
 
     private ValidationResult validate(List<List<Identifier>> idListList) {
+        ValidationResult result = new ValidationResult();
         for (List<Identifier> idList : idListList) {
             Map<String, String> map = new HashMap<>();
             for (Identifier id : idList) {
                 if (!map.containsKey(id.getType())) {
                     map.put(id.getType(), id.getValue());
                 } else {
-                    return invalid(String.format("seznam obsahuje více identifikátorů typu '%s'", id.getType()));
+                    result.addError(invalid(Level.ERROR, "seznam obsahuje více identifikátorů typu '%s'", id.getType()));
                 }
             }
         }
-
-        return valid();
+        return result;
     }
 }

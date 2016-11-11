@@ -1,9 +1,6 @@
 package nkp.pspValidator.shared.engine.validationFunctions;
 
-import nkp.pspValidator.shared.engine.Engine;
-import nkp.pspValidator.shared.engine.PatternEvaluation;
-import nkp.pspValidator.shared.engine.ValueEvaluation;
-import nkp.pspValidator.shared.engine.ValueType;
+import nkp.pspValidator.shared.engine.*;
 import nkp.pspValidator.shared.engine.exceptions.ContractException;
 
 import java.io.File;
@@ -46,15 +43,19 @@ public class VfCheckFilenameMatchesPattern extends ValidationFunction {
                 return invalidPatternParamNull(PARAM_PATTERN, paramPattern);
             }
 
-            if (!paramPattern.matches(file.getName())) {
-                return invalid(String.format("název souboru %s neodpovídá vzoru %s", file.getName(), paramPattern));
-            } else {
-                return valid();
-            }
+            return validate(file, paramPattern);
         } catch (ContractException e) {
             return invalidContractNotMet(e);
         } catch (Throwable e) {
             return invalidUnexpectedError(e);
+        }
+    }
+
+    private ValidationResult validate(File file, PatternEvaluation paramPattern) {
+        if (!paramPattern.matches(file.getName())) {
+            return singlErrorResult(invalid(Level.ERROR, "název souboru %s neodpovídá vzoru %s", file.getName(), paramPattern));
+        } else {
+            return new ValidationResult();
         }
     }
 

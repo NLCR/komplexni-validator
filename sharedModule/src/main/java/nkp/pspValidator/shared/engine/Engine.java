@@ -1,11 +1,11 @@
 package nkp.pspValidator.shared.engine;
 
-import org.w3c.dom.Document;
 import nkp.pspValidator.shared.engine.evaluationFunctions.*;
 import nkp.pspValidator.shared.engine.exceptions.InvalidXPathExpressionException;
 import nkp.pspValidator.shared.engine.exceptions.ValidatorConfigurationException;
 import nkp.pspValidator.shared.engine.exceptions.XmlParsingException;
 import nkp.pspValidator.shared.engine.validationFunctions.*;
+import org.w3c.dom.Document;
 
 import javax.xml.xpath.XPathExpression;
 import java.io.File;
@@ -168,7 +168,7 @@ public class Engine {
         return new RulesSection(sectionName);
     }
 
-    public Rule buildRule(String ruleName, Rule.Level error, ValidationFunction function) {
+    public Rule buildRule(String ruleName, Level error, ValidationFunction function) {
         return new Rule(ruleName, error, function);
     }
 

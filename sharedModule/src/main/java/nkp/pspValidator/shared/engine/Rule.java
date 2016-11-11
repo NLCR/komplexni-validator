@@ -46,7 +46,5 @@ public class Rule {
         return description;
     }
 
-    public static enum Level {
-        INFO, WARNING, ERROR;
-    }
+
 }

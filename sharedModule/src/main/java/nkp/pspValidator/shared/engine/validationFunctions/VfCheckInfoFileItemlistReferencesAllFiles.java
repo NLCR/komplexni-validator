@@ -1,18 +1,15 @@
 package nkp.pspValidator.shared.engine.validationFunctions;
 
 
-import org.w3c.dom.Document;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
-import nkp.pspValidator.shared.engine.Engine;
-import nkp.pspValidator.shared.engine.Utils;
-import nkp.pspValidator.shared.engine.ValueEvaluation;
-import nkp.pspValidator.shared.engine.ValueType;
+import nkp.pspValidator.shared.engine.*;
 import nkp.pspValidator.shared.engine.exceptions.ContractException;
 import nkp.pspValidator.shared.engine.exceptions.InvalidPathException;
 import nkp.pspValidator.shared.engine.exceptions.InvalidXPathExpressionException;
 import nkp.pspValidator.shared.engine.exceptions.XmlParsingException;
 import nkp.pspValidator.shared.engine.params.ValueParam;
+import org.w3c.dom.Document;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
 
 import javax.xml.xpath.XPathConstants;
 import javax.xml.xpath.XPathExpression;
@@ -55,9 +52,9 @@ public class VfCheckInfoFileItemlistReferencesAllFiles extends ValidationFunctio
             if (infoFile == null) {
                 return invalidValueParamNull(PARAM_INFO_FILE, paramInfoFile);
             } else if (infoFile.isDirectory()) {
-                return invalidFileIsDir(infoFile);
+                return singlErrorResult(invalidFileIsDir(infoFile));
             } else if (!infoFile.canRead()) {
-                return invalidCannotReadDir(infoFile);
+                return singlErrorResult(invalidCannotReadDir(infoFile));
             }
 
             Set<File> expectedFiles = new HashSet<>();
@@ -95,6 +92,7 @@ public class VfCheckInfoFileItemlistReferencesAllFiles extends ValidationFunctio
     }
 
     private ValidationResult validate(File infoFile, Set<File> expectedFiles) {
+        ValidationResult result = new ValidationResult();
         try {
             Document infoDoc = engine.getXmlDocument(infoFile);
             XPathExpression exp = engine.buildXpath("/info/itemlist/item");
@@ -104,7 +102,12 @@ public class VfCheckInfoFileItemlistReferencesAllFiles extends ValidationFunctio
             for (int i = 0; i < nodes.getLength(); i++) {
                 Node node = nodes.item(i);
                 String path = node.getTextContent().trim();
-                foundFilesList.add(Utils.buildAbsoluteFile(rootDir, path));
+                try {
+                    File file = Utils.buildAbsoluteFile(rootDir, path);
+                    foundFilesList.add(file);
+                } catch (InvalidPathException e) {
+                    result.addError(invalid(e));
+                }
             }
 
             Set<File> foundFiles = new HashSet<>(foundFilesList.size());
@@ -112,24 +115,23 @@ public class VfCheckInfoFileItemlistReferencesAllFiles extends ValidationFunctio
             if (!foundFiles.equals(expectedFiles)) {//something is different
                 for (File foundFile : foundFiles) {
                     if (!expectedFiles.contains(foundFile)) {
-                        return invalid(String.format("soubor INFO se odkazuje na neočekávaný soubor %s", foundFile.getAbsolutePath()));
+                        result.addError(invalid(Level.ERROR, "soubor INFO se odkazuje na neočekávaný soubor %s", foundFile.getAbsolutePath()));
                     }
                 }
                 for (File expectedFile : expectedFiles) {
                     if (!foundFiles.contains(expectedFile)) {
-                        return invalid(String.format("soubor INFO se neodkazuje na očekávaný soubor %s", expectedFile.getAbsolutePath()));
+                        result.addError(invalid(Level.ERROR, "soubor INFO se neodkazuje na očekávaný soubor %s", expectedFile.getAbsolutePath()));
                     }
                 }
             }
-            return valid();
         } catch (XmlParsingException e) {
-            return invalid(e);
+            result.addError(invalid(e));
         } catch (InvalidXPathExpressionException e) {
-            return invalid(e);
+            result.addError(invalid(e));
         } catch (XPathExpressionException e) {
-            return invalid(e);
-        } catch (InvalidPathException e) {
-            return invalid(e);
+            result.addError(invalid(e));
+        } finally {
+            return result;
         }
     }
 

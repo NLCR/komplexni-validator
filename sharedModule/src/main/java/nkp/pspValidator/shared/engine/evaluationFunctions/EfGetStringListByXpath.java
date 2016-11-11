@@ -1,13 +1,13 @@
 package nkp.pspValidator.shared.engine.evaluationFunctions;
 
-import org.w3c.dom.Document;
-import org.w3c.dom.NodeList;
 import nkp.pspValidator.shared.engine.Engine;
 import nkp.pspValidator.shared.engine.ValueEvaluation;
 import nkp.pspValidator.shared.engine.ValueType;
 import nkp.pspValidator.shared.engine.exceptions.ContractException;
 import nkp.pspValidator.shared.engine.exceptions.InvalidXPathExpressionException;
 import nkp.pspValidator.shared.engine.exceptions.XmlParsingException;
+import org.w3c.dom.Document;
+import org.w3c.dom.NodeList;
 
 import javax.xml.xpath.XPathConstants;
 import javax.xml.xpath.XPathExpression;

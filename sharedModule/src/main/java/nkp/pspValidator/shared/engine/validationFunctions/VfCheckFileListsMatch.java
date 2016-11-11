@@ -1,6 +1,7 @@
 package nkp.pspValidator.shared.engine.validationFunctions;
 
 import nkp.pspValidator.shared.engine.Engine;
+import nkp.pspValidator.shared.engine.Level;
 import nkp.pspValidator.shared.engine.ValueEvaluation;
 import nkp.pspValidator.shared.engine.ValueType;
 import nkp.pspValidator.shared.engine.exceptions.ContractException;
@@ -57,6 +58,7 @@ public class VfCheckFileListsMatch extends ValidationFunction {
     }
 
     private ValidationResult validate(List<File> filesExpectedList, List<File> filesFoundList) {
+        ValidationResult result = new ValidationResult();
         Set<File> filesExpectedSet = new HashSet<>(filesExpectedList.size());
         for (File file : filesExpectedList) {
             filesExpectedSet.add(file.getAbsoluteFile());
@@ -69,15 +71,15 @@ public class VfCheckFileListsMatch extends ValidationFunction {
         if (!filesExpectedSet.equals(filesFoundSet)) {//something is different
             for (File foundFile : filesFoundSet) {
                 if (!filesExpectedSet.contains(foundFile)) {
-                    return invalid(String.format("nalezen neočekávaný soubor %s", foundFile.getAbsolutePath()));
+                    result.addError(invalid(Level.ERROR, "nalezen neočekávaný soubor %s", foundFile.getAbsolutePath()));
                 }
             }
             for (File expectedFile : filesExpectedSet) {
                 if (!filesFoundSet.contains(expectedFile)) {
-                    return invalid(String.format("nenalezen očekávaný soubor %s", expectedFile.getAbsolutePath()));
+                    result.addError(invalid(Level.ERROR, "nenalezen očekávaný soubor %s", expectedFile.getAbsolutePath()));
                 }
             }
         }
-        return valid();
+        return result;
     }
 }

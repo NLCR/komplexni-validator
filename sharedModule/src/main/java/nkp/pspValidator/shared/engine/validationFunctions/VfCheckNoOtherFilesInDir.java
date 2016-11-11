@@ -1,6 +1,7 @@
 package nkp.pspValidator.shared.engine.validationFunctions;
 
 import nkp.pspValidator.shared.engine.Engine;
+import nkp.pspValidator.shared.engine.Level;
 import nkp.pspValidator.shared.engine.ValueEvaluation;
 import nkp.pspValidator.shared.engine.ValueType;
 import nkp.pspValidator.shared.engine.exceptions.ContractException;
@@ -47,24 +48,17 @@ public class VfCheckNoOtherFilesInDir extends ValidationFunction {
             if (rootDir == null) {
                 return invalidValueParamNull(PARAM_ROOT_DIR, paramRootDir);
             } else if (!rootDir.isDirectory()) {
-                return invalidFileIsNotDir(rootDir);
+                return singlErrorResult(invalidFileIsNotDir(rootDir));
             } else if (!rootDir.canRead()) {
-                return invalidCannotReadDir(rootDir);
+                return singlErrorResult(invalidCannotReadDir(rootDir));
             }
 
-            List<File> filesInDir = listAbsoluteFiles(rootDir);
             try {
                 Set<File> filesExpected = mergeAbsolutFilesFromParams();
-                for (File file : filesInDir) {
-                    if (!filesExpected.contains(file)) {
-                        return invalid(String.format("nalezen nečekaný soubor %s v adresáři %s", file.getName(), rootDir.getAbsolutePath()));
-                    }
-                }
+                return validate(rootDir, filesExpected);
             } catch (EmptyParamEvaluationException e) {
                 return invalidValueParamNull(e.getParamName(), e.getEvaluation());
             }
-
-            return valid();
         } catch (ContractException e) {
             return invalidContractNotMet(e);
         } catch (Throwable e) {
@@ -72,14 +66,6 @@ public class VfCheckNoOtherFilesInDir extends ValidationFunction {
         }
     }
 
-    private List<File> listAbsoluteFiles(File rootDir) {
-        File[] files = rootDir.listFiles();
-        List<File> result = new ArrayList<>(files.length);
-        for (File file : files) {
-            result.add(file.getAbsoluteFile());
-        }
-        return result;
-    }
 
     private Set<File> mergeAbsolutFilesFromParams() throws EmptyParamEvaluationException {
         Set<File> result = new HashSet<>();
@@ -102,6 +88,26 @@ public class VfCheckNoOtherFilesInDir extends ValidationFunction {
             for (File file : files) {
                 result.add(file.getAbsoluteFile());
             }
+        }
+        return result;
+    }
+
+    private ValidationResult validate(File rootDir, Set<File> filesExpected) {
+        ValidationResult result = new ValidationResult();
+        List<File> filesInDir = listAbsoluteFiles(rootDir);
+        for (File file : filesInDir) {
+            if (!filesExpected.contains(file)) {
+                result.addError(invalid(Level.ERROR, "nalezen nečekaný soubor %s v adresáři %s", file.getName(), rootDir.getAbsolutePath()));
+            }
+        }
+        return result;
+    }
+
+    private List<File> listAbsoluteFiles(File rootDir) {
+        File[] files = rootDir.listFiles();
+        List<File> result = new ArrayList<>(files.length);
+        for (File file : files) {
+            result.add(file.getAbsoluteFile());
         }
         return result;
     }

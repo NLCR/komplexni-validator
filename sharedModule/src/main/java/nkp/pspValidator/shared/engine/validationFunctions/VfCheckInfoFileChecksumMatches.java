@@ -1,12 +1,9 @@
 package nkp.pspValidator.shared.engine.validationFunctions;
 
 
-import org.w3c.dom.Document;
-import nkp.pspValidator.shared.engine.Engine;
-import nkp.pspValidator.shared.engine.Utils;
-import nkp.pspValidator.shared.engine.ValueEvaluation;
-import nkp.pspValidator.shared.engine.ValueType;
+import nkp.pspValidator.shared.engine.*;
 import nkp.pspValidator.shared.engine.exceptions.*;
+import org.w3c.dom.Document;
 
 import javax.xml.xpath.XPathConstants;
 import javax.xml.xpath.XPathExpression;
@@ -43,9 +40,9 @@ public class VfCheckInfoFileChecksumMatches extends ValidationFunction {
             if (infoFile == null) {
                 return invalidValueParamNull(PARAM_INFO_FILE, paramInfoFile);
             } else if (infoFile.isDirectory()) {
-                return invalidFileIsDir(infoFile);
+                return singlErrorResult(invalidFileIsDir(infoFile));
             } else if (!infoFile.canRead()) {
-                return invalidCannotReadDir(infoFile);
+                return singlErrorResult(invalidCannotReadDir(infoFile));
             }
 
             ValueEvaluation paramChecksumFile = valueParams.getParams(PARAM_CHECKSUM_FILE).get(0).getEvaluation();
@@ -53,9 +50,9 @@ public class VfCheckInfoFileChecksumMatches extends ValidationFunction {
             if (checksumFile == null) {
                 return invalidValueParamNull(PARAM_CHECKSUM_FILE, paramChecksumFile);
             } else if (checksumFile.isDirectory()) {
-                return invalidFileIsDir(checksumFile);
+                return singlErrorResult(invalidFileIsDir(checksumFile));
             } else if (!checksumFile.canRead()) {
-                return invalidCannotReadDir(checksumFile);
+                return singlErrorResult(invalidCannotReadDir(checksumFile));
             }
 
             return validate(infoFile, checksumFile);
@@ -67,6 +64,7 @@ public class VfCheckInfoFileChecksumMatches extends ValidationFunction {
     }
 
     private ValidationResult validate(File infoFile, File checksumFileExisting) {
+        ValidationResult result = new ValidationResult();
         try {
             Document infoDoc = engine.getXmlDocument(infoFile);
             //check if path to file CHECKSUM is correct
@@ -74,7 +72,8 @@ public class VfCheckInfoFileChecksumMatches extends ValidationFunction {
             String checksumFilePath = ((String) checksumFileExp.evaluate(infoDoc, XPathConstants.STRING)).trim();
             File checksumFileFound = Utils.buildAbsoluteFile(infoFile.getParentFile(), checksumFilePath);
             if (!checksumFileFound.equals(checksumFileExisting.getAbsoluteFile())) {
-                return invalid(String.format("element checksum obsahuje cestu ke špatnému souboru: namísto (%s) obsahuje (%s)",
+                result.addError(invalid(Level.ERROR,
+                        "element checksum obsahuje cestu ke špatnému souboru: namísto (%s) obsahuje (%s)",
                         checksumFileExisting.getAbsolutePath(), checksumFileFound.getAbsolutePath()));
             }
             //check that computed hash and hash from INFO file match
@@ -82,21 +81,22 @@ public class VfCheckInfoFileChecksumMatches extends ValidationFunction {
             String hashFound = (String) hashExp.evaluate(infoDoc, XPathConstants.STRING);
             String hashComputed = Utils.computeHash(checksumFileExisting);
             if (!hashComputed.toUpperCase().equals(hashFound.toUpperCase())) {
-                return invalid(String.format("uvedený kontrolní součet '%s' nesouhlasí s vypočítaným kontrolním součtem '%s' pro soubor %s",
+                result.addError(invalid(Level.ERROR,
+                        "uvedený kontrolní součet '%s' nesouhlasí s vypočítaným kontrolním součtem '%s' pro soubor %s",
                         hashFound, hashComputed, checksumFileExisting.getAbsolutePath()));
             }
-
-            return valid();
         } catch (XmlParsingException e) {
-            return invalid(e);
+            result.addError(invalid(e));
         } catch (InvalidXPathExpressionException e) {
-            return invalid(e);
+            result.addError(invalid(e));
         } catch (XPathExpressionException e) {
-            return invalid(e);
+            result.addError(invalid(e));
         } catch (InvalidPathException e) {
-            return invalid(String.format("cesta k souboru není zapsána korektně: '%s'", e.getPath()));
+            result.addError(invalid(Level.ERROR, "cesta k souboru není zapsána korektně: '%s'", e.getPath()));
         } catch (HashComputationException e) {
-            return invalid(String.format("chyba výpočtu kontrolního součtu souboru %s: %s", checksumFileExisting.getAbsolutePath(), e.getMessage()));
+            result.addError(invalid(Level.ERROR, "chyba výpočtu kontrolního součtu souboru %s: %s", checksumFileExisting.getAbsolutePath(), e.getMessage()));
+        } finally {
+            return result;
         }
     }
 
