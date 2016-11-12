@@ -1,12 +1,12 @@
 package nkp.pspValidator.cli;
 
-import npk.pspValidator.cli.Main;
 import nkp.pspValidator.shared.Dmf;
 import nkp.pspValidator.shared.FdmfRegistry;
 import nkp.pspValidator.shared.engine.exceptions.InvalidXPathExpressionException;
 import nkp.pspValidator.shared.engine.exceptions.PspDataException;
 import nkp.pspValidator.shared.engine.exceptions.ValidatorConfigurationException;
 import nkp.pspValidator.shared.engine.exceptions.XmlParsingException;
+import npk.pspValidator.cli.Main;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -32,10 +32,11 @@ public class MainTest {
                 //,PER_1_6
                 , Dmf.Type.MONOGRAPH
                 , "1.2"
+                , null
         ));
     }
 
-    private String[] buildParams(String fdmfsDir, String pspDir, Dmf.Type dmfType, String dmfVersion) {
+    private String[] buildParams(String fdmfsDir, String pspDir, Dmf.Type dmfType, String dmfVersion, Integer verbosity) {
         List<String> params = new ArrayList<>();
         params.add("-fd");
         params.add(fdmfsDir);
@@ -51,6 +52,11 @@ public class MainTest {
         if (dmfVersion != null) {
             params.add("-dv");
             params.add(dmfVersion);
+        }
+
+        if (verbosity != null) {
+            params.add("-v");
+            params.add(verbosity.toString());
         }
 
         Object[] array = params.toArray();

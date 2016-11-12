@@ -14,6 +14,9 @@ import java.io.File;
  * Created by Martin Řehánek on 27.9.16.
  */
 public class Main {
+
+    public static int DEFAULT_VERBOSITY = 2;
+
     public static void main(String[] args) throws PspDataException, XmlParsingException, InvalidXPathExpressionException, FdmfRegistry.UnknownFdmfException, ValidatorConfigurationException {
 
         //https://commons.apache.org/proper/commons-cli/usage.html
@@ -52,6 +55,15 @@ public class Main {
                 .withLongOpt("psp-zip")
                 .create("z"));*/
 
+        options.addOption(OptionBuilder
+                .withDescription("Úroveň podrobnosti výpisu." +
+                        " 0 vypíše jen celkový počet chyb a rozhodnutí validní/nevalidní." +
+                        " 3 vypíše vše všetně sekcí a pravidel bez chyb.")
+                .hasArg()
+                .withArgName("0-3")
+                .withLongOpt("verbosity")
+                .create("v"));
+
         options.addOption(OptionBuilder.withLongOpt("help")
                 .withDescription("Zobrazit tuto nápovědu.")
                 .create());
@@ -67,29 +79,28 @@ public class Main {
                 printHelp(options);
             } else if (line.hasOption("version")) {
                 //TODO
-                System.out.println("pspValidator for CLI verze 0.1");
+                System.out.println("pspValidator-cli verze 0.1");
             } else {
                 if (!line.hasOption("fd")) {
-                    System.err.println("pro spuštění validace je nutné určit adresář obsahující formalizované DMF");
+                    System.err.println("Pro spuštění validace je nutné určit adresář obsahující formalizované DMF.");
                     printHelp(options);
                     return;
                 }
                 if (!line.hasOption("pd")) {
-                    System.err.println("pro spuštění validace je nutné zadat PSP balík");
+                    System.err.println("Pro spuštění validace je nutné zadat PSP balík.");
                     printHelp(options);
                     return;
                 }
                 Dmf.Type dmfType = line.hasOption("dt") ? Dmf.Type.valueOf(line.getOptionValue("dt").toUpperCase()) : null;
                 String dmfVersion = line.hasOption("dv") ? line.getOptionValue("dv") : null;
-
+                Integer verbosity = line.hasOption("v") ? Integer.valueOf(line.getOptionValue("v")) : DEFAULT_VERBOSITY;
 
                 String fdmfsDir = line.getOptionValue("fd");
                 String pspDir = line.getOptionValue("pd");
-                validate(new Dmf(dmfType, dmfVersion), new File(fdmfsDir), new File(pspDir));
+                validate(new Dmf(dmfType, dmfVersion), new File(fdmfsDir), new File(pspDir), verbosity);
             }
         } catch (ParseException exp) {
-            // oops, something went wrong
-            System.err.println("Parsing failed.  Reason: " + exp.getMessage());
+            System.err.println("Chyba parsování parametrů: " + exp.getMessage());
             printHelp(options);
         }
         /*validate(new Dmf(Dmf.Type.MONOGRAPH, "1.3"),
@@ -108,11 +119,11 @@ public class Main {
 
         HelpFormatter formatter = new HelpFormatter();
         formatter.setOptionComparator(null);
-        formatter.printHelp("pspValidator", header, options, footer, true);
+        formatter.printHelp("java -jar pspValidator", header, options, footer, true);
     }
 
 
-    private static void validate(Dmf dmfPrefered, File fdmfsRoot, File pspRoot) throws PspDataException, InvalidXPathExpressionException, XmlParsingException, FdmfRegistry.UnknownFdmfException, ValidatorConfigurationException {
+    private static void validate(Dmf dmfPrefered, File fdmfsRoot, File pspRoot, int printVerbosity) throws PspDataException, InvalidXPathExpressionException, XmlParsingException, FdmfRegistry.UnknownFdmfException, ValidatorConfigurationException {
         checkReadableDir(pspRoot);
         checkReadableDir(fdmfsRoot);
         System.out.println(String.format("Zpracovávám PSP balík %s", pspRoot.getAbsolutePath()));
@@ -122,16 +133,36 @@ public class Main {
         System.out.println(String.format("Kořenový adresář fDMF: %s", fdmfRoot.getAbsolutePath()));
         Validator validator = ValidatorFactory.buildValidator(fdmfRoot, pspRoot);
         System.out.println(String.format("Validátor inicializován, spouštím validace"));
-        validator.run(false, false, true);
+
+        switch (printVerbosity) {
+            case 3:
+                //vsechno, vcetne sekci a pravidel bez chyb
+                validator.run(true, true, true, true);
+                break;
+            case 2:
+                //jen chybove sekce a v popisy jednotlivych chyb (default)
+                validator.run(true, false, true, false);
+                break;
+            case 1:
+                //jen pocty chyb v chybovych sekcich, bez popisu jednotlivych chyb
+                validator.run(true, false, false, false);
+                break;
+            case 0:
+                //jen valid/not valid
+                validator.run(false, false, false, false);
+                break;
+            default:
+                throw new IllegalStateException(String.format("Nepovolená hodnota verbosity: %d. Hodnota musí být v intervalu [0-3]", printVerbosity));
+        }
     }
 
     private static void checkReadableDir(File pspRoot) {
         if (!pspRoot.exists()) {
-            throw new IllegalStateException(String.format("soubor %s neexistuje", pspRoot.getAbsolutePath()));
+            throw new IllegalStateException(String.format("Soubor %s neexistuje", pspRoot.getAbsolutePath()));
         } else if (!pspRoot.isDirectory()) {
-            throw new IllegalStateException(String.format("soubor %s není adresář", pspRoot.getAbsolutePath()));
+            throw new IllegalStateException(String.format("Soubor %s není adresář", pspRoot.getAbsolutePath()));
         } else if (!pspRoot.canRead()) {
-            throw new IllegalStateException(String.format("nelze číst adresář %s", pspRoot.getAbsolutePath()));
+            throw new IllegalStateException(String.format("Nelze číst adresář %s", pspRoot.getAbsolutePath()));
         }
     }
 
