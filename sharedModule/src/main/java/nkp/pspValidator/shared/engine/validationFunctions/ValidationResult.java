@@ -10,28 +10,11 @@ import java.util.List;
  */
 public class ValidationResult {
 
-    /*private final boolean valid;
-    private String message;*/
-
     private final List<ValidationError> errors = new ArrayList<>();
 
-    /*public ValidationResult(boolean valid) {
-        this.valid = valid;
-    }*/
-
-
-    /*public ValidationResult withMessage(String message) {
-        this.message = message;
-        return this;
-    }*/
-
-    public boolean isValid() {
-        return errors.isEmpty();
+    public boolean hasErrors() {
+        return !errors.isEmpty();
     }
-
-    /*public String getMessage() {
-        return message;
-    }*/
 
     public void addError(ValidationError error) {
         errors.add(error);

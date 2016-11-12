@@ -1,10 +1,10 @@
 package nkp.pspValidator.shared;
 
-import org.w3c.dom.Document;
-import org.xml.sax.SAXException;
 import nkp.pspValidator.shared.engine.exceptions.InvalidXPathExpressionException;
 import nkp.pspValidator.shared.engine.exceptions.PspDataException;
 import nkp.pspValidator.shared.engine.exceptions.XmlParsingException;
+import org.w3c.dom.Document;
+import org.xml.sax.SAXException;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;

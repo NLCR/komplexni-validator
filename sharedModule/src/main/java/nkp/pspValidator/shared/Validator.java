@@ -18,39 +18,72 @@ public class Validator {
 
     private final Engine engine;
 
-
     public Validator(Engine engine) {
         this.engine = engine;
     }
 
-    public void run(boolean printValid, boolean printRuleDescription, boolean printErrors) {
+    public void run(
+            boolean printSectionsWithErrors, boolean printSectionsWithoutErrors,
+            boolean printRulesWithErrors, boolean printRulesWithoutErrors) {
         List<RulesSection> rulesSections = engine.getRuleSections();
         for (RulesSection section : rulesSections) {
-            System.out.println("Provádím sekci " + section.getName());
+            Map<Level, Integer> errorsByType = computeTotalErrorsByType(section);
+            int totalErrors = computeTotalErrors(errorsByType);
+            boolean printSection = totalErrors == 0 && printSectionsWithoutErrors || totalErrors != 0 && printSectionsWithErrors;
+            if (printSection) {
+                String sectionTitle = String.format("Sekce %s: %s", section.getName(), buildSummary(totalErrors, errorsByType));
+                System.out.println();
+                System.out.println(sectionTitle);
+                System.out.println(buildLine(sectionTitle.length()));
+            }
             List<Rule> rules = engine.getRules(section);
             for (Rule rule : rules) {
                 ValidationResult result = rule.getResult();
-                if (result.isValid()) {
-                    if (printValid) {
-                        System.out.println(String.format("Pravidlo %s: OK", rule.getName()));
-                    }
-                } else {
+                boolean printRule = printSection && (result.hasErrors() && printRulesWithErrors || !result.hasErrors() && printRulesWithoutErrors);
+                if (printRule) {
                     String errorsSummary = buildErrorsSummary(result.getErrors());
                     System.out.println(String.format("Pravidlo %s: %s", rule.getName(), errorsSummary));
-                    if (printRuleDescription) {
-                        System.out.println(String.format("\t%s", rule.getDescription()));
-                    }
-                    if (printErrors) {
-                        for (ValidationError error : result.getErrors()) {
-                            System.out.println(String.format("\t%s: %s", error.getLevel(), error.getMessage()));
-                        }
+                    System.out.println(String.format("\t%s", rule.getDescription()));
+                    for (ValidationError error : result.getErrors()) {
+                        System.out.println(String.format("\t%s: %s", error.getLevel(), error.getMessage()));
                     }
                 }
             }
         }
         Map<Level, Integer> errorsByType = computeTotalErrorsByType(rulesSections);
         int totalErrors = computeTotalErrors(errorsByType);
-        System.out.println(String.format("\nCelkem: %s", buildSummary(totalErrors, errorsByType)));
+        System.out.println(String.format("\nCelkem: %s, balík je: %s", buildSummary(totalErrors, errorsByType), buildStatus(errorsByType)));
+    }
+
+    private String buildStatus(Map<Level, Integer> errorsByType) {
+        Integer errors = errorsByType.get(Level.ERROR);
+        if (errors == 0) {
+            return "validní";
+        } else {
+            return "nevalidní";
+        }
+    }
+
+    private Map<Level, Integer> computeTotalErrorsByType(RulesSection section) {
+        Map<Level, Integer> errorsByType = new HashMap<>();
+        for (Level level : Level.values()) {
+            errorsByType.put(level, 0);
+        }
+        for (Rule rule : engine.getRules(section)) {
+            for (ValidationError error : rule.getResult().getErrors()) {
+                Integer count = errorsByType.get(error.getLevel());
+                errorsByType.put(error.getLevel(), ++count);
+            }
+        }
+        return errorsByType;
+    }
+
+    private String buildLine(int length) {
+        StringBuilder builder = new StringBuilder();
+        for (int i = 0; i < length; i++) {
+            builder.append('-');
+        }
+        return builder.toString();
     }
 
     private int computeTotalErrors(Map<Level, Integer> errorByType) {
