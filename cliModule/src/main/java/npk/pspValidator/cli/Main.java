@@ -56,6 +56,13 @@ public class Main {
                 .create("z"));*/
 
         options.addOption(OptionBuilder
+                .withDescription("Soubor, do kterého se zapíše strukturovaný protokol o průběhu validace v xml.")
+                .hasArg()
+                .withArgName("SOUBOR")
+                .withLongOpt("xml-output-file")
+                .create("x"));
+
+        options.addOption(OptionBuilder
                 .withDescription("Úroveň podrobnosti výpisu." +
                         " 0 vypíše jen celkový počet chyb a rozhodnutí validní/nevalidní." +
                         " 3 vypíše vše všetně sekcí a pravidel bez chyb.")
@@ -91,13 +98,14 @@ public class Main {
                     printHelp(options);
                     return;
                 }
+                File fdmfsDir = new File(line.getOptionValue("fd"));
+                File pspDir = new File(line.getOptionValue("pd"));
                 Dmf.Type dmfType = line.hasOption("dt") ? Dmf.Type.valueOf(line.getOptionValue("dt").toUpperCase()) : null;
                 String dmfVersion = line.hasOption("dv") ? line.getOptionValue("dv") : null;
                 Integer verbosity = line.hasOption("v") ? Integer.valueOf(line.getOptionValue("v")) : DEFAULT_VERBOSITY;
+                File xmlOutputFile = line.hasOption("x") ? new File(line.getOptionValue("x")) : null;
 
-                String fdmfsDir = line.getOptionValue("fd");
-                String pspDir = line.getOptionValue("pd");
-                validate(new Dmf(dmfType, dmfVersion), new File(fdmfsDir), new File(pspDir), verbosity);
+                validate(new Dmf(dmfType, dmfVersion), fdmfsDir, pspDir, xmlOutputFile, verbosity);
             }
         } catch (ParseException exp) {
             System.err.println("Chyba parsování parametrů: " + exp.getMessage());
@@ -123,7 +131,7 @@ public class Main {
     }
 
 
-    private static void validate(Dmf dmfPrefered, File fdmfsRoot, File pspRoot, int printVerbosity) throws PspDataException, InvalidXPathExpressionException, XmlParsingException, FdmfRegistry.UnknownFdmfException, ValidatorConfigurationException {
+    private static void validate(Dmf dmfPrefered, File fdmfsRoot, File pspRoot, File xmlOutputFile, int printVerbosity) throws PspDataException, InvalidXPathExpressionException, XmlParsingException, FdmfRegistry.UnknownFdmfException, ValidatorConfigurationException {
         checkReadableDir(pspRoot);
         checkReadableDir(fdmfsRoot);
         System.out.println(String.format("Zpracovávám PSP balík %s", pspRoot.getAbsolutePath()));
@@ -137,19 +145,19 @@ public class Main {
         switch (printVerbosity) {
             case 3:
                 //vsechno, vcetne sekci a pravidel bez chyb
-                validator.run(true, true, true, true);
+                validator.run(xmlOutputFile, true, true, true, true);
                 break;
             case 2:
                 //jen chybove sekce a v popisy jednotlivych chyb (default)
-                validator.run(true, false, true, false);
+                validator.run(xmlOutputFile, true, false, true, false);
                 break;
             case 1:
                 //jen pocty chyb v chybovych sekcich, bez popisu jednotlivych chyb
-                validator.run(true, false, false, false);
+                validator.run(xmlOutputFile, true, false, false, false);
                 break;
             case 0:
                 //jen valid/not valid
-                validator.run(false, false, false, false);
+                validator.run(xmlOutputFile, false, false, false, false);
                 break;
             default:
                 throw new IllegalStateException(String.format("Nepovolená hodnota verbosity: %d. Hodnota musí být v intervalu [0-3]", printVerbosity));

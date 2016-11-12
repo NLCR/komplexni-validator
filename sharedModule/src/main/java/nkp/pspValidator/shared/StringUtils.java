@@ -5,16 +5,16 @@ package nkp.pspValidator.shared;
  */
 public class StringUtils {
 
-    public static String declineErrorNumber(int errors) {
+    public static String declineProblemNumber(int errors) {
         switch (errors) {
             case 1:
-                return errors + " chyba";
+                return errors + " problém";
             case 2:
             case 3:
             case 4:
-                return errors + " chyby";
+                return errors + " problémy";
             default:
-                return errors + " chyb";
+                return errors + " problémů";
         }
     }
 }

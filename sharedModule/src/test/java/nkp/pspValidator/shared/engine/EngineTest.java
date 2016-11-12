@@ -69,7 +69,7 @@ public class EngineTest {
                 .withValueParamByReference("files", ValueType.FILE_LIST, "INFO_FILES")
                 .withValueParam("size", ValueType.INTEGER, new ValueEvaluation(1));
         ValidationResult singleInfoFileResult = singleInfoFileVf.validate();
-        assertTrue(singleInfoFileResult.getMessage(), singleInfoFileResult.hasErrors());
+        assertTrue(singleInfoFileResult.getMessage(), singleInfoFileResult.hasProblems());
 
         //through validation rule
         Rule ruleSingleInfo =
@@ -79,7 +79,7 @@ public class EngineTest {
                                 .withValueParam("size", ValueType.INTEGER, new ValueEvaluation(1)))
                         .setDescription("musi existovat prave jeden soubor info");
         ValidationResult ruleSingleInfoResult = ruleSingleInfo.getResult();
-        assertTrue(ruleSingleInfoResult.getMessage(), ruleSingleInfoResult.hasErrors());
+        assertTrue(ruleSingleInfoResult.getMessage(), ruleSingleInfoResult.hasProblems());
 
         //through validation rule
         Rule ruleTwoInfos =
@@ -89,7 +89,7 @@ public class EngineTest {
                                 .withValueParam("size", ValueType.INTEGER, new ValueEvaluation(2)))
                         .setDescription("dva soubory info");
         ValidationResult ruleTwoInfosResult = ruleTwoInfos.getResult();
-        assertFalse(ruleTwoInfosResult.getMessage(), ruleTwoInfosResult.hasErrors());
+        assertFalse(ruleTwoInfosResult.getMessage(), ruleTwoInfosResult.hasProblems());
     }
 
 

@@ -33,10 +33,11 @@ public class MainTest {
                 , Dmf.Type.MONOGRAPH
                 , "1.2"
                 , null
+                ,null// "/home/martin/ssd/IdeaProjects/PspValidator/cliModule/src/test/resources/protocol.xml"
         ));
     }
 
-    private String[] buildParams(String fdmfsDir, String pspDir, Dmf.Type dmfType, String dmfVersion, Integer verbosity) {
+    private String[] buildParams(String fdmfsDir, String pspDir, Dmf.Type dmfType, String dmfVersion, Integer verbosity, String xmlProtocolFile) {
         List<String> params = new ArrayList<>();
         params.add("-fd");
         params.add(fdmfsDir);
@@ -57,6 +58,11 @@ public class MainTest {
         if (verbosity != null) {
             params.add("-v");
             params.add(verbosity.toString());
+        }
+
+        if (xmlProtocolFile != null) {
+            params.add("-x");
+            params.add(xmlProtocolFile);
         }
 
         Object[] array = params.toArray();

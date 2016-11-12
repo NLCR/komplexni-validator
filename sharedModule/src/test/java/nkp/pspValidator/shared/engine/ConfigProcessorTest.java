@@ -57,7 +57,7 @@ public class ConfigProcessorTest {
                 for (Rule rule : rules) {
                     //System.out.println("Running rule " + rule.getName());
                     ValidationResult result = rule.getResult();
-                    if (result.hasErrors()) {
+                    if (result.hasProblems()) {
                         //System.out.println(String.format("rule %s: OK", rule.getName()));
                     } else {
                         System.out.println(String.format("rule %s: %s: %s", rule.getName(), rule.getLevel(), result.getMessage()));

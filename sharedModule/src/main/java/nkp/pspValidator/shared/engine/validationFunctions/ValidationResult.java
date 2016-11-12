@@ -12,7 +12,7 @@ public class ValidationResult {
 
     private final List<ValidationError> errors = new ArrayList<>();
 
-    public boolean hasErrors() {
+    public boolean hasProblems() {
         return !errors.isEmpty();
     }
 
@@ -25,7 +25,7 @@ public class ValidationResult {
     }
 
 
-    public List<ValidationError> getErrors() {
+    public List<ValidationError> getProblems() {
         return errors;
     }
 
