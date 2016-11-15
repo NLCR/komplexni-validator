@@ -9,36 +9,6 @@ import java.io.InputStreamReader;
  */
 public class CliCommand {
 
-    public static class Result {
-        private final int exitValue;
-        private final String stdout;
-        private final String stderr;
-
-        public Result(int exitValue, String stdout, String stderr) {
-            this.exitValue = exitValue;
-            this.stdout = stdout;
-            this.stderr = stderr;
-        }
-
-        public String getStdout() {
-            return stdout;
-        }
-
-        public String getStderr() {
-            return stderr;
-        }
-
-        public int getExitValue() {
-            return exitValue;
-        }
-
-        public void print() {
-            System.out.println("EXIT VALUE: " + exitValue + (exitValue == 0 ? " (ok)" : " (error)"));
-            System.err.println("SERR: " + stderr);
-            System.out.println("SOUT: " + stdout);
-        }
-    }
-
     private final String command;
 
     public CliCommand(String command) {
@@ -74,6 +44,36 @@ public class CliCommand {
 
         int exitValue = pr.waitFor();
         return new Result(exitValue, stdoutBuilder.toString(), stderrBuilder.toString());
+    }
+
+    public static class Result {
+        private final int exitValue;
+        private final String stdout;
+        private final String stderr;
+
+        public Result(int exitValue, String stdout, String stderr) {
+            this.exitValue = exitValue;
+            this.stdout = stdout;
+            this.stderr = stderr;
+        }
+
+        public String getStdout() {
+            return stdout;
+        }
+
+        public String getStderr() {
+            return stderr;
+        }
+
+        public int getExitValue() {
+            return exitValue;
+        }
+
+        public void print() {
+            System.out.println("EXIT VALUE: " + exitValue + (exitValue == 0 ? " (ok)" : " (error)"));
+            System.err.println("SERR: " + stderr);
+            System.out.println("SOUT: " + stdout);
+        }
     }
 
 

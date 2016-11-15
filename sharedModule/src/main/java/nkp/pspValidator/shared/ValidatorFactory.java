@@ -2,6 +2,7 @@ package nkp.pspValidator.shared;
 
 import nkp.pspValidator.shared.engine.Engine;
 import nkp.pspValidator.shared.engine.exceptions.ValidatorConfigurationException;
+import nkp.pspValidator.shared.imageUtils.ImageUtilManager;
 
 import java.io.File;
 import java.io.FilenameFilter;
@@ -11,8 +12,8 @@ import java.io.FilenameFilter;
  */
 public class ValidatorFactory {
 
-    public static Validator buildValidator(File fdmfRoot, File pspRootDir) throws ValidatorConfigurationException {
-        Engine engine = new Engine();
+    public static Validator buildValidator(Platform platform, File fdmfRoot, File pspRootDir, ImageUtilManager imageUtilManager) throws ValidatorConfigurationException {
+        Engine engine = new Engine(imageUtilManager);
         //root dir
         engine.setProvidedFile("PSP_DIR", pspRootDir);
         //provided xsd

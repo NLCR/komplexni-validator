@@ -7,7 +7,8 @@ import javafx.scene.control.Label;
 import nkp.pspValidator.shared.Platform;
 import nkp.pspValidator.shared.imageUtils.CliCommand;
 import nkp.pspValidator.shared.imageUtils.ImageUtil;
-import nkp.pspValidator.shared.imageUtils.ImageUtilRegistry;
+import nkp.pspValidator.shared.imageUtils.ImageUtilManager;
+import nkp.pspValidator.shared.imageUtils.ImageUtilManagerFactory;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -52,10 +53,14 @@ public class Controller {
 
 
     private final Platform platform;
+    //private final ImageUtilRegistry utilRegistry = ImageUtilRegistryImpl.instanceOf();
+    private final ImageUtilManager utilManager;
+
 
     public Controller() {
         platform = Platform.detectOs();
         LOGGER.info("platform: " + platform.toString());
+        utilManager = ImageUtilManagerFactory.instanceOf().buildImageUtilManager(platform.getOperatingSystem());
     }
 
     public void initialize() {
@@ -80,19 +85,18 @@ public class Controller {
     }
 
 
-    public void detectUtilVersion(String utilName, Label label) {
-        //detectUtilVersionOnFxThread(utilName,label);
-        detectUtilVersionOnWorkerThread(utilName, label);
+    public void detectUtilVersion(ImageUtil util, Label label) {
+        //detectUtilVersionOnFxThread(util,label);
+        detectUtilVersionOnWorkerThread(util, label);
     }
 
-    public void detectUtilVersionOnFxThread(String utilName, Label label) {
-        label.setText(String.format("checking %s ...", utilName));
+    public void detectUtilVersionOnFxThread(ImageUtil util, Label label) {
+        label.setText(String.format("checking %s ...", util));
         try {
-            ImageUtil imageUtil = ImageUtilRegistry.getImageUtilByName().get(utilName);
-            if (imageUtil == null) {
-                label.setText(String.format("util '%s' not defined", utilName));
+            if (!utilManager.isVersionDetectionDefined(util)) {
+                label.setText(String.format("version detection not defined for %s", util));
             } else {
-                String version = imageUtil.runVersionDetection(platform);
+                String version = utilManager.runUtilVersionDetection(util);
                 System.out.println(version);
                 label.setText(version);
             }
@@ -109,17 +113,16 @@ public class Controller {
     }
 
 
-    public void detectUtilVersionOnWorkerThread(String utilName, Label label) {
-        label.setText(String.format("checking %s ...", utilName));
+    public void detectUtilVersionOnWorkerThread(ImageUtil util, Label label) {
+        label.setText(String.format("checking %s ...", util));
         Task task = new Task<Void>() {
             @Override
             protected Void call() throws Exception {
                 try {
-                    ImageUtil imageUtil = ImageUtilRegistry.getImageUtilByName().get(utilName);
-                    if (imageUtil == null) {
-                        updateMessage(String.format("util '%s' not defined", utilName));
+                    if (!utilManager.isVersionDetectionDefined(util)) {
+                        updateMessage(String.format("version detection not defined for %s", util));
                     } else {
-                        String version = imageUtil.runVersionDetection(platform);
+                        String version = utilManager.runUtilVersionDetection(util);
                         System.out.println(version);
                         updateMessage(version);
                     }
@@ -142,20 +145,19 @@ public class Controller {
     }
 
 
-    public void runUtil(String utilName, Label label, String imageFile) {
-        runUtilOnWorkerThread(utilName, label, imageFile);
-        //runUtilOnFxThread(utilName, label, imageFile);
+    public void runUtil(ImageUtil type, Label label, String imageFile) {
+        runUtilOnWorkerThread(type, label, imageFile);
+        //runUtilOnFxThread(type, label, imageFile);
     }
 
 
-    public void runUtilOnFxThread(String utilName, Label label, String imageFile) {
-        label.setText(String.format("running %s ...", utilName));
+    public void runUtilOnFxThread(ImageUtil util, Label label, String imageFile) {
+        label.setText(String.format("running %s ...", util));
         try {
-            ImageUtil imageUtil = ImageUtilRegistry.getImageUtilByName().get(utilName);
-            if (imageUtil == null) {
-                label.setText(String.format("util '%s' not defined", utilName));
+            if (!utilManager.isUtilExecutionDefined(util)) {
+                label.setText(String.format("util execution not defined for %s", util));
             } else {
-                String output = imageUtil.runUtil(platform, imageFile);
+                String output = utilManager.runUtilExecution(util, imageFile);
                 System.out.println(output);
                 String partial = output.replace("\n", " ").substring(0, Math.min(output.length(), MAX_OUTPUT_LENGTH)) + " ...";
                 label.setText(partial);
@@ -172,8 +174,8 @@ public class Controller {
         }
     }
 
-    public void runUtilOnWorkerThread(String utilName, Label label, String imageFile) {
-        label.setText(String.format("running %s ...", utilName));
+    public void runUtilOnWorkerThread(ImageUtil util, Label label, String imageFile) {
+        label.setText(String.format("running %s ...", util));
         Task task = new Task<Void>() {
 
             @Override
@@ -183,11 +185,10 @@ public class Controller {
                     return null;
                 }
                 try {
-                    ImageUtil imageUtil = ImageUtilRegistry.getImageUtilByName().get(utilName);
-                    if (imageUtil == null) {
-                        updateMessage(String.format("util '%s' not defined", utilName));
+                    if (!utilManager.isUtilExecutionDefined(util)) {
+                        updateMessage(String.format("util execution not defined for %s", util));
                     } else {
-                        String output = imageUtil.runUtil(platform, imageFile);
+                        String output = utilManager.runUtilExecution(util, imageFile);
                         System.out.println(output);
                         String partial = output.replace("\n", " ").substring(0, Math.min(output.length(), MAX_OUTPUT_LENGTH)) + " ...";
                         updateMessage(partial);
@@ -221,38 +222,38 @@ public class Controller {
     }
 
     public void detectJpylyzerVersion(ActionEvent actionEvent) {
-        detectUtilVersion("jpylyzer", detectJpylyzerVersionLabel);
+        detectUtilVersion(ImageUtil.JPYLYZER, detectJpylyzerVersionLabel);
     }
 
     public void detectJhoveVersion(ActionEvent actionEvent) {
-        detectUtilVersion("jhove", detectJhoveVersionLabel);
+        detectUtilVersion(ImageUtil.JHOVE, detectJhoveVersionLabel);
     }
 
     public void detectImageMagickVersion(ActionEvent actionEvent) {
-        detectUtilVersion("imageMagick", detectImageMagickVersionLabel);
+        detectUtilVersion(ImageUtil.IMAGE_MAGICK, detectImageMagickVersionLabel);
     }
 
     public void detectKakaduVersion(ActionEvent actionEvent) {
-        detectUtilVersion("kakadu", detectKakaduVersionLabel);
+        detectUtilVersion(ImageUtil.KAKADU, detectKakaduVersionLabel);
     }
 
 
     public void runJpylyzer(ActionEvent actionEvent) {
-        runUtil("jpylyzer", runJpylyzerLabel, getMcFile());
+        runUtil(ImageUtil.JPYLYZER, runJpylyzerLabel, getMcFile());
     }
 
 
     public void runJhove(ActionEvent actionEvent) {
-        runUtil("jhove", runJhoveLabel, getMcFile());
+        runUtil(ImageUtil.JHOVE, runJhoveLabel, getMcFile());
     }
 
 
     public void runImageMagick(ActionEvent actionEvent) {
-        runUtil("imageMagick", runImageMagickLabel, getMcFile());
+        runUtil(ImageUtil.IMAGE_MAGICK, runImageMagickLabel, getMcFile());
     }
 
     public void runKakadu(ActionEvent actionEvent) {
-        runUtil("kakadu", runKakaduLabel, getMcFile());
+        runUtil(ImageUtil.KAKADU, runKakaduLabel, getMcFile());
     }
 
     public void installImageMagick(ActionEvent actionEvent) {

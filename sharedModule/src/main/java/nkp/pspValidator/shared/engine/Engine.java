@@ -5,6 +5,7 @@ import nkp.pspValidator.shared.engine.exceptions.InvalidXPathExpressionException
 import nkp.pspValidator.shared.engine.exceptions.ValidatorConfigurationException;
 import nkp.pspValidator.shared.engine.exceptions.XmlParsingException;
 import nkp.pspValidator.shared.engine.validationFunctions.*;
+import nkp.pspValidator.shared.imageUtils.ImageUtilManager;
 import org.w3c.dom.Document;
 
 import javax.xml.xpath.XPathExpression;
@@ -32,7 +33,11 @@ public class Engine {
     private final XmlManager xmlManager = new XmlManager(true);
 
     private final RulesManager rulesManager = new RulesManager();
+    private final ImageUtilManager imageUtilManager;
 
+    public Engine(ImageUtilManager imageUtilManager) {
+        this.imageUtilManager = imageUtilManager;
+    }
 
     //provided vars
 

@@ -2,53 +2,53 @@
 
     <versionDetection>
         <operatingSystem name="Linux">
-            <execution>
+            <command>
                 <path>/usr/bin</path>
-                <command>jpylyzer --version</command>
-            </execution>
-            <parsing>
+                <rawCommand>jpylyzer --version</rawCommand>
+            </command>
+            <parser>
                 <stream>stderr</stream>
                 <type>text</type>
                 <regexp>*</regexp>
-            </parsing>
+            </parser>
             <!--todo: pravidlo, ktere z parsovaneho vystupu rozhodne, jestli nastroj instalovany je-->
         </operatingSystem>
         <operatingSystem name="Windows">
-            <execution>
+            <command>
                 <path>C:\Program Files\jpylyzer</path>
-                <command>jpylyzer --version</command>
-            </execution>
-            <parsing>
+                <rawCommand>jpylyzer --version</rawCommand>
+            </command>
+            <parser>
                 <stream>stderr</stream>
                 <type>text</type>
                 <regexp>*</regexp>
-            </parsing>
+            </parser>
         </operatingSystem>
     </versionDetection>
 
-    <run>
+    <execution>
         <operatingSystem name="Linux">
-            <execution>
+            <command>
                 <path>/usr/bin</path>
-                <command>jpylyzer jp2In ${IMAGE_FILE}</command>
-            </execution>
-            <parsing>
+                <rawCommand>jpylyzer jp2In ${IMAGE_FILE}</rawCommand>
+            </command>
+            <parser>
                 <stream>stdout</stream>
                 <type>xml</type>
                 <regexp>*</regexp>
-            </parsing>
+            </parser>
         </operatingSystem>
         <operatingSystem name="Windows">
-            <execution>
+            <command>
                 <path>C:\Program Files\jpylyzer</path>
-                <command>jpylyzer jp2In ${IMAGE_FILE}</command>
-            </execution>
-            <parsing>
+                <rawCommand>jpylyzer jp2In ${IMAGE_FILE}</rawCommand>
+            </command>
+            <parser>
                 <stream>stdout</stream>
                 <type>xml</type>
                 <regexp>*</regexp>
-            </parsing>
+            </parser>
         </operatingSystem>
-    </run>
+    </execution>
 
 </imageUtil>

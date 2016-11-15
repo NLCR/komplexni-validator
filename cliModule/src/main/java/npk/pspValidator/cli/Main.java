@@ -5,10 +5,16 @@ import nkp.pspValidator.shared.engine.exceptions.InvalidXPathExpressionException
 import nkp.pspValidator.shared.engine.exceptions.PspDataException;
 import nkp.pspValidator.shared.engine.exceptions.ValidatorConfigurationException;
 import nkp.pspValidator.shared.engine.exceptions.XmlParsingException;
+import nkp.pspValidator.shared.imageUtils.ImageUtil;
+import nkp.pspValidator.shared.imageUtils.ImageUtilManager;
+import nkp.pspValidator.shared.imageUtils.ImageUtilManagerFactory;
 import nkp.pspValidator.shared.xsdValidation.XsdValidator;
 import org.apache.commons.cli.*;
 
 import java.io.File;
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by Martin Řehánek on 27.9.16.
@@ -30,21 +36,21 @@ public class Main {
         options.addOption(OptionBuilder
                 .withDescription("Verze standardu pro validaci.")
                 .hasArg()
-                .withArgName("DMF_VERSION")
+                .withArgName("VERZE_DMF")
                 .withLongOpt("dmf-version")
                 .create("dv"));
 
         options.addOption(OptionBuilder
                 .withDescription("Adresář obsahující formalizované DMF pro jednotlivé verze standardu.")
                 .hasArg()
-                .withArgName("FDMF_DIR")
+                .withArgName("ADRESÁŘ_FDMF")
                 .withLongOpt("fdmf-dir")
                 .create("fd"));
         options.addOption(OptionBuilder
                 .withDescription("Adresář PSP balíku, který má být validován.")
                 //.isRequired()
                 .hasArg()
-                .withArgName("PSP_DIR")
+                .withArgName("ADRESÁŘ_PSP")
                 .withLongOpt("psp-dir")
                 .create("pd"));
 
@@ -70,6 +76,38 @@ public class Main {
                 .withArgName("0-3")
                 .withLongOpt("verbosity")
                 .create("v"));
+
+        options.addOption(OptionBuilder
+                .withDescription("Adresář typ s binárními soubory nástroje Jpylyzer." +
+                        " Např. C:\\Program Files\\jpylyzer_1.17.0_win64 pro Windows, /usr/bin pro Linux, TODO pro MacOS.")
+                .hasArg()
+                .withArgName("ADRESÁŘ")
+                .withLongOpt("jpylyzer-path")
+                .create(null));
+
+        options.addOption(OptionBuilder
+                .withDescription("Adresář typ s binárními soubory nástroje JHOVE." +
+                        " Např. C:\\Program Files\\jhove-1_11\\\\jhove pro Windows, /usr/bin pro Linux, TODO pro MacOS.")
+                .hasArg()
+                .withArgName("ADRESÁŘ")
+                .withLongOpt("jhove-path")
+                .create(null));
+
+        options.addOption(OptionBuilder
+                .withDescription("Adresář typ s binárními soubory nástroje ImageMagick." +
+                        " Např. C:\\Program Files\\ImageMagick-7.0.3-Q16 pro Windows, /usr/bin pro Linux, TODO pro MacOS.")
+                .hasArg()
+                .withArgName("ADRESÁŘ")
+                .withLongOpt("imageMagick-path")
+                .create(null));
+        options.addOption(OptionBuilder
+                .withDescription("Adresář typ s binárními soubory nástroje Kakadu." +
+                        " Např. C:\\Program Files\\Kakadu pro Windows, /usr/bin pro Linux, TODO pro MacOS.")
+                .hasArg()
+                .withArgName("ADRESÁŘ")
+                .withLongOpt("kakadu-path")
+                .create(null));
+
 
         options.addOption(OptionBuilder.withLongOpt("help")
                 .withDescription("Zobrazit tuto nápovědu.")
@@ -98,6 +136,8 @@ public class Main {
                     printHelp(options);
                     return;
                 }
+
+
                 File fdmfsDir = new File(line.getOptionValue("fd"));
                 File pspDir = new File(line.getOptionValue("pd"));
                 Dmf.Type dmfType = line.hasOption("dt") ? Dmf.Type.valueOf(line.getOptionValue("dt").toUpperCase()) : null;
@@ -105,7 +145,21 @@ public class Main {
                 Integer verbosity = line.hasOption("v") ? Integer.valueOf(line.getOptionValue("v")) : DEFAULT_VERBOSITY;
                 File xmlOutputFile = line.hasOption("x") ? new File(line.getOptionValue("x")) : null;
 
-                validate(new Dmf(dmfType, dmfVersion), fdmfsDir, pspDir, xmlOutputFile, verbosity);
+                Map<ImageUtil, File> utilPaths = new HashMap<>();
+                if (line.hasOption("jpylyzer-path")) {
+                    utilPaths.put(ImageUtil.JPYLYZER, new File(line.getOptionValue("jpylyzer-path")));
+                }
+                if (line.hasOption("jhove-path")) {
+                    utilPaths.put(ImageUtil.JHOVE, new File(line.getOptionValue("jhove-path")));
+                }
+                if (line.hasOption("imageMagick-path")) {
+                    utilPaths.put(ImageUtil.IMAGE_MAGICK, new File(line.getOptionValue("imageMagick-path")));
+                }
+                if (line.hasOption("kakadu-path")) {
+                    utilPaths.put(ImageUtil.IMAGE_MAGICK, new File(line.getOptionValue("kakadu-path")));
+                }
+
+                validate(new Dmf(dmfType, dmfVersion), fdmfsDir, pspDir, xmlOutputFile, verbosity, utilPaths);
             }
         } catch (ParseException exp) {
             System.err.println("Chyba parsování parametrů: " + exp.getMessage());
@@ -113,7 +167,8 @@ public class Main {
         }
         /*validate(new Dmf(Dmf.Type.MONOGRAPH, "1.3"),
                 new File("/home/martin/IdeaProjects/PspValidator/sharedModule/src/main/resources/rzehan/shared/fDMF"),
-                new File("/home/martin/IdeaProjects/PspValidator/sharedModule/src/test/resources/monograph_1.2/b50eb6b0-f0a4-11e3-b72e-005056827e52")
+                new File("/home/martin/IdeaProjects/PspValidator/sharedModule/src/test/resources/monograph_1.2/b50eb6b0-f0a4-11e3-b72e-005056827e52"),
+
         );*/
     }
 
@@ -131,7 +186,7 @@ public class Main {
     }
 
 
-    private static void validate(Dmf dmfPrefered, File fdmfsRoot, File pspRoot, File xmlOutputFile, int printVerbosity) throws PspDataException, InvalidXPathExpressionException, XmlParsingException, FdmfRegistry.UnknownFdmfException, ValidatorConfigurationException {
+    private static void validate(Dmf dmfPrefered, File fdmfsRoot, File pspRoot, File xmlOutputFile, int printVerbosity, Map<ImageUtil, File> utilPaths) throws PspDataException, InvalidXPathExpressionException, XmlParsingException, FdmfRegistry.UnknownFdmfException, ValidatorConfigurationException {
         checkReadableDir(pspRoot);
         checkReadableDir(fdmfsRoot);
         System.out.println(String.format("Zpracovávám PSP balík %s", pspRoot.getAbsolutePath()));
@@ -139,9 +194,14 @@ public class Main {
         System.out.println(String.format("Bude použita verze standardu %s", dmfResolved));
         File fdmfRoot = new FdmfRegistry(fdmfsRoot).getFdmfDir(dmfResolved);
         System.out.println(String.format("Kořenový adresář fDMF: %s", fdmfRoot.getAbsolutePath()));
-        Validator validator = ValidatorFactory.buildValidator(fdmfRoot, pspRoot);
-        System.out.println(String.format("Validátor inicializován, spouštím validace"));
+        Platform platform = Platform.detectOs();
+        System.out.println(String.format("Platforma: %s", platform.toReadableString()));
+        ImageUtilManager imageUtilManager = ImageUtilManagerFactory.instanceOf().buildImageUtilManager(platform.getOperatingSystem());
+        imageUtilManager.setPaths(utilPaths);
+        detectImageTools(imageUtilManager);
 
+        Validator validator = ValidatorFactory.buildValidator(platform, fdmfRoot, pspRoot, imageUtilManager);
+        System.out.println(String.format("Validátor inicializován, spouštím validace"));
         switch (printVerbosity) {
             case 3:
                 //vsechno, vcetne sekci a pravidel bez chyb
@@ -161,6 +221,28 @@ public class Main {
                 break;
             default:
                 throw new IllegalStateException(String.format("Nepovolená hodnota verbosity: %d. Hodnota musí být v intervalu [0-3]", printVerbosity));
+        }
+    }
+
+    private static void detectImageTools(ImageUtilManager imageUtilManager) {
+        for (ImageUtil util : ImageUtil.values()) {
+            System.out.print(String.format("kontroluji dostupnost nástroje %s: ", util.name()));
+            if (!imageUtilManager.isVersionDetectionDefined(util)) {
+                System.out.println("není definován způsob detekce verze");
+            } else if (!imageUtilManager.isUtilExecutionDefined(util)) {
+                System.out.println("není definován způsob spuštění");
+            } else {
+                try {
+                    String version = imageUtilManager.runUtilVersionDetection(util);
+                    imageUtilManager.setUtilAvailable(util, true);
+                    System.out.println("nástroj nalezen, verze: " + version);
+                } catch (IOException e) {
+                    //System.out.println("I/O chyba: " + e.getMessage());
+                    System.out.println("nástroj nenalezen");
+                } catch (InterruptedException e) {
+                    System.out.println("detekce přerušena: " + e.getMessage());
+                }
+            }
         }
     }
 

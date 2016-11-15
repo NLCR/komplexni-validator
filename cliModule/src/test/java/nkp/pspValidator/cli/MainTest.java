@@ -32,12 +32,18 @@ public class MainTest {
                 //,PER_1_6
                 , Dmf.Type.MONOGRAPH
                 , "1.2"
-                , null
-                ,null// "/home/martin/ssd/IdeaProjects/PspValidator/cliModule/src/test/resources/protocol.xml"
+                , null //verbosity
+                , null// "/home/martin/ssd/IdeaProjects/PspValidator/cliModule/src/test/resources/protocol.xml" //xml protocol
+                , "/usr/bin" //jpylyzer path
+                , "/usr/bin" //jhove path
+                , null //imageMagick path
+                , null //kakadu path
         ));
     }
 
-    private String[] buildParams(String fdmfsDir, String pspDir, Dmf.Type dmfType, String dmfVersion, Integer verbosity, String xmlProtocolFile) {
+    private String[] buildParams(String fdmfsDir, String pspDir, Dmf.Type dmfType, String dmfVersion, Integer verbosity, String xmlProtocolFile,
+                                 String jpylyzerPath, String jhovePath, String imageMagickPath, String kakaduPath
+    ) {
         List<String> params = new ArrayList<>();
         params.add("-fd");
         params.add(fdmfsDir);
@@ -63,6 +69,26 @@ public class MainTest {
         if (xmlProtocolFile != null) {
             params.add("-x");
             params.add(xmlProtocolFile);
+        }
+
+        if (jpylyzerPath != null) {
+            params.add("--jpylyzer-path");
+            params.add(jpylyzerPath);
+        }
+
+        if (jhovePath != null) {
+            params.add("--jhove-path");
+            params.add(jhovePath);
+        }
+
+        if (imageMagickPath != null) {
+            params.add("--imageMagick-path");
+            params.add(imageMagickPath);
+        }
+
+        if (kakaduPath != null) {
+            params.add("--kakadu-path");
+            params.add(kakaduPath);
         }
 
         Object[] array = params.toArray();
