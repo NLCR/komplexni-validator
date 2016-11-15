@@ -145,6 +145,7 @@ public class Main {
                 Integer verbosity = line.hasOption("v") ? Integer.valueOf(line.getOptionValue("v")) : DEFAULT_VERBOSITY;
                 File xmlOutputFile = line.hasOption("x") ? new File(line.getOptionValue("x")) : null;
 
+
                 Map<ImageUtil, File> utilPaths = new HashMap<>();
                 if (line.hasOption("jpylyzer-path")) {
                     utilPaths.put(ImageUtil.JPYLYZER, new File(line.getOptionValue("jpylyzer-path")));
@@ -189,6 +190,7 @@ public class Main {
     private static void validate(Dmf dmfPrefered, File fdmfsRoot, File pspRoot, File xmlOutputFile, int printVerbosity, Map<ImageUtil, File> utilPaths) throws PspDataException, InvalidXPathExpressionException, XmlParsingException, FdmfRegistry.UnknownFdmfException, ValidatorConfigurationException {
         checkReadableDir(pspRoot);
         checkReadableDir(fdmfsRoot);
+        File imageUtilsConfigFile = getImageUtilsConfigFile(fdmfsRoot);
         System.out.println(String.format("Zpracovávám PSP balík %s", pspRoot.getAbsolutePath()));
         Dmf dmfResolved = new DmfDetector().resolveDmf(dmfPrefered, pspRoot);
         System.out.println(String.format("Bude použita verze standardu %s", dmfResolved));
@@ -196,7 +198,7 @@ public class Main {
         System.out.println(String.format("Kořenový adresář fDMF: %s", fdmfRoot.getAbsolutePath()));
         Platform platform = Platform.detectOs();
         System.out.println(String.format("Platforma: %s", platform.toReadableString()));
-        ImageUtilManager imageUtilManager = ImageUtilManagerFactory.instanceOf().buildImageUtilManager(platform.getOperatingSystem());
+        ImageUtilManager imageUtilManager = new ImageUtilManagerFactory(imageUtilsConfigFile).buildImageUtilManager(platform.getOperatingSystem());
         imageUtilManager.setPaths(utilPaths);
         detectImageTools(imageUtilManager);
 
@@ -221,6 +223,17 @@ public class Main {
                 break;
             default:
                 throw new IllegalStateException(String.format("Nepovolená hodnota verbosity: %d. Hodnota musí být v intervalu [0-3]", printVerbosity));
+        }
+    }
+
+    private static File getImageUtilsConfigFile(File fdmfsRoot) throws ValidatorConfigurationException {
+        File file = new File(fdmfsRoot, "imageUtils.xml");
+        if (!file.exists()) {
+            throw new ValidatorConfigurationException("chybí konfigurační soubor " + file.getAbsolutePath());
+        } else if (!file.canRead()) {
+            throw new ValidatorConfigurationException("nelze číst konfigurační soubor " + file.getAbsolutePath());
+        } else {
+            return file;
         }
     }
 

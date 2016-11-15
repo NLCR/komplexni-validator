@@ -2,6 +2,7 @@ package nkp.pspValidator.shared.engine;
 
 import com.mycila.xmltool.XMLDoc;
 import com.mycila.xmltool.XMLTag;
+import nkp.pspValidator.shared.XmlUtils;
 import nkp.pspValidator.shared.engine.evaluationFunctions.EvaluationFunction;
 import nkp.pspValidator.shared.engine.exceptions.ValidatorConfigurationException;
 import nkp.pspValidator.shared.engine.validationFunctions.ValidationFunction;
@@ -19,6 +20,7 @@ public class ConfigProcessor {
 
     public void processConfigFile(Engine engine, File configFile) throws ValidatorConfigurationException {
         XMLTag doc = XMLDoc.from(configFile, true);
+        //TODO: nebude potreba s xsd
         if (!"fDMF".equals(doc.getCurrentTagName())) {
             throw new ValidatorConfigurationException("root element není dmf");
         }

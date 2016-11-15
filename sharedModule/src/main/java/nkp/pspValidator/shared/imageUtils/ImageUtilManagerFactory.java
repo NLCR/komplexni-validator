@@ -1,9 +1,18 @@
 package nkp.pspValidator.shared.imageUtils;
 
+import com.mycila.xmltool.XMLDoc;
+import com.mycila.xmltool.XMLTag;
 import nkp.pspValidator.shared.OperatingSystem;
+import nkp.pspValidator.shared.engine.exceptions.ValidatorConfigurationException;
+import org.w3c.dom.Element;
 
+import java.io.File;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+
+import static nkp.pspValidator.shared.XmlUtils.getChildrenElementsByName;
+import static nkp.pspValidator.shared.XmlUtils.getFirstChildElementsByName;
 
 /**
  * Created by Martin Řehánek on 29.9.16.
@@ -26,15 +35,39 @@ public class ImageUtilManagerFactory {
         return result;
     }
 
-    public static ImageUtilManagerFactory instanceOf() {
-        if (instance == null) {
-            instance = new ImageUtilManagerFactory();
+    public ImageUtilManagerFactory(File configFile) throws ValidatorConfigurationException {
+        XMLTag doc = XMLDoc.from(configFile, true);
+        if (!"imageUtils".equals(doc.getCurrentTagName())) {
+            throw new ValidatorConfigurationException("root element není dmf");
         }
-        return instance;
-    }
+        List<Element> imageUtilEls = getChildrenElementsByName(doc.getCurrentTag(), "imageUtil");
+        for (Element imageUtilEl : imageUtilEls) {
+            ImageUtil util = ImageUtil.valueOf(imageUtilEl.getAttribute("name"));
 
-    public ImageUtilManagerFactory() {
-        init();
+            Element versionDetectionEl = getFirstChildElementsByName(imageUtilEl, "versionDetection");
+            List<Element> versionDetectionsEls = getChildrenElementsByName(versionDetectionEl, "operatingSystem");
+            for (Element osEl : versionDetectionsEls) {
+                OperatingSystem os = OperatingSystem.valueOf(osEl.getAttribute("name"));
+                String command = getFirstChildElementsByName(osEl, "command").getTextContent().trim();
+                Element parserEl = getFirstChildElementsByName(osEl, "parser");
+                Element streamEl = getFirstChildElementsByName(parserEl, "stream");
+                Stream stream = Stream.valueOf(streamEl.getTextContent().trim());
+                String regexp = getFirstChildElementsByName(parserEl, "regexp").getTextContent().trim();
+                addVersionDetection(os, util, command, stream, regexp);
+            }
+
+            Element executionEl = getFirstChildElementsByName(imageUtilEl, "execution");
+            List<Element> executionOsEl = getChildrenElementsByName(executionEl, "operatingSystem");
+            for (Element osEl : executionOsEl) {
+                OperatingSystem os = OperatingSystem.valueOf(osEl.getAttribute("name"));
+                String command = getFirstChildElementsByName(osEl, "command").getTextContent().trim();
+                Element parserEl = getFirstChildElementsByName(osEl, "parser");
+                Element streamEl = getFirstChildElementsByName(parserEl, "stream");
+                Stream stream = Stream.valueOf(streamEl.getTextContent().trim());
+                String regexp = getFirstChildElementsByName(parserEl, "regexp").getTextContent().trim();
+                addUtilityExecution(os, util, command, stream, regexp);
+            }
+        }
     }
 
     public ImageUtilManager buildImageUtilManager(OperatingSystem os) {

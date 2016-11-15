@@ -1,4 +1,4 @@
-package nkp.pspValidator.shared.engine;
+package nkp.pspValidator.shared;
 
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -29,4 +29,7 @@ public class XmlUtils {
     }
 
 
+    public static Element getFirstChildElementsByName(Element osEl, String name) {
+        return getChildrenElementsByName(osEl, name).get(0);
+    }
 }
