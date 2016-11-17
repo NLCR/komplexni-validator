@@ -1302,6 +1302,8 @@
 
     <rules-section name="Secondary METS filesec" description="">
 
+        <!--TODO: dodelat-->
+
         <rule name="SECONDARY-METS_FILESEC_ALL_FILEGROUPS_PRESENT">
             <description>Element mets:fileSec v každém souboru SECONDARY-METS musí obsahovat elementy mets:fileGrp s
                 definovanými hodnotami ID a USE a žádné další.
@@ -1311,6 +1313,27 @@
                     <value name="secondary-mets_files" type="FILE_LIST">
                         <value-ref name="SECONDARY-METS_FILES"/>
                     </value>
+                </params>
+            </validation>
+        </rule>
+
+
+    </rules-section>
+
+    <rules-section name="JPEG 2000 "
+                   description="Kontrola obrázků MASTER-COPY a USER-COPY v JPEG 2000 za pomocí externích nástrojů">
+
+        <rule name="MASTER-COPY_FILES_VALID_BY_JPYLYZER">
+            <description>Všechny soubory MASTER-COPY musí být validní vůči profilu JPEG 2000 pro nástroj JPYLYZER.
+            </description>
+            <validation functionName="checkImagesFilesValidByExternalUtil">
+                <params>
+                    <value name="level" type="LEVEL">ERROR</value>
+                    <value name="files" type="FILE_LIST">
+                        <value-ref name="MASTER-COPY_FILES"/>
+                    </value>
+                    <value name="copy" type="IMAGE_COPY">MASTER</value>
+                    <value name="util" type="IMAGE_UTIL">JPYLYZER</value>
                 </params>
             </validation>
         </rule>

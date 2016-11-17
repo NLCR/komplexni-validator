@@ -96,7 +96,7 @@ public class ImageUtilManager {
         String command = path != null ? path.getAbsolutePath() + File.separator + ExecutionInfo.getRawCommand() :
                 ExecutionInfo.getRawCommand();
         command = command.replace("${IMAGE_FILE}", imageFile);
-        System.out.println(command);
+        //System.out.println(command);
         return command;
     }
 
@@ -115,9 +115,9 @@ public class ImageUtilManager {
         }
     }
 
-    public String runUtilExecution(ImageUtil utilType, String imageFile) throws IOException, InterruptedException {
+    public String runUtilExecution(ImageUtil utilType, File imageFile) throws IOException, InterruptedException {
         UtilHandler UtilHandler = utilExecutionHandlers.get(utilType);
-        String command = constructCommand(UtilHandler.getCommand(), imageFile);
+        String command = constructCommand(UtilHandler.getCommand(), imageFile.getAbsolutePath());
         CliCommand.Result result = new CliCommand(command).execute();
         String rawOutput = null;
         Stream stream = UtilHandler.getParser().getStream();

@@ -5,11 +5,13 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import nkp.pspValidator.shared.Platform;
+import nkp.pspValidator.shared.engine.exceptions.ValidatorConfigurationException;
 import nkp.pspValidator.shared.imageUtils.CliCommand;
 import nkp.pspValidator.shared.imageUtils.ImageUtil;
 import nkp.pspValidator.shared.imageUtils.ImageUtilManager;
 import nkp.pspValidator.shared.imageUtils.ImageUtilManagerFactory;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -22,8 +24,8 @@ public class Controller {
     private static final Logger LOGGER = Logger.getLogger(Controller.class.getSimpleName());
 
     private static final int MAX_OUTPUT_LENGTH = 100;
-    private static final String MC_FILE_LINUX = "/home/martin/zakazky/NKP-validator/data/monografie_1.2/b50eb6b0-f0a4-11e3-b72e-005056827e52/mastercopy/mc_b50eb6b0-f0a4-11e3-b72e-005056827e52_0001.jp2";
-    private static final String MC_FILE_WINDOWS = "C:\\Users\\Martin\\Documents\\PspValidator\\mc_b50eb6b0-f0a4-11e3-b72e-005056827e52_0001.jp2";
+    private static final File MC_FILE_LINUX = new File("/home/martin/zakazky/NKP-validator/data/monografie_1.2/b50eb6b0-f0a4-11e3-b72e-005056827e52/mastercopy/mc_b50eb6b0-f0a4-11e3-b72e-005056827e52_0001.jp2");
+    private static final File MC_FILE_WINDOWS = new File("C:\\Users\\Martin\\Documents\\PspValidator\\mc_b50eb6b0-f0a4-11e3-b72e-005056827e52_0001.jp2");
 
 
     @FXML
@@ -57,10 +59,11 @@ public class Controller {
     private final ImageUtilManager utilManager;
 
 
-    public Controller() {
+    public Controller() throws ValidatorConfigurationException {
         platform = Platform.detectOs();
         LOGGER.info("platform: " + platform.toString());
-        utilManager = ImageUtilManagerFactory.instanceOf().buildImageUtilManager(platform.getOperatingSystem());
+        utilManager = new ImageUtilManagerFactory(new File("/home/martin/ssd/IdeaProjects/PspValidator/sharedModule/src/main/resources/nkp/pspValidator/shared/fDMF/imageUtils.xml"))
+                .buildImageUtilManager(platform.getOperatingSystem());
     }
 
     public void initialize() {
@@ -145,13 +148,13 @@ public class Controller {
     }
 
 
-    public void runUtil(ImageUtil type, Label label, String imageFile) {
+    public void runUtil(ImageUtil type, Label label, File imageFile) {
         runUtilOnWorkerThread(type, label, imageFile);
         //runUtilOnFxThread(type, label, imageFile);
     }
 
 
-    public void runUtilOnFxThread(ImageUtil util, Label label, String imageFile) {
+    public void runUtilOnFxThread(ImageUtil util, Label label, File imageFile) {
         label.setText(String.format("running %s ...", util));
         try {
             if (!utilManager.isUtilExecutionDefined(util)) {
@@ -174,7 +177,7 @@ public class Controller {
         }
     }
 
-    public void runUtilOnWorkerThread(ImageUtil util, Label label, String imageFile) {
+    public void runUtilOnWorkerThread(ImageUtil util, Label label, File imageFile) {
         label.setText(String.format("running %s ...", util));
         Task task = new Task<Void>() {
 
@@ -210,7 +213,7 @@ public class Controller {
         task.messageProperty().addListener((obs, oldMessage, newMessage) -> label.setText(newMessage));
     }
 
-    private String getMcFile() {
+    private File getMcFile() {
         switch (platform.getOperatingSystem()) {
             case LINUX:
                 return MC_FILE_LINUX;

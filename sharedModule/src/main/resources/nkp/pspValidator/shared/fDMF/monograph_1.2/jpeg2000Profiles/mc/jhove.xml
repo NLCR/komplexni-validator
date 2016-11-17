@@ -21,9 +21,10 @@
         </validation>
     </attribute>
 
+    <!--TODO:
     <attribute id="file_size_in_bytes"/>
     <attribute id="tool_name"/>
-    <attribute id="tool_version"/>
+    <attribute id="tool_version"/>-->
 
     <!--neni definovano, proto kontrolovany atribut zde chybi-->
     <!--<attribute id="format_identification"/>-->
@@ -41,8 +42,9 @@
         </validation>
     </attribute>
 
+    <!--TODO
     <attribute id="height"/>
-    <attribute id="width"/>
+    <attribute id="width"/>-->
 
     <attribute id="number_of_color_components">
         <extraction>
@@ -63,7 +65,8 @@
         </validation>
     </attribute>
 
-    <attribute id="color_depth"/>
+    <!--TODO
+    <attribute id="color_depth"/>-->
 
     <attribute id="color_space_1">
         <extraction>
@@ -82,7 +85,8 @@
         </validation>
     </attribute>
 
-    <attribute id="color_space_2"/>
+    <!--TODO
+    <attribute id="color_space_2"/>-->
 
     <attribute id="resolution_vertical" type="Float">
         <extraction>
@@ -101,7 +105,8 @@
         </validation>
     </attribute>
 
-    <attribute id="resolution_horizontal"/>
+    <!--TODO
+    <attribute id="resolution_horizontal"/>-->
 
     <attribute id="number_of_tiles">
         <extraction>
@@ -120,8 +125,9 @@
         </validation>
     </attribute>
 
+    <!--TODO
     <attribute id="size_of_tiles_1"/>
-    <attribute id="size_of_tiles_2"/>
+    <attribute id="size_of_tiles_2"/>-->
 
     <!--nedefinovano-->
     <!--<attribute id="precints"/>
@@ -130,6 +136,8 @@
     <attribute id="sop"/>
     <attribute id="eph"/>-->
 
+
+    <!--TODO
     <attribute id="order"/>
     <attribute id="layers"/>
     <attribute id="levels"/>
@@ -138,7 +146,7 @@
     <attribute id="bypass"/>
     <attribute id="transformation"/>
     <attribute id="compression_ratio"/>
-    <attribute id="migration_software"/>
+    <attribute id="migration_software"/>-->
 
     <!--nedefinovano-->
     <!--<attribute id="regions_of_interest"/>-->

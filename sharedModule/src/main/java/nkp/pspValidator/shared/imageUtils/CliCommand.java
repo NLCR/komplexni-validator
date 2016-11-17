@@ -10,15 +10,22 @@ import java.io.InputStreamReader;
 public class CliCommand {
 
     private final String command;
+    private final boolean prettyPrint;
 
     public CliCommand(String command) {
         this.command = command;
+        this.prettyPrint = false;
     }
+
+    public CliCommand(String command, boolean prettyPrint) {
+        this.command = command;
+        this.prettyPrint = prettyPrint;
+    }
+
 
     public Result execute() throws IOException, InterruptedException {
         //https://gist.github.com/Lammerink/3926636
         Process pr = Runtime.getRuntime().exec(command);
-
 
         //read standard error stream
         BufferedReader stderrReader = new BufferedReader(new InputStreamReader(pr.getErrorStream()));
@@ -26,7 +33,10 @@ public class CliCommand {
         if (stderrReader != null) {
             String line;
             while ((line = stderrReader.readLine()) != null) {
-                stderrBuilder.append(line).append('\n');
+                stderrBuilder.append(line);
+                if (prettyPrint) {
+                    stderrBuilder.append('\n');
+                }
             }
             stderrReader.close();
         }
@@ -37,13 +47,20 @@ public class CliCommand {
         if (stdoutReader != null) {
             String line;
             while ((line = stdoutReader.readLine()) != null) {
-                stdoutBuilder.append(line).append('\n');
+                stdoutBuilder.append(line);
+                if (prettyPrint) {
+                    stdoutBuilder.append('\n');
+                }
             }
             stdoutReader.close();
         }
 
         int exitValue = pr.waitFor();
-        return new Result(exitValue, stdoutBuilder.toString(), stderrBuilder.toString());
+        String stdOut = stdoutBuilder.toString();
+        String stdErr = stderrBuilder.toString();
+        /*System.err.println("SOUT: " + stdOut);
+        System.err.println("SERR: " + stdErr);*/
+        return new Result(exitValue, stdOut, stdErr);
     }
 
     public static class Result {

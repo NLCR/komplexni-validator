@@ -5,6 +5,19 @@ package nkp.pspValidator.shared.imageUtils;
  */
 public enum ImageUtil {
 
-    JPYLYZER, IMAGE_MAGICK, JHOVE, KAKADU;
+    JPYLYZER("jpylyzer.xml"),
+    IMAGE_MAGICK("imageMagick.xml"),
+    JHOVE("jhove.xml"),
+    KAKADU("kakadu.xml");
+
+    private String profileFileName;
+
+    ImageUtil(String profileFileName) {
+        this.profileFileName = profileFileName;
+    }
+
+    public String getProfileFileName() {
+        return profileFileName;
+    }
 
 }

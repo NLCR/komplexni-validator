@@ -6,6 +6,8 @@ import nkp.pspValidator.shared.XmlUtils;
 import nkp.pspValidator.shared.engine.evaluationFunctions.EvaluationFunction;
 import nkp.pspValidator.shared.engine.exceptions.ValidatorConfigurationException;
 import nkp.pspValidator.shared.engine.validationFunctions.ValidationFunction;
+import nkp.pspValidator.shared.imageUtils.ImageCopy;
+import nkp.pspValidator.shared.imageUtils.ImageUtil;
 import org.w3c.dom.Element;
 
 import java.io.File;
@@ -20,11 +22,6 @@ public class ConfigProcessor {
 
     public void processConfigFile(Engine engine, File configFile) throws ValidatorConfigurationException {
         XMLTag doc = XMLDoc.from(configFile, true);
-        //TODO: nebude potreba s xsd
-        if (!"fDMF".equals(doc.getCurrentTagName())) {
-            throw new ValidatorConfigurationException("root element není dmf");
-        }
-
         for (Element childEl : doc.getChildElement()) {
             String elementName = childEl.getTagName();
             switch (elementName) {
@@ -165,13 +162,18 @@ public class ConfigProcessor {
 
 
     private Object parseConstantValueDefinition(String varName, Element varEl, ValueType paramType) throws ValidatorConfigurationException {
+        String str = varEl.getTextContent().trim();
         switch (paramType) {
             case STRING:
-                return varEl.getTextContent();
+                return str;
             case INTEGER:
-                return Integer.valueOf(varEl.getTextContent());
+                return Integer.valueOf(str);
             case LEVEL:
-                return Level.valueOf(varEl.getTextContent());
+                return Level.valueOf(str);
+            case IMAGE_COPY:
+                return ImageCopy.valueOf(str);
+            case IMAGE_UTIL:
+                return ImageUtil.valueOf(str);
             default:
                 throw new ValidatorConfigurationException(
                         String.format("parametr %s: není zde možné použít parametr typu %s", varName, paramType));

@@ -1,0 +1,178 @@
+<jpeg2000profile>
+    <xmlValidations>
+        <namespaces>
+            <namespace prefix="j">http://openpreservation.org/ns/jpylyzer/</namespace>
+        </namespaces>
+
+        <validation name="file_name">
+            <extraction type="STRING">
+                <firstNonempty>
+                    <xpath>//j:fileInfo/j:fileName</xpath>
+                </firstNonempty>
+            </extraction>
+            <validation>
+                <mustExist/>
+            </validation>
+        </validation>
+
+        <!--TODO
+        <validation name="last_modified"/>
+        <validation name="file_size_in_bytes"/>
+        <validation name="tool_name"/>
+        <validation name="tool_version"/>-->
+
+        <!--neni definovano, proto kontrolovany atribut zde chybi-->
+        <!--<validation name="format_identification"/>-->
+
+        <validation name="valid">
+            <extraction type="STRING">
+                <firstNonempty>
+                    <!--TODO: tohle se lisi mezi verzemi jpylyzer, prvni je ze specifikace, druhy je z realneho vystupu pro jpylyzer 1.17.0-->
+                    <!--<xpath>//j:statusInfo/j:isValidJP2</xpath>-->
+                    <xpath>//j:statusInfo/j:success</xpath>
+                </firstNonempty>
+            </extraction>
+            <validation>
+                <mustExist/>
+                <mustMatch>
+                    <constant>True</constant>
+                </mustMatch>
+            </validation>
+        </validation>
+
+        <!--TODO
+        <validation name="height"/>
+        <validation name="width"/>-->
+
+        <validation name="number_of_color_components">
+            <extraction type="STRING">
+                <firstNonempty>
+                    <xpath>//j:properties/j:jp2HeaderBox/j:imageHeaderBox/j:nC</xpath>
+                </firstNonempty>
+            </extraction>
+            <validation>
+                <mustExist/>
+                <!--povolene hodnoty "1" nebo "3"-->
+                <mustMatchOne>
+                    <constant>1</constant>
+                    <constant>3</constant>
+                </mustMatchOne>
+            </validation>
+        </validation>
+
+        <!--TODO
+        <validation name="color_depth"/>-->
+
+        <validation name="color_space_1">
+            <extraction type="STRING">
+                <firstNonempty>
+                    <xpath>//j:properties/j:jp2HeaderBox/j:colourSpecificationBox/j:enumCS</xpath>
+                </firstNonempty>
+            </extraction>
+            <validation>
+                <mustExist/>
+                <!--povolene hodnoty "sRGB" nebo "greyscale"-->
+                <mustMatchOne>
+                    <constant>sRGB</constant>
+                    <constant>greyscale</constant>
+                </mustMatchOne>
+            </validation>
+        </validation>
+
+        <!--TODO
+        <validation name="color_space_2"/>-->
+
+        <validation name="resolution_vertical" type="Float">
+            <extraction type="FLOAT">
+                <!--muze se nachazet na nekolika mistech, pouzije se prvni dostupna hodnota-->
+                <firstNonempty>
+                    <xpath>//j:properties/j:jp2HeaderBox/j:resolutionBox/j:captureResolutionBox/j:vRescInPixelsPerMeter
+                    </xpath>
+                    <xpath>//j:properties/j:jp2HeaderBox/j:resolutionBox/j:displayResolutionBox/j:vResdInPixelsPerMeter
+                    </xpath>
+                </firstNonempty>
+            </extraction>
+            <validation>
+                <mustExist/>
+                <!--rozsah hodnot, zde realná čísla-->
+                <mustMatch>
+                    <floatRange>
+                        <min>11732</min>
+                    </floatRange>
+                </mustMatch>
+            </validation>
+        </validation>
+
+        <!--TODO
+        <validation name="resolution_horizontal"/>-->
+
+        <validation name="number_of_tiles">
+            <extraction type="INTEGER">
+                <firstNonempty>
+                    <xpath>//j:properties/j:contiguousCodestreamBox/j:siz/j:numberOfTiles</xpath>
+                </firstNonempty>
+            </extraction>
+            <validation>
+                <mustExist/>
+                <!--jakékoliv přirozené číslo-->
+                <mustMatch>
+                    <intRange>
+                        <min>1</min>
+                        <!--maximum nedefinovano, tedy nekonecno-->
+                    </intRange>
+                </mustMatch>
+            </validation>
+        </validation>
+
+        <!--TODO
+        <validation name="size_of_tiles_1"/>
+        <validation name="size_of_tiles_2"/>
+        <validation name="precints"/>-->
+
+        <validation name="size_of_precints_1">
+            <extraction type="STRING_LIST">
+                <!--typ je "pole", pokud neuvedeno, použije se "hodnota", ať už pro singlePath anebo firstPathAvailable -->
+                <firstNonempty>
+                    <xpath>//j:properties/j:contiguousCodestreamBox/j:cod/j:precintSizeX</xpath>
+                </firstNonempty>
+            </extraction>
+            <validation>
+                <mustExist/>
+                <!--2krát hodnota 256; zbylé precints 128-->
+                <mustMatch>
+                    <nTimesXRemainingY>
+                        <n>2</n>
+                        <x>256</x>
+                        <y>128</y>
+                    </nTimesXRemainingY>
+                </mustMatch>
+            </validation>
+        </validation>
+
+        <!--TODO
+        <validation name="size_of_precints_2"/>
+        <validation name="sop"/>
+        <validation name="eph"/>
+        <validation name="order"/>
+        <validation name="layers"/>
+        <validation name="levels"/>
+        <validation name="code_block_width"/>
+        <validation name="code_block_height"/>
+        <validation name="bypass"/>
+        <validation name="transformation"/>
+        <validation name="compression_ratio"/>
+        <validation name="migration_software"/>-->
+
+        <validation name="regions_of_interest">
+            <extraction type="STRING">
+                <firstNonempty>
+                    <xpath>rgn</xpath>
+                </firstNonempty>
+            </extraction>
+            <validation>
+                <!--element se nesmi vyskytovat, jakakoliv hodnota je nepovolena-->
+                <mustNotExist/>
+            </validation>
+        </validation>
+    </xmlValidations>
+</jpeg2000profile>

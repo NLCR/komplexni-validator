@@ -1,11 +1,11 @@
 package nkp.pspValidator.shared.engine;
 
+import nkp.pspValidator.shared.ImageValidator;
 import nkp.pspValidator.shared.engine.evaluationFunctions.*;
 import nkp.pspValidator.shared.engine.exceptions.InvalidXPathExpressionException;
 import nkp.pspValidator.shared.engine.exceptions.ValidatorConfigurationException;
 import nkp.pspValidator.shared.engine.exceptions.XmlParsingException;
 import nkp.pspValidator.shared.engine.validationFunctions.*;
-import nkp.pspValidator.shared.imageUtils.ImageUtilManager;
 import org.w3c.dom.Document;
 
 import javax.xml.xpath.XPathExpression;
@@ -33,10 +33,10 @@ public class Engine {
     private final XmlManager xmlManager = new XmlManager(true);
 
     private final RulesManager rulesManager = new RulesManager();
-    private final ImageUtilManager imageUtilManager;
+    private final ImageValidator imageValidator;
 
-    public Engine(ImageUtilManager imageUtilManager) {
-        this.imageUtilManager = imageUtilManager;
+    public Engine(ImageValidator imageValidator) {
+        this.imageValidator = imageValidator;
     }
 
     //provided vars
@@ -164,6 +164,8 @@ public class Engine {
                 return new VfCheckMetsFilesecChecksumsMatch(this);
             case "checkSecondaryMetsFilesecContainsAllFilegroups":
                 return new VfCheckSecondaryMetsFilesecContainsAllFilegroups(this);
+            case "checkImagesFilesValidByExternalUtil":
+                return new VfCheckImagesFilesValidByExternalUtil(this);
             default:
                 throw new ValidatorConfigurationException(String.format("validační funkce %s neexistuje", name));
         }
@@ -333,6 +335,10 @@ public class Engine {
 
     public void defineNamespace(String prefix, String uri) {
         xmlManager.setNamespaceUri(prefix, uri);
+    }
+
+    public ImageValidator getImageValidator() {
+        return imageValidator;
     }
 
 }

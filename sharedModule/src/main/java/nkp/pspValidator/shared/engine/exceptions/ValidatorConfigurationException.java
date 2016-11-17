@@ -10,4 +10,8 @@ public class ValidatorConfigurationException extends Exception {
     public ValidatorConfigurationException(String message) {
         super(message);
     }
+
+    public ValidatorConfigurationException(String format, Object... args) {
+        this(String.format(format, args));
+    }
 }

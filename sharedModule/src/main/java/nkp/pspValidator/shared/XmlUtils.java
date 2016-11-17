@@ -30,6 +30,23 @@ public class XmlUtils {
 
 
     public static Element getFirstChildElementsByName(Element osEl, String name) {
-        return getChildrenElementsByName(osEl, name).get(0);
+        List<Element> list = getChildrenElementsByName(osEl, name);
+        if (list == null || list.isEmpty()) {
+            return null;
+        } else {
+            return list.get(0);
+        }
+    }
+
+    public static List<Element> getChilrenElements(Element root) {
+        NodeList nodes = root.getChildNodes();
+        List<Element> result = new ArrayList<>(nodes.getLength());
+        for (int i = 0; i < nodes.getLength(); i++) {
+            Node node = nodes.item(i);
+            if (node.getNodeType() == Node.ELEMENT_NODE) {
+                result.add((Element) node);
+            }
+        }
+        return result;
     }
 }

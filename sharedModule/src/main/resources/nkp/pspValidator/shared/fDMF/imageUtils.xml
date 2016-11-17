@@ -37,7 +37,9 @@
     <imageUtil name="IMAGE_MAGICK">
         <versionDetection>
             <operatingSystem name="LINUX">
-                <command>convert -version</command>
+                <!--FIXME: jen docasne vyrazeno-->
+                <!--<command>convert -version</command>-->
+                <command>BLABLA -version</command>
                 <parser>
                     <stream>STDOUT</stream>
                     <regexp>ImageMagick\s\S*\s\S*</regexp>

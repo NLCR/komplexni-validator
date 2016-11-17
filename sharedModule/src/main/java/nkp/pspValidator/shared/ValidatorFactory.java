@@ -2,6 +2,8 @@ package nkp.pspValidator.shared;
 
 import nkp.pspValidator.shared.engine.Engine;
 import nkp.pspValidator.shared.engine.exceptions.ValidatorConfigurationException;
+import nkp.pspValidator.shared.imageUtils.ImageCopy;
+import nkp.pspValidator.shared.imageUtils.ImageUtil;
 import nkp.pspValidator.shared.imageUtils.ImageUtilManager;
 
 import java.io.File;
@@ -12,12 +14,30 @@ import java.io.FilenameFilter;
  */
 public class ValidatorFactory {
 
+    private static final String FDMF_XSD_FILE = "fdmf.xsd";
+    private static final String XSD_DIR = "xsd";
+    private static final String J2K_PROFILES_DIR = "jpeg2000Profiles";
+    private static final String J2K_PROFILES_UC_DIR = "uc";
+    private static final String J2K_PROFILES_MC_DIR = "mc";
+
     public static Validator buildValidator(Platform platform, File fdmfRoot, File pspRootDir, ImageUtilManager imageUtilManager) throws ValidatorConfigurationException {
-        Engine engine = new Engine(imageUtilManager);
-        //root dir
+        checkDirExistAndReadable(fdmfRoot);
+        checkDirExistAndReadable(pspRootDir);
+
+        ImageValidator validator = new ImageValidator(imageUtilManager);
+        for (ImageCopy copy : ImageCopy.values()) {
+            for (ImageUtil util : ImageUtil.values()) {
+                if (imageUtilManager.isUtilAvailable(util)) {
+                    validateAndProcessJ2kProfileConfig(fdmfRoot, validator, copy, util);
+                }
+            }
+        }
+
+        Engine engine = new Engine(validator);
         engine.setProvidedFile("PSP_DIR", pspRootDir);
         //provided xsd
-        File xsdRoot = buildXsdDir(fdmfRoot);
+        File xsdRoot = new File(fdmfRoot, XSD_DIR);
+        checkDirExistAndReadable(xsdRoot);
         engine.setProvidedFile("INFO_XSD_FILE", findXsdFile(xsdRoot, "DMF-info", "info_[0-9]+(\\.([0-9])+)*\\.xsd"));
         engine.setProvidedFile("ALTO_XSD_FILE", findXsdFile(xsdRoot, "ALTO", "alto_[0-9]+(\\.([0-9])+)*\\.xsd"));
         engine.setProvidedFile("CMD_XSD_FILE", findXsdFile(xsdRoot, "copyrightMD", "cmd_[0-9]+(\\.([0-9])+)*\\.xsd"));
@@ -29,24 +49,67 @@ public class ValidatorFactory {
 
         //nacteni patternu, promennych, pravidel etc.
 
-        //TODO: kontroly, ze jsou soubory dostupne, daji se cist, etc
-        File fdmfXsdFile = new File(fdmfRoot, "fdmf.xsd");
 
-        //validateAndProcessConfigFile(engine, fdmfXsdFile, fdmfRoot, "fdmf.xml");
-
-        validateAndProcessConfigFile(engine, fdmfXsdFile, fdmfRoot, "namespaces.xml");
-        validateAndProcessConfigFile(engine, fdmfXsdFile, fdmfRoot, "patterns.xml");
-        validateAndProcessConfigFile(engine, fdmfXsdFile, fdmfRoot, "variables.xml");
-        validateAndProcessConfigFile(engine, fdmfXsdFile, fdmfRoot, "rules.xml");
+        File fdmfXsdFile = new File(fdmfRoot, FDMF_XSD_FILE);
+        checkFileExistAndReadable(fdmfXsdFile);
+        //validateAndProcessFdmfConfig(engine, fdmfXsdFile, fdmfRoot, "fdmf.xml");
+        validateAndProcessFdmfConfig(engine, fdmfXsdFile, fdmfRoot, "namespaces.xml");
+        validateAndProcessFdmfConfig(engine, fdmfXsdFile, fdmfRoot, "patterns.xml");
+        validateAndProcessFdmfConfig(engine, fdmfXsdFile, fdmfRoot, "variables.xml");
+        validateAndProcessFdmfConfig(engine, fdmfXsdFile, fdmfRoot, "rules.xml");
         return new Validator(engine);
     }
 
-    private static void validateAndProcessConfigFile(Engine engine, File fdmfXsdFile, File fdmfRoot, String fileName) throws ValidatorConfigurationException {
-        //TODO: kontroly, ze jsou soubory dostupne, daji se cist, etc
+    private static void validateAndProcessJ2kProfileConfig(File fdmfRoot, ImageValidator validator, ImageCopy copy, ImageUtil util) throws ValidatorConfigurationException {
+        File rootFile = new File(fdmfRoot, J2K_PROFILES_DIR);
+        checkDirExistAndReadable(rootFile);
+        File copyFile = buildImageCopyDir(rootFile, copy);
+        checkDirExistAndReadable(copyFile);
+        //TODO: xsd pro validaci tohohle souboru podle xsd
+        File configFile = new File(copyFile, util.getProfileFileName());
+        checkFileExistAndReadable(configFile);
+        validator.processProfile(util, copy, configFile);
+    }
+
+    private static File buildImageCopyDir(File rootFile, ImageCopy copy) {
+        switch (copy) {
+            case USER:
+                return new File(rootFile, J2K_PROFILES_UC_DIR);
+            case MASTER:
+                return new File(rootFile, J2K_PROFILES_MC_DIR);
+            default:
+                throw new IllegalStateException();
+        }
+    }
+
+    private static void checkDirExistAndReadable(File dir) throws ValidatorConfigurationException {
+        if (!dir.exists()) {
+            throw new ValidatorConfigurationException(String.format("adresář neexistuje: %s", dir.getAbsolutePath()));
+        } else if (!dir.isDirectory()) {
+            throw new ValidatorConfigurationException(String.format("soubor není adresář: %s", dir.getAbsolutePath()));
+        } else if (!dir.canRead()) {
+            throw new ValidatorConfigurationException(String.format("nelze číst adresář: %s", dir.getAbsolutePath()));
+        }
+    }
+
+    private static void checkFileExistAndReadable(File file) throws ValidatorConfigurationException {
+        if (!file.exists()) {
+            throw new ValidatorConfigurationException(String.format("soubor neexistuje: %s", file.getAbsolutePath()));
+        } else if (file.isDirectory()) {
+            throw new ValidatorConfigurationException(String.format("soubor je adresář: %s", file.getAbsolutePath()));
+        } else if (!file.canRead()) {
+            throw new ValidatorConfigurationException(String.format("nelze číst soubor: %s", file.getAbsolutePath()));
+        }
+    }
+
+    private static void validateAndProcessFdmfConfig(Engine engine, File fdmfXsdFile, File fdmfRoot, String fileName) throws ValidatorConfigurationException {
         File configFile = new File(fdmfRoot, fileName);
+        checkFileExistAndReadable(configFile);
+        //TODO: v produkci povolit validaci konfiguracniho souboru podle xsd
         //XsdValidator.validate(fileName, fdmfXsdFile, configFile);
         engine.processConfigFile(configFile);
     }
+
 
     private static File findXsdFile(File xsdDir, String formatName, String filePattern) throws ValidatorConfigurationException {
         File[] files = xsdDir.listFiles(new FilenameFilter() {
@@ -66,20 +129,9 @@ public class ValidatorFactory {
             } else if (!file.canRead()) {
                 throw new ValidatorConfigurationException(String.format("nelze číst obsah souboru %s", file.getAbsolutePath()));
             }
+            checkFileExistAndReadable(file);
             return file;
         }
-    }
-
-    private static File buildXsdDir(File fdmfRoot) throws ValidatorConfigurationException {
-        File dir = new File(fdmfRoot, "xsd");
-        if (!dir.exists()) {
-            throw new ValidatorConfigurationException(String.format("soubor %s neexistuje", dir.getAbsolutePath()));
-        } else if (!dir.isDirectory()) {
-            throw new ValidatorConfigurationException(String.format("soubor %s není adresář", dir.getAbsolutePath()));
-        } else if (!dir.canRead()) {
-            throw new ValidatorConfigurationException(String.format("nelze číst obsah adresáře %s", dir.getAbsolutePath()));
-        }
-        return dir;
     }
 
 

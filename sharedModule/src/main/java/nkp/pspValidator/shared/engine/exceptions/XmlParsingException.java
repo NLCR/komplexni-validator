@@ -14,6 +14,11 @@ public class XmlParsingException extends Exception {
         this.file = file;
     }
 
+    public XmlParsingException(String message) {
+        super(message);
+        this.file = null;
+    }
+
     public File getFile() {
         return file;
     }

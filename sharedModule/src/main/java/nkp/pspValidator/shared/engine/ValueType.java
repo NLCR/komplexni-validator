@@ -8,6 +8,6 @@ public enum ValueType {
     STRING, INTEGER, FILE, IDENTIFIER,//
     STRING_LIST, FILE_LIST, IDENTIFIER_LIST, //lists
     STRING_LIST_LIST, FILE_LIST_LIST, IDENTIFIER_LIST_LIST,  //lists of lists
-    LEVEL;
+    LEVEL, IMAGE_COPY, IMAGE_UTIL; //enums
 
 }
