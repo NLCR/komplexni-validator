@@ -5,6 +5,7 @@ import nkp.pspValidator.shared.engine.exceptions.ValidatorConfigurationException
 import nkp.pspValidator.shared.imageUtils.ImageCopy;
 import nkp.pspValidator.shared.imageUtils.ImageUtil;
 import nkp.pspValidator.shared.imageUtils.ImageUtilManager;
+import nkp.pspValidator.shared.imageUtils.validation.ImageValidator;
 
 import java.io.File;
 import java.io.FilenameFilter;

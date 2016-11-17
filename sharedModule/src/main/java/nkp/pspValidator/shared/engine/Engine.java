@@ -1,6 +1,6 @@
 package nkp.pspValidator.shared.engine;
 
-import nkp.pspValidator.shared.ImageValidator;
+import nkp.pspValidator.shared.imageUtils.validation.ImageValidator;
 import nkp.pspValidator.shared.engine.evaluationFunctions.*;
 import nkp.pspValidator.shared.engine.exceptions.InvalidXPathExpressionException;
 import nkp.pspValidator.shared.engine.exceptions.ValidatorConfigurationException;

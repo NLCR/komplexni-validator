@@ -1,6 +1,7 @@
 package nkp.pspValidator.shared.engine.validationFunctions;
 
-import nkp.pspValidator.shared.ImageValidator;
+import nkp.pspValidator.shared.imageUtils.validation.DataExtraction;
+import nkp.pspValidator.shared.imageUtils.validation.ImageValidator;
 import nkp.pspValidator.shared.engine.Engine;
 import nkp.pspValidator.shared.engine.Level;
 import nkp.pspValidator.shared.engine.ValueEvaluation;
@@ -9,6 +10,7 @@ import nkp.pspValidator.shared.engine.exceptions.ContractException;
 import nkp.pspValidator.shared.engine.exceptions.XmlParsingException;
 import nkp.pspValidator.shared.imageUtils.ImageCopy;
 import nkp.pspValidator.shared.imageUtils.ImageUtil;
+import nkp.pspValidator.shared.imageUtils.validation.J2kProfile;
 
 import java.io.File;
 import java.io.IOException;
@@ -81,7 +83,7 @@ public class VfCheckImagesFilesValidByExternalUtil extends ValidationFunction {
     private ValidationResult validate(Level level, List<File> files, ImageCopy copy, ImageUtil util) {
         ValidationResult result = new ValidationResult();
         ImageValidator imageValidator = engine.getImageValidator();
-        ImageValidator.J2kProfile profile = imageValidator.getProfile(copy, util);
+        J2kProfile profile = imageValidator.getProfile(copy, util);
         if (profile == null) {
             return singlErrorResult(invalid(Level.ERROR, "nenalezen J2K profil pro kopii %s a nástroj %s", copy, util));
         }
@@ -97,7 +99,7 @@ public class VfCheckImagesFilesValidByExternalUtil extends ValidationFunction {
                 result.addError(invalid(Level.ERROR, "%s: (soubor %s)", e.getMessage(), file.getName()));
             } catch (XmlParsingException e) {
                 result.addError(invalid(Level.ERROR, "%s: (soubor %s)", e.getMessage(), file.getName()));
-            } catch (ImageValidator.DataExtraction.ExtractionException e) {
+            } catch (DataExtraction.ExtractionException e) {
                 result.addError(invalid(Level.ERROR, "%s: (soubor %s)", e.getMessage(), file.getName()));
             }
         }
