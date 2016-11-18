@@ -2,6 +2,8 @@ package nkp.pspValidator.shared.imageUtils.validation.rules;
 
 import nkp.pspValidator.shared.imageUtils.validation.Constraint;
 
+import java.util.List;
+
 /**
  * Created by martin on 17.11.16.
  */
@@ -14,11 +16,11 @@ public class MustMatchDR extends AbstractDataRule {
     }
 
     @Override
-    public String validate(Object data) {
+    public List<String> validate(Object data) {
         if (!constraint.matches(data)) {
-            return error(String.format("hodnota \"%s\" neodpovídá omezení: \"%s\"", toString(data), constraint.toString()));
+            return singleError(error(String.format("hodnota \"%s\" neodpovídá omezení: \"%s\"", toString(data), constraint.toString())));
         } else {
-            return null;
+            return noErrors();
         }
     }
 }

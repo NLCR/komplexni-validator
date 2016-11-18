@@ -72,7 +72,7 @@ public class ImageValidator {
         Element profileTypeEl = XmlUtils.getChilrenElements(rootEl).get(0);
         switch (profileTypeEl.getTagName()) {
             case "xmlValidations":
-                return buildXmlProfile(rootEl, util);
+                return buildXmlProfile(profileTypeEl, util);
             /*TODO: jeste pro parsovani samotneho textu, treba neco jako "textValidation"*/
             default:
                 throw new ValidatorConfigurationException("neznámý element " + profileTypeEl.getTagName());
@@ -80,8 +80,8 @@ public class ImageValidator {
     }
 
     private J2kProfile buildXmlProfile(Element rootEl, ImageUtil util) throws ValidatorConfigurationException {
-        J2kProfile profile = new J2kProfile(imageUtilManager, J2kProfile.Type.XML, util);
-        //extractions data
+        J2kXmlProfile profile = new J2kXmlProfile(imageUtilManager, util);
+        //namespaces
         Element namespacesEl = XmlUtils.getFirstChildElementsByName(rootEl, "namespaces");
         if (namespacesEl != null) {
             List<Element> nsEls = XmlUtils.getChildrenElementsByName(namespacesEl, "namespace");
@@ -95,21 +95,21 @@ public class ImageValidator {
                 profile.addNamespace(null, defaultNamespaceEl.getTextContent().trim());
             }
         }
+        //validations
         List<Element> validationEls = XmlUtils.getChildrenElementsByName(rootEl, "validation");
         for (Element attributeEl : validationEls) {
-            String name = attributeEl.getAttribute("name");
-            System.out.println("name: " + name);
+            String validationName = attributeEl.getAttribute("name");
             //extraction
             Element extractionEl = XmlUtils.getFirstChildElementsByName(attributeEl, "extraction");
             DataExtraction dataExtraction = buildExtraction(profile.getNamespaceContext(), extractionEl);
-            //validations
+            //rules
             Element validationEl = XmlUtils.getFirstChildElementsByName(attributeEl, "validation");
             List<DataRule> dataRules = new ArrayList<>();
             List<Element> ruleEls = XmlUtils.getChilrenElements(validationEl);
             for (Element ruleEl : ruleEls) {
-                dataRules.add(buildRule(name, ruleEl));
+                dataRules.add(buildRule(validationName, ruleEl));
             }
-            Validation validation = new Validation(name, dataExtraction, dataRules);
+            Validation validation = new Validation(dataExtraction, dataRules);
             profile.addValidation(validation);
         }
         return profile;

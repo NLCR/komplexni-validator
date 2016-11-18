@@ -1,19 +1,16 @@
 package nkp.pspValidator.shared.engine.validationFunctions;
 
-import nkp.pspValidator.shared.imageUtils.validation.DataExtraction;
-import nkp.pspValidator.shared.imageUtils.validation.ImageValidator;
 import nkp.pspValidator.shared.engine.Engine;
 import nkp.pspValidator.shared.engine.Level;
 import nkp.pspValidator.shared.engine.ValueEvaluation;
 import nkp.pspValidator.shared.engine.ValueType;
 import nkp.pspValidator.shared.engine.exceptions.ContractException;
-import nkp.pspValidator.shared.engine.exceptions.XmlParsingException;
 import nkp.pspValidator.shared.imageUtils.ImageCopy;
 import nkp.pspValidator.shared.imageUtils.ImageUtil;
+import nkp.pspValidator.shared.imageUtils.validation.ImageValidator;
 import nkp.pspValidator.shared.imageUtils.validation.J2kProfile;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.List;
 
 
@@ -93,13 +90,7 @@ public class VfCheckImagesFilesValidByExternalUtil extends ValidationFunction {
                 for (String problem : problems) {
                     result.addError(invalid(level, "%s (soubor %s)", problem, file.getAbsoluteFile()));
                 }
-            } catch (IOException e) {
-                result.addError(invalid(Level.ERROR, "%s: (soubor %s)", e.getMessage(), file.getName()));
-            } catch (InterruptedException e) {
-                result.addError(invalid(Level.ERROR, "%s: (soubor %s)", e.getMessage(), file.getName()));
-            } catch (XmlParsingException e) {
-                result.addError(invalid(Level.ERROR, "%s: (soubor %s)", e.getMessage(), file.getName()));
-            } catch (DataExtraction.ExtractionException e) {
+            } catch (Exception e) {
                 result.addError(invalid(Level.ERROR, "%s: (soubor %s)", e.getMessage(), file.getName()));
             }
         }

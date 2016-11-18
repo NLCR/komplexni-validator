@@ -16,12 +16,12 @@ public class MustMatchOneDR extends AbstractDataRule {
     }
 
     @Override
-    public String validate(Object data) {
+    public List<String> validate(Object data) {
         for (Constraint constraint : constraints) {
             if (constraint.matches(data)) {
-                return null;
+                return noErrors();
             }
         }
-        return error(String.format("hodnota \"%s\" neodpovídá žádnému z omezení: %s", toString(data), toString(constraints)));
+        return singleError(error(String.format("hodnota \"%s\" neodpovídá žádnému z omezení: %s", toString(data), toString(constraints))));
     }
 }

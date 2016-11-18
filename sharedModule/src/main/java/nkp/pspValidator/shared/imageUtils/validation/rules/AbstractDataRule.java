@@ -2,6 +2,8 @@ package nkp.pspValidator.shared.imageUtils.validation.rules;
 
 import nkp.pspValidator.shared.imageUtils.validation.DataRule;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -16,6 +18,16 @@ public abstract class AbstractDataRule implements DataRule {
 
     String error(String message) {
         return String.format("%s: %s", validationName, message);
+    }
+
+    List<String> singleError(String error) {
+        List<String> list = new ArrayList<>();
+        list.add(error);
+        return list;
+    }
+
+    List<String> noErrors() {
+        return Collections.emptyList();
     }
 
     public String toString(Object data) {

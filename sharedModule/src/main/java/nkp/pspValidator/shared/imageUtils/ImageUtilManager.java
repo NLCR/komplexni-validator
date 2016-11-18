@@ -1,6 +1,5 @@
 package nkp.pspValidator.shared.imageUtils;
 
-import nkp.pspValidator.shared.OperatingSystem;
 import nkp.pspValidator.shared.imageUtils.UtilHandler.Command;
 import nkp.pspValidator.shared.imageUtils.UtilHandler.Parser;
 
@@ -16,16 +15,12 @@ import java.util.regex.Pattern;
  */
 public class ImageUtilManager {
 
-    //TODO: cachovani vysledku operaci, pripadne xml
-
-    private final OperatingSystem os;
     private final Map<ImageUtil, UtilHandler> utilVersionDetectionHandlers;
     private final Map<ImageUtil, UtilHandler> utilExecutionHandlers;
     private final Map<ImageUtil, Boolean> utilAvaliable = new HashMap<>();
 
 
-    public ImageUtilManager(OperatingSystem os, Map<ImageUtil, UtilHandler> utilVersionDetectionHandlers, Map<ImageUtil, UtilHandler> utilExecutionHandlers) {
-        this.os = os;
+    public ImageUtilManager(Map<ImageUtil, UtilHandler> utilVersionDetectionHandlers, Map<ImageUtil, UtilHandler> utilExecutionHandlers) {
         this.utilVersionDetectionHandlers = utilVersionDetectionHandlers;
         this.utilExecutionHandlers = utilExecutionHandlers;
         for (ImageUtil util : ImageUtil.values()) {
@@ -44,16 +39,21 @@ public class ImageUtilManager {
     public void setPaths(Map<ImageUtil, File> paths) {
         for (ImageUtil util : paths.keySet()) {
             File path = paths.get(util);
-            UtilHandler versionDetection = utilVersionDetectionHandlers.get(util);
-            if (versionDetection != null) {
-                versionDetection.getCommand().setPath(path);
-            }
-            UtilHandler UtilHandler = utilExecutionHandlers.get(util);
-            if (UtilHandler != null) {
-                UtilHandler.getCommand().setPath(path);
-            }
+            setPath(util, path);
         }
     }
+
+    public void setPath(ImageUtil util, File path) {
+        UtilHandler versionDetection = utilVersionDetectionHandlers.get(util);
+        if (versionDetection != null) {
+            versionDetection.getCommand().setPath(path);
+        }
+        UtilHandler UtilHandler = utilExecutionHandlers.get(util);
+        if (UtilHandler != null) {
+            UtilHandler.getCommand().setPath(path);
+        }
+    }
+
 
     public void setUtilAvailable(ImageUtil util, boolean available) {
         utilAvaliable.put(util, available);

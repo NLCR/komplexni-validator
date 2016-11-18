@@ -27,8 +27,8 @@
         <validation name="valid">
             <extraction type="STRING">
                 <firstNonempty>
-                    <!--TODO: tohle se lisi mezi verzemi jpylyzer, prvni je ze specifikace, druhy je z realneho vystupu pro jpylyzer 1.17.0-->
-                    <!--<xpath>//j:statusInfo/j:isValidJP2</xpath>-->
+                    <!--tohle se lisi mezi verzemi jpylyzer, prvni je ze specifikace, druhy je z realneho vystupu pro jpylyzer 1.17.0-->
+                    <xpath>//j:statusInfo/j:isValidJP2</xpath>
                     <xpath>//j:statusInfo/j:success</xpath>
                 </firstNonempty>
             </extraction>

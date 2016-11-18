@@ -64,6 +64,8 @@ public class Controller {
         LOGGER.info("platform: " + platform.toString());
         utilManager = new ImageUtilManagerFactory(new File("/home/martin/ssd/IdeaProjects/PspValidator/sharedModule/src/main/resources/nkp/pspValidator/shared/fDMF/imageUtils.xml"))
                 .buildImageUtilManager(platform.getOperatingSystem());
+        //LINUX paths
+        utilManager.setPath(ImageUtil.KAKADU, new File("/home/martin/zakazky/PSP-validator/utility/kakadu/KDU78_Demo_Apps_for_Linux-x86-64_160226"));
     }
 
     public void initialize() {

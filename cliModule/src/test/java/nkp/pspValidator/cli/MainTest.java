@@ -37,7 +37,7 @@ public class MainTest {
                 , "/usr/bin" //jpylyzer path
                 , "/usr/bin" //jhove path
                 , null //imageMagick path
-                , null //kakadu path
+                , "/home/martin/zakazky/PSP-validator/utility/kakadu/KDU78_Demo_Apps_for_Linux-x86-64_160226" //kakadu path
         ));
     }
 

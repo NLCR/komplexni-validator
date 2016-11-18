@@ -157,7 +157,7 @@ public class Main {
                     utilPaths.put(ImageUtil.IMAGE_MAGICK, new File(line.getOptionValue("imageMagick-path")));
                 }
                 if (line.hasOption("kakadu-path")) {
-                    utilPaths.put(ImageUtil.IMAGE_MAGICK, new File(line.getOptionValue("kakadu-path")));
+                    utilPaths.put(ImageUtil.KAKADU, new File(line.getOptionValue("kakadu-path")));
                 }
 
                 validate(new Dmf(dmfType, dmfVersion), fdmfsDir, pspDir, xmlOutputFile, verbosity, utilPaths);

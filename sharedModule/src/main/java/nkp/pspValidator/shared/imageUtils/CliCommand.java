@@ -25,6 +25,7 @@ public class CliCommand {
 
     public Result execute() throws IOException, InterruptedException {
         //https://gist.github.com/Lammerink/3926636
+        //System.out.println(command);
         Process pr = Runtime.getRuntime().exec(command);
 
         //read standard error stream

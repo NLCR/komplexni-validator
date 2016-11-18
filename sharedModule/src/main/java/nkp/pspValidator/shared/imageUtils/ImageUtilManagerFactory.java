@@ -71,7 +71,7 @@ public class ImageUtilManagerFactory {
     }
 
     public ImageUtilManager buildImageUtilManager(OperatingSystem os) {
-        return new ImageUtilManager(os, utilVersionDetectionInfoByOs.get(os), utilExecutionInfoByOs.get(os));
+        return new ImageUtilManager(utilVersionDetectionInfoByOs.get(os), utilExecutionInfoByOs.get(os));
     }
 
     private void init() {
