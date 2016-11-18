@@ -10,9 +10,9 @@
                     <xpath>fileInfo/fileName</xpath>
                 </firstNonempty>
             </extraction>
-            <validation>
+            <rules>
                 <mustExist/>
-            </validation>
+            </rules>
         </validation>
 
         <!--TODO
@@ -30,12 +30,12 @@
                     <xpath>statusInfo/isValidJP2</xpath>
                 </firstNonempty>
             </extraction>
-            <validation>
+            <rules>
                 <mustExist/>
                 <mustMatch>
                     <constant>True</constant>
                 </mustMatch>
-            </validation>
+            </rules>
         </validation>
 
         <!--TODO
@@ -48,14 +48,14 @@
                     <xpath>properties/jp2HeaderBox/imageHeaderBox/nC</xpath>
                 </firstNonempty>
             </extraction>
-            <validation>
+            <rules>
                 <mustExist/>
                 <!--povolene hodnoty "1" nebo "3"-->
                 <mustMatchOne>
                     <constant>1</constant>
                     <constant>3</constant>
                 </mustMatchOne>
-            </validation>
+            </rules>
         </validation>
 
         <!--TODO
@@ -67,14 +67,14 @@
                     <xpath>properties/jp2HeaderBox/colourSpecificationBox/enumCS</xpath>
                 </firstNonempty>
             </extraction>
-            <validation>
+            <rules>
                 <mustExist/>
                 <!--povolene hodnoty "sRGB" nebo "greyscale"-->
                 <mustMatchOne>
                     <constant>sRGB</constant>
                     <constant>greyscale</constant>
                 </mustMatchOne>
-            </validation>
+            </rules>
         </validation>
 
         <!--TODO
@@ -88,7 +88,7 @@
                     <xpath>Properties/jp2HeaderBox/resolutionBox/displayResolutionBox/vResdInPixelsPerMeter</xpath>
                 </firstNonempty>
             </extraction>
-            <validation>
+            <rules>
                 <mustExist/>
                 <!--rozsah hodnot, zde realná čísla-->
                 <mustMatch>
@@ -97,7 +97,7 @@
                         <max>11812</max>
                     </floatRange>
                 </mustMatch>
-            </validation>
+            </rules>
         </validation>
 
         <!--TODO
@@ -109,7 +109,7 @@
                     <xpath>Properties/contiguousCodestreamBox/siz/numberOfTiles</xpath>
                 </firstNonempty>
             </extraction>
-            <validation>
+            <rules>
                 <mustExist/>
                 <!--jakékoliv přirozené číslo-->
                 <mustMatch>
@@ -118,7 +118,7 @@
                         <!--maximum nedefinovano, tedy nekonecno-->
                     </intRange>
                 </mustMatch>
-            </validation>
+            </rules>
         </validation>
 
         <!--TODO
@@ -133,7 +133,7 @@
                     <xpath>Properties/contiguousCodestreamBox/cod/precintSizeX</xpath>
                 </firstNonempty>
             </extraction>
-            <validation>
+            <rules>
                 <mustExist/>
                 <!--2krát hodnota 256; zbylé precints 128-->
                 <mustMatch>
@@ -143,7 +143,7 @@
                         <y>128</y>
                     </nTimesXRemainingY>
                 </mustMatch>
-            </validation>
+            </rules>
         </validation>
 
         <!--TODO
@@ -166,10 +166,10 @@
                     <xpath>rgn</xpath>
                 </firstNonempty>
             </extraction>
-            <validation>
+            <rules>
                 <!--element se nesmi vyskytovat, jakakoliv hodnota je nepovolena-->
                 <mustNotExist/>
-            </validation>
+            </rules>
         </validation>
 
     </xmlValidations>

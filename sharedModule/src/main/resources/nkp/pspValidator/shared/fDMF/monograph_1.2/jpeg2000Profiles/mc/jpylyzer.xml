@@ -10,9 +10,9 @@
                     <xpath>//j:fileInfo/j:fileName</xpath>
                 </firstNonempty>
             </extraction>
-            <validation>
+            <rules>
                 <mustExist/>
-            </validation>
+            </rules>
         </validation>
 
         <!--TODO
@@ -32,12 +32,12 @@
                     <xpath>//j:statusInfo/j:success</xpath>
                 </firstNonempty>
             </extraction>
-            <validation>
+            <rules>
                 <mustExist/>
                 <mustMatch>
                     <constant>True</constant>
                 </mustMatch>
-            </validation>
+            </rules>
         </validation>
 
         <!--TODO
@@ -50,14 +50,14 @@
                     <xpath>//j:properties/j:jp2HeaderBox/j:imageHeaderBox/j:nC</xpath>
                 </firstNonempty>
             </extraction>
-            <validation>
+            <rules>
                 <mustExist/>
                 <!--povolene hodnoty "1" nebo "3"-->
                 <mustMatchOne>
                     <constant>1</constant>
                     <constant>3</constant>
                 </mustMatchOne>
-            </validation>
+            </rules>
         </validation>
 
         <!--TODO
@@ -69,14 +69,14 @@
                     <xpath>//j:properties/j:jp2HeaderBox/j:colourSpecificationBox/j:enumCS</xpath>
                 </firstNonempty>
             </extraction>
-            <validation>
+            <rules>
                 <mustExist/>
                 <!--povolene hodnoty "sRGB" nebo "greyscale"-->
                 <mustMatchOne>
                     <constant>sRGB</constant>
                     <constant>greyscale</constant>
                 </mustMatchOne>
-            </validation>
+            </rules>
         </validation>
 
         <!--TODO
@@ -92,7 +92,7 @@
                     </xpath>
                 </firstNonempty>
             </extraction>
-            <validation>
+            <rules>
                 <mustExist/>
                 <!--rozsah hodnot, zde realná čísla-->
                 <mustMatch>
@@ -100,7 +100,7 @@
                         <min>11732</min>
                     </floatRange>
                 </mustMatch>
-            </validation>
+            </rules>
         </validation>
 
         <!--TODO
@@ -112,7 +112,7 @@
                     <xpath>//j:properties/j:contiguousCodestreamBox/j:siz/j:numberOfTiles</xpath>
                 </firstNonempty>
             </extraction>
-            <validation>
+            <rules>
                 <mustExist/>
                 <!--jakékoliv přirozené číslo-->
                 <mustMatch>
@@ -121,7 +121,7 @@
                         <!--maximum nedefinovano, tedy nekonecno-->
                     </intRange>
                 </mustMatch>
-            </validation>
+            </rules>
         </validation>
 
         <!--TODO
@@ -136,7 +136,7 @@
                     <xpath>//j:properties/j:contiguousCodestreamBox/j:cod/j:precintSizeX</xpath>
                 </firstNonempty>
             </extraction>
-            <validation>
+            <rules>
                 <mustExist/>
                 <!--2krát hodnota 256; zbylé precints 128-->
                 <mustMatch>
@@ -146,7 +146,7 @@
                         <y>128</y>
                     </nTimesXRemainingY>
                 </mustMatch>
-            </validation>
+            </rules>
         </validation>
 
         <!--TODO
@@ -169,10 +169,10 @@
                     <xpath>rgn</xpath>
                 </firstNonempty>
             </extraction>
-            <validation>
+            <rules>
                 <!--element se nesmi vyskytovat, jakakoliv hodnota je nepovolena-->
                 <mustNotExist/>
-            </validation>
+            </rules>
         </validation>
     </xmlValidations>
 </jpeg2000profile>

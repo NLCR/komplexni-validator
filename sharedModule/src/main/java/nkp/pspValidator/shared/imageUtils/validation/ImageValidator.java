@@ -97,15 +97,15 @@ public class ImageValidator {
         }
         //validations
         List<Element> validationEls = XmlUtils.getChildrenElementsByName(rootEl, "validation");
-        for (Element attributeEl : validationEls) {
-            String validationName = attributeEl.getAttribute("name");
+        for (Element validationEl : validationEls) {
+            String validationName = validationEl.getAttribute("name");
             //extraction
-            Element extractionEl = XmlUtils.getFirstChildElementsByName(attributeEl, "extraction");
+            Element extractionEl = XmlUtils.getFirstChildElementsByName(validationEl, "extraction");
             DataExtraction dataExtraction = buildExtraction(profile.getNamespaceContext(), extractionEl);
             //rules
-            Element validationEl = XmlUtils.getFirstChildElementsByName(attributeEl, "validation");
+            Element rulesEl = XmlUtils.getFirstChildElementsByName(validationEl, "rules");
             List<DataRule> dataRules = new ArrayList<>();
-            List<Element> ruleEls = XmlUtils.getChilrenElements(validationEl);
+            List<Element> ruleEls = XmlUtils.getChilrenElements(rulesEl);
             for (Element ruleEl : ruleEls) {
                 dataRules.add(buildRule(validationName, ruleEl));
             }
