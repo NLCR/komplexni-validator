@@ -35,3 +35,4 @@ task fatJar(type: Jar) {
 //gradle run - spusti Main (plugin application)
 //gradle fatJar - vybuildi jar v cliModule/build/lisb
 
+//TODO: change package from rzehan.gui to nkp.pspValidator.gui
