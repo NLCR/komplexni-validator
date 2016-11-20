@@ -69,7 +69,9 @@ is added to the list of patterns supported in EDTF.
 
 *************************************************************************************************************************************
 -->
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="info:lc/xmlns/premis-v2" targetNamespace="info:lc/xmlns/premis-v2" elementFormDefault="qualified" attributeFormDefault="unqualified">
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xlink="http://www.w3.org/1999/xlink"
+           xmlns="info:lc/xmlns/premis-v2" targetNamespace="info:lc/xmlns/premis-v2" elementFormDefault="qualified"
+           attributeFormDefault="unqualified">
     <!--
  Import XLink-->
 
@@ -1178,7 +1180,8 @@ edtfSimpleType  is the union of three simple types: xsDate, xs:dateTime -  and e
             <xs:pattern value="\d{6}(\d{2}|\?\?)~?\??"/>
             <xs:pattern value="\d{8}T\d{6}"/>
             <xs:pattern value="((\d{4}(-\d{2})?)|UNKNOWN)/((\d{4}(-\d{2})?)|UNKNOWN|OPEN)"/>
-            <xs:pattern value="\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}((Z|(\+|-)\d{2}:\d{2}))?/\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}((Z|(\+|-)\d{2}:\d{2}))?"/>
+            <xs:pattern
+                    value="\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}((Z|(\+|-)\d{2}:\d{2}))?/\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}((Z|(\+|-)\d{2}:\d{2}))?"/>
             <!-- The following, "OPEN", introduced in version 2.2 -->
             <xs:pattern value="OPEN"/>
             <!--

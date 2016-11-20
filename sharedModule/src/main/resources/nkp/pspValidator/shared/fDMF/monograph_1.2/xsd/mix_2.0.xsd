@@ -69,7 +69,8 @@
 
     <xsd:element name="mix">
         <xsd:annotation>
-            <xsd:documentation>NISO Data Dictionary Technical Metadata for Digital Still Images (May 1, 2006)</xsd:documentation>
+            <xsd:documentation>NISO Data Dictionary Technical Metadata for Digital Still Images (May 1, 2006)
+            </xsd:documentation>
         </xsd:annotation>
         <xsd:complexType>
             <xsd:complexContent>
@@ -81,26 +82,32 @@
 
     <xsd:complexType name="mixType">
         <xsd:sequence>
-            <xsd:element name="BasicDigitalObjectInformation" type="BasicDigitalObjectInformationType" minOccurs="0" maxOccurs="1">
+            <xsd:element name="BasicDigitalObjectInformation" type="BasicDigitalObjectInformationType" minOccurs="0"
+                         maxOccurs="1">
                 <xsd:annotation>
                     <xsd:documentation>NDD id="6"</xsd:documentation>
-                </xsd:annotation></xsd:element>
+                </xsd:annotation>
+            </xsd:element>
             <xsd:element name="BasicImageInformation" type="BasicImageInformationType" minOccurs="0" maxOccurs="1">
                 <xsd:annotation>
                     <xsd:documentation>NDD id="7"</xsd:documentation>
-                </xsd:annotation></xsd:element>
+                </xsd:annotation>
+            </xsd:element>
             <xsd:element name="ImageCaptureMetadata" type="ImageCaptureMetadataType" minOccurs="0" maxOccurs="1">
                 <xsd:annotation>
                     <xsd:documentation>NDD id="8"</xsd:documentation>
-                </xsd:annotation></xsd:element>
+                </xsd:annotation>
+            </xsd:element>
             <xsd:element name="ImageAssessmentMetadata" type="ImageAssessmentMetadataType" minOccurs="0" maxOccurs="1">
                 <xsd:annotation>
                     <xsd:documentation>NDD id="9"</xsd:documentation>
-                </xsd:annotation></xsd:element>
+                </xsd:annotation>
+            </xsd:element>
             <xsd:element name="ChangeHistory" type="ChangeHistoryType" minOccurs="0" maxOccurs="1">
                 <xsd:annotation>
                     <xsd:documentation>NDD id="10"</xsd:documentation>
-                </xsd:annotation></xsd:element>
+                </xsd:annotation>
+            </xsd:element>
             <xsd:element name="Extension" type="extensionType" minOccurs="0" maxOccurs="unbounded">
                 <xsd:annotation>
                     <xsd:documentation>MIX extension element (does not appear in Data Dictionary)</xsd:documentation>
@@ -216,7 +223,8 @@
                 </xsd:annotation>
                 <xsd:complexType>
                     <xsd:sequence>
-                        <xsd:element name="messageDigestAlgorithm" type="typeOfMessageDigestAlgorithmType" minOccurs="0" maxOccurs="1">
+                        <xsd:element name="messageDigestAlgorithm" type="typeOfMessageDigestAlgorithmType" minOccurs="0"
+                                     maxOccurs="1">
                             <xsd:annotation>
                                 <xsd:documentation>NDD id="6.7.1"</xsd:documentation>
                             </xsd:annotation>
@@ -280,19 +288,25 @@
                                                     </xsd:annotation>
                                                     <xsd:complexType>
                                                         <xsd:sequence>
-                                                            <xsd:element name="iccProfileName" type="stringType" minOccurs="0" maxOccurs="1">
+                                                            <xsd:element name="iccProfileName" type="stringType"
+                                                                         minOccurs="0" maxOccurs="1">
                                                                 <xsd:annotation>
-                                                                    <xsd:documentation>NDD id="7.1.3.2.1.1"</xsd:documentation>
+                                                                    <xsd:documentation>NDD id="7.1.3.2.1.1"
+                                                                    </xsd:documentation>
                                                                 </xsd:annotation>
                                                             </xsd:element>
-                                                            <xsd:element name="iccProfileVersion" type="stringType" minOccurs="0" maxOccurs="1">
+                                                            <xsd:element name="iccProfileVersion" type="stringType"
+                                                                         minOccurs="0" maxOccurs="1">
                                                                 <xsd:annotation>
-                                                                    <xsd:documentation>NDD id="7.1.3.2.1.2"</xsd:documentation>
+                                                                    <xsd:documentation>NDD id="7.1.3.2.1.2"
+                                                                    </xsd:documentation>
                                                                 </xsd:annotation>
                                                             </xsd:element>
-                                                            <xsd:element name="iccProfileURI" type="URIType" minOccurs="0" maxOccurs="1">
+                                                            <xsd:element name="iccProfileURI" type="URIType"
+                                                                         minOccurs="0" maxOccurs="1">
                                                                 <xsd:annotation>
-                                                                    <xsd:documentation>NDD id="7.1.3.2.1.3"</xsd:documentation>
+                                                                    <xsd:documentation>NDD id="7.1.3.2.1.3"
+                                                                    </xsd:documentation>
                                                                 </xsd:annotation>
                                                             </xsd:element>
                                                         </xsd:sequence>
@@ -304,20 +318,25 @@
                                                     </xsd:annotation>
                                                     <xsd:complexType>
                                                         <xsd:sequence>
-                                                            <xsd:element name="localProfileName" type="stringType" minOccurs="0" maxOccurs="1">
+                                                            <xsd:element name="localProfileName" type="stringType"
+                                                                         minOccurs="0" maxOccurs="1">
                                                                 <xsd:annotation>
-                                                                    <xsd:documentation>NDD id="7.1.3.2.2.1"</xsd:documentation>
+                                                                    <xsd:documentation>NDD id="7.1.3.2.2.1"
+                                                                    </xsd:documentation>
                                                                 </xsd:annotation>
                                                             </xsd:element>
-                                                            <xsd:element name="localProfileURL" type="URIType" minOccurs="0" maxOccurs="1">
+                                                            <xsd:element name="localProfileURL" type="URIType"
+                                                                         minOccurs="0" maxOccurs="1">
                                                                 <xsd:annotation>
-                                                                    <xsd:documentation>NDD id="7.1.3.2.2.2"</xsd:documentation>
+                                                                    <xsd:documentation>NDD id="7.1.3.2.2.2"
+                                                                    </xsd:documentation>
                                                                 </xsd:annotation>
                                                             </xsd:element>
                                                         </xsd:sequence>
                                                     </xsd:complexType>
                                                 </xsd:element>
-                                                <xsd:element name="embeddedProfile" type="base64BinaryType" minOccurs="0" maxOccurs="1">
+                                                <xsd:element name="embeddedProfile" type="base64BinaryType"
+                                                             minOccurs="0" maxOccurs="1">
                                                     <xsd:annotation>
                                                         <xsd:documentation>NDD id="7.1.3.2.3"</xsd:documentation>
                                                     </xsd:annotation>
@@ -338,20 +357,27 @@
                                                     </xsd:annotation>
                                                     <xsd:complexType>
                                                         <xsd:sequence>
-                                                            <xsd:element name="yCbCrSubsampleHoriz" type="typeOfYCbCrSubsampleHorizType" minOccurs="0" maxOccurs="1">
+                                                            <xsd:element name="yCbCrSubsampleHoriz"
+                                                                         type="typeOfYCbCrSubsampleHorizType"
+                                                                         minOccurs="0" maxOccurs="1">
                                                                 <xsd:annotation>
-                                                                    <xsd:documentation>NDD id="not specified"</xsd:documentation>
+                                                                    <xsd:documentation>NDD id="not specified"
+                                                                    </xsd:documentation>
                                                                 </xsd:annotation>
                                                             </xsd:element>
-                                                            <xsd:element name="yCbCrSubsampleVert" type="typeOfYCbCrSubsampleVertType" minOccurs="0" maxOccurs="1">
+                                                            <xsd:element name="yCbCrSubsampleVert"
+                                                                         type="typeOfYCbCrSubsampleVertType"
+                                                                         minOccurs="0" maxOccurs="1">
                                                                 <xsd:annotation>
-                                                                    <xsd:documentation>NDD id="not specified"</xsd:documentation>
+                                                                    <xsd:documentation>NDD id="not specified"
+                                                                    </xsd:documentation>
                                                                 </xsd:annotation>
                                                             </xsd:element>
                                                         </xsd:sequence>
                                                     </xsd:complexType>
                                                 </xsd:element>
-                                                <xsd:element name="yCbCrPositioning" type="typeOfYCbCrPositioningType" minOccurs="0" maxOccurs="1">
+                                                <xsd:element name="yCbCrPositioning" type="typeOfYCbCrPositioningType"
+                                                             minOccurs="0" maxOccurs="1">
                                                     <xsd:annotation>
                                                         <xsd:documentation>NDD id="7.1.3.3.2"</xsd:documentation>
                                                     </xsd:annotation>
@@ -362,19 +388,25 @@
                                                     </xsd:annotation>
                                                     <xsd:complexType>
                                                         <xsd:sequence>
-                                                            <xsd:element name="lumaRed" type="rationalType" minOccurs="0" maxOccurs="1">
+                                                            <xsd:element name="lumaRed" type="rationalType"
+                                                                         minOccurs="0" maxOccurs="1">
                                                                 <xsd:annotation>
-                                                                    <xsd:documentation>Not specified in NDD</xsd:documentation>
+                                                                    <xsd:documentation>Not specified in NDD
+                                                                    </xsd:documentation>
                                                                 </xsd:annotation>
                                                             </xsd:element>
-                                                            <xsd:element name="lumaGreen" type="rationalType" minOccurs="0" maxOccurs="1">
+                                                            <xsd:element name="lumaGreen" type="rationalType"
+                                                                         minOccurs="0" maxOccurs="1">
                                                                 <xsd:annotation>
-                                                                    <xsd:documentation>Not specified in NDD</xsd:documentation>
+                                                                    <xsd:documentation>Not specified in NDD
+                                                                    </xsd:documentation>
                                                                 </xsd:annotation>
                                                             </xsd:element>
-                                                            <xsd:element name="lumaBlue" type="rationalType" minOccurs="0" maxOccurs="1">
+                                                            <xsd:element name="lumaBlue" type="rationalType"
+                                                                         minOccurs="0" maxOccurs="1">
                                                                 <xsd:annotation>
-                                                                    <xsd:documentation>Not specified in NDD</xsd:documentation>
+                                                                    <xsd:documentation>Not specified in NDD
+                                                                    </xsd:documentation>
                                                                 </xsd:annotation>
                                                             </xsd:element>
                                                         </xsd:sequence>
@@ -390,10 +422,11 @@
                                         </xsd:annotation>
                                         <xsd:complexType>
                                             <xsd:sequence>
-                                                <xsd:element name="Component"  minOccurs="0" maxOccurs="unbounded">
+                                                <xsd:element name="Component" minOccurs="0" maxOccurs="unbounded">
                                                     <xsd:complexType>
                                                         <xsd:sequence>
-                                                            <xsd:element name="componentPhotometricInterpretation" type="typeOfComponentPhotometricInterpretationType">
+                                                            <xsd:element name="componentPhotometricInterpretation"
+                                                                         type="typeOfComponentPhotometricInterpretationType">
                                                                 <xsd:annotation>
                                                                     <xsd:documentation>Not in NDD</xsd:documentation>
                                                                 </xsd:annotation>
@@ -416,7 +449,6 @@
                                     </xsd:element>
                                 </xsd:sequence>
                             </xsd:complexType>
-
 
 
                         </xsd:element>
@@ -448,17 +480,20 @@
                                                         <xsd:documentation>NDD id="7.2.1.1.1"</xsd:documentation>
                                                     </xsd:annotation>
                                                 </xsd:element>
-                                                <xsd:element name="codecVersion" type="stringType" minOccurs="0" maxOccurs="1">
+                                                <xsd:element name="codecVersion" type="stringType" minOccurs="0"
+                                                             maxOccurs="1">
                                                     <xsd:annotation>
                                                         <xsd:documentation>NDD id="7.2.1.1.2"</xsd:documentation>
                                                     </xsd:annotation>
                                                 </xsd:element>
-                                                <xsd:element name="codestreamProfile" type="stringType" minOccurs="0" maxOccurs="1">
+                                                <xsd:element name="codestreamProfile" type="stringType" minOccurs="0"
+                                                             maxOccurs="1">
                                                     <xsd:annotation>
                                                         <xsd:documentation>NDD id="7.2.1.1.3"</xsd:documentation>
                                                     </xsd:annotation>
                                                 </xsd:element>
-                                                <xsd:element name="complianceClass" type="stringType" minOccurs="0" maxOccurs="1">
+                                                <xsd:element name="complianceClass" type="stringType" minOccurs="0"
+                                                             maxOccurs="1">
                                                     <xsd:annotation>
                                                         <xsd:documentation>NDD id="7.2.1.1.4"</xsd:documentation>
                                                     </xsd:annotation>
@@ -478,12 +513,14 @@
                                                     </xsd:annotation>
                                                     <xsd:complexType>
                                                         <xsd:sequence>
-                                                            <xsd:element name="tileWidth" type="positiveIntegerType" minOccurs="0" maxOccurs="1">
+                                                            <xsd:element name="tileWidth" type="positiveIntegerType"
+                                                                         minOccurs="0" maxOccurs="1">
                                                                 <xsd:annotation>
                                                                     <xsd:documentation>not in NDD</xsd:documentation>
                                                                 </xsd:annotation>
                                                             </xsd:element>
-                                                            <xsd:element name="tileHeight" type="positiveIntegerType" minOccurs="0" maxOccurs="1">
+                                                            <xsd:element name="tileHeight" type="positiveIntegerType"
+                                                                         minOccurs="0" maxOccurs="1">
                                                                 <xsd:annotation>
                                                                     <xsd:documentation>not in NDD</xsd:documentation>
                                                                 </xsd:annotation>
@@ -491,12 +528,14 @@
                                                         </xsd:sequence>
                                                     </xsd:complexType>
                                                 </xsd:element>
-                                                <xsd:element name="qualityLayers" type="positiveIntegerType" minOccurs="0" maxOccurs="1">
+                                                <xsd:element name="qualityLayers" type="positiveIntegerType"
+                                                             minOccurs="0" maxOccurs="1">
                                                     <xsd:annotation>
                                                         <xsd:documentation>NDD id="7.2.1.2.2"</xsd:documentation>
                                                     </xsd:annotation>
                                                 </xsd:element>
-                                                <xsd:element name="resolutionLevels" type="positiveIntegerType" minOccurs="0" maxOccurs="1">
+                                                <xsd:element name="resolutionLevels" type="positiveIntegerType"
+                                                             minOccurs="0" maxOccurs="1">
                                                     <xsd:annotation>
                                                         <xsd:documentation>NDD id="7.2.1.2.3"</xsd:documentation>
                                                     </xsd:annotation>
@@ -514,7 +553,8 @@
                             </xsd:annotation>
                             <xsd:complexType>
                                 <xsd:sequence>
-                                    <xsd:element name="zoomLevels" type="positiveIntegerType" minOccurs="0" maxOccurs="1">
+                                    <xsd:element name="zoomLevels" type="positiveIntegerType" minOccurs="0"
+                                                 maxOccurs="1">
                                         <xsd:annotation>
                                             <xsd:documentation>NDD id="7.2.2.1"</xsd:documentation>
                                         </xsd:annotation>
@@ -528,7 +568,8 @@
                             </xsd:annotation>
                             <xsd:complexType>
                                 <xsd:sequence>
-                                    <xsd:element name="djvuFormat" type="typeOfDjvuFormatType" minOccurs="0" maxOccurs="1">
+                                    <xsd:element name="djvuFormat" type="typeOfDjvuFormatType" minOccurs="0"
+                                                 maxOccurs="1">
                                         <xsd:annotation>
                                             <xsd:documentation>NDD id="7.2.3.1"</xsd:documentation>
                                         </xsd:annotation>
@@ -542,9 +583,6 @@
         </xsd:sequence>
     </xsd:complexType>
     <!-- end of BasicImageInformationType -->
-
-
-
 
 
     <!-- ImageCaptureMetadataType -->
@@ -592,12 +630,16 @@
                                         </xsd:annotation>
                                         <xsd:complexType>
                                             <xsd:sequence>
-                                                <xsd:element name="sourceXDimensionValue" type="typeOfNonNegativeRealType" minOccurs="0" maxOccurs="1">
+                                                <xsd:element name="sourceXDimensionValue"
+                                                             type="typeOfNonNegativeRealType" minOccurs="0"
+                                                             maxOccurs="1">
                                                     <xsd:annotation>
                                                         <xsd:documentation>NDD id="8.1.3.1.1"</xsd:documentation>
                                                     </xsd:annotation>
                                                 </xsd:element>
-                                                <xsd:element name="sourceXDimensionUnit" type="typeOfsourceDimensionUnitType" minOccurs="0" maxOccurs="1">
+                                                <xsd:element name="sourceXDimensionUnit"
+                                                             type="typeOfsourceDimensionUnitType" minOccurs="0"
+                                                             maxOccurs="1">
                                                     <xsd:annotation>
                                                         <xsd:documentation>NDD id="8.1.3.1.1"</xsd:documentation>
                                                     </xsd:annotation>
@@ -611,12 +653,16 @@
                                         </xsd:annotation>
                                         <xsd:complexType>
                                             <xsd:sequence>
-                                                <xsd:element name="sourceYDimensionValue" type="typeOfNonNegativeRealType" minOccurs="0" maxOccurs="1">
+                                                <xsd:element name="sourceYDimensionValue"
+                                                             type="typeOfNonNegativeRealType" minOccurs="0"
+                                                             maxOccurs="1">
                                                     <xsd:annotation>
                                                         <xsd:documentation>NDD id="8.1.3.2.1"</xsd:documentation>
                                                     </xsd:annotation>
                                                 </xsd:element>
-                                                <xsd:element name="sourceYDimensionUnit" type="typeOfsourceDimensionUnitType" minOccurs="0" maxOccurs="1">
+                                                <xsd:element name="sourceYDimensionUnit"
+                                                             type="typeOfsourceDimensionUnitType" minOccurs="0"
+                                                             maxOccurs="1">
                                                     <xsd:annotation>
                                                         <xsd:documentation>NDD id="8.1.3.2.2"</xsd:documentation>
                                                     </xsd:annotation>
@@ -630,12 +676,16 @@
                                         </xsd:annotation>
                                         <xsd:complexType>
                                             <xsd:sequence>
-                                                <xsd:element name="sourceZDimensionValue" type="typeOfNonNegativeRealType" minOccurs="0" maxOccurs="1">
+                                                <xsd:element name="sourceZDimensionValue"
+                                                             type="typeOfNonNegativeRealType" minOccurs="0"
+                                                             maxOccurs="1">
                                                     <xsd:annotation>
                                                         <xsd:documentation>NDD id="8.1.3.3.1"</xsd:documentation>
                                                     </xsd:annotation>
                                                 </xsd:element>
-                                                <xsd:element name="sourceZDimensionUnit" type="typeOfsourceDimensionUnitType" minOccurs="0" maxOccurs="1">
+                                                <xsd:element name="sourceZDimensionUnit"
+                                                             type="typeOfsourceDimensionUnitType" minOccurs="0"
+                                                             maxOccurs="1">
                                                     <xsd:annotation>
                                                         <xsd:documentation>NDD id="8.1.3.3.2"</xsd:documentation>
                                                     </xsd:annotation>
@@ -695,12 +745,14 @@
                                             <xsd:documentation>NDD id="8.3.2.1"</xsd:documentation>
                                         </xsd:annotation>
                                     </xsd:element>
-                                    <xsd:element name="scannerModelNumber" type="stringType" minOccurs="0" maxOccurs="1">
+                                    <xsd:element name="scannerModelNumber" type="stringType" minOccurs="0"
+                                                 maxOccurs="1">
                                         <xsd:annotation>
                                             <xsd:documentation>NDD id="8.3.2.2"</xsd:documentation>
                                         </xsd:annotation>
                                     </xsd:element>
-                                    <xsd:element name="scannerModelSerialNo" type="stringType" minOccurs="0" maxOccurs="1">
+                                    <xsd:element name="scannerModelSerialNo" type="stringType" minOccurs="0"
+                                                 maxOccurs="1">
                                         <xsd:annotation>
                                             <xsd:documentation>NDD id="8.3.2.3"</xsd:documentation>
                                         </xsd:annotation>
@@ -716,17 +768,20 @@
                             </xsd:annotation>
                             <xsd:complexType>
                                 <xsd:sequence>
-                                    <xsd:element name="xOpticalResolution" type="positiveIntegerType" minOccurs="0" maxOccurs="1">
+                                    <xsd:element name="xOpticalResolution" type="positiveIntegerType" minOccurs="0"
+                                                 maxOccurs="1">
                                         <xsd:annotation>
                                             <xsd:documentation>not in NDD</xsd:documentation>
                                         </xsd:annotation>
                                     </xsd:element>
-                                    <xsd:element name="yOpticalResolution" type="positiveIntegerType" minOccurs="0" maxOccurs="1">
+                                    <xsd:element name="yOpticalResolution" type="positiveIntegerType" minOccurs="0"
+                                                 maxOccurs="1">
                                         <xsd:annotation>
                                             <xsd:documentation>not in NDD</xsd:documentation>
                                         </xsd:annotation>
                                     </xsd:element>
-                                    <xsd:element name="opticalResolutionUnit" type="typeOfOpticalResolutionUnitType" minOccurs="0" maxOccurs="1">
+                                    <xsd:element name="opticalResolutionUnit" type="typeOfOpticalResolutionUnitType"
+                                                 minOccurs="0" maxOccurs="1">
                                         <xsd:annotation>
                                             <xsd:documentation>not in NDD</xsd:documentation>
                                         </xsd:annotation>
@@ -734,8 +789,6 @@
                                 </xsd:sequence>
                             </xsd:complexType>
                         </xsd:element>
-
-
 
 
                         <xsd:element name="scannerSensor" type="typeOfScannerSensorType" minOccurs="0" maxOccurs="1">
@@ -749,12 +802,14 @@
                             </xsd:annotation>
                             <xsd:complexType>
                                 <xsd:sequence>
-                                    <xsd:element name="scanningSoftwareName" type="stringType" minOccurs="0" maxOccurs="1">
+                                    <xsd:element name="scanningSoftwareName" type="stringType" minOccurs="0"
+                                                 maxOccurs="1">
                                         <xsd:annotation>
                                             <xsd:documentation>NDD id="8.3.5.1"</xsd:documentation>
                                         </xsd:annotation>
                                     </xsd:element>
-                                    <xsd:element name="scanningSoftwareVersionNo" type="stringType" minOccurs="0" maxOccurs="1">
+                                    <xsd:element name="scanningSoftwareVersionNo" type="stringType" minOccurs="0"
+                                                 maxOccurs="1">
                                         <xsd:annotation>
                                             <xsd:documentation>NDD id="8.3.5.2"</xsd:documentation>
                                         </xsd:annotation>
@@ -782,17 +837,20 @@
                             </xsd:annotation>
                             <xsd:complexType>
                                 <xsd:sequence>
-                                    <xsd:element name="digitalCameraModelName" type="stringType" minOccurs="0" maxOccurs="1">
+                                    <xsd:element name="digitalCameraModelName" type="stringType" minOccurs="0"
+                                                 maxOccurs="1">
                                         <xsd:annotation>
                                             <xsd:documentation>NDD id="8.4.2.1"</xsd:documentation>
                                         </xsd:annotation>
                                     </xsd:element>
-                                    <xsd:element name="digitalCameraModelNumber" type="stringType" minOccurs="0" maxOccurs="1">
+                                    <xsd:element name="digitalCameraModelNumber" type="stringType" minOccurs="0"
+                                                 maxOccurs="1">
                                         <xsd:annotation>
                                             <xsd:documentation>NDD id="8.4.2.2"</xsd:documentation>
                                         </xsd:annotation>
                                     </xsd:element>
-                                    <xsd:element name="digitalCameraModelSerialNo" type="stringType" minOccurs="0" maxOccurs="1">
+                                    <xsd:element name="digitalCameraModelSerialNo" type="stringType" minOccurs="0"
+                                                 maxOccurs="1">
                                         <xsd:annotation>
                                             <xsd:documentation>NDD id="8.4.2.3"</xsd:documentation>
                                         </xsd:annotation>
@@ -817,63 +875,75 @@
                                         </xsd:annotation>
                                         <xsd:complexType>
                                             <xsd:sequence>
-                                                <xsd:element name="fNumber" type="typeOfNonNegativeRealType" minOccurs="0" maxOccurs="1">
+                                                <xsd:element name="fNumber" type="typeOfNonNegativeRealType"
+                                                             minOccurs="0" maxOccurs="1">
                                                     <xsd:annotation>
                                                         <xsd:documentation>NDD id="8.4.4.1.1"</xsd:documentation>
                                                     </xsd:annotation>
                                                 </xsd:element>
-                                                <xsd:element name="exposureTime" type="typeOfNonNegativeRealType" minOccurs="0" maxOccurs="1">
+                                                <xsd:element name="exposureTime" type="typeOfNonNegativeRealType"
+                                                             minOccurs="0" maxOccurs="1">
                                                     <xsd:annotation>
                                                         <xsd:documentation>NDD id="8.4.4.1.2"</xsd:documentation>
                                                     </xsd:annotation>
                                                 </xsd:element>
-                                                <xsd:element name="exposureProgram" type="typeOfExposureProgramType" minOccurs="0" maxOccurs="1">
+                                                <xsd:element name="exposureProgram" type="typeOfExposureProgramType"
+                                                             minOccurs="0" maxOccurs="1">
                                                     <xsd:annotation>
                                                         <xsd:documentation>NDD id="8.4.4.1.3"</xsd:documentation>
                                                     </xsd:annotation>
                                                 </xsd:element>
-                                                <xsd:element name="spectralSensitivity" type="stringType" minOccurs="0" maxOccurs="unbounded">
+                                                <xsd:element name="spectralSensitivity" type="stringType" minOccurs="0"
+                                                             maxOccurs="unbounded">
                                                     <xsd:annotation>
                                                         <xsd:documentation>NDD id="8.4.4.1.4"</xsd:documentation>
                                                     </xsd:annotation>
                                                 </xsd:element>
-                                                <xsd:element name="isoSpeedRatings" type="positiveIntegerType" minOccurs="0" maxOccurs="1">
+                                                <xsd:element name="isoSpeedRatings" type="positiveIntegerType"
+                                                             minOccurs="0" maxOccurs="1">
                                                     <xsd:annotation>
                                                         <xsd:documentation>NDD id="8.4.4.1.5"</xsd:documentation>
                                                     </xsd:annotation>
                                                 </xsd:element>
-                                                <xsd:element name="oECF" type="rationalType" minOccurs="0" maxOccurs="1">
+                                                <xsd:element name="oECF" type="rationalType" minOccurs="0"
+                                                             maxOccurs="1">
                                                     <xsd:annotation>
                                                         <xsd:documentation>NDD id="8.4.4.1.6"</xsd:documentation>
                                                     </xsd:annotation>
                                                 </xsd:element>
-                                                <xsd:element name="exifVersion" type="typeOfExifVersionType" minOccurs="0" maxOccurs="1">
+                                                <xsd:element name="exifVersion" type="typeOfExifVersionType"
+                                                             minOccurs="0" maxOccurs="1">
                                                     <xsd:annotation>
                                                         <xsd:documentation>NDD id="8.4.4.1.7"</xsd:documentation>
                                                     </xsd:annotation>
                                                 </xsd:element>
-                                                <xsd:element name="shutterSpeedValue" type="rationalType" minOccurs="0" maxOccurs="1">
+                                                <xsd:element name="shutterSpeedValue" type="rationalType" minOccurs="0"
+                                                             maxOccurs="1">
                                                     <xsd:annotation>
                                                         <xsd:documentation>NDD id="8.4.4.1.8"</xsd:documentation>
                                                     </xsd:annotation>
                                                 </xsd:element>
-                                                <xsd:element name="apertureValue" type="rationalType" minOccurs="0" maxOccurs="1">
+                                                <xsd:element name="apertureValue" type="rationalType" minOccurs="0"
+                                                             maxOccurs="1">
                                                     <xsd:annotation>
                                                         <xsd:documentation>NDD id="8.4.4.1.9"</xsd:documentation>
                                                     </xsd:annotation>
                                                 </xsd:element>
-                                                <xsd:element name="brightnessValue" type="rationalType" minOccurs="0" maxOccurs="1">
+                                                <xsd:element name="brightnessValue" type="rationalType" minOccurs="0"
+                                                             maxOccurs="1">
                                                     <xsd:annotation>
                                                         <xsd:documentation>NDD id="8.4.4.1.10"</xsd:documentation>
                                                     </xsd:annotation>
                                                 </xsd:element>
-                                                <xsd:element name="exposureBiasValue" type="rationalType" minOccurs="0" maxOccurs="1">
+                                                <xsd:element name="exposureBiasValue" type="rationalType" minOccurs="0"
+                                                             maxOccurs="1">
                                                     <xsd:annotation>
                                                         <xsd:documentation>NDD id="8.4.4.1.11"</xsd:documentation>
                                                     </xsd:annotation>
                                                 </xsd:element>
 
-                                                <xsd:element name="maxApertureValue" type="rationalType" minOccurs="0" maxOccurs="1">
+                                                <xsd:element name="maxApertureValue" type="rationalType" minOccurs="0"
+                                                             maxOccurs="1">
                                                     <xsd:annotation>
                                                         <xsd:documentation>NDD id="8.4.4.1.12"</xsd:documentation>
                                                     </xsd:annotation>
@@ -882,22 +952,32 @@
                                                 <xsd:element name="SubjectDistance" minOccurs="0" maxOccurs="1">
                                                     <xsd:complexType>
                                                         <xsd:sequence>
-                                                            <xsd:element name="distance" type="typeOfNonNegativeDecimalType" minOccurs="0" maxOccurs="1">
+                                                            <xsd:element name="distance"
+                                                                         type="typeOfNonNegativeDecimalType"
+                                                                         minOccurs="0" maxOccurs="1">
                                                                 <xsd:annotation>
-                                                                    <xsd:documentation>NDD id="8.4.4.1.13"</xsd:documentation>
+                                                                    <xsd:documentation>NDD id="8.4.4.1.13"
+                                                                    </xsd:documentation>
                                                                 </xsd:annotation>
                                                             </xsd:element>
-                                                            <xsd:element name="MinMaxDistance" minOccurs="0" maxOccurs="1">
+                                                            <xsd:element name="MinMaxDistance" minOccurs="0"
+                                                                         maxOccurs="1">
                                                                 <xsd:complexType>
                                                                     <xsd:sequence>
-                                                                        <xsd:element name="minDistance" type="typeOfNonNegativeDecimalType" minOccurs="0" maxOccurs="1">
+                                                                        <xsd:element name="minDistance"
+                                                                                     type="typeOfNonNegativeDecimalType"
+                                                                                     minOccurs="0" maxOccurs="1">
                                                                             <xsd:annotation>
-                                                                                <xsd:documentation>NDD id="8.4.4.1.13"</xsd:documentation>
+                                                                                <xsd:documentation>NDD id="8.4.4.1.13"
+                                                                                </xsd:documentation>
                                                                             </xsd:annotation>
                                                                         </xsd:element>
-                                                                        <xsd:element name="maxDistance" type="typeOfNonNegativeDecimalType" minOccurs="0" maxOccurs="1">
+                                                                        <xsd:element name="maxDistance"
+                                                                                     type="typeOfNonNegativeDecimalType"
+                                                                                     minOccurs="0" maxOccurs="1">
                                                                             <xsd:annotation>
-                                                                                <xsd:documentation>NDD id="8.4.4.1.13"</xsd:documentation>
+                                                                                <xsd:documentation>NDD id="8.4.4.1.13"
+                                                                                </xsd:documentation>
                                                                             </xsd:annotation>
                                                                         </xsd:element>
                                                                     </xsd:sequence>
@@ -908,53 +988,62 @@
                                                 </xsd:element>
 
 
-
-                                                <xsd:element name="meteringMode" type="typeOfMeteringModeType" minOccurs="0" maxOccurs="1">
+                                                <xsd:element name="meteringMode" type="typeOfMeteringModeType"
+                                                             minOccurs="0" maxOccurs="1">
                                                     <xsd:annotation>
                                                         <xsd:documentation>NDD id="8.4.4.1.14"</xsd:documentation>
                                                     </xsd:annotation>
                                                 </xsd:element>
-                                                <xsd:element name="lightSource" type="typeOfLightSourceType" minOccurs="0" maxOccurs="1">
+                                                <xsd:element name="lightSource" type="typeOfLightSourceType"
+                                                             minOccurs="0" maxOccurs="1">
                                                     <xsd:annotation>
                                                         <xsd:documentation>NDD id="8.4.4.1.15"</xsd:documentation>
                                                     </xsd:annotation>
                                                 </xsd:element>
-                                                <xsd:element name="flash" type="typeOfFlashType" minOccurs="0" maxOccurs="1">
+                                                <xsd:element name="flash" type="typeOfFlashType" minOccurs="0"
+                                                             maxOccurs="1">
                                                     <xsd:annotation>
                                                         <xsd:documentation>NDD id="8.4.4.1.16"</xsd:documentation>
                                                     </xsd:annotation>
                                                 </xsd:element>
-                                                <xsd:element name="focalLength" type="typeOfNonNegativeDecimalType" minOccurs="0" maxOccurs="1">
+                                                <xsd:element name="focalLength" type="typeOfNonNegativeDecimalType"
+                                                             minOccurs="0" maxOccurs="1">
                                                     <xsd:annotation>
                                                         <xsd:documentation>NDD id="8.4.4.1.17"</xsd:documentation>
                                                     </xsd:annotation>
                                                 </xsd:element>
-                                                <xsd:element name="flashEnergy" type="rationalType" minOccurs="0" maxOccurs="1">
+                                                <xsd:element name="flashEnergy" type="rationalType" minOccurs="0"
+                                                             maxOccurs="1">
                                                     <xsd:annotation>
                                                         <xsd:documentation>NDD id="8.4.4.1.18"</xsd:documentation>
                                                     </xsd:annotation>
                                                 </xsd:element>
-                                                <xsd:element name="backLight" type="typeOfBackLightType" minOccurs="0" maxOccurs="1">
+                                                <xsd:element name="backLight" type="typeOfBackLightType" minOccurs="0"
+                                                             maxOccurs="1">
                                                     <xsd:annotation>
                                                         <xsd:documentation>NDD id="8.4.4.1.19"</xsd:documentation>
                                                     </xsd:annotation>
                                                 </xsd:element>
-                                                <xsd:element name="exposureIndex" type="typeOfPositiveRealType" minOccurs="0" maxOccurs="1">
+                                                <xsd:element name="exposureIndex" type="typeOfPositiveRealType"
+                                                             minOccurs="0" maxOccurs="1">
                                                     <xsd:annotation>
                                                         <xsd:documentation>NDD id="8.4.4.1.20"</xsd:documentation>
                                                     </xsd:annotation>
                                                 </xsd:element>
-                                                <xsd:element name="sensingMethod" type="typeOfSensingMethodType" minOccurs="0" maxOccurs="1">
+                                                <xsd:element name="sensingMethod" type="typeOfSensingMethodType"
+                                                             minOccurs="0" maxOccurs="1">
                                                     <xsd:annotation>
                                                         <xsd:documentation>NDD id="8.4.4.1.21"</xsd:documentation>
                                                     </xsd:annotation>
                                                 </xsd:element>
-                                                <xsd:element name="cfaPattern" type="integerType" minOccurs="0" maxOccurs="1">
+                                                <xsd:element name="cfaPattern" type="integerType" minOccurs="0"
+                                                             maxOccurs="1">
                                                     <xsd:annotation>
                                                         <xsd:documentation>NDD id="8.4.4.1.22"</xsd:documentation>
                                                     </xsd:annotation>
                                                 </xsd:element>
-                                                <xsd:element name="autoFocus" type="typeOfAutoFocusType" minOccurs="0" maxOccurs="1">
+                                                <xsd:element name="autoFocus" type="typeOfAutoFocusType" minOccurs="0"
+                                                             maxOccurs="1">
                                                     <xsd:annotation>
                                                         <xsd:documentation>NDD id="8.4.4.1.23"</xsd:documentation>
                                                     </xsd:annotation>
@@ -965,14 +1054,20 @@
                                                     </xsd:annotation>
                                                     <xsd:complexType>
                                                         <xsd:sequence>
-                                                            <xsd:element name="xPrintAspectRatio" type="typeOfNonNegativeRealType" minOccurs="0" maxOccurs="1">
+                                                            <xsd:element name="xPrintAspectRatio"
+                                                                         type="typeOfNonNegativeRealType" minOccurs="0"
+                                                                         maxOccurs="1">
                                                                 <xsd:annotation>
-                                                                    <xsd:documentation>NDD id="8.4.4.1.24.1"</xsd:documentation>
+                                                                    <xsd:documentation>NDD id="8.4.4.1.24.1"
+                                                                    </xsd:documentation>
                                                                 </xsd:annotation>
                                                             </xsd:element>
-                                                            <xsd:element name="yPrintAspectRatio" type="typeOfNonNegativeRealType" minOccurs="0" maxOccurs="1">
+                                                            <xsd:element name="yPrintAspectRatio"
+                                                                         type="typeOfNonNegativeRealType" minOccurs="0"
+                                                                         maxOccurs="1">
                                                                 <xsd:annotation>
-                                                                    <xsd:documentation>NDD id="8.4.4.1.24.2"</xsd:documentation>
+                                                                    <xsd:documentation>NDD id="8.4.4.1.24.2"
+                                                                    </xsd:documentation>
                                                                 </xsd:annotation>
                                                             </xsd:element>
                                                         </xsd:sequence>
@@ -988,12 +1083,14 @@
                                         </xsd:annotation>
                                         <xsd:complexType>
                                             <xsd:sequence>
-                                                <xsd:element name="gpsVersionID" type="stringType" minOccurs="0" maxOccurs="1">
+                                                <xsd:element name="gpsVersionID" type="stringType" minOccurs="0"
+                                                             maxOccurs="1">
                                                     <xsd:annotation>
                                                         <xsd:documentation>NDD id="8.4.4.2.1"</xsd:documentation>
                                                     </xsd:annotation>
                                                 </xsd:element>
-                                                <xsd:element name="gpsLatitudeRef" type="typeOfgpsLatitudeRefType" minOccurs="0" maxOccurs="1">
+                                                <xsd:element name="gpsLatitudeRef" type="typeOfgpsLatitudeRefType"
+                                                             minOccurs="0" maxOccurs="1">
                                                     <xsd:annotation>
                                                         <xsd:documentation>NDD id="8.4.4.2.2"</xsd:documentation>
                                                     </xsd:annotation>
@@ -1006,7 +1103,8 @@
                                                         <xsd:group ref="gpsGroup"/>
                                                     </xsd:complexType>
                                                 </xsd:element>
-                                                <xsd:element name="gpsLongitudeRef" type="typeOfgpsLongitudeRefType" minOccurs="0" maxOccurs="1">
+                                                <xsd:element name="gpsLongitudeRef" type="typeOfgpsLongitudeRefType"
+                                                             minOccurs="0" maxOccurs="1">
                                                     <xsd:annotation>
                                                         <xsd:documentation>NDD id="8.4.4.2.4"</xsd:documentation>
                                                     </xsd:annotation>
@@ -1019,77 +1117,94 @@
                                                         <xsd:group ref="gpsGroup"/>
                                                     </xsd:complexType>
                                                 </xsd:element>
-                                                <xsd:element name="gpsAltitudeRef" type="typeOfgpsAltitudeRefType" minOccurs="0" maxOccurs="1">
+                                                <xsd:element name="gpsAltitudeRef" type="typeOfgpsAltitudeRefType"
+                                                             minOccurs="0" maxOccurs="1">
                                                     <xsd:annotation>
                                                         <xsd:documentation>NDD id="8.4.4.2.6"</xsd:documentation>
                                                     </xsd:annotation>
                                                 </xsd:element>
-                                                <xsd:element name="gpsAltitude" type="rationalType" minOccurs="0" maxOccurs="1">
+                                                <xsd:element name="gpsAltitude" type="rationalType" minOccurs="0"
+                                                             maxOccurs="1">
                                                     <xsd:annotation>
                                                         <xsd:documentation>NDD id="8.4.4.2.7"</xsd:documentation>
                                                     </xsd:annotation>
                                                 </xsd:element>
-                                                <xsd:element name="gpsTimeStamp" type="stringType" minOccurs="0" maxOccurs="1">
+                                                <xsd:element name="gpsTimeStamp" type="stringType" minOccurs="0"
+                                                             maxOccurs="1">
                                                     <xsd:annotation>
                                                         <xsd:documentation>NDD id="8.4.4.2.8"</xsd:documentation>
                                                     </xsd:annotation>
                                                 </xsd:element>
-                                                <xsd:element name="gpsSatellites" type="stringType" minOccurs="0" maxOccurs="1">
+                                                <xsd:element name="gpsSatellites" type="stringType" minOccurs="0"
+                                                             maxOccurs="1">
                                                     <xsd:annotation>
                                                         <xsd:documentation>NDD id="8.4.4.2.9"</xsd:documentation>
                                                     </xsd:annotation>
                                                 </xsd:element>
-                                                <xsd:element name="gpsStatus" type="typeOfgpsStatusType" minOccurs="0" maxOccurs="1">
+                                                <xsd:element name="gpsStatus" type="typeOfgpsStatusType" minOccurs="0"
+                                                             maxOccurs="1">
                                                     <xsd:annotation>
                                                         <xsd:documentation>NDD id="8.4.4.2.10"</xsd:documentation>
                                                     </xsd:annotation>
                                                 </xsd:element>
-                                                <xsd:element name="gpsMeasureMode" type="typeOfgpsMeasureModeType" minOccurs="0" maxOccurs="1">
+                                                <xsd:element name="gpsMeasureMode" type="typeOfgpsMeasureModeType"
+                                                             minOccurs="0" maxOccurs="1">
                                                     <xsd:annotation>
                                                         <xsd:documentation>NDD id="8.4.4.2.11"</xsd:documentation>
                                                     </xsd:annotation>
                                                 </xsd:element>
-                                                <xsd:element name="gpsDOP" type="rationalType" minOccurs="0" maxOccurs="1">
+                                                <xsd:element name="gpsDOP" type="rationalType" minOccurs="0"
+                                                             maxOccurs="1">
                                                     <xsd:annotation>
                                                         <xsd:documentation>NDD id="8.4.4.2.12"</xsd:documentation>
                                                     </xsd:annotation>
                                                 </xsd:element>
-                                                <xsd:element name="gpsSpeedRef" type="typeOfgpsSpeedRefType" minOccurs="0" maxOccurs="1">
+                                                <xsd:element name="gpsSpeedRef" type="typeOfgpsSpeedRefType"
+                                                             minOccurs="0" maxOccurs="1">
                                                     <xsd:annotation>
                                                         <xsd:documentation>NDD id="8.4.4.2.13"</xsd:documentation>
                                                     </xsd:annotation>
                                                 </xsd:element>
-                                                <xsd:element name="gpsSpeed" type="rationalType" minOccurs="0" maxOccurs="1">
+                                                <xsd:element name="gpsSpeed" type="rationalType" minOccurs="0"
+                                                             maxOccurs="1">
                                                     <xsd:annotation>
                                                         <xsd:documentation>NDD id="8.4.4.2.14"</xsd:documentation>
                                                     </xsd:annotation>
                                                 </xsd:element>
-                                                <xsd:element name="gpsTrackRef" type="typeOfgpsTrackRefType" minOccurs="0" maxOccurs="1">
+                                                <xsd:element name="gpsTrackRef" type="typeOfgpsTrackRefType"
+                                                             minOccurs="0" maxOccurs="1">
                                                     <xsd:annotation>
                                                         <xsd:documentation>NDD id="8.4.4.2.15"</xsd:documentation>
                                                     </xsd:annotation>
                                                 </xsd:element>
-                                                <xsd:element name="gpsTrack" type="rationalType" minOccurs="0" maxOccurs="1">
+                                                <xsd:element name="gpsTrack" type="rationalType" minOccurs="0"
+                                                             maxOccurs="1">
                                                     <xsd:annotation>
                                                         <xsd:documentation>NDD id="8.4.4.2.16"</xsd:documentation>
                                                     </xsd:annotation>
                                                 </xsd:element>
-                                                <xsd:element name="gpsImgDirectionRef" type="typeOfgpsImgDirectionRefType" minOccurs="0" maxOccurs="1">
+                                                <xsd:element name="gpsImgDirectionRef"
+                                                             type="typeOfgpsImgDirectionRefType" minOccurs="0"
+                                                             maxOccurs="1">
                                                     <xsd:annotation>
                                                         <xsd:documentation>NDD id="8.4.4.2.17"</xsd:documentation>
                                                     </xsd:annotation>
                                                 </xsd:element>
-                                                <xsd:element name="gpsImgDirection" type="rationalType" minOccurs="0" maxOccurs="1">
+                                                <xsd:element name="gpsImgDirection" type="rationalType" minOccurs="0"
+                                                             maxOccurs="1">
                                                     <xsd:annotation>
                                                         <xsd:documentation>NDD id="8.4.4.2.18"</xsd:documentation>
                                                     </xsd:annotation>
                                                 </xsd:element>
-                                                <xsd:element name="gpsMapDatum" type="stringType" minOccurs="0" maxOccurs="1">
+                                                <xsd:element name="gpsMapDatum" type="stringType" minOccurs="0"
+                                                             maxOccurs="1">
                                                     <xsd:annotation>
                                                         <xsd:documentation>NDD id="8.4.4.2.19"</xsd:documentation>
                                                     </xsd:annotation>
                                                 </xsd:element>
-                                                <xsd:element name="gpsDestLatitudeRef" type="typeOfgpsDestLatitudeRefType" minOccurs="0" maxOccurs="1">
+                                                <xsd:element name="gpsDestLatitudeRef"
+                                                             type="typeOfgpsDestLatitudeRefType" minOccurs="0"
+                                                             maxOccurs="1">
                                                     <xsd:annotation>
                                                         <xsd:documentation>NDD id="8.4.4.2.20"</xsd:documentation>
                                                     </xsd:annotation>
@@ -1102,7 +1217,9 @@
                                                         <xsd:group ref="gpsGroup"/>
                                                     </xsd:complexType>
                                                 </xsd:element>
-                                                <xsd:element name="gpsDestLongitudeRef" type="typeOfgpsDestLongitudeRefType" minOccurs="0" maxOccurs="1">
+                                                <xsd:element name="gpsDestLongitudeRef"
+                                                             type="typeOfgpsDestLongitudeRefType" minOccurs="0"
+                                                             maxOccurs="1">
                                                     <xsd:annotation>
                                                         <xsd:documentation>NDD id="8.4.4.2.22"</xsd:documentation>
                                                     </xsd:annotation>
@@ -1115,42 +1232,51 @@
                                                         <xsd:group ref="gpsGroup"/>
                                                     </xsd:complexType>
                                                 </xsd:element>
-                                                <xsd:element name="gpsDestBearingRef" type="typeOfgpsDestBearingRefType" minOccurs="0" maxOccurs="1">
+                                                <xsd:element name="gpsDestBearingRef" type="typeOfgpsDestBearingRefType"
+                                                             minOccurs="0" maxOccurs="1">
                                                     <xsd:annotation>
                                                         <xsd:documentation>NDD id="8.4.4.2.24"</xsd:documentation>
                                                     </xsd:annotation>
                                                 </xsd:element>
-                                                <xsd:element name="gpsDestBearing" type="rationalType" minOccurs="0" maxOccurs="1">
+                                                <xsd:element name="gpsDestBearing" type="rationalType" minOccurs="0"
+                                                             maxOccurs="1">
                                                     <xsd:annotation>
                                                         <xsd:documentation>NDD id="8.4.4.2.25"</xsd:documentation>
                                                     </xsd:annotation>
                                                 </xsd:element>
-                                                <xsd:element name="gpsDestDistanceRef" type="typeOfgpsDestDistanceRefType" minOccurs="0" maxOccurs="1">
+                                                <xsd:element name="gpsDestDistanceRef"
+                                                             type="typeOfgpsDestDistanceRefType" minOccurs="0"
+                                                             maxOccurs="1">
                                                     <xsd:annotation>
                                                         <xsd:documentation>NDD id="8.4.4.2.26"</xsd:documentation>
                                                     </xsd:annotation>
                                                 </xsd:element>
-                                                <xsd:element name="gpsDestDistance" type="rationalType" minOccurs="0" maxOccurs="1">
+                                                <xsd:element name="gpsDestDistance" type="rationalType" minOccurs="0"
+                                                             maxOccurs="1">
                                                     <xsd:annotation>
                                                         <xsd:documentation>NDD id="8.4.4.2.27"</xsd:documentation>
                                                     </xsd:annotation>
                                                 </xsd:element>
-                                                <xsd:element name="gpsProcessingMethod" type="stringType" minOccurs="0" maxOccurs="1">
+                                                <xsd:element name="gpsProcessingMethod" type="stringType" minOccurs="0"
+                                                             maxOccurs="1">
                                                     <xsd:annotation>
                                                         <xsd:documentation>NDD id="8.4.4.2.28"</xsd:documentation>
                                                     </xsd:annotation>
                                                 </xsd:element>
-                                                <xsd:element name="gpsAreaInformation" type="stringType" minOccurs="0" maxOccurs="1">
+                                                <xsd:element name="gpsAreaInformation" type="stringType" minOccurs="0"
+                                                             maxOccurs="1">
                                                     <xsd:annotation>
                                                         <xsd:documentation>NDD id="8.4.4.2.29"</xsd:documentation>
                                                     </xsd:annotation>
                                                 </xsd:element>
-                                                <xsd:element name="gpsDateStamp" type="dateType" minOccurs="0" maxOccurs="1">
+                                                <xsd:element name="gpsDateStamp" type="dateType" minOccurs="0"
+                                                             maxOccurs="1">
                                                     <xsd:annotation>
                                                         <xsd:documentation>NDD id="8.4.4.2.30"</xsd:documentation>
                                                     </xsd:annotation>
                                                 </xsd:element>
-                                                <xsd:element name="gpsDifferential" type="typeOfgpsDifferentialType" minOccurs="0" maxOccurs="1">
+                                                <xsd:element name="gpsDifferential" type="typeOfgpsDifferentialType"
+                                                             minOccurs="0" maxOccurs="1">
                                                     <xsd:annotation>
                                                         <xsd:documentation>NDD id="8.4.4.2.31"</xsd:documentation>
                                                     </xsd:annotation>
@@ -1187,12 +1313,14 @@
                 </xsd:annotation>
                 <xsd:complexType>
                     <xsd:sequence>
-                        <xsd:element name="samplingFrequencyPlane" type="typeOfSamplingFrequencyPlaneType" minOccurs="0" maxOccurs="1">
+                        <xsd:element name="samplingFrequencyPlane" type="typeOfSamplingFrequencyPlaneType" minOccurs="0"
+                                     maxOccurs="1">
                             <xsd:annotation>
                                 <xsd:documentation>NDD id="9.1.1"</xsd:documentation>
                             </xsd:annotation>
                         </xsd:element>
-                        <xsd:element name="samplingFrequencyUnit" type="typeOfSamplingFrequencyUnitType" minOccurs="0" maxOccurs="1">
+                        <xsd:element name="samplingFrequencyUnit" type="typeOfSamplingFrequencyUnitType" minOccurs="0"
+                                     maxOccurs="1">
                             <xsd:annotation>
                                 <xsd:documentation>NDD id="9.1.2"</xsd:documentation>
                             </xsd:annotation>
@@ -1222,12 +1350,14 @@
                             </xsd:annotation>
                             <xsd:complexType>
                                 <xsd:sequence>
-                                    <xsd:element name="bitsPerSampleValue" type="positiveIntegerType" minOccurs="0" maxOccurs="unbounded">
+                                    <xsd:element name="bitsPerSampleValue" type="positiveIntegerType" minOccurs="0"
+                                                 maxOccurs="unbounded">
                                         <xsd:annotation>
                                             <xsd:documentation>NDD id="9.2.1.1"</xsd:documentation>
                                         </xsd:annotation>
                                     </xsd:element>
-                                    <xsd:element name="bitsPerSampleUnit" type="typeOfBitsPerSampleUnitType" minOccurs="0" maxOccurs="1">
+                                    <xsd:element name="bitsPerSampleUnit" type="typeOfBitsPerSampleUnitType"
+                                                 minOccurs="0" maxOccurs="1">
                                         <xsd:annotation>
                                             <xsd:documentation>NDD id="9.2.1.2"</xsd:documentation>
                                         </xsd:annotation>
@@ -1240,7 +1370,8 @@
                                 <xsd:documentation>NDD id="9.2.2"</xsd:documentation>
                             </xsd:annotation>
                         </xsd:element>
-                        <xsd:element name="extraSamples" type="typeOfExtraSamplesType" minOccurs="0" maxOccurs="unbounded">
+                        <xsd:element name="extraSamples" type="typeOfExtraSamplesType" minOccurs="0"
+                                     maxOccurs="unbounded">
                             <xsd:annotation>
                                 <xsd:documentation>NDD id="9.2.3"</xsd:documentation>
                             </xsd:annotation>
@@ -1258,7 +1389,8 @@
                                             <xsd:documentation>NDD id="9.2.4.1"</xsd:documentation>
                                         </xsd:annotation>
                                     </xsd:element>
-                                    <xsd:element name="embeddedColormap" type="base64BinaryType" minOccurs="0" maxOccurs="1">
+                                    <xsd:element name="embeddedColormap" type="base64BinaryType" minOccurs="0"
+                                                 maxOccurs="1">
                                         <xsd:annotation>
                                             <xsd:documentation>NDD id="9.2.4.2"</xsd:documentation>
                                         </xsd:annotation>
@@ -1273,12 +1405,14 @@
                             </xsd:annotation>
                             <xsd:complexType>
                                 <xsd:sequence>
-                                    <xsd:element name="grayResponseCurve" type="nonNegativeIntegerType" minOccurs="0" maxOccurs="unbounded">
+                                    <xsd:element name="grayResponseCurve" type="nonNegativeIntegerType" minOccurs="0"
+                                                 maxOccurs="unbounded">
                                         <xsd:annotation>
                                             <xsd:documentation>NDD id="9.2.5"</xsd:documentation>
                                         </xsd:annotation>
                                     </xsd:element>
-                                    <xsd:element name="grayResponseUnit" type="typeOfGrayResponseUnitType" minOccurs="0" maxOccurs="1">
+                                    <xsd:element name="grayResponseUnit" type="typeOfGrayResponseUnitType" minOccurs="0"
+                                                 maxOccurs="1">
                                         <xsd:annotation>
                                             <xsd:documentation>NDD id="9.2.6"</xsd:documentation>
                                         </xsd:annotation>
@@ -1293,12 +1427,14 @@
                             </xsd:annotation>
                             <xsd:complexType>
                                 <xsd:sequence>
-                                    <xsd:element name="whitePointXValue" type="rationalType" minOccurs="0" maxOccurs="1">
+                                    <xsd:element name="whitePointXValue" type="rationalType" minOccurs="0"
+                                                 maxOccurs="1">
                                         <xsd:annotation>
                                             <xsd:documentation>NDD id="9.2.7.1"</xsd:documentation>
                                         </xsd:annotation>
                                     </xsd:element>
-                                    <xsd:element name="whitePointYValue" type="rationalType" minOccurs="0" maxOccurs="1">
+                                    <xsd:element name="whitePointYValue" type="rationalType" minOccurs="0"
+                                                 maxOccurs="1">
                                         <xsd:annotation>
                                             <xsd:documentation>NDD id="9.2.7.2"</xsd:documentation>
                                         </xsd:annotation>
@@ -1312,32 +1448,38 @@
                             </xsd:annotation>
                             <xsd:complexType>
                                 <xsd:sequence>
-                                    <xsd:element name="primaryChromaticitiesRedX" type="rationalType" minOccurs="0" maxOccurs="1">
+                                    <xsd:element name="primaryChromaticitiesRedX" type="rationalType" minOccurs="0"
+                                                 maxOccurs="1">
                                         <xsd:annotation>
                                             <xsd:documentation>NDD id="9.2.8.1"</xsd:documentation>
                                         </xsd:annotation>
                                     </xsd:element>
-                                    <xsd:element name="primaryChromaticitiesRedY" type="rationalType" minOccurs="0" maxOccurs="1">
+                                    <xsd:element name="primaryChromaticitiesRedY" type="rationalType" minOccurs="0"
+                                                 maxOccurs="1">
                                         <xsd:annotation>
                                             <xsd:documentation>NDD id="9.2.8.2"</xsd:documentation>
                                         </xsd:annotation>
                                     </xsd:element>
-                                    <xsd:element name="primaryChromaticitiesGreenX" type="rationalType" minOccurs="0" maxOccurs="1">
+                                    <xsd:element name="primaryChromaticitiesGreenX" type="rationalType" minOccurs="0"
+                                                 maxOccurs="1">
                                         <xsd:annotation>
                                             <xsd:documentation>NDD id="9.2.8.3"</xsd:documentation>
                                         </xsd:annotation>
                                     </xsd:element>
-                                    <xsd:element name="primaryChromaticitiesGreenY" type="rationalType" minOccurs="0" maxOccurs="1">
+                                    <xsd:element name="primaryChromaticitiesGreenY" type="rationalType" minOccurs="0"
+                                                 maxOccurs="1">
                                         <xsd:annotation>
                                             <xsd:documentation>NDD id="9.2.8.4"</xsd:documentation>
                                         </xsd:annotation>
                                     </xsd:element>
-                                    <xsd:element name="primaryChromaticitiesBlueX" type="rationalType" minOccurs="0" maxOccurs="1">
+                                    <xsd:element name="primaryChromaticitiesBlueX" type="rationalType" minOccurs="0"
+                                                 maxOccurs="1">
                                         <xsd:annotation>
                                             <xsd:documentation>NDD id="9.2.8.5"</xsd:documentation>
                                         </xsd:annotation>
                                     </xsd:element>
-                                    <xsd:element name="primaryChromaticitiesBlueY" type="rationalType" minOccurs="0" maxOccurs="1">
+                                    <xsd:element name="primaryChromaticitiesBlueY" type="rationalType" minOccurs="0"
+                                                 maxOccurs="1">
                                         <xsd:annotation>
                                             <xsd:documentation>NDD id="9.2.8.6"</xsd:documentation>
                                         </xsd:annotation>
@@ -1365,7 +1507,8 @@
                             </xsd:annotation>
                             <xsd:complexType>
                                 <xsd:sequence>
-                                    <xsd:element name="targetManufacturer" type="stringType" minOccurs="0" maxOccurs="1">
+                                    <xsd:element name="targetManufacturer" type="stringType" minOccurs="0"
+                                                 maxOccurs="1">
                                         <xsd:annotation>
                                             <xsd:documentation>NDD id="9.3.2.1"</xsd:documentation>
                                         </xsd:annotation>
@@ -1440,22 +1583,26 @@
                             </xsd:annotation>
                             <xsd:complexType>
                                 <xsd:sequence>
-                                    <xsd:element name="processingSoftwareName" type="stringType" minOccurs="0" maxOccurs="1">
+                                    <xsd:element name="processingSoftwareName" type="stringType" minOccurs="0"
+                                                 maxOccurs="1">
                                         <xsd:annotation>
                                             <xsd:documentation>NDD id="10.1.5.1"</xsd:documentation>
                                         </xsd:annotation>
                                     </xsd:element>
-                                    <xsd:element name="processingSoftwareVersion" type="stringType" minOccurs="0" maxOccurs="1">
+                                    <xsd:element name="processingSoftwareVersion" type="stringType" minOccurs="0"
+                                                 maxOccurs="1">
                                         <xsd:annotation>
                                             <xsd:documentation>NDD id="10.1.5.2"</xsd:documentation>
                                         </xsd:annotation>
                                     </xsd:element>
-                                    <xsd:element name="processingOperatingSystemName" type="stringType" minOccurs="0" maxOccurs="1">
+                                    <xsd:element name="processingOperatingSystemName" type="stringType" minOccurs="0"
+                                                 maxOccurs="1">
                                         <xsd:annotation>
                                             <xsd:documentation>NDD id="10.1.5.3"</xsd:documentation>
                                         </xsd:annotation>
                                     </xsd:element>
-                                    <xsd:element name="processingOperatingSystemVersion" type="stringType" minOccurs="0" maxOccurs="1">
+                                    <xsd:element name="processingOperatingSystemVersion" type="stringType" minOccurs="0"
+                                                 maxOccurs="1">
                                         <xsd:annotation>
                                             <xsd:documentation>NDD id="10.1.5.4"</xsd:documentation>
                                         </xsd:annotation>
@@ -1471,7 +1618,8 @@
                     </xsd:sequence>
                 </xsd:complexType>
             </xsd:element>
-            <xsd:element name="PreviousImageMetadata"  type="typeOfPreviousImageMetadataType" minOccurs="0" maxOccurs="unbounded">
+            <xsd:element name="PreviousImageMetadata" type="typeOfPreviousImageMetadataType" minOccurs="0"
+                         maxOccurs="unbounded">
                 <xsd:annotation>
                     <xsd:documentation>NDD id="10.2"</xsd:documentation>
                 </xsd:annotation>
@@ -1498,7 +1646,7 @@
     <!-- end of typeOfStringType -->
 
     <!-- integerType -->
-    <xsd:complexType  name="integerType">
+    <xsd:complexType name="integerType">
         <xsd:simpleContent>
             <xsd:extension base="xsd:integer">
                 <xsd:attribute name="use" type="xsd:string"/>
@@ -1508,7 +1656,7 @@
     <!-- end of integerType -->
 
     <!-- positiveIntegerType -->
-    <xsd:complexType  name="positiveIntegerType">
+    <xsd:complexType name="positiveIntegerType">
         <xsd:simpleContent>
             <xsd:extension base="xsd:positiveInteger">
                 <xsd:attribute name="use" type="xsd:string"/>
@@ -1527,9 +1675,6 @@
         </xsd:simpleContent>
     </xsd:complexType>
     <!-- end of URIType -->
-
-
-
 
 
     <!-- realType -->
@@ -1610,8 +1755,6 @@
     <!-- end of typeOfNonNegativeRealType -->
 
 
-
-
     <!-- typeOfDateType -->
     <xsd:complexType name="typeOfDateType">
         <xsd:simpleContent>
@@ -1636,7 +1779,6 @@
         </xsd:simpleContent>
     </xsd:complexType>
     <!-- end of dateType -->
-
 
 
     <!-- base64BinaryType -->
@@ -1746,7 +1888,6 @@
     <!-- end of typeOfDjvuFormatType -->
 
 
-
     <!-- typeOfCaptureDeviceType -->
     <xsd:complexType name="typeOfCaptureDeviceType">
         <xsd:simpleContent>
@@ -1810,8 +1951,6 @@
         </xsd:restriction>
     </xsd:simpleType>
     <!-- end of typeOfCameraSensorType -->
-
-
 
 
     <!-- typeOfBitsPerSampleUnitType template (xsd:string base) -->
@@ -2027,7 +2166,8 @@
             <xsd:enumeration value="Flash fired, red-eye reduction mode, return light not detected"/>
             <xsd:enumeration value="Flash fired, red-eye reduction mode, return light detected"/>
             <xsd:enumeration value="Flash fired, compulsory flash mode, red-eye reduction mode"/>
-            <xsd:enumeration value="Flash fired, compulsory flash mode, red-eye reduction mode, return light not detected"/>
+            <xsd:enumeration
+                    value="Flash fired, compulsory flash mode, red-eye reduction mode, return light not detected"/>
             <xsd:enumeration value="Flash fired, compulsory flash mode, red-eye reduction mode, return light detected"/>
             <xsd:enumeration value="Flash fired, auto mode, red-eye reduction mode"/>
             <xsd:enumeration value="Flash fired, auto mode, return light not detected, red-eye reduction mode"/>
@@ -2035,8 +2175,6 @@
         </xsd:restriction>
     </xsd:simpleType>
     <!-- end of typeOfFlashType  -->
-
-
 
 
     <!-- typeOfBackLightType -->
@@ -2060,19 +2198,19 @@
     <xsd:complexType name="typeOfSensingMethodType">
         <xsd:simpleContent>
             <xsd:extension base="sensingMethodType">
-                <xsd:attribute name="use" type="xsd:string" />
+                <xsd:attribute name="use" type="xsd:string"/>
             </xsd:extension>
         </xsd:simpleContent>
     </xsd:complexType>
     <xsd:simpleType name="sensingMethodType">
         <xsd:restriction base="xsd:string">
-            <xsd:enumeration value="Not defined" />
-            <xsd:enumeration value="One-chip color area sensor" />
-            <xsd:enumeration value="Two-chip color area sensor" />
-            <xsd:enumeration value="Three-chip color area sensor" />
-            <xsd:enumeration value="Color sequential area sensor" />
-            <xsd:enumeration value="Trilinear sensor" />
-            <xsd:enumeration value="Color sequential linear sensor" />
+            <xsd:enumeration value="Not defined"/>
+            <xsd:enumeration value="One-chip color area sensor"/>
+            <xsd:enumeration value="Two-chip color area sensor"/>
+            <xsd:enumeration value="Three-chip color area sensor"/>
+            <xsd:enumeration value="Color sequential area sensor"/>
+            <xsd:enumeration value="Trilinear sensor"/>
+            <xsd:enumeration value="Color sequential linear sensor"/>
         </xsd:restriction>
     </xsd:simpleType>
     <!--  end of typeOfSensingMethodType -->
@@ -2094,8 +2232,6 @@
         </xsd:restriction>
     </xsd:simpleType>
     <!-- end of typeOfOpticalResolutionUnitType   -->
-
-
 
 
     <!-- typeOfAutoFocusType -->
@@ -2392,7 +2528,6 @@
     <!-- end of typeOfSamplingFrequencyUnitType   -->
 
 
-
     <!-- typeOfsourceDimensionUnitType -->
     <xsd:complexType name="typeOfsourceDimensionUnitType">
         <xsd:simpleContent>
@@ -2424,7 +2559,6 @@
         </xsd:restriction>
     </xsd:simpleType>
     <!-- end of typeOfGrayResponseCurveType   -->
-
 
 
     <!-- typeOfExifVersionType -->
@@ -2497,13 +2631,10 @@
     <!-- end of typeOfYCbCrSubsampleVertType   -->
 
 
-
-
-
     <!-- typeOfPreviousImageMetadataType -->
     <xsd:complexType name="typeOfPreviousImageMetadataType" mixed="false">
         <xsd:sequence>
-            <xsd:any processContents="skip" minOccurs="0" maxOccurs="unbounded" />
+            <xsd:any processContents="skip" minOccurs="0" maxOccurs="unbounded"/>
         </xsd:sequence>
     </xsd:complexType>
     <!--  end of typeOfPreviousImageMetadataType   -->
@@ -2530,15 +2661,10 @@
     <!-- end of typeOfComponentPhotometricInterpretationType   -->
 
 
-
-
-
-
-
     <!-- extensionType -->
     <xsd:complexType name="extensionType" mixed="true">
         <xsd:sequence>
-            <xsd:any processContents="skip" maxOccurs="unbounded" />
+            <xsd:any processContents="skip" maxOccurs="unbounded"/>
         </xsd:sequence>
     </xsd:complexType>
     <!-- end of extensionType -->
@@ -2562,7 +2688,6 @@
             </xsd:element>
         </xsd:sequence>
     </xsd:group>
-
 
 
 </xsd:schema>

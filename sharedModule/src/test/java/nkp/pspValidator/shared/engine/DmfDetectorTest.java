@@ -1,11 +1,11 @@
 package nkp.pspValidator.shared.engine;
 
-import org.junit.Test;
 import nkp.pspValidator.shared.Dmf;
 import nkp.pspValidator.shared.DmfDetector;
 import nkp.pspValidator.shared.engine.exceptions.InvalidXPathExpressionException;
 import nkp.pspValidator.shared.engine.exceptions.PspDataException;
 import nkp.pspValidator.shared.engine.exceptions.XmlParsingException;
+import org.junit.Test;
 
 import java.io.File;
 

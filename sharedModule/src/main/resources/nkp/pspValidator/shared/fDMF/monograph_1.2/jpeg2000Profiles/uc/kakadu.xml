@@ -1,0 +1,16 @@
+<jpeg2000profile>
+    <fromText>
+
+        <validation name="no_errors">
+            <textDataExtraction resultType="STRING_LIST">
+                <allNonempty>
+                    <regexp>Kakadu Core Error:((?!Kakadu Core Error).)*</regexp>
+                </allNonempty>
+            </textDataExtraction>
+            <rules>
+                <mustNotExist/>
+            </rules>
+        </validation>
+
+    </fromText>
+</jpeg2000profile>

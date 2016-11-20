@@ -1,8 +1,8 @@
 package nkp.pspValidator.shared.engine;
 
-import org.junit.Test;
 import nkp.pspValidator.shared.engine.exceptions.ValidatorConfigurationException;
 import nkp.pspValidator.shared.engine.validationFunctions.ValidationResult;
+import org.junit.Test;
 
 import java.io.File;
 import java.util.List;
@@ -18,7 +18,7 @@ public class ConfigProcessorTest {
         File pspRootDir = new File("src/test/resources/monograph_1.2/b50eb6b0-f0a4-11e3-b72e-005056827e52");
 
         try {
-            Engine engine = new Engine();
+            Engine engine = new Engine(null);
             engine.setProvidedFile("PSP_DIR", pspRootDir);
             //pvMgr.addFile("PSP_DIR", new File("/home/martin/zakazky/DMF-validator/data/monografie_1.2/b50eb6b0-f0a4-11e3-b72e-005056827e52"));
 
@@ -60,7 +60,7 @@ public class ConfigProcessorTest {
                     if (result.hasProblems()) {
                         //System.out.println(String.format("rule %s: OK", rule.getName()));
                     } else {
-                        System.out.println(String.format("rule %s: %s: %s", rule.getName(), rule.getLevel(), result.getMessage()));
+                        //System.out.println(String.format("rule %s: %s: %s", rule.getName(), rule.getLevel(), result.getMessage()));
                         System.out.println(String.format("\t%s", rule.getDescription()));
                     }
                 }

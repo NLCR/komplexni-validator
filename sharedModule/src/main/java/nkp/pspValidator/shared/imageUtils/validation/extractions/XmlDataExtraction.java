@@ -1,6 +1,6 @@
 package nkp.pspValidator.shared.imageUtils.validation.extractions;
 
-import nkp.pspValidator.shared.imageUtils.ExtractionType;
+import nkp.pspValidator.shared.imageUtils.ExtractionResultType;
 import nkp.pspValidator.shared.imageUtils.validation.DataExtraction;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
@@ -15,11 +15,11 @@ import java.util.List;
  */
 public abstract class XmlDataExtraction implements DataExtraction {
 
-    final ExtractionType extractionType;
+    final ExtractionResultType extractionResultType;
     private final NamespaceContext namespaceContext;
 
-    protected XmlDataExtraction(ExtractionType extractionType, NamespaceContext namespaceContext) {
-        this.extractionType = extractionType;
+    protected XmlDataExtraction(ExtractionResultType extractionResultType, NamespaceContext namespaceContext) {
+        this.extractionResultType = extractionResultType;
         this.namespaceContext = namespaceContext;
     }
 
@@ -36,7 +36,7 @@ public abstract class XmlDataExtraction implements DataExtraction {
 
     Object extractData(XPathExpression xPath, Object processedOutput) throws XPathExpressionException {
         try {
-            switch (extractionType) {
+            switch (extractionResultType) {
                 case STRING: {
                     return xPath.evaluate(processedOutput, XPathConstants.STRING);
                 }

@@ -5,11 +5,12 @@ import com.mycila.xmltool.XMLTag;
 import nkp.pspValidator.shared.NamespaceContextImpl;
 import nkp.pspValidator.shared.XmlUtils;
 import nkp.pspValidator.shared.engine.exceptions.ValidatorConfigurationException;
-import nkp.pspValidator.shared.imageUtils.ExtractionType;
+import nkp.pspValidator.shared.imageUtils.ExtractionResultType;
 import nkp.pspValidator.shared.imageUtils.ImageCopy;
 import nkp.pspValidator.shared.imageUtils.ImageUtil;
 import nkp.pspValidator.shared.imageUtils.ImageUtilManager;
-import nkp.pspValidator.shared.imageUtils.validation.extractions.FirstNonemptyDataExctraction;
+import nkp.pspValidator.shared.imageUtils.validation.extractions.AllNonemptyByRegexpDataExtraction;
+import nkp.pspValidator.shared.imageUtils.validation.extractions.FirstNonemptyByXpathDataExctraction;
 import nkp.pspValidator.shared.imageUtils.validation.rules.MustExistDR;
 import nkp.pspValidator.shared.imageUtils.validation.rules.MustMatchDR;
 import nkp.pspValidator.shared.imageUtils.validation.rules.MustMatchOneDR;
@@ -71,12 +72,35 @@ public class ImageValidator {
     private J2kProfile buildProfile(ImageUtil util, Element rootEl) throws ValidatorConfigurationException {
         Element profileTypeEl = XmlUtils.getChilrenElements(rootEl).get(0);
         switch (profileTypeEl.getTagName()) {
-            case "xmlValidations":
+            case "fromXml":
                 return buildXmlProfile(profileTypeEl, util);
-            /*TODO: jeste pro parsovani samotneho textu, treba neco jako "textValidation"*/
+            case "fromText":
+                return buildTextProfile(profileTypeEl, util);
             default:
                 throw new ValidatorConfigurationException("neznámý element " + profileTypeEl.getTagName());
         }
+    }
+
+    private J2kProfile buildTextProfile(Element rootEl, ImageUtil util) throws ValidatorConfigurationException {
+        J2kTextProfile profile = new J2kTextProfile(imageUtilManager, util);
+        //validations
+        List<Element> validationEls = XmlUtils.getChildrenElementsByName(rootEl, "validation");
+        for (Element validationEl : validationEls) {
+            String validationName = validationEl.getAttribute("name");
+            //extraction
+            Element xmlDataExtractionEl = XmlUtils.getFirstChildElementsByName(validationEl, "textDataExtraction");
+            DataExtraction dataExtraction = buildTextDataExtraction(xmlDataExtractionEl);
+            //rules
+            Element rulesEl = XmlUtils.getFirstChildElementsByName(validationEl, "rules");
+            List<DataRule> dataRules = new ArrayList<>();
+            List<Element> ruleEls = XmlUtils.getChilrenElements(rulesEl);
+            for (Element ruleEl : ruleEls) {
+                dataRules.add(buildRule(validationName, ruleEl));
+            }
+            Validation validation = new Validation(dataExtraction, dataRules);
+            profile.addValidation(validation);
+        }
+        return profile;
     }
 
     private J2kProfile buildXmlProfile(Element rootEl, ImageUtil util) throws ValidatorConfigurationException {
@@ -100,8 +124,8 @@ public class ImageValidator {
         for (Element validationEl : validationEls) {
             String validationName = validationEl.getAttribute("name");
             //extraction
-            Element extractionEl = XmlUtils.getFirstChildElementsByName(validationEl, "extraction");
-            DataExtraction dataExtraction = buildExtraction(profile.getNamespaceContext(), extractionEl);
+            Element xmlDataExtractionEl = XmlUtils.getFirstChildElementsByName(validationEl, "xmlDataExtraction");
+            DataExtraction dataExtraction = buildXmlDataExtraction(profile.getNamespaceContext(), xmlDataExtractionEl);
             //rules
             Element rulesEl = XmlUtils.getFirstChildElementsByName(validationEl, "rules");
             List<DataRule> dataRules = new ArrayList<>();
@@ -115,18 +139,33 @@ public class ImageValidator {
         return profile;
     }
 
-    private DataExtraction buildExtraction(NamespaceContextImpl nsContext, Element extractionEl) throws ValidatorConfigurationException {
-        String typeStr = extractionEl.getAttribute("type");
-        ExtractionType type = ExtractionType.valueOf(typeStr);
+    private DataExtraction buildTextDataExtraction(Element extractionEl) throws ValidatorConfigurationException {
+        String resultTypeStr = extractionEl.getAttribute("resultType");
+        ExtractionResultType resultType = ExtractionResultType.valueOf(resultTypeStr);
 
-        Element firstPathAvailableEl = XmlUtils.getFirstChildElementsByName(extractionEl, "firstNonempty");
-        if (firstPathAvailableEl != null) {
+        Element allAppearancesEl = XmlUtils.getFirstChildElementsByName(extractionEl, "allNonempty");
+        if (allAppearancesEl != null) {
+            List<String> regexps = new ArrayList<>();
+            List<Element> xpathEls = XmlUtils.getChildrenElementsByName(allAppearancesEl, "regexp");
+            for (Element regexpEl : xpathEls) {
+                regexps.add(regexpEl.getTextContent().trim());
+            }
+            return new AllNonemptyByRegexpDataExtraction(resultType, regexps);
+        }
+        throw new ValidatorConfigurationException("neznámá extrakce hodnoty: " + XmlUtils.getChilrenElements(extractionEl).get(0).getTagName());
+    }
+
+    private DataExtraction buildXmlDataExtraction(NamespaceContextImpl nsContext, Element extractionEl) throws ValidatorConfigurationException {
+        String resultTypeStr = extractionEl.getAttribute("resultType");
+        ExtractionResultType resultType = ExtractionResultType.valueOf(resultTypeStr);
+        Element firstNonemptyEl = XmlUtils.getFirstChildElementsByName(extractionEl, "firstNonempty");
+        if (firstNonemptyEl != null) {
             List<String> xpaths = new ArrayList<>();
-            List<Element> xpathEls = XmlUtils.getChildrenElementsByName(firstPathAvailableEl, "xpath");
+            List<Element> xpathEls = XmlUtils.getChildrenElementsByName(firstNonemptyEl, "xpath");
             for (Element xpathEl : xpathEls) {
                 xpaths.add(xpathEl.getTextContent().trim());
             }
-            return new FirstNonemptyDataExctraction(type, nsContext, xpaths);
+            return new FirstNonemptyByXpathDataExctraction(resultType, nsContext, xpaths);
         }
         throw new ValidatorConfigurationException("neznámá extrakce hodnoty");
     }

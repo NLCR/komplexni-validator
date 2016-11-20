@@ -39,6 +39,9 @@ public class Validator {
         List<RulesSection> rulesSections = engine.getRuleSections();
         protocol.reportValidationsStart();
         for (RulesSection section : rulesSections) {
+            //FIXME: odstranit pro produkci
+            //docasne pro testovani jedine sekce
+            //if (section.getName().equals("JPEG 2000")) {
             protocol.reportSectionProcessingStarted(section);
             protocol.addSection(section);
             int sectionProblemsTotal = protocol.getSectionProblemsSum(section);
@@ -68,6 +71,7 @@ public class Validator {
                 protocol.reportRuleProcessingFinished(rule);
             }
             protocol.reportSectionProcessingFinished(section);
+            //}
         }
         protocol.reportValidationsEnd();
         String verdict = protocol.isValid() ? "validní" : "nevalidní";

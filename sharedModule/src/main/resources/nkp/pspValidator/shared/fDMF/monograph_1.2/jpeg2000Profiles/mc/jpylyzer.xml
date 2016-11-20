@@ -1,15 +1,15 @@
 <jpeg2000profile>
-    <xmlValidations>
+    <fromXml>
         <namespaces>
             <namespace prefix="j">http://openpreservation.org/ns/jpylyzer/</namespace>
         </namespaces>
 
         <validation name="file_name">
-            <extraction type="STRING">
+            <xmlDataExtraction resultType="STRING">
                 <firstNonempty>
                     <xpath>//j:fileInfo/j:fileName</xpath>
                 </firstNonempty>
-            </extraction>
+            </xmlDataExtraction>
             <rules>
                 <mustExist/>
             </rules>
@@ -25,13 +25,13 @@
         <!--<validation name="format_identification"/>-->
 
         <validation name="valid">
-            <extraction type="STRING">
+            <xmlDataExtraction resultType="STRING">
                 <firstNonempty>
                     <!--tohle se lisi mezi verzemi jpylyzer, prvni je ze specifikace, druhy je z realneho vystupu pro jpylyzer 1.17.0-->
                     <xpath>//j:statusInfo/j:isValidJP2</xpath>
                     <xpath>//j:statusInfo/j:success</xpath>
                 </firstNonempty>
-            </extraction>
+            </xmlDataExtraction>
             <rules>
                 <mustExist/>
                 <mustMatch>
@@ -45,11 +45,11 @@
         <validation name="width"/>-->
 
         <validation name="number_of_color_components">
-            <extraction type="STRING">
+            <xmlDataExtraction resultType="STRING">
                 <firstNonempty>
                     <xpath>//j:properties/j:jp2HeaderBox/j:imageHeaderBox/j:nC</xpath>
                 </firstNonempty>
-            </extraction>
+            </xmlDataExtraction>
             <rules>
                 <mustExist/>
                 <!--povolene hodnoty "1" nebo "3"-->
@@ -64,11 +64,11 @@
         <validation name="color_depth"/>-->
 
         <validation name="color_space_1">
-            <extraction type="STRING">
+            <xmlDataExtraction resultType="STRING">
                 <firstNonempty>
                     <xpath>//j:properties/j:jp2HeaderBox/j:colourSpecificationBox/j:enumCS</xpath>
                 </firstNonempty>
-            </extraction>
+            </xmlDataExtraction>
             <rules>
                 <mustExist/>
                 <!--povolene hodnoty "sRGB" nebo "greyscale"-->
@@ -82,8 +82,8 @@
         <!--TODO
         <validation name="color_space_2"/>-->
 
-        <validation name="resolution_vertical" type="Float">
-            <extraction type="FLOAT">
+        <validation name="resolution_vertical">
+            <xmlDataExtraction resultType="FLOAT">
                 <!--muze se nachazet na nekolika mistech, pouzije se prvni dostupna hodnota-->
                 <firstNonempty>
                     <xpath>//j:properties/j:jp2HeaderBox/j:resolutionBox/j:captureResolutionBox/j:vRescInPixelsPerMeter
@@ -91,7 +91,7 @@
                     <xpath>//j:properties/j:jp2HeaderBox/j:resolutionBox/j:displayResolutionBox/j:vResdInPixelsPerMeter
                     </xpath>
                 </firstNonempty>
-            </extraction>
+            </xmlDataExtraction>
             <rules>
                 <mustExist/>
                 <!--rozsah hodnot, zde realná čísla-->
@@ -107,11 +107,11 @@
         <validation name="resolution_horizontal"/>-->
 
         <validation name="number_of_tiles">
-            <extraction type="INTEGER">
+            <xmlDataExtraction resultType="INTEGER">
                 <firstNonempty>
                     <xpath>//j:properties/j:contiguousCodestreamBox/j:siz/j:numberOfTiles</xpath>
                 </firstNonempty>
-            </extraction>
+            </xmlDataExtraction>
             <rules>
                 <mustExist/>
                 <!--jakékoliv přirozené číslo-->
@@ -130,12 +130,12 @@
         <validation name="precints"/>-->
 
         <validation name="size_of_precints_1">
-            <extraction type="STRING_LIST">
+            <xmlDataExtraction resultType="STRING_LIST">
                 <!--typ je "pole", pokud neuvedeno, použije se "hodnota", ať už pro singlePath anebo firstPathAvailable -->
                 <firstNonempty>
                     <xpath>//j:properties/j:contiguousCodestreamBox/j:cod/j:precintSizeX</xpath>
                 </firstNonempty>
-            </extraction>
+            </xmlDataExtraction>
             <rules>
                 <mustExist/>
                 <!--2krát hodnota 256; zbylé precints 128-->
@@ -164,15 +164,15 @@
         <validation name="migration_software"/>-->
 
         <validation name="regions_of_interest">
-            <extraction type="STRING">
+            <xmlDataExtraction resultType="STRING">
                 <firstNonempty>
                     <xpath>rgn</xpath>
                 </firstNonempty>
-            </extraction>
+            </xmlDataExtraction>
             <rules>
                 <!--element se nesmi vyskytovat, jakakoliv hodnota je nepovolena-->
                 <mustNotExist/>
             </rules>
         </validation>
-    </xmlValidations>
+    </fromXml>
 </jpeg2000profile>

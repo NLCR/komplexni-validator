@@ -1,7 +1,7 @@
 package nkp.pspValidator.shared.engine;
 
-import org.junit.Test;
 import nkp.pspValidator.shared.FdmfRegistry;
+import org.junit.Test;
 
 import java.io.File;
 

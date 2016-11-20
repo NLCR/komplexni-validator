@@ -37,9 +37,7 @@
     <imageUtil name="IMAGE_MAGICK">
         <versionDetection>
             <operatingSystem name="LINUX">
-                <!--FIXME: jen docasne vyrazeno-->
-                <!--<command>convert -version</command>-->
-                <command>BLABLA -version</command>
+                <command>convert -version</command>
                 <parser>
                     <stream>STDOUT</stream>
                     <regexp>ImageMagick\s\S*\s\S*</regexp>
@@ -135,7 +133,7 @@
             <operatingSystem name="LINUX">
                 <command>kdu_expand -i ${IMAGE_FILE}</command>
                 <parser>
-                    <stream>STDOUT</stream>
+                    <stream>STDERR</stream>
                     <regexp>.*</regexp>
                 </parser>
             </operatingSystem>

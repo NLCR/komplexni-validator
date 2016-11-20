@@ -1,9 +1,9 @@
 package nkp.pspValidator.shared.engine.validationFunctions;
 
-import org.junit.BeforeClass;
-import org.junit.Test;
 import nkp.pspValidator.shared.engine.Engine;
 import nkp.pspValidator.shared.engine.types.Identifier;
+import org.junit.BeforeClass;
+import org.junit.Test;
 
 import java.util.Arrays;
 import java.util.List;
@@ -21,7 +21,7 @@ public class VfCheckStringDerivedFromOneOfIdentifiersTest {
 
     @BeforeClass
     public static void setup() {
-        engine = new Engine();
+        engine = new Engine(null);
     }
 
 
@@ -37,7 +37,7 @@ public class VfCheckStringDerivedFromOneOfIdentifiersTest {
                 prefixes("cnb", "urn:nbn:cz:", "uuid:")
         );
 
-        assertTrue(result.getMessage(), result.hasProblems());
+        assertTrue(result.hasProblems());
     }
 
     @Test
@@ -51,7 +51,7 @@ public class VfCheckStringDerivedFromOneOfIdentifiersTest {
                 ),
                 prefixes("cnb", "urn:nbn:cz:", "uuid:")
         );
-        assertTrue(result.getMessage(), result.hasProblems());
+        assertTrue(result.hasProblems());
     }
 
     @Test
@@ -65,7 +65,7 @@ public class VfCheckStringDerivedFromOneOfIdentifiersTest {
                 ),
                 prefixes("cnb", "urn:nbn:cz:", "uuid:")
         );
-        assertTrue(result.getMessage(), result.hasProblems());
+        assertTrue(result.hasProblems());
     }
 
     @Test

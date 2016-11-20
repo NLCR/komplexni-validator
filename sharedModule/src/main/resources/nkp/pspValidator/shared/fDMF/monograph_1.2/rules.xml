@@ -1320,7 +1320,7 @@
 
     </rules-section>
 
-    <rules-section name="JPEG 2000 "
+    <rules-section name="JPEG 2000"
                    description="Kontrola obrázků MASTER-COPY a USER-COPY v JPEG 2000 za pomocí externích nástrojů">
 
         <rule name="MASTER-COPY_FILES_VALID_BY_JPYLYZER">
@@ -1338,6 +1338,50 @@
             </validation>
         </rule>
 
+        <rule name="USER-COPY_FILES_VALID_BY_JPYLYZER">
+            <description>Všechny soubory USER-COPY musí být validní vůči profilu JPEG 2000 pro nástroj JPYLYZER.
+            </description>
+            <validation functionName="checkImagesFilesValidByExternalUtil">
+                <params>
+                    <value name="level" type="LEVEL">ERROR</value>
+                    <value name="files" type="FILE_LIST">
+                        <value-ref name="USER-COPY_FILES"/>
+                    </value>
+                    <value name="copy" type="IMAGE_COPY">USER</value>
+                    <value name="util" type="IMAGE_UTIL">JPYLYZER</value>
+                </params>
+            </validation>
+        </rule>
+
+        <rule name="MASTER-COPY_FILES_VALID_BY_KAKADU">
+            <description>Všechny soubory MASTER-COPY musí být validní vůči profilu JPEG 2000 pro nástroj KAKADU.
+            </description>
+            <validation functionName="checkImagesFilesValidByExternalUtil">
+                <params>
+                    <value name="level" type="LEVEL">ERROR</value>
+                    <value name="files" type="FILE_LIST">
+                        <value-ref name="MASTER-COPY_FILES"/>
+                    </value>
+                    <value name="copy" type="IMAGE_COPY">MASTER</value>
+                    <value name="util" type="IMAGE_UTIL">KAKADU</value>
+                </params>
+            </validation>
+        </rule>
+
+        <rule name="USER-COPY_FILES_VALID_BY_KAKADU">
+            <description>Všechny soubory USER-COPY musí být validní vůči profilu JPEG 2000 pro nástroj KAKADU.
+            </description>
+            <validation functionName="checkImagesFilesValidByExternalUtil">
+                <params>
+                    <value name="level" type="LEVEL">ERROR</value>
+                    <value name="files" type="FILE_LIST">
+                        <value-ref name="USER-COPY_FILES"/>
+                    </value>
+                    <value name="copy" type="IMAGE_COPY">USER</value>
+                    <value name="util" type="IMAGE_UTIL">KAKADU</value>
+                </params>
+            </validation>
+        </rule>
 
     </rules-section>
 

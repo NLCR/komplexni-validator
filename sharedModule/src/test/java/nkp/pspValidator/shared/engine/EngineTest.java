@@ -1,10 +1,10 @@
 package nkp.pspValidator.shared.engine;
 
-import org.junit.BeforeClass;
-import org.junit.Test;
 import nkp.pspValidator.shared.engine.exceptions.ValidatorConfigurationException;
 import nkp.pspValidator.shared.engine.validationFunctions.ValidationFunction;
 import nkp.pspValidator.shared.engine.validationFunctions.ValidationResult;
+import org.junit.BeforeClass;
+import org.junit.Test;
 
 import java.io.File;
 
@@ -26,7 +26,7 @@ public class EngineTest {
 
     @BeforeClass
     public static void setup() {
-        engine = new Engine();
+        engine = new Engine(null);
         engine.setProvidedFile("PSP_DIR", new File("src/test/resources/monograph_1.2/b50eb6b0-f0a4-11e3-b72e-005056827e52"));
         engine.setProvidedString("PSP_ID", "b50eb6b0-f0a4-11e3-b72e-005056827e52");
     }
@@ -69,27 +69,27 @@ public class EngineTest {
                 .withValueParamByReference("files", ValueType.FILE_LIST, "INFO_FILES")
                 .withValueParam("size", ValueType.INTEGER, new ValueEvaluation(1));
         ValidationResult singleInfoFileResult = singleInfoFileVf.validate();
-        assertTrue(singleInfoFileResult.getMessage(), singleInfoFileResult.hasProblems());
+        assertTrue(singleInfoFileResult.hasProblems());
 
         //through validation rule
         Rule ruleSingleInfo =
-                engine.buildRule("SINGLE_INFO", Rule.Level.ERROR,
+                engine.buildRule("SINGLE_INFO",
                         engine.buildValidationFunction("checkFilelistHasExactSize")
                                 .withValueParamByReference("files", ValueType.FILE_LIST, "INFO_FILES")
                                 .withValueParam("size", ValueType.INTEGER, new ValueEvaluation(1)))
                         .setDescription("musi existovat prave jeden soubor info");
         ValidationResult ruleSingleInfoResult = ruleSingleInfo.getResult();
-        assertTrue(ruleSingleInfoResult.getMessage(), ruleSingleInfoResult.hasProblems());
+        assertTrue(ruleSingleInfoResult.hasProblems());
 
         //through validation rule
         Rule ruleTwoInfos =
-                engine.buildRule("SINGLE_INFO", Rule.Level.ERROR,
+                engine.buildRule("SINGLE_INFO",
                         engine.buildValidationFunction("checkFilelistHasExactSize")
                                 .withValueParamByReference("files", ValueType.FILE_LIST, "INFO_FILES")
                                 .withValueParam("size", ValueType.INTEGER, new ValueEvaluation(2)))
                         .setDescription("dva soubory info");
         ValidationResult ruleTwoInfosResult = ruleTwoInfos.getResult();
-        assertFalse(ruleTwoInfosResult.getMessage(), ruleTwoInfosResult.hasProblems());
+        assertFalse(ruleTwoInfosResult.hasProblems());
     }
 
 

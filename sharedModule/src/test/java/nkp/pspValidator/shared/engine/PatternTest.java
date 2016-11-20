@@ -1,8 +1,13 @@
 package nkp.pspValidator.shared.engine;
 
+import nkp.pspValidator.shared.engine.evaluationFunctions.TestUtils;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import nkp.pspValidator.shared.engine.evaluationFunctions.TestUtils;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import static org.junit.Assert.*;
 
@@ -15,7 +20,7 @@ public class PatternTest {
 
     @BeforeClass
     public static void setup() {
-        engine = new Engine();
+        engine = new Engine(null);
         engine.setProvidedString("STR1", "neco");
         engine.setProvidedString("STR2", "nic");
         engine.setProvidedInteger("NUM1", 6);
@@ -102,6 +107,42 @@ public class PatternTest {
                 engine.buildRawPatternExpression(true, "info_.+\\.xml"),
                 engine.buildRawPatternExpression(true, "info\\.xml")
         ).evaluate().matches("info_b50eb6b0-f0a4-11e3-b72e-005056827e52.xml"));
+    }
+
+
+    @Test
+    public void kakaduPattern() {
+        String text = "" +
+                "Kakadu Core Error:\n" +
+                "Expected to find EPH marker following packet header.  Found 0xff instead.\n" +
+                "Kakadu Core Error:\n" +
+                "Expected to find EPH marker following packet header.  Found 0x0 instead.\n" +
+                "Kakadu Core Error:\n" +
+                "Expected to find EPH marker following packet header.  Found 0x0 instead.\n" +
+                "Kakadu Core Error:\n" +
+                "Expected to find EPH marker following packet header.  Found 0x0 instead.\n" +
+                "Kakadu Core Error:\n" +
+                "Code-stream must start with an SOC marker!\n" +
+                "Kakadu Core Error:\n" +
+                "Missing or out-of-sequence tile-parts for tile number 0 in code-stream!\n" +
+                "Kakadu Core Error:\n" +
+                "Out-of-sequence SOP marker found while attempting to read a packet from the\n" +
+                "code-stream!\n" +
+                "    Found sequence number 0, but expected 392.\n" +
+                "Use the resilient option if you would like to try to recover from this error.\n";
+
+        String regexp = "Kakadu Core Error:((?!Kakadu Core Error).)*^";
+
+        Pattern p = Pattern.compile(regexp, Pattern.MULTILINE|Pattern.DOTALL);
+        Matcher m = p.matcher(text);
+        List<String> errors = new ArrayList<>();
+        while (m.find()) {
+            String finding = m.group();
+            System.err.println(finding);
+            errors.add(finding);
+        }
+        assertEquals(7, errors.size());
+
     }
 
 

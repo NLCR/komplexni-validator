@@ -1,11 +1,11 @@
 package nkp.pspValidator.shared.engine.evaluationFunctions;
 
-import org.junit.BeforeClass;
-import org.junit.Test;
 import nkp.pspValidator.shared.engine.Engine;
 import nkp.pspValidator.shared.engine.PatternDefinition;
 import nkp.pspValidator.shared.engine.ValueEvaluation;
 import nkp.pspValidator.shared.engine.ValueType;
+import org.junit.BeforeClass;
+import org.junit.Test;
 
 import java.io.File;
 import java.util.List;
@@ -35,7 +35,7 @@ public class EfFindFilesInDirByPatternTest {
 
     @BeforeClass
     public static void setup() {
-        engine = new Engine();
+        engine = new Engine(null);
         engine.setProvidedFile(PSP_VAR, PSP_DIR_FILE);
 
         TestUtils.defineProvidedFileVar(engine, PSP_VAR);

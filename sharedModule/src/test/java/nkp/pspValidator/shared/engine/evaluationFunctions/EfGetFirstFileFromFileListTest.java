@@ -1,10 +1,10 @@
 package nkp.pspValidator.shared.engine.evaluationFunctions;
 
-import org.junit.BeforeClass;
-import org.junit.Test;
 import nkp.pspValidator.shared.engine.Engine;
 import nkp.pspValidator.shared.engine.ValueEvaluation;
 import nkp.pspValidator.shared.engine.ValueType;
+import org.junit.BeforeClass;
+import org.junit.Test;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -37,7 +37,7 @@ public class EfGetFirstFileFromFileListTest {
 
     @BeforeClass
     public static void setup() {
-        engine = new Engine();
+        engine = new Engine(null);
         defineListVar();
     }
 

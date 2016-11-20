@@ -1,5 +1,6 @@
 package nkp.pspValidator.shared.imageUtils.validation.rules;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -13,7 +14,16 @@ public class MustNotExistDR extends AbstractDataRule {
     @Override
     public List<String> validate(Object data) {
         if (data != null && !data.toString().isEmpty()) {
-            return singleError(error("zakázaná hodnota nalezena"));
+            if (data instanceof List) {
+                List dataLst = (List) data;
+                List<String> errors = new ArrayList<>();
+                for (Object item : dataLst) {
+                    errors.add(error("zakázaná hodnota nalezena: " + item.toString()));
+                }
+                return errors;
+            } else {
+                return singleError(error("zakázaná hodnota nalezena: " + data.toString()));
+            }
         } else {
             return noErrors();
         }

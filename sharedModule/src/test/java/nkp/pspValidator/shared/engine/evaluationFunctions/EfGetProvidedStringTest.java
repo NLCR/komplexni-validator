@@ -1,10 +1,10 @@
 package nkp.pspValidator.shared.engine.evaluationFunctions;
 
-import org.junit.BeforeClass;
-import org.junit.Test;
 import nkp.pspValidator.shared.engine.Engine;
 import nkp.pspValidator.shared.engine.ValueEvaluation;
 import nkp.pspValidator.shared.engine.ValueType;
+import org.junit.BeforeClass;
+import org.junit.Test;
 
 import static org.junit.Assert.*;
 
@@ -24,7 +24,7 @@ public class EfGetProvidedStringTest {
 
     @BeforeClass
     public static void setup() {
-        engine = new Engine();
+        engine = new Engine(null);
         engine.setProvidedString(PSP_ID_STRINGID, PSP_ID_VALUE);
     }
 

@@ -1,10 +1,10 @@
 package nkp.pspValidator.shared.engine.evaluationFunctions;
 
-import org.junit.BeforeClass;
-import org.junit.Test;
 import nkp.pspValidator.shared.engine.Engine;
 import nkp.pspValidator.shared.engine.ValueEvaluation;
 import nkp.pspValidator.shared.engine.ValueType;
+import org.junit.BeforeClass;
+import org.junit.Test;
 
 import java.io.File;
 
@@ -25,7 +25,7 @@ public class EfGetProvidedFileTest {
 
     @BeforeClass
     public static void setup() {
-        engine = new Engine();
+        engine = new Engine(null);
         engine.setProvidedFile(PSP_DIR_FILEID, PSP_DIR_FILE);
     }
 
