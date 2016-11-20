@@ -234,7 +234,7 @@ public class Main {
 
     private static void detectImageTools(ImageUtilManager imageUtilManager) {
         for (ImageUtil util : ImageUtil.values()) {
-            System.out.print(String.format("kontroluji dostupnost nástroje %s: ", util.name()));
+            System.out.print(String.format("Kontroluji dostupnost nástroje %s: ", util.getUserFriendlyName()));
             if (!imageUtilManager.isVersionDetectionDefined(util)) {
                 System.out.println("není definován způsob detekce verze");
             } else if (!imageUtilManager.isUtilExecutionDefined(util)) {
@@ -243,10 +243,10 @@ public class Main {
                 try {
                     String version = imageUtilManager.runUtilVersionDetection(util);
                     imageUtilManager.setUtilAvailable(util, true);
-                    System.out.println("nástroj nalezen, verze: " + version);
+                    System.out.println("nalezen, verze: " + version);
                 } catch (IOException e) {
                     //System.out.println("I/O chyba: " + e.getMessage());
-                    System.out.println("nástroj nenalezen");
+                    System.out.println("nenalezen");
                 } catch (InterruptedException e) {
                     System.out.println("detekce přerušena: " + e.getMessage());
                 }

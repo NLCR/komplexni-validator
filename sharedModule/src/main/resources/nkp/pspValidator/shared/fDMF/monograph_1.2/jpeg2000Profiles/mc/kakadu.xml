@@ -4,7 +4,7 @@
         <validation name="no_errors">
             <textDataExtraction resultType="STRING_LIST">
                 <allNonempty>
-                    <regexp>Kakadu Core Error:((?!Kakadu Core Error).)*</regexp>
+                    <regexp>(?ms)Kakadu Core Error:((?!Kakadu Core Error).)*</regexp>
                 </allNonempty>
             </textDataExtraction>
             <rules>

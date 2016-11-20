@@ -116,11 +116,11 @@ public class ImageUtilManager {
     }
 
     public String runUtilExecution(ImageUtil utilType, File imageFile) throws IOException, InterruptedException {
-        UtilHandler UtilHandler = utilExecutionHandlers.get(utilType);
-        String command = constructCommand(UtilHandler.getCommand(), imageFile.getAbsolutePath());
+        UtilHandler utilHandler = utilExecutionHandlers.get(utilType);
+        String command = constructCommand(utilHandler.getCommand(), imageFile.getAbsolutePath());
         CliCommand.Result result = new CliCommand(command).execute();
         String rawOutput = null;
-        Stream stream = UtilHandler.getParser().getStream();
+        Stream stream = utilHandler.getParser().getStream();
         switch (stream) {
             case STDERR:
                 rawOutput = result.getStderr();
@@ -131,7 +131,7 @@ public class ImageUtilManager {
             default:
                 throw new IOException(String.format("empty response from '%s' (%s)", command, stream));
         }
-        String parsed = parseData(rawOutput, UtilHandler.getParser());
+        String parsed = parseData(rawOutput, utilHandler.getParser());
         return parsed == null || parsed.isEmpty() ? rawOutput.trim() : parsed.trim();
     }
 

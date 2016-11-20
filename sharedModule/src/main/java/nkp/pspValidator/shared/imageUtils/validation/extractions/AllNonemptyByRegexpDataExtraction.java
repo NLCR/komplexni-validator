@@ -26,16 +26,15 @@ public class AllNonemptyByRegexpDataExtraction implements DataExtraction {
     public List<String> extract(Object processedOutput) throws ExtractionException {
         String text = (String) processedOutput;
         List<String> result = new ArrayList<>();
-        if (processedOutput != null && !((String) processedOutput).isEmpty()) {
-            //System.err.println("TOTAL: \"" + processedOutput + "\"");
-        }
+        /*if (processedOutput != null && !((String) processedOutput).isEmpty()) {
+            System.err.println("TOTAL: \"" + processedOutput + "\"");
+        }*/
         for (String regexp : regexps) {
-            Pattern p = Pattern.compile(regexp, Pattern.MULTILINE | Pattern.DOTALL);
+            Pattern p = Pattern.compile(regexp);
             Matcher m = p.matcher(text);
             while (m.find()) {
                 String finding = m.group();
                 String processed = reduceWhitespaces(finding);
-                //System.err.println("ERROR: \"" + processed + "\"");
                 result.add(processed);
             }
         }

@@ -55,7 +55,7 @@
             <operatingSystem name="LINUX">
                 <command>identify -verbose ${IMAGE_FILE}</command>
                 <parser>
-                    <stream>STDOUT</stream>
+                    <stream>STDERR</stream>
                     <regexp>.*</regexp>
                 </parser>
             </operatingSystem>

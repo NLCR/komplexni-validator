@@ -17,7 +17,7 @@ import java.util.List;
 /**
  * Created by martin on 27.10.16.
  */
-public class VfCheckImagesFilesValidByExternalUtil extends ValidationFunction {
+public class VfCheckImageFilesValidByExternalUtil extends ValidationFunction {
 
     public static final String PARAM_FILES = "files";
     public static final String PARAM_LEVEL = "level";
@@ -25,7 +25,7 @@ public class VfCheckImagesFilesValidByExternalUtil extends ValidationFunction {
     public static final String PARAM_UTIL = "util";
 
 
-    public VfCheckImagesFilesValidByExternalUtil(Engine engine) {
+    public VfCheckImageFilesValidByExternalUtil(Engine engine) {
         super(engine, new Contract()
                 .withValueParam(PARAM_FILES, ValueType.FILE_LIST, 1, 1)
                 .withValueParam(PARAM_LEVEL, ValueType.LEVEL, 1, 1)
@@ -37,7 +37,7 @@ public class VfCheckImagesFilesValidByExternalUtil extends ValidationFunction {
 
     @Override
     public String getName() {
-        return "checkImagesFilesValidByExternalUtil";
+        return "checkImageFilesValidByExternalUtil";
     }
 
     @Override

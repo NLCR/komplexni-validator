@@ -131,20 +131,86 @@ public class PatternTest {
                 "    Found sequence number 0, but expected 392.\n" +
                 "Use the resilient option if you would like to try to recover from this error.\n";
 
-        String regexp = "Kakadu Core Error:((?!Kakadu Core Error).)*^";
+        String regexp = "(?ms)Kakadu Core Error:((?!Kakadu Core Error).)*";
+        Pattern p = Pattern.compile(regexp);
 
-        Pattern p = Pattern.compile(regexp, Pattern.MULTILINE | Pattern.DOTALL);
         Matcher m = p.matcher(text);
         List<String> errors = new ArrayList<>();
         while (m.find()) {
             String finding = m.group();
-            System.err.println(finding);
+            //System.err.println(finding);
             errors.add(finding);
         }
         assertEquals(7, errors.size());
-
     }
 
+    @Test
+    public void imageMagickPatternError() {
+        String text = "" +
+                "Error : expected SOP marker\n" +
+                "Error : expected EPH marker\n" +
+                "Error : expected SOP marker\n" +
+                "Error : expected EPH marker\n" +
+                "Error : expected SOP marker\n" +
+                "Error : expected EPH marker\n" +
+                "read: segment too long (126853) with max (3140) for codeblock 2 (p=3, b=2, r=4, c=2)\n" +
+                "identify: Failed to decode.\n" +
+                " `OpenJP2' @ error/jp2.c/JP2ErrorHandler/193.\n" +
+                "identify: Failed to decode tile 2/8\n" +
+                " `OpenJP2' @ error/jp2.c/JP2ErrorHandler/193.\n" +
+                "identify: Failed to decode the codestream in the JP2 file\n" +
+                " `OpenJP2' @ error/jp2.c/JP2ErrorHandler/193.\n" +
+                "identify: unable to decode image file `detekce_poskozeni/w7201gUC.jp2' @ error/jp2.c/ReadJP2Image/384.\n";
+        //String regexp = "^Error.*$";
+        //Pattern p = Pattern.compile(regexp, Pattern.MULTILINE);
+        String regexp = "(?m)^Error.*$";
+        Pattern p = Pattern.compile(regexp);
+        Matcher m = p.matcher(text);
+        List<String> errors = new ArrayList<>();
+        while (m.find()) {
+            String found = m.group();
+            //System.err.println(found);
+            errors.add(found);
+        }
+        assertEquals(6, errors.size());
+        assertEquals("Error : expected SOP marker", errors.get(0));
+        assertEquals("Error : expected EPH marker", errors.get(1));
+        assertEquals("Error : expected SOP marker", errors.get(2));
+        assertEquals("Error : expected EPH marker", errors.get(3));
+        assertEquals("Error : expected SOP marker", errors.get(4));
+        assertEquals("Error : expected EPH marker", errors.get(5));
+    }
+
+    @Test
+    public void imageMagickPatterIdentify() {
+        String text = "" +
+                "Error : expected SOP marker\n" +
+                "Error : expected EPH marker\n" +
+                "Error : expected SOP marker\n" +
+                "Error : expected EPH marker\n" +
+                "Error : expected SOP marker\n" +
+                "Error : expected EPH marker\n" +
+                "read: segment too long (126853) with max (3140) for codeblock 2 (p=3, b=2, r=4, c=2)\n" +
+                "identify: Failed to decode.\n" +
+                " `OpenJP2' @ error/jp2.c/JP2ErrorHandler/193.\n" +
+                "identify: Failed to decode tile 2/8\n" +
+                " `OpenJP2' @ error/jp2.c/JP2ErrorHandler/193.\n" +
+                "identify: Failed to decode the codestream in the JP2 file\n" +
+                " `OpenJP2' @ error/jp2.c/JP2ErrorHandler/193.\n" +
+                "identify: unable to decode image file `detekce_poskozeni/w7201gUC.jp2' @ error/jp2.c/ReadJP2Image/384.\n";
+        //String regexp = "identify:((?!identify).)*";
+        //Pattern p = Pattern.compile(regexp, Pattern.MULTILINE | Pattern.DOTALL);
+        String regexp = "(?ms)identify:((?!identify).)*";
+        Pattern p = Pattern.compile(regexp);
+        Matcher m = p.matcher(text);
+        List<String> errors = new ArrayList<>();
+        while (m.find()) {
+            String finding = m.group();
+            //System.err.println(finding);
+            errors.add(finding);
+        }
+        assertEquals(4, errors.size());
+    }
 
 }
 

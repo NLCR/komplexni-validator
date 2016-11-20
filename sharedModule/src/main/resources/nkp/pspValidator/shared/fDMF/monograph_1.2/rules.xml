@@ -1326,7 +1326,7 @@
         <rule name="MASTER-COPY_FILES_VALID_BY_JPYLYZER">
             <description>Všechny soubory MASTER-COPY musí být validní vůči profilu JPEG 2000 pro nástroj JPYLYZER.
             </description>
-            <validation functionName="checkImagesFilesValidByExternalUtil">
+            <validation functionName="checkImageFilesValidByExternalUtil">
                 <params>
                     <value name="level" type="LEVEL">ERROR</value>
                     <value name="files" type="FILE_LIST">
@@ -1341,7 +1341,7 @@
         <rule name="USER-COPY_FILES_VALID_BY_JPYLYZER">
             <description>Všechny soubory USER-COPY musí být validní vůči profilu JPEG 2000 pro nástroj JPYLYZER.
             </description>
-            <validation functionName="checkImagesFilesValidByExternalUtil">
+            <validation functionName="checkImageFilesValidByExternalUtil">
                 <params>
                     <value name="level" type="LEVEL">ERROR</value>
                     <value name="files" type="FILE_LIST">
@@ -1356,7 +1356,7 @@
         <rule name="MASTER-COPY_FILES_VALID_BY_KAKADU">
             <description>Všechny soubory MASTER-COPY musí být validní vůči profilu JPEG 2000 pro nástroj KAKADU.
             </description>
-            <validation functionName="checkImagesFilesValidByExternalUtil">
+            <validation functionName="checkImageFilesValidByExternalUtil">
                 <params>
                     <value name="level" type="LEVEL">ERROR</value>
                     <value name="files" type="FILE_LIST">
@@ -1371,7 +1371,7 @@
         <rule name="USER-COPY_FILES_VALID_BY_KAKADU">
             <description>Všechny soubory USER-COPY musí být validní vůči profilu JPEG 2000 pro nástroj KAKADU.
             </description>
-            <validation functionName="checkImagesFilesValidByExternalUtil">
+            <validation functionName="checkImageFilesValidByExternalUtil">
                 <params>
                     <value name="level" type="LEVEL">ERROR</value>
                     <value name="files" type="FILE_LIST">
@@ -1382,6 +1382,37 @@
                 </params>
             </validation>
         </rule>
+
+        <rule name="MASTER-COPY_FILES_VALID_BY_IMAGE_MAGICK">
+            <description>Všechny soubory MASTER-COPY musí být validní vůči profilu JPEG 2000 pro nástroj ImageMagick.
+            </description>
+            <validation functionName="checkImageFilesValidByExternalUtil">
+                <params>
+                    <value name="level" type="LEVEL">ERROR</value>
+                    <value name="files" type="FILE_LIST">
+                        <value-ref name="MASTER-COPY_FILES"/>
+                    </value>
+                    <value name="copy" type="IMAGE_COPY">MASTER</value>
+                    <value name="util" type="IMAGE_UTIL">IMAGE_MAGICK</value>
+                </params>
+            </validation>
+        </rule>
+
+        <rule name="USER-COPY_FILES_VALID_BY_IMAGE_MAGICK">
+            <description>Všechny soubory USER-COPY musí být validní vůči profilu JPEG 2000 pro nástroj ImageMagick.
+            </description>
+            <validation functionName="checkImageFilesValidByExternalUtil">
+                <params>
+                    <value name="level" type="LEVEL">ERROR</value>
+                    <value name="files" type="FILE_LIST">
+                        <value-ref name="USER-COPY_FILES"/>
+                    </value>
+                    <value name="copy" type="IMAGE_COPY">USER</value>
+                    <value name="util" type="IMAGE_UTIL">IMAGE_MAGICK</value>
+                </params>
+            </validation>
+        </rule>
+
 
     </rules-section>
 

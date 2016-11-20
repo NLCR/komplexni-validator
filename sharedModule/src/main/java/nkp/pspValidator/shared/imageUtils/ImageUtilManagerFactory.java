@@ -64,6 +64,7 @@ public class ImageUtilManagerFactory {
                 Element parserEl = getFirstChildElementsByName(osEl, "parser");
                 Element streamEl = getFirstChildElementsByName(parserEl, "stream");
                 Stream stream = Stream.valueOf(streamEl.getTextContent().trim());
+                //System.err.println(String.format("execution: os: %s, util: %s, stream: %s", os, util, stream));
                 String regexp = getFirstChildElementsByName(parserEl, "regexp").getTextContent().trim();
                 addUtilityExecution(os, util, command, stream, regexp);
             }
