@@ -30,7 +30,7 @@ public class ValidatorFactoryRegistryTest {
 
     @Test
     public void versions() {
-        FdmfRegistry registry = new FdmfRegistry(new File("/home/martin/ssd/IdeaProjects/PspValidator/sharedModule/src/main/resources/nkp/pspValidator/shared/fDMF"));
+        FdmfRegistry registry = new FdmfRegistry(new File("src/main/resources/nkp/pspValidator/shared/fDMF"));
 
         assertEquals(2, registry.getMonographFdmfVersions().size());
         assertTrue(registry.getMonographFdmfVersions().contains("1.0"));

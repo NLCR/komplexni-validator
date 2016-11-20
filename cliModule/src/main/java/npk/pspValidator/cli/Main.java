@@ -166,11 +166,6 @@ public class Main {
             System.err.println("Chyba parsování parametrů: " + exp.getMessage());
             printHelp(options);
         }
-        /*validate(new Dmf(Dmf.Type.MONOGRAPH, "1.3"),
-                new File("/home/martin/IdeaProjects/PspValidator/sharedModule/src/main/resources/rzehan/shared/fDMF"),
-                new File("/home/martin/IdeaProjects/PspValidator/sharedModule/src/test/resources/monograph_1.2/b50eb6b0-f0a4-11e3-b72e-005056827e52"),
-
-        );*/
     }
 
     private static void printHelp(Options options) {
@@ -271,33 +266,33 @@ public class Main {
 
     private static void testXsds() {
         //info - ok
-        File infoXml = new File("/home/martin/IdeaProjects/PspValidator/sharedModule/src/main/resources/rzehan/shared/fdmf_1_1_3/xsd/examples/info.xml");
-        File infoXsd = new File("/home/martin/IdeaProjects/PspValidator/sharedModule/src/main/resources/rzehan/shared/fdmf_1_1_3/xsd/info_1.1.xsd");
+        File infoXml = new File("../sharedModule/src/main/resources/rzehan/shared/fdmf_1_1_3/xsd/examples/info.xml");
+        File infoXsd = new File("../sharedModule/src/main/resources/rzehan/shared/fdmf_1_1_3/xsd/info_1.1.xsd");
         XsdValidator.validate("INFO", infoXsd, infoXml);
 
        /* //mix - ok
-        File mixXsd = new File("/home/martin/IdeaProjects/PspValidator/sharedModule/src/main/resources/rzehan/shared/fdmf_1_1_3/xsd/mix_2.0.xsd");
-        File mixXml = new File("/home/martin/IdeaProjects/PspValidator/sharedModule/src/main/resources/rzehan/shared/fdmf_1_1_3/xsd/examples/mix.xml");
+        File mixXsd = new File("../sharedModule/src/main/resources/rzehan/shared/fdmf_1_1_3/xsd/mix_2.0.xsd");
+        File mixXml = new File("../sharedModule/src/main/resources/rzehan/shared/fdmf_1_1_3/xsd/examples/mix.xml");
         XsdValidator.validate("MIX", mixXsd, mixXml);
 
         //premis - ok
-        File premisXsd = new File("/home/martin/IdeaProjects/PspValidator/sharedModule/src/main/resources/rzehan/shared/fdmf_1_1_3/xsd/premis_2.2.xsd");
-        File premisXml = new File("/home/martin/IdeaProjects/PspValidator/sharedModule/src/main/resources/rzehan/shared/fdmf_1_1_3/xsd/examples/premis.xml");
+        File premisXsd = new File("../sharedModule/src/main/resources/rzehan/shared/fdmf_1_1_3/xsd/premis_2.2.xsd");
+        File premisXml = new File("../sharedModule/src/main/resources/rzehan/shared/fdmf_1_1_3/xsd/examples/premis.xml");
         XsdValidator.validate("PREMIS", premisXsd, premisXml);
 
         //dc - TODO, jak je to s tim root elementem a jeste import xml.xsd v xsd
-        File dcXsd = new File("/home/martin/IdeaProjects/PspValidator/sharedModule/src/main/resources/rzehan/shared/fdmf_1_1_3/xsd/dc_1.1.xsd");
-        File dcXml = new File("/home/martin/IdeaProjects/PspValidator/sharedModule/src/main/resources/rzehan/shared/fdmf_1_1_3/xsd/examples/dc.xml");
+        File dcXsd = new File("../sharedModule/src/main/resources/rzehan/shared/fdmf_1_1_3/xsd/dc_1.1.xsd");
+        File dcXml = new File("../sharedModule/src/main/resources/rzehan/shared/fdmf_1_1_3/xsd/examples/dc.xml");
         XsdValidator.validate("DC", dcXsd, dcXml);
 
         //mods - TODO: problem s importem xml.xsd
-        File modsXsd = new File("/home/martin/IdeaProjects/PspValidator/sharedModule/src/main/resources/rzehan/shared/fdmf_1_1_3/xsd/mods_3.5.xsd");
-        File modsXml = new File("/home/martin/IdeaProjects/PspValidator/sharedModule/src/main/resources/rzehan/shared/fdmf_1_1_3/xsd/examples/mods.xml");
+        File modsXsd = new File("../sharedModule/src/main/resources/rzehan/shared/fdmf_1_1_3/xsd/mods_3.5.xsd");
+        File modsXml = new File("../sharedModule/src/main/resources/rzehan/shared/fdmf_1_1_3/xsd/examples/mods.xml");
         XsdValidator.validate("MODS", modsXsd, modsXml);
 
         //mets - ok
-        File metsXsd = new File("/home/martin/IdeaProjects/PspValidator/sharedModule/src/main/resources/rzehan/shared/fdmf_1_1_3/xsd/mets_1.9.1.xsd");
-        File metsXml = new File("/home/martin/IdeaProjects/PspValidator/sharedModule/src/main/resources/rzehan/shared/fdmf_1_1_3/xsd/examples/mets.xml");
+        File metsXsd = new File("../sharedModule/src/main/resources/rzehan/shared/fdmf_1_1_3/xsd/mets_1.9.1.xsd");
+        File metsXml = new File("../sharedModule/src/main/resources/rzehan/shared/fdmf_1_1_3/xsd/examples/mets.xml");
         XsdValidator.validate("METS", metsXsd, metsXml);*/
     }
 

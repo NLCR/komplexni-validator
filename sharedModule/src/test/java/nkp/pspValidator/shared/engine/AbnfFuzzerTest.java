@@ -12,7 +12,7 @@ public class AbnfFuzzerTest {
     @Test
     public void abnfTest() {
 
-        //Fuzzer fuzzer = new Fuzzer(new File("/home/martin/ssd/IdeaProjects/PspValidator/sharedModule/src/test/resources/abnf/windows_absolute.md5"));
+        //Fuzzer fuzzer = new Fuzzer(new File("src/test/resources/abnf/windows_absolute.md5"));
         assertEquals(2, "neco:nic".split(":").length);
         assertEquals(2, "neco nic".split("\\s").length);
         assertEquals(2, "neco\tnic".split("\\s").length);

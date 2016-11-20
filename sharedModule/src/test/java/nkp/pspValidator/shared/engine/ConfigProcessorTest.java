@@ -20,9 +20,9 @@ public class ConfigProcessorTest {
         try {
             Engine engine = new Engine(null);
             engine.setProvidedFile("PSP_DIR", pspRootDir);
-            //pvMgr.addFile("PSP_DIR", new File("/home/martin/zakazky/DMF-validator/data/monografie_1.2/b50eb6b0-f0a4-11e3-b72e-005056827e52"));
 
-            File fdmfRoot = new File("/home/martin/ssd/IdeaProjects/PspValidator/sharedModule/src/main/resources/nkp/pspValidator/shared/fDMF/monograph_1.2");
+            File fdmfRoot = new File("src/main/resources/nkp/pspValidator/shared/fDMF/monograph_1.2");
+
             engine.setProvidedFile("INFO_XSD_FILE", new File(fdmfRoot, "xsd/info_1.1.xsd"));
             engine.setProvidedFile("ALTO_XSD_FILE", new File(fdmfRoot, "xsd/alto_2.0.xsd"));
             engine.setProvidedFile("CMD_XSD_FILE", new File(fdmfRoot, "xsd/cmd_0.91.xsd"));
