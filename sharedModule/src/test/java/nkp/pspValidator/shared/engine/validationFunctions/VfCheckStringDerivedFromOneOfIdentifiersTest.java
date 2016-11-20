@@ -37,7 +37,7 @@ public class VfCheckStringDerivedFromOneOfIdentifiersTest {
                 prefixes("cnb", "urn:nbn:cz:", "uuid:")
         );
 
-        assertTrue(result.hasProblems());
+        assertFalse(result.hasProblems());
     }
 
     @Test
@@ -51,7 +51,7 @@ public class VfCheckStringDerivedFromOneOfIdentifiersTest {
                 ),
                 prefixes("cnb", "urn:nbn:cz:", "uuid:")
         );
-        assertTrue(result.hasProblems());
+        assertFalse(result.hasProblems());
     }
 
     @Test
@@ -65,7 +65,7 @@ public class VfCheckStringDerivedFromOneOfIdentifiersTest {
                 ),
                 prefixes("cnb", "urn:nbn:cz:", "uuid:")
         );
-        assertTrue(result.hasProblems());
+        assertFalse(result.hasProblems());
     }
 
     @Test
@@ -79,7 +79,7 @@ public class VfCheckStringDerivedFromOneOfIdentifiersTest {
                 ),
                 prefixes("cnb", "urn:nbn:cz:", "uuid:")
         );
-        assertFalse(result.hasProblems());
+        assertTrue(result.hasProblems());
     }
 
 
@@ -93,7 +93,7 @@ public class VfCheckStringDerivedFromOneOfIdentifiersTest {
                 ),
                 prefixes("cnb", "urn:nbn:cz:")
         );
-        assertFalse(result.hasProblems());
+        assertTrue(result.hasProblems());
     }
 
     private List<Identifier> ids(Identifier... ids) {

@@ -133,7 +133,7 @@ public class PatternTest {
 
         String regexp = "Kakadu Core Error:((?!Kakadu Core Error).)*^";
 
-        Pattern p = Pattern.compile(regexp, Pattern.MULTILINE|Pattern.DOTALL);
+        Pattern p = Pattern.compile(regexp, Pattern.MULTILINE | Pattern.DOTALL);
         Matcher m = p.matcher(text);
         List<String> errors = new ArrayList<>();
         while (m.find()) {
