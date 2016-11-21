@@ -198,7 +198,7 @@ public class Main {
         imageUtilManager.setPaths(utilPaths);
         detectImageTools(imageUtilManager);
 
-        Validator validator = ValidatorFactory.buildValidator(platform, fdmfRoot, pspRoot, imageUtilManager);
+        Validator validator = ValidatorFactory.buildValidator(fdmfRoot, pspRoot, imageUtilManager);
         System.out.println(String.format("Validátor inicializován, spouštím validace"));
         switch (printVerbosity) {
             case 3:

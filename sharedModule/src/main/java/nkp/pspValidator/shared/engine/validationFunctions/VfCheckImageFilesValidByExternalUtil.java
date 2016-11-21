@@ -85,6 +85,7 @@ public class VfCheckImageFilesValidByExternalUtil extends ValidationFunction {
             return singlErrorResult(invalid(Level.ERROR, "nenalezen J2K profil pro kopii %s a nástroj %s", copy, util));
         }
         for (File file : files) {
+            //System.err.println("validating " + file.getAbsolutePath());
             try {
                 List<String> problems = profile.validate(file);
                 for (String problem : problems) {

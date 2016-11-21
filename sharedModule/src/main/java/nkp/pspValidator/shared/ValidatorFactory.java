@@ -21,7 +21,7 @@ public class ValidatorFactory {
     private static final String J2K_PROFILES_UC_DIR = "uc";
     private static final String J2K_PROFILES_MC_DIR = "mc";
 
-    public static Validator buildValidator(Platform platform, File fdmfRoot, File pspRootDir, ImageUtilManager imageUtilManager) throws ValidatorConfigurationException {
+    public static Validator buildValidator(File fdmfRoot, File pspRootDir, ImageUtilManager imageUtilManager) throws ValidatorConfigurationException {
         checkDirExistAndReadable(fdmfRoot);
         checkDirExistAndReadable(pspRootDir);
 

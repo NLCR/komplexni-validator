@@ -32,6 +32,14 @@ public class Validator {
         this.engine = engine;
     }
 
+    /**
+     * only for tests
+     * @return
+     */
+    public Engine getEngine() {
+        return engine;
+    }
+
     public void run(File xmlOutputFile,
                     boolean printSectionsWithProblems, boolean printSectionsWithoutProblems,
                     boolean printRulesWithProblems, boolean printRulesWithoutProblems) {
