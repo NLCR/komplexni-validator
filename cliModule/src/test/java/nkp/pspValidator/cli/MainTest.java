@@ -27,23 +27,28 @@ public class MainTest {
 
         Main.main(buildParams(
                 "../sharedModule/src/main/resources/nkp/pspValidator/shared/fDMF"
-                //, MON_1_2
-                , MON_1_2_INVALID_IMAGES
+                , MON_1_2
+                //, MON_1_2_INVALID_IMAGES
                 //, MON_1_2_MAP
                 //,PER_1_6
                 , Dmf.Type.MONOGRAPH
                 , "1.2"
-                , null //verbosity
-                , null// "src/test/resources/protocol.xml" //xml protocol
+                , 3 //verbosity
+                , "src/test/resources/protocol.xml" //xml protocol
                 , "/usr/bin" //jpylyzer path
                 , "/usr/bin" //jhove path
                 , null //imageMagick path
-                , "/home/martin/zakazky/NKP-PSP_validator/utility/kakadu/KDU78_Demo_Apps_for_Linux-x86-64_160226" //kakadu path
+                , null //"/home/martin/zakazky/NKP-PSP_validator/utility/kakadu/KDU78_Demo_Apps_for_Linux-x86-64_160226" //kakadu path
+                , false //disable imageMagick
+                , true //disable jhove
+                , false //disable jpylyzer
+                , true//disable kakadu
         ));
     }
 
     private String[] buildParams(String fdmfsDir, String pspDir, Dmf.Type dmfType, String dmfVersion, Integer verbosity, String xmlProtocolFile,
-                                 String jpylyzerPath, String jhovePath, String imageMagickPath, String kakaduPath
+                                 String jpylyzerPath, String jhovePath, String imageMagickPath, String kakaduPath,
+                                 boolean disableImageMagick, boolean disableJhove, boolean disableJpylyzer, boolean disableKakadu
     ) {
         List<String> params = new ArrayList<>();
         params.add("-fd");
@@ -72,24 +77,34 @@ public class MainTest {
             params.add(xmlProtocolFile);
         }
 
-        if (jpylyzerPath != null) {
-            params.add("--jpylyzer-path");
-            params.add(jpylyzerPath);
-        }
-
-        if (jhovePath != null) {
-            params.add("--jhove-path");
-            params.add(jhovePath);
-        }
-
+        //image utils
         if (imageMagickPath != null) {
             params.add("--imageMagick-path");
             params.add(imageMagickPath);
         }
-
+        if (jhovePath != null) {
+            params.add("--jhove-path");
+            params.add(jhovePath);
+        }
+        if (jpylyzerPath != null) {
+            params.add("--jpylyzer-path");
+            params.add(jpylyzerPath);
+        }
         if (kakaduPath != null) {
             params.add("--kakadu-path");
             params.add(kakaduPath);
+        }
+        if (disableImageMagick) {
+            params.add("--disable-imageMagick");
+        }
+        if (disableJhove) {
+            params.add("--disable-jhove");
+        }
+        if (disableJpylyzer) {
+            params.add("--disable-jpylyzer");
+        }
+        if (disableKakadu) {
+            params.add("--disable-kakadu");
         }
 
         Object[] array = params.toArray();

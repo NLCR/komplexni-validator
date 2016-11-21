@@ -53,6 +53,7 @@ public class Validator {
             //if (section.getName().equals("JPEG 2000")) {
             protocol.reportSectionProcessingStarted(section);
             protocol.addSection(section);
+            //TODO: tohle se pocita
             int sectionProblemsTotal = protocol.getSectionProblemsSum(section);
             Map<Level, Integer> sectionProblemsByLevel = protocol.getSectionProblemsByLevel(section);
             boolean printSection = sectionProblemsTotal == 0 && printSectionsWithoutProblems || sectionProblemsTotal != 0 && printSectionsWithProblems;

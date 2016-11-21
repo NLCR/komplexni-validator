@@ -78,25 +78,29 @@ public class VfCheckImageFilesValidByExternalUtil extends ValidationFunction {
     }
 
     private ValidationResult validate(Level level, List<File> files, ImageCopy copy, ImageUtil util) {
-        ValidationResult result = new ValidationResult();
-        ImageValidator imageValidator = engine.getImageValidator();
-        J2kProfile profile = imageValidator.getProfile(copy, util);
-        if (profile == null) {
-            return singlErrorResult(invalid(Level.ERROR, "nenalezen J2K profil pro kopii %s a nástroj %s", copy, util));
-        }
-        for (File file : files) {
-            //System.err.println("validating " + file.getAbsolutePath());
-            try {
-                List<String> problems = profile.validate(file);
-                for (String problem : problems) {
-                    result.addError(invalid(level, "%s (soubor %s)", problem, file.getAbsoluteFile()));
-                }
-            } catch (Exception e) {
-                result.addError(invalid(Level.ERROR, "%s: (soubor %s)", e.getMessage(), file.getName()));
-                e.printStackTrace();
+        if (!engine.getImageValidator().isUtilAvailable(util)) {
+            return singlErrorResult(invalid(Level.INFO, "nástroj %s není dostupný", util.getUserFriendlyName()));
+        } else {
+            ValidationResult result = new ValidationResult();
+            ImageValidator imageValidator = engine.getImageValidator();
+            J2kProfile profile = imageValidator.getProfile(copy, util);
+            if (profile == null) {
+                return singlErrorResult(invalid(Level.ERROR, "nenalezen J2K profil pro kopii %s a nástroj %s", copy, util));
             }
+            for (File file : files) {
+                //System.err.println("validating " + file.getAbsolutePath());
+                try {
+                    List<String> problems = profile.validate(file);
+                    for (String problem : problems) {
+                        result.addError(invalid(level, "%s (soubor %s)", problem, file.getAbsoluteFile()));
+                    }
+                } catch (Exception e) {
+                    result.addError(invalid(Level.ERROR, "%s: (soubor %s)", e.getMessage(), file.getName()));
+                    e.printStackTrace();
+                }
+            }
+            return result;
         }
-        return result;
     }
 
 }

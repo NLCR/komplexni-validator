@@ -80,7 +80,7 @@ public class CliCommand {
             System.err.println("SERR: " + stdErr);*/
             return new Result(exitValue, stdOut, stdErr);
         } catch (Throwable e) {
-            e.printStackTrace();
+            //e.printStackTrace();
             throw e;
         }
     }

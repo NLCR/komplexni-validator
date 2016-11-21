@@ -51,6 +51,10 @@ public class ImageValidator {
         }
     }
 
+    public boolean isUtilAvailable(ImageUtil util) {
+        return imageUtilManager.isUtilAvailable(util);
+    }
+
     public J2kProfile getProfile(ImageCopy copy, ImageUtil util) {
         switch (copy) {
             case MASTER:

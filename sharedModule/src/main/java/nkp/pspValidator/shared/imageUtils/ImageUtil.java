@@ -5,9 +5,9 @@ package nkp.pspValidator.shared.imageUtils;
  */
 public enum ImageUtil {
 
-    JPYLYZER("Jpylyzer", "jpylyzer.xml"),
     IMAGE_MAGICK("ImageMagick", "imageMagick.xml"),
     JHOVE("JHOVE", "jhove.xml"),
+    JPYLYZER("Jpylyzer", "jpylyzer.xml"),
     KAKADU("Kakadu", "kakadu.xml");
 
     private final String userFriendlyName;

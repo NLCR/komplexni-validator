@@ -14,7 +14,9 @@ import org.apache.commons.cli.*;
 import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * Created by Martin Řehánek on 27.9.16.
@@ -77,12 +79,13 @@ public class Main {
                 .withLongOpt("verbosity")
                 .create("v"));
 
+
         options.addOption(OptionBuilder
-                .withDescription("Adresář typ s binárními soubory nástroje Jpylyzer." +
-                        " Např. C:\\Program Files\\jpylyzer_1.17.0_win64 pro Windows, /usr/bin pro Linux, TODO pro MacOS.")
+                .withDescription("Adresář typ s binárními soubory nástroje ImageMagick." +
+                        " Např. C:\\Program Files\\ImageMagick-7.0.3-Q16 pro Windows, /usr/bin pro Linux, TODO pro MacOS.")
                 .hasArg()
                 .withArgName("ADRESÁŘ")
-                .withLongOpt("jpylyzer-path")
+                .withLongOpt("imageMagick-path")
                 .create(null));
 
         options.addOption(OptionBuilder
@@ -94,12 +97,13 @@ public class Main {
                 .create(null));
 
         options.addOption(OptionBuilder
-                .withDescription("Adresář typ s binárními soubory nástroje ImageMagick." +
-                        " Např. C:\\Program Files\\ImageMagick-7.0.3-Q16 pro Windows, /usr/bin pro Linux, TODO pro MacOS.")
+                .withDescription("Adresář typ s binárními soubory nástroje Jpylyzer." +
+                        " Např. C:\\Program Files\\jpylyzer_1.17.0_win64 pro Windows, /usr/bin pro Linux, TODO pro MacOS.")
                 .hasArg()
                 .withArgName("ADRESÁŘ")
-                .withLongOpt("imageMagick-path")
+                .withLongOpt("jpylyzer-path")
                 .create(null));
+
         options.addOption(OptionBuilder
                 .withDescription("Adresář typ s binárními soubory nástroje Kakadu." +
                         " Např. C:\\Program Files\\Kakadu pro Windows, /usr/bin pro Linux, TODO pro MacOS.")
@@ -108,6 +112,26 @@ public class Main {
                 .withLongOpt("kakadu-path")
                 .create(null));
 
+
+        options.addOption(OptionBuilder
+                .withDescription("Zakáže použití ImageMagick.")
+                .withLongOpt("disable-imageMagick")
+                .create(null));
+
+        options.addOption(OptionBuilder
+                .withDescription("Zakáže použití JHOVE.")
+                .withLongOpt("disable-jhove")
+                .create(null));
+
+        options.addOption(OptionBuilder
+                .withDescription("Zakáže použití Jpylyzer.")
+                .withLongOpt("disable-jpylyzer")
+                .create(null));
+
+        options.addOption(OptionBuilder
+                .withDescription("Zakáže použití Kakadu.")
+                .withLongOpt("disable-kakadu")
+                .create(null));
 
         options.addOption(OptionBuilder.withLongOpt("help")
                 .withDescription("Zobrazit tuto nápovědu.")
@@ -144,24 +168,39 @@ public class Main {
                 Integer verbosity = line.hasOption("v") ? Integer.valueOf(line.getOptionValue("v")) : DEFAULT_VERBOSITY;
                 File xmlOutputFile = line.hasOption("x") ? new File(line.getOptionValue("x")) : null;
 
+                //image utils
+                Map<ImageUtil, File> imageUtilPaths = new HashMap<>();
+                Set<ImageUtil> imageUtilsDisabled = new HashSet<>();
+                if (line.hasOption("disable-imageMagick")) {
+                    imageUtilsDisabled.add(ImageUtil.IMAGE_MAGICK);
+                } else {
+                    if (line.hasOption("imageMagick-path")) {
+                        imageUtilPaths.put(ImageUtil.IMAGE_MAGICK, new File(line.getOptionValue("imageMagick-path")));
+                    }
+                }
+                if (line.hasOption("disable-jhove")) {
+                    imageUtilsDisabled.add(ImageUtil.JHOVE);
+                } else {
+                    if (line.hasOption("jhove-path")) {
+                        imageUtilPaths.put(ImageUtil.JHOVE, new File(line.getOptionValue("jhove-path")));
+                    }
+                }
+                if (line.hasOption("disable-jpylyzer")) {
+                    imageUtilsDisabled.add(ImageUtil.JPYLYZER);
+                } else {
+                    if (line.hasOption("jpylyzer-path")) {
+                        imageUtilPaths.put(ImageUtil.JPYLYZER, new File(line.getOptionValue("jpylyzer-path")));
+                    }
+                }
+                if (line.hasOption("disable-kakadu")) {
+                    imageUtilsDisabled.add(ImageUtil.KAKADU);
+                } else {
+                    if (line.hasOption("kakadu-path")) {
+                        imageUtilPaths.put(ImageUtil.KAKADU, new File(line.getOptionValue("kakadu-path")));
+                    }
+                }
 
-                Map<ImageUtil, File> utilPaths = new HashMap<>();
-                if (line.hasOption("jpylyzer-path")) {
-                    utilPaths.put(ImageUtil.JPYLYZER, new File(line.getOptionValue("jpylyzer-path")));
-                }
-                if (line.hasOption("jhove-path")) {
-                    utilPaths.put(ImageUtil.JHOVE, new File(line.getOptionValue("jhove-path")));
-                }
-                if (line.hasOption("imageMagick-path")) {
-                    utilPaths.put(ImageUtil.IMAGE_MAGICK, new File(line.getOptionValue("imageMagick-path")));
-                }
-                if (line.hasOption("kakadu-path")) {
-                    utilPaths.put(ImageUtil.KAKADU, new File(line.getOptionValue("kakadu-path")));
-                }
-
-                //TODO: options to disable jhove, jpylyzer, imagemagick, kakadu
-
-                validate(new Dmf(dmfType, dmfVersion), fdmfsDir, pspDir, xmlOutputFile, verbosity, utilPaths);
+                runValidator(new Dmf(dmfType, dmfVersion), fdmfsDir, pspDir, xmlOutputFile, verbosity, imageUtilsDisabled, imageUtilPaths);
             }
         } catch (ParseException exp) {
             System.err.println("Chyba parsování parametrů: " + exp.getMessage());
@@ -183,7 +222,9 @@ public class Main {
     }
 
 
-    private static void validate(Dmf dmfPrefered, File fdmfsRoot, File pspRoot, File xmlOutputFile, int printVerbosity, Map<ImageUtil, File> utilPaths) throws PspDataException, InvalidXPathExpressionException, XmlParsingException, FdmfRegistry.UnknownFdmfException, ValidatorConfigurationException {
+    private static void runValidator(Dmf dmfPrefered, File fdmfsRoot, File pspRoot,
+                                     File xmlOutputFile, int printVerbosity,
+                                     Set<ImageUtil> imageUtilsDisabled, Map<ImageUtil, File> imageUtilPaths) throws PspDataException, InvalidXPathExpressionException, XmlParsingException, FdmfRegistry.UnknownFdmfException, ValidatorConfigurationException {
         checkReadableDir(pspRoot);
         checkReadableDir(fdmfsRoot);
         File imageUtilsConfigFile = getImageUtilsConfigFile(fdmfsRoot);
@@ -195,8 +236,8 @@ public class Main {
         Platform platform = Platform.detectOs();
         System.out.println(String.format("Platforma: %s", platform.toReadableString()));
         ImageUtilManager imageUtilManager = new ImageUtilManagerFactory(imageUtilsConfigFile).buildImageUtilManager(platform.getOperatingSystem());
-        imageUtilManager.setPaths(utilPaths);
-        detectImageTools(imageUtilManager);
+        imageUtilManager.setPaths(imageUtilPaths);
+        detectImageTools(imageUtilManager, imageUtilsDisabled);
 
         Validator validator = ValidatorFactory.buildValidator(fdmfRoot, pspRoot, imageUtilManager);
         System.out.println(String.format("Validátor inicializován, spouštím validace"));
@@ -233,23 +274,27 @@ public class Main {
         }
     }
 
-    private static void detectImageTools(ImageUtilManager imageUtilManager) {
+    private static void detectImageTools(ImageUtilManager imageUtilManager, Set<ImageUtil> utilsDisabled) {
         for (ImageUtil util : ImageUtil.values()) {
-            System.out.print(String.format("Kontroluji dostupnost nástroje %s: ", util.getUserFriendlyName()));
-            if (!imageUtilManager.isVersionDetectionDefined(util)) {
-                System.out.println("není definován způsob detekce verze");
-            } else if (!imageUtilManager.isUtilExecutionDefined(util)) {
-                System.out.println("není definován způsob spuštění");
+            if (utilsDisabled.contains(util)) {
+                System.out.println(String.format("Vypnuto použití nástroje %s.", util.getUserFriendlyName()));
             } else {
-                try {
-                    String version = imageUtilManager.runUtilVersionDetection(util);
-                    imageUtilManager.setUtilAvailable(util, true);
-                    System.out.println("nalezen, verze: " + version);
-                } catch (IOException e) {
-                    //System.out.println("I/O chyba: " + e.getMessage());
-                    System.out.println("nenalezen");
-                } catch (InterruptedException e) {
-                    System.out.println("detekce přerušena: " + e.getMessage());
+                System.out.print(String.format("Kontroluji dostupnost nástroje %s: ", util.getUserFriendlyName()));
+                if (!imageUtilManager.isVersionDetectionDefined(util)) {
+                    System.out.println("není definován způsob detekce verze");
+                } else if (!imageUtilManager.isUtilExecutionDefined(util)) {
+                    System.out.println("není definován způsob spuštění");
+                } else {
+                    try {
+                        String version = imageUtilManager.runUtilVersionDetection(util);
+                        imageUtilManager.setUtilAvailable(util, true);
+                        System.out.println("nalezen, verze: " + version);
+                    } catch (IOException e) {
+                        //System.out.println("I/O chyba: " + e.getMessage());
+                        System.out.println("nenalezen");
+                    } catch (InterruptedException e) {
+                        System.out.println("detekce přerušena: " + e.getMessage());
+                    }
                 }
             }
         }
