@@ -182,6 +182,9 @@ public class VfCheckImageFilesValidByExternalUtilTest {
             ValidationFunction validationFunction = buildValidationFunction(ImageUtil.JHOVE, ImageCopy.MASTER, FILES_OK_MC);
             ValidationResult result = validationFunction.validate();
             assertFalse(result.hasProblems());
+            /*for (ValidationError problem : result.getProblems()) {
+                assertNull(problem.getMessage());
+            }*/
         }
     }
 
@@ -191,6 +194,9 @@ public class VfCheckImageFilesValidByExternalUtilTest {
             ValidationFunction validationFunction = buildValidationFunction(ImageUtil.JHOVE, ImageCopy.USER, FILES_OK_UC);
             ValidationResult result = validationFunction.validate();
             assertFalse(result.hasProblems());
+            /*for (ValidationError problem : result.getProblems()) {
+                assertNull(problem.getMessage());
+            }*/
         }
     }
 

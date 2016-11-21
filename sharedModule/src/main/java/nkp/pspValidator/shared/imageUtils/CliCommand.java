@@ -26,6 +26,7 @@ public class CliCommand {
     public Result execute() throws IOException, InterruptedException {
         try {
             Process process = Runtime.getRuntime().exec(command);
+            //System.err.println(command);
             //TODO: perhaps thread pooling here
 
             //read standard error stream in separate thread
