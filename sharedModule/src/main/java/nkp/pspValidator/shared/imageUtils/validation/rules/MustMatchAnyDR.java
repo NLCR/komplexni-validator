@@ -7,10 +7,10 @@ import java.util.List;
 /**
  * Created by martin on 17.11.16.
  */
-public class MustMatchOneDR extends AbstractDataRule {
+public class MustMatchAnyDR extends AbstractDataRule {
     private final List<Constraint> constraints;
 
-    public MustMatchOneDR(String validationName, List<Constraint> constraints) {
+    public MustMatchAnyDR(String validationName, List<Constraint> constraints) {
         super(validationName);
         this.constraints = constraints;
     }

@@ -12,8 +12,7 @@ import nkp.pspValidator.shared.imageUtils.ImageUtilManager;
 import nkp.pspValidator.shared.imageUtils.validation.extractions.AllNonemptyByRegexpDataExtraction;
 import nkp.pspValidator.shared.imageUtils.validation.extractions.FirstNonemptyByXpathDataExctraction;
 import nkp.pspValidator.shared.imageUtils.validation.rules.MustExistDR;
-import nkp.pspValidator.shared.imageUtils.validation.rules.MustMatchDR;
-import nkp.pspValidator.shared.imageUtils.validation.rules.MustMatchOneDR;
+import nkp.pspValidator.shared.imageUtils.validation.rules.MustMatchAnyDR;
 import nkp.pspValidator.shared.imageUtils.validation.rules.MustNotExistDR;
 import nkp.pspValidator.shared.imageUtils.validation.rules.constraints.ConstantConstraint;
 import nkp.pspValidator.shared.imageUtils.validation.rules.constraints.FlowRangeConstraint;
@@ -182,18 +181,13 @@ public class ImageValidator {
             case "mustNotExist": {
                 return new MustNotExistDR(validationName);
             }
-            case "mustMatch": {
-                Element childEl = XmlUtils.getChilrenElements(ruleEl).get(0);
-                Constraint constraint = buildConstraint(childEl);
-                return new MustMatchDR(validationName, constraint);
-            }
-            case "mustMatchOne": {
+            case "mustMatchAny": {
                 List<Constraint> constraints = new ArrayList<>();
                 List<Element> constraintEls = XmlUtils.getChilrenElements(ruleEl);
                 for (Element constraintEl : constraintEls) {
                     constraints.add(buildConstraint(constraintEl));
                 }
-                return new MustMatchOneDR(validationName, constraints);
+                return new MustMatchAnyDR(validationName, constraints);
             }
             default:
                 throw new ValidatorConfigurationException("nečekaný element %s", ruleEl.getTagName());

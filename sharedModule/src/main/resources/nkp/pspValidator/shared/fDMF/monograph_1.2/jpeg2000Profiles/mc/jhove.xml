@@ -37,9 +37,9 @@
             </xmlDataExtraction>
             <rules>
                 <mustExist/>
-                <mustMatch>
+                <mustMatchAny>
                     <constant>Jhove</constant>
-                </mustMatch>
+                </mustMatchAny>
             </rules>
         </validation>
 
@@ -62,9 +62,9 @@
             </xmlDataExtraction>
             <rules>
                 <mustExist/>
-                <mustMatch>
+                <mustMatchAny>
                     <constant>JPEG 2000</constant>
-                </mustMatch>
+                </mustMatchAny>
             </rules>
         </validation>
 
@@ -76,9 +76,9 @@
             </xmlDataExtraction>
             <rules>
                 <mustExist/>
-                <mustMatch>
+                <mustMatchAny>
                     <constant>Well-Formed and valid</constant>
-                </mustMatch>
+                </mustMatchAny>
             </rules>
         </validation>
 
@@ -114,10 +114,10 @@
             <rules>
                 <mustExist/>
                 <!--povolene hodnoty "1" nebo "3"-->
-                <mustMatchOne>
+                <mustMatchAny>
                     <constant>1</constant>
                     <constant>3</constant>
-                </mustMatchOne>
+                </mustMatchAny>
             </rules>
         </validation>
 
@@ -131,9 +131,9 @@
             <rules>
                 <!--TODO: docasne vyrazeno, vzdy v datech neni a nekdy je tam vice hodnot-->
                 <!-- <mustExist/>
-                <mustMatchOne>
+                <mustMatchAny>
                     <constant>8</constant>
-                </mustMatchOne>-->
+                </mustMatchAny>-->
             </rules>
         </validation>
 
@@ -146,10 +146,10 @@
             <rules>
                 <mustExist/>
                 <!--povolene hodnoty "sRGB" nebo "greyscale"-->
-                <mustMatchOne>
+                <mustMatchAny>
                     <constant>sRGB</constant>
                     <constant>Greyscale</constant>
-                </mustMatchOne>
+                </mustMatchAny>
             </rules>
         </validation>
 
@@ -162,9 +162,9 @@
             <rules>
                 <mustExist/>
                 <!--TODO: docasne vyrazeno, v realnych datech byva "Enumerated Colorspace"-->
-                <!--<mustMatchOne>
+                <!--<mustMatchAny>
                     <constant>Restricted ICC Profile</constant>
-                </mustMatchOne>-->
+                </mustMatchAny>-->
             </rules>
         </validation>
 
@@ -179,11 +179,11 @@
             <rules>
                 <!--TODO: docasne vyrazeno, v datech se hodnota nenachazi-->
                 <!--<mustExist/>
-                <mustMatch>
+                <mustMatchAny>
                     <floatRange>
                         <min>11732</min>
                     </floatRange>
-                </mustMatch>-->
+                </mustMatchAny>-->
             </rules>
         </validation>
 
@@ -198,11 +198,11 @@
             <rules>
                 <!--TODO: docasne vyrazeno, v datech se hodnota nenachazi-->
                 <!--<mustExist/>
-                <mustMatch>
+                <mustMatchAny>
                     <floatRange>
                         <min>11732</min>
                     </floatRange>
-                </mustMatch>-->
+                </mustMatchAny>-->
             </rules>
         </validation>
 
@@ -215,11 +215,11 @@
             <rules>
                 <mustExist/>
                 <!--jakékoliv přirozené číslo-->
-                <mustMatch>
+                <mustMatchAny>
                     <intRange>
                         <min>1</min>
                     </intRange>
-                </mustMatch>
+                </mustMatchAny>
             </rules>
         </validation>
 
@@ -233,9 +233,9 @@
             </xmlDataExtraction>
             <rules>
                 <mustExist/>
-                <mustMatch>
+                <mustMatchAny>
                     <constant>4096</constant>
-                </mustMatch>
+                </mustMatchAny>
             </rules>
         </validation>
 
@@ -249,9 +249,9 @@
             </xmlDataExtraction>
             <rules>
                 <mustExist/>
-                <mustMatch>
+                <mustMatchAny>
                     <constant>4096</constant>
-                </mustMatch>
+                </mustMatchAny>
             </rules>
         </validation>
 
@@ -265,9 +265,9 @@
             </xmlDataExtraction>
             <rules>
                 <mustExist/>
-                <mustMatch>
+                <mustMatchAny>
                     <constant>2</constant>
-                </mustMatch>
+                </mustMatchAny>
             </rules>
         </validation>
 
@@ -281,9 +281,9 @@
             </xmlDataExtraction>
             <rules>
                 <mustExist/>
-                <mustMatch>
+                <mustMatchAny>
                     <constant>1</constant>
-                </mustMatch>
+                </mustMatchAny>
             </rules>
         </validation>
 
@@ -297,10 +297,10 @@
             </xmlDataExtraction>
             <rules>
                 <mustExist/>
-                <mustMatchOne>
+                <mustMatchAny>
                     <constant>5</constant>
                     <constant>6</constant>
-                </mustMatchOne>
+                </mustMatchAny>
             </rules>
         </validation>
 
@@ -314,9 +314,9 @@
             </xmlDataExtraction>
             <rules>
                 <mustExist/>
-                <mustMatchOne>
+                <mustMatchAny>
                     <constant>4</constant>
-                </mustMatchOne>
+                </mustMatchAny>
             </rules>
         </validation>
 
@@ -330,9 +330,9 @@
             </xmlDataExtraction>
             <rules>
                 <mustExist/>
-                <mustMatchOne>
+                <mustMatchAny>
                     <constant>4</constant>
-                </mustMatchOne>
+                </mustMatchAny>
             </rules>
         </validation>
 
@@ -346,9 +346,9 @@
             </xmlDataExtraction>
             <rules>
                 <mustExist/>
-                <mustMatchOne>
+                <mustMatchAny>
                     <constant>1</constant>
-                </mustMatchOne>
+                </mustMatchAny>
             </rules>
         </validation>
 
