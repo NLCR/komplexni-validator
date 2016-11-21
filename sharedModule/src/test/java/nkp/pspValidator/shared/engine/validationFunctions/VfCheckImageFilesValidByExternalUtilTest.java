@@ -120,10 +120,10 @@ public class VfCheckImageFilesValidByExternalUtilTest {
         if (imageUtilManager.isUtilAvailable(ImageUtil.KAKADU)) {
             ValidationFunction validationFunction = buildValidationFunction(ImageUtil.KAKADU, ImageCopy.MASTER, FILES_OK_MC);
             ValidationResult result = validationFunction.validate();
-            assertFalse(result.hasProblems());
-            /*for (ValidationError problem : result.getProblems()) {
+            for (ValidationError problem : result.getProblems()) {
                 assertNull(problem.getMessage());
-            }*/
+            }
+            assertFalse(result.hasProblems());
         }
     }
 
@@ -132,10 +132,10 @@ public class VfCheckImageFilesValidByExternalUtilTest {
         if (imageUtilManager.isUtilAvailable(ImageUtil.KAKADU)) {
             ValidationFunction validationFunction = buildValidationFunction(ImageUtil.KAKADU, ImageCopy.MASTER, FILES_OK_UC);
             ValidationResult result = validationFunction.validate();
-            assertFalse(result.hasProblems());
-            /*for (ValidationError problem : result.getProblems()) {
+            for (ValidationError problem : result.getProblems()) {
                 assertNull(problem.getMessage());
-            }*/
+            }
+            assertFalse(result.hasProblems());
         }
     }
 
@@ -144,6 +144,9 @@ public class VfCheckImageFilesValidByExternalUtilTest {
         if (imageUtilManager.isUtilAvailable(ImageUtil.IMAGE_MAGICK)) {
             ValidationFunction validationFunction = buildValidationFunction(ImageUtil.IMAGE_MAGICK, ImageCopy.MASTER, FILES_OK_MC);
             ValidationResult result = validationFunction.validate();
+            for (ValidationError problem : result.getProblems()) {
+                assertNull(problem.getMessage());
+            }
             assertFalse(result.hasProblems());
         }
     }
@@ -153,6 +156,9 @@ public class VfCheckImageFilesValidByExternalUtilTest {
         if (imageUtilManager.isUtilAvailable(ImageUtil.IMAGE_MAGICK)) {
             ValidationFunction validationFunction = buildValidationFunction(ImageUtil.IMAGE_MAGICK, ImageCopy.USER, FILES_OK_UC);
             ValidationResult result = validationFunction.validate();
+            for (ValidationError problem : result.getProblems()) {
+                assertNull(problem.getMessage());
+            }
             assertFalse(result.hasProblems());
         }
     }
@@ -163,6 +169,9 @@ public class VfCheckImageFilesValidByExternalUtilTest {
         if (imageUtilManager.isUtilAvailable(ImageUtil.JPYLYZER)) {
             ValidationFunction validationFunction = buildValidationFunction(ImageUtil.JPYLYZER, ImageCopy.MASTER, FILES_OK_MC);
             ValidationResult result = validationFunction.validate();
+            for (ValidationError problem : result.getProblems()) {
+                assertNull(problem.getMessage());
+            }
             assertFalse(result.hasProblems());
         }
     }
@@ -172,6 +181,9 @@ public class VfCheckImageFilesValidByExternalUtilTest {
         if (imageUtilManager.isUtilAvailable(ImageUtil.JPYLYZER)) {
             ValidationFunction validationFunction = buildValidationFunction(ImageUtil.JPYLYZER, ImageCopy.USER, FILES_OK_UC);
             ValidationResult result = validationFunction.validate();
+            for (ValidationError problem : result.getProblems()) {
+                assertNull(problem.getMessage());
+            }
             assertFalse(result.hasProblems());
         }
     }
@@ -181,10 +193,10 @@ public class VfCheckImageFilesValidByExternalUtilTest {
         if (imageUtilManager.isUtilAvailable(ImageUtil.JHOVE)) {
             ValidationFunction validationFunction = buildValidationFunction(ImageUtil.JHOVE, ImageCopy.MASTER, FILES_OK_MC);
             ValidationResult result = validationFunction.validate();
-            assertFalse(result.hasProblems());
-            /*for (ValidationError problem : result.getProblems()) {
+            for (ValidationError problem : result.getProblems()) {
                 assertNull(problem.getMessage());
-            }*/
+            }
+            assertFalse(result.hasProblems());
         }
     }
 
@@ -193,10 +205,10 @@ public class VfCheckImageFilesValidByExternalUtilTest {
         if (imageUtilManager.isUtilAvailable(ImageUtil.JHOVE)) {
             ValidationFunction validationFunction = buildValidationFunction(ImageUtil.JHOVE, ImageCopy.USER, FILES_OK_UC);
             ValidationResult result = validationFunction.validate();
-            assertFalse(result.hasProblems());
-            /*for (ValidationError problem : result.getProblems()) {
+            for (ValidationError problem : result.getProblems()) {
                 assertNull(problem.getMessage());
-            }*/
+            }
+            assertFalse(result.hasProblems());
         }
     }
 

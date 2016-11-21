@@ -26,7 +26,7 @@ public class FirstNonemptyByXpathDataExctraction extends XmlDataExtraction {
                 pathForError = path;
                 XPathExpression xPath = buildXpath(path);
                 Object extractedData = extractData(xPath, processedOutput);
-                if (extractedData != null) {
+                if (extractedData != null && !extractedData.toString().isEmpty()) {
                     return extractedData;
                 }
             }

@@ -177,12 +177,11 @@
                 </firstNonempty>
             </xmlDataExtraction>
             <rules>
-                <!--TODO: docasne vyrazeno, v datech se nenachazi-->
+                <!--TODO: docasne vyrazeno, v datech se hodnota nenachazi-->
                 <!--<mustExist/>
                 <mustMatch>
                     <floatRange>
-                        <min>11810</min>
-                        <max>11812</max>
+                        <min>11732</min>
                     </floatRange>
                 </mustMatch>-->
             </rules>
@@ -197,12 +196,11 @@
                 </firstNonempty>
             </xmlDataExtraction>
             <rules>
-                <!--TODO: docasne vyrazeno, v datech se nenachazi-->
+                <!--TODO: docasne vyrazeno, v datech se hodnota nenachazi-->
                 <!--<mustExist/>
                 <mustMatch>
                     <floatRange>
-                        <min>11810</min>
-                        <max>11812</max>
+                        <min>11732</min>
                     </floatRange>
                 </mustMatch>-->
             </rules>

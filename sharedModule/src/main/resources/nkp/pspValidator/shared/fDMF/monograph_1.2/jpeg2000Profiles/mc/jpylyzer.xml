@@ -40,18 +40,21 @@
         <validation name="Tool name">
             <xmlDataExtraction resultType="STRING">
                 <firstNonempty>
-                    <xpath>//j:fileInfo/j:toolName</xpath>
+                    <xpath>//j:toolInfo/j:toolName</xpath>
                 </firstNonempty>
             </xmlDataExtraction>
             <rules>
                 <mustExist/>
+                <mustMatch>
+                    <constant>jpylyzer</constant>
+                </mustMatch>
             </rules>
         </validation>
 
         <validation name="Tool version">
             <xmlDataExtraction resultType="STRING">
                 <firstNonempty>
-                    <xpath>//j:fileInfo/j:toolVersion</xpath>
+                    <xpath>//j:toolInfo/j:toolVersion</xpath>
                 </firstNonempty>
             </xmlDataExtraction>
             <rules>
@@ -62,7 +65,7 @@
         <validation name="Valid">
             <xmlDataExtraction resultType="STRING">
                 <firstNonempty>
-                    <!--tohle se lisi mezi verzemi jpylyzer, prvni je ze specifikace, druhy je z realneho vystupu pro jpylyzer 1.17.0-->
+                    <!--tohle se nejspis lisi mezi verzemi jpylyzer, prvni je ze specifikace, druhy je z realneho vystupu pro jpylyzer 1.17.0-->
                     <xpath>//j:statusInfo/j:isValidJP2</xpath>
                     <xpath>//j:statusInfo/j:success</xpath>
                 </firstNonempty>
@@ -151,9 +154,10 @@
             </xmlDataExtraction>
             <rules>
                 <mustExist/>
-                <mustMatchOne>
+                <!--TODO: docasne vyple, v datech se realne nachazi "Enumerated"-->
+                <!--<mustMatchOne>
                     <constant>Restricted ICC</constant>
-                </mustMatchOne>
+                </mustMatchOne>-->
             </rules>
         </validation>
 
@@ -181,7 +185,7 @@
         <validation name="Rozlišení horiz.">
             <xmlDataExtraction resultType="FLOAT">
                 <firstNonempty>
-                    <xpath>//j:properties/j:jp2HeaderBox/j:resolutionBox/j:captureResolutionBox/j:hResdInPixelsPerMeter
+                    <xpath>//j:properties/j:jp2HeaderBox/j:resolutionBox/j:captureResolutionBox/j:hRescInPixelsPerMeter
                     </xpath>
                     <xpath>//j:properties/j:jp2HeaderBox/j:resolutionBox/j:displayResolutionBox/j:hResdInPixelsPerMeter
                     </xpath>
@@ -191,8 +195,7 @@
                 <mustExist/>
                 <mustMatch>
                     <floatRange>
-                        <min>11810.0</min>
-                        <max>11812.0</max>
+                        <min>11732.0</min>
                     </floatRange>
                 </mustMatch>
             </rules>
@@ -252,9 +255,10 @@
             </xmlDataExtraction>
             <rules>
                 <mustExist/>
-                <mustMatch>
+                <mustMatchOne>
                     <constant>Yes</constant>
-                </mustMatch>
+                    <constant>yes</constant>
+                </mustMatchOne>
             </rules>
         </validation>
 
@@ -304,9 +308,10 @@
             </xmlDataExtraction>
             <rules>
                 <mustExist/>
-                <mustMatch>
+                <mustMatchOne>
                     <constant>Yes</constant>
-                </mustMatch>
+                    <constant>yes</constant>
+                </mustMatchOne>
             </rules>
         </validation>
 
@@ -318,9 +323,10 @@
             </xmlDataExtraction>
             <rules>
                 <mustExist/>
-                <mustMatch>
+                <mustMatchOne>
                     <constant>Yes</constant>
-                </mustMatch>
+                    <constant>yes</constant>
+                </mustMatchOne>
             </rules>
         </validation>
 
@@ -403,9 +409,10 @@
             </xmlDataExtraction>
             <rules>
                 <mustExist/>
-                <mustMatch>
+                <mustMatchOne>
                     <constant>Yes</constant>
-                </mustMatch>
+                    <constant>yes</constant>
+                </mustMatchOne>
             </rules>
         </validation>
 
@@ -418,7 +425,7 @@
             <rules>
                 <mustExist/>
                 <mustMatch>
-                    <constant>5-3</constant>
+                    <constant>5-3 reversible</constant>
                 </mustMatch>
             </rules>
         </validation>
@@ -431,12 +438,6 @@
             </xmlDataExtraction>
             <rules>
                 <mustExist/>
-                <mustMatch>
-                    <floatRange>
-                        <min>1.5</min>
-                        <max>5.0</max>
-                    </floatRange>
-                </mustMatch>
             </rules>
         </validation>
 
