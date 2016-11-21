@@ -1,13 +1,12 @@
 package nkp.pspValidator.shared.engine;
 
 import nkp.pspValidator.shared.NamespaceContextImpl;
+import nkp.pspValidator.shared.XmlUtils;
 import nkp.pspValidator.shared.engine.exceptions.InvalidXPathExpressionException;
 import nkp.pspValidator.shared.engine.exceptions.XmlParsingException;
 import org.w3c.dom.Document;
 import org.xml.sax.SAXException;
 
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.xpath.XPath;
 import javax.xml.xpath.XPathExpression;
@@ -70,10 +69,7 @@ public class XmlManager {
 
     private Document loadDocument(File file) throws XmlParsingException {
         try {
-            DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-            factory.setNamespaceAware(true);
-            DocumentBuilder builder = factory.newDocumentBuilder();
-            return builder.parse(file.getAbsoluteFile());
+            return XmlUtils.buildDocumentFromFile(file, true);
         } catch (SAXException e) {
             throw new XmlParsingException(file, String.format("chyba parsování xml v souboru %s: %s", file.getAbsolutePath(), e.getMessage()));
         } catch (IOException e) {

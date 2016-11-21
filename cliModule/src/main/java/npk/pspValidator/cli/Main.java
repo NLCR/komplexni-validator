@@ -137,7 +137,6 @@ public class Main {
                     return;
                 }
 
-
                 File fdmfsDir = new File(line.getOptionValue("fd"));
                 File pspDir = new File(line.getOptionValue("pd"));
                 Dmf.Type dmfType = line.hasOption("dt") ? Dmf.Type.valueOf(line.getOptionValue("dt").toUpperCase()) : null;
@@ -159,6 +158,8 @@ public class Main {
                 if (line.hasOption("kakadu-path")) {
                     utilPaths.put(ImageUtil.KAKADU, new File(line.getOptionValue("kakadu-path")));
                 }
+
+                //TODO: options to disable jhove, jpylyzer, imagemagick, kakadu
 
                 validate(new Dmf(dmfType, dmfVersion), fdmfsDir, pspDir, xmlOutputFile, verbosity, utilPaths);
             }

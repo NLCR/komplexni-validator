@@ -31,7 +31,9 @@ public abstract class AbstractDataRule implements DataRule {
     }
 
     public String toString(Object data) {
-        if (data instanceof List) {
+        if (data == null) {
+            return null;
+        } else if (data instanceof List) {
             List list = (List) data;
             StringBuilder builder = new StringBuilder();
             builder.append('[');

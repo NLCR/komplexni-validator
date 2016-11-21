@@ -6,8 +6,6 @@ import nkp.pspValidator.shared.engine.exceptions.XmlParsingException;
 import org.w3c.dom.Document;
 import org.xml.sax.SAXException;
 
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.xpath.*;
 import java.io.File;
@@ -75,9 +73,7 @@ public class DmfDetector {
 
     private Document loadDocument(File file) throws XmlParsingException {
         try {
-            DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-            DocumentBuilder builder = factory.newDocumentBuilder();
-            return builder.parse(file.getAbsoluteFile());
+            return XmlUtils.buildDocumentFromFile(file, false);
         } catch (SAXException e) {
             throw new XmlParsingException(file, String.format("chyba parsování xml v souboru %s: %s", file.getAbsolutePath(), e.getMessage()));
         } catch (IOException e) {

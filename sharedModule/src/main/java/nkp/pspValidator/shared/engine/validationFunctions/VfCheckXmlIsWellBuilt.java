@@ -1,5 +1,6 @@
 package nkp.pspValidator.shared.engine.validationFunctions;
 
+import nkp.pspValidator.shared.XmlUtils;
 import nkp.pspValidator.shared.engine.Engine;
 import nkp.pspValidator.shared.engine.Level;
 import nkp.pspValidator.shared.engine.ValueEvaluation;
@@ -7,11 +8,8 @@ import nkp.pspValidator.shared.engine.ValueType;
 import nkp.pspValidator.shared.engine.exceptions.ContractException;
 import org.xml.sax.SAXException;
 
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
 
 
@@ -62,8 +60,7 @@ public class VfCheckXmlIsWellBuilt extends ValidationFunction {
     private ValidationResult validate(File file) {
         ValidationResult result = new ValidationResult();
         try {
-            DocumentBuilder builder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
-            builder.parse(new FileInputStream(file));
+            XmlUtils.buildDocumentFromFile(file, false);
         } catch (ParserConfigurationException e) {
             result.addError(invalid(Level.ERROR, "ParserConfigurationException při zpracování souboru %s: %s", file.getAbsolutePath(), e.getMessage()));
         } catch (SAXException e) {

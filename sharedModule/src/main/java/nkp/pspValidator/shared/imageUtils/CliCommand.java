@@ -24,44 +24,64 @@ public class CliCommand {
 
 
     public Result execute() throws IOException, InterruptedException {
-        //https://gist.github.com/Lammerink/3926636
-        //System.out.println(command);
-        Process pr = Runtime.getRuntime().exec(command);
+        try {
+            Process process = Runtime.getRuntime().exec(command);
+            //TODO: perhaps thread pooling here
 
-        //read standard error stream
-        BufferedReader stderrReader = new BufferedReader(new InputStreamReader(pr.getErrorStream()));
-        StringBuilder stderrBuilder = new StringBuilder();
-        if (stderrReader != null) {
-            String line;
-            while ((line = stderrReader.readLine()) != null) {
-                stderrBuilder.append(line);
-                if (prettyPrint) {
-                    stderrBuilder.append('\n');
+            //read standard error stream in separate thread
+            StringBuilder stderrBuilder = new StringBuilder();
+            IOException stdErrEx = null;
+            Thread errThread = new Thread(() -> {
+                try {
+                    BufferedReader stderrReader = new BufferedReader(new InputStreamReader(process.getErrorStream()));
+                    String line;
+                    while ((line = stderrReader.readLine()) != null) {
+                        stderrBuilder.append(line);
+                        if (prettyPrint) {
+                            stderrBuilder.append('\n');
+                        }
+                    }
+                    stderrReader.close();
+                } catch (IOException e) {
+                    //nothing, only main thread running program itself shoud propagate exception
                 }
-            }
-            stderrReader.close();
-        }
+            });
 
-        //read standard output stream
-        BufferedReader stdoutReader = new BufferedReader(new InputStreamReader(pr.getInputStream()));
-        StringBuilder stdoutBuilder = new StringBuilder();
-        if (stdoutReader != null) {
-            String line;
-            while ((line = stdoutReader.readLine()) != null) {
-                stdoutBuilder.append(line);
-                if (prettyPrint) {
-                    stdoutBuilder.append('\n');
+            //read standard output stream in separate thread
+            StringBuilder stdoutBuilder = new StringBuilder();
+            Thread outThread = new Thread(() -> {
+                try {
+                    BufferedReader stdoutReader = new BufferedReader(new InputStreamReader(process.getInputStream()));
+                    String line;
+                    while ((line = stdoutReader.readLine()) != null) {
+                        stdoutBuilder.append(line);
+                        if (prettyPrint) {
+                            stdoutBuilder.append('\n');
+                        }
+                    }
+                    stdoutReader.close();
+                } catch (IOException e) {
+                    //nothing, only main thread running program itself shoud propagate exception
                 }
-            }
-            stdoutReader.close();
-        }
+            });
+            //start threads to read output streams
+            outThread.start();
+            errThread.start();
 
-        int exitValue = pr.waitFor();
-        String stdOut = stdoutBuilder.toString();
-        String stdErr = stderrBuilder.toString();
-        /*System.err.println("SOUT: " + stdOut);
-        System.err.println("SERR: " + stdErr);*/
-        return new Result(exitValue, stdOut, stdErr);
+            //wait for all 3 threads to finish
+            int exitValue = process.waitFor();
+            outThread.join();
+            errThread.join();
+
+            String stdOut = stdoutBuilder.toString();
+            String stdErr = stderrBuilder.toString();
+            /*System.err.println("SOUT: " + stdOut);
+            System.err.println("SERR: " + stdErr);*/
+            return new Result(exitValue, stdOut, stdErr);
+        } catch (Throwable e) {
+            e.printStackTrace();
+            throw e;
+        }
     }
 
     public static class Result {

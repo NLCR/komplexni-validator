@@ -79,8 +79,12 @@ public class ImageUtilManager {
             default:
                 throw new IOException(String.format("empty response from '%s' (%s)", command, stream));
         }
-        String parsed = parseData(rawOutput, versionDetection.getParser());
-        return parsed == null || parsed.isEmpty() ? rawOutput.trim() : parsed.trim();
+        if (rawOutput != null) {
+            String parsed = parseData(rawOutput, versionDetection.getParser());
+            return parsed == null || parsed.isEmpty() ? rawOutput.trim() : parsed.trim();
+        } else {
+            return null;
+        }
     }
 
     private String constructCommand(Command command) {
@@ -89,7 +93,6 @@ public class ImageUtilManager {
                 path.getAbsolutePath() + File.separator + command.getRawCommand() :
                 command.getRawCommand();
     }
-
 
     private String constructCommand(Command ExecutionInfo, String imageFile) {
         File path = ExecutionInfo.getPath();
@@ -131,9 +134,11 @@ public class ImageUtilManager {
             default:
                 throw new IOException(String.format("empty response from '%s' (%s)", command, stream));
         }
-        String parsed = parseData(rawOutput, utilHandler.getParser());
-        return parsed == null || parsed.isEmpty() ? rawOutput.trim() : parsed.trim();
+        if (rawOutput != null) {
+            String parsed = parseData(rawOutput, utilHandler.getParser());
+            return parsed == null || parsed.isEmpty() ? rawOutput.trim() : parsed.trim();
+        } else {
+            return null;
+        }
     }
-
-
 }

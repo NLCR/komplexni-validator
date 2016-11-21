@@ -36,6 +36,7 @@
 
     <imageUtil name="IMAGE_MAGICK">
         <versionDetection>
+            <!--https://gist.github.com/Lammerink/3926636-->
             <operatingSystem name="LINUX">
                 <command>convert -version</command>
                 <parser>
@@ -96,7 +97,7 @@
                 <command>jhove -h XML -m jpeg2000-hul -k ${IMAGE_FILE}</command>
                 <parser>
                     <stream>STDOUT</stream>
-                    <regexp>.*</regexp>
+                    <regexp>(?s)&lt;\?xml.*$</regexp>
                 </parser>
             </operatingSystem>
             <operatingSystem name="WINDOWS">
@@ -106,7 +107,7 @@
                 <command>jhove.bat -c C:\Users\Martin\Documents\PspValidator\jhove-1_11\jhove\conf\jhove.conf</command>
                 <parser>
                     <stream>STDOUT</stream>
-                    <regexp>.*</regexp>
+                    <regexp>(?s)&lt;\?xml.*$</regexp>
                 </parser>
             </operatingSystem>
         </execution>

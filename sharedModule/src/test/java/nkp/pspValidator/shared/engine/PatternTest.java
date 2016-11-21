@@ -1,9 +1,13 @@
 package nkp.pspValidator.shared.engine;
 
+import nkp.pspValidator.shared.XmlUtils;
 import nkp.pspValidator.shared.engine.evaluationFunctions.TestUtils;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import org.xml.sax.SAXException;
 
+import javax.xml.parsers.ParserConfigurationException;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
@@ -137,9 +141,9 @@ public class PatternTest {
         Matcher m = p.matcher(text);
         List<String> errors = new ArrayList<>();
         while (m.find()) {
-            String finding = m.group();
-            //System.err.println(finding);
-            errors.add(finding);
+            String match = m.group();
+            //System.err.println(match);
+            errors.add(match);
         }
         assertEquals(7, errors.size());
     }
@@ -168,9 +172,9 @@ public class PatternTest {
         Matcher m = p.matcher(text);
         List<String> errors = new ArrayList<>();
         while (m.find()) {
-            String found = m.group();
-            //System.err.println(found);
-            errors.add(found);
+            String match = m.group();
+            //System.err.println(match);
+            errors.add(match);
         }
         assertEquals(6, errors.size());
         assertEquals("Error : expected SOP marker", errors.get(0));
@@ -205,11 +209,57 @@ public class PatternTest {
         Matcher m = p.matcher(text);
         List<String> errors = new ArrayList<>();
         while (m.find()) {
-            String finding = m.group();
-            //System.err.println(finding);
-            errors.add(finding);
+            String match = m.group();
+            //System.err.println(match);
+            errors.add(match);
         }
         assertEquals(4, errors.size());
+    }
+
+    @Test
+    public void jhove() {
+        String text = "READBOX seen=true<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" +
+                "<jhove xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns=\"http://hul.harvard.edu/ois/xml/ns/jhove\"\n" +
+                "       xsi:schemaLocation=\"http://hul.harvard.edu/ois/xml/ns/jhove http://hul.harvard.edu/ois/xml/xsd/jhove/1.6/jhove.xsd\"\n" +
+                "       name=\"Jhove\" release=\"1.6\" date=\"2011-01-04\">\n" +
+                "    <date>2016-11-21T00:53:00+01:00</date>\n" +
+                "    <repInfo\n" +
+                "            uri=\"/home/martin/ssd/IdeaProjects/PspValidator/cliModule/../sharedModule/src/test/resources/monograph_1.2-invalid_images/b50eb6b0-f0a4-11e3-b72e-005056827e52/mastercopy/mc_b50eb6b0-f0a4-11e3-b72e-005056827e52_0007.jp2\">\n" +
+                "        <reportingModule release=\"1.3\" date=\"2007-01-08\">JPEG2000-hul</reportingModule>\n" +
+                "        <lastModified>2016-11-20T13:30:25+01:00</lastModified>\n" +
+                "        <size>677227</size>\n" +
+                "        <format>JPEG 2000</format>\n" +
+                "        <status>Well-Formed and valid</status>\n" +
+                "        <sigMatch>\n" +
+                "            <module>JPEG2000-hul</module>\n" +
+                "        </sigMatch>\n" +
+                "        <mimeType>image/jp2</mimeType>\n" +
+                "        <checksums>\n" +
+                "            <checksum type=\"CRC32\">bda73ccf</checksum>\n" +
+                "            <checksum type=\"MD5\">ba557951bdda4d7fd6c49963c9c3fafb</checksum>\n" +
+                "            <checksum type=\"SHA-1\">b4b4d049c7b4e362ca99ea625126cbe0ecfe62e0</checksum>\n" +
+                "        </checksums>\n" +
+                "    </repInfo>\n" +
+                "</jhove>";
+        String regexp = "(?s)<\\?xml.*$";
+        Pattern p = Pattern.compile(regexp);
+        Matcher m = p.matcher(text);
+        int found = 0;
+        while (m.find()) {
+            found++;
+            String match = m.group();
+            //System.err.println(match);
+            try {
+                XmlUtils.buildDocumentFromString(match, true);
+            } catch (ParserConfigurationException e) {
+                fail(e.getMessage());
+            } catch (IOException e) {
+                fail(e.getMessage());
+            } catch (SAXException e) {
+                fail(e.getMessage());
+            }
+        }
+        assertEquals(1, found);
     }
 
 }

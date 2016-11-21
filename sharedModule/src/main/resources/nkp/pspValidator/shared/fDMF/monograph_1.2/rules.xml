@@ -1324,7 +1324,7 @@
                    description="Kontrola obrázků MASTER-COPY a USER-COPY v JPEG 2000 za pomocí externích nástrojů">
 
         <rule name="MASTER-COPY_FILES_VALID_BY_JPYLYZER">
-            <description>Všechny soubory MASTER-COPY musí být validní vůči profilu JPEG 2000 pro nástroj JPYLYZER.
+            <description>Všechny soubory MASTER-COPY musí být validní vůči profilu JPEG 2000 pro nástroj Jpylyzer.
             </description>
             <validation functionName="checkImageFilesValidByExternalUtil">
                 <params>
@@ -1339,7 +1339,7 @@
         </rule>
 
         <rule name="USER-COPY_FILES_VALID_BY_JPYLYZER">
-            <description>Všechny soubory USER-COPY musí být validní vůči profilu JPEG 2000 pro nástroj JPYLYZER.
+            <description>Všechny soubory USER-COPY musí být validní vůči profilu JPEG 2000 pro nástroj Jpylyzer.
             </description>
             <validation functionName="checkImageFilesValidByExternalUtil">
                 <params>
@@ -1353,8 +1353,38 @@
             </validation>
         </rule>
 
+        <rule name="MASTER-COPY_FILES_VALID_BY_JHOVE">
+            <description>Všechny soubory MASTER-COPY musí být validní vůči profilu JPEG 2000 pro nástroj JHOVE.
+            </description>
+            <validation functionName="checkImageFilesValidByExternalUtil">
+                <params>
+                    <value name="level" type="LEVEL">ERROR</value>
+                    <value name="files" type="FILE_LIST">
+                        <value-ref name="MASTER-COPY_FILES"/>
+                    </value>
+                    <value name="copy" type="IMAGE_COPY">MASTER</value>
+                    <value name="util" type="IMAGE_UTIL">JHOVE</value>
+                </params>
+            </validation>
+        </rule>
+
+        <rule name="USER-COPY_FILES_VALID_BY_JHOVE">
+            <description>Všechny soubory USER-COPY musí být validní vůči profilu JPEG 2000 pro nástroj JHOVE.
+            </description>
+            <validation functionName="checkImageFilesValidByExternalUtil">
+                <params>
+                    <value name="level" type="LEVEL">ERROR</value>
+                    <value name="files" type="FILE_LIST">
+                        <value-ref name="USER-COPY_FILES"/>
+                    </value>
+                    <value name="copy" type="IMAGE_COPY">USER</value>
+                    <value name="util" type="IMAGE_UTIL">JHOVE</value>
+                </params>
+            </validation>
+        </rule>
+
         <rule name="MASTER-COPY_FILES_VALID_BY_KAKADU">
-            <description>Všechny soubory MASTER-COPY musí být validní vůči profilu JPEG 2000 pro nástroj KAKADU.
+            <description>Všechny soubory MASTER-COPY musí být validní vůči profilu JPEG 2000 pro nástroj Kakadu.
             </description>
             <validation functionName="checkImageFilesValidByExternalUtil">
                 <params>
@@ -1369,7 +1399,7 @@
         </rule>
 
         <rule name="USER-COPY_FILES_VALID_BY_KAKADU">
-            <description>Všechny soubory USER-COPY musí být validní vůči profilu JPEG 2000 pro nástroj KAKADU.
+            <description>Všechny soubory USER-COPY musí být validní vůči profilu JPEG 2000 pro nástroj Kakadu.
             </description>
             <validation functionName="checkImageFilesValidByExternalUtil">
                 <params>

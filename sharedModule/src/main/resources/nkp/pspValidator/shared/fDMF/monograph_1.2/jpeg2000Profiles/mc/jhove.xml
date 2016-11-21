@@ -1,154 +1,156 @@
-<checkedAttributes>
-    <extractions>
-        <defaultNamespace>http://hul.harvard.edu/ois/xml/ns/jhove</defaultNamespace>
-        <namespace prefix="mix">http://www.loc.gov/mix/v20</namespace>
-    </extractions>
+<jpeg2000profile>
+    <fromXml>
+        <namespaces>
+            <!--<defaultNamespace>http://hul.harvard.edu/ois/xml/ns/jhove</defaultNamespace>-->
+            <namespace prefix="j">http://www.loc.gov/mix/v20</namespace>
+            <namespace prefix="mix">http://www.loc.gov/mix/v20</namespace>
+        </namespaces>
 
-    <!--neni definovano, proto kontrolovany atribut zde chybi-->
-    <!--<attribute id="file_name"/>-->
+        <!--neni definovano, proto kontrolovany atribut zde chybi-->
+        <!--<validation name="file_name"/>-->
 
-    <attribute id="last_modified">
-        <extraction>
-            <singlePath>
-                <xpath>repInfo/lastModified</xpath>
-            </singlePath>
-        </extraction>
-        <validation>
-            <validValue>
+        <validation name="last_modified">
+            <xmlDataExtraction resultType="STRING">
+                <firstNonempty>
+                    <xpath>repInfo/lastModified</xpath>
+                </firstNonempty>
+            </xmlDataExtraction>
+            <rules>
                 <!--povolen jakykoliv retezec znaku-->
-                <any/>
-            </validValue>
+                <mustExist/>
+            </rules>
         </validation>
-    </attribute>
 
-    <!--TODO:
-    <attribute id="file_size_in_bytes"/>
-    <attribute id="tool_name"/>
-    <attribute id="tool_version"/>-->
+        <!--TODO:
+        <validation name="file_size_in_bytes"/>
+        <validation name="tool_name"/>
+        <validation name="tool_version"/>-->
 
-    <!--neni definovano, proto kontrolovany atribut zde chybi-->
-    <!--<attribute id="format_identification"/>-->
+        <!--neni definovano, proto kontrolovany atribut zde chybi-->
+        <!--<validation name="format_identification"/>-->
 
-    <attribute id="valid">
-        <extraction>
-            <singlePath>
-                <xpath>repInfo/status</xpath>
-            </singlePath>
-        </extraction>
-        <validation>
-            <validValue>
-                <constant>True</constant>
-            </validValue>
+        <validation name="valid">
+            <xmlDataExtraction resultType="STRING">
+                <firstNonempty>
+                    <xpath>repInfo/status</xpath>
+                </firstNonempty>
+            </xmlDataExtraction>
+            <rules>
+                <mustExist/>
+                <mustMatch>
+                    <constant>True</constant>
+                </mustMatch>
+            </rules>
         </validation>
-    </attribute>
 
-    <!--TODO
-    <attribute id="height"/>
-    <attribute id="width"/>-->
+        <!--TODO
+        <validation name="height"/>
+        <validation name="width"/>-->
 
-    <attribute id="number_of_color_components">
-        <extraction>
-            <!--muze se nachazet na nekolika mistech, pouzije se prvni dostupna hodnota-->
-            <firstPathAvailable>
-                <xpath>Properties/property/name=CSize/value</xpath>
-                <xpath>mix:ImageColorEncoding/mix:samplesPerPixel</xpath>
-            </firstPathAvailable>
-        </extraction>
-        <validation>
-            <!--povolene hodnoty "1" nebo "3"-->
-            <validValue>
-                <constant>1</constant>
-            </validValue>
-            <validValue>
-                <constant>3</constant>
-            </validValue>
+        <validation name="number_of_color_components">
+            <xmlDataExtraction  resultType="STRING">
+                <!--muze se nachazet na nekolika mistech, pouzije se prvni dostupna hodnota-->
+                <firstNonempty>
+                    <xpath>Properties/property/name=CSize/value</xpath>
+                    <xpath>mix:ImageColorEncoding/mix:samplesPerPixel</xpath>
+                </firstNonempty>
+            </xmlDataExtraction>
+            <rules>
+                <mustExist/>
+                <!--povolene hodnoty "1" nebo "3"-->
+                <mustMatchOne>
+                    <constant>1</constant>
+                    <constant>3</constant>
+                </mustMatchOne>
+            </rules>
         </validation>
-    </attribute>
 
-    <!--TODO
-    <attribute id="color_depth"/>-->
+        <!--TODO
+        <validation name="color_depth"/>-->
 
-    <attribute id="color_space_1">
-        <extraction>
-            <singlePath>
-                <xpath>properties/property[./name/text()='EnumCS']/values/value</xpath>
-            </singlePath>
-        </extraction>
-        <validation>
-            <!--povolene hodnoty "sRGB" nebo "greyscale"-->
-            <validValue>
-                <constant>sRGB</constant>
-            </validValue>
-            <validValue>
-                <constant>greyscale</constant>
-            </validValue>
+        <validation name="color_space_1">
+            <xmlDataExtraction resultType="STRING">
+                <firstNonempty>
+                    <xpath>properties/property[./name/text()='EnumCS']/values/value</xpath>
+                </firstNonempty>
+            </xmlDataExtraction>
+            <rules>
+                <mustExist/>
+                <!--povolene hodnoty "sRGB" nebo "greyscale"-->
+                <mustMatchOne>
+                    <constant>sRGB</constant>
+                    <constant>greyscale</constant>
+                </mustMatchOne>
+            </rules>
         </validation>
-    </attribute>
 
-    <!--TODO
-    <attribute id="color_space_2"/>-->
+        <!--TODO
+        <validation name="color_space_2"/>-->
 
-    <attribute id="resolution_vertical" type="Float">
-        <extraction>
-            <singlePath>
-                <xpath>Properties/property/name=VertResolution/property/name=Numerator/value</xpath>
-            </singlePath>
-        </extraction>
-        <validation>
-            <!--rozsah hodnot, zde realná čísla-->
-            <validValue>
-                <range type="Float">
-                    <min>11810</min>
-                    <max>11812</max>
-                </range>
-            </validValue>
+        <validation name="resolution_vertical">
+            <xmlDataExtraction resultType="FLOAT">
+                <firstNonempty>
+                    <xpath>Properties/property/name=VertResolution/property/name=Numerator/value</xpath>
+                </firstNonempty>
+            </xmlDataExtraction>
+            <rules>
+                <mustExist/>
+                <!--rozsah hodnot, zde realná čísla-->
+                <mustMatch>
+                    <floatRange>
+                        <min>11810</min>
+                        <max>11812</max>
+                    </floatRange>
+                </mustMatch>
+            </rules>
         </validation>
-    </attribute>
 
-    <!--TODO
-    <attribute id="resolution_horizontal"/>-->
+        <!--TODO
+        <validation name="resolution_horizontal"/>-->
 
-    <attribute id="number_of_tiles">
-        <extraction>
-            <singlePath>
-                <xpath>count(.//name[text()='TilePart'])</xpath>
-            </singlePath>
-        </extraction>
-        <validation>
-            <!--jakékoliv přirozené číslo-->
-            <validValue>
-                <range type="Integer">
-                    <min>1</min>
-                    <!--maximum nedefinovano, tedy nekonecno-->
-                </range>
-            </validValue>
+        <validation name="number_of_tiles">
+            <xmlDataExtraction resultType="INTEGER">
+                <firstNonempty>
+                    <xpath>count(.//name[text()='TilePart'])</xpath>
+                </firstNonempty>
+            </xmlDataExtraction>
+            <rules>
+                <mustExist/>
+                <!--jakékoliv přirozené číslo-->
+                <mustMatch>
+                    <intRange>
+                        <min>1</min>
+                        <!--maximum nedefinovano, tedy nekonecno-->
+                    </intRange>
+                </mustMatch>
+            </rules>
         </validation>
-    </attribute>
 
-    <!--TODO
-    <attribute id="size_of_tiles_1"/>
-    <attribute id="size_of_tiles_2"/>-->
+        <!--TODO
+        <validation name="size_of_tiles_1"/>
+        <validation name="size_of_tiles_2"/>-->
 
-    <!--nedefinovano-->
-    <!--<attribute id="precints"/>
-    <attribute id="size_of_precints_1"/>
-    <attribute id="size_of_precints_2"/>
-    <attribute id="sop"/>
-    <attribute id="eph"/>-->
+        <!--nedefinovano-->
+        <!--<validation name="precints"/>
+        <validation name="size_of_precints_1"/>
+        <validation name="size_of_precints_2"/>
+        <validation name="sop"/>
+        <validation name="eph"/>-->
 
 
-    <!--TODO
-    <attribute id="order"/>
-    <attribute id="layers"/>
-    <attribute id="levels"/>
-    <attribute id="code_block_width"/>
-    <attribute id="code_block_height"/>
-    <attribute id="bypass"/>
-    <attribute id="transformation"/>
-    <attribute id="compression_ratio"/>
-    <attribute id="migration_software"/>-->
+        <!--TODO
+        <validation name="order"/>
+        <validation name="layers"/>
+        <validation name="levels"/>
+        <validation name="code_block_width"/>
+        <validation name="code_block_height"/>
+        <validation name="bypass"/>
+        <validation name="transformation"/>
+        <validation name="compression_ratio"/>
+        <validation name="migration_software"/>-->
 
-    <!--nedefinovano-->
-    <!--<attribute id="regions_of_interest"/>-->
+        <!--nedefinovano-->
+        <!--<validation name="regions_of_interest"/>-->
 
-</checkedAttributes>
+    </fromXml>
+</jpeg2000profile>

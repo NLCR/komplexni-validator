@@ -92,6 +92,7 @@ public class VfCheckImageFilesValidByExternalUtil extends ValidationFunction {
                 }
             } catch (Exception e) {
                 result.addError(invalid(Level.ERROR, "%s: (soubor %s)", e.getMessage(), file.getName()));
+                e.printStackTrace();
             }
         }
         return result;
