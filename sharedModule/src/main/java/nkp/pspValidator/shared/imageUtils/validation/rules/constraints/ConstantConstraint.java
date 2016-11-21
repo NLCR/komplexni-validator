@@ -14,7 +14,7 @@ public class ConstantConstraint implements Constraint {
 
     @Override
     public boolean matches(Object data) {
-        String dataStr = (String) data;
+        String dataStr = data.toString();
         return constant.equals(dataStr);
     }
 
