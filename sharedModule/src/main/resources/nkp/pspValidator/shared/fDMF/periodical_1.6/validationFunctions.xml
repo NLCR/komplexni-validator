@@ -1,0 +1,240 @@
+<validationFunctions>
+    <description>
+        Zde jsou definovány validační funkce, které využívají jednotlivá validační pravidla.
+        Tento soubor je jen informativní a neměl by být měněn ani doplňován. Samotné validace včetně jmen, typů
+        a počtů parametrů a zejména samotné implementace jsou definovány v kódu validátoru.
+    </description>
+
+    <validationFunction name="checkFilelistHasExactSize">
+        <description>Zkontroluje, že má seznam souborů očekávanou velikost.</description>
+        <params-def>
+            <value name="files" type="FILE_LIST"/>
+            <value name="size" type="INTEGER" description="Expected size of list"/>
+            <value name="level" type="LEVEL"/>
+        </params-def>
+    </validationFunction>
+
+    <!--TODO: implement-->
+    <validationFunction name="CHECK_LIST_EMPTY">
+        <description>Zkontroluje, že je seznam souborů je prázdný.</description>
+        <params-def>
+            <value name="files" type="FILE_LIST"/>
+        </params-def>
+    </validationFunction>
+
+    <validationFunction name="checkAllFileListsHaveSameSize">
+        <description>Zkontroluje, že mají všechny seznamy souborů stejnou velikost.</description>
+        <params-def>
+            <value name="files" type="FILE_LIST" description="List of files" min="2" max="unbound"/>
+        </params-def>
+    </validationFunction>
+
+    <validationFunction name="checkFilenameMatchesPattern">
+        <description>Zkontroluje, že název souboru odpovídá vzoru.</description>
+        <params-def>
+            <value name="level" type="LEVEL"/>
+            <value name="file" type="FILE"/>
+            <pattern name="pattern" description="Pattern to match"/>
+        </params-def>
+    </validationFunction>
+
+    <validationFunction name="checkAllFilenamesMatchPattern">
+        <description>Zkontroluje, že jména všech souborů odpovídají vzoru.</description>
+        <params-def>
+            <value name="files" type="FILE_LIST"/>
+            <pattern name="pattern" description="Pattern to match"/>
+        </params-def>
+    </validationFunction>
+
+
+    <validationFunction name="checkFileIsDir">
+        <description>Zkontroluje, že soubor existuje a je adresář (tedy zda není obyčejný soubor).</description>
+        <params-def>
+            <value name="file" type="FILE"/>
+        </params-def>
+    </validationFunction>
+
+    <validationFunction name="checkFileIsNotDir">
+        <description>Zkontroluje, že soubor existuje a není adresář (tedy zda je obyčejný soubor).</description>
+        <params-def>
+            <value name="file" type="FILE"/>
+        </params-def>
+    </validationFunction>
+
+    <validationFunction name="checkNoFileIsDir">
+        <description>Zkontroluje, že každý ze souborů existuje a žádný z nich není adresář (tedy zda je obyčejný
+            soubor).
+        </description>
+        <params-def>
+            <value name="files" type="FILE_LIST"/>
+        </params-def>
+    </validationFunction>
+
+    <validationFunction name="checkNoOtherFilesInDir">
+        <description>Zkontroluje, že adresář neobsahuje žádné další soubory kromě vyjmenovaných. Všechny vyjmenované
+            soubory ale nemusí nutně patřit do adresáře.
+        </description>
+        <params-def>
+            <value name="root_dir" type="FILE" description="root dir"/>
+            <value name="file" type="FILE" minOccurs="0" maxOccurs="unbound"/>
+            <value name="files" type="FILE_LIST" minOccurs="0" maxOccurs="unbound"/>
+        </params-def>
+    </validationFunction>
+
+    <validationFunction name="checkFilenamesLengthsSame">
+        <description>Zkontroluje, že všechny soubory existují a jejich jména mají stejnou délku.</description>
+        <params-def>
+            <value name="files" type="FILE_LIST"/>
+        </params-def>
+    </validationFunction>
+
+    <validationFunction name="checkChecksumFileGeneratedByGrammar">
+        <description>Zkontroluje, že předepsaná gramatika pro CHECKSUM generuje obsah souboru.</description>
+        <params-def>
+            <value name="checksum_file" type="FILE"/>
+        </params-def>
+    </validationFunction>
+
+    <validationFunction name="checkChecksumFileAllPathsMatchFiles">
+        <description>Zkontroluje, že soubor CHECKSUM obsahuje záznamy pro každý uvedený soubor a žádný jiný.
+        </description>
+        <params-def>
+            <value name="checksum_file" type="FILE"/>
+            <value name="file" type="FILE" minOccurs="0" maxOccurs="unbound"/>
+            <value name="files" type="FILE_LIST" minOccurs="0" maxOccurs="unbound"/>
+        </params-def>
+    </validationFunction>
+
+    <validationFunction name="checkChecksumFileAllChecksumsMatch">
+        <description>Zkontroluje, že provedené kontrolní součty, pro každý soubor uvedený v souboru CHECKSUM,
+            souhlasí.
+        </description>
+        <params-def>
+            <value name="checksum_file" type="FILE"/>
+        </params-def>
+    </validationFunction>
+
+    <validationFunction name="checkXmlIsWellBuilt">
+        <description>Zkontroluje, že soubor obsahuje korektní xml (well-built).</description>
+        <params-def>
+            <value name="xml_file" type="FILE"/>
+        </params-def>
+    </validationFunction>
+
+    <validationFunction name="checkXmlIsValidByXsd">
+        <description>Zkontroluje, že soubor obsahuje xml validní podle XML Schema (XSD).</description>
+        <params-def>
+            <value name="xml_file" type="FILE"/>
+            <value name="xsd_file" type="FILE"/>
+        </params-def>
+    </validationFunction>
+
+    <validationFunction name="checkInfoFileReferencesPrimaryMets">
+        <description>Zkontroluje, že se soubor INFO odkazuje na soubor PRIMARY-METS přes element mainMets.</description>
+        <params-def>
+            <value name="info_file" type="FILE"/>
+            <value name="primary-mets_file" type="FILE"/>
+        </params-def>
+    </validationFunction>
+
+    <validationFunction name="checkInfoFileItemsCountMatchesItemtotal">
+        <description>Zkontroluje, že v souboru INFO počet elementů item souhlasí s hodnotou atributu itemtotal elementu
+            itemlist.
+        </description>
+        <params-def>
+            <value name="info_file" type="FILE"/>
+        </params-def>
+    </validationFunction>
+
+    <validationFunction name="checkInfoFileItemlistReferencesAllFiles">
+        <description>Zkontroluje, že se soubor INFO odkazuje na všechny uvedené soubory přes elementy item a na žádné
+            další.
+        </description>
+        <params-def>
+            <value name="info_file" type="FILE"/>
+            <value name="file" type="FILE" min="0" max="unbound"/>
+            <value name="files" type="FILE_LIST" min="0" max="unbound"/>
+        </params-def>
+    </validationFunction>
+
+    <validationFunction name="checkInfoFileChecksumMatches">
+        <description>Zkontroluje, že se soubor INFO odkazuje na existující soubor CHECKSUM přes element checksum a že se
+            kontrolní součet shoduje.
+        </description>
+        <params-def>
+            <value name="info_file" type="FILE"/>
+            <value name="checksum_file" type="FILE"/>
+        </params-def>
+    </validationFunction>
+
+    <validationFunction name="checkNoDuplicateIdentifiers">
+        <description>Zkontroluje, že seznam identifikátorů neobsahuje duplikáty, tedy více identifikátorů stejného typu.
+        </description>
+        <params-def>
+            <value name="identifier_list" type="IDENTIFIER_LIST" min="0" maxOccurs="unbounded"
+                   description="seznam identifikátorů, v jehož rámci se kontroluje přítomnost duplikátů"/>
+            <value name="identifier_list_list" type="IDENTIFIER_LIST_LIST" min="0" maxOccurs="unbounded"
+                   description="seznam seznamů identifikátorů; kontrola na přítomnost duplikátů se provádní v rámci jednotlivých seznamů"/>
+        </params-def>
+    </validationFunction>
+
+    <validationFunction name="checkStringDerivedFromOneOfIdentifiers">
+        <description>Ověří, že řetězec je odvozen od některého z identifikátoru. Vztah "být
+            odvozen" zde chápeme tak, A je odvozen od B právě tehdy, když A i B obsahují shodný podřetězec o určené
+            minimální
+            délce. Před kontrolou se odstraňují vybrané prefixy identifikátorů.
+        </description>
+        <params-def>
+            <value name="string" type="STRING"/>
+            <value name="identifiers" type="IDENTIFIER_LIST"/>
+            <value name="min_match_length" type="INTEGER"/>
+            <value name="id_prefixes" type="STRING_LIST"
+                   description="Prefixy hodnot identifikátorů, které budou odstraněny před hledáním shody. Delší varianty prefixů by měly být v seznamu dríve."/>
+        </params-def>
+    </validationFunction>
+
+    <validationFunction name="checkDcIdentifiersDoNotContainWhiteSpaces">
+        <params-def>
+            <value name="primary-mets_file" type="FILE"/>
+        </params-def>
+    </validationFunction>
+
+    <validationFunction name="checkPrimaryMetsFilesecContainsAllFilegroups">
+        <params-def>
+            <value name="primary-mets_file" type="FILE"/>
+        </params-def>
+    </validationFunction>
+
+    <validationFunction name="checkFileListsMatch">
+        <description>Zkontroluje, že dva seznamy souborů obsahují stejné soubory.</description>
+        <params-def>
+            <value name="expected_files" type="FILE_LIST"/>
+            <value name="found_files" type="FILE_LIST"/>
+        </params-def>
+    </validationFunction>
+
+    <validationFunction functionName="checkMetsFilesecSizesMatch">
+        <params-def>
+            <value name="psp_dir" type="FILE"/>
+            <value name="mets_file" type="FILE_LIST"/>
+        </params-def>
+    </validationFunction>
+
+    <validationFunction functionName="checkMetsFilesecChecksumsMatch">
+        <params-def>
+            <value name="psp_dir" type="FILE"/>
+            <value name="mets_file" type="FILE_LIST"/>
+        </params-def>
+    </validationFunction>
+
+    <validationFunction functionName="checkImageFilesValidByExternalUtil">
+        <params-def>
+            <value name="level" type="LEVEL"/>
+            <value name="files" type="FILE_LIST"/>
+            <value name="copy" type="IMAGE_COPY"/>
+            <value name="util" type="IMAGE_UTIL"/>
+        </params-def>
+    </validationFunction>
+
+
+</validationFunctions>

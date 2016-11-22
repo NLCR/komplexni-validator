@@ -1,0 +1,51 @@
+<premis:object xsi:type="premis:file"
+               xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+               xmlns:premis="info:lc/xmlns/premis-v2"
+>
+    <premis:objectIdentifier>
+        <premis:objectIdentifierType>file</premis:objectIdentifierType>
+        <premis:objectIdentifierValue>PS_1_image_0002</premis:objectIdentifierValue>
+    </premis:objectIdentifier>
+    <premis:preservationLevel>
+        <premis:preservationLevelValue>deleted</premis:preservationLevelValue>
+        <premis:preservationLevelDateAssigned>2014-07-21</premis:preservationLevelDateAssigned>
+    </premis:preservationLevel>
+    <premis:objectCharacteristics>
+        <premis:compositionLevel>0</premis:compositionLevel>
+        <premis:fixity>
+            <premis:messageDigestAlgorithm>MD5</premis:messageDigestAlgorithm>
+            <premis:messageDigest>95d0671277e68e95d22ca7b4164de76c</premis:messageDigest>
+            <premis:messageDigestOriginator>Utility GeneratePremis</premis:messageDigestOriginator>
+        </premis:fixity>
+        <premis:size>13161078</premis:size>
+        <premis:format>
+            <premis:formatDesignation>
+                <premis:formatName>image/tiff</premis:formatName>
+                <premis:formatVersion>6.0</premis:formatVersion>
+            </premis:formatDesignation>
+            <premis:formatRegistry>
+                <premis:formatRegistryName>PRONOM</premis:formatRegistryName>
+                <premis:formatRegistryKey>fmt/353</premis:formatRegistryKey>
+            </premis:formatRegistry>
+        </premis:format>
+        <premis:creatingApplication>
+            <premis:creatingApplicationName>Pixel Translations Inc., PIXTIFF Version 57.5.218.7646
+            </premis:creatingApplicationName>
+            <premis:creatingApplicationVersion>3.0</premis:creatingApplicationVersion>
+            <premis:dateCreatedByApplication>2014-07-09T11:07:24</premis:dateCreatedByApplication>
+        </premis:creatingApplication>
+    </premis:objectCharacteristics>
+    <premis:originalName>1_image_0002.tif</premis:originalName>
+    <premis:linkingEventIdentifier>
+        <premis:linkingEventIdentifierType>NK_eventID</premis:linkingEventIdentifierType>
+        <premis:linkingEventIdentifierValue>postprocessingData_001</premis:linkingEventIdentifierValue>
+    </premis:linkingEventIdentifier>
+    <premis:linkingEventIdentifier>
+        <premis:linkingEventIdentifierType>NK_eventID</premis:linkingEventIdentifierType>
+        <premis:linkingEventIdentifierValue>postprocessingData_002</premis:linkingEventIdentifierValue>
+    </premis:linkingEventIdentifier>
+    <premis:linkingEventIdentifier>
+        <premis:linkingEventIdentifierType>NK_eventID</premis:linkingEventIdentifierType>
+        <premis:linkingEventIdentifierValue>flatData_001</premis:linkingEventIdentifierValue>
+    </premis:linkingEventIdentifier>
+</premis:object>
