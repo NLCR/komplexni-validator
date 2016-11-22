@@ -2,6 +2,7 @@ package nkp.pspValidator.cli;
 
 import nkp.pspValidator.shared.Dmf;
 import nkp.pspValidator.shared.FdmfRegistry;
+import nkp.pspValidator.shared.Platform;
 import nkp.pspValidator.shared.engine.exceptions.InvalidXPathExpressionException;
 import nkp.pspValidator.shared.engine.exceptions.PspDataException;
 import nkp.pspValidator.shared.engine.exceptions.ValidatorConfigurationException;
@@ -24,30 +25,47 @@ public class MainTest {
 
     @org.junit.Test
     public void cli() throws InvalidXPathExpressionException, FdmfRegistry.UnknownFdmfException, PspDataException, ValidatorConfigurationException, XmlParsingException {
+        Platform platform = Platform.detectOs();
+        String imageMagickPath = null;
+        String jhovePath = null;
+        String jpylyzerPath = null;
+        String kakaduPath = null;
+
+        switch (platform.getOperatingSystem()) {
+            case WINDOWS:
+                imageMagickPath = "C:\\Program Files\\ImageMagick-7.0.3-Q16";
+                jhovePath = "C:\\Users\\Lenovo\\Documents\\software\\jhove-1_11\\jhove";
+                jpylyzerPath = "C:\\Users\\Lenovo\\Documents\\software\\jpylyzer_1.17.0_win64";
+                kakaduPath = "C:\\Program Files (x86)\\Kakadu\\";
+                break;
+            case LINUX:
+                kakaduPath = "/home/martin/zakazky/NKP-PSP_validator/utility/kakadu/KDU78_Demo_Apps_for_Linux-x86-64_160226";
+                break;
+        }
 
         Main.main(buildParams(
                 "../sharedModule/src/main/resources/nkp/pspValidator/shared/fDMF"
-                , MON_1_2
-                //, MON_1_2_INVALID_IMAGES
+                //, MON_1_2
+                , MON_1_2_INVALID_IMAGES
                 //, MON_1_2_MAP
                 //,PER_1_6
                 , Dmf.Type.MONOGRAPH
                 , "1.2"
-                , 3 //verbosity
+                , null //verbosity
                 , "src/test/resources/protocol.xml" //xml protocol
-                , "/usr/bin" //jpylyzer path
-                , "/usr/bin" //jhove path
-                , null //imageMagick path
-                , null //"/home/martin/zakazky/NKP-PSP_validator/utility/kakadu/KDU78_Demo_Apps_for_Linux-x86-64_160226" //kakadu path
+                , imageMagickPath //null //imageMagick path
+                , jhovePath //jhove path
+                , jpylyzerPath //jpylyzer path
+                , kakaduPath  //kakadu path
                 , false //disable imageMagick
-                , true //disable jhove
+                , false //disable jhove
                 , false //disable jpylyzer
-                , true//disable kakadu
+                , false//disable kakadu
         ));
     }
 
     private String[] buildParams(String fdmfsDir, String pspDir, Dmf.Type dmfType, String dmfVersion, Integer verbosity, String xmlProtocolFile,
-                                 String jpylyzerPath, String jhovePath, String imageMagickPath, String kakaduPath,
+                                 String imageMagickPath, String jhovePath, String jpylyzerPath, String kakaduPath,
                                  boolean disableImageMagick, boolean disableJhove, boolean disableJpylyzer, boolean disableKakadu
     ) {
         List<String> params = new ArrayList<>();

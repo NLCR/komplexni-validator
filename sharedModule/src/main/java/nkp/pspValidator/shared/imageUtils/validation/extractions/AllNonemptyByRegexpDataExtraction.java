@@ -33,8 +33,8 @@ public class AllNonemptyByRegexpDataExtraction implements DataExtraction {
             Pattern p = Pattern.compile(regexp);
             Matcher m = p.matcher(text);
             while (m.find()) {
-                String finding = m.group();
-                String processed = reduceWhitespaces(finding);
+                String match = m.group();
+                String processed = reduceWhitespaces(match);
                 result.add(processed);
             }
         }

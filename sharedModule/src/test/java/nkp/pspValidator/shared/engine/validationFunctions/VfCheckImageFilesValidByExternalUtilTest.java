@@ -32,7 +32,22 @@ public class VfCheckImageFilesValidByExternalUtilTest {
     private static final File EXAMPLES_ROOT_DIR = new File("src/test/resources/jpeg2000");
     private static final File FDMD_ROOT = new File("src/main/resources/nkp/pspValidator/shared/fDMF/monograph_1.2");
     private static final File IMAGE_UTILS_CONFIG = new File("src/main/resources/nkp/pspValidator/shared/fDMF/imageUtils.xml");
-    private static File KAKADU_PATH = new File("/home/martin/zakazky/NKP-PSP_validator/utility/kakadu/KDU78_Demo_Apps_for_Linux-x86-64_160226");
+    private static File IMAGEMAGICK_PATH_LINUX = null;
+    //ImageMagick-7.0.3-7-Q16-x64-static.exe
+    private static File IMAGEMAGICK_PATH_WINDOWS = new File("C:\\Program Files\\ImageMagick-7.0.3-Q16");
+    private static File IMAGEMAGICK_PATH_MAC = null;
+
+    private static File JHOVE_PATH_LINUX = null;
+    private static File JHOVE_PATH_WINDOWS = new File("C:\\Users\\Lenovo\\Documents\\software\\jhove-1_11\\jhove");
+    private static File JHOVE_PATH_MAC = null;
+
+    private static File JPYLYZER_PATH_LINUX = null;
+    private static File JPYLYZER_PATH_WINDOWS = new File("C:\\Users\\Lenovo\\Documents\\software\\jpylyzer_1.17.0_win64");
+    private static File JPYLYZER_PATH_MAC = null;
+
+    private static File KAKADU_PATH_LINUX = new File("/home/martin/zakazky/NKP-PSP_validator/utility/kakadu/KDU78_Demo_Apps_for_Linux-x86-64_160226");
+    private static File KAKADU_PATH_WINDOWS = new File("C:\\Program Files (x86)\\Kakadu\\");
+    private static File KAKADU_PATH_MAC = null;
 
     private static Engine engine;
     private static ImageUtilManager imageUtilManager;
@@ -47,7 +62,6 @@ public class VfCheckImageFilesValidByExternalUtilTest {
 
     @BeforeClass
     public static void setup() throws ValidatorConfigurationException {
-        System.err.println(new File("."));
         engine = initEngine();
         FILES_OK_UC = toFilesInDir("ok_uc");
         FILES_OK_MC = toFilesInDir("ok_mc");
@@ -68,7 +82,28 @@ public class VfCheckImageFilesValidByExternalUtilTest {
     private static Engine initEngine() throws ValidatorConfigurationException {
         Platform platform = Platform.detectOs();
         imageUtilManager = new ImageUtilManagerFactory(IMAGE_UTILS_CONFIG).buildImageUtilManager(platform.getOperatingSystem());
-        imageUtilManager.setPath(ImageUtil.KAKADU, KAKADU_PATH);
+        switch (platform.getOperatingSystem()) {
+            case WINDOWS:
+                imageUtilManager.setPath(ImageUtil.IMAGE_MAGICK, IMAGEMAGICK_PATH_WINDOWS);
+                imageUtilManager.setPath(ImageUtil.JHOVE, JHOVE_PATH_WINDOWS);
+                imageUtilManager.setPath(ImageUtil.JPYLYZER, JPYLYZER_PATH_WINDOWS);
+                imageUtilManager.setPath(ImageUtil.KAKADU, KAKADU_PATH_WINDOWS);
+                break;
+            case LINUX:
+                imageUtilManager.setPath(ImageUtil.IMAGE_MAGICK, IMAGEMAGICK_PATH_LINUX);
+                imageUtilManager.setPath(ImageUtil.JHOVE, JHOVE_PATH_LINUX);
+                imageUtilManager.setPath(ImageUtil.JPYLYZER, JPYLYZER_PATH_LINUX);
+                imageUtilManager.setPath(ImageUtil.KAKADU, KAKADU_PATH_LINUX);
+                break;
+            case MAC:
+                imageUtilManager.setPath(ImageUtil.IMAGE_MAGICK, IMAGEMAGICK_PATH_MAC);
+                imageUtilManager.setPath(ImageUtil.JHOVE, JHOVE_PATH_MAC);
+                imageUtilManager.setPath(ImageUtil.JPYLYZER, JPYLYZER_PATH_MAC);
+                imageUtilManager.setPath(ImageUtil.KAKADU, KAKADU_PATH_MAC);
+                break;
+        }
+
+
         detectImageTools(imageUtilManager);
         Validator validator = ValidatorFactory.buildValidator(FDMD_ROOT, new File("/tmp"), imageUtilManager);
         return validator.getEngine();
@@ -156,6 +191,7 @@ public class VfCheckImageFilesValidByExternalUtilTest {
         if (imageUtilManager.isUtilAvailable(ImageUtil.IMAGE_MAGICK)) {
             ValidationFunction validationFunction = buildValidationFunction(ImageUtil.IMAGE_MAGICK, ImageCopy.USER, FILES_OK_UC);
             ValidationResult result = validationFunction.validate();
+            //verze ImageMagick-7.0.3-Q16 pro Windows najde chybu v souboru UC_cnb001652709-001_0233.jp2
             for (ValidationError problem : result.getProblems()) {
                 assertNull(problem.getMessage());
             }
@@ -226,6 +262,7 @@ public class VfCheckImageFilesValidByExternalUtilTest {
         if (imageUtilManager.isUtilAvailable(ImageUtil.JHOVE)) {
             ValidationFunction validationFunction = buildValidationFunction(ImageUtil.JHOVE, ImageCopy.USER, FILES_PROFILE_MISMATCH_UC);
             ValidationResult result = validationFunction.validate();
+            //verze jhove-1_11 pro Windows nenajde zadnou chybu
             assertTrue(result.hasProblems());
         }
     }
@@ -318,6 +355,7 @@ public class VfCheckImageFilesValidByExternalUtilTest {
         if (imageUtilManager.isUtilAvailable(ImageUtil.IMAGE_MAGICK)) {
             ValidationFunction validationFunction = buildValidationFunction(ImageUtil.IMAGE_MAGICK, ImageCopy.MASTER, FILES_INVALID);
             ValidationResult result = validationFunction.validate();
+            //FIXME: neprojde, mozna je to v datech
             assertTrue(result.hasProblems());
         }
     }

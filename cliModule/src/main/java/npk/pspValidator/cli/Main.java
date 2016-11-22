@@ -1,6 +1,7 @@
 package npk.pspValidator.cli;
 
 import nkp.pspValidator.shared.*;
+import nkp.pspValidator.shared.engine.Level;
 import nkp.pspValidator.shared.engine.exceptions.InvalidXPathExpressionException;
 import nkp.pspValidator.shared.engine.exceptions.PspDataException;
 import nkp.pspValidator.shared.engine.exceptions.ValidatorConfigurationException;
@@ -241,6 +242,13 @@ public class Main {
 
         Validator validator = ValidatorFactory.buildValidator(fdmfRoot, pspRoot, imageUtilManager);
         System.out.println(String.format("Validátor inicializován, spouštím validace"));
+        /*System.out.println("ěščřžýáíéĚŠČŘŽÝÁÍÉ");
+        System.out.println(String.format("ěščřžýáíéĚŠČŘŽÝÁÍÉ"));
+        StringBuilder b = new StringBuilder();
+        b.append("ěščřžýáíéĚŠČŘŽÝÁÍÉ");
+        System.out.println(b.toString());*/
+
+
         switch (printVerbosity) {
             case 3:
                 //vsechno, vcetne sekci a pravidel bez chyb

@@ -47,6 +47,7 @@
                 <mustExist/>
                 <mustMatchAny>
                     <constant>jpylyzer</constant>
+                    <constant>jpylyzer.exe</constant>
                 </mustMatchAny>
             </rules>
         </validation>

@@ -31,7 +31,6 @@ public class CliCommand {
 
             //read standard error stream in separate thread
             StringBuilder stderrBuilder = new StringBuilder();
-            IOException stdErrEx = null;
             Thread errThread = new Thread(() -> {
                 try {
                     BufferedReader stderrReader = new BufferedReader(new InputStreamReader(process.getErrorStream()));

@@ -5,14 +5,14 @@
                 <command>jpylyzer --version</command>
                 <parser>
                     <stream>STDERR</stream>
-                    <regexp>.*</regexp>
+                    <regexp>(?s).*</regexp>
                 </parser>
             </operatingSystem>
             <operatingSystem name="WINDOWS">
                 <command>jpylyzer --version</command>
                 <parser>
                     <stream>STDERR</stream>
-                    <regexp>.*</regexp>
+                    <regexp>(?s).*</regexp>
                 </parser>
             </operatingSystem>
         </versionDetection>
@@ -21,14 +21,14 @@
                 <command>jpylyzer jp2In ${IMAGE_FILE}</command>
                 <parser>
                     <stream>STDOUT</stream>
-                    <regexp>.*</regexp>
+                    <regexp>(?s).*</regexp>
                 </parser>
             </operatingSystem>
             <operatingSystem name="WINDOWS">
                 <command>jpylyzer jp2In ${IMAGE_FILE}</command>
                 <parser>
                     <stream>STDOUT</stream>
-                    <regexp>.*</regexp>
+                    <regexp>(?s).*</regexp>
                 </parser>
             </operatingSystem>
         </execution>
@@ -57,14 +57,14 @@
                 <command>identify -verbose ${IMAGE_FILE}</command>
                 <parser>
                     <stream>STDERR</stream>
-                    <regexp>.*</regexp>
+                    <regexp>(?s).*</regexp>
                 </parser>
             </operatingSystem>
             <operatingSystem name="WINDOWS">
                 <command>magick.exe identify -verbose ${IMAGE_FILE}</command>
                 <parser>
-                    <stream>STDOUT</stream>
-                    <regexp>.*</regexp>
+                    <stream>STDERR</stream>
+                    <regexp>(?s).*</regexp>
                 </parser>
             </operatingSystem>
         </execution>
@@ -83,8 +83,7 @@
                 <!--TODO:
                 //https://github.com/openpreserve/jhove/issues/32
                 //until then temporary fix with configuration file-->
-                <command>jhove.bat -c C:\Users\Martin\Documents\PspValidator\jhove-1_11\jhove\conf\jhove.conf
-                    --version
+                <command>jhove.bat --version -c C:\Users\Lenovo\Documents\software\jhove-1_11\jhove\conf\jhove.conf
                 </command>
                 <parser>
                     <stream>STDOUT</stream>
@@ -104,7 +103,9 @@
                 <!--TODO:
                 //https://github.com/openpreserve/jhove/issues/32
                 //until then temporary fix with configuration file-->
-                <command>jhove.bat -c C:\Users\Martin\Documents\PspValidator\jhove-1_11\jhove\conf\jhove.conf</command>
+                <command>jhove.bat -h XML -m jpeg2000-hul -k ${IMAGE_FILE} -c
+                    C:\Users\Lenovo\Documents\software\jhove-1_11\jhove\conf\jhove.conf
+                </command>
                 <parser>
                     <stream>STDOUT</stream>
                     <regexp>(?s)&lt;\?xml.*$</regexp>
@@ -135,14 +136,14 @@
                 <command>kdu_expand -i ${IMAGE_FILE}</command>
                 <parser>
                     <stream>STDERR</stream>
-                    <regexp>.*</regexp>
+                    <regexp>(?s).*</regexp>
                 </parser>
             </operatingSystem>
             <operatingSystem name="WINDOWS">
                 <command>kdu_expand.exe -i ${IMAGE_FILE}</command>
                 <parser>
-                    <stream>STDOUT</stream>
-                    <regexp>.*</regexp>
+                    <stream>STDERR</stream>
+                    <regexp>(?s).*</regexp>
                 </parser>
             </operatingSystem>
         </execution>

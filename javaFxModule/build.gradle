@@ -56,3 +56,10 @@ jfx {
     mainClass = 'rzehan.gui.sample.Main'
     vendor = 'rzehan'
 }
+
+//targets:
+//gradle jfxJar - Create executable JavaFX-jar
+//gradle jfxRun -  Create the JavaFX-jar and runs it like you would do using java -jar my-project-jfx.jar, adjustable using runJavaParameter/runJavaParameter-parameter
+//gradle jfxNative - Create native JavaFX-bundle (will run jfxJar first)
+//gradle jfxListBundlers
+
