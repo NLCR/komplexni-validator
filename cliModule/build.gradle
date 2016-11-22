@@ -5,7 +5,7 @@ sourceCompatibility = 1.8
 targetCompatibility = 1.8
 
 //For plugin application, see https://docs.gradle.org/current/userguide/application_plugin.html
-mainClassName = "npk.pspValidator.Main"
+mainClassName = "npk.pspValidator.cli.Main"
 
 repositories {
     mavenCentral()
@@ -24,7 +24,7 @@ task fatJar(type: Jar) {
     manifest {
         attributes 'Implementation-Title': 'PSP validator for CLI',
                 'Implementation-Version': version,
-                'Main-Class': 'npk.pspValidator.Main'
+                'Main-Class': 'npk.pspValidator.cli.Main'
     }
     baseName = 'pspValidator'
     from { configurations.compile.collect { it.isDirectory() ? it : zipTree(it) } }
