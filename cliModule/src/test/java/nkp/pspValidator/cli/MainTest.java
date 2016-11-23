@@ -3,6 +3,7 @@ package nkp.pspValidator.cli;
 import nkp.pspValidator.shared.Dmf;
 import nkp.pspValidator.shared.FdmfRegistry;
 import nkp.pspValidator.shared.Platform;
+import nkp.pspValidator.shared.Validator;
 import nkp.pspValidator.shared.engine.exceptions.InvalidXPathExpressionException;
 import nkp.pspValidator.shared.engine.exceptions.PspDataException;
 import nkp.pspValidator.shared.engine.exceptions.ValidatorConfigurationException;
@@ -43,24 +44,28 @@ public class MainTest {
                 break;
         }
 
-        Main.main(buildParams(
+        Validator.DevParams devParams = new Validator.DevParams();
+        devParams.getSectionsToRun().add("Identifikátory");
+
+        Main.main(devParams, buildParams(
                 "../sharedModule/src/main/resources/nkp/pspValidator/shared/fDMF"
                 //, MON_1_2
-                , MON_1_2_INVALID_IMAGES
+                , PER_1_6
+                //, MON_1_2_INVALID_IMAGES
                 //, MON_1_2_MAP
                 //,PER_1_6
-                , Dmf.Type.MONOGRAPH
-                , "1.2"
+                , null//, Dmf.Type.MONOGRAPH
+                , null//, "1.2"
                 , null //verbosity
-                , "src/test/resources/protocol.xml" //xml protocol
+                , null//"src/test/resources/protocol.xml" //xml protocol
                 , imageMagickPath //null //imageMagick path
                 , jhovePath //jhove path
                 , jpylyzerPath //jpylyzer path
                 , kakaduPath  //kakadu path
-                , false //disable imageMagick
-                , false //disable jhove
-                , false //disable jpylyzer
-                , false//disable kakadu
+                , true //disable imageMagick
+                , true //disable jhove
+                , true //disable jpylyzer
+                , true//disable kakadu
         ));
     }
 

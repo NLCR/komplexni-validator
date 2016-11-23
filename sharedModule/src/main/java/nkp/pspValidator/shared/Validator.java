@@ -43,45 +43,49 @@ public class Validator {
 
     public void run(File xmlOutputFile,
                     boolean printSectionsWithProblems, boolean printSectionsWithoutProblems,
-                    boolean printRulesWithProblems, boolean printRulesWithoutProblems) {
+                    boolean printRulesWithProblems, boolean printRulesWithoutProblems,
+                    DevParams devMode) {
+        boolean runAllSections = devMode == null || devMode.getSectionsToRun() == null || devMode.getSectionsToRun().isEmpty();
+
         Protocol protocol = new Protocol(engine);
         List<RulesSection> rulesSections = engine.getRuleSections();
         protocol.reportValidationsStart();
         for (RulesSection section : rulesSections) {
-            //FIXME: odstranit pro produkci
-            //docasne pro testovani jedine sekce
-            //if (section.getName().equals("Identifikátory")) {
-            protocol.reportSectionProcessingStarted(section);
-            protocol.addSection(section);
-            //TODO: tohle se pocita
-            int sectionProblemsTotal = protocol.getSectionProblemsSum(section);
-            Map<Level, Integer> sectionProblemsByLevel = protocol.getSectionProblemsByLevel(section);
-            boolean printSection = sectionProblemsTotal == 0 && printSectionsWithoutProblems || sectionProblemsTotal != 0 && printSectionsWithProblems;
-            if (printSection) {
-                String sectionTitle = String.format("Sekce %s: %s", section.getName(), buildSummary(sectionProblemsTotal, sectionProblemsByLevel));
-                System.out.println();
-                System.out.println(sectionTitle);
-                System.out.println(buildDelimiter(sectionTitle.length()));
-            }
-            List<Rule> rules = engine.getRules(section);
-            for (Rule rule : rules) {
-                protocol.reportRuleProcessingStarted(rule);
-                protocol.addRule(section, rule);
-                ValidationResult result = rule.getResult();
-                boolean printRule = printSection && (result.hasProblems() && printRulesWithProblems || !result.hasProblems() && printRulesWithoutProblems);
-                if (printRule) {
-                    int ruleProblemsTotal = protocol.getRuleProblemsSum(rule);
-                    Map<Level, Integer> ruleProblemsByLevel = protocol.getRuleProblemsByLevel(rule);
-                    System.out.println(String.format("Pravidlo %s: %s", rule.getName(), buildSummary(ruleProblemsTotal, ruleProblemsByLevel)));
-                    System.out.println(String.format("\t%s", rule.getDescription()));
-                    for (ValidationError error : result.getProblems()) {
-                        System.out.println(String.format("\t%s: %s", error.getLevel(), error.getMessage()));
-                    }
+            boolean runSection = runAllSections || devMode.getSectionsToRun().contains(section.getName());
+            if (!runSection) {
+                //TODO: ve vystupu a v logu zaznamenat, ze byla sekce ignorovana
+            } else {
+                protocol.reportSectionProcessingStarted(section);
+                protocol.addSection(section);
+                //TODO: tohle se pocita
+                int sectionProblemsTotal = protocol.getSectionProblemsSum(section);
+                Map<Level, Integer> sectionProblemsByLevel = protocol.getSectionProblemsByLevel(section);
+                boolean printSection = sectionProblemsTotal == 0 && printSectionsWithoutProblems || sectionProblemsTotal != 0 && printSectionsWithProblems;
+                if (printSection) {
+                    String sectionTitle = String.format("Sekce %s: %s", section.getName(), buildSummary(sectionProblemsTotal, sectionProblemsByLevel));
+                    System.out.println();
+                    System.out.println(sectionTitle);
+                    System.out.println(buildDelimiter(sectionTitle.length()));
                 }
-                protocol.reportRuleProcessingFinished(rule);
+                List<Rule> rules = engine.getRules(section);
+                for (Rule rule : rules) {
+                    protocol.reportRuleProcessingStarted(rule);
+                    protocol.addRule(section, rule);
+                    ValidationResult result = rule.getResult();
+                    boolean printRule = printSection && (result.hasProblems() && printRulesWithProblems || !result.hasProblems() && printRulesWithoutProblems);
+                    if (printRule) {
+                        int ruleProblemsTotal = protocol.getRuleProblemsSum(rule);
+                        Map<Level, Integer> ruleProblemsByLevel = protocol.getRuleProblemsByLevel(rule);
+                        System.out.println(String.format("Pravidlo %s: %s", rule.getName(), buildSummary(ruleProblemsTotal, ruleProblemsByLevel)));
+                        System.out.println(String.format("\t%s", rule.getDescription()));
+                        for (ValidationError error : result.getProblems()) {
+                            System.out.println(String.format("\t%s: %s", error.getLevel(), error.getMessage()));
+                        }
+                    }
+                    protocol.reportRuleProcessingFinished(rule);
+                }
+                protocol.reportSectionProcessingFinished(section);
             }
-            protocol.reportSectionProcessingFinished(section);
-            //}
         }
         protocol.reportValidationsEnd();
         String verdict = protocol.isValid() ? "validní" : "nevalidní";
@@ -405,7 +409,17 @@ public class Validator {
         public long getRuleProcessingDuration(Rule rule) {
             return finishTimeByRule.get(rule) - startTimeByRule.get(rule);
         }
+    }
 
+    public static class DevParams {
+        private Set<String> sectionsToRun = new HashSet<>();
 
+        public Set<String> getSectionsToRun() {
+            return sectionsToRun;
+        }
+
+        public void setSectionsToRun(Set<String> sectionsToRun) {
+            this.sectionsToRun = sectionsToRun;
+        }
     }
 }

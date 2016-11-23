@@ -1,7 +1,6 @@
 package npk.pspValidator.cli;
 
 import nkp.pspValidator.shared.*;
-import nkp.pspValidator.shared.engine.Level;
 import nkp.pspValidator.shared.engine.exceptions.InvalidXPathExpressionException;
 import nkp.pspValidator.shared.engine.exceptions.PspDataException;
 import nkp.pspValidator.shared.engine.exceptions.ValidatorConfigurationException;
@@ -27,6 +26,15 @@ public class Main {
     public static int DEFAULT_VERBOSITY = 2;
 
     public static void main(String[] args) throws PspDataException, XmlParsingException, InvalidXPathExpressionException, FdmfRegistry.UnknownFdmfException, ValidatorConfigurationException {
+        main(null, args);
+    }
+
+    public static void main(Validator.DevParams devParams, String[] args) throws PspDataException, XmlParsingException, InvalidXPathExpressionException, FdmfRegistry.UnknownFdmfException, ValidatorConfigurationException {
+        /*if (true) {
+            Properties properties = System.getProperties();
+            properties.list(System.out);
+            return;
+        }*/
 
         //https://commons.apache.org/proper/commons-cli/usage.html
         Options options = new Options();
@@ -226,7 +234,7 @@ public class Main {
                     }
                 }
 
-                runValidator(new Dmf(dmfType, dmfVersion), fdmfsDir, pspDir, xmlOutputFile, verbosity, imageUtilsDisabled, imageUtilPaths);
+                runValidator(new Dmf(dmfType, dmfVersion), fdmfsDir, pspDir, xmlOutputFile, verbosity, imageUtilsDisabled, imageUtilPaths, null, devParams);
             }
         } catch (ParseException exp) {
             System.err.println("Chyba parsování parametrů: " + exp.getMessage());
@@ -246,7 +254,7 @@ public class Main {
                 " Dale je potreba pomoci --fdmf-dir uvest adresář, který obsahuje definice fDMF," +
                 " typicky adresare monograph_1.0, monograph_1.2, periodical_1.4 a periodical 1.6.\n\n";
         String footer = "\n*Definice metadatovych formatu. Vice na http://www.ndk.cz/standardy-digitalizace/metadata.\n";
-                //"Více informací o validátoru najdete na http://TODO ";
+        //"Více informací o validátoru najdete na http://TODO ";
 
         HelpFormatter formatter = new HelpFormatter();
         formatter.setOptionComparator(null);
@@ -256,7 +264,9 @@ public class Main {
 
     private static void runValidator(Dmf dmfPrefered, File fdmfsRoot, File pspRoot,
                                      File xmlOutputFile, int printVerbosity,
-                                     Set<ImageUtil> imageUtilsDisabled, Map<ImageUtil, File> imageUtilPaths) throws PspDataException, InvalidXPathExpressionException, XmlParsingException, FdmfRegistry.UnknownFdmfException, ValidatorConfigurationException {
+                                     Set<ImageUtil> imageUtilsDisabled, Map<ImageUtil, File> imageUtilPaths,
+                                     Set<String> runOnlyTheseSections,
+                                     Validator.DevParams devParams) throws PspDataException, InvalidXPathExpressionException, XmlParsingException, FdmfRegistry.UnknownFdmfException, ValidatorConfigurationException {
         checkReadableDir(pspRoot);
         checkReadableDir(fdmfsRoot);
         File imageUtilsConfigFile = getImageUtilsConfigFile(fdmfsRoot);
@@ -283,19 +293,19 @@ public class Main {
         switch (printVerbosity) {
             case 3:
                 //vsechno, vcetne sekci a pravidel bez chyb
-                validator.run(xmlOutputFile, true, true, true, true);
+                validator.run(xmlOutputFile, true, true, true, true, devParams);
                 break;
             case 2:
                 //jen chybove sekce a v popisy jednotlivych chyb (default)
-                validator.run(xmlOutputFile, true, false, true, false);
+                validator.run(xmlOutputFile, true, false, true, false, devParams);
                 break;
             case 1:
                 //jen pocty chyb v chybovych sekcich, bez popisu jednotlivych chyb
-                validator.run(xmlOutputFile, true, false, false, false);
+                validator.run(xmlOutputFile, true, false, false, false, devParams);
                 break;
             case 0:
                 //jen valid/not valid
-                validator.run(xmlOutputFile, false, false, false, false);
+                validator.run(xmlOutputFile, false, false, false, false, devParams);
                 break;
             default:
                 throw new IllegalStateException(String.format("Nepovolená hodnota verbosity: %d. Hodnota musí být v intervalu [0-3]", printVerbosity));
