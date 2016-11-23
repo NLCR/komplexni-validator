@@ -167,8 +167,8 @@
         </params-def>
     </validationFunction>
 
-    <validationFunction name="checkNoDuplicateIdentifiers">
-        <description>Zkontroluje, že seznam identifikátorů neobsahuje duplikáty, tedy více identifikátorů stejného typu.
+    <validationFunction name="checkNoDuplicateIdentifiersTypes">
+        <description>Zkontroluje, že seznamy identifikátorů neobsahují více identifikátorů stejného typu.
         </description>
         <params-def>
             <value name="identifier_list" type="IDENTIFIER_LIST" min="0" maxOccurs="unbounded"
@@ -177,6 +177,18 @@
                    description="seznam seznamů identifikátorů; kontrola na přítomnost duplikátů se provádní v rámci jednotlivých seznamů"/>
         </params-def>
     </validationFunction>
+
+    <validationFunction name="checkNoDuplicateIdentifiers">
+        <description>Zkontroluje, že seznamy identifikátorů neobsahují více identifikátorů stejného typu a hodnoty.
+        </description>
+        <params-def>
+            <value name="identifier_list" type="IDENTIFIER_LIST" min="0" maxOccurs="unbounded"
+                   description="seznam identifikátorů, v jehož rámci se kontroluje přítomnost duplikátů"/>
+            <value name="identifier_list_list" type="IDENTIFIER_LIST_LIST" min="0" maxOccurs="unbounded"
+                   description="seznam seznamů identifikátorů; kontrola na přítomnost duplikátů se provádní v rámci jednotlivých seznamů"/>
+        </params-def>
+    </validationFunction>
+
 
     <validationFunction name="checkStringDerivedFromOneOfIdentifiers">
         <description>Ověří, že řetězec je odvozen od některého z identifikátoru. Vztah "být

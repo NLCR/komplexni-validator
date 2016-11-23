@@ -206,4 +206,21 @@ public class Utils {
         return builder.toString();
     }
 
+    public static String listToString(List list) {
+        if (list == null) {
+            return null;
+        } else {
+            StringBuilder builder = new StringBuilder();
+            builder.append('[');
+            for (int i = 0; i < list.size(); i++) {
+                if (i != 0) {
+                    builder.append(',');
+                }
+                builder.append(list.get(i));
+            }
+            builder.append(']');
+            return builder.toString();
+        }
+    }
+
 }

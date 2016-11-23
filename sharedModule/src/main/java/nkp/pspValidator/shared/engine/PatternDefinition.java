@@ -100,18 +100,7 @@ public class PatternDefinition {
     }
 
     public String toString() {
-        StringBuilder builder = new StringBuilder();
-        {
-            builder.append("[");
-            for (int i = 0; i < rawExpressions.size(); i++) {
-                if (i != 0) {
-                    builder.append(';');
-                }
-                builder.append(rawExpressions.get(i).toString());
-            }
-            builder.append("]");
-        }
-        return builder.toString();
+        return Utils.listToString(rawExpressions);
     }
 
 

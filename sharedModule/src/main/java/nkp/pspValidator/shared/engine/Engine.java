@@ -148,6 +148,8 @@ public class Engine {
                 return new VfCheckInfoFileItemlistReferencesAllFiles(this);
             case "checkInfoFileChecksumMatches":
                 return new VfCheckInfoFileChecksumMatches(this);
+            case "checkNoDuplicateIdentifierTypes":
+                return new VfCheckNoDuplicateIdentifierTypes(this);
             case "checkNoDuplicateIdentifiers":
                 return new VfCheckNoDuplicateIdentifiers(this);
             case "checkDcIdentifiersDoNotContainWhiteSpaces":

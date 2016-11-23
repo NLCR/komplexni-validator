@@ -18,13 +18,13 @@ import java.util.Map;
  */
 //TODO: prejmenovat, aby se oddelila shoda typu a shoda celkova
 //treba 2 ruzne urovne popisu muzou mit obe uuid:..., ale uz ne uuid:1
-public class VfCheckNoDuplicateIdentifiers extends ValidationFunction {
+public class VfCheckNoDuplicateIdentifierTypes extends ValidationFunction {
 
     public static final String PARAM_IDENTIFIER_LIST = "identifier_list";
     public static final String PARAM_IDENTIFIER_LIST_LIST = "identifier_list_list";
 
 
-    public VfCheckNoDuplicateIdentifiers(Engine engine) {
+    public VfCheckNoDuplicateIdentifierTypes(Engine engine) {
         super(engine, new Contract()
                 .withValueParam(PARAM_IDENTIFIER_LIST, ValueType.IDENTIFIER_LIST, 0, null)
                 .withValueParam(PARAM_IDENTIFIER_LIST_LIST, ValueType.IDENTIFIER_LIST_LIST, 0, null)
@@ -33,7 +33,7 @@ public class VfCheckNoDuplicateIdentifiers extends ValidationFunction {
 
     @Override
     public String getName() {
-        return "checkNoDuplicateIdentifiers";
+        return "checkNoDuplicateIdentifierTypes";
     }
 
     @Override
@@ -79,11 +79,10 @@ public class VfCheckNoDuplicateIdentifiers extends ValidationFunction {
             //System.out.println(Utils.listToString(idList));
             Map<String, String> map = new HashMap<>();
             for (Identifier id : idList) {
-                String valueFound = map.get(id.getType());
-                if (valueFound == null) {
+                if (!map.containsKey(id.getType())) {
                     map.put(id.getType(), id.getValue());
-                } else if (valueFound.equals(id.getValue())) {
-                    result.addError(invalid(Level.ERROR, "seznam obsahuje duplikovaný identifikátor '%s'", id.toString()));
+                } else {
+                    result.addError(invalid(Level.ERROR, "seznam obsahuje více identifikátorů typu '%s', např: %s", id.getType(), id.toString()));
                 }
             }
         }

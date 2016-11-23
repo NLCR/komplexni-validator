@@ -50,7 +50,7 @@ public class Validator {
         for (RulesSection section : rulesSections) {
             //FIXME: odstranit pro produkci
             //docasne pro testovani jedine sekce
-            //if (section.getName().equals("JPEG 2000")) {
+            //if (section.getName().equals("Identifikátory")) {
             protocol.reportSectionProcessingStarted(section);
             protocol.addSection(section);
             //TODO: tohle se pocita

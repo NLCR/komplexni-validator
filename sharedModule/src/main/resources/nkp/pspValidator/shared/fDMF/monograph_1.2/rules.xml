@@ -997,12 +997,11 @@
         </rule>
 
         <rule name="DC_IDENTIFIERS_NO_DUPLICATES_WITHIN_DMDSEC">
-            <description>Identifikátory v jednotlivých Dublin Core záznamech by musí být unikátní.
-                Nesmí se tedy objevit dva přesně stejné identifikátory, ani dva identifikátory stejného typu ale
-                různé hodnoty.
+            <description>Identifikátory v jednotlivých Dublin Core záznamech musí mít unikátní typ.
+                Nesmí se tedy objevit dva a více identikátorů stejného typu v jednom záznamu.
             </description>
 
-            <validation functionName="checkNoDuplicateIdentifiers">
+            <validation functionName="checkNoDuplicateIdentifierTypes">
                 <params>
                     <value name="identifier_list_list" type="IDENTIFIER_LIST_LIST">
                         <!--seznam obsahujici seznam identifikatoru DC pro kazdy zaznam dmdSec pro dc-->
@@ -1032,9 +1031,8 @@
         </rule>
 
         <rule name="DC_IDENTIFIERS_NO_DUPLICATES_ACROSS_DMDSECS">
-            <description>Identifikátory napříš Dublin Core záznamech by měly být unikátní.
-                Neměly by se tedy objevit dva přesně stejné identifikátory, ani dva identifikátory stejného typu ale
-                různé hodnoty.
+            <description>Identifikátory napříč Dublin Core záznamech by měly být unikátní.
+                Na různých úrovní popisu se tedy nesmí objevit dva totožné identifikátory (shodný typ i hodnota).
             </description>
 
             <validation functionName="checkNoDuplicateIdentifiers">
@@ -1072,7 +1070,6 @@
                 </params>
             </validation>
         </rule>
-
 
         <!--TODO: pro kazdou uroven musi byt shoda id v DC a v  MODS-->
 

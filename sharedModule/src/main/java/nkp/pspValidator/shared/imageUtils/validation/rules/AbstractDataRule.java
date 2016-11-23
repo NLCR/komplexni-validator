@@ -1,5 +1,6 @@
 package nkp.pspValidator.shared.imageUtils.validation.rules;
 
+import nkp.pspValidator.shared.engine.Utils;
 import nkp.pspValidator.shared.imageUtils.validation.DataRule;
 
 import java.util.ArrayList;
@@ -34,17 +35,7 @@ public abstract class AbstractDataRule implements DataRule {
         if (data == null) {
             return null;
         } else if (data instanceof List) {
-            List list = (List) data;
-            StringBuilder builder = new StringBuilder();
-            builder.append('[');
-            for (int i = 0; i < list.size(); i++) {
-                if (i != 0) {
-                    builder.append(", ");
-                }
-                builder.append(list.get(i));
-            }
-            builder.append(']');
-            return builder.toString();
+            return Utils.listToString((List) data);
         } else {
             return data.toString();
         }
