@@ -183,7 +183,7 @@ public class Utils {
                 List<String> valueTokens = new LinkedList<>();
                 valueTokens.addAll(Arrays.asList(tokens));
                 valueTokens.remove(0);
-                value = mergeStrings(valueTokens);
+                value = mergeStrings(valueTokens, ':');
             }
             if (type.isEmpty()) {
                 throw new InvalidIdException("typ identifikátoru je prázdný");
@@ -195,10 +195,13 @@ public class Utils {
         }
     }
 
-    public static String mergeStrings(List<String> list) {
+    public static String mergeStrings(List<String> list, Character separator) {
         StringBuilder builder = new StringBuilder();
-        for (String string : list) {
-            builder.append(string);
+        for (int i = 0; i < list.size(); i++) {
+            if (i != 0 && separator != null) {
+                builder.append(separator);
+            }
+            builder.append(list.get(i));
         }
         return builder.toString();
     }

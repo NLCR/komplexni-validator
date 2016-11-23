@@ -1,5 +1,7 @@
 package nkp.pspValidator.shared.engine;
 
+import nkp.pspValidator.shared.engine.exceptions.InvalidIdException;
+import nkp.pspValidator.shared.engine.types.Identifier;
 import org.junit.Test;
 
 import java.io.File;
@@ -99,6 +101,50 @@ public class UtilsTest {
     public void getLongestCommonSubstringLength() {
         String uuid = "b50eb6b0-f0a4-11e3-b72e-005056827e52";
         assertEquals(uuid.length(), Utils.getLongestCommonSubstringLength("uuid:" + uuid, uuid));
+    }
+
+    @Test
+    public void extractIdentifierFromDcStringCcnb() throws InvalidIdException {
+        String type = "ccnb";
+        String value = "cnb001315579";
+        String dcString = String.format("%s:%s", type, value);
+        Identifier id = Utils.extractIdentifierFromDcString(dcString);
+        assertEquals(type, id.getType());
+        assertEquals(value, id.getValue());
+        assertEquals(dcString, id.toString());
+    }
+
+    @Test
+    public void extractIdentifierFromDcStringUuid() throws InvalidIdException {
+        String type = "uuid";
+        String value = "6d5a1810-0377-11e4-9806-005056825209";
+        String dcString = String.format("%s:%s", type, value);
+        Identifier id = Utils.extractIdentifierFromDcString(dcString);
+        assertEquals(type, id.getType());
+        assertEquals(value, id.getValue());
+        assertEquals(dcString, id.toString());
+    }
+
+    @Test
+    public void extractIdentifierFromDcStringBarCode() throws InvalidIdException {
+        String type = "barCode";
+        String value = "1001149769";
+        String dcString = String.format("%s:%s", type, value);
+        Identifier id = Utils.extractIdentifierFromDcString(dcString);
+        assertEquals(type, id.getType());
+        assertEquals(value, id.getValue());
+        assertEquals(dcString, id.toString());
+    }
+
+    @Test
+    public void extractIdentifierFromDcStringUrnNbn() throws InvalidIdException {
+        String type = "urnnbn";
+        String value = "urn:nbn:cz:nk-0016ke";
+        String dcString = String.format("%s:%s", type, value);
+        Identifier id = Utils.extractIdentifierFromDcString(dcString);
+        assertEquals(type, id.getType());
+        assertEquals(value, id.getValue());
+        assertEquals(dcString, id.toString());
     }
 
 }
