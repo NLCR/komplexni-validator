@@ -189,6 +189,31 @@
         </params-def>
     </validationFunction>
 
+    <validationFunction name="checkIdentifiersAllTypesPresent">
+        <description>Zkontroluje, že seznamy identifikátorů obsahují všechny požadované typy identifikátorů.
+        </description>
+        <params-def>
+            <value name="identifier_list" type="IDENTIFIER_LIST" min="0" maxOccurs="unbounded"
+                   description="seznam identifikátorů, v jehož rámci se kontroluje přítomnost identifikátorů"/>
+            <value name="identifier_list_list" type="IDENTIFIER_LIST_LIST" min="0" maxOccurs="unbounded"
+                   description="seznam seznamů identifikátorů; kontrola na přítomnost identifikátorů se provádní v rámci jednotlivých seznamů"/>
+            <value name="id_types" type="STRING_LIST" description="typy identifikátorů"/>
+            <value name="level_name" type="STRING" description="název úrovně popisu"/>
+        </params-def>
+    </validationFunction>
+
+    <validationFunction name="checkIdentifiersNoTypesPresent">
+        <description>Zkontroluje, že seznamy identifikátorů neobsahují žádný s typů identifikátorů.
+        </description>
+        <params-def>
+            <value name="identifier_list" type="IDENTIFIER_LIST" min="0" maxOccurs="unbounded"
+                   description="seznam identifikátorů, v jehož rámci se kontroluje přítomnost identifikátorů"/>
+            <value name="identifier_list_list" type="IDENTIFIER_LIST_LIST" min="0" maxOccurs="unbounded"
+                   description="seznam seznamů identifikátorů; kontrola na přítomnost identifikátorů se provádní v rámci jednotlivých seznamů"/>
+            <value name="id_types" type="STRING_LIST" description="typy identifikátorů"/>
+            <value name="level_name" type="STRING" description="název úrovně popisu"/>
+        </params-def>
+    </validationFunction>
 
     <validationFunction name="checkStringDerivedFromOneOfIdentifiers">
         <description>Ověří, že řetězec je odvozen od některého z identifikátoru. Vztah "být

@@ -148,10 +148,17 @@ public class Engine {
                 return new VfCheckInfoFileItemlistReferencesAllFiles(this);
             case "checkInfoFileChecksumMatches":
                 return new VfCheckInfoFileChecksumMatches(this);
+
+            //identifiers in general
             case "checkNoDuplicateIdentifierTypes":
                 return new VfCheckNoDuplicateIdentifierTypes(this);
             case "checkNoDuplicateIdentifiers":
                 return new VfCheckNoDuplicateIdentifiers(this);
+            case "checkIdentifiersAllTypesPresent":
+                return new VfCheckIdentifiersAllTypesPresent(this);
+            case "checkIdentifiersNoTypesPresent":
+                return new VfCheckIdentifiersNoTypesPresent(this);
+
             case "checkDcIdentifiersDoNotContainWhiteSpaces":
                 return new VfCheckDcIdentifiersDoNotContainWhiteSpaces(this);
             case "checkStringDerivedFromOneOfIdentifiers":

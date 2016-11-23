@@ -996,6 +996,85 @@
             </validation>
         </rule>
 
+        <rule name="DC_MANDATORY_IDENTIFIERS_PRESENT_LEVEL_TITLE">
+            <description>
+                Úroveň TITLE musí obsahovat všechny povinné identifikátory v záznamu Dublin Core.
+            </description>
+            <validation functionName="checkIdentifiersAllTypesPresent">
+                <params>
+                    <value name="identifier_list_list" type="IDENTIFIER_LIST_LIST">
+                        <!--seznam obsahujici seznam identifikatoru DC pro kazdy zaznam dmdSec pro dc-->
+                        <evaluation functionName="getDcIdentifiersForEachDmdsecId">
+                            <params>
+                                <value name="dmdsec_ids" type="STRING_LIST">
+                                    <!--seznam identifikatoru (dmdSec ID)-->
+                                    <evaluation functionName="getStringListByXpath">
+                                        <params>
+                                            <value name="xml_file" type="FILE">
+                                                <value-ref name="PRIMARY-METS_FILE"/>
+                                            </value>
+                                            <value name="xpath" type="STRING">
+                                                /mets:mets/mets:dmdSec[starts-with(@ID, "DCMD_TITLE")]/@ID
+                                            </value>
+                                        </params>
+                                    </evaluation>
+                                </value>
+                                <value name="mets_file" type="FILE">
+                                    <value-ref name="PRIMARY-METS_FILE"/>
+                                </value>
+                            </params>
+                        </evaluation>
+                    </value>
+                    <value name="id_types" type="STRING_LIST">
+                        <value-ref name="ID_TYPES_TITLE_MANDATORY"/>
+                    </value>
+                    <value name="level_name" type="STRING">
+                        TITLE
+                    </value>
+                </params>
+            </validation>
+        </rule>
+
+        <rule name="DC_PROHIBITED_IDENTIFIERS_NOT_PRESENT_LEVEL_TITLE">
+            <description>
+                Úroveň TITLE nesmí obsahovat žádné zakázané identifikátory v záznamu Dublin Core.
+            </description>
+            <validation functionName="checkIdentifiersNoTypesPresent">
+                <params>
+                    <value name="identifier_list_list" type="IDENTIFIER_LIST_LIST">
+                        <!--seznam obsahujici seznam identifikatoru DC pro kazdy zaznam dmdSec pro dc-->
+                        <evaluation functionName="getDcIdentifiersForEachDmdsecId">
+                            <params>
+                                <value name="dmdsec_ids" type="STRING_LIST">
+                                    <!--seznam identifikatoru (dmdSec ID)-->
+                                    <evaluation functionName="getStringListByXpath">
+                                        <params>
+                                            <value name="xml_file" type="FILE">
+                                                <value-ref name="PRIMARY-METS_FILE"/>
+                                            </value>
+                                            <value name="xpath" type="STRING">
+                                                /mets:mets/mets:dmdSec[starts-with(@ID, "DCMD_TITLE")]/@ID
+                                            </value>
+                                        </params>
+                                    </evaluation>
+                                </value>
+                                <value name="mets_file" type="FILE">
+                                    <value-ref name="PRIMARY-METS_FILE"/>
+                                </value>
+                            </params>
+                        </evaluation>
+                    </value>
+                    <value name="id_types" type="STRING_LIST">
+                        <value-ref name="ID_TYPES_TITLE_PROHIBITED"/>
+                    </value>
+                    <value name="level_name" type="STRING">
+                        TITLE
+                    </value>
+                </params>
+            </validation>
+        </rule>
+
+
         <rule name="DC_IDENTIFIERS_NO_DUPLICATES_WITHIN_DMDSEC">
             <description>Identifikátory v jednotlivých Dublin Core záznamech musí mít unikátní typ.
                 Nesmí se tedy objevit dva a více identikátorů stejného typu v jednom záznamu.

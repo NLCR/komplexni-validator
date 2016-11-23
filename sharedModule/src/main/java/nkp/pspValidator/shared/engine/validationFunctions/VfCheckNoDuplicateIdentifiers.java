@@ -16,8 +16,7 @@ import java.util.Map;
 /**
  * Created by martin on 27.10.16.
  */
-//TODO: prejmenovat, aby se oddelila shoda typu a shoda celkova
-//treba 2 ruzne urovne popisu muzou mit obe uuid:..., ale uz ne uuid:1
+//TODO: prejmenovat na checkIdentifiersNoDuplicates
 public class VfCheckNoDuplicateIdentifiers extends ValidationFunction {
 
     public static final String PARAM_IDENTIFIER_LIST = "identifier_list";

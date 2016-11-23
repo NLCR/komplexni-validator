@@ -9,30 +9,30 @@ import nkp.pspValidator.shared.engine.params.ValueParam;
 import nkp.pspValidator.shared.engine.types.Identifier;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * Created by martin on 27.10.16.
  */
-//TODO: prejmenovat na checkIdentifiersNoDuplicateTypes
-public class VfCheckNoDuplicateIdentifierTypes extends ValidationFunction {
+public class VfCheckIdentifiersNoTypesPresent extends ValidationFunction {
 
     public static final String PARAM_IDENTIFIER_LIST = "identifier_list";
     public static final String PARAM_IDENTIFIER_LIST_LIST = "identifier_list_list";
+    public static final String PARAM_ID_TYPES = "id_types";
+    public static final String PARAM_ID_LEVEL_NAME = "level_name";
 
-
-    public VfCheckNoDuplicateIdentifierTypes(Engine engine) {
+    public VfCheckIdentifiersNoTypesPresent(Engine engine) {
         super(engine, new Contract()
                 .withValueParam(PARAM_IDENTIFIER_LIST, ValueType.IDENTIFIER_LIST, 0, null)
                 .withValueParam(PARAM_IDENTIFIER_LIST_LIST, ValueType.IDENTIFIER_LIST_LIST, 0, null)
+                .withValueParam(PARAM_ID_TYPES, ValueType.STRING_LIST, 1, 1)
+                .withValueParam(PARAM_ID_LEVEL_NAME, ValueType.STRING, 1, 1)
         );
     }
 
     @Override
     public String getName() {
-        return "checkNoDuplicateIdentifierTypes";
+        return "checkIdentifiersNoTypesPresent";
     }
 
     @Override
@@ -64,7 +64,22 @@ public class VfCheckNoDuplicateIdentifierTypes extends ValidationFunction {
                 }
             }
 
-            return validate(idListList);
+            //id types
+            ValueEvaluation idTypesParamEval = valueParams.getParams(PARAM_ID_TYPES).get(0).getEvaluation();
+            List<String> types = (List<String>) idTypesParamEval.getData();
+            if (types == null) {
+                return invalidValueParamNull(PARAM_ID_TYPES, idTypesParamEval);
+            }
+
+            //level name
+            ValueEvaluation paramLevelNameEval = valueParams.getParams(PARAM_ID_LEVEL_NAME).get(0).getEvaluation();
+            String levelName = (String) paramLevelNameEval.getData();
+            if (levelName == null) {
+                return invalidValueParamNull(PARAM_ID_LEVEL_NAME, paramLevelNameEval);
+            }
+
+
+            return validate(levelName, types, idListList);
         } catch (ContractException e) {
             return invalidContractNotMet(e);
         } catch (Throwable e) {
@@ -72,16 +87,12 @@ public class VfCheckNoDuplicateIdentifierTypes extends ValidationFunction {
         }
     }
 
-    private ValidationResult validate(List<List<Identifier>> idListList) {
+    private ValidationResult validate(String levelName, List<String> typesNotExpected, List<List<Identifier>> idListList) {
         ValidationResult result = new ValidationResult();
         for (List<Identifier> idList : idListList) {
-            //System.out.println(Utils.listToString(idList));
-            Map<String, String> map = new HashMap<>();
-            for (Identifier id : idList) {
-                if (!map.containsKey(id.getType())) {
-                    map.put(id.getType(), id.getValue());
-                } else {
-                    result.addError(invalid(Level.ERROR, "seznam obsahuje více identifikátorů typu '%s', např: %s", id.getType(), id.toString()));
+            for (Identifier idFound : idList) {
+                if (typesNotExpected.contains(idFound.getType())) {
+                    result.addError(invalid(Level.ERROR, "nalezen zakázaný identifikátor typu '%s' pro úroveň %s", idFound.getType(), levelName));
                 }
             }
         }

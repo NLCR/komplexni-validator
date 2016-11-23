@@ -145,9 +145,9 @@
     </evaluationFunction>
 
 
-    <params>
+    <!--<params>
         <value name="dmdsec_ids" type="STRING_LIST">
-            <!--seznam identifikatoru (dmdSec ID)-->
+            &lt;!&ndash;seznam identifikatoru (dmdSec ID)&ndash;&gt;
             <evaluation functionName="getStringListByXpath">
                 <params>
                     <value name="xml_file" type="FILE">
@@ -162,7 +162,7 @@
         <value name="primary-mets_file" type="FILE">
             <value-ref name="PRIMARY-METS_FILE"/>
         </value>
-    </params>
+    </params>-->
 
 
     <!--TODO: pridat do dokumentace v hlavicce-->
