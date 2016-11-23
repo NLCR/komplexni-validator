@@ -16,14 +16,13 @@ import java.util.Map;
 /**
  * Created by martin on 27.10.16.
  */
-//TODO: prejmenovat na checkIdentifiersNoDuplicateTypes
-public class VfCheckNoDuplicateIdentifierTypes extends ValidationFunction {
+public class VfCheckIdentifiersNoDuplicateTypes extends ValidationFunction {
 
     public static final String PARAM_IDENTIFIER_LIST = "identifier_list";
     public static final String PARAM_IDENTIFIER_LIST_LIST = "identifier_list_list";
 
 
-    public VfCheckNoDuplicateIdentifierTypes(Engine engine) {
+    public VfCheckIdentifiersNoDuplicateTypes(Engine engine) {
         super(engine, new Contract()
                 .withValueParam(PARAM_IDENTIFIER_LIST, ValueType.IDENTIFIER_LIST, 0, null)
                 .withValueParam(PARAM_IDENTIFIER_LIST_LIST, ValueType.IDENTIFIER_LIST_LIST, 0, null)
@@ -32,7 +31,7 @@ public class VfCheckNoDuplicateIdentifierTypes extends ValidationFunction {
 
     @Override
     public String getName() {
-        return "checkNoDuplicateIdentifierTypes";
+        return "checkIdentifiersNoDuplicateTypes";
     }
 
     @Override

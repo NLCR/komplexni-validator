@@ -1607,7 +1607,7 @@
             <description>Soubor INFO nesmí obsahovat duplikované identifikátory (tedy více identifikátorů stejného
                 typu).
             </description>
-            <validation functionName="checkNoDuplicateIdentifiers">
+            <validation functionName="checkIdentifiersNoDuplicates">
                 <params>
                     <value name="identifiers" type="IDENTIFIER_LIST">
                         <value-ref name="INFO_IDENTIFIERS"/>

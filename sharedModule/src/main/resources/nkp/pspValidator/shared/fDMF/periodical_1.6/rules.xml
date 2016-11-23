@@ -972,7 +972,7 @@
             <description>Soubor INFO nesmí obsahovat duplikované identifikátory (tedy více identifikátorů stejného
                 typu).
             </description>
-            <validation functionName="checkNoDuplicateIdentifiers">
+            <validation functionName="checkIdentifiersNoDuplicates">
                 <params>
                     <value name="identifier_list" type="IDENTIFIER_LIST">
                         <value-ref name="INFO_IDENTIFIERS"/>
@@ -1080,7 +1080,7 @@
                 Nesmí se tedy objevit dva a více identikátorů stejného typu v jednom záznamu.
             </description>
 
-            <validation functionName="checkNoDuplicateIdentifierTypes">
+            <validation functionName="checkIdentifiersNoDuplicateTypes">
                 <params>
                     <value name="identifier_list_list" type="IDENTIFIER_LIST_LIST">
                         <!--seznam obsahujici seznam identifikatoru DC pro kazdy zaznam dmdSec pro dc-->
@@ -1114,7 +1114,7 @@
                 Na různých úrovní popisu se tedy nesmí objevit dva totožné identifikátory (shodný typ i hodnota).
             </description>
 
-            <validation functionName="checkNoDuplicateIdentifiers">
+            <validation functionName="checkIdentifiersNoDuplicates">
                 <params>
                     <value name="identifier_list" type="IDENTIFIER_LIST">
                         <!--spojeni vsech identifikatoru do jednoho seznamu-->

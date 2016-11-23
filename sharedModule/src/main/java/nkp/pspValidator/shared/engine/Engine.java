@@ -150,10 +150,10 @@ public class Engine {
                 return new VfCheckInfoFileChecksumMatches(this);
 
             //identifiers in general
-            case "checkNoDuplicateIdentifierTypes":
-                return new VfCheckNoDuplicateIdentifierTypes(this);
-            case "checkNoDuplicateIdentifiers":
-                return new VfCheckNoDuplicateIdentifiers(this);
+            case "checkIdentifiersNoDuplicateTypes":
+                return new VfCheckIdentifiersNoDuplicateTypes(this);
+            case "checkIdentifiersNoDuplicates":
+                return new VfCheckIdentifiersNoDuplicates(this);
             case "checkIdentifiersAllTypesPresent":
                 return new VfCheckIdentifiersAllTypesPresent(this);
             case "checkIdentifiersNoTypesPresent":

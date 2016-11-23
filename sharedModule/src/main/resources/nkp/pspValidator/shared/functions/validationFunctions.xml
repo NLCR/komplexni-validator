@@ -167,7 +167,7 @@
         </params-def>
     </validationFunction>
 
-    <validationFunction name="checkNoDuplicateIdentifiersTypes">
+    <validationFunction name="checkIdentifiersNoDuplicateTypes">
         <description>Zkontroluje, že seznamy identifikátorů neobsahují více identifikátorů stejného typu.
         </description>
         <params-def>
@@ -178,7 +178,7 @@
         </params-def>
     </validationFunction>
 
-    <validationFunction name="checkNoDuplicateIdentifiers">
+    <validationFunction name="checkIdentifiersNoDuplicates">
         <description>Zkontroluje, že seznamy identifikátorů neobsahují více identifikátorů stejného typu a hodnoty.
         </description>
         <params-def>
