@@ -460,8 +460,6 @@
         <evaluation functionName="buildListOfStrings">
             <params>
                 <value name="string" type="STRING">urnnbn</value>
-
-
             </params>
         </evaluation>
     </value-def>
@@ -493,8 +491,6 @@
         <evaluation functionName="buildListOfStrings">
             <params>
                 <value name="string" type="STRING">urnnbn</value>
-
-
             </params>
         </evaluation>
     </value-def>
