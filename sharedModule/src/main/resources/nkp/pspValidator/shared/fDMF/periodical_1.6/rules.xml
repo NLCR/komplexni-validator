@@ -966,7 +966,7 @@
             </validation>
         </rule>
 
-        <!--info-->
+        <!--info identifiers -->
 
         <rule name="INFO_NO_DUPLICATE_IDENTIFIERS">
             <description>Soubor INFO nesmí obsahovat duplikované identifikátory (tedy více identifikátorů stejného
@@ -981,9 +981,7 @@
             </validation>
         </rule>
 
-        <!--TODO: neni pritomen identifikator zakazaneho typu, warning-->
-
-        <!--DC-->
+        <!--DC identifiers -->
 
         <rule name="DC_IDENTIFIERS_NO_WHITE_SPACES">
             <description>Identifikátory v Dublin Core záznamech by neměly obsahovat bílé znaky.</description>
@@ -996,6 +994,7 @@
             </validation>
         </rule>
 
+        <!--title-->
         <rule name="DC_MANDATORY_IDENTIFIERS_PRESENT_LEVEL_TITLE">
             <description>
                 Úroveň TITLE musí obsahovat všechny povinné identifikátory v záznamu Dublin Core.
@@ -1028,9 +1027,7 @@
                     <value name="id_types" type="STRING_LIST">
                         <value-ref name="ID_TYPES_TITLE_MANDATORY"/>
                     </value>
-                    <value name="level_name" type="STRING">
-                        TITLE
-                    </value>
+                    <value name="level_name" type="STRING">TITLE</value>
                 </params>
             </validation>
         </rule>
@@ -1067,13 +1064,385 @@
                     <value name="id_types" type="STRING_LIST">
                         <value-ref name="ID_TYPES_TITLE_PROHIBITED"/>
                     </value>
-                    <value name="level_name" type="STRING">
-                        TITLE
-                    </value>
+                    <value name="level_name" type="STRING">TITLE</value>
                 </params>
             </validation>
         </rule>
 
+        <!--volume-->
+        <rule name="DC_MANDATORY_IDENTIFIERS_PRESENT_LEVEL_VOLUME">
+            <description>
+                Úroveň VOLUME musí obsahovat všechny povinné identifikátory v záznamu Dublin Core.
+            </description>
+            <validation functionName="checkIdentifiersAllTypesPresent">
+                <params>
+                    <value name="identifier_list_list" type="IDENTIFIER_LIST_LIST">
+                        <!--seznam obsahujici seznam identifikatoru DC pro kazdy zaznam dmdSec pro dc-->
+                        <evaluation functionName="getDcIdentifiersForEachDmdsecId">
+                            <params>
+                                <value name="dmdsec_ids" type="STRING_LIST">
+                                    <!--seznam identifikatoru (dmdSec ID)-->
+                                    <evaluation functionName="getStringListByXpath">
+                                        <params>
+                                            <value name="xml_file" type="FILE">
+                                                <value-ref name="PRIMARY-METS_FILE"/>
+                                            </value>
+                                            <value name="xpath" type="STRING">
+                                                /mets:mets/mets:dmdSec[starts-with(@ID, "DCMD_VOLUME")]/@ID
+                                            </value>
+                                        </params>
+                                    </evaluation>
+                                </value>
+                                <value name="mets_file" type="FILE">
+                                    <value-ref name="PRIMARY-METS_FILE"/>
+                                </value>
+                            </params>
+                        </evaluation>
+                    </value>
+                    <value name="id_types" type="STRING_LIST">
+                        <value-ref name="ID_TYPES_VOLUME_MANDATORY"/>
+                    </value>
+                    <value name="level_name" type="STRING">VOLUME</value>
+                </params>
+            </validation>
+        </rule>
+
+        <rule name="DC_PROHIBITED_IDENTIFIERS_NOT_PRESENT_LEVEL_VOLUME">
+            <description>
+                Úroveň VOLUME nesmí obsahovat žádné zakázané identifikátory v záznamu Dublin Core.
+            </description>
+            <validation functionName="checkIdentifiersNoTypesPresent">
+                <params>
+                    <value name="identifier_list_list" type="IDENTIFIER_LIST_LIST">
+                        <!--seznam obsahujici seznam identifikatoru DC pro kazdy zaznam dmdSec pro dc-->
+                        <evaluation functionName="getDcIdentifiersForEachDmdsecId">
+                            <params>
+                                <value name="dmdsec_ids" type="STRING_LIST">
+                                    <!--seznam identifikatoru (dmdSec ID)-->
+                                    <evaluation functionName="getStringListByXpath">
+                                        <params>
+                                            <value name="xml_file" type="FILE">
+                                                <value-ref name="PRIMARY-METS_FILE"/>
+                                            </value>
+                                            <value name="xpath" type="STRING">
+                                                /mets:mets/mets:dmdSec[starts-with(@ID, "DCMD_VOLUME")]/@ID
+                                            </value>
+                                        </params>
+                                    </evaluation>
+                                </value>
+                                <value name="mets_file" type="FILE">
+                                    <value-ref name="PRIMARY-METS_FILE"/>
+                                </value>
+                            </params>
+                        </evaluation>
+                    </value>
+                    <value name="id_types" type="STRING_LIST">
+                        <value-ref name="ID_TYPES_VOLUME_PROHIBITED"/>
+                    </value>
+                    <value name="level_name" type="STRING">VOLUME</value>
+                </params>
+            </validation>
+        </rule>
+
+        <!--issue-->
+        <rule name="DC_MANDATORY_IDENTIFIERS_PRESENT_LEVEL_ISSUE">
+            <description>
+                Úroveň ISSUE musí obsahovat všechny povinné identifikátory v záznamu Dublin Core.
+            </description>
+            <validation functionName="checkIdentifiersAllTypesPresent">
+                <params>
+                    <value name="identifier_list_list" type="IDENTIFIER_LIST_LIST">
+                        <!--seznam obsahujici seznam identifikatoru DC pro kazdy zaznam dmdSec pro dc-->
+                        <evaluation functionName="getDcIdentifiersForEachDmdsecId">
+                            <params>
+                                <value name="dmdsec_ids" type="STRING_LIST">
+                                    <!--seznam identifikatoru (dmdSec ID)-->
+                                    <evaluation functionName="getStringListByXpath">
+                                        <params>
+                                            <value name="xml_file" type="FILE">
+                                                <value-ref name="PRIMARY-METS_FILE"/>
+                                            </value>
+                                            <value name="xpath" type="STRING">
+                                                /mets:mets/mets:dmdSec[starts-with(@ID, "DCMD_ISSUE")]/@ID
+                                            </value>
+                                        </params>
+                                    </evaluation>
+                                </value>
+                                <value name="mets_file" type="FILE">
+                                    <value-ref name="PRIMARY-METS_FILE"/>
+                                </value>
+                            </params>
+                        </evaluation>
+                    </value>
+                    <value name="id_types" type="STRING_LIST">
+                        <value-ref name="ID_TYPES_ISSUE_MANDATORY"/>
+                    </value>
+                    <value name="level_name" type="STRING">ISSUE</value>
+                </params>
+            </validation>
+        </rule>
+
+        <rule name="DC_PROHIBITED_IDENTIFIERS_NOT_PRESENT_LEVEL_ISSUE">
+            <description>
+                Úroveň ISSUE nesmí obsahovat žádné zakázané identifikátory v záznamu Dublin Core.
+            </description>
+            <validation functionName="checkIdentifiersNoTypesPresent">
+                <params>
+                    <value name="identifier_list_list" type="IDENTIFIER_LIST_LIST">
+                        <!--seznam obsahujici seznam identifikatoru DC pro kazdy zaznam dmdSec pro dc-->
+                        <evaluation functionName="getDcIdentifiersForEachDmdsecId">
+                            <params>
+                                <value name="dmdsec_ids" type="STRING_LIST">
+                                    <!--seznam identifikatoru (dmdSec ID)-->
+                                    <evaluation functionName="getStringListByXpath">
+                                        <params>
+                                            <value name="xml_file" type="FILE">
+                                                <value-ref name="PRIMARY-METS_FILE"/>
+                                            </value>
+                                            <value name="xpath" type="STRING">
+                                                /mets:mets/mets:dmdSec[starts-with(@ID, "DCMD_ISSUE")]/@ID
+                                            </value>
+                                        </params>
+                                    </evaluation>
+                                </value>
+                                <value name="mets_file" type="FILE">
+                                    <value-ref name="PRIMARY-METS_FILE"/>
+                                </value>
+                            </params>
+                        </evaluation>
+                    </value>
+                    <value name="id_types" type="STRING_LIST">
+                        <value-ref name="ID_TYPES_ISSUE_PROHIBITED"/>
+                    </value>
+                    <value name="level_name" type="STRING">ISSUE</value>
+                </params>
+            </validation>
+        </rule>
+
+        <!--supplement-->
+        <rule name="DC_MANDATORY_IDENTIFIERS_PRESENT_LEVEL_SUPPLEMENT">
+            <description>
+                Úroveň SUPPLEMENT musí obsahovat všechny povinné identifikátory v záznamu Dublin Core.
+            </description>
+            <validation functionName="checkIdentifiersAllTypesPresent">
+                <params>
+                    <value name="identifier_list_list" type="IDENTIFIER_LIST_LIST">
+                        <!--seznam obsahujici seznam identifikatoru DC pro kazdy zaznam dmdSec pro dc-->
+                        <evaluation functionName="getDcIdentifiersForEachDmdsecId">
+                            <params>
+                                <value name="dmdsec_ids" type="STRING_LIST">
+                                    <!--seznam identifikatoru (dmdSec ID)-->
+                                    <evaluation functionName="getStringListByXpath">
+                                        <params>
+                                            <value name="xml_file" type="FILE">
+                                                <value-ref name="PRIMARY-METS_FILE"/>
+                                            </value>
+                                            <value name="xpath" type="STRING">
+                                                /mets:mets/mets:dmdSec[starts-with(@ID, "DCMD_SUPPL")]/@ID
+                                            </value>
+                                        </params>
+                                    </evaluation>
+                                </value>
+                                <value name="mets_file" type="FILE">
+                                    <value-ref name="PRIMARY-METS_FILE"/>
+                                </value>
+                            </params>
+                        </evaluation>
+                    </value>
+                    <value name="id_types" type="STRING_LIST">
+                        <value-ref name="ID_TYPES_SUPPLEMENT_MANDATORY"/>
+                    </value>
+                    <value name="level_name" type="STRING">SUPPLEMENT</value>
+                </params>
+            </validation>
+        </rule>
+
+        <rule name="DC_PROHIBITED_IDENTIFIERS_NOT_PRESENT_LEVEL_SUPPLEMENT">
+            <description>
+                Úroveň SUPPLEMENT nesmí obsahovat žádné zakázané identifikátory v záznamu Dublin Core.
+            </description>
+            <validation functionName="checkIdentifiersNoTypesPresent">
+                <params>
+                    <value name="identifier_list_list" type="IDENTIFIER_LIST_LIST">
+                        <!--seznam obsahujici seznam identifikatoru DC pro kazdy zaznam dmdSec pro dc-->
+                        <evaluation functionName="getDcIdentifiersForEachDmdsecId">
+                            <params>
+                                <value name="dmdsec_ids" type="STRING_LIST">
+                                    <!--seznam identifikatoru (dmdSec ID)-->
+                                    <evaluation functionName="getStringListByXpath">
+                                        <params>
+                                            <value name="xml_file" type="FILE">
+                                                <value-ref name="PRIMARY-METS_FILE"/>
+                                            </value>
+                                            <value name="xpath" type="STRING">
+                                                /mets:mets/mets:dmdSec[starts-with(@ID, "DCMD_SUPPL")]/@ID
+                                            </value>
+                                        </params>
+                                    </evaluation>
+                                </value>
+                                <value name="mets_file" type="FILE">
+                                    <value-ref name="PRIMARY-METS_FILE"/>
+                                </value>
+                            </params>
+                        </evaluation>
+                    </value>
+                    <value name="id_types" type="STRING_LIST">
+                        <value-ref name="ID_TYPES_SUPPLEMENT_PROHIBITED"/>
+                    </value>
+                    <value name="level_name" type="STRING">SUPPLEMENT</value>
+                </params>
+            </validation>
+        </rule>
+
+        <!--article-->
+        <rule name="DC_MANDATORY_IDENTIFIERS_PRESENT_LEVEL_ARTICLE">
+            <description>
+                Úroveň ARTICLE musí obsahovat všechny povinné identifikátory v záznamu Dublin Core.
+            </description>
+            <validation functionName="checkIdentifiersAllTypesPresent">
+                <params>
+                    <value name="identifier_list_list" type="IDENTIFIER_LIST_LIST">
+                        <!--seznam obsahujici seznam identifikatoru DC pro kazdy zaznam dmdSec pro dc-->
+                        <evaluation functionName="getDcIdentifiersForEachDmdsecId">
+                            <params>
+                                <value name="dmdsec_ids" type="STRING_LIST">
+                                    <!--seznam identifikatoru (dmdSec ID)-->
+                                    <evaluation functionName="getStringListByXpath">
+                                        <params>
+                                            <value name="xml_file" type="FILE">
+                                                <value-ref name="PRIMARY-METS_FILE"/>
+                                            </value>
+                                            <value name="xpath" type="STRING">
+                                                /mets:mets/mets:dmdSec[starts-with(@ID, "DCMD_ART")]/@ID
+                                            </value>
+                                        </params>
+                                    </evaluation>
+                                </value>
+                                <value name="mets_file" type="FILE">
+                                    <value-ref name="PRIMARY-METS_FILE"/>
+                                </value>
+                            </params>
+                        </evaluation>
+                    </value>
+                    <value name="id_types" type="STRING_LIST">
+                        <value-ref name="ID_TYPES_ARTICLE_MANDATORY"/>
+                    </value>
+                    <value name="level_name" type="STRING">ARTICLE</value>
+                </params>
+            </validation>
+        </rule>
+
+        <rule name="DC_PROHIBITED_IDENTIFIERS_NOT_PRESENT_LEVEL_ARTICLE">
+            <description>
+                Úroveň ARTICLE nesmí obsahovat žádné zakázané identifikátory v záznamu Dublin Core.
+            </description>
+            <validation functionName="checkIdentifiersNoTypesPresent">
+                <params>
+                    <value name="identifier_list_list" type="IDENTIFIER_LIST_LIST">
+                        <!--seznam obsahujici seznam identifikatoru DC pro kazdy zaznam dmdSec pro dc-->
+                        <evaluation functionName="getDcIdentifiersForEachDmdsecId">
+                            <params>
+                                <value name="dmdsec_ids" type="STRING_LIST">
+                                    <!--seznam identifikatoru (dmdSec ID)-->
+                                    <evaluation functionName="getStringListByXpath">
+                                        <params>
+                                            <value name="xml_file" type="FILE">
+                                                <value-ref name="PRIMARY-METS_FILE"/>
+                                            </value>
+                                            <value name="xpath" type="STRING">
+                                                /mets:mets/mets:dmdSec[starts-with(@ID, "DCMD_ART")]/@ID
+                                            </value>
+                                        </params>
+                                    </evaluation>
+                                </value>
+                                <value name="mets_file" type="FILE">
+                                    <value-ref name="PRIMARY-METS_FILE"/>
+                                </value>
+                            </params>
+                        </evaluation>
+                    </value>
+                    <value name="id_types" type="STRING_LIST">
+                        <value-ref name="ID_TYPES_ARTICLE_PROHIBITED"/>
+                    </value>
+                    <value name="level_name" type="STRING">ARTICLE</value>
+                </params>
+            </validation>
+        </rule>
+
+        <!-- picture -->
+        <rule name="DC_MANDATORY_IDENTIFIERS_PRESENT_LEVEL_PICTURE">
+            <description>
+                Úroveň PICTURE musí obsahovat všechny povinné identifikátory v záznamu Dublin Core.
+            </description>
+            <validation functionName="checkIdentifiersAllTypesPresent">
+                <params>
+                    <value name="identifier_list_list" type="IDENTIFIER_LIST_LIST">
+                        <!--seznam obsahujici seznam identifikatoru DC pro kazdy zaznam dmdSec pro dc-->
+                        <evaluation functionName="getDcIdentifiersForEachDmdsecId">
+                            <params>
+                                <value name="dmdsec_ids" type="STRING_LIST">
+                                    <!--seznam identifikatoru (dmdSec ID)-->
+                                    <evaluation functionName="getStringListByXpath">
+                                        <params>
+                                            <value name="xml_file" type="FILE">
+                                                <value-ref name="PRIMARY-METS_FILE"/>
+                                            </value>
+                                            <value name="xpath" type="STRING">
+                                                /mets:mets/mets:dmdSec[starts-with(@ID, "DCMD_PICT")]/@ID
+                                            </value>
+                                        </params>
+                                    </evaluation>
+                                </value>
+                                <value name="mets_file" type="FILE">
+                                    <value-ref name="PRIMARY-METS_FILE"/>
+                                </value>
+                            </params>
+                        </evaluation>
+                    </value>
+                    <value name="id_types" type="STRING_LIST">
+                        <value-ref name="ID_TYPES_PICTURE_MANDATORY"/>
+                    </value>
+                    <value name="level_name" type="STRING">PICTURE</value>
+                </params>
+            </validation>
+        </rule>
+
+        <rule name="DC_PROHIBITED_IDENTIFIERS_NOT_PRESENT_LEVEL_PICTURE">
+            <description>
+                Úroveň PICTURE nesmí obsahovat žádné zakázané identifikátory v záznamu Dublin Core.
+            </description>
+            <validation functionName="checkIdentifiersNoTypesPresent">
+                <params>
+                    <value name="identifier_list_list" type="IDENTIFIER_LIST_LIST">
+                        <!--seznam obsahujici seznam identifikatoru DC pro kazdy zaznam dmdSec pro dc-->
+                        <evaluation functionName="getDcIdentifiersForEachDmdsecId">
+                            <params>
+                                <value name="dmdsec_ids" type="STRING_LIST">
+                                    <!--seznam identifikatoru (dmdSec ID)-->
+                                    <evaluation functionName="getStringListByXpath">
+                                        <params>
+                                            <value name="xml_file" type="FILE">
+                                                <value-ref name="PRIMARY-METS_FILE"/>
+                                            </value>
+                                            <value name="xpath" type="STRING">
+                                                /mets:mets/mets:dmdSec[starts-with(@ID, "DCMD_PICT")]/@ID
+                                            </value>
+                                        </params>
+                                    </evaluation>
+                                </value>
+                                <value name="mets_file" type="FILE">
+                                    <value-ref name="PRIMARY-METS_FILE"/>
+                                </value>
+                            </params>
+                        </evaluation>
+                    </value>
+                    <value name="id_types" type="STRING_LIST">
+                        <value-ref name="ID_TYPES_PICTURE_PROHIBITED"/>
+                    </value>
+                    <value name="level_name" type="STRING">PICTURE</value>
+                </params>
+            </validation>
+        </rule>
 
         <rule name="DC_IDENTIFIERS_NO_DUPLICATES_WITHIN_DMDSEC">
             <description>Identifikátory v jednotlivých Dublin Core záznamech musí mít unikátní typ.
@@ -1150,7 +1519,7 @@
             </validation>
         </rule>
 
-
+        <!--TODO: podobne kontroly pro identifikatory MODS, jako pro DC-->
         <!--TODO: pro kazdou uroven musi byt shoda id v DC a v  MODS-->
 
 
