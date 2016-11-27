@@ -103,6 +103,8 @@ public class Engine {
                 return new EfGetFileListByXpath(this);
             case "getDcIdentifiersForEachDmdsecId":
                 return new EfGetDcIdentifiersForEachDmdsecId(this);
+            case "getModsIdentifiersForEachDmdsecId":
+                return new EfGetModsIdentifiersForEachDmdsecId(this);
             case "mergeIdentifiers":
                 return new EfMergeIdentifiers(this);
             default:
