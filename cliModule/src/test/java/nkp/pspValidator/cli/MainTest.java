@@ -49,8 +49,8 @@ public class MainTest {
 
         Main.main(devParams, buildParams(
                 "../sharedModule/src/main/resources/nkp/pspValidator/shared/fDMF"
-                //, MON_1_2
-                , PER_1_6
+                , MON_1_2
+                //, PER_1_6
                 //, MON_1_2_INVALID_IMAGES
                 //, MON_1_2_MAP
                 //,PER_1_6
