@@ -104,7 +104,7 @@ public class DmfDetector {
         try {
             File infoFile = findInfoFile(pspRootDir);
             Document infoDoc = loadDocument(infoFile);
-            XPathExpression xPathExpression = buildXpathIgnoringNamespaces("/info/metadataversion");
+            XPathExpression xPathExpression = buildXpathIgnoringNamespaces("/info/metadataversion|/info/metadataVersion");
             String versionFound = ((String) xPathExpression.evaluate(infoDoc, XPathConstants.STRING)).trim();
             if (versionFound == null || versionFound.isEmpty()) {
                 switch (dmfType) {
