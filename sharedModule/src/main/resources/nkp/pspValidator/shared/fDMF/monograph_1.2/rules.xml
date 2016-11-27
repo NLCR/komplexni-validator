@@ -1897,8 +1897,18 @@
             </validation>
         </rule>
 
-        <!--TODO: pro kazdou uroven musi byt shoda id v DC a v  MODS-->
-
+        <!--shoda identifikatorů v mods, dc-->
+        <rule name="PRIMARY-METS_DC_IDENTIFIER_MATCH_MODS_IDENTIFIERS">
+            <description>Identifikátory v DC se musí shodovat s identifikátory v MODS pro všechny úrovně popisu.
+            </description>
+            <validation functionName="checkPrimaryMetsDcIdentifiersMatchModsIdentifiers">
+                <params>
+                    <value name="primary-mets_file" type="FILE">
+                        <value-ref name="PRIMARY-METS_FILE"/>
+                    </value>
+                </params>
+            </validation>
+        </rule>
 
     </rules-section>
 

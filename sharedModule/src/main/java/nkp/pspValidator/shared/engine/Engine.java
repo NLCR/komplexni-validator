@@ -167,6 +167,8 @@ public class Engine {
                 return new VfCheckStringDerivedFromOneOfIdentifiers(this);
             case "checkPrimaryMetsFilesecContainsAllFilegroups":
                 return new VfCheckPrimaryMetsFilesecContainsAllFilegroups(this);
+            case "checkPrimaryMetsDcIdentifiersMatchModsIdentifiers":
+                return new VfCheckPrimaryMetsDcIdentifiersMatchModsIdentifiers(this);
             case "checkFileListsMatch":
                 return new VfCheckFileListsMatch(this);
             case "checkMetsFilesecSizesMatch":
