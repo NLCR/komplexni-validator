@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<validationTemplate>
+	<name>periodical_supplement</name>
+	<version>1.0</version>
+	<rootValidationNode mandatory="MANDATORY" name="mets:mets" nullable="false">
+		<attribute mandatory="MANDATORY" name="LABEL"/>
+		<attribute mandatory="MANDATORY" name="TYPE"/>
+		<element mandatory="MANDATORY" name="mets:metsHdr" nullable="false">
+			<attribute mandatory="MANDATORY" name="CREATEDATE"/>
+			<attribute mandatory="MANDATORY" name="LASTMODDATE"/>
+			<element mandatory="MANDATORY" name="mets:agent" nullable="false">
+				<attribute mandatory="MANDATORY" name="ROLE">
+					<possibleValue>CREATOR</possibleValue>
+					<possibleValue>ARCHIVIST</possibleValue>
+				</attribute>
+				<attribute mandatory="MANDATORY" name="TYPE">
+					<possibleValue>ORGANIZATION</possibleValue>
+				</attribute>
+				<element mandatory="MANDATORY" name="mets:name" nullable="false"/>
+			</element>
+		</element>
+		<element mandatory="MANDATORY_IF_AVAILABLE" name="mets:dmdSec[@ID='MODSMD_SUPPLEMENT_0001']" nullable="false">
+			<element mandatory="MANDATORY" name="mets:mdWrap" nullable="false">
+				<element mandatory="MANDATORY" name="mets:xmlData" nullable="false">
+					<element mandatory="MANDATORY" name="mods:mods" nullable="false">
+						<attribute mandatory="MANDATORY" name="ID"/>
+						<element mandatory="MANDATORY" name="mods:titleInfo" nullable="false">
+							<element mandatory="MANDATORY" name="mods:title" nullable="false"/>
+							<element mandatory="MANDATORY_IF_AVAILABLE" name="mods:partNumber" nullable="false"/>
+							<element mandatory="MANDATORY_IF_AVAILABLE" name="mods:partName" nullable="false"/>
+						</element>
+						<element mandatory="MANDATORY_IF_AVAILABLE" name="mods:name" nullable="false">
+							<attribute mandatory="MANDATORY" name="type">
+								<possibleValue>personal</possibleValue>
+								<possibleValue>corporate</possibleValue>
+								<possibleValue>conference</possibleValue>
+								<possibleValue>family</possibleValue>
+							</attribute>
+							<element mandatory="MANDATORY_IF_AVAILABLE" name="mods:namePart" nullable="false">
+								<attribute mandatory="MANDATORY" name="type">
+									<possibleValue>date</possibleValue>
+									<possibleValue>family</possibleValue>
+									<possibleValue>given</possibleValue>
+									<possibleValue>termsOfAddress</possibleValue>
+								</attribute>
+							</element>
+							<element mandatory="MANDATORY_IF_AVAILABLE" name="mods:role" nullable="false">
+								<element mandatory="MANDATORY_IF_AVAILABLE" name="mods:roleTerm" nullable="false">
+									<attribute mandatory="MANDATORY" name="type"/>
+									<attribute mandatory="MANDATORY" name="authority"/>
+								</element>
+							</element>
+						</element>
+						<element mandatory="MANDATORY" name="mods:genre" nullable="false"/>
+						<element mandatory="MANDATORY_IF_AVAILABLE" name="mods:originInfo" nullable="false">
+							<element mandatory="MANDATORY_IF_AVAILABLE" name="mods:place" nullable="false"/>
+							<element mandatory="MANDATORY_IF_AVAILABLE" name="mods:placeTerm" nullable="false">
+								<attribute mandatory="MANDATORY" name="type"/>
+							</element>
+							<element mandatory="MANDATORY_IF_AVAILABLE" name="mods:publisher" nullable="false"/>
+							<element mandatory="MANDATORY" name="mods:dateIssued" nullable="false"/>
+						</element>
+						<element mandatory="MANDATORY" name="mods:language" nullable="false">
+							<element mandatory="MANDATORY" name="mods:languageTerm" nullable="false">
+								<attribute mandatory="MANDATORY" name="type">
+									<possibleValue>code</possibleValue>
+								</attribute>
+								<attribute mandatory="MANDATORY" name="authority">
+									<possibleValue>iso639-2b</possibleValue>
+								</attribute>
+							</element>
+						</element>
+						<element mandatory="MANDATORY" name="mods:physicalDescription" nullable="false">
+							<element mandatory="MANDATORY" name="mods:form" nullable="false">
+								<attribute mandatory="MANDATORY" name="authority">
+									<possibleValue>marcform</possibleValue>
+									<possibleValue>rdacarrier</possibleValue>
+									<possibleValue>rdamedia</possibleValue>
+								</attribute>
+								<attribute mandatory="MANDATORY_IF_AVAILABLE" name="type">
+									<possibleValue>carrier</possibleValue>
+									<possibleValue>media</possibleValue>
+								</attribute>
+							</element>
+						</element>
+						<element mandatory="MANDATORY" name="mods:identifier" nullable="false">
+							<attribute mandatory="MANDATORY" name="type">
+								<possibleValue>doi</possibleValue>
+								<possibleValue>hdl</possibleValue>
+								<possibleValue>issn</possibleValue>
+								<possibleValue>isbn</possibleValue>
+								<possibleValue>urnnbn</possibleValue>
+								<possibleValue>uuid</possibleValue>
+								<possibleValue>local</possibleValue>
+								<possibleValue>barcode</possibleValue>
+								<possibleValue>oclc</possibleValue>
+								<possibleValue>URN</possibleValue>
+								<possibleValue>ccnb</possibleValue>
+								<possibleValue>uri</possibleValue>
+								<possibleValue>ISMN</possibleValue>
+							</attribute>
+						</element>
+					</element>
+				</element>
+			</element>
+		</element>
+		<element mandatory="MANDATORY_IF_AVAILABLE" name="mets:dmdSec[@ID='DCMD_SUPPLEMENT_0001']" nullable="false">
+			<element mandatory="MANDATORY" name="mets:mdWrap" nullable="false">
+				<attribute mandatory="MANDATORY" name="MDTYPE">
+					<possibleValue>DC</possibleValue>
+				</attribute>
+				<attribute mandatory="MANDATORY" name="MIMETYPE">
+					<possibleValue>text/xml</possibleValue>
+				</attribute>
+				<element mandatory="MANDATORY" name="mets:xmlData" nullable="false">
+					<element mandatory="MANDATORY" name="oai_dc:dc" nullable="false">
+						<element mandatory="MANDATORY" name="dc:title" nullable="false"/>
+						<element mandatory="MANDATORY_IF_AVAILABLE" name="dc:description" nullable="false"/>
+						<element mandatory="MANDATORY_IF_AVAILABLE" name="dc:creator" nullable="false"/>
+						<element mandatory="MANDATORY" name="dc:type" nullable="false"/>
+						<element mandatory="MANDATORY_IF_AVAILABLE" name="dc:coverage" nullable="false"/>
+						<element mandatory="MANDATORY_IF_AVAILABLE" name="dc:publisher" nullable="false"/>
+						<element mandatory="MANDATORY_IF_AVAILABLE" name="dc:date" nullable="false"/>
+						<element mandatory="MANDATORY" name="dc:language" nullable="false"/>
+						<element mandatory="MANDATORY_IF_AVAILABLE" name="dc:subject" nullable="false"/>
+						<element mandatory="MANDATORY" name="dc:identifier" nullable="false"/>
+						<element mandatory="MANDATORY_IF_AVAILABLE" name="dc:source" nullable="false"/>
+					</element>
+				</element>
+			</element>
+		</element>
+	</rootValidationNode>
+</validationTemplate>

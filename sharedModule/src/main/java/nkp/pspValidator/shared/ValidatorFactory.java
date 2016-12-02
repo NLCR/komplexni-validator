@@ -49,8 +49,6 @@ public class ValidatorFactory {
         engine.setProvidedFile("PREMIS_XSD_FILE", findXsdFile(xsdRoot, "PREMIS", "premis_[0-9]+(\\.([0-9])+)*\\.xsd"));
 
         //nacteni patternu, promennych, pravidel etc.
-
-
         File fdmfXsdFile = new File(fdmfRoot, FDMF_XSD_FILE);
         checkFileExistAndReadable(fdmfXsdFile);
         //validateAndProcessFdmfConfig(engine, fdmfXsdFile, fdmfRoot, "fdmf.xml");
@@ -58,6 +56,13 @@ public class ValidatorFactory {
         validateAndProcessFdmfConfig(engine, fdmfXsdFile, fdmfRoot, "patterns.xml");
         validateAndProcessFdmfConfig(engine, fdmfXsdFile, fdmfRoot, "variables.xml");
         validateAndProcessFdmfConfig(engine, fdmfXsdFile, fdmfRoot, "rules.xml");
+
+        //nacteni sablon pro validaci biblio metadata
+        //TODO: poradne
+        //TODO: validovat pomoci xsd
+        ///home/martin/ssd/IdeaProjects/PspValidator/sharedModule/src/main/resources/nkp/pspValidator/shared/fDMF/monograph_1.2/biblioProfiles/dc/title.xml
+        engine.setProvidedFile("BIBLIO_PROFILE_DC_TITLE", new File("/home/martin/ssd/IdeaProjects/PspValidator/sharedModule/src/main/resources/nkp/pspValidator/shared/fDMF/monograph_1.2/biblioProfiles/dc/title.xml"));
+
         return new Validator(engine);
     }
 

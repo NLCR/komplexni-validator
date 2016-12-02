@@ -45,7 +45,7 @@ public class MainTest {
         }
 
         Validator.DevParams devParams = new Validator.DevParams();
-        devParams.getSectionsToRun().add("Identifikátory");
+        devParams.getSectionsToRun().add("Bibliografická metadata");
 
         Main.main(devParams, buildParams(
                 "../sharedModule/src/main/resources/nkp/pspValidator/shared/fDMF"

@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<validationTemplate>
+    <name>mix_mc</name>
+    <version>1.0</version>
+    <rootValidationNode mandatory="MANDATORY" name="mix" nullable="false">
+        <element mandatory="MANDATORY" name="*[local-name()='BasicDigitalObjectInformation']" nullable="false">
+            <element mandatory="MANDATORY_IF_AVAILABLE" name="*[local-name()='ObjectIdentifier']" nullable="false">
+                <element mandatory="MANDATORY_IF_AVAILABLE" name="*[local-name()='objectIdentifierType']" nullable="false"/>
+                <element mandatory="MANDATORY_IF_AVAILABLE" name="*[local-name()='objectIdentifierValue']" nullable="false"/>
+            </element>
+            <element mandatory="MANDATORY" name="*[local-name()='FormatDesignation']" nullable="false">
+                <element mandatory="MANDATORY" name="*[local-name()='formatName']" nullable="false"/>
+                <element mandatory="MANDATORY" name="*[local-name()='formatVersion']" nullable="false"/>
+            </element>
+            <element mandatory="MANDATORY" name="*[local-name()='Compression']" nullable="false">
+                <element mandatory="MANDATORY" name="*[local-name()='compressionScheme']" nullable="false"/>
+            </element>
+        </element>
+        <element mandatory="MANDATORY" name="*[local-name()='BasicImageInformation']" nullable="false">
+            <element mandatory="MANDATORY" name="*[local-name()='BasicImageCharacteristics']" nullable="false">
+                <element mandatory="MANDATORY" name="*[local-name()='imageWidth']" nullable="false"/>
+                <element mandatory="MANDATORY" name="*[local-name()='imageHeight']" nullable="false"/>
+                <element mandatory="MANDATORY" name="*[local-name()='PhotometricInterpretation']" nullable="false">
+                    <element mandatory="MANDATORY" name="*[local-name()='colorSpace']" nullable="false"/>
+                    <element mandatory="MANDATORY_IF_AVAILABLE" name="*[local-name()='ColorProfile']" nullable="false">
+                        <element mandatory="MANDATORY" name="*[local-name()='IccProfile']" nullable="false">
+                            <element mandatory="MANDATORY" name="*[local-name()='iccProfileName']" nullable="false"/>
+                            <element mandatory="MANDATORY" name="*[local-name()='iccProfileVersion']" nullable="false"/>
+                        </element>
+                    </element>
+                </element>
+            </element>
+            <element mandatory="MANDATORY_IF_AVAILABLE" name="*[local-name()='SpecialFormatCharacteristics']" nullable="false">
+                <element mandatory="MANDATORY" name="*[local-name()='JPEG2000']" nullable="false">
+                    <element mandatory="MANDATORY" name="*[local-name()='CodecCompliance']" nullable="false">
+                        <element mandatory="MANDATORY" name="*[local-name()='codec']" nullable="false"/>
+                        <element mandatory="MANDATORY" name="*[local-name()='codecVersion']" nullable="false"/>
+                        <element mandatory="MANDATORY" name="*[local-name()='codestreamProfile']" nullable="false"/>
+                        <element mandatory="MANDATORY" name="*[local-name()='complianceClass']" nullable="false"/>
+                    </element>
+                    <element mandatory="MANDATORY" name="*[local-name()='EncodingOptions']" nullable="false">
+                        <element mandatory="MANDATORY" name="*[local-name()='Tiles']" nullable="false">
+                            <element mandatory="MANDATORY" name="*[local-name()='tileWidth']" nullable="false"/>
+                            <element mandatory="MANDATORY" name="*[local-name()='tileHeight']" nullable="false"/>
+                        </element>
+                        <element mandatory="MANDATORY" name="*[local-name()='qualityLayers']" nullable="false"/>
+                        <element mandatory="MANDATORY" name="*[local-name()='resolutionLevels']" nullable="false"/>
+                    </element>
+                </element>
+            </element>
+        </element>
+        <element mandatory="MANDATORY" name="*[local-name()='ImageAssessmentMetadata']" nullable="false">
+            <element mandatory="MANDATORY" name="*[local-name()='SpatialMetrics']" nullable="false">
+                <element mandatory="MANDATORY" name="*[local-name()='samplingFrequencyUnit']" nullable="false"/>
+                <element mandatory="MANDATORY_IF_AVAILABLE" name="*[local-name()='xSamplingFrequency']" nullable="false">
+                    <element mandatory="MANDATORY" name="*[local-name()='numerator']" nullable="false"/>
+                    <element mandatory="MANDATORY" name="*[local-name()='denominator']" nullable="false"/>
+                </element>
+                <element mandatory="MANDATORY_IF_AVAILABLE" name="*[local-name()='ySamplingFrequency']" nullable="false">
+                    <element mandatory="MANDATORY" name="*[local-name()='numerator']" nullable="false"/>
+                    <element mandatory="MANDATORY" name="*[local-name()='denominator']" nullable="false"/>
+                </element>
+            </element>
+            <element mandatory="MANDATORY" name="*[local-name()='ImageColorEncoding']" nullable="false">
+                <element mandatory="MANDATORY" name="*[local-name()='BitsPerSample']" nullable="false">
+                    <element mandatory="MANDATORY" name="*[local-name()='bitsPerSampleValue']" nullable="false"/>
+                </element>
+                <element mandatory="MANDATORY" name="*[local-name()='samplesPerPixel']" nullable="false"/>
+            </element>
+            <element mandatory="MANDATORY_IF_AVAILABLE" name="*[local-name()='TargetData']" nullable="false">
+                <element mandatory="MANDATORY" name="*[local-name()='targetType']" nullable="false"/>
+                <element mandatory="MANDATORY" name="*[local-name()='targetID']" nullable="false">
+                    <element mandatory="MANDATORY" name="*[local-name()='targetManufacturer']" nullable="false"/>
+                    <element mandatory="MANDATORY" name="*[local-name()='targetName']" nullable="false"/>
+                </element>
+                <element mandatory="MANDATORY_IF_AVAILABLE" name="*[local-name()='externalTarget']" nullable="false"/>
+                <element mandatory="MANDATORY_IF_AVAILABLE" name="*[local-name()='externalTarget']" nullable="false"/>
+            </element>
+        </element>
+        <element mandatory="MANDATORY" name="*[local-name()='ChangeHistory']" nullable="false">
+            <element mandatory="MANDATORY" name="*[local-name()='ImageProcessing']" nullable="false">
+                <element mandatory="MANDATORY" name="*[local-name()='sourceData']" nullable="false"/>
+            </element>
+        </element>
+    </rootValidationNode>
+</validationTemplate>

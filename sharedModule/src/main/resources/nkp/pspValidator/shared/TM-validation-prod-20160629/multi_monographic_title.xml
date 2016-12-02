@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<validationTemplate>
+	<name>monographic_volume</name>
+	<version>1.0</version>
+	<rootValidationNode mandatory="MANDATORY" name="mets:mets" nullable="false">
+		<attribute mandatory="MANDATORY" name="LABEL"/>
+		<attribute mandatory="MANDATORY" name="TYPE"/>
+		<element mandatory="MANDATORY" name="mets:dmdSec[@ID='MODSMD_TITLE_0001']" nullable="false">
+			<element mandatory="MANDATORY" name="mets:mdWrap" nullable="false">
+				<attribute mandatory="MANDATORY" name="MDTYPE">
+					<possibleValue>MODS</possibleValue>
+				</attribute>
+				<attribute mandatory="MANDATORY" name="MIMETYPE">
+					<possibleValue>text/xml</possibleValue>
+				</attribute>
+				<element mandatory="MANDATORY" name="mets:xmlData" nullable="false">
+					<element mandatory="MANDATORY" name="mods:mods" nullable="false">
+						<attribute mandatory="MANDATORY" name="ID">
+							<possibleValue>MODS_TITLE_0001</possibleValue>
+						</attribute>
+						<element mandatory="MANDATORY" name="mods:titleInfo" nullable="false">
+							<element mandatory="MANDATORY" name="mods:title" nullable="false"/>
+						</element>
+						<element mandatory="MANDATORY" name="mods:originInfo" nullable="true">
+							<element mandatory="MANDATORY_IF_AVAILABLE" name="mods:publisher" nullable="false"/>
+							<element mandatory="MANDATORY_IF_AVAILABLE" name="mods:edition" nullable="false"/>
+						</element>
+						<element mandatory="MANDATORY" name="mods:genre" nullable="false"/>
+						<element mandatory="MANDATORY" name="mods:identifier" nullable="false">
+							<attribute mandatory="MANDATORY_IF_AVAILABLE" name="type"/>
+						</element>
+					</element>
+				</element>
+			</element>
+		</element>
+	</rootValidationNode>
+</validationTemplate>
+
+	

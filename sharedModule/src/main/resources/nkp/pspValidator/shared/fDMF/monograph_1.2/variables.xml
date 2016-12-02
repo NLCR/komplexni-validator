@@ -550,4 +550,16 @@
         </evaluation>
     </value-def>
 
+
+    <!--TODO: dodelat-->
+    <!--TODO: doplnit pro monografie-->
+    <!--BIBLIO PROFILY-->
+    <value-def name="BIBLIO_PROFILE_DC_TITLE" type="FILE">
+        <evaluation functionName="getProvidedFile">
+            <params>
+                <value name="file_id" type="STRING">BIBLIO_PROFILE_DC_TITLE</value>
+            </params>
+        </evaluation>
+    </value-def>
+
 </fDMF>

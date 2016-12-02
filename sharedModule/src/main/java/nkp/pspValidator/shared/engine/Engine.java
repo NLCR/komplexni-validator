@@ -179,6 +179,11 @@ public class Engine {
                 return new VfCheckSecondaryMetsFilesecContainsAllFilegroups(this);
             case "checkImageFilesValidByExternalUtil":
                 return new VfCheckImageFilesValidByExternalUtil(this);
+
+            //bibliographic metadata
+            case "checkBibliographicMetadataMatchProfile":
+                return new VfCheckBibliographicMetadataMatchProfile(this);
+
             default:
                 throw new ValidatorConfigurationException(String.format("validační funkce %s neexistuje", name));
         }

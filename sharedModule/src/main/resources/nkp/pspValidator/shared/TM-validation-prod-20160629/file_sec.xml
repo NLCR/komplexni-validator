@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<validationTemplate>
+    <name>file_sec</name>
+    <version>1.0</version>
+    <rootValidationNode mandatory="MANDATORY" name="mets:mets" nullable="false">
+        <attribute mandatory="MANDATORY" name="LABEL"/>
+        <attribute mandatory="MANDATORY" name="TYPE"/>
+        <element mandatory="MANDATORY" name="mets:fileSec" nullable="false">
+            <element mandatory="MANDATORY" name="mets:fileGrp[@ID='MC_IMGGRP']" nullable="false">
+                <attribute mandatory="MANDATORY" name="USE">
+                    <possibleValue>Images</possibleValue>
+                </attribute>
+                <element mandatory="MANDATORY" name="mets:file" nullable="false">
+                    <attribute mandatory="MANDATORY" name="ID"/>
+                    <attribute mandatory="MANDATORY" name="MIMETYPE">
+                        <possibleValue>image/jp2</possibleValue>
+                    </attribute>
+                    <attribute mandatory="MANDATORY" name="SIZE"/>
+                    <attribute mandatory="MANDATORY" name="CHECKSUMTYPE">
+                        <possibleValue>MD5</possibleValue>
+                    </attribute>
+                    <attribute mandatory="MANDATORY" name="CHECKSUM"/>
+                    <attribute mandatory="MANDATORY" name="SEQ"/>
+                    <attribute mandatory="MANDATORY" name="CREATED"/>
+                    <element mandatory="MANDATORY" name="mets:FLocat" nullable="true">
+                        <attribute mandatory="MANDATORY" name="LOCTYPE"/>
+                        <attribute mandatory="MANDATORY" name="xlink:href"/>
+                    </element>
+                </element>
+            </element>
+            <element mandatory="MANDATORY" name="mets:fileGrp[@ID='UC_IMGGRP']" nullable="false">
+                <attribute mandatory="MANDATORY" name="USE">
+                    <possibleValue>Images</possibleValue>
+                </attribute>
+                <element mandatory="MANDATORY" name="mets:file" nullable="false">
+                    <attribute mandatory="MANDATORY" name="ID"/>
+                    <attribute mandatory="MANDATORY" name="MIMETYPE">
+                        <possibleValue>image/jp2</possibleValue>
+                    </attribute>
+                    <attribute mandatory="MANDATORY" name="SIZE"/>
+                    <attribute mandatory="MANDATORY" name="CHECKSUMTYPE">
+                        <possibleValue>MD5</possibleValue>
+                    </attribute>
+                    <attribute mandatory="MANDATORY" name="CHECKSUM"/>
+                    <attribute mandatory="MANDATORY" name="SEQ"/>
+                    <attribute mandatory="MANDATORY" name="CREATED"/>
+                    <element mandatory="MANDATORY" name="mets:FLocat" nullable="true">
+                        <attribute mandatory="MANDATORY" name="LOCTYPE"/>
+                        <attribute mandatory="MANDATORY" name="xlink:href"/>
+                    </element>
+                </element>
+            </element>
+            <element mandatory="MANDATORY" name="mets:fileGrp[@ID='ALTOGRP']" nullable="false">
+                <attribute mandatory="MANDATORY" name="USE">
+                    <possibleValue>Layout</possibleValue>
+                </attribute>
+                <element mandatory="MANDATORY" name="mets:file" nullable="false">
+                    <attribute mandatory="MANDATORY" name="ID"/>
+                    <attribute mandatory="MANDATORY" name="MIMETYPE">
+                        <possibleValue>text/xml</possibleValue>
+                    </attribute>
+                    <attribute mandatory="MANDATORY" name="SIZE"/>
+                    <attribute mandatory="MANDATORY" name="CHECKSUMTYPE">
+                        <possibleValue>MD5</possibleValue>
+                    </attribute>
+                    <attribute mandatory="MANDATORY" name="CHECKSUM"/>
+                    <attribute mandatory="MANDATORY" name="CREATED"/>
+                    <element mandatory="MANDATORY" name="mets:FLocat" nullable="true">
+                        <attribute mandatory="MANDATORY" name="LOCTYPE"/>
+                        <attribute mandatory="MANDATORY" name="xlink:href"/>
+                    </element>
+                </element>
+            </element>
+            <element mandatory="MANDATORY" name="mets:fileGrp[@ID='TECHMDGRP']" nullable="false">
+                <attribute mandatory="MANDATORY" name="USE">
+                    <possibleValue>Technical Metadata</possibleValue>
+                </attribute>
+                <element mandatory="MANDATORY" name="mets:file" nullable="false">
+                    <attribute mandatory="MANDATORY" name="ID"/>
+                    <attribute mandatory="MANDATORY" name="MIMETYPE">
+                        <possibleValue>text/xml</possibleValue>
+                    </attribute>
+                    <attribute mandatory="MANDATORY" name="SIZE"/>
+                    <attribute mandatory="MANDATORY" name="CHECKSUMTYPE">
+                        <possibleValue>MD5</possibleValue>
+                    </attribute>
+                    <attribute mandatory="MANDATORY" name="CHECKSUM"/>
+                    <attribute mandatory="MANDATORY" name="CREATED"/>
+                    <element mandatory="MANDATORY" name="mets:FLocat" nullable="true">
+                        <attribute mandatory="MANDATORY" name="LOCTYPE"/>
+                        <attribute mandatory="MANDATORY" name="xlink:href"/>
+                    </element>
+                </element>
+            </element>
+            <element mandatory="MANDATORY" name="mets:fileGrp[@ID='TXTGRP']" nullable="false">
+                <attribute mandatory="MANDATORY" name="USE">
+                    <possibleValue>Text</possibleValue>
+                </attribute>
+                <element mandatory="MANDATORY" name="mets:file" nullable="false">
+                    <attribute mandatory="MANDATORY" name="ID"/>
+                    <attribute mandatory="MANDATORY" name="MIMETYPE">
+                        <possibleValue>text/plain</possibleValue>
+                    </attribute>
+                    <attribute mandatory="MANDATORY" name="SIZE"/>
+                    <attribute mandatory="MANDATORY" name="CHECKSUMTYPE">
+                        <possibleValue>MD5</possibleValue>
+                    </attribute>
+                    <attribute mandatory="MANDATORY" name="CHECKSUM"/>
+                    <attribute mandatory="MANDATORY" name="SEQ"/>
+                    <attribute mandatory="MANDATORY" name="CREATED"/>
+                    <element mandatory="MANDATORY" name="mets:FLocat" nullable="true">
+                        <attribute mandatory="MANDATORY" name="LOCTYPE"/>
+                        <attribute mandatory="MANDATORY" name="xlink:href"/>
+                    </element>
+                </element>
+            </element>
+        </element>
+    </rootValidationNode>
+</validationTemplate>

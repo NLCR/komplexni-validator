@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<validationTemplate>
+    <name>physical_map_amd</name>
+    <version>1.0</version>
+    <rootValidationNode mandatory="MANDATORY" name="mets:mets" nullable="false">
+        <element mandatory="MANDATORY" name="mets:structMap" nullable="false">
+            <attribute mandatory="MANDATORY" name="TYPE">
+                <possibleValue>PHYSICAL</possibleValue>
+            </attribute>
+            <element mandatory="MANDATORY" name="mets:div" nullable="false">
+                <attribute mandatory="MANDATORY" name="TYPE">
+                    <possibleValue>MONOGRAPH_PAGE</possibleValue>
+                    <possibleValue>PERIODICAL_PAGE</possibleValue>
+                </attribute>
+                <element mandatory="MANDATORY" name="mets:fptr[starts-with(@FILEID, 'MC')]" nullable="true"/>
+                <element mandatory="MANDATORY" name="mets:fptr[starts-with(@FILEID, 'UC')]" nullable="true"/>
+                <element mandatory="MANDATORY" name="mets:fptr[starts-with(@FILEID, 'ALTO')]" nullable="true"/>
+                <element mandatory="MANDATORY" name="mets:fptr[starts-with(@FILEID, 'TXT')]" nullable="true"/>
+            </element>
+        </element>
+    </rootValidationNode>
+</validationTemplate>
