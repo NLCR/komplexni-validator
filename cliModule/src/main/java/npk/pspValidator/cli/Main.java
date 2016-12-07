@@ -336,8 +336,12 @@ public class Main {
                 } else {
                     try {
                         String version = imageUtilManager.runUtilVersionDetection(util);
-                        imageUtilManager.setUtilAvailable(util, true);
-                        System.out.println("nalezen, verze: " + version);
+                        if (version != null) {
+                            imageUtilManager.setUtilAvailable(util, true);
+                            System.out.println("nalezen, verze: " + version);
+                        } else {
+                            System.out.println("nenalezen");
+                        }
                     } catch (IOException e) {
                         //System.out.println("I/O chyba: " + e.getMessage());
                         System.out.println("nenalezen");

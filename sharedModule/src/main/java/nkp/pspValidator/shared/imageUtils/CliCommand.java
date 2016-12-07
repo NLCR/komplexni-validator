@@ -13,8 +13,7 @@ public class CliCommand {
     private final boolean prettyPrint;
 
     public CliCommand(String command) {
-        this.command = command;
-        this.prettyPrint = false;
+        this(command, false);
     }
 
     public CliCommand(String command, boolean prettyPrint) {
@@ -25,8 +24,8 @@ public class CliCommand {
 
     public Result execute() throws IOException, InterruptedException {
         try {
+            //System.out.println("command: " + this);
             Process process = Runtime.getRuntime().exec(command);
-            //System.err.println(command);
             //TODO: perhaps thread pooling here
 
             //read standard error stream in separate thread
@@ -43,6 +42,7 @@ public class CliCommand {
                     }
                     stderrReader.close();
                 } catch (IOException e) {
+                    //e.printStackTrace();
                     //nothing, only main thread running program itself shoud propagate exception
                 }
             });
@@ -63,6 +63,7 @@ public class CliCommand {
                     }
                     stdoutReader.close();
                 } catch (IOException e) {
+                    //e.printStackTrace();
                     //nothing, only main thread running program itself shoud propagate exception
                 }
             });
@@ -79,11 +80,21 @@ public class CliCommand {
             String stdErr = stderrBuilder.toString();
             /*System.err.println("SOUT: " + stdOut);
             System.err.println("SERR: " + stdErr);*/
-            return new Result(exitValue, stdOut, stdErr);
+            Result result = new Result(exitValue, stdOut, stdErr);
+            //result.print();
+            return result;
         } catch (Throwable e) {
-            //e.printStackTrace();
+            e.printStackTrace();
             throw e;
         }
+    }
+
+    @Override
+    public String toString() {
+        return "CliCommand{" +
+                "command='" + command + '\'' +
+                ", prettyPrint=" + prettyPrint +
+                '}';
     }
 
     public static class Result {
@@ -110,9 +121,9 @@ public class CliCommand {
         }
 
         public void print() {
-            System.out.println("EXIT VALUE: " + exitValue + (exitValue == 0 ? " (ok)" : " (error)"));
+            System.err.println("EXIT VALUE: " + exitValue + (exitValue == 0 ? " (ok)" : " (error)"));
             System.err.println("SERR: " + stderr);
-            System.out.println("SOUT: " + stdout);
+            System.err.println("SOUT: " + stdout);
         }
     }
 

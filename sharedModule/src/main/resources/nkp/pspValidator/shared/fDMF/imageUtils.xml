@@ -15,6 +15,15 @@
                     <regexp>(?s).*</regexp>
                 </parser>
             </operatingSystem>
+            <!--zdrojove kody z https://github.com/openpreserve/jpylyzer/releases a spousteni pres python-->
+            <!--http://jpylyzer.openpreservation.org//installation.html-->
+            <operatingSystem name="MAC">
+                <command>python ${PATH}jpylyzer.py --version</command>
+                <parser>
+                    <stream>STDERR</stream>
+                    <regexp>(?s).*</regexp>
+                </parser>
+            </operatingSystem>
         </versionDetection>
         <execution>
             <operatingSystem name="LINUX">
@@ -26,6 +35,13 @@
             </operatingSystem>
             <operatingSystem name="WINDOWS">
                 <command>jpylyzer jp2In ${IMAGE_FILE}</command>
+                <parser>
+                    <stream>STDOUT</stream>
+                    <regexp>(?s).*</regexp>
+                </parser>
+            </operatingSystem>
+            <operatingSystem name="MAC">
+                <command>python ${PATH}jpylyzer.py jp2In ${IMAGE_FILE}</command>
                 <parser>
                     <stream>STDOUT</stream>
                     <regexp>(?s).*</regexp>
@@ -51,6 +67,17 @@
                     <regexp>ImageMagick\s\S*\s\S*</regexp>
                 </parser>
             </operatingSystem>
+            <!--http://www.imagemagick.org/script/binary-releases.php-->
+            <!--instalace pres MacPorts-->
+            <!--bohuzel ale jen verze 6.9.9, ktera nedava vystup v xml-->
+            <!--mozna pouzit https://github.com/mtna/imagemagick-identify-parser-->
+            <!--<operatingSystem name="MAC">
+                <command>${PATH}convert -version</command>
+                <parser>
+                    <stream>STDOUT</stream>
+                    <regexp>ImageMagick\s\S*\s\S*</regexp>
+                </parser>
+            </operatingSystem>-->
         </versionDetection>
         <execution>
             <operatingSystem name="LINUX">
@@ -67,6 +94,13 @@
                     <regexp>(?s).*</regexp>
                 </parser>
             </operatingSystem>
+            <!--<operatingSystem name="MAC">
+                <command>${PATH}identify -verbose ${IMAGE_FILE}</command>
+                <parser>
+                    <stream>STDOUT</stream>
+                    <regexp>(?s).*</regexp>
+                </parser>
+            </operatingSystem>-->
         </execution>
     </imageUtil>
 
@@ -93,7 +127,7 @@
             <!--instalace podle http://jhove.openpreservation.org/getting-started/-->
             <!--stahnout jhove-latest.jar a double click spusti instalator (predpoklad jre)-->
             <operatingSystem name="MAC">
-                <command>jhove --version</command>
+                <command>${PATH}jhove --version</command>
                 <parser>
                     <stream>STDOUT</stream>
                     <regexp>Jhove \(.*\)</regexp>
@@ -121,7 +155,7 @@
                 </parser>
             </operatingSystem>
             <operatingSystem name="MAC">
-                <command>jhove -h XML -m jpeg2000-hul -k ${IMAGE_FILE}</command>
+                <command>${PATH}jhove -h XML -m jpeg2000-hul -k ${IMAGE_FILE}</command>
                 <parser>
                     <stream>STDOUT</stream>
                     <regexp>(?s)&lt;\?xml.*$</regexp>
@@ -146,7 +180,14 @@
                     <regexp>Current core system version is \S*</regexp>
                 </parser>
             </operatingSystem>
-            <!--demo app does not work in macOS 10.12 Sierra-->
+            <!--demo app does not work in macOS 10.12 Sierra, so not tested-->
+            <operatingSystem name="MAC">
+                <command>${PATH}kdu_expand -version</command>
+                <parser>
+                    <stream>STDOUT</stream>
+                    <regexp>Current core system version is \S*</regexp>
+                </parser>
+            </operatingSystem>
         </versionDetection>
         <execution>
             <operatingSystem name="LINUX">
@@ -163,7 +204,14 @@
                     <regexp>(?s).*</regexp>
                 </parser>
             </operatingSystem>
-            <!--demo app does not work in macOS 10.12 Sierra-->
+            <!--demo app does not work in macOS 10.12 Sierra, so not tested-->
+            <operatingSystem name="LINUX">
+                <command>${PATH}kdu_expand -i ${IMAGE_FILE}</command>
+                <parser>
+                    <stream>STDERR</stream>
+                    <regexp>(?s).*</regexp>
+                </parser>
+            </operatingSystem>
         </execution>
     </imageUtil>
 

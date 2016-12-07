@@ -26,7 +26,7 @@ public class Controller {
     private static final int MAX_OUTPUT_LENGTH = 100;
     private static final File MC_FILE_LINUX = new File("/home/martin/zakazky/NKP-PSP_validator/data/monografie_1.2/b50eb6b0-f0a4-11e3-b72e-005056827e52/mastercopy/mc_b50eb6b0-f0a4-11e3-b72e-005056827e52_0001.jp2");
     private static final File MC_FILE_WINDOWS = new File("C:\\Users\\Martin\\Documents\\PspValidator\\mc_b50eb6b0-f0a4-11e3-b72e-005056827e52_0001.jp2");
-    private static final File MC_FILE_MAC = new File("/Users/martinrehanek/Dropbox/PSP validator/data/monograph_1.2/b50eb6b0-f0a4-11e3-b72e-005056827e52/mastercopy/mc_b50eb6b0-f0a4-11e3-b72e-005056827e52_0001.jp2");
+    private static final File MC_FILE_MAC = new File("/Users/martinrehanek/Dropbox/PspValidator/data/monograph_1.2/b50eb6b0-f0a4-11e3-b72e-005056827e52/mastercopy/mc_b50eb6b0-f0a4-11e3-b72e-005056827e52_0001.jp2");
 
     private static final File IMAGE_PROPERTIES_LINUX = new File("/home/martin/ssd/IdeaProjects/PspValidator/sharedModule/src/main/resources/nkp/pspValidator/shared/fDMF/imageUtils.xml");
     private static final File IMAGE_PROPERTIES_MAC = new File("/Users/martinrehanek/IdeaProjects/PspValidator/sharedModule/src/main/resources/nkp/pspValidator/shared/fDMF/imageUtils.xml");
@@ -78,6 +78,8 @@ public class Controller {
             }
             case MAC: {
                 utilManager.setPath(ImageUtil.JHOVE, new File("/Users/martinrehanek/Software/jhove"));
+                utilManager.setPath(ImageUtil.JPYLYZER, new File("/Users/martinrehanek/Software/jpylyzer-1.17.0/jpylyzer"));
+                utilManager.setPath(ImageUtil.IMAGE_MAGICK, new File("/opt/local/bin"));
                 break;
             }
             default:
@@ -313,10 +315,10 @@ public class Controller {
             String file = null;
             switch (platform.getOperatingSystem()) {
                 case WINDOWS:
-                    file = dir + "\\resources\\bin\\ImageMagick-7.0.2-4-Q16-x64-dll.exe";
+                    file =  "\\resources\\bin\\ImageMagick-7.0.2-4-Q16-x64-dll.exe";
                     break;
                 case LINUX:
-                    file = dir + "/resources/bin/ImageMagick.deb";
+                    file =  "/resources/bin/ImageMagick.deb";
                     break;
             }
 

@@ -44,6 +44,8 @@ public class MainTest {
                 break;
             case MAC:
                 jhovePath = "/Users/martinrehanek/Software/jhove";
+                imageMagickPath = "/opt/local/bin";
+                jpylyzerPath = "/Users/martinrehanek/Software/jpylyzer-1.17.0/jpylyzer";
         }
 
         Validator.DevParams devParams = new Validator.DevParams();
