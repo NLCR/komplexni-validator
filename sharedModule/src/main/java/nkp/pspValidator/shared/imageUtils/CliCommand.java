@@ -58,6 +58,8 @@ public class CliCommand {
                         if (prettyPrint) {
                             stdoutBuilder.append('\n');
                         }
+                        //FIXME: on macOS the whole output is single line
+                        //System.err.println(line);
                     }
                     stdoutReader.close();
                 } catch (IOException e) {

@@ -26,12 +26,15 @@ public class Controller {
     private static final int MAX_OUTPUT_LENGTH = 100;
     private static final File MC_FILE_LINUX = new File("/home/martin/zakazky/NKP-PSP_validator/data/monografie_1.2/b50eb6b0-f0a4-11e3-b72e-005056827e52/mastercopy/mc_b50eb6b0-f0a4-11e3-b72e-005056827e52_0001.jp2");
     private static final File MC_FILE_WINDOWS = new File("C:\\Users\\Martin\\Documents\\PspValidator\\mc_b50eb6b0-f0a4-11e3-b72e-005056827e52_0001.jp2");
+    private static final File MC_FILE_MAC = new File("/Users/martinrehanek/Dropbox/PSP validator/data/monograph_1.2/b50eb6b0-f0a4-11e3-b72e-005056827e52/mastercopy/mc_b50eb6b0-f0a4-11e3-b72e-005056827e52_0001.jp2");
 
+    private static final File IMAGE_PROPERTIES_LINUX = new File("/home/martin/ssd/IdeaProjects/PspValidator/sharedModule/src/main/resources/nkp/pspValidator/shared/fDMF/imageUtils.xml");
+    private static final File IMAGE_PROPERTIES_MAC = new File("/Users/martinrehanek/IdeaProjects/PspValidator/sharedModule/src/main/resources/nkp/pspValidator/shared/fDMF/imageUtils.xml");
 
-    @FXML
-    Label osLabel;
     @FXML
     Label logLabel;
+    @FXML
+    Label osLabel;
 
     @FXML
     Label detectJpylyzerVersionLabel;
@@ -62,10 +65,40 @@ public class Controller {
     public Controller() throws ValidatorConfigurationException {
         platform = Platform.detectOs();
         LOGGER.info("platform: " + platform.toString());
-        utilManager = new ImageUtilManagerFactory(new File("/home/martin/ssd/IdeaProjects/PspValidator/sharedModule/src/main/resources/nkp/pspValidator/shared/fDMF/imageUtils.xml"))
-                .buildImageUtilManager(platform.getOperatingSystem());
+        File imageProperties = getImageProperties(platform);
+        utilManager = new ImageUtilManagerFactory(imageProperties).buildImageUtilManager(platform.getOperatingSystem());
+        //paths
+        switch (platform.getOperatingSystem()) {
+            case LINUX: {
+                utilManager.setPath(ImageUtil.KAKADU, new File("/home/martin/zakazky/PSP-validator/utility/kakadu/KDU78_Demo_Apps_for_Linux-x86-64_160226"));
+                break;
+            }
+            case WINDOWS: {
+                break;
+            }
+            case MAC: {
+                utilManager.setPath(ImageUtil.JHOVE, new File("/Users/martinrehanek/Software/jhove"));
+                break;
+            }
+            default:
+                throw new IllegalStateException("Unsupported platform: " + platform);
+        }
+
         //LINUX paths
-        utilManager.setPath(ImageUtil.KAKADU, new File("/home/martin/zakazky/PSP-validator/utility/kakadu/KDU78_Demo_Apps_for_Linux-x86-64_160226"));
+
+    }
+
+    private File getImageProperties(Platform platform) {
+        switch (platform.getOperatingSystem()) {
+            case LINUX:
+                return IMAGE_PROPERTIES_LINUX;
+            /*case WINDOWS:
+                return null;*/
+            case MAC:
+                return IMAGE_PROPERTIES_MAC;
+            default:
+                throw new IllegalStateException("Unsupported platform");
+        }
     }
 
     public void initialize() {
@@ -221,6 +254,8 @@ public class Controller {
                 return MC_FILE_LINUX;
             case WINDOWS:
                 return MC_FILE_WINDOWS;
+            case MAC:
+                return MC_FILE_MAC;
             default:
                 throw new IllegalStateException("Unsupported platform");
         }

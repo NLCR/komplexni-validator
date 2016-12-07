@@ -90,6 +90,15 @@
                     <regexp>(?m)^.*$</regexp>
                 </parser>
             </operatingSystem>
+            <!--instalace podle http://jhove.openpreservation.org/getting-started/-->
+            <!--stahnout jhove-latest.jar a double click spusti instalator (predpoklad jre)-->
+            <operatingSystem name="MAC">
+                <command>jhove --version</command>
+                <parser>
+                    <stream>STDOUT</stream>
+                    <regexp>Jhove \(.*\)</regexp>
+                </parser>
+            </operatingSystem>
         </versionDetection>
         <execution>
             <operatingSystem name="LINUX">
@@ -106,6 +115,13 @@
                 <command>jhove.bat -h XML -m jpeg2000-hul -k ${IMAGE_FILE} -c
                     C:\Users\Lenovo\Documents\software\jhove-1_11\jhove\conf\jhove.conf
                 </command>
+                <parser>
+                    <stream>STDOUT</stream>
+                    <regexp>(?s)&lt;\?xml.*$</regexp>
+                </parser>
+            </operatingSystem>
+            <operatingSystem name="MAC">
+                <command>jhove -h XML -m jpeg2000-hul -k ${IMAGE_FILE}</command>
                 <parser>
                     <stream>STDOUT</stream>
                     <regexp>(?s)&lt;\?xml.*$</regexp>
@@ -130,6 +146,7 @@
                     <regexp>Current core system version is \S*</regexp>
                 </parser>
             </operatingSystem>
+            <!--demo app does not work in macOS 10.12 Sierra-->
         </versionDetection>
         <execution>
             <operatingSystem name="LINUX">
@@ -146,6 +163,7 @@
                     <regexp>(?s).*</regexp>
                 </parser>
             </operatingSystem>
+            <!--demo app does not work in macOS 10.12 Sierra-->
         </execution>
     </imageUtil>
 

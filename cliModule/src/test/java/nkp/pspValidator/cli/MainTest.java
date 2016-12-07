@@ -42,10 +42,13 @@ public class MainTest {
             case LINUX:
                 kakaduPath = "/home/martin/zakazky/NKP-PSP_validator/utility/kakadu/KDU78_Demo_Apps_for_Linux-x86-64_160226";
                 break;
+            case MAC:
+                jhovePath = "/Users/martinrehanek/Software/jhove";
         }
 
         Validator.DevParams devParams = new Validator.DevParams();
-        devParams.getSectionsToRun().add("Identifikátory");
+        //devParams.getSectionsToRun().add("Identifikátory");
+        devParams.getSectionsToRun().add("JPEG 2000");
 
         Main.main(devParams, buildParams(
                 "../sharedModule/src/main/resources/nkp/pspValidator/shared/fDMF"
@@ -56,16 +59,16 @@ public class MainTest {
                 //,PER_1_6
                 , null//, Dmf.Type.MONOGRAPH
                 , null//, "1.2"
-                , null //verbosity
+                , 3 //verbosity
                 , null//"src/test/resources/protocol.xml" //xml protocol
                 , imageMagickPath //null //imageMagick path
                 , jhovePath //jhove path
                 , jpylyzerPath //jpylyzer path
                 , kakaduPath  //kakadu path
-                , true //disable imageMagick
-                , true //disable jhove
-                , true //disable jpylyzer
-                , true//disable kakadu
+                , false //disable imageMagick
+                , false //disable jhove
+                , false //disable jpylyzer
+                , false//disable kakadu
         ));
     }
 

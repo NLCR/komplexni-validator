@@ -68,7 +68,8 @@ public class ImageUtilManager {
         String command = constructCommand(versionDetection.getCommand());
         CliCommand.Result result = new CliCommand(command).execute();
         String rawOutput = null;
-        Stream stream = versionDetection.getParser().getStream();
+        Parser parser = versionDetection.getParser();
+        Stream stream = parser.getStream();
         switch (stream) {
             case STDERR:
                 rawOutput = result.getStderr();
@@ -80,8 +81,8 @@ public class ImageUtilManager {
                 throw new IOException(String.format("empty response from '%s' (%s)", command, stream));
         }
         if (rawOutput != null) {
-            String parsed = parseData(rawOutput, versionDetection.getParser());
-            return parsed == null || parsed.isEmpty() ? rawOutput.trim() : parsed.trim();
+            String parsed = parseData(rawOutput, parser);
+            return parsed == null || parsed.isEmpty() ? "neznámá verze" : parsed.trim();
         } else {
             return null;
         }
@@ -105,13 +106,17 @@ public class ImageUtilManager {
 
     private String parseData(String rawOutput, Parser parser) {
         if (parser.getRegexp() == null) {
+            //System.err.println("regexp is null");
             return rawOutput;
         } else {
             Matcher m = Pattern.compile(parser.getRegexp()).matcher(rawOutput);
             if (m.find()) {
                 //first appearance
-                return m.group(0);
+                String result = m.group(0);
+                //System.err.println("match: "  + result);
+                return result;
             } else {
+                //System.err.println("no match");
                 // TODO: 29.9.16 not found
                 return null;
             }
