@@ -8,6 +8,14 @@ repositories {
     mavenCentral()
 }
 
+tasks.withType(JavaCompile) {
+    options.encoding = 'UTF-8'
+}
+
+/*tasks.withType(Compile) {
+    options.encoding = 'UTF-8'
+}*/
+
 dependencies {
     testCompile 'junit:junit:4.12'
     compile group: 'com.mycila', name: 'mycila-xmltool', version: '4.4.ga'
@@ -18,7 +26,7 @@ dependencies {
 }
 
 //tohle udela zip, ale asi shared-logic.zip, asi na nic
-// see https://docs.gradle.org/current/userguide/javaLibraryDistribution_plugin.html
+//see https://docs.gradle.org/current/userguide/javaLibraryDistribution_plugin.html
 apply plugin: 'java-library-distribution'
 distributions {
     main {
