@@ -52,7 +52,7 @@
                        style="-fx-background-color: BLACK"
             >
                 <image>
-                    <Image url="@/img/Ok-48.png"/>
+                    <Image url="@/img/Checkmark-48.png"/>
                 </image>
             </ImageView>
 
@@ -118,7 +118,7 @@
                        style="-fx-background-color: BLACK"
             >
                 <image>
-                    <Image url="@/img/Ok-48.png"/>
+                    <Image url="@/img/Checkmark-48.png"/>
                 </image>
             </ImageView>
 
@@ -185,7 +185,7 @@
                        style="-fx-background-color: BLACK"
             >
                 <image>
-                    <Image url="@/img/Ok-48.png"/>
+                    <Image url="@/img/Checkmark-48.png"/>
                 </image>
             </ImageView>
 
@@ -252,7 +252,7 @@
                        style="-fx-background-color: BLACK"
             >
                 <image>
-                    <Image url="@/img/Ok-48.png"/>
+                    <Image url="@/img/Checkmark-48.png"/>
                 </image>
             </ImageView>
 
