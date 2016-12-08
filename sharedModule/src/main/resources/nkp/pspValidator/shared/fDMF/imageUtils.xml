@@ -70,15 +70,13 @@
             <!--TODO: vlastne blbost, nepotrebuju tady xml-->
             <!--http://www.imagemagick.org/script/binary-releases.php-->
             <!--instalace pres MacPorts-->
-            <!--bohuzel ale jen verze 6.9.9, ktera nedava vystup v xml-->
-            <!--mozna pouzit https://github.com/mtna/imagemagick-identify-parser-->
-            <!--<operatingSystem name="MAC">
+            <operatingSystem name="MAC">
                 <command>${PATH}convert -version</command>
                 <parser>
                     <stream>STDOUT</stream>
                     <regexp>ImageMagick\s\S*\s\S*</regexp>
                 </parser>
-            </operatingSystem>-->
+            </operatingSystem>
         </versionDetection>
         <execution>
             <operatingSystem name="LINUX">
@@ -95,13 +93,13 @@
                     <regexp>(?s).*</regexp>
                 </parser>
             </operatingSystem>
-            <!--<operatingSystem name="MAC">
+            <operatingSystem name="MAC">
                 <command>${PATH}identify -verbose ${IMAGE_FILE}</command>
                 <parser>
                     <stream>STDOUT</stream>
                     <regexp>(?s).*</regexp>
                 </parser>
-            </operatingSystem>-->
+            </operatingSystem>
         </execution>
     </imageUtil>
 
