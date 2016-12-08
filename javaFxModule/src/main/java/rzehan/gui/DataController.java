@@ -3,7 +3,6 @@ package rzehan.gui;
 import nkp.pspValidator.shared.Platform;
 import nkp.pspValidator.shared.imageUtils.ImageUtil;
 import nkp.pspValidator.shared.imageUtils.ImageUtilManager;
-import rzehan.gui.sample.Config;
 
 import java.io.File;
 import java.io.IOException;

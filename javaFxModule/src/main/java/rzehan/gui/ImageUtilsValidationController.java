@@ -16,7 +16,6 @@ import javafx.stage.Stage;
 import nkp.pspValidator.shared.imageUtils.CliCommand;
 import nkp.pspValidator.shared.imageUtils.ImageUtil;
 import nkp.pspValidator.shared.imageUtils.ImageUtilManager;
-import rzehan.gui.sample.Config;
 
 import java.io.File;
 
@@ -24,7 +23,7 @@ import java.io.File;
 /**
  * Created by martin on 2.12.16.
  */
-public class InitScreenController extends Application {
+public class ImageUtilsValidationController extends Application {
 
     //TODO: nahradit odkazy na WIKI a jeste podle OS rozdelit
     private static final String JPYLYZER_INSTALLATION_URL = "https://github.com/openpreserve/jpylyzer/releases";

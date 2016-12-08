@@ -1,4 +1,4 @@
-package rzehan.gui.sample;
+package rzehan.gui;
 
 import java.io.*;
 import java.util.Properties;

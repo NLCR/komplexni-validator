@@ -18,9 +18,9 @@ import java.util.List;
 import java.util.Properties;
 import java.util.logging.Logger;
 
-public class Controller {
+public class SampleController {
 
-    private static final Logger LOGGER = Logger.getLogger(Controller.class.getSimpleName());
+    private static final Logger LOGGER = Logger.getLogger(SampleController.class.getSimpleName());
 
     private static final int MAX_OUTPUT_LENGTH = 100;
     private static final File MC_FILE_LINUX = new File("/home/martin/Dropbox/PspValidator/data/monograph_1.2/b50eb6b0-f0a4-11e3-b72e-005056827e52/mastercopy/mc_b50eb6b0-f0a4-11e3-b72e-005056827e52_0001.jp2");
@@ -62,7 +62,7 @@ public class Controller {
     private final ImageUtilManager utilManager;
 
 
-    public Controller() throws ValidatorConfigurationException {
+    public SampleController() throws ValidatorConfigurationException {
         platform = Platform.detectOs();
         LOGGER.info("platform: " + platform.toString());
         File imageProperties = getImageProperties(platform);

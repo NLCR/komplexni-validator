@@ -11,16 +11,16 @@
 <!--<VBox fx:controller="sample.Controller"
       xmlns:fx="http://javafx.com/fxml"
       fx:id="container"
-      stylesheets="/css/main.css">-->
+      stylesheets="/css/sample.css">-->
 
 
 <?import javafx.scene.control.Separator?>
 
 <VBox
         xmlns:fx="http://javafx.com/fxml"
-        fx:controller="rzehan.gui.sample.Controller"
+        fx:controller="rzehan.gui.sample.SampleController"
         fx:id="container"
-        stylesheets="/css/main.css">
+        stylesheets="/css/sample.css">
 
 
 

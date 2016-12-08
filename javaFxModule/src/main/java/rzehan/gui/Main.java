@@ -1,4 +1,4 @@
-package rzehan.gui.sample;
+package rzehan.gui;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -6,17 +6,23 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import nkp.pspValidator.shared.Platform;
+import nkp.pspValidator.shared.engine.exceptions.ValidatorConfigurationException;
 import nkp.pspValidator.shared.imageUtils.ImageUtilManager;
 import nkp.pspValidator.shared.imageUtils.ImageUtilManagerFactory;
 import rzehan.gui.DataController;
-import rzehan.gui.InitScreenController;
+import rzehan.gui.ImageUtilsValidationController;
 
 import java.io.File;
+import java.io.IOException;
 
 public class Main extends Application {
 
+    private Stage stage;
+
     @Override
-    public void start(Stage primaryStage) throws Exception {
+    public void start(Stage stage) throws Exception {
+        this.stage = stage;
+
         //System.out.println("pwd: " + new File(".").getAbsolutePath());
 
         //System.out.println("fdmf.dir:" + config.getFdmfDir().getAbsolutePath());
@@ -28,14 +34,22 @@ public class Main extends Application {
         primaryStage.show();*/
 
         //init screen
-        /*Parent root = FXMLLoader.load(getClass().getResource("/fxml/initScreen.fxml"));
+        /*Parent root = FXMLLoader.load(getClass().getResource("/fxml/imageUtilsValidation.fxml"));
         primaryStage.setTitle("PSP validator");
         primaryStage.setScene(new Scene(root, 1000, 700));
         primaryStage.show();*/
 
 
         DataController dataController = new DataController(Platform.detectOs());
+        //checkValidationData(dataController);
+        checkImageUtils(dataController);
+    }
 
+    private void checkValidationData(DataController dataController) {
+        //TODO
+    }
+
+    public void checkImageUtils(DataController dataController) throws ValidatorConfigurationException, IOException {
         //TODO: jen docasne
         File imageUtilConfig = null;
         switch (dataController.getPlatform().getOperatingSystem()) {
@@ -51,12 +65,12 @@ public class Main extends Application {
         dataController.setImageUtilManager(imageUtilManager);
 
 
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/initScreen.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/imageUtilsValidation.fxml"));
         Parent root = (Parent) loader.load();
-        primaryStage.setTitle("PSP Validátor");
-        primaryStage.setScene(new Scene(root, 1000, 700));
-        primaryStage.show();
-        InitScreenController controller = (InitScreenController) loader.getController();
+        stage.setTitle("PSP Validátor");
+        stage.setScene(new Scene(root, 1000, 700));
+        stage.show();
+        ImageUtilsValidationController controller = (ImageUtilsValidationController) loader.getController();
         controller.setDataController(dataController);
         //controller.setStageAndApplication(primaryStage, this);
         controller.startAllChecks();

@@ -10,8 +10,6 @@ repositories {
 }
 */
 
-
-
 //https://github.com/FibreFoX/javafx-gradle-plugin
 
 group 'rzehan'
@@ -60,7 +58,7 @@ apply plugin: 'javafx-gradle-plugin'
 
 jfx {
     //mainClass = 'rzehan.gui.SomeClass'
-    mainClass = 'rzehan.gui.sample.Main'
+    mainClass = 'rzehan.gui.Main'
     vendor = 'rzehan'
 }
 
