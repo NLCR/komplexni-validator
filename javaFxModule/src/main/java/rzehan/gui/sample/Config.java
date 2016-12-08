@@ -1,9 +1,6 @@
 package rzehan.gui.sample;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
+import java.io.*;
 import java.util.Properties;
 
 /**
@@ -13,26 +10,42 @@ public class Config {
 
     private static final String PROP_DMF_DIR = "fdmf.dir";
 
+    public static final String PROP_JHOVE_DIR = "jhove.dir";
+    public static final String PROP_JPYLYZER_DIR = "jpylyzer.dir";
+    public static final String PROP_IMAGE_MAGICK_DIR = "imageMagick.dir";
+    public static final String PROP_KAKADU_DIR = "kakadu.dir";
+
+
     private final File configFile;
     private final Properties properties = new Properties();
 
-    public Config(File configFile) throws FileNotFoundException, IOException {
+    public Config(File configFile) throws IOException {
         this.configFile = configFile;
         loadProperties();
     }
 
-    private void loadProperties() throws FileNotFoundException, IOException {
+    private void loadProperties() throws IOException {
         properties.load(new FileInputStream(configFile));
     }
 
-    public File getFdmfDir() {
-        return getFile(PROP_DMF_DIR);
+    public File getFileOrNull(String propertyName) {
+        String file = properties.getProperty(propertyName);
+        return file == null ? null : new File(file);
     }
 
-    private File getFile(String property) {
-        String file = properties.getProperty(property);
-        return new File(file);
+    public void setFile(String propertyName, File file) {
+        try {
+            properties.setProperty(propertyName, file.getCanonicalPath());
+            saveProperties();
+        } catch (IOException e) {
+            throw new RuntimeException(String.format("chyba ukládání souboru %s", file.getAbsolutePath()), e);
+        }
     }
 
+    private void saveProperties() throws IOException {
+        OutputStream out = new FileOutputStream(configFile);
+        properties.store(out, null);
+        out.close();
+    }
 
 }

@@ -1,5 +1,8 @@
 package rzehan.gui;
 
+import nkp.pspValidator.shared.Platform;
+import nkp.pspValidator.shared.imageUtils.ImageUtil;
+import nkp.pspValidator.shared.imageUtils.ImageUtilManager;
 import rzehan.gui.sample.Config;
 
 import java.io.File;
@@ -10,21 +13,34 @@ import java.io.IOException;
  */
 public class DataController {
 
+    private static File CONFIG_FILE = new File("../../resources/main/config.properties");
     private static DataController instance;
     private final Config config;
+    private ImageUtilManager imageUtilManager;
+    private Platform platform;
 
-
-    private DataController() throws IOException {
-        config = new Config(new File("../../resources/main/config.properties"));
+    public DataController(Platform platform) throws IOException {
+        this.platform = platform;
+        config = new Config(CONFIG_FILE);
     }
 
-    public static DataController instanceOf() throws IOException {
-        //TODO: should be initialized with data
-        if (instance == null) {
-            instance = new DataController();
-        }
-        return instance;
+    public ImageUtilManager getImageUtilManager() {
+        return imageUtilManager;
     }
 
+    public void setImageUtilManager(ImageUtilManager imageUtilManager) {
+        this.imageUtilManager = imageUtilManager;
+        imageUtilManager.setPath(ImageUtil.JHOVE, config.getFileOrNull(Config.PROP_JHOVE_DIR));
+        imageUtilManager.setPath(ImageUtil.JPYLYZER, config.getFileOrNull(Config.PROP_JPYLYZER_DIR));
+        imageUtilManager.setPath(ImageUtil.IMAGE_MAGICK, config.getFileOrNull(Config.PROP_IMAGE_MAGICK_DIR));
+        imageUtilManager.setPath(ImageUtil.KAKADU, config.getFileOrNull(Config.PROP_KAKADU_DIR));
+    }
 
+    public Config getConfig() {
+        return config;
+    }
+
+    public Platform getPlatform() {
+        return platform;
+    }
 }

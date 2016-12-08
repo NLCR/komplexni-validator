@@ -77,6 +77,7 @@ public class VfCheckImageFilesValidByExternalUtilTest {
 
     private static Engine initEngine() throws ValidatorConfigurationException {
         Platform platform = Platform.detectOs();
+        //TODO: should not be initialized here
         imageUtilManager = new ImageUtilManagerFactory(IMAGE_UTILS_CONFIG).buildImageUtilManager(platform.getOperatingSystem());
         switch (platform.getOperatingSystem()) {
             case WINDOWS:
