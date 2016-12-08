@@ -1,4 +1,4 @@
-package rzehan.gui;
+package nkp.pspValidator.gui;
 
 import nkp.pspValidator.shared.Platform;
 import nkp.pspValidator.shared.imageUtils.ImageUtil;

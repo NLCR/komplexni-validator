@@ -1,4 +1,4 @@
-package rzehan.gui;
+package nkp.pspValidator.gui;
 
 import com.sun.deploy.uitoolkit.impl.fx.HostServicesFactory;
 import com.sun.javafx.application.HostServicesDelegate;

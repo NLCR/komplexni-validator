@@ -1,4 +1,4 @@
-package rzehan.gui.sample;
+package nkp.pspValidator.gui.sample;
 
 import javafx.concurrent.Task;
 import javafx.event.ActionEvent;

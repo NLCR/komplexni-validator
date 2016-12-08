@@ -18,7 +18,7 @@
 
 <VBox
         xmlns:fx="http://javafx.com/fxml"
-        fx:controller="rzehan.gui.sample.SampleController"
+        fx:controller="nkp.pspValidator.gui.sample.SampleController"
         fx:id="container"
         stylesheets="/css/sample.css">
 

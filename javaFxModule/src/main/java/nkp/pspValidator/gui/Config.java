@@ -1,4 +1,4 @@
-package rzehan.gui;
+package nkp.pspValidator.gui;
 
 import java.io.*;
 import java.util.Properties;

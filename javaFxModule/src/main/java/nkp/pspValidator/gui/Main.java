@@ -1,4 +1,4 @@
-package rzehan.gui;
+package nkp.pspValidator.gui;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -9,8 +9,6 @@ import nkp.pspValidator.shared.Platform;
 import nkp.pspValidator.shared.engine.exceptions.ValidatorConfigurationException;
 import nkp.pspValidator.shared.imageUtils.ImageUtilManager;
 import nkp.pspValidator.shared.imageUtils.ImageUtilManagerFactory;
-import rzehan.gui.DataController;
-import rzehan.gui.ImageUtilsValidationController;
 
 import java.io.File;
 import java.io.IOException;
