@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--<VBox fx:controller="sample.Controller"
+      xmlns:fx="http://javafx.com/fxml"
+      fx:id="container"
+      stylesheets="/css/main.css">-->
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<VBox stylesheets="/css/main.css"
+      xmlns="http://javafx.com/javafx/8.0.112"
+      xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="rzehan.gui.InitScreenController"
+      fx:id="container"
+>
+    <children>
+
+        <Button fx:id="btnTest" text="Test" onAction="#test"/>
+
+        <GridPane styleClass="table">
+
+            <Label text="Kontrola fDMF"
+                   GridPane.columnIndex="0"
+                   GridPane.rowIndex="0"/>
+
+            <ProgressIndicator fx:id="fdmfProgress"
+                               GridPane.columnIndex="1"
+                               GridPane.rowIndex="0"
+                               visible="false"
+            />
+
+            <ImageView fx:id="fdmfOkImg"
+                       GridPane.columnIndex="1"
+                       GridPane.rowIndex="0"
+                       visible="false">
+                <image>
+                    <Image url="@/img/Ok-48.png"/>
+                </image>
+            </ImageView>
+
+            <ImageView fx:id="fdmfErrorImg"
+                       GridPane.columnIndex="1"
+                       GridPane.rowIndex="0"
+                       visible="false">
+                <image>
+                    <Image url="@/img/Error-48.png"/>
+                </image>
+            </ImageView>
+
+            <Label fx:id="fdmfErrorText"
+                   text="chyba: TODO"
+                   GridPane.columnIndex="2"
+                   GridPane.rowIndex="0"
+                   visible="false"
+            />
+
+
+            <!--KAKADU-->
+            <Label text="Kontrola kakadu"
+                   GridPane.columnIndex="0"
+                   GridPane.rowIndex="1"/>
+
+            <ProgressIndicator fx:id="kakaduProgress"
+                               GridPane.columnIndex="1"
+                               GridPane.rowIndex="1"
+                               visible="false"
+            />
+
+            <ImageView fx:id="kakaduOkImg"
+                       GridPane.columnIndex="1"
+                       GridPane.rowIndex="1"
+                       visible="false">
+                <image>
+                    <Image url="@/img/Ok-48.png"/>
+                </image>
+            </ImageView>
+
+            <ImageView fx:id="kakaduErrorImg"
+                       GridPane.columnIndex="1"
+                       GridPane.rowIndex="1"
+                       visible="false">
+                <image>
+                    <Image url="@/img/Error-48.png"/>
+                </image>
+            </ImageView>
+
+            <Label fx:id="kakaduErrorText"
+                   text="chyba: TODO"
+                   GridPane.columnIndex="2"
+                   GridPane.rowIndex="1"
+                   visible="false"
+            />
+
+
+        </GridPane>
+
+
+    </children>
+</VBox>
