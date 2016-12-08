@@ -5,14 +5,15 @@
                 <command>${PATH}jpylyzer --version</command>
                 <parser>
                     <stream>STDERR</stream>
-                    <regexp>(?s).*</regexp>
+                    <!--      <regexp>(?s).*</regexp>-->
+                    <regexp>\A[0-9\.]+$</regexp>
                 </parser>
             </operatingSystem>
             <operatingSystem name="WINDOWS">
                 <command>${PATH}jpylyzer --version</command>
                 <parser>
                     <stream>STDERR</stream>
-                    <regexp>(?s).*</regexp>
+                    <regexp>\A[0-9\.]+$</regexp>
                 </parser>
             </operatingSystem>
             <!--zdrojove kody z https://github.com/openpreserve/jpylyzer/releases a spousteni pres python-->
@@ -21,7 +22,7 @@
                 <command>python ${PATH}jpylyzer.py --version</command>
                 <parser>
                     <stream>STDERR</stream>
-                    <regexp>(?s).*</regexp>
+                    <regexp>\A[0-9\.]+$</regexp>
                 </parser>
             </operatingSystem>
         </versionDetection>

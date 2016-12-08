@@ -212,14 +212,14 @@ public class InitScreenController extends Application {
                 try {
                     ImageUtilManager utilManager = dataController.getImageUtilManager();
                     if (!utilManager.isVersionDetectionDefined(util)) {
-                        processResult(new CheckResult(false, String.format("version detection not defined for %s", util)));
+                        processResult(new CheckResult(false, String.format("detekce verze není definována pro %s", util)));
                     } else {
                         String version = utilManager.runUtilVersionDetection(util);
                         //System.out.println(version);
                         processResult(new CheckResult(true, version));
                     }
                 } catch (CliCommand.CliCommandException e) {
-                    processResult(new CheckResult(false, String.format("not found: %s", e.getMessage())));
+                    processResult(new CheckResult(false, String.format("chyba: %s", e.getMessage())));
                 }
                 return null;
             }

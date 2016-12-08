@@ -89,9 +89,6 @@ public class Controller {
             default:
                 throw new IllegalStateException("Unsupported platform: " + platform);
         }
-
-        //LINUX paths
-
     }
 
     private File getImageProperties(Platform platform) {

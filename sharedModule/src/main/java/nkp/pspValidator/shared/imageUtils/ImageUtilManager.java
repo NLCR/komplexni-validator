@@ -81,7 +81,13 @@ public class ImageUtilManager {
         }
         if (rawOutput != null && !rawOutput.isEmpty()) {
             String parsed = parseData(rawOutput, parser);
-            return parsed == null || parsed.isEmpty() ? null : parsed.trim();
+            if (parsed == null || parsed.isEmpty()) {
+                System.out.println("'" + rawOutput + "'");
+
+                throw new CliCommand.CliCommandException("verze nenalezena ve výstupu: " + rawOutput);
+            } else {
+                return parsed.trim();
+            }
         } else {
             throw new CliCommand.CliCommandException("prázdný výstup");
         }

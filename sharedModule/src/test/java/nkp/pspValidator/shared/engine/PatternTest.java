@@ -308,5 +308,22 @@ public class PatternTest {
     }
 
 
+    @Test
+    public void jpylyzerDetection() {
+        String text = "1.17.0";
+        //String regexp = "ˆ[0-9\\.]+$";
+        String regexp = "\\A[0-9\\.]+$";
+        Pattern p = Pattern.compile(regexp);
+        Matcher m = p.matcher(text);
+        int found = 0;
+        while (m.find()) {
+            found++;
+            String match = m.group();
+            assertEquals("1.17.0", m.group());
+        }
+        assertEquals(1, found);
+    }
+
+
 }
 

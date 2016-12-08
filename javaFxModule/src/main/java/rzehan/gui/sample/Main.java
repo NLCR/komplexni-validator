@@ -36,7 +36,17 @@ public class Main extends Application {
 
         DataController dataController = new DataController(Platform.detectOs());
 
-        File imageUtilConfig = new File("/home/martin/ssd/IdeaProjects/PspValidator/sharedModule/src/main/resources/nkp/pspValidator/shared/fDMF/imageUtils.xml");
+        //TODO: jen docasne
+        File imageUtilConfig = null;
+        switch (dataController.getPlatform().getOperatingSystem()) {
+            case LINUX:
+                imageUtilConfig = new File("/home/martin/ssd/IdeaProjects/PspValidator/sharedModule/src/main/resources/nkp/pspValidator/shared/fDMF/imageUtils.xml");
+                break;
+            case MAC:
+                imageUtilConfig = new File("/Users/martinrehanek/IdeaProjects/PspValidator/sharedModule/src/main/resources/nkp/pspValidator/shared/fDMF/imageUtils.xml");
+                break;
+        }
+
         ImageUtilManager imageUtilManager = new ImageUtilManagerFactory(imageUtilConfig).buildImageUtilManager(dataController.getPlatform().getOperatingSystem());
         dataController.setImageUtilManager(imageUtilManager);
 
