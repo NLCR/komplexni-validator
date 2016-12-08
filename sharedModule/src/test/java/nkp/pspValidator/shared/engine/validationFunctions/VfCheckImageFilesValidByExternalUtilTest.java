@@ -293,6 +293,7 @@ public class VfCheckImageFilesValidByExternalUtilTest {
         if (imageUtilManager.isUtilAvailable(ImageUtil.IMAGE_MAGICK)) {
             ValidationFunction validationFunction = buildValidationFunction(ImageUtil.IMAGE_MAGICK, ImageCopy.MASTER, FILES_ERROR_DETECTION);
             ValidationResult result = validationFunction.validate();
+            //FIXME: neprojde na macOS pro ImageMagick 6.9.6-6 Q16 x86_64 2016-12-07
             assertTrue(result.hasProblems());
         }
     }
