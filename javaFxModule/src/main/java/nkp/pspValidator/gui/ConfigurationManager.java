@@ -1,12 +1,16 @@
 package nkp.pspValidator.gui;
 
+import nkp.pspValidator.shared.Platform;
+
 import java.io.*;
 import java.util.Properties;
 
 /**
  * Created by martin on 2.12.16.
  */
-public class Config {
+public class ConfigurationManager {
+
+    private static File CONFIG_FILE = new File("../../resources/main/config.properties");
 
     private static final String PROP_DMF_DIR = "fdmf.dir";
 
@@ -16,11 +20,13 @@ public class Config {
     public static final String PROP_KAKADU_DIR = "kakadu.dir";
 
 
+    private final Platform platform;
     private final File configFile;
     private final Properties properties = new Properties();
 
-    public Config(File configFile) throws IOException {
-        this.configFile = configFile;
+    public ConfigurationManager(Platform platform) throws IOException {
+        this.platform = platform;
+        this.configFile = CONFIG_FILE;
         loadProperties();
     }
 
@@ -48,4 +54,7 @@ public class Config {
         out.close();
     }
 
+    public Platform getPlatform() {
+        return platform;
+    }
 }

@@ -1,0 +1,73 @@
+/* https://docs.oracle.com/javase/8/javafx/api/javafx/scene/doc-files/cssref.html */
+
+
+
+/*
+    -fx-spacing: 20px;
+
+*/
+
+
+
+.heading-label {
+    -fx-font-size: 20;
+}
+
+/*-fx-font-style: italics;*/
+
+#logLabel {
+    -fx-background-color: #eeeeee;
+    -fx-height: 300px;
+}
+
+
+#logScrollPane {
+    /*-fx-height: 300px;*/
+}
+
+
+
+#container {
+  /*-fx-scale-shape: true;*/
+    /*-fx-background: #ebfaf0;*/
+    /*-fx-pref-width: 1500px;*/
+    /*-fx-pref-height: 1000px;*/
+    -fx-padding: 35px;
+
+}
+
+.description-text{
+    -fx-font-size: 27;
+    -fx-wrap-text: true;
+}
+
+
+.table {
+   /*-fx-scale-shape: true;*/
+    -fx-padding: 50px;
+    -fx-spacing: 10px;
+    -fx-hgap: 15px;
+    -fx-vgap: 5px;
+    -fx-alignment: center;
+/*    -fx-grid-lines-visible: true;*/
+}
+
+.global-button{
+-fx-font-size: 20;
+
+}
+
+.util-name {
+    -fx-font-size: 22;
+}
+
+.result-text{
+    -fx-font-size: 18;
+    -fx-wrap-text: true;
+}
+
+.result-image{
+    /*-fx-font-size: 20;*/
+ /*   -fx-background-color: #eeeeee;*/
+}
+

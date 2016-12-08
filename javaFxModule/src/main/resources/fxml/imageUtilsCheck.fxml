@@ -1,0 +1,322 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<VBox stylesheets="/css/imageUtilsCheck.css"
+      xmlns="http://javafx.com/javafx/8.0.112"
+      xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="nkp.pspValidator.gui.ImageUtilsCheckController"
+      fx:id="container"
+      maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
+>
+    <children>
+
+        <!--TODO: tabulka by mela zaujimat celou sirku-->
+
+        <!--<Button fx:id="btnTest" text="Test" onAction="#retryAll"/>-->
+
+        <HBox
+                alignment="CENTER"
+        >
+
+            <Label styleClass="description-text"
+                   text="Kontrola dostupnosti nástrojů pro validaci obrázků"
+            />
+        </HBox>
+
+
+        <GridPane styleClass="table"
+                  alignment="CENTER"
+
+        >
+
+            <!--JHOVE-->
+            <Label text="Jhove"
+                   styleClass="util-name"
+                   GridPane.columnIndex="0"
+                   GridPane.rowIndex="0"/>
+
+            <ProgressIndicator fx:id="jhoveProgress"
+                               GridPane.columnIndex="1"
+                               GridPane.rowIndex="0"
+                               visible="false"
+            />
+
+            <ImageView fx:id="jhoveOkImg"
+                       styleClass="result-image"
+                       GridPane.columnIndex="1"
+                       GridPane.rowIndex="0"
+                       preserveRatio="true"
+                       visible="false"
+                       style="-fx-background-color: BLACK"
+            >
+                <image>
+                    <Image url="@/img/Checkmark-48.png"/>
+                </image>
+            </ImageView>
+
+            <ImageView fx:id="jhoveErrorImg"
+                       styleClass="result-image"
+                       GridPane.columnIndex="1"
+                       GridPane.rowIndex="0"
+                       GridPane.halignment="CENTER"
+                       visible="false">
+                <image>
+                    <Image url="@/img/Error-48.png"/>
+                </image>
+            </ImageView>
+
+            <Button fx:id="jhoveBtnRetry"
+                    text="Zkusit znovu"
+                    onAction="#checkJhove"
+                    GridPane.columnIndex="2"
+                    GridPane.rowIndex="0"
+            />
+
+            <Button fx:id="jhoveBtnSelectPath"
+                    text="Nastavit adresář"
+                    onAction="#selectJhovePath"
+                    GridPane.columnIndex="3"
+                    GridPane.rowIndex="0"
+            />
+
+            <Button fx:id="jhoveBtnInstall"
+                    text="Instalovat"
+                    onAction="#installJhove"
+                    GridPane.columnIndex="4"
+                    GridPane.rowIndex="0"
+            />
+
+
+            <Label fx:id="jhoveStatusText"
+                   styleClass="result-text"
+                   GridPane.columnIndex="0"
+                   GridPane.columnSpan="6"
+                   GridPane.rowIndex="1"
+                   visible="false"
+            />
+
+            <!--JPYLYZER-->
+            <Label text="Jpylyzer"
+                   styleClass="util-name"
+                   GridPane.columnIndex="0"
+                   GridPane.rowIndex="3"/>
+
+            <ProgressIndicator fx:id="jpylyzerProgress"
+                               GridPane.columnIndex="1"
+                               GridPane.rowIndex="3"
+                               visible="false"
+            />
+
+            <ImageView fx:id="jpylyzerOkImg"
+                       styleClass="result-image"
+                       GridPane.columnIndex="1"
+                       GridPane.rowIndex="3"
+                       preserveRatio="true"
+                       visible="false"
+                       style="-fx-background-color: BLACK"
+            >
+                <image>
+                    <Image url="@/img/Checkmark-48.png"/>
+                </image>
+            </ImageView>
+
+            <ImageView fx:id="jpylyzerErrorImg"
+                       styleClass="result-image"
+                       GridPane.columnIndex="1"
+                       GridPane.rowIndex="3"
+                       GridPane.halignment="CENTER"
+                       visible="false">
+                <image>
+                    <Image url="@/img/Error-48.png"/>
+                </image>
+            </ImageView>
+
+            <Button fx:id="jpylyzerBtnRetry"
+                    text="Zkusit znovu"
+                    onAction="#checkJpylyzer"
+                    GridPane.columnIndex="2"
+                    GridPane.rowIndex="3"
+            />
+
+            <Button fx:id="jpylyzerBtnSelectPath"
+                    text="Nastavit adresář"
+                    onAction="#selectJpylyzerPath"
+                    GridPane.columnIndex="3"
+                    GridPane.rowIndex="3"
+            />
+
+            <Button fx:id="jpylyzerBtnInstall"
+                    text="Instalovat"
+                    onAction="#installJpylyzer"
+                    GridPane.columnIndex="4"
+                    GridPane.rowIndex="3"
+            />
+
+
+            <Label fx:id="jpylyzerStatusText"
+                   styleClass="result-text"
+                   GridPane.columnIndex="0"
+                   GridPane.columnSpan="6"
+                   GridPane.rowIndex="4"
+                   visible="false"
+            />
+
+
+            <!--IMAGE MAGICK-->
+            <Label text="ImageMagick"
+                   styleClass="util-name"
+                   GridPane.columnIndex="0"
+                   GridPane.rowIndex="6"/>
+
+            <ProgressIndicator fx:id="imageMagickProgress"
+                               GridPane.columnIndex="1"
+                               GridPane.rowIndex="6"
+                               visible="false"
+            />
+
+            <ImageView fx:id="imageMagickOkImg"
+                       styleClass="result-image"
+                       GridPane.columnIndex="1"
+                       GridPane.rowIndex="6"
+                       preserveRatio="true"
+                       visible="false"
+                       style="-fx-background-color: BLACK"
+            >
+                <image>
+                    <Image url="@/img/Checkmark-48.png"/>
+                </image>
+            </ImageView>
+
+            <ImageView fx:id="imageMagickErrorImg"
+                       styleClass="result-image"
+                       GridPane.columnIndex="1"
+                       GridPane.rowIndex="6"
+                       GridPane.halignment="CENTER"
+                       visible="false">
+                <image>
+                    <Image url="@/img/Error-48.png"/>
+                </image>
+            </ImageView>
+
+            <Button fx:id="imageMagickBtnRetry"
+                    text="Zkusit znovu"
+                    onAction="#checkImageMagick"
+                    GridPane.columnIndex="2"
+                    GridPane.rowIndex="6"
+            />
+
+            <Button fx:id="imageMagickBtnSelectPath"
+                    text="Nastavit adresář"
+                    onAction="#selectImageMagickPath"
+                    GridPane.columnIndex="3"
+                    GridPane.rowIndex="6"
+            />
+
+            <Button fx:id="imageMagickBtnInstall"
+                    text="Instalovat"
+                    onAction="#installImageMagick"
+                    GridPane.columnIndex="4"
+                    GridPane.rowIndex="6"
+            />
+
+
+            <Label fx:id="imageMagickStatusText"
+                   styleClass="result-text"
+                   GridPane.columnIndex="0"
+                   GridPane.columnSpan="6"
+                   GridPane.rowIndex="7"
+                   visible="false"
+            />
+
+
+            <!--KAKADU-->
+            <Label text="Kakadu"
+                   styleClass="util-name"
+                   GridPane.columnIndex="0"
+                   GridPane.rowIndex="9"/>
+
+            <ProgressIndicator fx:id="kakaduProgress"
+                               GridPane.columnIndex="1"
+                               GridPane.rowIndex="9"
+                               visible="false"
+            />
+
+            <ImageView fx:id="kakaduOkImg"
+                       styleClass="result-image"
+                       GridPane.columnIndex="1"
+                       GridPane.rowIndex="9"
+                       preserveRatio="true"
+                       visible="false"
+                       style="-fx-background-color: BLACK"
+            >
+                <image>
+                    <Image url="@/img/Checkmark-48.png"/>
+                </image>
+            </ImageView>
+
+            <ImageView fx:id="kakaduErrorImg"
+                       styleClass="result-image"
+                       GridPane.columnIndex="1"
+                       GridPane.rowIndex="9"
+                       GridPane.halignment="CENTER"
+                       visible="false">
+                <image>
+                    <Image url="@/img/Error-48.png"/>
+                </image>
+            </ImageView>
+
+            <Button fx:id="kakaduBtnRetry"
+                    text="Zkusit znovu"
+                    onAction="#checkKakadu"
+                    GridPane.columnIndex="2"
+                    GridPane.rowIndex="9"
+            />
+
+            <Button fx:id="kakaduBtnSelectPath"
+                    text="Nastavit adresář"
+                    onAction="#selectKakaduPath"
+                    GridPane.columnIndex="3"
+                    GridPane.rowIndex="9"
+            />
+
+            <Button fx:id="kakaduBtnInstall"
+                    text="Instalovat"
+                    onAction="#installKakadu"
+                    GridPane.columnIndex="4"
+                    GridPane.rowIndex="9"
+            />
+
+
+            <Label fx:id="kakaduStatusText"
+                   styleClass="result-text"
+                   GridPane.columnIndex="0"
+                   GridPane.columnSpan="6"
+                   GridPane.rowIndex="10"
+                   visible="false"
+            />
+
+
+        </GridPane>
+
+        <HBox
+                alignment="CENTER"
+                spacing="20.0"
+        >
+
+            <Button onAction="#continueInApp"
+                    styleClass="global-button"
+                    text="Pokračovat"
+            />
+
+            <Button
+                    onAction="#showHelp"
+                    styleClass="global-button"
+                    text="Zobrazit nápovědu"
+            />
+        </HBox>
+
+
+    </children>
+</VBox>

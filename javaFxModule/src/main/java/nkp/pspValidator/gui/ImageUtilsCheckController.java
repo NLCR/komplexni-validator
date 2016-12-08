@@ -23,7 +23,7 @@ import java.io.File;
 /**
  * Created by martin on 2.12.16.
  */
-public class ImageUtilsValidationController extends Application {
+public class ImageUtilsCheckController extends Application {
 
     //TODO: nahradit odkazy na WIKI a jeste podle OS rozdelit
     private static final String JPYLYZER_INSTALLATION_URL = "https://github.com/openpreserve/jpylyzer/releases";
@@ -145,7 +145,7 @@ public class ImageUtilsValidationController extends Application {
     //other data
     private Stage stage;
     private Application application;
-    private DataManager dataManager;
+    private ValidationDataManager validationDataManager;
 
     @Override
     public void start(Stage stage) throws Exception {
@@ -154,8 +154,8 @@ public class ImageUtilsValidationController extends Application {
         //retryAll(null);
     }
 
-    public void setDataManager(DataManager dataManager) {
-        this.dataManager = dataManager;
+    public void setValidationDataManager(ValidationDataManager validationDataManager) {
+        this.validationDataManager = validationDataManager;
     }
 
     public void startAllChecks() {
@@ -209,7 +209,7 @@ public class ImageUtilsValidationController extends Application {
             @Override
             protected CheckResult call() throws Exception {
                 try {
-                    ImageUtilManager utilManager = dataManager.getImageUtilManager();
+                    ImageUtilManager utilManager = validationDataManager.getImageUtilManager();
                     if (!utilManager.isVersionDetectionDefined(util)) {
                         processResult(new CheckResult(false, String.format("detekce verze není definována pro %s", util)));
                     } else {
@@ -248,33 +248,33 @@ public class ImageUtilsValidationController extends Application {
     }
 
     public void selectJpylyzerPath(ActionEvent actionEvent) {
-        selectImageUtilPath(Config.PROP_JPYLYZER_DIR, ImageUtil.JPYLYZER, () -> checkJpylyzer());
+        selectImageUtilPath(ConfigurationManager.PROP_JPYLYZER_DIR, ImageUtil.JPYLYZER, () -> checkJpylyzer());
     }
 
 
     public void selectJhovePath(ActionEvent actionEvent) {
-        selectImageUtilPath(Config.PROP_JHOVE_DIR, ImageUtil.JHOVE, () -> checkJhove());
+        selectImageUtilPath(ConfigurationManager.PROP_JHOVE_DIR, ImageUtil.JHOVE, () -> checkJhove());
     }
 
     public void selectImageMagickPath(ActionEvent actionEvent) {
-        selectImageUtilPath(Config.PROP_IMAGE_MAGICK_DIR, ImageUtil.IMAGE_MAGICK, () -> checkImageMagick());
+        selectImageUtilPath(ConfigurationManager.PROP_IMAGE_MAGICK_DIR, ImageUtil.IMAGE_MAGICK, () -> checkImageMagick());
     }
 
     public void selectKakaduPath(ActionEvent actionEvent) {
-        selectImageUtilPath(Config.PROP_KAKADU_DIR, ImageUtil.KAKADU, () -> checkKakadu());
+        selectImageUtilPath(ConfigurationManager.PROP_KAKADU_DIR, ImageUtil.KAKADU, () -> checkKakadu());
     }
 
     private void selectImageUtilPath(String property, ImageUtil util, MyListener listener) {
         DirectoryChooser chooser = new DirectoryChooser();
         chooser.setTitle(String.format("Vyberte adresář se spustitelnými soubory %s", util.getUserFriendlyName()));
-        File currentDir = dataManager.getConfig().getFileOrNull(property);
+        File currentDir = validationDataManager.getConfigurationManager().getFileOrNull(property);
         if (currentDir != null) {
             chooser.setInitialDirectory(currentDir);
         }
         File selectedDirectory = chooser.showDialog(stage);
         if (selectedDirectory != null) {
-            dataManager.getConfig().setFile(property, selectedDirectory);
-            dataManager.getImageUtilManager().setPath(util, selectedDirectory);
+            validationDataManager.getConfigurationManager().setFile(property, selectedDirectory);
+            validationDataManager.getImageUtilManager().setPath(util, selectedDirectory);
             listener.onFinished();
         }
     }

@@ -27,6 +27,7 @@ public class ImageUtilManager {
         }
     }
 
+    //TODO: must be thread safe
     public boolean isVersionDetectionDefined(ImageUtil type) {
         return utilVersionDetectionHandlers.containsKey(type);
     }
@@ -62,6 +63,7 @@ public class ImageUtilManager {
         return utilAvaliable.get(util);
     }
 
+    //TODO: must be thrad safe
     public String runUtilVersionDetection(ImageUtil type) throws CliCommand.CliCommandException {
         UtilHandler versionDetection = utilVersionDetectionHandlers.get(type);
         String command = buildCommand(versionDetection.getCommandData());

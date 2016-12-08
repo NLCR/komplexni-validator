@@ -16,10 +16,17 @@ import java.io.IOException;
 public class Main extends Application {
 
     private Stage stage;
+    private ConfigurationManager configurationManager;
+    private ValidationDataManager validationDataManager;
+
+    public static void main(String[] args) {
+        launch(args);
+    }
 
     @Override
-    public void start(Stage stage) throws Exception {
+    public void start(Stage stage) {
         this.stage = stage;
+        stage.setTitle("PSP Validátor");
 
         //System.out.println("pwd: " + new File(".").getAbsolutePath());
 
@@ -32,50 +39,55 @@ public class Main extends Application {
         primaryStage.show();*/
 
         //init screen
-        /*Parent root = FXMLLoader.load(getClass().getResource("/fxml/imageUtilsValidation.fxml"));
+        /*Parent root = FXMLLoader.load(getClass().getResource("/fxml/imageUtilsCheck.fxml"));
         primaryStage.setTitle("PSP validator");
         primaryStage.setScene(new Scene(root, 1000, 700));
         primaryStage.show();*/
 
-
-        DataManager dataManager = new DataManager(Platform.detectOs());
-        //checkValidationData(dataController);
-        checkImageUtils(dataManager);
+        try {
+            configurationManager = new ConfigurationManager(Platform.detectOs());
+            validationDataManager = initValidationData();
+            checkImageUtils();
+        } catch (IOException e) {
+            e.printStackTrace();
+            //TODO: a zobrazit dialog s tlacitkem OK a stack tracem, ktery apku zavre
+        }
     }
 
-    private void checkValidationData(DataManager dataManager) {
+    private ValidationDataManager initValidationData() {
+        try {
+            ValidationDataManager validationDataManager = new ValidationDataManager(configurationManager);
+            //TODO: jen docasne
+            File imageUtilConfig = null;
+            switch (configurationManager.getPlatform().getOperatingSystem()) {
+                case LINUX:
+                    imageUtilConfig = new File("/home/martin/ssd/IdeaProjects/PspValidator/sharedModule/src/main/resources/nkp/pspValidator/shared/fDMF/imageUtils.xml");
+                    break;
+                case MAC:
+                    imageUtilConfig = new File("/Users/martinrehanek/IdeaProjects/PspValidator/sharedModule/src/main/resources/nkp/pspValidator/shared/fDMF/imageUtils.xml");
+                    break;
+            }
+
+            ImageUtilManager imageUtilManager = new ImageUtilManagerFactory(imageUtilConfig).buildImageUtilManager(configurationManager.getPlatform().getOperatingSystem());
+            validationDataManager.setImageUtilManager(imageUtilManager);
+            return validationDataManager;
+        } catch (ValidatorConfigurationException e) {
+            //TODO: tohle bude ve vlastni Aktivite
+            e.printStackTrace();
+            throw new RuntimeException(e);
+        }
         //TODO
     }
 
-    public void checkImageUtils(DataManager dataManager) throws ValidatorConfigurationException, IOException {
-        //TODO: jen docasne
-        File imageUtilConfig = null;
-        switch (dataManager.getPlatform().getOperatingSystem()) {
-            case LINUX:
-                imageUtilConfig = new File("/home/martin/ssd/IdeaProjects/PspValidator/sharedModule/src/main/resources/nkp/pspValidator/shared/fDMF/imageUtils.xml");
-                break;
-            case MAC:
-                imageUtilConfig = new File("/Users/martinrehanek/IdeaProjects/PspValidator/sharedModule/src/main/resources/nkp/pspValidator/shared/fDMF/imageUtils.xml");
-                break;
-        }
-
-        ImageUtilManager imageUtilManager = new ImageUtilManagerFactory(imageUtilConfig).buildImageUtilManager(dataManager.getPlatform().getOperatingSystem());
-        dataManager.setImageUtilManager(imageUtilManager);
-
-
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/imageUtilsValidation.fxml"));
+    public void checkImageUtils() throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/imageUtilsCheck.fxml"));
         Parent root = (Parent) loader.load();
-        stage.setTitle("PSP Validátor");
         stage.setScene(new Scene(root, 1000, 700));
         stage.show();
-        ImageUtilsValidationController controller = (ImageUtilsValidationController) loader.getController();
-        controller.setDataManager(dataManager);
-        //controller.setStageAndApplication(primaryStage, this);
+        ImageUtilsCheckController controller = (ImageUtilsCheckController) loader.getController();
+        controller.setValidationDataManager(validationDataManager);
         controller.startAllChecks();
     }
 
 
-    public static void main(String[] args) {
-        launch(args);
-    }
 }
