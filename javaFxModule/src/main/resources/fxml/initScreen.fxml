@@ -21,7 +21,7 @@
         >
 
             <Label styleClass="description-text"
-                   text="Zde se kontroluje dostupnost nástrojů pro validaci obrazových dat"
+                   text="Kontrola dostupnosti nástrojů pro validaci obrázků"
             />
         </HBox>
 
@@ -308,7 +308,6 @@
             <Button onAction="#continueInApp"
                     styleClass="global-button"
                     text="Pokračovat"
-
             />
 
             <Button

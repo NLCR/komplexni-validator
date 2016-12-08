@@ -53,7 +53,7 @@ public class Main extends Application {
 
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/initScreen.fxml"));
         Parent root = (Parent) loader.load();
-        primaryStage.setTitle("Kontrola dostupnosti nástrojů pro validaci obrázků");
+        primaryStage.setTitle("PSP Validátor");
         primaryStage.setScene(new Scene(root, 1000, 700));
         primaryStage.show();
         InitScreenController controller = (InitScreenController) loader.getController();
