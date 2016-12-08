@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<validationTemplate>
+    <name>periodical_logical_map</name>
+    <version>1.0</version>
+    <rootValidationNode mandatory="MANDATORY" name="mets:mets" nullable="false">
+        <attribute mandatory="MANDATORY" name="LABEL"/>
+        <attribute mandatory="MANDATORY" name="TYPE"/>
+        <element mandatory="MANDATORY" name="mets:structMap[@LABEL='Logical_Structure']" nullable="false">
+            <attribute mandatory="MANDATORY" name="TYPE">
+                <possibleValue>LOGICAL</possibleValue>
+            </attribute>
+            <element mandatory="MANDATORY" name="mets:div" nullable="false">
+                <attribute mandatory="MANDATORY" name="LABEL"/>
+                <attribute mandatory="MANDATORY" name="ID"/>
+                <attribute mandatory="MANDATORY" name="DMDID"/>
+                <attribute mandatory="MANDATORY" name="TYPE">
+                    <possibleValue>PERIODICAL_TITLE</possibleValue>
+                </attribute>
+                <element mandatory="MANDATORY" name="mets:div" nullable="false">
+                    <attribute mandatory="MANDATORY" name="TYPE">
+                        <possibleValue>VOLUME</possibleValue>
+                        <possibleValue>PERIODICAL_VOLUME</possibleValue>
+                    </attribute>
+                    <attribute mandatory="MANDATORY" name="ID"/>
+                    <attribute mandatory="MANDATORY" name="DMDID"/>
+                    <element mandatory="MANDATORY" name="mets:div" nullable="true">
+                        <attribute mandatory="MANDATORY" name="TYPE">
+                            <possibleValue>ISSUE</possibleValue>
+                            <possibleValue>SUPPLEMENT</possibleValue>
+                        </attribute>
+                        <attribute mandatory="MANDATORY" name="LABEL"/>
+                        <attribute mandatory="MANDATORY" name="ID"/>
+                        <attribute mandatory="MANDATORY" name="DMDID"/>
+                    </element>
+                </element>
+            </element>
+        </element>
+    </rootValidationNode>
+</validationTemplate>

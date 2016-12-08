@@ -1,0 +1,56 @@
+<dmf>
+
+
+    <!--prima definice - pouze String, Integer-->
+
+    <value-def name="int1" type="INTEGER">3</value-def>
+
+    <value-def name="string1" type="STRING">5</value-def>
+
+
+    <value-def name="NECO" type="FILE_LIST">
+        <evaluation functionName="EVALUATE_NECO">
+            <params>
+
+                <!--parametry VALUE-->
+
+                <!--hodnota konstantou - omezeno na String, Integer-->
+                <value-param name="day" type="STRING">Monday</value-param>
+                <value-param name="days" type="INTEGER">7</value-param>
+
+                <!--hodnota odkazem na promennou-->
+                <value-param name="dir" type="FILE">
+                    <value-ref name="PSP_DIR"/>
+                </value-param>
+
+                <!--hodnota primou definici-->
+                <value-param name="psp_dir" type="FILE">
+                    <evaluation functionName="getProvidedFile">
+                        <!--tj. musi byt dodano pres GUI nebo CLI-->
+                        <params>
+                            <value-param name="file_id" type="STRING">PSP_DIR</value-param>
+                        </params>
+                    </evaluation>
+                </value-param>
+
+                <!--parametry PATTERN-->
+
+                <!--pattern definici-->
+                <pattern-param name="pattern_info">
+                    <expressions>
+                        <expression caseSensitive="true">info_${PSP_ID}\.xml</expression>
+                        <expression>info\.xml</expression>
+                    </expressions>
+                </pattern-param>
+
+                <!--pattern odkazem-->
+                <pattern-param name="pattern_checksum">
+                    <pattern-ref name="CHECKSUM_FILENAME"/>
+                </pattern-param>
+
+            </params>
+        </evaluation>
+    </value-def>
+
+
+</dmf>

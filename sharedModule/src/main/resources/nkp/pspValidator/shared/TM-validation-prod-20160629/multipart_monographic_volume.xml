@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<validationTemplate>
+    <name>multipart_monographic_volume</name>
+    <version>1.0</version>
+    <rootValidationNode mandatory="MANDATORY" name="mets:mets" nullable="false">
+		
+        <element mandatory="MANDATORY" name="mets:dmdSec[@ID='MODSMD_VOLUME_0001']" nullable="false">
+            <element mandatory="MANDATORY" name="mets:mdWrap" nullable="false">
+                <element mandatory="MANDATORY" name="mets:xmlData" nullable="false">
+                    <element mandatory="MANDATORY_IF_AVAILABLE" name="mods:mods[@ID='MODS_VOLUME_0001']" nullable="false"
+                             evaluateIf="//mets:mets/mets:dmdSec[@ID='MODSMD_TITLE_0001']">						 
+						<element mandatory="MANDATORY" name="mods:titleInfo[not(@type='alternative') and not(@type='abbreviated') and not(@type='translated') and not(@type='uniform')]" nullable="false">
+                            <element mandatory="MANDATORY" name="mods:partNumber" nullable="false" 
+								evaluateIf="count(//mets:mets/mets:dmdSec[@ID='MODSMD_VOLUME_0001']/mets:mdWrap/mets:xmlData/mods:mods/mods:titleInfo/mods:partName) = 0"></element>
+                            <element mandatory="MANDATORY" name="mods:partName" nullable="false" 
+								evaluateIf="count(//mets:mets/mets:dmdSec[@ID='MODSMD_VOLUME_0001']/mets:mdWrap/mets:xmlData/mods:mods/mods:titleInfo/mods:partNumber) = 0"></element>
+						</element>
+						<element mandatory="MANDATORY" name="mods:originInfo">
+								<element mandatory="MANDATORY" name="mods:dateIssued" nullable="false"/>
+						</element>	
+                    </element>
+                </element>
+            </element>
+        </element>
+		
+    </rootValidationNode>
+</validationTemplate>

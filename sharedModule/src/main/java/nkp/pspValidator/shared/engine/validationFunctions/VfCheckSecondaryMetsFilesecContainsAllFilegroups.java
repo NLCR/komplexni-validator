@@ -7,7 +7,7 @@ import nkp.pspValidator.shared.engine.ValueEvaluation;
 import nkp.pspValidator.shared.engine.ValueType;
 import nkp.pspValidator.shared.engine.exceptions.ContractException;
 import nkp.pspValidator.shared.engine.exceptions.InvalidXPathExpressionException;
-import nkp.pspValidator.shared.engine.exceptions.XmlParsingException;
+import nkp.pspValidator.shared.engine.exceptions.XmlFileParsingException;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
@@ -80,7 +80,7 @@ public class VfCheckSecondaryMetsFilesecContainsAllFilegroups extends Validation
             result.addError(invalid(e));
         } catch (XPathExpressionException e) {
             result.addError(invalid(e));
-        } catch (XmlParsingException e) {
+        } catch (XmlFileParsingException e) {
             result.addError(invalid(e));
         }
     }

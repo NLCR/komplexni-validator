@@ -92,7 +92,7 @@ public class VfCheckImageFilesValidByExternalUtil extends ValidationFunction {
                 try {
                     List<String> problems = profile.validate(file);
                     for (String problem : problems) {
-                        result.addError(invalid(level, "%s (soubor %s)", problem, file.getAbsoluteFile()));
+                        result.addError(invalid(level, "%s (soubor %s)", problem, file.getCanonicalPath()));
                     }
                 } catch (Exception e) {
                     result.addError(invalid(Level.ERROR, "%s: (soubor %s)", e.getMessage(), file.getName()));

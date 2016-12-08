@@ -1,0 +1,4 @@
+initScreen
+----------
+error (Error-48.png): https://icons8.com/web-app/12116/error
+ok (Ok-48.png): https://icons8.com/web-app/13115/ok

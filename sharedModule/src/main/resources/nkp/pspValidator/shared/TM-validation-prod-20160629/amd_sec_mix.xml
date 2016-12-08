@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<validationTemplate>
+	<name>amd_sec_mix</name>
+	<version>1.0</version>
+	<rootValidationNode mandatory="MANDATORY" name="mets:mets" nullable="false">
+		<element mandatory="MANDATORY" name="mets:amdSec" nullable="false">
+			<attribute mandatory="MANDATORY" name="ID"/>
+			<element mandatory="MANDATORY" name="mets:techMD[@ID='MIX_001']" nullable="false">
+				<element mandatory="MANDATORY" name="mets:mdWrap" nullable="false">
+					<attribute mandatory="MANDATORY" name="MDTYPE">
+						<possibleValue>NISOIMG</possibleValue>
+					</attribute>
+					<element mandatory="MANDATORY" name="mets:xmlData" nullable="false">
+						<element mandatory="MANDATORY" name="mix:mix" nullable="false">
+							<element mandatory="MANDATORY" name="mix:BasicDigitalObjectInformation" nullable="false">
+								<element mandatory="MANDATORY_IF_AVAILABLE" name="mix:ObjectIdentifier" nullable="false">
+									<element mandatory="MANDATORY_IF_AVAILABLE" name="mix:objectIdentifierType" nullable="false"/>
+									<element mandatory="MANDATORY_IF_AVAILABLE" name="mix:objectIdentifierValue" nullable="false"/>
+								</element>
+								<element mandatory="MANDATORY" name="mix:FormatDesignation" nullable="false">
+									<element mandatory="MANDATORY" name="mix:formatName" nullable="false"/>
+									<element mandatory="MANDATORY" name="mix:formatVersion" nullable="false"/>
+								</element>
+								<element mandatory="MANDATORY" name="mix:Compression" nullable="false">
+									<element mandatory="MANDATORY" name="mix:compressionScheme" nullable="false"/>
+								</element>
+							</element>
+							<element mandatory="MANDATORY" name="mix:BasicImageInformation" nullable="false">
+								<element mandatory="MANDATORY" name="mix:BasicImageCharacteristics" nullable="false">
+									<element mandatory="MANDATORY" name="mix:imageWidth" nullable="false"/>
+									<element mandatory="MANDATORY" name="mix:imageHeight" nullable="false"/>
+									<element mandatory="MANDATORY" name="mix:PhotometricInterpretation" nullable="false">
+										<element mandatory="MANDATORY" name="mix:colorSpace" nullable="false"/>
+										<element mandatory="MANDATORY_IF_AVAILABLE" name="mix:ColorProfile" nullable="false">
+											<element mandatory="MANDATORY" name="mix:IccProfile" nullable="false">
+												<element mandatory="MANDATORY" name="mix:iccProfileName" nullable="false"/>
+												<element mandatory="MANDATORY" name="mix:iccProfileVersion" nullable="false"/>
+											</element>
+										</element>
+									</element>
+								</element>
+							</element>
+							<element mandatory="MANDATORY" name="mix:ImageCaptureMetadata" nullable="false">
+								<element mandatory="MANDATORY_IF_AVAILABLE" name="mix:SourceInformation" nullable="false">
+									<element mandatory="MANDATORY" name="mix:sourceType" nullable="false"/>
+									<element mandatory="MANDATORY_IF_AVAILABLE" name="mix:SourceID" nullable="false">
+										<element mandatory="MANDATORY" name="sourceIDType" nullable="false"/>
+										<element mandatory="MANDATORY" name="sourceIDValue" nullable="false"/>
+									</element>
+								</element>
+								<element mandatory="MANDATORY" name="mix:GeneralCaptureInformation" nullable="false">
+									<element mandatory="MANDATORY" name="mix:imageProducer" nullable="false"/>
+									<element mandatory="MANDATORY_IF_AVAILABLE" name="mix:captureDevice" nullable="false"/>
+								</element>
+								<element mandatory="MANDATORY" name="mix:ScannerCapture" nullable="false">
+									<element mandatory="MANDATORY" name="mix:ScannerModel" nullable="false">
+										<element mandatory="MANDATORY" name="mix:scannerModelName" nullable="false"/>
+										<element mandatory="MANDATORY" name="mix:scannerModelNumber" nullable="false"/>
+										<element mandatory="MANDATORY" name="mix:scannerModelSerialNo" nullable="false"/>
+									</element>
+									<element mandatory="MANDATORY" name="mix:MaximumOpticalResolution" nullable="false">
+										<element mandatory="MANDATORY" name="mix:xOpticalResolution" nullable="false"/>
+										<element mandatory="MANDATORY" name="mix:yOpticalResolution" nullable="false"/>
+										<element mandatory="MANDATORY" name="mix:opticalResolutionUnit" nullable="false"/>
+									</element>
+									<element mandatory="MANDATORY" name="mix:scannerSensor" nullable="false"/>
+									<element mandatory="MANDATORY" name="mix:ScanningSystemSoftware" nullable="false">
+										<element mandatory="MANDATORY" name="mix:scanningSoftwareName" nullable="false"/>
+										<element mandatory="MANDATORY" name="mix:scanningSoftwareVersionNo" nullable="false"/>
+									</element>
+								</element>
+								<element mandatory="MANDATORY_IF_AVAILABLE" name="mix:DigitalCameraCapture" nullable="false">
+									<element mandatory="MANDATORY" name="mix:digitalCameraManufacturer" nullable="false"/>
+									<element mandatory="MANDATORY" name="mix:DigitalCameraModel" nullable="false">
+										<element mandatory="MANDATORY" name="digitalCameraModelName" nullable="false"/>
+										<element mandatory="MANDATORY" name="digitalCameraModelNumber" nullable="false"/>
+										<element mandatory="MANDATORY" name="digitalCameraModelSerialNo" nullable="false"/>
+										<element mandatory="MANDATORY" name="digitalCameraSensor" nullable="false"/>
+									</element>
+									<element mandatory="MANDATORY" name="mix:CameraCaptureSettings" nullable="false">
+										<element mandatory="MANDATORY" name="mix:ImageData" nullable="false"/>
+									</element>
+								</element>
+								<element mandatory="MANDATORY" name="mix:orientation" nullable="false"/>
+							</element>
+							<element mandatory="MANDATORY" name="mix:ImageAssessmentMetadata" nullable="false">
+								<element mandatory="MANDATORY" name="mix:SpatialMetrics" nullable="false">
+									<element mandatory="MANDATORY" name="mix:samplingFrequencyUnit" nullable="false"/>
+									<element mandatory="MANDATORY_IF_AVAILABLE" name="mix:xSamplingFrequency" nullable="false">
+										<element mandatory="MANDATORY" name="mix:numerator" nullable="false"/>
+										<element mandatory="MANDATORY" name="mix:denominator" nullable="false"/>
+									</element>
+									<element mandatory="MANDATORY_IF_AVAILABLE" name="mix:ySamplingFrequency" nullable="false">
+										<element mandatory="MANDATORY" name="mix:numerator" nullable="false"/>
+										<element mandatory="MANDATORY" name="mix:denominator" nullable="false"/>
+									</element>
+								</element>
+								<element mandatory="MANDATORY" name="mix:ImageColorEncoding" nullable="false">
+									<element mandatory="MANDATORY" name="mix:BitsPerSample" nullable="false">
+										<element mandatory="MANDATORY" name="mix:bitsPerSampleValue" nullable="false"/>
+									</element>
+									<element mandatory="MANDATORY" name="mix:samplesPerPixel" nullable="false"/>
+								</element>
+							</element>
+						</element>
+					</element>
+				</element>
+			</element>
+			<element mandatory="MANDATORY" name="mets:techMD[@ID='MIX_002']" nullable="false">
+				<element mandatory="MANDATORY" name="mets:mdWrap" nullable="false">
+					<attribute mandatory="MANDATORY" name="MDTYPE">
+						<possibleValue>NISOIMG</possibleValue>
+					</attribute>
+					<element mandatory="MANDATORY" name="mets:xmlData" nullable="false">
+						<element mandatory="MANDATORY" name="mix:mix" nullable="false">
+							<element mandatory="MANDATORY" name="mix:BasicDigitalObjectInformation" nullable="false">
+								<element mandatory="MANDATORY_IF_AVAILABLE" name="mix:ObjectIdentifier" nullable="false">
+									<element mandatory="MANDATORY_IF_AVAILABLE" name="mix:objectIdentifierType" nullable="false"/>
+									<element mandatory="MANDATORY_IF_AVAILABLE" name="mix:objectIdentifierValue" nullable="false"/>
+								</element>
+								<element mandatory="MANDATORY" name="mix:FormatDesignation" nullable="false">
+									<element mandatory="MANDATORY" name="mix:formatName" nullable="false"/>
+									<element mandatory="MANDATORY" name="mix:formatVersion" nullable="false"/>
+								</element>
+								<element mandatory="MANDATORY" name="mix:Compression" nullable="false">
+									<element mandatory="MANDATORY" name="mix:compressionScheme" nullable="false"/>
+								</element>
+							</element>
+							<element mandatory="MANDATORY" name="mix:BasicImageInformation" nullable="false">
+								<element mandatory="MANDATORY" name="mix:BasicImageCharacteristics" nullable="false">
+									<element mandatory="MANDATORY" name="mix:imageWidth" nullable="false"/>
+									<element mandatory="MANDATORY" name="mix:imageHeight" nullable="false"/>
+									<element mandatory="MANDATORY" name="mix:PhotometricInterpretation" nullable="false">
+										<element mandatory="MANDATORY" name="mix:colorSpace" nullable="false"/>
+										<element mandatory="MANDATORY_IF_AVAILABLE" name="mix:ColorProfile" nullable="false">
+											<element mandatory="MANDATORY" name="mix:IccProfile" nullable="false">
+												<element mandatory="MANDATORY" name="mix:iccProfileName" nullable="false"/>
+												<element mandatory="MANDATORY" name="mix:iccProfileVersion" nullable="false"/>
+											</element>
+										</element>
+									</element>
+								</element>
+								<element mandatory="MANDATORY_IF_AVAILABLE" name="mix:SpecialFormatCharacteristics" nullable="false">
+									<element mandatory="MANDATORY" name="mix:JPEG2000" nullable="false">
+										<element mandatory="MANDATORY" name="mix:CodecCompliance" nullable="false">
+											<element mandatory="MANDATORY" name="mix:codec" nullable="false"/>
+											<element mandatory="MANDATORY" name="mix:codecVersion" nullable="false"/>
+											<element mandatory="MANDATORY" name="mix:codestreamProfile" nullable="false"/>
+											<element mandatory="MANDATORY" name="mix:complianceClass" nullable="false"/>
+										</element>
+										<element mandatory="MANDATORY" name="mix:EncodingOptions" nullable="false">
+											<element mandatory="MANDATORY" name="mix:Tiles" nullable="false">
+												<element mandatory="MANDATORY" name="mix:tileWidth" nullable="false"/>
+												<element mandatory="MANDATORY" name="mix:tileHeight" nullable="false"/>
+											</element>
+											<element mandatory="MANDATORY" name="mix:qualityLayers" nullable="false"/>
+											<element mandatory="MANDATORY" name="mix:resolutionLevels" nullable="false"/>
+										</element>
+									</element>
+								</element>
+							</element>
+							<element mandatory="MANDATORY" name="mix:ImageAssessmentMetadata" nullable="false">
+								<element mandatory="MANDATORY" name="mix:SpatialMetrics" nullable="false">
+									<element mandatory="MANDATORY" name="mix:samplingFrequencyUnit" nullable="false"/>
+									<element mandatory="MANDATORY_IF_AVAILABLE" name="mix:xSamplingFrequency" nullable="false">
+										<element mandatory="MANDATORY" name="mix:numerator" nullable="false"/>
+										<element mandatory="MANDATORY" name="mix:denominator" nullable="false"/>
+									</element>
+									<element mandatory="MANDATORY_IF_AVAILABLE" name="mix:ySamplingFrequency" nullable="false">
+										<element mandatory="MANDATORY" name="mix:numerator" nullable="false"/>
+										<element mandatory="MANDATORY" name="mix:denominator" nullable="false"/>
+									</element>
+								</element>
+								<element mandatory="MANDATORY" name="mix:ImageColorEncoding" nullable="false">
+									<element mandatory="MANDATORY" name="mix:BitsPerSample" nullable="false">
+										<element mandatory="MANDATORY" name="mix:bitsPerSampleValue" nullable="false"/>
+									</element>
+									<element mandatory="MANDATORY" name="mix:samplesPerPixel" nullable="false"/>
+								</element>
+								<element mandatory="MANDATORY_IF_AVAILABLE" name="mix:TargetData" nullable="false">
+									<element mandatory="MANDATORY" name="mix:targetType" nullable="false"/>
+									<element mandatory="MANDATORY" name="mix:targetID" nullable="false">
+										<element mandatory="MANDATORY" name="mix:targetManufacturer" nullable="false"/>
+										<element mandatory="MANDATORY" name="mix:targetName" nullable="false"/>
+									</element>
+									<element mandatory="MANDATORY_IF_AVAILABLE" name="mix:externalTarget" nullable="false"/>
+									<element mandatory="MANDATORY_IF_AVAILABLE" name="mix:externalTarget" nullable="false"/>
+								</element>
+							</element>
+							<element mandatory="MANDATORY" name="mix:ChangeHistory" nullable="false">
+								<element mandatory="MANDATORY" name="mix:ImageProcessing" nullable="false">
+									<element mandatory="MANDATORY" name="mix:sourceData" nullable="false"/>
+								</element>
+							</element>
+						</element>
+					</element>
+				</element>
+			</element>
+		</element>
+	</rootValidationNode>
+</validationTemplate>

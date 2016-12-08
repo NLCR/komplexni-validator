@@ -85,7 +85,7 @@ public class VfCheckInfoFileChecksumMatches extends ValidationFunction {
                         "uvedený kontrolní součet '%s' nesouhlasí s vypočítaným kontrolním součtem '%s' pro soubor %s",
                         hashFound, hashComputed, checksumFileExisting.getAbsolutePath()));
             }
-        } catch (XmlParsingException e) {
+        } catch (XmlFileParsingException e) {
             result.addError(invalid(e));
         } catch (InvalidXPathExpressionException e) {
             result.addError(invalid(e));

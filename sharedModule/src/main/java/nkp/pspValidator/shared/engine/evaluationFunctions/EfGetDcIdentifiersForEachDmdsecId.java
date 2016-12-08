@@ -7,7 +7,7 @@ import nkp.pspValidator.shared.engine.ValueType;
 import nkp.pspValidator.shared.engine.exceptions.ContractException;
 import nkp.pspValidator.shared.engine.exceptions.InvalidIdException;
 import nkp.pspValidator.shared.engine.exceptions.InvalidXPathExpressionException;
-import nkp.pspValidator.shared.engine.exceptions.XmlParsingException;
+import nkp.pspValidator.shared.engine.exceptions.XmlFileParsingException;
 import nkp.pspValidator.shared.engine.types.Identifier;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -83,7 +83,7 @@ public class EfGetDcIdentifiersForEachDmdsecId extends EvaluationFunction {
                     return errorResult("dokument neobsahuje právě jeden element dmdSec s ID=" + dmdSecId);
                 }
                 Element dmdsecEl = (Element) dmdSecNodes.item(0);
-                XPathExpression xpathIdentifier = engine.buildXpath("//dc:identifier");
+                XPathExpression xpathIdentifier = engine.buildXpath("mets:mdWrap/mets:xmlData/oai_dc:dc/dc:identifier");
                 NodeList idEls = (NodeList) xpathIdentifier.evaluate(dmdsecEl, XPathConstants.NODESET);
                 List<Identifier> idList = new ArrayList<>();
                 for (int i = 0; i < idEls.getLength(); i++) {
@@ -96,11 +96,13 @@ public class EfGetDcIdentifiersForEachDmdsecId extends EvaluationFunction {
                     }
                 }
                 result.add(idList);
+                //System.err.println(dmdSecId + ": " + Utils.listToString(idList));
             }
+            //System.err.println(Utils.listToString(result));
             return okResult(result);
         } catch (XPathExpressionException e) {
             return errorResult(String.format("neplatný xpath výraz '%s': %s", xmlFile.getAbsolutePath(), e.getMessage()));
-        } catch (XmlParsingException e) {
+        } catch (XmlFileParsingException e) {
             return errorResult(e);
         } catch (InvalidXPathExpressionException e) {
             return errorResult(e);

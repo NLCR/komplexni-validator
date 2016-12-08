@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<validationTemplate>
+    <name>physical_map</name>
+    <version>1.0</version>
+    <rootValidationNode mandatory="MANDATORY" name="mets:mets" nullable="false">
+        <attribute mandatory="MANDATORY" name="LABEL"/>
+        <attribute mandatory="MANDATORY" name="TYPE"/>
+        <element mandatory="MANDATORY" name="mets:structMap[@LABEL='Physical_Structure']" nullable="false">
+            <attribute mandatory="MANDATORY" name="TYPE">
+                <possibleValue>PHYSICAL</possibleValue>
+            </attribute>
+            <element mandatory="MANDATORY" name="mets:div" nullable="false">
+                <attribute mandatory="MANDATORY" name="LABEL"/>
+                <attribute mandatory="MANDATORY" name="TYPE"/>
+                <attribute mandatory="MANDATORY" name="ID"/>
+                <attribute mandatory="MANDATORY" name="DMDID"/>
+                <element mandatory="MANDATORY" name="mets:div" nullable="false">
+                    <attribute mandatory="MANDATORY" name="TYPE"/>
+                    <attribute mandatory="MANDATORY" name="ID"/>
+                    <attribute mandatory="MANDATORY" name="ORDERLABEL"/>
+                    <attribute mandatory="MANDATORY" name="ORDER"/>
+                    <element mandatory="MANDATORY" name="mets:fptr[starts-with(@FILEID, 'MC')]" nullable="true"/>
+                    <element mandatory="MANDATORY" name="mets:fptr[starts-with(@FILEID, 'UC')]" nullable="true"/>
+                    <element mandatory="MANDATORY" name="mets:fptr[starts-with(@FILEID, 'ALTO')]" nullable="true">
+                        <attribute mandatory="MANDATORY_IF_AVAILABLE" name="BEGIN"/>
+                        <attribute mandatory="MANDATORY_IF_AVAILABLE" name="BETYPE">
+                            <possibleValue>IDREF</possibleValue>
+                        </attribute>
+                    </element>
+                    <element mandatory="MANDATORY" name="mets:fptr[starts-with(@FILEID, 'TXT')]" nullable="true"/>
+                    <element mandatory="MANDATORY" name="mets:fptr[starts-with(@FILEID, 'AMD_METS')]" nullable="true"/>
+                </element>
+            </element>
+        </element>
+    </rootValidationNode>
+</validationTemplate>

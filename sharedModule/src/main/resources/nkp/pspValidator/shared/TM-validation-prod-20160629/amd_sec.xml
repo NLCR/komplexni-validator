@@ -1,0 +1,213 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<validationTemplate>
+	<name>amd_sec</name>
+	<version>1.0</version>
+	<rootValidationNode mandatory="MANDATORY" name="mets:mets" nullable="false">
+		<element mandatory="MANDATORY" name="mets:amdSec" nullable="false">
+			<attribute mandatory="MANDATORY" name="ID"/>
+			<element mandatory="MANDATORY" name="mets:techMD[@ID='OBJ_001']" nullable="false">
+				<element mandatory="MANDATORY" name="mets:mdWrap" nullable="false">
+					<attribute mandatory="MANDATORY" name="MDTYPE">
+						<possibleValue>PREMIS</possibleValue>
+					</attribute>
+					<element mandatory="MANDATORY" name="mets:xmlData" nullable="false">
+						<element mandatory="MANDATORY" name="premis:object" nullable="false">
+							<element mandatory="MANDATORY" name="premis:objectIdentifier" nullable="false">
+								<element mandatory="MANDATORY" name="premis:objectIdentifierType" nullable="false"/>
+								<element mandatory="MANDATORY" name="premis:objectIdentifierValue" nullable="false"/>
+							</element>
+							<element mandatory="MANDATORY" name="premis:preservationLevel" nullable="false">
+								<element mandatory="MANDATORY" name="premis:preservationLevelValue" nullable="false"/>
+							</element>
+							<element mandatory="MANDATORY" name="premis:objectCharacteristics" nullable="false">
+								<element name="premis:compositionLevel" nullable="false"/>
+								<element mandatory="MANDATORY" name="premis:fixity" nullable="false">
+									<element mandatory="MANDATORY" name="premis:messageDigestAlgorithm" nullable="false"/>
+									<element mandatory="MANDATORY" name="premis:messageDigest" nullable="false"/>
+									<element mandatory="MANDATORY" name="premis:messageDigestOriginator" nullable="false"/>
+								</element>
+								<element mandatory="MANDATORY" name="premis:size" nullable="false"/>
+								<element mandatory="MANDATORY" name="premis:format" nullable="false">
+									<element mandatory="MANDATORY" name="premis:formatDesignation" nullable="false">
+										<element mandatory="MANDATORY" name="premis:formatName" nullable="false"/>
+										<element mandatory="MANDATORY" name="premis:formatVersion" nullable="false"/>
+									</element>
+									<element mandatory="MANDATORY" name="premis:formatRegistry" nullable="false">
+										<element mandatory="MANDATORY" name="premis:formatRegistryName" nullable="false"/>
+										<element mandatory="MANDATORY" name="premis:formatRegistryKey" nullable="false"/>
+									</element>
+								</element>
+								<element mandatory="MANDATORY" name="premis:creatingApplication" nullable="false">
+									<element mandatory="MANDATORY" name="premis:creatingApplicationName" nullable="false"/>
+									<element mandatory="MANDATORY" name="premis:creatingApplicationVersion" nullable="false"/>
+									<element mandatory="MANDATORY" name="premis:dateCreatedByApplication" nullable="false"/>
+								</element>
+							</element>
+							<element mandatory="MANDATORY" name="premis:originalName" nullable="false"/>
+							<element mandatory="MANDATORY" name="premis:linkingEventIdentifier" nullable="false">
+								<element mandatory="MANDATORY" name="premis:linkingEventIdentifierType" nullable="false"/>
+								<element mandatory="MANDATORY" name="premis:linkingEventIdentifierValue" nullable="false"/>
+							</element>
+						</element>
+					</element>
+				</element>
+			</element>
+			<element mandatory="MANDATORY" name="mets:techMD[@ID='OBJ_002']" nullable="false">
+				<element mandatory="MANDATORY" name="mets:mdWrap" nullable="false">
+					<attribute mandatory="MANDATORY" name="MDTYPE">
+						<possibleValue>PREMIS</possibleValue>
+					</attribute>
+					<element mandatory="MANDATORY" name="mets:xmlData" nullable="false">
+						<element mandatory="MANDATORY" name="premis:object" nullable="false">
+							<element mandatory="MANDATORY" name="premis:objectIdentifier" nullable="false">
+								<element mandatory="MANDATORY" name="premis:objectIdentifierType" nullable="false"/>
+								<element mandatory="MANDATORY" name="premis:objectIdentifierValue" nullable="false"/>
+							</element>
+							<element mandatory="MANDATORY" name="premis:preservationLevel" nullable="false">
+								<element mandatory="MANDATORY" name="premis:preservationLevelValue" nullable="false"/>
+							</element>
+							<element mandatory="MANDATORY" name="premis:objectCharacteristics" nullable="false">
+								<element mandatory="MANDATORY" name="premis:compositionLevel" nullable="false"/>
+								<element mandatory="MANDATORY" name="premis:fixity" nullable="false">
+									<element mandatory="MANDATORY" name="premis:messageDigestAlgorithm" nullable="false"/>
+									<element mandatory="MANDATORY" name="premis:messageDigest" nullable="false"/>
+									<element mandatory="MANDATORY" name="premis:messageDigestOriginator" nullable="false"/>
+								</element>
+								<element mandatory="MANDATORY" name="premis:size" nullable="false"/>
+								<element mandatory="MANDATORY" name="premis:format" nullable="false">
+									<element mandatory="MANDATORY" name="premis:formatDesignation" nullable="false">
+										<element mandatory="MANDATORY" name="premis:formatName" nullable="false"/>
+										<element mandatory="MANDATORY" name="premis:formatVersion" nullable="false"/>
+									</element>
+									<element mandatory="MANDATORY" name="premis:formatRegistry" nullable="false">
+										<element mandatory="MANDATORY" name="premis:formatRegistryName" nullable="false"/>
+										<element mandatory="MANDATORY" name="premis:formatRegistryKey" nullable="false"/>
+									</element>
+								</element>
+								<element mandatory="MANDATORY" name="premis:creatingApplication" nullable="false">
+									<element mandatory="MANDATORY" name="premis:creatingApplicationName" nullable="false"/>
+									<element mandatory="MANDATORY" name="premis:creatingApplicationVersion" nullable="false"/>
+									<element mandatory="MANDATORY" name="premis:dateCreatedByApplication" nullable="false"/>
+								</element>
+							</element>
+							<element mandatory="MANDATORY" name="premis:originalName" nullable="false"/>
+							<element mandatory="MANDATORY" name="premis:relationship" nullable="false">
+								<element mandatory="MANDATORY" name="premis:relationshipType" nullable="false"/>
+								<element mandatory="MANDATORY" name="premis:relationshipSubType" nullable="false"/>
+								<element mandatory="MANDATORY" name="premis:relatedObjectIdentification" nullable="false">
+									<element mandatory="MANDATORY" name="premis:relatedObjectIdentifierType" nullable="false"/>
+									<element mandatory="MANDATORY" name="premis:relatedObjectIdentifierValue" nullable="false"/>
+								</element>
+								<element mandatory="MANDATORY" name="premis:relatedEventIdentification" nullable="false">
+									<element mandatory="MANDATORY" name="premis:relatedEventIdentifierType" nullable="false"/>
+									<element mandatory="MANDATORY" name="premis:relatedEventIdentifierValue" nullable="false"/>
+								</element>
+							</element>
+						</element>
+					</element>
+				</element>
+			</element>
+			<element mandatory="MANDATORY" name="mets:techMD[@ID='OBJ_003']" nullable="false">
+				<element mandatory="MANDATORY" name="mets:mdWrap" nullable="false">
+					<attribute mandatory="MANDATORY" name="MDTYPE">
+						<possibleValue>PREMIS</possibleValue>
+					</attribute>
+					<element mandatory="MANDATORY" name="mets:xmlData" nullable="false">
+						<element mandatory="MANDATORY" name="premis:object" nullable="false">
+							<element mandatory="MANDATORY" name="premis:objectIdentifier" nullable="false">
+								<element mandatory="MANDATORY" name="premis:objectIdentifierType" nullable="false"/>
+								<element mandatory="MANDATORY" name="premis:objectIdentifierValue" nullable="false"/>
+							</element>
+							<element mandatory="MANDATORY" name="premis:preservationLevel" nullable="false">
+								<element mandatory="MANDATORY" name="premis:preservationLevelValue" nullable="false"/>
+							</element>
+							<element mandatory="MANDATORY" name="premis:objectCharacteristics" nullable="false">
+								<element mandatory="MANDATORY" name="premis:compositionLevel" nullable="false"/>
+								<element mandatory="MANDATORY" name="premis:fixity" nullable="false">
+									<element mandatory="MANDATORY" name="premis:messageDigestAlgorithm" nullable="false"/>
+									<element mandatory="MANDATORY" name="premis:messageDigest" nullable="false"/>
+									<element mandatory="MANDATORY" name="premis:messageDigestOriginator" nullable="false"/>
+								</element>
+								<element mandatory="MANDATORY" name="premis:size" nullable="false"/>
+								<element mandatory="MANDATORY" name="premis:format" nullable="false">
+									<element mandatory="MANDATORY" name="premis:formatDesignation" nullable="false">
+										<element mandatory="MANDATORY" name="premis:formatName" nullable="false"/>
+										<element mandatory="MANDATORY" name="premis:formatVersion" nullable="false"/>
+									</element>
+									<element mandatory="MANDATORY" name="premis:formatRegistry" nullable="false">
+										<element mandatory="MANDATORY" name="premis:formatRegistryName" nullable="false"/>
+										<element mandatory="MANDATORY" name="premis:formatRegistryKey" nullable="false"/>
+									</element>
+								</element>
+								<element mandatory="MANDATORY" name="premis:creatingApplication" nullable="false">
+									<element mandatory="MANDATORY" name="premis:creatingApplicationName" nullable="false"/>
+									<element mandatory="MANDATORY" name="premis:creatingApplicationVersion" nullable="false"/>
+									<element mandatory="MANDATORY" name="premis:dateCreatedByApplication" nullable="false"/>
+								</element>
+							</element>
+							<element mandatory="MANDATORY" name="premis:originalName" nullable="false"/>
+							<element mandatory="MANDATORY" name="premis:relationship" nullable="false">
+								<element mandatory="MANDATORY" name="premis:relationshipType" nullable="false"/>
+								<element mandatory="MANDATORY" name="premis:relationshipSubType" nullable="false"/>
+								<element mandatory="MANDATORY" name="premis:relatedObjectIdentification" nullable="false">
+									<element mandatory="MANDATORY" name="premis:relatedObjectIdentifierType" nullable="false"/>
+									<element mandatory="MANDATORY" name="premis:relatedObjectIdentifierValue" nullable="false"/>
+								</element>
+								<element mandatory="MANDATORY" name="premis:relatedEventIdentification" nullable="false">
+									<element mandatory="MANDATORY" name="premis:relatedEventIdentifierType" nullable="false"/>
+									<element mandatory="MANDATORY" name="premis:relatedEventIdentifierValue" nullable="false"/>
+								</element>
+							</element>
+						</element>
+					</element>
+				</element>
+			</element>
+			<element mandatory="MANDATORY" name="mets:digiprovMD[starts-with(@ID, 'EVT')]" nullable="false">
+				<element mandatory="MANDATORY" name="mets:mdWrap" nullable="false">
+					<attribute mandatory="MANDATORY" name="MDTYPE">
+						<possibleValue>PREMIS</possibleValue>
+					</attribute>
+					<element mandatory="MANDATORY" name="mets:xmlData" nullable="false">
+						<element mandatory="MANDATORY" name="premis:event" nullable="false">
+							<element mandatory="MANDATORY" name="premis:eventIdentifier" nullable="false">
+								<element mandatory="MANDATORY" name="premis:eventIdentifierType" nullable="false"/>
+								<element mandatory="MANDATORY" name="premis:eventIdentifierValue" nullable="false"/>
+							</element>
+							<element mandatory="MANDATORY" name="premis:eventType" nullable="false"/>
+							<element mandatory="MANDATORY" name="premis:eventDateTime" nullable="false"/>
+							<element mandatory="MANDATORY" name="premis:eventDetail" nullable="false"/>
+							<element mandatory="MANDATORY_IF_AVAILABLE" name="premis:eventOutcomeInformation" nullable="false">
+								<element mandatory="MANDATORY_IF_AVAILABLE" name="premis:eventOutcome" nullable="false"/>
+							</element>
+							<element mandatory="MANDATORY" name="premis:linkingAgentIdentifier" nullable="false">
+								<element mandatory="MANDATORY" name="premis:linkingAgentIdentifierType" nullable="false"/>
+								<element mandatory="MANDATORY" name="premis:linkingAgentIdentifierValue" nullable="false"/>
+							</element>
+							<element mandatory="MANDATORY" name="premis:linkingObjectIdentifier" nullable="false">
+								<element mandatory="MANDATORY" name="premis:linkingObjectIdentifierType" nullable="false"/>
+								<element mandatory="MANDATORY" name="premis:linkingObjectIdentifierValue" nullable="false"/>
+							</element>
+						</element>
+					</element>
+				</element>
+			</element>
+			<element mandatory="MANDATORY" name="mets:digiprovMD[starts-with(@ID, 'AGENT')]" nullable="false">
+				<element mandatory="MANDATORY" name="mets:mdWrap" nullable="false">
+					<attribute mandatory="MANDATORY" name="MDTYPE">
+						<possibleValue>PREMIS</possibleValue>
+					</attribute>
+					<element mandatory="MANDATORY" name="mets:xmlData" nullable="false">
+						<element mandatory="MANDATORY" name="premis:agent" nullable="false">
+							<element mandatory="MANDATORY" name="premis:agentIdentifier" nullable="false">
+								<element mandatory="MANDATORY" name="premis:agentIdentifierType" nullable="false"/>
+								<element mandatory="MANDATORY" name="premis:agentIdentifierValue" nullable="false"/>
+							</element>
+							<element mandatory="MANDATORY" name="premis:agentType" nullable="false"/>
+							<element mandatory="MANDATORY_IF_AVAILABLE" name="premis:agentNote" nullable="false"/>
+						</element>
+					</element>
+				</element>
+			</element>
+		</element>
+	</rootValidationNode>
+</validationTemplate>

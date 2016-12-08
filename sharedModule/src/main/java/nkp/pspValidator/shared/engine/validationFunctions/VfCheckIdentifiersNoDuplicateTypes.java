@@ -16,15 +16,13 @@ import java.util.Map;
 /**
  * Created by martin on 27.10.16.
  */
-//TODO: prejmenovat, aby se oddelila shoda typu a shoda celkova
-//treba 2 ruzne urovne popisu muzou mit obe uuid:..., ale uz ne uuid:1
-public class VfCheckNoDuplicateIdentifiers extends ValidationFunction {
+public class VfCheckIdentifiersNoDuplicateTypes extends ValidationFunction {
 
     public static final String PARAM_IDENTIFIER_LIST = "identifier_list";
     public static final String PARAM_IDENTIFIER_LIST_LIST = "identifier_list_list";
 
 
-    public VfCheckNoDuplicateIdentifiers(Engine engine) {
+    public VfCheckIdentifiersNoDuplicateTypes(Engine engine) {
         super(engine, new Contract()
                 .withValueParam(PARAM_IDENTIFIER_LIST, ValueType.IDENTIFIER_LIST, 0, null)
                 .withValueParam(PARAM_IDENTIFIER_LIST_LIST, ValueType.IDENTIFIER_LIST_LIST, 0, null)
@@ -33,7 +31,7 @@ public class VfCheckNoDuplicateIdentifiers extends ValidationFunction {
 
     @Override
     public String getName() {
-        return "checkNoDuplicateIdentifiers";
+        return "checkIdentifiersNoDuplicateTypes";
     }
 
     @Override
@@ -76,12 +74,13 @@ public class VfCheckNoDuplicateIdentifiers extends ValidationFunction {
     private ValidationResult validate(List<List<Identifier>> idListList) {
         ValidationResult result = new ValidationResult();
         for (List<Identifier> idList : idListList) {
+            //System.out.println(Utils.listToString(idList));
             Map<String, String> map = new HashMap<>();
             for (Identifier id : idList) {
                 if (!map.containsKey(id.getType())) {
                     map.put(id.getType(), id.getValue());
                 } else {
-                    result.addError(invalid(Level.ERROR, "seznam obsahuje více identifikátorů typu '%s'", id.getType()));
+                    result.addError(invalid(Level.ERROR, "seznam obsahuje více identifikátorů typu '%s', např: %s", id.getType(), id.toString()));
                 }
             }
         }

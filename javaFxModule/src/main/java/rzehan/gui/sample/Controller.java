@@ -12,7 +12,6 @@ import nkp.pspValidator.shared.imageUtils.ImageUtilManager;
 import nkp.pspValidator.shared.imageUtils.ImageUtilManagerFactory;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -26,12 +25,15 @@ public class Controller {
     private static final int MAX_OUTPUT_LENGTH = 100;
     private static final File MC_FILE_LINUX = new File("/home/martin/zakazky/NKP-PSP_validator/data/monografie_1.2/b50eb6b0-f0a4-11e3-b72e-005056827e52/mastercopy/mc_b50eb6b0-f0a4-11e3-b72e-005056827e52_0001.jp2");
     private static final File MC_FILE_WINDOWS = new File("C:\\Users\\Martin\\Documents\\PspValidator\\mc_b50eb6b0-f0a4-11e3-b72e-005056827e52_0001.jp2");
+    private static final File MC_FILE_MAC = new File("/Users/martinrehanek/Dropbox/PspValidator/data/monograph_1.2/b50eb6b0-f0a4-11e3-b72e-005056827e52/mastercopy/mc_b50eb6b0-f0a4-11e3-b72e-005056827e52_0001.jp2");
 
+    private static final File IMAGE_PROPERTIES_LINUX = new File("/home/martin/ssd/IdeaProjects/PspValidator/sharedModule/src/main/resources/nkp/pspValidator/shared/fDMF/imageUtils.xml");
+    private static final File IMAGE_PROPERTIES_MAC = new File("/Users/martinrehanek/IdeaProjects/PspValidator/sharedModule/src/main/resources/nkp/pspValidator/shared/fDMF/imageUtils.xml");
 
-    @FXML
-    Label osLabel;
     @FXML
     Label logLabel;
+    @FXML
+    Label osLabel;
 
     @FXML
     Label detectJpylyzerVersionLabel;
@@ -62,10 +64,42 @@ public class Controller {
     public Controller() throws ValidatorConfigurationException {
         platform = Platform.detectOs();
         LOGGER.info("platform: " + platform.toString());
-        utilManager = new ImageUtilManagerFactory(new File("/home/martin/ssd/IdeaProjects/PspValidator/sharedModule/src/main/resources/nkp/pspValidator/shared/fDMF/imageUtils.xml"))
-                .buildImageUtilManager(platform.getOperatingSystem());
+        File imageProperties = getImageProperties(platform);
+        utilManager = new ImageUtilManagerFactory(imageProperties).buildImageUtilManager(platform.getOperatingSystem());
+        //paths
+        switch (platform.getOperatingSystem()) {
+            case LINUX: {
+                utilManager.setPath(ImageUtil.KAKADU, new File("/home/martin/zakazky/PSP-validator/utility/kakadu/KDU78_Demo_Apps_for_Linux-x86-64_160226"));
+                break;
+            }
+            case WINDOWS: {
+                break;
+            }
+            case MAC: {
+                utilManager.setPath(ImageUtil.JHOVE, new File("/Users/martinrehanek/Software/jhove"));
+                utilManager.setPath(ImageUtil.JPYLYZER, new File("/Users/martinrehanek/Software/jpylyzer-1.17.0/jpylyzer"));
+                utilManager.setPath(ImageUtil.IMAGE_MAGICK, new File("/opt/local/bin"));
+                break;
+            }
+            default:
+                throw new IllegalStateException("Unsupported platform: " + platform);
+        }
+
         //LINUX paths
-        utilManager.setPath(ImageUtil.KAKADU, new File("/home/martin/zakazky/PSP-validator/utility/kakadu/KDU78_Demo_Apps_for_Linux-x86-64_160226"));
+
+    }
+
+    private File getImageProperties(Platform platform) {
+        switch (platform.getOperatingSystem()) {
+            case LINUX:
+                return IMAGE_PROPERTIES_LINUX;
+            /*case WINDOWS:
+                return null;*/
+            case MAC:
+                return IMAGE_PROPERTIES_MAC;
+            default:
+                throw new IllegalStateException("Unsupported platform");
+        }
     }
 
     public void initialize() {
@@ -105,15 +139,10 @@ public class Controller {
                 System.out.println(version);
                 label.setText(version);
             }
-        } catch (IOException e) {
+        } catch (CliCommand.CliCommandException e) {
             //program probably does not exist
-            //e.printStackTrace() here throws IOEXception on Windows
             //e.printStackTrace();
-            label.setText("not found");
-        } catch (InterruptedException e) {
-            //e.printStackTrace() here throws IOEXception on Windows
-            //e.printStackTrace();
-            label.setText("process interrupted");
+            label.setText("not found: " + e.getMessage());
         }
     }
 
@@ -131,15 +160,10 @@ public class Controller {
                         System.out.println(version);
                         updateMessage(version);
                     }
-                } catch (IOException e) {
+                } catch (CliCommand.CliCommandException e) {
                     //program probably does not exist
-                    //e.printStackTrace() here throws IOEXception on Windows
                     //e.printStackTrace();
-                    updateMessage("not found");
-                } catch (InterruptedException e) {
-                    //e.printStackTrace() here throws IOEXception on Windows
-                    //e.printStackTrace();
-                    updateMessage("process interrupted");
+                    updateMessage("not found: " + e.getMessage());
                 }
                 return null;
             }
@@ -167,15 +191,9 @@ public class Controller {
                 String partial = output.replace("\n", " ").substring(0, Math.min(output.length(), MAX_OUTPUT_LENGTH)) + " ...";
                 label.setText(partial);
             }
-        } catch (IOException e) {
+        } catch (CliCommand.CliCommandException e) {
             //program probably does not exist
-            //e.printStackTrace() here throws IOEXception on Windows
-            //e.printStackTrace();
-            label.setText("not found");
-        } catch (InterruptedException e) {
-            //e.printStackTrace() here throws IOEXception on Windows
-            //e.printStackTrace();
-            label.setText("process interrupted");
+            label.setText("not found: " + e.getMessage());
         }
     }
 
@@ -194,19 +212,12 @@ public class Controller {
                         updateMessage(String.format("util execution not defined for %s", util));
                     } else {
                         String output = utilManager.runUtilExecution(util, imageFile);
-                        System.out.println(output);
+                        System.out.println("output: " + output);
                         String partial = output.replace("\n", " ").substring(0, Math.min(output.length(), MAX_OUTPUT_LENGTH)) + " ...";
                         updateMessage(partial);
                     }
-                } catch (IOException e) {
-                    //program probably does not exist
-                    //e.printStackTrace() here throws IOEXception on Windows
-                    //e.printStackTrace();
-                    updateMessage("not found");
-                } catch (InterruptedException e) {
-                    //e.printStackTrace() here throws IOEXception on Windows
-                    //e.printStackTrace();
-                    updateMessage("process interrupted");
+                } catch (CliCommand.CliCommandException e) {
+                    updateMessage("not found: " + e.getMessage());
                 }
                 return null;
             }
@@ -221,6 +232,8 @@ public class Controller {
                 return MC_FILE_LINUX;
             case WINDOWS:
                 return MC_FILE_WINDOWS;
+            case MAC:
+                return MC_FILE_MAC;
             default:
                 throw new IllegalStateException("Unsupported platform");
         }
@@ -278,16 +291,17 @@ public class Controller {
             String file = null;
             switch (platform.getOperatingSystem()) {
                 case WINDOWS:
-                    file = dir + "\\resources\\bin\\ImageMagick-7.0.2-4-Q16-x64-dll.exe";
+                    file = "\\resources\\bin\\ImageMagick-7.0.2-4-Q16-x64-dll.exe";
                     break;
                 case LINUX:
-                    file = dir + "/resources/bin/ImageMagick.deb";
+                    file = "/resources/bin/ImageMagick.deb";
                     break;
             }
 
 
             //String outStr = new CliCommand("/home/martin/IdeaProjects/NkpValidator/res/bin/fuckyou.sh");
             CliCommand.Result output = new CliCommand(file).execute();
+            System.err.println("executed");
             output.print();
             String outStr = output.getStdout();
 
@@ -300,16 +314,9 @@ public class Controller {
 
 
             //installImageMagickLabel.setText(outStr);
-        } catch (IOException e) {
+        } catch (CliCommand.CliCommandException e) {
             //program probably does not exist
-            //e.printStackTrace();
-            String output = e.getMessage();
-            int length = Math.min(output.length(), MAX_OUTPUT_LENGTH);
-            installImageMagickLabel.setText(output.substring(0, length) + " ...");
-            //e.printStackTrace();
-        } catch (InterruptedException e) {
-            installImageMagickLabel.setText("process interrupted");
-            //e.printStackTrace();
+            installImageMagickLabel.setText("not found: " + e.getMessage());
         }
     }
 

@@ -1,11 +1,11 @@
 package npk.pspValidator.cli;
 
 import nkp.pspValidator.shared.*;
-import nkp.pspValidator.shared.engine.Level;
 import nkp.pspValidator.shared.engine.exceptions.InvalidXPathExpressionException;
 import nkp.pspValidator.shared.engine.exceptions.PspDataException;
 import nkp.pspValidator.shared.engine.exceptions.ValidatorConfigurationException;
-import nkp.pspValidator.shared.engine.exceptions.XmlParsingException;
+import nkp.pspValidator.shared.engine.exceptions.XmlFileParsingException;
+import nkp.pspValidator.shared.imageUtils.CliCommand;
 import nkp.pspValidator.shared.imageUtils.ImageUtil;
 import nkp.pspValidator.shared.imageUtils.ImageUtilManager;
 import nkp.pspValidator.shared.imageUtils.ImageUtilManagerFactory;
@@ -13,7 +13,6 @@ import nkp.pspValidator.shared.xsdValidation.XsdValidator;
 import org.apache.commons.cli.*;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
@@ -26,7 +25,16 @@ public class Main {
 
     public static int DEFAULT_VERBOSITY = 2;
 
-    public static void main(String[] args) throws PspDataException, XmlParsingException, InvalidXPathExpressionException, FdmfRegistry.UnknownFdmfException, ValidatorConfigurationException {
+    public static void main(String[] args) throws PspDataException, XmlFileParsingException, InvalidXPathExpressionException, FdmfRegistry.UnknownFdmfException, ValidatorConfigurationException {
+        main(null, args);
+    }
+
+    public static void main(Validator.DevParams devParams, String[] args) throws PspDataException, XmlFileParsingException, InvalidXPathExpressionException, FdmfRegistry.UnknownFdmfException, ValidatorConfigurationException {
+        /*if (true) {
+            Properties properties = System.getProperties();
+            properties.list(System.out);
+            return;
+        }*/
 
         //https://commons.apache.org/proper/commons-cli/usage.html
         Options options = new Options();
@@ -44,16 +52,20 @@ public class Main {
                 .create("dv"));
 
         options.addOption(OptionBuilder
-                .withDescription("Adresář obsahující formalizované DMF pro jednotlivé verze standardu.")
+                //.withDescription("Adresář obsahující formalizované DMF pro jednotlivé verze standardu.")
+                .withDescription("Adresar obsahujici formalizovane DMF pro jednotlive verze standardu.")
                 .hasArg()
-                .withArgName("ADRESÁŘ_FDMF")
+                //.withArgName("ADRESÁŘ_FDMF")
+                .withArgName("ADRESAR_FDMF")
                 .withLongOpt("fdmf-dir")
                 .create("fd"));
         options.addOption(OptionBuilder
-                .withDescription("Adresář PSP balíku, který má být validován.")
+                //.withDescription("Adresář PSP balíku, který má být validován.")
+                .withDescription("Adresar PSP baliku, ktery ma byt validovan.")
                 //.isRequired()
                 .hasArg()
-                .withArgName("ADRESÁŘ_PSP")
+                //.withArgName("ADRESÁŘ_PSP")
+                .withArgName("ADRESAR_PSP")
                 .withLongOpt("psp-dir")
                 .create("pd"));
 
@@ -65,16 +77,20 @@ public class Main {
                 .create("z"));*/
 
         options.addOption(OptionBuilder
-                .withDescription("Soubor, do kterého se zapíše strukturovaný protokol o průběhu validace v xml.")
+                //.withDescription("Soubor, do kterého se zapíše strukturovaný protokol o průběhu validace v xml.")
+                .withDescription("Soubor, do kterého se zapise strukturovany protokol o prubehu validace v xml.")
                 .hasArg()
                 .withArgName("SOUBOR")
                 .withLongOpt("xml-output-file")
                 .create("x"));
 
         options.addOption(OptionBuilder
-                .withDescription("Úroveň podrobnosti výpisu." +
+                /*.withDescription("Úroveň podrobnosti výpisu." +
                         " 0 vypíše jen celkový počet chyb a rozhodnutí validní/nevalidní." +
-                        " 3 vypíše vše všetně sekcí a pravidel bez chyb.")
+                        " 3 vypíše vše včetně sekcí a pravidel bez chyb.")*/
+                .withDescription("Uroven podrobnosti vypisu." +
+                        " 0 vypise jen celkovy pocet chyb a rozhodnuti validni/nevalidni." +
+                        " 3 vypise vse vcetně sekci a pravidel bez chyb.")
                 .hasArg()
                 .withArgName("0-3")
                 .withLongOpt("verbosity")
@@ -82,60 +98,77 @@ public class Main {
 
 
         options.addOption(OptionBuilder
-                .withDescription("Adresář typ s binárními soubory nástroje ImageMagick." +
-                        " Např. C:\\Program Files\\ImageMagick-7.0.3-Q16 pro Windows, /usr/bin pro Linux, TODO pro MacOS.")
+                /*.withDescription("Adresář s binárními soubory nástroje ImageMagick." +
+                        " Např. C:\\Program Files\\ImageMagick-7.0.3-Q16 pro Windows, /usr/bin pro Linux.")*/
+                .withDescription("Adresar typ s binarnimi soubory nastroje ImageMagick." +
+                        " Napr. C:\\Program Files\\ImageMagick-7.0.3-Q16 pro Windows, /usr/bin pro Linux.")
                 .hasArg()
-                .withArgName("ADRESÁŘ")
+                //.withArgName("ADRESÁŘ")
+                .withArgName("ADRESAR")
                 .withLongOpt("imageMagick-path")
                 .create(null));
 
         options.addOption(OptionBuilder
-                .withDescription("Adresář typ s binárními soubory nástroje JHOVE." +
-                        " Např. C:\\Program Files\\jhove-1_11\\\\jhove pro Windows, /usr/bin pro Linux, TODO pro MacOS.")
+                /*.withDescription("Adresář s binárními soubory nástroje JHOVE." +
+                        " Např. C:\\Program Files\\jhove-1_11\\\\jhove pro Windows, /usr/bin pro Linux, TODO pro MacOS.")*/
+                .withDescription("Adresar s binarnimi soubory nastroje JHOVE." +
+                        " Např. C:\\Program Files\\jhove-1_11\\\\jhove pro Windows, /usr/bin pro Linux.")
                 .hasArg()
-                .withArgName("ADRESÁŘ")
+                //.withArgName("ADRESÁŘ")
+                .withArgName("ADRESAR")
                 .withLongOpt("jhove-path")
                 .create(null));
 
         options.addOption(OptionBuilder
-                .withDescription("Adresář typ s binárními soubory nástroje Jpylyzer." +
-                        " Např. C:\\Program Files\\jpylyzer_1.17.0_win64 pro Windows, /usr/bin pro Linux, TODO pro MacOS.")
+                /*.withDescription("Adresář typ s binárními soubory nástroje Jpylyzer." +
+                        " Např. C:\\Program Files\\jpylyzer_1.17.0_win64 pro Windows, /usr/bin pro Linux, TODO pro MacOS.")*/
+                .withDescription("Adresar typ s binarnimi soubory nastroje Jpylyzer." +
+                        " Např. C:\\Program Files\\jpylyzer_1.17.0_win64 pro Windows, /usr/bin pro Linux.")
                 .hasArg()
-                .withArgName("ADRESÁŘ")
+                //.withArgName("ADRESÁŘ")
+                .withArgName("ADRESAR")
                 .withLongOpt("jpylyzer-path")
                 .create(null));
 
         options.addOption(OptionBuilder
-                .withDescription("Adresář typ s binárními soubory nástroje Kakadu." +
-                        " Např. C:\\Program Files\\Kakadu pro Windows, /usr/bin pro Linux, TODO pro MacOS.")
+                /*.withDescription("Adresář s binárními soubory nástroje Kakadu." +
+                        " Např. C:\\Program Files\\Kakadu pro Windows, /usr/bin pro Linux, TODO pro MacOS.")*/
+                .withDescription("Adresar s binarnimi soubory nastroje Kakadu." +
+                        " Např. C:\\Program Files\\Kakadu pro Windows, /usr/bin pro Linux.")
                 .hasArg()
-                .withArgName("ADRESÁŘ")
+                //.withArgName("ADRESÁŘ")
+                .withArgName("ADRESAR")
                 .withLongOpt("kakadu-path")
                 .create(null));
 
 
         options.addOption(OptionBuilder
-                .withDescription("Zakáže použití ImageMagick.")
+                //.withDescription("Zakáže použití ImageMagick.")
+                .withDescription("Zakaze pouziti ImageMagick.")
                 .withLongOpt("disable-imageMagick")
                 .create(null));
 
         options.addOption(OptionBuilder
-                .withDescription("Zakáže použití JHOVE.")
+                //.withDescription("Zakáže použití JHOVE.")
+                .withDescription("Zakaze pouziti JHOVE.")
                 .withLongOpt("disable-jhove")
                 .create(null));
 
         options.addOption(OptionBuilder
-                .withDescription("Zakáže použití Jpylyzer.")
+                //.withDescription("Zakáže použití Jpylyzer.")
+                .withDescription("Zakaze pouziti Jpylyzer.")
                 .withLongOpt("disable-jpylyzer")
                 .create(null));
 
         options.addOption(OptionBuilder
-                .withDescription("Zakáže použití Kakadu.")
+                //.withDescription("Zakáže použití Kakadu.")
+                .withDescription("Zakaze pouziti Kakadu.")
                 .withLongOpt("disable-kakadu")
                 .create(null));
 
         options.addOption(OptionBuilder.withLongOpt("help")
-                .withDescription("Zobrazit tuto nápovědu.")
+                //.withDescription("Zobrazit tuto nápovědu.")
+                .withDescription("Zobrazit tuto napovedu.")
                 .create());
         options.addOption(OptionBuilder.withLongOpt("version")
                 .withDescription("Zobrazit informace o verzi.")
@@ -149,7 +182,7 @@ public class Main {
                 printHelp(options);
             } else if (line.hasOption("version")) {
                 //TODO
-                System.out.println("pspValidator-cli verze 0.1");
+                System.out.println("pspValidator-cli verze 0.2");
             } else {
                 if (!line.hasOption("fd")) {
                     System.err.println("Pro spuštění validace je nutné určit adresář obsahující formalizované DMF.");
@@ -198,10 +231,13 @@ public class Main {
                 } else {
                     if (line.hasOption("kakadu-path")) {
                         imageUtilPaths.put(ImageUtil.KAKADU, new File(line.getOptionValue("kakadu-path")));
+                    }else{
+                        System.err.println("no kakadu path");
                     }
+
                 }
 
-                runValidator(new Dmf(dmfType, dmfVersion), fdmfsDir, pspDir, xmlOutputFile, verbosity, imageUtilsDisabled, imageUtilPaths);
+                runValidator(new Dmf(dmfType, dmfVersion), fdmfsDir, pspDir, xmlOutputFile, verbosity, imageUtilsDisabled, imageUtilPaths, null, devParams);
             }
         } catch (ParseException exp) {
             System.err.println("Chyba parsování parametrů: " + exp.getMessage());
@@ -210,12 +246,18 @@ public class Main {
     }
 
     private static void printHelp(Options options) {
-        String header = "Validuje PSP balík, nebo sadu PSP balíků podle DMF*." +
-                " Verze a typ DMF lze vynutit parametry --dmf-type a/nebo --dmf-version, případně jsou odvozeny z dat PSP balíku." +
+        /*String header = "Validuje PSP balík, nebo sadu PSP balíků podle DMF*." +
+                " Verzi a typ DMF lze vynutit parametry --dmf-type a/nebo --dmf-version, případně jsou odvozeny z dat PSP balíku." +
                 " Dále je potřeba pomocí --fdmf-dir uvést adresář, který obsahuje definice fDMF," +
                 " typicky adresáře monograph_1.0, monograph_1.2, periodical_1.4 a periodical 1.6.\n\n";
         String footer = "\n*Definice metadatových formátů. Více na http://www.ndk.cz/standardy-digitalizace/metadata.\n" +
-                "Více informací o validátoru najdete na http://TODO ";
+                "Více informací o validátoru najdete na http://TODO ";*/
+        String header = "Validuje PSP balik, nebo sadu PSP baliku podle DMF*." +
+                " Verzi a typ DMF lze vynutit parametry --dmf-type a/nebo --dmf-version, pripadne jsou odvozeny z dat PSP baliku." +
+                " Dale je potreba pomoci --fdmf-dir uvest adresář, který obsahuje definice fDMF," +
+                " typicky adresare monograph_1.0, monograph_1.2, periodical_1.4 a periodical 1.6.\n\n";
+        String footer = "\n*Definice metadatovych formatu. Vice na http://www.ndk.cz/standardy-digitalizace/metadata.\n";
+        //"Více informací o validátoru najdete na http://TODO ";
 
         HelpFormatter formatter = new HelpFormatter();
         formatter.setOptionComparator(null);
@@ -225,7 +267,9 @@ public class Main {
 
     private static void runValidator(Dmf dmfPrefered, File fdmfsRoot, File pspRoot,
                                      File xmlOutputFile, int printVerbosity,
-                                     Set<ImageUtil> imageUtilsDisabled, Map<ImageUtil, File> imageUtilPaths) throws PspDataException, InvalidXPathExpressionException, XmlParsingException, FdmfRegistry.UnknownFdmfException, ValidatorConfigurationException {
+                                     Set<ImageUtil> imageUtilsDisabled, Map<ImageUtil, File> imageUtilPaths,
+                                     Set<String> runOnlyTheseSections,
+                                     Validator.DevParams devParams) throws PspDataException, InvalidXPathExpressionException, XmlFileParsingException, FdmfRegistry.UnknownFdmfException, ValidatorConfigurationException {
         checkReadableDir(pspRoot);
         checkReadableDir(fdmfsRoot);
         File imageUtilsConfigFile = getImageUtilsConfigFile(fdmfsRoot);
@@ -252,19 +296,19 @@ public class Main {
         switch (printVerbosity) {
             case 3:
                 //vsechno, vcetne sekci a pravidel bez chyb
-                validator.run(xmlOutputFile, true, true, true, true);
+                validator.run(xmlOutputFile, true, true, true, true, devParams);
                 break;
             case 2:
                 //jen chybove sekce a v popisy jednotlivych chyb (default)
-                validator.run(xmlOutputFile, true, false, true, false);
+                validator.run(xmlOutputFile, true, false, true, false, devParams);
                 break;
             case 1:
                 //jen pocty chyb v chybovych sekcich, bez popisu jednotlivych chyb
-                validator.run(xmlOutputFile, true, false, false, false);
+                validator.run(xmlOutputFile, true, false, false, false, devParams);
                 break;
             case 0:
                 //jen valid/not valid
-                validator.run(xmlOutputFile, false, false, false, false);
+                validator.run(xmlOutputFile, false, false, false, false, devParams);
                 break;
             default:
                 throw new IllegalStateException(String.format("Nepovolená hodnota verbosity: %d. Hodnota musí být v intervalu [0-3]", printVerbosity));
@@ -295,13 +339,15 @@ public class Main {
                 } else {
                     try {
                         String version = imageUtilManager.runUtilVersionDetection(util);
-                        imageUtilManager.setUtilAvailable(util, true);
-                        System.out.println("nalezen, verze: " + version);
-                    } catch (IOException e) {
-                        //System.out.println("I/O chyba: " + e.getMessage());
-                        System.out.println("nenalezen");
-                    } catch (InterruptedException e) {
-                        System.out.println("detekce přerušena: " + e.getMessage());
+                        if (version != null) {
+                            imageUtilManager.setUtilAvailable(util, true);
+                            System.out.println("nalezen, verze: " + version);
+                        } else {
+                            System.out.println("nenalezen");
+                        }
+                    } catch (CliCommand.CliCommandException e) {
+                        //System.out.println(String.format("chyba běhu %s: %s ", util.getUserFriendlyName(), e.getMessage()));
+                        System.out.println(String.format("nenalezen (%s)", e.getMessage()));
                     }
                 }
             }

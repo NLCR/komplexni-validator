@@ -32,6 +32,7 @@ public class ValidatorFactoryRegistryTest {
     public void versions() {
         FdmfRegistry registry = new FdmfRegistry(new File("src/main/resources/nkp/pspValidator/shared/fDMF"));
 
+/*
         assertEquals(2, registry.getMonographFdmfVersions().size());
         assertTrue(registry.getMonographFdmfVersions().contains("1.0"));
         assertTrue(registry.getMonographFdmfVersions().contains("1.2"));
@@ -39,7 +40,12 @@ public class ValidatorFactoryRegistryTest {
         assertEquals(2, registry.getPeriodicalFdmfVersions().size());
         assertTrue(registry.getPeriodicalFdmfVersions().contains("1.4"));
         assertTrue(registry.getPeriodicalFdmfVersions().contains("1.6"));
+*/
+        assertEquals(1, registry.getMonographFdmfVersions().size());
+        assertTrue(registry.getMonographFdmfVersions().contains("1.2"));
 
+        assertEquals(1, registry.getPeriodicalFdmfVersions().size());
+        assertTrue(registry.getPeriodicalFdmfVersions().contains("1.6"));
     }
 
 }

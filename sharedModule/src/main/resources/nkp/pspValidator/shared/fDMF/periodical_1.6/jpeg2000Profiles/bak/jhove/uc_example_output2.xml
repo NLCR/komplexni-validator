@@ -1,0 +1,1048 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jhove xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://hul.harvard.edu/ois/xml/ns/jhove"
+       xsi:schemaLocation="http://hul.harvard.edu/ois/xml/ns/jhove http://hul.harvard.edu/ois/xml/xsd/jhove/1.6/jhove.xsd"
+       name="Jhove" release="1.6" date="2011-01-04">
+    <date>2016-11-21T18:31:04+01:00</date>
+    <repInfo
+            uri="/home/martin/ssd/IdeaProjects/PspValidator/sharedModule/src/test/resources/jpeg2000/ok_uc/uc_aba006-0000vn_0015.jp2">
+        <reportingModule release="1.3" date="2007-01-08">JPEG2000-hul</reportingModule>
+        <lastModified>2016-11-21T12:31:12+01:00</lastModified>
+        <size>620857</size>
+        <format>JPEG 2000</format>
+        <status>Well-Formed and valid</status>
+        <sigMatch>
+            <module>JPEG2000-hul</module>
+        </sigMatch>
+        <mimeType>image/jp2</mimeType>
+        <profiles>
+            <profile>JP2</profile>
+        </profiles>
+        <properties>
+            <property>
+                <name>JPEG2000Metadata</name>
+                <values arity="List" type="Property">
+                    <property>
+                        <name>Brand</name>
+                        <values arity="Scalar" type="String">
+                            <value>jp2</value>
+                        </values>
+                    </property>
+                    <property>
+                        <name>MinorVersion</name>
+                        <values arity="Scalar" type="Long">
+                            <value>0</value>
+                        </values>
+                    </property>
+                    <property>
+                        <name>Compatibility</name>
+                        <values arity="List" type="String">
+                            <value>jp2</value>
+                        </values>
+                    </property>
+                    <property>
+                        <name>ColorspaceUnknown</name>
+                        <values arity="Scalar" type="Boolean">
+                            <value>true</value>
+                        </values>
+                    </property>
+                    <property>
+                        <name>DefaultDisplayResolution</name>
+                        <values arity="Array" type="Property">
+                            <property>
+                                <name>HorizResolution</name>
+                                <values arity="List" type="Property">
+                                    <property>
+                                        <name>Numerator</name>
+                                        <values arity="Scalar" type="Integer">
+                                            <value>3870</value>
+                                        </values>
+                                    </property>
+                                    <property>
+                                        <name>Denominator</name>
+                                        <values arity="Scalar" type="Integer">
+                                            <value>32768</value>
+                                        </values>
+                                    </property>
+                                    <property>
+                                        <name>Exponent</name>
+                                        <values arity="Scalar" type="Integer">
+                                            <value>5</value>
+                                        </values>
+                                    </property>
+                                </values>
+                            </property>
+                            <property>
+                                <name>VertResolution</name>
+                                <values arity="List" type="Property">
+                                    <property>
+                                        <name>Numerator</name>
+                                        <values arity="Scalar" type="Integer">
+                                            <value>3870</value>
+                                        </values>
+                                    </property>
+                                    <property>
+                                        <name>Denominator</name>
+                                        <values arity="Scalar" type="Integer">
+                                            <value>32768</value>
+                                        </values>
+                                    </property>
+                                    <property>
+                                        <name>Exponent</name>
+                                        <values arity="Scalar" type="Integer">
+                                            <value>5</value>
+                                        </values>
+                                    </property>
+                                </values>
+                            </property>
+                        </values>
+                    </property>
+                    <property>
+                        <name>ColorSpecs</name>
+                        <values arity="List" type="Property">
+                            <property>
+                                <name>ColorSpec</name>
+                                <values arity="List" type="Property">
+                                    <property>
+                                        <name>Method</name>
+                                        <values arity="Scalar" type="String">
+                                            <value>Enumerated Colorspace</value>
+                                        </values>
+                                    </property>
+                                    <property>
+                                        <name>Precedence</name>
+                                        <values arity="Scalar" type="Integer">
+                                            <value>0</value>
+                                        </values>
+                                    </property>
+                                    <property>
+                                        <name>Approx</name>
+                                        <values arity="Scalar" type="Integer">
+                                            <value>0</value>
+                                        </values>
+                                    </property>
+                                    <property>
+                                        <name>EnumCS</name>
+                                        <values arity="Scalar" type="String">
+                                            <value>sRGB</value>
+                                        </values>
+                                    </property>
+                                </values>
+                            </property>
+                        </values>
+                    </property>
+                    <property>
+                        <name>Codestreams</name>
+                        <values arity="List" type="Property">
+                            <property>
+                                <name>Codestream</name>
+                                <values arity="List" type="Property">
+                                    <property>
+                                        <name>ImageAndTileSize</name>
+                                        <values arity="List" type="Property">
+                                            <property>
+                                                <name>Capabilities</name>
+                                                <values arity="Scalar" type="Integer">
+                                                    <value>0</value>
+                                                </values>
+                                            </property>
+                                            <property>
+                                                <name>XSize</name>
+                                                <values arity="Scalar" type="Integer">
+                                                    <value>1694</value>
+                                                </values>
+                                            </property>
+                                            <property>
+                                                <name>YSize</name>
+                                                <values arity="Scalar" type="Integer">
+                                                    <value>2442</value>
+                                                </values>
+                                            </property>
+                                            <property>
+                                                <name>XOSize</name>
+                                                <values arity="Scalar" type="Integer">
+                                                    <value>0</value>
+                                                </values>
+                                            </property>
+                                            <property>
+                                                <name>YOSize</name>
+                                                <values arity="Scalar" type="Integer">
+                                                    <value>0</value>
+                                                </values>
+                                            </property>
+                                            <property>
+                                                <name>XTSize</name>
+                                                <values arity="Scalar" type="Integer">
+                                                    <value>1024</value>
+                                                </values>
+                                            </property>
+                                            <property>
+                                                <name>YTSize</name>
+                                                <values arity="Scalar" type="Integer">
+                                                    <value>1024</value>
+                                                </values>
+                                            </property>
+                                            <property>
+                                                <name>XTOSize</name>
+                                                <values arity="Scalar" type="Integer">
+                                                    <value>0</value>
+                                                </values>
+                                            </property>
+                                            <property>
+                                                <name>YTOSize</name>
+                                                <values arity="Scalar" type="Integer">
+                                                    <value>0</value>
+                                                </values>
+                                            </property>
+                                            <property>
+                                                <name>CSize</name>
+                                                <values arity="Scalar" type="Integer">
+                                                    <value>3</value>
+                                                </values>
+                                            </property>
+                                            <property>
+                                                <name>SSize</name>
+                                                <values arity="Array" type="Integer">
+                                                    <value>7</value>
+                                                    <value>1</value>
+                                                    <value>1</value>
+                                                </values>
+                                            </property>
+                                            <property>
+                                                <name>XRSize</name>
+                                                <values arity="Array" type="Integer">
+                                                    <value>7</value>
+                                                    <value>1</value>
+                                                    <value>1</value>
+                                                </values>
+                                            </property>
+                                            <property>
+                                                <name>YRSize</name>
+                                                <values arity="Array" type="Integer">
+                                                    <value>7</value>
+                                                    <value>1</value>
+                                                    <value>1</value>
+                                                </values>
+                                            </property>
+                                        </values>
+                                    </property>
+                                    <property>
+                                        <name>CodingStyleDefault</name>
+                                        <values arity="List" type="Property">
+                                            <property>
+                                                <name>CodingStyle</name>
+                                                <values arity="Scalar" type="Integer">
+                                                    <value>1</value>
+                                                </values>
+                                            </property>
+                                            <property>
+                                                <name>ProgressionOrder</name>
+                                                <values arity="Scalar" type="Integer">
+                                                    <value>2</value>
+                                                </values>
+                                            </property>
+                                            <property>
+                                                <name>NumberOfLayers</name>
+                                                <values arity="Scalar" type="Integer">
+                                                    <value>12</value>
+                                                </values>
+                                            </property>
+                                            <property>
+                                                <name>MultipleComponentTransformation</name>
+                                                <values arity="Scalar" type="Integer">
+                                                    <value>1</value>
+                                                </values>
+                                            </property>
+                                            <property>
+                                                <name>NumberDecompositionLevels</name>
+                                                <values arity="Scalar" type="Integer">
+                                                    <value>5</value>
+                                                </values>
+                                            </property>
+                                            <property>
+                                                <name>CodeBlockWidth</name>
+                                                <values arity="Scalar" type="Integer">
+                                                    <value>4</value>
+                                                </values>
+                                            </property>
+                                            <property>
+                                                <name>CodeBlockHeight</name>
+                                                <values arity="Scalar" type="Integer">
+                                                    <value>4</value>
+                                                </values>
+                                            </property>
+                                            <property>
+                                                <name>CodeBlockStyle</name>
+                                                <values arity="Scalar" type="Integer">
+                                                    <value>1</value>
+                                                </values>
+                                            </property>
+                                            <property>
+                                                <name>Transformation</name>
+                                                <values arity="Scalar" type="Integer">
+                                                    <value>0</value>
+                                                </values>
+                                            </property>
+                                            <property>
+                                                <name>PrecinctSize</name>
+                                                <values arity="Array" type="Integer">
+                                                    <value>119</value>
+                                                    <value>119</value>
+                                                    <value>119</value>
+                                                    <value>119</value>
+                                                    <value>136</value>
+                                                    <value>136</value>
+                                                </values>
+                                            </property>
+                                        </values>
+                                    </property>
+                                    <property>
+                                        <name>QuantizationDefault</name>
+                                        <values arity="List" type="Property">
+                                            <property>
+                                                <name>QuantizationStyle</name>
+                                                <values arity="Scalar" type="Integer">
+                                                    <value>34</value>
+                                                </values>
+                                            </property>
+                                            <property>
+                                                <name>StepValue</name>
+                                                <values arity="Array" type="Integer">
+                                                    <value>30494</value>
+                                                    <value>30442</value>
+                                                    <value>30442</value>
+                                                    <value>30396</value>
+                                                    <value>28416</value>
+                                                    <value>28416</value>
+                                                    <value>28386</value>
+                                                    <value>26444</value>
+                                                    <value>26444</value>
+                                                    <value>26468</value>
+                                                    <value>20483</value>
+                                                    <value>20483</value>
+                                                    <value>20549</value>
+                                                    <value>22482</value>
+                                                    <value>22482</value>
+                                                    <value>22369</value>
+                                                </values>
+                                            </property>
+                                        </values>
+                                    </property>
+                                    <property>
+                                        <name>NisoImageMetadata</name>
+                                        <values arity="Scalar" type="NISOImageMetadata">
+                                            <value>
+                                                <mix:mix xmlns:mix="http://www.loc.gov/mix/v20"
+                                                         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                                                         xsi:schemaLocation="http://www.loc.gov/mix/v20 http://www.loc.gov/standards/mix/mix20/mix20.xsd">
+                                                    <mix:BasicDigitalObjectInformation>
+                                                        <mix:ObjectIdentifier>
+                                                            <mix:objectIdentifierType>JHOVE</mix:objectIdentifierType>
+                                                        </mix:ObjectIdentifier>
+                                                        <mix:byteOrder>big endian</mix:byteOrder>
+                                                        <mix:Compression>
+                                                            <mix:compressionScheme>Unknown</mix:compressionScheme>
+                                                        </mix:Compression>
+                                                    </mix:BasicDigitalObjectInformation>
+                                                    <mix:BasicImageInformation>
+                                                        <mix:BasicImageCharacteristics>
+                                                            <mix:imageWidth>1694</mix:imageWidth>
+                                                            <mix:imageHeight>2442</mix:imageHeight>
+                                                        </mix:BasicImageCharacteristics>
+                                                    </mix:BasicImageInformation>
+                                                    <mix:ImageAssessmentMetadata>
+                                                        <mix:ImageColorEncoding>
+                                                            <mix:BitsPerSample>
+                                                                <mix:bitsPerSampleValue>8</mix:bitsPerSampleValue>
+                                                                <mix:bitsPerSampleValue>8</mix:bitsPerSampleValue>
+                                                                <mix:bitsPerSampleUnit>integer</mix:bitsPerSampleUnit>
+                                                            </mix:BitsPerSample>
+                                                            <mix:samplesPerPixel>3</mix:samplesPerPixel>
+                                                        </mix:ImageColorEncoding>
+                                                    </mix:ImageAssessmentMetadata>
+                                                </mix:mix>
+                                            </value>
+                                        </values>
+                                    </property>
+                                    <property>
+                                        <name>Tiles</name>
+                                        <values arity="List" type="Property">
+                                            <property>
+                                                <name>Tile</name>
+                                                <values arity="List" type="Property">
+                                                    <property>
+                                                        <name>TilePart</name>
+                                                        <values arity="List" type="Property">
+                                                            <property>
+                                                                <name>Index</name>
+                                                                <values arity="Scalar" type="Integer">
+                                                                    <value>0</value>
+                                                                </values>
+                                                            </property>
+                                                            <property>
+                                                                <name>Length</name>
+                                                                <values arity="Scalar" type="Long">
+                                                                    <value>2636</value>
+                                                                </values>
+                                                            </property>
+                                                        </values>
+                                                    </property>
+                                                    <property>
+                                                        <name>TilePart</name>
+                                                        <values arity="List" type="Property">
+                                                            <property>
+                                                                <name>Index</name>
+                                                                <values arity="Scalar" type="Integer">
+                                                                    <value>1</value>
+                                                                </values>
+                                                            </property>
+                                                            <property>
+                                                                <name>Length</name>
+                                                                <values arity="Scalar" type="Long">
+                                                                    <value>5168</value>
+                                                                </values>
+                                                            </property>
+                                                        </values>
+                                                    </property>
+                                                    <property>
+                                                        <name>TilePart</name>
+                                                        <values arity="List" type="Property">
+                                                            <property>
+                                                                <name>Index</name>
+                                                                <values arity="Scalar" type="Integer">
+                                                                    <value>2</value>
+                                                                </values>
+                                                            </property>
+                                                            <property>
+                                                                <name>Length</name>
+                                                                <values arity="Scalar" type="Long">
+                                                                    <value>16113</value>
+                                                                </values>
+                                                            </property>
+                                                        </values>
+                                                    </property>
+                                                    <property>
+                                                        <name>TilePart</name>
+                                                        <values arity="List" type="Property">
+                                                            <property>
+                                                                <name>Index</name>
+                                                                <values arity="Scalar" type="Integer">
+                                                                    <value>3</value>
+                                                                </values>
+                                                            </property>
+                                                            <property>
+                                                                <name>Length</name>
+                                                                <values arity="Scalar" type="Long">
+                                                                    <value>40658</value>
+                                                                </values>
+                                                            </property>
+                                                        </values>
+                                                    </property>
+                                                    <property>
+                                                        <name>TilePart</name>
+                                                        <values arity="List" type="Property">
+                                                            <property>
+                                                                <name>Index</name>
+                                                                <values arity="Scalar" type="Integer">
+                                                                    <value>4</value>
+                                                                </values>
+                                                            </property>
+                                                            <property>
+                                                                <name>Length</name>
+                                                                <values arity="Scalar" type="Long">
+                                                                    <value>87953</value>
+                                                                </values>
+                                                            </property>
+                                                        </values>
+                                                    </property>
+                                                    <property>
+                                                        <name>TilePart</name>
+                                                        <values arity="List" type="Property">
+                                                            <property>
+                                                                <name>Index</name>
+                                                                <values arity="Scalar" type="Integer">
+                                                                    <value>5</value>
+                                                                </values>
+                                                            </property>
+                                                            <property>
+                                                                <name>Length</name>
+                                                                <values arity="Scalar" type="Long">
+                                                                    <value>20540</value>
+                                                                </values>
+                                                            </property>
+                                                        </values>
+                                                    </property>
+                                                </values>
+                                            </property>
+                                            <property>
+                                                <name>Tile</name>
+                                                <values arity="List" type="Property">
+                                                    <property>
+                                                        <name>TilePart</name>
+                                                        <values arity="List" type="Property">
+                                                            <property>
+                                                                <name>Index</name>
+                                                                <values arity="Scalar" type="Integer">
+                                                                    <value>0</value>
+                                                                </values>
+                                                            </property>
+                                                            <property>
+                                                                <name>Length</name>
+                                                                <values arity="Scalar" type="Long">
+                                                                    <value>1712</value>
+                                                                </values>
+                                                            </property>
+                                                        </values>
+                                                    </property>
+                                                    <property>
+                                                        <name>TilePart</name>
+                                                        <values arity="List" type="Property">
+                                                            <property>
+                                                                <name>Index</name>
+                                                                <values arity="Scalar" type="Integer">
+                                                                    <value>1</value>
+                                                                </values>
+                                                            </property>
+                                                            <property>
+                                                                <name>Length</name>
+                                                                <values arity="Scalar" type="Long">
+                                                                    <value>3113</value>
+                                                                </values>
+                                                            </property>
+                                                        </values>
+                                                    </property>
+                                                    <property>
+                                                        <name>TilePart</name>
+                                                        <values arity="List" type="Property">
+                                                            <property>
+                                                                <name>Index</name>
+                                                                <values arity="Scalar" type="Integer">
+                                                                    <value>2</value>
+                                                                </values>
+                                                            </property>
+                                                            <property>
+                                                                <name>Length</name>
+                                                                <values arity="Scalar" type="Long">
+                                                                    <value>9282</value>
+                                                                </values>
+                                                            </property>
+                                                        </values>
+                                                    </property>
+                                                    <property>
+                                                        <name>TilePart</name>
+                                                        <values arity="List" type="Property">
+                                                            <property>
+                                                                <name>Index</name>
+                                                                <values arity="Scalar" type="Integer">
+                                                                    <value>3</value>
+                                                                </values>
+                                                            </property>
+                                                            <property>
+                                                                <name>Length</name>
+                                                                <values arity="Scalar" type="Long">
+                                                                    <value>22869</value>
+                                                                </values>
+                                                            </property>
+                                                        </values>
+                                                    </property>
+                                                    <property>
+                                                        <name>TilePart</name>
+                                                        <values arity="List" type="Property">
+                                                            <property>
+                                                                <name>Index</name>
+                                                                <values arity="Scalar" type="Integer">
+                                                                    <value>4</value>
+                                                                </values>
+                                                            </property>
+                                                            <property>
+                                                                <name>Length</name>
+                                                                <values arity="Scalar" type="Long">
+                                                                    <value>54203</value>
+                                                                </values>
+                                                            </property>
+                                                        </values>
+                                                    </property>
+                                                    <property>
+                                                        <name>TilePart</name>
+                                                        <values arity="List" type="Property">
+                                                            <property>
+                                                                <name>Index</name>
+                                                                <values arity="Scalar" type="Integer">
+                                                                    <value>5</value>
+                                                                </values>
+                                                            </property>
+                                                            <property>
+                                                                <name>Length</name>
+                                                                <values arity="Scalar" type="Long">
+                                                                    <value>9065</value>
+                                                                </values>
+                                                            </property>
+                                                        </values>
+                                                    </property>
+                                                </values>
+                                            </property>
+                                            <property>
+                                                <name>Tile</name>
+                                                <values arity="List" type="Property">
+                                                    <property>
+                                                        <name>TilePart</name>
+                                                        <values arity="List" type="Property">
+                                                            <property>
+                                                                <name>Index</name>
+                                                                <values arity="Scalar" type="Integer">
+                                                                    <value>0</value>
+                                                                </values>
+                                                            </property>
+                                                            <property>
+                                                                <name>Length</name>
+                                                                <values arity="Scalar" type="Long">
+                                                                    <value>2648</value>
+                                                                </values>
+                                                            </property>
+                                                        </values>
+                                                    </property>
+                                                    <property>
+                                                        <name>TilePart</name>
+                                                        <values arity="List" type="Property">
+                                                            <property>
+                                                                <name>Index</name>
+                                                                <values arity="Scalar" type="Integer">
+                                                                    <value>1</value>
+                                                                </values>
+                                                            </property>
+                                                            <property>
+                                                                <name>Length</name>
+                                                                <values arity="Scalar" type="Long">
+                                                                    <value>4949</value>
+                                                                </values>
+                                                            </property>
+                                                        </values>
+                                                    </property>
+                                                    <property>
+                                                        <name>TilePart</name>
+                                                        <values arity="List" type="Property">
+                                                            <property>
+                                                                <name>Index</name>
+                                                                <values arity="Scalar" type="Integer">
+                                                                    <value>2</value>
+                                                                </values>
+                                                            </property>
+                                                            <property>
+                                                                <name>Length</name>
+                                                                <values arity="Scalar" type="Long">
+                                                                    <value>15498</value>
+                                                                </values>
+                                                            </property>
+                                                        </values>
+                                                    </property>
+                                                    <property>
+                                                        <name>TilePart</name>
+                                                        <values arity="List" type="Property">
+                                                            <property>
+                                                                <name>Index</name>
+                                                                <values arity="Scalar" type="Integer">
+                                                                    <value>3</value>
+                                                                </values>
+                                                            </property>
+                                                            <property>
+                                                                <name>Length</name>
+                                                                <values arity="Scalar" type="Long">
+                                                                    <value>38138</value>
+                                                                </values>
+                                                            </property>
+                                                        </values>
+                                                    </property>
+                                                    <property>
+                                                        <name>TilePart</name>
+                                                        <values arity="List" type="Property">
+                                                            <property>
+                                                                <name>Index</name>
+                                                                <values arity="Scalar" type="Integer">
+                                                                    <value>4</value>
+                                                                </values>
+                                                            </property>
+                                                            <property>
+                                                                <name>Length</name>
+                                                                <values arity="Scalar" type="Long">
+                                                                    <value>87687</value>
+                                                                </values>
+                                                            </property>
+                                                        </values>
+                                                    </property>
+                                                    <property>
+                                                        <name>TilePart</name>
+                                                        <values arity="List" type="Property">
+                                                            <property>
+                                                                <name>Index</name>
+                                                                <values arity="Scalar" type="Integer">
+                                                                    <value>5</value>
+                                                                </values>
+                                                            </property>
+                                                            <property>
+                                                                <name>Length</name>
+                                                                <values arity="Scalar" type="Long">
+                                                                    <value>18539</value>
+                                                                </values>
+                                                            </property>
+                                                        </values>
+                                                    </property>
+                                                </values>
+                                            </property>
+                                            <property>
+                                                <name>Tile</name>
+                                                <values arity="List" type="Property">
+                                                    <property>
+                                                        <name>TilePart</name>
+                                                        <values arity="List" type="Property">
+                                                            <property>
+                                                                <name>Index</name>
+                                                                <values arity="Scalar" type="Integer">
+                                                                    <value>0</value>
+                                                                </values>
+                                                            </property>
+                                                            <property>
+                                                                <name>Length</name>
+                                                                <values arity="Scalar" type="Long">
+                                                                    <value>1653</value>
+                                                                </values>
+                                                            </property>
+                                                        </values>
+                                                    </property>
+                                                    <property>
+                                                        <name>TilePart</name>
+                                                        <values arity="List" type="Property">
+                                                            <property>
+                                                                <name>Index</name>
+                                                                <values arity="Scalar" type="Integer">
+                                                                    <value>1</value>
+                                                                </values>
+                                                            </property>
+                                                            <property>
+                                                                <name>Length</name>
+                                                                <values arity="Scalar" type="Long">
+                                                                    <value>2857</value>
+                                                                </values>
+                                                            </property>
+                                                        </values>
+                                                    </property>
+                                                    <property>
+                                                        <name>TilePart</name>
+                                                        <values arity="List" type="Property">
+                                                            <property>
+                                                                <name>Index</name>
+                                                                <values arity="Scalar" type="Integer">
+                                                                    <value>2</value>
+                                                                </values>
+                                                            </property>
+                                                            <property>
+                                                                <name>Length</name>
+                                                                <values arity="Scalar" type="Long">
+                                                                    <value>8909</value>
+                                                                </values>
+                                                            </property>
+                                                        </values>
+                                                    </property>
+                                                    <property>
+                                                        <name>TilePart</name>
+                                                        <values arity="List" type="Property">
+                                                            <property>
+                                                                <name>Index</name>
+                                                                <values arity="Scalar" type="Integer">
+                                                                    <value>3</value>
+                                                                </values>
+                                                            </property>
+                                                            <property>
+                                                                <name>Length</name>
+                                                                <values arity="Scalar" type="Long">
+                                                                    <value>21771</value>
+                                                                </values>
+                                                            </property>
+                                                        </values>
+                                                    </property>
+                                                    <property>
+                                                        <name>TilePart</name>
+                                                        <values arity="List" type="Property">
+                                                            <property>
+                                                                <name>Index</name>
+                                                                <values arity="Scalar" type="Integer">
+                                                                    <value>4</value>
+                                                                </values>
+                                                            </property>
+                                                            <property>
+                                                                <name>Length</name>
+                                                                <values arity="Scalar" type="Long">
+                                                                    <value>54082</value>
+                                                                </values>
+                                                            </property>
+                                                        </values>
+                                                    </property>
+                                                    <property>
+                                                        <name>TilePart</name>
+                                                        <values arity="List" type="Property">
+                                                            <property>
+                                                                <name>Index</name>
+                                                                <values arity="Scalar" type="Integer">
+                                                                    <value>5</value>
+                                                                </values>
+                                                            </property>
+                                                            <property>
+                                                                <name>Length</name>
+                                                                <values arity="Scalar" type="Long">
+                                                                    <value>7827</value>
+                                                                </values>
+                                                            </property>
+                                                        </values>
+                                                    </property>
+                                                </values>
+                                            </property>
+                                            <property>
+                                                <name>Tile</name>
+                                                <values arity="List" type="Property">
+                                                    <property>
+                                                        <name>TilePart</name>
+                                                        <values arity="List" type="Property">
+                                                            <property>
+                                                                <name>Index</name>
+                                                                <values arity="Scalar" type="Integer">
+                                                                    <value>0</value>
+                                                                </values>
+                                                            </property>
+                                                            <property>
+                                                                <name>Length</name>
+                                                                <values arity="Scalar" type="Long">
+                                                                    <value>1103</value>
+                                                                </values>
+                                                            </property>
+                                                        </values>
+                                                    </property>
+                                                    <property>
+                                                        <name>TilePart</name>
+                                                        <values arity="List" type="Property">
+                                                            <property>
+                                                                <name>Index</name>
+                                                                <values arity="Scalar" type="Integer">
+                                                                    <value>1</value>
+                                                                </values>
+                                                            </property>
+                                                            <property>
+                                                                <name>Length</name>
+                                                                <values arity="Scalar" type="Long">
+                                                                    <value>1513</value>
+                                                                </values>
+                                                            </property>
+                                                        </values>
+                                                    </property>
+                                                    <property>
+                                                        <name>TilePart</name>
+                                                        <values arity="List" type="Property">
+                                                            <property>
+                                                                <name>Index</name>
+                                                                <values arity="Scalar" type="Integer">
+                                                                    <value>2</value>
+                                                                </values>
+                                                            </property>
+                                                            <property>
+                                                                <name>Length</name>
+                                                                <values arity="Scalar" type="Long">
+                                                                    <value>4518</value>
+                                                                </values>
+                                                            </property>
+                                                        </values>
+                                                    </property>
+                                                    <property>
+                                                        <name>TilePart</name>
+                                                        <values arity="List" type="Property">
+                                                            <property>
+                                                                <name>Index</name>
+                                                                <values arity="Scalar" type="Integer">
+                                                                    <value>3</value>
+                                                                </values>
+                                                            </property>
+                                                            <property>
+                                                                <name>Length</name>
+                                                                <values arity="Scalar" type="Long">
+                                                                    <value>10570</value>
+                                                                </values>
+                                                            </property>
+                                                        </values>
+                                                    </property>
+                                                    <property>
+                                                        <name>TilePart</name>
+                                                        <values arity="List" type="Property">
+                                                            <property>
+                                                                <name>Index</name>
+                                                                <values arity="Scalar" type="Integer">
+                                                                    <value>4</value>
+                                                                </values>
+                                                            </property>
+                                                            <property>
+                                                                <name>Length</name>
+                                                                <values arity="Scalar" type="Long">
+                                                                    <value>29591</value>
+                                                                </values>
+                                                            </property>
+                                                        </values>
+                                                    </property>
+                                                    <property>
+                                                        <name>TilePart</name>
+                                                        <values arity="List" type="Property">
+                                                            <property>
+                                                                <name>Index</name>
+                                                                <values arity="Scalar" type="Integer">
+                                                                    <value>5</value>
+                                                                </values>
+                                                            </property>
+                                                            <property>
+                                                                <name>Length</name>
+                                                                <values arity="Scalar" type="Long">
+                                                                    <value>1618</value>
+                                                                </values>
+                                                            </property>
+                                                        </values>
+                                                    </property>
+                                                </values>
+                                            </property>
+                                            <property>
+                                                <name>Tile</name>
+                                                <values arity="List" type="Property">
+                                                    <property>
+                                                        <name>TilePart</name>
+                                                        <values arity="List" type="Property">
+                                                            <property>
+                                                                <name>Index</name>
+                                                                <values arity="Scalar" type="Integer">
+                                                                    <value>0</value>
+                                                                </values>
+                                                            </property>
+                                                            <property>
+                                                                <name>Length</name>
+                                                                <values arity="Scalar" type="Long">
+                                                                    <value>736</value>
+                                                                </values>
+                                                            </property>
+                                                        </values>
+                                                    </property>
+                                                    <property>
+                                                        <name>TilePart</name>
+                                                        <values arity="List" type="Property">
+                                                            <property>
+                                                                <name>Index</name>
+                                                                <values arity="Scalar" type="Integer">
+                                                                    <value>1</value>
+                                                                </values>
+                                                            </property>
+                                                            <property>
+                                                                <name>Length</name>
+                                                                <values arity="Scalar" type="Long">
+                                                                    <value>1025</value>
+                                                                </values>
+                                                            </property>
+                                                        </values>
+                                                    </property>
+                                                    <property>
+                                                        <name>TilePart</name>
+                                                        <values arity="List" type="Property">
+                                                            <property>
+                                                                <name>Index</name>
+                                                                <values arity="Scalar" type="Integer">
+                                                                    <value>2</value>
+                                                                </values>
+                                                            </property>
+                                                            <property>
+                                                                <name>Length</name>
+                                                                <values arity="Scalar" type="Long">
+                                                                    <value>2971</value>
+                                                                </values>
+                                                            </property>
+                                                        </values>
+                                                    </property>
+                                                    <property>
+                                                        <name>TilePart</name>
+                                                        <values arity="List" type="Property">
+                                                            <property>
+                                                                <name>Index</name>
+                                                                <values arity="Scalar" type="Integer">
+                                                                    <value>3</value>
+                                                                </values>
+                                                            </property>
+                                                            <property>
+                                                                <name>Length</name>
+                                                                <values arity="Scalar" type="Long">
+                                                                    <value>7192</value>
+                                                                </values>
+                                                            </property>
+                                                        </values>
+                                                    </property>
+                                                    <property>
+                                                        <name>TilePart</name>
+                                                        <values arity="List" type="Property">
+                                                            <property>
+                                                                <name>Index</name>
+                                                                <values arity="Scalar" type="Integer">
+                                                                    <value>4</value>
+                                                                </values>
+                                                            </property>
+                                                            <property>
+                                                                <name>Length</name>
+                                                                <values arity="Scalar" type="Long">
+                                                                    <value>20134</value>
+                                                                </values>
+                                                            </property>
+                                                        </values>
+                                                    </property>
+                                                    <property>
+                                                        <name>TilePart</name>
+                                                        <values arity="List" type="Property">
+                                                            <property>
+                                                                <name>Index</name>
+                                                                <values arity="Scalar" type="Integer">
+                                                                    <value>5</value>
+                                                                </values>
+                                                            </property>
+                                                            <property>
+                                                                <name>Length</name>
+                                                                <values arity="Scalar" type="Long">
+                                                                    <value>1500</value>
+                                                                </values>
+                                                            </property>
+                                                        </values>
+                                                    </property>
+                                                </values>
+                                            </property>
+                                        </values>
+                                    </property>
+                                    <property>
+                                        <name>Comments</name>
+                                        <values arity="List" type="Property">
+                                            <property>
+                                                <name>Comment</name>
+                                                <values arity="Scalar" type="String">
+                                                    <value>Kakadu-v6.0</value>
+                                                </values>
+                                            </property>
+                                            <property>
+                                                <name>Comment</name>
+                                                <values arity="Scalar" type="String">
+                                                    <value>Kdu-Layer-Info: log_2{Delta-D(MSE)/[2^16*Delta-L(bytes)]},
+                                                        L(bytes) -47.2, 1.4e+004 -48.2, 2.0e+004 -48.6, 2.9e+004 -49.8,
+                                                        4.0e+004 -51.2, 5.7e+004 -52.4, 8.0e+004 -53.0, 1.1e+005 -53.5,
+                                                        1.6e+005 -54.6, 2.2e+005 -55.4, 3.1e+005 -56.6, 4.4e+005 -58.3,
+                                                        6.2e+005
+                                                    </value>
+                                                </values>
+                                            </property>
+                                        </values>
+                                    </property>
+                                </values>
+                            </property>
+                        </values>
+                    </property>
+                </values>
+            </property>
+        </properties>
+        <checksums>
+            <checksum type="CRC32">20ea627f</checksum>
+            <checksum type="MD5">28d774b60e5c0f439056ac89adc7ae30</checksum>
+            <checksum type="SHA-1">f5d2cbf6ac6dc3aa1e15492c2fa624a29b690514</checksum>
+        </checksums>
+    </repInfo>
+</jhove>

@@ -3,10 +3,11 @@ package nkp.pspValidator.cli;
 import nkp.pspValidator.shared.Dmf;
 import nkp.pspValidator.shared.FdmfRegistry;
 import nkp.pspValidator.shared.Platform;
+import nkp.pspValidator.shared.Validator;
 import nkp.pspValidator.shared.engine.exceptions.InvalidXPathExpressionException;
 import nkp.pspValidator.shared.engine.exceptions.PspDataException;
 import nkp.pspValidator.shared.engine.exceptions.ValidatorConfigurationException;
-import nkp.pspValidator.shared.engine.exceptions.XmlParsingException;
+import nkp.pspValidator.shared.engine.exceptions.XmlFileParsingException;
 import npk.pspValidator.cli.Main;
 
 import java.util.ArrayList;
@@ -24,7 +25,7 @@ public class MainTest {
     private static final String MON_1_2_INVALID_IMAGES = "../sharedModule/src/test/resources/monograph_1.2-invalid_images/b50eb6b0-f0a4-11e3-b72e-005056827e52";
 
     @org.junit.Test
-    public void cli() throws InvalidXPathExpressionException, FdmfRegistry.UnknownFdmfException, PspDataException, ValidatorConfigurationException, XmlParsingException {
+    public void cli() throws InvalidXPathExpressionException, FdmfRegistry.UnknownFdmfException, PspDataException, ValidatorConfigurationException, XmlFileParsingException {
         Platform platform = Platform.detectOs();
         String imageMagickPath = null;
         String jhovePath = null;
@@ -41,18 +42,28 @@ public class MainTest {
             case LINUX:
                 kakaduPath = "/home/martin/zakazky/NKP-PSP_validator/utility/kakadu/KDU78_Demo_Apps_for_Linux-x86-64_160226";
                 break;
+            case MAC:
+                jhovePath = "/Users/martinrehanek/Software/jhove";
+                imageMagickPath = "/opt/local/bin";
+                jpylyzerPath = "/Users/martinrehanek/Software/jpylyzer-1.17.0/jpylyzer";
         }
 
-        Main.main(buildParams(
+        Validator.DevParams devParams = new Validator.DevParams();
+        //devParams.getSectionsToRun().add("Bibliografická metadata");
+        //devParams.getSectionsToRun().add("Identifikátory");
+        devParams.getSectionsToRun().add("JPEG 2000");
+
+        Main.main(devParams, buildParams(
                 "../sharedModule/src/main/resources/nkp/pspValidator/shared/fDMF"
-                //, MON_1_2
-                , MON_1_2_INVALID_IMAGES
+                , MON_1_2
+                //, PER_1_6
+                //, MON_1_2_INVALID_IMAGES
                 //, MON_1_2_MAP
                 //,PER_1_6
-                , Dmf.Type.MONOGRAPH
-                , "1.2"
-                , null //verbosity
-                , "src/test/resources/protocol.xml" //xml protocol
+                , null//, Dmf.Type.MONOGRAPH
+                , null//, "1.2"
+                , 3 //verbosity
+                , null//"src/test/resources/protocol.xml" //xml protocol
                 , imageMagickPath //null //imageMagick path
                 , jhovePath //jhove path
                 , jpylyzerPath //jpylyzer path

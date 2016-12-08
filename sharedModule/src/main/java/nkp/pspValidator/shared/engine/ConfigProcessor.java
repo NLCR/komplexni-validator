@@ -5,6 +5,8 @@ import com.mycila.xmltool.XMLTag;
 import nkp.pspValidator.shared.XmlUtils;
 import nkp.pspValidator.shared.engine.evaluationFunctions.EvaluationFunction;
 import nkp.pspValidator.shared.engine.exceptions.ValidatorConfigurationException;
+import nkp.pspValidator.shared.engine.types.EntityType;
+import nkp.pspValidator.shared.engine.types.MetadataFormat;
 import nkp.pspValidator.shared.engine.validationFunctions.ValidationFunction;
 import nkp.pspValidator.shared.imageUtils.ImageCopy;
 import nkp.pspValidator.shared.imageUtils.ImageUtil;
@@ -174,6 +176,10 @@ public class ConfigProcessor {
                 return ImageCopy.valueOf(str);
             case IMAGE_UTIL:
                 return ImageUtil.valueOf(str);
+            case METADATA_FORMAT:
+                return MetadataFormat.valueOf(str);
+            case ENTITY_TYPE:
+                return EntityType.valueOf(str);
             default:
                 throw new ValidatorConfigurationException(
                         String.format("parametr %s: není zde možné použít parametr typu %s", varName, paramType));

@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<validationTemplate>
+    <name>mix_ps</name>
+    <version>1.0</version>
+    <rootValidationNode mandatory="MANDATORY" name="*[local-name()='mix']" nullable="false">
+        <element mandatory="MANDATORY" name="*[local-name()='BasicDigitalObjectInformation']" nullable="false">
+            <element mandatory="MANDATORY_IF_AVAILABLE" name="*[local-name()='ObjectIdentifier']" nullable="false">
+                <element mandatory="MANDATORY_IF_AVAILABLE" name="*[local-name()='objectIdentifierType']" nullable="false"/>
+                <element mandatory="MANDATORY_IF_AVAILABLE" name="*[local-name()='objectIdentifierValue']" nullable="false"/>
+            </element>
+            <element mandatory="MANDATORY" name="*[local-name()='FormatDesignation']" nullable="false">
+                <element mandatory="MANDATORY" name="*[local-name()='formatName']" nullable="false"/>
+                <element mandatory="MANDATORY" name="*[local-name()='formatVersion']" nullable="false"/>
+            </element>
+            <element mandatory="MANDATORY" name="*[local-name()='Compression']" nullable="false">
+                <element mandatory="MANDATORY" name="*[local-name()='compressionScheme']" nullable="false"/>
+            </element>
+        </element>
+        <element mandatory="MANDATORY" name="*[local-name()='BasicImageInformation']" nullable="false">
+            <element mandatory="MANDATORY" name="*[local-name()='BasicImageCharacteristics']" nullable="false">
+                <element mandatory="MANDATORY" name="*[local-name()='imageWidth']" nullable="false"/>
+                <element mandatory="MANDATORY" name="*[local-name()='imageHeight']" nullable="false"/>
+                <element mandatory="MANDATORY" name="*[local-name()='PhotometricInterpretation']" nullable="false">
+                    <element mandatory="MANDATORY" name="*[local-name()='colorSpace']" nullable="false"/>
+                    <element mandatory="MANDATORY_IF_AVAILABLE" name="*[local-name()='ColorProfile']" nullable="false">
+                        <element mandatory="MANDATORY" name="*[local-name()='IccProfile']" nullable="false">
+                            <element mandatory="MANDATORY" name="*[local-name()='iccProfileName']" nullable="false"/>
+                            <element mandatory="MANDATORY" name="*[local-name()='iccProfileVersion']" nullable="false"/>
+                        </element>
+                    </element>
+                </element>
+            </element>
+        </element>
+        <element mandatory="MANDATORY" name="*[local-name()='ImageCaptureMetadata']" nullable="false">
+            <element mandatory="MANDATORY_IF_AVAILABLE" name="*[local-name()='SourceInformation']" nullable="false">
+                <element mandatory="MANDATORY" name="*[local-name()='sourceType']" nullable="false"/>
+                <element mandatory="MANDATORY_IF_AVAILABLE" name="*[local-name()='SourceID']" nullable="false">
+                    <element mandatory="MANDATORY" name="*[local-name()='sourceIDType']" nullable="false"/>
+                    <element mandatory="MANDATORY" name="*[local-name()='sourceIDValue']" nullable="false"/>
+                </element>
+            </element>
+            <element mandatory="MANDATORY" name="*[local-name()='GeneralCaptureInformation']" nullable="false">
+                <element mandatory="MANDATORY" name="*[local-name()='imageProducer']" nullable="false"/>
+                <element mandatory="MANDATORY" name="*[local-name()='captureDevice']" nullable="false"/>
+            </element>
+            <element mandatory="MANDATORY" name="*[local-name()='ScannerCapture']" nullable="false">
+                <element mandatory="MANDATORY" name="*[local-name()='ScannerModel']" nullable="false">
+                    <element mandatory="MANDATORY" name="*[local-name()='scannerModelName']" nullable="false"/>
+                    <element mandatory="MANDATORY" name="*[local-name()='scannerModelNumber']" nullable="false"/>
+                    <element mandatory="MANDATORY" name="*[local-name()='scannerModelSerialNo']" nullable="false"/>
+                </element>
+                <element mandatory="MANDATORY" name="*[local-name()='MaximumOpticalResolution']" nullable="false">
+                    <element mandatory="MANDATORY" name="*[local-name()='xOpticalResolution']" nullable="false"/>
+                    <element mandatory="MANDATORY" name="*[local-name()='yOpticalResolution']" nullable="false"/>
+                    <element mandatory="MANDATORY" name="*[local-name()='opticalResolutionUnit']" nullable="false"/>
+                </element>
+                <element mandatory="MANDATORY" name="*[local-name()='scannerSensor']" nullable="false"/>
+                <element mandatory="MANDATORY" name="*[local-name()='ScanningSystemSoftware']" nullable="false">
+                    <element mandatory="MANDATORY" name="*[local-name()='scanningSoftwareName']" nullable="false"/>
+                    <element mandatory="MANDATORY" name="*[local-name()='scanningSoftwareVersionNo']" nullable="false"/>
+                </element>
+            </element>
+            <element mandatory="MANDATORY_IF_AVAILABLE" name="*[local-name()='DigitalCameraCapture']" nullable="false">
+                <element mandatory="MANDATORY" name="*[local-name()='digitalCameraManufacturer']" nullable="false"/>
+                <element mandatory="MANDATORY" name="*[local-name()='DigitalCameraModel']" nullable="false">
+                    <element mandatory="MANDATORY" name="*[local-name()='digitalCameraModelName']" nullable="false"/>
+                    <element mandatory="MANDATORY" name="*[local-name()='digitalCameraModelNumber']" nullable="false"/>
+                    <element mandatory="MANDATORY" name="*[local-name()='digitalCameraModelSerialNo']" nullable="false"/>
+                    <element mandatory="MANDATORY" name="*[local-name()='digitalCameraSensor']" nullable="false"/>
+                </element>
+                <element mandatory="MANDATORY" name="*[local-name()='CameraCaptureSettings']" nullable="false">
+                    <element mandatory="MANDATORY" name="*[local-name()='ImageData']" nullable="false"/>
+                </element>
+            </element>
+            <element mandatory="MANDATORY" name="*[local-name()='orientation']" nullable="false"/>
+        </element>
+        <element mandatory="MANDATORY" name="*[local-name()='ImageAssessmentMetadata']" nullable="false">
+            <element mandatory="MANDATORY" name="*[local-name()='SpatialMetrics']" nullable="false">
+                <element mandatory="MANDATORY" name="*[local-name()='samplingFrequencyUnit']" nullable="false"/>
+                <element mandatory="MANDATORY_IF_AVAILABLE" name="*[local-name()='xSamplingFrequency']" nullable="false">
+                    <element mandatory="MANDATORY" name="*[local-name()='numerator']" nullable="false"/>
+                    <element mandatory="MANDATORY" name="*[local-name()='denominator']" nullable="false"/>
+                </element>
+                <element mandatory="MANDATORY_IF_AVAILABLE" name="*[local-name()='ySamplingFrequency']" nullable="false">
+                    <element mandatory="MANDATORY" name="*[local-name()='numerator']" nullable="false"/>
+                    <element mandatory="MANDATORY" name="*[local-name()='denominator']" nullable="false"/>
+                </element>
+            </element>
+            <element mandatory="MANDATORY" name="*[local-name()='ImageColorEncoding']" nullable="false">
+                <element mandatory="MANDATORY" name="*[local-name()='BitsPerSample']" nullable="false">
+                    <element mandatory="MANDATORY" name="*[local-name()='bitsPerSampleValue']" nullable="false"/>
+                </element>
+                <element mandatory="MANDATORY" name="*[local-name()='samplesPerPixel']" nullable="false"/>
+            </element>
+        </element>
+    </rootValidationNode>
+</validationTemplate>

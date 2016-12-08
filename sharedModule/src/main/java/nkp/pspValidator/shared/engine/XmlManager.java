@@ -3,7 +3,7 @@ package nkp.pspValidator.shared.engine;
 import nkp.pspValidator.shared.NamespaceContextImpl;
 import nkp.pspValidator.shared.XmlUtils;
 import nkp.pspValidator.shared.engine.exceptions.InvalidXPathExpressionException;
-import nkp.pspValidator.shared.engine.exceptions.XmlParsingException;
+import nkp.pspValidator.shared.engine.exceptions.XmlFileParsingException;
 import org.w3c.dom.Document;
 import org.xml.sax.SAXException;
 
@@ -52,7 +52,7 @@ public class XmlManager {
         }
     }
 
-    public Document getXmlDocument(File file) throws XmlParsingException {
+    public Document getXmlDocument(File file) throws XmlFileParsingException {
         if (docCache != null) {
             String key = file.getAbsolutePath();
             if (docCache.containsKey(key)) {
@@ -67,15 +67,15 @@ public class XmlManager {
         }
     }
 
-    private Document loadDocument(File file) throws XmlParsingException {
+    private Document loadDocument(File file) throws XmlFileParsingException {
         try {
             return XmlUtils.buildDocumentFromFile(file, true);
         } catch (SAXException e) {
-            throw new XmlParsingException(file, String.format("chyba parsování xml v souboru %s: %s", file.getAbsolutePath(), e.getMessage()));
+            throw new XmlFileParsingException(file, String.format("chyba parsování xml v souboru %s: %s", file.getAbsolutePath(), e.getMessage()));
         } catch (IOException e) {
-            throw new XmlParsingException(file, String.format("chyba čtení v souboru %s: %s", file.getAbsolutePath(), e.getMessage()));
+            throw new XmlFileParsingException(file, String.format("chyba čtení v souboru %s: %s", file.getAbsolutePath(), e.getMessage()));
         } catch (ParserConfigurationException e) {
-            throw new XmlParsingException(file, String.format("chyba konfigurace parseru při zpracování souboru %s: %s", file.getAbsolutePath(), e.getMessage()));
+            throw new XmlFileParsingException(file, String.format("chyba konfigurace parseru při zpracování souboru %s: %s", file.getAbsolutePath(), e.getMessage()));
         }
     }
 

@@ -7,7 +7,7 @@ import nkp.pspValidator.shared.engine.ValueType;
 import nkp.pspValidator.shared.engine.exceptions.ContractException;
 import nkp.pspValidator.shared.engine.exceptions.InvalidPathException;
 import nkp.pspValidator.shared.engine.exceptions.InvalidXPathExpressionException;
-import nkp.pspValidator.shared.engine.exceptions.XmlParsingException;
+import nkp.pspValidator.shared.engine.exceptions.XmlFileParsingException;
 import org.w3c.dom.Document;
 import org.w3c.dom.NodeList;
 
@@ -99,7 +99,7 @@ public class EfGetFileListByXpath extends EvaluationFunction {
             return okResult(fileList);
         } catch (XPathExpressionException e) {
             return errorResult(String.format("neplatný xpath výraz '%s': %s", xmlFile.getAbsolutePath(), e.getMessage()));
-        } catch (XmlParsingException e) {
+        } catch (XmlFileParsingException e) {
             return errorResult(e);
         } catch (InvalidXPathExpressionException e) {
             return errorResult(e);

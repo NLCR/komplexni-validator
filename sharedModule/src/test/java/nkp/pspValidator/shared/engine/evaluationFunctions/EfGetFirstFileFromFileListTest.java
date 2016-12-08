@@ -21,6 +21,8 @@ public class EfGetFirstFileFromFileListTest {
     private static final String FUNCTION_NAME = "getFirstFileFromFileList";
     private static final String PARAM_FILE_LIST = "files";
 
+    private static final File DIR = new File("src/test/resources/monograph_1.2/b50eb6b0-f0a4-11e3-b72e-005056827e52");
+
 
     private static List<File> LIST = new ArrayList<File>() {
         {
@@ -45,7 +47,7 @@ public class EfGetFirstFileFromFileListTest {
         engine.registerValueDefinition(LIST_VAR,
                 engine.buildValueDefinition(ValueType.FILE_LIST,
                         engine.buildEvaluationFunction("findFilesInDirByPattern")
-                                .withValueParam("dir", ValueType.FILE, new ValueEvaluation(new File("src/test/resources/monograph_1.2/b50eb6b0-f0a4-11e3-b72e-005056827e52")))
+                                .withValueParam("dir", ValueType.FILE, new ValueEvaluation(DIR))
                                 .withPatternParam("pattern", engine.buildPatternDefinition(engine.buildRawPatternExpression(false, ".+")).evaluate())
                 ));
     }
@@ -64,7 +66,7 @@ public class EfGetFirstFileFromFileListTest {
         EvaluationFunction evFunction = engine.buildEvaluationFunction(FUNCTION_NAME)
                 .withValueParamByReference(PARAM_FILE_LIST, ValueType.FILE_LIST, LIST_VAR);
         ValueEvaluation result = evFunction.evaluate();
-        assertEquals("txt", ((File) result.getData()).getName());
+        assertEquals(DIR.listFiles()[0].getName(), ((File) result.getData()).getName());
     }
 
     @Test

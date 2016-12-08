@@ -29,7 +29,6 @@ public class Identifier {
 
         if (type != null ? !type.equals(that.type) : that.type != null) return false;
         return value != null ? value.equals(that.value) : that.value == null;
-
     }
 
     @Override
@@ -41,9 +40,6 @@ public class Identifier {
 
     @Override
     public String toString() {
-        return "Identifier{" +
-                "type='" + type + '\'' +
-                ", value='" + value + '\'' +
-                '}';
+        return String.format("%s:%s", type, value);
     }
 }

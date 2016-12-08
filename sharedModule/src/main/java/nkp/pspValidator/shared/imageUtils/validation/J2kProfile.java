@@ -1,10 +1,11 @@
 package nkp.pspValidator.shared.imageUtils.validation;
 
+import nkp.pspValidator.shared.engine.exceptions.ImageUtilOutputParsingException;
+import nkp.pspValidator.shared.imageUtils.CliCommand;
 import nkp.pspValidator.shared.imageUtils.ImageUtil;
 import nkp.pspValidator.shared.imageUtils.ImageUtilManager;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -27,28 +28,34 @@ public abstract class J2kProfile {
         validations.add(validation);
     }
 
-    public List<String> validate(File imageFile) throws Exception {
+    public List<String> validate(File imageFile) {
         List<String> totalErrors = new ArrayList<>();
-        String toolRawOutput = runImageUtil(imageFile);
-        Object processedOutput = processImageUtilOutput(toolRawOutput, imageUtil);
-        for (Validation validation : validations) {
-            List<String> validationErrors = validation.validate(processedOutput);
-            totalErrors.addAll(validationErrors);
-        }
-        return totalErrors;
-    }
-
-    String runImageUtil(File imageFile) throws IOException, InterruptedException {
+        String toolRawOutput = null;
         try {
-            return imageUtilManager.runUtilExecution(imageUtil, imageFile);
-        } catch (IOException e) {
-            throw new IOException(String.format("chyba běhu nástroje %s: ", imageUtil, e.getMessage()), e);
-        } catch (InterruptedException e) {
-            throw new IOException(String.format("běh nástroje %s přerušen: ", imageUtil, e.getMessage()), e);
+            toolRawOutput = runImageUtil(imageFile);
+            Object processedOutput = processImageUtilOutput(toolRawOutput, imageUtil);
+            for (Validation validation : validations) {
+                try {
+                    List<String> validationErrors = validation.validate(processedOutput);
+                    totalErrors.addAll(validationErrors);
+                } catch (DataExtraction.ExtractionException e) {
+                    totalErrors.add(e.getMessage());
+                }
+            }
+        } catch (CliCommand.CliCommandException e) {
+            totalErrors.add(e.getMessage());
+        } catch (ImageUtilOutputParsingException e) {
+            totalErrors.add(e.getMessage());
+        } finally {
+            return totalErrors;
         }
     }
 
-    abstract Object processImageUtilOutput(String toolRawOutput, ImageUtil util) throws Exception;
+    String runImageUtil(File imageFile) throws CliCommand.CliCommandException {
+        return imageUtilManager.runUtilExecution(imageUtil, imageFile);
+    }
+
+    abstract Object processImageUtilOutput(String toolRawOutput, ImageUtil util) throws ImageUtilOutputParsingException;
 
     public enum Type {
         XML, TEXT;

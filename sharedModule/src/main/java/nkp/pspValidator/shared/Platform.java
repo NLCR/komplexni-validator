@@ -51,7 +51,7 @@ public class Platform {
         //http://stackoverflow.com/questions/10846105/all-possible-values-os-arch-in-32bit-jre-and-in-64bit-jre
         String osArch = System.getProperty("os.arch");
         OsArchitecture osArchitecture = null;
-        if (osArch.contains("32")) {
+        if (osArch.contains("32") || osArch.contains("x86")) {
             osArchitecture = OsArchitecture.B32;
         } else if (osArch.contains("64")) {
             osArchitecture = OsArchitecture.B64;
@@ -72,26 +72,29 @@ public class Platform {
     }
 
     public String toReadableString() {
-        switch (operatingSystem) {
-            case LINUX:
-                return "Linux; " + toArchitectureString();
-            case WINDOWS:
-                return "Windows; " + toArchitectureString();
-            case MAC:
-                return "Mac; " + toArchitectureString();
-            default:
-                return "Unknown (" + sysPropertyOsName + "); " + toArchitectureString();
+        if (operatingSystem != null) {
+            switch (operatingSystem) {
+                case LINUX:
+                    return "Linux; " + toArchitectureString();
+                case WINDOWS:
+                    return "Windows; " + toArchitectureString();
+                case MAC:
+                    return "Mac; " + toArchitectureString();
+            }
         }
+        return "unknown OS (" + sysPropertyOsName + "); " + toArchitectureString();
     }
 
     private String toArchitectureString() {
-        switch (osArchitecture) {
-            case B32:
-                return "32b";
-            case B64:
-                return "64b";
-            default:
-                return "unkown (" + sysPropertyOsArch + ")";
+        if (osArchitecture != null) {
+            switch (osArchitecture) {
+                case B32:
+                    return "32b";
+                case B64:
+                    return "64b";
+                default:
+            }
         }
+        return "unkown architecture(" + sysPropertyOsArch + ")";
     }
 }

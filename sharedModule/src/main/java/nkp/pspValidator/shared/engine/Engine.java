@@ -3,7 +3,7 @@ package nkp.pspValidator.shared.engine;
 import nkp.pspValidator.shared.engine.evaluationFunctions.*;
 import nkp.pspValidator.shared.engine.exceptions.InvalidXPathExpressionException;
 import nkp.pspValidator.shared.engine.exceptions.ValidatorConfigurationException;
-import nkp.pspValidator.shared.engine.exceptions.XmlParsingException;
+import nkp.pspValidator.shared.engine.exceptions.XmlFileParsingException;
 import nkp.pspValidator.shared.engine.validationFunctions.*;
 import nkp.pspValidator.shared.imageUtils.validation.ImageValidator;
 import org.w3c.dom.Document;
@@ -103,6 +103,8 @@ public class Engine {
                 return new EfGetFileListByXpath(this);
             case "getDcIdentifiersForEachDmdsecId":
                 return new EfGetDcIdentifiersForEachDmdsecId(this);
+            case "getModsIdentifiersForEachDmdsecId":
+                return new EfGetModsIdentifiersForEachDmdsecId(this);
             case "mergeIdentifiers":
                 return new EfMergeIdentifiers(this);
             default:
@@ -148,14 +150,25 @@ public class Engine {
                 return new VfCheckInfoFileItemlistReferencesAllFiles(this);
             case "checkInfoFileChecksumMatches":
                 return new VfCheckInfoFileChecksumMatches(this);
-            case "checkNoDuplicateIdentifiers":
-                return new VfCheckNoDuplicateIdentifiers(this);
+
+            //identifiers in general
+            case "checkIdentifiersNoDuplicateTypes":
+                return new VfCheckIdentifiersNoDuplicateTypes(this);
+            case "checkIdentifiersNoDuplicates":
+                return new VfCheckIdentifiersNoDuplicates(this);
+            case "checkIdentifiersAllTypesPresent":
+                return new VfCheckIdentifiersAllTypesPresent(this);
+            case "checkIdentifiersNoTypesPresent":
+                return new VfCheckIdentifiersNoTypesPresent(this);
+
             case "checkDcIdentifiersDoNotContainWhiteSpaces":
                 return new VfCheckDcIdentifiersDoNotContainWhiteSpaces(this);
             case "checkStringDerivedFromOneOfIdentifiers":
                 return new VfCheckStringDerivedFromOneOfIdentifiers(this);
             case "checkPrimaryMetsFilesecContainsAllFilegroups":
                 return new VfCheckPrimaryMetsFilesecContainsAllFilegroups(this);
+            case "checkPrimaryMetsDcIdentifiersMatchModsIdentifiers":
+                return new VfCheckPrimaryMetsDcIdentifiersMatchModsIdentifiers(this);
             case "checkFileListsMatch":
                 return new VfCheckFileListsMatch(this);
             case "checkMetsFilesecSizesMatch":
@@ -166,6 +179,11 @@ public class Engine {
                 return new VfCheckSecondaryMetsFilesecContainsAllFilegroups(this);
             case "checkImageFilesValidByExternalUtil":
                 return new VfCheckImageFilesValidByExternalUtil(this);
+
+            //bibliographic metadata
+            case "checkBibliographicMetadataMatchProfile":
+                return new VfCheckBibliographicMetadataMatchProfile(this);
+
             default:
                 throw new ValidatorConfigurationException(String.format("validační funkce %s neexistuje", name));
         }
@@ -325,7 +343,7 @@ public class Engine {
     }
 
 
-    public Document getXmlDocument(File file) throws XmlParsingException {
+    public Document getXmlDocument(File file) throws XmlFileParsingException {
         return xmlManager.getXmlDocument(file);
     }
 
