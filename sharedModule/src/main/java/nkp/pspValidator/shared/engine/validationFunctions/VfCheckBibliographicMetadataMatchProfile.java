@@ -7,7 +7,7 @@ import nkp.pspValidator.shared.engine.ValueType;
 import nkp.pspValidator.shared.engine.exceptions.ContractException;
 import nkp.pspValidator.shared.engine.exceptions.InvalidDataException;
 import nkp.pspValidator.shared.engine.exceptions.InvalidXPathExpressionException;
-import nkp.pspValidator.shared.engine.exceptions.XmlParsingException;
+import nkp.pspValidator.shared.engine.exceptions.XmlFileParsingException;
 import nkp.pspValidator.shared.engine.types.EntityType;
 import nkp.pspValidator.shared.engine.types.MetadataFormat;
 import org.w3c.dom.Document;
@@ -105,7 +105,7 @@ public class VfCheckBibliographicMetadataMatchProfile extends ValidationFunction
                     result.addError(invalid(e));
                 }
             }
-        } catch (XmlParsingException e) {
+        } catch (XmlFileParsingException e) {
             result.addError(invalid(e));
         } catch (InvalidXPathExpressionException e) {
             result.addError(invalid(e));

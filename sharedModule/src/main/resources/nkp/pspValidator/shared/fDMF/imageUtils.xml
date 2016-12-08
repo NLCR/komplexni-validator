@@ -2,14 +2,14 @@
     <imageUtil name="JPYLYZER">
         <versionDetection>
             <operatingSystem name="LINUX">
-                <command>jpylyzer --version</command>
+                <command>${PATH}jpylyzer --version</command>
                 <parser>
                     <stream>STDERR</stream>
                     <regexp>(?s).*</regexp>
                 </parser>
             </operatingSystem>
             <operatingSystem name="WINDOWS">
-                <command>jpylyzer --version</command>
+                <command>${PATH}jpylyzer --version</command>
                 <parser>
                     <stream>STDERR</stream>
                     <regexp>(?s).*</regexp>
@@ -27,14 +27,14 @@
         </versionDetection>
         <execution>
             <operatingSystem name="LINUX">
-                <command>jpylyzer jp2In ${IMAGE_FILE}</command>
+                <command>${PATH}jpylyzer jp2In ${IMAGE_FILE}</command>
                 <parser>
                     <stream>STDOUT</stream>
                     <regexp>(?s).*</regexp>
                 </parser>
             </operatingSystem>
             <operatingSystem name="WINDOWS">
-                <command>jpylyzer jp2In ${IMAGE_FILE}</command>
+                <command>${PATH}jpylyzer jp2In ${IMAGE_FILE}</command>
                 <parser>
                     <stream>STDOUT</stream>
                     <regexp>(?s).*</regexp>
@@ -54,19 +54,20 @@
         <versionDetection>
             <!--https://gist.github.com/Lammerink/3926636-->
             <operatingSystem name="LINUX">
-                <command>convert -version</command>
+                <command>${PATH}convert -version</command>
                 <parser>
                     <stream>STDOUT</stream>
                     <regexp>ImageMagick\s\S*\s\S*</regexp>
                 </parser>
             </operatingSystem>
             <operatingSystem name="WINDOWS">
-                <command>magick.exe convert -version</command>
+                <command>${PATH}magick.exe convert -version</command>
                 <parser>
                     <stream>STDOUT</stream>
                     <regexp>ImageMagick\s\S*\s\S*</regexp>
                 </parser>
             </operatingSystem>
+            <!--TODO: vlastne blbost, nepotrebuju tady xml-->
             <!--http://www.imagemagick.org/script/binary-releases.php-->
             <!--instalace pres MacPorts-->
             <!--bohuzel ale jen verze 6.9.9, ktera nedava vystup v xml-->
@@ -81,14 +82,14 @@
         </versionDetection>
         <execution>
             <operatingSystem name="LINUX">
-                <command>identify -verbose ${IMAGE_FILE}</command>
+                <command>${PATH}identify -verbose ${IMAGE_FILE}</command>
                 <parser>
                     <stream>STDERR</stream>
                     <regexp>(?s).*</regexp>
                 </parser>
             </operatingSystem>
             <operatingSystem name="WINDOWS">
-                <command>magick.exe identify -verbose ${IMAGE_FILE}</command>
+                <command>${PATH}magick.exe identify -verbose ${IMAGE_FILE}</command>
                 <parser>
                     <stream>STDERR</stream>
                     <regexp>(?s).*</regexp>
@@ -107,17 +108,18 @@
     <imageUtil name="JHOVE">
         <versionDetection>
             <operatingSystem name="LINUX">
-                <command>jhove --version</command>
+                <command>${PATH}jhove --version</command>
                 <parser>
                     <stream>STDOUT</stream>
-                    <regexp>(?m)^.*$</regexp>
+                    <regexp>Jhove \(.*\)</regexp>
                 </parser>
             </operatingSystem>
             <operatingSystem name="WINDOWS">
                 <!--TODO:
                 //https://github.com/openpreserve/jhove/issues/32
                 //until then temporary fix with configuration file-->
-                <command>jhove.bat --version -c C:\Users\Lenovo\Documents\software\jhove-1_11\jhove\conf\jhove.conf
+                <command>${PATH}jhove.bat --version -c
+                    C:\Users\Lenovo\Documents\software\jhove-1_11\jhove\conf\jhove.conf
                 </command>
                 <parser>
                     <stream>STDOUT</stream>
@@ -136,7 +138,7 @@
         </versionDetection>
         <execution>
             <operatingSystem name="LINUX">
-                <command>jhove -h XML -m jpeg2000-hul -k ${IMAGE_FILE}</command>
+                <command>${PATH}jhove -h XML -m jpeg2000-hul -k ${IMAGE_FILE}</command>
                 <parser>
                     <stream>STDOUT</stream>
                     <regexp>(?s)&lt;\?xml.*$</regexp>
@@ -146,7 +148,7 @@
                 <!--TODO:
                 //https://github.com/openpreserve/jhove/issues/32
                 //until then temporary fix with configuration file-->
-                <command>jhove.bat -h XML -m jpeg2000-hul -k ${IMAGE_FILE} -c
+                <command>${PATH}jhove.bat -h XML -m jpeg2000-hul -k ${IMAGE_FILE} -c
                     C:\Users\Lenovo\Documents\software\jhove-1_11\jhove\conf\jhove.conf
                 </command>
                 <parser>
@@ -167,14 +169,14 @@
     <imageUtil name="KAKADU">
         <versionDetection>
             <operatingSystem name="LINUX">
-                <command>kdu_expand -version</command>
+                <command>${PATH}kdu_expand -version</command>
                 <parser>
                     <stream>STDOUT</stream>
                     <regexp>Current core system version is \S*</regexp>
                 </parser>
             </operatingSystem>
             <operatingSystem name="WINDOWS">
-                <command>kdu_expand.exe -version</command>
+                <command>${PATH}kdu_expand.exe -version</command>
                 <parser>
                     <stream>STDOUT</stream>
                     <regexp>Current core system version is \S*</regexp>
@@ -191,14 +193,14 @@
         </versionDetection>
         <execution>
             <operatingSystem name="LINUX">
-                <command>kdu_expand -i ${IMAGE_FILE}</command>
+                <command>${PATH}kdu_expand -i ${IMAGE_FILE}</command>
                 <parser>
                     <stream>STDERR</stream>
                     <regexp>(?s).*</regexp>
                 </parser>
             </operatingSystem>
             <operatingSystem name="WINDOWS">
-                <command>kdu_expand.exe -i ${IMAGE_FILE}</command>
+                <command>${PATH}kdu_expand.exe -i ${IMAGE_FILE}</command>
                 <parser>
                     <stream>STDERR</stream>
                     <regexp>(?s).*</regexp>

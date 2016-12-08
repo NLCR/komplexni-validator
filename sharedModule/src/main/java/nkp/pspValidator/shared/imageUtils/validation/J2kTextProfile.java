@@ -1,5 +1,6 @@
 package nkp.pspValidator.shared.imageUtils.validation;
 
+import nkp.pspValidator.shared.engine.exceptions.ImageUtilOutputParsingException;
 import nkp.pspValidator.shared.imageUtils.ImageUtil;
 import nkp.pspValidator.shared.imageUtils.ImageUtilManager;
 
@@ -13,7 +14,7 @@ public class J2kTextProfile extends J2kProfile {
     }
 
     @Override
-    Object processImageUtilOutput(String toolRawOutput, ImageUtil util) throws Exception {
+    Object processImageUtilOutput(String toolRawOutput, ImageUtil util) throws ImageUtilOutputParsingException {
         return toolRawOutput;
     }
 }

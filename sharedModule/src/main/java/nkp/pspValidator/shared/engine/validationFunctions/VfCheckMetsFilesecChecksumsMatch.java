@@ -78,7 +78,7 @@ public class VfCheckMetsFilesecChecksumsMatch extends ValidationFunction {
                     result.addError(invalid(e));
                 }
             }
-        } catch (XmlParsingException e) {
+        } catch (XmlFileParsingException e) {
             result.addError(invalid(e));
         } catch (InvalidXPathExpressionException e) {
             result.addError(invalid(e));

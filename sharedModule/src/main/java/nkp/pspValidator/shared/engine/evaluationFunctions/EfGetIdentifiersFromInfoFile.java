@@ -5,7 +5,7 @@ import nkp.pspValidator.shared.engine.ValueEvaluation;
 import nkp.pspValidator.shared.engine.ValueType;
 import nkp.pspValidator.shared.engine.exceptions.ContractException;
 import nkp.pspValidator.shared.engine.exceptions.InvalidXPathExpressionException;
-import nkp.pspValidator.shared.engine.exceptions.XmlParsingException;
+import nkp.pspValidator.shared.engine.exceptions.XmlFileParsingException;
 import nkp.pspValidator.shared.engine.types.Identifier;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -75,7 +75,7 @@ public class EfGetIdentifiersFromInfoFile extends EvaluationFunction {
                 identifiers.add(new Identifier(type, value));
             }
             return okResult(identifiers);
-        } catch (XmlParsingException e) {
+        } catch (XmlFileParsingException e) {
             return errorResult(e);
         } catch (InvalidXPathExpressionException e) {
             return errorResult(e);

@@ -21,8 +21,7 @@ public class CliCommand {
         this.prettyPrint = prettyPrint;
     }
 
-
-    public Result execute() throws IOException, InterruptedException {
+    public Result execute() throws CliCommandException {
         try {
             //System.out.println("command: " + this);
             Process process = Runtime.getRuntime().exec(command);
@@ -75,7 +74,6 @@ public class CliCommand {
             int exitValue = process.waitFor();
             outThread.join();
             errThread.join();
-
             String stdOut = stdoutBuilder.toString();
             String stdErr = stderrBuilder.toString();
             /*System.err.println("SOUT: " + stdOut);
@@ -84,8 +82,11 @@ public class CliCommand {
             //result.print();
             return result;
         } catch (Throwable e) {
-            e.printStackTrace();
-            throw e;
+            //e.printStackTrace();
+            //throw e;
+            //return null;
+            //return new Result(-1,null, e.getMessage());
+            throw new CliCommandException(e.getMessage());
         }
     }
 
@@ -121,9 +122,19 @@ public class CliCommand {
         }
 
         public void print() {
-            System.err.println("EXIT VALUE: " + exitValue + (exitValue == 0 ? " (ok)" : " (error)"));
-            System.err.println("SERR: " + stderr);
-            System.err.println("SOUT: " + stdout);
+            System.out.println("EXIT VALUE: " + exitValue + (exitValue == 0 ? " (ok)" : " (error)"));
+            System.out.println("SERR: " + stderr);
+            System.out.println("SOUT: " + stdout);
+        }
+    }
+
+    public static class CliCommandException extends Exception {
+        public CliCommandException(String message) {
+            super(message);
+        }
+
+        public CliCommandException(String message, Throwable cause) {
+            super(message, cause);
         }
     }
 

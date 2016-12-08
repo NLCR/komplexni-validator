@@ -6,27 +6,27 @@ import java.io.File;
  * Created by martin on 14.11.16.
  */
 public class UtilHandler {
-    private final Command command;
+    private final CommandData commandData;
     private final Parser parser;
 
-    public UtilHandler(Command command, Parser parser) {
-        this.command = command;
+    public UtilHandler(CommandData commandData, Parser parser) {
+        this.commandData = commandData;
         this.parser = parser;
     }
 
-    public Command getCommand() {
-        return command;
+    public CommandData getCommandData() {
+        return commandData;
     }
 
     public Parser getParser() {
         return parser;
     }
 
-    public static class Command {
+    public static class CommandData {
         private File path;
         private final String rawCommand;
 
-        public Command(String rawCommand) {
+        public CommandData(String rawCommand) {
             this.rawCommand = rawCommand;
         }
 
@@ -40,6 +40,14 @@ public class UtilHandler {
 
         public void setPath(File path) {
             this.path = path;
+        }
+
+        @Override
+        public String toString() {
+            return "Command{" +
+                    "path=" + path +
+                    ", rawCommand='" + rawCommand + '\'' +
+                    '}';
         }
     }
 

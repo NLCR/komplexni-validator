@@ -1,10 +1,9 @@
 package nkp.pspValidator.shared.imageUtils;
 
-import nkp.pspValidator.shared.imageUtils.UtilHandler.Command;
+import nkp.pspValidator.shared.imageUtils.UtilHandler.CommandData;
 import nkp.pspValidator.shared.imageUtils.UtilHandler.Parser;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.regex.Matcher;
@@ -46,11 +45,11 @@ public class ImageUtilManager {
     public void setPath(ImageUtil util, File path) {
         UtilHandler versionDetection = utilVersionDetectionHandlers.get(util);
         if (versionDetection != null) {
-            versionDetection.getCommand().setPath(path);
+            versionDetection.getCommandData().setPath(path);
         }
         UtilHandler UtilHandler = utilExecutionHandlers.get(util);
         if (UtilHandler != null) {
-            UtilHandler.getCommand().setPath(path);
+            UtilHandler.getCommandData().setPath(path);
         }
     }
 
@@ -63,9 +62,9 @@ public class ImageUtilManager {
         return utilAvaliable.get(util);
     }
 
-    public String runUtilVersionDetection(ImageUtil type) throws IOException, InterruptedException {
+    public String runUtilVersionDetection(ImageUtil type) throws CliCommand.CliCommandException {
         UtilHandler versionDetection = utilVersionDetectionHandlers.get(type);
-        String command = buildCommand(versionDetection.getCommand());
+        String command = buildCommand(versionDetection.getCommandData());
         CliCommand.Result result = new CliCommand(command).execute();
         String rawOutput = null;
         Parser parser = versionDetection.getParser();
@@ -78,19 +77,19 @@ public class ImageUtilManager {
                 rawOutput = result.getStdout();
                 break;
             default:
-                throw new IOException(String.format("empty response from '%s' (%s)", command, stream));
+                throw new IllegalStateException("unexpected stream " + stream);
         }
-        if (rawOutput != null) {
+        if (rawOutput != null && !rawOutput.isEmpty()) {
             String parsed = parseData(rawOutput, parser);
             return parsed == null || parsed.isEmpty() ? null : parsed.trim();
         } else {
-            return null;
+            throw new CliCommand.CliCommandException("prázdný výstup");
         }
     }
 
-    private String buildCommand(Command command) {
-        String path = command.getPath() == null ? "" : command.getPath().getAbsolutePath();
-        String result = command.getRawCommand();
+    private String buildCommand(CommandData commandData) {
+        String path = commandData.getPath() == null ? "" : commandData.getPath().getAbsolutePath();
+        String result = commandData.getRawCommand();
         if (!path.isEmpty()) {
             path = path + File.separatorChar;
         }
@@ -98,9 +97,9 @@ public class ImageUtilManager {
         return result;
     }
 
-    private String buildCommand(Command command, File imageFile) {
-        String path = command.getPath() == null ? "" : command.getPath().getAbsolutePath();
-        String result = command.getRawCommand();
+    private String buildCommand(CommandData commandData, File imageFile) {
+        String path = commandData.getPath() == null ? "" : commandData.getPath().getAbsolutePath();
+        String result = commandData.getRawCommand();
         if (!path.isEmpty()) {
             path = path + File.separatorChar;
         }
@@ -128,10 +127,10 @@ public class ImageUtilManager {
         }
     }
 
-    public String runUtilExecution(ImageUtil utilType, File imageFile) throws IOException, InterruptedException {
+    public String runUtilExecution(ImageUtil utilType, File imageFile) throws CliCommand.CliCommandException {
         UtilHandler utilHandler = utilExecutionHandlers.get(utilType);
         //TODO: poresit, NPE pro getCommand, kdyz neni definovano
-        String command = buildCommand(utilHandler.getCommand(), imageFile);
+        String command = buildCommand(utilHandler.getCommandData(), imageFile);
         CliCommand.Result result = new CliCommand(command).execute();
         String rawOutput = null;
         Stream stream = utilHandler.getParser().getStream();
@@ -143,13 +142,15 @@ public class ImageUtilManager {
                 rawOutput = result.getStdout();
                 break;
             default:
-                throw new IOException(String.format("empty response from '%s' (%s)", command, stream));
+                throw new IllegalStateException("unexpected stream " + stream);
         }
         if (rawOutput != null) {
             String parsed = parseData(rawOutput, utilHandler.getParser());
-            return parsed == null || parsed.isEmpty() ? null : parsed.trim();
+            return parsed == null || parsed.isEmpty() ? "" : parsed.trim();
         } else {
-            return null;
+            throw new CliCommand.CliCommandException("chybí výstup");
         }
     }
+
+
 }

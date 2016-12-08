@@ -21,16 +21,16 @@ public class Main extends Application {
         System.out.println("fdmf.dir:" + config.getFdmfDir().getAbsolutePath());
 
         //Font.loadFont(getClass().getResource("/fonts/VarelaRound-Regular.ttf").toExternalForm(), 10);
-       /* Parent root = FXMLLoader.load(getClass().getResource("/fxml/sample.fxml"));
-        primaryStage.setTitle("PSP validator");
-        primaryStage.setScene(new Scene(root, 1000, 700));
-        primaryStage.show();*/
-
-        //init screen
-        Parent root = FXMLLoader.load(getClass().getResource("/fxml/initScreen.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("/fxml/sample.fxml"));
         primaryStage.setTitle("PSP validator");
         primaryStage.setScene(new Scene(root, 1000, 700));
         primaryStage.show();
+
+        //init screen
+       /* Parent root = FXMLLoader.load(getClass().getResource("/fxml/initScreen.fxml"));
+        primaryStage.setTitle("PSP validator");
+        primaryStage.setScene(new Scene(root, 1000, 700));
+        primaryStage.show();*/
     }
 
 

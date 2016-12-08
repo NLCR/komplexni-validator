@@ -5,7 +5,7 @@ import nkp.pspValidator.shared.engine.*;
 import nkp.pspValidator.shared.engine.exceptions.ContractException;
 import nkp.pspValidator.shared.engine.exceptions.InvalidIdException;
 import nkp.pspValidator.shared.engine.exceptions.InvalidXPathExpressionException;
-import nkp.pspValidator.shared.engine.exceptions.XmlParsingException;
+import nkp.pspValidator.shared.engine.exceptions.XmlFileParsingException;
 import nkp.pspValidator.shared.engine.types.Identifier;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -97,7 +97,7 @@ public class VfCheckPrimaryMetsDcIdentifiersMatchModsIdentifiers extends Validat
                 }
             }
             return result;
-        } catch (XmlParsingException e) {
+        } catch (XmlFileParsingException e) {
             result.addError(invalid(e));
         } catch (InvalidXPathExpressionException e) {
             result.addError(invalid(e));

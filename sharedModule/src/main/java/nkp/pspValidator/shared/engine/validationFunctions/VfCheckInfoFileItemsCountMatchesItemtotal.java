@@ -7,7 +7,7 @@ import nkp.pspValidator.shared.engine.ValueEvaluation;
 import nkp.pspValidator.shared.engine.ValueType;
 import nkp.pspValidator.shared.engine.exceptions.ContractException;
 import nkp.pspValidator.shared.engine.exceptions.InvalidXPathExpressionException;
-import nkp.pspValidator.shared.engine.exceptions.XmlParsingException;
+import nkp.pspValidator.shared.engine.exceptions.XmlFileParsingException;
 import org.w3c.dom.Document;
 
 import javax.xml.xpath.XPathConstants;
@@ -68,7 +68,7 @@ public class VfCheckInfoFileItemsCountMatchesItemtotal extends ValidationFunctio
             if (items != itemTotal) {
                 return singlErrorResult(invalid(Level.ERROR, "počet elementů item (%s) nesouhlasí s obsahem atributu itemtotal (%s)", items, itemTotal));
             }
-        } catch (XmlParsingException e) {
+        } catch (XmlFileParsingException e) {
             result.addError(invalid(e));
         } catch (InvalidXPathExpressionException e) {
             result.addError(invalid(e));

@@ -5,7 +5,7 @@ import nkp.pspValidator.shared.engine.*;
 import nkp.pspValidator.shared.engine.exceptions.ContractException;
 import nkp.pspValidator.shared.engine.exceptions.InvalidPathException;
 import nkp.pspValidator.shared.engine.exceptions.InvalidXPathExpressionException;
-import nkp.pspValidator.shared.engine.exceptions.XmlParsingException;
+import nkp.pspValidator.shared.engine.exceptions.XmlFileParsingException;
 import nkp.pspValidator.shared.engine.params.ValueParam;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
@@ -124,7 +124,7 @@ public class VfCheckInfoFileItemlistReferencesAllFiles extends ValidationFunctio
                     }
                 }
             }
-        } catch (XmlParsingException e) {
+        } catch (XmlFileParsingException e) {
             result.addError(invalid(e));
         } catch (InvalidXPathExpressionException e) {
             result.addError(invalid(e));

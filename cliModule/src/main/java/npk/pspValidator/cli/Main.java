@@ -4,7 +4,8 @@ import nkp.pspValidator.shared.*;
 import nkp.pspValidator.shared.engine.exceptions.InvalidXPathExpressionException;
 import nkp.pspValidator.shared.engine.exceptions.PspDataException;
 import nkp.pspValidator.shared.engine.exceptions.ValidatorConfigurationException;
-import nkp.pspValidator.shared.engine.exceptions.XmlParsingException;
+import nkp.pspValidator.shared.engine.exceptions.XmlFileParsingException;
+import nkp.pspValidator.shared.imageUtils.CliCommand;
 import nkp.pspValidator.shared.imageUtils.ImageUtil;
 import nkp.pspValidator.shared.imageUtils.ImageUtilManager;
 import nkp.pspValidator.shared.imageUtils.ImageUtilManagerFactory;
@@ -12,7 +13,6 @@ import nkp.pspValidator.shared.xsdValidation.XsdValidator;
 import org.apache.commons.cli.*;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
@@ -25,11 +25,11 @@ public class Main {
 
     public static int DEFAULT_VERBOSITY = 2;
 
-    public static void main(String[] args) throws PspDataException, XmlParsingException, InvalidXPathExpressionException, FdmfRegistry.UnknownFdmfException, ValidatorConfigurationException {
+    public static void main(String[] args) throws PspDataException, XmlFileParsingException, InvalidXPathExpressionException, FdmfRegistry.UnknownFdmfException, ValidatorConfigurationException {
         main(null, args);
     }
 
-    public static void main(Validator.DevParams devParams, String[] args) throws PspDataException, XmlParsingException, InvalidXPathExpressionException, FdmfRegistry.UnknownFdmfException, ValidatorConfigurationException {
+    public static void main(Validator.DevParams devParams, String[] args) throws PspDataException, XmlFileParsingException, InvalidXPathExpressionException, FdmfRegistry.UnknownFdmfException, ValidatorConfigurationException {
         /*if (true) {
             Properties properties = System.getProperties();
             properties.list(System.out);
@@ -231,7 +231,10 @@ public class Main {
                 } else {
                     if (line.hasOption("kakadu-path")) {
                         imageUtilPaths.put(ImageUtil.KAKADU, new File(line.getOptionValue("kakadu-path")));
+                    }else{
+                        System.err.println("no kakadu path");
                     }
+
                 }
 
                 runValidator(new Dmf(dmfType, dmfVersion), fdmfsDir, pspDir, xmlOutputFile, verbosity, imageUtilsDisabled, imageUtilPaths, null, devParams);
@@ -266,7 +269,7 @@ public class Main {
                                      File xmlOutputFile, int printVerbosity,
                                      Set<ImageUtil> imageUtilsDisabled, Map<ImageUtil, File> imageUtilPaths,
                                      Set<String> runOnlyTheseSections,
-                                     Validator.DevParams devParams) throws PspDataException, InvalidXPathExpressionException, XmlParsingException, FdmfRegistry.UnknownFdmfException, ValidatorConfigurationException {
+                                     Validator.DevParams devParams) throws PspDataException, InvalidXPathExpressionException, XmlFileParsingException, FdmfRegistry.UnknownFdmfException, ValidatorConfigurationException {
         checkReadableDir(pspRoot);
         checkReadableDir(fdmfsRoot);
         File imageUtilsConfigFile = getImageUtilsConfigFile(fdmfsRoot);
@@ -342,11 +345,9 @@ public class Main {
                         } else {
                             System.out.println("nenalezen");
                         }
-                    } catch (IOException e) {
-                        //System.out.println("I/O chyba: " + e.getMessage());
-                        System.out.println("nenalezen");
-                    } catch (InterruptedException e) {
-                        System.out.println("detekce přerušena: " + e.getMessage());
+                    } catch (CliCommand.CliCommandException e) {
+                        //System.out.println(String.format("chyba běhu %s: %s ", util.getUserFriendlyName(), e.getMessage()));
+                        System.out.println(String.format("nenalezen (%s)", e.getMessage()));
                     }
                 }
             }

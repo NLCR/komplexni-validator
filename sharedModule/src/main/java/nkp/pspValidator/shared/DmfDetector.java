@@ -2,7 +2,7 @@ package nkp.pspValidator.shared;
 
 import nkp.pspValidator.shared.engine.exceptions.InvalidXPathExpressionException;
 import nkp.pspValidator.shared.engine.exceptions.PspDataException;
-import nkp.pspValidator.shared.engine.exceptions.XmlParsingException;
+import nkp.pspValidator.shared.engine.exceptions.XmlFileParsingException;
 import org.w3c.dom.Document;
 import org.xml.sax.SAXException;
 
@@ -33,7 +33,7 @@ public class DmfDetector {
      * Pokud se vyskytuje hodnota „Monograph“, zachází validátor s balíčkem jako s monografií.
      * Pokud se vyskytuje hodnota „Periodical“, zachází validátor s balíčkem jako s periodikem.
      */
-    public Dmf.Type detectDmfType(File pspRootDir) throws PspDataException, XmlParsingException, InvalidXPathExpressionException {
+    public Dmf.Type detectDmfType(File pspRootDir) throws PspDataException, XmlFileParsingException, InvalidXPathExpressionException {
 
         try {
             File primaryMetsFile = findPrimaryMetsFile(pspRootDir);
@@ -71,15 +71,15 @@ public class DmfDetector {
         }
     }
 
-    private Document loadDocument(File file) throws XmlParsingException {
+    private Document loadDocument(File file) throws XmlFileParsingException {
         try {
             return XmlUtils.buildDocumentFromFile(file, false);
         } catch (SAXException e) {
-            throw new XmlParsingException(file, String.format("chyba parsování xml v souboru %s: %s", file.getAbsolutePath(), e.getMessage()));
+            throw new XmlFileParsingException(file, String.format("chyba parsování xml v souboru %s: %s", file.getAbsolutePath(), e.getMessage()));
         } catch (IOException e) {
-            throw new XmlParsingException(file, String.format("chyba čtení v souboru %s: %s", file.getAbsolutePath(), e.getMessage()));
+            throw new XmlFileParsingException(file, String.format("chyba čtení v souboru %s: %s", file.getAbsolutePath(), e.getMessage()));
         } catch (ParserConfigurationException e) {
-            throw new XmlParsingException(file, String.format("chyba konfigurace parseru při zpracování souboru %s: %s", file.getAbsolutePath(), e.getMessage()));
+            throw new XmlFileParsingException(file, String.format("chyba konfigurace parseru při zpracování souboru %s: %s", file.getAbsolutePath(), e.getMessage()));
         }
     }
 
@@ -99,7 +99,7 @@ public class DmfDetector {
      * Pokud element nenalezne, předpokládá, že je balíček zpracován podle starších DMF, než je 1.5 pro periodika a 1.1 pro monografie (a validuje podle 1.4 pro periodika a 1.0 pro monografie).
      * Pokud element nalezne, podívá se na jeho hodnotu a validuje podle této hodnoty.
      */
-    public String detectDmfVersion(Dmf.Type dmfType, File pspRootDir) throws PspDataException, XmlParsingException, InvalidXPathExpressionException {
+    public String detectDmfVersion(Dmf.Type dmfType, File pspRootDir) throws PspDataException, XmlFileParsingException, InvalidXPathExpressionException {
 
         try {
             File infoFile = findInfoFile(pspRootDir);
@@ -143,7 +143,7 @@ public class DmfDetector {
         }
     }
 
-    public Dmf resolveDmf(Dmf dmfPrefered, File pspRoot) throws PspDataException, InvalidXPathExpressionException, XmlParsingException {
+    public Dmf resolveDmf(Dmf dmfPrefered, File pspRoot) throws PspDataException, InvalidXPathExpressionException, XmlFileParsingException {
         if (dmfPrefered == null) {//both missing (wrapper is null)
             Dmf.Type type = detectDmfType(pspRoot);
             String version = detectDmfVersion(type, pspRoot);

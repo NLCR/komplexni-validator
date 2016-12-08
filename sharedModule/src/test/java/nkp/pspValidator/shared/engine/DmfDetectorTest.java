@@ -4,7 +4,7 @@ import nkp.pspValidator.shared.Dmf;
 import nkp.pspValidator.shared.DmfDetector;
 import nkp.pspValidator.shared.engine.exceptions.InvalidXPathExpressionException;
 import nkp.pspValidator.shared.engine.exceptions.PspDataException;
-import nkp.pspValidator.shared.engine.exceptions.XmlParsingException;
+import nkp.pspValidator.shared.engine.exceptions.XmlFileParsingException;
 import org.junit.Test;
 
 import java.io.File;
@@ -27,7 +27,7 @@ public class DmfDetectorTest {
             assertEquals(Dmf.Type.MONOGRAPH, dmfType);
         } catch (PspDataException e) {
             fail(e.getMessage());
-        } catch (XmlParsingException e) {
+        } catch (XmlFileParsingException e) {
             fail(e.getMessage());
         } catch (InvalidXPathExpressionException e) {
             fail(e.getMessage());
@@ -43,7 +43,7 @@ public class DmfDetectorTest {
             assertEquals(Dmf.Type.PERIODICAL, dmfType);
         } catch (PspDataException e) {
             fail(e.getMessage());
-        } catch (XmlParsingException e) {
+        } catch (XmlFileParsingException e) {
             fail(e.getMessage());
         } catch (InvalidXPathExpressionException e) {
             fail(e.getMessage());
@@ -61,7 +61,7 @@ public class DmfDetectorTest {
             fail();
         } catch (PspDataException e) {
             //ok
-        } catch (XmlParsingException e) {
+        } catch (XmlFileParsingException e) {
             fail(e.getMessage());
         } catch (InvalidXPathExpressionException e) {
             fail(e.getMessage());
@@ -77,7 +77,7 @@ public class DmfDetectorTest {
             assertEquals("1.2", version);
         } catch (PspDataException e) {
             fail(e.getMessage());
-        } catch (XmlParsingException e) {
+        } catch (XmlFileParsingException e) {
             fail(e.getMessage());
         } catch (InvalidXPathExpressionException e) {
             fail(e.getMessage());
@@ -93,7 +93,7 @@ public class DmfDetectorTest {
             assertEquals("1.6", version);
         } catch (PspDataException e) {
             fail(e.getMessage());
-        } catch (XmlParsingException e) {
+        } catch (XmlFileParsingException e) {
             fail(e.getMessage());
         } catch (InvalidXPathExpressionException e) {
             fail(e.getMessage());

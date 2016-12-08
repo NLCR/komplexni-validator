@@ -12,7 +12,6 @@ import nkp.pspValidator.shared.imageUtils.ImageUtilManager;
 import nkp.pspValidator.shared.imageUtils.ImageUtilManagerFactory;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -140,15 +139,10 @@ public class Controller {
                 System.out.println(version);
                 label.setText(version);
             }
-        } catch (IOException e) {
+        } catch (CliCommand.CliCommandException e) {
             //program probably does not exist
-            //e.printStackTrace() here throws IOEXception on Windows
             //e.printStackTrace();
-            label.setText("not found");
-        } catch (InterruptedException e) {
-            //e.printStackTrace() here throws IOEXception on Windows
-            //e.printStackTrace();
-            label.setText("process interrupted");
+            label.setText("not found: " + e.getMessage());
         }
     }
 
@@ -166,15 +160,10 @@ public class Controller {
                         System.out.println(version);
                         updateMessage(version);
                     }
-                } catch (IOException e) {
+                } catch (CliCommand.CliCommandException e) {
                     //program probably does not exist
-                    //e.printStackTrace() here throws IOEXception on Windows
                     //e.printStackTrace();
-                    updateMessage("not found");
-                } catch (InterruptedException e) {
-                    //e.printStackTrace() here throws IOEXception on Windows
-                    //e.printStackTrace();
-                    updateMessage("process interrupted");
+                    updateMessage("not found: " + e.getMessage());
                 }
                 return null;
             }
@@ -202,15 +191,9 @@ public class Controller {
                 String partial = output.replace("\n", " ").substring(0, Math.min(output.length(), MAX_OUTPUT_LENGTH)) + " ...";
                 label.setText(partial);
             }
-        } catch (IOException e) {
+        } catch (CliCommand.CliCommandException e) {
             //program probably does not exist
-            //e.printStackTrace() here throws IOEXception on Windows
-            //e.printStackTrace();
-            label.setText("not found");
-        } catch (InterruptedException e) {
-            //e.printStackTrace() here throws IOEXception on Windows
-            //e.printStackTrace();
-            label.setText("process interrupted");
+            label.setText("not found: " + e.getMessage());
         }
     }
 
@@ -229,19 +212,12 @@ public class Controller {
                         updateMessage(String.format("util execution not defined for %s", util));
                     } else {
                         String output = utilManager.runUtilExecution(util, imageFile);
-                        System.out.println(output);
+                        System.out.println("output: " + output);
                         String partial = output.replace("\n", " ").substring(0, Math.min(output.length(), MAX_OUTPUT_LENGTH)) + " ...";
                         updateMessage(partial);
                     }
-                } catch (IOException e) {
-                    //program probably does not exist
-                    //e.printStackTrace() here throws IOEXception on Windows
-                    //e.printStackTrace();
-                    updateMessage("not found");
-                } catch (InterruptedException e) {
-                    //e.printStackTrace() here throws IOEXception on Windows
-                    //e.printStackTrace();
-                    updateMessage("process interrupted");
+                } catch (CliCommand.CliCommandException e) {
+                    updateMessage("not found: " + e.getMessage());
                 }
                 return null;
             }
@@ -315,16 +291,17 @@ public class Controller {
             String file = null;
             switch (platform.getOperatingSystem()) {
                 case WINDOWS:
-                    file =  "\\resources\\bin\\ImageMagick-7.0.2-4-Q16-x64-dll.exe";
+                    file = "\\resources\\bin\\ImageMagick-7.0.2-4-Q16-x64-dll.exe";
                     break;
                 case LINUX:
-                    file =  "/resources/bin/ImageMagick.deb";
+                    file = "/resources/bin/ImageMagick.deb";
                     break;
             }
 
 
             //String outStr = new CliCommand("/home/martin/IdeaProjects/NkpValidator/res/bin/fuckyou.sh");
             CliCommand.Result output = new CliCommand(file).execute();
+            System.err.println("executed");
             output.print();
             String outStr = output.getStdout();
 
@@ -337,16 +314,9 @@ public class Controller {
 
 
             //installImageMagickLabel.setText(outStr);
-        } catch (IOException e) {
+        } catch (CliCommand.CliCommandException e) {
             //program probably does not exist
-            //e.printStackTrace();
-            String output = e.getMessage();
-            int length = Math.min(output.length(), MAX_OUTPUT_LENGTH);
-            installImageMagickLabel.setText(output.substring(0, length) + " ...");
-            //e.printStackTrace();
-        } catch (InterruptedException e) {
-            installImageMagickLabel.setText("process interrupted");
-            //e.printStackTrace();
+            installImageMagickLabel.setText("not found: " + e.getMessage());
         }
     }
 

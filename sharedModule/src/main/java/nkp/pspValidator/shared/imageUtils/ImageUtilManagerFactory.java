@@ -127,7 +127,7 @@ public class ImageUtilManagerFactory {
     private void addVersionDetection(OperatingSystem os, ImageUtil util, String rawCommand, Stream outStream, String outRegexp) {
         utilVersionDetectionInfoByOs.get(os).put(util,
                 new UtilHandler(
-                        new UtilHandler.Command(rawCommand),
+                        new UtilHandler.CommandData(rawCommand),
                         new UtilHandler.Parser(outStream, outRegexp)
                 )
         );
@@ -136,7 +136,7 @@ public class ImageUtilManagerFactory {
     private void addUtilityExecution(OperatingSystem os, ImageUtil util, String rawCommand, Stream outStream, String outRegexp) {
         utilExecutionInfoByOs.get(os).put(util,
                 new UtilHandler(
-                        new UtilHandler.Command(rawCommand),
+                        new UtilHandler.CommandData(rawCommand),
                         new UtilHandler.Parser(outStream, outRegexp)
                 )
         );

@@ -2,7 +2,7 @@ package nkp.pspValidator.shared.imageUtils.validation;
 
 import nkp.pspValidator.shared.NamespaceContextImpl;
 import nkp.pspValidator.shared.XmlUtils;
-import nkp.pspValidator.shared.engine.exceptions.XmlParsingException;
+import nkp.pspValidator.shared.engine.exceptions.ImageUtilOutputParsingException;
 import nkp.pspValidator.shared.imageUtils.ImageUtil;
 import nkp.pspValidator.shared.imageUtils.ImageUtilManager;
 import org.w3c.dom.Document;
@@ -31,18 +31,18 @@ public class J2kXmlProfile extends J2kProfile {
         return namespaceContext;
     }
 
-    Object processImageUtilOutput(String toolRawOutput, ImageUtil util) throws XmlParsingException {
+    Object processImageUtilOutput(String toolRawOutput, ImageUtil util) throws ImageUtilOutputParsingException {
         try {
             Document doc = XmlUtils.buildDocumentFromString(toolRawOutput, true);
             /*String docStr = XmlUtils.toString(doc);
             System.out.println(docStr);*/
             return doc;
         } catch (SAXException e) {
-            throw new XmlParsingException(String.format("chyba parsování xml (výstup nástroje %s): %s", util, e.getMessage()));
+            throw new ImageUtilOutputParsingException(String.format("chyba parsování xml (výstup nástroje %s): %s", util, e.getMessage()));
         } catch (IOException e) {
-            throw new XmlParsingException(String.format("chyba čtení výstupu nástroje %s: %s", util, e.getMessage()));
+            throw new ImageUtilOutputParsingException(String.format("chyba čtení výstupu nástroje %s: %s", util, e.getMessage()));
         } catch (ParserConfigurationException e) {
-            throw new XmlParsingException(String.format("chyba konfigurace parseru při čtení výstupu nástroje %s: %s", util, e.getMessage()));
+            throw new ImageUtilOutputParsingException(String.format("chyba konfigurace parseru při čtení výstupu nástroje %s: %s", util, e.getMessage()));
         }
     }
 
