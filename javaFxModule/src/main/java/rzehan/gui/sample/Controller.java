@@ -23,7 +23,7 @@ public class Controller {
     private static final Logger LOGGER = Logger.getLogger(Controller.class.getSimpleName());
 
     private static final int MAX_OUTPUT_LENGTH = 100;
-    private static final File MC_FILE_LINUX = new File("/home/martin/zakazky/NKP-PSP_validator/data/monografie_1.2/b50eb6b0-f0a4-11e3-b72e-005056827e52/mastercopy/mc_b50eb6b0-f0a4-11e3-b72e-005056827e52_0001.jp2");
+    private static final File MC_FILE_LINUX = new File("/home/martin/Dropbox/PspValidator/data/monograph_1.2/b50eb6b0-f0a4-11e3-b72e-005056827e52/mastercopy/mc_b50eb6b0-f0a4-11e3-b72e-005056827e52_0001.jp2");
     private static final File MC_FILE_WINDOWS = new File("C:\\Users\\Lenovo\\Dropbox\\PspValidator\\data\\monograph_1.2\\b50eb6b0-f0a4-11e3-b72e-005056827e52\\mastercopy\\mc_b50eb6b0-f0a4-11e3-b72e-005056827e52_0001.jp2");
     private static final File MC_FILE_MAC = new File("/Users/martinrehanek/Dropbox/PspValidator/data/monograph_1.2/b50eb6b0-f0a4-11e3-b72e-005056827e52/mastercopy/mc_b50eb6b0-f0a4-11e3-b72e-005056827e52_0001.jp2");
 
@@ -70,7 +70,7 @@ public class Controller {
         //paths
         switch (platform.getOperatingSystem()) {
             case LINUX: {
-                utilManager.setPath(ImageUtil.KAKADU, new File("/home/martin/zakazky/PSP-validator/utility/kakadu/KDU78_Demo_Apps_for_Linux-x86-64_160226"));
+                utilManager.setPath(ImageUtil.KAKADU, new File("/home/martin/zakazky/NKP-PSP_validator/utility/kakadu/KDU78_Demo_Apps_for_Linux-x86-64_160226"));
                 break;
             }
             case WINDOWS: {

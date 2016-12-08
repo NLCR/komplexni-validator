@@ -57,7 +57,8 @@
                 <command>${PATH}convert -version</command>
                 <parser>
                     <stream>STDOUT</stream>
-                    <regexp>ImageMagick\s\S*\s\S*</regexp>
+                    <!--<regexp>ImageMagick\s\S*\s\S*</regexp>-->
+                    <regexp>ImageMagick [0-9\.\-]+</regexp>
                 </parser>
             </operatingSystem>
             <operatingSystem name="WINDOWS">
@@ -110,7 +111,8 @@
                 <command>${PATH}jhove --version</command>
                 <parser>
                     <stream>STDOUT</stream>
-                    <regexp>Jhove \(.*\)</regexp>
+                    <!--<regexp>Jhove \(.*\)</regexp>-->
+                    <regexp>Rel\. [0-9\.]+</regexp>
                 </parser>
             </operatingSystem>
             <operatingSystem name="WINDOWS">
@@ -167,7 +169,8 @@
                 <command>${PATH}kdu_expand -version</command>
                 <parser>
                     <stream>STDOUT</stream>
-                    <regexp>Current core system version is \S*</regexp>
+                    <!--<regexp>Current core system version is \S*</regexp>-->
+                    <regexp>v[\.0-9]+</regexp>
                 </parser>
             </operatingSystem>
             <operatingSystem name="WINDOWS">
