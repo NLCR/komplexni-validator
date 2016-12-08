@@ -145,7 +145,7 @@ public class ImageUtilsValidationController extends Application {
     //other data
     private Stage stage;
     private Application application;
-    private DataController dataController;
+    private DataManager dataManager;
 
     @Override
     public void start(Stage stage) throws Exception {
@@ -154,8 +154,8 @@ public class ImageUtilsValidationController extends Application {
         //retryAll(null);
     }
 
-    public void setDataController(DataController dataController) {
-        this.dataController = dataController;
+    public void setDataManager(DataManager dataManager) {
+        this.dataManager = dataManager;
     }
 
     public void startAllChecks() {
@@ -209,7 +209,7 @@ public class ImageUtilsValidationController extends Application {
             @Override
             protected CheckResult call() throws Exception {
                 try {
-                    ImageUtilManager utilManager = dataController.getImageUtilManager();
+                    ImageUtilManager utilManager = dataManager.getImageUtilManager();
                     if (!utilManager.isVersionDetectionDefined(util)) {
                         processResult(new CheckResult(false, String.format("detekce verze není definována pro %s", util)));
                     } else {
@@ -267,14 +267,14 @@ public class ImageUtilsValidationController extends Application {
     private void selectImageUtilPath(String property, ImageUtil util, MyListener listener) {
         DirectoryChooser chooser = new DirectoryChooser();
         chooser.setTitle(String.format("Vyberte adresář se spustitelnými soubory %s", util.getUserFriendlyName()));
-        File currentDir = dataController.getConfig().getFileOrNull(property);
+        File currentDir = dataManager.getConfig().getFileOrNull(property);
         if (currentDir != null) {
             chooser.setInitialDirectory(currentDir);
         }
         File selectedDirectory = chooser.showDialog(stage);
         if (selectedDirectory != null) {
-            dataController.getConfig().setFile(property, selectedDirectory);
-            dataController.getImageUtilManager().setPath(util, selectedDirectory);
+            dataManager.getConfig().setFile(property, selectedDirectory);
+            dataManager.getImageUtilManager().setPath(util, selectedDirectory);
             listener.onFinished();
         }
     }

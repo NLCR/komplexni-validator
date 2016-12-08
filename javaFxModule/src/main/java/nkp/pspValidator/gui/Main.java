@@ -38,19 +38,19 @@ public class Main extends Application {
         primaryStage.show();*/
 
 
-        DataController dataController = new DataController(Platform.detectOs());
+        DataManager dataManager = new DataManager(Platform.detectOs());
         //checkValidationData(dataController);
-        checkImageUtils(dataController);
+        checkImageUtils(dataManager);
     }
 
-    private void checkValidationData(DataController dataController) {
+    private void checkValidationData(DataManager dataManager) {
         //TODO
     }
 
-    public void checkImageUtils(DataController dataController) throws ValidatorConfigurationException, IOException {
+    public void checkImageUtils(DataManager dataManager) throws ValidatorConfigurationException, IOException {
         //TODO: jen docasne
         File imageUtilConfig = null;
-        switch (dataController.getPlatform().getOperatingSystem()) {
+        switch (dataManager.getPlatform().getOperatingSystem()) {
             case LINUX:
                 imageUtilConfig = new File("/home/martin/ssd/IdeaProjects/PspValidator/sharedModule/src/main/resources/nkp/pspValidator/shared/fDMF/imageUtils.xml");
                 break;
@@ -59,8 +59,8 @@ public class Main extends Application {
                 break;
         }
 
-        ImageUtilManager imageUtilManager = new ImageUtilManagerFactory(imageUtilConfig).buildImageUtilManager(dataController.getPlatform().getOperatingSystem());
-        dataController.setImageUtilManager(imageUtilManager);
+        ImageUtilManager imageUtilManager = new ImageUtilManagerFactory(imageUtilConfig).buildImageUtilManager(dataManager.getPlatform().getOperatingSystem());
+        dataManager.setImageUtilManager(imageUtilManager);
 
 
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/imageUtilsValidation.fxml"));
@@ -69,7 +69,7 @@ public class Main extends Application {
         stage.setScene(new Scene(root, 1000, 700));
         stage.show();
         ImageUtilsValidationController controller = (ImageUtilsValidationController) loader.getController();
-        controller.setDataController(dataController);
+        controller.setDataManager(dataManager);
         //controller.setStageAndApplication(primaryStage, this);
         controller.startAllChecks();
     }

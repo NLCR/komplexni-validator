@@ -10,15 +10,15 @@ import java.io.IOException;
 /**
  * Created by martin on 2.12.16.
  */
-public class DataController {
+public class DataManager {
 
     private static File CONFIG_FILE = new File("../../resources/main/config.properties");
-    private static DataController instance;
+    private static DataManager instance;
     private final Config config;
     private ImageUtilManager imageUtilManager;
     private Platform platform;
 
-    public DataController(Platform platform) throws IOException {
+    public DataManager(Platform platform) throws IOException {
         this.platform = platform;
         config = new Config(CONFIG_FILE);
     }
