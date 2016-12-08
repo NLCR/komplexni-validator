@@ -293,15 +293,17 @@ public class PatternTest {
                 "  OutputHandler: XML 1.7\n" +
                 "  Usage: java JHOVE [-c config] [-m module] [-h handler] [-e encoding] [-H handler] [-o output] [-x saxclass] [-t tempdir] [-b bufsize] [-l loglevel] [[-krs] dir-file-or-uri [...]]\n" +
                 "  Rights: Derived from software Copyright 2004-2011 by the President and Fellows of Harvard College. Version 1.7 to 1.11 independently released. Version 1.12 onwards released by Open Preservation Foundation. Released under the GNU Lesser General Public License.";
-        String regexp = "(?m)^Jhove.*$";
+        //String regexp = "(?m)^Jhove.*$";
+        String regexp = "Rel\\. [0-9\\.]+";
         Pattern p = Pattern.compile(regexp);
         Matcher m = p.matcher(text);
         int found = 0;
         while (m.find()) {
             found++;
             String match = m.group();
-            assertEquals("Jhove (Rel. 1.14.6, 2016-05-12)", m.group());
-      }
+            //assertEquals("Jhove (Rel. 1.14.6, 2016-05-12)", m.group());
+            assertEquals("Rel. 1.14.6", m.group());
+        }
         assertEquals(1, found);
     }
 

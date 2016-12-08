@@ -64,7 +64,8 @@
                 <command>${PATH}magick.exe convert -version</command>
                 <parser>
                     <stream>STDOUT</stream>
-                    <regexp>ImageMagick\s\S*\s\S*</regexp>
+                    <!--<regexp>ImageMagick\s\S*\s\S*</regexp>-->
+                    <regexp>ImageMagick [0-9\.\-]+</regexp>
                 </parser>
             </operatingSystem>
             <!--TODO: vlastne blbost, nepotrebuju tady xml-->
@@ -113,15 +114,16 @@
                 </parser>
             </operatingSystem>
             <operatingSystem name="WINDOWS">
-                <!--TODO:
-                //https://github.com/openpreserve/jhove/issues/32
-                //until then temporary fix with configuration file-->
-                <command>${PATH}jhove.bat --version -c
-                    C:\Users\Lenovo\Documents\software\jhove-1_11\jhove\conf\jhove.conf
-                </command>
+                <!--TODO: v aplikaci vyzadovat minimalni verzi 1.14
+                http://openpreservation.org/news/jhove-1-14-released/
+                instalace: stahnout jhove-latest.jar (instalator) a spustit double click nebo java -jar jhove-latest.jar
+                -->
+                <command>${PATH}jhove.bat --version</command>
                 <parser>
                     <stream>STDOUT</stream>
-                    <regexp>(?m)^.*$</regexp>
+                    <regexp>Rel\. [0-9\.]+</regexp>
+                    <!--<regexp>Jhove \(.*\)</regexp>-->
+                    <!--<regexp>(?m)^.*$</regexp>-->
                 </parser>
             </operatingSystem>
             <!--instalace podle http://jhove.openpreservation.org/getting-started/-->
@@ -143,12 +145,7 @@
                 </parser>
             </operatingSystem>
             <operatingSystem name="WINDOWS">
-                <!--TODO:
-                //https://github.com/openpreserve/jhove/issues/32
-                //until then temporary fix with configuration file-->
-                <command>${PATH}jhove.bat -h XML -m jpeg2000-hul -k ${IMAGE_FILE} -c
-                    C:\Users\Lenovo\Documents\software\jhove-1_11\jhove\conf\jhove.conf
-                </command>
+                <command>${PATH}jhove.bat -h XML -m jpeg2000-hul -k ${IMAGE_FILE}</command>
                 <parser>
                     <stream>STDOUT</stream>
                     <regexp>(?s)&lt;\?xml.*$</regexp>
@@ -177,7 +174,8 @@
                 <command>${PATH}kdu_expand.exe -version</command>
                 <parser>
                     <stream>STDOUT</stream>
-                    <regexp>Current core system version is \S*</regexp>
+                    <!--<regexp>Current core system version is \S*</regexp>-->
+                    <regexp>v[\.0-9]+</regexp>
                 </parser>
             </operatingSystem>
             <!--demo app does not work in macOS 10.12 Sierra, so not tested-->

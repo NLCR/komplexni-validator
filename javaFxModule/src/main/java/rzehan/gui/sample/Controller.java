@@ -24,10 +24,11 @@ public class Controller {
 
     private static final int MAX_OUTPUT_LENGTH = 100;
     private static final File MC_FILE_LINUX = new File("/home/martin/zakazky/NKP-PSP_validator/data/monografie_1.2/b50eb6b0-f0a4-11e3-b72e-005056827e52/mastercopy/mc_b50eb6b0-f0a4-11e3-b72e-005056827e52_0001.jp2");
-    private static final File MC_FILE_WINDOWS = new File("C:\\Users\\Martin\\Documents\\PspValidator\\mc_b50eb6b0-f0a4-11e3-b72e-005056827e52_0001.jp2");
+    private static final File MC_FILE_WINDOWS = new File("C:\\Users\\Lenovo\\Dropbox\\PspValidator\\data\\monograph_1.2\\b50eb6b0-f0a4-11e3-b72e-005056827e52\\mastercopy\\mc_b50eb6b0-f0a4-11e3-b72e-005056827e52_0001.jp2");
     private static final File MC_FILE_MAC = new File("/Users/martinrehanek/Dropbox/PspValidator/data/monograph_1.2/b50eb6b0-f0a4-11e3-b72e-005056827e52/mastercopy/mc_b50eb6b0-f0a4-11e3-b72e-005056827e52_0001.jp2");
 
     private static final File IMAGE_PROPERTIES_LINUX = new File("/home/martin/ssd/IdeaProjects/PspValidator/sharedModule/src/main/resources/nkp/pspValidator/shared/fDMF/imageUtils.xml");
+    private static final File IMAGE_PROPERTIES_WINDOWS = new File("C:\\Users\\Lenovo\\IdeaProjects\\PspValidator\\sharedModule\\src\\main\\resources\\nkp\\pspValidator\\shared\\fDMF\\imageUtils.xml");
     private static final File IMAGE_PROPERTIES_MAC = new File("/Users/martinrehanek/IdeaProjects/PspValidator/sharedModule/src/main/resources/nkp/pspValidator/shared/fDMF/imageUtils.xml");
 
     @FXML
@@ -73,6 +74,10 @@ public class Controller {
                 break;
             }
             case WINDOWS: {
+                utilManager.setPath(ImageUtil.JHOVE, new File("C:\\Users\\Lenovo\\Documents\\software\\jhove"));
+                utilManager.setPath(ImageUtil.JPYLYZER, new File("C:\\Users\\Lenovo\\Documents\\software\\jpylyzer_1.17.0_win64"));
+                utilManager.setPath(ImageUtil.IMAGE_MAGICK, new File("C:\\Program Files\\ImageMagick-7.0.3-Q16"));
+                utilManager.setPath(ImageUtil.KAKADU, new File("C:\\Program Files (x86)\\Kakadu\\"));
                 break;
             }
             case MAC: {
@@ -93,8 +98,8 @@ public class Controller {
         switch (platform.getOperatingSystem()) {
             case LINUX:
                 return IMAGE_PROPERTIES_LINUX;
-            /*case WINDOWS:
-                return null;*/
+            case WINDOWS:
+                return IMAGE_PROPERTIES_WINDOWS;
             case MAC:
                 return IMAGE_PROPERTIES_MAC;
             default:

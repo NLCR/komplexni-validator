@@ -35,7 +35,7 @@ public class MainTest {
         switch (platform.getOperatingSystem()) {
             case WINDOWS:
                 imageMagickPath = "C:\\Program Files\\ImageMagick-7.0.3-Q16";
-                jhovePath = "C:\\Users\\Lenovo\\Documents\\software\\jhove-1_11\\jhove";
+                jhovePath = "C:\\Users\\Lenovo\\Documents\\software\\jhove";
                 jpylyzerPath = "C:\\Users\\Lenovo\\Documents\\software\\jpylyzer_1.17.0_win64";
                 kakaduPath = "C:\\Program Files (x86)\\Kakadu\\";
                 break;
@@ -51,7 +51,7 @@ public class MainTest {
         Validator.DevParams devParams = new Validator.DevParams();
         //devParams.getSectionsToRun().add("Bibliografická metadata");
         //devParams.getSectionsToRun().add("Identifikátory");
-        devParams.getSectionsToRun().add("JPEG 2000");
+        //devParams.getSectionsToRun().add("JPEG 2000");
 
         Main.main(devParams, buildParams(
                 "../sharedModule/src/main/resources/nkp/pspValidator/shared/fDMF"
