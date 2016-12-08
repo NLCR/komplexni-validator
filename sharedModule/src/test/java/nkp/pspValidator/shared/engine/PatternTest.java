@@ -262,5 +262,49 @@ public class PatternTest {
         assertEquals(1, found);
     }
 
+    @Test
+    public void jhoveDetection() {
+        String text = "Jhove (Rel. 1.14.6, 2016-05-12)\n" +
+                " Date: 2016-12-07 10:29:40 CET\n" +
+                " App:\n" +
+                "  API: 1.14.6, 2016-05-12\n" +
+                "  Configuration: /Users/martinrehanek/Software/jhove/conf/jhove.conf\n" +
+                "  JhoveHome: /Users/martinrehanek/Software/jhove\n" +
+                "  Encoding: utf-8\n" +
+                "  TempDirectory: /var/folders/30/rb2929n16kld3mnlnpw7wb7h0000gn/T/\n" +
+                "  BufferSize: 131072\n" +
+                "  Module: AIFF-hul 1.3\n" +
+                "  Module: ASCII-hul 1.3\n" +
+                "  Module: BYTESTREAM 1.3\n" +
+                "  Module: GIF-hul 1.3\n" +
+                "  Module: GZIP-kb 0.1\n" +
+                "  Module: HTML-hul 1.3\n" +
+                "  Module: JPEG-hul 1.2\n" +
+                "  Module: JPEG2000-hul 1.3\n" +
+                "  Module: PDF-hul 1.7\n" +
+                "  Module: PNG-gdm 1.0\n" +
+                "  Module: TIFF-hul 1.7\n" +
+                "  Module: UTF8-hul 1.6\n" +
+                "  Module: WARC-kb 1.0\n" +
+                "  Module: WAVE-hul 1.3\n" +
+                "  Module: XML-hul 1.4\n" +
+                "  OutputHandler: Audit 1.1\n" +
+                "  OutputHandler: TEXT 1.5\n" +
+                "  OutputHandler: XML 1.7\n" +
+                "  Usage: java JHOVE [-c config] [-m module] [-h handler] [-e encoding] [-H handler] [-o output] [-x saxclass] [-t tempdir] [-b bufsize] [-l loglevel] [[-krs] dir-file-or-uri [...]]\n" +
+                "  Rights: Derived from software Copyright 2004-2011 by the President and Fellows of Harvard College. Version 1.7 to 1.11 independently released. Version 1.12 onwards released by Open Preservation Foundation. Released under the GNU Lesser General Public License.";
+        String regexp = "(?m)^Jhove.*$";
+        Pattern p = Pattern.compile(regexp);
+        Matcher m = p.matcher(text);
+        int found = 0;
+        while (m.find()) {
+            found++;
+            String match = m.group();
+            assertEquals("Jhove (Rel. 1.14.6, 2016-05-12)", m.group());
+      }
+        assertEquals(1, found);
+    }
+
+
 }
 

@@ -65,10 +65,11 @@ public class ImageUtilManager {
 
     public String runUtilVersionDetection(ImageUtil type) throws IOException, InterruptedException {
         UtilHandler versionDetection = utilVersionDetectionHandlers.get(type);
-        String command = constructCommand(versionDetection.getCommand());
+        String command = buildCommand(versionDetection.getCommand());
         CliCommand.Result result = new CliCommand(command).execute();
         String rawOutput = null;
-        Stream stream = versionDetection.getParser().getStream();
+        Parser parser = versionDetection.getParser();
+        Stream stream = parser.getStream();
         switch (stream) {
             case STDERR:
                 rawOutput = result.getStderr();
@@ -80,38 +81,47 @@ public class ImageUtilManager {
                 throw new IOException(String.format("empty response from '%s' (%s)", command, stream));
         }
         if (rawOutput != null) {
-            String parsed = parseData(rawOutput, versionDetection.getParser());
-            return parsed == null || parsed.isEmpty() ? rawOutput.trim() : parsed.trim();
+            String parsed = parseData(rawOutput, parser);
+            return parsed == null || parsed.isEmpty() ? null : parsed.trim();
         } else {
             return null;
         }
     }
 
-    private String constructCommand(Command command) {
-        File path = command.getPath();
-        return path != null ?
-                path.getAbsolutePath() + File.separator + command.getRawCommand() :
-                command.getRawCommand();
+    private String buildCommand(Command command) {
+        String path = command.getPath() == null ? "" : command.getPath().getAbsolutePath();
+        String result = command.getRawCommand();
+        if (!path.isEmpty()) {
+            path = path + File.separatorChar;
+        }
+        result = result.replace("${PATH}", path);
+        return result;
     }
 
-    private String constructCommand(Command ExecutionInfo, String imageFile) {
-        File path = ExecutionInfo.getPath();
-        String command = path != null ? path.getAbsolutePath() + File.separator + ExecutionInfo.getRawCommand() :
-                ExecutionInfo.getRawCommand();
-        command = command.replace("${IMAGE_FILE}", imageFile);
-        //System.out.println(command);
-        return command;
+    private String buildCommand(Command command, File imageFile) {
+        String path = command.getPath() == null ? "" : command.getPath().getAbsolutePath();
+        String result = command.getRawCommand();
+        if (!path.isEmpty()) {
+            path = path + File.separatorChar;
+        }
+        result = result.replace("${PATH}", path);
+        result = result.replace("${IMAGE_FILE}", imageFile.getAbsolutePath());
+        return result;
     }
 
     private String parseData(String rawOutput, Parser parser) {
         if (parser.getRegexp() == null) {
+            //System.err.println("regexp is null");
             return rawOutput;
         } else {
             Matcher m = Pattern.compile(parser.getRegexp()).matcher(rawOutput);
             if (m.find()) {
                 //first appearance
-                return m.group(0);
+                String result = m.group(0);
+                //System.err.println("match: "  + result);
+                return result;
             } else {
+                //System.err.println("no match");
                 // TODO: 29.9.16 not found
                 return null;
             }
@@ -120,7 +130,8 @@ public class ImageUtilManager {
 
     public String runUtilExecution(ImageUtil utilType, File imageFile) throws IOException, InterruptedException {
         UtilHandler utilHandler = utilExecutionHandlers.get(utilType);
-        String command = constructCommand(utilHandler.getCommand(), imageFile.getAbsolutePath());
+        //TODO: poresit, NPE pro getCommand, kdyz neni definovano
+        String command = buildCommand(utilHandler.getCommand(), imageFile);
         CliCommand.Result result = new CliCommand(command).execute();
         String rawOutput = null;
         Stream stream = utilHandler.getParser().getStream();
@@ -136,7 +147,7 @@ public class ImageUtilManager {
         }
         if (rawOutput != null) {
             String parsed = parseData(rawOutput, utilHandler.getParser());
-            return parsed == null || parsed.isEmpty() ? rawOutput.trim() : parsed.trim();
+            return parsed == null || parsed.isEmpty() ? null : parsed.trim();
         } else {
             return null;
         }

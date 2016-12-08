@@ -48,6 +48,7 @@
                 <mustMatchAny>
                     <constant>jpylyzer</constant>
                     <constant>jpylyzer.exe</constant>
+                    <constant>jpylyzer.py</constant>
                 </mustMatchAny>
             </rules>
         </validation>

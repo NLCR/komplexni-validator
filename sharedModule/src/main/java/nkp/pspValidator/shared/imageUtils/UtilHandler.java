@@ -59,6 +59,14 @@ public class UtilHandler {
         public String getRegexp() {
             return regexp;
         }
+
+        @Override
+        public String toString() {
+            return "Parser{" +
+                    "stream=" + stream +
+                    ", regexp='" + regexp + '\'' +
+                    '}';
+        }
     }
 
 
