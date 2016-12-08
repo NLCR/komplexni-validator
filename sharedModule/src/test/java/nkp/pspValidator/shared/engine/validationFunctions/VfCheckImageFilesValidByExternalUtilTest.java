@@ -8,15 +8,11 @@ import nkp.pspValidator.shared.engine.Level;
 import nkp.pspValidator.shared.engine.ValueEvaluation;
 import nkp.pspValidator.shared.engine.ValueType;
 import nkp.pspValidator.shared.engine.exceptions.ValidatorConfigurationException;
-import nkp.pspValidator.shared.imageUtils.ImageCopy;
-import nkp.pspValidator.shared.imageUtils.ImageUtil;
-import nkp.pspValidator.shared.imageUtils.ImageUtilManager;
-import nkp.pspValidator.shared.imageUtils.ImageUtilManagerFactory;
+import nkp.pspValidator.shared.imageUtils.*;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
 
@@ -122,11 +118,8 @@ public class VfCheckImageFilesValidByExternalUtilTest {
                     String version = imageUtilManager.runUtilVersionDetection(util);
                     imageUtilManager.setUtilAvailable(util, true);
                     System.out.println("nalezen, verze: " + version);
-                } catch (IOException e) {
-                    //System.out.println("I/O chyba: " + e.getMessage());
-                    System.out.println("nenalezen");
-                } catch (InterruptedException e) {
-                    System.out.println("detekce přerušena: " + e.getMessage());
+                } catch (CliCommand.CliCommandException e) {
+                    e.printStackTrace();
                 }
             }
         }
@@ -263,6 +256,7 @@ public class VfCheckImageFilesValidByExternalUtilTest {
             ValidationFunction validationFunction = buildValidationFunction(ImageUtil.JHOVE, ImageCopy.USER, FILES_PROFILE_MISMATCH_UC);
             ValidationResult result = validationFunction.validate();
             //verze jhove-1_11 pro Windows nenajde zadnou chybu
+            //ani Jhove (Rel. 1.6, 2011-01-04) pro Linux
             assertTrue(result.hasProblems());
         }
     }
