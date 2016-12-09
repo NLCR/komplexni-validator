@@ -1,7 +1,5 @@
 package nkp.pspValidator.gui;
 
-import com.sun.deploy.uitoolkit.impl.fx.HostServicesFactory;
-import com.sun.javafx.application.HostServicesDelegate;
 import javafx.application.Platform;
 import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
@@ -17,6 +15,8 @@ import nkp.pspValidator.shared.imageUtils.ImageUtil;
 import nkp.pspValidator.shared.imageUtils.ImageUtilManager;
 
 import java.io.File;
+import java.util.HashMap;
+import java.util.Map;
 
 
 /**
@@ -141,9 +141,39 @@ public class ImageUtilsCheckController extends AbstractController {
     @FXML
     Button kakaduBtnInstall;
 
+    @FXML
+    Button btnContinue;
+
     //other data
 
     private ValidationDataManager validationDataManager;
+    private final Map<ImageUtil, Boolean> utilsFinished = new HashMap<>();
+
+    public ImageUtilsCheckController() {
+        synchronized (utilsFinished) {
+            for (ImageUtil util : ImageUtil.values()) {
+                utilsFinished.put(util, false);
+            }
+        }
+    }
+
+    //must be thread safe
+    private boolean isAllUtilsFinished() {
+        synchronized (utilsFinished) {
+            for (boolean utilFinished : utilsFinished.values()) {
+                if (!utilFinished) {
+                    return false;
+                }
+            }
+            return true;
+        }
+    }
+
+    private void setUtilFinished(ImageUtil util, boolean finished) {
+        synchronized (utilsFinished) {
+            utilsFinished.put(util, finished);
+        }
+    }
 
     public void setValidationDataManager(ValidationDataManager validationDataManager) {
         this.validationDataManager = validationDataManager;
@@ -195,13 +225,15 @@ public class ImageUtilsCheckController extends AbstractController {
         btnRetry.setVisible(false);
         btnSelectPath.setVisible(false);
         btnInstall.setVisible(false);
+        setUtilFinished(util, false);
+        btnContinue.setDisable(true);
 
         Task task = new Task<Void>() {
             @Override
             protected Void call() throws Exception {
+                ImageUtilManager utilManager = validationDataManager.getImageUtilManager();
                 try {
                     Thread.sleep(300);
-                    ImageUtilManager utilManager = validationDataManager.getImageUtilManager();
                     if (!utilManager.isVersionDetectionDefined(util)) {
                         processResult(new CheckResult(false, String.format("detekce verze není definována pro %s", util)));
                     } else {
@@ -209,10 +241,13 @@ public class ImageUtilsCheckController extends AbstractController {
                         //System.out.println(version);
                         validationDataManager.getFdmfRegistry().initJ2kProfiles(utilManager);
                         processResult(new CheckResult(true, version));
+                        utilManager.setUtilAvailable(util, true);
                     }
                 } catch (CliCommand.CliCommandException e) {
+                    utilManager.setUtilAvailable(util, false);
                     processResult(new CheckResult(false, String.format("chyba: %s", e.getMessage())));
                 } catch (ValidatorConfigurationException e) {
+                    utilManager.setUtilAvailable(util, false);
                     processResult(new CheckResult(false, String.format("chyba: %s", e.getMessage())));
                 }
                 return null;
@@ -235,6 +270,10 @@ public class ImageUtilsCheckController extends AbstractController {
                         btnSelectPath.setVisible(true);
                         btnInstall.setVisible(true);
                         statusLabel.setText(result.getMessage());
+                    }
+                    setUtilFinished(util, true);
+                    if (isAllUtilsFinished()) {
+                        btnContinue.setDisable(false);
                     }
                 });
             }
@@ -295,13 +334,8 @@ public class ImageUtilsCheckController extends AbstractController {
         openUrl(HELP_URL);
     }
 
-    private void openUrl(String url) {
-        HostServicesDelegate hostServices = HostServicesFactory.getInstance(this);
-        getHostServices().showDocument(url);
-    }
-
     public void continueInApp(ActionEvent actionEvent) {
-        System.out.println("TODO: zavrit dialog a pokracovat");
+        app.openMainWindow();
     }
 
     private static final class CheckResult {
