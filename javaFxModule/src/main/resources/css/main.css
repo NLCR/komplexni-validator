@@ -1,0 +1,38 @@
+/* https://docs.oracle.com/javase/8/javafx/api/javafx/scene/doc-files/cssref.html */
+#container {
+  /*-fx-scale-shape: true;*/
+    /*-fx-background: #ebfaf0;*/
+    /*-fx-pref-width: 1500px;*/
+    /*-fx-pref-height: 1000px;*/
+    /*-fx-padding: 35px;
+    -fx-spacing: 20px;*/
+
+}
+
+#title {
+    -fx-font-size: 27;
+    -fx-wrap-text: true;
+}
+
+
+#progressIndicator {
+    -fx-spin-enabled: true
+}
+
+#progressStatusLabel {
+    -fx-font-size: 22;
+}
+
+#errorLabel {
+    -fx-font-size: 18;
+    -fx-wrap-text: true;
+}
+
+.global-button{
+    -fx-font-size: 20;
+}
+
+.result-image{
+    /*-fx-font-size: 20;*/
+ /*   -fx-background-color: #eeeeee;*/
+}

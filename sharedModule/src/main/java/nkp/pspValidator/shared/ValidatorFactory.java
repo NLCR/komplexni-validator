@@ -28,18 +28,19 @@ public class ValidatorFactory {
 
     public static Validator buildValidator(FdmfConfiguration fdmfConfiguration, File pspRootDir, ImageUtilManager imageUtilManager) throws ValidatorConfigurationException {
         Engine engine = new Engine(fdmfConfiguration.getImageValidator());
+        //psp dir
+        engine.setProvidedFile("PSP_DIR", pspRootDir);
         //init with provided files
         Map<String, File> providedFiles = fdmfConfiguration.getProvidedFiles();
         for (String id : providedFiles.keySet()) {
             File file = providedFiles.get(id);
+            //System.out.println(String.format("id: %s, provided file: %s", id, file.getAbsolutePath()));
             engine.setProvidedFile(id, file);
         }
         // init configuration files (patterns, variables, rules)
         for (File configFile : fdmfConfiguration.getFdmfConfigFiles()) {
             engine.processConfigFile(configFile);
         }
-        //psp data
-        engine.setProvidedFile("PSP_DIR", pspRootDir);
         return new Validator(engine);
     }
 

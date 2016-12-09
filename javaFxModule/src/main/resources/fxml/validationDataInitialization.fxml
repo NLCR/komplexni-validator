@@ -20,7 +20,7 @@
 
 >
     <children>
-        <Button onAction="#retry" text="retry"/>
+        <!--<Button onAction="#retry" text="retry"/>-->
 
         <Label fx:id="title" text="Inicializace validačních dat"/>
 

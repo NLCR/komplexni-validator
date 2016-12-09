@@ -78,6 +78,23 @@ public class Main extends Application {
         }
     }
 
+    public void openMainWindow(){
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/main.fxml"));
+            Parent root = (Parent) loader.load();
+            //stage.setScene(new Scene(root, 1000, 700));
+            stage.setScene(new Scene(root));
+            stage.show();
+            MainController controller = (MainController) loader.getController();
+            controller.setApp(this);
+            controller.setValidationDataManager(validationDataManager);
+            controller.setConfigurationManager(configurationManager);
+            //controller.startAllChecks();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
 
     public void setValidationDataManager(ValidationDataManager validationDataManager) {
         this.validationDataManager = validationDataManager;

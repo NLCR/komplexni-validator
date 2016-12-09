@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.VBox?>
+<VBox
+        xmlns="http://javafx.com/javafx/8.0.112"
+        xmlns:fx="http://javafx.com/fxml/1"
+        fx:controller="nkp.pspValidator.gui.MainController"
+        fx:id="container"
+        maxHeight="-Infinity"
+        maxWidth="-Infinity"
+        minHeight="-Infinity"
+        minWidth="-Infinity"
+        stylesheets="/css/main.css"
+        alignment="CENTER"
+
+>
+    <children>
+        <MenuBar fx:id="menuBar" onKeyPressed="#handleKeyInput">
+            <menus>
+                <Menu text="Validovat">
+                    <items>
+                        <MenuItem text="PSP balík (adresář)" onAction="#validate"/>
+                        <MenuItem text="PSP (zip)" disable="true"/>
+                        <SeparatorMenuItem/>
+                        <MenuItem text="Adresář obsahující PSP balíky (adresáře)" disable="true"/>
+                        <MenuItem text="Zip obsahující PSP balíky (zip)" disable="true"/>
+                    </items>
+                </Menu>
+                <Menu text="Zobrazit">
+                    <items>
+                        <MenuItem text="Poslední validace"/>
+                        <MenuItem text="Validační soubory" disable="true"/>
+                    </items>
+                </Menu>
+                <Menu text="Nápověda">
+                    <items>
+                        <MenuItem text="Online nápověda" onAction="#showOnlineHelp"/>
+                        <SeparatorMenuItem/>
+                        <MenuItem text="O aplikaci" onAction="#showAboutApp"/>
+                    </items>
+                </Menu>
+            </menus>
+        </MenuBar>
+
+
+        <!--   <StackPane>
+
+               <ProgressIndicator fx:id="progressIndicator"/>
+               <ImageView fx:id="imgOk"
+                          styleClass="result-image"
+                          preserveRatio="true"
+                          visible="false"
+               >
+                   <image>
+                       <Image url="@/img/Checkmark-48.png"/>
+                   </image>
+               </ImageView>
+
+               <ImageView fx:id="imgError"
+                          styleClass="result-image"
+                          visible="false">
+                   <image>
+                       <Image url="@/img/Error-48.png"/>
+                   </image>
+               </ImageView>
+           </StackPane>
+
+
+           <Label fx:id="progressStatusLabel"/>
+
+           <Label fx:id="errorLabel" text="error"/>
+
+           <StackPane>
+
+
+               <HBox
+                       alignment="CENTER"
+                       spacing="20.0"
+               >
+
+                   <Button
+                           fx:id="btnSetFdmfsRootDir"
+                           onAction="#setFdmfsRootDir"
+                           styleClass="global-button"
+                           text="Nastavit kořenový adresář validačních dat"
+                   />
+
+                   <Button
+                           fx:id="btnClose"
+                           onAction="#closeApp"
+                           styleClass="global-button"
+                           text="Zavřít"/>
+               </HBox>
+
+               <Button
+                       fx:id="btnContinue"
+                       styleClass="global-button"
+                       onAction="#continueInApp"
+                       text="Pokračovat"/>
+
+
+           </StackPane>-->
+
+    </children>
+</VBox>
