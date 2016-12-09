@@ -71,3 +71,6 @@
  /*   -fx-background-color: #eeeeee;*/
 }
 
+.progress-indicatorf {
+    -fx-spin-enabled: true
+}

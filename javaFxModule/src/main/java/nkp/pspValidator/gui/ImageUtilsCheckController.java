@@ -2,7 +2,6 @@ package nkp.pspValidator.gui;
 
 import com.sun.deploy.uitoolkit.impl.fx.HostServicesFactory;
 import com.sun.javafx.application.HostServicesDelegate;
-import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
@@ -12,7 +11,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ProgressIndicator;
 import javafx.scene.image.ImageView;
 import javafx.stage.DirectoryChooser;
-import javafx.stage.Stage;
+import nkp.pspValidator.shared.engine.exceptions.ValidatorConfigurationException;
 import nkp.pspValidator.shared.imageUtils.CliCommand;
 import nkp.pspValidator.shared.imageUtils.ImageUtil;
 import nkp.pspValidator.shared.imageUtils.ImageUtilManager;
@@ -23,7 +22,7 @@ import java.io.File;
 /**
  * Created by martin on 2.12.16.
  */
-public class ImageUtilsCheckController extends Application {
+public class ImageUtilsCheckController extends AbstractController {
 
     //TODO: nahradit odkazy na WIKI a jeste podle OS rozdelit
     private static final String JPYLYZER_INSTALLATION_URL = "https://github.com/openpreserve/jpylyzer/releases";
@@ -143,16 +142,8 @@ public class ImageUtilsCheckController extends Application {
     Button kakaduBtnInstall;
 
     //other data
-    private Stage stage;
-    private Application application;
-    private ValidationDataManager validationDataManager;
 
-    @Override
-    public void start(Stage stage) throws Exception {
-        //System.out.println("start");
-        this.stage = stage;
-        //retryAll(null);
-    }
+    private ValidationDataManager validationDataManager;
 
     public void setValidationDataManager(ValidationDataManager validationDataManager) {
         this.validationDataManager = validationDataManager;
@@ -205,19 +196,23 @@ public class ImageUtilsCheckController extends Application {
         btnSelectPath.setVisible(false);
         btnInstall.setVisible(false);
 
-        Task task = new Task<CheckResult>() {
+        Task task = new Task<Void>() {
             @Override
-            protected CheckResult call() throws Exception {
+            protected Void call() throws Exception {
                 try {
+                    Thread.sleep(300);
                     ImageUtilManager utilManager = validationDataManager.getImageUtilManager();
                     if (!utilManager.isVersionDetectionDefined(util)) {
                         processResult(new CheckResult(false, String.format("detekce verze není definována pro %s", util)));
                     } else {
                         String version = utilManager.runUtilVersionDetection(util);
                         //System.out.println(version);
+                        validationDataManager.getFdmfRegistry().initJ2kProfiles(utilManager);
                         processResult(new CheckResult(true, version));
                     }
                 } catch (CliCommand.CliCommandException e) {
+                    processResult(new CheckResult(false, String.format("chyba: %s", e.getMessage())));
+                } catch (ValidatorConfigurationException e) {
                     processResult(new CheckResult(false, String.format("chyba: %s", e.getMessage())));
                 }
                 return null;
@@ -267,13 +262,13 @@ public class ImageUtilsCheckController extends Application {
     private void selectImageUtilPath(String property, ImageUtil util, MyListener listener) {
         DirectoryChooser chooser = new DirectoryChooser();
         chooser.setTitle(String.format("Vyberte adresář se spustitelnými soubory %s", util.getUserFriendlyName()));
-        File currentDir = validationDataManager.getConfigurationManager().getFileOrNull(property);
+        File currentDir = configurationManager.getFileOrNull(property);
         if (currentDir != null) {
             chooser.setInitialDirectory(currentDir);
         }
         File selectedDirectory = chooser.showDialog(stage);
         if (selectedDirectory != null) {
-            validationDataManager.getConfigurationManager().setFile(property, selectedDirectory);
+            configurationManager.setFile(property, selectedDirectory);
             validationDataManager.getImageUtilManager().setPath(util, selectedDirectory);
             listener.onFinished();
         }

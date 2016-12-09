@@ -1,7 +1,7 @@
 package nkp.pspValidator.cli;
 
 import nkp.pspValidator.shared.Dmf;
-import nkp.pspValidator.shared.FdmfRegistry;
+import nkp.pspValidator.shared.FdmfRegistryBak;
 import nkp.pspValidator.shared.Platform;
 import nkp.pspValidator.shared.Validator;
 import nkp.pspValidator.shared.engine.exceptions.InvalidXPathExpressionException;
@@ -25,7 +25,7 @@ public class MainTest {
     private static final String MON_1_2_INVALID_IMAGES = "../sharedModule/src/test/resources/monograph_1.2-invalid_images/b50eb6b0-f0a4-11e3-b72e-005056827e52";
 
     @org.junit.Test
-    public void cli() throws InvalidXPathExpressionException, FdmfRegistry.UnknownFdmfException, PspDataException, ValidatorConfigurationException, XmlFileParsingException {
+    public void cli() throws InvalidXPathExpressionException, FdmfRegistryBak.UnknownFdmfException, PspDataException, ValidatorConfigurationException, XmlFileParsingException {
         Platform platform = Platform.detectOs();
         String imageMagickPath = null;
         String jhovePath = null;

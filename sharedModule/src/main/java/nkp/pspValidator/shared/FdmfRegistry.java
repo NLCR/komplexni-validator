@@ -1,7 +1,9 @@
 package nkp.pspValidator.shared;
 
+import nkp.pspValidator.shared.engine.exceptions.ValidatorConfigurationException;
+import nkp.pspValidator.shared.imageUtils.ImageUtilManager;
+
 import java.io.File;
-import java.io.FilenameFilter;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
@@ -11,64 +13,63 @@ import java.util.Set;
  */
 public class FdmfRegistry {
 
-    private final Map<String, File> monographFdmfByVersion = new HashMap<>();
-    private final Map<String, File> periodicalFdmfByVersion = new HashMap<>();
+    private final Map<String, FdmfConfiguration> monographFdmfByVersion = new HashMap<>();
+    private final Map<String, FdmfConfiguration> periodicalFdmfByVersion = new HashMap<>();
 
-    public FdmfRegistry(File fdmfsRootDir) {
+    public FdmfRegistry(File fdmfsRootDir) throws ValidatorConfigurationException {
         init(fdmfsRootDir);
     }
 
-    private void init(File fdmfsRootDir) {
-        loadMonographFdmfs(fdmfsRootDir);
-        loadPeriodicalFdmfs(fdmfsRootDir);
-    }
-
-    private void loadMonographFdmfs(File fdmfsRootDir) {
-        File[] fdmfDirs = fdmfsRootDir.listFiles(new FilenameFilter() {
-            @Override
-            public boolean accept(File dir, String name) {
-                return name.matches("monograph_[0-9]+(\\.([0-9])+)*");
-            }
-        });
-        for (File fdmfDir : fdmfDirs) {
-            String version = fdmfDir.getName().split("_")[1];
-            monographFdmfByVersion.put(version, fdmfDir);
+    public void initJ2kProfiles(ImageUtilManager imageUtilManager) throws ValidatorConfigurationException {
+        for (FdmfConfiguration fdmfConfig : monographFdmfByVersion.values()) {
+            fdmfConfig.initJ2kProfiles(imageUtilManager);
+        }
+        for (FdmfConfiguration fdmfConfig : periodicalFdmfByVersion.values()) {
+            fdmfConfig.initJ2kProfiles(imageUtilManager);
         }
     }
 
-    private void loadPeriodicalFdmfs(File fdmfsRootDir) {
-        File[] fdmfDirs = fdmfsRootDir.listFiles(new FilenameFilter() {
-            @Override
-            public boolean accept(File dir, String name) {
-                return name.matches("periodical_[0-9]+(\\.([0-9])+)*");
-            }
-        });
+    private void init(File fdmfsRootDir) throws ValidatorConfigurationException {
+        loadMonographFdmfConfigs(fdmfsRootDir);
+        loadPeriodicalFdmfConfigs(fdmfsRootDir);
+    }
+
+    private void loadMonographFdmfConfigs(File fdmfsRootDir) throws ValidatorConfigurationException {
+        File[] fdmfDirs = fdmfsRootDir.listFiles((dir, name) -> name.matches("monograph_[0-9]+(\\.([0-9])+)*"));
         for (File fdmfDir : fdmfDirs) {
             String version = fdmfDir.getName().split("_")[1];
-            periodicalFdmfByVersion.put(version, fdmfDir);
+            monographFdmfByVersion.put(version, new FdmfConfiguration(fdmfDir));
         }
     }
 
-    public Set<String> getMonographFdmfVersions() {
+    private void loadPeriodicalFdmfConfigs(File fdmfsRootDir) throws ValidatorConfigurationException {
+        File[] fdmfDirs = fdmfsRootDir.listFiles((dir, name) -> name.matches("periodical_[0-9]+(\\.([0-9])+)*"));
+        for (File fdmfDir : fdmfDirs) {
+            String version = fdmfDir.getName().split("_")[1];
+            periodicalFdmfByVersion.put(version, new FdmfConfiguration(fdmfDir));
+        }
+    }
+
+    public Set<String> getMonographFdmfConfigs() {
         return monographFdmfByVersion.keySet();
     }
 
-    public Set<String> getPeriodicalFdmfVersions() {
+    public Set<String> getPeriodicalFdmfConfigs() {
         return periodicalFdmfByVersion.keySet();
     }
 
-    public File getMonographFdmfDir(String dmfVersion) {
+    public FdmfConfiguration getMonographFdmfConfig(String dmfVersion) {
         return monographFdmfByVersion.get(dmfVersion);
     }
 
-    public File getPeriodicalFdmfDir(String dmfVersion) {
+    public FdmfConfiguration getPeriodicalFdmfConfig(String dmfVersion) {
         return periodicalFdmfByVersion.get(dmfVersion);
     }
 
-    public File getFdmfDir(Dmf dmf) throws UnknownFdmfException {
+    public FdmfConfiguration getFdmfConfig(Dmf dmf) throws UnknownFdmfException {
         switch (dmf.getType()) {
             case MONOGRAPH: {
-                File file = monographFdmfByVersion.get(dmf.getVersion());
+                FdmfConfiguration file = monographFdmfByVersion.get(dmf.getVersion());
                 if (file == null) {
                     throw new UnknownFdmfException(dmf);
                 } else {
@@ -76,7 +77,7 @@ public class FdmfRegistry {
                 }
             }
             case PERIODICAL: {
-                File file = periodicalFdmfByVersion.get(dmf.getVersion());
+                FdmfConfiguration file = periodicalFdmfByVersion.get(dmf.getVersion());
                 if (file == null) {
                     throw new UnknownFdmfException(dmf);
                 } else {

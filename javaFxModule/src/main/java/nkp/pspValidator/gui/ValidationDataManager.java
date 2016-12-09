@@ -1,5 +1,6 @@
 package nkp.pspValidator.gui;
 
+import nkp.pspValidator.shared.FdmfRegistry;
 import nkp.pspValidator.shared.imageUtils.ImageUtil;
 import nkp.pspValidator.shared.imageUtils.ImageUtilManager;
 
@@ -12,6 +13,7 @@ public class ValidationDataManager {
     private static ValidationDataManager instance;
     private ImageUtilManager imageUtilManager;
     private ConfigurationManager configurationManager;
+    private FdmfRegistry fdmfRegistry;
 
     public ValidationDataManager(ConfigurationManager configurationManager) {
         this.configurationManager = configurationManager;
@@ -29,8 +31,11 @@ public class ValidationDataManager {
         imageUtilManager.setPath(ImageUtil.KAKADU, configurationManager.getFileOrNull(ConfigurationManager.PROP_KAKADU_DIR));
     }
 
-    public ConfigurationManager getConfigurationManager() {
-        return configurationManager;
+    public void setFdmfRegistry(FdmfRegistry fdmfRegistry) {
+        this.fdmfRegistry = fdmfRegistry;
     }
 
+    public FdmfRegistry getFdmfRegistry() {
+        return fdmfRegistry;
+    }
 }

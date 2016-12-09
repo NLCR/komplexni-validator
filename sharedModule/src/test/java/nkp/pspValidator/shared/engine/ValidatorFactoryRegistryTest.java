@@ -1,6 +1,6 @@
 package nkp.pspValidator.shared.engine;
 
-import nkp.pspValidator.shared.FdmfRegistry;
+import nkp.pspValidator.shared.FdmfRegistryBak;
 import org.junit.Test;
 
 import java.io.File;
@@ -30,7 +30,7 @@ public class ValidatorFactoryRegistryTest {
 
     @Test
     public void versions() {
-        FdmfRegistry registry = new FdmfRegistry(new File("src/main/resources/nkp/pspValidator/shared/fDMF"));
+        FdmfRegistryBak registry = new FdmfRegistryBak(new File("src/main/resources/nkp/pspValidator/shared/fDMF"));
 
 /*
         assertEquals(2, registry.getMonographFdmfVersions().size());

@@ -9,6 +9,10 @@ import nkp.pspValidator.shared.imageUtils.validation.ImageValidator;
 
 import java.io.File;
 import java.io.FilenameFilter;
+import java.util.Map;
+
+import static nkp.pspValidator.shared.FileUtils.checkDirExistAndReadable;
+import static nkp.pspValidator.shared.FileUtils.checkFileExistAndReadable;
 
 /**
  * Created by martin on 2.11.16.
@@ -21,6 +25,25 @@ public class ValidatorFactory {
     private static final String J2K_PROFILES_UC_DIR = "uc";
     private static final String J2K_PROFILES_MC_DIR = "mc";
 
+
+    public static Validator buildValidator(FdmfConfiguration fdmfConfiguration, File pspRootDir, ImageUtilManager imageUtilManager) throws ValidatorConfigurationException {
+        Engine engine = new Engine(fdmfConfiguration.getImageValidator());
+        //init with provided files
+        Map<String, File> providedFiles = fdmfConfiguration.getProvidedFiles();
+        for (String id : providedFiles.keySet()) {
+            File file = providedFiles.get(id);
+            engine.setProvidedFile(id, file);
+        }
+        // init configuration files (patterns, variables, rules)
+        for (File configFile : fdmfConfiguration.getFdmfConfigFiles()) {
+            engine.processConfigFile(configFile);
+        }
+        //psp data
+        engine.setProvidedFile("PSP_DIR", pspRootDir);
+        return new Validator(engine);
+    }
+
+    @Deprecated
     public static Validator buildValidator(File fdmfRoot, File pspRootDir, ImageUtilManager imageUtilManager) throws ValidatorConfigurationException {
         checkDirExistAndReadable(fdmfRoot);
         checkDirExistAndReadable(pspRootDir);
@@ -61,7 +84,7 @@ public class ValidatorFactory {
         //TODO: poradne
         //TODO: validovat pomoci xsd
         ///home/martin/ssd/IdeaProjects/PspValidator/sharedModule/src/main/resources/nkp/pspValidator/shared/fDMF/monograph_1.2/biblioProfiles/dc/title.xml
-        engine.setProvidedFile("BIBLIO_PROFILE_DC_TITLE", new File("/home/martin/ssd/IdeaProjects/PspValidator/sharedModule/src/main/resources/nkp/pspValidator/shared/fDMF/monograph_1.2/biblioProfiles/dc/title.xml"));
+        //engine.setProvidedFile("BIBLIO_PROFILE_DC_TITLE", new File("/home/martin/ssd/IdeaProjects/PspValidator/sharedModule/src/main/resources/nkp/pspValidator/shared/fDMF/monograph_1.2/biblioProfiles/dc/title.xml"));
 
         return new Validator(engine);
     }
@@ -88,25 +111,6 @@ public class ValidatorFactory {
         }
     }
 
-    private static void checkDirExistAndReadable(File dir) throws ValidatorConfigurationException {
-        if (!dir.exists()) {
-            throw new ValidatorConfigurationException(String.format("adresář neexistuje: %s", dir.getAbsolutePath()));
-        } else if (!dir.isDirectory()) {
-            throw new ValidatorConfigurationException(String.format("soubor není adresář: %s", dir.getAbsolutePath()));
-        } else if (!dir.canRead()) {
-            throw new ValidatorConfigurationException(String.format("nelze číst adresář: %s", dir.getAbsolutePath()));
-        }
-    }
-
-    private static void checkFileExistAndReadable(File file) throws ValidatorConfigurationException {
-        if (!file.exists()) {
-            throw new ValidatorConfigurationException(String.format("soubor neexistuje: %s", file.getAbsolutePath()));
-        } else if (file.isDirectory()) {
-            throw new ValidatorConfigurationException(String.format("soubor je adresář: %s", file.getAbsolutePath()));
-        } else if (!file.canRead()) {
-            throw new ValidatorConfigurationException(String.format("nelze číst soubor: %s", file.getAbsolutePath()));
-        }
-    }
 
     private static void validateAndProcessFdmfConfig(Engine engine, File fdmfXsdFile, File fdmfRoot, String fileName) throws ValidatorConfigurationException {
         File configFile = new File(fdmfRoot, fileName);

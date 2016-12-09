@@ -12,13 +12,14 @@ public class ConfigurationManager {
 
     private static File CONFIG_FILE = new File("../../resources/main/config.properties");
 
-    private static final String PROP_DMF_DIR = "fdmf.dir";
+    public static final String PROP_DMF_DIR = "fdmf.dir";
 
     public static final String PROP_JHOVE_DIR = "jhove.dir";
     public static final String PROP_JPYLYZER_DIR = "jpylyzer.dir";
     public static final String PROP_IMAGE_MAGICK_DIR = "imageMagick.dir";
     public static final String PROP_KAKADU_DIR = "kakadu.dir";
 
+    //public static final String PROP_VALIDATION_DATA_CHECK_SHOWN = "validationDataCheck.shown";
 
     private final Platform platform;
     private final File configFile;
