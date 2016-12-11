@@ -10,7 +10,7 @@
                 </parser>
             </operatingSystem>
             <operatingSystem name="WINDOWS">
-                <command>${PATH}jpylyzer --version</command>
+                <command>${PATH}jpylyzer.exe --version</command>
                 <parser>
                     <stream>STDERR</stream>
                     <regexp>\A[0-9\.]+$</regexp>
@@ -35,7 +35,7 @@
                 </parser>
             </operatingSystem>
             <operatingSystem name="WINDOWS">
-                <command>${PATH}jpylyzer jp2In ${IMAGE_FILE}</command>
+                <command>${PATH}jpylyzer.exe jp2In ${IMAGE_FILE}</command>
                 <parser>
                     <stream>STDOUT</stream>
                     <regexp>(?s).*</regexp>
@@ -70,7 +70,6 @@
                     <regexp>ImageMagick [0-9\.\-]+</regexp>
                 </parser>
             </operatingSystem>
-            <!--TODO: vlastne blbost, nepotrebuju tady xml-->
             <!--http://www.imagemagick.org/script/binary-releases.php-->
             <!--instalace pres MacPorts-->
             <operatingSystem name="MAC">

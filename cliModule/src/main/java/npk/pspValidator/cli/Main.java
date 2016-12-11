@@ -231,7 +231,7 @@ public class Main {
                 } else {
                     if (line.hasOption("kakadu-path")) {
                         imageUtilPaths.put(ImageUtil.KAKADU, new File(line.getOptionValue("kakadu-path")));
-                    }else{
+                    } else {
                         System.err.println("no kakadu path");
                     }
 
@@ -256,8 +256,9 @@ public class Main {
                 " Verzi a typ DMF lze vynutit parametry --dmf-type a/nebo --dmf-version, pripadne jsou odvozeny z dat PSP baliku." +
                 " Dale je potreba pomoci --fdmf-dir uvest adresář, který obsahuje definice fDMF," +
                 " typicky adresare monograph_1.0, monograph_1.2, periodical_1.4 a periodical 1.6.\n\n";
-        String footer = "\n*Definice metadatovych formatu. Vice na http://www.ndk.cz/standardy-digitalizace/metadata.\n";
-        //"Více informací o validátoru najdete na http://TODO ";
+        String footer = "\n*Definice metadatovych formatu. Vice na http://www.ndk.cz/standardy-digitalizace/metadata.\n"
+                + "Vice informaci o Validatoru najdete na https://github.com/rzeh4n/psp-validator.";
+//        + "Více informací o Validátoru najdete na https://github.com/rzeh4n/psp-validator.";
 
         HelpFormatter formatter = new HelpFormatter();
         formatter.setOptionComparator(null);

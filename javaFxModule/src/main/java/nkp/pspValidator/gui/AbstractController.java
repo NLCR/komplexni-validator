@@ -4,6 +4,7 @@ import com.sun.deploy.uitoolkit.impl.fx.HostServicesFactory;
 import com.sun.javafx.application.HostServicesDelegate;
 import javafx.application.Application;
 import javafx.stage.Stage;
+import nkp.pspValidator.shared.imageUtils.ImageUtil;
 
 /**
  * Created by martin on 9.12.16.

@@ -25,11 +25,11 @@ import java.util.Map;
 public class ImageUtilsCheckController extends AbstractController {
 
     //TODO: nahradit odkazy na WIKI a jeste podle OS rozdelit
-    private static final String JPYLYZER_INSTALLATION_URL = "https://github.com/openpreserve/jpylyzer/releases";
-    private static final String JHOVE_INSTALLATION_URL = "http://openpreservation.org/news/jhove-1-14-released/";
-    private static final String IMAGE_MAGICK_INSTALLATION_URL = "http://www.imagemagick.org/script/binary-releases.php";
-    private static final String KAKADU_INSTALLATION_URL = "http://kakadusoftware.com/software/";
-    private static final String HELP_URL = "http://github.com";
+    private static final String JPYLYZER_INSTALLATION_URL = "https://github.com/rzeh4n/psp-validator/wiki/Instalace#jpylyzer";
+    private static final String JHOVE_INSTALLATION_URL = "https://github.com/rzeh4n/psp-validator/wiki/Instalace#jhove";
+    private static final String IMAGE_MAGICK_INSTALLATION_URL = "https://github.com/rzeh4n/psp-validator/wiki/Instalace#imagemagick";
+    private static final String KAKADU_INSTALLATION_URL = "https://github.com/rzeh4n/psp-validator/wiki/Instalace#kakadu";
+    private static final String HELP_URL = "https://github.com/rzeh4n/psp-validator/wiki/Instalace#instalace-n%C3%A1stroj%C5%AF-pro-validaci-obrazov%C3%BDch-soubor%C5%AF";
 
     @FXML
     Button btnTest;
@@ -282,28 +282,54 @@ public class ImageUtilsCheckController extends AbstractController {
     }
 
     public void selectJpylyzerPath(ActionEvent actionEvent) {
-        selectImageUtilPath(ConfigurationManager.PROP_JPYLYZER_DIR, ImageUtil.JPYLYZER, () -> checkJpylyzer());
+        File defaultDir = null;
+        switch (configurationManager.getPlatform().getOperatingSystem()) {
+            case WINDOWS:
+                defaultDir = new File("C:\\Program Files");
+                break;
+        }
+        selectImageUtilPath(ConfigurationManager.PROP_JPYLYZER_DIR, defaultDir, ImageUtil.JPYLYZER, () -> checkJpylyzer());
     }
 
 
     public void selectJhovePath(ActionEvent actionEvent) {
-        selectImageUtilPath(ConfigurationManager.PROP_JHOVE_DIR, ImageUtil.JHOVE, () -> checkJhove());
+        File defaultDir = null;
+        switch (configurationManager.getPlatform().getOperatingSystem()) {
+            case WINDOWS:
+                defaultDir = new File("C:\\Program Files");
+                break;
+        }
+        selectImageUtilPath(ConfigurationManager.PROP_JHOVE_DIR, defaultDir, ImageUtil.JHOVE, () -> checkJhove());
     }
 
     public void selectImageMagickPath(ActionEvent actionEvent) {
-        selectImageUtilPath(ConfigurationManager.PROP_IMAGE_MAGICK_DIR, ImageUtil.IMAGE_MAGICK, () -> checkImageMagick());
+        File defaultDir = null;
+        switch (configurationManager.getPlatform().getOperatingSystem()) {
+            case WINDOWS:
+                defaultDir = new File("C:\\Program Files");
+                break;
+        }
+        selectImageUtilPath(ConfigurationManager.PROP_IMAGE_MAGICK_DIR, defaultDir, ImageUtil.IMAGE_MAGICK, () -> checkImageMagick());
     }
 
     public void selectKakaduPath(ActionEvent actionEvent) {
-        selectImageUtilPath(ConfigurationManager.PROP_KAKADU_DIR, ImageUtil.KAKADU, () -> checkKakadu());
+        File defaultDir = null;
+        switch (configurationManager.getPlatform().getOperatingSystem()) {
+            case WINDOWS:
+                defaultDir = new File("C:\\Program Files");
+                break;
+        }
+        selectImageUtilPath(ConfigurationManager.PROP_KAKADU_DIR, defaultDir, ImageUtil.KAKADU, () -> checkKakadu());
     }
 
-    private void selectImageUtilPath(String property, ImageUtil util, MyListener listener) {
+    private void selectImageUtilPath(String property, File defaultDir, ImageUtil util, MyListener listener) {
         DirectoryChooser chooser = new DirectoryChooser();
         chooser.setTitle(String.format("Vyberte adresář se spustitelnými soubory %s", util.getUserFriendlyName()));
         File currentDir = configurationManager.getFileOrNull(property);
-        if (currentDir != null) {
+        if (currentDir != null && currentDir.exists()) {
             chooser.setInitialDirectory(currentDir);
+        } else if (defaultDir != null && defaultDir.exists()) {
+            chooser.setInitialDirectory(defaultDir);
         }
         File selectedDirectory = chooser.showDialog(stage);
         if (selectedDirectory != null) {
