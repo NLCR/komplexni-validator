@@ -5,8 +5,10 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import nkp.pspValidator.shared.Dmf;
 import nkp.pspValidator.shared.Platform;
 
+import java.io.File;
 import java.io.IOException;
 
 public class Main extends Application {
@@ -78,7 +80,7 @@ public class Main extends Application {
         }
     }
 
-    public void openMainWindow(){
+    public void openMainWindow() {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/main.fxml"));
             Parent root = (Parent) loader.load();
@@ -100,4 +102,13 @@ public class Main extends Application {
         this.validationDataManager = validationDataManager;
     }
 
+    /**
+     * @param pspDir
+     * @param preferedMonographDmf  can be null
+     * @param preferedPeriodicalDmf can be null
+     */
+    public void validatePsp(File pspDir, Dmf preferedMonographDmf, Dmf preferedPeriodicalDmf) {
+        //TODO
+        System.out.println("validating " + pspDir.getAbsolutePath() + ", mon: " + preferedMonographDmf + ", per: " + preferedPeriodicalDmf);
+    }
 }

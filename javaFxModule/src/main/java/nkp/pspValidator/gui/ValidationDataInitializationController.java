@@ -74,10 +74,10 @@ public class ValidationDataInitializationController extends AbstractController {
                         processResult(new Result(false, "není definován kořenový adresář pro validační soubory"));
                     } else {
                         checkReadableDir(fdmfsRoot);
-                        System.out.println(fdmfsRoot.getAbsolutePath());
+                        //System.out.println(fdmfsRoot.getAbsolutePath());
                         updateStatus("kontroluji " + fdmfsRoot.getAbsolutePath());
                         File imageUtilConfig = getImageUtilsConfigFile(fdmfsRoot);
-                        System.out.println(imageUtilConfig.getAbsolutePath());
+                        //System.out.println(imageUtilConfig.getAbsolutePath());
                         ImageUtilManager imageUtilManager = new ImageUtilManagerFactory(imageUtilConfig).buildImageUtilManager(configurationManager.getPlatform().getOperatingSystem());
                         validationDataManager.setImageUtilManager(imageUtilManager);
                         validationDataManager.setFdmfRegistry(new FdmfRegistry(fdmfsRoot));
@@ -133,6 +133,8 @@ public class ValidationDataInitializationController extends AbstractController {
                         progressStatusLabel.setText("OK");
                         app.setValidationDataManager(validationDataManager);
                         //TODO: pokud uz jednou zobrazeno, tak rovnou zavolat dalsi fazi
+                        //ted pokracuju rovnou, pokud je vse ok
+                        app.checkImageUtils();
                     } else {//error
                         imgError.setVisible(true);
                         progressStatusLabel.setText("CHYBA");

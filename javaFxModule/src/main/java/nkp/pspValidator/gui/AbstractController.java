@@ -20,6 +20,10 @@ public abstract class AbstractController extends Application {
         this.stage = stage;
     }
 
+    public void setStage(Stage stage) {
+        this.stage = stage;
+    }
+
     public void setApp(Main app) {
         this.app = app;
     }

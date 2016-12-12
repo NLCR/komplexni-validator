@@ -50,11 +50,11 @@ public class FdmfRegistry {
         }
     }
 
-    public Set<String> getMonographFdmfConfigs() {
+    public Set<String> getMonographFdmfVersions() {
         return monographFdmfByVersion.keySet();
     }
 
-    public Set<String> getPeriodicalFdmfConfigs() {
+    public Set<String> getPeriodicalFdmfVersions() {
         return periodicalFdmfByVersion.keySet();
     }
 

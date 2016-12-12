@@ -24,7 +24,6 @@ import java.util.Map;
  */
 public class ImageUtilsCheckController extends AbstractController {
 
-    //TODO: nahradit odkazy na WIKI a jeste podle OS rozdelit
     private static final String JPYLYZER_INSTALLATION_URL = "https://github.com/rzeh4n/psp-validator/wiki/Instalace#jpylyzer";
     private static final String JHOVE_INSTALLATION_URL = "https://github.com/rzeh4n/psp-validator/wiki/Instalace#jhove";
     private static final String IMAGE_MAGICK_INSTALLATION_URL = "https://github.com/rzeh4n/psp-validator/wiki/Instalace#imagemagick";
@@ -274,6 +273,8 @@ public class ImageUtilsCheckController extends AbstractController {
                     setUtilFinished(util, true);
                     if (isAllUtilsFinished()) {
                         btnContinue.setDisable(false);
+                        //TODO: tohle jen docasne, ted pokracuju rovnou, pokud je vse ok
+                        //app.openMainWindow();
                     }
                 });
             }
