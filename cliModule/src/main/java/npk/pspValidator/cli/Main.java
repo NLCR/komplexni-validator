@@ -13,6 +13,7 @@ import nkp.pspValidator.shared.xsdValidation.XsdValidator;
 import org.apache.commons.cli.*;
 
 import java.io.File;
+import java.io.PrintStream;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
@@ -293,23 +294,23 @@ public class Main {
         b.append("ěščřžýáíéĚŠČŘŽÝÁÍÉ");
         System.out.println(b.toString());*/
 
-
+        PrintStream out = System.out;
         switch (printVerbosity) {
             case 3:
                 //vsechno, vcetne sekci a pravidel bez chyb
-                validator.run(xmlOutputFile, true, true, true, true, devParams);
+                validator.run(xmlOutputFile, out, true, true, true, true, devParams);
                 break;
             case 2:
                 //jen chybove sekce a v popisy jednotlivych chyb (default)
-                validator.run(xmlOutputFile, true, false, true, false, devParams);
+                validator.run(xmlOutputFile, out, true, false, true, false, devParams);
                 break;
             case 1:
                 //jen pocty chyb v chybovych sekcich, bez popisu jednotlivych chyb
-                validator.run(xmlOutputFile, true, false, false, false, devParams);
+                validator.run(xmlOutputFile, out, true, false, false, false, devParams);
                 break;
             case 0:
                 //jen valid/not valid
-                validator.run(xmlOutputFile, false, false, false, false, devParams);
+                validator.run(xmlOutputFile, out, false, false, false, false, devParams);
                 break;
             default:
                 throw new IllegalStateException(String.format("Nepovolená hodnota verbosity: %d. Hodnota musí být v intervalu [0-3]", printVerbosity));

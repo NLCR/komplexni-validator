@@ -16,7 +16,7 @@
             <menus>
                 <Menu text="Validovat">
                     <items>
-                        <MenuItem onAction="#validate" text="PSP balík (adresář)"/>
+                        <MenuItem onAction="#openNewValidationDialog" text="PSP balík (adresář)"/>
                         <MenuItem disable="true" text="PSP (zip)"/>
                         <SeparatorMenuItem/>
                         <MenuItem disable="true" text="Adresář obsahující PSP balíky (adresáře)"/>
@@ -42,7 +42,12 @@
     <center>
         <VBox alignment="CENTER" spacing="20">
             <children>
-                <Label fx:id="status" text="nothing"/>
+                <Label fx:id="status" text=""/>
+                <TextArea fx:id="textArea"
+                          minHeight="500"
+                          editable="false"
+                          scrollTop="Infinity"
+                />
             </children>
         </VBox>
     </center>

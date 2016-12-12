@@ -31,7 +31,8 @@
             />
             <Button onAction="#selectPspDir" text="Vybrat" GridPane.columnIndex="3" GridPane.rowIndex="0"/>
 
-            <Label text="Vynutit použití konkrétních verzí standardů" GridPane.columnIndex="0" GridPane.columnSpan="3"
+            <Label text="Vynutit validaci proti konkrétním verzím standardů" GridPane.columnIndex="0"
+                   GridPane.columnSpan="3"
                    GridPane.rowIndex="2"/>
 
             <!--forced Monograph version-->

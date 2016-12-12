@@ -19,6 +19,7 @@ import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 import java.io.File;
+import java.io.PrintStream;
 import java.util.*;
 
 /**
@@ -42,16 +43,17 @@ public class Validator {
     }
 
     public void run(File xmlOutputFile,
+                    PrintStream out,
                     boolean printSectionsWithProblems, boolean printSectionsWithoutProblems,
                     boolean printRulesWithProblems, boolean printRulesWithoutProblems,
-                    DevParams devMode) {
-        boolean runAllSections = devMode == null || devMode.getSectionsToRun() == null || devMode.getSectionsToRun().isEmpty();
+                    DevParams devParams) {
+        boolean runAllSections = devParams == null || devParams.getSectionsToRun() == null || devParams.getSectionsToRun().isEmpty();
 
         Protocol protocol = new Protocol(engine);
         List<RulesSection> rulesSections = engine.getRuleSections();
         protocol.reportValidationsStart();
         for (RulesSection section : rulesSections) {
-            boolean runSection = runAllSections || devMode.getSectionsToRun().contains(section.getName());
+            boolean runSection = runAllSections || devParams.getSectionsToRun().contains(section.getName());
             if (!runSection) {
                 //TODO: ve vystupu a v logu zaznamenat, ze byla sekce ignorovana
             } else {
@@ -63,9 +65,9 @@ public class Validator {
                 boolean printSection = sectionProblemsTotal == 0 && printSectionsWithoutProblems || sectionProblemsTotal != 0 && printSectionsWithProblems;
                 if (printSection) {
                     String sectionTitle = String.format("Sekce %s: %s", section.getName(), buildSummary(sectionProblemsTotal, sectionProblemsByLevel));
-                    System.out.println();
-                    System.out.println(sectionTitle);
-                    System.out.println(buildDelimiter(sectionTitle.length()));
+                    out.println();
+                    out.println(sectionTitle);
+                    out.println(buildDelimiter(sectionTitle.length()));
                 }
                 List<Rule> rules = engine.getRules(section);
                 for (Rule rule : rules) {
@@ -76,10 +78,10 @@ public class Validator {
                     if (printRule) {
                         int ruleProblemsTotal = protocol.getRuleProblemsSum(rule);
                         Map<Level, Integer> ruleProblemsByLevel = protocol.getRuleProblemsByLevel(rule);
-                        System.out.println(String.format("Pravidlo %s: %s", rule.getName(), buildSummary(ruleProblemsTotal, ruleProblemsByLevel)));
-                        System.out.println(String.format("\t%s", rule.getDescription()));
+                        out.println(String.format("Pravidlo %s: %s", rule.getName(), buildSummary(ruleProblemsTotal, ruleProblemsByLevel)));
+                        out.println(String.format("\t%s", rule.getDescription()));
                         for (ValidationError error : result.getProblems()) {
-                            System.out.println(String.format("\t%s: %s", error.getLevel(), error.getMessage()));
+                            out.println(String.format("\t%s: %s", error.getLevel(), error.getMessage()));
                         }
                     }
                     protocol.reportRuleProcessingFinished(rule);
@@ -89,11 +91,11 @@ public class Validator {
         }
         protocol.reportValidationsEnd();
         String verdict = protocol.isValid() ? "validní" : "nevalidní";
-        System.out.println(String.format("\nCelkem: %s, balík je: %s", buildSummary(protocol.getTotalProblemsSum(), protocol.getTotalProblemsByLevel()), verdict));
+        out.println(String.format("\nCelkem: %s, balík je: %s", buildSummary(protocol.getTotalProblemsSum(), protocol.getTotalProblemsByLevel()), verdict));
         if (xmlOutputFile != null) {
-            System.out.println("Vytvářím xml export do souboru " + xmlOutputFile.getAbsolutePath());
+            out.println("Vytvářím xml export do souboru " + xmlOutputFile.getAbsolutePath());
             buildXmlOutput(xmlOutputFile, protocol);
-            System.out.println("Xml export vytvořen");
+            out.println("Xml export vytvořen");
         }
     }
 

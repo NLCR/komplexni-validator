@@ -5,7 +5,6 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import nkp.pspValidator.shared.DmfDetector;
 import nkp.pspValidator.shared.Platform;
 
 import java.io.File;
@@ -16,6 +15,8 @@ public class Main extends Application {
     private Stage stage;
     private ConfigurationManager configurationManager;
     private ValidationDataManager validationDataManager;
+
+    private MainController mainController;
 
     public static void main(String[] args) {
         launch(args);
@@ -87,10 +88,14 @@ public class Main extends Application {
             //stage.setScene(new Scene(root, 1000, 700));
             stage.setScene(new Scene(root));
             stage.show();
-            MainController controller = (MainController) loader.getController();
-            controller.setApp(this);
-            controller.setValidationDataManager(validationDataManager);
-            controller.setConfigurationManager(configurationManager);
+            stage.setHeight(700);
+            stage.setMinHeight(700);
+            stage.setWidth(650);
+            stage.setMinWidth(650);
+            mainController = (MainController) loader.getController();
+            mainController.setApp(this);
+            mainController.setValidationDataManager(validationDataManager);
+            mainController.setConfigurationManager(configurationManager);
             //controller.startAllChecks();
         } catch (IOException e) {
             throw new RuntimeException(e);
@@ -102,17 +107,14 @@ public class Main extends Application {
         this.validationDataManager = validationDataManager;
     }
 
+
     /**
      * @param pspDir
      * @param focedMonographVersion   can be null
      * @param forcedPeriodicalVersion can be null
      */
     public void validatePsp(File pspDir, String focedMonographVersion, String forcedPeriodicalVersion) {
-        DmfDetector dmfDetector = new DmfDetector();
-        //dmfDetector.detectDmfVersionFromInfoFile();
-
-        //TODO
-        System.out.println("validating " + pspDir.getAbsolutePath() + ", mon: " + focedMonographVersion + ", per: " + forcedPeriodicalVersion);
-
+        mainController.validatePsp(pspDir, focedMonographVersion, forcedPeriodicalVersion);
     }
+
 }
