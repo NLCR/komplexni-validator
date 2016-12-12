@@ -33,7 +33,6 @@ public class ImageUtilsCheckController extends AbstractController {
     @FXML
     Button btnTest;
 
-
     @FXML
     ProgressIndicator fdmfProgress;
 
@@ -274,7 +273,7 @@ public class ImageUtilsCheckController extends AbstractController {
                     if (isAllUtilsFinished()) {
                         btnContinue.setDisable(false);
                         //TODO: tohle jen docasne, ted pokracuju rovnou, pokud je vse ok
-                        //app.openMainWindow();
+                        app.openMainWindow();
                     }
                 });
             }
@@ -363,6 +362,11 @@ public class ImageUtilsCheckController extends AbstractController {
 
     public void continueInApp(ActionEvent actionEvent) {
         app.openMainWindow();
+    }
+
+    @Override
+    void onConfigurationManagerSet() {
+
     }
 
     private static final class CheckResult {

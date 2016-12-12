@@ -14,30 +14,49 @@
 
         <GridPane alignment="CENTER" hgap="10" vgap="10">
             <padding>
-                <Insets bottom="10" left="10" right="10" top="10"/>
+                <Insets bottom="10" left="10" right="10" top="20"/>
             </padding>
 
             <!--PSP dir-->
-            <Label text="Adresář PSP balíku" GridPane.columnIndex="0" GridPane.rowIndex="0"/>
-            <TextField fx:id="pspDirTextField" minWidth="350" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS"
-                       GridPane.rowIndex="0"/>
-            <Button onAction="#selectPspDir" text="Vybrat" GridPane.columnIndex="2" GridPane.rowIndex="0"/>
+            <Label text="Adresář PSP balíku"
+                   GridPane.columnIndex="0"
+                   GridPane.rowIndex="0"
+                   GridPane.columnSpan="2"
+            />
+            <TextField fx:id="pspDirTextField" minWidth="350"
+                       GridPane.columnIndex="2"
+                       GridPane.rowIndex="0"
+                       GridPane.columnSpan="1"
+                       GridPane.hgrow="ALWAYS"
+            />
+            <Button onAction="#selectPspDir" text="Vybrat" GridPane.columnIndex="3" GridPane.rowIndex="0"/>
 
-
-            <Label text="Preferované verze standardů" GridPane.columnIndex="0" GridPane.columnSpan="3"
+            <Label text="Vynutit použití konkrétních verzí standardů" GridPane.columnIndex="0" GridPane.columnSpan="3"
                    GridPane.rowIndex="2"/>
 
-            <!--prefered Monograph version-->
-            <Label text="Monografie" GridPane.columnIndex="0" GridPane.rowIndex="3"/>
+            <!--forced Monograph version-->
+            <CheckBox fx:id="monVersionForcedCheckBox"
+                      onAction="#monVersionForcedChanged"
+                      GridPane.columnIndex="0"
+                      GridPane.rowIndex="3"/>
 
-            <ChoiceBox fx:id="monVersionChoiceBox" GridPane.columnIndex="1" GridPane.columnSpan="2"
+            <Label text="Monografie" GridPane.columnIndex="1" GridPane.rowIndex="3"/>
+
+            <ChoiceBox fx:id="monVersionChoiceBox"
+                       GridPane.columnIndex="2"
                        GridPane.rowIndex="3"/>
 
-            <!--prefered Periodical version-->
-            <Label text="Periodika" GridPane.columnIndex="0" GridPane.rowIndex="4"/>
+            <!--forced Periodical version-->
+            <CheckBox fx:id="perVersionForcedCheckBox"
+                      onAction="#perVersionForcedChanged"
+                      GridPane.columnIndex="0"
+                      GridPane.rowIndex="4"/>
 
-            <ChoiceBox fx:id="perVersionChoiceBox" GridPane.columnIndex="1" GridPane.columnSpan="2"
+            <Label text="Periodika" GridPane.columnIndex="1" GridPane.rowIndex="4"/>
+
+            <ChoiceBox fx:id="perVersionChoiceBox" GridPane.columnIndex="2" GridPane.columnSpan="2"
                        GridPane.rowIndex="4"/>
+
 
         </GridPane>
 

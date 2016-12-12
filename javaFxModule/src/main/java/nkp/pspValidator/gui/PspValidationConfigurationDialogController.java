@@ -4,12 +4,11 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.DirectoryChooser;
-import javafx.stage.Window;
-import nkp.pspValidator.shared.Dmf;
 
 import java.io.File;
 import java.io.IOException;
@@ -22,6 +21,9 @@ import java.util.Set;
 public class PspValidationConfigurationDialogController extends AbstractController {
 
 
+    private ValidationDataManager validationDataManager;
+
+
     @FXML
     TextField pspDirTextField;
 
@@ -29,12 +31,17 @@ public class PspValidationConfigurationDialogController extends AbstractControll
     ChoiceBox monVersionChoiceBox;
 
     @FXML
+    CheckBox monVersionForcedCheckBox;
+
+    @FXML
     ChoiceBox perVersionChoiceBox;
-    private Window windows;
+
+    @FXML
+    CheckBox perVersionForcedCheckBox;
 
     @FXML
     Label errorMessageLabel;
-    private ValidationDataManager validationDataManager;
+
 
     @FXML
     private void initialize() {
@@ -42,6 +49,16 @@ public class PspValidationConfigurationDialogController extends AbstractControll
         //spousti se po Parent root = (Parent) loader.load();
     }
 
+
+    @Override
+    void onConfigurationManagerSet() {
+        boolean monVersionForced = configurationManager.getBooleanOrDefault(ConfigurationManager.PROP_FORCE_MON_VERSION, false);
+        boolean perVersionForced = configurationManager.getBooleanOrDefault(ConfigurationManager.PROP_FORCE_PER_VERSION, false);
+        monVersionForcedCheckBox.setSelected(monVersionForced);
+        monVersionChoiceBox.setDisable(!monVersionForced);
+        perVersionForcedCheckBox.setSelected(perVersionForced);
+        perVersionChoiceBox.setDisable(!perVersionForced);
+    }
 
     public void selectPspDir(ActionEvent actionEvent) {
         DirectoryChooser chooser = new DirectoryChooser();
@@ -83,10 +100,10 @@ public class PspValidationConfigurationDialogController extends AbstractControll
             } else if (!pspDir.canRead()) {
                 showError(String.format("Nelze číst obsah adresáře '%s'!", pspDirTxt));
             } else {
-                String monVersion = (String) monVersionChoiceBox.getSelectionModel().getSelectedItem();
-                String perVersion = (String) perVersionChoiceBox.getSelectionModel().getSelectedItem();
+                String monVersion = monVersionChoiceBox.isDisabled() ? null : (String) monVersionChoiceBox.getSelectionModel().getSelectedItem();
+                String perVersion = perVersionChoiceBox.isDisabled() ? null : (String) perVersionChoiceBox.getSelectionModel().getSelectedItem();
                 stage.close();
-                app.validatePsp(pspDir, new Dmf(Dmf.Type.MONOGRAPH, monVersion), new Dmf(Dmf.Type.PERIODICAL, perVersion));
+                app.validatePsp(pspDir, monVersion, perVersion);
             }
         }
     }
@@ -97,10 +114,10 @@ public class PspValidationConfigurationDialogController extends AbstractControll
 
     public void setValidationDataManager(ValidationDataManager validationDataManager) {
         this.validationDataManager = validationDataManager;
-        initChoicBoxes();
+        initChoiceBoxes();
     }
 
-    private void initChoicBoxes() {
+    private void initChoiceBoxes() {
         Set<String> monVersions = validationDataManager.getFdmfRegistry().getMonographFdmfVersions();
         if (monVersions != null) {
             ObservableList<String> monVersionsObservable = FXCollections.observableArrayList(monVersions);
@@ -112,6 +129,22 @@ public class PspValidationConfigurationDialogController extends AbstractControll
             ObservableList<String> perVersionsObservable = FXCollections.observableArrayList(perVersions);
             perVersionChoiceBox.setItems(perVersionsObservable);
             perVersionChoiceBox.getSelectionModel().selectFirst();
+        }
+    }
+
+    public void monVersionForcedChanged(ActionEvent actionEvent) {
+        boolean force = monVersionForcedCheckBox.isSelected();
+        monVersionChoiceBox.setDisable(!force);
+        if (configurationManager != null) {
+            configurationManager.setBoolean(ConfigurationManager.PROP_FORCE_MON_VERSION, force);
+        }
+    }
+
+    public void perVersionForcedChanged(ActionEvent actionEvent) {
+        boolean force = perVersionForcedCheckBox.isSelected();
+        perVersionChoiceBox.setDisable(!force);
+        if (configurationManager != null) {
+            configurationManager.setBoolean(ConfigurationManager.PROP_FORCE_PER_VERSION, force);
         }
     }
 }

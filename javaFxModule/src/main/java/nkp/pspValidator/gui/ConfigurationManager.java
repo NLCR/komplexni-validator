@@ -23,8 +23,9 @@ public class ConfigurationManager {
     public static final String PROP_KAKADU_DIR = "kakadu.dir";
 
     //validation
-    public static final String PROP_LAST_PSP_DIR = "lastPsp.dir";
-
+    public static final String PROP_LAST_PSP_DIR = "last.psp.dir";
+    public static final String PROP_FORCE_MON_VERSION = "force.monograph.version";
+    public static final String PROP_FORCE_PER_VERSION = "force.periodical.version";
 
     //public static final String PROP_VALIDATION_DATA_CHECK_SHOWN = "validationDataCheck.shown";
 
@@ -47,22 +48,44 @@ public class ConfigurationManager {
         return file == null ? null : new File(file);
     }
 
+    public boolean getBooleanOrDefault(String propertyName, boolean defaultValue) {
+        String stringVal = properties.getProperty(propertyName);
+        if (stringVal == null) {
+            return defaultValue;
+        } else {
+            return Boolean.valueOf(stringVal);
+        }
+    }
+
+    public void setBoolean(String propertyName, Boolean value) {
+        properties.setProperty(propertyName, value.toString());
+        saveProperties();
+    }
+
+
     public void setFile(String propertyName, File file) {
         try {
             properties.setProperty(propertyName, file.getCanonicalPath());
             saveProperties();
         } catch (IOException e) {
-            throw new RuntimeException(String.format("chyba ukládání souboru %s", file.getAbsolutePath()), e);
+            throw new RuntimeException(e);
         }
     }
 
-    private void saveProperties() throws IOException {
-        OutputStream out = new FileOutputStream(configFile);
-        properties.store(out, null);
-        out.close();
+    private void saveProperties() {
+        try {
+            OutputStream out = new FileOutputStream(configFile);
+            properties.store(out, null);
+            out.close();
+        } catch (IOException e) {
+            throw new RuntimeException(String.format("chyba při zápisu do souboru %s", configFile.getAbsolutePath()), e);
+        }
+
     }
 
     public Platform getPlatform() {
         return platform;
     }
+
+
 }

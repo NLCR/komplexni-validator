@@ -5,7 +5,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import nkp.pspValidator.shared.Dmf;
+import nkp.pspValidator.shared.DmfDetector;
 import nkp.pspValidator.shared.Platform;
 
 import java.io.File;
@@ -104,11 +104,15 @@ public class Main extends Application {
 
     /**
      * @param pspDir
-     * @param preferedMonographDmf  can be null
-     * @param preferedPeriodicalDmf can be null
+     * @param focedMonographVersion   can be null
+     * @param forcedPeriodicalVersion can be null
      */
-    public void validatePsp(File pspDir, Dmf preferedMonographDmf, Dmf preferedPeriodicalDmf) {
+    public void validatePsp(File pspDir, String focedMonographVersion, String forcedPeriodicalVersion) {
+        DmfDetector dmfDetector = new DmfDetector();
+        //dmfDetector.detectDmfVersionFromInfoFile();
+
         //TODO
-        System.out.println("validating " + pspDir.getAbsolutePath() + ", mon: " + preferedMonographDmf + ", per: " + preferedPeriodicalDmf);
+        System.out.println("validating " + pspDir.getAbsolutePath() + ", mon: " + focedMonographVersion + ", per: " + forcedPeriodicalVersion);
+
     }
 }

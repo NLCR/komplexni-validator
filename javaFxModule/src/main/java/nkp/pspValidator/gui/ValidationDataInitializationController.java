@@ -176,6 +176,11 @@ public class ValidationDataInitializationController extends AbstractController {
         }
     }
 
+    @Override
+    void onConfigurationManagerSet() {
+
+    }
+
     private static final class Result {
         private final boolean ok;
         private final String error;

@@ -99,25 +99,34 @@ public class DmfDetector {
      * Pokud element nenalezne, předpokládá, že je balíček zpracován podle starších DMF, než je 1.5 pro periodika a 1.1 pro monografie (a validuje podle 1.4 pro periodika a 1.0 pro monografie).
      * Pokud element nalezne, podívá se na jeho hodnotu a validuje podle této hodnoty.
      */
-    public String detectDmfVersion(Dmf.Type dmfType, File pspRootDir) throws PspDataException, XmlFileParsingException, InvalidXPathExpressionException {
+    public String detectDmfVersionFromInfoOrDefault(Dmf.Type dmfType, File pspRootDir) throws PspDataException, XmlFileParsingException, InvalidXPathExpressionException {
+        String versionFromInfo = detectDmfVersionFromInfoFile(dmfType, pspRootDir);
+        if (versionFromInfo == null) {
+            switch (dmfType) {
+                case MONOGRAPH:
+                    return DEFAULT_MONOGRAPH_VERSION;
+                case PERIODICAL:
+                    return DEFAULT_PERIODICAL_VERSION;
+                default:
+                    throw new IllegalStateException();
+            }
+        } else {
+            return versionFromInfo;
+        }
+    }
 
+    /**
+     * @param dmfType
+     * @param pspRootDir
+     * @return dmf version found in file INFO or null
+     */
+    public String detectDmfVersionFromInfoFile(Dmf.Type dmfType, File pspRootDir) throws PspDataException, XmlFileParsingException, InvalidXPathExpressionException {
         try {
             File infoFile = findInfoFile(pspRootDir);
             Document infoDoc = loadDocument(infoFile);
             XPathExpression xPathExpression = buildXpathIgnoringNamespaces("/info/metadataversion|/info/metadataVersion");
             String versionFound = ((String) xPathExpression.evaluate(infoDoc, XPathConstants.STRING)).trim();
-            if (versionFound == null || versionFound.isEmpty()) {
-                switch (dmfType) {
-                    case MONOGRAPH:
-                        return DEFAULT_MONOGRAPH_VERSION;
-                    case PERIODICAL:
-                        return DEFAULT_PERIODICAL_VERSION;
-                    default:
-                        throw new IllegalStateException();
-                }
-            } else {
-                return versionFound;
-            }
+            return versionFound == null || versionFound.isEmpty() ? null : versionFound;
         } catch (XPathExpressionException e) {
             throw new InvalidXPathExpressionException("", String.format("chyba v zápisu Xpath: %s", e.getMessage()));
         }
@@ -146,23 +155,23 @@ public class DmfDetector {
     public Dmf resolveDmf(Dmf dmfPrefered, File pspRoot) throws PspDataException, InvalidXPathExpressionException, XmlFileParsingException {
         if (dmfPrefered == null) {//both missing (wrapper is null)
             Dmf.Type type = detectDmfType(pspRoot);
-            String version = detectDmfVersion(type, pspRoot);
+            String version = detectDmfVersionFromInfoOrDefault(type, pspRoot);
             return new Dmf(type, version);
         } else {
             if (dmfPrefered.getType() != null && dmfPrefered.getVersion() != null) { //both present
                 return dmfPrefered;
             } else if (dmfPrefered.getType() == null && dmfPrefered.getVersion() == null) { //both missing
                 Dmf.Type type = detectDmfType(pspRoot);
-                String version = detectDmfVersion(type, pspRoot);
+                String version = detectDmfVersionFromInfoOrDefault(type, pspRoot);
                 return new Dmf(type, version);
             } else if (dmfPrefered.getType() == null) { //only type missing
                 //TODO: logger
                 System.err.println(String.format("Požadována verze DMF (%s), ale neuveden typ (monografie/periodikum). Požadovanou verzi ignoruji.", dmfPrefered.getVersion()));
                 Dmf.Type type = detectDmfType(pspRoot);
-                String version = detectDmfVersion(type, pspRoot);
+                String version = detectDmfVersionFromInfoOrDefault(type, pspRoot);
                 return new Dmf(type, version);
             } else { //only version missing
-                String version = detectDmfVersion(dmfPrefered.getType(), pspRoot);
+                String version = detectDmfVersionFromInfoOrDefault(dmfPrefered.getType(), pspRoot);
                 return new Dmf(dmfPrefered.getType(), version);
             }
         }

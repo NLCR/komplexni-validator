@@ -6,6 +6,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Label;
 import javafx.scene.control.MenuBar;
 import javafx.scene.input.KeyEvent;
 import javafx.stage.Modality;
@@ -31,6 +32,9 @@ public class MainController extends AbstractController {
 
     @FXML
     MenuBar menuBar;
+
+    @FXML
+    Label status;
 
     public void setValidationDataManager(ValidationDataManager validationDataManager) {
         this.validationDataManager = validationDataManager;
@@ -89,6 +93,11 @@ public class MainController extends AbstractController {
     private void showNewDialog() {
         PspValidationConfigurationDialog dialog = new PspValidationConfigurationDialog(menuBar.getScene().getWindow());
         dialog.showAndWait();
+    }
+
+    @Override
+    void onConfigurationManagerSet() {
+
     }
 
 
