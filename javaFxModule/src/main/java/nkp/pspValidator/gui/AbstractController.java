@@ -3,40 +3,26 @@ package nkp.pspValidator.gui;
 import com.sun.deploy.uitoolkit.impl.fx.HostServicesFactory;
 import com.sun.javafx.application.HostServicesDelegate;
 import javafx.application.Application;
-import javafx.stage.Stage;
+
+import java.util.logging.Logger;
 
 /**
- * Created by martin on 9.12.16.
+ * Created by martin on 13.12.16.
  */
 public abstract class AbstractController extends Application {
 
-    protected Stage stage;
-    protected Main app;
-    protected ConfigurationManager configurationManager;
+    private static Logger LOG = Logger.getLogger(AbstractController.class.getSimpleName());
 
-    @Override
-    public void start(Stage stage) throws Exception {
-        this.stage = stage;
-    }
+    protected Main main;
 
-    public void setStage(Stage stage) {
-        this.stage = stage;
-    }
-
-    public void setApp(Main app) {
-        this.app = app;
-    }
-
-    public void setConfigurationManager(ConfigurationManager configurationManager) {
-        this.configurationManager = configurationManager;
-        onConfigurationManagerSet();
+    public void setMain(Main main) {
+        LOG.info("setMain");
+        this.main = main;
     }
 
     protected void openUrl(String url) {
         HostServicesDelegate hostServices = HostServicesFactory.getInstance(this);
         getHostServices().showDocument(url);
     }
-
-    abstract void onConfigurationManagerSet();
 
 }

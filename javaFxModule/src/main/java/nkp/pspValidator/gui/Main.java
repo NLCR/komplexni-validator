@@ -4,18 +4,25 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import nkp.pspValidator.shared.Platform;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.logging.Logger;
 
 public class Main extends Application {
 
-    private Stage stage;
+    private static Logger LOG = Logger.getLogger(Main.class.getSimpleName());
+
+    private Stage primaryStage;
+    private Stage dialogStage;
     private ConfigurationManager configurationManager;
     private ValidationDataManager validationDataManager;
 
+    //controllers
     private MainController mainController;
 
     public static void main(String[] args) {
@@ -24,7 +31,9 @@ public class Main extends Application {
 
     @Override
     public void start(Stage stage) {
-        this.stage = stage;
+        LOG.info("start");
+        this.primaryStage = stage;
+        this.dialogStage = initDialogStage();
         stage.setTitle("PSP Validátor");
 
         //System.out.println("pwd: " + new File(".").getAbsolutePath());
@@ -45,7 +54,10 @@ public class Main extends Application {
 
         try {
             configurationManager = new ConfigurationManager(Platform.detectOs());
+            //initValidationData();
+            openMainWindow();
             initValidationData();
+
             //checkImageUtils();
         } catch (IOException e) {
             e.printStackTrace();
@@ -53,68 +65,92 @@ public class Main extends Application {
         }
     }
 
-    private void initValidationData() throws IOException {
+    private void initValidationData() {
+        ValidationDataInitializationDialog dialog = new ValidationDataInitializationDialog(dialogStage, this);
+        dialog.show();
+    }
+
+    public void checkImageUtils() {
+        ImageUtilsCheckDialog dialog = new ImageUtilsCheckDialog(dialogStage, this);
+        dialog.show();
+    }
+
+
+    public void showNewValidationConfigurationDialog() {
+        /*PspValidationConfigurationDialog dialog = new PspValidationConfigurationDialog(getWindow(), this, configurationManager, validationDataManager);
+        dialog.showAndWait();*/
+        PspValidationConfigurationDialog dialog = new PspValidationConfigurationDialog(dialogStage, this);
+        dialog.show();
+    }
+
+    private Stage initDialogStage() {
+        Stage dialogStage = new Stage();
+        dialogStage.initStyle(StageStyle.UTILITY);
+        dialogStage.initModality(Modality.WINDOW_MODAL);
+        dialogStage.initOwner(primaryStage);
+        return dialogStage;
+    }
+
+    /*private void initValidationData() throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/validationDataInitialization.fxml"));
         Parent root = (Parent) loader.load();
-        stage.setScene(new Scene(root));
-        stage.show();
+        primaryStage.setScene(new Scene(root));
+        primaryStage.show();
         ValidationDataInitializationController controller = (ValidationDataInitializationController) loader.getController();
         controller.setApp(this);
         controller.setConfigurationManager(configurationManager);
         controller.startInitalization();
-    }
-
-    public void checkImageUtils() {
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/imageUtilsCheck.fxml"));
-            Parent root = (Parent) loader.load();
-            //stage.setScene(new Scene(root, 1000, 700));
-            stage.setScene(new Scene(root));
-            stage.show();
-            ImageUtilsCheckController controller = (ImageUtilsCheckController) loader.getController();
-            controller.setApp(this);
-            controller.setValidationDataManager(validationDataManager);
-            controller.setConfigurationManager(configurationManager);
-            controller.startAllChecks();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-    }
+    }*/
 
     public void openMainWindow() {
+        LOG.info("openMainWindow");
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/main.fxml"));
             Parent root = (Parent) loader.load();
-            //stage.setScene(new Scene(root, 1000, 700));
-            stage.setScene(new Scene(root));
-            stage.show();
-            stage.setHeight(700);
-            stage.setMinHeight(700);
-            stage.setWidth(650);
-            stage.setMinWidth(650);
+            //primaryStage.setScene(new Scene(root, 1000, 700));
+            primaryStage.setScene(new Scene(root));
+            primaryStage.show();
+            primaryStage.setHeight(700);
+            primaryStage.setMinHeight(700);
+            primaryStage.setWidth(650);
+            primaryStage.setMinWidth(650);
             mainController = (MainController) loader.getController();
-            mainController.setApp(this);
-            mainController.setValidationDataManager(validationDataManager);
-            mainController.setConfigurationManager(configurationManager);
+            mainController.setMain(this);
+            //mainController.setApp(this);
+            //TODO: zatim nebude k dispozici
+            //mainController.setConfigurationManager(configurationManager);
+            //mainController.setMain(mainController);
+            //mainController.setValidationDataManager(validationDataManager);
+            //mainController.startAllChecks();
             //controller.startAllChecks();
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }
 
+    public ConfigurationManager getConfigurationManager() {
+        return configurationManager;
+    }
+
+
+    /*public void setValidationDataManager(ValidationDataManager validationDataManager) {
+        this.validationDataManager = validationDataManager;
+    }*/
+
+
+    /*public void validatePsp(File pspDir, String focedMonographVersion, String forcedPeriodicalVersion) {
+        mainController.validatePsp(pspDir, focedMonographVersion, forcedPeriodicalVersion);
+    }*/
+    public ValidationDataManager getValidationDataManager() {
+        return validationDataManager;
+    }
 
     public void setValidationDataManager(ValidationDataManager validationDataManager) {
         this.validationDataManager = validationDataManager;
     }
 
 
-    /**
-     * @param pspDir
-     * @param focedMonographVersion   can be null
-     * @param forcedPeriodicalVersion can be null
-     */
-    public void validatePsp(File pspDir, String focedMonographVersion, String forcedPeriodicalVersion) {
-        mainController.validatePsp(pspDir, focedMonographVersion, forcedPeriodicalVersion);
+    public void validatePsp(File pspDir, String monVersion, String perVersion) {
+        mainController.validatePsp(pspDir, monVersion, perVersion);
     }
-
 }

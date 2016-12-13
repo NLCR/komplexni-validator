@@ -8,9 +8,10 @@
       xmlns:fx="http://javafx.com/fxml/1"
       fx:controller="nkp.pspValidator.gui.ImageUtilsCheckController"
       fx:id="container"
-      maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
+
 >
     <children>
+        <!--maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"-->
 
         <!--TODO: tabulka by mela zaujimat celou sirku-->
 

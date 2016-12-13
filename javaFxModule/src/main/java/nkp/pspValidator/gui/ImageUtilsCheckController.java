@@ -22,7 +22,7 @@ import java.util.Map;
 /**
  * Created by martin on 2.12.16.
  */
-public class ImageUtilsCheckController extends AbstractController {
+public class ImageUtilsCheckController extends DialogController {
 
     private static final String JPYLYZER_INSTALLATION_URL = "https://github.com/rzeh4n/psp-validator/wiki/Instalace#jpylyzer";
     private static final String JHOVE_INSTALLATION_URL = "https://github.com/rzeh4n/psp-validator/wiki/Instalace#jhove";
@@ -144,7 +144,7 @@ public class ImageUtilsCheckController extends AbstractController {
 
     //other data
 
-    private ValidationDataManager validationDataManager;
+    //private ValidationDataManager validationDataManager;
     private final Map<ImageUtil, Boolean> utilsFinished = new HashMap<>();
 
     public ImageUtilsCheckController() {
@@ -173,9 +173,9 @@ public class ImageUtilsCheckController extends AbstractController {
         }
     }
 
-    public void setValidationDataManager(ValidationDataManager validationDataManager) {
+    /*public void setValidationDataManager(ValidationDataManager validationDataManager) {
         this.validationDataManager = validationDataManager;
-    }
+    }*/
 
     public void startAllChecks() {
         retryAll(null);
@@ -214,6 +214,7 @@ public class ImageUtilsCheckController extends AbstractController {
                                 ImageView imgOk, ImageView imgError,
                                 Button btnRetry, Button btnSelectPath, Button btnInstall
     ) {
+        System.out.println("checkImageUtil");
         //show progress indicator
         progresIndicator.setVisible(true);
         //hide buttons, texts, images
@@ -225,11 +226,12 @@ public class ImageUtilsCheckController extends AbstractController {
         btnInstall.setVisible(false);
         setUtilFinished(util, false);
         btnContinue.setDisable(true);
+        main.getValidationDataManager().getImageUtilManager().toString();
 
         Task task = new Task<Void>() {
             @Override
             protected Void call() throws Exception {
-                ImageUtilManager utilManager = validationDataManager.getImageUtilManager();
+                ImageUtilManager utilManager = main.getValidationDataManager().getImageUtilManager();
                 try {
                     Thread.sleep(300);
                     if (!utilManager.isVersionDetectionDefined(util)) {
@@ -237,7 +239,7 @@ public class ImageUtilsCheckController extends AbstractController {
                     } else {
                         String version = utilManager.runUtilVersionDetection(util);
                         //System.out.println(version);
-                        validationDataManager.getFdmfRegistry().initJ2kProfiles(utilManager);
+                        main.getValidationDataManager().getFdmfRegistry().initJ2kProfiles(utilManager);
                         processResult(new CheckResult(true, version));
                         utilManager.setUtilAvailable(util, true);
                     }
@@ -273,7 +275,10 @@ public class ImageUtilsCheckController extends AbstractController {
                     if (isAllUtilsFinished()) {
                         btnContinue.setDisable(false);
                         //TODO: tohle jen docasne, ted pokracuju rovnou, pokud je vse ok
-                        app.openMainWindow();
+                        //app.openMainWindow();
+                        //stage.close();
+
+
                     }
                 });
             }
@@ -283,7 +288,7 @@ public class ImageUtilsCheckController extends AbstractController {
 
     public void selectJpylyzerPath(ActionEvent actionEvent) {
         File defaultDir = null;
-        switch (configurationManager.getPlatform().getOperatingSystem()) {
+        switch (getConfigurationManager().getPlatform().getOperatingSystem()) {
             case WINDOWS:
                 defaultDir = new File("C:\\Program Files");
                 break;
@@ -294,7 +299,7 @@ public class ImageUtilsCheckController extends AbstractController {
 
     public void selectJhovePath(ActionEvent actionEvent) {
         File defaultDir = null;
-        switch (configurationManager.getPlatform().getOperatingSystem()) {
+        switch (getConfigurationManager().getPlatform().getOperatingSystem()) {
             case WINDOWS:
                 defaultDir = new File("C:\\Program Files");
                 break;
@@ -304,7 +309,7 @@ public class ImageUtilsCheckController extends AbstractController {
 
     public void selectImageMagickPath(ActionEvent actionEvent) {
         File defaultDir = null;
-        switch (configurationManager.getPlatform().getOperatingSystem()) {
+        switch (getConfigurationManager().getPlatform().getOperatingSystem()) {
             case WINDOWS:
                 defaultDir = new File("C:\\Program Files");
                 break;
@@ -314,7 +319,7 @@ public class ImageUtilsCheckController extends AbstractController {
 
     public void selectKakaduPath(ActionEvent actionEvent) {
         File defaultDir = null;
-        switch (configurationManager.getPlatform().getOperatingSystem()) {
+        switch (getConfigurationManager().getPlatform().getOperatingSystem()) {
             case WINDOWS:
                 defaultDir = new File("C:\\Program Files");
                 break;
@@ -325,7 +330,7 @@ public class ImageUtilsCheckController extends AbstractController {
     private void selectImageUtilPath(String property, File defaultDir, ImageUtil util, MyListener listener) {
         DirectoryChooser chooser = new DirectoryChooser();
         chooser.setTitle(String.format("Vyberte adresář se spustitelnými soubory %s", util.getUserFriendlyName()));
-        File currentDir = configurationManager.getFileOrNull(property);
+        File currentDir = getConfigurationManager().getFileOrNull(property);
         if (currentDir != null && currentDir.exists()) {
             chooser.setInitialDirectory(currentDir);
         } else if (defaultDir != null && defaultDir.exists()) {
@@ -333,8 +338,8 @@ public class ImageUtilsCheckController extends AbstractController {
         }
         File selectedDirectory = chooser.showDialog(stage);
         if (selectedDirectory != null) {
-            configurationManager.setFile(property, selectedDirectory);
-            validationDataManager.getImageUtilManager().setPath(util, selectedDirectory);
+            getConfigurationManager().setFile(property, selectedDirectory);
+            main.getValidationDataManager().getImageUtilManager().setPath(util, selectedDirectory);
             listener.onFinished();
         }
     }
@@ -361,7 +366,8 @@ public class ImageUtilsCheckController extends AbstractController {
     }
 
     public void continueInApp(ActionEvent actionEvent) {
-        app.openMainWindow();
+        stage.hide();
+        //app.openMainWindow();
     }
 
     @Override

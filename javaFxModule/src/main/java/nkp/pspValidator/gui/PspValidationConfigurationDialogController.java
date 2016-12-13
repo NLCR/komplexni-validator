@@ -14,15 +14,13 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Set;
 
-
 /**
- * Created by martin on 12.12.16.
+ * Created by martin on 13.12.16.
  */
-public class PspValidationConfigurationDialogController extends AbstractController {
-
+public class PspValidationConfigurationDialogController extends DialogController {
 
     private ValidationDataManager validationDataManager;
-
+    //private MainController mainController;
 
     @FXML
     TextField pspDirTextField;
@@ -42,7 +40,6 @@ public class PspValidationConfigurationDialogController extends AbstractControll
     @FXML
     Label errorMessageLabel;
 
-
     @FXML
     private void initialize() {
         //System.out.println("initialize");
@@ -52,8 +49,8 @@ public class PspValidationConfigurationDialogController extends AbstractControll
 
     @Override
     void onConfigurationManagerSet() {
-        boolean monVersionForced = configurationManager.getBooleanOrDefault(ConfigurationManager.PROP_FORCE_MON_VERSION, false);
-        boolean perVersionForced = configurationManager.getBooleanOrDefault(ConfigurationManager.PROP_FORCE_PER_VERSION, false);
+        boolean monVersionForced = getConfigurationManager().getBooleanOrDefault(ConfigurationManager.PROP_FORCE_MON_VERSION, false);
+        boolean perVersionForced = getConfigurationManager().getBooleanOrDefault(ConfigurationManager.PROP_FORCE_PER_VERSION, false);
         monVersionForcedCheckBox.setSelected(monVersionForced);
         monVersionChoiceBox.setDisable(!monVersionForced);
         perVersionForcedCheckBox.setSelected(perVersionForced);
@@ -63,7 +60,7 @@ public class PspValidationConfigurationDialogController extends AbstractControll
     public void selectPspDir(ActionEvent actionEvent) {
         DirectoryChooser chooser = new DirectoryChooser();
         chooser.setTitle("Vyberte kořenový adresář PSP balíku");
-        File lastPspDir = configurationManager.getFileOrNull(ConfigurationManager.PROP_LAST_PSP_DIR);
+        File lastPspDir = getConfigurationManager().getFileOrNull(ConfigurationManager.PROP_LAST_PSP_DIR);
         if (lastPspDir != null && lastPspDir.exists()) {
             File parent = lastPspDir.getParentFile();
             if (parent != null && parent.exists()) {
@@ -72,7 +69,7 @@ public class PspValidationConfigurationDialogController extends AbstractControll
         }
         File selectedDir = chooser.showDialog(stage);
         if (selectedDir != null) {
-            configurationManager.setFile(ConfigurationManager.PROP_LAST_PSP_DIR, selectedDir);
+            getConfigurationManager().setFile(ConfigurationManager.PROP_LAST_PSP_DIR, selectedDir);
             try {
                 pspDirTextField.setText(selectedDir.getCanonicalPath());
             } catch (IOException e) {
@@ -102,8 +99,8 @@ public class PspValidationConfigurationDialogController extends AbstractControll
             } else {
                 String monVersion = monVersionChoiceBox.isDisabled() ? null : (String) monVersionChoiceBox.getSelectionModel().getSelectedItem();
                 String perVersion = perVersionChoiceBox.isDisabled() ? null : (String) perVersionChoiceBox.getSelectionModel().getSelectedItem();
-                stage.close();
-                app.validatePsp(pspDir, monVersion, perVersion);
+                stage.hide();
+                main.validatePsp(pspDir, monVersion, perVersion);
             }
         }
     }
@@ -135,16 +132,20 @@ public class PspValidationConfigurationDialogController extends AbstractControll
     public void monVersionForcedChanged(ActionEvent actionEvent) {
         boolean force = monVersionForcedCheckBox.isSelected();
         monVersionChoiceBox.setDisable(!force);
-        if (configurationManager != null) {
-            configurationManager.setBoolean(ConfigurationManager.PROP_FORCE_MON_VERSION, force);
+        if (getConfigurationManager() != null) {
+            getConfigurationManager().setBoolean(ConfigurationManager.PROP_FORCE_MON_VERSION, force);
         }
     }
 
     public void perVersionForcedChanged(ActionEvent actionEvent) {
         boolean force = perVersionForcedCheckBox.isSelected();
         perVersionChoiceBox.setDisable(!force);
-        if (configurationManager != null) {
-            configurationManager.setBoolean(ConfigurationManager.PROP_FORCE_PER_VERSION, force);
+        if (getConfigurationManager() != null) {
+            getConfigurationManager().setBoolean(ConfigurationManager.PROP_FORCE_PER_VERSION, force);
         }
     }
+
+    /*public void setMainController(MainController mainController) {
+        this.mainController = mainController;
+    }*/
 }

@@ -9,6 +9,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ProgressIndicator;
 import javafx.scene.image.ImageView;
 import javafx.stage.DirectoryChooser;
+import javafx.stage.Window;
 import nkp.pspValidator.shared.FdmfRegistry;
 import nkp.pspValidator.shared.engine.exceptions.ValidatorConfigurationException;
 import nkp.pspValidator.shared.imageUtils.ImageUtilManager;
@@ -16,11 +17,14 @@ import nkp.pspValidator.shared.imageUtils.ImageUtilManagerFactory;
 
 import java.io.File;
 import java.util.Random;
+import java.util.logging.Logger;
 
 /**
  * Created by martin on 9.12.16.
  */
-public class ValidationDataInitializationController extends AbstractController {
+public class ValidationDataInitializationController extends DialogController {
+
+    private static Logger LOG = Logger.getLogger(ValidationDataInitializationController.class.getSimpleName());
 
     @FXML
     ProgressIndicator progressIndicator;
@@ -46,8 +50,8 @@ public class ValidationDataInitializationController extends AbstractController {
     @FXML
     Button btnSetFdmfsRootDir;
 
-
     public void startInitalization() {
+        LOG.info("startInitialization");
         //show progress
         progressIndicator.setVisible(true);
         progressStatusLabel.setVisible(true);
@@ -60,6 +64,7 @@ public class ValidationDataInitializationController extends AbstractController {
         btnContinue.setVisible(false);
         btnClose.setVisible(false);
         btnSetFdmfsRootDir.setVisible(false);
+        getConfigurationManager();
 
         Task task = new Task<Void>() {
             private ValidationDataManager validationDataManager;
@@ -68,8 +73,8 @@ public class ValidationDataInitializationController extends AbstractController {
             protected Void call() throws Exception {
                 try {
                     Thread.sleep(300);
-                    validationDataManager = new ValidationDataManager(configurationManager);
-                    File fdmfsRoot = configurationManager.getFileOrNull(ConfigurationManager.PROP_DMF_DIR);
+                    validationDataManager = new ValidationDataManager(getConfigurationManager());
+                    File fdmfsRoot = getConfigurationManager().getFileOrNull(ConfigurationManager.PROP_DMF_DIR);
                     if (fdmfsRoot == null) {
                         processResult(new Result(false, "není definován kořenový adresář pro validační soubory"));
                     } else {
@@ -78,7 +83,7 @@ public class ValidationDataInitializationController extends AbstractController {
                         updateStatus("kontroluji " + fdmfsRoot.getAbsolutePath());
                         File imageUtilConfig = getImageUtilsConfigFile(fdmfsRoot);
                         //System.out.println(imageUtilConfig.getAbsolutePath());
-                        ImageUtilManager imageUtilManager = new ImageUtilManagerFactory(imageUtilConfig).buildImageUtilManager(configurationManager.getPlatform().getOperatingSystem());
+                        ImageUtilManager imageUtilManager = new ImageUtilManagerFactory(imageUtilConfig).buildImageUtilManager(getConfigurationManager().getPlatform().getOperatingSystem());
                         validationDataManager.setImageUtilManager(imageUtilManager);
                         validationDataManager.setFdmfRegistry(new FdmfRegistry(fdmfsRoot));
                         //FdmfRegistry fdmfRegistry = new FdmfRegistry(fdmfsRoot);
@@ -131,10 +136,15 @@ public class ValidationDataInitializationController extends AbstractController {
                         imgOk.setVisible(true);
                         btnContinue.setVisible(true);
                         progressStatusLabel.setText("OK");
-                        app.setValidationDataManager(validationDataManager);
+                        /*app.setValidationDataManager(validationDataManager);
                         //TODO: pokud uz jednou zobrazeno, tak rovnou zavolat dalsi fazi
                         //ted pokracuju rovnou, pokud je vse ok
-                        app.checkImageUtils();
+                        app.checkImageUtils();*/
+
+                        main.setValidationDataManager(validationDataManager);
+                        //TODO: pokud uz jednou zobrazeno, tak rovnou zavolat dalsi fazi
+                        //ted pokracuju rovnou, pokud je vse ok
+                        //mainController.checkImageUtils();
                     } else {//error
                         imgError.setVisible(true);
                         progressStatusLabel.setText("CHYBA");
@@ -150,7 +160,11 @@ public class ValidationDataInitializationController extends AbstractController {
     }
 
     public void continueInApp(ActionEvent actionEvent) {
-        app.checkImageUtils();
+        //stage.close();
+        //stage.hide();
+        //stage.hide();
+        main.checkImageUtils();
+        //app.checkImageUtils();
     }
 
     public void retry(ActionEvent actionEvent) {
@@ -165,13 +179,13 @@ public class ValidationDataInitializationController extends AbstractController {
     public void setFdmfsRootDir(ActionEvent actionEvent) {
         DirectoryChooser chooser = new DirectoryChooser();
         chooser.setTitle("Vyberte kořenový adresář s validačními soubory");
-        File currentDir = configurationManager.getFileOrNull(ConfigurationManager.PROP_DMF_DIR);
+        File currentDir = getConfigurationManager().getFileOrNull(ConfigurationManager.PROP_DMF_DIR);
         if (currentDir != null) {
             chooser.setInitialDirectory(currentDir);
         }
         File selectedDirectory = chooser.showDialog(stage);
         if (selectedDirectory != null) {
-            configurationManager.setFile(ConfigurationManager.PROP_DMF_DIR, selectedDirectory);
+            getConfigurationManager().setFile(ConfigurationManager.PROP_DMF_DIR, selectedDirectory);
             startInitalization();
         }
     }
@@ -198,4 +212,5 @@ public class ValidationDataInitializationController extends AbstractController {
             return error;
         }
     }
+
 }
