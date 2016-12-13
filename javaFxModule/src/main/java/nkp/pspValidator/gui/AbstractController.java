@@ -3,6 +3,8 @@ package nkp.pspValidator.gui;
 import com.sun.deploy.uitoolkit.impl.fx.HostServicesFactory;
 import com.sun.javafx.application.HostServicesDelegate;
 import javafx.application.Application;
+import javafx.application.Platform;
+import javafx.event.ActionEvent;
 
 import java.util.logging.Logger;
 
@@ -16,13 +18,16 @@ public abstract class AbstractController extends Application {
     protected Main main;
 
     public void setMain(Main main) {
-        //LOG.info("setMain");
         this.main = main;
     }
 
     protected void openUrl(String url) {
         HostServicesDelegate hostServices = HostServicesFactory.getInstance(this);
         getHostServices().showDocument(url);
+    }
+
+    protected void closeApp() {
+        Platform.exit();
     }
 
 

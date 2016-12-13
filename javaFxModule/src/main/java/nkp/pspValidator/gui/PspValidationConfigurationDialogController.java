@@ -3,12 +3,14 @@ package nkp.pspValidator.gui;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.DirectoryChooser;
+import javafx.stage.WindowEvent;
 
 import java.io.File;
 import java.io.IOException;
@@ -44,6 +46,16 @@ public class PspValidationConfigurationDialogController extends DialogController
     private void initialize() {
         //System.out.println("initialize");
         //spousti se po Parent root = (Parent) loader.load();
+    }
+
+    @Override
+    EventHandler<WindowEvent> getOnCloseEventHandler() {
+        return new EventHandler<WindowEvent>() {
+            @Override
+            public void handle(WindowEvent event) {
+                //nothing, event not consumed, so just closes
+            }
+        };
     }
 
 

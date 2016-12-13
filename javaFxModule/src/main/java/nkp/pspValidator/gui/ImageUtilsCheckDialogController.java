@@ -3,12 +3,14 @@ package nkp.pspValidator.gui;
 import javafx.application.Platform;
 import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ProgressIndicator;
 import javafx.scene.image.ImageView;
 import javafx.stage.DirectoryChooser;
+import javafx.stage.WindowEvent;
 import nkp.pspValidator.shared.engine.exceptions.ValidatorConfigurationException;
 import nkp.pspValidator.shared.imageUtils.CliCommand;
 import nkp.pspValidator.shared.imageUtils.ImageUtil;
@@ -17,6 +19,7 @@ import nkp.pspValidator.shared.imageUtils.ImageUtilManager;
 import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Random;
 
 
 /**
@@ -127,8 +130,28 @@ public class ImageUtilsCheckDialogController extends DialogController {
     Button btnContinue;
 
     //other data
-
     private final Map<ImageUtil, Boolean> utilsFinished = new HashMap<>();
+    private DialogState state = DialogState.RUNNING;
+
+    @Override
+    EventHandler<WindowEvent> getOnCloseEventHandler() {
+        return new EventHandler<WindowEvent>() {
+            @Override
+            public void handle(WindowEvent event) {
+                switch (state) {
+                    case RUNNING:
+                        event.consume();
+                        break;
+                    case ERROR:
+                        closeApp();
+                        break;
+                    case FINISHED:
+                        event.consume();
+                        continueInApp(null);
+                }
+            }
+        };
+    }
 
     public ImageUtilsCheckDialogController() {
         synchronized (utilsFinished) {
@@ -158,6 +181,7 @@ public class ImageUtilsCheckDialogController extends DialogController {
 
     @Override
     void startNow() {
+        state = DialogState.RUNNING;
         checkJhove();
         checkJpylyzer();
         checkImageMagick();
@@ -213,7 +237,8 @@ public class ImageUtilsCheckDialogController extends DialogController {
             protected Void call() throws Exception {
                 ImageUtilManager utilManager = main.getValidationDataManager().getImageUtilManager();
                 try {
-                    Thread.sleep(300);
+                    //Thread.sleep(3000);
+                    Thread.sleep(new Random().nextInt(3000));
                     if (!utilManager.isVersionDetectionDefined(util)) {
                         processResult(new CheckResult(false, String.format("detekce verze není definována pro %s", util)));
                     } else {
@@ -253,12 +278,11 @@ public class ImageUtilsCheckDialogController extends DialogController {
                     }
                     setUtilFinished(util, true);
                     if (isAllUtilsFinished()) {
+                        state = DialogState.FINISHED;
                         btnContinue.setDisable(false);
                         //TODO: tohle jen docasne, ted pokracuju rovnou, pokud je vse ok
                         //app.openMainWindow();
                         //stage.close();
-
-
                     }
                 });
             }
@@ -367,5 +391,9 @@ public class ImageUtilsCheckDialogController extends DialogController {
         void onFinished();
     }
 
+
+    public static enum DialogState {
+        RUNNING, FINISHED, ERROR;
+    }
 
 }

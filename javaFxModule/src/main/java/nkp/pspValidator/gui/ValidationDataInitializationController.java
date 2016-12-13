@@ -3,12 +3,14 @@ package nkp.pspValidator.gui;
 import javafx.application.Platform;
 import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ProgressIndicator;
 import javafx.scene.image.ImageView;
 import javafx.stage.DirectoryChooser;
+import javafx.stage.WindowEvent;
 import nkp.pspValidator.shared.FdmfRegistry;
 import nkp.pspValidator.shared.engine.exceptions.ValidatorConfigurationException;
 import nkp.pspValidator.shared.imageUtils.ImageUtilManager;
@@ -49,9 +51,33 @@ public class ValidationDataInitializationController extends DialogController {
     @FXML
     Button btnSetFdmfsRootDir;
 
+    //other data
+    private DialogState state = DialogState.RUNNING;
+
+    @Override
+    EventHandler<WindowEvent> getOnCloseEventHandler() {
+        return new EventHandler<WindowEvent>() {
+            @Override
+            public void handle(WindowEvent event) {
+                switch (state) {
+                    case RUNNING:
+                        event.consume();
+                        break;
+                    case ERROR:
+                        closeApp();
+                        break;
+                    case FINISHED:
+                        event.consume();
+                        continueInApp(null);
+                }
+            }
+        };
+    }
+
     @Override
     void startNow() {
         LOG.info("startNow");
+        state = DialogState.RUNNING;
         //show progress
         progressIndicator.setVisible(true);
         progressStatusLabel.setVisible(true);
@@ -133,6 +159,7 @@ public class ValidationDataInitializationController extends DialogController {
                     Random random = new Random();
                     progressIndicator.setVisible(false);
                     if (result.isOk()) {//ok
+                        state = DialogState.FINISHED;
                         imgOk.setVisible(true);
                         btnContinue.setVisible(true);
                         progressStatusLabel.setText("OK");
@@ -145,7 +172,9 @@ public class ValidationDataInitializationController extends DialogController {
                         //TODO: pokud uz jednou zobrazeno, tak rovnou zavolat dalsi fazi
                         //ted pokracuju rovnou, pokud je vse ok
                         //mainController.checkImageUtils();
+                        continueInApp(null);
                     } else {//error
+                        state = DialogState.ERROR;
                         imgError.setVisible(true);
                         progressStatusLabel.setText("CHYBA");
                         errorLabel.setVisible(true);
@@ -160,15 +189,11 @@ public class ValidationDataInitializationController extends DialogController {
     }
 
     public void continueInApp(ActionEvent actionEvent) {
-        //stage.close();
-        //stage.hide();
-        //stage.hide();
         main.checkImageUtils();
-        //app.checkImageUtils();
     }
 
     public void closeApp(ActionEvent actionEvent) {
-        Platform.exit();
+        closeApp();
     }
 
     public void setFdmfsRootDir(ActionEvent actionEvent) {
@@ -202,6 +227,10 @@ public class ValidationDataInitializationController extends DialogController {
         public String getError() {
             return error;
         }
+    }
+
+    public static enum DialogState {
+        RUNNING, FINISHED, ERROR;
     }
 
 }

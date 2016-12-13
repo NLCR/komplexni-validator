@@ -1,6 +1,8 @@
 package nkp.pspValidator.gui;
 
+import javafx.event.EventHandler;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 
 import java.util.logging.Logger;
 
@@ -27,5 +29,7 @@ public abstract class DialogController extends AbstractController {
     }
 
     abstract void startNow();
+
+    abstract EventHandler<WindowEvent> getOnCloseEventHandler();
 
 }

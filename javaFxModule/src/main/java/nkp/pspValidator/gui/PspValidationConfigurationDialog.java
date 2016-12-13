@@ -35,6 +35,7 @@ public class PspValidationConfigurationDialog {
             Parent root = (Parent) loader.load();
             stage.setScene(new Scene(root));
             PspValidationConfigurationDialogController controller = loader.getController();
+            stage.setOnCloseRequest(controller.getOnCloseEventHandler());
             controller.setMain(main);
             controller.setStage(stage);
             controller.startNow();

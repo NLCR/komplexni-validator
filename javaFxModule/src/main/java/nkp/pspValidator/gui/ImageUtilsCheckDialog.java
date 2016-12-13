@@ -35,6 +35,7 @@ public class ImageUtilsCheckDialog {
             Parent root = (Parent) loader.load();
             stage.setScene(new Scene(root));
             ImageUtilsCheckDialogController controller = loader.getController();
+            stage.setOnCloseRequest(controller.getOnCloseEventHandler());
             controller.setMain(main);
             controller.setStage(stage);
             controller.startNow();
