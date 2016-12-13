@@ -31,35 +31,14 @@ public class Main extends Application {
 
     @Override
     public void start(Stage stage) {
-        LOG.info("start");
-        this.primaryStage = stage;
-        this.dialogStage = initDialogStage();
-        stage.setTitle("PSP Validátor");
-
-        //System.out.println("pwd: " + new File(".").getAbsolutePath());
-
-        //System.out.println("fdmf.dir:" + config.getFdmfConfig().getAbsolutePath());
-
-        //Font.loadFont(getClass().getResource("/fonts/VarelaRound-Regular.ttf").toExternalForm(), 10);
-        /*Parent root = FXMLLoader.load(getClass().getResource("/fxml/sample.fxml"));
-        primaryStage.setTitle("PSP validator");
-        primaryStage.setScene(new Scene(root, 1000, 700));
-        primaryStage.show();*/
-
-        //init screen
-        /*Parent root = FXMLLoader.load(getClass().getResource("/fxml/imageUtilsCheck.fxml"));
-        primaryStage.setTitle("PSP validator");
-        primaryStage.setScene(new Scene(root, 1000, 700));
-        primaryStage.show();*/
-
         try {
+            this.primaryStage = stage;
+            this.dialogStage = initDialogStage();
+            primaryStage.setTitle("PSP Validátor");
             configurationManager = new ConfigurationManager(Platform.detectOs());
-            //initValidationData();
-            openMainWindow();
+            mainController = openMainWindow();
             initValidationData();
-
-            //checkImageUtils();
-        } catch (IOException e) {
+        } catch (Throwable e) {
             e.printStackTrace();
             //TODO: a zobrazit dialog s tlacitkem OK a stack tracem, ktery apku zavre
         }
@@ -77,32 +56,23 @@ public class Main extends Application {
 
 
     public void showNewValidationConfigurationDialog() {
-        /*PspValidationConfigurationDialog dialog = new PspValidationConfigurationDialog(getWindow(), this, configurationManager, validationDataManager);
-        dialog.showAndWait();*/
         PspValidationConfigurationDialog dialog = new PspValidationConfigurationDialog(dialogStage, this);
         dialog.show();
+    }
+
+    public void runPspValidation(File pspDir, String monVersion, String perVersion) {
+        mainController.runPspValidation(pspDir, monVersion, perVersion);
     }
 
     private Stage initDialogStage() {
         Stage dialogStage = new Stage();
         dialogStage.initStyle(StageStyle.UTILITY);
-        dialogStage.initModality(Modality.WINDOW_MODAL);
+        dialogStage.initModality(Modality.APPLICATION_MODAL);
         dialogStage.initOwner(primaryStage);
         return dialogStage;
     }
 
-    /*private void initValidationData() throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/validationDataInitialization.fxml"));
-        Parent root = (Parent) loader.load();
-        primaryStage.setScene(new Scene(root));
-        primaryStage.show();
-        ValidationDataInitializationController controller = (ValidationDataInitializationController) loader.getController();
-        controller.setApp(this);
-        controller.setConfigurationManager(configurationManager);
-        controller.startInitalization();
-    }*/
-
-    public void openMainWindow() {
+    public MainController openMainWindow() {
         LOG.info("openMainWindow");
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/main.fxml"));
@@ -114,15 +84,9 @@ public class Main extends Application {
             primaryStage.setMinHeight(700);
             primaryStage.setWidth(650);
             primaryStage.setMinWidth(650);
-            mainController = (MainController) loader.getController();
-            mainController.setMain(this);
-            //mainController.setApp(this);
-            //TODO: zatim nebude k dispozici
-            //mainController.setConfigurationManager(configurationManager);
-            //mainController.setMain(mainController);
-            //mainController.setValidationDataManager(validationDataManager);
-            //mainController.startAllChecks();
-            //controller.startAllChecks();
+            MainController controller = loader.getController();
+            controller.setMain(this);
+            return controller;
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -132,15 +96,6 @@ public class Main extends Application {
         return configurationManager;
     }
 
-
-    /*public void setValidationDataManager(ValidationDataManager validationDataManager) {
-        this.validationDataManager = validationDataManager;
-    }*/
-
-
-    /*public void validatePsp(File pspDir, String focedMonographVersion, String forcedPeriodicalVersion) {
-        mainController.validatePsp(pspDir, focedMonographVersion, forcedPeriodicalVersion);
-    }*/
     public ValidationDataManager getValidationDataManager() {
         return validationDataManager;
     }
@@ -149,8 +104,4 @@ public class Main extends Application {
         this.validationDataManager = validationDataManager;
     }
 
-
-    public void validatePsp(File pspDir, String monVersion, String perVersion) {
-        mainController.validatePsp(pspDir, monVersion, perVersion);
-    }
 }

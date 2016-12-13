@@ -9,7 +9,6 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ProgressIndicator;
 import javafx.scene.image.ImageView;
 import javafx.stage.DirectoryChooser;
-import javafx.stage.Window;
 import nkp.pspValidator.shared.FdmfRegistry;
 import nkp.pspValidator.shared.engine.exceptions.ValidatorConfigurationException;
 import nkp.pspValidator.shared.imageUtils.ImageUtilManager;
@@ -50,8 +49,9 @@ public class ValidationDataInitializationController extends DialogController {
     @FXML
     Button btnSetFdmfsRootDir;
 
-    public void startInitalization() {
-        LOG.info("startInitialization");
+    @Override
+    void startNow() {
+        LOG.info("startNow");
         //show progress
         progressIndicator.setVisible(true);
         progressStatusLabel.setVisible(true);
@@ -167,14 +167,9 @@ public class ValidationDataInitializationController extends DialogController {
         //app.checkImageUtils();
     }
 
-    public void retry(ActionEvent actionEvent) {
-        startInitalization();
-    }
-
     public void closeApp(ActionEvent actionEvent) {
         Platform.exit();
     }
-
 
     public void setFdmfsRootDir(ActionEvent actionEvent) {
         DirectoryChooser chooser = new DirectoryChooser();
@@ -186,14 +181,10 @@ public class ValidationDataInitializationController extends DialogController {
         File selectedDirectory = chooser.showDialog(stage);
         if (selectedDirectory != null) {
             getConfigurationManager().setFile(ConfigurationManager.PROP_DMF_DIR, selectedDirectory);
-            startInitalization();
+            startNow();
         }
     }
 
-    @Override
-    void onConfigurationManagerSet() {
-
-    }
 
     private static final class Result {
         private final boolean ok;

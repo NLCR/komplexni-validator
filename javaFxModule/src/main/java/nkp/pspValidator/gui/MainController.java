@@ -26,9 +26,6 @@ public class MainController extends AbstractController {
     //TODO: nahradit konkretni wiki strankou
     private static final String URL_ONLINE_HELP = "https://github.com/rzeh4n/psp-validator/wiki";
 
-    /*private ConfigurationManager configurationManager;
-    private ValidationDataManager validationDataManager;*/
-
     @FXML
     BorderPane container;
 
@@ -46,26 +43,8 @@ public class MainController extends AbstractController {
 
     }
 
-
-    /*public void setConfigurationManager(ConfigurationManager configurationManager) {
-        this.configurationManager = configurationManager;
-        //onConfigurationManagerSet();
-    }
-
-    public ConfigurationManager getConfigurationManager() {
-        return configurationManager;
-    }
-
-    public void setValidationDataManager(ValidationDataManager validationDataManager) {
-        this.validationDataManager = validationDataManager;
-    }
-
-    public ValidationDataManager getValidationDataManager() {
-        return validationDataManager;
-    }*/
-
     public void handleKeyInput(KeyEvent keyEvent) {
-
+        //TODO: zpracovani menu
     }
 
     public void showOnlineHelp(ActionEvent actionEvent) {
@@ -84,63 +63,12 @@ public class MainController extends AbstractController {
         return container.getScene().getWindow();
     }
 
-    private void showNewDialog() {
-        /*PspValidationConfigurationDialog dialog = new PspValidationConfigurationDialog(getWindow(), this, configurationManager, validationDataManager);
-        dialog.showAndWait();*/
-    }
-
-  /*  public void startAllChecks() {
-        Stage dialogStage = new Stage();
-        dialogStage.initStyle(StageStyle.UTILITY);
-        dialogStage.initModality(Modality.WINDOW_MODAL);
-        dialogStage. initOwner(getWindow());
-
-        ValidationDataInitializationDialog dialog = new ValidationDataInitializationDialog(dialogStage, this);
-        dialog.show();
-
-
-
-        //ValidationDataInitializationDialog dialog = new ValidationDataInitializationDialog(getWindow(), this, configurationManager, validationDataManager);
-        *//*ValidationDataInitializationDialog dialog = new ValidationDataInitializationDialog(getWindow(), this);
-        dialog.showAndWait();*//*
-    }*/
-
-
-    //TODO: zase dialog
-    public void checkImageUtils() {
-        //ImageUtilsCheckDialog dialog = new ImageUtilsCheckDialog(getWindow(), this, configurationManager, validationDataManager);
-        /*ImageUtilsCheckDialog dialog = new ImageUtilsCheckDialog(getWindow(), this);
-        dialog.showAndWait();*/
-
-
-       /* try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/imageUtilsCheck.fxml"));
-            Parent root = (Parent) loader.load();
-            //stage.setScene(new Scene(root, 1000, 700));
-            stage.setScene(new Scene(root));
-            stage.show();
-            ImageUtilsCheckController controller = (ImageUtilsCheckController) loader.getController();
-            controller.setMain(this);
-            controller.setApp(null);
-            controller.setValidationDataManager(validationDataManager);
-            controller.setConfigurationManager(configurationManager);
-            controller.startAllChecks();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }*/
-    }
-
-   /* @Override
-    void onConfigurationManagerSet() {
-
-    }*/
-
     /**
      * @param pspDir
      * @param focedMonographVersion   can be null
      * @param forcedPeriodicalVersion can be null
      */
-    public void validatePsp(File pspDir, String focedMonographVersion, String forcedPeriodicalVersion) {
+    public void runPspValidation(File pspDir, String focedMonographVersion, String forcedPeriodicalVersion) {
         textArea.clear();
         Task task = new Task<Void>() {
 

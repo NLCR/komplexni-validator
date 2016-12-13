@@ -22,29 +22,13 @@ import java.util.Map;
 /**
  * Created by martin on 2.12.16.
  */
-public class ImageUtilsCheckController extends DialogController {
+public class ImageUtilsCheckDialogController extends DialogController {
 
     private static final String JPYLYZER_INSTALLATION_URL = "https://github.com/rzeh4n/psp-validator/wiki/Instalace#jpylyzer";
     private static final String JHOVE_INSTALLATION_URL = "https://github.com/rzeh4n/psp-validator/wiki/Instalace#jhove";
     private static final String IMAGE_MAGICK_INSTALLATION_URL = "https://github.com/rzeh4n/psp-validator/wiki/Instalace#imagemagick";
     private static final String KAKADU_INSTALLATION_URL = "https://github.com/rzeh4n/psp-validator/wiki/Instalace#kakadu";
     private static final String HELP_URL = "https://github.com/rzeh4n/psp-validator/wiki/Instalace#instalace-n%C3%A1stroj%C5%AF-pro-validaci-obrazov%C3%BDch-soubor%C5%AF";
-
-    @FXML
-    Button btnTest;
-
-    @FXML
-    ProgressIndicator fdmfProgress;
-
-    @FXML
-    ImageView fdmfOkImg;
-
-    @FXML
-    ImageView fdmfErrorImg;
-
-    @FXML
-    Label fdmfErrorText;
-
 
     /*jhove*/
 
@@ -144,10 +128,9 @@ public class ImageUtilsCheckController extends DialogController {
 
     //other data
 
-    //private ValidationDataManager validationDataManager;
     private final Map<ImageUtil, Boolean> utilsFinished = new HashMap<>();
 
-    public ImageUtilsCheckController() {
+    public ImageUtilsCheckDialogController() {
         synchronized (utilsFinished) {
             for (ImageUtil util : ImageUtil.values()) {
                 utilsFinished.put(util, false);
@@ -173,19 +156,17 @@ public class ImageUtilsCheckController extends DialogController {
         }
     }
 
-    /*public void setValidationDataManager(ValidationDataManager validationDataManager) {
-        this.validationDataManager = validationDataManager;
-    }*/
-
-    public void startAllChecks() {
-        retryAll(null);
-    }
-
-    public void retryAll(ActionEvent actionEvent) {
+    @Override
+    void startNow() {
         checkJhove();
         checkJpylyzer();
         checkImageMagick();
         checkKakadu();
+    }
+
+    public void continueInApp(ActionEvent actionEvent) {
+        stage.hide();
+        //app.openMainWindow();
     }
 
     @FXML
@@ -214,7 +195,6 @@ public class ImageUtilsCheckController extends DialogController {
                                 ImageView imgOk, ImageView imgError,
                                 Button btnRetry, Button btnSelectPath, Button btnInstall
     ) {
-        System.out.println("checkImageUtil");
         //show progress indicator
         progresIndicator.setVisible(true);
         //hide buttons, texts, images
@@ -363,16 +343,6 @@ public class ImageUtilsCheckController extends DialogController {
 
     public void showHelp(ActionEvent actionEvent) {
         openUrl(HELP_URL);
-    }
-
-    public void continueInApp(ActionEvent actionEvent) {
-        stage.hide();
-        //app.openMainWindow();
-    }
-
-    @Override
-    void onConfigurationManagerSet() {
-
     }
 
     private static final class CheckResult {

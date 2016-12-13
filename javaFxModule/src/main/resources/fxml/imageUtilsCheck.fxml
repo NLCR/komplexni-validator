@@ -6,7 +6,7 @@
 <VBox stylesheets="/css/imageUtilsCheck.css"
       xmlns="http://javafx.com/javafx/8.0.112"
       xmlns:fx="http://javafx.com/fxml/1"
-      fx:controller="nkp.pspValidator.gui.ImageUtilsCheckController"
+      fx:controller="nkp.pspValidator.gui.ImageUtilsCheckDialogController"
       fx:id="container"
 
 >
@@ -15,7 +15,7 @@
 
         <!--TODO: tabulka by mela zaujimat celou sirku-->
 
-        <!--<Button fx:id="btnTest" text="Test" onAction="#retryAll"/>-->
+        <!--<Button fx:id="btnTest" text="Test" onAction="#retry"/>-->
 
         <HBox
                 alignment="CENTER"

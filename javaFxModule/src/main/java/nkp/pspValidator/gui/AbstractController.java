@@ -16,7 +16,7 @@ public abstract class AbstractController extends Application {
     protected Main main;
 
     public void setMain(Main main) {
-        LOG.info("setMain");
+        //LOG.info("setMain");
         this.main = main;
     }
 
@@ -24,5 +24,6 @@ public abstract class AbstractController extends Application {
         HostServicesDelegate hostServices = HostServicesFactory.getInstance(this);
         getHostServices().showDocument(url);
     }
+
 
 }

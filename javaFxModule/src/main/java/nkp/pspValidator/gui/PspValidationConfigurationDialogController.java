@@ -48,7 +48,7 @@ public class PspValidationConfigurationDialogController extends DialogController
 
 
     @Override
-    void onConfigurationManagerSet() {
+    void startNow() {
         boolean monVersionForced = getConfigurationManager().getBooleanOrDefault(ConfigurationManager.PROP_FORCE_MON_VERSION, false);
         boolean perVersionForced = getConfigurationManager().getBooleanOrDefault(ConfigurationManager.PROP_FORCE_PER_VERSION, false);
         monVersionForcedCheckBox.setSelected(monVersionForced);
@@ -100,7 +100,7 @@ public class PspValidationConfigurationDialogController extends DialogController
                 String monVersion = monVersionChoiceBox.isDisabled() ? null : (String) monVersionChoiceBox.getSelectionModel().getSelectedItem();
                 String perVersion = perVersionChoiceBox.isDisabled() ? null : (String) perVersionChoiceBox.getSelectionModel().getSelectedItem();
                 stage.hide();
-                main.validatePsp(pspDir, monVersion, perVersion);
+                main.runPspValidation(pspDir, monVersion, perVersion);
             }
         }
     }
@@ -145,7 +145,4 @@ public class PspValidationConfigurationDialogController extends DialogController
         }
     }
 
-    /*public void setMainController(MainController mainController) {
-        this.mainController = mainController;
-    }*/
 }

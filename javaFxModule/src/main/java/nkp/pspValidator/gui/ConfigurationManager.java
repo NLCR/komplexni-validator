@@ -16,7 +16,7 @@ public class ConfigurationManager {
     //fdmf
     public static final String PROP_DMF_DIR = "fdmf.dir";
 
-    //image toolsl
+    //image tools
     public static final String PROP_JHOVE_DIR = "jhove.dir";
     public static final String PROP_JPYLYZER_DIR = "jpylyzer.dir";
     public static final String PROP_IMAGE_MAGICK_DIR = "imageMagick.dir";
@@ -26,8 +26,6 @@ public class ConfigurationManager {
     public static final String PROP_LAST_PSP_DIR = "last.psp.dir";
     public static final String PROP_FORCE_MON_VERSION = "force.monograph.version";
     public static final String PROP_FORCE_PER_VERSION = "force.periodical.version";
-
-    //public static final String PROP_VALIDATION_DATA_CHECK_SHOWN = "validationDataCheck.shown";
 
     private final Platform platform;
     private final File configFile;

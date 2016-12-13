@@ -12,11 +12,6 @@ public abstract class DialogController extends AbstractController {
     private static Logger LOG = Logger.getLogger(DialogController.class.getSimpleName());
 
     protected Stage stage;
-    //@Deprecated
-    //protected Main app;
-    //protected ConfigurationManager configurationManager;
-    //protected MainController mainController;
-
 
     @Override
     public void start(Stage stage) throws Exception {
@@ -31,20 +26,6 @@ public abstract class DialogController extends AbstractController {
         this.stage = stage;
     }
 
-    /*@Deprecated
-    public void setApp(Main app) {
-        this.app = app;
-    }*/
-
-
-    @Deprecated
-    public void setConfigurationManager(ConfigurationManager configurationManager) {
-        //this.configurationManager = configurationManager;
-        onConfigurationManagerSet();
-    }
-
-
-    abstract void onConfigurationManagerSet();
-
+    abstract void startNow();
 
 }
