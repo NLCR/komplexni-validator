@@ -1,5 +1,15 @@
 initScreen
 ----------
-error (Error-48.png): https://icons8.com/web-app/12116/error
+error (Error-48.png, Error-25.png): https://icons8.com/web-app/12116/error
 ok (Ok-48.png): https://icons8.com/web-app/13115/ok
 ok (Checkmark-48.png): https://icons8.com/web-app/11849/checkmark
+cancel:
+https://icons8.com/web-app/13114/cancel
+
+
+about (About-18.png):
+https://icons8.com/web-app/3439/about
+
+Synchronize-18.png
+https://icons8.com/web-app/14078/synchronize
+

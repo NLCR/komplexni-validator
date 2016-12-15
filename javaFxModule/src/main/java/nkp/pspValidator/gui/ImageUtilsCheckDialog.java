@@ -23,7 +23,7 @@ public class ImageUtilsCheckDialog {
     public void show() {
         stage.setTitle("Kontrola dostupnosti nástrojů pro validaci obrázků");
         int initialWidth = 700;
-        int initialHeight = 600;
+        int initialHeight = 450;
 
         stage.setWidth(initialWidth);
         stage.setMinWidth(initialWidth);

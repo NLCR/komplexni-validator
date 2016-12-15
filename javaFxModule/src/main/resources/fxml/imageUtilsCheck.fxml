@@ -8,29 +8,14 @@
       xmlns:fx="http://javafx.com/fxml/1"
       fx:controller="nkp.pspValidator.gui.ImageUtilsCheckDialogController"
       fx:id="container"
-
+      minWidth="700"
+      minHeight="450"
+      alignment="CENTER"
 >
     <children>
-        <!--maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"-->
-
-        <!--TODO: tabulka by mela zaujimat celou sirku-->
-
-        <!--<Button fx:id="btnTest" text="Test" onAction="#retry"/>-->
-
-        <HBox
-                alignment="CENTER"
-        >
-
-            <Label styleClass="description-text"
-                   text="Kontrola dostupnosti nástrojů pro validaci obrázků"
-            />
-        </HBox>
-
 
         <GridPane styleClass="table"
-                  alignment="CENTER"
-
-        >
+                  alignment="CENTER">
 
             <!--JHOVE-->
             <Label text="Jhove"
@@ -53,7 +38,7 @@
                        style="-fx-background-color: BLACK"
             >
                 <image>
-                    <Image url="@/img/Checkmark-48.png"/>
+                    <Image url="@/img/Ok-30.png"/>
                 </image>
             </ImageView>
 
@@ -64,7 +49,7 @@
                        GridPane.halignment="CENTER"
                        visible="false">
                 <image>
-                    <Image url="@/img/Error-48.png"/>
+                    <Image url="@/img/Error-30.png"/>
                 </image>
             </ImageView>
 
@@ -73,21 +58,45 @@
                     onAction="#checkJhove"
                     GridPane.columnIndex="2"
                     GridPane.rowIndex="0"
-            />
+            >
+                <graphic>
+                    <ImageView>
+                        <image>
+                            <Image url="@/img/Synchronize-18.png"/>
+                        </image>
+                    </ImageView>
+                </graphic>
+            </Button>
 
             <Button fx:id="jhoveBtnSelectPath"
                     text="Nastavit adresář"
                     onAction="#selectJhovePath"
                     GridPane.columnIndex="3"
                     GridPane.rowIndex="0"
-            />
+            >
+                <graphic>
+                    <ImageView>
+                        <image>
+                            <Image url="@/img/Add Folder-18.png"/>
+                        </image>
+                    </ImageView>
+                </graphic>
+            </Button>
 
             <Button fx:id="jhoveBtnInstall"
                     text="Instalovat"
                     onAction="#installJhove"
                     GridPane.columnIndex="4"
                     GridPane.rowIndex="0"
-            />
+            >
+                <graphic>
+                    <ImageView>
+                        <image>
+                            <Image url="@/img/About-18.png"/>
+                        </image>
+                    </ImageView>
+                </graphic>
+            </Button>
 
 
             <Label fx:id="jhoveStatusText"
@@ -119,7 +128,7 @@
                        style="-fx-background-color: BLACK"
             >
                 <image>
-                    <Image url="@/img/Checkmark-48.png"/>
+                    <Image url="@/img/Ok-30.png"/>
                 </image>
             </ImageView>
 
@@ -130,7 +139,7 @@
                        GridPane.halignment="CENTER"
                        visible="false">
                 <image>
-                    <Image url="@/img/Error-48.png"/>
+                    <Image url="@/img/Error-30.png"/>
                 </image>
             </ImageView>
 
@@ -139,21 +148,46 @@
                     onAction="#checkJpylyzer"
                     GridPane.columnIndex="2"
                     GridPane.rowIndex="3"
-            />
+            >
+                <graphic>
+                    <ImageView>
+                        <image>
+                            <Image url="@/img/Synchronize-18.png"/>
+                        </image>
+                    </ImageView>
+                </graphic>
+            </Button>
 
             <Button fx:id="jpylyzerBtnSelectPath"
                     text="Nastavit adresář"
                     onAction="#selectJpylyzerPath"
                     GridPane.columnIndex="3"
                     GridPane.rowIndex="3"
-            />
+            >
+                <graphic>
+                    <ImageView>
+                        <image>
+                            <Image url="@/img/Add Folder-18.png"/>
+                        </image>
+                    </ImageView>
+                </graphic>
+            </Button>
 
             <Button fx:id="jpylyzerBtnInstall"
                     text="Instalovat"
                     onAction="#installJpylyzer"
                     GridPane.columnIndex="4"
                     GridPane.rowIndex="3"
-            />
+            >
+                <graphic>
+
+                    <ImageView>
+                        <image>
+                            <Image url="@/img/About-18.png"/>
+                        </image>
+                    </ImageView>
+                </graphic>
+            </Button>
 
 
             <Label fx:id="jpylyzerStatusText"
@@ -186,7 +220,7 @@
                        style="-fx-background-color: BLACK"
             >
                 <image>
-                    <Image url="@/img/Checkmark-48.png"/>
+                    <Image url="@/img/Ok-30.png"/>
                 </image>
             </ImageView>
 
@@ -197,7 +231,7 @@
                        GridPane.halignment="CENTER"
                        visible="false">
                 <image>
-                    <Image url="@/img/Error-48.png"/>
+                    <Image url="@/img/Error-30.png"/>
                 </image>
             </ImageView>
 
@@ -206,21 +240,46 @@
                     onAction="#checkImageMagick"
                     GridPane.columnIndex="2"
                     GridPane.rowIndex="6"
-            />
+            >
+                <graphic>
+                    <ImageView>
+                        <image>
+                            <Image url="@/img/Synchronize-18.png"/>
+                        </image>
+                    </ImageView>
+                </graphic>
+            </Button>
 
             <Button fx:id="imageMagickBtnSelectPath"
                     text="Nastavit adresář"
                     onAction="#selectImageMagickPath"
                     GridPane.columnIndex="3"
                     GridPane.rowIndex="6"
-            />
+            >
+                <graphic>
+                    <ImageView>
+                        <image>
+                            <Image url="@/img/Add Folder-18.png"/>
+                        </image>
+                    </ImageView>
+                </graphic>
+            </Button>
 
             <Button fx:id="imageMagickBtnInstall"
                     text="Instalovat"
                     onAction="#installImageMagick"
                     GridPane.columnIndex="4"
                     GridPane.rowIndex="6"
-            />
+            >
+                <graphic>
+
+                    <ImageView>
+                        <image>
+                            <Image url="@/img/About-18.png"/>
+                        </image>
+                    </ImageView>
+                </graphic>
+            </Button>
 
 
             <Label fx:id="imageMagickStatusText"
@@ -253,7 +312,7 @@
                        style="-fx-background-color: BLACK"
             >
                 <image>
-                    <Image url="@/img/Checkmark-48.png"/>
+                    <Image url="@/img/Ok-30.png"/>
                 </image>
             </ImageView>
 
@@ -264,7 +323,7 @@
                        GridPane.halignment="CENTER"
                        visible="false">
                 <image>
-                    <Image url="@/img/Error-48.png"/>
+                    <Image url="@/img/Error-30.png"/>
                 </image>
             </ImageView>
 
@@ -273,21 +332,47 @@
                     onAction="#checkKakadu"
                     GridPane.columnIndex="2"
                     GridPane.rowIndex="9"
-            />
+            >
+                <graphic>
+                    <ImageView>
+                        <image>
+                            <Image url="@/img/Synchronize-18.png"/>
+                        </image>
+                    </ImageView>
+                </graphic>
+            </Button>
 
             <Button fx:id="kakaduBtnSelectPath"
                     text="Nastavit adresář"
                     onAction="#selectKakaduPath"
                     GridPane.columnIndex="3"
                     GridPane.rowIndex="9"
-            />
+            >
+                <graphic>
+                    <ImageView>
+                        <image>
+                            <Image url="@/img/Add Folder-18.png"/>
+                        </image>
+                    </ImageView>
+                </graphic>
+            </Button>
 
             <Button fx:id="kakaduBtnInstall"
                     text="Instalovat"
                     onAction="#installKakadu"
                     GridPane.columnIndex="4"
                     GridPane.rowIndex="9"
-            />
+            >
+                <graphic>
+
+                    <ImageView>
+                        <image>
+                            <Image url="@/img/About-18.png"/>
+                        </image>
+                    </ImageView>
+                </graphic>
+
+            </Button>
 
 
             <Label fx:id="kakaduStatusText"
@@ -301,10 +386,27 @@
 
         </GridPane>
 
-        <HBox
-                alignment="CENTER"
-                spacing="20.0"
-        >
+        <StackPane>
+
+            <AnchorPane>
+                <Button
+                        onAction="#showHelp"
+                        styleClass="global-button"
+                        text="Nápověda"
+                        AnchorPane.rightAnchor="0"
+                        AnchorPane.bottomAnchor="0"
+                >
+                    <graphic>
+
+                        <ImageView>
+                            <image>
+                                <Image url="@/img/About-18.png"/>
+                            </image>
+                        </ImageView>
+                    </graphic>
+
+                </Button>
+            </AnchorPane>
 
             <Button onAction="#continueInApp"
                     fx:id="btnContinue"
@@ -312,13 +414,7 @@
                     text="Pokračovat"
             />
 
-            <Button
-                    onAction="#showHelp"
-                    styleClass="global-button"
-                    text="Zobrazit nápovědu"
-            />
-        </HBox>
-
+        </StackPane>
 
     </children>
 </VBox>

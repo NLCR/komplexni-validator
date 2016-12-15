@@ -19,7 +19,6 @@ import nkp.pspValidator.shared.imageUtils.ImageUtilManager;
 import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Random;
 
 
 /**
@@ -237,10 +236,10 @@ public class ImageUtilsCheckDialogController extends DialogController {
             protected Void call() throws Exception {
                 ImageUtilManager utilManager = main.getValidationDataManager().getImageUtilManager();
                 try {
-                    //Thread.sleep(3000);
-                    Thread.sleep(new Random().nextInt(3000));
+                    Thread.sleep(300);
+                    //Thread.sleep(new Random().nextInt(3000));
                     if (!utilManager.isVersionDetectionDefined(util)) {
-                        processResult(new CheckResult(false, String.format("detekce verze není definována pro %s", util)));
+                        processResult(new CheckResult(false, String.format("Detekce verze není definována pro %s!", util)));
                     } else {
                         String version = utilManager.runUtilVersionDetection(util);
                         //System.out.println(version);
@@ -250,10 +249,10 @@ public class ImageUtilsCheckDialogController extends DialogController {
                     }
                 } catch (CliCommand.CliCommandException e) {
                     utilManager.setUtilAvailable(util, false);
-                    processResult(new CheckResult(false, String.format("chyba: %s", e.getMessage())));
+                    processResult(new CheckResult(false, String.format("Chyba: %s!", e.getMessage())));
                 } catch (ValidatorConfigurationException e) {
                     utilManager.setUtilAvailable(util, false);
-                    processResult(new CheckResult(false, String.format("chyba: %s", e.getMessage())));
+                    processResult(new CheckResult(false, String.format("Chyba: %s!", e.getMessage())));
                 }
                 return null;
             }
@@ -280,9 +279,7 @@ public class ImageUtilsCheckDialogController extends DialogController {
                     if (isAllUtilsFinished()) {
                         state = DialogState.FINISHED;
                         btnContinue.setDisable(false);
-                        //TODO: tohle jen docasne, ted pokracuju rovnou, pokud je vse ok
-                        //app.openMainWindow();
-                        //stage.close();
+                        btnContinue.requestFocus();
                     }
                 });
             }

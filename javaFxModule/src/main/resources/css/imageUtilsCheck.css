@@ -32,37 +32,38 @@
     /*-fx-background: #ebfaf0;*/
     /*-fx-pref-width: 1500px;*/
     /*-fx-pref-height: 1000px;*/
-    -fx-padding: 35px;
+    -fx-padding: 25px;
+    -fx-spacing: 20px;
 
 }
 
 .description-text{
-    -fx-font-size: 27;
+    /*-fx-font-size: 27;*/
     -fx-wrap-text: true;
 }
 
 
 .table {
    /*-fx-scale-shape: true;*/
-    -fx-padding: 50px;
+    -fx-padding: 20px;
     -fx-spacing: 10px;
     -fx-hgap: 15px;
     -fx-vgap: 5px;
     -fx-alignment: center;
-/*    -fx-grid-lines-visible: true;*/
+    /*-fx-grid-lines-visible: true;*/
 }
 
 .global-button{
--fx-font-size: 20;
-
+    /*-fx-font-size: 20;*/
 }
 
 .util-name {
-    -fx-font-size: 22;
+    -fx-font-size: 15;
+    -fx-font-weight: bold;
 }
 
 .result-text{
-    -fx-font-size: 18;
+    /*-fx-font-size: 18;*/
     -fx-wrap-text: true;
 }
 
@@ -71,6 +72,20 @@
  /*   -fx-background-color: #eeeeee;*/
 }
 
-.progress-indicatorf {
-    -fx-spin-enabled: true
+.progress-bar > .bar {
+    -fx-accent: green;
+
+    -fx-background-insets: 1 1 2 1;
+    -fx-padding: 0.20em;
+}
+
+.progress-indicator {
+    -fx-pref-width: 30px;
+    -fx-pref-height: 30px;
+}
+
+.spinner {
+        /*-fx-accent: yellow;*/
+        -fx-background-insets: 1 1 2 1;
+        -fx-padding: 0.20em;
 }
