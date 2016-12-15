@@ -272,32 +272,31 @@ public class Main {
                                      Set<ImageUtil> imageUtilsDisabled, Map<ImageUtil, File> imageUtilPaths,
                                      Set<String> runOnlyTheseSections,
                                      Validator.DevParams devParams) throws PspDataException, InvalidXPathExpressionException, XmlFileParsingException, ValidatorConfigurationException, FdmfRegistry.UnknownFdmfException {
-        checkReadableDir(pspRoot);
-        checkReadableDir(fdmfsRoot);
-        File imageUtilsConfigFile = getImageUtilsConfigFile(fdmfsRoot);
-        System.out.println(String.format("Zpracovávám PSP balík %s", pspRoot.getAbsolutePath()));
-        Dmf dmfResolved = new DmfDetector().resolveDmf(dmfPrefered, pspRoot);
-        System.out.println(String.format("Bude použita verze standardu %s", dmfResolved));
 
-
-        FdmfConfiguration fdmfConfig = new FdmfRegistry(fdmfsRoot).getFdmfConfig(dmfResolved);
-        //File fdmfRoot = new FdmfRegistryBak(fdmfsRoot).getFdmfDir(dmfResolved);
-        System.out.println(String.format("Kořenový adresář fDMF: %s", fdmfsRoot.getAbsolutePath()));
+        PrintStream out = System.out;
         Platform platform = Platform.detectOs();
-        System.out.println(String.format("Platforma: %s", platform.toReadableString()));
+        out.println(String.format("Platforma: %s", platform.toReadableString()));
+        out.println(String.format("Kořenový adresář fDMF: %s", fdmfsRoot.getAbsolutePath()));
+        checkReadableDir(fdmfsRoot);
+        checkReadableDir(pspRoot);
+        out.println(String.format("Zpracovávám PSP balík %s", pspRoot.getAbsolutePath()));
+        Dmf dmfResolved = new DmfDetector().resolveDmf(dmfPrefered, pspRoot);
+        out.println(String.format("Bude použita verze standardu %s", dmfResolved));
+        FdmfConfiguration fdmfConfig = new FdmfRegistry(fdmfsRoot).getFdmfConfig(dmfResolved);
+        File imageUtilsConfigFile = getImageUtilsConfigFile(fdmfsRoot);
         ImageUtilManager imageUtilManager = new ImageUtilManagerFactory(imageUtilsConfigFile).buildImageUtilManager(platform.getOperatingSystem());
         imageUtilManager.setPaths(imageUtilPaths);
-        detectImageTools(imageUtilManager, imageUtilsDisabled);
+        detectImageTools(out, imageUtilManager, imageUtilsDisabled);
 
         Validator validator = ValidatorFactory.buildValidator(fdmfConfig, pspRoot, imageUtilManager);
-        System.out.println(String.format("Validátor inicializován, spouštím validace"));
+        out.println(String.format("Validátor inicializován, spouštím validace"));
         /*System.out.println("ěščřžýáíéĚŠČŘŽÝÁÍÉ");
         System.out.println(String.format("ěščřžýáíéĚŠČŘŽÝÁÍÉ"));
         StringBuilder b = new StringBuilder();
         b.append("ěščřžýáíéĚŠČŘŽÝÁÍÉ");
         System.out.println(b.toString());*/
 
-        PrintStream out = System.out;
+
         switch (printVerbosity) {
             case 3:
                 //vsechno, vcetne sekci a pravidel bez chyb
@@ -331,28 +330,28 @@ public class Main {
         }
     }
 
-    private static void detectImageTools(ImageUtilManager imageUtilManager, Set<ImageUtil> utilsDisabled) {
+    private static void detectImageTools(PrintStream out, ImageUtilManager imageUtilManager, Set<ImageUtil> utilsDisabled) {
         for (ImageUtil util : ImageUtil.values()) {
             if (utilsDisabled.contains(util)) {
-                System.out.println(String.format("Vypnuto použití nástroje %s.", util.getUserFriendlyName()));
+                out.println(String.format("Vypnuto použití nástroje %s.", util.getUserFriendlyName()));
             } else {
-                System.out.print(String.format("Kontroluji dostupnost nástroje %s: ", util.getUserFriendlyName()));
+                out.print(String.format("Kontroluji dostupnost nástroje %s: ", util.getUserFriendlyName()));
                 if (!imageUtilManager.isVersionDetectionDefined(util)) {
-                    System.out.println("není definován způsob detekce verze");
+                    out.println("není definován způsob detekce verze");
                 } else if (!imageUtilManager.isUtilExecutionDefined(util)) {
-                    System.out.println("není definován způsob spuštění");
+                    out.println("není definován způsob spuštění");
                 } else {
                     try {
                         String version = imageUtilManager.runUtilVersionDetection(util);
                         if (version != null) {
                             imageUtilManager.setUtilAvailable(util, true);
-                            System.out.println("nalezen, verze: " + version);
+                            out.println("nalezen, verze: " + version);
                         } else {
-                            System.out.println("nenalezen");
+                            out.println("nenalezen");
                         }
                     } catch (CliCommand.CliCommandException e) {
                         //System.out.println(String.format("chyba běhu %s: %s ", util.getUserFriendlyName(), e.getMessage()));
-                        System.out.println(String.format("nenalezen (%s)", e.getMessage()));
+                        out.println(String.format("nenalezen (%s)", e.getMessage()));
                     }
                 }
             }

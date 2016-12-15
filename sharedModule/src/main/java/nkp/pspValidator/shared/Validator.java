@@ -22,6 +22,7 @@ import java.io.File;
 import java.io.PrintStream;
 import java.util.*;
 
+
 /**
  * Created by martin on 2.11.16.
  */
@@ -47,6 +48,8 @@ public class Validator {
                     boolean printSectionsWithProblems, boolean printSectionsWithoutProblems,
                     boolean printRulesWithProblems, boolean printRulesWithoutProblems,
                     DevParams devParams) {
+        TextLogger textLogger = new TextLogger(out);
+
         boolean runAllSections = devParams == null || devParams.getSectionsToRun() == null || devParams.getSectionsToRun().isEmpty();
 
         Protocol protocol = new Protocol(engine);
@@ -65,9 +68,9 @@ public class Validator {
                 boolean printSection = sectionProblemsTotal == 0 && printSectionsWithoutProblems || sectionProblemsTotal != 0 && printSectionsWithProblems;
                 if (printSection) {
                     String sectionTitle = String.format("Sekce %s: %s", section.getName(), buildSummary(sectionProblemsTotal, sectionProblemsByLevel));
-                    out.println();
-                    out.println(sectionTitle);
-                    out.println(buildDelimiter(sectionTitle.length()));
+                    textLogger.logNewLine();
+                    textLogger.logLine(sectionTitle);
+                    textLogger.logLine(buildDelimiter(sectionTitle.length()));
                 }
                 List<Rule> rules = engine.getRules(section);
                 for (Rule rule : rules) {
@@ -78,10 +81,10 @@ public class Validator {
                     if (printRule) {
                         int ruleProblemsTotal = protocol.getRuleProblemsSum(rule);
                         Map<Level, Integer> ruleProblemsByLevel = protocol.getRuleProblemsByLevel(rule);
-                        out.println(String.format("Pravidlo %s: %s", rule.getName(), buildSummary(ruleProblemsTotal, ruleProblemsByLevel)));
-                        out.println(String.format("\t%s", rule.getDescription()));
+                        textLogger.logLine(String.format("Pravidlo %s: %s", rule.getName(), buildSummary(ruleProblemsTotal, ruleProblemsByLevel)));
+                        textLogger.logLine(String.format("\t%s", rule.getDescription()));
                         for (ValidationError error : result.getProblems()) {
-                            out.println(String.format("\t%s: %s", error.getLevel(), error.getMessage()));
+                            textLogger.logLine(String.format("\t%s: %s", error.getLevel(), error.getMessage()));
                         }
                     }
                     protocol.reportRuleProcessingFinished(rule);
@@ -91,11 +94,11 @@ public class Validator {
         }
         protocol.reportValidationsEnd();
         String verdict = protocol.isValid() ? "validní" : "nevalidní";
-        out.println(String.format("\nCelkem: %s, balík je: %s", buildSummary(protocol.getTotalProblemsSum(), protocol.getTotalProblemsByLevel()), verdict));
+        textLogger.logLine(String.format("\nCelkem: %s, balík je: %s", buildSummary(protocol.getTotalProblemsSum(), protocol.getTotalProblemsByLevel()), verdict));
         if (xmlOutputFile != null) {
-            out.println("Vytvářím xml export do souboru " + xmlOutputFile.getAbsolutePath());
+            textLogger.logLine("Vytvářím xml export do souboru " + xmlOutputFile.getAbsolutePath());
             buildXmlOutput(xmlOutputFile, protocol);
-            out.println("Xml export vytvořen");
+            textLogger.logLine("Xml export vytvořen");
         }
     }
 
@@ -422,6 +425,26 @@ public class Validator {
 
         public void setSectionsToRun(Set<String> sectionsToRun) {
             this.sectionsToRun = sectionsToRun;
+        }
+    }
+
+    public static class TextLogger {
+        private final PrintStream out;
+
+        public TextLogger(PrintStream out) {
+            this.out = out;
+        }
+
+        public void logNewLine() {
+            if (out != null) {
+                out.println();
+            }
+        }
+
+        public void logLine(String line) {
+            if (out != null) {
+                out.println(line);
+            }
         }
     }
 }
