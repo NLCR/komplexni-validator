@@ -8,6 +8,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ProgressIndicator;
+import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.WindowEvent;
@@ -17,7 +18,6 @@ import nkp.pspValidator.shared.imageUtils.ImageUtilManager;
 import nkp.pspValidator.shared.imageUtils.ImageUtilManagerFactory;
 
 import java.io.File;
-import java.util.Random;
 import java.util.logging.Logger;
 
 /**
@@ -27,26 +27,18 @@ public class ValidationDataInitializationController extends DialogController {
 
     private static Logger LOG = Logger.getLogger(ValidationDataInitializationController.class.getSimpleName());
 
-    @FXML
-    ProgressIndicator progressIndicator;
 
     @FXML
-    ImageView imgOk;
+    TextField rootDirTextfield;
+
+    @FXML
+    ProgressIndicator progressIndicator;
 
     @FXML
     ImageView imgError;
 
     @FXML
-    Label progressStatusLabel;
-
-    @FXML
     Label errorLabel;
-
-    @FXML
-    Button btnContinue;
-
-    @FXML
-    Button btnClose;
 
     @FXML
     Button btnSetFdmfsRootDir;
@@ -56,39 +48,29 @@ public class ValidationDataInitializationController extends DialogController {
 
     @Override
     EventHandler<WindowEvent> getOnCloseEventHandler() {
-        return new EventHandler<WindowEvent>() {
-            @Override
-            public void handle(WindowEvent event) {
-                switch (state) {
-                    case RUNNING:
-                        event.consume();
-                        break;
-                    case ERROR:
-                        closeApp();
-                        break;
-                    case FINISHED:
-                        event.consume();
-                        continueInApp(null);
-                }
+        return event -> {
+            switch (state) {
+                case RUNNING:
+                    event.consume();
+                    break;
+                case ERROR:
+                    closeApp();
+                    break;
+                case FINISHED:
+                    event.consume();
+                    continueInApp(null);
             }
         };
     }
 
     @Override
     void startNow() {
-        LOG.info("startNow");
         state = DialogState.RUNNING;
         //show progress
         progressIndicator.setVisible(true);
-        progressStatusLabel.setVisible(true);
-        progressStatusLabel.setText("");
         //hide images & buttons
         errorLabel.setVisible(false);
-        btnContinue.setVisible(false);
-        imgOk.setVisible(false);
         imgError.setVisible(false);
-        btnContinue.setVisible(false);
-        btnClose.setVisible(false);
         btnSetFdmfsRootDir.setVisible(false);
         getConfigurationManager();
 
@@ -102,20 +84,15 @@ public class ValidationDataInitializationController extends DialogController {
                     validationDataManager = new ValidationDataManager(getConfigurationManager());
                     File fdmfsRoot = getConfigurationManager().getFileOrNull(ConfigurationManager.PROP_DMF_DIR);
                     if (fdmfsRoot == null) {
-                        processResult(new Result(false, "není definován kořenový adresář pro validační soubory"));
+                        processResult(new Result(false, "Není definován kořenový adresář fDMF!"));
                     } else {
+                        updateRootDir(fdmfsRoot.getCanonicalPath());
                         checkReadableDir(fdmfsRoot);
-                        //System.out.println(fdmfsRoot.getAbsolutePath());
-                        updateStatus("kontroluji " + fdmfsRoot.getAbsolutePath());
+                        //Thread.sleep(5000);
                         File imageUtilConfig = getImageUtilsConfigFile(fdmfsRoot);
-                        //System.out.println(imageUtilConfig.getAbsolutePath());
                         ImageUtilManager imageUtilManager = new ImageUtilManagerFactory(imageUtilConfig).buildImageUtilManager(getConfigurationManager().getPlatform().getOperatingSystem());
                         validationDataManager.setImageUtilManager(imageUtilManager);
                         validationDataManager.setFdmfRegistry(new FdmfRegistry(fdmfsRoot));
-                        //FdmfRegistry fdmfRegistry = new FdmfRegistry(fdmfsRoot);
-
-
-                        //TODO: jeste dalsi veci
                         processResult(new Result(true, null));
                     }
                 } catch (ValidatorConfigurationException e) {
@@ -129,9 +106,9 @@ public class ValidationDataInitializationController extends DialogController {
             private File getImageUtilsConfigFile(File fdmfsRoot) throws ValidatorConfigurationException {
                 File file = new File(fdmfsRoot, "imageUtils.xml");
                 if (!file.exists()) {
-                    throw new ValidatorConfigurationException("chybí konfigurační soubor " + file.getAbsolutePath());
+                    throw new ValidatorConfigurationException(String.format("Chybí konfigurační soubor %s!", file.getAbsolutePath()));
                 } else if (!file.canRead()) {
-                    throw new ValidatorConfigurationException("nelze číst konfigurační soubor " + file.getAbsolutePath());
+                    throw new ValidatorConfigurationException(String.format("Nelze číst konfigurační soubor %s!", file.getAbsolutePath()));
                 } else {
                     return file;
                 }
@@ -139,48 +116,34 @@ public class ValidationDataInitializationController extends DialogController {
 
             private void checkReadableDir(File pspRoot) throws ValidatorConfigurationException {
                 if (!pspRoot.exists()) {
-                    throw new ValidatorConfigurationException(String.format("Soubor %s neexistuje", pspRoot.getAbsolutePath()));
+                    throw new ValidatorConfigurationException(String.format("Soubor %s neexistuje!", pspRoot.getAbsolutePath()));
                 } else if (!pspRoot.isDirectory()) {
-                    throw new ValidatorConfigurationException(String.format("Soubor %s není adresář", pspRoot.getAbsolutePath()));
+                    throw new ValidatorConfigurationException(String.format("Soubor %s není adresář!", pspRoot.getAbsolutePath()));
                 } else if (!pspRoot.canRead()) {
-                    throw new ValidatorConfigurationException(String.format("Nelze číst adresář %s", pspRoot.getAbsolutePath()));
+                    throw new ValidatorConfigurationException(String.format("Nelze číst adresář %s!", pspRoot.getAbsolutePath()));
                 }
             }
 
-            private void updateStatus(String status) {
+            private void updateRootDir(String text) {
                 Platform.runLater(() -> {
-                    progressStatusLabel.setText(status);
+                    rootDirTextfield.setText(text);
                 });
             }
 
             private void processResult(Result result) {
                 progressIndicator.setVisible(false);
                 Platform.runLater(() -> {
-                    Random random = new Random();
                     progressIndicator.setVisible(false);
                     if (result.isOk()) {//ok
                         state = DialogState.FINISHED;
-                        imgOk.setVisible(true);
-                        btnContinue.setVisible(true);
-                        progressStatusLabel.setText("OK");
-                        /*app.setValidationDataManager(validationDataManager);
-                        //TODO: pokud uz jednou zobrazeno, tak rovnou zavolat dalsi fazi
-                        //ted pokracuju rovnou, pokud je vse ok
-                        app.checkImageUtils();*/
-
                         main.setValidationDataManager(validationDataManager);
-                        //TODO: pokud uz jednou zobrazeno, tak rovnou zavolat dalsi fazi
-                        //ted pokracuju rovnou, pokud je vse ok
-                        //mainController.checkImageUtils();
                         continueInApp(null);
                     } else {//error
                         state = DialogState.ERROR;
                         imgError.setVisible(true);
-                        progressStatusLabel.setText("CHYBA");
                         errorLabel.setVisible(true);
                         errorLabel.setText(result.getError());
                         btnSetFdmfsRootDir.setVisible(true);
-                        btnClose.setVisible(true);
                     }
                 });
             }
@@ -192,15 +155,11 @@ public class ValidationDataInitializationController extends DialogController {
         main.checkImageUtils();
     }
 
-    public void closeApp(ActionEvent actionEvent) {
-        closeApp();
-    }
-
     public void setFdmfsRootDir(ActionEvent actionEvent) {
         DirectoryChooser chooser = new DirectoryChooser();
-        chooser.setTitle("Vyberte kořenový adresář s validačními soubory");
+        chooser.setTitle("Vyberte kořenový adresář fDMF");
         File currentDir = getConfigurationManager().getFileOrNull(ConfigurationManager.PROP_DMF_DIR);
-        if (currentDir != null) {
+        if (currentDir != null && currentDir.exists()) {
             chooser.setInitialDirectory(currentDir);
         }
         File selectedDirectory = chooser.showDialog(stage);

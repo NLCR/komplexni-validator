@@ -23,8 +23,8 @@ public class ValidationDataInitializationDialog {
     //TODO: nesmi byt closable
     public void show() {
         stage.setTitle("Inicializace validačních dat");
-        int initialWidth = 550;
-        int initialHeight = 300;
+        int initialWidth = 1000;
+        int initialHeight = 280;
         stage.setWidth(initialWidth);
         stage.setMinWidth(initialWidth);
         stage.setHeight(initialHeight);

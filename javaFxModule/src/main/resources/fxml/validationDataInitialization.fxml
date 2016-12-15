@@ -3,7 +3,6 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 <VBox
@@ -11,31 +10,22 @@
         xmlns:fx="http://javafx.com/fxml/1"
         fx:controller="nkp.pspValidator.gui.ValidationDataInitializationController"
         fx:id="container"
-        maxHeight="-Infinity"
-        maxWidth="-Infinity"
-        minHeight="-Infinity"
-        minWidth="-Infinity"
         stylesheets="/css/validationDataInitialization.css"
         alignment="CENTER"
+        minWidth="1000"
+        minHeight="280"
+        spacing="20"
 
 >
     <children>
-        <!--<Button onAction="#retry" text="retry"/>-->
 
-        <Label fx:id="title" text="Inicializace validačních dat"/>
+        <Label fx:id="title" text="Kořenový adresář fDMF:"/>
+
+        <TextField fx:id="rootDirTextfield" editable="false"/>
 
         <StackPane>
 
             <ProgressIndicator fx:id="progressIndicator"/>
-            <ImageView fx:id="imgOk"
-                       styleClass="result-image"
-                       preserveRatio="true"
-                       visible="false"
-            >
-                <image>
-                    <Image url="@/img/Checkmark-48.png"/>
-                </image>
-            </ImageView>
 
             <ImageView fx:id="imgError"
                        styleClass="result-image"
@@ -46,41 +36,14 @@
             </ImageView>
         </StackPane>
 
-
-        <Label fx:id="progressStatusLabel"/>
-
         <Label fx:id="errorLabel" text="error"/>
 
-        <StackPane>
-
-
-            <HBox
-                    alignment="CENTER"
-                    spacing="20.0"
-            >
-
-                <Button
-                        fx:id="btnSetFdmfsRootDir"
-                        onAction="#setFdmfsRootDir"
-                        styleClass="global-button"
-                        text="Nastavit kořenový adresář validačních dat"
-                />
-
-                <Button
-                        fx:id="btnClose"
-                        onAction="#closeApp"
-                        styleClass="global-button"
-                        text="Zavřít"/>
-            </HBox>
-
-            <Button
-                    fx:id="btnContinue"
-                    styleClass="global-button"
-                    onAction="#continueInApp"
-                    text="Pokračovat"/>
-
-
-        </StackPane>
+        <Button
+                fx:id="btnSetFdmfsRootDir"
+                onAction="#setFdmfsRootDir"
+                styleClass="global-button"
+                text="Změnit kořenový adresář fDMF"
+        />
 
     </children>
 </VBox>
