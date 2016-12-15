@@ -26,11 +26,11 @@ public class Main {
 
     public static int DEFAULT_VERBOSITY = 2;
 
-    public static void main(String[] args) throws PspDataException, XmlFileParsingException, InvalidXPathExpressionException, FdmfRegistryBak.UnknownFdmfException, ValidatorConfigurationException {
+    public static void main(String[] args) throws PspDataException, XmlFileParsingException, InvalidXPathExpressionException, FdmfRegistry.UnknownFdmfException, ValidatorConfigurationException, FdmfRegistry.UnknownFdmfException {
         main(null, args);
     }
 
-    public static void main(Validator.DevParams devParams, String[] args) throws PspDataException, XmlFileParsingException, InvalidXPathExpressionException, FdmfRegistryBak.UnknownFdmfException, ValidatorConfigurationException {
+    public static void main(Validator.DevParams devParams, String[] args) throws PspDataException, XmlFileParsingException, InvalidXPathExpressionException, FdmfRegistry.UnknownFdmfException, ValidatorConfigurationException, FdmfRegistry.UnknownFdmfException {
         /*if (true) {
             Properties properties = System.getProperties();
             properties.list(System.out);
@@ -271,22 +271,25 @@ public class Main {
                                      File xmlOutputFile, int printVerbosity,
                                      Set<ImageUtil> imageUtilsDisabled, Map<ImageUtil, File> imageUtilPaths,
                                      Set<String> runOnlyTheseSections,
-                                     Validator.DevParams devParams) throws PspDataException, InvalidXPathExpressionException, XmlFileParsingException, FdmfRegistryBak.UnknownFdmfException, ValidatorConfigurationException {
+                                     Validator.DevParams devParams) throws PspDataException, InvalidXPathExpressionException, XmlFileParsingException, ValidatorConfigurationException, FdmfRegistry.UnknownFdmfException {
         checkReadableDir(pspRoot);
         checkReadableDir(fdmfsRoot);
         File imageUtilsConfigFile = getImageUtilsConfigFile(fdmfsRoot);
         System.out.println(String.format("Zpracovávám PSP balík %s", pspRoot.getAbsolutePath()));
         Dmf dmfResolved = new DmfDetector().resolveDmf(dmfPrefered, pspRoot);
         System.out.println(String.format("Bude použita verze standardu %s", dmfResolved));
-        File fdmfRoot = new FdmfRegistryBak(fdmfsRoot).getFdmfDir(dmfResolved);
-        System.out.println(String.format("Kořenový adresář fDMF: %s", fdmfRoot.getAbsolutePath()));
+
+
+        FdmfConfiguration fdmfConfig = new FdmfRegistry(fdmfsRoot).getFdmfConfig(dmfResolved);
+        //File fdmfRoot = new FdmfRegistryBak(fdmfsRoot).getFdmfDir(dmfResolved);
+        System.out.println(String.format("Kořenový adresář fDMF: %s", fdmfsRoot.getAbsolutePath()));
         Platform platform = Platform.detectOs();
         System.out.println(String.format("Platforma: %s", platform.toReadableString()));
         ImageUtilManager imageUtilManager = new ImageUtilManagerFactory(imageUtilsConfigFile).buildImageUtilManager(platform.getOperatingSystem());
         imageUtilManager.setPaths(imageUtilPaths);
         detectImageTools(imageUtilManager, imageUtilsDisabled);
 
-        Validator validator = ValidatorFactory.buildValidator(fdmfRoot, pspRoot, imageUtilManager);
+        Validator validator = ValidatorFactory.buildValidator(fdmfConfig, pspRoot, imageUtilManager);
         System.out.println(String.format("Validátor inicializován, spouštím validace"));
         /*System.out.println("ěščřžýáíéĚŠČŘŽÝÁÍÉ");
         System.out.println(String.format("ěščřžýáíéĚŠČŘŽÝÁÍÉ"));

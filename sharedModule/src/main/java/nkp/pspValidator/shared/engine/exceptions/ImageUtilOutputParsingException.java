@@ -5,7 +5,7 @@ package nkp.pspValidator.shared.engine.exceptions;
  */
 public class ImageUtilOutputParsingException extends Exception {
 
-    public ImageUtilOutputParsingException(String message){
+    public ImageUtilOutputParsingException(String message) {
         super(message);
     }
 }

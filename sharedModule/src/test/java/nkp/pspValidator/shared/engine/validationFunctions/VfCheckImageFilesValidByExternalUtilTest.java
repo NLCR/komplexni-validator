@@ -1,8 +1,6 @@
 package nkp.pspValidator.shared.engine.validationFunctions;
 
-import nkp.pspValidator.shared.Platform;
-import nkp.pspValidator.shared.Validator;
-import nkp.pspValidator.shared.ValidatorFactory;
+import nkp.pspValidator.shared.*;
 import nkp.pspValidator.shared.engine.Engine;
 import nkp.pspValidator.shared.engine.Level;
 import nkp.pspValidator.shared.engine.ValueEvaluation;
@@ -26,7 +24,8 @@ public class VfCheckImageFilesValidByExternalUtilTest {
 
     //TODO: presunout
     private static final File EXAMPLES_ROOT_DIR = new File("src/test/resources/jpeg2000");
-    private static final File FDMD_ROOT = new File("src/main/resources/nkp/pspValidator/shared/fDMF/monograph_1.2");
+    //private static final File FDMD_ROOT = new File("src/main/resources/nkp/pspValidator/shared/fDMF/monograph_1.2");
+    private static final File FDMD_ROOT = new File("src/main/resources/nkp/pspValidator/shared/fDMF");
     private static final File IMAGE_UTILS_CONFIG = new File("src/main/resources/nkp/pspValidator/shared/fDMF/imageUtils.xml");
     private static File IMAGEMAGICK_PATH_LINUX = null;
     //ImageMagick-7.0.3-7-Q16-x64-static.exe
@@ -57,7 +56,7 @@ public class VfCheckImageFilesValidByExternalUtilTest {
 
 
     @BeforeClass
-    public static void setup() throws ValidatorConfigurationException {
+    public static void setup() throws ValidatorConfigurationException, FdmfRegistry.UnknownFdmfException {
         engine = initEngine();
         FILES_OK_UC = toFilesInDir("ok_uc");
         FILES_OK_MC = toFilesInDir("ok_mc");
@@ -75,7 +74,7 @@ public class VfCheckImageFilesValidByExternalUtilTest {
         return Arrays.asList(array);
     }
 
-    private static Engine initEngine() throws ValidatorConfigurationException {
+    private static Engine initEngine() throws ValidatorConfigurationException, FdmfRegistry.UnknownFdmfException {
         Platform platform = Platform.detectOs();
         //TODO: should not be initialized here
         imageUtilManager = new ImageUtilManagerFactory(IMAGE_UTILS_CONFIG).buildImageUtilManager(platform.getOperatingSystem());
@@ -102,7 +101,8 @@ public class VfCheckImageFilesValidByExternalUtilTest {
 
 
         detectImageTools(imageUtilManager);
-        Validator validator = ValidatorFactory.buildValidator(FDMD_ROOT, new File("/tmp"), imageUtilManager);
+        FdmfConfiguration fdmfConfig = new FdmfRegistry(FDMD_ROOT).getFdmfConfig(new Dmf(Dmf.Type.MONOGRAPH, "1.2"));
+        Validator validator = ValidatorFactory.buildValidator(fdmfConfig, new File("/tmp"), imageUtilManager);
         return validator.getEngine();
     }
 
