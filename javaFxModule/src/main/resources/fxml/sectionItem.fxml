@@ -19,24 +19,26 @@
           AnchorPane.topAnchor="0"
           AnchorPane.bottomAnchor="0"
     >
+        <children>
 
-        <StackPane>
+            <StackPane>
 
-            <ProgressIndicator fx:id="progressIndicator"
-                               prefWidth="20"
-                               prefHeight="20"
-            />
+                <ProgressIndicator fx:id="progressIndicator"
+                                   prefWidth="20"
+                                   prefHeight="20"
+                />
 
-            <ImageView fx:id="imgFinished"
-                       styleClass="problem-thumb">
-                <image>
-                    <Image url="@/img/Checkmark Filled-20.png"/>
-                </image>
-            </ImageView>
+                <ImageView fx:id="imgFinished"
+                           styleClass="problem-thumb">
+                    <image>
+                        <Image url="@/img/Checkmark Filled-20.png"/>
+                    </image>
+                </ImageView>
 
-        </StackPane>
+            </StackPane>
 
-        <Label fx:id="name" text="Název sekce"/>
+            <Label fx:id="name" text="Název sekce"/>
+        </children>
     </HBox>
 
 

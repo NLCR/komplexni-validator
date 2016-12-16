@@ -1,8 +1,6 @@
 package nkp.pspValidator.gui;
 
 import javafx.application.Platform;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -12,9 +10,10 @@ import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 import javafx.stage.Window;
 import javafx.util.Callback;
-import nkp.pspValidator.gui.pojo.PojoFactory;
+import nkp.pspValidator.gui.pojo.ProcessingState;
 import nkp.pspValidator.gui.pojo.RulesSectionWithState;
 import nkp.pspValidator.gui.pojo.SectionItem;
+import nkp.pspValidator.gui.pojo.ValidationStateManager;
 import nkp.pspValidator.shared.*;
 import nkp.pspValidator.shared.engine.RulesSection;
 
@@ -47,8 +46,9 @@ public class MainController extends AbstractController implements ValidationStat
 
     //sections
     @FXML
-    //ListView<RulesSectionWithState> sectionList;
-            ListView<RulesSectionWithState> sectionList;
+    ListView<RulesSectionWithState> sectionList;
+
+    private ValidationStateManager validationStateManager = null;
 
     @Override
     public void start(Stage primaryStage) throws Exception {
@@ -94,11 +94,14 @@ public class MainController extends AbstractController implements ValidationStat
 
                     FdmfConfiguration fdmfConfig = main.getValidationDataManager().getFdmfRegistry().getFdmfConfig(dmf);
                     Validator validator = ValidatorFactory.buildValidator(fdmfConfig, pspDir, main.getValidationDataManager().getImageUtilManager());
-                    PrintStream out = textAreaPrintStream();//System.out;
+                    //PrintStream out = textAreaPrintStream();//System.out;
+                    PrintStream out = null;
                     //TODO: v produkci odstraint
                     Validator.DevParams devParams = new Validator.DevParams();
                     //devParams.getSectionsToRun().add("Bibliografická metadata");
                     devParams.getSectionsToRun().add("Identifikátory");
+                    devParams.getSectionsToRun().add("Struktura souborů");
+                    devParams.getSectionsToRun().add("Primary METS filesec");
                     //devParams.getSectionsToRun().add("JPEG 2000");
                     validator.run(null, out, true, true, true, true, devParams, MainController.this);
                     updateStatus("validace balíku " + pspDir.getAbsolutePath() + " hotova");
@@ -163,14 +166,16 @@ public class MainController extends AbstractController implements ValidationStat
     @Override
     public void onSectionStarted(RulesSection section) {
         Platform.runLater(() -> {
-            status.setText("zpracovávám sekci " + section.getName());
+            validationStateManager.updateSectionStatus(section.getId(), ProcessingState.RUNNING);
+            System.out.println("zpracovávám sekci " + section.getName());
         });
     }
 
     @Override
     public void onSectionFinished(RulesSection section, long duration) {
         Platform.runLater(() -> {
-            status.setText("ukončena sekce " + section.getName() + ", cas: " + duration);
+            validationStateManager.updateSectionStatus(section.getId(), ProcessingState.FINISHED);
+            System.out.println("ukončena sekce " + section.getName() + ", cas: " + duration);
         });
     }
 
@@ -182,34 +187,28 @@ public class MainController extends AbstractController implements ValidationStat
     @Override
     public void onInitialized(List<RulesSection> sections) {
         Platform.runLater(() -> {
-            ObservableList<String> items = FXCollections.observableArrayList(
-                    "Single", "Double", "Suite", "Family App");
-//        sectionList.setItems(items);
-
-
+            validationStateManager = new ValidationStateManager(sections);
             sectionList.setCellFactory(new Callback<ListView<RulesSectionWithState>, ListCell<RulesSectionWithState>>() {
 
                 @Override
-                public ListCell<RulesSectionWithState> call(ListView<RulesSectionWithState> p) {
-                    ListCell<RulesSectionWithState> cell = new ListCell<RulesSectionWithState>() {
+                public ListCell<RulesSectionWithState> call(ListView<RulesSectionWithState> list) {
+                    return new ListCell<RulesSectionWithState>() {
 
                         @Override
-                        protected void updateItem(RulesSectionWithState section, boolean bln) {
-                            super.updateItem(section, bln);
-                            if (section != null) {
+                        protected void updateItem(RulesSectionWithState section, boolean empty) {
+                            super.updateItem(section, empty);
+                            if (empty || section == null) {
+                                setGraphic(null);
+                            } else {
                                 SectionItem item = new SectionItem();
                                 item.populate(section);
                                 setGraphic(item.getContainer());
                             }
                         }
-
                     };
-                    return cell;
                 }
             });
-
-            ObservableList<RulesSectionWithState> sectionsWithState = FXCollections.observableList(PojoFactory.buildRulesSections(sections));
-            sectionList.setItems(sectionsWithState);
+            sectionList.setItems(validationStateManager.getSectionsObservable());
         });
     }
 

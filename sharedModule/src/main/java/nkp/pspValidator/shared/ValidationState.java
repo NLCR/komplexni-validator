@@ -80,6 +80,7 @@ public class ValidationState {
         startTimeBySection.put(section, System.currentTimeMillis());
         if (progressListener != null) {
             progressListener.onSectionStarted(section);
+            System.out.println("progressListener.onSectionStarted(section);");
         }
     }
 
@@ -88,6 +89,7 @@ public class ValidationState {
         sectionBeingProcessed = null;
         if (progressListener != null) {
             progressListener.onSectionFinished(section, getSectionProcessingDuration(section));
+            System.out.println("progressListener.onSectionFinished(section);");
         }
     }
 

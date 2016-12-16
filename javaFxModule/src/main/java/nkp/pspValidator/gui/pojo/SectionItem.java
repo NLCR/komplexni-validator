@@ -56,12 +56,15 @@ public class SectionItem {
             case WAITING:
                 imgFinished.setVisible(false);
                 progressIndicator.setVisible(false);
+                break;
             case RUNNING:
                 imgFinished.setVisible(false);
                 progressIndicator.setVisible(true);
+                break;
             case FINISHED:
                 imgFinished.setVisible(true);
                 progressIndicator.setVisible(false);
+                break;
         }
 
         infosLabel.setText(section.getInfos().toString());

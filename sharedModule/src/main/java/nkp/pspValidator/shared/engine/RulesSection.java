@@ -34,12 +34,12 @@ public class RulesSection {
         return name;
     }
 
-    /*public List<Rule> getRules() {
-        return rules;
-    }*/
-
     public String getDescription() {
         return description;
+    }
+
+    public Integer getId() {
+        return id;
     }
 
     public boolean isEnabled() {

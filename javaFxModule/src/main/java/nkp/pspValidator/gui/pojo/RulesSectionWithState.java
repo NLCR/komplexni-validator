@@ -9,12 +9,18 @@ import java.util.Random;
  */
 public class RulesSectionWithState {
 
+    private static Random random = new Random();
+
     private final RulesSection section;
-    private ProcessingState state = randomState();//TMP
+    private ProcessingState state = ProcessingState.WAITING;
+    //randomState();//TMP
 
     private ProcessingState randomState() {
-        Random random = new Random(System.currentTimeMillis());
-        return ProcessingState.values()[random.nextInt(3)];
+        int id = random.nextInt(3);
+        System.out.println(id);
+        ProcessingState state = ProcessingState.values()[id];
+        System.out.println(state);
+        return state;
     }
 
     private Integer errors = randomNum();
