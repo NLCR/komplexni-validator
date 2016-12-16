@@ -1,20 +1,41 @@
 package nkp.pspValidator.gui.pojo;
 
+import nkp.pspValidator.shared.engine.Rule;
 import nkp.pspValidator.shared.engine.RulesSection;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by martin on 16.12.16.
  */
 public class PojoFactory {
 
-    public static List<RulesSectionWithState> buildRulesSections(List<RulesSection> sections) {
-        List<RulesSectionWithState> result = new ArrayList<>(sections.size());
+    public static List<SectionWithState> buildSections(List<RulesSection> sections) {
+        List<SectionWithState> result = new ArrayList<>(sections.size());
         for (RulesSection section : sections) {
-            RulesSectionWithState withState = new RulesSectionWithState(section);
+            SectionWithState withState = new SectionWithState(section);
             result.add(withState);
+        }
+        return result;
+    }
+
+    public static Map<Integer, List<RuleWithState>> buildRules(Map<RulesSection, List<Rule>> original) {
+        Map<Integer, List<RuleWithState>> result = new HashMap<>();
+        for (RulesSection section : original.keySet()) {
+            List<Rule> originalList = original.get(section);
+            List<RuleWithState> newList = toRulesWithState(originalList);
+            result.put(section.getId(), newList);
+        }
+        return result;
+    }
+
+    private static List<RuleWithState> toRulesWithState(List<Rule> originalList) {
+        List<RuleWithState> result = new ArrayList<>(originalList.size());
+        for (Rule rule : originalList) {
+            result.add(new RuleWithState(rule));
         }
         return result;
     }

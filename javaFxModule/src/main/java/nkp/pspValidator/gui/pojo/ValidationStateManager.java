@@ -2,6 +2,7 @@ package nkp.pspValidator.gui.pojo;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.util.Pair;
 import nkp.pspValidator.shared.engine.Level;
 import nkp.pspValidator.shared.engine.Rule;
 import nkp.pspValidator.shared.engine.RulesSection;
@@ -15,46 +16,75 @@ import java.util.Map;
  */
 public class ValidationStateManager {
 
-    private final ObservableList<RulesSectionWithState> sectionsObservable;
-    private final Map<Integer, RulesSectionWithState> sectionsById;
+
+    private final Map<Integer, SectionWithState> sectionsById;
+    private final Map<Pair<Integer, Integer>, RuleWithState> rulesByIds;
+
+    //observables
+    private final ObservableList<SectionWithState> sectionsObservable;
+    private final Map<Integer, ObservableList<RuleWithState>> rulesObservableBySectionId;
 
     public ValidationStateManager(List<RulesSection> sections, Map<RulesSection, List<Rule>> rules) {
-        List<RulesSectionWithState> sectionsWithState = PojoFactory.buildRulesSections(sections);
-        this.sectionsObservable = FXCollections.observableList(sectionsWithState);
+        //sections
+        List<SectionWithState> sectionsWithState = PojoFactory.buildSections(sections);
         this.sectionsById = initSectionsById(sectionsWithState);
+        this.sectionsObservable = FXCollections.observableList(sectionsWithState);
+        //rules
+        Map<Integer, List<RuleWithState>> rulesWithState = PojoFactory.buildRules(rules);
+        this.rulesByIds = initRulesByIds(rulesWithState);
+        this.rulesObservableBySectionId = initObservableRules(rulesWithState);
     }
 
-    private Map<Integer, RulesSectionWithState> initSectionsById(List<RulesSectionWithState> sectionsWithState) {
-        Map<Integer, RulesSectionWithState> result = new HashMap<>();
-        for (RulesSectionWithState section : sectionsWithState) {
+    private Map<Integer, ObservableList<RuleWithState>> initObservableRules(Map<Integer, List<RuleWithState>> plainRulesBySectionId) {
+        Map<Integer, ObservableList<RuleWithState>> result = new HashMap<>();
+        for (Integer sectionId : plainRulesBySectionId.keySet()) {
+            result.put(sectionId, FXCollections.observableList(plainRulesBySectionId.get(sectionId)));
+        }
+        return result;
+    }
+
+    private Map<Pair<Integer, Integer>, RuleWithState> initRulesByIds(Map<Integer, List<RuleWithState>> rulesWithState) {
+        Map<Pair<Integer, Integer>, RuleWithState> result = new HashMap<>();
+        for (Integer sectionId : rulesWithState.keySet()) {
+            List<RuleWithState> rulesOfSection = rulesWithState.get(sectionId);
+            for (RuleWithState rule : rulesOfSection) {
+                result.put(new Pair<>(sectionId, rule.getId()), rule);
+            }
+        }
+        return result;
+    }
+
+    private Map<Integer, SectionWithState> initSectionsById(List<SectionWithState> sectionsWithState) {
+        Map<Integer, SectionWithState> result = new HashMap<>();
+        for (SectionWithState section : sectionsWithState) {
             result.put(section.getId(), section);
         }
         return result;
     }
 
-    public ObservableList<RulesSectionWithState> getSectionsObservable() {
+    public ObservableList<SectionWithState> getSectionsObservable() {
         return sectionsObservable;
     }
 
     public void updateSectionStatus(Integer sectionId, ProcessingState state) {
-        RulesSectionWithState section = sectionsById.get(sectionId);
+        SectionWithState section = sectionsById.get(sectionId);
         section.setState(state);
         updateSectionObservable(section);
-
     }
 
-    private void updateSectionObservable(RulesSectionWithState section) {
+    private void updateSectionObservable(SectionWithState updated) {
         for (int i = 0; i < sectionsObservable.size(); i++) {
-            RulesSectionWithState rulesSectionWithState = sectionsObservable.get(i);
-            if (rulesSectionWithState.getId() == section.getId()) {
-                sectionsObservable.set(i, section);
+            SectionWithState section = sectionsObservable.get(i);
+            if (section.getId() == updated.getId()) {
+                sectionsObservable.set(i, updated);
+                break;
             }
         }
     }
 
 
     public void updateSectionProblems(int sectionId, Map<Level, Integer> sectionProblemsByLevel) {
-        RulesSectionWithState section = sectionsById.get(sectionId);
+        SectionWithState section = sectionsById.get(sectionId);
         Integer errors = sectionProblemsByLevel.get(Level.ERROR);
         if (errors != null) {
             section.setErrors(errors);
@@ -68,5 +98,40 @@ public class ValidationStateManager {
             section.setInfos(infos);
         }
         updateSectionObservable(section);
+    }
+
+    public ObservableList<RuleWithState> getRulesObervable(Integer selectedSectionId) {
+        return rulesObservableBySectionId.get(selectedSectionId);
+    }
+
+    public void updateRule(int sectionId, int ruleId, ProcessingState state, Map<Level, Integer> ruleProblemsByLevel) {
+        RuleWithState rule = rulesByIds.get(new Pair<>(sectionId, ruleId));
+        rule.setState(state);
+        if (ruleProblemsByLevel != null) {
+            Integer errors = ruleProblemsByLevel.get(Level.ERROR);
+            if (errors != null) {
+                rule.setErrors(errors);
+            }
+            Integer warnings = ruleProblemsByLevel.get(Level.WARNING);
+            if (warnings != null) {
+                rule.setWarnings(warnings);
+            }
+            Integer infos = ruleProblemsByLevel.get(Level.INFO);
+            if (infos != null) {
+                rule.setInfos(infos);
+            }
+        }
+        updateRuleObservable(rule);
+    }
+
+    private void updateRuleObservable(RuleWithState updated) {
+        ObservableList<RuleWithState> rules = rulesObservableBySectionId.get(updated.getSectionId());
+        for (int i = 0; i < rules.size(); i++) {
+            RuleWithState rule = rules.get(i);
+            if (rule.getId() == updated.getId()) {
+                rules.set(i, updated);
+                break;
+            }
+        }
     }
 }

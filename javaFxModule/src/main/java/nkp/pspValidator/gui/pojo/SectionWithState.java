@@ -5,7 +5,7 @@ import nkp.pspValidator.shared.engine.RulesSection;
 /**
  * Created by martin on 16.12.16.
  */
-public class RulesSectionWithState {
+public class SectionWithState {
 
     private final Integer id;
     private final String name;
@@ -16,7 +16,7 @@ public class RulesSectionWithState {
     private Integer infos = 0;
     private ProcessingState state = ProcessingState.WAITING;
 
-    public RulesSectionWithState(RulesSection section) {
+    public SectionWithState(RulesSection section) {
         this.id = section.getId();
         this.name = section.getName();
         this.description = section.getDescription();
@@ -77,7 +77,7 @@ public class RulesSectionWithState {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        RulesSectionWithState that = (RulesSectionWithState) o;
+        SectionWithState that = (SectionWithState) o;
 
         return id.equals(that.id);
 

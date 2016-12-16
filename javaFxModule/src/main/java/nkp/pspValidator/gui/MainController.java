@@ -1,6 +1,8 @@
 package nkp.pspValidator.gui;
 
 import javafx.application.Platform;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -10,10 +12,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 import javafx.stage.Window;
 import javafx.util.Callback;
-import nkp.pspValidator.gui.pojo.ProcessingState;
-import nkp.pspValidator.gui.pojo.RulesSectionWithState;
-import nkp.pspValidator.gui.pojo.SectionItem;
-import nkp.pspValidator.gui.pojo.ValidationStateManager;
+import nkp.pspValidator.gui.pojo.*;
 import nkp.pspValidator.shared.*;
 import nkp.pspValidator.shared.engine.Level;
 import nkp.pspValidator.shared.engine.Rule;
@@ -48,12 +47,13 @@ public class MainController extends AbstractController implements ValidationStat
     TextArea textArea;
 
     @FXML
-    ListView<RulesSectionWithState> sectionList;
+    ListView<SectionWithState> sectionList;
 
     @FXML
     ListView ruleList;
 
     private ValidationStateManager validationStateManager = null;
+    private SectionWithState selectedSection;
 
     @Override
     public void start(Stage primaryStage) throws Exception {
@@ -177,17 +177,17 @@ public class MainController extends AbstractController implements ValidationStat
 
     @Override
     public void onInitialization(List<RulesSection> sections, Map<RulesSection, List<Rule>> rules) {
-        System.out.println("on initialization");
+        //System.out.println("on initialization");
         Platform.runLater(() -> {
             validationStateManager = new ValidationStateManager(sections, rules);
-            sectionList.setCellFactory(new Callback<ListView<RulesSectionWithState>, ListCell<RulesSectionWithState>>() {
+            sectionList.setCellFactory(new Callback<ListView<SectionWithState>, ListCell<SectionWithState>>() {
 
                 @Override
-                public ListCell<RulesSectionWithState> call(ListView<RulesSectionWithState> list) {
-                    return new ListCell<RulesSectionWithState>() {
+                public ListCell<SectionWithState> call(ListView<SectionWithState> list) {
+                    return new ListCell<SectionWithState>() {
 
                         @Override
-                        protected void updateItem(RulesSectionWithState section, boolean empty) {
+                        protected void updateItem(SectionWithState section, boolean empty) {
                             super.updateItem(section, empty);
                             if (empty || section == null) {
                                 setGraphic(null);
@@ -201,7 +201,57 @@ public class MainController extends AbstractController implements ValidationStat
                 }
             });
             sectionList.setItems(validationStateManager.getSectionsObservable());
+            sectionList.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<SectionWithState>() {
+                @Override
+                public void changed(ObservableValue<? extends SectionWithState> observable, SectionWithState oldValue, SectionWithState newSection) {
+                    if (newSection == null) {
+                        selectSection(null);
+                    } else {
+                        if (!newSection.equals(selectedSection)) {
+                            selectSection(newSection);
+                        }
+                    }
+                }
+            });
+            //rules
+            ruleList.setItems(null);
+            ruleList.setCellFactory(new Callback<ListView<RuleWithState>, ListCell<RuleWithState>>() {
+
+                @Override
+                public ListCell<RuleWithState> call(ListView<RuleWithState> list) {
+                    return new ListCell<RuleWithState>() {
+
+                        @Override
+                        protected void updateItem(RuleWithState rule, boolean empty) {
+                            super.updateItem(rule, empty);
+                            if (empty || rule == null) {
+                                setGraphic(null);
+                            } else {
+                                RuleItem item = new RuleItem();
+                                item.populate(rule);
+                                setGraphic(item.getContainer());
+                            }
+                        }
+                    };
+                }
+            });
+            //TODO: rule selection
+
         });
+    }
+
+    private void selectSection(SectionWithState section) {
+        if (section != null) {
+            //TODO: jeste aktualizovat hlavicku u seznamu pravidel
+            //TODO: bug, seznam se chova divne, pokud ma vice polozek. Treba u pravidla "Struktura souboru"
+            System.out.println("Selected section: " + section.getName());
+            selectedSection = section;
+            ruleList.setItems(validationStateManager.getRulesObervable(selectedSection.getId()));
+            ruleList.refresh();
+        } else {
+            selectedSection = null;
+            //TODO: empty item
+        }
     }
 
     @Override
@@ -225,13 +275,16 @@ public class MainController extends AbstractController implements ValidationStat
 
     @Override
     public void onRuleStart(int sectionId, int ruleId) {
-        //TODO
+        Platform.runLater(() -> {
+            validationStateManager.updateRule(sectionId, ruleId, ProcessingState.RUNNING, null);
+        });
     }
 
     @Override
     public void onRuleFinish(int sectionId, Map<Level, Integer> sectionProblemsByLevel, int sectionProblemsTotal, int ruleId, Map<Level, Integer> ruleProblemsByLevel, int ruleProblemsTotal, List<ValidationError> errors) {
         Platform.runLater(() -> {
             validationStateManager.updateSectionProblems(sectionId, sectionProblemsByLevel);
+            validationStateManager.updateRule(sectionId, ruleId, ProcessingState.FINISHED, ruleProblemsByLevel);
         });
     }
 }
