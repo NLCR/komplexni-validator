@@ -42,7 +42,7 @@ public class Validator {
         boolean runAllSections = devParams == null || devParams.getSectionsToRun() == null || devParams.getSectionsToRun().isEmpty();
         ValidationState state = initState(progressListener);
         List<RulesSection> rulesSections = state.getSections();
-        state.reportValidationsStart();
+        state.reportValidationsStarted();
         for (RulesSection section : rulesSections) {
             boolean runSection = runAllSections || devParams.getSectionsToRun().contains(section.getName());
             if (!runSection) {
@@ -53,7 +53,7 @@ public class Validator {
                 state.reportSectionProcessingFinished(section);
             }
         }
-        state.reportValidationsEnd();
+        state.reportValidationsFinished();
         textLogger.logPackageSummary(state.getGlobalProblemsTotal(), state.getGlobalProblemsByLevel(), state.isValid());
         if (xmlOutputFile != null) {
             textLogger.logXmlExportStarted(xmlOutputFile);
@@ -113,6 +113,19 @@ public class Validator {
         public void setSectionsToRun(Set<String> sectionsToRun) {
             this.sectionsToRun = sectionsToRun;
         }
+    }
+
+    public static interface ProgressListener {
+
+        public void onValidationsStarted();
+
+        public void onSectionStarted(RulesSection section);
+
+        public void onSectionFinished(RulesSection section, long duration);
+
+        public void onValidationsFinished();
+
+        public void onInitialized(List<RulesSection> sections);
     }
 
 }

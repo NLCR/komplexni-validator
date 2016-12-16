@@ -7,8 +7,8 @@ import nkp.pspValidator.shared.engine.Level;
  */
 public class ValidationError {
 
-    private Level level;
-    private String message;
+    private final Level level;
+    private final String message;
 
     public ValidationError(Level level, String message) {
         this.level = level;

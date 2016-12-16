@@ -70,11 +70,11 @@ public class ConfigProcessor {
     private void processRulesSectionDefinition(Engine engine, Element rulesSectionEl, Integer ruleId) throws ValidatorConfigurationException {
         String name = rulesSectionEl.getAttribute("name");
         //System.out.println(String.format("processing rule-section %s'", name));
-        RulesSection section = engine.buildRuleSection(ruleId, name);
         String description = rulesSectionEl.getAttribute("description");
-        if (description != null && !description.isEmpty()) {
-            section.setDescription(description);
+        if (description.isEmpty()) {
+            description = null;
         }
+        RulesSection section = engine.buildRuleSection(ruleId, name, description);
         section.setEnabled(parseBooleanAttribute("enabled", true));
         engine.registerRuleSection(section);
         //rules
@@ -86,15 +86,17 @@ public class ConfigProcessor {
     }
 
     private void processRule(Engine engine, RulesSection section, int ruleId, Element ruleEl) throws ValidatorConfigurationException {
+        //name
         String name = ruleEl.getAttribute("name");
         Element validationEl = XmlUtils.getChildrenElementsByName(ruleEl, "validation").get(0);
         ValidationFunction function = parseValidationFunction(engine, validationEl);
-        Rule rule = new Rule(section.getId(), ruleId, name, function);
         //description
         List<Element> descriptionEls = XmlUtils.getChildrenElementsByName(ruleEl, "description");
+        String description = null;
         if (!descriptionEls.isEmpty()) {
-            rule.setDescription(descriptionEls.get(0).getTextContent().replaceAll("\\s+", " "));
+            description = descriptionEls.get(0).getTextContent().replaceAll("\\s+", " ");
         }
+        Rule rule = new Rule(section.getId(), ruleId, name, description, function);
         //System.out.println(String.format("registering rule '%s' (%s)", name, level));
         engine.registerRule(section, rule);
 

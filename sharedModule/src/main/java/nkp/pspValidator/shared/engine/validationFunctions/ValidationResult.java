@@ -24,7 +24,6 @@ public class ValidationResult {
         errors.add(new ValidationError(level, messae));
     }
 
-
     public List<ValidationError> getProblems() {
         return errors;
     }

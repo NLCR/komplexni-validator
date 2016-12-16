@@ -12,8 +12,10 @@ public class RulesSectionWithState {
     private static Random random = new Random();
 
     private final RulesSection section;
+    private Integer errors = 0;
+    private Integer warnings = 0;
+    private Integer infos = 0;
     private ProcessingState state = ProcessingState.WAITING;
-    //randomState();//TMP
 
     private ProcessingState randomState() {
         int id = random.nextInt(3);
@@ -22,10 +24,6 @@ public class RulesSectionWithState {
         System.out.println(state);
         return state;
     }
-
-    private Integer errors = randomNum();
-    private Integer warnings = randomNum();
-    private Integer infos = randomNum();
 
     private Integer randomNum() {
         Random random = new Random();

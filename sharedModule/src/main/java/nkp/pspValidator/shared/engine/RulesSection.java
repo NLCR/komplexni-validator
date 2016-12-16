@@ -6,28 +6,25 @@ package nkp.pspValidator.shared.engine;
 public class RulesSection {
     private final Integer id;
     private final String name;
-    //private final List<Rule> rules = new ArrayList<>();
-
-    private String description;
+    private final String description;
     private boolean enabled = true;
 
-    public RulesSection(Integer id, String name) {
+    public RulesSection(Integer id, String name, String description) {
         if (id == null) {
             throw new IllegalArgumentException("id cannot be null");
         }
         this.id = id;
         this.name = name;
-    }
-
-
-    public RulesSection setDescription(String description) {
         this.description = description;
-        return this;
     }
 
     public RulesSection setEnabled(boolean enabled) {
         this.enabled = enabled;
         return this;
+    }
+
+    public RulesSection copy() {
+        return new RulesSection(id.intValue(), name, description);
     }
 
     public String getName() {

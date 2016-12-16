@@ -11,22 +11,20 @@ public class Rule {
     private final Integer sectionId;
     private final Integer id;
     private final String name;
+    private final String description;
     private final ValidationFunction function;
-
-    private String description;
-
     private ValidationResult result;
 
-    public Rule(Integer sectionId, Integer id, String name, ValidationFunction function) {
-        this.sectionId = id;
+    public Rule(Integer sectionId, Integer id, String name, String description, ValidationFunction function) {
+        this.sectionId = sectionId;
         this.id = id;
         this.name = name;
+        this.description = description;
         this.function = function;
     }
 
-    public Rule setDescription(String description) {
-        this.description = description;
-        return this;
+    public Rule copyWithoutValidationFunction() {
+        return new Rule(sectionId.intValue(), id.intValue(), name, description, null);
     }
 
     public ValidationResult getResult() {

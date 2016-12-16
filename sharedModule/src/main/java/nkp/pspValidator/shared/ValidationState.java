@@ -6,10 +6,7 @@ import nkp.pspValidator.shared.engine.RulesSection;
 import nkp.pspValidator.shared.engine.validationFunctions.ValidationError;
 import nkp.pspValidator.shared.engine.validationFunctions.ValidationResult;
 
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Created by martin on 15.12.16.
@@ -32,8 +29,8 @@ public class ValidationState {
     private final Map<RulesSection, List<Rule>> rulesBySection;
     //results
     private final Map<Rule, ValidationResult> validationResults = new HashMap<>();
-    private int globalProblemsTotal;
     private final Map<Level, Integer> globalProblemsByLevel = new HashMap<>();
+    private int globalProblemsTotal;
     private final Map<RulesSection, Map<Level, Integer>> sectionProblemsByLevel = new HashMap<>();
     private final Map<RulesSection, Integer> sectionProblemsTotal = new HashMap<>();
     private final Map<Rule, Map<Level, Integer>> ruleProblemsByLevel = new HashMap<>();
@@ -46,7 +43,39 @@ public class ValidationState {
         this.sections = sections;
         this.rulesBySection = rules;
         if (progressListener != null) {
-            progressListener.onInitialized(sections);
+            progressListener.onInitialization(copy(sections), copy(rules));
+        }
+    }
+
+    private List<RulesSection> copy(List<RulesSection> original) {
+        if (original == null) {
+            return null;
+        } else {
+            List<RulesSection> result = new ArrayList<>();
+            for (RulesSection rule : original) {
+                result.add(rule.copy());
+            }
+            return result;
+        }
+    }
+
+    private Map<RulesSection, List<Rule>> copy(Map<RulesSection, List<Rule>> original) {
+        if (original == null) {
+            return null;
+        } else {
+            Map<RulesSection, List<Rule>> result = new HashMap<>();
+            for (RulesSection section : original.keySet()) {
+                List<Rule> rulesOriginal = original.get(section);
+                if (rulesOriginal != null) {
+                    List<Rule> rulesNew = null;
+                    rulesNew = new ArrayList<>(original.size());
+                    for (Rule rule : rulesOriginal) {
+                        rulesNew.add(rule.copyWithoutValidationFunction());
+                    }
+                    result.put(section.copy(), rulesNew);
+                }
+            }
+            return result;
         }
     }
 
@@ -57,14 +86,14 @@ public class ValidationState {
     public void reportSectionProcessingStarted(RulesSection section) {
         startTimeBySection.put(section, System.currentTimeMillis());
         if (progressListener != null) {
-            progressListener.onSectionStarted(section);
+            progressListener.onSectionStart(section.getId());
         }
     }
 
     public void reportSectionProcessingFinished(RulesSection section) {
         finishTimeBySection.put(section, System.currentTimeMillis());
         if (progressListener != null) {
-            progressListener.onSectionFinished(section, getSectionProcessingDuration(section));
+            progressListener.onSectionFinish(section.getId(), getSectionProcessingDuration(section));
         }
     }
 
@@ -83,6 +112,39 @@ public class ValidationState {
         ruleProblemsTotal.put(rule, problemsTotal);
         updateRuleSectionProblems(section, problemsByLevel, problemsTotal);
         updateTotalProblems(problemsByLevel, problemsTotal);
+        if (progressListener != null) {
+            progressListener.onRuleFinish(
+                    rule.getSectionId(), copyProblems(sectionProblemsByLevel.get(section)), sectionProblemsTotal.get(section).intValue(),
+                    rule.getId(), copyProblems(ruleProblemsByLevel.get(rule)), ruleProblemsTotal.get(rule).intValue(),
+                    copyErrors(result.getProblems())
+            );
+        }
+    }
+
+    private List<ValidationError> copyErrors(List<ValidationError> original) {
+        List<ValidationError> result = null;
+        if (original != null) {
+            result = new ArrayList<>(original.size());
+            for (ValidationError error : original) {
+                result.add(error);
+            }
+        }
+        return result;
+    }
+
+    private Map<Level, Integer> copyProblems(Map<Level, Integer> original) {
+        if (original == null) {
+            return null;
+        } else {
+            Map<Level, Integer> result = new HashMap<>();
+            for (Level level : original.keySet()) {
+                Integer value = original.get(level);
+                if (value != null) {
+                    result.put(level, value.intValue());
+                }
+            }
+            return result;
+        }
     }
 
 
@@ -150,19 +212,19 @@ public class ValidationState {
         return result;
     }
 
-    public void reportValidationsStart() {
+    public void reportValidationsStarted() {
         globalStartTime = System.currentTimeMillis();
         if (progressListener != null) {
-            progressListener.onValidationsStarted();
+            progressListener.onValidationsStart();
         }
     }
 
-    public void reportValidationsEnd() {
+    public void reportValidationsFinished() {
         globalFinishTime = System.currentTimeMillis();
         Integer errors = globalProblemsByLevel.get(Level.ERROR);
         valid = errors == null || errors == 0;
         if (progressListener != null) {
-            progressListener.onValidationsFinished();
+            progressListener.onValidationsFinish();
         }
     }
 
@@ -221,14 +283,19 @@ public class ValidationState {
 
     public static interface ProgressListener {
 
-        public void onValidationsStarted();
+        public void onInitialization(List<RulesSection> sections, Map<RulesSection, List<Rule>> rules);
 
-        public void onSectionStarted(RulesSection section);
+        public void onValidationsStart();
 
-        public void onSectionFinished(RulesSection section, long duration);
+        public void onSectionStart(int sectionId);
 
-        public void onValidationsFinished();
+        public void onSectionFinish(int sectionId, long duration);
 
-        public void onInitialized(List<RulesSection> sections);
+        public void onRuleStart(int sectionId, int ruleId);
+
+        public void onRuleFinish(int sectionId, Map<Level, Integer> sectionProblemsByLevel, int sectionProblemsTotal, int ruleId, Map<Level, Integer> ruleProblemsByLevel, int ruleProblemsTotal, List<ValidationError> errors);
+
+        public void onValidationsFinish();
+
     }
 }

@@ -73,21 +73,19 @@ public class EngineTest {
 
         //through validation rule
         Rule ruleSingleInfo =
-                engine.buildRule(0, 0, "SINGLE_INFO",
+                engine.buildRule(0, 0, "SINGLE_INFO", "musi existovat prave jeden soubor info",
                         engine.buildValidationFunction("checkFilelistHasExactSize")
                                 .withValueParamByReference("files", ValueType.FILE_LIST, "INFO_FILES")
-                                .withValueParam("size", ValueType.INTEGER, new ValueEvaluation(1)))
-                        .setDescription("musi existovat prave jeden soubor info");
+                                .withValueParam("size", ValueType.INTEGER, new ValueEvaluation(1)));
         ValidationResult ruleSingleInfoResult = ruleSingleInfo.getResult();
         assertFalse(ruleSingleInfoResult.hasProblems());
 
         //through validation rule
         Rule ruleTwoInfos =
-                engine.buildRule(0, 1, "SINGLE_INFO",
+                engine.buildRule(0, 1, "SINGLE_INFO", "dva soubory info",
                         engine.buildValidationFunction("checkFilelistHasExactSize")
                                 .withValueParamByReference("files", ValueType.FILE_LIST, "INFO_FILES")
-                                .withValueParam("size", ValueType.INTEGER, new ValueEvaluation(2)))
-                        .setDescription("dva soubory info");
+                                .withValueParam("size", ValueType.INTEGER, new ValueEvaluation(2)));
         ValidationResult ruleTwoInfosResult = ruleTwoInfos.getResult();
         assertTrue(ruleTwoInfosResult.hasProblems());
     }

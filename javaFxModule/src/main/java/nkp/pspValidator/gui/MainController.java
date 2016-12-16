@@ -15,10 +15,14 @@ import nkp.pspValidator.gui.pojo.RulesSectionWithState;
 import nkp.pspValidator.gui.pojo.SectionItem;
 import nkp.pspValidator.gui.pojo.ValidationStateManager;
 import nkp.pspValidator.shared.*;
+import nkp.pspValidator.shared.engine.Level;
+import nkp.pspValidator.shared.engine.Rule;
 import nkp.pspValidator.shared.engine.RulesSection;
+import nkp.pspValidator.shared.engine.validationFunctions.ValidationError;
 
 import java.io.*;
 import java.util.List;
+import java.util.Map;
 import java.util.logging.Logger;
 
 /**
@@ -100,8 +104,11 @@ public class MainController extends AbstractController implements ValidationStat
                     Validator.DevParams devParams = new Validator.DevParams();
                     //devParams.getSectionsToRun().add("Bibliografická metadata");
                     devParams.getSectionsToRun().add("Identifikátory");
+                    devParams.getSectionsToRun().add("Soubor CHECKSUM");
+                    devParams.getSectionsToRun().add("Soubor info");
                     devParams.getSectionsToRun().add("Struktura souborů");
                     devParams.getSectionsToRun().add("Primary METS filesec");
+
                     //devParams.getSectionsToRun().add("JPEG 2000");
                     validator.run(null, out, true, true, true, true, devParams, MainController.this);
                     updateStatus("validace balíku " + pspDir.getAbsolutePath() + " hotova");
@@ -162,32 +169,16 @@ public class MainController extends AbstractController implements ValidationStat
         new Thread(task).start();
     }
 
-
     @Override
-    public void onSectionStarted(RulesSection section) {
-        Platform.runLater(() -> {
-            validationStateManager.updateSectionStatus(section.getId(), ProcessingState.RUNNING);
-            System.out.println("zpracovávám sekci " + section.getName());
-        });
-    }
-
-    @Override
-    public void onSectionFinished(RulesSection section, long duration) {
-        Platform.runLater(() -> {
-            validationStateManager.updateSectionStatus(section.getId(), ProcessingState.FINISHED);
-            System.out.println("ukončena sekce " + section.getName() + ", cas: " + duration);
-        });
-    }
-
-    @Override
-    public void onValidationsFinished() {
+    public void onValidationsFinish() {
         //  TODO
     }
 
     @Override
-    public void onInitialized(List<RulesSection> sections) {
+    public void onInitialization(List<RulesSection> sections, Map<RulesSection, List<Rule>> rules) {
+        System.out.println("on initialization");
         Platform.runLater(() -> {
-            validationStateManager = new ValidationStateManager(sections);
+            validationStateManager = new ValidationStateManager(sections, rules);
             sectionList.setCellFactory(new Callback<ListView<RulesSectionWithState>, ListCell<RulesSectionWithState>>() {
 
                 @Override
@@ -213,7 +204,33 @@ public class MainController extends AbstractController implements ValidationStat
     }
 
     @Override
-    public void onValidationsStarted() {
+    public void onValidationsStart() {
         //  TODO
+    }
+
+    @Override
+    public void onSectionStart(int sectionId) {
+        Platform.runLater(() -> {
+            validationStateManager.updateSectionStatus(sectionId, ProcessingState.RUNNING);
+        });
+    }
+
+    @Override
+    public void onSectionFinish(int sectionId, long duration) {
+        Platform.runLater(() -> {
+            validationStateManager.updateSectionStatus(sectionId, ProcessingState.FINISHED);
+        });
+    }
+
+    @Override
+    public void onRuleStart(int sectionId, int ruleId) {
+        //TODO
+    }
+
+    @Override
+    public void onRuleFinish(int sectionId, Map<Level, Integer> sectionProblemsByLevel, int sectionProblemsTotal, int ruleId, Map<Level, Integer> ruleProblemsByLevel, int ruleProblemsTotal, List<ValidationError> errors) {
+        Platform.runLater(() -> {
+            validationStateManager.updateSectionProblems(sectionId, sectionProblemsByLevel);
+        });
     }
 }

@@ -189,13 +189,13 @@ public class Engine {
         }
     }
 
-    public RulesSection buildRuleSection(Integer id, String sectionName) {
-        return new RulesSection(id, sectionName);
+    public RulesSection buildRuleSection(Integer id, String sectionName, String description) {
+        return new RulesSection(id, sectionName, description);
     }
 
     @Deprecated
-    public Rule buildRule(int sectionId, int ruleId,String ruleName,  ValidationFunction function) {
-        return new Rule(sectionId, ruleId, ruleName, function);
+    public Rule buildRule(int sectionId, int ruleId, String ruleName, String description, ValidationFunction function) {
+        return new Rule(sectionId, ruleId, ruleName, description, function);
     }
 
     //register methods for defining variables (values, patterns, ruleSections, rules)
