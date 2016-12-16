@@ -4,6 +4,7 @@ import javafx.application.Platform;
 import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
@@ -37,7 +38,6 @@ public class MainController extends AbstractController implements ValidationStat
     @FXML
     BorderPane container;
 
-
     //menu
     @FXML
     MenuBar menuBar;
@@ -45,44 +45,40 @@ public class MainController extends AbstractController implements ValidationStat
     //status bar
     @FXML
     Label statusText;
-
     @FXML
     ProgressIndicator statusProgressIndicator;
-
     @FXML
     ImageView statusImgFinished;
-
     @FXML
     ImageView statusImgError;
 
     //sections
-
     @FXML
     ListView<SectionWithState> sectionList;
 
-    //rules for section
-
+    //rules of section
     @FXML
     Label rulesSectionNameLbl;
-
     @FXML
     Label rulesSectionDescriptionLbl;
-
     @FXML
     ListView<RuleWithState> ruleList;
 
     //problems of rule
-
+    @FXML
+    Node problemsContainer;
     @FXML
     Label problemsSectionNameLbl;
     @FXML
     Label problemsRuleNameLbl;
     @FXML
     Label problemsRuleDescriptionLbl;
-
+    @FXML
+    ProgressIndicator problemsProgressIndicator;
     @FXML
     ListView<ValidationProblem> problemList;
 
+    //other data
     private ValidationStateManager validationStateManager = null;
     private SectionWithState selectedSection;
     private RuleWithState selectedRule;
@@ -113,16 +109,43 @@ public class MainController extends AbstractController implements ValidationStat
         return container.getScene().getWindow();
     }
 
+    private void initBeforeValidation() {
+        //data spojena s konkretnim behem validace
+        validationStateManager = null;
+        pspDir = null;
+        //stav validace
+        selectedSection = null;
+        selectedRule = null;
+        //VIEWS
+        //status
+        statusText.setText(null);
+        statusProgressIndicator.setVisible(false);
+        statusImgFinished.setVisible(false);
+        statusImgError.setVisible(false);
+        //sections
+        sectionList.setItems(null);
+        //rules
+        rulesSectionNameLbl.setText(null);
+        rulesSectionDescriptionLbl.setText(null);
+        ruleList.setItems(null);
+        //problems of rule
+        problemsContainer.setVisible(false);
+        problemsProgressIndicator.setVisible(false);
+        problemsSectionNameLbl.setText(null);
+        problemsRuleNameLbl.setText(null);
+        problemsRuleDescriptionLbl.setText(null);
+        problemList.setItems(null);
+        problemList.setVisible(false);
+    }
+
     /**
      * @param pspDir
      * @param focedMonographVersion   can be null
      * @param forcedPeriodicalVersion can be null
      */
     public void runPspValidation(File pspDir, String focedMonographVersion, String forcedPeriodicalVersion) {
+        initBeforeValidation();
         this.pspDir = pspDir;
-        sectionList.setItems(null);
-        ruleList.setItems(null);
-        problemList.setItems(null);
         Task task = new Task<Void>() {
 
             @Override
@@ -139,15 +162,16 @@ public class MainController extends AbstractController implements ValidationStat
                     PrintStream out = null;
                     //TODO: v produkci odstranit
                     Validator.DevParams devParams = null;
-                    devParams = new Validator.DevParams();
-                    //devParams.getSectionsToRun().add("Bibliografická metadata");
-                    devParams.getSectionsToRun().add("Identifikátory");
-                    devParams.getSectionsToRun().add("Soubor CHECKSUM");
-                    devParams.getSectionsToRun().add("Soubor info");
-                    devParams.getSectionsToRun().add("Struktura souborů");
-                    devParams.getSectionsToRun().add("Primary METS filesec");
-                    //devParams.getSectionsToRun().add("JPEG 2000");
-
+                    if (ConfigurationManager.DEV_MODE) {
+                        devParams = new Validator.DevParams();
+                        //devParams.getSectionsToRun().add("Bibliografická metadata");
+                        devParams.getSectionsToRun().add("Identifikátory");
+                        devParams.getSectionsToRun().add("Soubor CHECKSUM");
+                        devParams.getSectionsToRun().add("Soubor info");
+                        devParams.getSectionsToRun().add("Struktura souborů");
+                        devParams.getSectionsToRun().add("Primary METS filesec");
+                        //devParams.getSectionsToRun().add("JPEG 2000");
+                    }
                     validator.run(null, out, true, true, true, true, devParams, MainController.this);
                     //updateStatus(String.format("Validace balíku %s hotova.", pspDir.getAbsolutePath()));
                 } catch (Exception e) {
@@ -316,24 +340,41 @@ public class MainController extends AbstractController implements ValidationStat
     private void selectRule(RuleWithState rule) {
         if (rule != null) {
             selectedRule = rule;
-            if (selectedSection != null) {
-                problemsSectionNameLbl.setText(selectedSection.getName() + ": ");
-                problemsRuleNameLbl.setText(rule.getName());
-                problemsRuleDescriptionLbl.setText(rule.getDescription());
-                problemList.setItems(validationStateManager.getProblemsObservable(rule.getSectionId(), rule.getId()));
-                problemList.refresh();
+            problemsContainer.setVisible(true);
+            problemsSectionNameLbl.setText(selectedSection.getName() + ": ");
+            problemsRuleNameLbl.setText(rule.getName());
+            problemsRuleDescriptionLbl.setText(rule.getDescription());
+            switch (rule.getState()) {
+                case FINISHED:
+                    problemsProgressIndicator.setVisible(false);
+                    problemList.setVisible(true);
+                    problemList.setItems(validationStateManager.getProblemsObservable(rule.getSectionId(), rule.getId()));
+                    problemList.refresh();
+                    break;
+                case RUNNING:
+                    problemsProgressIndicator.setVisible(true);
+                    problemList.setVisible(false);
+                    break;
+                case WAITING:
+                    problemsProgressIndicator.setVisible(false);
+                    problemList.setVisible(false);
+                    break;
             }
-        } else {
+        } else { //rule je null
             selectedRule = null;
+            //hide problems
+            problemsContainer.setVisible(false);
             problemsSectionNameLbl.setText(null);
             problemsRuleNameLbl.setText(null);
             problemsRuleDescriptionLbl.setText(null);
+            problemList.setVisible(false);
+            problemsProgressIndicator.setVisible(false);
         }
     }
 
+
     private void selectSection(SectionWithState section) {
         if (section != null) {
-            //TODO: jeste aktualizovat hlavicku u seznamu pravidel
             //TODO: bug, seznam se chova divne, pokud ma vice polozek. Treba u pravidla "Struktura souboru"
             //System.out.println("Selected section: " + section.getName());
             selectedSection = section;
@@ -346,11 +387,11 @@ public class MainController extends AbstractController implements ValidationStat
             rulesSectionNameLbl.setText(null);
             rulesSectionDescriptionLbl.setText(null);
         }
+        selectRule(null);
     }
 
     @Override
     public void onValidationsStart() {
-        //TODO: disable menu
         updateStatus(String.format("Validuji balík %s.", pspDir.getAbsolutePath()), TotalState.RUNNING);
     }
 
@@ -381,6 +422,8 @@ public class MainController extends AbstractController implements ValidationStat
             validationStateManager.updateSectionProblems(sectionId, sectionProblemsByLevel);
             validationStateManager.updateRuleState(sectionId, ruleId, ProcessingState.FINISHED);
             validationStateManager.setRuleResults(sectionId, ruleId, ruleProblemsByLevel, problems);
+            //so that probles are reloaded
+            selectRule(selectedRule);
         });
     }
 

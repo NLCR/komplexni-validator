@@ -87,8 +87,12 @@
                 </SplitPane>
 
                 <!--seznam chyb pro zvolene pravidlo-->
+
+
                 <VBox alignment="TOP_CENTER" spacing="0"
                       minHeight="300"
+                      fx:id="problemsContainer"
+                      visible="false"
                 >
                     <children>
                         <VBox spacing="5">
@@ -108,9 +112,16 @@
                                 <Label text="Problémy:"/>
                             </children>
                         </VBox>
-                        <ListView fx:id="problemList"/>
+                        <StackPane>
+                            <ListView fx:id="problemList"/>
+                            <ProgressIndicator fx:id="problemsProgressIndicator"
+                                               maxWidth="60"
+                                               maxHeight="60"
+                            />
+                        </StackPane>
                     </children>
                 </VBox>
+
 
             </items>
         </SplitPane>

@@ -10,6 +10,7 @@ import java.util.Properties;
  */
 public class ConfigurationManager {
 
+    public static boolean DEV_MODE = true;
 
     private static File CONFIG_FILE = new File("../../resources/main/config.properties");
 
