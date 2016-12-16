@@ -47,10 +47,11 @@ public class MainController extends AbstractController implements ValidationStat
     @FXML
     TextArea textArea;
 
-
-    //sections
     @FXML
     ListView<RulesSectionWithState> sectionList;
+
+    @FXML
+    ListView ruleList;
 
     private ValidationStateManager validationStateManager = null;
 
@@ -92,7 +93,7 @@ public class MainController extends AbstractController implements ValidationStat
             protected Void call() throws Exception {
                 //System.out.println("validating " + pspDir.getAbsolutePath() + ", mon: " + focedMonographVersion + ", per: " + forcedPeriodicalVersion);
                 try {
-                    updateStatus("validuji " + pspDir.getAbsolutePath());
+                    updateStatus(String.format("Validuji balík %s.", pspDir.getAbsolutePath()));
                     Dmf dmf = selectDmf(pspDir, focedMonographVersion, forcedPeriodicalVersion);
                     System.out.println(dmf);
 
@@ -100,7 +101,7 @@ public class MainController extends AbstractController implements ValidationStat
                     Validator validator = ValidatorFactory.buildValidator(fdmfConfig, pspDir, main.getValidationDataManager().getImageUtilManager());
                     //PrintStream out = textAreaPrintStream();//System.out;
                     PrintStream out = null;
-                    //TODO: v produkci odstraint
+                    //TODO: v produkci odstranit
                     Validator.DevParams devParams = new Validator.DevParams();
                     //devParams.getSectionsToRun().add("Bibliografická metadata");
                     devParams.getSectionsToRun().add("Identifikátory");
@@ -108,14 +109,14 @@ public class MainController extends AbstractController implements ValidationStat
                     devParams.getSectionsToRun().add("Soubor info");
                     devParams.getSectionsToRun().add("Struktura souborů");
                     devParams.getSectionsToRun().add("Primary METS filesec");
-
                     //devParams.getSectionsToRun().add("JPEG 2000");
+
                     validator.run(null, out, true, true, true, true, devParams, MainController.this);
-                    updateStatus("validace balíku " + pspDir.getAbsolutePath() + " hotova");
+                    updateStatus(String.format("Validace balíku %s hotova.", pspDir.getAbsolutePath()));
                 } catch (Exception e) {
                     //TODO: handle in UI
                     e.printStackTrace();
-                    updateStatus("chyba: " + e.getMessage());
+                    updateStatus(String.format("Chyba: %s.", e.getMessage()));
                 } finally {
                     return null;
                 }

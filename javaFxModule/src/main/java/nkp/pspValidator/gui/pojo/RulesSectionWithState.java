@@ -2,50 +2,42 @@ package nkp.pspValidator.gui.pojo;
 
 import nkp.pspValidator.shared.engine.RulesSection;
 
-import java.util.Random;
-
 /**
  * Created by martin on 16.12.16.
  */
 public class RulesSectionWithState {
 
-    private static Random random = new Random();
-
-    private final RulesSection section;
+    private final Integer id;
+    private final String name;
+    private final String description;
+    private boolean enabled = true;
     private Integer errors = 0;
     private Integer warnings = 0;
     private Integer infos = 0;
     private ProcessingState state = ProcessingState.WAITING;
 
-    private ProcessingState randomState() {
-        int id = random.nextInt(3);
-        System.out.println(id);
-        ProcessingState state = ProcessingState.values()[id];
-        System.out.println(state);
-        return state;
-    }
-
-    private Integer randomNum() {
-        Random random = new Random();
-        switch (random.nextInt(4)) {
-            case 0:
-                return 0;
-            case 1:
-                return random.nextInt(10);
-            case 2:
-                return 10 + random.nextInt(90);
-            default:
-                return 100 + random.nextInt(900);
-        }
-    }
-
-
     public RulesSectionWithState(RulesSection section) {
-        this.section = section;
+        this.id = section.getId();
+        this.name = section.getName();
+        this.description = section.getDescription();
+        this.enabled = section.isEnabled();
     }
 
-    public RulesSection getSection() {
-        return section;
+    public Integer getId() {
+        return id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+
+    public boolean isEnabled() {
+        return enabled;
     }
 
     public ProcessingState getState() {
@@ -87,12 +79,12 @@ public class RulesSectionWithState {
 
         RulesSectionWithState that = (RulesSectionWithState) o;
 
-        return section.equals(that.section);
+        return id.equals(that.id);
 
     }
 
     @Override
     public int hashCode() {
-        return section.hashCode();
+        return id.hashCode();
     }
 }

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <BorderPane
@@ -46,9 +47,8 @@
                       minWidth="500"
                       spacing="20">
                     <children>
-                        <Label text="Sekce"/>
-                        <ListView fx:id="sectionList" minWidth="500"
-                        />
+                        <Label text="Seznam sekcí"/>
+                        <ListView fx:id="sectionList" minWidth="500"/>
                     </children>
                 </VBox>
             </left>
@@ -58,13 +58,8 @@
                       minWidth="500"
                 >
                     <children>
-                        <Label text="TODO: popis sekce"/>
-                        <Label fx:id="status" text=""/>
-                        <TextArea fx:id="textArea"
-                                  minHeight="400"
-                                  editable="false"
-                                  scrollTop="Infinity"
-                        />
+                        <Label text="Seznam pravidel"/>
+                        <ListView fx:id="ruleList" minWidth="500"/>
                     </children>
                 </VBox>
             </center>
@@ -74,7 +69,12 @@
                       minWidth="500"
                 >
                     <children>
-                        <Label text="TODO: right"/>
+                        <Label text="TODO: seznam problémů v pravidlu"/>
+                        <TextArea fx:id="textArea"
+                                  minHeight="400"
+                                  editable="false"
+                                  scrollTop="Infinity"
+                        />
                     </children>
                 </VBox>
             </right>
@@ -83,8 +83,15 @@
     </center>
 
     <bottom>
-        <Label text="TODO: footer"/>
-
+        <!--TODO: Mozna zmenit zpet na jen HBox-->
+        <!--<HBox>-->
+        <ToolBar minWidth="300">
+            <padding>
+                <Insets bottom="10" left="10" right="10" top="10"/>
+            </padding>
+            <Label fx:id="status" text=""/>
+        </ToolBar>
+        <!--</HBox>-->
     </bottom>
 
 </BorderPane>

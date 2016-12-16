@@ -51,7 +51,7 @@ public class SectionItem {
     }
 
     public void populate(RulesSectionWithState section) {
-        name.setText(section.getSection().getName());
+        name.setText(section.getName());
         switch (section.getState()) {
             case WAITING:
                 imgFinished.setVisible(false);

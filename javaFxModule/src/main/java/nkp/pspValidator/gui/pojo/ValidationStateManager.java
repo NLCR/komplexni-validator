@@ -27,7 +27,7 @@ public class ValidationStateManager {
     private Map<Integer, RulesSectionWithState> initSectionsById(List<RulesSectionWithState> sectionsWithState) {
         Map<Integer, RulesSectionWithState> result = new HashMap<>();
         for (RulesSectionWithState section : sectionsWithState) {
-            result.put(section.getSection().getId(), section);
+            result.put(section.getId(), section);
         }
         return result;
     }
@@ -46,7 +46,7 @@ public class ValidationStateManager {
     private void updateSectionObservable(RulesSectionWithState section) {
         for (int i = 0; i < sectionsObservable.size(); i++) {
             RulesSectionWithState rulesSectionWithState = sectionsObservable.get(i);
-            if (rulesSectionWithState.getSection().getId() == section.getSection().getId()) {
+            if (rulesSectionWithState.getId() == section.getId()) {
                 sectionsObservable.set(i, section);
             }
         }
