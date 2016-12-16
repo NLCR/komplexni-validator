@@ -116,14 +116,15 @@ public class MainController extends AbstractController implements ValidationStat
                     //PrintStream out = textAreaPrintStream();//System.out;
                     PrintStream out = null;
                     //TODO: v produkci odstranit
-                    Validator.DevParams devParams = new Validator.DevParams();
+                    Validator.DevParams devParams = null;
+                    /*devParams = new Validator.DevParams();
                     //devParams.getSectionsToRun().add("Bibliografická metadata");
                     devParams.getSectionsToRun().add("Identifikátory");
                     devParams.getSectionsToRun().add("Soubor CHECKSUM");
                     devParams.getSectionsToRun().add("Soubor info");
                     devParams.getSectionsToRun().add("Struktura souborů");
                     devParams.getSectionsToRun().add("Primary METS filesec");
-                    //devParams.getSectionsToRun().add("JPEG 2000");
+                    //devParams.getSectionsToRun().add("JPEG 2000");*/
 
                     validator.run(null, out, true, true, true, true, devParams, MainController.this);
                     //updateStatus(String.format("Validace balíku %s hotova.", pspDir.getAbsolutePath()));
@@ -280,7 +281,7 @@ public class MainController extends AbstractController implements ValidationStat
         if (section != null) {
             //TODO: jeste aktualizovat hlavicku u seznamu pravidel
             //TODO: bug, seznam se chova divne, pokud ma vice polozek. Treba u pravidla "Struktura souboru"
-            System.out.println("Selected section: " + section.getName());
+            //System.out.println("Selected section: " + section.getName());
             selectedSection = section;
             ruleList.setItems(validationStateManager.getRulesObervable(selectedSection.getId()));
             ruleList.refresh();

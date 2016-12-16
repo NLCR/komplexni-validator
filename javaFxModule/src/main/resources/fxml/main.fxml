@@ -46,11 +46,11 @@
             <!--seznam sekci-->
             <left>
                 <VBox alignment="TOP_CENTER"
-                      minWidth="500"
+                      minWidth="330"
                       spacing="20">
                     <children>
                         <Label text="Seznam sekcí"/>
-                        <ListView fx:id="sectionList" minWidth="500"/>
+                        <ListView fx:id="sectionList" minWidth="330"/>
                     </children>
                 </VBox>
             </left>

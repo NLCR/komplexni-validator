@@ -8,9 +8,8 @@
         xmlns:fx="http://javafx.com/fxml/1"
         stylesheets="/css/sectionItem.css"
         fx:id="container"
-        minWidth="300"
+        minWidth="280"
         minHeight="30"
-
 >
 
     <HBox spacing="5"
