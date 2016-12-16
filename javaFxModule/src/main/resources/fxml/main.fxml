@@ -41,49 +41,89 @@
             </menus>
         </MenuBar>
     </top>
+
+    <!--validation -->
     <center>
-        <BorderPane>
-            <!--seznam sekci-->
-            <left>
-                <VBox alignment="TOP_CENTER"
-                      minWidth="330"
-                      spacing="20">
-                    <children>
-                        <Label text="Seznam sekcí"/>
-                        <ListView fx:id="sectionList" minWidth="330"/>
-                    </children>
-                </VBox>
-            </left>
-            <!--seznam pravidel ve zvolene sekci-->
-            <center>
-                <VBox alignment="TOP_CENTER" spacing="20"
-                      minWidth="500"
+        <SplitPane orientation="VERTICAL">
+            <items>
+
+                <SplitPane orientation="HORIZONTAL">
+
+                    <items>
+                        <!--seznam sekci-->
+                        <VBox alignment="TOP_CENTER"
+                              minWidth="330"
+                              spacing="0">
+                            <children>
+                                <VBox spacing="5">
+                                    <padding>
+                                        <Insets bottom="10" left="10" right="10" top="10"/>
+                                    </padding>
+                                    <Label text="Validační sekce:"/>
+                                </VBox>
+                                <ListView fx:id="sectionList" minWidth="330"/>
+                            </children>
+                        </VBox>
+
+                        <!--seznam pravidel ve zvolene sekci-->
+
+                        <VBox alignment="TOP_CENTER" spacing="0"
+                              minWidth="500"
+                        >
+                            <children>
+                                <VBox spacing="5">
+                                    <padding>
+                                        <Insets bottom="10" left="10" right="10" top="10"/>
+                                    </padding>
+                                    <Label fx:id="rulesSectionNameLbl"/>
+                                    <Label fx:id="rulesSectionDescriptionLbl"/>
+                                    <Label text="Pravidla:"/>
+                                </VBox>
+                                <ListView fx:id="ruleList" minWidth="500"/>
+                            </children>
+                        </VBox>
+
+                    </items>
+                </SplitPane>
+
+                <!--seznam chyb pro zvolene pravidlo-->
+                <VBox alignment="TOP_CENTER" spacing="0"
+                      minHeight="300"
                 >
                     <children>
-                        <Label text="Seznam pravidel"/>
-                        <ListView fx:id="ruleList" minWidth="500"/>
-                    </children>
-                </VBox>
-            </center>
-            <!--seznam chyb pro zvolene pravidlo-->
-            <right>
-                <VBox alignment="TOP_CENTER" spacing="20"
-                      minWidth="500"
-                >
-                    <children>
-                        <Label text="TODO: seznam problémů v pravidlu"/>
+                        <VBox spacing="5">
+                            <padding>
+                                <Insets bottom="10" left="10" right="10" top="10"/>
+                            </padding>
+                            <children>
+                                <HBox spacing="5">
+                                    <children>
+                                        <Label fx:id="problemsSectionNameLbl"/>
+                                        <Label fx:id="problemsRuleNameLbl"/>
+                                        <!--TODO: jeste mozna pocet problemu podle levelu-->
+                                    </children>
+                                </HBox>
+
+                                <Label fx:id="problemsRuleDescriptionLbl"/>
+                                <Label text="Problémy:"/>
+                            </children>
+                        </VBox>
+
                         <TextArea fx:id="textArea"
-                                  minHeight="400"
+                                  minHeight="200"
                                   editable="false"
                                   scrollTop="Infinity"
                         />
                     </children>
                 </VBox>
-            </right>
 
-        </BorderPane>
+            </items>
+        </SplitPane>
+
     </center>
 
+
+    <!--status bar-->
     <bottom>
         <!--TODO: Mozna zmenit zpet na jen HBox a odstranit Toolbar-->
 

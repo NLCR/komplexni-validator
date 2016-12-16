@@ -38,9 +38,12 @@ public class MainController extends AbstractController implements ValidationStat
     @FXML
     BorderPane container;
 
+
+    //menu
     @FXML
     MenuBar menuBar;
 
+    //status bar
     @FXML
     Label statusText;
 
@@ -53,17 +56,37 @@ public class MainController extends AbstractController implements ValidationStat
     @FXML
     ImageView statusImgError;
 
-    @FXML
-    TextArea textArea;
+    //sections
 
     @FXML
     ListView<SectionWithState> sectionList;
 
+    //rules for section
+
     @FXML
-    ListView ruleList;
+    Label rulesSectionNameLbl;
+
+    @FXML
+    Label rulesSectionDescriptionLbl;
+
+    @FXML
+    ListView<RuleWithState> ruleList;
+
+    //problems of rule
+
+    @FXML
+    Label problemsSectionNameLbl;
+    @FXML
+    Label problemsRuleNameLbl;
+    @FXML
+    Label problemsRuleDescriptionLbl;
+
+    @FXML
+    TextArea textArea;
 
     private ValidationStateManager validationStateManager = null;
     private SectionWithState selectedSection;
+    private RuleWithState selectedRule;
     private File pspDir;
 
     @Override
@@ -251,6 +274,8 @@ public class MainController extends AbstractController implements ValidationStat
                 }
             });
             //rules
+            rulesSectionNameLbl.setText(null);
+            rulesSectionDescriptionLbl.setText(null);
             ruleList.setItems(null);
             ruleList.setCellFactory(new Callback<ListView<RuleWithState>, ListCell<RuleWithState>>() {
 
@@ -272,9 +297,36 @@ public class MainController extends AbstractController implements ValidationStat
                     };
                 }
             });
-            //TODO: rule selection
-
+            ruleList.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<RuleWithState>() {
+                @Override
+                public void changed(ObservableValue<? extends RuleWithState> observable, RuleWithState oldValue, RuleWithState newRule) {
+                    if (newRule == null) {
+                        selectSection(null);
+                    } else {
+                        if (!newRule.equals(selectedRule)) {
+                            selectRule(newRule);
+                        }
+                    }
+                }
+            });
         });
+    }
+
+    private void selectRule(RuleWithState rule) {
+        if (rule != null) {
+            selectedRule = rule;
+            if (selectedSection != null) {
+                problemsSectionNameLbl.setText(selectedSection.getName() + ": ");
+                problemsRuleNameLbl.setText(rule.getName());
+                problemsRuleDescriptionLbl.setText(rule.getDescription());
+                //TODO: update problem list
+            }
+        } else {
+            selectedRule = null;
+            problemsSectionNameLbl.setText(null);
+            problemsRuleNameLbl.setText(null);
+            problemsRuleDescriptionLbl.setText(null);
+        }
     }
 
     private void selectSection(SectionWithState section) {
@@ -283,11 +335,14 @@ public class MainController extends AbstractController implements ValidationStat
             //TODO: bug, seznam se chova divne, pokud ma vice polozek. Treba u pravidla "Struktura souboru"
             //System.out.println("Selected section: " + section.getName());
             selectedSection = section;
+            rulesSectionNameLbl.setText(section.getName());
+            rulesSectionDescriptionLbl.setText(section.getDescription());
             ruleList.setItems(validationStateManager.getRulesObervable(selectedSection.getId()));
             ruleList.refresh();
         } else {
             selectedSection = null;
-            //TODO: empty item
+            rulesSectionNameLbl.setText(null);
+            rulesSectionDescriptionLbl.setText(null);
         }
     }
 

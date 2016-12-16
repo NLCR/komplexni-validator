@@ -70,9 +70,10 @@ public class ConfigProcessor {
     private void processRulesSectionDefinition(Engine engine, Element rulesSectionEl, Integer ruleId) throws ValidatorConfigurationException {
         String name = rulesSectionEl.getAttribute("name");
         //System.out.println(String.format("processing rule-section %s'", name));
-        String description = rulesSectionEl.getAttribute("description");
-        if (description.isEmpty()) {
-            description = null;
+        String description = null;
+        String descriptionFromEl = rulesSectionEl.getAttribute("description");
+        if (descriptionFromEl != null && !descriptionFromEl.trim().isEmpty()) {
+            description = descriptionFromEl.trim();
         }
         RulesSection section = engine.buildRuleSection(ruleId, name, description);
         section.setEnabled(parseBooleanAttribute("enabled", true));
@@ -94,7 +95,7 @@ public class ConfigProcessor {
         List<Element> descriptionEls = XmlUtils.getChildrenElementsByName(ruleEl, "description");
         String description = null;
         if (!descriptionEls.isEmpty()) {
-            description = descriptionEls.get(0).getTextContent().replaceAll("\\s+", " ");
+            description = descriptionEls.get(0).getTextContent().replaceAll("\\s+", " ").trim();
         }
         Rule rule = new Rule(section.getId(), ruleId, name, description, function);
         //System.out.println(String.format("registering rule '%s' (%s)", name, level));

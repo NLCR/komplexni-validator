@@ -36,3 +36,24 @@
     /*-fx-font-size: 20;*/
  /*   -fx-background-color: #eeeeee;*/
 }
+
+#rulesSectionNameLbl{
+    -fx-font-weight: bold;
+}
+
+#rulesSectionDescriptionLbl{
+    -fx-font-style: italic;
+}
+
+#problemsSectionNameLbl{
+    -fx-font-weight: bold;
+}
+
+#problemsRuleNameLbl{
+   -fx-font-weight: bold;
+}
+
+#problemsDescriptionLbl {
+    -fx-font-style: italic;
+}
+
