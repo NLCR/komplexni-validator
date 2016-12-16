@@ -40,7 +40,7 @@ public abstract class ValidationFunction implements Function {
     }*/
 
 
-    ValidationResult singlErrorResult(ValidationError error) {
+    ValidationResult singlErrorResult(ValidationProblem error) {
         ValidationResult result = new ValidationResult();
         result.addError(error);
         return result;
@@ -74,36 +74,36 @@ public abstract class ValidationFunction implements Function {
         return result;
     }
 
-    ValidationError invalidFileDoesNotExist(File file) {
-        return new ValidationError(Level.ERROR, String.format("%s: soubor %s neexistuje", getName(), file.getAbsoluteFile()));
+    ValidationProblem invalidFileDoesNotExist(File file) {
+        return new ValidationProblem(Level.ERROR, String.format("%s: soubor %s neexistuje", getName(), file.getAbsoluteFile()));
     }
 
-    ValidationError invalidFileIsDir(File file) {
-        return new ValidationError(Level.ERROR, String.format("%s: soubor %s je adresář", getName(), file.getAbsoluteFile()));
+    ValidationProblem invalidFileIsDir(File file) {
+        return new ValidationProblem(Level.ERROR, String.format("%s: soubor %s je adresář", getName(), file.getAbsoluteFile()));
     }
 
-    ValidationError invalidFileIsNotDir(File file) {
-        return new ValidationError(Level.ERROR, String.format("%s: soubor %s není adresář", getName(), file.getAbsoluteFile()));
+    ValidationProblem invalidFileIsNotDir(File file) {
+        return new ValidationProblem(Level.ERROR, String.format("%s: soubor %s není adresář", getName(), file.getAbsoluteFile()));
     }
 
-    ValidationError invalidCannotReadFile(File file) {
-        return new ValidationError(Level.ERROR, String.format("nelze číst soubor %s", file.getAbsoluteFile()));
+    ValidationProblem invalidCannotReadFile(File file) {
+        return new ValidationProblem(Level.ERROR, String.format("nelze číst soubor %s", file.getAbsoluteFile()));
     }
 
-    ValidationError invalidCannotReadDir(File dir) {
-        return new ValidationError(Level.ERROR, String.format("%s: nelze číst adresář %s", getName(), dir.getAbsoluteFile()));
+    ValidationProblem invalidCannotReadDir(File dir) {
+        return new ValidationProblem(Level.ERROR, String.format("%s: nelze číst adresář %s", getName(), dir.getAbsoluteFile()));
     }
 
-    ValidationError invalid(Exception e) {
-        return new ValidationError(Level.ERROR, e.getMessage());
+    ValidationProblem invalid(Exception e) {
+        return new ValidationProblem(Level.ERROR, e.getMessage());
     }
 
-    ValidationError invalid(Level level, String errorMessage) {
-        return new ValidationError(level, String.format("%s: %s", getName(), errorMessage));
+    ValidationProblem invalid(Level level, String errorMessage) {
+        return new ValidationProblem(level, String.format("%s: %s", getName(), errorMessage));
     }
 
-    ValidationError invalid(Level level, String errorMessage, Object... errorMsgParams) {
-        return new ValidationError(level, String.format("%s: %s", getName(), String.format(errorMessage, errorMsgParams)));
+    ValidationProblem invalid(Level level, String errorMessage, Object... errorMsgParams) {
+        return new ValidationProblem(level, String.format("%s: %s", getName(), String.format(errorMessage, errorMsgParams)));
     }
 
 

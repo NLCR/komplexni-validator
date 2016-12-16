@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.text.Text?>
+<HBox spacing="15"
+      xmlns="http://javafx.com/javafx/8.0.112"
+      xmlns:fx="http://javafx.com/fxml/1"
+      stylesheets="/css/problemItem.css"
+      fx:id="container"
+      alignment="CENTER"
+>
+
+    <padding>
+        <Insets bottom="15" left="15" right="15" top="15"/>
+    </padding>
+    <children>
+
+        <StackPane>
+
+            <!--info-->
+            <ImageView fx:id="imgInfo" styleClass="problem-thumb">
+                <image>
+                    <Image url="@/img/Info-50.png"/>
+                </image>
+            </ImageView>
+
+            <!--warning-->
+            <ImageView fx:id="imgWarning" styleClass="problem-thumb">
+                <image>
+                    <Image url="@/img/Error-48.png"/>
+                </image>
+            </ImageView>
+
+            <!--error-->
+            <ImageView fx:id="imgError" styleClass="problem-thumb">
+                <image>
+                    <Image url="@/img/Cancel-48.png"/>
+                </image>
+            </ImageView>
+
+        </StackPane>
+
+        <Text fx:id="message"
+              wrappingWidth="1250"/>
+        <Button fx:id="btnCopyToClipboard" onAction="#copyToClipboard" text="kopírovat">
+            <graphic>
+                <ImageView>
+                    <image>
+                        <Image url="@/img/Copy-20.png"/>
+                    </image>
+                </ImageView>
+            </graphic>
+        </Button>
+
+    </children>
+</HBox>
+

@@ -4,7 +4,7 @@ import nkp.pspValidator.shared.engine.Engine;
 import nkp.pspValidator.shared.engine.Level;
 import nkp.pspValidator.shared.engine.Rule;
 import nkp.pspValidator.shared.engine.RulesSection;
-import nkp.pspValidator.shared.engine.validationFunctions.ValidationError;
+import nkp.pspValidator.shared.engine.validationFunctions.ValidationProblem;
 import nkp.pspValidator.shared.engine.validationFunctions.ValidationResult;
 
 import java.io.File;
@@ -86,7 +86,7 @@ public class Validator {
                 int ruleProblemsTotal = state.getRuleProblemsTotal(rule);
                 Map<Level, Integer> ruleProblemsByLevel = state.getRuleProblemsByLevel(rule);
                 textLogger.logRuleStart(rule.getName(), rule.getDescription(), ruleProblemsTotal, ruleProblemsByLevel);
-                for (ValidationError error : result.getProblems()) {
+                for (ValidationProblem error : result.getProblems()) {
                     textLogger.logRuleError(error.getLevel(), error.getMessage());
                 }
             }

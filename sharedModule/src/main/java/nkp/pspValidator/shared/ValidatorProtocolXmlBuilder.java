@@ -3,7 +3,7 @@ package nkp.pspValidator.shared;
 import nkp.pspValidator.shared.engine.Level;
 import nkp.pspValidator.shared.engine.Rule;
 import nkp.pspValidator.shared.engine.RulesSection;
-import nkp.pspValidator.shared.engine.validationFunctions.ValidationError;
+import nkp.pspValidator.shared.engine.validationFunctions.ValidationProblem;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
@@ -65,7 +65,7 @@ public class ValidatorProtocolXmlBuilder {
                     ruleEl.appendChild(ruleSummaryEl);
                     if (rule.getResult().hasProblems()) {
                         Element problemsEl = (Element) ruleSummaryEl.getElementsByTagName("problems").item(0);
-                        for (ValidationError error : rule.getResult().getProblems()) {
+                        for (ValidationProblem error : rule.getResult().getProblems()) {
                             appendErrorEl(doc, problemsEl, error);
                         }
                     }
@@ -86,7 +86,7 @@ public class ValidatorProtocolXmlBuilder {
         }
     }
 
-    private void appendErrorEl(Document doc, Element problemsEl, ValidationError error) {
+    private void appendErrorEl(Document doc, Element problemsEl, ValidationProblem error) {
         Element problemEl = doc.createElement("problem");
         problemsEl.appendChild(problemEl);
         problemEl.setAttribute("level", error.getLevel().name());

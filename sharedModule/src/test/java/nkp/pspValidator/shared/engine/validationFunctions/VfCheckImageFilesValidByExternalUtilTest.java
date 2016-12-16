@@ -149,7 +149,7 @@ public class VfCheckImageFilesValidByExternalUtilTest {
         if (imageUtilManager.isUtilAvailable(ImageUtil.KAKADU)) {
             ValidationFunction validationFunction = buildValidationFunction(ImageUtil.KAKADU, ImageCopy.MASTER, FILES_OK_MC);
             ValidationResult result = validationFunction.validate();
-            for (ValidationError problem : result.getProblems()) {
+            for (ValidationProblem problem : result.getProblems()) {
                 assertNull(problem.getMessage());
             }
             assertFalse(result.hasProblems());
@@ -161,7 +161,7 @@ public class VfCheckImageFilesValidByExternalUtilTest {
         if (imageUtilManager.isUtilAvailable(ImageUtil.KAKADU)) {
             ValidationFunction validationFunction = buildValidationFunction(ImageUtil.KAKADU, ImageCopy.MASTER, FILES_OK_UC);
             ValidationResult result = validationFunction.validate();
-            for (ValidationError problem : result.getProblems()) {
+            for (ValidationProblem problem : result.getProblems()) {
                 assertNull(problem.getMessage());
             }
             assertFalse(result.hasProblems());
@@ -173,7 +173,7 @@ public class VfCheckImageFilesValidByExternalUtilTest {
         if (imageUtilManager.isUtilAvailable(ImageUtil.IMAGE_MAGICK)) {
             ValidationFunction validationFunction = buildValidationFunction(ImageUtil.IMAGE_MAGICK, ImageCopy.MASTER, FILES_OK_MC);
             ValidationResult result = validationFunction.validate();
-            for (ValidationError problem : result.getProblems()) {
+            for (ValidationProblem problem : result.getProblems()) {
                 assertNull(problem.getMessage());
             }
             assertFalse(result.hasProblems());
@@ -186,7 +186,7 @@ public class VfCheckImageFilesValidByExternalUtilTest {
             ValidationFunction validationFunction = buildValidationFunction(ImageUtil.IMAGE_MAGICK, ImageCopy.USER, FILES_OK_UC);
             ValidationResult result = validationFunction.validate();
             //verze ImageMagick-7.0.3-Q16 pro Windows najde chybu v souboru UC_cnb001652709-001_0233.jp2
-            for (ValidationError problem : result.getProblems()) {
+            for (ValidationProblem problem : result.getProblems()) {
                 assertNull(problem.getMessage());
             }
             assertFalse(result.hasProblems());
@@ -199,7 +199,7 @@ public class VfCheckImageFilesValidByExternalUtilTest {
         if (imageUtilManager.isUtilAvailable(ImageUtil.JPYLYZER)) {
             ValidationFunction validationFunction = buildValidationFunction(ImageUtil.JPYLYZER, ImageCopy.MASTER, FILES_OK_MC);
             ValidationResult result = validationFunction.validate();
-            for (ValidationError problem : result.getProblems()) {
+            for (ValidationProblem problem : result.getProblems()) {
                 assertNull(problem.getMessage());
             }
             assertFalse(result.hasProblems());
@@ -211,7 +211,7 @@ public class VfCheckImageFilesValidByExternalUtilTest {
         if (imageUtilManager.isUtilAvailable(ImageUtil.JPYLYZER)) {
             ValidationFunction validationFunction = buildValidationFunction(ImageUtil.JPYLYZER, ImageCopy.USER, FILES_OK_UC);
             ValidationResult result = validationFunction.validate();
-            for (ValidationError problem : result.getProblems()) {
+            for (ValidationProblem problem : result.getProblems()) {
                 assertNull(problem.getMessage());
             }
             assertFalse(result.hasProblems());
@@ -223,7 +223,7 @@ public class VfCheckImageFilesValidByExternalUtilTest {
         if (imageUtilManager.isUtilAvailable(ImageUtil.JHOVE)) {
             ValidationFunction validationFunction = buildValidationFunction(ImageUtil.JHOVE, ImageCopy.MASTER, FILES_OK_MC);
             ValidationResult result = validationFunction.validate();
-            for (ValidationError problem : result.getProblems()) {
+            for (ValidationProblem problem : result.getProblems()) {
                 assertNull(problem.getMessage());
             }
             assertFalse(result.hasProblems());
@@ -235,7 +235,7 @@ public class VfCheckImageFilesValidByExternalUtilTest {
         if (imageUtilManager.isUtilAvailable(ImageUtil.JHOVE)) {
             ValidationFunction validationFunction = buildValidationFunction(ImageUtil.JHOVE, ImageCopy.USER, FILES_OK_UC);
             ValidationResult result = validationFunction.validate();
-            for (ValidationError problem : result.getProblems()) {
+            for (ValidationProblem problem : result.getProblems()) {
                 assertNull(problem.getMessage());
             }
             assertFalse(result.hasProblems());

@@ -16,27 +16,27 @@ import java.io.IOException;
 public class RuleItem {
 
     @FXML
-    Node container;
+    private Node container;
     @FXML
     private Label name;
     @FXML
-    ProgressIndicator progressIndicator;
+    private ProgressIndicator progressIndicator;
     @FXML
-    ImageView imgFinished;
+    private ImageView imgFinished;
 
 
     @FXML
-    Node errorsContainer;
+    private Node errorsContainer;
     @FXML
     private Label errorsLabel;
 
     @FXML
-    Node warningsContainer;
+    private Node warningsContainer;
     @FXML
     private Label warningsLabel;
 
     @FXML
-    Node infosContainer;
+    private Node infosContainer;
     @FXML
     private Label infosLabel;
 

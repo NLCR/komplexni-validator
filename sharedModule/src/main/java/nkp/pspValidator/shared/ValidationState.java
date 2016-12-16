@@ -3,7 +3,7 @@ package nkp.pspValidator.shared;
 import nkp.pspValidator.shared.engine.Level;
 import nkp.pspValidator.shared.engine.Rule;
 import nkp.pspValidator.shared.engine.RulesSection;
-import nkp.pspValidator.shared.engine.validationFunctions.ValidationError;
+import nkp.pspValidator.shared.engine.validationFunctions.ValidationProblem;
 import nkp.pspValidator.shared.engine.validationFunctions.ValidationResult;
 
 import java.util.*;
@@ -124,11 +124,11 @@ public class ValidationState {
         }
     }
 
-    private List<ValidationError> copyErrors(List<ValidationError> original) {
-        List<ValidationError> result = null;
+    private List<ValidationProblem> copyErrors(List<ValidationProblem> original) {
+        List<ValidationProblem> result = null;
         if (original != null) {
             result = new ArrayList<>(original.size());
-            for (ValidationError error : original) {
+            for (ValidationProblem error : original) {
                 result.add(error);
             }
         }
@@ -157,7 +157,7 @@ public class ValidationState {
             problemsByLevel.put(level, 0);
         }
         if (rule.getResult().hasProblems()) {
-            for (ValidationError error : rule.getResult().getProblems()) {
+            for (ValidationProblem error : rule.getResult().getProblems()) {
                 Integer counter = problemsByLevel.get(error.getLevel());
                 problemsByLevel.put(error.getLevel(), ++counter);
             }
@@ -296,7 +296,7 @@ public class ValidationState {
 
         public void onRuleStart(int sectionId, int ruleId);
 
-        public void onRuleFinish(int sectionId, Map<Level, Integer> sectionProblemsByLevel, int sectionProblemsTotal, int ruleId, Map<Level, Integer> ruleProblemsByLevel, int ruleProblemsTotal, List<ValidationError> errors);
+        public void onRuleFinish(int sectionId, Map<Level, Integer> sectionProblemsByLevel, int sectionProblemsTotal, int ruleId, Map<Level, Integer> ruleProblemsByLevel, int ruleProblemsTotal, List<ValidationProblem> errors);
 
         public void onValidationsFinish();
 

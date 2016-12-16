@@ -6,6 +6,7 @@ import javafx.util.Pair;
 import nkp.pspValidator.shared.engine.Level;
 import nkp.pspValidator.shared.engine.Rule;
 import nkp.pspValidator.shared.engine.RulesSection;
+import nkp.pspValidator.shared.engine.validationFunctions.ValidationProblem;
 
 import java.util.HashMap;
 import java.util.List;
@@ -23,6 +24,7 @@ public class ValidationStateManager {
     //observables
     private final ObservableList<SectionWithState> sectionsObservable;
     private final Map<Integer, ObservableList<RuleWithState>> rulesObservableBySectionId;
+    private final Map<Pair<Integer, Integer>, ObservableList<ValidationProblem>> problemsObservableBySectionAndRuleId = new HashMap<>();
 
     public ValidationStateManager(List<RulesSection> sections, Map<RulesSection, List<Rule>> rules) {
         //sections
@@ -104,7 +106,7 @@ public class ValidationStateManager {
         return rulesObservableBySectionId.get(selectedSectionId);
     }
 
-    public void updateRule(int sectionId, int ruleId, ProcessingState state, Map<Level, Integer> ruleProblemsByLevel) {
+    public void updateRule(int sectionId, int ruleId, ProcessingState state, Map<Level, Integer> ruleProblemsByLevel, List<ValidationProblem> problems) {
         RuleWithState rule = rulesByIds.get(new Pair<>(sectionId, ruleId));
         rule.setState(state);
         if (ruleProblemsByLevel != null) {
@@ -124,6 +126,13 @@ public class ValidationStateManager {
         updateRuleObservable(rule);
     }
 
+    public void updateRuleState(int sectionId, int ruleId, ProcessingState state) {
+        RuleWithState rule = rulesByIds.get(new Pair<>(sectionId, ruleId));
+        rule.setState(state);
+        updateRuleObservable(rule);
+    }
+
+
     private void updateRuleObservable(RuleWithState updated) {
         ObservableList<RuleWithState> rules = rulesObservableBySectionId.get(updated.getSectionId());
         for (int i = 0; i < rules.size(); i++) {
@@ -133,5 +142,30 @@ public class ValidationStateManager {
                 break;
             }
         }
+    }
+
+
+    public void setRuleResults(int sectionId, int ruleId, Map<Level, Integer> ruleProblemsByLevel, List<ValidationProblem> problems) {
+        RuleWithState rule = rulesByIds.get(new Pair<>(sectionId, ruleId));
+        Integer errors = ruleProblemsByLevel.get(Level.ERROR);
+        if (errors != null) {
+            rule.setErrors(errors);
+        }
+        Integer warnings = ruleProblemsByLevel.get(Level.WARNING);
+        if (warnings != null) {
+            rule.setWarnings(warnings);
+        }
+        Integer infos = ruleProblemsByLevel.get(Level.INFO);
+        if (infos != null) {
+            rule.setInfos(infos);
+        }
+        problemsObservableBySectionAndRuleId.put(new Pair<>(sectionId, ruleId), FXCollections.observableList(problems));
+        //TODO: mozna prekreslit
+        updateRuleObservable(rule);
+    }
+
+    public ObservableList<ValidationProblem> getProblemsObservable(Integer sectionId, Integer ruleId) {
+
+        return problemsObservableBySectionAndRuleId.get(new Pair<>(sectionId, ruleId));
     }
 }

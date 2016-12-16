@@ -108,12 +108,7 @@
                                 <Label text="Problémy:"/>
                             </children>
                         </VBox>
-
-                        <TextArea fx:id="textArea"
-                                  minHeight="200"
-                                  editable="false"
-                                  scrollTop="Infinity"
-                        />
+                        <ListView fx:id="problemList"/>
                     </children>
                 </VBox>
 

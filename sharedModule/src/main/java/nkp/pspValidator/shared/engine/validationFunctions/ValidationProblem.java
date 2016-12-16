@@ -5,12 +5,12 @@ import nkp.pspValidator.shared.engine.Level;
 /**
  * Created by martin on 11.11.16.
  */
-public class ValidationError {
+public class ValidationProblem {
 
     private final Level level;
     private final String message;
 
-    public ValidationError(Level level, String message) {
+    public ValidationProblem(Level level, String message) {
         this.level = level;
         this.message = message;
     }

@@ -1,0 +1,55 @@
+.problems-container {
+    -fx-min-width: 50;
+    -fx-alignment: center-right;
+    -fx-spacing: 5;
+}
+
+.problem-thumb {
+
+}
+
+.problem-label {
+
+}
+
+
+.copyable-label, .copyable-label:focused {
+    -fx-background-color: transparent ;
+    -fx-background-insets: 0px ;
+    -fx-text-box-border: transparent;
+    -fx-focus-color: transparent;
+    -fx-faint-focus-color: transparent;
+
+
+    /*caret je sipka, tj. scrollbar*/
+    -fx-display-caret: false;
+}
+
+/*
+.copyable-label {
+    -fx-background-color: transparent ;
+    -fx-background-insets: 0px ;
+}
+
+.copyable-label:focused {
+    -fx-background-color: transparent ;
+    -fx-background-insets: 0px ;
+}*/
+
+.text-area {
+    /*-fx-background-color: rgba(53,89,119,0.4);*/
+    -fx-background-color: transparent;
+}
+
+.text-area .scroll-pane {
+    -fx-background-color: transparent;
+}
+
+.text-area .scroll-pane .viewport{
+    -fx-background-color: transparent;
+}
+
+
+.text-area .scroll-pane .content{
+    -fx-background-color: transparent;
+}

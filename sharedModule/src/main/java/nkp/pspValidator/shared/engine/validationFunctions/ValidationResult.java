@@ -10,21 +10,21 @@ import java.util.List;
  */
 public class ValidationResult {
 
-    private final List<ValidationError> errors = new ArrayList<>();
+    private final List<ValidationProblem> errors = new ArrayList<>();
 
     public boolean hasProblems() {
         return !errors.isEmpty();
     }
 
-    public void addError(ValidationError error) {
+    public void addError(ValidationProblem error) {
         errors.add(error);
     }
 
     public void addError(Level level, String messae) {
-        errors.add(new ValidationError(level, messae));
+        errors.add(new ValidationProblem(level, messae));
     }
 
-    public List<ValidationError> getProblems() {
+    public List<ValidationProblem> getProblems() {
         return errors;
     }
 
