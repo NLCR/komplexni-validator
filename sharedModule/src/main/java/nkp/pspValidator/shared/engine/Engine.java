@@ -189,8 +189,8 @@ public class Engine {
         }
     }
 
-    public RulesSection buildRuleSection(String sectionName) {
-        return new RulesSection(sectionName);
+    public RulesSection buildRuleSection(Integer id, String sectionName) {
+        return new RulesSection(id, sectionName);
     }
 
     public Rule buildRule(String ruleName, ValidationFunction function) {

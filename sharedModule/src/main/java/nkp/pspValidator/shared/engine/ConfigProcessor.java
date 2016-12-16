@@ -24,6 +24,7 @@ public class ConfigProcessor {
 
     public void processConfigFile(Engine engine, File configFile) throws ValidatorConfigurationException {
         XMLTag doc = XMLDoc.from(configFile, true);
+        int ruleCounter = 0;
         for (Element childEl : doc.getChildElement()) {
             String elementName = childEl.getTagName();
             switch (elementName) {
@@ -34,7 +35,7 @@ public class ConfigProcessor {
                     processNamedValueDefinition(engine, childEl);
                     break;
                 case "rules-section":
-                    processRulesSectionDefinition(engine, childEl);
+                    processRulesSectionDefinition(engine, childEl, ruleCounter++);
                     break;
                 case "namespaces":
                     processNamespaces(engine, childEl);
@@ -66,10 +67,10 @@ public class ConfigProcessor {
         engine.defineNamespace("xlink", xlinkEl.getTextContent());
     }
 
-    private void processRulesSectionDefinition(Engine engine, Element rulesSectionEl) throws ValidatorConfigurationException {
+    private void processRulesSectionDefinition(Engine engine, Element rulesSectionEl, Integer ruleId) throws ValidatorConfigurationException {
         String name = rulesSectionEl.getAttribute("name");
         //System.out.println(String.format("processing rule-section %s'", name));
-        RulesSection section = engine.buildRuleSection(name);
+        RulesSection section = engine.buildRuleSection(ruleId, name);
         String description = rulesSectionEl.getAttribute("description");
         if (description != null && !description.isEmpty()) {
             section.setDescription(description);

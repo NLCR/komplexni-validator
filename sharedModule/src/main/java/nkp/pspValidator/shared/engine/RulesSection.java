@@ -4,13 +4,18 @@ package nkp.pspValidator.shared.engine;
  * Created by martin on 30.10.16.
  */
 public class RulesSection {
+    private final Integer id;
     private final String name;
     //private final List<Rule> rules = new ArrayList<>();
 
     private String description;
     private boolean enabled = true;
 
-    public RulesSection(String name) {
+    public RulesSection(Integer id, String name) {
+        if (id == null) {
+            throw new IllegalArgumentException("id cannot be null");
+        }
+        this.id = id;
         this.name = name;
     }
 
@@ -48,12 +53,12 @@ public class RulesSection {
 
         RulesSection that = (RulesSection) o;
 
-        return name != null ? name.equals(that.name) : that.name == null;
+        return id.equals(that.id);
 
     }
 
     @Override
     public int hashCode() {
-        return name != null ? name.hashCode() : 0;
+        return id.hashCode();
     }
 }

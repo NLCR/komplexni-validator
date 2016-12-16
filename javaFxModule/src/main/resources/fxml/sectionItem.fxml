@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<AnchorPane
+        xmlns="http://javafx.com/javafx/8.0.112"
+        xmlns:fx="http://javafx.com/fxml/1"
+        stylesheets="/css/sectionItem.css"
+        fx:id="container"
+        minWidth="300"
+        minHeight="30"
+
+>
+
+    <HBox spacing="5"
+          alignment="CENTER"
+          AnchorPane.leftAnchor="0"
+          AnchorPane.topAnchor="0"
+          AnchorPane.bottomAnchor="0"
+    >
+
+        <StackPane>
+
+            <ProgressIndicator fx:id="progressIndicator"
+                               prefWidth="20"
+                               prefHeight="20"
+            />
+
+            <ImageView fx:id="imgFinished"
+                       styleClass="problem-thumb">
+                <image>
+                    <Image url="@/img/Checkmark Filled-20.png"/>
+                </image>
+            </ImageView>
+
+        </StackPane>
+
+        <Label fx:id="name" text="Název sekce"/>
+    </HBox>
+
+
+    <GridPane alignment="CENTER"
+              AnchorPane.rightAnchor="0"
+              AnchorPane.topAnchor="0"
+              AnchorPane.bottomAnchor="0"
+              hgap="10"
+
+    >
+
+        <!--infos-->
+        <HBox fx:id="infosContainer"
+              styleClass="problems-container"
+              GridPane.columnIndex="0"
+              GridPane.rowIndex="0"
+        >
+
+            <Label fx:id="infosLabel"
+                   text="0"
+                   styleClass="problem-label"
+            />
+            <ImageView styleClass="problem-thumb">
+                <image>
+                    <Image url="@/img/Info-20.png"/>
+                </image>
+            </ImageView>
+        </HBox>
+
+        <!--warnings-->
+        <HBox fx:id="warningsContainer"
+              styleClass="problems-container"
+              GridPane.columnIndex="1"
+              GridPane.rowIndex="0"
+        >
+            <Label fx:id="warningsLabel"
+                   text="0"
+                   styleClass="problem-label"
+            />
+            <ImageView styleClass="problem-thumb">
+                <image>
+                    <Image url="@/img/Error-20.png"/>
+                </image>
+            </ImageView>
+        </HBox>
+
+        <!--errors-->
+        <HBox fx:id="errorsContainer"
+              styleClass="problems-container"
+              GridPane.columnIndex="2"
+              GridPane.rowIndex="0"
+        >
+            <Label fx:id="errorsLabel"
+                   text="0"
+                   styleClass="problem-label"
+            />
+            <ImageView styleClass="problem-thumb">
+                <image>
+                    <Image url="@/img/Cancel-20.png"/>
+                </image>
+            </ImageView>
+        </HBox>
+
+    </GridPane>
+
+
+</AnchorPane>
+
+
+

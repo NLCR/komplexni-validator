@@ -17,4 +17,5 @@ public class StringUtils {
                 return errors + " problémů";
         }
     }
+
 }

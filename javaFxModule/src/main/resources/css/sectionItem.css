@@ -1,0 +1,13 @@
+.problems-container {
+    -fx-min-width: 60;
+    -fx-alignment: center-right;
+    -fx-spacing: 5;
+}
+
+.problem-thumb {
+
+}
+
+.problem-label {
+
+}

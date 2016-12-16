@@ -239,25 +239,25 @@ public class ImageUtilsCheckDialogController extends DialogController {
                     Thread.sleep(300);
                     //Thread.sleep(new Random().nextInt(3000));
                     if (!utilManager.isVersionDetectionDefined(util)) {
-                        processResult(new CheckResult(false, String.format("Detekce verze není definována pro %s!", util)));
+                        processResult(new UtilCheckResult(false, String.format("Detekce verze není definována pro %s!", util)));
                     } else {
                         String version = utilManager.runUtilVersionDetection(util);
                         //System.out.println(version);
                         main.getValidationDataManager().getFdmfRegistry().initJ2kProfiles(utilManager);
-                        processResult(new CheckResult(true, version));
+                        processResult(new UtilCheckResult(true, version));
                         utilManager.setUtilAvailable(util, true);
                     }
                 } catch (CliCommand.CliCommandException e) {
                     utilManager.setUtilAvailable(util, false);
-                    processResult(new CheckResult(false, String.format("Chyba: %s!", e.getMessage())));
+                    processResult(new UtilCheckResult(false, String.format("Chyba: %s!", e.getMessage())));
                 } catch (ValidatorConfigurationException e) {
                     utilManager.setUtilAvailable(util, false);
-                    processResult(new CheckResult(false, String.format("Chyba: %s!", e.getMessage())));
+                    processResult(new UtilCheckResult(false, String.format("Chyba: %s!", e.getMessage())));
                 }
                 return null;
             }
 
-            private void processResult(CheckResult result) {
+            private void processResult(UtilCheckResult result) {
                 Platform.runLater(() -> {
                     progresIndicator.setVisible(false);
                     statusLabel.setVisible(true);
@@ -280,6 +280,8 @@ public class ImageUtilsCheckDialogController extends DialogController {
                         state = DialogState.FINISHED;
                         btnContinue.setDisable(false);
                         btnContinue.requestFocus();
+                        //TODO: jen docasne
+                        continueInApp(null);
                     }
                 });
             }
@@ -366,11 +368,11 @@ public class ImageUtilsCheckDialogController extends DialogController {
         openUrl(HELP_URL);
     }
 
-    private static final class CheckResult {
+    private static final class UtilCheckResult {
         private final boolean available;
         private final String message;
 
-        public CheckResult(boolean available, String message) {
+        public UtilCheckResult(boolean available, String message) {
             this.available = available;
             this.message = message;
         }

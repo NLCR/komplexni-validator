@@ -14,9 +14,13 @@ import java.util.Map;
 /**
  * Created by martin on 15.12.16.
  */
-public class ValidationProtocol {
+public class ValidationState {
 
-    private final Engine engine;
+    //TODO: handle synchronization properly!!! Will definitely be accessed from multiple threads.
+
+    @Deprecated
+    private final Engine engine; //neni potreba pristupovat k enginu, seznam pravidel si vytahnu i odsud
+    private final ProgressListener progressListener;
 
     private long startTime;
     private long finishTime;
@@ -25,8 +29,9 @@ public class ValidationProtocol {
     private int totalProblems;
     private Map<Level, Integer> totalProblemsByLevel;
     private boolean valid;
-    //sections
-    private final List<RulesSection> sections = new ArrayList<>();
+    //sectionsBak
+    private final List<RulesSection> sections;
+    private final List<RulesSection> sectionsBak = new ArrayList<>();
     private final Map<RulesSection, Map<Level, Integer>> sectionProblemsByLevel = new HashMap<>();
     private final Map<RulesSection, Integer> sectionProblemsTotal = new HashMap<>();
     private final Map<RulesSection, Long> startTimeBySection = new HashMap<>();
@@ -37,13 +42,20 @@ public class ValidationProtocol {
     private final Map<Rule, Integer> ruleProblemsTotal = new HashMap<>();
     private final Map<Rule, Long> startTimeByRule = new HashMap<>();
     private final Map<Rule, Long> finishTimeByRule = new HashMap<>();
+    //progress
+    private RulesSection sectionBeingProcessed = null;
 
-    public ValidationProtocol(Engine engine) {
+    public ValidationState(Engine engine, ProgressListener progressListener, List<RulesSection> sections) {
         this.engine = engine;
+        this.progressListener = progressListener;
+        this.sections = sections;
+        if (progressListener != null) {
+            progressListener.onInitialized(sections);
+        }
     }
 
     public void addSection(RulesSection section) {
-        sections.add(section);
+        sectionsBak.add(section);
         Map<Level, Integer> problemsByLevel = computeTotalProblemsByLevel(section);
         sectionProblemsByLevel.put(section, problemsByLevel);
         int totalProblems = computeTotalProblems(problemsByLevel);
@@ -64,11 +76,19 @@ public class ValidationProtocol {
     }
 
     public void reportSectionProcessingStarted(RulesSection section) {
+        sectionBeingProcessed = section;
         startTimeBySection.put(section, System.currentTimeMillis());
+        if (progressListener != null) {
+            progressListener.onSectionStarted(section);
+        }
     }
 
     public void reportSectionProcessingFinished(RulesSection section) {
         finishTimeBySection.put(section, System.currentTimeMillis());
+        sectionBeingProcessed = null;
+        if (progressListener != null) {
+            progressListener.onSectionFinished(section, getSectionProcessingDuration(section));
+        }
     }
 
     public void reportRuleProcessingStarted(Rule rule) {
@@ -81,14 +101,20 @@ public class ValidationProtocol {
 
     public void reportValidationsStart() {
         startTime = System.currentTimeMillis();
+        if (progressListener != null) {
+            progressListener.onValidationsStarted();
+        }
     }
 
     public void reportValidationsEnd() {
         finishTime = System.currentTimeMillis();
-        totalProblemsByLevel = computeTotalProblemsByLevel(sections);
+        totalProblemsByLevel = computeTotalProblemsByLevel(sectionsBak);
         totalProblems = computeTotalProblems(totalProblemsByLevel);
         Integer errors = totalProblemsByLevel.get(Level.ERROR);
         valid = errors == 0;
+        if (progressListener != null) {
+            progressListener.onValidationsFinished();
+        }
     }
 
     private Map<Level, Integer> computeTotalProblemsByLevel(Rule rule) {
@@ -173,8 +199,8 @@ public class ValidationProtocol {
         return finishTime;
     }
 
-    public List<RulesSection> getSections() {
-        return sections;
+    public List<RulesSection> getSectionsBak() {
+        return sectionsBak;
     }
 
     public List<Rule> getRules(RulesSection section) {
@@ -195,5 +221,22 @@ public class ValidationProtocol {
 
     public long getRuleProcessingDuration(Rule rule) {
         return finishTimeByRule.get(rule) - startTimeByRule.get(rule);
+    }
+
+    /*public RulesSection getSectionBeingProcessed() {
+        return sectionBeingProcessed;
+    }*/
+
+    public static interface ProgressListener {
+
+        public void onValidationsStarted();
+
+        public void onSectionStarted(RulesSection section);
+
+        public void onSectionFinished(RulesSection section, long duration);
+
+        public void onValidationsFinished();
+
+        public void onInitialized(List<RulesSection> sections);
     }
 }

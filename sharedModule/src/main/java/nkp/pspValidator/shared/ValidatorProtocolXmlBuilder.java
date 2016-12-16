@@ -25,7 +25,7 @@ import java.util.Map;
  */
 public class ValidatorProtocolXmlBuilder {
 
-    public void buildXmlOutput(File xmlOutputFile, ValidationProtocol protocol) {
+    public void buildXmlOutput(File xmlOutputFile, ValidationState protocol) {
         try {
             DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
             DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
@@ -43,7 +43,7 @@ public class ValidatorProtocolXmlBuilder {
 
             Element sectionsEl = doc.createElement("sections");
             protocolEl.appendChild(sectionsEl);
-            for (RulesSection section : protocol.getSections()) {
+            for (RulesSection section : protocol.getSectionsBak()) {
                 Element sectionEl = doc.createElement("section");
                 sectionsEl.appendChild(sectionEl);
                 sectionEl.setAttribute("name", section.getName());

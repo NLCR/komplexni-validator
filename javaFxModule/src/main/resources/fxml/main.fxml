@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.*?>
-<?import javafx.scene.layout.BorderPane?>
-<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.layout.*?>
 <BorderPane
         fx:id="container"
         minHeight="300"
-        minWidth="650" stylesheets="/css/main.css"
+        minWidth="1500" stylesheets="/css/main.css"
         xmlns="http://javafx.com/javafx/8.0.112"
         xmlns:fx="http://javafx.com/fxml/1"
         fx:controller="nkp.pspValidator.gui.MainController"
@@ -40,17 +39,53 @@
         </MenuBar>
     </top>
     <center>
-        <VBox alignment="CENTER" spacing="20">
-            <children>
-                <Label fx:id="status" text=""/>
-                <TextArea fx:id="textArea"
-                          minHeight="500"
-                          editable="false"
-                          scrollTop="Infinity"
-                />
-            </children>
-        </VBox>
+        <BorderPane>
+            <!--seznam sekci-->
+            <left>
+                <VBox alignment="TOP_CENTER"
+                      minWidth="500"
+                      spacing="20">
+                    <children>
+                        <Label text="Sekce"/>
+                        <ListView fx:id="sectionList" minWidth="500"
+                        />
+                    </children>
+                </VBox>
+            </left>
+            <!--seznam pravidel ve zvolene sekci-->
+            <center>
+                <VBox alignment="TOP_CENTER" spacing="20"
+                      minWidth="500"
+                >
+                    <children>
+                        <Label text="TODO: popis sekce"/>
+                        <Label fx:id="status" text=""/>
+                        <TextArea fx:id="textArea"
+                                  minHeight="400"
+                                  editable="false"
+                                  scrollTop="Infinity"
+                        />
+                    </children>
+                </VBox>
+            </center>
+            <!--seznam chyb pro zvolene pravidlo-->
+            <right>
+                <VBox alignment="TOP_CENTER" spacing="20"
+                      minWidth="500"
+                >
+                    <children>
+                        <Label text="TODO: right"/>
+                    </children>
+                </VBox>
+            </right>
+
+        </BorderPane>
     </center>
+
+    <bottom>
+        <Label text="TODO: footer"/>
+
+    </bottom>
 
 </BorderPane>
 

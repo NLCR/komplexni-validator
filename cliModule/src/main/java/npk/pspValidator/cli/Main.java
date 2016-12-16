@@ -296,23 +296,24 @@ public class Main {
         b.append("ěščřžýáíéĚŠČŘŽÝÁÍÉ");
         System.out.println(b.toString());*/
 
+        ValidationState.ProgressListener progressListener = null;
 
         switch (printVerbosity) {
             case 3:
                 //vsechno, vcetne sekci a pravidel bez chyb
-                validator.run(xmlOutputFile, out, true, true, true, true, devParams);
+                validator.run(xmlOutputFile, out, true, true, true, true, devParams, progressListener);
                 break;
             case 2:
                 //jen chybove sekce a v popisy jednotlivych chyb (default)
-                validator.run(xmlOutputFile, out, true, false, true, false, devParams);
+                validator.run(xmlOutputFile, out, true, false, true, false, devParams, progressListener);
                 break;
             case 1:
                 //jen pocty chyb v chybovych sekcich, bez popisu jednotlivych chyb
-                validator.run(xmlOutputFile, out, true, false, false, false, devParams);
+                validator.run(xmlOutputFile, out, true, false, false, false, devParams, progressListener);
                 break;
             case 0:
                 //jen valid/not valid
-                validator.run(xmlOutputFile, out, false, false, false, false, devParams);
+                validator.run(xmlOutputFile, out, false, false, false, false, devParams, progressListener);
                 break;
             default:
                 throw new IllegalStateException(String.format("Nepovolená hodnota verbosity: %d. Hodnota musí být v intervalu [0-3]", printVerbosity));

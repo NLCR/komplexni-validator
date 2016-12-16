@@ -1,25 +1,31 @@
 package nkp.pspValidator.gui;
 
 import javafx.application.Platform;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Label;
-import javafx.scene.control.MenuBar;
-import javafx.scene.control.TextArea;
+import javafx.scene.control.*;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 import javafx.stage.Window;
+import javafx.util.Callback;
+import nkp.pspValidator.gui.pojo.PojoFactory;
+import nkp.pspValidator.gui.pojo.RulesSectionWithState;
+import nkp.pspValidator.gui.pojo.SectionItem;
 import nkp.pspValidator.shared.*;
+import nkp.pspValidator.shared.engine.RulesSection;
 
 import java.io.*;
+import java.util.List;
 import java.util.logging.Logger;
 
 /**
  * Created by martin on 9.12.16.
  */
-public class MainController extends AbstractController {
+public class MainController extends AbstractController implements ValidationState.ProgressListener {
 
     private static Logger LOG = Logger.getLogger(MainController.class.getSimpleName());
 
@@ -37,6 +43,12 @@ public class MainController extends AbstractController {
 
     @FXML
     TextArea textArea;
+
+
+    //sections
+    @FXML
+    //ListView<RulesSectionWithState> sectionList;
+            ListView<RulesSectionWithState> sectionList;
 
     @Override
     public void start(Stage primaryStage) throws Exception {
@@ -86,10 +98,9 @@ public class MainController extends AbstractController {
                     //TODO: v produkci odstraint
                     Validator.DevParams devParams = new Validator.DevParams();
                     //devParams.getSectionsToRun().add("Bibliografická metadata");
-                    //devParams.getSectionsToRun().add("Identifikátory");
+                    devParams.getSectionsToRun().add("Identifikátory");
                     //devParams.getSectionsToRun().add("JPEG 2000");
-
-                    validator.run(null, out, true, true, true, true, devParams);
+                    validator.run(null, out, true, true, true, true, devParams, MainController.this);
                     updateStatus("validace balíku " + pspDir.getAbsolutePath() + " hotova");
                 } catch (Exception e) {
                     //TODO: handle in UI
@@ -148,4 +159,62 @@ public class MainController extends AbstractController {
         new Thread(task).start();
     }
 
+
+    @Override
+    public void onSectionStarted(RulesSection section) {
+        Platform.runLater(() -> {
+            status.setText("zpracovávám sekci " + section.getName());
+        });
+    }
+
+    @Override
+    public void onSectionFinished(RulesSection section, long duration) {
+        Platform.runLater(() -> {
+            status.setText("ukončena sekce " + section.getName() + ", cas: " + duration);
+        });
+    }
+
+    @Override
+    public void onValidationsFinished() {
+        //  TODO
+    }
+
+    @Override
+    public void onInitialized(List<RulesSection> sections) {
+        Platform.runLater(() -> {
+            ObservableList<String> items = FXCollections.observableArrayList(
+                    "Single", "Double", "Suite", "Family App");
+//        sectionList.setItems(items);
+
+
+            sectionList.setCellFactory(new Callback<ListView<RulesSectionWithState>, ListCell<RulesSectionWithState>>() {
+
+                @Override
+                public ListCell<RulesSectionWithState> call(ListView<RulesSectionWithState> p) {
+                    ListCell<RulesSectionWithState> cell = new ListCell<RulesSectionWithState>() {
+
+                        @Override
+                        protected void updateItem(RulesSectionWithState section, boolean bln) {
+                            super.updateItem(section, bln);
+                            if (section != null) {
+                                SectionItem item = new SectionItem();
+                                item.populate(section);
+                                setGraphic(item.getContainer());
+                            }
+                        }
+
+                    };
+                    return cell;
+                }
+            });
+
+            ObservableList<RulesSectionWithState> sectionsWithState = FXCollections.observableList(PojoFactory.buildRulesSections(sections));
+            sectionList.setItems(sectionsWithState);
+        });
+    }
+
+    @Override
+    public void onValidationsStarted() {
+        //  TODO
+    }
 }

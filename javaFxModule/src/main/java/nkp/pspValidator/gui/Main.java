@@ -78,12 +78,14 @@ public class Main extends Application {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/main.fxml"));
             Parent root = (Parent) loader.load();
             //primaryStage.setScene(new Scene(root, 1000, 700));
+            int width = 1000;
+            int height = 700;
             primaryStage.setScene(new Scene(root));
             primaryStage.show();
-            primaryStage.setHeight(700);
-            primaryStage.setMinHeight(700);
-            primaryStage.setWidth(650);
-            primaryStage.setMinWidth(650);
+            primaryStage.setHeight(1000);
+            primaryStage.setMinHeight(height);
+            primaryStage.setWidth(1500);
+            primaryStage.setMinWidth(width);
             MainController controller = loader.getController();
             controller.setMain(this);
             return controller;
