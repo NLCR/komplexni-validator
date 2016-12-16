@@ -2,6 +2,8 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.*?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.*?>
 <BorderPane
         fx:id="container"
@@ -83,15 +85,41 @@
     </center>
 
     <bottom>
-        <!--TODO: Mozna zmenit zpet na jen HBox-->
-        <!--<HBox>-->
+        <!--TODO: Mozna zmenit zpet na jen HBox a odstranit Toolbar-->
+
         <ToolBar minWidth="300">
-            <padding>
-                <Insets bottom="10" left="10" right="10" top="10"/>
-            </padding>
-            <Label fx:id="status" text=""/>
+
+            <HBox spacing="15">
+                <padding>
+                    <Insets bottom="15" left="15" right="15" top="15"/>
+                </padding>
+
+                <StackPane>
+
+                    <ProgressIndicator fx:id="statusProgressIndicator"
+                                       prefWidth="20"
+                                       prefHeight="20"
+                                       visible="false"/>
+
+                    <ImageView fx:id="statusImgFinished" visible="false">
+                        <image>
+                            <Image url="@/img/Checkmark Filled-20.png"/>
+                        </image>
+                    </ImageView>
+
+                    <ImageView fx:id="statusImgError" visible="false">
+                        <image>
+                            <Image url="@/img/Error-20.png"/>
+                        </image>
+                    </ImageView>
+
+                </StackPane>
+
+                <Label fx:id="statusText"/>
+
+            </HBox>
         </ToolBar>
-        <!--</HBox>-->
+
     </bottom>
 
 </BorderPane>

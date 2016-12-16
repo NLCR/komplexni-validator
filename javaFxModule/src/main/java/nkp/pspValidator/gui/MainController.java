@@ -7,6 +7,7 @@ import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
@@ -41,7 +42,16 @@ public class MainController extends AbstractController implements ValidationStat
     MenuBar menuBar;
 
     @FXML
-    Label status;
+    Label statusText;
+
+    @FXML
+    ProgressIndicator statusProgressIndicator;
+
+    @FXML
+    ImageView statusImgFinished;
+
+    @FXML
+    ImageView statusImgError;
 
     @FXML
     TextArea textArea;
@@ -54,6 +64,7 @@ public class MainController extends AbstractController implements ValidationStat
 
     private ValidationStateManager validationStateManager = null;
     private SectionWithState selectedSection;
+    private File pspDir;
 
     @Override
     public void start(Stage primaryStage) throws Exception {
@@ -86,14 +97,17 @@ public class MainController extends AbstractController implements ValidationStat
      * @param forcedPeriodicalVersion can be null
      */
     public void runPspValidation(File pspDir, String focedMonographVersion, String forcedPeriodicalVersion) {
+        this.pspDir = pspDir;
         textArea.clear();
+        sectionList.setItems(null);
+        ruleList.setItems(null);
         Task task = new Task<Void>() {
 
             @Override
             protected Void call() throws Exception {
                 //System.out.println("validating " + pspDir.getAbsolutePath() + ", mon: " + focedMonographVersion + ", per: " + forcedPeriodicalVersion);
                 try {
-                    updateStatus(String.format("Validuji balík %s.", pspDir.getAbsolutePath()));
+                    updateStatus(String.format("Inicializuji balík %s.", pspDir.getAbsolutePath()), TotalState.RUNNING);
                     Dmf dmf = selectDmf(pspDir, focedMonographVersion, forcedPeriodicalVersion);
                     System.out.println(dmf);
 
@@ -112,11 +126,11 @@ public class MainController extends AbstractController implements ValidationStat
                     //devParams.getSectionsToRun().add("JPEG 2000");
 
                     validator.run(null, out, true, true, true, true, devParams, MainController.this);
-                    updateStatus(String.format("Validace balíku %s hotova.", pspDir.getAbsolutePath()));
+                    //updateStatus(String.format("Validace balíku %s hotova.", pspDir.getAbsolutePath()));
                 } catch (Exception e) {
                     //TODO: handle in UI
                     e.printStackTrace();
-                    updateStatus(String.format("Chyba: %s.", e.getMessage()));
+                    updateStatus(String.format("Chyba: %s.", e.getMessage()), TotalState.ERROR);
                 } finally {
                     return null;
                 }
@@ -124,7 +138,6 @@ public class MainController extends AbstractController implements ValidationStat
 
             private PrintStream textAreaPrintStream() {
                 OutputStream out = new OutputStream() {
-
                     @Override
                     public void write(int b) throws IOException {
                         //TODO: rozbite kodovani, ale stejne je to jen docasne reseni
@@ -160,26 +173,49 @@ public class MainController extends AbstractController implements ValidationStat
                         throw new Exception("nepodporovaný typ " + type);
                 }
             }
-
-            private void updateStatus(String statusText) {
-                Platform.runLater(() -> {
-                    status.setText(statusText);
-                });
-            }
         };
         new Thread(task).start();
     }
 
+    private void updateStatus(String text, TotalState state) {
+        Platform.runLater(() -> {
+            statusText.setText(text);
+            switch (state) {
+                case IDLE:
+                    statusProgressIndicator.setVisible(false);
+                    statusImgFinished.setVisible(false);
+                    statusImgError.setVisible(false);
+                    break;
+                case RUNNING:
+                    statusProgressIndicator.setVisible(true);
+                    statusImgFinished.setVisible(false);
+                    statusImgError.setVisible(false);
+                    break;
+                case FINISHED:
+                    statusProgressIndicator.setVisible(false);
+                    statusImgFinished.setVisible(true);
+                    statusImgError.setVisible(false);
+                    break;
+                case ERROR:
+                    statusProgressIndicator.setVisible(false);
+                    statusImgFinished.setVisible(false);
+                    statusImgError.setVisible(true);
+                    break;
+            }
+        });
+    }
+
     @Override
     public void onValidationsFinish() {
-        //  TODO
+        updateStatus(String.format("Validace balíku %s hotova.", pspDir.getAbsolutePath()), TotalState.FINISHED);
+        //TODO: reenable menu
     }
 
     @Override
     public void onInitialization(List<RulesSection> sections, Map<RulesSection, List<Rule>> rules) {
         //System.out.println("on initialization");
+        validationStateManager = new ValidationStateManager(sections, rules);
         Platform.runLater(() -> {
-            validationStateManager = new ValidationStateManager(sections, rules);
             sectionList.setCellFactory(new Callback<ListView<SectionWithState>, ListCell<SectionWithState>>() {
 
                 @Override
@@ -256,7 +292,8 @@ public class MainController extends AbstractController implements ValidationStat
 
     @Override
     public void onValidationsStart() {
-        //  TODO
+        //TODO: disable menu
+        updateStatus(String.format("Validuji balík %s.", pspDir.getAbsolutePath()), TotalState.RUNNING);
     }
 
     @Override
@@ -286,5 +323,9 @@ public class MainController extends AbstractController implements ValidationStat
             validationStateManager.updateSectionProblems(sectionId, sectionProblemsByLevel);
             validationStateManager.updateRule(sectionId, ruleId, ProcessingState.FINISHED, ruleProblemsByLevel);
         });
+    }
+
+    private enum TotalState {
+        IDLE, RUNNING, FINISHED, ERROR;
     }
 }
