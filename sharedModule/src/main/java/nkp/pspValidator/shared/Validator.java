@@ -9,10 +9,7 @@ import nkp.pspValidator.shared.engine.validationFunctions.ValidationResult;
 
 import java.io.File;
 import java.io.PrintStream;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 
 /**
@@ -28,9 +25,8 @@ public class Validator {
 
     /**
      * only for tests
-     *
-     * @return
      */
+    @Deprecated
     public Engine getEngine() {
         return engine;
     }
@@ -44,10 +40,8 @@ public class Validator {
     ) {
         ValidatorProtocolTextBuilder textLogger = new ValidatorProtocolTextBuilder(out);
         boolean runAllSections = devParams == null || devParams.getSectionsToRun() == null || devParams.getSectionsToRun().isEmpty();
-        //ValidationState state = new ValidationState(engine, progressListener);
-        ValidationState state = initState(engine, progressListener);
-
-        List<RulesSection> rulesSections = engine.getRuleSections();
+        ValidationState state = initState(progressListener);
+        List<RulesSection> rulesSections = state.getSections();
         state.reportValidationsStart();
         for (RulesSection section : rulesSections) {
             boolean runSection = runAllSections || devParams.getSectionsToRun().contains(section.getName());
@@ -55,35 +49,12 @@ public class Validator {
                 //TODO: ve vystupu a v logu zaznamenat, ze byla sekce ignorovana
             } else {
                 state.reportSectionProcessingStarted(section);
-                state.addSection(section);
-                //TODO: tohle se pocita
-                int sectionProblemsTotal = state.getSectionProblemsSum(section);
-                Map<Level, Integer> sectionProblemsByLevel = state.getSectionProblemsByLevel(section);
-                boolean printSection = sectionProblemsTotal == 0 && printSectionsWithoutProblems || sectionProblemsTotal != 0 && printSectionsWithProblems;
-                if (printSection) {
-                    textLogger.logSectionStart(section.getName(), sectionProblemsTotal, sectionProblemsByLevel);
-                }
-                List<Rule> rules = engine.getRules(section);
-                for (Rule rule : rules) {
-                    state.reportRuleProcessingStarted(rule);
-                    state.addRule(section, rule);
-                    ValidationResult result = rule.getResult();
-                    boolean printRule = printSection && (result.hasProblems() && printRulesWithProblems || !result.hasProblems() && printRulesWithoutProblems);
-                    if (printRule) {
-                        int ruleProblemsTotal = state.getRuleProblemsSum(rule);
-                        Map<Level, Integer> ruleProblemsByLevel = state.getRuleProblemsByLevel(rule);
-                        textLogger.logRuleStart(rule.getName(), rule.getDescription(), ruleProblemsTotal, ruleProblemsByLevel);
-                        for (ValidationError error : result.getProblems()) {
-                            textLogger.logRuleError(error.getLevel(), error.getMessage());
-                        }
-                    }
-                    state.reportRuleProcessingFinished(rule);
-                }
+                processSection(section, state, printSectionsWithoutProblems, printSectionsWithProblems, printRulesWithoutProblems, printRulesWithProblems, textLogger);
                 state.reportSectionProcessingFinished(section);
             }
         }
         state.reportValidationsEnd();
-        textLogger.logPackageSummary(state.getTotalProblemsSum(), state.getTotalProblemsByLevel(), state.isValid());
+        textLogger.logPackageSummary(state.getGlobalProblemsTotal(), state.getGlobalProblemsByLevel(), state.isValid());
         if (xmlOutputFile != null) {
             textLogger.logXmlExportStarted(xmlOutputFile);
             new ValidatorProtocolXmlBuilder().buildXmlOutput(xmlOutputFile, state);
@@ -91,9 +62,44 @@ public class Validator {
         }
     }
 
-    private ValidationState initState(Engine engine, ValidationState.ProgressListener progressListener) {
+    private void processSection(RulesSection section, ValidationState state, boolean printSectionsWithoutProblems, boolean printSectionsWithProblems, boolean printRulesWithoutProblems, boolean printRulesWithProblems, ValidatorProtocolTextBuilder textLogger) {
+        //vypocet pravidel
+        for (Rule rule : state.getRules(section)) {
+            state.reportRuleProcessingStarted(rule);
+            //skutecny vypocet
+            ValidationResult result = rule.getResult();
+            //ulozeni vysledku
+            state.reportRuleProcessingFinished(section, rule, result);
+        }
+        //vypis sekce, pokud potreba
+        int sectionProblemsTotal = state.getSectionProblemsTotal(section);
+        Map<Level, Integer> sectionProblemsByLevel = state.getSectionProblemsByLevel(section);
+        boolean printSection = sectionProblemsTotal == 0 && printSectionsWithoutProblems || sectionProblemsTotal != 0 && printSectionsWithProblems;
+        if (printSection) {
+            textLogger.logSectionStart(section.getName(), sectionProblemsTotal, sectionProblemsByLevel);
+        }
+        //vypis pravidel, ktera jsou potreba
+        for (Rule rule : state.getRules(section)) {
+            ValidationResult result = state.getResult(rule);
+            boolean printRule = printSection && (result.hasProblems() && printRulesWithProblems || !result.hasProblems() && printRulesWithoutProblems);
+            if (printRule) {
+                int ruleProblemsTotal = state.getRuleProblemsTotal(rule);
+                Map<Level, Integer> ruleProblemsByLevel = state.getRuleProblemsByLevel(rule);
+                textLogger.logRuleStart(rule.getName(), rule.getDescription(), ruleProblemsTotal, ruleProblemsByLevel);
+                for (ValidationError error : result.getProblems()) {
+                    textLogger.logRuleError(error.getLevel(), error.getMessage());
+                }
+            }
+        }
+    }
+
+    private ValidationState initState(ValidationState.ProgressListener progressListener) {
         List<RulesSection> sections = engine.getRuleSections();
-        ValidationState state = new ValidationState(engine, progressListener, sections);
+        Map<RulesSection, List<Rule>> rules = new HashMap<>();
+        for (RulesSection section : sections) {
+            rules.put(section, engine.getRules(section));
+        }
+        ValidationState state = new ValidationState(progressListener, sections, rules);
         return state;
     }
 

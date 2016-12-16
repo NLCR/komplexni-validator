@@ -1,12 +1,12 @@
 package nkp.pspValidator.shared;
 
-import nkp.pspValidator.shared.engine.Engine;
 import nkp.pspValidator.shared.engine.Level;
 import nkp.pspValidator.shared.engine.Rule;
 import nkp.pspValidator.shared.engine.RulesSection;
 import nkp.pspValidator.shared.engine.validationFunctions.ValidationError;
+import nkp.pspValidator.shared.engine.validationFunctions.ValidationResult;
 
-import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -18,78 +18,53 @@ public class ValidationState {
 
     //TODO: handle synchronization properly!!! Will definitely be accessed from multiple threads.
 
-    @Deprecated
-    private final Engine engine; //neni potreba pristupovat k enginu, seznam pravidel si vytahnu i odsud
     private final ProgressListener progressListener;
 
-    private long startTime;
-    private long finishTime;
-
-    //total
-    private int totalProblems;
-    private Map<Level, Integer> totalProblemsByLevel;
-    private boolean valid;
-    //sectionsBak
-    private final List<RulesSection> sections;
-    private final List<RulesSection> sectionsBak = new ArrayList<>();
-    private final Map<RulesSection, Map<Level, Integer>> sectionProblemsByLevel = new HashMap<>();
-    private final Map<RulesSection, Integer> sectionProblemsTotal = new HashMap<>();
+    //times for durations
+    private long globalStartTime;
+    private long globalFinishTime;
     private final Map<RulesSection, Long> startTimeBySection = new HashMap<>();
     private final Map<RulesSection, Long> finishTimeBySection = new HashMap<>();
-    //rules
-    private Map<RulesSection, List<Rule>> rulesBySection = new HashMap<>();
-    private final Map<Rule, Map<Level, Integer>> ruleProblemsByLevel = new HashMap<>();
-    private final Map<Rule, Integer> ruleProblemsTotal = new HashMap<>();
     private final Map<Rule, Long> startTimeByRule = new HashMap<>();
     private final Map<Rule, Long> finishTimeByRule = new HashMap<>();
-    //progress
-    private RulesSection sectionBeingProcessed = null;
+    //rules and sections
+    private final List<RulesSection> sections;
+    private final Map<RulesSection, List<Rule>> rulesBySection;
+    //results
+    private final Map<Rule, ValidationResult> validationResults = new HashMap<>();
+    private int globalProblemsTotal;
+    private final Map<Level, Integer> globalProblemsByLevel = new HashMap<>();
+    private final Map<RulesSection, Map<Level, Integer>> sectionProblemsByLevel = new HashMap<>();
+    private final Map<RulesSection, Integer> sectionProblemsTotal = new HashMap<>();
+    private final Map<Rule, Map<Level, Integer>> ruleProblemsByLevel = new HashMap<>();
+    private final Map<Rule, Integer> ruleProblemsTotal = new HashMap<>();
+    private boolean valid;
 
-    public ValidationState(Engine engine, ProgressListener progressListener, List<RulesSection> sections) {
-        this.engine = engine;
+
+    public ValidationState(ProgressListener progressListener, List<RulesSection> sections, Map<RulesSection, List<Rule>> rules) {
         this.progressListener = progressListener;
         this.sections = sections;
+        this.rulesBySection = rules;
         if (progressListener != null) {
             progressListener.onInitialized(sections);
         }
     }
 
-    public void addSection(RulesSection section) {
-        sectionsBak.add(section);
-        Map<Level, Integer> problemsByLevel = computeTotalProblemsByLevel(section);
-        sectionProblemsByLevel.put(section, problemsByLevel);
-        int totalProblems = computeTotalProblems(problemsByLevel);
-        sectionProblemsTotal.put(section, totalProblems);
-    }
-
-    public void addRule(RulesSection section, Rule rule) {
-        List<Rule> rules = rulesBySection.get(section);
-        if (rules == null) {
-            rules = new ArrayList<>();
-            rulesBySection.put(section, rules);
-        }
-        rules.add(rule);
-        Map<Level, Integer> problemsByLevel = computeTotalProblemsByLevel(rule);
-        int totalProblems = computeTotalProblems(problemsByLevel);
-        ruleProblemsByLevel.put(rule, problemsByLevel);
-        ruleProblemsTotal.put(rule, totalProblems);
+    public ValidationResult getResult(Rule rule) {
+        return validationResults.get(rule);
     }
 
     public void reportSectionProcessingStarted(RulesSection section) {
-        sectionBeingProcessed = section;
         startTimeBySection.put(section, System.currentTimeMillis());
         if (progressListener != null) {
             progressListener.onSectionStarted(section);
-            System.out.println("progressListener.onSectionStarted(section);");
         }
     }
 
     public void reportSectionProcessingFinished(RulesSection section) {
         finishTimeBySection.put(section, System.currentTimeMillis());
-        sectionBeingProcessed = null;
         if (progressListener != null) {
             progressListener.onSectionFinished(section, getSectionProcessingDuration(section));
-            System.out.println("progressListener.onSectionFinished(section);");
         }
     }
 
@@ -97,29 +72,21 @@ public class ValidationState {
         startTimeByRule.put(rule, System.currentTimeMillis());
     }
 
-    public void reportRuleProcessingFinished(Rule rule) {
+    public void reportRuleProcessingFinished(RulesSection section, Rule rule, ValidationResult result) {
         finishTimeByRule.put(rule, System.currentTimeMillis());
+        validationResults.put(rule, result);
+        //rule problems
+        Map<Level, Integer> problemsByLevel = computeProblemsByLevel(rule);
+        ruleProblemsByLevel.put(rule, problemsByLevel);
+        //rule problems total
+        int problemsTotal = sum(problemsByLevel.values());
+        ruleProblemsTotal.put(rule, problemsTotal);
+        updateRuleSectionProblems(section, problemsByLevel, problemsTotal);
+        updateTotalProblems(problemsByLevel, problemsTotal);
     }
 
-    public void reportValidationsStart() {
-        startTime = System.currentTimeMillis();
-        if (progressListener != null) {
-            progressListener.onValidationsStarted();
-        }
-    }
 
-    public void reportValidationsEnd() {
-        finishTime = System.currentTimeMillis();
-        totalProblemsByLevel = computeTotalProblemsByLevel(sectionsBak);
-        totalProblems = computeTotalProblems(totalProblemsByLevel);
-        Integer errors = totalProblemsByLevel.get(Level.ERROR);
-        valid = errors == 0;
-        if (progressListener != null) {
-            progressListener.onValidationsFinished();
-        }
-    }
-
-    private Map<Level, Integer> computeTotalProblemsByLevel(Rule rule) {
+    private Map<Level, Integer> computeProblemsByLevel(Rule rule) {
         Map<Level, Integer> problemsByLevel = new HashMap<>();
         for (Level level : Level.values()) {
             problemsByLevel.put(level, 0);
@@ -129,51 +96,77 @@ public class ValidationState {
                 Integer counter = problemsByLevel.get(error.getLevel());
                 problemsByLevel.put(error.getLevel(), ++counter);
             }
-
         }
         return problemsByLevel;
     }
 
-    private Map<Level, Integer> computeTotalProblemsByLevel(RulesSection section) {
-        Map<Level, Integer> problemsByLevel = new HashMap<>();
+    private void updateRuleSectionProblems(RulesSection section, Map<Level, Integer> problemsByLevelNow, int problemsTotalNow) {
+        //total
+        Integer total = sectionProblemsTotal.get(section);
+        if (total == null) {
+            total = 0;
+        }
+        total += problemsTotalNow;
+        sectionProblemsTotal.put(section, total);
+        //by level
+        Map<Level, Integer> byLevel = sectionProblemsByLevel.get(section);
+        if (byLevel == null) {
+            byLevel = new HashMap<>();
+        }
         for (Level level : Level.values()) {
-            problemsByLevel.put(level, 0);
-        }
-        for (Rule rule : engine.getRules(section)) {
-            for (ValidationError error : rule.getResult().getProblems()) {
-                Integer count = problemsByLevel.get(error.getLevel());
-                problemsByLevel.put(error.getLevel(), ++count);
+            Integer ofLevel = byLevel.get(level);
+            if (ofLevel == null) {
+                ofLevel = 0;
             }
+            Integer ofLevelNew = problemsByLevelNow.get(level);
+            if (ofLevelNew != null) {
+                ofLevel += ofLevelNew;
+            }
+            byLevel.put(level, ofLevel);
         }
-        return problemsByLevel;
+        sectionProblemsByLevel.put(section, byLevel);
     }
 
-    private int computeTotalProblems(Map<Level, Integer> problemsByLevel) {
-        int counter = 0;
-        for (Integer counterByLevel : problemsByLevel.values()) {
-            counter += counterByLevel;
-        }
-        return counter;
-    }
-
-
-    private Map<Level, Integer> computeTotalProblemsByLevel(List<RulesSection> rulesSections) {
-        Map<Level, Integer> problemsByLevel = new HashMap<>();
+    private void updateTotalProblems(Map<Level, Integer> problemsByLevelNow, int problemsTotalNow) {
+        globalProblemsTotal += problemsTotalNow;
         for (Level level : Level.values()) {
-            problemsByLevel.put(level, 0);
-        }
-        for (RulesSection section : rulesSections) {
-            for (Rule rule : engine.getRules(section)) {
-                for (ValidationError error : rule.getResult().getProblems()) {
-                    Integer count = problemsByLevel.get(error.getLevel());
-                    problemsByLevel.put(error.getLevel(), ++count);
-                }
+            Integer ofLevelGlobal = globalProblemsByLevel.get(level);
+            if (ofLevelGlobal == null) {
+                ofLevelGlobal = 0;
             }
+            Integer problemsOfLevelNow = problemsByLevelNow.get(level);
+            if (problemsOfLevelNow == null) {
+                ofLevelGlobal += problemsOfLevelNow;
+            }
+            globalProblemsByLevel.put(level, ofLevelGlobal);
         }
-        return problemsByLevel;
     }
 
-    public int getSectionProblemsSum(RulesSection section) {
+    private int sum(Collection<Integer> values) {
+        int result = 0;
+        for (Integer value : values) {
+            result += value;
+        }
+        return result;
+    }
+
+    public void reportValidationsStart() {
+        globalStartTime = System.currentTimeMillis();
+        if (progressListener != null) {
+            progressListener.onValidationsStarted();
+        }
+    }
+
+    public void reportValidationsEnd() {
+        globalFinishTime = System.currentTimeMillis();
+        Integer errors = globalProblemsByLevel.get(Level.ERROR);
+        valid = errors == null || errors == 0;
+        if (progressListener != null) {
+            progressListener.onValidationsFinished();
+        }
+    }
+
+    public int getSectionProblemsTotal(RulesSection section) {
         return sectionProblemsTotal.get(section);
     }
 
@@ -185,31 +178,28 @@ public class ValidationState {
         return valid;
     }
 
-    public Integer getTotalProblemsSum() {
-        return totalProblems;
+    public Integer getGlobalProblemsTotal() {
+        return globalProblemsTotal;
     }
 
-    public Map<Level, Integer> getTotalProblemsByLevel() {
-        return totalProblemsByLevel;
+    public Map<Level, Integer> getGlobalProblemsByLevel() {
+        return globalProblemsByLevel;
     }
 
-    public long getStartTime() {
-        return startTime;
+    public long getGlobalStartTime() {
+        return globalStartTime;
     }
 
-    public long getFinishTime() {
-        return finishTime;
+    public long getGlobalFinishTime() {
+        return globalFinishTime;
     }
 
-    public List<RulesSection> getSectionsBak() {
-        return sectionsBak;
-    }
 
     public List<Rule> getRules(RulesSection section) {
         return rulesBySection.get(section);
     }
 
-    public int getRuleProblemsSum(Rule rule) {
+    public int getRuleProblemsTotal(Rule rule) {
         return ruleProblemsTotal.get(rule);
     }
 
@@ -225,9 +215,9 @@ public class ValidationState {
         return finishTimeByRule.get(rule) - startTimeByRule.get(rule);
     }
 
-    /*public RulesSection getSectionBeingProcessed() {
-        return sectionBeingProcessed;
-    }*/
+    public List<RulesSection> getSections() {
+        return sections;
+    }
 
     public static interface ProgressListener {
 

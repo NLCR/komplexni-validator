@@ -79,16 +79,17 @@ public class ConfigProcessor {
         engine.registerRuleSection(section);
         //rules
         List<Element> ruleEls = XmlUtils.getChildrenElementsByName(rulesSectionEl, "rule");
+        int ruleCounter = 0;
         for (Element ruleEl : ruleEls) {
-            processRule(engine, section, ruleEl);
+            processRule(engine, section, ruleCounter++, ruleEl);
         }
     }
 
-    private void processRule(Engine engine, RulesSection section, Element ruleEl) throws ValidatorConfigurationException {
+    private void processRule(Engine engine, RulesSection section, int ruleId, Element ruleEl) throws ValidatorConfigurationException {
         String name = ruleEl.getAttribute("name");
         Element validationEl = XmlUtils.getChildrenElementsByName(ruleEl, "validation").get(0);
         ValidationFunction function = parseValidationFunction(engine, validationEl);
-        Rule rule = new Rule(name, function);
+        Rule rule = new Rule(section.getId(), ruleId, name, function);
         //description
         List<Element> descriptionEls = XmlUtils.getChildrenElementsByName(ruleEl, "description");
         if (!descriptionEls.isEmpty()) {

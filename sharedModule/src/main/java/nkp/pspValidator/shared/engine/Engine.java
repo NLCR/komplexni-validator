@@ -193,8 +193,9 @@ public class Engine {
         return new RulesSection(id, sectionName);
     }
 
-    public Rule buildRule(String ruleName, ValidationFunction function) {
-        return new Rule(ruleName, function);
+    @Deprecated
+    public Rule buildRule(int sectionId, int ruleId,String ruleName,  ValidationFunction function) {
+        return new Rule(sectionId, ruleId, ruleName, function);
     }
 
     //register methods for defining variables (values, patterns, ruleSections, rules)

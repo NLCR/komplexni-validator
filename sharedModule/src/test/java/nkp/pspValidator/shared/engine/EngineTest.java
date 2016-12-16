@@ -73,7 +73,7 @@ public class EngineTest {
 
         //through validation rule
         Rule ruleSingleInfo =
-                engine.buildRule("SINGLE_INFO",
+                engine.buildRule(0, 0, "SINGLE_INFO",
                         engine.buildValidationFunction("checkFilelistHasExactSize")
                                 .withValueParamByReference("files", ValueType.FILE_LIST, "INFO_FILES")
                                 .withValueParam("size", ValueType.INTEGER, new ValueEvaluation(1)))
@@ -83,7 +83,7 @@ public class EngineTest {
 
         //through validation rule
         Rule ruleTwoInfos =
-                engine.buildRule("SINGLE_INFO",
+                engine.buildRule(0, 1, "SINGLE_INFO",
                         engine.buildValidationFunction("checkFilelistHasExactSize")
                                 .withValueParamByReference("files", ValueType.FILE_LIST, "INFO_FILES")
                                 .withValueParam("size", ValueType.INTEGER, new ValueEvaluation(2)))

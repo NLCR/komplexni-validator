@@ -34,16 +34,16 @@ public class ValidatorProtocolXmlBuilder {
             Element protocolEl = doc.createElement("protocol");
             doc.appendChild(protocolEl);
 
-            Long duration = protocol.getFinishTime() - protocol.getStartTime();
-            Date startDate = new Date(protocol.getStartTime());
-            Date finishDAte = new Date(protocol.getFinishTime());
+            Long duration = protocol.getGlobalFinishTime() - protocol.getGlobalStartTime();
+            Date startDate = new Date(protocol.getGlobalStartTime());
+            Date finishDAte = new Date(protocol.getGlobalFinishTime());
             String verdict = protocol.isValid() ? "VALID" : "INVALID";
-            Element summaryEl = buildSummaryEl(doc, duration, startDate, finishDAte, protocol.getTotalProblemsSum(), protocol.getTotalProblemsByLevel(), verdict);
+            Element summaryEl = buildSummaryEl(doc, duration, startDate, finishDAte, protocol.getGlobalProblemsTotal(), protocol.getGlobalProblemsByLevel(), verdict);
             protocolEl.appendChild(summaryEl);
 
             Element sectionsEl = doc.createElement("sections");
             protocolEl.appendChild(sectionsEl);
-            for (RulesSection section : protocol.getSectionsBak()) {
+            for (RulesSection section : protocol.getSections()) {
                 Element sectionEl = doc.createElement("section");
                 sectionsEl.appendChild(sectionEl);
                 sectionEl.setAttribute("name", section.getName());
@@ -51,7 +51,7 @@ public class ValidatorProtocolXmlBuilder {
                     sectionEl.setAttribute("description", section.getDescription());
                 }
                 Element sectionSummaryEl = buildSummaryEl(doc, protocol.getSectionProcessingDuration(section), null, null,
-                        protocol.getSectionProblemsSum(section), protocol.getSectionProblemsByLevel(section), null);
+                        protocol.getSectionProblemsTotal(section), protocol.getSectionProblemsByLevel(section), null);
                 sectionEl.appendChild(sectionSummaryEl);
                 for (Rule rule : protocol.getRules(section)) {
                     Element ruleEl = doc.createElement("rule");
@@ -61,7 +61,7 @@ public class ValidatorProtocolXmlBuilder {
                         ruleEl.setAttribute("description", rule.getDescription());
                     }
                     Element ruleSummaryEl = buildSummaryEl(doc, protocol.getRuleProcessingDuration(rule),
-                            null, null, protocol.getRuleProblemsSum(rule), protocol.getRuleProblemsByLevel(rule), null);
+                            null, null, protocol.getRuleProblemsTotal(rule), protocol.getRuleProblemsByLevel(rule), null);
                     ruleEl.appendChild(ruleSummaryEl);
                     if (rule.getResult().hasProblems()) {
                         Element problemsEl = (Element) ruleSummaryEl.getElementsByTagName("problems").item(0);
