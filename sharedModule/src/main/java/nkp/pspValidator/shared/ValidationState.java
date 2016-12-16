@@ -99,6 +99,9 @@ public class ValidationState {
 
     public void reportRuleProcessingStarted(Rule rule) {
         startTimeByRule.put(rule, System.currentTimeMillis());
+        if (progressListener != null) {
+            progressListener.onRuleStart(rule.getSectionId(), rule.getId());
+        }
     }
 
     public void reportRuleProcessingFinished(RulesSection section, Rule rule, ValidationResult result) {
