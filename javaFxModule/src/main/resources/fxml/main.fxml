@@ -16,7 +16,7 @@
     <top>
         <MenuBar fx:id="menuBar" onKeyPressed="#handleKeyInput" prefHeight="29.0" prefWidth="0.0">
             <menus>
-                <Menu text="Validovat">
+                <Menu fx:id="menuValidate" text="Validovat">
                     <items>
                         <MenuItem onAction="#openNewValidationDialog" text="PSP balík (adresář)"/>
                         <MenuItem disable="true" text="PSP (zip)"/>
@@ -25,12 +25,18 @@
                         <MenuItem disable="true" text="Zip obsahující PSP balíky (zip)"/>
                     </items>
                 </Menu>
-                <Menu text="Zobrazit">
+                <Menu fx:id="menuSettings" text="Nastavení">
+                    <items>
+                        <MenuItem text="Nástroje pro kontrolu obrázků"/>
+                        <MenuItem text="Různé"/>
+                    </items>
+                </Menu>
+                <!--<Menu text="Zobrazit">
                     <items>
                         <MenuItem text="Poslední validace"/>
                         <MenuItem disable="true" text="Validační soubory"/>
                     </items>
-                </Menu>
+                </Menu>-->
                 <Menu text="Nápověda">
                     <items>
                         <MenuItem onAction="#showOnlineHelp" text="Online nápověda"/>

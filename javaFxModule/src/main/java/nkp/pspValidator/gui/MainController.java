@@ -41,6 +41,10 @@ public class MainController extends AbstractController implements ValidationStat
     //menu
     @FXML
     MenuBar menuBar;
+    @FXML
+    Menu menuValidate;
+    @FXML
+    Menu menuSettings;
 
     //status bar
     @FXML
@@ -136,6 +140,9 @@ public class MainController extends AbstractController implements ValidationStat
         problemsRuleDescriptionLbl.setText(null);
         problemList.setItems(null);
         problemList.setVisible(false);
+        //zablokovani casti menu
+        menuValidate.setDisable(true);
+        menuSettings.setDisable(true);
     }
 
     /**
@@ -240,7 +247,9 @@ public class MainController extends AbstractController implements ValidationStat
     @Override
     public void onValidationsFinish() {
         updateStatus(String.format("Validace balíku %s hotova.", pspDir.getAbsolutePath()), TotalState.FINISHED);
-        //TODO: reenable menu
+        //reenable menus
+        menuValidate.setDisable(false);
+        menuSettings.setDisable(false);
     }
 
     @Override
