@@ -49,8 +49,8 @@ public class Main extends Application {
         dialog.show();
     }
 
-    public void checkImageUtils() {
-        ImageUtilsCheckDialog dialog = new ImageUtilsCheckDialog(dialogStage, this);
+    public void checkImageUtils(boolean closeWhenFinished, String mainButtonText) {
+        ImageUtilsCheckDialog dialog = new ImageUtilsCheckDialog(dialogStage, this, closeWhenFinished, mainButtonText);
         dialog.show();
     }
 

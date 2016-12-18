@@ -27,8 +27,8 @@
                 </Menu>
                 <Menu fx:id="menuSettings" text="Nastavení">
                     <items>
-                        <MenuItem text="Nástroje pro kontrolu obrázků"/>
-                        <MenuItem text="Různé"/>
+                        <MenuItem text="Nástroje pro kontrolu obrázků" onAction="#openImageUtilsDialog"/>
+                        <MenuItem text="Různé" disable="true"/>
                     </items>
                 </Menu>
                 <!--<Menu text="Zobrazit">
@@ -41,7 +41,7 @@
                     <items>
                         <MenuItem onAction="#showOnlineHelp" text="Online nápověda"/>
                         <SeparatorMenuItem/>
-                        <MenuItem onAction="#showAboutApp" text="O aplikaci"/>
+                        <MenuItem onAction="#showAboutApp" text="O aplikaci" disable="true"/>
                     </items>
                 </Menu>
             </menus>

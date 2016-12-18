@@ -14,10 +14,14 @@ public class ImageUtilsCheckDialog {
 
     private final Stage stage;
     private final Main main;
+    private final boolean closeWhenFinished;
+    private final String mainButtonText;
 
-    public ImageUtilsCheckDialog(Stage stage, Main main) {
+    public ImageUtilsCheckDialog(Stage stage, Main main, boolean closeWhenFinished, String mainButtonText) {
         this.stage = stage;
         this.main = main;
+        this.closeWhenFinished = closeWhenFinished;
+        this.mainButtonText = mainButtonText;
     }
 
     public void show() {
@@ -38,6 +42,7 @@ public class ImageUtilsCheckDialog {
             stage.setOnCloseRequest(controller.getOnCloseEventHandler());
             controller.setMain(main);
             controller.setStage(stage);
+            controller.setData(closeWhenFinished, mainButtonText);
             controller.startNow();
         } catch (IOException e) {
             //should never happen

@@ -411,7 +411,6 @@
             <Button onAction="#continueInApp"
                     fx:id="btnContinue"
                     styleClass="global-button"
-                    text="Pokračovat"
             />
 
         </StackPane>

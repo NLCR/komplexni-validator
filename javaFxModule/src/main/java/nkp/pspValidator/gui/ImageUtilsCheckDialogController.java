@@ -131,25 +131,28 @@ public class ImageUtilsCheckDialogController extends DialogController {
     //other data
     private final Map<ImageUtil, Boolean> utilsFinished = new HashMap<>();
     private DialogState state = DialogState.RUNNING;
+    private boolean closeWhenFinished;
 
     @Override
     EventHandler<WindowEvent> getOnCloseEventHandler() {
-        return new EventHandler<WindowEvent>() {
-            @Override
-            public void handle(WindowEvent event) {
-                switch (state) {
-                    case RUNNING:
-                        event.consume();
-                        break;
-                    case ERROR:
-                        closeApp();
-                        break;
-                    case FINISHED:
-                        event.consume();
-                        continueInApp(null);
-                }
+        return event -> {
+            switch (state) {
+                case RUNNING:
+                    event.consume();
+                    break;
+                case ERROR:
+                    closeApp();
+                    break;
+                case FINISHED:
+                    event.consume();
+                    continueInApp(null);
             }
         };
+    }
+
+    @FXML
+    public void initialize() {
+
     }
 
     public ImageUtilsCheckDialogController() {
@@ -277,10 +280,11 @@ public class ImageUtilsCheckDialogController extends DialogController {
                     }
                     setUtilFinished(util, true);
                     if (isAllUtilsFinished()) {
+                        getConfigurationManager().setBoolean(ConfigurationManager.PROP_IMAGE_TOOLS_CHECK_SHOWN, true);
                         state = DialogState.FINISHED;
                         btnContinue.setDisable(false);
                         btnContinue.requestFocus();
-                        if (ConfigurationManager.DEV_MODE) {
+                        if (closeWhenFinished) {
                             continueInApp(null);
                         }
                     }
@@ -367,6 +371,11 @@ public class ImageUtilsCheckDialogController extends DialogController {
 
     public void showHelp(ActionEvent actionEvent) {
         openUrl(HELP_URL);
+    }
+
+    public void setData(boolean closeWhenFinished, String mainButtonText) {
+        this.closeWhenFinished = closeWhenFinished;
+        btnContinue.setText(mainButtonText);
     }
 
     private static final class UtilCheckResult {

@@ -18,10 +18,12 @@ public class ConfigurationManager {
     public static final String PROP_DMF_DIR = "fdmf.dir";
 
     //image tools
+    public static final String PROP_IMAGE_TOOLS_CHECK_SHOWN = "image_tools_check.shown";
     public static final String PROP_JHOVE_DIR = "jhove.dir";
     public static final String PROP_JPYLYZER_DIR = "jpylyzer.dir";
     public static final String PROP_IMAGE_MAGICK_DIR = "imageMagick.dir";
     public static final String PROP_KAKADU_DIR = "kakadu.dir";
+
 
     //validation
     public static final String PROP_LAST_PSP_DIR = "last.psp.dir";

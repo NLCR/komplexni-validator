@@ -436,6 +436,10 @@ public class MainController extends AbstractController implements ValidationStat
         });
     }
 
+    public void openImageUtilsDialog(ActionEvent actionEvent) {
+        main.checkImageUtils(false, "Zavřít");
+    }
+
     private enum TotalState {
         IDLE, RUNNING, FINISHED, ERROR;
     }

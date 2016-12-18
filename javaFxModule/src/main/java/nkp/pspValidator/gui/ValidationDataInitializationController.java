@@ -152,7 +152,8 @@ public class ValidationDataInitializationController extends DialogController {
     }
 
     public void continueInApp(ActionEvent actionEvent) {
-        main.checkImageUtils();
+        boolean shown = getConfigurationManager().getBooleanOrDefault(ConfigurationManager.PROP_IMAGE_TOOLS_CHECK_SHOWN, false);
+        main.checkImageUtils(shown, "Pokračovat");
     }
 
     public void setFdmfsRootDir(ActionEvent actionEvent) {
