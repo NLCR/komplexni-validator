@@ -10,33 +10,34 @@ import java.io.IOException;
 /**
  * Created by martin on 13.12.16.
  */
-public class ValidationDataInitializationDialog {
+public class ValidationResultSummaryDialog {
 
     private final Stage stage;
     private final Main main;
 
-    public ValidationDataInitializationDialog(Stage stage, Main main) {
+    public ValidationResultSummaryDialog(Stage stage, Main main) {
         this.stage = stage;
         this.main = main;
     }
 
-    public void show() {
-        stage.setTitle("Inicializace validačních dat");
-        int initialWidth = 1000;
-        int initialHeight = 280;
+    public void show(ValidationResultSummary summary) {
+        stage.setTitle("Sumarizace výsledků validace");
+        int initialWidth = 700;
+        int initialHeight = 400;
         stage.setWidth(initialWidth);
         stage.setMinWidth(initialWidth);
         stage.setHeight(initialHeight);
         stage.setMinHeight(initialHeight);
         //controller
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/validationDataInitialization.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/validationResulSummaryDialog.fxml"));
             Parent root = (Parent) loader.load();
             stage.setScene(new Scene(root));
-            ValidationDataInitializationController controller = loader.getController();
+            ValidationResultsSummaryDialogController controller = loader.getController();
             stage.setOnCloseRequest(controller.getOnCloseEventHandler());
             controller.setMain(main);
             controller.setStage(stage);
+            controller.setData(summary);
             controller.startNow();
         } catch (IOException e) {
             //should never happen

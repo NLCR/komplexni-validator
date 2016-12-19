@@ -229,7 +229,7 @@ public class ValidationState {
         Integer errors = globalProblemsByLevel.get(Level.ERROR);
         valid = errors == null || errors == 0;
         if (progressListener != null) {
-            progressListener.onValidationsFinish(globalProblemsTotal, globalProblemsByLevel, valid);
+            progressListener.onValidationsFinish(globalProblemsTotal, globalProblemsByLevel, valid, getProcessingDuration());
         }
     }
 
@@ -261,6 +261,9 @@ public class ValidationState {
         return globalFinishTime;
     }
 
+    public long getProcessingDuration() {
+        return globalFinishTime - globalStartTime;
+    }
 
     public List<Rule> getRules(RulesSection section) {
         return rulesBySection.get(section);
@@ -304,7 +307,7 @@ public class ValidationState {
 
         public void onRuleFinish(int sectionId, Map<Level, Integer> sectionProblemsByLevel, int sectionProblemsTotal, int ruleId, Map<Level, Integer> ruleProblemsByLevel, int ruleProblemsTotal, List<ValidationProblem> errors);
 
-        public void onValidationsFinish(int globalProblemsTotal, Map<Level, Integer> globalProblemsByLevel, boolean valid);
+        public void onValidationsFinish(int globalProblemsTotal, Map<Level, Integer> globalProblemsByLevel, boolean valid, long totalTime);
 
     }
 }

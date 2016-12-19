@@ -116,17 +116,4 @@ public class Validator {
         }
     }
 
-    public static interface ProgressListener {
-
-        public void onValidationsStarted();
-
-        public void onSectionStarted(RulesSection section);
-
-        public void onSectionFinished(RulesSection section, long duration);
-
-        public void onValidationsFinished();
-
-        public void onInitialized(List<RulesSection> sections);
-    }
-
 }

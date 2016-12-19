@@ -68,6 +68,11 @@ public class Main extends Application {
         dialog.show();
     }
 
+    public void showValidationResultsDialog(ValidationResultSummary summary) {
+        ValidationResultSummaryDialog dialog = new ValidationResultSummaryDialog(dialogStage, this);
+        dialog.show(summary);
+    }
+
     public void runPspValidation(File pspDir, String monVersion, String perVersion, boolean createTxtLog, boolean createXmlLog) {
         mainController.runPspValidation(pspDir, monVersion, perVersion, createTxtLog, createXmlLog);
     }

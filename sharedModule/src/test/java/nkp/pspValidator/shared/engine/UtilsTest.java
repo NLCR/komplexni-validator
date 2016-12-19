@@ -1,5 +1,6 @@
 package nkp.pspValidator.shared.engine;
 
+import nkp.pspValidator.shared.StringUtils;
 import nkp.pspValidator.shared.engine.exceptions.InvalidIdException;
 import nkp.pspValidator.shared.engine.types.Identifier;
 import org.junit.Test;
@@ -145,6 +146,21 @@ public class UtilsTest {
         assertEquals(type, id.getType());
         assertEquals(value, id.getValue());
         assertEquals(dcString, id.toString());
+    }
+
+    @Test
+    public void formatMilliseconds() {
+        assertEquals("0 ms", StringUtils.formatMilliseconds(0));
+        assertEquals("1 ms", StringUtils.formatMilliseconds(1));
+        assertEquals("99 ms", StringUtils.formatMilliseconds(99));
+        assertEquals("1 s, 0 ms", StringUtils.formatMilliseconds(1000));
+        assertEquals("5 s, 1 ms", StringUtils.formatMilliseconds(5001));
+        assertEquals("2 s, 999 ms", StringUtils.formatMilliseconds(2999));
+        assertEquals("59 s, 0 ms", StringUtils.formatMilliseconds(59000));
+        assertEquals("1 m, 0 s, 0 ms", StringUtils.formatMilliseconds(60000));
+        assertEquals("1 m, 2 s, 1 ms", StringUtils.formatMilliseconds(2001 + 60 * 1000));
+        assertEquals("1 m, 1 s, 1 ms", StringUtils.formatMilliseconds(1 + 1000 + 60 * 1000));
+        assertEquals("1 h, 1 m, 1 s, 1 ms", StringUtils.formatMilliseconds(1 + 1000 + 60 * 1000 + 60 * 60 * 1000));
     }
 
 }

@@ -96,6 +96,7 @@ public class MainController extends AbstractController implements ValidationStat
     private SectionWithState selectedSection;
     private RuleWithState selectedRule;
     private File pspDir;
+    private Dmf dmf;
     private File logTxtFile;
     private File logXmlFile;
 
@@ -128,6 +129,7 @@ public class MainController extends AbstractController implements ValidationStat
         //data spojena s konkretnim behem validace
         validationStateManager = null;
         pspDir = null;
+        dmf = null;
         //stav validace
         selectedSection = null;
         selectedRule = null;
@@ -177,9 +179,9 @@ public class MainController extends AbstractController implements ValidationStat
                 //System.out.println("validating " + pspDir.getAbsolutePath() + ", mon: " + focedMonographVersion + ", per: " + forcedPeriodicalVersion);
                 PrintStream out = null;
                 try {
-                    updateStatus(String.format("Inicializuji balík %s.", pspDir.getAbsolutePath()), TotalState.RUNNING);
-                    Dmf dmf = selectDmf(pspDir, focedMonographVersion, forcedPeriodicalVersion);
-                    System.out.println(dmf);
+                    updateStatusFromWorkerThread(String.format("Inicializuji balík %s.", pspDir.getAbsolutePath()), TotalState.RUNNING);
+                    dmf = selectDmf(pspDir, focedMonographVersion, forcedPeriodicalVersion);
+                    //System.out.println(dmf);
 
                     FdmfConfiguration fdmfConfig = main.getValidationDataManager().getFdmfRegistry().getFdmfConfig(dmf);
                     Validator validator = ValidatorFactory.buildValidator(fdmfConfig, pspDir, main.getValidationDataManager().getImageUtilManager());
@@ -202,7 +204,7 @@ public class MainController extends AbstractController implements ValidationStat
                 } catch (Exception e) {
                     //TODO: handle in UI
                     e.printStackTrace();
-                    updateStatus(String.format("Chyba: %s.", e.getMessage()), TotalState.ERROR);
+                    updateStatusFromWorkerThread(String.format("Chyba: %s.", e.getMessage()), TotalState.ERROR);
                 } finally {
                     if (out != null) {
                         out.close();
@@ -250,32 +252,36 @@ public class MainController extends AbstractController implements ValidationStat
         new Thread(task).start();
     }
 
-    private void updateStatus(String text, TotalState state) {
+    private void updateStatusFromWorkerThread(String text, TotalState state) {
         Platform.runLater(() -> {
-            statusText.setText(text);
-            switch (state) {
-                case IDLE:
-                    statusProgressIndicator.setVisible(false);
-                    statusImgFinished.setVisible(false);
-                    statusImgError.setVisible(false);
-                    break;
-                case RUNNING:
-                    statusProgressIndicator.setVisible(true);
-                    statusImgFinished.setVisible(false);
-                    statusImgError.setVisible(false);
-                    break;
-                case FINISHED:
-                    statusProgressIndicator.setVisible(false);
-                    statusImgFinished.setVisible(true);
-                    statusImgError.setVisible(false);
-                    break;
-                case ERROR:
-                    statusProgressIndicator.setVisible(false);
-                    statusImgFinished.setVisible(false);
-                    statusImgError.setVisible(true);
-                    break;
-            }
+            updateStatus(text, state);
         });
+    }
+
+    private void updateStatus(String text, TotalState state) {
+        statusText.setText(text);
+        switch (state) {
+            case IDLE:
+                statusProgressIndicator.setVisible(false);
+                statusImgFinished.setVisible(false);
+                statusImgError.setVisible(false);
+                break;
+            case RUNNING:
+                statusProgressIndicator.setVisible(true);
+                statusImgFinished.setVisible(false);
+                statusImgError.setVisible(false);
+                break;
+            case FINISHED:
+                statusProgressIndicator.setVisible(false);
+                statusImgFinished.setVisible(true);
+                statusImgError.setVisible(false);
+                break;
+            case ERROR:
+                statusProgressIndicator.setVisible(false);
+                statusImgFinished.setVisible(false);
+                statusImgError.setVisible(true);
+                break;
+        }
     }
 
     private String buildValidationLogName(File pspDir) {
@@ -306,15 +312,25 @@ public class MainController extends AbstractController implements ValidationStat
 
 
     @Override
-    public void onValidationsFinish(int globalProblemsTotal, Map<Level, Integer> globalProblemsByLevel, boolean valid) {
-        //TODO: zobrazit celkový výsledek někde
-        updateStatus(String.format("Validace balíku %s hotova.", pspDir.getAbsolutePath()), TotalState.FINISHED);
-        //reenable menus
-        menuValidate.setDisable(false);
-        menuSettings.setDisable(false);
-        menuShow.setDisable(false);
-        showLogTxtMenuItem.setDisable(logTxtFile == null);
-        showLogXmlMenuItem.setDisable(logXmlFile == null);
+    public void onValidationsFinish(int globalProblemsTotal, Map<Level, Integer> globalProblemsByLevel, boolean valid, long duration) {
+        Platform.runLater(() -> {
+            updateStatus(String.format("Validace balíku %s hotova.", pspDir.getAbsolutePath()), TotalState.FINISHED);
+            //reenable menus
+            menuValidate.setDisable(false);
+            menuSettings.setDisable(false);
+            menuShow.setDisable(false);
+            showLogTxtMenuItem.setDisable(logTxtFile == null);
+            showLogXmlMenuItem.setDisable(logXmlFile == null);
+            //show dialog with summary
+            ValidationResultSummary summary = new ValidationResultSummary();
+            summary.setPspDir(pspDir);
+            summary.setDmf(dmf);
+            summary.setGlobalProblemsTotal(globalProblemsTotal);
+            summary.setGlobalProblemsByLevel(globalProblemsByLevel);
+            summary.setValid(valid);
+            summary.setTotalTime(duration);
+            main.showValidationResultsDialog(summary);
+        });
     }
 
     @Override
@@ -466,7 +482,9 @@ public class MainController extends AbstractController implements ValidationStat
 
     @Override
     public void onValidationsStart() {
-        updateStatus(String.format("Validuji balík %s.", pspDir.getAbsolutePath()), TotalState.RUNNING);
+        Platform.runLater(() -> {
+            updateStatus(String.format("Validuji balík %s.", pspDir.getAbsolutePath()), TotalState.RUNNING);
+        });
     }
 
     @Override
