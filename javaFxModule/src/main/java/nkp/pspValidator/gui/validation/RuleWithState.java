@@ -1,4 +1,4 @@
-package nkp.pspValidator.gui.pojo;
+package nkp.pspValidator.gui.validation;
 
 import nkp.pspValidator.shared.engine.Rule;
 

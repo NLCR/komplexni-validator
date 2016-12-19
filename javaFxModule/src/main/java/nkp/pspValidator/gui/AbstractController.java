@@ -4,7 +4,6 @@ import com.sun.deploy.uitoolkit.impl.fx.HostServicesFactory;
 import com.sun.javafx.application.HostServicesDelegate;
 import javafx.application.Application;
 import javafx.application.Platform;
-import javafx.event.ActionEvent;
 
 import java.util.logging.Logger;
 

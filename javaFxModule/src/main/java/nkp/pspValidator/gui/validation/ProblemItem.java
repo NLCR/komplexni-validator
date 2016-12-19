@@ -1,4 +1,4 @@
-package nkp.pspValidator.gui.pojo;
+package nkp.pspValidator.gui.validation;
 
 /**
  * Created by martin on 16.12.16.
@@ -9,7 +9,6 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
 import javafx.scene.control.Tooltip;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.Clipboard;

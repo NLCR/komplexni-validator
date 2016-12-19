@@ -1,4 +1,4 @@
-package nkp.pspValidator.gui.pojo;
+package nkp.pspValidator.gui.validation;
 
 /**
  * Created by martin on 16.12.16.
@@ -13,7 +13,7 @@ import javafx.scene.image.ImageView;
 
 import java.io.IOException;
 
-public class RuleItem {
+public class SectionItem {
 
     @FXML
     private Node container;
@@ -40,8 +40,8 @@ public class RuleItem {
     @FXML
     private Label infosLabel;
 
-    public RuleItem() {
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/ruleItem.fxml"));
+    public SectionItem() {
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/sectionItem.fxml"));
         fxmlLoader.setController(this);
         try {
             fxmlLoader.load();
@@ -50,9 +50,9 @@ public class RuleItem {
         }
     }
 
-    public void populate(RuleWithState rule) {
-        name.setText(rule.getName());
-        switch (rule.getState()) {
+    public void populate(SectionWithState section) {
+        name.setText(section.getName());
+        switch (section.getState()) {
             case WAITING:
                 imgFinished.setVisible(false);
                 progressIndicator.setVisible(false);
@@ -67,12 +67,12 @@ public class RuleItem {
                 break;
         }
 
-        infosLabel.setText(rule.getInfos().toString());
-        warningsLabel.setText(rule.getWarnings().toString());
-        errorsLabel.setText(rule.getErrors().toString());
-        infosContainer.setVisible(rule.getInfos() != 0);
-        warningsContainer.setVisible(rule.getWarnings() != 0);
-        errorsContainer.setVisible(rule.getErrors() != 0);
+        infosLabel.setText(section.getInfos().toString());
+        warningsLabel.setText(section.getWarnings().toString());
+        errorsLabel.setText(section.getErrors().toString());
+        infosContainer.setVisible(section.getInfos() != 0);
+        warningsContainer.setVisible(section.getWarnings() != 0);
+        errorsContainer.setVisible(section.getErrors() != 0);
     }
 
     public Node getContainer() {
