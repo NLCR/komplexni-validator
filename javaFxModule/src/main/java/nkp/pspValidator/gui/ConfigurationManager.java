@@ -24,11 +24,13 @@ public class ConfigurationManager {
     public static final String PROP_IMAGE_MAGICK_DIR = "imageMagick.dir";
     public static final String PROP_KAKADU_DIR = "kakadu.dir";
 
-
     //validation
     public static final String PROP_LAST_PSP_DIR = "last.psp.dir";
     public static final String PROP_FORCE_MON_VERSION = "force.monograph.version";
     public static final String PROP_FORCE_PER_VERSION = "force.periodical.version";
+    public static final String PROP_PSP_VALIDATION_CREATE_TXT_LOG = "psp_validation.create_txt_log";
+    public static final String PROP_PSP_VALIDATION_CREATE_XML_LOG = "psp_validation.create_xml_log";
+    public static final String PROP_LOG_DIR = "validation.log_dir";
 
     private final Platform platform;
     private final File configFile;

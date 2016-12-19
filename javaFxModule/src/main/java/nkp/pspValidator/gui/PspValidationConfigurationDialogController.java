@@ -21,9 +21,6 @@ import java.util.Set;
  */
 public class PspValidationConfigurationDialogController extends DialogController {
 
-    private ValidationDataManager validationDataManager;
-    //private MainController mainController;
-
     @FXML
     TextField pspDirTextField;
 
@@ -41,6 +38,12 @@ public class PspValidationConfigurationDialogController extends DialogController
 
     @FXML
     Label errorMessageLabel;
+
+    @FXML
+    CheckBox createTxtLog;
+
+    @FXML
+    CheckBox createXmlLog;
 
     @FXML
     private void initialize() {
@@ -61,12 +64,36 @@ public class PspValidationConfigurationDialogController extends DialogController
 
     @Override
     void startNow() {
-        boolean monVersionForced = getConfigurationManager().getBooleanOrDefault(ConfigurationManager.PROP_FORCE_MON_VERSION, false);
-        boolean perVersionForced = getConfigurationManager().getBooleanOrDefault(ConfigurationManager.PROP_FORCE_PER_VERSION, false);
+        //init views from configuration
+        ConfigurationManager mgr = getConfigurationManager();
+        boolean monVersionForced = mgr.getBooleanOrDefault(ConfigurationManager.PROP_FORCE_MON_VERSION, false);
+        boolean perVersionForced = mgr.getBooleanOrDefault(ConfigurationManager.PROP_FORCE_PER_VERSION, false);
         monVersionForcedCheckBox.setSelected(monVersionForced);
         monVersionChoiceBox.setDisable(!monVersionForced);
         perVersionForcedCheckBox.setSelected(perVersionForced);
         perVersionChoiceBox.setDisable(!perVersionForced);
+        createTxtLog.setSelected(mgr.getBooleanOrDefault(ConfigurationManager.PROP_PSP_VALIDATION_CREATE_TXT_LOG, false));
+        createXmlLog.setSelected(mgr.getBooleanOrDefault(ConfigurationManager.PROP_PSP_VALIDATION_CREATE_XML_LOG, false));
+        //TODO; taky inicializovat vyrobu logu
+        //init views from fdmf
+        initChoiceBoxes();
+
+
+    }
+
+    private void initChoiceBoxes() {
+        Set<String> monVersions = main.getValidationDataManager().getFdmfRegistry().getMonographFdmfVersions();
+        if (monVersions != null) {
+            ObservableList<String> monVersionsObservable = FXCollections.observableArrayList(monVersions);
+            monVersionChoiceBox.setItems(monVersionsObservable);
+            monVersionChoiceBox.getSelectionModel().selectFirst();
+        }
+        Set<String> perVersions = main.getValidationDataManager().getFdmfRegistry().getPeriodicalFdmfVersions();
+        if (perVersions != null) {
+            ObservableList<String> perVersionsObservable = FXCollections.observableArrayList(perVersions);
+            perVersionChoiceBox.setItems(perVersionsObservable);
+            perVersionChoiceBox.getSelectionModel().selectFirst();
+        }
     }
 
     public void selectPspDir(ActionEvent actionEvent) {
@@ -112,33 +139,13 @@ public class PspValidationConfigurationDialogController extends DialogController
                 String monVersion = monVersionChoiceBox.isDisabled() ? null : (String) monVersionChoiceBox.getSelectionModel().getSelectedItem();
                 String perVersion = perVersionChoiceBox.isDisabled() ? null : (String) perVersionChoiceBox.getSelectionModel().getSelectedItem();
                 stage.hide();
-                main.runPspValidation(pspDir, monVersion, perVersion);
+                main.runPspValidation(pspDir, monVersion, perVersion, createTxtLog.isSelected(), createXmlLog.isSelected());
             }
         }
     }
 
     private void showError(String s) {
         errorMessageLabel.setText(s);
-    }
-
-    public void setValidationDataManager(ValidationDataManager validationDataManager) {
-        this.validationDataManager = validationDataManager;
-        initChoiceBoxes();
-    }
-
-    private void initChoiceBoxes() {
-        Set<String> monVersions = validationDataManager.getFdmfRegistry().getMonographFdmfVersions();
-        if (monVersions != null) {
-            ObservableList<String> monVersionsObservable = FXCollections.observableArrayList(monVersions);
-            monVersionChoiceBox.setItems(monVersionsObservable);
-            monVersionChoiceBox.getSelectionModel().selectFirst();
-        }
-        Set<String> perVersions = validationDataManager.getFdmfRegistry().getPeriodicalFdmfVersions();
-        if (perVersions != null) {
-            ObservableList<String> perVersionsObservable = FXCollections.observableArrayList(perVersions);
-            perVersionChoiceBox.setItems(perVersionsObservable);
-            perVersionChoiceBox.getSelectionModel().selectFirst();
-        }
     }
 
     public void monVersionForcedChanged(ActionEvent actionEvent) {
@@ -157,4 +164,13 @@ public class PspValidationConfigurationDialogController extends DialogController
         }
     }
 
+    public void createXmlLogChanged(ActionEvent actionEvent) {
+        boolean create = createXmlLog.isSelected();
+        getConfigurationManager().setBoolean(ConfigurationManager.PROP_PSP_VALIDATION_CREATE_XML_LOG, create);
+    }
+
+    public void createTxtLogChanged(ActionEvent actionEvent) {
+        boolean create = createTxtLog.isSelected();
+        getConfigurationManager().setBoolean(ConfigurationManager.PROP_PSP_VALIDATION_CREATE_TXT_LOG, create);
+    }
 }

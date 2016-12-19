@@ -284,7 +284,7 @@ public class ImageUtilsCheckDialogController extends DialogController {
                         state = DialogState.FINISHED;
                         btnContinue.setDisable(false);
                         btnContinue.requestFocus();
-                        if (closeWhenFinished) {
+                        if (closeWhenFinished || ConfigurationManager.DEV_MODE) {
                             continueInApp(null);
                         }
                     }

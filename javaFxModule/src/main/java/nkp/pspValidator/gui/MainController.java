@@ -20,7 +20,10 @@ import nkp.pspValidator.shared.engine.RulesSection;
 import nkp.pspValidator.shared.engine.validationFunctions.ValidationProblem;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.PrintStream;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.logging.Logger;
@@ -45,6 +48,12 @@ public class MainController extends AbstractController implements ValidationStat
     Menu menuValidate;
     @FXML
     Menu menuSettings;
+    @FXML
+    Menu menuShow;
+    @FXML
+    MenuItem showLogTxtMenuItem;
+    @FXML
+    MenuItem showLogXmlMenuItem;
 
     //status bar
     @FXML
@@ -82,11 +91,13 @@ public class MainController extends AbstractController implements ValidationStat
     @FXML
     ListView<ValidationProblem> problemList;
 
-    //other data
+    //other validation data
     private ValidationStateManager validationStateManager = null;
     private SectionWithState selectedSection;
     private RuleWithState selectedRule;
     private File pspDir;
+    private File logTxtFile;
+    private File logXmlFile;
 
     @Override
     public void start(Stage primaryStage) throws Exception {
@@ -143,21 +154,28 @@ public class MainController extends AbstractController implements ValidationStat
         //zablokovani casti menu
         menuValidate.setDisable(true);
         menuSettings.setDisable(true);
+        menuShow.setDisable(true);
     }
 
     /**
      * @param pspDir
      * @param focedMonographVersion   can be null
      * @param forcedPeriodicalVersion can be null
+     * @param createTxtLog
+     * @param createXmlLog
      */
-    public void runPspValidation(File pspDir, String focedMonographVersion, String forcedPeriodicalVersion) {
+    public void runPspValidation(File pspDir, String focedMonographVersion, String forcedPeriodicalVersion, boolean createTxtLog, boolean createXmlLog) {
         initBeforeValidation();
         this.pspDir = pspDir;
+        this.logTxtFile = createTxtLog ? buildTxtLogFile(pspDir) : null;
+        this.logXmlFile = createXmlLog ? buildXmlLogFile(pspDir) : null;
+
         Task task = new Task<Void>() {
 
             @Override
             protected Void call() throws Exception {
                 //System.out.println("validating " + pspDir.getAbsolutePath() + ", mon: " + focedMonographVersion + ", per: " + forcedPeriodicalVersion);
+                PrintStream out = null;
                 try {
                     updateStatus(String.format("Inicializuji balík %s.", pspDir.getAbsolutePath()), TotalState.RUNNING);
                     Dmf dmf = selectDmf(pspDir, focedMonographVersion, forcedPeriodicalVersion);
@@ -166,7 +184,7 @@ public class MainController extends AbstractController implements ValidationStat
                     FdmfConfiguration fdmfConfig = main.getValidationDataManager().getFdmfRegistry().getFdmfConfig(dmf);
                     Validator validator = ValidatorFactory.buildValidator(fdmfConfig, pspDir, main.getValidationDataManager().getImageUtilManager());
                     //PrintStream out = textAreaPrintStream();//System.out;
-                    PrintStream out = null;
+                    out = buildTxtLogPrintstream();
                     //TODO: v produkci odstranit
                     Validator.DevParams devParams = null;
                     if (ConfigurationManager.DEV_MODE) {
@@ -179,14 +197,30 @@ public class MainController extends AbstractController implements ValidationStat
                         devParams.getSectionsToRun().add("Primary METS filesec");
                         //devParams.getSectionsToRun().add("JPEG 2000");
                     }
-                    validator.run(null, out, true, true, true, true, devParams, MainController.this);
+                    validator.run(logXmlFile, out, true, true, true, true, devParams, MainController.this);
                     //updateStatus(String.format("Validace balíku %s hotova.", pspDir.getAbsolutePath()));
                 } catch (Exception e) {
                     //TODO: handle in UI
                     e.printStackTrace();
                     updateStatus(String.format("Chyba: %s.", e.getMessage()), TotalState.ERROR);
                 } finally {
+                    if (out != null) {
+                        out.close();
+                    }
                     return null;
+                }
+            }
+
+            private PrintStream buildTxtLogPrintstream() {
+                if (logTxtFile == null) {
+                    return null;
+                } else {
+                    try {
+                        return new PrintStream(logTxtFile);
+                    } catch (FileNotFoundException e) {
+                        e.printStackTrace();
+                        return null;
+                    }
                 }
             }
 
@@ -244,12 +278,43 @@ public class MainController extends AbstractController implements ValidationStat
         });
     }
 
+    private String buildValidationLogName(File pspDir) {
+        //SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy_MM_dd_HH_mm_ss_");
+        Date date = new Date();
+        return dateFormat.format(date) + pspDir.getName();
+    }
+
+
+    private File buildXmlLogFile(File pspDir) {
+        File logDir = main.getConfigurationManager().getFileOrNull(ConfigurationManager.PROP_LOG_DIR);
+        if (logDir != null) {
+            return new File(logDir, buildValidationLogName(pspDir) + ".xml");
+        } else {
+            return null;
+        }
+    }
+
+    private File buildTxtLogFile(File pspDir) {
+        File logDir = main.getConfigurationManager().getFileOrNull(ConfigurationManager.PROP_LOG_DIR);
+        if (logDir != null) {
+            return new File(logDir, buildValidationLogName(pspDir) + ".txt");
+        } else {
+            return null;
+        }
+    }
+
+
     @Override
-    public void onValidationsFinish() {
+    public void onValidationsFinish(int globalProblemsTotal, Map<Level, Integer> globalProblemsByLevel, boolean valid) {
+        //TODO: zobrazit celkový výsledek někde
         updateStatus(String.format("Validace balíku %s hotova.", pspDir.getAbsolutePath()), TotalState.FINISHED);
         //reenable menus
         menuValidate.setDisable(false);
         menuSettings.setDisable(false);
+        menuShow.setDisable(false);
+        showLogTxtMenuItem.setDisable(logTxtFile == null);
+        showLogXmlMenuItem.setDisable(logXmlFile == null);
     }
 
     @Override
@@ -438,6 +503,14 @@ public class MainController extends AbstractController implements ValidationStat
 
     public void openImageUtilsDialog(ActionEvent actionEvent) {
         main.checkImageUtils(false, "Zavřít");
+    }
+
+    public void showLogTxt(ActionEvent actionEvent) {
+        openUrl("file:" + logTxtFile.getAbsolutePath());
+    }
+
+    public void showLogXml(ActionEvent actionEvent) {
+        openUrl("file:" + logXmlFile.getAbsolutePath());
     }
 
     private enum TotalState {

@@ -50,27 +50,28 @@ public class ValidatorProtocolXmlBuilder {
                 if (section.getDescription() != null) {
                     sectionEl.setAttribute("description", section.getDescription());
                 }
-                Element sectionSummaryEl = buildSummaryEl(doc, protocol.getSectionProcessingDuration(section), null, null,
-                        protocol.getSectionProblemsTotal(section), protocol.getSectionProblemsByLevel(section), null);
-                sectionEl.appendChild(sectionSummaryEl);
-                for (Rule rule : protocol.getRules(section)) {
-                    Element ruleEl = doc.createElement("rule");
-                    sectionEl.appendChild(ruleEl);
-                    ruleEl.setAttribute("name", rule.getName());
-                    if (rule.getDescription() != null) {
-                        ruleEl.setAttribute("description", rule.getDescription());
-                    }
-                    Element ruleSummaryEl = buildSummaryEl(doc, protocol.getRuleProcessingDuration(rule),
-                            null, null, protocol.getRuleProblemsTotal(rule), protocol.getRuleProblemsByLevel(rule), null);
-                    ruleEl.appendChild(ruleSummaryEl);
-                    if (rule.getResult().hasProblems()) {
-                        Element problemsEl = (Element) ruleSummaryEl.getElementsByTagName("problems").item(0);
-                        for (ValidationProblem error : rule.getResult().getProblems()) {
-                            appendErrorEl(doc, problemsEl, error);
+                if (protocol.sectionWasExecuted(section)) {
+                    Element sectionSummaryEl = buildSummaryEl(doc, protocol.getSectionProcessingDuration(section), null, null,
+                            protocol.getSectionProblemsTotal(section), protocol.getSectionProblemsByLevel(section), null);
+                    sectionEl.appendChild(sectionSummaryEl);
+                    for (Rule rule : protocol.getRules(section)) {
+                        Element ruleEl = doc.createElement("rule");
+                        sectionEl.appendChild(ruleEl);
+                        ruleEl.setAttribute("name", rule.getName());
+                        if (rule.getDescription() != null) {
+                            ruleEl.setAttribute("description", rule.getDescription());
+                        }
+                        Element ruleSummaryEl = buildSummaryEl(doc, protocol.getRuleProcessingDuration(rule),
+                                null, null, protocol.getRuleProblemsTotal(rule), protocol.getRuleProblemsByLevel(rule), null);
+                        ruleEl.appendChild(ruleSummaryEl);
+                        if (rule.getResult().hasProblems()) {
+                            Element problemsEl = (Element) ruleSummaryEl.getElementsByTagName("problems").item(0);
+                            for (ValidationProblem error : rule.getResult().getProblems()) {
+                                appendErrorEl(doc, problemsEl, error);
+                            }
                         }
                     }
                 }
-                protocol.reportSectionProcessingFinished(section);
             }
             TransformerFactory transformerFactory = TransformerFactory.newInstance();
             Transformer transformer = transformerFactory.newTransformer();

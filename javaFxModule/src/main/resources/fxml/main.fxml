@@ -31,12 +31,16 @@
                         <MenuItem text="Různé" disable="true"/>
                     </items>
                 </Menu>
-                <!--<Menu text="Zobrazit">
+                <Menu fx:id="menuShow" text="Zobrazit">
                     <items>
-                        <MenuItem text="Poslední validace"/>
-                        <MenuItem disable="true" text="Validační soubory"/>
+                        <MenuItem fx:id="showLogTxtMenuItem" text="Textový log proběhlé validace" disable="true"
+                                  onAction="#showLogTxt"/>
+                        <MenuItem fx:id="showLogXmlMenuItem" text="XML log proběhlé validace" disable="true"
+                                  onAction="#showLogXml"/>
+                        <!--<MenuItem text="Poslední validace"/>
+                        <MenuItem disable="true" text="Validační soubory"/>-->
                     </items>
-                </Menu>-->
+                </Menu>
                 <Menu text="Nápověda">
                     <items>
                         <MenuItem onAction="#showOnlineHelp" text="Online nápověda"/>

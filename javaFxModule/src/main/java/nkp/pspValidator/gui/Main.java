@@ -44,6 +44,14 @@ public class Main extends Application {
         }
     }
 
+    private Stage initDialogStage() {
+        Stage dialogStage = new Stage();
+        dialogStage.initStyle(StageStyle.UTILITY);
+        dialogStage.initModality(Modality.APPLICATION_MODAL);
+        dialogStage.initOwner(primaryStage);
+        return dialogStage;
+    }
+
     private void initValidationData() {
         ValidationDataInitializationDialog dialog = new ValidationDataInitializationDialog(dialogStage, this);
         dialog.show();
@@ -60,17 +68,10 @@ public class Main extends Application {
         dialog.show();
     }
 
-    public void runPspValidation(File pspDir, String monVersion, String perVersion) {
-        mainController.runPspValidation(pspDir, monVersion, perVersion);
+    public void runPspValidation(File pspDir, String monVersion, String perVersion, boolean createTxtLog, boolean createXmlLog) {
+        mainController.runPspValidation(pspDir, monVersion, perVersion, createTxtLog, createXmlLog);
     }
 
-    private Stage initDialogStage() {
-        Stage dialogStage = new Stage();
-        dialogStage.initStyle(StageStyle.UTILITY);
-        dialogStage.initModality(Modality.APPLICATION_MODAL);
-        dialogStage.initOwner(primaryStage);
-        return dialogStage;
-    }
 
     public MainController openMainWindow() {
         LOG.info("openMainWindow");

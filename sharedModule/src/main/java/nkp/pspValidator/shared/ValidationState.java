@@ -27,6 +27,8 @@ public class ValidationState {
     //rules and sections
     private final List<RulesSection> sections;
     private final Map<RulesSection, List<Rule>> rulesBySection;
+    //process
+    private final Set<Integer> sectionsProcessed = new HashSet<>();
     //results
     private final Map<Rule, ValidationResult> validationResults = new HashMap<>();
     private final Map<Level, Integer> globalProblemsByLevel = new HashMap<>();
@@ -84,6 +86,7 @@ public class ValidationState {
     }
 
     public void reportSectionProcessingStarted(RulesSection section) {
+        sectionsProcessed.add(section.getId());
         startTimeBySection.put(section, System.currentTimeMillis());
         if (progressListener != null) {
             progressListener.onSectionStart(section.getId());
@@ -114,7 +117,7 @@ public class ValidationState {
         int problemsTotal = sum(problemsByLevel.values());
         ruleProblemsTotal.put(rule, problemsTotal);
         updateRuleSectionProblems(section, problemsByLevel, problemsTotal);
-        updateTotalProblems(problemsByLevel, problemsTotal);
+        updateGlobalProblems(problemsByLevel, problemsTotal);
         if (progressListener != null) {
             progressListener.onRuleFinish(
                     rule.getSectionId(), copyProblems(sectionProblemsByLevel.get(section)), sectionProblemsTotal.get(section).intValue(),
@@ -149,7 +152,6 @@ public class ValidationState {
             return result;
         }
     }
-
 
     private Map<Level, Integer> computeProblemsByLevel(Rule rule) {
         Map<Level, Integer> problemsByLevel = new HashMap<>();
@@ -192,7 +194,7 @@ public class ValidationState {
         sectionProblemsByLevel.put(section, byLevel);
     }
 
-    private void updateTotalProblems(Map<Level, Integer> problemsByLevelNow, int problemsTotalNow) {
+    private void updateGlobalProblems(Map<Level, Integer> problemsByLevelNow, int problemsTotalNow) {
         globalProblemsTotal += problemsTotalNow;
         for (Level level : Level.values()) {
             Integer ofLevelGlobal = globalProblemsByLevel.get(level);
@@ -200,7 +202,7 @@ public class ValidationState {
                 ofLevelGlobal = 0;
             }
             Integer problemsOfLevelNow = problemsByLevelNow.get(level);
-            if (problemsOfLevelNow == null) {
+            if (problemsOfLevelNow != null) {
                 ofLevelGlobal += problemsOfLevelNow;
             }
             globalProblemsByLevel.put(level, ofLevelGlobal);
@@ -227,7 +229,7 @@ public class ValidationState {
         Integer errors = globalProblemsByLevel.get(Level.ERROR);
         valid = errors == null || errors == 0;
         if (progressListener != null) {
-            progressListener.onValidationsFinish();
+            progressListener.onValidationsFinish(globalProblemsTotal, globalProblemsByLevel, valid);
         }
     }
 
@@ -284,6 +286,10 @@ public class ValidationState {
         return sections;
     }
 
+    public boolean sectionWasExecuted(RulesSection section) {
+        return sectionsProcessed.contains(section.getId());
+    }
+
     public static interface ProgressListener {
 
         public void onInitialization(List<RulesSection> sections, Map<RulesSection, List<Rule>> rules);
@@ -298,7 +304,7 @@ public class ValidationState {
 
         public void onRuleFinish(int sectionId, Map<Level, Integer> sectionProblemsByLevel, int sectionProblemsTotal, int ruleId, Map<Level, Integer> ruleProblemsByLevel, int ruleProblemsTotal, List<ValidationProblem> errors);
 
-        public void onValidationsFinish();
+        public void onValidationsFinish(int globalProblemsTotal, Map<Level, Integer> globalProblemsByLevel, boolean valid);
 
     }
 }

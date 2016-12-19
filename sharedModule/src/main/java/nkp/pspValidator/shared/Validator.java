@@ -58,6 +58,7 @@ public class Validator {
         if (xmlOutputFile != null) {
             textLogger.logXmlExportStarted(xmlOutputFile);
             new ValidatorProtocolXmlBuilder().buildXmlOutput(xmlOutputFile, state);
+            //TODO: tohle nepatri do textoveho logu
             textLogger.logXmlExportCreated();
         }
     }
