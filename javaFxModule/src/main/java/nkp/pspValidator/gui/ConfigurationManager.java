@@ -42,7 +42,7 @@ public class ConfigurationManager {
     public ConfigurationManager(Platform platform) throws IOException {
         this.platform = platform;
         this.configFile = selectConfigFile();
-        System.out.println("config file: " + configFile.getAbsolutePath());
+        //System.out.println("config file: " + configFile.getAbsolutePath());
         loadProperties();
     }
 

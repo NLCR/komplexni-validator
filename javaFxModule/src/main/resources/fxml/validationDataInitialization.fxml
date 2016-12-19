@@ -8,7 +8,7 @@
 <VBox
         xmlns="http://javafx.com/javafx/8.0.112"
         xmlns:fx="http://javafx.com/fxml/1"
-        fx:controller="nkp.pspValidator.gui.ValidationDataInitializationController"
+        fx:controller="nkp.pspValidator.gui.ValidationDataInitializationDialogController"
         fx:id="container"
         stylesheets="/css/validationDataInitialization.css"
         alignment="CENTER"

@@ -23,9 +23,9 @@ import java.util.logging.Logger;
 /**
  * Created by martin on 9.12.16.
  */
-public class ValidationDataInitializationController extends DialogController {
+public class ValidationDataInitializationDialogController extends DialogController {
 
-    private static Logger LOG = Logger.getLogger(ValidationDataInitializationController.class.getSimpleName());
+    private static Logger LOG = Logger.getLogger(ValidationDataInitializationDialogController.class.getSimpleName());
 
 
     @FXML
@@ -97,7 +97,6 @@ public class ValidationDataInitializationController extends DialogController {
                     }
                 } catch (ValidatorConfigurationException e) {
                     processResult(new Result(false, e.getMessage()));
-                    return null;
                 } finally {
                     return null;
                 }
@@ -114,13 +113,15 @@ public class ValidationDataInitializationController extends DialogController {
                 }
             }
 
-            private void checkReadableDir(File pspRoot) throws ValidatorConfigurationException {
-                if (!pspRoot.exists()) {
-                    throw new ValidatorConfigurationException(String.format("Soubor %s neexistuje!", pspRoot.getAbsolutePath()));
-                } else if (!pspRoot.isDirectory()) {
-                    throw new ValidatorConfigurationException(String.format("Soubor %s není adresář!", pspRoot.getAbsolutePath()));
-                } else if (!pspRoot.canRead()) {
-                    throw new ValidatorConfigurationException(String.format("Nelze číst adresář %s!", pspRoot.getAbsolutePath()));
+            private void checkReadableDir(File dir) throws ValidatorConfigurationException {
+                if (!dir.exists()) {
+                    throw new ValidatorConfigurationException(String.format("Soubor %s neexistuje!", dir.getAbsolutePath()));
+                } else if (!dir.isDirectory()) {
+                    throw new ValidatorConfigurationException(String.format("Soubor %s není adresář!", dir.getAbsolutePath()));
+                } else if (!dir.canRead()) {
+                    throw new ValidatorConfigurationException(String.format("Nelze číst adresář %s!", dir.getAbsolutePath()));
+                }else{
+                    System.out.println("dir ok: " + dir.getAbsolutePath());
                 }
             }
 

@@ -33,7 +33,7 @@ public class ValidationDataInitializationDialog {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/validationDataInitialization.fxml"));
             Parent root = (Parent) loader.load();
             stage.setScene(new Scene(root));
-            ValidationDataInitializationController controller = loader.getController();
+            ValidationDataInitializationDialogController controller = loader.getController();
             stage.setOnCloseRequest(controller.getOnCloseEventHandler());
             controller.setMain(main);
             controller.setStage(stage);
