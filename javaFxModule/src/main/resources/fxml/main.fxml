@@ -69,7 +69,9 @@
                                     <padding>
                                         <Insets bottom="10" left="10" right="10" top="10"/>
                                     </padding>
-                                    <Label text="Validační sekce:"/>
+                                    <children>
+                                        <Label text="Validační sekce:"/>
+                                    </children>
                                 </VBox>
                                 <ListView fx:id="sectionList" minWidth="330"/>
                             </children>
@@ -85,11 +87,13 @@
                                     <padding>
                                         <Insets bottom="10" left="10" right="10" top="10"/>
                                     </padding>
-                                    <Label fx:id="rulesSectionNameLbl"/>
-                                    <Label fx:id="rulesSectionDescriptionLbl"/>
-                                    <Label text="Pravidla:"/>
+                                    <children>
+                                        <Label fx:id="rulesSectionNameLbl"/>
+                                        <Label fx:id="rulesSectionDescriptionLbl"/>
+                                        <Label text="Pravidla:"/>
+                                    </children>
                                 </VBox>
-                                <ListView fx:id="ruleList" minWidth="500"/>
+                                <ListView fx:id="ruleList" minWidth="600"/>
                             </children>
                         </VBox>
 
@@ -100,7 +104,7 @@
 
 
                 <VBox alignment="TOP_CENTER" spacing="0"
-                      minHeight="300"
+                      minHeight="450"
                       fx:id="problemsContainer"
                       visible="false"
                 >
