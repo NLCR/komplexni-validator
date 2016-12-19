@@ -12,7 +12,10 @@ public class ConfigurationManager {
 
     public static boolean DEV_MODE = true;
 
-    private static File CONFIG_FILE = new File("../../resources/main/config.properties");
+    private static File CONFIG_FILE_PRODUCTION = new File("../../resources/main/config.properties");
+    private static File CONFIG_FILE_DEV_WIN = new File("../../resources/main/config-test-win.properties");
+    private static File CONFIG_FILE_DEV_MAC = new File("../../resources/main/config-test-mac.properties");
+    private static File CONFIG_FILE_DEV_LINUX = new File("../../resources/main/config-test-linux.properties");
 
     //fdmf
     public static final String PROP_DMF_DIR = "fdmf.dir";
@@ -38,8 +41,26 @@ public class ConfigurationManager {
 
     public ConfigurationManager(Platform platform) throws IOException {
         this.platform = platform;
-        this.configFile = CONFIG_FILE;
+        this.configFile = selectConfigFile();
+        System.out.println("config file: " + configFile.getAbsolutePath());
         loadProperties();
+    }
+
+    private File selectConfigFile() {
+        if (DEV_MODE) {
+            switch (platform.getOperatingSystem()) {
+                case LINUX:
+                    return CONFIG_FILE_DEV_LINUX;
+                case WINDOWS:
+                    return CONFIG_FILE_DEV_WIN;
+                case MAC:
+                    return CONFIG_FILE_DEV_MAC;
+                default:
+                    return CONFIG_FILE_PRODUCTION;
+            }
+        } else {
+            return CONFIG_FILE_PRODUCTION;
+        }
     }
 
     private void loadProperties() throws IOException {
