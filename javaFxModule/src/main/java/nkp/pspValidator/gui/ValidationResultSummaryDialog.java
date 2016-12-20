@@ -23,7 +23,7 @@ public class ValidationResultSummaryDialog {
     public void show(ValidationResultSummary summary) {
         stage.setTitle("Sumarizace výsledků validace");
         int initialWidth = 700;
-        int initialHeight = 400;
+        int initialHeight = 500;
         stage.setWidth(initialWidth);
         stage.setMinWidth(initialWidth);
         stage.setHeight(initialHeight);

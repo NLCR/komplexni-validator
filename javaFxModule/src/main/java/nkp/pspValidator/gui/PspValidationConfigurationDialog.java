@@ -23,7 +23,7 @@ public class PspValidationConfigurationDialog {
     public void show() {
         stage.setTitle("Nastavení validace PSP balíku");
         int initialWidth = 650;
-        int initialHeight = 350;
+        int initialHeight = 450;
 
         stage.setWidth(initialWidth);
         stage.setMinWidth(initialWidth);

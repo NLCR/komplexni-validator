@@ -13,7 +13,7 @@
         stylesheets="/css/validationDataInitialization.css"
         alignment="CENTER"
         minWidth="1000"
-        minHeight="280"
+        minHeight="300"
         spacing="20"
 
 >
@@ -42,7 +42,7 @@
                 fx:id="btnSetFdmfsRootDir"
                 onAction="#setFdmfsRootDir"
                 styleClass="global-button"
-                text="Změnit kořenový adresář fDMF"
+                text="Nastavit kořenový adresář fDMF"
         />
 
     </children>

@@ -10,12 +10,15 @@ import java.util.Properties;
  */
 public class ConfigurationManager {
 
-    public static boolean DEV_MODE = true;
+    public static boolean DEV_MODE = false;
 
-    private static File CONFIG_FILE_PRODUCTION = new File("../../resources/main/config.properties");
-    private static File CONFIG_FILE_DEV_WIN = new File("../../resources/main/config-test-win.properties");
-    private static File CONFIG_FILE_DEV_MAC = new File("../../resources/main/config-test-mac.properties");
-    private static File CONFIG_FILE_DEV_LINUX = new File("../../resources/main/config-test-linux.properties");
+    private static final String DEFAULT_LOG_DIR = "logs";
+    private static final String DEFAULT_FDMF_DIR = "fDMF";
+
+    private static File CONFIG_FILE_PRODUCTION = new File("config.properties");
+    private static File CONFIG_FILE_DEV_WIN = new File("../../resources/main/dev/config-win.properties");
+    private static File CONFIG_FILE_DEV_MAC = new File("../../resources/main/dev/config-mac.properties");
+    private static File CONFIG_FILE_DEV_LINUX = new File("../../resources/main/dev/config-linux.properties");
 
     //fdmf
     public static final String PROP_DMF_DIR = "fdmf.dir";
@@ -40,10 +43,31 @@ public class ConfigurationManager {
     private final Properties properties = new Properties();
 
     public ConfigurationManager(Platform platform) throws IOException {
-        this.platform = platform;
-        this.configFile = selectConfigFile();
-        //System.out.println("config file: " + configFile.getAbsolutePath());
-        loadProperties();
+        try {
+            this.platform = platform;
+            this.configFile = selectConfigFile();
+            //System.out.println("path: " + new File(".").getAbsolutePath());
+            //System.out.println("config file: " + configFile.getAbsolutePath());
+            loadProperties();
+            initDefaultProperties();
+        } catch (IOException e) {
+            throw new IOException(new File(".").getAbsolutePath(), e);
+        }
+    }
+
+    private void initDefaultProperties() {
+        //fDMF dir
+        File fdmfDir = getFileOrNull(PROP_DMF_DIR);
+        if (fdmfDir == null) {
+            fdmfDir = new File(DEFAULT_FDMF_DIR);
+            setFile(PROP_DMF_DIR, fdmfDir);
+        }
+        //log dir
+        File logDir = getFileOrNull(PROP_LOG_DIR);
+        if (logDir == null) {
+            logDir = new File(DEFAULT_LOG_DIR);
+            setFile(PROP_LOG_DIR, logDir);
+        }
     }
 
     private File selectConfigFile() {
@@ -64,7 +88,9 @@ public class ConfigurationManager {
     }
 
     private void loadProperties() throws IOException {
-        properties.load(new FileInputStream(configFile));
+        if (configFile.exists()) {
+            properties.load(new FileInputStream(configFile));
+        }
     }
 
     public File getFileOrNull(String propertyName) {

@@ -134,7 +134,7 @@ public class ImageUtilsCheckDialogController extends DialogController {
     private boolean closeWhenFinished;
 
     @Override
-    EventHandler<WindowEvent> getOnCloseEventHandler() {
+    public EventHandler<WindowEvent> getOnCloseEventHandler() {
         return event -> {
             switch (state) {
                 case RUNNING:
@@ -182,7 +182,7 @@ public class ImageUtilsCheckDialogController extends DialogController {
     }
 
     @Override
-    void startNow() {
+    public void startNow() {
         state = DialogState.RUNNING;
         checkJhove();
         checkJpylyzer();

@@ -47,7 +47,7 @@ public class ValidationDataInitializationDialogController extends DialogControll
     private DialogState state = DialogState.RUNNING;
 
     @Override
-    EventHandler<WindowEvent> getOnCloseEventHandler() {
+    public EventHandler<WindowEvent> getOnCloseEventHandler() {
         return event -> {
             switch (state) {
                 case RUNNING:
@@ -64,7 +64,7 @@ public class ValidationDataInitializationDialogController extends DialogControll
     }
 
     @Override
-    void startNow() {
+    public void startNow() {
         state = DialogState.RUNNING;
         //show progress
         progressIndicator.setVisible(true);
@@ -120,8 +120,8 @@ public class ValidationDataInitializationDialogController extends DialogControll
                     throw new ValidatorConfigurationException(String.format("Soubor %s není adresář!", dir.getAbsolutePath()));
                 } else if (!dir.canRead()) {
                     throw new ValidatorConfigurationException(String.format("Nelze číst adresář %s!", dir.getAbsolutePath()));
-                }else{
-                    System.out.println("dir ok: " + dir.getAbsolutePath());
+                } else {
+                    //System.out.println("dir ok: " + dir.getAbsolutePath());
                 }
             }
 

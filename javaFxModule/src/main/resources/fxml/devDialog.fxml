@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+<VBox fx:id="container" alignment="CENTER_LEFT"
+      minHeight="400"
+      minWidth="700" spacing="0"
+      xmlns="http://javafx.com/javafx/8.0.112" xmlns:fx="http://javafx.com/fxml/1"
+      stylesheets="/css/validationResultsSummary.css"
+      fx:controller="nkp.pspValidator.gui.dev.DevDialogController">
+
+    <padding>
+        <Insets bottom="10" left="10" right="10" top="20"/>
+    </padding>
+
+    <children>
+
+        <Text text="/tmp/neco/nekde"
+              fx:id="text"
+              wrappingWidth="400"
+        />
+
+    </children>
+</VBox>

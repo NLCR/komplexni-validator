@@ -110,7 +110,11 @@ public class MainController extends AbstractController implements ValidationStat
     }
 
     public void showOnlineHelp(ActionEvent actionEvent) {
-        openUrl(URL_ONLINE_HELP);
+        if (ConfigurationManager.DEV_MODE) {
+            main.showTestDialog();
+        } else {
+            openUrl(URL_ONLINE_HELP);
+        }
     }
 
     public void showAboutApp(ActionEvent actionEvent) {
@@ -291,9 +295,20 @@ public class MainController extends AbstractController implements ValidationStat
         return dateFormat.format(date) + pspDir.getName();
     }
 
+    private File getLogDir() {
+        File logDir = main.getConfigurationManager().getFileOrNull(ConfigurationManager.PROP_LOG_DIR);
+        if (logDir != null) {
+            if (!logDir.exists()) {
+                logDir.mkdirs();
+            }
+            return logDir;
+        } else {
+            return null;
+        }
+    }
 
     private File buildXmlLogFile(File pspDir) {
-        File logDir = main.getConfigurationManager().getFileOrNull(ConfigurationManager.PROP_LOG_DIR);
+        File logDir = getLogDir();
         if (logDir != null) {
             return new File(logDir, buildValidationLogName(pspDir) + ".xml");
         } else {
@@ -302,7 +317,7 @@ public class MainController extends AbstractController implements ValidationStat
     }
 
     private File buildTxtLogFile(File pspDir) {
-        File logDir = main.getConfigurationManager().getFileOrNull(ConfigurationManager.PROP_LOG_DIR);
+        File logDir = getLogDir();
         if (logDir != null) {
             return new File(logDir, buildValidationLogName(pspDir) + ".txt");
         } else {
@@ -428,7 +443,7 @@ public class MainController extends AbstractController implements ValidationStat
     }
 
     private void selectRule(RuleWithState rule) {
-        if (rule != null) {
+        if (rule != null && selectedSection != null) {
             selectedRule = rule;
             problemsContainer.setVisible(true);
             problemsSectionNameLbl.setText(selectedSection.getName() + ": ");

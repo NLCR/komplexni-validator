@@ -52,7 +52,7 @@ public class PspValidationConfigurationDialogController extends DialogController
     }
 
     @Override
-    EventHandler<WindowEvent> getOnCloseEventHandler() {
+    public EventHandler<WindowEvent> getOnCloseEventHandler() {
         return new EventHandler<WindowEvent>() {
             @Override
             public void handle(WindowEvent event) {
@@ -63,7 +63,7 @@ public class PspValidationConfigurationDialogController extends DialogController
 
 
     @Override
-    void startNow() {
+    public void startNow() {
         //init views from configuration
         ConfigurationManager mgr = getConfigurationManager();
         boolean monVersionForced = mgr.getBooleanOrDefault(ConfigurationManager.PROP_FORCE_MON_VERSION, false);

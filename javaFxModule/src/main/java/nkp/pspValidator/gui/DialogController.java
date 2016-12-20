@@ -28,8 +28,8 @@ public abstract class DialogController extends AbstractController {
         this.stage = stage;
     }
 
-    abstract void startNow();
+    public abstract void startNow();
 
-    abstract EventHandler<WindowEvent> getOnCloseEventHandler();
+    public abstract EventHandler<WindowEvent> getOnCloseEventHandler();
 
 }

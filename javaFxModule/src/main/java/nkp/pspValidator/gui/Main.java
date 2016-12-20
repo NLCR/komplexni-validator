@@ -7,6 +7,7 @@ import javafx.scene.Scene;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+import nkp.pspValidator.gui.dev.DevDialog;
 import nkp.pspValidator.shared.Platform;
 
 import java.io.File;
@@ -32,6 +33,7 @@ public class Main extends Application {
     @Override
     public void start(Stage stage) {
         try {
+            System.out.println("working dir: " + new File(".").getAbsolutePath());
             this.primaryStage = stage;
             this.dialogStage = initDialogStage();
             primaryStage.setTitle("PSP Validátor");
@@ -73,6 +75,11 @@ public class Main extends Application {
         dialog.show(summary);
     }
 
+    public void showTestDialog() {
+        DevDialog dialog = new DevDialog(dialogStage, this);
+        dialog.show();
+    }
+
     public void runPspValidation(File pspDir, String monVersion, String perVersion, boolean createTxtLog, boolean createXmlLog) {
         mainController.runPspValidation(pspDir, monVersion, perVersion, createTxtLog, createXmlLog);
     }
@@ -85,7 +92,7 @@ public class Main extends Application {
             Parent root = (Parent) loader.load();
             //primaryStage.setScene(new Scene(root, 1000, 700));
             int width = 1000;
-            int height = 700;
+            int height = 500;
             primaryStage.setScene(new Scene(root));
             primaryStage.show();
             primaryStage.setHeight(1000);

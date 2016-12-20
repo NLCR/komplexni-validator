@@ -46,7 +46,7 @@ public class ValidationResultsSummaryDialogController extends DialogController {
     }
 
     @Override
-    void startNow() {
+    public void startNow() {
         pspDirText.setText(summary.getPspDir().getAbsolutePath());
         dmfVersion.setText(summary.getDmf().toString());
 
@@ -70,7 +70,7 @@ public class ValidationResultsSummaryDialogController extends DialogController {
     }
 
     @Override
-    EventHandler<WindowEvent> getOnCloseEventHandler() {
+    public EventHandler<WindowEvent> getOnCloseEventHandler() {
         return null;
     }
 
