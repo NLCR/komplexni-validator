@@ -29,16 +29,16 @@ dependencies {
     //compile 'commons-cli:commons-cli:1.4-SNAPSHOT'
 }
 
-version = '0.2'
+version = '1.0'
 
 //https://www.mkyong.com/gradle/gradle-create-a-jar-file-with-dependencies/
 task fatJar(type: Jar) {
     manifest {
-        attributes 'Implementation-Title': 'PSP validator for CLI',
+        attributes 'Implementation-Title': 'PSP Validator CLI',
                 'Implementation-Version': version,
                 'Main-Class': 'npk.pspValidator.cli.Main'
     }
-    baseName = 'pspValidator'
+    baseName = 'PspValidator-CLI'
     from { configurations.compile.collect { it.isDirectory() ? it : zipTree(it) } }
     with jar
 }

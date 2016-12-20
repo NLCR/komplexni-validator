@@ -183,7 +183,7 @@ public class Main {
                 printHelp(options);
             } else if (line.hasOption("version")) {
                 //TODO
-                System.out.println("pspValidator-cli verze 0.2");
+                System.out.println(String.format("PSP Validator CLI verze %s, sestaveno: %s", Version.VERSION_CODE, Version.BUILD_DATE));
             } else {
                 if (!line.hasOption("fd")) {
                     System.err.println("Pro spuštění validace je nutné určit adresář obsahující formalizované DMF.");
