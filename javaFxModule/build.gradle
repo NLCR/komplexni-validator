@@ -94,6 +94,9 @@ jfx {
 //jfxRun -  Create the JavaFX-jar and runs it like you would do using java -jar my-project-jfx.jar, adjustable using runJavaParameter/runJavaParameter-parameter
 //jfxListBundlers - Shows available bundlers
 
+//TODO: Ubuntu icons
+//http://stackoverflow.com/questions/36311638/javafx-ubuntu-stage-dock-icon-wont-work/36316722#36316722
+
 
 
 

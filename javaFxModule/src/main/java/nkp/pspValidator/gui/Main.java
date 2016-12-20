@@ -4,6 +4,7 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
@@ -12,6 +13,7 @@ import nkp.pspValidator.shared.Platform;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.logging.Logger;
 
 public class Main extends Application {
@@ -33,15 +35,21 @@ public class Main extends Application {
     @Override
     public void start(Stage stage) {
         try {
-            System.out.println("working dir: " + new File(".").getAbsolutePath());
+            //System.out.println("working dir: " + new File(".").getAbsolutePath());
             this.primaryStage = stage;
             this.dialogStage = initDialogStage();
             primaryStage.setTitle("PSP Validátor");
+            //icon
+            Image icon = new Image("img/appIcon.png");
+            if (icon != null) {
+                stage.getIcons().add(icon);
+            }
             configurationManager = new ConfigurationManager(Platform.detectOs());
             mainController = openMainWindow();
             initValidationData();
         } catch (Throwable e) {
             e.printStackTrace();
+            javafx.application.Platform.exit();
             //TODO: a zobrazit dialog s tlacitkem OK a stack tracem, ktery apku zavre
         }
     }
