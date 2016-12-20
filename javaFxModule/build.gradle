@@ -67,7 +67,7 @@ jfx {
     // vytvori javaFxModule\build\jfx\native\PspValidator, jeste je potreba pridat fDMF a vyrobit instalator
 
     //bundler = 'windows.app'//bundler='ALL'
-    appName = 'PspValidator-GUI'
+    appName = 'PspValidatorGUI'
     nativeReleaseVersion = "1.0"
 
     //additionalAppResources = ['../sharedModule/src/main/resources/nkp/pspValidator/shared','src/main/resources/config']
