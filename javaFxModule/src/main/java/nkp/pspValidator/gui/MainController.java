@@ -118,7 +118,7 @@ public class MainController extends AbstractController implements ValidationStat
     }
 
     public void showAboutApp(ActionEvent actionEvent) {
-        //TODO: dialog
+        main.showAboutAppDialog();
     }
 
     public void openNewValidationDialog(ActionEvent actionEvent) {

@@ -82,6 +82,11 @@ public class Main extends Application {
         dialog.show();
     }
 
+    public void showAboutAppDialog() {
+        AboutAppDialog dialog = new AboutAppDialog(dialogStage, this);
+        dialog.show();
+    }
+
     public void showTestDialog() {
         DevDialog dialog = new DevDialog(dialogStage, this);
         dialog.show();

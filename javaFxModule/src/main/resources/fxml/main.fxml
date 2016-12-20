@@ -45,7 +45,7 @@
                     <items>
                         <MenuItem onAction="#showOnlineHelp" text="Online nápověda"/>
                         <SeparatorMenuItem/>
-                        <MenuItem onAction="#showAboutApp" text="O aplikaci" disable="true"/>
+                        <MenuItem onAction="#showAboutApp" text="O aplikaci"/>
                     </items>
                 </Menu>
             </menus>
