@@ -4,7 +4,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <VBox fx:id="container" alignment="CENTER"
-      minHeight="350"
+      minHeight="450"
       minWidth="650" spacing="20"
       xmlns="http://javafx.com/javafx/8.0.112" xmlns:fx="http://javafx.com/fxml/1"
       fx:controller="nkp.pspValidator.gui.PspValidationConfigurationDialogController">

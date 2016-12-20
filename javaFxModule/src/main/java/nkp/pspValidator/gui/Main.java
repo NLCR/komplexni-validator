@@ -13,7 +13,6 @@ import nkp.pspValidator.shared.Platform;
 
 import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
 import java.util.logging.Logger;
 
 public class Main extends Application {
@@ -79,8 +78,8 @@ public class Main extends Application {
     }
 
     public void showValidationResultsDialog(ValidationResultSummary summary) {
-        ValidationResultSummaryDialog dialog = new ValidationResultSummaryDialog(dialogStage, this);
-        dialog.show(summary);
+        ValidationResultSummaryDialog dialog = new ValidationResultSummaryDialog(dialogStage, this, summary);
+        dialog.show();
     }
 
     public void showTestDialog() {

@@ -10,7 +10,7 @@ import java.util.Properties;
  */
 public class ConfigurationManager {
 
-    public static boolean DEV_MODE = false;
+    public static boolean DEV_MODE = true;
 
     private static final String DEFAULT_LOG_DIR = "logs";
     private static final String DEFAULT_FDMF_DIR = "fDMF";

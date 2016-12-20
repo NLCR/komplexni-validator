@@ -10,14 +10,10 @@ import java.io.IOException;
 /**
  * Created by martin on 13.12.16.
  */
-public class PspValidationConfigurationDialog {
-
-    private final Stage stage;
-    private final Main main;
+public class PspValidationConfigurationDialog extends AbstractDialog {
 
     public PspValidationConfigurationDialog(Stage stage, Main main) {
-        this.stage = stage;
-        this.main = main;
+        super(stage, main);
     }
 
     public void show() {

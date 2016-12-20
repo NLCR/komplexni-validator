@@ -10,17 +10,16 @@ import java.io.IOException;
 /**
  * Created by martin on 13.12.16.
  */
-public class ValidationResultSummaryDialog {
+public class ValidationResultSummaryDialog extends AbstractDialog {
 
-    private final Stage stage;
-    private final Main main;
+    private final ValidationResultSummary summary;
 
-    public ValidationResultSummaryDialog(Stage stage, Main main) {
-        this.stage = stage;
-        this.main = main;
+    public ValidationResultSummaryDialog(Stage stage, Main main, ValidationResultSummary summary) {
+        super(stage, main);
+        this.summary = summary;
     }
 
-    public void show(ValidationResultSummary summary) {
+    public void show() {
         stage.setTitle("Sumarizace výsledků validace");
         int initialWidth = 700;
         int initialHeight = 500;

@@ -10,16 +10,13 @@ import java.io.IOException;
 /**
  * Created by martin on 13.12.16.
  */
-public class ImageUtilsCheckDialog {
+public class ImageUtilsCheckDialog extends AbstractDialog {
 
-    private final Stage stage;
-    private final Main main;
     private final boolean closeWhenFinished;
     private final String mainButtonText;
 
     public ImageUtilsCheckDialog(Stage stage, Main main, boolean closeWhenFinished, String mainButtonText) {
-        this.stage = stage;
-        this.main = main;
+        super(stage, main);
         this.closeWhenFinished = closeWhenFinished;
         this.mainButtonText = mainButtonText;
     }

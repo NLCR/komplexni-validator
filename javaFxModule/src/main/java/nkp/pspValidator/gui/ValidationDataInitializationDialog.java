@@ -10,14 +10,10 @@ import java.io.IOException;
 /**
  * Created by martin on 13.12.16.
  */
-public class ValidationDataInitializationDialog {
-
-    private final Stage stage;
-    private final Main main;
+public class ValidationDataInitializationDialog extends AbstractDialog {
 
     public ValidationDataInitializationDialog(Stage stage, Main main) {
-        this.stage = stage;
-        this.main = main;
+        super(stage, main);
     }
 
     public void show() {
