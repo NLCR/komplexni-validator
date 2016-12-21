@@ -39,12 +39,6 @@ public class Main extends Application {
             //System.out.println("working dir: " + new File(".").getAbsolutePath());
             this.primaryStage = stage;
             this.dialogStage = initDialogStage();
-            primaryStage.setTitle("PSP Validátor");
-            //icon
-            Image icon = new Image("img/appIcon.png");
-            if (icon != null) {
-                stage.getIcons().add(icon);
-            }
             configurationManager = new ConfigurationManager(Platform.detectOs());
             mainController = openMainWindow();
             initValidationData();
@@ -100,9 +94,18 @@ public class Main extends Application {
 
 
     public MainController openMainWindow() {
-        LOG.info("openMainWindow");
+        //LOG.info("mainWindow: " + primaryStage);
+        System.out.println("mainWindow: " + primaryStage);
         try {
+            //title
+            primaryStage.setTitle("PSP Validátor");
+            //icon
+            Image icon = new Image("img/appIcon.png");
+            if (icon != null) {
+                primaryStage.getIcons().add(icon);
+            }
             //window size and position
+            primaryStage.setResizable(true);
             Rectangle2D visualBounds = Screen.getPrimary().getVisualBounds();
             int minWidth = 1200;
             int minHeight = 600;
