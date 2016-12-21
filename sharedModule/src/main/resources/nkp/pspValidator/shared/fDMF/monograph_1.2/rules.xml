@@ -39,7 +39,7 @@
         <!--právě jeden každý top-level soubor-->
 
         <rule name="SINGLE_INFO_FILE_EXISTS">
-            <description>Musí existovat nanejvýše jeden soubor INFO.</description>
+            <description>Musí existovat nanejvýše jeden soubor INFO. Pokud neexistuje, je soubor špatně pojmenován, nebo opravdu chybí.</description>
             <validation functionName="checkFilelistHasExactSize">
                 <params>
                     <value name="files" type="FILE_LIST">
@@ -51,7 +51,7 @@
         </rule>
 
         <rule name="SINGLE_PRIMARY-METS_FILE_EXISTS">
-            <description>Musí existovat nanejvýše jeden soubor PRIMARY-METS.</description>
+            <description>Musí existovat nanejvýše jeden soubor PRIMARY-METS. Pokud neexistuje, je soubor špatně pojmenován, nebo opravdu chybí.</description>
             <validation functionName="checkFilelistHasExactSize">
                 <params>
                     <value name="files" type="FILE_LIST">
@@ -63,7 +63,7 @@
         </rule>
 
         <rule name="SINGLE_CHECKSUM_FILE_EXISTS">
-            <description>Musí existovat nanejvýše jeden soubor CHECKSUM.</description>
+            <description>Musí existovat nanejvýše jeden soubor CHECKSUM. Pokud neexistuje, je soubor špatně pojmenován, nebo opravdu chybí.</description>
             <validation functionName="checkFilelistHasExactSize">
                 <params>
                     <value name="files" type="FILE_LIST">
@@ -235,7 +235,7 @@
 
 
         <rule name="SINGLE_SECONDARY-METS-DIR_FILE_EXISTS">
-            <description>Musí existovat nanejvýše jeden soubor (adresář) SECONDARY-METS-DIR.</description>
+            <description>Musí existovat nanejvýše jeden soubor (adresář) SECONDARY-METS-DIR. Pokud neexistuje, je adresár špatně pojmenován, nebo opravdu chybí.</description>
             <validation functionName="checkFilelistHasExactSize">
                 <params>
                     <value name="files" type="FILE_LIST">
@@ -247,7 +247,7 @@
         </rule>
 
         <rule name="SINGLE_OCR-TEXT-DIR_FILE_EXISTS">
-            <description>Musí existovat nanejvýše jeden soubor (adresář) SINGLE_OCR-TEXT.</description>
+            <description>Musí existovat nanejvýše jeden soubor (adresář) SINGLE_OCR-TEXT. Pokud neexistuje, je adresár špatně pojmenován, nebo opravdu chybí.</description>
             <validation functionName="checkFilelistHasExactSize">
                 <params>
                     <value name="files" type="FILE_LIST">
@@ -259,7 +259,7 @@
         </rule>
 
         <rule name="SINGLE_OCR-ALTO-DIR_FILE_EXISTS">
-            <description>Musí existovat nanejvýše jeden soubor (adresář) OCR-ALTO-DIR.</description>
+            <description>Musí existovat nanejvýše jeden soubor (adresář) OCR-ALTO-DIR. Pokud neexistuje, je adresár špatně pojmenován, nebo opravdu chybí.</description>
             <validation functionName="checkFilelistHasExactSize">
                 <params>
                     <value name="files" type="FILE_LIST">
@@ -271,7 +271,7 @@
         </rule>
 
         <rule name="SINGLE_MASTER-COPY-DIR_FILE_EXISTS">
-            <description>Musí existovat nanejvýše jeden soubor (adresář) MASTER-COPY-DIR.</description>
+            <description>Musí existovat nanejvýše jeden soubor (adresář) MASTER-COPY-DIR. Pokud neexistuje, je adresár špatně pojmenován, nebo opravdu chybí.</description>
             <validation functionName="checkFilelistHasExactSize">
                 <params>
                     <value name="files" type="FILE_LIST">
@@ -283,7 +283,7 @@
         </rule>
 
         <rule name="SINGLE_USER-COPY-DIR_FILE_EXISTS">
-            <description>Musí existovat nanejvýše jeden soubor (adresář) USER-COPY-DIR.</description>
+            <description>Musí existovat nanejvýše jeden soubor (adresář) USER-COPY-DIR. Pokud neexistuje, je adresár špatně pojmenován, nebo opravdu chybí.</description>
             <validation functionName="checkFilelistHasExactSize">
                 <params>
                     <value name="files" type="FILE_LIST">
@@ -1857,7 +1857,7 @@
         </rule>
 
         <rule name="MODS_IDENTIFIERS_NO_DUPLICATES_ACROSS_DMDSECS">
-            <description>Identifikátory napříč MODS záznamech by měly být unikátní.
+            <description>Identifikátory napříč MODS záznamy by měly být unikátní.
                 Na různých úrovní popisu se tedy nesmí objevit dva totožné identifikátory (shodný typ i hodnota).
             </description>
 

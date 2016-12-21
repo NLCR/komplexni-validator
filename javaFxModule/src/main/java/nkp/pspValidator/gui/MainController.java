@@ -246,7 +246,7 @@ public class MainController extends AbstractController implements ValidationStat
                             return new Dmf(Dmf.Type.MONOGRAPH, version);
                         }
                     case PERIODICAL:
-                        if (focedMonographVersion != null) {
+                        if (forcedPeriodicalVersion != null) {
                             return new Dmf(Dmf.Type.PERIODICAL, forcedPeriodicalVersion);
                         } else {
                             String version = dmfDetector.detectDmfVersionFromInfoOrDefault(Dmf.Type.PERIODICAL, pspDir);

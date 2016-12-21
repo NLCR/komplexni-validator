@@ -136,10 +136,10 @@ public class PspValidationConfigurationDialogController extends DialogController
             } else if (!pspDir.canRead()) {
                 showError(String.format("Nelze číst obsah adresáře '%s'!", pspDirTxt));
             } else {
-                String monVersion = monVersionChoiceBox.isDisabled() ? null : (String) monVersionChoiceBox.getSelectionModel().getSelectedItem();
-                String perVersion = perVersionChoiceBox.isDisabled() ? null : (String) perVersionChoiceBox.getSelectionModel().getSelectedItem();
+                String forcedMonVersion = monVersionChoiceBox.isDisabled() ? null : (String) monVersionChoiceBox.getSelectionModel().getSelectedItem();
+                String forcedPerVersion = perVersionChoiceBox.isDisabled() ? null : (String) perVersionChoiceBox.getSelectionModel().getSelectedItem();
                 stage.hide();
-                main.runPspValidation(pspDir, monVersion, perVersion, createTxtLog.isSelected(), createXmlLog.isSelected());
+                main.runPspValidation(pspDir, forcedMonVersion, forcedPerVersion, createTxtLog.isSelected(), createXmlLog.isSelected());
             }
         }
     }

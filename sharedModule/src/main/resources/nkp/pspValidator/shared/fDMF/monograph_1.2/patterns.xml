@@ -14,9 +14,11 @@
     <!--TODO: pro vzory bez vstupních proměných, které jsou jen jednou použité je rovnou zapisovat do definic proměnných-->
 
     <pattern-def name="FILENAME">
-        <description>Vzor pro obecný soubor/adresář. Určuje povolené znaky v názvech souborů/adresářů.</description>
+        <description>Vzor pro obecný soubor/adresář. Určuje povolené znaky v názvech souborů/adresářů, tedy písmena,
+            číslice, tečky, pomlčky, a podtržítka.
+        </description>
         <!--per<=1.4, mon<=1.0-->
-        <!--<expression caseSensitive="false">[a-z_\-\.]+</expression>-->
+        <!--<expression caseSensitive="false">[a-z0-9_\-\.]+</expression>-->
 
         <!--per>=1.5, mon>=1.1-->
         <expression caseSensitive="true">[a-z0-9_\-\.]+</expression>

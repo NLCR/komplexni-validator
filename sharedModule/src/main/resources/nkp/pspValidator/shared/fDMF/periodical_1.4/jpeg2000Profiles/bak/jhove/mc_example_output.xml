@@ -1,0 +1,537 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- OBECNE POZNAMKY -->
+<!-- 1. Color space (2) jsem tu nenasel -->
+<!-- 2. Rozlišení vertik. jsem tu nenasel -->
+<!-- 3. Rozlišení horiz. jsem tu nenasel -->
+<!-- 4. Precints (regiony) nedefinovano -->
+<!-- 5. Velikost precints nedefinovano -->
+<!-- 6. Velikost precints nedefinovano -->
+<!-- 7. Sop  nedefinovano -->
+<!-- 8. Eph nedefinovano -->
+<!-- 9. Bypass nedefinovano -->
+<!-- 10. Kompresní poměr nedefinovano -->
+<!-- 11. Regions of interest nedefinováno -->
+
+<!-- SPEC: Tool name -->
+<!-- HODNOTY: neurčeno -->
+<!-- NOTE: atribute name  -->
+<!-- SPEC: Tool Version -->
+<!-- HODNOTY: neurčeno -->
+<!-- NOTE: atribute releas  -->
+<jhove xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns="http://hul.harvard.edu/ois/xml/ns/jhove"
+       xsi:schemaLocation="http://hul.harvard.edu/ois/xml/ns/jhove http://hul.harvard.edu/ois/xml/xsd/jhove/1.6/jhove.xsd"
+       name="Jhove"
+       release="1.6"
+       date="2011-01-04">
+    <date>2016-08-15T16:33:03+02:00</date>
+    <!-- SPEC: File name -->
+    <!-- HODNOTY: neurčeno -->
+    <!-- NOTE: v atributu uri  -->
+    <repInfo uri="mc_b50eb6b0-f0a4-11e3-b72e-005056827e52_0001.jp2">
+        <reportingModule release="1.3" date="2007-01-08">JPEG2000-hul</reportingModule>
+        <!-- SPEC: Last modified -->
+        <!-- HODNOTY: neurčeno -->
+        <lastModified>2014-09-11T17:15:56+02:00</lastModified>
+        <!-- SPEC: Size -->
+        <!-- HODNOTY: neurčeno -->
+        <size>5329138</size>
+        <!-- SPEC: Identifikace formátu -->
+        <!-- HODNOTY: JPEG 2000 -->
+        <format>JPEG 2000</format>
+        <!-- SPEC: Valid -->
+        <!-- HODNOTY: Well-Formed and valid -->
+        <status>Well-Formed and valid</status>
+        <sigMatch>
+            <module>JPEG2000-hul</module>
+        </sigMatch>
+        <mimeType>image/jp2</mimeType>
+        <profiles>
+            <profile>JP2</profile>
+        </profiles>
+        <properties>
+            <property>
+                <name>JPEG2000Metadata</name>
+                <values arity="List" type="Property">
+                    <property>
+                        <name>Brand</name>
+                        <values arity="Scalar" type="String">
+                            <value>jp2</value>
+                        </values>
+                    </property>
+                    <property>
+                        <name>MinorVersion</name>
+                        <values arity="Scalar" type="Long">
+                            <value>0</value>
+                        </values>
+                    </property>
+                    <property>
+                        <name>Compatibility</name>
+                        <values arity="List" type="String">
+                            <value>jp2</value>
+                        </values>
+                    </property>
+                    <property>
+                        <name>ColorspaceUnknown</name>
+                        <values arity="Scalar" type="Boolean">
+                            <value>true</value>
+                        </values>
+                    </property>
+                    <property>
+                        <name>ColorSpecs</name>
+                        <values arity="List" type="Property">
+                            <property>
+                                <name>ColorSpec</name>
+                                <values arity="List" type="Property">
+                                    <property>
+                                        <name>Method</name>
+                                        <values arity="Scalar" type="String">
+                                            <value>Enumerated Colorspace</value>
+                                        </values>
+                                    </property>
+                                    <property>
+                                        <name>Precedence</name>
+                                        <values arity="Scalar" type="Integer">
+                                            <value>0</value>
+                                        </values>
+                                    </property>
+                                    <property>
+                                        <name>Approx</name>
+                                        <values arity="Scalar" type="Integer">
+                                            <value>0</value>
+                                        </values>
+                                    </property>
+                                    <property>
+                                        <name>EnumCS</name>
+                                        <values arity="Scalar" type="String">
+                                            <!-- SPEC: Color space (1) -->
+                                            <!-- HODNOTY: sRGB nebo greyscale -->
+                                            <value>sRGB</value>
+                                        </values>
+                                    </property>
+                                </values>
+                            </property>
+                        </values>
+                    </property>
+                    <property>
+                        <name>Codestreams</name>
+                        <values arity="List" type="Property">
+                            <property>
+                                <name>Codestream</name>
+                                <values arity="List" type="Property">
+                                    <property>
+                                        <name>ImageAndTileSize</name>
+                                        <values arity="List" type="Property">
+                                            <property>
+                                                <name>Capabilities</name>
+                                                <values arity="Scalar" type="Integer">
+                                                    <value>0</value>
+                                                </values>
+                                            </property>
+                                            <property>
+                                                <name>XSize</name>
+                                                <values arity="Scalar" type="Integer">
+                                                    <!-- SPEC: Width -->
+                                                    <!-- HODNOTY: neurčeno -->
+                                                    <value>1658</value>
+                                                </values>
+                                            </property>
+                                            <property>
+                                                <name>YSize</name>
+                                                <values arity="Scalar" type="Integer">
+                                                    <!-- SPEC: Height -->
+                                                    <!-- HODNOTY: neurčeno -->
+                                                    <value>2754</value>
+                                                </values>
+                                            </property>
+                                            <property>
+                                                <name>XOSize</name>
+                                                <values arity="Scalar" type="Integer">
+                                                    <value>0</value>
+                                                </values>
+                                            </property>
+                                            <property>
+                                                <name>YOSize</name>
+                                                <values arity="Scalar" type="Integer">
+                                                    <value>0</value>
+                                                </values>
+                                            </property>
+                                            <property>
+                                                <name>XTSize</name>
+                                                <values arity="Scalar" type="Integer">
+                                                    <!-- SPEC: Velikost dlaždic -->
+                                                    <!-- HODNOTY: 4096 -->
+                                                    <value>4096</value>
+                                                </values>
+                                            </property>
+                                            <property>
+                                                <name>YTSize</name>
+                                                <values arity="Scalar" type="Integer">
+                                                    <!-- SPEC: Velikost dlaždic -->
+                                                    <!-- HODNOTY: 4096 -->
+                                                    <value>4096</value>
+                                                </values>
+                                            </property>
+                                            <property>
+                                                <name>XTOSize</name>
+                                                <values arity="Scalar" type="Integer">
+                                                    <value>0</value>
+                                                </values>
+                                            </property>
+                                            <property>
+                                                <name>YTOSize</name>
+                                                <values arity="Scalar" type="Integer">
+                                                    <value>0</value>
+                                                </values>
+                                            </property>
+                                            <property>
+                                                <name>CSize</name>
+                                                <values arity="Scalar" type="Integer">
+                                                    <!-- SPEC: Počet barevných komponent (verze 1) -->
+                                                    <!-- HODNOTY: 3 nebo 1 -->
+                                                    <value>3</value>
+                                                </values>
+                                            </property>
+                                            <property>
+                                                <name>SSize</name>
+                                                <values arity="Array" type="Integer">
+                                                    <value>7</value>
+                                                    <value>1</value>
+                                                    <value>1</value>
+                                                </values>
+                                            </property>
+                                            <property>
+                                                <name>XRSize</name>
+                                                <values arity="Array" type="Integer">
+                                                    <value>7</value>
+                                                    <value>1</value>
+                                                    <value>1</value>
+                                                </values>
+                                            </property>
+                                            <property>
+                                                <name>YRSize</name>
+                                                <values arity="Array" type="Integer">
+                                                    <value>7</value>
+                                                    <value>1</value>
+                                                    <value>1</value>
+                                                </values>
+                                            </property>
+                                        </values>
+                                    </property>
+                                    <property>
+                                        <name>CodingStyleDefault</name>
+                                        <values arity="List" type="Property">
+                                            <property>
+                                                <name>CodingStyle</name>
+                                                <values arity="Scalar" type="Integer">
+                                                    <value>7</value>
+                                                </values>
+                                            </property>
+                                            <property>
+                                                <name>ProgressionOrder</name>
+                                                <values arity="Scalar" type="Integer">
+                                                    <!-- SPEC: Order -->
+                                                    <!-- HODNOTY: 2 -->
+                                                    <value>2</value>
+                                                </values>
+                                            </property>
+                                            <property>
+                                                <name>NumberOfLayers</name>
+                                                <values arity="Scalar" type="Integer">
+                                                    <!-- SPEC: Layers -->
+                                                    <!-- HODNOTY: 1 -->
+                                                    <value>1</value>
+                                                </values>
+                                            </property>
+                                            <property>
+                                                <name>MultipleComponentTransformation</name>
+                                                <values arity="Scalar" type="Integer">
+                                                    <value>1</value>
+                                                </values>
+                                            </property>
+                                            <property>
+                                                <name>NumberDecompositionLevels</name>
+                                                <values arity="Scalar" type="Integer">
+                                                    <!-- SPEC: Levels -->
+                                                    <!-- HODNOTY: 5 nebo 6 -->
+                                                    <value>5</value>
+                                                </values>
+                                            </property>
+                                            <property>
+                                                <name>CodeBlockWidth</name>
+                                                <values arity="Scalar" type="Integer">
+                                                    <!-- SPEC: Code block width -->
+                                                    <!-- HODNOTY: 4 -->
+                                                    <value>4</value>
+                                                </values>
+                                            </property>
+                                            <property>
+                                                <name>CodeBlockHeight</name>
+                                                <values arity="Scalar" type="Integer">
+                                                    <!-- SPEC: Code block height -->
+                                                    <!-- HODNOTY: 64 -->
+                                                    <value>4</value>
+                                                </values>
+                                            </property>
+                                            <property>
+                                                <name>CodeBlockStyle</name>
+                                                <values arity="Scalar" type="Integer">
+                                                    <value>1</value>
+                                                </values>
+                                            </property>
+                                            <property>
+                                                <name>Transformation</name>
+                                                <values arity="Scalar" type="Integer">
+                                                    <!-- SPEC: Code block height -->
+                                                    <!-- HODNOTY: 5-3 -->
+                                                    <value>1</value>
+                                                </values>
+                                            </property>
+                                            <property>
+                                                <name>PrecinctSize</name>
+                                                <values arity="Array" type="Integer">
+                                                    <value>119</value>
+                                                    <value>119</value>
+                                                    <value>119</value>
+                                                    <value>119</value>
+                                                    <value>136</value>
+                                                    <value>136</value>
+                                                </values>
+                                            </property>
+                                        </values>
+                                    </property>
+                                    <property>
+                                        <name>QuantizationDefault</name>
+                                        <values arity="List" type="Property">
+                                            <property>
+                                                <name>QuantizationStyle</name>
+                                                <values arity="Scalar" type="Integer">
+                                                    <value>32</value>
+                                                </values>
+                                            </property>
+                                            <property>
+                                                <name>StepValue</name>
+                                                <values arity="Array" type="Integer">
+                                                    <value>80</value>
+                                                    <value>88</value>
+                                                    <value>88</value>
+                                                    <value>96</value>
+                                                    <value>88</value>
+                                                    <value>88</value>
+                                                    <value>96</value>
+                                                    <value>88</value>
+                                                    <value>88</value>
+                                                    <value>96</value>
+                                                    <value>88</value>
+                                                    <value>88</value>
+                                                    <value>88</value>
+                                                    <value>80</value>
+                                                    <value>80</value>
+                                                    <value>88</value>
+                                                </values>
+                                            </property>
+                                        </values>
+                                    </property>
+                                    <property>
+                                        <name>NisoImageMetadata</name>
+                                        <values arity="Scalar" type="NISOImageMetadata">
+                                            <value>
+                                                <mix:mix xmlns:mix="http://www.loc.gov/mix/v20"
+                                                         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                                                         xsi:schemaLocation="http://www.loc.gov/mix/v20 http://www.loc.gov/standards/mix/mix20/mix20.xsd">
+                                                    <mix:BasicDigitalObjectInformation>
+                                                        <mix:ObjectIdentifier>
+                                                            <mix:objectIdentifierType>JHOVE</mix:objectIdentifierType>
+                                                        </mix:ObjectIdentifier>
+                                                        <mix:byteOrder>big endian</mix:byteOrder>
+                                                        <mix:Compression>
+                                                            <mix:compressionScheme>Unknown</mix:compressionScheme>
+                                                        </mix:Compression>
+                                                    </mix:BasicDigitalObjectInformation>
+                                                    <mix:BasicImageInformation>
+                                                        <mix:BasicImageCharacteristics>
+                                                            <mix:imageWidth>1658</mix:imageWidth>
+                                                            <mix:imageHeight>2754</mix:imageHeight>
+                                                        </mix:BasicImageCharacteristics>
+                                                    </mix:BasicImageInformation>
+                                                    <mix:ImageAssessmentMetadata>
+                                                        <mix:SpatialMetrics>
+                                                            <mix:samplingFrequencyUnit>cm</mix:samplingFrequencyUnit>
+                                                            <mix:xSamplingFrequency>
+                                                                <mix:numerator>3000000</mix:numerator>
+                                                                <mix:denominator>25400</mix:denominator>
+                                                            </mix:xSamplingFrequency>
+                                                            <mix:ySamplingFrequency>
+                                                                <mix:numerator>3000000</mix:numerator>
+                                                                <mix:denominator>25400</mix:denominator>
+                                                            </mix:ySamplingFrequency>
+                                                        </mix:SpatialMetrics>
+                                                        <mix:ImageColorEncoding>
+                                                            <mix:BitsPerSample>
+                                                                <!-- SPEC: Barevná hloubka -->
+                                                                <!-- HODNOTY: 8 (očekává se rozšíření na 8 a 16) -->
+                                                                <!-- NOTE: Jsou tu dvě hodnoty, co s tím? -->
+                                                                <mix:bitsPerSampleValue>8</mix:bitsPerSampleValue>
+                                                                <mix:bitsPerSampleValue>8</mix:bitsPerSampleValue>
+                                                                <mix:bitsPerSampleUnit>integer</mix:bitsPerSampleUnit>
+                                                            </mix:BitsPerSample>
+                                                            <!-- SPEC: Počet barevných komponent (verze 2) -->
+                                                            <!-- HODNOTY: 3 nebo 1 -->
+                                                            <mix:samplesPerPixel>3</mix:samplesPerPixel>
+                                                        </mix:ImageColorEncoding>
+                                                    </mix:ImageAssessmentMetadata>
+                                                </mix:mix>
+                                            </value>
+                                        </values>
+                                    </property>
+                                    <property>
+                                        <!-- SPEC: Počet dlaždic -->
+                                        <!-- HODNOTY: není předepsán -->
+                                        <!-- NOTE: count(.//jhove:name[text()='TilePart']) -->
+                                        <name>Tiles</name>
+                                        <values arity="List" type="Property">
+                                            <property>
+                                                <name>Tile</name>
+                                                <values arity="List" type="Property">
+                                                    <property>
+                                                        <name>TilePart</name>
+                                                        <values arity="List" type="Property">
+                                                            <property>
+                                                                <name>Index</name>
+                                                                <values arity="Scalar" type="Integer">
+                                                                    <value>0</value>
+                                                                </values>
+                                                            </property>
+                                                            <property>
+                                                                <name>Length</name>
+                                                                <values arity="Scalar" type="Long">
+                                                                    <value>7526</value>
+                                                                </values>
+                                                            </property>
+                                                        </values>
+                                                    </property>
+                                                    <property>
+                                                        <name>TilePart</name>
+                                                        <values arity="List" type="Property">
+                                                            <property>
+                                                                <name>Index</name>
+                                                                <values arity="Scalar" type="Integer">
+                                                                    <value>1</value>
+                                                                </values>
+                                                            </property>
+                                                            <property>
+                                                                <name>Length</name>
+                                                                <values arity="Scalar" type="Long">
+                                                                    <value>18822</value>
+                                                                </values>
+                                                            </property>
+                                                        </values>
+                                                    </property>
+                                                    <property>
+                                                        <name>TilePart</name>
+                                                        <values arity="List" type="Property">
+                                                            <property>
+                                                                <name>Index</name>
+                                                                <values arity="Scalar" type="Integer">
+                                                                    <value>2</value>
+                                                                </values>
+                                                            </property>
+                                                            <property>
+                                                                <name>Length</name>
+                                                                <values arity="Scalar" type="Long">
+                                                                    <value>77502</value>
+                                                                </values>
+                                                            </property>
+                                                        </values>
+                                                    </property>
+                                                    <property>
+                                                        <name>TilePart</name>
+                                                        <values arity="List" type="Property">
+                                                            <property>
+                                                                <name>Index</name>
+                                                                <values arity="Scalar" type="Integer">
+                                                                    <value>3</value>
+                                                                </values>
+                                                            </property>
+                                                            <property>
+                                                                <name>Length</name>
+                                                                <values arity="Scalar" type="Long">
+                                                                    <value>320853</value>
+                                                                </values>
+                                                            </property>
+                                                        </values>
+                                                    </property>
+                                                    <property>
+                                                        <name>TilePart</name>
+                                                        <values arity="List" type="Property">
+                                                            <property>
+                                                                <name>Index</name>
+                                                                <values arity="Scalar" type="Integer">
+                                                                    <value>4</value>
+                                                                </values>
+                                                            </property>
+                                                            <property>
+                                                                <name>Length</name>
+                                                                <values arity="Scalar" type="Long">
+                                                                    <value>1225812</value>
+                                                                </values>
+                                                            </property>
+                                                        </values>
+                                                    </property>
+                                                    <property>
+                                                        <name>TilePart</name>
+                                                        <values arity="List" type="Property">
+                                                            <property>
+                                                                <name>Index</name>
+                                                                <values arity="Scalar" type="Integer">
+                                                                    <value>5</value>
+                                                                </values>
+                                                            </property>
+                                                            <property>
+                                                                <name>Length</name>
+                                                                <values arity="Scalar" type="Long">
+                                                                    <value>3678307</value>
+                                                                </values>
+                                                            </property>
+                                                        </values>
+                                                    </property>
+                                                </values>
+                                            </property>
+                                        </values>
+                                    </property>
+                                    <property>
+                                        <name>Comments</name>
+                                        <values arity="List" type="Property">
+                                            <property>
+                                                <name>Comment</name>
+                                                <values arity="Scalar" type="String">
+                                                    <!-- SPEC: Migrační sw -->
+                                                    <!-- HODNOTY: nedefinováno -->
+                                                    <value>Kakadu-v7.0</value>
+                                                </values>
+                                            </property>
+                                            <property>
+                                                <name>Comment</name>
+                                                <values arity="Scalar" type="String">
+                                                    <value>Kdu-Layer-Info: log_2{Delta-D(squared-error)/Delta-L(bytes)},
+                                                        L(bytes)
+                                                        -192.0, 5.3e+006
+                                                    </value>
+                                                </values>
+                                            </property>
+                                        </values>
+                                    </property>
+                                </values>
+                            </property>
+                        </values>
+                    </property>
+                </values>
+            </property>
+        </properties>
+        <checksums>
+            <checksum type="CRC32">e58fee38</checksum>
+            <checksum type="MD5">a0faf6bcf61919ea7037d6528befcc60</checksum>
+            <checksum type="SHA-1">1d0fa92ae203f6c30ea3b28f31659a051363e980</checksum>
+        </checksums>
+    </repInfo>
+</jhove>
