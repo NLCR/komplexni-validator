@@ -64,6 +64,7 @@ jfx {
     //https://github.com/FibreFoX/javafx-gradle-plugin/issues/27
     //bundler = 'exe,linux.app,deb,rpm,dmg'
     //bundler = 'exe'
+    //bundler = 'linux.app'
     // vytvori javaFxModule\build\jfx\native\PspValidator, jeste je potreba pridat fDMF a vyrobit instalator
 
     //bundler = 'windows.app'//bundler='ALL'

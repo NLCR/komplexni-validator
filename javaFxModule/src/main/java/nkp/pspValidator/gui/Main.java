@@ -94,16 +94,15 @@ public class Main extends Application {
 
 
     public MainController openMainWindow() {
-        //LOG.info("mainWindow: " + primaryStage);
-        System.out.println("mainWindow: " + primaryStage);
+        //System.out.println("mainWindow: " + primaryStage);
         try {
             //title
             primaryStage.setTitle("PSP Validátor");
             //icon
-            Image icon = new Image("img/appIcon.png");
-            if (icon != null) {
-                primaryStage.getIcons().add(icon);
-            }
+            addIconIfFound(primaryStage, "img/appIcon/appIcon16.png");
+            addIconIfFound(primaryStage, "img/appIcon/appIcon32.png");
+            addIconIfFound(primaryStage, "img/appIcon/appIcon48.png");
+
             //window size and position
             primaryStage.setResizable(true);
             Rectangle2D visualBounds = Screen.getPrimary().getVisualBounds();
@@ -134,6 +133,13 @@ public class Main extends Application {
             return controller;
         } catch (IOException e) {
             throw new RuntimeException(e);
+        }
+    }
+
+    private void addIconIfFound(Stage stage, String path) {
+        Image icon = new Image(path);
+        if (icon != null) {
+            stage.getIcons().add(icon);
         }
     }
 
