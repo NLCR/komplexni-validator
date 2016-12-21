@@ -34,6 +34,11 @@ public class AboutAppDialog extends AbstractDialog {
     }
 
     @Override
+    boolean isResizable() {
+        return false;
+    }
+
+    @Override
     void setControllerData(DialogController controller) {
         //TODO
     }

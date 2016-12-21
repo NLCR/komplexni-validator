@@ -34,6 +34,11 @@ public class PspValidationConfigurationDialog extends AbstractDialog {
     }
 
     @Override
+    boolean isResizable() {
+        return false;
+    }
+
+    @Override
     void setControllerData(DialogController controller) {
         //nothing
     }

@@ -2,10 +2,12 @@ package nkp.pspValidator.gui;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Rectangle2D;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Modality;
+import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import nkp.pspValidator.gui.dev.DevDialog;
@@ -77,7 +79,7 @@ public class Main extends Application {
         dialog.show();
     }
 
-    public void showValidationResultsDialog(ValidationResultSummary summary) {
+    public void showValidationResultSummaryDialog(ValidationResultSummary summary) {
         ValidationResultSummaryDialog dialog = new ValidationResultSummaryDialog(dialogStage, this, summary);
         dialog.show();
     }
@@ -100,17 +102,30 @@ public class Main extends Application {
     public MainController openMainWindow() {
         LOG.info("openMainWindow");
         try {
+            //window size and position
+            Rectangle2D visualBounds = Screen.getPrimary().getVisualBounds();
+            int minWidth = 1200;
+            int minHeight = 600;
+            int preferedWidth = (int) (visualBounds.getWidth() * 0.85);
+            int preferedHeight = (int) (visualBounds.getHeight() * 0.85);
+            int width = Math.max(minWidth, preferedWidth);
+            int height = Math.max(minHeight, preferedHeight);
+            //int height = minHeight;
+            //int width = minWidth;
+            //set size
+            primaryStage.setHeight(height);
+            primaryStage.setMinHeight(minHeight);
+            primaryStage.setWidth(width);
+            primaryStage.setMinWidth(minWidth);
+            //center in screen
+            primaryStage.setX((visualBounds.getMaxX() - width) / 2);
+            primaryStage.setY((visualBounds.getMaxY() - height) / 2);
+
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/main.fxml"));
             Parent root = (Parent) loader.load();
-            //primaryStage.setScene(new Scene(root, 1000, 700));
-            int width = 1000;
-            int height = 500;
             primaryStage.setScene(new Scene(root));
             primaryStage.show();
-            primaryStage.setHeight(1000);
-            primaryStage.setMinHeight(height);
-            primaryStage.setWidth(1500);
-            primaryStage.setMinWidth(width);
+
             MainController controller = loader.getController();
             controller.setMain(this);
             return controller;

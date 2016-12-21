@@ -37,6 +37,11 @@ public class ValidationResultSummaryDialog extends AbstractDialog {
     }
 
     @Override
+    boolean isResizable() {
+        return false;
+    }
+
+    @Override
     void setControllerData(DialogController controller) {
         ((ValidationResultsSummaryDialogController) controller).setData(summary);
     }

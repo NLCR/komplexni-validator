@@ -51,6 +51,8 @@ public class MainController extends AbstractController implements ValidationStat
     @FXML
     Menu menuShow;
     @FXML
+    MenuItem showValidationResultSummaryDialogItem;
+    @FXML
     MenuItem showLogTxtMenuItem;
     @FXML
     MenuItem showLogXmlMenuItem;
@@ -99,6 +101,7 @@ public class MainController extends AbstractController implements ValidationStat
     private Dmf dmf;
     private File logTxtFile;
     private File logXmlFile;
+    ValidationResultSummary validationResultSummary;
 
     @Override
     public void start(Stage primaryStage) throws Exception {
@@ -134,6 +137,7 @@ public class MainController extends AbstractController implements ValidationStat
         validationStateManager = null;
         pspDir = null;
         dmf = null;
+        validationResultSummary = null;
         //stav validace
         selectedSection = null;
         selectedRule = null;
@@ -334,17 +338,18 @@ public class MainController extends AbstractController implements ValidationStat
             menuValidate.setDisable(false);
             menuSettings.setDisable(false);
             menuShow.setDisable(false);
+            showValidationResultSummaryDialogItem.setDisable(false);
             showLogTxtMenuItem.setDisable(logTxtFile == null);
             showLogXmlMenuItem.setDisable(logXmlFile == null);
             //show dialog with summary
-            ValidationResultSummary summary = new ValidationResultSummary();
-            summary.setPspDir(pspDir);
-            summary.setDmf(dmf);
-            summary.setGlobalProblemsTotal(globalProblemsTotal);
-            summary.setGlobalProblemsByLevel(globalProblemsByLevel);
-            summary.setValid(valid);
-            summary.setTotalTime(duration);
-            main.showValidationResultsDialog(summary);
+            validationResultSummary = new ValidationResultSummary();
+            validationResultSummary.setPspDir(pspDir);
+            validationResultSummary.setDmf(dmf);
+            validationResultSummary.setGlobalProblemsTotal(globalProblemsTotal);
+            validationResultSummary.setGlobalProblemsByLevel(globalProblemsByLevel);
+            validationResultSummary.setValid(valid);
+            validationResultSummary.setTotalTime(duration);
+            main.showValidationResultSummaryDialog(validationResultSummary);
         });
     }
 
@@ -423,7 +428,7 @@ public class MainController extends AbstractController implements ValidationStat
 
                 @Override
                 public ListCell<ValidationProblem> call(ListView<ValidationProblem> list) {
-                    return new ListCell<ValidationProblem>() {
+                    ListCell<ValidationProblem> cell = new ListCell<ValidationProblem>() {
 
                         @Override
                         protected void updateItem(ValidationProblem problem, boolean empty) {
@@ -434,10 +439,16 @@ public class MainController extends AbstractController implements ValidationStat
                                 ProblemItem item = new ProblemItem();
                                 item.populate(problem);
                                 setGraphic(item.getContainer());
+                                item.bindTextWidthToListWidth(list);
                             }
                         }
                     };
+                    //http://stackoverflow.com/questions/29884894/how-to-make-listview-width-fit-width-of-its-cells#
+                    //cell.prefWidthProperty().bind(list.widthProperty());
+                    return cell;
                 }
+
+
             });
         });
     }
@@ -535,7 +546,7 @@ public class MainController extends AbstractController implements ValidationStat
     }
 
     public void openImageUtilsDialog(ActionEvent actionEvent) {
-        main.checkImageUtils(false, "Zavřít");
+        main.checkImageUtils(false, "OK");
     }
 
     public void showLogTxt(ActionEvent actionEvent) {
@@ -544,6 +555,12 @@ public class MainController extends AbstractController implements ValidationStat
 
     public void showLogXml(ActionEvent actionEvent) {
         openUrl("file:" + logXmlFile.getAbsolutePath());
+    }
+
+    public void showValidationResultSummaryDialog(ActionEvent actionEvent) {
+        if(validationResultSummary!= null){
+            main.showValidationResultSummaryDialog(validationResultSummary);
+        }
     }
 
     private enum TotalState {

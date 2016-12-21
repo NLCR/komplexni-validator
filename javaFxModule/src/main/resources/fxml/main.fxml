@@ -8,7 +8,7 @@
 <BorderPane
         fx:id="container"
         minHeight="300"
-        minWidth="1500" stylesheets="/css/main.css"
+        stylesheets="/css/main.css"
         xmlns="http://javafx.com/javafx/8.0.112"
         xmlns:fx="http://javafx.com/fxml/1"
         fx:controller="nkp.pspValidator.gui.MainController"
@@ -33,6 +33,9 @@
                 </Menu>
                 <Menu fx:id="menuShow" text="Zobrazit">
                     <items>
+                        <MenuItem fx:id="showValidationResultSummaryDialogItem"
+                                  text="Sumarizace výsledku proběhlé validace" disable="true"
+                                  onAction="#showValidationResultSummaryDialog"/>
                         <MenuItem fx:id="showLogTxtMenuItem" text="Textový log proběhlé validace" disable="true"
                                   onAction="#showLogTxt"/>
                         <MenuItem fx:id="showLogXmlMenuItem" text="XML log proběhlé validace" disable="true"
@@ -54,15 +57,18 @@
 
     <!--validation -->
     <center>
-        <SplitPane orientation="VERTICAL">
+        <SplitPane orientation="VERTICAL" dividerPositions="0.38">
             <items>
 
-                <SplitPane orientation="HORIZONTAL">
-
+                <SplitPane orientation="HORIZONTAL"
+                           dividerPositions="0.38"
+                           minHeight="150"
+                >
                     <items>
+
                         <!--seznam sekci-->
                         <VBox alignment="TOP_CENTER"
-                              minWidth="330"
+                              minWidth="500"
                               spacing="0">
                             <children>
                                 <VBox spacing="5">
@@ -73,15 +79,14 @@
                                         <Label text="Validační sekce:"/>
                                     </children>
                                 </VBox>
-                                <ListView fx:id="sectionList" minWidth="330"/>
+                                <ListView fx:id="sectionList" minWidth="300"/>
                             </children>
                         </VBox>
 
                         <!--seznam pravidel ve zvolene sekci-->
-
-                        <VBox alignment="TOP_CENTER" spacing="0"
-                              minWidth="500"
-                        >
+                        <VBox alignment="TOP_CENTER"
+                              spacing="0"
+                              minWidth="500">
                             <children>
                                 <VBox spacing="5">
                                     <padding>
@@ -93,7 +98,7 @@
                                         <Label text="Pravidla:"/>
                                     </children>
                                 </VBox>
-                                <ListView fx:id="ruleList" minWidth="600"/>
+                                <ListView fx:id="ruleList" minWidth="350"/>
                             </children>
                         </VBox>
 
@@ -104,7 +109,7 @@
 
 
                 <VBox alignment="TOP_CENTER" spacing="0"
-                      minHeight="450"
+                      minHeight="200"
                       fx:id="problemsContainer"
                       visible="false"
                 >

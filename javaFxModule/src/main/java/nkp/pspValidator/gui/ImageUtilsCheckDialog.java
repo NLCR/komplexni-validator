@@ -39,6 +39,12 @@ public class ImageUtilsCheckDialog extends AbstractDialog {
     }
 
     @Override
+    boolean isResizable() {
+        //TODO: just temporary, put all content into scroll view
+        return true;
+    }
+
+    @Override
     void setControllerData(DialogController controller) {
         ((ImageUtilsCheckDialogController) controller).setData(closeWhenFinished, mainButtonText);
     }

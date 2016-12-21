@@ -1,8 +1,10 @@
 package nkp.pspValidator.gui;
 
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Rectangle2D;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.stage.Screen;
 import javafx.stage.Stage;
 
 import java.net.URL;
@@ -28,16 +30,23 @@ public abstract class AbstractDialog {
 
     abstract String getTitle();
 
+    abstract boolean isResizable();
+
     abstract void setControllerData(DialogController controller);
 
     public void show() {
         try {
+            stage.setResizable(isResizable());
             stage.setTitle(getTitle());
-            //width, height
+            //set size
             stage.setWidth(getWidth());
             stage.setMinWidth(getWidth());
             stage.setHeight(getHeight());
             stage.setMinHeight(getHeight());
+            //center in screen
+            Rectangle2D visualBounds = Screen.getPrimary().getVisualBounds();
+            stage.setX((visualBounds.getMaxX() - getWidth()) / 2);
+            stage.setY((visualBounds.getMaxY() - getHeight()) / 2);
 
             FXMLLoader loader = new FXMLLoader(getFxmlResource());
             Parent root = (Parent) loader.load();

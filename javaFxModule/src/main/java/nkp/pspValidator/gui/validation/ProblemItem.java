@@ -9,10 +9,13 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
+import javafx.scene.control.ListView;
 import javafx.scene.control.Tooltip;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.Clipboard;
 import javafx.scene.input.ClipboardContent;
+import javafx.scene.layout.Pane;
+import javafx.scene.layout.StackPane;
 import javafx.scene.text.Text;
 import nkp.pspValidator.shared.engine.validationFunctions.ValidationProblem;
 
@@ -22,15 +25,23 @@ public class ProblemItem {
 
     @FXML
     private Node container;
+
     @FXML
-    //private TextArea message;
-    private Text message;
+    private StackPane iconPane;
+
     @FXML
     private ImageView imgInfo;
     @FXML
     private ImageView imgError;
     @FXML
     private ImageView imgWarning;
+
+    @FXML
+    private Text message;
+
+    @FXML
+    Pane buttonPane;
+
     @FXML
     private Button btnCopyToClipboard;
 
@@ -83,5 +94,19 @@ public class ProblemItem {
         ClipboardContent content = new ClipboardContent();
         content.putString(text);
         clipboard.setContent(content);
+    }
+
+    public Text getMessage() {
+        return message;
+    }
+
+    public void bindTextWidthToListWidth(ListView<ValidationProblem> list) {
+        //max. velikost sirka Text (z wrappingWidth) je sirka ListView - 250 px
+        // (priblizne soucet sirek oblasti s ikonou vlevo a s tlacitkem vpravo)
+        message.wrappingWidthProperty().bind(list.widthProperty().subtract(250));
+        //nefunguje
+        //message.wrappingWidthProperty().bind(list.widthProperty().subtract(iconPane.widthProperty()).subtract(buttonPane.widthProperty()));
+        //TODO: nemuze tady byt memory leak kvuli bindovani zahazovanych ProblemItem na ListView?
+        //mozna v nejakem destruktoru odbindovat
     }
 }
