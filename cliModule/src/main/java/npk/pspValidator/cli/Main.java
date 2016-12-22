@@ -282,13 +282,15 @@ public class Main {
         out.println(String.format("Zpracovávám PSP balík %s", pspRoot.getAbsolutePath()));
         Dmf dmfResolved = new DmfDetector().resolveDmf(dmfPrefered, pspRoot);
         out.println(String.format("Bude použita verze standardu %s", dmfResolved));
+
         FdmfConfiguration fdmfConfig = new FdmfRegistry(fdmfsRoot).getFdmfConfig(dmfResolved);
         File imageUtilsConfigFile = getImageUtilsConfigFile(fdmfsRoot);
         ImageUtilManager imageUtilManager = new ImageUtilManagerFactory(imageUtilsConfigFile).buildImageUtilManager(platform.getOperatingSystem());
         imageUtilManager.setPaths(imageUtilPaths);
         detectImageTools(out, imageUtilManager, imageUtilsDisabled);
+        fdmfConfig.initJ2kProfiles(imageUtilManager);
 
-        Validator validator = ValidatorFactory.buildValidator(fdmfConfig, pspRoot, imageUtilManager);
+        Validator validator = ValidatorFactory.buildValidator(fdmfConfig, pspRoot);
         out.println(String.format("Validátor inicializován, spouštím validace"));
         /*System.out.println("ěščřžýáíéĚŠČŘŽÝÁÍÉ");
         System.out.println(String.format("ěščřžýáíéĚŠČŘŽÝÁÍÉ"));

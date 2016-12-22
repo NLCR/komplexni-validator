@@ -125,6 +125,9 @@ public class FdmfConfiguration {
     }
 
     public ImageValidator getImageValidator() {
+        if (imageValidator == null) {
+            throw new IllegalStateException(ImageValidator.class.getSimpleName() + " not initialized yet");
+        }
         return imageValidator;
     }
 

@@ -2,7 +2,6 @@ package nkp.pspValidator.shared;
 
 import nkp.pspValidator.shared.engine.Engine;
 import nkp.pspValidator.shared.engine.exceptions.ValidatorConfigurationException;
-import nkp.pspValidator.shared.imageUtils.ImageUtilManager;
 
 import java.io.File;
 import java.util.Map;
@@ -12,7 +11,7 @@ import java.util.Map;
  */
 public class ValidatorFactory {
 
-    public static Validator buildValidator(FdmfConfiguration fdmfConfiguration, File pspRootDir, ImageUtilManager imageUtilManager) throws ValidatorConfigurationException {
+    public static Validator buildValidator(FdmfConfiguration fdmfConfiguration, File pspRootDir) throws ValidatorConfigurationException {
         Engine engine = new Engine(fdmfConfiguration.getImageValidator());
         //psp dir
         engine.setProvidedFile("PSP_DIR", pspRootDir);

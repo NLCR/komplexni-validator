@@ -72,7 +72,8 @@ public class VfCheckImageFilesValidByExternalUtil extends ValidationFunction {
             return validate(level, files, copy, util);
         } catch (ContractException e) {
             return invalidContractNotMet(e);
-        } catch (Throwable e) {
+        } catch (Exception e) {
+            e.printStackTrace();
             return invalidUnexpectedError(e);
         }
     }
@@ -88,7 +89,7 @@ public class VfCheckImageFilesValidByExternalUtil extends ValidationFunction {
                 return singlErrorResult(invalid(Level.ERROR, "nenalezen J2K profil pro kopii %s a nástroj %s", copy, util));
             }
             for (File file : files) {
-                //System.err.println("validating " + file.getAbsolutePath());
+                //System.out.println(String.format("validating (%s): %s", profile, file.getAbsolutePath()));
                 try {
                     List<String> problems = profile.validate(file);
                     for (String problem : problems) {
@@ -98,6 +99,7 @@ public class VfCheckImageFilesValidByExternalUtil extends ValidationFunction {
                     result.addError(invalid(Level.ERROR, "%s: (soubor %s)", e.getMessage(), file.getName()));
                     e.printStackTrace();
                 }
+                //break;
             }
             return result;
         }

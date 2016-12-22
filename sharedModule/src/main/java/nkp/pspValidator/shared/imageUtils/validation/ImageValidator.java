@@ -228,6 +228,4 @@ public class ImageValidator {
                 throw new IllegalStateException("unknow constraint");
         }
     }
-
-
 }

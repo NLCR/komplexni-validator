@@ -60,4 +60,12 @@ public abstract class J2kProfile {
     public enum Type {
         XML, TEXT;
     }
+
+    @Override
+    public String toString() {
+        return "J2kProfile{" +
+                "imageUtil=" + imageUtil +
+                ", validations=" + validations.size() +
+                '}';
+    }
 }

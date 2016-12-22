@@ -192,7 +192,8 @@ public class MainController extends AbstractController implements ValidationStat
                     //System.out.println(dmf);
 
                     FdmfConfiguration fdmfConfig = main.getValidationDataManager().getFdmfRegistry().getFdmfConfig(dmf);
-                    Validator validator = ValidatorFactory.buildValidator(fdmfConfig, pspDir, main.getValidationDataManager().getImageUtilManager());
+                    fdmfConfig.initJ2kProfiles(main.getValidationDataManager().getImageUtilManager());
+                    Validator validator = ValidatorFactory.buildValidator(fdmfConfig, pspDir);
                     //PrintStream out = textAreaPrintStream();//System.out;
                     out = buildTxtLogPrintstream();
                     //TODO: v produkci odstranit
@@ -558,7 +559,7 @@ public class MainController extends AbstractController implements ValidationStat
     }
 
     public void showValidationResultSummaryDialog(ActionEvent actionEvent) {
-        if(validationResultSummary!= null){
+        if (validationResultSummary != null) {
             main.showValidationResultSummaryDialog(validationResultSummary);
         }
     }
