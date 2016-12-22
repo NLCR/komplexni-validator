@@ -197,7 +197,7 @@ public class MainController extends AbstractController implements ValidationStat
                     out = buildTxtLogPrintstream();
                     //TODO: v produkci odstranit
                     Validator.DevParams devParams = null;
-                    if (ConfigurationManager.DEV_MODE) {
+                    if (ConfigurationManager.DEV_MODE && ConfigurationManager.DEV_MODE_ONLY_SELECTED_SECTIONS) {
                         devParams = new Validator.DevParams();
                         //devParams.getSectionsToRun().add("Bibliografická metadata");
                         devParams.getSectionsToRun().add("Identifikátory");
