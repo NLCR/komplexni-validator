@@ -78,7 +78,7 @@ public class VfCheckStringDerivedFromOneOfIdentifiers extends ValidationFunction
             }
         }
         return singlErrorResult(invalid(Level.WARNING,
-                "nenalezena shoda pro žádný z %d povolených identifikátorů (%s)",
+                "nenalezena shoda pro žádný z %d nalezených identifikátorů (%s)",
                 identifiers.size(), buildIdTypeList(identifiers)));
     }
 
@@ -88,7 +88,8 @@ public class VfCheckStringDerivedFromOneOfIdentifiers extends ValidationFunction
             if (i != 0) {
                 builder.append(", ");
             }
-            builder.append(identifiers.get(i).getType());
+            Identifier id = identifiers.get(i);
+            builder.append(id.getType() + ":" + id.getValue());
         }
         return builder.toString();
     }
