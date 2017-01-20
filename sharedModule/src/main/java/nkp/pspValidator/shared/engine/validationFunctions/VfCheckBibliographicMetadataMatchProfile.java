@@ -93,7 +93,7 @@ public class VfCheckBibliographicMetadataMatchProfile extends ValidationFunction
     private ValidationResult validate(File metsFile, File profileDefinition, MetadataFormat metadataFormat, EntityType entityType) {
         ValidationResult result = new ValidationResult();
         try {
-            Document doc = engine.getXmlDocument(metsFile);
+            Document doc = engine.getXmlDocument(metsFile, true);
             XPathExpression dmdSecXpath = buildDmdSecXpath(entityType, metadataFormat);
             NodeList fileElements = (NodeList) dmdSecXpath.evaluate(doc, XPathConstants.NODESET);
             for (int i = 0; i < fileElements.getLength(); i++) {

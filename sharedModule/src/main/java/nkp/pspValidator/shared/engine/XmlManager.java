@@ -23,14 +23,22 @@ import java.util.Map;
 public class XmlManager {
 
     //TODO: na realnem provozu (vsechna pravidla hotova) otestovat, jestli ma vubec cache vyznam
-    private final LRUCache<String, Document> docCache;
+    private final boolean docCacheEnabled;
+    private final LRUCache<String, Document> nsAwareDocCache;
+    private final LRUCache<String, Document> nsUnawareDocCache;
+
+
     private final NamespaceContextImpl namespaceContext = new NamespaceContextImpl();
 
     public XmlManager(boolean withDocumentCache) {
         if (withDocumentCache) {
-            docCache = new LRUCache<>(20);
+            docCacheEnabled = true;
+            nsAwareDocCache = new LRUCache<>(20);
+            nsUnawareDocCache = new LRUCache<>(5);
         } else {
-            docCache = null;
+            docCacheEnabled = false;
+            nsAwareDocCache = null;
+            nsUnawareDocCache = null;
         }
     }
 
@@ -52,24 +60,34 @@ public class XmlManager {
         }
     }
 
-    public Document getXmlDocument(File file) throws XmlFileParsingException {
-        if (docCache != null) {
+    public Document getXmlDocument(File file, boolean nsAware) throws XmlFileParsingException {
+        if (docCacheEnabled) {
             String key = file.getAbsolutePath();
-            if (docCache.containsKey(key)) {
-                return docCache.get(key);
+            if (nsAware) {
+                if (nsAwareDocCache.containsKey(key)) {
+                    return nsAwareDocCache.get(key);
+                } else {
+                    Document doc = loadDocument(file, nsAware);
+                    nsAwareDocCache.put(key, doc);
+                    return doc;
+                }
             } else {
-                Document doc = loadDocument(file);
-                docCache.put(key, doc);
-                return doc;
+                if (nsUnawareDocCache.containsKey(key)) {
+                    return nsUnawareDocCache.get(key);
+                } else {
+                    Document doc = loadDocument(file, nsAware);
+                    nsUnawareDocCache.put(key, doc);
+                    return doc;
+                }
             }
         } else {
-            return loadDocument(file);
+            return loadDocument(file, nsAware);
         }
     }
 
-    private Document loadDocument(File file) throws XmlFileParsingException {
+    private Document loadDocument(File file, boolean nsAware) throws XmlFileParsingException {
         try {
-            return XmlUtils.buildDocumentFromFile(file, true);
+            return XmlUtils.buildDocumentFromFile(file, nsAware);
         } catch (SAXException e) {
             throw new XmlFileParsingException(file, String.format("chyba parsování xml v souboru %s: %s", file.getAbsolutePath(), e.getMessage()));
         } catch (IOException e) {
@@ -78,7 +96,6 @@ public class XmlManager {
             throw new XmlFileParsingException(file, String.format("chyba konfigurace parseru při zpracování souboru %s: %s", file.getAbsolutePath(), e.getMessage()));
         }
     }
-
 
     public XPathExpression buildXpath(String xpathExpression) throws InvalidXPathExpressionException {
         try {

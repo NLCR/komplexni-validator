@@ -6,6 +6,7 @@ import nkp.pspValidator.shared.engine.ValueType;
 import nkp.pspValidator.shared.engine.exceptions.ContractException;
 import nkp.pspValidator.shared.engine.exceptions.InvalidXPathExpressionException;
 import nkp.pspValidator.shared.engine.exceptions.XmlFileParsingException;
+import nkp.pspValidator.shared.engine.params.ValueParam;
 import org.w3c.dom.Document;
 import org.w3c.dom.NodeList;
 
@@ -23,12 +24,14 @@ public class EfGetStringListByXpath extends EvaluationFunction {
 
     private static final String PARAM_XML_FILE = "xml_file";
     private static final String PARAM_XPATH = "xpath";
+    private static final String PARAM_NS_AWARE = "nsAware";
 
     public EfGetStringListByXpath(Engine engine) {
         super(engine, new Contract()
                 .withReturnType(ValueType.STRING_LIST)
                 .withValueParam(PARAM_XML_FILE, ValueType.FILE, 1, 1)
                 .withValueParam(PARAM_XPATH, ValueType.STRING, 1, 1)
+                .withValueParam(PARAM_NS_AWARE, ValueType.BOOLEAN, 0, 1)
         );
     }
 
@@ -60,7 +63,14 @@ public class EfGetStringListByXpath extends EvaluationFunction {
                 return errorResultParamNull(PARAM_XPATH, paramXpath);
             }
 
-            return evaluate(xmlFile, xpathStr);
+            boolean nsAware = true;
+            List<ValueParam> nsAwareparams = valueParams.getParams(PARAM_NS_AWARE);
+            if (nsAwareparams.size() == 1) {
+                ValueEvaluation paramNsAware = nsAwareparams.get(0).getEvaluation();
+                nsAware = (boolean) paramNsAware.getData();
+            }
+
+            return evaluate(xmlFile, xpathStr, nsAware);
 
         } catch (ContractException e) {
             return errorResultContractNotMet(e);
@@ -69,9 +79,9 @@ public class EfGetStringListByXpath extends EvaluationFunction {
         }
     }
 
-    private ValueEvaluation evaluate(File xmlFile, String xpathStr) {
+    private ValueEvaluation evaluate(File xmlFile, String xpathStr, boolean nsAware) {
         try {
-            Document doc = engine.getXmlDocument(xmlFile);
+            Document doc = engine.getXmlDocument(xmlFile, nsAware);
             XPathExpression xPathExpression = engine.buildXpath(xpathStr);
             NodeList nodes = (NodeList) xPathExpression.evaluate(doc, XPathConstants.NODESET);
             List<String> list = new ArrayList<>(nodes.getLength());

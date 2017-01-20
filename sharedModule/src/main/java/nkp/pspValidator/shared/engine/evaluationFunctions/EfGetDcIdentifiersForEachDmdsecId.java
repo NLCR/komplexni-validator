@@ -76,7 +76,7 @@ public class EfGetDcIdentifiersForEachDmdsecId extends EvaluationFunction {
         try {
             List<List<Identifier>> result = new ArrayList<>();
             for (String dmdSecId : dmdsecIds) {
-                Document doc = engine.getXmlDocument(xmlFile);
+                Document doc = engine.getXmlDocument(xmlFile, true);
                 XPathExpression xpathDmdSec = engine.buildXpath(String.format("/mets:mets/mets:dmdSec[@ID=\"%s\"]", dmdSecId));
                 NodeList dmdSecNodes = (NodeList) xpathDmdSec.evaluate(doc, XPathConstants.NODESET);
                 if (dmdSecNodes.getLength() != 1) {

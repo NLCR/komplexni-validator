@@ -344,8 +344,8 @@ public class Engine {
     }
 
 
-    public Document getXmlDocument(File file) throws XmlFileParsingException {
-        return xmlManager.getXmlDocument(file);
+    public Document getXmlDocument(File file, boolean nsAware) throws XmlFileParsingException {
+        return xmlManager.getXmlDocument(file, nsAware);
     }
 
     public XPathExpression buildXpath(String xpathExpression) throws InvalidXPathExpressionException {

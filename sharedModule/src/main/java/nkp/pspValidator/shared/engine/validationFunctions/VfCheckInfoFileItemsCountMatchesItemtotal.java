@@ -59,7 +59,7 @@ public class VfCheckInfoFileItemsCountMatchesItemtotal extends ValidationFunctio
     private ValidationResult validate(File infoFile) {
         ValidationResult result = new ValidationResult();
         try {
-            Document infoDoc = engine.getXmlDocument(infoFile);
+            Document infoDoc = engine.getXmlDocument(infoFile, false);
             XPathExpression itemTotalExp = engine.buildXpath("/info/itemlist/@itemtotal");
             Integer itemTotal = Integer.valueOf((String) itemTotalExp.evaluate(infoDoc, XPathConstants.STRING));
             XPathExpression itemsExp = engine.buildXpath("count(/info/itemlist/item)");

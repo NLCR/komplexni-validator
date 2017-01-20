@@ -66,7 +66,7 @@ public class VfCheckMetsFilesecChecksumsMatch extends ValidationFunction {
     private ValidationResult validate(File pspdir, File metsFile) {
         ValidationResult result = new ValidationResult();
         try {
-            Document doc = engine.getXmlDocument(metsFile);
+            Document doc = engine.getXmlDocument(metsFile, true);
             XPathExpression xpath = engine.buildXpath("//mets:fileSec/mets:fileGrp/mets:file");
             NodeList fileElements = (NodeList) xpath.evaluate(doc, XPathConstants.NODESET);
             for (int i = 0; i < fileElements.getLength(); i++) {

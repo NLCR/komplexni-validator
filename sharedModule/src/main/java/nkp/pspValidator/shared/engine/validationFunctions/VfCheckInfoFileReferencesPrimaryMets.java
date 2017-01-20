@@ -67,7 +67,7 @@ public class VfCheckInfoFileReferencesPrimaryMets extends ValidationFunction {
     private ValidationResult validate(File infoFile, File primaryMetsFile) {
         ValidationResult result = new ValidationResult();
         try {
-            Document infoDoc = engine.getXmlDocument(infoFile);
+            Document infoDoc = engine.getXmlDocument(infoFile, false);
             XPathExpression exp = engine.buildXpath("/info/mainmets");
             String primaryMetsFilenameFound = (String) exp.evaluate(infoDoc, XPathConstants.STRING);
             if (primaryMetsFilenameFound == null || primaryMetsFilenameFound.isEmpty()) {

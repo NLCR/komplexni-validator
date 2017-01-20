@@ -46,6 +46,7 @@
                     </evaluation>
                 </value>
                 <value name="xpath" type="STRING">/info/packageid</value>
+                <value name="nsAware" type="BOOLEAN">false</value>
             </params>
         </evaluation>
     </value-def>

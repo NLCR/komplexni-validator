@@ -64,7 +64,7 @@ public class EfGetIdentifiersFromInfoFile extends EvaluationFunction {
 
     private ValueEvaluation evaluate(File infoFile) {
         try {
-            Document infoDoc = engine.getXmlDocument(infoFile);
+            Document infoDoc = engine.getXmlDocument(infoFile, false);
             XPathExpression exp = engine.buildXpath("/info/titleid");
             NodeList nodes = (NodeList) exp.evaluate(infoDoc, XPathConstants.NODESET);
             List<Identifier> identifiers = new ArrayList<>(nodes.getLength());

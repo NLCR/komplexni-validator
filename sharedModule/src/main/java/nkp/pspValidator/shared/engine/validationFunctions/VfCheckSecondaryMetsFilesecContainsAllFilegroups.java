@@ -70,7 +70,7 @@ public class VfCheckSecondaryMetsFilesecContainsAllFilegroups extends Validation
 
     private void checkFileValid(File file, ValidationResult result) {
         try {
-            Document doc = engine.getXmlDocument(file);
+            Document doc = engine.getXmlDocument(file, true);
             checkFileGroupOk(doc, "MC_IMGGRP", "Images", result);
             checkFileGroupOk(doc, "UC_IMGGRP", "Images", result);
             checkFileGroupOk(doc, "ALTOGRP", "Layout", result);

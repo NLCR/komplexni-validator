@@ -175,6 +175,14 @@ public class ConfigProcessor {
                 return str;
             case INTEGER:
                 return Integer.valueOf(str);
+            case BOOLEAN:
+                if ("true".equals(str.toLowerCase())) {
+                    return Boolean.TRUE;
+                } else if ("false".equals(str.toLowerCase())) {
+                    return Boolean.FALSE;
+                } else {
+                    throw new IllegalArgumentException(str);
+                }
             case LEVEL:
                 return Level.valueOf(str);
             case IMAGE_COPY:

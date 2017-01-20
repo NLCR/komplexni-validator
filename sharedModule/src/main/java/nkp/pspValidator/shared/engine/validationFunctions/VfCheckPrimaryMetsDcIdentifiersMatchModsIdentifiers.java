@@ -64,7 +64,7 @@ public class VfCheckPrimaryMetsDcIdentifiersMatchModsIdentifiers extends Validat
     private ValidationResult validate(File file) {
         ValidationResult result = new ValidationResult();
         try {
-            Document doc = engine.getXmlDocument(file);
+            Document doc = engine.getXmlDocument(file, true);
             Map<String, Map<String, String>> modsIdentifiers = getModsIdentifiers(doc, result);
             Map<String, Map<String, String>> dcIdentifiers = getDcIdentifiers(doc, result);
             Set<String> sectionIds = new HashSet<>();

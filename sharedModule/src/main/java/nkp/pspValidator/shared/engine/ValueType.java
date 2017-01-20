@@ -5,9 +5,9 @@ package nkp.pspValidator.shared.engine;
  */
 public enum ValueType {
 
-    STRING, INTEGER, FILE, IDENTIFIER,//
+    STRING, INTEGER, FILE, IDENTIFIER, // simple types
     STRING_LIST, FILE_LIST, IDENTIFIER_LIST, //lists
     STRING_LIST_LIST, FILE_LIST_LIST, IDENTIFIER_LIST_LIST,  //lists of lists
-    LEVEL, IMAGE_COPY, IMAGE_UTIL, METADATA_FORMAT, ENTITY_TYPE; //enums
+    BOOLEAN, LEVEL, IMAGE_COPY, IMAGE_UTIL, METADATA_FORMAT, ENTITY_TYPE; //enums
 
 }

@@ -60,7 +60,7 @@ public class VfCheckPrimaryMetsFilesecContainsAllFilegroups extends ValidationFu
     private ValidationResult validate(File file) {
         ValidationResult result = new ValidationResult();
         try {
-            Document doc = engine.getXmlDocument(file);
+            Document doc = engine.getXmlDocument(file, true);
             checkFileGroupOk(doc, "MC_IMGGRP", "Images", result);
             checkFileGroupOk(doc, "UC_IMGGRP", "Images", result);
             checkFileGroupOk(doc, "ALTOGRP", "Layout", result);

@@ -94,7 +94,7 @@ public class VfCheckInfoFileItemlistReferencesAllFiles extends ValidationFunctio
     private ValidationResult validate(File infoFile, Set<File> expectedFiles) {
         ValidationResult result = new ValidationResult();
         try {
-            Document infoDoc = engine.getXmlDocument(infoFile);
+            Document infoDoc = engine.getXmlDocument(infoFile, false);
             XPathExpression exp = engine.buildXpath("/info/itemlist/item");
             NodeList nodes = (NodeList) exp.evaluate(infoDoc, XPathConstants.NODESET);
             File rootDir = infoFile.getParentFile();

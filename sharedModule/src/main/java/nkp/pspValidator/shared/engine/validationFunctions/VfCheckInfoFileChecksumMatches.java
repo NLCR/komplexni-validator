@@ -66,7 +66,7 @@ public class VfCheckInfoFileChecksumMatches extends ValidationFunction {
     private ValidationResult validate(File infoFile, File checksumFileExisting) {
         ValidationResult result = new ValidationResult();
         try {
-            Document infoDoc = engine.getXmlDocument(infoFile);
+            Document infoDoc = engine.getXmlDocument(infoFile, false);
             //check if path to file CHECKSUM is correct
             XPathExpression checksumFileExp = engine.buildXpath("/info/checksum");
             String checksumFilePath = ((String) checksumFileExp.evaluate(infoDoc, XPathConstants.STRING)).trim();

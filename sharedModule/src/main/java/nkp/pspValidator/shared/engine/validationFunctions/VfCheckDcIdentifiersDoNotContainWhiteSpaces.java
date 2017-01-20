@@ -61,7 +61,7 @@ public class VfCheckDcIdentifiersDoNotContainWhiteSpaces extends ValidationFunct
     private ValidationResult validate(File file) {
         ValidationResult result = new ValidationResult();
         try {
-            Document doc = engine.getXmlDocument(file);
+            Document doc = engine.getXmlDocument(file, true);
             XPathExpression xpath = engine.buildXpath("//dc:identifier");
             NodeList nodes = (NodeList) xpath.evaluate(doc, XPathConstants.NODESET);
             for (int i = 0; i < nodes.getLength(); i++) {
