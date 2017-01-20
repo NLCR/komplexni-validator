@@ -40,6 +40,7 @@
     <pattern-def name="CHECKSUM_FILENAME">
         <description>Vzor pro jméno souboru CHECKSUM.</description>
         <expression caseSensitive="false">md5_${PSP_ID}\.md5</expression>
+        <expression caseSensitive="false">${PSP_ID}\.md5</expression>
     </pattern-def>
 
     <pattern-def name="TOLERATED_TL_FILENAME">

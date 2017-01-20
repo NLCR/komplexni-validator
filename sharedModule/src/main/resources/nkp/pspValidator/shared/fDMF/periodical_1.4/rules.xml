@@ -39,7 +39,9 @@
         <!--právě jeden každý top-level soubor-->
 
         <rule name="SINGLE_INFO_FILE_EXISTS">
-            <description>Musí existovat nanejvýše jeden soubor INFO. Pokud neexistuje, je soubor špatně pojmenován, nebo opravdu chybí.</description>
+            <description>Musí existovat nanejvýše jeden soubor INFO. Pokud neexistuje, je soubor špatně pojmenován, nebo
+                opravdu chybí.
+            </description>
             <validation functionName="checkFilelistHasExactSize">
                 <params>
                     <value name="files" type="FILE_LIST">
@@ -51,7 +53,9 @@
         </rule>
 
         <rule name="SINGLE_PRIMARY-METS_FILE_EXISTS">
-            <description>Musí existovat nanejvýše jeden soubor PRIMARY-METS. Pokud neexistuje, je soubor špatně pojmenován, nebo opravdu chybí.</description>
+            <description>Musí existovat nanejvýše jeden soubor PRIMARY-METS. Pokud neexistuje, je soubor špatně
+                pojmenován, nebo opravdu chybí.
+            </description>
             <validation functionName="checkFilelistHasExactSize">
                 <params>
                     <value name="files" type="FILE_LIST">
@@ -63,7 +67,9 @@
         </rule>
 
         <rule name="SINGLE_CHECKSUM_FILE_EXISTS">
-            <description>Musí existovat nanejvýše jeden soubor CHECKSUM. Pokud neexistuje, je soubor špatně pojmenován, nebo opravdu chybí.</description>
+            <description>Musí existovat nanejvýše jeden soubor CHECKSUM. Pokud neexistuje, je soubor špatně pojmenován,
+                nebo opravdu chybí.
+            </description>
             <validation functionName="checkFilelistHasExactSize">
                 <params>
                     <value name="files" type="FILE_LIST">
@@ -119,6 +125,22 @@
             </validation>
         </rule>
 
+        <rule name="CHECKSUM_FILE_HAS_PREFIX_MD5">
+            <description>Název souboru CHECKSUM by měl začínat na md5_/MD5_.</description>
+            <validation functionName="checkFilenameMatchesPattern">
+                <params>
+                    <value name="level" type="LEVEL">WARNING</value>
+                    <value name="file" type="FILE">
+                        <value-ref name="CHECKSUM_FILE"/>
+                    </value>
+                    <pattern name="pattern">
+                        <expressions>
+                            <expression caseSensitive="false">md5_.*</expression>
+                        </expressions>
+                    </pattern>
+                </params>
+            </validation>
+        </rule>
 
         <!--top-level soubory nejsou adresáře-->
 
@@ -235,7 +257,9 @@
 
 
         <rule name="SINGLE_SECONDARY-METS-DIR_FILE_EXISTS">
-            <description>Musí existovat nanejvýše jeden soubor (adresář) SECONDARY-METS-DIR. Pokud neexistuje, je adresář špatně pojmenován, nebo opravdu chybí.</description>
+            <description>Musí existovat nanejvýše jeden soubor (adresář) SECONDARY-METS-DIR. Pokud neexistuje, je
+                adresář špatně pojmenován, nebo opravdu chybí.
+            </description>
             <validation functionName="checkFilelistHasExactSize">
                 <params>
                     <value name="files" type="FILE_LIST">
@@ -247,7 +271,9 @@
         </rule>
 
         <rule name="SINGLE_OCR-TEXT-DIR_FILE_EXISTS">
-            <description>Musí existovat nanejvýše jeden soubor (adresář) SINGLE_OCR-TEXT. Pokud neexistuje, je adresář špatně pojmenován, nebo opravdu chybí.</description>
+            <description>Musí existovat nanejvýše jeden soubor (adresář) SINGLE_OCR-TEXT. Pokud neexistuje, je adresář
+                špatně pojmenován, nebo opravdu chybí.
+            </description>
             <validation functionName="checkFilelistHasExactSize">
                 <params>
                     <value name="files" type="FILE_LIST">
@@ -259,7 +285,9 @@
         </rule>
 
         <rule name="SINGLE_OCR-ALTO-DIR_FILE_EXISTS">
-            <description>Musí existovat nanejvýše jeden soubor (adresář) OCR-ALTO-DIR. Pokud neexistuje, je adresář špatně pojmenován, nebo opravdu chybí.</description>
+            <description>Musí existovat nanejvýše jeden soubor (adresář) OCR-ALTO-DIR. Pokud neexistuje, je adresář
+                špatně pojmenován, nebo opravdu chybí.
+            </description>
             <validation functionName="checkFilelistHasExactSize">
                 <params>
                     <value name="files" type="FILE_LIST">
@@ -271,7 +299,9 @@
         </rule>
 
         <rule name="SINGLE_MASTER-COPY-DIR_FILE_EXISTS">
-            <description>Musí existovat nanejvýše jeden soubor (adresář) MASTER-COPY-DIR. Pokud neexistuje, je adresář špatně pojmenován, nebo opravdu chybí.</description>
+            <description>Musí existovat nanejvýše jeden soubor (adresář) MASTER-COPY-DIR. Pokud neexistuje, je adresář
+                špatně pojmenován, nebo opravdu chybí.
+            </description>
             <validation functionName="checkFilelistHasExactSize">
                 <params>
                     <value name="files" type="FILE_LIST">
@@ -283,7 +313,9 @@
         </rule>
 
         <rule name="SINGLE_USER-COPY-DIR_FILE_EXISTS">
-            <description>Musí existovat nanejvýše jeden soubor (adresář) USER-COPY-DIR. Pokud neexistuje, je adresář špatně pojmenován, nebo opravdu chybí.</description>
+            <description>Musí existovat nanejvýše jeden soubor (adresář) USER-COPY-DIR. Pokud neexistuje, je adresář
+                špatně pojmenován, nebo opravdu chybí.
+            </description>
             <validation functionName="checkFilelistHasExactSize">
                 <params>
                     <value name="files" type="FILE_LIST">
