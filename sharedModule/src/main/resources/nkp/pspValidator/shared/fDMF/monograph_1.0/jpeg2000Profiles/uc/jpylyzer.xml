@@ -440,17 +440,12 @@
             </xmlDataExtraction>
             <rules>
                 <mustExist/>
-                <!--v datech nalezeny hodnoty napr.: 19.99, 2.67
-                myslel jsem, ze je chyba v zadani a ma tam byt 1.7-3.2 (namisto 17-32)
-                ale i tak jsem nasel data, kde ty hodnoty nesedely
-                -->
-                <!--TODO: docasne vyrazeno-->
-                <!--<mustMatchAny>
+                <mustMatchAny>
                     <floatRange>
                         <min>17</min>
                         <max>32</max>
                     </floatRange>
-                </mustMatchAny>-->
+                </mustMatchAny>
             </rules>
         </validation>
 

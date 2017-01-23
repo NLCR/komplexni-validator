@@ -36,7 +36,7 @@
         </rule>
 
 
-        <!--právě jeden každý top-level soubor-->   
+        <!--právě jeden každý top-level soubor-->
 
         <rule name="SINGLE_INFO_FILE_EXISTS">
             <description>Musí existovat nanejvýše jeden soubor INFO. Pokud neexistuje, je soubor špatně pojmenován, nebo
