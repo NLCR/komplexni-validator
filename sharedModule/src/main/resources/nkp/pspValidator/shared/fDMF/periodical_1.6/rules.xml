@@ -919,8 +919,8 @@
     <rules-section name="Identifikátory" description="">
 
         <!--psp id-->
-
-        <rule name="PSP_ID_DERIVED_FROM_TITLE_ID">
+        <!--Na žádost NKP zrušeno-->
+        <!--<rule name="PSP_ID_DERIVED_FROM_TITLE_ID">
             <description>PSP-ID by měl být odvozen od některého z identifikátorů titulu, navíc pouze typu 'urnnbn' nebo
                 'uuid'.
             </description>
@@ -929,12 +929,12 @@
                     <value name="string" type="STRING">
                         <value-ref name="PSP_ID"/>
                     </value>
-                    <!--seznam identifikatoru-->
+                    &lt;!&ndash;seznam identifikatoru&ndash;&gt;
                     <value name="identifiers" type="IDENTIFIER_LIST">
-                        <!--jeste omezeni na konkretni typy identifikatoru titulu, ze kterych muze byt psp-id odvozen-->
+                        &lt;!&ndash;jeste omezeni na konkretni typy identifikatoru titulu, ze kterych muze byt psp-id odvozen&ndash;&gt;
                         <evaluation functionName="filterIdentifersByTypes">
                             <params>
-                                <!--seznam identifikatoru (bere se zde z identifikatoru nalezenych v souboru INFO (tj. jen identifikatory titulu)-->
+                                &lt;!&ndash;seznam identifikatoru (bere se zde z identifikatoru nalezenych v souboru INFO (tj. jen identifikatory titulu)&ndash;&gt;
                                 <value name="identifiers" type="IDENTIFIER_LIST">
                                     <value-ref name="INFO_IDENTIFIERS"/>
                                 </value>
@@ -949,7 +949,7 @@
                             </params>
                         </evaluation>
                     </value>
-                    <!--seznam prefixu, ktere se odstranuji z hodnot identifikatoru pred hledanim shody-->
+                    &lt;!&ndash;seznam prefixu, ktere se odstranuji z hodnot identifikatoru pred hledanim shody&ndash;&gt;
                     <value name="id_prefixes" type="STRING_LIST">
                         <evaluation functionName="buildListOfStrings">
                             <params>
@@ -962,7 +962,7 @@
                     <value name="min_match_length" type="INTEGER">6</value>>
                 </params>
             </validation>
-        </rule>
+        </rule>-->
 
         <!--info identifiers -->
 
