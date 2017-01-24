@@ -56,6 +56,7 @@ public class MainController extends AbstractController implements ValidationStat
     MenuItem showLogTxtMenuItem;
     @FXML
     MenuItem showLogXmlMenuItem;
+    
 
     //status bar
     @FXML
@@ -105,7 +106,6 @@ public class MainController extends AbstractController implements ValidationStat
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-
     }
 
     public void handleKeyInput(KeyEvent keyEvent) {

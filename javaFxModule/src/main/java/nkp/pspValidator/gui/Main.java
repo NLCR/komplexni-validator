@@ -12,6 +12,7 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import nkp.pspValidator.gui.dev.DevDialog;
 import nkp.pspValidator.shared.Platform;
+import nkp.pspValidator.shared.Version;
 
 import java.io.File;
 import java.io.IOException;
@@ -97,7 +98,7 @@ public class Main extends Application {
         //System.out.println("mainWindow: " + primaryStage);
         try {
             //title
-            primaryStage.setTitle("PSP Validátor");
+            primaryStage.setTitle("PSP Validátor " + Version.VERSION_CODE);
             //icon
             addIconIfFound(primaryStage, "img/appIcon/appIcon16.png");
             addIconIfFound(primaryStage, "img/appIcon/appIcon32.png");
