@@ -459,6 +459,8 @@
         <evaluation functionName="buildListOfStrings">
             <params>
                 <value name="string" type="STRING">isbn</value>
+                <!--POZOR: DMF explicitně issn na této úrovni neuvádí-->
+                <value name="string" type="STRING">issn</value>
             </params>
         </evaluation>
     </value-def>
@@ -467,7 +469,6 @@
         <description>seznam zakázaných typů identifikátorů pro úroveň VOLUME</description>
         <evaluation functionName="buildListOfStrings">
             <params>
-                <value name="string" type="STRING">issn</value>
                 <value name="string" type="STRING">ccnb</value>
             </params>
         </evaluation>
@@ -488,6 +489,10 @@
         <evaluation functionName="buildListOfStrings">
             <params>
                 <value name="string" type="STRING">urnnbn</value>
+                <value name="string" type="STRING">ccnb</value>
+                <value name="string" type="STRING">isbn</value>
+                <value name="string" type="STRING">ismn</value>
+                <value name="string" type="STRING">issn</value>
             </params>
         </evaluation>
     </value-def>
@@ -495,10 +500,7 @@
     <value-def name="ID_TYPES_SUPPLEMENT_PROHIBITED" type="STRING_LIST">
         <description>seznam zakázaných typů identifikátorů pro úroveň SUPPLEMENT</description>
         <evaluation functionName="buildListOfStrings">
-            <params>
-                <value name="string" type="STRING">issn</value>
-                <value name="string" type="STRING">ccnb</value>
-            </params>
+            <params/>
         </evaluation>
     </value-def>
 
