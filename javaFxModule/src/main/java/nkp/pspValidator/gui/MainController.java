@@ -56,7 +56,6 @@ public class MainController extends AbstractController implements ValidationStat
     MenuItem showLogTxtMenuItem;
     @FXML
     MenuItem showLogXmlMenuItem;
-    
 
     //status bar
     @FXML
@@ -211,9 +210,9 @@ public class MainController extends AbstractController implements ValidationStat
                     validator.run(logXmlFile, out, true, true, true, true, devParams, MainController.this);
                     //updateStatus(String.format("Validace balíku %s hotova.", pspDir.getAbsolutePath()));
                 } catch (Exception e) {
-                    //TODO: handle in UI
-                    e.printStackTrace();
                     updateStatusFromWorkerThread(String.format("Chyba: %s.", e.getMessage()), TotalState.ERROR);
+                    //TODO: handle in UI
+                    //e.printStackTrace();
                 } finally {
                     if (out != null) {
                         out.close();
@@ -289,6 +288,10 @@ public class MainController extends AbstractController implements ValidationStat
                 statusProgressIndicator.setVisible(false);
                 statusImgFinished.setVisible(false);
                 statusImgError.setVisible(true);
+                //init menus
+                menuValidate.setDisable(false);
+                menuSettings.setDisable(false);
+                menuShow.setDisable(false);
                 break;
         }
     }
