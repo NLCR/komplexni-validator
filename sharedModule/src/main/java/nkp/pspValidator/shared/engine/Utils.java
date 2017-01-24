@@ -185,6 +185,9 @@ public class Utils {
                 valueTokens.remove(0);
                 value = mergeStrings(valueTokens, ':');
             }
+            if (value != null) {
+                value = value.trim();
+            }
             if (type.isEmpty()) {
                 throw new InvalidIdException("typ identifikátoru je prázdný");
             }
