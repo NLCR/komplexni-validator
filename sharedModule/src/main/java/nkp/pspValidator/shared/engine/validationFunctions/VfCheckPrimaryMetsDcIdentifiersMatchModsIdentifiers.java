@@ -85,12 +85,12 @@ public class VfCheckPrimaryMetsDcIdentifiersMatchModsIdentifiers extends Validat
                         String modsValue = modsIdsPerSection.get(idType);
                         String dcValue = dcIdsPerSection.get(idType);
                         if (modsValue == null) {
-                            result.addError(invalid(Level.ERROR, "MODS neobsahuje identifikátor typu %s pro %s", idType, sectionId));
+                            result.addError(invalid(Level.WARNING, "MODS neobsahuje identifikátor typu %s pro %s", idType, sectionId));
                         } else if (dcValue == null) {
-                            result.addError(invalid(Level.ERROR, "MODS neobsahuje identifikátor typu %s pro %s", idType, sectionId));
+                            result.addError(invalid(Level.WARNING, "DC neobsahuje identifikátor typu %s pro %s", idType, sectionId));
                         } else {
                             if (!modsValue.equals(dcValue)) {
-                                result.addError(invalid(Level.ERROR, "hodnota identifikátoru typu %s se liší mezi MODS (%s) a DC (%s) pro %s", idType, modsValue, dcValue, sectionId));
+                                result.addError(invalid(Level.WARNING, "hodnota identifikátoru typu %s se liší mezi MODS (%s) a DC (%s) pro %s", idType, modsValue, dcValue, sectionId));
                             }
                         }
                     }
