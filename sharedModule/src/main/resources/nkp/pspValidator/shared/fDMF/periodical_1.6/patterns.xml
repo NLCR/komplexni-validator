@@ -1,12 +1,12 @@
 <fDMF>
 
     <description>
-        Zde jsou definovány vzory. K jejich vyhodnocení jsou použity reguární výrazi a případně proměnné.
+        Zde jsou definovány vzory. K jejich vyhodnocení jsou použity reguární výrazy a případně proměnné.
         Vzory je možné dynamicky doplňovat/upravovat.
         Nesmí ale nastat situace cyklu, tedy že by hodnota vzoru X závisela na vzoru/proměnné Y, který by závisel na
         vzoru X.
-        Vzor (pattern) má jeden nebo více výrazů (expression). Hodnota (typick proměnné) odpovídá vzoru, pokud odpovídá
-        alespoň jednomu výrazu. Výrazy vzoru jsou tedy vždy ve vztahu OR.
+        Vzor (pattern) má jeden nebo více výrazů (expression). Hodnota (typicky proměnné) odpovídá vzoru, pokud odpovídá
+        alespoň jednomu výrazu. Výrazy vzoru jsou tedy vždy ve vztahu NEBO (OR).
         Výraz může mít vstupní promměnné, v tom případě se např. pro proměnnou X nahradí všechny výskyty ${X} za hodnotu
         proměnné X před samotným vyhodnocením výrazu. Lze použít pouze proměnné typu String.
     </description>
