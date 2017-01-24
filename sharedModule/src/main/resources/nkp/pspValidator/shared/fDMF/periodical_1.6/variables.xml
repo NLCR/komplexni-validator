@@ -401,7 +401,6 @@
                 <value name="string" type="STRING">issn</value>
                 <value name="string" type="STRING">isbn</value>
                 <value name="string" type="STRING">ccnb</value>
-                <value name="string" type="STRING">urnnbn</value>
             </params>
         </evaluation>
     </value-def>
@@ -410,7 +409,7 @@
         <description>seznam zakázaných typů identifikátorů pro úroveň TITLE</description>
         <evaluation functionName="buildListOfStrings">
             <params>
-                <!--<value name="string" type="STRING"></value>-->
+                <value name="string" type="STRING">urnnbn</value>
             </params>
         </evaluation>
     </value-def>
