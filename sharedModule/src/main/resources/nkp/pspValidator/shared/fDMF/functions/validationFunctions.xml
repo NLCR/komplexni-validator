@@ -188,6 +188,8 @@
                    description="seznam identifikátorů, v jehož rámci se kontroluje přítomnost duplikátů"/>
             <value name="identifier_list_list" type="IDENTIFIER_LIST_LIST" min="0" maxOccurs="unbounded"
                    description="seznam seznamů identifikátorů; kontrola na přítomnost duplikátů se provádní v rámci jednotlivých seznamů"/>
+            <value name="ignored_type_list" type="STRING_LIST" min="0"
+                   description="seznam typů identifikátorů, které budou ignorovány"/>
         </params-def>
     </validationFunction>
 

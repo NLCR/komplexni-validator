@@ -1548,6 +1548,13 @@
                             </params>
                         </evaluation>
                     </value>
+                    <value name="ignored_type_list" type="STRING_LIST">
+                        <evaluation functionName="buildListOfStrings">
+                            <params>
+                                <value name="string" type="STRING">urnnbn</value>
+                            </params>
+                        </evaluation>
+                    </value>
                 </params>
             </validation>
         </rule>
@@ -2075,6 +2082,13 @@
                             </params>
                         </evaluation>
                     </value>
+                    <value name="ignored_type_list" type="STRING_LIST">
+                        <evaluation functionName="buildListOfStrings">
+                            <params>
+                                <value name="string" type="STRING">urnnbn</value>
+                            </params>
+                        </evaluation>
+                    </value>x
                 </params>
             </validation>
         </rule>

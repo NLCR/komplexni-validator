@@ -20,12 +20,13 @@ public class VfCheckIdentifiersNoDuplicates extends ValidationFunction {
 
     public static final String PARAM_IDENTIFIER_LIST = "identifier_list";
     public static final String PARAM_IDENTIFIER_LIST_LIST = "identifier_list_list";
-
+    public static final String PARAM_IGNORED_TYPE_LIST = "ignored_type_list";
 
     public VfCheckIdentifiersNoDuplicates(Engine engine) {
         super(engine, new Contract()
                 .withValueParam(PARAM_IDENTIFIER_LIST, ValueType.IDENTIFIER_LIST, 0, null)
                 .withValueParam(PARAM_IDENTIFIER_LIST_LIST, ValueType.IDENTIFIER_LIST_LIST, 0, null)
+                .withValueParam(PARAM_IGNORED_TYPE_LIST, ValueType.STRING_LIST, 0, 1)
         );
     }
 
@@ -63,7 +64,18 @@ public class VfCheckIdentifiersNoDuplicates extends ValidationFunction {
                 }
             }
 
-            return validate(idListList);
+            //ignored types
+            List<String> ignoredTypes = new ArrayList<>();
+            List<ValueParam> ignoredTypesParam = valueParams.getParams(PARAM_IGNORED_TYPE_LIST);
+            if (!ignoredTypesParam.isEmpty()) {
+                ValueEvaluation eval = ignoredTypesParam.get(0).getEvaluation();
+                ignoredTypes = (List<String>) eval.getData();
+                if (ignoredTypes == null) {
+                    return invalidValueParamNull(PARAM_IGNORED_TYPE_LIST, eval);
+                }
+            }
+
+            return validate(idListList, ignoredTypes);
         } catch (ContractException e) {
             return invalidContractNotMet(e);
         } catch (Throwable e) {
@@ -71,17 +83,19 @@ public class VfCheckIdentifiersNoDuplicates extends ValidationFunction {
         }
     }
 
-    private ValidationResult validate(List<List<Identifier>> idListList) {
+    private ValidationResult validate(List<List<Identifier>> idListList, List<String> ignoredTypes) {
         ValidationResult result = new ValidationResult();
         for (List<Identifier> idList : idListList) {
             //System.out.println(Utils.listToString(idList));
             Map<String, String> map = new HashMap<>();
             for (Identifier id : idList) {
-                String valueFound = map.get(id.getType());
-                if (valueFound == null) {
-                    map.put(id.getType(), id.getValue());
-                } else if (valueFound.equals(id.getValue())) {
-                    result.addError(invalid(Level.ERROR, "seznam obsahuje duplikovaný identifikátor '%s'", id.toString()));
+                if (!ignoredTypes.contains(id.getType())) {
+                    String valueFound = map.get(id.getType());
+                    if (valueFound == null) {
+                        map.put(id.getType(), id.getValue());
+                    } else if (valueFound.equals(id.getValue())) {
+                        result.addError(invalid(Level.WARNING, "seznam obsahuje duplikovaný identifikátor '%s'", id.toString()));
+                    }
                 }
             }
         }
