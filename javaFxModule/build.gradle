@@ -13,7 +13,7 @@ repositories {
 //https://github.com/FibreFoX/javafx-gradle-plugin
 
 group 'rzehan'
-version '1.0'
+version '1.1'
 
 //sourceCompatibility = 1.8
 
@@ -69,7 +69,7 @@ jfx {
 
     //bundler = 'windows.app'//bundler='ALL'
     appName = 'PspValidatorGUI'
-    nativeReleaseVersion = "1.0"
+    nativeReleaseVersion = "1.1"
 
     //additionalAppResources = ['../sharedModule/src/main/resources/nkp/pspValidator/shared','src/main/resources/config']
     additionalAppResources = '../sharedModule/src/main/resources/nkp/pspValidator/shared'
@@ -88,7 +88,7 @@ jfx {
 //Tohle pouzit s necim jako Inno Setup a vyrobit instalator vcetne fDMF
 
 //bundler = 'exe'
-//Vytvori instalator javaFxModule\build\jfx\native\PspValidator-1.0.exe
+//Vytvori instalator javaFxModule\build\jfx\native\PspValidator-version.exe
 
 //32b instalator Win bude problem: https://github.com/FibreFoX/javafx-gradle-plugin/issues/22
 
