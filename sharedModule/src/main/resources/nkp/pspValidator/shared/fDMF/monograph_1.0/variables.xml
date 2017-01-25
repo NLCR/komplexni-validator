@@ -396,6 +396,7 @@
     </value-def>
 
     <value-def name="ID_TYPES_VOLUME_OPTIONAL" type="STRING_LIST">
+        <!--Zatím se nepužívá, jen pro přehled. -->
         <description>seznam volitelných typů identifikátorů pro úroveň VOLUME</description>
         <evaluation functionName="buildListOfStrings">
             <params>
@@ -426,6 +427,7 @@
     </value-def>
 
     <value-def name="ID_TYPES_TITLE_OPTIONAL" type="STRING_LIST">
+        <!--Zatím se nepužívá, jen pro přehled. -->
         <description>seznam volitelných typů identifikátorů pro úroveň TITLE</description>
         <evaluation functionName="buildListOfStrings">
             <params>
@@ -457,6 +459,7 @@
     </value-def>
 
     <value-def name="ID_TYPES_SUPPLEMENT_OPTIONAL" type="STRING_LIST">
+        <!--Zatím se nepužívá, jen pro přehled. -->
         <description>seznam volitelných typů identifikátorů pro úroveň SUPPLEMENT</description>
         <evaluation functionName="buildListOfStrings">
             <params>
@@ -488,6 +491,7 @@
     </value-def>
 
     <value-def name="ID_TYPES_CHAPTER_OPTIONAL" type="STRING_LIST">
+        <!--Zatím se nepužívá, jen pro přehled. -->
         <description>seznam volitelných typů identifikátorů pro úroveň CHAPTER</description>
         <evaluation functionName="buildListOfStrings">
             <params>
@@ -519,6 +523,7 @@
     </value-def>
 
     <value-def name="ID_TYPES_PICTURE_OPTIONAL" type="STRING_LIST">
+        <!--Zatím se nepužívá, jen pro přehled. -->
         <description>seznam volitelných typů identifikátorů pro úroveň PICTURE</description>
         <evaluation functionName="buildListOfStrings">
             <params>

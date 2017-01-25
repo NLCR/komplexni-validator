@@ -158,9 +158,8 @@ public class Engine {
                 return new VfCheckIdentifiersNoDuplicates(this);
             case "checkIdentifiersAllTypesPresent":
                 return new VfCheckIdentifiersAllTypesPresent(this);
-            case "checkIdentifiersNoTypesPresent":
-                return new VfCheckIdentifiersNoTypesPresent(this);
-
+            case "checkIdentifiersNoneTypePresent":
+                return new VfCheckIdentifiersNoneTypePresent(this);
             case "checkDcIdentifiersDoNotContainWhiteSpaces":
                 return new VfCheckDcIdentifiersDoNotContainWhiteSpaces(this);
             case "checkStringDerivedFromOneOfIdentifiers":

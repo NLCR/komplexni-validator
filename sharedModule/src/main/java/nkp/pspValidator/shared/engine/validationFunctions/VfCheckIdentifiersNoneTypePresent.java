@@ -14,14 +14,14 @@ import java.util.List;
 /**
  * Created by martin on 27.10.16.
  */
-public class VfCheckIdentifiersNoTypesPresent extends ValidationFunction {
+public class VfCheckIdentifiersNoneTypePresent extends ValidationFunction {
 
     public static final String PARAM_IDENTIFIER_LIST = "identifier_list";
     public static final String PARAM_IDENTIFIER_LIST_LIST = "identifier_list_list";
     public static final String PARAM_ID_TYPES = "id_types";
     public static final String PARAM_ID_LEVEL_NAME = "level_name";
 
-    public VfCheckIdentifiersNoTypesPresent(Engine engine) {
+    public VfCheckIdentifiersNoneTypePresent(Engine engine) {
         super(engine, new Contract()
                 .withValueParam(PARAM_IDENTIFIER_LIST, ValueType.IDENTIFIER_LIST, 0, null)
                 .withValueParam(PARAM_IDENTIFIER_LIST_LIST, ValueType.IDENTIFIER_LIST_LIST, 0, null)
@@ -32,7 +32,7 @@ public class VfCheckIdentifiersNoTypesPresent extends ValidationFunction {
 
     @Override
     public String getName() {
-        return "checkIdentifiersNoTypesPresent";
+        return "checkIdentifiersNoneTypePresent";
     }
 
     @Override
@@ -92,7 +92,7 @@ public class VfCheckIdentifiersNoTypesPresent extends ValidationFunction {
         for (List<Identifier> idList : idListList) {
             for (Identifier idFound : idList) {
                 if (typesNotExpected.contains(idFound.getType())) {
-                    result.addError(invalid(Level.ERROR, "nalezen zakázaný identifikátor typu '%s' pro úroveň %s", idFound.getType(), levelName));
+                    result.addError(invalid(Level.WARNING, "nalezen zakázaný identifikátor typu '%s' pro úroveň %s", idFound.getType(), levelName));
                 }
             }
         }

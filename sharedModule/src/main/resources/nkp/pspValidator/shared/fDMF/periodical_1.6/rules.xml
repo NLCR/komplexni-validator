@@ -1034,7 +1034,7 @@
             <description>
                 Úroveň TITLE nesmí obsahovat žádné zakázané identifikátory v záznamu Dublin Core.
             </description>
-            <validation functionName="checkIdentifiersNoTypesPresent">
+            <validation functionName="checkIdentifiersNoneTypePresent">
                 <params>
                     <value name="identifier_list_list" type="IDENTIFIER_LIST_LIST">
                         <!--seznam obsahujici seznam identifikatoru DC pro kazdy zaznam dmdSec pro dc-->
@@ -1109,7 +1109,7 @@
             <description>
                 Úroveň VOLUME nesmí obsahovat žádné zakázané identifikátory v záznamu Dublin Core.
             </description>
-            <validation functionName="checkIdentifiersNoTypesPresent">
+            <validation functionName="checkIdentifiersNoneTypePresent">
                 <params>
                     <value name="identifier_list_list" type="IDENTIFIER_LIST_LIST">
                         <!--seznam obsahujici seznam identifikatoru DC pro kazdy zaznam dmdSec pro dc-->
@@ -1184,7 +1184,7 @@
             <description>
                 Úroveň ISSUE nesmí obsahovat žádné zakázané identifikátory v záznamu Dublin Core.
             </description>
-            <validation functionName="checkIdentifiersNoTypesPresent">
+            <validation functionName="checkIdentifiersNoneTypePresent">
                 <params>
                     <value name="identifier_list_list" type="IDENTIFIER_LIST_LIST">
                         <!--seznam obsahujici seznam identifikatoru DC pro kazdy zaznam dmdSec pro dc-->
@@ -1259,7 +1259,7 @@
             <description>
                 Úroveň SUPPLEMENT nesmí obsahovat žádné zakázané identifikátory v záznamu Dublin Core.
             </description>
-            <validation functionName="checkIdentifiersNoTypesPresent">
+            <validation functionName="checkIdentifiersNoneTypePresent">
                 <params>
                     <value name="identifier_list_list" type="IDENTIFIER_LIST_LIST">
                         <!--seznam obsahujici seznam identifikatoru DC pro kazdy zaznam dmdSec pro dc-->
@@ -1334,7 +1334,7 @@
             <description>
                 Úroveň ARTICLE nesmí obsahovat žádné zakázané identifikátory v záznamu Dublin Core.
             </description>
-            <validation functionName="checkIdentifiersNoTypesPresent">
+            <validation functionName="checkIdentifiersNoneTypePresent">
                 <params>
                     <value name="identifier_list_list" type="IDENTIFIER_LIST_LIST">
                         <!--seznam obsahujici seznam identifikatoru DC pro kazdy zaznam dmdSec pro dc-->
@@ -1409,7 +1409,7 @@
             <description>
                 Úroveň PICTURE nesmí obsahovat žádné zakázané identifikátory v záznamu Dublin Core.
             </description>
-            <validation functionName="checkIdentifiersNoTypesPresent">
+            <validation functionName="checkIdentifiersNoneTypePresent">
                 <params>
                     <value name="identifier_list_list" type="IDENTIFIER_LIST_LIST">
                         <!--seznam obsahujici seznam identifikatoru DC pro kazdy zaznam dmdSec pro dc-->
@@ -1561,7 +1561,7 @@
             <description>
                 Úroveň TITLE nesmí obsahovat žádné zakázané identifikátory v záznamu MODS.
             </description>
-            <validation functionName="checkIdentifiersNoTypesPresent">
+            <validation functionName="checkIdentifiersNoneTypePresent">
                 <params>
                     <value name="identifier_list_list" type="IDENTIFIER_LIST_LIST">
                         <!--seznam obsahujici seznam identifikatoru pro kazdy zaznam dmdSec pro MODS-->
@@ -1636,7 +1636,7 @@
             <description>
                 Úroveň VOLUME nesmí obsahovat žádné zakázané identifikátory v záznamu MODS.
             </description>
-            <validation functionName="checkIdentifiersNoTypesPresent">
+            <validation functionName="checkIdentifiersNoneTypePresent">
                 <params>
                     <value name="identifier_list_list" type="IDENTIFIER_LIST_LIST">
                         <!--seznam obsahujici seznam identifikatoru pro kazdy zaznam dmdSec pro MODS-->
@@ -1711,7 +1711,7 @@
             <description>
                 Úroveň ISSUE nesmí obsahovat žádné zakázané identifikátory v záznamu MODS.
             </description>
-            <validation functionName="checkIdentifiersNoTypesPresent">
+            <validation functionName="checkIdentifiersNoneTypePresent">
                 <params>
                     <value name="identifier_list_list" type="IDENTIFIER_LIST_LIST">
                         <!--seznam obsahujici seznam identifikatoru pro kazdy zaznam dmdSec pro MODS-->
@@ -1786,7 +1786,7 @@
             <description>
                 Úroveň SUPPLEMENT nesmí obsahovat žádné zakázané identifikátory v záznamu MODS.
             </description>
-            <validation functionName="checkIdentifiersNoTypesPresent">
+            <validation functionName="checkIdentifiersNoneTypePresent">
                 <params>
                     <value name="identifier_list_list" type="IDENTIFIER_LIST_LIST">
                         <!--seznam obsahujici seznam identifikatoru pro kazdy zaznam dmdSec pro MODS-->
@@ -1861,7 +1861,7 @@
             <description>
                 Úroveň ARTICLE nesmí obsahovat žádné zakázané identifikátory v záznamu MODS.
             </description>
-            <validation functionName="checkIdentifiersNoTypesPresent">
+            <validation functionName="checkIdentifiersNoneTypePresent">
                 <params>
                     <value name="identifier_list_list" type="IDENTIFIER_LIST_LIST">
                         <!--seznam obsahujici seznam identifikatoru pro kazdy zaznam dmdSec pro MODS-->
@@ -1936,7 +1936,7 @@
             <description>
                 Úroveň PICTURE nesmí obsahovat žádné zakázané identifikátory v záznamu MODS.
             </description>
-            <validation functionName="checkIdentifiersNoTypesPresent">
+            <validation functionName="checkIdentifiersNoneTypePresent">
                 <params>
                     <value name="identifier_list_list" type="IDENTIFIER_LIST_LIST">
                         <!--seznam obsahujici seznam identifikatoru pro kazdy zaznam dmdSec pro MODS-->

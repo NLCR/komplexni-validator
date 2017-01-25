@@ -202,7 +202,7 @@
         </params-def>
     </validationFunction>
 
-    <validationFunction name="checkIdentifiersNoTypesPresent">
+    <validationFunction name="checkIdentifiersNoneTypePresent">
         <description>Zkontroluje, že seznamy identifikátorů neobsahují žádný s typů identifikátorů.
         </description>
         <params-def>
