@@ -894,13 +894,16 @@
         </rule>
 
         <!--METS Profile requirement id infoxml13-->
-        <!--TODO: nahradit pozitim checkFileListsMatch a getFileListByXpath a nove funkce na spojeni souborů a seznamů souborů do jednoho seznamu podobně, jako u PRIMARY-METS_FILESEC_ALL_MASTER_COPY_FILES_REFERENCED-->
         <rule name="INFO_ITEMLIST_REFERENCES_ALL_FILES">
-            <description>Soubor INFO se musí odkazovat na všechny uvedené soubory přes elementy item a na žádné další.
+            <description>Soubor INFO by se měl odkazovat na všechny uvedené soubory přes elementy item a na žádné další.
             </description>
             <validation functionName="checkInfoFileItemlistReferencesAllFiles">
                 <params>
                     <value name="info_file" type="FILE">
+                        <value-ref name="INFO_FILE"/>
+                    </value>
+                    <value name="level" type="LEVEL">WARNING</value>
+                    <value name="file" type="FILE">
                         <value-ref name="INFO_FILE"/>
                     </value>
                     <value name="file" type="FILE">

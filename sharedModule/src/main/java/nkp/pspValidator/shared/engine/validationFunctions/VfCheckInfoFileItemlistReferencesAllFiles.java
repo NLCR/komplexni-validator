@@ -26,12 +26,14 @@ import java.util.Set;
 public class VfCheckInfoFileItemlistReferencesAllFiles extends ValidationFunction {
 
     public static final String PARAM_INFO_FILE = "info_file";
+    public static final String PARAM_LEVEL = "level";
     public static final String PARAM_FILE = "file";
     public static final String PARAM_FILES = "files";
 
     public VfCheckInfoFileItemlistReferencesAllFiles(Engine engine) {
         super(engine, new Contract()
                 .withValueParam(PARAM_INFO_FILE, ValueType.FILE, 1, 1)
+                .withValueParam(PARAM_LEVEL, ValueType.LEVEL, 1, 1)
                 .withValueParam(PARAM_FILE, ValueType.FILE, 0, null)
                 .withValueParam(PARAM_FILES, ValueType.FILE_LIST, 0, null)
         );
@@ -55,6 +57,12 @@ public class VfCheckInfoFileItemlistReferencesAllFiles extends ValidationFunctio
                 return singlErrorResult(invalidFileIsDir(infoFile));
             } else if (!infoFile.canRead()) {
                 return singlErrorResult(invalidCannotReadDir(infoFile));
+            }
+
+            ValueEvaluation paramLevel = valueParams.getParams(PARAM_LEVEL).get(0).getEvaluation();
+            Level level = (Level) paramLevel.getData();
+            if (level == null) {
+                return invalidValueParamNull(PARAM_LEVEL, paramLevel);
             }
 
             Set<File> expectedFiles = new HashSet<>();
@@ -83,7 +91,7 @@ public class VfCheckInfoFileItemlistReferencesAllFiles extends ValidationFunctio
                 }
             }
 
-            return validate(infoFile, expectedFiles);
+            return validate(infoFile, expectedFiles, level);
         } catch (ContractException e) {
             return invalidContractNotMet(e);
         } catch (Throwable e) {
@@ -91,7 +99,7 @@ public class VfCheckInfoFileItemlistReferencesAllFiles extends ValidationFunctio
         }
     }
 
-    private ValidationResult validate(File infoFile, Set<File> expectedFiles) {
+    private ValidationResult validate(File infoFile, Set<File> expectedFiles, Level level) {
         ValidationResult result = new ValidationResult();
         try {
             Document infoDoc = engine.getXmlDocument(infoFile, false);
@@ -115,12 +123,12 @@ public class VfCheckInfoFileItemlistReferencesAllFiles extends ValidationFunctio
             if (!foundFiles.equals(expectedFiles)) {//something is different
                 for (File foundFile : foundFiles) {
                     if (!expectedFiles.contains(foundFile)) {
-                        result.addError(invalid(Level.ERROR, "soubor INFO se odkazuje na neočekávaný soubor %s", foundFile.getAbsolutePath()));
+                        result.addError(invalid(level, "soubor INFO se odkazuje na neočekávaný soubor %s", foundFile.getAbsolutePath()));
                     }
                 }
                 for (File expectedFile : expectedFiles) {
                     if (!foundFiles.contains(expectedFile)) {
-                        result.addError(invalid(Level.ERROR, "soubor INFO se neodkazuje na očekávaný soubor %s", expectedFile.getAbsolutePath()));
+                        result.addError(invalid(level, "soubor INFO se neodkazuje na očekávaný soubor %s", expectedFile.getAbsolutePath()));
                     }
                 }
             }

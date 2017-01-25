@@ -152,6 +152,8 @@
         </description>
         <params-def>
             <value name="info_file" type="FILE"/>
+            <value name="level" type="LEVEL"
+                   description="Úroveň chybové hlášky, pokud se neodkazuje na specifikovaný soubor, nebo se odkazuje na nespecifikovaný soubor."/>
             <value name="file" type="FILE" min="0" max="unbound"/>
             <value name="files" type="FILE_LIST" min="0" max="unbound"/>
         </params-def>
