@@ -81,7 +81,7 @@ public class EfGetModsIdentifiersForEachDmdsecId extends EvaluationFunction {
                     return errorResult("dokument neobsahuje právě jeden element dmdSec s ID=" + dmdSecId);
                 }
                 Element dmdsecEl = (Element) dmdSecNodes.item(0);
-                XPathExpression xpathIdentifier = engine.buildXpath("mets:mdWrap/mets:xmlData/mods:mods/mods:identifier");
+                XPathExpression xpathIdentifier = engine.buildXpath("mets:mdWrap/mets:xmlData/mods:mods/mods:identifier[not(@invalid='yes')]");
                 NodeList idEls = (NodeList) xpathIdentifier.evaluate(dmdsecEl, XPathConstants.NODESET);
                 List<Identifier> idList = new ArrayList<>();
                 for (int i = 0; i < idEls.getLength(); i++) {

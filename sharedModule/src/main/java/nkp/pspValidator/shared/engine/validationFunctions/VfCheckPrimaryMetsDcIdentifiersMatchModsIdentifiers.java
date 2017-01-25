@@ -65,7 +65,7 @@ public class VfCheckPrimaryMetsDcIdentifiersMatchModsIdentifiers extends Validat
         ValidationResult result = new ValidationResult();
         try {
             Document doc = engine.getXmlDocument(file, true);
-            Map<String, Map<String, String>> modsIdentifiers = getModsIdentifiers(doc, result);
+            Map<String, Map<String, String>> modsIdentifiers = getModsIdentifiersValidOnly(doc, result);
             Map<String, Map<String, String>> dcIdentifiers = getDcIdentifiers(doc, result);
             Set<String> sectionIds = new HashSet<>();
             sectionIds.addAll(modsIdentifiers.keySet());
@@ -133,7 +133,7 @@ public class VfCheckPrimaryMetsDcIdentifiersMatchModsIdentifiers extends Validat
         return result;
     }
 
-    private Map<String, Map<String, String>> getModsIdentifiers(Document doc, ValidationResult validationResult) throws InvalidXPathExpressionException, XPathExpressionException {
+    private Map<String, Map<String, String>> getModsIdentifiersValidOnly(Document doc, ValidationResult validationResult) throws InvalidXPathExpressionException, XPathExpressionException {
         Map<String, Map<String, String>> result = new HashMap<>();
         XPathExpression dmdSecXpath = engine.buildXpath("/mets:mets/mets:dmdSec[starts-with(@ID, \"MODSMD\")]");
         NodeList dmdSecNodes = (NodeList) dmdSecXpath.evaluate(doc, XPathConstants.NODESET);
@@ -141,7 +141,7 @@ public class VfCheckPrimaryMetsDcIdentifiersMatchModsIdentifiers extends Validat
             Element dmdSecEl = (Element) dmdSecNodes.item(i);
             String id = dmdSecEl.getAttribute("ID").substring("MODSMD_".length());
             Map<String, String> ids = new HashMap<>();
-            XPathExpression idXpath = engine.buildXpath("mets:mdWrap/mets:xmlData/mods:mods/mods:identifier");
+            XPathExpression idXpath = engine.buildXpath("mets:mdWrap/mets:xmlData/mods:mods/mods:identifier[not(@invalid='yes')]");
             NodeList idEls = (NodeList) idXpath.evaluate(dmdSecEl, XPathConstants.NODESET);
             for (int j = 0; j < idEls.getLength(); j++) {
                 Element idEl = (Element) idEls.item(j);
