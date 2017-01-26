@@ -17,13 +17,15 @@ version '1.1'
 
 //sourceCompatibility = 1.8
 
-/*tasks.withType(JavaCompile) {
+tasks.withType(JavaCompile) {
     options.encoding = 'UTF-8'
 }
 
+/*
 tasks.withType(Compile) {
     options.encoding = 'UTF-8'
-}*/
+}
+*/
 
 buildscript {
     apply from: './version.gradle'
