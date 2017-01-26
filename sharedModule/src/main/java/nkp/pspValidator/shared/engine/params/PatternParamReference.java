@@ -4,7 +4,7 @@ import nkp.pspValidator.shared.engine.Engine;
 import nkp.pspValidator.shared.engine.PatternEvaluation;
 
 /**
- * Created by martin on 24.10.16.
+ * Created by Martin Řehánek on 24.10.16.
  */
 public class PatternParamReference extends PatternParam {
     protected final Engine engine;

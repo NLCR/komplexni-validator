@@ -9,7 +9,7 @@ import javafx.stage.WindowEvent;
 import nkp.pspValidator.shared.Version;
 
 /**
- * Created by martin on 20.12.16.
+ * Created by Martin Řehánek on 20.12.16.
  */
 public class AboutAppDialogController extends DialogController {
 

@@ -11,7 +11,7 @@ import java.io.IOException;
 import java.util.*;
 
 /**
- * Created by martin on 21.10.16.
+ * Created by Martin Řehánek on 21.10.16.
  */
 public class Utils {
 

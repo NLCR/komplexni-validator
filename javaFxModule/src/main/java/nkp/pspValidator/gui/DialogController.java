@@ -7,7 +7,7 @@ import javafx.stage.WindowEvent;
 import java.util.logging.Logger;
 
 /**
- * Created by martin on 9.12.16.
+ * Created by Martin Řehánek on 9.12.16.
  */
 public abstract class DialogController extends AbstractController {
 

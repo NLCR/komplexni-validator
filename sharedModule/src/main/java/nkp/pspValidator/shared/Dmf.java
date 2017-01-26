@@ -1,7 +1,7 @@
 package nkp.pspValidator.shared;
 
 /**
- * Created by martin on 2.11.16.
+ * Created by Martin Řehánek on 2.11.16.
  */
 public class Dmf {
 

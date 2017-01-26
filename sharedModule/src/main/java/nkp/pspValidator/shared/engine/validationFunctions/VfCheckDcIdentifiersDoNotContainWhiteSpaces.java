@@ -18,7 +18,7 @@ import javax.xml.xpath.XPathExpressionException;
 import java.io.File;
 
 /**
- * Created by martin on 1.11.16.
+ * Created by Martin Řehánek on 1.11.16.
  */
 public class VfCheckDcIdentifiersDoNotContainWhiteSpaces extends ValidationFunction {
 

@@ -15,7 +15,7 @@ import java.util.Map;
 import java.util.logging.Logger;
 
 /**
- * Created by martin on 9.12.16.
+ * Created by Martin Řehánek on 9.12.16.
  */
 public class ValidationResultsSummaryDialogController extends DialogController {
 

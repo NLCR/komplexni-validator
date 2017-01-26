@@ -22,7 +22,7 @@ import java.util.Map;
 
 
 /**
- * Created by martin on 2.12.16.
+ * Created by Martin Řehánek on 2.12.16.
  */
 public class ImageUtilsCheckDialogController extends DialogController {
 

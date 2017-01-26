@@ -3,7 +3,7 @@ package nkp.pspValidator.shared.imageUtils.validation.rules.constraints;
 import nkp.pspValidator.shared.imageUtils.validation.Constraint;
 
 /**
- * Created by martin on 17.11.16.
+ * Created by Martin Řehánek on 17.11.16.
  */
 public class ConstantConstraint implements Constraint {
     private final String constant;

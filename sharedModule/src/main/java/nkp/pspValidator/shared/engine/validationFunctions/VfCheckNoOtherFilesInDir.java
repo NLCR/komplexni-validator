@@ -16,7 +16,7 @@ import java.util.Set;
 
 
 /**
- * Created by martin on 27.10.16.
+ * Created by Martin Řehánek on 27.10.16.
  */
 public class VfCheckNoOtherFilesInDir extends ValidationFunction {
 

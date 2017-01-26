@@ -9,7 +9,7 @@ import nkp.pspValidator.shared.engine.validationFunctions.ValidationResult;
 import java.util.*;
 
 /**
- * Created by martin on 15.12.16.
+ * Created by Martin Řehánek on 15.12.16.
  */
 public class ValidationState {
 

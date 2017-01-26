@@ -5,7 +5,7 @@ import nkp.pspValidator.shared.engine.exceptions.ValidatorConfigurationException
 import java.io.File;
 
 /**
- * Created by martin on 9.12.16.
+ * Created by Martin Řehánek on 9.12.16.
  */
 public class FileUtils {
 

@@ -3,7 +3,7 @@ package nkp.pspValidator.shared.engine.exceptions;
 import nkp.pspValidator.shared.engine.ValueEvaluation;
 
 /**
- * Created by martin on 1.11.16.
+ * Created by Martin Řehánek on 1.11.16.
  */
 public class EmptyParamEvaluationException extends Exception {
 

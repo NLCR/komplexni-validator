@@ -7,7 +7,7 @@ import java.io.File;
 import java.util.Map;
 
 /**
- * Created by martin on 19.12.16.
+ * Created by Martin Řehánek on 19.12.16.
  */
 public class ValidationResultSummary {
 

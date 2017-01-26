@@ -28,6 +28,7 @@ public class Main {
 
     public static void main(String[] args) throws PspDataException, XmlFileParsingException, InvalidXPathExpressionException, FdmfRegistry.UnknownFdmfException, ValidatorConfigurationException, FdmfRegistry.UnknownFdmfException {
         main(null, args);
+        //testXsds();
     }
 
     public static void main(Validator.DevParams devParams, String[] args) throws PspDataException, XmlFileParsingException, InvalidXPathExpressionException, FdmfRegistry.UnknownFdmfException, ValidatorConfigurationException, FdmfRegistry.UnknownFdmfException {
@@ -378,7 +379,7 @@ public class Main {
         File infoXsd = new File("../sharedModule/src/main/resources/nkp/pspValidator/shared/fDMF/monograph_1.2/xsd/info_1.1.xsd");
         XsdValidator.validate("INFO", infoXsd, infoXml);
 
-       /* //mix - ok
+        //mix - ok
         File mixXsd = new File("../sharedModule/src/main/resources/nkp/pspValidator/shared/fDMF/monograph_1.2/xsd/mix_2.0.xsd");
         File mixXml = new File("../sharedModule/src/main/resources/nkp/pspValidator/shared/fDMF/monograph_1.2/xsd/examples/mix.xml");
         XsdValidator.validate("MIX", mixXsd, mixXml);
@@ -393,15 +394,15 @@ public class Main {
         File dcXml = new File("../sharedModule/src/main/resources/nkp/pspValidator/shared/fDMF/monograph_1.2/xsd/examples/dc.xml");
         XsdValidator.validate("DC", dcXsd, dcXml);
 
-        //mods - TODO: problem s importem xml.xsd
+     /*   //mods - TODO: problem s importem xml.xsd
         File modsXsd = new File("../sharedModule/src/main/resources/nkp/pspValidator/shared/fDMF/monograph_1.2/xsd/mods_3.5.xsd");
         File modsXml = new File("../sharedModule/src/main/resources/nkp/pspValidator/shared/fDMF/monograph_1.2/xsd/examples/mods.xml");
-        XsdValidator.validate("MODS", modsXsd, modsXml);
+        XsdValidator.validate("MODS", modsXsd, modsXml);*/
 
         //mets - ok
         File metsXsd = new File("../sharedModule/src/main/resources/nkp/pspValidator/shared/fDMF/monograph_1.2/xsd/mets_1.9.1.xsd");
         File metsXml = new File("../sharedModule/src/main/resources/nkp/pspValidator/shared/fDMF/monograph_1.2/xsd/examples/mets.xml");
-        XsdValidator.validate("METS", metsXsd, metsXml);*/
+        XsdValidator.validate("METS", metsXsd, metsXml);
     }
 
 }

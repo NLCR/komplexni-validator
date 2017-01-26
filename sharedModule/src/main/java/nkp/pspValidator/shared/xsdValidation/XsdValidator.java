@@ -11,7 +11,7 @@ import java.io.File;
 import java.io.IOException;
 
 /**
- * Created by martin on 18.10.16.
+ * Created by Martin Řehánek on 18.10.16.
  */
 public class XsdValidator {
 

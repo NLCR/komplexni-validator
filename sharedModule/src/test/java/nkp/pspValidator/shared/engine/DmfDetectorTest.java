@@ -13,7 +13,7 @@ import static junit.framework.TestCase.fail;
 import static org.junit.Assert.assertEquals;
 
 /**
- * Created by martin on 2.11.16.
+ * Created by Martin Řehánek on 2.11.16.
  */
 public class DmfDetectorTest {
 

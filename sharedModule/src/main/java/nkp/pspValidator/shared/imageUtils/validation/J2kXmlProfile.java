@@ -12,7 +12,7 @@ import javax.xml.parsers.ParserConfigurationException;
 import java.io.IOException;
 
 /**
- * Created by martin on 18.11.16.
+ * Created by Martin Řehánek on 18.11.16.
  */
 public class J2kXmlProfile extends J2kProfile {
 

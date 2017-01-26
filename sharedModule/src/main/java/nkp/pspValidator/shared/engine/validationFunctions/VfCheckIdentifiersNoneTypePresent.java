@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by martin on 27.10.16.
+ * Created by Martin Řehánek on 27.10.16.
  */
 public class VfCheckIdentifiersNoneTypePresent extends ValidationFunction {
 

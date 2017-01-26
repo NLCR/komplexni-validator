@@ -9,7 +9,7 @@ import java.io.StringReader;
 import static org.junit.Assert.*;
 
 /**
- * Created by martinrehanek on 07.12.16.
+ * Created by Martin Řehánekrehanek on 07.12.16.
  */
 public class MacTest {
 

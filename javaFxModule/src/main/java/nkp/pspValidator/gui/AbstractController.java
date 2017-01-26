@@ -8,7 +8,7 @@ import javafx.application.Platform;
 import java.util.logging.Logger;
 
 /**
- * Created by martin on 13.12.16.
+ * Created by Martin Řehánek on 13.12.16.
  */
 public abstract class AbstractController extends Application {
 

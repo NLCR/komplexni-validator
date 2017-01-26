@@ -1,7 +1,7 @@
 package nkp.pspValidator.shared.imageUtils;
 
 /**
- * Created by martin on 17.11.16.
+ * Created by Martin Řehánek on 17.11.16.
  */
 public enum ExtractionResultType {
     STRING, FLOAT, INTEGER, //

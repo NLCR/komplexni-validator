@@ -6,7 +6,7 @@ import java.util.Iterator;
 import java.util.Map;
 
 /**
- * Created by martin on 17.11.16.
+ * Created by Martin Řehánek on 17.11.16.
  */
 public class NamespaceContextImpl implements NamespaceContext {
     private final Map<String, String> namespaceByPrefix = new HashMap<>();

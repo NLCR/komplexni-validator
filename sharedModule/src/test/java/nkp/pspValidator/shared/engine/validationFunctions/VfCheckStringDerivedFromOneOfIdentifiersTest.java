@@ -12,7 +12,7 @@ import static junit.framework.TestCase.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 /**
- * Created by martin on 4.11.16.
+ * Created by Martin Řehánek on 4.11.16.
  */
 public class VfCheckStringDerivedFromOneOfIdentifiersTest {
 

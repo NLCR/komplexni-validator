@@ -16,7 +16,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Created by martin on 20.10.16.
+ * Created by Martin Řehánek on 20.10.16.
  */
 public class Engine {
 

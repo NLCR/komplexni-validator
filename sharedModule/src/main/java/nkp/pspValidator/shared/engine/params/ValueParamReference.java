@@ -5,7 +5,7 @@ import nkp.pspValidator.shared.engine.ValueEvaluation;
 import nkp.pspValidator.shared.engine.ValueType;
 
 /**
- * Created by martin on 24.10.16.
+ * Created by Martin Řehánek on 24.10.16.
  */
 public class ValueParamReference extends ValueParam {
     protected final Engine engine;

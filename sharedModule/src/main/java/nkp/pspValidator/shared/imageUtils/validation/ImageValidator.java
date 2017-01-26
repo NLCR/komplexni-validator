@@ -27,7 +27,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Created by martin on 16.11.16.
+ * Created by Martin Řehánek on 16.11.16.
  */
 public class ImageValidator {
 

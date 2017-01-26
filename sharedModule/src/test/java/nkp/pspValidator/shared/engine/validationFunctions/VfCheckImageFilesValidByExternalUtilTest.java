@@ -18,7 +18,7 @@ import static junit.framework.TestCase.*;
 
 
 /**
- * Created by martin on 21.11.16.
+ * Created by Martin Řehánek on 21.11.16.
  */
 public class VfCheckImageFilesValidByExternalUtilTest {
 

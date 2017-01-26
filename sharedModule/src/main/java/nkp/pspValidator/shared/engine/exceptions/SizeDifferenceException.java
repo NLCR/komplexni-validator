@@ -1,7 +1,7 @@
 package nkp.pspValidator.shared.engine.exceptions;
 
 /**
- * Created by martin on 11.11.16.
+ * Created by Martin Řehánek on 11.11.16.
  */
 public class SizeDifferenceException extends Exception {
     public SizeDifferenceException(String message) {

@@ -8,7 +8,7 @@ import java.util.Collections;
 import java.util.List;
 
 /**
- * Created by martin on 17.11.16.
+ * Created by Martin Řehánek on 17.11.16.
  */
 public abstract class AbstractDataRule implements DataRule {
     private final String validationName;

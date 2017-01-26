@@ -1,7 +1,7 @@
 package nkp.pspValidator.shared.engine;
 
 /**
- * Created by martin on 21.10.16.
+ * Created by Martin Řehánek on 21.10.16.
  */
 public enum ValueType {
 

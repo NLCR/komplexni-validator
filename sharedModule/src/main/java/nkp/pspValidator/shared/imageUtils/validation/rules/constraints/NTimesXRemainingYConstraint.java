@@ -5,7 +5,7 @@ import nkp.pspValidator.shared.imageUtils.validation.Constraint;
 import java.util.List;
 
 /**
- * Created by martin on 17.11.16.
+ * Created by Martin Řehánek on 17.11.16.
  */
 public class NTimesXRemainingYConstraint implements Constraint {
     private final Integer n;

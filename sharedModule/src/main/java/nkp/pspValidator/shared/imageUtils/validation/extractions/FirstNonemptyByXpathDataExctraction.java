@@ -8,7 +8,7 @@ import javax.xml.xpath.XPathExpressionException;
 import java.util.List;
 
 /**
- * Created by martin on 17.11.16.
+ * Created by Martin Řehánek on 17.11.16.
  */
 public class FirstNonemptyByXpathDataExctraction extends XmlDataExtraction {
     private final List<String> paths;

@@ -13,7 +13,7 @@ import java.util.List;
 import static org.junit.Assert.*;
 
 /**
- * Created by martin on 21.10.16.
+ * Created by Martin Řehánek on 21.10.16.
  */
 public class EfGetFirstFileFromFileListTest {
 

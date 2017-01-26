@@ -10,7 +10,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
- * Created by martin on 14.11.16.
+ * Created by Martin Řehánek on 14.11.16.
  */
 public class ImageUtilManager {
 

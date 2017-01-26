@@ -5,7 +5,7 @@ import org.junit.Test;
 import static org.junit.Assert.assertEquals;
 
 /**
- * Created by martin on 31.10.16.
+ * Created by Martin Řehánek on 31.10.16.
  */
 public class AbnfFuzzerTest {
 

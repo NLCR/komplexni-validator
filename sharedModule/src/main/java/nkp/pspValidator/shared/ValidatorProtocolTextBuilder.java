@@ -7,7 +7,7 @@ import java.io.PrintStream;
 import java.util.Map;
 
 /**
- * Created by martin on 15.12.16.
+ * Created by Martin Řehánek on 15.12.16.
  */
 public class ValidatorProtocolTextBuilder {
     private final PrintStream out;

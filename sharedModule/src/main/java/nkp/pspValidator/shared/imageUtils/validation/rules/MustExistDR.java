@@ -3,7 +3,7 @@ package nkp.pspValidator.shared.imageUtils.validation.rules;
 import java.util.List;
 
 /**
- * Created by martin on 17.11.16.
+ * Created by Martin Řehánek on 17.11.16.
  */
 public class MustExistDR extends AbstractDataRule {
 

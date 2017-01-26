@@ -1,7 +1,7 @@
 package nkp.pspValidator.shared.engine.types;
 
 /**
- * Created by martin on 3.11.16.
+ * Created by Martin Řehánek on 3.11.16.
  */
 public class Identifier {
     private final String type;

@@ -17,7 +17,7 @@ import static nkp.pspValidator.shared.Dmf.Type.MONOGRAPH;
 import static nkp.pspValidator.shared.Dmf.Type.PERIODICAL;
 
 /**
- * Created by martin on 2.11.16.
+ * Created by Martin Řehánek on 2.11.16.
  */
 public class DmfDetector {
 

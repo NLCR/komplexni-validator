@@ -3,7 +3,7 @@ package nkp.pspValidator.shared.engine.validationFunctions;
 import nkp.pspValidator.shared.engine.Level;
 
 /**
- * Created by martin on 11.11.16.
+ * Created by Martin Řehánek on 11.11.16.
  */
 public class ValidationProblem {
 

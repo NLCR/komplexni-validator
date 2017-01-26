@@ -5,7 +5,7 @@ import nkp.pspValidator.shared.imageUtils.ImageUtil;
 import nkp.pspValidator.shared.imageUtils.ImageUtilManager;
 
 /**
- * Created by martin on 2.12.16.
+ * Created by Martin Řehánek on 2.12.16.
  */
 public class ValidationDataManager {
 

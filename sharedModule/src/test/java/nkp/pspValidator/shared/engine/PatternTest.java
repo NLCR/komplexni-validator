@@ -16,7 +16,7 @@ import java.util.regex.Pattern;
 import static org.junit.Assert.*;
 
 /**
- * Created by martin on 20.10.16.
+ * Created by Martin Řehánek on 20.10.16.
  */
 public class PatternTest {
 

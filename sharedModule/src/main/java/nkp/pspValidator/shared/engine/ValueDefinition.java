@@ -3,7 +3,7 @@ package nkp.pspValidator.shared.engine;
 import nkp.pspValidator.shared.engine.evaluationFunctions.EvaluationFunction;
 
 /**
- * Created by martin on 24.10.16.
+ * Created by Martin Řehánek on 24.10.16.
  */
 public class ValueDefinition {
 

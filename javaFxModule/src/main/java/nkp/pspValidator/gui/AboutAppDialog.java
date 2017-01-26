@@ -5,7 +5,7 @@ import javafx.stage.Stage;
 import java.net.URL;
 
 /**
- * Created by martin on 20.12.16.
+ * Created by Martin Řehánek on 20.12.16.
  */
 public class AboutAppDialog extends AbstractDialog {
 

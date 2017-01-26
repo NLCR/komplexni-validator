@@ -8,7 +8,7 @@ import java.io.File;
 import java.util.*;
 
 /**
- * Created by martin on 20.10.16.
+ * Created by Martin Řehánek on 20.10.16.
  */
 public abstract class EvaluationFunction implements Function {
     protected final Engine engine;

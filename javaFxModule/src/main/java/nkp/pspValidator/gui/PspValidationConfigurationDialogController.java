@@ -17,7 +17,7 @@ import java.io.IOException;
 import java.util.Set;
 
 /**
- * Created by martin on 13.12.16.
+ * Created by Martin Řehánek on 13.12.16.
  */
 public class PspValidationConfigurationDialogController extends DialogController {
 

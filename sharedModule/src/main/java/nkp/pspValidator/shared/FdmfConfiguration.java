@@ -16,7 +16,7 @@ import static nkp.pspValidator.shared.FileUtils.checkDirExistAndReadable;
 import static nkp.pspValidator.shared.FileUtils.checkFileExistAndReadable;
 
 /**
- * Created by martin on 9.12.16.
+ * Created by Martin Řehánek on 9.12.16.
  */
 public class FdmfConfiguration {
 

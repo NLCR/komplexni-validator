@@ -4,7 +4,7 @@ import nkp.pspValidator.shared.engine.ValueEvaluation;
 import nkp.pspValidator.shared.engine.ValueType;
 
 /**
- * Created by martin on 24.10.16.
+ * Created by Martin Řehánek on 24.10.16.
  */
 public final class ValueParamConstant extends ValueParam {
     private final ValueEvaluation evaluation;

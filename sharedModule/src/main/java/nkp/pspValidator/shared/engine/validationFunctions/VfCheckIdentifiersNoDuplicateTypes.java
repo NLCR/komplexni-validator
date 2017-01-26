@@ -14,7 +14,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Created by martin on 27.10.16.
+ * Created by Martin Řehánek on 27.10.16.
  */
 public class VfCheckIdentifiersNoDuplicateTypes extends ValidationFunction {
 

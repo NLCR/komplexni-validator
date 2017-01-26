@@ -6,7 +6,7 @@ import org.junit.Test;
 import java.io.File;
 
 /**
- * Created by martin on 4.11.16.
+ * Created by Martin Řehánek on 4.11.16.
  */
 public class XsdTest {
 

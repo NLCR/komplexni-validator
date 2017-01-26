@@ -6,7 +6,7 @@ import nkp.pspValidator.shared.engine.ValueType;
 import nkp.pspValidator.shared.engine.exceptions.ContractException;
 
 /**
- * Created by martin on 20.10.16.
+ * Created by Martin Řehánek on 20.10.16.
  */
 public class EfGetProvidedString extends EvaluationFunction {
 

@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by martin on 21.10.16.
+ * Created by Martin Řehánek on 21.10.16.
  */
 public class EfBuildListOfStrings extends EvaluationFunction {
 

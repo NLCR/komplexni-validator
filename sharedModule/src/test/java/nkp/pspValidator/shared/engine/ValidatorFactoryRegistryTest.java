@@ -11,7 +11,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 /**
- * Created by martin on 2.11.16.
+ * Created by Martin Řehánek on 2.11.16.
  */
 public class ValidatorFactoryRegistryTest {
 

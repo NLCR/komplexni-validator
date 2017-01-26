@@ -12,7 +12,7 @@ import static junit.framework.TestCase.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 /**
- * Created by martin on 27.10.16.
+ * Created by Martin Řehánek on 27.10.16.
  */
 public class EngineTest {
 

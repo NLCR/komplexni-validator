@@ -1,7 +1,7 @@
 package nkp.pspValidator.gui.validation;
 
 /**
- * Created by martin on 16.12.16.
+ * Created by Martin Řehánek on 16.12.16.
  */
 
 import javafx.event.ActionEvent;

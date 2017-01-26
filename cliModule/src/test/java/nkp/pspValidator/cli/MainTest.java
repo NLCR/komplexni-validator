@@ -15,14 +15,21 @@ import java.util.Arrays;
 import java.util.List;
 
 /**
- * Created by martin on 10.11.16.
+ * Created by Martin Řehánek on 10.11.16.
  */
 public class MainTest {
 
     private static final String MON_1_2 = "../sharedModule/src/test/resources/monograph_1.2/b50eb6b0-f0a4-11e3-b72e-005056827e52";
     private static final String MON_1_2_MAP = "../sharedModule/src/test/resources/monografie_1.2_map/6e9a7000-65c0-11e6-85af-005056827e52";
-    private static final String PER_1_6 = "../sharedModule/src/test/resources/periodical_1.6/7033d800-0935-11e4-beed-5ef3fc9ae867";
     private static final String MON_1_2_INVALID_IMAGES = "../sharedModule/src/test/resources/monograph_1.2-invalid_images/b50eb6b0-f0a4-11e3-b72e-005056827e52";
+
+    private static final String PER_1_6 = "../sharedModule/src/test/resources/periodical_1.6/7033d800-0935-11e4-beed-5ef3fc9ae867";
+
+    //private static final String PER_1_6 = "../sharedModule/src/test/resources/periodical_1.6/ope301-00000v";
+    //private static final String PER_1_6_INFO_INVALID_NS = "/home/martin/zakazky/NKP-PSP_validator/data/per_1.6_invalid_info_ns/aba008-000310";
+
+    private static final String PER_1_4 = "/home/martin/zakazky/NKP-PSP_validator/data/neprochazi/ope301-00000v";
+
 
     @org.junit.Test
     public void cli() throws InvalidXPathExpressionException, PspDataException, ValidatorConfigurationException, XmlFileParsingException, FdmfRegistry.UnknownFdmfException {
@@ -49,29 +56,35 @@ public class MainTest {
         }
 
         Validator.DevParams devParams = new Validator.DevParams();
+
+        //devParams.getSectionsToRun().add("Soubor CHECKSUM");
+        //devParams.getSectionsToRun().add("Soubor INFO");
+        //devParams.getSectionsToRun().add("Struktura souborů");
         //devParams.getSectionsToRun().add("Bibliografická metadata");
         //devParams.getSectionsToRun().add("Identifikátory");
         //devParams.getSectionsToRun().add("JPEG 2000");
 
         Main.main(devParams, buildParams(
                 "../sharedModule/src/main/resources/nkp/pspValidator/shared/fDMF"
-                , MON_1_2
-                //, PER_1_6
+                //, MON_1_2
+                //, PER_1_6_INFO_INVALID_NS
+                , PER_1_6
+                //, PER_1_4
                 //, MON_1_2_INVALID_IMAGES
                 //, MON_1_2_MAP
                 //,PER_1_6
-                , null//, Dmf.Type.MONOGRAPH
-                , null//, "1.2"
-                , 3 //verbosity
+                , Dmf.Type.PERIODICAL//, Dmf.Type.MONOGRAPH
+                , "1.4"//, "1.2"
+                , 2 //verbosity
                 , null//"src/test/resources/protocol.xml" //xml protocol
                 , imageMagickPath //null //imageMagick path
                 , jhovePath //jhove path
                 , jpylyzerPath //jpylyzer path
                 , kakaduPath  //kakadu path
-                , false //disable imageMagick
-                , false //disable jhove
-                , false //disable jpylyzer
-                , false//disable kakadu
+                , true //disable imageMagick
+                , true //disable jhove
+                , true //disable jpylyzer
+                , true//disable kakadu
         ));
     }
 

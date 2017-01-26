@@ -4,7 +4,7 @@ import nkp.pspValidator.shared.engine.validationFunctions.ValidationFunction;
 import nkp.pspValidator.shared.engine.validationFunctions.ValidationResult;
 
 /**
- * Created by martin on 30.10.16.
+ * Created by Martin Řehánek on 30.10.16.
  */
 public class Rule {
 

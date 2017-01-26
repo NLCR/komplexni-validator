@@ -1,7 +1,7 @@
 package nkp.pspValidator.shared.engine.exceptions;
 
 /**
- * Created by martin on 10.11.16.
+ * Created by Martin Řehánek on 10.11.16.
  */
 public class InvalidIdException extends Exception {
 

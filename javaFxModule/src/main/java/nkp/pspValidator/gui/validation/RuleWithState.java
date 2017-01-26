@@ -3,7 +3,7 @@ package nkp.pspValidator.gui.validation;
 import nkp.pspValidator.shared.engine.Rule;
 
 /**
- * Created by martin on 16.12.16.
+ * Created by Martin Řehánek on 16.12.16.
  */
 public class RuleWithState {
 
