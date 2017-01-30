@@ -5,6 +5,7 @@ import nkp.pspValidator.shared.engine.Level;
 import nkp.pspValidator.shared.engine.ValueEvaluation;
 import nkp.pspValidator.shared.engine.ValueType;
 import nkp.pspValidator.shared.engine.exceptions.ContractException;
+import nkp.pspValidator.shared.engine.params.ValueParam;
 import org.xml.sax.SAXException;
 
 import javax.xml.XMLConstants;
@@ -15,6 +16,7 @@ import javax.xml.validation.SchemaFactory;
 import javax.xml.validation.Validator;
 import java.io.File;
 import java.io.IOException;
+import java.util.List;
 
 
 /**
@@ -24,12 +26,13 @@ public class VfCheckXmlIsValidByXsd extends ValidationFunction {
 
     public static final String PARAM_XML_FILE = "xml_file";
     public static final String PARAM_XSD_FILE = "xsd_file";
-
+    public static final String PARAM_LEVEL = "level";
 
     public VfCheckXmlIsValidByXsd(Engine engine) {
         super(engine, new Contract()
                 .withValueParam(PARAM_XML_FILE, ValueType.FILE, 1, 1)
                 .withValueParam(PARAM_XSD_FILE, ValueType.FILE, 1, 1)
+                .withValueParam(PARAM_LEVEL, ValueType.LEVEL, 0, 1)
         );
     }
 
@@ -66,7 +69,19 @@ public class VfCheckXmlIsValidByXsd extends ValidationFunction {
                 return singlErrorResult(invalidCannotReadFile(xsdFile));
             }
 
-            return validate(xmlFile, xsdFile);
+            Level level = Level.ERROR;
+            List<ValueParam> paramsLevel = valueParams.getParams(PARAM_LEVEL);
+            if (!paramsLevel.isEmpty()) {
+                ValueParam paramLevel = paramsLevel.get(0);
+                ValueEvaluation evaluation = paramLevel.getEvaluation();
+                if (evaluation.getData() == null) {
+                    return invalidValueParamNull(PARAM_LEVEL, evaluation);
+                } else {
+                    level = (Level) evaluation.getData();
+                }
+            }
+
+            return validate(xmlFile, xsdFile, level);
         } catch (ContractException e) {
             return invalidContractNotMet(e);
         } catch (Throwable e) {
@@ -74,7 +89,7 @@ public class VfCheckXmlIsValidByXsd extends ValidationFunction {
         }
     }
 
-    private ValidationResult validate(File xmlFileF, File xsdFile) {
+    private ValidationResult validate(File xmlFileF, File xsdFile, Level level) {
         try {
             Source xmlFile = new StreamSource(xmlFileF);
             SchemaFactory schemaFactory = SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
@@ -83,7 +98,7 @@ public class VfCheckXmlIsValidByXsd extends ValidationFunction {
             validator.validate(xmlFile);
             return new ValidationResult();
         } catch (SAXException e) {
-            return singlErrorResult(invalid(Level.ERROR,
+            return singlErrorResult(invalid(level,
                     "obsah souboru %s není validní podle Xml schema ze souboru %s: %s",
                     xmlFileF.getAbsolutePath(), xsdFile.getAbsolutePath(), e.getMessage()));
         } catch (IOException e) {

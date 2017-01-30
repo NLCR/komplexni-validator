@@ -126,6 +126,8 @@
         <params-def>
             <value name="xml_file" type="FILE"/>
             <value name="xsd_file" type="FILE"/>
+            <value name="level" type="LEVEL" description="Úroveň chybové hlášky, pokud neprojde validace podle XSD."
+                   minOccurs="0" maxOccurs="1"/>
         </params-def>
     </validationFunction>
 
