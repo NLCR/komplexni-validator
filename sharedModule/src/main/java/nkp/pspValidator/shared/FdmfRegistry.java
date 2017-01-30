@@ -16,9 +16,8 @@ public class FdmfRegistry {
     private final Map<String, FdmfConfiguration> monographFdmfByVersion = new HashMap<>();
     private final Map<String, FdmfConfiguration> periodicalFdmfByVersion = new HashMap<>();
 
-    public FdmfRegistry(File validatorConfigurationDir) throws ValidatorConfigurationException {
-        File fdmfDir = new File(validatorConfigurationDir, "fDMF");
-        init(fdmfDir);
+    public FdmfRegistry(ValidatorConfigurationManager validatorConfigManager) throws ValidatorConfigurationException {
+        init(validatorConfigManager);
     }
 
     public void initJ2kProfiles(ImageUtilManager imageUtilManager) throws ValidatorConfigurationException {
@@ -30,24 +29,24 @@ public class FdmfRegistry {
         }
     }
 
-    private void init(File fdmfsRootDir) throws ValidatorConfigurationException {
-        loadMonographFdmfConfigs(fdmfsRootDir);
-        loadPeriodicalFdmfConfigs(fdmfsRootDir);
+    private void init(ValidatorConfigurationManager validatorConfigManager) throws ValidatorConfigurationException {
+        loadMonographFdmfConfigs(validatorConfigManager);
+        loadPeriodicalFdmfConfigs(validatorConfigManager);
     }
 
-    private void loadMonographFdmfConfigs(File fdmfsRootDir) throws ValidatorConfigurationException {
-        File[] fdmfDirs = fdmfsRootDir.listFiles((dir, name) -> name.matches("monograph_[0-9]+(\\.([0-9])+)*"));
+    private void loadMonographFdmfConfigs(ValidatorConfigurationManager validatorConfigManager) throws ValidatorConfigurationException {
+        File[] fdmfDirs = validatorConfigManager.getFdmfDir().listFiles((dir, name) -> name.matches("monograph_[0-9]+(\\.([0-9])+)*"));
         for (File fdmfDir : fdmfDirs) {
             String version = fdmfDir.getName().split("_")[1];
-            monographFdmfByVersion.put(version, new FdmfConfiguration(fdmfDir));
+            monographFdmfByVersion.put(version, new FdmfConfiguration(fdmfDir, validatorConfigManager.getFdmfConfigXsd(), validatorConfigManager.getJ2kProfileConfigXsd()));
         }
     }
 
-    private void loadPeriodicalFdmfConfigs(File fdmfsRootDir) throws ValidatorConfigurationException {
-        File[] fdmfDirs = fdmfsRootDir.listFiles((dir, name) -> name.matches("periodical_[0-9]+(\\.([0-9])+)*"));
+    private void loadPeriodicalFdmfConfigs(ValidatorConfigurationManager validatorConfigManager) throws ValidatorConfigurationException {
+        File[] fdmfDirs = validatorConfigManager.getFdmfDir().listFiles((dir, name) -> name.matches("periodical_[0-9]+(\\.([0-9])+)*"));
         for (File fdmfDir : fdmfDirs) {
             String version = fdmfDir.getName().split("_")[1];
-            periodicalFdmfByVersion.put(version, new FdmfConfiguration(fdmfDir));
+            periodicalFdmfByVersion.put(version, new FdmfConfiguration(fdmfDir, validatorConfigManager.getFdmfConfigXsd(), validatorConfigManager.getJ2kProfileConfigXsd()));
         }
     }
 

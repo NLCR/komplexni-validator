@@ -273,35 +273,31 @@ public class Main {
                                      Set<ImageUtil> imageUtilsDisabled, Map<ImageUtil, File> imageUtilPaths,
                                      Set<String> runOnlyTheseSections,
                                      Validator.DevParams devParams) throws PspDataException, InvalidXPathExpressionException, XmlFileParsingException, ValidatorConfigurationException, FdmfRegistry.UnknownFdmfException {
-
         PrintStream out = System.out;
         Platform platform = Platform.detectOs();
         out.println(String.format("Platforma: %s", platform.toReadableString()));
+
+        //validator configuration
         out.println(String.format("Kořenový adresář konfigurace validátoru: %s", validatorConfigurationDir.getAbsolutePath()));
-        checkReadableDir(validatorConfigurationDir);
+        ValidatorConfigurationManager validatorConfigManager = new ValidatorConfigurationManager(validatorConfigurationDir);
+        ImageUtilManager imageUtilManager = new ImageUtilManagerFactory(validatorConfigManager.getImageUtilsConfigFile()).buildImageUtilManager(platform.getOperatingSystem());
+        imageUtilManager.setPaths(imageUtilPaths);
+        detectImageTools(out, imageUtilManager, imageUtilsDisabled);
+
+        //psp dir, dmf detection
         checkReadableDir(pspRoot);
         out.println(String.format("Zpracovávám PSP balík %s", pspRoot.getAbsolutePath()));
         Dmf dmfResolved = new DmfDetector().resolveDmf(dmfPrefered, pspRoot);
         out.println(String.format("Bude použita verze standardu %s", dmfResolved));
 
-        //File fDmfDir = new File(validatorConfigurationDir, "fDMF");
-        FdmfConfiguration fdmfConfig = new FdmfRegistry(validatorConfigurationDir).getFdmfConfig(dmfResolved);
-        File imageUtilsConfigFile = getImageUtilsConfigFile(validatorConfigurationDir);
-        ImageUtilManager imageUtilManager = new ImageUtilManagerFactory(imageUtilsConfigFile).buildImageUtilManager(platform.getOperatingSystem());
-        imageUtilManager.setPaths(imageUtilPaths);
-        detectImageTools(out, imageUtilManager, imageUtilsDisabled);
+        //initializes j2k profiles according to selected fDMF
+        FdmfConfiguration fdmfConfig = new FdmfRegistry(validatorConfigManager).getFdmfConfig(dmfResolved);
         fdmfConfig.initJ2kProfiles(imageUtilManager);
 
+        //validate
         Validator validator = ValidatorFactory.buildValidator(fdmfConfig, pspRoot);
         out.println(String.format("Validátor inicializován, spouštím validace"));
-        /*System.out.println("ěščřžýáíéĚŠČŘŽÝÁÍÉ");
-        System.out.println(String.format("ěščřžýáíéĚŠČŘŽÝÁÍÉ"));
-        StringBuilder b = new StringBuilder();
-        b.append("ěščřžýáíéĚŠČŘŽÝÁÍÉ");
-        System.out.println(b.toString());*/
-
         ValidationState.ProgressListener progressListener = null;
-
         switch (printVerbosity) {
             case 3:
                 //vsechno, vcetne sekci a pravidel bez chyb
@@ -321,17 +317,6 @@ public class Main {
                 break;
             default:
                 throw new IllegalStateException(String.format("Nepovolená hodnota verbosity: %d. Hodnota musí být v intervalu [0-3]", printVerbosity));
-        }
-    }
-
-    private static File getImageUtilsConfigFile(File fdmfsRoot) throws ValidatorConfigurationException {
-        File file = new File(fdmfsRoot, "imageUtils.xml");
-        if (!file.exists()) {
-            throw new ValidatorConfigurationException("chybí konfigurační soubor " + file.getAbsolutePath());
-        } else if (!file.canRead()) {
-            throw new ValidatorConfigurationException("nelze číst konfigurační soubor " + file.getAbsolutePath());
-        } else {
-            return file;
         }
     }
 
@@ -363,13 +348,13 @@ public class Main {
         }
     }
 
-    private static void checkReadableDir(File pspRoot) {
-        if (!pspRoot.exists()) {
-            throw new IllegalStateException(String.format("Soubor %s neexistuje", pspRoot.getAbsolutePath()));
-        } else if (!pspRoot.isDirectory()) {
-            throw new IllegalStateException(String.format("Soubor %s není adresář", pspRoot.getAbsolutePath()));
-        } else if (!pspRoot.canRead()) {
-            throw new IllegalStateException(String.format("Nelze číst adresář %s", pspRoot.getAbsolutePath()));
+    private static void checkReadableDir(File file) {
+        if (!file.exists()) {
+            throw new IllegalStateException(String.format("Soubor %s neexistuje", file.getAbsolutePath()));
+        } else if (!file.isDirectory()) {
+            throw new IllegalStateException(String.format("Soubor %s není adresář", file.getAbsolutePath()));
+        } else if (!file.canRead()) {
+            throw new IllegalStateException(String.format("Nelze číst adresář %s", file.getAbsolutePath()));
         }
     }
 

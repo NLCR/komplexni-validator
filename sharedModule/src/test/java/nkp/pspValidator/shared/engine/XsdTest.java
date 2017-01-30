@@ -15,7 +15,7 @@ public class XsdTest {
 
         File root = new File("src/main/resources/nkp/pspValidator/shared/fDMF/monograph_1.2");
         File xmlFile = new File(root, "fdmf.xml");
-        File xsdFile = new File(root, "fdmf.xsd");
+        File xsdFile = new File(root, "fdmfConfig.xsd");
         XsdValidator.validate("INFO", xsdFile, xmlFile);
     }
 }

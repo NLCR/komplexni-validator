@@ -24,11 +24,11 @@ public class FileUtils {
 
     public static void checkFileExistAndReadable(File file) throws ValidatorConfigurationException {
         if (!file.exists()) {
-            throw new ValidatorConfigurationException(String.format("soubor neexistuje: %s", file.getAbsolutePath()));
+            throw new ValidatorConfigurationException(String.format("chybí konfigurační soubor: %s", file.getAbsolutePath()));
         } else if (file.isDirectory()) {
-            throw new ValidatorConfigurationException(String.format("soubor je adresář: %s", file.getAbsolutePath()));
+            throw new ValidatorConfigurationException(String.format("konfigurační soubor je adresář: %s", file.getAbsolutePath()));
         } else if (!file.canRead()) {
-            throw new ValidatorConfigurationException(String.format("nelze číst soubor: %s", file.getAbsolutePath()));
+            throw new ValidatorConfigurationException(String.format("nelze číst konfigurační soubor: %s", file.getAbsolutePath()));
         }
     }
 

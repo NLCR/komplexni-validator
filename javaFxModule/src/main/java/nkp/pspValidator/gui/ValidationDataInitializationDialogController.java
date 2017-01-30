@@ -13,6 +13,7 @@ import javafx.scene.image.ImageView;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.WindowEvent;
 import nkp.pspValidator.shared.FdmfRegistry;
+import nkp.pspValidator.shared.ValidatorConfigurationManager;
 import nkp.pspValidator.shared.engine.exceptions.ValidatorConfigurationException;
 import nkp.pspValidator.shared.imageUtils.ImageUtilManager;
 import nkp.pspValidator.shared.imageUtils.ImageUtilManagerFactory;
@@ -82,46 +83,22 @@ public class ValidationDataInitializationDialogController extends DialogControll
                 try {
                     Thread.sleep(300);
                     validationDataManager = new ValidationDataManager(getConfigurationManager());
-                    File fdmfsRoot = getConfigurationManager().getFileOrNull(ConfigurationManager.PROP_VALIDATOR_CONFIG_DIR);
-                    if (fdmfsRoot == null) {
+                    File validatorConfigDir = getConfigurationManager().getFileOrNull(ConfigurationManager.PROP_VALIDATOR_CONFIG_DIR);
+                    if (validatorConfigDir == null) {
                         processResult(new Result(false, "Není definován adresář s konfigurací Validátoru!"));
                     } else {
-                        updateRootDir(fdmfsRoot.getCanonicalPath());
-                        checkReadableDir(fdmfsRoot);
+                        updateRootDir(validatorConfigDir.getCanonicalPath());
+                        ValidatorConfigurationManager validatorConfigMgr = new ValidatorConfigurationManager(validatorConfigDir);
                         //Thread.sleep(5000);
-                        File imageUtilConfig = getImageUtilsConfigFile(fdmfsRoot);
-                        ImageUtilManager imageUtilManager = new ImageUtilManagerFactory(imageUtilConfig).buildImageUtilManager(getConfigurationManager().getPlatform().getOperatingSystem());
+                        ImageUtilManager imageUtilManager = new ImageUtilManagerFactory(validatorConfigMgr.getImageUtilsConfigFile()).buildImageUtilManager(getConfigurationManager().getPlatform().getOperatingSystem());
                         validationDataManager.setImageUtilManager(imageUtilManager);
-                        validationDataManager.setFdmfRegistry(new FdmfRegistry(fdmfsRoot));
+                        validationDataManager.setFdmfRegistry(new FdmfRegistry(validatorConfigMgr));
                         processResult(new Result(true, null));
                     }
                 } catch (ValidatorConfigurationException e) {
                     processResult(new Result(false, e.getMessage()));
                 } finally {
                     return null;
-                }
-            }
-
-            private File getImageUtilsConfigFile(File fdmfsRoot) throws ValidatorConfigurationException {
-                File file = new File(fdmfsRoot, "imageUtils.xml");
-                if (!file.exists()) {
-                    throw new ValidatorConfigurationException(String.format("Chybí konfigurační soubor %s!", file.getAbsolutePath()));
-                } else if (!file.canRead()) {
-                    throw new ValidatorConfigurationException(String.format("Nelze číst konfigurační soubor %s!", file.getAbsolutePath()));
-                } else {
-                    return file;
-                }
-            }
-
-            private void checkReadableDir(File dir) throws ValidatorConfigurationException {
-                if (!dir.exists()) {
-                    throw new ValidatorConfigurationException(String.format("Soubor %s neexistuje!", dir.getAbsolutePath()));
-                } else if (!dir.isDirectory()) {
-                    throw new ValidatorConfigurationException(String.format("Soubor %s není adresář!", dir.getAbsolutePath()));
-                } else if (!dir.canRead()) {
-                    throw new ValidatorConfigurationException(String.format("Nelze číst adresář %s!", dir.getAbsolutePath()));
-                } else {
-                    //System.out.println("dir ok: " + dir.getAbsolutePath());
                 }
             }
 

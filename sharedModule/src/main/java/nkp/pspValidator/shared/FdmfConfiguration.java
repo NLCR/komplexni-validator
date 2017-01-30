@@ -6,6 +6,10 @@ import nkp.pspValidator.shared.imageUtils.ImageUtil;
 import nkp.pspValidator.shared.imageUtils.ImageUtilManager;
 import nkp.pspValidator.shared.imageUtils.validation.ImageValidator;
 
+import javax.xml.XMLConstants;
+import javax.xml.transform.stream.StreamSource;
+import javax.xml.validation.Schema;
+import javax.xml.validation.SchemaFactory;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -20,19 +24,23 @@ import static nkp.pspValidator.shared.FileUtils.checkFileExistAndReadable;
  */
 public class FdmfConfiguration {
 
-    private static final String FDMF_XSD_FILE = "fdmf.xsd";
+    //private static final String FDMF_XSD_FILE = "fdmfConfig.xsd";
     private static final String XSD_DIR = "xsd";
     private static final String J2K_PROFILES_DIR = "jpeg2000Profiles";
     private static final String J2K_PROFILES_UC_DIR = "uc";
     private static final String J2K_PROFILES_MC_DIR = "mc";
 
     private final File fdmfRoot;
+    private final File fdmfConfigXsd;
+    private final File j2kProfileConfigXsd;
     private final Map<String, File> providedFiles = new HashMap<>();
     private final List<File> fdmfConfigFiles = new ArrayList<>();
     private ImageValidator imageValidator;
 
-    public FdmfConfiguration(File fdmfRoot) throws ValidatorConfigurationException {
+    public FdmfConfiguration(File fdmfRoot, File fdmfConfigXsd, File j2kProfileConfigXsd) throws ValidatorConfigurationException {
         this.fdmfRoot = fdmfRoot;
+        this.fdmfConfigXsd = fdmfConfigXsd;
+        this.j2kProfileConfigXsd = j2kProfileConfigXsd;
         init();
     }
 
@@ -49,28 +57,32 @@ public class FdmfConfiguration {
         providedFiles.put("MODS_XSD_FILE", findXsdFile(xsdRoot, "MODS", "mods_[0-9]+(\\.([0-9])+)*\\.xsd"));
         providedFiles.put("PREMIS_XSD_FILE", findXsdFile(xsdRoot, "PREMIS", "premis_[0-9]+(\\.([0-9])+)*\\.xsd"));
 
-        //nacteni patternu, promennych, pravidel etc.
-        File fdmfXsdFile = new File(fdmfRoot, FDMF_XSD_FILE);
-        checkFileExistAndReadable(fdmfXsdFile);
-        //validateAndProcessFdmfConfig(engine, fdmfXsdFile, fdmfRoot, "fdmf.xml");
-        validateAndRegisterFdmfConfig(fdmfXsdFile, fdmfRoot, "namespaces.xml");
-        validateAndRegisterFdmfConfig(fdmfXsdFile, fdmfRoot, "patterns.xml");
-        validateAndRegisterFdmfConfig(fdmfXsdFile, fdmfRoot, "variables.xml");
-        validateAndRegisterFdmfConfig(fdmfXsdFile, fdmfRoot, "rules.xml");
+        //nacteni konfiguracnich souboru - jmennych prostoru, vzdoru, promennych, pravidel
+        validateAndRegisterFdmfConfig(fdmfRoot, "namespaces.xml");
+        validateAndRegisterFdmfConfig(fdmfRoot, "patterns.xml");
+        validateAndRegisterFdmfConfig(fdmfRoot, "variables.xml");
+        validateAndRegisterFdmfConfig(fdmfRoot, "rules.xml");
 
-        //nacteni sablon pro validaci biblio metadata
-        //TODO: poradne
-        //TODO: validovat pomoci xsd
-        ///home/martin/ssd/IdeaProjects/PspValidator/sharedModule/src/main/resources/nkp/pspValidator/shared/fDMF/monograph_1.2/biblioProfiles/dc/title.xml
-        //engine.setProvidedFile("BIBLIO_PROFILE_DC_TITLE", new File("/home/martin/ssd/IdeaProjects/PspValidator/sharedModule/src/main/resources/nkp/pspValidator/shared/fDMF/monograph_1.2/biblioProfiles/dc/title.xml"));
+        //TODO: inicializace sablon pro validacio biblio metadat
     }
 
-    private void validateAndRegisterFdmfConfig(File fdmfXsdFile, File fdmfRoot, String fileName) throws ValidatorConfigurationException {
+    private void validateAndRegisterFdmfConfig(File fdmfRoot, String fileName) throws ValidatorConfigurationException {
         File configFile = new File(fdmfRoot, fileName);
         checkFileExistAndReadable(configFile);
         //TODO: v produkci povolit validaci konfiguracniho souboru podle xsd
-        //XsdValidator.validate(fileName, fdmfXsdFile, configFile);
+        //validateConfigFile(configFile, fdmfConfigXsd);
         fdmfConfigFiles.add(configFile);
+    }
+
+    private void validateConfigFile(File configFile, File xsd) throws ValidatorConfigurationException {
+        SchemaFactory schemaFactory = SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
+        try {
+            Schema schema = schemaFactory.newSchema(xsd);
+            javax.xml.validation.Validator validator = schema.newValidator();
+            validator.validate(new StreamSource(configFile));
+        } catch (Exception e) {
+            throw new ValidatorConfigurationException("konfigurační soubor %s není validní: %s", configFile.getAbsolutePath(), e.getMessage());
+        }
     }
 
     public void initJ2kProfiles(ImageUtilManager imageUtilManager) throws ValidatorConfigurationException {
@@ -89,9 +101,10 @@ public class FdmfConfiguration {
         checkDirExistAndReadable(rootFile);
         File copyFile = buildImageCopyDir(rootFile, copy);
         checkDirExistAndReadable(copyFile);
-        //TODO: xsd pro validaci tohohle souboru podle xsd
         File configFile = new File(copyFile, util.getProfileFileName());
         checkFileExistAndReadable(configFile);
+        //TODO: implementovat xsd, povolit validaci v produkci
+        //validateConfigFile(configFile, j2kProfileConfigXsd);
         validator.processProfile(util, copy, configFile);
     }
 
