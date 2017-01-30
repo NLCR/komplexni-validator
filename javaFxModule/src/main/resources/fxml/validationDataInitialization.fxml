@@ -19,7 +19,7 @@
 >
     <children>
 
-        <Label fx:id="title" text="Kořenový adresář fDMF:"/>
+        <Label fx:id="title" text="Adresář s konfigurací Validátoru:"/>
 
         <TextField fx:id="rootDirTextfield" editable="false"/>
 
@@ -42,7 +42,7 @@
                 fx:id="btnSetFdmfsRootDir"
                 onAction="#setFdmfsRootDir"
                 styleClass="global-button"
-                text="Nastavit kořenový adresář fDMF"
+                text="Nastavit adresář s konfigurací Validátoru"
         />
 
     </children>

@@ -16,8 +16,9 @@ public class FdmfRegistry {
     private final Map<String, FdmfConfiguration> monographFdmfByVersion = new HashMap<>();
     private final Map<String, FdmfConfiguration> periodicalFdmfByVersion = new HashMap<>();
 
-    public FdmfRegistry(File fdmfsRootDir) throws ValidatorConfigurationException {
-        init(fdmfsRootDir);
+    public FdmfRegistry(File validatorConfigurationDir) throws ValidatorConfigurationException {
+        File fdmfDir = new File(validatorConfigurationDir, "fDMF");
+        init(fdmfDir);
     }
 
     public void initJ2kProfiles(ImageUtilManager imageUtilManager) throws ValidatorConfigurationException {

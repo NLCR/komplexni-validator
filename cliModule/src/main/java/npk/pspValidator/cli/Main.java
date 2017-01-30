@@ -55,12 +55,12 @@ public class Main {
 
         options.addOption(OptionBuilder
                 //.withDescription("Adresář obsahující formalizované DMF pro jednotlivé verze standardu.")
-                .withDescription("Adresar obsahujici formalizovane DMF pro jednotlive verze standardu.")
+                .withDescription("Adresar obsahujici konfiguraci validatoru vcetne formalizovanych verzi DMF pro jednotlive verze standardu.")
                 .hasArg()
                 //.withArgName("ADRESÁŘ_FDMF")
-                .withArgName("ADRESAR_FDMF")
-                .withLongOpt("fdmf-dir")
-                .create("fd"));
+                .withArgName("ADRESAR_VALIDATOR_CONFIG")
+                .withLongOpt("config-dir")
+                .create("conf"));
         options.addOption(OptionBuilder
                 //.withDescription("Adresář PSP balíku, který má být validován.")
                 .withDescription("Adresar PSP baliku, ktery ma byt validovan.")
@@ -186,8 +186,8 @@ public class Main {
                 //TODO
                 System.out.println(String.format("PSP Validator CLI verze %s, sestaveno: %s", Version.VERSION_CODE, Version.BUILD_DATE));
             } else {
-                if (!line.hasOption("fd")) {
-                    System.err.println("Pro spuštění validace je nutné určit adresář obsahující formalizované DMF.");
+                if (!line.hasOption("conf")) {
+                    System.err.println("Pro spuštění validace je nutné určit adresář obsahující konfiguraci validátoru včetbě formalizovaných DMF.");
                     printHelp(options);
                     return;
                 }
@@ -197,7 +197,7 @@ public class Main {
                     return;
                 }
 
-                File fdmfsDir = new File(line.getOptionValue("fd"));
+                File validatorConfigurationDir = new File(line.getOptionValue("conf"));
                 File pspDir = new File(line.getOptionValue("pd"));
                 Dmf.Type dmfType = line.hasOption("dt") ? Dmf.Type.valueOf(line.getOptionValue("dt").toUpperCase()) : null;
                 String dmfVersion = line.hasOption("dv") ? line.getOptionValue("dv") : null;
@@ -239,7 +239,7 @@ public class Main {
 
                 }
 
-                runValidator(new Dmf(dmfType, dmfVersion), fdmfsDir, pspDir, xmlOutputFile, verbosity, imageUtilsDisabled, imageUtilPaths, null, devParams);
+                runValidator(new Dmf(dmfType, dmfVersion), validatorConfigurationDir, pspDir, xmlOutputFile, verbosity, imageUtilsDisabled, imageUtilPaths, null, devParams);
             }
         } catch (ParseException exp) {
             System.err.println("Chyba parsování parametrů: " + exp.getMessage());
@@ -256,7 +256,7 @@ public class Main {
                 "Více informací o validátoru najdete na http://TODO ";*/
         String header = "Validuje PSP balik, nebo sadu PSP baliku podle DMF*." +
                 " Verzi a typ DMF lze vynutit parametry --dmf-type a/nebo --dmf-version, pripadne jsou odvozeny z dat PSP baliku." +
-                " Dale je potreba pomoci --fdmf-dir uvest adresář, který obsahuje definice fDMF," +
+                " Dale je potreba pomoci --config-dir uvest adresar, ktery obsahuje definice konfiguraci validatoru vcetne fDMF," +
                 " typicky adresare monograph_1.0, monograph_1.2, periodical_1.4 a periodical 1.6.\n\n";
         String footer = "\n*Definice metadatovych formatu. Vice na http://www.ndk.cz/standardy-digitalizace/metadata.\n"
                 + "Vice informaci o Validatoru najdete na https://github.com/rzeh4n/psp-validator.";
@@ -268,7 +268,7 @@ public class Main {
     }
 
 
-    private static void runValidator(Dmf dmfPrefered, File fdmfsRoot, File pspRoot,
+    private static void runValidator(Dmf dmfPrefered, File validatorConfigurationDir, File pspRoot,
                                      File xmlOutputFile, int printVerbosity,
                                      Set<ImageUtil> imageUtilsDisabled, Map<ImageUtil, File> imageUtilPaths,
                                      Set<String> runOnlyTheseSections,
@@ -277,15 +277,16 @@ public class Main {
         PrintStream out = System.out;
         Platform platform = Platform.detectOs();
         out.println(String.format("Platforma: %s", platform.toReadableString()));
-        out.println(String.format("Kořenový adresář fDMF: %s", fdmfsRoot.getAbsolutePath()));
-        checkReadableDir(fdmfsRoot);
+        out.println(String.format("Kořenový adresář konfigurace validátoru: %s", validatorConfigurationDir.getAbsolutePath()));
+        checkReadableDir(validatorConfigurationDir);
         checkReadableDir(pspRoot);
         out.println(String.format("Zpracovávám PSP balík %s", pspRoot.getAbsolutePath()));
         Dmf dmfResolved = new DmfDetector().resolveDmf(dmfPrefered, pspRoot);
         out.println(String.format("Bude použita verze standardu %s", dmfResolved));
 
-        FdmfConfiguration fdmfConfig = new FdmfRegistry(fdmfsRoot).getFdmfConfig(dmfResolved);
-        File imageUtilsConfigFile = getImageUtilsConfigFile(fdmfsRoot);
+        //File fDmfDir = new File(validatorConfigurationDir, "fDMF");
+        FdmfConfiguration fdmfConfig = new FdmfRegistry(validatorConfigurationDir).getFdmfConfig(dmfResolved);
+        File imageUtilsConfigFile = getImageUtilsConfigFile(validatorConfigurationDir);
         ImageUtilManager imageUtilManager = new ImageUtilManagerFactory(imageUtilsConfigFile).buildImageUtilManager(platform.getOperatingSystem());
         imageUtilManager.setPaths(imageUtilPaths);
         detectImageTools(out, imageUtilManager, imageUtilsDisabled);

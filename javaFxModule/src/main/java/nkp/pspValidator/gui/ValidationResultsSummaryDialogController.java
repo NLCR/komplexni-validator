@@ -81,14 +81,14 @@ public class ValidationResultsSummaryDialogController extends DialogController {
 
     public void setFdmfsRootDir(ActionEvent actionEvent) {
         DirectoryChooser chooser = new DirectoryChooser();
-        chooser.setTitle("Vyberte kořenový adresář fDMF");
-        File currentDir = getConfigurationManager().getFileOrNull(ConfigurationManager.PROP_DMF_DIR);
+        chooser.setTitle("Vyberte adresář s konfigurací Validátoru");
+        File currentDir = getConfigurationManager().getFileOrNull(ConfigurationManager.PROP_VALIDATOR_CONFIG_DIR);
         if (currentDir != null && currentDir.exists()) {
             chooser.setInitialDirectory(currentDir);
         }
         File selectedDirectory = chooser.showDialog(stage);
         if (selectedDirectory != null) {
-            getConfigurationManager().setFile(ConfigurationManager.PROP_DMF_DIR, selectedDirectory);
+            getConfigurationManager().setFile(ConfigurationManager.PROP_VALIDATOR_CONFIG_DIR, selectedDirectory);
             startNow();
         }
     }

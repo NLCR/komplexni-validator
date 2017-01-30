@@ -1,0 +1,1 @@
+Tento adresář obsahuje Xml schémata pro validaci konfiguračních souborů validátoru pro jednotlivé verze fDMF.

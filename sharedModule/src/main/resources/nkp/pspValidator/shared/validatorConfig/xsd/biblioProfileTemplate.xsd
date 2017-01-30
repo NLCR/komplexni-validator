@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema
+        xmlns:xs="http://www.w3.org/2001/XMLSchema"
+        targetNamespace="http://www.nkp.cz/pspValidator/1.1/xmlValidationTemplate"
+        xmlns="http://www.nkp.cz/pspValidator/1.1/xmlValidationTemplate"
+        elementFormDefault="qualified"
+        attributeFormDefault="unqualified"
+>
+    <xs:element name="validationTemplate">
+        <xs:complexType>
+            <xs:sequence>
+
+                <xs:element name="info">
+                    <xs:complexType>
+                        <xs:choice maxOccurs="unbounded">
+                            <xs:element name="text" type="xs:string" minOccurs="0" maxOccurs="unbounded"/>
+                            <xs:element name="url" minOccurs="0" maxOccurs="unbounded">
+                                <xs:complexType>
+                                    <xs:simpleContent>
+                                        <xs:extension base="xs:anyURI">
+                                            <xs:attribute type="xs:string" name="description" use="optional"/>
+                                        </xs:extension>
+                                    </xs:simpleContent>
+                                </xs:complexType>
+                            </xs:element>
+                        </xs:choice>
+                    </xs:complexType>
+                </xs:element>
+
+                <!--Definované jmenné prostory-->
+                <xs:element name="namespaces">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element name="namespace" minOccurs="0" maxOccurs="unbounded">
+                                <xs:complexType>
+                                    <xs:simpleContent>
+                                        <xs:extension base="xs:anyURI">
+                                            <xs:attribute name="prefix" type="namespacePrefixType" use="required"/>
+                                        </xs:extension>
+                                    </xs:simpleContent>
+                                </xs:complexType>
+                            </xs:element>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+
+                <!--Kontrolované slovníky-->
+                <xs:element name="dictionaries" minOccurs="0">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element name="dictionary" maxOccurs="unbounded" minOccurs="0">
+                                <xs:complexType>
+                                    <xs:simpleContent>
+                                        <xs:extension base="xs:string">
+                                            <xs:attribute name="name" use="required" type="dictionaryNameType"/>
+                                            <xs:attribute name="description" use="optional" type="xs:string"/>
+                                        </xs:extension>
+                                    </xs:simpleContent>
+                                </xs:complexType>
+                            </xs:element>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+
+                <!--Kořenový element-->
+                <xs:element name="rootElement">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element name="expectedAttributes" type="expectedAttributesType" minOccurs="0"/>
+                            <xs:choice minOccurs="0">
+                                <xs:element name="expectedElements" type="expectedElementsType"/>
+                                <xs:element name="expectedContent" type="expectedContentType"/>
+                            </xs:choice>
+                            <xs:element name="extraRules" type="extraRulesType" minOccurs="0"/>
+                        </xs:sequence>
+                        <xs:attribute name="name" type="elementNameType" use="required"/>
+                    </xs:complexType>
+                </xs:element>
+
+            </xs:sequence>
+
+            <xs:attribute name="name" type="xs:string" use="optional"/>
+            <!--<xs:attribute name="version" type="xs:string" use="optional"/>-->
+
+        </xs:complexType>
+    </xs:element>
+
+
+    <xs:simpleType name="elementNameType">
+        <xs:restriction base="xs:string">
+            <xs:pattern value="([a-zA-Z_]+:){0,1}[a-zA-Z]+"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:simpleType name="namespacePrefixType">
+        <xs:restriction base="xs:string">
+            <xs:pattern value="[a-zA-Z0-9_]+"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:simpleType name="dictionaryNameType">
+        <xs:restriction base="xs:string">
+            <xs:pattern value="[a-zA-Z0-9\-_\.]+"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:complexType name="expectedAttributesType">
+        <xs:sequence>
+            <xs:element name="attribute" maxOccurs="unbounded" minOccurs="0">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="expectedContent" type="expectedContentType" minOccurs="0"/>
+                    </xs:sequence>
+                    <xs:attribute name="name" type="xs:string" use="required"/>
+                    <xs:attribute name="mandatory" type="xs:boolean" use="optional"/>
+                </xs:complexType>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="expectedElementsType">
+        <xs:sequence>
+            <xs:element name="element" maxOccurs="unbounded">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="expectedAttributes" type="expectedAttributesType" minOccurs="0"/>
+                        <xs:choice minOccurs="0">
+                            <xs:element name="expectedElements" type="expectedElementsType"/>
+                            <xs:element name="expectedContent" type="expectedContentType"/>
+                        </xs:choice>
+                        <xs:element name="extraRules" type="extraRulesType" minOccurs="0"/>
+                    </xs:sequence>
+                    <xs:attribute name="name" type="elementNameType" use="required"/>
+                    <xs:attribute name="mandatory" type="xs:boolean" use="optional"/>
+                    <xs:attribute name="specification" type="xs:string" use="optional"/>
+                    <xs:attribute name="repeatable" type="xs:boolean" use="optional"/>
+                    <xs:attribute name="errorMessage" type="xs:string" use="optional"/>
+                </xs:complexType>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="expectedContentType" mixed="true">
+        <xs:choice minOccurs="0">
+            <xs:element name="oneOf" type="oneOfType"/>
+            <xs:element name="value" type="valueType"/>
+            <xs:element name="regexp" type="regexpType"/>
+            <xs:element name="fromDictionary" type="dictionaryReferenceType"/>
+        </xs:choice>
+    </xs:complexType>
+
+    <xs:complexType name="oneOfType">
+        <xs:choice maxOccurs="unbounded">
+            <xs:element name="value" type="valueType"/>
+            <xs:element name="regexp" type="regexpType"/>
+            <xs:element name="fromDictionary" type="dictionaryReferenceType"/>
+        </xs:choice>
+    </xs:complexType>
+
+    <xs:simpleType name="valueType">
+        <xs:restriction base="xs:string"/>
+    </xs:simpleType>
+
+    <xs:simpleType name="regexpType">
+        <xs:restriction base="xs:string"/>
+    </xs:simpleType>
+
+    <xs:complexType name="dictionaryReferenceType">
+        <xs:simpleContent>
+            <xs:extension base="xs:string">
+                <xs:attribute type="xs:string" name="name" use="required"/>
+            </xs:extension>
+        </xs:simpleContent>
+    </xs:complexType>
+
+    <xs:complexType name="extraRulesType">
+        <xs:choice minOccurs="0">
+            <xs:element name="atLeastOneElementExists">
+                <xs:complexType>
+                    <xs:attribute name="xpath" use="required"/>
+                </xs:complexType>
+            </xs:element>
+        </xs:choice>
+    </xs:complexType>
+
+</xs:schema>

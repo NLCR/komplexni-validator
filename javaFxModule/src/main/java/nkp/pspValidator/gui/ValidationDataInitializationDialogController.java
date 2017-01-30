@@ -82,9 +82,9 @@ public class ValidationDataInitializationDialogController extends DialogControll
                 try {
                     Thread.sleep(300);
                     validationDataManager = new ValidationDataManager(getConfigurationManager());
-                    File fdmfsRoot = getConfigurationManager().getFileOrNull(ConfigurationManager.PROP_DMF_DIR);
+                    File fdmfsRoot = getConfigurationManager().getFileOrNull(ConfigurationManager.PROP_VALIDATOR_CONFIG_DIR);
                     if (fdmfsRoot == null) {
-                        processResult(new Result(false, "Není definován kořenový adresář fDMF!"));
+                        processResult(new Result(false, "Není definován adresář s konfigurací Validátoru!"));
                     } else {
                         updateRootDir(fdmfsRoot.getCanonicalPath());
                         checkReadableDir(fdmfsRoot);
@@ -159,14 +159,14 @@ public class ValidationDataInitializationDialogController extends DialogControll
 
     public void setFdmfsRootDir(ActionEvent actionEvent) {
         DirectoryChooser chooser = new DirectoryChooser();
-        chooser.setTitle("Vyberte kořenový adresář fDMF");
-        File currentDir = getConfigurationManager().getFileOrNull(ConfigurationManager.PROP_DMF_DIR);
+        chooser.setTitle("Vyberte adresář s konfigurací Validátoru");
+        File currentDir = getConfigurationManager().getFileOrNull(ConfigurationManager.PROP_VALIDATOR_CONFIG_DIR);
         if (currentDir != null && currentDir.exists()) {
             chooser.setInitialDirectory(currentDir);
         }
         File selectedDirectory = chooser.showDialog(stage);
         if (selectedDirectory != null) {
-            getConfigurationManager().setFile(ConfigurationManager.PROP_DMF_DIR, selectedDirectory);
+            getConfigurationManager().setFile(ConfigurationManager.PROP_VALIDATOR_CONFIG_DIR, selectedDirectory);
             startNow();
         }
     }

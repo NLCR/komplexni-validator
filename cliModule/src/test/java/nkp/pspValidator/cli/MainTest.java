@@ -65,7 +65,7 @@ public class MainTest {
         //devParams.getSectionsToRun().add("JPEG 2000");
 
         Main.main(devParams, buildParams(
-                "../sharedModule/src/main/resources/nkp/pspValidator/shared/fDMF"
+                "../sharedModule/src/main/resources/nkp/pspValidator/shared/validatorConfig"
                 //, MON_1_2
                 //, PER_1_6_INFO_INVALID_NS
                 , PER_1_6
@@ -88,13 +88,13 @@ public class MainTest {
         ));
     }
 
-    private String[] buildParams(String fdmfsDir, String pspDir, Dmf.Type dmfType, String dmfVersion, Integer verbosity, String xmlProtocolFile,
+    private String[] buildParams(String configDir, String pspDir, Dmf.Type dmfType, String dmfVersion, Integer verbosity, String xmlProtocolFile,
                                  String imageMagickPath, String jhovePath, String jpylyzerPath, String kakaduPath,
                                  boolean disableImageMagick, boolean disableJhove, boolean disableJpylyzer, boolean disableKakadu
     ) {
         List<String> params = new ArrayList<>();
-        params.add("-fd");
-        params.add(fdmfsDir);
+        params.add("-conf");
+        params.add(configDir);
 
         params.add("-pd");
         params.add(pspDir);

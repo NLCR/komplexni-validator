@@ -10,11 +10,11 @@ import java.util.Properties;
  */
 public class ConfigurationManager {
 
-    public static boolean DEV_MODE = false;
+    public static boolean DEV_MODE = true;
     public static boolean DEV_MODE_ONLY_SELECTED_SECTIONS = false;
 
     private static final String DEFAULT_LOG_DIR = "logs";
-    private static final String DEFAULT_FDMF_DIR = "fDMF";
+    private static final String DEFAULT_FDMF_DIR = "validatorConfig";
 
     private static File CONFIG_FILE_PRODUCTION = new File("config.properties");
     private static File CONFIG_FILE_DEV_WIN = new File("../../resources/main/dev/config-win.properties");
@@ -22,7 +22,7 @@ public class ConfigurationManager {
     private static File CONFIG_FILE_DEV_LINUX = new File("../../resources/main/dev/config-linux.properties");
 
     //fdmf
-    public static final String PROP_DMF_DIR = "fdmf.dir";
+    public static final String PROP_VALIDATOR_CONFIG_DIR = "validatorConfig.dir";
 
     //image tools
     public static final String PROP_IMAGE_TOOLS_CHECK_SHOWN = "image_tools_check.shown";
@@ -57,11 +57,11 @@ public class ConfigurationManager {
     }
 
     private void initDefaultProperties() {
-        //fDMF dir
-        File fdmfDir = getFileOrNull(PROP_DMF_DIR);
-        if (fdmfDir == null) {
-            fdmfDir = new File(DEFAULT_FDMF_DIR);
-            setFile(PROP_DMF_DIR, fdmfDir);
+        //validator config dir
+        File validatorConfigDir = getFileOrNull(PROP_VALIDATOR_CONFIG_DIR);
+        if (validatorConfigDir == null) {
+            validatorConfigDir = new File(DEFAULT_FDMF_DIR);
+            setFile(PROP_VALIDATOR_CONFIG_DIR, validatorConfigDir);
         }
         //log dir
         File logDir = getFileOrNull(PROP_LOG_DIR);
