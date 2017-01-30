@@ -80,7 +80,8 @@ public class VfCheckIdentifiersNoDuplicateTypes extends ValidationFunction {
                 if (!map.containsKey(id.getType())) {
                     map.put(id.getType(), id.getValue());
                 } else {
-                    result.addError(invalid(Level.ERROR, "seznam obsahuje více identifikátorů typu '%s', např: %s", id.getType(), id.toString()));
+                    String presentValue = map.get(id.getType());
+                    result.addError(invalid(Level.WARNING, "seznam obsahuje více identifikátorů typu '%s', např: %s, %s", id.getType(), id.getValue(), presentValue));
                 }
             }
         }

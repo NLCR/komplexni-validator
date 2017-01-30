@@ -1479,8 +1479,8 @@
         </rule>
 
         <rule name="DC_IDENTIFIERS_NO_DUPLICATES_WITHIN_DMDSEC">
-            <description>Identifikátory v jednotlivých Dublin Core záznamech musí mít unikátní typ.
-                Nesmí se tedy objevit dva a více identikátorů stejného typu v jednom záznamu.
+            <description>Identifikátory v jednotlivých Dublin Core záznamech by měly mít unikátní typ.
+                Neměly by se tedy objevit dva a více identikátorů stejného typu v jednom záznamu.
             </description>
 
             <validation functionName="checkIdentifiersNoDuplicateTypes">
@@ -2013,8 +2013,8 @@
         </rule>
 
         <rule name="MODS_IDENTIFIERS_NO_DUPLICATES_WITHIN_DMDSEC">
-            <description>Identifikátory v jednotlivých MODS záznamech musí mít unikátní typ.
-                Nesmí se tedy objevit dva a více identikátorů stejného typu v jednom záznamu.
+            <description>Identifikátory v jednotlivých MODS záznamech by měly mít unikátní typ.
+                Neměly by se tedy objevit dva a více identikátorů stejného typu v jednom záznamu.
             </description>
 
             <validation functionName="checkIdentifiersNoDuplicateTypes">
