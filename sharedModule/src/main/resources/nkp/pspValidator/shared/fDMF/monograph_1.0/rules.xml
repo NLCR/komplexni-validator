@@ -2329,11 +2329,9 @@
 
     </rules-section>
 
-    <rules-section name="Bibliografická metadata"
+    <!--TODO: dodelat-->
+    <!--<rules-section name="Bibliografická metadata"
                    description="validace obsahů bibliografických metadata v MODS a Dubline Core v souboru PRIMARY-METS">
-        <!--TODO: dodelat-->
-        <!--TODO: doplnit pro monografie-->
-
         <rule name="BIBLIOGRAPHIC_METADATA_MATCH_PROFILE_FOR_DC_MONOGRAPH_TITLE">
             <description>Bibliografická metadata pro entitu TITLE a formát DC musí splňovat požadovaný profil.
             </description>
@@ -2342,7 +2340,7 @@
                     <value name="mets_file" type="FILE">
                         <value-ref name="PRIMARY-METS_FILE"/>
                     </value>
-                    <!--TODO: do provided promenne -->
+                    &lt;!&ndash;TODO: do provided promenne &ndash;&gt;
                     <value name="profile_definition" type="FILE">
                         <value-ref name="BIBLIO_PROFILE_DC_TITLE"/>
                     </value>
@@ -2352,7 +2350,7 @@
             </validation>
         </rule>
 
-    </rules-section>
+    </rules-section>-->
 
 
 </fDMF>
