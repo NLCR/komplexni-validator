@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<validationTemplate
+        xmlns="http://www.nkp.cz/pspValidator/1.1/xmlValidationTemplate"
+        name="MODS title of multivolume monographic (AACR2)"
+>
+
+    <info>
+        <text>DMF Monografie-1.2 očekává MODS verze 3.5. Dále se zde upřesňují očekávaná metadata pro titul
+            vícesvazkové monografie pro záznamy zpracované podle katalogizačních pravidel AACR2.
+        </text>
+        <url>http://www.loc.gov/standards/mods/</url>
+        <url description="XSD pro MODS 3.5">http://www.loc.gov/standards/mods/v3/mods-3-5.xsd</url>
+        <url description="popis MODS 3.5">http://www.loc.gov/standards/mods/mods-outline-3-5.html</url>
+    </info>
+
+    <namespaces>
+        <namespace prefix="mods">http://www.loc.gov/mods/v3</namespace>
+    </namespaces>
+
+    <rootElement name="mods:mods">
+        <expectedAttributes>
+            <attribute name="ID">
+                <expectedContent>
+                    <regexp>MODS_TITLE_[0-9]{4}</regexp>>
+                </expectedContent>
+            </attribute>
+        </expectedAttributes>
+        <expectedElements>
+            <element name="mods:titleInfo">
+                <expectedElements>
+                    <element name="mods:title">
+                        <expectedContent/>
+                    </element>
+
+                    <element name="mods:subTitle" mandatory="false">
+                        <expectedContent/>
+                    </element>
+
+                    <element name="mods:partNumber" mandatory="false">
+                        <expectedContent/>
+                    </element>
+
+                    <element name="mods:partName" mandatory="false">
+                        <expectedContent/>
+                    </element>
+                </expectedElements>
+            </element>
+
+            <element name="mods:originInfo">
+                <expectedElements>
+                    <element name="mods:publisher" mandatory="false">
+                        <expectedContent/>
+                    </element>
+
+                    <element name="mods:edition" mandatory="false">
+                        <expectedContent/>
+                    </element>
+                </expectedElements>
+            </element>
+
+            <element name="mods:genre">
+                <expectedContent>
+                    <value>title</value>
+                </expectedContent>
+            </element>
+
+            <!--    identifier-->
+
+            <element name="mods:identifier" specification="@type='uuid'">
+                <expectedAttributes>
+                    <attribute name="type"/>
+                    <attribute name="invalid" mandatory="false">
+                        <expectedContent>
+                            <value>yes</value>
+                        </expectedContent>
+                    </attribute>
+                </expectedAttributes>
+                <expectedContent/>
+            </element>
+
+            <element name="mods:identifier" specification="@type='isbn'" mandatory="false">
+                <expectedAttributes>
+                    <attribute name="type"/>
+                    <attribute name="invalid" mandatory="false">
+                        <expectedContent>
+                            <value>yes</value>
+                        </expectedContent>
+                    </attribute>
+                </expectedAttributes>
+                <expectedContent/>
+            </element>
+
+            <element name="mods:identifier" specification="@type='ismn'" mandatory="false">
+                <expectedAttributes>
+                    <attribute name="type"/>
+                    <attribute name="invalid" mandatory="false">
+                        <expectedContent>
+                            <value>yes</value>
+                        </expectedContent>
+                    </attribute>
+                </expectedAttributes>
+                <expectedContent/>
+            </element>
+
+            <element name="mods:identifier" specification="@type='ccnb'" mandatory="false">
+                <expectedAttributes>
+                    <attribute name="type"/>
+                    <attribute name="invalid" mandatory="false">
+                        <expectedContent>
+                            <value>yes</value>
+                        </expectedContent>
+                    </attribute>
+                </expectedAttributes>
+                <expectedContent/>
+            </element>
+
+            <element name="mods:identifier"
+                     specification="@type!='uuid' and @type!='isbn' and @type!='ismn' and @type!='ccnb'"
+                     mandatory="false">
+                <expectedAttributes>
+                    <attribute name="type" mandatory="false"/>
+                    <attribute name="invalid" mandatory="false">
+                        <expectedContent>
+                            <value>yes</value>
+                        </expectedContent>
+                    </attribute>
+                    <attribute name="type"/>
+                </expectedAttributes>
+                <expectedContent/>
+            </element>
+        </expectedElements>
+    </rootElement>
+</validationTemplate>
+
+	

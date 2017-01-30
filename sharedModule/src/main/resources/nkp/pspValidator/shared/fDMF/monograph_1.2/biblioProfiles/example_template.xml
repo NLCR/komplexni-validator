@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<validationTemplate
+        xmlns="http://www.nkp.cz/pspValidator/1.1/xmlValidationTemplate"
+        name="ukázková šablona"
+>
+    <info>
+        <!--Různé poznámky, případně odkazy-->
+        <text>DMF Monografie-1.2 očekává MODS verze 3.5. Dále se zde upřesňují očekávaná metadata pro svazek
+            vícesvazkové monografie.
+        </text>
+        <url>http://www.loc.gov/standards/mods/</url>
+        <url description="XSD pro MODS 3.5">http://www.loc.gov/standards/mods/v3/mods-3-5.xsd</url>
+        <url description="popis MODS 3.5">http://www.loc.gov/standards/mods/mods-outline-3-5.html</url>
+    </info>
+    <namespaces>
+        <!--Mapování prefixů na jmenné prostory. Všecny použité prefixy zde musí být definovány.-->
+        <namespace prefix="mods">http://www.loc.gov/mods/v3</namespace>
+    </namespaces>
+    <dictionaries>
+        <!--Definice kontrolovaných slovníků. Všechny použité slovníky zde musí být definovány.-->
+        <dictionary name="marcrelator"
+                    description="Kódy rolí podle MARC21. Dostupné na http://www.loc.gov/marc/relators/relaterm.html"/>
+        <dictionary name="iso639-2b"
+                    description="Kódy jazyků podle ISO 639-2. Dostupné na http://www.loc.gov/standards/iso639-2/php/code_list.php"/>
+        <dictionary name="siglaADR" description="Sigly knihoven"/>
+    </dictionaries>
+
+    <!--Definice kořenového elementu. Ten se musí shodovat s kořenovým elementem dodaného dokumentu.
+        Jinak je definice stejná, jako u ostatních elementů, až na pár výjimek:
+        1. vždy platí mandatory="true"
+        2. nelze použít atribut specification
+    -->
+    <rootElement name="mods:mods">
+
+        <!--Defice očekávaných atributů elementu. Pokud je nalezen jiný, než zde definovaný atribut, je vyprodukován problém INFO-->
+        <!--Nelze definovat dvakrát atribut stejného jména, v opačném případě nastane chyba zpracování šablony-->
+        <expectedAttributes>
+
+            <!--Pokud má atribut mandatory="false" a není nalezen, je vyprodukován problém INFO-->
+            <!--Pokud má atribut mandatory="true" (defaultní hodnota) a není nalezen, je vyprodukován problém ERROR-->
+            <attribute name="type" mandatory="false">
+                <!--Atribut musí mýt vždy nějakou hodnotu, pokud je hodnota prázdná, je vyprodukován problém ERROR-->
+                <!--Není tedy nutné vždy použít element expectedContent-->
+            </attribute>
+
+            <attribute name="institutionType">
+                <!-- Element expectedContent je potřeba použít jen tehdy, pokud chceme omezit možné hodnoty-->
+                <!--Zde je příklad očekáváné konkrétní hodnoty-->
+                <expectedContent>
+                    <value>Library</value>
+                </expectedContent>
+            </attribute>
+
+            <attribute name="dayOfWeekNum">
+                <!-- Element expectedContent je potřeba použít jen tehdy, pokud chceme omezit možné hodnoty-->
+                <!-- Zde je příklad regulárního výrazu -->
+                <expectedContent>
+                    <regexp>[1-7]</regexp>
+                </expectedContent>
+            </attribute>
+
+            <attribute name="langCode">
+                <!-- Element expectedContent je potřeba použít jen tehdy, pokud chceme omezit možné hodnoty-->
+                <!-- Zde je příklad odkazu na kontrolovaný slovník. Nalezená hodnota se musí shodovat s některým záznamem slovníku -->
+                <expectedContent>
+                    <fromDictionary name="iso639-2b"/>
+                </expectedContent>
+            </attribute>
+
+            <attribute name="dayOfWeek">
+                <!-- Element expectedContent je potřeba použít jen tehdy, pokud chceme omezit možné hodnoty-->
+                <!-- Zde je příklad výčtu hodnot. Nalezená hodnota se musí shodovat s některou z definovaných hodnot -->
+                <expectedContent>
+                    <oneOf>
+                        <value>Monday</value>
+                        <value>Tuesday</value>
+                        <value>Wednesday</value>
+                        <value>Thursday</value>
+                        <value>Friday</value>
+                    </oneOf>
+                </expectedContent>
+            </attribute>
+
+            <attribute name="dayOfWeek">
+                <!-- Element expectedContent je potřeba použít jen tehdy, pokud chceme omezit možné hodnoty-->
+                <!-- Zde je příklad výčtu regulárních výrazů. Nalezená hodnota musí splňovat některý z regulárních výrazů. -->
+                <expectedContent>
+                    <oneOf>
+                        <value>Monday</value>
+                        <value>Tuesday</value>
+                        <value>Wednesday</value>
+                        <value>Thursday</value>
+                        <value>Friday</value>
+                    </oneOf>
+                </expectedContent>
+            </attribute>
+
+            <attribute name="institutionName">
+                <!-- Element expectedContent je potřeba použít jen tehdy, pokud chceme omezit možné hodnoty-->
+                <!-- Zde je příklad kombinace výčtu regulárních výrazů a hodnot. Nalezená hodnota musí splňovat některý z regulárních výrazů anebo s shodovat s něktoru z hodnot -->
+                <expectedContent>
+                    <oneOf>
+                        <regexp>.* knihovna</regexp>
+                        <regexp>.* muzeum</regexp>
+                        <regexp>.* archiv</regexp>
+                        <value>Library of congress</value>
+                        <value>Knihovna Václava Havla</value>
+                    </oneOf>
+                </expectedContent>
+            </attribute>
+
+        </expectedAttributes>
+
+        <!--Každý element může mít subelementy, nebo (textový) obsah. Očekávané elementy se definují přes expectedElements-->
+        <expectedElements>
+
+            <!-- Steně, jako u atributů je i u elementů možné uvést mandatory="false/true". Pokud není uvedeno, předpokládá se hodnota true -->
+            <element name="mods:note" mandatory="false">
+                <!--pokud je element "element" prázdný, validátor se jeho obsahem dále nezabývá-->
+            </element>
+
+            <element name="mods:description">
+                <!--Prázdný element expectedContent znamená, že je očekáváná JAKÁKOLIV hodnota, element tedy musí obsahovat nějaký text-->
+                <!--Nesmí ale mít ani subelementy - nelze použít expectedContent a zároveň expectedElements-->
+                <expectedContent/>
+            </element>
+
+            <element name="mods:dayOfWeek">
+                <!--Element expectedContent může upřesňovat očekávané hodnoty stejně, jako u atributů-->
+                <expectedContent>
+                    <oneOf>
+                        <value>Monday</value>
+                        <value>Tuesday</value>
+                        <value>Wednesday</value>
+                        <value>Thursday</value>
+                        <value>Friday</value>
+                    </oneOf>
+                </expectedContent>
+            </element>
+
+            <!--Je také možné upřesnit volbu elementu, ne jen podle názvu.
+            Obsah nepovinného atributu specification se použije k vytvoření xpath predikatu.
+            Nicmene atribut je i tak nutne definvoat v sekci expectedAttributes.
+            Zde třeba: mods:description[@type='secret']-->
+            <element name="mods:description" specification="@type='secret'">
+                <expectedAttributes>
+                    <attribute name="type"/>
+                </expectedAttributes>
+            </element>
+
+            <!--Takže lze třeba zvolit element description, který má atribut type-->
+            <element name="mods:description" specification="@type">
+                <expectedAttributes>
+                    <attribute name="type"/>
+                </expectedAttributes>
+            </element>
+
+            <!--Anebo element description, který atribut type nemá-->
+            <element name="mods:description" specification="not(@type)"/>
+
+            <!--Anebo element description, který má atribut type a zároveň atribut code-->
+            <element name="mods:description" specification="@type and @code">
+                <expectedAttributes>
+                    <attribute name="type"/>
+                    <attribute name="code"/>
+                </expectedAttributes>
+            </element>
+
+            <!--Je možné definiovat více očekávaných elementů stejného jména (zde mods:description) ale jen tehdy, pokud
+            mají všechny přítomný atribut specification a vždy s odlišným obsahem-->
+
+        </expectedElements>
+
+    </rootElement>
+
+</validationTemplate>
+
+        <!--TODO: dalsi pravidla (extraRules)-->
+        <!--TODO: XSD-->
+        <!--TODO: neopakovatelny element repeatable="false"-->
