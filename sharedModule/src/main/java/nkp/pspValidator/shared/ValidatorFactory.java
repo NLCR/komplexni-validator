@@ -26,6 +26,8 @@ public class ValidatorFactory {
         for (File configFile : fdmfConfiguration.getFdmfConfigFiles()) {
             engine.processConfigFile(configFile);
         }
+        //TODO: biblio validator files
+
         return new Validator(engine);
     }
 

@@ -1,5 +1,6 @@
 package nkp.pspValidator.shared;
 
+import nkp.pspValidator.shared.biblio.DictionaryManager;
 import nkp.pspValidator.shared.engine.exceptions.ValidatorConfigurationException;
 
 import java.io.File;
@@ -11,9 +12,12 @@ public class ValidatorConfigurationManager {
 
     private final File imageUtilsConfigFile;
     private final File fdmfDir;
+    private final File dictionariesDir;
+    private final DictionaryManager dictionaryManager;
+    //xsds
     private final File fdmfConfigXsd;
     private final File j2kProfileConfigXsd;
-    private final File dictionariesDir;
+    private final File biblioProfileXsd;
 
     public ValidatorConfigurationManager(File validatorConfigurationDir) throws ValidatorConfigurationException {
         checkDirExistAndReadable(validatorConfigurationDir);
@@ -21,14 +25,19 @@ public class ValidatorConfigurationManager {
         checkDirExistAndReadable(fdmfDir);
         imageUtilsConfigFile = new File(validatorConfigurationDir, "imageUtils.xml");
         checkFileExistAndReadable(imageUtilsConfigFile);
+        dictionariesDir = new File(validatorConfigurationDir, "dictionaries");
+        checkDirExistAndReadable(dictionariesDir);
+        dictionaryManager = new DictionaryManager(dictionariesDir);
+
+        //xsds
         File xsdDir = new File(validatorConfigurationDir, "xsd");
         checkDirExistAndReadable(xsdDir);
         fdmfConfigXsd = new File(xsdDir, "fdmfConfig.xsd");
         checkFileExistAndReadable(fdmfConfigXsd);
         j2kProfileConfigXsd = new File(xsdDir, "j2kProfile.xsd");
         checkFileExistAndReadable(j2kProfileConfigXsd);
-        dictionariesDir = new File(validatorConfigurationDir, "dictionaries");
-        checkDirExistAndReadable(dictionariesDir);
+        biblioProfileXsd = new File(xsdDir, "biblioProfile.xsd");
+        checkFileExistAndReadable(biblioProfileXsd);
     }
 
     public File getImageUtilsConfigFile() {
@@ -49,6 +58,14 @@ public class ValidatorConfigurationManager {
 
     public File getDictionariesDir() {
         return dictionariesDir;
+    }
+
+    public DictionaryManager getDictionaryManager() {
+        return dictionaryManager;
+    }
+
+    public File getBiblioProfileXsd() {
+        return biblioProfileXsd;
     }
 
     public void checkDirExistAndReadable(File dir) throws ValidatorConfigurationException {

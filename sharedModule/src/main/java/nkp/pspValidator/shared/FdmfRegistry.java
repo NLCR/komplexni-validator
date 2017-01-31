@@ -38,7 +38,11 @@ public class FdmfRegistry {
         File[] fdmfDirs = validatorConfigManager.getFdmfDir().listFiles((dir, name) -> name.matches("monograph_[0-9]+(\\.([0-9])+)*"));
         for (File fdmfDir : fdmfDirs) {
             String version = fdmfDir.getName().split("_")[1];
-            monographFdmfByVersion.put(version, new FdmfConfiguration(fdmfDir, validatorConfigManager.getFdmfConfigXsd(), validatorConfigManager.getJ2kProfileConfigXsd()));
+            monographFdmfByVersion.put(version, new FdmfConfiguration(
+                    fdmfDir,
+                    validatorConfigManager.getFdmfConfigXsd(),
+                    validatorConfigManager.getJ2kProfileConfigXsd(),
+                    validatorConfigManager.getBiblioProfileXsd()));
         }
     }
 
@@ -46,7 +50,11 @@ public class FdmfRegistry {
         File[] fdmfDirs = validatorConfigManager.getFdmfDir().listFiles((dir, name) -> name.matches("periodical_[0-9]+(\\.([0-9])+)*"));
         for (File fdmfDir : fdmfDirs) {
             String version = fdmfDir.getName().split("_")[1];
-            periodicalFdmfByVersion.put(version, new FdmfConfiguration(fdmfDir, validatorConfigManager.getFdmfConfigXsd(), validatorConfigManager.getJ2kProfileConfigXsd()));
+            periodicalFdmfByVersion.put(version, new FdmfConfiguration(
+                    fdmfDir,
+                    validatorConfigManager.getFdmfConfigXsd(),
+                    validatorConfigManager.getJ2kProfileConfigXsd(),
+                    validatorConfigManager.getBiblioProfileXsd()));
         }
     }
 

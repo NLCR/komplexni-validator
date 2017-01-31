@@ -1,6 +1,7 @@
 package npk.pspValidator.cli;
 
 import nkp.pspValidator.shared.*;
+import nkp.pspValidator.shared.bak.XsdValidator;
 import nkp.pspValidator.shared.engine.exceptions.InvalidXPathExpressionException;
 import nkp.pspValidator.shared.engine.exceptions.PspDataException;
 import nkp.pspValidator.shared.engine.exceptions.ValidatorConfigurationException;
@@ -9,7 +10,6 @@ import nkp.pspValidator.shared.imageUtils.CliCommand;
 import nkp.pspValidator.shared.imageUtils.ImageUtil;
 import nkp.pspValidator.shared.imageUtils.ImageUtilManager;
 import nkp.pspValidator.shared.imageUtils.ImageUtilManagerFactory;
-import nkp.pspValidator.shared.bak.XsdValidator;
 import org.apache.commons.cli.*;
 
 import java.io.File;
