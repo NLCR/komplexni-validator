@@ -6,10 +6,7 @@ import nkp.pspValidator.shared.engine.Level;
 import nkp.pspValidator.shared.engine.XmlManager;
 import nkp.pspValidator.shared.engine.exceptions.InvalidXPathExpressionException;
 import nkp.pspValidator.shared.engine.validationFunctions.ValidationResult;
-import org.w3c.dom.Attr;
-import org.w3c.dom.Element;
-import org.w3c.dom.NamedNodeMap;
-import org.w3c.dom.NodeList;
+import org.w3c.dom.*;
 
 import javax.xml.xpath.XPathConstants;
 import javax.xml.xpath.XPathExpression;
@@ -23,7 +20,7 @@ import java.util.Set;
  */
 public class BiblioValidator {
 
-    public static ValidationResult validate(BiblioTemplate biblioTemplate, Element rootEl, ValidationResult result) throws InvalidXPathExpressionException, XPathExpressionException {
+    public static ValidationResult validate(BiblioTemplate biblioTemplate, Document doc, ValidationResult result) throws InvalidXPathExpressionException, XPathExpressionException {
         XmlManager manager = new XmlManager(false);
         for (String prefix : biblioTemplate.getNamespaces().keySet()) {
             String url = biblioTemplate.getNamespaces().get(prefix);
@@ -32,14 +29,14 @@ public class BiblioValidator {
         ExpectedElementDefinition rootElDef = biblioTemplate.getRootElementDefinition();
         String rootElXpath = buildElementPath(null, rootElDef.buildRelativeXpath(), null);
         XPathExpression rootElXpathExpr = manager.buildXpath(rootElXpath);
-        NodeList modEls = (NodeList) rootElXpathExpr.evaluate(rootEl, XPathConstants.NODESET);
-        if (modEls.getLength() == 0) {
-            result.addError(Level.ERROR, String.format("nenalezen kořenový element %s", rootElDef.getElementName()));
-        } else if (modEls.getLength() > 1) {
-            result.addError(Level.ERROR, String.format("nalezeno více kořenových elementů %s", rootElDef.getElementName()));
+        NodeList biblioRootEls = (NodeList) rootElXpathExpr.evaluate(doc.getDocumentElement(), XPathConstants.NODESET);
+        if (biblioRootEls.getLength() == 0) {
+            result.addError(Level.ERROR, String.format("nenalezen kořenový element %s:%s", rootElDef.getElementNameNsPrefix(), rootElDef.getElementName()));
+        } else if (biblioRootEls.getLength() > 1) {
+            result.addError(Level.ERROR, String.format("nalezeno více kořenových elementů %s:%s", rootElDef.getElementNameNsPrefix(), rootElDef.getElementName()));
         } else { //continue - single root element
-            Element modsEl = (Element) modEls.item(0);
-            checkElement(manager, result, modsEl, rootElDef, null, null);
+            Element biblioRootEl = (Element) biblioRootEls.item(0);
+            checkElement(manager, result, biblioRootEl, rootElDef, null, null);
         }
         return result;
     }

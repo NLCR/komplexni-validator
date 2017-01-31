@@ -116,4 +116,23 @@ public class XmlUtils {
         }
         return builder.toString();
     }
+
+    public static String elementToXml(Element element) throws TransformerException {
+        StringWriter writer = new StringWriter();
+        Transformer transformer = TransformerFactory.newInstance().newTransformer();
+        transformer.transform(new DOMSource(element), new StreamResult(writer));
+        return writer.toString();
+    }
+
+    public static Document elementToNewDocument(Element element, boolean nsAware) throws ParserConfigurationException {
+        DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+        factory.setNamespaceAware(nsAware);
+        DocumentBuilder builder = factory.newDocumentBuilder();
+        Document newDocument = builder.newDocument();
+        Node importedNode = newDocument.importNode(element, true);
+        newDocument.appendChild(importedNode);
+        return newDocument;
+    }
+
+
 }

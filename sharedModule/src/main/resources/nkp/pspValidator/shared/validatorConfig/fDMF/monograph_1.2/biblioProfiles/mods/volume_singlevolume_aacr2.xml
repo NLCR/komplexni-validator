@@ -19,10 +19,13 @@
 
     <dictionaries>
         <dictionary name="marcRelatorCodes"
-                    description="Kódy rolí podle MARC21. Dostupné na http://www.loc.gov/marc/relators/relaterm.html"/>
+                    description="kódy rolí podle MARC21"
+                    url="http://www.loc.gov/marc/relators/relaterm.html"/>
         <dictionary name="iso6392languageCodes"
-                    description="Kódy jazyků podle ISO 639-2. Dostupné na http://www.loc.gov/standards/iso639-2/php/code_list.php"/>
-        <dictionary name="siglaInstitutionCodes" description="Sigly knihoven"/>
+                    description="kódy jazyků podle ISO 639-2"
+                    url="http://www.loc.gov/standards/iso639-2/php/code_list.php"/>
+        <dictionary name="siglaInstitutionCodes"
+                    description="sigly knihoven"/>
     </dictionaries>
 
     <rootElement name="mods:mods">
@@ -92,7 +95,7 @@
                             <attribute name="type"/>
                         </expectedAttributes>
                         <expectedContent>
-                            <regexp>[0-9]{4}-[0-9}{4}</regexp>
+                            <regexp>[0-9]{4}-[0-9]{4}</regexp>
                         </expectedContent>
                     </element>
 
@@ -446,7 +449,6 @@
                             <value>yes</value>
                         </expectedContent>
                     </attribute>
-                    <attribute name="type" mandatory="false"/>
                 </expectedAttributes>
                 <expectedContent/>
             </element>

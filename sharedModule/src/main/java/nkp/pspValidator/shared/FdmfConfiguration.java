@@ -93,8 +93,8 @@ public class FdmfConfiguration {
         //mods templates
         File modsTemplatesDir = new File(biblioProfilesDir, BIBLIO_PROFILES_MODS_DIR);
         checkDirExistAndReadable(modsTemplatesDir);
-        modsTemplatesDir.listFiles((dir, name) -> name.endsWith(".xml"));
-        for (File template : biblioModsTemplates) {
+        File[] modsTemplates = modsTemplatesDir.listFiles((dir, name) -> name.endsWith(".xml"));
+        for (File template : modsTemplates) {
             //xsd validation of template
             validateConfigFile(template, biblioProfileXsd);
             biblioModsTemplates.add(template);

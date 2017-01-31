@@ -18,11 +18,14 @@
     </namespaces>
 
     <dictionaries>
-        <dictionary name="marcrelator"
-                    description="Kódy rolí podle MARC21. Dostupné na http://www.loc.gov/marc/relators/relaterm.html"/>
-        <dictionary name="iso639-2b"
-                    description="Kódy jazyků podle ISO 639-2. Dostupné na http://www.loc.gov/standards/iso639-2/php/code_list.php"/>
-        <dictionary name="siglaADR" description="Sigly knihoven"/>
+        <dictionary name="marcRelatorCodes"
+                    description="kódy rolí podle MARC21"
+                    url="http://www.loc.gov/marc/relators/relaterm.html"/>
+        <dictionary name="iso6392languageCodes"
+                    description="kódy jazyků podle ISO 639-2"
+                    url="http://www.loc.gov/standards/iso639-2/php/code_list.php"/>
+        <dictionary name="siglaInstitutionCodes"
+                    description="sigly knihoven"/>
     </dictionaries>
 
     <rootElement name="mods:mods">
@@ -137,7 +140,7 @@
                                     </attribute>
                                 </expectedAttributes>
                                 <expectedContent>
-                                    <fromDictionary name="marcrelator"/>
+                                    <fromDictionary name="marcRelatorCodes"/>
                                 </expectedContent>
                             </element>
                         </expectedElements>
@@ -503,7 +506,7 @@
                             </attribute>
                         </expectedAttributes>
                         <expectedContent>
-                            <fromDictionary name="iso639-2b"/>
+                            <fromDictionary name="iso6392languageCodes"/>
                         </expectedContent>
                     </element>
                 </expectedElements>
@@ -719,7 +722,6 @@
                             <value>yes</value>
                         </expectedContent>
                     </attribute>
-                    <attribute name="type" mandatory="false"/>
                 </expectedAttributes>
                 <expectedContent/>
             </element>
@@ -742,7 +744,7 @@
                             </attribute>
                         </expectedAttributes>
                         <expectedContent>
-                            <fromDictionary name="siglaADR"/>
+                            <fromDictionary name="siglaInstitutionCodes"/>
                         </expectedContent>
                     </element>
 

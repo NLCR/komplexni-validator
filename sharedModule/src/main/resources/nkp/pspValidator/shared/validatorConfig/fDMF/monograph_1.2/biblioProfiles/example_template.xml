@@ -12,17 +12,22 @@
         <url description="XSD pro MODS 3.5">http://www.loc.gov/standards/mods/v3/mods-3-5.xsd</url>
         <url description="popis MODS 3.5">http://www.loc.gov/standards/mods/mods-outline-3-5.html</url>
     </info>
+
     <namespaces>
         <!--Mapování prefixů na jmenné prostory. Všecny použité prefixy zde musí být definovány.-->
         <namespace prefix="mods">http://www.loc.gov/mods/v3</namespace>
     </namespaces>
+
     <dictionaries>
-        <!--Definice kontrolovaných slovníků. Všechny použité slovníky zde musí být definovány.-->
-        <dictionary name="marcrelator"
-                    description="Kódy rolí podle MARC21. Dostupné na http://www.loc.gov/marc/relators/relaterm.html"/>
-        <dictionary name="iso639-2b"
-                    description="Kódy jazyků podle ISO 639-2. Dostupné na http://www.loc.gov/standards/iso639-2/php/code_list.php"/>
-        <dictionary name="siglaADR" description="Sigly knihoven"/>
+        <!--Definice kontrolovaných slovníků. Všechny v dokumentu použité slovníky zde musí být definovány.-->
+        <dictionary name="marcRelatorCodes"
+                    description="kódy rolí podle MARC21"
+                    url="http://www.loc.gov/marc/relators/relaterm.html"/>
+        <dictionary name="iso6392languageCodes"
+                    description="kódy jazyků podle ISO 639-2"
+                    url="http://www.loc.gov/standards/iso639-2/php/code_list.php"/>
+        <dictionary name="siglaInstitutionCodes"
+                    description="sigly knihoven"/>
     </dictionaries>
 
     <!--Definice kořenového elementu. Ten se musí shodovat s kořenovým elementem dodaného dokumentu.
@@ -63,7 +68,7 @@
                 <!-- Element expectedContent je potřeba použít jen tehdy, pokud chceme omezit možné hodnoty-->
                 <!-- Zde je příklad odkazu na kontrolovaný slovník. Nalezená hodnota se musí shodovat s některým záznamem slovníku -->
                 <expectedContent>
-                    <fromDictionary name="iso639-2b"/>
+                    <fromDictionary name="iso6392languageCodes"/>
                 </expectedContent>
             </attribute>
 

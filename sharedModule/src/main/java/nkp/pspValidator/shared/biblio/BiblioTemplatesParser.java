@@ -9,7 +9,6 @@ import org.w3c.dom.Element;
 
 import java.io.File;
 import java.util.*;
-import java.util.logging.Logger;
 
 import static nkp.pspValidator.shared.XmlUtils.getFirstChildElementsByName;
 

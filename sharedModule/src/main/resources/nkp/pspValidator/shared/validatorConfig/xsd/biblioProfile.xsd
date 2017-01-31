@@ -54,6 +54,7 @@
                                         <xs:extension base="xs:string">
                                             <xs:attribute name="name" use="required" type="dictionaryNameType"/>
                                             <xs:attribute name="description" use="optional" type="xs:string"/>
+                                            <xs:attribute name="url" use="optional" type="xs:anyURI"/>
                                         </xs:extension>
                                     </xs:simpleContent>
                                 </xs:complexType>

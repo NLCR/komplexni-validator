@@ -21,10 +21,7 @@
 
             <element name="dc:title"
                      errorMessage="Očekáván povinný element dc:title obsahující název, případně podnázev titulu.">
-                <!--<expectedContent/>-->
-                <expectedContent>
-                    <value>TODO</value>
-                </expectedContent>
+                <expectedContent/>
             </element>
 
             <element name="dc:description" mandatory="false">

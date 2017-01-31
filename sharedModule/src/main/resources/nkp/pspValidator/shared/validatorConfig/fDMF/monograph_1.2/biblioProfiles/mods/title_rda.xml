@@ -151,7 +151,6 @@
                             <value>yes</value>
                         </expectedContent>
                     </attribute>
-                    <attribute name="type"/>
                 </expectedAttributes>
                 <expectedContent/>
             </element>

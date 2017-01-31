@@ -16,7 +16,7 @@ import static nkp.pspValidator.shared.engine.types.MetadataFormat.MODS;
  */
 public class BiblioTemplatesManager {
 
-    private final Map<MetadataFormat, Map<CatalogingRules, Map<String, File>>> data = new HashMap<>();
+    private final Map<MetadataFormat, Map<CatalogingConventions, Map<String, File>>> data = new HashMap<>();
     private final BiblioTemplatesParser parser;
 
     public BiblioTemplatesManager(BiblioTemplatesParser parser) {
@@ -26,33 +26,34 @@ public class BiblioTemplatesManager {
     }
 
     public void processFile(File file, MetadataFormat format) throws ValidatorConfigurationException {
+        //System.err.println("processing: " + file.getName() + ", " + format);
         //just test-parsing so that we reveal potential errors before actually processing it
         parser.parseTemplate(file);
-        Map<CatalogingRules, Map<String, File>> catalogingRulesMapMap = data.get(format);
+        Map<CatalogingConventions, Map<String, File>> conventionsMapMap = data.get(format);
         String filename = file.getName();
         String filenameWithoutSuffix = file.getName().substring(0, filename.length() - ".xml".length());
-        CatalogingRules rules = detectCatalogingRules(filenameWithoutSuffix, file);
-        Map<String, File> rulesMap = catalogingRulesMapMap.get(rules);
-        if (rulesMap == null) {
-            rulesMap = new HashMap<>();
+        CatalogingConventions conventions = detectCatalogingConventions(filenameWithoutSuffix, file);
+        Map<String, File> filenameFileMap = conventionsMapMap.get(conventions);
+        if (filenameFileMap == null) {
+            filenameFileMap = new HashMap<>();
         }
-        catalogingRulesMapMap.put(rules, rulesMap);
-        String fileId = buildFileId(filenameWithoutSuffix, rules);
-        rulesMap.put(fileId, file);
+        conventionsMapMap.put(conventions, filenameFileMap);
+        String fileId = buildFileId(filenameWithoutSuffix, conventions);
+        filenameFileMap.put(fileId, file);
     }
 
-    private CatalogingRules detectCatalogingRules(String filenameWithoutSuffix, File file) throws ValidatorConfigurationException {
+    private CatalogingConventions detectCatalogingConventions(String filenameWithoutSuffix, File file) throws ValidatorConfigurationException {
         if (filenameWithoutSuffix.endsWith("_aacr2")) {
-            return CatalogingRules.AACR2;
+            return CatalogingConventions.AACR2;
         } else if (filenameWithoutSuffix.endsWith("_rda")) {
-            return CatalogingRules.RDA;
+            return CatalogingConventions.RDA;
         } else {
             throw new ValidatorConfigurationException("neznámá katalogizační pravidlo souboru %s", file.getAbsolutePath());
         }
     }
 
-    private String buildFileId(String filenameWithoutSuffix, CatalogingRules rules) throws ValidatorConfigurationException {
-        switch (rules) {
+    private String buildFileId(String filenameWithoutSuffix, CatalogingConventions conventions) throws ValidatorConfigurationException {
+        switch (conventions) {
             case AACR2:
                 return filenameWithoutSuffix.substring(0, filenameWithoutSuffix.length() - "_aacr2".length());
             case RDA:
@@ -62,12 +63,8 @@ public class BiblioTemplatesManager {
         }
     }
 
-    public static enum CatalogingRules {
-        AACR2, RDA;
-    }
-
-    public BiblioTemplate buildTemplate(String fileId, MetadataFormat format, CatalogingRules rules) {
-        File file = getTemplateFile(fileId, format, rules);
+    public BiblioTemplate buildTemplate(String fileId, MetadataFormat format, CatalogingConventions conventions) {
+        File file = getTemplateFile(fileId, format, conventions);
         if (file == null) {
             return null;
         } else {
@@ -80,12 +77,12 @@ public class BiblioTemplatesManager {
         }
     }
 
-    private File getTemplateFile(String fileId, MetadataFormat format, CatalogingRules rules) {
-        Map<CatalogingRules, Map<String, File>> catalogingRulesMapMap = data.get(format);
-        if (catalogingRulesMapMap == null) {
+    private File getTemplateFile(String fileId, MetadataFormat format, CatalogingConventions conventions) {
+        Map<CatalogingConventions, Map<String, File>> conventionsMapMap = data.get(format);
+        if (conventionsMapMap == null) {
             return null;
         } else {
-            Map<String, File> stringFileMap = catalogingRulesMapMap.get(rules);
+            Map<String, File> stringFileMap = conventionsMapMap.get(conventions);
             if (stringFileMap == null) {
                 return null;
             } else {
@@ -93,6 +90,5 @@ public class BiblioTemplatesManager {
             }
         }
     }
-
 
 }
