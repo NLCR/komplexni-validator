@@ -9,7 +9,7 @@ import nkp.pspValidator.shared.imageUtils.CliCommand;
 import nkp.pspValidator.shared.imageUtils.ImageUtil;
 import nkp.pspValidator.shared.imageUtils.ImageUtilManager;
 import nkp.pspValidator.shared.imageUtils.ImageUtilManagerFactory;
-import nkp.pspValidator.shared.xsdValidation.XsdValidator;
+import nkp.pspValidator.shared.bak.XsdValidator;
 import org.apache.commons.cli.*;
 
 import java.io.File;

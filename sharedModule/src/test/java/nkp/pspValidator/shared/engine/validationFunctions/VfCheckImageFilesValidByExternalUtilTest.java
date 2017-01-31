@@ -25,8 +25,8 @@ public class VfCheckImageFilesValidByExternalUtilTest {
     //TODO: presunout
     private static final File EXAMPLES_ROOT_DIR = new File("src/test/resources/jpeg2000");
     //private static final File FDMD_ROOT = new File("src/main/resources/nkp/pspValidator/shared/fDMF/monograph_1.2");
-    private static final File FDMD_ROOT = new File("src/main/resources/nkp/pspValidator/shared/fDMF");
-    private static final File IMAGE_UTILS_CONFIG = new File("src/main/resources/nkp/pspValidator/shared/fDMF/imageUtils.xml");
+    private static final File FDMD_ROOT = new File("src/main/resources/nkp/pspValidator/shared/validatorConfig");
+    private static final File IMAGE_UTILS_CONFIG = new File("src/main/resources/nkp/pspValidator/shared/validatorConfig/imageUtils.xml");
     private static File IMAGEMAGICK_PATH_LINUX = null;
     //ImageMagick-7.0.3-7-Q16-x64-static.exe
     private static File IMAGEMAGICK_PATH_WINDOWS = new File("C:\\Program Files\\ImageMagick-7.0.3-Q16");
@@ -101,7 +101,8 @@ public class VfCheckImageFilesValidByExternalUtilTest {
 
 
         detectImageTools(imageUtilManager);
-        FdmfConfiguration fdmfConfig = new FdmfRegistry(FDMD_ROOT).getFdmfConfig(new Dmf(Dmf.Type.MONOGRAPH, "1.2"));
+        ValidatorConfigurationManager validatorConfigManager = new ValidatorConfigurationManager(FDMD_ROOT);
+        FdmfConfiguration fdmfConfig = new FdmfRegistry(validatorConfigManager).getFdmfConfig(new Dmf(Dmf.Type.MONOGRAPH, "1.2"));
         fdmfConfig.initJ2kProfiles(imageUtilManager);
         Validator validator = ValidatorFactory.buildValidator(fdmfConfig, new File("/tmp"));
         return validator.getEngine();

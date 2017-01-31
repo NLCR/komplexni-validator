@@ -1,6 +1,7 @@
 package nkp.pspValidator.shared.engine;
 
 import nkp.pspValidator.shared.FdmfRegistry;
+import nkp.pspValidator.shared.ValidatorConfigurationManager;
 import nkp.pspValidator.shared.engine.exceptions.ValidatorConfigurationException;
 import org.junit.Test;
 
@@ -31,7 +32,9 @@ public class ValidatorFactoryRegistryTest {
 
     @Test
     public void versions() throws ValidatorConfigurationException {
-        FdmfRegistry registry = new FdmfRegistry(new File("src/main/resources/nkp/pspValidator/shared/fDMF"));
+        File validatorConfigDir = new File("src/main/resources/nkp/pspValidator/shared/validatorConfig");
+        ValidatorConfigurationManager validatorConfigManager = new ValidatorConfigurationManager(validatorConfigDir);
+        FdmfRegistry registry = new FdmfRegistry(validatorConfigManager);
 
 /*
         assertEquals(2, registry.getMonographFdmfVersions().size());

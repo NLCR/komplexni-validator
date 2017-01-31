@@ -13,6 +13,7 @@ public class ValidatorConfigurationManager {
     private final File fdmfDir;
     private final File fdmfConfigXsd;
     private final File j2kProfileConfigXsd;
+    private final File dictionariesDir;
 
     public ValidatorConfigurationManager(File validatorConfigurationDir) throws ValidatorConfigurationException {
         checkDirExistAndReadable(validatorConfigurationDir);
@@ -23,10 +24,11 @@ public class ValidatorConfigurationManager {
         File xsdDir = new File(validatorConfigurationDir, "xsd");
         checkDirExistAndReadable(xsdDir);
         fdmfConfigXsd = new File(xsdDir, "fdmfConfig.xsd");
-        //fdmfConfigXsd = new File(xsdDir, "info.txt");
         checkFileExistAndReadable(fdmfConfigXsd);
         j2kProfileConfigXsd = new File(xsdDir, "j2kProfile.xsd");
         checkFileExistAndReadable(j2kProfileConfigXsd);
+        dictionariesDir = new File(validatorConfigurationDir, "dictionaries");
+        checkDirExistAndReadable(dictionariesDir);
     }
 
     public File getImageUtilsConfigFile() {
@@ -43,6 +45,10 @@ public class ValidatorConfigurationManager {
 
     public File getJ2kProfileConfigXsd() {
         return j2kProfileConfigXsd;
+    }
+
+    public File getDictionariesDir() {
+        return dictionariesDir;
     }
 
     public void checkDirExistAndReadable(File dir) throws ValidatorConfigurationException {
