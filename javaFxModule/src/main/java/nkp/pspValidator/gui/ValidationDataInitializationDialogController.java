@@ -93,6 +93,7 @@ public class ValidationDataInitializationDialogController extends DialogControll
                         ImageUtilManager imageUtilManager = new ImageUtilManagerFactory(validatorConfigMgr.getImageUtilsConfigFile()).buildImageUtilManager(getConfigurationManager().getPlatform().getOperatingSystem());
                         validationDataManager.setImageUtilManager(imageUtilManager);
                         validationDataManager.setFdmfRegistry(new FdmfRegistry(validatorConfigMgr));
+                        validationDataManager.setValidatorConfigMgr(validatorConfigMgr);
                         processResult(new Result(true, null));
                     }
                 } catch (ValidatorConfigurationException e) {

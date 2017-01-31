@@ -18,7 +18,7 @@ import static nkp.pspValidator.shared.XmlUtils.getFirstChildElementsByName;
  */
 public class BiblioTemplatesParser {
 
-    private static final Logger LOG = Logger.getLogger(BiblioTemplatesParser.class.getSimpleName());
+    //private static final Logger LOG = Logger.getLogger(BiblioTemplatesParser.class.getSimpleName());
 
     private final DictionaryManager dictionaryManager;
 
@@ -27,7 +27,7 @@ public class BiblioTemplatesParser {
     }
 
     public BiblioTemplate parseTemplate(File templateXml) throws ValidatorConfigurationException {
-        LOG.info(String.format("parsing %s", templateXml.getAbsolutePath()));
+        //LOG.info(String.format("parsing %s", templateXml.getAbsolutePath()));
         BiblioTemplate biblioTemplate = new BiblioTemplate();
         XMLTag doc = XMLDoc.from(templateXml, true); //ignoring namespaces
         for (Element childEl : doc.getChildElement()) {
@@ -59,7 +59,7 @@ public class BiblioTemplatesParser {
         for (Element nsEl : namespaceEls) {
             String prefix = nsEl.getAttribute("prefix");
             String url = nsEl.getTextContent().trim();
-            LOG.info(String.format("deklarován jmenný prostor s prefixem '%s' a url: %s", prefix, url));
+            //LOG.info(String.format("deklarován jmenný prostor s prefixem '%s' a url: %s", prefix, url));
             result.put(prefix, url);
         }
         return result;
@@ -70,9 +70,9 @@ public class BiblioTemplatesParser {
         List<Element> namespaceEls = XmlUtils.getChildrenElementsByName(dictionariesEl, "dictionary");
         for (Element nsEl : namespaceEls) {
             String dictionaryName = nsEl.getAttribute("name");
-            LOG.info(String.format("deklarován slovník '%s'", dictionaryName));
+            //LOG.info(String.format("deklarován slovník '%s'", dictionaryName));
             if (result.contains(dictionaryName)) {
-                LOG.warning(String.format("slovník '%s' deklarován vícenásobně", dictionaryName));
+                //LOG.warning(String.format("slovník '%s' deklarován vícenásobně", dictionaryName));
             }
             if (!dictionaryManager.hasDictionary(dictionaryName)) {
                 throw new ValidatorConfigurationException("kontrolovaný slovník %s nenalezen", dictionaryName);

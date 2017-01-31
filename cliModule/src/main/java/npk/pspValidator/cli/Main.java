@@ -295,7 +295,7 @@ public class Main {
         fdmfConfig.initJ2kProfiles(imageUtilManager);
 
         //validate
-        Validator validator = ValidatorFactory.buildValidator(fdmfConfig, pspRoot);
+        Validator validator = ValidatorFactory.buildValidator(fdmfConfig, pspRoot, validatorConfigManager.getDictionaryManager());
         out.println(String.format("Validátor inicializován, spouštím validace"));
         ValidationState.ProgressListener progressListener = null;
         switch (printVerbosity) {

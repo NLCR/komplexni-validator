@@ -55,6 +55,8 @@ public class FdmfConfiguration {
 
     private void init() throws ValidatorConfigurationException {
         checkDirExistAndReadable(fdmfRoot);
+
+        //nacteni xsd pro metadata
         File xsdRoot = new File(fdmfRoot, XSD_DIR);
         checkDirExistAndReadable(xsdRoot);
         providedFiles.put("INFO_XSD_FILE", findXsdFile(xsdRoot, "DMF-info", "info_[0-9]+(\\.([0-9])+)*\\.xsd"));
@@ -183,5 +185,13 @@ public class FdmfConfiguration {
 
     public List<File> getFdmfConfigFiles() {
         return fdmfConfigFiles;
+    }
+
+    public List<File> getBiblioModsTemplates() {
+        return biblioModsTemplates;
+    }
+
+    public List<File> getBiblioDcTemplates() {
+        return biblioDcTemplates;
     }
 }

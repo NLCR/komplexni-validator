@@ -1,5 +1,6 @@
 package nkp.pspValidator.shared.engine;
 
+import nkp.pspValidator.shared.biblio.BiblioTemplatesManager;
 import nkp.pspValidator.shared.engine.evaluationFunctions.*;
 import nkp.pspValidator.shared.engine.exceptions.InvalidXPathExpressionException;
 import nkp.pspValidator.shared.engine.exceptions.ValidatorConfigurationException;
@@ -20,7 +21,6 @@ import java.util.Map;
  */
 public class Engine {
 
-
     private final Map<String, ValueDefinition> valueDefinitionsByVarName = new HashMap<>();
     private final Map<String, ValueEvaluation> valueEvaluationsByVarName = new HashMap<>();
 
@@ -34,6 +34,16 @@ public class Engine {
 
     private final RulesManager rulesManager = new RulesManager();
     private final ImageValidator imageValidator;
+
+    private BiblioTemplatesManager biblioMgr;
+
+    public BiblioTemplatesManager getBiblioMgr() {
+        return biblioMgr;
+    }
+
+    public void setBiblioMgr(BiblioTemplatesManager biblioMgr) {
+        this.biblioMgr = biblioMgr;
+    }
 
     public Engine(ImageValidator imageValidator) {
         this.imageValidator = imageValidator;

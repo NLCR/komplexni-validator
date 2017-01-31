@@ -23,13 +23,12 @@ import java.util.Set;
  */
 public class BiblioValidator {
 
-    public static ValidationResult validate(BiblioTemplate biblioTemplate, Element rootEl) throws InvalidXPathExpressionException, XPathExpressionException {
+    public static ValidationResult validate(BiblioTemplate biblioTemplate, Element rootEl, ValidationResult result) throws InvalidXPathExpressionException, XPathExpressionException {
         XmlManager manager = new XmlManager(false);
         for (String prefix : biblioTemplate.getNamespaces().keySet()) {
             String url = biblioTemplate.getNamespaces().get(prefix);
             manager.setNamespaceUri(prefix, url);
         }
-        ValidationResult result = new ValidationResult();
         ExpectedElementDefinition rootElDef = biblioTemplate.getRootElementDefinition();
         String rootElXpath = buildElementPath(null, rootElDef.buildRelativeXpath(), null);
         XPathExpression rootElXpathExpr = manager.buildXpath(rootElXpath);

@@ -63,18 +63,20 @@ public class MainTest {
         //devParams.getSectionsToRun().add("Bibliografická metadata");
         //devParams.getSectionsToRun().add("Identifikátory");
         //devParams.getSectionsToRun().add("JPEG 2000");
+        devParams.getSectionsToRun().add("Bibliografická metadata");
+
 
         Main.main(devParams, buildParams(
                 "../sharedModule/src/main/resources/nkp/pspValidator/shared/validatorConfig"
-                //, MON_1_2
+                , MON_1_2
                 //, PER_1_6_INFO_INVALID_NS
-                , PER_1_6
+                //, PER_1_6
                 //, PER_1_4
                 //, MON_1_2_INVALID_IMAGES
                 //, MON_1_2_MAP
                 //,PER_1_6
-                , Dmf.Type.PERIODICAL//, Dmf.Type.MONOGRAPH
-                , "1.4"//, "1.2"
+                , null//, Dmf.Type.PERIODICAL//, Dmf.Type.MONOGRAPH
+                , null //"1.4"//, "1.2"
                 , 2 //verbosity
                 , null//"src/test/resources/protocol.xml" //xml protocol
                 , imageMagickPath //null //imageMagick path

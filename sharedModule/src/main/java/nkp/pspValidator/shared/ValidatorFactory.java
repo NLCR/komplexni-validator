@@ -1,7 +1,11 @@
 package nkp.pspValidator.shared;
 
+import nkp.pspValidator.shared.biblio.BiblioTemplatesManager;
+import nkp.pspValidator.shared.biblio.BiblioTemplatesParser;
+import nkp.pspValidator.shared.biblio.DictionaryManager;
 import nkp.pspValidator.shared.engine.Engine;
 import nkp.pspValidator.shared.engine.exceptions.ValidatorConfigurationException;
+import nkp.pspValidator.shared.engine.types.MetadataFormat;
 
 import java.io.File;
 import java.util.Map;
@@ -11,7 +15,7 @@ import java.util.Map;
  */
 public class ValidatorFactory {
 
-    public static Validator buildValidator(FdmfConfiguration fdmfConfiguration, File pspRootDir) throws ValidatorConfigurationException {
+    public static Validator buildValidator(FdmfConfiguration fdmfConfiguration, File pspRootDir, DictionaryManager dictionaryManager) throws ValidatorConfigurationException {
         Engine engine = new Engine(fdmfConfiguration.getImageValidator());
         //psp dir
         engine.setProvidedFile("PSP_DIR", pspRootDir);
@@ -26,7 +30,15 @@ public class ValidatorFactory {
         for (File configFile : fdmfConfiguration.getFdmfConfigFiles()) {
             engine.processConfigFile(configFile);
         }
-        //TODO: biblio validator files
+        // process biblio validator files
+        BiblioTemplatesManager biblioMgr = new BiblioTemplatesManager(new BiblioTemplatesParser(dictionaryManager));
+        for (File templateFile : fdmfConfiguration.getBiblioDcTemplates()) {
+            biblioMgr.processFile(templateFile, MetadataFormat.DC);
+        }
+        for (File templateFile : fdmfConfiguration.getBiblioModsTemplates()) {
+            biblioMgr.processFile(templateFile, MetadataFormat.MODS);
+        }
+        engine.setBiblioMgr(biblioMgr);
 
         return new Validator(engine);
     }

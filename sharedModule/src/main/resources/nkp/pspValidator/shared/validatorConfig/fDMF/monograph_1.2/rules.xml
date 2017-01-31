@@ -2300,7 +2300,7 @@
     </rules-section>
 
     <!--TODO: dodelat-->
-    <!--<rules-section name="Bibliografická metadata"
+   <!-- <rules-section name="Bibliografická metadata"
                    description="validace obsahů bibliografických metadata v MODS a Dubline Core v souboru PRIMARY-METS">
         <rule name="BIBLIOGRAPHIC_METADATA_MATCH_PROFILE_FOR_DC_MONOGRAPH_TITLE">
             <description>Bibliografická metadata pro entitu TITLE a formát DC musí splňovat požadovaný profil.
@@ -2311,9 +2311,9 @@
                         <value-ref name="PRIMARY-METS_FILE"/>
                     </value>
                     &lt;!&ndash;TODO: do provided promenne &ndash;&gt;
-                    <value name="profile_definition" type="FILE">
+                    &lt;!&ndash;<value name="profile_definition" type="FILE">
                         <value-ref name="BIBLIO_PROFILE_DC_TITLE"/>
-                    </value>
+                    </value>&ndash;&gt;
                     <value name="metadata_format" type="METADATA_FORMAT">DC</value>
                     <value name="entity_type" type="ENTITY_TYPE">TITLE</value>
                 </params>

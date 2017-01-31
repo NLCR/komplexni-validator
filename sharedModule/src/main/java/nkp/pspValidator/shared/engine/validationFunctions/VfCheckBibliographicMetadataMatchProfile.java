@@ -1,6 +1,10 @@
 package nkp.pspValidator.shared.engine.validationFunctions;
 
 
+import com.sun.scenario.effect.impl.sw.sse.SSEBlend_SRC_OUTPeer;
+import nkp.pspValidator.shared.biblio.BiblioTemplatesManager;
+import nkp.pspValidator.shared.biblio.BiblioValidator;
+import nkp.pspValidator.shared.biblio.biblioValidator.BiblioTemplate;
 import nkp.pspValidator.shared.engine.Engine;
 import nkp.pspValidator.shared.engine.ValueEvaluation;
 import nkp.pspValidator.shared.engine.ValueType;
@@ -25,7 +29,7 @@ import java.io.File;
 public class VfCheckBibliographicMetadataMatchProfile extends ValidationFunction {
 
     public static final String PARAM_METS_FILE = "mets_file";
-    public static final String PARAM_PROFILE_DEFINITION = "profile_definition";
+    //public static final String PARAM_PROFILE_DEFINITION = "profile_definition";
     public static final String PARAM_METADATA_FORMAT = "metadata_format";
     public static final String PARAM_ENTITY_TYPE = "entity_type";
 
@@ -33,7 +37,7 @@ public class VfCheckBibliographicMetadataMatchProfile extends ValidationFunction
     public VfCheckBibliographicMetadataMatchProfile(Engine engine) {
         super(engine, new Contract()
                 .withValueParam(PARAM_METS_FILE, ValueType.FILE, 1, 1)
-                .withValueParam(PARAM_PROFILE_DEFINITION, ValueType.FILE, 1, 1)
+                //.withValueParam(PARAM_PROFILE_DEFINITION, ValueType.FILE, 1, 1)
                 .withValueParam(PARAM_METADATA_FORMAT, ValueType.METADATA_FORMAT, 1, 1)
                 .withValueParam(PARAM_ENTITY_TYPE, ValueType.ENTITY_TYPE, 1, 1)
         );
@@ -59,7 +63,7 @@ public class VfCheckBibliographicMetadataMatchProfile extends ValidationFunction
                 return singlErrorResult(invalidCannotReadDir(metsFile));
             }
 
-            ValueEvaluation paramProfileDefinition = valueParams.getParams(PARAM_PROFILE_DEFINITION).get(0).getEvaluation();
+          /*  ValueEvaluation paramProfileDefinition = valueParams.getParams(PARAM_PROFILE_DEFINITION).get(0).getEvaluation();
             File profileDefinition = (File) paramProfileDefinition.getData();
             if (profileDefinition == null) {
                 return invalidValueParamNull(PARAM_PROFILE_DEFINITION, paramProfileDefinition);
@@ -67,7 +71,7 @@ public class VfCheckBibliographicMetadataMatchProfile extends ValidationFunction
                 return singlErrorResult(invalidFileIsDir(profileDefinition));
             } else if (!profileDefinition.canRead()) {
                 return singlErrorResult(invalidCannotReadDir(profileDefinition));
-            }
+            }*/
 
             ValueEvaluation paramMetadataFormat = valueParams.getParams(PARAM_METADATA_FORMAT).get(0).getEvaluation();
             MetadataFormat metadataFormat = (MetadataFormat) paramMetadataFormat.getData();
@@ -82,7 +86,7 @@ public class VfCheckBibliographicMetadataMatchProfile extends ValidationFunction
             }
 
 
-            return validate(metsFile, profileDefinition, metadataFormat, entityType);
+            return validate(metsFile,/* profileDefinition,*/ metadataFormat, entityType);
         } catch (ContractException e) {
             return invalidContractNotMet(e);
         } catch (Throwable e) {
@@ -90,7 +94,7 @@ public class VfCheckBibliographicMetadataMatchProfile extends ValidationFunction
         }
     }
 
-    private ValidationResult validate(File metsFile, File profileDefinition, MetadataFormat metadataFormat, EntityType entityType) {
+    private ValidationResult validate(File metsFile, /*File profileDefinition,*/ MetadataFormat metadataFormat, EntityType entityType) {
         ValidationResult result = new ValidationResult();
         try {
             Document doc = engine.getXmlDocument(metsFile, true);
@@ -100,7 +104,8 @@ public class VfCheckBibliographicMetadataMatchProfile extends ValidationFunction
                 try {
                     Element dmdSecEl = (Element) fileElements.item(i);
                     String dmdSecId = dmdSecEl.getAttribute("ID");
-                    validate(profileDefinition, dmdSecId, dmdSecEl, result);
+                    System.out.println("processing " + dmdSecEl.getTagName());
+                    validate(/*profileDefinition,*/ dmdSecId, dmdSecEl, result);
                 } catch (Exception e) {
                     result.addError(invalid(e));
                 }
@@ -132,10 +137,25 @@ public class VfCheckBibliographicMetadataMatchProfile extends ValidationFunction
         }
         String idPrefix = formatPrefix + '_' + entityType.getDmdSecCode();
         //System.err.println("idPrefix: " + idPrefix);
-        return engine.buildXpath("/mets:mets/mets:dmdSec[starts-with(@ID, \"" + idPrefix + "\")]");
+        //return engine.buildXpath("/mets:mets/mets:dmdSec[starts-with(@ID, \"" + idPrefix + "\")]");
+        return engine.buildXpath("/mets:mets/mets:dmdSec[starts-with(@ID, \"DCMD\")]/mets:mdWrap/mets:xmlData/oai_dc:dc");
     }
 
-    private void validate(File profileDefinition, String dmdSecId, Element dmdSecEl, ValidationResult result) {
+    private void validate(/*File profileDefinition,*/ String dmdSecId, Element dmdSecEl, ValidationResult result) {
+        //volume_singlevolume
+        BiblioTemplate template = engine.getBiblioMgr().buildTemplate("volume_singlevolume", MetadataFormat.DC, BiblioTemplatesManager.CatalogingRules.AACR2);
+
+        try {
+            ValidationResult result2 = BiblioValidator.validate(template, dmdSecEl, result);
+        } catch (InvalidXPathExpressionException e) {
+            e.printStackTrace();
+        } catch (XPathExpressionException e) {
+            e.printStackTrace();
+        }
+        for (ValidationProblem problem : result.getProblems()) {
+            System.out.println(problem);
+        }
+
         //TODO: actual validation
     }
 

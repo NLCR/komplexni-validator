@@ -192,7 +192,7 @@ public class MainController extends AbstractController implements ValidationStat
 
                     FdmfConfiguration fdmfConfig = main.getValidationDataManager().getFdmfRegistry().getFdmfConfig(dmf);
                     fdmfConfig.initJ2kProfiles(main.getValidationDataManager().getImageUtilManager());
-                    Validator validator = ValidatorFactory.buildValidator(fdmfConfig, pspDir);
+                    Validator validator = ValidatorFactory.buildValidator(fdmfConfig, pspDir, main.getValidationDataManager().getValidatorConfigMgr().getDictionaryManager());
                     //PrintStream out = textAreaPrintStream();//System.out;
                     out = buildTxtLogPrintstream();
                     //TODO: v produkci odstranit

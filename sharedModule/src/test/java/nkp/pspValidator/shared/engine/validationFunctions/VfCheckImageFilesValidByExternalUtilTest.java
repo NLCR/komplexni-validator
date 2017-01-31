@@ -104,7 +104,7 @@ public class VfCheckImageFilesValidByExternalUtilTest {
         ValidatorConfigurationManager validatorConfigManager = new ValidatorConfigurationManager(FDMD_ROOT);
         FdmfConfiguration fdmfConfig = new FdmfRegistry(validatorConfigManager).getFdmfConfig(new Dmf(Dmf.Type.MONOGRAPH, "1.2"));
         fdmfConfig.initJ2kProfiles(imageUtilManager);
-        Validator validator = ValidatorFactory.buildValidator(fdmfConfig, new File("/tmp"));
+        Validator validator = ValidatorFactory.buildValidator(fdmfConfig, new File("/tmp"), validatorConfigManager.getDictionaryManager());
         return validator.getEngine();
     }
 
