@@ -24,7 +24,6 @@ import static nkp.pspValidator.shared.FileUtils.checkFileExistAndReadable;
  */
 public class FdmfConfiguration {
 
-    //private static final String FDMF_XSD_FILE = "fdmfConfig.xsd";
     private static final String XSD_DIR = "xsd";
     private static final String J2K_PROFILES_DIR = "jpeg2000Profiles";
     private static final String J2K_PROFILES_UC_DIR = "uc";

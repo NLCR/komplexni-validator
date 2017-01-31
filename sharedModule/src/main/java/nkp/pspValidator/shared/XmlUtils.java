@@ -1,9 +1,6 @@
 package nkp.pspValidator.shared;
 
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
+import org.w3c.dom.*;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 
@@ -95,4 +92,28 @@ public class XmlUtils {
     }
 
 
+    public static List<Element> getChildrenElements(Element element) {
+        NodeList nodes = element.getChildNodes();
+        List<Element> result = new ArrayList<>(nodes.getLength());
+        for (int i = 0; i < nodes.getLength(); i++) {
+            Node node = nodes.item(i);
+            if (node.getNodeType() == Node.ELEMENT_NODE) {
+                result.add((Element) node);
+            }
+        }
+        return result;
+    }
+
+    public static String getDirectTextContent(Element element) {
+        StringBuilder builder = new StringBuilder();
+        NodeList nodes = element.getChildNodes();
+        for (int i = 0; i < nodes.getLength(); i++) {
+            Node node = nodes.item(i);
+            if (node.getNodeType() == Node.TEXT_NODE) {
+                Text textNode = (Text) node;
+                builder.append(textNode.getWholeText());
+            }
+        }
+        return builder.toString();
+    }
 }
