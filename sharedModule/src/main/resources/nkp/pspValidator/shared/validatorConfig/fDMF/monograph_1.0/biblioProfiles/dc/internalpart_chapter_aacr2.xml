@@ -27,8 +27,8 @@
     <rootElement name="oai_dc:dc">
         <expectedElements>
 
-            <element name="dc:title" mandatory="false"
-                     errorMessage="Očekáván povinný element dc:title obsahující název, podnázev, nebo číslo obrazu, nebo vnitřní části.">
+            <element name="dc:title"
+                     errorMessage="Očekáván povinný element dc:title obsahující název, podnázev, nebo číslo kapitoly.">
                 <expectedContent/>
             </element>
 
@@ -40,7 +40,7 @@
                      errorMessage="Očekáván povinný element dc:type obsahující text 'chapter'.">
             </element>
 
-            <element name="dc:language" mandatory="false">
+            <element name="dc:language">
                 <expectedContent>
                     <fromDictionary name="iso6392languageCodes"/>
                 </expectedContent>
@@ -54,7 +54,8 @@
                 <expectedContent/>
             </element>
 
-            <element name="dc:subject" mandatory="false">
+            <element name="dc:subject"
+                     errorMessage="Očekáván alespoň jeden povinný element dc:subject charakterizující obsah kapitoly.">
                 <expectedContent/>
             </element>
 

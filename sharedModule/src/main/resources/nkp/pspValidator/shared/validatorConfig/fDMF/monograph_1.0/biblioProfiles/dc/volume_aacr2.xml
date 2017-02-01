@@ -26,7 +26,8 @@
     <rootElement name="oai_dc:dc">
         <expectedElements>
 
-            <element name="dc:title" mandatory="false">
+            <element name="dc:title"
+                     errorMessage="Očekáván povinný element dc:title obsahující název, případně podnázev svazku monografie.">
                 <expectedContent/>
             </element>
 
@@ -39,6 +40,12 @@
                 <expectedContent/>
             </element>
 
+            <!--mods:typeOfResource-->
+            <element name="dc:type" specification="text() = 'text'" mandatory="false">
+                <expectedContent/>
+            </element>
+
+            <!--mods:genre-->
             <element name="dc:type" specification="text() = 'volume'"
                      errorMessage="Očekáván povinný element dc:type obsahující text 'volume'.">
             </element>
@@ -69,7 +76,7 @@
             </element>
 
             <element name="dc:subject"
-                     errorMessage="Očekáván povinný element dc:subject obsahující údaje alespoň klasifikační údaje věcného třídění.">
+                     errorMessage="Očekáván alespoň jeden element dc:subject obsahující klasifikační údaje věcného třídění.">
                 <expectedContent/>
             </element>
 
@@ -78,7 +85,8 @@
                 <expectedContent/>
             </element>
 
-            <element name="dc:source" mandatory="false">
+            <element name="dc:source"
+                     errorMessage="Očekáván alespoň jeden povinný element dc:source obsahující údje o lokaci fyzického nebo elektronického dokumentu.">
                 <expectedContent/>
             </element>
 
