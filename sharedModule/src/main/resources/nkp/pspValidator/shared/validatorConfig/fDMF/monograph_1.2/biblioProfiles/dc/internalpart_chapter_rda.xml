@@ -5,7 +5,7 @@
 >
 
     <info>
-        <text>DMF Monografie-1.2 očekává Dublin Core verze 1.1. Dále se zde upřesňují očekávaná metadata pro vnitrní
+        <text>DMF Monografie-1.2 očekává Dublin Core verze 1.1. Dále se zde upřesňují očekávaná metadata pro vnitřní
             část typu kapitola pro záznamy zpracované podle katalogizačních pravidel RDA.
         </text>
         <url description="popis Dublin Core 1.1">http://dublincore.org/documents/dces/</url>
@@ -19,7 +19,9 @@
 
     <dictionaries>
         <dictionary name="iso6392languageCodes"
-                    description="Kódy jazyků podle ISO 639-2. Dostupné na http://www.loc.gov/standards/iso639-2/php/code_list.php"/>
+                    description="kódy jazyků podle ISO 639-2"
+                    url="http://www.loc.gov/standards/iso639-2/php/code_list.php"
+        />
     </dictionaries>
 
     <rootElement name="oai_dc:dc">

@@ -5,7 +5,7 @@
 >
 
     <info>
-        <text>DMF Monografie-1.2 očekává Dublin Core verze 1.1. Dále se zde upřesňují očekávaná metadata pro vnitrní
+        <text>DMF Monografie-1.2 očekává Dublin Core verze 1.1. Dále se zde upřesňují očekávaná metadata pro vnitřní
             část typu obraz pro záznamy zpracované podle katalogizačních pravidel RDA.
         </text>
         <url description="popis Dublin Core 1.1">http://dublincore.org/documents/dces/</url>

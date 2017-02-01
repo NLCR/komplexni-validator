@@ -18,7 +18,9 @@
 
     <dictionaries>
         <dictionary name="iso6392languageCodes"
-                    description="Kódy jazyků podle ISO 639-2. Dostupné na http://www.loc.gov/standards/iso639-2/php/code_list.php"/>
+                    description="kódy jazyků podle ISO 639-2"
+                    url="http://www.loc.gov/standards/iso639-2/php/code_list.php"
+        />
     </dictionaries>
 
     <rootElement name="oai_dc:dc">

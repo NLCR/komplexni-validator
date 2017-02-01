@@ -5,7 +5,7 @@
 >
 
     <info>
-        <text>DMF Monografie-1.2 očekává Dublin Core verze 1.1. Dále se zde upřesňují očekávaná metadata pro vnitřní
+        <text>DMF Monografie-1.0 očekává Dublin Core verze 1.1. Dále se zde upřesňují očekávaná metadata pro vnitřní
             část typu obraz pro záznamy zpracované podle katalogizačních pravidel AACR2.
         </text>
         <url description="popis Dublin Core 1.1">http://dublincore.org/documents/dces/</url>
@@ -27,8 +27,8 @@
     <rootElement name="oai_dc:dc">
         <expectedElements>
 
-            <element name="dc:title"
-                     errorMessage="Očekáván povinný element dc:title obsahující název, podnázev, nebo číslo obrazu.">
+            <element name="dc:title" mandatory="false"
+                     errorMessage="Očekáván povinný element dc:title obsahující název, podnázev, nebo číslo obrazu, nebo vnitřní části.">
                 <expectedContent/>
             </element>
 
@@ -36,15 +36,11 @@
                 <expectedContent/>
             </element>
 
-            <element name="dc:type" repeatable="false"
-                     errorMessage="Očekáván právě jeden povinný element dc:type obsahující 'model:internalpart'.">
-                <expectedContent>
-                    <value>model:internalpart</value>
-                </expectedContent>
+            <element name="dc:type" specification="text() = 'picture'"
+                     errorMessage="Očekáván povinný element dc:type obsahující text 'picture'.">
             </element>
 
-            <element name="dc:language"
-                     errorMessage="Očekáván alespoň jeden povinný element dc:language obsahující přesné určení jazyka kódem z kontrolovaného slovníku ISO 639-2.">
+            <element name="dc:language" mandatory="false">
                 <expectedContent>
                     <fromDictionary name="iso6392languageCodes"/>
                 </expectedContent>
@@ -58,8 +54,7 @@
                 <expectedContent/>
             </element>
 
-            <element name="dc:subject"
-                     errorMessage="Očekáván alespoň jeden povinný element dc:subject obsahující libovolný výraz specifikující nebo charakterizující obsah obrazu.">
+            <element name="dc:subject" mandatory="false">
                 <expectedContent/>
             </element>
 
