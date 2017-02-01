@@ -1,5 +1,6 @@
 package nkp.pspValidator.shared.engine;
 
+
 import nkp.pspValidator.shared.NamespaceContextImpl;
 import nkp.pspValidator.shared.XmlUtils;
 import nkp.pspValidator.shared.engine.exceptions.InvalidXPathExpressionException;
@@ -99,6 +100,11 @@ public class XmlManager {
 
     public XPathExpression buildXpath(String xpathExpression) throws InvalidXPathExpressionException {
         try {
+            // SAXON - if xpath 2.0 was needed eventually
+            //only constructor works, not static method
+            //XPathFactory xPathfactory = net.sf.saxon.xpath.XPathFactoryImpl.newInstance();
+            //XPathFactory xPathfactory = new net.sf.saxon.xpath.XPathFactoryImpl();
+
             XPathFactory xPathfactory = XPathFactory.newInstance();
             XPath xpath = xPathfactory.newXPath();
             xpath.setNamespaceContext(namespaceContext);

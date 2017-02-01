@@ -279,5 +279,20 @@
         </params-def>
     </validationFunction>
 
+    <validation functionName="checkBibliographicMetadataMatchProfile">
+        <description>Zkontroluje, zda všechny entity daného typu (např. kapitoly, svazky/ročníky, ...) jsou validní
+            podle určených validačních šablon. A to jak MODS tak Dublin Core verze záznamů.
+        </description>
+        <params>
+            <value name="mets_file" type="FILE"/>
+            <value name="entity_type" type="ENTITY_TYPE"/>
+            <value name="template_detection_xpath" type="STRING"
+                   description="Xpath výraz, který vrátí základní název šablony, která má být pro validaci použita.
+                   Např. title, volume_multivolume, internalpart_chapter, issue, apod.
+                   Xpath výraz se vyhodnocuje vzhledem k elementu mods:mods MODS záznamu analyzovaného entity, ale v rámci celého xml souboru PRIMARY-METS.
+                   Lze se tedy jednak odkazovat na obsah MODS záznamu enity, ale i na jiné části PRIMARY-METS."/>
+        </params>
+    </validation>
+
 
 </validationFunctions>

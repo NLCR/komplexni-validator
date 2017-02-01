@@ -19,8 +19,9 @@ import java.util.List;
  */
 public class MainTest {
 
+
     private static final String MON_1_2 = "../sharedModule/src/test/resources/monograph_1.2/b50eb6b0-f0a4-11e3-b72e-005056827e52";
-    private static final String MON_1_2_MAP = "../sharedModule/src/test/resources/monografie_1.2_map/6e9a7000-65c0-11e6-85af-005056827e52";
+    private static final String MON_1_2_MAP = "../sharedModule/src/test/resources/monograph_1.2/b50eb6b0-f0a4-11e3-b72e-005056827e52";
     private static final String MON_1_2_INVALID_IMAGES = "../sharedModule/src/test/resources/monograph_1.2-invalid_images/b50eb6b0-f0a4-11e3-b72e-005056827e52";
 
     private static final String PER_1_6 = "../sharedModule/src/test/resources/periodical_1.6/7033d800-0935-11e4-beed-5ef3fc9ae867";
@@ -68,12 +69,12 @@ public class MainTest {
 
         Main.main(devParams, buildParams(
                 "../sharedModule/src/main/resources/nkp/pspValidator/shared/validatorConfig"
-                , MON_1_2
+                //, MON_1_2
                 //, PER_1_6_INFO_INVALID_NS
                 //, PER_1_6
                 //, PER_1_4
                 //, MON_1_2_INVALID_IMAGES
-                //, MON_1_2_MAP
+                , MON_1_2_MAP
                 //,PER_1_6
                 , null//, Dmf.Type.PERIODICAL//, Dmf.Type.MONOGRAPH
                 , null //"1.4"//, "1.2"

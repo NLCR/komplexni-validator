@@ -22,7 +22,9 @@ dependencies {
     // https://mvnrepository.com/artifact/com.github.nradov/abnffuzzer
     // compile group: 'com.github.nradov', name: 'abnffuzzer', version: '0.1.11'
     compile 'commons-codec:commons-codec:1.10'
-
+    // SAXON - if xpath 2.0 was needed eventually
+    // https://mvnrepository.com/artifact/net.sf.saxon/Saxon-HE
+    //compile group: 'net.sf.saxon', name: 'Saxon-HE', version: '9.7.0-14'
 }
 
 //tohle udela zip, ale asi shared-logic.zip, asi na nic
