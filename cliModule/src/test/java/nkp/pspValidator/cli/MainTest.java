@@ -76,8 +76,8 @@ public class MainTest {
                 //, MON_1_2_INVALID_IMAGES
                 , MON_1_2_MAP
                 //,PER_1_6
-                , null//, Dmf.Type.PERIODICAL//, Dmf.Type.MONOGRAPH
-                , null //"1.4"//, "1.2"
+                , Dmf.Type.MONOGRAPH//null//, Dmf.Type.PERIODICAL//, Dmf.Type.MONOGRAPH
+                , "1.0"//null //"1.4"//, "1.2"
                 , 2 //verbosity
                 , null//"src/test/resources/protocol.xml" //xml protocol
                 , imageMagickPath //null //imageMagick path

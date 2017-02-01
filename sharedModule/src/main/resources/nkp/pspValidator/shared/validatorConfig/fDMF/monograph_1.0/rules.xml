@@ -2329,28 +2329,74 @@
 
     </rules-section>
 
-    <!--TODO: dodelat-->
-    <!--<rules-section name="Bibliografická metadata"
+    <rules-section name="Bibliografická metadata"
                    description="validace obsahů bibliografických metadata v MODS a Dubline Core v souboru PRIMARY-METS">
-        <rule name="BIBLIOGRAPHIC_METADATA_MATCH_PROFILE_FOR_DC_MONOGRAPH_TITLE">
-            <description>Bibliografická metadata pro entitu TITLE a formát DC musí splňovat požadovaný profil.
+
+        <!--TODO: jeste validace vsech MODS a DC podle xsd-->
+
+        <rule name="BIBLIOGRAPHIC_METADATA_MATCH_PROFILE_VOLUME">
+            <description>Bibliografická metadata pro entitu typu VOLUME musí splňovat požadovaný profil pro záznamy v
+                Dublin Core i MODS.
             </description>
             <validation functionName="checkBibliographicMetadataMatchProfile">
                 <params>
                     <value name="mets_file" type="FILE">
                         <value-ref name="PRIMARY-METS_FILE"/>
                     </value>
-                    &lt;!&ndash;TODO: do provided promenne &ndash;&gt;
-                    <value name="profile_definition" type="FILE">
-                        <value-ref name="BIBLIO_PROFILE_DC_TITLE"/>
+                    <value name="entity_type" type="ENTITY_TYPE">VOLUME</value>
+                    <value name="template_detection_xpath" type="STRING">
+                        concat('volume',null)
                     </value>
-                    <value name="metadata_format" type="METADATA_FORMAT">DC</value>
-                    <value name="entity_type" type="ENTITY_TYPE">TITLE</value>
                 </params>
             </validation>
         </rule>
 
-    </rules-section>-->
+        <rule name="BIBLIOGRAPHIC_METADATA_MATCH_PROFILE_SUPPLEMENT">
+            <description>Bibliografická metadata pro entitu typu SUPPLEMENT musí splňovat požadovaný profil pro záznamy
+                v Dublin Core i MODS.
+            </description>
+            <validation functionName="checkBibliographicMetadataMatchProfile">
+                <params>
+                    <value name="mets_file" type="FILE">
+                        <value-ref name="PRIMARY-METS_FILE"/>
+                    </value>
+                    <value name="entity_type" type="ENTITY_TYPE">SUPPLEMENT</value>
+                    <value name="template_detection_xpath" type="STRING">concat('supplement',null)</value>
+                </params>
+            </validation>
+        </rule>
+
+        <rule name="BIBLIOGRAPHIC_METADATA_MATCH_PROFILE_PICTURE">
+            <description>Bibliografická metadata pro entitu typu PICTURE musí splňovat požadovaný profil pro záznamy
+                v Dublin Core i MODS.
+            </description>
+            <validation functionName="checkBibliographicMetadataMatchProfile">
+                <params>
+                    <value name="mets_file" type="FILE">
+                        <value-ref name="PRIMARY-METS_FILE"/>
+                    </value>
+                    <value name="entity_type" type="ENTITY_TYPE">PICTURE</value>
+                    <value name="template_detection_xpath" type="STRING">concat('internalpart_picture',null)</value>
+                </params>
+            </validation>
+        </rule>
+
+        <rule name="BIBLIOGRAPHIC_METADATA_MATCH_PROFILE_CHAPTER">
+            <description>Bibliografická metadata pro entitu typu CHAPTER musí splňovat požadovaný profil pro záznamy
+                v Dublin Core i MODS.
+            </description>
+            <validation functionName="checkBibliographicMetadataMatchProfile">
+                <params>
+                    <value name="mets_file" type="FILE">
+                        <value-ref name="PRIMARY-METS_FILE"/>
+                    </value>
+                    <value name="entity_type" type="ENTITY_TYPE">CHAPTER</value>
+                    <value name="template_detection_xpath" type="STRING">concat('internalpart_chapter',null)</value>
+                </params>
+            </validation>
+        </rule>
+
+    </rules-section>
 
 
 </fDMF>
