@@ -25,10 +25,10 @@ public class BiblioTemplatesParser {
         this.dictionaryManager = dictionaryManager;
     }
 
-    public BiblioTemplate parseTemplate(File templateXml) throws ValidatorConfigurationException {
+    public BiblioTemplate parseTemplate(File templateXmlFile) throws ValidatorConfigurationException {
         //LOG.info(String.format("parsing %s", templateXml.getAbsolutePath()));
         BiblioTemplate biblioTemplate = new BiblioTemplate();
-        XMLTag doc = XMLDoc.from(templateXml, true); //ignoring namespaces
+        XMLTag doc = XMLDoc.from(templateXmlFile, true); //ignoring namespaces
         for (Element childEl : doc.getChildElement()) {
             String elementName = childEl.getTagName();
             switch (elementName) {
@@ -38,10 +38,10 @@ public class BiblioTemplatesParser {
                     biblioTemplate.setNamespaces(parseNamespaces(childEl));
                     break;
                 case "dictionaries":
-                    biblioTemplate.setDeclaredDictionaries(parseDeclaredDictionaries(childEl));
+                    biblioTemplate.setDeclaredDictionaries(parseDeclaredDictionaries(childEl, templateXmlFile));
                     break;
                 case "rootElement":
-                    ExpectedElementDefinition rootElementDef = parseElementDefinition(biblioTemplate, null, childEl);
+                    ExpectedElementDefinition rootElementDef = parseElementDefinition(biblioTemplate, null, childEl, templateXmlFile);
                     rootElementDef.setRepeatable(false); //quick fix
                     biblioTemplate.setRootElementDefinition(rootElementDef);
                     break;
@@ -64,7 +64,7 @@ public class BiblioTemplatesParser {
         return result;
     }
 
-    private Set<String> parseDeclaredDictionaries(Element dictionariesEl) throws ValidatorConfigurationException {
+    private Set<String> parseDeclaredDictionaries(Element dictionariesEl, File file) throws ValidatorConfigurationException {
         Set<String> result = new HashSet<>();
         List<Element> namespaceEls = XmlUtils.getChildrenElementsByName(dictionariesEl, "dictionary");
         for (Element nsEl : namespaceEls) {
@@ -74,14 +74,14 @@ public class BiblioTemplatesParser {
                 //LOG.warning(String.format("slovník '%s' deklarován vícenásobně", dictionaryName));
             }
             if (!dictionaryManager.hasDictionary(dictionaryName)) {
-                throw new ValidatorConfigurationException("kontrolovaný slovník %s nenalezen", dictionaryName);
+                throw new ValidatorConfigurationException("kontrolovaný slovník %s nenalezen (soubor %s)", dictionaryName, file.getAbsolutePath());
             }
             result.add(dictionaryName);
         }
         return result;
     }
 
-    private ExpectedElementDefinition parseElementDefinition(BiblioTemplate biblioTemplate, ExpectedElementDefinition parentDef, Element rootEl) throws ValidatorConfigurationException {
+    private ExpectedElementDefinition parseElementDefinition(BiblioTemplate biblioTemplate, ExpectedElementDefinition parentDef, Element rootEl, File file) throws ValidatorConfigurationException {
         String errorMessage = rootEl.getAttribute("errorMessage");
         ExpectedElementDefinition elementDef = new ExpectedElementDefinition(biblioTemplate, parentDef, errorMessage);
         //name
@@ -91,7 +91,7 @@ public class BiblioTemplatesParser {
             String[] tokens = name.split(":");
             nsPrefix = tokens[0];
             if (!biblioTemplate.getNamespaces().keySet().contains(nsPrefix)) {
-                throw new ValidatorConfigurationException(String.format("prefix jmenného prostoru '%s' není registrován", nsPrefix));
+                throw new ValidatorConfigurationException(String.format("prefix jmenného prostoru '%s' není registrován (soubor %s)", nsPrefix, file.getAbsolutePath()));
             }
             name = tokens[1];
         }
@@ -128,9 +128,9 @@ public class BiblioTemplatesParser {
             List<ExpectedAttributeDefinition> expectedAttributes = new ArrayList<>(attributeEls.size());
             Set<String> expectedAttributeNames = new HashSet<>();
             for (Element attributeEl : attributeEls) {
-                ExpectedAttributeDefinition definition = parseAttributeDefinition(biblioTemplate, attributeEl);
+                ExpectedAttributeDefinition definition = parseAttributeDefinition(biblioTemplate, attributeEl, file);
                 if (expectedAttributeNames.contains(definition.getAttributeName())) {
-                    throw new ValidatorConfigurationException("zdvojená definice očekávaného atributu '%s' v rámci definice očekávaného elementu '%s'", definition.getAttributeName(), elementDef.buildAbsoluteXpath());
+                    throw new ValidatorConfigurationException("zdvojená definice očekávaného atributu '%s' v rámci definice očekávaného elementu '%s' (soubor %s)", definition.getAttributeName(), elementDef.buildAbsoluteXpath(), file.getAbsolutePath());
                 } else {
                     expectedAttributeNames.add(definition.getAttributeName());
                     expectedAttributes.add(definition);
@@ -147,12 +147,12 @@ public class BiblioTemplatesParser {
             List<Element> elementEls = XmlUtils.getChildrenElementsByName(expectedElementsEl, "element");
             List<ExpectedElementDefinition> expectedElements = new ArrayList<>(elementEls.size());
             for (Element elementEl : elementEls) {
-                ExpectedElementDefinition newElementDefinition = parseElementDefinition(biblioTemplate, elementDef, elementEl);
+                ExpectedElementDefinition newElementDefinition = parseElementDefinition(biblioTemplate, elementDef, elementEl, file);
                 //check whether not duplicate definition
                 for (ExpectedElementDefinition previousDefinition : expectedElements) {
                     if (previousDefinition.getElementName().equals(newElementDefinition.getElementName())
                             && isEqual(previousDefinition.getSpecification(), newElementDefinition.getSpecification())) {
-                        throw new ValidatorConfigurationException("zdvojená definice elementu '%s' se shodnou specifikací '%s'", newElementDefinition.getElementName(), newElementDefinition.getSpecification());
+                        throw new ValidatorConfigurationException("zdvojená definice elementu '%s' se shodnou specifikací '%s' (soubor %s)", newElementDefinition.getElementName(), newElementDefinition.getSpecification(), file.getAbsolutePath());
                     }
                 }
                 expectedElements.add(newElementDefinition);
@@ -169,7 +169,7 @@ public class BiblioTemplatesParser {
             if (expectedContentChildrenEls.isEmpty()) { //empty element 'expectedContent' means any content
                 elementDef.setExpectedContentDefinition(new ExpectedContentDefinitionAnything());
             } else { //some element inside 'expectedContent'
-                ExpectedContentDefinition contentDefinition = parseContentDefinition(biblioTemplate, expectedContentChildrenEls.get(0));
+                ExpectedContentDefinition contentDefinition = parseContentDefinition(biblioTemplate, expectedContentChildrenEls.get(0), file);
                 elementDef.setExpectedContentDefinition(contentDefinition);
             }
         } else {
@@ -214,7 +214,7 @@ public class BiblioTemplatesParser {
         }
     }
 
-    private ExpectedAttributeDefinition parseAttributeDefinition(BiblioTemplate templateDef, Element attributeEl) throws ValidatorConfigurationException {
+    private ExpectedAttributeDefinition parseAttributeDefinition(BiblioTemplate templateDef, Element attributeEl, File file) throws ValidatorConfigurationException {
         ExpectedAttributeDefinition definition = new ExpectedAttributeDefinition();
         //name
         String name = attributeEl.getAttribute("name");
@@ -235,7 +235,7 @@ public class BiblioTemplatesParser {
             if (expectedContentChildrenEls.isEmpty()) {
                 definition.setExpectedContentDefinition(new ExpectedContentDefinitionAnything());
             } else {
-                ExpectedContentDefinition contentDefinition = parseContentDefinition(templateDef, expectedContentChildrenEls.get(0));
+                ExpectedContentDefinition contentDefinition = parseContentDefinition(templateDef, expectedContentChildrenEls.get(0), file);
                 definition.setExpectedContentDefinition(contentDefinition);
             }
         }
@@ -243,7 +243,7 @@ public class BiblioTemplatesParser {
     }
 
     //parametrem je primo element value, regexp, fromDictionary, oneOf
-    private ExpectedContentDefinition parseContentDefinition(BiblioTemplate templateDef, Element expectedContentChildEl) throws ValidatorConfigurationException {
+    private ExpectedContentDefinition parseContentDefinition(BiblioTemplate templateDef, Element expectedContentChildEl, File file) throws ValidatorConfigurationException {
         switch (expectedContentChildEl.getTagName()) {
             case "value":
                 return new ExpectedContentDefinitionValue(expectedContentChildEl.getTextContent().trim());
@@ -252,7 +252,7 @@ public class BiblioTemplatesParser {
             case "fromDictionary":
                 String dictionaryName = expectedContentChildEl.getAttribute("name");
                 if (!templateDef.getDeclaredDictionaries().contains(dictionaryName)) {
-                    throw new ValidatorConfigurationException(String.format("kontrolovaný slovník  '%s' není definován", dictionaryName));
+                    throw new ValidatorConfigurationException(String.format("kontrolovaný slovník  '%s' není definován (soubor %s)", dictionaryName, file.getAbsolutePath()));
                 } else {
                     return new ExpectedContentDefinitionFromDictionary(dictionaryName, dictionaryManager.getDictionaryValues(dictionaryName));
                 }
@@ -260,7 +260,7 @@ public class BiblioTemplatesParser {
                 List<Element> oneOfChildEls = XmlUtils.getChildrenElements(expectedContentChildEl);
                 List<ExpectedContentDefinition> definitions = new ArrayList<>(oneOfChildEls.size());
                 for (Element element : oneOfChildEls) {
-                    definitions.add(parseContentDefinition(templateDef, element));
+                    definitions.add(parseContentDefinition(templateDef, element, file));
                 }
                 return new ExpectedContentDefinitionOneOf(definitions);
             default:
