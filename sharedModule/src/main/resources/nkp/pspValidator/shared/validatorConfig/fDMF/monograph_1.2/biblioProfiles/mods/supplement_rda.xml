@@ -500,7 +500,7 @@
                 <expectedContent/>
             </element>
 
-            <element name="mods:classification" mandatory="false">
+            <element name="mods:classification" specification="boolean(@edition)" mandatory="false">
                 <!--Klasifikační údaje věcného třídění podle Konspektu-->
                 <expectedAttributes>
                     <attribute name="authority">

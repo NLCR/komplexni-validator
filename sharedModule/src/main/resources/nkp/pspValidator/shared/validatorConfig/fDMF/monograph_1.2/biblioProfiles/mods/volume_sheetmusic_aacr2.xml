@@ -352,7 +352,7 @@
                 <expectedContent/>
             </element>
 
-            <element name="mods:classification" specification="@authority and @edition" mandatory="false">
+            <element name="mods:classification" specification="boolean(@edition)" mandatory="false">
                 <!--Konspekt-->
                 <expectedAttributes>
                     <attribute name="authority"/>
