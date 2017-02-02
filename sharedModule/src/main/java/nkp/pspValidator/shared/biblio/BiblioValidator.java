@@ -158,7 +158,7 @@ public class BiblioValidator {
                 }
             }
             if (foundElementsByXpath.getLength() == 0 && elDef.isMandatory()) { //mandatory element not found
-                result.addError(Level.ERROR, String.format("%s: nenalezen očekávaný povinný element '%s'", parentElementPath, elDef.buildRelativeXpath()));
+                result.addError(Level.ERROR, buildMessage(errorLabel, "%s: nenalezen očekávaný povinný element '%s'", parentElementPath, elDef.buildRelativeXpath()));
             }
         }
         //unexpected element, warning
