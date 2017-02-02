@@ -17,6 +17,17 @@
         <namespace prefix="mods">http://www.loc.gov/mods/v3</namespace>
     </namespaces>
 
+    <dictionaries>
+        <dictionary name="marcRelatorCodes"
+                    description="kódy rolí podle MARC21"
+                    url="http://www.loc.gov/marc/relators/relaterm.html"/>
+        <dictionary name="iso6392languageCodes"
+                    description="kódy jazyků podle ISO 639-2"
+                    url="http://www.loc.gov/standards/iso639-2/php/code_list.php"/>
+        <dictionary name="siglaInstitutionCodes"
+                    description="sigly knihoven"/>
+    </dictionaries>
+
     <rootElement name="mods:mods">
         <expectedAttributes>
             <attribute name="ID">
