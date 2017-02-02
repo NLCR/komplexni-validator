@@ -726,6 +726,11 @@
             <element name="mods:identifier" specification="@type='uuid'">
                 <expectedAttributes>
                     <attribute name="type"/>
+                    <attribute name="invalid" mandatory="false">
+                        <expectedContent>
+                            <value>yes</value>
+                        </expectedContent>
+                    </attribute>
                 </expectedAttributes>
                 <expectedContent/>
             </element>
@@ -736,6 +741,11 @@
                      mandatory="false">
                 <expectedAttributes>
                     <attribute name="type"/>
+                    <attribute name="invalid" mandatory="false">
+                        <expectedContent>
+                            <value>yes</value>
+                        </expectedContent>
+                    </attribute>
                 </expectedAttributes>
                 <expectedContent/>
             </element>
