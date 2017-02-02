@@ -1,0 +1,224 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<validationTemplate
+        xmlns="http://www.nkp.cz/pspValidator/1.1/xmlValidationTemplate"
+        name="MODS title (AACR2)"
+>
+
+    <info>
+        <text>DMF Periodika-1.6 očekává MODS verze 3.5. Dále se zde upřesňují očekávaná metadata pro titul periodika pro
+            záznamy zpracované podle katalogizačních pravidel AACR2.
+        </text>
+        <url>http://www.loc.gov/standards/mods/</url>
+        <url description="XSD pro MODS 3.5">http://www.loc.gov/standards/mods/v3/mods-3-5.xsd</url>
+        <url description="popis MODS 3.5">http://www.loc.gov/standards/mods/mods-outline-3-5.html</url>
+    </info>
+
+    <namespaces>
+        <namespace prefix="mods">http://www.loc.gov/mods/v3</namespace>
+    </namespaces>
+
+    <rootElement name="mods:mods">
+        <expectedAttributes>
+            <attribute name="ID">
+                <expectedContent>
+                    <regexp>MODS_TITLE_[0-9]{4}</regexp>>
+                </expectedContent>
+            </attribute>
+        </expectedAttributes>
+        <expectedElements>
+            <element name="mods:titleInfo">
+                <expectedAttributes>
+                    <attribute name="type" mandatory="false">
+                        <expectedContent>
+                            <oneOf>
+                                <value>abbreviated</value>
+                                <value>alternative</value>
+                                <value>translated</value>
+                                <value>uniform</value>
+                            </oneOf>
+                        </expectedContent>
+                    </attribute>
+                </expectedAttributes>
+
+                <expectedElements>
+                    <element name="mods:title">
+                        <expectedContent/>
+                    </element>
+
+                    <element name="mods:subTitle" mandatory="false">
+                        <expectedContent/>
+                    </element>
+
+                    <element name="mods:partNumber" mandatory="false">
+                        <expectedContent/>
+                    </element>
+
+                    <element name="mods:partName" mandatory="false">
+                        <expectedContent/>
+                    </element>
+                </expectedElements>
+            </element>
+
+            <element name="mods:name" mandatory="false">
+                <expectedAttributes>
+                    <attribute name="type" mandatory="false">
+                        <expectedContent>
+                            <oneOf>
+                                <value>personal</value>
+                                <value>corporate</value>
+                                <!--Neni tohle preklep? jinych verzich je tady "conference", proc je tady prave ta jedna hodnota cesky?
+                                Kazdopadne preklep, nebo ne, jednou je to ve standardu, tak to plati.-->
+                                <value>konference</value>
+                                <value>family</value>
+                            </oneOf>
+                        </expectedContent>
+                    </attribute>
+
+                    <attribute name="usage" mandatory="false">
+                        <expectedContent>
+                            <value>primary</value>
+                        </expectedContent>
+                    </attribute>
+                </expectedAttributes>
+                <expectedElements>
+                    <element name="mods:namePart" mandatory="false">
+                        <expectedAttributes>
+                            <attribute name="type" mandatory="false">
+                                <expectedContent>
+                                    <oneOf>
+                                        <value>date</value>
+                                        <value>family</value>
+                                        <value>given</value>
+                                        <value>termsOfAddress</value>
+                                    </oneOf>
+                                </expectedContent>
+                            </attribute>
+                        </expectedAttributes>
+                        <expectedContent/>
+                    </element>
+
+                    <element name="mods:role" mandatory="false">
+                        <expectedElements>
+                            <element name="mods:roleTerm" mandatory="false">
+                                <expectedAttributes>
+                                    <attribute name="type">
+                                        <expectedContent>
+                                            <value>code</value>
+                                        </expectedContent>
+                                    </attribute>
+
+                                    <attribute name="authority">
+                                        <expectedContent>
+                                            <value>marcrelator</value>
+                                        </expectedContent>
+                                    </attribute>
+                                </expectedAttributes>
+                                <expectedContent>
+                                    <fromDictionary name="marcRelatorCodes"/>
+                                </expectedContent>
+                            </element>
+                        </expectedElements>
+                    </element>
+                </expectedElements>
+            </element>
+
+
+            <element name="mods:typeOfResource" mandatory="false">
+                <expectedContent>
+                    <value>text</value>
+                </expectedContent>
+            </element>
+
+            <element name="mods:genre">
+                <expectedContent>
+                    <value>title</value>
+                </expectedContent>
+            </element>
+
+            <element name="mods:originInfo">
+                <expectedElements>
+                    <element name="mods:place" mandatory="false">
+                        <expectedElements>
+                            <element name="mods:placeTerm" mandatory="false">
+                                <expectedAttributes>
+                                    <attribute name="type">
+                                        <expectedContent>
+                                            <oneOf>
+                                                <value>code</value>
+                                                <value>text</value>
+                                            </oneOf>
+                                        </expectedContent>
+                                    </attribute>
+
+                                    <attribute name="authority" mandatory="false">
+                                        <expectedContent>
+                                            <!--<value>marccountry</value>-->
+                                        </expectedContent>
+                                    </attribute>
+                                </expectedAttributes>
+                                <expectedContent/>
+                            </element>
+                        </expectedElements>
+                    </element>
+
+                    <element name="mods:publisher" mandatory="false">
+                        <expectedContent/>
+                    </element>
+
+                    <element name="mods:dateIssued">
+                        <expectedAttributes>
+                            <attribute name="encoding" mandatory="false">
+                                <expectedContent>
+                                    <!--neni jasne, jestli povinna hodnota, ktera se smi vyplnit jen nekdy, ale kdyz uz, tak presne "marc", anebo "marc" jen nekdy, jindy klidne jina hodnota-->
+                                    <!--<value>marc</value>-->
+                                </expectedContent>
+                            </attribute>
+                            <attribute name="point">
+                                <!--tohle je povinne, coz nedava uplne smysl, resp. problem s praxi-->
+                                <expectedContent>
+                                    <!--neni jasne, jestli to jsou opravdu jedine dve povolene hodnoty-->
+                                    <!--<oneOf>
+                                        <value>start</value>
+                                        <value>end</value>
+                                    </oneOf>-->
+                                </expectedContent>
+                            </attribute>
+                            <attribute name="qualifier" mandatory="false">
+                                <expectedContent>
+                                    <!--approximate je jen doporucena hodnota, muze tam byt jinak cokoliv-->
+                                </expectedContent>
+                            </attribute>
+                        </expectedAttributes>
+                        <expectedContent/>
+                    </element>
+
+                    <element name="mods:dateCreated" mandatory="false">
+                        <expectedContent/>
+                    </element>
+
+                    <element name="mods:issuance">
+                        <expectedContent>
+                            <oneOf>
+                                <value>continuing</value>
+                                <value>serial</value>
+                                <value>integrating resource</value>
+                            </oneOf>
+                        </expectedContent>
+                    </element>
+
+                    <element name="mods:frequency" mandatory="false">
+                        <expectedAttributes>
+                            <attribute name="authority" mandatory="false">
+                                <!--jen doporucena hodnota 'marcfrequency', resp. neni urcena hodnota pro data z jineho zdroje, treba MARC21 pole 310-->
+                            </attribute>
+                        </expectedAttributes>
+                        <expectedContent/>
+                    </element>
+
+                </expectedElements>
+            </element>
+        </expectedElements>
+    </rootElement>
+</validationTemplate>
+
+	

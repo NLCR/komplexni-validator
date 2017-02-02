@@ -624,10 +624,7 @@
             </element>
 
             <element name="mods:relatedItem" mandatory="false">
-                <!--TODO: "element <relatedItem> může obsahovat jakýkoliv
-                jiný element MODS – jejich použití se řídí
-                pravidly popsanými pro tyto elementy"
-                - co s tím? Zatím budu obsah ignorovat, protože třeba ani nelze použít stejnou šablonu, relatedItem může odkazova na jinou úroveň -->
+                <!--TODO: povolit obecne jakekoliv elementy a hloubeji nevalidovat. Staci obecne validnost vuci MODS a o to se postara XSD-->
                 <expectedAttributes>
                     <!--NOTE: DMF neuvadi, jestli je type povinny atribut, necham, ze je nepovinny-->
                     <attribute name="type" mandatory="false"/>
