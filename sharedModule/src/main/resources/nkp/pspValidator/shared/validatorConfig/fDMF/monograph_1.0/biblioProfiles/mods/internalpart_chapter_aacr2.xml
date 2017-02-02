@@ -277,7 +277,7 @@
 
             <!--identifikator jineho typu - napr. doi, hdl, local, ...-->
             <element name="mods:identifier"
-                     specification="@type!=uuid and @type!=urnnbn"
+                     specification="@type!='uuid' and @type!='urnnbn'"
                      mandatory="false">
                 <expectedAttributes>
                     <attribute name="type" mandatory="false"/>

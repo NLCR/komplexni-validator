@@ -324,7 +324,7 @@
             </element>
 
             <element name="mods:identifier"
-                     specification="@type!=uuid and @type!=urnnbn"
+                     specification="@type!='uuid' and @type!='urnnbn'"
                      mandatory="false">
                 <expectedAttributes>
                     <attribute name="invalid" mandatory="false">
