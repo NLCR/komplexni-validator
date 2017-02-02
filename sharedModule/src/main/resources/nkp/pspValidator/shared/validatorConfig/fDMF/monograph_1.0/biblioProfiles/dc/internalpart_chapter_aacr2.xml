@@ -38,6 +38,7 @@
 
             <element name="dc:type" specification="text() = 'chapter'"
                      errorMessage="Očekáván povinný element dc:type obsahující text 'chapter'.">
+                <expectedContent/>
             </element>
 
             <element name="dc:language">

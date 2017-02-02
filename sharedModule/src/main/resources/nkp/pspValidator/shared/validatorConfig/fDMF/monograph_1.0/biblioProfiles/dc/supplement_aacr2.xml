@@ -49,6 +49,7 @@
             <!--mods:genre-->
             <element name="dc:type" specification="text() = 'supplement'"
                      errorMessage="Očekáván povinný element dc:type obsahující text 'supplement'.">
+                <expectedContent/>
             </element>
 
             <element name="dc:coverage" mandatory="false">

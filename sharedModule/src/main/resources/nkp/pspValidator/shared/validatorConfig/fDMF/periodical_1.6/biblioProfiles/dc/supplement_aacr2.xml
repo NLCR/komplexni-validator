@@ -1,11 +1,12 @@
-<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <validationTemplate
         xmlns="http://www.nkp.cz/pspValidator/1.1/xmlValidationTemplate"
-        name="DC volume of multivolume monographic (RDA)"
+        name="DC supplement (AACR2)"
 >
+
     <info>
-        <text>DMF Monografie-1.2 očekává Dublin Core verze 1.1. Dále se zde upřesňují očekávaná metadata pro svazek
-            vícesvazkové monografie pro záznamy zpracované podle katalogizačních pravidel RDA.
+        <text>DMF Periodika-1.6 očekává Dublin Core verze 1.1. Dále se zde upřesňují očekávaná metadata pro přílohu pro
+            záznamy zpracované podle katalogizačních pravidel AACR2.
         </text>
         <url description="popis Dublin Core 1.1">http://dublincore.org/documents/dces/</url>
         <url description="XSD pro Dublin Core 1.1">http://www.openarchives.org/OAI/2.0/oai_dc.xsd</url>
@@ -17,17 +18,21 @@
     </namespaces>
 
     <dictionaries>
+        <dictionary name="marcRelatorCodes"
+                    description="kódy rolí podle MARC21"
+                    url="http://www.loc.gov/marc/relators/relaterm.html"/>
         <dictionary name="iso6392languageCodes"
                     description="kódy jazyků podle ISO 639-2"
-                    url="http://www.loc.gov/standards/iso639-2/php/code_list.php"
-        />
+                    url="http://www.loc.gov/standards/iso639-2/php/code_list.php"/>
+        <dictionary name="siglaInstitutionCodes"
+                    description="sigly knihoven"/>
     </dictionaries>
 
     <rootElement name="oai_dc:dc">
         <expectedElements>
 
             <element name="dc:title"
-                     errorMessage="Očekáván alespoň jeden povinný element dc:title obsahující název, případně podnázev titulu.">
+                     errorMessage="Očekáván povinný element dc:title obsahující názvové infromace.">
                 <expectedContent/>
             </element>
 
@@ -35,13 +40,12 @@
                 <expectedContent/>
             </element>
 
-            <element name="dc:creator"
-                     errorMessage="Očekáván alespoň jeden povinný element dc:creator obsahující jméno, příjmení, apod. autora.">
+            <element name="dc:creator" mandatory="false">
                 <expectedContent/>
             </element>
 
-            <element name="dc:type" specification="text() = 'model:monographunit'"
-                     errorMessage="Očekáván povinný element dc:type obsahující text 'model:monographunit'.">
+            <element name="dc:type" specification="text() = 'model:supplement'"
+                     errorMessage="Očekáván povinný element dc:type obsahující text 'model:supplement'.">
                 <expectedContent/>
             </element>
 
@@ -53,20 +57,19 @@
                 <expectedContent/>
             </element>
 
-            <element name="dc:date"
-                     errorMessage="Očekáván alespoň jeden povinný element dc:date obsahující datum vydání předlohy, nebo datum vydání copyrightu.">
+            <element name="dc:date" mandatory="false">
                 <expectedContent/>
             </element>
 
             <element name="dc:language"
-                     errorMessage="Očekáván alespoň jeden povinný element dc:language obsahující přesné určení jazyka kódem z kontrolovaného slovníku ISO 639-2.">
+                     errorMessage="Očekáván povinný element dc:language obsahující přesné určení jazyka.">
                 <expectedContent>
                     <fromDictionary name="iso6392languageCodes"/>
                 </expectedContent>
             </element>
 
             <element name="dc:format"
-                     errorMessage="Očekáván alespoň jeden povinný element dc:format obsahující údaje o fyzické podobě dokumentu, případně údaje o rozsahu.">
+                     errorMessage="Očekáván povinný element dc:format obsahující údaje o fyzické podobě dokumentu.">
                 <expectedContent/>
             </element>
 
@@ -78,13 +81,9 @@
                 <expectedContent/>
             </element>
 
-            <element name="dc:source"
-                     errorMessage="Očekáván alespoň jeden povinný element dc:source obsahující údaje o instituci, kde je fyzicky uložen daný konkrétní popisovaný dokument; signaturu nebo lokační údaje o daném konkrétním dokumentu; a/nebo lokaci dokumentu (url).">
-                <expectedContent/>
-            </element>
-
         </expectedElements>
     </rootElement>
+
 </validationTemplate>
 
 	

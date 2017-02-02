@@ -38,6 +38,7 @@
 
             <element name="dc:type" specification="text() = 'picture'"
                      errorMessage="Očekáván povinný element dc:type obsahující text 'picture'.">
+                <expectedContent/>
             </element>
 
             <element name="dc:language">

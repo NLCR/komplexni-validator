@@ -48,6 +48,7 @@
             <!--mods:genre-->
             <element name="dc:type" specification="text() = 'volume'"
                      errorMessage="Očekáván povinný element dc:type obsahující text 'volume'.">
+                <expectedContent/>
             </element>
 
             <element name="dc:coverage" mandatory="false">
