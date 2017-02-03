@@ -1,12 +1,11 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <validationTemplate
         xmlns="http://www.nkp.cz/pspValidator/1.1/xmlValidationTemplate"
-        name="DC internal part - picture (AACR2)"
+        name="DC issue (AACR2)"
 >
-
     <info>
-        <text>DMF Periodika-1.6 očekává Dublin Core verze 1.1. Dále se zde upřesňují očekávaná metadata pro vnitřní
-            část typu obraz pro záznamy zpracované podle katalogizačních pravidel AACR2.
+        <text>DMF Periodika-1.4 očekává Dublin Core verze 1.1. Dále se zde upřesňují očekávaná metadata pro číslo
+            periodika pro záznamy zpracované podle katalogizačních pravidel AACR2.
         </text>
         <url description="popis Dublin Core 1.1">http://dublincore.org/documents/dces/</url>
         <url description="XSD pro Dublin Core 1.1">http://www.openarchives.org/OAI/2.0/oai_dc.xsd</url>
@@ -32,20 +31,7 @@
         <expectedElements>
 
             <element name="dc:title"
-                     errorMessage="Očekáván povinný element dc:title obsahující název, podnázev, nebo číslo obrazu.">
-                <expectedContent/>
-            </element>
-
-            <element name="dc:creator" mandatory="false">
-                <expectedContent/>
-            </element>
-
-            <element name="dc:type" specification="text() = 'model:internalpart'"
-                     errorMessage="Očekáván povinný element dc:type obsahující text 'model:internalpart'.">
-                <expectedContent/>
-            </element>
-
-            <element name="dc:format" mandatory="false">
+                     errorMessage="Očekáván povinný element dc:title obsahující název, případně podnázev periodika.">
                 <expectedContent/>
             </element>
 
@@ -53,12 +39,12 @@
                 <expectedContent/>
             </element>
 
-            <element name="dc:subject"
-                     errorMessage="Očekáván alespoň jeden povinný element dc:subject obsahující libovolný výraz specifikující nebo charakterizující obsah obrazu.">
+            <element name="dc:creator" mandatory="false">
                 <expectedContent/>
             </element>
 
-            <element name="dc:identifier" errorMessage="Očekáván alespoň jeden povinný element dc:identifier.">
+            <element name="dc:type" specification="text() = 'issue'"
+                     errorMessage="Očekáván právě jeden povinný element dc:type obsahující text 'issue'.">
                 <expectedContent/>
             </element>
 
@@ -66,9 +52,39 @@
                 <expectedContent/>
             </element>
 
+            <element name="dc:publisher" mandatory="false">
+                <expectedContent/>
+            </element>
+
+            <element name="dc:date" mandatory="false">
+                <expectedContent/>
+            </element>
+
+            <element name="dc:language"
+                     errorMessage="Očekáván povinný element dc:language obsahující přesné určení jazyka.">
+                <expectedContent>
+                    <fromDictionary name="iso6392languageCodes"/>
+                </expectedContent>
+            </element>
+
+            <element name="dc:format" mandatory="false">
+                <expectedContent/>
+            </element>
+
+            <element name="dc:subject" mandatory="false">
+                <expectedContent/>
+            </element>
+
+            <element name="dc:identifier" errorMessage="Očekáván alespoň jeden povinný element dc:identifier.">
+                <expectedContent/>
+            </element>
+
+            <element name="dc:source" mandatory="false">
+                <expectedContent/>
+            </element>
+
         </expectedElements>
     </rootElement>
-
 </validationTemplate>
 
 	

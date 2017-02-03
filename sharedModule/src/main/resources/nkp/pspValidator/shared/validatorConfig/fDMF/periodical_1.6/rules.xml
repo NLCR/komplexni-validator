@@ -2300,6 +2300,7 @@
 
     </rules-section>
 
+
     <rules-section name="Secondary METS filesec" description="">
 
         <!--TODO: dodelat-->
@@ -2317,8 +2318,8 @@
             </validation>
         </rule>
 
-
     </rules-section>
+
 
     <rules-section name="JPEG 2000"
                    description="Kontrola obrázků MASTER-COPY a USER-COPY v JPEG 2000 za pomocí externích nástrojů">
