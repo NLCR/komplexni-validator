@@ -2,6 +2,7 @@ package nkp.pspValidator.shared.biblio;
 
 import com.mycila.xmltool.XMLDoc;
 import com.mycila.xmltool.XMLTag;
+import nkp.pspValidator.shared.Version;
 import nkp.pspValidator.shared.XmlUtils;
 import nkp.pspValidator.shared.biblio.biblioValidator.*;
 import nkp.pspValidator.shared.engine.exceptions.ValidatorConfigurationException;
@@ -29,6 +30,12 @@ public class BiblioTemplatesParser {
         //LOG.info(String.format("parsing %s", templateXml.getAbsolutePath()));
         BiblioTemplate biblioTemplate = new BiblioTemplate();
         XMLTag doc = XMLDoc.from(templateXmlFile, true); //ignoring namespaces
+        biblioTemplate.setValidatorVersion(doc.getAttribute("validatorVersion"));
+        biblioTemplate.setDmf(doc.getAttribute("dmf"));
+
+        checkValidatorVersionCorrect(biblioTemplate.getValidatorVersion(), templateXmlFile);
+        //TODO: podobne testovat dmf
+
         for (Element childEl : doc.getChildElement()) {
             String elementName = childEl.getTagName();
             switch (elementName) {
@@ -50,6 +57,16 @@ public class BiblioTemplatesParser {
             }
         }
         return biblioTemplate;
+    }
+
+    private void checkValidatorVersionCorrect(String versionFromTemplate, File templateXmlFile) throws ValidatorConfigurationException {
+        String versionPure = Version.VERSION_CODE;
+        if (versionPure.contains("-")) {
+            versionPure = versionPure.split("-")[0];
+        }
+        if (!versionPure.equals(versionFromTemplate)) {
+            throw new ValidatorConfigurationException("nesouhlasí verze validátoru - očekávaná '%s', nalezena '%s' v souboru %s", versionPure, versionFromTemplate, templateXmlFile.getAbsolutePath());
+        }
     }
 
     private Map<String, String> parseNamespaces(Element namespacesEl) {

@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <validationTemplate
-        xmlns="http://www.nkp.cz/pspValidator/1.1/xmlValidationTemplate"
+        xmlns="http://www.nkp.cz/pspValidator/1.2/xmlValidationTemplate"
         name="DC issue (AACR2)"
+        validatorVersion="1.2"
+        dmf="periodical_1.4"
 >
     <info>
         <text>DMF Periodika-1.4 očekává Dublin Core verze 1.1. Dále se zde upřesňují očekávaná metadata pro číslo

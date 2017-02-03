@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <validationTemplate
-        xmlns="http://www.nkp.cz/pspValidator/1.1/xmlValidationTemplate"
+        xmlns="http://www.nkp.cz/pspValidator/1.2/xmlValidationTemplate"
         name="DC sheetmusic volume (RDA)"
+        validatorVersion="1.2"
+        dmf="monograph_1.2"
 >
     <info>
         <text>DMF Monografie-1.2 očekává Dublin Core verze 1.1. Dále se zde upřesňují očekávaná metadata pro svazek

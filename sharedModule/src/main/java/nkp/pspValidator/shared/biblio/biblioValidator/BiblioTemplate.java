@@ -9,6 +9,10 @@ import java.util.Set;
  */
 public class BiblioTemplate {
 
+    private String name;
+    private String validatorVersion;
+    private String dmf;
+
     private Map<String, String> namespaces;
     private Set<String> declaredDictionaries = Collections.emptySet();
     private ExpectedElementDefinition rootElementDefinition;
@@ -35,5 +39,29 @@ public class BiblioTemplate {
 
     public void setRootElementDefinition(ExpectedElementDefinition rootElementDefinition) {
         this.rootElementDefinition = rootElementDefinition;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getValidatorVersion() {
+        return validatorVersion;
+    }
+
+    public void setValidatorVersion(String validatorVersion) {
+        this.validatorVersion = validatorVersion;
+    }
+
+    public String getDmf() {
+        return dmf;
+    }
+
+    public void setDmf(String dmf) {
+        this.dmf = dmf;
     }
 }

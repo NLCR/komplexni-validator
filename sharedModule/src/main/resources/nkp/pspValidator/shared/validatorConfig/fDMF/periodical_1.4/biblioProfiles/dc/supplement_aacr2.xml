@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <validationTemplate
-        xmlns="http://www.nkp.cz/pspValidator/1.1/xmlValidationTemplate"
+        xmlns="http://www.nkp.cz/pspValidator/1.2/xmlValidationTemplate"
         name="DC supplement (AACR2)"
+        validatorVersion="1.2"
+        dmf="periodical_1.4"
 >
 
     <info>
