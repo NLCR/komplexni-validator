@@ -48,10 +48,7 @@
                     </element>
 
                     <element name="mods:partNumber">
-                        <expectedContent>
-                            <!--TODO: nekontrolovat regularnim vyrazem, zda se sklada pouze a jen z arabskych cislic?-->
-                            <!--<regexp>[0-9]+</regexp>-->
-                        </expectedContent>
+                        <expectedContent/>
                     </element>
 
                     <element name="mods:partName" mandatory="false">

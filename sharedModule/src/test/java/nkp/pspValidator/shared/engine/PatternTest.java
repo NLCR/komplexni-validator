@@ -325,5 +325,27 @@ public class PatternTest {
     }
 
 
+    @Test
+    public void years() {
+        //RRRR
+        String regexp = "[1-9]{1}[0-9]{0,3}|0";
+        assertTrue("1925".matches(regexp));
+        assertTrue("925".matches(regexp));
+        assertTrue("25".matches(regexp));
+        assertTrue("5".matches(regexp));
+        assertTrue("0".matches(regexp));
+
+        assertFalse("51925".matches(regexp));
+        assertFalse("0925".matches(regexp));
+        assertFalse("025".matches(regexp));
+        assertFalse("05".matches(regexp));
+
+        //RRRR-RRRR
+        regexp = "([1-9]{1}[0-9]{0,3}|0)-([1-9]{1}[0-9]{0,3}|0)";
+        assertTrue("0-0".matches(regexp));
+        assertTrue("2010-2017".matches(regexp));
+    }
+
+
 }
 

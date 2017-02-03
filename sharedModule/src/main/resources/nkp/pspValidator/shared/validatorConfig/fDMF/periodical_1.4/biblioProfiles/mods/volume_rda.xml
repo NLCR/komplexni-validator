@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<validationTemplate
+        xmlns="http://www.nkp.cz/pspValidator/1.1/xmlValidationTemplate"
+        name="MODS volume (RDA)"
+>
+
+    <info>
+        <text>DMF Periodika-1.4 očekává MODS verze 3.5. Dále se zde upřesňují očekávaná metadata pro ročník periodika
+            pro záznamy zpracované podle katalogizačních pravidel RDA.
+        </text>
+        <url>http://www.loc.gov/standards/mods/</url>
+        <url description="XSD pro MODS 3.5">http://www.loc.gov/standards/mods/v3/mods-3-5.xsd</url>
+        <url description="popis MODS 3.5">http://www.loc.gov/standards/mods/mods-outline-3-5.html</url>
+    </info>
+
+    <namespaces>
+        <namespace prefix="mods">http://www.loc.gov/mods/v3</namespace>
+    </namespaces>
+
+    <dictionaries>
+        <dictionary name="marcRelatorCodes"
+                    description="kódy rolí podle MARC21"
+                    url="http://www.loc.gov/marc/relators/relaterm.html"/>
+        <dictionary name="iso6392languageCodes"
+                    description="kódy jazyků podle ISO 639-2"
+                    url="http://www.loc.gov/standards/iso639-2/php/code_list.php"/>
+        <dictionary name="siglaInstitutionCodes"
+                    description="sigly knihoven"/>
+    </dictionaries>
+
+    <rootElement name="mods:mods">
+        <expectedAttributes>
+            <attribute name="ID">
+                <expectedContent>
+                    <regexp>MODS_VOLUME_[0-9]{4}</regexp>>
+                </expectedContent>
+            </attribute>
+        </expectedAttributes>
+        <expectedElements>
+            <element name="mods:titleInfo">
+                <expectedElements>
+                    <element name="mods:partNumber" mandatory="false">
+                        <expectedContent/>
+                    </element>
+                </expectedElements>
+            </element>
+
+            <element name="mods:genre">
+                <expectedContent>
+                    <value>volume</value>
+                </expectedContent>
+            </element>
+
+            <element name="mods:originInfo">
+                <expectedElements>
+                    <element name="mods:dateIssued">
+                        <expectedAttributes>
+                            <attribute name="qualifier" mandatory="false">
+                                <expectedContent>
+                                    <!--approximate je jen doporucena hodnota, muze tam byt jinak cokoliv-->
+                                </expectedContent>
+                            </attribute>
+                        </expectedAttributes>
+                        <expectedContent>
+                            <oneOf>
+                                <!--RRRR s tim, ze rok muze mit min nez 4 znaky a nesmi byt prefixovany nulami-->
+                                <regexp>[1-9]{1}[0-9]{0,3}|0</regexp>
+                                <!--RRRR-RRRR s tim, ze rok muze mit min nez 4 znaky a nesmi byt prefixovany nulami-->
+                                <regexp>([1-9]{1}[0-9]{0,3}|0)-([1-9]{1}[0-9]{0,3}|0)</regexp>
+                            </oneOf>
+                        </expectedContent>
+                    </element>
+                </expectedElements>
+            </element>
+
+            <!--identifikatory-->
+
+            <element name="mods:identifier" specification="@type='uuid'">
+                <expectedAttributes>
+                    <attribute name="type"/>
+                </expectedAttributes>
+                <expectedContent/>
+            </element>
+
+            <!--dalsi identifikatory - urnnbn, jine (barcode, oclc, sysno, permalink apod.)-->
+            <element name="mods:identifier"
+                     specification="@type!='uuid'"
+                     mandatory="false">
+                <expectedAttributes>
+                    <attribute name="type"/>
+                    <attribute name="local" mandatory="false"/>
+                </expectedAttributes>
+                <expectedContent/>
+            </element>
+
+            <element name="mods:physicalDescription" mandatory="false">
+                <expectedContent/>
+            </element>
+
+            <element name="mods:note" mandatory="false">
+                <expectedContent/>
+            </element>
+
+        </expectedElements>
+    </rootElement>
+</validationTemplate>
+
+	

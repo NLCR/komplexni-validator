@@ -107,7 +107,7 @@
                                     </attribute>
                                 </expectedAttributes>
                                 <expectedContent>
-                                    <fromDictionary name="marcRelatorCodes"/>
+                                    <!--<fromDictionary name="marcRelatorCodes"/>-->
                                 </expectedContent>
                             </element>
                         </expectedElements>

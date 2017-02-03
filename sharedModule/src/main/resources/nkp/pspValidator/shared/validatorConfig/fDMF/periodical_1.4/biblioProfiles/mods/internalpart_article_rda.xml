@@ -5,7 +5,7 @@
 >
 
     <info>
-        <text>DMF Periodika-1.6 očekává MODS verze 3.5. Dále se zde upřesňují očekávaná metadata pro vnitřní část typu
+        <text>DMF Periodika-1.4 očekává MODS verze 3.5. Dále se zde upřesňují očekávaná metadata pro vnitřní část typu
             článek pro záznamy zpracované podle katalogizačních pravidel RDA.
         </text>
         <url>http://www.loc.gov/standards/mods/</url>
@@ -64,8 +64,7 @@
                             <oneOf>
                                 <value>personal</value>
                                 <value>corporate</value>
-                                <!--zase "konference" namisto "conference"-->
-                                <value>konference</value>
+                                <value>conference</value>
                                 <value>family</value>
                             </oneOf>
                         </expectedContent>
@@ -130,7 +129,7 @@
                                 <value>bibliography</value>
                                 <value>editorsNote</value>
                                 <value>preface</value>
-                                <value>mainarticle</value>
+                                <value>main article</value>
                                 <value>index</value>
                                 <value>unspecified</value>
                             </oneOf>
@@ -169,12 +168,9 @@
                 <expectedElements>
                     <element name="mods:form" mandatory="false">
                         <expectedAttributes>
-                            <attribute name="authority" mandatory="false">
+                            <attribute name="type">
                                 <expectedContent>
-                                    <oneOf>
-                                        <value>marcform</value>
-                                        <value>gmd</value>
-                                    </oneOf>
+                                    <value>code</value>
                                 </expectedContent>
                             </attribute>
                         </expectedAttributes>
@@ -197,11 +193,7 @@
                         <expectedAttributes>
                             <attribute name="authority" mandatory="false">
                                 <expectedContent>
-                                    <!--s.44 - neni jasne,jestli je o jedine dve povolene hodnoty, nechavam cokoliv-->
-                                    <!--<oneOf>
-                                        <value>czenas</value>
-                                        <value>Konspekt</value>
-                                    </oneOf>-->
+                                    <value>czenas</value>
                                 </expectedContent>
                             </attribute>
                         </expectedAttributes>
@@ -209,6 +201,13 @@
                     </element>
 
                     <element name="mods:geographic" mandatory="false">
+                        <expectedAttributes>
+                            <attribute name="authority">
+                                <expectedContent>
+                                    <value>czenas</value>
+                                </expectedContent>
+                            </attribute>
+                        </expectedAttributes>
                         <expectedContent>
                             <!--V DMF je "použít kontrolovaný slovník, napříkld ... " - tj. kontrolovaný slovník NENÍ vyžadován DMF-->
                         </expectedContent>
@@ -229,8 +228,7 @@
 
                     <element name="mods:name" mandatory="false">
                         <expectedAttributes>
-                            <attribute name="authority" mandatory="false">
-                                <!--v DNF není vyplněné, jestli je atribut povinný, nechávám tedy nepovinný-->
+                            <attribute name="authority">
                                 <expectedContent>
                                     <value>czenas</value>
                                 </expectedContent>
@@ -238,21 +236,17 @@
                         </expectedAttributes>
                         <expectedElements>
                             <element name="mods:namePart" mandatory="false">
-                                <!--v DNF není vyplněné, jestli je element povinný, nechávám tedy nepovinný-->
-                                <expectedContent>
-                                    <!--V DMF je "použít kontrolovaný slovník, napříkld ... " - tj. kontrolovaný slovník NENÍ vyžadován DMF-->
-                                </expectedContent>
+                                <expectedContent/>
                             </element>
                         </expectedElements>
                     </element>
                 </expectedElements>
             </element>
 
-            <element name="mods:classification" specification="not(@edition)" mandatory="false">
+            <element name="mods:classification" mandatory="false">
                 <!--Mezinarodni desetinne trideni-->
                 <expectedAttributes>
-                    <!--NOTE: DMF neuvadi, jestli je authority povinny atribut, nechavam nepovinny-->
-                    <attribute name="authority" mandatory="true">
+                    <attribute name="authority">
                         <expectedContent>
                             <value>udc</value>
                         </expectedContent>
@@ -261,52 +255,23 @@
                 <expectedContent/>
             </element>
 
-            <element name="mods:classification" specification="boolean(@edition)" mandatory="false">
-                <!--Klasifikační údaje věcného třídění podle Konspektu-->
-                <expectedAttributes>
-                    <attribute name="authority">
-                        <expectedContent>
-                            <oneOf>
-                                <value>udc</value>
-                                <value>Konspekt</value>
-                            </oneOf>
-                        </expectedContent>
-                    </attribute>
-
-                    <attribute name="edition">
-                        <expectedContent>
-                            <!--hodnota "Konspekt" je zde nejspíš jen doporučená-->
-                        </expectedContent>
-                    </attribute>
-                </expectedAttributes>
-                <expectedContent/>
-            </element>
 
             <!--    identifier-->
 
             <element name="mods:identifier" specification="@type='uuid'">
                 <expectedAttributes>
                     <attribute name="type"/>
-                    <attribute name="invalid" mandatory="false">
-                        <expectedContent>
-                            <value>yes</value>
-                        </expectedContent>
-                    </attribute>
                 </expectedAttributes>
                 <expectedContent/>
             </element>
 
-            <!--jine identifikatory - urnnbn, barcode, oclc, sysn, permalink, apod.-->
+            <!--jine identifikatory - doi, hdl, urnnbn, jiny-->
             <element name="mods:identifier"
                      specification="@type!='uuid'"
                      mandatory="false">
                 <expectedAttributes>
-                    <attribute name="invalid" mandatory="false">
-                        <expectedContent>
-                            <value>yes</value>
-                        </expectedContent>
-                    </attribute>
                     <attribute name="type" mandatory="false"/>
+                    <attribute name="local" mandatory="false"/>
                 </expectedAttributes>
                 <expectedContent/>
             </element>
@@ -342,11 +307,7 @@
                                 </expectedContent>
                             </attribute>
                         </expectedAttributes>
-                        <expectedContent>
-                            <!--TODO: mozna regulernim vyrazem, resp. skupinou, protoze ten zapis muze byt dost ruzny - uz jenom oddelovace, viz. treba
-                            http://www.pelagodesign.com/blog/2009/05/20/iso-8601-date-validation-that-doesnt-suck/
-                            -->
-                        </expectedContent>
+                        <expectedContent/>
                     </element>
 
                     <element name="mods:recordChangeDate" mandatory="false">
@@ -358,11 +319,7 @@
                                 </expectedContent>
                             </attribute>
                         </expectedAttributes>
-                        <expectedContent>
-                            <!--TODO: mozna regulernim vyrazem, resp. skupinou, protoze ten zapis muze byt dost ruzny - uz jenom oddelovace, viz. treba
-                           http://www.pelagodesign.com/blog/2009/05/20/iso-8601-date-validation-that-doesnt-suck/
-                           -->
-                        </expectedContent>
+                        <expectedContent/>
                     </element>
 
                     <element name="mods:recordOrigin" mandatory="false">

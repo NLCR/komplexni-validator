@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <validationTemplate
         xmlns="http://www.nkp.cz/pspValidator/1.1/xmlValidationTemplate"
-        name="MODS supplement (AACR2)"
+        name="MODS supplement (RDA)"
 >
 
     <info>
-        <text>DMF Monografie-1.0 očekává MODS verze 3.5. Dále se zde upřesňují očekávaná metadata pro přílohu pro
-            záznamy zpracované podle katalogizačních pravidel AACR2.
+        <text>DMF Periodika-1.4 očekává MODS verze 3.5. Dále se zde upřesňují očekávaná metadata pro přílohu pro
+            záznamy zpracované podle katalogizačních pravidel RDA.
         </text>
         <url>http://www.loc.gov/standards/mods/</url>
         <url description="XSD pro MODS 3.5">http://www.loc.gov/standards/mods/v3/mods-3-5.xsd</url>
@@ -24,19 +24,20 @@
         <dictionary name="iso6392languageCodes"
                     description="kódy jazyků podle ISO 639-2"
                     url="http://www.loc.gov/standards/iso639-2/php/code_list.php"/>
+        <dictionary name="siglaInstitutionCodes"
+                    description="sigly knihoven"/>
     </dictionaries>
 
     <rootElement name="mods:mods">
         <expectedAttributes>
             <attribute name="ID">
                 <expectedContent>
-                    <regexp>MODS_SUPPLEMENT_[0-9]{4}</regexp>>
+                    <regexp>MODS_SUPPL_[0-9]{4}</regexp>>
                 </expectedContent>
             </attribute>
         </expectedAttributes>
         <expectedElements>
-            <element name="mods:titleInfo" mandatory="false">
-                <!--DMF nespecifikuje, zda je titleInfo povinny element, nechavam nepovinny-->
+            <element name="mods:titleInfo">
                 <expectedElements>
                     <element name="mods:title">
                         <expectedContent/>
@@ -72,7 +73,7 @@
                                 <expectedContent>
                                     <oneOf>
                                         <value>date</value>
-                                        <value>famiyl</value>
+                                        <value>family</value>
                                         <value>given</value>
                                         <value>termsOfAddress</value>
                                     </oneOf>
@@ -85,8 +86,6 @@
                     <element name="mods:role" mandatory="false">
                         <expectedElements>
                             <element name="mods:roleTerm" mandatory="false">
-                                <!--Tady je ve specifikaci zmatek v tom, jestli
-                                hodnoty musi byt opravdu vzdy z kontrolovaneho slovniku marcRelatorCodes, nebo je to jen doporucene -->
                                 <expectedAttributes>
                                     <attribute name="type">
                                         <expectedContent>
@@ -96,12 +95,14 @@
 
                                     <attribute name="authority" mandatory="false">
                                         <expectedContent>
-                                            <value>marcrelator</value>
+                                            <!--kontrolovaný slovník marcRelatorCodes je jen doporučený-->
+                                            <!--<value>marcrelator</value>-->
                                         </expectedContent>
                                     </attribute>
                                 </expectedAttributes>
                                 <expectedContent>
-                                    <fromDictionary name="marcRelatorCodes"/>
+                                    <!--kontrolovaný slovník marcRelatorCodes je jen doporučený-->
+                                    <!--<fromDictionary name="marcRelatorCodes"/>-->
                                 </expectedContent>
                             </element>
                         </expectedElements>
@@ -129,7 +130,10 @@
 
             <element name="mods:genre">
                 <expectedContent>
-                    <value>supplement</value>
+                    <oneOf>
+                        <value>volume_supplement</value>
+                        <value>issue_supplement</value>
+                    </oneOf>
                 </expectedContent>
             </element>
 
@@ -155,7 +159,7 @@
                         <expectedContent/>
                     </element>
 
-                    <element name="mods:dateIssued" mandatory="false">
+                    <element name="mods:dateIssued">
                         <expectedAttributes>
                             <attribute name="qualifier" mandatory="false"/>
                         </expectedAttributes>
@@ -175,35 +179,6 @@
                         </expectedContent>
                     </element>
 
-                    <element name="mods:frequency" mandatory="false">
-                        <expectedContent/>
-                    </element>
-                </expectedElements>
-            </element>
-
-            <!--tiskar-->
-            <element name="mods:originInfo" specification="@transliteration='printer'" mandatory="false">
-                <expectedElements>
-                    <element name="mods:place" mandatory="false">
-                        <expectedElements>
-                            <element name="mods:placeTerm" mandatory="false">
-                                <expectedAttributes>
-                                    <attribute name="type">
-                                        <expectedContent>
-                                            <value>text</value>
-                                        </expectedContent>
-                                    </attribute>
-                                </expectedAttributes>
-                                <expectedContent/>
-                            </element>
-                        </expectedElements>
-                    </element>
-
-                    <element name="mods:publisher" mandatory="false">
-                        <expectedContent/>
-                    </element>
-
-                    <!--opravdu tady mandatory=false?-->
                     <element name="mods:dateCreated" mandatory="false">
                         <expectedAttributes>
                             <attribute name="qualifier" mandatory="false"/>
@@ -251,7 +226,7 @@
                             </attribute>
                         </expectedAttributes>
                         <expectedContent>
-                            <!-- Nejasné specifikace v DMF. Navrhovane hodnoty "print", "electronic" ale nejspíš ne vyžadované, kvůli slovům "např.", "apod."-->
+                            <!--Navrhovane hodnoty "print", "electronic" ale nejspíš ne vyžadované-->
                         </expectedContent>
                     </element>
 
@@ -302,7 +277,7 @@
 
                     <element name="mods:name" mandatory="false">
                         <expectedElements>
-                            <element name="mods:namePart">
+                            <element name="mods:namePart" mandatory="false">
                                 <expectedContent/>
                             </element>
                         </expectedElements>
@@ -324,29 +299,10 @@
             </element>
 
             <!-- identifiers -->
-
-            <element name="mods:identifier" specification="@type='uuid'">
-                <expectedAttributes>
-                    <attribute name="type"/>
-                </expectedAttributes>
-                <expectedContent/>
-            </element>
-
-            <element name="mods:identifier" specification="@type='urnnbn'" mandatory="false">
-                <expectedAttributes>
-                    <attribute name="type"/>
-                </expectedAttributes>
-                <expectedContent>
-                    <regexp>(?i)urn:nbn:cz:[a-z0-9]{2,6}-[a-z0-9]{6}</regexp>
-                </expectedContent>
-            </element>
-
-            <!--identifikator jineho typu - doi, hdl, issn, isbn, ccnb, permalink Alephu NKP, local, apod.-->
-            <element name="mods:identifier"
-                     specification="@type!='uuid' and @type!='urnnbn'"
-                     mandatory="false">
+            <element name="mods:identifier" mandatory="false">
                 <expectedAttributes>
                     <attribute name="type" mandatory="false"/>
+                    <attribute name="local" mandatory="false"/>
                 </expectedAttributes>
                 <expectedContent/>
             </element>

@@ -773,7 +773,7 @@
                     </element>
 
                     <!--DMF si protireci: "pozn. u dokumentů v digitální podobě není možné vyplnit" a zaroven je element mandatory. Nechavam tedy nepovinny.-->
-                    <element name="mods:physicalLocation" repeatable="false" mandatory="true">
+                    <element name="mods:physicalLocation" repeatable="false" mandatory="false">
                         <expectedAttributes>
                             <attribute name="authority" mandatory="false">
                                 <expectedContent>
