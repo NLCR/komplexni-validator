@@ -4,20 +4,23 @@
            xmlns="http://www.loc.gov/mods/v3" targetNamespace="http://www.loc.gov/mods/v3"
            elementFormDefault="qualified" attributeFormDefault="unqualified">
     <!-- -->
-    <!--<xs:import namespace="http://www.w3.org/XML/1998/namespace" schemaLocation="http://www.loc.gov/mods/xml.xsd"/>
-    <xs:import namespace="http://www.w3.org/1999/xlink" schemaLocation="http://www.loc.gov/standards/xlink/xlink.xsd"/>-->
-    <xs:import namespace="http://www.w3.org/XML/1998/namespace" schemaLocation="imports/xml.xsd"/>
-    <xs:import namespace="http://www.w3.org/1999/xlink" schemaLocation="imports/xlink.xsd"/>
+    <!--
+    <xs:import namespace="http://www.w3.org/XML/1998/namespace" schemaLocation="http://www.loc.gov/mods/xml.xsd"/>
+    <xs:import namespace="http://www.w3.org/1999/xlink" schemaLocation="http://www.loc.gov/standards/xlink/xlink.xsd"/>
+    -->
+
+    <xs:import namespace="http://www.w3.org/XML/1998/namespace" schemaLocation="xml.xsd"/>
+    <xs:import namespace="http://www.w3.org/1999/xlink" schemaLocation="xlink.xsd"/>
 
     <!--
 MODS: Metadata Object Description Schema. See http://www.loc.gov/standards/mods/
 
           ****************************************************************
-         *                                                                                
-         *                            MODS 3.5                                    
-         *                                                                               
-         *                            July 8, 2013                 
-         *                                                                                                                                                              
+         *
+         *                            MODS 3.5
+         *
+         *                            July 8, 2013
+         *
         *****************************************************************
 
 
@@ -25,8 +28,8 @@ MODS: Metadata Object Description Schema. See http://www.loc.gov/standards/mods/
 Changes in version 3.5
 
 1. Reorganization of the schema. To allow a reader to more easily understand the definition of a particular element,
- by minimizing the number of places within the schema that the reader must look.  
-This in itself does not introduce any substantive changes.  
+ by minimizing the number of places within the schema that the reader must look.
+This in itself does not introduce any substantive changes.
 
 2. Add attribute @unit to <extent> of <physicalDescription> ( @unit is already defined for <extent> of <part>).
 
@@ -53,16 +56,16 @@ This in itself does not introduce any substantive changes.
      *************************************
 The schema has three parts:
 
-1.   Structural declarations and definitions 
+1.   Structural declarations and definitions
 2.    Elements (top level elements  and their subelements)
-3.   Auxiliary Definitions 
+3.   Auxiliary Definitions
 
          ***********************************************************************
          ***********************************************************************
-         Part 1:    Structural Declarations and Definitions 
+         Part 1:    Structural Declarations and Definitions
          ***********************************************************************
          ***********************************************************************
-- Definition of a single MODS record  and a MODS collection   
+- Definition of a single MODS record  and a MODS collection
 - modsGroup, listing the top level MODS elements
 
 ***********************************************************************
@@ -102,10 +105,10 @@ The schema has three parts:
     <!--
 
 ************************************************
-**      Group Definition 
+**      Group Definition
 ***********************************************
-This forms the basis of the mods record definition, and also relatedItem. The difference between a MODS record and a relatedItem 
-(as they pertain to their usage of the group definition) is that mods requires at least one element and relatedItem does not. 
+This forms the basis of the mods record definition, and also relatedItem. The difference between a MODS record and a relatedItem
+(as they pertain to their usage of the group definition) is that mods requires at least one element and relatedItem does not.
 The group definition is used by both, where relatedItem says minOccurs="0" and for the mods record definition minOccurs="1" (default).
 
 -->
@@ -137,16 +140,16 @@ The group definition is used by both, where relatedItem says minOccurs="0" and f
             <xs:element ref="titleInfo"/>
             <xs:element ref="typeOfResource"/>
             <!--
-End list of "top level" MODS elements 
+End list of "top level" MODS elements
 -->
         </xs:choice>
     </xs:group>
     <!--
         ***********************************************************************
         ***********************************************************************
-       Part 2:   Elements (top level elements and their subelements)                               
+       Part 2:   Elements (top level elements and their subelements)
        ************************************************************************
-        ***********************************************************************                              
+        ***********************************************************************
 -->
     <!--
 *********************************************
@@ -281,7 +284,7 @@ End list of "top level" MODS elements
     </xs:complexType>
     <!--
 
-********   Subordinate Elements for <language>                
+********   Subordinate Elements for <language>
  -->
     <xs:element name="languageTerm" type="languageTermDefinition"/>
     <!-- -->
@@ -325,7 +328,7 @@ End list of "top level" MODS elements
 
 ****************************************************
 *   Top Level Element <location>                 *
-*****************************************************         
+*****************************************************
  -->
     <xs:element name="location" type="locationDefinition"/>
     <!-- -->
@@ -343,10 +346,10 @@ End list of "top level" MODS elements
     </xs:complexType>
     <!--
 
-********   Subordinate Elements for <location>                
+********   Subordinate Elements for <location>
  -->
     <!--
-********** physicalLocation **********         
+********** physicalLocation **********
 -->
     <xs:element name="physicalLocation" type="physicalLocationDefinition"/>
     <!-- -->
@@ -362,7 +365,7 @@ End list of "top level" MODS elements
     <!-- -->
     <xs:element name="shelfLocator" type="stringPlusLanguage"/>
     <!--
-********** holdingSimple **********      
+********** holdingSimple **********
  -->
     <xs:element name="holdingSimple" type="holdingSimpleDefinition"/>
     <!-- -->
@@ -372,7 +375,7 @@ End list of "top level" MODS elements
         </xs:sequence>
     </xs:complexType>
     <!--
-**********copyInformation **********     
+**********copyInformation **********
  -->
     <xs:element name="copyInformation" type="copyInformationDefinition"/>
     <!-- -->
@@ -398,7 +401,7 @@ End list of "top level" MODS elements
         </xs:sequence>
     </xs:complexType>
     <!--
-**********form**********     
+**********form**********
  -->
     <xs:element name="form" type="formDefinition"/>
     <!-- -->
@@ -413,7 +416,7 @@ End list of "top level" MODS elements
     <xs:element name="subLocation" type="stringPlusLanguage"/>
     <xs:element name="electronicLocator" type="stringPlusLanguage"/>
     <!--
-**********enumerationAndChronology  **********     
+**********enumerationAndChronology  **********
      -->
     <xs:element name="enumerationAndChronology" type="enumerationAndChronologyDefinition"/>
     <!-- -->
@@ -433,7 +436,7 @@ End list of "top level" MODS elements
         </xs:simpleContent>
     </xs:complexType>
     <!--
- ********** url  **********        
+ ********** url  **********
      -->
     <xs:element name="url" type="urlDefinition"/>
     <!-- -->
@@ -468,7 +471,7 @@ End list of "top level" MODS elements
     <!--
 ****************************************************
 *   Top Level Element <name>                 *
-*****************************************************         
+*****************************************************
 -->
     <xs:element name="name" type="nameDefinition"/>
     <!-- -->
@@ -488,14 +491,14 @@ Choice one. The old way.
             <!--
 Choice two.	With <etal>.
 The presence of <etal> Indicates that there are names that cannot be explicitily included. It may be empty, or it may have simple content
-  - e.g. <etal>et al.</etal>.  In the latter case the content is what is suggested for display. When <etal> occurs, <namePart> MAY NOT occur, 
-<displayForm> MAY NOT occur, <affiliation>, <role>, <description>   MAY occur (but are not repeatable).  
+  - e.g. <etal>et al.</etal>.  In the latter case the content is what is suggested for display. When <etal> occurs, <namePart> MAY NOT occur,
+<displayForm> MAY NOT occur, <affiliation>, <role>, <description>   MAY occur (but are not repeatable).
 (<etal> is not repeatable within a given <name>, however there may be mutilple <etal> elements, each within in a separate <name> element.)
 -->
             <xs:sequence>
                 <!--
-             <etal> is mandatory, nonrepeatable, and must occur first. 
-            After that <affiliation>, <role>, and <description> may occur, in any order or number. 
+             <etal> is mandatory, nonrepeatable, and must occur first.
+            After that <affiliation>, <role>, and <description> may occur, in any order or number.
 -->
                 <xs:element ref="etal"/>
                 <xs:choice minOccurs="0" maxOccurs="unbounded">
@@ -527,7 +530,7 @@ The presence of <etal> Indicates that there are names that cannot be explicitily
     </xs:complexType>
     <!--
 
-********   Subordinate Elements for <name>                
+********   Subordinate Elements for <name>
  -->
     <!-- namePart-->
     <xs:element name="namePart" type="namePartDefinition"/>
@@ -563,7 +566,7 @@ The presence of <etal> Indicates that there are names that cannot be explicitily
         </xs:sequence>
     </xs:complexType>
     <!--
-***************roleTerm *********************** 
+***************roleTerm ***********************
     -->
     <xs:element name="roleTerm" type="roleTermDefinition"/>
     <!-- -->
@@ -582,7 +585,7 @@ The presence of <etal> Indicates that there are names that cannot be explicitily
 
 ****************************************************
 *   Top Level Element <note>                      *
-*****************************************************         
+*****************************************************
 -->
     <xs:element name="note" type="noteDefinition"/>
     <!-- -->
@@ -604,7 +607,7 @@ The presence of <etal> Indicates that there are names that cannot be explicitily
 
 ****************************************************
 *   Top Level Element <originInfo>                 *
-*****************************************************         
+*****************************************************
 -->
     <xs:element name="originInfo" type="originInfoDefinition"/>
     <!-- -->
@@ -631,16 +634,16 @@ The presence of <etal> Indicates that there are names that cannot be explicitily
            following attribute, @eventType, is new in version 3.5 -->
         <!-- Recomended values are "production", "publication", "distribution", "manufacture"
 So when eventType="production"
-•	<publisher> is the producer 
-•	<dateIssued> is the date of production 
+•	<publisher> is the producer
+•	<dateIssued> is the date of production
 •	<place> is the place of production
 etc.
-Detailed usage rules are supplied in the guidelines. 
+Detailed usage rules are supplied in the guidelines.
 -->
     </xs:complexType>
     <!--
 
-********   Subordinate Elements for <originInfo>                
+********   Subordinate Elements for <originInfo>
  -->
     <!--
 *** place ***
@@ -681,7 +684,7 @@ Detailed usage rules are supplied in the guidelines.
 -->
     <xs:element name="publisher" type="stringPlusLanguagePlusSupplied"/>
     <!--
-********** dates  **********  
+********** dates  **********
 -->
     <xs:element name="dateIssued" type="dateDefinition"/>
     <xs:element name="dateCreated" type="dateDefinition"/>
@@ -741,7 +744,7 @@ Detailed usage rules are supplied in the guidelines.
 -->
     <xs:element name="edition" type="stringPlusLanguagePlusSupplied"/>
     <!--
-********** issuance **********  	
+********** issuance **********
        -->
     <xs:element name="issuance" type="issuanceDefinition"/>
     <!-- -->
@@ -763,7 +766,7 @@ Detailed usage rules are supplied in the guidelines.
 
 ****************************************************
 *   Top Level Element <part>                       *
-*****************************************************         
+*****************************************************
 -->
     <xs:element name="part" type="partDefinition"/>
     <!-- -->
@@ -783,10 +786,10 @@ Detailed usage rules are supplied in the guidelines.
     </xs:complexType>
     <!--
 
-********   Subordinate Elements for <part>                
+********   Subordinate Elements for <part>
  -->
     <!--
-********** detail **********  
+********** detail **********
 -->
     <xs:element name="detail" type="detailDefinition"/>
     <!-- -->
@@ -803,7 +806,7 @@ Detailed usage rules are supplied in the guidelines.
     <xs:element name="number" type="stringPlusLanguage"/>
     <xs:element name="caption" type="stringPlusLanguage"/>
     <!--
-********** extent **********  
+********** extent **********
 -->
     <xs:complexType name="extentDefinition">
         <xs:sequence>
@@ -820,11 +823,11 @@ Detailed usage rules are supplied in the guidelines.
     <xs:element name="total" type="xs:positiveInteger"/>
     <xs:element name="list" type="stringPlusLanguage"/>
     <!--
-***************** date *** 
+***************** date ***
 -->
     <xs:element name="date" type="dateDefinition"/>
     <!--
-***************** text *** 
+***************** text ***
 -->
     <xs:element name="text">
         <xs:complexType>
@@ -841,7 +844,7 @@ Detailed usage rules are supplied in the guidelines.
 
 ****************************************************
 *   Top Level Element <physicalDescription> *
-*****************************************************         
+*****************************************************
  -->
     <xs:element name="physicalDescription" type="physicalDescriptionDefinition"/>
     <!-- -->
@@ -861,10 +864,10 @@ Detailed usage rules are supplied in the guidelines.
     </xs:complexType>
     <!--
 
-********   Subordinate Elements for <physicalDescription>                
+********   Subordinate Elements for <physicalDescription>
  -->
     <!--
-**********reformattingQuality **********  		 
+**********reformattingQuality **********
  -->
     <xs:element name="reformattingQuality" type="reformattingQualityDefinition"/>
     <!-- -->
@@ -876,11 +879,11 @@ Detailed usage rules are supplied in the guidelines.
         </xs:restriction>
     </xs:simpleType>
     <!--
-**********internetMediaType **********  		 
+**********internetMediaType **********
  -->
     <xs:element name="internetMediaType" type="stringPlusLanguage"/>
     <!--
-********** extent **********  	
+********** extent **********
  -->
     <xs:element name="extent">
         <xs:complexType>
@@ -889,13 +892,13 @@ Detailed usage rules are supplied in the guidelines.
                     <xs:attribute name="unit"/>
                 </xs:extension>
                 <!--
-******************* unit is new in 3.5 
+******************* unit is new in 3.5
 -->
             </xs:simpleContent>
         </xs:complexType>
     </xs:element>
     <!--
-********** digitalOrigin **********  	
+********** digitalOrigin **********
  -->
     <xs:element name="digitalOrigin" type="digitalOriginDefinition"/>
     <!-- -->
@@ -908,7 +911,7 @@ Detailed usage rules are supplied in the guidelines.
         </xs:restriction>
     </xs:simpleType>
     <!--
-********** note **********  	
+********** note **********
  -->
     <xs:complexType name="physicalDescriptionNote">
         <xs:simpleContent>
@@ -926,9 +929,9 @@ Detailed usage rules are supplied in the guidelines.
     <!--
 ****************************************************
 *   Top Level Element <recordInfo>              *
-*****************************************************         
+*****************************************************
 
-**********  recordInfo  **********   
+**********  recordInfo  **********
 -->
     <xs:element name="recordInfo" type="recordInfoDefinition"/>
     <!-- -->
@@ -948,13 +951,13 @@ Detailed usage rules are supplied in the guidelines.
     </xs:complexType>
     <!--
 
-********   Subordinate Elements for <recordInfo>                
+********   Subordinate Elements for <recordInfo>
  -->
     <xs:element name="recordContentSource" type="stringPlusLanguagePlusAuthority"/>
     <xs:element name="recordCreationDate" type="dateDefinition"/>
     <xs:element name="recordChangeDate" type="dateDefinition"/>
     <!--
-********** recordIdentifier 
+********** recordIdentifier
 -->
     <xs:element name="recordIdentifier" type="recordIdentifierDefinition"/>
     <!-- -->
@@ -973,9 +976,9 @@ Detailed usage rules are supplied in the guidelines.
 
 ****************************************************
 *   Top Level Element <relatedItem>             *
-*****************************************************         
+*****************************************************
 
-**********   relatedItem  **********  
+**********   relatedItem  **********
 -->
     <xs:element name="relatedItem" type="relatedItemDefinition"/>
     <!-- -->
@@ -1006,7 +1009,7 @@ Detailed usage rules are supplied in the guidelines.
 
 ****************************************************
 *   Top Level Element <subject>                  *
-*****************************************************         
+*****************************************************
 -->
     <xs:element name="subject" type="subjectDefinition"/>
     <!-- -->
@@ -1034,7 +1037,7 @@ Detailed usage rules are supplied in the guidelines.
     </xs:complexType>
     <!--
 
-********   Subordinate Elements for <subject>                
+********   Subordinate Elements for <subject>
  -->
     <!-- topic, geographic -->
     <xs:element name="topic" type="stringPlusLanguagePlusAuthority"/>
@@ -1106,7 +1109,7 @@ Detailed usage rules are supplied in the guidelines.
         <xs:attribute name="displayLabel" type="xs:string"/>
     </xs:complexType>
     <!--
- ********** geographicCode **********  	 	
+ ********** geographicCode **********
 -->
     <xs:element name="geographicCode" type="geographicCodeDefinition"/>
     <!-- -->
@@ -1128,7 +1131,7 @@ Detailed usage rules are supplied in the guidelines.
         </xs:simpleContent>
     </xs:complexType>
     <!--
-********** hierarchicalGeographic **********  	 
+********** hierarchicalGeographic **********
 -->
     <xs:element name="hierarchicalGeographic" type="hierarchicalGeographicDefinition"/>
     <!-- -->
@@ -1163,7 +1166,7 @@ Detailed usage rules are supplied in the guidelines.
     <xs:element name="region" type="stringPlusLanguage"/>
     <xs:element name="territory" type="stringPlusLanguage"/>
     <!--
- ********** cartographics **********  
+ ********** cartographics **********
 -->
     <xs:element name="cartographics" type="cartographicsDefinition"/>
     <!-- -->
@@ -1180,13 +1183,13 @@ Detailed usage rules are supplied in the guidelines.
     <xs:element name="projection" type="stringPlusLanguage"/>
     <xs:element name="coordinates" type="stringPlusLanguage"/>
     <!--
- ********** occupation **********  
+ ********** occupation **********
 -->
     <xs:element name="occupation" type="stringPlusLanguagePlusAuthority"/>
     <!--
 ****************************************************
 *   Top Level Element <tableOfContents>     *
-*****************************************************           
+*****************************************************
  -->
     <xs:element name="tableOfContents" type="tableOfContentsDefinition"/>
     <!-- -->
@@ -1208,7 +1211,7 @@ Detailed usage rules are supplied in the guidelines.
 
 ****************************************************
 *   Top Level Element <targetAudience>       *
-*****************************************************           
+*****************************************************
  -->
     <xs:element name="targetAudience" type="targetAudienceDefinition"/>
     <!-- -->
@@ -1263,7 +1266,7 @@ Detailed usage rules are supplied in the guidelines.
     </xs:complexType>
     <!--
 
-********   Subordinate Elements for <titleInfo>                
+********   Subordinate Elements for <titleInfo>
  -->
     <xs:element name="title" type="stringPlusLanguage"/>
     <xs:element name="subTitle" type="stringPlusLanguage"/>
@@ -1273,7 +1276,7 @@ Detailed usage rules are supplied in the guidelines.
     <!--
 ****************************************************
 *   Top Level Element <typeOfResource>     *
-*****************************************************         
+*****************************************************
  -->
     <xs:element name="typeOfResource" type="typeOfResourceDefinition"/>
     <!-- -->
@@ -1290,10 +1293,10 @@ Detailed usage rules are supplied in the guidelines.
     </xs:complexType>
     <!--
 
-********   Subordinate Definitions for <typeOfResource>                
+********   Subordinate Definitions for <typeOfResource>
  -->
     <!--
- ******* resourceTypeDefinition  ********    
+ ******* resourceTypeDefinition  ********
 -->
     <xs:simpleType name="resourceTypeDefinition">
         <xs:restriction base="xs:string">
@@ -1319,11 +1322,11 @@ Detailed usage rules are supplied in the guidelines.
          *********************************
 
 **********************************
-String Definitions 
+String Definitions
 **********************************
 -->
     <!--
-********** stringPlusLanguage  
+********** stringPlusLanguage
    -->
     <xs:complexType name="stringPlusLanguage">
         <xs:simpleContent>
@@ -1333,7 +1336,7 @@ String Definitions
         </xs:simpleContent>
     </xs:complexType>
     <!--
-************************* stringPlusLanguagePlusAuthority  *************************     	
+************************* stringPlusLanguagePlusAuthority  *************************
  -->
     <xs:complexType name="stringPlusLanguagePlusAuthority">
         <xs:simpleContent>
@@ -1343,7 +1346,7 @@ String Definitions
         </xs:simpleContent>
     </xs:complexType>
     <!--
-************************* stringPlusLanguagePlusSupplied  *************************     	 
+************************* stringPlusLanguagePlusSupplied  *************************
  -->
     <xs:complexType name="stringPlusLanguagePlusSupplied">
         <xs:simpleContent>
@@ -1354,11 +1357,11 @@ String Definitions
     </xs:complexType>
     <!--
 **********************************
-  Attribute Group Definitions 
+  Attribute Group Definitions
 **********************************
 -->
     <!--
- ********** authorityAttributeGroup   **********  	                       	  
+ ********** authorityAttributeGroup   **********
    -->
     <xs:attributeGroup name="authorityAttributeGroup">
         <!-- new in 3.4 -->
@@ -1367,7 +1370,7 @@ String Definitions
         <xs:attribute name="valueURI" type="xs:anyURI"/>
     </xs:attributeGroup>
     <!--
-  ********** languageAttributeGroup   **********  	                       	  
+  ********** languageAttributeGroup   **********
 -->
     <xs:attributeGroup name="languageAttributeGroup">
         <xs:attribute name="lang" type="xs:string"/>
@@ -1376,8 +1379,8 @@ String Definitions
         <xs:attribute name="transliteration" type="xs:string"/>
     </xs:attributeGroup>
     <!--
-  ********** altFormatAttributeGroup   **********  	                       	  
- altFormat new in version 3.5 
+  ********** altFormatAttributeGroup   **********
+ altFormat new in version 3.5
 -->
     <xs:attributeGroup name="altFormatAttributeGroup">
         <xs:attribute name="altFormat" type="xs:anyURI"/>

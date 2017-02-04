@@ -56,7 +56,8 @@ public abstract class ValidationFunction implements Function {
 
     ValidationResult invalidUnexpectedError(Throwable e) {
         ValidationResult result = new ValidationResult();
-        result.addError(Level.ERROR, String.format("nečekaná chyba: %s", e.getMessage()));
+        String message = e.getMessage() != null ? e.getMessage() : e.toString();
+        result.addError(Level.ERROR, String.format("nečekaná chyba: %s", message));
         return result;
     }
 

@@ -94,13 +94,11 @@
 
     <xs:simpleType name="metadataVersion">
         <xs:restriction base="xs:string">
-            <!--TODO: pro periodika jinak-->
             <!--tohle se lisi podle verze DMF (fDMF), jejiz soucasti je tenhle soubor-->
-            <xs:enumeration value="1.1"/>
-            <xs:enumeration value="1.1.1"/>
-            <xs:enumeration value="1.1.2"/>
-            <xs:enumeration value="1.1.3"/>
-            <xs:enumeration value="1.2"/>
+            <xs:enumeration value="1.5"/>
+            <xs:enumeration value="1.5.1"/>
+            <xs:enumeration value="1.5.2"/>
+            <xs:enumeration value="1.6"/>
         </xs:restriction>
     </xs:simpleType>
 

@@ -2302,8 +2302,6 @@
     <rules-section name="Bibliografická metadata"
                    description="validace obsahů bibliografických metadata v MODS a Dubline Core v souboru PRIMARY-METS">
 
-        <!--TODO: jeste validace vsech MODS a DC podle xsd-->
-
         <rule name="BIBLIOGRAPHIC_METADATA_MATCH_PROFILE_TITLE">
             <description>Bibliografická metadata pro entitu typu TITLE musí splňovat požadovaný profil pro záznamy v
                 Dublin Core i MODS.
@@ -2315,6 +2313,12 @@
                     </value>
                     <value name="entity_type" type="ENTITY_TYPE">TITLE</value>
                     <value name="template_detection_xpath" type="STRING">concat('title',null)</value>
+                    <value name="xsd_file_dc" type="FILE">
+                        <value-ref name="DC_XSD_FILE"/>
+                    </value>
+                    <value name="xsd_file_mods" type="FILE">
+                        <value-ref name="MODS_XSD_FILE"/>
+                    </value>
                 </params>
             </validation>
         </rule>
@@ -2339,6 +2343,12 @@
                         1 div boolean(./mods:genre[text()='volume'] and not(//mets:dmdSec[contains(@ID,'TITLE')])))
                         )
                     </value>
+                    <value name="xsd_file_dc" type="FILE">
+                        <value-ref name="DC_XSD_FILE"/>
+                    </value>
+                    <value name="xsd_file_mods" type="FILE">
+                        <value-ref name="MODS_XSD_FILE"/>
+                    </value>
                 </params>
             </validation>
         </rule>
@@ -2354,6 +2364,12 @@
                     </value>
                     <value name="entity_type" type="ENTITY_TYPE">SUPPLEMENT</value>
                     <value name="template_detection_xpath" type="STRING">concat('supplement',null)</value>
+                    <value name="xsd_file_dc" type="FILE">
+                        <value-ref name="DC_XSD_FILE"/>
+                    </value>
+                    <value name="xsd_file_mods" type="FILE">
+                        <value-ref name="MODS_XSD_FILE"/>
+                    </value>
                 </params>
             </validation>
         </rule>
@@ -2369,6 +2385,12 @@
                     </value>
                     <value name="entity_type" type="ENTITY_TYPE">PICTURE</value>
                     <value name="template_detection_xpath" type="STRING">concat('internalpart_picture',null)</value>
+                    <value name="xsd_file_dc" type="FILE">
+                        <value-ref name="DC_XSD_FILE"/>
+                    </value>
+                    <value name="xsd_file_mods" type="FILE">
+                        <value-ref name="MODS_XSD_FILE"/>
+                    </value>
                 </params>
             </validation>
         </rule>
@@ -2384,6 +2406,12 @@
                     </value>
                     <value name="entity_type" type="ENTITY_TYPE">CHAPTER</value>
                     <value name="template_detection_xpath" type="STRING">concat('internalpart_chapter',null)</value>
+                    <value name="xsd_file_dc" type="FILE">
+                        <value-ref name="DC_XSD_FILE"/>
+                    </value>
+                    <value name="xsd_file_mods" type="FILE">
+                        <value-ref name="MODS_XSD_FILE"/>
+                    </value>
                 </params>
             </validation>
         </rule>

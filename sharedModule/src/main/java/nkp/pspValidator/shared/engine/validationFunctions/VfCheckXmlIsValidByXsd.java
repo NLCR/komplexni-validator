@@ -89,20 +89,20 @@ public class VfCheckXmlIsValidByXsd extends ValidationFunction {
         }
     }
 
-    private ValidationResult validate(File xmlFileF, File xsdFile, Level level) {
+    private ValidationResult validate(File xmlFile, File xsdFile, Level level) {
         try {
-            Source xmlFile = new StreamSource(xmlFileF);
+            Source xmlFileSource = new StreamSource(xmlFile);
             SchemaFactory schemaFactory = SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
             Schema schema = schemaFactory.newSchema(xsdFile);
             Validator validator = schema.newValidator();
-            validator.validate(xmlFile);
+            validator.validate(xmlFileSource);
             return new ValidationResult();
         } catch (SAXException e) {
             return singlErrorResult(invalid(level,
                     "obsah souboru %s není validní podle Xml schema ze souboru %s: %s",
-                    xmlFileF.getAbsolutePath(), xsdFile.getAbsolutePath(), e.getMessage()));
+                    xmlFile.getAbsolutePath(), xsdFile.getAbsolutePath(), e.getMessage()));
         } catch (IOException e) {
-            return singlErrorResult(invalid(Level.ERROR, "I/O chyba při čtení souboru %s: %s", xmlFileF.getAbsolutePath(), e.getMessage()));
+            return singlErrorResult(invalid(Level.ERROR, "I/O chyba při čtení souboru %s: %s", xmlFile.getAbsolutePath(), e.getMessage()));
         }
     }
 
