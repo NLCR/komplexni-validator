@@ -344,6 +344,16 @@ public class PatternTest {
         regexp = "([1-9]{1}[0-9]{0,3}|0)-([1-9]{1}[0-9]{0,3}|0)";
         assertTrue("0-0".matches(regexp));
         assertTrue("2010-2017".matches(regexp));
+
+        //DD.MM.RRRR
+        regexp = "[0-9]{1,2}\\.[0-9]{1,2}\\.[0-9]{1,4}";
+        assertTrue("1.1.2017".matches(regexp));
+        assertTrue("31.10.7".matches(regexp));
+
+        //DD.-DD.MM.RRRR
+        regexp = "[0-9]{1,2}\\.-[0-9]{1,2}\\.[0-9]{1,2}\\.[0-9]{1,4}";
+        assertTrue("1.-2.1.2017".matches(regexp));
+        assertTrue("15.-16.11.7".matches(regexp));
     }
 
 
