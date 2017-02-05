@@ -837,7 +837,7 @@
         </rule>
 
         <rule name="INFO_XML_VALID_BY_XSD">
-            <description>Soubor INFO by měl být validní podle XML Schema (xsd).</description>
+            <description>Soubor INFO by měl být validní podle XML Schema (info_1.1.xsd).</description>
             <validation functionName="checkXmlIsValidByXsd">
                 <params>
                     <value name="xml_file" type="FILE">
@@ -2600,6 +2600,25 @@
                     <value name="xsd_file_mods" type="FILE">
                         <value-ref name="MODS_XSD_FILE"/>
                     </value>
+                </params>
+            </validation>
+        </rule>
+
+    </rules-section>
+
+    <rules-section name="ALTO" description="Kontrola souborů ALTO.">
+
+        <rule name="ALTO_FILES_VALID_BY_XSD">
+            <description>Soubory OCR-ALTO musí být validní podle XML Schema (alto_2.0.xsd).</description>
+            <validation functionName="checkXmlIsValidByXsd">
+                <params>
+                    <value name="xml_files" type="FILE_LIST">
+                        <value-ref name="OCR-ALTO_FILES"/>
+                    </value>
+                    <value name="xsd_file" type="FILE">
+                        <value-ref name="ALTO_XSD_FILE"/>
+                    </value>
+                    <value name="level" type="LEVEL">ERROR</value>
                 </params>
             </validation>
         </rule>

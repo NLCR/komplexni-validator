@@ -122,10 +122,11 @@
     </validationFunction>
 
     <validationFunction name="checkXmlIsValidByXsd">
-        <description>Zkontroluje, že soubor obsahuje xml validní podle XML Schema (XSD).</description>
+        <description>Zkontroluje, že soubor (soubory) obsahuje (obsahují) xml validní podle XML Schema (XSD).</description>
         <params-def>
-            <value name="xml_file" type="FILE"/>
             <value name="xsd_file" type="FILE"/>
+            <value name="xml_file" type="FILE"/>
+            <value name="xml_files" type="FILE_LIST"/>
             <value name="level" type="LEVEL" description="Úroveň chybové hlášky, pokud neprojde validace podle XSD."
                    minOccurs="0" maxOccurs="1"/>
         </params-def>

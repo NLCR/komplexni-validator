@@ -20,13 +20,16 @@ public class ValidationResult {
         errors.add(error);
     }
 
-    public void addError(Level level, String messae) {
-        errors.add(new ValidationProblem(level, messae));
+    public void addError(Level level, String message) {
+        errors.add(new ValidationProblem(level, message));
+    }
+
+    public void addError(Level level, String message, Object... params) {
+        errors.add(new ValidationProblem(level, String.format(message, params)));
     }
 
     public List<ValidationProblem> getProblems() {
         return errors;
     }
-
 
 }
