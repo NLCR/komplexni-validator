@@ -2437,5 +2437,25 @@
 
     </rules-section>
 
+    <rules-section name="Technická metadata" description="Kontrola technických metadat - MIX a PREMIS.">
+
+        <rule name="MIX_VALID_BY_XSD">
+            <description>Záznamy MIX v souborech SECONDARY-METS musí být validní podle XML Schema (mix_2.0.xsd).
+            </description>
+            <validation functionName="checkMixIsValidByXsd">
+                <params>
+                    <value name="mets_files" type="FILE_LIST">
+                        <value-ref name="SECONDARY-METS_FILES"/>
+                    </value>
+                    <value name="xsd_file" type="FILE">
+                        <value-ref name="MIX_XSD_FILE"/>
+                    </value>
+                    <value name="level" type="LEVEL">ERROR</value>
+                </params>
+            </validation>
+        </rule>
+
+    </rules-section>
+
 
 </fDMF>

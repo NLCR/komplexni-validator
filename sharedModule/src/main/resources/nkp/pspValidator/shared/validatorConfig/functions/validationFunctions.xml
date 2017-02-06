@@ -122,7 +122,8 @@
     </validationFunction>
 
     <validationFunction name="checkXmlIsValidByXsd">
-        <description>Zkontroluje, že soubor (soubory) obsahuje (obsahují) xml validní podle XML Schema (XSD).</description>
+        <description>Zkontroluje, že soubor (soubory) obsahuje (obsahují) xml validní podle XML Schema (XSD).
+        </description>
         <params-def>
             <value name="xsd_file" type="FILE"/>
             <value name="xml_file" type="FILE"/>
@@ -294,6 +295,17 @@
                    Lze se tedy jednak odkazovat na obsah MODS záznamu enity, ale i na jiné části PRIMARY-METS."/>
         </params>
     </validation>
+
+    <validationFunction name="checkMixIsValidByXsd">
+        <description>Zkontroluje, že MIX záznamy v METS souborech jsou validní podle XML Schema (mix_2.0.xsd).
+        </description>
+        <params-def>
+            <value name="xsd_file" type="FILE"/>
+            <value name="mets_files" type="FILE_LIST"/>
+            <value name="level" type="LEVEL" description="Úroveň chybové hlášky, pokud neprojde validace podle XSD."
+                   minOccurs="0" maxOccurs="1"/>
+        </params-def>
+    </validationFunction>
 
 
 </validationFunctions>

@@ -192,6 +192,8 @@ public class Engine {
             //bibliographic metadata
             case "checkBibliographicMetadataMatchProfile":
                 return new VfCheckBibliographicMetadataMatchProfile(this);
+            case "checkMixIsValidByXsd":
+                return new VfCheckMixIsValidByXsd(this);
 
             default:
                 throw new ValidatorConfigurationException(String.format("validační funkce %s neexistuje", name));
