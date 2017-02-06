@@ -23,34 +23,36 @@ import javax.xml.validation.Schema;
 import javax.xml.validation.SchemaFactory;
 import javax.xml.validation.Validator;
 import javax.xml.xpath.XPathConstants;
-import javax.xml.xpath.XPathExpression;
 import javax.xml.xpath.XPathExpressionException;
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 
 /**
  * Created by Martin Řehánek on 27.10.16.
  */
-public class VfCheckMixIsValidByXsd extends ValidationFunction {
+public class VfCheckCopyrightmdIsValidByXsd extends ValidationFunction {
 
     public static final String PARAM_XSD_FILE = "xsd_file";
     public static final String PARAM_METS_FILES = "mets_files";
+    public static final String PARAM_METS_FILE = "mets_file";
     public static final String PARAM_LEVEL = "level";
 
-    public VfCheckMixIsValidByXsd(Engine engine) {
+    public VfCheckCopyrightmdIsValidByXsd(Engine engine) {
         super(engine, new Contract()
                 .withValueParam(PARAM_XSD_FILE, ValueType.FILE, 1, 1)
                 .withValueParam(PARAM_LEVEL, ValueType.LEVEL, 0, 1)
                 .withValueParam(PARAM_METS_FILES, ValueType.FILE_LIST, 0, null)
+                .withValueParam(PARAM_METS_FILE, ValueType.FILE, 0, null)
         );
     }
 
     @Override
     public String getName() {
-        return "checkMixIsValidByXsd";
+        return "checkCopyrightMdIsValidByXsd";
     }
 
     @Override
@@ -69,18 +71,7 @@ public class VfCheckMixIsValidByXsd extends ValidationFunction {
                 return singlErrorResult(invalidCannotReadFile(xsdFile));
             }
 
-            List<File> metsFiles = new ArrayList<>();
-            List<ValueParam> metsFilesParams = valueParams.getParams(PARAM_METS_FILES);
-            for (ValueParam param : metsFilesParams) {
-                ValueEvaluation evaluation = param.getEvaluation();
-                List<File> files = (List<File>) evaluation.getData();
-                if (files == null) {
-                    throw new EmptyParamEvaluationException(PARAM_METS_FILES, evaluation);
-                }
-                for (File file : files) {
-                    metsFiles.add(file.getAbsoluteFile());
-                }
-            }
+            Set<File> metsFiles = mergeAbsolutFilesFromParams();
 
             Level level = Level.ERROR;
             List<ValueParam> paramsLevel = valueParams.getParams(PARAM_LEVEL);
@@ -102,7 +93,32 @@ public class VfCheckMixIsValidByXsd extends ValidationFunction {
         }
     }
 
-    private ValidationResult validate(List<File> metsFiles, File xsdFile, Level level) {
+    private Set<File> mergeAbsolutFilesFromParams() throws EmptyParamEvaluationException {
+        Set<File> result = new HashSet<>();
+        List<ValueParam> fileParams = valueParams.getParams(PARAM_METS_FILE);
+        for (ValueParam param : fileParams) {
+            ValueEvaluation evaluation = param.getEvaluation();
+            File file = (File) evaluation.getData();
+            if (file == null) {
+                throw new EmptyParamEvaluationException(PARAM_METS_FILE, evaluation);
+            }
+            result.add(file.getAbsoluteFile());
+        }
+        List<ValueParam> filesParams = valueParams.getParams(PARAM_METS_FILES);
+        for (ValueParam param : filesParams) {
+            ValueEvaluation evaluation = param.getEvaluation();
+            List<File> files = (List<File>) evaluation.getData();
+            if (files == null) {
+                throw new EmptyParamEvaluationException(PARAM_METS_FILES, evaluation);
+            }
+            for (File file : files) {
+                result.add(file.getAbsoluteFile());
+            }
+        }
+        return result;
+    }
+
+    private ValidationResult validate(Set<File> metsFiles, File xsdFile, Level level) {
         ValidationResult result = new ValidationResult();
         for (File metsFile : metsFiles) {
             validate(metsFile, xsdFile, level, result);
@@ -113,11 +129,10 @@ public class VfCheckMixIsValidByXsd extends ValidationFunction {
     private void validate(File metsFile, File xsdFile, Level level, ValidationResult result) {
         try {
             Document metsDoc = engine.getXmlDocument(metsFile, true);
-            XPathExpression xPath = engine.buildXpath("/mets:mets/mets:amdSec/mets:techMD[starts-with(@ID,'MIX_')]");
-            NodeList techMdEls = (NodeList) xPath.evaluate(metsDoc, XPathConstants.NODESET);
-            for (int i = 0; i < techMdEls.getLength(); i++) {
-                Element techMdEl = (Element) techMdEls.item(i);
-                validate(techMdEl, metsFile, xsdFile, level, result);
+            NodeList rightsMdEls = (NodeList) engine.buildXpath("//mets:rightsMD").evaluate(metsDoc, XPathConstants.NODESET);
+            for (int i = 0; i < rightsMdEls.getLength(); i++) {
+                Element rightsMdEl = (Element) rightsMdEls.item(i);
+                validate(rightsMdEl, metsFile, xsdFile, level, result);
             }
         } catch (XmlFileParsingException e) {
             result.addError(invalid(level, "%s: %s", metsFile.getName(), e.getMessage()));
@@ -128,26 +143,22 @@ public class VfCheckMixIsValidByXsd extends ValidationFunction {
         }
     }
 
-    private void validate(Element techMdEl, File metsFile, File xsdFile, Level level, ValidationResult result) {
-        String id = techMdEl.getAttribute("ID");
+    private void validate(Element rightsMdEl, File metsFile, File xsdFile, Level level, ValidationResult result) {
+        String id = rightsMdEl.getAttribute("ID");
         try {
-            String xpathStr = "mets:mdWrap/mets:xmlData/mix:mix";
-            XPathExpression xPath = engine.buildXpath(xpathStr);
-            Element mixEl = (Element) xPath.evaluate(techMdEl, XPathConstants.NODE);
-            if (mixEl == null) {
-                result.addError(invalid(level, "%s: %s: nenalezen element %s", metsFile.getName(), id, xpathStr));
+            String copyrightXpath = "mets:mdWrap/mets:xmlData/cmd:copyright";
+            Element copyrightEl = (Element) engine.buildXpath(copyrightXpath).evaluate(rightsMdEl, XPathConstants.NODE);
+            if (copyrightEl == null) {
+                result.addError(invalid(Level.WARNING, "%s: %s: nenalezen element %s", metsFile.getName(), id, copyrightXpath));
             } else {
-                Document mixDoc = XmlUtils.elementToNewDocument(mixEl, true);
-
-                DOMSource source = new DOMSource(mixDoc);
+                Document doc = XmlUtils.elementToNewDocument(copyrightEl, true);
+                DOMSource source = new DOMSource(doc);
                 SchemaFactory schemaFactory = SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
                 schemaFactory.setResourceResolver(new XsdImportsResourceResolver(xsdFile.getParentFile()));
-
                 Schema schema = schemaFactory.newSchema(xsdFile);
                 Validator validator = schema.newValidator();
                 validator.validate(source);
             }
-
         } catch (InvalidXPathExpressionException e) {
             result.addError(invalid(level, "%s: %s: %s", metsFile.getName(), id, e.getMessage()));
         } catch (XPathExpressionException e) {

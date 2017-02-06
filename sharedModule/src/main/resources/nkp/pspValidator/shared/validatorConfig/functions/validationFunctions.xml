@@ -318,5 +318,18 @@
         </params-def>
     </validationFunction>
 
+    <validationFunction name="checkCopyrightMdIsValidByXsd">
+        <description>Zkontroluje, že CopyrightMD záznamy v primárním a sekundárních METS souborech jsou validní podle
+            XML Schema (cmd_0.91.xsd).
+        </description>
+        <params-def>
+            <value name="xsd_file" type="FILE"/>
+            <value name="mets_files" type="FILE_LIST" min="0" maxOccurs="unbound"/>
+            <value name="mets_file" type="FILE_LIST" min="0" maxOccurs="unbound"/>
+            <value name="level" type="LEVEL" description="Úroveň chybové hlášky, pokud neprojde validace podle XSD."
+                   minOccurs="0" maxOccurs="1"/>
+        </params-def>
+    </validationFunction>
+
 
 </validationFunctions>

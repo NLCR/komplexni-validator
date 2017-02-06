@@ -2418,7 +2418,7 @@
 
     </rules-section>
 
-    <rules-section name="ALTO" description="Kontrola souborů ALTO.">
+    <rules-section name="OCR ALTO" description="Kontrola souborů ALTO.">
 
         <rule name="ALTO_FILES_VALID_BY_XSD">
             <description>Soubory OCR-ALTO musí být validní podle XML Schema (alto_2.0.xsd).</description>
@@ -2437,7 +2437,7 @@
 
     </rules-section>
 
-    <rules-section name="Technická metadata" description="Kontrola technických metadat - MIX a PREMIS.">
+    <rules-section name="Technická metadata" description="Kontrola technických (MIX, PREMIS) metadat.">
 
         <rule name="MIX_VALID_BY_XSD">
             <description>Záznamy MIX v souborech SECONDARY-METS musí být validní podle XML Schema (mix_2.0.xsd).
@@ -2465,6 +2465,30 @@
                     </value>
                     <value name="xsd_file" type="FILE">
                         <value-ref name="PREMIS_XSD_FILE"/>
+                    </value>
+                    <value name="level" type="LEVEL">ERROR</value>
+                </params>
+            </validation>
+        </rule>
+
+    </rules-section>
+
+    <rules-section name="Autorskoprávní metadata" description="Kontrola autorskoprávních (CopyrightMD) metadat.">
+
+        <rule name="COPYRIGHTMD_VALID_BY_XSD">
+            <description>Záznamy CopyrightMD v souboru PRIMARY-METS a souborech SECONDARY-METS musí být validní podle
+                XML Schema (cmd_0.91.xsd).
+            </description>
+            <validation functionName="checkCopyrightMdIsValidByXsd">
+                <params>
+                    <value name="mets_file" type="FILE">
+                        <value-ref name="PRIMARY-METS_FILE"/>
+                    </value>
+                    <value name="mets_files" type="FILE_LIST">
+                        <value-ref name="SECONDARY-METS_FILES"/>
+                    </value>
+                    <value name="xsd_file" type="FILE">
+                        <value-ref name="CMD_XSD_FILE"/>
                     </value>
                     <value name="level" type="LEVEL">ERROR</value>
                 </params>

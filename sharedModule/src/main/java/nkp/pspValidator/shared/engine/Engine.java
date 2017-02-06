@@ -196,6 +196,8 @@ public class Engine {
                 return new VfCheckMixIsValidByXsd(this);
             case "checkPremisIsValidByXsd":
                 return new VfCheckPremisIsValidByXsd(this);
+            case "checkCopyrightMdIsValidByXsd":
+                return new VfCheckCopyrightmdIsValidByXsd(this);
 
             default:
                 throw new ValidatorConfigurationException(String.format("validační funkce %s neexistuje", name));
