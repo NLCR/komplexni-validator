@@ -307,5 +307,16 @@
         </params-def>
     </validationFunction>
 
+    <validationFunction name="checkPremisIsValidByXsd">
+        <description>Zkontroluje, že MIX záznamy v METS souborech jsou validní podle XML Schema (mix_2.0.xsd).
+        </description>
+        <params-def>
+            <value name="xsd_file" type="FILE"/>
+            <value name="mets_files" type="FILE_LIST"/>
+            <value name="level" type="LEVEL" description="Úroveň chybové hlášky, pokud neprojde validace podle XSD."
+                   minOccurs="0" maxOccurs="1"/>
+        </params-def>
+    </validationFunction>
+
 
 </validationFunctions>

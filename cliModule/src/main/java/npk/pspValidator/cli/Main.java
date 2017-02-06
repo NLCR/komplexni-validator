@@ -359,36 +359,45 @@ public class Main {
     }
 
     private static void testXsds() {
-        //info - ok
-        File infoXml = new File("../sharedModule/src/main/resources/nkp/pspValidator/shared/fDMF/monograph_1.2/xsd/examples/info.xml");
+       /* //info - ok
+        File infoXml = new File("../sharedModule/src/main/resources/nkp/pspValidator/shared-tmp/examples/info.xml");
 
-        File infoXsd = new File("../sharedModule/src/main/resources/nkp/pspValidator/shared/fDMF/monograph_1.2/xsd/info_1.1.xsd");
+        File infoXsd = new File("../sharedModule/src/main/resources/nkp/pspValidator/shared/validatorConfig/fDMF/monograph_1.2/xsd/info_1.1.xsd");
         XsdValidator.validate("INFO", infoXsd, infoXml);
 
         //mix - ok
-        File mixXsd = new File("../sharedModule/src/main/resources/nkp/pspValidator/shared/fDMF/monograph_1.2/xsd/mix_2.0.xsd");
-        File mixXml = new File("../sharedModule/src/main/resources/nkp/pspValidator/shared/fDMF/monograph_1.2/xsd/examples/mix.xml");
+        File mixXsd = new File("../sharedModule/src/main/resources/nkp/pspValidator/shared/validatorConfig/fDMF/monograph_1.2/xsd/mix_2.0.xsd");
+        File mixXml = new File("../sharedModule/src/main/resources/nkp/pspValidator/shared-tmp/examples/mix.xml");
         XsdValidator.validate("MIX", mixXsd, mixXml);
 
-        //premis - ok
-        File premisXsd = new File("../sharedModule/src/main/resources/nkp/pspValidator/shared/fDMF/monograph_1.2/xsd/premis_2.2.xsd");
-        File premisXml = new File("../sharedModule/src/main/resources/nkp/pspValidator/shared/fDMF/monograph_1.2/xsd/examples/premis.xml");
-        XsdValidator.validate("PREMIS", premisXsd, premisXml);
+        */
 
-        //dc - TODO, jak je to s tim root elementem a jeste import xml.xsd v xsd
-        File dcXsd = new File("../sharedModule/src/main/resources/nkp/pspValidator/shared/fDMF/monograph_1.2/xsd/dc_1.1.xsd");
-        File dcXml = new File("../sharedModule/src/main/resources/nkp/pspValidator/shared/fDMF/monograph_1.2/xsd/examples/dc.xml");
-        XsdValidator.validate("DC", dcXsd, dcXml);
+        //premis - ok
+        File premisXsd = new File("../sharedModule/src/main/resources/nkp/pspValidator/shared/validatorConfig/fDMF/monograph_1.2/xsd/premis_2.2.xsd");
+        File premisXml = new File("../sharedModule/src/main/resources/nkp/pspValidator/shared-tmp/examples/premis-event.xml");
+        XsdValidator.validate("PREMIS-EVENT", premisXsd, premisXml);
+
+        premisXml = new File("../sharedModule/src/main/resources/nkp/pspValidator/shared-tmp/examples/premis-object.xml");
+        XsdValidator.validate("PREMIS-OBJECT", premisXsd, premisXml);
+
+        premisXml = new File("../sharedModule/src/main/resources/nkp/pspValidator/shared-tmp/examples/premis-agent.xml");
+        XsdValidator.validate("PREMIS-AGENT", premisXsd, premisXml);
+
+
+       /* //dc - TODO, jak je to s tim root elementem a jeste import xml.xsd v xsd
+        File dcXsd = new File("../sharedModule/src/main/resources/nkp/pspValidator/shared/validatorConfig/fDMF/monograph_1.2/xsd/dc_1.1.xsd");
+        File dcXml = new File("../sharedModule/src/main/resources/nkp/pspValidator/shared-tmp/examples/dc.xml");
+        XsdValidator.validate("DC", dcXsd, dcXml);*/
 
      /*   //mods - TODO: problem s importem xml.xsd
-        File modsXsd = new File("../sharedModule/src/main/resources/nkp/pspValidator/shared/fDMF/monograph_1.2/xsd/mods_3.5.xsd");
-        File modsXml = new File("../sharedModule/src/main/resources/nkp/pspValidator/shared/fDMF/monograph_1.2/xsd/examples/mods.xml");
+        File modsXsd = new File("../sharedModule/src/main/resources/nkp/pspValidator/shared/validatorConfig/fDMF/monograph_1.2/xsd/mods_3.5.xsd");
+        File modsXml = new File("../sharedModule/src/main/resources/nkp/pspValidator/shared-tmp/examples/mods.xml");
         XsdValidator.validate("MODS", modsXsd, modsXml);*/
 
-        //mets - ok
-        File metsXsd = new File("../sharedModule/src/main/resources/nkp/pspValidator/shared/fDMF/monograph_1.2/xsd/mets_1.9.1.xsd");
-        File metsXml = new File("../sharedModule/src/main/resources/nkp/pspValidator/shared/fDMF/monograph_1.2/xsd/examples/mets.xml");
-        XsdValidator.validate("METS", metsXsd, metsXml);
+       /* //mets - ok
+        File metsXsd = new File("../sharedModule/src/main/resources/nkp/pspValidator/shared/validatorConfig/fDMF/monograph_1.2/xsd/mets_1.9.1.xsd");
+        File metsXml = new File("../sharedModule/src/main/resources/nkp/pspValidator/shared-tmp/examples/mets.xml");
+        XsdValidator.validate("METS", metsXsd, metsXml);*/
     }
 
 }

@@ -2455,6 +2455,22 @@
             </validation>
         </rule>
 
+        <rule name="PREMIS_VALID_BY_XSD">
+            <description>Záznamy PREMIS v souborech SECONDARY-METS musí být validní podle XML Schema (premis_2.2.xsd).
+            </description>
+            <validation functionName="checkPremisIsValidByXsd">
+                <params>
+                    <value name="mets_files" type="FILE_LIST">
+                        <value-ref name="SECONDARY-METS_FILES"/>
+                    </value>
+                    <value name="xsd_file" type="FILE">
+                        <value-ref name="PREMIS_XSD_FILE"/>
+                    </value>
+                    <value name="level" type="LEVEL">ERROR</value>
+                </params>
+            </validation>
+        </rule>
+
     </rules-section>
 
 

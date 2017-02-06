@@ -1,0 +1,11 @@
+<premis:agent
+        xmlns:premis="info:lc/xmlns/premis-v2"
+>
+    <premis:agentIdentifier>
+        <premis:agentIdentifierType>NK_AgentID</premis:agentIdentifierType>
+        <premis:agentIdentifierValue>Canon DR-X10C ImageFormula-flatData</premis:agentIdentifierValue>
+    </premis:agentIdentifier>
+    <premis:agentName>Canon DR-X10C ImageFormula-Canon DR-X10C ImageFormula</premis:agentName>
+    <premis:agentType>software</premis:agentType>
+    <premis:agentNote/>
+</premis:agent>

@@ -1,0 +1,23 @@
+<premis:event
+        xmlns:premis="info:lc/xmlns/premis-v2"
+>
+    <premis:eventIdentifier>
+        <premis:eventIdentifierType>NK_eventID</premis:eventIdentifierType>
+        <premis:eventIdentifierValue>flatData_001</premis:eventIdentifierValue>
+    </premis:eventIdentifier>
+    <premis:eventType>capture</premis:eventType>
+    <premis:eventDateTime>2014-07-09T15:20:51</premis:eventDateTime>
+    <premis:eventDetail>capture/digitalization</premis:eventDetail>
+    <premis:eventOutcomeInformation>
+        <premis:eventOutcome>OK</premis:eventOutcome>
+    </premis:eventOutcomeInformation>
+    <premis:linkingAgentIdentifier>
+        <premis:linkingAgentIdentifierType>NK_AgentID</premis:linkingAgentIdentifierType>
+        <premis:linkingAgentIdentifierValue>Canon DR-X10C ImageFormula-flatData</premis:linkingAgentIdentifierValue>
+        <premis:linkingAgentRole>machine</premis:linkingAgentRole>
+    </premis:linkingAgentIdentifier>
+    <premis:linkingObjectIdentifier>
+        <premis:linkingObjectIdentifierType>file</premis:linkingObjectIdentifierType>
+        <premis:linkingObjectIdentifierValue>PS_1_image_0001</premis:linkingObjectIdentifierValue>
+    </premis:linkingObjectIdentifier>
+</premis:event>

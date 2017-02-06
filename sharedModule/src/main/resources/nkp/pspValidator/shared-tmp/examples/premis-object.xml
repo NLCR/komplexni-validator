@@ -1,10 +1,11 @@
-<premis:object xsi:type="premis:file"
-               xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-               xmlns:premis="info:lc/xmlns/premis-v2"
+<premis:object
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:type="premis:file"
+        xmlns:premis="info:lc/xmlns/premis-v2"
 >
     <premis:objectIdentifier>
         <premis:objectIdentifierType>file</premis:objectIdentifierType>
-        <premis:objectIdentifierValue>PS_1_image_0002</premis:objectIdentifierValue>
+        <premis:objectIdentifierValue>PS_1_image_0001</premis:objectIdentifierValue>
     </premis:objectIdentifier>
     <premis:preservationLevel>
         <premis:preservationLevelValue>deleted</premis:preservationLevelValue>
@@ -14,10 +15,10 @@
         <premis:compositionLevel>0</premis:compositionLevel>
         <premis:fixity>
             <premis:messageDigestAlgorithm>MD5</premis:messageDigestAlgorithm>
-            <premis:messageDigest>95d0671277e68e95d22ca7b4164de76c</premis:messageDigest>
+            <premis:messageDigest>3ca031147f0bdb5873351c62ac61c3db</premis:messageDigest>
             <premis:messageDigestOriginator>Utility GeneratePremis</premis:messageDigestOriginator>
         </premis:fixity>
-        <premis:size>13161078</premis:size>
+        <premis:size>13698594</premis:size>
         <premis:format>
             <premis:formatDesignation>
                 <premis:formatName>image/tiff</premis:formatName>
@@ -35,7 +36,7 @@
             <premis:dateCreatedByApplication>2014-07-09T11:07:24</premis:dateCreatedByApplication>
         </premis:creatingApplication>
     </premis:objectCharacteristics>
-    <premis:originalName>1_image_0002.tif</premis:originalName>
+    <premis:originalName>1_image_0001.tif</premis:originalName>
     <premis:linkingEventIdentifier>
         <premis:linkingEventIdentifierType>NK_eventID</premis:linkingEventIdentifierType>
         <premis:linkingEventIdentifierValue>postprocessingData_001</premis:linkingEventIdentifierValue>
