@@ -359,45 +359,34 @@ public class Main {
     }
 
     private static void testXsds() {
-       /* //info - ok
-        File infoXml = new File("../sharedModule/src/main/resources/nkp/pspValidator/shared-tmp/examples/info.xml");
-
+        //info - ok
         File infoXsd = new File("../sharedModule/src/main/resources/nkp/pspValidator/shared/validatorConfig/fDMF/monograph_1.2/xsd/info_1.1.xsd");
-        XsdValidator.validate("INFO", infoXsd, infoXml);
+        XsdValidator.validate("INFO", infoXsd, new File("../sharedModule/src/main/resources/nkp/pspValidator/shared-tmp/examples/info.xml"));
 
         //mix - ok
         File mixXsd = new File("../sharedModule/src/main/resources/nkp/pspValidator/shared/validatorConfig/fDMF/monograph_1.2/xsd/mix_2.0.xsd");
-        File mixXml = new File("../sharedModule/src/main/resources/nkp/pspValidator/shared-tmp/examples/mix.xml");
-        XsdValidator.validate("MIX", mixXsd, mixXml);
-
-        */
+        XsdValidator.validate("MIX", mixXsd, new File("../sharedModule/src/main/resources/nkp/pspValidator/shared-tmp/examples/mix.xml"));
 
         //premis - ok
         File premisXsd = new File("../sharedModule/src/main/resources/nkp/pspValidator/shared/validatorConfig/fDMF/monograph_1.2/xsd/premis_2.2.xsd");
-        File premisXml = new File("../sharedModule/src/main/resources/nkp/pspValidator/shared-tmp/examples/premis-event.xml");
-        XsdValidator.validate("PREMIS-EVENT", premisXsd, premisXml);
+        XsdValidator.validate("PREMIS-EVENT", premisXsd, new File("../sharedModule/src/main/resources/nkp/pspValidator/shared-tmp/examples/premis-event.xml"));
+        XsdValidator.validate("PREMIS-OBJECT", premisXsd, new File("../sharedModule/src/main/resources/nkp/pspValidator/shared-tmp/examples/premis-object.xml"));
+        XsdValidator.validate("PREMIS-AGENT", premisXsd, new File("../sharedModule/src/main/resources/nkp/pspValidator/shared-tmp/examples/premis-agent.xml"));
 
-        premisXml = new File("../sharedModule/src/main/resources/nkp/pspValidator/shared-tmp/examples/premis-object.xml");
-        XsdValidator.validate("PREMIS-OBJECT", premisXsd, premisXml);
-
-        premisXml = new File("../sharedModule/src/main/resources/nkp/pspValidator/shared-tmp/examples/premis-agent.xml");
-        XsdValidator.validate("PREMIS-AGENT", premisXsd, premisXml);
-
-
-       /* //dc - TODO, jak je to s tim root elementem a jeste import xml.xsd v xsd
+        //dc - ok
         File dcXsd = new File("../sharedModule/src/main/resources/nkp/pspValidator/shared/validatorConfig/fDMF/monograph_1.2/xsd/dc_1.1.xsd");
-        File dcXml = new File("../sharedModule/src/main/resources/nkp/pspValidator/shared-tmp/examples/dc.xml");
-        XsdValidator.validate("DC", dcXsd, dcXml);*/
+        XsdValidator.validate("DC", dcXsd, new File("../sharedModule/src/main/resources/nkp/pspValidator/shared-tmp/examples/dc.xml"));
 
-     /*   //mods - TODO: problem s importem xml.xsd
+        //mods - ok
         File modsXsd = new File("../sharedModule/src/main/resources/nkp/pspValidator/shared/validatorConfig/fDMF/monograph_1.2/xsd/mods_3.5.xsd");
-        File modsXml = new File("../sharedModule/src/main/resources/nkp/pspValidator/shared-tmp/examples/mods.xml");
-        XsdValidator.validate("MODS", modsXsd, modsXml);*/
+        XsdValidator.validate("MODS", modsXsd, new File("../sharedModule/src/main/resources/nkp/pspValidator/shared-tmp/examples/mods.xml"));
 
-       /* //mets - ok
+        //mets - problem https://github.com/rzeh4n/psp-validator/issues/13
         File metsXsd = new File("../sharedModule/src/main/resources/nkp/pspValidator/shared/validatorConfig/fDMF/monograph_1.2/xsd/mets_1.9.1.xsd");
-        File metsXml = new File("../sharedModule/src/main/resources/nkp/pspValidator/shared-tmp/examples/mets.xml");
-        XsdValidator.validate("METS", metsXsd, metsXml);*/
+        XsdValidator.validate("METS-PRIMARY", metsXsd, new File("../sharedModule/src/main/resources/nkp/pspValidator/shared-tmp/examples/mets-primary.xml"));
+        XsdValidator.validate("METS-SECONDARY", metsXsd, new File("../sharedModule/src/main/resources/nkp/pspValidator/shared-tmp/examples/mets-secondary.xml"));
+        //XsdValidator.validate("METS", metsXsd, new File("../sharedModule/src/test/resources/monograph_1.2/b50eb6b0-f0a4-11e3-b72e-005056827e52/amdsec/amd_mets_b50eb6b0-f0a4-11e3-b72e-005056827e52_0001.xml"));
+
     }
 
 }

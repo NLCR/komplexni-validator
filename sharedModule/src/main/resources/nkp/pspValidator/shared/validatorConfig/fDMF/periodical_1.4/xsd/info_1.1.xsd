@@ -1,5 +1,6 @@
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
     <!--METS Profile requirement id infoxml2-->
+    <!--TODO: upravit, resp. vyradit, pro 1.4 neni pevne dana struktura-->
     <xs:element name="info">
         <xs:complexType>
             <xs:sequence>

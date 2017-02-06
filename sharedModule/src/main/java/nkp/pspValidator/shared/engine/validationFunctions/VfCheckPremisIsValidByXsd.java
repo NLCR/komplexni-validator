@@ -18,7 +18,6 @@ import org.xml.sax.SAXException;
 
 import javax.xml.XMLConstants;
 import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.transform.TransformerException;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.validation.Schema;
 import javax.xml.validation.SchemaFactory;
@@ -109,8 +108,8 @@ public class VfCheckPremisIsValidByXsd extends ValidationFunction {
         ValidationResult result = new ValidationResult();
         for (File metsFile : metsFiles) {
             //TODO: // FIXME: 6.2.17 :
-            //	ERROR: checkPremisIsValidByXsd: amd_mets_b50eb6b0-f0a4-11e3-b72e-005056827e52_0008.xml: OBJ_001: UndeclaredPrefix: Cannot resolve 'premis:file' as a QName: the prefix 'premis' is not declared.
-            validate(metsFile, "mets:techMD", "OBJ_", xsdFile, level, result);
+            //validace objektů dočasně vypnuta kvůli https://github.com/rzeh4n/psp-validator/issues/13
+            //validate(metsFile, "mets:techMD", "OBJ_", xsdFile, level, result);
             validate(metsFile, "mets:digiprovMD", "EVT_", xsdFile, level, result);
             validate(metsFile, "mets:digiprovMD", "AGENT_", xsdFile, level, result);
         }
@@ -121,8 +120,6 @@ public class VfCheckPremisIsValidByXsd extends ValidationFunction {
         try {
             Document metsDoc = engine.getXmlDocument(metsFile, true);
             String xpathStr = String.format("/mets:mets/mets:amdSec/%s[starts-with(@ID,'%s')]", amdSecElement, idPrefix);
-//            System.err.println("xpath: " + xpathStr);
-            //XPathExpression xPath = engine.buildXpath("/mets:mets/mets:amdSec/mets:techMD[starts-with(@ID,'MIX_')]");
             NodeList techMdEls = (NodeList) engine.buildXpath(xpathStr).evaluate(metsDoc, XPathConstants.NODESET);
             for (int i = 0; i < techMdEls.getLength(); i++) {
                 Element techMdEl = (Element) techMdEls.item(i);
@@ -150,18 +147,16 @@ public class VfCheckPremisIsValidByXsd extends ValidationFunction {
                 result.addError(invalid(level, "%s: %s: nenalezen element %s", metsFile.getName(), id, xpathStr));
             } else {
                 Document mixDoc = XmlUtils.elementToNewDocument(mixEl, true);
-                if(print){
-                    /*try {
+                /*if(print){
+                    try {
                         System.out.println(XmlUtils.elementToXml(mixDoc.getDocumentElement()));
                     } catch (TransformerException e) {
                         e.printStackTrace();
-                    }*/
-                }
-
+                    }
+                }*/
                 DOMSource source = new DOMSource(mixDoc);
                 SchemaFactory schemaFactory = SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
                 schemaFactory.setResourceResolver(new XsdImportsResourceResolver(xsdFile.getParentFile()));
-
                 Schema schema = schemaFactory.newSchema(xsdFile);
                 Validator validator = schema.newValidator();
                 validator.validate(source);

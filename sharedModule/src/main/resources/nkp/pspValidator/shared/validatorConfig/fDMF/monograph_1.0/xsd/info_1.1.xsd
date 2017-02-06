@@ -1,5 +1,7 @@
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
     <!--METS Profile requirement id infoxml2-->
+    <!--TODO: upravit podle DMF, nebo mozna rovnou vyradit-->
+
     <xs:element name="info">
         <xs:complexType>
             <xs:sequence>
@@ -94,11 +96,13 @@
 
     <xs:simpleType name="metadataVersion">
         <xs:restriction base="xs:string">
+            <!--TODO: pro periodika jinak-->
             <!--tohle se lisi podle verze DMF (fDMF), jejiz soucasti je tenhle soubor-->
-            <xs:enumeration value="1.5"/>
-            <xs:enumeration value="1.5.1"/>
-            <xs:enumeration value="1.5.2"/>
-            <xs:enumeration value="1.6"/>
+            <xs:enumeration value="1.1"/>
+            <xs:enumeration value="1.1.1"/>
+            <xs:enumeration value="1.1.2"/>
+            <xs:enumeration value="1.1.3"/>
+            <xs:enumeration value="1.2"/>
         </xs:restriction>
     </xs:simpleType>
 
