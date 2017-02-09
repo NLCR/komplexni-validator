@@ -92,7 +92,8 @@ public class EfGetDcIdentifiersForEachDmdsecId extends EvaluationFunction {
                     try {
                         idList.add(Utils.extractIdentifierFromDcString(idStr));
                     } catch (InvalidIdException e) {
-                        return errorResult(String.format("neplatný identifikátor '%s': %s", idStr, e.getMessage()));
+                        //tady proste budu neplatny identifikator ignorovat
+                        //return errorResult(String.format("neplatný identifikátor '%s': %s", idStr, e.getMessage()));
                     }
                 }
                 result.add(idList);

@@ -125,11 +125,11 @@ public class VfCheckPrimaryMetsDcIdentifiersMatchModsIdentifiers extends Validat
                 //log identifiers that are in mods and not in dc or vise versa
                 for (String modsValue : modsValuesRemainging) {
                     Identifier id = new Identifier(idType, modsValue);
-                    result.addError(invalid(Level.WARNING, "identifikátor %s nalezen v MODS záznamu, ale nenalezen v DC záznamu pro %s", id, sectionId));
+                    result.addError(invalid(Level.WARNING, "identifikátor '%s' nalezen v MODS záznamu, ale nenalezen v DC záznamu pro %s", id, sectionId));
                 }
                 for (String dcValue : dcValuesRemainging) {
                     Identifier id = new Identifier(idType, dcValue);
-                    result.addError(invalid(Level.WARNING, "identifikátor %s nalezen v DC záznamu, ale nenalezen v MODS záznamu pro %s", id, sectionId));
+                    result.addError(invalid(Level.WARNING, "identifikátor '%s' nalezen v DC záznamu, ale nenalezen v MODS záznamu pro %s", id, sectionId));
                 }
             }
         }
@@ -157,7 +157,8 @@ public class VfCheckPrimaryMetsDcIdentifiersMatchModsIdentifiers extends Validat
                     }
                     values.add(identifier.getValue());
                 } catch (InvalidIdException e) {
-                    validationResult.addError(invalid(Level.ERROR, "neplatný identifikátor '%s': %s", idStr, e.getMessage()));
+                    //just ignore
+                    //validationResult.addError(invalid(Level.ERROR, "neplatný identifikátor '%s': %s", idStr, e.getMessage()));
                 }
             }
             result.put(entityId, ids);

@@ -174,6 +174,8 @@ public class Engine {
                 return new VfCheckDcIdentifiersDoNotContainWhiteSpaces(this);
             case "checkStringDerivedFromOneOfIdentifiers":
                 return new VfCheckStringDerivedFromOneOfIdentifiers(this);
+            case "checkDcIdentifiersHaveTypeAndValue":
+                return new VfCheckDcIdentifiersHaveTypeAndValue(this);
             case "checkPrimaryMetsFilesecContainsAllFilegroups":
                 return new VfCheckPrimaryMetsFilesecContainsAllFilegroups(this);
             case "checkPrimaryMetsDcIdentifiersMatchModsIdentifiers":

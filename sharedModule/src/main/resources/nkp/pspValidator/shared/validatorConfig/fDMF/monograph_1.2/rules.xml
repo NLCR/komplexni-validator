@@ -1014,6 +1014,17 @@
             </validation>
         </rule>
 
+        <rule name="DC_IDENTIFIERS_CONTAIN_TYPE_AND_VALUE">
+            <description>Identifikátory v Dublin Core záznamech by měly obsahovat typ a hodnotu oddělěné dvojtečkou (např. barCode:2610161505).</description>
+            <validation functionName="checkDcIdentifiersHaveTypeAndValue">
+                <params>
+                    <value name="primary-mets_file" type="FILE">
+                        <value-ref name="PRIMARY-METS_FILE"/>
+                    </value>
+                </params>
+            </validation>
+        </rule>
+
         <!--title-->
         <rule name="DC_MANDATORY_IDENTIFIERS_PRESENT_LEVEL_TITLE">
             <description>

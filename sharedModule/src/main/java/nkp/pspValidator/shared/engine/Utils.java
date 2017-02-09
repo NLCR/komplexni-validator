@@ -172,18 +172,23 @@ public class Utils {
         } else if (string.isEmpty()) {
             throw new InvalidIdException("identifikátor je prázdný");
         } else if (!string.contains(":")) {
-            throw new InvalidIdException("identifikátor neobsahuje oddělovač ':'");
+            throw new InvalidIdException("identifikátor není složen z typu a hodnoty oddělených dvojtečkou (např. barCode:2610161505)");
         } else {
             String[] tokens = string.split(":");
             String type = tokens[0];
             String value = null;
-            if (tokens.length == 2) {
+            if (tokens.length == 1) {
+                value = "";
+            } else if (tokens.length == 2) {
                 value = tokens[1];
             } else {
                 List<String> valueTokens = new LinkedList<>();
                 valueTokens.addAll(Arrays.asList(tokens));
                 valueTokens.remove(0);
                 value = mergeStrings(valueTokens, ':');
+                if (valueTokens.size() >= 2 && string.endsWith(":")) {
+                    value += ':';
+                }
             }
             if (value != null) {
                 value = value.trim();
