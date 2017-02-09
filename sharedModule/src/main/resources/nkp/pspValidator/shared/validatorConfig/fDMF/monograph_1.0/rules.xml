@@ -852,22 +852,6 @@
             </validation>
         </rule>
 
-
-        <!--METS Profile requirement id infoxml6-->
-        <rule name="INFO_REFERENCES_PRIMARY-METS">
-            <description>Soubor INFO se musí odkazovat na soubor PRIMARY-METS přes element mainmets.</description>
-            <validation functionName="checkInfoFileReferencesPrimaryMets">
-                <params>
-                    <value name="info_file" type="FILE">
-                        <value-ref name="INFO_FILE"/>
-                    </value>
-                    <value name="primary-mets_file" type="FILE">
-                        <value-ref name="PRIMARY-METS_FILE"/>
-                    </value>
-                </params>
-            </validation>
-        </rule>
-
         <!--METS Profile requirement id infoxml13-->
         <rule name="INFO_ITEMTOTAL_MATCHES_ITEMS_COUNT">
             <description>V souboru INFO musí počet elementů item souhlasit s hodnotou atributu itemtotal elementu

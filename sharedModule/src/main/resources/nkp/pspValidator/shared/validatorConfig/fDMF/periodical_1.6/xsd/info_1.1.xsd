@@ -1,4 +1,6 @@
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+    <!--XML Schema pro soubor INFO pro DMF Periodika 1.6-->
+
     <!--METS Profile requirement id infoxml2-->
     <xs:element name="info">
         <xs:complexType>
@@ -22,7 +24,6 @@
                     </xs:complexType>
                 </xs:element>
                 <!--METS Profile requirement id infoxml8-->
-                <!--TODO: mimo XSD kontrolovat shodu s identifikatory MODS a DC-->
                 <xs:element name="titleid" maxOccurs="unbounded">
                     <xs:complexType>
                         <xs:simpleContent>
@@ -30,18 +31,10 @@
                                 <xs:attribute name="type" use="required">
                                     <xs:simpleType>
                                         <xs:restriction base="xs:string">
-                                            <!--TODO: podle typu standardu (mon/per) nechat jen povolene identifikatory-->
-
-                                            <!--pouze pro monografie-->
+                                            <!--podle seznamu na s.14-->
                                             <xs:enumeration value="isbn"/>
-                                            <xs:enumeration value="ismn"/>
-
-                                            <!--pouze pro periodika-->
                                             <xs:enumeration value="issn"/>
-
-                                            <!--vsechno-->
                                             <xs:enumeration value="ccnb"/>
-                                            <xs:enumeration value="uuid"/>
                                             <xs:enumeration value="urnnbn"/>
                                         </xs:restriction>
                                     </xs:simpleType>

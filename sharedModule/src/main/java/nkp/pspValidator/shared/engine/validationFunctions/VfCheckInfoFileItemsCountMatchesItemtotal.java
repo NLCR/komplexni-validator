@@ -60,11 +60,16 @@ public class VfCheckInfoFileItemsCountMatchesItemtotal extends ValidationFunctio
         ValidationResult result = new ValidationResult();
         try {
             Document infoDoc = engine.getXmlDocument(infoFile, false);
-            XPathExpression itemTotalExp = engine.buildXpath("/info/itemlist/@itemtotal");
-            Integer itemTotal = Integer.valueOf((String) itemTotalExp.evaluate(infoDoc, XPathConstants.STRING));
+            Integer itemTotalLc = Integer.valueOf((String) engine.buildXpath("/info/itemlist/@itemtotal").evaluate(infoDoc, XPathConstants.STRING));
+            Integer itemTotalUc = Integer.valueOf((String) engine.buildXpath("/info/itemlist/@ITEMTOTAL").evaluate(infoDoc, XPathConstants.STRING));
+            Integer itemTotal = null;
+            if (itemTotalLc != null) {
+                itemTotal = itemTotalLc;
+            } else if (itemTotalUc != null) {
+                itemTotal = itemTotalUc;
+            }
             XPathExpression itemsExp = engine.buildXpath("count(/info/itemlist/item)");
             Integer items = Integer.valueOf((String) itemsExp.evaluate(infoDoc, XPathConstants.STRING));
-
             if (items != itemTotal) {
                 return singlErrorResult(invalid(Level.ERROR, "počet elementů item (%s) nesouhlasí s obsahem atributu itemtotal (%s)", items, itemTotal));
             }

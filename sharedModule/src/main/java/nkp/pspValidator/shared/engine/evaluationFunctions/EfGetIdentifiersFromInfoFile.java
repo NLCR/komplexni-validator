@@ -70,7 +70,14 @@ public class EfGetIdentifiersFromInfoFile extends EvaluationFunction {
             List<Identifier> identifiers = new ArrayList<>(nodes.getLength());
             for (int i = 0; i < nodes.getLength(); i++) {
                 Element element = (Element) nodes.item(i);
-                String type = element.getAttribute("type").trim();
+                String typeLc = element.getAttribute("type").trim();
+                String typeUc = element.getAttribute("TYPE").trim();
+                String type = null;
+                if (typeLc != null && !typeLc.trim().isEmpty()) {
+                    type = typeLc.trim();
+                } else if (typeUc != null && typeUc.trim().isEmpty()) {
+                    type = typeUc.trim();
+                }
                 String value = element.getTextContent().trim();
                 identifiers.add(new Identifier(type, value));
             }

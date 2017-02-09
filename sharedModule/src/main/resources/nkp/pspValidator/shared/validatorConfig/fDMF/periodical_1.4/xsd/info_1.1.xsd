@@ -1,52 +1,20 @@
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+    <!--XML Schema pro soubor INFO pro DMF Periodika 1.4-->
+
     <!--METS Profile requirement id infoxml2-->
-    <!--TODO: upravit, resp. vyradit, pro 1.4 neni pevne dana struktura-->
     <xs:element name="info">
         <xs:complexType>
             <xs:sequence>
                 <!--METS Profile requirement id infoxml3-->
                 <xs:element type="xs:dateTime" name="created"/>
-                <!--METS Profile requirement id infoxml4-->
-                <xs:element type="metadataVersion" name="metadataversion"/>
                 <!--METS Profile requirement id infoxml5-->
                 <xs:element type="xs:string" name="packageid"/>
-                <!--METS Profile requirement id infoxml6-->
-                <xs:element type="xs:string" name="mainmets"/>
-                <!--METS Profile requirement id infoxml7-->
-                <xs:element name="validation">
-                    <xs:complexType>
-                        <xs:simpleContent>
-                            <xs:extension base="xs:string">
-                                <xs:attribute name="version" type="xs:string" use="required"/>
-                            </xs:extension>
-                        </xs:simpleContent>
-                    </xs:complexType>
-                </xs:element>
                 <!--METS Profile requirement id infoxml8-->
-                <!--TODO: mimo XSD kontrolovat shodu s identifikatory MODS a DC-->
                 <xs:element name="titleid" maxOccurs="unbounded">
                     <xs:complexType>
                         <xs:simpleContent>
                             <xs:extension base="xs:string">
-                                <xs:attribute name="type" use="required">
-                                    <xs:simpleType>
-                                        <xs:restriction base="xs:string">
-                                            <!--TODO: podle typu standardu (mon/per) nechat jen povolene identifikatory-->
-
-                                            <!--pouze pro monografie-->
-                                            <xs:enumeration value="isbn"/>
-                                            <xs:enumeration value="ismn"/>
-
-                                            <!--pouze pro periodika-->
-                                            <xs:enumeration value="issn"/>
-
-                                            <!--vsechno-->
-                                            <xs:enumeration value="ccnb"/>
-                                            <xs:enumeration value="uuid"/>
-                                            <xs:enumeration value="urnnbn"/>
-                                        </xs:restriction>
-                                    </xs:simpleType>
-                                </xs:attribute>
+                                <xs:attribute name="TYPE" use="required" type="xs:string"/>
                             </xs:extension>
                         </xs:simpleContent>
                     </xs:complexType>
@@ -67,7 +35,7 @@
                         <xs:sequence>
                             <xs:element type="xs:anyURI" name="item" maxOccurs="unbounded" minOccurs="1"/>
                         </xs:sequence>
-                        <xs:attribute type="xs:integer" name="itemtotal" use="required"/>
+                        <xs:attribute type="xs:integer" name="ITEMTOTAL" use="required"/>
                     </xs:complexType>
                 </xs:element>
                 <!--METS Profile requirement id infoxml14-->
@@ -75,8 +43,15 @@
                     <xs:complexType>
                         <xs:simpleContent>
                             <xs:extension base="xs:anyURI">
-                                <xs:attribute type="checksumType" name="type" use="required"/>
-                                <xs:attribute type="xs:string" name="checksum" use="required"/>
+                                <xs:attribute name="TYPE" use="required">
+                                    <xs:simpleType>
+                                        <xs:restriction base="xs:string">
+                                            <xs:enumeration value="MD5"/>
+                                            <xs:enumeration value="md5"/>
+                                        </xs:restriction>
+                                    </xs:simpleType>
+                                </xs:attribute>
+                                <xs:attribute type="xs:string" name="CHECKSUM" use="required"/>
                             </xs:extension>
                         </xs:simpleContent>
                     </xs:complexType>
@@ -86,21 +61,5 @@
             </xs:sequence>
         </xs:complexType>
     </xs:element>
-
-    <xs:simpleType name="checksumType">
-        <xs:restriction base="xs:string">
-            <xs:pattern value="MD5"/>
-        </xs:restriction>
-    </xs:simpleType>
-
-    <xs:simpleType name="metadataVersion">
-        <xs:restriction base="xs:string">
-            <!--tohle se lisi podle verze DMF (fDMF), jejiz soucasti je tenhle soubor-->
-            <xs:enumeration value="1.5"/>
-            <xs:enumeration value="1.5.1"/>
-            <xs:enumeration value="1.5.2"/>
-            <xs:enumeration value="1.6"/>
-        </xs:restriction>
-    </xs:simpleType>
 
 </xs:schema>

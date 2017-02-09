@@ -77,8 +77,14 @@ public class VfCheckInfoFileChecksumMatches extends ValidationFunction {
                         checksumFileExisting.getAbsolutePath(), checksumFileFound.getAbsolutePath()));
             }
             //check that computed hash and hash from INFO file match
-            XPathExpression hashExp = engine.buildXpath("/info/checksum/@checksum");
-            String hashFound = (String) hashExp.evaluate(infoDoc, XPathConstants.STRING);
+            String hashFoundLc = (String) engine.buildXpath("/info/checksum/@checksum").evaluate(infoDoc, XPathConstants.STRING);
+            String hashFoundUc = (String) engine.buildXpath("/info/checksum/@CHECKSUM").evaluate(infoDoc, XPathConstants.STRING);
+            String hashFound = null;
+            if (hashFoundLc != null && !hashFoundLc.trim().isEmpty()) {
+                hashFound = hashFoundLc.trim();
+            } else if (hashFoundUc != null && !hashFoundUc.trim().isEmpty()) {
+                hashFound = hashFoundUc.trim();
+            }
             String hashComputed = Utils.computeHash(checksumFileExisting);
             if (!hashComputed.toUpperCase().equals(hashFound.toUpperCase())) {
                 result.addError(invalid(Level.ERROR,
