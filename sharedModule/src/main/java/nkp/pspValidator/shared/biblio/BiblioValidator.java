@@ -50,7 +50,7 @@ public class BiblioValidator {
         //check element's attributes
         checkAttributes(result, thisElementPath, definition.getExpectedAttributes(), element.getAttributes(), errorLabel);
         //check element's children elements
-        checkChildrenElements(manager, result, element, thisElementPath, definition.getExpectedElementDefinitions(), XmlUtils.getChildrenElements(element), errorLabel);
+        checkChildrenElements(manager, result, element, thisElementPath, definition.getExpectedChildElementDefinitions(), definition.isIgnoreUnexpectedChildElements(), XmlUtils.getChildrenElements(element), errorLabel);
         //check element's text content
         if (definition.getExpectedContentDefinition() != null) {
             checkContent(manager, result, element, thisElementPath, definition.getExpectedContentDefinition(), errorLabel);
@@ -131,7 +131,7 @@ public class BiblioValidator {
         }
     }
 
-    private static void checkChildrenElements(XmlManager manager, ValidationResult result, Element rootElement, String parentElementPath, List<ExpectedElementDefinition> expectedElementDefinitions, List<Element> chilrenElements, String errorLabel) throws InvalidXPathExpressionException, XPathExpressionException {
+    private static void checkChildrenElements(XmlManager manager, ValidationResult result, Element rootElement, String parentElementPath, List<ExpectedElementDefinition> expectedElementDefinitions, boolean ignoreUnexpectedElements, List<Element> chilrenElements, String errorLabel) throws InvalidXPathExpressionException, XPathExpressionException {
         Set<Element> childrenRemaining = new HashSet<>();
         childrenRemaining.addAll(chilrenElements);
         for (ExpectedElementDefinition elDef : expectedElementDefinitions) {
@@ -163,7 +163,9 @@ public class BiblioValidator {
         }
         //unexpected element, warning
         for (Element element : childrenRemaining) {
-            result.addError(Level.WARNING, buildMessage(errorLabel, "%s: nalezen neočekávaný element '%s' %s", parentElementPath, element.getTagName(), buildAttributeList(element)));
+            if (!ignoreUnexpectedElements) {
+                result.addError(Level.WARNING, buildMessage(errorLabel, "%s: nalezen neočekávaný element '%s' %s", parentElementPath, element.getTagName(), buildAttributeList(element)));
+            }
         }
     }
 

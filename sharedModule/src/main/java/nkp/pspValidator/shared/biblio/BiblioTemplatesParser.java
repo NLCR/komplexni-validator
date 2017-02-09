@@ -138,6 +138,14 @@ public class BiblioTemplatesParser {
         }
         elementDef.setRepeatable(repeatable);
 
+        //ignore unexpected child elements
+        boolean ignoreUnexpectedChildelements = false;
+        String ignoreUnexpectedChildelementsStr = rootEl.getAttribute("ignoreUnexpectedChildElements");
+        if (ignoreUnexpectedChildelementsStr != null && !ignoreUnexpectedChildelementsStr.isEmpty()) {
+            ignoreUnexpectedChildelements = Boolean.valueOf(ignoreUnexpectedChildelementsStr);
+        }
+        elementDef.setIgnoreUnexpectedChildElements(ignoreUnexpectedChildelements);
+
         //expected attributes
         Element expectedAttributesEl = getFirstChildElementsByName(rootEl, "expectedAttributes");
         if (expectedAttributesEl != null) {
@@ -175,7 +183,7 @@ public class BiblioTemplatesParser {
                 expectedElements.add(newElementDefinition);
             }
             if (!expectedElements.isEmpty()) {
-                elementDef.setExpectedElementDefinitions(expectedElements);
+                elementDef.setExpectedChildElementDefinitions(expectedElements);
             }
         }
 

@@ -25,7 +25,8 @@ public class ExpectedElementDefinition {
 
     //expected children
     private List<ExpectedAttributeDefinition> expectedAttributes = Collections.emptyList();
-    private List<ExpectedElementDefinition> expectedElementDefinitions = Collections.emptyList();
+    private List<ExpectedElementDefinition> expectedChildElementDefinitions = Collections.emptyList();
+    private boolean ignoreUnexpectedChildElements = false;
     private ExpectedContentDefinition expectedContentDefinition;
     private List<ExtraRule> extraRules = Collections.emptyList();
 
@@ -86,15 +87,23 @@ public class ExpectedElementDefinition {
         this.expectedAttributes = expectedAttributes;
     }
 
-    public List<ExpectedElementDefinition> getExpectedElementDefinitions() {
-        return expectedElementDefinitions;
+    public List<ExpectedElementDefinition> getExpectedChildElementDefinitions() {
+        return expectedChildElementDefinitions;
     }
 
-    public void setExpectedElementDefinitions(List<ExpectedElementDefinition> expectedElementDefinitions) {
-        if (expectedElementDefinitions == null) {
-            throw new IllegalArgumentException("expectedElementDefinitions mustn't be null");
+    public void setExpectedChildElementDefinitions(List<ExpectedElementDefinition> expectedChildElementDefinitions) {
+        if (expectedChildElementDefinitions == null) {
+            throw new IllegalArgumentException("expectedChildElementDefinitions mustn't be null");
         }
-        this.expectedElementDefinitions = expectedElementDefinitions;
+        this.expectedChildElementDefinitions = expectedChildElementDefinitions;
+    }
+
+    public boolean isIgnoreUnexpectedChildElements() {
+        return ignoreUnexpectedChildElements;
+    }
+
+    public void setIgnoreUnexpectedChildElements(boolean ignoreUnexpectedChildElements) {
+        this.ignoreUnexpectedChildElements = ignoreUnexpectedChildElements;
     }
 
     public List<ExtraRule> getExtraRules() {
