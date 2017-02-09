@@ -19,6 +19,13 @@
         <namespace prefix="dc">http://purl.org/dc/elements/1.1/</namespace>
     </namespaces>
 
+    <dictionaries>
+        <dictionary name="iso6392languageCodes"
+                    description="kódy jazyků podle ISO 639-2"
+                    url="http://www.loc.gov/standards/iso639-2/php/code_list.php"
+        />
+    </dictionaries>
+
     <rootElement name="oai_dc:dc">
         <expectedElements>
 
