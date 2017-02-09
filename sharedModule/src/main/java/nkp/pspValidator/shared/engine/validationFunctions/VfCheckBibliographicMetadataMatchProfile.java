@@ -175,7 +175,7 @@ public class VfCheckBibliographicMetadataMatchProfile extends ValidationFunction
 
         String specStr = (String) xPathExpression.evaluate(metsDoc, XPathConstants.STRING);
         if (specStr == null || specStr.isEmpty()) {
-            result.addError(invalid(Level.INFO, "záznam %s neobsahuje informaci o použitých digitalizačních pravidlech; validuji %s oproti AACR2", dmdSecId, entityGlobalId));
+            result.addError(invalid(Level.INFO, "záznam %s neobsahuje informaci o použitých katalogizačních pravidlech; validuji %s oproti AACR2", dmdSecId, entityGlobalId));
             return CatalogingConventions.AACR2;
         } else {
             if (specStr.equals("aacr2")) {
@@ -183,7 +183,7 @@ public class VfCheckBibliographicMetadataMatchProfile extends ValidationFunction
             } else if (specStr.equals("rda")) {
                 return CatalogingConventions.RDA;
             } else {
-                result.addError(invalid(Level.WARNING, "záznam %s obsahuje neplatnou informaci o použitých digitalizačních pravidlech (%s); validuji %s oproti AACR2", dmdSecId, specStr, entityGlobalId));
+                result.addError(invalid(Level.WARNING, "záznam %s obsahuje neplatnou informaci o použitých katalogizačních pravidlech (%s); validuji %s oproti AACR2", dmdSecId, specStr, entityGlobalId));
                 return CatalogingConventions.AACR2;
             }
         }
