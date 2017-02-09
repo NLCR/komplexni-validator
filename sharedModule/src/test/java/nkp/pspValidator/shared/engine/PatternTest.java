@@ -356,6 +356,14 @@ public class PatternTest {
         assertTrue("15.-16.11.7".matches(regexp));
     }
 
+    @Test
+    public void infoXsdFilename() {
+        String regexp = "info_(mon|per)[0-9]+(\\.([0-9])+)*\\.xsd";
+        assertTrue("info_mon1.2.xsd".matches(regexp));
+        assertTrue("info_mon1.1.3.xsd".matches(regexp));
+        assertTrue("info_per1.6.xsd".matches(regexp));
+    }
+
 
 }
 

@@ -23,7 +23,7 @@ public class ConfigProcessorTest {
 
             File fdmfRoot = new File("src/main/resources/nkp/pspValidator/shared/fDMF/monograph_1.2");
 
-            engine.setProvidedFile("INFO_XSD_FILE", new File(fdmfRoot, "xsd/info_1.1.xsd"));
+            engine.setProvidedFile("INFO_XSD_FILE", new File(fdmfRoot, "xsd/info_mon1.2.xsd"));
             engine.setProvidedFile("ALTO_XSD_FILE", new File(fdmfRoot, "xsd/alto_2.0.xsd"));
             engine.setProvidedFile("CMD_XSD_FILE", new File(fdmfRoot, "xsd/cmd_0.91.xsd"));
             engine.setProvidedFile("DC_XSD_FILE", new File(fdmfRoot, "xsd/dc_1.1.xsd"));
