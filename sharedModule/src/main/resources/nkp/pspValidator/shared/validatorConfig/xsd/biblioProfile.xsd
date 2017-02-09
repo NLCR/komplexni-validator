@@ -137,6 +137,7 @@
                     <xs:attribute name="repeatable" type="xs:boolean" use="optional"/>
                     <xs:attribute name="errorMessage" type="xs:string" use="optional"/>
                     <xs:attribute name="ignoreUnexpectedChildElements" type="xs:boolean" use="optional"/>
+                    <xs:attribute name="ignoreUnexpectedAttributes" type="xs:boolean" use="optional"/>
                 </xs:complexType>
             </xs:element>
         </xs:sequence>

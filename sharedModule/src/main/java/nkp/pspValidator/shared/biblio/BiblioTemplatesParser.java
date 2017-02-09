@@ -146,6 +146,14 @@ public class BiblioTemplatesParser {
         }
         elementDef.setIgnoreUnexpectedChildElements(ignoreUnexpectedChildelements);
 
+        //ignore unexpected attributes
+        boolean ignoreUnexpectedAttributes = false;
+        String ignoreUnexpectedAttributesStr = rootEl.getAttribute("ignoreUnexpectedAttributes");
+        if (ignoreUnexpectedAttributesStr != null && !ignoreUnexpectedAttributesStr.isEmpty()) {
+            ignoreUnexpectedAttributes = Boolean.valueOf(ignoreUnexpectedAttributesStr);
+        }
+        elementDef.setIgnoreUnexpectedAttributes(ignoreUnexpectedAttributes);
+
         //expected attributes
         Element expectedAttributesEl = getFirstChildElementsByName(rootEl, "expectedAttributes");
         if (expectedAttributesEl != null) {

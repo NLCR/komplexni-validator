@@ -48,7 +48,7 @@ public class BiblioValidator {
     private static void checkElement(XmlManager manager, ValidationResult result, Element element, ExpectedElementDefinition definition, String parentPath, Integer positionOfElement, String errorLabel) throws InvalidXPathExpressionException, XPathExpressionException {
         String thisElementPath = buildElementPath(parentPath, definition.buildRelativeXpath(), positionOfElement);
         //check element's attributes
-        checkAttributes(result, thisElementPath, definition.getExpectedAttributes(), element.getAttributes(), errorLabel);
+        checkAttributes(result, thisElementPath, definition.getExpectedAttributes(), definition.isIgnoreUnexpectedAttributes(), element.getAttributes(), errorLabel);
         //check element's children elements
         checkChildrenElements(manager, result, element, thisElementPath, definition.getExpectedChildElementDefinitions(), definition.isIgnoreUnexpectedChildElements(), XmlUtils.getChildrenElements(element), errorLabel);
         //check element's text content
@@ -68,7 +68,7 @@ public class BiblioValidator {
         }
     }
 
-    private static void checkAttributes(ValidationResult result, String parentElementPath, List<ExpectedAttributeDefinition> attrDefs, NamedNodeMap foundAttrs, String errorLabel) {
+    private static void checkAttributes(ValidationResult result, String parentElementPath, List<ExpectedAttributeDefinition> attrDefs, boolean ignoreUnexpectedAttributes, NamedNodeMap foundAttrs, String errorLabel) {
         Set<Integer> positionsOfUsedAttrs = new HashSet<>();
         for (ExpectedAttributeDefinition attrDef : attrDefs) {
             boolean found = false;
@@ -95,7 +95,7 @@ public class BiblioValidator {
         for (int i = 0; i < foundAttrs.getLength(); i++) {
             if (!positionsOfUsedAttrs.contains(i)) {
                 Attr attr = (Attr) foundAttrs.item(i);
-                if (!attr.getName().startsWith("xmlns:")) { //ignore namespace definitions
+                if (!attr.getName().startsWith("xmlns:") && !ignoreUnexpectedAttributes) { //ignore namespace definitions
                     result.addError(Level.WARNING, buildMessage(errorLabel, "%s: nalezen neočekávaný atribut '%s'", parentElementPath, attr.getName()));
                 }
             }

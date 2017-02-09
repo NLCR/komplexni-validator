@@ -25,6 +25,7 @@ public class ExpectedElementDefinition {
 
     //expected children
     private List<ExpectedAttributeDefinition> expectedAttributes = Collections.emptyList();
+    private boolean ignoreUnexpectedAttributes = false;
     private List<ExpectedElementDefinition> expectedChildElementDefinitions = Collections.emptyList();
     private boolean ignoreUnexpectedChildElements = false;
     private ExpectedContentDefinition expectedContentDefinition;
@@ -85,6 +86,14 @@ public class ExpectedElementDefinition {
             throw new IllegalArgumentException("expectedAttributes mustn't be null");
         }
         this.expectedAttributes = expectedAttributes;
+    }
+
+    public boolean isIgnoreUnexpectedAttributes() {
+        return ignoreUnexpectedAttributes;
+    }
+
+    public void setIgnoreUnexpectedAttributes(boolean ignoreUnexpectedAttributes) {
+        this.ignoreUnexpectedAttributes = ignoreUnexpectedAttributes;
     }
 
     public List<ExpectedElementDefinition> getExpectedChildElementDefinitions() {
