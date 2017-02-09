@@ -74,7 +74,7 @@
                 <expectedContent/>
             </element>
 
-            <element name="dc:identifier" mandatory="true"
+            <element name="dc:identifier"
                      errorMessage="Očekáván alespoň jeden povinný element dc:identifier.">
                 <expectedContent/>
             </element>

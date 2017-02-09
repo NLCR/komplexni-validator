@@ -49,8 +49,34 @@
                 <expectedContent/>
             </element>
 
-            <element name="dc:date" mandatory="true"
+            <element name="dc:date"
                      errorMessage="Očekáván povinný element dc:date obsahující datum vydání předlohy.">
+                <expectedContent/>
+            </element>
+
+            <element name="dc:language"
+                     errorMessage="Očekáván alespoň jeden povinný element dc:language obsahující přesné určení jazyka kódem z kontrolovaného slovníku ISO 639-2.">
+                <expectedContent>
+                    <fromDictionary name="iso6392languageCodes"/>
+                </expectedContent>
+            </element>
+
+            <element name="dc:format"
+                     errorMessage="Očekáván alespoň jeden povinný element dc:format obsahující údaje o fyzické podobě dokumentu, případně údaje o rozsahu.">
+                <expectedContent/>
+            </element>
+
+            <element name="dc:subject" mandatory="false">
+                <expectedContent/>
+            </element>
+
+            <element name="dc:identifier"
+                     errorMessage="Očekáván alespoň jeden povinný element dc:identifier.">
+                <expectedContent/>
+            </element>
+
+            <element name="dc:source"
+                     errorMessage="Očekáván alespoň jeden povinný element dc:source obsahující údaje o instituci, kde je fyzicky uložen daný konkrétní popisovaný dokument; signaturu nebo lokační údaje o daném konkrétním dokumentu; a/nebo lokaci dokumentu (url).">
                 <expectedContent/>
             </element>
 

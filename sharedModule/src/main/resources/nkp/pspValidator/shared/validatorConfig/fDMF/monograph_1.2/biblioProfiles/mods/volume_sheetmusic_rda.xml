@@ -559,17 +559,6 @@
             </element>
 
             <element name="mods:subject" mandatory="false">
-                <expectedAttributes>
-                    <attribute name="authority" mandatory="false">
-                        <expectedContent>
-                            <oneOf>
-                                <value>czenas</value>
-                                <value>eczenas</value>
-                                <value>Konspekt</value>
-                            </oneOf>
-                        </expectedContent>
-                    </attribute>
-                </expectedAttributes>
                 <expectedElements>
                     <element name="mods:topic" mandatory="false">
                         <!--V DMF je "použít kontrolovaný slovník, napříkld ... " - tj. kontrolovaný slovník NENÍ vyžadován DMF-->
@@ -810,17 +799,19 @@
                     </element>
 
                     <element name="mods:recordChangeDate" mandatory="false">
+                        <expectedAttributes>
+                            <attribute name="encoding" mandatory="false">
+                                <expectedContent>
+                                    <value>iso8601</value>
+                                </expectedContent>
+                            </attribute>
+                        </expectedAttributes>
                         <expectedContent/>
                     </element>
 
                     <element name="mods:recordIdentifier" mandatory="false">
                         <expectedAttributes>
                             <attribute name="source" mandatory="false"/>
-                            <attribute name="encoding" mandatory="false">
-                                <expectedContent>
-                                    <value>iso8601</value>
-                                </expectedContent>
-                            </attribute>
                         </expectedAttributes>
                         <expectedContent/>
                     </element>

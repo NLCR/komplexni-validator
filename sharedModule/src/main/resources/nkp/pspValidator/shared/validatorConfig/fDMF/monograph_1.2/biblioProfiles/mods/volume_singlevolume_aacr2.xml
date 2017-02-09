@@ -307,6 +307,7 @@
                             <oneOf>
                                 <value>czenas</value>
                                 <value>eczenas</value>
+                                <value>Konspekt</value>
                             </oneOf>
                         </expectedContent>
                     </attribute>

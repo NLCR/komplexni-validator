@@ -82,7 +82,7 @@
                 <expectedContent/>
             </element>
 
-            <element name="dc:source" mandatory="true"
+            <element name="dc:source"
                      errorMessage="Očekáván alespoň jeden povinný element dc:source obsahující údaje o instituci, kde je fyzicky uložen daný konkrétní popisovaný dokument; signaturu nebo lokační údaje o daném konkrétním dokumentu; a/nebo lokaci dokumentu (url).">
                 <expectedContent/>
             </element>

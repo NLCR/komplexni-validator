@@ -52,6 +52,26 @@
                 <expectedContent/>
             </element>
 
+            <element name="dc:language"
+                     errorMessage="Očekáván alespoň jeden povinný element dc:language obsahující přesné určení jazyka kódem z kontrolovaného slovníku ISO 639-2.">
+                <expectedContent>
+                    <fromDictionary name="iso6392languageCodes"/>
+                </expectedContent>
+            </element>
+
+            <element name="dc:format">
+                <expectedContent/>
+            </element>
+
+            <element name="dc:subject" mandatory="false">
+                <expectedContent/>
+            </element>
+
+            <element name="dc:identifier"
+                     errorMessage="Očekáván alespoň jeden povinný element dc:identifier.">
+                <expectedContent/>
+            </element>
+
         </expectedElements>
     </rootElement>
 

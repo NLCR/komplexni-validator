@@ -544,13 +544,19 @@
                     </element>
 
                     <element name="mods:recordChangeDate" mandatory="false">
+                        <expectedAttributes>
+                            <attribute name="encoding" mandatory="false">
+                                <expectedContent>
+                                    <value>iso8601</value>
+                                </expectedContent>
+                            </attribute>
+                        </expectedAttributes>
                         <expectedContent/>
                     </element>
 
                     <element name="mods:recordIdentifier" mandatory="false">
                         <expectedAttributes>
                             <attribute name="source" mandatory="false"/>
-                            <attribute name="encoding" mandatory="false"/>
                         </expectedAttributes>
                         <expectedContent/>
                     </element>
