@@ -77,11 +77,7 @@
                 </expectedContent>
             </element>
 
-            <element name="mods:genre">
-                <expectedContent>
-                    <value>title</value>
-                </expectedContent>
-            </element>
+            <element name="mods:genre" specification="text()='title'"/>
 
             <!--vydavatel-->
             <element name="mods:originInfo" specification="not(@transliteration='printer')">

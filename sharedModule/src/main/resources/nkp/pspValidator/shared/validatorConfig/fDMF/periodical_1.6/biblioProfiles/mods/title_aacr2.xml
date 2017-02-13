@@ -142,11 +142,7 @@
                 </expectedContent>
             </element>
 
-            <element name="mods:genre">
-                <expectedContent>
-                    <value>title</value>
-                </expectedContent>
-            </element>
+            <element name="mods:genre" specification="text()='title'"/>
 
             <element name="mods:originInfo">
                 <expectedElements>

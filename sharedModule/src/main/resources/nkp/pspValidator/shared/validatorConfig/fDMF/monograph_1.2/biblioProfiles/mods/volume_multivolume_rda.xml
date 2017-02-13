@@ -164,11 +164,7 @@
                 </expectedContent>
             </element>
 
-            <element name="mods:genre">
-                <expectedContent>
-                    <value>volume</value>
-                </expectedContent>
-            </element>
+            <element name="mods:genre" specification="text()='volume'"/>
 
             <element name="mods:originInfo" specification="@eventType='production'" mandatory="false">
                 <expectedAttributes>

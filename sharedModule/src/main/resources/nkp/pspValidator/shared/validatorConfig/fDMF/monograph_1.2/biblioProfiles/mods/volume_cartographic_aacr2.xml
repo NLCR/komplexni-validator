@@ -159,11 +159,7 @@
                 </expectedContent>
             </element>
 
-            <element name="mods:genre">
-                <expectedContent>
-                    <value>cartographic</value>
-                </expectedContent>
-            </element>
+            <element name="mods:genre" specification="text()='cartographic'"/>
 
             <element name="mods:originInfo">
                 <expectedElements>

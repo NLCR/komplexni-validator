@@ -130,14 +130,7 @@
                 </expectedContent>
             </element>
 
-            <element name="mods:genre">
-                <expectedContent>
-                    <oneOf>
-                        <value>volume_supplement</value>
-                        <value>issue_supplement</value>
-                    </oneOf>
-                </expectedContent>
-            </element>
+            <element name="mods:genre" specification="text()='volume_supplement' or text()='issue_supplement'"/>
 
             <!--vydavatel-->
             <element name="mods:originInfo" specification="not(@transliteration='printer')" mandatory="false">

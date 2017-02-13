@@ -126,7 +126,7 @@
                 </expectedElements>
             </element>
 
-            <element name="mods:genre">
+            <element name="mods:genre" specification="text()='issue'">
                 <expectedAttributes>
                     <attribute name="type">
                         <expectedContent>
@@ -143,9 +143,7 @@
                         </expectedContent>
                     </attribute>
                 </expectedAttributes>
-                <expectedContent>
-                    <value>issue</value>
-                </expectedContent>
+                <expectedContent/>
             </element>
 
             <element name="mods:originInfo" mandatory="false">

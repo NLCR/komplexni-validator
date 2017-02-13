@@ -117,8 +117,8 @@
                 </expectedElements>
             </element>
 
-            <element name="mods:genre">
-                <expectedAttributes>
+            <element name="mods:genre" specification="text()='article'">
+            <expectedAttributes>
                     <attribute name="type" mandatory="false">
                         <expectedContent>
                             <oneOf>
@@ -139,9 +139,7 @@
                         </expectedContent>
                     </attribute>
                 </expectedAttributes>
-                <expectedContent>
-                    <value>article</value>
-                </expectedContent>
+                <expectedContent/>
             </element>
 
             <element name="mods:language" mandatory="false">

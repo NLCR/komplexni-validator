@@ -130,7 +130,7 @@
                 </expectedContent>
             </element>
 
-            <element name="mods:genre">
+            <element name="mods:genre" specification="text()='supplement'">
                 <expectedAttributes>
                     <attribute name="type">
                         <expectedContent>
@@ -141,9 +141,7 @@
                         </expectedContent>
                     </attribute>
                 </expectedAttributes>
-                <expectedContent>
-                    <value>supplement</value>
-                </expectedContent>
+                <expectedContent/>
             </element>
 
             <!--vydavatel-->

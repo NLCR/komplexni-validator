@@ -132,7 +132,7 @@
                 </expectedElements>
             </element>
 
-            <element name="mods:genre">
+            <element name="mods:genre" specification="text()='picture'">
                 <expectedAttributes>
                     <attribute name="type" mandatory="false">
                         <expectedContent>
@@ -151,9 +151,7 @@
                     </attribute>
                 </expectedAttributes>
 
-                <expectedContent>
-                    <value>picture</value>
-                </expectedContent>
+                <expectedContent/>
             </element>
 
             <element name="mods:language" mandatory="false">

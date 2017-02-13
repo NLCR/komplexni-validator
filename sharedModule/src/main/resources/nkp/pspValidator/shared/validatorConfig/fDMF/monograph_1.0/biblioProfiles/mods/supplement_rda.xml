@@ -129,11 +129,7 @@
                 </expectedContent>
             </element>
 
-            <element name="mods:genre">
-                <expectedContent>
-                    <value>supplement</value>
-                </expectedContent>
-            </element>
+            <element name="mods:genre" specification="text()='supplement'"/>
 
             <!--vydavatel-->
             <element name="mods:originInfo" specification="not(@transliteration='printer')" mandatory="false">
