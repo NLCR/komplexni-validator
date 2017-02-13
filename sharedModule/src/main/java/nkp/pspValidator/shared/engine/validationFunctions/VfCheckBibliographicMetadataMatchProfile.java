@@ -224,7 +224,7 @@ public class VfCheckBibliographicMetadataMatchProfile extends ValidationFunction
                     //result.addError(Level.INFO, String.format("%s je validní podle %s", dmdSecId, xsdFile.getName()));
                     BiblioTemplate biblioTemplate = engine.getBiblioMgr().buildTemplate(templateName, format, catalogingConventions);
                     if (biblioTemplate == null) {
-                        result.addError(invalid(Level.INFO, "nenalezena šablona '%s' (verze %s, %s); ignoruji validaci záznamu %s", templateName, format, catalogingConventions, dmdSecId));
+                        result.addError(invalid(Level.ERROR, "nenalezena šablona '%s' (verze %s, %s), pravděpodobně chybí element mods:genre určující druh záznamu; ignoruji validaci záznamu %s", templateName, format, catalogingConventions, dmdSecId));
                     } else {
                         BiblioValidator.validate(biblioTemplate, metadataDoc, result, dmdSecId);
                     }
