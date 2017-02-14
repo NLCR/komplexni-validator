@@ -259,18 +259,21 @@
                 </expectedElements>
             </element>
 
+            <!--<element name="mods:note" specification="text()='xxx'"></element>-->
+
+
             <element name="mods:physicalDescription">
                 <expectedElements>
                     <element name="mods:form">
                         <expectedAttributes>
                             <attribute name="authority" mandatory="false">
                                 <!--neni jasne, jestli tohle ma byt povinne - je tam M/MA-->
-                                <expectedContent>
+                                <recommendedContent>
                                     <oneOf>
                                         <value>marcform</value>
                                         <value>gmd</value>
                                     </oneOf>
-                                </expectedContent>
+                                </recommendedContent>
                             </attribute>
 
                             <attribute name="type" mandatory="false"/>

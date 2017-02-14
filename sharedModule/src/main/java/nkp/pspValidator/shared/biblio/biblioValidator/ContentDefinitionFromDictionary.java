@@ -5,11 +5,11 @@ import java.util.Set;
 /**
  * Created by Martin Řehánek on 10.1.17.
  */
-public class ExpectedContentDefinitionFromDictionary implements ExpectedContentDefinition {
+public class ContentDefinitionFromDictionary implements ContentDefinition {
     private final String dictionaryName;
     private final Set<String> dictionaryValues;
 
-    public ExpectedContentDefinitionFromDictionary(String dictionaryName, Set<String> dictionaryValues) {
+    public ContentDefinitionFromDictionary(String dictionaryName, Set<String> dictionaryValues) {
         this.dictionaryName = dictionaryName;
         this.dictionaryValues = dictionaryValues;
     }

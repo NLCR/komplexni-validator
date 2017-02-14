@@ -6,7 +6,8 @@ package nkp.pspValidator.shared.biblio.biblioValidator;
 public class ExpectedAttributeDefinition {
     private String attributeName;
     private boolean mandatory;
-    private ExpectedContentDefinition expectedContentDefinition;
+    private ContentDefinition expectedContentDefinition;
+    private ContentDefinition recommendedContentDefinition;
 
     public String getAttributeName() {
         return attributeName;
@@ -24,11 +25,19 @@ public class ExpectedAttributeDefinition {
         this.mandatory = mandatory;
     }
 
-    public ExpectedContentDefinition getExpectedContentDefinition() {
+    public ContentDefinition getExpectedContentDefinition() {
         return expectedContentDefinition;
     }
 
-    public void setExpectedContentDefinition(ExpectedContentDefinition expectedContentDefinition) {
+    public void setExpectedContentDefinition(ContentDefinition expectedContentDefinition) {
         this.expectedContentDefinition = expectedContentDefinition;
+    }
+
+    public void setRecommendedContentDefinition(ContentDefinition recommendedContentDefinition) {
+        this.recommendedContentDefinition = recommendedContentDefinition;
+    }
+
+    public ContentDefinition getRecommendedContentDefinition() {
+        return recommendedContentDefinition;
     }
 }

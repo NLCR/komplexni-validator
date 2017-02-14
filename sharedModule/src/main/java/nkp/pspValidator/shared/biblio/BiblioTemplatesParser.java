@@ -195,21 +195,26 @@ public class BiblioTemplatesParser {
             }
         }
 
-        //expected content
+        //content
         Element expectedContentEl = getFirstChildElementsByName(rootEl, "expectedContent");
-        if (expectedContentEl != null) { //nothing in element
+        Element recommendedContentEl = getFirstChildElementsByName(rootEl, "recommendedContent");
+        if (expectedContentEl != null) { //expected content
             List<Element> expectedContentChildrenEls = XmlUtils.getChildrenElements(expectedContentEl);
             if (expectedContentChildrenEls.isEmpty()) { //empty element 'expectedContent' means any content
-                elementDef.setExpectedContentDefinition(new ExpectedContentDefinitionAnything());
+                elementDef.setExpectedContentDefinition(new ContentDefinitionAnything());
             } else { //some element inside 'expectedContent'
-                ExpectedContentDefinition contentDefinition = parseContentDefinition(biblioTemplate, expectedContentChildrenEls.get(0), file);
+                ContentDefinition contentDefinition = parseContentDefinition(biblioTemplate, expectedContentChildrenEls.get(0), file);
                 elementDef.setExpectedContentDefinition(contentDefinition);
             }
-        } else {
-            //nothing if element 'expectedContent' is not present
+        } else if (recommendedContentEl != null) { //recommended content
+            List<Element> recommendedContentChildrenEls = XmlUtils.getChildrenElements(recommendedContentEl);
+            if (recommendedContentChildrenEls.isEmpty()) { //empty element 'recommendedContent' means any content
+                elementDef.setRecommendedContentDefinition(new ContentDefinitionAnything());
+            } else { //some element inside 'recommendedContent'
+                ContentDefinition contentDefinition = parseContentDefinition(biblioTemplate, recommendedContentChildrenEls.get(0), file);
+                elementDef.setRecommendedContentDefinition(contentDefinition);
+            }
         }
-
-        //TODO: co takhle pridat jeste "recomended content" jako alternativu k expected content, at uz pro atributy, nebo hodnoty. Lisilo by se to jen v tom, ze by pripadne hazelo WARNING/INFO namisto ERROR
 
         //extra rules
         Element extraRulesEl = getFirstChildElementsByName(rootEl, "extraRules");
@@ -259,43 +264,52 @@ public class BiblioTemplatesParser {
             mandatory = Boolean.valueOf(mandatoryStr);
         }
         definition.setMandatory(mandatory);
-        //expected content
+        //content
         Element expectedContentEl = getFirstChildElementsByName(attributeEl, "expectedContent");
-        if (expectedContentEl == null) { //any content but not empty
-            definition.setExpectedContentDefinition(new ExpectedContentDefinitionAnything());
-        } else {
+        Element recommendedContentEl = getFirstChildElementsByName(attributeEl, "recommendedContent");
+        if (expectedContentEl != null) {//expected content
             List<Element> expectedContentChildrenEls = XmlUtils.getChildrenElements(expectedContentEl);
             if (expectedContentChildrenEls.isEmpty()) {
-                definition.setExpectedContentDefinition(new ExpectedContentDefinitionAnything());
+                definition.setExpectedContentDefinition(new ContentDefinitionAnything());
             } else {
-                ExpectedContentDefinition contentDefinition = parseContentDefinition(templateDef, expectedContentChildrenEls.get(0), file);
+                ContentDefinition contentDefinition = parseContentDefinition(templateDef, expectedContentChildrenEls.get(0), file);
                 definition.setExpectedContentDefinition(contentDefinition);
             }
+        } else if (recommendedContentEl != null) {//recomended content
+            List<Element> recommendedContentChildrenEls = XmlUtils.getChildrenElements(recommendedContentEl);
+            if (recommendedContentChildrenEls.isEmpty()) {
+                definition.setRecommendedContentDefinition(new ContentDefinitionAnything());
+            } else {
+                ContentDefinition contentDefinition = parseContentDefinition(templateDef, recommendedContentChildrenEls.get(0), file);
+                definition.setRecommendedContentDefinition(contentDefinition);
+            }
+        } else {//not expected nor recomended content
+            definition.setExpectedContentDefinition(new ContentDefinitionAnything());//any content but not empty
         }
         return definition;
     }
 
     //parametrem je primo element value, regexp, fromDictionary, oneOf
-    private ExpectedContentDefinition parseContentDefinition(BiblioTemplate templateDef, Element expectedContentChildEl, File file) throws ValidatorConfigurationException {
+    private ContentDefinition parseContentDefinition(BiblioTemplate templateDef, Element expectedContentChildEl, File file) throws ValidatorConfigurationException {
         switch (expectedContentChildEl.getTagName()) {
             case "value":
-                return new ExpectedContentDefinitionValue(expectedContentChildEl.getTextContent().trim());
+                return new ContentDefinitionValue(expectedContentChildEl.getTextContent().trim());
             case "regexp":
-                return new ExpectedContentDefinitionRegexp(expectedContentChildEl.getTextContent().trim());
+                return new ContentDefinitionRegexp(expectedContentChildEl.getTextContent().trim());
             case "fromDictionary":
                 String dictionaryName = expectedContentChildEl.getAttribute("name");
                 if (!templateDef.getDeclaredDictionaries().contains(dictionaryName)) {
                     throw new ValidatorConfigurationException(String.format("kontrolovaný slovník  '%s' není definován (soubor %s)", dictionaryName, file.getAbsolutePath()));
                 } else {
-                    return new ExpectedContentDefinitionFromDictionary(dictionaryName, dictionaryManager.getDictionaryValues(dictionaryName));
+                    return new ContentDefinitionFromDictionary(dictionaryName, dictionaryManager.getDictionaryValues(dictionaryName));
                 }
             case "oneOf":
                 List<Element> oneOfChildEls = XmlUtils.getChildrenElements(expectedContentChildEl);
-                List<ExpectedContentDefinition> definitions = new ArrayList<>(oneOfChildEls.size());
+                List<ContentDefinition> definitions = new ArrayList<>(oneOfChildEls.size());
                 for (Element element : oneOfChildEls) {
                     definitions.add(parseContentDefinition(templateDef, element, file));
                 }
-                return new ExpectedContentDefinitionOneOf(definitions);
+                return new ContentDefinitionOneOf(definitions);
             default:
                 throw new IllegalStateException(String.format("neočekávaný element '%s'", expectedContentChildEl.getTagName()));
 

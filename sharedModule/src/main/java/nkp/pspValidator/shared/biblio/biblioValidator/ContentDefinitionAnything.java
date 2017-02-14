@@ -3,7 +3,7 @@ package nkp.pspValidator.shared.biblio.biblioValidator;
 /**
  * Created by Martin Řehánek on 10.1.17.
  */
-public class ExpectedContentDefinitionAnything implements ExpectedContentDefinition {
+public class ContentDefinitionAnything implements ContentDefinition {
 
     @Override
     public CheckingResult checkAgainst(String valueFound) {

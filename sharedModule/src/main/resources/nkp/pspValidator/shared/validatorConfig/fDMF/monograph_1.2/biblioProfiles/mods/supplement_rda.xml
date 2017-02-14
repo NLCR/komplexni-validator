@@ -405,12 +405,12 @@
                     <element name="mods:form">
                         <expectedAttributes>
                             <attribute name="authority" mandatory="false">
-                                <expectedContent>
+                                <recommendedContent>
                                     <oneOf>
                                         <value>rdamedia</value>
                                         <value>rdacarrier</value>
                                     </oneOf>
-                                </expectedContent>
+                                </recommendedContent>
                             </attribute>
 
                             <attribute name="type">

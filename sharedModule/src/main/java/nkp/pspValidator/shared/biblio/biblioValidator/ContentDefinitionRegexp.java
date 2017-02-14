@@ -5,10 +5,10 @@ import java.util.regex.Pattern;
 /**
  * Created by Martin Řehánek on 10.1.17.
  */
-public class ExpectedContentDefinitionRegexp implements ExpectedContentDefinition {
+public class ContentDefinitionRegexp implements ContentDefinition {
     private final String regexp;
 
-    public ExpectedContentDefinitionRegexp(String regexp) {
+    public ContentDefinitionRegexp(String regexp) {
         this.regexp = regexp;
     }
 

@@ -3,10 +3,10 @@ package nkp.pspValidator.shared.biblio.biblioValidator;
 /**
  * Created by Martin Řehánek on 10.1.17.
  */
-public class ExpectedContentDefinitionValue implements ExpectedContentDefinition {
+public class ContentDefinitionValue implements ContentDefinition {
     private final String valueExpected;
 
-    public ExpectedContentDefinitionValue(String valueExpected) {
+    public ContentDefinitionValue(String valueExpected) {
         this.valueExpected = valueExpected;
     }
 

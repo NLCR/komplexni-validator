@@ -28,7 +28,8 @@ public class ExpectedElementDefinition {
     private boolean ignoreUnexpectedAttributes = false;
     private List<ExpectedElementDefinition> expectedChildElementDefinitions = Collections.emptyList();
     private boolean ignoreUnexpectedChildElements = false;
-    private ExpectedContentDefinition expectedContentDefinition;
+    private ContentDefinition expectedContentDefinition;
+    private ContentDefinition recommendedContentDefinition;
     private List<ExtraRule> extraRules = Collections.emptyList();
 
     public ExpectedElementDefinition(BiblioTemplate template, ExpectedElementDefinition parent, String errorMessage) {
@@ -126,11 +127,11 @@ public class ExpectedElementDefinition {
         this.extraRules = extraRules;
     }
 
-    public ExpectedContentDefinition getExpectedContentDefinition() {
+    public ContentDefinition getExpectedContentDefinition() {
         return expectedContentDefinition;
     }
 
-    public void setExpectedContentDefinition(ExpectedContentDefinition expectedContentDefinition) {
+    public void setExpectedContentDefinition(ContentDefinition expectedContentDefinition) {
         this.expectedContentDefinition = expectedContentDefinition;
     }
 
@@ -158,5 +159,13 @@ public class ExpectedElementDefinition {
 
     public String getErrorMessage() {
         return errorMessage;
+    }
+
+    public ContentDefinition getRecommendedContentDefinition() {
+        return recommendedContentDefinition;
+    }
+
+    public void setRecommendedContentDefinition(ContentDefinition recommendedContentDefinition) {
+        this.recommendedContentDefinition = recommendedContentDefinition;
     }
 }

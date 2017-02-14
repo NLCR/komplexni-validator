@@ -5,11 +5,11 @@ import java.util.List;
 /**
  * Created by Martin Řehánek on 10.1.17.
  */
-public class ExpectedContentDefinitionOneOf implements ExpectedContentDefinition {
+public class ContentDefinitionOneOf implements ContentDefinition {
 
-    private final List<ExpectedContentDefinition> candidates;
+    private final List<ContentDefinition> candidates;
 
-    public ExpectedContentDefinitionOneOf(List<ExpectedContentDefinition> candidates) {
+    public ContentDefinitionOneOf(List<ContentDefinition> candidates) {
         this.candidates = candidates;
     }
 
@@ -23,7 +23,7 @@ public class ExpectedContentDefinitionOneOf implements ExpectedContentDefinition
                 }
             };
         } else {
-            for (ExpectedContentDefinition candidate : candidates) {
+            for (ContentDefinition candidate : candidates) {
                 if (candidate.checkAgainst(valueFound).matches()) {
                     return new CheckingResultMatch();
                 }

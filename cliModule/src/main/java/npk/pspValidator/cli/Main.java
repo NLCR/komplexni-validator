@@ -360,7 +360,7 @@ public class Main {
 
     private static void testXsds() {
         //info - ok
-        File infoXsd = new File("../sharedModule/src/main/resources/nkp/pspValidator/shared/validatorConfig/fDMF/monograph_1.2/xsd/info_1.1.xsd");
+        File infoXsd = new File("../sharedModule/src/main/resources/nkp/pspValidator/shared/validatorConfig/fDMF/monograph_1.2/xsd/info_mon1.2.xsd");
         XsdValidator.validate("INFO", infoXsd, new File("../sharedModule/src/main/resources/nkp/pspValidator/shared-tmp/examples/info.xml"));
 
         //mix - ok

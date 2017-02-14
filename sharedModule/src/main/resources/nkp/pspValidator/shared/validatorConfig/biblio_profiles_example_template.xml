@@ -114,6 +114,14 @@
                 </expectedContent>
             </attribute>
 
+            <attribute name="institutionType">
+                <!-- Namísto elementu expectedContent lze použít recommendedContent. -->
+                <!-- Rozdíl je v tom, že pokud hodnota nesouhlasí, bude výsledkem WARNING namísto ERROR -->
+                <recommendedContent>
+                    <value>Library</value>
+                </recommendedContent>
+            </attribute>
+
         </expectedAttributes>
 
         <!--Každý element může mít subelementy, nebo (textový) obsah. Očekávané elementy se definují přes expectedElements-->

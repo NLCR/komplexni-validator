@@ -251,9 +251,9 @@
                     <element name="mods:form">
                         <expectedAttributes>
                             <attribute name="authority">
-                                <expectedContent>
+                                <recommendedContent>
                                     <value>marcform</value>
-                                </expectedContent>
+                                </recommendedContent>
                             </attribute>
                         </expectedAttributes>
                         <expectedContent/>

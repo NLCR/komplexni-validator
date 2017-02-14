@@ -41,8 +41,8 @@ public class BiblioValidator {
         return result;
     }
 
-    private static String buildMessage(String label, String message, Object... params) {
-        return String.format(label + ": " + message, params);
+    private static String buildMessage(String label, String messagePattern, Object... params) {
+        return String.format(label + ": " + messagePattern, params);
     }
 
     private static void checkElement(XmlManager manager, ValidationResult result, Element element, ExpectedElementDefinition definition, String parentPath, Integer positionOfElement, String errorLabel) throws InvalidXPathExpressionException, XPathExpressionException {
@@ -52,8 +52,19 @@ public class BiblioValidator {
         //check element's children elements
         checkChildrenElements(manager, result, element, thisElementPath, definition.getExpectedChildElementDefinitions(), definition.isIgnoreUnexpectedChildElements(), XmlUtils.getChildrenElements(element), errorLabel);
         //check element's text content
-        if (definition.getExpectedContentDefinition() != null) {
-            checkContent(manager, result, element, thisElementPath, definition.getExpectedContentDefinition(), errorLabel);
+        if (definition.getExpectedContentDefinition() != null) {//expected content
+            //checkContent(manager, result, element, thisElementPath, definition.getExpectedContentDefinition(), errorLabel);
+            String content = XmlUtils.getDirectTextContent(element);
+            CheckingResult checkingResult = definition.getExpectedContentDefinition().checkAgainst(content);
+            if (!checkingResult.matches()) {
+                result.addError(Level.ERROR, buildMessage(errorLabel, "%s: %s", thisElementPath, checkingResult.getErrorMessage()));
+            }
+        } else if (definition.getRecommendedContentDefinition() != null) {//recommended content
+            String content = XmlUtils.getDirectTextContent(element);
+            CheckingResult checkingResult = definition.getRecommendedContentDefinition().checkAgainst(content);
+            if (!checkingResult.matches()) {
+                result.addError(Level.WARNING, buildMessage(errorLabel, "%s: %s", thisElementPath, checkingResult.getErrorMessage()));
+            }
         }
         //check element's extra rules
         checkExtraRules(manager, result, element, thisElementPath, definition.getExtraRules(), errorLabel);
@@ -76,13 +87,15 @@ public class BiblioValidator {
                 Attr attr = (Attr) foundAttrs.item(i);
                 if (attr.getName().equals(attrDef.getAttributeName())) {
                     //check whether actual attribute value matches expected value
-                    checkAttributeValue(result, parentElementPath, attr.getName(), attr.getValue(), attrDef.getExpectedContentDefinition(), errorLabel);
+                    checkAttributeValue(result, parentElementPath, attr.getName(), attr.getValue(),
+                            attrDef.getExpectedContentDefinition(), attrDef.getRecommendedContentDefinition(),
+                            errorLabel);
                     positionsOfUsedAttrs.add(i);
                     found = true;
                     break;
                 }
             }
-            //attribute for definition not found
+            //defined attribute not found
             if (!found) {
                 if (attrDef.isMandatory()) { //ERROR if mandatory
                     result.addError(Level.ERROR, buildMessage(errorLabel, "%s: nenalezen povinný atribut '%s'", parentElementPath, attrDef.getAttributeName()));
@@ -91,7 +104,7 @@ public class BiblioValidator {
                 }
             }
         }
-        //WARNING for all not defined attributes
+        //WARNING for all undefined attributes
         for (int i = 0; i < foundAttrs.getLength(); i++) {
             if (!positionsOfUsedAttrs.contains(i)) {
                 Attr attr = (Attr) foundAttrs.item(i);
@@ -102,11 +115,18 @@ public class BiblioValidator {
         }
     }
 
-    private static void checkAttributeValue(ValidationResult result, String parentElementPath, String attrName, String attrValue, ExpectedContentDefinition attrExpetedContent, String errorLabel) {
-        if (attrExpetedContent != null) {
-            CheckingResult checkingResult = attrExpetedContent.checkAgainst(attrValue);
+    private static void checkAttributeValue(ValidationResult result, String parentElementPath, String attrName, String attrValue,
+                                            ContentDefinition attrExpectedContent, ContentDefinition attrRecommendedContent,
+                                            String errorLabel) {
+        if (attrExpectedContent != null) {
+            CheckingResult checkingResult = attrExpectedContent.checkAgainst(attrValue);
             if (!checkingResult.matches()) {
                 result.addError(Level.ERROR, buildMessage(errorLabel, "%s/@%s: %s", parentElementPath, attrName, checkingResult.getErrorMessage()));
+            }
+        } else if (attrRecommendedContent != null) {
+            CheckingResult checkingResult = attrRecommendedContent.checkAgainst(attrValue);
+            if (!checkingResult.matches()) {
+                result.addError(Level.WARNING, buildMessage(errorLabel, "%s/@%s: %s", parentElementPath, attrName, checkingResult.getErrorMessage()));
             }
         }
     }
@@ -123,13 +143,6 @@ public class BiblioValidator {
         return builder.toString();
     }
 
-    private static void checkContent(XmlManager manager, ValidationResult result, Element element, String parentElementPath, ExpectedContentDefinition definition, String errorLabel) throws InvalidXPathExpressionException, XPathExpressionException {
-        String content = XmlUtils.getDirectTextContent(element);
-        CheckingResult checkingResult = definition.checkAgainst(content);
-        if (!checkingResult.matches()) {
-            result.addError(Level.ERROR, buildMessage(errorLabel, "%s: %s", parentElementPath, checkingResult.getErrorMessage()));
-        }
-    }
 
     private static void checkChildrenElements(XmlManager manager, ValidationResult result, Element rootElement, String parentElementPath, List<ExpectedElementDefinition> expectedElementDefinitions, boolean ignoreUnexpectedElements, List<Element> chilrenElements, String errorLabel) throws InvalidXPathExpressionException, XPathExpressionException {
         Set<Element> childrenRemaining = new HashSet<>();

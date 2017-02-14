@@ -70,7 +70,8 @@
                             <xs:element name="expectedAttributes" type="expectedAttributesType" minOccurs="0"/>
                             <xs:choice minOccurs="0">
                                 <xs:element name="expectedElements" type="expectedElementsType"/>
-                                <xs:element name="expectedContent" type="expectedContentType"/>
+                                <xs:element name="expectedContent" type="contentType"/>
+                                <xs:element name="recommendedContent" type="contentType"/>
                             </xs:choice>
                             <xs:element name="extraRules" type="extraRulesType" minOccurs="0"/>
                         </xs:sequence>
@@ -109,9 +110,10 @@
         <xs:sequence>
             <xs:element name="attribute" maxOccurs="unbounded" minOccurs="0">
                 <xs:complexType>
-                    <xs:sequence>
-                        <xs:element name="expectedContent" type="expectedContentType" minOccurs="0"/>
-                    </xs:sequence>
+                    <xs:choice>
+                        <xs:element name="expectedContent" type="contentType" minOccurs="0"/>
+                        <xs:element name="recommendedContent" type="contentType" minOccurs="0"/>
+                    </xs:choice>
                     <xs:attribute name="name" type="xs:string" use="required"/>
                     <xs:attribute name="mandatory" type="xs:boolean" use="optional"/>
                 </xs:complexType>
@@ -127,7 +129,8 @@
                         <xs:element name="expectedAttributes" type="expectedAttributesType" minOccurs="0"/>
                         <xs:choice minOccurs="0">
                             <xs:element name="expectedElements" type="expectedElementsType"/>
-                            <xs:element name="expectedContent" type="expectedContentType"/>
+                            <xs:element name="expectedContent" type="contentType"/>
+                            <xs:element name="recommendedContent" type="contentType"/>
                         </xs:choice>
                         <xs:element name="extraRules" type="extraRulesType" minOccurs="0"/>
                     </xs:sequence>
@@ -143,7 +146,7 @@
         </xs:sequence>
     </xs:complexType>
 
-    <xs:complexType name="expectedContentType" mixed="true">
+    <xs:complexType name="contentType" mixed="true">
         <xs:choice minOccurs="0">
             <xs:element name="oneOf" type="oneOfType"/>
             <xs:element name="value" type="valueType"/>

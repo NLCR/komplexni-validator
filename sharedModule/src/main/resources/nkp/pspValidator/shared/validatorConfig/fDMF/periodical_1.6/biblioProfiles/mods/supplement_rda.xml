@@ -372,12 +372,12 @@
                     <element name="mods:form">
                         <expectedAttributes>
                             <attribute name="authority" mandatory="false">
-                                <expectedContent>
+                                <recommendedContent>
                                     <oneOf>
                                         <value>marcform</value>
                                         <value>gmd</value>
                                     </oneOf>
-                                </expectedContent>
+                                </recommendedContent>
                             </attribute>
 
                             <attribute name="type" mandatory="false">

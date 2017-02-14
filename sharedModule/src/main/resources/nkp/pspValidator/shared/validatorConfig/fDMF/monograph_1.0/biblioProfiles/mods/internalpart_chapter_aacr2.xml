@@ -169,9 +169,9 @@
                         <expectedAttributes>
                             <attribute name="authority" mandatory="false">
                                 <!--neni jasne, jestli tohle ma byt povinne - neni vyplneno, tak nechavam nepovinny-->
-                                <expectedContent>
+                                <recommendedContent>
                                     <value>marcform</value>
-                                </expectedContent>
+                                </recommendedContent>
                             </attribute>
                         </expectedAttributes>
                         <expectedContent/>

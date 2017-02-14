@@ -517,12 +517,12 @@
                         <expectedAttributes>
                             <attribute name="authority" mandatory="false">
                                 <!--neni jasne, jestli tohle ma byt povinne - je tam M/MA-->
-                                <expectedContent>
+                                <recommendedContent>
                                     <oneOf>
                                         <value>rdamedia</value>
                                         <value>rdacarrier</value>
                                     </oneOf>
-                                </expectedContent>
+                                </recommendedContent>
                             </attribute>
 
                             <attribute name="type" mandatory="false">
