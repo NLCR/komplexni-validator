@@ -531,8 +531,8 @@
                     <element name="mods:recordChangeDate" mandatory="false">
                         <expectedAttributes>
                             <attribute name="encoding" mandatory="false">
-                                <!--DMF jej vůbec neuvádí, což je "chyba ve specifikaci"-->
-                                <!--Proto je zde atribut mandatory a jen obsah jen recommended-->
+                                <!--DMF jej vůbec neuvádí, což je "chyba ve specifikaci".-->
+                                <!--Proto je zde atribut nepovinný a hodnota jen doporučená, ne nutná.-->
                                 <recommendedContent>
                                     <value>iso8601</value>
                                 </recommendedContent>
