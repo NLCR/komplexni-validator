@@ -532,6 +532,15 @@
                     </element>
 
                     <element name="mods:recordChangeDate" mandatory="false">
+                        <expectedAttributes>
+                            <attribute name="encoding" mandatory="false">
+                                <!--DMF jej vůbec neuvádí, což je "chyba ve specifikaci"-->
+                                <!--Proto je zde atribut mandatory a jen obsah jen recommended-->
+                                <recommendedContent>
+                                    <value>iso8601</value>
+                                </recommendedContent>
+                            </attribute>
+                        </expectedAttributes>
                         <expectedContent/>
                     </element>
 
