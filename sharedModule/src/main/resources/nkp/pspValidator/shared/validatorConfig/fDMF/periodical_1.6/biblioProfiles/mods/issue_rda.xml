@@ -233,7 +233,7 @@
                 </expectedElements>
             </element>
 
-            <element name="mods:physicalDescription" mandatory="true">
+            <element name="mods:physicalDescription" mandatory="false">
                 <expectedElements>
                     <element name="mods:extent" mandatory="false">
                         <expectedContent/>
