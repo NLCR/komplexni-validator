@@ -510,10 +510,9 @@
             <element name="mods:recordInfo">
                 <expectedElements>
                     <element name="mods:descriptionStandard" mandatory="false">
-                        <!--Poznamka: na str. 33 se pise o podobe pro zaznamy AACR2, nicmene mimo sekci "zmeny pro RDA" neni mods:descriptionStandard definovan-->
-                        <expectedContent>
-                            <value>rda</value>
-                        </expectedContent>
+                        <recommendedContent>
+                            <value>aacr</value>
+                        </recommendedContent>
                     </element>
 
                     <element name="mods:recordContentSource" mandatory="false">

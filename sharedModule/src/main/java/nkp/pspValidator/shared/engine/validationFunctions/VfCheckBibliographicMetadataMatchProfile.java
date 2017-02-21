@@ -178,7 +178,7 @@ public class VfCheckBibliographicMetadataMatchProfile extends ValidationFunction
             result.addError(invalid(Level.INFO, "záznam %s neobsahuje informaci o použitých katalogizačních pravidlech; validuji %s oproti AACR2", dmdSecId, entityGlobalId));
             return CatalogingConventions.AACR2;
         } else {
-            if (specStr.equals("aacr2")) {
+            if (specStr.toLowerCase().equals("aacr") || specStr.toLowerCase().equals("aacr2")) {
                 return CatalogingConventions.AACR2;
             } else if (specStr.equals("rda")) {
                 return CatalogingConventions.RDA;

@@ -486,9 +486,9 @@
             <element name="mods:recordInfo">
                 <expectedElements>
                     <element name="mods:descriptionStandard" mandatory="false">
-                        <expectedContent>
+                        <recommendedContent>
                             <value>aacr</value>
-                        </expectedContent>
+                        </recommendedContent>
                     </element>
 
                     <element name="mods:recordContentSource" mandatory="false">
