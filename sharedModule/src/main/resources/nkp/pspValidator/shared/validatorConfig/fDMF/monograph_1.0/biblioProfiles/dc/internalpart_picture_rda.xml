@@ -51,8 +51,7 @@
                 <expectedContent/>
             </element>
 
-            <element name="dc:subject"
-                     errorMessage="Očekáván alespoň jeden povinný element dc:subject charakterizující obsah obrázku.">
+            <element name="dc:subject" mandatory="false">
                 <expectedContent/>
             </element>
 
