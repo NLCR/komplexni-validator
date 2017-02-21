@@ -113,7 +113,7 @@
                 </expectedElements>
             </element>
 
-            <element name="mods:genre" specification="text()='picture'">
+            <element name="mods:genre" specification="text()='picture' or text()='PICTURE'">
                 <expectedAttributes>
                     <attribute name="type" mandatory="false">
                         <expectedContent>
@@ -133,7 +133,9 @@
                     </attribute>
                 </expectedAttributes>
 
-                <expectedContent/>
+                <recommendedContent>
+                    <value>picture</value>
+                </recommendedContent>
             </element>
 
             <element name="mods:physicalDescription" mandatory="false">

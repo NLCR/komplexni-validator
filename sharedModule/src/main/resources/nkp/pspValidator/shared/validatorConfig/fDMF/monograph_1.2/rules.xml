@@ -2428,12 +2428,12 @@
                     <value name="entity_type" type="ENTITY_TYPE">VOLUME</value>
                     <value name="template_detection_xpath" type="STRING">
                         concat(
-                        substring('volume_sheetmusic', 1 div boolean(./mods:genre[text()='sheetmusic'])),
-                        substring('volume_cartographic', 1 div boolean(./mods:genre[text()='cartographic'])),
+                        substring('volume_sheetmusic', 1 div boolean(./mods:genre[text()='sheetmusic' or text()='SHEETMUSIC'])),
+                        substring('volume_cartographic', 1 div boolean(./mods:genre[text()='cartographic' or text()='CARTOGRAPHIC'])),
                         substring('volume_multivolume',
-                        1 div boolean(./mods:genre[text()='volume'] and //mets:dmdSec[contains(@ID,'TITLE')])),
+                        1 div boolean(./mods:genre[text()='volume' or text()='VOLUME'] and //mets:dmdSec[contains(@ID,'TITLE')])),
                         substring('volume_singlevolume',
-                        1 div boolean(./mods:genre[text()='volume'] and not(//mets:dmdSec[contains(@ID,'TITLE')])))
+                        1 div boolean(./mods:genre[text()='volume' or text()='VOLUME'] and not(//mets:dmdSec[contains(@ID,'TITLE')])))
                         )
                     </value>
                     <value name="xsd_file_dc" type="FILE">

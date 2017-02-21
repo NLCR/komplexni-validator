@@ -132,7 +132,7 @@
                 </expectedElements>
             </element>
 
-            <element name="mods:genre" specification="text()='chapter'">
+            <element name="mods:genre" specification="text()='chapter' or text()='CHAPTER'">
                 <expectedAttributes>
                     <attribute name="type" mandatory="false">
                         <expectedContent>
@@ -155,7 +155,9 @@
                     </attribute>
                 </expectedAttributes>
 
-                <expectedContent/>
+                <recommendedContent>
+                    <value>chapter</value>
+                </recommendedContent>
             </element>
 
             <element name="mods:language" mandatory="false">
