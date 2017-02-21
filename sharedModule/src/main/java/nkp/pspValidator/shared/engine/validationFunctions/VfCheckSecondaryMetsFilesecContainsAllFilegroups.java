@@ -22,11 +22,11 @@ import java.util.List;
  */
 public class VfCheckSecondaryMetsFilesecContainsAllFilegroups extends ValidationFunction {
 
-    public static final String PARAM_PRIMARY_METS_FILES = "secondary-mets_files";
+    public static final String PARAM_SECONDARY_METS_FILES = "secondary-mets_files";
 
     public VfCheckSecondaryMetsFilesecContainsAllFilegroups(Engine engine) {
         super(engine, new Contract()
-                .withValueParam(PARAM_PRIMARY_METS_FILES, ValueType.FILE_LIST, 1, 1)
+                .withValueParam(PARAM_SECONDARY_METS_FILES, ValueType.FILE_LIST, 1, 1)
         );
     }
 
@@ -40,10 +40,10 @@ public class VfCheckSecondaryMetsFilesecContainsAllFilegroups extends Validation
         try {
             checkContractCompliance();
 
-            ValueEvaluation paramEvaluation = valueParams.getParams(PARAM_PRIMARY_METS_FILES).get(0).getEvaluation();
+            ValueEvaluation paramEvaluation = valueParams.getParams(PARAM_SECONDARY_METS_FILES).get(0).getEvaluation();
             List<File> files = (List<File>) paramEvaluation.getData();
             if (files == null) {
-                return invalidValueParamNull(PARAM_PRIMARY_METS_FILES, paramEvaluation);
+                return invalidValueParamNull(PARAM_SECONDARY_METS_FILES, paramEvaluation);
             }
 
             return validate(files);

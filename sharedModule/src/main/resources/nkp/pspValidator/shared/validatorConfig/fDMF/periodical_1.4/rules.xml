@@ -2326,13 +2326,12 @@
 
     </rules-section>
 
-    <rules-section name="Secondary METS filesec" description="">
-
-        <!--TODO: dodelat-->
+    <rules-section name="Secondary METS filesec"
+                   description="Sekce mets:fileSec v sekundárních METS souborech musí obsahovat korektní odkazy na soubory s popisy jednotlivých stran (master a user kopie, textové a alto ocr)">
 
         <rule name="SECONDARY-METS_FILESEC_ALL_FILEGROUPS_PRESENT">
             <description>Element mets:fileSec v každém souboru SECONDARY-METS musí obsahovat elementy mets:fileGrp s
-                definovanými hodnotami ID a USE a žádné další.
+                definovanými hodnotami atributů ID a USE a žádné další.
             </description>
             <validation functionName="checkSecondaryMetsFilesecContainsAllFilegroups">
                 <params>
@@ -2343,6 +2342,85 @@
             </validation>
         </rule>
 
+        <rule name="SECONDARY-METS_FILESEC_MASTER_COPY_FILE_REFERENCED">
+            <description>Element mets:fileSec v každém souboru SECONDARY-METS musí v elementu mets:fileGroup s atributem
+                ID="MC_IMGGRP" obsahovat odkaz na správný soubor MASTER-COPY a žádné jiné odkazy.
+            </description>
+            <validation functionName="checkSecondaryMetsFilegroupReferencesSingleFile">
+                <params>
+                    <value name="psp_dir" type="FILE">
+                        <value-ref name="PSP_DIR"/>
+                    </value>
+                    <value name="secondary-mets_files" type="FILE_LIST">
+                        <value-ref name="SECONDARY-METS_FILES"/>
+                    </value>
+                    <value name="referenced_files" type="FILE_LIST">
+                        <value-ref name="MASTER-COPY_FILES"/>
+                    </value>
+                    <value name="filegroup_id" type="STRING">MC_IMGGRP</value>
+                </params>
+            </validation>
+        </rule>
+
+        <rule name="SECONDARY-METS_FILESEC_USER_COPY_FILE_REFERENCED">
+            <description>Element mets:fileSec v každém souboru SECONDARY-METS musí v elementu mets:fileGroup s atributem
+                ID="UC_IMGGRP" obsahovat odkaz na správný soubor USER-COPY a žádné jiné odkazy.
+            </description>
+            <validation functionName="checkSecondaryMetsFilegroupReferencesSingleFile">
+                <params>
+                    <value name="psp_dir" type="FILE">
+                        <value-ref name="PSP_DIR"/>
+                    </value>
+                    <value name="secondary-mets_files" type="FILE_LIST">
+                        <value-ref name="SECONDARY-METS_FILES"/>
+                    </value>
+                    <value name="referenced_files" type="FILE_LIST">
+                        <value-ref name="USER-COPY_FILES"/>
+                    </value>
+                    <value name="filegroup_id" type="STRING">UC_IMGGRP</value>
+                </params>
+            </validation>
+        </rule>
+
+        <rule name="SECONDARY-METS_FILESEC_OCR-ALTO_FILE_REFERENCED">
+            <description>Element mets:fileSec v každém souboru SECONDARY-METS musí v elementu mets:fileGroup s atributem
+                ID="ALTOGRP" obsahovat odkaz na správný soubor OCR-ALTO a žádné jiné odkazy.
+            </description>
+            <validation functionName="checkSecondaryMetsFilegroupReferencesSingleFile">
+                <params>
+                    <value name="psp_dir" type="FILE">
+                        <value-ref name="PSP_DIR"/>
+                    </value>
+                    <value name="secondary-mets_files" type="FILE_LIST">
+                        <value-ref name="SECONDARY-METS_FILES"/>
+                    </value>
+                    <value name="referenced_files" type="FILE_LIST">
+                        <value-ref name="OCR-ALTO_FILES"/>
+                    </value>
+                    <value name="filegroup_id" type="STRING">ALTOGRP</value>
+                </params>
+            </validation>
+        </rule>
+
+        <rule name="SECONDARY-METS_FILESEC_OCR-TEXT_FILE_REFERENCED">
+            <description>Element mets:fileSec v každém souboru SECONDARY-METS musí v elementu mets:fileGroup s atributem
+                ID="TXTGRP" obsahovat odkaz na správný soubor OCR-TEXT a žádné jiné odkazy.
+            </description>
+            <validation functionName="checkSecondaryMetsFilegroupReferencesSingleFile">
+                <params>
+                    <value name="psp_dir" type="FILE">
+                        <value-ref name="PSP_DIR"/>
+                    </value>
+                    <value name="secondary-mets_files" type="FILE_LIST">
+                        <value-ref name="SECONDARY-METS_FILES"/>
+                    </value>
+                    <value name="referenced_files" type="FILE_LIST">
+                        <value-ref name="OCR-TEXT_FILES"/>
+                    </value>
+                    <value name="filegroup_id" type="STRING">TXTGRP</value>
+                </params>
+            </validation>
+        </rule>
 
     </rules-section>
 

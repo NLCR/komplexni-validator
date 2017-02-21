@@ -188,6 +188,8 @@ public class Engine {
                 return new VfCheckMetsFilesecChecksumsMatch(this);
             case "checkSecondaryMetsFilesecContainsAllFilegroups":
                 return new VfCheckSecondaryMetsFilesecContainsAllFilegroups(this);
+            case "checkSecondaryMetsFilegroupReferencesSingleFile":
+                return new VfCheckSecondaryMetsFilegroupReferencesSingleFile(this);
             case "checkImageFilesValidByExternalUtil":
                 return new VfCheckImageFilesValidByExternalUtil(this);
 

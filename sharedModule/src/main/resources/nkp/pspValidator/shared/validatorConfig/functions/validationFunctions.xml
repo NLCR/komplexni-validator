@@ -337,5 +337,19 @@
         </params-def>
     </validationFunction>
 
+    <validationFunction functionName="checkSecondaryMetsFilesecContainsAllFilegroups">
+        <params-def>
+            <value name="secondary-mets_files" type="FILE_LIST"/>
+        </params-def>
+    </validationFunction>
+
+    <validationFunction functionName="checkSecondaryMetsFilegroupReferencesSingleFile">
+        <params-def>
+            <value name="psp_dir" type="FILE"/>
+            <value name="secondary-mets_files" type="FILE_LIST"/>
+            <value name="referenced_files" type="FILE_LIST"/>
+            <value name="filegroup_id" type="STRING"/>
+        </params-def>
+    </validationFunction>
 
 </validationFunctions>

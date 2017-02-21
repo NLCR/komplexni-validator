@@ -3,6 +3,8 @@ package nkp.pspValidator.shared;
 import nkp.pspValidator.shared.engine.exceptions.ValidatorConfigurationException;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Martin Řehánek on 9.12.16.
@@ -30,6 +32,33 @@ public class FileUtils {
         } else if (!file.canRead()) {
             throw new ValidatorConfigurationException(String.format("nelze číst konfigurační soubor: %s", file.getAbsolutePath()));
         }
+    }
+
+    public static String toLimitedPath(File file, int parentsNum) {
+        //put parents in list
+        List<String> parents = new ArrayList<>();
+        File current = file;
+        while (parentsNum > 0) {
+            if (current != null) {
+                File parent = current.getParentFile();
+                if (parent != null) {
+                    parents.add(parent.getName());
+                    current = parent;
+                    parentsNum--;
+                }
+            } else {
+                break;
+            }
+        }
+        //build path with inverted parent list
+        StringBuilder builder = new StringBuilder();
+        for (int i = parents.size() - 1; i >= 0; i--) {
+            builder.append(parents.get(i));
+            builder.append(File.separatorChar);
+        }
+        //append file name
+        builder.append(file.getName());
+        return builder.toString();
     }
 
 }
