@@ -64,16 +64,18 @@ public class MainTest {
         //devParams.getSectionsToRun().add("Bibliografická metadata");
         //devParams.getSectionsToRun().add("Identifikátory");
         //devParams.getSectionsToRun().add("JPEG 2000");
-        devParams.getSectionsToRun().add("Bibliografická metadata");
+        //devParams.getSectionsToRun().add("Bibliografická metadata");
         //devParams.getSectionsToRun().add("ALTO");
         //devParams.getSectionsToRun().add("Technická metadata");
         //devParams.getSectionsToRun().add("Autorskoprávní metadata");
 
+        devParams.getSectionsToRun().add("Secondary METS filesec");
+
         Main.main(devParams, buildParams(
                 "../sharedModule/src/main/resources/nkp/pspValidator/shared/validatorConfig"
-                , MON_1_2_MAP
+                //, MON_1_2_MAP
                 //, PER_1_6_INFO_INVALID_NS
-                //, PER_1_6
+                , PER_1_6
                 //, PER_1_4
                 //, MON_1_2_INVALID_IMAGES
                 //, MON_1_2_MAP
