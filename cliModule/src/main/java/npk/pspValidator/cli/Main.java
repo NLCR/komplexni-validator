@@ -259,8 +259,8 @@ public class Main {
                 " Dale je potreba pomoci --config-dir uvest adresar, ktery obsahuje definice konfiguraci validatoru vcetne fDMF," +
                 " typicky adresare monograph_1.0, monograph_1.2, periodical_1.4 a periodical 1.6.\n\n";
         String footer = "\n*Definice metadatovych formatu. Vice na http://www.ndk.cz/standardy-digitalizace/metadata.\n"
-                + "Vice informaci o Validatoru najdete na https://github.com/rzeh4n/psp-validator.";
-//        + "Více informací o Validátoru najdete na https://github.com/rzeh4n/psp-validator.";
+                + "Vice informaci o Validatoru najdete na https://github.com/NLCR/psp-validator.";
+//        + "Více informací o Validátoru najdete na https://github.com/NLCR/psp-validator.";
 
         HelpFormatter formatter = new HelpFormatter();
         formatter.setOptionComparator(null);
@@ -381,7 +381,7 @@ public class Main {
         File modsXsd = new File("../sharedModule/src/main/resources/nkp/pspValidator/shared/validatorConfig/fDMF/monograph_1.2/xsd/mods_3.5.xsd");
         XsdValidator.validate("MODS", modsXsd, new File("../sharedModule/src/main/resources/nkp/pspValidator/shared-tmp/examples/mods.xml"));
 
-        //mets - problem https://github.com/rzeh4n/psp-validator/issues/13
+        //mets - problem https://github.com/NLCR/psp-validator/issues/13
         File metsXsd = new File("../sharedModule/src/main/resources/nkp/pspValidator/shared/validatorConfig/fDMF/monograph_1.2/xsd/mets_1.9.1.xsd");
         XsdValidator.validate("METS-PRIMARY", metsXsd, new File("../sharedModule/src/main/resources/nkp/pspValidator/shared-tmp/examples/mets-primary.xml"));
         XsdValidator.validate("METS-SECONDARY", metsXsd, new File("../sharedModule/src/main/resources/nkp/pspValidator/shared-tmp/examples/mets-secondary.xml"));

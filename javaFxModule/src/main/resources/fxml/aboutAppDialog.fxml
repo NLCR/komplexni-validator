@@ -53,7 +53,7 @@
                    GridPane.rowIndex="2"
                    GridPane.columnIndex="0"
             />
-            <Hyperlink text="https://github.com/rzeh4n/psp-validator"
+            <Hyperlink text="https://github.com/NLCR/psp-validator"
                        GridPane.rowIndex="2"
                        GridPane.columnIndex="2"
                        GridPane.hgrow="ALWAYS"

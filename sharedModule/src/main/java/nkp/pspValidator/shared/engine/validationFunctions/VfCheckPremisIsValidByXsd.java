@@ -108,7 +108,7 @@ public class VfCheckPremisIsValidByXsd extends ValidationFunction {
         ValidationResult result = new ValidationResult();
         for (File metsFile : metsFiles) {
             //TODO: // FIXME: 6.2.17 :
-            //validace objektů dočasně vypnuta kvůli https://github.com/rzeh4n/psp-validator/issues/13
+            //validace objektů dočasně vypnuta kvůli https://github.com/NLCR/psp-validator/issues/13
             //validate(metsFile, "mets:techMD", "OBJ_", xsdFile, level, result);
             validate(metsFile, "mets:digiprovMD", "EVT_", xsdFile, level, result);
             validate(metsFile, "mets:digiprovMD", "AGENT_", xsdFile, level, result);
