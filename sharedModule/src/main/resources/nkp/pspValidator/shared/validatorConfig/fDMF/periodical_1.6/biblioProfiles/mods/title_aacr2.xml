@@ -415,9 +415,9 @@
                 <!--Mezinarodni desetinne trideni-->
                 <expectedAttributes>
                     <attribute name="authority">
-                        <expectedContent>
+                        <recommendedContent>
                             <value>udc</value>
-                        </expectedContent>
+                        </recommendedContent>
                     </attribute>
                 </expectedAttributes>
                 <expectedContent/>
@@ -428,12 +428,12 @@
                 <expectedAttributes>
                     <!--NOTE: DMF neuvadi, jestli je authority povinny atribut, necham, ze je nepovinny-->
                     <attribute name="authority">
-                        <expectedContent>
+                        <recommendedContent>
                             <oneOf>
                                 <value>udc</value>
                                 <value>Konspekt</value>
                             </oneOf>
-                        </expectedContent>
+                        </recommendedContent>
                     </attribute>
 
                     <attribute name="edition"/>

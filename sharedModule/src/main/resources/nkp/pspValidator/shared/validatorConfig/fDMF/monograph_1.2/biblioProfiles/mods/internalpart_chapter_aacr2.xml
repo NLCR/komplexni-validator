@@ -287,9 +287,9 @@
                 <expectedAttributes>
                     <!--NOTE: DMF neuvadi, jestli je authority povinny atribut, nechavam nepovinny-->
                     <attribute name="authority" mandatory="true">
-                        <expectedContent>
+                        <recommendedContent>
                             <value>udc</value>
-                        </expectedContent>
+                        </recommendedContent>
                     </attribute>
                 </expectedAttributes>
                 <expectedContent/>

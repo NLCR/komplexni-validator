@@ -222,9 +222,9 @@
                 <!--Mezinarodni desetinne trideni-->
                 <expectedAttributes>
                     <attribute name="authority">
-                        <expectedContent>
+                        <recommendedContent>
                             <value>udc</value>
-                        </expectedContent>
+                        </recommendedContent>
                     </attribute>
                 </expectedAttributes>
                 <expectedContent/>
