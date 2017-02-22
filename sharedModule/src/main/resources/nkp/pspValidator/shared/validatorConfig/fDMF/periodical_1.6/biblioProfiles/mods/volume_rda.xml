@@ -163,11 +163,11 @@
             </element>
 
             <element name="mods:physicalDescription" mandatory="false">
-                <expectedContent/>
-            </element>
-
-            <element name="mods:note" mandatory="false">
-                <expectedContent/>
+                <expectedElements>
+                    <element name="mods:note" mandatory="false">
+                        <expectedContent/>
+                    </element>
+                </expectedElements>
             </element>
 
         </expectedElements>
