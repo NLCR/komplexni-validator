@@ -36,7 +36,7 @@ public class MainController extends AbstractController implements ValidationStat
     private static Logger LOG = Logger.getLogger(MainController.class.getSimpleName());
 
     //TODO: nahradit konkretni wiki strankou
-    private static final String URL_ONLINE_HELP = "https://github.com/NLCR/psp-validator/wiki";
+    private static final String URL_ONLINE_HELP = "https://github.com/NLCR/komplexni-validator/wiki";
 
     @FXML
     BorderPane container;

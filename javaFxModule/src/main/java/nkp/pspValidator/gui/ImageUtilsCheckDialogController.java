@@ -26,11 +26,11 @@ import java.util.Map;
  */
 public class ImageUtilsCheckDialogController extends DialogController {
 
-    private static final String JPYLYZER_INSTALLATION_URL = "https://github.com/NLCR/psp-validator/wiki/Instalace#jpylyzer";
-    private static final String JHOVE_INSTALLATION_URL = "https://github.com/NLCR/psp-validator/wiki/Instalace#jhove";
-    private static final String IMAGE_MAGICK_INSTALLATION_URL = "https://github.com/NLCR/psp-validator/wiki/Instalace#imagemagick";
-    private static final String KAKADU_INSTALLATION_URL = "https://github.com/NLCR/psp-validator/wiki/Instalace#kakadu";
-    private static final String HELP_URL = "https://github.com/NLCR/psp-validator/wiki/Instalace#instalace-n%C3%A1stroj%C5%AF-pro-validaci-obrazov%C3%BDch-soubor%C5%AF";
+    private static final String JPYLYZER_INSTALLATION_URL = "https://github.com/NLCR/komplexni-validator/wiki/Instalace#jpylyzer";
+    private static final String JHOVE_INSTALLATION_URL = "https://github.com/NLCR/komplexni-validator/wiki/Instalace#jhove";
+    private static final String IMAGE_MAGICK_INSTALLATION_URL = "https://github.com/NLCR/komplexni-validator/wiki/Instalace#imagemagick";
+    private static final String KAKADU_INSTALLATION_URL = "https://github.com/NLCR/komplexni-validator/wiki/Instalace#kakadu";
+    private static final String HELP_URL = "https://github.com/NLCR/komplexni-validator/wiki/Instalace#instalace-n%C3%A1stroj%C5%AF-pro-validaci-obrazov%C3%BDch-soubor%C5%AF";
 
     /*jhove*/
 

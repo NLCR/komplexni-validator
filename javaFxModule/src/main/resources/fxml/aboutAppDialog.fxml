@@ -20,7 +20,7 @@
 
         <Text styleClass="title"
               wrappingWidth="580"
-              text="PSP Validátor byl vyvinut pro Národní Knihovnu České republiky. Nástroj je určený k validaci PSP balíků podle standardu Definice metadatových formátů pro digitalizaci."
+              text="Komplexní validátor byl vyvinut pro Národní Knihovnu České republiky. Nástroj je určený k validaci PSP balíků podle standardu Definice metadatových formátů pro digitalizaci."
         />
         <GridPane alignment="CENTER" hgap="10" vgap="10">
             <padding>
@@ -53,7 +53,7 @@
                    GridPane.rowIndex="2"
                    GridPane.columnIndex="0"
             />
-            <Hyperlink text="https://github.com/NLCR/psp-validator"
+            <Hyperlink text="https://github.com/NLCR/komplexni-validator"
                        GridPane.rowIndex="2"
                        GridPane.columnIndex="2"
                        GridPane.hgrow="ALWAYS"

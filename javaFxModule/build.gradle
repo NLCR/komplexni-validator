@@ -59,7 +59,7 @@ apply plugin: 'javafx-gradle-plugin'
 
 jfx {
     mainClass = 'nkp.pspValidator.gui.Main'
-    jfxMainAppJarName = "PspValidator-GUI.jar"
+    jfxMainAppJarName = "KomplexniValidatorGUI.jar"
     //jfxNative
     identifier = 'nkp.pspValidator-gui'
     vendor = 'NKP'
@@ -70,7 +70,7 @@ jfx {
     // vytvori javaFxModule\build\jfx\native\PspValidator, jeste je potreba pridat fDMF a vyrobit instalator
 
     //bundler = 'windows.app'//bundler='ALL'
-    appName = 'PspValidatorGUI'
+    appName = 'KomplexniValidatorGUI'
     nativeReleaseVersion = "1.3-dev"
 
     //additionalAppResources = ['../sharedModule/src/main/resources/nkp/pspValidator/shared','src/main/resources/config']

@@ -34,11 +34,11 @@ version = '1.3-dev'
 //https://www.mkyong.com/gradle/gradle-create-a-jar-file-with-dependencies/
 task fatJar(type: Jar) {
     manifest {
-        attributes 'Implementation-Title': 'PSP Validator CLI',
+        attributes 'Implementation-Title': 'Komplexni validator CLI',
                 'Implementation-Version': version,
                 'Main-Class': 'npk.pspValidator.cli.Main'
     }
-    baseName = 'PspValidatorCLI'
+    baseName = 'KomplexniValidatorCLI'
     from { configurations.compile.collect { it.isDirectory() ? it : zipTree(it) } }
     with jar
 }
@@ -46,5 +46,3 @@ task fatJar(type: Jar) {
 //targets:
 //gradle run - spusti Main (plugin application)
 //gradle fatJar - vybuildi jar v cliModule/build/lisb
-
-//TODO: change package from rzehan.gui to nkp.pspValidator.gui
