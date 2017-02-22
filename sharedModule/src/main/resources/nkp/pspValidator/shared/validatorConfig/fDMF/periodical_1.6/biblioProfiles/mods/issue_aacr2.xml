@@ -174,7 +174,7 @@
 
                     <element name="mods:dateIssued" mandatory="false">
                         <expectedAttributes>
-                            <attribute name="point">
+                            <attribute name="point" mandatory="false">
                                 <expectedContent>
                                     <!--neni jasne, jestli to jsou opravdu jedine dve povolene hodnoty-->
                                     <!--<oneOf>
