@@ -442,8 +442,8 @@
                 <mustExist/>
                 <mustMatchAny>
                     <floatRange>
-                        <min>17</min>
-                        <max>32</max>
+                        <min>6</min>
+                        <max>12</max>
                     </floatRange>
                 </mustMatchAny>
             </rules>
