@@ -53,6 +53,11 @@
                 <expectedContent/>
             </element>
 
+            <!--mods:typeOfResource-->
+            <element name="dc:type" mandatory="false">
+                <expectedContent/>
+            </element>
+
             <element name="dc:coverage" mandatory="false">
                 <expectedContent/>
             </element>
