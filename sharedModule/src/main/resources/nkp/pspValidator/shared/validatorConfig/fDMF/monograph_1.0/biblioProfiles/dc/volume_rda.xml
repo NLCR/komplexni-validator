@@ -43,18 +43,27 @@
             </element>
 
             <!--mods:typeOfResource-->
-            <element name="dc:type" specification="text() = 'text'" mandatory="false">
-                <expectedContent/>
+            <element name="dc:type" specification="text() != 'volume'" mandatory="false">
+                <expectedContent>
+                    <oneOf>
+                        <value>text</value>
+                        <value>cartographic</value>
+                        <value>notatedmusic</value>
+                        <value>soundrecording‐musical</value>
+                        <value>soundrecording‐nonmusical</value>
+                        <value>soundrecording</value>
+                        <value>stillimage</value>
+                        <value>movingimage</value>
+                        <value>threedimensionalobject</value>
+                        <value>software,multimedia</value>
+                        <value>mixedmaterial</value>
+                    </oneOf>
+                </expectedContent>
             </element>
 
             <!--mods:genre-->
             <element name="dc:type" specification="text() = 'volume'"
                      errorMessage="Očekáván povinný element dc:type obsahující text 'volume'.">
-                <expectedContent/>
-            </element>
-
-            <!--mods:typeOfResource-->
-            <element name="dc:type" mandatory="false">
                 <expectedContent/>
             </element>
 
