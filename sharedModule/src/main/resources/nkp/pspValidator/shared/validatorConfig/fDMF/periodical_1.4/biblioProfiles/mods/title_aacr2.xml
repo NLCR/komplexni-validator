@@ -116,7 +116,7 @@
                         </expectedContent>
                     </element>
 
-                    <element name="mods:frequency">
+                    <element name="mods:frequency" mandatory="false">
                         <expectedContent/>
                     </element>
                 </expectedElements>
@@ -159,7 +159,7 @@
                         </expectedContent>
                     </element>
 
-                    <element name="mods:frequency">
+                    <element name="mods:frequency" mandatory="false">
                         <expectedContent/>
                     </element>
                 </expectedElements>
