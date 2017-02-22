@@ -29,7 +29,7 @@ public class MainTest {
     //private static final String PER_1_6 = "../sharedModule/src/test/resources/periodical_1.6/ope301-00000v";
     //private static final String PER_1_6_INFO_INVALID_NS = "/home/martin/zakazky/NKP-PSP_validator/data/per_1.6_invalid_info_ns/aba008-000310";
 
-    private static final String PER_1_4 = "/home/martin/zakazky/NKP-PSP_validator/data/neprochazi/ope301-00000v";
+    private static final String PER_1_4 = "../sharedModule/src/test/resources/periodical_1.4/ope301-00000v";
 
 
     @org.junit.Test
@@ -59,12 +59,12 @@ public class MainTest {
         Validator.DevParams devParams = new Validator.DevParams();
 
         //devParams.getSectionsToRun().add("Soubor CHECKSUM");
-        //devParams.getSectionsToRun().add("Soubor INFO");
+        devParams.getSectionsToRun().add("Soubor INFO");
         //devParams.getSectionsToRun().add("Struktura souborů");
         //devParams.getSectionsToRun().add("Bibliografická metadata");
         //devParams.getSectionsToRun().add("Identifikátory");
         //devParams.getSectionsToRun().add("JPEG 2000");
-        devParams.getSectionsToRun().add("Bibliografická metadata");
+        //devParams.getSectionsToRun().add("Bibliografická metadata");
         //devParams.getSectionsToRun().add("ALTO");
         //devParams.getSectionsToRun().add("Technická metadata");
         //devParams.getSectionsToRun().add("Autorskoprávní metadata");
@@ -72,10 +72,10 @@ public class MainTest {
 
         Main.main(devParams, buildParams(
                 "../sharedModule/src/main/resources/nkp/pspValidator/shared/validatorConfig"
-                , MON_1_2_MAP
+                //, MON_1_2_MAP
                 //, PER_1_6_INFO_INVALID_NS
                 //, PER_1_6
-                //, PER_1_4
+                , PER_1_4
                 //, MON_1_2_INVALID_IMAGES
                 //, MON_1_2_MAP
                 // , PER_1_6

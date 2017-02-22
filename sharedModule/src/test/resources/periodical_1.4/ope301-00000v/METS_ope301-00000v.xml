@@ -1,0 +1,872 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<METS:mets LABEL="Zeitschrift für Kranken-und Humanitätsanstalten, 4, 10.03.1911" TYPE="Periodical"
+           xmlns:METS="http://www.loc.gov/METS/"
+           xmlns:xlink="http://www.w3.org/1999/xlink"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="http://www.loc.gov/METS/
+    http://www.loc.gov/standards/mets/mets.xsd 
+">
+    <METS:metsHdr CREATEDATE="2014-11-18T12:06:12Z" ID="ope301-00000v" LASTMODDATE="2014-11-18T12:06:12Z"
+                  RECORDSTATUS="COMPLETE">
+        <METS:agent ROLE="CREATOR" TYPE="ORGANIZATION">
+            <METS:name>OSA001</METS:name>
+        </METS:agent>
+        <METS:agent ROLE="ARCHIVIST" TYPE="ORGANIZATION">
+            <METS:name>OSA001</METS:name>
+        </METS:agent>
+    </METS:metsHdr>
+    <METS:dmdSec ID="MODSMD_ISSUE_0001">
+        <METS:mdWrap MDTYPE="MODS" MIMETYPE="text/xml">
+            <METS:xmlData>
+                <mods ID="MODS_ISSUE_0001" version="3.4"
+                      xsi:schemaLocation="http://www.loc.gov/mods/v3 http://www.loc.gov/standards/mods/v3/mods-3-4.xsd"
+                      xmlns="http://www.loc.gov/mods/v3" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                      xmlns:xlink="http://www.w3.org/1999/xlink">
+                    <titleInfo ID="MODS_ISSUE">
+                        <title>Zeitschrift für Kranken-und Humanitätsanstalten</title>
+                        <subTitle>Fachblatt für Bau, Betrieb und Verwaltung von Heil-, Pflege- und Kuranstalten
+                        </subTitle>
+                        <partNumber>4</partNumber>
+                    </titleInfo>
+                    <genre type="normal">issue</genre>
+                    <genre>issue</genre>
+                    <originInfo>
+                        <dateIssued qualifier="approximate">10.03.1911</dateIssued>
+                    </originInfo>
+                    <language>
+                        <languageTerm authority="iso639-2b" type="code">ger</languageTerm>
+                    </language>
+                    <identifier type="uuid">c1315d97-2cdb-4735-8ffa-350cb4ae2f10</identifier>
+                    <identifier type="urnnbn">urn:nbn:cz:ope301-00000v</identifier>
+                </mods>
+            </METS:xmlData>
+        </METS:mdWrap>
+    </METS:dmdSec>
+    <METS:dmdSec ID="DCMD_ISSUE_0001">
+        <METS:mdWrap MDTYPE="DC" MIMETYPE="text/xml">
+            <METS:xmlData>
+                <oai_dc:dc
+                        xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/oai_dc/ http://www.openarchives.org/OAI/2.0/oai_dc.xsd"
+                        xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/"
+                        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                        xmlns:dc="http://purl.org/dc/elements/1.1/">
+                    <dc:title>Zeitschrift für Kranken-und Humanitätsanstalten</dc:title>
+                    <dc:title>Fachblatt für Bau, Betrieb und Verwaltung von Heil-, Pflege- und Kuranstalten</dc:title>
+                    <dc:description>4</dc:description>
+                    <dc:type>issue</dc:type>
+                    <dc:type>issue</dc:type>
+                    <dc:date>10.03.1911</dc:date>
+                    <dc:identifier>uuid: c1315d97-2cdb-4735-8ffa-350cb4ae2f10</dc:identifier>
+                    <dc:identifier>urnnbn: urn:nbn:cz:ope301-00000v</dc:identifier>
+                    <dc:language>ger</dc:language>
+                </oai_dc:dc>
+            </METS:xmlData>
+        </METS:mdWrap>
+    </METS:dmdSec>
+    <METS:dmdSec ID="MODSMD_TITLE_0001">
+        <METS:mdWrap MDTYPE="MODS" MIMETYPE="text/xml">
+            <METS:xmlData>
+                <mods ID="MODS_TITLE_0001" version="3.4"
+                      xsi:schemaLocation="http://www.loc.gov/mods/v3 http://www.loc.gov/standards/mods/v3/mods-3-4.xsd"
+                      xmlns="http://www.loc.gov/mods/v3" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+                    <titleInfo>
+                        <title>Zeitschrift für Kranken-und Humanitätsanstalten</title>
+                        <subTitle>Fachblatt für Bau, Betrieb und Verwaltung von Heil-, Pflege- und Kuranstalten
+                        </subTitle>
+                    </titleInfo>
+                    <typeOfResource>text</typeOfResource>
+                    <genre authority="marcgt">periodical</genre>
+                    <genre>title</genre>
+                    <originInfo>
+                        <place>
+                            <placeTerm type="code" authority="marccountry">xr</placeTerm>
+                        </place>
+                        <place>
+                            <placeTerm type="text">Troppau [Opava]</placeTerm>
+                        </place>
+                        <publisher>F. Troger</publisher>
+                        <dateIssued>[1911]-1918</dateIssued>
+                        <dateIssued encoding="marc" point="start">1911</dateIssued>
+                        <dateIssued encoding="marc" point="end">1918</dateIssued>
+                        <issuance>continuing</issuance>
+                        <frequency authority="marcfrequency">2x měsíčně</frequency>
+                        <frequency>Semimonthly</frequency>
+                    </originInfo>
+                    <language>
+                        <languageTerm authority="iso639-2b" type="code">ger</languageTerm>
+                    </language>
+                    <physicalDescription>
+                        <form authority="marcform">print</form>
+                    </physicalDescription>
+                    <identifier type="ccnb">cnb002200033</identifier>
+                    <identifier type="issn">2336-3878</identifier>
+                    <recordInfo>
+                        <descriptionStandard>aacr</descriptionStandard>
+                        <recordContentSource>OLA001</recordContentSource>
+                        <recordCreationDate encoding="iso8601">2001-09-18T00:00:00Z</recordCreationDate>
+                        <recordChangeDate encoding="iso8601">2014-05-20T09:51:07Z</recordChangeDate>
+                        <recordIdentifier source="CZ OsVK">000518815</recordIdentifier>
+                        <recordOrigin>Converted from MARCXML to MODS version 3.4</recordOrigin>
+                        <languageOfCataloging>
+                            <languageTerm authority="iso639-2b" type="code">cze</languageTerm>
+                        </languageOfCataloging>
+                    </recordInfo>
+                    <identifier type="uuid">b382b234-b53c-4685-848e-bfc8af73f472</identifier>
+                    <note>red. Gustav Kürner 1911 - 25.7.1914, Fritz Troger 10.8.1914 - 5.8.1915, Karl Kürner 10.9.1915
+                        - 1918
+                    </note>
+                    <abstract>Časopis obsahuje příspěvky o různých typech zdravotnických ústavů a zařízení v
+                        Rakousku-Uhersku, o jejich budovách, vybavení, provozu a správě, péči o nemocné atd. Přináší
+                        také zákony a nařízení pro zdravotnická zařízení, články o výstavách, vyročích aj.
+                    </abstract>
+                    <subject authority="czenas">
+                        <topic>zdravotnická zařízení</topic>
+                    </subject>
+                    <subject authority="czenas">
+                        <topic>sanitární technika</topic>
+                    </subject>
+                    <subject authority="czenas">
+                        <topic>sociální péče</topic>
+                    </subject>
+                    <subject authority="czenas">
+                        <topic>zdravotní péče</topic>
+                    </subject>
+                    <subject authority="czenas">
+                        <topic>náklady</topic>
+                    </subject>
+                    <subject authority="czenas">
+                        <topic>budovy</topic>
+                    </subject>
+                    <subject authority="msvkth">
+                        <topic>předpisy</topic>
+                    </subject>
+                    <subject authority="czenas">
+                        <topic>zákony</topic>
+                    </subject>
+                    <subject authority="czenas">
+                        <topic>statistika</topic>
+                    </subject>
+                    <subject authority="msvkth">
+                        <topic>statistické ukazatele</topic>
+                    </subject>
+                    <subject authority="czenas">
+                        <topic>časopisy</topic>
+                    </subject>
+                    <subject authority="czenas">
+                        <geographic>Rakousko-Uhersko</geographic>
+                    </subject>
+                    <subject authority="czenas">
+                        <geographic>Morava (Česko)</geographic>
+                    </subject>
+                    <subject authority="czenas">
+                        <geographic>Slezsko (Česko)</geographic>
+                    </subject>
+                    <classification authority="udc">614.2:725.5</classification>
+                    <classification authority="udc">614.2</classification>
+                    <classification authority="udc">64-3</classification>
+                    <classification authority="udc">696.14</classification>
+                    <classification authority="udc">338.58</classification>
+                    <classification authority="udc">721</classification>
+                    <classification authority="udc">34</classification>
+                    <classification authority="udc">311</classification>
+                    <classification authority="udc">(436+439)</classification>
+                    <classification authority="udc">(437.32)</classification>
+                    <classification authority="udc">(437.33)</classification>
+                    <classification authority="udc">050</classification>
+                    <classification authority="udc">070.48</classification>
+                    <location>
+                        <physicalLocation authority="siglaADR">OPE301</physicalLocation>
+                        <shelfLocator>S 16051</shelfLocator>
+                    </location>
+                </mods>
+            </METS:xmlData>
+        </METS:mdWrap>
+    </METS:dmdSec>
+    <METS:dmdSec ID="DCMD_TITLE_0001">
+        <METS:mdWrap MDTYPE="DC" MIMETYPE="text/xml">
+            <METS:xmlData>
+                <oai_dc:dc
+                        xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/oai_dc/ http://www.openarchives.org/OAI/2.0/oai_dc.xsd"
+                        xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/"
+                        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                        xmlns:dc="http://purl.org/dc/elements/1.1/">
+                    <dc:title>Zeitschrift für Kranken-und Humanitätsanstalten</dc:title>
+                    <dc:title>Fachblatt für Bau, Betrieb und Verwaltung von Heil-, Pflege- und Kuranstalten</dc:title>
+                    <dc:type>periodical</dc:type>
+                    <dc:type>title</dc:type>
+                    <dc:date>[1911]-1918</dc:date>
+                    <dc:description>Časopis obsahuje příspěvky o různých typech zdravotnických ústavů a zařízení v
+                        Rakousku-Uhersku, o jejich budovách, vybavení, provozu a správě, péči o nemocné atd. Přináší
+                        také zákony a nařízení pro zdravotnická zařízení, články o výstavách, vyročích aj.
+                    </dc:description>
+                    <dc:description>red. Gustav Kürner 1911 - 25.7.1914, Fritz Troger 10.8.1914 - 5.8.1915, Karl Kürner
+                        10.9.1915 - 1918
+                    </dc:description>
+                    <dc:format>print</dc:format>
+                    <dc:identifier>ccnb: cnb002200033</dc:identifier>
+                    <dc:identifier>issn: 2336-3878</dc:identifier>
+                    <dc:identifier>uuid: b382b234-b53c-4685-848e-bfc8af73f472</dc:identifier>
+                    <dc:subject>udc:614.2:725.5</dc:subject>
+                    <dc:subject>udc:614.2</dc:subject>
+                    <dc:subject>udc:64-3</dc:subject>
+                    <dc:subject>udc:696.14</dc:subject>
+                    <dc:subject>udc:338.58</dc:subject>
+                    <dc:subject>udc:721</dc:subject>
+                    <dc:subject>udc:34</dc:subject>
+                    <dc:subject>udc:311</dc:subject>
+                    <dc:subject>udc:(436+439)</dc:subject>
+                    <dc:subject>udc:(437.32)</dc:subject>
+                    <dc:subject>udc:(437.33)</dc:subject>
+                    <dc:subject>udc:050</dc:subject>
+                    <dc:subject>udc:070.48</dc:subject>
+                    <dc:language>ger</dc:language>
+                    <dc:subject>czenas:zdravotnická zařízení</dc:subject>
+                    <dc:subject>czenas:sanitární technika</dc:subject>
+                    <dc:subject>czenas:sociální péče</dc:subject>
+                    <dc:subject>czenas:zdravotní péče</dc:subject>
+                    <dc:subject>czenas:náklady</dc:subject>
+                    <dc:subject>czenas:budovy</dc:subject>
+                    <dc:subject>msvkth:předpisy</dc:subject>
+                    <dc:subject>czenas:zákony</dc:subject>
+                    <dc:subject>czenas:statistika</dc:subject>
+                    <dc:subject>msvkth:statistické ukazatele</dc:subject>
+                    <dc:subject>czenas:časopisy</dc:subject>
+                    <dc:subject>czenas:Rakousko-Uhersko</dc:subject>
+                    <dc:subject>czenas:Morava (Česko)</dc:subject>
+                    <dc:subject>czenas:Slezsko (Česko)</dc:subject>
+                    <dc:publisher>F. Troger</dc:publisher>
+                    <dc:coverage>xr</dc:coverage>
+                    <dc:coverage>Troppau [Opava]</dc:coverage>
+                    <dc:type>text</dc:type>
+                    <dc:source>OLA001</dc:source>
+                    <dc:source>OPE301</dc:source>
+                    <dc:source>S 16051</dc:source>
+                </oai_dc:dc>
+            </METS:xmlData>
+        </METS:mdWrap>
+    </METS:dmdSec>
+    <METS:dmdSec ID="MODSMD_VOLUME_0001">
+        <METS:mdWrap MDTYPE="MODS" MIMETYPE="text/xml">
+            <METS:xmlData>
+                <mods ID="MODS_VOLUME_0001" version="3.4"
+                      xsi:schemaLocation="http://www.loc.gov/mods/v3 http://www.loc.gov/standards/mods/v3/mods-3-4.xsd"
+                      xmlns="http://www.loc.gov/mods/v3" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                      xmlns:xlink="http://www.w3.org/1999/xlink">
+                    <titleInfo>
+                        <partNumber>1</partNumber>
+                    </titleInfo>
+                    <genre>volume</genre>
+                    <originInfo>
+                        <dateIssued>1911</dateIssued>
+                    </originInfo>
+                    <identifier type="uuid">d2ee4587-37dd-4a1c-bc0b-14db4b9c2e3a</identifier>
+                </mods>
+            </METS:xmlData>
+        </METS:mdWrap>
+    </METS:dmdSec>
+    <METS:dmdSec ID="DCMD_VOLUME_0001">
+        <METS:mdWrap MDTYPE="DC" MIMETYPE="text/xml">
+            <METS:xmlData>
+                <oai_dc:dc
+                        xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/oai_dc/ http://www.openarchives.org/OAI/2.0/oai_dc.xsd"
+                        xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/"
+                        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                        xmlns:dc="http://purl.org/dc/elements/1.1/">
+                    <dc:title></dc:title>
+                    <dc:description>1</dc:description>
+                    <dc:type>volume</dc:type>
+                    <dc:date>1911</dc:date>
+                    <dc:identifier>uuid: d2ee4587-37dd-4a1c-bc0b-14db4b9c2e3a</dc:identifier>
+                </oai_dc:dc>
+            </METS:xmlData>
+        </METS:mdWrap>
+    </METS:dmdSec>
+    <METS:fileSec>
+        <METS:fileGrp ID="MC_IMGGRP" USE="Images">
+            <METS:file SEQ="0057" CREATED="2014-07-02T13:59:21Z" ID="JP210057" MIMETYPE="image/jp2"
+                       CHECKSUM="238314dd2f51c11ffd03231d83f64c78" CHECKSUMTYPE="MD5" SIZE="13968555">
+                <METS:FLocat LOCTYPE="URL" xlink:href="./masterCopy/MC_ope301-00000v_0057.jp2"/>
+            </METS:file>
+            <METS:file SEQ="0058" CREATED="2014-07-02T13:59:21Z" ID="JP210058" MIMETYPE="image/jp2"
+                       CHECKSUM="cea0e88460b51214a280d08c0b3c1394" CHECKSUMTYPE="MD5" SIZE="14025249">
+                <METS:FLocat LOCTYPE="URL" xlink:href="./masterCopy/MC_ope301-00000v_0058.jp2"/>
+            </METS:file>
+            <METS:file SEQ="0059" CREATED="2014-07-02T13:59:22Z" ID="JP210059" MIMETYPE="image/jp2"
+                       CHECKSUM="1ba1e11cf54a247afcf0dc8e21c1f4ee" CHECKSUMTYPE="MD5" SIZE="14319419">
+                <METS:FLocat LOCTYPE="URL" xlink:href="./masterCopy/MC_ope301-00000v_0059.jp2"/>
+            </METS:file>
+            <METS:file SEQ="0060" CREATED="2014-07-02T13:59:22Z" ID="JP210060" MIMETYPE="image/jp2"
+                       CHECKSUM="a61ba7aa8c711f410685325aed0c6a62" CHECKSUMTYPE="MD5" SIZE="13986181">
+                <METS:FLocat LOCTYPE="URL" xlink:href="./masterCopy/MC_ope301-00000v_0060.jp2"/>
+            </METS:file>
+            <METS:file SEQ="0061" CREATED="2014-07-02T13:59:23Z" ID="JP210061" MIMETYPE="image/jp2"
+                       CHECKSUM="1ca136b7a2f8824d0816b8a081540a73" CHECKSUMTYPE="MD5" SIZE="13828196">
+                <METS:FLocat LOCTYPE="URL" xlink:href="./masterCopy/MC_ope301-00000v_0061.jp2"/>
+            </METS:file>
+            <METS:file SEQ="0062" CREATED="2014-07-02T13:59:23Z" ID="JP210062" MIMETYPE="image/jp2"
+                       CHECKSUM="28d5c53a21a4e7937d01827a086ed5f9" CHECKSUMTYPE="MD5" SIZE="13826583">
+                <METS:FLocat LOCTYPE="URL" xlink:href="./masterCopy/MC_ope301-00000v_0062.jp2"/>
+            </METS:file>
+            <METS:file SEQ="0063" CREATED="2014-07-02T13:59:24Z" ID="JP210063" MIMETYPE="image/jp2"
+                       CHECKSUM="fced3741b664f58b0e563f9978f622cb" CHECKSUMTYPE="MD5" SIZE="13579837">
+                <METS:FLocat LOCTYPE="URL" xlink:href="./masterCopy/MC_ope301-00000v_0063.jp2"/>
+            </METS:file>
+            <METS:file SEQ="0064" CREATED="2014-07-02T13:59:24Z" ID="JP210064" MIMETYPE="image/jp2"
+                       CHECKSUM="fb0469d45499dd32aac076430c96edde" CHECKSUMTYPE="MD5" SIZE="13831895">
+                <METS:FLocat LOCTYPE="URL" xlink:href="./masterCopy/MC_ope301-00000v_0064.jp2"/>
+            </METS:file>
+            <METS:file SEQ="0065" CREATED="2014-07-02T13:59:24Z" ID="JP210065" MIMETYPE="image/jp2"
+                       CHECKSUM="1cebac7a53dc965d9ab17228736991ba" CHECKSUMTYPE="MD5" SIZE="13776306">
+                <METS:FLocat LOCTYPE="URL" xlink:href="./masterCopy/MC_ope301-00000v_0065.jp2"/>
+            </METS:file>
+            <METS:file SEQ="0066" CREATED="2014-07-02T13:59:25Z" ID="JP210066" MIMETYPE="image/jp2"
+                       CHECKSUM="d00c414b00f6cb3a499844f0c375156d" CHECKSUMTYPE="MD5" SIZE="13586049">
+                <METS:FLocat LOCTYPE="URL" xlink:href="./masterCopy/MC_ope301-00000v_0066.jp2"/>
+            </METS:file>
+            <METS:file SEQ="0067" CREATED="2014-07-02T13:59:25Z" ID="JP210067" MIMETYPE="image/jp2"
+                       CHECKSUM="3d2db3c4907dedbe63c327247588ac0e" CHECKSUMTYPE="MD5" SIZE="13840234">
+                <METS:FLocat LOCTYPE="URL" xlink:href="./masterCopy/MC_ope301-00000v_0067.jp2"/>
+            </METS:file>
+            <METS:file SEQ="0068" CREATED="2014-07-02T13:59:26Z" ID="JP210068" MIMETYPE="image/jp2"
+                       CHECKSUM="8fff271266e3c6b74b97257933164bb8" CHECKSUMTYPE="MD5" SIZE="14192031">
+                <METS:FLocat LOCTYPE="URL" xlink:href="./masterCopy/MC_ope301-00000v_0068.jp2"/>
+            </METS:file>
+            <METS:file SEQ="0069" CREATED="2014-07-02T13:59:26Z" ID="JP210069" MIMETYPE="image/jp2"
+                       CHECKSUM="0351e70ea2add690f0875f74b26468eb" CHECKSUMTYPE="MD5" SIZE="14075958">
+                <METS:FLocat LOCTYPE="URL" xlink:href="./masterCopy/MC_ope301-00000v_0069.jp2"/>
+            </METS:file>
+            <METS:file SEQ="0070" CREATED="2014-07-02T13:59:27Z" ID="JP210070" MIMETYPE="image/jp2"
+                       CHECKSUM="84c4020b3406becca08de70919cc7fd8" CHECKSUMTYPE="MD5" SIZE="14224195">
+                <METS:FLocat LOCTYPE="URL" xlink:href="./masterCopy/MC_ope301-00000v_0070.jp2"/>
+            </METS:file>
+            <METS:file SEQ="0071" CREATED="2014-07-02T13:59:27Z" ID="JP210071" MIMETYPE="image/jp2"
+                       CHECKSUM="5d3d639d47311687ffebde05924c9b21" CHECKSUMTYPE="MD5" SIZE="13903445">
+                <METS:FLocat LOCTYPE="URL" xlink:href="./masterCopy/MC_ope301-00000v_0071.jp2"/>
+            </METS:file>
+            <METS:file SEQ="0072" CREATED="2014-07-02T13:59:27Z" ID="JP210072" MIMETYPE="image/jp2"
+                       CHECKSUM="d98d1b905418eba1438b550b5b6bdea1" CHECKSUMTYPE="MD5" SIZE="14208348">
+                <METS:FLocat LOCTYPE="URL" xlink:href="./masterCopy/MC_ope301-00000v_0072.jp2"/>
+            </METS:file>
+            <METS:file SEQ="0073" CREATED="2014-07-02T13:59:28Z" ID="JP210073" MIMETYPE="image/jp2"
+                       CHECKSUM="217210476ea16d06cbd254a390ed1ffc" CHECKSUMTYPE="MD5" SIZE="14109649">
+                <METS:FLocat LOCTYPE="URL" xlink:href="./masterCopy/MC_ope301-00000v_0073.jp2"/>
+            </METS:file>
+            <METS:file SEQ="0074" CREATED="2014-07-02T13:59:28Z" ID="JP210074" MIMETYPE="image/jp2"
+                       CHECKSUM="463dbc4142dce0c812b3468acac8b436" CHECKSUMTYPE="MD5" SIZE="14108040">
+                <METS:FLocat LOCTYPE="URL" xlink:href="./masterCopy/MC_ope301-00000v_0074.jp2"/>
+            </METS:file>
+            <METS:file SEQ="0075" CREATED="2014-07-02T13:59:29Z" ID="JP210075" MIMETYPE="image/jp2"
+                       CHECKSUM="236725ab5a41431a1b8d7c580a3c4333" CHECKSUMTYPE="MD5" SIZE="14032586">
+                <METS:FLocat LOCTYPE="URL" xlink:href="./masterCopy/MC_ope301-00000v_0075.jp2"/>
+            </METS:file>
+            <METS:file SEQ="0076" CREATED="2014-07-02T13:59:29Z" ID="JP210076" MIMETYPE="image/jp2"
+                       CHECKSUM="a5803c563cf4bc2f838e2f927ad7f834" CHECKSUMTYPE="MD5" SIZE="13979851">
+                <METS:FLocat LOCTYPE="URL" xlink:href="./masterCopy/MC_ope301-00000v_0076.jp2"/>
+            </METS:file>
+        </METS:fileGrp>
+        <METS:fileGrp ID="UC_IMGGRP" USE="Images">
+            <METS:file SEQ="0057" CREATED="2014-07-02T14:07:39Z" ID="JP220057" MIMETYPE="image/jp2"
+                       CHECKSUM="fb7ffe44676de6a175978074df2dafc3" CHECKSUMTYPE="MD5" SIZE="1425114">
+                <METS:FLocat LOCTYPE="URL" xlink:href="./userCopy/UC_ope301-00000v_0057.jp2"/>
+            </METS:file>
+            <METS:file SEQ="0058" CREATED="2014-07-02T14:07:40Z" ID="JP220058" MIMETYPE="image/jp2"
+                       CHECKSUM="82d5fb9cedad8a2a0edc91353ae31165" CHECKSUMTYPE="MD5" SIZE="1416028">
+                <METS:FLocat LOCTYPE="URL" xlink:href="./userCopy/UC_ope301-00000v_0058.jp2"/>
+            </METS:file>
+            <METS:file SEQ="0059" CREATED="2014-07-02T14:07:40Z" ID="JP220059" MIMETYPE="image/jp2"
+                       CHECKSUM="c765b719ba9be8b84fb67059fc395321" CHECKSUMTYPE="MD5" SIZE="1458511">
+                <METS:FLocat LOCTYPE="URL" xlink:href="./userCopy/UC_ope301-00000v_0059.jp2"/>
+            </METS:file>
+            <METS:file SEQ="0060" CREATED="2014-07-02T14:07:40Z" ID="JP220060" MIMETYPE="image/jp2"
+                       CHECKSUM="7400c2d0e3f3e9866705a70a981f0588" CHECKSUMTYPE="MD5" SIZE="1422366">
+                <METS:FLocat LOCTYPE="URL" xlink:href="./userCopy/UC_ope301-00000v_0060.jp2"/>
+            </METS:file>
+            <METS:file SEQ="0061" CREATED="2014-07-02T14:07:40Z" ID="JP220061" MIMETYPE="image/jp2"
+                       CHECKSUM="1554ec62b5a527247117f6c8108c8791" CHECKSUMTYPE="MD5" SIZE="1427522">
+                <METS:FLocat LOCTYPE="URL" xlink:href="./userCopy/UC_ope301-00000v_0061.jp2"/>
+            </METS:file>
+            <METS:file SEQ="0062" CREATED="2014-07-02T14:07:40Z" ID="JP220062" MIMETYPE="image/jp2"
+                       CHECKSUM="fa3d0ca4f1c3cd13d146a7bbbe9daf96" CHECKSUMTYPE="MD5" SIZE="1434210">
+                <METS:FLocat LOCTYPE="URL" xlink:href="./userCopy/UC_ope301-00000v_0062.jp2"/>
+            </METS:file>
+            <METS:file SEQ="0063" CREATED="2014-07-02T14:07:40Z" ID="JP220063" MIMETYPE="image/jp2"
+                       CHECKSUM="38043f39e797c6d6718cd31681d56875" CHECKSUMTYPE="MD5" SIZE="1416465">
+                <METS:FLocat LOCTYPE="URL" xlink:href="./userCopy/UC_ope301-00000v_0063.jp2"/>
+            </METS:file>
+            <METS:file SEQ="0064" CREATED="2014-07-02T14:07:40Z" ID="JP220064" MIMETYPE="image/jp2"
+                       CHECKSUM="6820067de273160de2551b2d6f19c856" CHECKSUMTYPE="MD5" SIZE="1435548">
+                <METS:FLocat LOCTYPE="URL" xlink:href="./userCopy/UC_ope301-00000v_0064.jp2"/>
+            </METS:file>
+            <METS:file SEQ="0065" CREATED="2014-07-02T14:07:40Z" ID="JP220065" MIMETYPE="image/jp2"
+                       CHECKSUM="d534575c9209e9d9116467a492284033" CHECKSUMTYPE="MD5" SIZE="1418862">
+                <METS:FLocat LOCTYPE="URL" xlink:href="./userCopy/UC_ope301-00000v_0065.jp2"/>
+            </METS:file>
+            <METS:file SEQ="0066" CREATED="2014-07-02T14:07:40Z" ID="JP220066" MIMETYPE="image/jp2"
+                       CHECKSUM="5b05d4e89f4048878165320a461edf3e" CHECKSUMTYPE="MD5" SIZE="1424452">
+                <METS:FLocat LOCTYPE="URL" xlink:href="./userCopy/UC_ope301-00000v_0066.jp2"/>
+            </METS:file>
+            <METS:file SEQ="0067" CREATED="2014-07-02T14:07:40Z" ID="JP220067" MIMETYPE="image/jp2"
+                       CHECKSUM="5bee9df6e425ab154f1083d51b55b2ec" CHECKSUMTYPE="MD5" SIZE="1430553">
+                <METS:FLocat LOCTYPE="URL" xlink:href="./userCopy/UC_ope301-00000v_0067.jp2"/>
+            </METS:file>
+            <METS:file SEQ="0068" CREATED="2014-07-02T14:07:40Z" ID="JP220068" MIMETYPE="image/jp2"
+                       CHECKSUM="1322c55e48c8aae98c16d2b5ea654493" CHECKSUMTYPE="MD5" SIZE="1432852">
+                <METS:FLocat LOCTYPE="URL" xlink:href="./userCopy/UC_ope301-00000v_0068.jp2"/>
+            </METS:file>
+            <METS:file SEQ="0069" CREATED="2014-07-02T14:07:40Z" ID="JP220069" MIMETYPE="image/jp2"
+                       CHECKSUM="1bd40b501a5df93afffc519eb3ef771e" CHECKSUMTYPE="MD5" SIZE="1418596">
+                <METS:FLocat LOCTYPE="URL" xlink:href="./userCopy/UC_ope301-00000v_0069.jp2"/>
+            </METS:file>
+            <METS:file SEQ="0070" CREATED="2014-07-02T14:07:40Z" ID="JP220070" MIMETYPE="image/jp2"
+                       CHECKSUM="d3427bf78be5ac56a9e320af2b8c43ad" CHECKSUMTYPE="MD5" SIZE="1431492">
+                <METS:FLocat LOCTYPE="URL" xlink:href="./userCopy/UC_ope301-00000v_0070.jp2"/>
+            </METS:file>
+            <METS:file SEQ="0071" CREATED="2014-07-02T14:07:40Z" ID="JP220071" MIMETYPE="image/jp2"
+                       CHECKSUM="534d589a7a4f6a4ca6e5abf0bf8be492" CHECKSUMTYPE="MD5" SIZE="1413392">
+                <METS:FLocat LOCTYPE="URL" xlink:href="./userCopy/UC_ope301-00000v_0071.jp2"/>
+            </METS:file>
+            <METS:file SEQ="0072" CREATED="2014-07-02T14:07:40Z" ID="JP220072" MIMETYPE="image/jp2"
+                       CHECKSUM="e9c2ee40951c6c3e0a3e281c7d740400" CHECKSUMTYPE="MD5" SIZE="1432693">
+                <METS:FLocat LOCTYPE="URL" xlink:href="./userCopy/UC_ope301-00000v_0072.jp2"/>
+            </METS:file>
+            <METS:file SEQ="0073" CREATED="2014-07-02T14:07:40Z" ID="JP220073" MIMETYPE="image/jp2"
+                       CHECKSUM="7f6edac4f253a50efeb02822f827f6d8" CHECKSUMTYPE="MD5" SIZE="1424782">
+                <METS:FLocat LOCTYPE="URL" xlink:href="./userCopy/UC_ope301-00000v_0073.jp2"/>
+            </METS:file>
+            <METS:file SEQ="0074" CREATED="2014-07-02T14:07:40Z" ID="JP220074" MIMETYPE="image/jp2"
+                       CHECKSUM="a0fd07560d1263d97986efce3393aaa5" CHECKSUMTYPE="MD5" SIZE="1425033">
+                <METS:FLocat LOCTYPE="URL" xlink:href="./userCopy/UC_ope301-00000v_0074.jp2"/>
+            </METS:file>
+            <METS:file SEQ="0075" CREATED="2014-07-02T14:07:40Z" ID="JP220075" MIMETYPE="image/jp2"
+                       CHECKSUM="6d810e6ab23d6138c0633fb4f0d62a45" CHECKSUMTYPE="MD5" SIZE="1427822">
+                <METS:FLocat LOCTYPE="URL" xlink:href="./userCopy/UC_ope301-00000v_0075.jp2"/>
+            </METS:file>
+            <METS:file SEQ="0076" CREATED="2014-07-02T14:07:40Z" ID="JP220076" MIMETYPE="image/jp2"
+                       CHECKSUM="df773234cbf12dfade21fa79d386baf9" CHECKSUMTYPE="MD5" SIZE="1427124">
+                <METS:FLocat LOCTYPE="URL" xlink:href="./userCopy/UC_ope301-00000v_0076.jp2"/>
+            </METS:file>
+        </METS:fileGrp>
+        <METS:fileGrp ID="TXTGRP" USE="Text">
+            <METS:file SEQ="0057" CREATED="2014-07-02T14:07:35Z" ID="TXT30057" MIMETYPE="text/plain"
+                       CHECKSUM="e089169be91fe33242d5a683309fafd5" CHECKSUMTYPE="MD5" SIZE="6118">
+                <METS:FLocat LOCTYPE="URL" xlink:href="./TXT/TXT_ope301-00000v_0057.txt"/>
+            </METS:file>
+            <METS:file SEQ="0058" CREATED="2014-07-02T14:07:35Z" ID="TXT30058" MIMETYPE="text/plain"
+                       CHECKSUM="13d21ffe38458264ae92af21115c83ce" CHECKSUMTYPE="MD5" SIZE="7014">
+                <METS:FLocat LOCTYPE="URL" xlink:href="./TXT/TXT_ope301-00000v_0058.txt"/>
+            </METS:file>
+            <METS:file SEQ="0059" CREATED="2014-07-02T14:07:35Z" ID="TXT30059" MIMETYPE="text/plain"
+                       CHECKSUM="9ab7adaa1f4ae1a9e0a240080d217584" CHECKSUMTYPE="MD5" SIZE="6774">
+                <METS:FLocat LOCTYPE="URL" xlink:href="./TXT/TXT_ope301-00000v_0059.txt"/>
+            </METS:file>
+            <METS:file SEQ="0060" CREATED="2014-07-02T14:07:35Z" ID="TXT30060" MIMETYPE="text/plain"
+                       CHECKSUM="a47792c35b62fb244a4e4bb03b94a4af" CHECKSUMTYPE="MD5" SIZE="6242">
+                <METS:FLocat LOCTYPE="URL" xlink:href="./TXT/TXT_ope301-00000v_0060.txt"/>
+            </METS:file>
+            <METS:file SEQ="0061" CREATED="2014-07-02T14:07:35Z" ID="TXT30061" MIMETYPE="text/plain"
+                       CHECKSUM="f6fbe95e83335d8ed81582fbff95110a" CHECKSUMTYPE="MD5" SIZE="6918">
+                <METS:FLocat LOCTYPE="URL" xlink:href="./TXT/TXT_ope301-00000v_0061.txt"/>
+            </METS:file>
+            <METS:file SEQ="0062" CREATED="2014-07-02T14:07:35Z" ID="TXT30062" MIMETYPE="text/plain"
+                       CHECKSUM="a807c254dab82a2c81db01d647fb43b9" CHECKSUMTYPE="MD5" SIZE="6482">
+                <METS:FLocat LOCTYPE="URL" xlink:href="./TXT/TXT_ope301-00000v_0062.txt"/>
+            </METS:file>
+            <METS:file SEQ="0063" CREATED="2014-07-02T14:07:35Z" ID="TXT30063" MIMETYPE="text/plain"
+                       CHECKSUM="a4576a904af48bb0595e4c2502ad1208" CHECKSUMTYPE="MD5" SIZE="6479">
+                <METS:FLocat LOCTYPE="URL" xlink:href="./TXT/TXT_ope301-00000v_0063.txt"/>
+            </METS:file>
+            <METS:file SEQ="0064" CREATED="2014-07-02T14:07:35Z" ID="TXT30064" MIMETYPE="text/plain"
+                       CHECKSUM="32962c495339b7419d61b4c96896448a" CHECKSUMTYPE="MD5" SIZE="6317">
+                <METS:FLocat LOCTYPE="URL" xlink:href="./TXT/TXT_ope301-00000v_0064.txt"/>
+            </METS:file>
+            <METS:file SEQ="0065" CREATED="2014-07-02T14:07:35Z" ID="TXT30065" MIMETYPE="text/plain"
+                       CHECKSUM="30c3ffcabb0d257021036634fd6a73b2" CHECKSUMTYPE="MD5" SIZE="5910">
+                <METS:FLocat LOCTYPE="URL" xlink:href="./TXT/TXT_ope301-00000v_0065.txt"/>
+            </METS:file>
+            <METS:file SEQ="0066" CREATED="2014-07-02T14:07:35Z" ID="TXT30066" MIMETYPE="text/plain"
+                       CHECKSUM="36701dec92103b7459c9f16b3aadef41" CHECKSUMTYPE="MD5" SIZE="5459">
+                <METS:FLocat LOCTYPE="URL" xlink:href="./TXT/TXT_ope301-00000v_0066.txt"/>
+            </METS:file>
+            <METS:file SEQ="0067" CREATED="2014-07-02T14:07:35Z" ID="TXT30067" MIMETYPE="text/plain"
+                       CHECKSUM="91bcf28200013f7a9d552609f5bc0368" CHECKSUMTYPE="MD5" SIZE="7196">
+                <METS:FLocat LOCTYPE="URL" xlink:href="./TXT/TXT_ope301-00000v_0067.txt"/>
+            </METS:file>
+            <METS:file SEQ="0068" CREATED="2014-07-02T14:07:35Z" ID="TXT30068" MIMETYPE="text/plain"
+                       CHECKSUM="d173fe9f40b9a886658a95e2aa6428d3" CHECKSUMTYPE="MD5" SIZE="8719">
+                <METS:FLocat LOCTYPE="URL" xlink:href="./TXT/TXT_ope301-00000v_0068.txt"/>
+            </METS:file>
+            <METS:file SEQ="0069" CREATED="2014-07-02T14:07:35Z" ID="TXT30069" MIMETYPE="text/plain"
+                       CHECKSUM="7cf5123a32eeff98d996b1733f7ffadb" CHECKSUMTYPE="MD5" SIZE="8672">
+                <METS:FLocat LOCTYPE="URL" xlink:href="./TXT/TXT_ope301-00000v_0069.txt"/>
+            </METS:file>
+            <METS:file SEQ="0070" CREATED="2014-07-02T14:07:35Z" ID="TXT30070" MIMETYPE="text/plain"
+                       CHECKSUM="d2fef0fd8cc78b8f5f3f38962de58aa0" CHECKSUMTYPE="MD5" SIZE="8441">
+                <METS:FLocat LOCTYPE="URL" xlink:href="./TXT/TXT_ope301-00000v_0070.txt"/>
+            </METS:file>
+            <METS:file SEQ="0071" CREATED="2014-07-02T14:07:35Z" ID="TXT30071" MIMETYPE="text/plain"
+                       CHECKSUM="e976b9cef35ea730c5e1ca89f01bd58f" CHECKSUMTYPE="MD5" SIZE="7891">
+                <METS:FLocat LOCTYPE="URL" xlink:href="./TXT/TXT_ope301-00000v_0071.txt"/>
+            </METS:file>
+            <METS:file SEQ="0072" CREATED="2014-07-02T14:07:35Z" ID="TXT30072" MIMETYPE="text/plain"
+                       CHECKSUM="03aecb6d3536d597480b45e465821255" CHECKSUMTYPE="MD5" SIZE="8468">
+                <METS:FLocat LOCTYPE="URL" xlink:href="./TXT/TXT_ope301-00000v_0072.txt"/>
+            </METS:file>
+            <METS:file SEQ="0073" CREATED="2014-07-02T14:07:35Z" ID="TXT30073" MIMETYPE="text/plain"
+                       CHECKSUM="69ac6ad3e084065637a0594de7349894" CHECKSUMTYPE="MD5" SIZE="8510">
+                <METS:FLocat LOCTYPE="URL" xlink:href="./TXT/TXT_ope301-00000v_0073.txt"/>
+            </METS:file>
+            <METS:file SEQ="0074" CREATED="2014-07-02T14:07:35Z" ID="TXT30074" MIMETYPE="text/plain"
+                       CHECKSUM="35a1e8aac340f4f70eb8baa0ab087d1f" CHECKSUMTYPE="MD5" SIZE="7734">
+                <METS:FLocat LOCTYPE="URL" xlink:href="./TXT/TXT_ope301-00000v_0074.txt"/>
+            </METS:file>
+            <METS:file SEQ="0075" CREATED="2014-07-02T14:07:35Z" ID="TXT30075" MIMETYPE="text/plain"
+                       CHECKSUM="0711aa081900d44c509e48a962c22ec7" CHECKSUMTYPE="MD5" SIZE="7797">
+                <METS:FLocat LOCTYPE="URL" xlink:href="./TXT/TXT_ope301-00000v_0075.txt"/>
+            </METS:file>
+            <METS:file SEQ="0076" CREATED="2014-07-02T14:07:35Z" ID="TXT30076" MIMETYPE="text/plain"
+                       CHECKSUM="90b4243152bcba29a02fde5ce03b8316" CHECKSUMTYPE="MD5" SIZE="4341">
+                <METS:FLocat LOCTYPE="URL" xlink:href="./TXT/TXT_ope301-00000v_0076.txt"/>
+            </METS:file>
+        </METS:fileGrp>
+        <METS:fileGrp ID="ALTOGRP" USE="Layout">
+            <METS:file SEQ="0057" CREATED="2014-07-02T13:58:53Z" ID="XML40057" MIMETYPE="text/xml"
+                       CHECKSUM="08906dbf680ac4589281ba98c36dad80" CHECKSUMTYPE="MD5" SIZE="171331">
+                <METS:FLocat LOCTYPE="URL" xlink:href="./ALTO/ALTO_ope301-00000v_0057.xml"/>
+            </METS:file>
+            <METS:file SEQ="0058" CREATED="2014-07-02T13:58:53Z" ID="XML40058" MIMETYPE="text/xml"
+                       CHECKSUM="cee060d70b21a02e27e5c20507771b48" CHECKSUMTYPE="MD5" SIZE="190994">
+                <METS:FLocat LOCTYPE="URL" xlink:href="./ALTO/ALTO_ope301-00000v_0058.xml"/>
+            </METS:file>
+            <METS:file SEQ="0059" CREATED="2014-07-02T13:58:53Z" ID="XML40059" MIMETYPE="text/xml"
+                       CHECKSUM="e68b12564d793c255da801958d128818" CHECKSUMTYPE="MD5" SIZE="193339">
+                <METS:FLocat LOCTYPE="URL" xlink:href="./ALTO/ALTO_ope301-00000v_0059.xml"/>
+            </METS:file>
+            <METS:file SEQ="0060" CREATED="2014-07-02T13:58:53Z" ID="XML40060" MIMETYPE="text/xml"
+                       CHECKSUM="1d01789bdea20a9d002bcc0eea497857" CHECKSUMTYPE="MD5" SIZE="207171">
+                <METS:FLocat LOCTYPE="URL" xlink:href="./ALTO/ALTO_ope301-00000v_0060.xml"/>
+            </METS:file>
+            <METS:file SEQ="0061" CREATED="2014-07-02T13:58:53Z" ID="XML40061" MIMETYPE="text/xml"
+                       CHECKSUM="8414bc1ac2413a1f0f9f456bb1717852" CHECKSUMTYPE="MD5" SIZE="204213">
+                <METS:FLocat LOCTYPE="URL" xlink:href="./ALTO/ALTO_ope301-00000v_0061.xml"/>
+            </METS:file>
+            <METS:file SEQ="0062" CREATED="2014-07-02T13:58:53Z" ID="XML40062" MIMETYPE="text/xml"
+                       CHECKSUM="1e0c328c4713edb3a832a01e40fe1b3f" CHECKSUMTYPE="MD5" SIZE="185458">
+                <METS:FLocat LOCTYPE="URL" xlink:href="./ALTO/ALTO_ope301-00000v_0062.xml"/>
+            </METS:file>
+            <METS:file SEQ="0063" CREATED="2014-07-02T13:58:53Z" ID="XML40063" MIMETYPE="text/xml"
+                       CHECKSUM="c91c9a4c75dca78ca72d2c21eb50aaaf" CHECKSUMTYPE="MD5" SIZE="186565">
+                <METS:FLocat LOCTYPE="URL" xlink:href="./ALTO/ALTO_ope301-00000v_0063.xml"/>
+            </METS:file>
+            <METS:file SEQ="0064" CREATED="2014-07-02T13:58:53Z" ID="XML40064" MIMETYPE="text/xml"
+                       CHECKSUM="45b99a034eeaa09bfbfe61fd2a38b8e4" CHECKSUMTYPE="MD5" SIZE="181503">
+                <METS:FLocat LOCTYPE="URL" xlink:href="./ALTO/ALTO_ope301-00000v_0064.xml"/>
+            </METS:file>
+            <METS:file SEQ="0065" CREATED="2014-07-02T13:58:53Z" ID="XML40065" MIMETYPE="text/xml"
+                       CHECKSUM="a365d5c466da6d85ec0bc9239b5284cb" CHECKSUMTYPE="MD5" SIZE="172934">
+                <METS:FLocat LOCTYPE="URL" xlink:href="./ALTO/ALTO_ope301-00000v_0065.xml"/>
+            </METS:file>
+            <METS:file SEQ="0066" CREATED="2014-07-02T13:58:53Z" ID="XML40066" MIMETYPE="text/xml"
+                       CHECKSUM="046b97edc7ed43188867a63ec5fda6c3" CHECKSUMTYPE="MD5" SIZE="208856">
+                <METS:FLocat LOCTYPE="URL" xlink:href="./ALTO/ALTO_ope301-00000v_0066.xml"/>
+            </METS:file>
+            <METS:file SEQ="0067" CREATED="2014-07-02T13:58:53Z" ID="XML40067" MIMETYPE="text/xml"
+                       CHECKSUM="7bff5e52f5db3bc0caf0a156dc58d84c" CHECKSUMTYPE="MD5" SIZE="202386">
+                <METS:FLocat LOCTYPE="URL" xlink:href="./ALTO/ALTO_ope301-00000v_0067.xml"/>
+            </METS:file>
+            <METS:file SEQ="0068" CREATED="2014-07-02T13:58:53Z" ID="XML40068" MIMETYPE="text/xml"
+                       CHECKSUM="238fd61f5357cb9948ff3ac3923abb8e" CHECKSUMTYPE="MD5" SIZE="243028">
+                <METS:FLocat LOCTYPE="URL" xlink:href="./ALTO/ALTO_ope301-00000v_0068.xml"/>
+            </METS:file>
+            <METS:file SEQ="0069" CREATED="2014-07-02T13:58:53Z" ID="XML40069" MIMETYPE="text/xml"
+                       CHECKSUM="4c2e82c9c1d4bdeae14f78bb15d6e9f5" CHECKSUMTYPE="MD5" SIZE="249530">
+                <METS:FLocat LOCTYPE="URL" xlink:href="./ALTO/ALTO_ope301-00000v_0069.xml"/>
+            </METS:file>
+            <METS:file SEQ="0070" CREATED="2014-07-02T13:58:53Z" ID="XML40070" MIMETYPE="text/xml"
+                       CHECKSUM="8666a0d79a5ac1c40ca46e6be0d706d0" CHECKSUMTYPE="MD5" SIZE="240610">
+                <METS:FLocat LOCTYPE="URL" xlink:href="./ALTO/ALTO_ope301-00000v_0070.xml"/>
+            </METS:file>
+            <METS:file SEQ="0071" CREATED="2014-07-02T13:58:53Z" ID="XML40071" MIMETYPE="text/xml"
+                       CHECKSUM="cf4c7b25e911ecca0063a96159cb81ea" CHECKSUMTYPE="MD5" SIZE="224203">
+                <METS:FLocat LOCTYPE="URL" xlink:href="./ALTO/ALTO_ope301-00000v_0071.xml"/>
+            </METS:file>
+            <METS:file SEQ="0072" CREATED="2014-07-02T13:58:53Z" ID="XML40072" MIMETYPE="text/xml"
+                       CHECKSUM="fac0432fe2c39d4deab6b485f39c4886" CHECKSUMTYPE="MD5" SIZE="244440">
+                <METS:FLocat LOCTYPE="URL" xlink:href="./ALTO/ALTO_ope301-00000v_0072.xml"/>
+            </METS:file>
+            <METS:file SEQ="0073" CREATED="2014-07-02T13:58:53Z" ID="XML40073" MIMETYPE="text/xml"
+                       CHECKSUM="18685f82c3ff4bcf4d918c59319c5bb9" CHECKSUMTYPE="MD5" SIZE="241298">
+                <METS:FLocat LOCTYPE="URL" xlink:href="./ALTO/ALTO_ope301-00000v_0073.xml"/>
+            </METS:file>
+            <METS:file SEQ="0074" CREATED="2014-07-02T13:58:53Z" ID="XML40074" MIMETYPE="text/xml"
+                       CHECKSUM="4e981a647365622be74e4d77af2cbcb7" CHECKSUMTYPE="MD5" SIZE="224459">
+                <METS:FLocat LOCTYPE="URL" xlink:href="./ALTO/ALTO_ope301-00000v_0074.xml"/>
+            </METS:file>
+            <METS:file SEQ="0075" CREATED="2014-07-02T13:58:53Z" ID="XML40075" MIMETYPE="text/xml"
+                       CHECKSUM="c9b5a05c1e0df8bcbe2492b5ee00bc32" CHECKSUMTYPE="MD5" SIZE="223634">
+                <METS:FLocat LOCTYPE="URL" xlink:href="./ALTO/ALTO_ope301-00000v_0075.xml"/>
+            </METS:file>
+            <METS:file SEQ="0076" CREATED="2014-07-02T13:58:53Z" ID="XML40076" MIMETYPE="text/xml"
+                       CHECKSUM="cfb649373617d4de0caeaac7630aca2d" CHECKSUMTYPE="MD5" SIZE="133949">
+                <METS:FLocat LOCTYPE="URL" xlink:href="./ALTO/ALTO_ope301-00000v_0076.xml"/>
+            </METS:file>
+        </METS:fileGrp>
+        <METS:fileGrp ID="TECHMDGRP" USE="Technical Metadata">
+            <METS:file SEQ="0057" CREATED="2014-11-18T12:06:14Z" ID="XML50057" MIMETYPE="text/xml"
+                       CHECKSUM="0e355beb4424fd3593f8a5305551aee9" CHECKSUMTYPE="MD5" SIZE="24037">
+                <METS:FLocat LOCTYPE="URL" xlink:href="./amdSec/AMD_METS_ope301-00000v_0057.xml"/>
+            </METS:file>
+            <METS:file SEQ="0058" CREATED="2014-11-18T12:06:14Z" ID="XML50058" MIMETYPE="text/xml"
+                       CHECKSUM="b86f3e47b1665805980d11b6be952f1e" CHECKSUMTYPE="MD5" SIZE="24037">
+                <METS:FLocat LOCTYPE="URL" xlink:href="./amdSec/AMD_METS_ope301-00000v_0058.xml"/>
+            </METS:file>
+            <METS:file SEQ="0059" CREATED="2014-11-18T12:06:14Z" ID="XML50059" MIMETYPE="text/xml"
+                       CHECKSUM="179125be8c4ceebaaea97494ec2844a8" CHECKSUMTYPE="MD5" SIZE="24037">
+                <METS:FLocat LOCTYPE="URL" xlink:href="./amdSec/AMD_METS_ope301-00000v_0059.xml"/>
+            </METS:file>
+            <METS:file SEQ="0060" CREATED="2014-11-18T12:06:15Z" ID="XML50060" MIMETYPE="text/xml"
+                       CHECKSUM="b727543431d91a4a7b857dd32f93ac47" CHECKSUMTYPE="MD5" SIZE="24037">
+                <METS:FLocat LOCTYPE="URL" xlink:href="./amdSec/AMD_METS_ope301-00000v_0060.xml"/>
+            </METS:file>
+            <METS:file SEQ="0061" CREATED="2014-11-18T12:06:15Z" ID="XML50061" MIMETYPE="text/xml"
+                       CHECKSUM="5836f34eafe2b691f5031dcac596c511" CHECKSUMTYPE="MD5" SIZE="24037">
+                <METS:FLocat LOCTYPE="URL" xlink:href="./amdSec/AMD_METS_ope301-00000v_0061.xml"/>
+            </METS:file>
+            <METS:file SEQ="0062" CREATED="2014-11-18T12:06:15Z" ID="XML50062" MIMETYPE="text/xml"
+                       CHECKSUM="f009b5e1e2522399763db2f1c08016b1" CHECKSUMTYPE="MD5" SIZE="24037">
+                <METS:FLocat LOCTYPE="URL" xlink:href="./amdSec/AMD_METS_ope301-00000v_0062.xml"/>
+            </METS:file>
+            <METS:file SEQ="0063" CREATED="2014-11-18T12:06:15Z" ID="XML50063" MIMETYPE="text/xml"
+                       CHECKSUM="0766ad67c41bcf4c3dffbf7be347d473" CHECKSUMTYPE="MD5" SIZE="24037">
+                <METS:FLocat LOCTYPE="URL" xlink:href="./amdSec/AMD_METS_ope301-00000v_0063.xml"/>
+            </METS:file>
+            <METS:file SEQ="0064" CREATED="2014-11-18T12:06:15Z" ID="XML50064" MIMETYPE="text/xml"
+                       CHECKSUM="ca0306dd3bc9a8c4d21e922f85647e8d" CHECKSUMTYPE="MD5" SIZE="24037">
+                <METS:FLocat LOCTYPE="URL" xlink:href="./amdSec/AMD_METS_ope301-00000v_0064.xml"/>
+            </METS:file>
+            <METS:file SEQ="0065" CREATED="2014-11-18T12:06:15Z" ID="XML50065" MIMETYPE="text/xml"
+                       CHECKSUM="7311e88ebc2485e7f82a676044842dcf" CHECKSUMTYPE="MD5" SIZE="24037">
+                <METS:FLocat LOCTYPE="URL" xlink:href="./amdSec/AMD_METS_ope301-00000v_0065.xml"/>
+            </METS:file>
+            <METS:file SEQ="0066" CREATED="2014-11-18T12:06:15Z" ID="XML50066" MIMETYPE="text/xml"
+                       CHECKSUM="7626ac5c7437cdb66553ee31fdcc2320" CHECKSUMTYPE="MD5" SIZE="24037">
+                <METS:FLocat LOCTYPE="URL" xlink:href="./amdSec/AMD_METS_ope301-00000v_0066.xml"/>
+            </METS:file>
+            <METS:file SEQ="0067" CREATED="2014-11-18T12:06:15Z" ID="XML50067" MIMETYPE="text/xml"
+                       CHECKSUM="841a22337e41fe398fad11e1a660efe9" CHECKSUMTYPE="MD5" SIZE="24037">
+                <METS:FLocat LOCTYPE="URL" xlink:href="./amdSec/AMD_METS_ope301-00000v_0067.xml"/>
+            </METS:file>
+            <METS:file SEQ="0068" CREATED="2014-11-18T12:06:15Z" ID="XML50068" MIMETYPE="text/xml"
+                       CHECKSUM="a341a7facb34b8d14d2b95b344a533e2" CHECKSUMTYPE="MD5" SIZE="24037">
+                <METS:FLocat LOCTYPE="URL" xlink:href="./amdSec/AMD_METS_ope301-00000v_0068.xml"/>
+            </METS:file>
+            <METS:file SEQ="0069" CREATED="2014-11-18T12:06:15Z" ID="XML50069" MIMETYPE="text/xml"
+                       CHECKSUM="aea52c136e6a94d47860661e63e3dba7" CHECKSUMTYPE="MD5" SIZE="24037">
+                <METS:FLocat LOCTYPE="URL" xlink:href="./amdSec/AMD_METS_ope301-00000v_0069.xml"/>
+            </METS:file>
+            <METS:file SEQ="0070" CREATED="2014-11-18T12:06:15Z" ID="XML50070" MIMETYPE="text/xml"
+                       CHECKSUM="379a9171c94e5bd8eb80b02f4fc2158c" CHECKSUMTYPE="MD5" SIZE="24037">
+                <METS:FLocat LOCTYPE="URL" xlink:href="./amdSec/AMD_METS_ope301-00000v_0070.xml"/>
+            </METS:file>
+            <METS:file SEQ="0071" CREATED="2014-11-18T12:06:15Z" ID="XML50071" MIMETYPE="text/xml"
+                       CHECKSUM="e2c1e74097aef52b1473790f76d7b63d" CHECKSUMTYPE="MD5" SIZE="24037">
+                <METS:FLocat LOCTYPE="URL" xlink:href="./amdSec/AMD_METS_ope301-00000v_0071.xml"/>
+            </METS:file>
+            <METS:file SEQ="0072" CREATED="2014-11-18T12:06:15Z" ID="XML50072" MIMETYPE="text/xml"
+                       CHECKSUM="da134669411fc25fc2ffd0d00471d564" CHECKSUMTYPE="MD5" SIZE="24037">
+                <METS:FLocat LOCTYPE="URL" xlink:href="./amdSec/AMD_METS_ope301-00000v_0072.xml"/>
+            </METS:file>
+            <METS:file SEQ="0073" CREATED="2014-11-18T12:06:15Z" ID="XML50073" MIMETYPE="text/xml"
+                       CHECKSUM="804c0f592ceb9feb368c8a09e659faf0" CHECKSUMTYPE="MD5" SIZE="24037">
+                <METS:FLocat LOCTYPE="URL" xlink:href="./amdSec/AMD_METS_ope301-00000v_0073.xml"/>
+            </METS:file>
+            <METS:file SEQ="0074" CREATED="2014-11-18T12:06:15Z" ID="XML50074" MIMETYPE="text/xml"
+                       CHECKSUM="4bb6eabc2d693dd638e490ade60d6894" CHECKSUMTYPE="MD5" SIZE="24037">
+                <METS:FLocat LOCTYPE="URL" xlink:href="./amdSec/AMD_METS_ope301-00000v_0074.xml"/>
+            </METS:file>
+            <METS:file SEQ="0075" CREATED="2014-11-18T12:06:15Z" ID="XML50075" MIMETYPE="text/xml"
+                       CHECKSUM="0cb0f4d312850aa924ea802009168b09" CHECKSUMTYPE="MD5" SIZE="24037">
+                <METS:FLocat LOCTYPE="URL" xlink:href="./amdSec/AMD_METS_ope301-00000v_0075.xml"/>
+            </METS:file>
+            <METS:file SEQ="0076" CREATED="2014-11-18T12:06:15Z" ID="XML50076" MIMETYPE="text/xml"
+                       CHECKSUM="5bcdfac0760d296e203ddbad11eeab53" CHECKSUMTYPE="MD5" SIZE="24037">
+                <METS:FLocat LOCTYPE="URL" xlink:href="./amdSec/AMD_METS_ope301-00000v_0076.xml"/>
+            </METS:file>
+        </METS:fileGrp>
+    </METS:fileSec>
+    <METS:structMap LABEL="Physical_Structure" TYPE="PHYSICAL">
+        <METS:div ID="DIV_P_0000" DMDID="MODSMD_ISSUE_0001" ORDER="0" TYPE="periodical"
+                  LABEL="Zeitschrift für Kranken-und Humanitätsanstalten, 4, 10.03.1911">
+            <METS:div ID="PageID_0057" ORDER="0057" ORDERLABEL="[1]" TYPE="TitlePage">
+                <METS:fptr FILEID="JP210057"/>
+                <METS:fptr FILEID="JP220057"/>
+                <METS:fptr FILEID="TXT30057"/>
+                <METS:fptr FILEID="XML40057"/>
+                <METS:fptr FILEID="XML50057"/>
+            </METS:div>
+            <METS:div ID="PageID_0058" ORDER="0058" ORDERLABEL="2" TYPE="NormalPage">
+                <METS:fptr FILEID="JP210058"/>
+                <METS:fptr FILEID="JP220058"/>
+                <METS:fptr FILEID="TXT30058"/>
+                <METS:fptr FILEID="XML40058"/>
+                <METS:fptr FILEID="XML50058"/>
+            </METS:div>
+            <METS:div ID="PageID_0059" ORDER="0059" ORDERLABEL="3" TYPE="NormalPage">
+                <METS:fptr FILEID="JP210059"/>
+                <METS:fptr FILEID="JP220059"/>
+                <METS:fptr FILEID="TXT30059"/>
+                <METS:fptr FILEID="XML40059"/>
+                <METS:fptr FILEID="XML50059"/>
+            </METS:div>
+            <METS:div ID="PageID_0060" ORDER="0060" ORDERLABEL="4" TYPE="NormalPage">
+                <METS:fptr FILEID="JP210060"/>
+                <METS:fptr FILEID="JP220060"/>
+                <METS:fptr FILEID="TXT30060"/>
+                <METS:fptr FILEID="XML40060"/>
+                <METS:fptr FILEID="XML50060"/>
+            </METS:div>
+            <METS:div ID="PageID_0061" ORDER="0061" ORDERLABEL="5" TYPE="NormalPage">
+                <METS:fptr FILEID="JP210061"/>
+                <METS:fptr FILEID="JP220061"/>
+                <METS:fptr FILEID="TXT30061"/>
+                <METS:fptr FILEID="XML40061"/>
+                <METS:fptr FILEID="XML50061"/>
+            </METS:div>
+            <METS:div ID="PageID_0062" ORDER="0062" ORDERLABEL="6" TYPE="NormalPage">
+                <METS:fptr FILEID="JP210062"/>
+                <METS:fptr FILEID="JP220062"/>
+                <METS:fptr FILEID="TXT30062"/>
+                <METS:fptr FILEID="XML40062"/>
+                <METS:fptr FILEID="XML50062"/>
+            </METS:div>
+            <METS:div ID="PageID_0063" ORDER="0063" ORDERLABEL="7" TYPE="NormalPage">
+                <METS:fptr FILEID="JP210063"/>
+                <METS:fptr FILEID="JP220063"/>
+                <METS:fptr FILEID="TXT30063"/>
+                <METS:fptr FILEID="XML40063"/>
+                <METS:fptr FILEID="XML50063"/>
+            </METS:div>
+            <METS:div ID="PageID_0064" ORDER="0064" ORDERLABEL="8" TYPE="NormalPage">
+                <METS:fptr FILEID="JP210064"/>
+                <METS:fptr FILEID="JP220064"/>
+                <METS:fptr FILEID="TXT30064"/>
+                <METS:fptr FILEID="XML40064"/>
+                <METS:fptr FILEID="XML50064"/>
+            </METS:div>
+            <METS:div ID="PageID_0065" ORDER="0065" ORDERLABEL="9" TYPE="NormalPage">
+                <METS:fptr FILEID="JP210065"/>
+                <METS:fptr FILEID="JP220065"/>
+                <METS:fptr FILEID="TXT30065"/>
+                <METS:fptr FILEID="XML40065"/>
+                <METS:fptr FILEID="XML50065"/>
+            </METS:div>
+            <METS:div ID="PageID_0066" ORDER="0066" ORDERLABEL="10" TYPE="NormalPage">
+                <METS:fptr FILEID="JP210066"/>
+                <METS:fptr FILEID="JP220066"/>
+                <METS:fptr FILEID="TXT30066"/>
+                <METS:fptr FILEID="XML40066"/>
+                <METS:fptr FILEID="XML50066"/>
+            </METS:div>
+            <METS:div ID="PageID_0067" ORDER="0067" ORDERLABEL="11" TYPE="NormalPage">
+                <METS:fptr FILEID="JP210067"/>
+                <METS:fptr FILEID="JP220067"/>
+                <METS:fptr FILEID="TXT30067"/>
+                <METS:fptr FILEID="XML40067"/>
+                <METS:fptr FILEID="XML50067"/>
+            </METS:div>
+            <METS:div ID="PageID_0068" ORDER="0068" ORDERLABEL="12" TYPE="NormalPage">
+                <METS:fptr FILEID="JP210068"/>
+                <METS:fptr FILEID="JP220068"/>
+                <METS:fptr FILEID="TXT30068"/>
+                <METS:fptr FILEID="XML40068"/>
+                <METS:fptr FILEID="XML50068"/>
+            </METS:div>
+            <METS:div ID="PageID_0069" ORDER="0069" ORDERLABEL="13" TYPE="NormalPage">
+                <METS:fptr FILEID="JP210069"/>
+                <METS:fptr FILEID="JP220069"/>
+                <METS:fptr FILEID="TXT30069"/>
+                <METS:fptr FILEID="XML40069"/>
+                <METS:fptr FILEID="XML50069"/>
+            </METS:div>
+            <METS:div ID="PageID_0070" ORDER="0070" ORDERLABEL="14" TYPE="NormalPage">
+                <METS:fptr FILEID="JP210070"/>
+                <METS:fptr FILEID="JP220070"/>
+                <METS:fptr FILEID="TXT30070"/>
+                <METS:fptr FILEID="XML40070"/>
+                <METS:fptr FILEID="XML50070"/>
+            </METS:div>
+            <METS:div ID="PageID_0071" ORDER="0071" ORDERLABEL="15" TYPE="NormalPage">
+                <METS:fptr FILEID="JP210071"/>
+                <METS:fptr FILEID="JP220071"/>
+                <METS:fptr FILEID="TXT30071"/>
+                <METS:fptr FILEID="XML40071"/>
+                <METS:fptr FILEID="XML50071"/>
+            </METS:div>
+            <METS:div ID="PageID_0072" ORDER="0072" ORDERLABEL="16" TYPE="NormalPage">
+                <METS:fptr FILEID="JP210072"/>
+                <METS:fptr FILEID="JP220072"/>
+                <METS:fptr FILEID="TXT30072"/>
+                <METS:fptr FILEID="XML40072"/>
+                <METS:fptr FILEID="XML50072"/>
+            </METS:div>
+            <METS:div ID="PageID_0073" ORDER="0073" ORDERLABEL="17" TYPE="NormalPage">
+                <METS:fptr FILEID="JP210073"/>
+                <METS:fptr FILEID="JP220073"/>
+                <METS:fptr FILEID="TXT30073"/>
+                <METS:fptr FILEID="XML40073"/>
+                <METS:fptr FILEID="XML50073"/>
+            </METS:div>
+            <METS:div ID="PageID_0074" ORDER="0074" ORDERLABEL="18" TYPE="NormalPage">
+                <METS:fptr FILEID="JP210074"/>
+                <METS:fptr FILEID="JP220074"/>
+                <METS:fptr FILEID="TXT30074"/>
+                <METS:fptr FILEID="XML40074"/>
+                <METS:fptr FILEID="XML50074"/>
+            </METS:div>
+            <METS:div ID="PageID_0075" ORDER="0075" ORDERLABEL="19" TYPE="NormalPage">
+                <METS:fptr FILEID="JP210075"/>
+                <METS:fptr FILEID="JP220075"/>
+                <METS:fptr FILEID="TXT30075"/>
+                <METS:fptr FILEID="XML40075"/>
+                <METS:fptr FILEID="XML50075"/>
+            </METS:div>
+            <METS:div ID="PageID_0076" ORDER="0076" ORDERLABEL="20" TYPE="NormalPage">
+                <METS:fptr FILEID="JP210076"/>
+                <METS:fptr FILEID="JP220076"/>
+                <METS:fptr FILEID="TXT30076"/>
+                <METS:fptr FILEID="XML40076"/>
+                <METS:fptr FILEID="XML50076"/>
+            </METS:div>
+        </METS:div>
+    </METS:structMap>
+    <METS:structMap LABEL="Logical_Structure" TYPE="LOGICAL">
+        <METS:div LABEL="Zeitschrift für Kranken-und Humanitätsanstalten" TYPE="PERIODICAL_TITLE" ID="TITLE_0001"
+                  DMDID="MODSMD_TITLE_0001">
+            <METS:div LABEL="" TYPE="PERIODICAL_VOLUME" ID="VOLUME_0001" DMDID="MODSMD_VOLUME_0001">
+                <METS:div LABEL="Zeitschrift für Kranken-und Humanitätsanstalten" TYPE="ISSUE" ID="ISSUE_0001"
+                          DMDID="MODSMD_ISSUE_0001"/>
+            </METS:div>
+        </METS:div>
+    </METS:structMap>
+    <METS:structLink>
+        <METS:smLink xlink:from="ISSUE_0001" xlink:to="PageID_0057"/>
+        <METS:smLink xlink:from="ISSUE_0001" xlink:to="PageID_0058"/>
+        <METS:smLink xlink:from="ISSUE_0001" xlink:to="PageID_0059"/>
+        <METS:smLink xlink:from="ISSUE_0001" xlink:to="PageID_0060"/>
+        <METS:smLink xlink:from="ISSUE_0001" xlink:to="PageID_0061"/>
+        <METS:smLink xlink:from="ISSUE_0001" xlink:to="PageID_0062"/>
+        <METS:smLink xlink:from="ISSUE_0001" xlink:to="PageID_0063"/>
+        <METS:smLink xlink:from="ISSUE_0001" xlink:to="PageID_0064"/>
+        <METS:smLink xlink:from="ISSUE_0001" xlink:to="PageID_0065"/>
+        <METS:smLink xlink:from="ISSUE_0001" xlink:to="PageID_0066"/>
+        <METS:smLink xlink:from="ISSUE_0001" xlink:to="PageID_0067"/>
+        <METS:smLink xlink:from="ISSUE_0001" xlink:to="PageID_0068"/>
+        <METS:smLink xlink:from="ISSUE_0001" xlink:to="PageID_0069"/>
+        <METS:smLink xlink:from="ISSUE_0001" xlink:to="PageID_0070"/>
+        <METS:smLink xlink:from="ISSUE_0001" xlink:to="PageID_0071"/>
+        <METS:smLink xlink:from="ISSUE_0001" xlink:to="PageID_0072"/>
+        <METS:smLink xlink:from="ISSUE_0001" xlink:to="PageID_0073"/>
+        <METS:smLink xlink:from="ISSUE_0001" xlink:to="PageID_0074"/>
+        <METS:smLink xlink:from="ISSUE_0001" xlink:to="PageID_0075"/>
+        <METS:smLink xlink:from="ISSUE_0001" xlink:to="PageID_0076"/>
+    </METS:structLink>
+</METS:mets>

@@ -1,0 +1,1816 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<alto xmlns="http://www.loc.gov/standards/alto/ns-v2#" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.loc.gov/standards/alto/ns-v2# http://www.loc.gov/standards/alto/alto-v2.0.xsd">
+  <Description>
+    <MeasurementUnit>pixel</MeasurementUnit>
+    <OCRProcessing ID="IdOcr">
+      <ocrProcessingStep>
+        <processingDateTime>2014-06-25</processingDateTime>
+        <processingSoftware>
+          <softwareCreator>ABBYY</softwareCreator>
+          <softwareName>ABBYY Recognition Server</softwareName>
+          <softwareVersion>4.0</softwareVersion>
+        </processingSoftware>
+      </ocrProcessingStep>
+    </OCRProcessing>
+  </Description>
+  <Styles>
+    <ParagraphStyle ID="StyleId-FFFFFFFF-FFFF-FFFF-FFFF-FFFFFFFFFFFF-" ALIGN="Left" LEFT="0" RIGHT="0" FIRSTLINE="0" />
+    <ParagraphStyle ID="StyleId-B9C34055-F4F6-4710-9D0A-D070A83E0523-" ALIGN="Center" LEFT="0" RIGHT="0" FIRSTLINE="0" />
+    <ParagraphStyle ID="StyleId-6E32EE1F-F2ED-4D32-8D3A-04BEC416DB00-" ALIGN="Left" LEFT="0" RIGHT="0" FIRSTLINE="-13" />
+    <ParagraphStyle ID="StyleId-62D710E7-8B56-416C-BD7E-F46362A9DA24-" ALIGN="Left" LEFT="0" RIGHT="0" FIRSTLINE="0" />
+    <ParagraphStyle ID="StyleId-27A4373B-2714-4B00-983C-4ABF96E6F4F6-" ALIGN="Left" LEFT="0" RIGHT="0" FIRSTLINE="0" />
+  </Styles>
+  <Layout>
+    <Page ID="Page1" PHYSICAL_IMG_NR="1">
+      <TopMargin ID="Page1_TMc9a1de44-57b7-46bd-9c8c-f4d876b22ed6" HPOS="0" VPOS="0" WIDTH="2659" HEIGHT="0" />
+      <LeftMargin ID="Page1_LMcef0ecde-4141-432d-9191-b0f8eacf4eac" HPOS="0" VPOS="0" WIDTH="0" HEIGHT="3555" />
+      <RightMargin ID="Page1_RMb8585978-4256-4349-ab96-18952119ad91" HPOS="2659" VPOS="0" WIDTH="0" HEIGHT="3555" />
+      <BottomMargin ID="Page1_BMcda32302-5a6e-4cd3-b962-ce3940bba07d" HPOS="0" VPOS="3555" WIDTH="2659" HEIGHT="0" />
+      <PrintSpace HEIGHT="3555" WIDTH="2659" VPOS="0" HPOS="0" ID="P1_PS0001">
+        <ComposedBlock ID="BlockId-F2FC614A-FB90-4846-A9FD-496A071198E7-" HEIGHT="101" WIDTH="2419" VPOS="0" HPOS="11" TYPE="container">
+          <TextBlock ID="BlockId-97430B99-8C9D-43B5-BDC0-AC037C686149-" HEIGHT="75" WIDTH="21" VPOS="0" HPOS="11" STYLEREFS="StyleId-62D710E7-8B56-416C-BD7E-F46362A9DA24-">
+            <TextLine HEIGHT="26" WIDTH="20" VPOS="1" HPOS="11" ID="P1_TL0001" STYLEREFS="StyleId-62D710E7-8B56-416C-BD7E-F46362A9DA24-">
+              <String CONTENT="■" HEIGHT="26" WIDTH="20" VPOS="1" HPOS="11" ID="P1_ST0001" WC="1" CC="1" />
+            </TextLine>
+          </TextBlock>
+          <TextBlock ID="BlockId-21067D9B-70E2-4267-8F41-C837B838CDE2-" HEIGHT="44" WIDTH="458" VPOS="56" HPOS="225" STYLEREFS="StyleId-6E32EE1F-F2ED-4D32-8D3A-04BEC416DB00-">
+            <TextLine HEIGHT="32" WIDTH="446" VPOS="62" HPOS="231" ID="P1_TL0002" STYLEREFS="StyleId-6E32EE1F-F2ED-4D32-8D3A-04BEC416DB00-">
+              <String CONTENT="Nr." HEIGHT="32" WIDTH="56" VPOS="62" HPOS="231" ID="P1_ST0002" WC="1" CC="111" />
+              <SP WIDTH="24" VPOS="63" HPOS="288" ID="P1_SP0001" />
+              <String CONTENT="4." HEIGHT="31" WIDTH="27" VPOS="63" HPOS="313" ID="P1_ST0003" WC="1" CC="11" />
+              <SP WIDTH="49" VPOS="63" HPOS="341" ID="P1_SP0002" />
+              <String CONTENT="10." HEIGHT="31" WIDTH="49" VPOS="63" HPOS="391" ID="P1_ST0004" WC="1" CC="111" />
+              <SP WIDTH="23" VPOS="62" HPOS="441" ID="P1_SP0003" />
+              <String CONTENT="März" HEIGHT="32" WIDTH="94" VPOS="62" HPOS="465" ID="P1_ST0005" WC="1" CC="1111" />
+              <SP WIDTH="25" VPOS="63" HPOS="560" ID="P1_SP0004" />
+              <String CONTENT="1911." HEIGHT="32" WIDTH="91" VPOS="62" HPOS="586" ID="P1_ST0006" WC="1" CC="11111" />
+            </TextLine>
+          </TextBlock>
+          <TextBlock ID="BlockId-140566DF-06C1-4175-9251-21A4E3E8DA24-" HEIGHT="47" WIDTH="952" VPOS="54" HPOS="865" STYLEREFS="StyleId-27A4373B-2714-4B00-983C-4ABF96E6F4F6-">
+            <TextLine HEIGHT="35" WIDTH="939" VPOS="60" HPOS="871" ID="P1_TL0003" STYLEREFS="StyleId-27A4373B-2714-4B00-983C-4ABF96E6F4F6-">
+              <String CONTENT="Zeitschrift" HEIGHT="34" WIDTH="181" VPOS="60" HPOS="871" ID="P1_ST0007" WC="1" CC="11111111111" />
+              <SP WIDTH="21" VPOS="60" HPOS="1053" ID="P1_SP0005" />
+              <String CONTENT="für" HEIGHT="33" WIDTH="56" VPOS="60" HPOS="1075" ID="P1_ST0008" WC="1" CC="111" />
+              <SP WIDTH="24" VPOS="61" HPOS="1132" ID="P1_SP0006" />
+              <String CONTENT="Kranken-" HEIGHT="35" WIDTH="159" VPOS="60" HPOS="1157" ID="P1_ST0009" WC="1" CC="11111111" />
+              <SP WIDTH="24" VPOS="70" HPOS="1317" ID="P1_SP0007" />
+              <String CONTENT="und" HEIGHT="32" WIDTH="63" VPOS="61" HPOS="1342" ID="P1_ST0010" WC="1" CC="111" />
+              <SP WIDTH="26" VPOS="60" HPOS="1406" ID="P1_SP0008" />
+              <String CONTENT="Eumanitätsanstalten." HEIGHT="33" WIDTH="377" VPOS="60" HPOS="1433" ID="P1_ST0011" WC="1" CC="11111111111111111111" />
+            </TextLine>
+          </TextBlock>
+          <TextBlock ID="BlockId-45E9D6DA-71AA-41C7-9A0D-41A2DE3C41F7-" HEIGHT="47" WIDTH="157" VPOS="53" HPOS="2273" STYLEREFS="StyleId-6E32EE1F-F2ED-4D32-8D3A-04BEC416DB00-">
+            <TextLine HEIGHT="35" WIDTH="145" VPOS="59" HPOS="2279" ID="P1_TL0004" STYLEREFS="StyleId-6E32EE1F-F2ED-4D32-8D3A-04BEC416DB00-">
+              <String CONTENT="Seite" HEIGHT="34" WIDTH="90" VPOS="59" HPOS="2279" ID="P1_ST0012" WC="1" CC="11111" />
+              <SP WIDTH="23" VPOS="62" HPOS="2370" ID="P1_SP0009" />
+              <String CONTENT="9." HEIGHT="32" WIDTH="30" VPOS="62" HPOS="2394" ID="P1_ST0013" WC="1" CC="11" />
+            </TextLine>
+          </TextBlock>
+        </ComposedBlock>
+        <ComposedBlock ID="BlockId-26ED21D6-0D7D-4151-94F2-29AA2EF3A630-" HEIGHT="3126" WIDTH="1078" VPOS="163" HPOS="205" TYPE="container">
+          <TextBlock ID="BlockId-A4892EAF-063D-40E5-A9F7-9F83CC862D7F-" HEIGHT="1670" WIDTH="1074" VPOS="163" HPOS="205" STYLEREFS="StyleId-6E32EE1F-F2ED-4D32-8D3A-04BEC416DB00-">
+            <TextLine HEIGHT="41" WIDTH="702" VPOS="169" HPOS="241" ID="P1_TL0005" STYLEREFS="StyleId-6E32EE1F-F2ED-4D32-8D3A-04BEC416DB00-">
+              <String CONTENT="3." HEIGHT="32" WIDTH="30" VPOS="169" HPOS="241" ID="P1_ST0014" WC="1" CC="11" />
+              <SP WIDTH="24" VPOS="169" HPOS="272" ID="P1_SP0010" />
+              <String CONTENT="durch" HEIGHT="32" WIDTH="105" VPOS="169" HPOS="297" ID="P1_ST0015" WC="1" CC="11111" />
+              <SP WIDTH="24" VPOS="169" HPOS="403" ID="P1_SP0011" />
+              <String CONTENT="den" HEIGHT="32" WIDTH="65" VPOS="169" HPOS="428" ID="P1_ST0016" WC="1" CC="111" />
+              <SP WIDTH="22" VPOS="169" HPOS="494" ID="P1_SP0012" />
+              <String CONTENT="Beitrag" HEIGHT="41" WIDTH="132" VPOS="169" HPOS="517" ID="P1_ST0017" WC="1" CC="1111111" />
+              <SP WIDTH="14" VPOS="178" HPOS="650" ID="P1_SP0013" />
+              <String CONTENT="vom" HEIGHT="23" WIDTH="78" VPOS="178" HPOS="665" ID="P1_ST0018" WC="1" CC="111" />
+              <SP WIDTH="20" VPOS="169" HPOS="744" ID="P1_SP0014" />
+              <String CONTENT="Bezirke" HEIGHT="32" WIDTH="178" VPOS="169" HPOS="765" ID="P1_ST0019" WC="1" CC="1111111" />
+            </TextLine>
+            <TextLine HEIGHT="42" WIDTH="972" VPOS="213" HPOS="297" ID="P1_TL0006" STYLEREFS="StyleId-6E32EE1F-F2ED-4D32-8D3A-04BEC416DB00-">
+              <String CONTENT="Eg" HEIGHT="41" WIDTH="56" VPOS="214" HPOS="297" ID="P1_ST0020" WC="1" CC="11" />
+              <SP WIDTH="8" VPOS="223" HPOS="354" ID="P1_SP0015" />
+              <String CONTENT="er" HEIGHT="22" WIDTH="41" VPOS="223" HPOS="363" ID="P1_ST0021" WC="1" CC="11" />
+              <SP WIDTH="19" VPOS="223" HPOS="405" ID="P1_SP0016" />
+              <String CONTENT="pr" HEIGHT="32" WIDTH="38" VPOS="223" HPOS="425" ID="P1_ST0022" WC="1" CC="11" />
+              <SP WIDTH="495" VPOS="215" HPOS="466" ID="P1_SP0017" />
+              <String CONTENT="215.302" HEIGHT="31" WIDTH="141" VPOS="214" HPOS="962" ID="P1_ST0023" WC="1" CC="1111111" />
+              <SP WIDTH="25" VPOS="214" HPOS="1104" ID="P1_SP0018" />
+              <String CONTENT="K" HEIGHT="34" WIDTH="27" VPOS="214" HPOS="1130" ID="P1_ST0024" WC="1" CC="1" />
+              <SP WIDTH="23" VPOS="214" HPOS="1158" ID="P1_SP0019" />
+              <String CONTENT="08" HEIGHT="32" WIDTH="42" VPOS="214" HPOS="1182" ID="P1_ST0025" WC="1" CC="11" />
+              <SP WIDTH="24" VPOS="213" HPOS="1225" ID="P1_SP0020" />
+              <String CONTENT="h" HEIGHT="32" WIDTH="19" VPOS="213" HPOS="1250" ID="P1_ST0026" WC="1" CC="1" />
+            </TextLine>
+            <TextLine HEIGHT="41" WIDTH="705" VPOS="276" HPOS="240" ID="P1_TL0007" STYLEREFS="StyleId-6E32EE1F-F2ED-4D32-8D3A-04BEC416DB00-">
+              <String CONTENT="4." HEIGHT="30" WIDTH="29" VPOS="277" HPOS="240" ID="P1_ST0027" WC="1" CC="11" />
+              <SP WIDTH="27" VPOS="276" HPOS="270" ID="P1_SP0021" />
+              <String CONTENT="durch" HEIGHT="32" WIDTH="104" VPOS="276" HPOS="298" ID="P1_ST0028" WC="1" CC="11111" />
+              <SP WIDTH="32" VPOS="276" HPOS="403" ID="P1_SP0022" />
+              <String CONTENT="die" HEIGHT="32" WIDTH="55" VPOS="276" HPOS="436" ID="P1_ST0029" WC="1" CC="111" />
+              <SP WIDTH="22" VPOS="286" HPOS="492" ID="P1_SP0023" />
+              <String CONTENT="vom" HEIGHT="22" WIDTH="79" VPOS="286" HPOS="515" ID="P1_ST0030" WC="1" CC="111" />
+              <SP WIDTH="38" VPOS="276" HPOS="595" ID="P1_SP0024" />
+              <String CONTENT="Bezirke" HEIGHT="32" WIDTH="177" VPOS="276" HPOS="634" ID="P1_ST0031" WC="1" CC="1111111" />
+              <SP WIDTH="24" VPOS="276" HPOS="812" ID="P1_SP0025" />
+              <String CONTENT="Eger" HEIGHT="41" WIDTH="108" VPOS="276" HPOS="837" ID="P1_ST0032" WC="1" CC="1111" />
+            </TextLine>
+            <TextLine HEIGHT="42" WIDTH="648" VPOS="320" HPOS="297" ID="P1_TL0008" STYLEREFS="StyleId-6E32EE1F-F2ED-4D32-8D3A-04BEC416DB00-">
+              <String CONTENT="und" HEIGHT="32" WIDTH="70" VPOS="321" HPOS="297" ID="P1_ST0033" WC="1" CC="111" />
+              <SP WIDTH="16" VPOS="320" HPOS="368" ID="P1_SP0026" />
+              <String CONTENT="der" HEIGHT="33" WIDTH="59" VPOS="320" HPOS="385" ID="P1_ST0034" WC="1" CC="111" />
+              <SP WIDTH="14" VPOS="320" HPOS="445" ID="P1_SP0027" />
+              <String CONTENT="Stadtgemeinde" HEIGHT="42" WIDTH="362" VPOS="320" HPOS="460" ID="P1_ST0035" WC="1" CC="1111111111111" />
+              <SP WIDTH="14" VPOS="321" HPOS="823" ID="P1_SP0028" />
+              <String CONTENT="Eger" HEIGHT="41" WIDTH="107" VPOS="321" HPOS="838" ID="P1_ST0036" WC="1" CC="1111" />
+            </TextLine>
+            <TextLine HEIGHT="41" WIDTH="969" VPOS="365" HPOS="298" ID="P1_TL0009" STYLEREFS="StyleId-6E32EE1F-F2ED-4D32-8D3A-04BEC416DB00-">
+              <String CONTENT="mit" HEIGHT="31" WIDTH="58" VPOS="366" HPOS="298" ID="P1_ST0037" WC="1" CC="111" />
+              <SP WIDTH="32" VPOS="365" HPOS="357" ID="P1_SP0029" />
+              <String CONTENT="je" HEIGHT="41" WIDTH="31" VPOS="365" HPOS="390" ID="P1_ST0038" WC="1" CC="11" />
+              <SP WIDTH="23" VPOS="366" HPOS="422" ID="P1_SP0030" />
+              <String CONTENT="200.000" HEIGHT="32" WIDTH="140" VPOS="366" HPOS="446" ID="P1_ST0039" WC="1" CC="1111111" />
+              <SP WIDTH="25" VPOS="366" HPOS="587" ID="P1_SP0031" />
+              <String CONTENT="K" HEIGHT="33" WIDTH="27" VPOS="366" HPOS="613" ID="P1_ST0040" WC="1" CC="1" />
+              <SP WIDTH="29" VPOS="366" HPOS="641" ID="P1_SP0032" />
+              <String CONTENT="zusammen" HEIGHT="23" WIDTH="193" VPOS="375" HPOS="671" ID="P1_ST0041" WC="1" CC="11111111" />
+              <SP WIDTH="25" VPOS="375" HPOS="865" ID="P1_SP0033" />
+              <String CONTENT="mit" HEIGHT="31" WIDTH="58" VPOS="366" HPOS="891" ID="P1_ST0042" WC="1" CC="111" />
+              <SP WIDTH="14" VPOS="366" HPOS="950" ID="P1_SP0034" />
+              <String CONTENT="400.000" HEIGHT="32" WIDTH="142" VPOS="365" HPOS="965" ID="P1_ST0043" WC="1" CC="1111111" />
+              <SP WIDTH="35" VPOS="365" HPOS="1108" ID="P1_SP0035" />
+              <String CONTENT="»" HEIGHT="15" WIDTH="12" VPOS="378" HPOS="1144" ID="P1_ST0044" WC="1" CC="1" />
+              <SP WIDTH="27" VPOS="378" HPOS="1157" ID="P1_SP0036" />
+              <String CONTENT="—" HEIGHT="3" WIDTH="40" VPOS="384" HPOS="1185" ID="P1_ST0045" WC="1" CC="1" />
+              <SP WIDTH="27" VPOS="377" HPOS="1226" ID="P1_SP0037" />
+              <String CONTENT="»" HEIGHT="16" WIDTH="13" VPOS="377" HPOS="1254" ID="P1_ST0046" WC="1" CC="1" />
+            </TextLine>
+            <TextLine HEIGHT="42" WIDTH="646" VPOS="410" HPOS="297" ID="P1_TL0010" STYLEREFS="StyleId-6E32EE1F-F2ED-4D32-8D3A-04BEC416DB00-">
+              <String CONTENT="bei" HEIGHT="31" WIDTH="53" VPOS="411" HPOS="297" ID="P1_ST0047" WC="1" CC="111" />
+              <SP WIDTH="33" VPOS="410" HPOS="351" ID="P1_SP0038" />
+              <String CONTENT="der" HEIGHT="32" WIDTH="57" VPOS="410" HPOS="385" ID="P1_ST0048" WC="1" CC="111" />
+              <SP WIDTH="23" VPOS="410" HPOS="443" ID="P1_SP0039" />
+              <String CONTENT="Egerer" HEIGHT="41" WIDTH="122" VPOS="410" HPOS="467" ID="P1_ST0049" WC="1" CC="111111" />
+              <SP WIDTH="23" VPOS="410" HPOS="590" ID="P1_SP0040" />
+              <String CONTENT="Sparkassa" HEIGHT="42" WIDTH="179" VPOS="410" HPOS="614" ID="P1_ST0050" WC="1" CC="111111111" />
+              <SP WIDTH="33" VPOS="420" HPOS="794" ID="P1_SP0041" />
+              <String CONTENT="aufge" HEIGHT="41" WIDTH="98" VPOS="410" HPOS="828" ID="P1_ST0051" WC="1" CC="11111" />
+              <HYP CONTENT="172" />
+            </TextLine>
+            <TextLine HEIGHT="42" WIDTH="643" VPOS="454" HPOS="297" ID="P1_TL0011" STYLEREFS="StyleId-6E32EE1F-F2ED-4D32-8D3A-04BEC416DB00-">
+              <String CONTENT="nommenen" HEIGHT="23" WIDTH="205" VPOS="464" HPOS="297" ID="P1_ST0052" WC="1" CC="11111111" />
+              <SP WIDTH="41" VPOS="454" HPOS="503" ID="P1_SP0042" />
+              <String CONTENT="Darlehen," HEIGHT="41" WIDTH="175" VPOS="454" HPOS="545" ID="P1_ST0053" WC="1" CC="111111111" />
+              <SP WIDTH="41" VPOS="455" HPOS="721" ID="P1_SP0043" />
+              <String CONTENT="bezüglich" HEIGHT="42" WIDTH="177" VPOS="454" HPOS="763" ID="P1_ST0054" WC="1" CC="111111111" />
+            </TextLine>
+            <TextLine HEIGHT="42" WIDTH="646" VPOS="499" HPOS="298" ID="P1_TL0012" STYLEREFS="StyleId-6E32EE1F-F2ED-4D32-8D3A-04BEC416DB00-">
+              <String CONTENT="welcher" HEIGHT="33" WIDTH="144" VPOS="499" HPOS="298" ID="P1_ST0055" WC="1" CC="1111111" />
+              <SP WIDTH="15" VPOS="500" HPOS="443" ID="P1_SP0044" />
+              <String CONTENT="die" HEIGHT="31" WIDTH="54" VPOS="500" HPOS="459" ID="P1_ST0056" WC="1" CC="111" />
+              <SP WIDTH="17" VPOS="499" HPOS="514" ID="P1_SP0045" />
+              <String CONTENT="Egerer" HEIGHT="42" WIDTH="160" VPOS="499" HPOS="532" ID="P1_ST0057" WC="1" CC="111111" />
+              <SP WIDTH="11" VPOS="499" HPOS="693" ID="P1_SP0046" />
+              <String CONTENT="Sparkassa" HEIGHT="42" WIDTH="239" VPOS="499" HPOS="705" ID="P1_ST0058" WC="1" CC="111111111" />
+            </TextLine>
+            <TextLine HEIGHT="41" WIDTH="645" VPOS="544" HPOS="299" ID="P1_TL0013" STYLEREFS="StyleId-6E32EE1F-F2ED-4D32-8D3A-04BEC416DB00-">
+              <String CONTENT="die" HEIGHT="31" WIDTH="53" VPOS="545" HPOS="299" ID="P1_ST0059" WC="1" CC="111" />
+              <SP WIDTH="30" VPOS="544" HPOS="353" ID="P1_SP0047" />
+              <String CONTENT="Amortisierung," HEIGHT="41" WIDTH="277" VPOS="544" HPOS="384" ID="P1_ST0060" WC="1" CC="11111111111111" />
+              <SP WIDTH="36" VPOS="544" HPOS="662" ID="P1_SP0048" />
+              <String CONTENT="Bezirk" HEIGHT="32" WIDTH="150" VPOS="544" HPOS="699" ID="P1_ST0061" WC="1" CC="111111" />
+              <SP WIDTH="23" VPOS="544" HPOS="850" ID="P1_SP0049" />
+              <String CONTENT="und" HEIGHT="31" WIDTH="70" VPOS="545" HPOS="874" ID="P1_ST0062" WC="1" CC="111" />
+            </TextLine>
+            <TextLine HEIGHT="41" WIDTH="644" VPOS="589" HPOS="302" ID="P1_TL0014" STYLEREFS="StyleId-6E32EE1F-F2ED-4D32-8D3A-04BEC416DB00-">
+              <String CONTENT="Stadt" HEIGHT="33" WIDTH="121" VPOS="589" HPOS="302" ID="P1_ST0063" WC="1" CC="11111" />
+              <SP WIDTH="33" VPOS="589" HPOS="424" ID="P1_SP0050" />
+              <String CONTENT="dagegen" HEIGHT="41" WIDTH="155" VPOS="589" HPOS="458" ID="P1_ST0064" WC="1" CC="1111111" />
+              <SP WIDTH="36" VPOS="589" HPOS="614" ID="P1_SP0051" />
+              <String CONTENT="die" HEIGHT="32" WIDTH="53" VPOS="589" HPOS="651" ID="P1_ST0065" WC="1" CC="111" />
+              <SP WIDTH="30" VPOS="589" HPOS="705" ID="P1_SP0052" />
+              <String CONTENT="Verzinsung" HEIGHT="41" WIDTH="210" VPOS="589" HPOS="736" ID="P1_ST0066" WC="1" CC="1111111111" />
+            </TextLine>
+            <TextLine HEIGHT="41" WIDTH="552" VPOS="633" HPOS="298" ID="P1_TL0015" STYLEREFS="StyleId-6E32EE1F-F2ED-4D32-8D3A-04BEC416DB00-">
+              <String CONTENT="übernommen" HEIGHT="32" WIDTH="249" VPOS="634" HPOS="298" ID="P1_ST0067" WC="1" CC="1111111111" />
+              <SP WIDTH="26" VPOS="633" HPOS="548" ID="P1_SP0053" />
+              <String CONTENT="haben," HEIGHT="41" WIDTH="117" VPOS="633" HPOS="575" ID="P1_ST0068" WC="1" CC="111111" />
+              <SP WIDTH="25" VPOS="644" HPOS="693" ID="P1_SP0054" />
+              <String CONTENT="endlich" HEIGHT="33" WIDTH="131" VPOS="633" HPOS="719" ID="P1_ST0069" WC="1" CC="1111111" />
+            </TextLine>
+            <TextLine HEIGHT="42" WIDTH="702" VPOS="705" HPOS="242" ID="P1_TL0016" STYLEREFS="StyleId-6E32EE1F-F2ED-4D32-8D3A-04BEC416DB00-">
+              <String CONTENT="5." HEIGHT="31" WIDTH="28" VPOS="707" HPOS="242" ID="P1_ST0070" WC="1" CC="11" />
+              <SP WIDTH="24" VPOS="706" HPOS="271" ID="P1_SP0055" />
+              <String CONTENT="durch" HEIGHT="32" WIDTH="104" VPOS="706" HPOS="296" ID="P1_ST0071" WC="1" CC="11111" />
+              <SP WIDTH="24" VPOS="706" HPOS="401" ID="P1_SP0056" />
+              <String CONTENT="die" HEIGHT="32" WIDTH="54" VPOS="706" HPOS="426" ID="P1_ST0072" WC="1" CC="111" />
+              <SP WIDTH="19" VPOS="706" HPOS="481" ID="P1_SP0057" />
+              <String CONTENT="für" HEIGHT="32" WIDTH="51" VPOS="706" HPOS="501" ID="P1_ST0073" WC="1" CC="111" />
+              <SP WIDTH="18" VPOS="706" HPOS="553" ID="P1_SP0058" />
+              <String CONTENT="die" HEIGHT="32" WIDTH="54" VPOS="706" HPOS="572" ID="P1_ST0074" WC="1" CC="111" />
+              <SP WIDTH="19" VPOS="706" HPOS="627" ID="P1_SP0059" />
+              <String CONTENT="fruchtbringende" HEIGHT="42" WIDTH="297" VPOS="705" HPOS="647" ID="P1_ST0075" WC="1" CC="111111111111111" />
+            </TextLine>
+            <TextLine HEIGHT="42" WIDTH="649" VPOS="750" HPOS="297" ID="P1_TL0017" STYLEREFS="StyleId-6E32EE1F-F2ED-4D32-8D3A-04BEC416DB00-">
+              <String CONTENT="Anlegung" HEIGHT="41" WIDTH="184" VPOS="751" HPOS="297" ID="P1_ST0076" WC="1" CC="11111111" />
+              <SP WIDTH="38" VPOS="751" HPOS="482" ID="P1_SP0060" />
+              <String CONTENT="der" HEIGHT="32" WIDTH="59" VPOS="751" HPOS="521" ID="P1_ST0077" WC="1" CC="111" />
+              <SP WIDTH="32" VPOS="751" HPOS="581" ID="P1_SP0061" />
+              <String CONTENT="Widmungen" HEIGHT="41" WIDTH="232" VPOS="751" HPOS="614" ID="P1_ST0078" WC="1" CC="111111111" />
+              <SP WIDTH="40" VPOS="750" HPOS="847" ID="P1_SP0062" />
+              <String CONTENT="der" HEIGHT="32" WIDTH="58" VPOS="750" HPOS="888" ID="P1_ST0079" WC="1" CC="111" />
+            </TextLine>
+            <TextLine HEIGHT="41" WIDTH="645" VPOS="795" HPOS="300" ID="P1_TL0018" STYLEREFS="StyleId-6E32EE1F-F2ED-4D32-8D3A-04BEC416DB00-">
+              <String CONTENT="Sparkassa" HEIGHT="41" WIDTH="180" VPOS="795" HPOS="300" ID="P1_ST0080" WC="1" CC="111111111" />
+              <SP WIDTH="7" VPOS="805" HPOS="481" ID="P1_SP0063" />
+              <String CONTENT="und" HEIGHT="33" WIDTH="70" VPOS="795" HPOS="489" ID="P1_ST0081" WC="1" CC="111" />
+              <SP WIDTH="9" VPOS="795" HPOS="560" ID="P1_SP0064" />
+              <String CONTENT="der" HEIGHT="31" WIDTH="59" VPOS="796" HPOS="570" ID="P1_ST0082" WC="1" CC="111" />
+              <SP WIDTH="7" VPOS="806" HPOS="630" ID="P1_SP0065" />
+              <String CONTENT="aufgenommenen" HEIGHT="41" WIDTH="307" VPOS="795" HPOS="638" ID="P1_ST0083" WC="1" CC="1111111111111" />
+            </TextLine>
+            <TextLine HEIGHT="32" WIDTH="643" VPOS="840" HPOS="304" ID="P1_TL0019" STYLEREFS="StyleId-6E32EE1F-F2ED-4D32-8D3A-04BEC416DB00-">
+              <String CONTENT="Darlehen" HEIGHT="32" WIDTH="167" VPOS="840" HPOS="304" ID="P1_ST0084" WC="1" CC="11111111" />
+              <SP WIDTH="25" VPOS="850" HPOS="472" ID="P1_SP0066" />
+              <String CONTENT="erzielten" HEIGHT="32" WIDTH="150" VPOS="840" HPOS="498" ID="P1_ST0085" WC="1" CC="111111111" />
+              <SP WIDTH="20" VPOS="840" HPOS="649" ID="P1_SP0067" />
+              <String CONTENT="Zinsen" HEIGHT="32" WIDTH="123" VPOS="840" HPOS="670" ID="P1_ST0086" WC="1" CC="111111" />
+              <SP WIDTH="24" VPOS="840" HPOS="794" ID="P1_SP0068" />
+              <String CONTENT="im" HEIGHT="32" WIDTH="44" VPOS="840" HPOS="819" ID="P1_ST0087" WC="1" CC="11" />
+              <SP WIDTH="22" VPOS="840" HPOS="864" ID="P1_SP0069" />
+              <String CONTENT="Be" HEIGHT="31" WIDTH="43" VPOS="840" HPOS="887" ID="P1_ST0088" WC="1" CC="11" />
+              <HYP CONTENT="172" />
+            </TextLine>
+            <TextLine HEIGHT="43" WIDTH="972" VPOS="883" HPOS="299" ID="P1_TL0020" STYLEREFS="StyleId-6E32EE1F-F2ED-4D32-8D3A-04BEC416DB00-">
+              <String CONTENT="trage" HEIGHT="39" WIDTH="93" VPOS="887" HPOS="299" ID="P1_ST0089" WC="1" CC="11111" />
+              <SP WIDTH="15" VPOS="895" HPOS="393" ID="P1_SP0070" />
+              <String CONTENT="von" HEIGHT="23" WIDTH="67" VPOS="894" HPOS="409" ID="P1_ST0090" WC="1" CC="111" />
+              <SP WIDTH="516" VPOS="884" HPOS="498" ID="P1_SP0071" />
+              <String CONTENT="6.361" HEIGHT="32" WIDTH="91" VPOS="884" HPOS="1015" ID="P1_ST0091" WC="1" CC="11111" />
+              <SP WIDTH="38" VPOS="885" HPOS="1107" ID="P1_SP0072" />
+              <String CONTENT="»" HEIGHT="16" WIDTH="13" VPOS="896" HPOS="1146" ID="P1_ST0092" WC="1" CC="1" />
+              <SP WIDTH="26" VPOS="884" HPOS="1160" ID="P1_SP0073" />
+              <String CONTENT="96" HEIGHT="32" WIDTH="42" VPOS="883" HPOS="1187" ID="P1_ST0093" WC="1" CC="11" />
+              <SP WIDTH="28" VPOS="883" HPOS="1230" ID="P1_SP0074" />
+              <String CONTENT="»" HEIGHT="15" WIDTH="12" VPOS="896" HPOS="1259" ID="P1_ST0094" WC="1" CC="1" />
+            </TextLine>
+            <TextLine HEIGHT="35" WIDTH="551" VPOS="955" HPOS="720" ID="P1_TL0021" STYLEREFS="StyleId-6E32EE1F-F2ED-4D32-8D3A-04BEC416DB00-">
+              <String CONTENT="zusammen" HEIGHT="23" WIDTH="192" VPOS="965" HPOS="720" ID="P1_ST0095" WC="1" CC="11111111" />
+              <SP WIDTH="19" VPOS="966" HPOS="913" ID="P1_SP0075" />
+              <String CONTENT="." HEIGHT="5" WIDTH="6" VPOS="982" HPOS="933" ID="P1_ST0096" WC="1" CC="1" />
+              <SP WIDTH="20" VPOS="956" HPOS="940" ID="P1_SP0076" />
+              <String CONTENT="836.966" HEIGHT="33" WIDTH="142" VPOS="955" HPOS="961" ID="P1_ST0097" WC="1" CC="1111111" />
+              <SP WIDTH="25" VPOS="955" HPOS="1104" ID="P1_SP0077" />
+              <String CONTENT="K" HEIGHT="35" WIDTH="27" VPOS="955" HPOS="1130" ID="P1_ST0098" WC="1" CC="1" />
+              <SP WIDTH="27" VPOS="955" HPOS="1158" ID="P1_SP0078" />
+              <String CONTENT="12" HEIGHT="30" WIDTH="38" VPOS="956" HPOS="1186" ID="P1_ST0099" WC="1" CC="11" />
+              <SP WIDTH="25" VPOS="955" HPOS="1225" ID="P1_SP0079" />
+              <String CONTENT="h" HEIGHT="31" WIDTH="20" VPOS="955" HPOS="1251" ID="P1_ST0100" WC="1" CC="1" />
+            </TextLine>
+            <TextLine HEIGHT="42" WIDTH="1059" VPOS="1027" HPOS="211" ID="P1_TL0022" STYLEREFS="StyleId-6E32EE1F-F2ED-4D32-8D3A-04BEC416DB00-">
+              <String CONTENT="so" HEIGHT="22" WIDTH="37" VPOS="1038" HPOS="211" ID="P1_ST0101" WC="1" CC="11" />
+              <SP WIDTH="36" VPOS="1028" HPOS="249" ID="P1_SP0080" />
+              <String CONTENT="dass" HEIGHT="32" WIDTH="75" VPOS="1028" HPOS="286" ID="P1_ST0102" WC="1" CC="1111" />
+              <SP WIDTH="35" VPOS="1038" HPOS="362" ID="P1_SP0081" />
+              <String CONTENT="sich" HEIGHT="33" WIDTH="69" VPOS="1028" HPOS="398" ID="P1_ST0103" WC="1" CC="1111" />
+              <SP WIDTH="35" VPOS="1028" HPOS="468" ID="P1_SP0082" />
+              <String CONTENT="also" HEIGHT="32" WIDTH="70" VPOS="1029" HPOS="504" ID="P1_ST0104" WC="1" CC="1111" />
+              <SP WIDTH="37" VPOS="1038" HPOS="575" ID="P1_SP0083" />
+              <String CONTENT="gegenüber" HEIGHT="41" WIDTH="197" VPOS="1028" HPOS="613" ID="P1_ST0105" WC="1" CC="111111111" />
+              <SP WIDTH="22" VPOS="1027" HPOS="811" ID="P1_SP0084" />
+              <String CONTENT="dem" HEIGHT="33" WIDTH="77" VPOS="1027" HPOS="834" ID="P1_ST0106" WC="1" CC="111" />
+              <SP WIDTH="25" VPOS="1027" HPOS="912" ID="P1_SP0085" />
+              <String CONTENT="Gesamtkostenauf-" HEIGHT="33" WIDTH="332" VPOS="1027" HPOS="938" ID="P1_ST0107" WC="1" CC="1111111111111111" />
+            </TextLine>
+            <TextLine HEIGHT="35" WIDTH="1060" VPOS="1072" HPOS="212" ID="P1_TL0023" STYLEREFS="StyleId-6E32EE1F-F2ED-4D32-8D3A-04BEC416DB00-">
+              <String CONTENT="wande" HEIGHT="32" WIDTH="119" VPOS="1073" HPOS="212" ID="P1_ST0108" WC="1" CC="11111" />
+              <SP WIDTH="24" VPOS="1082" HPOS="332" ID="P1_SP0086" />
+              <String CONTENT="noch" HEIGHT="32" WIDTH="86" VPOS="1073" HPOS="357" ID="P1_ST0109" WC="1" CC="1111" />
+              <SP WIDTH="26" VPOS="1073" HPOS="444" ID="P1_SP0087" />
+              <String CONTENT="ein" HEIGHT="32" WIDTH="52" VPOS="1073" HPOS="471" ID="P1_ST0110" WC="1" CC="111" />
+              <SP WIDTH="24" VPOS="1083" HPOS="524" ID="P1_SP0088" />
+              <String CONTENT="unbedeckter" HEIGHT="33" WIDTH="226" VPOS="1073" HPOS="549" ID="P1_ST0111" WC="1" CC="11111111111" />
+              <SP WIDTH="24" VPOS="1073" HPOS="776" ID="P1_SP0089" />
+              <String CONTENT="Rest" HEIGHT="34" WIDTH="76" VPOS="1073" HPOS="801" ID="P1_ST0112" WC="1" CC="1111" />
+              <SP WIDTH="20" VPOS="1074" HPOS="878" ID="P1_SP0090" />
+              <String CONTENT="von" HEIGHT="22" WIDTH="67" VPOS="1082" HPOS="899" ID="P1_ST0113" WC="1" CC="111" />
+              <SP WIDTH="24" VPOS="1082" HPOS="967" ID="P1_SP0091" />
+              <String CONTENT="zirka" HEIGHT="32" WIDTH="87" VPOS="1072" HPOS="992" ID="P1_ST0114" WC="1" CC="11111" />
+              <SP WIDTH="25" VPOS="1073" HPOS="1080" ID="P1_SP0092" />
+              <String CONTENT="40.000" HEIGHT="32" WIDTH="119" VPOS="1072" HPOS="1106" ID="P1_ST0115" WC="1" CC="111111" />
+              <SP WIDTH="18" VPOS="1072" HPOS="1226" ID="P1_SP0093" />
+              <String CONTENT="K" HEIGHT="34" WIDTH="27" VPOS="1072" HPOS="1245" ID="P1_ST0116" WC="1" CC="1" />
+            </TextLine>
+            <TextLine HEIGHT="42" WIDTH="1061" VPOS="1116" HPOS="211" ID="P1_TL0024" STYLEREFS="StyleId-6E32EE1F-F2ED-4D32-8D3A-04BEC416DB00-">
+              <String CONTENT="ergibt," HEIGHT="41" WIDTH="114" VPOS="1117" HPOS="211" ID="P1_ST0117" WC="1" CC="1111111" />
+              <SP WIDTH="16" VPOS="1128" HPOS="326" ID="P1_SP0094" />
+              <String CONTENT="welcher" HEIGHT="31" WIDTH="145" VPOS="1118" HPOS="343" ID="P1_ST0118" WC="1" CC="1111111" />
+              <SP WIDTH="15" VPOS="1128" HPOS="489" ID="P1_SP0095" />
+              <String CONTENT="von" HEIGHT="23" WIDTH="66" VPOS="1127" HPOS="505" ID="P1_ST0119" WC="1" CC="111" />
+              <SP WIDTH="13" VPOS="1118" HPOS="572" ID="P1_SP0096" />
+              <String CONTENT="den" HEIGHT="31" WIDTH="64" VPOS="1118" HPOS="586" ID="P1_ST0120" WC="1" CC="111" />
+              <SP WIDTH="18" VPOS="1118" HPOS="651" ID="P1_SP0097" />
+              <String CONTENT="Erbauern" HEIGHT="32" WIDTH="220" VPOS="1117" HPOS="670" ID="P1_ST0121" WC="1" CC="11111111" />
+              <SP WIDTH="13" VPOS="1117" HPOS="891" ID="P1_SP0098" />
+              <String CONTENT="des" HEIGHT="32" WIDTH="58" VPOS="1117" HPOS="905" ID="P1_ST0122" WC="1" CC="111" />
+              <SP WIDTH="12" VPOS="1126" HPOS="964" ID="P1_SP0099" />
+              <String CONTENT="neuen" HEIGHT="23" WIDTH="108" VPOS="1126" HPOS="977" ID="P1_ST0123" WC="1" CC="11111" />
+              <SP WIDTH="16" VPOS="1117" HPOS="1086" ID="P1_SP0100" />
+              <String CONTENT="Kranken" HEIGHT="35" WIDTH="152" VPOS="1116" HPOS="1103" ID="P1_ST0124" WC="1" CC="1111111" />
+              <HYP CONTENT="172" />
+            </TextLine>
+            <TextLine HEIGHT="42" WIDTH="1060" VPOS="1160" HPOS="211" ID="P1_TL0025" STYLEREFS="StyleId-6E32EE1F-F2ED-4D32-8D3A-04BEC416DB00-">
+              <String CONTENT="hauses:" HEIGHT="32" WIDTH="134" VPOS="1162" HPOS="211" ID="P1_ST0125" WC="1" CC="1111111" />
+              <SP WIDTH="47" VPOS="1162" HPOS="346" ID="P1_SP0101" />
+              <String CONTENT="Bezirk" HEIGHT="32" WIDTH="150" VPOS="1162" HPOS="394" ID="P1_ST0126" WC="1" CC="111111" />
+              <SP WIDTH="45" VPOS="1163" HPOS="545" ID="P1_SP0102" />
+              <String CONTENT="und" HEIGHT="32" WIDTH="84" VPOS="1162" HPOS="591" ID="P1_ST0127" WC="1" CC="111" />
+              <SP WIDTH="43" VPOS="1162" HPOS="676" ID="P1_SP0103" />
+              <String CONTENT="Stadt" HEIGHT="32" WIDTH="121" VPOS="1162" HPOS="720" ID="P1_ST0128" WC="1" CC="11111" />
+              <SP WIDTH="39" VPOS="1162" HPOS="842" ID="P1_SP0104" />
+              <String CONTENT="Eger" HEIGHT="40" WIDTH="108" VPOS="1162" HPOS="882" ID="P1_ST0129" WC="1" CC="1111" />
+              <SP WIDTH="41" VPOS="1171" HPOS="991" ID="P1_SP0105" />
+              <String CONTENT="noch" HEIGHT="33" WIDTH="87" VPOS="1160" HPOS="1033" ID="P1_ST0130" WC="1" CC="1111" />
+              <SP WIDTH="36" VPOS="1160" HPOS="1121" ID="P1_SP0106" />
+              <String CONTENT="aufzu" HEIGHT="32" WIDTH="97" VPOS="1161" HPOS="1158" ID="P1_ST0131" WC="1" CC="11111" />
+              <HYP CONTENT="172" />
+            </TextLine>
+            <TextLine HEIGHT="41" WIDTH="218" VPOS="1207" HPOS="211" ID="P1_TL0026" STYLEREFS="StyleId-6E32EE1F-F2ED-4D32-8D3A-04BEC416DB00-">
+              <String CONTENT="bringen" HEIGHT="41" WIDTH="143" VPOS="1207" HPOS="211" ID="P1_ST0132" WC="1" CC="1111111" />
+              <SP WIDTH="25" VPOS="1207" HPOS="355" ID="P1_SP0107" />
+              <String CONTENT="ist." HEIGHT="32" WIDTH="48" VPOS="1207" HPOS="381" ID="P1_ST0133" WC="1" CC="1111" />
+            </TextLine>
+            <TextLine HEIGHT="43" WIDTH="989" VPOS="1276" HPOS="282" ID="P1_TL0027" STYLEREFS="StyleId-6E32EE1F-F2ED-4D32-8D3A-04BEC416DB00-">
+              <String CONTENT="Die" HEIGHT="32" WIDTH="61" VPOS="1278" HPOS="282" ID="P1_ST0134" WC="1" CC="111" />
+              <SP WIDTH="24" VPOS="1288" HPOS="344" ID="P1_SP0108" />
+              <String CONTENT="neue" HEIGHT="22" WIDTH="86" VPOS="1288" HPOS="369" ID="P1_ST0135" WC="1" CC="1111" />
+              <SP WIDTH="24" VPOS="1279" HPOS="456" ID="P1_SP0109" />
+              <String CONTENT="Krankenhausanlage," HEIGHT="41" WIDTH="369" VPOS="1278" HPOS="481" ID="P1_ST0136" WC="1" CC="111111111111111111" />
+              <SP WIDTH="35" VPOS="1277" HPOS="851" ID="P1_SP0110" />
+              <String CONTENT="die" HEIGHT="32" WIDTH="54" VPOS="1277" HPOS="887" ID="P1_ST0137" WC="1" CC="111" />
+              <SP WIDTH="30" VPOS="1287" HPOS="942" ID="P1_SP0111" />
+              <String CONTENT="allen" HEIGHT="32" WIDTH="85" VPOS="1277" HPOS="973" ID="P1_ST0138" WC="1" CC="11111" />
+              <SP WIDTH="26" VPOS="1287" HPOS="1059" ID="P1_SP0112" />
+              <String CONTENT="modernen" HEIGHT="33" WIDTH="185" VPOS="1276" HPOS="1086" ID="P1_ST0139" WC="1" CC="11111111" />
+            </TextLine>
+            <TextLine HEIGHT="43" WIDTH="1060" VPOS="1321" HPOS="211" ID="P1_TL0028" STYLEREFS="StyleId-6E32EE1F-F2ED-4D32-8D3A-04BEC416DB00-">
+              <String CONTENT="Anforderungen," HEIGHT="42" WIDTH="295" VPOS="1322" HPOS="211" ID="P1_ST0140" WC="1" CC="11111111111111" />
+              <SP WIDTH="35" VPOS="1324" HPOS="507" ID="P1_SP0113" />
+              <String CONTENT="die" HEIGHT="31" WIDTH="54" VPOS="1323" HPOS="543" ID="P1_ST0141" WC="1" CC="111" />
+              <SP WIDTH="34" VPOS="1332" HPOS="598" ID="P1_SP0114" />
+              <String CONTENT="an" HEIGHT="22" WIDTH="40" VPOS="1332" HPOS="633" ID="P1_ST0142" WC="1" CC="11" />
+              <SP WIDTH="24" VPOS="1332" HPOS="674" ID="P1_SP0115" />
+              <String CONTENT="solche" HEIGHT="32" WIDTH="114" VPOS="1322" HPOS="699" ID="P1_ST0143" WC="1" CC="111111" />
+              <SP WIDTH="23" VPOS="1321" HPOS="814" ID="P1_SP0116" />
+              <String CONTENT="Anstalten" HEIGHT="33" WIDTH="170" VPOS="1321" HPOS="838" ID="P1_ST0144" WC="1" CC="111111111" />
+              <SP WIDTH="23" VPOS="1331" HPOS="1009" ID="P1_SP0117" />
+              <String CONTENT="gestellt" HEIGHT="42" WIDTH="130" VPOS="1321" HPOS="1033" ID="P1_ST0145" WC="1" CC="11111111" />
+              <SP WIDTH="23" VPOS="1324" HPOS="1164" ID="P1_SP0118" />
+              <String CONTENT="wer" HEIGHT="23" WIDTH="68" VPOS="1331" HPOS="1188" ID="P1_ST0146" WC="1" CC="111" />
+              <HYP CONTENT="172" />
+            </TextLine>
+            <TextLine HEIGHT="42" WIDTH="1060" VPOS="1366" HPOS="211" ID="P1_TL0029" STYLEREFS="StyleId-6E32EE1F-F2ED-4D32-8D3A-04BEC416DB00-">
+              <String CONTENT="den," HEIGHT="40" WIDTH="74" VPOS="1367" HPOS="211" ID="P1_ST0147" WC="1" CC="1111" />
+              <SP WIDTH="23" VPOS="1378" HPOS="286" ID="P1_SP0119" />
+              <String CONTENT="vollauf" HEIGHT="33" WIDTH="127" VPOS="1367" HPOS="310" ID="P1_ST0148" WC="1" CC="1111111" />
+              <SP WIDTH="23" VPOS="1368" HPOS="438" ID="P1_SP0120" />
+              <String CONTENT="entspricht" HEIGHT="40" WIDTH="181" VPOS="1368" HPOS="462" ID="P1_ST0149" WC="1" CC="1111111111" />
+              <SP WIDTH="21" VPOS="1369" HPOS="644" ID="P1_SP0121" />
+              <String CONTENT="und" HEIGHT="32" WIDTH="70" VPOS="1367" HPOS="666" ID="P1_ST0150" WC="1" CC="111" />
+              <SP WIDTH="24" VPOS="1367" HPOS="737" ID="P1_SP0122" />
+              <String CONTENT="die" HEIGHT="32" WIDTH="53" VPOS="1367" HPOS="762" ID="P1_ST0151" WC="1" CC="111" />
+              <SP WIDTH="19" VPOS="1367" HPOS="816" ID="P1_SP0123" />
+              <String CONTENT="in" HEIGHT="31" WIDTH="32" VPOS="1367" HPOS="836" ID="P1_ST0152" WC="1" CC="11" />
+              <SP WIDTH="17" VPOS="1376" HPOS="869" ID="P1_SP0124" />
+              <String CONTENT="solcher" HEIGHT="33" WIDTH="131" VPOS="1366" HPOS="887" ID="P1_ST0153" WC="1" CC="1111111" />
+              <SP WIDTH="14" VPOS="1366" HPOS="1019" ID="P1_SP0125" />
+              <String CONTENT="Ausdehnung" HEIGHT="41" WIDTH="237" VPOS="1366" HPOS="1034" ID="P1_ST0154" WC="1" CC="1111111111" />
+            </TextLine>
+            <TextLine HEIGHT="42" WIDTH="1059" VPOS="1411" HPOS="211" ID="P1_TL0030" STYLEREFS="StyleId-6E32EE1F-F2ED-4D32-8D3A-04BEC416DB00-">
+              <String CONTENT="und" HEIGHT="32" WIDTH="70" VPOS="1412" HPOS="211" ID="P1_ST0155" WC="1" CC="111" />
+              <SP WIDTH="40" VPOS="1412" HPOS="282" ID="P1_SP0126" />
+              <String CONTENT="mit" HEIGHT="32" WIDTH="59" VPOS="1412" HPOS="323" ID="P1_ST0156" WC="1" CC="111" />
+              <SP WIDTH="33" VPOS="1414" HPOS="383" ID="P1_SP0127" />
+              <String CONTENT="solcher" HEIGHT="32" WIDTH="132" VPOS="1412" HPOS="417" ID="P1_ST0157" WC="1" CC="1111111" />
+              <SP WIDTH="24" VPOS="1412" HPOS="550" ID="P1_SP0128" />
+              <String CONTENT="Einrichtung" HEIGHT="41" WIDTH="217" VPOS="1412" HPOS="575" ID="P1_ST0158" WC="1" CC="11111111111" />
+              <SP WIDTH="38" VPOS="1412" HPOS="793" ID="P1_SP0129" />
+              <String CONTENT="in" HEIGHT="31" WIDTH="32" VPOS="1412" HPOS="832" ID="P1_ST0159" WC="1" CC="11" />
+              <SP WIDTH="38" VPOS="1421" HPOS="865" ID="P1_SP0130" />
+              <String CONTENT="anderen" HEIGHT="32" WIDTH="147" VPOS="1411" HPOS="904" ID="P1_ST0160" WC="1" CC="1111111" />
+              <SP WIDTH="24" VPOS="1411" HPOS="1052" ID="P1_SP0131" />
+              <String CONTENT="Städten" HEIGHT="32" WIDTH="133" VPOS="1411" HPOS="1077" ID="P1_ST0161" WC="1" CC="1111111" />
+              <SP WIDTH="27" VPOS="1411" HPOS="1211" ID="P1_SP0132" />
+              <String CONTENT="in" HEIGHT="32" WIDTH="31" VPOS="1411" HPOS="1239" ID="P1_ST0162" WC="1" CC="11" />
+            </TextLine>
+            <TextLine HEIGHT="43" WIDTH="1059" VPOS="1455" HPOS="211" ID="P1_TL0031" STYLEREFS="StyleId-6E32EE1F-F2ED-4D32-8D3A-04BEC416DB00-">
+              <String CONTENT="der" HEIGHT="33" WIDTH="59" VPOS="1456" HPOS="211" ID="P1_ST0163" WC="1" CC="111" />
+              <SP WIDTH="21" VPOS="1456" HPOS="271" ID="P1_SP0133" />
+              <String CONTENT="Grösse" HEIGHT="33" WIDTH="126" VPOS="1456" HPOS="293" ID="P1_ST0164" WC="1" CC="111111" />
+              <SP WIDTH="34" VPOS="1466" HPOS="420" ID="P1_SP0134" />
+              <String CONTENT="von" HEIGHT="23" WIDTH="67" VPOS="1466" HPOS="455" ID="P1_ST0165" WC="1" CC="111" />
+              <SP WIDTH="25" VPOS="1457" HPOS="523" ID="P1_SP0135" />
+              <String CONTENT="Eger" HEIGHT="41" WIDTH="86" VPOS="1457" HPOS="549" ID="P1_ST0166" WC="1" CC="1111" />
+              <SP WIDTH="32" VPOS="1466" HPOS="636" ID="P1_SP0136" />
+              <String CONTENT="wohl" HEIGHT="33" WIDTH="89" VPOS="1456" HPOS="669" ID="P1_ST0167" WC="1" CC="1111" />
+              <SP WIDTH="36" VPOS="1456" HPOS="759" ID="P1_SP0137" />
+              <String CONTENT="kaum" HEIGHT="32" WIDTH="98" VPOS="1456" HPOS="796" ID="P1_ST0168" WC="1" CC="1111" />
+              <SP WIDTH="24" VPOS="1466" HPOS="895" ID="P1_SP0138" />
+              <String CONTENT="wieder" HEIGHT="32" WIDTH="124" VPOS="1456" HPOS="920" ID="P1_ST0169" WC="1" CC="111111" />
+              <SP WIDTH="33" VPOS="1465" HPOS="1045" ID="P1_SP0139" />
+              <String CONTENT="zu" HEIGHT="23" WIDTH="40" VPOS="1465" HPOS="1079" ID="P1_ST0170" WC="1" CC="11" />
+              <SP WIDTH="34" VPOS="1455" HPOS="1120" ID="P1_SP0140" />
+              <String CONTENT="finden" HEIGHT="33" WIDTH="115" VPOS="1455" HPOS="1155" ID="P1_ST0171" WC="1" CC="111111" />
+            </TextLine>
+            <TextLine HEIGHT="43" WIDTH="1059" VPOS="1500" HPOS="213" ID="P1_TL0032" STYLEREFS="StyleId-6E32EE1F-F2ED-4D32-8D3A-04BEC416DB00-">
+              <String CONTENT="sein" HEIGHT="32" WIDTH="68" VPOS="1501" HPOS="213" ID="P1_ST0172" WC="1" CC="1111" />
+              <SP WIDTH="26" VPOS="1511" HPOS="282" ID="P1_SP0141" />
+              <String CONTENT="wird," HEIGHT="41" WIDTH="91" VPOS="1501" HPOS="309" ID="P1_ST0173" WC="1" CC="11111" />
+              <SP WIDTH="24" VPOS="1501" HPOS="401" ID="P1_SP0142" />
+              <String CONTENT="ist" HEIGHT="33" WIDTH="40" VPOS="1501" HPOS="426" ID="P1_ST0174" WC="1" CC="111" />
+              <SP WIDTH="22" VPOS="1503" HPOS="467" ID="P1_SP0143" />
+              <String CONTENT="also" HEIGHT="32" WIDTH="70" VPOS="1502" HPOS="490" ID="P1_ST0175" WC="1" CC="1111" />
+              <SP WIDTH="24" VPOS="1511" HPOS="561" ID="P1_SP0144" />
+              <String CONTENT="einzig" HEIGHT="42" WIDTH="108" VPOS="1501" HPOS="586" ID="P1_ST0176" WC="1" CC="111111" />
+              <SP WIDTH="25" VPOS="1511" HPOS="695" ID="P1_SP0145" />
+              <String CONTENT="und" HEIGHT="32" WIDTH="69" VPOS="1501" HPOS="721" ID="P1_ST0177" WC="1" CC="111" />
+              <SP WIDTH="24" VPOS="1501" HPOS="791" ID="P1_SP0146" />
+              <String CONTENT="allein" HEIGHT="32" WIDTH="97" VPOS="1501" HPOS="816" ID="P1_ST0178" WC="1" CC="111111" />
+              <SP WIDTH="25" VPOS="1501" HPOS="914" ID="P1_SP0147" />
+              <String CONTENT="durch" HEIGHT="33" WIDTH="104" VPOS="1500" HPOS="940" ID="P1_ST0179" WC="1" CC="11111" />
+              <SP WIDTH="25" VPOS="1500" HPOS="1045" ID="P1_SP0148" />
+              <String CONTENT="die" HEIGHT="31" WIDTH="54" VPOS="1501" HPOS="1071" ID="P1_ST0180" WC="1" CC="111" />
+              <SP WIDTH="23" VPOS="1500" HPOS="1126" ID="P1_SP0149" />
+              <String CONTENT="Opfer" HEIGHT="42" WIDTH="106" VPOS="1500" HPOS="1150" ID="P1_ST0181" WC="1" CC="11111" />
+              <HYP CONTENT="172" />
+            </TextLine>
+            <TextLine HEIGHT="42" WIDTH="1059" VPOS="1545" HPOS="213" ID="P1_TL0033" STYLEREFS="StyleId-6E32EE1F-F2ED-4D32-8D3A-04BEC416DB00-">
+              <String CONTENT="willigkeit" HEIGHT="41" WIDTH="170" VPOS="1546" HPOS="213" ID="P1_ST0182" WC="1" CC="1111111111" />
+              <SP WIDTH="22" VPOS="1548" HPOS="384" ID="P1_SP0150" />
+              <String CONTENT="von" HEIGHT="22" WIDTH="67" VPOS="1556" HPOS="407" ID="P1_ST0183" WC="1" CC="111" />
+              <SP WIDTH="38" VPOS="1546" HPOS="475" ID="P1_SP0151" />
+              <String CONTENT="Bezirk" HEIGHT="32" WIDTH="149" VPOS="1546" HPOS="514" ID="P1_ST0184" WC="1" CC="111111" />
+              <SP WIDTH="35" VPOS="1546" HPOS="664" ID="P1_SP0152" />
+              <String CONTENT="und" HEIGHT="32" WIDTH="84" VPOS="1546" HPOS="700" ID="P1_ST0185" WC="1" CC="111" />
+              <SP WIDTH="35" VPOS="1545" HPOS="785" ID="P1_SP0153" />
+              <String CONTENT="Stadt" HEIGHT="33" WIDTH="121" VPOS="1545" HPOS="821" ID="P1_ST0186" WC="1" CC="11111" />
+              <SP WIDTH="31" VPOS="1546" HPOS="943" ID="P1_SP0154" />
+              <String CONTENT="Eger" HEIGHT="41" WIDTH="108" VPOS="1546" HPOS="975" ID="P1_ST0187" WC="1" CC="1111" />
+              <SP WIDTH="29" VPOS="1555" HPOS="1084" ID="P1_SP0155" />
+              <String CONTENT="mit" HEIGHT="31" WIDTH="59" VPOS="1546" HPOS="1114" ID="P1_ST0188" WC="1" CC="111" />
+              <SP WIDTH="22" VPOS="1547" HPOS="1174" ID="P1_SP0156" />
+              <String CONTENT="aus" HEIGHT="22" WIDTH="58" VPOS="1555" HPOS="1197" ID="P1_ST0189" WC="1" CC="111" />
+              <HYP CONTENT="172" />
+            </TextLine>
+            <TextLine HEIGHT="42" WIDTH="1062" VPOS="1590" HPOS="211" ID="P1_TL0034" STYLEREFS="StyleId-6E32EE1F-F2ED-4D32-8D3A-04BEC416DB00-">
+              <String CONTENT="giebiger" HEIGHT="41" WIDTH="154" VPOS="1591" HPOS="211" ID="P1_ST0190" WC="1" CC="11111111" />
+              <SP WIDTH="17" VPOS="1591" HPOS="366" ID="P1_SP0157" />
+              <String CONTENT="Unterstützung" HEIGHT="41" WIDTH="261" VPOS="1591" HPOS="384" ID="P1_ST0191" WC="1" CC="1111111111111" />
+              <SP WIDTH="23" VPOS="1591" HPOS="646" ID="P1_SP0158" />
+              <String CONTENT="der" HEIGHT="32" WIDTH="59" VPOS="1591" HPOS="670" ID="P1_ST0192" WC="1" CC="111" />
+              <SP WIDTH="17" VPOS="1601" HPOS="730" ID="P1_SP0159" />
+              <String CONTENT="allzeit" HEIGHT="32" WIDTH="105" VPOS="1590" HPOS="748" ID="P1_ST0193" WC="1" CC="1111111" />
+              <SP WIDTH="16" VPOS="1590" HPOS="854" ID="P1_SP0160" />
+              <String CONTENT="hilfsbereiten" HEIGHT="33" WIDTH="221" VPOS="1590" HPOS="871" ID="P1_ST0194" WC="1" CC="1111111111111" />
+              <SP WIDTH="20" VPOS="1590" HPOS="1093" ID="P1_SP0161" />
+              <String CONTENT="Egerer" HEIGHT="41" WIDTH="159" VPOS="1590" HPOS="1114" ID="P1_ST0195" WC="1" CC="111111" />
+            </TextLine>
+            <TextLine HEIGHT="42" WIDTH="663" VPOS="1635" HPOS="212" ID="P1_TL0035" STYLEREFS="StyleId-6E32EE1F-F2ED-4D32-8D3A-04BEC416DB00-">
+              <String CONTENT="Sparkassa" HEIGHT="41" WIDTH="241" VPOS="1635" HPOS="212" ID="P1_ST0196" WC="1" CC="111111111" />
+              <SP WIDTH="22" VPOS="1645" HPOS="454" ID="P1_SP0162" />
+              <String CONTENT="zustande" HEIGHT="32" WIDTH="159" VPOS="1636" HPOS="477" ID="P1_ST0197" WC="1" CC="11111111" />
+              <SP WIDTH="22" VPOS="1645" HPOS="637" ID="P1_SP0163" />
+              <String CONTENT="gekommen." HEIGHT="41" WIDTH="215" VPOS="1636" HPOS="660" ID="P1_ST0198" WC="1" CC="111111111" />
+            </TextLine>
+            <TextLine HEIGHT="42" WIDTH="991" VPOS="1697" HPOS="280" ID="P1_TL0036" STYLEREFS="StyleId-6E32EE1F-F2ED-4D32-8D3A-04BEC416DB00-">
+              <String CONTENT="Möge" HEIGHT="41" WIDTH="104" VPOS="1697" HPOS="280" ID="P1_ST0199" WC="1" CC="1111" />
+              <SP WIDTH="39" VPOS="1698" HPOS="385" ID="P1_SP0164" />
+              <String CONTENT="dieses" HEIGHT="31" WIDTH="107" VPOS="1698" HPOS="425" ID="P1_ST0200" WC="1" CC="111111" />
+              <SP WIDTH="39" VPOS="1707" HPOS="533" ID="P1_SP0165" />
+              <String CONTENT="neue" HEIGHT="22" WIDTH="85" VPOS="1707" HPOS="573" ID="P1_ST0201" WC="1" CC="1111" />
+              <SP WIDTH="39" VPOS="1697" HPOS="659" ID="P1_SP0166" />
+              <String CONTENT="Allgemeine" HEIGHT="42" WIDTH="209" VPOS="1697" HPOS="699" ID="P1_ST0202" WC="1" CC="1111111111" />
+              <SP WIDTH="25" VPOS="1697" HPOS="909" ID="P1_SP0167" />
+              <String CONTENT="Krankenhaus" HEIGHT="34" WIDTH="241" VPOS="1697" HPOS="935" ID="P1_ST0203" WC="1" CC="11111111111" />
+              <SP WIDTH="38" VPOS="1707" HPOS="1177" ID="P1_SP0168" />
+              <String CONTENT="auf" HEIGHT="33" WIDTH="55" VPOS="1697" HPOS="1216" ID="P1_ST0204" WC="1" CC="111" />
+            </TextLine>
+            <TextLine HEIGHT="42" WIDTH="1058" VPOS="1741" HPOS="212" ID="P1_TL0037" STYLEREFS="StyleId-6E32EE1F-F2ED-4D32-8D3A-04BEC416DB00-">
+              <String CONTENT="ungezählte" HEIGHT="41" WIDTH="196" VPOS="1741" HPOS="212" ID="P1_ST0205" WC="1" CC="1111111111" />
+              <SP WIDTH="21" VPOS="1742" HPOS="409" ID="P1_SP0169" />
+              <String CONTENT="Jahre" HEIGHT="42" WIDTH="95" VPOS="1741" HPOS="431" ID="P1_ST0206" WC="1" CC="11111" />
+              <SP WIDTH="35" VPOS="1741" HPOS="527" ID="P1_SP0170" />
+              <String CONTENT="hinaus" HEIGHT="33" WIDTH="119" VPOS="1741" HPOS="563" ID="P1_ST0207" WC="1" CC="111111" />
+              <SP WIDTH="38" VPOS="1742" HPOS="683" ID="P1_SP0171" />
+              <String CONTENT="der" HEIGHT="32" WIDTH="58" VPOS="1742" HPOS="722" ID="P1_ST0208" WC="1" CC="111" />
+              <SP WIDTH="23" VPOS="1742" HPOS="781" ID="P1_SP0172" />
+              <String CONTENT="heilbedürftigen" HEIGHT="41" WIDTH="280" VPOS="1741" HPOS="805" ID="P1_ST0209" WC="1" CC="111111111111111" />
+              <SP WIDTH="25" VPOS="1742" HPOS="1086" ID="P1_SP0173" />
+              <String CONTENT="Mensch" HEIGHT="32" WIDTH="140" VPOS="1742" HPOS="1112" ID="P1_ST0210" WC="1" CC="111111" />
+              <HYP CONTENT="172" />
+            </TextLine>
+            <TextLine HEIGHT="42" WIDTH="812" VPOS="1785" HPOS="212" ID="P1_TL0038" STYLEREFS="StyleId-6E32EE1F-F2ED-4D32-8D3A-04BEC416DB00-">
+              <String CONTENT="heit" HEIGHT="33" WIDTH="67" VPOS="1785" HPOS="212" ID="P1_ST0211" WC="1" CC="1111" />
+              <SP WIDTH="23" VPOS="1788" HPOS="280" ID="P1_SP0174" />
+              <String CONTENT="eine" HEIGHT="32" WIDTH="74" VPOS="1786" HPOS="304" ID="P1_ST0212" WC="1" CC="1111" />
+              <SP WIDTH="23" VPOS="1796" HPOS="379" ID="P1_SP0175" />
+              <String CONTENT="segensreiche" HEIGHT="41" WIDTH="233" VPOS="1786" HPOS="403" ID="P1_ST0213" WC="1" CC="111111111111" />
+              <SP WIDTH="24" VPOS="1787" HPOS="637" ID="P1_SP0176" />
+              <String CONTENT="Zufluchtstätte" HEIGHT="32" WIDTH="250" VPOS="1786" HPOS="662" ID="P1_ST0214" WC="1" CC="11111111111111" />
+              <SP WIDTH="23" VPOS="1796" HPOS="913" ID="P1_SP0177" />
+              <String CONTENT="sein!" HEIGHT="32" WIDTH="87" VPOS="1786" HPOS="937" ID="P1_ST0215" WC="1" CC="11111" />
+            </TextLine>
+          </TextBlock>
+          <TextBlock ID="BlockId-D2AE4A86-8B44-41E6-B828-43819DCA194F-" HEIGHT="378" WIDTH="1073" VPOS="1993" HPOS="206" STYLEREFS="StyleId-6E32EE1F-F2ED-4D32-8D3A-04BEC416DB00-">
+            <TextLine HEIGHT="66" WIDTH="958" VPOS="1999" HPOS="267" STYLEREFS="StyleId-B9C34055-F4F6-4710-9D0A-D070A83E0523-" ID="P1_TL0039">
+              <String CONTENT="Ueber" HEIGHT="52" WIDTH="171" VPOS="1999" HPOS="267" ID="P1_ST0216" WC="1" CC="11111" />
+              <SP WIDTH="34" VPOS="2000" HPOS="439" ID="P1_SP0178" />
+              <String CONTENT="Aluminium-Kochgeschirre." HEIGHT="66" WIDTH="751" VPOS="1999" HPOS="474" ID="P1_ST0217" WC="1" CC="111111111111111111111111" />
+            </TextLine>
+            <TextLine HEIGHT="43" WIDTH="994" VPOS="2098" HPOS="279" ID="P1_TL0040" STYLEREFS="StyleId-6E32EE1F-F2ED-4D32-8D3A-04BEC416DB00-">
+              <String CONTENT="In" HEIGHT="32" WIDTH="34" VPOS="2099" HPOS="279" ID="P1_ST0218" WC="1" CC="11" />
+              <SP WIDTH="24" VPOS="2100" HPOS="314" ID="P1_SP0179" />
+              <String CONTENT="diesem," HEIGHT="41" WIDTH="136" VPOS="2100" HPOS="339" ID="P1_ST0219" WC="1" CC="1111111" />
+              <SP WIDTH="23" VPOS="2110" HPOS="476" ID="P1_SP0180" />
+              <String CONTENT="von" HEIGHT="23" WIDTH="67" VPOS="2109" HPOS="500" ID="P1_ST0220" WC="1" CC="111" />
+              <SP WIDTH="26" VPOS="2099" HPOS="568" ID="P1_SP0181" />
+              <String CONTENT="Herrn" HEIGHT="32" WIDTH="106" VPOS="2099" HPOS="595" ID="P1_ST0221" WC="1" CC="11111" />
+              <SP WIDTH="21" VPOS="2099" HPOS="702" ID="P1_SP0182" />
+              <String CONTENT="Rechnungsrat" HEIGHT="42" WIDTH="252" VPOS="2098" HPOS="724" ID="P1_ST0222" WC="1" CC="111111111111" />
+              <SP WIDTH="23" VPOS="2099" HPOS="977" ID="P1_SP0183" />
+              <String CONTENT="Karl" HEIGHT="34" WIDTH="74" VPOS="2099" HPOS="1001" ID="P1_ST0223" WC="1" CC="1111" />
+              <SP WIDTH="22" VPOS="2099" HPOS="1076" ID="P1_SP0184" />
+              <String CONTENT="Richter" HEIGHT="33" WIDTH="174" VPOS="2099" HPOS="1099" ID="P1_ST0224" WC="1" CC="1111111" />
+            </TextLine>
+            <TextLine HEIGHT="34" WIDTH="1058" VPOS="2143" HPOS="213" ID="P1_TL0041" STYLEREFS="StyleId-6E32EE1F-F2ED-4D32-8D3A-04BEC416DB00-">
+              <String CONTENT="in" HEIGHT="32" WIDTH="32" VPOS="2143" HPOS="213" ID="P1_ST0225" WC="1" CC="11" />
+              <SP WIDTH="32" VPOS="2144" HPOS="246" ID="P1_SP0185" />
+              <String CONTENT="Wien" HEIGHT="33" WIDTH="97" VPOS="2144" HPOS="279" ID="P1_ST0226" WC="1" CC="1111" />
+              <SP WIDTH="35" VPOS="2155" HPOS="377" ID="P1_SP0186" />
+              <String CONTENT="verfassten" HEIGHT="32" WIDTH="179" VPOS="2145" HPOS="413" ID="P1_ST0227" WC="1" CC="1111111111" />
+              <SP WIDTH="39" VPOS="2153" HPOS="593" ID="P1_SP0187" />
+              <String CONTENT="und" HEIGHT="32" WIDTH="70" VPOS="2143" HPOS="633" ID="P1_ST0228" WC="1" CC="111" />
+              <SP WIDTH="39" VPOS="2143" HPOS="704" ID="P1_SP0188" />
+              <String CONTENT="in" HEIGHT="32" WIDTH="33" VPOS="2143" HPOS="744" ID="P1_ST0229" WC="1" CC="11" />
+              <SP WIDTH="38" VPOS="2153" HPOS="778" ID="P1_SP0189" />
+              <String CONTENT="unserer" HEIGHT="22" WIDTH="137" VPOS="2153" HPOS="817" ID="P1_ST0230" WC="1" CC="1111111" />
+              <SP WIDTH="37" VPOS="2143" HPOS="955" ID="P1_SP0190" />
+              <String CONTENT="Zeitschrift" HEIGHT="33" WIDTH="186" VPOS="2143" HPOS="993" ID="P1_ST0231" WC="1" CC="11111111111" />
+              <SP WIDTH="37" VPOS="2145" HPOS="1180" ID="P1_SP0191" />
+              <String CONTENT="am" HEIGHT="22" WIDTH="53" VPOS="2154" HPOS="1218" ID="P1_ST0232" WC="1" CC="11" />
+            </TextLine>
+            <TextLine HEIGHT="43" WIDTH="1059" VPOS="2187" HPOS="213" ID="P1_TL0042" STYLEREFS="StyleId-6E32EE1F-F2ED-4D32-8D3A-04BEC416DB00-">
+              <String CONTENT="25." HEIGHT="32" WIDTH="49" VPOS="2189" HPOS="213" ID="P1_ST0233" WC="1" CC="111" />
+              <SP WIDTH="18" VPOS="2189" HPOS="263" ID="P1_SP0192" />
+              <String CONTENT="Februar" HEIGHT="32" WIDTH="145" VPOS="2189" HPOS="282" ID="P1_ST0234" WC="1" CC="1111111" />
+              <SP WIDTH="22" VPOS="2188" HPOS="428" ID="P1_SP0193" />
+              <String CONTENT="1." HEIGHT="33" WIDTH="18" VPOS="2188" HPOS="451" ID="P1_ST0235" WC="1" CC="11" />
+              <SP WIDTH="17" VPOS="2189" HPOS="470" ID="P1_SP0194" />
+              <String CONTENT="J," HEIGHT="41" WIDTH="22" VPOS="2189" HPOS="488" ID="P1_ST0236" WC="1" CC="11" />
+              <SP WIDTH="23" VPOS="2199" HPOS="511" ID="P1_SP0195" />
+              <String CONTENT="veröffentlichten" HEIGHT="34" WIDTH="285" VPOS="2187" HPOS="535" ID="P1_ST0237" WC="1" CC="1111111111111111" />
+              <SP WIDTH="25" VPOS="2188" HPOS="821" ID="P1_SP0196" />
+              <String CONTENT="Artikel" HEIGHT="31" WIDTH="122" VPOS="2188" HPOS="847" ID="P1_ST0238" WC="1" CC="1111111" />
+              <SP WIDTH="25" VPOS="2188" HPOS="970" ID="P1_SP0197" />
+              <String CONTENT="ist" HEIGHT="32" WIDTH="40" VPOS="2188" HPOS="996" ID="P1_ST0239" WC="1" CC="111" />
+              <SP WIDTH="22" VPOS="2190" HPOS="1037" ID="P1_SP0198" />
+              <String CONTENT="auf" HEIGHT="32" WIDTH="56" VPOS="2188" HPOS="1060" ID="P1_ST0240" WC="1" CC="111" />
+              <SP WIDTH="21" VPOS="2187" HPOS="1117" ID="P1_SP0199" />
+              <String CONTENT="Seite" HEIGHT="33" WIDTH="87" VPOS="2187" HPOS="1139" ID="P1_ST0241" WC="1" CC="11111" />
+              <SP WIDTH="15" VPOS="2189" HPOS="1227" ID="P1_SP0200" />
+              <String CONTENT="6," HEIGHT="40" WIDTH="29" VPOS="2189" HPOS="1243" ID="P1_ST0242" WC="1" CC="11" />
+            </TextLine>
+            <TextLine HEIGHT="43" WIDTH="1060" VPOS="2232" HPOS="213" ID="P1_TL0043" STYLEREFS="StyleId-6E32EE1F-F2ED-4D32-8D3A-04BEC416DB00-">
+              <String CONTENT="Spalte" HEIGHT="43" WIDTH="109" VPOS="2232" HPOS="213" ID="P1_ST0243" WC="1" CC="111111" />
+              <SP WIDTH="23" VPOS="2236" HPOS="323" ID="P1_SP0201" />
+              <String CONTENT="2," HEIGHT="39" WIDTH="28" VPOS="2236" HPOS="347" ID="P1_ST0244" WC="1" CC="11" />
+              <SP WIDTH="24" VPOS="2244" HPOS="376" ID="P1_SP0202" />
+              <String CONTENT="ein" HEIGHT="32" WIDTH="52" VPOS="2234" HPOS="401" ID="P1_ST0245" WC="1" CC="111" />
+              <SP WIDTH="26" VPOS="2233" HPOS="454" ID="P1_SP0203" />
+              <String CONTENT="Druckfehler" HEIGHT="33" WIDTH="217" VPOS="2232" HPOS="481" ID="P1_ST0246" WC="1" CC="11111111111" />
+              <SP WIDTH="22" VPOS="2241" HPOS="699" ID="P1_SP0204" />
+              <String CONTENT="richtigzustellen." HEIGHT="41" WIDTH="287" VPOS="2232" HPOS="722" ID="P1_ST0247" WC="1" CC="11111111111111111" />
+              <SP WIDTH="33" VPOS="2232" HPOS="1010" ID="P1_SP0205" />
+              <String CONTENT="Es" HEIGHT="32" WIDTH="40" VPOS="2232" HPOS="1044" ID="P1_ST0248" WC="1" CC="11" />
+              <SP WIDTH="23" VPOS="2241" HPOS="1085" ID="P1_SP0206" />
+              <String CONTENT="soll" HEIGHT="32" WIDTH="62" VPOS="2232" HPOS="1109" ID="P1_ST0249" WC="1" CC="1111" />
+              <SP WIDTH="25" VPOS="2233" HPOS="1172" ID="P1_SP0207" />
+              <String CONTENT="dort" HEIGHT="32" WIDTH="75" VPOS="2233" HPOS="1198" ID="P1_ST0250" WC="1" CC="1111" />
+            </TextLine>
+            <TextLine HEIGHT="44" WIDTH="1061" VPOS="2276" HPOS="212" ID="P1_TL0044" STYLEREFS="StyleId-6E32EE1F-F2ED-4D32-8D3A-04BEC416DB00-">
+              <String CONTENT="richtig" HEIGHT="42" WIDTH="164" VPOS="2278" HPOS="212" ID="P1_ST0251" WC="1" CC="1111111" />
+              <SP WIDTH="23" VPOS="2278" HPOS="377" ID="P1_SP0208" />
+              <String CONTENT="heissen:" HEIGHT="32" WIDTH="147" VPOS="2278" HPOS="401" ID="P1_ST0252" WC="1" CC="11111111" />
+              <SP WIDTH="24" VPOS="2277" HPOS="549" ID="P1_SP0209" />
+              <String CONTENT="Das" HEIGHT="32" WIDTH="66" VPOS="2277" HPOS="574" ID="P1_ST0253" WC="1" CC="111" />
+              <SP WIDTH="19" VPOS="2276" HPOS="641" ID="P1_SP0210" />
+              <String CONTENT="Aluminium" HEIGHT="32" WIDTH="207" VPOS="2276" HPOS="661" ID="P1_ST0254" WC="1" CC="111111111" />
+              <SP WIDTH="22" VPOS="2276" HPOS="869" ID="P1_SP0211" />
+              <String CONTENT="des" HEIGHT="32" WIDTH="58" VPOS="2276" HPOS="892" ID="P1_ST0255" WC="1" CC="111" />
+              <SP WIDTH="21" VPOS="2277" HPOS="951" ID="P1_SP0212" />
+              <String CONTENT="Handels" HEIGHT="31" WIDTH="149" VPOS="2277" HPOS="973" ID="P1_ST0256" WC="1" CC="1111111" />
+              <SP WIDTH="24" VPOS="2285" HPOS="1123" ID="P1_SP0213" />
+              <String CONTENT="enthält" HEIGHT="32" WIDTH="125" VPOS="2277" HPOS="1148" ID="P1_ST0257" WC="1" CC="1111111" />
+            </TextLine>
+            <TextLine HEIGHT="45" WIDTH="697" VPOS="2320" HPOS="212" ID="P1_TL0045" STYLEREFS="StyleId-6E32EE1F-F2ED-4D32-8D3A-04BEC416DB00-">
+              <String CONTENT="von" HEIGHT="23" WIDTH="66" VPOS="2333" HPOS="212" ID="P1_ST0258" WC="1" CC="111" />
+              <SP WIDTH="24" VPOS="2324" HPOS="279" ID="P1_SP0214" />
+              <String CONTENT="92-84%" HEIGHT="42" WIDTH="134" VPOS="2323" HPOS="304" ID="P1_ST0259" WC="1" CC="111111" />
+              <SP WIDTH="30" VPOS="2323" HPOS="439" ID="P1_SP0215" />
+              <String CONTENT="bis" HEIGHT="32" WIDTH="50" VPOS="2323" HPOS="470" ID="P1_ST0260" WC="1" CC="111" />
+              <SP WIDTH="23" VPOS="2323" HPOS="521" ID="P1_SP0216" />
+              <String CONTENT="99" HEIGHT="32" WIDTH="41" VPOS="2322" HPOS="545" ID="P1_ST0261" WC="1" CC="11" />
+              <SP WIDTH="11" VPOS="2322" HPOS="587" ID="P1_SP0217" />
+              <String CONTENT="9%" HEIGHT="42" WIDTH="58" VPOS="2321" HPOS="599" ID="P1_ST0262" WC="1" CC="11" />
+              <SP WIDTH="31" VPOS="2321" HPOS="658" ID="P1_SP0218" />
+              <String CONTENT="Aluminium." HEIGHT="33" WIDTH="219" VPOS="2320" HPOS="690" ID="P1_ST0263" WC="1" CC="1111111111" />
+            </TextLine>
+          </TextBlock>
+          <TextBlock ID="BlockId-6D26CB90-B760-4F53-9B23-7E1A1EA461BE-" HEIGHT="750" WIDTH="1077" VPOS="2539" HPOS="206" STYLEREFS="StyleId-6E32EE1F-F2ED-4D32-8D3A-04BEC416DB00-">
+            <TextLine HEIGHT="66" WIDTH="1057" VPOS="2545" HPOS="215" STYLEREFS="StyleId-B9C34055-F4F6-4710-9D0A-D070A83E0523-" ID="P1_TL0046">
+              <String CONTENT="Gesetze," HEIGHT="60" WIDTH="230" VPOS="2548" HPOS="215" ID="P1_ST0264" WC="1" CC="11111111" />
+              <SP WIDTH="36" VPOS="2548" HPOS="446" ID="P1_SP0219" />
+              <String CONTENT="Verordnungen," HEIGHT="64" WIDTH="417" VPOS="2547" HPOS="483" ID="P1_ST0265" WC="1" CC="1111111111111" />
+              <SP WIDTH="42" VPOS="2545" HPOS="901" ID="P1_SP0220" />
+              <String CONTENT="Erlässe" HEIGHT="51" WIDTH="196" VPOS="2545" HPOS="944" ID="P1_ST0266" WC="1" CC="1111111" />
+              <SP WIDTH="39" VPOS="2562" HPOS="1141" ID="P1_SP0221" />
+              <String CONTENT="etc." HEIGHT="47" WIDTH="91" VPOS="2549" HPOS="1181" ID="P1_ST0267" WC="1" CC="1111" />
+            </TextLine>
+            <TextLine HEIGHT="45" WIDTH="1063" VPOS="2635" HPOS="212" STYLEREFS="StyleId-27A4373B-2714-4B00-983C-4ABF96E6F4F6-" ID="P1_TL0047">
+              <String CONTENT="Transport" HEIGHT="41" WIDTH="178" VPOS="2639" HPOS="212" ID="P1_ST0268" WC="1" CC="111111111" />
+              <SP WIDTH="38" VPOS="2639" HPOS="391" ID="P1_SP0222" />
+              <String CONTENT="von" HEIGHT="23" WIDTH="62" VPOS="2647" HPOS="430" ID="P1_ST0269" WC="1" CC="111" />
+              <SP WIDTH="42" VPOS="2637" HPOS="493" ID="P1_SP0223" />
+              <String CONTENT="Kranken" HEIGHT="34" WIDTH="145" VPOS="2636" HPOS="536" ID="P1_ST0270" WC="1" CC="1111111" />
+              <SP WIDTH="40" VPOS="2645" HPOS="682" ID="P1_SP0224" />
+              <String CONTENT="und" HEIGHT="32" WIDTH="62" VPOS="2636" HPOS="723" ID="P1_ST0271" WC="1" CC="111" />
+              <SP WIDTH="40" VPOS="2635" HPOS="786" ID="P1_SP0225" />
+              <String CONTENT="Verunglückten" HEIGHT="42" WIDTH="255" VPOS="2635" HPOS="827" ID="P1_ST0272" WC="1" CC="1111111111111" />
+              <SP WIDTH="40" VPOS="2645" HPOS="1083" ID="P1_SP0226" />
+              <String CONTENT="auf" HEIGHT="33" WIDTH="56" VPOS="2635" HPOS="1124" ID="P1_ST0273" WC="1" CC="111" />
+              <SP WIDTH="37" VPOS="2635" HPOS="1181" ID="P1_SP0227" />
+              <String CONTENT="der" HEIGHT="32" WIDTH="56" VPOS="2636" HPOS="1219" ID="P1_ST0274" WC="1" CC="111" />
+            </TextLine>
+            <TextLine HEIGHT="33" WIDTH="192" VPOS="2680" HPOS="651" STYLEREFS="StyleId-27A4373B-2714-4B00-983C-4ABF96E6F4F6-" ID="P1_TL0048">
+              <String CONTENT="Eisenbahn." HEIGHT="33" WIDTH="192" VPOS="2680" HPOS="651" ID="P1_ST0275" WC="1" CC="1111111111" />
+            </TextLine>
+            <TextLine HEIGHT="42" WIDTH="993" VPOS="2751" HPOS="282" ID="P1_TL0049" STYLEREFS="StyleId-6E32EE1F-F2ED-4D32-8D3A-04BEC416DB00-">
+              <String CONTENT="Das" HEIGHT="32" WIDTH="67" VPOS="2756" HPOS="282" ID="P1_ST0276" WC="1" CC="111" />
+              <SP WIDTH="30" VPOS="2754" HPOS="350" ID="P1_SP0228" />
+              <String CONTENT="Amtsblatt" HEIGHT="32" WIDTH="178" VPOS="2754" HPOS="381" ID="P1_ST0277" WC="1" CC="111111111" />
+              <SP WIDTH="30" VPOS="2753" HPOS="560" ID="P1_SP0229" />
+              <String CONTENT="der" HEIGHT="32" WIDTH="59" VPOS="2753" HPOS="591" ID="P1_ST0278" WC="1" CC="111" />
+              <SP WIDTH="30" VPOS="2753" HPOS="651" ID="P1_SP0230" />
+              <String CONTENT="Bezirkshauptmannschaft" HEIGHT="42" WIDTH="447" VPOS="2751" HPOS="682" ID="P1_ST0279" WC="1" CC="1111111111111111111111" />
+              <SP WIDTH="23" VPOS="2752" HPOS="1130" ID="P1_SP0231" />
+              <String CONTENT="Murau" HEIGHT="31" WIDTH="121" VPOS="2752" HPOS="1154" ID="P1_ST0280" WC="1" CC="11111" />
+            </TextLine>
+            <TextLine HEIGHT="47" WIDTH="1062" VPOS="2796" HPOS="214" ID="P1_TL0050" STYLEREFS="StyleId-6E32EE1F-F2ED-4D32-8D3A-04BEC416DB00-">
+              <String CONTENT="(Steiermark)" HEIGHT="44" WIDTH="221" VPOS="2799" HPOS="214" ID="P1_ST0281" WC="1" CC="111111111111" />
+              <SP WIDTH="20" VPOS="2801" HPOS="436" ID="P1_SP0232" />
+              <String CONTENT="veröffentlichte" HEIGHT="34" WIDTH="262" VPOS="2797" HPOS="457" ID="P1_ST0282" WC="1" CC="111111111111111" />
+              <SP WIDTH="22" VPOS="2807" HPOS="720" ID="P1_SP0233" />
+              <String CONTENT="vor" HEIGHT="23" WIDTH="61" VPOS="2807" HPOS="743" ID="P1_ST0283" WC="1" CC="111" />
+              <SP WIDTH="23" VPOS="2796" HPOS="805" ID="P1_SP0234" />
+              <String CONTENT="kurzer" HEIGHT="32" WIDTH="114" VPOS="2796" HPOS="829" ID="P1_ST0284" WC="1" CC="111111" />
+              <SP WIDTH="18" VPOS="2796" HPOS="944" ID="P1_SP0235" />
+              <String CONTENT="Zeit" HEIGHT="32" WIDTH="71" VPOS="2796" HPOS="963" ID="P1_ST0285" WC="1" CC="1111" />
+              <SP WIDTH="22" VPOS="2796" HPOS="1035" ID="P1_SP0236" />
+              <String CONTENT="den" HEIGHT="32" WIDTH="65" VPOS="2796" HPOS="1058" ID="P1_ST0286" WC="1" CC="111" />
+              <SP WIDTH="21" VPOS="2796" HPOS="1124" ID="P1_SP0237" />
+              <String CONTENT="Bericht" HEIGHT="32" WIDTH="130" VPOS="2796" HPOS="1146" ID="P1_ST0287" WC="1" CC="1111111" />
+            </TextLine>
+            <TextLine HEIGHT="44" WIDTH="1061" VPOS="2841" HPOS="213" ID="P1_TL0051" STYLEREFS="StyleId-6E32EE1F-F2ED-4D32-8D3A-04BEC416DB00-">
+              <String CONTENT="über" HEIGHT="32" WIDTH="83" VPOS="2847" HPOS="213" ID="P1_ST0288" WC="1" CC="1111" />
+              <SP WIDTH="38" VPOS="2845" HPOS="297" ID="P1_SP0238" />
+              <String CONTENT="die" HEIGHT="32" WIDTH="54" VPOS="2845" HPOS="336" ID="P1_ST0289" WC="1" CC="111" />
+              <SP WIDTH="37" VPOS="2843" HPOS="391" ID="P1_SP0239" />
+              <String CONTENT="Ausstattung" HEIGHT="42" WIDTH="220" VPOS="2843" HPOS="429" ID="P1_ST0290" WC="1" CC="11111111111" />
+              <SP WIDTH="44" VPOS="2853" HPOS="650" ID="P1_SP0240" />
+              <String CONTENT="eines" HEIGHT="32" WIDTH="89" VPOS="2843" HPOS="695" ID="P1_ST0291" WC="1" CC="11111" />
+              <SP WIDTH="40" VPOS="2841" HPOS="785" ID="P1_SP0241" />
+              <String CONTENT="Eisenbahnwagens" HEIGHT="41" WIDTH="328" VPOS="2841" HPOS="826" ID="P1_ST0292" WC="1" CC="111111111111111" />
+              <SP WIDTH="43" VPOS="2850" HPOS="1155" ID="P1_SP0242" />
+              <String CONTENT="zum" HEIGHT="22" WIDTH="75" VPOS="2850" HPOS="1199" ID="P1_ST0293" WC="1" CC="111" />
+            </TextLine>
+            <TextLine HEIGHT="47" WIDTH="809" VPOS="2885" HPOS="216" ID="P1_TL0052" STYLEREFS="StyleId-6E32EE1F-F2ED-4D32-8D3A-04BEC416DB00-">
+              <String CONTENT="Transporte" HEIGHT="40" WIDTH="202" VPOS="2892" HPOS="216" ID="P1_ST0294" WC="1" CC="1111111111" />
+              <SP WIDTH="22" VPOS="2889" HPOS="419" ID="P1_SP0243" />
+              <String CONTENT="für" HEIGHT="32" WIDTH="51" VPOS="2889" HPOS="442" ID="P1_ST0295" WC="1" CC="111" />
+              <SP WIDTH="24" VPOS="2889" HPOS="494" ID="P1_SP0244" />
+              <String CONTENT="Kranke" HEIGHT="34" WIDTH="129" VPOS="2888" HPOS="519" ID="P1_ST0296" WC="1" CC="111111" />
+              <SP WIDTH="23" VPOS="2898" HPOS="649" ID="P1_SP0245" />
+              <String CONTENT="und" HEIGHT="32" WIDTH="69" VPOS="2887" HPOS="673" ID="P1_ST0297" WC="1" CC="111" />
+              <SP WIDTH="23" VPOS="2887" HPOS="743" ID="P1_SP0246" />
+              <String CONTENT="Verunglückte." HEIGHT="42" WIDTH="258" VPOS="2885" HPOS="767" ID="P1_ST0298" WC="1" CC="1111111111111" />
+            </TextLine>
+            <TextLine HEIGHT="39" WIDTH="868" VPOS="2948" HPOS="284" ID="P1_TL0053" STYLEREFS="StyleId-6E32EE1F-F2ED-4D32-8D3A-04BEC416DB00-">
+              <String CONTENT="In" HEIGHT="31" WIDTH="33" VPOS="2955" HPOS="284" ID="P1_ST0299" WC="1" CC="11" />
+              <SP WIDTH="25" VPOS="2954" HPOS="318" ID="P1_SP0247" />
+              <String CONTENT="diesem" HEIGHT="33" WIDTH="127" VPOS="2954" HPOS="344" ID="P1_ST0300" WC="1" CC="111111" />
+              <SP WIDTH="25" VPOS="2952" HPOS="472" ID="P1_SP0248" />
+              <String CONTENT="Berichte" HEIGHT="34" WIDTH="150" VPOS="2950" HPOS="498" ID="P1_ST0301" WC="1" CC="11111111" />
+              <SP WIDTH="23" VPOS="2951" HPOS="649" ID="P1_SP0249" />
+              <String CONTENT="heisst" HEIGHT="32" WIDTH="101" VPOS="2950" HPOS="673" ID="P1_ST0302" WC="1" CC="111111" />
+              <SP WIDTH="22" VPOS="2952" HPOS="775" ID="P1_SP0250" />
+              <String CONTENT="es" HEIGHT="22" WIDTH="34" VPOS="2959" HPOS="798" ID="P1_ST0303" WC="1" CC="11" />
+              <SP WIDTH="22" VPOS="2958" HPOS="833" ID="P1_SP0251" />
+              <String CONTENT="unter" HEIGHT="32" WIDTH="96" VPOS="2949" HPOS="856" ID="P1_ST0304" WC="1" CC="11111" />
+              <SP WIDTH="20" VPOS="2957" HPOS="953" ID="P1_SP0252" />
+              <String CONTENT="anderem:" HEIGHT="32" WIDTH="178" VPOS="2948" HPOS="974" ID="P1_ST0305" WC="1" CC="11111111" />
+            </TextLine>
+            <TextLine HEIGHT="48" WIDTH="991" VPOS="3009" HPOS="284" ID="P1_TL0054" STYLEREFS="StyleId-6E32EE1F-F2ED-4D32-8D3A-04BEC416DB00-">
+              <String CONTENT="»In" HEIGHT="32" WIDTH="53" VPOS="3018" HPOS="284" ID="P1_ST0306" WC="1" CC="111" />
+              <SP WIDTH="27" VPOS="3017" HPOS="338" ID="P1_SP0253" />
+              <String CONTENT="Betätigung" HEIGHT="41" WIDTH="200" VPOS="3016" HPOS="366" ID="P1_ST0307" WC="1" CC="1111111111" />
+              <SP WIDTH="30" VPOS="3013" HPOS="567" ID="P1_SP0254" />
+              <String CONTENT="der" HEIGHT="33" WIDTH="59" VPOS="3013" HPOS="598" ID="P1_ST0308" WC="1" CC="111" />
+              <SP WIDTH="23" VPOS="3014" HPOS="658" ID="P1_SP0255" />
+              <String CONTENT="ihm" HEIGHT="32" WIDTH="68" VPOS="3013" HPOS="682" ID="P1_ST0309" WC="1" CC="111" />
+              <SP WIDTH="32" VPOS="3021" HPOS="751" ID="P1_SP0256" />
+              <String CONTENT="obliegenden" HEIGHT="42" WIDTH="226" VPOS="3010" HPOS="784" ID="P1_ST0310" WC="1" CC="11111111111" />
+              <SP WIDTH="26" VPOS="3010" HPOS="1011" ID="P1_SP0257" />
+              <String CONTENT="Friedenshilfe" HEIGHT="33" WIDTH="237" VPOS="3009" HPOS="1038" ID="P1_ST0311" WC="1" CC="1111111111111" />
+            </TextLine>
+            <TextLine HEIGHT="47" WIDTH="1060" VPOS="3055" HPOS="215" ID="P1_TL0055" STYLEREFS="StyleId-6E32EE1F-F2ED-4D32-8D3A-04BEC416DB00-">
+              <String CONTENT="hat" HEIGHT="32" WIDTH="54" VPOS="3064" HPOS="215" ID="P1_ST0312" WC="1" CC="111" />
+              <SP WIDTH="23" VPOS="3063" HPOS="270" ID="P1_SP0258" />
+              <String CONTENT="der" HEIGHT="31" WIDTH="59" VPOS="3063" HPOS="294" ID="P1_ST0313" WC="1" CC="111" />
+              <SP WIDTH="22" VPOS="3062" HPOS="354" ID="P1_SP0259" />
+              <String CONTENT="Zweigverein" HEIGHT="43" WIDTH="230" VPOS="3059" HPOS="377" ID="P1_ST0314" WC="1" CC="11111111111" />
+              <SP WIDTH="27" VPOS="3059" HPOS="608" ID="P1_SP0260" />
+              <String CONTENT="Murau" HEIGHT="32" WIDTH="119" VPOS="3059" HPOS="636" ID="P1_ST0315" WC="1" CC="11111" />
+              <SP WIDTH="24" VPOS="3057" HPOS="756" ID="P1_SP0261" />
+              <String CONTENT="des" HEIGHT="32" WIDTH="58" VPOS="3057" HPOS="781" ID="P1_ST0316" WC="1" CC="111" />
+              <SP WIDTH="25" VPOS="3058" HPOS="840" ID="P1_SP0262" />
+              <String CONTENT="Landes-" HEIGHT="33" WIDTH="144" VPOS="3055" HPOS="866" ID="P1_ST0317" WC="1" CC="1111111" />
+              <SP WIDTH="24" VPOS="3065" HPOS="1011" ID="P1_SP0263" />
+              <String CONTENT="und" HEIGHT="31" WIDTH="69" VPOS="3055" HPOS="1036" ID="P1_ST0318" WC="1" CC="111" />
+              <SP WIDTH="25" VPOS="3055" HPOS="1106" ID="P1_SP0264" />
+              <String CONTENT="Frauen" HEIGHT="31" WIDTH="126" VPOS="3055" HPOS="1132" ID="P1_ST0319" WC="1" CC="111111" />
+              <HYP CONTENT="172" />
+            </TextLine>
+            <TextLine HEIGHT="42" WIDTH="1061" VPOS="3098" HPOS="215" ID="P1_TL0056" STYLEREFS="StyleId-6E32EE1F-F2ED-4D32-8D3A-04BEC416DB00-">
+              <String CONTENT="hilfsvereines" HEIGHT="33" WIDTH="226" VPOS="3107" HPOS="215" ID="P1_ST0320" WC="1" CC="1111111111111" />
+              <SP WIDTH="33" VPOS="3115" HPOS="442" ID="P1_SP0265" />
+              <String CONTENT="vom" HEIGHT="23" WIDTH="79" VPOS="3114" HPOS="476" ID="P1_ST0321" WC="1" CC="111" />
+              <SP WIDTH="36" VPOS="3104" HPOS="556" ID="P1_SP0266" />
+              <String CONTENT="Roten" HEIGHT="34" WIDTH="105" VPOS="3104" HPOS="593" ID="P1_ST0322" WC="1" CC="11111" />
+              <SP WIDTH="37" VPOS="3102" HPOS="699" ID="P1_SP0267" />
+              <String CONTENT="Kreuze" HEIGHT="34" WIDTH="125" VPOS="3102" HPOS="737" ID="P1_ST0323" WC="1" CC="111111" />
+              <SP WIDTH="33" VPOS="3100" HPOS="863" ID="P1_SP0268" />
+              <String CONTENT="für" HEIGHT="32" WIDTH="52" VPOS="3100" HPOS="897" ID="P1_ST0324" WC="1" CC="111" />
+              <SP WIDTH="32" VPOS="3099" HPOS="950" ID="P1_SP0269" />
+              <String CONTENT="Steiermark" HEIGHT="34" WIDTH="198" VPOS="3098" HPOS="983" ID="P1_ST0325" WC="1" CC="1111111111" />
+              <SP WIDTH="34" VPOS="3098" HPOS="1182" ID="P1_SP0270" />
+              <String CONTENT="mit" HEIGHT="32" WIDTH="59" VPOS="3098" HPOS="1217" ID="P1_ST0326" WC="1" CC="111" />
+            </TextLine>
+            <TextLine HEIGHT="49" WIDTH="1060" VPOS="3143" HPOS="216" ID="P1_TL0057" STYLEREFS="StyleId-6E32EE1F-F2ED-4D32-8D3A-04BEC416DB00-">
+              <String CONTENT="Unterstützung" HEIGHT="39" WIDTH="260" VPOS="3153" HPOS="216" ID="P1_ST0327" WC="1" CC="1111111111111" />
+              <SP WIDTH="32" VPOS="3150" HPOS="477" ID="P1_SP0271" />
+              <String CONTENT="des" HEIGHT="32" WIDTH="59" VPOS="3150" HPOS="510" ID="P1_ST0328" WC="1" CC="111" />
+              <SP WIDTH="23" VPOS="3148" HPOS="570" ID="P1_SP0272" />
+              <String CONTENT="Stammvereines," HEIGHT="40" WIDTH="287" VPOS="3147" HPOS="594" ID="P1_ST0329" WC="1" CC="11111111111111" />
+              <SP WIDTH="23" VPOS="3154" HPOS="882" ID="P1_SP0273" />
+              <String CONTENT="um" HEIGHT="22" WIDTH="57" VPOS="3154" HPOS="906" ID="P1_ST0330" WC="1" CC="11" />
+              <SP WIDTH="25" VPOS="3154" HPOS="964" ID="P1_SP0274" />
+              <String CONTENT="einem" HEIGHT="31" WIDTH="109" VPOS="3145" HPOS="990" ID="P1_ST0331" WC="1" CC="11111" />
+              <SP WIDTH="23" VPOS="3154" HPOS="1100" ID="P1_SP0275" />
+              <String CONTENT="von" HEIGHT="23" WIDTH="67" VPOS="3153" HPOS="1124" ID="P1_ST0332" WC="1" CC="111" />
+              <SP WIDTH="24" VPOS="3143" HPOS="1192" ID="P1_SP0276" />
+              <String CONTENT="der" HEIGHT="32" WIDTH="59" VPOS="3143" HPOS="1217" ID="P1_ST0333" WC="1" CC="111" />
+            </TextLine>
+            <TextLine HEIGHT="49" WIDTH="1060" VPOS="3188" HPOS="215" ID="P1_TL0058" STYLEREFS="StyleId-6E32EE1F-F2ED-4D32-8D3A-04BEC416DB00-">
+              <String CONTENT="Bevölkerung" HEIGHT="39" WIDTH="235" VPOS="3198" HPOS="215" ID="P1_ST0334" WC="1" CC="11111111111" />
+              <SP WIDTH="31" VPOS="3205" HPOS="451" ID="P1_SP0277" />
+              <String CONTENT="oft" HEIGHT="33" WIDTH="46" VPOS="3194" HPOS="483" ID="P1_ST0335" WC="1" CC="111" />
+              <SP WIDTH="23" VPOS="3195" HPOS="530" ID="P1_SP0278" />
+              <String CONTENT="beklagten" HEIGHT="41" WIDTH="176" VPOS="3194" HPOS="554" ID="P1_ST0336" WC="1" CC="111111111" />
+              <SP WIDTH="33" VPOS="3201" HPOS="731" ID="P1_SP0279" />
+              <String CONTENT="empfindlichen" HEIGHT="42" WIDTH="262" VPOS="3189" HPOS="765" ID="P1_ST0337" WC="1" CC="1111111111111" />
+              <SP WIDTH="25" VPOS="3189" HPOS="1028" ID="P1_SP0280" />
+              <String CONTENT="Mangel" HEIGHT="41" WIDTH="137" VPOS="3188" HPOS="1054" ID="P1_ST0338" WC="1" CC="111111" />
+              <SP WIDTH="24" VPOS="3188" HPOS="1192" ID="P1_SP0281" />
+              <String CONTENT="ab" HEIGHT="32" WIDTH="42" VPOS="3188" HPOS="1217" ID="P1_ST0339" WC="1" CC="11" />
+              <HYP CONTENT="172" />
+            </TextLine>
+            <TextLine HEIGHT="50" WIDTH="1064" VPOS="3233" HPOS="213" ID="P1_TL0059" STYLEREFS="StyleId-6E32EE1F-F2ED-4D32-8D3A-04BEC416DB00-">
+              <String CONTENT="zuhelfen," HEIGHT="40" WIDTH="161" VPOS="3243" HPOS="213" ID="P1_ST0340" WC="1" CC="111111111" />
+              <SP WIDTH="32" VPOS="3241" HPOS="375" ID="P1_SP0282" />
+              <String CONTENT="bereits" HEIGHT="34" WIDTH="119" VPOS="3240" HPOS="408" ID="P1_ST0341" WC="1" CC="1111111" />
+              <SP WIDTH="32" VPOS="3239" HPOS="528" ID="P1_SP0283" />
+              <String CONTENT="im" HEIGHT="32" WIDTH="43" VPOS="3239" HPOS="561" ID="P1_ST0342" WC="1" CC="11" />
+              <SP WIDTH="29" VPOS="3239" HPOS="605" ID="P1_SP0284" />
+              <String CONTENT="Jahre" HEIGHT="42" WIDTH="94" VPOS="3238" HPOS="635" ID="P1_ST0343" WC="1" CC="11111" />
+              <SP WIDTH="36" VPOS="3238" HPOS="730" ID="P1_SP0285" />
+              <String CONTENT="1909" HEIGHT="32" WIDTH="81" VPOS="3236" HPOS="767" ID="P1_ST0344" WC="1" CC="1111" />
+              <SP WIDTH="32" VPOS="3235" HPOS="849" ID="P1_SP0286" />
+              <String CONTENT="die" HEIGHT="32" WIDTH="54" VPOS="3235" HPOS="882" ID="P1_ST0345" WC="1" CC="111" />
+              <SP WIDTH="32" VPOS="3234" HPOS="937" ID="P1_SP0287" />
+              <String CONTENT="Einrichtung" HEIGHT="41" WIDTH="218" VPOS="3233" HPOS="970" ID="P1_ST0346" WC="1" CC="11111111111" />
+              <SP WIDTH="30" VPOS="3242" HPOS="1189" ID="P1_SP0288" />
+              <String CONTENT="zur" HEIGHT="23" WIDTH="57" VPOS="3241" HPOS="1220" ID="P1_ST0347" WC="1" CC="111" />
+            </TextLine>
+          </TextBlock>
+        </ComposedBlock>
+        <TextBlock ID="BlockId-2C9F76C0-0D2A-48FA-A54E-66F4396DA5A1-" HEIGHT="3116" WIDTH="1082" VPOS="162" HPOS="1374" STYLEREFS="StyleId-6E32EE1F-F2ED-4D32-8D3A-04BEC416DB00-">
+          <TextLine HEIGHT="41" WIDTH="1067" VPOS="168" HPOS="1381" ID="P1_TL0060" STYLEREFS="StyleId-6E32EE1F-F2ED-4D32-8D3A-04BEC416DB00-">
+            <String CONTENT="Ausstattung" HEIGHT="41" WIDTH="218" VPOS="168" HPOS="1381" ID="P1_ST0348" WC="1" CC="11111111111" />
+            <SP WIDTH="31" VPOS="178" HPOS="1600" ID="P1_SP0289" />
+            <String CONTENT="eines" HEIGHT="31" WIDTH="90" VPOS="169" HPOS="1632" ID="P1_ST0349" WC="1" CC="11111" />
+            <SP WIDTH="25" VPOS="169" HPOS="1723" ID="P1_SP0290" />
+            <String CONTENT="Eisenbahnwagens" HEIGHT="41" WIDTH="330" VPOS="168" HPOS="1749" ID="P1_ST0350" WC="1" CC="111111111111111" />
+            <SP WIDTH="29" VPOS="178" HPOS="2080" ID="P1_SP0291" />
+            <String CONTENT="zum" HEIGHT="23" WIDTH="76" VPOS="177" HPOS="2110" ID="P1_ST0351" WC="1" CC="111" />
+            <SP WIDTH="24" VPOS="168" HPOS="2187" ID="P1_SP0292" />
+            <String CONTENT="Zwecke" HEIGHT="32" WIDTH="143" VPOS="168" HPOS="2212" ID="P1_ST0352" WC="1" CC="111111" />
+            <SP WIDTH="33" VPOS="169" HPOS="2356" ID="P1_SP0293" />
+            <String CONTENT="des" HEIGHT="32" WIDTH="58" VPOS="169" HPOS="2390" ID="P1_ST0353" WC="1" CC="111" />
+          </TextLine>
+          <TextLine HEIGHT="42" WIDTH="1065" VPOS="212" HPOS="1381" ID="P1_TL0061" STYLEREFS="StyleId-6E32EE1F-F2ED-4D32-8D3A-04BEC416DB00-">
+            <String CONTENT="Transportes" HEIGHT="41" WIDTH="219" VPOS="213" HPOS="1381" ID="P1_ST0354" WC="1" CC="11111111111" />
+            <SP WIDTH="32" VPOS="223" HPOS="1601" ID="P1_SP0294" />
+            <String CONTENT="von" HEIGHT="22" WIDTH="67" VPOS="223" HPOS="1634" ID="P1_ST0355" WC="1" CC="111" />
+            <SP WIDTH="33" VPOS="212" HPOS="1702" ID="P1_SP0295" />
+            <String CONTENT="Schwerkranken" HEIGHT="33" WIDTH="284" VPOS="212" HPOS="1736" ID="P1_ST0356" WC="1" CC="1111111111111" />
+            <SP WIDTH="32" VPOS="222" HPOS="2021" ID="P1_SP0296" />
+            <String CONTENT="oder" HEIGHT="33" WIDTH="82" VPOS="212" HPOS="2054" ID="P1_ST0357" WC="1" CC="1111" />
+            <SP WIDTH="33" VPOS="213" HPOS="2137" ID="P1_SP0297" />
+            <String CONTENT="Verunglückten" HEIGHT="41" WIDTH="275" VPOS="213" HPOS="2171" ID="P1_ST0358" WC="1" CC="1111111111111" />
+          </TextLine>
+          <TextLine HEIGHT="42" WIDTH="472" VPOS="257" HPOS="1381" ID="P1_TL0062" STYLEREFS="StyleId-6E32EE1F-F2ED-4D32-8D3A-04BEC416DB00-">
+            <String CONTENT="in" HEIGHT="31" WIDTH="33" VPOS="258" HPOS="1381" ID="P1_ST0359" WC="1" CC="11" />
+            <SP WIDTH="24" VPOS="257" HPOS="1415" ID="P1_SP0298" />
+            <String CONTENT="die" HEIGHT="32" WIDTH="54" VPOS="257" HPOS="1440" ID="P1_ST0360" WC="1" CC="111" />
+            <SP WIDTH="23" VPOS="258" HPOS="1495" ID="P1_SP0299" />
+            <String CONTENT="Spitäler" HEIGHT="42" WIDTH="141" VPOS="257" HPOS="1519" ID="P1_ST0361" WC="1" CC="11111111" />
+            <SP WIDTH="21" VPOS="258" HPOS="1661" ID="P1_SP0300" />
+            <String CONTENT="beschafft." HEIGHT="33" WIDTH="170" VPOS="257" HPOS="1683" ID="P1_ST0362" WC="1" CC="1111111111" />
+          </TextLine>
+          <TextLine HEIGHT="42" WIDTH="941" VPOS="320" HPOS="1449" ID="P1_TL0063" STYLEREFS="StyleId-6E32EE1F-F2ED-4D32-8D3A-04BEC416DB00-">
+            <String CONTENT="Die" HEIGHT="32" WIDTH="62" VPOS="320" HPOS="1449" ID="P1_ST0363" WC="1" CC="111" />
+            <SP WIDTH="24" VPOS="321" HPOS="1512" ID="P1_SP0301" />
+            <String CONTENT="Einrichtung" HEIGHT="42" WIDTH="219" VPOS="320" HPOS="1537" ID="P1_ST0364" WC="1" CC="11111111111" />
+            <SP WIDTH="22" VPOS="321" HPOS="1757" ID="P1_SP0302" />
+            <String CONTENT="besteht" HEIGHT="31" WIDTH="130" VPOS="321" HPOS="1780" ID="P1_ST0365" WC="1" CC="1111111" />
+            <SP WIDTH="22" VPOS="322" HPOS="1911" ID="P1_SP0303" />
+            <String CONTENT="aus" HEIGHT="23" WIDTH="59" VPOS="329" HPOS="1934" ID="P1_ST0366" WC="1" CC="111" />
+            <SP WIDTH="23" VPOS="320" HPOS="1994" ID="P1_SP0304" />
+            <String CONTENT="folgenden" HEIGHT="41" WIDTH="183" VPOS="320" HPOS="2018" ID="P1_ST0367" WC="1" CC="111111111" />
+            <SP WIDTH="25" VPOS="320" HPOS="2202" ID="P1_SP0305" />
+            <String CONTENT="Stücken:" HEIGHT="33" WIDTH="162" VPOS="320" HPOS="2228" ID="P1_ST0368" WC="1" CC="11111111" />
+          </TextLine>
+          <TextLine HEIGHT="43" WIDTH="999" VPOS="364" HPOS="1449" ID="P1_TL0064" STYLEREFS="StyleId-6E32EE1F-F2ED-4D32-8D3A-04BEC416DB00-">
+            <String CONTENT="Rädertragbahre" HEIGHT="42" WIDTH="285" VPOS="364" HPOS="1449" ID="P1_ST0369" WC="1" CC="11111111111111" />
+            <SP WIDTH="24" VPOS="366" HPOS="1735" ID="P1_SP0306" />
+            <String CONTENT="(Modell" HEIGHT="40" WIDTH="141" VPOS="365" HPOS="1760" ID="P1_ST0370" WC="1" CC="1111111" />
+            <SP WIDTH="25" VPOS="365" HPOS="1902" ID="P1_SP0307" />
+            <String CONTENT="der" HEIGHT="32" WIDTH="59" VPOS="365" HPOS="1928" ID="P1_ST0371" WC="1" CC="111" />
+            <SP WIDTH="22" VPOS="365" HPOS="1988" ID="P1_SP0308" />
+            <String CONTENT="k." HEIGHT="32" WIDTH="28" VPOS="365" HPOS="2011" ID="P1_ST0372" WC="1" CC="11" />
+            <SP WIDTH="20" VPOS="365" HPOS="2040" ID="P1_SP0309" />
+            <String CONTENT="k." HEIGHT="32" WIDTH="28" VPOS="365" HPOS="2061" ID="P1_ST0373" WC="1" CC="11" />
+            <SP WIDTH="17" VPOS="365" HPOS="2090" ID="P1_SP0310" />
+            <String CONTENT="Landwehr)," HEIGHT="42" WIDTH="207" VPOS="365" HPOS="2108" ID="P1_ST0374" WC="1" CC="1111111111" />
+            <SP WIDTH="26" VPOS="366" HPOS="2316" ID="P1_SP0311" />
+            <String CONTENT="Kran" HEIGHT="34" WIDTH="87" VPOS="366" HPOS="2343" ID="P1_ST0375" WC="1" CC="1111" />
+            <HYP CONTENT="172" />
+          </TextLine>
+          <TextLine HEIGHT="43" WIDTH="1066" VPOS="409" HPOS="1381" ID="P1_TL0065" STYLEREFS="StyleId-6E32EE1F-F2ED-4D32-8D3A-04BEC416DB00-">
+            <String CONTENT="kenlagerungsapparat" HEIGHT="41" WIDTH="387" VPOS="410" HPOS="1381" ID="P1_ST0376" WC="1" CC="1111111111111111111" />
+            <SP WIDTH="38" VPOS="410" HPOS="1769" ID="P1_SP0312" />
+            <String CONTENT="(System" HEIGHT="43" WIDTH="141" VPOS="409" HPOS="1808" ID="P1_ST0377" WC="1" CC="1111111" />
+            <SP WIDTH="37" VPOS="409" HPOS="1950" ID="P1_SP0313" />
+            <String CONTENT="Pastor)," HEIGHT="41" WIDTH="135" VPOS="409" HPOS="1988" ID="P1_ST0378" WC="1" CC="11111111" />
+            <SP WIDTH="33" VPOS="410" HPOS="2124" ID="P1_SP0314" />
+            <String CONTENT="Rettungskasten," HEIGHT="42" WIDTH="289" VPOS="410" HPOS="2158" ID="P1_ST0379" WC="1" CC="111111111111111" />
+          </TextLine>
+          <TextLine HEIGHT="42" WIDTH="1063" VPOS="454" HPOS="1380" ID="P1_TL0066" STYLEREFS="StyleId-6E32EE1F-F2ED-4D32-8D3A-04BEC416DB00-">
+            <String CONTENT="zwei" HEIGHT="32" WIDTH="80" VPOS="454" HPOS="1380" ID="P1_ST0380" WC="1" CC="1111" />
+            <SP WIDTH="19" VPOS="454" HPOS="1461" ID="P1_SP0315" />
+            <String CONTENT="Beinschienen," HEIGHT="39" WIDTH="250" VPOS="454" HPOS="1481" ID="P1_ST0381" WC="1" CC="1111111111111" />
+            <SP WIDTH="17" VPOS="455" HPOS="1732" ID="P1_SP0316" />
+            <String CONTENT="Verbandmaterial," HEIGHT="40" WIDTH="317" VPOS="454" HPOS="1750" ID="P1_ST0382" WC="1" CC="1111111111111111" />
+            <SP WIDTH="17" VPOS="454" HPOS="2068" ID="P1_SP0317" />
+            <String CONTENT="Waschkasten," HEIGHT="42" WIDTH="247" VPOS="454" HPOS="2086" ID="P1_ST0383" WC="1" CC="111111111111" />
+            <SP WIDTH="21" VPOS="456" HPOS="2334" ID="P1_SP0318" />
+            <String CONTENT="Bett" HEIGHT="32" WIDTH="71" VPOS="456" HPOS="2356" ID="P1_ST0384" WC="1" CC="1111" />
+            <HYP CONTENT="172" />
+          </TextLine>
+          <TextLine HEIGHT="42" WIDTH="1062" VPOS="499" HPOS="1381" ID="P1_TL0067" STYLEREFS="StyleId-6E32EE1F-F2ED-4D32-8D3A-04BEC416DB00-">
+            <String CONTENT="wäsche," HEIGHT="41" WIDTH="140" VPOS="499" HPOS="1381" ID="P1_ST0385" WC="1" CC="1111111" />
+            <SP WIDTH="25" VPOS="499" HPOS="1522" ID="P1_SP0319" />
+            <String CONTENT="Decken," HEIGHT="41" WIDTH="144" VPOS="499" HPOS="1548" ID="P1_ST0386" WC="1" CC="1111111" />
+            <SP WIDTH="18" VPOS="499" HPOS="1693" ID="P1_SP0320" />
+            <String CONTENT="Bank," HEIGHT="40" WIDTH="99" VPOS="499" HPOS="1712" ID="P1_ST0387" WC="1" CC="11111" />
+            <SP WIDTH="20" VPOS="499" HPOS="1812" ID="P1_SP0321" />
+            <String CONTENT="Sessel," HEIGHT="38" WIDTH="117" VPOS="499" HPOS="1833" ID="P1_ST0388" WC="1" CC="1111111" />
+            <SP WIDTH="18" VPOS="499" HPOS="1951" ID="P1_SP0322" />
+            <String CONTENT="Klosett" HEIGHT="35" WIDTH="127" VPOS="499" HPOS="1970" ID="P1_ST0389" WC="1" CC="1111111" />
+            <SP WIDTH="21" VPOS="501" HPOS="2098" ID="P1_SP0323" />
+            <String CONTENT="und" HEIGHT="32" WIDTH="70" VPOS="499" HPOS="2120" ID="P1_ST0390" WC="1" CC="111" />
+            <SP WIDTH="19" VPOS="499" HPOS="2191" ID="P1_SP0324" />
+            <String CONTENT="Spiritusofen." HEIGHT="42" WIDTH="232" VPOS="499" HPOS="2211" ID="P1_ST0391" WC="1" CC="1111111111111" />
+          </TextLine>
+          <TextLine HEIGHT="43" WIDTH="997" VPOS="561" HPOS="1451" ID="P1_TL0068" STYLEREFS="StyleId-6E32EE1F-F2ED-4D32-8D3A-04BEC416DB00-">
+            <String CONTENT="Bei" HEIGHT="32" WIDTH="55" VPOS="562" HPOS="1451" ID="P1_ST0392" WC="1" CC="111" />
+            <SP WIDTH="36" VPOS="562" HPOS="1507" ID="P1_SP0325" />
+            <String CONTENT="Inanspruchnahme" HEIGHT="41" WIDTH="330" VPOS="562" HPOS="1544" ID="P1_ST0393" WC="1" CC="111111111111111" />
+            <SP WIDTH="34" VPOS="562" HPOS="1875" ID="P1_SP0326" />
+            <String CONTENT="des" HEIGHT="32" WIDTH="59" VPOS="562" HPOS="1910" ID="P1_ST0394" WC="1" CC="111" />
+            <SP WIDTH="35" VPOS="572" HPOS="1970" ID="P1_SP0327" />
+            <String CONTENT="eingerichteten" HEIGHT="42" WIDTH="257" VPOS="561" HPOS="2006" ID="P1_ST0395" WC="1" CC="11111111111111" />
+            <SP WIDTH="34" VPOS="563" HPOS="2264" ID="P1_SP0328" />
+            <String CONTENT="Wagens" HEIGHT="41" WIDTH="149" VPOS="563" HPOS="2299" ID="P1_ST0396" WC="1" CC="111111" />
+          </TextLine>
+          <TextLine HEIGHT="43" WIDTH="1065" VPOS="606" HPOS="1382" ID="P1_TL0069" STYLEREFS="StyleId-6E32EE1F-F2ED-4D32-8D3A-04BEC416DB00-">
+            <String CONTENT="genügt" HEIGHT="39" WIDTH="129" VPOS="608" HPOS="1382" ID="P1_ST0397" WC="1" CC="111111" />
+            <SP WIDTH="30" VPOS="607" HPOS="1512" ID="P1_SP0329" />
+            <String CONTENT="die" HEIGHT="32" WIDTH="55" VPOS="607" HPOS="1543" ID="P1_ST0398" WC="1" CC="111" />
+            <SP WIDTH="32" VPOS="607" HPOS="1599" ID="P1_SP0330" />
+            <String CONTENT="Benachrichtigung" HEIGHT="41" WIDTH="328" VPOS="607" HPOS="1632" ID="P1_ST0399" WC="1" CC="1111111111111111" />
+            <SP WIDTH="31" VPOS="606" HPOS="1961" ID="P1_SP0331" />
+            <String CONTENT="der" HEIGHT="32" WIDTH="59" VPOS="606" HPOS="1993" ID="P1_ST0400" WC="1" CC="111" />
+            <SP WIDTH="32" VPOS="607" HPOS="2053" ID="P1_SP0332" />
+            <String CONTENT="Betriebsleitung" HEIGHT="42" WIDTH="278" VPOS="607" HPOS="2086" ID="P1_ST0401" WC="1" CC="111111111111111" />
+            <SP WIDTH="23" VPOS="608" HPOS="2365" ID="P1_SP0333" />
+            <String CONTENT="der" HEIGHT="32" WIDTH="58" VPOS="608" HPOS="2389" ID="P1_ST0402" WC="1" CC="111" />
+          </TextLine>
+          <TextLine HEIGHT="41" WIDTH="1062" VPOS="651" HPOS="1384" ID="P1_TL0070" STYLEREFS="StyleId-6E32EE1F-F2ED-4D32-8D3A-04BEC416DB00-">
+            <String CONTENT="Murtalbahn" HEIGHT="33" WIDTH="213" VPOS="651" HPOS="1384" ID="P1_ST0403" WC="1" CC="1111111111" />
+            <SP WIDTH="36" VPOS="652" HPOS="1598" ID="P1_SP0334" />
+            <String CONTENT="in" HEIGHT="31" WIDTH="31" VPOS="652" HPOS="1635" ID="P1_ST0404" WC="1" CC="11" />
+            <SP WIDTH="38" VPOS="652" HPOS="1667" ID="P1_SP0335" />
+            <String CONTENT="Murau," HEIGHT="40" WIDTH="128" VPOS="652" HPOS="1706" ID="P1_ST0405" WC="1" CC="111111" />
+            <SP WIDTH="31" VPOS="662" HPOS="1835" ID="P1_SP0336" />
+            <String CONTENT="welche" HEIGHT="33" WIDTH="127" VPOS="651" HPOS="1867" ID="P1_ST0406" WC="1" CC="111111" />
+            <SP WIDTH="34" VPOS="661" HPOS="1995" ID="P1_SP0337" />
+            <String CONTENT="sofort" HEIGHT="32" WIDTH="104" VPOS="651" HPOS="2030" ID="P1_ST0407" WC="1" CC="111111" />
+            <SP WIDTH="33" VPOS="651" HPOS="2135" ID="P1_SP0338" />
+            <String CONTENT="dessen" HEIGHT="33" WIDTH="119" VPOS="651" HPOS="2169" ID="P1_ST0408" WC="1" CC="111111" />
+            <SP WIDTH="35" VPOS="652" HPOS="2289" ID="P1_SP0339" />
+            <String CONTENT="Bereit" HEIGHT="32" WIDTH="107" VPOS="652" HPOS="2325" ID="P1_ST0409" WC="1" CC="111111" />
+            <HYP CONTENT="172" />
+          </TextLine>
+          <TextLine HEIGHT="43" WIDTH="1064" VPOS="695" HPOS="1383" ID="P1_TL0071" STYLEREFS="StyleId-6E32EE1F-F2ED-4D32-8D3A-04BEC416DB00-">
+            <String CONTENT="stellung" HEIGHT="42" WIDTH="145" VPOS="695" HPOS="1383" ID="P1_ST0410" WC="1" CC="11111111" />
+            <SP WIDTH="23" VPOS="697" HPOS="1529" ID="P1_SP0340" />
+            <String CONTENT="in" HEIGHT="31" WIDTH="32" VPOS="697" HPOS="1553" ID="P1_ST0411" WC="1" CC="11" />
+            <SP WIDTH="25" VPOS="697" HPOS="1586" ID="P1_SP0341" />
+            <String CONTENT="der" HEIGHT="31" WIDTH="59" VPOS="697" HPOS="1612" ID="P1_ST0412" WC="1" CC="111" />
+            <SP WIDTH="14" VPOS="696" HPOS="1672" ID="P1_SP0342" />
+            <String CONTENT="Station" HEIGHT="33" WIDTH="126" VPOS="696" HPOS="1687" ID="P1_ST0413" WC="1" CC="1111111" />
+            <SP WIDTH="26" VPOS="696" HPOS="1814" ID="P1_SP0343" />
+            <String CONTENT="Murau" HEIGHT="32" WIDTH="120" VPOS="696" HPOS="1841" ID="P1_ST0414" WC="1" CC="11111" />
+            <SP WIDTH="26" VPOS="705" HPOS="1962" ID="P1_SP0344" />
+            <String CONTENT="oder" HEIGHT="33" WIDTH="83" VPOS="695" HPOS="1989" ID="P1_ST0415" WC="1" CC="1111" />
+            <SP WIDTH="13" VPOS="696" HPOS="2073" ID="P1_SP0345" />
+            <String CONTENT="Absendung" HEIGHT="42" WIDTH="213" VPOS="696" HPOS="2087" ID="P1_ST0416" WC="1" CC="111111111" />
+            <SP WIDTH="23" VPOS="707" HPOS="2301" ID="P1_SP0346" />
+            <String CONTENT="an" HEIGHT="22" WIDTH="40" VPOS="707" HPOS="2325" ID="P1_ST0417" WC="1" CC="11" />
+            <SP WIDTH="26" VPOS="697" HPOS="2366" ID="P1_SP0347" />
+            <String CONTENT="die" HEIGHT="33" WIDTH="54" VPOS="697" HPOS="2393" ID="P1_ST0418" WC="1" CC="111" />
+          </TextLine>
+          <TextLine HEIGHT="35" WIDTH="1063" VPOS="740" HPOS="1382" ID="P1_TL0072" STYLEREFS="StyleId-6E32EE1F-F2ED-4D32-8D3A-04BEC416DB00-">
+            <String CONTENT="für" HEIGHT="32" WIDTH="52" VPOS="740" HPOS="1382" ID="P1_ST0419" WC="1" CC="111" />
+            <SP WIDTH="23" VPOS="741" HPOS="1435" ID="P1_SP0348" />
+            <String CONTENT="die" HEIGHT="32" WIDTH="53" VPOS="741" HPOS="1459" ID="P1_ST0420" WC="1" CC="111" />
+            <SP WIDTH="23" VPOS="740" HPOS="1513" ID="P1_SP0349" />
+            <String CONTENT="Aufnahme" HEIGHT="34" WIDTH="191" VPOS="740" HPOS="1537" ID="P1_ST0421" WC="1" CC="11111111" />
+            <SP WIDTH="23" VPOS="741" HPOS="1729" ID="P1_SP0350" />
+            <String CONTENT="des" HEIGHT="32" WIDTH="59" VPOS="741" HPOS="1753" ID="P1_ST0422" WC="1" CC="111" />
+            <SP WIDTH="24" VPOS="741" HPOS="1813" ID="P1_SP0351" />
+            <String CONTENT="Kranken" HEIGHT="34" WIDTH="153" VPOS="741" HPOS="1838" ID="P1_ST0423" WC="1" CC="1111111" />
+            <SP WIDTH="25" VPOS="741" HPOS="1992" ID="P1_SP0352" />
+            <String CONTENT="bestimmte" HEIGHT="32" WIDTH="189" VPOS="741" HPOS="2018" ID="P1_ST0424" WC="1" CC="111111111" />
+            <SP WIDTH="23" VPOS="741" HPOS="2208" ID="P1_SP0353" />
+            <String CONTENT="Station" HEIGHT="33" WIDTH="126" VPOS="741" HPOS="2232" ID="P1_ST0425" WC="1" CC="1111111" />
+            <SP WIDTH="26" VPOS="752" HPOS="2359" ID="P1_SP0354" />
+            <String CONTENT="mit" HEIGHT="32" WIDTH="59" VPOS="742" HPOS="2386" ID="P1_ST0426" WC="1" CC="111" />
+          </TextLine>
+          <TextLine HEIGHT="42" WIDTH="595" VPOS="785" HPOS="1384" ID="P1_TL0073" STYLEREFS="StyleId-6E32EE1F-F2ED-4D32-8D3A-04BEC416DB00-">
+            <String CONTENT="dem" HEIGHT="32" WIDTH="77" VPOS="785" HPOS="1384" ID="P1_ST0427" WC="1" CC="111" />
+            <SP WIDTH="24" VPOS="795" HPOS="1462" ID="P1_SP0355" />
+            <String CONTENT="nächsten" HEIGHT="32" WIDTH="157" VPOS="786" HPOS="1487" ID="P1_ST0428" WC="1" CC="11111111" />
+            <SP WIDTH="25" VPOS="786" HPOS="1645" ID="P1_SP0356" />
+            <String CONTENT="Zuge" HEIGHT="41" WIDTH="95" VPOS="786" HPOS="1671" ID="P1_ST0429" WC="1" CC="1111" />
+            <SP WIDTH="23" VPOS="796" HPOS="1767" ID="P1_SP0357" />
+            <String CONTENT="veranlasst." HEIGHT="32" WIDTH="188" VPOS="786" HPOS="1791" ID="P1_ST0430" WC="1" CC="11111111111" />
+          </TextLine>
+          <TextLine HEIGHT="41" WIDTH="996" VPOS="853" HPOS="1451" ID="P1_TL0074" STYLEREFS="StyleId-6E32EE1F-F2ED-4D32-8D3A-04BEC416DB00-">
+            <String CONTENT="Zum" HEIGHT="31" WIDTH="85" VPOS="853" HPOS="1451" ID="P1_ST0431" WC="1" CC="111" />
+            <SP WIDTH="32" VPOS="853" HPOS="1537" ID="P1_SP0358" />
+            <String CONTENT="Zwecke" HEIGHT="32" WIDTH="142" VPOS="853" HPOS="1570" ID="P1_ST0432" WC="1" CC="111111" />
+            <SP WIDTH="32" VPOS="853" HPOS="1713" ID="P1_SP0359" />
+            <String CONTENT="der" HEIGHT="32" WIDTH="58" VPOS="853" HPOS="1746" ID="P1_ST0433" WC="1" CC="111" />
+            <SP WIDTH="32" VPOS="853" HPOS="1805" ID="P1_SP0360" />
+            <String CONTENT="Behandlung" HEIGHT="41" WIDTH="223" VPOS="853" HPOS="1838" ID="P1_ST0434" WC="1" CC="1111111111" />
+            <SP WIDTH="30" VPOS="853" HPOS="2062" ID="P1_SP0361" />
+            <String CONTENT="der" HEIGHT="32" WIDTH="58" VPOS="853" HPOS="2093" ID="P1_ST0435" WC="1" CC="111" />
+            <SP WIDTH="24" VPOS="853" HPOS="2152" ID="P1_SP0362" />
+            <String CONTENT="Kranken" HEIGHT="34" WIDTH="153" VPOS="853" HPOS="2177" ID="P1_ST0436" WC="1" CC="1111111" />
+            <SP WIDTH="32" VPOS="863" HPOS="2331" ID="P1_SP0363" />
+            <String CONTENT="oder" HEIGHT="32" WIDTH="83" VPOS="854" HPOS="2364" ID="P1_ST0437" WC="1" CC="1111" />
+          </TextLine>
+          <TextLine HEIGHT="42" WIDTH="1062" VPOS="897" HPOS="1384" ID="P1_TL0075" STYLEREFS="StyleId-6E32EE1F-F2ED-4D32-8D3A-04BEC416DB00-">
+            <String CONTENT="Verunglückten" HEIGHT="42" WIDTH="272" VPOS="897" HPOS="1384" ID="P1_ST0438" WC="1" CC="1111111111111" />
+            <SP WIDTH="33" VPOS="908" HPOS="1657" ID="P1_SP0364" />
+            <String CONTENT="an" HEIGHT="22" WIDTH="41" VPOS="908" HPOS="1691" ID="P1_ST0439" WC="1" CC="11" />
+            <SP WIDTH="25" VPOS="897" HPOS="1733" ID="P1_SP0365" />
+            <String CONTENT="Ort" HEIGHT="34" WIDTH="62" VPOS="897" HPOS="1759" ID="P1_ST0440" WC="1" CC="111" />
+            <SP WIDTH="29" VPOS="900" HPOS="1822" ID="P1_SP0366" />
+            <String CONTENT="und" HEIGHT="32" WIDTH="69" VPOS="898" HPOS="1852" ID="P1_ST0441" WC="1" CC="111" />
+            <SP WIDTH="25" VPOS="897" HPOS="1922" ID="P1_SP0367" />
+            <String CONTENT="Stelle" HEIGHT="33" WIDTH="99" VPOS="897" HPOS="1948" ID="P1_ST0442" WC="1" CC="111111" />
+            <SP WIDTH="30" VPOS="907" HPOS="2048" ID="P1_SP0368" />
+            <String CONTENT="und" HEIGHT="31" WIDTH="68" VPOS="898" HPOS="2079" ID="P1_ST0443" WC="1" CC="111" />
+            <SP WIDTH="33" VPOS="898" HPOS="2148" ID="P1_SP0369" />
+            <String CONTENT="der" HEIGHT="32" WIDTH="60" VPOS="898" HPOS="2182" ID="P1_ST0444" WC="1" CC="111" />
+            <SP WIDTH="24" VPOS="899" HPOS="2243" ID="P1_SP0370" />
+            <String CONTENT="Erleichte" HEIGHT="31" WIDTH="161" VPOS="899" HPOS="2268" ID="P1_ST0445" WC="1" CC="111111111" />
+            <HYP CONTENT="172" />
+          </TextLine>
+          <TextLine HEIGHT="42" WIDTH="1063" VPOS="942" HPOS="1385" ID="P1_TL0076" STYLEREFS="StyleId-6E32EE1F-F2ED-4D32-8D3A-04BEC416DB00-">
+            <String CONTENT="rung" HEIGHT="30" WIDTH="88" VPOS="951" HPOS="1385" ID="P1_ST0446" WC="1" CC="1111" />
+            <SP WIDTH="12" VPOS="943" HPOS="1474" ID="P1_SP0371" />
+            <String CONTENT="der" HEIGHT="31" WIDTH="59" VPOS="943" HPOS="1487" ID="P1_ST0447" WC="1" CC="111" />
+            <SP WIDTH="9" VPOS="943" HPOS="1547" ID="P1_SP0372" />
+            <String CONTENT="Ueberführung" HEIGHT="41" WIDTH="264" VPOS="943" HPOS="1557" ID="P1_ST0448" WC="1" CC="111111111111" />
+            <SP WIDTH="8" VPOS="943" HPOS="1822" ID="P1_SP0373" />
+            <String CONTENT="derselben" HEIGHT="33" WIDTH="174" VPOS="942" HPOS="1831" ID="P1_ST0449" WC="1" CC="111111111" />
+            <SP WIDTH="13" VPOS="952" HPOS="2006" ID="P1_SP0374" />
+            <String CONTENT="zur" HEIGHT="22" WIDTH="57" VPOS="952" HPOS="2020" ID="P1_ST0450" WC="1" CC="111" />
+            <SP WIDTH="8" VPOS="943" HPOS="2078" ID="P1_SP0375" />
+            <String CONTENT="Bahnstation" HEIGHT="33" WIDTH="214" VPOS="942" HPOS="2087" ID="P1_ST0451" WC="1" CC="11111111111" />
+            <SP WIDTH="10" VPOS="953" HPOS="2302" ID="P1_SP0376" />
+            <String CONTENT="werden" HEIGHT="32" WIDTH="135" VPOS="943" HPOS="2313" ID="P1_ST0452" WC="1" CC="111111" />
+          </TextLine>
+          <TextLine HEIGHT="41" WIDTH="1065" VPOS="987" HPOS="1384" ID="P1_TL0077" STYLEREFS="StyleId-6E32EE1F-F2ED-4D32-8D3A-04BEC416DB00-">
+            <String CONTENT="vom" HEIGHT="23" WIDTH="78" VPOS="995" HPOS="1384" ID="P1_ST0453" WC="1" CC="111" />
+            <SP WIDTH="40" VPOS="987" HPOS="1463" ID="P1_SP0377" />
+            <String CONTENT="Zweigverein" HEIGHT="41" WIDTH="231" VPOS="987" HPOS="1504" ID="P1_ST0454" WC="1" CC="11111111111" />
+            <SP WIDTH="55" VPOS="988" HPOS="1736" ID="P1_SP0378" />
+            <String CONTENT="die" HEIGHT="31" WIDTH="54" VPOS="988" HPOS="1792" ID="P1_ST0455" WC="1" CC="111" />
+            <SP WIDTH="47" VPOS="987" HPOS="1847" ID="P1_SP0379" />
+            <String CONTENT="Räderbahre," HEIGHT="41" WIDTH="219" VPOS="987" HPOS="1895" ID="P1_ST0456" WC="1" CC="11111111111" />
+            <SP WIDTH="48" VPOS="987" HPOS="2115" ID="P1_SP0380" />
+            <String CONTENT="Rettungskasten," HEIGHT="41" WIDTH="285" VPOS="987" HPOS="2164" ID="P1_ST0457" WC="1" CC="111111111111111" />
+          </TextLine>
+          <TextLine HEIGHT="44" WIDTH="1063" VPOS="1030" HPOS="1386" ID="P1_TL0078" STYLEREFS="StyleId-6E32EE1F-F2ED-4D32-8D3A-04BEC416DB00-">
+            <String CONTENT="Beinschienen" HEIGHT="34" WIDTH="241" VPOS="1030" HPOS="1386" ID="P1_ST0458" WC="1" CC="111111111111" />
+            <SP WIDTH="35" VPOS="1042" HPOS="1628" ID="P1_SP0381" />
+            <String CONTENT="und" HEIGHT="33" WIDTH="69" VPOS="1031" HPOS="1664" ID="P1_ST0459" WC="1" CC="111" />
+            <SP WIDTH="36" VPOS="1031" HPOS="1734" ID="P1_SP0382" />
+            <String CONTENT="das" HEIGHT="32" WIDTH="59" VPOS="1032" HPOS="1771" ID="P1_ST0460" WC="1" CC="111" />
+            <SP WIDTH="38" VPOS="1033" HPOS="1831" ID="P1_SP0383" />
+            <String CONTENT="Verbandzeug" HEIGHT="41" WIDTH="245" VPOS="1032" HPOS="1870" ID="P1_ST0461" WC="1" CC="11111111111" />
+            <SP WIDTH="36" VPOS="1042" HPOS="2116" ID="P1_SP0384" />
+            <String CONTENT="zur" HEIGHT="22" WIDTH="58" VPOS="1042" HPOS="2153" ID="P1_ST0462" WC="1" CC="111" />
+            <SP WIDTH="36" VPOS="1033" HPOS="2212" ID="P1_SP0385" />
+            <String CONTENT="Verfügung" HEIGHT="42" WIDTH="200" VPOS="1032" HPOS="2249" ID="P1_ST0463" WC="1" CC="111111111" />
+          </TextLine>
+          <TextLine HEIGHT="43" WIDTH="1065" VPOS="1076" HPOS="1384" ID="P1_TL0079" STYLEREFS="StyleId-6E32EE1F-F2ED-4D32-8D3A-04BEC416DB00-">
+            <String CONTENT="gestellt." HEIGHT="43" WIDTH="138" VPOS="1076" HPOS="1384" ID="P1_ST0464" WC="1" CC="111111111" />
+            <SP WIDTH="25" VPOS="1077" HPOS="1523" ID="P1_SP0386" />
+            <String CONTENT="Diese" HEIGHT="32" WIDTH="100" VPOS="1077" HPOS="1549" ID="P1_ST0465" WC="1" CC="11111" />
+            <SP WIDTH="24" VPOS="1077" HPOS="1650" ID="P1_SP0387" />
+            <String CONTENT="Behelfe" HEIGHT="33" WIDTH="134" VPOS="1076" HPOS="1675" ID="P1_ST0466" WC="1" CC="1111111" />
+            <SP WIDTH="24" VPOS="1077" HPOS="1810" ID="P1_SP0388" />
+            <String CONTENT="können" HEIGHT="32" WIDTH="134" VPOS="1077" HPOS="1835" ID="P1_ST0467" WC="1" CC="111111" />
+            <SP WIDTH="26" VPOS="1086" HPOS="1970" ID="P1_SP0389" />
+            <String CONTENT="ebenfalls" HEIGHT="33" WIDTH="159" VPOS="1076" HPOS="1997" ID="P1_ST0468" WC="1" CC="111111111" />
+            <SP WIDTH="28" VPOS="1077" HPOS="2157" ID="P1_SP0390" />
+            <String CONTENT="im" HEIGHT="32" WIDTH="44" VPOS="1077" HPOS="2186" ID="P1_ST0469" WC="1" CC="11" />
+            <SP WIDTH="24" VPOS="1077" HPOS="2231" ID="P1_SP0391" />
+            <String CONTENT="Wege" HEIGHT="41" WIDTH="108" VPOS="1077" HPOS="2256" ID="P1_ST0470" WC="1" CC="1111" />
+            <SP WIDTH="23" VPOS="1077" HPOS="2365" ID="P1_SP0392" />
+            <String CONTENT="der" HEIGHT="32" WIDTH="60" VPOS="1077" HPOS="2389" ID="P1_ST0471" WC="1" CC="111" />
+          </TextLine>
+          <TextLine HEIGHT="42" WIDTH="1062" VPOS="1121" HPOS="1386" ID="P1_TL0080" STYLEREFS="StyleId-6E32EE1F-F2ED-4D32-8D3A-04BEC416DB00-">
+            <String CONTENT="Betriebsleitung" HEIGHT="42" WIDTH="278" VPOS="1121" HPOS="1386" ID="P1_ST0472" WC="1" CC="111111111111111" />
+            <SP WIDTH="30" VPOS="1121" HPOS="1665" ID="P1_SP0393" />
+            <String CONTENT="der" HEIGHT="32" WIDTH="59" VPOS="1121" HPOS="1696" ID="P1_ST0473" WC="1" CC="111" />
+            <SP WIDTH="23" VPOS="1122" HPOS="1756" ID="P1_SP0394" />
+            <String CONTENT="Murtalbahn" HEIGHT="33" WIDTH="215" VPOS="1121" HPOS="1780" ID="P1_ST0474" WC="1" CC="1111111111" />
+            <SP WIDTH="23" VPOS="1131" HPOS="1996" ID="P1_SP0395" />
+            <String CONTENT="angesprochen" HEIGHT="40" WIDTH="255" VPOS="1122" HPOS="2020" ID="P1_ST0475" WC="1" CC="111111111111" />
+            <SP WIDTH="24" VPOS="1131" HPOS="2276" ID="P1_SP0396" />
+            <String CONTENT="werden." HEIGHT="31" WIDTH="147" VPOS="1123" HPOS="2301" ID="P1_ST0476" WC="1" CC="1111111" />
+          </TextLine>
+          <TextLine HEIGHT="42" WIDTH="1061" VPOS="1166" HPOS="1386" ID="P1_TL0081" STYLEREFS="StyleId-6E32EE1F-F2ED-4D32-8D3A-04BEC416DB00-">
+            <String CONTENT="Die" HEIGHT="34" WIDTH="61" VPOS="1166" HPOS="1386" ID="P1_ST0477" WC="1" CC="111" />
+            <SP WIDTH="33" VPOS="1166" HPOS="1448" ID="P1_SP0397" />
+            <String CONTENT="Benützung" HEIGHT="41" WIDTH="197" VPOS="1166" HPOS="1482" ID="P1_ST0478" WC="1" CC="111111111" />
+            <SP WIDTH="30" VPOS="1166" HPOS="1680" ID="P1_SP0398" />
+            <String CONTENT="dieser" HEIGHT="32" WIDTH="109" VPOS="1166" HPOS="1711" ID="P1_ST0479" WC="1" CC="111111" />
+            <SP WIDTH="23" VPOS="1167" HPOS="1821" ID="P1_SP0399" />
+            <String CONTENT="Einrichtung" HEIGHT="41" WIDTH="219" VPOS="1166" HPOS="1845" ID="P1_ST0480" WC="1" CC="11111111111" />
+            <SP WIDTH="30" VPOS="1166" HPOS="2065" ID="P1_SP0400" />
+            <String CONTENT="ist" HEIGHT="32" WIDTH="39" VPOS="1166" HPOS="2096" ID="P1_ST0481" WC="1" CC="111" />
+            <SP WIDTH="31" VPOS="1167" HPOS="2136" ID="P1_SP0401" />
+            <String CONTENT="im" HEIGHT="31" WIDTH="44" VPOS="1167" HPOS="2168" ID="P1_ST0482" WC="1" CC="11" />
+            <SP WIDTH="32" VPOS="1167" HPOS="2213" ID="P1_SP0402" />
+            <String CONTENT="Vereinsge" HEIGHT="41" WIDTH="184" VPOS="1167" HPOS="2246" ID="P1_ST0483" WC="1" CC="111111111" />
+            <HYP CONTENT="172" />
+          </TextLine>
+          <TextLine HEIGHT="41" WIDTH="1063" VPOS="1211" HPOS="1385" ID="P1_TL0082" STYLEREFS="StyleId-6E32EE1F-F2ED-4D32-8D3A-04BEC416DB00-">
+            <String CONTENT="biete," HEIGHT="40" WIDTH="94" VPOS="1212" HPOS="1385" ID="P1_ST0484" WC="1" CC="111111" />
+            <SP WIDTH="39" VPOS="1211" HPOS="1480" ID="P1_SP0403" />
+            <String CONTENT="das" HEIGHT="32" WIDTH="59" VPOS="1211" HPOS="1520" ID="P1_ST0485" WC="1" CC="111" />
+            <SP WIDTH="46" VPOS="1211" HPOS="1580" ID="P1_SP0404" />
+            <String CONTENT="den" HEIGHT="32" WIDTH="64" VPOS="1211" HPOS="1627" ID="P1_ST0486" WC="1" CC="111" />
+            <SP WIDTH="48" VPOS="1221" HPOS="1692" ID="P1_SP0405" />
+            <String CONTENT="politischen" HEIGHT="41" WIDTH="198" VPOS="1211" HPOS="1741" ID="P1_ST0487" WC="1" CC="11111111111" />
+            <SP WIDTH="40" VPOS="1211" HPOS="1940" ID="P1_SP0406" />
+            <String CONTENT="Bezirk" HEIGHT="32" WIDTH="114" VPOS="1211" HPOS="1981" ID="P1_ST0488" WC="1" CC="111111" />
+            <SP WIDTH="36" VPOS="1211" HPOS="2096" ID="P1_SP0407" />
+            <String CONTENT="Murau" HEIGHT="32" WIDTH="121" VPOS="1211" HPOS="2133" ID="P1_ST0489" WC="1" CC="11111" />
+            <SP WIDTH="46" VPOS="1220" HPOS="2255" ID="P1_SP0408" />
+            <String CONTENT="umfasst," HEIGHT="39" WIDTH="146" VPOS="1212" HPOS="2302" ID="P1_ST0490" WC="1" CC="11111111" />
+          </TextLine>
+          <TextLine HEIGHT="42" WIDTH="1062" VPOS="1255" HPOS="1384" ID="P1_TL0083" STYLEREFS="StyleId-6E32EE1F-F2ED-4D32-8D3A-04BEC416DB00-">
+            <String CONTENT="unentgeltlich." HEIGHT="42" WIDTH="249" VPOS="1255" HPOS="1384" ID="P1_ST0491" WC="1" CC="11111111111111" />
+            <SP WIDTH="45" VPOS="1255" HPOS="1634" ID="P1_SP0409" />
+            <String CONTENT="Sie" HEIGHT="33" WIDTH="55" VPOS="1255" HPOS="1680" ID="P1_ST0492" WC="1" CC="111" />
+            <SP WIDTH="30" VPOS="1265" HPOS="1736" ID="P1_SP0410" />
+            <String CONTENT="steht" HEIGHT="32" WIDTH="85" VPOS="1256" HPOS="1767" ID="P1_ST0493" WC="1" CC="11111" />
+            <SP WIDTH="28" VPOS="1256" HPOS="1853" ID="P1_SP0411" />
+            <String CONTENT="jedoch" HEIGHT="40" WIDTH="122" VPOS="1256" HPOS="1882" ID="P1_ST0494" WC="1" CC="111111" />
+            <SP WIDTH="31" VPOS="1256" HPOS="2005" ID="P1_SP0412" />
+            <String CONTENT="auch" HEIGHT="32" WIDTH="84" VPOS="1256" HPOS="2037" ID="P1_ST0495" WC="1" CC="1111" />
+            <SP WIDTH="32" VPOS="1256" HPOS="2122" ID="P1_SP0413" />
+            <String CONTENT="ausserhalb" HEIGHT="32" WIDTH="193" VPOS="1256" HPOS="2155" ID="P1_ST0496" WC="1" CC="1111111111" />
+            <SP WIDTH="24" VPOS="1256" HPOS="2349" ID="P1_SP0414" />
+            <String CONTENT="des" HEIGHT="32" WIDTH="58" VPOS="1256" HPOS="2374" ID="P1_ST0497" WC="1" CC="111" />
+            <HYP CONTENT="172" />
+          </TextLine>
+          <TextLine HEIGHT="42" WIDTH="1065" VPOS="1300" HPOS="1384" ID="P1_TL0084" STYLEREFS="StyleId-6E32EE1F-F2ED-4D32-8D3A-04BEC416DB00-">
+            <String CONTENT="selben" HEIGHT="33" WIDTH="114" VPOS="1301" HPOS="1384" ID="P1_ST0498" WC="1" CC="111111" />
+            <SP WIDTH="31" VPOS="1310" HPOS="1499" ID="P1_SP0415" />
+            <String CONTENT="gegen" HEIGHT="32" WIDTH="111" VPOS="1310" HPOS="1531" ID="P1_ST0499" WC="1" CC="11111" />
+            <SP WIDTH="36" VPOS="1310" HPOS="1643" ID="P1_SP0416" />
+            <String CONTENT="eine" HEIGHT="32" WIDTH="74" VPOS="1301" HPOS="1680" ID="P1_ST0500" WC="1" CC="1111" />
+            <SP WIDTH="34" VPOS="1301" HPOS="1755" ID="P1_SP0417" />
+            <String CONTENT="Abnützungsgebühr" HEIGHT="42" WIDTH="356" VPOS="1300" HPOS="1790" ID="P1_ST0501" WC="1" CC="1111111111111111" />
+            <SP WIDTH="29" VPOS="1310" HPOS="2147" ID="P1_SP0418" />
+            <String CONTENT="von" HEIGHT="22" WIDTH="67" VPOS="1310" HPOS="2177" ID="P1_ST0502" WC="1" CC="111" />
+            <SP WIDTH="32" VPOS="1302" HPOS="2245" ID="P1_SP0419" />
+            <String CONTENT="4" HEIGHT="30" WIDTH="19" VPOS="1302" HPOS="2278" ID="P1_ST0503" WC="1" CC="1" />
+            <SP WIDTH="33" VPOS="1301" HPOS="2298" ID="P1_SP0420" />
+            <String CONTENT="K" HEIGHT="34" WIDTH="27" VPOS="1301" HPOS="2332" ID="P1_ST0504" WC="1" CC="1" />
+            <SP WIDTH="30" VPOS="1301" HPOS="2360" ID="P1_SP0421" />
+            <String CONTENT="zur" HEIGHT="22" WIDTH="58" VPOS="1311" HPOS="2391" ID="P1_ST0505" WC="1" CC="111" />
+          </TextLine>
+          <TextLine HEIGHT="42" WIDTH="1060" VPOS="1345" HPOS="1383" ID="P1_TL0085" STYLEREFS="StyleId-6E32EE1F-F2ED-4D32-8D3A-04BEC416DB00-">
+            <String CONTENT="Verfügung." HEIGHT="41" WIDTH="207" VPOS="1345" HPOS="1383" ID="P1_ST0506" WC="1" CC="1111111111" />
+            <SP WIDTH="25" VPOS="1345" HPOS="1591" ID="P1_SP0422" />
+            <String CONTENT="Bei" HEIGHT="32" WIDTH="56" VPOS="1345" HPOS="1617" ID="P1_ST0507" WC="1" CC="111" />
+            <SP WIDTH="18" VPOS="1345" HPOS="1674" ID="P1_SP0423" />
+            <String CONTENT="Benützung" HEIGHT="42" WIDTH="198" VPOS="1345" HPOS="1693" ID="P1_ST0508" WC="1" CC="111111111" />
+            <SP WIDTH="22" VPOS="1345" HPOS="1892" ID="P1_SP0424" />
+            <String CONTENT="des" HEIGHT="32" WIDTH="59" VPOS="1345" HPOS="1915" ID="P1_ST0509" WC="1" CC="111" />
+            <SP WIDTH="18" VPOS="1345" HPOS="1975" ID="P1_SP0425" />
+            <String CONTENT="Rettungskastens" HEIGHT="41" WIDTH="293" VPOS="1345" HPOS="1994" ID="P1_ST0510" WC="1" CC="111111111111111" />
+            <SP WIDTH="20" VPOS="1355" HPOS="2288" ID="P1_SP0426" />
+            <String CONTENT="müssen" HEIGHT="31" WIDTH="134" VPOS="1347" HPOS="2309" ID="P1_ST0511" WC="1" CC="111111" />
+          </TextLine>
+          <TextLine HEIGHT="33" WIDTH="1061" VPOS="1390" HPOS="1384" ID="P1_TL0086" STYLEREFS="StyleId-6E32EE1F-F2ED-4D32-8D3A-04BEC416DB00-">
+            <String CONTENT="die" HEIGHT="32" WIDTH="54" VPOS="1391" HPOS="1384" ID="P1_ST0512" WC="1" CC="111" />
+            <SP WIDTH="31" VPOS="1390" HPOS="1439" ID="P1_SP0427" />
+            <String CONTENT="demselben" HEIGHT="32" WIDTH="196" VPOS="1390" HPOS="1471" ID="P1_ST0513" WC="1" CC="111111111" />
+            <SP WIDTH="32" VPOS="1400" HPOS="1668" ID="P1_SP0428" />
+            <String CONTENT="entnommenen" HEIGHT="30" WIDTH="262" VPOS="1392" HPOS="1701" ID="P1_ST0514" WC="1" CC="11111111111" />
+            <SP WIDTH="35" VPOS="1399" HPOS="1964" ID="P1_SP0429" />
+            <String CONTENT="und" HEIGHT="32" WIDTH="70" VPOS="1390" HPOS="2000" ID="P1_ST0515" WC="1" CC="111" />
+            <SP WIDTH="33" VPOS="1390" HPOS="2071" ID="P1_SP0430" />
+            <String CONTENT="verbrauchten" HEIGHT="32" WIDTH="241" VPOS="1390" HPOS="2105" ID="P1_ST0516" WC="1" CC="111111111111" />
+            <SP WIDTH="38" VPOS="1391" HPOS="2347" ID="P1_SP0431" />
+            <String CONTENT="Be" HEIGHT="32" WIDTH="44" VPOS="1391" HPOS="2386" ID="P1_ST0517" WC="1" CC="11" />
+            <HYP CONTENT="172" />
+          </TextLine>
+          <TextLine HEIGHT="41" WIDTH="676" VPOS="1435" HPOS="1383" ID="P1_TL0087" STYLEREFS="StyleId-6E32EE1F-F2ED-4D32-8D3A-04BEC416DB00-">
+            <String CONTENT="standteile" HEIGHT="33" WIDTH="175" VPOS="1435" HPOS="1383" ID="P1_ST0518" WC="1" CC="1111111111" />
+            <SP WIDTH="23" VPOS="1435" HPOS="1559" ID="P1_SP0432" />
+            <String CONTENT="bekanntgegeben" HEIGHT="41" WIDTH="304" VPOS="1435" HPOS="1583" ID="P1_ST0519" WC="1" CC="11111111111111" />
+            <SP WIDTH="24" VPOS="1444" HPOS="1888" ID="P1_SP0433" />
+            <String CONTENT="werden." HEIGHT="32" WIDTH="146" VPOS="1435" HPOS="1913" ID="P1_ST0520" WC="1" CC="1111111" />
+          </TextLine>
+          <TextLine HEIGHT="41" WIDTH="999" VPOS="1507" HPOS="1450" ID="P1_TL0088" STYLEREFS="StyleId-6E32EE1F-F2ED-4D32-8D3A-04BEC416DB00-">
+            <String CONTENT="Was" HEIGHT="32" WIDTH="79" VPOS="1508" HPOS="1450" ID="P1_ST0521" WC="1" CC="111" />
+            <SP WIDTH="32" VPOS="1507" HPOS="1530" ID="P1_SP0434" />
+            <String CONTENT="die" HEIGHT="32" WIDTH="54" VPOS="1507" HPOS="1563" ID="P1_ST0522" WC="1" CC="111" />
+            <SP WIDTH="23" VPOS="1507" HPOS="1618" ID="P1_SP0435" />
+            <String CONTENT="Transportkosten" HEIGHT="41" WIDTH="300" VPOS="1507" HPOS="1642" ID="P1_ST0523" WC="1" CC="111111111111111" />
+            <SP WIDTH="31" VPOS="1507" HPOS="1943" ID="P1_SP0436" />
+            <String CONTENT="für" HEIGHT="32" WIDTH="51" VPOS="1507" HPOS="1975" ID="P1_ST0524" WC="1" CC="111" />
+            <SP WIDTH="24" VPOS="1507" HPOS="2027" ID="P1_SP0437" />
+            <String CONTENT="Kranke" HEIGHT="34" WIDTH="128" VPOS="1507" HPOS="2052" ID="P1_ST0525" WC="1" CC="111111" />
+            <SP WIDTH="32" VPOS="1516" HPOS="2181" ID="P1_SP0438" />
+            <String CONTENT="oder" HEIGHT="32" WIDTH="83" VPOS="1507" HPOS="2214" ID="P1_ST0526" WC="1" CC="1111" />
+            <SP WIDTH="21" VPOS="1507" HPOS="2298" ID="P1_SP0439" />
+            <String CONTENT="Verun" HEIGHT="32" WIDTH="111" VPOS="1507" HPOS="2320" ID="P1_ST0527" WC="1" CC="11111" />
+            <HYP CONTENT="172" />
+          </TextLine>
+          <TextLine HEIGHT="42" WIDTH="1065" VPOS="1552" HPOS="1383" ID="P1_TL0089" STYLEREFS="StyleId-6E32EE1F-F2ED-4D32-8D3A-04BEC416DB00-">
+            <String CONTENT="glückte" HEIGHT="42" WIDTH="135" VPOS="1552" HPOS="1383" ID="P1_ST0528" WC="1" CC="1111111" />
+            <SP WIDTH="23" VPOS="1562" HPOS="1519" ID="P1_SP0440" />
+            <String CONTENT="anbelangt," HEIGHT="41" WIDTH="189" VPOS="1552" HPOS="1543" ID="P1_ST0529" WC="1" CC="1111111111" />
+            <SP WIDTH="24" VPOS="1562" HPOS="1733" ID="P1_SP0441" />
+            <String CONTENT="stellt" HEIGHT="32" WIDTH="84" VPOS="1552" HPOS="1758" ID="P1_ST0530" WC="1" CC="111111" />
+            <SP WIDTH="23" VPOS="1552" HPOS="1843" ID="P1_SP0442" />
+            <String CONTENT="die" HEIGHT="32" WIDTH="54" VPOS="1552" HPOS="1867" ID="P1_ST0531" WC="1" CC="111" />
+            <SP WIDTH="25" VPOS="1552" HPOS="1922" ID="P1_SP0443" />
+            <String CONTENT="Murtalbahn" HEIGHT="32" WIDTH="212" VPOS="1552" HPOS="1948" ID="P1_ST0532" WC="1" CC="1111111111" />
+            <SP WIDTH="23" VPOS="1561" HPOS="2161" ID="P1_SP0444" />
+            <String CONTENT="ganze" HEIGHT="32" WIDTH="106" VPOS="1561" HPOS="2185" ID="P1_ST0533" WC="1" CC="11111" />
+            <SP WIDTH="23" VPOS="1553" HPOS="2292" ID="P1_SP0445" />
+            <String CONTENT="Abteile" HEIGHT="32" WIDTH="132" VPOS="1552" HPOS="2316" ID="P1_ST0534" WC="1" CC="1111111" />
+          </TextLine>
+          <TextLine HEIGHT="42" WIDTH="1062" VPOS="1596" HPOS="1384" ID="P1_TL0090" STYLEREFS="StyleId-6E32EE1F-F2ED-4D32-8D3A-04BEC416DB00-">
+            <String CONTENT="der" HEIGHT="32" WIDTH="58" VPOS="1598" HPOS="1384" ID="P1_ST0535" WC="1" CC="111" />
+            <SP WIDTH="23" VPOS="1597" HPOS="1443" ID="P1_SP0446" />
+            <String CONTENT="dritten" HEIGHT="32" WIDTH="118" VPOS="1597" HPOS="1467" ID="P1_ST0536" WC="1" CC="1111111" />
+            <SP WIDTH="28" VPOS="1597" HPOS="1586" ID="P1_SP0447" />
+            <String CONTENT="Klasse" HEIGHT="35" WIDTH="114" VPOS="1597" HPOS="1615" ID="P1_ST0537" WC="1" CC="111111" />
+            <SP WIDTH="30" VPOS="1606" HPOS="1730" ID="P1_SP0448" />
+            <String CONTENT="oder" HEIGHT="32" WIDTH="84" VPOS="1597" HPOS="1761" ID="P1_ST0538" WC="1" CC="1111" />
+            <SP WIDTH="29" VPOS="1606" HPOS="1846" ID="P1_SP0449" />
+            <String CONTENT="einen" HEIGHT="31" WIDTH="96" VPOS="1598" HPOS="1876" ID="P1_ST0539" WC="1" CC="11111" />
+            <SP WIDTH="32" VPOS="1606" HPOS="1973" ID="P1_SP0450" />
+            <String CONTENT="gedeckten" HEIGHT="41" WIDTH="185" VPOS="1597" HPOS="2006" ID="P1_ST0540" WC="1" CC="111111111" />
+            <SP WIDTH="26" VPOS="1596" HPOS="2192" ID="P1_SP0451" />
+            <String CONTENT="Güterwagen" HEIGHT="42" WIDTH="227" VPOS="1596" HPOS="2219" ID="P1_ST0541" WC="1" CC="1111111111" />
+          </TextLine>
+          <TextLine HEIGHT="43" WIDTH="1063" VPOS="1640" HPOS="1382" ID="P1_TL0091" STYLEREFS="StyleId-6E32EE1F-F2ED-4D32-8D3A-04BEC416DB00-">
+            <String CONTENT="zur" HEIGHT="22" WIDTH="58" VPOS="1652" HPOS="1382" ID="P1_ST0542" WC="1" CC="111" />
+            <SP WIDTH="21" VPOS="1642" HPOS="1441" ID="P1_SP0452" />
+            <String CONTENT="Verfügung." HEIGHT="41" WIDTH="209" VPOS="1642" HPOS="1463" ID="P1_ST0543" WC="1" CC="1111111111" />
+            <SP WIDTH="38" VPOS="1640" HPOS="1673" ID="P1_SP0453" />
+            <String CONTENT="Auf" HEIGHT="33" WIDTH="67" VPOS="1640" HPOS="1712" ID="P1_ST0544" WC="1" CC="111" />
+            <SP WIDTH="30" VPOS="1642" HPOS="1780" ID="P1_SP0454" />
+            <String CONTENT="den" HEIGHT="32" WIDTH="65" VPOS="1642" HPOS="1811" ID="P1_ST0545" WC="1" CC="111" />
+            <SP WIDTH="33" VPOS="1642" HPOS="1877" ID="P1_SP0455" />
+            <String CONTENT="Linien" HEIGHT="32" WIDTH="114" VPOS="1641" HPOS="1911" ID="P1_ST0546" WC="1" CC="111111" />
+            <SP WIDTH="32" VPOS="1641" HPOS="2026" ID="P1_SP0456" />
+            <String CONTENT="der" HEIGHT="32" WIDTH="59" VPOS="1641" HPOS="2059" ID="P1_ST0547" WC="1" CC="111" />
+            <SP WIDTH="23" VPOS="1641" HPOS="2119" ID="P1_SP0457" />
+            <String CONTENT="k." HEIGHT="32" WIDTH="26" VPOS="1641" HPOS="2143" ID="P1_ST0548" WC="1" CC="11" />
+            <SP WIDTH="25" VPOS="1641" HPOS="2170" ID="P1_SP0458" />
+            <String CONTENT="k." HEIGHT="32" WIDTH="28" VPOS="1641" HPOS="2196" ID="P1_ST0549" WC="1" CC="11" />
+            <SP WIDTH="24" VPOS="1641" HPOS="2225" ID="P1_SP0459" />
+            <String CONTENT="Staatsbahn" HEIGHT="33" WIDTH="195" VPOS="1641" HPOS="2250" ID="P1_ST0550" WC="1" CC="1111111111" />
+          </TextLine>
+          <TextLine HEIGHT="42" WIDTH="1064" VPOS="1686" HPOS="1385" ID="P1_TL0092" STYLEREFS="StyleId-6E32EE1F-F2ED-4D32-8D3A-04BEC416DB00-">
+            <String CONTENT="sind" HEIGHT="32" WIDTH="75" VPOS="1687" HPOS="1385" ID="P1_ST0551" WC="1" CC="1111" />
+            <SP WIDTH="46" VPOS="1687" HPOS="1461" ID="P1_SP0460" />
+            <String CONTENT="im" HEIGHT="31" WIDTH="44" VPOS="1687" HPOS="1508" ID="P1_ST0552" WC="1" CC="11" />
+            <SP WIDTH="47" VPOS="1696" HPOS="1553" ID="P1_SP0461" />
+            <String CONTENT="allgemeinen" HEIGHT="41" WIDTH="222" VPOS="1686" HPOS="1601" ID="P1_ST0553" WC="1" CC="11111111111" />
+            <SP WIDTH="47" VPOS="1686" HPOS="1824" ID="P1_SP0462" />
+            <String CONTENT="für" HEIGHT="32" WIDTH="52" VPOS="1686" HPOS="1872" ID="P1_ST0554" WC="1" CC="111" />
+            <SP WIDTH="44" VPOS="1696" HPOS="1925" ID="P1_SP0463" />
+            <String CONTENT="auf" HEIGHT="31" WIDTH="56" VPOS="1687" HPOS="1970" ID="P1_ST0555" WC="1" CC="111" />
+            <SP WIDTH="43" VPOS="1686" HPOS="2027" ID="P1_SP0464" />
+            <String CONTENT="Antrag" HEIGHT="41" WIDTH="127" VPOS="1686" HPOS="2071" ID="P1_ST0556" WC="1" CC="111111" />
+            <SP WIDTH="43" VPOS="1696" HPOS="2199" ID="P1_SP0465" />
+            <String CONTENT="eingestellte" HEIGHT="41" WIDTH="206" VPOS="1687" HPOS="2243" ID="P1_ST0557" WC="1" CC="111111111111" />
+          </TextLine>
+          <TextLine HEIGHT="41" WIDTH="1062" VPOS="1731" HPOS="1384" ID="P1_TL0093" STYLEREFS="StyleId-6E32EE1F-F2ED-4D32-8D3A-04BEC416DB00-">
+            <String CONTENT="Gepäck-" HEIGHT="41" WIDTH="154" VPOS="1731" HPOS="1384" ID="P1_ST0558" WC="1" CC="1111111" />
+            <SP WIDTH="13" VPOS="1740" HPOS="1539" ID="P1_SP0466" />
+            <String CONTENT="oder" HEIGHT="32" WIDTH="83" VPOS="1731" HPOS="1553" ID="P1_ST0559" WC="1" CC="1111" />
+            <SP WIDTH="8" VPOS="1731" HPOS="1637" ID="P1_SP0467" />
+            <String CONTENT="Güterwagen" HEIGHT="41" WIDTH="227" VPOS="1731" HPOS="1646" ID="P1_ST0560" WC="1" CC="1111111111" />
+            <SP WIDTH="16" VPOS="1741" HPOS="1874" ID="P1_SP0468" />
+            <String CONTENT="zur" HEIGHT="22" WIDTH="58" VPOS="1741" HPOS="1891" ID="P1_ST0561" WC="1" CC="111" />
+            <SP WIDTH="12" VPOS="1731" HPOS="1950" ID="P1_SP0469" />
+            <String CONTENT="Beförderung" HEIGHT="41" WIDTH="230" VPOS="1731" HPOS="1963" ID="P1_ST0562" WC="1" CC="11111111111" />
+            <SP WIDTH="11" VPOS="1741" HPOS="2194" ID="P1_SP0470" />
+            <String CONTENT="von" HEIGHT="22" WIDTH="67" VPOS="1741" HPOS="2206" ID="P1_ST0563" WC="1" CC="111" />
+            <SP WIDTH="19" VPOS="1731" HPOS="2274" ID="P1_SP0471" />
+            <String CONTENT="Kranken" HEIGHT="34" WIDTH="152" VPOS="1731" HPOS="2294" ID="P1_ST0564" WC="1" CC="1111111" />
+          </TextLine>
+          <TextLine HEIGHT="41" WIDTH="1064" VPOS="1776" HPOS="1383" ID="P1_TL0094" STYLEREFS="StyleId-6E32EE1F-F2ED-4D32-8D3A-04BEC416DB00-">
+            <String CONTENT="oder" HEIGHT="32" WIDTH="83" VPOS="1776" HPOS="1383" ID="P1_ST0565" WC="1" CC="1111" />
+            <SP WIDTH="38" VPOS="1776" HPOS="1467" ID="P1_SP0472" />
+            <String CONTENT="Verunglückten" HEIGHT="41" WIDTH="271" VPOS="1776" HPOS="1506" ID="P1_ST0566" WC="1" CC="1111111111111" />
+            <SP WIDTH="48" VPOS="1785" HPOS="1778" ID="P1_SP0473" />
+            <String CONTENT="sechs" HEIGHT="32" WIDTH="96" VPOS="1776" HPOS="1827" ID="P1_ST0567" WC="1" CC="11111" />
+            <SP WIDTH="37" VPOS="1786" HPOS="1924" ID="P1_SP0474" />
+            <String CONTENT="ganze" HEIGHT="32" WIDTH="105" VPOS="1785" HPOS="1962" ID="P1_ST0568" WC="1" CC="11111" />
+            <SP WIDTH="39" VPOS="1776" HPOS="2068" ID="P1_SP0475" />
+            <String CONTENT="Fahrkarten" HEIGHT="32" WIDTH="197" VPOS="1776" HPOS="2108" ID="P1_ST0569" WC="1" CC="1111111111" />
+            <SP WIDTH="40" VPOS="1786" HPOS="2306" ID="P1_SP0476" />
+            <String CONTENT="erster" HEIGHT="30" WIDTH="100" VPOS="1778" HPOS="2347" ID="P1_ST0570" WC="1" CC="111111" />
+          </TextLine>
+          <TextLine HEIGHT="42" WIDTH="1061" VPOS="1820" HPOS="1384" ID="P1_TL0095" STYLEREFS="StyleId-6E32EE1F-F2ED-4D32-8D3A-04BEC416DB00-">
+            <String CONTENT="Klasse" HEIGHT="34" WIDTH="114" VPOS="1821" HPOS="1384" ID="P1_ST0571" WC="1" CC="111111" />
+            <SP WIDTH="31" VPOS="1820" HPOS="1499" ID="P1_SP0477" />
+            <String CONTENT="der" HEIGHT="32" WIDTH="60" VPOS="1820" HPOS="1531" ID="P1_ST0572" WC="1" CC="111" />
+            <SP WIDTH="29" VPOS="1821" HPOS="1592" ID="P1_SP0478" />
+            <String CONTENT="betreffenden" HEIGHT="33" WIDTH="228" VPOS="1820" HPOS="1622" ID="P1_ST0573" WC="1" CC="111111111111" />
+            <SP WIDTH="32" VPOS="1821" HPOS="1851" ID="P1_SP0479" />
+            <String CONTENT="Zugsgattung" HEIGHT="41" WIDTH="234" VPOS="1821" HPOS="1884" ID="P1_ST0574" WC="1" CC="11111111111" />
+            <SP WIDTH="31" VPOS="1830" HPOS="2119" ID="P1_SP0480" />
+            <String CONTENT="zu" HEIGHT="22" WIDTH="38" VPOS="1830" HPOS="2151" ID="P1_ST0575" WC="1" CC="11" />
+            <SP WIDTH="33" VPOS="1821" HPOS="2190" ID="P1_SP0481" />
+            <String CONTENT="lösen." HEIGHT="32" WIDTH="101" VPOS="1821" HPOS="2224" ID="P1_ST0576" WC="1" CC="111111" />
+            <SP WIDTH="25" VPOS="1821" HPOS="2326" ID="P1_SP0482" />
+            <String CONTENT="Wird" HEIGHT="32" WIDTH="93" VPOS="1821" HPOS="2352" ID="P1_ST0577" WC="1" CC="1111" />
+          </TextLine>
+          <TextLine HEIGHT="42" WIDTH="1062" VPOS="1865" HPOS="1383" ID="P1_TL0096" STYLEREFS="StyleId-6E32EE1F-F2ED-4D32-8D3A-04BEC416DB00-">
+            <String CONTENT="in" HEIGHT="32" WIDTH="32" VPOS="1865" HPOS="1383" ID="P1_ST0578" WC="1" CC="11" />
+            <SP WIDTH="33" VPOS="1875" HPOS="1416" ID="P1_SP0483" />
+            <String CONTENT="einem" HEIGHT="31" WIDTH="108" VPOS="1866" HPOS="1450" ID="P1_ST0579" WC="1" CC="11111" />
+            <SP WIDTH="24" VPOS="1866" HPOS="1559" ID="P1_SP0484" />
+            <String CONTENT="Wagen" HEIGHT="41" WIDTH="131" VPOS="1866" HPOS="1584" ID="P1_ST0580" WC="1" CC="11111" />
+            <SP WIDTH="25" VPOS="1874" HPOS="1716" ID="P1_SP0485" />
+            <String CONTENT="mehr" HEIGHT="32" WIDTH="94" VPOS="1866" HPOS="1742" ID="P1_ST0581" WC="1" CC="1111" />
+            <SP WIDTH="30" VPOS="1875" HPOS="1837" ID="P1_SP0486" />
+            <String CONTENT="als" HEIGHT="33" WIDTH="46" VPOS="1865" HPOS="1868" ID="P1_ST0582" WC="1" CC="111" />
+            <SP WIDTH="31" VPOS="1875" HPOS="1915" ID="P1_SP0487" />
+            <String CONTENT="ein" HEIGHT="31" WIDTH="52" VPOS="1866" HPOS="1947" ID="P1_ST0583" WC="1" CC="111" />
+            <SP WIDTH="27" VPOS="1866" HPOS="2000" ID="P1_SP0488" />
+            <String CONTENT="Kranker" HEIGHT="34" WIDTH="146" VPOS="1865" HPOS="2028" ID="P1_ST0584" WC="1" CC="1111111" />
+            <SP WIDTH="30" VPOS="1866" HPOS="2175" ID="P1_SP0489" />
+            <String CONTENT="befördert," HEIGHT="40" WIDTH="176" VPOS="1865" HPOS="2206" ID="P1_ST0585" WC="1" CC="1111111111" />
+            <SP WIDTH="24" VPOS="1875" HPOS="2383" ID="P1_SP0490" />
+            <String CONTENT="so" HEIGHT="22" WIDTH="37" VPOS="1875" HPOS="2408" ID="P1_ST0586" WC="1" CC="11" />
+          </TextLine>
+          <TextLine HEIGHT="41" WIDTH="1063" VPOS="1910" HPOS="1383" ID="P1_TL0097" STYLEREFS="StyleId-6E32EE1F-F2ED-4D32-8D3A-04BEC416DB00-">
+            <String CONTENT="ist" HEIGHT="31" WIDTH="40" VPOS="1911" HPOS="1383" ID="P1_ST0587" WC="1" CC="111" />
+            <SP WIDTH="28" VPOS="1910" HPOS="1424" ID="P1_SP0491" />
+            <String CONTENT="für" HEIGHT="32" WIDTH="51" VPOS="1910" HPOS="1453" ID="P1_ST0588" WC="1" CC="111" />
+            <SP WIDTH="29" VPOS="1910" HPOS="1505" ID="P1_SP0492" />
+            <String CONTENT="jeden" HEIGHT="41" WIDTH="99" VPOS="1910" HPOS="1535" ID="P1_ST0589" WC="1" CC="11111" />
+            <SP WIDTH="32" VPOS="1920" HPOS="1635" ID="P1_SP0493" />
+            <String CONTENT="weiteren" HEIGHT="31" WIDTH="155" VPOS="1911" HPOS="1668" ID="P1_ST0590" WC="1" CC="11111111" />
+            <SP WIDTH="27" VPOS="1911" HPOS="1824" ID="P1_SP0494" />
+            <String CONTENT="Kranken" HEIGHT="34" WIDTH="152" VPOS="1910" HPOS="1852" ID="P1_ST0591" WC="1" CC="1111111" />
+            <SP WIDTH="32" VPOS="1920" HPOS="2005" ID="P1_SP0495" />
+            <String CONTENT="eine" HEIGHT="31" WIDTH="73" VPOS="1911" HPOS="2038" ID="P1_ST0592" WC="1" CC="1111" />
+            <SP WIDTH="25" VPOS="1910" HPOS="2112" ID="P1_SP0496" />
+            <String CONTENT="Fahrkarte" HEIGHT="32" WIDTH="174" VPOS="1910" HPOS="2138" ID="P1_ST0593" WC="1" CC="111111111" />
+            <SP WIDTH="32" VPOS="1920" HPOS="2313" ID="P1_SP0497" />
+            <String CONTENT="erster" HEIGHT="30" WIDTH="100" VPOS="1912" HPOS="2346" ID="P1_ST0594" WC="1" CC="111111" />
+          </TextLine>
+          <TextLine HEIGHT="42" WIDTH="1062" VPOS="1954" HPOS="1383" ID="P1_TL0098" STYLEREFS="StyleId-6E32EE1F-F2ED-4D32-8D3A-04BEC416DB00-">
+            <String CONTENT="Klasse" HEIGHT="34" WIDTH="114" VPOS="1955" HPOS="1383" ID="P1_ST0595" WC="1" CC="111111" />
+            <SP WIDTH="22" VPOS="1965" HPOS="1498" ID="P1_SP0498" />
+            <String CONTENT="zu" HEIGHT="23" WIDTH="40" VPOS="1964" HPOS="1521" ID="P1_ST0596" WC="1" CC="11" />
+            <SP WIDTH="24" VPOS="1955" HPOS="1562" ID="P1_SP0499" />
+            <String CONTENT="lösen." HEIGHT="32" WIDTH="101" VPOS="1955" HPOS="1587" ID="P1_ST0597" WC="1" CC="111111" />
+            <SP WIDTH="25" VPOS="1955" HPOS="1689" ID="P1_SP0500" />
+            <String CONTENT="Zwei" HEIGHT="32" WIDTH="91" VPOS="1955" HPOS="1715" ID="P1_ST0598" WC="1" CC="1111" />
+            <SP WIDTH="26" VPOS="1955" HPOS="1807" ID="P1_SP0501" />
+            <String CONTENT="Begleiter" HEIGHT="41" WIDTH="164" VPOS="1955" HPOS="1834" ID="P1_ST0599" WC="1" CC="111111111" />
+            <SP WIDTH="22" VPOS="1965" HPOS="1999" ID="P1_SP0502" />
+            <String CONTENT="werden" HEIGHT="32" WIDTH="134" VPOS="1954" HPOS="2022" ID="P1_ST0600" WC="1" CC="111111" />
+            <SP WIDTH="25" VPOS="1954" HPOS="2157" ID="P1_SP0503" />
+            <String CONTENT="in" HEIGHT="32" WIDTH="32" VPOS="1954" HPOS="2183" ID="P1_ST0601" WC="1" CC="11" />
+            <SP WIDTH="20" VPOS="1955" HPOS="2216" ID="P1_SP0504" />
+            <String CONTENT="dem" HEIGHT="31" WIDTH="77" VPOS="1955" HPOS="2237" ID="P1_ST0602" WC="1" CC="111" />
+            <SP WIDTH="26" VPOS="1954" HPOS="2315" ID="P1_SP0505" />
+            <String CONTENT="Kran" HEIGHT="34" WIDTH="86" VPOS="1954" HPOS="2342" ID="P1_ST0603" WC="1" CC="1111" />
+            <HYP CONTENT="172" />
+          </TextLine>
+          <TextLine HEIGHT="43" WIDTH="1063" VPOS="1998" HPOS="1382" ID="P1_TL0099" STYLEREFS="StyleId-6E32EE1F-F2ED-4D32-8D3A-04BEC416DB00-">
+            <String CONTENT="kenwagen" HEIGHT="41" WIDTH="185" VPOS="2000" HPOS="1382" ID="P1_ST0604" WC="1" CC="11111111" />
+            <SP WIDTH="35" VPOS="1999" HPOS="1568" ID="P1_SP0506" />
+            <String CONTENT="frei" HEIGHT="32" WIDTH="58" VPOS="1999" HPOS="1604" ID="P1_ST0605" WC="1" CC="1111" />
+            <SP WIDTH="36" VPOS="2000" HPOS="1663" ID="P1_SP0507" />
+            <String CONTENT="befördert." HEIGHT="33" WIDTH="176" VPOS="1999" HPOS="1700" ID="P1_ST0606" WC="1" CC="1111111111" />
+            <SP WIDTH="36" VPOS="2000" HPOS="1877" ID="P1_SP0508" />
+            <String CONTENT="Für" HEIGHT="31" WIDTH="64" VPOS="2000" HPOS="1914" ID="P1_ST0607" WC="1" CC="111" />
+            <SP WIDTH="33" VPOS="1999" HPOS="1979" ID="P1_SP0509" />
+            <String CONTENT="Gepäck-" HEIGHT="40" WIDTH="155" VPOS="1999" HPOS="2013" ID="P1_ST0608" WC="1" CC="1111111" />
+            <SP WIDTH="36" VPOS="2008" HPOS="2169" ID="P1_SP0510" />
+            <String CONTENT="oder" HEIGHT="32" WIDTH="83" VPOS="1999" HPOS="2206" ID="P1_ST0609" WC="1" CC="1111" />
+            <SP WIDTH="34" VPOS="1998" HPOS="2290" ID="P1_SP0511" />
+            <String CONTENT="Güter" HEIGHT="33" WIDTH="106" VPOS="1998" HPOS="2325" ID="P1_ST0610" WC="1" CC="11111" />
+            <HYP CONTENT="172" />
+          </TextLine>
+          <TextLine HEIGHT="42" WIDTH="1064" VPOS="2043" HPOS="1382" ID="P1_TL0100" STYLEREFS="StyleId-6E32EE1F-F2ED-4D32-8D3A-04BEC416DB00-">
+            <String CONTENT="wagen" HEIGHT="31" WIDTH="118" VPOS="2054" HPOS="1382" ID="P1_ST0611" WC="1" CC="11111" />
+            <SP WIDTH="31" VPOS="2054" HPOS="1501" ID="P1_SP0512" />
+            <String CONTENT="zur" HEIGHT="23" WIDTH="57" VPOS="2053" HPOS="1533" ID="P1_ST0612" WC="1" CC="111" />
+            <SP WIDTH="19" VPOS="2044" HPOS="1591" ID="P1_SP0513" />
+            <String CONTENT="Beförderung" HEIGHT="41" WIDTH="232" VPOS="2044" HPOS="1611" ID="P1_ST0613" WC="1" CC="11111111111" />
+            <SP WIDTH="28" VPOS="2054" HPOS="1844" ID="P1_SP0514" />
+            <String CONTENT="von" HEIGHT="23" WIDTH="68" VPOS="2053" HPOS="1873" ID="P1_ST0614" WC="1" CC="111" />
+            <SP WIDTH="37" VPOS="2044" HPOS="1942" ID="P1_SP0515" />
+            <String CONTENT="Kranken," HEIGHT="39" WIDTH="160" VPOS="2044" HPOS="1980" ID="P1_ST0615" WC="1" CC="11111111" />
+            <SP WIDTH="31" VPOS="2043" HPOS="2141" ID="P1_SP0516" />
+            <String CONTENT="die" HEIGHT="32" WIDTH="55" VPOS="2043" HPOS="2173" ID="P1_ST0616" WC="1" CC="111" />
+            <SP WIDTH="30" VPOS="2044" HPOS="2229" ID="P1_SP0517" />
+            <String CONTENT="in" HEIGHT="31" WIDTH="32" VPOS="2044" HPOS="2260" ID="P1_ST0617" WC="1" CC="11" />
+            <SP WIDTH="33" VPOS="2044" HPOS="2293" ID="P1_SP0518" />
+            <String CONTENT="öffent" HEIGHT="32" WIDTH="103" VPOS="2043" HPOS="2327" ID="P1_ST0618" WC="1" CC="111111" />
+            <HYP CONTENT="172" />
+          </TextLine>
+          <TextLine HEIGHT="43" WIDTH="1064" VPOS="2087" HPOS="1382" ID="P1_TL0101" STYLEREFS="StyleId-6E32EE1F-F2ED-4D32-8D3A-04BEC416DB00-">
+            <String CONTENT="licher" HEIGHT="33" WIDTH="102" VPOS="2088" HPOS="1382" ID="P1_ST0619" WC="1" CC="111111" />
+            <SP WIDTH="16" VPOS="2088" HPOS="1485" ID="P1_SP0519" />
+            <String CONTENT="Armenpflege" HEIGHT="42" WIDTH="240" VPOS="2088" HPOS="1502" ID="P1_ST0620" WC="1" CC="11111111111" />
+            <SP WIDTH="23" VPOS="2098" HPOS="1743" ID="P1_SP0520" />
+            <String CONTENT="stehen" HEIGHT="31" WIDTH="114" VPOS="2089" HPOS="1767" ID="P1_ST0621" WC="1" CC="111111" />
+            <SP WIDTH="25" VPOS="2098" HPOS="1882" ID="P1_SP0521" />
+            <String CONTENT="oder" HEIGHT="31" WIDTH="83" VPOS="2089" HPOS="1908" ID="P1_ST0622" WC="1" CC="1111" />
+            <SP WIDTH="19" VPOS="2088" HPOS="1992" ID="P1_SP0522" />
+            <String CONTENT="die" HEIGHT="32" WIDTH="53" VPOS="2088" HPOS="2012" ID="P1_ST0623" WC="1" CC="111" />
+            <SP WIDTH="23" VPOS="2088" HPOS="2066" ID="P1_SP0523" />
+            <String CONTENT="bei" HEIGHT="31" WIDTH="53" VPOS="2088" HPOS="2090" ID="P1_ST0624" WC="1" CC="111" />
+            <SP WIDTH="24" VPOS="2088" HPOS="2144" ID="P1_SP0524" />
+            <String CONTENT="einer" HEIGHT="30" WIDTH="91" VPOS="2089" HPOS="2169" ID="P1_ST0625" WC="1" CC="11111" />
+            <SP WIDTH="15" VPOS="2087" HPOS="2261" ID="P1_SP0525" />
+            <String CONTENT="Arbeiter" HEIGHT="33" WIDTH="154" VPOS="2087" HPOS="2277" ID="P1_ST0626" WC="1" CC="11111111" />
+            <HYP CONTENT="172" />
+          </TextLine>
+          <TextLine HEIGHT="41" WIDTH="1065" VPOS="2132" HPOS="1382" ID="P1_TL0102" STYLEREFS="StyleId-6E32EE1F-F2ED-4D32-8D3A-04BEC416DB00-">
+            <String CONTENT="krankenkasse" HEIGHT="32" WIDTH="245" VPOS="2133" HPOS="1382" ID="P1_ST0627" WC="1" CC="111111111111" />
+            <SP WIDTH="23" VPOS="2143" HPOS="1628" ID="P1_SP0526" />
+            <String CONTENT="versichert" HEIGHT="33" WIDTH="180" VPOS="2132" HPOS="1652" ID="P1_ST0628" WC="1" CC="1111111111" />
+            <SP WIDTH="21" VPOS="2134" HPOS="1833" ID="P1_SP0527" />
+            <String CONTENT="sind," HEIGHT="41" WIDTH="85" VPOS="2132" HPOS="1855" ID="P1_ST0629" WC="1" CC="11111" />
+            <SP WIDTH="24" VPOS="2133" HPOS="1941" ID="P1_SP0528" />
+            <String CONTENT="ist" HEIGHT="31" WIDTH="39" VPOS="2133" HPOS="1966" ID="P1_ST0630" WC="1" CC="111" />
+            <SP WIDTH="30" VPOS="2132" HPOS="2006" ID="P1_SP0529" />
+            <String CONTENT="die" HEIGHT="32" WIDTH="53" VPOS="2132" HPOS="2037" ID="P1_ST0631" WC="1" CC="111" />
+            <SP WIDTH="24" VPOS="2132" HPOS="2091" ID="P1_SP0530" />
+            <String CONTENT="Lösung" HEIGHT="41" WIDTH="137" VPOS="2132" HPOS="2116" ID="P1_ST0632" WC="1" CC="111111" />
+            <SP WIDTH="29" VPOS="2142" HPOS="2254" ID="P1_SP0531" />
+            <String CONTENT="von" HEIGHT="23" WIDTH="67" VPOS="2141" HPOS="2284" ID="P1_ST0633" WC="1" CC="111" />
+            <SP WIDTH="33" VPOS="2141" HPOS="2352" ID="P1_SP0532" />
+            <String CONTENT="nur" HEIGHT="22" WIDTH="61" VPOS="2142" HPOS="2386" ID="P1_ST0634" WC="1" CC="111" />
+          </TextLine>
+          <TextLine HEIGHT="35" WIDTH="1067" VPOS="2176" HPOS="1382" ID="P1_TL0103" STYLEREFS="StyleId-6E32EE1F-F2ED-4D32-8D3A-04BEC416DB00-">
+            <String CONTENT="drei" HEIGHT="31" WIDTH="69" VPOS="2178" HPOS="1382" ID="P1_ST0635" WC="1" CC="1111" />
+            <SP WIDTH="26" VPOS="2178" HPOS="1452" ID="P1_SP0533" />
+            <String CONTENT="Fahrkarten" HEIGHT="32" WIDTH="196" VPOS="2177" HPOS="1479" ID="P1_ST0636" WC="1" CC="1111111111" />
+            <SP WIDTH="24" VPOS="2187" HPOS="1676" ID="P1_SP0534" />
+            <String CONTENT="erster" HEIGHT="31" WIDTH="100" VPOS="2178" HPOS="1701" ID="P1_ST0637" WC="1" CC="111111" />
+            <SP WIDTH="17" VPOS="2177" HPOS="1802" ID="P1_SP0535" />
+            <String CONTENT="Klasse" HEIGHT="34" WIDTH="113" VPOS="2177" HPOS="1820" ID="P1_ST0638" WC="1" CC="111111" />
+            <SP WIDTH="19" VPOS="2186" HPOS="1934" ID="P1_SP0536" />
+            <String CONTENT="oder" HEIGHT="31" WIDTH="82" VPOS="2177" HPOS="1954" ID="P1_ST0639" WC="1" CC="1111" />
+            <SP WIDTH="18" VPOS="2186" HPOS="2037" ID="P1_SP0537" />
+            <String CONTENT="wenn" HEIGHT="22" WIDTH="97" VPOS="2186" HPOS="2056" ID="P1_ST0640" WC="1" CC="1111" />
+            <SP WIDTH="20" VPOS="2177" HPOS="2154" ID="P1_SP0538" />
+            <String CONTENT="die" HEIGHT="31" WIDTH="54" VPOS="2177" HPOS="2175" ID="P1_ST0641" WC="1" CC="111" />
+            <SP WIDTH="16" VPOS="2177" HPOS="2230" ID="P1_SP0539" />
+            <String CONTENT="in" HEIGHT="31" WIDTH="31" VPOS="2177" HPOS="2247" ID="P1_ST0642" WC="1" CC="11" />
+            <SP WIDTH="19" VPOS="2176" HPOS="2279" ID="P1_SP0540" />
+            <String CONTENT="Betracht" HEIGHT="32" WIDTH="150" VPOS="2176" HPOS="2299" ID="P1_ST0643" WC="1" CC="11111111" />
+          </TextLine>
+          <TextLine HEIGHT="42" WIDTH="1063" VPOS="2220" HPOS="1382" ID="P1_TL0104" STYLEREFS="StyleId-6E32EE1F-F2ED-4D32-8D3A-04BEC416DB00-">
+            <String CONTENT="kommenden" HEIGHT="32" WIDTH="228" VPOS="2221" HPOS="1382" ID="P1_ST0644" WC="1" CC="111111111" />
+            <SP WIDTH="32" VPOS="2221" HPOS="1611" ID="P1_SP0541" />
+            <String CONTENT="Züge" HEIGHT="41" WIDTH="96" VPOS="2221" HPOS="1644" ID="P1_ST0645" WC="1" CC="1111" />
+            <SP WIDTH="23" VPOS="2221" HPOS="1741" ID="P1_SP0542" />
+            <String CONTENT="Wagen" HEIGHT="41" WIDTH="130" VPOS="2221" HPOS="1765" ID="P1_ST0646" WC="1" CC="11111" />
+            <SP WIDTH="33" VPOS="2231" HPOS="1896" ID="P1_SP0543" />
+            <String CONTENT="erster" HEIGHT="30" WIDTH="99" VPOS="2223" HPOS="1930" ID="P1_ST0647" WC="1" CC="111111" />
+            <SP WIDTH="28" VPOS="2221" HPOS="2030" ID="P1_SP0544" />
+            <String CONTENT="Klasse" HEIGHT="34" WIDTH="113" VPOS="2221" HPOS="2059" ID="P1_ST0648" WC="1" CC="111111" />
+            <SP WIDTH="31" VPOS="2230" HPOS="2173" ID="P1_SP0545" />
+            <String CONTENT="nicht" HEIGHT="32" WIDTH="89" VPOS="2221" HPOS="2205" ID="P1_ST0649" WC="1" CC="11111" />
+            <SP WIDTH="22" VPOS="2221" HPOS="2295" ID="P1_SP0546" />
+            <String CONTENT="führen," HEIGHT="35" WIDTH="127" VPOS="2220" HPOS="2318" ID="P1_ST0650" WC="1" CC="1111111" />
+          </TextLine>
+          <TextLine HEIGHT="34" WIDTH="1063" VPOS="2265" HPOS="1382" ID="P1_TL0105" STYLEREFS="StyleId-6E32EE1F-F2ED-4D32-8D3A-04BEC416DB00-">
+            <String CONTENT="von" HEIGHT="23" WIDTH="66" VPOS="2275" HPOS="1382" ID="P1_ST0651" WC="1" CC="111" />
+            <SP WIDTH="26" VPOS="2276" HPOS="1449" ID="P1_SP0547" />
+            <String CONTENT="nur" HEIGHT="22" WIDTH="62" VPOS="2275" HPOS="1476" ID="P1_ST0652" WC="1" CC="111" />
+            <SP WIDTH="22" VPOS="2275" HPOS="1539" ID="P1_SP0548" />
+            <String CONTENT="viereinhalb" HEIGHT="32" WIDTH="205" VPOS="2265" HPOS="1562" ID="P1_ST0653" WC="1" CC="11111111111" />
+            <SP WIDTH="27" VPOS="2265" HPOS="1768" ID="P1_SP0549" />
+            <String CONTENT="Fahrkarten" HEIGHT="31" WIDTH="196" VPOS="2266" HPOS="1796" ID="P1_ST0654" WC="1" CC="1111111111" />
+            <SP WIDTH="23" VPOS="2275" HPOS="1993" ID="P1_SP0550" />
+            <String CONTENT="zweiter" HEIGHT="32" WIDTH="131" VPOS="2265" HPOS="2017" ID="P1_ST0655" WC="1" CC="1111111" />
+            <SP WIDTH="24" VPOS="2265" HPOS="2149" ID="P1_SP0551" />
+            <String CONTENT="Klasse" HEIGHT="34" WIDTH="113" VPOS="2265" HPOS="2174" ID="P1_ST0656" WC="1" CC="111111" />
+            <SP WIDTH="19" VPOS="2266" HPOS="2288" ID="P1_SP0552" />
+            <String CONTENT="der" HEIGHT="31" WIDTH="59" VPOS="2266" HPOS="2308" ID="P1_ST0657" WC="1" CC="111" />
+            <SP WIDTH="18" VPOS="2266" HPOS="2368" ID="P1_SP0553" />
+            <String CONTENT="be" HEIGHT="32" WIDTH="42" VPOS="2266" HPOS="2387" ID="P1_ST0658" WC="1" CC="11" />
+            <HYP CONTENT="172" />
+          </TextLine>
+          <TextLine HEIGHT="42" WIDTH="696" VPOS="2309" HPOS="1382" ID="P1_TL0106" STYLEREFS="StyleId-6E32EE1F-F2ED-4D32-8D3A-04BEC416DB00-">
+            <String CONTENT="treffenden" HEIGHT="32" WIDTH="184" VPOS="2310" HPOS="1382" ID="P1_ST0659" WC="1" CC="1111111111" />
+            <SP WIDTH="25" VPOS="2310" HPOS="1567" ID="P1_SP0554" />
+            <String CONTENT="Zugsgattung" HEIGHT="41" WIDTH="237" VPOS="2310" HPOS="1593" ID="P1_ST0660" WC="1" CC="11111111111" />
+            <SP WIDTH="22" VPOS="2319" HPOS="1831" ID="P1_SP0555" />
+            <String CONTENT="erforderlich." HEIGHT="33" WIDTH="224" VPOS="2309" HPOS="1854" ID="P1_ST0661" WC="1" CC="1111111111111" />
+          </TextLine>
+          <TextLine HEIGHT="40" WIDTH="996" VPOS="2381" HPOS="1452" ID="P1_TL0107" STYLEREFS="StyleId-6E32EE1F-F2ED-4D32-8D3A-04BEC416DB00-">
+            <String CONTENT="Um" HEIGHT="33" WIDTH="67" VPOS="2382" HPOS="1452" ID="P1_ST0662" WC="1" CC="11" />
+            <SP WIDTH="32" VPOS="2391" HPOS="1520" ID="P1_SP0556" />
+            <String CONTENT="nun" HEIGHT="22" WIDTH="67" VPOS="2392" HPOS="1553" ID="P1_ST0663" WC="1" CC="111" />
+            <SP WIDTH="31" VPOS="2392" HPOS="1621" ID="P1_SP0557" />
+            <String CONTENT="zu" HEIGHT="22" WIDTH="40" VPOS="2392" HPOS="1653" ID="P1_ST0664" WC="1" CC="11" />
+            <SP WIDTH="31" VPOS="2392" HPOS="1694" ID="P1_SP0558" />
+            <String CONTENT="vermeiden," HEIGHT="39" WIDTH="203" VPOS="2382" HPOS="1726" ID="P1_ST0665" WC="1" CC="1111111111" />
+            <SP WIDTH="32" VPOS="2382" HPOS="1930" ID="P1_SP0559" />
+            <String CONTENT="dass," HEIGHT="39" WIDTH="83" VPOS="2382" HPOS="1963" ID="P1_ST0666" WC="1" CC="11111" />
+            <SP WIDTH="35" VPOS="2392" HPOS="2047" ID="P1_SP0560" />
+            <String CONTENT="wie" HEIGHT="32" WIDTH="63" VPOS="2381" HPOS="2083" ID="P1_ST0667" WC="1" CC="111" />
+            <SP WIDTH="31" VPOS="2391" HPOS="2147" ID="P1_SP0561" />
+            <String CONTENT="es" HEIGHT="22" WIDTH="33" VPOS="2391" HPOS="2179" ID="P1_ST0668" WC="1" CC="11" />
+            <SP WIDTH="34" VPOS="2391" HPOS="2213" ID="P1_SP0562" />
+            <String CONTENT="wiederholt" HEIGHT="33" WIDTH="200" VPOS="2381" HPOS="2248" ID="P1_ST0669" WC="1" CC="1111111111" />
+          </TextLine>
+          <TextLine HEIGHT="42" WIDTH="1066" VPOS="2426" HPOS="1384" ID="P1_TL0108" STYLEREFS="StyleId-6E32EE1F-F2ED-4D32-8D3A-04BEC416DB00-">
+            <String CONTENT="vorgekommen," HEIGHT="42" WIDTH="278" VPOS="2426" HPOS="1384" ID="P1_ST0670" WC="1" CC="111111111111" />
+            <SP WIDTH="16" VPOS="2427" HPOS="1663" ID="P1_SP0563" />
+            <String CONTENT="für" HEIGHT="31" WIDTH="51" VPOS="2427" HPOS="1680" ID="P1_ST0671" WC="1" CC="111" />
+            <SP WIDTH="16" VPOS="2436" HPOS="1732" ID="P1_SP0564" />
+            <String CONTENT="mittellose" HEIGHT="32" WIDTH="176" VPOS="2426" HPOS="1749" ID="P1_ST0672" WC="1" CC="1111111111" />
+            <SP WIDTH="18" VPOS="2426" HPOS="1926" ID="P1_SP0565" />
+            <String CONTENT="Kranke" HEIGHT="34" WIDTH="129" VPOS="2426" HPOS="1945" ID="P1_ST0673" WC="1" CC="111111" />
+            <SP WIDTH="16" VPOS="2435" HPOS="2075" ID="P1_SP0566" />
+            <String CONTENT="oder" HEIGHT="32" WIDTH="82" VPOS="2426" HPOS="2092" ID="P1_ST0674" WC="1" CC="1111" />
+            <SP WIDTH="15" VPOS="2426" HPOS="2175" ID="P1_SP0567" />
+            <String CONTENT="Verunglückte," HEIGHT="42" WIDTH="259" VPOS="2426" HPOS="2191" ID="P1_ST0675" WC="1" CC="1111111111111" />
+          </TextLine>
+          <TextLine HEIGHT="42" WIDTH="1063" VPOS="2470" HPOS="1385" ID="P1_TL0109" STYLEREFS="StyleId-6E32EE1F-F2ED-4D32-8D3A-04BEC416DB00-">
+            <String CONTENT="die" HEIGHT="32" WIDTH="54" VPOS="2471" HPOS="1385" ID="P1_ST0676" WC="1" CC="111" />
+            <SP WIDTH="34" VPOS="2481" HPOS="1440" ID="P1_SP0568" />
+            <String CONTENT="nicht" HEIGHT="32" WIDTH="91" VPOS="2471" HPOS="1475" ID="P1_ST0677" WC="1" CC="11111" />
+            <SP WIDTH="33" VPOS="2471" HPOS="1567" ID="P1_SP0569" />
+            <String CONTENT="in" HEIGHT="32" WIDTH="31" VPOS="2471" HPOS="1601" ID="P1_ST0678" WC="1" CC="11" />
+            <SP WIDTH="32" VPOS="2471" HPOS="1633" ID="P1_SP0570" />
+            <String CONTENT="der" HEIGHT="31" WIDTH="59" VPOS="2471" HPOS="1666" ID="P1_ST0679" WC="1" CC="111" />
+            <SP WIDTH="24" VPOS="2471" HPOS="1726" ID="P1_SP0571" />
+            <String CONTENT="Lage" HEIGHT="41" WIDTH="88" VPOS="2471" HPOS="1751" ID="P1_ST0680" WC="1" CC="1111" />
+            <SP WIDTH="31" VPOS="2480" HPOS="1840" ID="P1_SP0572" />
+            <String CONTENT="sind," HEIGHT="39" WIDTH="84" VPOS="2471" HPOS="1872" ID="P1_ST0681" WC="1" CC="11111" />
+            <SP WIDTH="31" VPOS="2470" HPOS="1957" ID="P1_SP0573" />
+            <String CONTENT="die" HEIGHT="32" WIDTH="55" VPOS="2470" HPOS="1989" ID="P1_ST0682" WC="1" CC="111" />
+            <SP WIDTH="30" VPOS="2471" HPOS="2045" ID="P1_SP0574" />
+            <String CONTENT="Transportkosten" HEIGHT="41" WIDTH="299" VPOS="2471" HPOS="2076" ID="P1_ST0683" WC="1" CC="111111111111111" />
+            <SP WIDTH="32" VPOS="2481" HPOS="2376" ID="P1_SP0575" />
+            <String CONTENT="zu" HEIGHT="22" WIDTH="39" VPOS="2481" HPOS="2409" ID="P1_ST0684" WC="1" CC="11" />
+          </TextLine>
+          <TextLine HEIGHT="41" WIDTH="1063" VPOS="2515" HPOS="1384" ID="P1_TL0110" STYLEREFS="StyleId-6E32EE1F-F2ED-4D32-8D3A-04BEC416DB00-">
+            <String CONTENT="begleichen," HEIGHT="41" WIDTH="209" VPOS="2515" HPOS="1384" ID="P1_ST0685" WC="1" CC="11111111111" />
+            <SP WIDTH="32" VPOS="2525" HPOS="1594" ID="P1_SP0576" />
+            <String CONTENT="unsere" HEIGHT="23" WIDTH="119" VPOS="2525" HPOS="1627" ID="P1_ST0686" WC="1" CC="111111" />
+            <SP WIDTH="25" VPOS="2515" HPOS="1747" ID="P1_SP0577" />
+            <String CONTENT="Einrichtung" HEIGHT="41" WIDTH="218" VPOS="2515" HPOS="1773" ID="P1_ST0687" WC="1" CC="11111111111" />
+            <SP WIDTH="30" VPOS="2525" HPOS="1992" ID="P1_SP0578" />
+            <String CONTENT="nicht" HEIGHT="32" WIDTH="89" VPOS="2515" HPOS="2023" ID="P1_ST0688" WC="1" CC="11111" />
+            <SP WIDTH="30" VPOS="2515" HPOS="2113" ID="P1_SP0579" />
+            <String CONTENT="benützt" HEIGHT="32" WIDTH="135" VPOS="2515" HPOS="2144" ID="P1_ST0689" WC="1" CC="1111111" />
+            <SP WIDTH="31" VPOS="2519" HPOS="2280" ID="P1_SP0580" />
+            <String CONTENT="werden" HEIGHT="32" WIDTH="135" VPOS="2516" HPOS="2312" ID="P1_ST0690" WC="1" CC="111111" />
+          </TextLine>
+          <TextLine HEIGHT="42" WIDTH="1062" VPOS="2560" HPOS="1387" ID="P1_TL0111" STYLEREFS="StyleId-6E32EE1F-F2ED-4D32-8D3A-04BEC416DB00-">
+            <String CONTENT="kann," HEIGHT="40" WIDTH="96" VPOS="2560" HPOS="1387" ID="P1_ST0691" WC="1" CC="11111" />
+            <SP WIDTH="17" VPOS="2560" HPOS="1484" ID="P1_SP0581" />
+            <String CONTENT="hat" HEIGHT="32" WIDTH="54" VPOS="2560" HPOS="1502" ID="P1_ST0692" WC="1" CC="111" />
+            <SP WIDTH="16" VPOS="2560" HPOS="1557" ID="P1_SP0582" />
+            <String CONTENT="der" HEIGHT="32" WIDTH="59" VPOS="2560" HPOS="1574" ID="P1_ST0693" WC="1" CC="111" />
+            <SP WIDTH="15" VPOS="2560" HPOS="1634" ID="P1_SP0583" />
+            <String CONTENT="Zweigverein" HEIGHT="41" WIDTH="232" VPOS="2560" HPOS="1650" ID="P1_ST0694" WC="1" CC="11111111111" />
+            <SP WIDTH="18" VPOS="2569" HPOS="1883" ID="P1_SP0584" />
+            <String CONTENT="mit" HEIGHT="31" WIDTH="59" VPOS="2560" HPOS="1902" ID="P1_ST0695" WC="1" CC="111" />
+            <SP WIDTH="15" VPOS="2560" HPOS="1962" ID="P1_SP0585" />
+            <String CONTENT="Zustimmung" HEIGHT="42" WIDTH="238" VPOS="2560" HPOS="1978" ID="P1_ST0696" WC="1" CC="1111111111" />
+            <SP WIDTH="15" VPOS="2560" HPOS="2217" ID="P1_SP0586" />
+            <String CONTENT="des" HEIGHT="32" WIDTH="59" VPOS="2560" HPOS="2233" ID="P1_ST0697" WC="1" CC="111" />
+            <SP WIDTH="12" VPOS="2560" HPOS="2293" ID="P1_SP0587" />
+            <String CONTENT="Stamm" HEIGHT="32" WIDTH="125" VPOS="2560" HPOS="2306" ID="P1_ST0698" WC="1" CC="11111" />
+            <HYP CONTENT="172" />
+          </TextLine>
+          <TextLine HEIGHT="42" WIDTH="1062" VPOS="2604" HPOS="1385" ID="P1_TL0112" STYLEREFS="StyleId-6E32EE1F-F2ED-4D32-8D3A-04BEC416DB00-">
+            <String CONTENT="vereines" HEIGHT="32" WIDTH="151" VPOS="2605" HPOS="1385" ID="P1_ST0699" WC="1" CC="11111111" />
+            <SP WIDTH="24" VPOS="2605" HPOS="1537" ID="P1_SP0588" />
+            <String CONTENT="beschlossen," HEIGHT="41" WIDTH="226" VPOS="2604" HPOS="1562" ID="P1_ST0700" WC="1" CC="111111111111" />
+            <SP WIDTH="25" VPOS="2604" HPOS="1789" ID="P1_SP0589" />
+            <String CONTENT="diese" HEIGHT="32" WIDTH="91" VPOS="2604" HPOS="1815" ID="P1_ST0701" WC="1" CC="11111" />
+            <SP WIDTH="24" VPOS="2604" HPOS="1907" ID="P1_SP0590" />
+            <String CONTENT="Kosten" HEIGHT="34" WIDTH="124" VPOS="2604" HPOS="1932" ID="P1_ST0702" WC="1" CC="111111" />
+            <SP WIDTH="30" VPOS="2605" HPOS="2057" ID="P1_SP0591" />
+            <String CONTENT="je" HEIGHT="41" WIDTH="31" VPOS="2605" HPOS="2088" ID="P1_ST0703" WC="1" CC="11" />
+            <SP WIDTH="31" VPOS="2614" HPOS="2120" ID="P1_SP0592" />
+            <String CONTENT="nach" HEIGHT="32" WIDTH="83" VPOS="2605" HPOS="2152" ID="P1_ST0704" WC="1" CC="1111" />
+            <SP WIDTH="26" VPOS="2605" HPOS="2236" ID="P1_SP0593" />
+            <String CONTENT="der" HEIGHT="32" WIDTH="59" VPOS="2605" HPOS="2263" ID="P1_ST0705" WC="1" CC="111" />
+            <SP WIDTH="23" VPOS="2605" HPOS="2323" ID="P1_SP0594" />
+            <String CONTENT="Sach" HEIGHT="33" WIDTH="83" VPOS="2605" HPOS="2347" ID="P1_ST0706" WC="1" CC="1111" />
+            <HYP CONTENT="172" />
+          </TextLine>
+          <TextLine HEIGHT="42" WIDTH="1064" VPOS="2649" HPOS="1386" ID="P1_TL0113" STYLEREFS="StyleId-6E32EE1F-F2ED-4D32-8D3A-04BEC416DB00-">
+            <String CONTENT="lage" HEIGHT="41" WIDTH="74" VPOS="2649" HPOS="1386" ID="P1_ST0707" WC="1" CC="1111" />
+            <SP WIDTH="23" VPOS="2659" HPOS="1461" ID="P1_SP0595" />
+            <String CONTENT="entweder" HEIGHT="32" WIDTH="170" VPOS="2649" HPOS="1485" ID="P1_ST0708" WC="1" CC="11111111" />
+            <SP WIDTH="30" VPOS="2658" HPOS="1656" ID="P1_SP0596" />
+            <String CONTENT="ganz," HEIGHT="32" WIDTH="93" VPOS="2658" HPOS="1687" ID="P1_ST0709" WC="1" CC="11111" />
+            <SP WIDTH="23" VPOS="2651" HPOS="1781" ID="P1_SP0597" />
+            <String CONTENT="teilweise" HEIGHT="32" WIDTH="158" VPOS="2649" HPOS="1805" ID="P1_ST0710" WC="1" CC="111111111" />
+            <SP WIDTH="31" VPOS="2659" HPOS="1964" ID="P1_SP0598" />
+            <String CONTENT="oder" HEIGHT="33" WIDTH="82" VPOS="2649" HPOS="1996" ID="P1_ST0711" WC="1" CC="1111" />
+            <SP WIDTH="28" VPOS="2659" HPOS="2079" ID="P1_SP0599" />
+            <String CONTENT="gegen" HEIGHT="32" WIDTH="111" VPOS="2659" HPOS="2108" ID="P1_ST0712" WC="1" CC="11111" />
+            <SP WIDTH="33" VPOS="2650" HPOS="2220" ID="P1_SP0600" />
+            <String CONTENT="Rückersatz" HEIGHT="34" WIDTH="196" VPOS="2650" HPOS="2254" ID="P1_ST0713" WC="1" CC="1111111111" />
+          </TextLine>
+          <TextLine HEIGHT="42" WIDTH="1061" VPOS="2693" HPOS="1386" ID="P1_TL0114" STYLEREFS="StyleId-6E32EE1F-F2ED-4D32-8D3A-04BEC416DB00-">
+            <String CONTENT="auf" HEIGHT="32" WIDTH="55" VPOS="2694" HPOS="1386" ID="P1_ST0714" WC="1" CC="111" />
+            <SP WIDTH="24" VPOS="2694" HPOS="1442" ID="P1_SP0601" />
+            <String CONTENT="Rechnung" HEIGHT="41" WIDTH="187" VPOS="2694" HPOS="1467" ID="P1_ST0715" WC="1" CC="11111111" />
+            <SP WIDTH="22" VPOS="2694" HPOS="1655" ID="P1_SP0602" />
+            <String CONTENT="des" HEIGHT="32" WIDTH="59" VPOS="2694" HPOS="1678" ID="P1_ST0716" WC="1" CC="111" />
+            <SP WIDTH="18" VPOS="2694" HPOS="1738" ID="P1_SP0603" />
+            <String CONTENT="Friedensfondes" HEIGHT="33" WIDTH="279" VPOS="2693" HPOS="1757" ID="P1_ST0717" WC="1" CC="11111111111111" />
+            <SP WIDTH="22" VPOS="2704" HPOS="2037" ID="P1_SP0604" />
+            <String CONTENT="zu" HEIGHT="22" WIDTH="39" VPOS="2704" HPOS="2060" ID="P1_ST0718" WC="1" CC="11" />
+            <SP WIDTH="20" VPOS="2695" HPOS="2100" ID="P1_SP0605" />
+            <String CONTENT="übernehmen" HEIGHT="32" WIDTH="230" VPOS="2695" HPOS="2121" ID="P1_ST0719" WC="1" CC="1111111111" />
+            <SP WIDTH="24" VPOS="2704" HPOS="2352" ID="P1_SP0606" />
+            <String CONTENT="und" HEIGHT="32" WIDTH="70" VPOS="2695" HPOS="2377" ID="P1_ST0720" WC="1" CC="111" />
+          </TextLine>
+          <TextLine HEIGHT="34" WIDTH="1059" VPOS="2738" HPOS="1386" ID="P1_TL0115" STYLEREFS="StyleId-6E32EE1F-F2ED-4D32-8D3A-04BEC416DB00-">
+            <String CONTENT="ist" HEIGHT="31" WIDTH="40" VPOS="2739" HPOS="1386" ID="P1_ST0721" WC="1" CC="111" />
+            <SP WIDTH="18" VPOS="2740" HPOS="1427" ID="P1_SP0607" />
+            <String CONTENT="an" HEIGHT="22" WIDTH="39" VPOS="2748" HPOS="1446" ID="P1_ST0722" WC="1" CC="11" />
+            <SP WIDTH="25" VPOS="2738" HPOS="1486" ID="P1_SP0608" />
+            <String CONTENT="das" HEIGHT="32" WIDTH="59" VPOS="2738" HPOS="1512" ID="P1_ST0723" WC="1" CC="111" />
+            <SP WIDTH="17" VPOS="2739" HPOS="1572" ID="P1_SP0609" />
+            <String CONTENT="Landeseisenbahnamt" HEIGHT="33" WIDTH="386" VPOS="2738" HPOS="1590" ID="P1_ST0724" WC="1" CC="111111111111111111" />
+            <SP WIDTH="22" VPOS="2740" HPOS="1977" ID="P1_SP0610" />
+            <String CONTENT="und" HEIGHT="31" WIDTH="69" VPOS="2739" HPOS="2000" ID="P1_ST0725" WC="1" CC="111" />
+            <SP WIDTH="18" VPOS="2739" HPOS="2070" ID="P1_SP0611" />
+            <String CONTENT="an" HEIGHT="22" WIDTH="41" VPOS="2749" HPOS="2089" ID="P1_ST0726" WC="1" CC="11" />
+            <SP WIDTH="24" VPOS="2739" HPOS="2131" ID="P1_SP0612" />
+            <String CONTENT="das" HEIGHT="33" WIDTH="59" VPOS="2739" HPOS="2156" ID="P1_ST0727" WC="1" CC="111" />
+            <SP WIDTH="24" VPOS="2739" HPOS="2216" ID="P1_SP0613" />
+            <String CONTENT="k." HEIGHT="32" WIDTH="27" VPOS="2739" HPOS="2241" ID="P1_ST0728" WC="1" CC="11" />
+            <SP WIDTH="17" VPOS="2740" HPOS="2269" ID="P1_SP0614" />
+            <String CONTENT="k." HEIGHT="31" WIDTH="27" VPOS="2740" HPOS="2287" ID="P1_ST0729" WC="1" CC="11" />
+            <SP WIDTH="18" VPOS="2740" HPOS="2315" ID="P1_SP0615" />
+            <String CONTENT="Eisen" HEIGHT="32" WIDTH="96" VPOS="2740" HPOS="2334" ID="P1_ST0730" WC="1" CC="11111" />
+            <HYP CONTENT="172" />
+          </TextLine>
+          <TextLine HEIGHT="43" WIDTH="1062" VPOS="2783" HPOS="1386" ID="P1_TL0116" STYLEREFS="StyleId-6E32EE1F-F2ED-4D32-8D3A-04BEC416DB00-">
+            <String CONTENT="bahnministerium" HEIGHT="32" WIDTH="314" VPOS="2783" HPOS="1386" ID="P1_ST0731" WC="1" CC="111111111111111" />
+            <SP WIDTH="30" VPOS="2792" HPOS="1701" ID="P1_SP0616" />
+            <String CONTENT="um" HEIGHT="21" WIDTH="57" VPOS="2793" HPOS="1732" ID="P1_ST0732" WC="1" CC="11" />
+            <SP WIDTH="33" VPOS="2783" HPOS="1790" ID="P1_SP0617" />
+            <String CONTENT="die" HEIGHT="32" WIDTH="54" VPOS="2783" HPOS="1824" ID="P1_ST0733" WC="1" CC="111" />
+            <SP WIDTH="22" VPOS="2783" HPOS="1879" ID="P1_SP0618" />
+            <String CONTENT="Veranlassung" HEIGHT="42" WIDTH="249" VPOS="2783" HPOS="1902" ID="P1_ST0734" WC="1" CC="111111111111" />
+            <SP WIDTH="32" VPOS="2784" HPOS="2152" ID="P1_SP0619" />
+            <String CONTENT="herangetreten," HEIGHT="42" WIDTH="263" VPOS="2784" HPOS="2185" ID="P1_ST0735" WC="1" CC="11111111111111" />
+          </TextLine>
+          <TextLine HEIGHT="43" WIDTH="1063" VPOS="2827" HPOS="1386" ID="P1_TL0117" STYLEREFS="StyleId-6E32EE1F-F2ED-4D32-8D3A-04BEC416DB00-">
+            <String CONTENT="dass" HEIGHT="32" WIDTH="75" VPOS="2828" HPOS="1386" ID="P1_ST0736" WC="1" CC="1111" />
+            <SP WIDTH="17" VPOS="2837" HPOS="1462" ID="P1_SP0620" />
+            <String CONTENT="von" HEIGHT="23" WIDTH="66" VPOS="2837" HPOS="1480" ID="P1_ST0737" WC="1" CC="111" />
+            <SP WIDTH="20" VPOS="2837" HPOS="1547" ID="P1_SP0621" />
+            <String CONTENT="mittellosen" HEIGHT="33" WIDTH="199" VPOS="2827" HPOS="1568" ID="P1_ST0738" WC="1" CC="11111111111" />
+            <SP WIDTH="18" VPOS="2827" HPOS="1768" ID="P1_SP0622" />
+            <String CONTENT="Kranken" HEIGHT="33" WIDTH="153" VPOS="2827" HPOS="1787" ID="P1_ST0739" WC="1" CC="1111111" />
+            <SP WIDTH="18" VPOS="2838" HPOS="1941" ID="P1_SP0623" />
+            <String CONTENT="oder" HEIGHT="32" WIDTH="82" VPOS="2828" HPOS="1960" ID="P1_ST0740" WC="1" CC="1111" />
+            <SP WIDTH="15" VPOS="2829" HPOS="2043" ID="P1_SP0624" />
+            <String CONTENT="Verunglückten" HEIGHT="41" WIDTH="272" VPOS="2829" HPOS="2059" ID="P1_ST0741" WC="1" CC="1111111111111" />
+            <SP WIDTH="21" VPOS="2829" HPOS="2332" ID="P1_SP0625" />
+            <String CONTENT="keine" HEIGHT="32" WIDTH="95" VPOS="2829" HPOS="2354" ID="P1_ST0742" WC="1" CC="11111" />
+          </TextLine>
+          <TextLine HEIGHT="42" WIDTH="1061" VPOS="2872" HPOS="1387" ID="P1_TL0118" STYLEREFS="StyleId-6E32EE1F-F2ED-4D32-8D3A-04BEC416DB00-">
+            <String CONTENT="Gebühren" HEIGHT="33" WIDTH="185" VPOS="2872" HPOS="1387" ID="P1_ST0743" WC="1" CC="11111111" />
+            <SP WIDTH="34" VPOS="2882" HPOS="1573" ID="P1_SP0626" />
+            <String CONTENT="eingehoben," HEIGHT="42" WIDTH="225" VPOS="2872" HPOS="1608" ID="P1_ST0744" WC="1" CC="11111111111" />
+            <SP WIDTH="35" VPOS="2873" HPOS="1834" ID="P1_SP0627" />
+            <String CONTENT="dieselben" HEIGHT="32" WIDTH="171" VPOS="2873" HPOS="1870" ID="P1_ST0745" WC="1" CC="111111111" />
+            <SP WIDTH="33" VPOS="2883" HPOS="2042" ID="P1_SP0628" />
+            <String CONTENT="vielmehr" HEIGHT="33" WIDTH="164" VPOS="2873" HPOS="2076" ID="P1_ST0746" WC="1" CC="11111111" />
+            <SP WIDTH="33" VPOS="2883" HPOS="2241" ID="P1_SP0629" />
+            <String CONTENT="mit" HEIGHT="32" WIDTH="59" VPOS="2874" HPOS="2275" ID="P1_ST0747" WC="1" CC="111" />
+            <SP WIDTH="35" VPOS="2873" HPOS="2335" ID="P1_SP0630" />
+            <String CONTENT="dem" HEIGHT="33" WIDTH="77" VPOS="2873" HPOS="2371" ID="P1_ST0748" WC="1" CC="111" />
+          </TextLine>
+          <TextLine HEIGHT="42" WIDTH="1059" VPOS="2916" HPOS="1387" ID="P1_TL0119" STYLEREFS="StyleId-6E32EE1F-F2ED-4D32-8D3A-04BEC416DB00-">
+            <String CONTENT="Zweigvereine" HEIGHT="41" WIDTH="252" VPOS="2917" HPOS="1387" ID="P1_ST0749" WC="1" CC="111111111111" />
+            <SP WIDTH="22" VPOS="2926" HPOS="1640" ID="P1_SP0631" />
+            <String CONTENT="verrechnet" HEIGHT="33" WIDTH="195" VPOS="2916" HPOS="1663" ID="P1_ST0750" WC="1" CC="1111111111" />
+            <SP WIDTH="22" VPOS="2919" HPOS="1859" ID="P1_SP0632" />
+            <String CONTENT="werden." HEIGHT="33" WIDTH="144" VPOS="2917" HPOS="1882" ID="P1_ST0751" WC="1" CC="1111111" />
+            <SP WIDTH="32" VPOS="2918" HPOS="2027" ID="P1_SP0633" />
+            <String CONTENT="Diesem" HEIGHT="32" WIDTH="135" VPOS="2918" HPOS="2060" ID="P1_ST0752" WC="1" CC="111111" />
+            <SP WIDTH="24" VPOS="2918" HPOS="2196" ID="P1_SP0634" />
+            <String CONTENT="Einschreiten" HEIGHT="32" WIDTH="225" VPOS="2918" HPOS="2221" ID="P1_ST0753" WC="1" CC="111111111111" />
+          </TextLine>
+          <TextLine HEIGHT="43" WIDTH="1063" VPOS="2961" HPOS="1386" ID="P1_TL0120" STYLEREFS="StyleId-6E32EE1F-F2ED-4D32-8D3A-04BEC416DB00-">
+            <String CONTENT="wurde" HEIGHT="32" WIDTH="116" VPOS="2961" HPOS="1386" ID="P1_ST0754" WC="1" CC="11111" />
+            <SP WIDTH="24" VPOS="2971" HPOS="1503" ID="P1_SP0635" />
+            <String CONTENT="entsprochen" HEIGHT="40" WIDTH="222" VPOS="2962" HPOS="1528" ID="P1_ST0755" WC="1" CC="11111111111" />
+            <SP WIDTH="32" VPOS="2971" HPOS="1751" ID="P1_SP0636" />
+            <String CONTENT="und" HEIGHT="32" WIDTH="70" VPOS="2962" HPOS="1784" ID="P1_ST0756" WC="1" CC="111" />
+            <SP WIDTH="23" VPOS="2962" HPOS="1855" ID="P1_SP0637" />
+            <String CONTENT="für" HEIGHT="32" WIDTH="51" VPOS="2962" HPOS="1879" ID="P1_ST0757" WC="1" CC="111" />
+            <SP WIDTH="23" VPOS="2963" HPOS="1931" ID="P1_SP0638" />
+            <String CONTENT="den" HEIGHT="32" WIDTH="64" VPOS="2963" HPOS="1955" ID="P1_ST0758" WC="1" CC="111" />
+            <SP WIDTH="25" VPOS="2963" HPOS="2020" ID="P1_SP0639" />
+            <String CONTENT="Krankentransport" HEIGHT="41" WIDTH="323" VPOS="2963" HPOS="2046" ID="P1_ST0759" WC="1" CC="1111111111111111" />
+            <SP WIDTH="22" VPOS="2965" HPOS="2370" ID="P1_SP0640" />
+            <String CONTENT="auf" HEIGHT="32" WIDTH="56" VPOS="2963" HPOS="2393" ID="P1_ST0760" WC="1" CC="111" />
+          </TextLine>
+          <TextLine HEIGHT="44" WIDTH="1060" VPOS="3005" HPOS="1386" ID="P1_TL0121" STYLEREFS="StyleId-6E32EE1F-F2ED-4D32-8D3A-04BEC416DB00-">
+            <String CONTENT="der" HEIGHT="32" WIDTH="58" VPOS="3006" HPOS="1386" ID="P1_ST0761" WC="1" CC="111" />
+            <SP WIDTH="32" VPOS="3006" HPOS="1445" ID="P1_SP0641" />
+            <String CONTENT="Murtalbahn" HEIGHT="33" WIDTH="213" VPOS="3005" HPOS="1478" ID="P1_ST0762" WC="1" CC="1111111111" />
+            <SP WIDTH="32" VPOS="3006" HPOS="1692" ID="P1_SP0642" />
+            <String CONTENT="die" HEIGHT="32" WIDTH="54" VPOS="3006" HPOS="1725" ID="P1_ST0763" WC="1" CC="111" />
+            <SP WIDTH="23" VPOS="3006" HPOS="1780" ID="P1_SP0643" />
+            <String CONTENT="Stundung" HEIGHT="43" WIDTH="181" VPOS="3006" HPOS="1804" ID="P1_ST0764" WC="1" CC="11111111" />
+            <SP WIDTH="30" VPOS="3008" HPOS="1986" ID="P1_SP0644" />
+            <String CONTENT="der" HEIGHT="31" WIDTH="58" VPOS="3008" HPOS="2017" ID="P1_ST0765" WC="1" CC="111" />
+            <SP WIDTH="23" VPOS="3007" HPOS="2076" ID="P1_SP0645" />
+            <String CONTENT="Gebühren" HEIGHT="33" WIDTH="185" VPOS="3007" HPOS="2100" ID="P1_ST0766" WC="1" CC="11111111" />
+            <SP WIDTH="32" VPOS="3008" HPOS="2286" ID="P1_SP0646" />
+            <String CONTENT="im" HEIGHT="31" WIDTH="44" VPOS="3008" HPOS="2319" ID="P1_ST0767" WC="1" CC="11" />
+            <SP WIDTH="33" VPOS="3017" HPOS="2364" ID="P1_SP0647" />
+            <String CONTENT="er" HEIGHT="22" WIDTH="34" VPOS="3017" HPOS="2398" ID="P1_ST0768" WC="1" CC="11" />
+            <HYP CONTENT="172" />
+          </TextLine>
+          <TextLine HEIGHT="43" WIDTH="1062" VPOS="3050" HPOS="1386" ID="P1_TL0122" STYLEREFS="StyleId-6E32EE1F-F2ED-4D32-8D3A-04BEC416DB00-">
+            <String CONTENT="betenen" HEIGHT="32" WIDTH="141" VPOS="3051" HPOS="1386" ID="P1_ST0769" WC="1" CC="1111111" />
+            <SP WIDTH="25" VPOS="3050" HPOS="1528" ID="P1_SP0648" />
+            <String CONTENT="Sinne" HEIGHT="32" WIDTH="102" VPOS="3050" HPOS="1554" ID="P1_ST0770" WC="1" CC="11111" />
+            <SP WIDTH="23" VPOS="3051" HPOS="1657" ID="P1_SP0649" />
+            <String CONTENT="bedingungslos" HEIGHT="42" WIDTH="270" VPOS="3051" HPOS="1681" ID="P1_ST0771" WC="1" CC="1111111111111" />
+            <SP WIDTH="22" VPOS="3062" HPOS="1952" ID="P1_SP0650" />
+            <String CONTENT="gewährt," HEIGHT="41" WIDTH="157" VPOS="3052" HPOS="1975" ID="P1_ST0772" WC="1" CC="11111111" />
+            <SP WIDTH="20" VPOS="3063" HPOS="2133" ID="P1_SP0651" />
+            <String CONTENT="während" HEIGHT="33" WIDTH="158" VPOS="3052" HPOS="2154" ID="P1_ST0773" WC="1" CC="1111111" />
+            <SP WIDTH="25" VPOS="3052" HPOS="2313" ID="P1_SP0652" />
+            <String CONTENT="inner" HEIGHT="31" WIDTH="93" VPOS="3053" HPOS="2339" ID="P1_ST0774" WC="1" CC="11111" />
+            <HYP CONTENT="172" />
+          </TextLine>
+          <TextLine HEIGHT="34" WIDTH="1061" VPOS="3095" HPOS="1386" ID="P1_TL0123" STYLEREFS="StyleId-6E32EE1F-F2ED-4D32-8D3A-04BEC416DB00-">
+            <String CONTENT="halb" HEIGHT="32" WIDTH="77" VPOS="3095" HPOS="1386" ID="P1_ST0775" WC="1" CC="1111" />
+            <SP WIDTH="38" VPOS="3095" HPOS="1464" ID="P1_SP0653" />
+            <String CONTENT="des" HEIGHT="32" WIDTH="59" VPOS="3095" HPOS="1503" ID="P1_ST0776" WC="1" CC="111" />
+            <SP WIDTH="32" VPOS="3095" HPOS="1563" ID="P1_SP0654" />
+            <String CONTENT="Bereiches" HEIGHT="33" WIDTH="174" VPOS="3095" HPOS="1596" ID="P1_ST0777" WC="1" CC="111111111" />
+            <SP WIDTH="39" VPOS="3096" HPOS="1771" ID="P1_SP0655" />
+            <String CONTENT="der" HEIGHT="32" WIDTH="58" VPOS="3096" HPOS="1811" ID="P1_ST0778" WC="1" CC="111" />
+            <SP WIDTH="33" VPOS="3097" HPOS="1870" ID="P1_SP0656" />
+            <String CONTENT="k." HEIGHT="32" WIDTH="27" VPOS="3097" HPOS="1904" ID="P1_ST0779" WC="1" CC="11" />
+            <SP WIDTH="31" VPOS="3097" HPOS="1932" ID="P1_SP0657" />
+            <String CONTENT="k." HEIGHT="32" WIDTH="28" VPOS="3097" HPOS="1964" ID="P1_ST0780" WC="1" CC="11" />
+            <SP WIDTH="23" VPOS="3097" HPOS="1993" ID="P1_SP0658" />
+            <String CONTENT="Staatsbahnen" HEIGHT="32" WIDTH="241" VPOS="3097" HPOS="2017" ID="P1_ST0781" WC="1" CC="111111111111" />
+            <SP WIDTH="40" VPOS="3097" HPOS="2259" ID="P1_SP0659" />
+            <String CONTENT="für" HEIGHT="32" WIDTH="50" VPOS="3097" HPOS="2300" ID="P1_ST0782" WC="1" CC="111" />
+            <SP WIDTH="31" VPOS="3096" HPOS="2351" ID="P1_SP0660" />
+            <String CONTENT="den" HEIGHT="33" WIDTH="64" VPOS="3096" HPOS="2383" ID="P1_ST0783" WC="1" CC="111" />
+          </TextLine>
+          <TextLine HEIGHT="43" WIDTH="1060" VPOS="3140" HPOS="1386" ID="P1_TL0124" STYLEREFS="StyleId-6E32EE1F-F2ED-4D32-8D3A-04BEC416DB00-">
+            <String CONTENT="Transport" HEIGHT="41" WIDTH="184" VPOS="3140" HPOS="1386" ID="P1_ST0784" WC="1" CC="111111111" />
+            <SP WIDTH="18" VPOS="3142" HPOS="1571" ID="P1_SP0661" />
+            <String CONTENT="von" HEIGHT="23" WIDTH="66" VPOS="3149" HPOS="1590" ID="P1_ST0785" WC="1" CC="111" />
+            <SP WIDTH="19" VPOS="3150" HPOS="1657" ID="P1_SP0662" />
+            <String CONTENT="mittellosen" HEIGHT="33" WIDTH="198" VPOS="3140" HPOS="1677" ID="P1_ST0786" WC="1" CC="11111111111" />
+            <SP WIDTH="22" VPOS="3142" HPOS="1876" ID="P1_SP0663" />
+            <String CONTENT="Kranken" HEIGHT="33" WIDTH="152" VPOS="3142" HPOS="1899" ID="P1_ST0787" WC="1" CC="1111111" />
+            <SP WIDTH="24" VPOS="3151" HPOS="2052" ID="P1_SP0664" />
+            <String CONTENT="oder" HEIGHT="33" WIDTH="83" VPOS="3141" HPOS="2077" ID="P1_ST0788" WC="1" CC="1111" />
+            <SP WIDTH="22" VPOS="3151" HPOS="2161" ID="P1_SP0665" />
+            <String CONTENT="verunglückten" HEIGHT="41" WIDTH="262" VPOS="3142" HPOS="2184" ID="P1_ST0789" WC="1" CC="1111111111111" />
+          </TextLine>
+          <TextLine HEIGHT="43" WIDTH="1059" VPOS="3185" HPOS="1388" ID="P1_TL0125" STYLEREFS="StyleId-6E32EE1F-F2ED-4D32-8D3A-04BEC416DB00-">
+            <String CONTENT="Personen" HEIGHT="32" WIDTH="170" VPOS="3185" HPOS="1388" ID="P1_ST0790" WC="1" CC="11111111" />
+            <SP WIDTH="24" VPOS="3194" HPOS="1559" ID="P1_SP0666" />
+            <String CONTENT="samt" HEIGHT="29" WIDTH="86" VPOS="3187" HPOS="1584" ID="P1_ST0791" WC="1" CC="1111" />
+            <SP WIDTH="23" VPOS="3185" HPOS="1671" ID="P1_SP0667" />
+            <String CONTENT="Begleitung" HEIGHT="42" WIDTH="201" VPOS="3185" HPOS="1695" ID="P1_ST0792" WC="1" CC="1111111111" />
+            <SP WIDTH="26" VPOS="3195" HPOS="1897" ID="P1_SP0668" />
+            <String CONTENT="nach" HEIGHT="32" WIDTH="84" VPOS="3186" HPOS="1924" ID="P1_ST0793" WC="1" CC="1111" />
+            <SP WIDTH="31" VPOS="3186" HPOS="2009" ID="P1_SP0669" />
+            <String CONTENT="dem" HEIGHT="32" WIDTH="75" VPOS="3186" HPOS="2041" ID="P1_ST0794" WC="1" CC="111" />
+            <SP WIDTH="26" VPOS="3196" HPOS="2117" ID="P1_SP0670" />
+            <String CONTENT="nächstgelegenen" HEIGHT="42" WIDTH="303" VPOS="3186" HPOS="2144" ID="P1_ST0795" WC="1" CC="111111111111111" />
+          </TextLine>
+          <TextLine HEIGHT="43" WIDTH="1061" VPOS="3229" HPOS="1388" ID="P1_TL0126" STYLEREFS="StyleId-6E32EE1F-F2ED-4D32-8D3A-04BEC416DB00-">
+            <String CONTENT="Krankenhause" HEIGHT="35" WIDTH="260" VPOS="3229" HPOS="1388" ID="P1_ST0796" WC="1" CC="111111111111" />
+            <SP WIDTH="32" VPOS="3230" HPOS="1649" ID="P1_SP0671" />
+            <String CONTENT="die" HEIGHT="32" WIDTH="54" VPOS="3230" HPOS="1682" ID="P1_ST0797" WC="1" CC="111" />
+            <SP WIDTH="30" VPOS="3229" HPOS="1737" ID="P1_SP0672" />
+            <String CONTENT="Stundung" HEIGHT="43" WIDTH="181" VPOS="3229" HPOS="1768" ID="P1_ST0798" WC="1" CC="11111111" />
+            <SP WIDTH="30" VPOS="3231" HPOS="1950" ID="P1_SP0673" />
+            <String CONTENT="der" HEIGHT="32" WIDTH="58" VPOS="3231" HPOS="1981" ID="P1_ST0799" WC="1" CC="111" />
+            <SP WIDTH="30" VPOS="3230" HPOS="2040" ID="P1_SP0674" />
+            <String CONTENT="Gebühren" HEIGHT="33" WIDTH="184" VPOS="3230" HPOS="2071" ID="P1_ST0800" WC="1" CC="11111111" />
+            <SP WIDTH="32" VPOS="3240" HPOS="2256" ID="P1_SP0675" />
+            <String CONTENT="ebenfalls" HEIGHT="32" WIDTH="160" VPOS="3231" HPOS="2289" ID="P1_ST0801" WC="1" CC="111111111" />
+          </TextLine>
+        </TextBlock>
+        <GraphicalElement ID="BlockId-3E57FECA-AA2D-4605-BB8D-06ED3687A718-" HEIGHT="29" WIDTH="2659" VPOS="0" HPOS="0" />
+        <GraphicalElement ID="BlockId-6FE05E76-6D8F-405F-9382-010DC79C0B91-" HEIGHT="7" WIDTH="2230" VPOS="114" HPOS="207" />
+        <GraphicalElement ID="BlockId-A39FA4D5-314B-4985-9DAF-80E6B4555291-" HEIGHT="6" WIDTH="318" VPOS="928" HPOS="957" />
+        <GraphicalElement ID="BlockId-8B910EC0-31DC-4D0A-A3A8-1F2C58A51E6D-" HEIGHT="2" WIDTH="129" VPOS="2430" HPOS="670" />
+        <GraphicalElement ID="BlockId-E72041B2-0316-43A2-ABE1-33A19852D2F0-" HEIGHT="3087" WIDTH="7" VPOS="171" HPOS="1325" />
+        <GraphicalElement ID="BlockId-2389F4A4-3FA4-4B1A-839A-6413CCC095E2-" HEIGHT="7" WIDTH="475" VPOS="239" HPOS="465" />
+        <GraphicalElement ID="BlockId-EB1E5D12-770A-48AA-9CE3-1E078CDA6F8D-" HEIGHT="10" WIDTH="450" VPOS="908" HPOS="498" />
+      </PrintSpace>
+    </Page>
+  </Layout>
+</alto>
