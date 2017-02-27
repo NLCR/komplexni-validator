@@ -67,9 +67,7 @@
         <validation name="Valid">
             <xmlDataExtraction resultType="STRING">
                 <firstNonempty>
-                    <!--tohle se nejspis lisi mezi verzemi jpylyzer, prvni je ze specifikace, druhy je z realneho vystupu pro jpylyzer 1.17.0-->
                     <xpath>//j:statusInfo/j:isValidJP2</xpath>
-                    <xpath>//j:statusInfo/j:success</xpath>
                 </firstNonempty>
             </xmlDataExtraction>
             <rules>
