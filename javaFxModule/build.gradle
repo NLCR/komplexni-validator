@@ -13,7 +13,7 @@ repositories {
 //https://github.com/FibreFoX/javafx-gradle-plugin
 
 group 'rzehan'
-version '1.3-dev'
+version '1.3'
 
 //sourceCompatibility = 1.8
 
@@ -71,7 +71,7 @@ jfx {
 
     //bundler = 'windows.app'//bundler='ALL'
     appName = 'KomplexniValidatorGUI'
-    nativeReleaseVersion = "1.3-dev"
+    nativeReleaseVersion = "1.3"
 
     //additionalAppResources = ['../sharedModule/src/main/resources/nkp/pspValidator/shared','src/main/resources/config']
     additionalAppResources = '../sharedModule/src/main/resources/nkp/pspValidator/shared'

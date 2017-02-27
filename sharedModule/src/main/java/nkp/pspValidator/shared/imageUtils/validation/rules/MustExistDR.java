@@ -14,7 +14,7 @@ public class MustExistDR extends AbstractDataRule {
     @Override
     public List<String> validate(Object data) {
         if (data == null || data.toString().isEmpty()) {
-            return singleError(error("požadovaná hodnota nenalezena"));
+            return singleError(error("kontrolovaná hodnota nenalezena"));
         } else {
             return noErrors();
         }
