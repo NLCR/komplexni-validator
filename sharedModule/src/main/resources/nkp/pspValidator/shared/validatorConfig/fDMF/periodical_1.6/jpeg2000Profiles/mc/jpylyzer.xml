@@ -328,6 +328,7 @@
                 <mustMatchAny>
                     <constant>Yes</constant>
                     <constant>yes</constant>
+                    <constant>YES</constant>
                 </mustMatchAny>
             </rules>
         </validation>

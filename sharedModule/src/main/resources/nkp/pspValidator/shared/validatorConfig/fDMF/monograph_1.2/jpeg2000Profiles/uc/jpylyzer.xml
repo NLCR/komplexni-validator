@@ -326,8 +326,9 @@
             <rules>
                 <mustExist/>
                 <mustMatchAny>
-                    <constant>No</constant>
-                    <constant>no</constant>
+                    <constant>Yes</constant>
+                    <constant>yes</constant>
+                    <constant>YES</constant>
                 </mustMatchAny>
             </rules>
         </validation>
