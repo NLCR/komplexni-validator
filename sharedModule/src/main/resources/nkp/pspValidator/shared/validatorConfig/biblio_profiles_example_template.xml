@@ -159,7 +159,7 @@
 
             <!--Je také možné upřesnit volbu elementu, ne jen podle názvu.
             Obsah nepovinného atributu specification se použije k vytvoření xpath predikatu.
-            Nicmene atribut je i tak nutne definvoat v sekci expectedAttributes.
+            Nicmene atribut je i tak nutne definovat v sekci expectedAttributes.
             Zde třeba: mods:description[@type='secret']-->
             <element name="mods:description" specification="@type='secret'">
                 <expectedAttributes>
@@ -185,8 +185,20 @@
                 </expectedAttributes>
             </element>
 
-            <!--Je možné definiovat více očekávaných elementů stejného jména (zde mods:description) ale jen tehdy, pokud
+            <!--Je možné definovat více očekávaných elementů stejného jména (zde mods:description) ale jen tehdy, pokud
             mají všechny přítomný atribut specification a vždy s odlišným obsahem-->
+            
+            <!-- Pokud je u elementu nalezen jiný, než očekávaný atribut, je vygenerováno VAROVÁNÍ.
+            Pokud je potřeba ignorovat nalezené neočekávané atributy, lze použít ignoreUnexpectedAttributes.
+            Např. zde, pokud bude u elementu mods:note nalezen některý z atributů, které obecně MODS umožňuje (ID, xlink, lang, ...),
+            ale šablona je pro tento konrétní element neočekává, nebude výstup obsahovat VAROVÁNÍ pro tyto neočekávané atributy.
+            -->
+            <element name="mods:note" ignoreUnexpectedAttributes="true">
+                <expectedAttributes>
+                    <attribute name="type"/>
+                </expectedAttributes>
+            </element>
+
 
         </expectedElements>
 
