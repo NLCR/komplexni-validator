@@ -187,7 +187,7 @@
 
             <!--Je možné definovat více očekávaných elementů stejného jména (zde mods:description) ale jen tehdy, pokud
             mají všechny přítomný atribut specification a vždy s odlišným obsahem-->
-            
+
             <!-- Pokud je u elementu nalezen jiný, než očekávaný atribut, je vygenerováno VAROVÁNÍ.
             Pokud je potřeba ignorovat nalezené neočekávané atributy, lze použít ignoreUnexpectedAttributes.
             Např. zde, pokud bude u elementu mods:note nalezen některý z atributů, které obecně MODS umožňuje (ID, xlink, lang, ...),

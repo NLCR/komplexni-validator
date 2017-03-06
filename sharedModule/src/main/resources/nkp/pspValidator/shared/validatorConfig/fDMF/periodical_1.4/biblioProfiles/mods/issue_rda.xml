@@ -340,7 +340,7 @@
 
                     <element name="mods:physicalLocation" repeatable="false">
                         <expectedAttributes>
-                            <attribute name="authority">
+                            <attribute name="authority" mandatory="false">
                                 <expectedContent>
                                     <value>siglaADR</value>
                                 </expectedContent>
