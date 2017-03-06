@@ -2,7 +2,7 @@
 <validationTemplate
         xmlns="http://www.nkp.cz/pspValidator/1.2/xmlValidationTemplate"
         name="DC title of multivolume monographic (AACR2)"
-        validatorVersion="1.3"
+        validatorVersion="1.4"
         dmf="monograph_1.2"
 >
 
