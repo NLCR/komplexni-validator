@@ -96,6 +96,7 @@
                             <attribute name="type"/>
                         </expectedAttributes>
                         <recommendedContent>
+                            <!--RRRR-RRRR-->
                             <regexp>[0-9]{4}-[0-9]{4}</regexp>
                         </recommendedContent>
                     </element>
