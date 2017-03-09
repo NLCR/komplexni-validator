@@ -67,7 +67,7 @@
         <validation name="Valid">
             <xmlDataExtraction resultType="STRING">
                 <firstNonempty>
-                    <xpath>//j:statusInfo/j:isValidJP2</xpath>
+                    <xpath>//j:isValidJP2</xpath>
                 </firstNonempty>
             </xmlDataExtraction>
             <rules>
