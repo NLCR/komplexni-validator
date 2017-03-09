@@ -112,6 +112,7 @@
                 <mustMatchAny>
                     <constant>1</constant>
                     <constant>3</constant>
+                    <constant>4</constant>
                 </mustMatchAny>
             </rules>
         </validation>
@@ -300,7 +301,7 @@
             </rules>
         </validation>
 
-        <validation name="Sop">
+        <!--<validation name="Sop"> docasne vyple
             <xmlDataExtraction resultType="STRING">
                 <firstNonempty>
                     <xpath>//j:properties/j:contiguousCodestreamBox/j:cod/j:sop</xpath>
@@ -329,7 +330,7 @@
                     <constant>YES</constant>
                 </mustMatchAny>
             </rules>
-        </validation>
+        </validation>-->
 
         <validation name="Order">
             <xmlDataExtraction resultType="STRING">
@@ -442,7 +443,7 @@
                 <mustMatchAny>
                     <floatRange>
                         <min>6</min>
-                        <max>12</max>
+                        <max>35</max>
                     </floatRange>
                 </mustMatchAny>
             </rules>
