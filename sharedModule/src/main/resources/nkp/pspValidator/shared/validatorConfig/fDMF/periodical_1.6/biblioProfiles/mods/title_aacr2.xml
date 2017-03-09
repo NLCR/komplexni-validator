@@ -182,7 +182,7 @@
                                     <!--<value>marc</value>-->
                                 </expectedContent>
                             </attribute>
-                            <attribute name="point">
+                            <attribute name="point" mandatory="false">
                                 <!--tohle je povinne, coz nedava uplne smysl, resp. problem s praxi-->
                                 <expectedContent>
                                     <!--neni jasne, jestli to jsou opravdu jedine dve povolene hodnoty-->
