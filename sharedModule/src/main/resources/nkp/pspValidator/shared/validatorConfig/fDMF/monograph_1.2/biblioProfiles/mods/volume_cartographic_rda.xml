@@ -557,13 +557,13 @@
             <element name="mods:subject" mandatory="false">
                 <expectedAttributes>
                     <attribute name="authority" mandatory="false">
-                        <expectedContent>
+                        <recommendedContent>
                             <oneOf>
                                 <value>czenas</value>
                                 <value>eczenas</value>
                                 <value>Konspekt</value>
                             </oneOf>
-                        </expectedContent>
+                        </recommendedContent>
                     </attribute>
                 </expectedAttributes>
                 <expectedElements>
