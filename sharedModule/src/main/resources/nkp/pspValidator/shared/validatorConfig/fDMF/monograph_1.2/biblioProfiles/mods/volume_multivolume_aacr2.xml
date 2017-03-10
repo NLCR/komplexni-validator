@@ -95,10 +95,8 @@
                         <expectedAttributes>
                             <attribute name="type"/>
                         </expectedAttributes>
-                        <recommendedContent>
-                            <!--RRRR-RRRR-->
-                            <regexp>[0-9]{4}-[0-9]{4}</regexp>
-                        </recommendedContent>
+                        <expectedContent/>
+                         
                     </element>
 
                     <element name="mods:namePart" specification="@type='family'" mandatory="false">
