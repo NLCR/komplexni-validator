@@ -37,8 +37,7 @@
                 <expectedContent/>
             </element>
 
-            <element name="dc:creator"
-                     errorMessage="Očekáván alespoň jeden povinný element dc:creator obsahující jméno, příjmení, apod. autora.">
+            <element name="dc:creator" mandatory="false">
                 <expectedContent/>
             </element>
 
