@@ -10,6 +10,7 @@ import nkp.pspValidator.shared.engine.exceptions.ValidatorConfigurationException
 import nkp.pspValidator.shared.engine.exceptions.XmlFileParsingException;
 import npk.pspValidator.cli.Main;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -35,6 +36,7 @@ public class MainTest {
     @org.junit.Test
     public void cli() throws InvalidXPathExpressionException, PspDataException, ValidatorConfigurationException, XmlFileParsingException, FdmfRegistry.UnknownFdmfException {
         Platform platform = Platform.detectOs();
+        String validadtorConfigPath = null;
         String imageMagickPath = null;
         String jhovePath = null;
         String jpylyzerPath = null;
@@ -42,15 +44,18 @@ public class MainTest {
 
         switch (platform.getOperatingSystem()) {
             case WINDOWS:
+                validadtorConfigPath = "..\\sharedModule\\src\\main\\resources\\nkp\\pspValidator\\shared\\validatorConfig";
                 imageMagickPath = "C:\\Program Files\\ImageMagick-7.0.3-Q16";
                 jhovePath = "C:\\Users\\Lenovo\\Documents\\software\\jhove";
                 jpylyzerPath = "C:\\Users\\Lenovo\\Documents\\software\\jpylyzer_1.17.0_win64";
                 kakaduPath = "C:\\Program Files (x86)\\Kakadu\\";
                 break;
             case LINUX:
+                validadtorConfigPath = "../sharedModule/src/main/resources/nkp/pspValidator/shared/validatorConfig";
                 kakaduPath = "/home/martin/zakazky/NKP-PSP_validator/utility/kakadu/KDU78_Demo_Apps_for_Linux-x86-64_160226";
                 break;
             case MAC:
+                validadtorConfigPath = "../sharedModule/src/main/resources/nkp/pspValidator/shared/validatorConfig";
                 jhovePath = "/Users/martinrehanek/Software/jhove";
                 imageMagickPath = "/opt/local/bin";
                 jpylyzerPath = "/Users/martinrehanek/Software/jpylyzer-1.17.0/jpylyzer";
@@ -71,7 +76,7 @@ public class MainTest {
         //devParams.getSectionsToRun().add("Secondary METS filesec");
 
         Main.main(devParams, buildParams(
-                "../sharedModule/src/main/resources/nkp/pspValidator/shared/validatorConfig"
+                validadtorConfigPath
                 //, MON_1_2_MAP
                 //, PER_1_6_INFO_INVALID_NS
                 //, PER_1_6
