@@ -37,7 +37,7 @@
                 <expectedContent/>
             </element>
 
-            <element name="dc:creator"mandatory="false">
+            <element name="dc:creator" mandatory="false">
                 <expectedContent/>
             </element>
 
