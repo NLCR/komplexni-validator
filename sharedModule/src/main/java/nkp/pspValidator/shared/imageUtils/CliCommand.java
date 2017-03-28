@@ -9,14 +9,14 @@ import java.io.InputStreamReader;
  */
 public class CliCommand {
 
-    private final String command;
+    private final String[] command;
     private final boolean prettyPrint;
 
-    public CliCommand(String command) {
+    public CliCommand(String[] command) {
         this(command, false);
     }
 
-    public CliCommand(String command, boolean prettyPrint) {
+    public CliCommand(String[] command, boolean prettyPrint) {
         this.command = command;
         this.prettyPrint = prettyPrint;
     }

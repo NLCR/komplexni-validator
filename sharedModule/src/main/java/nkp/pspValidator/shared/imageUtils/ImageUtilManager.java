@@ -66,7 +66,7 @@ public class ImageUtilManager {
     //TODO: must be thrad safe
     public String runUtilVersionDetection(ImageUtil type) throws CliCommand.CliCommandException {
         UtilHandler versionDetection = utilVersionDetectionHandlers.get(type);
-        String command = buildCommand(versionDetection.getCommandData());
+        String[] command = buildCommand(versionDetection.getCommandData());
         CliCommand.Result result = new CliCommand(command).execute();
         String rawOutput = null;
         Parser parser = versionDetection.getParser();
@@ -95,24 +95,30 @@ public class ImageUtilManager {
         }
     }
 
-    private String buildCommand(CommandData commandData) {
+    private String[] buildCommand(CommandData commandData) {
         String path = commandData.getPath() == null ? "" : commandData.getPath().getAbsolutePath();
-        String result = commandData.getRawCommand();
-        if (!path.isEmpty()) {
+        if (!path.isEmpty() && !path.endsWith(File.separator)) {
             path = path + File.separatorChar;
         }
-        result = result.replace("${PATH}", path);
+
+        String[] result = commandData.getRawCommand().split("\\s");
+        for (int i = 0; i < result.length; i++) {
+            result[i] = result[i].replace("${PATH}", path);
+        }
         return result;
     }
 
-    private String buildCommand(CommandData commandData, File imageFile) {
+    private String[] buildCommand(CommandData commandData, File imageFile) {
         String path = commandData.getPath() == null ? "" : commandData.getPath().getAbsolutePath();
-        String result = commandData.getRawCommand();
-        if (!path.isEmpty()) {
+        if (!path.isEmpty() && !path.endsWith(File.separator)) {
             path = path + File.separatorChar;
         }
-        result = result.replace("${PATH}", path);
-        result = result.replace("${IMAGE_FILE}", imageFile.getAbsolutePath());
+
+        String[] result = commandData.getRawCommand().split("\\s");
+        for (int i = 0; i < result.length; i++) {
+            result[i] = result[i].replace("${PATH}", path);
+            result[i] = result[i].replace("${IMAGE_FILE}", imageFile.getAbsolutePath());
+        }
         return result;
     }
 
@@ -138,7 +144,7 @@ public class ImageUtilManager {
     public String runUtilExecution(ImageUtil utilType, File imageFile) throws CliCommand.CliCommandException {
         UtilHandler utilHandler = utilExecutionHandlers.get(utilType);
         //TODO: poresit, NPE pro getCommand, kdyz neni definovano
-        String command = buildCommand(utilHandler.getCommandData(), imageFile);
+        String[] command = buildCommand(utilHandler.getCommandData(), imageFile);
         CliCommand.Result result = new CliCommand(command).execute();
         String rawOutput = null;
         Stream stream = utilHandler.getParser().getStream();
