@@ -68,6 +68,7 @@
                                 <value>corporate</value>
                                 <!--zase "konference" namisto "conference"-->
                                 <value>konference</value>
+				<value>conference</value>
                                 <value>family</value>
                             </oneOf>
                         </expectedContent>
