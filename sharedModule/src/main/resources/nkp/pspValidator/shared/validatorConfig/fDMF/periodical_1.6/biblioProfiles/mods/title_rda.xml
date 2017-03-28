@@ -82,6 +82,7 @@
                                 <!--Neni tohle preklep? jinych verzich je tady "conference", proc je tady prave ta jedna hodnota cesky?
                                 Kazdopadne preklep, nebo ne, jednou je to ve standardu, tak to plati.-->
                                 <value>konference</value>
+				<value>conference</value>
                                 <value>family</value>
                             </oneOf>
                         </expectedContent>
