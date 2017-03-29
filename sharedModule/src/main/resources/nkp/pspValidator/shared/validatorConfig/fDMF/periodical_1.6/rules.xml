@@ -1013,7 +1013,9 @@
         </rule>
 
         <rule name="DC_IDENTIFIERS_CONTAIN_TYPE_AND_VALUE">
-            <description>Identifikátory v Dublin Core záznamech by měly obsahovat typ a hodnotu oddělěné dvojtečkou (např. barCode:2610161505).</description>
+            <description>Identifikátory v Dublin Core záznamech by měly obsahovat typ a hodnotu oddělěné dvojtečkou
+                (např. barCode:2610161505).
+            </description>
             <validation functionName="checkDcIdentifiersHaveTypeAndValue">
                 <params>
                     <value name="primary-mets_file" type="FILE">
@@ -2701,6 +2703,23 @@
                         <value-ref name="MIX_XSD_FILE"/>
                     </value>
                     <value name="level" type="LEVEL">ERROR</value>
+                </params>
+            </validation>
+        </rule>
+
+        <!--TODO: pridat pro vsechny verze fDMF, upravit mix_ps podle verzi specifikace-->
+        <!--TODO: dalsi validace pro MIX_002, profil mix_mc, mustExist=true -->
+        <!--TODO: dalsi validace pro MIX_003 ... MIX_XXX profil mix_mc, mustExist=false-->
+        <rule name="MIX_FOR_ORIGINAL_SCAN_VALID">
+            <description>Záznamy MIX v souborech SECONDARY-METS pro původní skeny musí splňovat profil.</description>
+            <validation functionName="checkSecondaryMetsAmdsecElementsMatchProfile">
+                <params>
+                    <value name="secondary-mets_files" type="FILE_LIST">
+                        <value-ref name="SECONDARY-METS_FILES"/>
+                    </value>
+                    <value name="element_xpath" type="STRING">mets:techMD[@ID="MIX_001"]</value>
+                    <value name="element_must_exist" type="BOOLEAN">true</value>
+                    <value name="profile_id" type="STRING">mix_ps</value>
                 </params>
             </validation>
         </rule>

@@ -352,4 +352,16 @@
         </params-def>
     </validationFunction>
 
+    <validationFunction functionName="checkSecondaryMetsAmdsecElementsMatchProfile">
+        <description>Zkontroluje, že zvolený potomek elementu amdSec (techMD/digiprovMD pro MIX/PREMIS) splňuje
+            požadovaný profil.
+        </description>
+        <params-def>
+            <value name="secondary-mets_files" type="FILE_LIST"/>
+            <value name="element_xpath" type="STRING"/>
+            <value name="element_must_exist" type="BOOLEAN"/>
+            <value name="profile_id" type="STRING"/>
+        </params-def>
+    </validationFunction>
+
 </validationFunctions>

@@ -3,6 +3,7 @@ package nkp.pspValidator.shared;
 import nkp.pspValidator.shared.biblio.BiblioTemplatesManager;
 import nkp.pspValidator.shared.biblio.BiblioTemplatesParser;
 import nkp.pspValidator.shared.biblio.DictionaryManager;
+import nkp.pspValidator.shared.biblio.TechnicalTemplatesManager;
 import nkp.pspValidator.shared.engine.Engine;
 import nkp.pspValidator.shared.engine.exceptions.ValidatorConfigurationException;
 import nkp.pspValidator.shared.engine.types.MetadataFormat;
@@ -30,7 +31,8 @@ public class ValidatorFactory {
         for (File configFile : fdmfConfiguration.getFdmfConfigFiles()) {
             engine.processConfigFile(configFile);
         }
-        // process biblio validator files
+
+        // process bibliographic profile files
         BiblioTemplatesManager biblioMgr = new BiblioTemplatesManager(new BiblioTemplatesParser(dictionaryManager));
         for (File templateFile : fdmfConfiguration.getBiblioDcTemplates()) {
             biblioMgr.processFile(templateFile, MetadataFormat.DC);
@@ -39,6 +41,13 @@ public class ValidatorFactory {
             biblioMgr.processFile(templateFile, MetadataFormat.MODS);
         }
         engine.setBiblioMgr(biblioMgr);
+
+        //process technical profile files
+        TechnicalTemplatesManager techMgr = new TechnicalTemplatesManager(new BiblioTemplatesParser(dictionaryManager));
+        for (File templateFile : fdmfConfiguration.getTechProfiles()) {
+            techMgr.processFile(templateFile);
+        }
+        engine.setTechnicalTemplatesManager(techMgr);
 
         return new Validator(engine);
     }

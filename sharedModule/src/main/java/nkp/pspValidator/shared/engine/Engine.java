@@ -1,6 +1,7 @@
 package nkp.pspValidator.shared.engine;
 
 import nkp.pspValidator.shared.biblio.BiblioTemplatesManager;
+import nkp.pspValidator.shared.biblio.TechnicalTemplatesManager;
 import nkp.pspValidator.shared.engine.evaluationFunctions.*;
 import nkp.pspValidator.shared.engine.exceptions.InvalidXPathExpressionException;
 import nkp.pspValidator.shared.engine.exceptions.ValidatorConfigurationException;
@@ -36,6 +37,7 @@ public class Engine {
     private final ImageValidator imageValidator;
 
     private BiblioTemplatesManager biblioMgr;
+    private TechnicalTemplatesManager technicalTemplatesManager;
 
     public BiblioTemplatesManager getBiblioMgr() {
         return biblioMgr;
@@ -43,6 +45,14 @@ public class Engine {
 
     public void setBiblioMgr(BiblioTemplatesManager biblioMgr) {
         this.biblioMgr = biblioMgr;
+    }
+
+    public TechnicalTemplatesManager getTechnicalTemplatesManager() {
+        return technicalTemplatesManager;
+    }
+
+    public void setTechnicalTemplatesManager(TechnicalTemplatesManager technicalTemplatesManager) {
+        this.technicalTemplatesManager = technicalTemplatesManager;
     }
 
     public Engine(ImageValidator imageValidator) {
@@ -186,10 +196,14 @@ public class Engine {
                 return new VfCheckMetsFilesecSizesMatch(this);
             case "checkMetsFilesecChecksumsMatch":
                 return new VfCheckMetsFilesecChecksumsMatch(this);
+
             case "checkSecondaryMetsFilesecContainsAllFilegroups":
                 return new VfCheckSecondaryMetsFilesecContainsAllFilegroups(this);
             case "checkSecondaryMetsFilegroupReferencesSingleFile":
                 return new VfCheckSecondaryMetsFilegroupReferencesSingleFile(this);
+            case "checkSecondaryMetsAmdsecElementsMatchProfile":
+                return new VfCheckSecondaryMetsAmdsecElementsMatchProfile(this);
+
             case "checkImageFilesValidByExternalUtil":
                 return new VfCheckImageFilesValidByExternalUtil(this);
 

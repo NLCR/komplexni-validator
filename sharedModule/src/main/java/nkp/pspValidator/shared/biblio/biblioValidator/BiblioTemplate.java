@@ -7,6 +7,7 @@ import java.util.Set;
 /**
  * Created by Martin Řehánek on 10.1.17.
  */
+//TODO: rename to MetadataProfile
 public class BiblioTemplate {
 
     private String name;

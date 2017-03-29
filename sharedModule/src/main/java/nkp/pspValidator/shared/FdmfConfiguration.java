@@ -33,15 +33,19 @@ public class FdmfConfiguration {
     private static final String BIBLIO_PROFILES_DC_DIR = "dc";
     private static final String BIBLIO_PROFILES_MODS_DIR = "mods";
 
+    private static final String TECH_PROFILES_DIR = "techProfiles";
+
     private final File fdmfRoot;
     private final File fdmfConfigXsd;
     private final File j2kProfileConfigXsd;
+    //TODO: prejmenovat na profileXsd
     private final File biblioProfileXsd;
 
     private final Map<String, File> providedFiles = new HashMap<>();
     private final List<File> fdmfConfigFiles = new ArrayList<>();
     private final List<File> biblioModsTemplates = new ArrayList<>();
     private final List<File> biblioDcTemplates = new ArrayList<>();
+    private final List<File> techProfiles = new ArrayList<>();
 
     private ImageValidator imageValidator;
 
@@ -76,6 +80,7 @@ public class FdmfConfiguration {
 
         //inicializace sablon pro validacio biblio metadat
         initBiblioTemplates();
+        initTechProfiles();
     }
 
     private void initBiblioTemplates() throws ValidatorConfigurationException {
@@ -84,6 +89,7 @@ public class FdmfConfiguration {
         //dc templates
         File dcTemplatesDir = new File(biblioProfilesDir, BIBLIO_PROFILES_DC_DIR);
         checkDirExistAndReadable(dcTemplatesDir);
+        //TODO: sjednotit terminologii, vzdy pouzivat profiles namisto templates
         File[] dcTemplates = dcTemplatesDir.listFiles((dir, name) -> name.endsWith(".xml"));
         for (File template : dcTemplates) {
             //xsd validation of template
@@ -98,6 +104,16 @@ public class FdmfConfiguration {
             //xsd validation of template
             validateConfigFile(template, biblioProfileXsd);
             biblioModsTemplates.add(template);
+        }
+    }
+
+    private void initTechProfiles() throws ValidatorConfigurationException {
+        File biblioProfilesDir = new File(fdmfRoot, TECH_PROFILES_DIR);
+        checkDirExistAndReadable(biblioProfilesDir);
+        File[] techProfileFiles = biblioProfilesDir.listFiles((dir, name) -> name.endsWith(".xml"));
+        for (File profileFile : techProfileFiles) {
+            validateConfigFile(profileFile, biblioProfileXsd);
+            techProfiles.add(profileFile);
         }
     }
 
@@ -193,5 +209,9 @@ public class FdmfConfiguration {
 
     public List<File> getBiblioDcTemplates() {
         return biblioDcTemplates;
+    }
+
+    public List<File> getTechProfiles() {
+        return techProfiles;
     }
 }

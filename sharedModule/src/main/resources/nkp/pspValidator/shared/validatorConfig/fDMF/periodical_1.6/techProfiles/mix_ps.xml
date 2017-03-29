@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<validationTemplate
+        xmlns="http://www.nkp.cz/pspValidator/1.2/xmlValidationTemplate"
+        name="MIX PS (primarní sken)"
+        validatorVersion="1.4"
+        dmf="periodical_1.6"
+>
+
+    <info>
+        <text>
+            Profil pro validaci MIX záznamu primárního skenu (PS) stránky v sekundárním MODSu pro DMF Periodika-1.6.
+        </text>
+        <url description="popis formátu MIX">http://www.loc.gov/standards/mix/</url>
+        <url description="XSD pro MIX 2.0">http://www.loc.gov/standards/mix/mix.xsd</url>
+    </info>
+
+    <namespaces>
+        <namespace prefix="mets">http://www.loc.gov/METS/</namespace>
+        <namespace prefix="mix">http://www.loc.gov/mix/v20</namespace>
+    </namespaces>
+
+    <rootElement name="mets:techMD">
+        <expectedAttributes>
+            <attribute name="ID">
+                <expectedContent>
+                    <value>MIX_001</value>
+                </expectedContent>
+            </attribute>
+        </expectedAttributes>
+
+        <expectedElements>
+            <element name="mets:mdWrap">
+                <expectedAttributes>
+                    <attribute name="MDTYPE">
+                        <expectedContent>
+                            <value>NISOIMG</value>
+                        </expectedContent>
+                    </attribute>
+                </expectedAttributes>
+
+                <expectedElements>
+                    <element name="mets:xmlData">
+                        <expectedElements>
+                            <element name="mix:mix">
+                                <!--TODO-->
+                            </element>
+                        </expectedElements>
+                    </element>
+                </expectedElements>
+            </element>
+        </expectedElements>
+    </rootElement>
+
+</validationTemplate>

@@ -1,6 +1,6 @@
 <fDMF>
     <namespaces>
-        <!--Zde jsou definovány jednotlivé jmenné prostory pro různé formáty. Uvedené prefixy musí být použité ve všech pravidlech. -->
+        <!--Zde jsou definovány jednotlivé jmenné prostory pro různé formáty. Uvedené prefixy musí být použity ve všech pravidlech. -->
 
         <!--prefix mets-->
         <namespace-mets>http://www.loc.gov/METS/</namespace-mets>

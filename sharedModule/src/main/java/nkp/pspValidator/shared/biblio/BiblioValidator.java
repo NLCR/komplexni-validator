@@ -18,6 +18,7 @@ import java.util.Set;
 /**
  * Created by Martin Řehánek on 10.1.17.
  */
+//TODO: rename to MetadataProfileValidator
 public class BiblioValidator {
 
     public static ValidationResult validate(BiblioTemplate biblioTemplate, Document doc, ValidationResult result, String errorLabel) throws InvalidXPathExpressionException, XPathExpressionException {

@@ -16,6 +16,7 @@ import static nkp.pspValidator.shared.XmlUtils.getFirstChildElementsByName;
 /**
  * Created by Martin Řehánek on 2.1.17.
  */
+//TODO: rename to MetadataProfileParser
 public class BiblioTemplatesParser {
 
     //private static final Logger LOG = Logger.getLogger(BiblioTemplatesParser.class.getSimpleName());
