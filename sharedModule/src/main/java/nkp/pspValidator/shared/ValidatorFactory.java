@@ -1,9 +1,9 @@
 package nkp.pspValidator.shared;
 
-import nkp.pspValidator.shared.biblio.BiblioTemplatesManager;
-import nkp.pspValidator.shared.biblio.BiblioTemplatesParser;
-import nkp.pspValidator.shared.biblio.DictionaryManager;
-import nkp.pspValidator.shared.biblio.TechnicalTemplatesManager;
+import nkp.pspValidator.shared.metadataProfile.biblio.BibliographicMetadataProfilesManager;
+import nkp.pspValidator.shared.metadataProfile.MetadataProfileParser;
+import nkp.pspValidator.shared.metadataProfile.DictionaryManager;
+import nkp.pspValidator.shared.metadataProfile.tech.TechnicalMetadataProfilesManager;
 import nkp.pspValidator.shared.engine.Engine;
 import nkp.pspValidator.shared.engine.exceptions.ValidatorConfigurationException;
 import nkp.pspValidator.shared.engine.types.MetadataFormat;
@@ -33,21 +33,21 @@ public class ValidatorFactory {
         }
 
         // process bibliographic profile files
-        BiblioTemplatesManager biblioMgr = new BiblioTemplatesManager(new BiblioTemplatesParser(dictionaryManager));
+        BibliographicMetadataProfilesManager biblioMgr = new BibliographicMetadataProfilesManager(new MetadataProfileParser(dictionaryManager));
         for (File templateFile : fdmfConfiguration.getBiblioDcTemplates()) {
             biblioMgr.processFile(templateFile, MetadataFormat.DC);
         }
         for (File templateFile : fdmfConfiguration.getBiblioModsTemplates()) {
             biblioMgr.processFile(templateFile, MetadataFormat.MODS);
         }
-        engine.setBiblioMgr(biblioMgr);
+        engine.setBibliographicMetadataProfilesManager(biblioMgr);
 
         //process technical profile files
-        TechnicalTemplatesManager techMgr = new TechnicalTemplatesManager(new BiblioTemplatesParser(dictionaryManager));
+        TechnicalMetadataProfilesManager techMgr = new TechnicalMetadataProfilesManager(new MetadataProfileParser(dictionaryManager));
         for (File templateFile : fdmfConfiguration.getTechProfiles()) {
             techMgr.processFile(templateFile);
         }
-        engine.setTechnicalTemplatesManager(techMgr);
+        engine.setTechnicalMetadataProfilesManager(techMgr);
 
         return new Validator(engine);
     }

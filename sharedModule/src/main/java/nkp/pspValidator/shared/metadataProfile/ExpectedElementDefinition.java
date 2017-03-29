@@ -1,4 +1,4 @@
-package nkp.pspValidator.shared.biblio.biblioValidator;
+package nkp.pspValidator.shared.metadataProfile;
 
 import java.util.Collections;
 import java.util.List;
@@ -9,7 +9,7 @@ import java.util.List;
 public class ExpectedElementDefinition {
 
     //template
-    private final BiblioTemplate template;
+    private final MetadataProfile profile;
 
     private final String errorMessage;
 
@@ -32,8 +32,8 @@ public class ExpectedElementDefinition {
     private ContentDefinition recommendedContentDefinition;
     private List<ExtraRule> extraRules = Collections.emptyList();
 
-    public ExpectedElementDefinition(BiblioTemplate template, ExpectedElementDefinition parent, String errorMessage) {
-        this.template = template;
+    public ExpectedElementDefinition(MetadataProfile profile, ExpectedElementDefinition parent, String errorMessage) {
+        this.profile = profile;
         this.parent = parent;
         this.errorMessage = errorMessage;
     }

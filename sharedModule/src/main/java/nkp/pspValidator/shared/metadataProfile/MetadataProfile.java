@@ -1,4 +1,4 @@
-package nkp.pspValidator.shared.biblio.biblioValidator;
+package nkp.pspValidator.shared.metadataProfile;
 
 import java.util.Collections;
 import java.util.Map;
@@ -7,8 +7,7 @@ import java.util.Set;
 /**
  * Created by Martin Řehánek on 10.1.17.
  */
-//TODO: rename to MetadataProfile
-public class BiblioTemplate {
+public class MetadataProfile {
 
     private String name;
     private String validatorVersion;

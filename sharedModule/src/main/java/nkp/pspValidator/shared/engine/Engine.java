@@ -1,7 +1,7 @@
 package nkp.pspValidator.shared.engine;
 
-import nkp.pspValidator.shared.biblio.BiblioTemplatesManager;
-import nkp.pspValidator.shared.biblio.TechnicalTemplatesManager;
+import nkp.pspValidator.shared.metadataProfile.biblio.BibliographicMetadataProfilesManager;
+import nkp.pspValidator.shared.metadataProfile.tech.TechnicalMetadataProfilesManager;
 import nkp.pspValidator.shared.engine.evaluationFunctions.*;
 import nkp.pspValidator.shared.engine.exceptions.InvalidXPathExpressionException;
 import nkp.pspValidator.shared.engine.exceptions.ValidatorConfigurationException;
@@ -36,23 +36,23 @@ public class Engine {
     private final RulesManager rulesManager = new RulesManager();
     private final ImageValidator imageValidator;
 
-    private BiblioTemplatesManager biblioMgr;
-    private TechnicalTemplatesManager technicalTemplatesManager;
+    private BibliographicMetadataProfilesManager bibliographicMetadataProfilesManager;
+    private TechnicalMetadataProfilesManager technicalMetadataProfilesManager;
 
-    public BiblioTemplatesManager getBiblioMgr() {
-        return biblioMgr;
+    public BibliographicMetadataProfilesManager getBibliographicMetadataProfilesManager() {
+        return bibliographicMetadataProfilesManager;
     }
 
-    public void setBiblioMgr(BiblioTemplatesManager biblioMgr) {
-        this.biblioMgr = biblioMgr;
+    public void setBibliographicMetadataProfilesManager(BibliographicMetadataProfilesManager bibliographicMetadataProfilesManager) {
+        this.bibliographicMetadataProfilesManager = bibliographicMetadataProfilesManager;
     }
 
-    public TechnicalTemplatesManager getTechnicalTemplatesManager() {
-        return technicalTemplatesManager;
+    public TechnicalMetadataProfilesManager getTechnicalMetadataProfilesManager() {
+        return technicalMetadataProfilesManager;
     }
 
-    public void setTechnicalTemplatesManager(TechnicalTemplatesManager technicalTemplatesManager) {
-        this.technicalTemplatesManager = technicalTemplatesManager;
+    public void setTechnicalMetadataProfilesManager(TechnicalMetadataProfilesManager technicalMetadataProfilesManager) {
+        this.technicalMetadataProfilesManager = technicalMetadataProfilesManager;
     }
 
     public Engine(ImageValidator imageValidator) {

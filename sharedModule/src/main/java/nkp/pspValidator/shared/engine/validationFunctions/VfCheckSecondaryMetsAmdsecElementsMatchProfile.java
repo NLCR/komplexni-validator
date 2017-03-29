@@ -2,8 +2,8 @@ package nkp.pspValidator.shared.engine.validationFunctions;
 
 
 import nkp.pspValidator.shared.XmlUtils;
-import nkp.pspValidator.shared.biblio.BiblioValidator;
-import nkp.pspValidator.shared.biblio.biblioValidator.BiblioTemplate;
+import nkp.pspValidator.shared.metadataProfile.MetadataProfileValidator;
+import nkp.pspValidator.shared.metadataProfile.MetadataProfile;
 import nkp.pspValidator.shared.engine.Engine;
 import nkp.pspValidator.shared.engine.Level;
 import nkp.pspValidator.shared.engine.ValueEvaluation;
@@ -75,7 +75,7 @@ public class VfCheckSecondaryMetsAmdsecElementsMatchProfile extends ValidationFu
                 return invalidValueParamNull(PARAM_PROFILE_ID, paramElementMustExist);
             }
 
-            BiblioTemplate profile = engine.getTechnicalTemplatesManager().buildTemplate(profileId);
+            MetadataProfile profile = engine.getTechnicalMetadataProfilesManager().buildProfile(profileId);
             if (profile == null) {
                 return singlErrorResult(invalid(Level.ERROR, "nenalezen profil '%s'", profileId));
             } else {
@@ -88,7 +88,7 @@ public class VfCheckSecondaryMetsAmdsecElementsMatchProfile extends ValidationFu
         }
     }
 
-    private ValidationResult validate(List<File> files, String elementXpath, Boolean elementMustExist, BiblioTemplate profile) {
+    private ValidationResult validate(List<File> files, String elementXpath, Boolean elementMustExist, MetadataProfile profile) {
         ValidationResult result = new ValidationResult();
         for (File file : files) {
             if (file.isDirectory()) {
@@ -102,7 +102,7 @@ public class VfCheckSecondaryMetsAmdsecElementsMatchProfile extends ValidationFu
         return result;
     }
 
-    private void validateFile(File file, ValidationResult result, String elementXpath, Boolean elementMustExist, BiblioTemplate profile) {
+    private void validateFile(File file, ValidationResult result, String elementXpath, Boolean elementMustExist, MetadataProfile profile) {
         try {
             Document doc = engine.getXmlDocument(file, true);
             Element amdSecEl = (Element) engine.buildXpath("/mets:mets/mets:amdSec").evaluate(doc, XPathConstants.NODE);
@@ -122,7 +122,7 @@ public class VfCheckSecondaryMetsAmdsecElementsMatchProfile extends ValidationFu
                         } else {
                             Element elementToValidate = (Element) nodeToValidate;
                             Document newDoc = XmlUtils.elementToNewDocument(elementToValidate, true);
-                            BiblioValidator.validate(profile, newDoc, result, file.getName());
+                            MetadataProfileValidator.validate(profile, newDoc, result, file.getName());
                         }
                     }
                 }

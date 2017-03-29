@@ -1,6 +1,7 @@
-package nkp.pspValidator.shared.biblio;
+package nkp.pspValidator.shared.metadataProfile.biblio;
 
-import nkp.pspValidator.shared.biblio.biblioValidator.BiblioTemplate;
+import nkp.pspValidator.shared.metadataProfile.MetadataProfileParser;
+import nkp.pspValidator.shared.metadataProfile.MetadataProfile;
 import nkp.pspValidator.shared.engine.exceptions.ValidatorConfigurationException;
 import nkp.pspValidator.shared.engine.types.MetadataFormat;
 
@@ -14,12 +15,12 @@ import static nkp.pspValidator.shared.engine.types.MetadataFormat.MODS;
 /**
  * Created by Martin Řehánek on 31.1.17.
  */
-public class BiblioTemplatesManager {
+public class BibliographicMetadataProfilesManager {
 
     private final Map<MetadataFormat, Map<CatalogingConventions, Map<String, File>>> data = new HashMap<>();
-    private final BiblioTemplatesParser parser;
+    private final MetadataProfileParser parser;
 
-    public BiblioTemplatesManager(BiblioTemplatesParser parser) {
+    public BibliographicMetadataProfilesManager(MetadataProfileParser parser) {
         this.parser = parser;
         data.put(DC, new HashMap<>());
         data.put(MODS, new HashMap<>());
@@ -28,7 +29,7 @@ public class BiblioTemplatesManager {
     public void processFile(File file, MetadataFormat format) throws ValidatorConfigurationException {
         //System.err.println("processing: " + file.getName() + ", " + format);
         //just test-parsing so that we reveal potential errors before actually processing it
-        parser.parseTemplate(file);
+        parser.parseProfile(file);
         Map<CatalogingConventions, Map<String, File>> conventionsMapMap = data.get(format);
         String filename = file.getName();
         String filenameWithoutSuffix = file.getName().substring(0, filename.length() - ".xml".length());
@@ -63,13 +64,13 @@ public class BiblioTemplatesManager {
         }
     }
 
-    public BiblioTemplate buildTemplate(String fileId, MetadataFormat format, CatalogingConventions conventions) {
+    public MetadataProfile buildProfile(String fileId, MetadataFormat format, CatalogingConventions conventions) {
         File file = getTemplateFile(fileId, format, conventions);
         if (file == null) {
             return null;
         } else {
             try {
-                return parser.parseTemplate(file);
+                return parser.parseProfile(file);
             } catch (ValidatorConfigurationException e) {
                 //should never happen, template has already been parsed
                 throw new IllegalStateException(e);

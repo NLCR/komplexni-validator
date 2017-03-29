@@ -3,9 +3,9 @@ package nkp.pspValidator.shared.engine.validationFunctions;
 
 import nkp.pspValidator.shared.XmlUtils;
 import nkp.pspValidator.shared.XsdImportsResourceResolver;
-import nkp.pspValidator.shared.biblio.BiblioValidator;
-import nkp.pspValidator.shared.biblio.CatalogingConventions;
-import nkp.pspValidator.shared.biblio.biblioValidator.BiblioTemplate;
+import nkp.pspValidator.shared.metadataProfile.MetadataProfileValidator;
+import nkp.pspValidator.shared.metadataProfile.biblio.CatalogingConventions;
+import nkp.pspValidator.shared.metadataProfile.MetadataProfile;
 import nkp.pspValidator.shared.engine.Engine;
 import nkp.pspValidator.shared.engine.Level;
 import nkp.pspValidator.shared.engine.ValueEvaluation;
@@ -222,11 +222,11 @@ public class VfCheckBibliographicMetadataMatchProfile extends ValidationFunction
                 boolean validByXsd = validateByXsd(xsdFile, metadataDoc, dmdSecId, result);
                 if (validByXsd) {
                     //result.addError(Level.INFO, String.format("%s je validní podle %s", dmdSecId, xsdFile.getName()));
-                    BiblioTemplate biblioTemplate = engine.getBiblioMgr().buildTemplate(templateName, format, catalogingConventions);
-                    if (biblioTemplate == null) {
+                    MetadataProfile profile = engine.getBibliographicMetadataProfilesManager().buildProfile(templateName, format, catalogingConventions);
+                    if (profile == null) {
                         result.addError(invalid(Level.ERROR, "nenalezena šablona '%s' (verze %s, %s), pravděpodobně chybí element mods:genre určující druh záznamu; ignoruji validaci záznamu %s", templateName, format, catalogingConventions, dmdSecId));
                     } else {
-                        BiblioValidator.validate(biblioTemplate, metadataDoc, result, dmdSecId);
+                        MetadataProfileValidator.validate(profile, metadataDoc, result, dmdSecId);
                     }
                 }
             }

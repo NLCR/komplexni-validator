@@ -1,4 +1,4 @@
-package nkp.pspValidator.shared.biblio.biblioValidator;
+package nkp.pspValidator.shared.metadataProfile;
 
 import nkp.pspValidator.shared.engine.XmlManager;
 import nkp.pspValidator.shared.engine.exceptions.InvalidXPathExpressionException;

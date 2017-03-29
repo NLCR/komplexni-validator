@@ -1,6 +1,6 @@
 package nkp.pspValidator.shared;
 
-import nkp.pspValidator.shared.biblio.DictionaryManager;
+import nkp.pspValidator.shared.metadataProfile.DictionaryManager;
 import nkp.pspValidator.shared.engine.exceptions.ValidatorConfigurationException;
 
 import java.io.File;

@@ -1,13 +1,15 @@
-package nkp.pspValidator.shared.biblio.biblioValidator;
+package nkp.pspValidator.shared.metadataProfile;
+
+import java.util.regex.Pattern;
 
 /**
  * Created by Martin Řehánek on 10.1.17.
  */
-public class ContentDefinitionValue implements ContentDefinition {
-    private final String valueExpected;
+public class ContentDefinitionRegexp implements ContentDefinition {
+    private final String regexp;
 
-    public ContentDefinitionValue(String valueExpected) {
-        this.valueExpected = valueExpected;
+    public ContentDefinitionRegexp(String regexp) {
+        this.regexp = regexp;
     }
 
     @Override
@@ -19,19 +21,20 @@ public class ContentDefinitionValue implements ContentDefinition {
                     return "prázdná hodnota";
                 }
             };
-        } else if (!valueFound.equals(valueExpected)) { //value different
+        }
+        if (Pattern.matches(regexp, valueFound)) {
+            return new CheckingResultMatch();
+        } else {
             return new CheckingResultFail() {
                 @Override
                 public String getErrorMessage() {
-                    return String.format("hodnota '%s' neodpovídá očekávané hodnotě '%s'", valueFound, valueExpected);
+                    return String.format("hodnota '%s' neodpovídá regulárním výrazu '%s'", valueFound, regexp);
                 }
             };
-        } else { //value same
-            return new CheckingResultMatch();
         }
     }
 
     public String toString() {
-        return String.format("\"%s\"", valueExpected);
+        return String.format("regulární výraz '%s'", regexp);
     }
 }

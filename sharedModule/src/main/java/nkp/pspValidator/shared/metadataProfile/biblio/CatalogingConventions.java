@@ -1,4 +1,4 @@
-package nkp.pspValidator.shared.biblio;
+package nkp.pspValidator.shared.metadataProfile.biblio;
 
 /**
  * Created by Martin Řehánek on 31.1.17.

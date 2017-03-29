@@ -1,10 +1,9 @@
-package nkp.pspValidator.shared.biblio;
+package nkp.pspValidator.shared.metadataProfile;
 
 import com.mycila.xmltool.XMLDoc;
 import com.mycila.xmltool.XMLTag;
 import nkp.pspValidator.shared.Version;
 import nkp.pspValidator.shared.XmlUtils;
-import nkp.pspValidator.shared.biblio.biblioValidator.*;
 import nkp.pspValidator.shared.engine.exceptions.ValidatorConfigurationException;
 import org.w3c.dom.Element;
 
@@ -16,25 +15,24 @@ import static nkp.pspValidator.shared.XmlUtils.getFirstChildElementsByName;
 /**
  * Created by Martin Řehánek on 2.1.17.
  */
-//TODO: rename to MetadataProfileParser
-public class BiblioTemplatesParser {
+public class MetadataProfileParser {
 
-    //private static final Logger LOG = Logger.getLogger(BiblioTemplatesParser.class.getSimpleName());
+    //private static final Logger LOG = Logger.getLogger(MetadataProfileParser.class.getSimpleName());
 
     private final DictionaryManager dictionaryManager;
 
-    public BiblioTemplatesParser(DictionaryManager dictionaryManager) {
+    public MetadataProfileParser(DictionaryManager dictionaryManager) {
         this.dictionaryManager = dictionaryManager;
     }
 
-    public BiblioTemplate parseTemplate(File templateXmlFile) throws ValidatorConfigurationException {
+    public MetadataProfile parseProfile(File profileXmlFile) throws ValidatorConfigurationException {
         //LOG.info(String.format("parsing %s", templateXml.getAbsolutePath()));
-        BiblioTemplate biblioTemplate = new BiblioTemplate();
-        XMLTag doc = XMLDoc.from(templateXmlFile, true); //ignoring namespaces
-        biblioTemplate.setValidatorVersion(doc.getAttribute("validatorVersion"));
-        biblioTemplate.setDmf(doc.getAttribute("dmf"));
+        MetadataProfile metadataProfile = new MetadataProfile();
+        XMLTag doc = XMLDoc.from(profileXmlFile, true); //ignoring namespaces
+        metadataProfile.setValidatorVersion(doc.getAttribute("validatorVersion"));
+        metadataProfile.setDmf(doc.getAttribute("dmf"));
 
-        checkValidatorVersionCorrect(biblioTemplate.getValidatorVersion(), templateXmlFile);
+        checkValidatorVersionCorrect(metadataProfile.getValidatorVersion(), profileXmlFile);
         //TODO: podobne testovat dmf
 
         for (Element childEl : doc.getChildElement()) {
@@ -43,21 +41,21 @@ public class BiblioTemplatesParser {
                 case "info": //won't be machine processed
                     break;
                 case "namespaces":
-                    biblioTemplate.setNamespaces(parseNamespaces(childEl));
+                    metadataProfile.setNamespaces(parseNamespaces(childEl));
                     break;
                 case "dictionaries":
-                    biblioTemplate.setDeclaredDictionaries(parseDeclaredDictionaries(childEl, templateXmlFile));
+                    metadataProfile.setDeclaredDictionaries(parseDeclaredDictionaries(childEl, profileXmlFile));
                     break;
                 case "rootElement":
-                    ExpectedElementDefinition rootElementDef = parseElementDefinition(biblioTemplate, null, childEl, templateXmlFile);
+                    ExpectedElementDefinition rootElementDef = parseElementDefinition(metadataProfile, null, childEl, profileXmlFile);
                     rootElementDef.setRepeatable(false); //quick fix
-                    biblioTemplate.setRootElementDefinition(rootElementDef);
+                    metadataProfile.setRootElementDefinition(rootElementDef);
                     break;
                 default:
                     //nothing
             }
         }
-        return biblioTemplate;
+        return metadataProfile;
     }
 
     private void checkValidatorVersionCorrect(String versionFromTemplate, File templateXmlFile) throws ValidatorConfigurationException {
@@ -99,16 +97,16 @@ public class BiblioTemplatesParser {
         return result;
     }
 
-    private ExpectedElementDefinition parseElementDefinition(BiblioTemplate biblioTemplate, ExpectedElementDefinition parentDef, Element rootEl, File file) throws ValidatorConfigurationException {
+    private ExpectedElementDefinition parseElementDefinition(MetadataProfile profile, ExpectedElementDefinition parentDef, Element rootEl, File file) throws ValidatorConfigurationException {
         String errorMessage = rootEl.getAttribute("errorMessage");
-        ExpectedElementDefinition elementDef = new ExpectedElementDefinition(biblioTemplate, parentDef, errorMessage);
+        ExpectedElementDefinition elementDef = new ExpectedElementDefinition(profile, parentDef, errorMessage);
         //name
         String nsPrefix = null;
         String name = rootEl.getAttribute("name");
         if (name.contains(":")) {
             String[] tokens = name.split(":");
             nsPrefix = tokens[0];
-            if (!biblioTemplate.getNamespaces().keySet().contains(nsPrefix)) {
+            if (!profile.getNamespaces().keySet().contains(nsPrefix)) {
                 throw new ValidatorConfigurationException(String.format("prefix jmenného prostoru '%s' není registrován (soubor %s)", nsPrefix, file.getAbsolutePath()));
             }
             name = tokens[1];
@@ -162,7 +160,7 @@ public class BiblioTemplatesParser {
             List<ExpectedAttributeDefinition> expectedAttributes = new ArrayList<>(attributeEls.size());
             Set<String> expectedAttributeNames = new HashSet<>();
             for (Element attributeEl : attributeEls) {
-                ExpectedAttributeDefinition definition = parseAttributeDefinition(biblioTemplate, attributeEl, file);
+                ExpectedAttributeDefinition definition = parseAttributeDefinition(profile, attributeEl, file);
                 if (expectedAttributeNames.contains(definition.getAttributeName())) {
                     throw new ValidatorConfigurationException("zdvojená definice očekávaného atributu '%s' v rámci definice očekávaného elementu '%s' (soubor %s)", definition.getAttributeName(), elementDef.buildAbsoluteXpath(), file.getAbsolutePath());
                 } else {
@@ -181,7 +179,7 @@ public class BiblioTemplatesParser {
             List<Element> elementEls = XmlUtils.getChildrenElementsByName(expectedElementsEl, "element");
             List<ExpectedElementDefinition> expectedElements = new ArrayList<>(elementEls.size());
             for (Element elementEl : elementEls) {
-                ExpectedElementDefinition newElementDefinition = parseElementDefinition(biblioTemplate, elementDef, elementEl, file);
+                ExpectedElementDefinition newElementDefinition = parseElementDefinition(profile, elementDef, elementEl, file);
                 //check whether not duplicate definition
                 for (ExpectedElementDefinition previousDefinition : expectedElements) {
                     if (previousDefinition.getElementName().equals(newElementDefinition.getElementName())
@@ -204,7 +202,7 @@ public class BiblioTemplatesParser {
             if (expectedContentChildrenEls.isEmpty()) { //empty element 'expectedContent' means any content
                 elementDef.setExpectedContentDefinition(new ContentDefinitionAnything());
             } else { //some element inside 'expectedContent'
-                ContentDefinition contentDefinition = parseContentDefinition(biblioTemplate, expectedContentChildrenEls.get(0), file);
+                ContentDefinition contentDefinition = parseContentDefinition(profile, expectedContentChildrenEls.get(0), file);
                 elementDef.setExpectedContentDefinition(contentDefinition);
             }
         } else if (recommendedContentEl != null) { //recommended content
@@ -212,7 +210,7 @@ public class BiblioTemplatesParser {
             if (recommendedContentChildrenEls.isEmpty()) { //empty element 'recommendedContent' means any content
                 elementDef.setRecommendedContentDefinition(new ContentDefinitionAnything());
             } else { //some element inside 'recommendedContent'
-                ContentDefinition contentDefinition = parseContentDefinition(biblioTemplate, recommendedContentChildrenEls.get(0), file);
+                ContentDefinition contentDefinition = parseContentDefinition(profile, recommendedContentChildrenEls.get(0), file);
                 elementDef.setRecommendedContentDefinition(contentDefinition);
             }
         }
@@ -226,7 +224,7 @@ public class BiblioTemplatesParser {
                 for (Element ruleEl : ruleEls) {
                     switch (ruleEl.getTagName()) {
                         case "atLeastOneElementExists":
-                            ExtraRule rule = parseExtraRuleAtLeastOneElementExists(biblioTemplate, ruleEl);
+                            ExtraRule rule = parseExtraRuleAtLeastOneElementExists(profile, ruleEl);
                             extraRules.add(rule);
                             break;
                     }
@@ -238,7 +236,7 @@ public class BiblioTemplatesParser {
         return elementDef;
     }
 
-    private ExtraRule parseExtraRuleAtLeastOneElementExists(BiblioTemplate templateDef, Element ruleEl) {
+    private ExtraRule parseExtraRuleAtLeastOneElementExists(MetadataProfile profile, Element ruleEl) {
         String xpath = ruleEl.getAttribute("xpath");
         return new ExtraRuleAtLeastOneElementExists(xpath);
     }
@@ -253,7 +251,7 @@ public class BiblioTemplatesParser {
         }
     }
 
-    private ExpectedAttributeDefinition parseAttributeDefinition(BiblioTemplate templateDef, Element attributeEl, File file) throws ValidatorConfigurationException {
+    private ExpectedAttributeDefinition parseAttributeDefinition(MetadataProfile profile, Element attributeEl, File file) throws ValidatorConfigurationException {
         ExpectedAttributeDefinition definition = new ExpectedAttributeDefinition();
         //name
         String name = attributeEl.getAttribute("name");
@@ -273,7 +271,7 @@ public class BiblioTemplatesParser {
             if (expectedContentChildrenEls.isEmpty()) {
                 definition.setExpectedContentDefinition(new ContentDefinitionAnything());
             } else {
-                ContentDefinition contentDefinition = parseContentDefinition(templateDef, expectedContentChildrenEls.get(0), file);
+                ContentDefinition contentDefinition = parseContentDefinition(profile, expectedContentChildrenEls.get(0), file);
                 definition.setExpectedContentDefinition(contentDefinition);
             }
         } else if (recommendedContentEl != null) {//recomended content
@@ -281,7 +279,7 @@ public class BiblioTemplatesParser {
             if (recommendedContentChildrenEls.isEmpty()) {
                 definition.setRecommendedContentDefinition(new ContentDefinitionAnything());
             } else {
-                ContentDefinition contentDefinition = parseContentDefinition(templateDef, recommendedContentChildrenEls.get(0), file);
+                ContentDefinition contentDefinition = parseContentDefinition(profile, recommendedContentChildrenEls.get(0), file);
                 definition.setRecommendedContentDefinition(contentDefinition);
             }
         } else {//not expected nor recomended content
@@ -291,7 +289,7 @@ public class BiblioTemplatesParser {
     }
 
     //parametrem je primo element value, regexp, fromDictionary, oneOf
-    private ContentDefinition parseContentDefinition(BiblioTemplate templateDef, Element expectedContentChildEl, File file) throws ValidatorConfigurationException {
+    private ContentDefinition parseContentDefinition(MetadataProfile profile, Element expectedContentChildEl, File file) throws ValidatorConfigurationException {
         switch (expectedContentChildEl.getTagName()) {
             case "value":
                 return new ContentDefinitionValue(expectedContentChildEl.getTextContent().trim());
@@ -299,7 +297,7 @@ public class BiblioTemplatesParser {
                 return new ContentDefinitionRegexp(expectedContentChildEl.getTextContent().trim());
             case "fromDictionary":
                 String dictionaryName = expectedContentChildEl.getAttribute("name");
-                if (!templateDef.getDeclaredDictionaries().contains(dictionaryName)) {
+                if (!profile.getDeclaredDictionaries().contains(dictionaryName)) {
                     throw new ValidatorConfigurationException(String.format("kontrolovaný slovník  '%s' není definován (soubor %s)", dictionaryName, file.getAbsolutePath()));
                 } else {
                     return new ContentDefinitionFromDictionary(dictionaryName, dictionaryManager.getDictionaryValues(dictionaryName));
@@ -308,7 +306,7 @@ public class BiblioTemplatesParser {
                 List<Element> oneOfChildEls = XmlUtils.getChildrenElements(expectedContentChildEl);
                 List<ContentDefinition> definitions = new ArrayList<>(oneOfChildEls.size());
                 for (Element element : oneOfChildEls) {
-                    definitions.add(parseContentDefinition(templateDef, element, file));
+                    definitions.add(parseContentDefinition(profile, element, file));
                 }
                 return new ContentDefinitionOneOf(definitions);
             default:

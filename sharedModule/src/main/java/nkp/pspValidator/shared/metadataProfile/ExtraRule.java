@@ -1,4 +1,4 @@
-package nkp.pspValidator.shared.biblio.biblioValidator;
+package nkp.pspValidator.shared.metadataProfile;
 
 import nkp.pspValidator.shared.engine.XmlManager;
 import org.w3c.dom.Element;

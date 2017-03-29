@@ -1,7 +1,6 @@
-package nkp.pspValidator.shared.biblio;
+package nkp.pspValidator.shared.metadataProfile;
 
 import nkp.pspValidator.shared.XmlUtils;
-import nkp.pspValidator.shared.biblio.biblioValidator.*;
 import nkp.pspValidator.shared.engine.Level;
 import nkp.pspValidator.shared.engine.XmlManager;
 import nkp.pspValidator.shared.engine.exceptions.InvalidXPathExpressionException;
@@ -18,16 +17,15 @@ import java.util.Set;
 /**
  * Created by Martin Řehánek on 10.1.17.
  */
-//TODO: rename to MetadataProfileValidator
-public class BiblioValidator {
+public class MetadataProfileValidator {
 
-    public static ValidationResult validate(BiblioTemplate biblioTemplate, Document doc, ValidationResult result, String errorLabel) throws InvalidXPathExpressionException, XPathExpressionException {
+    public static ValidationResult validate(MetadataProfile metadataProfile, Document doc, ValidationResult result, String errorLabel) throws InvalidXPathExpressionException, XPathExpressionException {
         XmlManager manager = new XmlManager(false);
-        for (String prefix : biblioTemplate.getNamespaces().keySet()) {
-            String url = biblioTemplate.getNamespaces().get(prefix);
+        for (String prefix : metadataProfile.getNamespaces().keySet()) {
+            String url = metadataProfile.getNamespaces().get(prefix);
             manager.setNamespaceUri(prefix, url);
         }
-        ExpectedElementDefinition rootElDef = biblioTemplate.getRootElementDefinition();
+        ExpectedElementDefinition rootElDef = metadataProfile.getRootElementDefinition();
         String rootElXpath = buildElementPath(null, rootElDef.buildRelativeXpath(), null);
         XPathExpression rootElXpathExpr = manager.buildXpath(rootElXpath);
         NodeList biblioRootEls = (NodeList) rootElXpathExpr.evaluate(doc.getDocumentElement(), XPathConstants.NODESET);

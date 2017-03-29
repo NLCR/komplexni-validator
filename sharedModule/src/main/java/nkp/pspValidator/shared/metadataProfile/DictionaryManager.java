@@ -1,4 +1,4 @@
-package nkp.pspValidator.shared.biblio;
+package nkp.pspValidator.shared.metadataProfile;
 
 import nkp.pspValidator.shared.engine.exceptions.ValidatorConfigurationException;
 
