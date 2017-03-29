@@ -2,8 +2,6 @@ package nkp.pspValidator.shared.engine.validationFunctions;
 
 
 import nkp.pspValidator.shared.XmlUtils;
-import nkp.pspValidator.shared.metadataProfile.MetadataProfileValidator;
-import nkp.pspValidator.shared.metadataProfile.MetadataProfile;
 import nkp.pspValidator.shared.engine.Engine;
 import nkp.pspValidator.shared.engine.Level;
 import nkp.pspValidator.shared.engine.ValueEvaluation;
@@ -11,6 +9,8 @@ import nkp.pspValidator.shared.engine.ValueType;
 import nkp.pspValidator.shared.engine.exceptions.ContractException;
 import nkp.pspValidator.shared.engine.exceptions.InvalidXPathExpressionException;
 import nkp.pspValidator.shared.engine.exceptions.XmlFileParsingException;
+import nkp.pspValidator.shared.metadataProfile.MetadataProfile;
+import nkp.pspValidator.shared.metadataProfile.MetadataProfileValidator;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -121,8 +121,9 @@ public class VfCheckSecondaryMetsAmdsecElementsMatchProfile extends ValidationFu
                             result.addError(invalid(Level.ERROR, "výsledek '%s' není element (soubor %s)", elementXpath, file.getName()));
                         } else {
                             Element elementToValidate = (Element) nodeToValidate;
+                            String id = (String) engine.buildXpath("@ID").evaluate(elementToValidate, XPathConstants.STRING);
                             Document newDoc = XmlUtils.elementToNewDocument(elementToValidate, true);
-                            MetadataProfileValidator.validate(profile, newDoc, result, file.getName());
+                            MetadataProfileValidator.validate(profile, newDoc, result, String.format("%s: %s", file.getName(), id));
                         }
                     }
                 }
