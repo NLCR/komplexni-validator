@@ -38,8 +38,7 @@ public class FdmfConfiguration {
     private final File fdmfRoot;
     private final File fdmfConfigXsd;
     private final File j2kProfileConfigXsd;
-    //TODO: prejmenovat na profileXsd
-    private final File biblioProfileXsd;
+    private final File metadataProfileXsd;
 
     private final Map<String, File> providedFiles = new HashMap<>();
     private final List<File> fdmfConfigFiles = new ArrayList<>();
@@ -49,11 +48,11 @@ public class FdmfConfiguration {
 
     private ImageValidator imageValidator;
 
-    public FdmfConfiguration(File fdmfRoot, File fdmfConfigXsd, File j2kProfileConfigXsd, File biblioProfileXsd) throws ValidatorConfigurationException {
+    public FdmfConfiguration(File fdmfRoot, File fdmfConfigXsd, File j2kProfileConfigXsd, File metadataProfileXsd) throws ValidatorConfigurationException {
         this.fdmfRoot = fdmfRoot;
         this.fdmfConfigXsd = fdmfConfigXsd;
         this.j2kProfileConfigXsd = j2kProfileConfigXsd;
-        this.biblioProfileXsd = biblioProfileXsd;
+        this.metadataProfileXsd = metadataProfileXsd;
         init();
     }
 
@@ -78,12 +77,12 @@ public class FdmfConfiguration {
         validateAndRegisterFdmfConfig(fdmfRoot, "variables.xml");
         validateAndRegisterFdmfConfig(fdmfRoot, "rules.xml");
 
-        //inicializace sablon pro validacio biblio metadat
-        initBiblioTemplates();
+        //inicializace profilu pro validaci metadat
+        initBiblioProfiles();
         initTechProfiles();
     }
 
-    private void initBiblioTemplates() throws ValidatorConfigurationException {
+    private void initBiblioProfiles() throws ValidatorConfigurationException {
         File biblioProfilesDir = new File(fdmfRoot, BIBLIO_PROFILES_DIR);
         checkDirExistAndReadable(biblioProfilesDir);
         //dc templates
@@ -93,7 +92,7 @@ public class FdmfConfiguration {
         File[] dcTemplates = dcTemplatesDir.listFiles((dir, name) -> name.endsWith(".xml"));
         for (File template : dcTemplates) {
             //xsd validation of template
-            validateConfigFile(template, biblioProfileXsd);
+            validateConfigFile(template, metadataProfileXsd);
             biblioDcTemplates.add(template);
         }
         //mods templates
@@ -102,17 +101,17 @@ public class FdmfConfiguration {
         File[] modsTemplates = modsTemplatesDir.listFiles((dir, name) -> name.endsWith(".xml"));
         for (File template : modsTemplates) {
             //xsd validation of template
-            validateConfigFile(template, biblioProfileXsd);
+            validateConfigFile(template, metadataProfileXsd);
             biblioModsTemplates.add(template);
         }
     }
 
     private void initTechProfiles() throws ValidatorConfigurationException {
-        File biblioProfilesDir = new File(fdmfRoot, TECH_PROFILES_DIR);
-        checkDirExistAndReadable(biblioProfilesDir);
-        File[] techProfileFiles = biblioProfilesDir.listFiles((dir, name) -> name.endsWith(".xml"));
+        File techProfilesDir = new File(fdmfRoot, TECH_PROFILES_DIR);
+        checkDirExistAndReadable(techProfilesDir);
+        File[] techProfileFiles = techProfilesDir.listFiles((dir, name) -> name.endsWith(".xml"));
         for (File profileFile : techProfileFiles) {
-            validateConfigFile(profileFile, biblioProfileXsd);
+            validateConfigFile(profileFile, metadataProfileXsd);
             techProfiles.add(profileFile);
         }
     }

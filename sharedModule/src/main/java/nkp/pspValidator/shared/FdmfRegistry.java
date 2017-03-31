@@ -42,7 +42,7 @@ public class FdmfRegistry {
                     fdmfDir,
                     validatorConfigManager.getFdmfConfigXsd(),
                     validatorConfigManager.getJ2kProfileConfigXsd(),
-                    validatorConfigManager.getBiblioProfileXsd()));
+                    validatorConfigManager.getMetadataProfileXsd()));
         }
     }
 
@@ -54,7 +54,7 @@ public class FdmfRegistry {
                     fdmfDir,
                     validatorConfigManager.getFdmfConfigXsd(),
                     validatorConfigManager.getJ2kProfileConfigXsd(),
-                    validatorConfigManager.getBiblioProfileXsd()));
+                    validatorConfigManager.getMetadataProfileXsd()));
         }
     }
 

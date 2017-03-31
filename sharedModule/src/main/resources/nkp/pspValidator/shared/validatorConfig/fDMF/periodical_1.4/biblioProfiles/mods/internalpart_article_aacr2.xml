@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <validationTemplate
-        xmlns="http://www.nkp.cz/pspValidator/1.2/xmlValidationTemplate"
+        xmlns="http://www.nkp.cz/pspValidator/1.4/metadataProfile"
         name="MODS internal part - article (AACR2)"
         validatorVersion="1.4"
         dmf="periodical_1.4"
