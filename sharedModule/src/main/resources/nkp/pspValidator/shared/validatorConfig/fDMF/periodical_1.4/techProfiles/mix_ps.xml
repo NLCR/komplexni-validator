@@ -187,7 +187,7 @@
                                                         <expectedContent/>
                                                     </element>
 
-                                                    <element name="mix:SourceID" mandatory="false" repeatable="false">
+                                                    <element name="mix:SourceID" mandatory="false" repeatable="true">
                                                         <expectedElements>
                                                             <!--Neni jasna povinnost - konflikt povinnost=M a vyskyt=0-1, viz DMF Periodika 1.4: s. 61. Nechavam defenzivne nepovinne-->
                                                             <element name="mix:sourceIDType" mandatory="false"

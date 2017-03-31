@@ -2548,6 +2548,53 @@
             </validation>
         </rule>
 
+        <rule name="MIX_FOR_ORIGINAL_SCAN_VALID">
+            <description>Záznamy MIX v souborech SECONDARY-METS pro původní skeny musí splňovat profil.</description>
+            <validation functionName="checkSecondaryMetsAmdsecElementsMatchProfile">
+                <params>
+                    <value name="secondary-mets_files" type="FILE_LIST">
+                        <value-ref name="SECONDARY-METS_FILES"/>
+                    </value>
+                    <value name="element_xpath" type="STRING">mets:techMD[@ID="MIX_001"]</value>
+                    <value name="element_must_exist" type="BOOLEAN">true</value>
+                    <value name="profile_id" type="STRING">mix_ps</value>
+                </params>
+            </validation>
+        </rule>
+
+        <rule name="MIX_FOR_FIRST_MASTER_COPY_VALID">
+            <description>Záznamy MIX v souborech SECONDARY-METS pro první verze archivních kopií musí splňovat profil.
+            </description>
+            <validation functionName="checkSecondaryMetsAmdsecElementsMatchProfile">
+                <params>
+                    <value name="secondary-mets_files" type="FILE_LIST">
+                        <value-ref name="SECONDARY-METS_FILES"/>
+                    </value>
+                    <value name="element_xpath" type="STRING">mets:techMD[@ID="MIX_002"]</value>
+                    <value name="element_must_exist" type="BOOLEAN">true</value>
+                    <value name="profile_id" type="STRING">mix_mc</value>
+                </params>
+            </validation>
+        </rule>
+
+        <rule name="MIX_FOR_OTHER_MASTER_COPIES_VALID">
+            <description>Záznamy MIX v souborech SECONDARY-METS pro další verze archivních kopií, pokud existují, musí
+                splňovat profil.
+            </description>
+            <validation functionName="checkSecondaryMetsAmdsecElementsMatchProfile">
+                <params>
+                    <value name="secondary-mets_files" type="FILE_LIST">
+                        <value-ref name="SECONDARY-METS_FILES"/>
+                    </value>
+                    <value name="element_xpath" type="STRING">mets:techMD[not(@ID="MIX_001") and not(@ID="MIX_002") and
+                        starts-with(@ID,"MIX_")]
+                    </value>
+                    <value name="element_must_exist" type="BOOLEAN">false</value>
+                    <value name="profile_id" type="STRING">mix_mc</value>
+                </params>
+            </validation>
+        </rule>
+
         <rule name="PREMIS_VALID_BY_XSD">
             <description>Záznamy PREMIS v souborech SECONDARY-METS musí být validní podle XML Schema (premis_2.2.xsd).
             </description>

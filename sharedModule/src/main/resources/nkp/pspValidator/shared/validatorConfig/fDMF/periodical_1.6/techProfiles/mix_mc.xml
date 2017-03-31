@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <validationTemplate
         xmlns="http://www.nkp.cz/pspValidator/1.2/xmlValidationTemplate"
-        name="MIX PS (primarní sken)"
+        name="MIX MC (archivní kopie)"
         validatorVersion="1.4"
         dmf="periodical_1.6"
 >
 
     <info>
         <text>
-            Profil pro validaci MIX záznamu primárního skenu (PS) stránky v sekundárním MODSu pro DMF Periodika-1.6.
+            Profil pro validaci MIX záznamu archivní kopie (MC) stránky v sekundárním MODSu pro DMF Periodika-1.6.
         </text>
         <url description="popis formátu MIX">http://www.loc.gov/standards/mix/</url>
         <url description="XSD pro MIX 2.0">http://www.loc.gov/standards/mix/mix.xsd</url>
