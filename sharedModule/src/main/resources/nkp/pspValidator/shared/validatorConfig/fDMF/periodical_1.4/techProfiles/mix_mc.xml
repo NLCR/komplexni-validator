@@ -96,7 +96,7 @@
                                             </element>
 
                                             <!--Neni jasna povinnost - konflikt povinnost=M a vyskyt=0-n, viz DMF Periodika 1.4: s. 59. Nechavam defenzivne nepovinne-->
-                                            <element name="mix:Compression" mandatory="false" repeatable="false">
+                                            <element name="mix:Compression" mandatory="false" repeatable="true">
                                                 <expectedElements>
                                                     <!--Neni jasna povinnost - konflikt povinnost=M a vyskyt=0-1, viz DMF Periodika 1.4: s. 59. Nechavam defenzivne nepovinne-->
                                                     <element name="mix:compressionScheme" mandatory="false"
@@ -408,7 +408,7 @@
                                                             </element>
 
                                                             <element name="mix:externalTarget"
-                                                                     mandatory="false" repeatable="false">
+                                                                     mandatory="false" repeatable="true">
                                                                 <expectedContent/>
                                                             </element>
 
