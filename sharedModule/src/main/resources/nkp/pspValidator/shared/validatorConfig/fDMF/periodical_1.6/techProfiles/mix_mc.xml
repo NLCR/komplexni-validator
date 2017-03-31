@@ -87,13 +87,15 @@
                                                     <oneOf>
                                                         <value>little endian</value>
                                                         <value>big endian</value>
+                                                        <!--Nejasne, jestli "middle (mix) endian", nebo "middle endian" a "mix endian", nechavam vse-->
                                                         <value>middle endian</value>
                                                         <value>mix endian</value>
+                                                        <value>middle (mix) endian</value>
                                                     </oneOf>
                                                 </expectedContent>
                                             </element>
 
-                                            <!--Neni jasna povinnost - konflikt povinnost=M a vyskyt=0-1, viz DMF Periodika 1.6: s. 64. Nechavam defenzivne nepovinne-->
+                                            <!--Neni jasna povinnost - konflikt povinnost=M a vyskyt=0-n, viz DMF Periodika 1.6: s. 64. Nechavam defenzivne nepovinne-->
                                             <element name="mix:Compression" mandatory="false" repeatable="false">
                                                 <expectedElements>
                                                     <!--Neni jasna povinnost - konflikt povinnost=M a vyskyt=0-1, viz DMF Periodika 1.6: s. 64. Nechavam defenzivne nepovinne-->
@@ -416,12 +418,12 @@
 
                                                             <element name="mix:externalTarget"
                                                                      mandatory="false" repeatable="false">
-                                                                <expectedElements>
-                                                                    <element name="mix:performaceData" mandatory="false"
-                                                                             repeatable="true">
-                                                                        <expectedContent/>
-                                                                    </element>
-                                                                </expectedElements>
+                                                                <expectedContent/>
+                                                            </element>
+
+                                                            <element name="mix:performaceData" mandatory="false"
+                                                                     repeatable="true">
+                                                                <expectedContent/>
                                                             </element>
                                                         </expectedElements>
                                                     </element>
@@ -434,7 +436,7 @@
                                     <element name="mix:ChangeHistory" mandatory="false" repeatable="false">
                                         <expectedElements>
                                             <!--Neni jasna povinnost - konflikt povinnost=M a vyskyt=0-n, viz DMF Periodika 1.6: s. 71. Nechavam defenzivne nepovinne-->
-                                            <element name="mix:ImageProcessing" mandatory="false" repeatable="false">
+                                            <element name="mix:ImageProcessing" mandatory="false" repeatable="true">
                                                 <expectedElements>
                                                     <!--Neni jasna povinnost - konflikt povinnost=M a vyskyt=0-1, viz DMF Periodika 1.6: s. 71. Nechavam defenzivne nepovinne-->
                                                     <element name="mix:dateTimeProcessed" mandatory="false"

@@ -87,13 +87,15 @@
                                                     <oneOf>
                                                         <value>little endian</value>
                                                         <value>big endian</value>
+                                                        <!--Nejasne, jestli "middle (mix) endian", nebo "middle endian" a "mix endian", nechavam vse-->
                                                         <value>middle endian</value>
                                                         <value>mix endian</value>
+                                                        <value>middle (mix) endian</value>
                                                     </oneOf>
                                                 </expectedContent>
                                             </element>
 
-                                            <!--Neni jasna povinnost - konflikt povinnost=M a vyskyt=0-1, viz DMF Periodika 1.6: s. 64. Nechavam defenzivne nepovinne-->
+                                            <!--Neni jasna povinnost - konflikt povinnost=M a vyskyt=0-n, viz DMF Periodika 1.6: s. 64. Nechavam defenzivne nepovinne-->
                                             <element name="mix:Compression" mandatory="false" repeatable="false">
                                                 <expectedElements>
                                                     <!--Neni jasna povinnost - konflikt povinnost=M a vyskyt=0-1, viz DMF Periodika 1.6: s. 64. Nechavam defenzivne nepovinne-->
@@ -391,7 +393,7 @@
                                                              repeatable="false">
                                                         <expectedElements>
                                                             <!--Neni jasna opakovatelnost, viz DMF Periodika 1.6: s. 68. Nechavam defenzivne opakovatelne-->
-                                                            <element name="mix:CameraCaptureSettings" mandatory="true"
+                                                            <element name="mix:ImageData" mandatory="true"
                                                                      repeatable="true">
                                                                 <expectedElements>
                                                                     <element name="mix:fNumber" mandatory="false"
