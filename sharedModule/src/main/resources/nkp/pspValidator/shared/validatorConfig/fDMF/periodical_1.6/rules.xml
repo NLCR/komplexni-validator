@@ -2707,8 +2707,7 @@
             </validation>
         </rule>
 
-        <!--TODO: pridat pro vsechny verze fDMF, upravit mix_ps podle verzi specifikace-->
-        <rule name="MIX_FOR_ORIGINAL_SCAN_VALID">
+        <rule name="MIX_FOR_ORIGINAL_SCAN_MATCHES_PROFILE">
             <description>Záznamy MIX v souborech SECONDARY-METS pro původní skeny musí splňovat profil.</description>
             <validation functionName="checkSecondaryMetsAmdsecElementsMatchProfile">
                 <params>
@@ -2722,8 +2721,7 @@
             </validation>
         </rule>
 
-        <!--TODO: pridat pro vsechny verze fDMF, upravit mix_mc podle verzi specifikace-->
-        <rule name="MIX_FOR_FIRST_MASTER_COPY_VALID">
+        <rule name="MIX_FOR_FIRST_MASTER_COPY_MATCHES_PROFILE">
             <description>Záznamy MIX v souborech SECONDARY-METS pro první verze archivních kopií musí splňovat profil.
             </description>
             <validation functionName="checkSecondaryMetsAmdsecElementsMatchProfile">
@@ -2738,8 +2736,7 @@
             </validation>
         </rule>
 
-        <!--TODO: pridat pro vsechny verze fDMF -->
-        <rule name="MIX_FOR_OTHER_MASTER_COPIES_VALID">
+        <rule name="MIX_FOR_OTHER_MASTER_COPIES_MATCHES_PROFILE">
             <description>Záznamy MIX v souborech SECONDARY-METS pro další verze archivních kopií, pokud existují, musí
                 splňovat profil.
             </description>
