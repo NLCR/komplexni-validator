@@ -2706,7 +2706,7 @@
                 </params>
             </validation>
         </rule>
-        
+
         <rule name="MIX_FOR_ORIGINAL_SCAN_MATCHES_PROFILE">
             <description>Záznamy MIX v souborech SECONDARY-METS pro původní skeny musí splňovat profil.</description>
             <validation functionName="checkSecondaryMetsAmdsecElementsMatchProfile">

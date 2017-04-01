@@ -38,6 +38,12 @@
                             <value>PREMIS</value>
                         </expectedContent>
                     </attribute>
+
+                    <attribute name="MIMETYPE">
+                        <expectedContent>
+                            <value>text/xml</value>
+                        </expectedContent>
+                    </attribute>
                 </expectedAttributes>
 
                 <expectedElements>
