@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <validationTemplate
         xmlns="http://www.nkp.cz/pspValidator/1.4/metadataProfile"
-        name="PREMIS Object pro MC (archivní kopie)"
+        name="PREMIS Object pro ALTO OCR"
         validatorVersion="1.4"
-        dmf="periodical_1.6"
+        dmf="periodical_1.4"
 >
 
     <info>
         <text>
-            Profil pro validaci PREMIS Object záznamu archivní kopie (MC) stránky v sekundárním MODSu pro DMF
-            Periodika-1.6.
+            Profil pro validaci PREMIS Object záznamu ALTO OCR stránky v sekundárním MODSu pro DMF
+            Periodika-1.4.
         </text>
         <url description="popis formátu PREMIS">http://www.loc.gov/standards/premis/</url>
         <url description="XSD pro PREMIS 2.2">http://www.loc.gov/standards/premis/v2/premis-v2-2.xsd</url>
@@ -25,7 +25,7 @@
         <expectedAttributes>
             <attribute name="ID">
                 <expectedContent>
-                    <value>OBJ_002</value>
+                    <value>OBJ_003</value>
                 </expectedContent>
             </attribute>
         </expectedAttributes>
@@ -77,7 +77,7 @@
                                         </expectedElements>
                                     </element>
 
-                                    <!--Neni jasna povinnost - konflikt povinnost=M a vyskyt=0-n, viz DMF Periodika 1.6: s. 57. Nechavam defenzivne nepovinne-->
+                                    <!--Neni jasna povinnost - konflikt povinnost=M a vyskyt=0-n, viz DMF Periodika 1.4: s. 48. Nechavam defenzivne nepovinne-->
                                     <element name="premis:preservationLevel" mandatory="false" repeatable="true">
                                         <expectedElements>
                                             <element name="premis:preservationLevelValue" mandatory="true"
@@ -102,7 +102,7 @@
                                                 <expectedContent/>
                                             </element>
 
-                                            <!--Neni jasna povinnost - konflikt povinnost=M a vyskyt=0-n, viz DMF Periodika 1.6: s. 58. Nechavam defenzivne nepovinne-->
+                                            <!--Neni jasna povinnost - konflikt povinnost=M a vyskyt=0-n, viz DMF Periodika 1.4: s. 48. Nechavam defenzivne nepovinne-->
                                             <element name="premis:fixity" mandatory="false" repeatable="true">
                                                 <expectedElements>
                                                     <element name="premis:messageDigestAlgorithm" mandatory="true"
@@ -114,7 +114,7 @@
                                                              repeatable="false">
                                                         <expectedContent/>
                                                     </element>
-                                                    <!--Neni jasna povinnost - konflikt povinnost=M a vyskyt=0-n, viz DMF Periodika 1.6: s. 58. Nechavam defenzivne nepovinne-->
+                                                    <!--Neni jasna povinnost - konflikt povinnost=M a vyskyt=0-n, viz DMF Periodika 1.4: s. 48/49. Nechavam defenzivne nepovinne-->
                                                     <element name="premis:messageDigestOriginator" mandatory="false"
                                                              repeatable="false">
                                                         <expectedContent/>
@@ -122,7 +122,7 @@
                                                 </expectedElements>
                                             </element>
 
-                                            <!--Neni jasna povinnost - konflikt povinnost=M a vyskyt=0-n, viz DMF Periodika 1.6: s. 58. Nechavam defenzivne nepovinne-->
+                                            <!--Neni jasna povinnost - konflikt povinnost=M a vyskyt=0-n, viz DMF Periodika 1.4: s. 49. Nechavam defenzivne nepovinne-->
                                             <element name="premis:size" mandatory="false" repeatable="false">
                                                 <expectedContent>
                                                     <regexp>[0-9]+</regexp>
@@ -131,7 +131,7 @@
 
                                             <element name="premis:format" mandatory="false" repeatable="true">
                                                 <expectedElements>
-                                                    <!--Neni jasna povinnost - konflikt povinnost=M a vyskyt=0-n, viz DMF Periodika 1.6: s. 58. Nechavam defenzivne nepovinne-->
+                                                    <!--Neni jasna povinnost - konflikt povinnost=M a vyskyt=0-n, viz DMF Periodika 1.4: s. 49. Nechavam defenzivne nepovinne-->
                                                     <element name="premis:formatDesignation" mandatory="false"
                                                              repeatable="false">
                                                         <expectedElements>
@@ -140,7 +140,7 @@
                                                                 <expectedContent/>
                                                             </element>
 
-                                                            <!--Neni jasna povinnost - konflikt povinnost=M a vyskyt=0-n, viz DMF Periodika 1.6: s. 58. Nechavam defenzivne nepovinne-->
+                                                            <!--Neni jasna povinnost - konflikt povinnost=M a vyskyt=0-n, viz DMF Periodika 1.4: s. 49. Nechavam defenzivne nepovinne-->
                                                             <element name="premis:formatVersion" mandatory="false"
                                                                      repeatable="false">
                                                                 <expectedContent/>
@@ -148,7 +148,7 @@
                                                         </expectedElements>
                                                     </element>
 
-                                                    <!--Neni jasna povinnost - konflikt povinnost=M a vyskyt=0-n, viz DMF Periodika 1.6: s. 58. Nechavam defenzivne nepovinne-->
+                                                    <!--Neni jasna povinnost - konflikt povinnost=M a vyskyt=0-n, viz DMF Periodika 1.4: s. 49. Nechavam defenzivne nepovinne-->
                                                     <element name="premis:formatRegistry" mandatory="false"
                                                              repeatable="false">
                                                         <expectedElements>
@@ -166,23 +166,23 @@
                                                 </expectedElements>
                                             </element>
 
-                                            <!--Neni jasna povinnost - konflikt povinnost=M a vyskyt=0-n, viz DMF Periodika 1.6: s. 59. Nechavam defenzivne nepovinne-->
+                                            <!--Neni jasna povinnost - konflikt povinnost=M a vyskyt=0-n, viz DMF Periodika 1.4: s. 49. Nechavam defenzivne nepovinne-->
                                             <element name="premis:creatingApplication" mandatory="false"
                                                      repeatable="true">
                                                 <expectedElements>
-                                                    <!--Neni jasna povinnost - konflikt povinnost=M a vyskyt=0-1, viz DMF Periodika 1.6: s. 59. Nechavam defenzivne nepovinne-->
+                                                    <!--Neni jasna povinnost - konflikt povinnost=M a vyskyt=0-1, viz DMF Periodika 1.4: s. 49. Nechavam defenzivne nepovinne-->
                                                     <element name="premis:creatingApplicationName" mandatory="false"
                                                              repeatable="false">
                                                         <expectedContent/>
                                                     </element>
 
-                                                    <!--Neni jasna povinnost - konflikt povinnost=M a vyskyt=0-1, viz DMF Periodika 1.6: s. 59. Nechavam defenzivne nepovinne-->
+                                                    <!--Neni jasna povinnost - konflikt povinnost=M a vyskyt=0-1, viz DMF Periodika 1.4: s. 49. Nechavam defenzivne nepovinne-->
                                                     <element name="premis:creatingApplicationVersion" mandatory="false"
                                                              repeatable="false">
                                                         <expectedContent/>
                                                     </element>
 
-                                                    <!--Neni jasna povinnost - konflikt povinnost=M a vyskyt=0-1, viz DMF Periodika 1.6: s. 59. Nechavam defenzivne nepovinne-->
+                                                    <!--Neni jasna povinnost - konflikt povinnost=M a vyskyt=0-1, viz DMF Periodika 1.4: s. 49/50. Nechavam defenzivne nepovinne-->
                                                     <element name="premis:dateCreatedByApplication" mandatory="false"
                                                              repeatable="false">
                                                         <expectedContent>
@@ -196,12 +196,12 @@
                                         </expectedElements>
                                     </element>
 
-                                    <!--Neni jasna povinnost - konflikt povinnost=M a vyskyt=0-1, viz DMF Periodika 1.6: s. 59. Nechavam defenzivne nepovinne-->
+                                    <!--Neni jasna povinnost - konflikt povinnost=M a vyskyt=0-1, viz DMF Periodika 1.4: s. 50. Nechavam defenzivne nepovinne-->
                                     <element name="premis:originalName" mandatory="false" repeatable="false">
                                         <expectedContent/>
                                     </element>
 
-                                    <!--Neni jasna povinnost - konflikt povinnost=M a vyskyt=0-n, viz DMF Periodika 1.6: s. 59. Nechavam defenzivne nepovinne-->
+                                    <!--Neni jasna povinnost - konflikt povinnost=M a vyskyt=0-n, viz DMF Periodika 1.4: s. 50. Nechavam defenzivne nepovinne-->
                                     <element name="premis:relationship" mandatory="false" repeatable="true">
                                         <expectedElements>
                                             <element name="premis:relationshipType" mandatory="true" repeatable="false">
@@ -240,7 +240,7 @@
                                                 </expectedElements>
                                             </element>
 
-                                            <!--Neni jasna povinnost - konflikt povinnost=M a vyskyt=0-n, viz DMF Periodika 1.6: s. 60. Nechavam defenzivne nepovinne-->
+                                            <!--Neni jasna povinnost - konflikt povinnost=M a vyskyt=0-n, viz DMF Periodika 1.4: s. 50. Nechavam defenzivne nepovinne-->
                                             <element name="premis:relatedEventIdentification" mandatory="false"
                                                      repeatable="true">
                                                 <expectedElements>
@@ -259,23 +259,6 @@
                                                         <expectedContent/>
                                                     </element>
                                                 </expectedElements>
-                                            </element>
-                                        </expectedElements>
-
-                                    </element>
-
-                                    <!--Neni jasna povinnost - konflikt povinnost=M a vyskyt=0-n, viz DMF Periodika 1.6: s. 59. Nechavam defenzivne nepovinne-->
-                                    <element name="premis:linkingEventIdentifier" mandatory="false"
-                                             repeatable="true">
-                                        <expectedElements>
-                                            <element name="premis:linkingEventIdentifierType" mandatory="true"
-                                                     repeatable="true">
-                                                <expectedContent/>
-                                            </element>
-
-                                            <element name="premis:linkingEventIdentifierValue" mandatory="true"
-                                                     repeatable="true">
-                                                <expectedContent/>
                                             </element>
                                         </expectedElements>
                                     </element>

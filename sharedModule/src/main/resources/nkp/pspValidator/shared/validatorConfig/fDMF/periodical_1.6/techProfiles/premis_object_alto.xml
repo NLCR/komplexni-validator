@@ -185,7 +185,11 @@
                                                     <!--Neni jasna povinnost - konflikt povinnost=M a vyskyt=0-1, viz DMF Periodika 1.6: s. 59. Nechavam defenzivne nepovinne-->
                                                     <element name="premis:dateCreatedByApplication" mandatory="false"
                                                              repeatable="false">
-                                                        <expectedContent/>
+                                                        <expectedContent>
+                                                            <!--TODO: mozna regulernim vyrazem, resp. skupinou, protoze ten zapis muze byt dost ruzny - uz jenom oddelovace, viz. treba
+                                                                http://www.pelagodesign.com/blog/2009/05/20/iso-8601-date-validation-that-doesnt-suck/
+                                                            -->
+                                                        </expectedContent>
                                                     </element>
                                                 </expectedElements>
                                             </element>
@@ -206,7 +210,19 @@
 
                                             <element name="premis:relationshipSubType" mandatory="true"
                                                      repeatable="false">
-                                                <expectedContent/>
+                                                <recommendedContent>
+                                                    <oneOf>
+                                                        <value>created from</value>
+                                                        <value>has source</value>
+                                                        <value>is source of</value>
+                                                        <value>has sibling</value>
+                                                        <value>has part</value>
+                                                        <value>is part of</value>
+                                                        <value>has root</value>
+                                                        <value>includes</value>
+                                                        <value>is included in</value>
+                                                    </oneOf>
+                                                </recommendedContent>
                                             </element>
 
                                             <element name="premis:relatedObjectIdentification" mandatory="true"
