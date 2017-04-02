@@ -216,7 +216,10 @@
 
                                             <element name="premis:relationshipSubType" mandatory="true"
                                                      repeatable="false">
-                                                <recommendedContent>
+                                                <expectedContent>
+                                                    <value>created from</value>
+                                                </expectedContent>
+                                                <!--<recommendedContent>
                                                     <oneOf>
                                                         <value>created from</value>
                                                         <value>has source</value>
@@ -228,7 +231,7 @@
                                                         <value>includes</value>
                                                         <value>is included in</value>
                                                     </oneOf>
-                                                </recommendedContent>
+                                                </recommendedContent>-->
                                             </element>
 
                                             <element name="premis:relatedObjectIdentification" mandatory="true"
