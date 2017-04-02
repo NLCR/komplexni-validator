@@ -2428,12 +2428,16 @@
                     <value name="entity_type" type="ENTITY_TYPE">VOLUME</value>
                     <value name="template_detection_xpath" type="STRING">
                         concat(
-                        substring('volume_sheetmusic', 1 div boolean(./mods:genre[text()='sheetmusic' or text()='SHEETMUSIC'])),
-                        substring('volume_cartographic', 1 div boolean(./mods:genre[text()='cartographic' or text()='CARTOGRAPHIC'])),
+                        substring('volume_sheetmusic', 1 div boolean(./mods:genre[text()='sheetmusic' or
+                        text()='SHEETMUSIC'])),
+                        substring('volume_cartographic', 1 div boolean(./mods:genre[text()='cartographic' or
+                        text()='CARTOGRAPHIC'])),
                         substring('volume_multivolume',
-                        1 div boolean(./mods:genre[text()='volume' or text()='VOLUME'] and //mets:dmdSec[contains(@ID,'TITLE')])),
+                        1 div boolean(./mods:genre[text()='volume' or text()='VOLUME'] and
+                        //mets:dmdSec[contains(@ID,'TITLE')])),
                         substring('volume_singlevolume',
-                        1 div boolean(./mods:genre[text()='volume' or text()='VOLUME'] and not(//mets:dmdSec[contains(@ID,'TITLE')])))
+                        1 div boolean(./mods:genre[text()='volume' or text()='VOLUME'] and
+                        not(//mets:dmdSec[contains(@ID,'TITLE')])))
                         )
                     </value>
                     <value name="xsd_file_dc" type="FILE">
@@ -2725,7 +2729,21 @@
             </validation>
         </rule>
 
-    </rules-section>
+        <rule name="COPYRIGHTMD_IN_PRIMARY_METS_MATCH_PROFILE">
+            <description>Záznamy CopyrightMD v souboru PRIMARY-METS, pokud existují, musí splňovat profil.
+            </description>
+            <validation functionName="checkMetsAmdsecElementsMatchProfile">
+                <params>
+                    <value name="mets_file" type="FILE">
+                        <value-ref name="PRIMARY-METS_FILE"/>
+                    </value>
+                    <value name="element_xpath" type="STRING">mets:rightsMD</value>
+                    <value name="element_must_exist" type="BOOLEAN">false</value>
+                    <value name="profile_id" type="STRING">copyrightmd</value>
+                </params>
+            </validation>
+        </rule>
 
+    </rules-section>
 
 </fDMF>
