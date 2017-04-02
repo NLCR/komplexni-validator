@@ -2550,9 +2550,9 @@
 
         <rule name="MIX_FOR_ORIGINAL_SCAN_MATCHES_PROFILE">
             <description>Záznamy MIX v souborech SECONDARY-METS pro původní skeny musí splňovat profil.</description>
-            <validation functionName="checkSecondaryMetsAmdsecElementsMatchProfile">
+            <validation functionName="checkMetsAmdsecElementsMatchProfile">
                 <params>
-                    <value name="secondary-mets_files" type="FILE_LIST">
+                    <value name="mets_files" type="FILE_LIST">
                         <value-ref name="SECONDARY-METS_FILES"/>
                     </value>
                     <value name="element_xpath" type="STRING">mets:techMD[@ID="MIX_001"]</value>
@@ -2565,9 +2565,9 @@
         <rule name="MIX_FOR_FIRST_MASTER_COPY_MATCHES_PROFILE">
             <description>Záznamy MIX v souborech SECONDARY-METS pro první verze archivních kopií musí splňovat profil.
             </description>
-            <validation functionName="checkSecondaryMetsAmdsecElementsMatchProfile">
+            <validation functionName="checkMetsAmdsecElementsMatchProfile">
                 <params>
-                    <value name="secondary-mets_files" type="FILE_LIST">
+                    <value name="mets_files" type="FILE_LIST">
                         <value-ref name="SECONDARY-METS_FILES"/>
                     </value>
                     <value name="element_xpath" type="STRING">mets:techMD[@ID="MIX_002"]</value>
@@ -2581,9 +2581,9 @@
             <description>Záznamy MIX v souborech SECONDARY-METS pro další verze archivních kopií, pokud existují, musí
                 splňovat profil.
             </description>
-            <validation functionName="checkSecondaryMetsAmdsecElementsMatchProfile">
+            <validation functionName="checkMetsAmdsecElementsMatchProfile">
                 <params>
-                    <value name="secondary-mets_files" type="FILE_LIST">
+                    <value name="mets_files" type="FILE_LIST">
                         <value-ref name="SECONDARY-METS_FILES"/>
                     </value>
                     <value name="element_xpath" type="STRING">mets:techMD[not(@ID="MIX_001") and not(@ID="MIX_002") and
@@ -2614,9 +2614,9 @@
         <rule name="PREMIS_OBJECT_FOR_ORIGINAL_SCAN_MATCHES_PROFILE">
             <description>Záznamy PREMIS Object v souborech SECONDARY-METS pro původní skeny musí splňovat profil.
             </description>
-            <validation functionName="checkSecondaryMetsAmdsecElementsMatchProfile">
+            <validation functionName="checkMetsAmdsecElementsMatchProfile">
                 <params>
-                    <value name="secondary-mets_files" type="FILE_LIST">
+                    <value name="mets_files" type="FILE_LIST">
                         <value-ref name="SECONDARY-METS_FILES"/>
                     </value>
                     <value name="element_xpath" type="STRING">mets:techMD[@ID="OBJ_001"]</value>
@@ -2629,9 +2629,9 @@
         <rule name="PREMIS_OBJECT_FOR_MASTER_COPY_MATCHES_PROFILE">
             <description>Záznamy PREMIS Object v souborech SECONDARY-METS pro archivní kopie musí splňovat profil.
             </description>
-            <validation functionName="checkSecondaryMetsAmdsecElementsMatchProfile">
+            <validation functionName="checkMetsAmdsecElementsMatchProfile">
                 <params>
-                    <value name="secondary-mets_files" type="FILE_LIST">
+                    <value name="mets_files" type="FILE_LIST">
                         <value-ref name="SECONDARY-METS_FILES"/>
                     </value>
                     <value name="element_xpath" type="STRING">mets:techMD[@ID="OBJ_002"]</value>
@@ -2644,9 +2644,9 @@
         <rule name="PREMIS_OBJECT_FOR_ALTO_OCR_MATCHES_PROFILE">
             <description>Záznamy PREMIS Object v souborech SECONDARY-METS pro ALTO OCR musí splňovat profil.
             </description>
-            <validation functionName="checkSecondaryMetsAmdsecElementsMatchProfile">
+            <validation functionName="checkMetsAmdsecElementsMatchProfile">
                 <params>
-                    <value name="secondary-mets_files" type="FILE_LIST">
+                    <value name="mets_files" type="FILE_LIST">
                         <value-ref name="SECONDARY-METS_FILES"/>
                     </value>
                     <value name="element_xpath" type="STRING">mets:techMD[@ID="OBJ_003"]</value>
@@ -2659,9 +2659,9 @@
         <rule name="PREMIS_EVENT_MATCHES_PROFILE">
             <description>Záznamy PREMIS Event v souborech SECONDARY-METS musí splňovat profil.
             </description>
-            <validation functionName="checkSecondaryMetsAmdsecElementsMatchProfile">
+            <validation functionName="checkMetsAmdsecElementsMatchProfile">
                 <params>
-                    <value name="secondary-mets_files" type="FILE_LIST">
+                    <value name="mets_files" type="FILE_LIST">
                         <value-ref name="SECONDARY-METS_FILES"/>
                     </value>
                     <value name="element_xpath" type="STRING">mets:digiprovMD[starts-with(@ID,"EVT_")]</value>
@@ -2674,9 +2674,9 @@
         <rule name="PREMIS_AGENT_MATCHES_PROFILE">
             <description>Záznamy PREMIS Event v souborech SECONDARY-METS musí splňovat profil.
             </description>
-            <validation functionName="checkSecondaryMetsAmdsecElementsMatchProfile">
+            <validation functionName="checkMetsAmdsecElementsMatchProfile">
                 <params>
-                    <value name="secondary-mets_files" type="FILE_LIST">
+                    <value name="mets_files" type="FILE_LIST">
                         <value-ref name="SECONDARY-METS_FILES"/>
                     </value>
                     <value name="element_xpath" type="STRING">mets:digiprovMD[starts-with(@ID,"AGENT_")]</value>
@@ -2713,9 +2713,9 @@
         <rule name="COPYRIGHTMD_IN_SECONDARY_METS_MATCH_PROFILE">
             <description>Záznamy CopyrightMD v souborech SECONDARY-METS, pokud existují, musí splňovat profil.
             </description>
-            <validation functionName="checkSecondaryMetsAmdsecElementsMatchProfile">
+            <validation functionName="checkMetsAmdsecElementsMatchProfile">
                 <params>
-                    <value name="secondary-mets_files" type="FILE_LIST">
+                    <value name="mets_files" type="FILE_LIST">
                         <value-ref name="SECONDARY-METS_FILES"/>
                     </value>
                     <value name="element_xpath" type="STRING">mets:rightsMD</value>

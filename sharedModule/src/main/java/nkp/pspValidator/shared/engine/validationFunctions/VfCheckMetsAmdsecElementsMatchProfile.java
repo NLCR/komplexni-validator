@@ -7,8 +7,10 @@ import nkp.pspValidator.shared.engine.Level;
 import nkp.pspValidator.shared.engine.ValueEvaluation;
 import nkp.pspValidator.shared.engine.ValueType;
 import nkp.pspValidator.shared.engine.exceptions.ContractException;
+import nkp.pspValidator.shared.engine.exceptions.EmptyParamEvaluationException;
 import nkp.pspValidator.shared.engine.exceptions.InvalidXPathExpressionException;
 import nkp.pspValidator.shared.engine.exceptions.XmlFileParsingException;
+import nkp.pspValidator.shared.engine.params.ValueParam;
 import nkp.pspValidator.shared.metadataProfile.MetadataProfile;
 import nkp.pspValidator.shared.metadataProfile.MetadataProfileValidator;
 import org.w3c.dom.Document;
@@ -20,21 +22,25 @@ import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.xpath.XPathConstants;
 import javax.xml.xpath.XPathExpressionException;
 import java.io.File;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  * Created by Martin Řehánek on 1.11.16.
  */
-public class VfCheckSecondaryMetsAmdsecElementsMatchProfile extends ValidationFunction {
+public class VfCheckMetsAmdsecElementsMatchProfile extends ValidationFunction {
 
-    public static final String PARAM_SECONDARY_METS_FILES = "secondary-mets_files";
+    public static final String PARAM_METS_FILES = "mets_files";
+    public static final String PARAM_METS_FILE = "mets_file";
     public static final String PARAM_ELEMENT_XPATH = "element_xpath";
     public static final String PARAM_PROFILE_ID = "profile_id";
     public static final String PARAM_ELEMENT_MUST_EXIST = "element_must_exist";
 
-    public VfCheckSecondaryMetsAmdsecElementsMatchProfile(Engine engine) {
+    public VfCheckMetsAmdsecElementsMatchProfile(Engine engine) {
         super(engine, new Contract()
-                .withValueParam(PARAM_SECONDARY_METS_FILES, ValueType.FILE_LIST, 1, 1)
+                .withValueParam(PARAM_METS_FILES, ValueType.FILE_LIST, 0, null)
+                .withValueParam(PARAM_METS_FILE, ValueType.FILE, 0, null)
                 .withValueParam(PARAM_ELEMENT_XPATH, ValueType.STRING, 1, 1)
                 .withValueParam(PARAM_PROFILE_ID, ValueType.STRING, 1, 1)
                 .withValueParam(PARAM_ELEMENT_MUST_EXIST, ValueType.BOOLEAN, 1, 1)
@@ -43,7 +49,7 @@ public class VfCheckSecondaryMetsAmdsecElementsMatchProfile extends ValidationFu
 
     @Override
     public String getName() {
-        return "checkSecondaryMetsAmdsecElementsMatchProfile";
+        return "checkMetsAmdsecElementsMatchProfile";
     }
 
     @Override
@@ -51,11 +57,7 @@ public class VfCheckSecondaryMetsAmdsecElementsMatchProfile extends ValidationFu
         try {
             checkContractCompliance();
 
-            ValueEvaluation paramSecondaryMetsFiles = valueParams.getParams(PARAM_SECONDARY_METS_FILES).get(0).getEvaluation();
-            List<File> secondaryMetsFiles = (List<File>) paramSecondaryMetsFiles.getData();
-            if (secondaryMetsFiles == null) {
-                return invalidValueParamNull(PARAM_SECONDARY_METS_FILES, paramSecondaryMetsFiles);
-            }
+            Set<File> metsFiles = mergeAbsolutFilesFromParams();
 
             ValueEvaluation paramElementXpath = valueParams.getParams(PARAM_ELEMENT_XPATH).get(0).getEvaluation();
             String elementXpath = (String) paramElementXpath.getData();
@@ -79,7 +81,7 @@ public class VfCheckSecondaryMetsAmdsecElementsMatchProfile extends ValidationFu
             if (profile == null) {
                 return singlErrorResult(invalid(Level.ERROR, "nenalezen profil '%s'", profileId));
             } else {
-                return validate(secondaryMetsFiles, elementXpath, elementMustExist, profile);
+                return validate(metsFiles, elementXpath, elementMustExist, profile);
             }
         } catch (ContractException e) {
             return invalidContractNotMet(e);
@@ -88,7 +90,32 @@ public class VfCheckSecondaryMetsAmdsecElementsMatchProfile extends ValidationFu
         }
     }
 
-    private ValidationResult validate(List<File> files, String elementXpath, Boolean elementMustExist, MetadataProfile profile) {
+    private Set<File> mergeAbsolutFilesFromParams() throws EmptyParamEvaluationException {
+        Set<File> result = new HashSet<>();
+        List<ValueParam> fileParams = valueParams.getParams(PARAM_METS_FILE);
+        for (ValueParam param : fileParams) {
+            ValueEvaluation evaluation = param.getEvaluation();
+            File file = (File) evaluation.getData();
+            if (file == null) {
+                throw new EmptyParamEvaluationException(PARAM_METS_FILE, evaluation);
+            }
+            result.add(file.getAbsoluteFile());
+        }
+        List<ValueParam> filesParams = valueParams.getParams(PARAM_METS_FILES);
+        for (ValueParam param : filesParams) {
+            ValueEvaluation evaluation = param.getEvaluation();
+            List<File> files = (List<File>) evaluation.getData();
+            if (files == null) {
+                throw new EmptyParamEvaluationException(PARAM_METS_FILES, evaluation);
+            }
+            for (File file : files) {
+                result.add(file.getAbsoluteFile());
+            }
+        }
+        return result;
+    }
+
+    private ValidationResult validate(Set<File> files, String elementXpath, Boolean elementMustExist, MetadataProfile profile) {
         ValidationResult result = new ValidationResult();
         for (File file : files) {
             if (file.isDirectory()) {
@@ -107,7 +134,9 @@ public class VfCheckSecondaryMetsAmdsecElementsMatchProfile extends ValidationFu
             Document doc = engine.getXmlDocument(file, true);
             Element amdSecEl = (Element) engine.buildXpath("/mets:mets/mets:amdSec").evaluate(doc, XPathConstants.NODE);
             if (amdSecEl == null) {
-                result.addError(invalid(Level.ERROR, "nenalezen element mets:amdSec v souboru %s", file.getName()));
+                if (elementMustExist) {
+                    result.addError(invalid(Level.ERROR, "nenalezen element mets:amdSec v souboru %s", file.getName()));
+                }
             } else {
                 NodeList nodesToValidate = (NodeList) engine.buildXpath(elementXpath).evaluate(amdSecEl, XPathConstants.NODESET);
                 if (nodesToValidate.getLength() == 0) {
