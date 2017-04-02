@@ -2869,6 +2869,36 @@
             </validation>
         </rule>
 
+        <rule name="COPYRIGHTMD_IN_SECONDARY_METS_MATCH_PROFILE">
+            <description>Záznamy CopyrightMD v souborech SECONDARY-METS, pokud existují, musí splňovat profil.
+            </description>
+            <validation functionName="checkMetsAmdsecElementsMatchProfile">
+                <params>
+                    <value name="mets_files" type="FILE_LIST">
+                        <value-ref name="SECONDARY-METS_FILES"/>
+                    </value>
+                    <value name="element_xpath" type="STRING">mets:rightsMD</value>
+                    <value name="element_must_exist" type="BOOLEAN">false</value>
+                    <value name="profile_id" type="STRING">copyrightmd</value>
+                </params>
+            </validation>
+        </rule>
+
+        <rule name="COPYRIGHTMD_IN_PRIMARY_METS_MATCH_PROFILE">
+            <description>Záznamy CopyrightMD v souboru PRIMARY-METS, pokud existují, musí splňovat profil.
+            </description>
+            <validation functionName="checkMetsAmdsecElementsMatchProfile">
+                <params>
+                    <value name="mets_file" type="FILE">
+                        <value-ref name="PRIMARY-METS_FILE"/>
+                    </value>
+                    <value name="element_xpath" type="STRING">mets:rightsMD</value>
+                    <value name="element_must_exist" type="BOOLEAN">false</value>
+                    <value name="profile_id" type="STRING">copyrightmd</value>
+                </params>
+            </validation>
+        </rule>
+
     </rules-section>
 
 
