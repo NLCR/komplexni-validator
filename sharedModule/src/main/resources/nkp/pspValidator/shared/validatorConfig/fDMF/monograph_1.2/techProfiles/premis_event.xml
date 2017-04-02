@@ -8,7 +8,7 @@
 
     <info>
         <text>
-            Profil pro validaci PREMIS Event záznamu stránky v sekundárním MODSu pro DMF Monografie-1.2.
+            Profil pro validaci PREMIS Event záznamu stránky v sekundárním METSu pro DMF Monografie-1.2.
         </text>
         <url description="popis formátu PREMIS">http://www.loc.gov/standards/premis/</url>
         <url description="XSD pro PREMIS 2.2">http://www.loc.gov/standards/premis/v2/premis-v2-2.xsd</url>

@@ -8,7 +8,7 @@
 
     <info>
         <text>
-            Profil pro validaci MIX záznamu archivní kopie (MC) stránky v sekundárním MODSu pro DMF Monografie-1.2.
+            Profil pro validaci MIX záznamu archivní kopie (MC) stránky v sekundárním METSu pro DMF Monografie-1.2.
         </text>
         <url description="popis formátu MIX">http://www.loc.gov/standards/mix/</url>
         <url description="XSD pro MIX 2.0">http://www.loc.gov/standards/mix/mix.xsd</url>

@@ -8,7 +8,7 @@
 
     <info>
         <text>
-            Profil pro validaci PREMIS Object záznamu ALTO OCR stránky v sekundárním MODSu pro DMF
+            Profil pro validaci PREMIS Object záznamu ALTO OCR stránky v sekundárním METSu pro DMF
             Periodika-1.6.
         </text>
         <url description="popis formátu PREMIS">http://www.loc.gov/standards/premis/</url>

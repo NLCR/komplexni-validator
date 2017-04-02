@@ -2710,6 +2710,22 @@
             </validation>
         </rule>
 
+        <rule name="COPYRIGHTMD_IN_SECONDARY_METS_MATCHE_PROFILE">
+            <description>Záznamy CopyrightMD v souborech SECONDARY-METS, pokud existují, musí splňovat profil.
+            </description>
+            <validation functionName="checkSecondaryMetsAmdsecElementsMatchProfile">
+                <params>
+                    <value name="secondary-mets_files" type="FILE_LIST">
+                        <value-ref name="SECONDARY-METS_FILES"/>
+                    </value>
+                    <value name="element_xpath" type="STRING">mets:rightsMD</value>
+                    <value name="element_must_exist" type="BOOLEAN">false</value>
+                    <value name="profile_id" type="STRING">copyrightmd</value>
+                </params>
+            </validation>
+        </rule>
+
+
     </rules-section>
 
 
