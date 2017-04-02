@@ -66,14 +66,14 @@
                                     </element>
 
                                     <element name="premis:eventType" mandatory="true" repeatable="false">
-                                        <expectedContent>
+                                        <recommendedContent>
                                             <oneOf>
                                                 <value>capture</value>
                                                 <value>migration</value>
                                                 <value>derivation</value>
                                                 <value>deletion</value>
                                             </oneOf>
-                                        </expectedContent>
+                                        </recommendedContent>
                                     </element>
 
                                     <element name="premis:eventDateTime" mandatory="true" repeatable="false">
@@ -86,16 +86,16 @@
 
                                     <!--Neni jasna povinnost - konflikt povinnost=M a vyskyt=0-1, viz DMF Periodika 1.6: s. 61. Nechavam defenzivne nepovinne-->
                                     <element name="premis:eventDetail" mandatory="false" repeatable="false">
-                                        <expectedContent>
-                                            <!--<oneOf>
+                                        <recommendedContent>
+                                            <oneOf>
                                                 <value>capture/digitization</value>
                                                 <value>capture/XML_creation</value>
                                                 <value>capture/TXT_creation</value>
                                                 <value>migration/MC_creation</value>
                                                 <value>derivation/UC_creation</value>
                                                 <value>deletion/PS_deletion</value>
-                                            </oneOf>-->
-                                        </expectedContent>
+                                            </oneOf>
+                                        </recommendedContent>
                                     </element>
 
                                     <element name="premis:eventOutcomeInformation" mandatory="false" repeatable="true">

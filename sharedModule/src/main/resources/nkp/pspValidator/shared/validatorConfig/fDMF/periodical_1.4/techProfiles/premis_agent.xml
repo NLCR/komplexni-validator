@@ -71,9 +71,13 @@
 
                                     <!--Neni jasna povinnost - konflikt povinnost=M a vyskyt=0-n, viz DMF Periodika 1.4: s. 57. Nechavam defenzivne nepovinne-->
                                     <element name="premis:agentType" mandatory="false" repeatable="false">
-                                        <expectedContent>
-                                            <!-- Popis je trochu zmateny, "hodnoty" zde asi znamenaji "doporucene hodnoty -->
-                                        </expectedContent>
+                                        <recommendedContent>
+                                            <oneOf>
+                                                <value>organization</value>
+                                                <value>person</value>
+                                                <value>software</value>
+                                            </oneOf>
+                                        </recommendedContent>
                                     </element>
 
                                     <element name="premis:agentNote" mandatory="false" repeatable="true">

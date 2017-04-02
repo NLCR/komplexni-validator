@@ -2611,6 +2611,81 @@
             </validation>
         </rule>
 
+        <rule name="PREMIS_OBJECT_FOR_ORIGINAL_SCAN_MATCHES_PROFILE">
+            <description>Záznamy PREMIS Object v souborech SECONDARY-METS pro původní skeny musí splňovat profil.
+            </description>
+            <validation functionName="checkSecondaryMetsAmdsecElementsMatchProfile">
+                <params>
+                    <value name="secondary-mets_files" type="FILE_LIST">
+                        <value-ref name="SECONDARY-METS_FILES"/>
+                    </value>
+                    <value name="element_xpath" type="STRING">mets:techMD[@ID="OBJ_001"]</value>
+                    <value name="element_must_exist" type="BOOLEAN">true</value>
+                    <value name="profile_id" type="STRING">premis_object_ps</value>
+                </params>
+            </validation>
+        </rule>
+
+        <rule name="PREMIS_OBJECT_FOR_MASTER_COPY_MATCHES_PROFILE">
+            <description>Záznamy PREMIS Object v souborech SECONDARY-METS pro archivní kopie musí splňovat profil.
+            </description>
+            <validation functionName="checkSecondaryMetsAmdsecElementsMatchProfile">
+                <params>
+                    <value name="secondary-mets_files" type="FILE_LIST">
+                        <value-ref name="SECONDARY-METS_FILES"/>
+                    </value>
+                    <value name="element_xpath" type="STRING">mets:techMD[@ID="OBJ_002"]</value>
+                    <value name="element_must_exist" type="BOOLEAN">true</value>
+                    <value name="profile_id" type="STRING">premis_object_mc</value>
+                </params>
+            </validation>
+        </rule>
+
+        <rule name="PREMIS_OBJECT_FOR_ALTO_OCR_MATCHES_PROFILE">
+            <description>Záznamy PREMIS Object v souborech SECONDARY-METS pro ALTO OCR musí splňovat profil.
+            </description>
+            <validation functionName="checkSecondaryMetsAmdsecElementsMatchProfile">
+                <params>
+                    <value name="secondary-mets_files" type="FILE_LIST">
+                        <value-ref name="SECONDARY-METS_FILES"/>
+                    </value>
+                    <value name="element_xpath" type="STRING">mets:techMD[@ID="OBJ_003"]</value>
+                    <value name="element_must_exist" type="BOOLEAN">true</value>
+                    <value name="profile_id" type="STRING">premis_object_alto</value>
+                </params>
+            </validation>
+        </rule>
+
+        <rule name="PREMIS_EVENT_MATCHES_PROFILE">
+            <description>Záznamy PREMIS Event v souborech SECONDARY-METS musí splňovat profil.
+            </description>
+            <validation functionName="checkSecondaryMetsAmdsecElementsMatchProfile">
+                <params>
+                    <value name="secondary-mets_files" type="FILE_LIST">
+                        <value-ref name="SECONDARY-METS_FILES"/>
+                    </value>
+                    <value name="element_xpath" type="STRING">mets:digiprovMD[starts-with(@ID,"EVT_")]</value>
+                    <value name="element_must_exist" type="BOOLEAN">true</value>
+                    <value name="profile_id" type="STRING">premis_event</value>
+                </params>
+            </validation>
+        </rule>
+
+        <rule name="PREMIS_AGENT_MATCHES_PROFILE">
+            <description>Záznamy PREMIS Event v souborech SECONDARY-METS musí splňovat profil.
+            </description>
+            <validation functionName="checkSecondaryMetsAmdsecElementsMatchProfile">
+                <params>
+                    <value name="secondary-mets_files" type="FILE_LIST">
+                        <value-ref name="SECONDARY-METS_FILES"/>
+                    </value>
+                    <value name="element_xpath" type="STRING">mets:digiprovMD[starts-with(@ID,"AGENT_")]</value>
+                    <value name="element_must_exist" type="BOOLEAN">true</value>
+                    <value name="profile_id" type="STRING">premis_agent</value>
+                </params>
+            </validation>
+        </rule>
+
     </rules-section>
 
     <rules-section name="Autorskoprávní metadata" description="Kontrola autorskoprávních (CopyrightMD) metadat.">

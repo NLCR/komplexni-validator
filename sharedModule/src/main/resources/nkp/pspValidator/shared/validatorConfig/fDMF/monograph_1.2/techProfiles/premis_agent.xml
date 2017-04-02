@@ -3,13 +3,12 @@
         xmlns="http://www.nkp.cz/pspValidator/1.4/metadataProfile"
         name="PREMIS Agent"
         validatorVersion="1.4"
-        dmf="periodical_1.6"
+        dmf="monograph_1.2"
 >
 
     <info>
         <text>
-            Profil pro validaci PREMIS Agent záznamu stránky v sekundárním MODSu pro DMF
-            Periodika-1.6.
+            Profil pro validaci PREMIS Agent záznamu stránky v sekundárním MODSu pro DMF Monografie-1.2.
         </text>
         <url description="popis formátu PREMIS">http://www.loc.gov/standards/premis/</url>
         <url description="XSD pro PREMIS 2.2">http://www.loc.gov/standards/premis/v2/premis-v2-2.xsd</url>
@@ -69,7 +68,7 @@
                                         <expectedContent/>
                                     </element>
 
-                                    <!--Neni jasna povinnost - konflikt povinnost=M a vyskyt=0-n, viz DMF Periodika 1.6: s. 63. Nechavam defenzivne nepovinne-->
+                                    <!--Neni jasna povinnost - konflikt povinnost=M a vyskyt=0-n, viz DMF Monografie 1.2: s. 75. Nechavam defenzivne nepovinne-->
                                     <element name="premis:agentType" mandatory="false" repeatable="false">
                                         <recommendedContent>
                                             <oneOf>
