@@ -10,23 +10,24 @@
         <text>
             Profil pro validaci Copyrigh MD záznamu stránky v sekundárním METSu pro DMF Monografie-1.2.
         </text>
-        <url description="popis formátu PREMIS">http://www.loc.gov/standards/premis/</url>
-        <url description="XSD pro PREMIS 2.2">http://www.loc.gov/standards/premis/v2/premis-v2-2.xsd</url>
+        <url description="popis formátu copyrightMD">http://www.cdlib.org/groups/rmg/</url>
+        <url description="XSD pro copyrightMD 0.91">http://www.cdlib.org/groups/rmg/docs/copyrightMD.xsd</url>
     </info>
 
     <namespaces>
         <namespace prefix="mets">http://www.loc.gov/METS/</namespace>
-        <namespace prefix="premis">info:lc/xmlns/premis-v2</namespace>
-        <namespace prefix="xsi">http://www.w3.org/2001/XMLSchema-instance</namespace>
+        <namespace prefix="cmd">http://www.cdlib.org/inside/diglib/copyrightMD</namespace>
     </namespaces>
 
-    <rootElement name="mets:digiprovMD">
+    <dictionaries>
+        <dictionary name="iso31661Alpha2languageCodes"
+                    description="kódy jazyků podle ISO 3166-1 alpha 2 (dvojznakové kódy)"
+                    url="https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2"/>
+    </dictionaries>
+
+    <rootElement name="mets:rightsMD">
         <expectedAttributes>
-            <attribute name="ID">
-                <expectedContent>
-                    <regexp>AGENT_[0-9]{3}</regexp>
-                </expectedContent>
-            </attribute>
+            <attribute name="ID"/>
         </expectedAttributes>
 
         <expectedElements>
@@ -34,7 +35,13 @@
                 <expectedAttributes>
                     <attribute name="MDTYPE">
                         <expectedContent>
-                            <value>PREMIS</value>
+                            <value>OTHER</value>
+                        </expectedContent>
+                    </attribute>
+
+                    <attribute name="OTHERMDTYPE">
+                        <expectedContent>
+                            <value>CopyrightMD</value>
                         </expectedContent>
                     </attribute>
 
@@ -48,38 +55,155 @@
                 <expectedElements>
                     <element name="mets:xmlData">
                         <expectedElements>
-                            <element name="premis:agent" mandatory="true" repeatable="false">
+                            <element name="cmd:copyright" mandatory="true" repeatable="false">
+                                <expectedAttributes>
+                                    <attribute name="copyright.status" mandatory="true">
+                                        <expectedContent>
+                                            <oneOf>
+                                                <value>Copyrighted</value>
+                                                <value>pd</value>
+                                                <value>pd_expired</value>
+                                                <value>unknown</value>
+                                            </oneOf>
+                                        </expectedContent>
+                                    </attribute>
+
+                                    <attribute name="publication.status" mandatory="true">
+                                        <expectedContent>
+                                            <oneOf>
+                                                <value>published</value>
+                                                <value>unpublished</value>
+                                                <value>unknown</value>
+                                            </oneOf>
+                                        </expectedContent>
+                                    </attribute>
+                                </expectedAttributes>
+
                                 <expectedElements>
-                                    <element name="premis:agentIdentifier" mandatory="true" repeatable="true">
+                                    <element name="cmd:creation" mandatory="false" repeatable="false">
                                         <expectedElements>
-                                            <element name="premis:agentIdentifierType" mandatory="true"
-                                                     repeatable="false">
+                                            <element name="cmd:year.creation" mandatory="false" repeatable="false">
+                                                <expectedContent>
+                                                    <regexp>[0-9]{4}</regexp>
+                                                </expectedContent>
+                                            </element>
+
+                                            <element name="cmd:country.creation" mandatory="false" repeatable="false">
+                                                <expectedAttributes>
+                                                    <attribute name="iso.code" mandatory="false">
+                                                        <expectedContent>
+                                                            <fromDictionary name="iso31661Alpha2languageCodes"/>
+                                                        </expectedContent>
+                                                    </attribute>
+                                                </expectedAttributes>
+                                                <expectedContent>
+                                                    <!--TODO: can be empty-->
+                                                    <!--TODO: extra rule: pokud je element prazdny, musi byt pritomen
+                                                   neprazndy atribut iso.code-->
+                                                </expectedContent>
+                                            </element>
+                                        </expectedElements>
+                                    </element>
+
+                                    <element name="cmd:creator" mandatory="false" repeatable="false">
+                                        <expectedElements>
+                                            <element name="cmd:creator.corporate" mandatory="false" repeatable="true">
                                                 <expectedContent/>
                                             </element>
 
-                                            <element name="premis:agentIdentifierValue" mandatory="true"
-                                                     repeatable="false">
+                                            <element name="cmd:creator.person" mandatory="false" repeatable="true">
+                                                <expectedElements>
+                                                    <element name="cmd:name" mandatory="false" repeatable="false">
+                                                        <expectedContent/>
+                                                    </element>
+
+                                                    <element name="cmd:year.birth" mandatory="false" repeatable="false">
+                                                        <expectedContent>
+                                                            <regexp>[0-9]{4}</regexp>
+                                                        </expectedContent>
+                                                    </element>
+
+                                                    <element name="cmd:year.death" mandatory="false" repeatable="false">
+                                                        <expectedContent>
+                                                            <regexp>[0-9]{4}</regexp>
+                                                        </expectedContent>
+                                                    </element>
+                                                </expectedElements>
+                                            </element>
+
+                                            <element name="cmd:note" mandatory="false" repeatable="true">
                                                 <expectedContent/>
                                             </element>
                                         </expectedElements>
                                     </element>
 
-                                    <element name="premis:agentName" mandatory="false" repeatable="true">
+                                    <element name="cmd:publication" mandatory="false" repeatable="false">
+                                        <expectedElements>
+                                            <element name="cmd:country.publication" mandatory="false"
+                                                     repeatable="false">
+                                                <expectedAttributes>
+                                                    <attribute name="iso.code" mandatory="false">
+                                                        <expectedContent>
+                                                            <fromDictionary name="iso31661Alpha2languageCodes"/>
+                                                        </expectedContent>
+                                                    </attribute>
+                                                </expectedAttributes>
+                                                <expectedContent>
+                                                    <!--TODO: can be empty-->
+                                                    <!--TODO: extra rule: pokud je element prazdny, musi byt pritomen
+                                                    neprazndy atribut iso.code-->
+                                                </expectedContent>
+                                            </element>
+
+                                            <element name="cmd:publisher" mandatory="false" repeatable="false">
+                                                <expectedContent/>
+                                            </element>
+
+                                            <element name="cmd:year.publication" mandatory="false" repeatable="false">
+                                                <expectedContent>
+                                                    <regexp>[0-9]{4}</regexp>
+                                                </expectedContent>
+                                            </element>
+
+                                            <element name="cmd:year.copyright" mandatory="false" repeatable="false">
+                                                <expectedContent>
+                                                    <regexp>[0-9]{4}</regexp>
+                                                </expectedContent>
+                                            </element>
+
+                                            <element name="cmd:year.renewal" mandatory="false" repeatable="false">
+                                                <expectedContent>
+                                                    <regexp>[0-9]{4}</regexp>
+                                                </expectedContent>
+                                            </element>
+
+                                            <element name="cmd:note" mandatory="false" repeatable="true">
+                                                <expectedContent/>
+                                            </element>
+                                        </expectedElements>
+                                    </element>
+
+                                    <element name="cmd:rights.holder" mandatory="false" repeatable="false">
+                                        <expectedElements>
+                                            <element name="cmd:contact" mandatory="false" repeatable="true">
+                                                <expectedContent/>
+                                            </element>
+
+                                            <element name="cmd:name" mandatory="false" repeatable="false">
+                                                <expectedContent/>
+                                            </element>
+
+                                            <element name="cmd:note" mandatory="false" repeatable="true">
+                                                <expectedContent/>
+                                            </element>
+                                        </expectedElements>
+                                    </element>
+
+                                    <element name="cmd:notice" mandatory="false" repeatable="false">
                                         <expectedContent/>
                                     </element>
 
-                                    <!--Neni jasna povinnost - konflikt povinnost=M a vyskyt=0-n, viz DMF Monografie 1.2: s. 75. Nechavam defenzivne nepovinne-->
-                                    <element name="premis:agentType" mandatory="false" repeatable="false">
-                                        <recommendedContent>
-                                            <oneOf>
-                                                <value>organization</value>
-                                                <value>person</value>
-                                                <value>software</value>
-                                            </oneOf>
-                                        </recommendedContent>
-                                    </element>
-
-                                    <element name="premis:agentNote" mandatory="false" repeatable="true">
+                                    <element name="cmd:general.note" mandatory="false" repeatable="true">
                                         <expectedContent/>
                                     </element>
                                 </expectedElements>

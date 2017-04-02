@@ -90,7 +90,7 @@
 
     <xs:simpleType name="elementNameType">
         <xs:restriction base="xs:string">
-            <xs:pattern value="([a-zA-Z_]+:){0,1}[a-zA-Z0-9]+"/>
+            <xs:pattern value="([a-zA-Z_]+:){0,1}[a-zA-Z0-9\.]+"/>
         </xs:restriction>
     </xs:simpleType>
 

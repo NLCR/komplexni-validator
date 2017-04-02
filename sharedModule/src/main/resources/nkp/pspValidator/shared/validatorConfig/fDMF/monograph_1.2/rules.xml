@@ -2710,7 +2710,7 @@
             </validation>
         </rule>
 
-        <rule name="COPYRIGHTMD_IN_SECONDARY_METS_MATCHE_PROFILE">
+        <rule name="COPYRIGHTMD_IN_SECONDARY_METS_MATCH_PROFILE">
             <description>Záznamy CopyrightMD v souborech SECONDARY-METS, pokud existují, musí splňovat profil.
             </description>
             <validation functionName="checkSecondaryMetsAmdsecElementsMatchProfile">
@@ -2724,7 +2724,6 @@
                 </params>
             </validation>
         </rule>
-
 
     </rules-section>
 
