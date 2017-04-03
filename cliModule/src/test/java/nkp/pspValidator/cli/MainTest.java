@@ -27,7 +27,7 @@ public class MainTest {
     private static final String PER_1_6 = "../sharedModule/src/test/resources/periodical_1.6/7033d800-0935-11e4-beed-5ef3fc9ae867";
 
     //private static final String PER_1_6 = "../sharedModule/src/test/resources/periodical_1.6/ope301-00000v";
-    //private static final String PER_1_6_INFO_INVALID_NS = "/home/martin/zakazky/NKP-PSP_validator/data/per_1.6_invalid_info_ns/aba008-000310";
+    //private static final String PER_1_6_INFO_INVALID_NS = "/home/martin/zakazky/NKP-Komplexni_Validator/data/per_1.6_invalid_info_ns/aba008-000310";
 
     private static final String PER_1_4 = "../sharedModule/src/test/resources/periodical_1.4/ope301-00000v";
 
@@ -51,7 +51,7 @@ public class MainTest {
                 break;
             case LINUX:
                 validadtorConfigPath = "../sharedModule/src/main/resources/nkp/pspValidator/shared/validatorConfig";
-                kakaduPath = "/home/martin/zakazky/NKP-PSP_validator/utility/kakadu/KDU78_Demo_Apps_for_Linux-x86-64_160226";
+                kakaduPath = "/home/martin/zakazky/NKP-Komplexni_Validator/utility/kakadu/KDU78_Demo_Apps_for_Linux-x86-64_160226";
                 break;
             case MAC:
                 validadtorConfigPath = "../sharedModule/src/main/resources/nkp/pspValidator/shared/validatorConfig";

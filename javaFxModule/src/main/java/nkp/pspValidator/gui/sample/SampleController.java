@@ -70,7 +70,7 @@ public class SampleController {
         //paths
         switch (platform.getOperatingSystem()) {
             case LINUX: {
-                utilManager.setPath(ImageUtil.KAKADU, new File("/home/martin/zakazky/NKP-PSP_validator/utility/kakadu/KDU78_Demo_Apps_for_Linux-x86-64_160226"));
+                utilManager.setPath(ImageUtil.KAKADU, new File("/home/martin/zakazky/NKP-Komplexni_Validator/utility/kakadu/KDU78_Demo_Apps_for_Linux-x86-64_160226"));
                 break;
             }
             case WINDOWS: {

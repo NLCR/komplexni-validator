@@ -40,7 +40,7 @@ public class VfCheckImageFilesValidByExternalUtilTest {
     private static File JPYLYZER_PATH_WINDOWS = new File("C:\\Users\\Lenovo\\Documents\\software\\jpylyzer_1.17.0_win64");
     private static File JPYLYZER_PATH_MAC = null;
 
-    private static File KAKADU_PATH_LINUX = new File("/home/martin/zakazky/NKP-PSP_validator/utility/kakadu/KDU78_Demo_Apps_for_Linux-x86-64_160226");
+    private static File KAKADU_PATH_LINUX = new File("/home/martin/zakazky/NKP-Komplexni_Validator/utility/kakadu/KDU78_Demo_Apps_for_Linux-x86-64_160226");
     private static File KAKADU_PATH_WINDOWS = new File("C:\\Program Files (x86)\\Kakadu\\");
     private static File KAKADU_PATH_MAC = null;
 
