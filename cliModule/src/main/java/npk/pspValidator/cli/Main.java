@@ -252,7 +252,7 @@ public class Main {
                 " Dále je potřeba pomocí --fdmf-dir uvést adresář, který obsahuje definice fDMF," +
                 " typicky adresáře monograph_1.0, monograph_1.2, periodical_1.4 a periodical 1.6.\n\n";
         String footer = "\n*Definice metadatových formátů. Více na http://www.ndk.cz/standardy-digitalizace/metadata.\n" +
-                "Více informací o validátoru najdete na http://TODO ";*/
+                "Více informací o validátoru najdete na https://github.com/NLCR/komplexni-validator.";*/
         String header = "Validuje PSP balik, nebo sadu PSP baliku podle DMF*." +
                 " Verzi a typ DMF lze vynutit parametry --dmf-type a/nebo --dmf-version, pripadne jsou odvozeny z dat PSP baliku." +
                 " Dale je potreba pomoci --config-dir uvest adresar, ktery obsahuje definice konfiguraci Komplexniho validatoru vcetne fDMF," +
