@@ -1,13 +1,13 @@
 package nkp.pspValidator.shared.engine;
 
-import nkp.pspValidator.shared.metadataProfile.biblio.BibliographicMetadataProfilesManager;
-import nkp.pspValidator.shared.metadataProfile.tech.TechnicalMetadataProfilesManager;
 import nkp.pspValidator.shared.engine.evaluationFunctions.*;
 import nkp.pspValidator.shared.engine.exceptions.InvalidXPathExpressionException;
 import nkp.pspValidator.shared.engine.exceptions.ValidatorConfigurationException;
 import nkp.pspValidator.shared.engine.exceptions.XmlFileParsingException;
 import nkp.pspValidator.shared.engine.validationFunctions.*;
 import nkp.pspValidator.shared.imageUtils.validation.ImageValidator;
+import nkp.pspValidator.shared.metadataProfile.biblio.BibliographicMetadataProfilesManager;
+import nkp.pspValidator.shared.metadataProfile.tech.TechnicalMetadataProfilesManager;
 import org.w3c.dom.Document;
 
 import javax.xml.xpath.XPathExpression;
@@ -203,6 +203,8 @@ public class Engine {
                 return new VfCheckSecondaryMetsFilegroupReferencesSingleFile(this);
             case "checkMetsAmdsecElementsMatchProfile":
                 return new VfCheckMetsAmdsecElementsMatchProfile(this);
+            case "checkPremisLinks":
+                return new VfCheckPremisLinks(this);
 
             case "checkImageFilesValidByExternalUtil":
                 return new VfCheckImageFilesValidByExternalUtil(this);

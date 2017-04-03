@@ -2845,6 +2845,17 @@
             </validation>
         </rule>
 
+        <rule name="PREMIS_LINKING_CORRECT">
+            <description>Odkazy mezi PREMIS Objekty, Událostmi a Agenty musí být korektní a úplné.</description>
+            <validation functionName="checkPremisLinks">
+                <params>
+                    <value name="mets_files" type="FILE_LIST">
+                        <value-ref name="SECONDARY-METS_FILES"/>
+                    </value>
+                </params>
+            </validation>
+        </rule>
+
     </rules-section>
 
     <rules-section name="Autorskoprávní metadata" description="Kontrola autorskoprávních (CopyrightMD) metadat.">

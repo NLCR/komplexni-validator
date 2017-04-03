@@ -365,4 +365,17 @@
         </params-def>
     </validationFunction>
 
+    <validationFunction functionName="checkPremisLinks">
+        <description>Zkontroluje, že odkazy mezi PREMIS Objekty, Událostmi a Agenty musí být korektní a úplné.
+        </description>
+        <params-def>
+            <value name="mets_files" type="FILE_LIST" min="0" maxOccurs="unbound"/>
+            <value name="mets_file" type="FILE_LIST" min="0" maxOccurs="unbound"/>
+            <!--<value name="element_xpath" type="STRING"/>
+            <value name="element_must_exist" type="BOOLEAN"/>
+            <value name="profile_id" type="STRING"/>-->
+        </params-def>
+    </validationFunction>
+
+
 </validationFunctions>
