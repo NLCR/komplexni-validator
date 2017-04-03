@@ -302,7 +302,7 @@ public class SampleController {
 
 
             //String outStr = new CliCommand("/home/martin/IdeaProjects/NkpValidator/res/bin/fuckyou.sh");
-            CliCommand.Result output = new CliCommand(file).execute();
+            CliCommand.Result output = new CliCommand(new String[]{file}).execute();
             System.err.println("executed");
             output.print();
             String outStr = output.getStdout();

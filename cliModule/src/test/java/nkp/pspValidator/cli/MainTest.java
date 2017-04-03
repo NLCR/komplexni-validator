@@ -10,7 +10,6 @@ import nkp.pspValidator.shared.engine.exceptions.ValidatorConfigurationException
 import nkp.pspValidator.shared.engine.exceptions.XmlFileParsingException;
 import npk.pspValidator.cli.Main;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -64,14 +63,14 @@ public class MainTest {
         Validator.DevParams devParams = new Validator.DevParams();
 
         //devParams.getSectionsToRun().add("Soubor CHECKSUM");
-        devParams.getSectionsToRun().add("Soubor INFO");
+        //devParams.getSectionsToRun().add("Soubor INFO");
         //devParams.getSectionsToRun().add("Struktura souborů");
         //devParams.getSectionsToRun().add("Bibliografická metadata");
         //devParams.getSectionsToRun().add("Identifikátory");
         //devParams.getSectionsToRun().add("JPEG 2000");
         //devParams.getSectionsToRun().add("Bibliografická metadata");
         //devParams.getSectionsToRun().add("ALTO");
-        //devParams.getSectionsToRun().add("Technická metadata");
+        devParams.getSectionsToRun().add("Technická metadata");
         //devParams.getSectionsToRun().add("Autorskoprávní metadata");
         //devParams.getSectionsToRun().add("Secondary METS filesec");
 
@@ -80,10 +79,11 @@ public class MainTest {
                 //, MON_1_2_MAP
                 //, PER_1_6_INFO_INVALID_NS
                 //, PER_1_6
-                , PER_1_4
+                //, PER_1_4
                 //, MON_1_2_INVALID_IMAGES
                 //, MON_1_2_MAP
-                // , PER_1_6
+                //, PER_1_4
+                , MON_1_2
                 , null//Dmf.Type.PERIODICAL//, Dmf.Type.MONOGRAPH
                 , null//"1.4"//, "1.2"
                 , 2 //verbosity
