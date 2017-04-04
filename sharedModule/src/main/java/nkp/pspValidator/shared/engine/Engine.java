@@ -201,6 +201,9 @@ public class Engine {
                 return new VfCheckSecondaryMetsFilesecContainsAllFilegroups(this);
             case "checkSecondaryMetsFilegroupReferencesSingleFile":
                 return new VfCheckSecondaryMetsFilegroupReferencesSingleFile(this);
+            case "checkSecondaryMetsPhysicalMapOk":
+                return new VfCheckSecondaryMetsPhysicalMapOk(this);
+
             case "checkMetsAmdsecElementsMatchProfile":
                 return new VfCheckMetsAmdsecElementsMatchProfile(this);
             case "checkPremisLinks":

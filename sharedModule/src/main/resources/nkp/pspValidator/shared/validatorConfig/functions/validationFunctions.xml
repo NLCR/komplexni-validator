@@ -377,5 +377,15 @@
         </params-def>
     </validationFunction>
 
+    <validationFunction functionName="checkSecondaryMetsPhysicalMapOk">
+        <params>
+            <value name="secondary-mets_files" type="FILE_LIST">
+                <value-ref name="SECONDARY-METS_FILES"/>
+            </value>
+            <value name="expected_page_type" type="STRING"/>
+            <value name="filegroups_to_check" type="STRING_LIST"/>
+        </params>
+    </validationFunction>
+
 
 </validationFunctions>

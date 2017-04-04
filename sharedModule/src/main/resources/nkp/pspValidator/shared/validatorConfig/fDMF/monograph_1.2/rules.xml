@@ -2262,9 +2262,32 @@
             </validation>
         </rule>
 
-    </rules-section>
+        <rule name="SECONDARY-METS_PHYSICAL_STRUCTURAL_MAP_CORRECT">
+            <description>Fyzická strukturální mapa v každém souboru SECONDARY-METS musí odkazovat všechny soubory
+                odkazované v elementu fileSec a žádné jiné.
+            </description>
+            <validation functionName="checkSecondaryMetsPhysicalMapOk">
+                <params>
+                    <value name="secondary-mets_files" type="FILE_LIST">
+                        <value-ref name="SECONDARY-METS_FILES"/>
+                    </value>
+                    <value name="expected_page_type" type="STRING">MONOGRAPH_PAGE</value>
+                    <value name="filegroups_to_check" type="STRING_LIST">
+                        <evaluation functionName="buildListOfStrings">
+                            <params>
+                                <value name="string" type="STRING">MC_IMGGRP</value>
+                                <!--O UC se DMF nezminuje, ale v realnych zaznamech se vyskytuji, takze asi "chyba v DMF"-->
+                                <value name="string" type="STRING">UC_IMGGRP</value>
+                                <value name="string" type="STRING">ALTOGRP</value>
+                                <value name="string" type="STRING">TXTGRP</value>
+                            </params>
+                        </evaluation>
+                    </value>
+                </params>
+            </validation>
+        </rule>
 
-    <!--TODO: structMap v secondary mets-->
+    </rules-section>
 
     <rules-section name="JPEG 2000"
                    description="Kontrola obrázků MASTER-COPY a USER-COPY v JPEG 2000 za pomocí externích nástrojů">
