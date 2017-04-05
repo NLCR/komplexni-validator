@@ -203,6 +203,8 @@ public class Engine {
                 return new VfCheckSecondaryMetsFilegroupReferencesSingleFile(this);
             case "checkSecondaryMetsPhysicalMapOk":
                 return new VfCheckSecondaryMetsPhysicalMapOk(this);
+            case "checkPrimaryMetsPhysicalMapOk":
+                return new VfCheckPrimaryMetsPhysicalMapOk(this);
 
             case "checkMetsAmdsecElementsMatchProfile":
                 return new VfCheckMetsAmdsecElementsMatchProfile(this);

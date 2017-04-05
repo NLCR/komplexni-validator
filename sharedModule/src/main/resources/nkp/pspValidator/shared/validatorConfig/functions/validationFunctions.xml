@@ -379,13 +379,19 @@
 
     <validationFunction functionName="checkSecondaryMetsPhysicalMapOk">
         <params>
-            <value name="secondary-mets_files" type="FILE_LIST">
-                <value-ref name="SECONDARY-METS_FILES"/>
-            </value>
+            <value name="secondary-mets_files" type="FILE_LIST"/>
             <value name="expected_page_type" type="STRING"/>
             <value name="filegroups_to_check" type="STRING_LIST"/>
         </params>
     </validationFunction>
 
+    <validationFunction functionName="checkPrimaryMetsPhysicalMapOk">
+        <params>
+            <value name="primary-mets_file" type="FILE"/>
+            <value name="expected_top_level_div_type" type="STRING" minOccurs="0"/>
+            <value name="filegroups_to_check" type="STRING_LIST"/>
+            <value name="page_types" type="STRING_LIST"/>
+        </params>
+    </validationFunction>
 
 </validationFunctions>

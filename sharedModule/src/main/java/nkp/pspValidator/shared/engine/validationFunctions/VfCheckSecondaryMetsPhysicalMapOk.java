@@ -101,53 +101,36 @@ public class VfCheckSecondaryMetsPhysicalMapOk extends ValidationFunction {
                 }
             }
 
-            String structMapXpath = "/mets:mets/mets:structMap";
+            String structMapXpath = "/mets:mets/mets:structMap[@TYPE='PHYSICAL']";
             Element structMapEl = (Element) engine.buildXpath(structMapXpath).evaluate(doc, XPathConstants.NODE);
             if (structMapEl == null) {
-                result.addError(Level.ERROR, "%s: nenalezen element %s ", file.getName(), structMapXpath);
+                result.addError(Level.ERROR, "%s: chybí fyzická strukturální mapa (%s)", file.getName(), structMapXpath);
             } else {
-                // mets:structMap/@TYPE must be "PHYSICAL"
-                String actualStructMapType = structMapEl.getAttribute("TYPE");
-                if (actualStructMapType == null || actualStructMapType.isEmpty()) {
-                    result.addError(Level.ERROR, "%s: chybějící nebo prázdný atribut TYPE elementu %s ", file.getName(), structMapXpath);
+                String topLevelDivPath = String.format("mets:div[@TYPE='%s']", expectedPageType);
+                Element topLevelDivEl = (Element) engine.buildXpath(topLevelDivPath).evaluate(structMapEl, XPathConstants.NODE);
+                if (topLevelDivEl == null) {
+                    result.addError(Level.ERROR, "%s: fyzická strukturální mapa neobsahuje element %s", file.getName(), topLevelDivPath);
                 } else {
-                    String expectedStructMapType = "PHYSICAL";
-                    if (!actualStructMapType.equals(expectedStructMapType)) {
-                        result.addError(Level.ERROR, "%s: špatná hodnota atributu TYPE elementu %s: očekáváno '%s', nalezeno '%s'",
-                                file.getName(), structMapXpath, expectedStructMapType, actualStructMapType);
+                    NodeList nodeList = (NodeList) engine.buildXpath("mets:fptr/@FILEID").evaluate(topLevelDivEl, XPathConstants.NODESET);
+                    List<String> fileIdsFromStructMap = new ArrayList<>();
+                    for (int i = 0; i < nodeList.getLength(); i++) {
+                        Node item = nodeList.item(i);
+                        String value = item.getNodeValue();
+                        fileIdsFromStructMap.add(value);
                     }
-                }
 
-                // mets:structMap/mets:div/@TYPE must equal expectedPageType
-                String actualPageType = (String) engine.buildXpath("mets:div/@TYPE").evaluate(structMapEl, XPathConstants.STRING);
-                if (actualPageType == null || actualPageType.isEmpty()) {
-                    result.addError(Level.ERROR, "%s: chybějící nebo prázdný atribut TYPE elementu mets:structMap/mets:div", file.getName());
-                } else {
-                    if (!actualPageType.equals(expectedPageType)) {
-                        result.addError(Level.ERROR, "%s: špatná hodnota atributu TYPE elementu mets:structMap/mets:div: očekáváno '%s', nalezeno '%s'",
-                                file.getName(), expectedPageType, actualPageType);
+                    //all files from fileSec must be referenced in structMap
+                    for (String fileIdFromFileSec : fileIdsFromFileSec) {
+                        if (!fileIdsFromStructMap.contains(fileIdFromFileSec)) {
+                            result.addError(Level.ERROR, "%s: fyzická strukturální mapa neobsahuje odkaz na soubor %s", file.getName(), fileIdFromFileSec);
+                        }
                     }
-                }
 
-                NodeList nodeList = (NodeList) engine.buildXpath("mets:div/mets:fptr/@FILEID").evaluate(structMapEl, XPathConstants.NODESET);
-                List<String> fileIdsFromStructMap = new ArrayList<>();
-                for (int i = 0; i < nodeList.getLength(); i++) {
-                    Node item = nodeList.item(i);
-                    String value = item.getNodeValue();
-                    fileIdsFromStructMap.add(value);
-                }
-
-                //all files from fileSec must be referenced in structMap
-                for (String fileIdFromFileSec : fileIdsFromFileSec) {
-                    if (!fileIdsFromStructMap.contains(fileIdFromFileSec)) {
-                        result.addError(Level.ERROR, "%s: fyzická strukturální mapa neobsahuje odkaz na soubor %s", file.getName(), fileIdFromFileSec);
-                    }
-                }
-
-                //all files in structMap must also be referenced in fileSec
-                for (String fileIdFromStructMap : fileIdsFromStructMap) {
-                    if (!fileIdsFromFileSec.contains(fileIdFromStructMap)) {
-                        result.addError(Level.ERROR, "%s: fyzická strukturální mapa obsahuje odkaz na neočekávaný soubor %s", file.getName(), fileIdFromStructMap);
+                    //all files in structMap must also be referenced in fileSec
+                    for (String fileIdFromStructMap : fileIdsFromStructMap) {
+                        if (!fileIdsFromFileSec.contains(fileIdFromStructMap)) {
+                            result.addError(Level.ERROR, "%s: fyzická strukturální mapa obsahuje odkaz na neočekávaný soubor %s", file.getName(), fileIdFromStructMap);
+                        }
                     }
                 }
             }
