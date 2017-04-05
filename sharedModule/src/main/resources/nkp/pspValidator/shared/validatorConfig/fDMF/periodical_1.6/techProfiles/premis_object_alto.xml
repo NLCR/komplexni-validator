@@ -54,10 +54,13 @@
                                     <attribute name="xsi:type">
                                         <expectedContent>
                                             <oneOf>
-                                                <!--<value>premis:file</value>-->
                                                 <value>file</value>
                                                 <value>representation</value>
                                                 <value>bitstream</value>
+                                                <!--hodnoty premis:* neodpovídají striktně specifikaci, v DMF uvedeny nejsou, ale v praxi se používají -->
+                                                <value>premis:file</value>
+                                                <value>premis:representation</value>
+                                                <value>premis:bitstream</value>
                                             </oneOf>
                                         </expectedContent>
                                     </attribute>
