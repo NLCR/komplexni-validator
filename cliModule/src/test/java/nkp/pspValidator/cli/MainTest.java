@@ -70,9 +70,10 @@ public class MainTest {
         //devParams.getSectionsToRun().add("JPEG 2000");
         //devParams.getSectionsToRun().add("Bibliografická metadata");
         //devParams.getSectionsToRun().add("ALTO");
-        devParams.getSectionsToRun().add("Technická metadata");
+        //devParams.getSectionsToRun().add("Technická metadata");
         //devParams.getSectionsToRun().add("Autorskoprávní metadata");
         //devParams.getSectionsToRun().add("Secondary METS filesec");
+        devParams.getSectionsToRun().add("Strukturální mapy");
 
         Main.main(devParams, buildParams(
                 validadtorConfigPath
