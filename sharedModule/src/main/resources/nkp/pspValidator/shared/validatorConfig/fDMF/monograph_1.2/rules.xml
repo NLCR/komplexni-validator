@@ -2262,6 +2262,14 @@
             </validation>
         </rule>
 
+    </rules-section>
+
+    <rules-section name="Strukturální mapy"
+                   description="Kontrola fyzických a logických strukturálních map v METS záznamech">
+
+        <!--TODO: kontrola fyzické strukturální mapy v hlavním METS -->
+        <!--TODO: kontrola logické strukturální mapy v hlavním METS -->
+
         <rule name="SECONDARY-METS_PHYSICAL_STRUCTURAL_MAP_CORRECT">
             <description>Fyzická strukturální mapa v každém souboru SECONDARY-METS musí odkazovat všechny soubory
                 odkazované v elementu fileSec a žádné jiné.

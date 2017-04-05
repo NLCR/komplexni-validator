@@ -2313,7 +2313,6 @@
 
     </rules-section>
 
-
     <rules-section name="Secondary METS filesec"
                    description="Sekce mets:fileSec v sekundárních METS souborech musí obsahovat korektní odkazy na soubory s popisy jednotlivých stran (master a user kopie, textové a alto ocr)">
 
@@ -2410,6 +2409,14 @@
             </validation>
         </rule>
 
+    </rules-section>
+
+    <rules-section name="Strukturální mapy"
+                   description="Kontrola fyzických a logických strukturálních map v METS záznamech">
+
+        <!--TODO: kontrola fyzické strukturální mapy v hlavním METS -->
+        <!--TODO: kontrola logické strukturální mapy v hlavním METS -->
+
         <rule name="SECONDARY-METS_PHYSICAL_STRUCTURAL_MAP_CORRECT">
             <description>Fyzická strukturální mapa v každém souboru SECONDARY-METS musí odkazovat všechny soubory
                 odkazované v elementu fileSec a žádné jiné.
@@ -2419,7 +2426,7 @@
                     <value name="secondary-mets_files" type="FILE_LIST">
                         <value-ref name="SECONDARY-METS_FILES"/>
                     </value>
-                    <value name="expected_page_type" type="STRING">MONOGRAPH_PAGE</value>
+                    <value name="expected_page_type" type="STRING">PERIODICAL_PAGE</value>
                     <value name="filegroups_to_check" type="STRING_LIST">
                         <evaluation functionName="buildListOfStrings">
                             <params>

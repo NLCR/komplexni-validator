@@ -2296,6 +2296,12 @@
 
     </rules-section>
 
+    <rules-section name="Strukturální mapy"
+                   description="Kontrola fyzických a logických strukturálních map v METS záznamech">
+        <!--TODO: kontrola fyzické strukturální mapy v hlavním METS -->
+        <!--TODO: kontrola logické strukturální mapy v hlavním METS -->
+    </rules-section>
+
     <rules-section name="JPEG 2000"
                    description="Kontrola obrázků MASTER-COPY a USER-COPY v JPEG 2000 za pomocí externích nástrojů">
 
