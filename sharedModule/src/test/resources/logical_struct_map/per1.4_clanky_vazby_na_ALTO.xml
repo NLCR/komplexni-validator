@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<mets:mets xmlns:mets="http://www.loc.gov/METS/"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="http://www.loc.gov/METS/ http://www.loc.gov/standards/mets/mets.xsd"
+           TYPE="Periodical"
+           LABEL="Mezinárodní vztahy no. 1 1987"
+>
+
+    <mets:structMap TYPE="LOGICAL" LABEL="Logical_Structure">
+        <mets:div TYPE="PERIODICAL_TITLE" ID="TITLE_0001" DMDID="MODSMD_TITLE_0001"
+                  LABEL="Mezinárodní vztahy no. 1 1987">
+            <mets:div TYPE="PERIODICAL_VOLUME" ID="VOLUME_0001" DMDID="MODSMD_VOLUME_0001">
+                <mets:div TYPE="ISSUE" ID="ISSUE_01" DMDID="MODSMD_ISSUE_0001" LABEL="Mezinárodní vztahy no. 1 1987">
+                    <mets:div TYPE="ARTICLE" ID="ART_0001" DMDID="MODSMD_ART_0001"
+                              LABEL="PAPRSKY SMRTI prezidenta Beneše" ORDER="0">
+                        <mets:div TYPE="TITLE" ID="ART_0001_0001" ORDER="0">
+                            <mets:fptr>
+                                <mets:area FILEID="ALTO_anl001-000001" BETYPE="IDREF" BEGIN="TextBlock1"/>
+                            </mets:fptr>
+                        </mets:div>
+                        <mets:div TYPE="NORMAL_TEXT" ID="ART_0001_0002" ORDER="1">
+                            <mets:fptr>
+                                <mets:area FILEID="ALTO_anl001-000007_0005" BETYPE="IDREF" BEGIN="TextBlock4"/>
+                            </mets:fptr>
+                        </mets:div>
+                        <mets:div TYPE="PICTURE" ID="ART_0001_0003" DMDID="MODSMD_PIC_0001" LABEL="Paprsek" ORDER="2">
+                            <mets:div TYPE="IMAGE" ID="ART_0001_0008">
+                                <mets:fptr>
+                                    <mets:area FILEID="ALTO_anl001-000007_0006" BETYPE="IDREF"
+                                               BEGIN="GraphicalElement0"/>
+                                </mets:fptr>
+                            </mets:div>
+                            <mets:div TYPE="CAPTION" ID="ART_0001_0035">
+                                <mets:fptr>
+                                    <mets:area FILEID="ALTO_anl001-000007_0007" BETYPE="IDREF" BEGIN="TextBlock20"/>
+                                </mets:fptr>
+                            </mets:div>
+                        </mets:div>
+                    </mets:div>
+                </mets:div>
+            </mets:div>
+        </mets:div>
+    </mets:structMap>
+
+</mets:mets>

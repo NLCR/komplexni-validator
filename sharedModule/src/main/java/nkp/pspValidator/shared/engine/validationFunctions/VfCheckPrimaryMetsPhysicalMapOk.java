@@ -53,29 +53,12 @@ public class VfCheckPrimaryMetsPhysicalMapOk extends ValidationFunction {
                 return invalidValueParamNull(PARAM_PRIMARY_METS_FILE, paramPrimaryMetsFile);
             }
 
-
             String expectedTopLevelDivType = null;
-
             List<ValueParam> paramValuesExpectedTopLevelDivType = valueParams.getParams(PARAM_EXPECTED_TOP_LEVEL_DIV_TYPE);
             if (!paramValuesExpectedTopLevelDivType.isEmpty()) {
                 ValueEvaluation paramExpectedTopLevelDivType = paramValuesExpectedTopLevelDivType.get(0).getEvaluation();
                 expectedTopLevelDivType = (String) paramExpectedTopLevelDivType.getData();
-                /*
-                if (expectedTopLevelDivType == null) {
-                    return invalidValueParamNull(PARAM_EXPECTED_TOP_LEVEL_DIV_TYPE, paramExpectedTopLevelDivType);
-                }else{
-                    expectedTopLevelDivType =
-                }*/
             }
-
-            //paramExpectedTopLevelDivType
-            //.get(0).getEvaluation();
-
-
-/*            String expectedTopLevelDivType = (String) paramExpectedTopLevelDivType.getData();
-            if (expectedTopLevelDivType == null) {
-                return invalidValueParamNull(PARAM_EXPECTED_TOP_LEVEL_DIV_TYPE, paramExpectedTopLevelDivType);
-            }*/
 
             ValueEvaluation paramFilegroupIds = valueParams.getParams(PARAM_FILEGROUP_IDS).get(0).getEvaluation();
             List<String> filegroupIds = (List<String>) paramFilegroupIds.getData();
@@ -182,7 +165,7 @@ public class VfCheckPrimaryMetsPhysicalMapOk extends ValidationFunction {
                         } else {
                             if (!pageTypes.contains(pageType)) {
                                 result.addError(Level.WARNING,
-                                        "%s: záznam stránky %s ve fyzické strukturální mapě má neočekávanou hodnotu atributu TYPE ('%s')",
+                                        "%s: záznam stránky %s ve fyzické strukturální mapě: nepovolená hodnota atributu TYPE ('%s')",
                                         primaryMetsFile.getName(), pageId, pageType);
                             }
                         }

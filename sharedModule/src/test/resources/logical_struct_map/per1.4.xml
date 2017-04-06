@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<mets:mets xmlns:mets="http://www.loc.gov/METS/"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="http://www.loc.gov/METS/ http://www.loc.gov/standards/mets/mets.xsd"
+           TYPE="Periodical"
+           LABEL="Mezinárodní vztahy no.1 1966"
+>
+
+    <mets:structMap TYPE="LOGICAL" LABEL="Logical_Structure">
+        <mets:div TYPE="PERIODICAL_TITLE" ID="TITLE_1" DMDID="MODSMD_TITLE_0001" LABEL="Mezinárodní vztahy no.1 1966-">
+            <mets:div TYPE="PERIODICAL_VOLUME" ID="VOLUME_1" DMDID="MODSMD_VOLUME_0001"
+                      LABEL="Mezinárodní vztahy no. 1">
+                <mets:div TYPE="ISSUE" ID="ISSUE_1" DMDID="MODSMD_ISSUE_0001" LABEL="Mezinárodní vztahy no.1 1966-"/>
+                <mets:div TYPE="SUPPLEMENT" ID="SUPPL_1" DMDID="MODSMD_SUPPL_0001" LABEL="Příloha 1"/>
+            </mets:div>
+        </mets:div>
+    </mets:structMap>
+
+</mets:mets>

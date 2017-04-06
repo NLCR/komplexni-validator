@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<mets:mets xmlns:mets="http://www.loc.gov/METS/"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="http://www.loc.gov/METS/ http://www.loc.gov/standards/mets/mets.xsd"
+           TYPE="Monograph"
+           LABEL="Honzíkova cesta, 1972"
+>
+
+    <mets:structMap TYPE="LOGICAL" LABEL="Logical_Structure">
+        <mets:div TYPE="MONOGRAPH" ID="MONOGRAPH_0001" LABEL="Honzíkova cesta, 1972">
+            <mets:div TYPE="VOLUME" ID="VOLUME_0001" DMDID="MODSMD_VOLUME_0001" LABEL=" Honzíkova cesta, 1972"/>
+            <mets:div TYPE="SUPPLEMENT" ID="SUPLEMENT_0001" DMDID="MODSMD_SUPPLEMENT_0001" LABEL="Příloha 1">
+                <mets:div TYPE="PAGE">
+                    <mets:div TYPE="PICTURE" ID="PICTURE_0001" DMDID="MODSMD_PICTURE_0001" LABEL="Vlak na nádraží"/>
+                </mets:div>
+            </mets:div>
+        </mets:div>
+    </mets:structMap>
+</mets:mets>

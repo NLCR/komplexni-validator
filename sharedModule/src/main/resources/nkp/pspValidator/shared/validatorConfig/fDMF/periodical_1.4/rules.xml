@@ -2444,7 +2444,42 @@
 
     <rules-section name="Strukturální mapy"
                    description="Kontrola fyzických a logických strukturálních map v METS záznamech">
-        <!--TODO: kontrola logické strukturální mapy v hlavním METS -->
+
+        <rule name="PRIMARY-METS_LOGICAL_STRUCTURAL_MAP_CORRECT">
+            <description>Logická strukturální mapa v souboru PRIMARY-METS musí odkazovat jen na povolené typy obsahu a
+                DMDID musí odkazovat na existující metadataové záznamy.
+            </description>
+            <validation functionName="checkPrimaryMetsLogicalMapOk">
+                <params>
+                    <value name="primary-mets_file" type="FILE">
+                        <value-ref name="PRIMARY-METS_FILE"/>
+                    </value>
+                    <value name="div_types_allowed" type="STRING_LIST">
+                        <evaluation functionName="buildListOfStrings">
+                            <params>
+                                <value name="string" type="STRING">PERIODICAL_TITLE</value>
+                                <value name="string" type="STRING">PERIODICAL_VOLUME</value>
+                                <value name="string" type="STRING">ISSUE</value>
+                                <value name="string" type="STRING">SUPPLEMENT</value>
+                                <value name="string" type="STRING">ARTICLE</value>
+                                <value name="string" type="STRING">TITLE</value>
+                                <value name="string" type="STRING">SUBTITLE</value>
+                                <value name="string" type="STRING">AUTHOR</value>
+                                <value name="string" type="STRING">TRANSLATOR</value>
+                                <value name="string" type="STRING">NORMAL_TEXT</value>
+                                <value name="string" type="STRING">PICTURE</value>
+                                <value name="string" type="STRING">NOTE</value>
+                                <value name="string" type="STRING">ARTICLE_PART</value>
+                                <value name="string" type="STRING">CAPTION</value>
+                                <value name="string" type="STRING">PICT_AUTHOR</value>
+                                <value name="string" type="STRING">PICT_TITLE</value>
+                                <value name="string" type="STRING">IMAGE</value>
+                            </params>
+                        </evaluation>
+                    </value>
+                </params>
+            </validation>
+        </rule>
 
         <rule name="PRIMARY-METS_PHYSICAL_STRUCTURAL_MAP_CORRECT">
             <description>Fyzická strukturální mapa v souboru PRIMARY-METS musí korektně odkazovat na všechny soubory
