@@ -96,7 +96,7 @@
                             <attribute name="type"/>
                         </expectedAttributes>
                         <expectedContent/>
-                          
+
                     </element>
 
                     <element name="mods:namePart" specification="@type='family'" mandatory="false">
@@ -256,10 +256,15 @@
                         </expectedContent>
                     </element>
                 </expectedElements>
+                <extraRules>
+                    <!-- TODO: povolit všude u language/languageTerm -->
+                    <!-- Musí existovat nejvýše jeden element languageTerm s atributy type='code' a authority='iso639-2b' -->
+                    <!--<atMostOneElementExists
+                            xpath="mods:languageTerm[@type='code' and @authority='iso639-2b']/text()"
+                            description="Pokud je potřeba zaznamenat více jazyků, musí být každý ve vlastním elementu mods:language"
+                    />-->
+                </extraRules>
             </element>
-
-            <!--<element name="mods:note" specification="text()='xxx'"></element>-->
-
 
             <element name="mods:physicalDescription">
                 <expectedElements>
@@ -338,7 +343,7 @@
                 <expectedAttributes>
                     <!--NOTE: DMF neuvadi, jestli je authority povinny atribut, nechavam nepovinny-->
                     <attribute name="authority">
-			<!--NOTE: povolena hodnota Konspekt, tak aby prochazely bez elementu edition-->
+                        <!--NOTE: povolena hodnota Konspekt, tak aby prochazely bez elementu edition-->
                         <recommendedContent>
                             <oneOf>
                                 <value>udc</value>

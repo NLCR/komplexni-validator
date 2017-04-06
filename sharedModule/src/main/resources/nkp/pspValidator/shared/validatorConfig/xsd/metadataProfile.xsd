@@ -184,6 +184,13 @@
             <xs:element name="atLeastOneElementExists">
                 <xs:complexType>
                     <xs:attribute name="xpath" use="required"/>
+                    <xs:attribute name="description" use="optional"/>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="atMostOneElementExists">
+                <xs:complexType>
+                    <xs:attribute name="xpath" use="required"/>
+                    <xs:attribute name="description" use="optional"/>
                 </xs:complexType>
             </xs:element>
         </xs:choice>

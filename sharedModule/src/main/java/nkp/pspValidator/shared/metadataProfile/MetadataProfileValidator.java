@@ -73,7 +73,7 @@ public class MetadataProfileValidator {
         for (ExtraRule rule : extraRules) {
             CheckingResult checkingResult = rule.checkAgainst(manager, currentElement);
             if (!checkingResult.matches()) {
-                result.addError(Level.ERROR, buildMessage(errorLabel, "%s: nesplněno extra pravidlo: %s", currentElementPath, checkingResult.getErrorMessage()));
+                result.addError(Level.ERROR, buildMessage(errorLabel, "%s: %s", currentElementPath, checkingResult.getErrorMessage()));
             }
         }
     }
