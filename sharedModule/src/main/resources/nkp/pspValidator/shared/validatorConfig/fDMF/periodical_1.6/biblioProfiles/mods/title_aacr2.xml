@@ -416,9 +416,13 @@
             <element name="mods:classification" specification="not(@edition)" mandatory="false">
                 <!--Mezinarodni desetinne trideni-->
                 <expectedAttributes>
+		    <!--NOTE: z DMF není hned zřejmé, které hodnoty platí pro rda a které pro aacr2, proto jsou nyní povoleny obě-->
                     <attribute name="authority">
                         <recommendedContent>
-                            <value>udc</value>
+                             <oneOf>
+                                <value>udc</value>
+                                <value>Konspekt</value>
+                            </oneOf>
                         </recommendedContent>
                     </attribute>
                 </expectedAttributes>
