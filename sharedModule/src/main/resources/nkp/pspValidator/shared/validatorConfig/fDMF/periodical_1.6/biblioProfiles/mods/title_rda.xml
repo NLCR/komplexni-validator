@@ -825,6 +825,15 @@
                     </element>
 
                     <element name="mods:recordChangeDate" mandatory="false">
+			<!--V DMF 1.6 není atribut encoding definován, ale logicky by měl být stejný zápis jako u recordCreationDate, atribut povolen
+ 			ale nepovinný, protože ve specifikaci není-->
+			<expectedAttributes>
+                            <attribute name="encoding" mandatory="false">
+                                <expectedContent>
+                                    <value>iso8601</value>
+                                </expectedContent>
+                            </attribute>
+			</expectedAttributes>
                         <expectedContent/>
                     </element>
 
