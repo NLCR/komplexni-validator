@@ -338,8 +338,12 @@
                 <expectedAttributes>
                     <!--NOTE: DMF neuvadi, jestli je authority povinny atribut, nechavam nepovinny-->
                     <attribute name="authority">
+			<!--NOTE: povolena hodnota Konspekt, tak aby prochazely bez elementu edition-->
                         <recommendedContent>
-                            <value>udc</value>
+                            <oneOf>
+                                <value>udc</value>
+                                <value>Konspekt</value>
+                            </oneOf>
                         </recommendedContent>
                     </attribute>
                 </expectedAttributes>
