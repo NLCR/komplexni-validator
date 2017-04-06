@@ -13,12 +13,12 @@ import javax.xml.xpath.XPathExpressionException;
 /**
  * Created by Martin Řehánek on 27.1.17.
  */
-public class ExtraRuleExtraRuleExistsAtMostOnce implements ExtraRule {
+public class ExtraRuleExistsAtMostOnce implements ExtraRule {
 
     private final String xpath;
     private final String description;
 
-    public ExtraRuleExtraRuleExistsAtMostOnce(String xpath, String description) {
+    public ExtraRuleExistsAtMostOnce(String xpath, String description) {
         this.xpath = xpath;
         this.description = description;
     }

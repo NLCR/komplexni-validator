@@ -150,7 +150,7 @@
                 </expectedElements>
                 <extraRules>
                     <!--  Musí existovat alespoň jeden element namePart-->
-                    <atLeastOneElementExists xpath="mods:namePart"/>
+                    <existsAtLeastOnce xpath="mods:namePart"/>
                 </extraRules>
             </element>
 
@@ -257,9 +257,8 @@
                     </element>
                 </expectedElements>
                 <extraRules>
-                    <!-- TODO: povolit všude u language/languageTerm -->
-                    <!-- Musí existovat nejvýše jeden element languageTerm s atributy type='code' a authority='iso639-2b' -->
-                    <!--<atMostOneElementExists
+                    <!-- V rámci elementu mods:language musí existovat nejvýše jeden element mods:languageTerm s atributy type='code' a authority='iso639-2b' -->
+                    <!--<existsAtMostOnce
                             xpath="mods:languageTerm[@type='code' and @authority='iso639-2b']/text()"
                             description="Pokud je potřeba zaznamenat více jazyků, musí být každý ve vlastním elementu mods:language"
                     />-->

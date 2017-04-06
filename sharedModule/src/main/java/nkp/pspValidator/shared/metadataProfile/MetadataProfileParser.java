@@ -223,13 +223,17 @@ public class MetadataProfileParser {
                 List<ExtraRule> extraRules = new ArrayList<>();
                 for (Element ruleEl : ruleEls) {
                     switch (ruleEl.getTagName()) {
-                        case "atLeastOneElementExists": {
-                            ExtraRule rule = parseExtraRuleAtLeastOneElementExists(profile, ruleEl);
+                        case "existsAtLeastOnce": {
+                            String xpath = ruleEl.getAttribute("xpath");
+                            String description = ruleEl.getAttribute("description");
+                            ExtraRule rule = new ExtraRuleExistsAtLeastOnce(xpath, description);
                             extraRules.add(rule);
                             break;
                         }
-                        case "atMostOneElementExists": {
-                            ExtraRule rule = parseExtraRuleAtMostOneElementExists(profile, ruleEl);
+                        case "existsAtMostOnce": {
+                            String xpath = ruleEl.getAttribute("xpath");
+                            String description = ruleEl.getAttribute("description");
+                            ExtraRule rule = new ExtraRuleExistsAtMostOnce(xpath, description);
                             extraRules.add(rule);
                             break;
                         }
@@ -240,18 +244,6 @@ public class MetadataProfileParser {
         }
 
         return elementDef;
-    }
-
-    private ExtraRuleAtMostOneElementExists parseExtraRuleAtMostOneElementExists(MetadataProfile profile, Element ruleEl) {
-        String xpath = ruleEl.getAttribute("xpath");
-        String description = ruleEl.getAttribute("description");
-        return new ExtraRuleAtMostOneElementExists(xpath, description);
-    }
-
-    private ExtraRuleAtLeastOneElementExists parseExtraRuleAtLeastOneElementExists(MetadataProfile profile, Element ruleEl) {
-        String xpath = ruleEl.getAttribute("xpath");
-        String description = ruleEl.getAttribute("description");
-        return new ExtraRuleAtLeastOneElementExists(xpath, description);
     }
 
     private boolean isEqual(String first, String second) {

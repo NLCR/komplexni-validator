@@ -181,13 +181,13 @@
 
     <xs:complexType name="extraRulesType">
         <xs:choice minOccurs="0">
-            <xs:element name="atLeastOneElementExists">
+            <xs:element name="existsAtLeastOnce">
                 <xs:complexType>
                     <xs:attribute name="xpath" use="required"/>
                     <xs:attribute name="description" use="optional"/>
                 </xs:complexType>
             </xs:element>
-            <xs:element name="atMostOneElementExists">
+            <xs:element name="existsAtMostOnce">
                 <xs:complexType>
                     <xs:attribute name="xpath" use="required"/>
                     <xs:attribute name="description" use="optional"/>

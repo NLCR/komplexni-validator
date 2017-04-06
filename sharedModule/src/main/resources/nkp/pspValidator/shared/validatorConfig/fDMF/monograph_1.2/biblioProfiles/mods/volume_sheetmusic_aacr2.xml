@@ -150,7 +150,7 @@
                 </expectedElements>
                 <extraRules>
                     <!--  Musí existovat alespoň jeden element namePart-->
-                    <atLeastOneElementExists xpath="mods:namePart"/>
+                    <existsAtLeastOnce xpath="mods:namePart"/>
                 </extraRules>
             </element>
 
