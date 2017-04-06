@@ -93,7 +93,10 @@
                                             <element name="premis:preservationLevelDateAssigned" mandatory="false"
                                                      repeatable="false">
                                                 <expectedContent>
-                                                    <regexp>[0-9]{4}-[0-9]{2}-[0-9]{2}</regexp>
+                                                     <oneOf>
+                                                        <regexp>[0-9]{4}-[0-9]{2}-[0-9]{2}</regexp>
+                                                        <regexp>[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}</regexp>
+                                                     </oneOf>
                                                 </expectedContent>
                                             </element>
                                         </expectedElements>
