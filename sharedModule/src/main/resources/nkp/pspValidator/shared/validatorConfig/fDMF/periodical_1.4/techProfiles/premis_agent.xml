@@ -70,7 +70,7 @@
                                     </element>
 
                                     <!--Neni jasna povinnost - konflikt povinnost=M a vyskyt=0-n, viz DMF Periodika 1.4: s. 57. Nechavam defenzivne nepovinne-->
-                                    <element name="premis:agentType" mandatory="false" repeatable="false">
+                                    <element name="premis:agentType" mandatory="true" repeatable="false">
                                         <recommendedContent>
                                             <oneOf>
                                                 <value>organization</value>
