@@ -852,12 +852,12 @@
                     </element>
 
                     <element name="mods:recordOrigin" mandatory="false">
-                        <expectedContent>
+                        <recommendedContent>
                             <oneOf>
                                 <value>machine generated</value>
                                 <value>human prepared</value>
                             </oneOf>
-                        </expectedContent>
+                        </recommendedContent>
                     </element>
 
                     <element name="mods:languageOfCataloging" mandatory="false">
