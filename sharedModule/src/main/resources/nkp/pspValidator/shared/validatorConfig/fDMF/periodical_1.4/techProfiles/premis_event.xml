@@ -85,7 +85,7 @@
                                     </element>
 
                                     <!--Neni jasna povinnost - konflikt povinnost=M a vyskyt=0-1, viz DMF Periodika 1.4: s. 54. Nechavam defenzivne nepovinne-->
-                                    <element name="premis:eventDetail" mandatory="false" repeatable="false">
+                                    <element name="premis:eventDetail" mandatory="true" repeatable="false">
                                         <recommendedContent>
                                             <oneOf>
                                                 <value>capture/digitization</value>
@@ -101,14 +101,14 @@
                                     <element name="premis:eventOutcomeInformation" mandatory="false" repeatable="true">
                                         <expectedElements>
                                             <!--Neni jasna povinnost - konflikt povinnost=M a vyskyt=0-1, viz DMF Periodika 1.4: s. 61. Nechavam defenzivne nepovinne-->
-                                            <element name="premis:eventOutcome" mandatory="false" repeatable="false">
+                                            <element name="premis:eventOutcome" mandatory="true" repeatable="false">
                                                 <expectedContent/>
                                             </element>
                                         </expectedElements>
                                     </element>
 
                                     <!--Neni jasna povinnost - konflikt povinnost=M a vyskyt=0-n, viz DMF Periodika 1.4: s. 61. Nechavam defenzivne nepovinne-->
-                                    <element name="premis:linkingAgentIdentifier" mandatory="false" repeatable="true">
+                                    <element name="premis:linkingAgentIdentifier" mandatory="true" repeatable="true">
                                         <expectedElements>
                                             <element name="premis:linkingAgentIdentifierType" mandatory="true"
                                                      repeatable="false">
@@ -127,7 +127,7 @@
                                     </element>
 
                                     <!--Neni jasna povinnost - konflikt povinnost=M a vyskyt=0-n, viz DMF Periodika 1.4: s. 54. Nechavam defenzivne nepovinne-->
-                                    <element name="premis:linkingObjectIdentifier" mandatory="false" repeatable="true">
+                                    <element name="premis:linkingObjectIdentifier" mandatory="true" repeatable="true">
                                         <expectedElements>
                                             <element name="premis:linkingObjectIdentifierType" mandatory="true"
                                                      repeatable="false">
