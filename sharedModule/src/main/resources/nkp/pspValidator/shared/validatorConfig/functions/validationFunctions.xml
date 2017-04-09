@@ -393,6 +393,12 @@
         </params>
     </validationFunction>
 
+    <validationFunction functionName="checkPrimaryMetsStructLinksOk">
+        <params>
+            <value name="primary-mets_file" type="FILE"/>
+        </params>
+    </validationFunction>
+
     <validationFunction functionName="checkSecondaryMetsPhysicalMapOk">
         <params>
             <value name="secondary-mets_files" type="FILE_LIST"/>

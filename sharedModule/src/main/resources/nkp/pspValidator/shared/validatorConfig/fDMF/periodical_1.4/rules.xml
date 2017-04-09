@@ -2481,6 +2481,19 @@
             </validation>
         </rule>
 
+        <rule name="PRIMARY-METS_STRUCT_LINKS_CORRECT">
+            <description>Sekce structLink v souboru PRIMARY-METS musí přes elementy smLink propojovat objekty logické
+                strukturální mapy se stranami z fyzické strukturální mapy.
+            </description>
+            <validation functionName="checkPrimaryMetsStructLinksOk">
+                <params>
+                    <value name="primary-mets_file" type="FILE">
+                        <value-ref name="PRIMARY-METS_FILE"/>
+                    </value>
+                </params>
+            </validation>
+        </rule>
+
         <rule name="PRIMARY-METS_PHYSICAL_STRUCTURAL_MAP_CORRECT">
             <description>Fyzická strukturální mapa v souboru PRIMARY-METS musí korektně odkazovat na všechny soubory
                 odkazované v elementu fileSec a žádné jiné.
@@ -2806,6 +2819,8 @@
                 </params>
             </validation>
         </rule>
+
+        <!--TODO: kontrola ALTO oproti profilu, viz dokument DMF periodika-1.4, strany 82 - 94-->
 
     </rules-section>
 

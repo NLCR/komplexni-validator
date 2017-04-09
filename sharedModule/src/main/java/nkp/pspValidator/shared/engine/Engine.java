@@ -205,6 +205,8 @@ public class Engine {
                 return new VfCheckPrimaryMetsLogicalMapOk(this);
             case "checkPrimaryMetsPhysicalMapOk":
                 return new VfCheckPrimaryMetsPhysicalMapOk(this);
+            case "checkPrimaryMetsStructLinksOk":
+                return new VfCheckPrimaryMetsStructLinksOk(this);
             case "checkSecondaryMetsPhysicalMapOk":
                 return new VfCheckSecondaryMetsPhysicalMapOk(this);
 
