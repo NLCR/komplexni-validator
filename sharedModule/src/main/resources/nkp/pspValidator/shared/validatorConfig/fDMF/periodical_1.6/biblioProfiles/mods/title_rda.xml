@@ -704,9 +704,13 @@
             <element name="mods:classification" specification="not(@edition)" mandatory="false">
                 <!--Mezinarodni desetinne trideni-->
                 <expectedAttributes>
+		    <!--NOTE: z DMF není úplně zřjmé co platí pro rda a aacr2, povolena hodnota Konspekt, aby při validaci prošel element s touto hodnotou i když nemá atribut edition-->
                     <attribute name="authority">
                         <recommendedContent>
-                            <value>udc</value>
+			    <oneOf>
+                               <value>udc</value>
+			       <value>Konspekt</value>
+			    </oneOf>
                         </recommendedContent>
                     </attribute>
                 </expectedAttributes>
