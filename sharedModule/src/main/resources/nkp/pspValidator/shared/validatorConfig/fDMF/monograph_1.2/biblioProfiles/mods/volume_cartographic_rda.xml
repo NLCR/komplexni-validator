@@ -639,10 +639,13 @@
             <element name="mods:classification" specification="not(@edition)" mandatory="false">
                 <!--Mezinarodni desetinne trideni-->
                 <expectedAttributes>
-                    <!--NOTE: DMF neuvadi, jestli je authority povinny atribut, nechavam nepovinny-->
+                    <!--NOTE: DMF neuvadi, jestli je authority povinny atribut, nechavam nepovinny. Povolen atribut Konspekt, aby prošel element s tímto atributem i bez atributu edition-->
                     <attribute name="authority">
                         <recommendedContent>
-                            <value>udc</value>
+                            <oneOf>
+                                <value>udc</value>
+                                <value>Konspekt</value>
+                            </oneOf>
                         </recommendedContent>
                     </attribute>
                 </expectedAttributes>
