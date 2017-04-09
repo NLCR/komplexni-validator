@@ -360,10 +360,13 @@
             <element name="mods:classification" specification="not(@edition)" mandatory="false">
                 <!--Mezinarodni desetinne trideni-->
                 <expectedAttributes>
-                    <!--NOTE: DMF neuvadi, jestli je authority povinny atribut, nechavam nepovinny-->
+                    <!--NOTE: DMF neuvadi, jestli je authority povinny atribut, nechavam nepovinny. Není zřejmé co platí pro rda a co pro aacr2, povolena navíc hodnota Konspekt aby prošel atribut s touto hodnotou i bez atributu edition-->
                     <attribute name="authority" mandatory="true">
                         <recommendedContent>
-                            <value>udc</value>
+                            <oneOf>
+                                <value>udc</value>
+                                <value>Konspekt</value>
+                            </oneOf>
                         </recommendedContent>
                     </attribute>
                 </expectedAttributes>
