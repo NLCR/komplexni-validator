@@ -102,7 +102,7 @@
                                             </element>
 
                                             <!--Neni jasna povinnost - konflikt povinnost=M a vyskyt=0-n, viz DMF Monografie 1.0: s. 55. Nechavam defenzivne nepovinne-->
-                                            <element name="mix:Compression" mandatory="tre" repeatable="true">
+                                            <element name="mix:Compression" mandatory="true" repeatable="true">
                                                 <expectedElements>
                                                     <!--Neni jasna povinnost - konflikt povinnost=M a vyskyt=0-1, viz DMF Monografie 1.0: s. 55. Nechavam defenzivne nepovinne-->
                                                     <element name="mix:compressionScheme" mandatory="true"

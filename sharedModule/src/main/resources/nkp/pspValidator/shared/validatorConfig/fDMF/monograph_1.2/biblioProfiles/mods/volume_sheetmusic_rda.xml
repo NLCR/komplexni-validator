@@ -615,9 +615,9 @@
                     <attribute name="authority" mandatory="true">
                         <recommendedContent>
                             <oneOf>
- +                                <value>udc</value>
- +                                <value>Konspekt</value>
- +                            </oneOf>
+                                <value>udc</value>
+                                <value>Konspekt</value>
+                            </oneOf>
                         </recommendedContent>
                     </attribute>
                 </expectedAttributes>
