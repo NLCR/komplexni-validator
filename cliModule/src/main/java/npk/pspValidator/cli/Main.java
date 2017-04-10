@@ -504,13 +504,13 @@ public class Main {
                 if (!pspDirOrZipFile.canRead()) {
                     throw new IllegalStateException(String.format("Nelze číst adresář %s", pspDirOrZipFile.getAbsolutePath()));
                 }
-                runValidatorOnPspDir(pspDirOrZipFile,
+                validatePspDir(pspDirOrZipFile,
                         imageUtilManager, validatorConfigManager,
                         out, verbosity, xmlProtocolDir, xmlProtocolFile,
                         preferDmfMonVersion, preferDmfPerVersion, forceDmfMonVersion, forceDmfPerVersion,
                         devParams);
             } else {
-                runValidatorOnZip(pspDirOrZipFile,
+                validatePspZip(pspDirOrZipFile,
                         tmpDir,
                         imageUtilManager, validatorConfigManager,
                         out, err, verbosity, xmlProtocolDir, xmlProtocolFile,
@@ -522,44 +522,44 @@ public class Main {
         }
     }
 
-    private static void runValidatorOnZip(File zipFile,
-                                          File tmpDir,
-                                          ImageUtilManager imageUtilManager, ValidatorConfigurationManager validatorConfigManager,
-                                          PrintStream out, PrintStream err, Integer verbosity, File xmlProtocolDir, File xmlProtocolFile,
-                                          String preferDmfMonVersion, String preferDmfPerVersion, String forceDmfMonVersion, String forceDmfPerVersion,
-                                          Validator.DevParams devParams) throws XmlFileParsingException, FdmfRegistry.UnknownFdmfException, PspDataException, ValidatorConfigurationException, InvalidXPathExpressionException {
+    private static void validatePspZip(File pspZipFile,
+                                       File tmpDir,
+                                       ImageUtilManager imageUtilManager, ValidatorConfigurationManager validatorConfigManager,
+                                       PrintStream out, PrintStream err, Integer verbosity, File xmlProtocolDir, File xmlProtocolFile,
+                                       String preferDmfMonVersion, String preferDmfPerVersion, String forceDmfMonVersion, String forceDmfPerVersion,
+                                       Validator.DevParams devParams) throws XmlFileParsingException, FdmfRegistry.UnknownFdmfException, PspDataException, ValidatorConfigurationException, InvalidXPathExpressionException {
         try {
             try {
-                new ZipFile(zipFile);
+                new ZipFile(pspZipFile);
             } catch (ZipException e) {
-                out.println(String.format("Soubor %s není adresář ani soubor ZIP, ignoruji.", zipFile.getAbsolutePath()));
+                out.println(String.format("Soubor %s není adresář ani soubor ZIP, ignoruji.", pspZipFile.getAbsolutePath()));
                 return;
             }
             if (tmpDir == null) {
-                err.println(String.format("Chyba: prázdný parametr --%s: adresář pro dočasné soubory je potřeba pro rozbalení ZIP souboru %s!", Params.TMP_DIR, zipFile.getAbsolutePath()));
+                err.println(String.format("Chyba: prázdný parametr --%s: adresář pro dočasné soubory je potřeba pro rozbalení ZIP souboru %s!", Params.TMP_DIR, pspZipFile.getAbsolutePath()));
             } else if (!tmpDir.exists()) {
-                err.println(String.format("Chyba: adresář %s neexistuje!", zipFile.getAbsolutePath()));
+                err.println(String.format("Chyba: adresář %s neexistuje!", pspZipFile.getAbsolutePath()));
             } else if (!tmpDir.isDirectory()) {
-                err.println(String.format("Chyba: soubor %s není adresář!", zipFile.getAbsolutePath()));
+                err.println(String.format("Chyba: soubor %s není adresář!", pspZipFile.getAbsolutePath()));
             } else if (!tmpDir.canWrite()) {
-                err.println(String.format("Chyba: nemůžu zapisovat do adresáře %s!", zipFile.getAbsolutePath()));
+                err.println(String.format("Chyba: nemůžu zapisovat do adresáře %s!", pspZipFile.getAbsolutePath()));
             } else {
-                File containerDir = new File(tmpDir, zipFile.getName() + "_extracted");
+                File containerDir = new File(tmpDir, pspZipFile.getName() + "_extracted");
                 if (containerDir.exists()) {
                     out.println(String.format("Mažu adresář %s", containerDir.getAbsolutePath()));
                     Utils.deleteNonemptyDir(containerDir);
                 }
-                out.println(String.format("Rozbaluji %s do adresáře %s", zipFile.getAbsolutePath(), containerDir.getAbsolutePath()));
-                Utils.unzip(zipFile, containerDir);
+                out.println(String.format("Rozbaluji %s do adresáře %s", pspZipFile.getAbsolutePath(), containerDir.getAbsolutePath()));
+                Utils.unzip(pspZipFile, containerDir);
                 File[] filesInContainer = containerDir.listFiles();
                 if (filesInContainer.length == 1 && filesInContainer[0].isDirectory()) {
-                    runValidatorOnPspDir(filesInContainer[0],
+                    validatePspDir(filesInContainer[0],
                             imageUtilManager, validatorConfigManager,
                             out, verbosity, xmlProtocolDir, xmlProtocolFile,
                             preferDmfMonVersion, preferDmfPerVersion, forceDmfMonVersion, forceDmfPerVersion,
                             devParams);
                 } else {
-                    runValidatorOnPspDir(containerDir,
+                    validatePspDir(containerDir,
                             imageUtilManager, validatorConfigManager,
                             out, verbosity, xmlProtocolDir, xmlProtocolFile,
                             preferDmfMonVersion, preferDmfPerVersion, forceDmfMonVersion, forceDmfPerVersion,
@@ -567,19 +567,19 @@ public class Main {
                 }
             }
         } catch (IOException e) {
-            out.println(String.format("Chyba zpracování ZIP souboru %s: %s!", zipFile.getAbsolutePath(), e.getMessage()));
+            out.println(String.format("Chyba zpracování ZIP souboru %s: %s!", pspZipFile.getAbsolutePath(), e.getMessage()));
         }
     }
 
-    private static void runValidatorOnPspDir(File pspRoot,
-                                             ImageUtilManager imageUtilManager, ValidatorConfigurationManager validatorConfigManager,
-                                             PrintStream out, Integer verbosity, File xmlProtocolDir, File xmlProtocolFile,
-                                             String preferDmfMonVersion, String preferDmfPerVersion, String forceDmfMonVersion, String forceDmfPerVersion,
-                                             Validator.DevParams devParams) throws ValidatorConfigurationException, FdmfRegistry.UnknownFdmfException, PspDataException, XmlFileParsingException, InvalidXPathExpressionException {
+    private static void validatePspDir(File pspDir,
+                                       ImageUtilManager imageUtilManager, ValidatorConfigurationManager validatorConfigManager,
+                                       PrintStream out, Integer verbosity, File xmlProtocolDir, File xmlProtocolFile,
+                                       String preferDmfMonVersion, String preferDmfPerVersion, String forceDmfMonVersion, String forceDmfPerVersion,
+                                       Validator.DevParams devParams) throws ValidatorConfigurationException, FdmfRegistry.UnknownFdmfException, PspDataException, XmlFileParsingException, InvalidXPathExpressionException {
         //psp dir, dmf detection
-        checkReadableDir(pspRoot);
-        out.println(String.format("Zpracovávám PSP balík %s", pspRoot.getAbsolutePath()));
-        Dmf dmfResolved = new DmfDetector().resolveDmf(pspRoot, preferDmfMonVersion, preferDmfPerVersion, forceDmfMonVersion, forceDmfPerVersion);
+        checkReadableDir(pspDir);
+        out.println(String.format("Zpracovávám PSP balík %s", pspDir.getAbsolutePath()));
+        Dmf dmfResolved = new DmfDetector().resolveDmf(pspDir, preferDmfMonVersion, preferDmfPerVersion, forceDmfMonVersion, forceDmfPerVersion);
         out.println(String.format("Bude použita verze standardu %s", dmfResolved));
 
         //initializes j2k profiles according to selected fDMF
@@ -590,13 +590,13 @@ public class Main {
         if (xmlProtocolFile == null) {
             if (xmlProtocolDir != null) {
                 SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd'_'HH:mm:ss.SSS");
-                String filename = String.format("%s_%s.xml", pspRoot.getName(), simpleDateFormat.format(new Date(System.currentTimeMillis())));
+                String filename = String.format("%s_%s.xml", pspDir.getName(), simpleDateFormat.format(new Date(System.currentTimeMillis())));
                 xmlProtocolFile = new File(xmlProtocolDir, filename);
             }
         }
 
         //validate
-        Validator validator = ValidatorFactory.buildValidator(fdmfConfig, pspRoot, validatorConfigManager.getDictionaryManager());
+        Validator validator = ValidatorFactory.buildValidator(fdmfConfig, pspDir, validatorConfigManager.getDictionaryManager());
         out.println(String.format("Validátor inicializován, spouštím validace"));
         ValidationState.ProgressListener progressListener = null;
         switch (verbosity) {
