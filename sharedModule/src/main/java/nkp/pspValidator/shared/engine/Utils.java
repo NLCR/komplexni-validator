@@ -258,6 +258,7 @@ public class Utils {
             // Read ever Entry (From top to bottom until the end)
             while ((entry = zipIs.getNextEntry()) != null) {
                 String entryName = entry.getName();
+                //System.out.println("entry name: " + entryName);
                 String outFileName = outFolder.getAbsolutePath() + File.separator + entryName;
                 //System.out.println("Unzip: " + outFileName);
                 if (entry.isDirectory()) {

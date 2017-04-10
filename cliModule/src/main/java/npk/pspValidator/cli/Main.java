@@ -16,10 +16,8 @@ import org.apache.commons.cli.*;
 import java.io.*;
 import java.text.SimpleDateFormat;
 import java.util.*;
-import java.util.zip.ZipEntry;
 import java.util.zip.ZipException;
 import java.util.zip.ZipFile;
-import java.util.zip.ZipInputStream;
 
 /**
  * Created by Martin Řehánek on 27.9.16.
@@ -226,7 +224,7 @@ public class Main {
 
         CommandLineParser parser = new DefaultParser();
         try {
-            //System.out.println(toString(args));
+            // System.out.println(toString(args));
             // parse the command line arguments
             CommandLine line = parser.parse(options, args);
             if (line.hasOption(Params.HELP)) {
@@ -387,20 +385,9 @@ public class Main {
                     }
                 }
 
-
-              /*  File pspDir = new File(line.getOptionValue("pd"));
-                Dmf.Type dmfType = line.hasOption("dt") ? Dmf.Type.valueOf(line.getOptionValue("dt").toUpperCase()) : null;
-                String dmfVersion = line.hasOption("dv") ? line.getOptionValue("dv") : null;
-                Integer verbosity = line.hasOption("v") ? Integer.valueOf(line.getOptionValue("v")) : DEFAULT_VERBOSITY;
-                File xmlOutputFile = line.hasOption("x") ? new File(line.getOptionValue("x")) : null;*/
-
-
-                // runValidator(new Dmf(dmfType, dmfVersion), configDir, pspDir, xmlOutputFile, verbosity, imageUtilsDisabled, imageUtilPaths, null, devParams);
-
-                //runValidator(new Dmf(dmfType, dmfVersion), configDir, pspDir, xmlOutputFile, verbosity, imageUtilsDisabled, imageUtilPaths, null, devParams);
                 switch (action) {
                     case VALIDATE_PSP:
-                        runValidator(psp,
+                        validatePsp(psp,
                                 configDir,
                                 verbosity, xmlProtocolDir, xmlProtocolFile,
                                 tmpDir,
@@ -409,7 +396,13 @@ public class Main {
                                 devParams);
                         break;
                     case VALIDATE_PSP_GROUP:
-                        //TODO
+                        validatePspGroup(pspGroup,
+                                configDir,
+                                verbosity, xmlProtocolDir,
+                                tmpDir,
+                                preferDmfMonVersion, preferDmfPerVersion, forceDmfMonVersion, forceDmfPerVersion,
+                                imageUtilPaths, imageUtilsDisabled,
+                                devParams);
                         break;
                 }
             }
@@ -458,13 +451,7 @@ public class Main {
         formatter.printHelp("java -jar KomplexniValidator.jar", header, options, footer, true);
     }
 
-
-    private static void runValidator(File psp, File configDir,
-                                     Integer verbosity, File xmlProtocolDir, File xmlProtocolFile,
-                                     File tmpDir,
-                                     String preferDmfMonVersion, String preferDmfPerVersion, String forceDmfMonVersion, String forceDmfPerVersion,
-                                     Map<ImageUtil, File> imageUtilPaths, Set<ImageUtil> imageUtilsDisabled,
-                                     Validator.DevParams devParams) throws ValidatorConfigurationException, FdmfRegistry.UnknownFdmfException, PspDataException, InvalidXPathExpressionException, XmlFileParsingException {
+    private static void validatePspGroup(File pspGroup, File configDir, Integer verbosity, File xmlProtocolDir, File tmpDir, String preferDmfMonVersion, String preferDmfPerVersion, String forceDmfMonVersion, String forceDmfPerVersion, Map<ImageUtil, File> imageUtilPaths, Set<ImageUtil> imageUtilsDisabled, Validator.DevParams devParams) throws ValidatorConfigurationException, XmlFileParsingException, FdmfRegistry.UnknownFdmfException, PspDataException, InvalidXPathExpressionException {
         PrintStream out = System.out;
         PrintStream err = System.err;
         Platform platform = Platform.detectOs();
@@ -477,65 +464,112 @@ public class Main {
         imageUtilManager.setPaths(imageUtilPaths);
         detectImageTools(out, imageUtilManager, imageUtilsDisabled);
 
-        //psp dir or file?
-        if (!psp.exists()) {
-            throw new IllegalStateException(String.format("Soubor %s neexistuje", psp.getAbsolutePath()));
+        //TODO: to taky muze byt zip
+        checkReadableDir(pspGroup);
+        for (File pspDirOrZip : pspGroup.listFiles()) {
+            //TODO: pocitat nevalidni baliky
+            validatePsp(pspDirOrZip,
+                    configDir,
+                    verbosity, xmlProtocolDir, null,
+                    tmpDir,
+                    preferDmfMonVersion, preferDmfPerVersion, forceDmfMonVersion, forceDmfPerVersion,
+                    imageUtilPaths, imageUtilsDisabled,
+                    devParams);
+        }
+    }
+
+    private static void validatePsp(File pspDirOrZipFile, File configDir,
+                                    Integer verbosity, File xmlProtocolDir, File xmlProtocolFile,
+                                    File tmpDir,
+                                    String preferDmfMonVersion, String preferDmfPerVersion, String forceDmfMonVersion, String forceDmfPerVersion,
+                                    Map<ImageUtil, File> imageUtilPaths, Set<ImageUtil> imageUtilsDisabled,
+                                    Validator.DevParams devParams) throws ValidatorConfigurationException, FdmfRegistry.UnknownFdmfException, PspDataException, InvalidXPathExpressionException, XmlFileParsingException {
+        PrintStream out = System.out;
+        PrintStream err = System.err;
+        Platform platform = Platform.detectOs();
+        out.println(String.format("Platforma: %s", platform.toReadableString()));
+
+        //validator configuration
+        out.println(String.format("Kořenový adresář konfigurace validátoru: %s", configDir.getAbsolutePath()));
+        ValidatorConfigurationManager validatorConfigManager = new ValidatorConfigurationManager(configDir);
+        ImageUtilManager imageUtilManager = new ImageUtilManagerFactory(validatorConfigManager.getImageUtilsConfigFile()).buildImageUtilManager(platform.getOperatingSystem());
+        imageUtilManager.setPaths(imageUtilPaths);
+        detectImageTools(out, imageUtilManager, imageUtilsDisabled);
+
+        //pspDirOrZipFile dir or zip file?
+        if (!pspDirOrZipFile.exists()) {
+            throw new IllegalStateException(String.format("Soubor %s neexistuje", pspDirOrZipFile.getAbsolutePath()));
         } else {
-            if (psp.isDirectory()) {
-                if (!psp.canRead()) {
-                    throw new IllegalStateException(String.format("Nelze číst adresář %s", psp.getAbsolutePath()));
+            if (pspDirOrZipFile.isDirectory()) {
+                if (!pspDirOrZipFile.canRead()) {
+                    throw new IllegalStateException(String.format("Nelze číst adresář %s", pspDirOrZipFile.getAbsolutePath()));
                 }
-                runValidatorOnPspDir(psp,
+                runValidatorOnPspDir(pspDirOrZipFile,
                         imageUtilManager, validatorConfigManager,
                         out, verbosity, xmlProtocolDir, xmlProtocolFile,
                         preferDmfMonVersion, preferDmfPerVersion, forceDmfMonVersion, forceDmfPerVersion,
                         devParams);
             } else {
-                try {
-                    try {
-                        ZipFile zipFile = new ZipFile(psp);
-                    } catch (ZipException e) {
-                        out.println(String.format("Soubor %s není adresář ani soubor ZIP, ignoruji.", psp.getAbsolutePath()));
-                        return;
-                    }
-                    if (tmpDir == null) {
-                        err.println(String.format("Chyba: prázdný parametr --%s: adresář pro dočasné soubory je potřeba pro rozbalení ZIP souboru %s!", Params.TMP_DIR, psp.getAbsolutePath()));
-                    } else if (!tmpDir.exists()) {
-                        err.println(String.format("Chyba: adresář %s neexistuje!", psp.getAbsolutePath()));
-                    } else if (!tmpDir.isDirectory()) {
-                        err.println(String.format("Chyba: soubor %s není adresář!", psp.getAbsolutePath()));
-                    } else if (!tmpDir.canWrite()) {
-                        err.println(String.format("Chyba: nemůžu zapisovat do adresáře %s!", psp.getAbsolutePath()));
-                    } else {
-                        File containerDir = new File(tmpDir, psp.getName() + "_extracted");
-                        if (containerDir.exists()) {
-                            out.println(String.format("Mažu adresář %s", containerDir.getAbsolutePath()));
-                            Utils.deleteNonemptyDir(containerDir);
-                        }
-                        out.println(String.format("Rozbaluji %s do adresáře %s", psp.getAbsolutePath(), containerDir.getAbsolutePath()));
-                        Utils.unzip(psp, containerDir);
-                        File[] filesInContainer = containerDir.listFiles();
-                        if (filesInContainer.length == 1 && filesInContainer[0].isDirectory()) {
-                            runValidatorOnPspDir(filesInContainer[0],
-                                    imageUtilManager, validatorConfigManager,
-                                    out, verbosity, xmlProtocolDir, xmlProtocolFile,
-                                    preferDmfMonVersion, preferDmfPerVersion, forceDmfMonVersion, forceDmfPerVersion,
-                                    devParams);
-                        } else {
-                            runValidatorOnPspDir(containerDir,
-                                    imageUtilManager, validatorConfigManager,
-                                    out, verbosity, xmlProtocolDir, xmlProtocolFile,
-                                    preferDmfMonVersion, preferDmfPerVersion, forceDmfMonVersion, forceDmfPerVersion,
-                                    devParams);
-                        }
-                    }
-                } catch (IOException e) {
-                    out.println(String.format("Chyba zpracování ZIP souboru %s: %s!", psp.getAbsolutePath(), e.getMessage()));
-                }
+                runValidatorOnZip(pspDirOrZipFile,
+                        tmpDir,
+                        imageUtilManager, validatorConfigManager,
+                        out, err, verbosity, xmlProtocolDir, xmlProtocolFile,
+                        preferDmfMonVersion, preferDmfPerVersion, forceDmfMonVersion, forceDmfPerVersion,
+                        devParams);
+
+
             }
         }
     }
 
+    private static void runValidatorOnZip(File zipFile,
+                                          File tmpDir,
+                                          ImageUtilManager imageUtilManager, ValidatorConfigurationManager validatorConfigManager,
+                                          PrintStream out, PrintStream err, Integer verbosity, File xmlProtocolDir, File xmlProtocolFile,
+                                          String preferDmfMonVersion, String preferDmfPerVersion, String forceDmfMonVersion, String forceDmfPerVersion,
+                                          Validator.DevParams devParams) throws XmlFileParsingException, FdmfRegistry.UnknownFdmfException, PspDataException, ValidatorConfigurationException, InvalidXPathExpressionException {
+        try {
+            try {
+                new ZipFile(zipFile);
+            } catch (ZipException e) {
+                out.println(String.format("Soubor %s není adresář ani soubor ZIP, ignoruji.", zipFile.getAbsolutePath()));
+                return;
+            }
+            if (tmpDir == null) {
+                err.println(String.format("Chyba: prázdný parametr --%s: adresář pro dočasné soubory je potřeba pro rozbalení ZIP souboru %s!", Params.TMP_DIR, zipFile.getAbsolutePath()));
+            } else if (!tmpDir.exists()) {
+                err.println(String.format("Chyba: adresář %s neexistuje!", zipFile.getAbsolutePath()));
+            } else if (!tmpDir.isDirectory()) {
+                err.println(String.format("Chyba: soubor %s není adresář!", zipFile.getAbsolutePath()));
+            } else if (!tmpDir.canWrite()) {
+                err.println(String.format("Chyba: nemůžu zapisovat do adresáře %s!", zipFile.getAbsolutePath()));
+            } else {
+                File containerDir = new File(tmpDir, zipFile.getName() + "_extracted");
+                if (containerDir.exists()) {
+                    out.println(String.format("Mažu adresář %s", containerDir.getAbsolutePath()));
+                    Utils.deleteNonemptyDir(containerDir);
+                }
+                out.println(String.format("Rozbaluji %s do adresáře %s", zipFile.getAbsolutePath(), containerDir.getAbsolutePath()));
+                Utils.unzip(zipFile, containerDir);
+                File[] filesInContainer = containerDir.listFiles();
+                if (filesInContainer.length == 1 && filesInContainer[0].isDirectory()) {
+                    runValidatorOnPspDir(filesInContainer[0],
+                            imageUtilManager, validatorConfigManager,
+                            out, verbosity, xmlProtocolDir, xmlProtocolFile,
+                            preferDmfMonVersion, preferDmfPerVersion, forceDmfMonVersion, forceDmfPerVersion,
+                            devParams);
+                } else {
+                    runValidatorOnPspDir(containerDir,
+                            imageUtilManager, validatorConfigManager,
+                            out, verbosity, xmlProtocolDir, xmlProtocolFile,
+                            preferDmfMonVersion, preferDmfPerVersion, forceDmfMonVersion, forceDmfPerVersion,
+                            devParams);
+                }
+            }
+        } catch (IOException e) {
+            out.println(String.format("Chyba zpracování ZIP souboru %s: %s!", zipFile.getAbsolutePath(), e.getMessage()));
+        }
+    }
 
     private static void runValidatorOnPspDir(File pspRoot,
                                              ImageUtilManager imageUtilManager, ValidatorConfigurationManager validatorConfigManager,
@@ -586,6 +620,7 @@ public class Main {
                 throw new IllegalStateException(String.format("Nepovolená hodnota verbosity: %d. Hodnota musí být v intervalu [0-3]", verbosity));
         }
     }
+
 
     private static void detectImageTools(PrintStream out, ImageUtilManager imageUtilManager, Set<ImageUtil> utilsDisabled) {
         for (ImageUtil util : ImageUtil.values()) {

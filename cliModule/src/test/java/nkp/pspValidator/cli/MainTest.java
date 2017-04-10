@@ -28,9 +28,11 @@ public class MainTest {
 
     private static final String PER_1_6 = "../sharedModule/src/test/resources/periodical_1.6/7033d800-0935-11e4-beed-5ef3fc9ae867";
 
-    private static final String ZIP_1 = "/home/martin/zakazky/NKP-Komplexni_Validator/data/zip/aba008-000310.zip";
-    private static final String ZIP_2 = "/home/martin/zakazky/NKP-Komplexni_Validator/data/zip/ope301-00000v.zip";
-    private static final String ZIP_NOT_ZIP = "/home/martin/zakazky/NKP-Komplexni_Validator/data/zip/not_a_zip.txt";
+    private static final String ZIP_1 = "/home/martin/zakazky/NKP-Komplexni_Validator/data/group/7033d800-0935-11e4-beed-5ef3fc9ae867.zip";
+    private static final String ZIP_2 = "/home/martin/zakazky/NKP-Komplexni_Validator/data/group/ope301-00000v.zip";
+    private static final String ZIP_NOT_ZIP = "/home/martin/zakazky/NKP-Komplexni_Validator/data/group/not_a_zip.txt";
+
+    private static final String GROUP = "/home/martin/zakazky/NKP-Komplexni_Validator/data/group/";
 
     //private static final String PER_1_6 = "../sharedModule/src/test/resources/periodical_1.6/ope301-00000v";
     //private static final String PER_1_6_INFO_INVALID_NS = "/home/martin/zakazky/NKP-Komplexni_Validator/data/per_1.6_invalid_info_ns/aba008-000310";
@@ -82,17 +84,22 @@ public class MainTest {
         devParams.getSectionsToRun().add("Strukturální mapy");
 
         Main.main(devParams, buildParams(
+                //Action.VALIDATE_PSP,
+                Action.VALIDATE_PSP_GROUP,
                 configDir
+                , "/tmp"
+
                 //, MON_1_2
                 //, MON_1_2_MAP
                 //, MON_1_2_INVALID_IMAGES
                 //, PER_1_4
                 //, PER_1_6
                 //, PER_1_6_INFO_INVALID_NS
-                , ZIP_2
+                , ZIP_1
                 //, ZIP_NOT_ZIP
 
-                , "/tmp"
+                , GROUP
+
                 , null
                 //,"1.0"
                 //,"1.2"
@@ -106,7 +113,7 @@ public class MainTest {
                 //, "1.4"
                 //, "1.6"
                 , 2 //verbosity
-                , "/tmp"
+                , "/tmp/protocols"
                 , null//"src/test/resources/protocol.xml" //xml protocol
                 , imageMagickPath //null //imageMagick path
                 , jhovePath //jhove path
@@ -119,7 +126,9 @@ public class MainTest {
         ));
     }
 
-    private String[] buildParams(String configDir, String pspDir, String tmpDir,
+    private String[] buildParams(Action action,
+                                 String configDir, String tmpDir,
+                                 String pspDir, String pspGroupDir,
                                  String preferDmfModVersion, String preferDmfPerVersion, String forceDmfModVersion, String forceDmfPerVersion,
                                  Integer verbosity, String xmlProtocolDir, String xmlProtocolFile,
                                  String imageMagickPath, String jhovePath, String jpylyzerPath, String kakaduPath,
@@ -128,13 +137,20 @@ public class MainTest {
         List<String> params = new ArrayList<>();
         //action
         params.add(String.format("--%s", Params.ACTION));
-        params.add(Action.VALIDATE_PSP.toString());
+        params.add(action.toString());
         //config dir
         params.add(String.format("--%s", Params.CONFIG_DIR));
         params.add(configDir);
         //psp
-        params.add(String.format("--%s", Params.PSP));
-        params.add(pspDir);
+        if (pspDir != null) {
+            params.add(String.format("--%s", Params.PSP));
+            params.add(pspDir);
+        }
+        //psp-group
+        if (pspGroupDir != null) {
+            params.add(String.format("--%s", Params.PSP_GROUP));
+            params.add(pspGroupDir);
+        }
 
         //xml protocol
         if (xmlProtocolDir != null) {
