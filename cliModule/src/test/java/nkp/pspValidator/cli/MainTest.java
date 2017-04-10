@@ -28,6 +28,10 @@ public class MainTest {
 
     private static final String PER_1_6 = "../sharedModule/src/test/resources/periodical_1.6/7033d800-0935-11e4-beed-5ef3fc9ae867";
 
+    private static final String ZIP_1 = "/home/martin/zakazky/NKP-Komplexni_Validator/data/zip/aba008-000310.zip";
+    private static final String ZIP_2 = "/home/martin/zakazky/NKP-Komplexni_Validator/data/zip/ope301-00000v.zip";
+    private static final String ZIP_NOT_ZIP = "/home/martin/zakazky/NKP-Komplexni_Validator/data/zip/not_a_zip.txt";
+
     //private static final String PER_1_6 = "../sharedModule/src/test/resources/periodical_1.6/ope301-00000v";
     //private static final String PER_1_6_INFO_INVALID_NS = "/home/martin/zakazky/NKP-Komplexni_Validator/data/per_1.6_invalid_info_ns/aba008-000310";
 
@@ -83,8 +87,10 @@ public class MainTest {
                 //, MON_1_2_MAP
                 //, MON_1_2_INVALID_IMAGES
                 //, PER_1_4
-                , PER_1_6
+                //, PER_1_6
                 //, PER_1_6_INFO_INVALID_NS
+                , ZIP_2
+                //, ZIP_NOT_ZIP
 
                 , "/tmp"
                 , null
@@ -100,7 +106,7 @@ public class MainTest {
                 //, "1.4"
                 //, "1.6"
                 , 2 //verbosity
-                , null//"/tmp"
+                , "/tmp"
                 , null//"src/test/resources/protocol.xml" //xml protocol
                 , imageMagickPath //null //imageMagick path
                 , jhovePath //jhove path

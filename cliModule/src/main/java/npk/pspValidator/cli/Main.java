@@ -2,6 +2,7 @@ package npk.pspValidator.cli;
 
 import nkp.pspValidator.shared.*;
 import nkp.pspValidator.shared.bak.XsdValidator;
+import nkp.pspValidator.shared.engine.Utils;
 import nkp.pspValidator.shared.engine.exceptions.InvalidXPathExpressionException;
 import nkp.pspValidator.shared.engine.exceptions.PspDataException;
 import nkp.pspValidator.shared.engine.exceptions.ValidatorConfigurationException;
@@ -10,13 +11,15 @@ import nkp.pspValidator.shared.imageUtils.CliCommand;
 import nkp.pspValidator.shared.imageUtils.ImageUtil;
 import nkp.pspValidator.shared.imageUtils.ImageUtilManager;
 import nkp.pspValidator.shared.imageUtils.ImageUtilManagerFactory;
-import oracle.jrockit.jfr.StringConstantPool;
 import org.apache.commons.cli.*;
 
-import java.io.File;
-import java.io.PrintStream;
+import java.io.*;
 import java.text.SimpleDateFormat;
 import java.util.*;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipException;
+import java.util.zip.ZipFile;
+import java.util.zip.ZipInputStream;
 
 /**
  * Created by Martin Řehánek on 27.9.16.
@@ -463,6 +466,7 @@ public class Main {
                                      Map<ImageUtil, File> imageUtilPaths, Set<ImageUtil> imageUtilsDisabled,
                                      Validator.DevParams devParams) throws ValidatorConfigurationException, FdmfRegistry.UnknownFdmfException, PspDataException, InvalidXPathExpressionException, XmlFileParsingException {
         PrintStream out = System.out;
+        PrintStream err = System.err;
         Platform platform = Platform.detectOs();
         out.println(String.format("Platforma: %s", platform.toReadableString()));
 
@@ -487,10 +491,51 @@ public class Main {
                         preferDmfMonVersion, preferDmfPerVersion, forceDmfMonVersion, forceDmfPerVersion,
                         devParams);
             } else {
-                //TODO: pokud zip, tak rozbalit do docasneho adresare a na nem spustit
+                try {
+                    try {
+                        ZipFile zipFile = new ZipFile(psp);
+                    } catch (ZipException e) {
+                        out.println(String.format("Soubor %s není adresář ani soubor ZIP, ignoruji.", psp.getAbsolutePath()));
+                        return;
+                    }
+                    if (tmpDir == null) {
+                        err.println(String.format("Chyba: prázdný parametr --%s: adresář pro dočasné soubory je potřeba pro rozbalení ZIP souboru %s!", Params.TMP_DIR, psp.getAbsolutePath()));
+                    } else if (!tmpDir.exists()) {
+                        err.println(String.format("Chyba: adresář %s neexistuje!", psp.getAbsolutePath()));
+                    } else if (!tmpDir.isDirectory()) {
+                        err.println(String.format("Chyba: soubor %s není adresář!", psp.getAbsolutePath()));
+                    } else if (!tmpDir.canWrite()) {
+                        err.println(String.format("Chyba: nemůžu zapisovat do adresáře %s!", psp.getAbsolutePath()));
+                    } else {
+                        File containerDir = new File(tmpDir, psp.getName() + "_extracted");
+                        if (containerDir.exists()) {
+                            out.println(String.format("Mažu adresář %s", containerDir.getAbsolutePath()));
+                            Utils.deleteNonemptyDir(containerDir);
+                        }
+                        out.println(String.format("Rozbaluji %s do adresáře %s", psp.getAbsolutePath(), containerDir.getAbsolutePath()));
+                        Utils.unzip(psp, containerDir);
+                        File[] filesInContainer = containerDir.listFiles();
+                        if (filesInContainer.length == 1 && filesInContainer[0].isDirectory()) {
+                            runValidatorOnPspDir(filesInContainer[0],
+                                    imageUtilManager, validatorConfigManager,
+                                    out, verbosity, xmlProtocolDir, xmlProtocolFile,
+                                    preferDmfMonVersion, preferDmfPerVersion, forceDmfMonVersion, forceDmfPerVersion,
+                                    devParams);
+                        } else {
+                            runValidatorOnPspDir(containerDir,
+                                    imageUtilManager, validatorConfigManager,
+                                    out, verbosity, xmlProtocolDir, xmlProtocolFile,
+                                    preferDmfMonVersion, preferDmfPerVersion, forceDmfMonVersion, forceDmfPerVersion,
+                                    devParams);
+                        }
+                    }
+                } catch (IOException e) {
+                    out.println(String.format("Chyba zpracování ZIP souboru %s: %s!", psp.getAbsolutePath(), e.getMessage()));
+                }
             }
         }
     }
+
 
     private static void runValidatorOnPspDir(File pspRoot,
                                              ImageUtilManager imageUtilManager, ValidatorConfigurationManager validatorConfigManager,

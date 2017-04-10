@@ -5,10 +5,11 @@ import nkp.pspValidator.shared.engine.exceptions.InvalidIdException;
 import nkp.pspValidator.shared.engine.exceptions.InvalidPathException;
 import nkp.pspValidator.shared.engine.types.Identifier;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
+import java.io.*;
 import java.util.*;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipFile;
+import java.util.zip.ZipInputStream;
 
 /**
  * Created by Martin Řehánek on 21.10.16.
@@ -231,4 +232,53 @@ public class Utils {
         }
     }
 
+    public static void deleteNonemptyDir(File unzippedDir) {
+        File[] files = unzippedDir.listFiles();
+        for (File file : files) {
+            if (!file.delete() && file.isDirectory()) {
+                deleteNonemptyDir(file);
+            }
+        }
+        boolean deleted = unzippedDir.delete();
+    }
+
+    public static void unzip(File zipFile, File outFolder) throws IOException {
+        // Create Output outFolder if it does not exists
+        //File outFolder = new File(outputDir);
+        if (!outFolder.exists()) {
+            outFolder.mkdirs();
+        }
+        // Create buffer
+        byte[] buffer = new byte[1024];
+        ZipInputStream zipIs = null;
+        try {
+            // Create ZipInputStream read a file from path.
+            zipIs = new ZipInputStream(new FileInputStream(zipFile));
+            ZipEntry entry = null;
+            // Read ever Entry (From top to bottom until the end)
+            while ((entry = zipIs.getNextEntry()) != null) {
+                String entryName = entry.getName();
+                String outFileName = outFolder.getAbsolutePath() + File.separator + entryName;
+                //System.out.println("Unzip: " + outFileName);
+                if (entry.isDirectory()) {
+                    // Make directories
+                    new File(outFileName).mkdirs();
+                } else {
+                    // Create Stream to write file.
+                    FileOutputStream fos = new FileOutputStream(outFileName);
+                    int len;
+                    // Read the data on the current entry.
+                    while ((len = zipIs.read(buffer)) > 0) {
+                        fos.write(buffer, 0, len);
+                    }
+                    fos.close();
+                }
+            }
+        } finally {
+            try {
+                zipIs.close();
+            } catch (Exception e) {
+            }
+        }
+    }
 }
