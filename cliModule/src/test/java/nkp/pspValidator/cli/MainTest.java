@@ -8,7 +8,9 @@ import nkp.pspValidator.shared.engine.exceptions.InvalidXPathExpressionException
 import nkp.pspValidator.shared.engine.exceptions.PspDataException;
 import nkp.pspValidator.shared.engine.exceptions.ValidatorConfigurationException;
 import nkp.pspValidator.shared.engine.exceptions.XmlFileParsingException;
+import npk.pspValidator.cli.Action;
 import npk.pspValidator.cli.Main;
+import npk.pspValidator.cli.Params;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -77,17 +79,27 @@ public class MainTest {
 
         Main.main(devParams, buildParams(
                 validadtorConfigPath
+                //, MON_1_2
                 //, MON_1_2_MAP
-                //, PER_1_6_INFO_INVALID_NS
-                //, PER_1_6
-                //, PER_1_4
                 //, MON_1_2_INVALID_IMAGES
-                //, MON_1_2_MAP
                 //, PER_1_4
-                , MON_1_2
-                , null//Dmf.Type.PERIODICAL//, Dmf.Type.MONOGRAPH
-                , null//"1.4"//, "1.2"
+                , PER_1_6
+                //, PER_1_6_INFO_INVALID_NS
+
+                , null
+                //,"1.0"
+                //,"1.2"
+                , null
+                //, "1.4"
+                //, "1.6"
+                , null
+                //,"1.0"
+                //,"1.2"
+                , null
+                //, "1.4"
+                //, "1.6"
                 , 2 //verbosity
+                , null//"/tmp"
                 , null//"src/test/resources/protocol.xml" //xml protocol
                 , imageMagickPath //null //imageMagick path
                 , jhovePath //jhove path
@@ -100,65 +112,88 @@ public class MainTest {
         ));
     }
 
-    private String[] buildParams(String configDir, String pspDir, Dmf.Type dmfType, String dmfVersion, Integer verbosity, String xmlProtocolFile,
+    private String[] buildParams(String configDir, String pspDir,
+                                 String preferDmfModVersion, String preferDmfPerVersion, String forceDmfModVersion, String forceDmfPerVersion,
+                                 Integer verbosity, String xmlProtocolDir, String xmlProtocolFile,
                                  String imageMagickPath, String jhovePath, String jpylyzerPath, String kakaduPath,
                                  boolean disableImageMagick, boolean disableJhove, boolean disableJpylyzer, boolean disableKakadu
     ) {
         List<String> params = new ArrayList<>();
-        params.add("-conf");
+        //action
+        params.add(String.format("--%s", Params.ACTION));
+        params.add(Action.VALIDATE_PSP.toString());
+        //config dir
+        params.add(String.format("--%s", Params.CONFIG_DIR));
         params.add(configDir);
-
-        params.add("-pd");
+        //psp
+        params.add(String.format("--%s", Params.PSP));
         params.add(pspDir);
 
-        if (dmfType != null) {
-            params.add("-dt");
-            params.add(dmfType.toString());
+        //xml protocol
+        if (xmlProtocolDir != null) {
+            params.add(String.format("--%s", Params.XML_PROTOCOL_DIR));
+            params.add(xmlProtocolDir);
         }
-
-        if (dmfVersion != null) {
-            params.add("-dv");
-            params.add(dmfVersion);
-        }
-
-        if (verbosity != null) {
-            params.add("-v");
-            params.add(verbosity.toString());
-        }
-
         if (xmlProtocolFile != null) {
-            params.add("-x");
+            params.add(String.format("--%s", Params.XML_PROTOCOL_FILE));
             params.add(xmlProtocolFile);
+        }
+
+        //TODO: tmp-dir
+        //TODO: quit-after-nth-invalid-psp
+
+        //DMF versions
+        if (preferDmfModVersion != null) {
+            params.add(String.format("--%s", Params.PREFER_DMF_MON_VERSION));
+            params.add(preferDmfModVersion);
+        }
+        if (preferDmfPerVersion != null) {
+            params.add(String.format("--%s", Params.PREFER_DMF_PER_VERSION));
+            params.add(preferDmfPerVersion);
+        }
+        if (forceDmfModVersion != null) {
+            params.add(String.format("--%s", Params.FORCE_DMF_MON_VERSION));
+            params.add(forceDmfModVersion);
+        }
+        if (forceDmfPerVersion != null) {
+            params.add(String.format("--%s", Params.FORCE_DMF_PER_VERSION));
+            params.add(forceDmfPerVersion);
+        }
+
+        //verbosity
+        if (verbosity != null) {
+            params.add(String.format("--%s", Params.VERBOSITY));
+            params.add(verbosity.toString());
         }
 
         //image utils
         if (imageMagickPath != null) {
-            params.add("--imageMagick-path");
+            params.add(String.format("--%s", Params.IMAGEMAGICK_PATH));
             params.add(imageMagickPath);
         }
         if (jhovePath != null) {
-            params.add("--jhove-path");
+            params.add(String.format("--%s", Params.JHOVE_PATH));
             params.add(jhovePath);
         }
         if (jpylyzerPath != null) {
-            params.add("--jpylyzer-path");
+            params.add(String.format("--%s", Params.JPYLYZER_PATH));
             params.add(jpylyzerPath);
         }
         if (kakaduPath != null) {
-            params.add("--kakadu-path");
+            params.add(String.format("--%s", Params.KAKADU_PATH));
             params.add(kakaduPath);
         }
         if (disableImageMagick) {
-            params.add("--disable-imageMagick");
+            params.add(String.format("--%s", Params.DISABLE_IMAGEMAGICK));
         }
         if (disableJhove) {
-            params.add("--disable-jhove");
+            params.add(String.format("--%s", Params.DISABLE_JHOVE));
         }
         if (disableJpylyzer) {
-            params.add("--disable-jpylyzer");
+            params.add(String.format("--%s", Params.DISABLE_JPYLYZER));
         }
         if (disableKakadu) {
-            params.add("--disable-kakadu");
+            params.add(String.format("--%s", Params.DISABLE_KAKADU));
         }
 
         Object[] array = params.toArray();

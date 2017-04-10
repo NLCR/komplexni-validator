@@ -99,6 +99,7 @@ public class DmfDetector {
      * Pokud element nenalezne, předpokládá, že je balíček zpracován podle starších DMF, než je 1.5 pro periodika a 1.1 pro monografie (a validuje podle 1.4 pro periodika a 1.0 pro monografie).
      * Pokud element nalezne, podívá se na jeho hodnotu a validuje podle této hodnoty.
      */
+    @Deprecated
     public String detectDmfVersionFromInfoOrDefault(Dmf.Type dmfType, File pspRootDir) throws PspDataException, XmlFileParsingException, InvalidXPathExpressionException {
         String versionFromInfo = detectDmfVersionFromInfoFile(dmfType, pspRootDir);
         if (versionFromInfo == null) {
@@ -152,6 +153,7 @@ public class DmfDetector {
         }
     }
 
+    @Deprecated
     public Dmf resolveDmf(Dmf dmfPrefered, File pspRoot) throws PspDataException, InvalidXPathExpressionException, XmlFileParsingException {
         if (dmfPrefered == null) {//both missing (wrapper is null)
             Dmf.Type type = detectDmfType(pspRoot);
@@ -173,6 +175,33 @@ public class DmfDetector {
             } else { //only version missing
                 String version = detectDmfVersionFromInfoOrDefault(dmfPrefered.getType(), pspRoot);
                 return new Dmf(dmfPrefered.getType(), version);
+            }
+        }
+    }
+
+    public Dmf resolveDmf(File pspRoot, String preferDmfMonVersion, String preferDmfPerVersion, String forceDmfMonVersion, String forceDmfPerVersion) throws PspDataException, InvalidXPathExpressionException, XmlFileParsingException {
+        Dmf.Type type = detectDmfType(pspRoot);
+        switch (type) {
+            case MONOGRAPH: {
+                return chooseVersion(MONOGRAPH, forceDmfMonVersion, pspRoot, preferDmfMonVersion, DEFAULT_MONOGRAPH_VERSION);
+            }
+            case PERIODICAL: {
+                return chooseVersion(PERIODICAL, forceDmfPerVersion, pspRoot, preferDmfPerVersion, DEFAULT_PERIODICAL_VERSION);
+            }
+            default:
+                throw new IllegalStateException();
+        }
+    }
+
+    private Dmf chooseVersion(Dmf.Type type, String forcedVersion, File pspRoot, String preferedVersion, String defaultVErsion) throws PspDataException, InvalidXPathExpressionException, XmlFileParsingException {
+        if (forcedVersion != null) {
+            return new Dmf(type, forcedVersion);
+        } else {
+            String versionFromInfo = detectDmfVersionFromInfoFile(type, pspRoot);
+            if (versionFromInfo != null) {
+                return new Dmf(type, versionFromInfo);
+            } else {
+                return new Dmf(type, defaultVErsion);
             }
         }
     }
