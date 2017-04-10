@@ -1,5 +1,5 @@
 group 'rzehan'
-version '1.5-dev'
+version '1.5'
 
 System.setProperty("file.encoding", "UTF-8")
 
