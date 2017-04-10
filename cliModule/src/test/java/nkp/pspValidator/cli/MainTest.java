@@ -33,6 +33,7 @@ public class MainTest {
     private static final String ZIP_NOT_ZIP = "/home/martin/zakazky/NKP-Komplexni_Validator/data/group/not_a_zip.txt";
 
     private static final String GROUP = "/home/martin/zakazky/NKP-Komplexni_Validator/data/group/";
+    private static final String GROUP_ZIP = "/home/martin/zakazky/NKP-Komplexni_Validator/data/group.zip";
 
     //private static final String PER_1_6 = "../sharedModule/src/test/resources/periodical_1.6/ope301-00000v";
     //private static final String PER_1_6_INFO_INVALID_NS = "/home/martin/zakazky/NKP-Komplexni_Validator/data/per_1.6_invalid_info_ns/aba008-000310";
@@ -99,6 +100,7 @@ public class MainTest {
                 //, ZIP_NOT_ZIP
 
                 , GROUP
+                //, GROUP_ZIP
 
                 , null
                 //,"1.0"

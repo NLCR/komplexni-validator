@@ -385,21 +385,22 @@ public class Main {
                     }
                 }
 
+                PrintStream out = System.out;
+                PrintStream err = System.err;
+
                 switch (action) {
                     case VALIDATE_PSP:
                         validatePsp(psp,
-                                configDir,
-                                verbosity, xmlProtocolDir, xmlProtocolFile,
-                                tmpDir,
+                                configDir, tmpDir,
+                                verbosity, out, err, xmlProtocolDir, xmlProtocolFile,
                                 preferDmfMonVersion, preferDmfPerVersion, forceDmfMonVersion, forceDmfPerVersion,
                                 imageUtilPaths, imageUtilsDisabled,
                                 devParams);
                         break;
                     case VALIDATE_PSP_GROUP:
                         validatePspGroup(pspGroup,
-                                configDir,
-                                verbosity, xmlProtocolDir,
-                                tmpDir,
+                                configDir, tmpDir,
+                                verbosity, out, err, xmlProtocolDir,
                                 preferDmfMonVersion, preferDmfPerVersion, forceDmfMonVersion, forceDmfPerVersion,
                                 imageUtilPaths, imageUtilsDisabled,
                                 devParams);
@@ -451,9 +452,12 @@ public class Main {
         formatter.printHelp("java -jar KomplexniValidator.jar", header, options, footer, true);
     }
 
-    private static void validatePspGroup(File pspGroup, File configDir, Integer verbosity, File xmlProtocolDir, File tmpDir, String preferDmfMonVersion, String preferDmfPerVersion, String forceDmfMonVersion, String forceDmfPerVersion, Map<ImageUtil, File> imageUtilPaths, Set<ImageUtil> imageUtilsDisabled, Validator.DevParams devParams) throws ValidatorConfigurationException, XmlFileParsingException, FdmfRegistry.UnknownFdmfException, PspDataException, InvalidXPathExpressionException {
-        PrintStream out = System.out;
-        PrintStream err = System.err;
+    private static void validatePspGroup(File pspGroup,
+                                         File configDir, File tmpDir,
+                                         Integer verbosity, PrintStream out, PrintStream err,
+                                         File xmlProtocolDir,
+                                         String preferDmfMonVersion, String preferDmfPerVersion, String forceDmfMonVersion, String forceDmfPerVersion,
+                                         Map<ImageUtil, File> imageUtilPaths, Set<ImageUtil> imageUtilsDisabled, Validator.DevParams devParams) throws ValidatorConfigurationException, XmlFileParsingException, FdmfRegistry.UnknownFdmfException, PspDataException, InvalidXPathExpressionException {
         Platform platform = Platform.detectOs();
         out.println(String.format("Platforma: %s", platform.toReadableString()));
 
@@ -464,28 +468,111 @@ public class Main {
         imageUtilManager.setPaths(imageUtilPaths);
         detectImageTools(out, imageUtilManager, imageUtilsDisabled);
 
-        //TODO: to taky muze byt zip
-        checkReadableDir(pspGroup);
-        for (File pspDirOrZip : pspGroup.listFiles()) {
+
+        //pspDirOrZipFile dir or zip file?
+        if (!pspGroup.exists()) {
+            throw new IllegalStateException(String.format("Soubor %s neexistuje", pspGroup.getAbsolutePath()));
+        } else {
+            if (pspGroup.isDirectory()) {
+                if (!pspGroup.canRead()) {
+                    throw new IllegalStateException(String.format("Nelze číst adresář %s", pspGroup.getAbsolutePath()));
+                }
+                validatePspGroupDir(pspGroup,
+                        configDir, tmpDir,
+                        verbosity, out, err, xmlProtocolDir,
+                        preferDmfMonVersion, preferDmfPerVersion, forceDmfMonVersion, forceDmfPerVersion,
+                        imageUtilPaths, imageUtilsDisabled,
+                        devParams);
+            } else {
+                validatePspGroupZip(pspGroup,
+                        configDir, tmpDir,
+                        verbosity, out, err, xmlProtocolDir,
+                        preferDmfMonVersion, preferDmfPerVersion, forceDmfMonVersion, forceDmfPerVersion,
+                        imageUtilPaths, imageUtilsDisabled,
+                        devParams);
+            }
+        }
+    }
+
+    private static void validatePspGroupZip(File pspGroupFile,
+                                            File configDir, File tmpDir,
+                                            Integer verbosity, PrintStream out, PrintStream err,
+                                            File xmlProtocolDir,
+                                            String preferDmfMonVersion, String preferDmfPerVersion, String forceDmfMonVersion, String forceDmfPerVersion,
+                                            Map<ImageUtil, File> imageUtilPaths, Set<ImageUtil> imageUtilsDisabled,
+                                            Validator.DevParams devParams) throws PspDataException, XmlFileParsingException, FdmfRegistry.UnknownFdmfException, ValidatorConfigurationException, InvalidXPathExpressionException {
+        try {
+            try {
+                new ZipFile(pspGroupFile);
+            } catch (ZipException e) {
+                out.println(String.format("Soubor %s není adresář ani soubor ZIP, ignoruji.", pspGroupFile.getAbsolutePath()));
+                return;
+            }
+            if (tmpDir == null) {
+                err.println(String.format("Chyba: prázdný parametr --%s: adresář pro dočasné soubory je potřeba pro rozbalení ZIP souboru %s!", Params.TMP_DIR, pspGroupFile.getAbsolutePath()));
+            } else if (!tmpDir.exists()) {
+                err.println(String.format("Chyba: adresář %s neexistuje!", pspGroupFile.getAbsolutePath()));
+            } else if (!tmpDir.isDirectory()) {
+                err.println(String.format("Chyba: soubor %s není adresář!", pspGroupFile.getAbsolutePath()));
+            } else if (!tmpDir.canWrite()) {
+                err.println(String.format("Chyba: nemůžu zapisovat do adresáře %s!", pspGroupFile.getAbsolutePath()));
+            } else {
+                File containerDir = new File(tmpDir, pspGroupFile.getName() + "_extracted");
+                if (containerDir.exists()) {
+                    out.println(String.format("Mažu adresář %s", containerDir.getAbsolutePath()));
+                    Utils.deleteNonemptyDir(containerDir);
+                }
+                out.println(String.format("Rozbaluji %s do adresáře %s", pspGroupFile.getAbsolutePath(), containerDir.getAbsolutePath()));
+                Utils.unzip(pspGroupFile, containerDir);
+                File[] filesInContainer = containerDir.listFiles();
+                if (filesInContainer.length == 1 && filesInContainer[0].isDirectory()) {
+                    validatePspGroupDir(filesInContainer[0],
+                            configDir, tmpDir,
+                            verbosity, out, err, xmlProtocolDir,
+                            preferDmfMonVersion, preferDmfPerVersion, forceDmfMonVersion, forceDmfPerVersion,
+                            imageUtilPaths, imageUtilsDisabled,
+                            devParams);
+                } else {
+                    validatePspGroupDir(containerDir,
+                            configDir, tmpDir,
+                            verbosity, out, err, xmlProtocolDir,
+                            preferDmfMonVersion, preferDmfPerVersion, forceDmfMonVersion, forceDmfPerVersion,
+                            imageUtilPaths, imageUtilsDisabled,
+                            devParams);
+                }
+            }
+        } catch (IOException e) {
+            out.println(String.format("Chyba zpracování ZIP souboru %s: %s!", pspGroupFile.getAbsolutePath(), e.getMessage()));
+        }
+
+    }
+
+    private static void validatePspGroupDir(File pspGroupDir,
+                                            File configDir, File tmpDir,
+                                            Integer verbosity, PrintStream out, PrintStream err,
+                                            File xmlProtocolDir,
+                                            String preferDmfMonVersion, String preferDmfPerVersion, String forceDmfMonVersion, String forceDmfPerVersion,
+                                            Map<ImageUtil, File> imageUtilPaths, Set<ImageUtil> imageUtilsDisabled,
+                                            Validator.DevParams devParams) throws XmlFileParsingException, FdmfRegistry.UnknownFdmfException, PspDataException, ValidatorConfigurationException, InvalidXPathExpressionException {
+        for (File pspDirOrZip : pspGroupDir.listFiles()) {
             //TODO: pocitat nevalidni baliky
             validatePsp(pspDirOrZip,
-                    configDir,
-                    verbosity, xmlProtocolDir, null,
-                    tmpDir,
+                    configDir, tmpDir,
+                    verbosity, out, err,
+                    xmlProtocolDir, null,
                     preferDmfMonVersion, preferDmfPerVersion, forceDmfMonVersion, forceDmfPerVersion,
                     imageUtilPaths, imageUtilsDisabled,
                     devParams);
         }
     }
 
-    private static void validatePsp(File pspDirOrZipFile, File configDir,
-                                    Integer verbosity, File xmlProtocolDir, File xmlProtocolFile,
-                                    File tmpDir,
+    private static void validatePsp(File pspDirOrZipFile,
+                                    File configDir, File tmpDir,
+                                    Integer verbosity, PrintStream out, PrintStream err,
+                                    File xmlProtocolDir, File xmlProtocolFile,
                                     String preferDmfMonVersion, String preferDmfPerVersion, String forceDmfMonVersion, String forceDmfPerVersion,
                                     Map<ImageUtil, File> imageUtilPaths, Set<ImageUtil> imageUtilsDisabled,
                                     Validator.DevParams devParams) throws ValidatorConfigurationException, FdmfRegistry.UnknownFdmfException, PspDataException, InvalidXPathExpressionException, XmlFileParsingException {
-        PrintStream out = System.out;
-        PrintStream err = System.err;
         Platform platform = Platform.detectOs();
         out.println(String.format("Platforma: %s", platform.toReadableString()));
 
@@ -516,8 +603,6 @@ public class Main {
                         out, err, verbosity, xmlProtocolDir, xmlProtocolFile,
                         preferDmfMonVersion, preferDmfPerVersion, forceDmfMonVersion, forceDmfPerVersion,
                         devParams);
-
-
             }
         }
     }
@@ -525,7 +610,8 @@ public class Main {
     private static void validatePspZip(File pspZipFile,
                                        File tmpDir,
                                        ImageUtilManager imageUtilManager, ValidatorConfigurationManager validatorConfigManager,
-                                       PrintStream out, PrintStream err, Integer verbosity, File xmlProtocolDir, File xmlProtocolFile,
+                                       PrintStream out, PrintStream err, Integer verbosity,
+                                       File xmlProtocolDir, File xmlProtocolFile,
                                        String preferDmfMonVersion, String preferDmfPerVersion, String forceDmfMonVersion, String forceDmfPerVersion,
                                        Validator.DevParams devParams) throws XmlFileParsingException, FdmfRegistry.UnknownFdmfException, PspDataException, ValidatorConfigurationException, InvalidXPathExpressionException {
         try {
@@ -573,7 +659,8 @@ public class Main {
 
     private static void validatePspDir(File pspDir,
                                        ImageUtilManager imageUtilManager, ValidatorConfigurationManager validatorConfigManager,
-                                       PrintStream out, Integer verbosity, File xmlProtocolDir, File xmlProtocolFile,
+                                       PrintStream out, Integer verbosity,
+                                       File xmlProtocolDir, File xmlProtocolFile,
                                        String preferDmfMonVersion, String preferDmfPerVersion, String forceDmfMonVersion, String forceDmfPerVersion,
                                        Validator.DevParams devParams) throws ValidatorConfigurationException, FdmfRegistry.UnknownFdmfException, PspDataException, XmlFileParsingException, InvalidXPathExpressionException {
         //psp dir, dmf detection
@@ -642,7 +729,6 @@ public class Main {
                             out.println("nenalezen");
                         }
                     } catch (CliCommand.CliCommandException e) {
-                        //System.out.println(String.format("chyba běhu %s: %s ", util.getUserFriendlyName(), e.getMessage()));
                         out.println(String.format("nenalezen (%s)", e.getMessage()));
                     }
                 }
