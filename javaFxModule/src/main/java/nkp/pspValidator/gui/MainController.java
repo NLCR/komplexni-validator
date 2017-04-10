@@ -168,12 +168,14 @@ public class MainController extends AbstractController implements ValidationStat
 
     /**
      * @param pspDir
-     * @param focedMonographVersion   can be null
-     * @param forcedPeriodicalVersion can be null
+     * @param preferedMonVersion can be null
+     * @param preferedPerVersion can be null
+     * @param forcedMonVersion   can be null
+     * @param forcedPerVersion   can be null
      * @param createTxtLog
      * @param createXmlLog
      */
-    public void runPspValidation(File pspDir, String focedMonographVersion, String forcedPeriodicalVersion, boolean createTxtLog, boolean createXmlLog) {
+    public void runPspValidation(File pspDir, String preferedMonVersion, String preferedPerVersion, String forcedMonVersion, String forcedPerVersion, boolean createTxtLog, boolean createXmlLog) {
         initBeforeValidation();
         this.pspDir = pspDir;
         this.logTxtFile = createTxtLog ? buildTxtLogFile(pspDir) : null;
@@ -187,7 +189,7 @@ public class MainController extends AbstractController implements ValidationStat
                 PrintStream out = null;
                 try {
                     updateStatusFromWorkerThread(String.format("Inicializuji balík %s.", pspDir.getAbsolutePath()), TotalState.RUNNING);
-                    dmf = selectDmf(pspDir, focedMonographVersion, forcedPeriodicalVersion);
+                    dmf = new DmfDetector().resolveDmf(pspDir, preferedMonVersion, preferedPerVersion, forcedMonVersion, forcedPerVersion);
                     //System.out.println(dmf);
 
                     FdmfConfiguration fdmfConfig = main.getValidationDataManager().getFdmfRegistry().getFdmfConfig(dmf);
@@ -231,29 +233,6 @@ public class MainController extends AbstractController implements ValidationStat
                         e.printStackTrace();
                         return null;
                     }
-                }
-            }
-
-            private Dmf selectDmf(File pspDir, String focedMonographVersion, String forcedPeriodicalVersion) throws Exception {
-                DmfDetector dmfDetector = new DmfDetector();
-                Dmf.Type type = dmfDetector.detectDmfType(pspDir);
-                switch (type) {
-                    case MONOGRAPH:
-                        if (focedMonographVersion != null) {
-                            return new Dmf(Dmf.Type.MONOGRAPH, focedMonographVersion);
-                        } else {
-                            String version = dmfDetector.detectDmfVersionFromInfoOrDefault(Dmf.Type.MONOGRAPH, pspDir);
-                            return new Dmf(Dmf.Type.MONOGRAPH, version);
-                        }
-                    case PERIODICAL:
-                        if (forcedPeriodicalVersion != null) {
-                            return new Dmf(Dmf.Type.PERIODICAL, forcedPeriodicalVersion);
-                        } else {
-                            String version = dmfDetector.detectDmfVersionFromInfoOrDefault(Dmf.Type.PERIODICAL, pspDir);
-                            return new Dmf(Dmf.Type.PERIODICAL, version);
-                        }
-                    default:
-                        throw new Exception("nepodporovaný typ " + type);
                 }
             }
         };

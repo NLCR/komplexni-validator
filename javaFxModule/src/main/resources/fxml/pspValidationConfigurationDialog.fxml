@@ -30,54 +30,96 @@
             />
             <Button onAction="#selectPspDir" text="Vybrat" GridPane.columnIndex="3" GridPane.rowIndex="0"/>
 
-            <Label text="Vynutit validaci proti konkrétním verzím standardů" GridPane.columnIndex="0"
+            <!--forced-->
+            <Label text="Vynutit validaci proti konkrétním verzím DMF" GridPane.columnIndex="0"
                    GridPane.columnSpan="3"
                    GridPane.rowIndex="2"/>
 
             <!--forced Monograph version-->
-            <CheckBox fx:id="monVersionForcedCheckBox"
-                      onAction="#monVersionForcedChanged"
+            <CheckBox fx:id="forcedMonVersionCheckBox"
+                      onAction="#forcedMonVersionChanged"
                       GridPane.columnIndex="0"
                       GridPane.rowIndex="3"/>
 
             <Label text="Monografie" GridPane.columnIndex="1" GridPane.rowIndex="3"/>
 
-            <ChoiceBox fx:id="monVersionChoiceBox"
+            <ChoiceBox fx:id="forcedMonVersionChoiceBox"
+                       onAction="#forcedMonVersionChoiceboxChanged"
                        GridPane.columnIndex="2"
                        GridPane.rowIndex="3"/>
 
             <!--forced Periodical version-->
-            <CheckBox fx:id="perVersionForcedCheckBox"
-                      onAction="#perVersionForcedChanged"
+            <CheckBox fx:id="forcedPerVersionCheckBox"
+                      onAction="#forcedPerVersionChanged"
                       GridPane.columnIndex="0"
                       GridPane.rowIndex="4"/>
 
+
             <Label text="Periodika" GridPane.columnIndex="1" GridPane.rowIndex="4"/>
 
-            <ChoiceBox fx:id="perVersionChoiceBox" GridPane.columnIndex="2" GridPane.columnSpan="2"
-                       GridPane.rowIndex="4"/>
+            <ChoiceBox fx:id="forcedPerVersionChoiceBox"
+                       GridPane.columnIndex="2" GridPane.columnSpan="2"
+                       GridPane.rowIndex="4"
+                       onAction="#forcedPerVersionChoiceboxChanged"
+            />
 
-            <Label text="Vytvořit log v XML"
+            <!--prefered-->
+            <Label text="Preferované verze standardů. Jsou použity, když v datech balíku chybí verze DMF."
                    GridPane.columnIndex="0"
-                   GridPane.rowIndex="5"
+                   GridPane.columnSpan="3"
+                   GridPane.rowIndex="5"/>
+
+            <!--forced Monograph version-->
+            <CheckBox fx:id="preferedMonVersionCheckBox"
+                      onAction="#preferedMonVersionChanged"
+                      GridPane.columnIndex="0"
+                      GridPane.rowIndex="6"/>
+
+            <Label text="Monografie" GridPane.columnIndex="1" GridPane.rowIndex="6"/>
+
+            <ChoiceBox fx:id="preferedMonVersionChoiceBox"
+                       GridPane.columnIndex="2"
+                       GridPane.rowIndex="6"
+                       onAction="#preferedMonVersionChoiceboxChanged"
+            />
+
+            <!--forced Periodical version-->
+            <CheckBox fx:id="preferedPerVersionCheckBox"
+                      GridPane.columnIndex="0"
+                      GridPane.rowIndex="7"
+                      onAction="#preferedPerVersionChanged"
+            />
+
+            <Label text="Periodika" GridPane.columnIndex="1" GridPane.rowIndex="7"/>
+
+            <ChoiceBox fx:id="preferedPerVersionChoiceBox"
+                       GridPane.columnIndex="2" GridPane.columnSpan="2"
+                       GridPane.rowIndex="7"
+                       onAction="#preferedPerVersionChoiceboxChanged"
+            />
+
+
+            <Label text="Vytvořit protokol v XML"
+                   GridPane.columnIndex="0"
+                   GridPane.rowIndex="8"
                    GridPane.columnSpan="2"
             />
 
             <CheckBox fx:id="createXmlLog"
                       GridPane.columnIndex="2"
-                      GridPane.rowIndex="5"
+                      GridPane.rowIndex="8"
                       onAction="#createXmlLogChanged"
             />
 
             <Label text="Vytvořit textový log"
                    GridPane.columnIndex="0"
-                   GridPane.rowIndex="6"
+                   GridPane.rowIndex="9"
                    GridPane.columnSpan="2"
             />
 
             <CheckBox fx:id="createTxtLog"
                       GridPane.columnIndex="2"
-                      GridPane.rowIndex="6"
+                      GridPane.rowIndex="9"
                       onAction="#createTxtLogChanged"
             />
 

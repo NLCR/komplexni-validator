@@ -33,8 +33,14 @@ public class ConfigurationManager {
 
     //validation
     public static final String PROP_LAST_PSP_DIR = "last.psp.dir";
-    public static final String PROP_FORCE_MON_VERSION = "force.monograph.version";
-    public static final String PROP_FORCE_PER_VERSION = "force.periodical.version";
+    public static final String PROP_FORCE_MON_VERSION_ENABLED = "force.monograph.version.enabled";
+    public static final String PROP_FORCE_MON_VERSION_CODE = "force.monograph.version.code";
+    public static final String PROP_FORCE_PER_VERSION_ENABLED = "force.periodical.version.enabled";
+    public static final String PROP_FORCE_PER_VERSION_CODE = "force.periodical.version.code";
+    public static final String PROP_PREFER_MON_VERSION_ENABLED = "prefer.monograph.version.enabled";
+    public static final String PROP_PREFER_MON_VERSION_CODE = "prefer.monograph.version.code";
+    public static final String PROP_PREFER_PER_VERSION_ENABLED = "prefer.periodical.version.enabled";
+    public static final String PROP_PREFER_PER_VERSION_CODE = "prefer.periodical.version.code";
     public static final String PROP_PSP_VALIDATION_CREATE_TXT_LOG = "psp_validation.create_txt_log";
     public static final String PROP_PSP_VALIDATION_CREATE_XML_LOG = "psp_validation.create_xml_log";
     public static final String PROP_LOG_DIR = "validation.log_dir";
@@ -111,6 +117,20 @@ public class ConfigurationManager {
     public void setBoolean(String propertyName, Boolean value) {
         properties.setProperty(propertyName, value.toString());
         saveProperties();
+    }
+
+    public void setString(String propertyName, String value) {
+        properties.setProperty(propertyName, value);
+        saveProperties();
+    }
+
+    public String getStringOrDefault(String propertyName, String defaultValue) {
+        String stringVal = properties.getProperty(propertyName);
+        if (stringVal == null) {
+            return defaultValue;
+        } else {
+            return stringVal;
+        }
     }
 
 

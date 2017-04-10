@@ -89,8 +89,8 @@ public class Main extends Application {
         dialog.show();
     }
 
-    public void runPspValidation(File pspDir, String forcedMonVersion, String forcedPerVersion, boolean createTxtLog, boolean createXmlLog) {
-        mainController.runPspValidation(pspDir, forcedMonVersion, forcedPerVersion, createTxtLog, createXmlLog);
+    public void runPspValidation(File pspDir, String preferedMonVersion, String preferedPerVersion, String forcedMonVersion, String forcedPerVersion, boolean createTxtLog, boolean createXmlLog) {
+        mainController.runPspValidation(pspDir, preferedMonVersion, preferedPerVersion, forcedMonVersion, forcedPerVersion, createTxtLog, createXmlLog);
     }
 
 

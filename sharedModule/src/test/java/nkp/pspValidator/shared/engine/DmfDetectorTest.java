@@ -73,7 +73,7 @@ public class DmfDetectorTest {
         File pspRootDir = new File("src/test/resources/monograph_1.2/b50eb6b0-f0a4-11e3-b72e-005056827e52");
         DmfDetector dmfDetector = new DmfDetector();
         try {
-            String version = dmfDetector.detectDmfVersionFromInfoOrDefault(Dmf.Type.MONOGRAPH, pspRootDir);
+            String version = dmfDetector.detectDmfVersionFromInfoFile(Dmf.Type.MONOGRAPH, pspRootDir);
             assertEquals("1.2", version);
         } catch (PspDataException e) {
             fail(e.getMessage());
@@ -89,7 +89,7 @@ public class DmfDetectorTest {
         File pspRootDir = new File("src/test/resources/periodical_1.6/7033d800-0935-11e4-beed-5ef3fc9ae867");
         DmfDetector dmfDetector = new DmfDetector();
         try {
-            String version = dmfDetector.detectDmfVersionFromInfoOrDefault(Dmf.Type.PERIODICAL, pspRootDir);
+            String version = dmfDetector.detectDmfVersionFromInfoFile(Dmf.Type.PERIODICAL, pspRootDir);
             assertEquals("1.6", version);
         } catch (PspDataException e) {
             fail(e.getMessage());
