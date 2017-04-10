@@ -41,185 +41,178 @@ public class Main {
         //https://commons.apache.org/proper/commons-cli/usage.html
         Options options = new Options();
         options.addOption(OptionBuilder
-                .withDescription("Akce, kterou má být provedena. Povolené hodnoty jsou VALIDATE_PSP a VALIDATE_PSP_GROUP.")
+                .withDescription(replaceUmlaut("Akce, kterou má být provedena. Povolené hodnoty jsou VALIDATE_PSP a VALIDATE_PSP_GROUP."))
                 .hasArg()
                 .withArgName("AKCE")
                 .withLongOpt(Params.ACTION)
                 .create("a"));
         options.addOption(OptionBuilder
-                //.withDescription("Adresář obsahující formalizované DMF pro jednotlivé verze standardu.")
-                .withDescription("Adresar obsahujici konfiguraci Komplexniho validatoru vcetne formalizovanych verzi DMF pro jednotlive verze standardu.")
+                .withDescription(replaceUmlaut("Adresář obsahující formalizované DMF pro jednotlivé verze standardu."))
                 .hasArg()
                 //.withArgName("ADRESÁŘ_FDMF")
                 .withArgName("ADRESAR_CONFIG")
                 .withLongOpt(Params.CONFIG_DIR)
                 .create());
         options.addOption(OptionBuilder
-                .withDescription("Adresář, nebo soubor ZIP obsahující PSP balík. " +
-                        "Parametr je povinný pro akci VALIDATE_PSP, u ostatních akcí je ignorován.")
+                .withDescription(replaceUmlaut(
+                        "Adresář, nebo soubor ZIP obsahující PSP balík. " +
+                                "Parametr je povinný pro akci VALIDATE_PSP, u ostatních akcí je ignorován."))
                 .hasArg()
                 .withArgName("ADRESAR/SOUBOR_ZIP")
                 .withLongOpt(Params.PSP)
                 .create());
         options.addOption(OptionBuilder
-                .withDescription("Adresář, nebo soubor ZIP obsahující skupinu PSP balíků. Ty opět mohou být ve formě adresářů nebo souborů ZIP. " +
-                        "Parametr je povinný pro akci VALIDATE_PSP_GROUP, u ostatních akcí je ignorován.")
+                .withDescription(replaceUmlaut(
+                        "Adresář, nebo soubor ZIP obsahující skupinu PSP balíků. Ty opět mohou být ve formě adresářů nebo souborů ZIP. " +
+                                "Parametr je povinný pro akci VALIDATE_PSP_GROUP, u ostatních akcí je ignorován."))
                 .hasArg()
                 .withArgName("ADRESAR/SOUBOR_ZIP")
                 .withLongOpt(Params.PSP_GROUP)
                 .create());
         options.addOption(OptionBuilder
-                .withDescription("Adresář pro ukládání xml protokolů s informacemi o validaci každého PSP balíku. Název souboru protokolu je odvozen od názvu PSP balíku a datumu+času začátku validace. " +
-                        "Pokud není parametr vyplněn, xml protokol se neukládá (kromě akce VALIDATE_PSP a vyplněného parametru xml-protocol-file).")
+                .withDescription(replaceUmlaut(
+                        "Adresář pro ukládání xml protokolů s informacemi o validaci každého PSP balíku. Název souboru protokolu je odvozen od názvu PSP balíku a datumu+času začátku validace. " +
+                                "Pokud není parametr vyplněn, xml protokol se neukládá (kromě akce VALIDATE_PSP a vyplněného parametru xml-protocol-file)."))
                 .hasArg()
                 .withArgName("ADRESAR")
                 .withLongOpt(Params.XML_PROTOCOL_DIR)
                 .create());
         options.addOption(OptionBuilder
-                .withDescription("Soubor pro uložení xml protokolu s informacemi o validaci PSP balíku. Použije se jen pro akci VALIDATE_PSP. " +
-                        "Pokud je zároveň vyplněn parametr xml-protocol-dir, použije se hodnota z xml-protocol-file. " +
-                        "Pokud není parametr (a zároveň není vyplněn ani xml-protocol-dir), xml protokol se neukládá. " +
-                        "Pokud soubor existuje, je nejprve smazán.")
+                .withDescription(replaceUmlaut(
+                        "Soubor pro uložení xml protokolu s informacemi o validaci PSP balíku. Použije se jen pro akci VALIDATE_PSP. " +
+                                "Pokud je zároveň vyplněn parametr xml-protocol-dir, použije se hodnota z xml-protocol-file. " +
+                                "Pokud není parametr (a zároveň není vyplněn ani xml-protocol-dir), xml protokol se neukládá. " +
+                                "Pokud soubor existuje, je nejprve smazán."))
                 .hasArg()
                 .withArgName("SOUBOR")
                 .withLongOpt(Params.XML_PROTOCOL_FILE)
                 .create());
         options.addOption(OptionBuilder
-                .withDescription("Adresář pro ukládání dočasných souborů, konkrétně rozbaleních verzí ZIP souborů. " +
-                        "Pokud parametr není vyplněn, bude výsledkem pokusu o validaci PSP balíku/skupiny balíků v ZIPu chyba.")
+                .withDescription(replaceUmlaut(
+                        "Adresář pro ukládání dočasných souborů, konkrétně rozbaleních verzí ZIP souborů. " +
+                                "Pokud parametr není vyplněn, bude výsledkem pokusu o validaci PSP balíku/skupiny balíků v ZIPu chyba."))
                 .hasArg()
                 .withArgName("ADRESAR")
                 .withLongOpt(Params.TMP_DIR)
                 .create("t"));
-        options.addOption(OptionBuilder
-                .withDescription("Počet nevalidních PSP balíku, po jehož dosažení validace předčasně skončí. " +
-                        "Bude použito jen pro akci VALIDATE_PSP_GROUP. " +
-                        "Pokud parametr není vyplněn, budou validováný všechny balíky.")
+        /*TODO: implement*/
+       /* options.addOption(OptionBuilder
+                .withDescription(replaceUmlaut(
+                        "Počet nevalidních PSP balíku, po jehož dosažení validace předčasně skončí. " +
+                                "Bude použito jen pro akci VALIDATE_PSP_GROUP. " +
+                                "Pokud parametr není vyplněn, budou validováný všechny balíky."))
                 .hasArg()
                 .withArgName("N")
                 .withLongOpt(Params.QUIT_AFTER_NTH_INVALID_PSP)
-                .create());
+                .create());*/
 
         options.addOption(OptionBuilder
-                .withDescription("Preferovaná verze DMF pro validaci monografií. " +
-                        "Použije se k validaci, pokud je balík typu Monografie, data balíku neobsahují informaci o vhodné verzi DMF Monografie " +
-                        "a parametr force-dmf-mon-version není vyplněn.")
+                .withDescription(replaceUmlaut(
+                        "Preferovaná verze DMF pro validaci monografií. " +
+                                "Použije se k validaci, pokud je balík typu Monografie, data balíku neobsahují informaci o vhodné verzi DMF Monografie " +
+                                "a parametr force-dmf-mon-version není vyplněn."))
                 .hasArg()
                 .withArgName("VERZE")
                 .withLongOpt(Params.PREFER_DMF_MON_VERSION)
                 .create());
 
         options.addOption(OptionBuilder
-                .withDescription("Preferovaná verze DMF pro validaci periodik. " +
-                        "Použije se k validaci, pokud je balík typu Periodikum, data balíku neobsahují informaci o vhodné verzi DMF Periodikum " +
-                        "a parametr force-dmf-per-version není vyplněn.")
+                .withDescription(replaceUmlaut(
+                        "Preferovaná verze DMF pro validaci periodik. " +
+                                "Použije se k validaci, pokud je balík typu Periodikum, data balíku neobsahují informaci o vhodné verzi DMF Periodikum " +
+                                "a parametr force-dmf-per-version není vyplněn."))
                 .hasArg()
                 .withArgName("VERZE")
                 .withLongOpt(Params.PREFER_DMF_PER_VERSION)
                 .create());
         options.addOption(OptionBuilder
-                .withDescription("Vynucená verze DMF pro validaci monografií. " +
-                        "Použije se k validaci všech balíků typu Monografie bez ohledu na data balíků a hodnotu parametru prefer-dmf-mon-version.")
+                .withDescription(replaceUmlaut(
+                        "Vynucená verze DMF pro validaci monografií. " +
+                                "Použije se k validaci všech balíků typu Monografie bez ohledu na data balíků a hodnotu parametru prefer-dmf-mon-version."))
                 .hasArg()
                 .withArgName("VERZE")
                 .withLongOpt(Params.FORCE_DMF_MON_VERSION)
                 .create());
         options.addOption(OptionBuilder
-                .withDescription("Vynucená verze DMF pro validaci periodik. " +
-                        "Použije se k validaci všech balíků typu Periodikum bez ohledu na data balíků a hodnotu parametru prefer-dmf-per-version.")
+                .withDescription(replaceUmlaut(
+                        "Vynucená verze DMF pro validaci periodik. " +
+                                "Použije se k validaci všech balíků typu Periodikum bez ohledu na data balíků a hodnotu parametru prefer-dmf-per-version."))
                 .hasArg()
                 .withArgName("VERZE")
                 .withLongOpt(Params.FORCE_DMF_PER_VERSION)
                 .create());
 
         options.addOption(OptionBuilder
-                /*.withDescription("Úroveň podrobnosti výpisu." +
-                        " 0 vypíše jen celkový počet chyb a rozhodnutí validní/nevalidní." +
-                        " 3 vypíše vše včetně sekcí a pravidel bez chyb.")*/
-                .withDescription("Uroven podrobnosti vypisu." +
-                        " 0 vypise jen celkovy pocet chyb a rozhodnuti validni/nevalidni." +
-                        " 3 vypise vse vcetně sekci a pravidel bez chyb.")
+                .withDescription(replaceUmlaut(
+                        "Úroveň podrobnosti výpisu." +
+                                " 0 vypíše jen celkový počet chyb a rozhodnutí validní/nevalidní." +
+                                " 3 vypíše vše včetně sekcí a pravidel bez chyb."))
                 .hasArg()
                 .withArgName("0-3")
                 .withLongOpt(Params.VERBOSITY)
                 .create("v"));
 
         options.addOption(OptionBuilder
-                /*.withDescription("Adresář s binárními soubory nástroje ImageMagick." +
-                        " Např. C:\\Program Files\\ImageMagick-7.0.3-Q16 pro Windows, /usr/bin pro Linux.")*/
-                .withDescription("Adresar typ s binarnimi soubory nastroje ImageMagick." +
-                        " Napr. C:\\Program Files\\ImageMagick-7.0.3-Q16 pro Windows, /usr/bin pro Linux.")
+                .withDescription(replaceUmlaut(
+                        "Adresář s binárními soubory nástroje ImageMagick. " +
+                                "Např. C:\\Program Files\\ImageMagick-7.0.3-Q16 pro Windows, /usr/bin pro Linux."))
                 .hasArg()
-                //.withArgName("ADRESÁŘ")
                 .withArgName("ADRESAR")
                 .withLongOpt(Params.IMAGEMAGICK_PATH)
                 .create());
 
         options.addOption(OptionBuilder
-                /*.withDescription("Adresář s binárními soubory nástroje JHOVE." +
-                        " Např. C:\\Program Files\\jhove-1_11\\\\jhove pro Windows, /usr/bin pro Linux, TODO pro MacOS.")*/
-                .withDescription("Adresar s binarnimi soubory nastroje JHOVE." +
-                        " Např. C:\\Program Files\\jhove-1_11\\\\jhove pro Windows, /usr/bin pro Linux.")
+                .withDescription(replaceUmlaut(
+                        "Adresář s binárními soubory nástroje JHOVE." +
+                                " Např. C:\\Program Files\\jhove-1_11\\\\jhove pro Windows, /usr/bin pro Linux."))
                 .hasArg()
-                //.withArgName("ADRESÁŘ")
                 .withArgName("ADRESAR")
                 .withLongOpt(Params.JHOVE_PATH)
                 .create());
 
         options.addOption(OptionBuilder
-                /*.withDescription("Adresář typ s binárními soubory nástroje Jpylyzer." +
-                        " Např. C:\\Program Files\\jpylyzer_1.17.0_win64 pro Windows, /usr/bin pro Linux, TODO pro MacOS.")*/
-                .withDescription("Adresar typ s binarnimi soubory nastroje Jpylyzer." +
-                        " Např. C:\\Program Files\\jpylyzer_1.17.0_win64 pro Windows, /usr/bin pro Linux.")
+                .withDescription(replaceUmlaut("Adresář typ s binárními soubory nástroje Jpylyzer." +
+                        " Např. C:\\Program Files\\jpylyzer_1.17.0_win64 pro Windows, /usr/bin pro Linux."))
                 .hasArg()
-                //.withArgName("ADRESÁŘ")
                 .withArgName("ADRESAR")
                 .withLongOpt(Params.JPYLYZER_PATH)
                 .create());
 
         options.addOption(OptionBuilder
-                /*.withDescription("Adresář s binárními soubory nástroje Kakadu." +
-                        " Např. C:\\Program Files\\Kakadu pro Windows, /usr/bin pro Linux, TODO pro MacOS.")*/
-                .withDescription("Adresar s binarnimi soubory nastroje Kakadu." +
-                        " Např. C:\\Program Files\\Kakadu pro Windows, /usr/bin pro Linux.")
+                .withDescription(replaceUmlaut("Adresář s binárními soubory nástroje Kakadu." +
+                        " Např. C:\\Program Files\\Kakadu pro Windows, /usr/bin pro Linux, TODO pro MacOS."))
                 .hasArg()
-                //.withArgName("ADRESÁŘ")
                 .withArgName("ADRESAR")
                 .withLongOpt(Params.KAKADU_PATH)
                 .create());
 
         options.addOption(OptionBuilder
-                //.withDescription("Zakáže použití ImageMagick.")
-                .withDescription("Zakaze pouziti ImageMagick.")
+                .withDescription(replaceUmlaut("Zakáže použití ImageMagick."))
                 .withLongOpt(Params.DISABLE_IMAGEMAGICK)
                 .create());
 
         options.addOption(OptionBuilder
-                //.withDescription("Zakáže použití JHOVE.")
-                .withDescription("Zakaze pouziti JHOVE.")
+                .withDescription(replaceUmlaut("Zakáže použití JHOVE."))
                 .withLongOpt("disable-jhove")
                 .create());
 
         options.addOption(OptionBuilder
-                //.withDescription("Zakáže použití Jpylyzer.")
-                .withDescription("Zakaze pouziti Jpylyzer.")
+                .withDescription(replaceUmlaut("Zakáže použití Jpylyzer."))
                 .withLongOpt(Params.DISABLE_JPYLYZER)
                 .create());
 
         options.addOption(OptionBuilder
-                //.withDescription("Zakáže použití Kakadu.")
-                .withDescription("Zakaze pouziti Kakadu.")
+                .withDescription(replaceUmlaut("Zakáže použití Kakadu."))
                 .withLongOpt(Params.DISABLE_KAKADU)
                 .create());
 
         options.addOption(OptionBuilder
                 .withLongOpt(Params.HELP)
-                //.withDescription("Zobrazit tuto nápovědu.")
-                .withDescription("Zobrazit tuto napovedu.")
+                .withDescription(replaceUmlaut("Zobrazit nápovědu."))
                 .create());
         options.addOption(OptionBuilder
                 .withLongOpt(Params.VERSION)
-                .withDescription("Zobrazit informace o verzi.")
+                .withDescription(replaceUmlaut("Zobrazit informace o verzi."))
                 .create());
 
         CommandLineParser parser = new DefaultParser();
@@ -301,7 +294,8 @@ public class Main {
 
                 //quitAfterInvalidPsps
                 Integer quitAfterInvalidPsps = null;
-                if (line.hasOption(Params.QUIT_AFTER_NTH_INVALID_PSP)) {
+                /*TODO: implement*/
+                /*if (line.hasOption(Params.QUIT_AFTER_NTH_INVALID_PSP)) {
                     try {
                         quitAfterInvalidPsps = Integer.valueOf(line.getOptionValue(Params.QUIT_AFTER_NTH_INVALID_PSP));
                         if (quitAfterInvalidPsps < 1) {
@@ -314,7 +308,7 @@ public class Main {
                         printHelp(options);
                         return;
                     }
-                }
+                }*/
 
                 //prefered dmf versions
                 String preferDmfMonVersion = null;
@@ -423,6 +417,45 @@ public class Main {
         }
     }
 
+    /*Docasne odstrani diakritiku, dokud se neopravi problem s kodovanim na Windows*/
+    private static String replaceUmlaut(String string) {
+        Map<String, String> replacements = new HashMap<>();
+        replacements.put("á", "a");
+        replacements.put("Á", "A");
+        replacements.put("é", "e");
+        replacements.put("É", "E");
+        replacements.put("ě", "e");
+        replacements.put("Ě", "E");
+        replacements.put("í", "i");
+        replacements.put("Í", "I");
+        replacements.put("ó", "o");
+        replacements.put("Ó", "O");
+        replacements.put("ů", "u");
+        replacements.put("Ů", "U");
+        replacements.put("ú", "u");
+        replacements.put("Ú", "U");
+
+        replacements.put("č", "c");
+        replacements.put("Č", "C");
+        replacements.put("ď", "d");
+        replacements.put("Ď", "D");
+        replacements.put("ň", "n");
+        replacements.put("Ň", "N");
+        replacements.put("ř", "r");
+        replacements.put("Ř", "R");
+        replacements.put("š", "s");
+        replacements.put("Š", "S");
+        replacements.put("ť", "t");
+        replacements.put("Ť", "T");
+        replacements.put("ž", "z");
+        replacements.put("Ž", "Z");
+
+        for (String letter : replacements.keySet()) {
+            string = string.replaceAll(letter, replacements.get(letter));
+        }
+        return string;
+    }
+
     private static String toString(String[] args) {
         StringBuilder builder = new StringBuilder();
         for (String string : args) {
@@ -432,20 +465,13 @@ public class Main {
     }
 
     private static void printHelp(Options options) {
-        /*String header = "Validuje PSP balík, nebo sadu PSP balíků podle DMF*." +
-                " Verzi a typ DMF lze vynutit parametry --dmf-type a/nebo --dmf-version, případně jsou odvozeny z dat PSP balíku." +
-                " Dále je potřeba pomocí --fdmf-dir uvést adresář, který obsahuje definice fDMF," +
-                " typicky adresáře monograph_1.0, monograph_1.2, periodical_1.4 a periodical 1.6.\n\n";
-        String footer = "\n*Definice metadatových formátů. Více na http://www.ndk.cz/standardy-digitalizace/metadata.\n" +
-                "Více informací o validátoru najdete na https://github.com/NLCR/komplexni-validator.";*/
-        String header = "Validuje PSP balik, nebo sadu PSP baliku podle DMF*." +
-                " Verzi a typ DMF lze vynutit parametry --dmf-type a/nebo --dmf-version, pripadne jsou odvozeny z dat PSP baliku." +
-                " Dale je potreba pomoci --config-dir uvest adresar, ktery obsahuje definice konfiguraci Komplexniho validatoru vcetne fDMF," +
-                " typicky adresare monograph_1.0, monograph_1.2, periodical_1.4 a periodical 1.6.\n\n";
-        String footer = "\n*Definice metadatovych formatu. Vice na http://www.ndk.cz/standardy-digitalizace/metadata.\n"
-                + "Vice informaci o Komplexnim validatoru najdete na https://github.com/NLCR/komplexni-validator.";
-//        + "Více informací o Validátoru najdete na https://github.com/NLCR/komplexni-validator.";
-
+        String header = replaceUmlaut("Validuje PSP balík, nebo sadu PSP balíků podle DMF*." +
+                " Typ DMF (Monografie/Periodikum) se vždy získává z dat jednotlivých PSP balíků." +
+                " Verze DMF použité pro validaci je možné ovlivnit parametry --prefer-dmf-mon-version, --prefer-dmf-per-version, --force-dmf-mon-version a --force-dmf-per-version." +
+                " Dále je potřeba pomocí --config-dir uvést adresář, který obsahuje definice fDMF," +
+                " typicky adresáře monograph_1.0, monograph_1.2, periodical_1.4 a periodical 1.6.\n\n");
+        String footer = replaceUmlaut("\n*Definice metadatových formátů. Více na http://www.ndk.cz/standardy-digitalizace/metadata.\n" +
+                "Více informací o validátoru najdete na https://github.com/NLCR/komplexni-validator.");
         HelpFormatter formatter = new HelpFormatter();
         formatter.setWidth(100);
         formatter.setOptionComparator(null);
