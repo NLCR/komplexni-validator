@@ -37,7 +37,7 @@ public class MainTest {
     @org.junit.Test
     public void cli() throws InvalidXPathExpressionException, PspDataException, ValidatorConfigurationException, XmlFileParsingException, FdmfRegistry.UnknownFdmfException {
         Platform platform = Platform.detectOs();
-        String validadtorConfigPath = null;
+        String configDir = null;
         String imageMagickPath = null;
         String jhovePath = null;
         String jpylyzerPath = null;
@@ -45,18 +45,18 @@ public class MainTest {
 
         switch (platform.getOperatingSystem()) {
             case WINDOWS:
-                validadtorConfigPath = "..\\sharedModule\\src\\main\\resources\\nkp\\pspValidator\\shared\\validatorConfig";
+                configDir = "..\\sharedModule\\src\\main\\resources\\nkp\\pspValidator\\shared\\validatorConfig";
                 imageMagickPath = "C:\\Program Files\\ImageMagick-7.0.3-Q16";
                 jhovePath = "C:\\Users\\Lenovo\\Documents\\software\\jhove";
                 jpylyzerPath = "C:\\Users\\Lenovo\\Documents\\software\\jpylyzer_1.17.0_win64";
                 kakaduPath = "C:\\Program Files (x86)\\Kakadu\\";
                 break;
             case LINUX:
-                validadtorConfigPath = "../sharedModule/src/main/resources/nkp/pspValidator/shared/validatorConfig";
+                configDir = "../sharedModule/src/main/resources/nkp/pspValidator/shared/validatorConfig";
                 kakaduPath = "/home/martin/zakazky/NKP-Komplexni_Validator/utility/kakadu/KDU78_Demo_Apps_for_Linux-x86-64_160226";
                 break;
             case MAC:
-                validadtorConfigPath = "../sharedModule/src/main/resources/nkp/pspValidator/shared/validatorConfig";
+                configDir = "../sharedModule/src/main/resources/nkp/pspValidator/shared/validatorConfig";
                 jhovePath = "/Users/martinrehanek/Software/jhove";
                 imageMagickPath = "/opt/local/bin";
                 jpylyzerPath = "/Users/martinrehanek/Software/jpylyzer-1.17.0/jpylyzer";
@@ -78,7 +78,7 @@ public class MainTest {
         devParams.getSectionsToRun().add("Strukturální mapy");
 
         Main.main(devParams, buildParams(
-                validadtorConfigPath
+                configDir
                 //, MON_1_2
                 //, MON_1_2_MAP
                 //, MON_1_2_INVALID_IMAGES
@@ -86,6 +86,7 @@ public class MainTest {
                 , PER_1_6
                 //, PER_1_6_INFO_INVALID_NS
 
+                , "/tmp"
                 , null
                 //,"1.0"
                 //,"1.2"
@@ -112,7 +113,7 @@ public class MainTest {
         ));
     }
 
-    private String[] buildParams(String configDir, String pspDir,
+    private String[] buildParams(String configDir, String pspDir, String tmpDir,
                                  String preferDmfModVersion, String preferDmfPerVersion, String forceDmfModVersion, String forceDmfPerVersion,
                                  Integer verbosity, String xmlProtocolDir, String xmlProtocolFile,
                                  String imageMagickPath, String jhovePath, String jpylyzerPath, String kakaduPath,
@@ -139,7 +140,12 @@ public class MainTest {
             params.add(xmlProtocolFile);
         }
 
-        //TODO: tmp-dir
+        //tmp-dir
+        if (tmpDir != null) {
+            params.add(String.format("--%s", Params.TMP_DIR));
+            params.add(tmpDir);
+        }
+
         //TODO: quit-after-nth-invalid-psp
 
         //DMF versions

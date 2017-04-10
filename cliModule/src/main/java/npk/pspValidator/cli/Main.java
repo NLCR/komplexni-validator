@@ -542,59 +542,6 @@ public class Main {
         }
     }
 
-
-    private static void runValidator(Dmf dmfPrefered, File validatorConfigurationDir, File pspRoot,
-                                     File xmlOutputFile, int printVerbosity,
-                                     Set<ImageUtil> imageUtilsDisabled, Map<ImageUtil, File> imageUtilPaths,
-                                     Set<String> runOnlyTheseSections,
-                                     Validator.DevParams devParams) throws PspDataException, InvalidXPathExpressionException, XmlFileParsingException, ValidatorConfigurationException, FdmfRegistry.UnknownFdmfException {
-        PrintStream out = System.out;
-        Platform platform = Platform.detectOs();
-        out.println(String.format("Platforma: %s", platform.toReadableString()));
-
-        //validator configuration
-        out.println(String.format("Kořenový adresář konfigurace validátoru: %s", validatorConfigurationDir.getAbsolutePath()));
-        ValidatorConfigurationManager validatorConfigManager = new ValidatorConfigurationManager(validatorConfigurationDir);
-        ImageUtilManager imageUtilManager = new ImageUtilManagerFactory(validatorConfigManager.getImageUtilsConfigFile()).buildImageUtilManager(platform.getOperatingSystem());
-        imageUtilManager.setPaths(imageUtilPaths);
-        detectImageTools(out, imageUtilManager, imageUtilsDisabled);
-
-        //psp dir, dmf detection
-        checkReadableDir(pspRoot);
-        out.println(String.format("Zpracovávám PSP balík %s", pspRoot.getAbsolutePath()));
-        Dmf dmfResolved = new DmfDetector().resolveDmf(dmfPrefered, pspRoot);
-        out.println(String.format("Bude použita verze standardu %s", dmfResolved));
-
-        //initializes j2k profiles according to selected fDMF
-        FdmfConfiguration fdmfConfig = new FdmfRegistry(validatorConfigManager).getFdmfConfig(dmfResolved);
-        fdmfConfig.initJ2kProfiles(imageUtilManager);
-
-        //validate
-        Validator validator = ValidatorFactory.buildValidator(fdmfConfig, pspRoot, validatorConfigManager.getDictionaryManager());
-        out.println(String.format("Validátor inicializován, spouštím validace"));
-        ValidationState.ProgressListener progressListener = null;
-        switch (printVerbosity) {
-            case 3:
-                //vsechno, vcetne sekci a pravidel bez chyb
-                validator.run(xmlOutputFile, out, true, true, true, true, devParams, progressListener);
-                break;
-            case 2:
-                //jen chybove sekce a v popisy jednotlivych chyb (default)
-                validator.run(xmlOutputFile, out, true, false, true, false, devParams, progressListener);
-                break;
-            case 1:
-                //jen pocty chyb v chybovych sekcich, bez popisu jednotlivych chyb
-                validator.run(xmlOutputFile, out, true, false, false, false, devParams, progressListener);
-                break;
-            case 0:
-                //jen valid/not valid
-                validator.run(xmlOutputFile, out, false, false, false, false, devParams, progressListener);
-                break;
-            default:
-                throw new IllegalStateException(String.format("Nepovolená hodnota verbosity: %d. Hodnota musí být v intervalu [0-3]", printVerbosity));
-        }
-    }
-
     private static void detectImageTools(PrintStream out, ImageUtilManager imageUtilManager, Set<ImageUtil> utilsDisabled) {
         for (ImageUtil util : ImageUtil.values()) {
             if (utilsDisabled.contains(util)) {
