@@ -73,7 +73,7 @@ public class ImageValidator {
     }
 
     private J2kProfile buildProfile(ImageUtil util, Element rootEl) throws ValidatorConfigurationException {
-        Element profileTypeEl = XmlUtils.getChilrenElements(rootEl).get(0);
+        Element profileTypeEl = XmlUtils.getChildrenElements(rootEl).get(0);
         switch (profileTypeEl.getTagName()) {
             case "fromXml":
                 return buildXmlProfile(profileTypeEl, util);
@@ -96,7 +96,7 @@ public class ImageValidator {
             //rules
             Element rulesEl = XmlUtils.getFirstChildElementsByName(validationEl, "rules");
             List<DataRule> dataRules = new ArrayList<>();
-            List<Element> ruleEls = XmlUtils.getChilrenElements(rulesEl);
+            List<Element> ruleEls = XmlUtils.getChildrenElements(rulesEl);
             for (Element ruleEl : ruleEls) {
                 dataRules.add(buildRule(validationName, ruleEl));
             }
@@ -132,7 +132,7 @@ public class ImageValidator {
             //rules
             Element rulesEl = XmlUtils.getFirstChildElementsByName(validationEl, "rules");
             List<DataRule> dataRules = new ArrayList<>();
-            List<Element> ruleEls = XmlUtils.getChilrenElements(rulesEl);
+            List<Element> ruleEls = XmlUtils.getChildrenElements(rulesEl);
             for (Element ruleEl : ruleEls) {
                 dataRules.add(buildRule(validationName, ruleEl));
             }
@@ -155,7 +155,7 @@ public class ImageValidator {
             }
             return new AllNonemptyByRegexpDataExtraction(resultType, regexps);
         }
-        throw new ValidatorConfigurationException("neznámá extrakce hodnoty: " + XmlUtils.getChilrenElements(extractionEl).get(0).getTagName());
+        throw new ValidatorConfigurationException("neznámá extrakce hodnoty: " + XmlUtils.getChildrenElements(extractionEl).get(0).getTagName());
     }
 
     private DataExtraction buildXmlDataExtraction(NamespaceContextImpl nsContext, Element extractionEl) throws ValidatorConfigurationException {
@@ -187,7 +187,7 @@ public class ImageValidator {
             }
             case "mustMatchAny": {
                 List<Constraint> constraints = new ArrayList<>();
-                List<Element> constraintEls = XmlUtils.getChilrenElements(ruleEl);
+                List<Element> constraintEls = XmlUtils.getChildrenElements(ruleEl);
                 for (Element constraintEl : constraintEls) {
                     constraints.add(buildConstraint(constraintEl));
                 }

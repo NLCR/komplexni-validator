@@ -50,18 +50,6 @@ public class XmlUtils {
         }
     }
 
-    public static List<Element> getChilrenElements(Element root) {
-        NodeList nodes = root.getChildNodes();
-        List<Element> result = new ArrayList<>(nodes.getLength());
-        for (int i = 0; i < nodes.getLength(); i++) {
-            Node node = nodes.item(i);
-            if (node.getNodeType() == Node.ELEMENT_NODE) {
-                result.add((Element) node);
-            }
-        }
-        return result;
-    }
-
     public static String toString(Document doc) {
         try {
             DOMSource domSource = new DOMSource(doc);
