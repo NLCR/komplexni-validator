@@ -117,7 +117,7 @@
                 <mustMatchAny>
                     <constant>1</constant>
                     <constant>3</constant>
-                    <constant>4</constant>
+                    
                 </mustMatchAny>
             </rules>
         </validation>
