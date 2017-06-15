@@ -68,7 +68,8 @@
                 <expectedContent/>
             </element>
 
-            <element name="dc:source"
+	    <!--dc:source má povinnost MA, tj neměl by házet chybu, ale jen VAROVÁNÍ. Varování u chybějících elementů zatím ve validátoru nejde nastavit, proto tu povinnost měníme na false.-->	
+            <element name="dc:source" mandatory="false"
                      errorMessage="Očekáván alespoň jeden povinný element dc:source obsahující údaje o uložení předlohy.">
                 <expectedContent/>
             </element>
