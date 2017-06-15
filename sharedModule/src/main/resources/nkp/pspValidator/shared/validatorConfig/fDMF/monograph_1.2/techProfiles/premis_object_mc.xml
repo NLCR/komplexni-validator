@@ -280,7 +280,7 @@
                                     </element>
 
                                     <!--Neni jasna povinnost - konflikt povinnost=M a vyskyt=0-n, viz DMF Monografie 1.2: s. 72. Nechavam defenzivne nepovinne-->
-                                    <element name="premis:linkingEventIdentifier" mandatory="true"
+                                    <element name="premis:linkingEventIdentifier" mandatory="false"
                                              repeatable="true">
                                         <expectedElements>
                                             <element name="premis:linkingEventIdentifierType" mandatory="true"
