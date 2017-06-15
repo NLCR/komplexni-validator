@@ -2472,7 +2472,8 @@
                     <value name="primary-mets_file" type="FILE">
                         <value-ref name="PRIMARY-METS_FILE"/>
                     </value>
-                    <value name="expected_top_level_div_type" type="STRING">Periodical</value>
+                    <!--Ze specifikace není jednoznačně zřejmé, jak plnit atribut TYPE- zda periodical nebo Periodical, proto dočasně zakomentováno-->
+                    <!--<value name="expected_top_level_div_type" type="STRING">Periodical</value>-->
                     <value name="filegroups_to_check" type="STRING_LIST">
                         <evaluation functionName="buildListOfStrings">
                             <params>
