@@ -112,11 +112,10 @@
                 <mustMatchAny>
                     <constant>1</constant>
                     <constant>3</constant>
-                    <constant>4</constant>
-                </mustMatchAny>
+                 </mustMatchAny>
             </rules>
-        </validation>
-
+        </validation>  
+             
         <validation name="Barevná hloubka">
             <xmlDataExtraction resultType="STRING">
                 <firstNonempty>
