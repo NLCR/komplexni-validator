@@ -374,7 +374,7 @@ public class Main {
                 if (line.hasOption(Params.KAKADU_PATH)) {
                     imageUtilsDisabled.add(ImageUtil.KAKADU);
                 } else {
-                    if (line.hasOption(Params.DISABLE_KAKADU)) {
+                    if (line.hasOption(Params.KAKADU_PATH)) {
                         imageUtilPaths.put(ImageUtil.KAKADU, new File(line.getOptionValue(Params.KAKADU_PATH)));
                     }
                 }
