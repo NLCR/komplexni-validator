@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <validationTemplate
-        xmlns="http://www.nkp.cz/pspValidator/1.5/metadataProfile"
+        xmlns="http://www.nkp.cz/pspValidator/1.6/metadataProfile"
         name="MIX PS (primarní sken)"
-        validatorVersion="1.5"
+        validatorVersion="1.6"
         dmf="periodical_1.4"
 >
 
