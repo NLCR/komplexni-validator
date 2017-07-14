@@ -88,7 +88,7 @@
                         <expectedContent/>
                     </element>
 
-                    <element name="mods:namePart" specification="@type=given'" mandatory="false">
+                    <element name="mods:namePart" specification="@type='given'" mandatory="false">
                         <expectedAttributes>
                             <attribute name="type"/>
                         </expectedAttributes>
