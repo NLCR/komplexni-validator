@@ -371,7 +371,7 @@ public class Main {
                         imageUtilPaths.put(ImageUtil.JPYLYZER, new File(line.getOptionValue(Params.JPYLYZER_PATH)));
                     }
                 }
-                if (line.hasOption(Params.KAKADU_PATH)) {
+                if (line.hasOption(Params.DISABLE_KAKADU)) {
                     imageUtilsDisabled.add(ImageUtil.KAKADU);
                 } else {
                     if (line.hasOption(Params.KAKADU_PATH)) {
