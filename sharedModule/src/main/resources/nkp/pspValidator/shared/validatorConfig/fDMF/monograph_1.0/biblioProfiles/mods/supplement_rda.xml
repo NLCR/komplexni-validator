@@ -56,7 +56,7 @@
 
             <element name="mods:name" mandatory="false">
                 <expectedAttributes>
-                    <attribute name="type">
+                    <attribute name="type" mandatory="false">
                         <expectedContent>
                             <oneOf>
                                 <value>personal</value>
