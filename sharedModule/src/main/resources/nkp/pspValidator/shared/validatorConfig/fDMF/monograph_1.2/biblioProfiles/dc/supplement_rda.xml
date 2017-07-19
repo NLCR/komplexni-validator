@@ -38,7 +38,7 @@
                 <expectedContent/>
             </element>
 
-            <element name="dc:creator" errorMessage="Údaje o křestním jméně a příjmení apod. autora.">
+            <element name="dc:creator" errorMessage="Údaje o křestním jméně a příjmení apod. autora." mandatory="false">
                 <expectedContent/>
             </element>
 
