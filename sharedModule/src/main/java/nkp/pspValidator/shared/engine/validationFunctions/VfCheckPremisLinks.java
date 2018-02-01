@@ -121,8 +121,8 @@ public class VfCheckPremisLinks extends ValidationFunction {
                 //rerefences
                 //OBJ_002 (MC) should refer to OBJ_001 (PS) through relatedObjectIdentification
                 checkMcRefersToPs(file, amdSecEl, result);
-                //OBJ_003 (ALTO) should refer to OBJ_001 (PS) through relatedObjectIdentification
-                checkAltoRefersToPs(file, amdSecEl, result);
+                //OBJ_003 (ALTO) should refer to OBJ_002 (MC) through relatedObjectIdentification
+                checkAltoRefersToMc(file, amdSecEl, result);
             }
         } catch (InvalidXPathExpressionException e) {
             result.addError(invalid(e));
@@ -430,7 +430,7 @@ public class VfCheckPremisLinks extends ValidationFunction {
         }
     }
 
-    private void checkAltoRefersToPs(File file, Element amdSecEl, ValidationResult result) throws InvalidXPathExpressionException, XPathExpressionException {
+    private void checkAltoRefersToMc(File file, Element amdSecEl, ValidationResult result) throws InvalidXPathExpressionException, XPathExpressionException {
         NodeList altoEls = (NodeList) engine.buildXpath("mets:techMD[@ID=\"OBJ_003\"]").evaluate(amdSecEl, XPathConstants.NODESET);
         if (altoEls.getLength() == 0) {
             result.addError(Level.ERROR, String.format("%s: Chybí objekt ALTO (ID=OBJ_003)", file.getName()));
@@ -441,11 +441,11 @@ public class VfCheckPremisLinks extends ValidationFunction {
             List<Identifier> objectRelatedObjectsIdentifiers = getObjectRelatedObjectsIdentifiers(mcEl);
             for (Identifier id : objectRelatedObjectsIdentifiers) {
                 String metsId = getMetsIdOfObjectByIdentifier(amdSecEl, id);
-                if ("OBJ_001".equals(metsId)) {
+                if ("OBJ_002".equals(metsId)) {
                     return;
                 }
             }
-            result.addError(Level.WARNING, String.format("%s: Chybí odkaz (relatedObject) z ALTO (ID=OBJ_003) na primární sken (ID=OBJ_001)", file.getName()));
+            result.addError(Level.WARNING, String.format("%s: Chybí odkaz (relatedObject) z ALTO (ID=OBJ_003) na archivní kopii (ID=OBJ_002)", file.getName()));
         }
     }
 
