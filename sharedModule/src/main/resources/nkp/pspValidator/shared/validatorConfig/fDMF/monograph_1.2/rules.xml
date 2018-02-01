@@ -2326,13 +2326,12 @@
                         <evaluation functionName="buildListOfStrings">
                             <params>
                                 <!--https://docs.google.com/document/d/1zSriHPdnUY5d_tKv0M8a6nEym560DKh2H6XZ24tGAEw/edit?pli=1#heading=h.g5ucgez1xrbr-->
-                                <!--V důsledku nekonzistence mezi DMF 1.2 a souvisejícími Pravidly pro popis, je povolena ve fyzické strukturální mapě jako typ strany "Index" i "index" -->
+                                <!--V DMF je uvedena hodnota s "index", v Pravidlech pro popis je hodnota "Index", správná hodnota je s malým i, tj. "index" -->
                                 <value name="string" type="STRING">titlePage</value>
                                 <value name="string" type="STRING">tableOfContents</value>
                                 <value name="string" type="STRING">blank</value>
                                 <value name="string" type="STRING">advertisement</value>
                                 <value name="string" type="STRING">normalPage</value>
-                                <value name="string" type="STRING">Index</value>
                                 <value name="string" type="STRING">index</value>
                                 <value name="string" type="STRING">listOfIllustrations</value>
                                 <value name="string" type="STRING">map</value>
