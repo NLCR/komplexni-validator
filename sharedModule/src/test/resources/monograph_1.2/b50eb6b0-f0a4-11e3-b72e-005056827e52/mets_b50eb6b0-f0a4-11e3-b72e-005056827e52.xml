@@ -57,10 +57,10 @@
                     </mods:physicalDescription>
                     <mods:note type="statement of responsibility">Alois Hora</mods:note>
                     <mods:subject authority="Konspekt">
-                        <topic>propagace</topic>
+                        <mods:topic>propagace</mods:topic>
                     </mods:subject>
-                    <classification authority="udc" edition="Konspekt">004</classification>
-                    <classification authority="Konspekt">23</classification>
+                    <mods:classification authority="udc" edition="Konspekt">004</mods:classification>
+                    <mods:classification authority="Konspekt">23</mods:classification>
                     <mods:location>
                         <mods:physicalLocation authority="siglaADR">ABA001</mods:physicalLocation>
                         <mods:shelfLocator>II 026293</mods:shelfLocator>
