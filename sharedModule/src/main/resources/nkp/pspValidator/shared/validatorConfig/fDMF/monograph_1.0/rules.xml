@@ -2543,7 +2543,7 @@
     </rules-section>
 
     <rules-section name="Bibliografická metadata"
-                   description="validace obsahů bibliografických metadata v MODS a Dubline Core v souboru PRIMARY-METS">
+                   description="validace obsahů bibliografických metadat v MODS a Dubline Core v souboru PRIMARY-METS">
 
         <rule name="BIBLIOGRAPHIC_METADATA_MATCH_PROFILE_VOLUME">
             <description>Bibliografická metadata pro entitu typu VOLUME musí splňovat požadovaný profil pro záznamy v
