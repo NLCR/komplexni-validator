@@ -96,7 +96,6 @@
                             <attribute name="type"/>
                         </expectedAttributes>
                         <expectedContent/>
-
                     </element>
 
                     <element name="mods:namePart" specification="@type='family'" mandatory="false">

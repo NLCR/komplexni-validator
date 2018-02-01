@@ -122,9 +122,6 @@
 
                     <!--namePart s celym jmenem-->
                     <element name="mods:namePart" specification="not(@type)" mandatory="false">
-                        <expectedAttributes>
-                            <attribute name="type"/>
-                        </expectedAttributes>
                         <expectedContent/>
                     </element>
 
