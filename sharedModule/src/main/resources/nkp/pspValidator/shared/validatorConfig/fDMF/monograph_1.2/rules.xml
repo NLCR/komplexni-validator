@@ -2311,6 +2311,8 @@
                     <value name="primary-mets_file" type="FILE">
                         <value-ref name="PRIMARY-METS_FILE"/>
                     </value>
+                    <!--Ze specifikace není jednoznačně zřejmé, jak plnit atribut TYPE- zda monograph nebo Monograph, proto dočasně zakomentováno-->
+                    <!--<value name="expected_top_level_div_type" type="STRING">monograph</value>-->
                     <value name="filegroups_to_check" type="STRING_LIST">
                         <evaluation functionName="buildListOfStrings">
                             <params>
