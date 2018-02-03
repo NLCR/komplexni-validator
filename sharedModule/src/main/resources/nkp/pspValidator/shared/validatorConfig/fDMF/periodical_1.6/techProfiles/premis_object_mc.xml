@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <validationTemplate
-        xmlns="http://www.nkp.cz/pspValidator/1.6/metadataProfile"
+        xmlns="http://www.nkp.cz/pspValidator/1.7/metadataProfile"
         name="PREMIS Object pro MC (archivní kopie)"
-        validatorVersion="1.6"
+        validatorVersion="1.7"
         dmf="periodical_1.6"
 >
 

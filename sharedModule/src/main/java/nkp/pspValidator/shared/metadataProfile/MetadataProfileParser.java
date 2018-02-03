@@ -28,6 +28,7 @@ public class MetadataProfileParser {
     public MetadataProfile parseProfile(File profileXmlFile) throws ValidatorConfigurationException {
         //LOG.info(String.format("parsing %s", templateXml.getAbsolutePath()));
         MetadataProfile metadataProfile = new MetadataProfile();
+        // TODO: 3.2.18 handle namespaces properly instead of ignoring it
         XMLTag doc = XMLDoc.from(profileXmlFile, true); //ignoring namespaces
         metadataProfile.setValidatorVersion(doc.getAttribute("validatorVersion"));
         metadataProfile.setDmf(doc.getAttribute("dmf"));
