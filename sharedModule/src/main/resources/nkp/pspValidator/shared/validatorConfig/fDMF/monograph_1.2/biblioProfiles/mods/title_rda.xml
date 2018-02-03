@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <validationTemplate
-        xmlns="http://www.nkp.cz/pspValidator/1.6/metadataProfile"
+        xmlns="http://www.nkp.cz/pspValidator/1.7/metadataProfile"
         name="MODS title of multivolume monographic (RDA)"
-        validatorVersion="1.6"
+        validatorVersion="1.7"
         dmf="monograph_1.2"
 >
 
