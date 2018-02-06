@@ -2337,9 +2337,9 @@
                                 <value name="string" type="STRING">jacket</value>
                                 <value name="string" type="STRING">cover</value>
                                 <value name="string" type="STRING">frontCover</value>
-                                <value name="string" type="STRING">frontMatter</value>
+                                <value name="string" type="STRING">frontEndPaper</value>
                                 <value name="string" type="STRING">backCover</value>
-                                <value name="string" type="STRING">backMatter</value>
+                                <value name="string" type="STRING">backEndPaper</value>
                                 <value name="string" type="STRING">frontEndSheet</value>
                                 <value name="string" type="STRING">backEndSheet</value>
                                 <value name="string" type="STRING">spine</value>
@@ -2358,7 +2358,7 @@
                                 <value name="string" type="STRING">errata</value>
                                 <value name="string" type="STRING">frontispiece</value>
                                 <value name="string" type="STRING">edge</value>
-                                <value name="string" type="STRING">printPermission</value>
+                                <value name="string" type="STRING">imprimatur</value>
                                 <value name="string" type="STRING">appendix</value>
                                 <value name="string" type="STRING">bibliography</value>
                                 <value name="string" type="STRING">sheetMusic</value>
