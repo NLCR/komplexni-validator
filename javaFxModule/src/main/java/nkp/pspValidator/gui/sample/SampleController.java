@@ -27,7 +27,7 @@ public class SampleController {
     private static final File MC_FILE_WINDOWS = new File("C:\\Users\\Lenovo\\Dropbox\\PspValidator\\data\\monograph_1.2\\b50eb6b0-f0a4-11e3-b72e-005056827e52\\mastercopy\\mc_b50eb6b0-f0a4-11e3-b72e-005056827e52_0001.jp2");
     private static final File MC_FILE_MAC = new File("/Users/martinrehanek/Dropbox/PspValidator/data/monograph_1.2/b50eb6b0-f0a4-11e3-b72e-005056827e52/mastercopy/mc_b50eb6b0-f0a4-11e3-b72e-005056827e52_0001.jp2");
 
-    private static final File IMAGE_PROPERTIES_LINUX = new File("/home/martin/ssd/IdeaProjects/PspValidator/sharedModule/src/main/resources/nkp/pspValidator/shared/fDMF/imageUtils.xml");
+    private static final File IMAGE_PROPERTIES_LINUX = new File("/home/martin/IdeaProjects/PspValidator/sharedModule/src/main/resources/nkp/pspValidator/shared/fDMF/imageUtils.xml");
     private static final File IMAGE_PROPERTIES_WINDOWS = new File("C:\\Users\\Lenovo\\IdeaProjects\\PspValidator\\sharedModule\\src\\main\\resources\\nkp\\pspValidator\\shared\\fDMF\\imageUtils.xml");
     private static final File IMAGE_PROPERTIES_MAC = new File("/Users/martinrehanek/IdeaProjects/PspValidator/sharedModule/src/main/resources/nkp/pspValidator/shared/fDMF/imageUtils.xml");
 
