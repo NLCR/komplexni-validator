@@ -23,7 +23,8 @@ public class RuleItem {
     private ProgressIndicator progressIndicator;
     @FXML
     private ImageView imgFinished;
-
+    @FXML
+    private ImageView imgCanceled;
 
     @FXML
     private Node errorsContainer;
@@ -54,16 +55,24 @@ public class RuleItem {
         name.setText(rule.getName());
         switch (rule.getState()) {
             case WAITING:
-                imgFinished.setVisible(false);
                 progressIndicator.setVisible(false);
+                imgFinished.setVisible(false);
+                imgCanceled.setVisible(false);
                 break;
             case RUNNING:
-                imgFinished.setVisible(false);
                 progressIndicator.setVisible(true);
+                imgFinished.setVisible(false);
+                imgCanceled.setVisible(false);
                 break;
             case FINISHED:
-                imgFinished.setVisible(true);
                 progressIndicator.setVisible(false);
+                imgFinished.setVisible(true);
+                imgCanceled.setVisible(false);
+                break;
+            case CANCELED:
+                progressIndicator.setVisible(false);
+                imgFinished.setVisible(false);
+                imgCanceled.setVisible(true);
                 break;
         }
 

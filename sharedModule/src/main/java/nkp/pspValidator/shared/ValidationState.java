@@ -100,6 +100,12 @@ public class ValidationState {
         }
     }
 
+    public void reportSectionProcessingCanceled(RulesSection section) {
+        if (progressListener != null) {
+            progressListener.onSectionCancel(section.getId());
+        }
+    }
+
     public void reportRuleProcessingStarted(Rule rule) {
         startTimeByRule.put(rule, System.currentTimeMillis());
         if (progressListener != null) {
@@ -124,6 +130,12 @@ public class ValidationState {
                     rule.getId(), copyProblems(ruleProblemsByLevel.get(rule)), ruleProblemsTotal.get(rule).intValue(),
                     copyErrors(result.getProblems())
             );
+        }
+    }
+
+    public void reportRuleProcessingCanceled(RulesSection section, Rule rule) {
+        if (progressListener != null) {
+            progressListener.onRuleCancel(section.getId(), rule.getId());
         }
     }
 
@@ -233,6 +245,12 @@ public class ValidationState {
         }
     }
 
+    public void reportValidationsCanceled() {
+        if (progressListener != null) {
+            progressListener.onValidationsCancel();
+        }
+    }
+
     public int getSectionProblemsTotal(RulesSection section) {
         return sectionProblemsTotal.get(section);
     }
@@ -293,21 +311,33 @@ public class ValidationState {
         return sectionsProcessed.contains(section.getId());
     }
 
+
     public static interface ProgressListener {
 
         public void onInitialization(List<RulesSection> sections, Map<RulesSection, List<Rule>> rules);
 
         public void onValidationsStart();
 
+        public void onValidationsFinish(int globalProblemsTotal, Map<Level, Integer> globalProblemsByLevel, boolean valid, long totalTime);
+
+        public void onValidationsCancel();
+
         public void onSectionStart(int sectionId);
 
         public void onSectionFinish(int sectionId, long duration);
+
+        public void onSectionCancel(int sectionId);
 
         public void onRuleStart(int sectionId, int ruleId);
 
         public void onRuleFinish(int sectionId, Map<Level, Integer> sectionProblemsByLevel, int sectionProblemsTotal, int ruleId, Map<Level, Integer> ruleProblemsByLevel, int ruleProblemsTotal, List<ValidationProblem> errors);
 
-        public void onValidationsFinish(int globalProblemsTotal, Map<Level, Integer> globalProblemsByLevel, boolean valid, long totalTime);
-
+        public void onRuleCancel(int sectionId, int ruleId);
     }
+
+    public static interface ProgressController {
+        public boolean shouldCancel();
+    }
+
+
 }

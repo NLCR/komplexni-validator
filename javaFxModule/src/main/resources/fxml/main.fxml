@@ -2,8 +2,7 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.*?>
-<?import javafx.scene.image.Image?>
-<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
 <BorderPane
         fx:id="container"
@@ -23,7 +22,6 @@
                         <SeparatorMenuItem/>
                         <MenuItem disable="true" text="Adresář obsahující PSP balíky (adresáře)"/>
                         <MenuItem disable="true" text="Zip obsahující PSP balíky (zip)"/>
-                        <SeparatorMenuItem/>
                     </items>
                 </Menu>
                 <Menu fx:id="menuValidation" text="Validace" disable="true">
@@ -179,6 +177,12 @@
                     <ImageView fx:id="statusImgError" visible="false">
                         <image>
                             <Image url="@/img/Error-20.png"/>
+                        </image>
+                    </ImageView>
+
+                    <ImageView fx:id="statusImgStopped" visible="false">
+                        <image>
+                            <Image url="@/img/Unavailable-20.png"/>
                         </image>
                     </ImageView>
 

@@ -31,7 +31,7 @@ import java.util.logging.Logger;
 /**
  * Created by Martin Řehánek on 9.12.16.
  */
-public class MainController extends AbstractController implements ValidationState.ProgressListener {
+public class MainController extends AbstractController implements ValidationState.ProgressListener, ValidationState.ProgressController {
 
     private static Logger LOG = Logger.getLogger(MainController.class.getSimpleName());
 
@@ -68,6 +68,8 @@ public class MainController extends AbstractController implements ValidationStat
     ImageView statusImgFinished;
     @FXML
     ImageView statusImgError;
+    @FXML
+    ImageView statusImgStopped;
 
     //sections
     @FXML
@@ -96,6 +98,7 @@ public class MainController extends AbstractController implements ValidationStat
     ListView<ValidationProblem> problemList;
 
     //other validation data
+    private Task validationTask;
     private ValidationStateManager validationStateManager = null;
     private SectionWithState selectedSection;
     private RuleWithState selectedRule;
@@ -104,6 +107,7 @@ public class MainController extends AbstractController implements ValidationStat
     private File logTxtFile;
     private File logXmlFile;
     ValidationResultSummary validationResultSummary;
+    private boolean cancelValidation = false;
 
     @Override
     public void start(Stage primaryStage) throws Exception {
@@ -145,9 +149,6 @@ public class MainController extends AbstractController implements ValidationStat
         //VIEWS
         //status
         statusText.setText(null);
-        statusProgressIndicator.setVisible(false);
-        statusImgFinished.setVisible(false);
-        statusImgError.setVisible(false);
         //sections
         sectionList.setItems(null);
         //rules
@@ -179,8 +180,9 @@ public class MainController extends AbstractController implements ValidationStat
         this.pspDir = pspDir;
         this.logTxtFile = createTxtLog ? buildTxtLogFile(pspDir) : null;
         this.logXmlFile = createXmlLog ? buildXmlLogFile(pspDir) : null;
+        this.cancelValidation = false;
 
-        Task task = new Task<Void>() {
+        validationTask = new Task<Void>() {
 
             @Override
             protected Void call() throws Exception {
@@ -190,7 +192,6 @@ public class MainController extends AbstractController implements ValidationStat
                     updateStatusFromWorkerThread(String.format("Inicializuji balík %s.", pspDir.getAbsolutePath()), TotalState.RUNNING);
                     dmf = new DmfDetector().resolveDmf(pspDir, preferedMonVersion, preferedPerVersion, forcedMonVersion, forcedPerVersion);
                     //System.out.println(dmf);
-
                     FdmfConfiguration fdmfConfig = main.getValidationDataManager().getFdmfRegistry().getFdmfConfig(dmf);
                     fdmfConfig.initJ2kProfiles(main.getValidationDataManager().getImageUtilManager());
                     Validator validator = ValidatorFactory.buildValidator(fdmfConfig, pspDir, main.getValidationDataManager().getValidatorConfigMgr().getDictionaryManager());
@@ -208,12 +209,22 @@ public class MainController extends AbstractController implements ValidationStat
                         devParams.getSectionsToRun().add("Primary METS filesec");
                         //devParams.getSectionsToRun().add("JPEG 2000");
                     }
-                    validator.run(logXmlFile, out, true, true, true, true, devParams, MainController.this);
+                    //Thread.sleep(5000);
+                    if (isCancelled()) {
+                        return null;
+                    }
+                    validator.run(logXmlFile, out,
+                            true, true,
+                            true, true,
+                            devParams,
+                            MainController.this,
+                            MainController.this);
                     //updateStatus(String.format("Validace balíku %s hotova.", pspDir.getAbsolutePath()));
-                } catch (Exception e) {
+                } /*catch (InterruptedException e) {
+                    updateStatusFromWorkerThread(String.format("Validace balíku zrušena."), TotalState.STOPPED);
+                } */catch (Exception e) {
                     updateStatusFromWorkerThread(String.format("Chyba: %s.", e.getMessage()), TotalState.ERROR);
-                    //TODO: handle in UI
-                    //e.printStackTrace();
+                    e.printStackTrace();
                 } finally {
                     if (out != null) {
                         out.close();
@@ -235,7 +246,7 @@ public class MainController extends AbstractController implements ValidationStat
                 }
             }
         };
-        new Thread(task).start();
+        new Thread(validationTask).start();
     }
 
     private void updateStatusFromWorkerThread(String text, TotalState state) {
@@ -257,6 +268,7 @@ public class MainController extends AbstractController implements ValidationStat
                 statusProgressIndicator.setVisible(false);
                 statusImgFinished.setVisible(false);
                 statusImgError.setVisible(false);
+                statusImgStopped.setVisible(false);
                 //logs through menu
                 showValidationResultSummaryDialogItem.setDisable(true);
                 showLogTxtMenuItem.setDisable(true);
@@ -272,6 +284,7 @@ public class MainController extends AbstractController implements ValidationStat
                 statusProgressIndicator.setVisible(true);
                 statusImgFinished.setVisible(false);
                 statusImgError.setVisible(false);
+                statusImgStopped.setVisible(false);
                 //logs through menu
                 showValidationResultSummaryDialogItem.setDisable(true);
                 showLogTxtMenuItem.setDisable(true);
@@ -287,6 +300,7 @@ public class MainController extends AbstractController implements ValidationStat
                 statusProgressIndicator.setVisible(false);
                 statusImgFinished.setVisible(true);
                 statusImgError.setVisible(false);
+                statusImgStopped.setVisible(false);
                 //logs through menu
                 showValidationResultSummaryDialogItem.setDisable(false);
                 showLogTxtMenuItem.setDisable(logTxtFile == null);
@@ -302,12 +316,13 @@ public class MainController extends AbstractController implements ValidationStat
                 statusProgressIndicator.setVisible(false);
                 statusImgFinished.setVisible(false);
                 statusImgError.setVisible(true);
+                statusImgStopped.setVisible(false);
                 //logs through menu
                 showValidationResultSummaryDialogItem.setDisable(true);
                 showLogTxtMenuItem.setDisable(true);
                 showLogXmlMenuItem.setDisable(true);
                 break;
-            case CANCELED:
+            case STOPPED:
                 //menus
                 menuValidate.setDisable(false);
                 menuValidation.setDisable(true);
@@ -317,6 +332,7 @@ public class MainController extends AbstractController implements ValidationStat
                 statusProgressIndicator.setVisible(false);
                 statusImgFinished.setVisible(false);
                 statusImgError.setVisible(false);
+                statusImgStopped.setVisible(true);
                 //logs through menu
                 showValidationResultSummaryDialogItem.setDisable(true);
                 showLogTxtMenuItem.setDisable(true);
@@ -376,6 +392,13 @@ public class MainController extends AbstractController implements ValidationStat
             validationResultSummary.setValid(valid);
             validationResultSummary.setTotalTime(duration);
             main.showValidationResultSummaryDialog(validationResultSummary);
+        });
+    }
+
+    @Override
+    public void onValidationsCancel() {
+        Platform.runLater(() -> {
+            updateStatus(String.format("Validace balíku zrušena.", pspDir.getAbsolutePath()), TotalState.STOPPED);
         });
     }
 
@@ -554,6 +577,13 @@ public class MainController extends AbstractController implements ValidationStat
     }
 
     @Override
+    public void onSectionCancel(int sectionId) {
+        Platform.runLater(() -> {
+            validationStateManager.updateSectionStatus(sectionId, ProcessingState.CANCELED);
+        });
+    }
+
+    @Override
     public void onRuleStart(int sectionId, int ruleId) {
         Platform.runLater(() -> {
             validationStateManager.updateRuleState(sectionId, ruleId, ProcessingState.RUNNING);
@@ -569,6 +599,18 @@ public class MainController extends AbstractController implements ValidationStat
             //so that probles are reloaded
             selectRule(selectedRule);
         });
+    }
+
+    @Override
+    public void onRuleCancel(int sectionId, int ruleId) {
+        Platform.runLater(() -> {
+            validationStateManager.updateRuleState(sectionId, ruleId, ProcessingState.CANCELED);
+        });
+    }
+
+    @Override
+    public boolean shouldCancel() {
+        return cancelValidation;
     }
 
     public void openImageUtilsDialog(ActionEvent actionEvent) {
@@ -590,10 +632,14 @@ public class MainController extends AbstractController implements ValidationStat
     }
 
     public void stopValidation(ActionEvent actionEvent) {
-        // TODO: 12.2.18 implementovat zrušení validace
+        cancelValidation = true;
+        if (validationTask != null) {
+            validationTask.cancel();
+        }
     }
 
+
     private enum TotalState {
-        IDLE, RUNNING, FINISHED, ERROR, CANCELED;
+        IDLE, RUNNING, FINISHED, ERROR, STOPPED;
     }
 }
