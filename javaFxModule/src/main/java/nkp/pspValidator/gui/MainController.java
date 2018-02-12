@@ -47,6 +47,8 @@ public class MainController extends AbstractController implements ValidationStat
     @FXML
     Menu menuValidate;
     @FXML
+    Menu menuValidation;
+    @FXML
     Menu menuSettings;
     @FXML
     Menu menuShow;
@@ -160,10 +162,7 @@ public class MainController extends AbstractController implements ValidationStat
         problemsRuleDescriptionLbl.setText(null);
         problemList.setItems(null);
         problemList.setVisible(false);
-        //zablokovani casti menu
-        menuValidate.setDisable(true);
-        menuSettings.setDisable(true);
-        menuShow.setDisable(true);
+        updateStatus("", TotalState.IDLE);
     }
 
     /**
@@ -249,28 +248,79 @@ public class MainController extends AbstractController implements ValidationStat
         statusText.setText(text);
         switch (state) {
             case IDLE:
+                //menus
+                menuValidate.setDisable(false);
+                menuValidation.setDisable(true);
+                menuSettings.setDisable(false);
+                menuShow.setDisable(false);
+                //status bar
                 statusProgressIndicator.setVisible(false);
                 statusImgFinished.setVisible(false);
                 statusImgError.setVisible(false);
+                //logs through menu
+                showValidationResultSummaryDialogItem.setDisable(true);
+                showLogTxtMenuItem.setDisable(true);
+                showLogXmlMenuItem.setDisable(true);
                 break;
             case RUNNING:
+                //menus
+                menuValidate.setDisable(true);
+                menuValidation.setDisable(false);
+                menuSettings.setDisable(true);
+                menuShow.setDisable(true);
+                //status bar
                 statusProgressIndicator.setVisible(true);
                 statusImgFinished.setVisible(false);
                 statusImgError.setVisible(false);
+                //logs through menu
+                showValidationResultSummaryDialogItem.setDisable(true);
+                showLogTxtMenuItem.setDisable(true);
+                showLogXmlMenuItem.setDisable(true);
                 break;
             case FINISHED:
+                //menus
+                menuValidate.setDisable(false);
+                menuValidation.setDisable(true);
+                menuSettings.setDisable(false);
+                menuShow.setDisable(false);
+                //status bar
                 statusProgressIndicator.setVisible(false);
                 statusImgFinished.setVisible(true);
                 statusImgError.setVisible(false);
+                //logs through menu
+                showValidationResultSummaryDialogItem.setDisable(false);
+                showLogTxtMenuItem.setDisable(logTxtFile == null);
+                showLogXmlMenuItem.setDisable(logXmlFile == null);
                 break;
             case ERROR:
+                //menus
+                menuValidate.setDisable(false);
+                menuValidation.setDisable(true);
+                menuSettings.setDisable(false);
+                menuShow.setDisable(false);
+                //status bar
                 statusProgressIndicator.setVisible(false);
                 statusImgFinished.setVisible(false);
                 statusImgError.setVisible(true);
-                //init menus
+                //logs through menu
+                showValidationResultSummaryDialogItem.setDisable(true);
+                showLogTxtMenuItem.setDisable(true);
+                showLogXmlMenuItem.setDisable(true);
+                break;
+            case CANCELED:
+                //menus
                 menuValidate.setDisable(false);
+                menuValidation.setDisable(true);
                 menuSettings.setDisable(false);
                 menuShow.setDisable(false);
+                //status bar
+                statusProgressIndicator.setVisible(false);
+                statusImgFinished.setVisible(false);
+                statusImgError.setVisible(false);
+                //logs through menu
+                showValidationResultSummaryDialogItem.setDisable(true);
+                showLogTxtMenuItem.setDisable(true);
+                showLogXmlMenuItem.setDisable(true);
                 break;
         }
     }
@@ -317,13 +367,6 @@ public class MainController extends AbstractController implements ValidationStat
     public void onValidationsFinish(int globalProblemsTotal, Map<Level, Integer> globalProblemsByLevel, boolean valid, long duration) {
         Platform.runLater(() -> {
             updateStatus(String.format("Validace balíku %s hotova.", pspDir.getAbsolutePath()), TotalState.FINISHED);
-            //reenable menus
-            menuValidate.setDisable(false);
-            menuSettings.setDisable(false);
-            menuShow.setDisable(false);
-            showValidationResultSummaryDialogItem.setDisable(false);
-            showLogTxtMenuItem.setDisable(logTxtFile == null);
-            showLogXmlMenuItem.setDisable(logXmlFile == null);
             //show dialog with summary
             validationResultSummary = new ValidationResultSummary();
             validationResultSummary.setPspDir(pspDir);
@@ -546,7 +589,11 @@ public class MainController extends AbstractController implements ValidationStat
         }
     }
 
+    public void stopValidation(ActionEvent actionEvent) {
+        // TODO: 12.2.18 implementovat zrušení validace
+    }
+
     private enum TotalState {
-        IDLE, RUNNING, FINISHED, ERROR;
+        IDLE, RUNNING, FINISHED, ERROR, CANCELED;
     }
 }
