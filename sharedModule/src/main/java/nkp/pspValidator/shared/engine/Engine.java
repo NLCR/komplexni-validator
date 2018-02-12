@@ -7,6 +7,7 @@ import nkp.pspValidator.shared.engine.exceptions.XmlFileParsingException;
 import nkp.pspValidator.shared.engine.validationFunctions.*;
 import nkp.pspValidator.shared.imageUtils.validation.ImageValidator;
 import nkp.pspValidator.shared.metadataProfile.biblio.BibliographicMetadataProfilesManager;
+import nkp.pspValidator.shared.metadataProfile.mets.MetsProfilesManager;
 import nkp.pspValidator.shared.metadataProfile.tech.TechnicalMetadataProfilesManager;
 import org.w3c.dom.Document;
 
@@ -38,6 +39,7 @@ public class Engine {
 
     private BibliographicMetadataProfilesManager bibliographicMetadataProfilesManager;
     private TechnicalMetadataProfilesManager technicalMetadataProfilesManager;
+    private MetsProfilesManager metsProfilesManager;
 
     public BibliographicMetadataProfilesManager getBibliographicMetadataProfilesManager() {
         return bibliographicMetadataProfilesManager;
@@ -53,6 +55,14 @@ public class Engine {
 
     public void setTechnicalMetadataProfilesManager(TechnicalMetadataProfilesManager technicalMetadataProfilesManager) {
         this.technicalMetadataProfilesManager = technicalMetadataProfilesManager;
+    }
+
+    public void setMetsProfilesManager(MetsProfilesManager metsProfilesManager) {
+        this.metsProfilesManager = metsProfilesManager;
+    }
+
+    public MetsProfilesManager getMetsProfilesManager() {
+        return metsProfilesManager;
     }
 
     public Engine(ImageValidator imageValidator) {
@@ -192,11 +202,13 @@ public class Engine {
                 return new VfCheckPrimaryMetsDcIdentifiersMatchModsIdentifiers(this);
             case "checkFileListsMatch":
                 return new VfCheckFileListsMatch(this);
+
+
+            //mets
             case "checkMetsFilesecSizesMatch":
                 return new VfCheckMetsFilesecSizesMatch(this);
             case "checkMetsFilesecChecksumsMatch":
                 return new VfCheckMetsFilesecChecksumsMatch(this);
-
             case "checkSecondaryMetsFilesecContainsAllFilegroups":
                 return new VfCheckSecondaryMetsFilesecContainsAllFilegroups(this);
             case "checkSecondaryMetsFilegroupReferencesSingleFile":
@@ -209,14 +221,14 @@ public class Engine {
                 return new VfCheckPrimaryMetsStructLinksOk(this);
             case "checkSecondaryMetsPhysicalMapOk":
                 return new VfCheckSecondaryMetsPhysicalMapOk(this);
-
             case "checkMetsAmdsecElementsMatchProfile":
                 return new VfCheckMetsAmdsecElementsMatchProfile(this);
             case "checkPremisLinks":
                 return new VfCheckPremisLinks(this);
-
             case "checkImageFilesValidByExternalUtil":
                 return new VfCheckImageFilesValidByExternalUtil(this);
+            case "checkMetsMatchProfile":
+                return new VfCheckMetsMatchProfile(this);
 
             //bibliographic metadata
             case "checkBibliographicMetadataMatchProfile":

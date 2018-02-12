@@ -34,6 +34,7 @@ public class FdmfConfiguration {
     private static final String BIBLIO_PROFILES_MODS_DIR = "mods";
 
     private static final String TECH_PROFILES_DIR = "techProfiles";
+    private static final String METS_PROFILES_DIR = "metsProfiles";
 
     private final File fdmfRoot;
     private final File fdmfConfigXsd;
@@ -45,8 +46,10 @@ public class FdmfConfiguration {
     private final List<File> biblioModsTemplates = new ArrayList<>();
     private final List<File> biblioDcTemplates = new ArrayList<>();
     private final List<File> techProfiles = new ArrayList<>();
+    private List<File> metsProfiles = new ArrayList<>();
 
     private ImageValidator imageValidator;
+
 
     public FdmfConfiguration(File fdmfRoot, File fdmfConfigXsd, File j2kProfileConfigXsd, File metadataProfileXsd) throws ValidatorConfigurationException {
         this.fdmfRoot = fdmfRoot;
@@ -80,6 +83,7 @@ public class FdmfConfiguration {
         //inicializace profilu pro validaci metadat
         initBiblioProfiles();
         initTechProfiles();
+        initMetsProfiles();
     }
 
     private void initBiblioProfiles() throws ValidatorConfigurationException {
@@ -113,6 +117,16 @@ public class FdmfConfiguration {
         for (File profileFile : techProfileFiles) {
             validateConfigFile(profileFile, metadataProfileXsd);
             techProfiles.add(profileFile);
+        }
+    }
+
+    private void initMetsProfiles() throws ValidatorConfigurationException {
+        File metsProfilesDir = new File(fdmfRoot, METS_PROFILES_DIR);
+        checkDirExistAndReadable(metsProfilesDir);
+        File[] metProfileFiles = metsProfilesDir.listFiles((dir, name) -> name.endsWith(".xml"));
+        for (File profileFile : metProfileFiles) {
+            validateConfigFile(profileFile, metadataProfileXsd);
+            metsProfiles.add(profileFile);
         }
     }
 
@@ -212,5 +226,9 @@ public class FdmfConfiguration {
 
     public List<File> getTechProfiles() {
         return techProfiles;
+    }
+
+    public List<File> getMetsProfiles() {
+        return metsProfiles;
     }
 }
