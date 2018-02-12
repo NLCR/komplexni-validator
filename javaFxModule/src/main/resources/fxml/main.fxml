@@ -23,6 +23,12 @@
                         <SeparatorMenuItem/>
                         <MenuItem disable="true" text="Adresář obsahující PSP balíky (adresáře)"/>
                         <MenuItem disable="true" text="Zip obsahující PSP balíky (zip)"/>
+                        <SeparatorMenuItem/>
+                    </items>
+                </Menu>
+                <Menu fx:id="menuValidation" text="Validace" disable="true">
+                    <items>
+                        <MenuItem onAction="#stopValidation" text="Zrušit probíhající validaci"/>
                     </items>
                 </Menu>
                 <Menu fx:id="menuSettings" text="Nastavení">
@@ -40,8 +46,6 @@
                                   onAction="#showLogTxt"/>
                         <MenuItem fx:id="showLogXmlMenuItem" text="XML log proběhlé validace" disable="true"
                                   onAction="#showLogXml"/>
-                        <!--<MenuItem text="Poslední validace"/>
-                        <MenuItem disable="true" text="Validační soubory"/>-->
                     </items>
                 </Menu>
                 <Menu text="Nápověda">
