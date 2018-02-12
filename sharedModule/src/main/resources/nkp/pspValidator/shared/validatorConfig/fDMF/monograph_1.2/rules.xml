@@ -1976,7 +1976,7 @@
 
     </rules-section>
 
-    
+
     <rules-section name="Primary METS filesec" description="">
 
         <rule name="PRIMARY-METS_FILESEC_ALL_FILEGROUPS_PRESENT">
