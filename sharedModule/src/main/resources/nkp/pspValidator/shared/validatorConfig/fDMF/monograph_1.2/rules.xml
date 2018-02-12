@@ -1945,6 +1945,38 @@
 
     </rules-section>
 
+
+    <rules-section name="METS headers" description="Kontrola hlaviček primárního a sekundárních METS záznamů">
+
+        <rule name="PRIMARY_METS_HEADER_MATCHES_PROFILE">
+            <description>Primární METS musí obsahovat hlavičku metsHdr, která musí splňovat požadovaný profil.
+            </description>
+            <validation functionName="checkMetsMatchProfile">
+                <params>
+                    <value name="mets_file" type="FILE">
+                        <value-ref name="PRIMARY-METS_FILE"/>
+                    </value>
+                    <value name="profile" type="STRING">primary_mets_header</value>
+                </params>
+            </validation>
+        </rule>
+
+        <rule name="SECONDARY_METS_HEADER_MATCH_PROFILE">
+            <description>Sekundární METS musí obsahovat hlavičku metsHdr, která musí splňovat požadovaný profil.
+            </description>
+            <validation functionName="checkMetsMatchProfile">
+                <params>
+                    <value name="mets_files" type="FILE_LIST">
+                        <value-ref name="SECONDARY-METS_FILES"/>
+                    </value>
+                    <value name="profile" type="STRING">secondary_mets_header</value>
+                </params>
+            </validation>
+        </rule>
+
+    </rules-section>
+
+    
     <rules-section name="Primary METS filesec" description="">
 
         <rule name="PRIMARY-METS_FILESEC_ALL_FILEGROUPS_PRESENT">

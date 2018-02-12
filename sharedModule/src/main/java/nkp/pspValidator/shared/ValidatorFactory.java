@@ -3,6 +3,7 @@ package nkp.pspValidator.shared;
 import nkp.pspValidator.shared.metadataProfile.biblio.BibliographicMetadataProfilesManager;
 import nkp.pspValidator.shared.metadataProfile.MetadataProfileParser;
 import nkp.pspValidator.shared.metadataProfile.DictionaryManager;
+import nkp.pspValidator.shared.metadataProfile.mets.MetsProfilesManager;
 import nkp.pspValidator.shared.metadataProfile.tech.TechnicalMetadataProfilesManager;
 import nkp.pspValidator.shared.engine.Engine;
 import nkp.pspValidator.shared.engine.exceptions.ValidatorConfigurationException;
@@ -48,6 +49,13 @@ public class ValidatorFactory {
             techMgr.processFile(templateFile);
         }
         engine.setTechnicalMetadataProfilesManager(techMgr);
+
+        //process mets profile files
+        MetsProfilesManager metsMgr = new MetsProfilesManager(new MetadataProfileParser(dictionaryManager));
+        for (File templateFile : fdmfConfiguration.getMetsProfiles()) {
+            metsMgr.processFile(templateFile);
+        }
+        engine.setMetsProfilesManager(metsMgr);
 
         return new Validator(engine);
     }
