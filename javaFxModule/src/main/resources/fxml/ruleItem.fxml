@@ -34,6 +34,13 @@
                     </image>
                 </ImageView>
 
+                <ImageView fx:id="imgCanceled"
+                           styleClass="problem-thumb">
+                    <image>
+                        <Image url="@/img/Unavailable-20.png"/>
+                    </image>
+                </ImageView>
+
             </StackPane>
 
             <Label fx:id="name" text="Název sekce"/>

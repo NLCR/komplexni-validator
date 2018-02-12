@@ -80,13 +80,14 @@ public class MainTest {
         //devParams.getSectionsToRun().add("Bibliografická metadata");
         //devParams.getSectionsToRun().add("ALTO");
         //devParams.getSectionsToRun().add("Technická metadata");
+        devParams.getSectionsToRun().add("METS headers");
         //devParams.getSectionsToRun().add("Autorskoprávní metadata");
         //devParams.getSectionsToRun().add("Secondary METS filesec");
-        devParams.getSectionsToRun().add("Strukturální mapy");
+        //devParams.getSectionsToRun().add("Strukturální mapy");
 
         Main.main(devParams, buildParams(
-                //Action.VALIDATE_PSP,
-                Action.VALIDATE_PSP_GROUP,
+                Action.VALIDATE_PSP,
+                //Action.VALIDATE_PSP_GROUP,
                 configDir
                 , "/tmp"
 
@@ -94,12 +95,12 @@ public class MainTest {
                 //, MON_1_2_MAP
                 //, MON_1_2_INVALID_IMAGES
                 //, PER_1_4
-                //, PER_1_6
+                , PER_1_6
                 //, PER_1_6_INFO_INVALID_NS
-                , ZIP_1
+                //, ZIP_1
                 //, ZIP_NOT_ZIP
 
-                , GROUP
+                , null//GROUP
                 //, GROUP_ZIP
 
                 , null

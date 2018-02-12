@@ -13,7 +13,9 @@ import nkp.pspValidator.shared.imageUtils.ImageUtilManager;
 import nkp.pspValidator.shared.imageUtils.ImageUtilManagerFactory;
 import org.apache.commons.cli.*;
 
-import java.io.*;
+import java.io.File;
+import java.io.IOException;
+import java.io.PrintStream;
 import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.zip.ZipException;
@@ -715,19 +717,31 @@ public class Main {
         switch (verbosity) {
             case 3:
                 //vsechno, vcetne sekci a pravidel bez chyb
-                validator.run(xmlProtocolFile, out, true, true, true, true, devParams, progressListener);
+                validator.run(xmlProtocolFile, out,
+                        true, true, true, true,
+                        devParams,
+                        progressListener, null);
                 break;
             case 2:
                 //jen chybove sekce a v popisy jednotlivych chyb (default)
-                validator.run(xmlProtocolFile, out, true, false, true, false, devParams, progressListener);
+                validator.run(xmlProtocolFile, out,
+                        true, false, true, false,
+                        devParams,
+                        progressListener, null);
                 break;
             case 1:
                 //jen pocty chyb v chybovych sekcich, bez popisu jednotlivych chyb
-                validator.run(xmlProtocolFile, out, true, false, false, false, devParams, progressListener);
+                validator.run(xmlProtocolFile, out,
+                        true, false, false, false,
+                        devParams,
+                        progressListener, null);
                 break;
             case 0:
                 //jen valid/not valid
-                validator.run(xmlProtocolFile, out, false, false, false, false, devParams, progressListener);
+                validator.run(xmlProtocolFile, out,
+                        false, false, false, false,
+                        devParams,
+                        progressListener, null);
                 break;
             default:
                 throw new IllegalStateException(String.format("Nepovolená hodnota verbosity: %d. Hodnota musí být v intervalu [0-3]", verbosity));
