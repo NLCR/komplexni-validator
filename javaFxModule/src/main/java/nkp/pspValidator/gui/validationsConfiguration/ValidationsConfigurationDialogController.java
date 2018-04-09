@@ -15,9 +15,7 @@ import nkp.pspValidator.gui.DialogController;
 import nkp.pspValidator.gui.ValidationDataManager;
 import nkp.pspValidator.shared.Dmf;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 
@@ -44,9 +42,12 @@ public class ValidationsConfigurationDialogController extends DialogController {
         container.prefHeightProperty().bind(stage.heightProperty());
 
         ValidationDataManager mgr = main.getValidationDataManager();
-        List<Dmf> dmfs = buildDmfList(mgr);
-        configurations = buildConfigMap(dmfs);
-        for (Dmf dmf : dmfs) {
+        // TODO: 10.4.18 inicializace configurationManager muze trvat dlouho, tak to delat ve vedlejsim vlakne a pridat nejaky progressbar
+        //configurationManager = new MockConfigurationManager();
+        configurationManager = new ConfigurationManagerImpl(mgr);
+        configurations = buildConfigMap();
+
+        for (Dmf dmf : configurationManager.getDmfList()) {
             Tab tab = new Tab();
             tab.setText(dmf.toString());
             HBox hbox = new HBox();
@@ -95,32 +96,17 @@ public class ValidationsConfigurationDialogController extends DialogController {
         return sectionList;
     }
 
-    private Map<Dmf, ValidationsConfiguration> buildConfigMap(List<Dmf> dmfs) {
+    private Map<Dmf, ValidationsConfiguration> buildConfigMap() {
         Map<Dmf, ValidationsConfiguration> map = new HashMap<>();
-        for (Dmf dmf : dmfs) {
+        for (Dmf dmf : configurationManager.getDmfList()) {
             map.put(dmf, configurationManager.getConfiguration(dmf));
         }
         return map;
     }
 
-    private List<Dmf> buildDmfList(ValidationDataManager mgr) {
-        List<Dmf> result = new ArrayList<>();
-        for (String monVersion : mgr.getFdmfRegistry().getMonographFdmfVersions()) {
-            result.add(new Dmf(Dmf.Type.MONOGRAPH, monVersion));
-        }
-        for (String perVersion : mgr.getFdmfRegistry().getPeriodicalFdmfVersions()) {
-            result.add(new Dmf(Dmf.Type.PERIODICAL, perVersion));
-        }
-        return result;
-    }
-
     @Override
     public EventHandler<WindowEvent> getOnCloseEventHandler() {
         return null;
-    }
-
-    public void setValidationsConfiguration(ConfigurationManager somethingManager) {
-        this.configurationManager = somethingManager;
     }
 
     public void notifyDataEdited() {

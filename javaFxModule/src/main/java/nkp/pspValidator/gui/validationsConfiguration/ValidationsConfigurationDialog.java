@@ -39,12 +39,11 @@ public class ValidationsConfigurationDialog extends AbstractDialog {
 
     @Override
     public boolean isResizable() {
-        //TODO: just temporary, put all content into scroll view
-        return true;
+        return false;
     }
 
     @Override
     public void setControllerData(DialogController controller) {
-        ((ValidationsConfigurationDialogController) controller).setValidationsConfiguration(MockConfigurationManager.getInstance());
+        //((ValidationsConfigurationDialogController) controller).setValidationsConfiguration(mgr);
     }
 }

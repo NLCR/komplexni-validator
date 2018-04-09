@@ -13,7 +13,10 @@ import javafx.stage.Stage;
 import javafx.stage.Window;
 import javafx.util.Callback;
 import nkp.pspValidator.gui.validation.*;
-import nkp.pspValidator.shared.*;
+import nkp.pspValidator.shared.Dmf;
+import nkp.pspValidator.shared.DmfDetector;
+import nkp.pspValidator.shared.ValidationState;
+import nkp.pspValidator.shared.Validator;
 import nkp.pspValidator.shared.engine.Level;
 import nkp.pspValidator.shared.engine.Rule;
 import nkp.pspValidator.shared.engine.RulesSection;
@@ -192,9 +195,7 @@ public class MainController extends AbstractController implements ValidationStat
                     updateStatusFromWorkerThread(String.format("Inicializuji balík %s.", pspDir.getAbsolutePath()), TotalState.RUNNING);
                     dmf = new DmfDetector().resolveDmf(pspDir, preferedMonVersion, preferedPerVersion, forcedMonVersion, forcedPerVersion);
                     //System.out.println(dmf);
-                    FdmfConfiguration fdmfConfig = main.getValidationDataManager().getFdmfRegistry().getFdmfConfig(dmf);
-                    fdmfConfig.initJ2kProfiles(main.getValidationDataManager().getImageUtilManager());
-                    Validator validator = ValidatorFactory.buildValidator(fdmfConfig, pspDir, main.getValidationDataManager().getValidatorConfigMgr().getDictionaryManager());
+                    Validator validator = Utils.buildValidator(main.getValidationDataManager(), dmf, pspDir);
                     //PrintStream out = textAreaPrintStream();//System.out;
                     out = buildTxtLogPrintstream();
                     //TODO: v produkci odstranit
@@ -222,7 +223,7 @@ public class MainController extends AbstractController implements ValidationStat
                     //updateStatus(String.format("Validace balíku %s hotova.", pspDir.getAbsolutePath()));
                 } /*catch (InterruptedException e) {
                     updateStatusFromWorkerThread(String.format("Validace balíku zrušena."), TotalState.STOPPED);
-                } */catch (Exception e) {
+                } */ catch (Exception e) {
                     updateStatusFromWorkerThread(String.format("Chyba: %s.", e.getMessage()), TotalState.ERROR);
                     e.printStackTrace();
                 } finally {
