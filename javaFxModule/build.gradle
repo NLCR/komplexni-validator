@@ -10,6 +10,8 @@ repositories {
 }
 */
 
+println "Java home: " + System.properties['java.home']
+
 //https://github.com/FibreFoX/javafx-gradle-plugin
 
 group 'rzehan'

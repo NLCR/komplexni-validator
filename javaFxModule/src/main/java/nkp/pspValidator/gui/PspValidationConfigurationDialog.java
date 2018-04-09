@@ -14,32 +14,32 @@ public class PspValidationConfigurationDialog extends AbstractDialog {
     }
 
     @Override
-    URL getFxmlResource() {
+    public URL getFxmlResource() {
         return getClass().getResource("/fxml/pspValidationConfigurationDialog.fxml");
     }
 
     @Override
-    int getWidth() {
+    public int getWidth() {
         return 650;
     }
 
     @Override
-    int getHeight() {
+    public int getHeight() {
         return 450;
     }
 
     @Override
-    String getTitle() {
+    public String getTitle() {
         return "Nastavení validace PSP balíku";
     }
 
     @Override
-    boolean isResizable() {
+    public boolean isResizable() {
         return false;
     }
 
     @Override
-    void setControllerData(DialogController controller) {
+    public void setControllerData(DialogController controller) {
         //nothing
     }
 

@@ -17,32 +17,32 @@ public class ValidationResultSummaryDialog extends AbstractDialog {
     }
 
     @Override
-    URL getFxmlResource() {
+    public URL getFxmlResource() {
         return getClass().getResource("/fxml/validationResulSummaryDialog.fxml");
     }
 
     @Override
-    int getWidth() {
+    public int getWidth() {
         return 700;
     }
 
     @Override
-    int getHeight() {
+    public int getHeight() {
         return 500;
     }
 
     @Override
-    String getTitle() {
+    public String getTitle() {
         return "Sumarizace výsledků validace";
     }
 
     @Override
-    boolean isResizable() {
+    public boolean isResizable() {
         return false;
     }
 
     @Override
-    void setControllerData(DialogController controller) {
+    public void setControllerData(DialogController controller) {
         ((ValidationResultsSummaryDialogController) controller).setData(summary);
     }
 

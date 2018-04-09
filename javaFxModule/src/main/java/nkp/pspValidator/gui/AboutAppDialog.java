@@ -14,32 +14,32 @@ public class AboutAppDialog extends AbstractDialog {
     }
 
     @Override
-    URL getFxmlResource() {
+    public URL getFxmlResource() {
         return getClass().getResource("/fxml/aboutAppDialog.fxml");
     }
 
     @Override
-    int getWidth() {
+    public int getWidth() {
         return 600;
     }
 
     @Override
-    int getHeight() {
+    public int getHeight() {
         return 400;
     }
 
     @Override
-    String getTitle() {
+    public String getTitle() {
         return "O programu";
     }
 
     @Override
-    boolean isResizable() {
+    public boolean isResizable() {
         return false;
     }
 
     @Override
-    void setControllerData(DialogController controller) {
+    public void setControllerData(DialogController controller) {
         //TODO
     }
 }
