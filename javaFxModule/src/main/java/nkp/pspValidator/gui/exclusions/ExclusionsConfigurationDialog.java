@@ -1,4 +1,4 @@
-package nkp.pspValidator.gui.validationsConfiguration;
+package nkp.pspValidator.gui.exclusions;
 
 import javafx.stage.Stage;
 import nkp.pspValidator.gui.AbstractDialog;
@@ -10,16 +10,16 @@ import java.net.URL;
 /**
  * Created by Martin Řehánek on 9.4.18.
  */
-public class ValidationsConfigurationDialog extends AbstractDialog {
+public class ExclusionsConfigurationDialog extends AbstractDialog {
 
 
-    public ValidationsConfigurationDialog(Stage stage, Main main) {
+    public ExclusionsConfigurationDialog(Stage stage, Main main) {
         super(stage, main);
     }
 
     @Override
     public URL getFxmlResource() {
-        return getClass().getResource("/fxml/validationsConfiguration/validationsConfigurationDialog.fxml");
+        return getClass().getResource("/fxml/exclusions/exclusionsConfigurationDialog.fxml");
     }
 
     @Override

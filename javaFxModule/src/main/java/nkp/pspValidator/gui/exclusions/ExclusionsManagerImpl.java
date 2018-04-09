@@ -1,6 +1,8 @@
-package nkp.pspValidator.gui.validationsConfiguration;
+package nkp.pspValidator.gui.exclusions;
 
 import nkp.pspValidator.gui.ValidationDataManager;
+import nkp.pspValidator.gui.exclusions.data.ExcludedSection;
+import nkp.pspValidator.gui.exclusions.data.ExclusionsConfiguration;
 import nkp.pspValidator.gui.validation.Utils;
 import nkp.pspValidator.shared.Dmf;
 import nkp.pspValidator.shared.FdmfRegistry;
@@ -16,12 +18,12 @@ import java.util.Map;
 /**
  * Created by Martin Řehánek on 9.4.18.
  */
-public class ConfigurationManagerImpl implements ConfigurationManager {
+public class ExclusionsManagerImpl implements ExclusionsManager {
 
     private final List<Dmf> dmfList;
-    private final Map<Dmf, ValidationsConfiguration> configurationMap = new HashMap<>();
+    private final Map<Dmf, ExclusionsConfiguration> configurationMap = new HashMap<>();
 
-    public ConfigurationManagerImpl(ValidationDataManager mgr) {
+    public ExclusionsManagerImpl(ValidationDataManager mgr) {
         dmfList = buildDmfList(mgr);
         for (Dmf dmf : dmfList) {
             configurationMap.put(dmf, buildConfiguration(mgr, dmf));
@@ -29,17 +31,17 @@ public class ConfigurationManagerImpl implements ConfigurationManager {
         //potom zmerguju s vlastni perzistentni konfiguraci pravidel
     }
 
-    private ValidationsConfiguration buildConfiguration(ValidationDataManager mgr, Dmf dmf) {
+    private ExclusionsConfiguration buildConfiguration(ValidationDataManager mgr, Dmf dmf) {
         try {
-            ValidationsConfiguration result = new ValidationsConfiguration();
+            ExclusionsConfiguration result = new ExclusionsConfiguration();
             //inicializace fake validatoru pro ziskani pravidel
             Validator validator = Utils.buildValidator(mgr, dmf, null);
             List<RulesSection> ruleSections = validator.getEngine().getRuleSections();
-            List<Section> sections = new ArrayList<>(ruleSections.size());
+            List<ExcludedSection> excludedSections = new ArrayList<>(ruleSections.size());
             for (RulesSection section : ruleSections) {
-                sections.add(new Section(section));
+                excludedSections.add(new ExcludedSection(section));
             }
-            result.setSections(sections);
+            result.setExcludedSections(excludedSections);
             return result;
         } catch (FdmfRegistry.UnknownFdmfException e) {
             //should never happen
@@ -61,12 +63,12 @@ public class ConfigurationManagerImpl implements ConfigurationManager {
     }
 
     @Override
-    public ValidationsConfiguration getConfiguration(Dmf dmf) {
+    public ExclusionsConfiguration getConfiguration(Dmf dmf) {
         return configurationMap.get(dmf);
     }
 
     @Override
-    public void setConfiguration(Dmf dmf, ValidationsConfiguration config) {
+    public void setConfiguration(Dmf dmf, ExclusionsConfiguration config) {
         // TODO: 10.4.18 nejak perzistentne uchovavat v souboru. A pozdeji tahat a mergovat s konfiguraci z enginu
     }
 

@@ -11,7 +11,7 @@ import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import nkp.pspValidator.gui.dev.DevDialog;
-import nkp.pspValidator.gui.validationsConfiguration.ValidationsConfigurationDialog;
+import nkp.pspValidator.gui.exclusions.ExclusionsConfigurationDialog;
 import nkp.pspValidator.shared.Platform;
 import nkp.pspValidator.shared.Version;
 
@@ -69,8 +69,8 @@ public class Main extends Application {
         dialog.show();
     }
 
-    public void openValidationsConfigurationDialog() {
-        ValidationsConfigurationDialog dialog = new ValidationsConfigurationDialog(dialogStage, this);
+    public void openExclusionsConfigurationDialog() {
+        ExclusionsConfigurationDialog dialog = new ExclusionsConfigurationDialog(dialogStage, this);
         dialog.show();
     }
 
