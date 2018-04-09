@@ -24,12 +24,12 @@ public class ValidationsConfigurationDialog extends AbstractDialog {
 
     @Override
     public int getWidth() {
-        return 700;
+        return 1400;
     }
 
     @Override
     public int getHeight() {
-        return 450;
+        return 800;
     }
 
     @Override
@@ -45,7 +45,6 @@ public class ValidationsConfigurationDialog extends AbstractDialog {
 
     @Override
     public void setControllerData(DialogController controller) {
-        ValidationsConfiguration configuration = DevValidationsConfigurationFactory.getInstance().getTestConfiguration();
-        ((ValidationsConfigurationDialogController) controller).setValidationsConfiguration(configuration);
+        ((ValidationsConfigurationDialogController) controller).setValidationsConfiguration(MockConfigurationManager.getInstance());
     }
 }

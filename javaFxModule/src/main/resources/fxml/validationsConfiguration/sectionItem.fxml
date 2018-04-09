@@ -1,45 +1,39 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.CheckBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.*?>
 <AnchorPane
-        xmlns="http://javafx.com/javafx/8.0.112"
+        xmlns="http://javafx.com/javafx/8.0.121"
         xmlns:fx="http://javafx.com/fxml/1"
-        fx:id="container"
         stylesheets="/css/validationsConfiguration/sectionItem.css"
-        minWidth="300"
-        minHeight="30"
+        fx:id="container"
+        minWidth="300">
 
->
+    <padding>
+        <Insets bottom="5" left="5" right="5" top="5"/>
+    </padding>
 
-    <HBox spacing="5"
-          alignment="TOP_CENTER"
-          AnchorPane.leftAnchor="0"
-          AnchorPane.topAnchor="0"
-          AnchorPane.bottomAnchor="0"
-    >
-        <children>
-            <!--https://docs.oracle.com/javafx/2/ui_controls/checkbox.htm-->
-            <!--pouzit indeterminate pro pravidla v sekci-->
-            <CheckBox fx:id="checkBox" indeterminate="false"/>
+    <children>
+        <HBox alignment="CENTER" AnchorPane.bottomAnchor="0" AnchorPane.leftAnchor="0" AnchorPane.topAnchor="0">
+            <children>
+                <!--https://docs.oracle.com/javafx/2/ui_controls/checkbox.htm-->
+                <!--pouzit indeterminate pro pravidla v sekci-->
+                <CheckBox fx:id="checkBox" indeterminate="false"/>
 
-            <VBox>
-                <Label fx:id="name"
-                       styleClass="section-name"
-                       text="Název sekce"
-                />
-                <Label fx:id="description"
-                       styleClass="section-description"
-                       text="Popis sekce"
-                />
-            </VBox>
+                <VBox>
+                    <Label fx:id="name"
+                           styleClass="section-name"
+                           text="Název sekce"/>
+                    <Label fx:id="description"
+                           styleClass="section-description"
+                           text="Popis sekce"
+                           wrapText="true"
+                           managed="true"/>
+                </VBox>
 
-        </children>
-    </HBox>
-
+            </children>
+        </HBox>
+    </children>
 
 </AnchorPane>
-
-
-

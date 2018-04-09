@@ -9,7 +9,6 @@ public class Section {
     private String description;
 
     public Section() {
-
     }
 
     public Section(Section original) {
@@ -42,7 +41,7 @@ public class Section {
         this.description = description;
     }
 
-    public static enum State {
+    public enum State {
         ENABLED, DISABLED;
     }
 
