@@ -130,6 +130,7 @@
                 </mustMatchAny>
             </rules>
         </validation>
+
         <!--TODO: docasne vyple, protože neprochází obrazy s hodnotou Restricted ICC, aktuálně stačí, že obraz projde kontrolou na validitu-->
         <!--<validation name="Color space (1)">
             <xmlDataExtraction resultType="STRING">
