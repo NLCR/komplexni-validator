@@ -618,8 +618,8 @@ public class MainController extends AbstractController implements ValidationStat
         main.checkImageUtils(false, "OK");
     }
 
-    public void openValidationsConfigurationDialog(ActionEvent actionEvent) {
-        main.openValidationsConfigurationDialog();
+    public void openExclusionsConfigurationDialog(ActionEvent actionEvent) {
+        main.openExclusionsConfigurationDialog();
     }
 
     public void showLogTxt(ActionEvent actionEvent) {

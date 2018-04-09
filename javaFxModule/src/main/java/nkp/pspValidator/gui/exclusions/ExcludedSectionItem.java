@@ -1,4 +1,4 @@
-package nkp.pspValidator.gui.validationsConfiguration;
+package nkp.pspValidator.gui.exclusions;
 
 /**
  * Created by Martin Řehánek on 16.12.16.
@@ -9,10 +9,11 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
+import nkp.pspValidator.gui.exclusions.data.ExcludedSection;
 
 import java.io.IOException;
 
-public class SectionItem {
+public class ExcludedSectionItem {
 
     @FXML
     private Node container;
@@ -23,14 +24,14 @@ public class SectionItem {
     @FXML
     private Label description;
 
-    private Section section;
+    private ExcludedSection excludedSection;
 
-    private final ValidationsConfigurationDialogController controller;
+    private final ExclusionsConfigurationDialogController controller;
 
 
-    public SectionItem(ValidationsConfigurationDialogController controller) {
+    public ExcludedSectionItem(ExclusionsConfigurationDialogController controller) {
         this.controller = controller;
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/validationsConfiguration/sectionItem.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/exclusions/excludedSectionItem.fxml"));
         fxmlLoader.setController(this);
         try {
             fxmlLoader.load();
@@ -39,22 +40,22 @@ public class SectionItem {
         }
     }
 
-    public void populate(Section section) {
-        this.section = section;
+    public void populate(ExcludedSection excludedSection) {
+        this.excludedSection = excludedSection;
         updateViews();
     }
 
     private void updateViews() {
-        name.setText(section.getName());
-        if (section.getDescription() == null) {
+        name.setText(excludedSection.getName());
+        if (excludedSection.getDescription() == null) {
             description.setVisible(false);
             description.setManaged(false);
         } else {
             description.setVisible(true);
             description.setManaged(true);
-            description.setText(section.getDescription());
+            description.setText(excludedSection.getDescription());
         }
-        switch (section.getState()) {
+        switch (excludedSection.getState()) {
             case ENABLED:
                 checkBox.setSelected(true);
                 break;
@@ -63,7 +64,7 @@ public class SectionItem {
                 break;
         }
         checkBox.selectedProperty().addListener((observable, oldValue, newValue) -> {
-            section.setState(newValue ? Section.State.ENABLED : Section.State.DISABLED);
+            excludedSection.setState(newValue ? ExcludedSection.State.ENABLED : ExcludedSection.State.DISABLED);
             if (oldValue != newValue) {
                 controller.notifyDataEdited();
             }

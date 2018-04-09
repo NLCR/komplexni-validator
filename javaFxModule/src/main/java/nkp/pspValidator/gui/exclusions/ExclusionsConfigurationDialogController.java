@@ -1,4 +1,4 @@
-package nkp.pspValidator.gui.validationsConfiguration;
+package nkp.pspValidator.gui.exclusions;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -13,6 +13,8 @@ import javafx.stage.WindowEvent;
 import javafx.util.Callback;
 import nkp.pspValidator.gui.DialogController;
 import nkp.pspValidator.gui.ValidationDataManager;
+import nkp.pspValidator.gui.exclusions.data.ExcludedSection;
+import nkp.pspValidator.gui.exclusions.data.ExclusionsConfiguration;
 import nkp.pspValidator.shared.Dmf;
 
 import java.util.HashMap;
@@ -22,7 +24,7 @@ import java.util.Map;
 /**
  * Created by Martin Řehánek on 9.4.18.
  */
-public class ValidationsConfigurationDialogController extends DialogController {
+public class ExclusionsConfigurationDialogController extends DialogController {
 
     @FXML
     VBox container;
@@ -33,8 +35,8 @@ public class ValidationsConfigurationDialogController extends DialogController {
     @FXML
     Button btnSave;
 
-    private ConfigurationManager configurationManager;
-    private Map<Dmf, ValidationsConfiguration> configurations;
+    private ExclusionsManager exclusionsManager;
+    private Map<Dmf, ExclusionsConfiguration> configurations;
 
     @Override
     public void startNow() {
@@ -44,14 +46,14 @@ public class ValidationsConfigurationDialogController extends DialogController {
         ValidationDataManager mgr = main.getValidationDataManager();
         // TODO: 10.4.18 inicializace configurationManager muze trvat dlouho, tak to delat ve vedlejsim vlakne a pridat nejaky progressbar
         //configurationManager = new MockConfigurationManager();
-        configurationManager = new ConfigurationManagerImpl(mgr);
+        exclusionsManager = new ExclusionsManagerImpl(mgr);
         configurations = buildConfigMap();
 
-        for (Dmf dmf : configurationManager.getDmfList()) {
+        for (Dmf dmf : exclusionsManager.getDmfList()) {
             Tab tab = new Tab();
             tab.setText(dmf.toString());
             HBox hbox = new HBox();
-            ListView<Section> sectionList = buildSectionList(dmf, configurations.get(dmf));
+            ListView<ExcludedSection> sectionList = buildSectionList(dmf, configurations.get(dmf));
             hbox.getChildren().add(sectionList);
             hbox.setAlignment(Pos.CENTER);
             tab.setContent(hbox);
@@ -60,23 +62,23 @@ public class ValidationsConfigurationDialogController extends DialogController {
         }
     }
 
-    private ListView<Section> buildSectionList(Dmf dmf, ValidationsConfiguration validationsConfiguration) {
-        ListView<Section> sectionList = new ListView<>();
-        ObservableList<Section> sectionsObservable = FXCollections.observableList(validationsConfiguration.getSections());
-        sectionList.setCellFactory(new Callback<ListView<Section>, ListCell<Section>>() {
+    private ListView<ExcludedSection> buildSectionList(Dmf dmf, ExclusionsConfiguration exclusionsConfiguration) {
+        ListView<ExcludedSection> sectionList = new ListView<>();
+        ObservableList<ExcludedSection> sectionsObservable = FXCollections.observableList(exclusionsConfiguration.getExcludedSections());
+        sectionList.setCellFactory(new Callback<ListView<ExcludedSection>, ListCell<ExcludedSection>>() {
 
             @Override
-            public ListCell<Section> call(javafx.scene.control.ListView<Section> list) {
-                return new ListCell<Section>() {
+            public ListCell<ExcludedSection> call(javafx.scene.control.ListView<ExcludedSection> list) {
+                return new ListCell<ExcludedSection>() {
 
                     @Override
-                    protected void updateItem(Section section, boolean empty) {
-                        super.updateItem(section, empty);
-                        if (empty || section == null) {
+                    protected void updateItem(ExcludedSection excludedSection, boolean empty) {
+                        super.updateItem(excludedSection, empty);
+                        if (empty || excludedSection == null) {
                             setGraphic(null);
                         } else {
-                            SectionItem item = new SectionItem(ValidationsConfigurationDialogController.this);
-                            item.populate(section);
+                            ExcludedSectionItem item = new ExcludedSectionItem(ExclusionsConfigurationDialogController.this);
+                            item.populate(excludedSection);
                             setGraphic(item.getContainer());
                         }
                     }
@@ -96,10 +98,10 @@ public class ValidationsConfigurationDialogController extends DialogController {
         return sectionList;
     }
 
-    private Map<Dmf, ValidationsConfiguration> buildConfigMap() {
-        Map<Dmf, ValidationsConfiguration> map = new HashMap<>();
-        for (Dmf dmf : configurationManager.getDmfList()) {
-            map.put(dmf, configurationManager.getConfiguration(dmf));
+    private Map<Dmf, ExclusionsConfiguration> buildConfigMap() {
+        Map<Dmf, ExclusionsConfiguration> map = new HashMap<>();
+        for (Dmf dmf : exclusionsManager.getDmfList()) {
+            map.put(dmf, exclusionsManager.getConfiguration(dmf));
         }
         return map;
     }
@@ -119,7 +121,7 @@ public class ValidationsConfigurationDialogController extends DialogController {
 
     public void saveData(ActionEvent actionEvent) {
         for (Dmf dmf : configurations.keySet()) {
-            configurationManager.setConfiguration(dmf, configurations.get(dmf));
+            exclusionsManager.setConfiguration(dmf, configurations.get(dmf));
         }
         stage.close();
     }

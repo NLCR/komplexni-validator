@@ -1,25 +1,25 @@
-package nkp.pspValidator.gui.validationsConfiguration;
+package nkp.pspValidator.gui.exclusions.data;
 
 import nkp.pspValidator.shared.engine.RulesSection;
 
 /**
  * Created by Martin Řehánek on 9.4.18.
  */
-public class Section {
+public class ExcludedSection {
     private State state;
     private String name;
     private String description;
 
-    public Section() {
+    public ExcludedSection() {
     }
 
-    public Section(Section original) {
+    public ExcludedSection(ExcludedSection original) {
         state = original.getState();
         name = original.getName();
         description = original.getDescription();
     }
 
-    public Section(RulesSection section) {
+    public ExcludedSection(RulesSection section) {
         state = State.ENABLED;
         name = section.getName();
         description = section.getDescription();
