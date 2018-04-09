@@ -89,6 +89,7 @@ fabric.properties
 
 # IntelliJ
 /out/
+/*/out/
 
 # mpeltonen/sbt-idea plugin
 .idea_modules/
