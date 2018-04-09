@@ -137,7 +137,8 @@
             </rules>
         </validation>
 
-        <validation name="Color space (1)">
+        <!--TODO: docasne vyple, protože neprochází obrazy s hodnotou Restricted ICC-->
+        <!--<validation name="Color space (1)">
             <xmlDataExtraction resultType="STRING">
                 <firstNonempty>
                     <xpath>//j:property[j:name='EnumCS']/j:values/j:value</xpath>
@@ -145,7 +146,7 @@
             </xmlDataExtraction>
             <rules>
                 <mustExist/>
-                <!--povolene hodnoty "sRGB" nebo "greyscale"-->
+                (povolene hodnoty "sRGB" nebo "greyscale")
                 <mustMatchAny>
                     <constant>sRGB</constant>
                     <constant>Greyscale</constant>
@@ -161,12 +162,12 @@
             </xmlDataExtraction>
             <rules>
                 <mustExist/>
-                <!--TODO: docasne vyrazeno, v realnych datech byva "Enumerated Colorspace"-->
-                <!--<mustMatchAny>
+                (TODO: docasne vyrazeno, v realnych datech byva "Enumerated Colorspace")
+                (<mustMatchAny>
                     <constant>Restricted ICC Profile</constant>
-                </mustMatchAny>-->
+                </mustMatchAny>)
             </rules>
-        </validation>
+        </validation>-->
 
         <validation name="Rozlišení vertik.">
             <xmlDataExtraction resultType="FLOAT">
