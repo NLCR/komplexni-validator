@@ -61,27 +61,27 @@ public class MockExclusionsManager implements ExclusionsManager {
         addSection(excludedSectionList, randomState(random), "Soubor CHECKSUM", "Kontrola souboru CHECKSUM, odkazů na další soubory a shody kontrolních součtů.");
         addSection(excludedSectionList, randomState(random), "Soubor INFO", "Validace souboru INFO - odkazování na ostatní soubory, kontrolní součet pro soubor CHECKSUM, atd.");
         addSection(excludedSectionList, randomState(random), "Identifikátory", null);
-        addSection(excludedSectionList, randomState(random), "METS headers", "Kontrola hlaviček primárního a sekundárních METS záznamů");
-        addSection(excludedSectionList, randomState(random), "Primary METS filesec", null);
-        addSection(excludedSectionList, randomState(random), "Secondary METS filesec", "Sekce mets:fileSec v sekundárních METS souborech musí obsahovat korektní odkazy na soubory s popisy jednotlivých stran (master a user kopie, textové a alto ocr)");
+        addSection(excludedSectionList, randomState(random), "METS hlavičky", "Kontrola hlaviček primárního a sekundárních METS záznamů");
+        addSection(excludedSectionList, randomState(random), "Primární METS filesec", null);
+        addSection(excludedSectionList, randomState(random), "Sekundární METS filesec", "Sekce mets:fileSec v sekundárních METS souborech musí obsahovat korektní odkazy na soubory s popisy jednotlivých stran (master a user kopie, textové a alto ocr)");
         addSection(excludedSectionList, randomState(random), "Strukturální mapy", "Kontrola fyzických a logických strukturálních map v METS záznamech");
 
         addSection(excludedSectionList, randomState(random), "Struktura souborů", "Struktura PSP balicku na urovni soboru");
         addSection(excludedSectionList, randomState(random), "Soubor CHECKSUM", "Kontrola souboru CHECKSUM, odkazů na další soubory a shody kontrolních součtů.");
         addSection(excludedSectionList, randomState(random), "Soubor INFO", "Validace souboru INFO - odkazování na ostatní soubory, kontrolní součet pro soubor CHECKSUM, atd.");
         addSection(excludedSectionList, randomState(random), "Identifikátory", null);
-        addSection(excludedSectionList, randomState(random), "METS headers", "Kontrola hlaviček primárního a sekundárních METS záznamů");
-        addSection(excludedSectionList, randomState(random), "Primary METS filesec", null);
-        addSection(excludedSectionList, randomState(random), "Secondary METS filesec", "Sekce mets:fileSec v sekundárních METS souborech musí obsahovat korektní odkazy na soubory s popisy jednotlivých stran (master a user kopie, textové a alto ocr)");
+        addSection(excludedSectionList, randomState(random), "METS hlavičky", "Kontrola hlaviček primárního a sekundárních METS záznamů");
+        addSection(excludedSectionList, randomState(random), "Primární METS filesec", null);
+        addSection(excludedSectionList, randomState(random), "Sekundární METS filesec", "Sekce mets:fileSec v sekundárních METS souborech musí obsahovat korektní odkazy na soubory s popisy jednotlivých stran (master a user kopie, textové a alto ocr)");
         addSection(excludedSectionList, randomState(random), "Strukturální mapy", "Kontrola fyzických a logických strukturálních map v METS záznamech");
 
         addSection(excludedSectionList, randomState(random), "Struktura souborů", "Struktura PSP balicku na urovni soboru");
         addSection(excludedSectionList, randomState(random), "Soubor CHECKSUM", "Kontrola souboru CHECKSUM, odkazů na další soubory a shody kontrolních součtů.");
         addSection(excludedSectionList, randomState(random), "Soubor INFO", "Validace souboru INFO - odkazování na ostatní soubory, kontrolní součet pro soubor CHECKSUM, atd.");
         addSection(excludedSectionList, randomState(random), "Identifikátory", null);
-        addSection(excludedSectionList, randomState(random), "METS headers", "Kontrola hlaviček primárního a sekundárních METS záznamů");
-        addSection(excludedSectionList, randomState(random), "Primary METS filesec", null);
-        addSection(excludedSectionList, randomState(random), "Secondary METS filesec", "Sekce mets:fileSec v sekundárních METS souborech musí obsahovat korektní odkazy na soubory s popisy jednotlivých stran (master a user kopie, textové a alto ocr)");
+        addSection(excludedSectionList, randomState(random), "METS hlavičky", "Kontrola hlaviček primárního a sekundárních METS záznamů");
+        addSection(excludedSectionList, randomState(random), "Primární METS filesec", null);
+        addSection(excludedSectionList, randomState(random), "Sekundární METS filesec", "Sekce mets:fileSec v sekundárních METS souborech musí obsahovat korektní odkazy na soubory s popisy jednotlivých stran (master a user kopie, textové a alto ocr)");
         addSection(excludedSectionList, randomState(random), "Strukturální mapy", "Kontrola fyzických a logických strukturálních map v METS záznamech");
 
         return configuration;

@@ -1946,7 +1946,7 @@
     </rules-section>
 
 
-    <rules-section name="METS headers" description="Kontrola hlaviček primárního a sekundárních METS záznamů">
+    <rules-section name="METS hlavičky" description="Kontrola hlaviček primárního a sekundárních METS záznamů">
 
         <rule name="PRIMARY_METS_HEADER_MATCHES_PROFILE">
             <description>Primární METS musí obsahovat hlavičku metsHdr, která musí splňovat požadovaný profil.
@@ -1977,7 +1977,7 @@
     </rules-section>
 
 
-    <rules-section name="Primary METS filesec" description="">
+    <rules-section name="Primární METS filesec" description="">
 
         <rule name="PRIMARY-METS_FILESEC_ALL_FILEGROUPS_PRESENT">
             <description>Element mets:fileSec v souboru PRIMARY-METS musí obsahovat elementy mets:fileGrp s definovanými
@@ -2198,7 +2198,7 @@
 
     </rules-section>
 
-    <rules-section name="Secondary METS filesec"
+    <rules-section name="Sekundární METS filesec"
                    description="Sekce mets:fileSec v sekundárních METS souborech musí obsahovat korektní odkazy na soubory s popisy jednotlivých stran (master a user kopie, textové a alto ocr)">
 
         <rule name="SECONDARY-METS_FILESEC_ALL_FILEGROUPS_PRESENT">
@@ -2568,7 +2568,7 @@
     </rules-section>
 
     <rules-section name="Bibliografická metadata"
-                   description="validace obsahů bibliografických metadata v MODS a Dubline Core v souboru PRIMARY-METS">
+                   description="validace obsahů bibliografických metadat v MODS a Dubline Core v souboru PRIMARY-METS">
 
         <rule name="BIBLIOGRAPHIC_METADATA_MATCH_PROFILE_TITLE">
             <description>Bibliografická metadata pro entitu typu TITLE musí splňovat požadovaný profil pro záznamy v

@@ -80,9 +80,9 @@ public class MainTest {
         //devParams.getSectionsToRun().add("Bibliografická metadata");
         //devParams.getSectionsToRun().add("ALTO");
         //devParams.getSectionsToRun().add("Technická metadata");
-        devParams.getSectionsToRun().add("METS headers");
+        devParams.getSectionsToRun().add("METS hlavičky");
         //devParams.getSectionsToRun().add("Autorskoprávní metadata");
-        //devParams.getSectionsToRun().add("Secondary METS filesec");
+        //devParams.getSectionsToRun().add("Sekundární METS filesec");
         //devParams.getSectionsToRun().add("Strukturální mapy");
 
         Main.main(devParams, buildParams(

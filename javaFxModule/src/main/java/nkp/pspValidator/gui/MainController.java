@@ -207,7 +207,7 @@ public class MainController extends AbstractController implements ValidationStat
                         devParams.getSectionsToRun().add("Soubor CHECKSUM");
                         devParams.getSectionsToRun().add("Soubor info");
                         devParams.getSectionsToRun().add("Struktura souborů");
-                        devParams.getSectionsToRun().add("Primary METS filesec");
+                        devParams.getSectionsToRun().add("Primární METS filesec");
                         //devParams.getSectionsToRun().add("JPEG 2000");
                     }
                     //Thread.sleep(5000);
