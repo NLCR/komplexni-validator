@@ -48,8 +48,10 @@ public class SectionItem {
         name.setText(section.getName());
         if (section.getDescription() == null) {
             description.setVisible(false);
+            description.setManaged(false);
         } else {
             description.setVisible(true);
+            description.setManaged(true);
             description.setText(section.getDescription());
         }
         switch (section.getState()) {
