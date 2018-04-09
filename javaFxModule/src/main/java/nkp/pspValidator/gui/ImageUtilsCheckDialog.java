@@ -19,33 +19,33 @@ public class ImageUtilsCheckDialog extends AbstractDialog {
     }
 
     @Override
-    URL getFxmlResource() {
+    public URL getFxmlResource() {
         return getClass().getResource("/fxml/imageUtilsCheck.fxml");
     }
 
     @Override
-    int getWidth() {
+    public int getWidth() {
         return 700;
     }
 
     @Override
-    int getHeight() {
+    public int getHeight() {
         return 450;
     }
 
     @Override
-    String getTitle() {
+    public String getTitle() {
         return "Kontrola dostupnosti nástrojů pro validaci obrázků";
     }
 
     @Override
-    boolean isResizable() {
+    public boolean isResizable() {
         //TODO: just temporary, put all content into scroll view
         return true;
     }
 
     @Override
-    void setControllerData(DialogController controller) {
+    public void setControllerData(DialogController controller) {
         ((ImageUtilsCheckDialogController) controller).setData(closeWhenFinished, mainButtonText);
     }
 

@@ -391,7 +391,7 @@ public class MainController extends AbstractController implements ValidationStat
             validationResultSummary.setGlobalProblemsByLevel(globalProblemsByLevel);
             validationResultSummary.setValid(valid);
             validationResultSummary.setTotalTime(duration);
-            main.showValidationResultSummaryDialog(validationResultSummary);
+            main.openValidationResultSummaryDialog(validationResultSummary);
         });
     }
 
@@ -617,6 +617,10 @@ public class MainController extends AbstractController implements ValidationStat
         main.checkImageUtils(false, "OK");
     }
 
+    public void openValidationsConfigurationDialog(ActionEvent actionEvent) {
+        main.openValidationsConfigurationDialog();
+    }
+
     public void showLogTxt(ActionEvent actionEvent) {
         openUrl("file:" + logTxtFile.getAbsolutePath());
     }
@@ -625,9 +629,9 @@ public class MainController extends AbstractController implements ValidationStat
         openUrl("file:" + logXmlFile.getAbsolutePath());
     }
 
-    public void showValidationResultSummaryDialog(ActionEvent actionEvent) {
+    public void openValidationResultSummaryDialog(ActionEvent actionEvent) {
         if (validationResultSummary != null) {
-            main.showValidationResultSummaryDialog(validationResultSummary);
+            main.openValidationResultSummaryDialog(validationResultSummary);
         }
     }
 

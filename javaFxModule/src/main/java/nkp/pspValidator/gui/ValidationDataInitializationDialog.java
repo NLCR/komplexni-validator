@@ -14,32 +14,32 @@ public class ValidationDataInitializationDialog extends AbstractDialog {
     }
 
     @Override
-    URL getFxmlResource() {
+    public URL getFxmlResource() {
         return getClass().getResource("/fxml/validationDataInitialization.fxml");
     }
 
     @Override
-    int getWidth() {
+    public int getWidth() {
         return 1000;
     }
 
     @Override
-    int getHeight() {
+    public int getHeight() {
         return 300;
     }
 
     @Override
-    String getTitle() {
+    public String getTitle() {
         return "Inicializace validačních dat";
     }
 
     @Override
-    boolean isResizable() {
+    public boolean isResizable() {
         return false;
     }
 
     @Override
-    void setControllerData(DialogController controller) {
+    public void setControllerData(DialogController controller) {
         //nothing
     }
 

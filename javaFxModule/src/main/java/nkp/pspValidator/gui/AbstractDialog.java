@@ -22,17 +22,17 @@ public abstract class AbstractDialog {
         this.main = main;
     }
 
-    abstract URL getFxmlResource();
+    public abstract URL getFxmlResource();
 
-    abstract int getWidth();
+    public abstract int getWidth();
 
-    abstract int getHeight();
+    public abstract int getHeight();
 
-    abstract String getTitle();
+    public abstract String getTitle();
 
-    abstract boolean isResizable();
+    public abstract boolean isResizable();
 
-    abstract void setControllerData(DialogController controller);
+    public abstract void setControllerData(DialogController controller);
 
     public void show() {
         try {
