@@ -1,5 +1,6 @@
 package nkp.pspValidator.gui.validationsConfiguration;
 
+import nkp.pspValidator.gui.ValidationDataManager;
 import nkp.pspValidator.shared.Dmf;
 
 import java.util.*;
@@ -28,6 +29,16 @@ public class MockConfigurationManager implements ConfigurationManager {
     @Override
     public void setConfiguration(Dmf dmf, ValidationsConfiguration config) {
         this.data.put(dmf, createCopy(config));
+    }
+
+    @Override
+    public List<Dmf> getDmfList() {
+        List<Dmf> result = new ArrayList<>();
+        result.add(new Dmf(Dmf.Type.MONOGRAPH, "1.0"));
+        result.add(new Dmf(Dmf.Type.MONOGRAPH, "1.2"));
+        result.add(new Dmf(Dmf.Type.PERIODICAL, "1.4"));
+        result.add(new Dmf(Dmf.Type.PERIODICAL, "1.6"));
+        return result;
     }
 
     private ValidationsConfiguration createCopy(ValidationsConfiguration originalConfig) {

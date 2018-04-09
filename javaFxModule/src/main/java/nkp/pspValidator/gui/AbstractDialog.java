@@ -36,6 +36,7 @@ public abstract class AbstractDialog {
 
     public void show() {
         try {
+            // FIXME: 10.4.18 nefunguje, u vetsiny dialogu vraci isResizable() false, presto se daji zvetsovat
             stage.setResizable(isResizable());
             stage.setTitle(getTitle());
             //set size
