@@ -29,7 +29,7 @@ dependencies {
     //compile 'commons-cli:commons-cli:1.4-SNAPSHOT'
 }
 
-version = '1.6'
+version = '1.7'
 
 //https://www.mkyong.com/gradle/gradle-create-a-jar-file-with-dependencies/
 task fatJar(type: Jar) {
@@ -45,4 +45,4 @@ task fatJar(type: Jar) {
 
 //targets:
 //gradle run - spusti Main (plugin application)
-//gradle fatJar - vybuildi jar v cliModule/build/lisb
+//gradle fatJar - vybuildi jar v cliModule/build/libs
