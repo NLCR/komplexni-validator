@@ -1,15 +1,15 @@
 package nkp.pspValidator.shared;
 
+import java.io.Serializable;
 import java.util.Objects;
 
 /**
  * Created by Martin Řehánek on 2.11.16.
  */
-public class Dmf {
+public class Dmf implements Serializable {
 
     private final Type type;
     private final String version;
-
 
     public Dmf(Type type, String version) {
         this.type = type;
@@ -44,7 +44,7 @@ public class Dmf {
         return Objects.hash(type, version);
     }
 
-    public static enum Type {
+    public enum Type implements Serializable {
         MONOGRAPH, PERIODICAL;
 
         @Override

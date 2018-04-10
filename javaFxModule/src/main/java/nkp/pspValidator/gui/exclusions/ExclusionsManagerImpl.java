@@ -1,5 +1,6 @@
 package nkp.pspValidator.gui.exclusions;
 
+import nkp.pspValidator.gui.ConfigurationManager;
 import nkp.pspValidator.gui.ValidationDataManager;
 import nkp.pspValidator.gui.exclusions.data.ExcludedSection;
 import nkp.pspValidator.gui.exclusions.data.ExclusionsConfiguration;
@@ -20,15 +21,60 @@ import java.util.Map;
  */
 public class ExclusionsManagerImpl implements ExclusionsManager {
 
+    private final ConfigurationManager configurationManager;
     private final List<Dmf> dmfList;
-    private final Map<Dmf, ExclusionsConfiguration> configurationMap = new HashMap<>();
+    private final Map<Dmf, ExclusionsConfiguration> configs;
 
-    public ExclusionsManagerImpl(ValidationDataManager mgr) {
+    public ExclusionsManagerImpl(ConfigurationManager configurationManager, ValidationDataManager mgr) {
+        this.configurationManager = configurationManager;
         dmfList = buildDmfList(mgr);
-        for (Dmf dmf : dmfList) {
-            configurationMap.put(dmf, buildConfiguration(mgr, dmf));
+        configs = loadConfigs(mgr);
+        save();
+    }
+
+    private Map<Dmf, ExclusionsConfiguration> loadConfigs(ValidationDataManager mgr) {
+        Map<Dmf, ExclusionsConfiguration> mapFromDmfs = loadFromDmfs(mgr);
+        Map<Dmf, ExclusionsConfiguration> mapFromConfig = configurationManager.getExclusionsConfigurations();
+        //merging
+        Map<Dmf, ExclusionsConfiguration> mapMerged = new HashMap<>();
+        for (Dmf dmf : mapFromDmfs.keySet()) {
+            //System.out.println("merging for " + dmf);
+            ExclusionsConfiguration merged = merge(mapFromDmfs.get(dmf), mapFromConfig.get(dmf));
+            if (merged != null) {
+                mapMerged.put(dmf, merged);
+            }
         }
-        //potom zmerguju s vlastni perzistentni konfiguraci pravidel
+        return mapMerged;
+    }
+
+    private ExclusionsConfiguration merge(ExclusionsConfiguration fromDmfs, ExclusionsConfiguration fromConfig) {
+        if (fromDmfs == null) {
+            return null;
+        } else if (fromConfig == null) {
+            return fromDmfs;
+        } else {
+            ExclusionsConfiguration result = new ExclusionsConfiguration();
+            result.setExcludedSections(new ArrayList<>());
+            for (ExcludedSection section : fromDmfs.getExcludedSections()) {
+                ExcludedSection newSection = new ExcludedSection(section);
+                ExcludedSection sectionFromConfig = fromConfig.getSectionByName(section.getName());
+                if (sectionFromConfig != null) {
+                    System.out.println(sectionFromConfig);
+                    newSection.setState(sectionFromConfig.getState());
+                }
+                result.getExcludedSections().add(newSection);
+                //System.out.println(newSection);
+            }
+            return result;
+        }
+    }
+
+    private Map<Dmf, ExclusionsConfiguration> loadFromDmfs(ValidationDataManager mgr) {
+        Map<Dmf, ExclusionsConfiguration> result = new HashMap<>();
+        for (Dmf dmf : dmfList) {
+            result.put(dmf, buildConfiguration(mgr, dmf));
+        }
+        return result;
     }
 
     private ExclusionsConfiguration buildConfiguration(ValidationDataManager mgr, Dmf dmf) {
@@ -64,16 +110,21 @@ public class ExclusionsManagerImpl implements ExclusionsManager {
 
     @Override
     public ExclusionsConfiguration getConfiguration(Dmf dmf) {
-        return configurationMap.get(dmf);
+        return configs.get(dmf);
     }
 
     @Override
     public void setConfiguration(Dmf dmf, ExclusionsConfiguration config) {
-        // TODO: 10.4.18 nejak perzistentne uchovavat v souboru. A pozdeji tahat a mergovat s konfiguraci z enginu
+        configs.put(dmf, config);
     }
 
     @Override
     public List<Dmf> getDmfList() {
         return dmfList;
+    }
+
+    @Override
+    public void save() {
+        configurationManager.updateExclusions(configs);
     }
 }

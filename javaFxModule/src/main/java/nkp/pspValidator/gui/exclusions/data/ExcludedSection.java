@@ -2,10 +2,12 @@ package nkp.pspValidator.gui.exclusions.data;
 
 import nkp.pspValidator.shared.engine.RulesSection;
 
+import java.io.Serializable;
+
 /**
  * Created by Martin Řehánek on 9.4.18.
  */
-public class ExcludedSection {
+public class ExcludedSection implements Serializable {
     private State state;
     private String name;
     private String description;
@@ -53,4 +55,12 @@ public class ExcludedSection {
         ENABLED, DISABLED;
     }
 
+    @Override
+    public String toString() {
+        return "ExcludedSection{" +
+                "state=" + state +
+                ", name='" + name + '\'' +
+                ", description='" + description + '\'' +
+                '}';
+    }
 }
