@@ -42,6 +42,11 @@ public class MockExclusionsManager implements ExclusionsManager {
         return result;
     }
 
+    @Override
+    public void save() {
+        //nothing, keeping only in memory
+    }
+
     private ExclusionsConfiguration createCopy(ExclusionsConfiguration originalConfig) {
         ExclusionsConfiguration newConfig = new ExclusionsConfiguration();
         List<ExcludedSection> newExcludedSection = new ArrayList<>(originalConfig.getExcludedSections().size());

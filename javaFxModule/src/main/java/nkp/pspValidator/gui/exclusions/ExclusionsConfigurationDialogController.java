@@ -12,7 +12,6 @@ import javafx.scene.layout.VBox;
 import javafx.stage.WindowEvent;
 import javafx.util.Callback;
 import nkp.pspValidator.gui.DialogController;
-import nkp.pspValidator.gui.ValidationDataManager;
 import nkp.pspValidator.gui.exclusions.data.ExcludedSection;
 import nkp.pspValidator.gui.exclusions.data.ExclusionsConfiguration;
 import nkp.pspValidator.shared.Dmf;
@@ -43,10 +42,9 @@ public class ExclusionsConfigurationDialogController extends DialogController {
         container.prefWidthProperty().bind(stage.widthProperty());
         container.prefHeightProperty().bind(stage.heightProperty());
 
-        ValidationDataManager mgr = main.getValidationDataManager();
         // TODO: 10.4.18 inicializace configurationManager muze trvat dlouho, tak to delat ve vedlejsim vlakne a pridat nejaky progressbar
         //configurationManager = new MockConfigurationManager();
-        exclusionsManager = new ExclusionsManagerImpl(mgr);
+        exclusionsManager = new ExclusionsManagerImpl(main.getConfigurationManager(), main.getValidationDataManager());
         configurations = buildConfigMap();
 
         for (Dmf dmf : exclusionsManager.getDmfList()) {
@@ -123,6 +121,7 @@ public class ExclusionsConfigurationDialogController extends DialogController {
         for (Dmf dmf : configurations.keySet()) {
             exclusionsManager.setConfiguration(dmf, configurations.get(dmf));
         }
+        exclusionsManager.save();
         stage.close();
     }
 }

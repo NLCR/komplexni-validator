@@ -14,4 +14,6 @@ public interface ExclusionsManager {
     void setConfiguration(Dmf dmf, ExclusionsConfiguration config);
 
     List<Dmf> getDmfList();
+
+    void save();
 }
