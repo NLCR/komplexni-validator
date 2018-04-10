@@ -32,7 +32,8 @@
                 <Menu fx:id="menuSettings" text="Nastavení">
                     <items>
                         <MenuItem text="Nástroje pro kontrolu obrázků" onAction="#openImageUtilsDialog"/>
-                        <MenuItem text="Vypnutí/Zapnutí validací" onAction="#openExclusionsConfigurationDialog"/>
+                        <MenuItem text="Vypnutí/Zapnutí validací" onAction="#openExclusionsConfigurationDialog"
+                                  disable="true"/>
                         <MenuItem text="Různé" disable="true"/>
                     </items>
                 </Menu>
