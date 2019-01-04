@@ -34,6 +34,8 @@
                         <MenuItem text="Nástroje pro kontrolu obrázků" onAction="#openImageUtilsDialog"/>
                         <MenuItem text="Vypnutí/Zapnutí validací" onAction="#openExclusionsConfigurationDialog"
                                   disable="true"/>
+                        <MenuItem text="Slovníky" onAction="#openDictionariesConfigurationDialog"
+                                  disable="false"/>
                         <MenuItem text="Různé" disable="true"/>
                     </items>
                 </Menu>

@@ -25,6 +25,7 @@ public class Main extends Application {
 
     private Stage primaryStage;
     private Stage dialogStage;
+    private Stage dialogStageLevel2;
     private ConfigurationManager configurationManager;
     private ValidationDataManager validationDataManager;
 
@@ -40,7 +41,8 @@ public class Main extends Application {
         try {
             //System.out.println("working dir: " + new File(".").getAbsolutePath());
             this.primaryStage = stage;
-            this.dialogStage = initDialogStage();
+            this.dialogStage = initDialogStage(primaryStage);
+            this.dialogStageLevel2 = initDialogStage(dialogStage);
             configurationManager = new ConfigurationManager(Platform.detectOs());
             mainController = openMainWindow();
             initValidationData();
@@ -51,11 +53,11 @@ public class Main extends Application {
         }
     }
 
-    private Stage initDialogStage() {
+    private Stage initDialogStage(Stage ownerStage) {
         Stage dialogStage = new Stage();
         dialogStage.initStyle(StageStyle.UTILITY);
         dialogStage.initModality(Modality.APPLICATION_MODAL);
-        dialogStage.initOwner(primaryStage);
+        dialogStage.initOwner(ownerStage);
         return dialogStage;
     }
 
@@ -68,6 +70,8 @@ public class Main extends Application {
         ImageUtilsCheckDialog dialog = new ImageUtilsCheckDialog(dialogStage, this, closeWhenFinished, mainButtonText);
         dialog.show();
     }
+
+    // TODO: 3.1.19 sjednotit názvy metod, buď openXyzDialog, nebo showXyzDialog
 
     public void openExclusionsConfigurationDialog() {
         ExclusionsConfigurationDialog dialog = new ExclusionsConfigurationDialog(dialogStage, this);
@@ -87,6 +91,14 @@ public class Main extends Application {
     public void showAboutAppDialog() {
         AboutAppDialog dialog = new AboutAppDialog(dialogStage, this);
         dialog.show();
+    }
+
+    public void openDictionariesConfigurationDialog() {
+        new DictionariesConfigurationDialog(dialogStage, this).show();
+    }
+
+    public void showSiglaInstitutionCodes(String dictionaryName) {
+        new DictionaryContentDialog(dialogStageLevel2, this, dictionaryName).show();
     }
 
     public void showTestDialog() {

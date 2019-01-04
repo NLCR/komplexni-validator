@@ -643,6 +643,10 @@ public class MainController extends AbstractController implements ValidationStat
         }
     }
 
+    public void openDictionariesConfigurationDialog(ActionEvent actionEvent) {
+        main.openDictionariesConfigurationDialog();
+    }
+
 
     private enum TotalState {
         IDLE, RUNNING, FINISHED, ERROR, STOPPED;
