@@ -3,7 +3,7 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-<?import javafx.scene.text.Text?>
+<?import javafx.scene.text.*?>
 <VBox fx:id="container" alignment="CENTER_LEFT"
       minHeight="400"
       minWidth="600" spacing="0"
@@ -80,6 +80,18 @@
                   GridPane.columnIndex="2"
                   GridPane.hgrow="ALWAYS"
                   fx:id="buildDateText"
+            />
+
+            <Label text="Vývojářský mód"
+                   fx:id="devModeLabel"
+                   GridPane.rowIndex="5"
+                   GridPane.columnIndex="0"
+            />
+            <Text fx:id="devModeText"
+                  GridPane.rowIndex="5"
+                  GridPane.columnIndex="2"
+                  GridPane.hgrow="ALWAYS"
+                  text="Ano, tuto verzi nepoužívejte pro produkční účely!"
             />
 
         </GridPane>
