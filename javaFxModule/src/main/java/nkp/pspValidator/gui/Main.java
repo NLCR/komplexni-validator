@@ -45,7 +45,7 @@ public class Main extends Application {
             this.dialogStageLevel2 = initDialogStage(dialogStage);
             configurationManager = new ConfigurationManager(Platform.detectOs());
             mainController = openMainWindow();
-            initValidationData();
+            showValidationInitializationDialog();
         } catch (Throwable e) {
             e.printStackTrace();
             javafx.application.Platform.exit();
@@ -60,56 +60,6 @@ public class Main extends Application {
         dialogStage.initOwner(ownerStage);
         return dialogStage;
     }
-
-    private void initValidationData() {
-        ValidationDataInitializationDialog dialog = new ValidationDataInitializationDialog(dialogStage, this);
-        dialog.show();
-    }
-
-    public void checkImageUtils(boolean closeWhenFinished, String mainButtonText) {
-        ImageUtilsCheckDialog dialog = new ImageUtilsCheckDialog(dialogStage, this, closeWhenFinished, mainButtonText);
-        dialog.show();
-    }
-
-    // TODO: 3.1.19 sjednotit názvy metod, buď openXyzDialog, nebo showXyzDialog
-
-    public void openExclusionsConfigurationDialog() {
-        ExclusionsConfigurationDialog dialog = new ExclusionsConfigurationDialog(dialogStage, this);
-        dialog.show();
-    }
-
-    public void showNewValidationConfigurationDialog() {
-        PspValidationConfigurationDialog dialog = new PspValidationConfigurationDialog(dialogStage, this);
-        dialog.show();
-    }
-
-    public void openValidationResultSummaryDialog(ValidationResultSummary summary) {
-        ValidationResultSummaryDialog dialog = new ValidationResultSummaryDialog(dialogStage, this, summary);
-        dialog.show();
-    }
-
-    public void showAboutAppDialog() {
-        AboutAppDialog dialog = new AboutAppDialog(dialogStage, this);
-        dialog.show();
-    }
-
-    public void openDictionariesConfigurationDialog() {
-        new DictionariesConfigurationDialog(dialogStage, this).show();
-    }
-
-    public void showSiglaInstitutionCodes(String dictionaryName) {
-        new DictionaryContentDialog(dialogStageLevel2, this, dictionaryName).show();
-    }
-
-    public void showTestDialog() {
-        DevDialog dialog = new DevDialog(dialogStage, this);
-        dialog.show();
-    }
-
-    public void runPspValidation(File pspDir, String preferedMonVersion, String preferedPerVersion, String forcedMonVersion, String forcedPerVersion, boolean createTxtLog, boolean createXmlLog) {
-        mainController.runPspValidation(pspDir, preferedMonVersion, preferedPerVersion, forcedMonVersion, forcedPerVersion, createTxtLog, createXmlLog);
-    }
-
 
     public MainController openMainWindow() {
         //System.out.println("mainWindow: " + primaryStage);
@@ -172,5 +122,48 @@ public class Main extends Application {
     public void setValidationDataManager(ValidationDataManager validationDataManager) {
         this.validationDataManager = validationDataManager;
     }
+
+    public void runPspValidation(File pspDir, String preferedMonVersion, String preferedPerVersion, String forcedMonVersion, String forcedPerVersion, boolean createTxtLog, boolean createXmlLog) {
+        mainController.runPspValidation(pspDir, preferedMonVersion, preferedPerVersion, forcedMonVersion, forcedPerVersion, createTxtLog, createXmlLog);
+    }
+
+    //DIALOGS
+
+    private void showValidationInitializationDialog() {
+        new ValidationDataInitializationDialog(dialogStage, this).show();
+    }
+
+    public void showImageUtilsCheckDialog(boolean closeWhenFinished, String mainButtonText) {
+        new ImageUtilsCheckDialog(dialogStage, this, closeWhenFinished, mainButtonText).show();
+    }
+
+    public void showExclusionsConfigurationDialog() {
+        new ExclusionsConfigurationDialog(dialogStage, this).show();
+    }
+
+    public void showNewValidationConfigurationDialog() {
+        new PspValidationConfigurationDialog(dialogStage, this).show();
+    }
+
+    public void showValidationResultSummaryDialog(ValidationResultSummary summary) {
+        new ValidationResultSummaryDialog(dialogStage, this, summary).show();
+    }
+
+    public void showAboutAppDialog() {
+        new AboutAppDialog(dialogStage, this).show();
+    }
+
+    public void showDictionariesConfigurationDialog() {
+        new DictionariesConfigurationDialog(dialogStage, this).show();
+    }
+
+    public void showSiglaInstitutionCodes(String dictionaryName) {
+        new DictionaryContentDialog(dialogStageLevel2, this, dictionaryName).show();
+    }
+
+    public void showTestDialog() {
+        new DevDialog(dialogStage, this).show();
+    }
+
 
 }
