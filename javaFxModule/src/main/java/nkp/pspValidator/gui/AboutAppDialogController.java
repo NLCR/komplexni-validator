@@ -4,6 +4,7 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.Hyperlink;
+import javafx.scene.control.Label;
 import javafx.scene.text.Text;
 import javafx.stage.WindowEvent;
 import nkp.pspValidator.shared.Version;
@@ -19,10 +20,21 @@ public class AboutAppDialogController extends DialogController {
     @FXML
     Text versionText;
 
+    @FXML
+    Label devModeLabel;
+
+    @FXML
+    Text devModeText;
+
+
     @Override
     public void startNow() {
         versionText.setText(Version.VERSION_CODE);
         buildDateText.setText(Version.BUILD_DATE);
+        if (!ConfigurationManager.DEV_MODE) {
+            devModeLabel.setVisible(false);
+            devModeText.setVisible(false);
+        }
     }
 
     @Override

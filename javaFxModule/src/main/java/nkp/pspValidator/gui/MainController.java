@@ -120,22 +120,6 @@ public class MainController extends AbstractController implements ValidationStat
         //TODO: zpracovani menu
     }
 
-    public void showOnlineHelp(ActionEvent actionEvent) {
-        if (ConfigurationManager.DEV_MODE) {
-            main.showTestDialog();
-        } else {
-            openUrl(URL_ONLINE_HELP);
-        }
-    }
-
-    public void showAboutApp(ActionEvent actionEvent) {
-        main.showAboutAppDialog();
-    }
-
-    public void openNewValidationDialog(ActionEvent actionEvent) {
-        main.showNewValidationConfigurationDialog();
-    }
-
     private Window getWindow() {
         return container.getScene().getWindow();
     }
@@ -392,7 +376,7 @@ public class MainController extends AbstractController implements ValidationStat
             validationResultSummary.setGlobalProblemsByLevel(globalProblemsByLevel);
             validationResultSummary.setValid(valid);
             validationResultSummary.setTotalTime(duration);
-            main.openValidationResultSummaryDialog(validationResultSummary);
+            main.showValidationResultSummaryDialog(validationResultSummary);
         });
     }
 
@@ -614,12 +598,49 @@ public class MainController extends AbstractController implements ValidationStat
         return cancelValidation;
     }
 
-    public void openImageUtilsDialog(ActionEvent actionEvent) {
-        main.checkImageUtils(false, "OK");
+    public void stopValidation(ActionEvent actionEvent) {
+        cancelValidation = true;
+        if (validationTask != null) {
+            validationTask.cancel();
+        }
     }
 
-    public void openExclusionsConfigurationDialog(ActionEvent actionEvent) {
-        main.openExclusionsConfigurationDialog();
+    //DIALOGS
+
+    public void showImageUtilsCheckDialog(ActionEvent actionEvent) {
+        main.showImageUtilsCheckDialog(false, "OK");
+    }
+
+    public void showExclusionsConfigurationDialog(ActionEvent actionEvent) {
+        main.showExclusionsConfigurationDialog();
+    }
+
+    public void showAboutAppDialog(ActionEvent actionEvent) {
+        main.showAboutAppDialog();
+    }
+
+    public void showNewValidationConfigurationDialog(ActionEvent actionEvent) {
+        main.showNewValidationConfigurationDialog();
+    }
+
+    public void showValidationResultSummaryDialog(ActionEvent actionEvent) {
+        if (validationResultSummary != null) {
+            main.showValidationResultSummaryDialog(validationResultSummary);
+        }
+    }
+
+    public void showDictionariesConfigurationDialog(ActionEvent actionEvent) {
+        main.showDictionariesConfigurationDialog();
+    }
+
+    //OPENING URLS
+
+    public void showOnlineHelp(ActionEvent actionEvent) {
+        if (ConfigurationManager.DEV_MODE) {
+            main.showTestDialog();
+        } else {
+            openUrl(URL_ONLINE_HELP);
+        }
     }
 
     public void showLogTxt(ActionEvent actionEvent) {
@@ -628,23 +649,6 @@ public class MainController extends AbstractController implements ValidationStat
 
     public void showLogXml(ActionEvent actionEvent) {
         openUrl("file:" + logXmlFile.getAbsolutePath());
-    }
-
-    public void openValidationResultSummaryDialog(ActionEvent actionEvent) {
-        if (validationResultSummary != null) {
-            main.openValidationResultSummaryDialog(validationResultSummary);
-        }
-    }
-
-    public void stopValidation(ActionEvent actionEvent) {
-        cancelValidation = true;
-        if (validationTask != null) {
-            validationTask.cancel();
-        }
-    }
-
-    public void openDictionariesConfigurationDialog(ActionEvent actionEvent) {
-        main.openDictionariesConfigurationDialog();
     }
 
 

@@ -17,7 +17,7 @@
             <menus>
                 <Menu fx:id="menuValidate" text="Validovat">
                     <items>
-                        <MenuItem onAction="#openNewValidationDialog" text="PSP balík (adresář)"/>
+                        <MenuItem onAction="#showNewValidationConfigurationDialog" text="PSP balík (adresář)"/>
                         <MenuItem disable="true" text="PSP (zip)"/>
                         <SeparatorMenuItem/>
                         <MenuItem disable="true" text="Adresář obsahující PSP balíky (adresáře)"/>
@@ -31,10 +31,10 @@
                 </Menu>
                 <Menu fx:id="menuSettings" text="Nastavení">
                     <items>
-                        <MenuItem text="Nástroje pro kontrolu obrázků" onAction="#openImageUtilsDialog"/>
-                        <MenuItem text="Vypnutí/Zapnutí validací" onAction="#openExclusionsConfigurationDialog"
+                        <MenuItem text="Nástroje pro kontrolu obrázků" onAction="#showImageUtilsCheckDialog"/>
+                        <MenuItem text="Vypnutí/Zapnutí validací" onAction="#showExclusionsConfigurationDialog"
                                   disable="true"/>
-                        <MenuItem text="Slovníky" onAction="#openDictionariesConfigurationDialog"
+                        <MenuItem text="Slovníky" onAction="#showDictionariesConfigurationDialog"
                                   disable="false"/>
                         <MenuItem text="Různé" disable="true"/>
                     </items>
@@ -43,7 +43,7 @@
                     <items>
                         <MenuItem fx:id="showValidationResultSummaryDialogItem"
                                   text="Sumarizace výsledku proběhlé validace" disable="true"
-                                  onAction="#openValidationResultSummaryDialog"/>
+                                  onAction="#showValidationResultSummaryDialog"/>
                         <MenuItem fx:id="showLogTxtMenuItem" text="Textový log proběhlé validace" disable="true"
                                   onAction="#showLogTxt"/>
                         <MenuItem fx:id="showLogXmlMenuItem" text="XML log proběhlé validace" disable="true"
@@ -54,7 +54,7 @@
                     <items>
                         <MenuItem onAction="#showOnlineHelp" text="Online nápověda"/>
                         <SeparatorMenuItem/>
-                        <MenuItem onAction="#showAboutApp" text="O aplikaci"/>
+                        <MenuItem onAction="#showAboutAppDialog" text="O aplikaci"/>
                     </items>
                 </Menu>
             </menus>
