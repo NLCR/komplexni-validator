@@ -14,7 +14,7 @@ import java.util.Properties;
  */
 public class ConfigurationManager {
 
-    public static boolean DEV_MODE = false;
+    public static boolean DEV_MODE = true;
     public static boolean DEV_MODE_ONLY_SELECTED_SECTIONS = false;
 
     private static final String DEFAULT_LOG_DIR = "logs";
@@ -54,6 +54,19 @@ public class ConfigurationManager {
     public static final String PROP_PSP_VALIDATION_CREATE_TXT_LOG = "psp_validation.create_txt_log";
     public static final String PROP_PSP_VALIDATION_CREATE_XML_LOG = "psp_validation.create_xml_log";
     public static final String PROP_LOG_DIR = "validation.log_dir";
+
+    //dictionaries
+    public static final String propDictionaryUrl(String dictionary) {
+        return "dictionary." + dictionary + ".url";
+    }
+
+    public static final String propDictionaryDescription(String dictionary) {
+        return "dictionary." + dictionary + ".description";
+    }
+
+    public static final String propDictionaryLastSynchronized(String dictionary) {
+        return "dictionary." + dictionary + ".lastSynchronized";
+    }
 
     private final Platform platform;
     private final File configFile;

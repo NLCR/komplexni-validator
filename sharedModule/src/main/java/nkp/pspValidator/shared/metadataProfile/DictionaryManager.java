@@ -18,9 +18,15 @@ public class DictionaryManager {
 
     public static final String DICT_FILE_SUFFIX = ".dict";
 
+    private final File dictionaryDir;
     private final Map<String, Set<String>> dictionaries = new HashMap<>();
 
     public DictionaryManager(File dictionaryDir) throws ValidatorConfigurationException {
+        this.dictionaryDir = dictionaryDir;
+        init();
+    }
+
+    private void init() throws ValidatorConfigurationException {
         if (!dictionaryDir.exists()) {
             throw new ValidatorConfigurationException("adresář %s neexistuje", dictionaryDir.getAbsolutePath());
         } else if (!dictionaryDir.isDirectory()) {
@@ -62,6 +68,10 @@ public class DictionaryManager {
         }
     }
 
+    public Set<String> getDictionaries() {
+        return dictionaries.keySet();
+    }
+
     public boolean hasDictionary(String dictionaryName) {
         return dictionaries.containsKey(dictionaryName);
     }
@@ -69,4 +79,16 @@ public class DictionaryManager {
     public Set<String> getDictionaryValues(String dictionaryName) {
         return dictionaries.get(dictionaryName);
     }
+
+    // TODO: 4.1.19 vyresit aktualiaci slovníku. Přeplácnutí souboru udělá klient, ale pak by DictionaryManager mel znovu zavolat init()
+
+    /*public File getDictionaryFile(String dictionaryName) {
+        if (!hasDictionary(dictionaryName)) {
+            return null;
+        } else {
+            return new File(dictionaryDir, dictionaryName + DICT_FILE_SUFFIX);
+        }
+    }*/
+
+
 }
