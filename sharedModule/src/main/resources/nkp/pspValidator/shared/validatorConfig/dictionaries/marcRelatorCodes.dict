@@ -1,4 +1,7 @@
 #Tento slovník obsahuje kódy typů rolí podle http://www.loc.gov/marc/relators/relaterm.html
+#Resp. http://www.loc.gov/marc/relators/relacode.html
+#Pozor na hodnoty s pomlčkou, např. -grt
+#https://github.com/NLCR/komplexni-validator/issues/74
 abr
 acp
 act
