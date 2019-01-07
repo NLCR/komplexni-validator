@@ -1,21 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.*?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
-<VBox
-        xmlns="http://javafx.com/javafx/8.0.121"
-        xmlns:fx="http://javafx.com/fxml/1"
-        stylesheets="/css/dictionaryContentDialog.css"
-        fx:controller="nkp.pspValidator.gui.DictionaryContentDialogController"
-        alignment="CENTER_LEFT"
-        minHeight="500"
-        minWidth="300"
-        spacing="0"
->
+<VBox alignment="CENTER_LEFT" minHeight="500" minWidth="300" spacing="0" stylesheets="/css/dictionaryContentDialog.css"
+      xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="nkp.pspValidator.gui.DictionaryContentDialogController">
 
     <padding>
         <Insets bottom="10" left="10" right="10" top="20"/>
@@ -23,19 +14,21 @@
 
     <children>
 
-        <ListView prefHeight="350.0"
-                  prefWidth="200.0"
-                  fx:id="listView"
-        />
+        <Label fx:id="lblDescription" text="kódy insitutcí podle ISO-blabla"/>
+
+        <Hyperlink fx:id="specHyperlink" onAction="#openHyperlink"
+                   text="https://www.loc.gov/marc/relators/relaterm.html"
+                   maxWidth="250"
+                   wrapText="true"/>
+
+        <ListView fx:id="listView" prefHeight="350.0" prefWidth="200.0"/>
 
         <VBox>
             <padding>
                 <Insets bottom="20" left="0" right="10" top="10"/>
             </padding>
 
-            <Label fx:id="labelDescription"
-                   text="Celkem 0 hodnot"
-            />
+            <Label fx:id="lblItemsTotal" text="Celkem 0 hodnot"/>
 
         </VBox>
 
