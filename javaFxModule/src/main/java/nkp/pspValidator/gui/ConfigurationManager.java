@@ -56,16 +56,20 @@ public class ConfigurationManager {
     public static final String PROP_LOG_DIR = "validation.log_dir";
 
     //dictionaries
-    public static final String propDictionaryUrl(String dictionary) {
-        return "dictionary." + dictionary + ".url";
+    public static final String propDictionarySpecUrl(String dictionary) {
+        return "dictionary." + dictionary + ".specUrl";
     }
 
     public static final String propDictionaryDescription(String dictionary) {
         return "dictionary." + dictionary + ".description";
     }
 
-    public static final String propDictionaryLastSynchronized(String dictionary) {
-        return "dictionary." + dictionary + ".lastSynchronized";
+    public static final String propDictionarySyncDate(String dictionary) {
+        return "dictionary." + dictionary + ".syncDate";
+    }
+
+    public static final String propDictionarySyncUrl(String dictionary) {
+        return "dictionary." + dictionary + ".syncUrl";
     }
 
     private final Platform platform;
