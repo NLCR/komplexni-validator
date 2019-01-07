@@ -157,8 +157,12 @@ public class Main extends Application {
         new DictionariesConfigurationDialog(dialogStage, this).show();
     }
 
-    public void showSiglaInstitutionCodes(String dictionaryName, String description, String specUrl) {
+    public void showDictionaryContentDialog(String dictionaryName, String description, String specUrl) {
         new DictionaryContentDialog(dialogStageLevel2, this, dictionaryName, description, specUrl).show();
+    }
+
+    public void showDictionaryUpdateDialog(String dictionaryName, String syncUrl, String syncDate) {
+        new DictionaryUpdateDialog(dialogStageLevel2, this, dictionaryName, syncUrl, syncDate).show();
     }
 
     public void showTestDialog() {
