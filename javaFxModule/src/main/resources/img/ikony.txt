@@ -34,3 +34,6 @@ https://icons8.com/icon/12116/error
 https://icons8.com/web-app/11849/checkmark
 https://icons8.com/icon/63652/stop-symbol
 
+slovníky:
+popup-16.png: https://icons8.com/icon/53198/popup
+synchronize-16.png: https://icons8.com/icon/47981/synchronize

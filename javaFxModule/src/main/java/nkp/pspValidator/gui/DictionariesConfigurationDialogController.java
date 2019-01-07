@@ -54,17 +54,15 @@ public class DictionariesConfigurationDialogController extends DialogController 
     }
 
     private Node buildSynchronizeButton(String dictionary, String url) {
-        // TODO: 4.1.19 vymenit obrazek
-        Button btn = new Button("Synchronizovat", new ImageView("/img/About-18.png"));
+        Button btn = new Button("Aktualizovat", new ImageView("/img/synchronize-16.png"));
         // TODO: 4.1.19 implement
         return btn;
     }
 
     private Button buildShowDataButton(String dictionary) {
-        // TODO: 4.1.19 vymenit obrazek
-        // TODO: 4.1.19 otestovat v produkci
-        //jeste funguje new ImageView("img/neco.png")
-        Button btn = new Button("Zobrazit", new ImageView("/img/About-18.png"));
+        // TODO: 4.1.19 otestovat v produkci (jestli se chytaji odkazy na souobory obrazku)
+        //jeste funguje new ImageView("img/popup-16.png")
+        Button btn = new Button("Zobrazit", new ImageView("/img/popup-16.png"));
         btn.setOnAction(event -> main.showSiglaInstitutionCodes(dictionary));
         return btn;
     }
