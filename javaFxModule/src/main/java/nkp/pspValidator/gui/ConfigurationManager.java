@@ -146,7 +146,7 @@ public class ConfigurationManager {
 
     private void loadProperties() throws IOException {
         if (configFile.exists()) {
-            properties.load(new FileInputStream(configFile));
+            properties.load(new InputStreamReader(new FileInputStream(configFile), "UTF-8"));
         }
     }
 
