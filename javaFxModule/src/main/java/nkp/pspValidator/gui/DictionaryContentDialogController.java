@@ -43,7 +43,6 @@ public class DictionaryContentDialogController extends DialogController {
         Collections.sort(valuesSorted);
         listView.getItems().addAll(valuesSorted);
         lblItemsTotal.setText("Celkem " + valuesSorted.size() + " hodnot");
-        // TODO: 7.1.19 pořešit špatné kódování
         lblDescription.setText(description);
         if (specUrl != null && !specUrl.isEmpty()) {
             specHyperlink.setText(specUrl);
