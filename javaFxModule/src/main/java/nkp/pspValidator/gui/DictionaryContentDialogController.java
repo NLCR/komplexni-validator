@@ -3,6 +3,7 @@ package nkp.pspValidator.gui;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.scene.control.Hyperlink;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.stage.WindowEvent;
@@ -22,9 +23,17 @@ public class DictionaryContentDialogController extends DialogController {
     ListView<String> listView;
 
     @FXML
-    Label labelDescription;
+    Label lblItemsTotal;
+
+    @FXML
+    Label lblDescription;
+
+    @FXML
+    Hyperlink specHyperlink;
 
     private String dictionaryName;
+    private String description;
+    private String specUrl;
 
     @Override
     public void startNow() {
@@ -33,7 +42,14 @@ public class DictionaryContentDialogController extends DialogController {
         valuesSorted.addAll(values);
         Collections.sort(valuesSorted);
         listView.getItems().addAll(valuesSorted);
-        labelDescription.setText("Celkem " + valuesSorted.size() + " hodnot");
+        lblItemsTotal.setText("Celkem " + valuesSorted.size() + " hodnot");
+        // TODO: 7.1.19 pořešit špatné kódování
+        lblDescription.setText(description);
+        if (specUrl != null && !specUrl.isEmpty()) {
+            specHyperlink.setText(specUrl);
+        } else {
+            specHyperlink.setVisible(false);
+        }
     }
 
     @Override
@@ -41,11 +57,17 @@ public class DictionaryContentDialogController extends DialogController {
         return null;
     }
 
-    public void setData(String dictionaryName) {
+    public void setData(String dictionaryName, String description, String specUrl) {
         this.dictionaryName = dictionaryName;
+        this.description = description;
+        this.specUrl = specUrl;
     }
 
     public void closeDialog(ActionEvent actionEvent) {
         stage.close();
+    }
+
+    public void openHyperlink(ActionEvent actionEvent) {
+        openUrl(((Hyperlink) actionEvent.getSource()).getText());
     }
 }

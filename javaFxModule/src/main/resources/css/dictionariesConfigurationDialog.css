@@ -3,3 +3,14 @@
     /*-fx-font-size: 15;
     -fx-font-weight: bold;*/
 }
+
+.dict-desc {
+    /*-fx-font-size: 15;*/
+    /*-fx-font-weight: bold;*/
+    -fx-font-style: italic;
+    -fx-spacing: 20px;
+}
+
+.dict-name {
+
+}

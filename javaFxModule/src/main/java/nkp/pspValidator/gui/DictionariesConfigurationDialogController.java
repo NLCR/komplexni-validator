@@ -29,26 +29,41 @@ public class DictionariesConfigurationDialogController extends DialogController 
         //pro kazdy slovnik:
         int row = 0;
         for (String dictionary : dictionaries) {
-            //String description = configurationManager.getStringOrDefault("dictionary." + dictionary + ".description", null);
+            int column = 0;
             String description = configurationManager.getStringOrDefault(ConfigurationManager.propDictionaryDescription(dictionary), null);
-            //String url = configurationManager.getStringOrDefault("dictionary." + dictionary + ".url", null);
-            String url = configurationManager.getStringOrDefault(ConfigurationManager.propDictionaryUrl(dictionary), null);
-            String lastSynchronized = configurationManager.getStringOrDefault(ConfigurationManager.propDictionaryLastSynchronized(dictionary), null);
+            String specUrl = configurationManager.getStringOrDefault(ConfigurationManager.propDictionarySpecUrl(dictionary), null);
+
+            String syncUrl = configurationManager.getStringOrDefault(ConfigurationManager.propDictionarySyncUrl(dictionary), null);
+            String syncDate = configurationManager.getStringOrDefault(ConfigurationManager.propDictionarySyncDate(dictionary), null);
 
             System.out.println("found dictionary " + dictionary);
             System.out.println("description: " + description);
-            System.out.println("url: " + url);
-            System.out.println("last synchronized: " + lastSynchronized);
+            System.out.println("sync url: " + syncUrl);
+            System.out.println("last synchronized: " + syncDate);
 
-            table.add(new Label(dictionary), 0, row);
-            table.add(buildShowDataButton(dictionary), 1, row);
+            Label nameLbl = new Label(dictionary);
+            nameLbl.getStyleClass().add("dict-name");
+            table.add(nameLbl, column++, row);
+            //separator
+            table.add(new Label(" "), column++, row);
+            //show data button
+            table.add(buildShowDataButton(dictionary, description, specUrl), column++, row);
+            if (syncUrl != null) {
+                //separator
+                table.add(new Label(" "), column++, row);
+                //synchronize button
+                table.add(buildSynchronizeButton(dictionary, syncUrl), column++, row);
+            }
             if (description != null && !description.isEmpty()) {
-                table.add(new Label(description), 2, row);
+                // TODO: 7.1.19 pořešit špatné kódování
+                row++;
+                Label descLbl = new Label(description);
+                descLbl.getStyleClass().add("dict-desc");
+                table.add(descLbl, 0, row);
             }
-            if (url != null) {
-                table.add(buildSynchronizeButton(dictionary, url), 3, row);
-            }
-
+            row++;
+            //one empty line to separate items
+            table.add(new Label(""), 0, row);
             row++;
         }
     }
@@ -59,11 +74,11 @@ public class DictionariesConfigurationDialogController extends DialogController 
         return btn;
     }
 
-    private Button buildShowDataButton(String dictionary) {
+    private Button buildShowDataButton(String dictionary, String description, String specUrl) {
         // TODO: 4.1.19 otestovat v produkci (jestli se chytaji odkazy na souobory obrazku)
         //jeste funguje new ImageView("img/popup-16.png")
         Button btn = new Button("Zobrazit", new ImageView("/img/popup-16.png"));
-        btn.setOnAction(event -> main.showSiglaInstitutionCodes(dictionary));
+        btn.setOnAction(event -> main.showSiglaInstitutionCodes(dictionary, description, specUrl));
         return btn;
     }
 
