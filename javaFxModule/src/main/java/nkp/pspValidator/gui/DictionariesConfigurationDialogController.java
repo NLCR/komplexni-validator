@@ -52,10 +52,9 @@ public class DictionariesConfigurationDialogController extends DialogController 
                 //separator
                 table.add(new Label(" "), column++, row);
                 //synchronize button
-                table.add(buildSynchronizeButton(dictionary, syncUrl), column++, row);
+                table.add(buildSynchronizeButton(dictionary, syncUrl, syncDate), column++, row);
             }
             if (description != null && !description.isEmpty()) {
-                // TODO: 7.1.19 pořešit špatné kódování
                 row++;
                 Label descLbl = new Label(description);
                 descLbl.getStyleClass().add("dict-desc");
@@ -68,9 +67,9 @@ public class DictionariesConfigurationDialogController extends DialogController 
         }
     }
 
-    private Node buildSynchronizeButton(String dictionary, String url) {
+    private Node buildSynchronizeButton(String dictionary, String syncUrl, String syncDate) {
         Button btn = new Button("Aktualizovat", new ImageView("/img/synchronize-16.png"));
-        // TODO: 4.1.19 implement
+        btn.setOnAction(event -> main.showDictionaryUpdateDialog(dictionary, syncUrl, syncDate));
         return btn;
     }
 
@@ -78,7 +77,7 @@ public class DictionariesConfigurationDialogController extends DialogController 
         // TODO: 4.1.19 otestovat v produkci (jestli se chytaji odkazy na souobory obrazku)
         //jeste funguje new ImageView("img/popup-16.png")
         Button btn = new Button("Zobrazit", new ImageView("/img/popup-16.png"));
-        btn.setOnAction(event -> main.showSiglaInstitutionCodes(dictionary, description, specUrl));
+        btn.setOnAction(event -> main.showDictionaryContentDialog(dictionary, description, specUrl));
         return btn;
     }
 
