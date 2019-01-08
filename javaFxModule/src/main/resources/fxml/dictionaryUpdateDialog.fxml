@@ -54,7 +54,14 @@
 
         </GridPane>
 
-        <ProgressIndicator fx:id="progressIndicator" visible="false"/>
+        <VBox alignment="CENTER" spacing="10">
+            <children>
+                <ProgressIndicator fx:id="progressIndicator" visible="false"/>
+
+                <Label fx:id="lblStatus" wrapText="true"/>
+
+            </children>
+        </VBox>
 
         <HBox alignment="CENTER" spacing="10">
             <padding>

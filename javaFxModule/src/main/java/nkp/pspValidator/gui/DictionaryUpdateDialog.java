@@ -11,13 +11,11 @@ public class DictionaryUpdateDialog extends AbstractDialog {
 
     private final String dictionaryName;
     private final String syncUrl;
-    private final String syncDate;
 
-    public DictionaryUpdateDialog(Stage stage, Main main, String dictionaryName, String syncUrl, String syncDate) {
+    public DictionaryUpdateDialog(Stage stage, Main main, String dictionaryName, String syncUrl) {
         super(stage, main);
         this.dictionaryName = dictionaryName;
         this.syncUrl = syncUrl;
-        this.syncDate = syncDate;
     }
 
     @Override
@@ -47,6 +45,6 @@ public class DictionaryUpdateDialog extends AbstractDialog {
 
     @Override
     public void setControllerData(DialogController controller) {
-        ((DictionaryUpdateDialogController) controller).setData(dictionaryName, syncUrl, syncDate);
+        ((DictionaryUpdateDialogController) controller).setData(dictionaryName, syncUrl);
     }
 }

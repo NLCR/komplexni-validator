@@ -27,6 +27,7 @@ public class DictionaryManager {
     }
 
     private void init() throws ValidatorConfigurationException {
+        dictionaries.clear();
         if (!dictionaryDir.exists()) {
             throw new ValidatorConfigurationException("adresář %s neexistuje", dictionaryDir.getAbsolutePath());
         } else if (!dictionaryDir.isDirectory()) {
@@ -80,15 +81,15 @@ public class DictionaryManager {
         return dictionaries.get(dictionaryName);
     }
 
-    // TODO: 4.1.19 vyresit aktualiaci slovníku. Přeplácnutí souboru udělá klient, ale pak by DictionaryManager mel znovu zavolat init()
-
-    /*public File getDictionaryFile(String dictionaryName) {
+    public File getDictionaryFile(String dictionaryName) {
         if (!hasDictionary(dictionaryName)) {
             return null;
         } else {
             return new File(dictionaryDir, dictionaryName + DICT_FILE_SUFFIX);
         }
-    }*/
+    }
 
-
+    public void reload() throws ValidatorConfigurationException {
+        init();
+    }
 }
