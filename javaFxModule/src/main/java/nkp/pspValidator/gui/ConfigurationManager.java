@@ -14,7 +14,7 @@ import java.util.Properties;
  */
 public class ConfigurationManager {
 
-    public static boolean DEV_MODE = true;
+    public static boolean DEV_MODE = false;
     public static boolean DEV_MODE_ONLY_SELECTED_SECTIONS = false;
 
     private static final String DEFAULT_LOG_DIR = "logs";
@@ -106,6 +106,38 @@ public class ConfigurationManager {
         if (logDir == null) {
             logDir = new File(DEFAULT_LOG_DIR);
             setFile(PROP_LOG_DIR, logDir);
+        }
+        //dictionaries
+        initDictionary("siglaInstitutionCodes",
+                "kódy institucí (Sigla)",
+                null,
+                "https://raw.githubusercontent.com/NLCR/komplexni-validator/master/sharedModule/src/main/resources/nkp/pspValidator/shared/validatorConfig/dictionaries/siglaInstitutionCodes.dict");
+        initDictionary("iso31661Alpha2languageCodes",
+                "kódy zemí ISO3166-1 alpha-2",
+                "https://www.iso.org/iso-3166-country-codes.html",
+                null);
+        initDictionary("iso6392languageCodes",
+                "kódy jazyků podle ISO 639-2",
+                "http://www.loc.gov/standards/iso639-2/php/code_list.php",
+                null);
+        initDictionary("marcRelatorCodes",
+                "kódy rolí podle MARC",
+                "https://www.loc.gov/marc/relators/relaterm.html",
+                null);
+    }
+
+    private void initDictionary(String name, String description, String specUrl, String syncUrl) {
+        updateStringPropertyIfOldValueEmptyAndNewValueNot(propDictionaryDescription(name), description);
+        updateStringPropertyIfOldValueEmptyAndNewValueNot(propDictionarySpecUrl(name), specUrl);
+        updateStringPropertyIfOldValueEmptyAndNewValueNot(propDictionarySyncUrl(name), syncUrl);
+    }
+
+    private void updateStringPropertyIfOldValueEmptyAndNewValueNot(String key, String newValue) {
+        String oldValue = getStringOrDefault(key, null);
+        if (oldValue == null || oldValue.isEmpty()) {
+            if (newValue != null && !newValue.isEmpty()) {
+                setString(key, newValue);
+            }
         }
     }
 
