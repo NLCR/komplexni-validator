@@ -161,8 +161,8 @@ public class Main extends Application {
         new DictionaryContentDialog(dialogStageLevel2, this, dictionaryName, description, specUrl).show();
     }
 
-    public void showDictionaryUpdateDialog(String dictionaryName, String syncUrl, String syncDate) {
-        new DictionaryUpdateDialog(dialogStageLevel2, this, dictionaryName, syncUrl, syncDate).show();
+    public void showDictionaryUpdateDialog(String dictionaryName, String syncUrl) {
+        new DictionaryUpdateDialog(dialogStageLevel2, this, dictionaryName, syncUrl).show();
     }
 
     public void showTestDialog() {
