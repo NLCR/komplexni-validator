@@ -32,14 +32,7 @@ public class DictionariesConfigurationDialogController extends DialogController 
             int column = 0;
             String description = configurationManager.getStringOrDefault(ConfigurationManager.propDictionaryDescription(dictionary), null);
             String specUrl = configurationManager.getStringOrDefault(ConfigurationManager.propDictionarySpecUrl(dictionary), null);
-
             String syncUrl = configurationManager.getStringOrDefault(ConfigurationManager.propDictionarySyncUrl(dictionary), null);
-            String syncDate = configurationManager.getStringOrDefault(ConfigurationManager.propDictionarySyncDate(dictionary), null);
-
-            System.out.println("found dictionary " + dictionary);
-            System.out.println("description: " + description);
-            System.out.println("sync url: " + syncUrl);
-            System.out.println("last synchronized: " + syncDate);
 
             Label nameLbl = new Label(dictionary);
             nameLbl.getStyleClass().add("dict-name");
@@ -52,7 +45,7 @@ public class DictionariesConfigurationDialogController extends DialogController 
                 //separator
                 table.add(new Label(" "), column++, row);
                 //synchronize button
-                table.add(buildSynchronizeButton(dictionary, syncUrl, syncDate), column++, row);
+                table.add(buildSynchronizeButton(dictionary, syncUrl), column++, row);
             }
             if (description != null && !description.isEmpty()) {
                 row++;
@@ -67,9 +60,9 @@ public class DictionariesConfigurationDialogController extends DialogController 
         }
     }
 
-    private Node buildSynchronizeButton(String dictionary, String syncUrl, String syncDate) {
-        Button btn = new Button("Aktualizovat", new ImageView("/img/synchronize-16.png"));
-        btn.setOnAction(event -> main.showDictionaryUpdateDialog(dictionary, syncUrl, syncDate));
+    private Node buildSynchronizeButton(String dictionary, String syncUrl) {
+        Button btn = new Button("Aktualizace", new ImageView("/img/synchronize-16.png"));
+        btn.setOnAction(event -> main.showDictionaryUpdateDialog(dictionary, syncUrl));
         return btn;
     }
 
