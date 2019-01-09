@@ -3,9 +3,8 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
-<VBox stylesheets="/css/imageUtilsCheck.css"
-      xmlns="http://javafx.com/javafx/8.0.112"
-      xmlns:fx="http://javafx.com/fxml/1"
+<VBox xmlns:fx="http://javafx.com/fxml"
+      stylesheets="/css/imageUtilsCheck.css"
       fx:controller="nkp.pspValidator.gui.ImageUtilsCheckDialogController"
       fx:id="container"
       minWidth="700"

@@ -5,17 +5,14 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
-<VBox
-        xmlns="http://javafx.com/javafx/8.0.112"
-        xmlns:fx="http://javafx.com/fxml/1"
-        fx:controller="nkp.pspValidator.gui.ValidationDataInitializationDialogController"
-        fx:id="container"
-        stylesheets="/css/validationDataInitialization.css"
-        alignment="CENTER"
-        minWidth="1000"
-        minHeight="300"
-        spacing="20"
-
+<VBox xmlns:fx="http://javafx.com/fxml"
+      stylesheets="/css/validationDataInitialization.css"
+      fx:controller="nkp.pspValidator.gui.ValidationDataInitializationDialogController"
+      fx:id="container"
+      minWidth="1000"
+      minHeight="300"
+      alignment="CENTER"
+      spacing="20"
 >
     <children>
 
