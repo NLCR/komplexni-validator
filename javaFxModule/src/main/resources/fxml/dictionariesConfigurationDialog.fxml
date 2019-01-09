@@ -11,7 +11,7 @@
         stylesheets="/css/dictionariesConfigurationDialog.css"
         fx:controller="nkp.pspValidator.gui.DictionariesConfigurationDialogController"
         alignment="CENTER_LEFT"
-        minHeight="400"
+        minHeight="500"
         minWidth="600"
         spacing="0"
 >
