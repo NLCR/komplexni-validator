@@ -3,11 +3,14 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-<VBox fx:id="container" alignment="CENTER"
+<VBox xmlns:fx="http://javafx.com/fxml"
+      fx:controller="nkp.pspValidator.gui.PspValidationConfigurationDialogController"
+      fx:id="container"
       minHeight="600"
-      minWidth="650" spacing="20"
-      xmlns="http://javafx.com/javafx/8.0.112" xmlns:fx="http://javafx.com/fxml/1"
-      fx:controller="nkp.pspValidator.gui.PspValidationConfigurationDialogController">
+      minWidth="650"
+      alignment="CENTER"
+      spacing="20"
+>
 
     <children>
 

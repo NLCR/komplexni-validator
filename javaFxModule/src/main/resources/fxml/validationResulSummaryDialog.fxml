@@ -4,12 +4,15 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
-<VBox fx:id="container" alignment="CENTER_LEFT"
-      minHeight="500"
-      minWidth="700" spacing="0"
-      xmlns="http://javafx.com/javafx/8.0.112" xmlns:fx="http://javafx.com/fxml/1"
+<VBox xmlns:fx="http://javafx.com/fxml"
       stylesheets="/css/validationResultsSummary.css"
-      fx:controller="nkp.pspValidator.gui.ValidationResultsSummaryDialogController">
+      fx:controller="nkp.pspValidator.gui.ValidationResultsSummaryDialogController"
+      fx:id="container"
+      minHeight="500"
+      minWidth="700"
+      alignment="CENTER_LEFT"
+      spacing="0"
+>
 
     <padding>
         <Insets bottom="10" left="10" right="10" top="20"/>

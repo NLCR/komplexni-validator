@@ -3,11 +3,12 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-<VBox xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1"
+<VBox xmlns:fx="http://javafx.com/fxml"
       stylesheets="/css/dictionaryUpdateDialog.css"
       fx:controller="nkp.pspValidator.gui.DictionaryUpdateDialogController"
+      minHeight="300"
+      minWidth="400"
       alignment="CENTER"
-      minHeight="300" minWidth="400"
       spacing="0"
 >
 

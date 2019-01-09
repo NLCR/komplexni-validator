@@ -4,9 +4,15 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
-<VBox alignment="CENTER_LEFT" minHeight="500" minWidth="300" spacing="0" stylesheets="/css/dictionaryContentDialog.css"
-      xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1"
-      fx:controller="nkp.pspValidator.gui.DictionaryContentDialogController">
+<VBox xmlns:fx="http://javafx.com/fxml"
+      stylesheets="/css/dictionaryContentDialog.css"
+      fx:controller="nkp.pspValidator.gui.DictionaryContentDialogController"
+      minHeight="500"
+      minWidth="300"
+      alignment="CENTER_LEFT"
+      spacing="0"
+>
+
 
     <padding>
         <Insets bottom="10" left="10" right="10" top="20"/>

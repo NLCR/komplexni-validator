@@ -4,13 +4,11 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
-<BorderPane
-        fx:id="container"
-        minHeight="300"
-        stylesheets="/css/main.css"
-        xmlns="http://javafx.com/javafx/8.0.112"
-        xmlns:fx="http://javafx.com/fxml/1"
-        fx:controller="nkp.pspValidator.gui.MainController"
+<BorderPane xmlns:fx="http://javafx.com/fxml"
+            stylesheets="/css/main.css"
+            fx:controller="nkp.pspValidator.gui.MainController"
+            fx:id="container"
+            minHeight="300"
 >
     <top>
         <MenuBar fx:id="menuBar" onKeyPressed="#handleKeyInput" prefHeight="29.0" prefWidth="0.0">
