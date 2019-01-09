@@ -25,7 +25,7 @@ public class DictionariesConfigurationDialog extends AbstractDialog {
 
     @Override
     public int getHeight() {
-        return 400;
+        return 500;
     }
 
     @Override
