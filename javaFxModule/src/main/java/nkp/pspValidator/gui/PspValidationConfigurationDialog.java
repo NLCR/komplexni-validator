@@ -25,7 +25,7 @@ public class PspValidationConfigurationDialog extends AbstractDialog {
 
     @Override
     public int getHeight() {
-        return 450;
+        return 600;
     }
 
     @Override
