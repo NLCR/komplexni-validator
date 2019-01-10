@@ -31,13 +31,53 @@ public class Validator {
         return engine;
     }
 
-    public void run(File xmlOutputFile,
+    public void run(File xmlProtocolFile,
                     PrintStream out,
-                    boolean printSectionsWithProblems, boolean printSectionsWithoutProblems,
-                    boolean printRulesWithProblems, boolean printRulesWithoutProblems,
+                    int verbosity,
                     DevParams devParams,
                     ValidationState.ProgressListener progressListener,
-                    ValidationState.ProgressController progressController
+                    ValidationState.ProgressController progressController) {
+        switch (verbosity) {
+            case 3:
+                //vsechno, vcetne sekci a pravidel bez chyb
+                run(xmlProtocolFile, out,
+                        true, true, true, true,
+                        devParams,
+                        progressListener, progressController);
+                break;
+            case 2:
+                //jen chybove sekce a v popisy jednotlivych chyb (default)
+                run(xmlProtocolFile, out,
+                        true, false, true, false,
+                        devParams,
+                        progressListener, progressController);
+                break;
+            case 1:
+                //jen pocty chyb v chybovych sekcich, bez popisu jednotlivych chyb
+                run(xmlProtocolFile, out,
+                        true, false, false, false,
+                        devParams,
+                        progressListener, progressController);
+                break;
+            case 0:
+                //jen valid/not valid
+                run(xmlProtocolFile, out,
+                        false, false, false, false,
+                        devParams,
+                        progressListener, progressController);
+                break;
+            default:
+                throw new IllegalStateException(String.format("Nepovolená hodnota verbosity: %d. Hodnota musí být v intervalu [0-3]", verbosity));
+        }
+    }
+
+    private void run(File xmlOutputFile,
+                     PrintStream out,
+                     boolean printSectionsWithProblems, boolean printSectionsWithoutProblems,
+                     boolean printRulesWithProblems, boolean printRulesWithoutProblems,
+                     DevParams devParams,
+                     ValidationState.ProgressListener progressListener,
+                     ValidationState.ProgressController progressController
     ) {
         ValidatorProtocolTextBuilder textLogger = new ValidatorProtocolTextBuilder(out);
         boolean runAllSections = devParams == null || devParams.getSectionsToRun() == null || devParams.getSectionsToRun().isEmpty();

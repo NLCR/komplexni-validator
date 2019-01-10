@@ -714,38 +714,7 @@ public class Main {
         Validator validator = ValidatorFactory.buildValidator(fdmfConfig, pspDir, validatorConfigManager.getDictionaryManager());
         out.println(String.format("Validátor inicializován, spouštím validace"));
         ValidationState.ProgressListener progressListener = null;
-        switch (verbosity) {
-            case 3:
-                //vsechno, vcetne sekci a pravidel bez chyb
-                validator.run(xmlProtocolFile, out,
-                        true, true, true, true,
-                        devParams,
-                        progressListener, null);
-                break;
-            case 2:
-                //jen chybove sekce a v popisy jednotlivych chyb (default)
-                validator.run(xmlProtocolFile, out,
-                        true, false, true, false,
-                        devParams,
-                        progressListener, null);
-                break;
-            case 1:
-                //jen pocty chyb v chybovych sekcich, bez popisu jednotlivych chyb
-                validator.run(xmlProtocolFile, out,
-                        true, false, false, false,
-                        devParams,
-                        progressListener, null);
-                break;
-            case 0:
-                //jen valid/not valid
-                validator.run(xmlProtocolFile, out,
-                        false, false, false, false,
-                        devParams,
-                        progressListener, null);
-                break;
-            default:
-                throw new IllegalStateException(String.format("Nepovolená hodnota verbosity: %d. Hodnota musí být v intervalu [0-3]", verbosity));
-        }
+        validator.run(xmlProtocolFile, out, verbosity, devParams, progressListener, null);
     }
 
 
