@@ -1,5 +1,5 @@
 group 'rzehan'
-version '1.7'
+version '2.0-dev-uroven_txt_logu_v_gui-01'
 
 System.setProperty("file.encoding", "UTF-8")
 
