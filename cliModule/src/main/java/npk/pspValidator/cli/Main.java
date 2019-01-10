@@ -704,8 +704,8 @@ public class Main {
         //xml protocol file
         if (xmlProtocolFile == null) {
             if (xmlProtocolDir != null) {
-                SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd'_'HH:mm:ss.SSS");
-                String filename = String.format("%s_%s.xml", pspDir.getName(), simpleDateFormat.format(new Date(System.currentTimeMillis())));
+                SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy_MM_dd_HH_mm_ss");
+                String filename = String.format("%s_%s.xml", simpleDateFormat.format(new Date(System.currentTimeMillis())), pspDir.getName());
                 xmlProtocolFile = new File(xmlProtocolDir, filename);
             }
         }
