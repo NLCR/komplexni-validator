@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <validationTemplate
-        xmlns="http://www.nkp.cz/pspValidator/1.7/metadataProfile"
+        xmlns="http://www.nkp.cz/pspValidator/2.0/metadataProfile"
         name="DC internal part - article (RDA)"
-        validatorVersion="1.7"
+        validatorVersion="2.0"
         dmf="periodical_1.4"
 >
 
