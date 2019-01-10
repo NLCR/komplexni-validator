@@ -5,10 +5,7 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.scene.control.CheckBox;
-import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.WindowEvent;
 
@@ -58,9 +55,34 @@ public class PspValidationConfigurationDialogController extends DialogController
     CheckBox createXmlLog;
 
     @FXML
+    ToggleButton verbosityLevel3;
+
+    @FXML
+    ToggleButton verbosityLevel2;
+
+    @FXML
+    ToggleButton verbosityLevel1;
+
+    @FXML
+    ToggleButton verbosityLevel0;
+
+    @FXML
     private void initialize() {
         //System.out.println("initialize");
         //spousti se po Parent root = (Parent) loader.load();
+
+        //verbosity toggle group
+        ToggleGroup toggleGroup = new ToggleGroup();
+        verbosityLevel0.setToggleGroup(toggleGroup);
+        verbosityLevel1.setToggleGroup(toggleGroup);
+        verbosityLevel2.setToggleGroup(toggleGroup);
+        verbosityLevel3.setToggleGroup(toggleGroup);
+        //znemožnění toho, aby nebyla vybrána žádná možnost
+        toggleGroup.selectedToggleProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue == null) {
+                oldValue.setSelected(true);
+            }
+        });
     }
 
     @Override
@@ -224,9 +246,25 @@ public class PspValidationConfigurationDialogController extends DialogController
                 String forcedPerVersion = forcedPerVersionChoiceBox.isDisabled() ? null : (String) forcedPerVersionChoiceBox.getSelectionModel().getSelectedItem();
                 String preferedMonVersion = preferedMonVersionChoiceBox.isDisabled() ? null : (String) preferedMonVersionChoiceBox.getSelectionModel().getSelectedItem();
                 String preferedPerVersion = preferedPerVersionChoiceBox.isDisabled() ? null : (String) preferedPerVersionChoiceBox.getSelectionModel().getSelectedItem();
+                int verbosity = getSelectedVerbosity();
                 stage.hide();
-                main.runPspValidation(pspDir, preferedMonVersion, preferedPerVersion, forcedMonVersion, forcedPerVersion, createTxtLog.isSelected(), createXmlLog.isSelected());
+                main.runPspValidation(pspDir, preferedMonVersion, preferedPerVersion, forcedMonVersion, forcedPerVersion, createTxtLog.isSelected(), createXmlLog.isSelected(), verbosity);
             }
+        }
+    }
+
+    private int getSelectedVerbosity() {
+        // TODO: 10.1.19 jeste si v properties pamatovat posledni zvolenou hodnotu
+        if (verbosityLevel0.isSelected()) {
+            return 0;
+        } else if (verbosityLevel1.isSelected()) {
+            return 1;
+        } else if (verbosityLevel2.isSelected()) {
+            return 2;
+        } else if (verbosityLevel3.isSelected()) {
+            return 3;
+        } else {
+            throw new IllegalStateException("no ToggleButton selected");
         }
     }
 

@@ -162,7 +162,9 @@ public class MainController extends AbstractController implements ValidationStat
      * @param createTxtLog
      * @param createXmlLog
      */
-    public void runPspValidation(File pspDir, String preferedMonVersion, String preferedPerVersion, String forcedMonVersion, String forcedPerVersion, boolean createTxtLog, boolean createXmlLog) {
+    public void runPspValidation(File pspDir,
+                                 String preferedMonVersion, String preferedPerVersion, String forcedMonVersion, String forcedPerVersion,
+                                 boolean createTxtLog, boolean createXmlLog, int verbosity) {
         initBeforeValidation();
         this.pspDir = pspDir;
         this.logTxtFile = createTxtLog ? buildTxtLogFile(pspDir) : null;
@@ -198,10 +200,8 @@ public class MainController extends AbstractController implements ValidationStat
                     if (isCancelled()) {
                         return null;
                     }
-                    // TODO: 10.1.19 make configurable in GUI
-                    int verbocity = 3;
                     validator.run(logXmlFile, out,
-                            verbocity,
+                            verbosity,
                             devParams,
                             MainController.this,
                             MainController.this);
