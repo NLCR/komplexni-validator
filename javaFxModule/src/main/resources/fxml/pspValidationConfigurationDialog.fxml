@@ -138,9 +138,13 @@
                   spacing="8">
                 <ToggleButton fx:id="verbosityLevel3"
                               selected="true"
-                              text="úplně vše"/>
+                              text="úplně vše"
+                              onAction="#onVerbositySwitched"
+                />
                 <ToggleButton fx:id="verbosityLevel2"
-                              text="jen sekce a pravidla obsahující chyby"/>
+                              text="jen sekce a pravidla obsahující chyby"
+                              onAction="#onVerbositySwitched"
+                />
             </HBox>
 
             <HBox GridPane.rowIndex="13"
@@ -148,10 +152,13 @@
                   GridPane.columnSpan="3"
                   spacing="10">
                 <ToggleButton fx:id="verbosityLevel1"
-                              text="jen sekce obsahující chyby"/>
-
+                              text="jen sekce obsahující chyby"
+                              onAction="#onVerbositySwitched"
+                />
                 <ToggleButton fx:id="verbosityLevel0"
-                              text="jen validní/nevalidní"/>
+                              text="jen validní/nevalidní"
+                              onAction="#onVerbositySwitched"
+                />
             </HBox>
 
 
