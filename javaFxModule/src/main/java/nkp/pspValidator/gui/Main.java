@@ -123,8 +123,8 @@ public class Main extends Application {
         this.validationDataManager = validationDataManager;
     }
 
-    public void runPspValidation(File pspDir, String preferedMonVersion, String preferedPerVersion, String forcedMonVersion, String forcedPerVersion, boolean createTxtLog, boolean createXmlLog) {
-        mainController.runPspValidation(pspDir, preferedMonVersion, preferedPerVersion, forcedMonVersion, forcedPerVersion, createTxtLog, createXmlLog);
+    public void runPspValidation(File pspDir, String preferedMonVersion, String preferedPerVersion, String forcedMonVersion, String forcedPerVersion, boolean createTxtLog, boolean createXmlLog, int verbosity) {
+        mainController.runPspValidation(pspDir, preferedMonVersion, preferedPerVersion, forcedMonVersion, forcedPerVersion, createTxtLog, createXmlLog, verbosity);
     }
 
     //DIALOGS

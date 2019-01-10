@@ -46,14 +46,14 @@ public class Validator {
                         progressListener, progressController);
                 break;
             case 2:
-                //jen chybove sekce a v popisy jednotlivych chyb (default)
+                //jen sekce a pravidla s chybami a popisy jednotlivych chyb (default)
                 run(xmlProtocolFile, out,
                         true, false, true, false,
                         devParams,
                         progressListener, progressController);
                 break;
             case 1:
-                //jen pocty chyb v chybovych sekcich, bez popisu jednotlivych chyb
+                //jen pocty chyb v sekcich s chybami, bez popisu jednotlivych chyb
                 run(xmlProtocolFile, out,
                         true, false, false, false,
                         devParams,
