@@ -34,8 +34,6 @@
         <!--per>=1.5, mon>=1.1-->
         <expression caseSensitive="true">info_.+\.xml</expression>
         <expression caseSensitive="true">info\.xml</expression>
-
-
     </pattern-def>
 
     <pattern-def name="INFO_FILENAME">
@@ -48,7 +46,6 @@
         <!--per>=1.5, mon>=1.1-->
         <expression caseSensitive="true">info_${PSP_ID}\.xml</expression>
         <expression>info\.xml</expression>
-
     </pattern-def>
 
     <pattern-def name="PRIMARY-METS_FILENAME">
@@ -84,7 +81,6 @@
 
         <!--per>=1.5, mon>=1.1-->
         <expression caseSensitive="true">amdsec</expression>
-
     </pattern-def>
 
     <pattern-def name="OCR-TEXT-DIR_FILENAME">
@@ -95,7 +91,6 @@
 
         <!--per>=1.5, mon>=1.1-->
         <expression caseSensitive="true">txt</expression>
-
     </pattern-def>
 
     <pattern-def name="OCR-ALTO-DIR_FILENAME">
@@ -106,7 +101,6 @@
 
         <!--per>=1.5, mon>=1.1-->
         <expression caseSensitive="true">alto</expression>
-
     </pattern-def>
 
     <pattern-def name="MASTER-COPY-DIR_FILENAME">
@@ -117,7 +111,6 @@
 
         <!--per>=1.5, mon>=1.1-->
         <expression caseSensitive="true">mastercopy</expression>
-
     </pattern-def>
 
     <pattern-def name="USER-COPY-DIR_FILENAME">
@@ -128,7 +121,6 @@
 
         <!--per>=1.5, mon>=1.1-->
         <expression caseSensitive="true">usercopy</expression>
-
     </pattern-def>
 
     <pattern-def name="SECONDARY-METS_FILENAME">
@@ -139,7 +131,6 @@
 
         <!--per>=1.5, mon>=1.1-->
         <expression caseSensitive="true">amd_mets_${PSP_ID}_[0-9]+\.xml</expression>
-
     </pattern-def>
 
     <pattern-def name="OCR-TEXT_FILENAME">
@@ -150,7 +141,6 @@
 
         <!--per>=1.5, mon>=1.1-->
         <expression caseSensitive="true">txt_${PSP_ID}_[0-9]+\.txt</expression>
-
     </pattern-def>
 
     <pattern-def name="OCR-ALTO_FILENAME">
@@ -161,7 +151,6 @@
 
         <!--per>=1.5, mon>=1.1-->
         <expression caseSensitive="true">alto_${PSP_ID}_[0-9]+\.xml</expression>
-
     </pattern-def>
 
     <pattern-def name="MASTER-COPY_FILENAME">
@@ -172,7 +161,6 @@
 
         <!--per>=1.5, mon>=1.1-->
         <expression caseSensitive="true">mc_${PSP_ID}_[0-9]+\.jp2</expression>
-
     </pattern-def>
 
     <pattern-def name="USER-COPY_FILENAME">
@@ -183,8 +171,6 @@
 
         <!--per>=1.5, mon>=1.1-->
         <expression caseSensitive="true">uc_${PSP_ID}_[0-9]+\.jp2</expression>
-
     </pattern-def>
-
 
 </fDMF>
