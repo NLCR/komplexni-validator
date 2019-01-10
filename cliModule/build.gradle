@@ -29,7 +29,7 @@ dependencies {
     //compile 'commons-cli:commons-cli:1.4-SNAPSHOT'
 }
 
-version = '2.0.dev-01'
+version = '2.0-dev-uroven_txt_logu_v_gui-01'
 
 //https://www.mkyong.com/gradle/gradle-create-a-jar-file-with-dependencies/
 task fatJar(type: Jar) {
