@@ -25,7 +25,7 @@
                    GridPane.rowIndex="0"
                    GridPane.columnSpan="2"
             />
-            <TextField fx:id="pspDirTextField" minWidth="300"
+            <TextField fx:id="pspDirTextField" minWidth="250"
                        GridPane.columnIndex="2"
                        GridPane.rowIndex="0"
                        GridPane.columnSpan="1"
@@ -125,6 +125,35 @@
                       GridPane.rowIndex="11"
                       onAction="#createTxtLogChanged"
             />
+
+            <!--Verbosity-->
+            <Label text="Podrobnost textového logu"
+                   GridPane.columnIndex="0"
+                   GridPane.rowIndex="12"
+            />
+
+            <HBox GridPane.rowIndex="12"
+                  GridPane.columnIndex="2"
+                  GridPane.columnSpan="3"
+                  spacing="8">
+                <ToggleButton fx:id="verbosityLevel3"
+                              selected="true"
+                              text="úplně vše"/>
+                <ToggleButton fx:id="verbosityLevel2"
+                              text="jen sekce a pravidla obsahující chyby"/>
+            </HBox>
+
+            <HBox GridPane.rowIndex="13"
+                  GridPane.columnIndex="2"
+                  GridPane.columnSpan="3"
+                  spacing="10">
+                <ToggleButton fx:id="verbosityLevel1"
+                              text="jen sekce obsahující chyby"/>
+
+                <ToggleButton fx:id="verbosityLevel0"
+                              text="jen validní/nevalidní"/>
+            </HBox>
+
 
         </GridPane>
 
