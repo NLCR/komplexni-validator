@@ -271,7 +271,6 @@ public class PspValidationConfigurationDialogController extends DialogController
     }
 
     private int getSelectedVerbosity() {
-        // TODO: 10.1.19 jeste si v properties pamatovat posledni zvolenou hodnotu
         if (verbosityLevel0.isSelected()) {
             return 0;
         } else if (verbosityLevel1.isSelected()) {
