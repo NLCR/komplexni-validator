@@ -114,11 +114,28 @@ public class PspValidationConfigurationDialogController extends DialogController
         preferedMonVersionChoiceBox.setDisable(!preferedMonVersionEnabled);
         preferedPerVersionCheckBox.setSelected(preferedPerVersionEnabled);
         preferedPerVersionChoiceBox.setDisable(!preferedPerVersionEnabled);
-
         //logs
         createTxtLog.setSelected(mgr.getBooleanOrDefault(ConfigurationManager.PROP_PSP_VALIDATION_CREATE_TXT_LOG, false));
         createXmlLog.setSelected(mgr.getBooleanOrDefault(ConfigurationManager.PROP_PSP_VALIDATION_CREATE_XML_LOG, false));
-        //TODO; taky inicializovat vyrobu logu
+        //log verbosity
+        Integer textLogVerbosity = mgr.getIntegerOrNull(ConfigurationManager.PROP_TEXT_LOG_VERBOSITY);
+        if (textLogVerbosity != null) {
+            switch (textLogVerbosity) {
+                case 0:
+                    verbosityLevel0.setSelected(true);
+                    break;
+                case 1:
+                    verbosityLevel1.setSelected(true);
+                    break;
+                case 2:
+                    verbosityLevel2.setSelected(true);
+                    break;
+                case 3:
+                    verbosityLevel3.setSelected(true);
+                    break;
+            }
+        }
+
         //init views from fdmf
         initChoiceBoxes();
     }
@@ -342,5 +359,20 @@ public class PspValidationConfigurationDialogController extends DialogController
     public void createTxtLogChanged(ActionEvent actionEvent) {
         boolean create = createTxtLog.isSelected();
         getConfigurationManager().setBoolean(ConfigurationManager.PROP_PSP_VALIDATION_CREATE_TXT_LOG, create);
+    }
+
+    public void onVerbositySwitched(ActionEvent actionEvent) {
+        Object source = actionEvent.getSource();
+        Integer verbosity = null;
+        if (source == verbosityLevel0) {
+            verbosity = 0;
+        } else if (source == verbosityLevel1) {
+            verbosity = 1;
+        } else if (source == verbosityLevel2) {
+            verbosity = 2;
+        } else if (source == verbosityLevel3) {
+            verbosity = 3;
+        }
+        getConfigurationManager().setInteger(ConfigurationManager.PROP_TEXT_LOG_VERBOSITY, verbosity);
     }
 }

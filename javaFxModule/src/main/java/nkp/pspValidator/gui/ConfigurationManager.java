@@ -72,6 +72,9 @@ public class ConfigurationManager {
         return "dictionary." + dictionary + ".syncUrl";
     }
 
+    //text log verbosity
+    public static final String PROP_TEXT_LOG_VERBOSITY = "text_log.verbosity";
+
     private final Platform platform;
     private final File configFile;
     private final Properties properties = new Properties();
@@ -235,14 +238,34 @@ public class ConfigurationManager {
         }
     }
 
+    public Integer getIntegerOrNull(String propertyName) {
+        String stringVal = properties.getProperty(propertyName);
+        if (stringVal == null) {
+            return null;
+        } else {
+            return Integer.valueOf(stringVal);
+        }
+    }
+
+    public void setInteger(String propertyName, Integer value) {
+        if (value != null) {
+            properties.setProperty(propertyName, value.toString());
+            saveProperties();
+        }
+    }
+
     public void setBoolean(String propertyName, Boolean value) {
-        properties.setProperty(propertyName, value.toString());
-        saveProperties();
+        if (value != null) {
+            properties.setProperty(propertyName, value.toString());
+            saveProperties();
+        }
     }
 
     public void setString(String propertyName, String value) {
-        properties.setProperty(propertyName, value);
-        saveProperties();
+        if (value != null) {
+            properties.setProperty(propertyName, value);
+            saveProperties();
+        }
     }
 
     public String getStringOrDefault(String propertyName, String defaultValue) {
