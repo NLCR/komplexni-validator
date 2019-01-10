@@ -98,5 +98,4 @@
         <expression caseSensitive="false">uc_${PSP_ID}_[0-9]+\.jp2</expression>
     </pattern-def>
 
-
 </fDMF>

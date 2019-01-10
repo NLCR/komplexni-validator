@@ -198,9 +198,10 @@ public class MainController extends AbstractController implements ValidationStat
                     if (isCancelled()) {
                         return null;
                     }
+                    // TODO: 10.1.19 make configurable in GUI
+                    int verbocity = 3;
                     validator.run(logXmlFile, out,
-                            true, true,
-                            true, true,
+                            verbocity,
                             devParams,
                             MainController.this,
                             MainController.this);
