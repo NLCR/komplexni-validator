@@ -1,7 +1,6 @@
-#Tento slovník obsahuje kódy typů rolí podle http://www.loc.gov/marc/relators/relaterm.html
-#Resp. http://www.loc.gov/marc/relators/relacode.html
-#Pozor na hodnoty s pomlčkou, např. -grt
-#https://github.com/NLCR/komplexni-validator/issues/74
+# Tento slovník obsahuje kódy typů rolí podle http://www.loc.gov/marc/relators/relaterm.html, resp. http://www.loc.gov/marc/relators/relacode.html
+# V rozporu s oficiální specifikací slovníku uznáváme i zastaralé kódy (ve specifikaci označeny úvodní pomlčkou)
+# Více k zastaralým kódům na https://github.com/NLCR/komplexni-validator/issues/74
 abr
 acp
 act
@@ -42,7 +41,7 @@ bsl
 cas
 ccp
 chr
--clb
+clb
 cli
 cll
 clr
@@ -126,7 +125,7 @@ fnd
 fpy
 frg
 gis
--grt
+grt
 his
 hnr
 hst
@@ -262,7 +261,7 @@ tyg
 uvp
 vac
 vdg
--voc
+voc
 wac
 wal
 wam
