@@ -14,15 +14,10 @@
         <!--mozna tohle patri spise k INFO?-->
         <!--TODO: spis pouzit pattern a checkFilenameMatchesPattern, kdyz matches-->
         <rule name="PSP_DIR_MATCHES_PSP_ID">
-            <!--Tady warning, protože to zadání vyžaduje, nicméně DMF mluví jasně:
-            <packageid> název kořenového adresáře balíčku viz kap. 6
-            a METS Profil taky:
-            There must be <packageid> element that contains name of package root directory.-->
             <description>Název kořenového adresáře musí být schodný s PSP-ID.</description>
-
             <validation functionName="checkFilenameMatchesPattern">
                 <params>
-                    <value name="level" type="LEVEL">WARNING</value>
+                    <value name="level" type="LEVEL">ERROR</value>
                     <value name="file" type="FILE">
                         <value-ref name="PSP_DIR"/>
                     </value>
