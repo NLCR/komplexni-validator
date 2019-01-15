@@ -141,8 +141,12 @@ public class Main extends Application {
         new ExclusionsConfigurationDialog(dialogStage, this).show();
     }
 
-    public void showNewValidationConfigurationDialog() {
-        new PspValidationConfigurationDialog(dialogStage, this).show();
+    public void showNewPspDirValidationConfigurationDialog() {
+        new PspDirValidationConfigurationDialog(dialogStage, this).show();
+    }
+
+    public void showNewPspZipValidationConfigurationDialog() {
+        new PspZipValidationConfigurationDialog(dialogStage, this).show();
     }
 
     public void showValidationResultSummaryDialog(ValidationResultSummary summary) {
@@ -168,6 +172,5 @@ public class Main extends Application {
     public void showTestDialog() {
         new DevDialog(dialogStage, this).show();
     }
-
 
 }

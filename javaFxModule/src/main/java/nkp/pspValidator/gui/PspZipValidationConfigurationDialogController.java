@@ -6,7 +6,7 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
-import javafx.stage.DirectoryChooser;
+import javafx.stage.FileChooser;
 import javafx.stage.WindowEvent;
 
 import java.io.File;
@@ -16,10 +16,10 @@ import java.util.Set;
 /**
  * Created by Martin Řehánek on 13.12.16.
  */
-public class PspValidationConfigurationDialogController extends DialogController {
+public class PspZipValidationConfigurationDialogController extends DialogController {
 
     @FXML
-    TextField pspDirTextField;
+    TextField pspZipTextField;
 
     @FXML
     ChoiceBox forcedMonVersionChoiceBox;
@@ -220,20 +220,21 @@ public class PspValidationConfigurationDialogController extends DialogController
     }
 
     public void selectPspDir(ActionEvent actionEvent) {
-        DirectoryChooser chooser = new DirectoryChooser();
-        chooser.setTitle("Vyberte kořenový adresář PSP balíku");
-        File lastPspDir = getConfigurationManager().getFileOrNull(ConfigurationManager.PROP_LAST_PSP_DIR);
-        if (lastPspDir != null && lastPspDir.exists()) {
-            File parent = lastPspDir.getParentFile();
+        FileChooser chooser = new FileChooser();
+        chooser.setTitle("Vyberte soubor PSP balíku");
+        chooser.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("Soubory ZIP", "*.zip"));
+        File lastPspZip = getConfigurationManager().getFileOrNull(ConfigurationManager.PROP_LAST_PSP_ZIP);
+        if (lastPspZip != null && lastPspZip.exists()) {
+            File parent = lastPspZip.getParentFile();
             if (parent != null && parent.exists()) {
                 chooser.setInitialDirectory(parent);
             }
         }
-        File selectedDir = chooser.showDialog(stage);
-        if (selectedDir != null) {
-            getConfigurationManager().setFile(ConfigurationManager.PROP_LAST_PSP_DIR, selectedDir);
+        File selectedZipFile = chooser.showOpenDialog(stage);
+        if (selectedZipFile != null) {
+            getConfigurationManager().setFile(ConfigurationManager.PROP_LAST_PSP_ZIP, selectedZipFile);
             try {
-                pspDirTextField.setText(selectedDir.getCanonicalPath());
+                pspZipTextField.setText(selectedZipFile.getCanonicalPath());
             } catch (IOException e) {
                 //should never happen
                 throw new RuntimeException(e);
@@ -247,7 +248,8 @@ public class PspValidationConfigurationDialogController extends DialogController
 
 
     public void validate(ActionEvent actionEvent) {
-        String pspDirTxt = pspDirTextField.getText();
+        // TODO: 15.1.19 implement
+        /*String pspDirTxt = pspDirTextField.getText();
         if (pspDirTxt == null || pspDirTxt.isEmpty()) {
             showError("Prázdný adresář PSP balíku!");
         } else {
@@ -267,7 +269,7 @@ public class PspValidationConfigurationDialogController extends DialogController
                 stage.hide();
                 main.runPspValidation(pspDir, preferedMonVersion, preferedPerVersion, forcedMonVersion, forcedPerVersion, createTxtLog.isSelected(), createXmlLog.isSelected(), verbosity);
             }
-        }
+        }*/
     }
 
     private int getSelectedVerbosity() {
