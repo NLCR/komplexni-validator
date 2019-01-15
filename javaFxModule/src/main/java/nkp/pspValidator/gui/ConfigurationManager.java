@@ -14,7 +14,7 @@ import java.util.Properties;
  */
 public class ConfigurationManager {
 
-    public static boolean DEV_MODE = false;
+    public static boolean DEV_MODE = true;
     public static boolean DEV_MODE_ONLY_SELECTED_SECTIONS = false;
 
     private static final String DEFAULT_LOG_DIR = "logs";
@@ -43,6 +43,7 @@ public class ConfigurationManager {
 
     //validation
     public static final String PROP_LAST_PSP_DIR = "last.psp.dir";
+    public static final String PROP_LAST_PSP_ZIP = "last.psp.zip";
     public static final String PROP_FORCE_MON_VERSION_ENABLED = "force.monograph.version.enabled";
     public static final String PROP_FORCE_MON_VERSION_CODE = "force.monograph.version.code";
     public static final String PROP_FORCE_PER_VERSION_ENABLED = "force.periodical.version.enabled";

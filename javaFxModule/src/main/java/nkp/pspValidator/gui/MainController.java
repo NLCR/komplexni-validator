@@ -620,8 +620,12 @@ public class MainController extends AbstractController implements ValidationStat
         main.showAboutAppDialog();
     }
 
-    public void showNewValidationConfigurationDialog(ActionEvent actionEvent) {
-        main.showNewValidationConfigurationDialog();
+    public void showNewPspDirValidationConfigurationDialog(ActionEvent actionEvent) {
+        main.showNewPspDirValidationConfigurationDialog();
+    }
+
+    public void showNewPspZipValidationConfigurationDialog(ActionEvent actionEvent) {
+        main.showNewPspZipValidationConfigurationDialog();
     }
 
     public void showValidationResultSummaryDialog(ActionEvent actionEvent) {

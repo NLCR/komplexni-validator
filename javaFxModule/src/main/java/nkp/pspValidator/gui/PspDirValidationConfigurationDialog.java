@@ -7,15 +7,15 @@ import java.net.URL;
 /**
  * Created by Martin Řehánek on 13.12.16.
  */
-public class PspValidationConfigurationDialog extends AbstractDialog {
+public class PspDirValidationConfigurationDialog extends AbstractDialog {
 
-    public PspValidationConfigurationDialog(Stage stage, Main main) {
+    public PspDirValidationConfigurationDialog(Stage stage, Main main) {
         super(stage, main);
     }
 
     @Override
     public URL getFxmlResource() {
-        return getClass().getResource("/fxml/pspValidationConfigurationDialog.fxml");
+        return getClass().getResource("/fxml/pspDirValidationConfigurationDialog.fxml");
     }
 
     @Override
