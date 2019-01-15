@@ -249,7 +249,7 @@ public class PspDirValidationConfigurationDialogController extends DialogControl
     public void validate(ActionEvent actionEvent) {
         String pspDirTxt = pspDirTextField.getText();
         if (pspDirTxt == null || pspDirTxt.isEmpty()) {
-            showError("Prázdný adresář PSP balíku!");
+            showError("Prázdné jméno adresáře PSP balíku!");
         } else {
             File pspDir = new File(pspDirTxt.trim());
             if (!pspDir.exists()) {
@@ -265,7 +265,7 @@ public class PspDirValidationConfigurationDialogController extends DialogControl
                 String preferedPerVersion = preferedPerVersionChoiceBox.isDisabled() ? null : (String) preferedPerVersionChoiceBox.getSelectionModel().getSelectedItem();
                 int verbosity = getSelectedVerbosity();
                 stage.hide();
-                main.runPspValidation(pspDir, preferedMonVersion, preferedPerVersion, forcedMonVersion, forcedPerVersion, createTxtLog.isSelected(), createXmlLog.isSelected(), verbosity);
+                main.runPspDirValidation(pspDir, preferedMonVersion, preferedPerVersion, forcedMonVersion, forcedPerVersion, createTxtLog.isSelected(), createXmlLog.isSelected(), verbosity);
             }
         }
     }
