@@ -15,8 +15,8 @@
             <menus>
                 <Menu fx:id="menuValidate" text="Validovat">
                     <items>
-                        <MenuItem onAction="#showNewValidationConfigurationDialog" text="PSP balík (adresář)"/>
-                        <MenuItem disable="true" text="PSP (zip)"/>
+                        <MenuItem onAction="#showNewPspDirValidationConfigurationDialog" text="PSP balík (adresář)"/>
+                        <MenuItem onAction="#showNewPspZipValidationConfigurationDialog" text="PSP balík (zip)"/>
                         <SeparatorMenuItem/>
                         <MenuItem disable="true" text="Adresář obsahující PSP balíky (adresáře)"/>
                         <MenuItem disable="true" text="Zip obsahující PSP balíky (zip)"/>
