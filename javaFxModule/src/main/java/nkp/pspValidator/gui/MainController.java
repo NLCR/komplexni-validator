@@ -162,9 +162,9 @@ public class MainController extends AbstractController implements ValidationStat
      * @param createTxtLog
      * @param createXmlLog
      */
-    public void runPspValidation(File pspDir,
-                                 String preferedMonVersion, String preferedPerVersion, String forcedMonVersion, String forcedPerVersion,
-                                 boolean createTxtLog, boolean createXmlLog, int verbosity) {
+    public void runPspDirValidation(File pspDir,
+                                    String preferedMonVersion, String preferedPerVersion, String forcedMonVersion, String forcedPerVersion,
+                                    boolean createTxtLog, boolean createXmlLog, int verbosity) {
         initBeforeValidation();
         this.pspDir = pspDir;
         this.logTxtFile = createTxtLog ? buildTxtLogFile(pspDir) : null;

@@ -248,28 +248,27 @@ public class PspZipValidationConfigurationDialogController extends DialogControl
 
 
     public void validate(ActionEvent actionEvent) {
-        // TODO: 15.1.19 implement
-        /*String pspDirTxt = pspDirTextField.getText();
-        if (pspDirTxt == null || pspDirTxt.isEmpty()) {
-            showError("Prázdný adresář PSP balíku!");
+        String pspZipFileTxt = pspZipTextField.getText();
+        if (pspZipFileTxt == null || pspZipFileTxt.isEmpty()) {
+            showError("Prázdné jméno zip souboru PSP balíku!");
         } else {
-            File pspDir = new File(pspDirTxt.trim());
-            if (!pspDir.exists()) {
-                showError(String.format("Adresář '%s' neexistuje!", pspDirTxt));
-            } else if (!pspDir.isDirectory()) {
-                showError(String.format("Soubor '%s' není adresář!", pspDirTxt));
-            } else if (!pspDir.canRead()) {
-                showError(String.format("Nelze číst obsah adresáře '%s'!", pspDirTxt));
+            File pspZipFile = new File(pspZipFileTxt.trim());
+            if (!pspZipFile.exists()) {
+                showError(String.format("Soubor '%s' neexistuje!", pspZipFileTxt));
+            } else if (!pspZipFile.isFile()) {
+                showError(String.format("Soubor '%s' není normální soubor !", pspZipFileTxt));
+            } else if (!pspZipFile.canRead()) {
+                showError(String.format("Nelze číst soubor '%s'!", pspZipFileTxt));
             } else {
                 String forcedMonVersion = forcedMonVersionChoiceBox.isDisabled() ? null : (String) forcedMonVersionChoiceBox.getSelectionModel().getSelectedItem();
                 String forcedPerVersion = forcedPerVersionChoiceBox.isDisabled() ? null : (String) forcedPerVersionChoiceBox.getSelectionModel().getSelectedItem();
                 String preferedMonVersion = preferedMonVersionChoiceBox.isDisabled() ? null : (String) preferedMonVersionChoiceBox.getSelectionModel().getSelectedItem();
                 String preferedPerVersion = preferedPerVersionChoiceBox.isDisabled() ? null : (String) preferedPerVersionChoiceBox.getSelectionModel().getSelectedItem();
                 int verbosity = getSelectedVerbosity();
-                stage.hide();
-                main.runPspValidation(pspDir, preferedMonVersion, preferedPerVersion, forcedMonVersion, forcedPerVersion, createTxtLog.isSelected(), createXmlLog.isSelected(), verbosity);
+                //stage.hide();
+                main.runPspZipValidation(pspZipFile, preferedMonVersion, preferedPerVersion, forcedMonVersion, forcedPerVersion, createTxtLog.isSelected(), createXmlLog.isSelected(), verbosity);
             }
-        }*/
+        }
     }
 
     private int getSelectedVerbosity() {
