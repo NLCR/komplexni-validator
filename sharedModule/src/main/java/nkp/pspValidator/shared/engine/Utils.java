@@ -5,10 +5,12 @@ import nkp.pspValidator.shared.engine.exceptions.InvalidIdException;
 import nkp.pspValidator.shared.engine.exceptions.InvalidPathException;
 import nkp.pspValidator.shared.engine.types.Identifier;
 
-import java.io.*;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.*;
 import java.util.zip.ZipEntry;
-import java.util.zip.ZipFile;
 import java.util.zip.ZipInputStream;
 
 /**
@@ -261,10 +263,14 @@ public class Utils {
                 //System.out.println("entry name: " + entryName);
                 String outFileName = outFolder.getAbsolutePath() + File.separator + entryName;
                 //System.out.println("Unzip: " + outFileName);
+                File entryFile = new File(outFileName);
                 if (entry.isDirectory()) {
                     // Make directories
-                    new File(outFileName).mkdirs();
+                    entryFile.mkdirs();
                 } else {
+                    // Make parent directories
+                    entryFile.getParentFile().mkdirs();
+
                     // Create Stream to write file.
                     FileOutputStream fos = new FileOutputStream(outFileName);
                     int len;

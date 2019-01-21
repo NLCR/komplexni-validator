@@ -539,11 +539,11 @@ public class Main {
             if (tmpDir == null) {
                 err.println(String.format("Chyba: prázdný parametr --%s: adresář pro dočasné soubory je potřeba pro rozbalení ZIP souboru %s!", Params.TMP_DIR, pspGroupFile.getAbsolutePath()));
             } else if (!tmpDir.exists()) {
-                err.println(String.format("Chyba: adresář %s neexistuje!", pspGroupFile.getAbsolutePath()));
+                err.println(String.format("Chyba: adresář %s neexistuje!", tmpDir.getAbsolutePath()));
             } else if (!tmpDir.isDirectory()) {
-                err.println(String.format("Chyba: soubor %s není adresář!", pspGroupFile.getAbsolutePath()));
+                err.println(String.format("Chyba: soubor %s není adresář!", tmpDir.getAbsolutePath()));
             } else if (!tmpDir.canWrite()) {
-                err.println(String.format("Chyba: nemůžu zapisovat do adresáře %s!", pspGroupFile.getAbsolutePath()));
+                err.println(String.format("Chyba: nemůžu zapisovat do adresáře %s!", tmpDir.getAbsolutePath()));
             } else {
                 File containerDir = new File(tmpDir, pspGroupFile.getName() + "_extracted");
                 if (containerDir.exists()) {
@@ -572,7 +572,6 @@ public class Main {
         } catch (IOException e) {
             out.println(String.format("Chyba zpracování ZIP souboru %s: %s!", pspGroupFile.getAbsolutePath(), e.getMessage()));
         }
-
     }
 
     private static void validatePspGroupDir(File pspGroupDir,
