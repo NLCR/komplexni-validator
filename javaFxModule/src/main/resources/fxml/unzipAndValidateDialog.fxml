@@ -26,8 +26,6 @@
 
         <ProgressIndicator fx:id="progressIndicator"/>
 
-        <Label fx:id="lblError" wrapText="true"/>
-
         <HBox alignment="CENTER" spacing="10">
             <padding>
                 <Insets bottom="5" left="10" right="10" top="10"/>
