@@ -1,5 +1,5 @@
 group 'rzehan'
-version '2.0-dev-validace_zip_balicku_z_gui'
+version '2.0-dev-02'
 
 System.setProperty("file.encoding", "UTF-8")
 
