@@ -123,12 +123,17 @@ public class Main extends Application {
         this.validationDataManager = validationDataManager;
     }
 
-    public void runPspDirValidation(File pspDir, String preferedMonVersion, String preferedPerVersion, String forcedMonVersion, String forcedPerVersion, boolean createTxtLog, boolean createXmlLog, int verbosity) {
+    public void runPspDirValidation(File pspDir, String preferedMonVersion, String preferedPerVersion, String forcedMonVersion, String forcedPerVersion,
+                                    boolean createTxtLog, boolean createXmlLog, int verbosity) {
+        //because the possible unzip dialog cannot close it's parent dialog
+        dialogStage.close();
         mainController.runPspDirValidation(pspDir, preferedMonVersion, preferedPerVersion, forcedMonVersion, forcedPerVersion, createTxtLog, createXmlLog, verbosity);
     }
 
-    public void runPspZipValidation(File pspZip, String preferedMonVersion, String preferedPerVersion, String forcedMonVersion, String forcedPerVersion, boolean createTxtLog, boolean createXmlLog, int verbosity) {
-        new UnzipAndValidateDialog(dialogStageLevel2, this, pspZip).show();
+    public void unzipAndRunPspZipValidation(File pspZip, String preferedMonVersion, String preferedPerVersion, String forcedMonVersion, String forcedPerVersion,
+                                            boolean createTxtLog, boolean createXmlLog, int verbosity) {
+        new UnzipAndValidateDialog(dialogStageLevel2, this, pspZip, preferedMonVersion, preferedPerVersion, forcedMonVersion, forcedPerVersion,
+                createTxtLog, createXmlLog, verbosity).show();
     }
 
     //DIALOGS
