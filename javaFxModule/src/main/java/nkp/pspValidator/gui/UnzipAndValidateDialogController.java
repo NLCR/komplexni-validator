@@ -56,7 +56,7 @@ public class UnzipAndValidateDialogController extends DialogController {
 
                     //check, that ok ZIP
                     updateMessage(String.format("Kontroluji soubor %s", pspZip.getAbsolutePath()));
-                    new ZipFile(pspZip);
+                    ZipFile zipFile = new ZipFile(pspZip);
                     busyWait(1000);
                     if (isCancelled()) {
                         return null;
@@ -76,28 +76,36 @@ public class UnzipAndValidateDialogController extends DialogController {
                         showError(String.format("Chyba: nemůžu zapisovat do adresáře %s!", tmpDir.getAbsolutePath()));
                         return null;
                     } else {
-                        File pspDir = new File(tmpDir, pspZip.getName().substring(0, pspZip.getName().length() - ".zip".length()));
+                        File containerDir = new File(tmpDir, pspZip.getName().substring(0, pspZip.getName().length() - ".zip".length()));
+                        //System.out.println("container dir:" + containerDir.getAbsolutePath());
                         if (isCancelled()) {
                             return null;
                         }
 
-                        //delete unzipped dir from previous run
-                        if (pspDir.exists()) {
-                            updateMessage(String.format("Mažu adresář %s", pspDir.getAbsolutePath()));
-                            Utils.deleteNonemptyDir(pspDir);
+                        //delete unzipped container dir from previous run
+                        if (containerDir.exists()) {
+                            updateMessage(String.format("Mažu adresář %s", containerDir.getAbsolutePath()));
+                            Utils.deleteNonemptyDir(containerDir);
                             busyWait(2000);
                             if (isCancelled()) {
                                 return null;
                             }
                         }
 
-                        //unzip
-                        updateMessage(String.format("Rozbaluji %s do adresáře %s", pspZip.getAbsolutePath(), tmpDir.getAbsolutePath()));
-                        Utils.unzip(pspZip, tmpDir);
+                        //unzip into container dir
+                        updateMessage(String.format("Rozbaluji %s do adresáře %s", pspZip.getAbsolutePath(), containerDir.getAbsolutePath()));
+                        Utils.unzip(pspZip, containerDir);
                         busyWait(1000);
                         if (isCancelled()) {
                             return null;
                         }
+
+                        File pspDir = containerDir;
+                        File[] filesInContainer = containerDir.listFiles();
+                        if (filesInContainer.length == 1) {
+                            pspDir = filesInContainer[0];
+                        }
+                        //System.out.println("psp dir: " + pspDir.getAbsolutePath());
 
                         if (!isCancelled()) {
                             finishOkAndContinue(pspDir);
