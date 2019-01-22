@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<alto xmlns="http://www.loc.gov/standards/alto/ns-v2#" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+<Description>
+<MeasurementUnit>pixel</MeasurementUnit>
+<OCRProcessing ID="IdOcr"><ocrProcessingStep><processingDateTime>2014-07-19</processingDateTime><processingSoftware><softwareCreator>ABBYY</softwareCreator><softwareName>ABBYY Recognition Server</softwareName><softwareVersion>4.0</softwareVersion></processingSoftware></ocrProcessingStep></OCRProcessing>
+</Description>
+<Styles><TextStyle ID="font0" FONTFAMILY="Arial" FONTSIZE="7"/><TextStyle ID="font1" FONTFAMILY="Arial" FONTSIZE="17"/>
+<ParagraphStyle ID="StyleId-FFFFFFFF-FFFF-FFFF-FFFF-FFFFFFFFFFFF-" ALIGN="Left" LEFT="0" RIGHT="0" FIRSTLINE="0"/>
+<ParagraphStyle ID="StyleId-6076C919-2A71-4462-8E28-B66012108F11-" ALIGN="Left" LEFT="0" RIGHT="0" FIRSTLINE="0"/>
+</Styles>
+<Layout>
+<Page ID="Page1" PHYSICAL_IMG_NR="1">
+<PrintSpace HEIGHT="2708" WIDTH="1620" VPOS="0" HPOS="0">
+<TextBlock ID="BlockId-E704E18D-83C2-473A-A9E9-CFB3AADAAA55-" HEIGHT="70" WIDTH="297" VPOS="1568" HPOS="888" STYLEREFS="StyleId-6076C919-2A71-4462-8E28-B66012108F11- font0">
+<TextLine HEIGHT="52" WIDTH="90" VPOS="1575" HPOS="895"><String CONTENT="'" HEIGHT="34" WIDTH="8" VPOS="1575" HPOS="895"/><String STYLEREFS="font1" CONTENT="5" HEIGHT="52" WIDTH="38" VPOS="1575" HPOS="897"/><String CONTENT="&quot;" HEIGHT="8" WIDTH="36" VPOS="1583" HPOS="949"/></TextLine>
+</TextBlock><Illustration ID="BlockId-ECA913AB-33E5-45C4-99EC-6510807DCECF-" HEIGHT="1056" WIDTH="1390" VPOS="1652" HPOS="54"/>
+</PrintSpace>
+</Page>
+</Layout>
+</alto>
