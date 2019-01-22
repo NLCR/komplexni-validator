@@ -30,9 +30,16 @@ public class UnzipAndValidateDialogController extends DialogController {
     @FXML
     Button btnCancelOrClose;
 
-    private File pspZip;
-
     private Task task = null;
+
+    private File pspZip;
+    private String preferedMonVersion;
+    private String preferedPerVersion;
+    private String forcedMonVersion;
+    private String forcedPerVersion;
+    private boolean createTxtLog;
+    private boolean createXmlLog;
+    private int verbosity;
 
     @Override
     public void startNow() {
@@ -114,8 +121,8 @@ public class UnzipAndValidateDialogController extends DialogController {
                     progressIndicator.setVisible(false);
                     task = null;
                     btnCancelOrClose.setText("Zavřít");
-                    // TODO: 22.1.19 jeste korektne zavrit tento a predchozi dialog
-                    validatePsp(pspDir);
+                    stage.close();
+                    main.runPspDirValidation(pspDir, preferedMonVersion, preferedPerVersion, forcedMonVersion, forcedPerVersion, createTxtLog, createXmlLog, verbosity);
                 });
             }
 
@@ -162,27 +169,6 @@ public class UnzipAndValidateDialogController extends DialogController {
         new Thread(task).start();
     }
 
-    private void validatePsp(File pspDir) {
-        // TODO: 21.1.19 a ted volat validaci
-        /*File[] filesInContainer = containerDir.listFiles();
-        if (filesInContainer.length == 1 && filesInContainer[0].isDirectory()) {
-            validatePspGroupDir(filesInContainer[0],
-                    configDir, tmpDir,
-                    verbosity, out, err, xmlProtocolDir,
-                    preferDmfMonVersion, preferDmfPerVersion, forceDmfMonVersion, forceDmfPerVersion,
-                    imageUtilPaths, imageUtilsDisabled,
-                    devParams);
-        } else {
-            validatePspGroupDir(containerDir,
-                    configDir, tmpDir,
-                    verbosity, out, err, xmlProtocolDir,
-                    preferDmfMonVersion, preferDmfPerVersion, forceDmfMonVersion, forceDmfPerVersion,
-                    imageUtilPaths, imageUtilsDisabled,
-                    devParams);
-        }*/
-
-    }
-
     @Override
     public EventHandler<WindowEvent> getOnCloseEventHandler() {
         return event -> {
@@ -193,8 +179,15 @@ public class UnzipAndValidateDialogController extends DialogController {
         };
     }
 
-    public void setData(File pspZip) {
+    public void setData(File pspZip, String preferedMonVersion, String preferedPerVersion, String forcedMonVersion, String forcedPerVersion, boolean createTxtLog, boolean createXmlLog, int verbosity) {
         this.pspZip = pspZip;
+        this.preferedMonVersion = preferedMonVersion;
+        this.preferedPerVersion = preferedPerVersion;
+        this.forcedMonVersion = forcedMonVersion;
+        this.forcedPerVersion = forcedPerVersion;
+        this.createTxtLog = createTxtLog;
+        this.createXmlLog = createXmlLog;
+        this.verbosity = verbosity;
     }
 
     public void cancelOrClose(ActionEvent actionEvent) {

@@ -266,7 +266,7 @@ public class PspZipValidationConfigurationDialogController extends DialogControl
                 String preferedPerVersion = preferedPerVersionChoiceBox.isDisabled() ? null : (String) preferedPerVersionChoiceBox.getSelectionModel().getSelectedItem();
                 int verbosity = getSelectedVerbosity();
                 //stage.hide();
-                main.runPspZipValidation(pspZipFile, preferedMonVersion, preferedPerVersion, forcedMonVersion, forcedPerVersion, createTxtLog.isSelected(), createXmlLog.isSelected(), verbosity);
+                main.unzipAndRunPspZipValidation(pspZipFile, preferedMonVersion, preferedPerVersion, forcedMonVersion, forcedPerVersion, createTxtLog.isSelected(), createXmlLog.isSelected(), verbosity);
             }
         }
     }
