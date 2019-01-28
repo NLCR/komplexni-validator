@@ -192,6 +192,8 @@ public class Engine {
                 return new VfCheckIdentifiersNoneTypePresent(this);
             case "checkDcIdentifiersDoNotContainWhiteSpaces":
                 return new VfCheckDcIdentifiersDoNotContainWhiteSpaces(this);
+            case "checkUrnNbnIdentifiersValid":
+                return new VfCheckUrnNbnIdentifiersValid(this);
             case "checkStringDerivedFromOneOfIdentifiers":
                 return new VfCheckStringDerivedFromOneOfIdentifiers(this);
             case "checkDcIdentifiersHaveTypeAndValue":
