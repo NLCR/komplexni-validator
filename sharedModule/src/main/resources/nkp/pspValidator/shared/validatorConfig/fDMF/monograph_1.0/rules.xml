@@ -1957,6 +1957,45 @@
             </validation>
         </rule>
 
+        <rule name="MODS_IDENTIFIERS_URN_NBN_VALID">
+            <description>Všechny identifikátory URN:NBN napříč MODS záznamy musí platnou podobu (např. urn:nbn:cz:abd005-00012z).
+            </description>
+            <validation functionName="checkUrnNbnIdentifiersValid">
+                <params>
+                    <value name="identifier_list" type="IDENTIFIER_LIST">
+                        <!--spojeni vsech identifikatoru do jednoho seznamu-->
+                        <evaluation functionName="mergeIdentifiers">
+                            <params>
+                                <value name="identifier_list_list" type="IDENTIFIER_LIST_LIST">
+                                    <!--seznam obsahujici seznam identifikatoru pro kazdy zaznam dmdSec pro MODS-->
+                                    <evaluation functionName="getModsIdentifiersForEachDmdsecId">
+                                        <params>
+                                            <value name="dmdsec_ids" type="STRING_LIST">
+                                                <!--seznam identifikatoru (dmdSec ID)-->
+                                                <evaluation functionName="getStringListByXpath">
+                                                    <params>
+                                                        <value name="xml_file" type="FILE">
+                                                            <value-ref name="PRIMARY-METS_FILE"/>
+                                                        </value>
+                                                        <value name="xpath" type="STRING">
+                                                            /mets:mets/mets:dmdSec[starts-with(@ID, "MODSMD")]/@ID
+                                                        </value>
+                                                    </params>
+                                                </evaluation>
+                                            </value>
+                                            <value name="mets_file" type="FILE">
+                                                <value-ref name="PRIMARY-METS_FILE"/>
+                                            </value>
+                                        </params>
+                                    </evaluation>
+                                </value>
+                            </params>
+                        </evaluation>
+                    </value>
+                </params>
+            </validation>
+        </rule>
+
         <!--shoda identifikatorů v mods, dc-->
         <rule name="PRIMARY-METS_DC_IDENTIFIER_MATCH_MODS_IDENTIFIERS">
             <description>Identifikátory v DC se musí shodovat s identifikátory v MODS pro všechny úrovně popisu.
