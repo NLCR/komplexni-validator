@@ -244,6 +244,13 @@
         </params-def>
     </validationFunction>
 
+    <validationFunction name="checkUrnNbnIdentifiersValid">
+        <params-def>
+            <value name="identifier_list" type="IDENTIFIER_LIST"
+                   description="Seznam identifikátorů, použity budou jen ty, které jsou typu urnnbn."/>
+        </params-def>
+    </validationFunction>
+
     <validationFunction name="checkDcIdentifiersHaveTypeAndValue">
         <params-def>
             <value name="primary-mets_file" type="FILE"/>
