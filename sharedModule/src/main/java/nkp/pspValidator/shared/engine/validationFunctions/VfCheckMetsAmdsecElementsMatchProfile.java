@@ -37,19 +37,14 @@ public class VfCheckMetsAmdsecElementsMatchProfile extends ValidationFunction {
     public static final String PARAM_PROFILE_ID = "profile_id";
     public static final String PARAM_ELEMENT_MUST_EXIST = "element_must_exist";
 
-    public VfCheckMetsAmdsecElementsMatchProfile(Engine engine) {
-        super(engine, new Contract()
+    public VfCheckMetsAmdsecElementsMatchProfile(String name, Engine engine) {
+        super(name, engine, new Contract()
                 .withValueParam(PARAM_METS_FILES, ValueType.FILE_LIST, 0, null)
                 .withValueParam(PARAM_METS_FILE, ValueType.FILE, 0, null)
                 .withValueParam(PARAM_ELEMENT_XPATH, ValueType.STRING, 1, 1)
                 .withValueParam(PARAM_PROFILE_ID, ValueType.STRING, 1, 1)
                 .withValueParam(PARAM_ELEMENT_MUST_EXIST, ValueType.BOOLEAN, 1, 1)
         );
-    }
-
-    @Override
-    public String getName() {
-        return "checkMetsAmdsecElementsMatchProfile";
     }
 
     @Override

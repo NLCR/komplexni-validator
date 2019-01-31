@@ -18,15 +18,10 @@ public class VfCheckFilenamesLengthsSame extends ValidationFunction {
     public static final String PARAM_FILES = "files";
 
 
-    public VfCheckFilenamesLengthsSame(Engine engine) {
-        super(engine, new Contract()
+    public VfCheckFilenamesLengthsSame(String name, Engine engine) {
+        super(name, engine, new Contract()
                 .withValueParam(PARAM_FILES, ValueType.FILE_LIST, 1, 1)
         );
-    }
-
-    @Override
-    public String getName() {
-        return "checkFilenamesLengthsSame";
     }
 
     @Override

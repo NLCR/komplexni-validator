@@ -13,15 +13,10 @@ public class EfGetProvidedString extends EvaluationFunction {
     private static final String PARAM_STRING_ID = "string_id";
 
 
-    public EfGetProvidedString(Engine engine) {
-        super(engine, new Contract()
+    public EfGetProvidedString(String name, Engine engine) {
+        super(name, engine, new Contract()
                 .withReturnType(ValueType.STRING)
                 .withValueParam(PARAM_STRING_ID, ValueType.STRING, 1, 1));
-    }
-
-    @Override
-    public String getName() {
-        return "getProvidedString";
     }
 
     @Override

@@ -18,18 +18,13 @@ public class VfCheckStringDerivedFromOneOfIdentifiers extends ValidationFunction
     public static final String PARAM_MIN_MATCH_LENGTH = "min_match_length";
     public static final String PARAM_ID_PREFIXES = "id_prefixes";
 
-    public VfCheckStringDerivedFromOneOfIdentifiers(Engine engine) {
-        super(engine, new Contract()
+    public VfCheckStringDerivedFromOneOfIdentifiers(String name, Engine engine) {
+        super(name, engine, new Contract()
                 .withValueParam(PARAM_STRING, ValueType.STRING, 1, 1)
                 .withValueParam(PARAM_MIN_MATCH_LENGTH, ValueType.INTEGER, 1, 1)
                 .withValueParam(PARAM_IDENTIFIERS, ValueType.IDENTIFIER_LIST, 1, 1)
                 .withValueParam(PARAM_ID_PREFIXES, ValueType.STRING_LIST, 1, 1)
         );
-    }
-
-    @Override
-    public String getName() {
-        return "checkStringDerivedFromOneOfIdentifiers";
     }
 
     @Override

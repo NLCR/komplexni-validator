@@ -24,15 +24,10 @@ public class VfCheckDcIdentifiersDoNotContainWhiteSpaces extends ValidationFunct
 
     public static final String PARAM_PRIMARY_METS_FILE = "primary-mets_file";
 
-    public VfCheckDcIdentifiersDoNotContainWhiteSpaces(Engine engine) {
-        super(engine, new Contract()
+    public VfCheckDcIdentifiersDoNotContainWhiteSpaces(String name, Engine engine) {
+        super(name, engine, new Contract()
                 .withValueParam(PARAM_PRIMARY_METS_FILE, ValueType.FILE, 1, 1)
         );
-    }
-
-    @Override
-    public String getName() {
-        return "checkDcIdentifiersDoNotContainWhiteSpaces";
     }
 
     @Override

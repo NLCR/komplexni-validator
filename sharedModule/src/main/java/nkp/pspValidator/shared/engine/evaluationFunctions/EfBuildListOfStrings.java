@@ -16,15 +16,10 @@ public class EfBuildListOfStrings extends EvaluationFunction {
 
     private static final String PARAM_STRING = "string";
 
-    public EfBuildListOfStrings(Engine engine) {
-        super(engine, new Contract()
+    public EfBuildListOfStrings(String name, Engine engine) {
+        super(name, engine, new Contract()
                 .withReturnType(ValueType.STRING_LIST)
                 .withValueParam(PARAM_STRING, ValueType.STRING, 0, null));
-    }
-
-    @Override
-    public String getName() {
-        return "buildListOfStrings";
     }
 
     @Override

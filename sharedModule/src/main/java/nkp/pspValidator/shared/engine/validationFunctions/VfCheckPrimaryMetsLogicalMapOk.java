@@ -25,16 +25,11 @@ public class VfCheckPrimaryMetsLogicalMapOk extends ValidationFunction {
     public static final String PARAM_PRIMARY_METS_FILE = "primary-mets_file";
     public static final String PARAM_DIV_TYPES_ALLOWED = "div_types_allowed";
 
-    public VfCheckPrimaryMetsLogicalMapOk(Engine engine) {
-        super(engine, new Contract()
+    public VfCheckPrimaryMetsLogicalMapOk(String name, Engine engine) {
+        super(name, engine, new Contract()
                 .withValueParam(PARAM_PRIMARY_METS_FILE, ValueType.FILE, 1, 1)
                 .withValueParam(PARAM_DIV_TYPES_ALLOWED, ValueType.STRING_LIST, 1, 1)
         );
-    }
-
-    @Override
-    public String getName() {
-        return "checkPrimaryMetsLogicalMapOk";
     }
 
     @Override

@@ -15,15 +15,10 @@ public class VfCheckChecksumFileAllChecksumsMatch extends ValidationFunction {
 
     public static final String PARAM_CHECKSUM_FILE = "checksum_file";
 
-    public VfCheckChecksumFileAllChecksumsMatch(Engine engine) {
-        super(engine, new Contract()
+    public VfCheckChecksumFileAllChecksumsMatch(String name, Engine engine) {
+        super(name, engine, new Contract()
                 .withValueParam(PARAM_CHECKSUM_FILE, ValueType.FILE, 1, 1)
         );
-    }
-
-    @Override
-    public String getName() {
-        return "checkChecksumFileAllChecksumsMatch";
     }
 
     @Override

@@ -29,17 +29,12 @@ public class VfCheckMetsMatchProfile extends ValidationFunction {
     public static final String PARAM_PROFILE = "profile";
 
 
-    public VfCheckMetsMatchProfile(Engine engine) {
-        super(engine, new Contract()
+    public VfCheckMetsMatchProfile(String name, Engine engine) {
+        super(name, engine, new Contract()
                 .withValueParam(PARAM_METS_FILE, ValueType.FILE, 0, null)
                 .withValueParam(PARAM_METS_FILES, ValueType.FILE_LIST, 0, null)
                 .withValueParam(PARAM_PROFILE, ValueType.STRING, 1, 1)
         );
-    }
-
-    @Override
-    public String getName() {
-        return "checkMetsMatchProfile";
     }
 
     @Override

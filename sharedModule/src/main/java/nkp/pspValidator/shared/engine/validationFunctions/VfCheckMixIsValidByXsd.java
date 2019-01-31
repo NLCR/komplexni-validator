@@ -40,17 +40,12 @@ public class VfCheckMixIsValidByXsd extends ValidationFunction {
     public static final String PARAM_METS_FILES = "mets_files";
     public static final String PARAM_LEVEL = "level";
 
-    public VfCheckMixIsValidByXsd(Engine engine) {
-        super(engine, new Contract()
+    public VfCheckMixIsValidByXsd(String name, Engine engine) {
+        super(name, engine, new Contract()
                 .withValueParam(PARAM_XSD_FILE, ValueType.FILE, 1, 1)
                 .withValueParam(PARAM_LEVEL, ValueType.LEVEL, 0, 1)
                 .withValueParam(PARAM_METS_FILES, ValueType.FILE_LIST, 0, null)
         );
-    }
-
-    @Override
-    public String getName() {
-        return "checkMixIsValidByXsd";
     }
 
     @Override

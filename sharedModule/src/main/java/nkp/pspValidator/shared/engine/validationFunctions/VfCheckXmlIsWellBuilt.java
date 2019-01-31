@@ -21,15 +21,10 @@ public class VfCheckXmlIsWellBuilt extends ValidationFunction {
     public static final String PARAM_XML_FILE = "xml_file";
 
 
-    public VfCheckXmlIsWellBuilt(Engine engine) {
-        super(engine, new Contract()
+    public VfCheckXmlIsWellBuilt(String name, Engine engine) {
+        super(name, engine, new Contract()
                 .withValueParam(PARAM_XML_FILE, ValueType.FILE, 1, 1)
         );
-    }
-
-    @Override
-    public String getName() {
-        return "checkXmlIsWellBuilt";
     }
 
     @Override

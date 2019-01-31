@@ -11,14 +11,20 @@ import java.util.*;
  * Created by Martin Řehánek on 20.10.16.
  */
 public abstract class ValidationFunction implements Function {
+    private final String name;
     protected final Engine engine;
     protected final Contract contract;
     protected final ValueParams valueParams = new ValueParams();
     protected final PatternParams patternParams = new PatternParams();
 
-    public ValidationFunction(Engine engine, Contract contract) {
+    public ValidationFunction(String name, Engine engine, Contract contract) {
+        this.name = name;
         this.engine = engine;
         this.contract = contract;
+    }
+
+    public final String getName() {
+        return name;
     }
 
     protected void checkContractCompliance() throws ContractException {
@@ -31,13 +37,6 @@ public abstract class ValidationFunction implements Function {
     }
 
     public abstract ValidationResult validate();
-
-    public abstract String getName();
-
-   /* @Deprecated
-    ValidationResult valid() {
-        return new ValidationResult();
-    }*/
 
 
     ValidationResult singlErrorResult(ValidationProblem error) {

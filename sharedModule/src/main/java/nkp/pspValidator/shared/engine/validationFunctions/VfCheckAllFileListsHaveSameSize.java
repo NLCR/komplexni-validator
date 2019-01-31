@@ -20,15 +20,10 @@ public class VfCheckAllFileListsHaveSameSize extends ValidationFunction {
     public static final String PARAM_FILES = "files";
 
 
-    public VfCheckAllFileListsHaveSameSize(Engine engine) {
-        super(engine, new Contract()
+    public VfCheckAllFileListsHaveSameSize(String name, Engine engine) {
+        super(name, engine, new Contract()
                 .withValueParam(PARAM_FILES, ValueType.FILE_LIST, 2, null)
         );
-    }
-
-    @Override
-    public String getName() {
-        return "checkAllFileListsHaveSameSize";
     }
 
     @Override

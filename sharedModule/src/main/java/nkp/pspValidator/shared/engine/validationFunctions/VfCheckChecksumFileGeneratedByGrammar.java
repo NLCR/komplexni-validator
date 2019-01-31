@@ -17,15 +17,10 @@ public class VfCheckChecksumFileGeneratedByGrammar extends ValidationFunction {
     public static final String PARAM_CHECKSUM_FILE = "checksum_file";
 
 
-    public VfCheckChecksumFileGeneratedByGrammar(Engine engine) {
-        super(engine, new Contract()
+    public VfCheckChecksumFileGeneratedByGrammar(String name, Engine engine) {
+        super(name, engine, new Contract()
                 .withValueParam(PARAM_CHECKSUM_FILE, ValueType.FILE, 1, 1)
         );
-    }
-
-    @Override
-    public String getName() {
-        return "checkChecksumFileGeneratedByGrammar";
     }
 
     @Override

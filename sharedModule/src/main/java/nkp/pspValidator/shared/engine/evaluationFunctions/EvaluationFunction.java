@@ -11,14 +11,20 @@ import java.util.*;
  * Created by Martin Řehánek on 20.10.16.
  */
 public abstract class EvaluationFunction implements Function {
+    private final String name;
     protected final Engine engine;
     protected final Contract contract;
     protected final ValueParams valueParams = new ValueParams();
     protected final PatternParams patternParams = new PatternParams();
 
-    public EvaluationFunction(Engine engine, Contract contract) {
+    public EvaluationFunction(String name, Engine engine, Contract contract) {
+        this.name = name;
         this.engine = engine;
         this.contract = contract;
+    }
+
+    public final String getName() {
+        return name;
     }
 
     protected void checkContractCompliance() throws ContractException {
@@ -29,9 +35,8 @@ public abstract class EvaluationFunction implements Function {
         return contract.getReturnType();
     }
 
-    public abstract ValueEvaluation evaluate();
 
-    public abstract String getName();
+    public abstract ValueEvaluation evaluate();
 
     ValueEvaluation okResult(Object data) {
         return new ValueEvaluation(data, null);

@@ -26,17 +26,12 @@ public class VfCheckInfoFileReferencesPrimaryMets extends ValidationFunction {
     public static final String PARAM_PRIMARY_METS_FILE = "primary-mets_file";
     public static final String PARAM_LEVEL = "level";
 
-    public VfCheckInfoFileReferencesPrimaryMets(Engine engine) {
-        super(engine, new Contract()
+    public VfCheckInfoFileReferencesPrimaryMets(String name, Engine engine) {
+        super(name, engine, new Contract()
                 .withValueParam(PARAM_INFO_FILE, ValueType.FILE, 1, 1)
                 .withValueParam(PARAM_PRIMARY_METS_FILE, ValueType.FILE, 1, 1)
                 .withValueParam(PARAM_LEVEL, ValueType.LEVEL, 0, 1)
         );
-    }
-
-    @Override
-    public String getName() {
-        return "checkInfoFileReferencesPrimaryMets";
     }
 
     @Override

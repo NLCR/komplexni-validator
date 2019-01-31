@@ -27,15 +27,10 @@ public class VfCheckPrimaryMetsDcIdentifiersMatchModsIdentifiers extends Validat
 
     public static final String PARAM_PRIMARY_METS_FILE = "primary-mets_file";
 
-    public VfCheckPrimaryMetsDcIdentifiersMatchModsIdentifiers(Engine engine) {
-        super(engine, new Contract()
+    public VfCheckPrimaryMetsDcIdentifiersMatchModsIdentifiers(String name, Engine engine) {
+        super(name, engine, new Contract()
                 .withValueParam(PARAM_PRIMARY_METS_FILE, ValueType.FILE, 1, 1)
         );
-    }
-
-    @Override
-    public String getName() {
-        return "checkPrimaryMetsDcIdentifiersMatchModsIdentifiers";
     }
 
     @Override

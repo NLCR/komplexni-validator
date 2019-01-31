@@ -19,18 +19,13 @@ public class EfMergeIdentifiers extends EvaluationFunction {
     private static final String PARAM_ID_LIST = "identifier_list";
     private static final String PARAM_ID_LIST_LIST = "identifier_list_list";
 
-    public EfMergeIdentifiers(Engine engine) {
-        super(engine, new Contract()
+    public EfMergeIdentifiers(String name, Engine engine) {
+        super(name, engine, new Contract()
                 .withReturnType(ValueType.IDENTIFIER_LIST)
                 .withValueParam(PARAM_ID, ValueType.IDENTIFIER, 0, null)
                 .withValueParam(PARAM_ID_LIST, ValueType.IDENTIFIER_LIST, 0, null)
                 .withValueParam(PARAM_ID_LIST_LIST, ValueType.IDENTIFIER_LIST_LIST, 0, null)
         );
-    }
-
-    @Override
-    public String getName() {
-        return "mergeIdentifiers";
     }
 
     @Override
