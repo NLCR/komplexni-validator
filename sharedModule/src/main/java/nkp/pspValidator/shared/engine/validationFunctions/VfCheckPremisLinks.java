@@ -29,16 +29,11 @@ public class VfCheckPremisLinks extends ValidationFunction {
     public static final String PARAM_METS_FILES = "mets_files";
     public static final String PARAM_METS_FILE = "mets_file";
 
-    public VfCheckPremisLinks(Engine engine) {
-        super(engine, new Contract()
+    public VfCheckPremisLinks(String name, Engine engine) {
+        super(name, engine, new Contract()
                 .withValueParam(PARAM_METS_FILES, ValueType.FILE_LIST, 0, null)
                 .withValueParam(PARAM_METS_FILE, ValueType.FILE, 0, null)
         );
-    }
-
-    @Override
-    public String getName() {
-        return "checkPremisLinks";
     }
 
     @Override

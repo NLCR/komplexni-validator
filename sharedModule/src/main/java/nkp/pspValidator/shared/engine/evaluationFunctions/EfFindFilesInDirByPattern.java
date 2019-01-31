@@ -18,16 +18,11 @@ public class EfFindFilesInDirByPattern extends EvaluationFunction {
     private static final String PARAM_DIR = "dir";
     private static final String PARAM_PATTERN = "pattern";
 
-    public EfFindFilesInDirByPattern(Engine engine) {
-        super(engine, new Contract()
+    public EfFindFilesInDirByPattern(String name, Engine engine) {
+        super(name, engine, new Contract()
                 .withReturnType(ValueType.FILE_LIST)
                 .withPatternParam(PARAM_PATTERN)
                 .withValueParam(PARAM_DIR, ValueType.FILE, 1, 1));
-    }
-
-    @Override
-    public String getName() {
-        return "findFilesInDirByPattern";
     }
 
     @Override

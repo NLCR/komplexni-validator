@@ -29,19 +29,14 @@ public class EfGetFileListByXpath extends EvaluationFunction {
     private static final String PARAM_XPATH = "xpath";
     private static final String PARAM_NS_AWARE = "nsAware";
 
-    public EfGetFileListByXpath(Engine engine) {
-        super(engine, new Contract()
+    public EfGetFileListByXpath(String name, Engine engine) {
+        super(name, engine, new Contract()
                 .withReturnType(ValueType.FILE_LIST)
                 .withValueParam(PARAM_PSP_ROOT_DIR, ValueType.FILE, 1, 1)
                 .withValueParam(PARAM_XML_FILE, ValueType.FILE, 1, 1)
                 .withValueParam(PARAM_XPATH, ValueType.STRING, 1, 1)
                 .withValueParam(PARAM_NS_AWARE, ValueType.BOOLEAN, 0, 1)
         );
-    }
-
-    @Override
-    public String getName() {
-        return "getFileListByXpath";
     }
 
     @Override

@@ -26,15 +26,10 @@ public class VfCheckPrimaryMetsStructLinksOk extends ValidationFunction {
 
     public static final String PARAM_PRIMARY_METS_FILE = "primary-mets_file";
 
-    public VfCheckPrimaryMetsStructLinksOk(Engine engine) {
-        super(engine, new Contract()
+    public VfCheckPrimaryMetsStructLinksOk(String name, Engine engine) {
+        super(name, engine, new Contract()
                 .withValueParam(PARAM_PRIMARY_METS_FILE, ValueType.FILE, 1, 1)
         );
-    }
-
-    @Override
-    public String getName() {
-        return "checkPrimaryMetsStructLinksOk";
     }
 
     @Override

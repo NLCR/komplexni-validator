@@ -16,15 +16,10 @@ public class VfCheckFileIsNotDir extends ValidationFunction {
     public static final String PARAM_FILE = "file";
 
 
-    public VfCheckFileIsNotDir(Engine engine) {
-        super(engine, new Contract()
+    public VfCheckFileIsNotDir(String name, Engine engine) {
+        super(name, engine, new Contract()
                 .withValueParam(PARAM_FILE, ValueType.FILE, 1, 1)
         );
-    }
-
-    @Override
-    public String getName() {
-        return "checkFileIsNotDir";
     }
 
     @Override

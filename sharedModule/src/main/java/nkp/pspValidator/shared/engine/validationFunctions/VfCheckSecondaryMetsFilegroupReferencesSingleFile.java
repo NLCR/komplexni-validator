@@ -27,18 +27,13 @@ public class VfCheckSecondaryMetsFilegroupReferencesSingleFile extends Validatio
     public static final String PARAM_REFERENCED_FILES = "referenced_files";
     public static final String PARAM_FILEGROUP_ID = "filegroup_id";
 
-    public VfCheckSecondaryMetsFilegroupReferencesSingleFile(Engine engine) {
-        super(engine, new Contract()
+    public VfCheckSecondaryMetsFilegroupReferencesSingleFile(String name, Engine engine) {
+        super(name, engine, new Contract()
                 .withValueParam(PARAM_PSP_DIR, ValueType.FILE, 1, 1)
                 .withValueParam(PARAM_SECONDARY_METS_FILES, ValueType.FILE_LIST, 1, 1)
                 .withValueParam(PARAM_REFERENCED_FILES, ValueType.FILE_LIST, 1, 1)
                 .withValueParam(PARAM_FILEGROUP_ID, ValueType.STRING, 1, 1)
         );
-    }
-
-    @Override
-    public String getName() {
-        return "checkSecondaryMetsFilegroupReferencesSingleFile";
     }
 
     @Override

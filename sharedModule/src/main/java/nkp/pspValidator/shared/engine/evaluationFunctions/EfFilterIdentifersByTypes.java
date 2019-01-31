@@ -17,17 +17,12 @@ public class EfFilterIdentifersByTypes extends EvaluationFunction {
     private static final String PARAM_IDENTIFIERS = "identifiers";
     private static final String PARAM_TYPES = "types";
 
-    public EfFilterIdentifersByTypes(Engine engine) {
-        super(engine, new Contract()
+    public EfFilterIdentifersByTypes(String name, Engine engine) {
+        super(name, engine, new Contract()
                 .withReturnType(ValueType.IDENTIFIER_LIST)
                 .withValueParam(PARAM_IDENTIFIERS, ValueType.IDENTIFIER_LIST, 1, 1)
                 .withValueParam(PARAM_TYPES, ValueType.STRING_LIST, 1, 1)
         );
-    }
-
-    @Override
-    public String getName() {
-        return "filterIdentifersByTypes";
     }
 
     @Override

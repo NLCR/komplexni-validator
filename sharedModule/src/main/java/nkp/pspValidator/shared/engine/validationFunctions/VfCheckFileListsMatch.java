@@ -20,18 +20,12 @@ public class VfCheckFileListsMatch extends ValidationFunction {
     public static final String PARAM_FILES_FOUND = "found_files";
 
 
-    public VfCheckFileListsMatch(Engine engine) {
-        super(engine, new Contract()
+    public VfCheckFileListsMatch(String name, Engine engine) {
+        super(name, engine, new Contract()
                 .withValueParam(PARAM_FILES_EXPECTED, ValueType.FILE_LIST, 1, 1)
                 .withValueParam(PARAM_FILES_FOUND, ValueType.FILE_LIST, 1, 1)
         );
     }
-
-    @Override
-    public String getName() {
-        return "checkFileListsMatch";
-    }
-
     @Override
     public ValidationResult validate() {
         try {

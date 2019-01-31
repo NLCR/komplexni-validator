@@ -22,15 +22,10 @@ public class VfCheckInfoFileItemsCountMatchesItemtotal extends ValidationFunctio
 
     public static final String PARAM_INFO_FILE = "info_file";
 
-    public VfCheckInfoFileItemsCountMatchesItemtotal(Engine engine) {
-        super(engine, new Contract()
+    public VfCheckInfoFileItemsCountMatchesItemtotal(String name, Engine engine) {
+        super(name, engine, new Contract()
                 .withValueParam(PARAM_INFO_FILE, ValueType.FILE, 1, 1)
         );
-    }
-
-    @Override
-    public String getName() {
-        return "checkInfoFileItemsCountMatchesItemtotal";
     }
 
     @Override

@@ -16,17 +16,11 @@ public class VfCheckAllFilenamesMatchPattern extends ValidationFunction {
     public static final String PARAM_PATTERN = "pattern";
 
 
-    public VfCheckAllFilenamesMatchPattern(Engine engine) {
-        super(engine, new Contract()
+    public VfCheckAllFilenamesMatchPattern(String name, Engine engine) {
+        super(name, engine, new Contract()
                 .withValueParam(PARAM_FILES, ValueType.FILE_LIST, 1, 1)
                 .withPatternParam(PARAM_PATTERN)
         );
-    }
-
-
-    @Override
-    public String getName() {
-        return "checkAllFilenamesMatchPattern";
     }
 
     @Override

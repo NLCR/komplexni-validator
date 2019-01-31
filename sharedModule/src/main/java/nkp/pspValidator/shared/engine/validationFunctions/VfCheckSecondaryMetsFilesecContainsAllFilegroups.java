@@ -24,15 +24,10 @@ public class VfCheckSecondaryMetsFilesecContainsAllFilegroups extends Validation
 
     public static final String PARAM_SECONDARY_METS_FILES = "secondary-mets_files";
 
-    public VfCheckSecondaryMetsFilesecContainsAllFilegroups(Engine engine) {
-        super(engine, new Contract()
+    public VfCheckSecondaryMetsFilesecContainsAllFilegroups(String name, Engine engine) {
+        super(name, engine, new Contract()
                 .withValueParam(PARAM_SECONDARY_METS_FILES, ValueType.FILE_LIST, 1, 1)
         );
-    }
-
-    @Override
-    public String getName() {
-        return "checkSecondaryMetsFilesecContainsAllFilegroups";
     }
 
     @Override

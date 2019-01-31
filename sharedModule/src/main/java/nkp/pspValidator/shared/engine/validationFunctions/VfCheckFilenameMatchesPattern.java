@@ -18,17 +18,12 @@ public class VfCheckFilenameMatchesPattern extends ValidationFunction {
     public static final String PARAM_LEVEL = "level";
 
 
-    public VfCheckFilenameMatchesPattern(Engine engine) {
-        super(engine, new Contract()
+    public VfCheckFilenameMatchesPattern(String name, Engine engine) {
+        super(name, engine, new Contract()
                 .withValueParam(PARAM_FILE, ValueType.FILE, 1, 1)
                 .withPatternParam(PARAM_PATTERN)
                 .withValueParam(PARAM_LEVEL, ValueType.LEVEL, 0, 1)
         );
-    }
-
-    @Override
-    public String getName() {
-        return "checkFilenameMatchesPattern";
     }
 
     @Override

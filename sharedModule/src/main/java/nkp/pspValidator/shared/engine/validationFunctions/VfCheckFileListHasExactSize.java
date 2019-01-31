@@ -19,17 +19,12 @@ public class VfCheckFileListHasExactSize extends ValidationFunction {
     public static final String PARAM_SIZE = "size";
     public static final String PARAM_LEVEL = "level";
 
-    public VfCheckFileListHasExactSize(Engine engine) {
-        super(engine, new Contract()
+    public VfCheckFileListHasExactSize(String name, Engine engine) {
+        super(name, engine, new Contract()
                 .withValueParam(PARAM_FILES, ValueType.FILE_LIST, 1, 1)
                 .withValueParam(PARAM_SIZE, ValueType.INTEGER, 1, 1)
                 .withValueParam(PARAM_LEVEL, ValueType.LEVEL, 0, 1)
         );
-    }
-
-    @Override
-    public String getName() {
-        return "checkFilelistHasExactSize";
     }
 
     @Override
