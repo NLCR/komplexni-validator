@@ -25,19 +25,14 @@ public class VfCheckImageFilesValidByExternalUtil extends ValidationFunction {
     public static final String PARAM_UTIL = "util";
 
 
-    public VfCheckImageFilesValidByExternalUtil(Engine engine) {
-        super(engine, new Contract()
+    public VfCheckImageFilesValidByExternalUtil(String name, Engine engine) {
+        super(name, engine, new Contract()
                 .withValueParam(PARAM_FILES, ValueType.FILE_LIST, 1, 1)
                 .withValueParam(PARAM_LEVEL, ValueType.LEVEL, 1, 1)
                 .withValueParam(PARAM_COPY, ValueType.IMAGE_COPY, 1, 1)
                 .withValueParam(PARAM_UTIL, ValueType.IMAGE_UTIL, 1, 1)
 
         );
-    }
-
-    @Override
-    public String getName() {
-        return "checkImageFilesValidByExternalUtil";
     }
 
     @Override

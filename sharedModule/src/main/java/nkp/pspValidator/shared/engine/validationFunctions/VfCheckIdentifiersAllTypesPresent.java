@@ -23,18 +23,13 @@ public class VfCheckIdentifiersAllTypesPresent extends ValidationFunction {
     public static final String PARAM_ID_TYPES = "id_types";
     public static final String PARAM_ID_LEVEL_NAME = "level_name";
 
-    public VfCheckIdentifiersAllTypesPresent(Engine engine) {
-        super(engine, new Contract()
+    public VfCheckIdentifiersAllTypesPresent(String name, Engine engine) {
+        super(name, engine, new Contract()
                 .withValueParam(PARAM_IDENTIFIER_LIST, ValueType.IDENTIFIER_LIST, 0, null)
                 .withValueParam(PARAM_IDENTIFIER_LIST_LIST, ValueType.IDENTIFIER_LIST_LIST, 0, null)
                 .withValueParam(PARAM_ID_TYPES, ValueType.STRING_LIST, 1, 1)
                 .withValueParam(PARAM_ID_LEVEL_NAME, ValueType.STRING, 1, 1)
         );
-    }
-
-    @Override
-    public String getName() {
-        return "checkIdentifiersAllTypesPresent";
     }
 
     @Override

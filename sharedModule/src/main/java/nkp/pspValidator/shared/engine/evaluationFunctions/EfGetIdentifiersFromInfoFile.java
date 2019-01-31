@@ -25,16 +25,11 @@ public class EfGetIdentifiersFromInfoFile extends EvaluationFunction {
 
     private static final String PARAM_INFO_FILE = "info_file";
 
-    public EfGetIdentifiersFromInfoFile(Engine engine) {
-        super(engine, new Contract()
+    public EfGetIdentifiersFromInfoFile(String name, Engine engine) {
+        super(name, engine, new Contract()
                 .withReturnType(ValueType.IDENTIFIER_LIST)
                 .withValueParam(PARAM_INFO_FILE, ValueType.FILE, 1, 1)
         );
-    }
-
-    @Override
-    public String getName() {
-        return "getIdentifiersFromInfoFile";
     }
 
     @Override

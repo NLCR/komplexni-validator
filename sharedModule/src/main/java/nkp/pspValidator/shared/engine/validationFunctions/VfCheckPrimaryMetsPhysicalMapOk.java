@@ -28,18 +28,13 @@ public class VfCheckPrimaryMetsPhysicalMapOk extends ValidationFunction {
     public static final String PARAM_FILEGROUP_IDS = "filegroups_to_check";
     public static final String PARAM_PAGE_TYPES = "page_types";
 
-    public VfCheckPrimaryMetsPhysicalMapOk(Engine engine) {
-        super(engine, new Contract()
+    public VfCheckPrimaryMetsPhysicalMapOk(String name, Engine engine) {
+        super(name, engine, new Contract()
                 .withValueParam(PARAM_PRIMARY_METS_FILE, ValueType.FILE, 1, 1)
                 .withValueParam(PARAM_EXPECTED_TOP_LEVEL_DIV_TYPE, ValueType.STRING, 0, 1)
                 .withValueParam(PARAM_FILEGROUP_IDS, ValueType.STRING_LIST, 1, 1)
                 .withValueParam(PARAM_PAGE_TYPES, ValueType.STRING_LIST, 1, 1)
         );
-    }
-
-    @Override
-    public String getName() {
-        return "checkPrimaryMetsPhysicalMapOk";
     }
 
     @Override

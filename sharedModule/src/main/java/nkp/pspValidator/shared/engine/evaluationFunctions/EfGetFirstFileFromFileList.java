@@ -15,16 +15,11 @@ public class EfGetFirstFileFromFileList extends EvaluationFunction {
 
     private static final String PARAM_FILE_LIST = "files";
 
-    public EfGetFirstFileFromFileList(Engine engine) {
-        super(engine, new Contract()
+    public EfGetFirstFileFromFileList(String name, Engine engine) {
+        super(name, engine, new Contract()
                 .withReturnType(ValueType.FILE)
                 .withValueParam(PARAM_FILE_LIST, ValueType.FILE_LIST, 1, 1)
         );
-    }
-
-    @Override
-    public String getName() {
-        return "getFirstFileFromFileList";
     }
 
     @Override

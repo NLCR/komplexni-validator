@@ -22,17 +22,12 @@ public class VfCheckIdentifiersNoDuplicates extends ValidationFunction {
     public static final String PARAM_IDENTIFIER_LIST_LIST = "identifier_list_list";
     public static final String PARAM_IGNORED_TYPE_LIST = "ignored_type_list";
 
-    public VfCheckIdentifiersNoDuplicates(Engine engine) {
-        super(engine, new Contract()
+    public VfCheckIdentifiersNoDuplicates(String name, Engine engine) {
+        super(name, engine, new Contract()
                 .withValueParam(PARAM_IDENTIFIER_LIST, ValueType.IDENTIFIER_LIST, 0, null)
                 .withValueParam(PARAM_IDENTIFIER_LIST_LIST, ValueType.IDENTIFIER_LIST_LIST, 0, null)
                 .withValueParam(PARAM_IGNORED_TYPE_LIST, ValueType.STRING_LIST, 0, 1)
         );
-    }
-
-    @Override
-    public String getName() {
-        return "checkIdentifiersNoDuplicates";
     }
 
     @Override

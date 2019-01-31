@@ -17,15 +17,10 @@ public class VfCheckUrnNbnIdentifiersValid extends ValidationFunction {
 
     public static final String PARAM_IDENTIFIER_LIST = "identifier_list";
 
-    public VfCheckUrnNbnIdentifiersValid(Engine engine) {
-        super(engine, new Contract()
+    public VfCheckUrnNbnIdentifiersValid(String name, Engine engine) {
+        super(name, engine, new Contract()
                 .withValueParam(PARAM_IDENTIFIER_LIST, ValueType.IDENTIFIER_LIST, 1, 1)
         );
-    }
-
-    @Override
-    public String getName() {
-        return "checkUrnNbnIdentifiersValid";
     }
 
     @Override

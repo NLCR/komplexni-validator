@@ -28,17 +28,12 @@ public class VfCheckSecondaryMetsPhysicalMapOk extends ValidationFunction {
     public static final String PARAM_EXPECTED_PAGE_TYPE = "expected_page_type";
     public static final String PARAM_FILEGROUP_IDS = "filegroups_to_check";
 
-    public VfCheckSecondaryMetsPhysicalMapOk(Engine engine) {
-        super(engine, new Contract()
+    public VfCheckSecondaryMetsPhysicalMapOk(String name, Engine engine) {
+        super(name, engine, new Contract()
                 .withValueParam(PARAM_SECONDARY_METS_FILES, ValueType.FILE_LIST, 1, 1)
                 .withValueParam(PARAM_EXPECTED_PAGE_TYPE, ValueType.STRING, 1, 1)
                 .withValueParam(PARAM_FILEGROUP_IDS, ValueType.STRING_LIST, 1, 1)
         );
-    }
-
-    @Override
-    public String getName() {
-        return "checkSecondaryMetsPhysicalMapOk";
     }
 
     @Override

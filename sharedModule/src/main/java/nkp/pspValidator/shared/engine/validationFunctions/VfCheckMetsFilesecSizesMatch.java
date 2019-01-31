@@ -20,16 +20,11 @@ public class VfCheckMetsFilesecSizesMatch extends ValidationFunction {
     public static final String PARAM_PSP_DIR = "psp_dir";
     public static final String PARAM_METS_FILE = "mets_file";
 
-    public VfCheckMetsFilesecSizesMatch(Engine engine) {
-        super(engine, new Contract()
+    public VfCheckMetsFilesecSizesMatch(String name, Engine engine) {
+        super(name, engine, new Contract()
                 .withValueParam(PARAM_PSP_DIR, ValueType.FILE, 1, 1)
                 .withValueParam(PARAM_METS_FILE, ValueType.FILE, 1, 1)
         );
-    }
-
-    @Override
-    public String getName() {
-        return "checkMetsFilesecSizesMatch";
     }
 
     @Override

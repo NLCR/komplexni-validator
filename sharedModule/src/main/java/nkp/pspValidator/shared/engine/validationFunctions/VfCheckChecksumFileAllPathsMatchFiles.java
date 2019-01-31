@@ -21,17 +21,12 @@ public class VfCheckChecksumFileAllPathsMatchFiles extends ValidationFunction {
     public static final String PARAM_FILE = "file";
     public static final String PARAM_FILES = "files";
 
-    public VfCheckChecksumFileAllPathsMatchFiles(Engine engine) {
-        super(engine, new Contract()
+    public VfCheckChecksumFileAllPathsMatchFiles(String name, Engine engine) {
+        super(name, engine, new Contract()
                 .withValueParam(PARAM_CHECKSUM_FILE, ValueType.FILE, 1, 1)
                 .withValueParam(PARAM_FILE, ValueType.FILE, 0, null)
                 .withValueParam(PARAM_FILES, ValueType.FILE_LIST, 0, null)
         );
-    }
-
-    @Override
-    public String getName() {
-        return "checkChecksumFileAllPathsMatchFiles";
     }
 
     @Override

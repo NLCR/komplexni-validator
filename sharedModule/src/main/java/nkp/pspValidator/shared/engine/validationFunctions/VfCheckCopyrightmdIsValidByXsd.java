@@ -41,18 +41,13 @@ public class VfCheckCopyrightmdIsValidByXsd extends ValidationFunction {
     public static final String PARAM_METS_FILE = "mets_file";
     public static final String PARAM_LEVEL = "level";
 
-    public VfCheckCopyrightmdIsValidByXsd(Engine engine) {
-        super(engine, new Contract()
+    public VfCheckCopyrightmdIsValidByXsd(String name, Engine engine) {
+        super(name, engine, new Contract()
                 .withValueParam(PARAM_XSD_FILE, ValueType.FILE, 1, 1)
                 .withValueParam(PARAM_LEVEL, ValueType.LEVEL, 0, 1)
                 .withValueParam(PARAM_METS_FILES, ValueType.FILE_LIST, 0, null)
                 .withValueParam(PARAM_METS_FILE, ValueType.FILE, 0, null)
         );
-    }
-
-    @Override
-    public String getName() {
-        return "checkCopyrightMdIsValidByXsd";
     }
 
     @Override

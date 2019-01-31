@@ -25,17 +25,12 @@ public class VfCheckNoOtherFilesInDir extends ValidationFunction {
     public static final String PARAM_FILES = "files";
 
 
-    public VfCheckNoOtherFilesInDir(Engine engine) {
-        super(engine, new Contract()
+    public VfCheckNoOtherFilesInDir(String name, Engine engine) {
+        super(name, engine, new Contract()
                 .withValueParam(PARAM_ROOT_DIR, ValueType.FILE, 1, 1)
                 .withValueParam(PARAM_FILE, ValueType.FILE, 0, null)
                 .withValueParam(PARAM_FILES, ValueType.FILE_LIST, 0, null)
         );
-    }
-
-    @Override
-    public String getName() {
-        return "checkNoOtherFilesInDir";
     }
 
     @Override

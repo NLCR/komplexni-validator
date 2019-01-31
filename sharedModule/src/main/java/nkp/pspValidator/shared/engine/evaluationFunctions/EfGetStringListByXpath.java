@@ -26,18 +26,13 @@ public class EfGetStringListByXpath extends EvaluationFunction {
     private static final String PARAM_XPATH = "xpath";
     private static final String PARAM_NS_AWARE = "nsAware";
 
-    public EfGetStringListByXpath(Engine engine) {
-        super(engine, new Contract()
+    public EfGetStringListByXpath(String name, Engine engine) {
+        super(name, engine, new Contract()
                 .withReturnType(ValueType.STRING_LIST)
                 .withValueParam(PARAM_XML_FILE, ValueType.FILE, 1, 1)
                 .withValueParam(PARAM_XPATH, ValueType.STRING, 1, 1)
                 .withValueParam(PARAM_NS_AWARE, ValueType.BOOLEAN, 0, 1)
         );
-    }
-
-    @Override
-    public String getName() {
-        return "getStringListByXpath";
     }
 
     @Override

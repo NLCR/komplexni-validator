@@ -108,36 +108,35 @@ public class Engine {
     }
 
     public EvaluationFunction buildEvaluationFunction(String name) {
-        // TODO: 2019-01-31 předávat name v konstruktoru, zbytečně se duplikuje string znovu v ValidationFunction.getName()
         switch (name) {
             case "getProvidedFile":
-                return new EfGetProvidedFile(this);
+                return new EfGetProvidedFile(name,this);
             case "getProvidedString":
-                return new EfGetProvidedString(this);
+                return new EfGetProvidedString(name,this);
             case "getProvidedInteger":
-                return new EfGetProvidedInteger(this);
+                return new EfGetProvidedInteger(name,this);
             case "getFirstFileFromFileList":
-                return new EfGetFirstFileFromFileList(this);
+                return new EfGetFirstFileFromFileList(name,this);
             case "findFilesInDirByPattern":
-                return new EfFindFilesInDirByPattern(this);
+                return new EfFindFilesInDirByPattern(name,this);
             case "getStringByXpath":
-                return new EfGetStringByXpath(this);
+                return new EfGetStringByXpath(name,this);
             case "getStringListByXpath":
-                return new EfGetStringListByXpath(this);
+                return new EfGetStringListByXpath(name,this);
             case "getIdentifiersFromInfoFile":
-                return new EfGetIdentifiersFromInfoFile(this);
+                return new EfGetIdentifiersFromInfoFile(name,this);
             case "buildListOfStrings":
-                return new EfBuildListOfStrings(this);
+                return new EfBuildListOfStrings(name,this);
             case "filterIdentifersByTypes":
-                return new EfFilterIdentifersByTypes(this);
+                return new EfFilterIdentifersByTypes(name,this);
             case "getFileListByXpath":
-                return new EfGetFileListByXpath(this);
+                return new EfGetFileListByXpath(name,this);
             case "getDcIdentifiersForEachDmdsecId":
-                return new EfGetDcIdentifiersForEachDmdsecId(this);
+                return new EfGetDcIdentifiersForEachDmdsecId(name,this);
             case "getModsIdentifiersForEachDmdsecId":
-                return new EfGetModsIdentifiersForEachDmdsecId(this);
+                return new EfGetModsIdentifiersForEachDmdsecId(name,this);
             case "mergeIdentifiers":
-                return new EfMergeIdentifiers(this);
+                return new EfMergeIdentifiers(name,this);
             default:
                 throw new RuntimeException(String.format("vyhodnocovací funkce %s neexistuje", name));
         }
@@ -146,104 +145,104 @@ public class Engine {
     public ValidationFunction buildValidationFunction(String name) throws ValidatorConfigurationException {
         switch (name) {
             case "checkFilelistHasExactSize":
-                return new VfCheckFileListHasExactSize(this);
+                return new VfCheckFileListHasExactSize(name,this);
             case "checkFilenameMatchesPattern":
-                return new VfCheckFilenameMatchesPattern(this);
+                return new VfCheckFilenameMatchesPattern(name,this);
             case "checkAllFilenamesMatchPattern":
-                return new VfCheckAllFilenamesMatchPattern(this);
+                return new VfCheckAllFilenamesMatchPattern(name,this);
             case "checkFileIsDir":
-                return new VfCheckFileIsDir(this);
+                return new VfCheckFileIsDir(name,this);
             case "checkFileIsNotDir":
-                return new VfCheckFileIsNotDir(this);
+                return new VfCheckFileIsNotDir(name,this);
             case "checkNoFileIsDir":
-                return new VfCheckNoFileIsDir(this);
+                return new VfCheckNoFileIsDir(name,this);
             case "checkNoOtherFilesInDir":
-                return new VfCheckNoOtherFilesInDir(this);
+                return new VfCheckNoOtherFilesInDir(name,this);
             case "checkAllFileListsHaveSameSize":
-                return new VfCheckAllFileListsHaveSameSize(this);
+                return new VfCheckAllFileListsHaveSameSize(name,this);
             case "checkFilenamesLengthsSame":
-                return new VfCheckFilenamesLengthsSame(this);
+                return new VfCheckFilenamesLengthsSame(name,this);
             case "checkChecksumFileGeneratedByGrammar":
-                return new VfCheckChecksumFileGeneratedByGrammar(this);
+                return new VfCheckChecksumFileGeneratedByGrammar(name,this);
             case "checkChecksumFileAllPathsMatchFiles":
-                return new VfCheckChecksumFileAllPathsMatchFiles(this);
+                return new VfCheckChecksumFileAllPathsMatchFiles(name,this);
             case "checkChecksumFileAllChecksumsMatch":
-                return new VfCheckChecksumFileAllChecksumsMatch(this);
+                return new VfCheckChecksumFileAllChecksumsMatch(name,this);
             case "checkXmlIsWellBuilt":
-                return new VfCheckXmlIsWellBuilt(this);
+                return new VfCheckXmlIsWellBuilt(name,this);
             case "checkXmlIsValidByXsd":
-                return new VfCheckXmlIsValidByXsd(this);
+                return new VfCheckXmlIsValidByXsd(name,this);
             case "checkInfoFileReferencesPrimaryMets":
-                return new VfCheckInfoFileReferencesPrimaryMets(this);
+                return new VfCheckInfoFileReferencesPrimaryMets(name,this);
             case "checkInfoFileItemsCountMatchesItemtotal":
-                return new VfCheckInfoFileItemsCountMatchesItemtotal(this);
+                return new VfCheckInfoFileItemsCountMatchesItemtotal(name,this);
             case "checkInfoFileItemlistReferencesAllFiles":
-                return new VfCheckInfoFileItemlistReferencesAllFiles(this);
+                return new VfCheckInfoFileItemlistReferencesAllFiles(name,this);
             case "checkInfoFileChecksumMatches":
-                return new VfCheckInfoFileChecksumMatches(this);
+                return new VfCheckInfoFileChecksumMatches(name,this);
 
             //identifiers in general
             case "checkIdentifiersNoDuplicateTypes":
-                return new VfCheckIdentifiersNoDuplicateTypes(this);
+                return new VfCheckIdentifiersNoDuplicateTypes(name,this);
             case "checkIdentifiersNoDuplicates":
-                return new VfCheckIdentifiersNoDuplicates(this);
+                return new VfCheckIdentifiersNoDuplicates(name,this);
             case "checkIdentifiersAllTypesPresent":
-                return new VfCheckIdentifiersAllTypesPresent(this);
+                return new VfCheckIdentifiersAllTypesPresent(name,this);
             case "checkIdentifiersNoneTypePresent":
-                return new VfCheckIdentifiersNoneTypePresent(this);
+                return new VfCheckIdentifiersNoneTypePresent(name,this);
             case "checkDcIdentifiersDoNotContainWhiteSpaces":
-                return new VfCheckDcIdentifiersDoNotContainWhiteSpaces(this);
+                return new VfCheckDcIdentifiersDoNotContainWhiteSpaces(name,this);
             case "checkUrnNbnIdentifiersValid":
-                return new VfCheckUrnNbnIdentifiersValid(this);
+                return new VfCheckUrnNbnIdentifiersValid(name,this);
             case "checkUrnNbnIdentifiersRegistered":
-                return new VfCheckUrnNbnIdentifiersRegistered(this);
+                return new VfCheckUrnNbnIdentifiersRegistered(name,this);
             case "checkStringDerivedFromOneOfIdentifiers":
-                return new VfCheckStringDerivedFromOneOfIdentifiers(this);
+                return new VfCheckStringDerivedFromOneOfIdentifiers(name,this);
             case "checkDcIdentifiersHaveTypeAndValue":
-                return new VfCheckDcIdentifiersHaveTypeAndValue(this);
+                return new VfCheckDcIdentifiersHaveTypeAndValue(name,this);
             case "checkPrimaryMetsFilesecContainsAllFilegroups":
-                return new VfCheckPrimaryMetsFilesecContainsAllFilegroups(this);
+                return new VfCheckPrimaryMetsFilesecContainsAllFilegroups(name,this);
             case "checkPrimaryMetsDcIdentifiersMatchModsIdentifiers":
-                return new VfCheckPrimaryMetsDcIdentifiersMatchModsIdentifiers(this);
+                return new VfCheckPrimaryMetsDcIdentifiersMatchModsIdentifiers(name,this);
             case "checkFileListsMatch":
-                return new VfCheckFileListsMatch(this);
+                return new VfCheckFileListsMatch(name,this);
 
 
             //mets
             case "checkMetsFilesecSizesMatch":
-                return new VfCheckMetsFilesecSizesMatch(this);
+                return new VfCheckMetsFilesecSizesMatch(name,this);
             case "checkMetsFilesecChecksumsMatch":
-                return new VfCheckMetsFilesecChecksumsMatch(this);
+                return new VfCheckMetsFilesecChecksumsMatch(name,this);
             case "checkSecondaryMetsFilesecContainsAllFilegroups":
-                return new VfCheckSecondaryMetsFilesecContainsAllFilegroups(this);
+                return new VfCheckSecondaryMetsFilesecContainsAllFilegroups(name,this);
             case "checkSecondaryMetsFilegroupReferencesSingleFile":
-                return new VfCheckSecondaryMetsFilegroupReferencesSingleFile(this);
+                return new VfCheckSecondaryMetsFilegroupReferencesSingleFile(name,this);
             case "checkPrimaryMetsLogicalMapOk":
-                return new VfCheckPrimaryMetsLogicalMapOk(this);
+                return new VfCheckPrimaryMetsLogicalMapOk(name,this);
             case "checkPrimaryMetsPhysicalMapOk":
-                return new VfCheckPrimaryMetsPhysicalMapOk(this);
+                return new VfCheckPrimaryMetsPhysicalMapOk(name,this);
             case "checkPrimaryMetsStructLinksOk":
-                return new VfCheckPrimaryMetsStructLinksOk(this);
+                return new VfCheckPrimaryMetsStructLinksOk(name,this);
             case "checkSecondaryMetsPhysicalMapOk":
-                return new VfCheckSecondaryMetsPhysicalMapOk(this);
+                return new VfCheckSecondaryMetsPhysicalMapOk(name,this);
             case "checkMetsAmdsecElementsMatchProfile":
-                return new VfCheckMetsAmdsecElementsMatchProfile(this);
+                return new VfCheckMetsAmdsecElementsMatchProfile(name,this);
             case "checkPremisLinks":
-                return new VfCheckPremisLinks(this);
+                return new VfCheckPremisLinks(name,this);
             case "checkImageFilesValidByExternalUtil":
-                return new VfCheckImageFilesValidByExternalUtil(this);
+                return new VfCheckImageFilesValidByExternalUtil(name,this);
             case "checkMetsMatchProfile":
-                return new VfCheckMetsMatchProfile(this);
+                return new VfCheckMetsMatchProfile(name,this);
 
             //bibliographic metadata
             case "checkBibliographicMetadataMatchProfile":
-                return new VfCheckBibliographicMetadataMatchProfile(this);
+                return new VfCheckBibliographicMetadataMatchProfile(name,this);
             case "checkMixIsValidByXsd":
-                return new VfCheckMixIsValidByXsd(this);
+                return new VfCheckMixIsValidByXsd(name,this);
             case "checkPremisIsValidByXsd":
-                return new VfCheckPremisIsValidByXsd(this);
+                return new VfCheckPremisIsValidByXsd(name,this);
             case "checkCopyrightMdIsValidByXsd":
-                return new VfCheckCopyrightmdIsValidByXsd(this);
+                return new VfCheckCopyrightmdIsValidByXsd(name,this);
 
             default:
                 throw new ValidatorConfigurationException(String.format("validační funkce %s neexistuje", name));

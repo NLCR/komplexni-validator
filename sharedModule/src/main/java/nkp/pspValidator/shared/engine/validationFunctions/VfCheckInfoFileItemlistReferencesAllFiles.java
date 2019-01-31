@@ -30,18 +30,13 @@ public class VfCheckInfoFileItemlistReferencesAllFiles extends ValidationFunctio
     public static final String PARAM_FILE = "file";
     public static final String PARAM_FILES = "files";
 
-    public VfCheckInfoFileItemlistReferencesAllFiles(Engine engine) {
-        super(engine, new Contract()
+    public VfCheckInfoFileItemlistReferencesAllFiles(String name, Engine engine) {
+        super(name, engine, new Contract()
                 .withValueParam(PARAM_INFO_FILE, ValueType.FILE, 1, 1)
                 .withValueParam(PARAM_LEVEL, ValueType.LEVEL, 1, 1)
                 .withValueParam(PARAM_FILE, ValueType.FILE, 0, null)
                 .withValueParam(PARAM_FILES, ValueType.FILE_LIST, 0, null)
         );
-    }
-
-    @Override
-    public String getName() {
-        return "checkInfoFileItemlistReferencesAllFiles";
     }
 
     @Override

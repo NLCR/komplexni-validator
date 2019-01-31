@@ -13,15 +13,10 @@ public class EfGetProvidedInteger extends EvaluationFunction {
     private static final String PARAM_INT_ID = "int_id";
 
 
-    public EfGetProvidedInteger(Engine engine) {
-        super(engine, new Contract()
+    public EfGetProvidedInteger(String name, Engine engine) {
+        super(name, engine, new Contract()
                 .withReturnType(ValueType.INTEGER)
                 .withValueParam(PARAM_INT_ID, ValueType.STRING, 1, 1));
-    }
-
-    @Override
-    public String getName() {
-        return "getProvidedInteger";
     }
 
     @Override

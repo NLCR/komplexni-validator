@@ -48,8 +48,8 @@ public class VfCheckBibliographicMetadataMatchProfile extends ValidationFunction
     public static final String PARAM_XSD_DC = "xsd_file_dc";
     public static final String PARAM_XSD_MODS = "xsd_file_mods";
 
-    public VfCheckBibliographicMetadataMatchProfile(Engine engine) {
-        super(engine, new Contract()
+    public VfCheckBibliographicMetadataMatchProfile(String name, Engine engine) {
+        super(name, engine, new Contract()
                 .withValueParam(PARAM_METS_FILE, ValueType.FILE, 1, 1)
                 .withValueParam(PARAM_ENTITY_TYPE, ValueType.ENTITY_TYPE, 1, 1)
                 .withValueParam(PARAM_TEMPLATE_DETECTION_XPATH, ValueType.STRING, 1, 1)
@@ -57,12 +57,6 @@ public class VfCheckBibliographicMetadataMatchProfile extends ValidationFunction
                 .withValueParam(PARAM_XSD_MODS, ValueType.FILE, 1, 1)
         );
     }
-
-    @Override
-    public String getName() {
-        return "checkBibliographicMetadataMatchProfile";
-    }
-
     @Override
     public ValidationResult validate() {
         try {

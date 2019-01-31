@@ -26,17 +26,12 @@ public class EfGetModsIdentifiersForEachDmdsecId extends EvaluationFunction {
     private static final String PARAM_DMDSEC_IDS = "dmdsec_ids";
     private static final String PARAM_METS_FILE = "mets_file";
 
-    public EfGetModsIdentifiersForEachDmdsecId(Engine engine) {
-        super(engine, new Contract()
+    public EfGetModsIdentifiersForEachDmdsecId(String name, Engine engine) {
+        super(name, engine, new Contract()
                 .withReturnType(ValueType.IDENTIFIER_LIST_LIST)
                 .withValueParam(PARAM_DMDSEC_IDS, ValueType.STRING_LIST, 1, 1)
                 .withValueParam(PARAM_METS_FILE, ValueType.FILE, 1, 1)
         );
-    }
-
-    @Override
-    public String getName() {
-        return "getModsIdentifiersForEachDmdsecId";
     }
 
     @Override
