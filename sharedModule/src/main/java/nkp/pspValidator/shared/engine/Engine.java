@@ -108,6 +108,7 @@ public class Engine {
     }
 
     public EvaluationFunction buildEvaluationFunction(String name) {
+        // TODO: 2019-01-31 předávat name v konstruktoru, zbytečně se duplikuje string znovu v ValidationFunction.getName()
         switch (name) {
             case "getProvidedFile":
                 return new EfGetProvidedFile(this);
@@ -194,6 +195,8 @@ public class Engine {
                 return new VfCheckDcIdentifiersDoNotContainWhiteSpaces(this);
             case "checkUrnNbnIdentifiersValid":
                 return new VfCheckUrnNbnIdentifiersValid(this);
+            case "checkUrnNbnIdentifiersRegistered":
+                return new VfCheckUrnNbnIdentifiersRegistered(this);
             case "checkStringDerivedFromOneOfIdentifiers":
                 return new VfCheckStringDerivedFromOneOfIdentifiers(this);
             case "checkDcIdentifiersHaveTypeAndValue":

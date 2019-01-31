@@ -245,6 +245,15 @@
     </validationFunction>
 
     <validationFunction name="checkUrnNbnIdentifiersValid">
+        <description>Ověří, že všechny identifikátory typu urnnbn mají platnou podobu.</description>
+        <params-def>
+            <value name="identifier_list" type="IDENTIFIER_LIST"
+                   description="Seznam identifikátorů, použity budou jen ty, které jsou typu urnnbn."/>
+        </params-def>
+    </validationFunction>
+
+    <validationFunction name="checkUrnNbnIdentifiersRegistered">
+        <description>Ověří, že všechny identifikátory typu urnnbn jsou registrovány v URN:NBN Rezolveru NKP.</description>
         <params-def>
             <value name="identifier_list" type="IDENTIFIER_LIST"
                    description="Seznam identifikátorů, použity budou jen ty, které jsou typu urnnbn."/>
