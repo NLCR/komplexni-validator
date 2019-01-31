@@ -1,12 +1,17 @@
 apply plugin: 'java'
-
-
+apply plugin: 'application'
 
 sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+//For plugin application, see https://docs.gradle.org/current/userguide/application_plugin.html
+mainClassName = "nkp.pspValidator.shared.Main"
 
 repositories {
     mavenCentral()
 }
+
+compileJava.options.encoding = 'UTF-8'
 
 tasks.withType(JavaCompile) {
     options.encoding = 'UTF-8'
@@ -26,6 +31,9 @@ dependencies {
     // https://mvnrepository.com/artifact/net.sf.saxon/Saxon-HE
     //compile group: 'net.sf.saxon', name: 'Saxon-HE', version: '9.7.0-14'
 }
+
+version = '2.0-dev-kontrola_urn_nbn'
+
 
 //tohle udela zip, ale asi shared-logic.zip, asi na nic
 //see https://docs.gradle.org/current/userguide/javaLibraryDistribution_plugin.html
