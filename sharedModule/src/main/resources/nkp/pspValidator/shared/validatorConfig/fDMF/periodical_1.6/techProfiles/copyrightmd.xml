@@ -60,7 +60,7 @@
                                     <attribute name="copyright.status" mandatory="true">
                                         <expectedContent>
                                             <oneOf>
-                                                <value>Copyrighted</value>
+                                                <value>copyrighted</value>
                                                 <value>pd</value>
                                                 <value>pd_expired</value>
                                                 <value>unknown</value>
