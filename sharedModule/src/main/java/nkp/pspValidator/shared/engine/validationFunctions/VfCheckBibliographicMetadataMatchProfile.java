@@ -128,7 +128,7 @@ public class VfCheckBibliographicMetadataMatchProfile extends ValidationFunction
                 String profileName = detectProfileName(metsDoc, entityTypeAndId, profileDetectionXpath, result);
                 //System.err.println("profile name: " + profileName);
                 if (profileName == null) {
-                    result.addError(invalid(Level.ERROR, "prázdný typ šablony pro %s; přeskakuji validaci MODS a DC zázanamů", entityTypeAndId));
+                    result.addError(invalid(Level.ERROR, "prázdný typ profilu pro %s; přeskakuji validaci MODS a DC zázanamů", entityTypeAndId));
                 } else {
                     validateMetadata(metsDoc, entityType, entityId, MetadataFormat.DC, profileName, conventions, result, xsdFileDc);
                     validateMetadata(metsDoc, entityType, entityId, MetadataFormat.MODS, profileName, conventions, result, xsdFileMods);

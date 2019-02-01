@@ -40,7 +40,7 @@
     <rootElement name="mods:mods">
 
         <!--Defice očekávaných atributů elementu. Pokud je nalezen jiný, než zde definovaný atribut, je vyprodukován problém INFO-->
-        <!--Nelze definovat dvakrát atribut stejného jména, v opačném případě nastane chyba zpracování šablony-->
+        <!--Nelze definovat dvakrát atribut stejného jména, v opačném případě nastane chyba zpracování profilu-->
         <expectedAttributes>
 
             <!--Pokud má atribut mandatory="false" a není nalezen, je vyprodukován problém INFO-->
