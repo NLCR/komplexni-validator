@@ -2111,8 +2111,8 @@
             </validation>
         </rule>
 
-        <rule name="MODS_IDENTIFIERS_URN_NBN_REGISTERD">
-            <description>Všechny identifikátory URN:NBN napříč MODS záznamy musí registrovány v URN:NBN Rezolveru NKP.</description>
+        <rule name="MODS_IDENTIFIERS_URN_NBN_REGISTERED">
+            <description>Všechny identifikátory URN:NBN napříč MODS záznamy musí registrovány v URN:NBN Resolveru NKP.</description>
             <validation functionName="checkUrnNbnIdentifiersRegistered">
                 <params>
                     <value name="identifier_list" type="IDENTIFIER_LIST">
