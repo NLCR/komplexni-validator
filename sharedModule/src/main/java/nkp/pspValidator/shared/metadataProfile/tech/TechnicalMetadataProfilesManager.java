@@ -36,7 +36,7 @@ public class TechnicalMetadataProfilesManager {
             try {
                 return parser.parseProfile(file);
             } catch (ValidatorConfigurationException e) {
-                //should never happen, template has already been parsed
+                //should never happen, profile has already been parsed
                 throw new IllegalStateException(e);
             }
         }

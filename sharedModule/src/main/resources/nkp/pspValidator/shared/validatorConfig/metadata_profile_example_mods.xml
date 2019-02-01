@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<validationTemplate
+<metadataProfile
         xmlns="http://www.nkp.cz/pspValidator/2.0/metadataProfile"
         name="ukázkový profil pro MODS záznam"
+        validatorVersion="2.0"
+        dmf="monograph_1.2"
 >
     <info>
         <!--Různé poznámky, případně odkazy-->
@@ -191,7 +193,7 @@
             <!-- Pokud je u elementu nalezen jiný, než očekávaný atribut, je vygenerováno VAROVÁNÍ.
             Pokud je potřeba ignorovat nalezené neočekávané atributy, lze použít ignoreUnexpectedAttributes.
             Např. zde, pokud bude u elementu mods:note nalezen některý z atributů, které obecně MODS umožňuje (ID, xlink, lang, ...),
-            ale šablona je pro tento konrétní element neočekává, nebude výstup obsahovat VAROVÁNÍ pro tyto neočekávané atributy.
+            ale profil je pro tento konrétní element neočekává, nebude výstup obsahovat VAROVÁNÍ pro tyto neočekávané atributy.
             -->
             <element name="mods:note" ignoreUnexpectedAttributes="true">
                 <expectedAttributes>
@@ -204,7 +206,7 @@
 
     </rootElement>
 
-</validationTemplate>
+</metadataProfile>
 
         <!--TODO: dalsi pravidla (extraRules)-->
         <!--TODO: XSD-->

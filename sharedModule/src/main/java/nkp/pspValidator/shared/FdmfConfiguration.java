@@ -43,8 +43,8 @@ public class FdmfConfiguration {
 
     private final Map<String, File> providedFiles = new HashMap<>();
     private final List<File> fdmfConfigFiles = new ArrayList<>();
-    private final List<File> biblioModsTemplates = new ArrayList<>();
-    private final List<File> biblioDcTemplates = new ArrayList<>();
+    private final List<File> biblioModsProfiles = new ArrayList<>();
+    private final List<File> biblioDcProfiles = new ArrayList<>();
     private final List<File> techProfiles = new ArrayList<>();
     private List<File> metsProfiles = new ArrayList<>();
 
@@ -89,24 +89,23 @@ public class FdmfConfiguration {
     private void initBiblioProfiles() throws ValidatorConfigurationException {
         File biblioProfilesDir = new File(fdmfRoot, BIBLIO_PROFILES_DIR);
         checkDirExistAndReadable(biblioProfilesDir);
-        //dc templates
-        File dcTemplatesDir = new File(biblioProfilesDir, BIBLIO_PROFILES_DC_DIR);
-        checkDirExistAndReadable(dcTemplatesDir);
-        //TODO: sjednotit terminologii, vzdy pouzivat profiles namisto templates
-        File[] dcTemplates = dcTemplatesDir.listFiles((dir, name) -> name.endsWith(".xml"));
-        for (File template : dcTemplates) {
-            //xsd validation of template
-            validateConfigFile(template, metadataProfileXsd);
-            biblioDcTemplates.add(template);
+        //dc profiles
+        File dcProfilesDir = new File(biblioProfilesDir, BIBLIO_PROFILES_DC_DIR);
+        checkDirExistAndReadable(dcProfilesDir);
+        File[] dcProfiles = dcProfilesDir.listFiles((dir, name) -> name.endsWith(".xml"));
+        for (File profile : dcProfiles) {
+            //xsd validation of profile
+            validateConfigFile(profile, metadataProfileXsd);
+            biblioDcProfiles.add(profile);
         }
-        //mods templates
-        File modsTemplatesDir = new File(biblioProfilesDir, BIBLIO_PROFILES_MODS_DIR);
-        checkDirExistAndReadable(modsTemplatesDir);
-        File[] modsTemplates = modsTemplatesDir.listFiles((dir, name) -> name.endsWith(".xml"));
-        for (File template : modsTemplates) {
-            //xsd validation of template
-            validateConfigFile(template, metadataProfileXsd);
-            biblioModsTemplates.add(template);
+        //mods profiles
+        File modsProfilesDir = new File(biblioProfilesDir, BIBLIO_PROFILES_MODS_DIR);
+        checkDirExistAndReadable(modsProfilesDir);
+        File[] modsProfiles = modsProfilesDir.listFiles((dir, name) -> name.endsWith(".xml"));
+        for (File profile : modsProfiles) {
+            //xsd validation of profile
+            validateConfigFile(profile, metadataProfileXsd);
+            biblioModsProfiles.add(profile);
         }
     }
 
@@ -216,12 +215,12 @@ public class FdmfConfiguration {
         return fdmfConfigFiles;
     }
 
-    public List<File> getBiblioModsTemplates() {
-        return biblioModsTemplates;
+    public List<File> getBiblioModsProfiles() {
+        return biblioModsProfiles;
     }
 
-    public List<File> getBiblioDcTemplates() {
-        return biblioDcTemplates;
+    public List<File> getBiblioDcProfiles() {
+        return biblioDcProfiles;
     }
 
     public List<File> getTechProfiles() {

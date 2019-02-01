@@ -2800,7 +2800,7 @@
                         <value-ref name="PRIMARY-METS_FILE"/>
                     </value>
                     <value name="entity_type" type="ENTITY_TYPE">TITLE</value>
-                    <value name="template_detection_xpath" type="STRING">concat('title',null)</value>
+                    <value name="profile_detection_xpath" type="STRING">concat('title',null)</value>
                     <value name="xsd_file_dc" type="FILE">
                         <value-ref name="DC_XSD_FILE"/>
                     </value>
@@ -2821,7 +2821,7 @@
                         <value-ref name="PRIMARY-METS_FILE"/>
                     </value>
                     <value name="entity_type" type="ENTITY_TYPE">VOLUME</value>
-                    <value name="template_detection_xpath" type="STRING">concat('volume',null)</value>
+                    <value name="profile_detection_xpath" type="STRING">concat('volume',null)</value>
                     <value name="xsd_file_dc" type="FILE">
                         <value-ref name="DC_XSD_FILE"/>
                     </value>
@@ -2842,7 +2842,7 @@
                         <value-ref name="PRIMARY-METS_FILE"/>
                     </value>
                     <value name="entity_type" type="ENTITY_TYPE">ISSUE</value>
-                    <value name="template_detection_xpath" type="STRING">concat('issue',null)</value>
+                    <value name="profile_detection_xpath" type="STRING">concat('issue',null)</value>
                     <value name="xsd_file_dc" type="FILE">
                         <value-ref name="DC_XSD_FILE"/>
                     </value>
@@ -2863,7 +2863,7 @@
                         <value-ref name="PRIMARY-METS_FILE"/>
                     </value>
                     <value name="entity_type" type="ENTITY_TYPE">SUPPLEMENT</value>
-                    <value name="template_detection_xpath" type="STRING">concat('supplement',null)</value>
+                    <value name="profile_detection_xpath" type="STRING">concat('supplement',null)</value>
                     <value name="xsd_file_dc" type="FILE">
                         <value-ref name="DC_XSD_FILE"/>
                     </value>
@@ -2884,7 +2884,7 @@
                         <value-ref name="PRIMARY-METS_FILE"/>
                     </value>
                     <value name="entity_type" type="ENTITY_TYPE">PICTURE</value>
-                    <value name="template_detection_xpath" type="STRING">concat('internalpart_picture',null)</value>
+                    <value name="profile_detection_xpath" type="STRING">concat('internalpart_picture',null)</value>
                     <value name="xsd_file_dc" type="FILE">
                         <value-ref name="DC_XSD_FILE"/>
                     </value>
@@ -2905,7 +2905,7 @@
                         <value-ref name="PRIMARY-METS_FILE"/>
                     </value>
                     <value name="entity_type" type="ENTITY_TYPE">ARTICLE</value>
-                    <value name="template_detection_xpath" type="STRING">concat('internalpart_article',null)</value>
+                    <value name="profile_detection_xpath" type="STRING">concat('internalpart_article',null)</value>
                     <value name="xsd_file_dc" type="FILE">
                         <value-ref name="DC_XSD_FILE"/>
                     </value>

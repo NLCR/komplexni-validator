@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<validationTemplate
+<metadataProfile
         xmlns="http://www.nkp.cz/pspValidator/2.0/metadataProfile"
         name="Secondary METS header"
         validatorVersion="2.0"
@@ -51,4 +51,4 @@
         </expectedElements>
     </rootElement>
 
-</validationTemplate>
+</metadataProfile>
