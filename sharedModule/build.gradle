@@ -30,6 +30,7 @@ dependencies {
     // SAXON - if xpath 2.0 was needed eventually
     // https://mvnrepository.com/artifact/net.sf.saxon/Saxon-HE
     //compile group: 'net.sf.saxon', name: 'Saxon-HE', version: '9.7.0-14'
+    compile 'org.json:json:20180813'
 }
 
 version = '2.0-dev-kontrola_urn_nbn'
