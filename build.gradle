@@ -1,5 +1,5 @@
 group 'rzehan'
-version '2.0-dev-kontrola_urn_nbn'
+version '2.0-dev-03'
 
 System.setProperty("file.encoding", "UTF-8")
 

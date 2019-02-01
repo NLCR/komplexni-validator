@@ -28,7 +28,7 @@ dependencies {
     //compile 'commons-cli:commons-cli:1.4-SNAPSHOT'
 }
 
-version = '2.0-dev-kontrola_urn_nbn'
+version = '2.0-dev-03'
 
 //https://www.mkyong.com/gradle/gradle-create-a-jar-file-with-dependencies/
 task fatJar(type: Jar) {
