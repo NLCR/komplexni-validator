@@ -8,7 +8,7 @@ import java.util.List;
  */
 public class ExpectedElementDefinition {
 
-    //template
+    //profile
     private final MetadataProfile profile;
 
     private final String errorMessage;

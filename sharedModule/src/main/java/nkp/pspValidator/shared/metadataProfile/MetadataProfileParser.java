@@ -26,7 +26,7 @@ public class MetadataProfileParser {
     }
 
     public MetadataProfile parseProfile(File profileXmlFile) throws ValidatorConfigurationException {
-        //LOG.info(String.format("parsing %s", templateXml.getAbsolutePath()));
+        //LOG.info(String.format("parsing %s", profileXmlFile.getAbsolutePath()));
         MetadataProfile metadataProfile = new MetadataProfile();
         // TODO: 3.2.18 handle namespaces properly instead of ignoring it
         XMLTag doc = XMLDoc.from(profileXmlFile, true); //ignoring namespaces
@@ -59,14 +59,14 @@ public class MetadataProfileParser {
         return metadataProfile;
     }
 
-    private void checkValidatorVersionCorrect(String versionFromTemplate, File templateXmlFile) throws ValidatorConfigurationException {
+    private void checkValidatorVersionCorrect(String versionFromProfile, File profileXmlFile) throws ValidatorConfigurationException {
         String versionPure = Version.VERSION_CODE;
         if (versionPure.contains("-")) {
             //everything after "-" is fair game, i.e. validator in version 2.0-dev-whatever will work with metadata-profile with validatorVersion="2.0"
             versionPure = versionPure.split("-")[0];
         }
-        if (!versionPure.equals(versionFromTemplate)) {
-            throw new ValidatorConfigurationException("nesouhlasí verze validátoru - očekávaná '%s', nalezena '%s' v souboru %s", versionPure, versionFromTemplate, templateXmlFile.getAbsolutePath());
+        if (!versionPure.equals(versionFromProfile)) {
+            throw new ValidatorConfigurationException("nesouhlasí verze validátoru - očekávaná '%s', nalezena '%s' v souboru %s", versionPure, versionFromProfile, profileXmlFile.getAbsolutePath());
         }
     }
 

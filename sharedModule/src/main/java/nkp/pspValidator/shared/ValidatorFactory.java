@@ -35,25 +35,25 @@ public class ValidatorFactory {
 
         // process bibliographic profile files
         BibliographicMetadataProfilesManager biblioMgr = new BibliographicMetadataProfilesManager(new MetadataProfileParser(dictionaryManager));
-        for (File templateFile : fdmfConfiguration.getBiblioDcTemplates()) {
-            biblioMgr.processFile(templateFile, MetadataFormat.DC);
+        for (File profileFile : fdmfConfiguration.getBiblioDcProfiles()) {
+            biblioMgr.processFile(profileFile, MetadataFormat.DC);
         }
-        for (File templateFile : fdmfConfiguration.getBiblioModsTemplates()) {
-            biblioMgr.processFile(templateFile, MetadataFormat.MODS);
+        for (File profileFile : fdmfConfiguration.getBiblioModsProfiles()) {
+            biblioMgr.processFile(profileFile, MetadataFormat.MODS);
         }
         engine.setBibliographicMetadataProfilesManager(biblioMgr);
 
         //process technical profile files
         TechnicalMetadataProfilesManager techMgr = new TechnicalMetadataProfilesManager(new MetadataProfileParser(dictionaryManager));
-        for (File templateFile : fdmfConfiguration.getTechProfiles()) {
-            techMgr.processFile(templateFile);
+        for (File profileFile : fdmfConfiguration.getTechProfiles()) {
+            techMgr.processFile(profileFile);
         }
         engine.setTechnicalMetadataProfilesManager(techMgr);
 
         //process mets profile files
         MetsProfilesManager metsMgr = new MetsProfilesManager(new MetadataProfileParser(dictionaryManager));
-        for (File templateFile : fdmfConfiguration.getMetsProfiles()) {
-            metsMgr.processFile(templateFile);
+        for (File profileFile : fdmfConfiguration.getMetsProfiles()) {
+            metsMgr.processFile(profileFile);
         }
         engine.setMetsProfilesManager(metsMgr);
 

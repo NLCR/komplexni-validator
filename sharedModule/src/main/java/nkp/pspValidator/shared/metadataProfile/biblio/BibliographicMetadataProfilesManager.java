@@ -65,20 +65,20 @@ public class BibliographicMetadataProfilesManager {
     }
 
     public MetadataProfile buildProfile(String fileId, MetadataFormat format, CatalogingConventions conventions) {
-        File file = getTemplateFile(fileId, format, conventions);
+        File file = getProfileFile(fileId, format, conventions);
         if (file == null) {
             return null;
         } else {
             try {
                 return parser.parseProfile(file);
             } catch (ValidatorConfigurationException e) {
-                //should never happen, template has already been parsed
+                //should never happen, profile has already been parsed
                 throw new IllegalStateException(e);
             }
         }
     }
 
-    private File getTemplateFile(String fileId, MetadataFormat format, CatalogingConventions conventions) {
+    private File getProfileFile(String fileId, MetadataFormat format, CatalogingConventions conventions) {
         Map<CatalogingConventions, Map<String, File>> conventionsMapMap = data.get(format);
         if (conventionsMapMap == null) {
             return null;

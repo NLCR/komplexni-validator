@@ -44,7 +44,7 @@ public class VfCheckBibliographicMetadataMatchProfile extends ValidationFunction
 
     public static final String PARAM_METS_FILE = "mets_file";
     public static final String PARAM_ENTITY_TYPE = "entity_type";
-    public static final String PARAM_TEMPLATE_DETECTION_XPATH = "template_detection_xpath";
+    public static final String PARAM_PROFILE_DETECTION_XPATH = "profile_detection_xpath";
     public static final String PARAM_XSD_DC = "xsd_file_dc";
     public static final String PARAM_XSD_MODS = "xsd_file_mods";
 
@@ -52,7 +52,7 @@ public class VfCheckBibliographicMetadataMatchProfile extends ValidationFunction
         super(name, engine, new Contract()
                 .withValueParam(PARAM_METS_FILE, ValueType.FILE, 1, 1)
                 .withValueParam(PARAM_ENTITY_TYPE, ValueType.ENTITY_TYPE, 1, 1)
-                .withValueParam(PARAM_TEMPLATE_DETECTION_XPATH, ValueType.STRING, 1, 1)
+                .withValueParam(PARAM_PROFILE_DETECTION_XPATH, ValueType.STRING, 1, 1)
                 .withValueParam(PARAM_XSD_DC, ValueType.FILE, 1, 1)
                 .withValueParam(PARAM_XSD_MODS, ValueType.FILE, 1, 1)
         );
@@ -72,10 +72,10 @@ public class VfCheckBibliographicMetadataMatchProfile extends ValidationFunction
                 return singlErrorResult(invalidCannotReadDir(metsFile));
             }
 
-            ValueEvaluation paramTemplateDetectionXpath = valueParams.getParams(PARAM_TEMPLATE_DETECTION_XPATH).get(0).getEvaluation();
-            String templateDetectionXpath = (String) paramTemplateDetectionXpath.getData();
-            if (templateDetectionXpath == null) {
-                return invalidValueParamNull(PARAM_TEMPLATE_DETECTION_XPATH, paramTemplateDetectionXpath);
+            ValueEvaluation paramProfileDetectionXpath = valueParams.getParams(PARAM_PROFILE_DETECTION_XPATH).get(0).getEvaluation();
+            String profileDetectionXpath = (String) paramProfileDetectionXpath.getData();
+            if (profileDetectionXpath == null) {
+                return invalidValueParamNull(PARAM_PROFILE_DETECTION_XPATH, paramProfileDetectionXpath);
             }
 
             ValueEvaluation paramEntityType = valueParams.getParams(PARAM_ENTITY_TYPE).get(0).getEvaluation();
@@ -106,7 +106,7 @@ public class VfCheckBibliographicMetadataMatchProfile extends ValidationFunction
                 return singlErrorResult(invalidCannotReadFile(xsdFileMods));
             }
 
-            return validate(metsFile, entityType, templateDetectionXpath, xsdFileDc, xsdFileMods);
+            return validate(metsFile, entityType, profileDetectionXpath, xsdFileDc, xsdFileMods);
         } catch (ContractException e) {
             return invalidContractNotMet(e);
         } catch (Throwable e) {
@@ -115,7 +115,7 @@ public class VfCheckBibliographicMetadataMatchProfile extends ValidationFunction
         }
     }
 
-    private ValidationResult validate(File metsFile, EntityType entityType, String templateDetectionXpath, File xsdFileDc, File xsdFileMods) {
+    private ValidationResult validate(File metsFile, EntityType entityType, String profileDetectionXpath, File xsdFileDc, File xsdFileMods) {
         ValidationResult result = new ValidationResult();
         try {
             Document metsDoc = engine.getXmlDocument(metsFile, true);
@@ -125,13 +125,13 @@ public class VfCheckBibliographicMetadataMatchProfile extends ValidationFunction
                 CatalogingConventions conventions = detectCatalogingConventions(entityId, entityType, metsDoc, result);
                 //System.err.println("conventions: " + conventions);
                 String entityTypeAndId = entityType.getDmdSecCode() + '_' + entityId;
-                String templateName = detectTemplateName(metsDoc, entityTypeAndId, templateDetectionXpath, result);
-                //System.err.println("template name: " + templateName);
-                if (templateName == null) {
+                String profileName = detectProfileName(metsDoc, entityTypeAndId, profileDetectionXpath, result);
+                //System.err.println("profile name: " + profileName);
+                if (profileName == null) {
                     result.addError(invalid(Level.ERROR, "prázdný typ šablony pro %s; přeskakuji validaci MODS a DC zázanamů", entityTypeAndId));
                 } else {
-                    validateMetadata(metsDoc, entityType, entityId, MetadataFormat.DC, templateName, conventions, result, xsdFileDc);
-                    validateMetadata(metsDoc, entityType, entityId, MetadataFormat.MODS, templateName, conventions, result, xsdFileMods);
+                    validateMetadata(metsDoc, entityType, entityId, MetadataFormat.DC, profileName, conventions, result, xsdFileDc);
+                    validateMetadata(metsDoc, entityType, entityId, MetadataFormat.MODS, profileName, conventions, result, xsdFileMods);
                 }
             }
             return result;
@@ -147,7 +147,7 @@ public class VfCheckBibliographicMetadataMatchProfile extends ValidationFunction
         }
     }
 
-    private String detectTemplateName(Document metsDoc, String entityTypeAndId, String templateDetectionXpath, ValidationResult result)
+    private String detectProfileName(Document metsDoc, String entityTypeAndId, String profileDetectionXpath, ValidationResult result)
             throws InvalidXPathExpressionException, XPathExpressionException {
         String dmdSecId = "MODSMD_" + entityTypeAndId;
         XPathExpression modsRootXpath = engine.buildXpath("/mets:mets/mets:dmdSec[@ID=\"" + dmdSecId + "\"]/mets:mdWrap/mets:xmlData/mods:mods");
@@ -156,7 +156,7 @@ public class VfCheckBibliographicMetadataMatchProfile extends ValidationFunction
             result.addError(invalid(Level.INFO, "nenalezen element mets:mets pro záznam %s", dmdSecId));
             return null;
         } else {
-            XPathExpression xPathExpression = engine.buildXpath(templateDetectionXpath);
+            XPathExpression xPathExpression = engine.buildXpath(profileDetectionXpath);
             return (String) xPathExpression.evaluate(modsEl, XPathConstants.STRING);
         }
     }
@@ -202,7 +202,7 @@ public class VfCheckBibliographicMetadataMatchProfile extends ValidationFunction
         return new ArrayList<>(set);
     }
 
-    private void validateMetadata(Document metsDoc, EntityType entityType, String entityId, MetadataFormat format, String templateName,
+    private void validateMetadata(Document metsDoc, EntityType entityType, String entityId, MetadataFormat format, String profileName,
                                   CatalogingConventions catalogingConventions, ValidationResult result, File xsdFile) {
         String dmdSecId = null;
         try {
@@ -216,9 +216,9 @@ public class VfCheckBibliographicMetadataMatchProfile extends ValidationFunction
                 boolean validByXsd = validateByXsd(xsdFile, metadataDoc, dmdSecId, result);
                 if (validByXsd) {
                     //result.addError(Level.INFO, String.format("%s je validní podle %s", dmdSecId, xsdFile.getName()));
-                    MetadataProfile profile = engine.getBibliographicMetadataProfilesManager().buildProfile(templateName, format, catalogingConventions);
+                    MetadataProfile profile = engine.getBibliographicMetadataProfilesManager().buildProfile(profileName, format, catalogingConventions);
                     if (profile == null) {
-                        result.addError(invalid(Level.ERROR, "nenalezena šablona '%s' (verze %s, %s), pravděpodobně chybí element mods:genre určující druh záznamu; ignoruji validaci záznamu %s", templateName, format, catalogingConventions, dmdSecId));
+                        result.addError(invalid(Level.ERROR, "nenalezen profil '%s' (verze %s, %s), pravděpodobně chybí element mods:genre určující druh záznamu; ignoruji validaci záznamu %s", profileName, format, catalogingConventions, dmdSecId));
                     } else {
                         MetadataProfileValidator.validate(profile, metadataDoc, result, dmdSecId);
                     }

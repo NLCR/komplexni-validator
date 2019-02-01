@@ -6,7 +6,7 @@
         elementFormDefault="qualified"
         attributeFormDefault="unqualified"
 >
-    <xs:element name="validationTemplate">
+    <xs:element name="metadataProfile">
         <xs:complexType>
             <xs:sequence>
 
