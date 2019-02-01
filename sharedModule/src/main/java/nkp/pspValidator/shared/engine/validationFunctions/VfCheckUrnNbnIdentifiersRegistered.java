@@ -7,7 +7,11 @@ import nkp.pspValidator.shared.engine.ValueEvaluation;
 import nkp.pspValidator.shared.engine.ValueType;
 import nkp.pspValidator.shared.engine.exceptions.ContractException;
 import nkp.pspValidator.shared.engine.types.Identifier;
+import nkp.pspValidator.shared.engine.utils.UrnNbnResolverChecker;
 
+import java.io.IOException;
+import java.security.KeyManagementException;
+import java.security.NoSuchAlgorithmException;
 import java.util.List;
 
 /**
@@ -42,15 +46,33 @@ public class VfCheckUrnNbnIdentifiersRegistered extends ValidationFunction {
     }
 
     private ValidationResult validate(List<Identifier> identifiers) {
-        ValidationResult result = new ValidationResult();
-        String regexp = "^urn:nbn:cz:[a-zA-z0-9]{2,6}\\-[a-zA-Z0-9]{6}$";
-        for (Identifier identifier : identifiers) {
-            if (identifier.getType().equals("urnnbn")) {
-                // TODO: 2019-01-31 skutečná implementace
-                result.addError(invalid(Level.ERROR, "identifikátor \"" + identifier.getValue() + "\" není registrován v Rezolveru URN:NBN"));
+        try {
+            UrnNbnResolverChecker checker = new UrnNbnResolverChecker();
+            ValidationResult result = new ValidationResult();
+            for (Identifier identifier : identifiers) {
+                if (identifier.getType().equals("urnnbn")) {
+                    checkUrn(checker, result, identifier.getValue());
+                }
             }
+            return result;
+        } catch (NoSuchAlgorithmException e) {
+            return invalidUnexpectedError(e);
+        } catch (KeyManagementException e) {
+            return invalidUnexpectedError(e);
         }
-        return result;
+    }
+
+    private void checkUrn(UrnNbnResolverChecker checker, ValidationResult result, String urnNbn) {
+        try {
+            checker.check(urnNbn);
+        } catch (IOException e) {
+            result.addError(Level.ERROR, "chyba připojení při zpracování identifikátoru %s: %s", urnNbn, e.getMessage());
+            e.printStackTrace();
+        } catch (UrnNbnResolverChecker.ResolverError e) {
+            result.addError(Level.ERROR, e.getMessage());
+        } catch (UrnNbnResolverChecker.ResolverWarning e) {
+            result.addError(Level.WARNING, e.getMessage());
+        }
     }
 
 }
