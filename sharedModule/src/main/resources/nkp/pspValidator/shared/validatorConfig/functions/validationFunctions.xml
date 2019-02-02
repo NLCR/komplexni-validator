@@ -234,7 +234,7 @@
             <value name="identifiers" type="IDENTIFIER_LIST"/>
             <value name="min_match_length" type="INTEGER"/>
             <value name="id_prefixes" type="STRING_LIST"
-                   description="Prefixy hodnot identifikátorů, které budou odstraněny před hledáním shody. Delší varianty prefixů by měly být v seznamu dríve."/>
+                   description="Prefixy hodnot identifikátorů, které budou odstraněny před hledáním shody. Delší varianty prefixů by měly být v seznamu dříve."/>
         </params-def>
     </validationFunction>
 
