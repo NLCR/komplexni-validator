@@ -102,9 +102,7 @@
                 <expectedContent/>
             </element>
 
-	    <!--absence dc:source má být jen VAROVÁNÍ ne CHYBA. Varování u chybějících elementů zatím ve validátoru nejde nastavit, proto povinnost změněna na false.-->
-            <element name="dc:source" mandatory="false"
-                     errorMessage="Očekáván alespoň jeden povinný element dc:source obsahující údje o lokaci fyzického nebo elektronického dokumentu.">
+            <element name="dc:source" mandatory="false">
                 <expectedContent/>
             </element>
 
