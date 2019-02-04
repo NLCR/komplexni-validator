@@ -109,6 +109,7 @@ public class MainController extends AbstractController implements ValidationStat
     private Dmf dmf;
     private File logTxtFile;
     private File logXmlFile;
+
     ValidationResultSummary validationResultSummary;
     private boolean cancelValidation = false;
 
@@ -414,7 +415,7 @@ public class MainController extends AbstractController implements ValidationStat
             ruleList.setCellFactory(list -> new RuleIListCell());
             ruleList.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, nowSelectedRule) -> {
                 if (nowSelectedRule == null) {
-                    selectSection(null);
+                    selectRule(null);
                 } else {
                     if (!nowSelectedRule.equals(selectedRule)) {
                         selectRule(nowSelectedRule);
@@ -521,7 +522,7 @@ public class MainController extends AbstractController implements ValidationStat
             validationStateManager.updateSectionProblems(sectionId, sectionProblemsByLevel);
             validationStateManager.updateRuleState(sectionId, ruleId, ProcessingState.FINISHED);
             validationStateManager.setRuleResults(sectionId, ruleId, ruleProblemsByLevel, problems);
-            //so that probles are reloaded
+            //so that problems are reloaded
             selectRule(selectedRule);
         });
     }
