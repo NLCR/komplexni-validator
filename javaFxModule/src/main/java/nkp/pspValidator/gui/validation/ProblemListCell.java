@@ -9,6 +9,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
+import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.control.Tooltip;
 import javafx.scene.image.ImageView;
@@ -21,7 +22,7 @@ import nkp.pspValidator.shared.engine.validationFunctions.ValidationProblem;
 
 import java.io.IOException;
 
-public class ProblemItem {
+public class ProblemListCell extends ListCell<ValidationProblem> {
 
     @FXML
     private Node container;
@@ -45,13 +46,32 @@ public class ProblemItem {
     @FXML
     private Button btnCopyToClipboard;
 
-    public ProblemItem() {
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/problemItem.fxml"));
-        fxmlLoader.setController(this);
-        try {
-            fxmlLoader.load();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
+    private FXMLLoader mLLoader;
+
+    private final ListView<ValidationProblem> containingList;
+
+    public ProblemListCell(ListView<ValidationProblem> containingList) {
+        this.containingList = containingList;
+    }
+
+    @Override
+    protected void updateItem(ValidationProblem problem, boolean empty) {
+        super.updateItem(problem, empty);
+        if (empty || problem == null) {
+            setGraphic(null);
+        } else {
+            if (mLLoader == null) {
+                mLLoader = new FXMLLoader(getClass().getResource("/fxml/problemItem.fxml"));
+                mLLoader.setController(this);
+
+                try {
+                    mLLoader.load();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+            populate(problem);
+            setGraphic(container);
         }
     }
 
@@ -60,6 +80,10 @@ public class ProblemItem {
         final Tooltip tooltip = new Tooltip();
         tooltip.setText("Kopírovat chybu do schránky");
         btnCopyToClipboard.setTooltip(tooltip);
+        //see http://stackoverflow.com/questions/29884894/how-to-make-listview-width-fit-width-of-its-cells#
+        message.wrappingWidthProperty().bind(containingList.widthProperty().subtract(250));
+        //TODO: nemuze tady byt memory leak kvuli bindovani zahazovanych ProblemListCell na ListView?
+        //mozna v nejakem destruktoru odbindovat
     }
 
     public void populate(ValidationProblem problem) {
@@ -84,10 +108,6 @@ public class ProblemItem {
         }
     }
 
-    public Node getContainer() {
-        return container;
-    }
-
     public void copyToClipboard(ActionEvent actionEvent) {
         String text = message.getText();
         Clipboard clipboard = Clipboard.getSystemClipboard();
@@ -96,17 +116,4 @@ public class ProblemItem {
         clipboard.setContent(content);
     }
 
-    public Text getMessage() {
-        return message;
-    }
-
-    public void bindTextWidthToListWidth(ListView<ValidationProblem> list) {
-        //max. velikost sirka Text (z wrappingWidth) je sirka ListView - 250 px
-        // (priblizne soucet sirek oblasti s ikonou vlevo a s tlacitkem vpravo)
-        message.wrappingWidthProperty().bind(list.widthProperty().subtract(250));
-        //nefunguje
-        //message.wrappingWidthProperty().bind(list.widthProperty().subtract(iconPane.widthProperty()).subtract(buttonPane.widthProperty()));
-        //TODO: nemuze tady byt memory leak kvuli bindovani zahazovanych ProblemItem na ListView?
-        //mozna v nejakem destruktoru odbindovat
-    }
 }
