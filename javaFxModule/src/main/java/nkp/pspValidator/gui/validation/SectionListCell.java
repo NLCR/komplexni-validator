@@ -8,12 +8,13 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
+import javafx.scene.control.ListCell;
 import javafx.scene.control.ProgressIndicator;
 import javafx.scene.image.ImageView;
 
 import java.io.IOException;
 
-public class SectionItem {
+public class SectionListCell extends ListCell<SectionWithState> {
 
     @FXML
     private Node container;
@@ -39,21 +40,39 @@ public class SectionItem {
 
     @FXML
     private Node infosContainer;
+
     @FXML
     private Label infosLabel;
 
-    public SectionItem() {
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/sectionItem.fxml"));
-        fxmlLoader.setController(this);
-        try {
-            fxmlLoader.load();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
+
+    private FXMLLoader mLLoader;
+
+
+    @Override
+    protected void updateItem(SectionWithState section, boolean empty) {
+        super.updateItem(section, empty);
+        if (empty || section == null) {
+            setGraphic(null);
+        } else {
+            if (mLLoader == null) {
+                mLLoader = new FXMLLoader(getClass().getResource("/fxml/sectionItem.fxml"));
+                mLLoader.setController(this);
+
+                try {
+                    mLLoader.load();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
+            }
+            populate(section);
+            setGraphic(container);
         }
     }
 
     public void populate(SectionWithState section) {
         name.setText(section.getName());
+
         switch (section.getState()) {
             case WAITING:
                 progressIndicator.setVisible(false);
@@ -76,7 +95,6 @@ public class SectionItem {
                 imgCanceled.setVisible(true);
                 break;
         }
-
         infosLabel.setText(section.getInfos().toString());
         warningsLabel.setText(section.getWarnings().toString());
         errorsLabel.setText(section.getErrors().toString());
@@ -85,7 +103,4 @@ public class SectionItem {
         errorsContainer.setVisible(section.getErrors() != 0);
     }
 
-    public Node getContainer() {
-        return container;
-    }
 }
