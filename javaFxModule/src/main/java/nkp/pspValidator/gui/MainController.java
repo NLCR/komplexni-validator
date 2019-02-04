@@ -424,32 +424,8 @@ public class MainController extends AbstractController implements ValidationStat
 
             //problems
             problemList.setItems(null);
-            problemList.setCellFactory(new Callback<ListView<ValidationProblem>, ListCell<ValidationProblem>>() {
+            problemList.setCellFactory(list -> new ProblemListCell(problemList));
 
-                @Override
-                public ListCell<ValidationProblem> call(ListView<ValidationProblem> list) {
-                    ListCell<ValidationProblem> cell = new ListCell<ValidationProblem>() {
-
-                        @Override
-                        protected void updateItem(ValidationProblem problem, boolean empty) {
-                            super.updateItem(problem, empty);
-                            if (empty || problem == null) {
-                                setGraphic(null);
-                            } else {
-                                ProblemItem item = new ProblemItem();
-                                item.populate(problem);
-                                setGraphic(item.getContainer());
-                                item.bindTextWidthToListWidth(list);
-                            }
-                        }
-                    };
-                    //http://stackoverflow.com/questions/29884894/how-to-make-listview-width-fit-width-of-its-cells#
-                    //cell.prefWidthProperty().bind(list.widthProperty());
-                    return cell;
-                }
-
-
-            });
         });
     }
 
