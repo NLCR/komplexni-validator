@@ -9,6 +9,8 @@
         fx:id="container"
         minWidth="350"
         minHeight="30"
+        maxHeight="30"
+        prefHeight="30"
 >
 
     <HBox spacing="5"
