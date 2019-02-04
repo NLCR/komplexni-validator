@@ -1,39 +1,40 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.*?>
-<?import javafx.scene.image.*?>
-<?import javafx.scene.layout.*?>
-<AnchorPane xmlns:fx="http://javafx.com/fxml"
-            stylesheets="/css/sectionItem.css"
-            fx:id="container"
-            minWidth="300"
-            minHeight="30"
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ProgressIndicator?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.StackPane?>
+
+
+<AnchorPane
+        xmlns="http://javafx.com/javafx/8.0.172-ea"
+        xmlns:fx="http://javafx.com/fxml/1"
+        stylesheets="/css/sectionItem.css"
+        fx:id="container"
+        maxHeight="30"
+        minHeight="30"
+        prefHeight="30"
+        minWidth="300"
 >
 
-    <HBox spacing="5"
-          alignment="CENTER"
-          AnchorPane.leftAnchor="0"
-          AnchorPane.topAnchor="0"
-          AnchorPane.bottomAnchor="0"
-    >
+    <HBox alignment="CENTER" spacing="5" AnchorPane.bottomAnchor="0" AnchorPane.leftAnchor="0" AnchorPane.topAnchor="0">
         <children>
 
             <StackPane>
 
-                <ProgressIndicator fx:id="progressIndicator"
-                                   prefWidth="20"
-                                   prefHeight="20"
-                />
+                <ProgressIndicator fx:id="progressIndicator" prefHeight="20" prefWidth="20"/>
 
-                <ImageView fx:id="imgFinished"
-                           styleClass="problem-thumb">
+                <ImageView fx:id="imgFinished" styleClass="problem-thumb">
                     <image>
                         <Image url="@/img/Checkmark Filled-20.png"/>
                     </image>
                 </ImageView>
 
-                <ImageView fx:id="imgCanceled"
-                           styleClass="problem-thumb">
+                <ImageView fx:id="imgCanceled" styleClass="problem-thumb">
                     <image>
                         <Image url="@/img/Unavailable-20.png"/>
                     </image>
@@ -46,25 +47,17 @@
     </HBox>
 
 
-    <GridPane alignment="CENTER"
-              AnchorPane.rightAnchor="0"
+    <GridPane alignment="CENTER" hgap="10"
               AnchorPane.topAnchor="0"
               AnchorPane.bottomAnchor="0"
-              hgap="10"
-
+              AnchorPane.rightAnchor="0"
     >
 
         <!--infos-->
-        <HBox fx:id="infosContainer"
-              styleClass="problems-container"
+        <HBox fx:id="infosContainer" styleClass="problems-container"
               GridPane.columnIndex="0"
-              GridPane.rowIndex="0"
-        >
-
-            <Label fx:id="infosLabel"
-                   text="0"
-                   styleClass="problem-label"
-            />
+              GridPane.rowIndex="0">
+            <Label fx:id="infosLabel" styleClass="problem-label" text="0"/>
             <ImageView styleClass="problem-thumb">
                 <image>
                     <Image url="@/img/Info-20.png"/>
@@ -73,15 +66,10 @@
         </HBox>
 
         <!--warnings-->
-        <HBox fx:id="warningsContainer"
-              styleClass="problems-container"
+        <HBox fx:id="warningsContainer" styleClass="problems-container"
               GridPane.columnIndex="1"
-              GridPane.rowIndex="0"
-        >
-            <Label fx:id="warningsLabel"
-                   text="0"
-                   styleClass="problem-label"
-            />
+              GridPane.rowIndex="0">
+            <Label fx:id="warningsLabel" styleClass="problem-label" text="0"/>
             <ImageView styleClass="problem-thumb">
                 <image>
                     <Image url="@/img/Error-20.png"/>
@@ -90,15 +78,10 @@
         </HBox>
 
         <!--errors-->
-        <HBox fx:id="errorsContainer"
-              styleClass="problems-container"
+        <HBox fx:id="errorsContainer" styleClass="problems-container"
               GridPane.columnIndex="2"
-              GridPane.rowIndex="0"
-        >
-            <Label fx:id="errorsLabel"
-                   text="0"
-                   styleClass="problem-label"
-            />
+              GridPane.rowIndex="0">
+            <Label fx:id="errorsLabel" styleClass="problem-label" text="0"/>
             <ImageView styleClass="problem-thumb">
                 <image>
                     <Image url="@/img/Cancel-20.png"/>
@@ -110,6 +93,3 @@
 
 
 </AnchorPane>
-
-
-

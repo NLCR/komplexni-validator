@@ -391,28 +391,11 @@ public class MainController extends AbstractController implements ValidationStat
     @Override
     public void onInitialization(List<RulesSection> sections, Map<RulesSection, List<Rule>> rules) {
         validationStateManager = new ValidationStateManager(sections, rules);
+
         Platform.runLater(() -> {
+
             //sections
-            sectionList.setCellFactory(new Callback<ListView<SectionWithState>, ListCell<SectionWithState>>() {
-
-                @Override
-                public ListCell<SectionWithState> call(ListView<SectionWithState> list) {
-                    return new ListCell<SectionWithState>() {
-
-                        @Override
-                        protected void updateItem(SectionWithState section, boolean empty) {
-                            super.updateItem(section, empty);
-                            if (empty || section == null) {
-                                setGraphic(null);
-                            } else {
-                                SectionItem item = new SectionItem();
-                                item.populate(section);
-                                setGraphic(item.getContainer());
-                            }
-                        }
-                    };
-                }
-            });
+            sectionList.setCellFactory(list -> new SectionListCell());
             sectionList.setItems(validationStateManager.getSectionsObservable());
             sectionList.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newSection) -> {
                 if (newSection == null) {
@@ -423,6 +406,7 @@ public class MainController extends AbstractController implements ValidationStat
                     }
                 }
             });
+
             //rules
             //TODO: tahle inicializace je na dvou mistech, sjednotit
             rulesSectionNameLbl.setText(null);
