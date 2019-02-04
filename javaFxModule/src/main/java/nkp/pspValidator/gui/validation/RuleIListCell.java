@@ -8,12 +8,13 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
+import javafx.scene.control.ListCell;
 import javafx.scene.control.ProgressIndicator;
 import javafx.scene.image.ImageView;
 
 import java.io.IOException;
 
-public class RuleItem {
+public class RuleIListCell extends ListCell<RuleWithState> {
 
     @FXML
     private Node container;
@@ -41,13 +42,27 @@ public class RuleItem {
     @FXML
     private Label infosLabel;
 
-    public RuleItem() {
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/ruleItem.fxml"));
-        fxmlLoader.setController(this);
-        try {
-            fxmlLoader.load();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
+    private FXMLLoader mLLoader;
+
+    @Override
+    protected void updateItem(RuleWithState rule, boolean empty) {
+        super.updateItem(rule, empty);
+        if (empty || rule == null) {
+            setGraphic(null);
+        } else {
+            if (mLLoader == null) {
+                mLLoader = new FXMLLoader(getClass().getResource("/fxml/ruleItem.fxml"));
+                mLLoader.setController(this);
+
+                try {
+                    mLLoader.load();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
+            }
+            populate(rule);
+            setGraphic(container);
         }
     }
 
@@ -84,7 +99,4 @@ public class RuleItem {
         errorsContainer.setVisible(rule.getErrors() != 0);
     }
 
-    public Node getContainer() {
-        return container;
-    }
 }

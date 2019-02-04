@@ -397,50 +397,31 @@ public class MainController extends AbstractController implements ValidationStat
             //sections
             sectionList.setCellFactory(list -> new SectionListCell());
             sectionList.setItems(validationStateManager.getSectionsObservable());
-            sectionList.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newSection) -> {
-                if (newSection == null) {
+            sectionList.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, nowSelectedSection) -> {
+                if (nowSelectedSection == null) {
                     selectSection(null);
                 } else {
-                    if (!newSection.equals(selectedSection)) {
-                        selectSection(newSection);
+                    if (!nowSelectedSection.equals(this.selectedSection)) {
+                        selectSection(nowSelectedSection);
                     }
                 }
             });
 
             //rules
-            //TODO: tahle inicializace je na dvou mistech, sjednotit
             rulesSectionNameLbl.setText(null);
             rulesSectionDescriptionLbl.setText(null);
             ruleList.setItems(null);
-            ruleList.setCellFactory(new Callback<ListView<RuleWithState>, ListCell<RuleWithState>>() {
-
-                @Override
-                public ListCell<RuleWithState> call(ListView<RuleWithState> list) {
-                    return new ListCell<RuleWithState>() {
-
-                        @Override
-                        protected void updateItem(RuleWithState rule, boolean empty) {
-                            super.updateItem(rule, empty);
-                            if (empty || rule == null) {
-                                setGraphic(null);
-                            } else {
-                                RuleItem item = new RuleItem();
-                                item.populate(rule);
-                                setGraphic(item.getContainer());
-                            }
-                        }
-                    };
-                }
-            });
-            ruleList.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newRule) -> {
-                if (newRule == null) {
+            ruleList.setCellFactory(list -> new RuleIListCell());
+            ruleList.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, nowSelectedRule) -> {
+                if (nowSelectedRule == null) {
                     selectSection(null);
                 } else {
-                    if (!newRule.equals(selectedRule)) {
-                        selectRule(newRule);
+                    if (!nowSelectedRule.equals(selectedRule)) {
+                        selectRule(nowSelectedRule);
                     }
                 }
             });
+
             //problems
             problemList.setItems(null);
             problemList.setCellFactory(new Callback<ListView<ValidationProblem>, ListCell<ValidationProblem>>() {
@@ -510,8 +491,6 @@ public class MainController extends AbstractController implements ValidationStat
 
     private void selectSection(SectionWithState section) {
         if (section != null) {
-            //TODO: bug, seznam se chova divne, pokud ma vice polozek. Treba u pravidla "Struktura souboru"
-            //System.out.println("Selected section: " + section.getName());
             selectedSection = section;
             rulesSectionNameLbl.setText(section.getName());
             rulesSectionDescriptionLbl.setText(section.getDescription());
