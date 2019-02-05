@@ -35,6 +35,7 @@ public class Validator {
                     PrintStream out,
                     int verbosity,
                     DevParams devParams,
+                    Set<String> skippedSections,
                     ValidationState.ProgressListener progressListener,
                     ValidationState.ProgressController progressController) {
         switch (verbosity) {
@@ -43,6 +44,7 @@ public class Validator {
                 run(xmlProtocolFile, out,
                         true, true, true, true,
                         devParams,
+                        skippedSections,
                         progressListener, progressController);
                 break;
             case 2:
@@ -50,6 +52,7 @@ public class Validator {
                 run(xmlProtocolFile, out,
                         true, false, true, false,
                         devParams,
+                        skippedSections,
                         progressListener, progressController);
                 break;
             case 1:
@@ -57,6 +60,7 @@ public class Validator {
                 run(xmlProtocolFile, out,
                         true, false, false, false,
                         devParams,
+                        skippedSections,
                         progressListener, progressController);
                 break;
             case 0:
@@ -64,6 +68,7 @@ public class Validator {
                 run(xmlProtocolFile, out,
                         false, false, false, false,
                         devParams,
+                        skippedSections,
                         progressListener, progressController);
                 break;
             default:
@@ -76,11 +81,14 @@ public class Validator {
                      boolean printSectionsWithProblems, boolean printSectionsWithoutProblems,
                      boolean printRulesWithProblems, boolean printRulesWithoutProblems,
                      DevParams devParams,
+                     Set<String> skippedSections,
                      ValidationState.ProgressListener progressListener,
                      ValidationState.ProgressController progressController
     ) {
         ValidatorProtocolTextBuilder textLogger = new ValidatorProtocolTextBuilder(out);
-        boolean runAllSections = devParams == null || devParams.getSectionsToRun() == null || devParams.getSectionsToRun().isEmpty();
+        boolean sectionsUnlimitted = devParams == null || devParams.getSectionsToRun() == null || devParams.getSectionsToRun().isEmpty();
+        boolean noSectionsSkipped = skippedSections == null || skippedSections.isEmpty();
+
         ValidationState state = initState(progressListener);
         List<RulesSection> rulesSections = state.getSections();
         state.reportValidationsStarted();
@@ -89,9 +97,15 @@ public class Validator {
                 if (progressController != null && progressController.shouldCancel()) {
                     break;
                 }
-                boolean runSection = runAllSections || devParams.getSectionsToRun().contains(section.getName());
+                boolean runSection = true;
+                runSection &= noSectionsSkipped || !skippedSections.contains(section.getName());
+                runSection &= sectionsUnlimitted || devParams.getSectionsToRun().contains(section.getName());
+
                 if (!runSection) {
-                    //TODO: ve vystupu a v logu zaznamenat, ze byla sekce ignorovana
+                    state.reportSectionSkipped(section);
+                    if (printSectionsWithoutProblems) {
+                        textLogger.logSectionSkipped(section.getName());
+                    }
                 } else {
                     state.reportSectionProcessingStarted(section);
                     processSection(section, state, printSectionsWithoutProblems, printSectionsWithProblems, printRulesWithoutProblems, printRulesWithProblems, textLogger, progressController);

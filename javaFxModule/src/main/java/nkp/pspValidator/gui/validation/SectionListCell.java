@@ -94,6 +94,11 @@ public class SectionListCell extends ListCell<SectionWithState> {
                 imgFinished.setVisible(false);
                 imgCanceled.setVisible(true);
                 break;
+            case SKIPPED:
+                progressIndicator.setVisible(false);
+                imgFinished.setVisible(false);
+                imgCanceled.setVisible(false);
+                break;
         }
         infosLabel.setText(section.getInfos().toString());
         warningsLabel.setText(section.getWarnings().toString());

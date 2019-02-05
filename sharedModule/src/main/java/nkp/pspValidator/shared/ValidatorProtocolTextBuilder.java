@@ -25,6 +25,15 @@ public class ValidatorProtocolTextBuilder {
         }
     }
 
+    public void logSectionSkipped(String sectionName) {
+        if (out != null) {
+            out.println();
+            String sectionTitle = String.format("Sekce %s: přeskočena", sectionName);
+            out.println(sectionTitle);
+            out.println(buildDelimiter(sectionTitle.length()));
+        }
+    }
+
     private String buildSummary(int totalProblems, Map<Level, Integer> problemsByLevel) {
         StringBuilder builder = new StringBuilder();
         builder.append(StringUtils.declineProblemNumber(totalProblems));
