@@ -8,6 +8,7 @@ public class InvalidPathException extends Exception {
     private final String path;
 
     public InvalidPathException(String path) {
+        super("Neplatná cesta k souboru: " + path );
         this.path = path;
     }
 
