@@ -11,12 +11,8 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 import javafx.stage.Window;
-import javafx.util.Callback;
 import nkp.pspValidator.gui.validation.*;
-import nkp.pspValidator.shared.Dmf;
-import nkp.pspValidator.shared.DmfDetector;
-import nkp.pspValidator.shared.ValidationState;
-import nkp.pspValidator.shared.Validator;
+import nkp.pspValidator.shared.*;
 import nkp.pspValidator.shared.engine.Level;
 import nkp.pspValidator.shared.engine.Rule;
 import nkp.pspValidator.shared.engine.RulesSection;
@@ -26,6 +22,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintStream;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -107,6 +104,21 @@ public class MainController extends AbstractController implements ValidationStat
     private RuleWithState selectedRule;
     private File pspDir;
     private Dmf dmf;
+    private Skipped skipped = getSkipped();
+
+    // TODO: 2019-02-05 tuhle konfiguaci dat do GUI
+    private Skipped getSkipped() {
+        Skipped result = new Skipped();
+        if (ConfigurationManager.DEV_MODE) {
+            List<String> list = new ArrayList<>();
+            //list.add("Soubor INFO");
+            list.add("OCR ALTO");
+            list.add("JPEG 2000");
+            result.setSections(new Dmf(Dmf.Type.MONOGRAPH, "1.2"), list);
+        }
+        return result;
+    }
+
     private File logTxtFile;
     private File logXmlFile;
 
@@ -181,11 +193,9 @@ public class MainController extends AbstractController implements ValidationStat
                 try {
                     updateStatusFromWorkerThread(String.format("Inicializuji balík %s.", pspDir.getAbsolutePath()), TotalState.RUNNING);
                     dmf = new DmfDetector().resolveDmf(pspDir, preferedMonVersion, preferedPerVersion, forcedMonVersion, forcedPerVersion);
-                    //System.out.println(dmf);
                     Validator validator = Utils.buildValidator(main.getValidationDataManager(), dmf, pspDir);
-                    //PrintStream out = textAreaPrintStream();//System.out;
                     out = buildTxtLogPrintstream();
-                    //TODO: v produkci odstranit
+                    //DEV
                     Validator.DevParams devParams = null;
                     if (ConfigurationManager.DEV_MODE && ConfigurationManager.DEV_MODE_ONLY_SELECTED_SECTIONS) {
                         devParams = new Validator.DevParams();
@@ -204,6 +214,7 @@ public class MainController extends AbstractController implements ValidationStat
                     validator.run(logXmlFile, out,
                             verbosity,
                             devParams,
+                            skipped.getSections(dmf),
                             MainController.this,
                             MainController.this);
                     //updateStatus(String.format("Validace balíku %s hotova.", pspDir.getAbsolutePath()));
@@ -485,6 +496,14 @@ public class MainController extends AbstractController implements ValidationStat
     public void onValidationsStart() {
         Platform.runLater(() -> {
             updateStatus(String.format("Validuji balík %s.", pspDir.getAbsolutePath()), TotalState.RUNNING);
+        });
+    }
+
+
+    @Override
+    public void onSectionSkipped(int sectionId) {
+        Platform.runLater(() -> {
+            validationStateManager.updateSectionStatus(sectionId, ProcessingState.SKIPPED);
         });
     }
 

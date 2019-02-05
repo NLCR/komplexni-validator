@@ -1,7 +1,7 @@
 package npk.pspValidator.cli;
 
 import nkp.pspValidator.shared.*;
-import nkp.pspValidator.shared.bak.XsdValidator;
+import nkp.pspValidator.shared.dev.XsdValidator;
 import nkp.pspValidator.shared.engine.Utils;
 import nkp.pspValidator.shared.engine.exceptions.InvalidXPathExpressionException;
 import nkp.pspValidator.shared.engine.exceptions.PspDataException;
@@ -30,7 +30,7 @@ public class Main {
 
     public static void main(String[] args) throws PspDataException, XmlFileParsingException, InvalidXPathExpressionException, FdmfRegistry.UnknownFdmfException, ValidatorConfigurationException, FdmfRegistry.UnknownFdmfException {
         main(null, args);
-        //testXsds();
+        //XsdValidator.testXsds();
     }
 
     public static void main(Validator.DevParams devParams, String[] args) {
@@ -713,7 +713,7 @@ public class Main {
         Validator validator = ValidatorFactory.buildValidator(fdmfConfig, pspDir, validatorConfigManager.getDictionaryManager());
         out.println(String.format("Validátor inicializován, spouštím validace"));
         ValidationState.ProgressListener progressListener = null;
-        validator.run(xmlProtocolFile, out, verbosity, devParams, progressListener, null);
+        validator.run(xmlProtocolFile, out, verbosity, devParams, null, progressListener, null);
     }
 
 
@@ -752,37 +752,6 @@ public class Main {
         } else if (!file.canRead()) {
             throw new IllegalStateException(String.format("Nelze číst adresář %s", file.getAbsolutePath()));
         }
-    }
-
-    private static void testXsds() {
-        //info - ok
-        File infoXsd = new File("../sharedModule/src/main/resources/nkp/pspValidator/shared/validatorConfig/fDMF/monograph_1.2/xsd/info_mon1.2.xsd");
-        XsdValidator.validate("INFO", infoXsd, new File("../sharedModule/src/main/resources/nkp/pspValidator/shared-tmp/examples/info.xml"));
-
-        //mix - ok
-        File mixXsd = new File("../sharedModule/src/main/resources/nkp/pspValidator/shared/validatorConfig/fDMF/monograph_1.2/xsd/mix_2.0.xsd");
-        XsdValidator.validate("MIX", mixXsd, new File("../sharedModule/src/main/resources/nkp/pspValidator/shared-tmp/examples/mix.xml"));
-
-        //premis - ok
-        File premisXsd = new File("../sharedModule/src/main/resources/nkp/pspValidator/shared/validatorConfig/fDMF/monograph_1.2/xsd/premis_2.2.xsd");
-        XsdValidator.validate("PREMIS-EVENT", premisXsd, new File("../sharedModule/src/main/resources/nkp/pspValidator/shared-tmp/examples/premis-event.xml"));
-        XsdValidator.validate("PREMIS-OBJECT", premisXsd, new File("../sharedModule/src/main/resources/nkp/pspValidator/shared-tmp/examples/premis-object.xml"));
-        XsdValidator.validate("PREMIS-AGENT", premisXsd, new File("../sharedModule/src/main/resources/nkp/pspValidator/shared-tmp/examples/premis-agent.xml"));
-
-        //dc - ok
-        File dcXsd = new File("../sharedModule/src/main/resources/nkp/pspValidator/shared/validatorConfig/fDMF/monograph_1.2/xsd/dc_1.1.xsd");
-        XsdValidator.validate("DC", dcXsd, new File("../sharedModule/src/main/resources/nkp/pspValidator/shared-tmp/examples/dc.xml"));
-
-        //mods - ok
-        File modsXsd = new File("../sharedModule/src/main/resources/nkp/pspValidator/shared/validatorConfig/fDMF/monograph_1.2/xsd/mods_3.5.xsd");
-        XsdValidator.validate("MODS", modsXsd, new File("../sharedModule/src/main/resources/nkp/pspValidator/shared-tmp/examples/mods.xml"));
-
-        //mets - problem https://github.com/NLCR/komplexni-validator/issues/13
-        File metsXsd = new File("../sharedModule/src/main/resources/nkp/pspValidator/shared/validatorConfig/fDMF/monograph_1.2/xsd/mets_1.9.1.xsd");
-        XsdValidator.validate("METS-PRIMARY", metsXsd, new File("../sharedModule/src/main/resources/nkp/pspValidator/shared-tmp/examples/mets-primary.xml"));
-        XsdValidator.validate("METS-SECONDARY", metsXsd, new File("../sharedModule/src/main/resources/nkp/pspValidator/shared-tmp/examples/mets-secondary.xml"));
-        //XsdValidator.validate("METS", metsXsd, new File("../sharedModule/src/test/resources/monograph_1.2/b50eb6b0-f0a4-11e3-b72e-005056827e52/amdsec/amd_mets_b50eb6b0-f0a4-11e3-b72e-005056827e52_0001.xml"));
-
     }
 
 }

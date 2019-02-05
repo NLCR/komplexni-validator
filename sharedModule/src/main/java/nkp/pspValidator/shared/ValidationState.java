@@ -85,6 +85,12 @@ public class ValidationState {
         return validationResults.get(rule);
     }
 
+    public void reportSectionSkipped(RulesSection section) {
+        if (progressListener != null) {
+            progressListener.onSectionSkipped(section.getId());
+        }
+    }
+
     public void reportSectionProcessingStarted(RulesSection section) {
         sectionsProcessed.add(section.getId());
         startTimeBySection.put(section, System.currentTimeMillis());
@@ -322,6 +328,8 @@ public class ValidationState {
 
         public void onValidationsCancel();
 
+        public void onSectionSkipped(int sectionId);
+
         public void onSectionStart(int sectionId);
 
         public void onSectionFinish(int sectionId, long duration);
@@ -333,6 +341,7 @@ public class ValidationState {
         public void onRuleFinish(int sectionId, Map<Level, Integer> sectionProblemsByLevel, int sectionProblemsTotal, int ruleId, Map<Level, Integer> ruleProblemsByLevel, int ruleProblemsTotal, List<ValidationProblem> errors);
 
         public void onRuleCancel(int sectionId, int ruleId);
+
     }
 
     public static interface ProgressController {
