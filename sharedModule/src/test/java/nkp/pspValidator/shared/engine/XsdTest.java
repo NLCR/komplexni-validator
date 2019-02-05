@@ -1,6 +1,6 @@
 package nkp.pspValidator.shared.engine;
 
-import nkp.pspValidator.shared.bak.XsdValidator;
+import nkp.pspValidator.shared.dev.XsdValidator;
 import org.junit.Test;
 
 import java.io.File;
