@@ -1,4 +1,4 @@
-package nkp.pspValidator.gui.exclusions;
+package nkp.pspValidator.gui.skipping;
 
 import javafx.stage.Stage;
 import nkp.pspValidator.gui.AbstractDialog;
@@ -10,17 +10,16 @@ import java.net.URL;
 /**
  * Created by Martin Řehánek on 9.4.18.
  */
-public class ExclusionsConfigurationDialog extends AbstractDialog {
+public class SkippingConfigurationDialog extends AbstractDialog {
 
 
-    public ExclusionsConfigurationDialog(Stage stage, Main main) {
+    public SkippingConfigurationDialog(Stage stage, Main main) {
         super(stage, main);
     }
 
     @Override
     public URL getFxmlResource() {
-        // TODO: 2019-02-07 rename ("exclusion" is deprecated terminology, now using "skipped"
-        return getClass().getResource("/fxml/exclusions/exclusionsConfigurationDialog.fxml");
+        return getClass().getResource("/fxml/skipping/configurationDialog.fxml");
     }
 
     @Override

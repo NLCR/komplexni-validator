@@ -1,4 +1,4 @@
-package nkp.pspValidator.gui.exclusions;
+package nkp.pspValidator.gui.skipping;
 
 import nkp.pspValidator.gui.ConfigurationManager;
 import nkp.pspValidator.gui.ValidationDataManager;

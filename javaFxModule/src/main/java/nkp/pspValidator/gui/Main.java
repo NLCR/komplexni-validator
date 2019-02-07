@@ -11,7 +11,7 @@ import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import nkp.pspValidator.gui.dev.DevDialog;
-import nkp.pspValidator.gui.exclusions.ExclusionsConfigurationDialog;
+import nkp.pspValidator.gui.skipping.SkippingConfigurationDialog;
 import nkp.pspValidator.shared.Platform;
 import nkp.pspValidator.shared.Version;
 
@@ -146,8 +146,8 @@ public class Main extends Application {
         new ImageUtilsCheckDialog(dialogStage, this, closeWhenFinished, mainButtonText).show();
     }
 
-    public void showExclusionsConfigurationDialog() {
-        new ExclusionsConfigurationDialog(dialogStage, this).show();
+    public void showSkippingConfigurationDialog() {
+        new SkippingConfigurationDialog(dialogStage, this).show();
     }
 
     public void showNewPspDirValidationConfigurationDialog() {

@@ -11,9 +11,9 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 import javafx.stage.Window;
-import nkp.pspValidator.gui.exclusions.SkippedManager;
-import nkp.pspValidator.gui.exclusions.SkippedManagerImpl;
-import nkp.pspValidator.gui.exclusions.Skipped;
+import nkp.pspValidator.gui.skipping.SkippedManager;
+import nkp.pspValidator.gui.skipping.SkippedManagerImpl;
+import nkp.pspValidator.gui.skipping.Skipped;
 import nkp.pspValidator.gui.validation.*;
 import nkp.pspValidator.shared.*;
 import nkp.pspValidator.shared.engine.Level;
@@ -571,8 +571,8 @@ public class MainController extends AbstractController implements ValidationStat
         main.showImageUtilsCheckDialog(false, "OK");
     }
 
-    public void showExclusionsConfigurationDialog(ActionEvent actionEvent) {
-        main.showExclusionsConfigurationDialog();
+    public void showSkippingConfigurationDialog(ActionEvent actionEvent) {
+        main.showSkippingConfigurationDialog();
     }
 
     public void showAboutAppDialog(ActionEvent actionEvent) {

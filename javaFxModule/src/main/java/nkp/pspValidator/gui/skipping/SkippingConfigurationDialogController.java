@@ -1,4 +1,4 @@
-package nkp.pspValidator.gui.exclusions;
+package nkp.pspValidator.gui.skipping;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -19,7 +19,7 @@ import nkp.pspValidator.shared.engine.RulesSection;
 /**
  * Created by Martin Řehánek on 9.4.18.
  */
-public class ExclusionsConfigurationDialogController extends DialogController {
+public class SkippingConfigurationDialogController extends DialogController {
 
     @FXML
     VBox container;
@@ -70,7 +70,7 @@ public class ExclusionsConfigurationDialogController extends DialogController {
                         if (empty || validationSection == null) {
                             setGraphic(null);
                         } else {
-                            SectionItem item = new SectionItem(ExclusionsConfigurationDialogController.this);
+                            SectionItem item = new SectionItem(SkippingConfigurationDialogController.this);
                             item.populate(validationSection);
                             setGraphic(item.getContainer());
                         }
