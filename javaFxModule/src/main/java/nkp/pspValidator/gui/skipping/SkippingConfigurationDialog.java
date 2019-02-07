@@ -34,7 +34,7 @@ public class SkippingConfigurationDialog extends AbstractDialog {
 
     @Override
     public String getTitle() {
-        return "Vypnutí/zapnutí validací";
+        return "Přeskakování validací";
     }
 
     @Override
