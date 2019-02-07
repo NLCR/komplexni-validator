@@ -13,7 +13,7 @@ import nkp.pspValidator.shared.engine.RulesSection;
 
 import java.io.IOException;
 
-public class ExcludedSectionItem {
+public class SectionItem {
 
     @FXML
     private Node container;
@@ -29,7 +29,7 @@ public class ExcludedSectionItem {
     private final ExclusionsConfigurationDialogController controller;
 
 
-    public ExcludedSectionItem(ExclusionsConfigurationDialogController controller) {
+    public SectionItem(ExclusionsConfigurationDialogController controller) {
         this.controller = controller;
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/exclusions/excludedSectionItem.fxml"));
         fxmlLoader.setController(this);

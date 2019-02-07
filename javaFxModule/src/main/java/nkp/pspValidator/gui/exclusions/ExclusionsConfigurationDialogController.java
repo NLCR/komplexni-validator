@@ -70,7 +70,7 @@ public class ExclusionsConfigurationDialogController extends DialogController {
                         if (empty || validationSection == null) {
                             setGraphic(null);
                         } else {
-                            ExcludedSectionItem item = new ExcludedSectionItem(ExclusionsConfigurationDialogController.this);
+                            SectionItem item = new SectionItem(ExclusionsConfigurationDialogController.this);
                             item.populate(validationSection);
                             setGraphic(item.getContainer());
                         }
