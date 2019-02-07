@@ -19,18 +19,18 @@ public class ExclusionsConfigurationDialog extends AbstractDialog {
 
     @Override
     public URL getFxmlResource() {
-        // TODO: 2019-02-07 rename ("exclusion" is deprecated terminology, now using "skippe"
+        // TODO: 2019-02-07 rename ("exclusion" is deprecated terminology, now using "skipped"
         return getClass().getResource("/fxml/exclusions/exclusionsConfigurationDialog.fxml");
     }
 
     @Override
     public int getWidth() {
-        return 1400;
+        return 1200;
     }
 
     @Override
     public int getHeight() {
-        return 800;
+        return 850;
     }
 
     @Override

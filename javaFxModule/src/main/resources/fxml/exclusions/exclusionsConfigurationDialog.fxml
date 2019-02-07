@@ -4,6 +4,7 @@
 <?import javafx.scene.control.TabPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.control.Label?>
 <VBox xmlns:fx="http://javafx.com/fxml"
       stylesheets="/css/exclusions/exclusionsConfigurationDialog.css"
       fx:controller="nkp.pspValidator.gui.exclusions.ExclusionsConfigurationDialogController"
@@ -16,10 +17,22 @@
         <Insets bottom="10" left="10" right="10" top="10"/>
     </padding>
 
+    <VBox>
+        <padding>
+            <Insets bottom="10" left="10" right="10" top="10"/>
+        </padding>
+        <children>
+            <Label text="Odškrtněte ty validační sekce, které chcete přeskakovat. Každá jedna verze DMF má vlastní seznam sekcí. Takže pokud třeba chcete vždy přeskočit validaci obrazových dat, odškrtněte pravidlo &quot;JPEG 2000&quot; pro všechny DMF."
+                   wrapText="true"
+                   maxWidth="1200"
+            />
+        </children>
+    </VBox>
+
     <children>
 
         <TabPane fx:id="tabPane"
-                 prefHeight="750"
+                 prefHeight="700"
         />
 
         <HBox
