@@ -12,12 +12,8 @@ import javafx.scene.layout.VBox;
 import javafx.stage.WindowEvent;
 import javafx.util.Callback;
 import nkp.pspValidator.gui.DialogController;
-import nkp.pspValidator.gui.exclusions.data.ExcludedSection;
-import nkp.pspValidator.gui.exclusions.data.ExclusionsConfiguration;
 import nkp.pspValidator.shared.Dmf;
-
-import java.util.HashMap;
-import java.util.Map;
+import nkp.pspValidator.shared.engine.RulesSection;
 
 
 /**
@@ -34,49 +30,48 @@ public class ExclusionsConfigurationDialogController extends DialogController {
     @FXML
     Button btnSave;
 
-    private ExclusionsManager exclusionsManager;
-    private Map<Dmf, ExclusionsConfiguration> configurations;
+    private SkippedManager skippedManager;
 
     @Override
     public void startNow() {
         container.prefWidthProperty().bind(stage.widthProperty());
         container.prefHeightProperty().bind(stage.heightProperty());
 
-        // TODO: 10.4.18 inicializace configurationManager muze trvat dlouho, tak to delat ve vedlejsim vlakne a pridat nejaky progressbar
-        //configurationManager = new MockConfigurationManager();
-        exclusionsManager = new ExclusionsManagerImpl(main.getConfigurationManager(), main.getValidationDataManager());
-        configurations = buildConfigMap();
+        // TODO: 10.4.18 inicializace SkippedManager muze trvat dlouho (pro kazdou DMF se inicializuje Engine a parsuji vsechny fDMF),
+        // tak to delat ve vedlejsim vlakne a pridat nejaky progressbar
+        skippedManager = new SkippedManagerImpl(main.getConfigurationManager(), main.getValidationDataManager());
 
-        for (Dmf dmf : exclusionsManager.getDmfList()) {
+        for (Dmf dmf : skippedManager.getDmfList()) {
             Tab tab = new Tab();
             tab.setText(dmf.toString());
             HBox hbox = new HBox();
-            ListView<ExcludedSection> sectionList = buildSectionList(dmf, configurations.get(dmf));
+            ListView<RulesSection> sectionList = buildSectionList(skippedManager.getSkippedForDmf(dmf));
             hbox.getChildren().add(sectionList);
             hbox.setAlignment(Pos.CENTER);
             tab.setContent(hbox);
+            tab.setClosable(false);
             tabPane.getTabs().add(tab);
             sectionList.prefWidthProperty().bind(tabPane.widthProperty());
         }
     }
 
-    private ListView<ExcludedSection> buildSectionList(Dmf dmf, ExclusionsConfiguration exclusionsConfiguration) {
-        ListView<ExcludedSection> sectionList = new ListView<>();
-        ObservableList<ExcludedSection> sectionsObservable = FXCollections.observableList(exclusionsConfiguration.getExcludedSections());
-        sectionList.setCellFactory(new Callback<ListView<ExcludedSection>, ListCell<ExcludedSection>>() {
+    private ListView<RulesSection> buildSectionList(Skipped skipped) {
+        ListView<RulesSection> sectionList = new ListView<>();
+        ObservableList<RulesSection> sectionsObservable = FXCollections.observableList(skipped.getAllSections());
+        sectionList.setCellFactory(new Callback<ListView<RulesSection>, ListCell<RulesSection>>() {
 
             @Override
-            public ListCell<ExcludedSection> call(javafx.scene.control.ListView<ExcludedSection> list) {
-                return new ListCell<ExcludedSection>() {
+            public ListCell<RulesSection> call(javafx.scene.control.ListView<RulesSection> list) {
+                return new ListCell<RulesSection>() {
 
                     @Override
-                    protected void updateItem(ExcludedSection excludedSection, boolean empty) {
-                        super.updateItem(excludedSection, empty);
-                        if (empty || excludedSection == null) {
+                    protected void updateItem(RulesSection validationSection, boolean empty) {
+                        super.updateItem(validationSection, empty);
+                        if (empty || validationSection == null) {
                             setGraphic(null);
                         } else {
                             ExcludedSectionItem item = new ExcludedSectionItem(ExclusionsConfigurationDialogController.this);
-                            item.populate(excludedSection);
+                            item.populate(validationSection);
                             setGraphic(item.getContainer());
                         }
                     }
@@ -96,14 +91,6 @@ public class ExclusionsConfigurationDialogController extends DialogController {
         return sectionList;
     }
 
-    private Map<Dmf, ExclusionsConfiguration> buildConfigMap() {
-        Map<Dmf, ExclusionsConfiguration> map = new HashMap<>();
-        for (Dmf dmf : exclusionsManager.getDmfList()) {
-            map.put(dmf, exclusionsManager.getConfiguration(dmf));
-        }
-        return map;
-    }
-
     @Override
     public EventHandler<WindowEvent> getOnCloseEventHandler() {
         return null;
@@ -118,10 +105,7 @@ public class ExclusionsConfigurationDialogController extends DialogController {
     }
 
     public void saveData(ActionEvent actionEvent) {
-        for (Dmf dmf : configurations.keySet()) {
-            exclusionsManager.setConfiguration(dmf, configurations.get(dmf));
-        }
-        exclusionsManager.save();
+        skippedManager.save();
         stage.close();
     }
 }

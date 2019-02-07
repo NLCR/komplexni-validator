@@ -1,13 +1,13 @@
 package nkp.pspValidator.gui;
 
-import nkp.pspValidator.gui.exclusions.data.ExclusionsConfiguration;
 import nkp.pspValidator.shared.Dmf;
 import nkp.pspValidator.shared.Platform;
 
 import java.io.*;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.Collections;
+import java.util.HashSet;
 import java.util.Properties;
+import java.util.Set;
 
 /**
  * Created by Martin Řehánek on 2.12.16.
@@ -24,12 +24,6 @@ public class ConfigurationManager {
     private static File CONFIG_FILE_DEV_WIN = new File("../../resources/main/dev/config-win.properties");
     private static File CONFIG_FILE_DEV_MAC = new File("../../resources/main/dev/config-mac.properties");
     private static File CONFIG_FILE_DEV_LINUX = new File("../../resources/main/dev/config-linux.properties");
-
-    private static File EXCLUSIONS_CONFIG_FILE_PRODUCTION = new File("exclusions.conf");
-    private static File EXCLUSIONS_CONFIG_FILE_DEV_WIN = new File("../../resources/main/dev/exclusions-win.conf");
-    private static File EXCLUSIONS_CONFIG_FILE_DEV_MAC = new File("../../resources/main/dev/exclusions-mac.conf");
-    private static File EXCLUSIONS_CONFIG_FILE_DEV_LINUX = new File("../../resources/main/dev/exclusions-linux.conf");
-
 
     //fdmf
     public static final String PROP_VALIDATOR_CONFIG_DIR = "validatorConfig.dir";
@@ -73,25 +67,24 @@ public class ConfigurationManager {
         return "dictionary." + dictionary + ".syncUrl";
     }
 
+    //skipped sections
+    public static final String propSkippedValidationSections(Dmf dmf) {
+        String dmfCode = dmf.getType().name() + "-" + dmf.getVersion();
+        return "skipped.validation.sections." + dmfCode;
+    }
+
     //text log verbosity
     public static final String PROP_TEXT_LOG_VERBOSITY = "text_log.verbosity";
 
     private final Platform platform;
     private final File configFile;
     private final Properties properties = new Properties();
-    private final File exclusionsConfigFile;
-    private Map<Dmf, ExclusionsConfiguration> exclusionsConfigurations = new HashMap<>();
 
     public ConfigurationManager(Platform platform) throws IOException {
         try {
             this.platform = platform;
             this.configFile = selectConfigFile();
-            this.exclusionsConfigFile = selectExclusionsConfigFile();
-
-            //System.out.println("path: " + new File(".").getAbsolutePath());
-            //System.out.println("config file: " + configFile.getAbsolutePath());
             loadProperties();
-            loadExclusionsConfigurations();
             initDefaultProperties();
         } catch (IOException e) {
             throw new IOException(new File(".").getAbsolutePath(), e);
@@ -162,66 +155,9 @@ public class ConfigurationManager {
         }
     }
 
-
-    private File selectExclusionsConfigFile() {
-        if (DEV_MODE) {
-            switch (platform.getOperatingSystem()) {
-                case LINUX:
-                    return EXCLUSIONS_CONFIG_FILE_DEV_LINUX;
-                case WINDOWS:
-                    return EXCLUSIONS_CONFIG_FILE_DEV_WIN;
-                case MAC:
-                    return EXCLUSIONS_CONFIG_FILE_DEV_MAC;
-                default:
-                    return EXCLUSIONS_CONFIG_FILE_PRODUCTION;
-            }
-        } else {
-            return EXCLUSIONS_CONFIG_FILE_PRODUCTION;
-        }
-    }
-
     private void loadProperties() throws IOException {
         if (configFile.exists()) {
             properties.load(new InputStreamReader(new FileInputStream(configFile), "UTF-8"));
-        }
-    }
-
-    private void loadExclusionsConfigurations() {
-        if (!exclusionsConfigFile.exists()) {
-            exclusionsConfigurations = new HashMap<>();
-        } else {
-            try {
-                FileInputStream fis = new FileInputStream(exclusionsConfigFile);
-                ObjectInputStream ois = new ObjectInputStream(fis);
-                exclusionsConfigurations = (HashMap) ois.readObject();
-                ois.close();
-                fis.close();
-            } catch (Exception e) {
-                exclusionsConfigFile.delete();
-                throw new RuntimeException(e);
-            }
-        }
-    }
-
-    public Map<Dmf, ExclusionsConfiguration> getExclusionsConfigurations() {
-        return exclusionsConfigurations;
-    }
-
-    public void updateExclusions(Map<Dmf, ExclusionsConfiguration> exclusionsConfigurations) {
-        this.exclusionsConfigurations = exclusionsConfigurations;
-        saveExclusionsConfiguration();
-    }
-
-    private void saveExclusionsConfiguration() {
-        try {
-            FileOutputStream fos = new FileOutputStream(exclusionsConfigFile);
-            ObjectOutputStream oos = new ObjectOutputStream(fos);
-            oos.writeObject(exclusionsConfigurations);
-            oos.close();
-            fos.close();
-            System.out.printf("Serialized HashMap data is saved in " + exclusionsConfigFile.getAbsolutePath());
-        } catch (IOException ioe) {
-            ioe.printStackTrace();
         }
     }
 
@@ -248,6 +184,33 @@ public class ConfigurationManager {
         }
     }
 
+    public String getStringOrDefault(String propertyName, String defaultValue) {
+        String stringVal = properties.getProperty(propertyName);
+        if (stringVal == null) {
+            return defaultValue;
+        } else {
+            return stringVal;
+        }
+    }
+
+    /**
+     * @param propertyName
+     * @return never null, if value is not found an empty Set<String> is returned
+     */
+    public Set<String> getStringSet(String propertyName) {
+        String stringVal = properties.getProperty(propertyName);
+        if (stringVal == null) {
+            return Collections.emptySet();
+        } else {
+            String[] items = stringVal.split(",");
+            HashSet<String> result = new HashSet<>(items.length);
+            for (String item : items) {
+                result.add(item);
+            }
+            return result;
+        }
+    }
+
     public void setInteger(String propertyName, Integer value) {
         if (value != null) {
             properties.setProperty(propertyName, value.toString());
@@ -269,12 +232,20 @@ public class ConfigurationManager {
         }
     }
 
-    public String getStringOrDefault(String propertyName, String defaultValue) {
-        String stringVal = properties.getProperty(propertyName);
-        if (stringVal == null) {
-            return defaultValue;
-        } else {
-            return stringVal;
+    public void setStringSet(String propertyName, Set<String> set) {
+        if (set != null) {
+            StringBuilder builder = new StringBuilder();
+            int counter = 0;
+            for (String item : set) {
+                builder.append(item);
+                if (counter != set.size() - 1) {
+                    builder.append(',');
+                }
+                counter++;
+            }
+            String value = builder.toString();
+            properties.setProperty(propertyName, value);
+            saveProperties();
         }
     }
 
