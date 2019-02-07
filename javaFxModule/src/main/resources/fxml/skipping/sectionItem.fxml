@@ -4,7 +4,7 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.*?>
 <AnchorPane xmlns:fx="http://javafx.com/fxml"
-            stylesheets="/css/exclusions/excludedSectionItem.css"
+            stylesheets="/css/skipping/sectionItem.css"
             fx:id="container"
             minWidth="300"
 >

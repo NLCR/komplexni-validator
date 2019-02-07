@@ -1,4 +1,4 @@
-package nkp.pspValidator.gui.exclusions;
+package nkp.pspValidator.gui.skipping;
 
 /**
  * Created by Martin Řehánek on 16.12.16.
@@ -26,12 +26,12 @@ public class SectionItem {
 
     private RulesSection section;
 
-    private final ExclusionsConfigurationDialogController controller;
+    private final SkippingConfigurationDialogController controller;
 
 
-    public SectionItem(ExclusionsConfigurationDialogController controller) {
+    public SectionItem(SkippingConfigurationDialogController controller) {
         this.controller = controller;
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/exclusions/excludedSectionItem.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/skipping/sectionItem.fxml"));
         fxmlLoader.setController(this);
         try {
             fxmlLoader.load();
