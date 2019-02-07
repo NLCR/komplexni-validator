@@ -31,7 +31,7 @@
                     <items>
                         <MenuItem text="Nástroje pro kontrolu obrázků" onAction="#showImageUtilsCheckDialog"/>
                         <MenuItem text="Vypnutí/Zapnutí validací" onAction="#showExclusionsConfigurationDialog"
-                                  disable="true"/>
+                                  disable="false"/>
                         <MenuItem text="Slovníky" onAction="#showDictionariesConfigurationDialog"
                                   disable="false"/>
                         <MenuItem text="Různé" disable="true"/>

@@ -11,6 +11,9 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 import javafx.stage.Window;
+import nkp.pspValidator.gui.exclusions.SkippedManager;
+import nkp.pspValidator.gui.exclusions.SkippedManagerImpl;
+import nkp.pspValidator.gui.exclusions.Skipped;
 import nkp.pspValidator.gui.validation.*;
 import nkp.pspValidator.shared.*;
 import nkp.pspValidator.shared.engine.Level;
@@ -22,10 +25,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintStream;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.logging.Logger;
 
 /**
@@ -104,20 +104,6 @@ public class MainController extends AbstractController implements ValidationStat
     private RuleWithState selectedRule;
     private File pspDir;
     private Dmf dmf;
-    private Skipped skipped = getSkipped();
-
-    // TODO: 2019-02-05 tuhle konfiguaci dat do GUI
-    private Skipped getSkipped() {
-        Skipped result = new Skipped();
-        if (ConfigurationManager.DEV_MODE) {
-            List<String> list = new ArrayList<>();
-            //list.add("Soubor INFO");
-            list.add("OCR ALTO");
-            list.add("JPEG 2000");
-            result.setSections(new Dmf(Dmf.Type.MONOGRAPH, "1.2"), list);
-        }
-        return result;
-    }
 
     private File logTxtFile;
     private File logXmlFile;
@@ -188,6 +174,8 @@ public class MainController extends AbstractController implements ValidationStat
 
             @Override
             protected Void call() throws Exception {
+                SkippedManager skippedManager = new SkippedManagerImpl(main.getConfigurationManager(), main.getValidationDataManager());
+
                 //System.out.println("validating " + pspDir.getAbsolutePath() + ", mon: " + focedMonographVersion + ", per: " + forcedPeriodicalVersion);
                 PrintStream out = null;
                 try {
@@ -214,7 +202,7 @@ public class MainController extends AbstractController implements ValidationStat
                     validator.run(logXmlFile, out,
                             verbosity,
                             devParams,
-                            skipped.getSections(dmf),
+                            toSetOfSkippedSectionNames(skippedManager, dmf),
                             MainController.this,
                             MainController.this);
                     //updateStatus(String.format("Validace balíku %s hotova.", pspDir.getAbsolutePath()));
@@ -245,6 +233,18 @@ public class MainController extends AbstractController implements ValidationStat
             }
         };
         new Thread(validationTask).start();
+    }
+
+    private Set<String> toSetOfSkippedSectionNames(SkippedManager skippedManager, Dmf dmf) {
+        Skipped skipped = skippedManager.getSkippedForDmf(dmf);
+        List<RulesSection> sections = skipped.getAllSections();
+        Set<String> result = new HashSet<>(sections.size());
+        for (RulesSection section : sections) {
+            if (!section.isEnabled()) {
+                result.add(section.getName());
+            }
+        }
+        return result;
     }
 
     private void updateStatusFromWorkerThread(String text, TotalState state) {

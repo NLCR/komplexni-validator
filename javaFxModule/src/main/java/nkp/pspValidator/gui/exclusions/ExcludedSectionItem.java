@@ -9,7 +9,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
-import nkp.pspValidator.gui.exclusions.data.ExcludedSection;
+import nkp.pspValidator.shared.engine.RulesSection;
 
 import java.io.IOException;
 
@@ -24,7 +24,7 @@ public class ExcludedSectionItem {
     @FXML
     private Label description;
 
-    private ExcludedSection excludedSection;
+    private RulesSection section;
 
     private final ExclusionsConfigurationDialogController controller;
 
@@ -40,31 +40,24 @@ public class ExcludedSectionItem {
         }
     }
 
-    public void populate(ExcludedSection excludedSection) {
-        this.excludedSection = excludedSection;
+    public void populate(RulesSection section) {
+        this.section = section;
         updateViews();
     }
 
     private void updateViews() {
-        name.setText(excludedSection.getName());
-        if (excludedSection.getDescription() == null) {
+        name.setText(section.getName());
+        if (section.getDescription() == null) {
             description.setVisible(false);
             description.setManaged(false);
         } else {
             description.setVisible(true);
             description.setManaged(true);
-            description.setText(excludedSection.getDescription());
+            description.setText(section.getDescription());
         }
-        switch (excludedSection.getState()) {
-            case ENABLED:
-                checkBox.setSelected(true);
-                break;
-            case DISABLED:
-                checkBox.setSelected(false);
-                break;
-        }
+        checkBox.setSelected(section.isEnabled());
         checkBox.selectedProperty().addListener((observable, oldValue, newValue) -> {
-            excludedSection.setState(newValue ? ExcludedSection.State.ENABLED : ExcludedSection.State.DISABLED);
+            section.setEnabled(newValue);
             if (oldValue != newValue) {
                 controller.notifyDataEdited();
             }
