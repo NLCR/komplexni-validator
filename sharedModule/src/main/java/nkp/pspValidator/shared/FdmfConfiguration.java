@@ -133,8 +133,7 @@ public class FdmfConfiguration {
     private void validateAndRegisterFdmfConfig(File fdmfRoot, String fileName) throws ValidatorConfigurationException {
         File configFile = new File(fdmfRoot, fileName);
         checkFileExistAndReadable(configFile);
-        //TODO: v produkci povolit validaci konfiguracniho souboru podle xsd
-        //validateConfigFile(configFile, fdmfConfigXsd);
+        validateConfigFile(configFile, fdmfConfigXsd);
         fdmfConfigFiles.add(configFile);
     }
 
@@ -145,6 +144,7 @@ public class FdmfConfiguration {
             javax.xml.validation.Validator validator = schema.newValidator();
             validator.validate(new StreamSource(configFile));
         } catch (Exception e) {
+            e.printStackTrace();
             throw new ValidatorConfigurationException("konfigurační soubor %s není validní: %s", configFile.getAbsolutePath(), e.getMessage());
         }
     }
