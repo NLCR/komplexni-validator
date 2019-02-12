@@ -1,46 +1,26 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!--TODO: FIXME-->
 <xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified"
            xmlns:xs="http://www.w3.org/2001/XMLSchema">
 
-    <xs:element name="fDMF" type="fDMFType"/>
-
-    <xs:complexType name="fDMFType">
-        <xs:sequence>
-            <xs:element type="namespacesType" name="namespaces"/>
-            <xs:choice maxOccurs="unbounded">
-                <xs:element type="pattern-defType" name="pattern-def" minOccurs="0" maxOccurs="unbounded"/>
-                <xs:element type="value-defType" name="value-def" minOccurs="0" maxOccurs="unbounded"/>
-                <xs:element type="rules-sectionType" name="rules-section" minOccurs="0" maxOccurs="unbounded"/>
-            </xs:choice>
-        </xs:sequence>
-    </xs:complexType>
+    <xs:element name="fDMF">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="description" minOccurs="0"/>
+                <xs:element name="namespaces" type="namespacesType" minOccurs="0"/>
+                <xs:choice maxOccurs="unbounded">
+                    <xs:element name="pattern-def" type="pattern-defType" minOccurs="0" maxOccurs="unbounded"/>
+                    <xs:element name="value-def" type="value-defType" minOccurs="0" maxOccurs="unbounded"/>
+                    <xs:element name="rules-section" type="rules-sectionType" minOccurs="0" maxOccurs="unbounded"/>
+                </xs:choice>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
 
     <xs:complexType name="namespacesType">
         <xs:sequence>
-            <xs:element type="xs:string" name="namespace-alto">
-                <xs:annotation>
-                    <xs:documentation>prefix alto</xs:documentation>
-                </xs:annotation>
-            </xs:element>
-            <xs:element type="xs:string" name="namespace-copyright_md">
-                <xs:annotation>
-                    <xs:documentation>prefix cmd</xs:documentation>
-                </xs:annotation>
-            </xs:element>
-            <xs:element type="xs:string" name="namespace-dublin_core">
-                <xs:annotation>
-                    <xs:documentation>prefix dc</xs:documentation>
-                </xs:annotation>
-            </xs:element>
             <xs:element type="xs:string" name="namespace-mets">
                 <xs:annotation>
                     <xs:documentation>prefix mets</xs:documentation>
-                </xs:annotation>
-            </xs:element>
-            <xs:element type="xs:string" name="namespace-mix">
-                <xs:annotation>
-                    <xs:documentation>prefix mix</xs:documentation>
                 </xs:annotation>
             </xs:element>
             <xs:element type="xs:string" name="namespace-mods">
@@ -51,6 +31,26 @@
             <xs:element type="xs:string" name="namespace-oai_dc">
                 <xs:annotation>
                     <xs:documentation>prefix oai_dc</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element type="xs:string" name="namespace-dublin_core">
+                <xs:annotation>
+                    <xs:documentation>prefix dc</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element type="xs:string" name="namespace-alto">
+                <xs:annotation>
+                    <xs:documentation>prefix alto</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element type="xs:string" name="namespace-copyright_md">
+                <xs:annotation>
+                    <xs:documentation>prefix cmd</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element type="xs:string" name="namespace-mix">
+                <xs:annotation>
+                    <xs:documentation>prefix mix</xs:documentation>
                 </xs:annotation>
             </xs:element>
             <xs:element type="xs:string" name="namespace-premis">
@@ -68,10 +68,10 @@
 
     <xs:complexType name="pattern-defType">
         <xs:sequence>
-            <xs:element type="xs:string" name="description" minOccurs="0"/>
-            <xs:element type="expressionType" name="expression" minOccurs="1" maxOccurs="unbounded"/>
+            <xs:element name="description" type="xs:string" minOccurs="0"/>
+            <xs:element name="expression" type="expressionType" minOccurs="1" maxOccurs="unbounded"/>
         </xs:sequence>
-        <xs:attribute type="xs:string" name="name"/>
+        <xs:attribute name="name" type="xs:string"/>
     </xs:complexType>
 
     <xs:complexType name="expressionType">
@@ -110,8 +110,8 @@
 
     <xs:complexType name="paramsType">
         <xs:choice maxOccurs="unbounded">
-            <xs:element type="valueType" name="value" minOccurs="0" maxOccurs="unbounded"/>
-            <xs:element type="patternType" name="pattern" minOccurs="0" maxOccurs="unbounded"/>
+            <xs:element name="value" type="valueType" minOccurs="0" maxOccurs="unbounded"/>
+            <xs:element name="pattern" type="patternType" minOccurs="0" maxOccurs="unbounded"/>
         </xs:choice>
     </xs:complexType>
 
@@ -125,10 +125,14 @@
     </xs:complexType>
 
     <xs:complexType name="patternType">
-        <xs:sequence>
-            <xs:element type="pattern-refType" name="pattern-ref"/>
-        </xs:sequence>
-        <xs:attribute type="xs:string" name="name"/>
+        <xs:choice>
+            <xs:element name="pattern-ref" type="pattern-refType"/>
+            <!--TODO: prejmenovat na pattern-def?-->
+            <!--mozna sjednotit, jakoze value-def (pojmenovana), value-ref (odkaz na pojemenovanou), value-exp (expression)
+            a stejne i s vzory-->
+            <xs:element name="expressions" type="pattern-expressionsType"/>
+        </xs:choice>
+        <xs:attribute name="name" type="xs:string" use="required"/>
     </xs:complexType>
 
     <xs:complexType name="pattern-refType">
@@ -137,6 +141,13 @@
                 <xs:attribute type="xs:string" name="name"/>
             </xs:extension>
         </xs:simpleContent>
+    </xs:complexType>
+
+    <xs:complexType name="pattern-expressionsType">
+        <xs:sequence>
+            <xs:element name="description" type="xs:string" minOccurs="0"/>
+            <xs:element name="expression" type="expressionType" minOccurs="1" maxOccurs="unbounded"/>
+        </xs:sequence>
     </xs:complexType>
 
     <xs:complexType name="rules-sectionType" mixed="true">
@@ -149,29 +160,37 @@
 
     <xs:complexType name="ruleType">
         <xs:sequence>
-            <xs:element type="xs:string" name="description"/>
-            <xs:element type="validationType" name="validation"/>
+            <xs:element name="description" type="xs:string"/>
+            <xs:element name="validation" type="validationType"/>
         </xs:sequence>
-        <xs:attribute type="xs:string" name="name"/>
+        <xs:attribute name="name" type="xs:string" use="required"/>
     </xs:complexType>
 
     <xs:complexType name="validationType">
         <xs:sequence>
-            <xs:element type="paramsType" name="params"/>
+            <xs:element name="params" type="paramsType"/>
         </xs:sequence>
-        <xs:attribute type="xs:string" name="functionName"/>
+        <xs:attribute name="functionName" type="xs:string"/>
     </xs:complexType>
 
     <xs:simpleType name="dataValueType">
         <xs:restriction base="xs:string">
+            <xs:enumeration value="BOOLEAN"/>
             <xs:enumeration value="STRING"/>
-            <xs:enumeration value="INTEGER"/>
-            <xs:enumeration value="FILE"/>
-            <xs:enumeration value="IDENTIFIER"/>
             <xs:enumeration value="STRING_LIST"/>
+            <xs:enumeration value="INTEGER"/>
             <xs:enumeration value="INTEGER_LIST"/>
+            <xs:enumeration value="FILE"/>
             <xs:enumeration value="FILE_LIST"/>
+            <xs:enumeration value="IDENTIFIER"/>
+            <xs:enumeration value="IDENTIFIER"/>
             <xs:enumeration value="IDENTIFIER_LIST"/>
+            <xs:enumeration value="IDENTIFIER_LIST_LIST"/>
+            <xs:enumeration value="LEVEL"/>
+            <!--TODO: opravdu tohle jako typy hodnot?-->
+            <xs:enumeration value="IMAGE_COPY"/>
+            <xs:enumeration value="IMAGE_UTIL"/>
+            <xs:enumeration value="ENTITY_TYPE"/>
         </xs:restriction>
     </xs:simpleType>
 
