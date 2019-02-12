@@ -1,5 +1,6 @@
 package nkp.pspValidator.shared;
 
+import com.sun.scenario.effect.impl.sw.sse.SSEBlend_SRC_OUTPeer;
 import nkp.pspValidator.shared.engine.exceptions.ValidatorConfigurationException;
 import nkp.pspValidator.shared.imageUtils.ImageCopy;
 import nkp.pspValidator.shared.imageUtils.ImageUtil;
@@ -38,7 +39,7 @@ public class FdmfConfiguration {
 
     private final File fdmfRoot;
     private final File fdmfConfigXsd;
-    private final File j2kProfileConfigXsd;
+    private final File j2kProfileXsd;
     private final File metadataProfileXsd;
 
     private final Map<String, File> providedFiles = new HashMap<>();
@@ -51,10 +52,10 @@ public class FdmfConfiguration {
     private ImageValidator imageValidator;
 
 
-    public FdmfConfiguration(File fdmfRoot, File fdmfConfigXsd, File j2kProfileConfigXsd, File metadataProfileXsd) throws ValidatorConfigurationException {
+    public FdmfConfiguration(File fdmfRoot, File fdmfConfigXsd, File j2kProfileXsd, File metadataProfileXsd) throws ValidatorConfigurationException {
         this.fdmfRoot = fdmfRoot;
         this.fdmfConfigXsd = fdmfConfigXsd;
-        this.j2kProfileConfigXsd = j2kProfileConfigXsd;
+        this.j2kProfileXsd = j2kProfileXsd;
         this.metadataProfileXsd = metadataProfileXsd;
         init();
     }
@@ -153,21 +154,20 @@ public class FdmfConfiguration {
         for (ImageCopy copy : ImageCopy.values()) {
             for (ImageUtil util : ImageUtil.values()) {
                 if (imageUtilManager.isUtilAvailable(util)) {
-                    validateAndProcessJ2kProfileConfig(fdmfRoot, imageValidator, copy, util);
+                    validateAndProcessJ2kProfile(fdmfRoot, imageValidator, copy, util);
                 }
             }
         }
     }
 
-    private void validateAndProcessJ2kProfileConfig(File fdmfRoot, ImageValidator validator, ImageCopy copy, ImageUtil util) throws ValidatorConfigurationException {
+    private void validateAndProcessJ2kProfile(File fdmfRoot, ImageValidator validator, ImageCopy copy, ImageUtil util) throws ValidatorConfigurationException {
         File rootFile = new File(fdmfRoot, J2K_PROFILES_DIR);
         checkDirExistAndReadable(rootFile);
         File copyFile = buildImageCopyDir(rootFile, copy);
         checkDirExistAndReadable(copyFile);
         File configFile = new File(copyFile, util.getProfileFileName());
         checkFileExistAndReadable(configFile);
-        //TODO: implementovat xsd, povolit validaci v produkci
-        //validateConfigFile(configFile, j2kProfileConfigXsd);
+        validateConfigFile(configFile, j2kProfileXsd);
         validator.processProfile(util, copy, configFile);
     }
 

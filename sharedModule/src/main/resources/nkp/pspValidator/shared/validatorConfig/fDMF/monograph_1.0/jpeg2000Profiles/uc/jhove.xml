@@ -1,4 +1,8 @@
-<jpeg2000profile>
+<jpeg2000profile
+        xmlns="http://www.nkp.cz/pspValidator/2.0/jpeg2000profile"
+        validatorVersion="2.0"
+        dmf="monograph_1.0"
+>
     <fromXml>
         <namespaces>
             <!--<defaultNamespace>http://hul.harvard.edu/ois/xml/ns/jhove</defaultNamespace>-->
@@ -120,7 +124,7 @@
                 </mustMatchAny>
             </rules>
         </validation>
-                
+
         <validation name="Barevná hloubka">
             <xmlDataExtraction resultType="STRING">
                 <firstNonempty>

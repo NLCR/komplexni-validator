@@ -1,4 +1,8 @@
-<jpeg2000profile>
+<jpeg2000profile
+        xmlns="http://www.nkp.cz/pspValidator/2.0/jpeg2000profile"
+        validatorVersion="2.0"
+        dmf="periodical_1.6"
+>
     <fromXml>
         <namespaces>
             <!--<defaultNamespace>http://hul.harvard.edu/ois/xml/ns/jhove</defaultNamespace>-->
@@ -117,7 +121,7 @@
                 <mustMatchAny>
                     <constant>1</constant>
                     <constant>3</constant>
-                    
+
                 </mustMatchAny>
             </rules>
         </validation>
