@@ -1,4 +1,4 @@
-<dmf>
+<fDMF>
 
     <!--TODO: opravit podle aktualni verze jazyka-->
 
@@ -36,12 +36,10 @@
 
                 <!--parametry PATTERN-->
 
-                <!--pattern definici-->
+                <!--pattern primou definici-->
                 <pattern-param name="pattern_info">
-                    <expressions>
                         <expression caseSensitive="true">info_${PSP_ID}\.xml</expression>
                         <expression>info\.xml</expression>
-                    </expressions>
                 </pattern-param>
 
                 <!--pattern odkazem-->
@@ -54,4 +52,4 @@
     </value-def>
 
 
-</dmf>
+</fDMF>

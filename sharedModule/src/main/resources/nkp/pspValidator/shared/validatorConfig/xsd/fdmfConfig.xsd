@@ -127,10 +127,7 @@
     <xs:complexType name="patternType">
         <xs:choice>
             <xs:element name="pattern-ref" type="pattern-refType"/>
-            <!--TODO: prejmenovat na pattern-def?-->
-            <!--mozna sjednotit, jakoze value-def (pojmenovana), value-ref (odkaz na pojemenovanou), value-exp (expression)
-            a stejne i s vzory-->
-            <xs:element name="expressions" type="pattern-expressionsType"/>
+            <xs:element name="expression" type="expressionType" maxOccurs="unbounded"/>
         </xs:choice>
         <xs:attribute name="name" type="xs:string" use="required"/>
     </xs:complexType>
@@ -141,13 +138,6 @@
                 <xs:attribute type="xs:string" name="name"/>
             </xs:extension>
         </xs:simpleContent>
-    </xs:complexType>
-
-    <xs:complexType name="pattern-expressionsType">
-        <xs:sequence>
-            <xs:element name="description" type="xs:string" minOccurs="0"/>
-            <xs:element name="expression" type="expressionType" minOccurs="1" maxOccurs="unbounded"/>
-        </xs:sequence>
     </xs:complexType>
 
     <xs:complexType name="rules-sectionType" mixed="true">

@@ -238,25 +238,18 @@ public class ConfigProcessor {
             String paramName = patternEl.getAttribute("name");
             //System.out.println("processing pattern param " + paramName);
             List<Element> referenceEls = XmlUtils.getChildrenElementsByName(patternEl, "pattern-ref");
-            List<Element> expressionsEls = XmlUtils.getChildrenElementsByName(patternEl, "expressions");
+            List<Element> expressionEls = XmlUtils.getChildrenElementsByName(patternEl, "expression");
             if (!referenceEls.isEmpty()) {
                 Element referenceEl = referenceEls.get(0);
                 String varName = referenceEl.getAttribute("name");
                 function.withPatternParamByReference(paramName, varName);
-            } else if (!expressionsEls.isEmpty()) {
-                Element expressionsEl = expressionsEls.get(0);
-                List<Element> expressionEls = XmlUtils.getChildrenElementsByName(expressionsEl, "expression");
+            } else if (!expressionEls.isEmpty()) {
                 PatternDefinition patternDefinition = engine.buildPatternDefinition();
                 for (Element expressionEl : expressionEls) {
                     patternDefinition.withRawExpression(toExpression(expressionEl));
                 }
-
-                //TODO: co, kdyz se uz tady bude odkazovat na promenne? Uz tady se bude vyhodnocovat, to neni dobry
                 function.withPatternParam(paramName, patternDefinition.evaluate());
             }
         }
-
     }
-
-
 }
