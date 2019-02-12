@@ -10,8 +10,8 @@
                 <xs:element name="fromXml" type="jpeg:fromXmlType"/>
                 <xs:element name="fromText" type="jpeg:fromTextType"/>
             </xs:choice>
-            <xs:attribute name="validatorVersion" type="xs:string"/>
-            <xs:attribute name="dmf" type="xs:string"/>
+            <xs:attribute name="validatorVersion" type="xs:string" use="required"/>
+            <xs:attribute name="dmf" type="xs:string" use="required"/>
         </xs:complexType>
     </xs:element>
 
