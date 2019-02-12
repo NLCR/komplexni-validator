@@ -1,4 +1,8 @@
-<jpeg2000profile>
+<jpeg2000profile
+        xmlns="http://www.nkp.cz/pspValidator/2.0/jpeg2000profile"
+        validatorVersion="2.0"
+        dmf="periodical_1.6"
+>
     <fromXml>
         <namespaces>
             <!--<defaultNamespace>http://hul.harvard.edu/ois/xml/ns/jhove</defaultNamespace>-->
@@ -137,7 +141,7 @@
             </rules>
         </validation>
 
-         <!--TODO: docasne vyple, protože neprochází obrazy s hodnotou Restricted ICC-->
+        <!--TODO: docasne vyple, protože neprochází obrazy s hodnotou Restricted ICC-->
         <!--<validation name="Color space (1)">
             <xmlDataExtraction resultType="STRING">
                 <firstNonempty>

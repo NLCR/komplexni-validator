@@ -41,7 +41,7 @@ public class FdmfRegistry {
             monographFdmfByVersion.put(version, new FdmfConfiguration(
                     fdmfDir,
                     validatorConfigManager.getFdmfConfigXsd(),
-                    validatorConfigManager.getJ2kProfileConfigXsd(),
+                    validatorConfigManager.getJ2kProfileXsd(),
                     validatorConfigManager.getMetadataProfileXsd()));
         }
     }
@@ -53,7 +53,7 @@ public class FdmfRegistry {
             periodicalFdmfByVersion.put(version, new FdmfConfiguration(
                     fdmfDir,
                     validatorConfigManager.getFdmfConfigXsd(),
-                    validatorConfigManager.getJ2kProfileConfigXsd(),
+                    validatorConfigManager.getJ2kProfileXsd(),
                     validatorConfigManager.getMetadataProfileXsd()));
         }
     }

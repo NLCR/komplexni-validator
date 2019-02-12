@@ -1,4 +1,8 @@
-<jpeg2000profile>
+<jpeg2000profile
+        xmlns="http://www.nkp.cz/pspValidator/2.0/jpeg2000profile"
+        validatorVersion="2.0"
+        dmf="monograph_1.2"
+>
     <fromXml>
         <namespaces>
             <namespace prefix="j">http://openpreservation.org/ns/jpylyzer/</namespace>
@@ -112,7 +116,7 @@
                 <mustMatchAny>
                     <constant>1</constant>
                     <constant>3</constant>
-                    
+
                 </mustMatchAny>
             </rules>
         </validation>

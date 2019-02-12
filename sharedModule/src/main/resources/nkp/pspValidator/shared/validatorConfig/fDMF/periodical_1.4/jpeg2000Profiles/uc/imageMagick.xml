@@ -1,4 +1,8 @@
-<jpeg2000profile>
+<jpeg2000profile
+        xmlns="http://www.nkp.cz/pspValidator/2.0/jpeg2000profile"
+        validatorVersion="2.0"
+        dmf="periodical_1.4"
+>
     <fromText>
 
         <validation name="no_errors">
