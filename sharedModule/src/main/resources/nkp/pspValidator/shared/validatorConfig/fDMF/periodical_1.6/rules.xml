@@ -1,5 +1,7 @@
-<fDMF xmlns="http://www.nkp.cz/pspValidator/2.0/fdmfConfig">
-
+<fDMF xmlns="http://www.nkp.cz/pspValidator/2.0/fdmfConfig"
+      validatorVersion="2.0"
+      dmf="periodical_1.6"
+>
     <description>
         Zde jsou definovány validační pravidla. K samotným validacím se používají validační funkce, jejichž parametry
         jsou definované proměnné, vzory a konstanty.

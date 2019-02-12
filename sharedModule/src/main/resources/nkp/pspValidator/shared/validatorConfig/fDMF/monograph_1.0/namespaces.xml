@@ -1,4 +1,7 @@
-<fDMF xmlns="http://www.nkp.cz/pspValidator/2.0/fdmfConfig">
+<fDMF xmlns="http://www.nkp.cz/pspValidator/2.0/fdmfConfig"
+      validatorVersion="2.0"
+      dmf="monograph_1.0"
+>
     <namespaces>
         <!--Zde jsou definovány jednotlivé jmenné prostory pro různé formáty. Uvedené prefixy musí být použity ve všech pravidlech. -->
 

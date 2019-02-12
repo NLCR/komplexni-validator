@@ -1,5 +1,7 @@
-<fDMF xmlns="http://www.nkp.cz/pspValidator/2.0/fdmfConfig">
-
+<fDMF xmlns="http://www.nkp.cz/pspValidator/2.0/fdmfConfig"
+      validatorVersion="2.0"
+      dmf="periodical_1.6"
+>
     <description>
         Zde jsou definovány vzory. K jejich vyhodnocení jsou použity reguární výrazy a případně proměnné.
         Vzory je možné dynamicky doplňovat/upravovat.

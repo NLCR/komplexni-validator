@@ -1,4 +1,7 @@
-<fDMF xmlns="http://www.nkp.cz/pspValidator/2.0/fdmfConfig">
+<fDMF xmlns="http://www.nkp.cz/pspValidator/2.0/fdmfConfig"
+      validatorVersion="2.0"
+      dmf="periodical_1.4"
+>
 
     <description>
         Zde jsou definovány proměnné. K jejich vyhodnocení jsou použity funkce, další proměnné, vzory a
