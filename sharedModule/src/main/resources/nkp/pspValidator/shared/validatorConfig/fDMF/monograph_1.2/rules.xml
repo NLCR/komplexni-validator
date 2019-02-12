@@ -22,9 +22,7 @@
                         <value-ref name="PSP_DIR"/>
                     </value>
                     <pattern name="pattern">
-                        <expressions>
-                            <expression caseSensitive="true">${PSP_ID}</expression>
-                        </expressions>
+                        <expression caseSensitive="true">${PSP_ID}</expression>
                     </pattern>
                 </params>
             </validation>
@@ -1926,7 +1924,8 @@
         </rule>
 
         <rule name="MODS_IDENTIFIERS_URN_NBN_VALID">
-            <description>Všechny identifikátory URN:NBN napříč MODS záznamy musí platnou podobu (např. urn:nbn:cz:abd005-00012z).
+            <description>Všechny identifikátory URN:NBN napříč MODS záznamy musí platnou podobu (např.
+                urn:nbn:cz:abd005-00012z).
             </description>
             <validation functionName="checkUrnNbnIdentifiersValid">
                 <params>
@@ -1965,7 +1964,8 @@
         </rule>
 
         <rule name="MODS_IDENTIFIERS_URN_NBN_REGISTERED">
-            <description>Všechny identifikátory URN:NBN napříč MODS záznamy musí registrovány v URN:NBN Resolveru NKP.</description>
+            <description>Všechny identifikátory URN:NBN napříč MODS záznamy musí registrovány v URN:NBN Resolveru NKP.
+            </description>
             <validation functionName="checkUrnNbnIdentifiersRegistered">
                 <params>
                     <value name="identifier_list" type="IDENTIFIER_LIST">
