@@ -1,4 +1,4 @@
-<fDMF>
+<fDMF xmlns="http://www.nkp.cz/pspValidator/2.0/fdmfConfig">
     <namespaces>
         <!--Zde jsou definovány jednotlivé jmenné prostory pro různé formáty. Uvedené prefixy musí být použity ve všech pravidlech. -->
 

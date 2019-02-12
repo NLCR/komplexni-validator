@@ -1,13 +1,4 @@
-<fDMF>
-
-    <!--TODO: opravit podle aktualni verze jazyka-->
-
-    <!--prima definice - pouze String, Integer-->
-
-    <value-def name="int1" type="INTEGER">3</value-def>
-
-    <value-def name="string1" type="STRING">5</value-def>
-
+<fDMF xmlns="http://www.nkp.cz/pspValidator/2.0/fdmfConfig">
 
     <value-def name="NECO" type="FILE_LIST">
         <evaluation functionName="EVALUATE_NECO">
@@ -16,36 +7,36 @@
                 <!--parametry VALUE-->
 
                 <!--hodnota konstantou - omezeno na String, Integer-->
-                <value-param name="day" type="STRING">Monday</value-param>
-                <value-param name="days" type="INTEGER">7</value-param>
+                <value name="day" type="STRING">Monday</value>
+                <value name="days" type="INTEGER">7</value>
 
                 <!--hodnota odkazem na promennou-->
-                <value-param name="dir" type="FILE">
+                <value name="dir" type="FILE">
                     <value-ref name="PSP_DIR"/>
-                </value-param>
+                </value>
 
                 <!--hodnota primou definici-->
-                <value-param name="psp_dir" type="FILE">
+                <value name="psp_dir" type="FILE">
                     <evaluation functionName="getProvidedFile">
                         <!--tj. musi byt dodano pres GUI nebo CLI-->
                         <params>
-                            <value-param name="file_id" type="STRING">PSP_DIR</value-param>
+                            <value name="file_id" type="STRING">PSP_DIR</value>
                         </params>
                     </evaluation>
-                </value-param>
+                </value>
 
                 <!--parametry PATTERN-->
 
                 <!--pattern primou definici-->
-                <pattern-param name="pattern_info">
-                        <expression caseSensitive="true">info_${PSP_ID}\.xml</expression>
-                        <expression>info\.xml</expression>
-                </pattern-param>
+                <pattern name="pattern_info">
+                    <expression caseSensitive="true">info_${PSP_ID}\.xml</expression>
+                    <expression>info\.xml</expression>
+                </pattern>
 
                 <!--pattern odkazem-->
-                <pattern-param name="pattern_checksum">
+                <pattern name="pattern_checksum">
                     <pattern-ref name="CHECKSUM_FILENAME"/>
-                </pattern-param>
+                </pattern>
 
             </params>
         </evaluation>
