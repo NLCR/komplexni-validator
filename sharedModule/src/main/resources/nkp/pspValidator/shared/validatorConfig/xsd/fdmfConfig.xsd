@@ -1,16 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified"
+           targetNamespace="http://www.nkp.cz/pspValidator/2.0/fdmfConfig"
+           xmlns:dmf="http://www.nkp.cz/pspValidator/2.0/fdmfConfig"
            xmlns:xs="http://www.w3.org/2001/XMLSchema">
 
     <xs:element name="fDMF">
         <xs:complexType>
             <xs:sequence>
                 <xs:element name="description" minOccurs="0"/>
-                <xs:element name="namespaces" type="namespacesType" minOccurs="0"/>
+                <xs:element name="namespaces" type="dmf:namespacesType" minOccurs="0"/>
                 <xs:choice maxOccurs="unbounded">
-                    <xs:element name="pattern-def" type="pattern-defType" minOccurs="0" maxOccurs="unbounded"/>
-                    <xs:element name="value-def" type="value-defType" minOccurs="0" maxOccurs="unbounded"/>
-                    <xs:element name="rules-section" type="rules-sectionType" minOccurs="0" maxOccurs="unbounded"/>
+                    <xs:element name="pattern-def" type="dmf:pattern-defType" minOccurs="0" maxOccurs="unbounded"/>
+                    <xs:element name="value-def" type="dmf:value-defType" minOccurs="0" maxOccurs="unbounded"/>
+                    <xs:element name="rules-section" type="dmf:rules-sectionType" minOccurs="0" maxOccurs="unbounded"/>
                 </xs:choice>
             </xs:sequence>
         </xs:complexType>
@@ -18,47 +20,47 @@
 
     <xs:complexType name="namespacesType">
         <xs:sequence>
-            <xs:element type="xs:string" name="namespace-mets">
+            <xs:element name="namespace-mets" type="xs:string">
                 <xs:annotation>
                     <xs:documentation>prefix mets</xs:documentation>
                 </xs:annotation>
             </xs:element>
-            <xs:element type="xs:string" name="namespace-mods">
+            <xs:element name="namespace-mods" type="xs:string">
                 <xs:annotation>
                     <xs:documentation>prefix mods</xs:documentation>
                 </xs:annotation>
             </xs:element>
-            <xs:element type="xs:string" name="namespace-oai_dc">
+            <xs:element name="namespace-oai_dc" type="xs:string">
                 <xs:annotation>
                     <xs:documentation>prefix oai_dc</xs:documentation>
                 </xs:annotation>
             </xs:element>
-            <xs:element type="xs:string" name="namespace-dublin_core">
+            <xs:element name="namespace-dublin_core" type="xs:string">
                 <xs:annotation>
                     <xs:documentation>prefix dc</xs:documentation>
                 </xs:annotation>
             </xs:element>
-            <xs:element type="xs:string" name="namespace-alto">
+            <xs:element name="namespace-alto" type="xs:string">
                 <xs:annotation>
                     <xs:documentation>prefix alto</xs:documentation>
                 </xs:annotation>
             </xs:element>
-            <xs:element type="xs:string" name="namespace-copyright_md">
+            <xs:element name="namespace-copyright_md" type="xs:string">
                 <xs:annotation>
                     <xs:documentation>prefix cmd</xs:documentation>
                 </xs:annotation>
             </xs:element>
-            <xs:element type="xs:string" name="namespace-mix">
+            <xs:element name="namespace-mix" type="xs:string">
                 <xs:annotation>
                     <xs:documentation>prefix mix</xs:documentation>
                 </xs:annotation>
             </xs:element>
-            <xs:element type="xs:string" name="namespace-premis">
+            <xs:element name="namespace-premis" type="xs:string">
                 <xs:annotation>
                     <xs:documentation>prefix premis</xs:documentation>
                 </xs:annotation>
             </xs:element>
-            <xs:element type="xs:string" name="namespace-xlink">
+            <xs:element name="namespace-xlink" type="xs:string">
                 <xs:annotation>
                     <xs:documentation>prefix xlink</xs:documentation>
                 </xs:annotation>
@@ -69,7 +71,7 @@
     <xs:complexType name="pattern-defType">
         <xs:sequence>
             <xs:element name="description" type="xs:string" minOccurs="0"/>
-            <xs:element name="expression" type="expressionType" minOccurs="1" maxOccurs="unbounded"/>
+            <xs:element name="expression" type="dmf:expressionType" minOccurs="1" maxOccurs="unbounded"/>
         </xs:sequence>
         <xs:attribute name="name" type="xs:string"/>
     </xs:complexType>
@@ -77,57 +79,57 @@
     <xs:complexType name="expressionType">
         <xs:simpleContent>
             <xs:extension base="xs:string">
-                <xs:attribute type="xs:string" name="caseSensitive" use="optional"/>
+                <xs:attribute name="caseSensitive" type="xs:string" use="optional"/>
             </xs:extension>
         </xs:simpleContent>
     </xs:complexType>
 
     <xs:complexType name="value-defType">
         <xs:sequence>
-            <xs:element type="xs:string" name="description" minOccurs="0"/>
-            <xs:element type="value-refType" name="value-ref" minOccurs="0"/>
-            <xs:element type="evaluationType" name="evaluation" minOccurs="0"/>
+            <xs:element name="description" type="xs:string" minOccurs="0"/>
+            <xs:element name="value-ref" type="dmf:value-refType" minOccurs="0"/>
+            <xs:element name="evaluation" type="dmf:evaluationType" minOccurs="0"/>
         </xs:sequence>
-        <xs:attribute type="xs:string" name="name"/>
+        <xs:attribute name="name" type="xs:string"/>
         <!--TODO: omezity typy-->
-        <xs:attribute type="dataValueType" name="type"/>
+        <xs:attribute name="type" type="dmf:dataValueType"/>
     </xs:complexType>
 
     <xs:complexType name="value-refType">
         <xs:simpleContent>
             <xs:extension base="xs:string">
-                <xs:attribute type="xs:string" name="name"/>
+                <xs:attribute name="name" type="xs:string"/>
             </xs:extension>
         </xs:simpleContent>
     </xs:complexType>
 
     <xs:complexType name="evaluationType">
         <xs:sequence>
-            <xs:element type="paramsType" name="params"/>
+            <xs:element name="params" type="dmf:paramsType"/>
         </xs:sequence>
-        <xs:attribute type="xs:string" name="functionName"/>
+        <xs:attribute name="functionName" type="xs:string"/>
     </xs:complexType>
 
     <xs:complexType name="paramsType">
         <xs:choice maxOccurs="unbounded">
-            <xs:element name="value" type="valueType" minOccurs="0" maxOccurs="unbounded"/>
-            <xs:element name="pattern" type="patternType" minOccurs="0" maxOccurs="unbounded"/>
+            <xs:element name="value" type="dmf:valueType" minOccurs="0" maxOccurs="unbounded"/>
+            <xs:element name="pattern" type="dmf:patternType" minOccurs="0" maxOccurs="unbounded"/>
         </xs:choice>
     </xs:complexType>
 
     <xs:complexType name="valueType" mixed="true">
         <xs:sequence>
-            <xs:element type="value-refType" name="value-ref" minOccurs="0"/>
-            <xs:element type="evaluationType" name="evaluation" minOccurs="0"/>
+            <xs:element name="value-ref" type="dmf:value-refType" minOccurs="0"/>
+            <xs:element name="evaluation" type="dmf:evaluationType" minOccurs="0"/>
         </xs:sequence>
-        <xs:attribute type="xs:string" name="name"/>
-        <xs:attribute type="dataValueType" name="type"/>
+        <xs:attribute name="name" type="xs:string"/>
+        <xs:attribute name="type" type="dmf:dataValueType"/>
     </xs:complexType>
 
     <xs:complexType name="patternType">
         <xs:choice>
-            <xs:element name="pattern-ref" type="pattern-refType"/>
-            <xs:element name="expression" type="expressionType" maxOccurs="unbounded"/>
+            <xs:element name="pattern-ref" type="dmf:pattern-refType"/>
+            <xs:element name="expression" type="dmf:expressionType" maxOccurs="unbounded"/>
         </xs:choice>
         <xs:attribute name="name" type="xs:string" use="required"/>
     </xs:complexType>
@@ -135,30 +137,30 @@
     <xs:complexType name="pattern-refType">
         <xs:simpleContent>
             <xs:extension base="xs:string">
-                <xs:attribute type="xs:string" name="name"/>
+                <xs:attribute name="name" type="xs:string"/>
             </xs:extension>
         </xs:simpleContent>
     </xs:complexType>
 
     <xs:complexType name="rules-sectionType" mixed="true">
         <xs:sequence>
-            <xs:element type="ruleType" name="rule" minOccurs="0" maxOccurs="unbounded"/>
+            <xs:element name="rule" type="dmf:ruleType" minOccurs="0" maxOccurs="unbounded"/>
         </xs:sequence>
-        <xs:attribute type="xs:string" name="name"/>
-        <xs:attribute type="xs:string" name="description" use="optional"/>
+        <xs:attribute name="name" type="xs:string"/>
+        <xs:attribute name="description" type="xs:string" use="optional"/>
     </xs:complexType>
 
     <xs:complexType name="ruleType">
         <xs:sequence>
             <xs:element name="description" type="xs:string"/>
-            <xs:element name="validation" type="validationType"/>
+            <xs:element name="validation" type="dmf:validationType"/>
         </xs:sequence>
         <xs:attribute name="name" type="xs:string" use="required"/>
     </xs:complexType>
 
     <xs:complexType name="validationType">
         <xs:sequence>
-            <xs:element name="params" type="paramsType"/>
+            <xs:element name="params" type="dmf:paramsType"/>
         </xs:sequence>
         <xs:attribute name="functionName" type="xs:string"/>
     </xs:complexType>
