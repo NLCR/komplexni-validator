@@ -102,25 +102,21 @@
                     <element name="mods:role" mandatory="false">
                         <expectedElements>
                             <element name="mods:roleTerm" mandatory="false">
-                                <!--Kontrolovany slovnik je jen doporucovan-->
                                 <expectedAttributes>
                                     <attribute name="type">
                                         <expectedContent>
                                             <value>code</value>
                                         </expectedContent>
                                     </attribute>
-
-                                    <attribute name="authority">
-                                        <expectedContent>
-                                            <!--hodnota 'marcrelator' jen pro doporucovany slovnik-->
-                                            <!--<value>marcrelator</value>-->
-                                        </expectedContent>
+                                    <attribute name="authority" mandatory="false">
+                                        <recommendedContent>
+                                            <value>marcrelator</value>
+                                        </recommendedContent>
                                     </attribute>
                                 </expectedAttributes>
-                                <expectedContent>
-                                    <!--slovnik macrelator je jen doporuceny-->
-                                    <!--<fromDictionary name="marcRelatorCodes"/>-->
-                                </expectedContent>
+                                <recommendedContent>
+                                    <fromDictionary name="marcRelatorCodes"/>
+                                </recommendedContent>
                             </element>
                         </expectedElements>
                     </element>

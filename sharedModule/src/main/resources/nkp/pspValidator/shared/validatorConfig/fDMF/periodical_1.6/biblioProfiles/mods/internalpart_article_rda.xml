@@ -94,24 +94,21 @@
                     <element name="mods:role" mandatory="false">
                         <expectedElements>
                             <element name="mods:roleTerm" mandatory="false">
-                                <!--"nutno použít kontrol. slovník, např. z MARC21" - kvůli slovu "např." tam může být cokoliv-->
                                 <expectedAttributes>
                                     <attribute name="type">
                                         <expectedContent>
                                             <value>code</value>
                                         </expectedContent>
                                     </attribute>
-
-                                    <attribute name="authority">
-                                        <expectedContent>
-                                            <!--hodnota marcrelator jen pro doporuceny slovnik kodu roli z marc21-->
-                                            <!--<value>marcrelator</value>-->
-                                        </expectedContent>
+                                    <attribute name="authority" mandatory="false">
+                                        <recommendedContent>
+                                            <value>marcrelator</value>
+                                        </recommendedContent>
                                     </attribute>
                                 </expectedAttributes>
-                                <expectedContent>
-                                    <!--<fromDictionary name="marcRelatorCodes"/>-->
-                                </expectedContent>
+                                <recommendedContent>
+                                    <fromDictionary name="marcRelatorCodes"/>
+                                </recommendedContent>
                             </element>
                         </expectedElements>
                     </element>

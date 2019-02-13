@@ -23,7 +23,7 @@ public class ContentDefinitionValue implements ContentDefinition {
             return new CheckingResultFail() {
                 @Override
                 public String getErrorMessage() {
-                    return String.format("hodnota '%s' neodpovídá očekávané hodnotě '%s'", valueFound, valueExpected);
+                    return String.format("hodnota '%s' neodpovídá očekávané/doporučené hodnotě '%s'", valueFound, valueExpected);
                 }
             };
         } else { //value same

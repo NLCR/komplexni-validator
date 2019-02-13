@@ -97,16 +97,15 @@
                                             <value>code</value>
                                         </expectedContent>
                                     </attribute>
-
                                     <attribute name="authority">
-                                        <expectedContent>
+                                        <recommendedContent>
                                             <value>marcrelator</value>
-                                        </expectedContent>
+                                        </recommendedContent>
                                     </attribute>
                                 </expectedAttributes>
-                                <expectedContent>
+                                <recommendedContent>
                                     <fromDictionary name="marcRelatorCodes"/>
-                                </expectedContent>
+                                </recommendedContent>
                             </element>
                         </expectedElements>
                     </element>
