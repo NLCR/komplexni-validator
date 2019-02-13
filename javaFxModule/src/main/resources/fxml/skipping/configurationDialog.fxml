@@ -5,6 +5,9 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.control.ProgressBar?>
+<?import javafx.scene.control.ProgressIndicator?>
 <VBox xmlns:fx="http://javafx.com/fxml"
       stylesheets="/css/skipping/configurationDialog.css"
       fx:controller="nkp.pspValidator.gui.skipping.SkippingConfigurationDialogController"
@@ -31,9 +34,13 @@
 
     <children>
 
-        <TabPane fx:id="tabPane"
-                 prefHeight="700"
-        />
+        <StackPane prefHeight="700">
+            <ProgressIndicator fx:id="progressIndicator"
+                               prefHeight="100" prefWidth="100"
+                               maxHeight="100" maxWidth="100"/>
+
+            <TabPane fx:id="tabPane"/>
+        </StackPane>
 
         <HBox
                 alignment="BOTTOM_CENTER" spacing="10">
