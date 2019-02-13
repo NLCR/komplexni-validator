@@ -30,7 +30,7 @@ public class MetadataProfileParser {
         MetadataProfile metadataProfile = new MetadataProfile();
         XMLTag doc = XMLDoc.from(profileXmlFile, true); //ignoring namespaces
         metadataProfile.setDmf(doc.getAttribute("dmf"));
-
+        metadataProfile.setValidatorVersion(doc.getAttribute("validatorVersion"));
         checkValidatorVersionCorrect(metadataProfile.getValidatorVersion(), profileXmlFile);
         //TODO: podobne testovat dmf
 
