@@ -1,7 +1,9 @@
 package nkp.pspValidator.gui.skipping;
 
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -25,6 +27,9 @@ public class SkippingConfigurationDialogController extends DialogController {
     VBox container;
 
     @FXML
+    ProgressIndicator progressIndicator;
+
+    @FXML
     TabPane tabPane;
 
     @FXML
@@ -37,22 +42,31 @@ public class SkippingConfigurationDialogController extends DialogController {
         container.prefWidthProperty().bind(stage.widthProperty());
         container.prefHeightProperty().bind(stage.heightProperty());
 
-        // TODO: 10.4.18 inicializace SkippedManager muze trvat dlouho (pro kazdou DMF se inicializuje Engine a parsuji vsechny fDMF),
-        // tak to delat ve vedlejsim vlakne a pridat nejaky progressbar
-        skippedManager = new SkippedManagerImpl(main.getConfigurationManager(), main.getValidationDataManager());
+        new Thread(new Task<Void>() {
 
-        for (Dmf dmf : skippedManager.getDmfList()) {
-            Tab tab = new Tab();
-            tab.setText(dmf.toString());
-            HBox hbox = new HBox();
-            ListView<RulesSection> sectionList = buildSectionList(skippedManager.getSkippedForDmf(dmf));
-            hbox.getChildren().add(sectionList);
-            hbox.setAlignment(Pos.CENTER);
-            tab.setContent(hbox);
-            tab.setClosable(false);
-            tabPane.getTabs().add(tab);
-            sectionList.prefWidthProperty().bind(tabPane.widthProperty());
-        }
+            @Override
+            protected Void call() {
+
+                skippedManager = new SkippedManagerImpl(main.getConfigurationManager(), main.getValidationDataManager());
+
+                Platform.runLater(() -> {
+                    progressIndicator.setVisible(false);
+                    for (Dmf dmf : skippedManager.getDmfList()) {
+                        Tab tab = new Tab();
+                        tab.setText(dmf.toString());
+                        HBox hbox = new HBox();
+                        ListView<RulesSection> sectionList = buildSectionList(skippedManager.getSkippedForDmf(dmf));
+                        hbox.getChildren().add(sectionList);
+                        hbox.setAlignment(Pos.CENTER);
+                        tab.setContent(hbox);
+                        tab.setClosable(false);
+                        tabPane.getTabs().add(tab);
+                        sectionList.prefWidthProperty().bind(tabPane.widthProperty());
+                    }
+                });
+                return null;
+            }
+        }).start();
     }
 
     private ListView<RulesSection> buildSectionList(Skipped skipped) {
