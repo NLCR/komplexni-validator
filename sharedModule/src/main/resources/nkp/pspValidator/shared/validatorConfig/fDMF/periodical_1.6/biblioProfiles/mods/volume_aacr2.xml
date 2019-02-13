@@ -52,7 +52,7 @@
                                 <!--Neni tohle preklep? jinych verzich je tady "conference", proc je tady prave ta jedna hodnota cesky?
                                 Kazdopadne preklep, nebo ne, jednou je to ve standardu, tak to plati.-->
                                 <value>konference</value>
-				<value>conference</value>
+                                <value>conference</value>
                                 <value>family</value>
                             </oneOf>
                         </expectedContent>
@@ -85,18 +85,15 @@
                                             <value>code</value>
                                         </expectedContent>
                                     </attribute>
-
-                                    <attribute name="authority">
-                                        <expectedContent>
-                                            <!--hodnota 'marcrelator' jen pro doporucovany slovnik-->
-                                            <!--<value>marcrelator</value>-->
-                                        </expectedContent>
+                                    <attribute name="authority" mandatory="false">
+                                        <recommendedContent>
+                                            <value>marcrelator</value>
+                                        </recommendedContent>
                                     </attribute>
                                 </expectedAttributes>
-                                <expectedContent>
-                                    <!--slovnik macrelator je jen doporucovany-->
-                                    <!--<fromDictionary name="marcRelatorCodes"/>-->
-                                </expectedContent>
+                                <recommendedContent>
+                                    <fromDictionary name="marcRelatorCodes"/>
+                                </recommendedContent>
                             </element>
                         </expectedElements>
                     </element>

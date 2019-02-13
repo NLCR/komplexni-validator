@@ -20,6 +20,8 @@
     </namespaces>
 
     <rootElement name="mods:mods">
+        <!--todo: tolerated attributes pro xmlns, xsi:schemaLocation, version, xmlns:xlink apod, vlastne xmlns:whatever-->
+
         <expectedAttributes>
             <attribute name="ID">
                 <expectedContent>

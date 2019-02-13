@@ -82,7 +82,7 @@
                                 <!--Neni tohle preklep? jinych verzich je tady "conference", proc je tady prave ta jedna hodnota cesky?
                                 Kazdopadne preklep, nebo ne, jednou je to ve standardu, tak to plati.-->
                                 <value>konference</value>
-				<value>conference</value>
+                                <value>conference</value>
                                 <value>family</value>
                             </oneOf>
                         </expectedContent>
@@ -120,16 +120,15 @@
                                             <value>code</value>
                                         </expectedContent>
                                     </attribute>
-
-                                    <attribute name="authority">
-                                        <expectedContent>
+                                    <attribute name="authority" mandatory="false">
+                                        <recommendedContent>
                                             <value>marcrelator</value>
-                                        </expectedContent>
+                                        </recommendedContent>
                                     </attribute>
                                 </expectedAttributes>
-                                <expectedContent>
+                                <recommendedContent>
                                     <fromDictionary name="marcRelatorCodes"/>
-                                </expectedContent>
+                                </recommendedContent>
                             </element>
                         </expectedElements>
                     </element>
@@ -683,16 +682,15 @@
                                                     <value>code</value>
                                                 </expectedContent>
                                             </attribute>
-
-                                            <attribute name="authority">
-                                                <expectedContent>
+                                            <attribute name="authority" mandatory="false">
+                                                <recommendedContent>
                                                     <value>marcrelator</value>
-                                                </expectedContent>
+                                                </recommendedContent>
                                             </attribute>
                                         </expectedAttributes>
-                                        <expectedContent>
+                                        <recommendedContent>
                                             <fromDictionary name="marcRelatorCodes"/>
-                                        </expectedContent>
+                                        </recommendedContent>
                                     </element>
                                 </expectedElements>
                             </element>
@@ -704,13 +702,13 @@
             <element name="mods:classification" specification="not(@edition)" mandatory="false">
                 <!--Mezinarodni desetinne trideni-->
                 <expectedAttributes>
-		    <!--NOTE: z DMF není úplně zřjmé co platí pro rda a aacr2, povolena hodnota Konspekt, aby při validaci prošel element s touto hodnotou i když nemá atribut edition-->
+                    <!--NOTE: z DMF není úplně zřjmé co platí pro rda a aacr2, povolena hodnota Konspekt, aby při validaci prošel element s touto hodnotou i když nemá atribut edition-->
                     <attribute name="authority">
                         <recommendedContent>
-			    <oneOf>
-                               <value>udc</value>
-			       <value>Konspekt</value>
-			    </oneOf>
+                            <oneOf>
+                                <value>udc</value>
+                                <value>Konspekt</value>
+                            </oneOf>
                         </recommendedContent>
                     </attribute>
                 </expectedAttributes>
@@ -836,15 +834,15 @@
                     </element>
 
                     <element name="mods:recordChangeDate" mandatory="false">
-			<!--V DMF 1.6 není atribut encoding definován, ale logicky by měl být stejný zápis jako u recordCreationDate, atribut povolen
- 			ale nepovinný, protože ve specifikaci není-->
-			<expectedAttributes>
+                        <!--V DMF 1.6 není atribut encoding definován, ale logicky by měl být stejný zápis jako u recordCreationDate, atribut povolen
+                         ale nepovinný, protože ve specifikaci není-->
+                        <expectedAttributes>
                             <attribute name="encoding" mandatory="false">
                                 <expectedContent>
                                     <value>iso8601</value>
                                 </expectedContent>
                             </attribute>
-			</expectedAttributes>
+                        </expectedAttributes>
                         <expectedContent/>
                     </element>
 
