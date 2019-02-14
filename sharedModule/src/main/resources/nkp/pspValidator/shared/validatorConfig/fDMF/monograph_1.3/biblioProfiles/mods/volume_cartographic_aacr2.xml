@@ -124,7 +124,13 @@
                         <expectedContent/>
                     </element>
 
-                    <element name="mods:role">
+                    <element name="mods:nameIdentifier" mandatory="false">
+                        <expectedContent/>
+                    </element>
+
+                    <element name="mods:etal" mandatory="false"/>
+
+                    <element name="mods:role" mandatory="false">
                         <expectedElements>
                             <element name="mods:roleTerm">
                                 <expectedAttributes>
@@ -252,13 +258,14 @@
                     <element name="mods:form">
                         <expectedAttributes>
                             <attribute name="authority" mandatory="false">
-                                <!--neni jasne, jestli tohle ma byt povinne - je tam M/MA-->
-                                <recommendedContent>
+                                <expectedContent>
                                     <oneOf>
                                         <value>marcform</value>
+                                        <value>marccategory</value>
+                                        <value>marcsmd</value>
                                         <value>gmd</value>
                                     </oneOf>
-                                </recommendedContent>
+                                </expectedContent>
                             </attribute>
 
                             <attribute name="type" mandatory="false"/>
@@ -292,6 +299,10 @@
                                 <value>czenas</value>
                                 <value>eczenas</value>
                                 <value>Konspekt</value>
+                                <value>czmesh</value>
+                                <value>mednas</value>
+                                <value>msvkth</value>
+                                <value>agrovoc</value>
                             </oneOf>
                         </recommendedContent>
                     </attribute>
@@ -395,8 +406,12 @@
 
             <element name="mods:relatedItem" mandatory="false" ignoreUnexpectedChildElements="true">
                 <expectedAttributes>
-                    <!--NOTE: DMF neuvadi, jestli je type povinny atribut, necham, ze je nepovinny-->
                     <attribute name="type" mandatory="false"/>
+                    <attribute name="otherType" mandatory="false"/>
+                    <attribute name="otherTypeURI" mandatory="false"/>
+                    <attribute name="otherTypeAuth" mandatory="false"/>
+                    <!--chyba v DMF, viz https://github.com/NLCR/Standard_NDK/issues/80-->
+                    <attribute name="otherTypeAuthURI" mandatory="false"/>
                 </expectedAttributes>
             </element>
 
@@ -572,6 +587,10 @@
                                 <value>human prepared</value>
                             </oneOf>
                         </recommendedContent>
+                    </element>
+
+                    <element name="mods:recordInfoNote" mandatory="false">
+                        <expectedContent/>
                     </element>
 
                     <element name="mods:languageOfCataloging" mandatory="false">

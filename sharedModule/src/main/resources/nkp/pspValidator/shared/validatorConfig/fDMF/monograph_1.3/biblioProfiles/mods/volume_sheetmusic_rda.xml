@@ -125,7 +125,13 @@
                         <expectedContent/>
                     </element>
 
-                    <element name="mods:role">
+                    <element name="mods:nameIdentifier" mandatory="false">
+                        <expectedContent/>
+                    </element>
+
+                    <element name="mods:etal" mandatory="false"/>
+
+                    <element name="mods:role" mandatory="false">
                         <expectedElements>
                             <element name="mods:roleTerm">
                                 <expectedAttributes>
@@ -225,7 +231,7 @@
                 </expectedElements>
             </element>
 
-            <element name="mods:originInfo" specification="@eventType='publication'">
+            <element name="mods:originInfo" specification="@eventType='publication'" mandatory="false">
                 <expectedAttributes>
                     <attribute name="eventType"/>
                 </expectedAttributes>
@@ -520,17 +526,16 @@
                 <expectedElements>
                     <element name="mods:form">
                         <expectedAttributes>
-                            <attribute name="authority" mandatory="false">
-                                <!--neni jasne, jestli tohle ma byt povinne - je tam M/MA-->
-                                <recommendedContent>
+                            <attribute name="authority">
+                                <expectedContent>
                                     <oneOf>
                                         <value>rdamedia</value>
                                         <value>rdacarrier</value>
                                     </oneOf>
-                                </recommendedContent>
+                                </expectedContent>
                             </attribute>
 
-                            <attribute name="type" mandatory="false">
+                            <attribute name="type">
                                 <expectedContent>
                                     <oneOf>
                                         <value>media</value>
@@ -635,8 +640,12 @@
 
             <element name="mods:relatedItem" mandatory="false" ignoreUnexpectedChildElements="true">
                 <expectedAttributes>
-                    <!--NOTE: DMF neuvadi, jestli je type povinny atribut, necham, ze je nepovinny-->
                     <attribute name="type" mandatory="false"/>
+                    <attribute name="otherType" mandatory="false"/>
+                    <attribute name="otherTypeURI" mandatory="false"/>
+                    <!--chyba v DMF, viz https://github.com/NLCR/Standard_NDK/issues/80-->
+                    <attribute name="otherTypeAuth" mandatory="false"/>
+                    <attribute name="otherTypeAuthURI" mandatory="false"/>
                 </expectedAttributes>
             </element>
 
@@ -829,6 +838,10 @@
                         </recommendedContent>
                     </element>
 
+                    <element name="mods:recordInfoNote" mandatory="false">
+                        <expectedContent/>
+                    </element>
+
                     <element name="mods:languageOfCataloging" mandatory="false">
                         <expectedElements>
                             <element name="mods:languageTerm" mandatory="false">
@@ -846,6 +859,10 @@
                 </expectedElements>
             </element>
         </expectedElements>
+        <extraRules>
+            <!--  Musí existovat alespoň jeden element originInfo a to s atributem eventType=publication nebo eventType=production -->
+            <existsAtLeastOnce xpath="mods:originInfo[@eventType='publication' or @eventType='production']"/>
+        </extraRules>
     </rootElement>
 
 </metadataProfile>

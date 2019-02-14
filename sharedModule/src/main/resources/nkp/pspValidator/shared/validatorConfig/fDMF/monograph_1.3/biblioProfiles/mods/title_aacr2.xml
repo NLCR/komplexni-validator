@@ -62,6 +62,43 @@
 
             <element name="mods:genre" specification="text()='title'"/>
 
+            <element name="mods:language" mandatory="false">
+                <expectedAttributes>
+                    <attribute name="objectPart" mandatory="false">
+                        <recommendedContent>
+                            <value>translation</value>
+                        </recommendedContent>
+                    </attribute>
+                </expectedAttributes>
+                <expectedElements>
+                    <element name="mods:languageTerm">
+                        <expectedAttributes>
+                            <attribute name="type">
+                                <expectedContent>
+                                    <value>code</value>
+                                </expectedContent>
+                            </attribute>
+
+                            <attribute name="authority">
+                                <expectedContent>
+                                    <value>iso639-2b</value>
+                                </expectedContent>
+                            </attribute>
+                        </expectedAttributes>
+                        <expectedContent>
+                            <fromDictionary name="iso6392languageCodes"/>
+                        </expectedContent>
+                    </element>
+                </expectedElements>
+                <extraRules>
+                    <!-- V rámci elementu mods:language musí existovat nejvýše jeden element mods:languageTerm s atributy type='code' a authority='iso639-2b' -->
+                    <existsAtMostOnce
+                            xpath="mods:languageTerm[@type='code' and @authority='iso639-2b']/text()"
+                            description="Pokud je potřeba zaznamenat více jazyků, musí být každý ve vlastním elementu mods:language"
+                    />
+                </extraRules>
+            </element>
+
             <!--    identifier-->
 
             <element name="mods:identifier" specification="@type='uuid'">
