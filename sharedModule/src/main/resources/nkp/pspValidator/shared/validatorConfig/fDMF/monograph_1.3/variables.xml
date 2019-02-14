@@ -546,6 +546,37 @@
         </evaluation>
     </value-def>
 
+    <!--page-->
+    <value-def name="ID_TYPES_PAGE_MANDATORY" type="STRING_LIST">
+        <description>seznam povinných typů identifikátorů pro úroveň PAGE</description>
+        <evaluation functionName="buildListOfStrings">
+            <params>
+                <value name="string" type="STRING">uuid</value>
+            </params>
+        </evaluation>
+    </value-def>
+
+    <value-def name="ID_TYPES_PAGE_OPTIONAL" type="STRING_LIST">
+        <!--Zatím se nepužívá, jen pro přehled. -->
+        <description>seznam volitelných typů identifikátorů pro úroveň PAGE</description>
+        <evaluation functionName="buildListOfStrings">
+            <params>
+                <!--   <value name="string" type="STRING">urnnbn</value>-->
+            </params>
+        </evaluation>
+    </value-def>
+
+    <value-def name="ID_TYPES_PAGE_PROHIBITED" type="STRING_LIST">
+        <description>seznam zakázaných typů identifikátorů pro úroveň PAGE</description>
+        <evaluation functionName="buildListOfStrings">
+            <params>
+                <value name="string" type="STRING">urnnbn</value>
+                <value name="string" type="STRING">isbn</value>
+                <value name="string" type="STRING">ismn</value>
+                <value name="string" type="STRING">ccnb</value>
+            </params>
+        </evaluation>
+    </value-def>
 
     <value-def name="INFO_IDENTIFIERS" type="IDENTIFIER_LIST">
         <description>seznam identifikátorů ze souboru INFO</description>
