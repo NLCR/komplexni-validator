@@ -96,7 +96,7 @@
                             <attribute name="type"/>
                         </expectedAttributes>
                         <expectedContent/>
-                           
+
                     </element>
 
                     <element name="mods:namePart" specification="@type='family'" mandatory="false">
@@ -125,7 +125,13 @@
                         <expectedContent/>
                     </element>
 
-                    <element name="mods:role">
+                    <element name="mods:nameIdentifier" mandatory="false">
+                        <expectedContent/>
+                    </element>
+
+                    <element name="mods:etal" mandatory="false"/>
+
+                    <element name="mods:role" mandatory="false">
                         <expectedElements>
                             <element name="mods:roleTerm">
                                 <expectedAttributes>
@@ -520,14 +526,14 @@
                 <expectedElements>
                     <element name="mods:form">
                         <expectedAttributes>
+                            <!--neni jasne, jestli tohle ma byt povinne - je tam M/MA-->
                             <attribute name="authority" mandatory="false">
-                                <!--neni jasne, jestli tohle ma byt povinne - je tam M/MA-->
-                                <recommendedContent>
+                                <expectedContent>
                                     <oneOf>
                                         <value>rdamedia</value>
                                         <value>rdacarrier</value>
                                     </oneOf>
-                                </recommendedContent>
+                                </expectedContent>
                             </attribute>
 
                             <attribute name="type" mandatory="false">
@@ -568,6 +574,10 @@
                                 <value>czenas</value>
                                 <value>eczenas</value>
                                 <value>Konspekt</value>
+                                <value>czmesh</value>
+                                <value>mednas</value>
+                                <value>msvkth</value>
+                                <value>agrovoc</value>
                             </oneOf>
                         </recommendedContent>
                     </attribute>
@@ -601,7 +611,7 @@
                     <!--NOTE: DMF neuvadi, jestli je authority povinny atribut, nechavam nepovinny. Z DMF není zřejmé co platí pro rda a co pro aacr2, povolena hodnota Konspekt, aby prošel element s tímto atributem i bez atributu edition-->
                     <attribute name="authority">
                         <recommendedContent>
-                             <oneOf>
+                            <oneOf>
                                 <value>udc</value>
                                 <value>Konspekt</value>
                             </oneOf>
@@ -633,6 +643,11 @@
                 <expectedAttributes>
                     <!--NOTE: DMF neuvadi, jestli je type povinny atribut, necham, ze je nepovinny-->
                     <attribute name="type" mandatory="false"/>
+                    <attribute name="otherType" mandatory="false"/>
+                    <attribute name="otherTypeURI" mandatory="false"/>
+                    <!--chyba v DMF, viz https://github.com/NLCR/Standard_NDK/issues/80-->
+                    <attribute name="otherTypeAuth" mandatory="false"/>
+                    <attribute name="otherTypeAuthURI" mandatory="false"/>
                 </expectedAttributes>
             </element>
 
@@ -824,6 +839,10 @@
                         </recommendedContent>
                     </element>
 
+                    <element name="mods:recordInfoNote" mandatory="false">
+                        <expectedContent/>
+                    </element>
+
                     <element name="mods:languageOfCataloging" mandatory="false">
                         <expectedElements>
                             <element name="mods:languageTerm" mandatory="false">
@@ -840,10 +859,10 @@
                     </element>
                 </expectedElements>
             </element>
-        </expectedElements> 
+        </expectedElements>
         <extraRules>
-             <!--  Musí existovat alespoň jeden element originInfo a to s atributem eventType=publication nebo eventType=production-->
-             <existsAtLeastOnce xpath="mods:originInfo[@eventType='publication' or @eventType='production']"/>
+            <!--  Musí existovat alespoň jeden element originInfo a to s atributem eventType=publication nebo eventType=production-->
+            <existsAtLeastOnce xpath="mods:originInfo[@eventType='publication' or @eventType='production']"/>
         </extraRules>
     </rootElement>
 </metadataProfile>
