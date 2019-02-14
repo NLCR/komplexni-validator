@@ -46,25 +46,28 @@ public class SkippingConfigurationDialogController extends DialogController {
 
             @Override
             protected Void call() {
-
-                skippedManager = new SkippedManagerImpl(main.getConfigurationManager(), main.getValidationDataManager());
-
-                Platform.runLater(() -> {
-                    progressIndicator.setVisible(false);
-                    for (Dmf dmf : skippedManager.getDmfList()) {
-                        Tab tab = new Tab();
-                        tab.setText(dmf.toString());
-                        HBox hbox = new HBox();
-                        ListView<RulesSection> sectionList = buildSectionList(skippedManager.getSkippedForDmf(dmf));
-                        hbox.getChildren().add(sectionList);
-                        hbox.setAlignment(Pos.CENTER);
-                        tab.setContent(hbox);
-                        tab.setClosable(false);
-                        tabPane.getTabs().add(tab);
-                        sectionList.prefWidthProperty().bind(tabPane.widthProperty());
-                    }
-                });
-                return null;
+                try {
+                    skippedManager = new SkippedManagerImpl(main.getConfigurationManager(), main.getValidationDataManager());
+                    Platform.runLater(() -> {
+                        progressIndicator.setVisible(false);
+                        for (Dmf dmf : skippedManager.getDmfList()) {
+                            Tab tab = new Tab();
+                            tab.setText(dmf.toString());
+                            HBox hbox = new HBox();
+                            ListView<RulesSection> sectionList = buildSectionList(skippedManager.getSkippedForDmf(dmf));
+                            hbox.getChildren().add(sectionList);
+                            hbox.setAlignment(Pos.CENTER);
+                            tab.setContent(hbox);
+                            tab.setClosable(false);
+                            tabPane.getTabs().add(tab);
+                            sectionList.prefWidthProperty().bind(tabPane.widthProperty());
+                        }
+                    });
+                } catch (Throwable e) {
+                    e.printStackTrace();
+                } finally {
+                    return null;
+                }
             }
         }).start();
     }
