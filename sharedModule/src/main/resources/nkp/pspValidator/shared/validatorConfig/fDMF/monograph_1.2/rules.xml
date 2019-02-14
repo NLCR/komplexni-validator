@@ -1432,7 +1432,7 @@
         </rule>
 
         <rule name="DC_IDENTIFIERS_NO_DUPLICATES_ACROSS_DMDSECS">
-            <description>Identifikátory napříč Dublin Core záznamech by měly být unikátní.
+            <description>Identifikátory napříč Dublin Core záznamy by měly být unikátní.
                 Na různých úrovní popisu se tedy nesmí objevit dva totožné identifikátory (shodný typ i hodnota).
             </description>
 
