@@ -225,7 +225,6 @@ public class VfCheckBibliographicMetadataMatchProfile extends ValidationFunction
                 }
             }
         } catch (InvalidXPathExpressionException e) {
-            result.addError(invalid(e));
             result.addError(Level.ERROR, dmdSecId + ": " + e.getMessage());
         } catch (XPathExpressionException e) {
             result.addError(Level.ERROR, dmdSecId + ": " + e.getMessage());
@@ -241,7 +240,6 @@ public class VfCheckBibliographicMetadataMatchProfile extends ValidationFunction
             DOMSource source = new DOMSource(xmlDoc);
             SchemaFactory schemaFactory = SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
             schemaFactory.setResourceResolver(new XsdImportsResourceResolver(xsdFile.getParentFile()));
-
             Schema schema = schemaFactory.newSchema(xsdFile);
             Validator validator = schema.newValidator();
             validator.validate(source);
