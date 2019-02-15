@@ -5,7 +5,7 @@ package nkp.pspValidator.shared.engine.types;
  */
 public enum EntityType {
 
-    VOLUME("VOLUME"), TITLE("TITLE"), SUPPLEMENT("SUPPL"), PICTURE("PICT"), //spolecne
+    VOLUME("VOLUME"), TITLE("TITLE"), SUPPLEMENT("SUPPL"), PICTURE("PICT"), PAGE("PAGE"),//spolecne
     ISSUE("ISSUE"), ARTICLE("ART"), //jen periodika
     CHAPTER("CHAP"); //jen monografie
 
