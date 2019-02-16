@@ -53,13 +53,13 @@
                                         <expectedElements>
                                             <element name="mix:ObjectIdentifier" mandatory="false" repeatable="true">
                                                 <expectedElements>
-                                                    <!--Neni jasna povinnost - konflikt povinnost=M a vyskyt=0-1, viz DMF Monografie 1.2: s. 76. Nechavam defenzivne nepovinne-->
+                                                    <!--Neni jasna povinnost - konflikt povinnost=M a vyskyt=0-1, viz DMF Monografie 1.3: s. 82. Nechavam defenzivne nepovinne-->
                                                     <element name="mix:objectIdentifierType" mandatory="true"
                                                              repeatable="false">
                                                         <expectedContent/>
                                                     </element>
 
-                                                    <!--Neni jasna povinnost - konflikt povinnost=M a vyskyt=0-1, viz DMF Monografie 1.2: s. 76. Nechavam defenzivne nepovinne-->
+                                                    <!--Neni jasna povinnost - konflikt povinnost=M a vyskyt=0-1, viz DMF Monografie 1.3: s. 82. Nechavam defenzivne nepovinne-->
                                                     <element name="mix:objectIdentifierValue" mandatory="true"
                                                              repeatable="false">
                                                         <expectedContent/>
@@ -71,15 +71,15 @@
                                                 <expectedContent/>
                                             </element>
 
-                                            <!--Neni jasna povinnost - konflikt povinnost=M a vyskyt=0-1, viz DMF Monografie 1.2: s. 76. Nechavam defenzivne nepovinne-->
+                                            <!--Neni jasna povinnost - konflikt povinnost=M a vyskyt=0-1, viz DMF Monografie 1.3: s. 82. Nechavam defenzivne nepovinne-->
                                             <element name="mix:FormatDesignation" mandatory="true" repeatable="false">
                                                 <expectedElements>
-                                                    <!--Neni jasna povinnost - konflikt povinnost=M a vyskyt=0-1, viz DMF Monografie 1.2: s. 76. Nechavam defenzivne nepovinne-->
+                                                    <!--Neni jasna povinnost - konflikt povinnost=M a vyskyt=0-1, viz DMF Monografie 1.3: s. 82. Nechavam defenzivne nepovinne-->
                                                     <element name="mix:formatName" mandatory="true" repeatable="false">
                                                         <expectedContent/>
                                                     </element>
 
-                                                    <!--Neni jasna povinnost - konflikt povinnost=M a vyskyt=0-1, viz DMF Monografie 1.2: s. 76. Nechavam defenzivne nepovinne-->
+                                                    <!--Neni jasna povinnost - konflikt povinnost=M a vyskyt=0-1, viz DMF Monografie 1.3: s. 82. Nechavam defenzivne nepovinne-->
                                                     <element name="mix:formatVersion" mandatory="true"
                                                              repeatable="false">
                                                         <expectedContent/>
@@ -87,7 +87,7 @@
                                                 </expectedElements>
                                             </element>
 
-                                            <!--Neni jasna povinnost - konflikt povinnost=M a vyskyt=0-1, viz DMF Monografie 1.2: s. 77. Nechavam defenzivne nepovinne-->
+                                            <!--Neni jasna povinnost - konflikt povinnost=M a vyskyt=0-1, viz DMF Monografie 1.3: s. 83. Nechavam defenzivne nepovinne-->
                                             <element name="mix:byteOrder" mandatory="true" repeatable="false">
                                                 <expectedContent>
                                                     <oneOf>
@@ -101,10 +101,10 @@
                                                 </expectedContent>
                                             </element>
 
-                                            <!--Neni jasna povinnost - konflikt povinnost=M a vyskyt=0-n, viz DMF Monografie 1.2: s. 77. Nechavam defenzivne nepovinne-->
+                                            <!--Neni jasna povinnost - konflikt povinnost=M a vyskyt=0-n, viz DMF Monografie 1.3: s. 83. Nechavam defenzivne nepovinne-->
                                             <element name="mix:Compression" mandatory="true" repeatable="true">
                                                 <expectedElements>
-                                                    <!--Neni jasna povinnost - konflikt povinnost=M a vyskyt=0-1, viz DMF Monografie 1.2: s. 77. Nechavam defenzivne nepovinne-->
+                                                    <!--Neni jasna povinnost - konflikt povinnost=M a vyskyt=0-1, viz DMF Monografie 1.3: s. 83. Nechavam defenzivne nepovinne-->
                                                     <element name="mix:compressionScheme" mandatory="true"
                                                              repeatable="false">
                                                         <expectedContent/>
@@ -114,21 +114,21 @@
                                         </expectedElements>
                                     </element>
 
-                                    <!--Neni jasna povinnost - konflikt povinnost=M a vyskyt=0-1, viz DMF Monografie 1.2: s. 77. Nechavam defenzivne nepovinne-->
+                                    <!--Neni jasna povinnost - konflikt povinnost=M a vyskyt=0-1, viz DMF Monografie 1.3: s. 83. Nechavam defenzivne nepovinne-->
                                     <element name="mix:BasicImageInformation" mandatory="true" repeatable="false">
                                         <expectedElements>
-                                            <!--Neni jasna povinnost - konflikt povinnost=M a vyskyt=0-1, viz DMF Monografie 1.2: s. 77. Nechavam defenzivne nepovinne-->
+                                            <!--Neni jasna povinnost - konflikt povinnost=M a vyskyt=0-1, viz DMF Monografie 1.3: s. 83. Nechavam defenzivne nepovinne-->
                                             <element name="mix:BasicImageCharacteristics" mandatory="true"
                                                      repeatable="false">
                                                 <expectedElements>
-                                                    <!--Neni jasna povinnost - konflikt povinnost=M a vyskyt=0-1, viz DMF Monografie 1.2: s. 77. Nechavam defenzivne nepovinne-->
+                                                    <!--Neni jasna povinnost - konflikt povinnost=M a vyskyt=0-1, viz DMF Monografie 1.3: s. 83. Nechavam defenzivne nepovinne-->
                                                     <element name="mix:imageWidth" mandatory="true" repeatable="false">
                                                         <expectedContent>
                                                             <regexp>[0-9]+</regexp>
                                                         </expectedContent>
                                                     </element>
 
-                                                    <!--Neni jasna povinnost - konflikt povinnost=M a vyskyt=0-1, viz DMF Monografie 1.2: s. 77. Nechavam defenzivne nepovinne-->
+                                                    <!--Neni jasna povinnost - konflikt povinnost=M a vyskyt=0-1, viz DMF Monografie 1.3: s. 83. Nechavam defenzivne nepovinne-->
                                                     <element name="mix:imageHeight" mandatory="true"
                                                              repeatable="false">
                                                         <expectedContent>
@@ -136,11 +136,11 @@
                                                         </expectedContent>
                                                     </element>
 
-                                                    <!--Neni jasna povinnost - konflikt povinnost=M a vyskyt=0-1, viz DMF Monografie 1.2: s. 77. Nechavam defenzivne nepovinne-->
+                                                    <!--Neni jasna povinnost - konflikt povinnost=M a vyskyt=0-1, viz DMF Monografie 1.3: s. 83. Nechavam defenzivne nepovinne-->
                                                     <element name="mix:PhotometricInterpretation" mandatory="true"
                                                              repeatable="false">
                                                         <expectedElements>
-                                                            <!--Neni jasna povinnost - konflikt povinnost=M a vyskyt=0-1, viz DMF Monografie 1.2: s. 77. Nechavam defenzivne nepovinne-->
+                                                            <!--Neni jasna povinnost - konflikt povinnost=M a vyskyt=0-1, viz DMF Monografie 1.3: s. 83. Nechavam defenzivne nepovinne-->
                                                             <element name="mix:colorSpace" mandatory="true"
                                                                      repeatable="false">
                                                                 <expectedContent/>
@@ -149,18 +149,18 @@
                                                             <element name="mix:ColorProfile" mandatory="false"
                                                                      repeatable="false">
                                                                 <expectedElements>
-                                                                    <!--Neni jasna povinnost - konflikt povinnost=M a vyskyt=0-1, viz DMF Monografie 1.2: s. 77. Nechavam defenzivne nepovinne-->
+                                                                    <!--Neni jasna povinnost - konflikt povinnost=M a vyskyt=0-1, viz DMF Monografie 1.3: s. 83. Nechavam defenzivne nepovinne-->
                                                                     <element name="mix:IccProfile" mandatory="true"
                                                                              repeatable="false">
                                                                         <expectedElements>
-                                                                            <!--Neni jasna povinnost - konflikt povinnost=M a vyskyt=0-1, viz DMF Monografie 1.2: s. 77. Nechavam defenzivne nepovinne-->
+                                                                            <!--Neni jasna povinnost - konflikt povinnost=M a vyskyt=0-1, viz DMF Monografie 1.3: s. 83. Nechavam defenzivne nepovinne-->
                                                                             <element name="mix:iccProfileName"
                                                                                      mandatory="true"
                                                                                      repeatable="false">
                                                                                 <expectedContent/>
                                                                             </element>
 
-                                                                            <!--Neni jasna povinnost - konflikt povinnost=M a vyskyt=0-1, viz DMF Monografie 1.2: s. 77. Nechavam defenzivne nepovinne-->
+                                                                            <!--Neni jasna povinnost - konflikt povinnost=M a vyskyt=0-1, viz DMF Monografie 1.3: s. 83. Nechavam defenzivne nepovinne-->
                                                                             <element name="mix:iccProfileVersion"
                                                                                      mandatory="true"
                                                                                      repeatable="false">
@@ -184,33 +184,33 @@
                                             <element name="mix:SpecialFormatCharacteristics" mandatory="false"
                                                      repeatable="false">
                                                 <expectedElements>
-                                                    <!--Neni jasna povinnost - konflikt povinnost=M a vyskyt=0-1, viz DMF Monografie 1.2: s. 77. Nechavam defenzivne nepovinne-->
+                                                    <!--Neni jasna povinnost - konflikt povinnost=M a vyskyt=0-1, viz DMF Monografie 1.3: s. 83. Nechavam defenzivne nepovinne-->
                                                     <element name="mix:JPEG2000" mandatory="true" repeatable="false">
                                                         <expectedElements>
-                                                            <!--Neni jasna povinnost - konflikt povinnost=M a vyskyt=0-1, viz DMF Monografie 1.2: s. 77. Nechavam defenzivne nepovinne-->
+                                                            <!--Neni jasna povinnost - konflikt povinnost=M a vyskyt=0-1, viz DMF Monografie 1.3: s. 83. Nechavam defenzivne nepovinne-->
                                                             <element name="mix:CodecCompliance" mandatory="true"
                                                                      repeatable="false">
                                                                 <expectedElements>
-                                                                    <!--Neni jasna povinnost - konflikt povinnost=M a vyskyt=0-1, viz DMF Monografie 1.2: s. 78. Nechavam defenzivne nepovinne-->
+                                                                    <!--Neni jasna povinnost - konflikt povinnost=M a vyskyt=0-1, viz DMF Monografie 1.3: s. 84. Nechavam defenzivne nepovinne-->
                                                                     <element name="mix:codec" mandatory="true"
                                                                              repeatable="false">
                                                                         <expectedContent/>
                                                                     </element>
 
-                                                                    <!--Neni jasna povinnost - konflikt povinnost=M a vyskyt=0-1, viz DMF Monografie 1.2: s. 78. Nechavam defenzivne nepovinne-->
+                                                                    <!--Neni jasna povinnost - konflikt povinnost=M a vyskyt=0-1, viz DMF Monografie 1.3: s. 84. Nechavam defenzivne nepovinne-->
                                                                     <element name="mix:codecVersion" mandatory="true"
                                                                              repeatable="false">
                                                                         <expectedContent/>
                                                                     </element>
 
-                                                                    <!--Neni jasna povinnost - konflikt povinnost=M a vyskyt=0-1, viz DMF Monografie 1.2: s. 78. Nechavam defenzivne nepovinne-->
+                                                                    <!--Neni jasna povinnost - konflikt povinnost=M a vyskyt=0-1, viz DMF Monografie 1.3: s. 84. Nechavam defenzivne nepovinne-->
                                                                     <element name="mix:codestreamProfile"
                                                                              mandatory="true"
                                                                              repeatable="false">
                                                                         <expectedContent/>
                                                                     </element>
 
-                                                                    <!--Neni jasna povinnost - konflikt povinnost=M a vyskyt=0-1, viz DMF Monografie 1.2: s. 78. Nechavam defenzivne nepovinne-->
+                                                                    <!--Neni jasna povinnost - konflikt povinnost=M a vyskyt=0-1, viz DMF Monografie 1.3: s. 84. Nechavam defenzivne nepovinne-->
                                                                     <element name="mix:complianceClass"
                                                                              mandatory="true"
                                                                              repeatable="false">
@@ -225,15 +225,15 @@
                                                                 </expectedElements>
                                                             </element>
 
-                                                            <!--Neni jasna povinnost - konflikt povinnost=M a vyskyt=0-1, viz DMF Monografie 1.2: s. 78. Nechavam defenzivne nepovinne-->
+                                                            <!--Neni jasna povinnost - konflikt povinnost=M a vyskyt=0-1, viz DMF Monografie 1.3: s. 84. Nechavam defenzivne nepovinne-->
                                                             <element name="mix:EncodingOptions" mandatory="true"
                                                                      repeatable="false">
                                                                 <expectedElements>
-                                                                    <!--Neni jasna povinnost - konflikt povinnost=M a vyskyt=0-1, viz DMF Monografie 1.2: s. 78. Nechavam defenzivne nepovinne-->
+                                                                    <!--Neni jasna povinnost - konflikt povinnost=M a vyskyt=0-1, viz DMF Monografie 1.3: s. 84. Nechavam defenzivne nepovinne-->
                                                                     <element name="mix:Tiles" mandatory="true"
                                                                              repeatable="false">
                                                                         <expectedElements>
-                                                                            <!--Neni jasna povinnost - konflikt povinnost=M a vyskyt=0-1, viz DMF Monografie 1.2: s. 78. Nechavam defenzivne nepovinne-->
+                                                                            <!--Neni jasna povinnost - konflikt povinnost=M a vyskyt=0-1, viz DMF Monografie 1.3: s. 84. Nechavam defenzivne nepovinne-->
                                                                             <element name="mix:tileWidth"
                                                                                      mandatory="true"
                                                                                      repeatable="false">
@@ -242,7 +242,7 @@
                                                                                 </expectedContent>
                                                                             </element>
 
-                                                                            <!--Neni jasna povinnost - konflikt povinnost=M a vyskyt=0-1, viz DMF Monografie 1.2: s. 78. Nechavam defenzivne nepovinne-->
+                                                                            <!--Neni jasna povinnost - konflikt povinnost=M a vyskyt=0-1, viz DMF Monografie 1.3: s. 84. Nechavam defenzivne nepovinne-->
                                                                             <element name="mix:tileHeight"
                                                                                      mandatory="true"
                                                                                      repeatable="false">
@@ -253,7 +253,7 @@
                                                                         </expectedElements>
                                                                     </element>
 
-                                                                    <!--Neni jasna povinnost - konflikt povinnost=M a vyskyt=0-1, viz DMF Monografie 1.2: s. 78. Nechavam defenzivne nepovinne-->
+                                                                    <!--Neni jasna povinnost - konflikt povinnost=M a vyskyt=0-1, viz DMF Monografie 1.3: s. 84. Nechavam defenzivne nepovinne-->
                                                                     <element name="mix:qualityLayers"
                                                                              mandatory="true"
                                                                              repeatable="false">
@@ -262,7 +262,7 @@
                                                                         </expectedContent>
                                                                     </element>
 
-                                                                    <!--Neni jasna povinnost - konflikt povinnost=M a vyskyt=0-1, viz DMF Monografie 1.2: s. 78. Nechavam defenzivne nepovinne-->
+                                                                    <!--Neni jasna povinnost - konflikt povinnost=M a vyskyt=0-1, viz DMF Monografie 1.3: s. 84. Nechavam defenzivne nepovinne-->
                                                                     <element name="mix:resolutionLevels"
                                                                              mandatory="true"
                                                                              repeatable="false">
@@ -279,10 +279,10 @@
                                         </expectedElements>
                                     </element>
 
-                                    <!--Neni jasna povinnost - konflikt povinnost=M a vyskyt=0-1, viz DMF Monografie 1.2: s. 81. Nechavam defenzivne nepovinne-->
+                                    <!--Neni jasna povinnost - konflikt povinnost=M a vyskyt=0-1, viz DMF Monografie 1.3: s. 87. Nechavam defenzivne nepovinne-->
                                     <element name="mix:ImageAssessmentMetadata" mandatory="true" repeatable="false">
                                         <expectedElements>
-                                            <!--Neni jasna povinnost - konflikt povinnost=M a vyskyt=0-1, viz DMF Monografie 1.2: s. 81. Nechavam defenzivne nepovinne-->
+                                            <!--Neni jasna povinnost - konflikt povinnost=M a vyskyt=0-1, viz DMF Monografie 1.3: s. 87. Nechavam defenzivne nepovinne-->
                                             <element name="mix:SpatialMetrics" mandatory="true" repeatable="false">
                                                 <expectedElements>
                                                     <element name="mix:samplingFrequencyPlane" mandatory="false"
@@ -290,7 +290,7 @@
                                                         <expectedContent/>
                                                     </element>
 
-                                                    <!--Neni jasna povinnost - konflikt povinnost=M a vyskyt=0-1, viz DMF Monografie 1.2: s. 81. Nechavam defenzivne nepovinne-->
+                                                    <!--Neni jasna povinnost - konflikt povinnost=M a vyskyt=0-1, viz DMF Monografie 1.3: s. 87. Nechavam defenzivne nepovinne-->
                                                     <element name="mix:samplingFrequencyUnit" mandatory="true"
                                                              repeatable="false">
                                                         <expectedContent>
@@ -306,7 +306,7 @@
                                                     <element name="mix:xSamplingFrequency" mandatory="false"
                                                              repeatable="false">
                                                         <expectedElements>
-                                                            <!--Neni jasna povinnost - konflikt povinnost=M a vyskyt=0-1, viz DMF Monografie 1.2: s. 81. Nechavam defenzivne nepovinne-->
+                                                            <!--Neni jasna povinnost - konflikt povinnost=M a vyskyt=0-1, viz DMF Monografie 1.3: s. 87. Nechavam defenzivne nepovinne-->
                                                             <element name="mix:numerator" mandatory="true"
                                                                      repeatable="false">
                                                                 <expectedContent>
@@ -314,7 +314,7 @@
                                                                 </expectedContent>
                                                             </element>
 
-                                                            <!--Neni jasna povinnost - konflikt povinnost=M a vyskyt=0-1, viz DMF Monografie 1.2: s. 81. Nechavam defenzivne nepovinne-->
+                                                            <!--Neni jasna povinnost - konflikt povinnost=M a vyskyt=0-1, viz DMF Monografie 1.3: s. 87. Nechavam defenzivne nepovinne-->
                                                             <element name="mix:denominator" mandatory="true"
                                                                      repeatable="false">
                                                                 <expectedContent>
@@ -327,7 +327,7 @@
                                                     <element name="mix:ySamplingFrequency" mandatory="false"
                                                              repeatable="false">
                                                         <expectedElements>
-                                                            <!--Neni jasna povinnost - konflikt povinnost=M a vyskyt=0-1, viz DMF Monografie 1.2: s. 82. Nechavam defenzivne nepovinne-->
+                                                            <!--Neni jasna povinnost - konflikt povinnost=M a vyskyt=0-1, viz DMF Monografie 1.3: s. 88. Nechavam defenzivne nepovinne-->
                                                             <element name="mix:numerator" mandatory="true"
                                                                      repeatable="false">
                                                                 <expectedContent>
@@ -335,7 +335,7 @@
                                                                 </expectedContent>
                                                             </element>
 
-                                                            <!--Neni jasna povinnost - konflikt povinnost=M a vyskyt=0-1, viz DMF Monografie 1.2: s. 82. Nechavam defenzivne nepovinne-->
+                                                            <!--Neni jasna povinnost - konflikt povinnost=M a vyskyt=0-1, viz DMF Monografie 1.3: s. 88. Nechavam defenzivne nepovinne-->
                                                             <element name="mix:denominator" mandatory="true"
                                                                      repeatable="false">
                                                                 <expectedContent>
@@ -347,10 +347,10 @@
                                                 </expectedElements>
                                             </element>
 
-                                            <!--Neni jasna povinnost - konflikt povinnost=M a vyskyt=0-1, viz DMF Monografie 1.2: s. 82. Nechavam defenzivne nepovinne-->
+                                            <!--Neni jasna povinnost - konflikt povinnost=M a vyskyt=0-1, viz DMF Monografie 1.3: s. 88. Nechavam defenzivne nepovinne-->
                                             <element name="mix:ImageColorEncoding" mandatory="true" repeatable="false">
                                                 <expectedElements>
-                                                    <!--Neni jasna povinnost - konflikt povinnost=M a vyskyt=0-1, viz DMF Monografie 1.2: s. 82. Nechavam defenzivne nepovinne-->
+                                                    <!--Neni jasna povinnost - konflikt povinnost=M a vyskyt=0-1, viz DMF Monografie 1.3: s. 88. Nechavam defenzivne nepovinne-->
                                                     <element name="mix:BitsPerSample" mandatory="true"
                                                              repeatable="false">
                                                         <expectedElements>
@@ -370,7 +370,7 @@
                                                         </expectedElements>
                                                     </element>
 
-                                                    <!--Neni jasna povinnost - konflikt povinnost=M a vyskyt=0-1, viz DMF Monografie 1.2: s. 82. Nechavam defenzivne nepovinne-->
+                                                    <!--Neni jasna povinnost - konflikt povinnost=M a vyskyt=0-1, viz DMF Monografie 1.3: s. 88. Nechavam defenzivne nepovinne-->
                                                     <element name="mix:samplesPerPixel" mandatory="true"
                                                              repeatable="false">
                                                         <expectedContent>
@@ -380,7 +380,7 @@
 
                                                     <element name="mix:TargetData" mandatory="false" repeatable="false">
                                                         <expectedElements>
-                                                            <!--Neni jasna povinnost - konflikt povinnost=M a vyskyt=0-n, viz DMF Monografie 1.2: s. 82. Nechavam defenzivne nepovinne-->
+                                                            <!--Neni jasna povinnost - konflikt povinnost=M a vyskyt=0-1, viz DMF Monografie 1.3: s. 88. Nechavam defenzivne nepovinne-->
                                                             <element name="mix:targetType" mandatory="true"
                                                                      repeatable="true">
                                                                 <expectedContent>
@@ -391,23 +391,23 @@
                                                                 </expectedContent>
                                                             </element>
 
-                                                            <!--Neni jasna povinnost - konflikt povinnost=M a vyskyt=0-n, viz DMF Monografie 1.2: s. 82. Nechavam defenzivne nepovinne-->
+                                                            <!--Neni jasna povinnost - konflikt povinnost=M a vyskyt=0-1, viz DMF Monografie 1.3: s. 88. Nechavam defenzivne nepovinne-->
                                                             <element name="mix:targetID" mandatory="true"
                                                                      repeatable="true">
                                                                 <expectedElements>
-                                                                    <!--Neni jasna povinnost - konflikt povinnost=M a vyskyt=0-1, viz DMF Monografie 1.2: s. 82. Nechavam defenzivne nepovinne-->
+                                                                    <!--Neni jasna povinnost - konflikt povinnost=M a vyskyt=0-1, viz DMF Monografie 1.3: s. 88. Nechavam defenzivne nepovinne-->
                                                                     <element name="mix:targetManufacturer"
                                                                              mandatory="true" repeatable="false">
                                                                         <expectedContent/>
                                                                     </element>
 
-                                                                    <!--Neni jasna povinnost - konflikt povinnost=M a vyskyt=0-1, viz DMF Monografie 1.2: s. 83. Nechavam defenzivne nepovinne-->
+                                                                    <!--Neni jasna povinnost - konflikt povinnost=M a vyskyt=0-1, viz DMF Monografie 1.3: s. 89. Nechavam defenzivne nepovinne-->
                                                                     <element name="mix:targetName"
                                                                              mandatory="true" repeatable="false">
                                                                         <expectedContent/>
                                                                     </element>
 
-                                                                    <!--Neni jasna povinnost - konflikt povinnost=M a vyskyt=0-1, viz DMF Monografie 1.2: s. 82. Nechavam defenzivne nepovinne-->
+                                                                    <!--Neni jasna povinnost - konflikt povinnost=M a vyskyt=0-1, viz DMF Monografie 1.3: s. 89. Nechavam defenzivne nepovinne-->
                                                                     <element name="mix:targetNo"
                                                                              mandatory="true" repeatable="false">
                                                                         <expectedContent/>
@@ -436,13 +436,13 @@
                                         </expectedElements>
                                     </element>
 
-                                    <!--Neni jasna povinnost - konflikt povinnost=M a vyskyt=0-1, viz DMF Monografie 1.2: s. 82. Nechavam defenzivne nepovinne-->
+                                    <!--Neni jasna povinnost - konflikt povinnost=M a vyskyt=0-1, viz DMF Monografie 1.3: s. 89. Nechavam defenzivne nepovinne-->
                                     <element name="mix:ChangeHistory" mandatory="true" repeatable="false">
                                         <expectedElements>
-                                            <!--Neni jasna povinnost - konflikt povinnost=M a vyskyt=0-n, viz DMF Monografie 1.2: s. 82. Nechavam defenzivne nepovinne-->
+                                            <!--Neni jasna povinnost - konflikt povinnost=M a vyskyt=0-n, viz DMF Monografie 1.3: s. 89. Nechavam defenzivne nepovinne-->
                                             <element name="mix:ImageProcessing" mandatory="true" repeatable="true">
                                                 <expectedElements>
-                                                    <!--Neni jasna povinnost - konflikt povinnost=M a vyskyt=0-1, viz DMF Monografie 1.2: s. 82. Nechavam defenzivne nepovinne-->
+                                                    <!--Neni jasna povinnost - konflikt povinnost=M a vyskyt=0-1, viz DMF Monografie 1.3: s. 89. Nechavam defenzivne nepovinne-->
                                                     <element name="mix:dateTimeProcessed" mandatory="true"
                                                              repeatable="false">
                                                         <expectedContent>
@@ -452,7 +452,7 @@
                                                         </expectedContent>
                                                     </element>
 
-                                                    <!--Neni jasna povinnost - konflikt povinnost=M a vyskyt=0-1, viz DMF Monografie 1.2: s. 82. Nechavam defenzivne nepovinne-->
+                                                    <!--Neni jasna povinnost - konflikt povinnost=M a vyskyt=0-1, viz DMF Monografie 1.3: s. 89. Nechavam defenzivne nepovinne-->
                                                     <element name="mix:sourceData" mandatory="true" repeatable="false">
                                                         <expectedContent/>
                                                     </element>
