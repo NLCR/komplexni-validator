@@ -19,6 +19,12 @@
         <namespace prefix="dc">http://purl.org/dc/elements/1.1/</namespace>
     </namespaces>
 
+    <dictionaries>
+        <dictionary name="iso6392languageCodes"
+                    description="kódy jazyků podle ISO 639-2"
+                    url="http://www.loc.gov/standards/iso639-2/php/code_list.php"/>
+    </dictionaries>
+
     <rootElement name="oai_dc:dc">
         <expectedElements>
 
@@ -30,6 +36,13 @@
             <element name="dc:type" specification="text() = 'model:monograph'"
                      errorMessage="Očekáván povinný element dc:type obsahující text 'model:monograph'.">
                 <expectedContent/>
+            </element>
+
+            <element name="dc:language"
+                     errorMessage="Očekáván povinný element dc:language obsahující přesné určení jazyka.">
+                <expectedContent>
+                    <fromDictionary name="iso6392languageCodes"/>
+                </expectedContent>
             </element>
 
             <element name="dc:identifier" errorMessage="Očekáván alespoň jeden povinný element dc:identifier.">
