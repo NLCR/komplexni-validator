@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+
+<info xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:noNamespaceSchemaLocation="http://www.ndk.cz/standardy-digitalizace/info11.xsd">
+    <created>2015-09-21T21:06:13</created>
+    <metadataversion>1.2</metadataversion>
+    <packageid>b50eb6b0-f0a4-11e3-b72e-005056827e52</packageid>
+    <mainmets>mets_b50eb6b0-f0a4-11e3-b72e-005056827e52.xml</mainmets>
+    <validation
+            version="validation_templates_version:file_sec:1.0;amd_sec_mix:1.0;physical_map_amd:1.0;amd_file_sec:1.0;monographic_volume:1.0;amd_sec:1.0;monographic_logical_map:1.0;physical_map:1.0"/>
+    <titleid type="ccnb">cnb000572615</titleid>
+    <titleid type="urnnbn">urn:nbn:cz:nk-00172f</titleid>
+    <titleid type="uuid">b50eb6b0-f0a4-11e3-b72e-005056827e52</titleid>
+    <collection>Digitalizace národní knihovny</collection>
+    <institution>Česká národní knihovna</institution>
+    <creator>ABA001</creator>
+    <size>180595</size>
+    <itemlist itemtotal="42">
+        <item>\mets_b50eb6b0-f0a4-11e3-b72e-005056827e52.xml</item>
+        <item>\usercopy\uc_b50eb6b0-f0a4-11e3-b72e-005056827e52_0001.jp2</item>
+        <item>\usercopy\uc_b50eb6b0-f0a4-11e3-b72e-005056827e52_0002.jp2</item>
+        <item>\usercopy\uc_b50eb6b0-f0a4-11e3-b72e-005056827e52_0003.jp2</item>
+        <item>\usercopy\uc_b50eb6b0-f0a4-11e3-b72e-005056827e52_0004.jp2</item>
+        <item>\usercopy\uc_b50eb6b0-f0a4-11e3-b72e-005056827e52_0005.jp2</item>
+        <item>\usercopy\uc_b50eb6b0-f0a4-11e3-b72e-005056827e52_0006.jp2</item>
+        <item>\usercopy\uc_b50eb6b0-f0a4-11e3-b72e-005056827e52_0007.jp2</item>
+        <item>\usercopy\uc_b50eb6b0-f0a4-11e3-b72e-005056827e52_0008.jp2</item>
+        <item>\mastercopy\mc_b50eb6b0-f0a4-11e3-b72e-005056827e52_0001.jp2</item>
+        <item>\mastercopy\mc_b50eb6b0-f0a4-11e3-b72e-005056827e52_0002.jp2</item>
+        <item>\mastercopy\mc_b50eb6b0-f0a4-11e3-b72e-005056827e52_0003.jp2</item>
+        <item>\mastercopy\mc_b50eb6b0-f0a4-11e3-b72e-005056827e52_0004.jp2</item>
+        <item>\mastercopy\mc_b50eb6b0-f0a4-11e3-b72e-005056827e52_0005.jp2</item>
+        <item>\mastercopy\mc_b50eb6b0-f0a4-11e3-b72e-005056827e52_0006.jp2</item>
+        <item>\mastercopy\mc_b50eb6b0-f0a4-11e3-b72e-005056827e52_0007.jp2</item>
+        <item>\mastercopy\mc_b50eb6b0-f0a4-11e3-b72e-005056827e52_0008.jp2</item>
+        <item>\alto\alto_b50eb6b0-f0a4-11e3-b72e-005056827e52_0001.xml</item>
+        <item>\alto\alto_b50eb6b0-f0a4-11e3-b72e-005056827e52_0002.xml</item>
+        <item>\alto\alto_b50eb6b0-f0a4-11e3-b72e-005056827e52_0003.xml</item>
+        <item>\alto\alto_b50eb6b0-f0a4-11e3-b72e-005056827e52_0004.xml</item>
+        <item>\alto\alto_b50eb6b0-f0a4-11e3-b72e-005056827e52_0005.xml</item>
+        <item>\alto\alto_b50eb6b0-f0a4-11e3-b72e-005056827e52_0006.xml</item>
+        <item>\alto\alto_b50eb6b0-f0a4-11e3-b72e-005056827e52_0007.xml</item>
+        <item>\alto\alto_b50eb6b0-f0a4-11e3-b72e-005056827e52_0008.xml</item>
+        <item>\amdsec\amd_mets_b50eb6b0-f0a4-11e3-b72e-005056827e52_0001.xml</item>
+        <item>\amdsec\amd_mets_b50eb6b0-f0a4-11e3-b72e-005056827e52_0002.xml</item>
+        <item>\amdsec\amd_mets_b50eb6b0-f0a4-11e3-b72e-005056827e52_0003.xml</item>
+        <item>\amdsec\amd_mets_b50eb6b0-f0a4-11e3-b72e-005056827e52_0004.xml</item>
+        <item>\amdsec\amd_mets_b50eb6b0-f0a4-11e3-b72e-005056827e52_0005.xml</item>
+        <item>\amdsec\amd_mets_b50eb6b0-f0a4-11e3-b72e-005056827e52_0006.xml</item>
+        <item>\amdsec\amd_mets_b50eb6b0-f0a4-11e3-b72e-005056827e52_0007.xml</item>
+        <item>\amdsec\amd_mets_b50eb6b0-f0a4-11e3-b72e-005056827e52_0008.xml</item>
+        <item>\txt\txt_b50eb6b0-f0a4-11e3-b72e-005056827e52_0001.txt</item>
+        <item>\txt\txt_b50eb6b0-f0a4-11e3-b72e-005056827e52_0002.txt</item>
+        <item>\txt\txt_b50eb6b0-f0a4-11e3-b72e-005056827e52_0003.txt</item>
+        <item>\txt\txt_b50eb6b0-f0a4-11e3-b72e-005056827e52_0004.txt</item>
+        <item>\txt\txt_b50eb6b0-f0a4-11e3-b72e-005056827e52_0005.txt</item>
+        <item>\txt\txt_b50eb6b0-f0a4-11e3-b72e-005056827e52_0006.txt</item>
+        <item>\txt\txt_b50eb6b0-f0a4-11e3-b72e-005056827e52_0007.txt</item>
+        <item>\txt\txt_b50eb6b0-f0a4-11e3-b72e-005056827e52_0008.txt</item>
+        <item>\md5_b50eb6b0-f0a4-11e3-b72e-005056827e52.md5</item>
+    </itemlist>
+    <checksum type="MD5" checksum="12d6dde1aaf0d7528810b01a0361bc15">\md5_b50eb6b0-f0a4-11e3-b72e-005056827e52.md5
+    </checksum>
+</info>
