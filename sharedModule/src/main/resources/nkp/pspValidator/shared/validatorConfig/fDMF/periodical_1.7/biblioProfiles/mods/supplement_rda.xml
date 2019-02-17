@@ -110,6 +110,10 @@
                             </element>
                         </expectedElements>
                     </element>
+
+                    <element name="mods:affiliation" mandatory="false">
+                        <expectedContent/>
+                    </element>
                 </expectedElements>
             </element>
 
