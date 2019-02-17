@@ -874,6 +874,10 @@
                         </recommendedContent>
                     </element>
 
+                    <element name="mods:recordInfoNote" mandatory="false">
+                        <recommendedContent/>
+                    </element>
+
                     <element name="mods:languageOfCataloging" mandatory="false">
                         <expectedElements>
                             <element name="mods:languageTerm" mandatory="false">
