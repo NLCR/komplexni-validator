@@ -1,5 +1,5 @@
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
-    <!--XML Schema pro soubor INFO pro DMF Monografie 1.3.1-->
+    <!--XML Schema pro soubor INFO pro DMF Monografie 1.3.2-->
 
     <!--METS Profile requirement id infoxml2-->
     <xs:element name="info">
@@ -86,7 +86,6 @@
 
     <xs:simpleType name="metadataVersion">
         <xs:restriction base="xs:string">
-            <!--TODO: pro periodika jinak-->
             <!--tohle se lisi podle verze DMF (fDMF), jejiz soucasti je tenhle soubor-->
             <xs:enumeration value="1.1"/>
             <xs:enumeration value="1.1.1"/>
@@ -95,6 +94,7 @@
             <xs:enumeration value="1.2"/>
             <xs:enumeration value="1.3"/>
             <xs:enumeration value="1.3.1"/>
+            <xs:enumeration value="1.3.2"/>
         </xs:restriction>
     </xs:simpleType>
 
