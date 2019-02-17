@@ -219,7 +219,6 @@
                     <oneOf>
                         <value>text</value>
                         <value>still image</value>
-                        <value>image</value>
                         <value>notated music</value>
                         <value>cartographic</value>
                     </oneOf>
