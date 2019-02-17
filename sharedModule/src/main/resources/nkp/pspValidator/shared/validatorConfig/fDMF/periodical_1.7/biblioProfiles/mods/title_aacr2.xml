@@ -553,9 +553,9 @@
                     </element>
 
                     <element name="mods:recordChangeDate" mandatory="false">
-                        <!-- TODO: proverit, zda stale plati i pro 1.7 -->
-                        <!--V DMF 1.6 není atribut encoding definován, ale logicky by měl být stejný zápis jako u recordCreationDate, atribut povolen
-                         ale nepovinný, protože ve specifikaci není-->
+                        <!-- TODO: https://github.com/NLCR/Standard_NDK/issues/86 -->
+                        <!-- V DMF 1.7 není atribut encoding definován, ale logicky by měl být stejný zápis jako u recordCreationDate.
+                        Zde ale atribut definován nepovinný, protože není ve specifikaci DMF -->
                         <expectedAttributes>
                             <attribute name="encoding" mandatory="false">
                                 <expectedContent>
