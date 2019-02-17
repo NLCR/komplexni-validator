@@ -34,14 +34,9 @@
                 <expectedContent/>
             </element>
 
-            <element name="dc:type" mandatory="false">
+            <element name="dc:type" mandatory="true">
                 <expectedContent>
-                    <oneOf>
-                        <value>text</value>
-                        <value>image</value>
-                        <value>notated music</value>
-                        <value>cartographic</value>
-                    </oneOf>
+                    <value>model:page</value>
                 </expectedContent>
             </element>
 
