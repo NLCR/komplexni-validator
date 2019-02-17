@@ -688,12 +688,12 @@ public class Main {
                                        ImageUtilManager imageUtilManager, ValidatorConfigurationManager validatorConfigManager,
                                        PrintStream out, Integer verbosity,
                                        File xmlProtocolDir, File xmlProtocolFile,
-                                       String preferDmfMonVersion, String preferDmfPerVersion, String forceDmfMonVersion, String forceDmfPerVersion,
+                                       String preferredDmfMonVersion, String preferredDmfPerVersion, String forcedDmfMonVersion, String forcedDmfPerVersion,
                                        Validator.DevParams devParams) throws ValidatorConfigurationException, FdmfRegistry.UnknownFdmfException, PspDataException, XmlFileParsingException, InvalidXPathExpressionException {
         //psp dir, dmf detection
         checkReadableDir(pspDir);
         out.println(String.format("Zpracovávám PSP balík %s", pspDir.getAbsolutePath()));
-        Dmf dmfResolved = new DmfDetector().resolveDmf(pspDir, preferDmfMonVersion, preferDmfPerVersion, forceDmfMonVersion, forceDmfPerVersion);
+        Dmf dmfResolved = new DmfDetector().resolveDmf(pspDir, preferredDmfMonVersion, preferredDmfPerVersion, forcedDmfMonVersion, forcedDmfPerVersion);
         out.println(String.format("Bude použita verze standardu %s", dmfResolved));
 
         //initializes j2k profiles according to selected fDMF
