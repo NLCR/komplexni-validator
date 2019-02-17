@@ -423,6 +423,9 @@
                         <expectedContent>
                             <oneOf>
                                 <value>czenas</value>
+                                <value>eczenas</value>
+                                <value>mednas</value>
+                                <value>czmesh</value>
                                 <value>Konspekt</value>
                             </oneOf>
                         </expectedContent>
@@ -463,7 +466,7 @@
                     <!--NOTE: DMF neuvadi, jestli je authority povinny atribut, nechavam nepovinny. Neni zrejme co plati pro rda a aacr2, povolena nvíc i hodnota Konspekt aby prochazely elementy s touto hodnotou bez atributu edition-->
                     <attribute name="authority" mandatory="true">
                         <recommendedContent>
-                             <oneOf>
+                            <oneOf>
                                 <value>udc</value>
                                 <value>Konspekt</value>
                             </oneOf>

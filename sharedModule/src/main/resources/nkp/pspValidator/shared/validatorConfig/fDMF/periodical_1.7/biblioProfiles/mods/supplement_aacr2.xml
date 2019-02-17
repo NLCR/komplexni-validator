@@ -323,6 +323,9 @@
                         <expectedContent>
                             <oneOf>
                                 <value>czenas</value>
+                                <value>eczenas</value>
+                                <value>mednas</value>
+                                <value>czmesh</value>
                                 <value>Konspekt</value>
                             </oneOf>
                         </expectedContent>
