@@ -58,7 +58,7 @@
                 <expectedContent/>
             </element>
 
-            <element name="mods:part" mandatory="false">
+            <element name="mods:part" specification="mods:detail[@type!='pageIndex']" mandatory="false">
                 <expectedAttributes>
                     <attribute name="type">
                         <recommendedContent>
@@ -128,6 +128,26 @@
                         </expectedAttributes>
                         <expectedElements>
                             <element name="mods:start">
+                                <expectedContent/>
+                            </element>
+                        </expectedElements>
+                    </element>
+
+                </expectedElements>
+            </element>
+
+            <element name="mods:part" specification="mods:detail[@type='pageIndex']" mandatory="false">
+                <expectedElements>
+                    <element name="mods:detail">
+                        <expectedAttributes>
+                            <attribute name="type">
+                                <expectedContent>
+                                    <value>pageIndex</value>
+                                </expectedContent>
+                            </attribute>
+                        </expectedAttributes>
+                        <expectedElements>
+                            <element name="mods:number">
                                 <expectedContent/>
                             </element>
                         </expectedElements>
