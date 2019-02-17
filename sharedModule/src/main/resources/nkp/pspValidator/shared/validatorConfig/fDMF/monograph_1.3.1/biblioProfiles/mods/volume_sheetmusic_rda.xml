@@ -157,7 +157,7 @@
                 </extraRules>
             </element>
 
-            <element name="mods:name" specification="mods:etal">
+            <element name="mods:name" specification="mods:etal" mandatory="false">
                 <expectedElements>
                     <element name="mods:etal">
                         <expectedContent/>
