@@ -3,11 +3,11 @@
         xmlns="http://www.nkp.cz/pspValidator/2.0/metadataProfile"
         name="DC internal part - picture (RDA)"
         validatorVersion="2.0"
-        dmf="monograph_1.3.1"
+        dmf="monograph_1.3.2"
 >
 
     <info>
-        <text>DMF Monografie 1.3.1 očekává Dublin Core verze 1.1. Dále se zde upřesňují očekávaná metadata pro vnitřní
+        <text>DMF Monografie 1.3.2 očekává Dublin Core verze 1.1. Dále se zde upřesňují očekávaná metadata pro vnitřní
             část typu obraz pro záznamy zpracované podle katalogizačních pravidel RDA.
         </text>
         <url description="popis Dublin Core 1.1">http://dublincore.org/documents/dces/</url>
