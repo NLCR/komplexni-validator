@@ -2,6 +2,7 @@ package nkp.pspValidator.gui.skipping;
 
 import nkp.pspValidator.gui.ConfigurationManager;
 import nkp.pspValidator.gui.ValidationDataManager;
+import nkp.pspValidator.gui.VersionComparator;
 import nkp.pspValidator.gui.validation.Utils;
 import nkp.pspValidator.shared.Dmf;
 import nkp.pspValidator.shared.FdmfRegistry;
@@ -26,13 +27,20 @@ public class SkippedManagerImpl implements SkippedManager {
         dmfToSkipped = buildDmfToSkipped(mgr);
     }
 
-    // TODO: 2019-02-07 usporadat od poslednich verzi k starsim
     private List<Dmf> buildDmfList(ValidationDataManager mgr) {
         List<Dmf> result = new ArrayList<>();
-        for (String monVersion : mgr.getFdmfRegistry().getMonographFdmfVersions()) {
+        //monograph
+        List<String> monVersions = new ArrayList<>();
+        monVersions.addAll(mgr.getFdmfRegistry().getMonographFdmfVersions());
+        Collections.sort(monVersions, new VersionComparator());
+        for (String monVersion : monVersions) {
             result.add(new Dmf(Dmf.Type.MONOGRAPH, monVersion));
         }
-        for (String perVersion : mgr.getFdmfRegistry().getPeriodicalFdmfVersions()) {
+        //periodical
+        List<String> perVersions = new ArrayList<>();
+        perVersions.addAll(mgr.getFdmfRegistry().getPeriodicalFdmfVersions());
+        Collections.sort(perVersions, new VersionComparator());
+        for (String perVersion : perVersions) {
             result.add(new Dmf(Dmf.Type.PERIODICAL, perVersion));
         }
         return result;
