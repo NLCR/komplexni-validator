@@ -3,12 +3,12 @@
         xmlns="http://www.nkp.cz/pspValidator/2.0/metadataProfile"
         name="MIX MC (archivní kopie)"
         validatorVersion="2.0"
-        dmf="monograph_1.3.1"
+        dmf="monograph_1.3.2"
 >
 
     <info>
         <text>
-            Profil pro validaci MIX záznamu archivní kopie (MC) stránky v sekundárním METSu pro DMF Monografie 1.3.1.
+            Profil pro validaci MIX záznamu archivní kopie (MC) stránky v sekundárním METSu pro DMF Monografie 1.3.2.
         </text>
         <url description="popis formátu MIX">http://www.loc.gov/standards/mix/</url>
         <url description="XSD pro MIX 2.0">http://www.loc.gov/standards/mix/mix.xsd</url>
