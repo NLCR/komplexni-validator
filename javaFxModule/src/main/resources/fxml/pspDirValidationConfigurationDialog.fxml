@@ -66,39 +66,39 @@
                        onAction="#forcedPerVersionChoiceboxChanged"
             />
 
-            <!--prefered-->
+            <!--preferred-->
             <Label text="Preferované verze standardů. Jsou použity, když v datech balíku chybí verze DMF."
                    GridPane.columnIndex="0"
                    GridPane.columnSpan="3"
                    GridPane.rowIndex="6"/>
 
             <!--forced Monograph version-->
-            <CheckBox fx:id="preferedMonVersionCheckBox"
-                      onAction="#preferedMonVersionChanged"
+            <CheckBox fx:id="preferredMonVersionCheckBox"
+                      onAction="#preferredMonVersionChanged"
                       GridPane.columnIndex="0"
                       GridPane.rowIndex="7"/>
 
             <Label text="Monografie" GridPane.columnIndex="1" GridPane.rowIndex="7"/>
 
-            <ChoiceBox fx:id="preferedMonVersionChoiceBox"
+            <ChoiceBox fx:id="preferredMonVersionChoiceBox"
                        GridPane.columnIndex="2"
                        GridPane.rowIndex="7"
-                       onAction="#preferedMonVersionChoiceboxChanged"
+                       onAction="#preferredMonVersionChoiceboxChanged"
             />
 
             <!--forced Periodical version-->
-            <CheckBox fx:id="preferedPerVersionCheckBox"
+            <CheckBox fx:id="preferredPerVersionCheckBox"
                       GridPane.columnIndex="0"
                       GridPane.rowIndex="8"
-                      onAction="#preferedPerVersionChanged"
+                      onAction="#preferredPerVersionChanged"
             />
 
             <Label text="Periodika" GridPane.columnIndex="1" GridPane.rowIndex="8"/>
 
-            <ChoiceBox fx:id="preferedPerVersionChoiceBox"
+            <ChoiceBox fx:id="preferredPerVersionChoiceBox"
                        GridPane.columnIndex="2" GridPane.columnSpan="2"
                        GridPane.rowIndex="8"
-                       onAction="#preferedPerVersionChoiceboxChanged"
+                       onAction="#preferredPerVersionChoiceboxChanged"
             />
 
 

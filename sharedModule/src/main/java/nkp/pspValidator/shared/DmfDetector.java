@@ -144,7 +144,7 @@ public class DmfDetector {
         }
     }
 
-    private Dmf chooseVersion(Dmf.Type type, String forcedVersion, File pspRoot, String preferedVersion, String defaultVErsion) throws PspDataException, InvalidXPathExpressionException, XmlFileParsingException {
+    private Dmf chooseVersion(Dmf.Type type, String forcedVersion, File pspRoot, String preferredVersion, String defaultVersion) throws PspDataException, InvalidXPathExpressionException, XmlFileParsingException {
         if (forcedVersion != null) {
             return new Dmf(type, forcedVersion);
         } else {
@@ -152,7 +152,7 @@ public class DmfDetector {
             if (versionFromInfo != null) {
                 return new Dmf(type, versionFromInfo);
             } else {
-                return new Dmf(type, defaultVErsion);
+                return new Dmf(type, defaultVersion);
             }
         }
     }
