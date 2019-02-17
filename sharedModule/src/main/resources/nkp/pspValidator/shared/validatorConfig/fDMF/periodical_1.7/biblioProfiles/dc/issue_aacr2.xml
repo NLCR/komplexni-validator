@@ -3,10 +3,10 @@
         xmlns="http://www.nkp.cz/pspValidator/2.0/metadataProfile"
         name="DC issue (AACR2)"
         validatorVersion="2.0"
-        dmf="periodical_1.6"
+        dmf="periodical_1.7"
 >
     <info>
-        <text>DMF Periodika-1.6 očekává Dublin Core verze 1.1. Dále se zde upřesňují očekávaná metadata pro číslo
+        <text>DMF Periodika 1.7 očekává Dublin Core verze 1.1. Dále se zde upřesňují očekávaná metadata pro číslo
             periodika pro záznamy zpracované podle katalogizačních pravidel AACR2.
         </text>
         <url description="popis Dublin Core 1.1">http://dublincore.org/documents/dces/</url>

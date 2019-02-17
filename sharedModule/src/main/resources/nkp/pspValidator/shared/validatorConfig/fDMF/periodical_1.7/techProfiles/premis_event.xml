@@ -3,16 +3,16 @@
         xmlns="http://www.nkp.cz/pspValidator/2.0/metadataProfile"
         name="PREMIS Event"
         validatorVersion="2.0"
-        dmf="periodical_1.6"
+        dmf="periodical_1.7"
 >
 
     <info>
         <text>
-            Profil pro validaci PREMIS Event záznamu stránky v sekundárním METSu pro DMF
-            Periodika-1.6.
+            Profil pro validaci PREMIS Event záznamu stránky v sekundárním METSu pro DMF Periodika 1.6.
         </text>
         <url description="popis formátu PREMIS">http://www.loc.gov/standards/premis/</url>
         <url description="XSD pro PREMIS 2.2">http://www.loc.gov/standards/premis/v2/premis-v2-2.xsd</url>
+        <!--TODO: proverit vsechny komentare "UPDATE z NK", zda bylo reflektovano v DMF. Potom bud sjednotit s DMF, nebo napsat issue k pretrvavajici nekonzistenci-->
     </info>
 
     <namespaces>
@@ -84,7 +84,7 @@
                                         </expectedContent>
                                     </element>
 
-                                    <!--Neni jasna povinnost - konflikt povinnost=M a vyskyt=0-1, viz DMF Periodika 1.6: s. 61. UPDATE z NK: má být povinné, opraveno na povinné-->
+                                    <!--Neni jasna povinnost - konflikt povinnost=M a vyskyt=0-1. UPDATE z NK: má být povinné, opraveno na povinné-->
                                     <element name="premis:eventDetail" mandatory="true" repeatable="false">
                                         <recommendedContent>
                                             <oneOf>
@@ -102,14 +102,14 @@
 
                                     <element name="premis:eventOutcomeInformation" mandatory="false" repeatable="true">
                                         <expectedElements>
-                                            <!--Neni jasna povinnost - konflikt povinnost=M a vyskyt=0-1, viz DMF Periodika 1.6: s. 61. UPDATE z NK: má být povinné, opraveno na povinné-->
+                                            <!--Neni jasna povinnost - konflikt povinnost=M a vyskyt=0-1. UPDATE z NK: má být povinné, opraveno na povinné-->
                                             <element name="premis:eventOutcome" mandatory="true" repeatable="false">
                                                 <expectedContent/>
                                             </element>
                                         </expectedElements>
                                     </element>
 
-                                    <!--Neni jasna povinnost - konflikt povinnost=M a vyskyt=0-n, viz DMF Periodika 1.6: s. 61. UPDATE z NK: má být povinné, opraveno na povinné-->
+                                    <!--Neni jasna povinnost - konflikt povinnost=M a vyskyt=0-n. UPDATE z NK: má být povinné, opraveno na povinné-->
                                     <element name="premis:linkingAgentIdentifier" mandatory="true" repeatable="true">
                                         <expectedElements>
                                             <element name="premis:linkingAgentIdentifierType" mandatory="true"
@@ -128,7 +128,7 @@
                                         </expectedElements>
                                     </element>
 
-                                    <!--Neni jasna povinnost - konflikt povinnost=M a vyskyt=0-n, viz DMF Periodika 1.6: s. 62. UPDATE z NK: má být povinné, opraveno na povinné-->
+                                    <!--Neni jasna povinnost - konflikt povinnost=M a vyskyt=0-n. UPDATE z NK: má být povinné, opraveno na povinné-->
                                     <element name="premis:linkingObjectIdentifier" mandatory="true" repeatable="true">
                                         <expectedElements>
                                             <element name="premis:linkingObjectIdentifierType" mandatory="true"

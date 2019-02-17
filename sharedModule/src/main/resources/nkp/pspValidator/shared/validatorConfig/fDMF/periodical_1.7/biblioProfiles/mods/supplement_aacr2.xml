@@ -3,11 +3,11 @@
         xmlns="http://www.nkp.cz/pspValidator/2.0/metadataProfile"
         name="MODS supplement (AACR2)"
         validatorVersion="2.0"
-        dmf="periodical_1.6"
+        dmf="periodical_1.7"
 >
 
     <info>
-        <text>DMF Periodika-1.6 očekává MODS verze 3.5. Dále se zde upřesňují očekávaná metadata pro přílohu pro
+        <text>DMF Periodika 1.7 očekává MODS verze 3.5. Dále se zde upřesňují očekávaná metadata pro přílohu pro
             záznamy zpracované podle katalogizačních pravidel AACR2.
         </text>
         <url>http://www.loc.gov/standards/mods/</url>
