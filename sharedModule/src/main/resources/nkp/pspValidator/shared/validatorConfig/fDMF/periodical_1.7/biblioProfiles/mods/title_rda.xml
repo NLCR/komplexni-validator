@@ -144,7 +144,7 @@
 
             <element name="mods:genre" specification="text()='title'"/>
 
-            <element name="mods:originInfo" specification="@eventType='publication'">
+            <element name="mods:originInfo" specification="@eventType='publication'" mandatory="false">
                 <expectedAttributes>
                     <attribute name="eventType"/>
                 </expectedAttributes>
@@ -880,6 +880,10 @@
             </element>
 
         </expectedElements>
+        <extraRules>
+            <!--  Musí existovat alespoň jeden element originInfo a to s atributem eventType=publication nebo eventType=production -->
+            <existsAtLeastOnce xpath="mods:originInfo[@eventType='publication' or @eventType='production']"/>
+        </extraRules>
     </rootElement>
 </metadataProfile>
 
