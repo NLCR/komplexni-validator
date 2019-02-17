@@ -160,6 +160,14 @@
                                 <value>chapter</value>
                                 <value>article</value>
                                 <value>index</value>
+                                <value>otherNote</value>
+                                <value>contributors</value>
+                                <value>debate</value>
+                                <value>figure</value>
+                                <value>obituary</value>
+                                <value>remark</value>
+                                <value>study</value>
+                                <value>technicalPlanScheme</value>
                                 <value>unspecified</value>
                             </oneOf>
                         </expectedContent>
