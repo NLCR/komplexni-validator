@@ -130,14 +130,14 @@ public class DmfDetector {
         }
     }
 
-    public Dmf resolveDmf(File pspRoot, String preferDmfMonVersion, String preferDmfPerVersion, String forceDmfMonVersion, String forceDmfPerVersion) throws PspDataException, InvalidXPathExpressionException, XmlFileParsingException {
+    public Dmf resolveDmf(File pspRoot, String preferredDmfMonVersion, String preferredDmfPerVersion, String forcedDmfMonVersion, String forcedDmfPerVersion) throws PspDataException, InvalidXPathExpressionException, XmlFileParsingException {
         Dmf.Type type = detectDmfType(pspRoot);
         switch (type) {
             case MONOGRAPH: {
-                return chooseVersion(MONOGRAPH, forceDmfMonVersion, pspRoot, preferDmfMonVersion, DEFAULT_MONOGRAPH_VERSION);
+                return chooseVersion(MONOGRAPH, forcedDmfMonVersion, pspRoot, preferredDmfMonVersion, DEFAULT_MONOGRAPH_VERSION);
             }
             case PERIODICAL: {
-                return chooseVersion(PERIODICAL, forceDmfPerVersion, pspRoot, preferDmfPerVersion, DEFAULT_PERIODICAL_VERSION);
+                return chooseVersion(PERIODICAL, forcedDmfPerVersion, pspRoot, preferredDmfPerVersion, DEFAULT_PERIODICAL_VERSION);
             }
             default:
                 throw new IllegalStateException();
@@ -151,6 +151,8 @@ public class DmfDetector {
             String versionFromInfo = detectDmfVersionFromInfoFile(type, pspRoot);
             if (versionFromInfo != null) {
                 return new Dmf(type, versionFromInfo);
+            } else if (preferredVersion != null) {
+                return new Dmf(type, preferredVersion);
             } else {
                 return new Dmf(type, defaultVersion);
             }
