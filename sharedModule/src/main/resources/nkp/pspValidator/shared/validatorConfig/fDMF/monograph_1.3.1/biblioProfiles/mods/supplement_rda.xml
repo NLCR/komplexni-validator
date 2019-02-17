@@ -238,7 +238,7 @@
                         <expectedContent/>
                     </element>
 
-                    <element name="mods:dateIssued">
+                    <element name="mods:dateIssued" mandatory="false">
                         <expectedAttributes>
                             <attribute name="qualifier" mandatory="false"/>
                         </expectedAttributes>
