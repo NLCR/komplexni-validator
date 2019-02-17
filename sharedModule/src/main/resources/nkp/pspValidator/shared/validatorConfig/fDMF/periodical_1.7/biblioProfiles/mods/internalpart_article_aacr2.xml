@@ -7,12 +7,12 @@
 >
 
     <info>
-        <text>DMF Periodika 1.7 očekává MODS verze 3.5. Dále se zde upřesňují očekávaná metadata pro vnitřní část typu
+        <text>DMF Periodika 1.7 očekává MODS verze 3.6. Dále se zde upřesňují očekávaná metadata pro vnitřní část typu
             článek pro záznamy zpracované podle katalogizačních pravidel AACR2.
         </text>
         <url>http://www.loc.gov/standards/mods/</url>
-        <url description="XSD pro MODS 3.5">http://www.loc.gov/standards/mods/v3/mods-3-5.xsd</url>
-        <url description="popis MODS 3.5">http://www.loc.gov/standards/mods/mods-outline-3-5.html</url>
+        <url description="XSD pro MODS 3.6">http://www.loc.gov/standards/mods/v3/mods-3-6.xsd</url>
+        <url description="popis MODS 3.6">http://www.loc.gov/standards/mods/mods-outline-3-6.html</url>
     </info>
 
     <namespaces>
