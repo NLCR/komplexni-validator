@@ -11,6 +11,9 @@ import javafx.stage.WindowEvent;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -143,7 +146,9 @@ public class PspZipValidationConfigurationDialogController extends DialogControl
     private void initChoiceBoxes() {
         ConfigurationManager mgr = getConfigurationManager();
         //forced - mon
-        Set<String> forcedMonVersions = main.getValidationDataManager().getFdmfRegistry().getMonographFdmfVersions();
+        List<String> forcedMonVersions = new ArrayList<>();
+        forcedMonVersions.addAll(main.getValidationDataManager().getFdmfRegistry().getMonographFdmfVersions());
+        Collections.sort(forcedMonVersions, new VersionComparator());
         if (forcedMonVersions != null) {
             ObservableList<String> monVersionsObservable = FXCollections.observableArrayList(forcedMonVersions);
             forcedMonVersionChoiceBox.setItems(monVersionsObservable);
@@ -162,7 +167,9 @@ public class PspZipValidationConfigurationDialogController extends DialogControl
             }
         }
         //forced - per
-        Set<String> forcedPerVersions = main.getValidationDataManager().getFdmfRegistry().getPeriodicalFdmfVersions();
+        List<String> forcedPerVersions = new ArrayList<>();
+        forcedPerVersions.addAll(main.getValidationDataManager().getFdmfRegistry().getPeriodicalFdmfVersions());
+        Collections.sort(forcedPerVersions, new VersionComparator());
         if (forcedPerVersions != null) {
             ObservableList<String> perVersionsObservable = FXCollections.observableArrayList(forcedPerVersions);
             forcedPerVersionChoiceBox.setItems(perVersionsObservable);
@@ -181,7 +188,9 @@ public class PspZipValidationConfigurationDialogController extends DialogControl
             }
         }
         //preferred - mon
-        Set<String> preferredMonVersions = main.getValidationDataManager().getFdmfRegistry().getMonographFdmfVersions();
+        List<String> preferredMonVersions = new ArrayList<>();
+        preferredMonVersions.addAll(main.getValidationDataManager().getFdmfRegistry().getMonographFdmfVersions());
+        Collections.sort(preferredMonVersions, new VersionComparator());
         if (preferredMonVersions != null) {
             ObservableList<String> monVersionsObservable = FXCollections.observableArrayList(preferredMonVersions);
             preferredMonVersionChoiceBox.setItems(monVersionsObservable);
@@ -199,7 +208,10 @@ public class PspZipValidationConfigurationDialogController extends DialogControl
                 preferredMonVersionChoiceBox.getSelectionModel().selectFirst();
             }
         }
-        Set<String> preferredPerVersions = main.getValidationDataManager().getFdmfRegistry().getPeriodicalFdmfVersions();
+        //preferred - per
+        List<String> preferredPerVersions = new ArrayList<>();
+        preferredPerVersions.addAll(main.getValidationDataManager().getFdmfRegistry().getPeriodicalFdmfVersions());
+        Collections.sort(preferredPerVersions, new VersionComparator());
         if (preferredPerVersions != null) {
             ObservableList<String> perVersionsObservable = FXCollections.observableArrayList(preferredPerVersions);
             preferredPerVersionChoiceBox.setItems(perVersionsObservable);
