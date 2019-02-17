@@ -54,7 +54,7 @@
                 </expectedElements>
             </element>
 
-            <element name="mods:name" mandatory="false">
+            <element name="mods:name" specification="not(mods:etal)" mandatory="false">
                 <expectedAttributes>
                     <attribute name="type" mandatory="false">
                         <expectedContent>
@@ -110,6 +110,14 @@
                                 </recommendedContent>
                             </element>
                         </expectedElements>
+                    </element>
+                </expectedElements>
+            </element>
+
+            <element name="mods:name" specification="mods:etal" mandatory="false">
+                <expectedElements>
+                    <element name="mods:etal">
+                        <expectedContent/>
                     </element>
                 </expectedElements>
             </element>
