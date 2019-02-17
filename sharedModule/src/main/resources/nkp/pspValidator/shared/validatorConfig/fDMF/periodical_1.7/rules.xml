@@ -1,6 +1,6 @@
 <fDMF xmlns="http://www.nkp.cz/pspValidator/2.0/fdmfConfig"
       validatorVersion="2.0"
-      dmf="periodical_1.6"
+      dmf="periodical_1.7"
 >
     <description>
         Zde jsou definovány validační pravidla. K samotným validacím se používají validační funkce, jejichž parametry
@@ -816,7 +816,7 @@
         </rule>
 
         <rule name="INFO_XML_VALID_BY_XSD">
-            <description>Soubor INFO by měl být být validní podle XML Schema (info_per1.6.xsd).</description>
+            <description>Soubor INFO by měl být být validní podle XML Schema (info_per1.7.xsd).</description>
             <validation functionName="checkXmlIsValidByXsd">
                 <params>
                     <value name="xml_file" type="FILE">
@@ -2937,7 +2937,7 @@
             </validation>
         </rule>
 
-        <!--TODO: kontrola ALTO oproti profilu, viz dokument DMF periodika-1.6, strany 82 - 95-->
+        <!--TODO: kontrola ALTO oproti profilu-->
 
     </rules-section>
 

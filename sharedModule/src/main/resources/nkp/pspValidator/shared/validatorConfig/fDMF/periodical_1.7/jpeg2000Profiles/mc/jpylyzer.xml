@@ -1,7 +1,7 @@
 <jpeg2000profile
         xmlns="http://www.nkp.cz/pspValidator/2.0/jpeg2000profile"
         validatorVersion="2.0"
-        dmf="periodical_1.6"
+        dmf="periodical_1.7"
 >
     <fromXml>
         <namespaces>

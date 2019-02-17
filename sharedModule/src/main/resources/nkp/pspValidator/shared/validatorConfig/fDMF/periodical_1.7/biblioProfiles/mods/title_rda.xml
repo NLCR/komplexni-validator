@@ -3,11 +3,11 @@
         xmlns="http://www.nkp.cz/pspValidator/2.0/metadataProfile"
         name="MODS title (RDA)"
         validatorVersion="2.0"
-        dmf="periodical_1.6"
+        dmf="periodical_1.7"
 >
 
     <info>
-        <text>DMF Periodika-1.6 očekává MODS verze 3.5. Dále se zde upřesňují očekávaná metadata pro titul periodika pro
+        <text>DMF Periodika 1.7 očekává MODS verze 3.5. Dále se zde upřesňují očekávaná metadata pro titul periodika pro
             záznamy zpracované podle katalogizačních pravidel RDA.
         </text>
         <url>http://www.loc.gov/standards/mods/</url>
@@ -834,6 +834,7 @@
                     </element>
 
                     <element name="mods:recordChangeDate" mandatory="false">
+                        <!-- TODO: proverit, zda stale plati i pro 1.7 -->
                         <!--V DMF 1.6 není atribut encoding definován, ale logicky by měl být stejný zápis jako u recordCreationDate, atribut povolen
                          ale nepovinný, protože ve specifikaci není-->
                         <expectedAttributes>
