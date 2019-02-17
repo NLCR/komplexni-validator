@@ -75,6 +75,10 @@
                         <expectedContent/>
                     </element>
 
+                    <element name="mods:nameIdentifier" mandatory="false">
+                        <expectedContent/>
+                    </element>
+
                     <element name="mods:role" mandatory="false">
                         <!--Kontrolovany slovnik je jen doporucovan-->
                         <expectedElements>
