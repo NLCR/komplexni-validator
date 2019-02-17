@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <metadataProfile
         xmlns="http://www.nkp.cz/pspValidator/2.0/metadataProfile"
-        name="MODS title of multivolume monographic (AACR2)"
+        name="MODS page (AACR2)"
         validatorVersion="2.0"
         dmf="monograph_1.3"
 >
