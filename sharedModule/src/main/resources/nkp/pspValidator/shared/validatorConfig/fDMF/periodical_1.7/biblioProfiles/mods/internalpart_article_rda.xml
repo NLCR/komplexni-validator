@@ -68,7 +68,7 @@
                                 <value>corporate</value>
                                 <!--zase "konference" namisto "conference"-->
                                 <value>konference</value>
-				<value>conference</value>
+                                <value>conference</value>
                                 <value>family</value>
                             </oneOf>
                         </expectedContent>
@@ -202,11 +202,13 @@
                         <expectedAttributes>
                             <attribute name="authority" mandatory="false">
                                 <expectedContent>
-                                    <!--s.44 - neni jasne,jestli je o jedine dve povolene hodnoty, nechavam cokoliv-->
-                                    <!--<oneOf>
+                                    <oneOf>
                                         <value>czenas</value>
+                                        <value>eczenas</value>
+                                        <value>mednas</value>
+                                        <value>czmesh</value>
                                         <value>Konspekt</value>
-                                    </oneOf>-->
+                                    </oneOf>
                                 </expectedContent>
                             </attribute>
                         </expectedAttributes>
