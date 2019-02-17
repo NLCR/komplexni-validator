@@ -71,7 +71,7 @@
                 </expectedElements>
             </element>
 
-            <element name="mods:name" mandatory="false">
+            <element name="mods:name" specification="not(mods:etal)" mandatory="false">
                 <expectedAttributes>
                     <attribute name="type" mandatory="false">
                         <!--    V DMF není určeno, jestli je atribut povinný, takže nechávám, že není-->
@@ -129,8 +129,6 @@
                         <expectedContent/>
                     </element>
 
-                    <element name="mods:etal" mandatory="false"/>
-
                     <element name="mods:role" mandatory="false">
                         <expectedElements>
                             <element name="mods:roleTerm">
@@ -157,6 +155,14 @@
                     <!--  Musí existovat alespoň jeden element namePart-->
                     <existsAtLeastOnce xpath="mods:namePart"/>
                 </extraRules>
+            </element>
+
+            <element name="mods:name" specification="mods:etal">
+                <expectedElements>
+                    <element name="mods:etal">
+                        <expectedContent/>
+                    </element>
+                </expectedElements>
             </element>
 
             <element name="mods:typeOfResource" mandatory="false">
@@ -563,10 +569,6 @@
                                 <value>human prepared</value>
                             </oneOf>
                         </recommendedContent>
-                    </element>
-
-                    <element name="mods:recordInfoNote" mandatory="false">
-                        <expectedContent/>
                     </element>
 
                     <element name="mods:languageOfCataloging" mandatory="false">

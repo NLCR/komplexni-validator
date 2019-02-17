@@ -60,7 +60,7 @@
                 </expectedElements>
             </element>
 
-            <element name="mods:name" mandatory="false">
+            <element name="mods:name" specification="not(mods:etal)" mandatory="false">
                 <expectedAttributes>
                     <attribute name="type" mandatory="false">
                         <expectedContent>
@@ -111,8 +111,6 @@
                         <expectedContent/>
                     </element>
 
-                    <element name="mods:etal" mandatory="false"/>
-
                     <element name="mods:role" mandatory="false">
                         <expectedElements>
                             <element name="mods:roleTerm" mandatory="false">
@@ -133,6 +131,14 @@
                                 </recommendedContent>
                             </element>
                         </expectedElements>
+                    </element>
+                </expectedElements>
+            </element>
+
+            <element name="mods:name" specification="mods:etal">
+                <expectedElements>
+                    <element name="mods:etal">
+                        <expectedContent/>
                     </element>
                 </expectedElements>
             </element>
@@ -422,10 +428,6 @@
                                 <value>human prepared</value>
                             </oneOf>
                         </recommendedContent>
-                    </element>
-
-                    <element name="mods:recordInfoNote" mandatory="false">
-                        <expectedContent/>
                     </element>
 
                 </expectedElements>
