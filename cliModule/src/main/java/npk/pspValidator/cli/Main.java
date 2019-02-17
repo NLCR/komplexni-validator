@@ -312,7 +312,7 @@ public class Main {
                     }
                 }*/
 
-                //prefered dmf versions
+                //preferred dmf versions
                 String preferDmfMonVersion = null;
                 if (line.hasOption(Params.PREFER_DMF_MON_VERSION)) {
                     preferDmfMonVersion = line.getOptionValue(Params.PREFER_DMF_MON_VERSION);

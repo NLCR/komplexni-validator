@@ -34,16 +34,16 @@ public class PspDirValidationConfigurationDialogController extends DialogControl
     CheckBox forcedPerVersionCheckBox;
 
     @FXML
-    ChoiceBox preferedMonVersionChoiceBox;
+    ChoiceBox preferredMonVersionChoiceBox;
 
     @FXML
-    CheckBox preferedMonVersionCheckBox;
+    CheckBox preferredMonVersionCheckBox;
 
     @FXML
-    ChoiceBox preferedPerVersionChoiceBox;
+    ChoiceBox preferredPerVersionChoiceBox;
 
     @FXML
-    CheckBox preferedPerVersionCheckBox;
+    CheckBox preferredPerVersionCheckBox;
 
     @FXML
     Label errorMessageLabel;
@@ -107,13 +107,13 @@ public class PspDirValidationConfigurationDialogController extends DialogControl
         forcedMonVersionChoiceBox.setDisable(!forcedMonVersionEnabled);
         forcedPerVersionCheckBox.setSelected(forcedPerVersionEnabled);
         forcedPerVersionChoiceBox.setDisable(!forcedPerVersionEnabled);
-        //prefered
-        boolean preferedMonVersionEnabled = mgr.getBooleanOrDefault(ConfigurationManager.PROP_PREFER_MON_VERSION_ENABLED, false);
-        boolean preferedPerVersionEnabled = mgr.getBooleanOrDefault(ConfigurationManager.PROP_PREFER_PER_VERSION_ENABLED, false);
-        preferedMonVersionCheckBox.setSelected(preferedMonVersionEnabled);
-        preferedMonVersionChoiceBox.setDisable(!preferedMonVersionEnabled);
-        preferedPerVersionCheckBox.setSelected(preferedPerVersionEnabled);
-        preferedPerVersionChoiceBox.setDisable(!preferedPerVersionEnabled);
+        //preferred
+        boolean preferredMonVersionEnabled = mgr.getBooleanOrDefault(ConfigurationManager.PROP_PREFER_MON_VERSION_ENABLED, false);
+        boolean preferredPerVersionEnabled = mgr.getBooleanOrDefault(ConfigurationManager.PROP_PREFER_PER_VERSION_ENABLED, false);
+        preferredMonVersionCheckBox.setSelected(preferredMonVersionEnabled);
+        preferredMonVersionChoiceBox.setDisable(!preferredMonVersionEnabled);
+        preferredPerVersionCheckBox.setSelected(preferredPerVersionEnabled);
+        preferredPerVersionChoiceBox.setDisable(!preferredPerVersionEnabled);
         //logs
         createTxtLog.setSelected(mgr.getBooleanOrDefault(ConfigurationManager.PROP_PSP_VALIDATION_CREATE_TXT_LOG, false));
         createXmlLog.setSelected(mgr.getBooleanOrDefault(ConfigurationManager.PROP_PSP_VALIDATION_CREATE_XML_LOG, false));
@@ -180,41 +180,41 @@ public class PspDirValidationConfigurationDialogController extends DialogControl
                 forcedPerVersionChoiceBox.getSelectionModel().selectFirst();
             }
         }
-        //prefered - mon
-        Set<String> preferedMonVersions = main.getValidationDataManager().getFdmfRegistry().getMonographFdmfVersions();
-        if (preferedMonVersions != null) {
-            ObservableList<String> monVersionsObservable = FXCollections.observableArrayList(preferedMonVersions);
-            preferedMonVersionChoiceBox.setItems(monVersionsObservable);
+        //preferred - mon
+        Set<String> preferredMonVersions = main.getValidationDataManager().getFdmfRegistry().getMonographFdmfVersions();
+        if (preferredMonVersions != null) {
+            ObservableList<String> monVersionsObservable = FXCollections.observableArrayList(preferredMonVersions);
+            preferredMonVersionChoiceBox.setItems(monVersionsObservable);
             String version = mgr.getStringOrDefault(ConfigurationManager.PROP_PREFER_MON_VERSION_CODE, null);
             boolean found = false;
             if (version != null) {
                 for (int i = 0; i < monVersionsObservable.size(); i++) {
                     if (version.equals(monVersionsObservable.get(i))) {
-                        preferedMonVersionChoiceBox.getSelectionModel().select(i);
+                        preferredMonVersionChoiceBox.getSelectionModel().select(i);
                         found = true;
                     }
                 }
             }
             if (!found) {
-                preferedMonVersionChoiceBox.getSelectionModel().selectFirst();
+                preferredMonVersionChoiceBox.getSelectionModel().selectFirst();
             }
         }
-        Set<String> preferedPerVersions = main.getValidationDataManager().getFdmfRegistry().getPeriodicalFdmfVersions();
-        if (preferedPerVersions != null) {
-            ObservableList<String> perVersionsObservable = FXCollections.observableArrayList(preferedPerVersions);
-            preferedPerVersionChoiceBox.setItems(perVersionsObservable);
+        Set<String> preferredPerVersions = main.getValidationDataManager().getFdmfRegistry().getPeriodicalFdmfVersions();
+        if (preferredPerVersions != null) {
+            ObservableList<String> perVersionsObservable = FXCollections.observableArrayList(preferredPerVersions);
+            preferredPerVersionChoiceBox.setItems(perVersionsObservable);
             String version = mgr.getStringOrDefault(ConfigurationManager.PROP_PREFER_PER_VERSION_CODE, null);
             boolean found = false;
             if (version != null) {
                 for (int i = 0; i < perVersionsObservable.size(); i++) {
                     if (version.equals(perVersionsObservable.get(i))) {
-                        preferedPerVersionChoiceBox.getSelectionModel().select(i);
+                        preferredPerVersionChoiceBox.getSelectionModel().select(i);
                         found = true;
                     }
                 }
             }
             if (!found) {
-                preferedPerVersionChoiceBox.getSelectionModel().selectFirst();
+                preferredPerVersionChoiceBox.getSelectionModel().selectFirst();
             }
         }
     }
@@ -261,11 +261,11 @@ public class PspDirValidationConfigurationDialogController extends DialogControl
             } else {
                 String forcedMonVersion = forcedMonVersionChoiceBox.isDisabled() ? null : (String) forcedMonVersionChoiceBox.getSelectionModel().getSelectedItem();
                 String forcedPerVersion = forcedPerVersionChoiceBox.isDisabled() ? null : (String) forcedPerVersionChoiceBox.getSelectionModel().getSelectedItem();
-                String preferedMonVersion = preferedMonVersionChoiceBox.isDisabled() ? null : (String) preferedMonVersionChoiceBox.getSelectionModel().getSelectedItem();
-                String preferedPerVersion = preferedPerVersionChoiceBox.isDisabled() ? null : (String) preferedPerVersionChoiceBox.getSelectionModel().getSelectedItem();
+                String preferredMonVersion = preferredMonVersionChoiceBox.isDisabled() ? null : (String) preferredMonVersionChoiceBox.getSelectionModel().getSelectedItem();
+                String preferredPerVersion = preferredPerVersionChoiceBox.isDisabled() ? null : (String) preferredPerVersionChoiceBox.getSelectionModel().getSelectedItem();
                 int verbosity = getSelectedVerbosity();
                 stage.hide();
-                main.runPspDirValidation(pspDir, preferedMonVersion, preferedPerVersion, forcedMonVersion, forcedPerVersion, createTxtLog.isSelected(), createXmlLog.isSelected(), verbosity);
+                main.runPspDirValidation(pspDir, preferredMonVersion, preferredPerVersion, forcedMonVersion, forcedPerVersion, createTxtLog.isSelected(), createXmlLog.isSelected(), verbosity);
             }
         }
     }
@@ -319,34 +319,34 @@ public class PspDirValidationConfigurationDialogController extends DialogControl
         }
     }
 
-    public void preferedMonVersionChoiceboxChanged(ActionEvent actionEvent) {
-        String version = (String) preferedMonVersionChoiceBox.getSelectionModel().getSelectedItem();
+    public void preferredMonVersionChoiceboxChanged(ActionEvent actionEvent) {
+        String version = (String) preferredMonVersionChoiceBox.getSelectionModel().getSelectedItem();
         if (getConfigurationManager() != null) {
             getConfigurationManager().setString(ConfigurationManager.PROP_PREFER_MON_VERSION_CODE, version);
         }
     }
 
-    public void preferedPerVersionChoiceboxChanged(ActionEvent actionEvent) {
-        String version = (String) preferedPerVersionChoiceBox.getSelectionModel().getSelectedItem();
+    public void preferredPerVersionChoiceboxChanged(ActionEvent actionEvent) {
+        String version = (String) preferredPerVersionChoiceBox.getSelectionModel().getSelectedItem();
         if (getConfigurationManager() != null) {
             getConfigurationManager().setString(ConfigurationManager.PROP_PREFER_PER_VERSION_CODE, version);
         }
     }
 
 
-    public void preferedMonVersionChanged(ActionEvent actionEvent) {
-        boolean prefered = preferedMonVersionCheckBox.isSelected();
-        preferedMonVersionChoiceBox.setDisable(!prefered);
+    public void preferredMonVersionChanged(ActionEvent actionEvent) {
+        boolean preferred = preferredMonVersionCheckBox.isSelected();
+        preferredMonVersionChoiceBox.setDisable(!preferred);
         if (getConfigurationManager() != null) {
-            getConfigurationManager().setBoolean(ConfigurationManager.PROP_PREFER_MON_VERSION_ENABLED, prefered);
+            getConfigurationManager().setBoolean(ConfigurationManager.PROP_PREFER_MON_VERSION_ENABLED, preferred);
         }
     }
 
-    public void preferedPerVersionChanged(ActionEvent actionEvent) {
-        boolean prefered = preferedPerVersionCheckBox.isSelected();
-        preferedPerVersionChoiceBox.setDisable(!prefered);
+    public void preferredPerVersionChanged(ActionEvent actionEvent) {
+        boolean preferred = preferredPerVersionCheckBox.isSelected();
+        preferredPerVersionChoiceBox.setDisable(!preferred);
         if (getConfigurationManager() != null) {
-            getConfigurationManager().setBoolean(ConfigurationManager.PROP_PREFER_PER_VERSION_ENABLED, prefered);
+            getConfigurationManager().setBoolean(ConfigurationManager.PROP_PREFER_PER_VERSION_ENABLED, preferred);
         }
     }
 

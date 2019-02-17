@@ -76,10 +76,10 @@ public class Main extends Application {
             Rectangle2D visualBounds = Screen.getPrimary().getVisualBounds();
             int minWidth = 1200;
             int minHeight = 600;
-            int preferedWidth = (int) (visualBounds.getWidth() * 0.85);
-            int preferedHeight = (int) (visualBounds.getHeight() * 0.85);
-            int width = Math.max(minWidth, preferedWidth);
-            int height = Math.max(minHeight, preferedHeight);
+            int preferredWidth = (int) (visualBounds.getWidth() * 0.85);
+            int preferredHeight = (int) (visualBounds.getHeight() * 0.85);
+            int width = Math.max(minWidth, preferredWidth);
+            int height = Math.max(minHeight, preferredHeight);
             //int height = minHeight;
             //int width = minWidth;
             //set size
@@ -123,16 +123,16 @@ public class Main extends Application {
         this.validationDataManager = validationDataManager;
     }
 
-    public void runPspDirValidation(File pspDir, String preferedMonVersion, String preferedPerVersion, String forcedMonVersion, String forcedPerVersion,
+    public void runPspDirValidation(File pspDir, String preferredMonVersion, String preferredPerVersion, String forcedMonVersion, String forcedPerVersion,
                                     boolean createTxtLog, boolean createXmlLog, int verbosity) {
         //because the possible unzip dialog cannot close it's parent dialog
         dialogStage.close();
-        mainController.runPspDirValidation(pspDir, preferedMonVersion, preferedPerVersion, forcedMonVersion, forcedPerVersion, createTxtLog, createXmlLog, verbosity);
+        mainController.runPspDirValidation(pspDir, preferredMonVersion, preferredPerVersion, forcedMonVersion, forcedPerVersion, createTxtLog, createXmlLog, verbosity);
     }
 
-    public void unzipAndRunPspZipValidation(File pspZip, String preferedMonVersion, String preferedPerVersion, String forcedMonVersion, String forcedPerVersion,
+    public void unzipAndRunPspZipValidation(File pspZip, String preferredMonVersion, String preferredPerVersion, String forcedMonVersion, String forcedPerVersion,
                                             boolean createTxtLog, boolean createXmlLog, int verbosity) {
-        new UnzipAndValidateDialog(dialogStageLevel2, this, pspZip, preferedMonVersion, preferedPerVersion, forcedMonVersion, forcedPerVersion,
+        new UnzipAndValidateDialog(dialogStageLevel2, this, pspZip, preferredMonVersion, preferredPerVersion, forcedMonVersion, forcedPerVersion,
                 createTxtLog, createXmlLog, verbosity).show();
     }
 

@@ -33,8 +33,8 @@ public class UnzipAndValidateDialogController extends DialogController {
     private Task task = null;
 
     private File pspZip;
-    private String preferedMonVersion;
-    private String preferedPerVersion;
+    private String preferredMonVersion;
+    private String preferredPerVersion;
     private String forcedMonVersion;
     private String forcedPerVersion;
     private boolean createTxtLog;
@@ -130,7 +130,7 @@ public class UnzipAndValidateDialogController extends DialogController {
                     task = null;
                     btnCancelOrClose.setText("Zavřít");
                     stage.close();
-                    main.runPspDirValidation(pspDir, preferedMonVersion, preferedPerVersion, forcedMonVersion, forcedPerVersion, createTxtLog, createXmlLog, verbosity);
+                    main.runPspDirValidation(pspDir, preferredMonVersion, preferredPerVersion, forcedMonVersion, forcedPerVersion, createTxtLog, createXmlLog, verbosity);
                 });
             }
 
@@ -187,10 +187,10 @@ public class UnzipAndValidateDialogController extends DialogController {
         };
     }
 
-    public void setData(File pspZip, String preferedMonVersion, String preferedPerVersion, String forcedMonVersion, String forcedPerVersion, boolean createTxtLog, boolean createXmlLog, int verbosity) {
+    public void setData(File pspZip, String preferredMonVersion, String preferredPerVersion, String forcedMonVersion, String forcedPerVersion, boolean createTxtLog, boolean createXmlLog, int verbosity) {
         this.pspZip = pspZip;
-        this.preferedMonVersion = preferedMonVersion;
-        this.preferedPerVersion = preferedPerVersion;
+        this.preferredMonVersion = preferredMonVersion;
+        this.preferredPerVersion = preferredPerVersion;
         this.forcedMonVersion = forcedMonVersion;
         this.forcedPerVersion = forcedPerVersion;
         this.createTxtLog = createTxtLog;
