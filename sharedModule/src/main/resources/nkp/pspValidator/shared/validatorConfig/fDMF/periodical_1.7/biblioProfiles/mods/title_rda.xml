@@ -555,14 +555,15 @@
                 <expectedElements>
                     <element name="mods:form">
                         <expectedAttributes>
+                            <!--neni jasne, jestli tohle ma byt povinne - je tam M/MA.
+                            Viz https://github.com/NLCR/Standard_NDK/issues/88-->
                             <attribute name="authority" mandatory="false">
-                                <!--neni jasne, jestli tohle ma byt povinne - je tam M/MA-->
-                                <recommendedContent>
+                                <expectedContent>
                                     <oneOf>
                                         <value>rdamedia</value>
                                         <value>rdacarrier</value>
                                     </oneOf>
-                                </recommendedContent>
+                                </expectedContent>
                             </attribute>
 
                             <attribute name="type" mandatory="false">

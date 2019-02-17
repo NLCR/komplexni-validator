@@ -273,13 +273,16 @@
                 <expectedElements>
                     <element name="mods:form">
                         <expectedAttributes>
+                            <!--Viz https://github.com/NLCR/Standard_NDK/issues/88-->
                             <attribute name="authority" mandatory="false">
-                                <recommendedContent>
+                                <expectedContent>
                                     <oneOf>
                                         <value>marcform</value>
+                                        <value>marccategory</value>
+                                        <value>marcsmd</value>
                                         <value>gmd</value>
                                     </oneOf>
-                                </recommendedContent>
+                                </expectedContent>
                             </attribute>
 
                             <attribute name="type" mandatory="false">
