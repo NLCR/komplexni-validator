@@ -12,7 +12,6 @@
         </text>
         <url description="popis formátu PREMIS">http://www.loc.gov/standards/premis/</url>
         <url description="XSD pro PREMIS 2.2">http://www.loc.gov/standards/premis/v2/premis-v2-2.xsd</url>
-        <!--TODO: proverit vsechny komentare "UPDATE z NK", zda bylo reflektovano v DMF. Potom bud sjednotit s DMF, nebo napsat issue k pretrvavajici nekonzistenci-->
     </info>
 
     <namespaces>
