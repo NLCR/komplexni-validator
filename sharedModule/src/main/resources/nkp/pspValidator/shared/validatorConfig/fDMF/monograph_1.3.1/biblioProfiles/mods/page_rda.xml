@@ -163,7 +163,7 @@
                 </expectedContent>
             </element>
 
-            <element name="mods:genre" mandatory="false">
+            <element name="mods:genre">
                 <expectedAttributes>
                     <attribute name="type">
                         <recommendedContent>
@@ -218,6 +218,7 @@
                 <expectedContent>
                     <oneOf>
                         <value>text</value>
+                        <value>still image</value>
                         <value>image</value>
                         <value>notated music</value>
                         <value>cartographic</value>
