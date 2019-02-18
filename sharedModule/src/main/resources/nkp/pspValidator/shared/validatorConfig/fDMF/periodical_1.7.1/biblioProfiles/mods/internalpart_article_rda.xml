@@ -400,9 +400,6 @@
                         </recommendedContent>
                     </element>
 
-                    <element name="mods:recordInfoNote" mandatory="false">
-                        <recommendedContent/>
-                    </element>
                 </expectedElements>
             </element>
         </expectedElements>
