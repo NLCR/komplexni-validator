@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <metadataProfile
-        xmlns="http://www.nkp.cz/pspValidator/2.0/metadataProfile"
+        xmlns="http://www.nkp.cz/pspValidator/2.1/metadataProfile"
         name="PREMIS Object pro ALTO OCR"
-        validatorVersion="2.0"
+        validatorVersion="2.1"
         dmf="periodical_1.7.1"
 >
 
