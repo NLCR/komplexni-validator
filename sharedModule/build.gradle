@@ -33,7 +33,8 @@ dependencies {
     compile 'org.json:json:20180813'
 }
 
-version = '2.0'
+group 'nkp.pspValidator'
+version '2.1-dev-01'
 
 
 //tohle udela zip, ale asi shared-logic.zip, asi na nic
