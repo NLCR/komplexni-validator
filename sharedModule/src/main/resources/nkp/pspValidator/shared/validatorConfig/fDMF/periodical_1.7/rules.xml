@@ -2700,6 +2700,7 @@
                                 <value name="string" type="STRING">PICT_AUTHOR</value>
                                 <value name="string" type="STRING">PICT_TITLE</value>
                                 <value name="string" type="STRING">IMAGE</value>
+                                <value name="string" type="STRING">PAGE</value>
                             </params>
                         </evaluation>
                     </value>
