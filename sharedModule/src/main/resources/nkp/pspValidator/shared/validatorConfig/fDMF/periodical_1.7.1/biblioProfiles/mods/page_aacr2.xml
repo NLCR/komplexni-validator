@@ -1,0 +1,241 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<metadataProfile
+        xmlns="http://www.nkp.cz/pspValidator/2.0/metadataProfile"
+        name="MODS page (AACR2)"
+        validatorVersion="2.0"
+        dmf="periodical_1.7.1"
+>
+
+    <info>
+        <text>DMF Periodika 1.7.1 očekává MODS verze 3.6. Dále se zde upřesňují očekávaná metadata pro stranu
+            pro záznamy zpracované podle katalogizačních pravidel AACR2.
+        </text>
+        <url>http://www.loc.gov/standards/mods/</url>
+        <url description="XSD pro MODS 3.6">http://www.loc.gov/standards/mods/v3/mods-3-6.xsd</url>
+        <url description="popis MODS 3.6">http://www.loc.gov/standards/mods/mods-outline-3-6.html</url>
+    </info>
+
+    <namespaces>
+        <namespace prefix="mods">http://www.loc.gov/mods/v3</namespace>
+    </namespaces>
+
+    <dictionaries>
+        <dictionary name="marcRelatorCodes"
+                    description="kódy rolí podle MARC21"
+                    url="http://www.loc.gov/marc/relators/relaterm.html"/>
+        <dictionary name="iso6392languageCodes"
+                    description="kódy jazyků podle ISO 639-2"
+                    url="http://www.loc.gov/standards/iso639-2/php/code_list.php"/>
+        <dictionary name="siglaInstitutionCodes"
+                    description="sigly knihoven"/>
+    </dictionaries>
+
+    <rootElement name="mods:mods">
+        <expectedAttributes>
+            <attribute name="ID">
+                <expectedContent>
+                    <regexp>MODS_PAGE_[0-9]{4}</regexp>>
+                </expectedContent>
+            </attribute>
+        </expectedAttributes>
+        <expectedElements>
+
+            <element name="mods:titleInfo" mandatory="false">
+                <expectedElements>
+                    <element name="mods:title" mandatory="false">
+                        <expectedContent/>
+                    </element>
+                    <element name="mods:subTitle" mandatory="false">
+                        <expectedContent/>
+                    </element>
+                </expectedElements>
+            </element>
+
+            <element name="mods:identifier" specification="@type='uuid'">
+                <expectedAttributes>
+                    <attribute name="type"/>
+                </expectedAttributes>
+                <expectedContent/>
+            </element>
+
+            <element name="mods:part" specification="mods:detail[@type!='pageIndex']" mandatory="false">
+                <expectedAttributes>
+                    <attribute name="type">
+                        <recommendedContent>
+                            <oneOf>
+                                <value>titlePage</value>
+                                <value>tableOfContents</value>
+                                <value>blank</value>
+                                <value>advertisement</value>
+                                <value>normalPage</value>
+                                <value>jacket</value>
+                                <value>cover</value>
+                                <value>frontCover</value>
+                                <value>frontEndPaper</value>
+                                <value>backCover</value>
+                                <value>backEndPaper</value>
+                                <value>frontEndSheet</value>
+                                <value>backEndSheet</value>
+                                <value>spine</value>
+                                <value>frontJacket</value>
+
+                                <!--další typy-->
+                                <value>index</value>
+                                <value>illustration</value>
+                                <value>listOfIllustrations</value>
+                                <value>map</value>
+                                <value>listOfMaps</value>
+                                <value>listOfTables</value>
+                                <value>table</value>
+                                <value>flyLeaf</value>
+                                <value>dedication</value>
+                                <value>errata</value>
+                                <value>frontispiece</value>
+                                <value>edge</value>
+                                <value>imprimatur</value>
+                                <value>appendix</value>
+                                <value>bibliography</value>
+                                <value>sheetMusic</value>
+                                <value>impressum</value>
+                            </oneOf>
+                        </recommendedContent>
+                    </attribute>
+                </expectedAttributes>
+                <expectedElements>
+                    <element name="mods:detail" mandatory="false">
+                        <expectedAttributes>
+                            <attribute name="type">
+                                <expectedContent>
+                                    <value>page number</value>
+                                </expectedContent>
+                            </attribute>
+                        </expectedAttributes>
+                        <expectedElements>
+                            <element name="mods:number" mandatory="false">
+                                <expectedContent/>
+                            </element>
+                        </expectedElements>
+                    </element>
+
+                    <!--není jasná povinnost elementu a atributu unit, viz https://github.com/NLCR/Standard_NDK/issues/82-->
+                    <element name="mods:extent" mandatory="false">
+                        <expectedAttributes>
+                            <attribute name="unit" mandatory="false">
+                                <expectedContent>
+                                    <value>pages</value>
+                                </expectedContent>
+                            </attribute>
+                        </expectedAttributes>
+                        <expectedElements>
+                            <element name="mods:start">
+                                <expectedContent/>
+                            </element>
+                        </expectedElements>
+                    </element>
+                </expectedElements>
+            </element>
+
+            <element name="mods:part" specification="mods:detail[@type='pageIndex']" mandatory="false">
+                <expectedElements>
+                    <element name="mods:detail">
+                        <expectedAttributes>
+                            <attribute name="type">
+                                <expectedContent>
+                                    <value>pageIndex</value>
+                                </expectedContent>
+                            </attribute>
+                        </expectedAttributes>
+                        <expectedElements>
+                            <element name="mods:number">
+                                <expectedContent/>
+                            </element>
+                        </expectedElements>
+                    </element>
+                </expectedElements>
+            </element>
+
+            <element name="mods:note" mandatory="false">
+                <expectedContent>
+                    <oneOf>
+                        <value>right</value>
+                        <value>left</value>
+                        <value>singlePage</value>
+                    </oneOf>
+                </expectedContent>
+            </element>
+
+            <element name="mods:genre">
+                <expectedAttributes>
+                    <attribute name="type">
+                        <recommendedContent>
+                            <oneOf>
+                                <value>titlePage</value>
+                                <value>tableOfContents</value>
+                                <value>blank</value>
+                                <value>advertisement</value>
+                                <value>normalPage</value>
+                                <value>jacket</value>
+                                <value>cover</value>
+                                <value>frontCover</value>
+                                <value>frontEndPaper</value>
+                                <value>backCover</value>
+                                <value>backEndPaper</value>
+                                <value>frontEndSheet</value>
+                                <value>backEndSheet</value>
+                                <value>spine</value>
+                                <value>frontJacket</value>
+
+                                <!--další typy-->
+                                <value>index</value>
+                                <value>illustration</value>
+                                <value>listOfIllustrations</value>
+                                <value>map</value>
+                                <value>listOfMaps</value>
+                                <value>listOfTables</value>
+                                <value>table</value>
+                                <value>flyLeaf</value>
+                                <value>dedication</value>
+                                <value>errata</value>
+                                <value>frontispiece</value>
+                                <value>edge</value>
+                                <value>imprimatur</value>
+                                <value>appendix</value>
+                                <value>bibliography</value>
+                                <value>sheetMusic</value>
+                                <value>impressum</value>
+                            </oneOf>
+                        </recommendedContent>
+                    </attribute>
+                </expectedAttributes>
+                <expectedContent>
+                    <oneOf>
+                        <value>reprePage</value>
+                        <value>page</value>
+                    </oneOf>
+                </expectedContent>
+            </element>
+
+            <element name="mods:typeOfResource" mandatory="false">
+                <expectedContent>
+                    <oneOf>
+                        <value>text</value>
+                        <value>image</value>
+                        <value>notated music</value>
+                        <value>cartographic</value>
+                    </oneOf>
+                </expectedContent>
+            </element>
+
+            <element name="mods:physicalDescription" mandatory="false">
+                <expectedElements>
+                    <element name="mods:note" mandatory="false">
+                        <expectedContent/>
+                    </element>
+                </expectedElements>
+            </element>
+
+        </expectedElements>
+    </rootElement>
+</metadataProfile>
+
+	
