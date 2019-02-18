@@ -33,7 +33,7 @@ dependencies {
     compile 'org.json:json:20180813'
 }
 
-version = '2.0-dev-03'
+version = '2.0'
 
 
 //tohle udela zip, ale asi shared-logic.zip, asi na nic
