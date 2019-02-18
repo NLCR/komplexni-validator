@@ -61,44 +61,47 @@
             <element name="mods:part" specification="mods:detail[@type!='pageIndex']" mandatory="false">
                 <expectedAttributes>
                     <attribute name="type">
-                        <recommendedContent>
+                        <expectedContent    >
                             <oneOf>
                                 <value>titlePage</value>
                                 <value>tableOfContents</value>
                                 <value>blank</value>
                                 <value>advertisement</value>
                                 <value>normalPage</value>
-                                <value>jacket</value>
-                                <value>cover</value>
-                                <value>frontCover</value>
-                                <value>frontEndPaper</value>
-                                <value>backCover</value>
-                                <value>backEndPaper</value>
-                                <value>frontEndSheet</value>
-                                <value>backEndSheet</value>
-                                <value>spine</value>
-                                <value>frontJacket</value>
-
-                                <!--další typy-->
                                 <value>index</value>
-                                <value>illustration</value>
                                 <value>listOfIllustrations</value>
+                                <value>illustration</value>
                                 <value>map</value>
                                 <value>listOfMaps</value>
                                 <value>listOfTables</value>
                                 <value>table</value>
-                                <value>flyLeaf</value>
+                                <value>bibliography</value>
                                 <value>dedication</value>
                                 <value>errata</value>
-                                <value>frontispiece</value>
-                                <value>edge</value>
-                                <value>imprimatur</value>
-                                <value>appendix</value>
-                                <value>bibliography</value>
-                                <value>sheetMusic</value>
-                                <value>impressum</value>
+                                <value>cover</value>
+                                <value>frontCover</value>
+                                <value>backCover</value>
+                                <value>frontEndSheet</value>
+                                <value>backEndSheet</value>
+                                <value>spine</value>
+                                <value>flyLeaf</value>
+                                <value>jacket</value>
+                                <value>frontJacket</value>
+
+                                <!--jen pro stranyv v ramci vnitrni casti (article)-->
+                                <value>news</value>
+                                <value>abstract</value>
+                                <value>introduction</value>
+                                <value>review</value>
+                                <value>mainArticle</value>
+                                <value>editorial</value>
+                                <value>obituary</value>
+                                <value>bibliographicalPortrait</value>
+                                <value>colophon</value>
+                                <value>interview</value>
+                                <value>anotation</value>
                             </oneOf>
-                        </recommendedContent>
+                        </expectedContent>
                     </attribute>
                 </expectedAttributes>
                 <expectedElements>
