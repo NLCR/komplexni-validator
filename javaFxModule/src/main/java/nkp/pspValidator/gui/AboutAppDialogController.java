@@ -9,6 +9,8 @@ import javafx.scene.text.Text;
 import javafx.stage.WindowEvent;
 import nkp.pspValidator.shared.Version;
 
+import java.io.File;
+
 /**
  * Created by Martin Řehánek on 20.12.16.
  */
@@ -24,8 +26,10 @@ public class AboutAppDialogController extends DialogController {
     Label devModeLabel;
 
     @FXML
-    Text devModeText;
+    Text configDirText;
 
+    @FXML
+    Text devModeText;
 
     @Override
     public void startNow() {
@@ -35,6 +39,8 @@ public class AboutAppDialogController extends DialogController {
             devModeLabel.setVisible(false);
             devModeText.setVisible(false);
         }
+        File validatorConfigDir = getConfigurationManager().getFileOrNull(ConfigurationManager.PROP_VALIDATOR_CONFIG_DIR);
+        configDirText.setText(validatorConfigDir.getAbsolutePath());
     }
 
     @Override
@@ -48,5 +54,9 @@ public class AboutAppDialogController extends DialogController {
 
     public void openHyperlink(ActionEvent actionEvent) {
         openUrl(((Hyperlink) actionEvent.getSource()).getText());
+    }
+
+    public void openConfigDir(ActionEvent actionEvent) {
+        openUrl("file://" + getConfigurationManager().getFileOrNull(ConfigurationManager.PROP_VALIDATOR_CONFIG_DIR).getAbsolutePath());
     }
 }

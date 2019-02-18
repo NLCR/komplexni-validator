@@ -9,7 +9,7 @@
       fx:controller="nkp.pspValidator.gui.AboutAppDialogController"
       fx:id="container"
       minHeight="400"
-      minWidth="600"
+      minWidth="700"
       alignment="CENTER_LEFT"
       spacing="0"
 >
@@ -21,7 +21,7 @@
     <children>
 
         <Text styleClass="title"
-              wrappingWidth="580"
+              wrappingWidth="650"
               text="Komplexní validátor byl vyvinut pro Národní Knihovnu České republiky. Nástroj je určený k validaci PSP balíků podle standardu Definice metadatových formátů pro digitalizaci."
         />
         <GridPane alignment="CENTER" hgap="10" vgap="10">
@@ -84,13 +84,33 @@
                   fx:id="buildDateText"
             />
 
-            <Label text="Vývojářský mód"
-                   fx:id="devModeLabel"
+            <Label text="Konfigurační soubory"
                    GridPane.rowIndex="5"
                    GridPane.columnIndex="0"
             />
-            <Text fx:id="devModeText"
+            <Text text="/Users/martin/IdeaProjects/komplexni-validator/sharedModule/src/main/resources/nkp/pspValidator/shared/validatorConfig"
                   GridPane.rowIndex="5"
+                  GridPane.columnIndex="2"
+                  GridPane.hgrow="ALWAYS"
+                  fx:id="configDirText"
+                  wrappingWidth="400"
+            />
+            <Button
+                    text="Otevřít"
+                    GridPane.rowIndex="5"
+                    GridPane.columnIndex="3"
+                    GridPane.hgrow="ALWAYS"
+                    onAction="#openConfigDir"
+            />
+
+
+            <Label text="Vývojářský mód"
+                   fx:id="devModeLabel"
+                   GridPane.rowIndex="6"
+                   GridPane.columnIndex="0"
+            />
+            <Text fx:id="devModeText"
+                  GridPane.rowIndex="6"
                   GridPane.columnIndex="2"
                   GridPane.hgrow="ALWAYS"
                   text="Ano, tuto verzi nepoužívejte pro produkční účely!"
