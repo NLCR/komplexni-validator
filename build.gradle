@@ -1,8 +1,7 @@
-group 'rzehan'
-version '2.0'
+group 'nkp.pspValidator'
+version '2.1-dev-01'
 
 System.setProperty("file.encoding", "UTF-8")
-
 
 apply plugin: 'java'
 
