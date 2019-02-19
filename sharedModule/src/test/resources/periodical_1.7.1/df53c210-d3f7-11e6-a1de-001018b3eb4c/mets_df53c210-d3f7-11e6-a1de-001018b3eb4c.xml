@@ -1,0 +1,466 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+
+<mets:mets xmlns:mets="http://www.loc.gov/METS/" xmlns:copyrightMD="http://www.cdlib.org/inside/diglib/copyrightMD" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:mods="http://www.loc.gov/mods/v3" xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/" xmlns:premis="info:lc/xmlns/premis-v2" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" LABEL="Atlas školství" TYPE="Periodical" xsi:schemaLocation="http://www.w3.org/2001/XMLSchema-instance http://www.w3.org/2001/XMLSchema.xsd http://www.loc.gov/METS/ http://www.loc.gov/standards/mets/mets.xsd http://www.loc.gov/mods/v3 http://www.loc.gov/standards/mods/mods-3-6.xsd http://www.openarchives.org/OAI/2.0/oai_dc/ http://www.openarchives.org/OAI/2.0/oai_dc.xsd http://www.w3.org/1999/xlink http://www.w3.org/1999/xlink.xsd http://www.cdlib.org/groups/rmg/docs/copyrightMD.xsd">  
+  <mets:metsHdr CREATEDATE="2016-12-20T09:33:14" LASTMODDATE="2017-01-06T17:20:06"> 
+    <mets:agent ROLE="CREATOR" TYPE="ORGANIZATION"> 
+      <mets:name>ABA001</mets:name> 
+    </mets:agent>  
+    <mets:agent ROLE="ARCHIVIST" TYPE="ORGANIZATION"> 
+      <mets:name>ABA001</mets:name> 
+    </mets:agent> 
+  </mets:metsHdr>  
+  <mets:dmdSec ID="MODSMD_TITLE_0001"> 
+    <mets:mdWrap MDTYPE="MODS" MDTYPEVERSION="3.6" MIMETYPE="text/xml"> 
+      <mets:xmlData> 
+        <mods:mods ID="MODS_TITLE_0001"> 
+          <mods:titleInfo> 
+            <mods:title>Atlas školství</mods:title>  
+            <mods:partName>Přehled středních škol a oborů otevíraných ve školním roce ... Liberecký kraj : Českolipsko, Jablonecko, Liberecko, Semilsko</mods:partName> 
+          </mods:titleInfo>  
+          <mods:titleInfo displayLabel="Název části od r. 2004/2005:" type="alternative"> 
+            <mods:title>Přehled středních škol, vybraných školských zařízení a oborů otevíraných ve školním roce</mods:title> 
+          </mods:titleInfo>  
+          <mods:titleInfo displayLabel="Název části od r. 2012/2013:" type="alternative"> 
+            <mods:title>Přehled středních škol a vybraných školských zařízení - Liberecký kraj</mods:title> 
+          </mods:titleInfo>  
+          <mods:titleInfo type="alternative"> 
+            <mods:title>Přehled středních škol a oborů otevíraných ve školním roce ... - Liberecký kraj</mods:title> 
+          </mods:titleInfo>  
+          <mods:titleInfo type="alternative"> 
+            <mods:title>Liberecký kraj</mods:title> 
+          </mods:titleInfo>  
+		  <mods:name type="personal">
+		    <mods:namePart type="given">Jan</mods:namePart>
+			<mods:namePart type="family">Žitavský</mods:namePart>
+			<mods:nameIdentifier>xy01056898</mods:nameIdentifier>
+			<mods:role>
+				<mods:roleTerm type="code" authority="marcrelator">cre</mods:roleTerm>
+			</mods:role>
+		  </mods:name>
+          <mods:typeOfResource>text</mods:typeOfResource>  
+          <mods:genre>title</mods:genre>  
+          <mods:originInfo eventType="publication"> 
+            <mods:place> 
+              <mods:placeTerm authority="marccountry" type="code">xr</mods:placeTerm> 
+            </mods:place>  
+            <mods:place> 
+              <mods:placeTerm type="text">Brno</mods:placeTerm> 
+            </mods:place>  
+            <mods:publisher>P.F. art</mods:publisher>  
+            <mods:dateIssued>2002</mods:dateIssued>  
+            <mods:dateIssued encoding="marc" point="start">2002</mods:dateIssued>  
+            <mods:dateIssued encoding="marc" point="end">9999</mods:dateIssued>  
+            <mods:issuance>continuing</mods:issuance>  
+            <mods:frequency authority="marcfrequency">1x ročně</mods:frequency>  
+            <mods:frequency>Annual</mods:frequency> 
+          </mods:originInfo>  
+          <mods:language> 
+            <mods:languageTerm authority="iso639-2b" type="code">cze</mods:languageTerm> 
+          </mods:language>  
+          <mods:physicalDescription> 
+            <mods:form authority="rdacarrier" type="carrier">svazek</mods:form>  
+            <mods:form authority="rdamedia" type="media">bez média</mods:form>  
+            <mods:form authority="marcform">print</mods:form>  
+            <mods:form authority="marccategory">text</mods:form>  
+            <mods:form authority="marcsmd">regular print</mods:form>  
+            <mods:extent>^^^svazků ; 30-31 cm</mods:extent> 
+          </mods:physicalDescription>  
+          <mods:note>Součástí názvu je označení školního roku</mods:note>  
+          <mods:note>Jednotlivé svazky mají ISBN</mods:note>  
+          <mods:note>Popsáno podle: 2003/2004</mods:note>  
+          <mods:subject> 
+            <mods:geographicCode authority="marcgac">e-xr---</mods:geographicCode> 
+          </mods:subject>  
+          <mods:subject authority="czenas"> 
+            <mods:temporal>2001-2020</mods:temporal> 
+          </mods:subject>  
+          <mods:subject authority="czenas"> 
+            <mods:temporal>21. století</mods:temporal> 
+          </mods:subject>  
+          <mods:subject authority="czenas"> 
+            <mods:topic>střední školy</mods:topic>  
+            <mods:geographic>Česko</mods:geographic>  
+            <mods:temporal>21. století</mods:temporal> 
+          </mods:subject>  
+          <mods:subject authority="eczenas"> 
+            <mods:topic>secondary schools</mods:topic>  
+            <mods:geographic>Czechia</mods:geographic>  
+            <mods:temporal>21st century</mods:temporal> 
+          </mods:subject>  
+          <mods:subject authority="czenas"> 
+            <mods:geographic>Liberecký kraj (Česko : 2000-)</mods:geographic> 
+          </mods:subject>  
+          <mods:subject authority="eczenas"> 
+            <mods:geographic>Liberecký kraj (Czechia)</mods:geographic> 
+          </mods:subject>  
+          <mods:classification authority="udc" edition="Konspekt">373.5/.6+377.1/.3</mods:classification>  
+          <mods:classification authority="udc" edition="Konspekt">(437.316)</mods:classification>  
+          <mods:classification authority="udc" edition="Konspekt">(058.7)</mods:classification>  
+          <mods:classification authority="udc" edition="Konspekt">(036)</mods:classification>  
+          <mods:relatedItem otherTypeURI="https://aleph.nkp.cz/F/?func=direct&amp;doc_number=000453712&amp;local_base=NKC"> 
+			<mods:titleInfo>
+			   <mods:title>Atlas školství</mods:title>
+				<mods:partName>Přehled středních škol a oborů otevíraných ve školním roce ... - Středočeský kraj</mods:partName> 
+			</mods:titleInfo>
+		  </mods:relatedItem>
+		  <mods:location> 
+            <mods:physicalLocation authority="siglaADR">ABA001</mods:physicalLocation>  
+            <mods:shelfLocator>54 D 158115</mods:shelfLocator> 
+          </mods:location>  
+          <mods:identifier type="barCode">1001922189</mods:identifier>  
+          <mods:identifier type="uuid">df53c210-d3f7-11e6-a1de-001018b3eb4c</mods:identifier>  
+          <mods:identifier type="oclc">85148789</mods:identifier>  
+          <mods:recordInfo> 
+            <mods:descriptionStandard>rda</mods:descriptionStandard>  
+            <mods:recordContentSource authority="marcorg">ABA001</mods:recordContentSource>  
+            <mods:recordCreationDate encoding="iso8601">2003-03-20T00:00:00Z</mods:recordCreationDate>  
+            <mods:recordChangeDate encoding="iso8601">2016-12-12T16:13:31Z</mods:recordChangeDate>  
+            <mods:recordIdentifier source="CZ-PrNK">nkc20051242968</mods:recordIdentifier>  
+            <mods:recordOrigin>human prepared</mods:recordOrigin>  
+            <mods:languageOfCataloging> 
+              <mods:languageTerm authority="iso639-2b" type="code">cze</mods:languageTerm> 
+            </mods:languageOfCataloging> 
+          </mods:recordInfo> 
+        </mods:mods> 
+      </mets:xmlData> 
+    </mets:mdWrap> 
+  </mets:dmdSec>  
+  <mets:dmdSec ID="DCMD_TITLE_0001"> 
+    <mets:mdWrap MDTYPE="DC" MIMETYPE="text/xml"> 
+      <mets:xmlData> 
+        <oai_dc:dc> 
+          <dc:title>Atlas školství. Přehled středních škol a oborů otevíraných ve školním roce ... Liberecký kraj : Českolipsko, Jablonecko, Liberecko, Semilsko</dc:title>  
+          <dc:title>Přehled středních škol, vybraných školských zařízení a oborů otevíraných ve školním roce</dc:title>  
+          <dc:title>Přehled středních škol a vybraných školských zařízení - Liberecký kraj</dc:title>  
+          <dc:title>Přehled středních škol a oborů otevíraných ve školním roce ... - Liberecký kraj</dc:title>  
+          <dc:title>Liberecký kraj</dc:title> 
+		  <dc:creator>Jan Žitavský</dc:creator>
+          <dc:date>2002-9999</dc:date>  
+          <dc:date>2002?]-</dc:date>  
+          <dc:date>2002</dc:date>  
+          <dc:date>9999</dc:date>  
+          <dc:publisher>P.F. art</dc:publisher>  
+          <dc:language>cze</dc:language>  
+          <dc:format>^^^svazků ; 30-31 cm</dc:format>  
+          <dc:format>svazek</dc:format>  
+          <dc:description>Součástí názvu je označení školního roku</dc:description>  
+          <dc:description>Jednotlivé svazky mají ISBN</dc:description>  
+          <dc:description>Popsáno podle: 2003/2004</dc:description>  
+          <dc:coverage>2001-2020</dc:coverage>  
+          <dc:coverage>21. století</dc:coverage>  
+          <dc:subject>střední školy</dc:subject>  
+          <dc:coverage>Česko</dc:coverage>  
+          <dc:coverage>21. století</dc:coverage>  
+          <dc:subject>střední školy--Česko--21. století</dc:subject>  
+          <dc:subject>secondary schools</dc:subject>  
+          <dc:coverage>Czechia</dc:coverage>  
+          <dc:coverage>21st century</dc:coverage>  
+          <dc:subject>secondary schools--Czechia--21st century</dc:subject>  
+          <dc:coverage>Liberecký kraj (Česko : 2000-)</dc:coverage> 
+          <dc:coverage>Liberecký kraj (Czechia)</dc:coverage>  
+          <dc:subject>373.5/.6+377.1/.3</dc:subject>  
+          <dc:subject>(437.316)</dc:subject>  
+          <dc:subject>(058.7)</dc:subject>  
+          <dc:subject>(036)</dc:subject>  
+          <dc:type>model:periodical</dc:type>  
+          <dc:identifier>uuid:df53c210-d3f7-11e6-a1de-001018b3eb4c</dc:identifier>  
+          <dc:identifier>oclc:85148789</dc:identifier>  
+          <dc:identifier>barCode:1001922189</dc:identifier> 
+        </oai_dc:dc> 
+      </mets:xmlData> 
+    </mets:mdWrap> 
+  </mets:dmdSec>  
+  <mets:dmdSec ID="MODSMD_VOLUME_0001"> 
+    <mets:mdWrap MDTYPE="MODS" MDTYPEVERSION="3.6" MIMETYPE="text/xml"> 
+      <mets:xmlData> 
+        <mods:mods ID="MODS_VOLUME_0001"> 
+          <mods:genre>volume</mods:genre>  
+          <mods:titleInfo> 
+            <mods:partNumber>2008</mods:partNumber> 
+          </mods:titleInfo>  
+          <mods:originInfo> 
+            <mods:dateIssued>2008</mods:dateIssued> 
+          </mods:originInfo>  
+          <mods:identifier type="uuid">0ecb8d70-d3f8-11e6-8f29-5ef3fc9ae867</mods:identifier> 
+        </mods:mods> 
+      </mets:xmlData> 
+    </mets:mdWrap> 
+  </mets:dmdSec>  
+  <mets:dmdSec ID="MODSMD_ISSUE_0001"> 
+    <mets:mdWrap MDTYPE="MODS" MDTYPEVERSION="3.6" MIMETYPE="text/xml"> 
+      <mets:xmlData> 
+        <mods:mods ID="MODS_ISSUE_0001"> 
+          <mods:genre type="normal">issue</mods:genre>  
+          <mods:titleInfo> 
+            <mods:title>Atlas školství</mods:title>  
+            <mods:partNumber>2009-2010</mods:partNumber> 
+          </mods:titleInfo>  
+          <mods:originInfo> 
+            <mods:place> 
+              <mods:placeTerm>Brno</mods:placeTerm> 
+            </mods:place>  
+            <mods:publisher>P.F. art</mods:publisher>  
+            <mods:dateIssued>2008</mods:dateIssued> 
+          </mods:originInfo>  
+          <mods:language> 
+            <mods:languageTerm authority="iso639-2b" type="code">cze</mods:languageTerm> 
+          </mods:language>  
+          <mods:subject> 
+            <mods:topic>střední školy</mods:topic> 
+          </mods:subject>  
+          <mods:location> 
+            <mods:physicalLocation>ABA001</mods:physicalLocation>  
+            <mods:shelfLocator>54 D 158115</mods:shelfLocator> 
+          </mods:location>  
+          <mods:identifier type="urnnbn">urn:nbn:cz:nk-0032ps</mods:identifier>  
+          <mods:identifier type="uuid">df53c210-d3f7-11e6-a1de-001018b3eb4b</mods:identifier> 
+        </mods:mods> 
+      </mets:xmlData> 
+    </mets:mdWrap> 
+  </mets:dmdSec>  
+  <mets:dmdSec ID="DCMD_ISSUE_0001"> 
+    <mets:mdWrap MDTYPE="DC" MIMETYPE="text/xml"> 
+      <mets:xmlData> 
+        <oai_dc:dc> 
+          <dc:type>model:periodicalitem</dc:type>  
+          <dc:title>Atlas školství. 2009-2010</dc:title>  
+		  <dc:description>2009-2010</dc:description>
+          <dc:date>2008</dc:date>  
+          <dc:publisher>P.F. art</dc:publisher>  
+          <dc:language>cze</dc:language>  
+          <dc:subject>střední školy</dc:subject>  
+          <dc:identifier>urnnbn:urn:nbn:cz:nk-0032ps</dc:identifier>
+          <dc:identifier>uuid:df53c210-d3f7-11e6-a1de-001018b3eb4b</dc:identifier> 
+        </oai_dc:dc> 
+      </mets:xmlData> 
+    </mets:mdWrap> 
+  </mets:dmdSec>  
+  <mets:dmdSec ID="DCMD_VOLUME_0001"> 
+    <mets:mdWrap MDTYPE="DC" MIMETYPE="text/xml"> 
+      <mets:xmlData> 
+        <oai_dc:dc> 
+          <dc:type>model:periodicalvolume</dc:type>  
+          <dc:date>2008</dc:date>  
+          <dc:identifier>uuid:0ecb8d70-d3f8-11e6-8f29-5ef3fc9ae867</dc:identifier> 
+        </oai_dc:dc> 
+      </mets:xmlData> 
+    </mets:mdWrap> 
+  </mets:dmdSec>  
+  <mets:dmdSec ID="MODSMD_PAGE_0000">  
+     <mets:mdWrap MDTYPE="MODS" MDTYPEVERSION="3.6" MIMETYPE="text/xml">
+		<mets:xmlData>
+			<mods:mods ID="MODS_PAGE_0000">
+				<mods:titleInfo>
+					<mods:title>Atlas školství</mods:title>
+				</mods:titleInfo>
+				<mods:identifier type="uuid">af85a560-c2a5-11e2-8b87-005056827e50</mods:identifier>
+				<mods:part type="titlePage">
+					<mods:detail type="page number">
+						<mods:number>0</mods:number>
+					</mods:detail>
+					<mods:extent unit="pages">
+						<mods:start>0</mods:start>
+					</mods:extent>
+				</mods:part>
+				<mods:part>	
+					<mods:detail type="pageIndex">
+						<mods:number>1</mods:number>
+					</mods:detail>
+				</mods:part>
+				<mods:genre type="titlePage">reprePage</mods:genre>
+				<mods:typeOfResource>image</mods:typeOfResource>
+				<mods:note>right</mods:note>
+			</mods:mods>
+		</mets:xmlData> 
+     </mets:mdWrap> 
+    </mets:dmdSec>
+	<mets:dmdSec ID="DCMD_PAGE_0000"> 
+    <mets:mdWrap MDTYPE="DC" MIMETYPE="text/xml"> 
+      <mets:xmlData> 
+        <oai_dc:dc> 
+          <dc:identifier>uuid:af85a560-c2a5-11e2-8b87-005056827e50</dc:identifier>
+		  <dc:extent>0</dc:extent>
+		  <dc:type>image</dc:type>
+		  <dc:type>model:page</dc:type>
+		</oai_dc:dc>
+	  </mets:xmlData>
+	 </mets:mdWrap>
+	</mets:dmdSec>
+   <mets:dmdSec ID="MODSMD_PAGE_0001">  
+     <mets:mdWrap MDTYPE="MODS" MDTYPEVERSION="3.6" MIMETYPE="text/xml">
+		<mets:xmlData>
+			<mods:mods ID="MODS_PAGE_0001">
+				<mods:identifier type="uuid">af85a560-c2a5-11e2-8b87-005056827e52</mods:identifier>
+				<mods:part type="normalPage">
+					<mods:detail type="page number">
+						<mods:number>1</mods:number>
+					</mods:detail>
+					<mods:extent unit="pages">
+						<mods:start>1</mods:start>
+					</mods:extent>
+				</mods:part>
+				<mods:part>	
+					<mods:detail type="pageIndex">
+						<mods:number>2</mods:number>
+					</mods:detail>
+				</mods:part>
+				<mods:genre type="normalPage">page</mods:genre>
+				<mods:typeOfResource>text</mods:typeOfResource>
+				<mods:note>right</mods:note>
+			</mods:mods>
+		</mets:xmlData> 
+     </mets:mdWrap> 
+    </mets:dmdSec>
+	<mets:dmdSec ID="DCMD_PAGE_0001"> 
+    <mets:mdWrap MDTYPE="DC" MIMETYPE="text/xml"> 
+      <mets:xmlData> 
+        <oai_dc:dc> 
+          <dc:identifier>uuid:af85a560-c2a5-11e2-8b87-005056827e52</dc:identifier>
+		  <dc:extent>1</dc:extent>
+		  <dc:type>image</dc:type>
+		  <dc:type>model:page</dc:type>
+		</oai_dc:dc>
+	  </mets:xmlData>
+	 </mets:mdWrap>
+	</mets:dmdSec>	
+   <mets:dmdSec ID="MODSMD_PAGE_0002">  
+     <mets:mdWrap MDTYPE="MODS" MDTYPEVERSION="3.6" MIMETYPE="text/xml">
+		<mets:xmlData>
+			<mods:mods ID="MODS_PAGE_0002">
+				<mods:identifier type="uuid">af85a560-c2a5-11e2-8b87-005056827e53</mods:identifier>
+				<mods:part type="normalPage">
+					<mods:detail type="page number">
+						<mods:number>2</mods:number>
+					</mods:detail>
+					<mods:extent unit="pages">
+						<mods:start>2</mods:start>
+					</mods:extent>
+				</mods:part>
+				<mods:part>	
+					<mods:detail type="pageIndex">
+						<mods:number>3</mods:number>
+					</mods:detail>
+				</mods:part>
+				<mods:genre type="normalPage">page</mods:genre>
+				<mods:typeOfResource>text</mods:typeOfResource>
+				<mods:note>right</mods:note>
+			</mods:mods>
+		</mets:xmlData> 
+     </mets:mdWrap> 
+    </mets:dmdSec>
+	<mets:dmdSec ID="DCMD_PAGE_0002"> 
+    <mets:mdWrap MDTYPE="DC" MIMETYPE="text/xml"> 
+      <mets:xmlData> 
+        <oai_dc:dc> 
+          <dc:identifier>uuid:af85a560-c2a5-11e2-8b87-005056827e53</dc:identifier>
+		  <dc:extent>2</dc:extent>
+		  <dc:type>image</dc:type>
+		  <dc:type>model:page</dc:type>
+		</oai_dc:dc>
+	  </mets:xmlData>
+	 </mets:mdWrap>
+	</mets:dmdSec>
+	<mets:amdSec ID="AMD_TITLE_0001">
+	  <mets:rightsMD ID="RIGHTS_0001"> 
+        <mets:mdWrap MDTYPE="OTHER" MIMETYPE="text/xml" OTHERMDTYPE="CopyrightMD"> 
+          <mets:xmlData> 
+            <copyrightMD:copyright copyright.status="unknown" publication.status="unknown"/> 
+          </mets:xmlData> 
+        </mets:mdWrap> 
+      </mets:rightsMD> 
+	</mets:amdSec>
+  <mets:fileSec> 
+    <mets:fileGrp ID="MC_IMGGRP" USE="Images"> 
+      <mets:file CHECKSUM="a1c33a10d8c97f6ea39a7fdd525e53bd" CHECKSUMTYPE="MD5" CREATED="2017-01-05T18:15:06" ID="mc_0001" MIMETYPE="image/jp2" SEQ="0" SIZE="11200750"> 
+        <mets:FLocat LOCTYPE="URL" xlink:href="mastercopy/mc_df53c210-d3f7-11e6-a1de-001018b3eb4c_0001.jp2"/> 
+      </mets:file>  
+      <mets:file CHECKSUM="c4068a1de46c7c33bdb1c16fc79781d0" CHECKSUMTYPE="MD5" CREATED="2017-01-05T18:16:35" ID="mc_0002" MIMETYPE="image/jp2" SEQ="1" SIZE="10143816"> 
+        <mets:FLocat LOCTYPE="URL" xlink:href="mastercopy/mc_df53c210-d3f7-11e6-a1de-001018b3eb4c_0002.jp2"/> 
+      </mets:file>  
+      <mets:file CHECKSUM="e16c6dbe6094df65b99652b1ac67073a" CHECKSUMTYPE="MD5" CREATED="2017-01-05T18:17:59" ID="mc_0003" MIMETYPE="image/jp2" SEQ="2" SIZE="8029377"> 
+        <mets:FLocat LOCTYPE="URL" xlink:href="mastercopy/mc_df53c210-d3f7-11e6-a1de-001018b3eb4c_0003.jp2"/> 
+      </mets:file>  
+    </mets:fileGrp>  
+    <mets:fileGrp ID="UC_IMGGRP" USE="Images"> 
+      <mets:file CHECKSUM="e5d13ea77ed81a97e786e526545a6409" CHECKSUMTYPE="MD5" CREATED="2017-01-05T19:11:15" ID="uc_0001" MIMETYPE="image/jp2" SEQ="0" SIZE="3579998"> 
+        <mets:FLocat LOCTYPE="URL" xlink:href="usercopy/uc_df53c210-d3f7-11e6-a1de-001018b3eb4c_0001.jp2"/> 
+      </mets:file>  
+      <mets:file CHECKSUM="de1f8684d137e60425ecfca0af7e3d5a" CHECKSUMTYPE="MD5" CREATED="2017-01-05T19:11:27" ID="uc_0002" MIMETYPE="image/jp2" SEQ="1" SIZE="3486567"> 
+        <mets:FLocat LOCTYPE="URL" xlink:href="usercopy/uc_df53c210-d3f7-11e6-a1de-001018b3eb4c_0002.jp2"/> 
+      </mets:file>  
+      <mets:file CHECKSUM="415cce6f89ea8d5a0ee2675d87b3daf1" CHECKSUMTYPE="MD5" CREATED="2017-01-05T19:11:35" ID="uc_0003" MIMETYPE="image/jp2" SEQ="2" SIZE="3441928"> 
+        <mets:FLocat LOCTYPE="URL" xlink:href="usercopy/uc_df53c210-d3f7-11e6-a1de-001018b3eb4c_0003.jp2"/> 
+      </mets:file>  
+    </mets:fileGrp>  
+    <mets:fileGrp ID="ALTOGRP" USE="Layout"> 
+      <mets:file CHECKSUM="39413997836e4aadd2930f0fa05ffdc1" CHECKSUMTYPE="MD5" CREATED="2017-01-06T11:45:30" ID="alto_0001" MIMETYPE="text/xml" SEQ="0" SIZE="6764"> 
+        <mets:FLocat LOCTYPE="URL" xlink:href="alto/alto_df53c210-d3f7-11e6-a1de-001018b3eb4c_0001.xml"/> 
+      </mets:file>  
+      <mets:file CHECKSUM="a7f2a387860bc08ae1f082f34082706a" CHECKSUMTYPE="MD5" CREATED="2017-01-06T11:45:30" ID="alto_0002" MIMETYPE="text/xml" SEQ="1" SIZE="55986"> 
+        <mets:FLocat LOCTYPE="URL" xlink:href="alto/alto_df53c210-d3f7-11e6-a1de-001018b3eb4c_0002.xml"/> 
+      </mets:file>  
+      <mets:file CHECKSUM="520d703d8dcd5128e724d3be154077ee" CHECKSUMTYPE="MD5" CREATED="2017-01-06T11:45:30" ID="alto_0003" MIMETYPE="text/xml" SEQ="2" SIZE="8578"> 
+        <mets:FLocat LOCTYPE="URL" xlink:href="alto/alto_df53c210-d3f7-11e6-a1de-001018b3eb4c_0003.xml"/> 
+      </mets:file>  
+    </mets:fileGrp>  
+    <mets:fileGrp ID="TXTGRP" USE="Text"> 
+      <mets:file CHECKSUM="951c956198ef6ab8b9057140749073ab" CHECKSUMTYPE="MD5" CREATED="2017-01-06T11:44:08" ID="txt_0001" MIMETYPE="text/plain" SEQ="0" SIZE="150"> 
+        <mets:FLocat LOCTYPE="URL" xlink:href="txt/txt_df53c210-d3f7-11e6-a1de-001018b3eb4c_0001.txt"/> 
+      </mets:file>  
+      <mets:file CHECKSUM="47784c2a2aad96f49d670dd552a1f3eb" CHECKSUMTYPE="MD5" CREATED="2017-01-06T11:44:17" ID="txt_0002" MIMETYPE="text/plain" SEQ="1" SIZE="2284"> 
+        <mets:FLocat LOCTYPE="URL" xlink:href="txt/txt_df53c210-d3f7-11e6-a1de-001018b3eb4c_0002.txt"/> 
+      </mets:file>  
+      <mets:file CHECKSUM="4d6a73e1fcccdebea3af87b888b13d0a" CHECKSUMTYPE="MD5" CREATED="2017-01-06T11:44:10" ID="txt_0003" MIMETYPE="text/plain" SEQ="2" SIZE="317"> 
+        <mets:FLocat LOCTYPE="URL" xlink:href="txt/txt_df53c210-d3f7-11e6-a1de-001018b3eb4c_0003.txt"/> 
+      </mets:file>  
+    </mets:fileGrp>  
+    <mets:fileGrp ID="TECHMDGRP" USE="Technical Metadata"> 
+      <mets:file CHECKSUM="e40ff309e853811869b633f13150c029" CHECKSUMTYPE="MD5" CREATED="2017-01-06T17:13:16" ID="amd_0001" MIMETYPE="text/xml" SEQ="0" SIZE="32009"> 
+        <mets:FLocat LOCTYPE="URL" xlink:href="amdsec/amd_mets_df53c210-d3f7-11e6-a1de-001018b3eb4c_0001.xml"/> 
+      </mets:file>  
+      <mets:file CHECKSUM="58e91388d5db5678cbeda531686b17b2" CHECKSUMTYPE="MD5" CREATED="2017-01-06T17:13:22" ID="amd_0002" MIMETYPE="text/xml" SEQ="1" SIZE="32011"> 
+        <mets:FLocat LOCTYPE="URL" xlink:href="amdsec/amd_mets_df53c210-d3f7-11e6-a1de-001018b3eb4c_0002.xml"/> 
+      </mets:file>  
+      <mets:file CHECKSUM="b8f62bfea308c4272fc81354fbf5b88e" CHECKSUMTYPE="MD5" CREATED="2017-01-06T17:13:29" ID="amd_0003" MIMETYPE="text/xml" SEQ="2" SIZE="32006"> 
+        <mets:FLocat LOCTYPE="URL" xlink:href="amdsec/amd_mets_df53c210-d3f7-11e6-a1de-001018b3eb4c_0003.xml"/> 
+      </mets:file>  
+    </mets:fileGrp> 
+  </mets:fileSec>  
+  <mets:structMap LABEL="Physical_Structure" TYPE="PHYSICAL"> 
+    <mets:div DMDID="MODSMD_TITLE_0001" ID="DIV_P_0000" LABEL="Atlas školství" TYPE="Periodical" ADMID="AMD_TITLE_0001"> 
+      <mets:div ID="DIV_P_PAGE_0000" ORDER="1" ORDERLABEL="[1a]" TYPE="titlePage"> 
+        <mets:fptr FILEID="mc_0001"/>  
+        <mets:fptr FILEID="uc_0001"/>  
+        <mets:fptr FILEID="alto_0001"/>  
+        <mets:fptr FILEID="txt_0001"/>  
+        <mets:fptr FILEID="amd_0001"/> 
+      </mets:div>  
+      <mets:div ID="DIV_P_PAGE_0001" ORDER="2" ORDERLABEL="[1b]" TYPE="normalPage"> 
+        <mets:fptr FILEID="mc_0002"/>  
+        <mets:fptr FILEID="uc_0002"/>  
+        <mets:fptr FILEID="alto_0002"/>  
+        <mets:fptr FILEID="txt_0002"/>  
+        <mets:fptr FILEID="amd_0002"/> 
+      </mets:div>  
+      <mets:div ID="DIV_P_PAGE_0002" ORDER="3" ORDERLABEL="[1]" TYPE="normalPage"> 
+        <mets:fptr FILEID="mc_0003"/>  
+        <mets:fptr FILEID="uc_0003"/>  
+        <mets:fptr FILEID="alto_0003"/>  
+        <mets:fptr FILEID="txt_0003"/>  
+        <mets:fptr FILEID="amd_0003"/> 
+      </mets:div>  
+    </mets:div> 
+  </mets:structMap>  
+  <mets:structMap LABEL="Logical_Structure" TYPE="LOGICAL"> 
+    <mets:div DMDID="MODSMD_TITLE_0001" ID="TITLE_0001" LABEL="Atlas školství" TYPE="PERIODICAL_TITLE"> 
+      <mets:div DMDID="MODSMD_VOLUME_0001" ID="VOLUME_0001" LABEL="Atlas školství" TYPE="PERIODICAL_VOLUME"> 
+        <mets:div DMDID="MODSMD_ISSUE_0001" ID="ISSUE_0001" LABEL="Atlas školství" TYPE="ISSUE"/> 
+      </mets:div> 
+    </mets:div> 
+  </mets:structMap>  
+  <mets:structLink> 
+    <mets:smLink xlink:from="ISSUE_0001" xlink:to="DIV_P_PAGE_0000"/>  
+    <mets:smLink xlink:from="ISSUE_0001" xlink:to="DIV_P_PAGE_0001"/>  
+    <mets:smLink xlink:from="ISSUE_0001" xlink:to="DIV_P_PAGE_0002"/>  
+  </mets:structLink> 
+</mets:mets>

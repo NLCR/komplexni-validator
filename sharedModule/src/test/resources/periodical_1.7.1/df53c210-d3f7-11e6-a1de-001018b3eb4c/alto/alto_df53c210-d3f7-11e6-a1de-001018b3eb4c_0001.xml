@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<alto xmlns="http://www.loc.gov/standards/alto/ns-v2#" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+<Description>
+<MeasurementUnit>pixel</MeasurementUnit>
+<OCRProcessing ID="IdOcr"><ocrProcessingStep><processingDateTime>2017-01-06</processingDateTime><processingSoftware><softwareCreator>ABBYY</softwareCreator><softwareName>ABBYY Recognition Server</softwareName><softwareVersion>4.0</softwareVersion></processingSoftware></ocrProcessingStep></OCRProcessing>
+</Description>
+<Styles><TextStyle ID="font0" FONTFAMILY="Arial" FONTSIZE="7"/><TextStyle ID="font1" FONTFAMILY="Arial" FONTSIZE="9"/><TextStyle ID="font2" FONTFAMILY="Arial" FONTSIZE="10"/><TextStyle ID="font3" FONTFAMILY="Arial" FONTSIZE="12"/><TextStyle ID="font4" FONTFAMILY="Arial" FONTSIZE="21"/><TextStyle ID="font5" FONTFAMILY="Arial" FONTSIZE="34"/><TextStyle ID="font6" FONTFAMILY="Arial" FONTSIZE="41"/>
+<ParagraphStyle ID="StyleId-FFFFFFFF-FFFF-FFFF-FFFF-FFFFFFFFFFFF-" ALIGN="Left" LEFT="0." RIGHT="0." FIRSTLINE="0."/>
+<ParagraphStyle ID="StyleId-559D65EC-0CD3-4E18-8D10-ACC27E11CAE2-" ALIGN="Right" LEFT="0." RIGHT="0." FIRSTLINE="0." LINESPACE="48.24000168"/>
+<ParagraphStyle ID="StyleId-3501AE0D-606C-4CAE-A605-F584631023E4-" ALIGN="Left" LEFT="0." RIGHT="0." FIRSTLINE="0." LINESPACE="48.24000168"/>
+<ParagraphStyle ID="StyleId-EB979086-6E87-4891-84E1-0D228BAC3A80-" ALIGN="Block" LEFT="0." RIGHT="0." FIRSTLINE="0." LINESPACE="13.39999962"/>
+<ParagraphStyle ID="StyleId-F8BA1299-278D-4ED9-8C5E-408F3130A3B3-" ALIGN="Left" LEFT="0." RIGHT="0." FIRSTLINE="0." LINESPACE="10."/>
+<ParagraphStyle ID="StyleId-AF8ABE00-7E78-4374-BB95-61BA1D339581-" ALIGN="Left" LEFT="0." RIGHT="0." FIRSTLINE="0." LINESPACE="23.5"/>
+<ParagraphStyle ID="StyleId-039308E5-50AC-4608-BC32-B0152C774CB0-" ALIGN="Left" LEFT="0." RIGHT="0." FIRSTLINE="0." LINESPACE="11.19999981"/>
+</Styles>
+<Layout>
+<Page ID="Page1" PHYSICAL_IMG_NR="1" HEIGHT="3654" WIDTH="2612">
+<TopMargin HEIGHT="8" WIDTH="2612" VPOS="0" HPOS="0">
+</TopMargin>
+<PrintSpace HEIGHT="3646" WIDTH="2612" VPOS="8" HPOS="0">
+<ComposedBlock ID="Page1_Block1" HEIGHT="310" WIDTH="550" VPOS="130" HPOS="194" TYPE="container">
+<TextBlock ID="Page1_Block2" HEIGHT="168" WIDTH="550" VPOS="130" HPOS="194" language="cs" STYLEREFS="StyleId-AF8ABE00-7E78-4374-BB95-61BA1D339581- font4">
+<TextLine BASELINE="171" HEIGHT="39" WIDTH="414" VPOS="133" HPOS="259" STYLEREFS="StyleId-F8BA1299-278D-4ED9-8C5E-408F3130A3B3- font1"><String STYLE="bold" CONTENT="PREZENČNÍ" HEIGHT="39" WIDTH="268" VPOS="133" HPOS="259"/><SP WIDTH="19" VPOS="134" HPOS="528"/><String STYLE="bold" CONTENT="FOND" HEIGHT="29" WIDTH="125" VPOS="142" HPOS="548"/></TextLine>
+<TextLine BASELINE="290" HEIGHT="70" WIDTH="520" VPOS="223" HPOS="209"><String STYLE="bold" CONTENT="54" HEIGHT="68" WIDTH="94" VPOS="225" HPOS="209"/><SP WIDTH="28" VPOS="225" HPOS="304"/><String STYLE="bold" CONTENT="D" HEIGHT="68" WIDTH="68" VPOS="225" HPOS="333"/><SP WIDTH="34" VPOS="223" HPOS="402"/><String STYLE="bold" CONTENT="158115" HEIGHT="70" WIDTH="292" VPOS="223" HPOS="437"/></TextLine>
+</TextBlock>
+<TextBlock ID="Page1_Block3" HEIGHT="40" WIDTH="358" VPOS="400" HPOS="308" language="cs" STYLEREFS="StyleId-039308E5-50AC-4608-BC32-B0152C774CB0- font2">
+<TextLine BASELINE="434" HEIGHT="33" WIDTH="326" VPOS="402" HPOS="323"><String STYLEREFS="font0" CONTENT="*" HEIGHT="20" WIDTH="20" VPOS="409" HPOS="323"/><String CONTENT="1001922179" HEIGHT="33" WIDTH="268" VPOS="402" HPOS="353"/><String STYLEREFS="font0" CONTENT="*" HEIGHT="21" WIDTH="20" VPOS="408" HPOS="629"/></TextLine>
+</TextBlock></ComposedBlock>
+<TextBlock ID="Page1_Block4" HEIGHT="630" WIDTH="2176" VPOS="541" HPOS="232" language="cs" STYLEREFS="StyleId-3501AE0D-606C-4CAE-A605-F584631023E4- font5">
+<TextLine BASELINE="661" HEIGHT="136" WIDTH="1096" VPOS="547" HPOS="1310" STYLEREFS="StyleId-559D65EC-0CD3-4E18-8D10-ACC27E11CAE2- font6"><String STYLE="bold italics" CONTENT="saa3/saj.c7" HEIGHT="136" WIDTH="1096" VPOS="547" HPOS="1310"/></TextLine>
+<TextLine BASELINE="864" HEIGHT="132" WIDTH="1516" VPOS="759" HPOS="238"><String STYLE="bold" CONTENT="přehled" HEIGHT="132" WIDTH="504" VPOS="759" HPOS="238"/><SP WIDTH="46" VPOS="763" HPOS="743"/><String STYLE="bold" CONTENT="středních" HEIGHT="104" WIDTH="644" VPOS="763" HPOS="790"/><SP WIDTH="50" VPOS="763" HPOS="1435"/><String STYLE="bold" CONTENT="škol" HEIGHT="104" WIDTH="268" VPOS="763" HPOS="1486"/></TextLine>
+<TextLine BASELINE="951" HEIGHT="52" WIDTH="1649" VPOS="909" HPOS="238" STYLEREFS="StyleId-EB979086-6E87-4891-84E1-0D228BAC3A80- font3"><String STYLE="bold" CONTENT="a" HEIGHT="29" WIDTH="29" VPOS="920" HPOS="238"/><SP WIDTH="20" VPOS="920" HPOS="268"/><String STYLE="bold" CONTENT="vybraných" HEIGHT="51" WIDTH="302" VPOS="909" HPOS="289"/><SP WIDTH="20" VPOS="910" HPOS="592"/><String STYLE="bold" CONTENT="školských" HEIGHT="51" WIDTH="282" VPOS="910" HPOS="613"/><SP WIDTH="20" VPOS="911" HPOS="896"/><String STYLE="bold" CONTENT="zařízení" HEIGHT="41" WIDTH="225" VPOS="910" HPOS="917"/><SP WIDTH="718" VPOS="911" HPOS="1143"/><String STYLE="bold" CONTENT="^" HEIGHT="32" WIDTH="25" VPOS="919" HPOS="1862"/></TextLine>
+<TextLine BASELINE="1139" HEIGHT="126" WIDTH="1094" VPOS="1040" HPOS="239"><String STYLE="bold" CONTENT="ЫЬегбскц" HEIGHT="124" WIDTH="726" VPOS="1040" HPOS="239"/><SP WIDTH="74" VPOS="1042" HPOS="966"/><String STYLE="bold" CONTENT="kraj" HEIGHT="124" WIDTH="292" VPOS="1042" HPOS="1041"/></TextLine>
+</TextBlock><Illustration ID="Page1_Block5" HEIGHT="2408" WIDTH="2612" VPOS="1246" HPOS="0"/><GraphicalElement ID="Page1_Block6" HEIGHT="6" WIDTH="518" VPOS="444" HPOS="253"/><GraphicalElement ID="Page1_Block7" HEIGHT="1" WIDTH="76" VPOS="1323" HPOS="1755"/><GraphicalElement ID="Page1_Block8" HEIGHT="5" WIDTH="91" VPOS="3394" HPOS="1265"/><GraphicalElement ID="Page1_Block9" HEIGHT="558" WIDTH="5" VPOS="1393" HPOS="1424"/><GraphicalElement ID="Page1_Block10" HEIGHT="428" WIDTH="5" VPOS="1320" HPOS="1961"/><GraphicalElement ID="Page1_Block11" HEIGHT="2" WIDTH="28" VPOS="1322" HPOS="1681"/><GraphicalElement ID="Page1_Block12" HEIGHT="5" WIDTH="41" VPOS="1345" HPOS="1204"/><Illustration ID="Page1_Block13" HEIGHT="26" WIDTH="2604" VPOS="8" HPOS="4"/><Illustration ID="Page1_Block14" HEIGHT="233" WIDTH="1256" VPOS="215" HPOS="1118"/><Illustration ID="Page1_Block15" HEIGHT="87" WIDTH="113" VPOS="1968" HPOS="1574"/><Illustration ID="Page1_Block16" HEIGHT="51" WIDTH="104" VPOS="2590" HPOS="1143"/><Illustration ID="Page1_Block17" HEIGHT="233" WIDTH="193" VPOS="213" HPOS="891"/><Illustration ID="Page1_Block18" HEIGHT="87" WIDTH="44" VPOS="1796" HPOS="1857"/>
+</PrintSpace>
+</Page>
+</Layout>
+</alto>
