@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?><info xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://www.ndk.cz/standardy-digitalizace/info11.xsd">
+    <created>2018-03-13T22:32:49</created>
+    <metadataversion>1.7.1</metadataversion>
+    <packageid>df53c210-d3f7-11e6-a1de-001018b3eb4c</packageid>
+    <mainmets>mets_df53c210-d3f7-11e6-a1de-001018b3eb4c.xml</mainmets>
+    <validation version="file_sec:1.0;periodical_issue:1.0;amd_sec_mix:1.0;physical_map_amd:1.0;periodical_title:1.0;amd_file_sec:1.0;amd_sec:1.0;periodical_logical_map:1.0;periodical_supplement:1.0;physical_map:1.0;periodical_volume:1.0">Valid</validation>
+    <titleid type="ccnb">cnb001242968</titleid>
+    <titleid type="urnnbn">urn:nbn:cz:nk-0032ps</titleid>
+    <collection>Digitalizace národní knihovny</collection>
+    <institution>Česká národní knihovna</institution>
+    <creator>ABA001</creator>
+    <size>634097</size>
+    <itemlist itemtotal="203">
+        <item>\usercopy\uc_df53c210-d3f7-11e6-a1de-001018b3eb4c_0001.jp2</item>
+        <item>\usercopy\uc_df53c210-d3f7-11e6-a1de-001018b3eb4c_0002.jp2</item>
+        <item>\usercopy\uc_df53c210-d3f7-11e6-a1de-001018b3eb4c_0003.jp2</item>
+        <item>\info_df53c210-d3f7-11e6-a1de-001018b3eb4c.xml</item>
+        <item>\txt\txt_df53c210-d3f7-11e6-a1de-001018b3eb4c_0001.txt</item>
+        <item>\txt\txt_df53c210-d3f7-11e6-a1de-001018b3eb4c_0002.txt</item>
+        <item>\txt\txt_df53c210-d3f7-11e6-a1de-001018b3eb4c_0003.txt</item>
+        <item>\mastercopy\mc_df53c210-d3f7-11e6-a1de-001018b3eb4c_0001.jp2</item>
+        <item>\mastercopy\mc_df53c210-d3f7-11e6-a1de-001018b3eb4c_0002.jp2</item>
+        <item>\mastercopy\mc_df53c210-d3f7-11e6-a1de-001018b3eb4c_0003.jp2</item>
+        <item>\md5_df53c210-d3f7-11e6-a1de-001018b3eb4c.md5</item>
+        <item>\mets_df53c210-d3f7-11e6-a1de-001018b3eb4c.xml</item>
+        <item>\amdsec\amd_mets_df53c210-d3f7-11e6-a1de-001018b3eb4c_0001.xml</item>
+        <item>\amdsec\amd_mets_df53c210-d3f7-11e6-a1de-001018b3eb4c_0002.xml</item>
+        <item>\amdsec\amd_mets_df53c210-d3f7-11e6-a1de-001018b3eb4c_0003.xml</item>
+        <item>\alto\alto_df53c210-d3f7-11e6-a1de-001018b3eb4c_0001.xml</item>
+        <item>\alto\alto_df53c210-d3f7-11e6-a1de-001018b3eb4c_0002.xml</item>
+        <item>\alto\alto_df53c210-d3f7-11e6-a1de-001018b3eb4c_0003.xml</item>
+    </itemlist>
+    <checksum checksum="7EACD9737BC5E3C0174D8CAEBFC84C3F" type="MD5">md5_df53c210-d3f7-11e6-a1de-001018b3eb4c.md5</checksum>
+</info>
