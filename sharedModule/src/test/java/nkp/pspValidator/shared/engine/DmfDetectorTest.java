@@ -17,11 +17,11 @@ import static org.junit.Assert.assertEquals;
  */
 public class DmfDetectorTest {
 
+    private final DmfDetector dmfDetector = new DmfDetector();
 
     @Test
     public void detectDmfTypeMonograph() {
         File pspRootDir = new File("src/test/resources/monograph_1.2/b50eb6b0-f0a4-11e3-b72e-005056827e52");
-        DmfDetector dmfDetector = new DmfDetector();
         try {
             Dmf.Type dmfType = dmfDetector.detectDmfType(pspRootDir);
             assertEquals(Dmf.Type.MONOGRAPH, dmfType);
@@ -37,7 +37,6 @@ public class DmfDetectorTest {
     @Test
     public void detectDmfTypePeriodical() {
         File pspRootDir = new File("src/test/resources/periodical_1.6/7033d800-0935-11e4-beed-5ef3fc9ae867");
-        DmfDetector dmfDetector = new DmfDetector();
         try {
             Dmf.Type dmfType = dmfDetector.detectDmfType(pspRootDir);
             assertEquals(Dmf.Type.PERIODICAL, dmfType);
@@ -54,7 +53,6 @@ public class DmfDetectorTest {
     @Test
     public void detectDmfTypeInvalid() {
         File pspRootDir = new File("src/test/resources/monograph_wrongType/b50eb6b0-f0a4-11e3-b72e-005056827e52");
-        DmfDetector dmfDetector = new DmfDetector();
         try {
             Dmf.Type dmfType = dmfDetector.detectDmfType(pspRootDir);
             System.out.println(dmfType);
@@ -71,7 +69,6 @@ public class DmfDetectorTest {
     @Test
     public void detectDmfVersionMonograph() {
         File pspRootDir = new File("src/test/resources/monograph_1.2/b50eb6b0-f0a4-11e3-b72e-005056827e52");
-        DmfDetector dmfDetector = new DmfDetector();
         try {
             String version = dmfDetector.detectDmfVersionFromInfoFile(Dmf.Type.MONOGRAPH, pspRootDir);
             assertEquals("1.2", version);
@@ -87,7 +84,6 @@ public class DmfDetectorTest {
     @Test
     public void detectDmfVersionPeriodical() {
         File pspRootDir = new File("src/test/resources/periodical_1.6/7033d800-0935-11e4-beed-5ef3fc9ae867");
-        DmfDetector dmfDetector = new DmfDetector();
         try {
             String version = dmfDetector.detectDmfVersionFromInfoFile(Dmf.Type.PERIODICAL, pspRootDir);
             assertEquals("1.6", version);
@@ -98,6 +94,35 @@ public class DmfDetectorTest {
         } catch (InvalidXPathExpressionException e) {
             fail(e.getMessage());
         }
+    }
+
+
+    @Test
+    public void something() throws PspDataException, XmlFileParsingException, InvalidXPathExpressionException {
+        //mon
+        File mon12Dir = new File("src/test/resources/monograph_1.2/b50eb6b0-f0a4-11e3-b72e-005056827e52");
+        assertEquals(resolverMon(mon12Dir, null, "123").getVersion(), "123");
+        assertEquals(resolverMon(mon12Dir, "1", "123").getVersion(), "123");
+        assertEquals(resolverMon(mon12Dir, "1", null).getVersion(), "1.2");
+        //sound recording
+        File sr03Dir = new File("src/test/resources/sound_recording_0.3/1234567890");
+        assertEquals(resolverSr(sr03Dir, null, "123").getVersion(), "123");
+        assertEquals(resolverSr(sr03Dir, "1", "123").getVersion(), "123");
+        assertEquals(resolverSr(sr03Dir, null, null).getVersion(), "0.3");
+        assertEquals(resolverSr(sr03Dir, "1", null).getVersion(), "0.3");
+    }
+
+
+    private Dmf resolverMon(File pspDir, String preferred, String forced) throws PspDataException, XmlFileParsingException, InvalidXPathExpressionException {
+        return dmfDetector.resolveDmf(pspDir, preferred, null, null, forced, null, null);
+    }
+
+    private Dmf resolverPer(File pspDir, String preferred, String forced) throws PspDataException, XmlFileParsingException, InvalidXPathExpressionException {
+        return dmfDetector.resolveDmf(pspDir, null, preferred, null, null, forced, null);
+    }
+
+    private Dmf resolverSr(File pspDir, String preferred, String forced) throws PspDataException, XmlFileParsingException, InvalidXPathExpressionException {
+        return dmfDetector.resolveDmf(pspDir, null, null, preferred, null, null, forced);
     }
 
 

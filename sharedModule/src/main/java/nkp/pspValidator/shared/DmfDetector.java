@@ -13,8 +13,7 @@ import java.io.FilenameFilter;
 import java.io.IOException;
 import java.util.regex.Pattern;
 
-import static nkp.pspValidator.shared.Dmf.Type.MONOGRAPH;
-import static nkp.pspValidator.shared.Dmf.Type.PERIODICAL;
+import static nkp.pspValidator.shared.Dmf.Type.*;
 
 /**
  * Created by Martin Řehánek on 2.11.16.
@@ -24,6 +23,7 @@ public class DmfDetector {
 
     public static final String DEFAULT_MONOGRAPH_VERSION = "1.0";
     public static final String DEFAULT_PERIODICAL_VERSION = "1.4";
+    public static final String DEFAULT_SOUND_RECORDING_VERSION = "0.2";
 
 
     /**
@@ -44,6 +44,8 @@ public class DmfDetector {
                 return MONOGRAPH;
             } else if ("Periodical".equals(docType)) {
                 return PERIODICAL;
+            } else if ("sound recording".equals(docType)) {
+                return SOUND_RECORDING;
             } else {
                 throw new PspDataException(pspRootDir, String.format("atribut TYPE elementu mods neobsahuje korektní typ (Monograph/Periodical), ale hodnotu '%s'", docType));
             }
@@ -54,12 +56,7 @@ public class DmfDetector {
 
     private File findPrimaryMetsFile(File pspRootDir) throws PspDataException {
         Pattern pattern = Pattern.compile("mets.*\\.xml", java.util.regex.Pattern.CASE_INSENSITIVE | java.util.regex.Pattern.UNICODE_CASE);
-        File[] metsCandidates = pspRootDir.listFiles(new FilenameFilter() {
-            @Override
-            public boolean accept(File dir, String name) {
-                return pattern.matcher(name).matches();
-            }
-        });
+        File[] metsCandidates = pspRootDir.listFiles((dir, name) -> pattern.matcher(name).matches());
         if (metsCandidates.length >= 2) {
             throw new PspDataException(pspRootDir,
                     String.format("nalezeno více možných souborů PRIMARY-METS, není jasné, který použít pro zjištění typu dokumentu (monografie/periodikum)"));
@@ -130,7 +127,9 @@ public class DmfDetector {
         }
     }
 
-    public Dmf resolveDmf(File pspRoot, String preferredDmfMonVersion, String preferredDmfPerVersion, String forcedDmfMonVersion, String forcedDmfPerVersion) throws PspDataException, InvalidXPathExpressionException, XmlFileParsingException {
+    public Dmf resolveDmf(File pspRoot,
+                          String preferredDmfMonVersion, String preferredDmfPerVersion, String preferredDmfSRVersion,
+                          String forcedDmfMonVersion, String forcedDmfPerVersion, String forcedDmfSRVersion) throws PspDataException, InvalidXPathExpressionException, XmlFileParsingException {
         Dmf.Type type = detectDmfType(pspRoot);
         switch (type) {
             case MONOGRAPH: {
@@ -138,6 +137,10 @@ public class DmfDetector {
             }
             case PERIODICAL: {
                 return chooseVersion(PERIODICAL, forcedDmfPerVersion, pspRoot, preferredDmfPerVersion, DEFAULT_PERIODICAL_VERSION);
+            }
+            case SOUND_RECORDING: {
+                return chooseVersion(SOUND_RECORDING, forcedDmfSRVersion, pspRoot, preferredDmfSRVersion, DEFAULT_SOUND_RECORDING_VERSION);
+
             }
             default:
                 throw new IllegalStateException();

@@ -45,7 +45,7 @@ public class XsdValidator {
         //XsdValidator.validate("METS", metsXsd, new File("../sharedModule/src/test/resources/monograph_1.2/b50eb6b0-f0a4-11e3-b72e-005056827e52/amdsec/amd_mets_b50eb6b0-f0a4-11e3-b72e-005056827e52_0001.xml"));
     }
 
-    private static void validate(String label, File xsd, File xml) {
+    public static void validate(String label, File xsd, File xml) {
         System.out.println("validating " + label);
         //System.out.println("xsd: " + xsd.getAbsolutePath());
         //System.out.println("xml: " + xml.getAbsolutePath());

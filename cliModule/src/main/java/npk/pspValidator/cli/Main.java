@@ -693,7 +693,7 @@ public class Main {
         //psp dir, dmf detection
         checkReadableDir(pspDir);
         out.println(String.format("Zpracovávám PSP balík %s", pspDir.getAbsolutePath()));
-        Dmf dmfResolved = new DmfDetector().resolveDmf(pspDir, preferredDmfMonVersion, preferredDmfPerVersion, forcedDmfMonVersion, forcedDmfPerVersion);
+        Dmf dmfResolved = new DmfDetector().resolveDmf(pspDir, preferredDmfMonVersion, preferredDmfPerVersion, null, forcedDmfMonVersion, forcedDmfPerVersion, null);
         out.println(String.format("Bude použita verze standardu %s", dmfResolved));
 
         //initializes j2k profiles according to selected fDMF

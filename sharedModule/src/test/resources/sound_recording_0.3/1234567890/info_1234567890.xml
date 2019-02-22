@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?><info xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://www.ndk.cz/standardy-digitalizace/info11.xsd">
+    <created>2017-07-12T10:39:23</created>
+    <metadataversion>0.3</metadataversion>
+    <packageid>1234567890</packageid>
+    <mainmets>mets_1234567890.xml</mainmets>
+    <validation version="file_sec:1.0;amd_sec_mix:1.0;physical_map_amd:1.0;amd_file_sec:1.0;monographic_volume:1.0;amd_sec:1.0;monographic_logical_map:1.0;physical_map:1.0">Valid</validation>
+	<titleid type="urnnbn">urn:nbn:cz:nk-0002s1</titleid>
+    <collection>Digitalizace národní knihovny</collection>
+    <institution>Česká národní knihovna</institution>
+    <creator>ABA001</creator>
+    <size>999898</size>
+    <itemlist itemtotal="19">
+	    <item>\source_audio\sa_1234567890_0001.wav</item>
+		<item>\source_audio\sa_1234567890_0002.wav</item>
+		<item>\user_copy_audio\uca_1234567890_0001.mp3</item>
+		<item>\user_copy_audio\uca_1234567890_0002.mp3</item>
+		<item>\master_copy\mc_1234567890_0001.jp2</item>
+		<item>\master_copy\mc_1234567890_0002.jp2</item>
+		<item>\user_copy\uc_1234567890_0001.jp2</item>
+		<item>\user_copy\uc_1234567890_0002.jp2</item>
+        <item>\amd_sec\amd_mets_1234567890_0001.xml</item>
+		<item>\amd_sec\amd_mets_1234567890_0002.xml</item>
+		<item>\amd_sec\amd_mets_audio_1234567890_0001.xml</item>
+		<item>\amd_sec\amd_mets_audio_1234567890_0002.xml</item>
+		<item>\alto\alto_1234567890_0001.xml</item>
+		<item>\alto\alto_1234567890_0002.xml</item>
+        <item>\txt\txt_1234567890_0001.txt</item>
+		<item>\txt\txt_1234567890_0002.txt</item>
+		<item>\mets_1234567890.xml</item>
+        <item>\info_1234567890.xml</item>
+		<item>\md5_1234567890.md5</item>
+    </itemlist>
+    <checksum checksum="E20A04D7D0DEB864B853223275FFB8A0" type="MD5">md5_1234567890.md5</checksum>
+</info>
