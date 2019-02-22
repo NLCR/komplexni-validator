@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <bytecodeTargetLevel>
+      <module name="nkp.pspValidator.cliModule.main" target="1.8" />
+      <module name="nkp.pspValidator.cliModule.test" target="1.8" />
+      <module name="nkp.pspValidator.gui.javaFxModule.main" target="1.8" />
+      <module name="nkp.pspValidator.gui.javaFxModule.test" target="1.8" />
+      <module name="nkp.pspValidator.javaFxModule.main" target="1.8" />
+      <module name="nkp.pspValidator.javaFxModule.test" target="1.8" />
+      <module name="nkp.pspValidator.PspValidator.main" target="1.8" />
+      <module name="nkp.pspValidator.PspValidator.test" target="1.8" />
+      <module name="nkp.pspValidator.sharedModule.main" target="1.8" />
+      <module name="nkp.pspValidator.sharedModule.test" target="1.8" />
+      <module name="PspValidator.cliModule.main" target="1.8" />
+      <module name="PspValidator.cliModule.test" target="1.8" />
+      <module name="PspValidator.sharedModule.main" target="1.8" />
+      <module name="PspValidator.sharedModule.test" target="1.8" />
+      <module name="rzehan.javaFxModule.main" target="1.8" />
+      <module name="rzehan.javaFxModule.test" target="1.8" />
+      <module name="rzehan.PspValidator.main" target="1.8" />
+      <module name="rzehan.PspValidator.test" target="1.8" />
+    </bytecodeTargetLevel>
+  </component>
+</project>
