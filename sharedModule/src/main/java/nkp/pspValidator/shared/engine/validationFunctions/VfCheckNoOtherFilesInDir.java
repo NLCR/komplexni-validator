@@ -49,7 +49,7 @@ public class VfCheckNoOtherFilesInDir extends ValidationFunction {
             }
 
             try {
-                Set<File> filesExpected = mergeAbsolutFilesFromParams();
+                Set<File> filesExpected = mergeAbsoluteFilesFromParamsIgnoreNulls();
                 return validate(rootDir, filesExpected);
             } catch (EmptyParamEvaluationException e) {
                 return invalidValueParamNull(e.getParamName(), e.getEvaluation());
@@ -62,26 +62,30 @@ public class VfCheckNoOtherFilesInDir extends ValidationFunction {
     }
 
 
-    private Set<File> mergeAbsolutFilesFromParams() throws EmptyParamEvaluationException {
+    private Set<File> mergeAbsoluteFilesFromParamsIgnoreNulls() throws EmptyParamEvaluationException {
         Set<File> result = new HashSet<>();
         List<ValueParam> fileParams = valueParams.getParams(PARAM_FILE);
         for (ValueParam param : fileParams) {
             ValueEvaluation evaluation = param.getEvaluation();
             File file = (File) evaluation.getData();
             if (file == null) {
-                throw new EmptyParamEvaluationException(PARAM_FILE, evaluation);
+                //ignore
+                //throw new EmptyParamEvaluationException(PARAM_FILE, evaluation);
+            } else {
+                result.add(file.getAbsoluteFile());
             }
-            result.add(file.getAbsoluteFile());
         }
         List<ValueParam> filesParams = valueParams.getParams(PARAM_FILES);
         for (ValueParam param : filesParams) {
             ValueEvaluation evaluation = param.getEvaluation();
             List<File> files = (List<File>) evaluation.getData();
             if (files == null) {
-                throw new EmptyParamEvaluationException(PARAM_FILES, evaluation);
-            }
-            for (File file : files) {
-                result.add(file.getAbsoluteFile());
+                //ignore
+                //throw new EmptyParamEvaluationException(PARAM_FILES, evaluation);
+            } else {
+                for (File file : files) {
+                    result.add(file.getAbsoluteFile());
+                }
             }
         }
         return result;

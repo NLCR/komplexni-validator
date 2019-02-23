@@ -54,6 +54,10 @@ public class EfFindFilesInDirByPattern extends EvaluationFunction {
                     filesMatching.add(file);
                 }
             }
+            // TODO: 2019-02-23 logging
+            /*if (filesMatching.isEmpty()) {
+                System.out.println(getName() + " result empty for dir=" + dir.getAbsolutePath() + ", pattern: " + patternParam.toString());
+            }*/
             return okResult(filesMatching);
 
         } catch (ContractException e) {
