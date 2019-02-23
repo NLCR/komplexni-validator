@@ -203,6 +203,48 @@
         </evaluation>
     </value-def>
 
+    <value-def name="SOURCE-AUDIO-DIR_FILES" type="FILE_LIST">
+        <evaluation functionName="findFilesInDirByPattern">
+            <params>
+                <value name="dir" type="FILE">
+                    <value-ref name="PSP_DIR"/>
+                </value>
+                <pattern name="pattern">
+                    <pattern-ref name="SOURCE-AUDIO-DIR_FILENAME"/>
+                </pattern>
+            </params>
+        </evaluation>
+    </value-def>
+
+    <value-def name="MASTER-COPY-AUDIO-DIR_FILES" type="FILE_LIST">
+        <evaluation functionName="findFilesInDirByPattern">
+            <params>
+                <value name="dir" type="FILE">
+                    <value-ref name="PSP_DIR"/>
+                </value>
+                <!--<pattern name="pattern">
+                    <pattern-ref name="MASTER-COPY-AUDIO-DIR_FILENAME"/>
+                </pattern>-->
+                <pattern name="pattern">
+                    <expression>mastercopyaudio</expression>
+                </pattern>
+            </params>
+        </evaluation>
+    </value-def>
+
+    <value-def name="USER-COPY-AUDIO-DIR_FILES" type="FILE_LIST">
+        <evaluation functionName="findFilesInDirByPattern">
+            <params>
+                <value name="dir" type="FILE">
+                    <value-ref name="PSP_DIR"/>
+                </value>
+                <pattern name="pattern">
+                    <pattern-ref name="USER-COPY-AUDIO-DIR_FILENAME"/>
+                </pattern>
+            </params>
+        </evaluation>
+    </value-def>
+
     <value-def name="SECONDARY-METS-DIR_FILE" type="FILE">
         <evaluation functionName="getFirstFileFromFileList">
             <params>
@@ -252,6 +294,39 @@
             </params>
         </evaluation>
     </value-def>
+
+    <value-def name="SOURCE-AUDIO-DIR_FILE" type="FILE">
+        <evaluation functionName="getFirstFileFromFileList">
+            <params>
+                <value name="files" type="FILE_LIST">
+                    <value-ref name="SOURCE-AUDIO-DIR_FILES"/>
+                </value>
+            </params>
+        </evaluation>
+    </value-def>
+
+    <!--tento adresar neni povinny, promena muze obsahovat null-->
+    <value-def name="MASTER-COPY-AUDIO-DIR_FILE" type="FILE">
+        <evaluation functionName="getFirstFileFromFileList">
+            <params>
+                <value name="files" type="FILE_LIST">
+                    <value-ref name="MASTER-COPY-AUDIO-DIR_FILES"/>
+                </value>
+                <value name="returnNullIfEmpty" type="BOOLEAN">true</value>
+            </params>
+        </evaluation>
+    </value-def>
+
+    <value-def name="USER-COPY-AUDIO-DIR_FILE" type="FILE">
+        <evaluation functionName="getFirstFileFromFileList">
+            <params>
+                <value name="files" type="FILE_LIST">
+                    <value-ref name="USER-COPY-AUDIO-DIR_FILES"/>
+                </value>
+            </params>
+        </evaluation>
+    </value-def>
+
 
     <value-def name="SECONDARY-METS_FILES" type="FILE_LIST">
         <evaluation functionName="findFilesInDirByPattern">

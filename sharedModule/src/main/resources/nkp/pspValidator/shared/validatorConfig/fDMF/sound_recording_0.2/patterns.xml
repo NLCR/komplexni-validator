@@ -52,21 +52,11 @@
 
     <pattern-def name="PRIMARY-METS_FILENAME">
         <description>Vzor pro jméno souboru PRIMARY-METS.</description>
-
-        <!--per<=1.4, mon<=1.0-->
-        <!--<expression caseSensitive="false">mets_${PSP_ID}\.xml</expression>-->
-
-        <!--per>=1.5, mon>=1.1-->
         <expression caseSensitive="true">mets_${PSP_ID}\.xml</expression>
     </pattern-def>
 
     <pattern-def name="CHECKSUM_FILENAME">
         <description>Vzor pro jméno souboru CHECKSUM.</description>
-
-        <!--per<=1.4, mon<=1.0-->
-        <!--<expression caseSensitive="false">md5_${PSP_ID}\.md5</expression>-->
-
-        <!--per>=1.5, mon>=1.1-->
         <expression caseSensitive="true">md5_${PSP_ID}\.md5</expression>
     </pattern-def>
 
@@ -77,52 +67,42 @@
 
     <pattern-def name="SECONDARY-METS-DIR_FILENAME">
         <description>Vzor pro jméno adresáře SECONDARY-METS-DIR.</description>
-
-        <!--per<=1.4, mon<=1.0-->
-        <!--<expression caseSensitive="false">amdsec</expression>-->
-
-        <!--per>=1.5, mon>=1.1-->
         <expression caseSensitive="true">amdsec</expression>
     </pattern-def>
 
     <pattern-def name="OCR-TEXT-DIR_FILENAME">
         <description>Vzor pro jméno adresáře OCR-TEXT-DIR.</description>
-
-        <!--per<=1.4, mon<=1.0-->
-        <!--<expression caseSensitive="false">txt</expression>-->
-
-        <!--per>=1.5, mon>=1.1-->
         <expression caseSensitive="true">txt</expression>
     </pattern-def>
 
     <pattern-def name="OCR-ALTO-DIR_FILENAME">
         <description>Vzor pro jméno adresáře OCR-ALTO-DIR.</description>
-
-        <!--per<=1.4, mon<=1.0-->
-        <!--<expression caseSensitive="false">alto</expression>-->
-
-        <!--per>=1.5, mon>=1.1-->
         <expression caseSensitive="true">alto</expression>
     </pattern-def>
 
     <pattern-def name="MASTER-COPY-DIR_FILENAME">
         <description>Vzor pro jméno adresáře MASTER-COPY-DIR.</description>
-
-        <!--per<=1.4, mon<=1.0-->
-        <!--<expression caseSensitive="false">mastercopy</expression>-->
-
-        <!--per>=1.5, mon>=1.1-->
         <expression caseSensitive="true">mastercopy</expression>
     </pattern-def>
 
     <pattern-def name="USER-COPY-DIR_FILENAME">
         <description>Vzor pro jméno adresáře USER-COPY-DIR.</description>
-
-        <!--per<=1.4, mon<=1.0-->
-        <!--<expression caseSensitive="false">usercopy</expression>-->
-
-        <!--per>=1.5, mon>=1.1-->
         <expression caseSensitive="true">usercopy</expression>
+    </pattern-def>
+
+    <pattern-def name="SOURCE-AUDIO-DIR_FILENAME">
+        <description>Vzor pro jméno adresáře SOURCE-AUDIO-DIR.</description>
+        <expression caseSensitive="true">sourceaudio</expression>
+    </pattern-def>
+
+    <pattern-def name="MASTER-COPY-AUDIO-DIR_FILENAME">
+        <description>Vzor pro jméno adresáře MASTER-COPY-AUDIO-DIR.</description>
+        <expression caseSensitive="true">masatercopyaudio</expression>
+    </pattern-def>
+
+    <pattern-def name="USER-COPY-AUDIO-DIR_FILENAME">
+        <description>Vzor pro jméno adresáře USER-COPY-AUDIO-DIR.</description>
+        <expression caseSensitive="true">usercopyaudio</expression>
     </pattern-def>
 
     <pattern-def name="SECONDARY-METS_FILENAME">
