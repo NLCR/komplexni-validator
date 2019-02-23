@@ -34,7 +34,7 @@
 
         <!--právě jeden každý top-level soubor-->
 
-        <rule name="SINGLE_INFO_FILE_EXISTS">
+        <rule name="SINGLE_INFO_FILE_FOUND">
             <description>Musí být nalezen nanejvýše jeden soubor INFO. Pokud nalezen není, je soubor špatně pojmenován, nebo
                 opravdu chybí.
             </description>
@@ -48,7 +48,7 @@
             </validation>
         </rule>
 
-        <rule name="SINGLE_PRIMARY-METS_FILE_EXISTS">
+        <rule name="SINGLE_PRIMARY-METS_FILE_FOUND">
             <description>Musí být nalezen nanejvýše jeden soubor PRIMARY-METS. Pokud nalezen není, je soubor špatně
                 pojmenován, nebo opravdu chybí.
             </description>
@@ -62,7 +62,7 @@
             </validation>
         </rule>
 
-        <rule name="SINGLE_CHECKSUM_FILE_EXISTS">
+        <rule name="SINGLE_CHECKSUM_FILE_FOUND">
             <description>Musí být nalezen nanejvýše jeden soubor CHECKSUM. Pokud nalezen není, je soubor špatně pojmenován,
                 nebo opravdu chybí.
             </description>
@@ -185,7 +185,7 @@
             </validation>
         </rule>
 
-        <rule name="NO_TOLERATED_TL_FILES_EXIST">
+        <rule name="NO_TOLERATED_TL_FILES_FOUND">
             <description>Ideálně by v kořenovém adresáři neměl být nalezen žádný tolerovaný soubor.</description>
             <validation functionName="checkFilelistHasExactSize">
                 <params>
@@ -206,9 +206,9 @@
                         </validation>-->
         </rule>
 
-        <rule name="NO_OTHER_TL_FILES_EXIST">
+        <rule name="NO_OTHER_TL_FILES_FOUND">
             <description>
-                Krome definovaných a tolerovaných souborů a adresářů nesmí v kořenovém adresáři existovat žádný jiný soubor nebo adresář.
+                Krome definovaných a tolerovaných souborů a adresářů nesmí být v kořenovém adresáři nalezen žádný další soubor nebo adresář.
             </description>
             <validation functionName="checkNoOtherFilesInDir">
                 <params>
@@ -250,7 +250,7 @@
         <!--právě jeden každý top-level adresář-->
 
 
-        <rule name="SINGLE_SECONDARY-METS-DIR_FILE_EXISTS">
+        <rule name="SINGLE_SECONDARY-METS-DIR_FILE_FOUND">
             <description>Musí být nalezen nanejvýše jeden adresář SECONDARY-METS-DIR. Pokud nalezen není, je
                 adresár špatně pojmenován, nebo opravdu chybí.
             </description>
@@ -264,7 +264,7 @@
             </validation>
         </rule>
 
-        <rule name="SINGLE_OCR-TEXT-DIR_FILE_EXISTS">
+        <rule name="SINGLE_OCR-TEXT-DIR_FILE_FOUND">
             <description>Musí být nalezen nanejvýše jeden adresář OCR-TEXT-DIR. Pokud nalezen není, je adresár
                 špatně pojmenován, nebo opravdu chybí.
             </description>
@@ -278,7 +278,7 @@
             </validation>
         </rule>
 
-        <rule name="SINGLE_OCR-ALTO-DIR_FILE_EXISTS">
+        <rule name="SINGLE_OCR-ALTO-DIR_FILE_FOUND">
             <description>Musí být nalezen nanejvýše jeden adresář OCR-ALTO-DIR. Pokud nalezen není, je adresár
                 špatně pojmenován, nebo opravdu chybí.
             </description>
@@ -292,7 +292,7 @@
             </validation>
         </rule>
 
-        <rule name="SINGLE_MASTER-COPY-DIR_FILE_EXISTS">
+        <rule name="SINGLE_MASTER-COPY-DIR_FILE_FOUND">
             <description>Musí být nalezen nanejvýše jeden adresář MASTER-COPY-DIR. Pokud nalezen není, je adresár
                 špatně pojmenován, nebo opravdu chybí.
             </description>
@@ -306,7 +306,7 @@
             </validation>
         </rule>
 
-        <rule name="SINGLE_USER-COPY-DIR_FILE_EXISTS">
+        <rule name="SINGLE_USER-COPY-DIR_FILE_FOUND">
             <description>Musí být nalezen nanejvýše jeden adresář USER-COPY-DIR. Pokud nalezen není, je adresár
                 špatně pojmenován, nebo opravdu chybí.
             </description>
