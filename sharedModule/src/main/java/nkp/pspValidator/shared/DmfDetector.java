@@ -32,6 +32,7 @@ public class DmfDetector {
      * Pokud se vyskytne jiná než povolená hodnota atributu – chyba.
      * Pokud se vyskytuje hodnota „Monograph“, zachází validátor s balíčkem jako s monografií.
      * Pokud se vyskytuje hodnota „Periodical“, zachází validátor s balíčkem jako s periodikem.
+     * Pokud se vyskytuje hodnota „sound recording“, zachází validátor s balíčkem jako se zvukovým dokumentem.
      */
     public Dmf.Type detectDmfType(File pspRootDir) throws PspDataException, XmlFileParsingException, InvalidXPathExpressionException {
 
@@ -127,27 +128,24 @@ public class DmfDetector {
         }
     }
 
-    public Dmf resolveDmf(File pspRoot,
-                          String preferredDmfMonVersion, String preferredDmfPerVersion, String preferredDmfSRVersion,
-                          String forcedDmfMonVersion, String forcedDmfPerVersion, String forcedDmfSRVersion) throws PspDataException, InvalidXPathExpressionException, XmlFileParsingException {
+    public Dmf resolveDmf(File pspRoot, Params params) throws PspDataException, InvalidXPathExpressionException, XmlFileParsingException {
         Dmf.Type type = detectDmfType(pspRoot);
         switch (type) {
             case MONOGRAPH: {
-                return chooseVersion(MONOGRAPH, forcedDmfMonVersion, pspRoot, preferredDmfMonVersion, DEFAULT_MONOGRAPH_VERSION);
+                return chooseVersion(MONOGRAPH, pspRoot, params.forcedDmfMonVersion, params.preferredDmfMonVersion, DEFAULT_MONOGRAPH_VERSION);
             }
             case PERIODICAL: {
-                return chooseVersion(PERIODICAL, forcedDmfPerVersion, pspRoot, preferredDmfPerVersion, DEFAULT_PERIODICAL_VERSION);
+                return chooseVersion(PERIODICAL, pspRoot, params.forcedDmfPerVersion, params.preferredDmfPerVersion, DEFAULT_PERIODICAL_VERSION);
             }
             case SOUND_RECORDING: {
-                return chooseVersion(SOUND_RECORDING, forcedDmfSRVersion, pspRoot, preferredDmfSRVersion, DEFAULT_SOUND_RECORDING_VERSION);
-
+                return chooseVersion(SOUND_RECORDING, pspRoot, params.forcedDmfSRVersion, params.preferredDmfSRVersion, DEFAULT_SOUND_RECORDING_VERSION);
             }
             default:
                 throw new IllegalStateException();
         }
     }
 
-    private Dmf chooseVersion(Dmf.Type type, String forcedVersion, File pspRoot, String preferredVersion, String defaultVersion) throws PspDataException, InvalidXPathExpressionException, XmlFileParsingException {
+    private Dmf chooseVersion(Dmf.Type type, File pspRoot, String forcedVersion, String preferredVersion, String defaultVersion) throws PspDataException, InvalidXPathExpressionException, XmlFileParsingException {
         if (forcedVersion != null) {
             return new Dmf(type, forcedVersion);
         } else {
@@ -160,6 +158,16 @@ public class DmfDetector {
                 return new Dmf(type, defaultVersion);
             }
         }
+    }
+
+
+    public static class Params {
+        public String preferredDmfMonVersion;
+        public String preferredDmfPerVersion;
+        public String preferredDmfSRVersion;
+        public String forcedDmfMonVersion;
+        public String forcedDmfPerVersion;
+        public String forcedDmfSRVersion;
     }
 
 }

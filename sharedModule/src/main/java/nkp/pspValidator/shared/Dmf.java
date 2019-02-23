@@ -51,11 +51,11 @@ public class Dmf implements Serializable {
         public String toString() {
             switch (this) {
                 case MONOGRAPH:
-                    return "Monograph";
+                    return "Monografie";
                 case PERIODICAL:
-                    return "Periodical";
+                    return "Periodika";
                 case SOUND_RECORDING:
-                    return "Sound recording";
+                    return "Zvuky";
                 default:
                     throw new IllegalStateException();
             }

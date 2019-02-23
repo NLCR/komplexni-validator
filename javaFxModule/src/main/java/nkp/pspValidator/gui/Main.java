@@ -12,6 +12,7 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import nkp.pspValidator.gui.dev.DevDialog;
 import nkp.pspValidator.gui.skipping.SkippingConfigurationDialog;
+import nkp.pspValidator.shared.DmfDetector;
 import nkp.pspValidator.shared.Platform;
 import nkp.pspValidator.shared.Version;
 
@@ -123,17 +124,14 @@ public class Main extends Application {
         this.validationDataManager = validationDataManager;
     }
 
-    public void runPspDirValidation(File pspDir, String preferredMonVersion, String preferredPerVersion, String forcedMonVersion, String forcedPerVersion,
-                                    boolean createTxtLog, boolean createXmlLog, int verbosity) {
+    public void runPspDirValidation(File pspDir, DmfDetector.Params dmDetectorParams, boolean createTxtLog, boolean createXmlLog, int verbosity) {
         //because the possible unzip dialog cannot close it's parent dialog
         dialogStage.close();
-        mainController.runPspDirValidation(pspDir, preferredMonVersion, preferredPerVersion, forcedMonVersion, forcedPerVersion, createTxtLog, createXmlLog, verbosity);
+        mainController.runPspDirValidation(pspDir, dmDetectorParams, createTxtLog, createXmlLog, verbosity);
     }
 
-    public void unzipAndRunPspZipValidation(File pspZip, String preferredMonVersion, String preferredPerVersion, String forcedMonVersion, String forcedPerVersion,
-                                            boolean createTxtLog, boolean createXmlLog, int verbosity) {
-        new UnzipAndValidateDialog(dialogStageLevel2, this, pspZip, preferredMonVersion, preferredPerVersion, forcedMonVersion, forcedPerVersion,
-                createTxtLog, createXmlLog, verbosity).show();
+    public void unzipAndRunPspZipValidation(File pspZip, DmfDetector.Params dmfDetectorParams, boolean createTxtLog, boolean createXmlLog, int verbosity) {
+        new UnzipAndValidateDialog(dialogStageLevel2, this, pspZip, dmfDetectorParams, createTxtLog, createXmlLog, verbosity).show();
     }
 
     //DIALOGS

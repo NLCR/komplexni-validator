@@ -9,6 +9,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ProgressIndicator;
 import javafx.stage.WindowEvent;
+import nkp.pspValidator.shared.DmfDetector;
 import nkp.pspValidator.shared.engine.Utils;
 
 import java.io.File;
@@ -33,10 +34,7 @@ public class UnzipAndValidateDialogController extends DialogController {
     private Task task = null;
 
     private File pspZip;
-    private String preferredMonVersion;
-    private String preferredPerVersion;
-    private String forcedMonVersion;
-    private String forcedPerVersion;
+    private DmfDetector.Params dmfDetectorParams;
     private boolean createTxtLog;
     private boolean createXmlLog;
     private int verbosity;
@@ -130,7 +128,7 @@ public class UnzipAndValidateDialogController extends DialogController {
                     task = null;
                     btnCancelOrClose.setText("Zavřít");
                     stage.close();
-                    main.runPspDirValidation(pspDir, preferredMonVersion, preferredPerVersion, forcedMonVersion, forcedPerVersion, createTxtLog, createXmlLog, verbosity);
+                    main.runPspDirValidation(pspDir, dmfDetectorParams, createTxtLog, createXmlLog, verbosity);
                 });
             }
 
@@ -187,12 +185,9 @@ public class UnzipAndValidateDialogController extends DialogController {
         };
     }
 
-    public void setData(File pspZip, String preferredMonVersion, String preferredPerVersion, String forcedMonVersion, String forcedPerVersion, boolean createTxtLog, boolean createXmlLog, int verbosity) {
+    public void setData(File pspZip, DmfDetector.Params dmfDetectorParams, boolean createTxtLog, boolean createXmlLog, int verbosity) {
         this.pspZip = pspZip;
-        this.preferredMonVersion = preferredMonVersion;
-        this.preferredPerVersion = preferredPerVersion;
-        this.forcedMonVersion = forcedMonVersion;
-        this.forcedPerVersion = forcedPerVersion;
+        this.dmfDetectorParams = dmfDetectorParams;
         this.createTxtLog = createTxtLog;
         this.createXmlLog = createXmlLog;
         this.verbosity = verbosity;

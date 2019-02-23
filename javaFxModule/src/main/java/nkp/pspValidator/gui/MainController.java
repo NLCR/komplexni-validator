@@ -154,16 +154,11 @@ public class MainController extends AbstractController implements ValidationStat
 
     /**
      * @param pspDir
-     * @param preferredMonVersion can be null
-     * @param preferredPerVersion can be null
-     * @param forcedMonVersion   can be null
-     * @param forcedPerVersion   can be null
+     * @param dmfDetectorParams
      * @param createTxtLog
      * @param createXmlLog
      */
-    public void runPspDirValidation(File pspDir,
-                                    String preferredMonVersion, String preferredPerVersion, String forcedMonVersion, String forcedPerVersion,
-                                    boolean createTxtLog, boolean createXmlLog, int verbosity) {
+    public void runPspDirValidation(File pspDir, DmfDetector.Params dmfDetectorParams, boolean createTxtLog, boolean createXmlLog, int verbosity) {
         initBeforeValidation();
         this.pspDir = pspDir;
         this.logTxtFile = createTxtLog ? buildTxtLogFile(pspDir) : null;
@@ -180,7 +175,7 @@ public class MainController extends AbstractController implements ValidationStat
                 PrintStream out = null;
                 try {
                     updateStatusFromWorkerThread(String.format("Inicializuji balík %s.", pspDir.getAbsolutePath()), TotalState.RUNNING);
-                    dmf = new DmfDetector().resolveDmf(pspDir, preferredMonVersion, preferredPerVersion, forcedMonVersion, forcedPerVersion);
+                    dmf = new DmfDetector().resolveDmf(pspDir, dmfDetectorParams);
                     Validator validator = Utils.buildValidator(main.getValidationDataManager(), dmf, pspDir);
                     out = buildTxtLogPrintstream();
                     //DEV
