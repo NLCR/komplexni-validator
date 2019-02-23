@@ -534,7 +534,39 @@
             </validation>
         </rule>
 
-        <!--TODO: SOURCE-AUDIO, MASTER-COPY-AUDIO, USER-COPY-AUDIO-->
+        <rule name="SOURCE-AUDIO-DIR_IS_DIR">
+            <description>Soubor SOURCE-AUDIO-DIR musí být adresář a ne obyčejný soubor.</description>
+            <validation functionName="checkFileIsDir">
+                <params>
+                    <value name="file" type="FILE">
+                        <value-ref name="SOURCE-AUDIO-DIR_FILE"/>
+                    </value>
+                </params>
+            </validation>
+        </rule>
+
+        <rule name="MASTER-COPY-AUDIO-DIR_IS_DIR">
+            <description>Soubor MASTER-COPY-AUDIO-DIR musí být adresář a ne obyčejný soubor.</description>
+            <validation functionName="checkFileIsDir">
+                <params>
+                    <value name="file" type="FILE">
+                        <value-ref name="MASTER-COPY-AUDIO-DIR_FILE"/>
+                    </value>
+                    <value name="ignoreIfFileIsNull" type="BOOLEAN">true</value>
+                </params>
+            </validation>
+        </rule>
+
+        <rule name="USER-COPY-DIR_IS_DIR">
+            <description>Soubor USER-COPY-AUDIO-DIR musí být adresář a ne obyčejný soubor.</description>
+            <validation functionName="checkFileIsDir">
+                <params>
+                    <value name="file" type="FILE">
+                        <value-ref name="USER-COPY-AUDIO-DIR_FILE"/>
+                    </value>
+                </params>
+            </validation>
+        </rule>
 
         <!--názvy souborů v top-level adresářích obsahují jen povolené znaky-->
 
