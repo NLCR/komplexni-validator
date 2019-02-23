@@ -246,7 +246,7 @@
 
 
         <rule name="SINGLE_SECONDARY-METS-DIR_FILE_FOUND">
-            <description>Musí být nalezen nanejvýše jeden adresář SECONDARY-METS-DIR. Pokud nalezen není, je
+            <description>Musí být nalezen právě jeden adresář SECONDARY-METS-DIR. Pokud nalezen není, je
                 adresář špatně pojmenován, nebo opravdu chybí.
             </description>
             <validation functionName="checkFilelistHasExactSize">
@@ -260,7 +260,7 @@
         </rule>
 
         <rule name="SINGLE_OCR-TEXT-DIR_FILE_FOUND">
-            <description>Musí být nalezen nanejvýše jeden adresář OCR-TEXT-DIR. Pokud nalezen není, je adresář
+            <description>Musí být nalezen právě jeden adresář OCR-TEXT-DIR. Pokud nalezen není, je adresář
                 špatně pojmenován, nebo opravdu chybí.
             </description>
             <validation functionName="checkFilelistHasExactSize">
@@ -274,7 +274,7 @@
         </rule>
 
         <rule name="SINGLE_OCR-ALTO-DIR_FILE_FOUND">
-            <description>Musí být nalezen nanejvýše jeden adresář OCR-ALTO-DIR. Pokud nalezen není, je adresář
+            <description>Musí být nalezen právě jeden adresář OCR-ALTO-DIR. Pokud nalezen není, je adresář
                 špatně pojmenován, nebo opravdu chybí.
             </description>
             <validation functionName="checkFilelistHasExactSize">
@@ -288,7 +288,7 @@
         </rule>
 
         <rule name="SINGLE_MASTER-COPY-DIR_FILE_FOUND">
-            <description>Musí být nalezen nanejvýše jeden adresář MASTER-COPY-DIR. Pokud nalezen není, je adresář
+            <description>Musí být nalezen právě jeden adresář MASTER-COPY-DIR. Pokud nalezen není, je adresář
                 špatně pojmenován, nebo opravdu chybí.
             </description>
             <validation functionName="checkFilelistHasExactSize">
@@ -302,7 +302,7 @@
         </rule>
 
         <rule name="SINGLE_USER-COPY-DIR_FILE_FOUND">
-            <description>Musí být nalezen nanejvýše jeden adresář USER-COPY-DIR. Pokud nalezen není, je adresář
+            <description>Musí být nalezen právě jeden adresář USER-COPY-DIR. Pokud nalezen není, je adresář
                 špatně pojmenován, nebo opravdu chybí.
             </description>
             <validation functionName="checkFilelistHasExactSize">
@@ -315,6 +315,47 @@
             </validation>
         </rule>
 
+        <rule name="SINGLE_SOURCE-AUDIO-DIR_FILE_FOUND">
+            <description>Musí být nalezen právě jeden adresář SOURCE-AUDIO-DIR. Pokud nalezen není, je adresář
+                špatně pojmenován, nebo opravdu chybí.
+            </description>
+            <validation functionName="checkFilelistHasExactSize">
+                <params>
+                    <value name="files" type="FILE_LIST">
+                        <value-ref name="SOURCE-AUDIO-DIR_FILES"/>
+                    </value>
+                    <value name="size" type="INTEGER">1</value>
+                </params>
+            </validation>
+        </rule>
+
+        <rule name="SINGLE_MASTER-COPY-AUDIO-DIR_FILE_FOUND">
+            <description>Musí být nalezen nejvýše jeden adresář MASTER-COPY-AUDIO-DIR. Pokud nalezen není, je adresář
+                špatně pojmenován, nebo opravdu chybí.
+            </description>
+            <validation functionName="checkFilelistSizeInRange">
+                <params>
+                    <value name="files" type="FILE_LIST">
+                        <value-ref name="MASTER-COPY-AUDIO-DIR_FILES"/>
+                    </value>
+                    <value name="max_size" type="INTEGER">1</value>
+                </params>
+            </validation>
+        </rule>
+
+        <rule name="SINGLE_USER-COPY-AUDIO-DIR_FILE_FOUND">
+            <description>Musí být nalezen právě jeden adresář USER-COPY-AUDIO-DIR. Pokud nalezen není, je adresář
+                špatně pojmenován, nebo opravdu chybí.
+            </description>
+            <validation functionName="checkFilelistHasExactSize">
+                <params>
+                    <value name="files" type="FILE_LIST">
+                        <value-ref name="USER-COPY-AUDIO-DIR_FILES"/>
+                    </value>
+                    <value name="size" type="INTEGER">1</value>
+                </params>
+            </validation>
+        </rule>
 
         <!--názvy top-level adresářů obsahují povolené znaky-->
 
@@ -390,6 +431,51 @@
             </validation>
         </rule>
 
+        <rule name="SOURCE-AUDIO-DIR_FILENAME_VALID">
+            <description>Název adresáře SOURCE-AUDIO-DIR musí obsahovat jen povolené znaky.
+            </description>
+            <validation functionName="checkFilenameMatchesPattern">
+                <params>
+                    <value name="file" type="FILE">
+                        <value-ref name="SOURCE-AUDIO-DIR_FILE"/>
+                    </value>
+                    <pattern name="pattern">
+                        <pattern-ref name="FILENAME"/>
+                    </pattern>
+                </params>
+            </validation>
+        </rule>
+
+        <rule name="MASTER-COPY-AUDIO-DIR_FILENAME_VALID">
+            <description>Název adresáře MASTER-COPY-AUDIO-DIR musí obsahovat jen povolené znaky.
+            </description>
+            <validation functionName="checkFilenameMatchesPattern">
+                <params>
+                    <value name="file" type="FILE">
+                        <value-ref name="MASTER-COPY-AUDIO-DIR_FILE"/>
+                    </value>
+                    <pattern name="pattern">
+                        <pattern-ref name="FILENAME"/>
+                    </pattern>
+                </params>
+            </validation>
+        </rule>
+
+        <rule name="USER-COPY-AUDIO-DIR_FILENAME_VALID">
+            <description>Název adresáře USER-COPY-AUDIO-DIR musí obsahovat jen povolené znaky.
+            </description>
+            <validation functionName="checkFilenameMatchesPattern">
+                <params>
+                    <value name="file" type="FILE">
+                        <value-ref name="USER-COPY-AUDIO-DIR_FILE"/>
+                    </value>
+                    <pattern name="pattern">
+                        <pattern-ref name="FILENAME"/>
+                    </pattern>
+                </params>
+            </validation>
+        </rule>
+
 
         <!--top-level adresáře jsou adresáře (ne obyčejné soubory)-->
 
@@ -448,6 +534,7 @@
             </validation>
         </rule>
 
+        <!--TODO: SOURCE-AUDIO, MASTER-COPY-AUDIO, USER-COPY-AUDIO-->
 
         <!--názvy souborů v top-level adresářích obsahují jen povolené znaky-->
 
@@ -522,6 +609,7 @@
             </validation>
         </rule>
 
+        <!--TODO: soubory v  SOURCE-AUDIO, MASTER-COPY-AUDIO, USER-COPY-AUDIO-->
 
         <!--počty souborů a délky názvů soborů v top-level adesářích-->
 

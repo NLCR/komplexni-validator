@@ -236,7 +236,7 @@
 
 
         <rule name="SINGLE_SECONDARY-METS-DIR_FILE_FOUND">
-            <description>Musí být nalezen nanejvýše jeden adresář SECONDARY-METS-DIR. Pokud nalezen není, je
+            <description>Musí být nalezen právě jeden adresář SECONDARY-METS-DIR. Pokud nalezen není, je
                 adresář špatně pojmenován, nebo opravdu chybí.
             </description>
             <validation functionName="checkFilelistHasExactSize">
@@ -250,7 +250,7 @@
         </rule>
 
         <rule name="SINGLE_OCR-TEXT-DIR_FILE_FOUND">
-            <description>Musí být nalezen nanejvýše jeden adresář OCR-TEXT-DIR. Pokud nalezen není, je adresář
+            <description>Musí být nalezen právě jeden adresář OCR-TEXT-DIR. Pokud nalezen není, je adresář
                 špatně pojmenován, nebo opravdu chybí.
             </description>
             <validation functionName="checkFilelistHasExactSize">
@@ -264,7 +264,7 @@
         </rule>
 
         <rule name="SINGLE_OCR-ALTO-DIR_FILE_FOUND">
-            <description>Musí být nalezen nanejvýše jeden adresář OCR-ALTO-DIR. Pokud nalezen není, je adresář
+            <description>Musí být nalezen právě jeden adresář OCR-ALTO-DIR. Pokud nalezen není, je adresář
                 špatně pojmenován, nebo opravdu chybí.
             </description>
             <validation functionName="checkFilelistHasExactSize">
@@ -278,7 +278,7 @@
         </rule>
 
         <rule name="SINGLE_MASTER-COPY-DIR_FILE_FOUND">
-            <description>Musí být nalezen nanejvýše jeden adresář MASTER-COPY-DIR. Pokud nalezen není, je adresář
+            <description>Musí být nalezen právě jeden adresář MASTER-COPY-DIR. Pokud nalezen není, je adresář
                 špatně pojmenován, nebo opravdu chybí.
             </description>
             <validation functionName="checkFilelistHasExactSize">
@@ -292,7 +292,7 @@
         </rule>
 
         <rule name="SINGLE_USER-COPY-DIR_FILE_FOUND">
-            <description>Musí být nalezen nanejvýše jeden adresář USER-COPY-DIR. Pokud nalezen není, je adresář
+            <description>Musí být nalezen právě jeden adresář USER-COPY-DIR. Pokud nalezen není, je adresář
                 špatně pojmenován, nebo opravdu chybí.
             </description>
             <validation functionName="checkFilelistHasExactSize">
