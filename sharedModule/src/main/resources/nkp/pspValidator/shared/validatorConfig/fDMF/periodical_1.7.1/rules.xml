@@ -171,7 +171,7 @@
         </rule>
 
         <rule name="NO_TOLERATED_TL_FILES_EXIST">
-            <description>Neměl by existovat žádný tolerovaný soubor.</description>
+            <description>Ideálně by neměl být nalezen žádný tolerovaný soubor.</description>
             <validation functionName="checkFilelistHasExactSize">
                 <params>
                     <value name="files" type="FILE_LIST">
