@@ -34,7 +34,7 @@
         <!--právě jeden každý top-level soubor-->
 
         <rule name="SINGLE_INFO_FILE_EXISTS">
-            <description>Musí existovat nanejvýše jeden soubor INFO. Pokud neexistuje, je soubor špatně pojmenován, nebo
+            <description>Musí být nalezen nanejvýše jeden soubor INFO. Pokud nalezen není, je soubor špatně pojmenován, nebo
                 opravdu chybí.
             </description>
             <validation functionName="checkFilelistHasExactSize">
@@ -48,7 +48,7 @@
         </rule>
 
         <rule name="SINGLE_PRIMARY-METS_FILE_EXISTS">
-            <description>Musí existovat nanejvýše jeden soubor PRIMARY-METS. Pokud neexistuje, je soubor špatně
+            <description>Musí být nalezen nanejvýše jeden soubor PRIMARY-METS. Pokud nalezen není, je soubor špatně
                 pojmenován, nebo opravdu chybí.
             </description>
             <validation functionName="checkFilelistHasExactSize">
@@ -62,7 +62,7 @@
         </rule>
 
         <rule name="SINGLE_CHECKSUM_FILE_EXISTS">
-            <description>Musí existovat nanejvýše jeden soubor CHECKSUM. Pokud neexistuje, je soubor špatně pojmenován,
+            <description>Musí být nalezen nanejvýše jeden soubor CHECKSUM. Pokud nalezen není, je soubor špatně pojmenován,
                 nebo opravdu chybí.
             </description>
             <validation functionName="checkFilelistHasExactSize">
@@ -171,7 +171,7 @@
         </rule>
 
         <rule name="NO_TOLERATED_TL_FILES_EXIST">
-            <description>Ideálně by neměl být nalezen žádný tolerovaný soubor.</description>
+            <description>Ideálně by v kořenovém adresáři neměl být nalezen žádný tolerovaný soubor.</description>
             <validation functionName="checkFilelistHasExactSize">
                 <params>
                     <value name="files" type="FILE_LIST">
@@ -191,7 +191,7 @@
                         </validation>-->
         </rule>
 
-        <rule name="NO_OTHER_TOP_LEVEL_FILES_EXIST">
+        <rule name="NO_OTHER_TL_FILES_EXIST">
             <description>
                 Krome definovaných a tolerovaných souborů a adresářů nesmí v kořenovém adresáři existovat žádný jiný soubor nebo adresář.
             </description>
@@ -236,7 +236,7 @@
 
 
         <rule name="SINGLE_SECONDARY-METS-DIR_FILE_EXISTS">
-            <description>Musí existovat nanejvýše jeden soubor (adresář) SECONDARY-METS-DIR. Pokud neexistuje, je
+            <description>Musí být nalezen nanejvýše jeden adresář SECONDARY-METS-DIR. Pokud nalezen není, je
                 adresář špatně pojmenován, nebo opravdu chybí.
             </description>
             <validation functionName="checkFilelistHasExactSize">
@@ -250,7 +250,7 @@
         </rule>
 
         <rule name="SINGLE_OCR-TEXT-DIR_FILE_EXISTS">
-            <description>Musí existovat nanejvýše jeden soubor (adresář) SINGLE_OCR-TEXT. Pokud neexistuje, je adresář
+            <description>Musí být nalezen nanejvýše jeden adresář OCR-TEXT-DIR. Pokud nalezen není, je adresář
                 špatně pojmenován, nebo opravdu chybí.
             </description>
             <validation functionName="checkFilelistHasExactSize">
@@ -264,7 +264,7 @@
         </rule>
 
         <rule name="SINGLE_OCR-ALTO-DIR_FILE_EXISTS">
-            <description>Musí existovat nanejvýše jeden soubor (adresář) OCR-ALTO-DIR. Pokud neexistuje, je adresář
+            <description>Musí být nalezen nanejvýše jeden adresář OCR-ALTO-DIR. Pokud nalezen není, je adresář
                 špatně pojmenován, nebo opravdu chybí.
             </description>
             <validation functionName="checkFilelistHasExactSize">
@@ -278,7 +278,7 @@
         </rule>
 
         <rule name="SINGLE_MASTER-COPY-DIR_FILE_EXISTS">
-            <description>Musí existovat nanejvýše jeden soubor (adresář) MASTER-COPY-DIR. Pokud neexistuje, je adresář
+            <description>Musí být nalezen nanejvýše jeden adresář MASTER-COPY-DIR. Pokud nalezen není, je adresář
                 špatně pojmenován, nebo opravdu chybí.
             </description>
             <validation functionName="checkFilelistHasExactSize">
@@ -292,7 +292,7 @@
         </rule>
 
         <rule name="SINGLE_USER-COPY-DIR_FILE_EXISTS">
-            <description>Musí existovat nanejvýše jeden soubor (adresář) USER-COPY-DIR. Pokud neexistuje, je adresář
+            <description>Musí být nalezen nanejvýše jeden adresář USER-COPY-DIR. Pokud nalezen není, je adresář
                 špatně pojmenován, nebo opravdu chybí.
             </description>
             <validation functionName="checkFilelistHasExactSize">
