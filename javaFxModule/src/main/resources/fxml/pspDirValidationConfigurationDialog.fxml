@@ -42,7 +42,9 @@
             <CheckBox fx:id="forcedMonVersionCheckBox"
                       onAction="#forcedMonVersionChanged"
                       GridPane.columnIndex="0"
-                      GridPane.rowIndex="3"/>
+                      GridPane.rowIndex="3"
+                      GridPane.halignment="RIGHT"
+            />
 
             <Label text="Monografie" GridPane.columnIndex="1" GridPane.rowIndex="3"/>
 
@@ -56,7 +58,9 @@
             <CheckBox fx:id="forcedPerVersionCheckBox"
                       onAction="#forcedPerVersionChanged"
                       GridPane.columnIndex="0"
-                      GridPane.rowIndex="4"/>
+                      GridPane.rowIndex="4"
+                      GridPane.halignment="RIGHT"
+            />
 
             <Label text="Periodika" GridPane.columnIndex="1" GridPane.rowIndex="4"/>
 
@@ -69,7 +73,9 @@
             <CheckBox fx:id="forcedSRVersionCheckBox"
                       onAction="#forcedSRVersionChanged"
                       GridPane.columnIndex="0"
-                      GridPane.rowIndex="5"/>
+                      GridPane.rowIndex="5"
+                      GridPane.halignment="RIGHT"
+            />
 
             <Label text="Zvuky" GridPane.columnIndex="1" GridPane.rowIndex="5"/>
 
@@ -88,7 +94,9 @@
             <CheckBox fx:id="preferredMonVersionCheckBox"
                       onAction="#preferredMonVersionChanged"
                       GridPane.columnIndex="0"
-                      GridPane.rowIndex="8"/>
+                      GridPane.rowIndex="8"
+                      GridPane.halignment="RIGHT"
+            />
 
             <Label text="Monografie" GridPane.columnIndex="1" GridPane.rowIndex="8"/>
 
@@ -100,9 +108,10 @@
 
             <!--Periodical-->
             <CheckBox fx:id="preferredPerVersionCheckBox"
+                      onAction="#preferredPerVersionChanged"
                       GridPane.columnIndex="0"
                       GridPane.rowIndex="9"
-                      onAction="#preferredPerVersionChanged"
+                      GridPane.halignment="RIGHT"
             />
 
             <Label text="Periodika" GridPane.columnIndex="1" GridPane.rowIndex="9"/>
@@ -115,9 +124,10 @@
 
             <!--Sound recording-->
             <CheckBox fx:id="preferredSRVersionCheckBox"
+                      onAction="#preferredSRVersionChanged"
                       GridPane.columnIndex="0"
                       GridPane.rowIndex="10"
-                      onAction="#preferredSRVersionChanged"
+                      GridPane.halignment="RIGHT"
             />
 
             <Label text="Zvuky" GridPane.columnIndex="1" GridPane.rowIndex="10"/>
@@ -136,9 +146,9 @@
             />
 
             <CheckBox fx:id="createXmlLog"
+                      onAction="#createXmlLogChanged"
                       GridPane.columnIndex="2"
                       GridPane.rowIndex="12"
-                      onAction="#createXmlLogChanged"
             />
 
             <Label text="Vytvořit textový log"
@@ -148,9 +158,9 @@
             />
 
             <CheckBox fx:id="createTxtLog"
+                      onAction="#createTxtLogChanged"
                       GridPane.columnIndex="2"
                       GridPane.rowIndex="13"
-                      onAction="#createTxtLogChanged"
             />
 
             <!--Verbosity-->
