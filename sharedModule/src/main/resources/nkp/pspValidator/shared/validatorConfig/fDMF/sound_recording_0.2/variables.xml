@@ -61,7 +61,9 @@
                     <value-ref name="PSP_DIR"/>
                 </value>
                 <pattern name="pattern">
-                    <pattern-ref name="INFO_FILENAME"/>
+                    <description>Vzor pro jméno souboru INFO.</description>
+                    <expression caseSensitive="true">info_${PSP_ID}\.xml</expression>
+                    <expression>info\.xml</expression>
                 </pattern>
             </params>
         </evaluation>
@@ -74,7 +76,8 @@
                     <value-ref name="PSP_DIR"/>
                 </value>
                 <pattern name="pattern">
-                    <pattern-ref name="PRIMARY-METS_FILENAME"/>
+                    <description>Vzor pro jméno souboru PRIMARY-METS.</description>
+                    <expression caseSensitive="true">mets_${PSP_ID}\.xml</expression>
                 </pattern>
             </params>
         </evaluation>
@@ -87,12 +90,12 @@
                     <value-ref name="PSP_DIR"/>
                 </value>
                 <pattern name="pattern">
-                    <pattern-ref name="CHECKSUM_FILENAME"/>
+                    <description>Vzor pro jméno souboru CHECKSUM.</description>
+                    <expression caseSensitive="true">md5_${PSP_ID}\.md5</expression>
                 </pattern>
             </params>
         </evaluation>
     </value-def>
-
 
     <value-def name="TOLERATED_TL_FILES" type="FILE_LIST">
         <evaluation functionName="findFilesInDirByPattern">
@@ -101,7 +104,8 @@
                     <value-ref name="PSP_DIR"/>
                 </value>
                 <pattern name="pattern">
-                    <pattern-ref name="TOLERATED_TL_FILENAME"/>
+                    <description>Vzory pro jména tolerovaných souborů.</description>
+                    <expression caseSensitive="true">LTP_MD\.xml</expression>
                 </pattern>
             </params>
         </evaluation>
@@ -144,7 +148,8 @@
                     <value-ref name="PSP_DIR"/>
                 </value>
                 <pattern name="pattern">
-                    <pattern-ref name="SECONDARY-METS-DIR_FILENAME"/>
+                    <description>Vzor pro jméno adresáře SECONDARY-METS-DIR.</description>
+                    <expression caseSensitive="true">amdsec</expression>
                 </pattern>
             </params>
         </evaluation>
@@ -157,7 +162,8 @@
                     <value-ref name="PSP_DIR"/>
                 </value>
                 <pattern name="pattern">
-                    <pattern-ref name="OCR-TEXT-DIR_FILENAME"/>
+                    <description>Vzor pro jméno adresáře OCR-TEXT-DIR.</description>
+                    <expression caseSensitive="true">txt</expression>
                 </pattern>
             </params>
         </evaluation>
@@ -170,7 +176,8 @@
                     <value-ref name="PSP_DIR"/>
                 </value>
                 <pattern name="pattern">
-                    <pattern-ref name="OCR-ALTO-DIR_FILENAME"/>
+                    <description>Vzor pro jméno adresáře OCR-ALTO-DIR.</description>
+                    <expression caseSensitive="true">alto</expression>
                 </pattern>
             </params>
         </evaluation>
@@ -184,7 +191,8 @@
                     <value-ref name="PSP_DIR"/>
                 </value>
                 <pattern name="pattern">
-                    <pattern-ref name="MASTER-COPY-DIR_FILENAME"/>
+                    <description>Vzor pro jméno adresáře MASTER-COPY-DIR.</description>
+                    <expression caseSensitive="true">mastercopy</expression>
                 </pattern>
             </params>
         </evaluation>
@@ -197,7 +205,8 @@
                     <value-ref name="PSP_DIR"/>
                 </value>
                 <pattern name="pattern">
-                    <pattern-ref name="USER-COPY-DIR_FILENAME"/>
+                    <description>Vzor pro jméno adresáře USER-COPY-DIR.</description>
+                    <expression caseSensitive="true">usercopy</expression>
                 </pattern>
             </params>
         </evaluation>
@@ -210,7 +219,8 @@
                     <value-ref name="PSP_DIR"/>
                 </value>
                 <pattern name="pattern">
-                    <pattern-ref name="SOURCE-AUDIO-DIR_FILENAME"/>
+                    <description>Vzor pro jméno adresáře SOURCE-AUDIO-DIR.</description>
+                    <expression caseSensitive="true">sourceaudio</expression>
                 </pattern>
             </params>
         </evaluation>
@@ -222,11 +232,9 @@
                 <value name="dir" type="FILE">
                     <value-ref name="PSP_DIR"/>
                 </value>
-                <!--<pattern name="pattern">
-                    <pattern-ref name="MASTER-COPY-AUDIO-DIR_FILENAME"/>
-                </pattern>-->
                 <pattern name="pattern">
-                    <expression>mastercopyaudio</expression>
+                    <description>Vzor pro jméno adresáře MASTER-COPY-AUDIO-DIR.</description>
+                    <expression caseSensitive="true">masatercopyaudio</expression>
                 </pattern>
             </params>
         </evaluation>
@@ -239,7 +247,8 @@
                     <value-ref name="PSP_DIR"/>
                 </value>
                 <pattern name="pattern">
-                    <pattern-ref name="USER-COPY-AUDIO-DIR_FILENAME"/>
+                    <description>Vzor pro jméno adresáře USER-COPY-AUDIO-DIR.</description>
+                    <expression caseSensitive="true">usercopyaudio</expression>
                 </pattern>
             </params>
         </evaluation>
@@ -335,7 +344,8 @@
                     <value-ref name="SECONDARY-METS-DIR_FILE"/>
                 </value>
                 <pattern name="pattern">
-                    <pattern-ref name="SECONDARY-METS_FILENAME"/>
+                    <description>Vzor pro jména souborů SECONDARY-METS v rámci adresáře SECONDARY-METS-DIR.</description>
+                    <expression caseSensitive="true">amd_mets_${PSP_ID}_[0-9]+\.xml</expression>
                 </pattern>
             </params>
         </evaluation>
@@ -348,7 +358,8 @@
                     <value-ref name="OCR-TEXT-DIR_FILE"/>
                 </value>
                 <pattern name="pattern">
-                    <pattern-ref name="OCR-TEXT_FILENAME"/>
+                    <description>Vzor pro jména souborů OCR-TEXT v rámci adresáře OCR-TEXT-DIR.</description>
+                    <expression caseSensitive="true">txt_${PSP_ID}_[0-9]+\.txt</expression>
                 </pattern>
             </params>
         </evaluation>
@@ -361,7 +372,8 @@
                     <value-ref name="OCR-ALTO-DIR_FILE"/>
                 </value>
                 <pattern name="pattern">
-                    <pattern-ref name="OCR-ALTO_FILENAME"/>
+                    <description>Vzor pro jména souborů OCR-ALTO v rámci adresáře OCR-ALTO-DIR.</description>
+                    <expression caseSensitive="true">alto_${PSP_ID}_[0-9]+\.xml</expression>
                 </pattern>
             </params>
         </evaluation>
@@ -374,7 +386,8 @@
                     <value-ref name="MASTER-COPY-DIR_FILE"/>
                 </value>
                 <pattern name="pattern">
-                    <pattern-ref name="MASTER-COPY_FILENAME"/>
+                    <description>Vzor pro jména souborů MASTER-COPY v rámci adresáře MASTER-COPY-DIR.</description>
+                    <expression caseSensitive="true">mc_${PSP_ID}_[0-9]+\.jp2</expression>
                 </pattern>
             </params>
         </evaluation>
@@ -387,7 +400,8 @@
                     <value-ref name="USER-COPY-DIR_FILE"/>
                 </value>
                 <pattern name="pattern">
-                    <pattern-ref name="USER-COPY_FILENAME"/>
+                    <description>Vzor pro jména souborů USER-COPY v rámci adresáře USER-COPY-DIR.</description>
+                    <expression caseSensitive="true">uc_${PSP_ID}_[0-9]+\.jp2</expression>
                 </pattern>
             </params>
         </evaluation>
@@ -664,16 +678,5 @@
         </evaluation>
     </value-def>
 
-
-    <!--TODO: dodelat-->
-    <!--TODO: doplnit pro monografie-->
-    <!--BIBLIO PROFILY-->
-    <value-def name="BIBLIO_PROFILE_DC_TITLE" type="FILE">
-        <evaluation functionName="getProvidedFile">
-            <params>
-                <value name="file_id" type="STRING">BIBLIO_PROFILE_DC_TITLE</value>
-            </params>
-        </evaluation>
-    </value-def>
 
 </fDMF>
