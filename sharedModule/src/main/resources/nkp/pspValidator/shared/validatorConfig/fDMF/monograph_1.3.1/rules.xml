@@ -192,8 +192,8 @@
         </rule>
 
         <rule name="NO_OTHER_TOP_LEVEL_FILES_EXIST">
-            <description>Krome definovaných souborů a adresářů nesmí v kořenovém adresáři existovat žádný jiný soubor
-                nebo adresář.
+            <description>
+                Krome definovaných a tolerovaných souborů a adresářů nesmí v kořenovém adresáři existovat žádný jiný soubor nebo adresář.
             </description>
             <validation functionName="checkNoOtherFilesInDir">
                 <params>
