@@ -2,7 +2,7 @@
     <created>2017-07-12T10:39:23</created>
     <metadataversion>0.3</metadataversion>
     <packageid>1234567890</packageid>
-    <mainmets>mets_1234567890.xml</mainmets>
+    <mainmets>main_mets_1234567890.xml</mainmets>
     <validation version="file_sec:1.0;amd_sec_mix:1.0;physical_map_amd:1.0;amd_file_sec:1.0;monographic_volume:1.0;amd_sec:1.0;monographic_logical_map:1.0;physical_map:1.0">Valid</validation>
 	<titleid type="urnnbn">urn:nbn:cz:nk-0002s1</titleid>
     <collection>Digitalizace národní knihovny</collection>
