@@ -83,7 +83,7 @@
                         <mods:shelfLocator>5180</mods:shelfLocator>
                     </mods:location>
                     <mods:identifier type="uuid">123e4567-e89b-12d3-a456-426655440000</mods:identifier>
-                    <mods:identifier type="urn:nbn">urn:nbn:cz:nk-0002s1</mods:identifier>
+                    <mods:identifier type="urnnbn">urn:nbn:cz:nk-0002s1</mods:identifier>
                     <mods:identifier type="issue number">272027</mods:identifier>
                     <mods:identifier type="matrix-number">H 1354</mods:identifier>
                     <mods:identifier type="local">1234567890</mods:identifier>
@@ -127,7 +127,7 @@
                     <dc:description>Strana 1: Bohemian Bass w. Orch. -- Strana 2: Bohemian Bss w. Chorus and Orch.</dc:description>
                     <dc:description>Emil Pollert ; sbor kr. českého zemského a nár. div. ; s průvodem orkestru nár. div.</dc:description>
                     <dc:identifier>uuid:123e4567-e89b-12d3-a456-426655440000</dc:identifier>
-                    <dc:identifier>urn:nbn:cz:nk-0002s1</dc:identifier>
+                    <dc:identifier>urnnbn:urn:nbn:cz:nk-0002s1</dc:identifier>
                     <dc:identifier>issue number:272027</dc:identifier>
                     <dc:identifier>matrix-number:H1354</dc:identifier>
                     <dc:identifier>local:1234567890</dc:identifier>
@@ -210,6 +210,7 @@
                     <dc:language>cze</dc:language>
                     <dc:subject>Divadelní hudba. Opera, opereta, muzikál</dc:subject>
                     <dc:description>Poco piu mosso ; Moderato afflitto</dc:description>
+                    <dc:identifier>uuid:321p7654-f32d-13d5-k654-798264310000</dc:identifier>
                 </oai_dc:dc>
             </mets:xmlData>
         </mets:mdWrap>
@@ -285,6 +286,7 @@
                     <dc:coverage>8:41</dc:coverage>
                     <dc:language>cze</dc:language>
                     <dc:subject>Divadelní hudba. Opera, opereta, muzikál</dc:subject>
+                    <dc:identifier>uuid:263e8795-k54e-15e4-r789-824600127960</dc:identifier>
                 </oai_dc:dc>
             </mets:xmlData>
         </mets:mdWrap>

@@ -1817,15 +1817,13 @@
             </validation>
         </rule>
 
-        <!--TODO: proverit odsud nize-->
-
 
         <!--MODS identifiers -->
 
-        <!--title-->
-        <rule name="MODS_MANDATORY_IDENTIFIERS_PRESENT_LEVEL_TITLE">
+        <!--souncollection-->
+        <rule name="MODS_MANDATORY_IDENTIFIERS_PRESENT_LEVEL_SOUNDCOLLECTION">
             <description>
-                Úroveň TITLE musí obsahovat všechny povinné identifikátory v záznamu MODS.
+                Úroveň SOUNDCOLLECTION musí obsahovat všechny povinné identifikátory v záznamu MODS.
             </description>
             <validation functionName="checkIdentifiersAllTypesPresent">
                 <params>
@@ -1841,7 +1839,7 @@
                                                 <value-ref name="PRIMARY-METS_FILE"/>
                                             </value>
                                             <value name="xpath" type="STRING">
-                                                /mets:mets/mets:dmdSec[starts-with(@ID, "MODSMD_TITLE")]/@ID
+                                                /mets:mets/mets:dmdSec[starts-with(@ID, "MODSMD_SOUNDCOLLECTION")]/@ID
                                             </value>
                                         </params>
                                     </evaluation>
@@ -1853,16 +1851,16 @@
                         </evaluation>
                     </value>
                     <value name="id_types" type="STRING_LIST">
-                        <value-ref name="ID_TYPES_TITLE_MANDATORY"/>
+                        <value-ref name="ID_TYPES_SOUNDCOLLECTION_MANDATORY"/>
                     </value>
-                    <value name="level_name" type="STRING">TITLE</value>
+                    <value name="level_name" type="STRING">SOUNDCOLLECTION</value>
                 </params>
             </validation>
         </rule>
 
-        <rule name="MODS_PROHIBITED_IDENTIFIERS_NOT_PRESENT_LEVEL_TITLE">
+        <rule name="MODS_PROHIBITED_IDENTIFIERS_NOT_PRESENT_LEVEL_SOUNDCOLLECTION">
             <description>
-                Úroveň TITLE nesmí obsahovat žádné zakázané identifikátory v záznamu MODS.
+                Úroveň SOUNDCOLLECTION nesmí obsahovat žádné zakázané identifikátory v záznamu MODS.
             </description>
             <validation functionName="checkIdentifiersNoneTypePresent">
                 <params>
@@ -1878,7 +1876,7 @@
                                                 <value-ref name="PRIMARY-METS_FILE"/>
                                             </value>
                                             <value name="xpath" type="STRING">
-                                                /mets:mets/mets:dmdSec[starts-with(@ID, "MODSMD_TITLE")]/@ID
+                                                /mets:mets/mets:dmdSec[starts-with(@ID, "MODSMD_SOUNDCOLLECTION")]/@ID
                                             </value>
                                         </params>
                                     </evaluation>
@@ -1890,17 +1888,17 @@
                         </evaluation>
                     </value>
                     <value name="id_types" type="STRING_LIST">
-                        <value-ref name="ID_TYPES_TITLE_PROHIBITED"/>
+                        <value-ref name="ID_TYPES_SOUNDCOLLECTION_PROHIBITED"/>
                     </value>
-                    <value name="level_name" type="STRING">TITLE</value>
+                    <value name="level_name" type="STRING">SOUNDCOLLECTION</value>
                 </params>
             </validation>
         </rule>
 
-        <!--volume-->
-        <rule name="MODS_MANDATORY_IDENTIFIERS_PRESENT_LEVEL_VOLUME">
+        <!--soundrecording-->
+        <rule name="MODS_MANDATORY_IDENTIFIERS_PRESENT_LEVEL_SOUNDRECORDING">
             <description>
-                Úroveň VOLUME musí obsahovat všechny povinné identifikátory v záznamu MODS.
+                Úroveň SOUNDRECORDING musí obsahovat všechny povinné identifikátory v záznamu MODS.
             </description>
             <validation functionName="checkIdentifiersAllTypesPresent">
                 <params>
@@ -1916,7 +1914,7 @@
                                                 <value-ref name="PRIMARY-METS_FILE"/>
                                             </value>
                                             <value name="xpath" type="STRING">
-                                                /mets:mets/mets:dmdSec[starts-with(@ID, "MODSMD_VOLUME")]/@ID
+                                                /mets:mets/mets:dmdSec[starts-with(@ID, "MODSMD_SOUNDRECORDING")]/@ID
                                             </value>
                                         </params>
                                     </evaluation>
@@ -1928,16 +1926,16 @@
                         </evaluation>
                     </value>
                     <value name="id_types" type="STRING_LIST">
-                        <value-ref name="ID_TYPES_VOLUME_MANDATORY"/>
+                        <value-ref name="ID_TYPES_SOUNDRECORDING_MANDATORY"/>
                     </value>
-                    <value name="level_name" type="STRING">VOLUME</value>
+                    <value name="level_name" type="STRING">SOUNDRECORDING</value>
                 </params>
             </validation>
         </rule>
 
-        <rule name="MODS_PROHIBITED_IDENTIFIERS_NOT_PRESENT_LEVEL_VOLUME">
+        <rule name="MODS_PROHIBITED_IDENTIFIERS_NOT_PRESENT_LEVEL_SOUNDRECORDING">
             <description>
-                Úroveň VOLUME nesmí obsahovat žádné zakázané identifikátory v záznamu MODS.
+                Úroveň SOUNDRECORDING nesmí obsahovat žádné zakázané identifikátory v záznamu MODS.
             </description>
             <validation functionName="checkIdentifiersNoneTypePresent">
                 <params>
@@ -1953,7 +1951,7 @@
                                                 <value-ref name="PRIMARY-METS_FILE"/>
                                             </value>
                                             <value name="xpath" type="STRING">
-                                                /mets:mets/mets:dmdSec[starts-with(@ID, "MODSMD_VOLUME")]/@ID
+                                                /mets:mets/mets:dmdSec[starts-with(@ID, "MODSMD_SOUNDRECORDING")]/@ID
                                             </value>
                                         </params>
                                     </evaluation>
@@ -1965,9 +1963,84 @@
                         </evaluation>
                     </value>
                     <value name="id_types" type="STRING_LIST">
-                        <value-ref name="ID_TYPES_VOLUME_PROHIBITED"/>
+                        <value-ref name="ID_TYPES_SOUNDRECORDING_PROHIBITED"/>
                     </value>
-                    <value name="level_name" type="STRING">VOLUME</value>
+                    <value name="level_name" type="STRING">SOUNDRECORDING</value>
+                </params>
+            </validation>
+        </rule>
+
+        <!-- soundpart -->
+        <rule name="MODS_MANDATORY_IDENTIFIERS_PRESENT_LEVEL_SOUNDPART">
+            <description>
+                Úroveň SOUNDPART musí obsahovat všechny povinné identifikátory v záznamu MODS.
+            </description>
+            <validation functionName="checkIdentifiersAllTypesPresent">
+                <params>
+                    <value name="identifier_list_list" type="IDENTIFIER_LIST_LIST">
+                        <!--seznam obsahujici seznam identifikatoru pro kazdy zaznam dmdSec pro MODS-->
+                        <evaluation functionName="getModsIdentifiersForEachDmdsecId">
+                            <params>
+                                <value name="dmdsec_ids" type="STRING_LIST">
+                                    <!--seznam identifikatoru (dmdSec ID)-->
+                                    <evaluation functionName="getStringListByXpath">
+                                        <params>
+                                            <value name="xml_file" type="FILE">
+                                                <value-ref name="PRIMARY-METS_FILE"/>
+                                            </value>
+                                            <value name="xpath" type="STRING">
+                                                /mets:mets/mets:dmdSec[starts-with(@ID, "MODSMD_SOUNDPART")]/@ID
+                                            </value>
+                                        </params>
+                                    </evaluation>
+                                </value>
+                                <value name="mets_file" type="FILE">
+                                    <value-ref name="PRIMARY-METS_FILE"/>
+                                </value>
+                            </params>
+                        </evaluation>
+                    </value>
+                    <value name="id_types" type="STRING_LIST">
+                        <value-ref name="ID_TYPES_SOUNDPART_MANDATORY"/>
+                    </value>
+                    <value name="level_name" type="STRING">SOUNDPART</value>
+                </params>
+            </validation>
+        </rule>
+
+        <rule name="MODS_PROHIBITED_IDENTIFIERS_NOT_PRESENT_LEVEL_SOUNDPART">
+            <description>
+                Úroveň SOUNDPART nesmí obsahovat žádné zakázané identifikátory v záznamu MODS.
+            </description>
+            <validation functionName="checkIdentifiersNoneTypePresent">
+                <params>
+                    <value name="identifier_list_list" type="IDENTIFIER_LIST_LIST">
+                        <!--seznam obsahujici seznam identifikatoru pro kazdy zaznam dmdSec pro MODS-->
+                        <evaluation functionName="getModsIdentifiersForEachDmdsecId">
+                            <params>
+                                <value name="dmdsec_ids" type="STRING_LIST">
+                                    <!--seznam identifikatoru (dmdSec ID)-->
+                                    <evaluation functionName="getStringListByXpath">
+                                        <params>
+                                            <value name="xml_file" type="FILE">
+                                                <value-ref name="PRIMARY-METS_FILE"/>
+                                            </value>
+                                            <value name="xpath" type="STRING">
+                                                /mets:mets/mets:dmdSec[starts-with(@ID, "MODSMD_SOUNDPART")]/@ID
+                                            </value>
+                                        </params>
+                                    </evaluation>
+                                </value>
+                                <value name="mets_file" type="FILE">
+                                    <value-ref name="PRIMARY-METS_FILE"/>
+                                </value>
+                            </params>
+                        </evaluation>
+                    </value>
+                    <value name="id_types" type="STRING_LIST">
+                        <value-ref name="ID_TYPES_SOUNDPART_PROHIBITED"/>
+                    </value>
+                    <value name="level_name" type="STRING">SOUNDPART</value>
                 </params>
             </validation>
         </rule>
@@ -2043,231 +2116,6 @@
                         <value-ref name="ID_TYPES_SUPPLEMENT_PROHIBITED"/>
                     </value>
                     <value name="level_name" type="STRING">SUPPLEMENT</value>
-                </params>
-            </validation>
-        </rule>
-
-        <!-- chapter -->
-        <rule name="MODS_MANDATORY_IDENTIFIERS_PRESENT_LEVEL_CHAPTER">
-            <description>
-                Úroveň CHAPTER musí obsahovat všechny povinné identifikátory v záznamu MODS.
-            </description>
-            <validation functionName="checkIdentifiersAllTypesPresent">
-                <params>
-                    <value name="identifier_list_list" type="IDENTIFIER_LIST_LIST">
-                        <!--seznam obsahujici seznam identifikatoru pro kazdy zaznam dmdSec pro MODS-->
-                        <evaluation functionName="getModsIdentifiersForEachDmdsecId">
-                            <params>
-                                <value name="dmdsec_ids" type="STRING_LIST">
-                                    <!--seznam identifikatoru (dmdSec ID)-->
-                                    <evaluation functionName="getStringListByXpath">
-                                        <params>
-                                            <value name="xml_file" type="FILE">
-                                                <value-ref name="PRIMARY-METS_FILE"/>
-                                            </value>
-                                            <value name="xpath" type="STRING">
-                                                /mets:mets/mets:dmdSec[starts-with(@ID, "MODSMD_CHAP")]/@ID
-                                            </value>
-                                        </params>
-                                    </evaluation>
-                                </value>
-                                <value name="mets_file" type="FILE">
-                                    <value-ref name="PRIMARY-METS_FILE"/>
-                                </value>
-                            </params>
-                        </evaluation>
-                    </value>
-                    <value name="id_types" type="STRING_LIST">
-                        <value-ref name="ID_TYPES_CHAPTER_MANDATORY"/>
-                    </value>
-                    <value name="level_name" type="STRING">CHAPTER</value>
-                </params>
-            </validation>
-        </rule>
-
-        <rule name="MODS_PROHIBITED_IDENTIFIERS_NOT_PRESENT_LEVEL_CHAPTER">
-            <description>
-                Úroveň CHAPTER nesmí obsahovat žádné zakázané identifikátory v záznamu MODS.
-            </description>
-            <validation functionName="checkIdentifiersNoneTypePresent">
-                <params>
-                    <value name="identifier_list_list" type="IDENTIFIER_LIST_LIST">
-                        <!--seznam obsahujici seznam identifikatoru pro kazdy zaznam dmdSec pro MODS-->
-                        <evaluation functionName="getModsIdentifiersForEachDmdsecId">
-                            <params>
-                                <value name="dmdsec_ids" type="STRING_LIST">
-                                    <!--seznam identifikatoru (dmdSec ID)-->
-                                    <evaluation functionName="getStringListByXpath">
-                                        <params>
-                                            <value name="xml_file" type="FILE">
-                                                <value-ref name="PRIMARY-METS_FILE"/>
-                                            </value>
-                                            <value name="xpath" type="STRING">
-                                                /mets:mets/mets:dmdSec[starts-with(@ID, "MODSMD_CHAP")]/@ID
-                                            </value>
-                                        </params>
-                                    </evaluation>
-                                </value>
-                                <value name="mets_file" type="FILE">
-                                    <value-ref name="PRIMARY-METS_FILE"/>
-                                </value>
-                            </params>
-                        </evaluation>
-                    </value>
-                    <value name="id_types" type="STRING_LIST">
-                        <value-ref name="ID_TYPES_CHAPTER_PROHIBITED"/>
-                    </value>
-                    <value name="level_name" type="STRING">CHAPTER</value>
-                </params>
-            </validation>
-        </rule>
-
-        <!-- picture -->
-        <rule name="MODS_MANDATORY_IDENTIFIERS_PRESENT_LEVEL_PICTURE">
-            <description>
-                Úroveň PICTURE musí obsahovat všechny povinné identifikátory v záznamu MODS.
-            </description>
-            <validation functionName="checkIdentifiersAllTypesPresent">
-                <params>
-                    <value name="identifier_list_list" type="IDENTIFIER_LIST_LIST">
-                        <!--seznam obsahujici seznam identifikatoru pro kazdy zaznam dmdSec pro MODS-->
-                        <evaluation functionName="getModsIdentifiersForEachDmdsecId">
-                            <params>
-                                <value name="dmdsec_ids" type="STRING_LIST">
-                                    <!--seznam identifikatoru (dmdSec ID)-->
-                                    <evaluation functionName="getStringListByXpath">
-                                        <params>
-                                            <value name="xml_file" type="FILE">
-                                                <value-ref name="PRIMARY-METS_FILE"/>
-                                            </value>
-                                            <value name="xpath" type="STRING">
-                                                /mets:mets/mets:dmdSec[starts-with(@ID, "MODSMD_PICT")]/@ID
-                                            </value>
-                                        </params>
-                                    </evaluation>
-                                </value>
-                                <value name="mets_file" type="FILE">
-                                    <value-ref name="PRIMARY-METS_FILE"/>
-                                </value>
-                            </params>
-                        </evaluation>
-                    </value>
-                    <value name="id_types" type="STRING_LIST">
-                        <value-ref name="ID_TYPES_PICTURE_MANDATORY"/>
-                    </value>
-                    <value name="level_name" type="STRING">PICTURE</value>
-                </params>
-            </validation>
-        </rule>
-
-        <rule name="MODS_PROHIBITED_IDENTIFIERS_NOT_PRESENT_LEVEL_PICTURE">
-            <description>
-                Úroveň PICTURE nesmí obsahovat žádné zakázané identifikátory v záznamu MODS.
-            </description>
-            <validation functionName="checkIdentifiersNoneTypePresent">
-                <params>
-                    <value name="identifier_list_list" type="IDENTIFIER_LIST_LIST">
-                        <!--seznam obsahujici seznam identifikatoru pro kazdy zaznam dmdSec pro MODS-->
-                        <evaluation functionName="getModsIdentifiersForEachDmdsecId">
-                            <params>
-                                <value name="dmdsec_ids" type="STRING_LIST">
-                                    <!--seznam identifikatoru (dmdSec ID)-->
-                                    <evaluation functionName="getStringListByXpath">
-                                        <params>
-                                            <value name="xml_file" type="FILE">
-                                                <value-ref name="PRIMARY-METS_FILE"/>
-                                            </value>
-                                            <value name="xpath" type="STRING">
-                                                /mets:mets/mets:dmdSec[starts-with(@ID, "MODSMD_PICT")]/@ID
-                                            </value>
-                                        </params>
-                                    </evaluation>
-                                </value>
-                                <value name="mets_file" type="FILE">
-                                    <value-ref name="PRIMARY-METS_FILE"/>
-                                </value>
-                            </params>
-                        </evaluation>
-                    </value>
-                    <value name="id_types" type="STRING_LIST">
-                        <value-ref name="ID_TYPES_PICTURE_PROHIBITED"/>
-                    </value>
-                    <value name="level_name" type="STRING">PICTURE</value>
-                </params>
-            </validation>
-        </rule>
-
-        <!-- page -->
-        <rule name="MODS_MANDATORY_IDENTIFIERS_PRESENT_LEVEL_PAGE">
-            <description>
-                Úroveň PAGE musí obsahovat všechny povinné identifikátory v záznamu MODS.
-            </description>
-            <validation functionName="checkIdentifiersAllTypesPresent">
-                <params>
-                    <value name="identifier_list_list" type="IDENTIFIER_LIST_LIST">
-                        <!--seznam obsahujici seznam identifikatoru pro kazdy zaznam dmdSec pro MODS-->
-                        <evaluation functionName="getModsIdentifiersForEachDmdsecId">
-                            <params>
-                                <value name="dmdsec_ids" type="STRING_LIST">
-                                    <!--seznam identifikatoru (dmdSec ID)-->
-                                    <evaluation functionName="getStringListByXpath">
-                                        <params>
-                                            <value name="xml_file" type="FILE">
-                                                <value-ref name="PRIMARY-METS_FILE"/>
-                                            </value>
-                                            <value name="xpath" type="STRING">
-                                                /mets:mets/mets:dmdSec[starts-with(@ID, "MODSMD_PAGE")]/@ID
-                                            </value>
-                                        </params>
-                                    </evaluation>
-                                </value>
-                                <value name="mets_file" type="FILE">
-                                    <value-ref name="PRIMARY-METS_FILE"/>
-                                </value>
-                            </params>
-                        </evaluation>
-                    </value>
-                    <value name="id_types" type="STRING_LIST">
-                        <value-ref name="ID_TYPES_PAGE_MANDATORY"/>
-                    </value>
-                    <value name="level_name" type="STRING">PAGE</value>
-                </params>
-            </validation>
-        </rule>
-
-        <rule name="MODS_PROHIBITED_IDENTIFIERS_NOT_PRESENT_LEVEL_PAGE">
-            <description>
-                Úroveň PAGE nesmí obsahovat žádné zakázané identifikátory v záznamu MODS.
-            </description>
-            <validation functionName="checkIdentifiersNoneTypePresent">
-                <params>
-                    <value name="identifier_list_list" type="IDENTIFIER_LIST_LIST">
-                        <!--seznam obsahujici seznam identifikatoru pro kazdy zaznam dmdSec pro MODS-->
-                        <evaluation functionName="getModsIdentifiersForEachDmdsecId">
-                            <params>
-                                <value name="dmdsec_ids" type="STRING_LIST">
-                                    <!--seznam identifikatoru (dmdSec ID)-->
-                                    <evaluation functionName="getStringListByXpath">
-                                        <params>
-                                            <value name="xml_file" type="FILE">
-                                                <value-ref name="PRIMARY-METS_FILE"/>
-                                            </value>
-                                            <value name="xpath" type="STRING">
-                                                /mets:mets/mets:dmdSec[starts-with(@ID, "MODSMD_PAGE")]/@ID
-                                            </value>
-                                        </params>
-                                    </evaluation>
-                                </value>
-                                <value name="mets_file" type="FILE">
-                                    <value-ref name="PRIMARY-METS_FILE"/>
-                                </value>
-                            </params>
-                        </evaluation>
-                    </value>
-                    <value name="id_types" type="STRING_LIST">
-                        <value-ref name="ID_TYPES_PAGE_PROHIBITED"/>
-                    </value>
-                    <value name="level_name" type="STRING">PAGE</value>
                 </params>
             </validation>
         </rule>
@@ -2440,6 +2288,8 @@
         </rule>
 
     </rules-section>
+
+    <!--TODO: proverit odsud nize-->
 
 
     <rules-section name="METS hlavičky" description="Kontrola hlaviček primárního a sekundárních METS záznamů">
