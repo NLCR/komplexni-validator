@@ -407,6 +407,51 @@
         </evaluation>
     </value-def>
 
+    <value-def name="SOURCE-AUDIO_FILES" type="FILE_LIST">
+        <evaluation functionName="findFilesInDirByPattern">
+            <params>
+                <value name="dir" type="FILE">
+                    <value-ref name="SOURCE-AUDIO-DIR_FILE"/>
+                </value>
+                <pattern name="pattern">
+                    <description>Vzor pro jména souborů SOURCE-AUDIO v rámci adresáře SOURCE-AUDIO-DIR.</description>
+                    <expression caseSensitive="true">sa_${PSP_ID}_[0-9]+\.wav</expression>
+                    <expression caseSensitive="true">sa_${PSP_ID}_[0-9]+_[0-9]+\.wav</expression>
+                </pattern>
+            </params>
+        </evaluation>
+    </value-def>
+
+    <value-def name="MASTER-COPY-AUDIO_FILES" type="FILE_LIST">
+        <evaluation functionName="findFilesInDirByPattern">
+            <params>
+                <value name="dir" type="FILE">
+                    <value-ref name="MASTER-COPY-AUDIO-DIR_FILE"/>
+                </value>
+                <pattern name="pattern">
+                    <description>Vzor pro jména souborů MASTER-COPY-AUDIO v rámci adresáře MASTER-COPY-AUDIO-DIR.</description>
+                    <expression caseSensitive="true">mca_${PSP_ID}_[0-9]+\.wav</expression>
+                    <expression caseSensitive="true">mca_${PSP_ID}_[0-9]+_[0-9]+\.wav</expression>
+                </pattern>
+            </params>
+        </evaluation>
+    </value-def>
+
+    <value-def name="USER-COPY-AUDIO_FILES" type="FILE_LIST">
+        <evaluation functionName="findFilesInDirByPattern">
+            <params>
+                <value name="dir" type="FILE">
+                    <value-ref name="USER-COPY-AUDIO-DIR_FILE"/>
+                </value>
+                <pattern name="pattern">
+                    <description>Vzor pro jména souborů USER-COPY-AUDIO v rámci adresáře USER-COPY-AUDIO-DIR.</description>
+                    <expression caseSensitive="true">uca_${PSP_ID}_[0-9]+\.mp3</expression>
+                    <expression caseSensitive="true">uca_${PSP_ID}_[0-9]+_[0-9]+\.mp3</expression>
+                </pattern>
+            </params>
+        </evaluation>
+    </value-def>
+
     <!--soubory XSD-->
 
     <value-def name="INFO_XSD_FILE" type="FILE">

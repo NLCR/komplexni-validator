@@ -641,17 +641,65 @@
             </validation>
         </rule>
 
-        <!--TODO: soubory v  SOURCE-AUDIO, MASTER-COPY-AUDIO, USER-COPY-AUDIO-->
+        <rule name="MASTER-COPY-AUDIO_FILENAMES_VALID">
+            <description>Všechny soubory MASTER-COPY-AUDIO musí obsahovat jen povolené znaky.</description>
+            <validation functionName="checkAllFilenamesMatchPattern">
+                <params>
+                    <value name="files" type="FILE_LIST">
+                        <value-ref name="MASTER-COPY_FILES"/>
+                    </value>
+                    <pattern name="pattern">
+                        <pattern-ref name="FILENAME"/>
+                    </pattern>
+                </params>
+            </validation>
+        </rule>
 
-        <!--počty souborů a délky názvů soborů v top-level adesářích-->
+        <rule name="USER-COPY-AUDIO_FILENAMES_VALID">
+            <description>Všechny soubory USER-COPY-AUDIO musí obsahovat jen povolené znaky.</description>
+            <validation functionName="checkAllFilenamesMatchPattern">
+                <params>
+                    <value name="files" type="FILE_LIST">
+                        <value-ref name="USER-COPY_FILES"/>
+                    </value>
+                    <pattern name="pattern">
+                        <pattern-ref name="FILENAME"/>
+                    </pattern>
+                </params>
+            </validation>
+        </rule>
 
-        <rule name="NUMBER_OF_FILES_IN_DIRS_MATCH">
-            <description>Počet souborů ve všech adresářích se musí shodovat.</description>
+        <!--počty souborů v top-level adesářích-->
+
+        <rule name="NUMBER_OF_FILES_IN_SECONDARY-METS-DIRS_OK">
+            <description>Počet souborů v adresáři SECONDARY-METS-DIR se musí shodovat s celkovým počtem souborů v adresářích SOURCE-AUDIO-DIR a
+                MASTER-COPY-DIR. Neboli pro každý obraz i zvuk musí existovat sekundární METS soubor s technickými metadaty.
+            </description>
             <validation functionName="checkAllFileListsHaveSameSize">
                 <params>
                     <value name="files" type="FILE_LIST">
                         <value-ref name="SECONDARY-METS_FILES"/>
                     </value>
+                    <value name="files" type="FILE_LIST">
+                        <evaluation functionName="mergeFiles">
+                            <params>
+                                <value name="file_list" type="FILE_LIST">
+                                    <value-ref name="MASTER-COPY_FILES"/>
+                                </value>
+                                <value name="file_list" type="FILE_LIST">
+                                    <value-ref name="SOURCE-AUDIO_FILES"/>
+                                </value>
+                            </params>
+                        </evaluation>
+                    </value>
+                </params>
+            </validation>
+        </rule>
+
+        <rule name="NUMBER_OF_FILES_IN_IMAGE-DIRS_MATCH">
+            <description>Počet souborů ve všech adresářích vztahujících se k stránkám se musí shodovat.</description>
+            <validation functionName="checkAllFileListsHaveSameSize">
+                <params>
                     <value name="files" type="FILE_LIST">
                         <value-ref name="OCR-TEXT_FILES"/>
                     </value>
@@ -668,7 +716,25 @@
             </validation>
         </rule>
 
-        <!--fadfad-->
+        <rule name="NUMBER_OF_FILES_IN_AUDIO-DIRS_MATCH">
+            <description>Počet souborů ve všech adresářích vztahujících se k zvukům se musí shodovat.</description>
+            <validation functionName="checkAllFileListsHaveSameSize">
+                <params>
+                    <value name="files" type="FILE_LIST">
+                        <value-ref name="SOURCE-AUDIO_FILES"/>
+                    </value>
+                    <value name="files" type="FILE_LIST">
+                        <value-ref name="MASTER-COPY-AUDIO_FILES"/>
+                    </value>
+                    <value name="files" type="FILE_LIST">
+                        <value-ref name="USER-COPY-AUDIO_FILES"/>
+                    </value>
+                </params>
+            </validation>
+        </rule>
+
+
+        <!--délky názvů soborů v top-level adesářích-->
 
         <rule name="SECONDARY-METS_FILENAMES_LENGTHS_SAME">
             <description>Délky názvů všech souborů SECONDARY-METS musí být stejné. Tedy čísla stran jsou zarovnaná na

@@ -38,7 +38,8 @@ public class VfCheckAllFileListsHaveSameSize extends ValidationFunction {
                 ValueEvaluation paramEvaluation = param.getEvaluation();
                 List<File> files = (List<File>) paramEvaluation.getData();
                 if (files == null) {
-                    return invalidValueParamNull(PARAM_FILES, paramEvaluation);
+                    //ignore
+                    //return invalidValueParamNull(PARAM_FILES, paramEvaluation);
                 } else {
                     list.add(files);
                 }

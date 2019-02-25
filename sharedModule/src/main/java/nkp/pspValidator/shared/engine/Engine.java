@@ -137,6 +137,8 @@ public class Engine {
                 return new EfGetModsIdentifiersForEachDmdsecId(name, this);
             case "mergeIdentifiers":
                 return new EfMergeIdentifiers(name, this);
+            case "mergeFiles":
+                return new EfMergeFiles(name, this);
             default:
                 throw new RuntimeException(String.format("vyhodnocovací funkce %s neexistuje", name));
         }
