@@ -4,10 +4,10 @@
            xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
            xsi:schemaLocation="http://www.w3.org/2001/XMLSchema-instance http://www.w3.org/2001/XMLSchema.xsd http://www.loc.gov/METS/ http://www.loc.gov/standards/mets/mets.xsd http://www.loc.gov/mods/v3 http://www.loc.gov/standards/mods/v3/mods-3-6.xsd http://www.openarchives.org/OAI/2.0/oai_dc/ http://www.openarchives.org/OAI/2.0/oai_dc.xsd">
     <mets:metsHdr CREATEDATE="2017-07-18T21:39:56" LASTMODDATE="2017-07-29T10:39:56">
-        <mets:agent ROLE="creator" TYPE="organization">
+        <mets:agent ROLE="CREATOR" TYPE="ORGANIZATION">
             <mets:name>ABA001</mets:name>
         </mets:agent>
-        <mets:agent ROLE="archivist" TYPE="organization">
+        <mets:agent ROLE="ARCHIVIST" TYPE="ORGANIZATION">
             <mets:name>ABA001</mets:name>
         </mets:agent>
     </mets:metsHdr>
