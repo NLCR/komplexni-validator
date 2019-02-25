@@ -60,10 +60,10 @@ public class DmfDetector {
         File[] metsCandidates = pspRootDir.listFiles((dir, name) -> pattern.matcher(name).matches());
         if (metsCandidates.length >= 2) {
             throw new PspDataException(pspRootDir,
-                    String.format("nalezeno více možných souborů PRIMARY-METS, není jasné, který použít pro zjištění typu dokumentu (monografie/periodikum)"));
+                    String.format("nalezeno více možných souborů PRIMARY-METS, není jasné, který použít pro zjištění typu dokumentu (monografie/periodikum/zvuk)"));
         } else if (metsCandidates.length == 0) {
             throw new PspDataException(pspRootDir,
-                    String.format("nenalezen soubor PRIMARY-METS pro zjištění typu dokumentu (monografie/periodikum)"));
+                    String.format("nenalezen soubor PRIMARY-METS pro zjištění typu dokumentu (monografie/periodikum/zvuk)"));
         } else {
             return metsCandidates[0];
         }
