@@ -16,7 +16,7 @@
         <namespace-dublin_core>http://purl.org/dc/elements/1.1/</namespace-dublin_core>
 
         <!--prefix alto-->
-        <namespace-alto>http://www.loc.gov/standards/alto/ns-v2#</namespace-alto>
+        <namespace-alto>http://www.loc.gov/standards/alto/ns-v3#</namespace-alto>
         <!--prefix cmd-->
         <namespace-copyright_md>http://www.cdlib.org/inside/diglib/copyrightMD</namespace-copyright_md>
         <!--prefix mix-->

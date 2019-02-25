@@ -1056,8 +1056,6 @@
 
     </rules-section>
 
-    <!--TODO: doplnit AUDIO kontroly-->
-
     <rules-section name="Soubor CHECKSUM"
                    description="Kontrola souboru CHECKSUM, odkazů na další soubory a shody kontrolních součtů.">
 
@@ -1262,6 +1260,8 @@
 
 
     </rules-section>
+
+    <!--TODO: doplnit AUDIO kontroly odsud dal-->
 
     <rules-section name="Identifikátory" description="">
 
