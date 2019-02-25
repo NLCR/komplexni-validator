@@ -1097,6 +1097,15 @@
                     <value name="files" type="FILE_LIST">
                         <value-ref name="USER-COPY_FILES"/>
                     </value>
+                    <value name="files" type="FILE_LIST">
+                        <value-ref name="SOURCE-AUDIO_FILES"/>
+                    </value>
+                    <value name="files" type="FILE_LIST">
+                        <value-ref name="MASTER-COPY-AUDIO_FILES"/>
+                    </value>
+                    <value name="files" type="FILE_LIST">
+                        <value-ref name="USER-COPY-AUDIO_FILES"/>
+                    </value>
                 </params>
             </validation>
         </rule>
@@ -1112,7 +1121,6 @@
                 </params>
             </validation>
         </rule>
-
 
     </rules-section>
 
