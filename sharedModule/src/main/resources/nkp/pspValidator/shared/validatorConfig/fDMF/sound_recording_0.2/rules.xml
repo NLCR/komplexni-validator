@@ -801,6 +801,45 @@
             </validation>
         </rule>
 
+        <rule name="SOURCE-AUDIO_FILENAMES_LENGTHS_SAME">
+            <description>Délky názvů všech souborů SOURCE-AUDIO musí být stejné. Tedy čísla desek a/nebo skladeb jsou zarovnaná na
+                stejný počet nul.
+            </description>
+            <validation functionName="checkFilenamesLengthsSame">
+                <params>
+                    <value name="files" type="FILE_LIST">
+                        <value-ref name="SOURCE-AUDIO_FILES"/>
+                    </value>
+                </params>
+            </validation>
+        </rule>
+
+        <rule name="MASTER-COPY-AUDIO_FILENAMES_LENGTHS_SAME">
+            <description>Délky názvů všech souborů MASTER-COPY-AUDIO musí být stejné. Tedy čísla desek a/nebo skladeb jsou zarovnaná na
+                stejný počet nul.
+            </description>
+            <validation functionName="checkFilenamesLengthsSame">
+                <params>
+                    <value name="files" type="FILE_LIST">
+                        <value-ref name="MASTER-COPY-AUDIO_FILES"/>
+                    </value>
+                </params>
+            </validation>
+        </rule>
+
+        <rule name="USER-COPY-AUDIO_FILENAMES_LENGTHS_SAME">
+            <description>Délky názvů všech souborů USER-COPY-AUDIO musí být stejné. Tedy čísla desek a/nebo skladeb jsou zarovnaná na stejný
+                počet nul.
+            </description>
+            <validation functionName="checkFilenamesLengthsSame">
+                <params>
+                    <value name="files" type="FILE_LIST">
+                        <value-ref name="USER-COPY-AUDIO_FILES"/>
+                    </value>
+                </params>
+            </validation>
+        </rule>
+
 
         <!--žádný ze souborů v top-level adresářích není adresář-->
 
@@ -854,6 +893,40 @@
                 <params>
                     <value name="files" type="FILE_LIST">
                         <value-ref name="USER-COPY_FILES"/>
+                    </value>
+                </params>
+            </validation>
+        </rule>
+
+
+        <rule name="SOURCE-AUDIO_FILES_ARE_NOT_DIRS">
+            <description>Žádný soubor SOURCE-AUDIO nesmí být adresář.</description>
+            <validation functionName="checkNoFileIsDir">
+                <params>
+                    <value name="files" type="FILE_LIST">
+                        <value-ref name="SOURCE-AUDIO_FILES"/>
+                    </value>
+                </params>
+            </validation>
+        </rule>
+
+        <rule name="MASTER-COPY-AUDIO_FILES_ARE_NOT_DIRS">
+            <description>Žádný soubor MASTER-COPY-AUDIO nesmí být adresář.</description>
+            <validation functionName="checkNoFileIsDir">
+                <params>
+                    <value name="files" type="FILE_LIST">
+                        <value-ref name="MASTER-COPY-AUDIO_FILES"/>
+                    </value>
+                </params>
+            </validation>
+        </rule>
+
+        <rule name="USER-COPY-AUDIO_FILES_ARE_NOT_DIRS">
+            <description>Žádný soubor USER-COPY-AUDIO nesmí být adresář.</description>
+            <validation functionName="checkNoFileIsDir">
+                <params>
+                    <value name="files" type="FILE_LIST">
+                        <value-ref name="USER-COPY-AUDIO_FILES"/>
                     </value>
                 </params>
             </validation>
@@ -936,8 +1009,54 @@
             </validation>
         </rule>
 
+        <rule name="NO_EXTRA_FILES_IN_SOURCE-AUDIO-DIR">
+            <description>Kromě souborů SOURCE-AUDIO nesmí adresář SOURCE-AUDIO-DIR obsahovat žádné další soubory.
+            </description>
+            <validation functionName="checkNoOtherFilesInDir">
+                <params>
+                    <value name="root_dir" type="FILE">
+                        <value-ref name="SOURCE-AUDIO-DIR_FILE"/>
+                    </value>
+                    <value name="files" type="FILE_LIST">
+                        <value-ref name="SOURCE-AUDIO_FILES"/>
+                    </value>
+                </params>
+            </validation>
+        </rule>
+
+        <rule name="NO_EXTRA_FILES_IN_MASTER-COPY-AUDIO-DIR">
+            <description>Kromě souborů MASTER-COPY-AUDIO nesmí adresář MASTER-COPY-AUDIO-DIR obsahovat žádné další soubory.
+            </description>
+            <validation functionName="checkNoOtherFilesInDir">
+                <params>
+                    <value name="root_dir" type="FILE">
+                        <value-ref name="MASTER-COPY-AUDIO-DIR_FILE"/>
+                    </value>
+                    <value name="files" type="FILE_LIST">
+                        <value-ref name="MASTER-COPY-AUDIO_FILES"/>
+                    </value>
+                </params>
+            </validation>
+        </rule>
+
+        <rule name="NO_EXTRA_FILES_IN_USER-COPY-AUDIO-DIR">
+            <description>Kromě souborů USER-COPY-AUDIO nesmí adresář USER-COPY-AUDIO-DIR obsahovat žádné další soubory.
+            </description>
+            <validation functionName="checkNoOtherFilesInDir">
+                <params>
+                    <value name="root_dir" type="FILE">
+                        <value-ref name="USER-COPY-AUDIO-DIR_FILE"/>
+                    </value>
+                    <value name="files" type="FILE_LIST">
+                        <value-ref name="USER-COPY-AUDIO_FILES"/>
+                    </value>
+                </params>
+            </validation>
+        </rule>
+
     </rules-section>
 
+    <!--TODO: doplnit AUDIO kontroly-->
 
     <rules-section name="Soubor CHECKSUM"
                    description="Kontrola souboru CHECKSUM, odkazů na další soubory a shody kontrolních součtů.">

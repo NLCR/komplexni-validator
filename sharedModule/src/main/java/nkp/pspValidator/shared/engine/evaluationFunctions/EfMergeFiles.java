@@ -5,7 +5,6 @@ import nkp.pspValidator.shared.engine.ValueEvaluation;
 import nkp.pspValidator.shared.engine.ValueType;
 import nkp.pspValidator.shared.engine.exceptions.ContractException;
 import nkp.pspValidator.shared.engine.params.ValueParam;
-import nkp.pspValidator.shared.engine.types.Identifier;
 
 import java.io.File;
 import java.util.ArrayList;
