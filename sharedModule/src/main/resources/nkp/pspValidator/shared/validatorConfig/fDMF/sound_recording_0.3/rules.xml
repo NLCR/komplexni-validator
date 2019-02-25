@@ -1188,6 +1188,9 @@
                     <value name="files" type="FILE_LIST">
                         <value-ref name="USER-COPY-AUDIO_FILES"/>
                     </value>
+                    <value name="files" type="FILE_LIST">
+                        <value-ref name="CATALOG-ENTRY_FILES"/>
+                    </value>
                 </params>
             </validation>
         </rule>

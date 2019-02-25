@@ -56,7 +56,7 @@ public class DmfDetector {
     }
 
     private File findPrimaryMetsFile(File pspRootDir) throws PspDataException {
-        Pattern pattern = Pattern.compile("mets.*\\.xml", java.util.regex.Pattern.CASE_INSENSITIVE | java.util.regex.Pattern.UNICODE_CASE);
+        Pattern pattern = Pattern.compile(".*mets.*\\.xml", java.util.regex.Pattern.CASE_INSENSITIVE | java.util.regex.Pattern.UNICODE_CASE);
         File[] metsCandidates = pspRootDir.listFiles((dir, name) -> pattern.matcher(name).matches());
         if (metsCandidates.length >= 2) {
             throw new PspDataException(pspRootDir,

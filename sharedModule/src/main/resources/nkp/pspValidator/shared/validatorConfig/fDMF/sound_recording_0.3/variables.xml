@@ -77,7 +77,7 @@
                 </value>
                 <pattern name="pattern">
                     <description>Vzor pro jméno souboru PRIMARY-METS.</description>
-                    <expression caseSensitive="true">mets_${PSP_ID}\.xml</expression>
+                    <expression caseSensitive="true">main_mets_${PSP_ID}\.xml</expression>
                 </pattern>
             </params>
         </evaluation>
