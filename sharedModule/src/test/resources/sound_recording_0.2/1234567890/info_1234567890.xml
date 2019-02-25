@@ -10,18 +10,18 @@
     <creator>ABA001</creator>
     <size>999898</size>
     <itemlist itemtotal="19">
-	    <item>\source_audio\sa_1234567890_0001.wav</item>
-		<item>\source_audio\sa_1234567890_0002.wav</item>
-		<item>\user_copy_audio\uca_1234567890_0001.mp3</item>
-		<item>\user_copy_audio\uca_1234567890_0002.mp3</item>
-		<item>\master_copy\mc_1234567890_0001.jp2</item>
-		<item>\master_copy\mc_1234567890_0002.jp2</item>
-		<item>\user_copy\uc_1234567890_0001.jp2</item>
-		<item>\user_copy\uc_1234567890_0002.jp2</item>
-        <item>\amd_sec\amd_mets_1234567890_0001.xml</item>
-		<item>\amd_sec\amd_mets_1234567890_0002.xml</item>
-		<item>\amd_sec\amd_mets_audio_1234567890_0001.xml</item>
-		<item>\amd_sec\amd_mets_audio_1234567890_0002.xml</item>
+	    <item>\sourceaudio\sa_1234567890_0001.wav</item>
+		<item>\sourceaudio\sa_1234567890_0002.wav</item>
+		<item>\usercopyaudio\uca_1234567890_0001.mp3</item>
+		<item>\usercopyaudio\uca_1234567890_0002.mp3</item>
+		<item>\mastercopy\mc_1234567890_0001.jp2</item>
+		<item>\mastercopy\mc_1234567890_0002.jp2</item>
+		<item>\usercopy\uc_1234567890_0001.jp2</item>
+		<item>\usercopy\uc_1234567890_0002.jp2</item>
+        <item>\amdsec\amd_mets_1234567890_0001.xml</item>
+		<item>\amdsec\amd_mets_1234567890_0002.xml</item>
+		<item>\amdsec\amd_mets_audio_1234567890_0001.xml</item>
+		<item>\amdsec\amd_mets_audio_1234567890_0002.xml</item>
 		<item>\alto\alto_1234567890_0001.xml</item>
 		<item>\alto\alto_1234567890_0002.xml</item>
         <item>\txt\txt_1234567890_0001.txt</item>
