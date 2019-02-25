@@ -1,632 +1,652 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<mets:mets LABEL= "Arie vodníka z opery Rusalka, 1908" TYPE="sound recording" xmlns:mets="http://www.loc.gov/METS/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:mods="http://www.loc.gov/mods/v3" xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/" xmlns:premis="info:lc/xmlns/premis-v2" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.w3.org/2001/XMLSchema-instance http://www.w3.org/2001/XMLSchema.xsd http://www.loc.gov/METS/ http://www.loc.gov/standards/mets/mets.xsd http://www.loc.gov/mods/v3 http://www.loc.gov/standards/mods/v3/mods-3-6.xsd http://www.openarchives.org/OAI/2.0/oai_dc/ http://www.openarchives.org/OAI/2.0/oai_dc.xsd">  
-  <mets:metsHdr CREATEDATE="2017-07-18T21:39:56" LASTMODDATE="2017-07-29T10:39:56"> 
-    <mets:agent ROLE="creator" TYPE="organization"> 
-      <mets:name>ABA001</mets:name> 
-    </mets:agent>  
-    <mets:agent ROLE="archivist" TYPE="organization"> 
-      <mets:name>ABA001</mets:name> 
-    </mets:agent> 
-  </mets:metsHdr>  
-  <mets:dmdSec ID="MODSMD_SOUNDCOLLECTION_0001"> 
-    <mets:mdWrap MDTYPE="MODS" MDTYPEVERSION="3.6" MIMETYPE="text/xml"> 
-      <mets:xmlData> 
-        <mods:mods ID="MODS_SOUNDCOLLECTION_0001"> 
-          <mods:titleInfo> 
-            <mods:title>Arie vodníka z opery "Rusalka"</mods:title>
-			<mods:subTitle>Pochod podloudníků z opery "Hubička"</mods:subTitle>
-		  </mods:titleInfo> 
-		  <mods:name type="personal">
-            <mods:namePart type="family">Dvořák</mods:namePart>
-            <mods:namePart type="given">Antonín</mods:namePart>
-            <mods:namePart type="date">1841-1904</mods:namePart>
-            <mods:role>
-              <mods:roleTerm authority="marcrelator" type="code">cmp</mods:roleTerm> 
-            </mods:role> 
-          </mods:name>  
-		  <mods:name type="personal">
-            <mods:namePart type="family">Smetana</mods:namePart>
-            <mods:namePart type="given">Bedřich</mods:namePart>
-            <mods:namePart type="date">1824-1884</mods:namePart>
-            <mods:role>
-              <mods:roleTerm authority="marcrelator" type="code">cmp</mods:roleTerm> 
-            </mods:role> 
-          </mods:name>  
-		  <mods:name type="personal">
-            <mods:namePart type="family">Pollert</mods:namePart>
-            <mods:namePart type="given">Emil</mods:namePart>
-            <mods:namePart type="date">1877-1935</mods:namePart>
-            <mods:role>
-              <mods:roleTerm authority="marcrelator" type="code">prf</mods:roleTerm> 
-            </mods:role> 
-          </mods:name>  
-		  <mods:name type="corporate">
-            <mods:namePart>Národní divadlo v Praze</mods:namePart>
-            <mods:namePart>Orchestr</mods:namePart>
-            <mods:role>
-              <mods:roleTerm authority="marcrelator" type="code">prf</mods:roleTerm> 
-            </mods:role> 
-          </mods:name>  
-		  <mods:name type="corporate">
-            <mods:namePart>Národní divadlo v Praze</mods:namePart>
-            <mods:namePart>Operní sbor</mods:namePart>
-            <mods:role>
-              <mods:roleTerm authority="marcrelator" type="code">prf</mods:roleTerm> 
-            </mods:role> 
-          </mods:name>  
-          <mods:typeOfResource>sound recording-musical</mods:typeOfResource>                  
-          <mods:genre>sound recording</mods:genre>                                          
-          <mods:originInfo eventType="publication"> 
-            <mods:place> 
-              <mods:placeTerm authority="marccountry" type="code">xxk</mods:placeTerm> 
-			  <mods:placeTerm type="text">[Velká Británie?]</mods:placeTerm>
-            </mods:place>  
-            <mods:publisher>Gramophone Concert Record</mods:publisher> 
-			<mods:dateIssued>[1908]</mods:dateIssued>	
-			<mods:issuance>monographic</mods:issuance>  
-          </mods:originInfo>   
-          <mods:physicalDescription> 
-			<mods:form authority="marccategory">sound recording</mods:form> 
-            <mods:form authority="rdacarrier" type="carrier">audiodisc</mods:form>  
-			<mods:form authority="rdamedia" type="media">audio</mods:form> 
-            <mods:extent>1 gramofonová deska</mods:extent>  									
-			<mods:extent>25 cm</mods:extent>   
-			<mods:extent>rychlost přehrávání 78 rpm</mods:extent>      
-		  </mods:physicalDescription>  
-          <mods:note>Strana 1: Bohemian Bass w. Orch. -- Strana 2: Bohemian Bss w. Chorus and Orch.</mods:note> 
-		  <mods:note>Emil Pollert ; sbor kr. českého zemského a nár. div. ; s průvodem orkestru nár. div. </mods:note> 
-          <mods:location> 
-            <mods:physicalLocation authority="siglaADR">ABE370</mods:physicalLocation>  
-            <mods:shelfLocator>5180</mods:shelfLocator> 
-          </mods:location>  
-          <mods:identifier type="uuid">123e4567-e89b-12d3-a456-426655440000</mods:identifier>  	
-          <mods:identifier type="urn:nbn">urn:nbn:cz:nk-0002s1</mods:identifier>
-          <mods:identifier type="issue number">272027</mods:identifier>		 
-          <mods:identifier type="matrix-number">H 1354</mods:identifier>  
-          <mods:identifier type="local">1234567890</mods:identifier> 
-          <mods:recordInfo> 
-			<mods:descriptionStandard>rda</mods:descriptionStandard>
-            <mods:recordContentSource authority="marcorg">ABE370</mods:recordContentSource>  
-            <mods:recordCreationDate encoding="iso8601">2017-04-27T12:34 Z</mods:recordCreationDate> 
-			<mods:recordChangeDate encoding="iso8601">2017-04-28T15:54:01Z</mods:recordChangeDate>  
-            <mods:recordOrigin>machine generated</mods:recordOrigin>  
-            <mods:languageOfCataloging> 
-              <mods:languageTerm authority="iso639-2b" type="code">cze</mods:languageTerm> 
-            </mods:languageOfCataloging> 
-          </mods:recordInfo>                                             
-        </mods:mods> 
-      </mets:xmlData> 
-    </mets:mdWrap> 
-  </mets:dmdSec>  
-  <mets:dmdSec ID="DCMD_SOUNDCOLLECTION_0001"> 
-    <mets:mdWrap MDTYPE="DC" MIMETYPE="text/xml"> 
-      <mets:xmlData> 
-        <oai_dc:dc> 
-          <dc:title>Arie vodníka z opery "Rusalka"</dc:title>
-		  <dc:title>Pochod podloudníků z opery "Hubička"</dc:title>
-          <dc:creator>Dvořák, Antonín</dc:creator>  
-		  <dc:creator>Smetana, Bedřich</dc:creator> 
-		  <dc:creator>Pollert, Emil</dc:creator>  	
-          <dc:creator>Národní divadlo v Praze, Orchestr</dc:creator>
-		  <dc:creator>Národní divadlo v Praze, Operní sbor</dc:creator>
-		  <dc:type>sound recording-musical</dc:type>             
-		  <dc:type>model:soundrecording</dc:type>
-		  <dc:coverage>xxk</dc:coverage>
-		  <dc:coverage>[Velká Británie?]</dc:coverage>
-		  <dc:date>[1908]</dc:date>  
-          <dc:publisher>Gramophone Concert Record</dc:publisher>  
-          <dc:format>sound recording</dc:format>  
-          <dc:format>audiodisc</dc:format>  
-		  <dc:format>audio</dc:format>
-          <dc:coverage>1 gramofonová deska</dc:coverage>
-		  <dc:coverage>25 cm</dc:coverage>   
-		  <dc:coverage>rychlost přehrávání 78 rpm</dc:coverage>
-		  <dc:description>Strana 1: Bohemian Bass w. Orch. -- Strana 2: Bohemian Bss w. Chorus and Orch.</dc:description> 
-		  <dc:description>Emil Pollert ; sbor kr. českého zemského a nár. div. ; s průvodem orkestru nár. div. </dc:description> 
-          <dc:identifier>uuid:123e4567-e89b-12d3-a456-426655440000</dc:identifier>  
-		  <dc:identifier>urn:nbn:cz:nk-0002s1</dc:identifier>  
-		  <dc:identifier>issue number:272027</dc:identifier>
-          <dc:identifier>matrix-number:H1354</dc:identifier>		  
-          <dc:identifier>local:1234567890</dc:identifier> 
-		  <dc:source>ABE370</dc:source>
-		  <dc:source>5180</dc:source>
-        </oai_dc:dc> 
-      </mets:xmlData> 
-    </mets:mdWrap> 
-  </mets:dmdSec>  
-  <mets:dmdSec ID="MODSMD_SOUNDRECORDING_0001">  
-    <mets:mdWrap MDTYPE="MODS" MDTYPEVERSION="3.6" MIMETYPE="text/xml"> 
-      <mets:xmlData> 
-        <mods:mods ID="MODS_SOUNDRECORDING_0001">
-		  <mods:titleInfo> 
-            <mods:title>Arie vodníka z opery "Rusalka"</mods:title>     
-			<mods:partNumber>01</mods:partNumber>   
-		  </mods:titleInfo>  
-		  <mods:name type="personal">
-			<mods:namePart type="family">Dvořák</mods:namePart>
-            <mods:namePart type="given">Antonín</mods:namePart>
-            <mods:namePart type="date">1841-1904</mods:namePart>
-            <mods:role>
-              <mods:roleTerm authority="marcrelator" type="code">cmp</mods:roleTerm> 
-            </mods:role> 
-          </mods:name> 
-          <mods:typeOfResource>sound recording-musical</mods:typeOfResource>		  
-		  <mods:genre type="model">soundrecording</mods:genre>          
-		  <mods:originInfo eventType="publication"> 
-            <mods:place> 
-              <mods:placeTerm authority="marccountry" type="code">xxk</mods:placeTerm>
-              <mods:placeTerm type="text">[Velká Británie?]</mods:placeTerm>			  
-            </mods:place>  
-			<mods:issuance>monographic</mods:issuance>
-          </mods:originInfo> 
-		  <mods:physicalDescription>
-			<mods:extent>5:21</mods:extent>
-		  </mods:physicalDescription>
-		  <mods:language> 
-            <mods:languageTerm authority="iso639-2b" type="code">cze</mods:languageTerm> 
-          </mods:language> 
-          <mods:tableOfContents displayLabel="contents">Poco piu mosso ; Moderato afflitto</mods:tableOfContents>	      
-		  <mods:relatedItem>
-			<mods:titleInfo>
-				<mods:title>Arie vodníka z opery "Rusalka"</mods:title>
-				<mods:subTitle>Pochod podloudníků z opery "Hubička"</mods:subTitle>
-			</mods:titleInfo>	
-			<mods:identifier type="uuid">123e4567-e89b-12d3-a456-426655440000</mods:identifier>     			
-		  </mods:relatedItem>
-		  <mods:subject authority="czenas">
-			<mods:topic>Divadelní hudba. Opera, opereta, muzikál</mods:topic> 
-		  </mods:subject>
-		  <mods:identifier type="uuid">321p7654-f32d-13d5-k654-798264310000</mods:identifier>
-		  <mods:identifier type="issue-number">272027</mods:identifier>                 
-		  <mods:identifier type="matrix-number">H1354</mods:identifier>
-		  <mods:identifier type="local">1234567890</mods:identifier>              
-		  <mods:recordInfo>
-			<mods:descriptionStandard>rda</mods:descriptionStandard>
-			<mods:recordContentSource authority="marcorg">ABA001</mods:recordContentSource>  
-            <mods:recordCreationDate encoding="iso8601">2017-04-27T12:34Z</mods:recordCreationDate> 
-			<mods:recordChangeDate encoding="iso8601">2017-04-28T15:54:01Z</mods:recordChangeDate>  
-            <mods:recordOrigin>human prepared</mods:recordOrigin> 
-			<mods:languageOfCataloging>
-			   <mods:languageTerm authority="iso639-2b" type="code">cze</mods:languageTerm> 
-            </mods:languageOfCataloging> 
-		  </mods:recordInfo> 
-        </mods:mods> 
-      </mets:xmlData> 
-    </mets:mdWrap> 
-  </mets:dmdSec>  
-  <mets:dmdSec ID="DCMD_SOUNDRECORDING_0001">
-    <mets:mdWrap MDTYPE="DC" MIMETYPE="text/xml">
-      <mets:xmlData>
-	    <oai_dc:dc> 
-		  <dc:title>Arie vodníka z opery "Rusalka"</dc:title>
-		  <dc:title>01</dc:title>
-		  <dc:creator>Dvořák, Antonín</dc:creator>  
-		  <dc:coverage>xxk</dc:coverage>
-		  <dc:coverage>[Velká Británie?]</dc:coverage>	
-		  <dc:coverage>5:21</dc:coverage>
-		  <dc:language>cze</dc:language>
-		  <dc:subject>Divadelní hudba. Opera, opereta, muzikál</dc:subject>
-		  <dc:description>Poco piu mosso ; Moderato afflitto</dc:description>
-        </oai_dc:dc>   
-	  </mets:xmlData>
-    </mets:mdWrap>
-  </mets:dmdSec> 
-  <mets:dmdSec ID="MODSMD_SOUNDRECORDING_0002"> 
-    <mets:mdWrap MDTYPE="MODS" MDTYPEVERSION="3.6" MIMETYPE="text/xml"> 
-      <mets:xmlData> 
-        <mods:mods ID="MODS_SOUNDRECORDING_0002">
-		  <mods:titleInfo> 
-            <mods:title>Pochod podloudníků z opery "Hubička"</mods:title>
-			<mods:partNumber>02</mods:partNumber>
-		  </mods:titleInfo>  
-		  <mods:name type="personal">
-            <mods:namePart type="family">Smetana</mods:namePart>
-            <mods:namePart type="given">Bedřich</mods:namePart>
-            <mods:namePart type="date">1824-1884</mods:namePart>
-            <mods:role>
-              <mods:roleTerm authority="marcrelator" type="code">cmp</mods:roleTerm> 
-            </mods:role> 
-          </mods:name> 
-		  <mods:typeOfResource>sound recording-musical</mods:typeOfResource>
-		  <mods:genre type="model">soundrecording</mods:genre>
-		  <mods:originInfo eventType="publication"> 
-            <mods:place> 
-              <mods:placeTerm authority="marccountry" type="code">xxk</mods:placeTerm> 
-			  <mods:placeTerm type="text">[Velká Británie?]</mods:placeTerm>	
-            </mods:place> 
-            <mods:issuance>monographic</mods:issuance>			
-          </mods:originInfo>
-		  <mods:physicalDescription>
-			<mods:extent>8:41</mods:extent>
-		  </mods:physicalDescription>
-		  <mods:language> 
-            <mods:languageTerm authority="iso639-2b" type="code">cze</mods:languageTerm> 
-          </mods:language> 
-		  <mods:subject authority="czenas">
-			<mods:topic>Divadelní hudba. Opera, opereta, muzikál</mods:topic> 
-		  </mods:subject>
-		  <mods:relatedItem>
-			<mods:titleInfo>
-				<mods:title>Arie vodníka z opery "Rusalka"</mods:title>
-				<mods:subTitle>Pochod podloudníků z opery "Hubička"</mods:subTitle>
-			</mods:titleInfo>
-			<mods:identifier type="uuid">123e4567-e89b-12d3-a456-426655440000</mods:identifier>    				   
-		  </mods:relatedItem>
-		  <mods:identifier type="matrix-number">H1355</mods:identifier>
-		  <mods:identifier type="issue-number">272027</mods:identifier>
-		  <mods:identifier type="uuid">263e8795-k54e-15e4-r789-824600127960</mods:identifier> 
-          <mods:identifier type="local">1234567890</mods:identifier>	  
-		  <mods:recordInfo>
-			<mods:descriptionStandard>rda</mods:descriptionStandard>
-			<mods:recordContentSource authority="marcorg">ABA001</mods:recordContentSource>  
-            <mods:recordCreationDate encoding="iso8601">2017-04-27T12:34Z</mods:recordCreationDate> 
-			<mods:recordChangeDate encoding="iso8601">2017-04-28T15:54:01Z</mods:recordChangeDate>  
-            <mods:recordOrigin>human prepared</mods:recordOrigin> 
-		    <mods:languageOfCataloging>
-			   <mods:languageTerm authority="iso639-2b" type="code">cze</mods:languageTerm> 
-            </mods:languageOfCataloging> 
-		  </mods:recordInfo> 
-        </mods:mods> 
-      </mets:xmlData> 
-    </mets:mdWrap> 
-  </mets:dmdSec>  
-  <mets:dmdSec ID="DCMD_SOUNDRECORDING_0002">
-    <mets:mdWrap MDTYPE="DC" MIMETYPE="text/xml">
-      <mets:xmlData>
-		<oai_dc:dc>  
-		  <dc:title>Pochod podloudníků z opery "Hubička"</dc:title>
-		  <dc:title>02</dc:title>
-		  <dc:creator>Smetana, Bedřich</dc:creator>  
-		  <dc:coverage>xxk</dc:coverage>
-		  <dc:coverage>[Velká Británie?]</dc:coverage>
-		  <dc:coverage>8:41</dc:coverage>
-		  <dc:language>cze</dc:language>
-          <dc:subject>Divadelní hudba. Opera, opereta, muzikál</dc:subject>		  
-        </oai_dc:dc>
-	  </mets:xmlData>
-    </mets:mdWrap>
-  </mets:dmdSec> 
-  <mets:dmdSec ID="MODSMD_SOUNDPART_0001">
-    <mets:mdWrap MDTYPE="MODS" MDTYPEVERSION="3.6" MIMETYPE="text/xml">
-	  <mets:xmlData>
-	    <mods:mods ID="MODS_SOUNDPART_0001">
-		  <mods:titleInfo>
-			<mods:title>Poco piu mosso</mods:title>
-			<mods:partNumber>01</mods:partNumber>
-          </mods:titleInfo>	
-          <mods:typeOfResource>sound recording</mods:typeOfResource>     
-		  <mods:genre type="model">sound part</mods:genre>          
-		  <mods:physicalDescription>
-		    <mods:extent>1:15</mods:extent>
-		  </mods:physicalDescription>
-		  <mods:relatedItem>
-		    <mods:titleInfo> 
-              <mods:title>Arie vodníka z opery "Rusalka"</mods:title>     
-			  <mods:partNumber>01</mods:partNumber> 			  
-		    </mods:titleInfo>
-			<mods:identifier type="uuid">321p7654-f32d-13d5-k654-798264310000</mods:identifier>
-          </mods:relatedItem>	
-          <mods:identifier type="uuid">581j6543-n32m-84e3-g750-849768265310</mods:identifier>	 
-          <mods:identifier type="local">1234567890</mods:identifier>	
-          <mods:recordInfo>
-			<mods:descriptionStandard>rda</mods:descriptionStandard>
-			<mods:recordContentSource authority="marcorg">ABA001</mods:recordContentSource>  
-            <mods:recordCreationDate encoding="iso8601">2017-04-27T12:34Z</mods:recordCreationDate> 
-			<mods:recordChangeDate encoding="iso8601">2017-04-28T15:54:01Z</mods:recordChangeDate>  
-            <mods:recordOrigin>human prepared</mods:recordOrigin>
-            <mods:languageOfCataloging>
-			   <mods:languageTerm authority="iso639-2b" type="code">cze</mods:languageTerm> 
-            </mods:languageOfCataloging> 			
-		  </mods:recordInfo> 		  
-		</mods:mods>
-	  </mets:xmlData>
-	</mets:mdWrap>
-  </mets:dmdSec>
-   <mets:dmdSec ID="DCMD_SOUNDPART_0001">
-    <mets:mdWrap MDTYPE="DC" MIMETYPE="text/xml">
-      <mets:xmlData>
-		<oai_dc:dc>  
-		  <dc:title>Poco piu mosso</dc:title>
-		  <dc:title>01</dc:title>
-		  <dc:type>sound recording</dc:type>
-		  <dc:coverage>1:15</dc:coverage>
-		  <dc:identifier>uuid:581j6543-n32m-84e3-g750-849768265310</dc:identifier>	  
-		  <dc:identifier>local:1234567890</dc:identifier>	
-        </oai_dc:dc>
-	  </mets:xmlData>
-    </mets:mdWrap>
-  </mets:dmdSec> 
-   <mets:dmdSec ID="MODSMD_SOUNDPART_0002">
-    <mets:mdWrap MDTYPE="MODS" MDTYPEVERSION="3.6" MIMETYPE="text/xml">
-	  <mets:xmlData>
-	    <mods:mods ID="MODS_SOUNDPART_0002">
-		  <mods:titleInfo>
-			<mods:title>Moderato afflitto</mods:title>
-			<mods:partNumber>02</mods:partNumber>
-          </mods:titleInfo>	
-          <mods:typeOfResource>sound recording</mods:typeOfResource>      
-		  <mods:genre type="model">sound part</mods:genre>         
-		  <mods:physicalDescription>
-		    <mods:extent>4:06</mods:extent>
-		  </mods:physicalDescription>
-		  <mods:relatedItem>
-		    <mods:titleInfo> 
-              <mods:title>Arie vodníka z opery "Rusalka"</mods:title>     
-			  <mods:partNumber>01</mods:partNumber> 			  
-		    </mods:titleInfo>
-			<mods:identifier type="uuid">321p7654-f32d-13d5-k654-798264310000</mods:identifier>
-          </mods:relatedItem>	
-          <mods:identifier type="uuid">637i7920-n96m-23d1-g971-1356905478</mods:identifier>	 
-          <mods:identifier type="local">1234567890</mods:identifier>	
-          <mods:recordInfo>
-			<mods:descriptionStandard>rda</mods:descriptionStandard>
-			<mods:recordContentSource authority="marcorg">ABA001</mods:recordContentSource>  
-            <mods:recordCreationDate encoding="iso8601">2017-04-27T12:34Z</mods:recordCreationDate> 
-			<mods:recordChangeDate encoding="iso8601">2017-04-28T15:54:01Z</mods:recordChangeDate>  
-            <mods:recordOrigin>human prepared</mods:recordOrigin>
-            <mods:languageOfCataloging>
-			   <mods:languageTerm authority="iso639-2b" type="code">cze</mods:languageTerm> 
-            </mods:languageOfCataloging> 			
-		  </mods:recordInfo> 		  
-		</mods:mods>
-	  </mets:xmlData>
-	</mets:mdWrap>
-  </mets:dmdSec>
-   <mets:dmdSec ID="DCMD_SOUNDPART_0002">
-    <mets:mdWrap MDTYPE="DC" MIMETYPE="text/xml">
-      <mets:xmlData>
-		<oai_dc:dc>  
-		  <dc:title>Moderato afflitto</dc:title>
-		  <dc:title>02</dc:title>
-		  <dc:type>sound recording</dc:type>
-		  <dc:coverage>4:06</dc:coverage>
-		  <dc:identifier>uuid:637i7920-n96m-23d1-g971-1356905478</dc:identifier>	  
-		  <dc:identifier>local:1234567890</dc:identifier>	
-        </oai_dc:dc>
-	  </mets:xmlData>
-    </mets:mdWrap>
-  </mets:dmdSec> 
-  <mets:dmdSec ID="MODSMD_SUPPL_0001">									
-    <mets:mdWrap MDTYPE="MODS" MDTYPEVERSION="3.6" MIMETYPE="text/xml">
-      <mets:xmlData>
-        <mods:mods ID="MODS_SUPPL_0001">
-          <mods:titleInfo>
-            <mods:title>Arie vodníka z opery "Rusalka"</mods:title>								
-			<mods:partNumber>01</mods:partNumber>
-			<mods:partName>obraz desky</mods:partName>
-		  </mods:titleInfo>
-		  <mods:typeOfResource>text</mods:typeOfResource>            
-		  <mods:genre type="model">imgdisc</mods:genre>              
-		  <mods:language>
-			<mods:languageTerm type="code" authority="iso639-2b">cze</mods:languageTerm>
-		  </mods:language>
-		  <mods:physicalDescription>
-			<mods:form authority="marccategory">text</mods:form>
-			<mods:form type="media" authority="rdamedia">bez média</mods:form>
-			<mods:form type= "carrier" authority="rdacarrier">svazek</mods:form>
-			<mods:extent>1 obraz desky</mods:extent>
-		  </mods:physicalDescription>
-		  <mods:relatedItem type="host">                   
-			<mods:titleInfo>
-				<mods:title>Arie vodníka z opery "Rusalka"</mods:title>		
-				<mods:subTitle>Pochod podloudníků z opery "Hubička"</mods:subTitle>	
-			</mods:titleInfo>
-			<mods:genre type="model">soundcollection</mods:genre>
-			<mods:identifier type="uuid">123e4567-e89b-12d3-a456-426655440000</mods:identifier>
-			<mods:identifier type="issue number">272027</mods:identifier>  
-            <mods:identifier type="local">1234567890</mods:identifier>			
-		  </mods:relatedItem>	
-		  <mods:identifier type="uuid">567o1234-g56s-23c9-ah793-7804659320</mods:identifier>	  
-		  <mods:recordInfo>
-			<mods:descriptionStandard>rda</mods:descriptionStandard>
-			<mods:recordContentSource>ABA001</mods:recordContentSource>
-			<mods:recordCreationDate encoding="iso8601">2017-07-17T09:23</mods:recordCreationDate>
-			<mods:recordChangeDate encoding="iso8601">2017-04-28T15:54:01Z</mods:recordChangeDate>  
-			<mods:recordOrigin>human prepared</mods:recordOrigin>
-			<mods:languageOfCataloging>
-			   <mods:languageTerm authority="iso639-2b" type="code">cze</mods:languageTerm> 
-            </mods:languageOfCataloging> 
-		  </mods:recordInfo>		  
-        </mods:mods>
-      </mets:xmlData>
-    </mets:mdWrap>
-  </mets:dmdSec>
-  <mets:dmdSec ID="DCMD_SUPPL_0001">
-    <mets:mdWrap MDTYPE="DC" MIMETYPE="text/xml">
-      <mets:xmlData>
-		<oai_dc:dc> 
-   		  <dc:title>Arie vodníka z opery "Rusalka"</dc:title>
-		  <dc:title>01</dc:title>
-		  <dc:type>model:supplement</dc:type>
-		  <dc:language>cze</dc:language>
-		  <dc:format>text</dc:format>
-		  <dc:format>svazek</dc:format>
-		  <dc:format>bez média</dc:format>
-		  <dc:format>1 obraz desky</dc:format>
-		  <dc:identifier>uuid:567o1234-g56s-23c9-ah793-7804659320</dc:identifier>
-        </oai_dc:dc>
-	  </mets:xmlData>
-    </mets:mdWrap>
-  </mets:dmdSec>
-  <mets:dmdSec ID="MODSMD_SUPPL_0002">									
-    <mets:mdWrap MDTYPE="MODS" MIMETYPE="text/xml">
-      <mets:xmlData>
-        <mods:mods ID="MODS_SUPPL_0002">
-          <mods:titleInfo>
-            <mods:title>Pochod podloudníků z opery "Hubička"</mods:title>								
-			<mods:partNumber>02</mods:partNumber>
-			<mods:partName>obraz desky</mods:partName>
-		  </mods:titleInfo>
-		  <mods:typeOfResource>text</mods:typeOfResource>
-		  <mods:genre type="model">imgdisc</mods:genre>
-		  <mods:language>
-			<mods:languageTerm type="code" authority="iso639-2b">cze</mods:languageTerm>
-		  </mods:language>
-		   <mods:physicalDescription>
-			<mods:form authority="marccategory">text</mods:form>
-			<mods:form type="media" authority="rdamedia">bez média</mods:form>
-			<mods:form type= "carrier" authority="rdacarrier">svazek</mods:form>
-			<mods:extent>1 obraz desky</mods:extent>
-		  </mods:physicalDescription>
-		  <mods:relatedItem type="host">
-			<mods:titleInfo>
-				<mods:title>Arie vodníka z opery "Rusalka"</mods:title>			
-				<mods:subTitle>Pochod podloudníků z opery "Hubička"</mods:subTitle>
-			</mods:titleInfo>
-			<mods:genre type="model">soundcollection</mods:genre>
-            <mods:identifier type="issue number">272027</mods:identifier>  
-            <mods:identifier type="uuid">123e4567-e89b-12d3-a456-426655440000</mods:identifier>
-            <mods:identifier type="local">1234567890</mods:identifier>		  
-		  </mods:relatedItem>	
-		  <mods:identifier type="uuid">548t3695-r45s-63a5-v258-589146302570</mods:identifier>	
-		  <mods:recordInfo>
-			<mods:descriptionStandard>rda</mods:descriptionStandard>
-			<mods:recordContentSource>ABA001</mods:recordContentSource>
-			<mods:recordCreationDate encoding="iso8601">2017-07-18T09:23</mods:recordCreationDate>
-			<mods:recordChangeDate encoding="iso8601">2017-04-28T15:54:01Z</mods:recordChangeDate> 
-			<mods:recordOrigin>human prepared</mods:recordOrigin>
-			<mods:languageOfCataloging>
-			   <mods:languageTerm authority="iso639-2b" type="code">cze</mods:languageTerm> 
-            </mods:languageOfCataloging> 
-		  </mods:recordInfo>		  
-        </mods:mods>
-      </mets:xmlData>
-    </mets:mdWrap>
-  </mets:dmdSec>
-  <mets:dmdSec ID="DCMD_SUPPL_0002">
-    <mets:mdWrap MDTYPE="DC" MIMETYPE="text/xml">
-      <mets:xmlData>
-		<oai_dc:dc>  
-		  <dc:title>Pochod podloudníků z opery "Hubička"</dc:title>
-		  <dc:title>02</dc:title>
-		  <dc:type>model:supplement</dc:type>
-		  <dc:language>cze</dc:language>
-		  <dc:format>text</dc:format>
-		  <dc:format>svazek</dc:format>
-		  <dc:format>bez média</dc:format>
-		  <dc:format>1 obraz desky</dc:format>
-		  <dc:identifier>uuid:548t3695-r45s-63a5-v258-589146302570</dc:identifier>
-        </oai_dc:dc>
-	  </mets:xmlData>
-    </mets:mdWrap>
-  </mets:dmdSec>
-  <mets:fileSec>  
-    <mets:fileGrp ID="SA_AUDIOGRP" USE="source">
-	  <mets:file SEQ="0" CREATED="2017-07-07T08:22:32Z" ID="sa_1234567890_0001" MIMETYPE="audio/wav" CHECKSUM="6I518677FB465F795863M6320F1993B0" CHECKSUMTYPE="MD5" SIZE="52674930">
-        <mets:FLocat LOCTYPE="URL" xlink:href="./sourceaudio/sa_1234567890_0001.wav" />
-      </mets:file>
-      <mets:file SEQ="1" CREATED="2017-07-07T08:22:33Z" ID="sa_1234567890_0002" MIMETYPE="audio/wav" CHECKSUM="MS4JS3D40E1P67EAB950KS0H84RB73E8" CHECKSUMTYPE="MD5" SIZE="105798634">
-        <mets:FLocat LOCTYPE="URL" xlink:href="./sourceaudio/sa_1234567890_0002.wav" />
-	  </mets:file>
-	</mets:fileGrp>
-	<mets:fileGrp ID="UC_AUDIOGRP" USE="user">
-	  <mets:file SEQ="0" CREATED="2017-07-07T08:22:32Z" ID="uca_1234567890_0001" MIMETYPE="audio/mp3" CHECKSUM="4CB9D5815CB51635282103F288CCC63E" CHECKSUMTYPE="MD5" SIZE="2495052">
-        <mets:FLocat LOCTYPE="URL" xlink:href="./usercopyaudio/uca_1234567890_0001.mp3" />
-      </mets:file>
-      <mets:file SEQ="1" CREATED="2017-07-07T08:22:33Z" ID="uca_1234567890_0002" MIMETYPE="audio/mp3" CHECKSUM="06A30A10D58747C1920A2F2360D923E1" CHECKSUMTYPE="MD5" SIZE="2937671">
-        <mets:FLocat LOCTYPE="URL" xlink:href="./usercopyaudio/uca_1234567890_0002.mp3" />
-      </mets:file>
-	</mets:fileGrp>
-	<mets:fileGrp ID="MC_IMGGRP" USE="master">
-	  <mets:file SEQ="0" CREATED="2017-07-07T08:22:32Z" ID="mc_1234567890_0001" MIMETYPE="image/jpeg2000" CHECKSUM="E5D729ADB8366717CE8E426AAFE3BC82" CHECKSUMTYPE="MD5" SIZE="4368473">
-        <mets:FLocat LOCTYPE="URL" xlink:href="./mastercopy/mc_1234567890_0001.jp2" />
-      </mets:file>
-      <mets:file SEQ="1" CREATED="2017-07-07T08:22:33Z" ID="mc_1234567890_0002" MIMETYPE="image/jpeg2000" CHECKSUM="28462958B32FE9A8E6E73CFDD21E69CA" CHECKSUMTYPE="MD5" SIZE="4306351">
-        <mets:FLocat LOCTYPE="URL" xlink:href="./mastercopy/mc_1234567890_0002.jp2" />
-      </mets:file>
-	</mets:fileGrp>
-	<mets:fileGrp ID="UC_IMGGRP" USE="user">
-	  <mets:file SEQ="0" CREATED="2017-07-07T08:22:32Z" ID="uc_1234567890_0001" MIMETYPE="image/jpeg2000" CHECKSUM="E71FC7D2EC524CCC47C66BCEF3B83644" CHECKSUMTYPE="MD5" SIZE="2437425">
-        <mets:FLocat LOCTYPE="URL" xlink:href="./usercopy/uc_1234567890_0001.jp2" />
-      </mets:file>
-      <mets:file SEQ="1" CREATED="2017-07-07T08:22:33Z" ID="uc_1234567890_0002" MIMETYPE="image/jpeg2000" CHECKSUM="DF05F7D202A542483A158A51F08CEACA" CHECKSUMTYPE="MD5" SIZE="2403979">
-        <mets:FLocat LOCTYPE="URL" xlink:href="./usercopy/uc_1234567890_0002.jp2" />
-      </mets:file>
-	</mets:fileGrp>
-	<mets:fileGrp ID="ALTOGRP" USE="layout">
-	  <mets:file SEQ="0" CREATED="2017-07-07T08:22:32Z" ID="alto_1234567890_0001" MIMETYPE="text/xml" CHECKSUM="C3D36A28520D15F0E3D6424172456195" CHECKSUMTYPE="MD5" SIZE="22550">
-        <mets:FLocat LOCTYPE="URL" xlink:href="./alto/alto_1234567890_0001.xml" />
-      </mets:file>
-      <mets:file SEQ="1" CREATED="2017-07-07T08:22:33Z" ID="alto_1234567890_0002" MIMETYPE="text/xml" CHECKSUM="25A908DB8E77562954F40C5FC16910AD" CHECKSUMTYPE="MD5" SIZE="10968">
-        <mets:FLocat LOCTYPE="URL" xlink:href="./alto/alto_1234567890_0002.xml" />
-      </mets:file>
-	</mets:fileGrp>
-	<mets:fileGrp ID="TECHMDGRP" USE="technical metadata">
-	  <mets:file SEQ="0" CREATED="2017-07-07T08:22:32Z" ID="amd_mets_1234567890_0001" MIMETYPE="text/xml" CHECKSUM="9AE1CAD67BD1E74B02F87922857B840C" CHECKSUMTYPE="MD5" SIZE="9535464">
-        <mets:FLocat LOCTYPE="URL" xlink:href="./amdsec/amd_mets_1234567890_0001.xml" />
-      </mets:file>
-      <mets:file SEQ="1" CREATED="2017-07-07T08:22:33Z" ID="amd_mets_1234567890_0002" MIMETYPE="text/xml" CHECKSUM="CCC0389017F8B713F0285525E598D8D6" CHECKSUMTYPE="MD5" SIZE="8711368">
-        <mets:FLocat LOCTYPE="URL" xlink:href="./amdsec/amd_mets_1234567890_0002.xml" />
-      </mets:file>
-	  <mets:file SEQ="2" CREATED="2017-07-07T08:22:32Z" ID="amd_mets_audio_1234567890_0001" MIMETYPE="text/xml" CHECKSUM="7EDB06F32E727C4589D3A9C811839C10" CHECKSUMTYPE="MD5" SIZE="9548970">
-        <mets:FLocat LOCTYPE="URL" xlink:href="./amdsec/amd_mets_1234567890__0001.xml" />
-      </mets:file>
-      <mets:file SEQ="3" CREATED="2017-07-07T08:22:33Z" ID="amd_mets_audio_1234567890_0002" MIMETYPE="text/xml" CHECKSUM="77EF487670E3A6D593B0CF5DC49F1B3E" CHECKSUMTYPE="MD5" SIZE="8356902">
-        <mets:FLocat LOCTYPE="URL" xlink:href="./amdsec/amd_mets_1234567890__0002.xml" />
-	  </mets:file>
-	</mets:fileGrp>
-	<mets:fileGrp ID="TXTGRP" USE="text">
-	  <mets:file SEQ="0" CREATED="2017-07-07T08:22:32Z" ID="txt_1234567890_0001" MIMETYPE="text/plain" CHECKSUM="293344CE16A2BFC21089B414E6BD3581" CHECKSUMTYPE="MD5" SIZE="842">
-        <mets:FLocat LOCTYPE="URL" xlink:href="./txt/txt_1234567890_0001.txt" />
-      </mets:file>
-      <mets:file SEQ="1" CREATED="2017-07-07T08:22:33Z" ID="txt_1234567890_0002" MIMETYPE="text/plain" CHECKSUM="6A523C1B33CA907591B1CB887C45DCD5" CHECKSUMTYPE="MD5" SIZE="1502">
-        <mets:FLocat LOCTYPE="URL" xlink:href="./txt/txt_1234567890_0002.txt" />
-      </mets:file>
-	 </mets:fileGrp>
-   </mets:fileSec>
-  <mets:structMap LABEL="logical_Structure" TYPE="logical"> 
-	<mets:div DMDID="MODSMD_SOUNDCOLLECTION_0001" ID="SOUNDCOLLECTION_0001" LABEL="Arie vodníka z opery Rusalka, Pochod podloudníků z opery Hubička" TYPE="SOUNDCOLLECTION"> 
-		<mets:div DMDID="MODSMD_SUPPL_0001" ID="SUPPL_0001" LABEL="IMGDISC" TYPE="SUPPL"/>
-		<mets:div DMDID="MODSMD_SUPPL_0002" ID="SUPPL_0002" LABEL="IMGDISC" TYPE="SUPPL"/>
-		<mets:div DMDID="MODSMD_SOUNDRECORDING_0001" ID="SOUNDRECORDING_0001" LABEL="Arie vodníka z opery Rusalka" TYPE="SOUNDRECORDING"/>        
-		   <mets:div DMDID="MODSMD_SOUNDPART_0001" ID="SOUNDPART_0001" LABEL="Poco piu mosso" TYPE="SOUNDPART"/>	
-		   <mets:div DMDID="MODSMD_SOUNDPART_0002" ID="SOUNDPART_0002" LABEL="Moderato afflitto" TYPE="SOUNDPART"/>	
-		<mets:div DMDID="MODSMD_SOUNDRECORDING_0002" ID="SOUNDRECORDING_0002" LABEL="Pochod podloudníků z opery Hubička" TYPE="SOUNDRECORDING"/> 	
-    </mets:div>  		
-   </mets:structMap>
-   <mets:structMap LABEL="physical_structure" TYPE="physical"> 
-    <mets:div DMDID="MODSMD_COLLECTION_0001" ID="DIV_0000" LABEL="Arie vodníka z opery Rusalka, Pochod podloudníků z opery Hubička" TYPE="sound collection"> 
-      <mets:div ID="DIV_AUDIO_0001" ORDER="1" ORDERLABEL="[1]" TYPE="sound"> 
-        <mets:fptr FILEID="sa_1234567890_0001"/>
-		<mets:fptr FILEID="uca_1234567890_0001"/>  
-        <mets:fptr FILEID="amd_mets_audio_1234567890_0001"/> 
-	  </mets:div>
-        <mets:div ID="DIV_STOPA_0001" ORDER="1" ORDERLABEL="[1]" TYPE="soundpart">    
-	        <mets:fptr FILEID="sa_1234567890_0001"/>
-	        <mets:fptr FILEID="uca_1234567890_0001"/>  
-            <mets:fptr FILEID="amd_mets_audio_1234567890_0001"/> 
-	    </mets:div>	
-        <mets:div ID="DIV_STOPA_0002" ORDER="2" ORDERLABEL="[2]" TYPE="soundpart">    
-	        <mets:fptr FILEID="sa_1234567890_0001"/>
-	        <mets:fptr FILEID="uca_1234567890_0001"/>  
-            <mets:fptr FILEID="amd_mets_audio_1234567890_0001"/> 
-	    </mets:div>			   
-	  <mets:div ID="DIV_AUDIO_0002" ORDER="2" ORDERLABEL="[2]" TYPE="sound"> 
-    	<mets:fptr FILEID="sa_1234567890_0002"/>
-		<mets:fptr FILEID="uca_1234567890_0002"/>   
-        <mets:fptr FILEID="amd_mets_audio_1234567890_0002"/> 
-      </mets:div>   
-      <mets:div ID="DIV_PAGE_0001" ORDER="1" ORDERLABEL="[1]" TYPE="imgdisc"> 
-        <mets:fptr FILEID="mc_1234567890_0001"/>  
-        <mets:fptr FILEID="uc_1234567890_0001"/>  
-        <mets:fptr FILEID="alto_1234567890_0001"/>  
-        <mets:fptr FILEID="txt_1234567890_0001"/>  
-        <mets:fptr FILEID="amd_mets_1234567890_0001"/> 
-      </mets:div>
-	  <mets:div ID="DIV_PAGE_0002" ORDER="2" ORDERLABEL="[2]" TYPE="imgdisc"> 
-        <mets:fptr FILEID="mc_1234567890_0002"/>  
-        <mets:fptr FILEID="uc_1234567890_0002"/>  
-        <mets:fptr FILEID="alto_1234567890_0002"/>  
-        <mets:fptr FILEID="txt_1234567890_0002"/>  
-        <mets:fptr FILEID="amd_mets_1234567890_0002"/> 
-      </mets:div>
-	</mets:div>
-   </mets:structMap>
-   <mets:structLink>                                  
-	  <mets:smLink xlink:from="SOUNDPART_0001" xlink:to="DIV_STOPA_0001"/>  
-	  <mets:smLink xlink:from="SOUNDPART_0002" xlink:to="DIV_STOPA_0002"/>  
-	  <mets:smLink xlink:from="SOUNDRECORDING_0002" xlink:to="DIV_AUDIO_0002"/>
-	  <mets:smLink xlink:from="SUPPL_0001" xlink:to="DIV_PAGE_0001"/>
-	  <mets:smLink xlink:from="SUPPL_0002" xlink:to="DIV_PAGE_0002"/>
-   </mets:structLink>
+<mets:mets LABEL="Arie vodníka z opery Rusalka, 1908" TYPE="sound recording" xmlns:mets="http://www.loc.gov/METS/" xmlns:dc="http://purl.org/dc/elements/1.1/"
+           xmlns:mods="http://www.loc.gov/mods/v3" xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/" xmlns:premis="info:lc/xmlns/premis-v2"
+           xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="http://www.w3.org/2001/XMLSchema-instance http://www.w3.org/2001/XMLSchema.xsd http://www.loc.gov/METS/ http://www.loc.gov/standards/mets/mets.xsd http://www.loc.gov/mods/v3 http://www.loc.gov/standards/mods/v3/mods-3-6.xsd http://www.openarchives.org/OAI/2.0/oai_dc/ http://www.openarchives.org/OAI/2.0/oai_dc.xsd">
+    <mets:metsHdr CREATEDATE="2017-07-18T21:39:56" LASTMODDATE="2017-07-29T10:39:56">
+        <mets:agent ROLE="creator" TYPE="organization">
+            <mets:name>ABA001</mets:name>
+        </mets:agent>
+        <mets:agent ROLE="archivist" TYPE="organization">
+            <mets:name>ABA001</mets:name>
+        </mets:agent>
+    </mets:metsHdr>
+    <mets:dmdSec ID="MODSMD_SOUNDCOLLECTION_0001">
+        <mets:mdWrap MDTYPE="MODS" MDTYPEVERSION="3.6" MIMETYPE="text/xml">
+            <mets:xmlData>
+                <mods:mods ID="MODS_SOUNDCOLLECTION_0001">
+                    <mods:titleInfo>
+                        <mods:title>Arie vodníka z opery "Rusalka"</mods:title>
+                        <mods:subTitle>Pochod podloudníků z opery "Hubička"</mods:subTitle>
+                    </mods:titleInfo>
+                    <mods:name type="personal">
+                        <mods:namePart type="family">Dvořák</mods:namePart>
+                        <mods:namePart type="given">Antonín</mods:namePart>
+                        <mods:namePart type="date">1841-1904</mods:namePart>
+                        <mods:role>
+                            <mods:roleTerm authority="marcrelator" type="code">cmp</mods:roleTerm>
+                        </mods:role>
+                    </mods:name>
+                    <mods:name type="personal">
+                        <mods:namePart type="family">Smetana</mods:namePart>
+                        <mods:namePart type="given">Bedřich</mods:namePart>
+                        <mods:namePart type="date">1824-1884</mods:namePart>
+                        <mods:role>
+                            <mods:roleTerm authority="marcrelator" type="code">cmp</mods:roleTerm>
+                        </mods:role>
+                    </mods:name>
+                    <mods:name type="personal">
+                        <mods:namePart type="family">Pollert</mods:namePart>
+                        <mods:namePart type="given">Emil</mods:namePart>
+                        <mods:namePart type="date">1877-1935</mods:namePart>
+                        <mods:role>
+                            <mods:roleTerm authority="marcrelator" type="code">prf</mods:roleTerm>
+                        </mods:role>
+                    </mods:name>
+                    <mods:name type="corporate">
+                        <mods:namePart>Národní divadlo v Praze</mods:namePart>
+                        <mods:namePart>Orchestr</mods:namePart>
+                        <mods:role>
+                            <mods:roleTerm authority="marcrelator" type="code">prf</mods:roleTerm>
+                        </mods:role>
+                    </mods:name>
+                    <mods:name type="corporate">
+                        <mods:namePart>Národní divadlo v Praze</mods:namePart>
+                        <mods:namePart>Operní sbor</mods:namePart>
+                        <mods:role>
+                            <mods:roleTerm authority="marcrelator" type="code">prf</mods:roleTerm>
+                        </mods:role>
+                    </mods:name>
+                    <mods:typeOfResource>sound recording-musical</mods:typeOfResource>
+                    <mods:genre>sound recording</mods:genre>
+                    <mods:originInfo eventType="publication">
+                        <mods:place>
+                            <mods:placeTerm authority="marccountry" type="code">xxk</mods:placeTerm>
+                            <mods:placeTerm type="text">[Velká Británie?]</mods:placeTerm>
+                        </mods:place>
+                        <mods:publisher>Gramophone Concert Record</mods:publisher>
+                        <mods:dateIssued>[1908]</mods:dateIssued>
+                        <mods:issuance>monographic</mods:issuance>
+                    </mods:originInfo>
+                    <mods:physicalDescription>
+                        <mods:form authority="marccategory">sound recording</mods:form>
+                        <mods:form authority="rdacarrier" type="carrier">audiodisc</mods:form>
+                        <mods:form authority="rdamedia" type="media">audio</mods:form>
+                        <mods:extent>1 gramofonová deska</mods:extent>
+                        <mods:extent>25 cm</mods:extent>
+                        <mods:extent>rychlost přehrávání 78 rpm</mods:extent>
+                    </mods:physicalDescription>
+                    <mods:note>Strana 1: Bohemian Bass w. Orch. -- Strana 2: Bohemian Bss w. Chorus and Orch.</mods:note>
+                    <mods:note>Emil Pollert ; sbor kr. českého zemského a nár. div. ; s průvodem orkestru nár. div.</mods:note>
+                    <mods:location>
+                        <mods:physicalLocation authority="siglaADR">ABE370</mods:physicalLocation>
+                        <mods:shelfLocator>5180</mods:shelfLocator>
+                    </mods:location>
+                    <mods:identifier type="uuid">123e4567-e89b-12d3-a456-426655440000</mods:identifier>
+                    <mods:identifier type="urn:nbn">urn:nbn:cz:nk-0002s1</mods:identifier>
+                    <mods:identifier type="issue number">272027</mods:identifier>
+                    <mods:identifier type="matrix-number">H 1354</mods:identifier>
+                    <mods:identifier type="local">1234567890</mods:identifier>
+                    <mods:recordInfo>
+                        <mods:descriptionStandard>rda</mods:descriptionStandard>
+                        <mods:recordContentSource authority="marcorg">ABE370</mods:recordContentSource>
+                        <mods:recordCreationDate encoding="iso8601">2017-04-27T12:34 Z</mods:recordCreationDate>
+                        <mods:recordChangeDate encoding="iso8601">2017-04-28T15:54:01Z</mods:recordChangeDate>
+                        <mods:recordOrigin>machine generated</mods:recordOrigin>
+                        <mods:languageOfCataloging>
+                            <mods:languageTerm authority="iso639-2b" type="code">cze</mods:languageTerm>
+                        </mods:languageOfCataloging>
+                    </mods:recordInfo>
+                </mods:mods>
+            </mets:xmlData>
+        </mets:mdWrap>
+    </mets:dmdSec>
+    <mets:dmdSec ID="DCMD_SOUNDCOLLECTION_0001">
+        <mets:mdWrap MDTYPE="DC" MIMETYPE="text/xml">
+            <mets:xmlData>
+                <oai_dc:dc>
+                    <dc:title>Arie vodníka z opery "Rusalka"</dc:title>
+                    <dc:title>Pochod podloudníků z opery "Hubička"</dc:title>
+                    <dc:creator>Dvořák, Antonín</dc:creator>
+                    <dc:creator>Smetana, Bedřich</dc:creator>
+                    <dc:creator>Pollert, Emil</dc:creator>
+                    <dc:creator>Národní divadlo v Praze, Orchestr</dc:creator>
+                    <dc:creator>Národní divadlo v Praze, Operní sbor</dc:creator>
+                    <dc:type>sound recording-musical</dc:type>
+                    <dc:type>model:soundrecording</dc:type>
+                    <dc:coverage>xxk</dc:coverage>
+                    <dc:coverage>[Velká Británie?]</dc:coverage>
+                    <dc:date>[1908]</dc:date>
+                    <dc:publisher>Gramophone Concert Record</dc:publisher>
+                    <dc:format>sound recording</dc:format>
+                    <dc:format>audiodisc</dc:format>
+                    <dc:format>audio</dc:format>
+                    <dc:coverage>1 gramofonová deska</dc:coverage>
+                    <dc:coverage>25 cm</dc:coverage>
+                    <dc:coverage>rychlost přehrávání 78 rpm</dc:coverage>
+                    <dc:description>Strana 1: Bohemian Bass w. Orch. -- Strana 2: Bohemian Bss w. Chorus and Orch.</dc:description>
+                    <dc:description>Emil Pollert ; sbor kr. českého zemského a nár. div. ; s průvodem orkestru nár. div.</dc:description>
+                    <dc:identifier>uuid:123e4567-e89b-12d3-a456-426655440000</dc:identifier>
+                    <dc:identifier>urn:nbn:cz:nk-0002s1</dc:identifier>
+                    <dc:identifier>issue number:272027</dc:identifier>
+                    <dc:identifier>matrix-number:H1354</dc:identifier>
+                    <dc:identifier>local:1234567890</dc:identifier>
+                    <dc:source>ABE370</dc:source>
+                    <dc:source>5180</dc:source>
+                </oai_dc:dc>
+            </mets:xmlData>
+        </mets:mdWrap>
+    </mets:dmdSec>
+    <mets:dmdSec ID="MODSMD_SOUNDRECORDING_0001">
+        <mets:mdWrap MDTYPE="MODS" MDTYPEVERSION="3.6" MIMETYPE="text/xml">
+            <mets:xmlData>
+                <mods:mods ID="MODS_SOUNDRECORDING_0001">
+                    <mods:titleInfo>
+                        <mods:title>Arie vodníka z opery "Rusalka"</mods:title>
+                        <mods:partNumber>01</mods:partNumber>
+                    </mods:titleInfo>
+                    <mods:name type="personal">
+                        <mods:namePart type="family">Dvořák</mods:namePart>
+                        <mods:namePart type="given">Antonín</mods:namePart>
+                        <mods:namePart type="date">1841-1904</mods:namePart>
+                        <mods:role>
+                            <mods:roleTerm authority="marcrelator" type="code">cmp</mods:roleTerm>
+                        </mods:role>
+                    </mods:name>
+                    <mods:typeOfResource>sound recording-musical</mods:typeOfResource>
+                    <mods:genre type="model">soundrecording</mods:genre>
+                    <mods:originInfo eventType="publication">
+                        <mods:place>
+                            <mods:placeTerm authority="marccountry" type="code">xxk</mods:placeTerm>
+                            <mods:placeTerm type="text">[Velká Británie?]</mods:placeTerm>
+                        </mods:place>
+                        <mods:issuance>monographic</mods:issuance>
+                    </mods:originInfo>
+                    <mods:physicalDescription>
+                        <mods:extent>5:21</mods:extent>
+                    </mods:physicalDescription>
+                    <mods:language>
+                        <mods:languageTerm authority="iso639-2b" type="code">cze</mods:languageTerm>
+                    </mods:language>
+                    <mods:tableOfContents displayLabel="contents">Poco piu mosso ; Moderato afflitto</mods:tableOfContents>
+                    <mods:relatedItem>
+                        <mods:titleInfo>
+                            <mods:title>Arie vodníka z opery "Rusalka"</mods:title>
+                            <mods:subTitle>Pochod podloudníků z opery "Hubička"</mods:subTitle>
+                        </mods:titleInfo>
+                        <mods:identifier type="uuid">123e4567-e89b-12d3-a456-426655440000</mods:identifier>
+                    </mods:relatedItem>
+                    <mods:subject authority="czenas">
+                        <mods:topic>Divadelní hudba. Opera, opereta, muzikál</mods:topic>
+                    </mods:subject>
+                    <mods:identifier type="uuid">321p7654-f32d-13d5-k654-798264310000</mods:identifier>
+                    <mods:identifier type="issue-number">272027</mods:identifier>
+                    <mods:identifier type="matrix-number">H1354</mods:identifier>
+                    <mods:identifier type="local">1234567890</mods:identifier>
+                    <mods:recordInfo>
+                        <mods:descriptionStandard>rda</mods:descriptionStandard>
+                        <mods:recordContentSource authority="marcorg">ABA001</mods:recordContentSource>
+                        <mods:recordCreationDate encoding="iso8601">2017-04-27T12:34Z</mods:recordCreationDate>
+                        <mods:recordChangeDate encoding="iso8601">2017-04-28T15:54:01Z</mods:recordChangeDate>
+                        <mods:recordOrigin>human prepared</mods:recordOrigin>
+                        <mods:languageOfCataloging>
+                            <mods:languageTerm authority="iso639-2b" type="code">cze</mods:languageTerm>
+                        </mods:languageOfCataloging>
+                    </mods:recordInfo>
+                </mods:mods>
+            </mets:xmlData>
+        </mets:mdWrap>
+    </mets:dmdSec>
+    <mets:dmdSec ID="DCMD_SOUNDRECORDING_0001">
+        <mets:mdWrap MDTYPE="DC" MIMETYPE="text/xml">
+            <mets:xmlData>
+                <oai_dc:dc>
+                    <dc:title>Arie vodníka z opery "Rusalka"</dc:title>
+                    <dc:title>01</dc:title>
+                    <dc:creator>Dvořák, Antonín</dc:creator>
+                    <dc:coverage>xxk</dc:coverage>
+                    <dc:coverage>[Velká Británie?]</dc:coverage>
+                    <dc:coverage>5:21</dc:coverage>
+                    <dc:language>cze</dc:language>
+                    <dc:subject>Divadelní hudba. Opera, opereta, muzikál</dc:subject>
+                    <dc:description>Poco piu mosso ; Moderato afflitto</dc:description>
+                </oai_dc:dc>
+            </mets:xmlData>
+        </mets:mdWrap>
+    </mets:dmdSec>
+    <mets:dmdSec ID="MODSMD_SOUNDRECORDING_0002">
+        <mets:mdWrap MDTYPE="MODS" MDTYPEVERSION="3.6" MIMETYPE="text/xml">
+            <mets:xmlData>
+                <mods:mods ID="MODS_SOUNDRECORDING_0002">
+                    <mods:titleInfo>
+                        <mods:title>Pochod podloudníků z opery "Hubička"</mods:title>
+                        <mods:partNumber>02</mods:partNumber>
+                    </mods:titleInfo>
+                    <mods:name type="personal">
+                        <mods:namePart type="family">Smetana</mods:namePart>
+                        <mods:namePart type="given">Bedřich</mods:namePart>
+                        <mods:namePart type="date">1824-1884</mods:namePart>
+                        <mods:role>
+                            <mods:roleTerm authority="marcrelator" type="code">cmp</mods:roleTerm>
+                        </mods:role>
+                    </mods:name>
+                    <mods:typeOfResource>sound recording-musical</mods:typeOfResource>
+                    <mods:genre type="model">soundrecording</mods:genre>
+                    <mods:originInfo eventType="publication">
+                        <mods:place>
+                            <mods:placeTerm authority="marccountry" type="code">xxk</mods:placeTerm>
+                            <mods:placeTerm type="text">[Velká Británie?]</mods:placeTerm>
+                        </mods:place>
+                        <mods:issuance>monographic</mods:issuance>
+                    </mods:originInfo>
+                    <mods:physicalDescription>
+                        <mods:extent>8:41</mods:extent>
+                    </mods:physicalDescription>
+                    <mods:language>
+                        <mods:languageTerm authority="iso639-2b" type="code">cze</mods:languageTerm>
+                    </mods:language>
+                    <mods:subject authority="czenas">
+                        <mods:topic>Divadelní hudba. Opera, opereta, muzikál</mods:topic>
+                    </mods:subject>
+                    <mods:relatedItem>
+                        <mods:titleInfo>
+                            <mods:title>Arie vodníka z opery "Rusalka"</mods:title>
+                            <mods:subTitle>Pochod podloudníků z opery "Hubička"</mods:subTitle>
+                        </mods:titleInfo>
+                        <mods:identifier type="uuid">123e4567-e89b-12d3-a456-426655440000</mods:identifier>
+                    </mods:relatedItem>
+                    <mods:identifier type="matrix-number">H1355</mods:identifier>
+                    <mods:identifier type="issue-number">272027</mods:identifier>
+                    <mods:identifier type="uuid">263e8795-k54e-15e4-r789-824600127960</mods:identifier>
+                    <mods:identifier type="local">1234567890</mods:identifier>
+                    <mods:recordInfo>
+                        <mods:descriptionStandard>rda</mods:descriptionStandard>
+                        <mods:recordContentSource authority="marcorg">ABA001</mods:recordContentSource>
+                        <mods:recordCreationDate encoding="iso8601">2017-04-27T12:34Z</mods:recordCreationDate>
+                        <mods:recordChangeDate encoding="iso8601">2017-04-28T15:54:01Z</mods:recordChangeDate>
+                        <mods:recordOrigin>human prepared</mods:recordOrigin>
+                        <mods:languageOfCataloging>
+                            <mods:languageTerm authority="iso639-2b" type="code">cze</mods:languageTerm>
+                        </mods:languageOfCataloging>
+                    </mods:recordInfo>
+                </mods:mods>
+            </mets:xmlData>
+        </mets:mdWrap>
+    </mets:dmdSec>
+    <mets:dmdSec ID="DCMD_SOUNDRECORDING_0002">
+        <mets:mdWrap MDTYPE="DC" MIMETYPE="text/xml">
+            <mets:xmlData>
+                <oai_dc:dc>
+                    <dc:title>Pochod podloudníků z opery "Hubička"</dc:title>
+                    <dc:title>02</dc:title>
+                    <dc:creator>Smetana, Bedřich</dc:creator>
+                    <dc:coverage>xxk</dc:coverage>
+                    <dc:coverage>[Velká Británie?]</dc:coverage>
+                    <dc:coverage>8:41</dc:coverage>
+                    <dc:language>cze</dc:language>
+                    <dc:subject>Divadelní hudba. Opera, opereta, muzikál</dc:subject>
+                </oai_dc:dc>
+            </mets:xmlData>
+        </mets:mdWrap>
+    </mets:dmdSec>
+    <mets:dmdSec ID="MODSMD_SOUNDPART_0001">
+        <mets:mdWrap MDTYPE="MODS" MDTYPEVERSION="3.6" MIMETYPE="text/xml">
+            <mets:xmlData>
+                <mods:mods ID="MODS_SOUNDPART_0001">
+                    <mods:titleInfo>
+                        <mods:title>Poco piu mosso</mods:title>
+                        <mods:partNumber>01</mods:partNumber>
+                    </mods:titleInfo>
+                    <mods:typeOfResource>sound recording</mods:typeOfResource>
+                    <mods:genre type="model">sound part</mods:genre>
+                    <mods:physicalDescription>
+                        <mods:extent>1:15</mods:extent>
+                    </mods:physicalDescription>
+                    <mods:relatedItem>
+                        <mods:titleInfo>
+                            <mods:title>Arie vodníka z opery "Rusalka"</mods:title>
+                            <mods:partNumber>01</mods:partNumber>
+                        </mods:titleInfo>
+                        <mods:identifier type="uuid">321p7654-f32d-13d5-k654-798264310000</mods:identifier>
+                    </mods:relatedItem>
+                    <mods:identifier type="uuid">581j6543-n32m-84e3-g750-849768265310</mods:identifier>
+                    <mods:identifier type="local">1234567890</mods:identifier>
+                    <mods:recordInfo>
+                        <mods:descriptionStandard>rda</mods:descriptionStandard>
+                        <mods:recordContentSource authority="marcorg">ABA001</mods:recordContentSource>
+                        <mods:recordCreationDate encoding="iso8601">2017-04-27T12:34Z</mods:recordCreationDate>
+                        <mods:recordChangeDate encoding="iso8601">2017-04-28T15:54:01Z</mods:recordChangeDate>
+                        <mods:recordOrigin>human prepared</mods:recordOrigin>
+                        <mods:languageOfCataloging>
+                            <mods:languageTerm authority="iso639-2b" type="code">cze</mods:languageTerm>
+                        </mods:languageOfCataloging>
+                    </mods:recordInfo>
+                </mods:mods>
+            </mets:xmlData>
+        </mets:mdWrap>
+    </mets:dmdSec>
+    <mets:dmdSec ID="DCMD_SOUNDPART_0001">
+        <mets:mdWrap MDTYPE="DC" MIMETYPE="text/xml">
+            <mets:xmlData>
+                <oai_dc:dc>
+                    <dc:title>Poco piu mosso</dc:title>
+                    <dc:title>01</dc:title>
+                    <dc:type>sound recording</dc:type>
+                    <dc:coverage>1:15</dc:coverage>
+                    <dc:identifier>uuid:581j6543-n32m-84e3-g750-849768265310</dc:identifier>
+                    <dc:identifier>local:1234567890</dc:identifier>
+                </oai_dc:dc>
+            </mets:xmlData>
+        </mets:mdWrap>
+    </mets:dmdSec>
+    <mets:dmdSec ID="MODSMD_SOUNDPART_0002">
+        <mets:mdWrap MDTYPE="MODS" MDTYPEVERSION="3.6" MIMETYPE="text/xml">
+            <mets:xmlData>
+                <mods:mods ID="MODS_SOUNDPART_0002">
+                    <mods:titleInfo>
+                        <mods:title>Moderato afflitto</mods:title>
+                        <mods:partNumber>02</mods:partNumber>
+                    </mods:titleInfo>
+                    <mods:typeOfResource>sound recording</mods:typeOfResource>
+                    <mods:genre type="model">sound part</mods:genre>
+                    <mods:physicalDescription>
+                        <mods:extent>4:06</mods:extent>
+                    </mods:physicalDescription>
+                    <mods:relatedItem>
+                        <mods:titleInfo>
+                            <mods:title>Arie vodníka z opery "Rusalka"</mods:title>
+                            <mods:partNumber>01</mods:partNumber>
+                        </mods:titleInfo>
+                        <mods:identifier type="uuid">321p7654-f32d-13d5-k654-798264310000</mods:identifier>
+                    </mods:relatedItem>
+                    <mods:identifier type="uuid">637i7920-n96m-23d1-g971-1356905478</mods:identifier>
+                    <mods:identifier type="local">1234567890</mods:identifier>
+                    <mods:recordInfo>
+                        <mods:descriptionStandard>rda</mods:descriptionStandard>
+                        <mods:recordContentSource authority="marcorg">ABA001</mods:recordContentSource>
+                        <mods:recordCreationDate encoding="iso8601">2017-04-27T12:34Z</mods:recordCreationDate>
+                        <mods:recordChangeDate encoding="iso8601">2017-04-28T15:54:01Z</mods:recordChangeDate>
+                        <mods:recordOrigin>human prepared</mods:recordOrigin>
+                        <mods:languageOfCataloging>
+                            <mods:languageTerm authority="iso639-2b" type="code">cze</mods:languageTerm>
+                        </mods:languageOfCataloging>
+                    </mods:recordInfo>
+                </mods:mods>
+            </mets:xmlData>
+        </mets:mdWrap>
+    </mets:dmdSec>
+    <mets:dmdSec ID="DCMD_SOUNDPART_0002">
+        <mets:mdWrap MDTYPE="DC" MIMETYPE="text/xml">
+            <mets:xmlData>
+                <oai_dc:dc>
+                    <dc:title>Moderato afflitto</dc:title>
+                    <dc:title>02</dc:title>
+                    <dc:type>sound recording</dc:type>
+                    <dc:coverage>4:06</dc:coverage>
+                    <dc:identifier>uuid:637i7920-n96m-23d1-g971-1356905478</dc:identifier>
+                    <dc:identifier>local:1234567890</dc:identifier>
+                </oai_dc:dc>
+            </mets:xmlData>
+        </mets:mdWrap>
+    </mets:dmdSec>
+    <mets:dmdSec ID="MODSMD_SUPPL_0001">
+        <mets:mdWrap MDTYPE="MODS" MDTYPEVERSION="3.6" MIMETYPE="text/xml">
+            <mets:xmlData>
+                <mods:mods ID="MODS_SUPPL_0001">
+                    <mods:titleInfo>
+                        <mods:title>Arie vodníka z opery "Rusalka"</mods:title>
+                        <mods:partNumber>01</mods:partNumber>
+                        <mods:partName>obraz desky</mods:partName>
+                    </mods:titleInfo>
+                    <mods:typeOfResource>text</mods:typeOfResource>
+                    <mods:genre type="model">imgdisc</mods:genre>
+                    <mods:language>
+                        <mods:languageTerm type="code" authority="iso639-2b">cze</mods:languageTerm>
+                    </mods:language>
+                    <mods:physicalDescription>
+                        <mods:form authority="marccategory">text</mods:form>
+                        <mods:form type="media" authority="rdamedia">bez média</mods:form>
+                        <mods:form type="carrier" authority="rdacarrier">svazek</mods:form>
+                        <mods:extent>1 obraz desky</mods:extent>
+                    </mods:physicalDescription>
+                    <mods:relatedItem type="host">
+                        <mods:titleInfo>
+                            <mods:title>Arie vodníka z opery "Rusalka"</mods:title>
+                            <mods:subTitle>Pochod podloudníků z opery "Hubička"</mods:subTitle>
+                        </mods:titleInfo>
+                        <mods:genre type="model">soundcollection</mods:genre>
+                        <mods:identifier type="uuid">123e4567-e89b-12d3-a456-426655440000</mods:identifier>
+                        <mods:identifier type="issue number">272027</mods:identifier>
+                        <mods:identifier type="local">1234567890</mods:identifier>
+                    </mods:relatedItem>
+                    <mods:identifier type="uuid">567o1234-g56s-23c9-ah793-7804659320</mods:identifier>
+                    <mods:recordInfo>
+                        <mods:descriptionStandard>rda</mods:descriptionStandard>
+                        <mods:recordContentSource>ABA001</mods:recordContentSource>
+                        <mods:recordCreationDate encoding="iso8601">2017-07-17T09:23</mods:recordCreationDate>
+                        <mods:recordChangeDate encoding="iso8601">2017-04-28T15:54:01Z</mods:recordChangeDate>
+                        <mods:recordOrigin>human prepared</mods:recordOrigin>
+                        <mods:languageOfCataloging>
+                            <mods:languageTerm authority="iso639-2b" type="code">cze</mods:languageTerm>
+                        </mods:languageOfCataloging>
+                    </mods:recordInfo>
+                </mods:mods>
+            </mets:xmlData>
+        </mets:mdWrap>
+    </mets:dmdSec>
+    <mets:dmdSec ID="DCMD_SUPPL_0001">
+        <mets:mdWrap MDTYPE="DC" MIMETYPE="text/xml">
+            <mets:xmlData>
+                <oai_dc:dc>
+                    <dc:title>Arie vodníka z opery "Rusalka"</dc:title>
+                    <dc:title>01</dc:title>
+                    <dc:type>model:supplement</dc:type>
+                    <dc:language>cze</dc:language>
+                    <dc:format>text</dc:format>
+                    <dc:format>svazek</dc:format>
+                    <dc:format>bez média</dc:format>
+                    <dc:format>1 obraz desky</dc:format>
+                    <dc:identifier>uuid:567o1234-g56s-23c9-ah793-7804659320</dc:identifier>
+                </oai_dc:dc>
+            </mets:xmlData>
+        </mets:mdWrap>
+    </mets:dmdSec>
+    <mets:dmdSec ID="MODSMD_SUPPL_0002">
+        <mets:mdWrap MDTYPE="MODS" MIMETYPE="text/xml">
+            <mets:xmlData>
+                <mods:mods ID="MODS_SUPPL_0002">
+                    <mods:titleInfo>
+                        <mods:title>Pochod podloudníků z opery "Hubička"</mods:title>
+                        <mods:partNumber>02</mods:partNumber>
+                        <mods:partName>obraz desky</mods:partName>
+                    </mods:titleInfo>
+                    <mods:typeOfResource>text</mods:typeOfResource>
+                    <mods:genre type="model">imgdisc</mods:genre>
+                    <mods:language>
+                        <mods:languageTerm type="code" authority="iso639-2b">cze</mods:languageTerm>
+                    </mods:language>
+                    <mods:physicalDescription>
+                        <mods:form authority="marccategory">text</mods:form>
+                        <mods:form type="media" authority="rdamedia">bez média</mods:form>
+                        <mods:form type="carrier" authority="rdacarrier">svazek</mods:form>
+                        <mods:extent>1 obraz desky</mods:extent>
+                    </mods:physicalDescription>
+                    <mods:relatedItem type="host">
+                        <mods:titleInfo>
+                            <mods:title>Arie vodníka z opery "Rusalka"</mods:title>
+                            <mods:subTitle>Pochod podloudníků z opery "Hubička"</mods:subTitle>
+                        </mods:titleInfo>
+                        <mods:genre type="model">soundcollection</mods:genre>
+                        <mods:identifier type="issue number">272027</mods:identifier>
+                        <mods:identifier type="uuid">123e4567-e89b-12d3-a456-426655440000</mods:identifier>
+                        <mods:identifier type="local">1234567890</mods:identifier>
+                    </mods:relatedItem>
+                    <mods:identifier type="uuid">548t3695-r45s-63a5-v258-589146302570</mods:identifier>
+                    <mods:recordInfo>
+                        <mods:descriptionStandard>rda</mods:descriptionStandard>
+                        <mods:recordContentSource>ABA001</mods:recordContentSource>
+                        <mods:recordCreationDate encoding="iso8601">2017-07-18T09:23</mods:recordCreationDate>
+                        <mods:recordChangeDate encoding="iso8601">2017-04-28T15:54:01Z</mods:recordChangeDate>
+                        <mods:recordOrigin>human prepared</mods:recordOrigin>
+                        <mods:languageOfCataloging>
+                            <mods:languageTerm authority="iso639-2b" type="code">cze</mods:languageTerm>
+                        </mods:languageOfCataloging>
+                    </mods:recordInfo>
+                </mods:mods>
+            </mets:xmlData>
+        </mets:mdWrap>
+    </mets:dmdSec>
+    <mets:dmdSec ID="DCMD_SUPPL_0002">
+        <mets:mdWrap MDTYPE="DC" MIMETYPE="text/xml">
+            <mets:xmlData>
+                <oai_dc:dc>
+                    <dc:title>Pochod podloudníků z opery "Hubička"</dc:title>
+                    <dc:title>02</dc:title>
+                    <dc:type>model:supplement</dc:type>
+                    <dc:language>cze</dc:language>
+                    <dc:format>text</dc:format>
+                    <dc:format>svazek</dc:format>
+                    <dc:format>bez média</dc:format>
+                    <dc:format>1 obraz desky</dc:format>
+                    <dc:identifier>uuid:548t3695-r45s-63a5-v258-589146302570</dc:identifier>
+                </oai_dc:dc>
+            </mets:xmlData>
+        </mets:mdWrap>
+    </mets:dmdSec>
+    <mets:fileSec>
+        <mets:fileGrp ID="SA_AUDIOGRP" USE="source">
+            <mets:file SEQ="0" CREATED="2017-07-07T08:22:32Z" ID="sa_1234567890_0001" MIMETYPE="audio/wav" CHECKSUM="6I518677FB465F795863M6320F1993B0"
+                       CHECKSUMTYPE="MD5" SIZE="52674930">
+                <mets:FLocat LOCTYPE="URL" xlink:href="./sourceaudio/sa_1234567890_0001.wav"/>
+            </mets:file>
+            <mets:file SEQ="1" CREATED="2017-07-07T08:22:33Z" ID="sa_1234567890_0002" MIMETYPE="audio/wav" CHECKSUM="MS4JS3D40E1P67EAB950KS0H84RB73E8"
+                       CHECKSUMTYPE="MD5" SIZE="105798634">
+                <mets:FLocat LOCTYPE="URL" xlink:href="./sourceaudio/sa_1234567890_0002.wav"/>
+            </mets:file>
+        </mets:fileGrp>
+        <mets:fileGrp ID="UC_AUDIOGRP" USE="user">
+            <mets:file SEQ="0" CREATED="2017-07-07T08:22:32Z" ID="uca_1234567890_0001" MIMETYPE="audio/mp3" CHECKSUM="4CB9D5815CB51635282103F288CCC63E"
+                       CHECKSUMTYPE="MD5" SIZE="2495052">
+                <mets:FLocat LOCTYPE="URL" xlink:href="./usercopyaudio/uca_1234567890_0001.mp3"/>
+            </mets:file>
+            <mets:file SEQ="1" CREATED="2017-07-07T08:22:33Z" ID="uca_1234567890_0002" MIMETYPE="audio/mp3" CHECKSUM="06A30A10D58747C1920A2F2360D923E1"
+                       CHECKSUMTYPE="MD5" SIZE="2937671">
+                <mets:FLocat LOCTYPE="URL" xlink:href="./usercopyaudio/uca_1234567890_0002.mp3"/>
+            </mets:file>
+        </mets:fileGrp>
+        <mets:fileGrp ID="MC_IMGGRP" USE="master">
+            <mets:file SEQ="0" CREATED="2017-07-07T08:22:32Z" ID="mc_1234567890_0001" MIMETYPE="image/jpeg2000" CHECKSUM="E5D729ADB8366717CE8E426AAFE3BC82"
+                       CHECKSUMTYPE="MD5" SIZE="4368473">
+                <mets:FLocat LOCTYPE="URL" xlink:href="./mastercopy/mc_1234567890_0001.jp2"/>
+            </mets:file>
+            <mets:file SEQ="1" CREATED="2017-07-07T08:22:33Z" ID="mc_1234567890_0002" MIMETYPE="image/jpeg2000" CHECKSUM="28462958B32FE9A8E6E73CFDD21E69CA"
+                       CHECKSUMTYPE="MD5" SIZE="4306351">
+                <mets:FLocat LOCTYPE="URL" xlink:href="./mastercopy/mc_1234567890_0002.jp2"/>
+            </mets:file>
+        </mets:fileGrp>
+        <mets:fileGrp ID="UC_IMGGRP" USE="user">
+            <mets:file SEQ="0" CREATED="2017-07-07T08:22:32Z" ID="uc_1234567890_0001" MIMETYPE="image/jpeg2000" CHECKSUM="E71FC7D2EC524CCC47C66BCEF3B83644"
+                       CHECKSUMTYPE="MD5" SIZE="2437425">
+                <mets:FLocat LOCTYPE="URL" xlink:href="./usercopy/uc_1234567890_0001.jp2"/>
+            </mets:file>
+            <mets:file SEQ="1" CREATED="2017-07-07T08:22:33Z" ID="uc_1234567890_0002" MIMETYPE="image/jpeg2000" CHECKSUM="DF05F7D202A542483A158A51F08CEACA"
+                       CHECKSUMTYPE="MD5" SIZE="2403979">
+                <mets:FLocat LOCTYPE="URL" xlink:href="./usercopy/uc_1234567890_0002.jp2"/>
+            </mets:file>
+        </mets:fileGrp>
+        <mets:fileGrp ID="ALTOGRP" USE="layout">
+            <mets:file SEQ="0" CREATED="2017-07-07T08:22:32Z" ID="alto_1234567890_0001" MIMETYPE="text/xml" CHECKSUM="C3D36A28520D15F0E3D6424172456195"
+                       CHECKSUMTYPE="MD5" SIZE="22550">
+                <mets:FLocat LOCTYPE="URL" xlink:href="./alto/alto_1234567890_0001.xml"/>
+            </mets:file>
+            <mets:file SEQ="1" CREATED="2017-07-07T08:22:33Z" ID="alto_1234567890_0002" MIMETYPE="text/xml" CHECKSUM="25A908DB8E77562954F40C5FC16910AD"
+                       CHECKSUMTYPE="MD5" SIZE="10968">
+                <mets:FLocat LOCTYPE="URL" xlink:href="./alto/alto_1234567890_0002.xml"/>
+            </mets:file>
+        </mets:fileGrp>
+        <mets:fileGrp ID="TECHMDGRP" USE="technical metadata">
+            <mets:file SEQ="0" CREATED="2017-07-07T08:22:32Z" ID="amd_mets_1234567890_0001" MIMETYPE="text/xml" CHECKSUM="9AE1CAD67BD1E74B02F87922857B840C"
+                       CHECKSUMTYPE="MD5" SIZE="9535464">
+                <mets:FLocat LOCTYPE="URL" xlink:href="./amdsec/amd_mets_1234567890_0001.xml"/>
+            </mets:file>
+            <mets:file SEQ="1" CREATED="2017-07-07T08:22:33Z" ID="amd_mets_1234567890_0002" MIMETYPE="text/xml" CHECKSUM="CCC0389017F8B713F0285525E598D8D6"
+                       CHECKSUMTYPE="MD5" SIZE="8711368">
+                <mets:FLocat LOCTYPE="URL" xlink:href="./amdsec/amd_mets_1234567890_0002.xml"/>
+            </mets:file>
+            <mets:file SEQ="2" CREATED="2017-07-07T08:22:32Z" ID="amd_mets_audio_1234567890_0001" MIMETYPE="text/xml"
+                       CHECKSUM="7EDB06F32E727C4589D3A9C811839C10" CHECKSUMTYPE="MD5" SIZE="9548970">
+                <mets:FLocat LOCTYPE="URL" xlink:href="./amdsec/amd_mets_1234567890__0001.xml"/>
+            </mets:file>
+            <mets:file SEQ="3" CREATED="2017-07-07T08:22:33Z" ID="amd_mets_audio_1234567890_0002" MIMETYPE="text/xml"
+                       CHECKSUM="77EF487670E3A6D593B0CF5DC49F1B3E" CHECKSUMTYPE="MD5" SIZE="8356902">
+                <mets:FLocat LOCTYPE="URL" xlink:href="./amdsec/amd_mets_1234567890__0002.xml"/>
+            </mets:file>
+        </mets:fileGrp>
+        <mets:fileGrp ID="TXTGRP" USE="text">
+            <mets:file SEQ="0" CREATED="2017-07-07T08:22:32Z" ID="txt_1234567890_0001" MIMETYPE="text/plain" CHECKSUM="293344CE16A2BFC21089B414E6BD3581"
+                       CHECKSUMTYPE="MD5" SIZE="842">
+                <mets:FLocat LOCTYPE="URL" xlink:href="./txt/txt_1234567890_0001.txt"/>
+            </mets:file>
+            <mets:file SEQ="1" CREATED="2017-07-07T08:22:33Z" ID="txt_1234567890_0002" MIMETYPE="text/plain" CHECKSUM="6A523C1B33CA907591B1CB887C45DCD5"
+                       CHECKSUMTYPE="MD5" SIZE="1502">
+                <mets:FLocat LOCTYPE="URL" xlink:href="./txt/txt_1234567890_0002.txt"/>
+            </mets:file>
+        </mets:fileGrp>
+    </mets:fileSec>
+    <mets:structMap LABEL="logical_Structure" TYPE="logical">
+        <mets:div DMDID="MODSMD_SOUNDCOLLECTION_0001" ID="SOUNDCOLLECTION_0001" LABEL="Arie vodníka z opery Rusalka, Pochod podloudníků z opery Hubička"
+                  TYPE="SOUNDCOLLECTION">
+            <mets:div DMDID="MODSMD_SUPPL_0001" ID="SUPPL_0001" LABEL="IMGDISC" TYPE="SUPPL"/>
+            <mets:div DMDID="MODSMD_SUPPL_0002" ID="SUPPL_0002" LABEL="IMGDISC" TYPE="SUPPL"/>
+            <mets:div DMDID="MODSMD_SOUNDRECORDING_0001" ID="SOUNDRECORDING_0001" LABEL="Arie vodníka z opery Rusalka" TYPE="SOUNDRECORDING"/>
+            <mets:div DMDID="MODSMD_SOUNDPART_0001" ID="SOUNDPART_0001" LABEL="Poco piu mosso" TYPE="SOUNDPART"/>
+            <mets:div DMDID="MODSMD_SOUNDPART_0002" ID="SOUNDPART_0002" LABEL="Moderato afflitto" TYPE="SOUNDPART"/>
+            <mets:div DMDID="MODSMD_SOUNDRECORDING_0002" ID="SOUNDRECORDING_0002" LABEL="Pochod podloudníků z opery Hubička" TYPE="SOUNDRECORDING"/>
+        </mets:div>
+    </mets:structMap>
+    <mets:structMap LABEL="physical_structure" TYPE="physical">
+        <mets:div DMDID="MODSMD_COLLECTION_0001" ID="DIV_0000" LABEL="Arie vodníka z opery Rusalka, Pochod podloudníků z opery Hubička" TYPE="sound collection">
+            <mets:div ID="DIV_AUDIO_0001" ORDER="1" ORDERLABEL="[1]" TYPE="sound">
+                <mets:fptr FILEID="sa_1234567890_0001"/>
+                <mets:fptr FILEID="uca_1234567890_0001"/>
+                <mets:fptr FILEID="amd_mets_audio_1234567890_0001"/>
+            </mets:div>
+            <mets:div ID="DIV_STOPA_0001" ORDER="1" ORDERLABEL="[1]" TYPE="soundpart">
+                <mets:fptr FILEID="sa_1234567890_0001"/>
+                <mets:fptr FILEID="uca_1234567890_0001"/>
+                <mets:fptr FILEID="amd_mets_audio_1234567890_0001"/>
+            </mets:div>
+            <mets:div ID="DIV_STOPA_0002" ORDER="2" ORDERLABEL="[2]" TYPE="soundpart">
+                <mets:fptr FILEID="sa_1234567890_0001"/>
+                <mets:fptr FILEID="uca_1234567890_0001"/>
+                <mets:fptr FILEID="amd_mets_audio_1234567890_0001"/>
+            </mets:div>
+            <mets:div ID="DIV_AUDIO_0002" ORDER="2" ORDERLABEL="[2]" TYPE="sound">
+                <mets:fptr FILEID="sa_1234567890_0002"/>
+                <mets:fptr FILEID="uca_1234567890_0002"/>
+                <mets:fptr FILEID="amd_mets_audio_1234567890_0002"/>
+            </mets:div>
+            <mets:div ID="DIV_PAGE_0001" ORDER="1" ORDERLABEL="[1]" TYPE="imgdisc">
+                <mets:fptr FILEID="mc_1234567890_0001"/>
+                <mets:fptr FILEID="uc_1234567890_0001"/>
+                <mets:fptr FILEID="alto_1234567890_0001"/>
+                <mets:fptr FILEID="txt_1234567890_0001"/>
+                <mets:fptr FILEID="amd_mets_1234567890_0001"/>
+            </mets:div>
+            <mets:div ID="DIV_PAGE_0002" ORDER="2" ORDERLABEL="[2]" TYPE="imgdisc">
+                <mets:fptr FILEID="mc_1234567890_0002"/>
+                <mets:fptr FILEID="uc_1234567890_0002"/>
+                <mets:fptr FILEID="alto_1234567890_0002"/>
+                <mets:fptr FILEID="txt_1234567890_0002"/>
+                <mets:fptr FILEID="amd_mets_1234567890_0002"/>
+            </mets:div>
+        </mets:div>
+    </mets:structMap>
+    <mets:structLink>
+        <mets:smLink xlink:from="SOUNDPART_0001" xlink:to="DIV_STOPA_0001"/>
+        <mets:smLink xlink:from="SOUNDPART_0002" xlink:to="DIV_STOPA_0002"/>
+        <mets:smLink xlink:from="SOUNDRECORDING_0002" xlink:to="DIV_AUDIO_0002"/>
+        <mets:smLink xlink:from="SUPPL_0001" xlink:to="DIV_PAGE_0001"/>
+        <mets:smLink xlink:from="SUPPL_0002" xlink:to="DIV_PAGE_0002"/>
+    </mets:structLink>
 </mets:mets>
