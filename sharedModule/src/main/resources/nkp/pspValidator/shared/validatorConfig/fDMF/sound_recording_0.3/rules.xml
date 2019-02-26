@@ -10,7 +10,6 @@
 
     <rules-section name="Struktura souborů" description="Struktura PSP balicku na urovni soboru">
 
-
         <!--psp dir-->
 
         <!--mozna tohle patri spise k INFO?-->
@@ -1140,6 +1139,7 @@
 
     </rules-section>
 
+
     <rules-section name="Soubor CHECKSUM"
                    description="Kontrola souboru CHECKSUM, odkazů na další soubory a shody kontrolních součtů.">
 
@@ -1208,6 +1208,7 @@
         </rule>
 
     </rules-section>
+
 
     <rules-section name="Soubor INFO"
                    description="Validace souboru INFO - odkazování na ostatní soubory, kontrolní součet pro soubor CHECKSUM, atd.">
@@ -2289,8 +2290,6 @@
 
     </rules-section>
 
-    <!--TODO: proverit odsud nize-->
-
 
     <rules-section name="METS hlavičky" description="Kontrola hlaviček primárního a sekundárních METS záznamů">
 
@@ -2323,6 +2322,7 @@
     </rules-section>
 
 
+    <!--TODO: projit tuto sekci-->
     <rules-section name="Primární METS filesec" description="">
 
         <rule name="PRIMARY-METS_FILESEC_ALL_FILEGROUPS_PRESENT">
@@ -2544,6 +2544,8 @@
 
     </rules-section>
 
+
+    <!--TODO: projit tuto sekci-->
     <rules-section name="Sekundární METS filesec"
                    description="Sekce mets:fileSec v sekundárních METS souborech musí obsahovat korektní odkazy na soubory s popisy jednotlivých stran (master a user kopie, textové a alto ocr)">
 
@@ -2642,6 +2644,8 @@
 
     </rules-section>
 
+
+    <!--TODO: projit tuto sekci-->
     <rules-section name="Strukturální mapy"
                    description="Kontrola fyzických a logických strukturálních map v METS záznamech">
 
@@ -2789,6 +2793,8 @@
 
     </rules-section>
 
+
+    <!--TODO: projit tuto sekci-->
     <rules-section name="JPEG 2000"
                    description="Kontrola obrázků MASTER-COPY a USER-COPY v JPEG 2000 za pomocí externích nástrojů">
 
@@ -2914,6 +2920,8 @@
 
     </rules-section>
 
+
+    <!--TODO: projit tuto sekci-->
     <rules-section name="Bibliografická metadata"
                    description="validace obsahů bibliografických metadat v MODS a Dubline Core v souboru PRIMARY-METS">
 
@@ -3058,6 +3066,8 @@
 
     </rules-section>
 
+
+    <!--TODO: projit tuto sekci-->
     <rules-section name="OCR ALTO" description="Kontrola souborů ALTO.">
 
         <rule name="ALTO_FILES_VALID_BY_XSD">
@@ -3079,6 +3089,8 @@
 
     </rules-section>
 
+
+    <!--TODO: projit tuto sekci-->
     <rules-section name="Technická metadata" description="Kontrola technických (MIX, PREMIS) metadat.">
 
         <rule name="MIX_VALID_BY_XSD">
@@ -3248,6 +3260,8 @@
 
     </rules-section>
 
+
+    <!--TODO: projit tuto sekci-->
     <rules-section name="Autorskoprávní metadata" description="Kontrola autorskoprávních (CopyrightMD) metadat.">
 
         <rule name="COPYRIGHTMD_VALID_BY_XSD">
