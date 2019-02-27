@@ -180,7 +180,7 @@
     </xs:complexType>
 
     <xs:complexType name="extraRulesType">
-        <xs:choice minOccurs="0">
+        <xs:choice minOccurs="0" maxOccurs="unbounded">
             <xs:element name="existsAtLeastOnce">
                 <xs:complexType>
                     <xs:attribute name="xpath" use="required"/>
