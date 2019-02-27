@@ -2945,11 +2945,8 @@
             </validation>
         </rule>
 
-        <!--TODO: doplnit kontroly pro SOUNDRECORDING, SOUNDPART, SUPPLEMENT a odstranit nepouzivane profily-->
-
-
-        <!--<rule name="BIBLIOGRAPHIC_METADATA_MATCH_PROFILE_VOLUME">
-            <description>Bibliografická metadata pro entitu typu VOLUME musí splňovat požadovaný profil pro záznamy v
+        <rule name="BIBLIOGRAPHIC_METADATA_MATCH_PROFILE_SOUNDRECORDING">
+            <description>Bibliografická metadata pro entitu typu SOUNDRECORDING musí splňovat požadovaný profil pro záznamy v
                 Dublin Core i MODS.
             </description>
             <validation functionName="checkBibliographicMetadataMatchProfile">
@@ -2957,21 +2954,9 @@
                     <value name="mets_file" type="FILE">
                         <value-ref name="PRIMARY-METS_FILE"/>
                     </value>
-                    <value name="entity_type" type="ENTITY_TYPE">VOLUME</value>
-                    <value name="profile_detection_xpath" type="STRING">
-                        concat(
-                        substring('volume_sheetmusic', 1 div boolean(./mods:genre[text()='sheetmusic' or
-                        text()='SHEETMUSIC'])),
-                        substring('volume_cartographic', 1 div boolean(./mods:genre[text()='cartographic' or
-                        text()='CARTOGRAPHIC'])),
-                        substring('volume_multivolume',
-                        1 div boolean(./mods:genre[text()='volume' or text()='VOLUME'] and
-                        //mets:dmdSec[contains(@ID,'TITLE')])),
-                        substring('volume_singlevolume',
-                        1 div boolean(./mods:genre[text()='volume' or text()='VOLUME'] and
-                        not(//mets:dmdSec[contains(@ID,'TITLE')])))
-                        )
-                    </value>
+                    <value name="entity_type" type="ENTITY_TYPE">SOUNDRECORDING</value>
+                    <value name="profile_detection_xpath" type="STRING">concat('soundrecording',null)</value>
+
                     <value name="xsd_file_dc" type="FILE">
                         <value-ref name="DC_XSD_FILE"/>
                     </value>
@@ -2981,6 +2966,11 @@
                 </params>
             </validation>
         </rule>
+
+        <!--TODO: doplnit kontroly pro SOUNDPART, SUPPLEMENT a odstranit nepouzivane profily-->
+
+
+        <!--
 
         <rule name="BIBLIOGRAPHIC_METADATA_MATCH_PROFILE_SUPPLEMENT">
             <description>Bibliografická metadata pro entitu typu SUPPLEMENT musí splňovat požadovaný profil pro záznamy
