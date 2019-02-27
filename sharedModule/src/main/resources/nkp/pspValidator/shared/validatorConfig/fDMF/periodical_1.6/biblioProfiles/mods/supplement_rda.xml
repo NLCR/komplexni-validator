@@ -377,13 +377,10 @@
                         <expectedAttributes>
                             <attribute name="authority" mandatory="false">
                                 <recommendedContent>
-				<!--DMF 1.6, s. 52 předepisuje pro RDA hodnoty rdamedia, rdacarrier, marcform a gmd. Povolené by zde ale měly být i hodnoty marcform a marccategory, ty DMF neuvádí, ale jejich použití zde je správné, dle mapování Kongresové knihovny. -->
-                                    <oneOf>
+				    <oneOf>
                                         <value>rdamedia</value>
                                         <value>rdacarrier</value>
 					<value>marcform</value>
-					<value>marccategory</value>
-					<value>marcsmd</value>
 					<value>gmd</value>
                                     </oneOf>
                                 </recommendedContent>
