@@ -526,6 +526,8 @@
                                     <oneOf>
                                         <value>rdamedia</value>
                                         <value>rdacarrier</value>
+					<value>marcform</value>
+                                        <value>gmd</value>
                                     </oneOf>
                                 </recommendedContent>
                             </attribute>
