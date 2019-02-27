@@ -184,6 +184,13 @@
                         <expectedContent/>
                     </element>
 
+                    <element name="mods:issuance">
+                        <expectedContent>
+                            <oneOf>
+                                <value>monographic</value>
+                            </oneOf>
+                        </expectedContent>
+                    </element>
                 </expectedElements>
             </element>
 
@@ -243,6 +250,14 @@
                         </expectedAttributes>
                         <expectedContent/>
                     </element>
+
+                    <element name="mods:issuance">
+                        <expectedContent>
+                            <oneOf>
+                                <value>monographic</value>
+                            </oneOf>
+                        </expectedContent>
+                    </element>
                 </expectedElements>
             </element>
 
@@ -288,6 +303,14 @@
                             </attribute>
                         </expectedAttributes>
                         <expectedContent/>
+                    </element>
+
+                    <element name="mods:issuance">
+                        <expectedContent>
+                            <oneOf>
+                                <value>monographic</value>
+                            </oneOf>
+                        </expectedContent>
                     </element>
                 </expectedElements>
             </element>
@@ -335,6 +358,14 @@
                         </expectedAttributes>
                         <expectedContent/>
                     </element>
+
+                    <element name="mods:issuance">
+                        <expectedContent>
+                            <oneOf>
+                                <value>monographic</value>
+                            </oneOf>
+                        </expectedContent>
+                    </element>
                 </expectedElements>
             </element>
 
@@ -373,6 +404,14 @@
 
                     <element name="mods:copyrightDate">
                         <expectedContent/>
+                    </element>
+
+                    <element name="mods:issuance">
+                        <expectedContent>
+                            <oneOf>
+                                <value>monographic</value>
+                            </oneOf>
+                        </expectedContent>
                     </element>
                 </expectedElements>
             </element>

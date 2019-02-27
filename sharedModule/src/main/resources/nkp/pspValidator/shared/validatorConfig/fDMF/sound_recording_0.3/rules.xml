@@ -2967,7 +2967,29 @@
             </validation>
         </rule>
 
-        <!--TODO: doplnit kontroly pro SOUNDPART, SUPPLEMENT a odstranit nepouzivane profily-->
+        <rule name="BIBLIOGRAPHIC_METADATA_MATCH_PROFILE_SOUNDPART">
+            <description>Bibliografická metadata pro entitu typu SOUNDPART musí splňovat požadovaný profil pro záznamy v
+                Dublin Core i MODS.
+            </description>
+            <validation functionName="checkBibliographicMetadataMatchProfile">
+                <params>
+                    <value name="mets_file" type="FILE">
+                        <value-ref name="PRIMARY-METS_FILE"/>
+                    </value>
+                    <value name="entity_type" type="ENTITY_TYPE">SOUNDPART</value>
+                    <value name="profile_detection_xpath" type="STRING">concat('soundpart',null)</value>
+
+                    <value name="xsd_file_dc" type="FILE">
+                        <value-ref name="DC_XSD_FILE"/>
+                    </value>
+                    <value name="xsd_file_mods" type="FILE">
+                        <value-ref name="MODS_XSD_FILE"/>
+                    </value>
+                </params>
+            </validation>
+        </rule>
+
+        <!--TODO: doplnit kontroly pro SUPPLEMENT a odstranit nepouzivane profily-->
 
 
         <!--
