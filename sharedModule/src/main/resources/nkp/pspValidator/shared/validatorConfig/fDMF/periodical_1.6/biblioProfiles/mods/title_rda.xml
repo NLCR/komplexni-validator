@@ -558,13 +558,12 @@
                             <attribute name="authority" mandatory="false">
                                 <!--neni jasne, jestli tohle ma byt povinne - je tam M/MA-->
                                 <recommendedContent>
-                                    <oneOf>
+			         <oneOf>
                                         <value>rdamedia</value>
                                         <value>rdacarrier</value>
 					<value>marcform</value>
-					<value>marccategory</value>
-					<value>marcsmd</value>
-                                    </oneOf>
+					<value>gmd</value>
+				   </oneOf>
                                 </recommendedContent>
                             </attribute>
 
