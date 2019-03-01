@@ -3013,7 +3013,6 @@
     </rules-section>
 
 
-    <!--TODO: projit tuto sekci-->
     <rules-section name="OCR ALTO" description="Kontrola souborů ALTO.">
 
         <rule name="ALTO_FILES_VALID_BY_XSD">
@@ -3036,12 +3035,10 @@
     </rules-section>
 
 
-    <!--TODO: projit tuto sekci-->
     <rules-section name="Technická metadata" description="Kontrola technických (MIX, PREMIS) metadat.">
 
         <rule name="MIX_VALID_BY_XSD">
-            <description>Záznamy MIX v souborech SECONDARY-METS musí být validní podle XML Schema (mix_2.0.xsd).
-            </description>
+            <description>Záznamy MIX v souborech SECONDARY-METS musí být validní podle XML Schema (mix_2.0.xsd).</description>
             <validation functionName="checkMixIsValidByXsd">
                 <params>
                     <value name="mets_files" type="FILE_LIST">
@@ -3070,8 +3067,7 @@
         </rule>
 
         <rule name="MIX_FOR_FIRST_MASTER_COPY_MATCHES_PROFILE">
-            <description>Záznamy MIX v souborech SECONDARY-METS pro první verze archivních kopií musí splňovat profil.
-            </description>
+            <description>Záznamy MIX v souborech SECONDARY-METS pro první verze archivních kopií musí splňovat profil.</description>
             <validation functionName="checkMetsAmdsecElementsMatchProfile">
                 <params>
                     <value name="mets_files" type="FILE_LIST">
@@ -3085,9 +3081,7 @@
         </rule>
 
         <rule name="MIX_FOR_OTHER_MASTER_COPIES_MATCHES_PROFILE">
-            <description>Záznamy MIX v souborech SECONDARY-METS pro další verze archivních kopií, pokud existují, musí
-                splňovat profil.
-            </description>
+            <description>Záznamy MIX v souborech SECONDARY-METS pro další verze archivních kopií, pokud existují, musí splňovat profil.</description>
             <validation functionName="checkMetsAmdsecElementsMatchProfile">
                 <params>
                     <value name="mets_files" type="FILE_LIST">
@@ -3101,6 +3095,8 @@
                 </params>
             </validation>
         </rule>
+
+        <!--TODO: dokoncit kontrolu sekce odsud dal-->
 
         <rule name="PREMIS_VALID_BY_XSD">
             <description>Záznamy PREMIS v souborech SECONDARY-METS musí být validní podle XML Schema (premis_2.2.xsd).
