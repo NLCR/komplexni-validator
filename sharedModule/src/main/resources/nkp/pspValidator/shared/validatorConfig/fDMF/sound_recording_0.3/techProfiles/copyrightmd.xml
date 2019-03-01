@@ -27,7 +27,8 @@
 
     <rootElement name="mets:rightsMD">
         <expectedAttributes>
-            <attribute name="ID"/>
+            <!--z DMF neni jasna povinnost-->
+            <attribute name="ID" mandatory="false"/>
         </expectedAttributes>
 
         <expectedElements>
@@ -39,13 +40,15 @@
                         </expectedContent>
                     </attribute>
 
-                    <attribute name="OTHERMDTYPE">
+                    <!--z DMF neni jasna povinnost-->
+                    <attribute name="OTHERMDTYPE" mandatory="false">
                         <expectedContent>
                             <value>CopyrightMD</value>
                         </expectedContent>
                     </attribute>
 
-                    <attribute name="MIMETYPE">
+                    <!--z DMF neni jasna povinnost-->
+                    <attribute name="MIMETYPE" mandatory="false">
                         <expectedContent>
                             <value>text/xml</value>
                         </expectedContent>
@@ -60,7 +63,7 @@
                                     <attribute name="copyright.status" mandatory="true">
                                         <expectedContent>
                                             <oneOf>
-                                                <value>copyrighted</value>
+                                                <value>Copyrighted</value>
                                                 <value>pd</value>
                                                 <value>pd_expired</value>
                                                 <value>unknown</value>
@@ -107,11 +110,7 @@
                                                         </expectedContent>
                                                     </attribute>
                                                 </expectedAttributes>
-                                                <expectedContent>
-                                                    <!--TODO: can be empty-->
-                                                    <!--TODO: extra rule: pokud je element prazdny, musi byt pritomen
-                                                   neprazndy atribut iso.code-->
-                                                </expectedContent>
+                                                <expectedContent/>
                                             </element>
                                         </expectedElements>
                                     </element>
@@ -181,11 +180,7 @@
                                                         </expectedContent>
                                                     </attribute>
                                                 </expectedAttributes>
-                                                <expectedContent>
-                                                    <!--TODO: can be empty-->
-                                                    <!--TODO: extra rule: pokud je element prazdny, musi byt pritomen
-                                                    neprazndy atribut iso.code-->
-                                                </expectedContent>
+                                                <expectedContent/>
                                             </element>
 
                                             <element name="cmd:publisher" mandatory="false" repeatable="false">

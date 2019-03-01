@@ -3207,12 +3207,11 @@
     </rules-section>
 
 
-    <!--TODO: projit tuto sekci-->
     <rules-section name="Autorskoprávní metadata" description="Kontrola autorskoprávních (CopyrightMD) metadat.">
 
         <rule name="COPYRIGHTMD_VALID_BY_XSD">
-            <description>Záznamy CopyrightMD v souboru PRIMARY-METS a souborech SECONDARY-METS musí být validní podle
-                XML Schema (cmd_0.91.xsd).
+            <description>
+                Záznamy CopyrightMD v souboru PRIMARY-METS a souborech SECONDARY-METS musí být validní podle XML Schema (cmd_0.91.xsd).
             </description>
             <validation functionName="checkCopyrightMdIsValidByXsd">
                 <params>
@@ -3231,7 +3230,8 @@
         </rule>
 
         <rule name="COPYRIGHTMD_IN_SECONDARY_METS_MATCH_PROFILE">
-            <description>Záznamy CopyrightMD v souborech SECONDARY-METS, pokud existují, musí splňovat profil.
+            <description>
+                Záznamy CopyrightMD v souborech SECONDARY-METS, pokud existují, musí splňovat profil.
             </description>
             <validation functionName="checkMetsAmdsecElementsMatchProfile">
                 <params>
@@ -3246,7 +3246,8 @@
         </rule>
 
         <rule name="COPYRIGHTMD_IN_PRIMARY_METS_MATCH_PROFILE">
-            <description>Záznamy CopyrightMD v souboru PRIMARY-METS, pokud existují, musí splňovat profil.
+            <description>
+                Záznamy CopyrightMD v souboru PRIMARY-METS, pokud existují, musí splňovat profil.
             </description>
             <validation functionName="checkMetsAmdsecElementsMatchProfile">
                 <params>
