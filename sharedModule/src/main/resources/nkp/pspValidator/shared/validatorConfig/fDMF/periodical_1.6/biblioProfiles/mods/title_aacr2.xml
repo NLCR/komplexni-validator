@@ -492,9 +492,10 @@
                     <element name="mods:url" mandatory="false">
                         <expectedAttributes>
                             <attribute name="note" mandatory="false"/>
-                            <!--Z DMF: "u elementu mohou být i další atributy např. displayLabel, usage, access apod."
-                            Mozna nektere z nich tady definovat?-->
-                        </expectedAttributes>
+				<attribute name="displayLabel" mandatory="false"/>
+				<attribute name="usage" mandatory="false"/>
+				<attribute name="access" mandatory="false"/>
+                           </expectedAttributes>
                         <expectedContent/>
                     </element>
 
