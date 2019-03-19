@@ -82,7 +82,7 @@
                                 <!--Neni tohle preklep? jinych verzich je tady "conference", proc je tady prave ta jedna hodnota cesky?
                                 Kazdopadne preklep, nebo ne, jednou je to ve standardu, tak to plati.-->
                                 <value>konference</value>
-				<value>conference</value>
+                                <value>conference</value>
                                 <value>family</value>
                             </oneOf>
                         </expectedContent>
@@ -363,7 +363,7 @@
                                         <!--Neni tohle preklep? jinych verzich je tady "conference", proc je tady prave ta jedna hodnota cesky?
                                         Kazdopadne preklep, nebo ne, jednou je to ve standardu, tak to plati.-->
                                         <value>konference</value>
-					<value>conference</value>
+                                        <value>conference</value>
                                         <value>family</value>
                                     </oneOf>
                                 </expectedContent>
@@ -421,10 +421,10 @@
             <element name="mods:classification" specification="not(@edition)" mandatory="false">
                 <!--Mezinarodni desetinne trideni-->
                 <expectedAttributes>
-		    <!--NOTE: z DMF není hned zřejmé, které hodnoty platí pro rda a které pro aacr2, proto jsou nyní povoleny obě-->
+                    <!--NOTE: z DMF není hned zřejmé, které hodnoty platí pro rda a které pro aacr2, proto jsou nyní povoleny obě-->
                     <attribute name="authority">
                         <recommendedContent>
-                             <oneOf>
+                            <oneOf>
                                 <value>udc</value>
                                 <value>Konspekt</value>
                             </oneOf>
@@ -492,8 +492,9 @@
                     <element name="mods:url" mandatory="false">
                         <expectedAttributes>
                             <attribute name="note" mandatory="false"/>
-                            <!--Z DMF: "u elementu mohou být i další atributy např. displayLabel, usage, access apod."
-                            Mozna nektere z nich tady definovat?-->
+                            <attribute name="displayLabel" mandatory="false"/>
+                            <attribute name="usage" mandatory="false"/>
+                            <attribute name="access" mandatory="false"/>
                         </expectedAttributes>
                         <expectedContent/>
                     </element>
@@ -553,9 +554,9 @@
                     </element>
 
                     <element name="mods:recordChangeDate" mandatory="false">
-			<!--V DMF 1.6 není atribut encoding definován, ale logicky by měl být stejný zápis jako u recordCreationDate, atribut povolen
- 			ale nepovinný, protože ve specifikaci není-->
-			<expectedAttributes>
+                        <!--V DMF 1.6 není atribut encoding definován, ale logicky by měl být stejný zápis jako u recordCreationDate, atribut povolen
+                         ale nepovinný, protože ve specifikaci není-->
+                        <expectedAttributes>
                             <attribute name="encoding" mandatory="false">
                                 <expectedContent>
                                     <value>iso8601</value>

@@ -114,15 +114,36 @@ public class DmfDetectorTest {
 
 
     private Dmf resolverMon(File pspDir, String preferred, String forced) throws PspDataException, XmlFileParsingException, InvalidXPathExpressionException {
-        return dmfDetector.resolveDmf(pspDir, preferred, null, null, forced, null, null);
+        DmfDetector.Params params = new DmfDetector.Params();
+        params.forcedDmfMonVersion = forced;
+        params.forcedDmfPerVersion = null;
+        params.forcedDmfSRVersion = null;
+        params.preferredDmfMonVersion = preferred;
+        params.preferredDmfPerVersion = null;
+        params.preferredDmfSRVersion = null;
+        return dmfDetector.resolveDmf(pspDir, params);
     }
 
     private Dmf resolverPer(File pspDir, String preferred, String forced) throws PspDataException, XmlFileParsingException, InvalidXPathExpressionException {
-        return dmfDetector.resolveDmf(pspDir, null, preferred, null, null, forced, null);
+        DmfDetector.Params params = new DmfDetector.Params();
+        params.forcedDmfMonVersion = null;
+        params.forcedDmfPerVersion = forced;
+        params.forcedDmfSRVersion = null;
+        params.preferredDmfMonVersion = null;
+        params.preferredDmfPerVersion = preferred;
+        params.preferredDmfSRVersion = null;
+        return dmfDetector.resolveDmf(pspDir, params);
     }
 
     private Dmf resolverSr(File pspDir, String preferred, String forced) throws PspDataException, XmlFileParsingException, InvalidXPathExpressionException {
-        return dmfDetector.resolveDmf(pspDir, null, null, preferred, null, null, forced);
+        DmfDetector.Params params = new DmfDetector.Params();
+        params.forcedDmfMonVersion = null;
+        params.forcedDmfPerVersion = null;
+        params.forcedDmfSRVersion = forced;
+        params.preferredDmfMonVersion = null;
+        params.preferredDmfPerVersion = null;
+        params.preferredDmfSRVersion = preferred;
+        return dmfDetector.resolveDmf(pspDir, params);
     }
 
 

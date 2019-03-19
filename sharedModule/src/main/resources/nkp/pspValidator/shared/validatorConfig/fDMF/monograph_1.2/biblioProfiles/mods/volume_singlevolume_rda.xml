@@ -96,7 +96,7 @@
                             <attribute name="type"/>
                         </expectedAttributes>
                         <expectedContent/>
-                           
+
                     </element>
 
                     <element name="mods:namePart" specification="@type='family'" mandatory="false">
@@ -526,6 +526,8 @@
                                     <oneOf>
                                         <value>rdamedia</value>
                                         <value>rdacarrier</value>
+                                        <value>marcform</value>
+                                        <value>gmd</value>
                                     </oneOf>
                                 </recommendedContent>
                             </attribute>
@@ -601,7 +603,7 @@
                     <!--NOTE: DMF neuvadi, jestli je authority povinny atribut, nechavam nepovinny. Z DMF není zřejmé co platí pro rda a co pro aacr2, povolena hodnota Konspekt, aby prošel element s tímto atributem i bez atributu edition-->
                     <attribute name="authority">
                         <recommendedContent>
-                             <oneOf>
+                            <oneOf>
                                 <value>udc</value>
                                 <value>Konspekt</value>
                             </oneOf>
@@ -840,10 +842,10 @@
                     </element>
                 </expectedElements>
             </element>
-        </expectedElements> 
+        </expectedElements>
         <extraRules>
-             <!--  Musí existovat alespoň jeden element originInfo a to s atributem eventType=publication nebo eventType=production-->
-             <existsAtLeastOnce xpath="mods:originInfo[@eventType='publication' or @eventType='production']"/>
+            <!--  Musí existovat alespoň jeden element originInfo a to s atributem eventType=publication nebo eventType=production-->
+            <existsAtLeastOnce xpath="mods:originInfo[@eventType='publication' or @eventType='production']"/>
         </extraRules>
     </rootElement>
 </metadataProfile>

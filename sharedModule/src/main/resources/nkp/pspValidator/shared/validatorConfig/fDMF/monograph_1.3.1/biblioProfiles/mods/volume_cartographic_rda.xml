@@ -537,6 +537,9 @@
                                     <oneOf>
                                         <value>rdamedia</value>
                                         <value>rdacarrier</value>
+                                        <value>marcform</value>
+                                        <value>marccategory</value>
+                                        <value>marcsmd</value>
                                     </oneOf>
                                 </expectedContent>
                             </attribute>

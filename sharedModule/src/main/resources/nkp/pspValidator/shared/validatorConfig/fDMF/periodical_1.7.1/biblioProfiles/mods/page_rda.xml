@@ -61,7 +61,7 @@
             <element name="mods:part" specification="mods:detail[@type!='pageIndex']" mandatory="false">
                 <expectedAttributes>
                     <attribute name="type">
-                        <expectedContent    >
+                        <expectedContent>
                             <oneOf>
                                 <value>titlePage</value>
                                 <value>tableOfContents</value>
