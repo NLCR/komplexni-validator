@@ -2323,7 +2323,7 @@
 
 
     <!--TODO: projit tuto sekci-->
-    <rules-section name="Primární METS filesec" description="">
+    <!--<rules-section name="Primární METS filesec" description="">
 
         <rule name="PRIMARY-METS_FILESEC_ALL_FILEGROUPS_PRESENT">
             <description>Element mets:fileSec v souboru PRIMARY-METS musí obsahovat elementy mets:fileGrp s definovanými
@@ -2542,11 +2542,11 @@
             </validation>
         </rule>
 
-    </rules-section>
+    </rules-section>-->
 
 
     <!--TODO: projit tuto sekci-->
-    <rules-section name="Sekundární METS filesec"
+    <!--<rules-section name="Sekundární METS filesec"
                    description="Sekce mets:fileSec v sekundárních METS souborech musí obsahovat korektní odkazy na soubory s popisy jednotlivých stran (master a user kopie, textové a alto ocr)">
 
         <rule name="SECONDARY-METS_FILESEC_ALL_FILEGROUPS_PRESENT">
@@ -2642,11 +2642,11 @@
             </validation>
         </rule>
 
-    </rules-section>
+    </rules-section>-->
 
 
     <!--TODO: projit tuto sekci-->
-    <rules-section name="Strukturální mapy"
+    <!--<rules-section name="Strukturální mapy"
                    description="Kontrola fyzických a logických strukturálních map v METS záznamech">
 
         <rule name="PRIMARY-METS_LOGICAL_STRUCTURAL_MAP_CORRECT">
@@ -2694,8 +2694,8 @@
                     <value name="primary-mets_file" type="FILE">
                         <value-ref name="PRIMARY-METS_FILE"/>
                     </value>
-                    <!--Ze specifikace není jednoznačně zřejmé, jak plnit atribut TYPE- zda monograph nebo Monograph, proto dočasně zakomentováno-->
-                    <!--<value name="expected_top_level_div_type" type="STRING">monograph</value>-->
+                    &lt;!&ndash;Ze specifikace není jednoznačně zřejmé, jak plnit atribut TYPE- zda monograph nebo Monograph, proto dočasně zakomentováno&ndash;&gt;
+                    &lt;!&ndash;<value name="expected_top_level_div_type" type="STRING">monograph</value>&ndash;&gt;
                     <value name="filegroups_to_check" type="STRING_LIST">
                         <evaluation functionName="buildListOfStrings">
                             <params>
@@ -2710,8 +2710,8 @@
                     <value name="page_types" type="STRING_LIST">
                         <evaluation functionName="buildListOfStrings">
                             <params>
-                                <!--https://docs.google.com/document/d/1zSriHPdnUY5d_tKv0M8a6nEym560DKh2H6XZ24tGAEw/edit?pli=1#heading=h.g5ucgez1xrbr-->
-                                <!--základní typy-->
+                                &lt;!&ndash;https://docs.google.com/document/d/1zSriHPdnUY5d_tKv0M8a6nEym560DKh2H6XZ24tGAEw/edit?pli=1#heading=h.g5ucgez1xrbr&ndash;&gt;
+                                &lt;!&ndash;základní typy&ndash;&gt;
                                 <value name="string" type="STRING">titlePage</value>
                                 <value name="string" type="STRING">tableOfContents</value>
                                 <value name="string" type="STRING">blank</value>
@@ -2728,7 +2728,7 @@
                                 <value name="string" type="STRING">spine</value>
                                 <value name="string" type="STRING">frontJacket</value>
 
-                                <!--další typy-->
+                                &lt;!&ndash;další typy&ndash;&gt;
                                 <value name="string" type="STRING">index</value>
                                 <value name="string" type="STRING">illustration</value>
                                 <value name="string" type="STRING">listOfIllustrations</value>
@@ -2780,7 +2780,7 @@
                         <evaluation functionName="buildListOfStrings">
                             <params>
                                 <value name="string" type="STRING">MC_IMGGRP</value>
-                                <!--O UC se DMF nezminuje, ale v realnych zaznamech se vyskytuji, takze asi "chyba v DMF"-->
+                                &lt;!&ndash;O UC se DMF nezminuje, ale v realnych zaznamech se vyskytuji, takze asi "chyba v DMF"&ndash;&gt;
                                 <value name="string" type="STRING">UC_IMGGRP</value>
                                 <value name="string" type="STRING">ALTOGRP</value>
                                 <value name="string" type="STRING">TXTGRP</value>
@@ -2791,11 +2791,11 @@
             </validation>
         </rule>
 
-    </rules-section>
+    </rules-section>-->
 
 
     <!--TODO: projit tuto sekci-->
-    <rules-section name="JPEG 2000"
+    <!--<rules-section name="JPEG 2000"
                    description="Kontrola obrázků MASTER-COPY a USER-COPY v JPEG 2000 za pomocí externích nástrojů">
 
         <rule name="MASTER-COPY_FILES_VALID_BY_JPYLYZER">
@@ -2918,7 +2918,10 @@
             </validation>
         </rule>
 
-    </rules-section>
+    </rules-section>-->
+
+
+    <!--TODO: doplnit sekci pro validaci zvukovych dat-->
 
 
     <rules-section name="Bibliografická metadata"
@@ -3035,7 +3038,8 @@
     </rules-section>
 
 
-    <rules-section name="Technická metadata" description="Kontrola technických (MIX, PREMIS) metadat.">
+    <!--TODO: projit tuto sekci a zejmena proverit, ze SECONDARY-METS_FILES obsahuje soubory secondary_mets pro obrazove ale i zvukove soubory-->
+    <rules-section name="Technická metadata" description="Kontrola technických (MIX, PREMIS) metadat."  >
 
         <rule name="MIX_VALID_BY_XSD">
             <description>Záznamy MIX v souborech SECONDARY-METS musí být validní podle XML Schema (mix_2.0.xsd).</description>
@@ -3096,7 +3100,6 @@
             </validation>
         </rule>
 
-        <!--TODO: dokoncit kontrolu sekce odsud dal-->
 
         <rule name="PREMIS_VALID_BY_XSD">
             <description>Záznamy PREMIS v souborech SECONDARY-METS musí být validní podle XML Schema (premis_2.2.xsd).
