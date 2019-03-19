@@ -96,7 +96,7 @@
                             <attribute name="type"/>
                         </expectedAttributes>
                         <expectedContent/>
-                          
+
                     </element>
 
                     <element name="mods:namePart" specification="@type='family'" mandatory="false">
@@ -526,7 +526,7 @@
                                     <oneOf>
                                         <value>rdamedia</value>
                                         <value>rdacarrier</value>
-					<value>marcform</value>
+                                        <value>marcform</value>
                                         <value>gmd</value>
                                     </oneOf>
                                 </recommendedContent>
@@ -600,7 +600,7 @@
             <element name="mods:classification" specification="not(@edition)" mandatory="false">
                 <!--Mezinarodni desetinne trideni-->
                 <expectedAttributes>
-		    <!--NOTE: Z DMF není zřejmé co platí pro rda a co pro aacr2. Povolena hodnota Konspekt aby prošel i element bez atributu edition-->
+                    <!--NOTE: Z DMF není zřejmé co platí pro rda a co pro aacr2. Povolena hodnota Konspekt aby prošel i element bez atributu edition-->
                     <attribute name="authority">
                         <recommendedContent>
                             <oneOf>

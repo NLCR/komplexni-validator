@@ -131,7 +131,10 @@
     <xs:complexType name="patternType">
         <xs:choice>
             <xs:element name="pattern-ref" type="dmf:pattern-refType"/>
-            <xs:element name="expression" type="dmf:expressionType" maxOccurs="unbounded"/>
+            <xs:sequence>
+                <xs:element name="description" type="xs:string" minOccurs="0"/>
+                <xs:element name="expression" type="dmf:expressionType" maxOccurs="unbounded"/>
+            </xs:sequence>
         </xs:choice>
         <xs:attribute name="name" type="xs:string" use="required"/>
     </xs:complexType>

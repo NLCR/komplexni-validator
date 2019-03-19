@@ -1,6 +1,7 @@
 package nkp.pspValidator.gui;
 
 import javafx.stage.Stage;
+import nkp.pspValidator.shared.DmfDetector;
 
 import java.io.File;
 import java.net.URL;
@@ -11,21 +12,15 @@ import java.net.URL;
 public class UnzipAndValidateDialog extends AbstractDialog {
 
     private final File pspZip;
-    private final String preferredMonVersion;
-    private final String preferredPerVersion;
-    private final String forcedMonVersion;
-    private final String forcedPerVersion;
+    private final DmfDetector.Params dmfDetectorParams;
     private final boolean createTxtLog;
     private final boolean createXmlLog;
     private final int verbosity;
 
-    public UnzipAndValidateDialog(Stage stage, Main main, File pspZip, String preferredMonVersion, String preferredPerVersion, String forcedMonVersion, String forcedPerVersion, boolean createTxtLog, boolean createXmlLog, int verbosity) {
+    public UnzipAndValidateDialog(Stage stage, Main main, File pspZip, DmfDetector.Params dmfDetectorParams, boolean createTxtLog, boolean createXmlLog, int verbosity) {
         super(stage, main);
         this.pspZip = pspZip;
-        this.preferredMonVersion = preferredMonVersion;
-        this.preferredPerVersion = preferredPerVersion;
-        this.forcedMonVersion = forcedMonVersion;
-        this.forcedPerVersion = forcedPerVersion;
+        this.dmfDetectorParams = dmfDetectorParams;
         this.createTxtLog = createTxtLog;
         this.createXmlLog = createXmlLog;
         this.verbosity = verbosity;
@@ -58,6 +53,6 @@ public class UnzipAndValidateDialog extends AbstractDialog {
 
     @Override
     public void setControllerData(DialogController controller) {
-        ((UnzipAndValidateDialogController) controller).setData(pspZip, preferredMonVersion, preferredPerVersion, forcedMonVersion, forcedPerVersion, createTxtLog, createXmlLog, verbosity);
+        ((UnzipAndValidateDialogController) controller).setData(pspZip, dmfDetectorParams, createTxtLog, createXmlLog, verbosity);
     }
 }

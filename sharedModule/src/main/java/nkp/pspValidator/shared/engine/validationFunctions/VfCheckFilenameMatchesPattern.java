@@ -33,9 +33,9 @@ public class VfCheckFilenameMatchesPattern extends ValidationFunction {
 
             ValueEvaluation paramFile = valueParams.getParams(PARAM_FILE).get(0).getEvaluation();
             File file = (File) paramFile.getData();
-            if (file == null) {
+            /*if (file == null) {
                 return invalidValueParamNull(PARAM_FILE, paramFile);
-            }
+            }*/
 
             PatternEvaluation paramPattern = patternParams.getParam(PARAM_PATTERN).getEvaluation();
             if (!paramPattern.isOk()) {
@@ -63,7 +63,10 @@ public class VfCheckFilenameMatchesPattern extends ValidationFunction {
     }
 
     private ValidationResult validate(File file, PatternEvaluation paramPattern, Level level) {
-        if (!paramPattern.matches(file.getName())) {
+        if (file == null) {
+            return new ValidationResult();
+
+        } else if (!paramPattern.matches(file.getName())) {
             return singlErrorResult(invalid(level, "název souboru %s neodpovídá vzoru %s", file.getName(), paramPattern));
         } else {
             return new ValidationResult();

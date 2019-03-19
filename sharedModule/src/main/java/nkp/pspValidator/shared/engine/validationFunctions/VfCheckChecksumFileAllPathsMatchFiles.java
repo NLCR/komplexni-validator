@@ -64,20 +64,23 @@ public class VfCheckChecksumFileAllPathsMatchFiles extends ValidationFunction {
             ValueEvaluation evaluation = param.getEvaluation();
             File file = (File) evaluation.getData();
             if (file == null) {
-                throw new EmptyParamEvaluationException(PARAM_FILE, evaluation);
+                //ignore
+                //throw new EmptyParamEvaluationException(PARAM_FILE, evaluation);
+            } else {
+                result.add(file.getAbsoluteFile());
             }
-
-            result.add(file.getAbsoluteFile());
         }
         List<ValueParam> filesParams = valueParams.getParams(PARAM_FILES);
         for (ValueParam param : filesParams) {
             ValueEvaluation evaluation = param.getEvaluation();
             List<File> files = (List<File>) evaluation.getData();
             if (files == null) {
-                throw new EmptyParamEvaluationException(PARAM_FILES, evaluation);
-            }
-            for (File file : files) {
-                result.add(file.getAbsoluteFile());
+                //ignore
+                //throw new EmptyParamEvaluationException(PARAM_FILES, evaluation);
+            } else {
+                for (File file : files) {
+                    result.add(file.getAbsoluteFile());
+                }
             }
         }
         return result;

@@ -31,7 +31,9 @@ public class VfCheckNoFileIsDir extends ValidationFunction {
             ValueEvaluation paramFiles = valueParams.getParams(PARAM_FILES).get(0).getEvaluation();
             List<File> files = (List<File>) paramFiles.getData();
             if (files == null) {
-                return invalidValueParamNull(PARAM_FILES, paramFiles);
+                //ignore
+                //return invalidValueParamNull(PARAM_FILES, paramFiles);
+                return new ValidationResult();
             }
 
             return validate(files);

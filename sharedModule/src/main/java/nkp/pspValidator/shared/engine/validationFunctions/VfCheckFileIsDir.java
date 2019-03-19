@@ -4,8 +4,10 @@ import nkp.pspValidator.shared.engine.Engine;
 import nkp.pspValidator.shared.engine.ValueEvaluation;
 import nkp.pspValidator.shared.engine.ValueType;
 import nkp.pspValidator.shared.engine.exceptions.ContractException;
+import nkp.pspValidator.shared.engine.params.ValueParam;
 
 import java.io.File;
+import java.util.List;
 
 
 /**
@@ -14,11 +16,13 @@ import java.io.File;
 public class VfCheckFileIsDir extends ValidationFunction {
 
     public static final String PARAM_FILE = "file";
+    public static final String PARAM_IGNORE_IF_FILE_IS_NULL = "ignoreIfFileIsNull";
 
 
     public VfCheckFileIsDir(String name, Engine engine) {
         super(name, engine, new Contract()
                 .withValueParam(PARAM_FILE, ValueType.FILE, 1, 1)
+                .withValueParam(PARAM_IGNORE_IF_FILE_IS_NULL, ValueType.BOOLEAN, 0, 1)
         );
     }
 
@@ -27,12 +31,22 @@ public class VfCheckFileIsDir extends ValidationFunction {
         try {
             checkContractCompliance();
 
+            boolean ignoreIfFileIsNull = false;
+            List<ValueParam> params = valueParams.getParams(PARAM_IGNORE_IF_FILE_IS_NULL);
+            if (params.size() == 1) {
+                ValueEvaluation eval = params.get(0).getEvaluation();
+                ignoreIfFileIsNull = (boolean) eval.getData();
+            }
+
             ValueEvaluation paramFile = valueParams.getParams(PARAM_FILE).get(0).getEvaluation();
             File file = (File) paramFile.getData();
             if (file == null) {
-                return invalidValueParamNull(PARAM_FILE, paramFile);
+                if (ignoreIfFileIsNull) {
+                    return new ValidationResult();
+                } else {
+                    return invalidValueParamNull(PARAM_FILE, paramFile);
+                }
             }
-
             return validate(file);
         } catch (ContractException e) {
             return invalidContractNotMet(e);

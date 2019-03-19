@@ -129,7 +129,7 @@ public class VfCheckImageFilesValidByExternalUtilTest {
     }
 
     private ValidationFunction buildValidationFunction(ImageUtil util, ImageCopy copy, List<File> files) {
-        return new VfCheckImageFilesValidByExternalUtil(engine)
+        return new VfCheckImageFilesValidByExternalUtil("test", engine)
                 .withValueParam("files", ValueType.FILE_LIST, new ValueEvaluation(files))
                 .withValueParam("level", ValueType.LEVEL, new ValueEvaluation(Level.WARNING))
                 .withValueParam("copy", ValueType.IMAGE_COPY, new ValueEvaluation(copy))

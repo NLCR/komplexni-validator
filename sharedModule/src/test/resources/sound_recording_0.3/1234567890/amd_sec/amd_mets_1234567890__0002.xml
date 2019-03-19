@@ -1,0 +1,305 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mets:mets xmlns:mets="http://www.loc.gov/METS/"
+           xmlns:aes="http://www.aes.org/publications/standards/search.cfm?docID=84"
+           xmlns:premis="info:lc/xmlns/premis-v2"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:mods="http://www.loc.gov/mods/v3"
+           xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/" xmlns:dc="http://purl.org/dc/elements/1.1/"
+           xmlns:xlink="http://www.w3.org/1999/xlink"
+           xsi:schemaLocation="http://www.w3.org/2001/XMLSchema-instance http://www.w3.org/2001/XMLSchema.xsd http://www.loc.gov/METS/ http://www.loc.gov/standards/mets/mets.xsd http://www.aes.org/standards/schemas/aes57-2011-08-27.xsd info:lc/xmlns/premis-v2 http://www.loc.gov/standards/premis/premis.xsd"
+           LABEL="Arie vodnika z opery Rusalka, 1908"
+           TYPE="sound recording">
+    <mets:metsHdr CREATEDATE="2017-07-18T12:06:14Z" ID="1234567890">
+        <mets:agent ROLE="CREATOR" TYPE="ORGANIZATION">
+            <mets:name>Národní knihovna</mets:name>
+        </mets:agent>
+    </mets:metsHdr>
+    <mets:amdSec ID="SIDE_0002">
+        <mets:techMD ID="OBJ_001">
+            <mets:mdWrap MDTYPE="PREMIS" MIMETYPE="text/xml">
+                <mets:xmlData>
+                    <premis:object xsi:type="premis:file">
+                        <premis:objectIdentifier>
+                            <premis:objectIdentifierType>ObjectID</premis:objectIdentifierType>
+                            <premis:objectIdentifierValue>sa_1234567890_0002</premis:objectIdentifierValue>
+                        </premis:objectIdentifier>
+                        <premis:preservationLevel>
+                            <premis:preservationLevelValue>preservation</premis:preservationLevelValue>
+                            <premis:preservationLevelDateAssigned>2017-07-18</premis:preservationLevelDateAssigned>
+                        </premis:preservationLevel>
+                        <premis:objectCharacteristics>
+                            <premis:compositionLevel>0</premis:compositionLevel>
+                            <premis:fixity>
+                                <premis:messageDigestAlgorithm>MD5</premis:messageDigestAlgorithm>
+                                <premis:messageDigest>FC2BF3D40E1C13EAB950B9AC84EC73E8</premis:messageDigest>
+                                <premis:messageDigestOriginator>Utility GeneratePremis</premis:messageDigestOriginator>
+                            </premis:fixity>
+                            <premis:size>105699276</premis:size>
+                            <premis:format>
+                                <premis:formatDesignation>
+                                    <premis:formatName>Broadcast WAVE</premis:formatName>
+                                    <premis:formatVersion>2 PCM Encoding</premis:formatVersion>
+                                </premis:formatDesignation>
+                                <premis:formatRegistry>
+                                    <premis:formatRegistryName>PRONOM</premis:formatRegistryName>
+                                    <premis:formatRegistryKey>fmt/705</premis:formatRegistryKey>
+                                </premis:formatRegistry>
+                            </premis:format>
+                            <premis:creatingApplication>
+                                <premis:creatingApplicationName>Wavelab Pro 9.0.30</premis:creatingApplicationName>
+                                <premis:creatingApplicationVersion>Pro 9.0.30</premis:creatingApplicationVersion>
+                                <premis:dateCreatedByApplication>2017-07-18T09:57:00</premis:dateCreatedByApplication>
+                            </premis:creatingApplication>
+                        </premis:objectCharacteristics>
+                        <premis:originalName>SA-GG05-01-02-01</premis:originalName>
+                        <premis:linkingEventIdentifier>
+                            <premis:linkingEventIdentifierType>NK_eventID</premis:linkingEventIdentifierType>
+                            <premis:linkingEventIdentifierValue>originaldata_001</premis:linkingEventIdentifierValue>
+                        </premis:linkingEventIdentifier>
+                    </premis:object>
+                </mets:xmlData>
+            </mets:mdWrap>
+        </mets:techMD>
+        <mets:techMD ID="AES57_001">
+            <mets:mdWrap MDTYPE="AES57" MIMETYPE="text/xml">
+                <mets:xmlData>
+                    <aes:audioObject ID="sa_1234567890_0002" title="Arie vodnika z opery Rusalka, Pochod podloudníků z opery Hubička"
+                                     analogDigitalFlag="FILE_DIGITAL" schemaVersion="1.0.0"
+                                     xsi:schemaLocation="http://www.aes.org/audioObject http://www.aes.org/standards/schemas/aes57-2011-08-27.xsd">
+                        <aes:format specificationVersion="2 PCM Encoding">Broadcast Wave</aes:format>
+                        <aes:audioDataEncoding>PCM audio in integer format</aes:audioDataEncoding>
+                        <aes:byteOrder>LITTLE_ENDIAN</aes:byteOrder>
+                        <aes:firstSampleOffset>80</aes:firstSampleOffset>
+                        <aes:audioDataBlockSize>6</aes:audioDataBlockSize>
+                        <aes:use useType="PRESERVATION_MASTER"/>
+                        <aes:primaryIdentifier identifierType="FILE_NAME">sa_1234567890_0002</aes:primaryIdentifier>
+                        <aes:fileChecksum>
+                            <aes:checksumValue>FC2BF3D40E1C13EAB950B9AC84EC73E8</aes:checksumValue>
+                            <aes:checksumKind>MD5</aes:checksumKind>
+                            <aes:checksumCreateDate>2017-07-18T15:54:46-05:00</aes:checksumCreateDate>
+                        </aes:fileChecksum>
+                        <aes:face ID="Side_2" direction="NONE" audioObjectRef="sa_1234567890_0002" label="2">
+                            <aes:timeline>
+                                <aes:startTime editRate="96000">0</aes:startTime>
+                                <aes:duration editRate="96000">17616390</aes:duration>
+                            </aes:timeline>
+                            <aes:region ID="sa_1234567890_0002" formatRef="WAVE" faceRef="Side_2" label="Region 1">
+                                <aes:timeRange>
+                                    <aes:startTime editRate="96000">0</aes:startTime>
+                                    <aes:duration editRate="96000">17616390</aes:duration>
+                                </aes:timeRange>
+                                <aes:numChannels>2</aes:numChannels>
+                                <aes:stream ID="sa_1234567890_0002a" label="1" faceRegionRef="sa_1234567890_0002">
+                                    <aes:channelAssignement channelNum="1" leftRightPosition="-100"/>
+                                </aes:stream>
+                                <aes:stream ID="sa_1234567890_0002b" label="2" faceRegionRef="sa_1234567890_0002">
+                                    <aes:channelAssignement channelNum="2" leftRightPosition="100"/>
+                                </aes:stream>
+                            </aes:region>
+                        </aes:face>
+                        <aes:formatList>
+                            <aes:formatRegion ID="WAVE" label="audio/x-wave" ownerRef="sa_1234567890_0002">
+                                <aes:bithDepth>24</aes:bithDepth>
+                                <aes:sampleRate>96000.0</aes:sampleRate>
+                                <aes:soundField>STEREO</aes:soundField>
+                            </aes:formatRegion>
+                        </aes:formatList>
+                    </aes:audioObject>
+                </mets:xmlData>
+            </mets:mdWrap>
+        </mets:techMD>
+        <mets:sourceMD ID="AES57_002">
+            <mets:mdWrap MDTYPE="AES57" MIMETYPE="text/xml">
+                <mets:xmlData>
+                    <aes:audioObject ID="sa-1111" title="Arie vodnika z opery Rusalka, Pochod podloudníků z opery Hubička" analogDigitalFlag="ANALOG"
+                                     schemaVersion="1.0.0"
+                                     xsi:schemaLocation="http://www.aes.org/audioObject http://www.aes.org/standards/schemas/aes57-2011-08-27.xsd"
+                                     generation="Original" disposition="returned to stacks">
+                        <aes:format specificationVersion="">Gramophone record</aes:format>
+                        <aes:use useTape="ORIGINAL_MASTER"/>
+                    </aes:audioObject>
+                </mets:xmlData>
+            </mets:mdWrap>
+        </mets:sourceMD>
+        <mets:digiprovMD ID="EVT_001">
+            <mets:mdWrap MDTYPE="PREMIS" MIMETYPE="text/xml">
+                <mets:xmlData>
+                    <premis:event>
+                        <premis:eventIdentifier>
+                            <premis:eventIdentifierType>NK_eventID</premis:eventIdentifierType>
+                            <premis:eventIdentifierValue>originaldata_002</premis:eventIdentifierValue>
+                        </premis:eventIdentifier>
+                        <premis:eventType>capture</premis:eventType>
+                        <premis:eventDateTime>2016-07-18T06:06:35</premis:eventDateTime>
+                        <premis:eventDetail>capture/digitization</premis:eventDetail>
+                        <premis:eventOutcomeInformation>
+                            <premis:eventOutcome>OK</premis:eventOutcome>
+                        </premis:eventOutcomeInformation>
+                        <premis:linkingAgentIdentifier>
+                            <premis:linkingAgentIdentifierType>NK_AgentID</premis:linkingAgentIdentifierType>
+                            <premis:linkingAgentIdentifierValue>MCdigit_001</premis:linkingAgentIdentifierValue>
+                            <premis:linkingAgentRole>player</premis:linkingAgentRole>
+                        </premis:linkingAgentIdentifier>
+                        <premis:linkingAgentIdentifier>
+                            <premis:linkingAgentIdentifierType>NK_AgentID</premis:linkingAgentIdentifierType>
+                            <premis:linkingAgentIdentifierValue>MCdigit_002</premis:linkingAgentIdentifierValue>
+                            <premis:linkingAgentRole>phono cartridge</premis:linkingAgentRole>
+                        </premis:linkingAgentIdentifier>
+                        <premis:linkingAgentIdentifier>
+                            <premis:linkingAgentIdentifierType>NK_AgentID</premis:linkingAgentIdentifierType>
+                            <premis:linkingAgentIdentifierValue>MCdigit_003</premis:linkingAgentIdentifierValue>
+                            <premis:linkingAgentRole>phono stylus</premis:linkingAgentRole>
+                        </premis:linkingAgentIdentifier>
+                        <premis:linkingAgentIdentifier>
+                            <premis:linkingAgentIdentifierType>NK_AgentID</premis:linkingAgentIdentifierType>
+                            <premis:linkingAgentIdentifierValue>MCdigit_004</premis:linkingAgentIdentifierValue>
+                            <premis:linkingAgentRole>preamplifier</premis:linkingAgentRole>
+                        </premis:linkingAgentIdentifier>
+                        <premis:linkingAgentIdentifier>
+                            <premis:linkingAgentIdentifierType>NK_AgentID</premis:linkingAgentIdentifierType>
+                            <premis:linkingAgentIdentifierValue>MCdigit_005</premis:linkingAgentIdentifierValue>
+                            <premis:linkingAgentRole>AD convertor</premis:linkingAgentRole>
+                        </premis:linkingAgentIdentifier>
+                        <premis:linkingAgentIdentifier>
+                            <premis:linkingAgentIdentifierType>NK_AgentID</premis:linkingAgentIdentifierType>
+                            <premis:linkingAgentIdentifierValue>MCdigit_006</premis:linkingAgentIdentifierValue>
+                            <premis:linkingAgentRole>software</premis:linkingAgentRole>
+                        </premis:linkingAgentIdentifier>
+                        <premis:linkingObjectIdentifier>
+                            <premis:linkingObjectIdentifierType>ObjectID</premis:linkingObjectIdentifierType>
+                            <premis:linkingObjectIdentifierValue>sa_1234567890_0002</premis:linkingObjectIdentifierValue>
+                        </premis:linkingObjectIdentifier>
+                    </premis:event>
+                </mets:xmlData>
+            </mets:mdWrap>
+        </mets:digiprovMD>
+        <mets:digiprovMD ID="AGENT_001">
+            <mets:mdWrap MDTYPE="PREMIS" MIMETYPE="text/xml">
+                <mets:xmlData>
+                    <premis:agent>
+                        <premis:agentIdentifier>
+                            <premis:agentIdentifierType>NK_AgentID</premis:agentIdentifierType>
+                            <premis:agentIdentifierValue>MCdigit_001</premis:agentIdentifierValue>
+                        </premis:agentIdentifier>
+                        <premis:agentName>Direct Drive Turntable SP-15</premis:agentName>
+                        <premis:agentType>hardware</premis:agentType>
+                        <premis:agentExtension>
+                            <NK:manufacturer>Technics</NK:manufacturer>
+                            <NK:serialNumber>SFNN015N01</NK:serialNumber>
+                        </premis:agentExtension>
+                    </premis:agent>
+                </mets:xmlData>
+            </mets:mdWrap>
+        </mets:digiprovMD>
+        <mets:digiprovMD ID="AGENT_002">
+            <mets:mdWrap MDTYPE="PREMIS" MIMETYPE="text/xml">
+                <mets:xmlData>
+                    <premis:agent>
+                        <premis:agentIdentifier>
+                            <premis:agentIdentifierType>NK_AgentID</premis:agentIdentifierType>
+                            <premis:agentIdentifierValue>MCdigit_002</premis:agentIdentifierValue>
+                        </premis:agentIdentifier>
+                        <premis:agentName>M78S</premis:agentName>
+                        <premis:agentType>hardware</premis:agentType>
+                        <premis:agentExtension>
+                        <NK:manufacturer>Shure</NK:manufacturer>
+                        <NK:serialNumber>123456</NK:serialNumber>
+                        <premis:agentExtension>
+                    </premis:agent>
+                </mets:xmlData>
+            </mets:mdWrap>
+        </mets:digiprovMD>
+        <mets:digiprovMD ID="AGENT_003">
+            <mets:mdWrap MDTYPE="PREMIS" MIMETYPE="text/xml">
+                <mets:xmlData>
+                    <premis:agent>
+                        <premis:agentIdentifier>
+                            <premis:agentIdentifierType>NK_AgentID</premis:agentIdentifierType>
+                            <premis:agentIdentifierValue>MCdigit_003</premis:agentIdentifierValue>
+                        </premis:agentIdentifier>
+                        <premis:agentName>N78S</premis:agentName>
+                        <premis:agentType>hardware</premis:agentType>
+                        <premis:agentExtension>
+                            <NK:manufacturer>Shure</NK:manufacturer>
+                            <NK:serialNumber>1N2M326</NK:serialNumber>
+                        </premis:agentExtension>
+                    </premis:agent>
+                </mets:xmlData>
+            </mets:mdWrap>
+        </mets:digiprovMD>
+        <mets:digiprovMD ID="AGENT_004">
+            <mets:mdWrap MDTYPE="PREMIS" MIMETYPE="text/xml">
+                <mets:xmlData>
+                    <premis:agent>
+                        <premis:agentIdentifier>
+                            <premis:agentIdentifierType>NK_AgentID</premis:agentIdentifierType>
+                            <premis:agentIdentifierValue>MCdigit_004</premis:agentIdentifierValue>
+                        </premis:agentIdentifier>
+                        <premis:agentName>MD12 MK4</premis:agentName>
+                        <premis:agentType>hardware</premis:agentType>
+                        <premis:agentExtension>
+                            <NK:manufacturer>VADLYD</NK:manufacturer>
+                            <NK:serialNumber>MD124098</NK:serialNumber>
+                        </premis:agentExtension>
+                    </premis:agent>
+                </mets:xmlData>
+            </mets:mdWrap>
+        </mets:digiprovMD>
+        <mets:digiprovMD ID="AGENT_005">
+            <mets:mdWrap MDTYPE="PREMIS" MIMETYPE="text/xml">
+                <mets:xmlData>
+                    <premis:agent>
+                        <premis:agentIdentifier>
+                            <premis:agentIdentifierType>NK_AgentID</premis:agentIdentifierType>
+                            <premis:agentIdentifierValue>MCdigit_005</premis:agentIdentifierValue>
+                        </premis:agentIdentifier>
+                        <premis:agentName>Orpheus FireWire</premis:agentName>
+                        <premis:agentType>hardware</premis:agentType>
+                        <premis:agentExtension>
+                            <NK:manufacturer>Prism Media</NK:manufacturer>
+                            <NK:serialNumber>01642</NK:serialNumber>
+                        </premis:agentExtension>
+                    </premis:agent>
+                </mets:xmlData>
+            </mets:mdWrap>
+        </mets:digiprovMD>
+        <mets:digiprovMD ID="AGENT_005">
+            <mets:mdWrap MDTYPE="PREMIS" MIMETYPE="text/xml">
+                <mets:xmlData>
+                    <premis:agent>
+                        <premis:agentIdentifier>
+                            <premis:agentIdentifierType>NK_AgentID</premis:agentIdentifierType>
+                            <premis:agentIdentifierValue>MCdigit_006</premis:agentIdentifierValue>
+                        </premis:agentIdentifier>
+                        <premis:agentName>Wavelab Pro 9</premis:agentName>
+                        <premis:agentType>software</premis:agentType>
+                        <premis:agentExtension>
+                            <NK:manufacturer>Steinberg</NK:manufacturer>
+                            <NK:serialNumber>01642</NK:serialNumber>
+                        </premis:agentExtension>
+                    </premis:agent>
+                </mets:xmlData>
+            </mets:mdWrap>
+        </mets:digiprovMD>
+    </mets:amdSec>
+    <mets:fileSec>
+        <mets:fileGrp ID="SA_AUDIOGRP" USE="source">
+            <mets:file CHECKSUM="FC2BF3D40E1C13EAB950B9AC84EC73E8" CHECKSUMTYPE="MD5" CREATED="2017-07-18T09:35:01" ID="WAV2001" MIMETYPE="audio/x-wav" SEQ="0"
+                       SIZE="105699276">
+                <mets:FLocat LOCTYPE="URL" xlink:href="source_audio/sa_1234567890_0001.wav"></mets:FLocat>
+            </mets:file>
+        </mets:fileGrp>
+        <mets:fileGrp ID="UC_AUDIOGRP" USE="user">
+            <mets:file CHECKSUM="06A30A10D58747C1920A2F2360D923E1" CHECKSUMTYPE="MD5" CREATED="2017-07-18T09:36:02" ID="WAV2002" MIMETYPE="audio/mp3" SEQ="0"
+                       SIZE="2937671">
+                <mets:FLocat LOCTYPE="URL" xlink:href="user_copy_audio/uca_1234567890_0002.mp3"></mets:FLocat>
+            </mets:file>
+        </mets:fileGrp>
+    </mets:fileSec>
+    <mets:structMap TYPE="PHYSICAL">
+        <mets:div TYPE="TRACK">
+            <mets:fptr FILEID="WAV2001"/>
+            <mets:fptr FILEID="WAV2002"/>
+        </mets:div>
+    </mets:structMap>
+</mets:mets>
+	

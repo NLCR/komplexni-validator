@@ -75,9 +75,10 @@
 
 
     <evaluationFunction name="getFirstFileFromFileList" resultType="FILE">
-        <description>Vrátí první položku ze seznamu.</description>
+        <description>Vrátí první položku ze seznamu. Pokud je seznam prázdný, vyhodí výjimku, případně vrátí null (jen, pokud je returnNullIfEmpty true)</description>
         <params-def>
             <value name="files" type="FILE_LIST"/>
+            <value name="returnNullIfEmpty" type="BOOLEAN" minOccurs="0"/>
         </params-def>
     </evaluationFunction>
 

@@ -15,6 +15,7 @@ public class FdmfRegistry {
 
     private final Map<String, FdmfConfiguration> monographFdmfByVersion = new HashMap<>();
     private final Map<String, FdmfConfiguration> periodicalFdmfByVersion = new HashMap<>();
+    private final Map<String, FdmfConfiguration> soundRecordingFdmfByVersion = new HashMap<>();
 
     public FdmfRegistry(ValidatorConfigurationManager validatorConfigManager) throws ValidatorConfigurationException {
         init(validatorConfigManager);
@@ -27,30 +28,23 @@ public class FdmfRegistry {
         for (FdmfConfiguration fdmfConfig : periodicalFdmfByVersion.values()) {
             fdmfConfig.initJ2kProfiles(imageUtilManager);
         }
-    }
-
-    private void init(ValidatorConfigurationManager validatorConfigManager) throws ValidatorConfigurationException {
-        loadMonographFdmfConfigs(validatorConfigManager);
-        loadPeriodicalFdmfConfigs(validatorConfigManager);
-    }
-
-    private void loadMonographFdmfConfigs(ValidatorConfigurationManager validatorConfigManager) throws ValidatorConfigurationException {
-        File[] fdmfDirs = validatorConfigManager.getFdmfDir().listFiles((dir, name) -> name.matches("monograph_[0-9]+(\\.([0-9])+)*"));
-        for (File fdmfDir : fdmfDirs) {
-            String version = fdmfDir.getName().split("_")[1];
-            monographFdmfByVersion.put(version, new FdmfConfiguration(
-                    fdmfDir,
-                    validatorConfigManager.getFdmfConfigXsd(),
-                    validatorConfigManager.getJ2kProfileXsd(),
-                    validatorConfigManager.getMetadataProfileXsd()));
+        for (FdmfConfiguration fdmfConfig : soundRecordingFdmfByVersion.values()) {
+            fdmfConfig.initJ2kProfiles(imageUtilManager);
         }
     }
 
-    private void loadPeriodicalFdmfConfigs(ValidatorConfigurationManager validatorConfigManager) throws ValidatorConfigurationException {
-        File[] fdmfDirs = validatorConfigManager.getFdmfDir().listFiles((dir, name) -> name.matches("periodical_[0-9]+(\\.([0-9])+)*"));
+    private void init(ValidatorConfigurationManager validatorConfigManager) throws ValidatorConfigurationException {
+        loadFdmfConfigs(validatorConfigManager, "monograph", monographFdmfByVersion);
+        loadFdmfConfigs(validatorConfigManager, "periodical", periodicalFdmfByVersion);
+        loadFdmfConfigs(validatorConfigManager, "sound_recording", soundRecordingFdmfByVersion);
+
+    }
+
+    private void loadFdmfConfigs(ValidatorConfigurationManager validatorConfigManager, String fdmfDirPefix, Map<String, FdmfConfiguration> mapToStoreResults) throws ValidatorConfigurationException {
+        File[] fdmfDirs = validatorConfigManager.getFdmfDir().listFiles((dir, name) -> name.matches(fdmfDirPefix + "_[0-9]+(\\.([0-9])+)*"));
         for (File fdmfDir : fdmfDirs) {
-            String version = fdmfDir.getName().split("_")[1];
-            periodicalFdmfByVersion.put(version, new FdmfConfiguration(
+            String versionNumber = fdmfDir.getName().substring(fdmfDirPefix.length() + 1);
+            mapToStoreResults.put(versionNumber, new FdmfConfiguration(
                     fdmfDir,
                     validatorConfigManager.getFdmfConfigXsd(),
                     validatorConfigManager.getJ2kProfileXsd(),
@@ -66,12 +60,20 @@ public class FdmfRegistry {
         return periodicalFdmfByVersion.keySet();
     }
 
+    public Set<String> getSoundRecordingFdmfVersions() {
+        return soundRecordingFdmfByVersion.keySet();
+    }
+
     public FdmfConfiguration getMonographFdmfConfig(String dmfVersion) {
         return monographFdmfByVersion.get(dmfVersion);
     }
 
     public FdmfConfiguration getPeriodicalFdmfConfig(String dmfVersion) {
         return periodicalFdmfByVersion.get(dmfVersion);
+    }
+
+    public FdmfConfiguration getSoundRecordingFdmfConfig(String dmfVersion) {
+        return soundRecordingFdmfByVersion.get(dmfVersion);
     }
 
     public FdmfConfiguration getFdmfConfig(Dmf dmf) throws UnknownFdmfException {
@@ -86,6 +88,14 @@ public class FdmfRegistry {
             }
             case PERIODICAL: {
                 FdmfConfiguration file = periodicalFdmfByVersion.get(dmf.getVersion());
+                if (file == null) {
+                    throw new UnknownFdmfException(dmf);
+                } else {
+                    return file;
+                }
+            }
+            case SOUND_RECORDING: {
+                FdmfConfiguration file = soundRecordingFdmfByVersion.get(dmf.getVersion());
                 if (file == null) {
                     throw new UnknownFdmfException(dmf);
                 } else {

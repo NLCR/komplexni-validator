@@ -45,15 +45,17 @@ public class Dmf implements Serializable {
     }
 
     public enum Type implements Serializable {
-        MONOGRAPH, PERIODICAL;
+        MONOGRAPH, PERIODICAL, SOUND_RECORDING;
 
         @Override
         public String toString() {
             switch (this) {
                 case MONOGRAPH:
-                    return "Monograph";
+                    return "Monografie";
                 case PERIODICAL:
-                    return "Periodical";
+                    return "Periodika";
+                case SOUND_RECORDING:
+                    return "Zvuky";
                 default:
                     throw new IllegalStateException();
             }

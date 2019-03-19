@@ -10,7 +10,17 @@
         <params-def>
             <value name="files" type="FILE_LIST"/>
             <value name="size" type="INTEGER" description="Expected size of list"/>
-            <value name="level" type="LEVEL"/>
+            <value name="level" type="LEVEL" minOccurs="0"/>
+        </params-def>
+    </validationFunction>
+
+    <validationFunction name="checkFilelistSizeInRange">
+        <description>Zkontroluje, že má seznam souborů velikost v očekávaném rozsahu hodnot.</description>
+        <params-def>
+            <value name="files" type="FILE_LIST"/>
+            <value name="min_size" type="INTEGER" minOccurs="0"/>
+            <value name="max_size" type="INTEGER" minOccurs="0"/>
+            <value name="level" type="LEVEL" minOccurs="0"/>
         </params-def>
     </validationFunction>
 
@@ -48,9 +58,12 @@
 
 
     <validationFunction name="checkFileIsDir">
-        <description>Zkontroluje, že soubor existuje a je adresář (tedy zda není obyčejný soubor).</description>
+        <description>Zkontroluje, že soubor existuje a je adresář (tedy zda není obyčejný soubor). Pokud je ignoreIfFileIsNull=true a soubor parametry file
+            obsahuje null, není vyhozena výjimka, ale vyhodnocení skončí bez detekce chyby.
+        </description>
         <params-def>
             <value name="file" type="FILE"/>
+            <value name="ignoreIfFileIsNull" type="BOOLEAN" minOccurs="0"/>
         </params-def>
     </validationFunction>
 

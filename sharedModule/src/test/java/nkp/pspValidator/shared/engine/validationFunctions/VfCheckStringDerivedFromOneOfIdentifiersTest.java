@@ -16,6 +16,7 @@ import static org.junit.Assert.assertTrue;
  */
 public class VfCheckStringDerivedFromOneOfIdentifiersTest {
 
+    private static final String VF_NAME = "checkStringDerivedFromOneOfIdentifiers";
 
     private static Engine engine;
 
@@ -27,7 +28,7 @@ public class VfCheckStringDerivedFromOneOfIdentifiersTest {
 
     @Test
     public void fromUuidOk() {
-        VfCheckStringDerivedFromOneOfIdentifiers vf = new VfCheckStringDerivedFromOneOfIdentifiers(engine);
+        VfCheckStringDerivedFromOneOfIdentifiers vf = new VfCheckStringDerivedFromOneOfIdentifiers(VF_NAME, engine);
         ValidationResult result = vf.validate("b50eb6b0-f0a4-11e3-b72e-005056827e52", 6,
                 ids(
                         id("ccnb", "cnb000572615"),
@@ -42,7 +43,7 @@ public class VfCheckStringDerivedFromOneOfIdentifiersTest {
 
     @Test
     public void fromCcnbOk() {
-        VfCheckStringDerivedFromOneOfIdentifiers vf = new VfCheckStringDerivedFromOneOfIdentifiers(engine);
+        VfCheckStringDerivedFromOneOfIdentifiers vf = new VfCheckStringDerivedFromOneOfIdentifiers(VF_NAME, engine);
         ValidationResult result = vf.validate("000572615", 6,
                 ids(
                         id("ccnb", "cnb000572615"),
@@ -56,7 +57,7 @@ public class VfCheckStringDerivedFromOneOfIdentifiersTest {
 
     @Test
     public void fromUrnOk() {
-        VfCheckStringDerivedFromOneOfIdentifiers vf = new VfCheckStringDerivedFromOneOfIdentifiers(engine);
+        VfCheckStringDerivedFromOneOfIdentifiers vf = new VfCheckStringDerivedFromOneOfIdentifiers(VF_NAME, engine);
         ValidationResult result = vf.validate("00172f", 6,
                 ids(
                         id("ccnb", "cnb000572615"),
@@ -70,7 +71,7 @@ public class VfCheckStringDerivedFromOneOfIdentifiersTest {
 
     @Test
     public void fromUrnTooShort() {
-        VfCheckStringDerivedFromOneOfIdentifiers vf = new VfCheckStringDerivedFromOneOfIdentifiers(engine);
+        VfCheckStringDerivedFromOneOfIdentifiers vf = new VfCheckStringDerivedFromOneOfIdentifiers(VF_NAME, engine);
         ValidationResult result = vf.validate("00172f", 6,
                 ids(
                         id("ccnb", "cnb000572615"),
@@ -85,7 +86,7 @@ public class VfCheckStringDerivedFromOneOfIdentifiersTest {
 
     @Test
     public void fromUuidErrorUuidMissing() {
-        VfCheckStringDerivedFromOneOfIdentifiers vf = new VfCheckStringDerivedFromOneOfIdentifiers(engine);
+        VfCheckStringDerivedFromOneOfIdentifiers vf = new VfCheckStringDerivedFromOneOfIdentifiers(VF_NAME, engine);
         ValidationResult result = vf.validate("b50eb6b0-f0a4-11e3-b72e-005056827e52", 6,
                 ids(
                         id("ccnb", "cnb000572615"),

@@ -7,7 +7,9 @@ public enum EntityType {
 
     VOLUME("VOLUME"), TITLE("TITLE"), SUPPLEMENT("SUPPL"), PICTURE("PICT"), PAGE("PAGE"),//spolecne
     ISSUE("ISSUE"), ARTICLE("ART"), //jen periodika
-    CHAPTER("CHAP"); //jen monografie
+    CHAPTER("CHAP"), //jen monografie
+    SOUNDCOLLECTION("SOUNDCOLLECTION"), SOUNDRECORDING("SOUNDRECORDING"), SOUNDPART("SOUNDPART"),//jen zvuky
+    ;
 
     private final String dmdSecCode;
 

@@ -377,11 +377,11 @@
                         <expectedAttributes>
                             <attribute name="authority" mandatory="false">
                                 <recommendedContent>
-				    <oneOf>
+                                    <oneOf>
                                         <value>rdamedia</value>
                                         <value>rdacarrier</value>
-					<value>marcform</value>
-					<value>gmd</value>
+                                        <value>marcform</value>
+                                        <value>gmd</value>
                                     </oneOf>
                                 </recommendedContent>
                             </attribute>
@@ -464,7 +464,7 @@
                     <!--NOTE: DMF neuvadi, jestli je authority povinny atribut, nechavam nepovinny. Neni zrejme co plati pro rda a aacr2, povolena nvíc i hodnota Konspekt aby prochazely elementy s touto hodnotou bez atributu edition-->
                     <attribute name="authority" mandatory="true">
                         <recommendedContent>
-                             <oneOf>
+                            <oneOf>
                                 <value>udc</value>
                                 <value>Konspekt</value>
                             </oneOf>

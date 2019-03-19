@@ -78,7 +78,8 @@ public class VfCheckInfoFileItemlistReferencesAllFiles extends ValidationFunctio
                 ValueEvaluation filesEvaluation = fileParam.getEvaluation();
                 List<File> files = (List<File>) filesEvaluation.getData();
                 if (files == null) {
-                    return invalidValueParamNull(PARAM_FILES, filesEvaluation);
+                    //ignore
+                    //return invalidValueParamNull(PARAM_FILES, filesEvaluation);
                 } else {
                     for (File file : files) {
                         expectedFiles.add(file.getAbsoluteFile());

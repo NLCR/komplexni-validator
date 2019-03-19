@@ -381,6 +381,14 @@ public class Main {
                     }
                 }
 
+                DmfDetector.Params dmfDetectorParams = new DmfDetector.Params();
+                dmfDetectorParams.forcedDmfMonVersion = forceDmfMonVersion;
+                dmfDetectorParams.forcedDmfPerVersion = forceDmfPerVersion;
+                dmfDetectorParams.forcedDmfSRVersion = null;
+                dmfDetectorParams.preferredDmfMonVersion = preferDmfMonVersion;
+                dmfDetectorParams.preferredDmfPerVersion = preferDmfPerVersion;
+                dmfDetectorParams.preferredDmfSRVersion = null;
+
                 PrintStream out = System.out;
                 PrintStream err = System.err;
 
@@ -389,7 +397,7 @@ public class Main {
                         validatePsp(psp,
                                 configDir, tmpDir,
                                 verbosity, out, err, xmlProtocolDir, xmlProtocolFile,
-                                preferDmfMonVersion, preferDmfPerVersion, forceDmfMonVersion, forceDmfPerVersion,
+                                dmfDetectorParams,
                                 imageUtilPaths, imageUtilsDisabled,
                                 devParams);
                         break;
@@ -397,7 +405,7 @@ public class Main {
                         validatePspGroup(pspGroup,
                                 configDir, tmpDir,
                                 verbosity, out, err, xmlProtocolDir,
-                                preferDmfMonVersion, preferDmfPerVersion, forceDmfMonVersion, forceDmfPerVersion,
+                                dmfDetectorParams,
                                 imageUtilPaths, imageUtilsDisabled,
                                 devParams);
                         break;
@@ -484,7 +492,7 @@ public class Main {
                                          File configDir, File tmpDir,
                                          Integer verbosity, PrintStream out, PrintStream err,
                                          File xmlProtocolDir,
-                                         String preferDmfMonVersion, String preferDmfPerVersion, String forceDmfMonVersion, String forceDmfPerVersion,
+                                         DmfDetector.Params dmfDetectorParams,
                                          Map<ImageUtil, File> imageUtilPaths, Set<ImageUtil> imageUtilsDisabled, Validator.DevParams devParams) throws ValidatorConfigurationException, XmlFileParsingException, FdmfRegistry.UnknownFdmfException, PspDataException, InvalidXPathExpressionException {
         Platform platform = Platform.detectOs();
         out.println(String.format("Platforma: %s", platform.toReadableString()));
@@ -508,14 +516,14 @@ public class Main {
                 validatePspGroupDir(pspGroup,
                         configDir, tmpDir,
                         verbosity, out, err, xmlProtocolDir,
-                        preferDmfMonVersion, preferDmfPerVersion, forceDmfMonVersion, forceDmfPerVersion,
+                        dmfDetectorParams,
                         imageUtilPaths, imageUtilsDisabled,
                         devParams);
             } else {
                 validatePspGroupZip(pspGroup,
                         configDir, tmpDir,
                         verbosity, out, err, xmlProtocolDir,
-                        preferDmfMonVersion, preferDmfPerVersion, forceDmfMonVersion, forceDmfPerVersion,
+                        dmfDetectorParams,
                         imageUtilPaths, imageUtilsDisabled,
                         devParams);
             }
@@ -526,7 +534,7 @@ public class Main {
                                             File configDir, File tmpDir,
                                             Integer verbosity, PrintStream out, PrintStream err,
                                             File xmlProtocolDir,
-                                            String preferDmfMonVersion, String preferDmfPerVersion, String forceDmfMonVersion, String forceDmfPerVersion,
+                                            DmfDetector.Params dmfDetectorParams,
                                             Map<ImageUtil, File> imageUtilPaths, Set<ImageUtil> imageUtilsDisabled,
                                             Validator.DevParams devParams) throws PspDataException, XmlFileParsingException, FdmfRegistry.UnknownFdmfException, ValidatorConfigurationException, InvalidXPathExpressionException {
         try {
@@ -557,14 +565,14 @@ public class Main {
                     validatePspGroupDir(filesInContainer[0],
                             configDir, tmpDir,
                             verbosity, out, err, xmlProtocolDir,
-                            preferDmfMonVersion, preferDmfPerVersion, forceDmfMonVersion, forceDmfPerVersion,
+                            dmfDetectorParams,
                             imageUtilPaths, imageUtilsDisabled,
                             devParams);
                 } else {
                     validatePspGroupDir(containerDir,
                             configDir, tmpDir,
                             verbosity, out, err, xmlProtocolDir,
-                            preferDmfMonVersion, preferDmfPerVersion, forceDmfMonVersion, forceDmfPerVersion,
+                            dmfDetectorParams,
                             imageUtilPaths, imageUtilsDisabled,
                             devParams);
                 }
@@ -578,7 +586,7 @@ public class Main {
                                             File configDir, File tmpDir,
                                             Integer verbosity, PrintStream out, PrintStream err,
                                             File xmlProtocolDir,
-                                            String preferDmfMonVersion, String preferDmfPerVersion, String forceDmfMonVersion, String forceDmfPerVersion,
+                                            DmfDetector.Params dmfDetectorParams,
                                             Map<ImageUtil, File> imageUtilPaths, Set<ImageUtil> imageUtilsDisabled,
                                             Validator.DevParams devParams) throws XmlFileParsingException, FdmfRegistry.UnknownFdmfException, PspDataException, ValidatorConfigurationException, InvalidXPathExpressionException {
         for (File pspDirOrZip : pspGroupDir.listFiles()) {
@@ -587,7 +595,7 @@ public class Main {
                     configDir, tmpDir,
                     verbosity, out, err,
                     xmlProtocolDir, null,
-                    preferDmfMonVersion, preferDmfPerVersion, forceDmfMonVersion, forceDmfPerVersion,
+                    dmfDetectorParams,
                     imageUtilPaths, imageUtilsDisabled,
                     devParams);
         }
@@ -597,7 +605,7 @@ public class Main {
                                     File configDir, File tmpDir,
                                     Integer verbosity, PrintStream out, PrintStream err,
                                     File xmlProtocolDir, File xmlProtocolFile,
-                                    String preferDmfMonVersion, String preferDmfPerVersion, String forceDmfMonVersion, String forceDmfPerVersion,
+                                    DmfDetector.Params dmfDetectorParams,
                                     Map<ImageUtil, File> imageUtilPaths, Set<ImageUtil> imageUtilsDisabled,
                                     Validator.DevParams devParams) throws ValidatorConfigurationException, FdmfRegistry.UnknownFdmfException, PspDataException, InvalidXPathExpressionException, XmlFileParsingException {
         Platform platform = Platform.detectOs();
@@ -621,14 +629,14 @@ public class Main {
                 validatePspDir(pspDirOrZipFile,
                         imageUtilManager, validatorConfigManager,
                         out, verbosity, xmlProtocolDir, xmlProtocolFile,
-                        preferDmfMonVersion, preferDmfPerVersion, forceDmfMonVersion, forceDmfPerVersion,
+                        dmfDetectorParams,
                         devParams);
             } else {
                 validatePspZip(pspDirOrZipFile,
                         tmpDir,
                         imageUtilManager, validatorConfigManager,
                         out, err, verbosity, xmlProtocolDir, xmlProtocolFile,
-                        preferDmfMonVersion, preferDmfPerVersion, forceDmfMonVersion, forceDmfPerVersion,
+                        dmfDetectorParams,
                         devParams);
             }
         }
@@ -639,7 +647,7 @@ public class Main {
                                        ImageUtilManager imageUtilManager, ValidatorConfigurationManager validatorConfigManager,
                                        PrintStream out, PrintStream err, Integer verbosity,
                                        File xmlProtocolDir, File xmlProtocolFile,
-                                       String preferDmfMonVersion, String preferDmfPerVersion, String forceDmfMonVersion, String forceDmfPerVersion,
+                                       DmfDetector.Params dmfDetectorParams,
                                        Validator.DevParams devParams) throws XmlFileParsingException, FdmfRegistry.UnknownFdmfException, PspDataException, ValidatorConfigurationException, InvalidXPathExpressionException {
         try {
             try {
@@ -669,13 +677,13 @@ public class Main {
                     validatePspDir(filesInContainer[0],
                             imageUtilManager, validatorConfigManager,
                             out, verbosity, xmlProtocolDir, xmlProtocolFile,
-                            preferDmfMonVersion, preferDmfPerVersion, forceDmfMonVersion, forceDmfPerVersion,
+                            dmfDetectorParams,
                             devParams);
                 } else {
                     validatePspDir(containerDir,
                             imageUtilManager, validatorConfigManager,
                             out, verbosity, xmlProtocolDir, xmlProtocolFile,
-                            preferDmfMonVersion, preferDmfPerVersion, forceDmfMonVersion, forceDmfPerVersion,
+                            dmfDetectorParams,
                             devParams);
                 }
             }
@@ -688,12 +696,14 @@ public class Main {
                                        ImageUtilManager imageUtilManager, ValidatorConfigurationManager validatorConfigManager,
                                        PrintStream out, Integer verbosity,
                                        File xmlProtocolDir, File xmlProtocolFile,
-                                       String preferredDmfMonVersion, String preferredDmfPerVersion, String forcedDmfMonVersion, String forcedDmfPerVersion,
+                                       DmfDetector.Params dmfDetectorParams,
                                        Validator.DevParams devParams) throws ValidatorConfigurationException, FdmfRegistry.UnknownFdmfException, PspDataException, XmlFileParsingException, InvalidXPathExpressionException {
         //psp dir, dmf detection
         checkReadableDir(pspDir);
         out.println(String.format("Zpracovávám PSP balík %s", pspDir.getAbsolutePath()));
-        Dmf dmfResolved = new DmfDetector().resolveDmf(pspDir, preferredDmfMonVersion, preferredDmfPerVersion, forcedDmfMonVersion, forcedDmfPerVersion);
+
+
+        Dmf dmfResolved = new DmfDetector().resolveDmf(pspDir, dmfDetectorParams);
         out.println(String.format("Bude použita verze standardu %s", dmfResolved));
 
         //initializes j2k profiles according to selected fDMF

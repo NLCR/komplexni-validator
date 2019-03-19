@@ -562,9 +562,18 @@
                                     <oneOf>
                                         <value>rdamedia</value>
                                         <value>rdacarrier</value>
-					<value>marcform</value>
-					<value>marccategory</value>
-					<value>marcsmd</value>
+                                        <
+                                        <
+                                        <
+                                        <
+                                        <
+                                        <
+                                        < HEAD
+                                        =======
+                                        <value>marcform</value>
+                                        <value>marccategory</value>
+                                        <value>marcsmd</value>
+                                        >>>>>>> master
                                     </oneOf>
                                 </expectedContent>
                             </attribute>
@@ -787,10 +796,10 @@
                     <element name="mods:url" mandatory="false">
                         <expectedAttributes>
                             <attribute name="note" mandatory="false"/>
-			    <attribute name="displayLabel" mandatory="false"/>
-			    <attribute name="usage" mandatory="false"/>
-			    <attribute name="access" mandatory="false"/>
-                         </expectedAttributes>
+                            <attribute name="displayLabel" mandatory="false"/>
+                            <attribute name="usage" mandatory="false"/>
+                            <attribute name="access" mandatory="false"/>
+                        </expectedAttributes>
                         <expectedContent/>
                     </element>
 

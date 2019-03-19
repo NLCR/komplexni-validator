@@ -72,10 +72,9 @@
                         </expectedAttributes>
                         <expectedElements>
                             <element name="mets:name" mandatory="true">
-                                <!--DMF 1.7.1 výslovně nepředepisuje, že hodnota v mods:name má být sigla-->
-                                <!--<recommendedContent>
+                                <recommendedContent>
                                     <fromDictionary name="siglaInstitutionCodes"/>
-                                </recommendedContent>-->
+                                </recommendedContent>
                             </element>
                         </expectedElements>
                     </element>
