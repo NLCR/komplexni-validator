@@ -184,7 +184,7 @@
                         <expectedContent/>
                     </element>
 
-                    <element name="mods:dateOther">
+                    <element name="mods:dateOther" mandatory="false">
                         <expectedAttributes>
                             <attribute name="type">
                                 <expectedContent>
@@ -274,7 +274,7 @@
                         <expectedContent/>
                     </element>
 
-                    <element name="mods:dateOther">
+                    <element name="mods:dateOther" mandatory="false">
                         <expectedAttributes>
                             <attribute name="type">
                                 <expectedContent>
@@ -322,7 +322,7 @@
                         <expectedContent/>
                     </element>
 
-                    <element name="mods:dateOther">
+                    <element name="mods:dateOther" mandatory="false">
                         <expectedAttributes>
                             <attribute name="type">
                                 <expectedContent>
