@@ -2630,6 +2630,20 @@
                                 <value name="string" type="STRING">bibliography</value>
                                 <value name="string" type="STRING">sheetMusic</value>
                                 <value name="string" type="STRING">impressum</value>
+                                  
+                                <!--Další možné typy stran pro vnitřní část dokumentu-article, doplněno z Pravidel pro popis periodik v. 8.3.1-->
+                                <value name="string" type="STRING">news</value>
+                                <value name="string" type="STRING">abstract</value>
+                                <value name="string" type="STRING">introduction</value>
+                                <value name="string" type="STRING">review</value>
+                                <value name="string" type="STRING">mainArticle</value>
+                                <value name="string" type="STRING">editorial</value>
+                                <value name="string" type="STRING">obituary</value>
+                                <value name="string" type="STRING">bibliographicalPortrait</value>
+                                <value name="string" type="STRING">dedication</value> 
+                                <value name="string" type="STRING">colophon</value> 
+                                <value name="string" type="STRING">interview</value> 
+                                <value name="string" type="STRING">anotation</value>
                             </params>
                         </evaluation>
                     </value>
