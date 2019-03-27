@@ -562,18 +562,9 @@
                                     <oneOf>
                                         <value>rdamedia</value>
                                         <value>rdacarrier</value>
-                                        <
-                                        <
-                                        <
-                                        <
-                                        <
-                                        <
-                                        < HEAD
-                                        =======
                                         <value>marcform</value>
                                         <value>marccategory</value>
                                         <value>marcsmd</value>
-                                        >>>>>>> master
                                     </oneOf>
                                 </expectedContent>
                             </attribute>
