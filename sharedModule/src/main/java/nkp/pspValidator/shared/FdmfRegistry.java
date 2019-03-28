@@ -1,7 +1,7 @@
 package nkp.pspValidator.shared;
 
 import nkp.pspValidator.shared.engine.exceptions.ValidatorConfigurationException;
-import nkp.pspValidator.shared.imageUtils.ImageUtilManager;
+import nkp.pspValidator.shared.externalUtils.ExternalUtilManager;
 
 import java.io.File;
 import java.util.HashMap;
@@ -21,15 +21,15 @@ public class FdmfRegistry {
         init(validatorConfigManager);
     }
 
-    public void initJ2kProfiles(ImageUtilManager imageUtilManager) throws ValidatorConfigurationException {
+    public void initJ2kProfiles(ExternalUtilManager externalUtilManager) throws ValidatorConfigurationException {
         for (FdmfConfiguration fdmfConfig : monographFdmfByVersion.values()) {
-            fdmfConfig.initJ2kProfiles(imageUtilManager);
+            fdmfConfig.initJ2kProfiles(externalUtilManager);
         }
         for (FdmfConfiguration fdmfConfig : periodicalFdmfByVersion.values()) {
-            fdmfConfig.initJ2kProfiles(imageUtilManager);
+            fdmfConfig.initJ2kProfiles(externalUtilManager);
         }
         for (FdmfConfiguration fdmfConfig : soundRecordingFdmfByVersion.values()) {
-            fdmfConfig.initJ2kProfiles(imageUtilManager);
+            fdmfConfig.initJ2kProfiles(externalUtilManager);
         }
     }
 

@@ -140,8 +140,8 @@ public class Main extends Application {
         new ValidationDataInitializationDialog(dialogStage, this).show();
     }
 
-    public void showImageUtilsCheckDialog(boolean closeWhenFinished, String mainButtonText) {
-        new ImageUtilsCheckDialog(dialogStage, this, closeWhenFinished, mainButtonText).show();
+    public void showExternalUtilsCheckDialog(boolean closeWhenFinished, String mainButtonText) {
+        new ExternalUtilsCheckDialog(dialogStage, this, closeWhenFinished, mainButtonText).show();
     }
 
     public void showSkippingConfigurationDialog() {

@@ -562,8 +562,8 @@ public class MainController extends AbstractController implements ValidationStat
 
     //DIALOGS
 
-    public void showImageUtilsCheckDialog(ActionEvent actionEvent) {
-        main.showImageUtilsCheckDialog(false, "OK");
+    public void showExternalUtilsCheckDialog(ActionEvent actionEvent) {
+        main.showExternalUtilsCheckDialog(false, "OK");
     }
 
     public void showSkippingConfigurationDialog(ActionEvent actionEvent) {

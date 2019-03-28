@@ -1,16 +1,15 @@
 package npk.pspValidator.cli;
 
 import nkp.pspValidator.shared.*;
-import nkp.pspValidator.shared.dev.XsdValidator;
 import nkp.pspValidator.shared.engine.Utils;
 import nkp.pspValidator.shared.engine.exceptions.InvalidXPathExpressionException;
 import nkp.pspValidator.shared.engine.exceptions.PspDataException;
 import nkp.pspValidator.shared.engine.exceptions.ValidatorConfigurationException;
 import nkp.pspValidator.shared.engine.exceptions.XmlFileParsingException;
-import nkp.pspValidator.shared.imageUtils.CliCommand;
-import nkp.pspValidator.shared.imageUtils.ImageUtil;
-import nkp.pspValidator.shared.imageUtils.ImageUtilManager;
-import nkp.pspValidator.shared.imageUtils.ImageUtilManagerFactory;
+import nkp.pspValidator.shared.externalUtils.CliCommand;
+import nkp.pspValidator.shared.externalUtils.ExternalUtil;
+import nkp.pspValidator.shared.externalUtils.ExternalUtilManager;
+import nkp.pspValidator.shared.externalUtils.ExternalUtilManagerFactory;
 import org.apache.commons.cli.*;
 
 import java.io.File;
@@ -350,34 +349,34 @@ public class Main {
                 }
 
                 //image utils
-                Map<ImageUtil, File> imageUtilPaths = new HashMap<>();
-                Set<ImageUtil> imageUtilsDisabled = new HashSet<>();
+                Map<ExternalUtil, File> utilsPaths = new HashMap<>();
+                Set<ExternalUtil> utilsDisabled = new HashSet<>();
                 if (line.hasOption(Params.DISABLE_IMAGEMAGICK)) {
-                    imageUtilsDisabled.add(ImageUtil.IMAGE_MAGICK);
+                    utilsDisabled.add(ExternalUtil.IMAGE_MAGICK);
                 } else {
                     if (line.hasOption(Params.IMAGEMAGICK_PATH)) {
-                        imageUtilPaths.put(ImageUtil.IMAGE_MAGICK, new File(line.getOptionValue(Params.IMAGEMAGICK_PATH)));
+                        utilsPaths.put(ExternalUtil.IMAGE_MAGICK, new File(line.getOptionValue(Params.IMAGEMAGICK_PATH)));
                     }
                 }
                 if (line.hasOption(Params.DISABLE_JHOVE)) {
-                    imageUtilsDisabled.add(ImageUtil.JHOVE);
+                    utilsDisabled.add(ExternalUtil.JHOVE);
                 } else {
                     if (line.hasOption(Params.JHOVE_PATH)) {
-                        imageUtilPaths.put(ImageUtil.JHOVE, new File(line.getOptionValue(Params.JHOVE_PATH)));
+                        utilsPaths.put(ExternalUtil.JHOVE, new File(line.getOptionValue(Params.JHOVE_PATH)));
                     }
                 }
                 if (line.hasOption(Params.DISABLE_JPYLYZER)) {
-                    imageUtilsDisabled.add(ImageUtil.JPYLYZER);
+                    utilsDisabled.add(ExternalUtil.JPYLYZER);
                 } else {
                     if (line.hasOption(Params.JPYLYZER_PATH)) {
-                        imageUtilPaths.put(ImageUtil.JPYLYZER, new File(line.getOptionValue(Params.JPYLYZER_PATH)));
+                        utilsPaths.put(ExternalUtil.JPYLYZER, new File(line.getOptionValue(Params.JPYLYZER_PATH)));
                     }
                 }
                 if (line.hasOption(Params.DISABLE_KAKADU)) {
-                    imageUtilsDisabled.add(ImageUtil.KAKADU);
+                    utilsDisabled.add(ExternalUtil.KAKADU);
                 } else {
                     if (line.hasOption(Params.KAKADU_PATH)) {
-                        imageUtilPaths.put(ImageUtil.KAKADU, new File(line.getOptionValue(Params.KAKADU_PATH)));
+                        utilsPaths.put(ExternalUtil.KAKADU, new File(line.getOptionValue(Params.KAKADU_PATH)));
                     }
                 }
 
@@ -398,7 +397,7 @@ public class Main {
                                 configDir, tmpDir,
                                 verbosity, out, err, xmlProtocolDir, xmlProtocolFile,
                                 dmfDetectorParams,
-                                imageUtilPaths, imageUtilsDisabled,
+                                utilsPaths, utilsDisabled,
                                 devParams);
                         break;
                     case VALIDATE_PSP_GROUP:
@@ -406,7 +405,7 @@ public class Main {
                                 configDir, tmpDir,
                                 verbosity, out, err, xmlProtocolDir,
                                 dmfDetectorParams,
-                                imageUtilPaths, imageUtilsDisabled,
+                                utilsPaths, utilsDisabled,
                                 devParams);
                         break;
                 }
@@ -493,16 +492,16 @@ public class Main {
                                          Integer verbosity, PrintStream out, PrintStream err,
                                          File xmlProtocolDir,
                                          DmfDetector.Params dmfDetectorParams,
-                                         Map<ImageUtil, File> imageUtilPaths, Set<ImageUtil> imageUtilsDisabled, Validator.DevParams devParams) throws ValidatorConfigurationException, XmlFileParsingException, FdmfRegistry.UnknownFdmfException, PspDataException, InvalidXPathExpressionException {
+                                         Map<ExternalUtil, File> utilsPaths, Set<ExternalUtil> utilsDisabled, Validator.DevParams devParams) throws ValidatorConfigurationException, XmlFileParsingException, FdmfRegistry.UnknownFdmfException, PspDataException, InvalidXPathExpressionException {
         Platform platform = Platform.detectOs();
         out.println(String.format("Platforma: %s", platform.toReadableString()));
 
         //validator configuration
         out.println(String.format("Kořenový adresář konfigurace validátoru: %s", configDir.getAbsolutePath()));
         ValidatorConfigurationManager validatorConfigManager = new ValidatorConfigurationManager(configDir);
-        ImageUtilManager imageUtilManager = new ImageUtilManagerFactory(validatorConfigManager.getImageUtilsConfigFile()).buildImageUtilManager(platform.getOperatingSystem());
-        imageUtilManager.setPaths(imageUtilPaths);
-        detectImageTools(out, imageUtilManager, imageUtilsDisabled);
+        ExternalUtilManager externalUtilManager = new ExternalUtilManagerFactory(validatorConfigManager.getExternalUtilsConfigFile()).buildExternalUtilManager(platform.getOperatingSystem());
+        externalUtilManager.setPaths(utilsPaths);
+        detectImageTools(out, externalUtilManager, utilsDisabled);
 
 
         //pspDirOrZipFile dir or zip file?
@@ -517,14 +516,14 @@ public class Main {
                         configDir, tmpDir,
                         verbosity, out, err, xmlProtocolDir,
                         dmfDetectorParams,
-                        imageUtilPaths, imageUtilsDisabled,
+                        utilsPaths, utilsDisabled,
                         devParams);
             } else {
                 validatePspGroupZip(pspGroup,
                         configDir, tmpDir,
                         verbosity, out, err, xmlProtocolDir,
                         dmfDetectorParams,
-                        imageUtilPaths, imageUtilsDisabled,
+                        utilsPaths, utilsDisabled,
                         devParams);
             }
         }
@@ -535,7 +534,7 @@ public class Main {
                                             Integer verbosity, PrintStream out, PrintStream err,
                                             File xmlProtocolDir,
                                             DmfDetector.Params dmfDetectorParams,
-                                            Map<ImageUtil, File> imageUtilPaths, Set<ImageUtil> imageUtilsDisabled,
+                                            Map<ExternalUtil, File> utilsPaths, Set<ExternalUtil> utilsDisabled,
                                             Validator.DevParams devParams) throws PspDataException, XmlFileParsingException, FdmfRegistry.UnknownFdmfException, ValidatorConfigurationException, InvalidXPathExpressionException {
         try {
             try {
@@ -566,14 +565,14 @@ public class Main {
                             configDir, tmpDir,
                             verbosity, out, err, xmlProtocolDir,
                             dmfDetectorParams,
-                            imageUtilPaths, imageUtilsDisabled,
+                            utilsPaths, utilsDisabled,
                             devParams);
                 } else {
                     validatePspGroupDir(containerDir,
                             configDir, tmpDir,
                             verbosity, out, err, xmlProtocolDir,
                             dmfDetectorParams,
-                            imageUtilPaths, imageUtilsDisabled,
+                            utilsPaths, utilsDisabled,
                             devParams);
                 }
             }
@@ -587,7 +586,7 @@ public class Main {
                                             Integer verbosity, PrintStream out, PrintStream err,
                                             File xmlProtocolDir,
                                             DmfDetector.Params dmfDetectorParams,
-                                            Map<ImageUtil, File> imageUtilPaths, Set<ImageUtil> imageUtilsDisabled,
+                                            Map<ExternalUtil, File> utilsPaths, Set<ExternalUtil> utilsDisabled,
                                             Validator.DevParams devParams) throws XmlFileParsingException, FdmfRegistry.UnknownFdmfException, PspDataException, ValidatorConfigurationException, InvalidXPathExpressionException {
         for (File pspDirOrZip : pspGroupDir.listFiles()) {
             //TODO: pocitat nevalidni baliky
@@ -596,7 +595,7 @@ public class Main {
                     verbosity, out, err,
                     xmlProtocolDir, null,
                     dmfDetectorParams,
-                    imageUtilPaths, imageUtilsDisabled,
+                    utilsPaths, utilsDisabled,
                     devParams);
         }
     }
@@ -606,7 +605,7 @@ public class Main {
                                     Integer verbosity, PrintStream out, PrintStream err,
                                     File xmlProtocolDir, File xmlProtocolFile,
                                     DmfDetector.Params dmfDetectorParams,
-                                    Map<ImageUtil, File> imageUtilPaths, Set<ImageUtil> imageUtilsDisabled,
+                                    Map<ExternalUtil, File> utilsPaths, Set<ExternalUtil> utilsDisabled,
                                     Validator.DevParams devParams) throws ValidatorConfigurationException, FdmfRegistry.UnknownFdmfException, PspDataException, InvalidXPathExpressionException, XmlFileParsingException {
         Platform platform = Platform.detectOs();
         out.println(String.format("Platforma: %s", platform.toReadableString()));
@@ -614,9 +613,9 @@ public class Main {
         //validator configuration
         out.println(String.format("Kořenový adresář konfigurace validátoru: %s", configDir.getAbsolutePath()));
         ValidatorConfigurationManager validatorConfigManager = new ValidatorConfigurationManager(configDir);
-        ImageUtilManager imageUtilManager = new ImageUtilManagerFactory(validatorConfigManager.getImageUtilsConfigFile()).buildImageUtilManager(platform.getOperatingSystem());
-        imageUtilManager.setPaths(imageUtilPaths);
-        detectImageTools(out, imageUtilManager, imageUtilsDisabled);
+        ExternalUtilManager externalUtilManager = new ExternalUtilManagerFactory(validatorConfigManager.getExternalUtilsConfigFile()).buildExternalUtilManager(platform.getOperatingSystem());
+        externalUtilManager.setPaths(utilsPaths);
+        detectImageTools(out, externalUtilManager, utilsDisabled);
 
         //pspDirOrZipFile dir or zip file?
         if (!pspDirOrZipFile.exists()) {
@@ -627,14 +626,14 @@ public class Main {
                     throw new IllegalStateException(String.format("Nelze číst adresář %s", pspDirOrZipFile.getAbsolutePath()));
                 }
                 validatePspDir(pspDirOrZipFile,
-                        imageUtilManager, validatorConfigManager,
+                        externalUtilManager, validatorConfigManager,
                         out, verbosity, xmlProtocolDir, xmlProtocolFile,
                         dmfDetectorParams,
                         devParams);
             } else {
                 validatePspZip(pspDirOrZipFile,
                         tmpDir,
-                        imageUtilManager, validatorConfigManager,
+                        externalUtilManager, validatorConfigManager,
                         out, err, verbosity, xmlProtocolDir, xmlProtocolFile,
                         dmfDetectorParams,
                         devParams);
@@ -644,7 +643,7 @@ public class Main {
 
     private static void validatePspZip(File pspZipFile,
                                        File tmpDir,
-                                       ImageUtilManager imageUtilManager, ValidatorConfigurationManager validatorConfigManager,
+                                       ExternalUtilManager externalUtilManager, ValidatorConfigurationManager validatorConfigManager,
                                        PrintStream out, PrintStream err, Integer verbosity,
                                        File xmlProtocolDir, File xmlProtocolFile,
                                        DmfDetector.Params dmfDetectorParams,
@@ -675,13 +674,13 @@ public class Main {
                 File[] filesInContainer = containerDir.listFiles();
                 if (filesInContainer.length == 1 && filesInContainer[0].isDirectory()) {
                     validatePspDir(filesInContainer[0],
-                            imageUtilManager, validatorConfigManager,
+                            externalUtilManager, validatorConfigManager,
                             out, verbosity, xmlProtocolDir, xmlProtocolFile,
                             dmfDetectorParams,
                             devParams);
                 } else {
                     validatePspDir(containerDir,
-                            imageUtilManager, validatorConfigManager,
+                            externalUtilManager, validatorConfigManager,
                             out, verbosity, xmlProtocolDir, xmlProtocolFile,
                             dmfDetectorParams,
                             devParams);
@@ -693,7 +692,7 @@ public class Main {
     }
 
     private static void validatePspDir(File pspDir,
-                                       ImageUtilManager imageUtilManager, ValidatorConfigurationManager validatorConfigManager,
+                                       ExternalUtilManager externalUtilManager, ValidatorConfigurationManager validatorConfigManager,
                                        PrintStream out, Integer verbosity,
                                        File xmlProtocolDir, File xmlProtocolFile,
                                        DmfDetector.Params dmfDetectorParams,
@@ -708,7 +707,7 @@ public class Main {
 
         //initializes j2k profiles according to selected fDMF
         FdmfConfiguration fdmfConfig = new FdmfRegistry(validatorConfigManager).getFdmfConfig(dmfResolved);
-        fdmfConfig.initJ2kProfiles(imageUtilManager);
+        fdmfConfig.initJ2kProfiles(externalUtilManager);
 
         //xml protocol file
         if (xmlProtocolFile == null) {
@@ -727,21 +726,21 @@ public class Main {
     }
 
 
-    private static void detectImageTools(PrintStream out, ImageUtilManager imageUtilManager, Set<ImageUtil> utilsDisabled) {
-        for (ImageUtil util : ImageUtil.values()) {
+    private static void detectImageTools(PrintStream out, ExternalUtilManager externalUtilManager, Set<ExternalUtil> utilsDisabled) {
+        for (ExternalUtil util : ExternalUtil.values()) {
             if (utilsDisabled.contains(util)) {
                 out.println(String.format("Vypnuto použití nástroje %s.", util.getUserFriendlyName()));
             } else {
                 out.print(String.format("Kontroluji dostupnost nástroje %s: ", util.getUserFriendlyName()));
-                if (!imageUtilManager.isVersionDetectionDefined(util)) {
+                if (!externalUtilManager.isVersionDetectionDefined(util)) {
                     out.println("není definován způsob detekce verze");
-                } else if (!imageUtilManager.isUtilExecutionDefined(util)) {
+                } else if (!externalUtilManager.isUtilExecutionDefined(util)) {
                     out.println("není definován způsob spuštění");
                 } else {
                     try {
-                        String version = imageUtilManager.runUtilVersionDetection(util);
+                        String version = externalUtilManager.runUtilVersionDetection(util);
                         if (version != null) {
-                            imageUtilManager.setUtilAvailable(util, true);
+                            externalUtilManager.setUtilAvailable(util, true);
                             out.println("nalezen, verze: " + version);
                         } else {
                             out.println("nenalezen");

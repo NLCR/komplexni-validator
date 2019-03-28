@@ -76,7 +76,7 @@ public class ValidationResultsSummaryDialogController extends DialogController {
 
     public void continueInApp(ActionEvent actionEvent) {
         boolean shown = getConfigurationManager().getBooleanOrDefault(ConfigurationManager.PROP_IMAGE_TOOLS_CHECK_SHOWN, false);
-        main.showImageUtilsCheckDialog(shown, "Pokračovat");
+        main.showExternalUtilsCheckDialog(shown, "Pokračovat");
     }
 
     public void setFdmfsRootDir(ActionEvent actionEvent) {

@@ -29,7 +29,7 @@
                 </Menu>
                 <Menu fx:id="menuSettings" text="Nastavení">
                     <items>
-                        <MenuItem text="Nástroje pro kontrolu obrázků" onAction="#showImageUtilsCheckDialog"/>
+                        <MenuItem text="Externí nástroje" onAction="#showExternalUtilsCheckDialog"/>
                         <MenuItem text="Přeskakování validací" onAction="#showSkippingConfigurationDialog"
                                   disable="false"/>
                         <MenuItem text="Slovníky" onAction="#showDictionariesConfigurationDialog"

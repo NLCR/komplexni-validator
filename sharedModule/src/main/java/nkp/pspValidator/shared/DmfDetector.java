@@ -48,7 +48,7 @@ public class DmfDetector {
             } else if ("sound recording".equals(docType)) {
                 return SOUND_RECORDING;
             } else {
-                throw new PspDataException(pspRootDir, String.format("atribut TYPE elementu mods neobsahuje korektní typ (Monograph/Periodical), ale hodnotu '%s'", docType));
+                throw new PspDataException(pspRootDir, String.format("atribut TYPE elementu mods neobsahuje korektní typ (Monograph/Periodical/sound recording), ale hodnotu '%s'", docType));
             }
         } catch (XPathExpressionException e) {
             throw new InvalidXPathExpressionException("", String.format("chyba v zápisu Xpath: %s", e.getMessage()));

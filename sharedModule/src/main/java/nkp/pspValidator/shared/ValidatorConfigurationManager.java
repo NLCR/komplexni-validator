@@ -10,7 +10,7 @@ import java.io.File;
  */
 public class ValidatorConfigurationManager {
 
-    private final File imageUtilsConfigFile;
+    private final File externalUtilsConfigFile;
     private final File fdmfDir;
     private final File dictionariesDir;
     private final DictionaryManager dictionaryManager;
@@ -23,8 +23,8 @@ public class ValidatorConfigurationManager {
         checkDirExistAndReadable(validatorConfigurationDir);
         fdmfDir = new File(validatorConfigurationDir, "fDMF");
         checkDirExistAndReadable(fdmfDir);
-        imageUtilsConfigFile = new File(validatorConfigurationDir, "imageUtils.xml");
-        checkFileExistAndReadable(imageUtilsConfigFile);
+        externalUtilsConfigFile = new File(validatorConfigurationDir, "externalUtils.xml");
+        checkFileExistAndReadable(externalUtilsConfigFile);
         dictionariesDir = new File(validatorConfigurationDir, "dictionaries");
         checkDirExistAndReadable(dictionariesDir);
         dictionaryManager = new DictionaryManager(dictionariesDir);
@@ -40,8 +40,8 @@ public class ValidatorConfigurationManager {
         checkFileExistAndReadable(metadataProfileXsd);
     }
 
-    public File getImageUtilsConfigFile() {
-        return imageUtilsConfigFile;
+    public File getExternalUtilsConfigFile() {
+        return externalUtilsConfigFile;
     }
 
     public File getFdmfDir() {

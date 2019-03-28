@@ -5,7 +5,7 @@ import nkp.pspValidator.shared.engine.exceptions.InvalidXPathExpressionException
 import nkp.pspValidator.shared.engine.exceptions.ValidatorConfigurationException;
 import nkp.pspValidator.shared.engine.exceptions.XmlFileParsingException;
 import nkp.pspValidator.shared.engine.validationFunctions.*;
-import nkp.pspValidator.shared.imageUtils.validation.ImageValidator;
+import nkp.pspValidator.shared.externalUtils.validation.ImageValidator;
 import nkp.pspValidator.shared.metadataProfile.biblio.BibliographicMetadataProfilesManager;
 import nkp.pspValidator.shared.metadataProfile.mets.MetsProfilesManager;
 import nkp.pspValidator.shared.metadataProfile.tech.TechnicalMetadataProfilesManager;
