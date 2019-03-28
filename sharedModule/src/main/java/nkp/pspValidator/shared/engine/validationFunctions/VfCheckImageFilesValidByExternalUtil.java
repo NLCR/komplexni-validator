@@ -5,10 +5,10 @@ import nkp.pspValidator.shared.engine.Level;
 import nkp.pspValidator.shared.engine.ValueEvaluation;
 import nkp.pspValidator.shared.engine.ValueType;
 import nkp.pspValidator.shared.engine.exceptions.ContractException;
-import nkp.pspValidator.shared.imageUtils.ImageCopy;
-import nkp.pspValidator.shared.imageUtils.ImageUtil;
-import nkp.pspValidator.shared.imageUtils.validation.ImageValidator;
-import nkp.pspValidator.shared.imageUtils.validation.J2kProfile;
+import nkp.pspValidator.shared.externalUtils.ExternalUtil;
+import nkp.pspValidator.shared.externalUtils.ImageCopy;
+import nkp.pspValidator.shared.externalUtils.validation.ImageValidator;
+import nkp.pspValidator.shared.externalUtils.validation.J2kProfile;
 
 import java.io.File;
 import java.util.List;
@@ -59,7 +59,7 @@ public class VfCheckImageFilesValidByExternalUtil extends ValidationFunction {
             }
 
             ValueEvaluation paramUtil = valueParams.getParams(PARAM_UTIL).get(0).getEvaluation();
-            ImageUtil util = (ImageUtil) paramUtil.getData();
+            ExternalUtil util = (ExternalUtil) paramUtil.getData();
             if (util == null) {
                 return invalidValueParamNull(PARAM_UTIL, paramUtil);
             }
@@ -73,7 +73,7 @@ public class VfCheckImageFilesValidByExternalUtil extends ValidationFunction {
         }
     }
 
-    private ValidationResult validate(Level level, List<File> files, ImageCopy copy, ImageUtil util) {
+    private ValidationResult validate(Level level, List<File> files, ImageCopy copy, ExternalUtil util) {
         if (!engine.getImageValidator().isUtilAvailable(util)) {
             return singlErrorResult(invalid(Level.INFO, "nástroj %s není dostupný", util.getUserFriendlyName()));
         } else {

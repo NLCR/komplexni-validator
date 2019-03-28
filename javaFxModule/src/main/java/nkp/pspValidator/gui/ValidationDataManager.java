@@ -2,8 +2,8 @@ package nkp.pspValidator.gui;
 
 import nkp.pspValidator.shared.FdmfRegistry;
 import nkp.pspValidator.shared.ValidatorConfigurationManager;
-import nkp.pspValidator.shared.imageUtils.ImageUtil;
-import nkp.pspValidator.shared.imageUtils.ImageUtilManager;
+import nkp.pspValidator.shared.externalUtils.ExternalUtil;
+import nkp.pspValidator.shared.externalUtils.ExternalUtilManager;
 
 /**
  * Created by Martin Řehánek on 2.12.16.
@@ -12,7 +12,7 @@ public class ValidationDataManager {
 
 
     private static ValidationDataManager instance;
-    private ImageUtilManager imageUtilManager;
+    private ExternalUtilManager externalUtilManager;
     private ConfigurationManager configurationManager;
     private FdmfRegistry fdmfRegistry;
     private ValidatorConfigurationManager validatorConfigMgr;
@@ -21,16 +21,16 @@ public class ValidationDataManager {
         this.configurationManager = configurationManager;
     }
 
-    public ImageUtilManager getImageUtilManager() {
-        return imageUtilManager;
+    public ExternalUtilManager getExternalUtilManager() {
+        return externalUtilManager;
     }
 
-    public void setImageUtilManager(ImageUtilManager imageUtilManager) {
-        this.imageUtilManager = imageUtilManager;
-        imageUtilManager.setPath(ImageUtil.JHOVE, configurationManager.getFileOrNull(ConfigurationManager.PROP_JHOVE_DIR));
-        imageUtilManager.setPath(ImageUtil.JPYLYZER, configurationManager.getFileOrNull(ConfigurationManager.PROP_JPYLYZER_DIR));
-        imageUtilManager.setPath(ImageUtil.IMAGE_MAGICK, configurationManager.getFileOrNull(ConfigurationManager.PROP_IMAGE_MAGICK_DIR));
-        imageUtilManager.setPath(ImageUtil.KAKADU, configurationManager.getFileOrNull(ConfigurationManager.PROP_KAKADU_DIR));
+    public void setExternalUtilManager(ExternalUtilManager externalUtilManager) {
+        this.externalUtilManager = externalUtilManager;
+        externalUtilManager.setPath(ExternalUtil.JHOVE, configurationManager.getFileOrNull(ConfigurationManager.PROP_JHOVE_DIR));
+        externalUtilManager.setPath(ExternalUtil.JPYLYZER, configurationManager.getFileOrNull(ConfigurationManager.PROP_JPYLYZER_DIR));
+        externalUtilManager.setPath(ExternalUtil.IMAGE_MAGICK, configurationManager.getFileOrNull(ConfigurationManager.PROP_IMAGE_MAGICK_DIR));
+        externalUtilManager.setPath(ExternalUtil.KAKADU, configurationManager.getFileOrNull(ConfigurationManager.PROP_KAKADU_DIR));
     }
 
     public void setFdmfRegistry(FdmfRegistry fdmfRegistry) {

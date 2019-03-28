@@ -15,8 +15,8 @@ import javafx.stage.WindowEvent;
 import nkp.pspValidator.shared.FdmfRegistry;
 import nkp.pspValidator.shared.ValidatorConfigurationManager;
 import nkp.pspValidator.shared.engine.exceptions.ValidatorConfigurationException;
-import nkp.pspValidator.shared.imageUtils.ImageUtilManager;
-import nkp.pspValidator.shared.imageUtils.ImageUtilManagerFactory;
+import nkp.pspValidator.shared.externalUtils.ExternalUtilManager;
+import nkp.pspValidator.shared.externalUtils.ExternalUtilManagerFactory;
 
 import java.io.File;
 import java.util.logging.Logger;
@@ -90,8 +90,8 @@ public class ValidationDataInitializationDialogController extends DialogControll
                         updateRootDir(validatorConfigDir.getCanonicalPath());
                         ValidatorConfigurationManager validatorConfigMgr = new ValidatorConfigurationManager(validatorConfigDir);
                         //Thread.sleep(5000);
-                        ImageUtilManager imageUtilManager = new ImageUtilManagerFactory(validatorConfigMgr.getImageUtilsConfigFile()).buildImageUtilManager(getConfigurationManager().getPlatform().getOperatingSystem());
-                        validationDataManager.setImageUtilManager(imageUtilManager);
+                        ExternalUtilManager externalUtilManager = new ExternalUtilManagerFactory(validatorConfigMgr.getExternalUtilsConfigFile()).buildExternalUtilManager(getConfigurationManager().getPlatform().getOperatingSystem());
+                        validationDataManager.setExternalUtilManager(externalUtilManager);
                         validationDataManager.setFdmfRegistry(new FdmfRegistry(validatorConfigMgr));
                         validationDataManager.setValidatorConfigMgr(validatorConfigMgr);
                         processResult(new Result(true, null));
@@ -132,7 +132,7 @@ public class ValidationDataInitializationDialogController extends DialogControll
 
     public void continueInApp(ActionEvent actionEvent) {
         boolean shown = getConfigurationManager().getBooleanOrDefault(ConfigurationManager.PROP_IMAGE_TOOLS_CHECK_SHOWN, false);
-        main.showImageUtilsCheckDialog(shown || ConfigurationManager.DEV_MODE, "Pokračovat");
+        main.showExternalUtilsCheckDialog(shown || ConfigurationManager.DEV_MODE, "Pokračovat");
     }
 
     public void setFdmfsRootDir(ActionEvent actionEvent) {

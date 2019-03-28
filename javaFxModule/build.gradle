@@ -15,7 +15,7 @@ println "Java home: " + System.properties['java.home']
 //https://github.com/FibreFoX/javafx-gradle-plugin
 
 group 'nkp.pspValidator'
-version '2.1-dev-01'
+version '2.1-dev-02'
 
 //sourceCompatibility = 1.8
 
@@ -86,7 +86,7 @@ jfx {
 
     //bundler = 'windows.app'//bundler='ALL'
     appName = 'KomplexniValidatorGUI'
-    nativeReleaseVersion = "2.1-dev-01"
+    nativeReleaseVersion = "2.1-dev-02"
 
     //additionalAppResources = ['../sharedModule/src/main/resources/nkp/pspValidator/shared','src/main/resources/config']
     additionalAppResources = '../sharedModule/src/main/resources/nkp/pspValidator/shared'

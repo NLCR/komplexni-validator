@@ -1,0 +1,226 @@
+<!--
+    This file defines available external utils.
+    Available variables are:
+    ${UTIL_PATH} - in version detection and execution will be replaced by whole path to given util, if the path is set, and with empty string otherwise
+    ${TARGET_FILE} - in execution will be replaced by target file, with absolute path
+-->
+<externalUtils>
+    <util name="JPYLYZER">
+        <versionDetection>
+            <operatingSystem name="LINUX">
+                <command>${UTIL_PATH}jpylyzer --version</command>
+                <parser>
+                    <stream>STDERR</stream>
+                    <!--      <regexp>(?s).*</regexp>-->
+                    <regexp>\A[0-9\.]+$</regexp>
+                </parser>
+            </operatingSystem>
+            <operatingSystem name="WINDOWS">
+                <command>${UTIL_PATH}jpylyzer.exe --version</command>
+                <parser>
+                    <stream>STDERR</stream>
+                    <regexp>\A[0-9\.]+$</regexp>
+                </parser>
+            </operatingSystem>
+            <!--zdrojove kody z https://github.com/openpreserve/jpylyzer/releases a spousteni pres python-->
+            <!--http://jpylyzer.openpreservation.org//installation.html-->
+            <operatingSystem name="MAC">
+                <command>python ${UTIL_PATH}jpylyzer.py --version</command>
+                <parser>
+                    <stream>STDERR</stream>
+                    <regexp>\A[0-9\.]+$</regexp>
+                </parser>
+            </operatingSystem>
+        </versionDetection>
+        <execution>
+            <operatingSystem name="LINUX">
+                <command>${UTIL_PATH}jpylyzer jp2In ${TARGET_FILE}</command>
+                <parser>
+                    <stream>STDOUT</stream>
+                    <regexp>(?s).*</regexp>
+                </parser>
+            </operatingSystem>
+            <operatingSystem name="WINDOWS">
+                <command>${UTIL_PATH}jpylyzer.exe jp2In ${TARGET_FILE}</command>
+                <parser>
+                    <stream>STDOUT</stream>
+                    <regexp>(?s).*</regexp>
+                </parser>
+            </operatingSystem>
+            <operatingSystem name="MAC">
+                <command>python ${UTIL_PATH}jpylyzer.py jp2In ${TARGET_FILE}</command>
+                <parser>
+                    <stream>STDOUT</stream>
+                    <regexp>(?s).*</regexp>
+                </parser>
+            </operatingSystem>
+        </execution>
+    </util>
+
+    <util name="IMAGE_MAGICK">
+        <versionDetection>
+            <!--https://gist.github.com/Lammerink/3926636-->
+            <operatingSystem name="LINUX">
+                <command>${UTIL_PATH}convert -version</command>
+                <parser>
+                    <stream>STDOUT</stream>
+                    <!--<regexp>ImageMagick\s\S*\s\S*</regexp>-->
+                    <regexp>ImageMagick [0-9\.\-]+</regexp>
+                </parser>
+            </operatingSystem>
+            <operatingSystem name="WINDOWS">
+                <command>${UTIL_PATH}magick.exe convert -version</command>
+                <parser>
+                    <stream>STDOUT</stream>
+                    <!--<regexp>ImageMagick\s\S*\s\S*</regexp>-->
+                    <regexp>ImageMagick [0-9\.\-]+</regexp>
+                </parser>
+            </operatingSystem>
+            <!--http://www.imagemagick.org/script/binary-releases.php-->
+            <!--instalace pres MacPorts-->
+            <operatingSystem name="MAC">
+                <command>${UTIL_PATH}convert -version</command>
+                <parser>
+                    <stream>STDOUT</stream>
+                    <regexp>ImageMagick\s\S*\s\S*</regexp>
+                </parser>
+            </operatingSystem>
+        </versionDetection>
+        <execution>
+            <operatingSystem name="LINUX">
+                <command>${UTIL_PATH}identify -verbose ${TARGET_FILE}</command>
+                <parser>
+                    <stream>STDERR</stream>
+                    <regexp>(?s).*</regexp>
+                </parser>
+            </operatingSystem>
+            <operatingSystem name="WINDOWS">
+                <command>${UTIL_PATH}magick.exe identify -verbose ${TARGET_FILE}</command>
+                <parser>
+                    <stream>STDERR</stream>
+                    <regexp>(?s).*</regexp>
+                </parser>
+            </operatingSystem>
+            <operatingSystem name="MAC">
+                <command>${UTIL_PATH}identify -verbose ${TARGET_FILE}</command>
+                <parser>
+                    <stream>STDOUT</stream>
+                    <regexp>(?s).*</regexp>
+                </parser>
+            </operatingSystem>
+        </execution>
+    </util>
+
+    <util name="JHOVE">
+        <versionDetection>
+            <operatingSystem name="LINUX">
+                <command>${UTIL_PATH}jhove --version</command>
+                <parser>
+                    <stream>STDOUT</stream>
+                    <!--<regexp>Jhove \(.*\)</regexp>-->
+                    <regexp>Rel\. [0-9\.]+</regexp>
+                </parser>
+            </operatingSystem>
+            <operatingSystem name="WINDOWS">
+                <!--TODO: v aplikaci vyzadovat minimalni verzi 1.14
+                http://openpreservation.org/news/jhove-1-14-released/
+                instalace: stahnout jhove-latest.jar (instalator) a spustit double click nebo java -jar jhove-latest.jar
+                -->
+                <command>${UTIL_PATH}jhove.bat --version</command>
+                <parser>
+                    <stream>STDOUT</stream>
+                    <regexp>Rel\. [0-9\.]+</regexp>
+                    <!--<regexp>Jhove \(.*\)</regexp>-->
+                    <!--<regexp>(?m)^.*$</regexp>-->
+                </parser>
+            </operatingSystem>
+            <!--instalace podle http://jhove.openpreservation.org/getting-started/-->
+            <!--stahnout jhove-latest.jar a double click spusti instalator (predpoklad jre)-->
+            <operatingSystem name="MAC">
+                <command>${UTIL_PATH}jhove --version</command>
+                <parser>
+                    <stream>STDOUT</stream>
+                    <regexp>Jhove \(.*\)</regexp>
+                </parser>
+            </operatingSystem>
+        </versionDetection>
+        <execution>
+            <operatingSystem name="LINUX">
+                <command>${UTIL_PATH}jhove -h XML -m jpeg2000-hul -k ${TARGET_FILE}</command>
+                <parser>
+                    <stream>STDOUT</stream>
+                    <regexp>(?s)&lt;\?xml.*$</regexp>
+                </parser>
+            </operatingSystem>
+            <operatingSystem name="WINDOWS">
+                <command>${UTIL_PATH}jhove.bat -h XML -m jpeg2000-hul -k ${TARGET_FILE}</command>
+                <parser>
+                    <stream>STDOUT</stream>
+                    <regexp>(?s)&lt;\?xml.*$</regexp>
+                </parser>
+            </operatingSystem>
+            <operatingSystem name="MAC">
+                <command>${UTIL_PATH}jhove -h XML -m jpeg2000-hul -k ${TARGET_FILE}</command>
+                <parser>
+                    <stream>STDOUT</stream>
+                    <regexp>(?s)&lt;\?xml.*$</regexp>
+                </parser>
+            </operatingSystem>
+        </execution>
+    </util>
+
+    <util name="KAKADU">
+        <versionDetection>
+            <operatingSystem name="LINUX">
+                <command>${UTIL_PATH}kdu_expand -version</command>
+                <parser>
+                    <stream>STDOUT</stream>
+                    <!--<regexp>Current core system version is \S*</regexp>-->
+                    <regexp>v[\.0-9]+</regexp>
+                </parser>
+            </operatingSystem>
+            <operatingSystem name="WINDOWS">
+                <command>${UTIL_PATH}kdu_expand.exe -version</command>
+                <parser>
+                    <stream>STDOUT</stream>
+                    <!--<regexp>Current core system version is \S*</regexp>-->
+                    <regexp>v[\.0-9]+</regexp>
+                </parser>
+            </operatingSystem>
+            <!--demo app does not work in macOS 10.12 Sierra, so not tested-->
+            <operatingSystem name="MAC">
+                <command>${UTIL_PATH}kdu_expand -version</command>
+                <parser>
+                    <stream>STDOUT</stream>
+                    <regexp>Current core system version is \S*</regexp>
+                </parser>
+            </operatingSystem>
+        </versionDetection>
+        <execution>
+            <operatingSystem name="LINUX">
+                <command>${UTIL_PATH}kdu_expand -i ${TARGET_FILE}</command>
+                <parser>
+                    <stream>STDERR</stream>
+                    <regexp>(?s).*</regexp>
+                </parser>
+            </operatingSystem>
+            <operatingSystem name="WINDOWS">
+                <command>${UTIL_PATH}kdu_expand.exe -i ${TARGET_FILE}</command>
+                <parser>
+                    <stream>STDERR</stream>
+                    <regexp>(?s).*</regexp>
+                </parser>
+            </operatingSystem>
+            <!--demo app does not work in macOS 10.12 Sierra, so not tested-->
+            <operatingSystem name="LINUX">
+                <command>${UTIL_PATH}kdu_expand -i ${TARGET_FILE}</command>
+                <parser>
+                    <stream>STDERR</stream>
+                    <regexp>(?s).*</regexp>
+                </parser>
+            </operatingSystem>
+        </execution>
+    </util>
+
+
+</externalUtils>

@@ -14,7 +14,7 @@ public class Utils {
 
     public static Validator buildValidator(ValidationDataManager mgr, Dmf dmf, File pspDir) throws FdmfRegistry.UnknownFdmfException, ValidatorConfigurationException {
         FdmfConfiguration fdmfConfig = mgr.getFdmfRegistry().getFdmfConfig(dmf);
-        fdmfConfig.initJ2kProfiles(mgr.getImageUtilManager());
+        fdmfConfig.initJ2kProfiles(mgr.getExternalUtilManager());
         DictionaryManager dictionaryManager = mgr.getValidatorConfigMgr().getDictionaryManager();
         return ValidatorFactory.buildValidator(fdmfConfig, pspDir, dictionaryManager);
     }

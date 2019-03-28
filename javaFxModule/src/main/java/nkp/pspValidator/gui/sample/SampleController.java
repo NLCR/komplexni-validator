@@ -6,10 +6,10 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import nkp.pspValidator.shared.Platform;
 import nkp.pspValidator.shared.engine.exceptions.ValidatorConfigurationException;
-import nkp.pspValidator.shared.imageUtils.CliCommand;
-import nkp.pspValidator.shared.imageUtils.ImageUtil;
-import nkp.pspValidator.shared.imageUtils.ImageUtilManager;
-import nkp.pspValidator.shared.imageUtils.ImageUtilManagerFactory;
+import nkp.pspValidator.shared.externalUtils.CliCommand;
+import nkp.pspValidator.shared.externalUtils.ExternalUtil;
+import nkp.pspValidator.shared.externalUtils.ExternalUtilManager;
+import nkp.pspValidator.shared.externalUtils.ExternalUtilManagerFactory;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -27,9 +27,9 @@ public class SampleController {
     private static final File MC_FILE_WINDOWS = new File("C:\\Users\\Lenovo\\Dropbox\\PspValidator\\data\\monograph_1.2\\b50eb6b0-f0a4-11e3-b72e-005056827e52\\mastercopy\\mc_b50eb6b0-f0a4-11e3-b72e-005056827e52_0001.jp2");
     private static final File MC_FILE_MAC = new File("/Users/martinrehanek/Dropbox/PspValidator/data/monograph_1.2/b50eb6b0-f0a4-11e3-b72e-005056827e52/mastercopy/mc_b50eb6b0-f0a4-11e3-b72e-005056827e52_0001.jp2");
 
-    private static final File IMAGE_PROPERTIES_LINUX = new File("/home/martin/IdeaProjects/PspValidator/sharedModule/src/main/resources/nkp/pspValidator/shared/fDMF/imageUtils.xml");
-    private static final File IMAGE_PROPERTIES_WINDOWS = new File("C:\\Users\\Lenovo\\IdeaProjects\\PspValidator\\sharedModule\\src\\main\\resources\\nkp\\pspValidator\\shared\\fDMF\\imageUtils.xml");
-    private static final File IMAGE_PROPERTIES_MAC = new File("/Users/martinrehanek/IdeaProjects/PspValidator/sharedModule/src/main/resources/nkp/pspValidator/shared/fDMF/imageUtils.xml");
+    private static final File IMAGE_PROPERTIES_LINUX = new File("/home/martin/IdeaProjects/PspValidator/sharedModule/src/main/resources/nkp/pspValidator/shared/fDMF/externalUtils.xml");
+    private static final File IMAGE_PROPERTIES_WINDOWS = new File("C:\\Users\\Lenovo\\IdeaProjects\\PspValidator\\sharedModule\\src\\main\\resources\\nkp\\pspValidator\\shared\\fDMF\\externalUtils.xml");
+    private static final File IMAGE_PROPERTIES_MAC = new File("/Users/martinrehanek/IdeaProjects/PspValidator/sharedModule/src/main/resources/nkp/pspValidator/shared/fDMF/externalUtils.xml");
 
     @FXML
     Label logLabel;
@@ -58,32 +58,31 @@ public class SampleController {
 
 
     private final Platform platform;
-    //private final ImageUtilRegistry utilRegistry = ImageUtilRegistryImpl.instanceOf();
-    private final ImageUtilManager utilManager;
+    private final ExternalUtilManager utilManager;
 
 
     public SampleController() throws ValidatorConfigurationException {
         platform = Platform.detectOs();
         LOGGER.info("platform: " + platform.toString());
         File imageProperties = getImageProperties(platform);
-        utilManager = new ImageUtilManagerFactory(imageProperties).buildImageUtilManager(platform.getOperatingSystem());
+        utilManager = new ExternalUtilManagerFactory(imageProperties).buildExternalUtilManager(platform.getOperatingSystem());
         //paths
         switch (platform.getOperatingSystem()) {
             case LINUX: {
-                utilManager.setPath(ImageUtil.KAKADU, new File("/home/martin/zakazky/NKP-Komplexni_Validator/utility/kakadu/KDU78_Demo_Apps_for_Linux-x86-64_160226"));
+                utilManager.setPath(ExternalUtil.KAKADU, new File("/home/martin/zakazky/NKP-Komplexni_Validator/utility/kakadu/KDU78_Demo_Apps_for_Linux-x86-64_160226"));
                 break;
             }
             case WINDOWS: {
-                utilManager.setPath(ImageUtil.JHOVE, new File("C:\\Users\\Lenovo\\Documents\\software\\jhove"));
-                utilManager.setPath(ImageUtil.JPYLYZER, new File("C:\\Users\\Lenovo\\Documents\\software\\jpylyzer_1.17.0_win64"));
-                utilManager.setPath(ImageUtil.IMAGE_MAGICK, new File("C:\\Program Files\\ImageMagick-7.0.3-Q16"));
-                utilManager.setPath(ImageUtil.KAKADU, new File("C:\\Program Files (x86)\\Kakadu\\"));
+                utilManager.setPath(ExternalUtil.JHOVE, new File("C:\\Users\\Lenovo\\Documents\\software\\jhove"));
+                utilManager.setPath(ExternalUtil.JPYLYZER, new File("C:\\Users\\Lenovo\\Documents\\software\\jpylyzer_1.17.0_win64"));
+                utilManager.setPath(ExternalUtil.IMAGE_MAGICK, new File("C:\\Program Files\\ImageMagick-7.0.3-Q16"));
+                utilManager.setPath(ExternalUtil.KAKADU, new File("C:\\Program Files (x86)\\Kakadu\\"));
                 break;
             }
             case MAC: {
-                utilManager.setPath(ImageUtil.JHOVE, new File("/Users/martinrehanek/Software/jhove"));
-                utilManager.setPath(ImageUtil.JPYLYZER, new File("/Users/martinrehanek/Software/jpylyzer-1.17.0/jpylyzer"));
-                utilManager.setPath(ImageUtil.IMAGE_MAGICK, new File("/opt/local/bin"));
+                utilManager.setPath(ExternalUtil.JHOVE, new File("/Users/martinrehanek/Software/jhove"));
+                utilManager.setPath(ExternalUtil.JPYLYZER, new File("/Users/martinrehanek/Software/jpylyzer-1.17.0/jpylyzer"));
+                utilManager.setPath(ExternalUtil.IMAGE_MAGICK, new File("/opt/local/bin"));
                 break;
             }
             default:
@@ -126,12 +125,12 @@ public class SampleController {
     }
 
 
-    public void detectUtilVersion(ImageUtil util, Label label) {
+    public void detectUtilVersion(ExternalUtil util, Label label) {
         //detectUtilVersionOnFxThread(util,label);
         detectUtilVersionOnWorkerThread(util, label);
     }
 
-    public void detectUtilVersionOnFxThread(ImageUtil util, Label label) {
+    public void detectUtilVersionOnFxThread(ExternalUtil util, Label label) {
         label.setText(String.format("checking %s ...", util));
         try {
             if (!utilManager.isVersionDetectionDefined(util)) {
@@ -149,7 +148,7 @@ public class SampleController {
     }
 
 
-    public void detectUtilVersionOnWorkerThread(ImageUtil util, Label label) {
+    public void detectUtilVersionOnWorkerThread(ExternalUtil util, Label label) {
         label.setText(String.format("checking %s ...", util));
         Task task = new Task<Void>() {
             @Override
@@ -176,13 +175,13 @@ public class SampleController {
     }
 
 
-    public void runUtil(ImageUtil type, Label label, File imageFile) {
+    public void runUtil(ExternalUtil type, Label label, File imageFile) {
         runUtilOnWorkerThread(type, label, imageFile);
         //runUtilOnFxThread(type, label, imageFile);
     }
 
 
-    public void runUtilOnFxThread(ImageUtil util, Label label, File imageFile) {
+    public void runUtilOnFxThread(ExternalUtil util, Label label, File imageFile) {
         label.setText(String.format("running %s ...", util));
         try {
             if (!utilManager.isUtilExecutionDefined(util)) {
@@ -199,7 +198,7 @@ public class SampleController {
         }
     }
 
-    public void runUtilOnWorkerThread(ImageUtil util, Label label, File imageFile) {
+    public void runUtilOnWorkerThread(ExternalUtil util, Label label, File imageFile) {
         label.setText(String.format("running %s ...", util));
         Task task = new Task<Void>() {
 
@@ -242,38 +241,38 @@ public class SampleController {
     }
 
     public void detectJpylyzerVersion(ActionEvent actionEvent) {
-        detectUtilVersion(ImageUtil.JPYLYZER, detectJpylyzerVersionLabel);
+        detectUtilVersion(ExternalUtil.JPYLYZER, detectJpylyzerVersionLabel);
     }
 
     public void detectJhoveVersion(ActionEvent actionEvent) {
-        detectUtilVersion(ImageUtil.JHOVE, detectJhoveVersionLabel);
+        detectUtilVersion(ExternalUtil.JHOVE, detectJhoveVersionLabel);
     }
 
     public void detectImageMagickVersion(ActionEvent actionEvent) {
-        detectUtilVersion(ImageUtil.IMAGE_MAGICK, detectImageMagickVersionLabel);
+        detectUtilVersion(ExternalUtil.IMAGE_MAGICK, detectImageMagickVersionLabel);
     }
 
     public void detectKakaduVersion(ActionEvent actionEvent) {
-        detectUtilVersion(ImageUtil.KAKADU, detectKakaduVersionLabel);
+        detectUtilVersion(ExternalUtil.KAKADU, detectKakaduVersionLabel);
     }
 
 
     public void runJpylyzer(ActionEvent actionEvent) {
-        runUtil(ImageUtil.JPYLYZER, runJpylyzerLabel, getMcFile());
+        runUtil(ExternalUtil.JPYLYZER, runJpylyzerLabel, getMcFile());
     }
 
 
     public void runJhove(ActionEvent actionEvent) {
-        runUtil(ImageUtil.JHOVE, runJhoveLabel, getMcFile());
+        runUtil(ExternalUtil.JHOVE, runJhoveLabel, getMcFile());
     }
 
 
     public void runImageMagick(ActionEvent actionEvent) {
-        runUtil(ImageUtil.IMAGE_MAGICK, runImageMagickLabel, getMcFile());
+        runUtil(ExternalUtil.IMAGE_MAGICK, runImageMagickLabel, getMcFile());
     }
 
     public void runKakadu(ActionEvent actionEvent) {
-        runUtil(ImageUtil.KAKADU, runKakaduLabel, getMcFile());
+        runUtil(ExternalUtil.KAKADU, runKakaduLabel, getMcFile());
     }
 
     public void installImageMagick(ActionEvent actionEvent) {

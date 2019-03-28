@@ -1,11 +1,10 @@
 package nkp.pspValidator.shared;
 
-import com.sun.scenario.effect.impl.sw.sse.SSEBlend_SRC_OUTPeer;
 import nkp.pspValidator.shared.engine.exceptions.ValidatorConfigurationException;
-import nkp.pspValidator.shared.imageUtils.ImageCopy;
-import nkp.pspValidator.shared.imageUtils.ImageUtil;
-import nkp.pspValidator.shared.imageUtils.ImageUtilManager;
-import nkp.pspValidator.shared.imageUtils.validation.ImageValidator;
+import nkp.pspValidator.shared.externalUtils.ExternalUtil;
+import nkp.pspValidator.shared.externalUtils.ImageCopy;
+import nkp.pspValidator.shared.externalUtils.ExternalUtilManager;
+import nkp.pspValidator.shared.externalUtils.validation.ImageValidator;
 
 import javax.xml.XMLConstants;
 import javax.xml.transform.stream.StreamSource;
@@ -149,18 +148,18 @@ public class FdmfConfiguration {
         }
     }
 
-    public void initJ2kProfiles(ImageUtilManager imageUtilManager) throws ValidatorConfigurationException {
-        imageValidator = new ImageValidator(imageUtilManager);
+    public void initJ2kProfiles(ExternalUtilManager externalUtilManager) throws ValidatorConfigurationException {
+        imageValidator = new ImageValidator(externalUtilManager);
         for (ImageCopy copy : ImageCopy.values()) {
-            for (ImageUtil util : ImageUtil.values()) {
-                if (imageUtilManager.isUtilAvailable(util)) {
+            for (ExternalUtil util : ExternalUtil.values()) {
+                if (externalUtilManager.isUtilAvailable(util)) {
                     validateAndProcessJ2kProfile(fdmfRoot, imageValidator, copy, util);
                 }
             }
         }
     }
 
-    private void validateAndProcessJ2kProfile(File fdmfRoot, ImageValidator validator, ImageCopy copy, ImageUtil util) throws ValidatorConfigurationException {
+    private void validateAndProcessJ2kProfile(File fdmfRoot, ImageValidator validator, ImageCopy copy, ExternalUtil util) throws ValidatorConfigurationException {
         File rootFile = new File(fdmfRoot, J2K_PROFILES_DIR);
         checkDirExistAndReadable(rootFile);
         File copyFile = buildImageCopyDir(rootFile, copy);
