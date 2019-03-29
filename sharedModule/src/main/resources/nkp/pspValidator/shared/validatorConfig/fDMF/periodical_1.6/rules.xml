@@ -2640,7 +2640,6 @@
                                 <value name="string" type="STRING">editorial</value>
                                 <value name="string" type="STRING">obituary</value>
                                 <value name="string" type="STRING">bibliographicalPortrait</value>
-                                <value name="string" type="STRING">dedication</value> 
                                 <value name="string" type="STRING">colophon</value> 
                                 <value name="string" type="STRING">interview</value> 
                                 <value name="string" type="STRING">anotation</value>
