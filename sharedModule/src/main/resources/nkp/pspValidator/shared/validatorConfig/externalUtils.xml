@@ -87,6 +87,7 @@
             </operatingSystem>
         </versionDetection>
         <execution>
+            <!--NOTE: if the file is empty, ideentify -verbose doesn't print anything at all-->
             <operatingSystem name="LINUX">
                 <command>${UTIL_PATH}identify -verbose ${TARGET_FILE}</command>
                 <parser>
@@ -104,7 +105,9 @@
             <operatingSystem name="MAC">
                 <command>${UTIL_PATH}identify -verbose ${TARGET_FILE}</command>
                 <parser>
-                    <stream>STDOUT</stream>
+                    <!--at least in version 6.9.9 the error message finally goes to STDERR-->
+                    <stream>STDERR</stream>
+                    <!--<stream>STDOUT</stream>-->
                     <regexp>(?s).*</regexp>
                 </parser>
             </operatingSystem>
@@ -212,7 +215,7 @@
                 </parser>
             </operatingSystem>
             <!--demo app does not work in macOS 10.12 Sierra, so not tested-->
-            <operatingSystem name="LINUX">
+            <operatingSystem name="MAC">
                 <command>${UTIL_PATH}kdu_expand -i ${TARGET_FILE}</command>
                 <parser>
                     <stream>STDERR</stream>
