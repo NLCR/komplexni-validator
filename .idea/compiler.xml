@@ -14,12 +14,10 @@
       <module name="nkp.pspValidator.sharedModule.test" target="1.8" />
       <module name="PspValidator.cliModule.main" target="1.8" />
       <module name="PspValidator.cliModule.test" target="1.8" />
+      <module name="PspValidator.javaFxModule.main" target="1.8" />
+      <module name="PspValidator.javaFxModule.test" target="1.8" />
       <module name="PspValidator.sharedModule.main" target="1.8" />
       <module name="PspValidator.sharedModule.test" target="1.8" />
-      <module name="rzehan.javaFxModule.main" target="1.8" />
-      <module name="rzehan.javaFxModule.test" target="1.8" />
-      <module name="rzehan.PspValidator.main" target="1.8" />
-      <module name="rzehan.PspValidator.test" target="1.8" />
     </bytecodeTargetLevel>
   </component>
 </project>
