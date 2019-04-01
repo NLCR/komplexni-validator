@@ -25,8 +25,7 @@ import static nkp.pspValidator.shared.FileUtils.checkFileExistAndReadable;
 public class FdmfConfiguration {
 
     private static final String XSD_DIR = "xsd";
-    // TODO: 2019-04-01 rename dir
-    private static final String DIR_BINARY_FILE_PROFILES = "jpeg2000Profiles";
+    private static final String DIR_BINARY_FILE_PROFILES = "binaryFileProfiles";
     private static final String DIR_BFP_SOURCE_IMAGE_USER_COPY = "uc";
     private static final String DIR_BFP_SOURCE_IMAGE_MASTER_COPY = "mc";
     private static final String DIR_BFP_SOURCE_AUDIO_SOURCE = "sa";
