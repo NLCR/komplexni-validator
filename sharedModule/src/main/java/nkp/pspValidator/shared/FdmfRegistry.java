@@ -47,7 +47,7 @@ public class FdmfRegistry {
             mapToStoreResults.put(versionNumber, new FdmfConfiguration(
                     fdmfDir,
                     validatorConfigManager.getFdmfConfigXsd(),
-                    validatorConfigManager.getJ2kProfileXsd(),
+                    validatorConfigManager.getBinaryFileProfileXsd(),
                     validatorConfigManager.getMetadataProfileXsd()));
         }
     }

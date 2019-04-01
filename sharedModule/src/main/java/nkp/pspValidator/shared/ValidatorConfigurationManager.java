@@ -16,7 +16,7 @@ public class ValidatorConfigurationManager {
     private final DictionaryManager dictionaryManager;
     //xsds
     private final File fdmfConfigXsd;
-    private final File j2kProfileXsd;
+    private final File binaryFileProfileXsd;
     private final File metadataProfileXsd;
 
     public ValidatorConfigurationManager(File validatorConfigurationDir) throws ValidatorConfigurationException {
@@ -34,8 +34,8 @@ public class ValidatorConfigurationManager {
         checkDirExistAndReadable(xsdDir);
         fdmfConfigXsd = new File(xsdDir, "fdmfConfig.xsd");
         checkFileExistAndReadable(fdmfConfigXsd);
-        j2kProfileXsd = new File(xsdDir, "j2kProfile.xsd");
-        checkFileExistAndReadable(j2kProfileXsd);
+        binaryFileProfileXsd = new File(xsdDir, "binaryFileProfile.xsd");
+        checkFileExistAndReadable(binaryFileProfileXsd);
         metadataProfileXsd = new File(xsdDir, "metadataProfile.xsd");
         checkFileExistAndReadable(metadataProfileXsd);
     }
@@ -52,8 +52,8 @@ public class ValidatorConfigurationManager {
         return fdmfConfigXsd;
     }
 
-    public File getJ2kProfileXsd() {
-        return j2kProfileXsd;
+    public File getBinaryFileProfileXsd() {
+        return binaryFileProfileXsd;
     }
 
     public File getDictionariesDir() {
