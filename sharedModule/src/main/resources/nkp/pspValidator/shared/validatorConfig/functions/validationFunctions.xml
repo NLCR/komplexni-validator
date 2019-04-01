@@ -307,7 +307,7 @@
         </params-def>
     </validationFunction>
 
-    <validationFunction functionName="checkImageFilesValidByExternalUtil">
+    <validationFunction functionName="checkBinaryFilesValidByExternalUtil">
         <params-def>
             <value name="level" type="LEVEL"/>
             <value name="files" type="FILE_LIST"/>

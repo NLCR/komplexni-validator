@@ -5,7 +5,7 @@ import nkp.pspValidator.shared.engine.exceptions.InvalidXPathExpressionException
 import nkp.pspValidator.shared.engine.exceptions.ValidatorConfigurationException;
 import nkp.pspValidator.shared.engine.exceptions.XmlFileParsingException;
 import nkp.pspValidator.shared.engine.validationFunctions.*;
-import nkp.pspValidator.shared.externalUtils.validation.ImageValidator;
+import nkp.pspValidator.shared.externalUtils.validation.BinaryFileValidator;
 import nkp.pspValidator.shared.metadataProfile.biblio.BibliographicMetadataProfilesManager;
 import nkp.pspValidator.shared.metadataProfile.mets.MetsProfilesManager;
 import nkp.pspValidator.shared.metadataProfile.tech.TechnicalMetadataProfilesManager;
@@ -35,7 +35,7 @@ public class Engine {
     private final XmlManager xmlManager = new XmlManager(true);
 
     private final RulesManager rulesManager = new RulesManager();
-    private final ImageValidator imageValidator;
+    private final BinaryFileValidator binaryFileValidator;
 
     private BibliographicMetadataProfilesManager bibliographicMetadataProfilesManager;
     private TechnicalMetadataProfilesManager technicalMetadataProfilesManager;
@@ -65,8 +65,8 @@ public class Engine {
         return metsProfilesManager;
     }
 
-    public Engine(ImageValidator imageValidator) {
-        this.imageValidator = imageValidator;
+    public Engine(BinaryFileValidator binaryFileValidator) {
+        this.binaryFileValidator = binaryFileValidator;
     }
 
     //provided vars
@@ -233,8 +233,8 @@ public class Engine {
                 return new VfCheckMetsAmdsecElementsMatchProfile(name, this);
             case "checkPremisLinks":
                 return new VfCheckPremisLinks(name, this);
-            case "checkImageFilesValidByExternalUtil":
-                return new VfCheckImageFilesValidByExternalUtil(name, this);
+            case "checkBinaryFilesValidByExternalUtil":
+                return new VfCheckBinaryFilesValidByExternalUtil(name, this);
             case "checkMetsMatchProfile":
                 return new VfCheckMetsMatchProfile(name, this);
 
@@ -420,8 +420,8 @@ public class Engine {
         xmlManager.setNamespaceUri(prefix, uri);
     }
 
-    public ImageValidator getImageValidator() {
-        return imageValidator;
+    public BinaryFileValidator getBinaryFileValidator() {
+        return binaryFileValidator;
     }
 
 }
