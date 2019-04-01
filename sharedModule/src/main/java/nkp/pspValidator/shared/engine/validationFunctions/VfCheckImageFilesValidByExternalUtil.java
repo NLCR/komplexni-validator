@@ -6,7 +6,7 @@ import nkp.pspValidator.shared.engine.ValueEvaluation;
 import nkp.pspValidator.shared.engine.ValueType;
 import nkp.pspValidator.shared.engine.exceptions.ContractException;
 import nkp.pspValidator.shared.externalUtils.ExternalUtil;
-import nkp.pspValidator.shared.externalUtils.ImageCopy;
+import nkp.pspValidator.shared.externalUtils.ResourceType;
 import nkp.pspValidator.shared.externalUtils.validation.ImageValidator;
 import nkp.pspValidator.shared.externalUtils.validation.J2kProfile;
 
@@ -21,7 +21,7 @@ public class VfCheckImageFilesValidByExternalUtil extends ValidationFunction {
 
     public static final String PARAM_FILES = "files";
     public static final String PARAM_LEVEL = "level";
-    public static final String PARAM_COPY = "copy";
+    public static final String PARAM_TYPE = "type";
     public static final String PARAM_UTIL = "util";
 
 
@@ -29,8 +29,8 @@ public class VfCheckImageFilesValidByExternalUtil extends ValidationFunction {
         super(name, engine, new Contract()
                 .withValueParam(PARAM_FILES, ValueType.FILE_LIST, 1, 1)
                 .withValueParam(PARAM_LEVEL, ValueType.LEVEL, 1, 1)
-                .withValueParam(PARAM_COPY, ValueType.IMAGE_COPY, 1, 1)
-                .withValueParam(PARAM_UTIL, ValueType.IMAGE_UTIL, 1, 1)
+                .withValueParam(PARAM_TYPE, ValueType.RESOURCE_TYPE, 1, 1)
+                .withValueParam(PARAM_UTIL, ValueType.EXTERNAL_UTIL, 1, 1)
 
         );
     }
@@ -52,10 +52,10 @@ public class VfCheckImageFilesValidByExternalUtil extends ValidationFunction {
                 return invalidValueParamNull(PARAM_LEVEL, paramLevel);
             }
 
-            ValueEvaluation paramCopy = valueParams.getParams(PARAM_COPY).get(0).getEvaluation();
-            ImageCopy copy = (ImageCopy) paramCopy.getData();
-            if (copy == null) {
-                return invalidValueParamNull(PARAM_COPY, paramCopy);
+            ValueEvaluation paramType = valueParams.getParams(PARAM_TYPE).get(0).getEvaluation();
+            ResourceType type = (ResourceType) paramType.getData();
+            if (type == null) {
+                return invalidValueParamNull(PARAM_TYPE, paramType);
             }
 
             ValueEvaluation paramUtil = valueParams.getParams(PARAM_UTIL).get(0).getEvaluation();
@@ -64,7 +64,7 @@ public class VfCheckImageFilesValidByExternalUtil extends ValidationFunction {
                 return invalidValueParamNull(PARAM_UTIL, paramUtil);
             }
 
-            return validate(level, files, copy, util);
+            return validate(level, files, type, util);
         } catch (ContractException e) {
             return invalidContractNotMet(e);
         } catch (Exception e) {
@@ -73,15 +73,15 @@ public class VfCheckImageFilesValidByExternalUtil extends ValidationFunction {
         }
     }
 
-    private ValidationResult validate(Level level, List<File> files, ImageCopy copy, ExternalUtil util) {
+    private ValidationResult validate(Level level, List<File> files, ResourceType type, ExternalUtil util) {
         if (!engine.getImageValidator().isUtilAvailable(util)) {
             return singlErrorResult(invalid(Level.INFO, "nástroj %s není dostupný", util.getUserFriendlyName()));
         } else {
             ValidationResult result = new ValidationResult();
             ImageValidator imageValidator = engine.getImageValidator();
-            J2kProfile profile = imageValidator.getProfile(copy, util);
+            J2kProfile profile = imageValidator.getProfile(type, util);
             if (profile == null) {
-                return singlErrorResult(invalid(Level.ERROR, "nenalezen J2K profil pro kopii %s a nástroj %s", copy, util));
+                return singlErrorResult(invalid(Level.ERROR, "nenalezen J2K profil pro kopii %s a nástroj %s", type, util));
             }
             for (File file : files) {
                 //System.out.println(String.format("validating (%s): %s", profile, file.getAbsolutePath()));

@@ -2807,8 +2807,8 @@
                     <value name="files" type="FILE_LIST">
                         <value-ref name="MASTER-COPY_FILES"/>
                     </value>
-                    <value name="copy" type="IMAGE_COPY">MASTER</value>
-                    <value name="util" type="IMAGE_UTIL">JPYLYZER</value>
+                    <value name="type" type="RESOURCE_TYPE">IMAGE_MASTER</value>
+                    <value name="util" type="EXTERNAL_UTIL">JPYLYZER</value>
                 </params>
             </validation>
         </rule>
@@ -2822,8 +2822,8 @@
                     <value name="files" type="FILE_LIST">
                         <value-ref name="USER-COPY_FILES"/>
                     </value>
-                    <value name="copy" type="IMAGE_COPY">USER</value>
-                    <value name="util" type="IMAGE_UTIL">JPYLYZER</value>
+                    <value name="type" type="RESOURCE_TYPE">IMAGE_USER</value>
+                    <value name="util" type="EXTERNAL_UTIL">JPYLYZER</value>
                 </params>
             </validation>
         </rule>
@@ -2837,8 +2837,8 @@
                     <value name="files" type="FILE_LIST">
                         <value-ref name="MASTER-COPY_FILES"/>
                     </value>
-                    <value name="copy" type="IMAGE_COPY">MASTER</value>
-                    <value name="util" type="IMAGE_UTIL">JHOVE</value>
+                    <value name="type" type="RESOURCE_TYPE">IMAGE_MASTER</value>
+                    <value name="util" type="EXTERNAL_UTIL">JHOVE</value>
                 </params>
             </validation>
         </rule>
@@ -2852,8 +2852,8 @@
                     <value name="files" type="FILE_LIST">
                         <value-ref name="USER-COPY_FILES"/>
                     </value>
-                    <value name="copy" type="IMAGE_COPY">USER</value>
-                    <value name="util" type="IMAGE_UTIL">JHOVE</value>
+                    <value name="type" type="RESOURCE_TYPE">IMAGE_USER</value>
+                    <value name="util" type="EXTERNAL_UTIL">JHOVE</value>
                 </params>
             </validation>
         </rule>
@@ -2867,8 +2867,8 @@
                     <value name="files" type="FILE_LIST">
                         <value-ref name="MASTER-COPY_FILES"/>
                     </value>
-                    <value name="copy" type="IMAGE_COPY">MASTER</value>
-                    <value name="util" type="IMAGE_UTIL">KAKADU</value>
+                    <value name="type" type="RESOURCE_TYPE">IMAGE_MASTER</value>
+                    <value name="util" type="EXTERNAL_UTIL">KAKADU</value>
                 </params>
             </validation>
         </rule>
@@ -2882,8 +2882,8 @@
                     <value name="files" type="FILE_LIST">
                         <value-ref name="USER-COPY_FILES"/>
                     </value>
-                    <value name="copy" type="IMAGE_COPY">USER</value>
-                    <value name="util" type="IMAGE_UTIL">KAKADU</value>
+                    <value name="type" type="RESOURCE_TYPE">IMAGE_USER</value>
+                    <value name="util" type="EXTERNAL_UTIL">KAKADU</value>
                 </params>
             </validation>
         </rule>
@@ -2897,8 +2897,8 @@
                     <value name="files" type="FILE_LIST">
                         <value-ref name="MASTER-COPY_FILES"/>
                     </value>
-                    <value name="copy" type="IMAGE_COPY">MASTER</value>
-                    <value name="util" type="IMAGE_UTIL">IMAGE_MAGICK</value>
+                    <value name="type" type="RESOURCE_TYPE">IMAGE_MASTER</value>
+                    <value name="util" type="EXTERNAL_UTIL">IMAGE_MAGICK</value>
                 </params>
             </validation>
         </rule>
@@ -2912,8 +2912,8 @@
                     <value name="files" type="FILE_LIST">
                         <value-ref name="USER-COPY_FILES"/>
                     </value>
-                    <value name="copy" type="IMAGE_COPY">USER</value>
-                    <value name="util" type="IMAGE_UTIL">IMAGE_MAGICK</value>
+                    <value name="type" type="RESOURCE_TYPE">IMAGE_USER</value>
+                    <value name="util" type="EXTERNAL_UTIL">IMAGE_MAGICK</value>
                 </params>
             </validation>
         </rule>
@@ -2922,6 +2922,22 @@
 
 
     <!--TODO: doplnit sekci pro validaci zvukovych dat-->
+    <rules-section name="ZVUKOVÁ DATA" description="Kontrola zvukových souborů (MP3, WAV) za pomocí externích nástrojů">
+        <rule name="SOURCE-AUDIO_FILES_VALID_BY_JHOVE">
+            <description>Všechny soubory SOURCE-AUDIO musí být validní vůči profilu JPEG 2000 pro nástroj JHOVE.
+            </description>
+            <validation functionName="checkImageFilesValidByExternalUtil">
+                <params>
+                    <value name="level" type="LEVEL">ERROR</value>
+                    <value name="files" type="FILE_LIST">
+                        <value-ref name="SOURCE-AUDIO_FILES"/>
+                    </value>
+                    <value name="type" type="RESOURCE_TYPE">IMAGE_USER</value>
+                    <value name="util" type="EXTERNAL_UTIL">JHOVE</value>
+                </params>
+            </validation>
+        </rule>
+    </rules-section>
 
 
     <rules-section name="Bibliografická metadata"
@@ -3039,7 +3055,7 @@
 
 
     <!--TODO: projit tuto sekci a zejmena proverit, ze SECONDARY-METS_FILES obsahuje soubory secondary_mets pro obrazove ale i zvukove soubory-->
-    <rules-section name="Technická metadata" description="Kontrola technických (MIX, PREMIS) metadat."  >
+    <rules-section name="Technická metadata" description="Kontrola technických (MIX, PREMIS) metadat.">
 
         <rule name="MIX_VALID_BY_XSD">
             <description>Záznamy MIX v souborech SECONDARY-METS musí být validní podle XML Schema (mix_2.0.xsd).</description>

@@ -128,12 +128,12 @@ public class VfCheckImageFilesValidByExternalUtilTest {
         }
     }
 
-    private ValidationFunction buildValidationFunction(ExternalUtil util, ImageCopy copy, List<File> files) {
+    private ValidationFunction buildValidationFunction(ExternalUtil util, ResourceType type, List<File> files) {
         return new VfCheckImageFilesValidByExternalUtil("test", engine)
                 .withValueParam("files", ValueType.FILE_LIST, new ValueEvaluation(files))
                 .withValueParam("level", ValueType.LEVEL, new ValueEvaluation(Level.WARNING))
-                .withValueParam("copy", ValueType.IMAGE_COPY, new ValueEvaluation(copy))
-                .withValueParam("util", ValueType.IMAGE_UTIL, new ValueEvaluation(util));
+                .withValueParam("type", ValueType.RESOURCE_TYPE, new ValueEvaluation(type))
+                .withValueParam("util", ValueType.EXTERNAL_UTIL, new ValueEvaluation(util));
     }
 
     @Test
@@ -149,7 +149,7 @@ public class VfCheckImageFilesValidByExternalUtilTest {
     @Test
     public void kakaduOkMc() {
         if (externalUtilManager.isUtilAvailable(ExternalUtil.KAKADU)) {
-            ValidationFunction validationFunction = buildValidationFunction(ExternalUtil.KAKADU, ImageCopy.MASTER, FILES_OK_MC);
+            ValidationFunction validationFunction = buildValidationFunction(ExternalUtil.KAKADU, ResourceType.IMAGE_MASTER, FILES_OK_MC);
             ValidationResult result = validationFunction.validate();
             for (ValidationProblem problem : result.getProblems()) {
                 assertNull(problem.getMessage());
@@ -161,7 +161,7 @@ public class VfCheckImageFilesValidByExternalUtilTest {
     @Test
     public void kakaduOkUc() {
         if (externalUtilManager.isUtilAvailable(ExternalUtil.KAKADU)) {
-            ValidationFunction validationFunction = buildValidationFunction(ExternalUtil.KAKADU, ImageCopy.MASTER, FILES_OK_UC);
+            ValidationFunction validationFunction = buildValidationFunction(ExternalUtil.KAKADU, ResourceType.IMAGE_MASTER, FILES_OK_UC);
             ValidationResult result = validationFunction.validate();
             for (ValidationProblem problem : result.getProblems()) {
                 assertNull(problem.getMessage());
@@ -173,7 +173,7 @@ public class VfCheckImageFilesValidByExternalUtilTest {
     @Test
     public void imageMagickOkMc() {
         if (externalUtilManager.isUtilAvailable(ExternalUtil.IMAGE_MAGICK)) {
-            ValidationFunction validationFunction = buildValidationFunction(ExternalUtil.IMAGE_MAGICK, ImageCopy.MASTER, FILES_OK_MC);
+            ValidationFunction validationFunction = buildValidationFunction(ExternalUtil.IMAGE_MAGICK, ResourceType.IMAGE_MASTER, FILES_OK_MC);
             ValidationResult result = validationFunction.validate();
             for (ValidationProblem problem : result.getProblems()) {
                 assertNull(problem.getMessage());
@@ -185,7 +185,7 @@ public class VfCheckImageFilesValidByExternalUtilTest {
     @Test
     public void imageMagickOkUc() {
         if (externalUtilManager.isUtilAvailable(ExternalUtil.IMAGE_MAGICK)) {
-            ValidationFunction validationFunction = buildValidationFunction(ExternalUtil.IMAGE_MAGICK, ImageCopy.USER, FILES_OK_UC);
+            ValidationFunction validationFunction = buildValidationFunction(ExternalUtil.IMAGE_MAGICK, ResourceType.IMAGE_USER, FILES_OK_UC);
             ValidationResult result = validationFunction.validate();
             //verze ImageMagick-7.0.3-Q16 pro Windows najde chybu v souboru UC_cnb001652709-001_0233.jp2
             for (ValidationProblem problem : result.getProblems()) {
@@ -199,7 +199,7 @@ public class VfCheckImageFilesValidByExternalUtilTest {
     @Test
     public void jpylyzerOkMc() {
         if (externalUtilManager.isUtilAvailable(ExternalUtil.JPYLYZER)) {
-            ValidationFunction validationFunction = buildValidationFunction(ExternalUtil.JPYLYZER, ImageCopy.MASTER, FILES_OK_MC);
+            ValidationFunction validationFunction = buildValidationFunction(ExternalUtil.JPYLYZER, ResourceType.IMAGE_MASTER, FILES_OK_MC);
             ValidationResult result = validationFunction.validate();
             for (ValidationProblem problem : result.getProblems()) {
                 assertNull(problem.getMessage());
@@ -211,7 +211,7 @@ public class VfCheckImageFilesValidByExternalUtilTest {
     @Test
     public void jpylyzerOkUc() {
         if (externalUtilManager.isUtilAvailable(ExternalUtil.JPYLYZER)) {
-            ValidationFunction validationFunction = buildValidationFunction(ExternalUtil.JPYLYZER, ImageCopy.USER, FILES_OK_UC);
+            ValidationFunction validationFunction = buildValidationFunction(ExternalUtil.JPYLYZER, ResourceType.IMAGE_USER, FILES_OK_UC);
             ValidationResult result = validationFunction.validate();
             for (ValidationProblem problem : result.getProblems()) {
                 assertNull(problem.getMessage());
@@ -223,7 +223,7 @@ public class VfCheckImageFilesValidByExternalUtilTest {
     @Test
     public void jhoveOkMc() {
         if (externalUtilManager.isUtilAvailable(ExternalUtil.JHOVE)) {
-            ValidationFunction validationFunction = buildValidationFunction(ExternalUtil.JHOVE, ImageCopy.MASTER, FILES_OK_MC);
+            ValidationFunction validationFunction = buildValidationFunction(ExternalUtil.JHOVE, ResourceType.IMAGE_MASTER, FILES_OK_MC);
             ValidationResult result = validationFunction.validate();
             for (ValidationProblem problem : result.getProblems()) {
                 assertNull(problem.getMessage());
@@ -235,7 +235,7 @@ public class VfCheckImageFilesValidByExternalUtilTest {
     @Test
     public void jhoveOkUc() {
         if (externalUtilManager.isUtilAvailable(ExternalUtil.JHOVE)) {
-            ValidationFunction validationFunction = buildValidationFunction(ExternalUtil.JHOVE, ImageCopy.USER, FILES_OK_UC);
+            ValidationFunction validationFunction = buildValidationFunction(ExternalUtil.JHOVE, ResourceType.IMAGE_USER, FILES_OK_UC);
             ValidationResult result = validationFunction.validate();
             for (ValidationProblem problem : result.getProblems()) {
                 assertNull(problem.getMessage());
@@ -247,7 +247,7 @@ public class VfCheckImageFilesValidByExternalUtilTest {
     @Test
     public void jhoveProfileMismatchMc() {
         if (externalUtilManager.isUtilAvailable(ExternalUtil.JHOVE)) {
-            ValidationFunction validationFunction = buildValidationFunction(ExternalUtil.JHOVE, ImageCopy.MASTER, FILES_PROFILE_MISMATCH_MC);
+            ValidationFunction validationFunction = buildValidationFunction(ExternalUtil.JHOVE, ResourceType.IMAGE_MASTER, FILES_PROFILE_MISMATCH_MC);
             ValidationResult result = validationFunction.validate();
             assertTrue(result.hasProblems());
         }
@@ -256,7 +256,7 @@ public class VfCheckImageFilesValidByExternalUtilTest {
     @Test
     public void jhoveProfileMismatchUc() {
         if (externalUtilManager.isUtilAvailable(ExternalUtil.JHOVE)) {
-            ValidationFunction validationFunction = buildValidationFunction(ExternalUtil.JHOVE, ImageCopy.USER, FILES_PROFILE_MISMATCH_UC);
+            ValidationFunction validationFunction = buildValidationFunction(ExternalUtil.JHOVE, ResourceType.IMAGE_USER, FILES_PROFILE_MISMATCH_UC);
             ValidationResult result = validationFunction.validate();
             //verze jhove-1_11 pro Windows nenajde zadnou chybu
             //ani Jhove (Rel. 1.6, 2011-01-04) pro Linux
@@ -267,7 +267,7 @@ public class VfCheckImageFilesValidByExternalUtilTest {
     @Test
     public void jpylyzerProfileMismatchMc() {
         if (externalUtilManager.isUtilAvailable(ExternalUtil.JPYLYZER)) {
-            ValidationFunction validationFunction = buildValidationFunction(ExternalUtil.JPYLYZER, ImageCopy.MASTER, FILES_PROFILE_MISMATCH_MC);
+            ValidationFunction validationFunction = buildValidationFunction(ExternalUtil.JPYLYZER, ResourceType.IMAGE_MASTER, FILES_PROFILE_MISMATCH_MC);
             ValidationResult result = validationFunction.validate();
             assertTrue(result.hasProblems());
         }
@@ -276,7 +276,7 @@ public class VfCheckImageFilesValidByExternalUtilTest {
     @Test
     public void jpylyzerProfileMismatchUc() {
         if (externalUtilManager.isUtilAvailable(ExternalUtil.JHOVE)) {
-            ValidationFunction validationFunction = buildValidationFunction(ExternalUtil.JPYLYZER, ImageCopy.USER, FILES_PROFILE_MISMATCH_UC);
+            ValidationFunction validationFunction = buildValidationFunction(ExternalUtil.JPYLYZER, ResourceType.IMAGE_USER, FILES_PROFILE_MISMATCH_UC);
             ValidationResult result = validationFunction.validate();
             assertTrue(result.hasProblems());
         }
@@ -285,7 +285,7 @@ public class VfCheckImageFilesValidByExternalUtilTest {
     @Test
     public void kakaduErrorDetection() {
         if (externalUtilManager.isUtilAvailable(ExternalUtil.KAKADU)) {
-            ValidationFunction validationFunction = buildValidationFunction(ExternalUtil.KAKADU, ImageCopy.MASTER, FILES_ERROR_DETECTION);
+            ValidationFunction validationFunction = buildValidationFunction(ExternalUtil.KAKADU, ResourceType.IMAGE_MASTER, FILES_ERROR_DETECTION);
             ValidationResult result = validationFunction.validate();
             assertTrue(result.hasProblems());
         }
@@ -294,7 +294,7 @@ public class VfCheckImageFilesValidByExternalUtilTest {
     @Test
     public void imageMagickErrorDetection() {
         if (externalUtilManager.isUtilAvailable(ExternalUtil.IMAGE_MAGICK)) {
-            ValidationFunction validationFunction = buildValidationFunction(ExternalUtil.IMAGE_MAGICK, ImageCopy.MASTER, FILES_ERROR_DETECTION);
+            ValidationFunction validationFunction = buildValidationFunction(ExternalUtil.IMAGE_MAGICK, ResourceType.IMAGE_MASTER, FILES_ERROR_DETECTION);
             ValidationResult result = validationFunction.validate();
             //FIXME: neprojde na macOS pro ImageMagick 6.9.6-6 Q16 x86_64 2016-12-07
             assertTrue(result.hasProblems());
@@ -305,7 +305,7 @@ public class VfCheckImageFilesValidByExternalUtilTest {
     public void kakaduIncorrect() {
         //TODO: co je na nich spatne? timhle projdou
         /*if (externalUtilManager.isUtilAvailable(ExternalUtil.KAKADU)) {
-            ValidationFunction validationFunction = buildValidationFunction(ExternalUtil.KAKADU, ImageCopy.MASTER, FILES_INCORRECT);
+            ValidationFunction validationFunction = buildValidationFunction(ExternalUtil.KAKADU, ResourceType.IMAGE_MASTER, FILES_INCORRECT);
             ValidationResult result = validationFunction.validate();
             assertTrue(result.hasProblems());
         }*/
@@ -315,7 +315,7 @@ public class VfCheckImageFilesValidByExternalUtilTest {
     public void imageMagickIncorrect() {
         //TODO: co je na nich spatne? timhle projdou
         /*if (externalUtilManager.isUtilAvailable(ExternalUtil.IMAGE_MAGICK)) {
-            ValidationFunction validationFunction = buildValidationFunction(ExternalUtil.IMAGE_MAGICK, ImageCopy.MASTER, FILES_INCORRECT);
+            ValidationFunction validationFunction = buildValidationFunction(ExternalUtil.IMAGE_MAGICK, ResourceType.IMAGE_MASTER, FILES_INCORRECT);
             ValidationResult result = validationFunction.validate();
             assertTrue(result.hasProblems());
         }*/
@@ -324,7 +324,7 @@ public class VfCheckImageFilesValidByExternalUtilTest {
     @Test
     public void jpylyzerIncorrect() {
         if (externalUtilManager.isUtilAvailable(ExternalUtil.JPYLYZER)) {
-            ValidationFunction validationFunction = buildValidationFunction(ExternalUtil.JPYLYZER, ImageCopy.MASTER, FILES_INCORRECT);
+            ValidationFunction validationFunction = buildValidationFunction(ExternalUtil.JPYLYZER, ResourceType.IMAGE_MASTER, FILES_INCORRECT);
             ValidationResult result = validationFunction.validate();
             assertTrue(result.hasProblems());
         }
@@ -333,7 +333,7 @@ public class VfCheckImageFilesValidByExternalUtilTest {
     @Test
     public void jhoveIncorrect() {
         if (externalUtilManager.isUtilAvailable(ExternalUtil.JHOVE)) {
-            ValidationFunction validationFunction = buildValidationFunction(ExternalUtil.JHOVE, ImageCopy.USER, FILES_INCORRECT);
+            ValidationFunction validationFunction = buildValidationFunction(ExternalUtil.JHOVE, ResourceType.IMAGE_USER, FILES_INCORRECT);
             ValidationResult result = validationFunction.validate();
             assertTrue(result.hasProblems());
         }
@@ -342,7 +342,7 @@ public class VfCheckImageFilesValidByExternalUtilTest {
     @Test
     public void kakaduInvalid() {
         if (externalUtilManager.isUtilAvailable(ExternalUtil.KAKADU)) {
-            ValidationFunction validationFunction = buildValidationFunction(ExternalUtil.KAKADU, ImageCopy.MASTER, FILES_INVALID);
+            ValidationFunction validationFunction = buildValidationFunction(ExternalUtil.KAKADU, ResourceType.IMAGE_MASTER, FILES_INVALID);
             ValidationResult result = validationFunction.validate();
             assertTrue(result.hasProblems());
         }
@@ -351,7 +351,7 @@ public class VfCheckImageFilesValidByExternalUtilTest {
     @Test
     public void imageMagickInvalid() {
         if (externalUtilManager.isUtilAvailable(ExternalUtil.IMAGE_MAGICK)) {
-            ValidationFunction validationFunction = buildValidationFunction(ExternalUtil.IMAGE_MAGICK, ImageCopy.MASTER, FILES_INVALID);
+            ValidationFunction validationFunction = buildValidationFunction(ExternalUtil.IMAGE_MAGICK, ResourceType.IMAGE_MASTER, FILES_INVALID);
             ValidationResult result = validationFunction.validate();
             //FIXME: neprojde, mozna je to v datech
             assertTrue(result.hasProblems());
@@ -361,7 +361,7 @@ public class VfCheckImageFilesValidByExternalUtilTest {
     @Test
     public void jpylyzerInvalid() {
         if (externalUtilManager.isUtilAvailable(ExternalUtil.JPYLYZER)) {
-            ValidationFunction validationFunction = buildValidationFunction(ExternalUtil.JPYLYZER, ImageCopy.MASTER, FILES_INVALID);
+            ValidationFunction validationFunction = buildValidationFunction(ExternalUtil.JPYLYZER, ResourceType.IMAGE_MASTER, FILES_INVALID);
             ValidationResult result = validationFunction.validate();
             assertTrue(result.hasProblems());
         }
@@ -370,7 +370,7 @@ public class VfCheckImageFilesValidByExternalUtilTest {
     @Test
     public void jhoveInvalid() {
         if (externalUtilManager.isUtilAvailable(ExternalUtil.JHOVE)) {
-            ValidationFunction validationFunction = buildValidationFunction(ExternalUtil.JHOVE, ImageCopy.USER, FILES_INVALID);
+            ValidationFunction validationFunction = buildValidationFunction(ExternalUtil.JHOVE, ResourceType.IMAGE_USER, FILES_INVALID);
             ValidationResult result = validationFunction.validate();
             assertTrue(result.hasProblems());
         }

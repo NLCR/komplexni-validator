@@ -184,9 +184,8 @@
             <xs:enumeration value="IDENTIFIER_LIST"/>
             <xs:enumeration value="IDENTIFIER_LIST_LIST"/>
             <xs:enumeration value="LEVEL"/>
-            <!--TODO: opravdu tohle jako typy hodnot?-->
-            <xs:enumeration value="IMAGE_COPY"/>
-            <xs:enumeration value="IMAGE_UTIL"/>
+            <xs:enumeration value="RESOURCE_TYPE"/>
+            <xs:enumeration value="EXTERNAL_UTIL"/>
             <xs:enumeration value="ENTITY_TYPE"/>
         </xs:restriction>
     </xs:simpleType>

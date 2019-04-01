@@ -311,8 +311,8 @@
         <params-def>
             <value name="level" type="LEVEL"/>
             <value name="files" type="FILE_LIST"/>
-            <value name="copy" type="IMAGE_COPY"/>
-            <value name="util" type="IMAGE_UTIL"/>
+            <value name="type" type="RESOURCE_TYPE"/>
+            <value name="util" type="EXTERNAL_UTIL"/>
         </params-def>
     </validationFunction>
 
