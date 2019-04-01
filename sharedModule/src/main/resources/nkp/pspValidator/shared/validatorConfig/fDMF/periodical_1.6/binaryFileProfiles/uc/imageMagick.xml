@@ -1,5 +1,5 @@
-<jpeg2000profile
-        xmlns="http://www.nkp.cz/pspValidator/2.1/jpeg2000profile"
+<binaryFileProfile
+        xmlns="http://www.nkp.cz/pspValidator/2.1/binaryFileProfile"
         validatorVersion="2.1"
         dmf="periodical_1.6"
 >
@@ -18,4 +18,4 @@
         </validation>
 
     </fromText>
-</jpeg2000profile>
+</binaryFileProfile>

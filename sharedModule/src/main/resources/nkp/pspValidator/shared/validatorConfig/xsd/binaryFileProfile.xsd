@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified"
-           targetNamespace="http://www.nkp.cz/pspValidator/2.1/jpeg2000profile"
-           xmlns:jpeg="http://www.nkp.cz/pspValidator/2.1/jpeg2000profile"
+           targetNamespace="http://www.nkp.cz/pspValidator/2.1/binaryFileProfile"
+           xmlns:bfp="http://www.nkp.cz/pspValidator/2.1/binaryFileProfile"
            xmlns:xs="http://www.w3.org/2001/XMLSchema">
 
-    <xs:element name="jpeg2000profile">
+    <xs:element name="binaryFileProfile">
         <xs:complexType>
             <xs:choice minOccurs="0">
-                <xs:element name="fromXml" type="jpeg:fromXmlType"/>
-                <xs:element name="fromText" type="jpeg:fromTextType"/>
+                <xs:element name="fromXml" type="bfp:fromXmlType"/>
+                <xs:element name="fromText" type="bfp:fromTextType"/>
             </xs:choice>
             <xs:attribute name="validatorVersion" type="xs:string" use="required"/>
             <xs:attribute name="dmf" type="xs:string" use="required"/>
@@ -17,20 +17,20 @@
 
     <xs:complexType name="fromTextType">
         <xs:sequence>
-            <xs:element name="validation" type="jpeg:validationType" maxOccurs="unbounded"/>
+            <xs:element name="validation" type="bfp:validationType" maxOccurs="unbounded"/>
         </xs:sequence>
     </xs:complexType>
 
     <xs:complexType name="fromXmlType">
         <xs:sequence>
-            <xs:element name="namespaces" type="jpeg:namespacesType" minOccurs="0"/>
-            <xs:element name="validation" type="jpeg:validationType" maxOccurs="unbounded"/>
+            <xs:element name="namespaces" type="bfp:namespacesType" minOccurs="0"/>
+            <xs:element name="validation" type="bfp:validationType" maxOccurs="unbounded"/>
         </xs:sequence>
     </xs:complexType>
 
     <xs:complexType name="namespacesType">
         <xs:sequence>
-            <xs:element name="namespace" type="jpeg:namespaceType" maxOccurs="unbounded" minOccurs="0"/>
+            <xs:element name="namespace" type="bfp:namespaceType" maxOccurs="unbounded" minOccurs="0"/>
         </xs:sequence>
     </xs:complexType>
 
@@ -45,28 +45,28 @@
     <xs:complexType name="validationType">
         <xs:sequence>
             <xs:choice minOccurs="0">
-                <xs:element name="xmlDataExtraction" type="jpeg:xmlDataExtractionType"/>
-                <xs:element name="textDataExtraction" type="jpeg:textDataExtractionType"/>
+                <xs:element name="xmlDataExtraction" type="bfp:xmlDataExtractionType"/>
+                <xs:element name="textDataExtraction" type="bfp:textDataExtractionType"/>
             </xs:choice>
-            <xs:element name="rules" type="jpeg:rulesType"/>
+            <xs:element name="rules" type="bfp:rulesType"/>
         </xs:sequence>
         <xs:attribute name="name" type="xs:string" use="optional"/>
     </xs:complexType>
 
     <xs:complexType name="textDataExtractionType">
         <xs:choice>
-            <xs:element name="firstNonempty" type="jpeg:firstNonemptyType"/>
-            <xs:element name="allNonempty" type="jpeg:allNonemptyType"/>
+            <xs:element name="firstNonempty" type="bfp:firstNonemptyType"/>
+            <xs:element name="allNonempty" type="bfp:allNonemptyType"/>
         </xs:choice>
-        <xs:attribute name="resultType" type="jpeg:extractionResultTypeType" use="required"/>
+        <xs:attribute name="resultType" type="bfp:extractionResultTypeType" use="required"/>
     </xs:complexType>
 
     <xs:complexType name="xmlDataExtractionType">
         <xs:choice>
-            <xs:element name="firstNonempty" type="jpeg:firstNonemptyType"/>
-            <xs:element name="allNonempty" type="jpeg:allNonemptyType"/>
+            <xs:element name="firstNonempty" type="bfp:firstNonemptyType"/>
+            <xs:element name="allNonempty" type="bfp:allNonemptyType"/>
         </xs:choice>
-        <xs:attribute name="resultType" type="jpeg:extractionResultTypeType" use="required"/>
+        <xs:attribute name="resultType" type="bfp:extractionResultTypeType" use="required"/>
     </xs:complexType>
 
     <xs:simpleType name="extractionResultTypeType">
@@ -94,18 +94,18 @@
 
     <xs:complexType name="rulesType" mixed="true">
         <xs:sequence>
-            <xs:element name="mustExist" type="jpeg:emptyElementType" minOccurs="0"/>
-            <xs:element name="mustNotExist" type="jpeg:emptyElementType" minOccurs="0"/>
-            <xs:element name="mustMatchAny" type="jpeg:mustMatchAnyType" minOccurs="0"/>
+            <xs:element name="mustExist" type="bfp:emptyElementType" minOccurs="0"/>
+            <xs:element name="mustNotExist" type="bfp:emptyElementType" minOccurs="0"/>
+            <xs:element name="mustMatchAny" type="bfp:mustMatchAnyType" minOccurs="0"/>
         </xs:sequence>
     </xs:complexType>
 
     <xs:complexType name="mustMatchAnyType">
         <xs:sequence>
             <xs:element name="constant" type="xs:string" minOccurs="0" maxOccurs="unbounded"/>
-            <xs:element name="intRange" type="jpeg:intRangeType" minOccurs="0"/>
-            <xs:element name="floatRange" type="jpeg:floatRangeType" minOccurs="0"/>
-            <xs:element name="nTimesXRemainingY" type="jpeg:nTimesXRemainingYType" minOccurs="0"/>
+            <xs:element name="intRange" type="bfp:intRangeType" minOccurs="0"/>
+            <xs:element name="floatRange" type="bfp:floatRangeType" minOccurs="0"/>
+            <xs:element name="nTimesXRemainingY" type="bfp:nTimesXRemainingYType" minOccurs="0"/>
         </xs:sequence>
     </xs:complexType>
 
