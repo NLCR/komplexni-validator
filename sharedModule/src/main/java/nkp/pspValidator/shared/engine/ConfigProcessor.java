@@ -8,7 +8,7 @@ import nkp.pspValidator.shared.engine.exceptions.ValidatorConfigurationException
 import nkp.pspValidator.shared.engine.types.EntityType;
 import nkp.pspValidator.shared.engine.types.MetadataFormat;
 import nkp.pspValidator.shared.engine.validationFunctions.ValidationFunction;
-import nkp.pspValidator.shared.externalUtils.ImageCopy;
+import nkp.pspValidator.shared.externalUtils.ResourceType;
 import nkp.pspValidator.shared.externalUtils.ExternalUtil;
 import org.w3c.dom.Element;
 
@@ -185,9 +185,9 @@ public class ConfigProcessor {
                 }
             case LEVEL:
                 return Level.valueOf(str);
-            case IMAGE_COPY:
-                return ImageCopy.valueOf(str);
-            case IMAGE_UTIL:
+            case RESOURCE_TYPE:
+                return ResourceType.valueOf(str);
+            case EXTERNAL_UTIL:
                 return ExternalUtil.valueOf(str);
             case METADATA_FORMAT:
                 return MetadataFormat.valueOf(str);

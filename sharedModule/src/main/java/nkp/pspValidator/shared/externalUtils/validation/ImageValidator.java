@@ -7,7 +7,7 @@ import nkp.pspValidator.shared.XmlUtils;
 import nkp.pspValidator.shared.engine.exceptions.ValidatorConfigurationException;
 import nkp.pspValidator.shared.externalUtils.ExternalUtil;
 import nkp.pspValidator.shared.externalUtils.ExtractionResultType;
-import nkp.pspValidator.shared.externalUtils.ImageCopy;
+import nkp.pspValidator.shared.externalUtils.ResourceType;
 import nkp.pspValidator.shared.externalUtils.ExternalUtilManager;
 import nkp.pspValidator.shared.externalUtils.validation.extractions.AllNonemptyByRegexpDataExtraction;
 import nkp.pspValidator.shared.externalUtils.validation.extractions.FirstNonemptyByXpathDataExctraction;
@@ -40,12 +40,12 @@ public class ImageValidator {
         this.externalUtilManager = externalUtilManager;
     }
 
-    public void processProfile(ExternalUtil util, ImageCopy copy, File profileDefinitionFile) throws ValidatorConfigurationException {
-        switch (copy) {
-            case MASTER:
+    public void processProfile(ExternalUtil util, ResourceType type, File profileDefinitionFile) throws ValidatorConfigurationException {
+        switch (type) {
+            case IMAGE_MASTER:
                 processProfile(util, profileDefinitionFile, masterCopyProfiles);
                 break;
-            case USER:
+            case IMAGE_USER:
                 processProfile(util, profileDefinitionFile, userCopyProfiles);
                 break;
         }
@@ -55,11 +55,11 @@ public class ImageValidator {
         return externalUtilManager.isUtilAvailable(util);
     }
 
-    public J2kProfile getProfile(ImageCopy copy, ExternalUtil util) {
-        switch (copy) {
-            case MASTER:
+    public J2kProfile getProfile(ResourceType type, ExternalUtil util) {
+        switch (type) {
+            case IMAGE_MASTER:
                 return masterCopyProfiles.get(util);
-            case USER:
+            case IMAGE_USER:
                 return userCopyProfiles.get(util);
             default:
                 throw new IllegalStateException();

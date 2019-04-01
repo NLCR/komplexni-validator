@@ -2,7 +2,7 @@ package nkp.pspValidator.shared;
 
 import nkp.pspValidator.shared.engine.exceptions.ValidatorConfigurationException;
 import nkp.pspValidator.shared.externalUtils.ExternalUtil;
-import nkp.pspValidator.shared.externalUtils.ImageCopy;
+import nkp.pspValidator.shared.externalUtils.ResourceType;
 import nkp.pspValidator.shared.externalUtils.ExternalUtilManager;
 import nkp.pspValidator.shared.externalUtils.validation.ImageValidator;
 
@@ -25,16 +25,20 @@ import static nkp.pspValidator.shared.FileUtils.checkFileExistAndReadable;
 public class FdmfConfiguration {
 
     private static final String XSD_DIR = "xsd";
-    private static final String J2K_PROFILES_DIR = "jpeg2000Profiles";
-    private static final String J2K_PROFILES_UC_DIR = "uc";
-    private static final String J2K_PROFILES_MC_DIR = "mc";
+    // TODO: 2019-04-01 rename dir
+    private static final String DIR_BINARY_FILE_PROFILES = "jpeg2000Profiles";
+    private static final String DIR_BFP_SOURCE_IMAGE_USER_COPY = "uc";
+    private static final String DIR_BFP_SOURCE_IMAGE_MASTER_COPY = "mc";
+    private static final String DIR_BFP_SOURCE_AUDIO_SOURCE = "sa";
+    private static final String DIR_BFP_SOURCE_AUDIO_MASTER_COPY = "mca";
+    private static final String DIR_BFP_SOURCE_AUDIO_USER_COPY = "uca";
 
-    private static final String BIBLIO_PROFILES_DIR = "biblioProfiles";
-    private static final String BIBLIO_PROFILES_DC_DIR = "dc";
-    private static final String BIBLIO_PROFILES_MODS_DIR = "mods";
+    private static final String DIR_BIBLIO_PROFILES_DIR = "biblioProfiles";
+    private static final String DIR_BP_TYPE_DC = "dc";
+    private static final String DIR_BP_TYPE_MODS = "mods";
 
-    private static final String TECH_PROFILES_DIR = "techProfiles";
-    private static final String METS_PROFILES_DIR = "metsProfiles";
+    private static final String DIR_TECH_PROFILES = "techProfiles";
+    private static final String DIR_METS_PROFILES = "metsProfiles";
 
     private final File fdmfRoot;
     private final File fdmfConfigXsd;
@@ -87,10 +91,10 @@ public class FdmfConfiguration {
     }
 
     private void initBiblioProfiles() throws ValidatorConfigurationException {
-        File biblioProfilesDir = new File(fdmfRoot, BIBLIO_PROFILES_DIR);
+        File biblioProfilesDir = new File(fdmfRoot, DIR_BIBLIO_PROFILES_DIR);
         checkDirExistAndReadable(biblioProfilesDir);
         //dc profiles
-        File dcProfilesDir = new File(biblioProfilesDir, BIBLIO_PROFILES_DC_DIR);
+        File dcProfilesDir = new File(biblioProfilesDir, DIR_BP_TYPE_DC);
         checkDirExistAndReadable(dcProfilesDir);
         File[] dcProfiles = dcProfilesDir.listFiles((dir, name) -> name.endsWith(".xml"));
         for (File profile : dcProfiles) {
@@ -99,7 +103,7 @@ public class FdmfConfiguration {
             biblioDcProfiles.add(profile);
         }
         //mods profiles
-        File modsProfilesDir = new File(biblioProfilesDir, BIBLIO_PROFILES_MODS_DIR);
+        File modsProfilesDir = new File(biblioProfilesDir, DIR_BP_TYPE_MODS);
         checkDirExistAndReadable(modsProfilesDir);
         File[] modsProfiles = modsProfilesDir.listFiles((dir, name) -> name.endsWith(".xml"));
         for (File profile : modsProfiles) {
@@ -110,7 +114,7 @@ public class FdmfConfiguration {
     }
 
     private void initTechProfiles() throws ValidatorConfigurationException {
-        File techProfilesDir = new File(fdmfRoot, TECH_PROFILES_DIR);
+        File techProfilesDir = new File(fdmfRoot, DIR_TECH_PROFILES);
         checkDirExistAndReadable(techProfilesDir);
         File[] techProfileFiles = techProfilesDir.listFiles((dir, name) -> name.endsWith(".xml"));
         for (File profileFile : techProfileFiles) {
@@ -120,7 +124,7 @@ public class FdmfConfiguration {
     }
 
     private void initMetsProfiles() throws ValidatorConfigurationException {
-        File metsProfilesDir = new File(fdmfRoot, METS_PROFILES_DIR);
+        File metsProfilesDir = new File(fdmfRoot, DIR_METS_PROFILES);
         checkDirExistAndReadable(metsProfilesDir);
         File[] metProfileFiles = metsProfilesDir.listFiles((dir, name) -> name.endsWith(".xml"));
         for (File profileFile : metProfileFiles) {
@@ -150,32 +154,42 @@ public class FdmfConfiguration {
 
     public void initJ2kProfiles(ExternalUtilManager externalUtilManager) throws ValidatorConfigurationException {
         imageValidator = new ImageValidator(externalUtilManager);
-        for (ImageCopy copy : ImageCopy.values()) {
+        for (ResourceType type : ResourceType.values()) {
             for (ExternalUtil util : ExternalUtil.values()) {
                 if (externalUtilManager.isUtilAvailable(util)) {
-                    validateAndProcessJ2kProfile(fdmfRoot, imageValidator, copy, util);
+                    validateAndProcessBinaryFileProfile(fdmfRoot, imageValidator, type, util);
                 }
             }
         }
     }
 
-    private void validateAndProcessJ2kProfile(File fdmfRoot, ImageValidator validator, ImageCopy copy, ExternalUtil util) throws ValidatorConfigurationException {
-        File rootFile = new File(fdmfRoot, J2K_PROFILES_DIR);
+    private void validateAndProcessBinaryFileProfile(File fdmfRoot, ImageValidator validator, ResourceType type, ExternalUtil util) throws ValidatorConfigurationException {
+        File rootFile = new File(fdmfRoot, DIR_BINARY_FILE_PROFILES);
         checkDirExistAndReadable(rootFile);
-        File copyFile = buildImageCopyDir(rootFile, copy);
-        checkDirExistAndReadable(copyFile);
-        File configFile = new File(copyFile, util.getProfileFileName());
-        checkFileExistAndReadable(configFile);
-        validateConfigFile(configFile, j2kProfileXsd);
-        validator.processProfile(util, copy, configFile);
+        File sourceTypeDir = buildSourceTypeDir(rootFile, type);
+        if (sourceTypeDir.exists()) {
+            checkDirExistAndReadable(sourceTypeDir);
+            File profileDefinitionFile = new File(sourceTypeDir, util.getProfileFileName());
+            if (profileDefinitionFile.exists()) {
+                checkFileExistAndReadable(profileDefinitionFile);
+                validateConfigFile(profileDefinitionFile, j2kProfileXsd);
+                validator.processProfile(util, type, profileDefinitionFile);
+            }
+        }
     }
 
-    private static File buildImageCopyDir(File rootFile, ImageCopy copy) {
-        switch (copy) {
-            case USER:
-                return new File(rootFile, J2K_PROFILES_UC_DIR);
-            case MASTER:
-                return new File(rootFile, J2K_PROFILES_MC_DIR);
+    private static File buildSourceTypeDir(File rootFile, ResourceType type) {
+        switch (type) {
+            case IMAGE_USER:
+                return new File(rootFile, DIR_BFP_SOURCE_IMAGE_USER_COPY);
+            case IMAGE_MASTER:
+                return new File(rootFile, DIR_BFP_SOURCE_IMAGE_MASTER_COPY);
+            case AUDIO_SOURCE:
+                return new File(rootFile, DIR_BFP_SOURCE_AUDIO_SOURCE);
+            case AUDIO_MASTER_COPY:
+                return new File(rootFile, DIR_BFP_SOURCE_AUDIO_MASTER_COPY);
+            case AUDIO_USER_COPY:
+                return new File(rootFile, DIR_BFP_SOURCE_AUDIO_USER_COPY);
             default:
                 throw new IllegalStateException();
         }

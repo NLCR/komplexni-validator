@@ -2664,8 +2664,8 @@
                     <value name="files" type="FILE_LIST">
                         <value-ref name="MASTER-COPY_FILES"/>
                     </value>
-                    <value name="copy" type="IMAGE_COPY">MASTER</value>
-                    <value name="util" type="IMAGE_UTIL">JPYLYZER</value>
+                    <value name="type" type="RESOURCE_TYPE">IMAGE_MASTER</value>
+                    <value name="util" type="EXTERNAL_UTIL">JPYLYZER</value>
                 </params>
             </validation>
         </rule>
@@ -2679,8 +2679,8 @@
                     <value name="files" type="FILE_LIST">
                         <value-ref name="USER-COPY_FILES"/>
                     </value>
-                    <value name="copy" type="IMAGE_COPY">USER</value>
-                    <value name="util" type="IMAGE_UTIL">JPYLYZER</value>
+                    <value name="type" type="RESOURCE_TYPE">IMAGE_USER</value>
+                    <value name="util" type="EXTERNAL_UTIL">JPYLYZER</value>
                 </params>
             </validation>
         </rule>
@@ -2694,8 +2694,8 @@
                     <value name="files" type="FILE_LIST">
                         <value-ref name="MASTER-COPY_FILES"/>
                     </value>
-                    <value name="copy" type="IMAGE_COPY">MASTER</value>
-                    <value name="util" type="IMAGE_UTIL">JHOVE</value>
+                    <value name="type" type="RESOURCE_TYPE">IMAGE_MASTER</value>
+                    <value name="util" type="EXTERNAL_UTIL">JHOVE</value>
                 </params>
             </validation>
         </rule>
@@ -2709,8 +2709,8 @@
                     <value name="files" type="FILE_LIST">
                         <value-ref name="USER-COPY_FILES"/>
                     </value>
-                    <value name="copy" type="IMAGE_COPY">USER</value>
-                    <value name="util" type="IMAGE_UTIL">JHOVE</value>
+                    <value name="type" type="RESOURCE_TYPE">IMAGE_USER</value>
+                    <value name="util" type="EXTERNAL_UTIL">JHOVE</value>
                 </params>
             </validation>
         </rule>
@@ -2724,8 +2724,8 @@
                     <value name="files" type="FILE_LIST">
                         <value-ref name="MASTER-COPY_FILES"/>
                     </value>
-                    <value name="copy" type="IMAGE_COPY">MASTER</value>
-                    <value name="util" type="IMAGE_UTIL">KAKADU</value>
+                    <value name="type" type="RESOURCE_TYPE">IMAGE_MASTER</value>
+                    <value name="util" type="EXTERNAL_UTIL">KAKADU</value>
                 </params>
             </validation>
         </rule>
@@ -2739,8 +2739,8 @@
                     <value name="files" type="FILE_LIST">
                         <value-ref name="USER-COPY_FILES"/>
                     </value>
-                    <value name="copy" type="IMAGE_COPY">USER</value>
-                    <value name="util" type="IMAGE_UTIL">KAKADU</value>
+                    <value name="type" type="RESOURCE_TYPE">IMAGE_USER</value>
+                    <value name="util" type="EXTERNAL_UTIL">KAKADU</value>
                 </params>
             </validation>
         </rule>
@@ -2754,8 +2754,8 @@
                     <value name="files" type="FILE_LIST">
                         <value-ref name="MASTER-COPY_FILES"/>
                     </value>
-                    <value name="copy" type="IMAGE_COPY">MASTER</value>
-                    <value name="util" type="IMAGE_UTIL">IMAGE_MAGICK</value>
+                    <value name="type" type="RESOURCE_TYPE">IMAGE_MASTER</value>
+                    <value name="util" type="EXTERNAL_UTIL">IMAGE_MAGICK</value>
                 </params>
             </validation>
         </rule>
@@ -2769,8 +2769,8 @@
                     <value name="files" type="FILE_LIST">
                         <value-ref name="USER-COPY_FILES"/>
                     </value>
-                    <value name="copy" type="IMAGE_COPY">USER</value>
-                    <value name="util" type="IMAGE_UTIL">IMAGE_MAGICK</value>
+                    <value name="type" type="RESOURCE_TYPE">IMAGE_USER</value>
+                    <value name="util" type="EXTERNAL_UTIL">IMAGE_MAGICK</value>
                 </params>
             </validation>
         </rule>
