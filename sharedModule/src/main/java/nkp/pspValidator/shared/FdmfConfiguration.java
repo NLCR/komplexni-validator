@@ -4,7 +4,7 @@ import nkp.pspValidator.shared.engine.exceptions.ValidatorConfigurationException
 import nkp.pspValidator.shared.externalUtils.ExternalUtil;
 import nkp.pspValidator.shared.externalUtils.ResourceType;
 import nkp.pspValidator.shared.externalUtils.ExternalUtilManager;
-import nkp.pspValidator.shared.externalUtils.validation.ImageValidator;
+import nkp.pspValidator.shared.externalUtils.validation.BinaryFileValidator;
 
 import javax.xml.XMLConstants;
 import javax.xml.transform.stream.StreamSource;
@@ -51,7 +51,7 @@ public class FdmfConfiguration {
     private final List<File> techProfiles = new ArrayList<>();
     private List<File> metsProfiles = new ArrayList<>();
 
-    private ImageValidator imageValidator;
+    private BinaryFileValidator binaryFileValidator;
 
 
     public FdmfConfiguration(File fdmfRoot, File fdmfConfigXsd, File j2kProfileXsd, File metadataProfileXsd) throws ValidatorConfigurationException {
@@ -152,17 +152,17 @@ public class FdmfConfiguration {
     }
 
     public void initJ2kProfiles(ExternalUtilManager externalUtilManager) throws ValidatorConfigurationException {
-        imageValidator = new ImageValidator(externalUtilManager);
+        binaryFileValidator = new BinaryFileValidator(externalUtilManager);
         for (ResourceType type : ResourceType.values()) {
             for (ExternalUtil util : ExternalUtil.values()) {
                 if (externalUtilManager.isUtilAvailable(util)) {
-                    validateAndProcessBinaryFileProfile(fdmfRoot, imageValidator, type, util);
+                    validateAndProcessBinaryFileProfile(fdmfRoot, binaryFileValidator, type, util);
                 }
             }
         }
     }
 
-    private void validateAndProcessBinaryFileProfile(File fdmfRoot, ImageValidator validator, ResourceType type, ExternalUtil util) throws ValidatorConfigurationException {
+    private void validateAndProcessBinaryFileProfile(File fdmfRoot, BinaryFileValidator validator, ResourceType type, ExternalUtil util) throws ValidatorConfigurationException {
         File rootFile = new File(fdmfRoot, DIR_BINARY_FILE_PROFILES);
         checkDirExistAndReadable(rootFile);
         File sourceTypeDir = buildSourceTypeDir(rootFile, type);
@@ -172,16 +172,16 @@ public class FdmfConfiguration {
             if (profileDefinitionFile.exists()) {
                 checkFileExistAndReadable(profileDefinitionFile);
                 validateConfigFile(profileDefinitionFile, j2kProfileXsd);
-                validator.processProfile(util, type, profileDefinitionFile);
+                validator.registerProfile(type, util, profileDefinitionFile);
             }
         }
     }
 
     private static File buildSourceTypeDir(File rootFile, ResourceType type) {
         switch (type) {
-            case IMAGE_USER:
+            case IMAGE_USER_COPY:
                 return new File(rootFile, DIR_BFP_SOURCE_IMAGE_USER_COPY);
-            case IMAGE_MASTER:
+            case IMAGE_MASTER_COPY:
                 return new File(rootFile, DIR_BFP_SOURCE_IMAGE_MASTER_COPY);
             case AUDIO_SOURCE:
                 return new File(rootFile, DIR_BFP_SOURCE_AUDIO_SOURCE);
@@ -212,11 +212,11 @@ public class FdmfConfiguration {
         }
     }
 
-    public ImageValidator getImageValidator() {
-        if (imageValidator == null) {
-            throw new IllegalStateException(ImageValidator.class.getSimpleName() + " not initialized yet");
+    public BinaryFileValidator getBinaryFileValidator() {
+        if (binaryFileValidator == null) {
+            throw new IllegalStateException(BinaryFileValidator.class.getSimpleName() + " not initialized yet");
         }
-        return imageValidator;
+        return binaryFileValidator;
     }
 
     public Map<String, File> getProvidedFiles() {

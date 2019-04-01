@@ -29,50 +29,38 @@ import java.util.Map;
 /**
  * Created by Martin Řehánek on 16.11.16.
  */
-public class ImageValidator {
+public class BinaryFileValidator {
 
     private final ExternalUtilManager externalUtilManager;
-    private final Map<ExternalUtil, J2kProfile> masterCopyProfiles = new HashMap<>();
-    private final Map<ExternalUtil, J2kProfile> userCopyProfiles = new HashMap<>();
+    private final Map<ResourceType, Map<ExternalUtil, BinaryFileProfile>> profiles = new HashMap<>();
 
 
-    public ImageValidator(ExternalUtilManager externalUtilManager) {
+    public BinaryFileValidator(ExternalUtilManager externalUtilManager) {
         this.externalUtilManager = externalUtilManager;
-    }
-
-    public void processProfile(ExternalUtil util, ResourceType type, File profileDefinitionFile) throws ValidatorConfigurationException {
-        switch (type) {
-            case IMAGE_MASTER:
-                processProfile(util, profileDefinitionFile, masterCopyProfiles);
-                break;
-            case IMAGE_USER:
-                processProfile(util, profileDefinitionFile, userCopyProfiles);
-                break;
-        }
     }
 
     public boolean isUtilAvailable(ExternalUtil util) {
         return externalUtilManager.isUtilAvailable(util);
     }
 
-    public J2kProfile getProfile(ResourceType type, ExternalUtil util) {
-        switch (type) {
-            case IMAGE_MASTER:
-                return masterCopyProfiles.get(util);
-            case IMAGE_USER:
-                return userCopyProfiles.get(util);
-            default:
-                throw new IllegalStateException();
+    private Map<ExternalUtil, BinaryFileProfile> getProfilesByType(ResourceType type) {
+        if (!profiles.containsKey(type)) {
+            profiles.put(type, new HashMap<>());
         }
+        return profiles.get(type);
     }
 
-    private void processProfile(ExternalUtil util, File profileDefinitionFile, Map<ExternalUtil, J2kProfile> profiles) throws ValidatorConfigurationException {
+    public void registerProfile(ResourceType type, ExternalUtil util, File profileDefinitionFile) throws ValidatorConfigurationException {
         XMLTag doc = XMLDoc.from(profileDefinitionFile, true);
-        J2kProfile profile = buildProfile(util, doc.getCurrentTag());
-        profiles.put(util, profile);
+        BinaryFileProfile profile = buildProfile(util, doc.getCurrentTag());
+        getProfilesByType(type).put(util, profile);
     }
 
-    private J2kProfile buildProfile(ExternalUtil util, Element rootEl) throws ValidatorConfigurationException {
+    public BinaryFileProfile getProfile(ResourceType type, ExternalUtil util) {
+        return getProfilesByType(type).get(util);
+    }
+
+    private BinaryFileProfile buildProfile(ExternalUtil util, Element rootEl) throws ValidatorConfigurationException {
         Element profileTypeEl = XmlUtils.getChildrenElements(rootEl).get(0);
         switch (profileTypeEl.getTagName()) {
             case "fromXml":
@@ -84,8 +72,8 @@ public class ImageValidator {
         }
     }
 
-    private J2kProfile buildTextProfile(Element rootEl, ExternalUtil util) throws ValidatorConfigurationException {
-        J2kTextProfile profile = new J2kTextProfile(externalUtilManager, util);
+    private BinaryFileProfile buildTextProfile(Element rootEl, ExternalUtil util) throws ValidatorConfigurationException {
+        BinaryFileTextProfile profile = new BinaryFileTextProfile(externalUtilManager, util);
         //validations
         List<Element> validationEls = XmlUtils.getChildrenElementsByName(rootEl, "validation");
         for (Element validationEl : validationEls) {
@@ -106,8 +94,8 @@ public class ImageValidator {
         return profile;
     }
 
-    private J2kProfile buildXmlProfile(Element rootEl, ExternalUtil util) throws ValidatorConfigurationException {
-        J2kXmlProfile profile = new J2kXmlProfile(externalUtilManager, util);
+    private BinaryFileProfile buildXmlProfile(Element rootEl, ExternalUtil util) throws ValidatorConfigurationException {
+        BinaryFileXmlProfile profile = new BinaryFileXmlProfile(externalUtilManager, util);
         //namespaces
         Element namespacesEl = XmlUtils.getFirstChildElementsByName(rootEl, "namespaces");
         if (namespacesEl != null) {

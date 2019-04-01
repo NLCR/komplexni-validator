@@ -7,9 +7,9 @@ import nkp.pspValidator.shared.externalUtils.ExternalUtilManager;
 /**
  * Created by Martin Řehánek on 18.11.16.
  */
-public class J2kTextProfile extends J2kProfile {
+public class BinaryFileTextProfile extends BinaryFileProfile {
 
-    public J2kTextProfile(ExternalUtilManager externalUtilManager, ExternalUtil externalUtil) {
+    public BinaryFileTextProfile(ExternalUtilManager externalUtilManager, ExternalUtil externalUtil) {
         super(externalUtilManager, externalUtil);
     }
 

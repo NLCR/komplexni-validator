@@ -14,12 +14,12 @@ import java.io.IOException;
 /**
  * Created by Martin Řehánek on 18.11.16.
  */
-public class J2kXmlProfile extends J2kProfile {
+public class BinaryFileXmlProfile extends BinaryFileProfile {
 
 
     private final NamespaceContextImpl namespaceContext = new NamespaceContextImpl();
 
-    public J2kXmlProfile(ExternalUtilManager externalUtilManager, ExternalUtil externalUtil) {
+    public BinaryFileXmlProfile(ExternalUtilManager externalUtilManager, ExternalUtil externalUtil) {
         super(externalUtilManager, externalUtil);
     }
 

@@ -2524,120 +2524,120 @@
                    description="Kontrola obrázků MASTER-COPY a USER-COPY v JPEG 2000 za pomocí externích nástrojů">
 
         <rule name="MASTER-COPY_FILES_VALID_BY_JPYLYZER">
-            <description>Všechny soubory MASTER-COPY musí být validní vůči profilu JPEG 2000 pro nástroj Jpylyzer.
+            <description>Všechny soubory MASTER-COPY (jpeg 2000) musí být validní vůči profilu pro binární soubory pro nástroj Jpylyzer.
             </description>
-            <validation functionName="checkImageFilesValidByExternalUtil">
+            <validation functionName="checkBinaryFilesValidByExternalUtil">
                 <params>
                     <value name="level" type="LEVEL">ERROR</value>
                     <value name="files" type="FILE_LIST">
                         <value-ref name="MASTER-COPY_FILES"/>
                     </value>
-                    <value name="type" type="RESOURCE_TYPE">IMAGE_MASTER</value>
+                    <value name="type" type="RESOURCE_TYPE">IMAGE_MASTER_COPY</value>
                     <value name="util" type="EXTERNAL_UTIL">JPYLYZER</value>
                 </params>
             </validation>
         </rule>
 
         <rule name="USER-COPY_FILES_VALID_BY_JPYLYZER">
-            <description>Všechny soubory USER-COPY musí být validní vůči profilu JPEG 2000 pro nástroj Jpylyzer.
+            <description>Všechny soubory USER-COPY (jpeg 2000) musí být validní vůči profilu pro binární soubory pro nástroj Jpylyzer.
             </description>
-            <validation functionName="checkImageFilesValidByExternalUtil">
+            <validation functionName="checkBinaryFilesValidByExternalUtil">
                 <params>
                     <value name="level" type="LEVEL">ERROR</value>
                     <value name="files" type="FILE_LIST">
                         <value-ref name="USER-COPY_FILES"/>
                     </value>
-                    <value name="type" type="RESOURCE_TYPE">IMAGE_USER</value>
+                    <value name="type" type="RESOURCE_TYPE">IMAGE_USER_COPY</value>
                     <value name="util" type="EXTERNAL_UTIL">JPYLYZER</value>
                 </params>
             </validation>
         </rule>
 
         <rule name="MASTER-COPY_FILES_VALID_BY_JHOVE">
-            <description>Všechny soubory MASTER-COPY musí být validní vůči profilu JPEG 2000 pro nástroj JHOVE.
+            <description>Všechny soubory MASTER-COPY (jpeg 2000) musí být validní vůči profilu pro binární soubory pro nástroj JHOVE.
             </description>
-            <validation functionName="checkImageFilesValidByExternalUtil">
+            <validation functionName="checkBinaryFilesValidByExternalUtil">
                 <params>
                     <value name="level" type="LEVEL">ERROR</value>
                     <value name="files" type="FILE_LIST">
                         <value-ref name="MASTER-COPY_FILES"/>
                     </value>
-                    <value name="type" type="RESOURCE_TYPE">IMAGE_MASTER</value>
+                    <value name="type" type="RESOURCE_TYPE">IMAGE_MASTER_COPY</value>
                     <value name="util" type="EXTERNAL_UTIL">JHOVE</value>
                 </params>
             </validation>
         </rule>
 
         <rule name="USER-COPY_FILES_VALID_BY_JHOVE">
-            <description>Všechny soubory USER-COPY musí být validní vůči profilu JPEG 2000 pro nástroj JHOVE.
+            <description>Všechny soubory USER-COPY (jpeg 2000) musí být validní vůči profilu pro binární soubory pro nástroj JHOVE.
             </description>
-            <validation functionName="checkImageFilesValidByExternalUtil">
+            <validation functionName="checkBinaryFilesValidByExternalUtil">
                 <params>
                     <value name="level" type="LEVEL">ERROR</value>
                     <value name="files" type="FILE_LIST">
                         <value-ref name="USER-COPY_FILES"/>
                     </value>
-                    <value name="type" type="RESOURCE_TYPE">IMAGE_USER</value>
+                    <value name="type" type="RESOURCE_TYPE">IMAGE_USER_COPY</value>
                     <value name="util" type="EXTERNAL_UTIL">JHOVE</value>
                 </params>
             </validation>
         </rule>
 
         <rule name="MASTER-COPY_FILES_VALID_BY_KAKADU">
-            <description>Všechny soubory MASTER-COPY musí být validní vůči profilu JPEG 2000 pro nástroj Kakadu.
+            <description>Všechny soubory MASTER-COPY (jpeg 2000) musí být validní vůči profilu pro binární soubory pro nástroj Kakadu.
             </description>
-            <validation functionName="checkImageFilesValidByExternalUtil">
+            <validation functionName="checkBinaryFilesValidByExternalUtil">
                 <params>
                     <value name="level" type="LEVEL">ERROR</value>
                     <value name="files" type="FILE_LIST">
                         <value-ref name="MASTER-COPY_FILES"/>
                     </value>
-                    <value name="type" type="RESOURCE_TYPE">IMAGE_MASTER</value>
+                    <value name="type" type="RESOURCE_TYPE">IMAGE_MASTER_COPY</value>
                     <value name="util" type="EXTERNAL_UTIL">KAKADU</value>
                 </params>
             </validation>
         </rule>
 
         <rule name="USER-COPY_FILES_VALID_BY_KAKADU">
-            <description>Všechny soubory USER-COPY musí být validní vůči profilu JPEG 2000 pro nástroj Kakadu.
+            <description>Všechny soubory USER-COPY (jpeg 2000) musí být validní vůči profilu pro binární soubory pro nástroj Kakadu.
             </description>
-            <validation functionName="checkImageFilesValidByExternalUtil">
+            <validation functionName="checkBinaryFilesValidByExternalUtil">
                 <params>
                     <value name="level" type="LEVEL">ERROR</value>
                     <value name="files" type="FILE_LIST">
                         <value-ref name="USER-COPY_FILES"/>
                     </value>
-                    <value name="type" type="RESOURCE_TYPE">IMAGE_USER</value>
+                    <value name="type" type="RESOURCE_TYPE">IMAGE_USER_COPY</value>
                     <value name="util" type="EXTERNAL_UTIL">KAKADU</value>
                 </params>
             </validation>
         </rule>
 
         <rule name="MASTER-COPY_FILES_VALID_BY_IMAGE_MAGICK">
-            <description>Všechny soubory MASTER-COPY musí být validní vůči profilu JPEG 2000 pro nástroj ImageMagick.
+            <description>Všechny soubory MASTER-COPY (jpeg 2000) musí být validní vůči profilu pro binární soubory pro nástroj ImageMagick.
             </description>
-            <validation functionName="checkImageFilesValidByExternalUtil">
+            <validation functionName="checkBinaryFilesValidByExternalUtil">
                 <params>
                     <value name="level" type="LEVEL">ERROR</value>
                     <value name="files" type="FILE_LIST">
                         <value-ref name="MASTER-COPY_FILES"/>
                     </value>
-                    <value name="type" type="RESOURCE_TYPE">IMAGE_MASTER</value>
+                    <value name="type" type="RESOURCE_TYPE">IMAGE_MASTER_COPY</value>
                     <value name="util" type="EXTERNAL_UTIL">IMAGE_MAGICK</value>
                 </params>
             </validation>
         </rule>
 
         <rule name="USER-COPY_FILES_VALID_BY_IMAGE_MAGICK">
-            <description>Všechny soubory USER-COPY musí být validní vůči profilu JPEG 2000 pro nástroj ImageMagick.
+            <description>Všechny soubory USER-COPY (jpeg 2000) musí být validní vůči profilu pro binární soubory pro nástroj ImageMagick.
             </description>
-            <validation functionName="checkImageFilesValidByExternalUtil">
+            <validation functionName="checkBinaryFilesValidByExternalUtil">
                 <params>
                     <value name="level" type="LEVEL">ERROR</value>
                     <value name="files" type="FILE_LIST">
                         <value-ref name="USER-COPY_FILES"/>
                     </value>
-                    <value name="type" type="RESOURCE_TYPE">IMAGE_USER</value>
+                    <value name="type" type="RESOURCE_TYPE">IMAGE_USER_COPY</value>
                     <value name="util" type="EXTERNAL_UTIL">IMAGE_MAGICK</value>
                 </params>
             </validation>

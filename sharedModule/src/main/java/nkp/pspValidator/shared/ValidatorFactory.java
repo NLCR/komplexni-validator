@@ -18,7 +18,7 @@ import java.util.Map;
 public class ValidatorFactory {
 
     public static Validator buildValidator(FdmfConfiguration fdmfConfiguration, File pspRootDir, DictionaryManager dictionaryManager) throws ValidatorConfigurationException {
-        Engine engine = new Engine(fdmfConfiguration.getImageValidator());
+        Engine engine = new Engine(fdmfConfiguration.getBinaryFileValidator());
         //psp dir
         engine.setProvidedFile("PSP_DIR", pspRootDir);
         //init with provided files

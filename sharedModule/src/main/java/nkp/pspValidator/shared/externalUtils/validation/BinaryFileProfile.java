@@ -12,14 +12,14 @@ import java.util.List;
 /**
  * Created by Martin Řehánek on 17.11.16.
  */
-public abstract class J2kProfile {
+public abstract class BinaryFileProfile {
 
     final ExternalUtilManager externalUtilManager;
     final ExternalUtil externalUtil;
     List<Validation> validations = new ArrayList<>();
 
 
-    public J2kProfile(ExternalUtilManager externalUtilManager, ExternalUtil externalUtil) {
+    public BinaryFileProfile(ExternalUtilManager externalUtilManager, ExternalUtil externalUtil) {
         this.externalUtilManager = externalUtilManager;
         this.externalUtil = externalUtil;
     }
@@ -63,7 +63,7 @@ public abstract class J2kProfile {
 
     @Override
     public String toString() {
-        return "J2kProfile{" +
+        return "BinaryFileProfile{" +
                 "externalUtil=" + externalUtil +
                 ", validations=" + validations.size() +
                 '}';
