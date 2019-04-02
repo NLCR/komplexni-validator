@@ -32,6 +32,7 @@ public class ExternalUtilsCheckDialogController extends DialogController {
     private static final String KAKADU_INSTALLATION_URL = "https://github.com/NLCR/komplexni-validator/wiki/Instalace#kakadu";
     // TODO: 2019-04-02 doplnit wiki
     private static final String MP3VAL_INSTALLATION_URL = "https://github.com/NLCR/komplexni-validator/wiki/Instalace#mp3val";
+    private static final String SHNTOOL_INSTALLATION_URL = "https://github.com/NLCR/komplexni-validator/wiki/Instalace#shntool";
 
     private static final String HELP_URL = "https://github.com/NLCR/komplexni-validator/wiki/Instalace#instalace-n%C3%A1stroj%C5%AF-pro-validaci-obrazov%C3%BDch-soubor%C5%AF";
 
@@ -152,6 +153,29 @@ public class ExternalUtilsCheckDialogController extends DialogController {
     @FXML
     Button mp3valBtnInstall;
 
+    /*shntool*/
+
+    @FXML
+    Label shntoolStatusText;
+
+    @FXML
+    ProgressIndicator shntoolProgress;
+
+    @FXML
+    ImageView shntoolOkImg;
+
+    @FXML
+    ImageView shntoolErrorImg;
+
+    @FXML
+    Button shntoolBtnRetry;
+
+    @FXML
+    Button shntoolBtnSelectPath;
+
+    @FXML
+    Button shntoolBtnInstall;
+
 
     @FXML
     Button btnContinue;
@@ -256,6 +280,7 @@ public class ExternalUtilsCheckDialogController extends DialogController {
         checkImageMagick();
         checkKakadu();
         checkMp3val();
+        checkShntool();
     }
 
     public void continueInApp(ActionEvent actionEvent) {
@@ -286,6 +311,10 @@ public class ExternalUtilsCheckDialogController extends DialogController {
     @FXML
     public void checkMp3val() {
         checkUtil(ExternalUtil.MP3VAL, mp3valProgress, mp3valStatusText, mp3valOkImg, mp3valErrorImg, mp3valBtnRetry, mp3valBtnSelectPath, mp3valBtnInstall);
+    }
+
+    public void checkShntool() {
+        checkUtil(ExternalUtil.SHNTOOL, shntoolProgress, shntoolStatusText, shntoolOkImg, shntoolErrorImg, shntoolBtnRetry, shntoolBtnSelectPath, shntoolBtnInstall);
     }
 
     private void checkUtil(ExternalUtil util,
@@ -392,6 +421,17 @@ public class ExternalUtilsCheckDialogController extends DialogController {
         selectUtilPath(ConfigurationManager.PROP_MP3VAL_DIR, defaultDir, ExternalUtil.MP3VAL, () -> checkMp3val());
     }
 
+
+    public void selectShntoolPath(ActionEvent actionEvent) {
+        File defaultDir = null;
+        switch (getConfigurationManager().getPlatform().getOperatingSystem()) {
+            case WINDOWS:
+                defaultDir = new File("C:\\Program Files");
+                break;
+        }
+        selectUtilPath(ConfigurationManager.PROP_SHNTOOL_DIR, defaultDir, ExternalUtil.SHNTOOL, () -> checkShntool());
+    }
+
     private void selectUtilPath(String property, File defaultDir, ExternalUtil util, MyListener listener) {
         DirectoryChooser chooser = new DirectoryChooser();
         chooser.setTitle(String.format("Vyberte adresář se spustitelnými soubory %s", util.getUserFriendlyName()));
@@ -428,6 +468,10 @@ public class ExternalUtilsCheckDialogController extends DialogController {
 
     public void installMp3val(ActionEvent actionEvent) {
         openUrl(MP3VAL_INSTALLATION_URL);
+    }
+
+    public void installShntool(ActionEvent actionEvent) {
+        openUrl(SHNTOOL_INSTALLATION_URL);
     }
 
     public void showHelp(ActionEvent actionEvent) {

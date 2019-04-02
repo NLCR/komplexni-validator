@@ -35,6 +35,7 @@ public class ConfigurationManager {
     public static final String PROP_IMAGE_MAGICK_DIR = "imageMagick.dir";
     public static final String PROP_KAKADU_DIR = "kakadu.dir";
     public static final String PROP_MP3VAL_DIR = "mp3val.dir";
+    public static final String PROP_SHNTOOL_DIR = "shntool.dir";
 
     //validation
     public static final String PROP_LAST_PSP_DIR = "last.psp.dir";

@@ -32,6 +32,7 @@ public class ValidationDataManager {
         externalUtilManager.setPath(ExternalUtil.IMAGE_MAGICK, configurationManager.getFileOrNull(ConfigurationManager.PROP_IMAGE_MAGICK_DIR));
         externalUtilManager.setPath(ExternalUtil.KAKADU, configurationManager.getFileOrNull(ConfigurationManager.PROP_KAKADU_DIR));
         externalUtilManager.setPath(ExternalUtil.MP3VAL, configurationManager.getFileOrNull(ConfigurationManager.PROP_MP3VAL_DIR));
+        externalUtilManager.setPath(ExternalUtil.SHNTOOL, configurationManager.getFileOrNull(ConfigurationManager.PROP_SHNTOOL_DIR));
     }
 
     public void setFdmfRegistry(FdmfRegistry fdmfRegistry) {

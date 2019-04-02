@@ -8,7 +8,7 @@
       fx:controller="nkp.pspValidator.gui.ExternalUtilsCheckDialogController"
       fx:id="container"
       minWidth="700"
-      minHeight="650"
+      minHeight="700"
       alignment="CENTER"
 >
     <children>
@@ -471,6 +471,98 @@
                    GridPane.columnIndex="0"
                    GridPane.columnSpan="6"
                    GridPane.rowIndex="12"
+                   visible="false"
+            />
+
+            <!--shntool-->
+            <Label text="shntool"
+                   styleClass="util-name"
+                   GridPane.columnIndex="0"
+                   GridPane.rowIndex="13"/>
+
+            <ProgressIndicator fx:id="shntoolProgress"
+                               GridPane.columnIndex="1"
+                               GridPane.rowIndex="13"
+                               visible="false"
+            />
+
+            <ImageView fx:id="shntoolOkImg"
+                       styleClass="result-image"
+                       GridPane.columnIndex="1"
+                       GridPane.rowIndex="13"
+                       preserveRatio="true"
+                       visible="false"
+                       style="-fx-background-color: BLACK"
+            >
+                <image>
+                    <Image url="@/img/Ok-30.png"/>
+                </image>
+            </ImageView>
+
+            <ImageView fx:id="shntoolErrorImg"
+                       styleClass="result-image"
+                       GridPane.columnIndex="1"
+                       GridPane.rowIndex="13"
+                       GridPane.halignment="CENTER"
+                       visible="false">
+                <image>
+                    <Image url="@/img/Error-30.png"/>
+                </image>
+            </ImageView>
+
+            <Button fx:id="shntoolBtnRetry"
+                    text="Zkusit znovu"
+                    onAction="#checkShntool"
+                    GridPane.columnIndex="2"
+                    GridPane.rowIndex="13"
+            >
+                <graphic>
+                    <ImageView>
+                        <image>
+                            <Image url="@/img/Synchronize-18.png"/>
+                        </image>
+                    </ImageView>
+                </graphic>
+            </Button>
+
+            <Button fx:id="shntoolBtnSelectPath"
+                    text="Nastavit adresář"
+                    onAction="#selectShntoolPath"
+                    GridPane.columnIndex="3"
+                    GridPane.rowIndex="13"
+            >
+                <graphic>
+                    <ImageView>
+                        <image>
+                            <Image url="@/img/Add Folder-18.png"/>
+                        </image>
+                    </ImageView>
+                </graphic>
+            </Button>
+
+            <Button fx:id="shntoolBtnInstall"
+                    text="Instalovat"
+                    onAction="#installShntool"
+                    GridPane.columnIndex="4"
+                    GridPane.rowIndex="13"
+            >
+                <graphic>
+
+                    <ImageView>
+                        <image>
+                            <Image url="@/img/About-18.png"/>
+                        </image>
+                    </ImageView>
+                </graphic>
+
+            </Button>
+
+
+            <Label fx:id="shntoolStatusText"
+                   styleClass="result-text"
+                   GridPane.columnIndex="0"
+                   GridPane.columnSpan="6"
+                   GridPane.rowIndex="14"
                    visible="false"
             />
 
