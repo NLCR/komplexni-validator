@@ -30,6 +30,9 @@ public class ExternalUtilsCheckDialogController extends DialogController {
     private static final String JHOVE_INSTALLATION_URL = "https://github.com/NLCR/komplexni-validator/wiki/Instalace#jhove";
     private static final String IMAGE_MAGICK_INSTALLATION_URL = "https://github.com/NLCR/komplexni-validator/wiki/Instalace#imagemagick";
     private static final String KAKADU_INSTALLATION_URL = "https://github.com/NLCR/komplexni-validator/wiki/Instalace#kakadu";
+    // TODO: 2019-04-02 doplnit wiki
+    private static final String MP3VAL_INSTALLATION_URL = "https://github.com/NLCR/komplexni-validator/wiki/Instalace#mp3val";
+
     private static final String HELP_URL = "https://github.com/NLCR/komplexni-validator/wiki/Instalace#instalace-n%C3%A1stroj%C5%AF-pro-validaci-obrazov%C3%BDch-soubor%C5%AF";
 
     /*jhove*/
@@ -125,18 +128,50 @@ public class ExternalUtilsCheckDialogController extends DialogController {
     @FXML
     Button kakaduBtnInstall;
 
+
+    /*MP3val*/
+
+    @FXML
+    Label mp3valStatusText;
+
+    @FXML
+    ProgressIndicator mp3valProgress;
+
+    @FXML
+    ImageView mp3valOkImg;
+
+    @FXML
+    ImageView mp3valErrorImg;
+
+    @FXML
+    Button mp3valBtnRetry;
+
+    @FXML
+    Button mp3valBtnSelectPath;
+
+    @FXML
+    Button mp3valBtnInstall;
+
+
     @FXML
     Button btnContinue;
 
     //other data
-    private final Map<ExternalUtil, Boolean> utilsFinished = new HashMap<>();
-    private DialogState state = DialogState.RUNNING;
     private boolean closeWhenFinished;
+    private ExternalUtilsCheckDialogControllerStateManager stateManager = new ExternalUtilsCheckDialogControllerStateManager();
+    private Map<ExternalUtil, UtilsUi> utilsUi = new HashMap<>();
+
+
+    @FXML
+    public void initialize() {
+
+    }
+
 
     @Override
     public EventHandler<WindowEvent> getOnCloseEventHandler() {
         return event -> {
-            switch (state) {
+            switch (stateManager.getState()) {
                 case RUNNING:
                     event.consume();
                     break;
@@ -150,44 +185,77 @@ public class ExternalUtilsCheckDialogController extends DialogController {
         };
     }
 
-    @FXML
-    public void initialize() {
 
-    }
-
-    public ExternalUtilsCheckDialogController() {
-        synchronized (utilsFinished) {
-            for (ExternalUtil util : ExternalUtil.values()) {
-                utilsFinished.put(util, false);
+    private void reflectUtilsViews() {
+        //state per Util
+        Map<ExternalUtil, UtilCheckResult> utilsResult = stateManager.getUtilsResult();
+        for (ExternalUtil util : utilsResult.keySet()) {
+            UtilCheckResult utilCheckResult = utilsResult.get(util);
+            UtilsUi utilsUi = this.utilsUi.get(util);
+            if (utilCheckResult == null) {//running
+                //show progress indicator
+                utilsUi.progresIndicator.setVisible(true);
+                //hide buttons, texts, images
+                utilsUi.imgOk.setVisible(false);
+                utilsUi.imgError.setVisible(false);
+                utilsUi.statusLabel.setVisible(false);
+                utilsUi.btnRetry.setVisible(false);
+                utilsUi.btnSelectPath.setVisible(false);
+                utilsUi.btnInstall.setVisible(false);
+            } else if (utilCheckResult.isAvailable()) {//finished
+                //hide progress indicator
+                utilsUi.progresIndicator.setVisible(false);
+                //show ok stuff
+                utilsUi.imgOk.setVisible(true);
+                utilsUi.statusLabel.setVisible(true);
+                utilsUi.statusLabel.setText("verze: " + utilCheckResult.getMessage());
+                //hide error stuff
+                utilsUi.imgError.setVisible(false);
+                utilsUi.btnRetry.setVisible(false);
+                utilsUi.btnSelectPath.setVisible(false);
+                utilsUi.btnInstall.setVisible(false);
+            } else { //error
+                //hide progress indicator
+                utilsUi.progresIndicator.setVisible(false);
+                //hide ok stuff
+                utilsUi.imgOk.setVisible(false);
+                //show error stuff
+                utilsUi.imgError.setVisible(true);
+                utilsUi.statusLabel.setVisible(true);
+                utilsUi.statusLabel.setText("chyba: " + utilCheckResult.getMessage());
+                utilsUi.btnRetry.setVisible(true);
+                utilsUi.btnSelectPath.setVisible(true);
+                utilsUi.btnInstall.setVisible(true);
             }
         }
-    }
 
-    //must be thread safe
-    private boolean isAllUtilsFinished() {
-        synchronized (utilsFinished) {
-            for (boolean utilFinished : utilsFinished.values()) {
-                if (!utilFinished) {
-                    return false;
+        //total state
+        ExternalUtilsCheckDialogControllerStateManager.DialogState state = stateManager.getState();
+        switch (state) {
+            case RUNNING:
+                btnContinue.setDisable(true);
+                break;
+            case FINISHED:
+                getConfigurationManager().setBoolean(ConfigurationManager.PROP_EXTERNAL_TOOLS_CHECK_SHOWN, true);
+                btnContinue.setDisable(false);
+                btnContinue.requestFocus();
+                if (closeWhenFinished) {
+                    continueInApp(null);
                 }
-            }
-            return true;
-        }
-    }
-
-    private void setUtilFinished(ExternalUtil util, boolean finished) {
-        synchronized (utilsFinished) {
-            utilsFinished.put(util, finished);
+                break;
+            case ERROR:
+                btnContinue.setDisable(false);
+                break;
         }
     }
 
     @Override
     public void startNow() {
-        state = DialogState.RUNNING;
         checkJhove();
         checkJpylyzer();
         checkImageMagick();
         checkKakadu();
+        checkMp3val();
     }
 
     public void continueInApp(ActionEvent actionEvent) {
@@ -215,23 +283,21 @@ public class ExternalUtilsCheckDialogController extends DialogController {
         checkUtil(ExternalUtil.KAKADU, kakaduProgress, kakaduStatusText, kakaduOkImg, kakaduErrorImg, kakaduBtnRetry, kakaduBtnSelectPath, kakaduBtnInstall);
     }
 
+    @FXML
+    public void checkMp3val() {
+        checkUtil(ExternalUtil.MP3VAL, mp3valProgress, mp3valStatusText, mp3valOkImg, mp3valErrorImg, mp3valBtnRetry, mp3valBtnSelectPath, mp3valBtnInstall);
+    }
+
     private void checkUtil(ExternalUtil util,
                            ProgressIndicator progresIndicator,
                            Label statusLabel,
                            ImageView imgOk, ImageView imgError,
                            Button btnRetry, Button btnSelectPath, Button btnInstall
     ) {
-        //show progress indicator
-        progresIndicator.setVisible(true);
-        //hide buttons, texts, images
-        imgOk.setVisible(false);
-        imgError.setVisible(false);
-        statusLabel.setVisible(false);
-        btnRetry.setVisible(false);
-        btnSelectPath.setVisible(false);
-        btnInstall.setVisible(false);
-        setUtilFinished(util, false);
-        btnContinue.setDisable(true);
+
+        utilsUi.put(util, new UtilsUi(progresIndicator, statusLabel, imgOk, imgError, btnRetry, btnSelectPath, btnInstall));
+        stateManager.registerUtil(util);
+        reflectUtilsViews();
         main.getValidationDataManager().getExternalUtilManager().toString();
 
         Task task = new Task<Void>() {
@@ -240,54 +306,35 @@ public class ExternalUtilsCheckDialogController extends DialogController {
                 ExternalUtilManager utilManager = main.getValidationDataManager().getExternalUtilManager();
                 try {
                     Thread.sleep(300);
-                    //Thread.sleep(new Random().nextInt(3000));
+                    //Thread.sleep(new Random().nextInt(1000));
                     if (!utilManager.isVersionDetectionDefined(util)) {
-                        processResult(new UtilCheckResult(false, String.format("Detekce verze není definována pro %s!", util)));
+                        processResult(new UtilCheckResult(util, false, String.format("Detekce verze není definována pro %s!", util)));
                     } else {
                         String version = utilManager.runUtilVersionDetection(util);
                         //System.out.println(version);
-                        main.getValidationDataManager().getFdmfRegistry().initJ2kProfiles(utilManager);
-                        processResult(new UtilCheckResult(true, version));
+                        main.getValidationDataManager().getFdmfRegistry().initBinaryFileProfiles(utilManager);
                         utilManager.setUtilAvailable(util, true);
+                        processResult(new UtilCheckResult(util, true, version));
                     }
                 } catch (CliCommand.CliCommandException e) {
                     utilManager.setUtilAvailable(util, false);
-                    processResult(new UtilCheckResult(false, String.format("Chyba: %s!", e.getMessage())));
-                } catch (ValidatorConfigurationException e) {
+                    processResult(new UtilCheckResult(util, false, String.format("Chyba: %s!", e.getMessage())));
+                /*} catch (ValidatorConfigurationException e) {
                     utilManager.setUtilAvailable(util, false);
-                    processResult(new UtilCheckResult(false, String.format("Chyba: %s!", e.getMessage())));
+                    processResult(new UtilCheckResult(util, false, true, String.format("Chyba: %s!", e.getMessage())));
+                */
+                } catch (Throwable e) {
+                    e.printStackTrace();
+                    return null;
                 }
                 return null;
             }
 
             private void processResult(UtilCheckResult result) {
+                stateManager.setUtilsResult(util, result);
                 Platform.runLater(() -> {
-                    progresIndicator.setVisible(false);
-                    statusLabel.setVisible(true);
-                    if (result.isAvailable()) {
-                        //ok
-                        imgOk.setVisible(true);
-                        imgError.setVisible(false);
-                        statusLabel.setText("verze: " + result.getMessage());
-                    } else {
-                        //error
-                        imgOk.setVisible(false);
-                        imgError.setVisible(true);
-                        btnRetry.setVisible(true);
-                        btnSelectPath.setVisible(true);
-                        btnInstall.setVisible(true);
-                        statusLabel.setText(result.getMessage());
-                    }
-                    setUtilFinished(util, true);
-                    if (isAllUtilsFinished()) {
-                        getConfigurationManager().setBoolean(ConfigurationManager.PROP_IMAGE_TOOLS_CHECK_SHOWN, true);
-                        state = DialogState.FINISHED;
-                        btnContinue.setDisable(false);
-                        btnContinue.requestFocus();
-                        if (closeWhenFinished) {
-                            continueInApp(null);
-                        }
-                    }
+                    reflectUtilsViews();
+
                 });
             }
         };
@@ -335,6 +382,16 @@ public class ExternalUtilsCheckDialogController extends DialogController {
         selectUtilPath(ConfigurationManager.PROP_KAKADU_DIR, defaultDir, ExternalUtil.KAKADU, () -> checkKakadu());
     }
 
+    public void selectMp3valPath(ActionEvent actionEvent) {
+        File defaultDir = null;
+        switch (getConfigurationManager().getPlatform().getOperatingSystem()) {
+            case WINDOWS:
+                defaultDir = new File("C:\\Program Files");
+                break;
+        }
+        selectUtilPath(ConfigurationManager.PROP_MP3VAL_DIR, defaultDir, ExternalUtil.MP3VAL, () -> checkMp3val());
+    }
+
     private void selectUtilPath(String property, File defaultDir, ExternalUtil util, MyListener listener) {
         DirectoryChooser chooser = new DirectoryChooser();
         chooser.setTitle(String.format("Vyberte adresář se spustitelnými soubory %s", util.getUserFriendlyName()));
@@ -369,6 +426,10 @@ public class ExternalUtilsCheckDialogController extends DialogController {
         openUrl(KAKADU_INSTALLATION_URL);
     }
 
+    public void installMp3val(ActionEvent actionEvent) {
+        openUrl(MP3VAL_INSTALLATION_URL);
+    }
+
     public void showHelp(ActionEvent actionEvent) {
         openUrl(HELP_URL);
     }
@@ -378,13 +439,19 @@ public class ExternalUtilsCheckDialogController extends DialogController {
         btnContinue.setText(mainButtonText);
     }
 
-    private static final class UtilCheckResult {
+    static final class UtilCheckResult {
+        private final ExternalUtil util;
         private final boolean available;
         private final String message;
 
-        public UtilCheckResult(boolean available, String message) {
+        public UtilCheckResult(ExternalUtil util, boolean available, String message) {
+            this.util = util;
             this.available = available;
             this.message = message;
+        }
+
+        public ExternalUtil getUtil() {
+            return util;
         }
 
         public boolean isAvailable() {
@@ -396,13 +463,30 @@ public class ExternalUtilsCheckDialogController extends DialogController {
         }
     }
 
-    private static interface MyListener {
+    private static class UtilsUi {
+        final ProgressIndicator progresIndicator;
+        final Label statusLabel;
+        private final ImageView imgOk;
+        private final ImageView imgError;
+        private final Button btnRetry;
+        private final Button btnSelectPath;
+        private final Button btnInstall;
+
+        public UtilsUi(ProgressIndicator progresIndicator, Label statusLabel, ImageView imgOk, ImageView imgError, Button btnRetry, Button btnSelectPath, Button btnInstall) {
+            this.progresIndicator = progresIndicator;
+            this.statusLabel = statusLabel;
+            this.imgOk = imgOk;
+            this.imgError = imgError;
+            this.btnRetry = btnRetry;
+            this.btnSelectPath = btnSelectPath;
+            this.btnInstall = btnInstall;
+        }
+    }
+
+
+    private interface MyListener {
         void onFinished();
     }
 
-
-    public static enum DialogState {
-        RUNNING, FINISHED, ERROR;
-    }
 
 }

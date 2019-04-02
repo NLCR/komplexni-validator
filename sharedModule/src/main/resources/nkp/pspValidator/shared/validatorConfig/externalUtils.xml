@@ -248,5 +248,54 @@
         </execution>
     </util>
 
+    <util name="MP3VAL">
+        <versionDetection>
+            <operatingSystem name="LINUX">
+                <command>${UTIL_PATH}mp3val -v</command>
+                <parser>
+                    <stream>STDOUT</stream>
+                    <regexp>MP3val [\.0-9]+</regexp>
+                </parser>
+            </operatingSystem>
+            <operatingSystem name="WINDOWS">
+                <command>${UTIL_PATH}mp3val -v</command>
+                <parser>
+                    <stream>STDOUT</stream>
+                    <regexp>MP3val [\.0-9]+</regexp>
+                </parser>
+            </operatingSystem>
+            <operatingSystem name="MAC">
+                <command>${UTIL_PATH}mp3val -v</command>
+                <parser>
+                    <stream>STDOUT</stream>
+                    <regexp>MP3val [\.0-9]+</regexp>
+                </parser>
+            </operatingSystem>
+        </versionDetection>
+        <execution name="mp3">
+            <operatingSystem name="LINUX">
+                <command>${UTIL_PATH}mp3val ${TARGET_FILE}</command>
+                <parser>
+                    <stream>STDOUT</stream>
+                    <regexp>(?s).*</regexp>
+                </parser>
+            </operatingSystem>
+            <operatingSystem name="WINDOWS">
+                <command>${UTIL_PATH}mp3val ${TARGET_FILE}</command>
+                <parser>
+                    <stream>STDOUT</stream>
+                    <regexp>(?s).*</regexp>
+                </parser>
+            </operatingSystem>
+            <operatingSystem name="MAC">
+                <command>${UTIL_PATH}mp3val ${TARGET_FILE}</command>
+                <parser>
+                    <stream>STDOUT</stream>
+                    <regexp>(?s).*</regexp>
+                </parser>
+            </operatingSystem>
+        </execution>
+    </util>
+
 
 </externalUtils>

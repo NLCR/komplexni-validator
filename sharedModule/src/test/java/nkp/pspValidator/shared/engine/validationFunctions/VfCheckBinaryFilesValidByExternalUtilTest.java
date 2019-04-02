@@ -103,7 +103,7 @@ public class VfCheckBinaryFilesValidByExternalUtilTest {
         detectImageTools(externalUtilManager);
         ValidatorConfigurationManager validatorConfigManager = new ValidatorConfigurationManager(FDMD_ROOT);
         FdmfConfiguration fdmfConfig = new FdmfRegistry(validatorConfigManager).getFdmfConfig(new Dmf(Dmf.Type.MONOGRAPH, "1.2"));
-        fdmfConfig.initJ2kProfiles(externalUtilManager);
+        fdmfConfig.initBinaryFileProfiles(externalUtilManager);
         Validator validator = ValidatorFactory.buildValidator(fdmfConfig, new File("/tmp"), validatorConfigManager.getDictionaryManager());
         return validator.getEngine();
     }
@@ -114,7 +114,7 @@ public class VfCheckBinaryFilesValidByExternalUtilTest {
             System.out.print(String.format("Kontroluji dostupnost nástroje %s: ", util.getUserFriendlyName()));
             if (!externalUtilManager.isVersionDetectionDefined(util)) {
                 System.out.println("není definován způsob detekce verze");
-            } else if (!externalUtilManager.isUtilExecutionDefined(util)) {
+            } else if (!externalUtilManager.isUtilAvailable(util)) {
                 System.out.println("není definován způsob spuštění");
             } else {
                 try {

@@ -8,7 +8,7 @@
       fx:controller="nkp.pspValidator.gui.ExternalUtilsCheckDialogController"
       fx:id="container"
       minWidth="700"
-      minHeight="450"
+      minHeight="650"
       alignment="CENTER"
 >
     <children>
@@ -379,6 +379,98 @@
                    GridPane.columnIndex="0"
                    GridPane.columnSpan="6"
                    GridPane.rowIndex="10"
+                   visible="false"
+            />
+
+            <!--MP3val-->
+            <Label text="MP3val"
+                   styleClass="util-name"
+                   GridPane.columnIndex="0"
+                   GridPane.rowIndex="11"/>
+
+            <ProgressIndicator fx:id="mp3valProgress"
+                               GridPane.columnIndex="1"
+                               GridPane.rowIndex="11"
+                               visible="false"
+            />
+
+            <ImageView fx:id="mp3valOkImg"
+                       styleClass="result-image"
+                       GridPane.columnIndex="1"
+                       GridPane.rowIndex="11"
+                       preserveRatio="true"
+                       visible="false"
+                       style="-fx-background-color: BLACK"
+            >
+                <image>
+                    <Image url="@/img/Ok-30.png"/>
+                </image>
+            </ImageView>
+
+            <ImageView fx:id="mp3valErrorImg"
+                       styleClass="result-image"
+                       GridPane.columnIndex="1"
+                       GridPane.rowIndex="11"
+                       GridPane.halignment="CENTER"
+                       visible="false">
+                <image>
+                    <Image url="@/img/Error-30.png"/>
+                </image>
+            </ImageView>
+
+            <Button fx:id="mp3valBtnRetry"
+                    text="Zkusit znovu"
+                    onAction="#checkMp3val"
+                    GridPane.columnIndex="2"
+                    GridPane.rowIndex="11"
+            >
+                <graphic>
+                    <ImageView>
+                        <image>
+                            <Image url="@/img/Synchronize-18.png"/>
+                        </image>
+                    </ImageView>
+                </graphic>
+            </Button>
+
+            <Button fx:id="mp3valBtnSelectPath"
+                    text="Nastavit adresář"
+                    onAction="#selectMp3valPath"
+                    GridPane.columnIndex="3"
+                    GridPane.rowIndex="11"
+            >
+                <graphic>
+                    <ImageView>
+                        <image>
+                            <Image url="@/img/Add Folder-18.png"/>
+                        </image>
+                    </ImageView>
+                </graphic>
+            </Button>
+
+            <Button fx:id="mp3valBtnInstall"
+                    text="Instalovat"
+                    onAction="#installMp3val"
+                    GridPane.columnIndex="4"
+                    GridPane.rowIndex="11"
+            >
+                <graphic>
+
+                    <ImageView>
+                        <image>
+                            <Image url="@/img/About-18.png"/>
+                        </image>
+                    </ImageView>
+                </graphic>
+
+            </Button>
+
+
+            <Label fx:id="mp3valStatusText"
+                   styleClass="result-text"
+                   GridPane.columnIndex="0"
+                   GridPane.columnSpan="6"
+                   GridPane.rowIndex="12"
                    visible="false"
             />
 

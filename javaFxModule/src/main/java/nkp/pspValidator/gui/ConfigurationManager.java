@@ -28,12 +28,13 @@ public class ConfigurationManager {
     //fdmf
     public static final String PROP_VALIDATOR_CONFIG_DIR = "validatorConfig.dir";
 
-    //image tools
-    public static final String PROP_IMAGE_TOOLS_CHECK_SHOWN = "image_tools_check.shown";
+    //external tools
+    public static final String PROP_EXTERNAL_TOOLS_CHECK_SHOWN = "external_tools_check.shown";
     public static final String PROP_JHOVE_DIR = "jhove.dir";
     public static final String PROP_JPYLYZER_DIR = "jpylyzer.dir";
     public static final String PROP_IMAGE_MAGICK_DIR = "imageMagick.dir";
     public static final String PROP_KAKADU_DIR = "kakadu.dir";
+    public static final String PROP_MP3VAL_DIR = "mp3val.dir";
 
     //validation
     public static final String PROP_LAST_PSP_DIR = "last.psp.dir";
