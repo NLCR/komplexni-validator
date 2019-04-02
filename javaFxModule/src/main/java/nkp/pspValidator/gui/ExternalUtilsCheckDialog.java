@@ -30,7 +30,7 @@ public class ExternalUtilsCheckDialog extends AbstractDialog {
 
     @Override
     public int getHeight() {
-        return 450;
+        return 700;
     }
 
     @Override
