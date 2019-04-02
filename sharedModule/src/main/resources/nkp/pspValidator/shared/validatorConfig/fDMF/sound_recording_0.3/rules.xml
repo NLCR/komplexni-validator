@@ -2946,6 +2946,40 @@
                 </params>
             </validation>
         </rule>
+
+        <!--TODO: vyresit, ze slozka i soubory nepovinne-->
+        <!--<rule name="MASTER-COPY-AUDIO_FILES_VALID_BY_MP3VAL">
+            <description>Všechny soubory MASTER-COPY-AUDIO (mp3) musí být validní vůči profilu pro binární soubory pro nástroj MP3VAL.
+            </description>
+            <validation functionName="checkBinaryFilesValidByExternalUtil">
+                <params>
+                    <value name="level" type="LEVEL">ERROR</value>
+                    <value name="files" type="FILE_LIST">
+                        <value-ref name="MASTER-COPY-AUDIO_FILES"/>
+                    </value>
+                    <value name="type" type="RESOURCE_TYPE">AUDIO_MASTER_COPY</value>
+                    <value name="util" type="EXTERNAL_UTIL">MP3VAL</value>
+                    <value name="execution" type="STRING">mp3</value>
+                </params>
+            </validation>
+        </rule>-->
+
+        <rule name="USER-COPY-AUDIO_FILES_VALID_BY_MP3VAL">
+            <description>Všechny soubory USER-COPY-AUDIO (mp3) musí být validní vůči profilu pro binární soubory pro nástroj MP3VAL.
+            </description>
+            <validation functionName="checkBinaryFilesValidByExternalUtil">
+                <params>
+                    <value name="level" type="LEVEL">ERROR</value>
+                    <value name="files" type="FILE_LIST">
+                        <value-ref name="USER-COPY-AUDIO_FILES"/>
+                    </value>
+                    <value name="type" type="RESOURCE_TYPE">AUDIO_USER_COPY</value>
+                    <value name="util" type="EXTERNAL_UTIL">MP3VAL</value>
+                    <value name="execution" type="STRING">mp3</value>
+                </params>
+            </validation>
+        </rule>
+
     </rules-section>
 
 

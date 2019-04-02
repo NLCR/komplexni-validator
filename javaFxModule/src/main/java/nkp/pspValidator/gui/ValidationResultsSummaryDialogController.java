@@ -75,7 +75,7 @@ public class ValidationResultsSummaryDialogController extends DialogController {
     }
 
     public void continueInApp(ActionEvent actionEvent) {
-        boolean shown = getConfigurationManager().getBooleanOrDefault(ConfigurationManager.PROP_IMAGE_TOOLS_CHECK_SHOWN, false);
+        boolean shown = getConfigurationManager().getBooleanOrDefault(ConfigurationManager.PROP_EXTERNAL_TOOLS_CHECK_SHOWN, false);
         main.showExternalUtilsCheckDialog(shown, "Pokračovat");
     }
 

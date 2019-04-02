@@ -151,7 +151,7 @@ public class FdmfConfiguration {
         }
     }
 
-    public void initJ2kProfiles(ExternalUtilManager externalUtilManager) throws ValidatorConfigurationException {
+    public void initBinaryFileProfiles(ExternalUtilManager externalUtilManager) throws ValidatorConfigurationException {
         binaryFileValidator = new BinaryFileValidator(externalUtilManager);
         for (ResourceType type : ResourceType.values()) {
             for (ExternalUtil util : ExternalUtil.values()) {

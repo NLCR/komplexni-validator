@@ -707,7 +707,7 @@ public class Main {
 
         //initializes j2k profiles according to selected fDMF
         FdmfConfiguration fdmfConfig = new FdmfRegistry(validatorConfigManager).getFdmfConfig(dmfResolved);
-        fdmfConfig.initJ2kProfiles(externalUtilManager);
+        fdmfConfig.initBinaryFileProfiles(externalUtilManager);
 
         //xml protocol file
         if (xmlProtocolFile == null) {
@@ -734,7 +734,7 @@ public class Main {
                 out.print(String.format("Kontroluji dostupnost nástroje %s: ", util.getUserFriendlyName()));
                 if (!externalUtilManager.isVersionDetectionDefined(util)) {
                     out.println("není definován způsob detekce verze");
-                } else if (!externalUtilManager.isUtilExecutionDefined(util)) {
+                } else if (!externalUtilManager.isUtilAvailable(util)) {
                     out.println("není definován způsob spuštění");
                 } else {
                     try {

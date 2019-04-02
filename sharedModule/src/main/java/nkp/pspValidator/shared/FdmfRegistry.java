@@ -21,15 +21,15 @@ public class FdmfRegistry {
         init(validatorConfigManager);
     }
 
-    public void initJ2kProfiles(ExternalUtilManager externalUtilManager) throws ValidatorConfigurationException {
+    public void initBinaryFileProfiles(ExternalUtilManager externalUtilManager) throws ValidatorConfigurationException {
         for (FdmfConfiguration fdmfConfig : monographFdmfByVersion.values()) {
-            fdmfConfig.initJ2kProfiles(externalUtilManager);
+            fdmfConfig.initBinaryFileProfiles(externalUtilManager);
         }
         for (FdmfConfiguration fdmfConfig : periodicalFdmfByVersion.values()) {
-            fdmfConfig.initJ2kProfiles(externalUtilManager);
+            fdmfConfig.initBinaryFileProfiles(externalUtilManager);
         }
         for (FdmfConfiguration fdmfConfig : soundRecordingFdmfByVersion.values()) {
-            fdmfConfig.initJ2kProfiles(externalUtilManager);
+            fdmfConfig.initBinaryFileProfiles(externalUtilManager);
         }
     }
 

@@ -55,7 +55,9 @@ public class BinaryFileValidator {
         XMLTag doc = XMLDoc.from(profileDefinitionFile, true);
         BinaryFileProfile profile = buildProfile(util, doc.getCurrentTag());
         if (getProfilesByType(type).containsKey(util)) {
-            throw new IllegalStateException(String.format("profil pro typ %s a utilitu %s už byl registrován", type, util));
+            // TODO: 2019-04-02 vyresit, docasne bude jen warning
+            //throw new IllegalStateException(String.format("profil pro typ %s a utilitu %s už byl registrován: %s", type, util, profileDefinitionFile.getAbsolutePath()));
+            System.err.println(String.format("profil pro typ %s a utilitu %s už byl registrován: %s", type, util, profileDefinitionFile.getAbsolutePath()));
         }
         getProfilesByType(type).put(util, profile);
     }
