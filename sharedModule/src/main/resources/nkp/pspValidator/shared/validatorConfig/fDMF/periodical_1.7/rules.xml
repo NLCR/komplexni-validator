@@ -2830,6 +2830,7 @@
                     </value>
                     <value name="type" type="RESOURCE_TYPE">IMAGE_MASTER_COPY</value>
                     <value name="util" type="EXTERNAL_UTIL">JPYLYZER</value>
+                    <value name="execution" type="STRING">jp2k</value>
                 </params>
             </validation>
         </rule>
@@ -2845,6 +2846,7 @@
                     </value>
                     <value name="type" type="RESOURCE_TYPE">IMAGE_USER_COPY</value>
                     <value name="util" type="EXTERNAL_UTIL">JPYLYZER</value>
+                    <value name="execution" type="STRING">jp2k</value>
                 </params>
             </validation>
         </rule>
@@ -2860,6 +2862,7 @@
                     </value>
                     <value name="type" type="RESOURCE_TYPE">IMAGE_MASTER_COPY</value>
                     <value name="util" type="EXTERNAL_UTIL">JHOVE</value>
+                    <value name="execution" type="STRING">jp2k</value>
                 </params>
             </validation>
         </rule>
@@ -2875,6 +2878,7 @@
                     </value>
                     <value name="type" type="RESOURCE_TYPE">IMAGE_USER_COPY</value>
                     <value name="util" type="EXTERNAL_UTIL">JHOVE</value>
+                    <value name="execution" type="STRING">jp2k</value>
                 </params>
             </validation>
         </rule>
@@ -2890,6 +2894,7 @@
                     </value>
                     <value name="type" type="RESOURCE_TYPE">IMAGE_MASTER_COPY</value>
                     <value name="util" type="EXTERNAL_UTIL">KAKADU</value>
+                    <value name="execution" type="STRING">jp2k</value>
                 </params>
             </validation>
         </rule>
@@ -2905,6 +2910,7 @@
                     </value>
                     <value name="type" type="RESOURCE_TYPE">IMAGE_USER_COPY</value>
                     <value name="util" type="EXTERNAL_UTIL">KAKADU</value>
+                    <value name="execution" type="STRING">jp2k</value>
                 </params>
             </validation>
         </rule>
@@ -2920,6 +2926,7 @@
                     </value>
                     <value name="type" type="RESOURCE_TYPE">IMAGE_MASTER_COPY</value>
                     <value name="util" type="EXTERNAL_UTIL">IMAGE_MAGICK</value>
+                    <value name="execution" type="STRING">jp2k</value>
                 </params>
             </validation>
         </rule>
@@ -2935,6 +2942,7 @@
                     </value>
                     <value name="type" type="RESOURCE_TYPE">IMAGE_USER_COPY</value>
                     <value name="util" type="EXTERNAL_UTIL">IMAGE_MAGICK</value>
+                    <value name="execution" type="STRING">jp2k</value>
                 </params>
             </validation>
         </rule>

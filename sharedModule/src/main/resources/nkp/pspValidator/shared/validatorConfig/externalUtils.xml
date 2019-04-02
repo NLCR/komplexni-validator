@@ -32,7 +32,7 @@
                 </parser>
             </operatingSystem>
         </versionDetection>
-        <execution>
+        <execution name="jp2k">
             <operatingSystem name="LINUX">
                 <command>${UTIL_PATH}jpylyzer jp2In ${TARGET_FILE}</command>
                 <parser>
@@ -86,7 +86,7 @@
                 </parser>
             </operatingSystem>
         </versionDetection>
-        <execution>
+        <execution name="jp2k">
             <!--NOTE: if the file is empty, ideentify -verbose doesn't print anything at all-->
             <operatingSystem name="LINUX">
                 <command>${UTIL_PATH}identify -verbose ${TARGET_FILE}</command>
@@ -147,7 +147,7 @@
                 </parser>
             </operatingSystem>
         </versionDetection>
-        <execution>
+        <execution name="jp2k">
             <operatingSystem name="LINUX">
                 <command>${UTIL_PATH}jhove -h XML -m jpeg2000-hul -k ${TARGET_FILE}</command>
                 <parser>
@@ -164,6 +164,29 @@
             </operatingSystem>
             <operatingSystem name="MAC">
                 <command>${UTIL_PATH}jhove -h XML -m jpeg2000-hul -k ${TARGET_FILE}</command>
+                <parser>
+                    <stream>STDOUT</stream>
+                    <regexp>(?s)&lt;\?xml.*$</regexp>
+                </parser>
+            </operatingSystem>
+        </execution>
+        <execution name="wav">
+            <operatingSystem name="LINUX">
+                <command>${UTIL_PATH}jhove -h XML -m WAVE-hul ${TARGET_FILE}</command>
+                <parser>
+                    <stream>STDOUT</stream>
+                    <regexp>(?s)&lt;\?xml.*$</regexp>
+                </parser>
+            </operatingSystem>
+            <operatingSystem name="WINDOWS">
+                <command>${UTIL_PATH}jhove.bat -h XML -m WAVE-hul ${TARGET_FILE}</command>
+                <parser>
+                    <stream>STDOUT</stream>
+                    <regexp>(?s)&lt;\?xml.*$</regexp>
+                </parser>
+            </operatingSystem>
+            <operatingSystem name="MAC">
+                <command>${UTIL_PATH}jhove -h XML -m WAVE-hul ${TARGET_FILE}</command>
                 <parser>
                     <stream>STDOUT</stream>
                     <regexp>(?s)&lt;\?xml.*$</regexp>
@@ -199,7 +222,7 @@
                 </parser>
             </operatingSystem>
         </versionDetection>
-        <execution>
+        <execution name="jp2k">
             <operatingSystem name="LINUX">
                 <command>${UTIL_PATH}kdu_expand -i ${TARGET_FILE}</command>
                 <parser>

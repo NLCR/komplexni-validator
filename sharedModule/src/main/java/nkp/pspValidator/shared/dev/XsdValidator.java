@@ -46,7 +46,7 @@ public class XsdValidator {
     }
 
     public static void validate(String label, File xsd, File xml) {
-        System.out.println("validating " + label);
+        //System.out.println("validating " + label);
         //System.out.println("xsd: " + xsd.getAbsolutePath());
         //System.out.println("xml: " + xml.getAbsolutePath());
         SchemaFactory schemaFactory = SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);

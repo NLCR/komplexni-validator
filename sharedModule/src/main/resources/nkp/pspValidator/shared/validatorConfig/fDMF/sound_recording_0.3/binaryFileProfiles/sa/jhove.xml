@@ -10,7 +10,7 @@
             <namespace prefix="m">http://www.loc.gov/mix/v20</namespace>
         </namespaces>
 
-        <validation name="Status valid">
+        <validation name="Status">
             <xmlDataExtraction resultType="STRING">
                 <firstNonempty>
                     <xpath>//j:repInfo/j:status</xpath>

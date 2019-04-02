@@ -9,6 +9,7 @@ import nkp.pspValidator.shared.externalUtils.ExternalUtil;
 import nkp.pspValidator.shared.externalUtils.ResourceType;
 import nkp.pspValidator.shared.externalUtils.validation.BinaryFileProfile;
 import nkp.pspValidator.shared.externalUtils.validation.BinaryFileValidator;
+import nkp.pspValidator.shared.externalUtils.ExternalUtilExecution;
 
 import java.io.File;
 import java.util.List;
@@ -23,7 +24,7 @@ public class VfCheckBinaryFilesValidByExternalUtil extends ValidationFunction {
     public static final String PARAM_LEVEL = "level";
     public static final String PARAM_TYPE = "type";
     public static final String PARAM_UTIL = "util";
-
+    public static final String PARAM_EXECUTION = "execution";
 
     public VfCheckBinaryFilesValidByExternalUtil(String name, Engine engine) {
         super(name, engine, new Contract()
@@ -31,6 +32,7 @@ public class VfCheckBinaryFilesValidByExternalUtil extends ValidationFunction {
                 .withValueParam(PARAM_LEVEL, ValueType.LEVEL, 1, 1)
                 .withValueParam(PARAM_TYPE, ValueType.RESOURCE_TYPE, 1, 1)
                 .withValueParam(PARAM_UTIL, ValueType.EXTERNAL_UTIL, 1, 1)
+                .withValueParam(PARAM_EXECUTION, ValueType.STRING, 1, 1)
         );
     }
 
@@ -63,7 +65,14 @@ public class VfCheckBinaryFilesValidByExternalUtil extends ValidationFunction {
                 return invalidValueParamNull(PARAM_UTIL, paramUtil);
             }
 
-            return validate(level, files, type, util);
+            ValueEvaluation paramExecution = valueParams.getParams(PARAM_EXECUTION).get(0).getEvaluation();
+            String executionName = (String) paramExecution.getData();
+            if (executionName == null) {
+                return invalidValueParamNull(PARAM_EXECUTION, paramExecution);
+            }
+
+            ExternalUtilExecution execution = new ExternalUtilExecution(executionName, util);
+            return validate(level, files, type, execution);
         } catch (ContractException e) {
             return invalidContractNotMet(e);
         } catch (Exception e) {
@@ -72,20 +81,22 @@ public class VfCheckBinaryFilesValidByExternalUtil extends ValidationFunction {
         }
     }
 
-    private ValidationResult validate(Level level, List<File> files, ResourceType type, ExternalUtil util) {
-        if (!engine.getBinaryFileValidator().isUtilAvailable(util)) {
-            return singlErrorResult(invalid(Level.INFO, "nástroj %s není dostupný", util.getUserFriendlyName()));
+    private ValidationResult validate(Level level, List<File> files, ResourceType type, ExternalUtilExecution execution) {
+        BinaryFileValidator validator = engine.getBinaryFileValidator();
+        if (!validator.isUtilAvailable(execution.getUtil())) {
+            return singlErrorResult(invalid(Level.INFO, "nástroj %s není dostupný", execution.getUtil().getUserFriendlyName()));
+        } else if (!validator.isUtilExecutionDefined(execution)) {
+            return singlErrorResult(invalid(Level.INFO, "pro nástroj %s není definováno spuštění '%s'", execution.getUtil().getUserFriendlyName(), execution.getName()));
         } else {
             ValidationResult result = new ValidationResult();
-            BinaryFileValidator binaryFileValidator = engine.getBinaryFileValidator();
-            BinaryFileProfile profile = binaryFileValidator.getProfile(type, util);
+            BinaryFileProfile profile = validator.getProfile(type, execution.getUtil());
             if (profile == null) {
-                return singlErrorResult(invalid(Level.ERROR, "nenalezen J2K profil pro kopii %s a nástroj %s", type, util));
+                return singlErrorResult(invalid(Level.ERROR, "nenalezen profil binárního souboru pro typ %s a nástroj %s", type, execution));
             }
             for (File file : files) {
                 //System.out.println(String.format("validating (%s): %s", profile, file.getAbsolutePath()));
                 try {
-                    List<String> problems = profile.validate(file);
+                    List<String> problems = profile.validate(execution.getName(), file);
                     for (String problem : problems) {
                         result.addError(invalid(level, "%s (soubor %s)", problem, file.getCanonicalPath()));
                     }

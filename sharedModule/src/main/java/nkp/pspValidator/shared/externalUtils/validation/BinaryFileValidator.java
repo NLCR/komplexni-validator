@@ -5,10 +5,7 @@ import com.mycila.xmltool.XMLTag;
 import nkp.pspValidator.shared.NamespaceContextImpl;
 import nkp.pspValidator.shared.XmlUtils;
 import nkp.pspValidator.shared.engine.exceptions.ValidatorConfigurationException;
-import nkp.pspValidator.shared.externalUtils.ExternalUtil;
-import nkp.pspValidator.shared.externalUtils.ExtractionResultType;
-import nkp.pspValidator.shared.externalUtils.ResourceType;
-import nkp.pspValidator.shared.externalUtils.ExternalUtilManager;
+import nkp.pspValidator.shared.externalUtils.*;
 import nkp.pspValidator.shared.externalUtils.validation.extractions.AllNonemptyByRegexpDataExtraction;
 import nkp.pspValidator.shared.externalUtils.validation.extractions.FirstNonemptyByXpathDataExctraction;
 import nkp.pspValidator.shared.externalUtils.validation.rules.MustExistDR;
@@ -43,6 +40,10 @@ public class BinaryFileValidator {
         return externalUtilManager.isUtilAvailable(util);
     }
 
+    public boolean isUtilExecutionDefined(ExternalUtilExecution exec) {
+        return externalUtilManager.isUtilExecutionDefined(exec);
+    }
+
     private Map<ExternalUtil, BinaryFileProfile> getProfilesByType(ResourceType type) {
         if (!profiles.containsKey(type)) {
             profiles.put(type, new HashMap<>());
@@ -53,6 +54,9 @@ public class BinaryFileValidator {
     public void registerProfile(ResourceType type, ExternalUtil util, File profileDefinitionFile) throws ValidatorConfigurationException {
         XMLTag doc = XMLDoc.from(profileDefinitionFile, true);
         BinaryFileProfile profile = buildProfile(util, doc.getCurrentTag());
+        if (getProfilesByType(type).containsKey(util)) {
+            throw new IllegalStateException(String.format("profil pro typ %s a utilitu %s už byl registrován", type, util));
+        }
         getProfilesByType(type).put(util, profile);
     }
 

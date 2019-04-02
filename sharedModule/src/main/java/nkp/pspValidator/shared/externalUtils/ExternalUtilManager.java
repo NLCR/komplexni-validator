@@ -15,11 +15,11 @@ import java.util.regex.Pattern;
 public class ExternalUtilManager {
 
     private final Map<ExternalUtil, UtilHandler> utilVersionDetectionHandlers;
-    private final Map<ExternalUtil, UtilHandler> utilExecutionHandlers;
+    private final Map<ExternalUtilExecution, UtilHandler> utilExecutionHandlers;
     private final Map<ExternalUtil, Boolean> utilAvaliable = new HashMap<>();
 
 
-    public ExternalUtilManager(Map<ExternalUtil, UtilHandler> utilVersionDetectionHandlers, Map<ExternalUtil, UtilHandler> utilExecutionHandlers) {
+    public ExternalUtilManager(Map<ExternalUtil, UtilHandler> utilVersionDetectionHandlers, Map<ExternalUtilExecution, UtilHandler> utilExecutionHandlers) {
         this.utilVersionDetectionHandlers = utilVersionDetectionHandlers;
         this.utilExecutionHandlers = utilExecutionHandlers;
         for (ExternalUtil util : ExternalUtil.values()) {
@@ -27,13 +27,20 @@ public class ExternalUtilManager {
         }
     }
 
-    //TODO: must be thread safe
     public boolean isVersionDetectionDefined(ExternalUtil type) {
         return utilVersionDetectionHandlers.containsKey(type);
     }
 
-    public boolean isUtilExecutionDefined(ExternalUtil type) {
-        return utilVersionDetectionHandlers.containsKey(type);
+    public void setUtilAvailable(ExternalUtil util, boolean available) {
+        utilAvaliable.put(util, available);
+    }
+
+    public boolean isUtilAvailable(ExternalUtil util) {
+        return utilAvaliable.get(util);
+    }
+
+    public boolean isUtilExecutionDefined(ExternalUtilExecution execution) {
+        return utilExecutionHandlers.containsKey(execution);
     }
 
     public void setPaths(Map<ExternalUtil, File> paths) {
@@ -48,25 +55,16 @@ public class ExternalUtilManager {
         if (versionDetection != null) {
             versionDetection.getCommandData().setPath(path);
         }
-        UtilHandler UtilHandler = utilExecutionHandlers.get(util);
-        if (UtilHandler != null) {
-            UtilHandler.getCommandData().setPath(path);
+        for (ExternalUtilExecution execution : utilExecutionHandlers.keySet()) {
+            if (execution.getUtil() == util) {
+                utilExecutionHandlers.get(execution).getCommandData().setPath(path);
+            }
         }
     }
 
-
-    public void setUtilAvailable(ExternalUtil util, boolean available) {
-        utilAvaliable.put(util, available);
-    }
-
-    public boolean isUtilAvailable(ExternalUtil util) {
-        return utilAvaliable.get(util);
-    }
-
-    //TODO: must be thrad safe
-    public String runUtilVersionDetection(ExternalUtil type) throws CliCommand.CliCommandException {
-        UtilHandler versionDetection = utilVersionDetectionHandlers.get(type);
-        String[] command = buildCommand(versionDetection.getCommandData());
+    public String runUtilVersionDetection(ExternalUtil util) throws CliCommand.CliCommandException {
+        UtilHandler versionDetection = utilVersionDetectionHandlers.get(util);
+        String[] command = buildCommand(versionDetection.getCommandData(), null);
         CliCommand.Result result = new CliCommand(command).execute();
         String rawOutput = null;
         Parser parser = versionDetection.getParser();
@@ -95,55 +93,8 @@ public class ExternalUtilManager {
         }
     }
 
-    private String[] buildCommand(CommandData commandData) {
-        String path = commandData.getPath() == null ? "" : commandData.getPath().getAbsolutePath();
-        if (!path.isEmpty() && !path.endsWith(File.separator)) {
-            path = path + File.separatorChar;
-        }
-
-        String[] result = commandData.getRawCommand().split("\\s");
-        for (int i = 0; i < result.length; i++) {
-            result[i] = result[i].replace("${UTIL_PATH}", path);
-        }
-        return result;
-    }
-
-    private String[] buildCommand(CommandData commandData, File targetFile) {
-        String utilPath = commandData.getPath() == null ? "" : commandData.getPath().getAbsolutePath();
-        if (!utilPath.isEmpty() && !utilPath.endsWith(File.separator)) {
-            utilPath = utilPath + File.separatorChar;
-        }
-
-        String[] result = commandData.getRawCommand().split("\\s");
-        for (int i = 0; i < result.length; i++) {
-            result[i] = result[i].replace("${UTIL_PATH}", utilPath);
-            result[i] = result[i].replace("${TARGET_FILE}", targetFile.getAbsolutePath());
-        }
-        return result;
-    }
-
-    private String parseData(String rawOutput, Parser parser) {
-        if (parser.getRegexp() == null) {
-            //System.err.println("regexp is null");
-            return rawOutput;
-        } else {
-            Matcher m = Pattern.compile(parser.getRegexp()).matcher(rawOutput);
-            if (m.find()) {
-                //first appearance
-                String result = m.group(0);
-                //System.err.println("match: "  + result);
-                return result;
-            } else {
-                //System.err.println("no match");
-                // TODO: 29.9.16 not found
-                return null;
-            }
-        }
-    }
-
-    public String runUtilExecution(ExternalUtil utilType, File targetFile) throws CliCommand.CliCommandException {
-        UtilHandler utilHandler = utilExecutionHandlers.get(utilType);
-        //TODO: poresit, NPE pro getCommand, kdyz neni definovano
+    public String runUtilExecution(ExternalUtilExecution utilExecution, File targetFile) throws CliCommand.CliCommandException {
+        UtilHandler utilHandler = utilExecutionHandlers.get(utilExecution);
         String[] command = buildCommand(utilHandler.getCommandData(), targetFile);
         CliCommand.Result result = new CliCommand(command).execute();
         String rawOutput = null;
@@ -163,6 +114,40 @@ public class ExternalUtilManager {
             return parsed == null || parsed.isEmpty() ? "" : parsed.trim();
         } else {
             throw new CliCommand.CliCommandException("chybí výstup");
+        }
+    }
+
+    private String[] buildCommand(CommandData commandData, File targetFile) {
+        String utilPath = commandData.getPath() == null ? "" : commandData.getPath().getAbsolutePath();
+        if (!utilPath.isEmpty() && !utilPath.endsWith(File.separator)) {
+            utilPath = utilPath + File.separatorChar;
+        }
+
+        String[] result = commandData.getRawCommand().split("\\s");
+        for (int i = 0; i < result.length; i++) {
+            result[i] = result[i].replace("${UTIL_PATH}", utilPath);
+            if (targetFile != null) {
+                result[i] = result[i].replace("${TARGET_FILE}", targetFile.getAbsolutePath());
+            }
+        }
+        return result;
+    }
+
+    private String parseData(String rawOutput, Parser parser) {
+        if (parser.getRegexp() == null) {
+            //System.err.println("regexp is null");
+            return rawOutput;
+        } else {
+            Matcher m = Pattern.compile(parser.getRegexp()).matcher(rawOutput);
+            if (m.find()) {
+                //first appearance
+                String result = m.group(0);
+                //System.err.println("match: "  + result);
+                return result;
+            } else {
+                //System.err.println("no match");
+                return null;
+            }
         }
     }
 
