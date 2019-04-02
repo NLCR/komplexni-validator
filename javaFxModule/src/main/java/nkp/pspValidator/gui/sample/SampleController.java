@@ -10,6 +10,7 @@ import nkp.pspValidator.shared.externalUtils.CliCommand;
 import nkp.pspValidator.shared.externalUtils.ExternalUtil;
 import nkp.pspValidator.shared.externalUtils.ExternalUtilManager;
 import nkp.pspValidator.shared.externalUtils.ExternalUtilManagerFactory;
+import nkp.pspValidator.shared.externalUtils.ExternalUtilExecution;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -175,19 +176,19 @@ public class SampleController {
     }
 
 
-    public void runUtil(ExternalUtil type, Label label, File imageFile) {
-        runUtilOnWorkerThread(type, label, imageFile);
-        //runUtilOnFxThread(type, label, imageFile);
+    public void runUtil(ExternalUtilExecution exec, Label label, File imageFile) {
+        runUtilOnWorkerThread(exec, label, imageFile);
+        //runUtilOnFxThread(exec, label, imageFile);
     }
 
 
-    public void runUtilOnFxThread(ExternalUtil util, Label label, File imageFile) {
-        label.setText(String.format("running %s ...", util));
+    public void runUtilOnFxThread(ExternalUtilExecution exec, Label label, File imageFile) {
+        label.setText(String.format("running %s ...", exec));
         try {
-            if (!utilManager.isUtilExecutionDefined(util)) {
-                label.setText(String.format("util execution not defined for %s", util));
+            if (!utilManager.isUtilExecutionDefined(exec)) {
+                label.setText(String.format("util execution not defined for %s", exec));
             } else {
-                String output = utilManager.runUtilExecution(util, imageFile);
+                String output = utilManager.runUtilExecution(exec, imageFile);
                 System.out.println(output);
                 String partial = output.replace("\n", " ").substring(0, Math.min(output.length(), MAX_OUTPUT_LENGTH)) + " ...";
                 label.setText(partial);
@@ -198,8 +199,8 @@ public class SampleController {
         }
     }
 
-    public void runUtilOnWorkerThread(ExternalUtil util, Label label, File imageFile) {
-        label.setText(String.format("running %s ...", util));
+    public void runUtilOnWorkerThread(ExternalUtilExecution exec, Label label, File imageFile) {
+        label.setText(String.format("running %s ...", exec));
         Task task = new Task<Void>() {
 
             @Override
@@ -209,10 +210,10 @@ public class SampleController {
                     return null;
                 }
                 try {
-                    if (!utilManager.isUtilExecutionDefined(util)) {
-                        updateMessage(String.format("util execution not defined for %s", util));
+                    if (!utilManager.isUtilExecutionDefined(exec)) {
+                        updateMessage(String.format("util execution not defined for %s", exec));
                     } else {
-                        String output = utilManager.runUtilExecution(util, imageFile);
+                        String output = utilManager.runUtilExecution(exec, imageFile);
                         System.out.println("output: " + output);
                         String partial = output.replace("\n", " ").substring(0, Math.min(output.length(), MAX_OUTPUT_LENGTH)) + " ...";
                         updateMessage(partial);
@@ -258,21 +259,21 @@ public class SampleController {
 
 
     public void runJpylyzer(ActionEvent actionEvent) {
-        runUtil(ExternalUtil.JPYLYZER, runJpylyzerLabel, getMcFile());
+        runUtil(new ExternalUtilExecution("jp2k", ExternalUtil.JPYLYZER), runJpylyzerLabel, getMcFile());
     }
 
 
     public void runJhove(ActionEvent actionEvent) {
-        runUtil(ExternalUtil.JHOVE, runJhoveLabel, getMcFile());
+        runUtil(new ExternalUtilExecution("jp2k", ExternalUtil.JHOVE), runJhoveLabel, getMcFile());
     }
 
 
     public void runImageMagick(ActionEvent actionEvent) {
-        runUtil(ExternalUtil.IMAGE_MAGICK, runImageMagickLabel, getMcFile());
+        runUtil(new ExternalUtilExecution("jp2k", ExternalUtil.IMAGE_MAGICK), runImageMagickLabel, getMcFile());
     }
 
     public void runKakadu(ActionEvent actionEvent) {
-        runUtil(ExternalUtil.KAKADU, runKakaduLabel, getMcFile());
+        runUtil(new ExternalUtilExecution("jp2k", ExternalUtil.KAKADU), runKakaduLabel, getMcFile());
     }
 
     public void installImageMagick(ActionEvent actionEvent) {

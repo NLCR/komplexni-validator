@@ -3,6 +3,7 @@ package nkp.pspValidator.shared.externalUtils.validation;
 import nkp.pspValidator.shared.engine.exceptions.ExternalUtilOutputParsingException;
 import nkp.pspValidator.shared.externalUtils.CliCommand;
 import nkp.pspValidator.shared.externalUtils.ExternalUtil;
+import nkp.pspValidator.shared.externalUtils.ExternalUtilExecution;
 import nkp.pspValidator.shared.externalUtils.ExternalUtilManager;
 
 import java.io.File;
@@ -28,11 +29,11 @@ public abstract class BinaryFileProfile {
         validations.add(validation);
     }
 
-    public List<String> validate(File imageFile) {
+    public List<String> validate(String executionName, File imageFile) {
         List<String> totalErrors = new ArrayList<>();
         String toolRawOutput = null;
         try {
-            toolRawOutput = runExternalUtil(imageFile);
+            toolRawOutput = runExternalUtil(executionName, imageFile);
             Object processedOutput = processExternalUtilOutput(toolRawOutput, externalUtil);
             for (Validation validation : validations) {
                 try {
@@ -51,8 +52,8 @@ public abstract class BinaryFileProfile {
         }
     }
 
-    String runExternalUtil(File imageFile) throws CliCommand.CliCommandException {
-        return externalUtilManager.runUtilExecution(externalUtil, imageFile);
+    String runExternalUtil(String executionName, File imageFile) throws CliCommand.CliCommandException {
+        return externalUtilManager.runUtilExecution(new ExternalUtilExecution(executionName, externalUtil), imageFile);
     }
 
     abstract Object processExternalUtilOutput(String toolRawOutput, ExternalUtil util) throws ExternalUtilOutputParsingException;
