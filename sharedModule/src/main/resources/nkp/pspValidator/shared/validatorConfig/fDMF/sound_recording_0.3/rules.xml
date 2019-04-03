@@ -2929,7 +2929,7 @@
     </rules-section>-->
 
 
-    <!--TODO: doplnit sekci pro validaci zvukovych dat-->
+    <!--TODO: dokoncit sekci pro validaci zvukovych dat-->
     <rules-section name="ZVUKOVÁ DATA" description="Kontrola zvukových souborů (MP3, WAV) za pomocí externích nástrojů">
         <rule name="SOURCE-AUDIO_FILES_VALID_BY_JHOVE">
             <description>Všechny soubory SOURCE-AUDIO (wav) musí být validní vůči profilu pro binární soubory pro nástroj JHOVE.
@@ -2942,6 +2942,22 @@
                     </value>
                     <value name="type" type="RESOURCE_TYPE">AUDIO_SOURCE</value>
                     <value name="util" type="EXTERNAL_UTIL">JHOVE</value>
+                    <value name="execution" type="STRING">wav</value>
+                </params>
+            </validation>
+        </rule>
+
+        <rule name="SOURCE-AUDIO_FILES_VALID_BY_SHNTOOL">
+            <description>Všechny soubory SOURCE-AUDIO (wav) musí být validní vůči profilu pro binární soubory pro nástroj SHNTOOL.
+            </description>
+            <validation functionName="checkBinaryFilesValidByExternalUtil">
+                <params>
+                    <value name="level" type="LEVEL">ERROR</value>
+                    <value name="files" type="FILE_LIST">
+                        <value-ref name="SOURCE-AUDIO_FILES"/>
+                    </value>
+                    <value name="type" type="RESOURCE_TYPE">AUDIO_SOURCE</value>
+                    <value name="util" type="EXTERNAL_UTIL">SHNTOOL</value>
                     <value name="execution" type="STRING">wav</value>
                 </params>
             </validation>

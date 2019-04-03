@@ -8,19 +8,19 @@ import java.util.List;
 /**
  * Created by Martin Řehánek on 18.11.16.
  */
-public class AllNonemptyByRegexpDataExtraction extends TextDataExtraction {
+public class FirstNonemptyByRegexpDataExtraction extends TextDataExtraction {
 
     final ExtractionResultType extractionResultType;
     private final List<String> regexps;
 
 
-    public AllNonemptyByRegexpDataExtraction(ExtractionResultType extractionResultType, List<String> regexps) {
+    public FirstNonemptyByRegexpDataExtraction(ExtractionResultType extractionResultType, List<String> regexps) {
         this.extractionResultType = extractionResultType;
         this.regexps = regexps;
     }
 
     @Override
-    public List<String> extract(Object processedOutput) throws ExtractionException {
+    public String extract(Object processedOutput) throws ExtractionException {
         try {
             List<String> allMatches = new ArrayList<>();
             String text = processedOutput.toString();
@@ -36,10 +36,9 @@ public class AllNonemptyByRegexpDataExtraction extends TextDataExtraction {
             /*for (String match : allMatches) {
                 System.out.println("match: " + match);
             }*/
-            return allMatches;
+            return allMatches.isEmpty() ? null : allMatches.get(0);
         } catch (Throwable e) {
             throw new ExtractionException(e);
         }
     }
-
 }

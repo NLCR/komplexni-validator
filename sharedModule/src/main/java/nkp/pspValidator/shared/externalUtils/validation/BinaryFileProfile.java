@@ -40,6 +40,7 @@ public abstract class BinaryFileProfile {
                     List<String> validationErrors = validation.validate(processedOutput);
                     totalErrors.addAll(validationErrors);
                 } catch (DataExtraction.ExtractionException e) {
+                    e.printStackTrace();
                     totalErrors.add(e.getMessage());
                 }
             }

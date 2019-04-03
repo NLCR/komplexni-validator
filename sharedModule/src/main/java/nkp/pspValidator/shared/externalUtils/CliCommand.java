@@ -3,6 +3,7 @@ package nkp.pspValidator.shared.externalUtils;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.Arrays;
 
 /**
  * Created by Martin Řehánek on 29.9.16.
@@ -10,15 +11,9 @@ import java.io.InputStreamReader;
 public class CliCommand {
 
     private final String[] command;
-    private final boolean prettyPrint;
 
     public CliCommand(String[] command) {
-        this(command, false);
-    }
-
-    public CliCommand(String[] command, boolean prettyPrint) {
         this.command = command;
-        this.prettyPrint = prettyPrint;
     }
 
     public Result execute() throws CliCommandException {
@@ -35,9 +30,7 @@ public class CliCommand {
                     String line;
                     while ((line = stderrReader.readLine()) != null) {
                         stderrBuilder.append(line);
-                        if (prettyPrint) {
-                            stderrBuilder.append('\n');
-                        }
+                        stderrBuilder.append('\n');
                     }
                     stderrReader.close();
                 } catch (IOException e) {
@@ -54,10 +47,7 @@ public class CliCommand {
                     String line;
                     while ((line = stdoutReader.readLine()) != null) {
                         stdoutBuilder.append(line);
-                        if (prettyPrint) {
-                            stdoutBuilder.append('\n');
-                        }
-                        //FIXME: on macOS the whole output is single line
+                        stdoutBuilder.append('\n');
                         //System.err.println(line);
                     }
                     stdoutReader.close();
@@ -93,8 +83,7 @@ public class CliCommand {
     @Override
     public String toString() {
         return "CliCommand{" +
-                "command='" + command + '\'' +
-                ", prettyPrint=" + prettyPrint +
+                "command=" + Arrays.toString(command) +
                 '}';
     }
 

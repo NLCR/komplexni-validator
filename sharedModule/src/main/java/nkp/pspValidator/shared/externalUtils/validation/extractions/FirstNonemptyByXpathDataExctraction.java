@@ -33,6 +33,8 @@ public class FirstNonemptyByXpathDataExctraction extends XmlDataExtraction {
             return null;
         } catch (XPathExpressionException e) {
             throw new ExtractionException(String.format("chyba v zápisu Xpath '%s': %s", pathForError, e.getMessage()));
+        } catch (Throwable e) {
+            throw new ExtractionException(e);
         }
     }
 }

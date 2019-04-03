@@ -7,14 +7,12 @@ import nkp.pspValidator.shared.XmlUtils;
 import nkp.pspValidator.shared.engine.exceptions.ValidatorConfigurationException;
 import nkp.pspValidator.shared.externalUtils.*;
 import nkp.pspValidator.shared.externalUtils.validation.extractions.AllNonemptyByRegexpDataExtraction;
+import nkp.pspValidator.shared.externalUtils.validation.extractions.FirstNonemptyByRegexpDataExtraction;
 import nkp.pspValidator.shared.externalUtils.validation.extractions.FirstNonemptyByXpathDataExctraction;
 import nkp.pspValidator.shared.externalUtils.validation.rules.MustExistDR;
 import nkp.pspValidator.shared.externalUtils.validation.rules.MustMatchAnyDR;
 import nkp.pspValidator.shared.externalUtils.validation.rules.MustNotExistDR;
-import nkp.pspValidator.shared.externalUtils.validation.rules.constraints.ConstantConstraint;
-import nkp.pspValidator.shared.externalUtils.validation.rules.constraints.FlowRangeConstraint;
-import nkp.pspValidator.shared.externalUtils.validation.rules.constraints.IntRangeConstraint;
-import nkp.pspValidator.shared.externalUtils.validation.rules.constraints.NTimesXRemainingYConstraint;
+import nkp.pspValidator.shared.externalUtils.validation.rules.constraints.*;
 import org.w3c.dom.Element;
 
 import java.io.File;
@@ -57,7 +55,7 @@ public class BinaryFileValidator {
         if (getProfilesByType(type).containsKey(util)) {
             // TODO: 2019-04-02 vyresit, docasne bude jen warning
             //throw new IllegalStateException(String.format("profil pro typ %s a utilitu %s už byl registrován: %s", type, util, profileDefinitionFile.getAbsolutePath()));
-            System.err.println(String.format("profil pro typ %s a utilitu %s už byl registrován: %s", type, util, profileDefinitionFile.getAbsolutePath()));
+            //System.err.println(String.format("profil pro typ %s a utilitu %s už byl registrován: %s", type, util, profileDefinitionFile.getAbsolutePath()));
         }
         getProfilesByType(type).put(util, profile);
     }
@@ -94,7 +92,7 @@ public class BinaryFileValidator {
             for (Element ruleEl : ruleEls) {
                 dataRules.add(buildRule(validationName, ruleEl));
             }
-            Validation validation = new Validation(dataExtraction, dataRules);
+            Validation validation = new Validation(validationName, dataExtraction, dataRules);
             profile.addValidation(validation);
         }
         return profile;
@@ -130,7 +128,7 @@ public class BinaryFileValidator {
             for (Element ruleEl : ruleEls) {
                 dataRules.add(buildRule(validationName, ruleEl));
             }
-            Validation validation = new Validation(dataExtraction, dataRules);
+            Validation validation = new Validation(validationName, dataExtraction, dataRules);
             profile.addValidation(validation);
         }
         return profile;
@@ -140,16 +138,25 @@ public class BinaryFileValidator {
         String resultTypeStr = extractionEl.getAttribute("resultType");
         ExtractionResultType resultType = ExtractionResultType.valueOf(resultTypeStr);
 
-        Element allAppearancesEl = XmlUtils.getFirstChildElementsByName(extractionEl, "allNonempty");
-        if (allAppearancesEl != null) {
+        Element allNonemptyEl = XmlUtils.getFirstChildElementsByName(extractionEl, "allNonempty");
+        Element firstNonemptyEl = XmlUtils.getFirstChildElementsByName(extractionEl, "firstNonempty");
+        if (allNonemptyEl != null) {
             List<String> regexps = new ArrayList<>();
-            List<Element> xpathEls = XmlUtils.getChildrenElementsByName(allAppearancesEl, "regexp");
+            List<Element> xpathEls = XmlUtils.getChildrenElementsByName(allNonemptyEl, "regexp");
             for (Element regexpEl : xpathEls) {
                 regexps.add(regexpEl.getTextContent().trim());
             }
             return new AllNonemptyByRegexpDataExtraction(resultType, regexps);
+        } else if (firstNonemptyEl != null) {
+            List<String> regexps = new ArrayList<>();
+            List<Element> xpathEls = XmlUtils.getChildrenElementsByName(firstNonemptyEl, "regexp");
+            for (Element regexpEl : xpathEls) {
+                regexps.add(regexpEl.getTextContent().trim());
+            }
+            return new FirstNonemptyByRegexpDataExtraction(resultType, regexps);
+        } else {
+            throw new ValidatorConfigurationException("neznámá extrakce hodnoty: " + XmlUtils.getChildrenElements(extractionEl).get(0).getTagName());
         }
-        throw new ValidatorConfigurationException("neznámá extrakce hodnoty: " + XmlUtils.getChildrenElements(extractionEl).get(0).getTagName());
     }
 
     private DataExtraction buildXmlDataExtraction(NamespaceContextImpl nsContext, Element extractionEl) throws ValidatorConfigurationException {
@@ -193,10 +200,16 @@ public class BinaryFileValidator {
     }
 
     private Constraint buildConstraint(Element constraintEl) {
-        switch (constraintEl.getTagName()) {
+        String constraintName = constraintEl.getTagName();
+        switch (constraintName) {
+            // TODO: 2019-04-03 prejmenovat na "isExactly", "isInIntRange" apod.
             case "constant": {
                 String constant = constraintEl.getTextContent().trim();
                 return new ConstantConstraint(constant);
+            }
+            case "endsWith": {
+                String suffix = constraintEl.getTextContent().trim();
+                return new EndsWithConstraint(suffix);
             }
             case "floatRange": {
                 Element minEl = XmlUtils.getFirstChildElementsByName(constraintEl, "min");
@@ -219,7 +232,7 @@ public class BinaryFileValidator {
                 return new NTimesXRemainingYConstraint(n, x, y);
             }
             default:
-                throw new IllegalStateException("unknow constraint");
+                throw new IllegalStateException("unknown constraint " + constraintName);
         }
     }
 }

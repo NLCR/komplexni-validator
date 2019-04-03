@@ -6,9 +6,17 @@ package nkp.pspValidator.shared.externalUtils.validation;
 public interface DataExtraction {
     Object extract(Object processedOutput) throws ExtractionException;
 
-    public static class ExtractionException extends Exception {
+    class ExtractionException extends Exception {
         public ExtractionException(String message) {
             super(message);
+        }
+
+        public ExtractionException(String message, Throwable cause) {
+            super(message, cause);
+        }
+
+        public ExtractionException(Throwable cause) {
+            super(cause);
         }
     }
 }

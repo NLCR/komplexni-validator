@@ -138,6 +138,7 @@ public class ExternalUtilManager {
             //System.err.println("regexp is null");
             return rawOutput;
         } else {
+            //System.out.println("raw output: " + rawOutput);
             Matcher m = Pattern.compile(parser.getRegexp()).matcher(rawOutput);
             if (m.find()) {
                 //first appearance

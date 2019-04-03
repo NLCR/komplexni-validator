@@ -353,10 +353,12 @@ public class ExternalUtilsCheckDialogController extends DialogController {
                     processResult(new UtilCheckResult(util, false, true, String.format("Chyba: %s!", e.getMessage())));
                 */
                 } catch (Throwable e) {
+                    utilManager.setUtilAvailable(util, false);
+                    processResult(new UtilCheckResult(util, false, String.format("Chyba: %s!", e.getMessage())));
                     e.printStackTrace();
+                } finally {
                     return null;
                 }
-                return null;
             }
 
             private void processResult(UtilCheckResult result) {

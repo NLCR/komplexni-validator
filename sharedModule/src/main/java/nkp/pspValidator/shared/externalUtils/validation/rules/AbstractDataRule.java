@@ -17,6 +17,10 @@ public abstract class AbstractDataRule implements DataRule {
         this.validationName = validationName;
     }
 
+    public String getValidationName() {
+        return validationName;
+    }
+
     String error(String message) {
         return String.format("%s: %s", validationName, message);
     }
