@@ -10,7 +10,8 @@ public enum ExternalUtil {
     JPYLYZER("Jpylyzer", "jpylyzer.xml"),
     KAKADU("Kakadu", "kakadu.xml"),
     MP3VAL("MP3val", "mp3val.xml"),
-    SHNTOOL("shntool", "shntool.xml");
+    SHNTOOL("shntool", "shntool.xml"),
+    CHECKMATE("Checkmate", "checkmate.xml");
 
     private final String userFriendlyName;
     private final String profileFileName;

@@ -567,6 +567,99 @@
             />
 
 
+            <!--Checkmate-->
+            <Label text="Checkmate"
+                   styleClass="util-name"
+                   GridPane.columnIndex="0"
+                   GridPane.rowIndex="15"/>
+
+            <ProgressIndicator fx:id="checkmateProgress"
+                               GridPane.columnIndex="1"
+                               GridPane.rowIndex="15"
+                               visible="false"
+            />
+
+            <ImageView fx:id="checkmateOkImg"
+                       styleClass="result-image"
+                       GridPane.columnIndex="1"
+                       GridPane.rowIndex="15"
+                       preserveRatio="true"
+                       visible="false"
+                       style="-fx-background-color: BLACK"
+            >
+                <image>
+                    <Image url="@/img/Ok-30.png"/>
+                </image>
+            </ImageView>
+
+            <ImageView fx:id="checkmateErrorImg"
+                       styleClass="result-image"
+                       GridPane.columnIndex="1"
+                       GridPane.rowIndex="15"
+                       GridPane.halignment="CENTER"
+                       visible="false">
+                <image>
+                    <Image url="@/img/Error-30.png"/>
+                </image>
+            </ImageView>
+
+            <Button fx:id="checkmateBtnRetry"
+                    text="Zkusit znovu"
+                    onAction="#checkCheckmate"
+                    GridPane.columnIndex="2"
+                    GridPane.rowIndex="15"
+            >
+                <graphic>
+                    <ImageView>
+                        <image>
+                            <Image url="@/img/Synchronize-18.png"/>
+                        </image>
+                    </ImageView>
+                </graphic>
+            </Button>
+
+            <Button fx:id="checkmateBtnSelectPath"
+                    text="Nastavit adresář"
+                    onAction="#selectCheckmatePath"
+                    GridPane.columnIndex="3"
+                    GridPane.rowIndex="15"
+            >
+                <graphic>
+                    <ImageView>
+                        <image>
+                            <Image url="@/img/Add Folder-18.png"/>
+                        </image>
+                    </ImageView>
+                </graphic>
+            </Button>
+
+            <Button fx:id="checkmateBtnInstall"
+                    text="Instalovat"
+                    onAction="#installCheckmate"
+                    GridPane.columnIndex="4"
+                    GridPane.rowIndex="15"
+            >
+                <graphic>
+
+                    <ImageView>
+                        <image>
+                            <Image url="@/img/About-18.png"/>
+                        </image>
+                    </ImageView>
+                </graphic>
+
+            </Button>
+
+
+            <Label fx:id="checkmateStatusText"
+                   styleClass="result-text"
+                   GridPane.columnIndex="0"
+                   GridPane.columnSpan="6"
+                   GridPane.rowIndex="16"
+                   visible="false"
+            />
+
+
         </GridPane>
 
         <StackPane>
