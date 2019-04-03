@@ -55,10 +55,13 @@ public class ExternalUtilsCheckDialogController extends DialogController {
     Button jhoveBtnRetry;
 
     @FXML
+    Button jhoveBtnInstall;
+
+    @FXML
     Button jhoveBtnSelectPath;
 
     @FXML
-    Button jhoveBtnInstall;
+    Button jhoveBtnRemovePath;
 
     /*jpylyzer*/
 
@@ -78,10 +81,13 @@ public class ExternalUtilsCheckDialogController extends DialogController {
     Button jpylyzerBtnRetry;
 
     @FXML
+    Button jpylyzerBtnInstall;
+
+    @FXML
     Button jpylyzerBtnSelectPath;
 
     @FXML
-    Button jpylyzerBtnInstall;
+    Button jpylyzerBtnRemovePath;
 
     /*imageMagick*/
 
@@ -101,11 +107,13 @@ public class ExternalUtilsCheckDialogController extends DialogController {
     Button imageMagickBtnRetry;
 
     @FXML
+    Button imageMagickBtnInstall;
+
+    @FXML
     Button imageMagickBtnSelectPath;
 
     @FXML
-    Button imageMagickBtnInstall;
-
+    Button imageMagickBtnRemovePath;
 
     /*kakadu*/
 
@@ -125,11 +133,13 @@ public class ExternalUtilsCheckDialogController extends DialogController {
     Button kakaduBtnRetry;
 
     @FXML
+    Button kakaduBtnInstall;
+
+    @FXML
     Button kakaduBtnSelectPath;
 
     @FXML
-    Button kakaduBtnInstall;
-
+    Button kakaduBtnRemovePath;
 
     /*MP3val*/
 
@@ -149,10 +159,13 @@ public class ExternalUtilsCheckDialogController extends DialogController {
     Button mp3valBtnRetry;
 
     @FXML
+    Button mp3valBtnInstall;
+
+    @FXML
     Button mp3valBtnSelectPath;
 
     @FXML
-    Button mp3valBtnInstall;
+    Button mp3valBtnRemovePath;
 
     /*shntool*/
 
@@ -172,10 +185,13 @@ public class ExternalUtilsCheckDialogController extends DialogController {
     Button shntoolBtnRetry;
 
     @FXML
+    Button shntoolBtnInstall;
+
+    @FXML
     Button shntoolBtnSelectPath;
 
     @FXML
-    Button shntoolBtnInstall;
+    Button shntoolBtnRemovePath;
 
     /*Checkmate*/
 
@@ -195,10 +211,13 @@ public class ExternalUtilsCheckDialogController extends DialogController {
     Button checkmateBtnRetry;
 
     @FXML
+    Button checkmateBtnInstall;
+
+    @FXML
     Button checkmateBtnSelectPath;
 
     @FXML
-    Button checkmateBtnInstall;
+    Button checkmateBtnRemovePath;
 
 
     @FXML
@@ -213,6 +232,11 @@ public class ExternalUtilsCheckDialogController extends DialogController {
     @FXML
     public void initialize() {
 
+    }
+
+    public void setData(boolean closeWhenFinished, String mainButtonText) {
+        this.closeWhenFinished = closeWhenFinished;
+        btnContinue.setText(mainButtonText);
     }
 
 
@@ -233,70 +257,6 @@ public class ExternalUtilsCheckDialogController extends DialogController {
         };
     }
 
-
-    private void reflectUtilsViews() {
-        //state per Util
-        Map<ExternalUtil, UtilCheckResult> utilsResult = stateManager.getUtilsResult();
-        for (ExternalUtil util : utilsResult.keySet()) {
-            UtilCheckResult utilCheckResult = utilsResult.get(util);
-            UtilsUi utilsUi = this.utilsUi.get(util);
-            if (utilCheckResult == null) {//running
-                //show progress indicator
-                utilsUi.progresIndicator.setVisible(true);
-                //hide buttons, texts, images
-                utilsUi.imgOk.setVisible(false);
-                utilsUi.imgError.setVisible(false);
-                utilsUi.statusLabel.setVisible(false);
-                utilsUi.btnRetry.setVisible(false);
-                utilsUi.btnSelectPath.setVisible(false);
-                utilsUi.btnInstall.setVisible(false);
-            } else if (utilCheckResult.isAvailable()) {//finished
-                //hide progress indicator
-                utilsUi.progresIndicator.setVisible(false);
-                //show ok stuff
-                utilsUi.imgOk.setVisible(true);
-                utilsUi.statusLabel.setVisible(true);
-                utilsUi.statusLabel.setText("verze: " + utilCheckResult.getMessage());
-                //hide error stuff
-                utilsUi.imgError.setVisible(false);
-                utilsUi.btnRetry.setVisible(false);
-                utilsUi.btnSelectPath.setVisible(false);
-                utilsUi.btnInstall.setVisible(false);
-            } else { //error
-                //hide progress indicator
-                utilsUi.progresIndicator.setVisible(false);
-                //hide ok stuff
-                utilsUi.imgOk.setVisible(false);
-                //show error stuff
-                utilsUi.imgError.setVisible(true);
-                utilsUi.statusLabel.setVisible(true);
-                utilsUi.statusLabel.setText("chyba: " + utilCheckResult.getMessage());
-                utilsUi.btnRetry.setVisible(true);
-                utilsUi.btnSelectPath.setVisible(true);
-                utilsUi.btnInstall.setVisible(true);
-            }
-        }
-
-        //total state
-        ExternalUtilsCheckDialogControllerStateManager.DialogState state = stateManager.getState();
-        switch (state) {
-            case RUNNING:
-                btnContinue.setDisable(true);
-                break;
-            case FINISHED:
-                getConfigurationManager().setBoolean(ConfigurationManager.PROP_EXTERNAL_TOOLS_CHECK_SHOWN, true);
-                btnContinue.setDisable(false);
-                btnContinue.requestFocus();
-                if (closeWhenFinished) {
-                    continueInApp(null);
-                }
-                break;
-            case ERROR:
-                btnContinue.setDisable(false);
-                break;
-        }
-    }
-
     @Override
     public void startNow() {
         checkJhove();
@@ -315,45 +275,46 @@ public class ExternalUtilsCheckDialogController extends DialogController {
 
     @FXML
     private void checkJhove() {
-        checkUtil(ExternalUtil.JHOVE, jhoveProgress, jhoveStatusText, jhoveOkImg, jhoveErrorImg, jhoveBtnRetry, jhoveBtnSelectPath, jhoveBtnInstall);
+        checkUtil(ExternalUtil.JHOVE, jhoveProgress, jhoveStatusText, jhoveOkImg, jhoveErrorImg, jhoveBtnRetry, jhoveBtnInstall, jhoveBtnSelectPath, jhoveBtnRemovePath);
     }
 
     @FXML
     private void checkJpylyzer() {
-        checkUtil(ExternalUtil.JPYLYZER, jpylyzerProgress, jpylyzerStatusText, jpylyzerOkImg, jpylyzerErrorImg, jpylyzerBtnRetry, jpylyzerBtnSelectPath, jpylyzerBtnInstall);
+        checkUtil(ExternalUtil.JPYLYZER, jpylyzerProgress, jpylyzerStatusText, jpylyzerOkImg, jpylyzerErrorImg, jpylyzerBtnRetry, jpylyzerBtnInstall, jpylyzerBtnSelectPath, jpylyzerBtnRemovePath);
     }
 
     @FXML
     private void checkImageMagick() {
-        checkUtil(ExternalUtil.IMAGE_MAGICK, imageMagickProgress, imageMagickStatusText, imageMagickOkImg, imageMagickErrorImg, imageMagickBtnRetry, imageMagickBtnSelectPath, imageMagickBtnInstall);
+        checkUtil(ExternalUtil.IMAGE_MAGICK, imageMagickProgress, imageMagickStatusText, imageMagickOkImg, imageMagickErrorImg, imageMagickBtnRetry, imageMagickBtnInstall, imageMagickBtnSelectPath, imageMagickBtnRemovePath);
     }
 
     @FXML
     private void checkKakadu() {
-        checkUtil(ExternalUtil.KAKADU, kakaduProgress, kakaduStatusText, kakaduOkImg, kakaduErrorImg, kakaduBtnRetry, kakaduBtnSelectPath, kakaduBtnInstall);
+        checkUtil(ExternalUtil.KAKADU, kakaduProgress, kakaduStatusText, kakaduOkImg, kakaduErrorImg, kakaduBtnRetry, kakaduBtnInstall, kakaduBtnSelectPath, kakaduBtnRemovePath);
     }
 
     @FXML
     public void checkMp3val() {
-        checkUtil(ExternalUtil.MP3VAL, mp3valProgress, mp3valStatusText, mp3valOkImg, mp3valErrorImg, mp3valBtnRetry, mp3valBtnSelectPath, mp3valBtnInstall);
+        checkUtil(ExternalUtil.MP3VAL, mp3valProgress, mp3valStatusText, mp3valOkImg, mp3valErrorImg, mp3valBtnRetry, mp3valBtnInstall, mp3valBtnSelectPath, mp3valBtnRemovePath);
     }
 
     public void checkShntool() {
-        checkUtil(ExternalUtil.SHNTOOL, shntoolProgress, shntoolStatusText, shntoolOkImg, shntoolErrorImg, shntoolBtnRetry, shntoolBtnSelectPath, shntoolBtnInstall);
+        checkUtil(ExternalUtil.SHNTOOL, shntoolProgress, shntoolStatusText, shntoolOkImg, shntoolErrorImg, shntoolBtnRetry, shntoolBtnInstall, shntoolBtnSelectPath, shntoolBtnRemovePath);
     }
 
     public void checkCheckmate() {
-        checkUtil(ExternalUtil.CHECKMATE, checkmateProgress, checkmateStatusText, checkmateOkImg, checkmateErrorImg, checkmateBtnRetry, checkmateBtnSelectPath, checkmateBtnInstall);
+        checkUtil(ExternalUtil.CHECKMATE, checkmateProgress, checkmateStatusText, checkmateOkImg, checkmateErrorImg, checkmateBtnRetry, checkmateBtnInstall, checkmateBtnSelectPath, checkmateBtnRemovePath);
     }
 
     private void checkUtil(ExternalUtil util,
                            ProgressIndicator progresIndicator,
                            Label statusLabel,
                            ImageView imgOk, ImageView imgError,
-                           Button btnRetry, Button btnSelectPath, Button btnInstall
+                           Button btnRetry, Button btnInstall,
+                           Button btnSelectPath, Button btnRemovePath
     ) {
 
-        utilsUi.put(util, new UtilsUi(progresIndicator, statusLabel, imgOk, imgError, btnRetry, btnSelectPath, btnInstall));
+        utilsUi.put(util, new UtilsUi(progresIndicator, statusLabel, imgOk, imgError, btnRetry, btnInstall, btnSelectPath, btnRemovePath));
         stateManager.registerUtil(util);
         reflectUtilsViews();
         main.getValidationDataManager().getExternalUtilManager().toString();
@@ -401,92 +362,69 @@ public class ExternalUtilsCheckDialogController extends DialogController {
         new Thread(task).start();
     }
 
-    public void selectJpylyzerPath(ActionEvent actionEvent) {
-        File defaultDir = null;
-        switch (getConfigurationManager().getPlatform().getOperatingSystem()) {
-            case WINDOWS:
-                defaultDir = new File("C:\\Program Files");
+    private void reflectUtilsViews() {
+        //state per Util
+        Map<ExternalUtil, UtilCheckResult> utilsResult = stateManager.getUtilsResult();
+        for (ExternalUtil util : utilsResult.keySet()) {
+            UtilCheckResult utilCheckResult = utilsResult.get(util);
+            UtilsUi utilsUi = this.utilsUi.get(util);
+            if (utilCheckResult == null) {//running
+                //show progress indicator
+                utilsUi.progresIndicator.setVisible(true);
+                //hide buttons, texts, images
+                utilsUi.imgOk.setVisible(false);
+                utilsUi.imgError.setVisible(false);
+                utilsUi.statusLabel.setVisible(false);
+                utilsUi.btnRetry.setVisible(false);
+                utilsUi.btnInstall.setVisible(false);
+                utilsUi.btnSelectPath.setVisible(false);
+                utilsUi.btnRemovePath.setVisible(false);
+            } else if (utilCheckResult.isAvailable()) {//finished
+                //hide progress indicator
+                utilsUi.progresIndicator.setVisible(false);
+                //show ok stuff
+                utilsUi.imgOk.setVisible(true);
+                utilsUi.statusLabel.setVisible(true);
+                utilsUi.statusLabel.setText("verze: " + utilCheckResult.getMessage());
+                //hide error stuff
+                utilsUi.imgError.setVisible(false);
+                utilsUi.btnRetry.setVisible(false);
+                utilsUi.btnInstall.setVisible(false);
+                utilsUi.btnSelectPath.setVisible(false);
+                utilsUi.btnRemovePath.setVisible(false);
+            } else { //error
+                //hide progress indicator
+                utilsUi.progresIndicator.setVisible(false);
+                //hide ok stuff
+                utilsUi.imgOk.setVisible(false);
+                //show error stuff
+                utilsUi.imgError.setVisible(true);
+                utilsUi.statusLabel.setVisible(true);
+                utilsUi.statusLabel.setText("chyba: " + utilCheckResult.getMessage());
+                utilsUi.btnRetry.setVisible(true);
+                utilsUi.btnInstall.setVisible(true);
+                utilsUi.btnSelectPath.setVisible(true);
+                utilsUi.btnRemovePath.setVisible(true);
+            }
+        }
+
+        //total state
+        ExternalUtilsCheckDialogControllerStateManager.DialogState state = stateManager.getState();
+        switch (state) {
+            case RUNNING:
+                btnContinue.setDisable(true);
                 break;
-        }
-        selectUtilPath(ConfigurationManager.PROP_JPYLYZER_DIR, defaultDir, ExternalUtil.JPYLYZER, () -> checkJpylyzer());
-    }
-
-
-    public void selectJhovePath(ActionEvent actionEvent) {
-        File defaultDir = null;
-        switch (getConfigurationManager().getPlatform().getOperatingSystem()) {
-            case WINDOWS:
-                defaultDir = new File("C:\\Program Files");
+            case FINISHED:
+                getConfigurationManager().setBoolean(ConfigurationManager.PROP_EXTERNAL_TOOLS_CHECK_SHOWN, true);
+                btnContinue.setDisable(false);
+                btnContinue.requestFocus();
+                if (closeWhenFinished) {
+                    continueInApp(null);
+                }
                 break;
-        }
-        selectUtilPath(ConfigurationManager.PROP_JHOVE_DIR, defaultDir, ExternalUtil.JHOVE, () -> checkJhove());
-    }
-
-    public void selectImageMagickPath(ActionEvent actionEvent) {
-        File defaultDir = null;
-        switch (getConfigurationManager().getPlatform().getOperatingSystem()) {
-            case WINDOWS:
-                defaultDir = new File("C:\\Program Files");
+            case ERROR:
+                btnContinue.setDisable(false);
                 break;
-        }
-        selectUtilPath(ConfigurationManager.PROP_IMAGE_MAGICK_DIR, defaultDir, ExternalUtil.IMAGE_MAGICK, () -> checkImageMagick());
-    }
-
-    public void selectKakaduPath(ActionEvent actionEvent) {
-        File defaultDir = null;
-        switch (getConfigurationManager().getPlatform().getOperatingSystem()) {
-            case WINDOWS:
-                defaultDir = new File("C:\\Program Files");
-                break;
-        }
-        selectUtilPath(ConfigurationManager.PROP_KAKADU_DIR, defaultDir, ExternalUtil.KAKADU, () -> checkKakadu());
-    }
-
-    public void selectMp3valPath(ActionEvent actionEvent) {
-        File defaultDir = null;
-        switch (getConfigurationManager().getPlatform().getOperatingSystem()) {
-            case WINDOWS:
-                defaultDir = new File("C:\\Program Files");
-                break;
-        }
-        selectUtilPath(ConfigurationManager.PROP_MP3VAL_DIR, defaultDir, ExternalUtil.MP3VAL, () -> checkMp3val());
-    }
-
-
-    public void selectShntoolPath(ActionEvent actionEvent) {
-        File defaultDir = null;
-        switch (getConfigurationManager().getPlatform().getOperatingSystem()) {
-            case WINDOWS:
-                defaultDir = new File("C:\\Program Files");
-                break;
-        }
-        selectUtilPath(ConfigurationManager.PROP_SHNTOOL_DIR, defaultDir, ExternalUtil.SHNTOOL, () -> checkShntool());
-    }
-
-    public void selectCheckmatePath(ActionEvent actionEvent) {
-        File defaultDir = null;
-        switch (getConfigurationManager().getPlatform().getOperatingSystem()) {
-            case WINDOWS:
-                defaultDir = new File("C:\\Program Files");
-                break;
-        }
-        selectUtilPath(ConfigurationManager.PROP_CHECKMATE_DIR, defaultDir, ExternalUtil.CHECKMATE, () -> checkCheckmate());
-    }
-
-    private void selectUtilPath(String property, File defaultDir, ExternalUtil util, MyListener listener) {
-        DirectoryChooser chooser = new DirectoryChooser();
-        chooser.setTitle(String.format("Vyberte adresář se spustitelnými soubory %s", util.getUserFriendlyName()));
-        File currentDir = getConfigurationManager().getFileOrNull(property);
-        if (currentDir != null && currentDir.exists()) {
-            chooser.setInitialDirectory(currentDir);
-        } else if (defaultDir != null && defaultDir.exists()) {
-            chooser.setInitialDirectory(defaultDir);
-        }
-        File selectedDirectory = chooser.showDialog(stage);
-        if (selectedDirectory != null) {
-            getConfigurationManager().setFile(property, selectedDirectory);
-            main.getValidationDataManager().getExternalUtilManager().setPath(util, selectedDirectory);
-            listener.onFinished();
         }
     }
 
@@ -523,10 +461,93 @@ public class ExternalUtilsCheckDialogController extends DialogController {
         openUrl(HELP_URL);
     }
 
-    public void setData(boolean closeWhenFinished, String mainButtonText) {
-        this.closeWhenFinished = closeWhenFinished;
-        btnContinue.setText(mainButtonText);
+
+    public void selectJhovePath(ActionEvent actionEvent) {
+        selectUtilPath(ConfigurationManager.PROP_JHOVE_DIR, ExternalUtil.JHOVE, () -> checkJhove());
     }
+
+    public void selectJpylyzerPath(ActionEvent actionEvent) {
+        selectUtilPath(ConfigurationManager.PROP_JPYLYZER_DIR, ExternalUtil.JPYLYZER, () -> checkJpylyzer());
+    }
+
+    public void selectImageMagickPath(ActionEvent actionEvent) {
+        selectUtilPath(ConfigurationManager.PROP_IMAGE_MAGICK_DIR, ExternalUtil.IMAGE_MAGICK, () -> checkImageMagick());
+    }
+
+    public void selectKakaduPath(ActionEvent actionEvent) {
+        selectUtilPath(ConfigurationManager.PROP_KAKADU_DIR, ExternalUtil.KAKADU, () -> checkKakadu());
+    }
+
+    public void selectMp3valPath(ActionEvent actionEvent) {
+        selectUtilPath(ConfigurationManager.PROP_MP3VAL_DIR, ExternalUtil.MP3VAL, () -> checkMp3val());
+    }
+
+
+    public void selectShntoolPath(ActionEvent actionEvent) {
+        selectUtilPath(ConfigurationManager.PROP_SHNTOOL_DIR, ExternalUtil.SHNTOOL, () -> checkShntool());
+    }
+
+    public void selectCheckmatePath(ActionEvent actionEvent) {
+        selectUtilPath(ConfigurationManager.PROP_CHECKMATE_DIR, ExternalUtil.CHECKMATE, () -> checkCheckmate());
+    }
+
+    private void selectUtilPath(String property, ExternalUtil util, MyListener listener) {
+        File defaultDir = null;
+        switch (getConfigurationManager().getPlatform().getOperatingSystem()) {
+            case WINDOWS:
+                defaultDir = new File("C:\\Program Files");
+                break;
+        }
+        DirectoryChooser chooser = new DirectoryChooser();
+        chooser.setTitle(String.format("Vyberte adresář se spustitelnými soubory %s", util.getUserFriendlyName()));
+        File currentDir = getConfigurationManager().getFileOrNull(property);
+        if (currentDir != null && currentDir.exists()) {
+            chooser.setInitialDirectory(currentDir);
+        } else if (defaultDir != null && defaultDir.exists()) {
+            chooser.setInitialDirectory(defaultDir);
+        }
+        File selectedDirectory = chooser.showDialog(stage);
+        if (selectedDirectory != null) {
+            getConfigurationManager().setFile(property, selectedDirectory);
+            main.getValidationDataManager().getExternalUtilManager().setPath(util, selectedDirectory);
+            listener.onFinished();
+        }
+    }
+
+    private void removeUtilPath(String property, ExternalUtil util, MyListener listener) {
+        getConfigurationManager().setFile(property, null);
+        main.getValidationDataManager().getExternalUtilManager().setPath(util, null);
+        listener.onFinished();
+    }
+
+    public void removeJhovePath(ActionEvent actionEvent) {
+        removeUtilPath(ConfigurationManager.PROP_JHOVE_DIR, ExternalUtil.JHOVE, () -> checkJhove());
+    }
+
+    public void removeJpylyzerPath(ActionEvent actionEvent) {
+        removeUtilPath(ConfigurationManager.PROP_JPYLYZER_DIR, ExternalUtil.JPYLYZER, () -> checkJpylyzer());
+    }
+
+    public void removeImageMagickPath(ActionEvent actionEvent) {
+        removeUtilPath(ConfigurationManager.PROP_IMAGE_MAGICK_DIR, ExternalUtil.IMAGE_MAGICK, () -> checkImageMagick());
+    }
+
+    public void removeKakaduPath(ActionEvent actionEvent) {
+        removeUtilPath(ConfigurationManager.PROP_KAKADU_DIR, ExternalUtil.KAKADU, () -> checkKakadu());
+    }
+
+    public void removeMp3valPath(ActionEvent actionEvent) {
+        removeUtilPath(ConfigurationManager.PROP_MP3VAL_DIR, ExternalUtil.MP3VAL, () -> checkMp3val());
+    }
+
+    public void removeShntoolPath(ActionEvent actionEvent) {
+        removeUtilPath(ConfigurationManager.PROP_SHNTOOL_DIR, ExternalUtil.SHNTOOL, () -> checkShntool());
+    }
+
+    public void removeCheckmatePath(ActionEvent actionEvent) {
+        removeUtilPath(ConfigurationManager.PROP_CHECKMATE_DIR, ExternalUtil.CHECKMATE, () -> checkCheckmate());
+    }
+
 
     static final class UtilCheckResult {
         private final ExternalUtil util;
@@ -558,17 +579,19 @@ public class ExternalUtilsCheckDialogController extends DialogController {
         private final ImageView imgOk;
         private final ImageView imgError;
         private final Button btnRetry;
-        private final Button btnSelectPath;
         private final Button btnInstall;
+        private final Button btnSelectPath;
+        private final Button btnRemovePath;
 
-        public UtilsUi(ProgressIndicator progresIndicator, Label statusLabel, ImageView imgOk, ImageView imgError, Button btnRetry, Button btnSelectPath, Button btnInstall) {
+        public UtilsUi(ProgressIndicator progresIndicator, Label statusLabel, ImageView imgOk, ImageView imgError, Button btnRetry, Button btnInstall, Button btnSelectPath, Button btnRemovePath) {
             this.progresIndicator = progresIndicator;
             this.statusLabel = statusLabel;
             this.imgOk = imgOk;
             this.imgError = imgError;
             this.btnRetry = btnRetry;
-            this.btnSelectPath = btnSelectPath;
             this.btnInstall = btnInstall;
+            this.btnSelectPath = btnSelectPath;
+            this.btnRemovePath = btnRemovePath;
         }
     }
 
