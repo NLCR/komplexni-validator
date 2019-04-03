@@ -5,12 +5,12 @@ import nkp.pspValidator.shared.externalUtils.validation.Constraint;
 /**
  * Created by Martin Řehánek on 17.11.16.
  */
-public class FlowRangeConstraint implements Constraint {
+public class IsInFloatRangeConstraint implements Constraint {
     private final Float min;
     private final Float max;
 
 
-    public FlowRangeConstraint(Float min, Float max) {
+    public IsInFloatRangeConstraint(Float min, Float max) {
         this.min = min;
         this.max = max;
     }

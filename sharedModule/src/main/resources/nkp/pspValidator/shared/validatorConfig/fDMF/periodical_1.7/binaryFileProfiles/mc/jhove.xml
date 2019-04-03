@@ -42,7 +42,7 @@
             <rules>
                 <mustExist/>
                 <mustMatchAny>
-                    <constant>Jhove</constant>
+                    <isExactly>Jhove</isExactly>
                 </mustMatchAny>
             </rules>
         </validation>
@@ -67,7 +67,7 @@
             <rules>
                 <mustExist/>
                 <mustMatchAny>
-                    <constant>JPEG 2000</constant>
+                    <isExactly>JPEG 2000</isExactly>
                 </mustMatchAny>
             </rules>
         </validation>
@@ -81,7 +81,7 @@
             <rules>
                 <mustExist/>
                 <mustMatchAny>
-                    <constant>Well-Formed and valid</constant>
+                    <isExactly>Well-Formed and valid</isExactly>
                 </mustMatchAny>
             </rules>
         </validation>
@@ -119,8 +119,8 @@
                 <mustExist/>
                 <!--povolene hodnoty "1" nebo "3"-->
                 <mustMatchAny>
-                    <constant>1</constant>
-                    <constant>3</constant>
+                    <isExactly>1</isExactly>
+                    <isExactly>3</isExactly>
                 </mustMatchAny>
             </rules>
         </validation>
@@ -136,7 +136,7 @@
                 <!--TODO: docasne vyrazeno, vzdy v datech neni a nekdy je tam vice hodnot-->
                 <!-- <mustExist/>
                 <mustMatchAny>
-                    <constant>8</constant>
+                    <isExactly>8</isExactly>
                 </mustMatchAny>-->
             </rules>
         </validation>
@@ -152,8 +152,8 @@
                 <mustExist/>
                 (povolene hodnoty "sRGB" nebo "greyscale")
                 <mustMatchAny>
-                    <constant>sRGB</constant>
-                    <constant>Greyscale</constant>
+                    <isExactly>sRGB</isExactly>
+                    <isExactly>Greyscale</isExactly>
                 </mustMatchAny>
             </rules>
         </validation>
@@ -168,7 +168,7 @@
                 <mustExist/>
                 (TODO: docasne vyrazeno, v realnych datech byva "Enumerated Colorspace")
                 (<mustMatchAny>
-                    <constant>Restricted ICC Profile</constant>
+                    <isExactly>Restricted ICC Profile</isExactly>
                 </mustMatchAny>)
             </rules>
         </validation>-->
@@ -185,9 +185,9 @@
                 <!--TODO: docasne vyrazeno, v datech se hodnota nenachazi-->
                 <!--<mustExist/>
                 <mustMatchAny>
-                    <floatRange>
+                    <isInFloatRange>
                         <min>11732</min>
-                    </floatRange>
+                    </isInFloatRange>
                 </mustMatchAny>-->
             </rules>
         </validation>
@@ -204,9 +204,9 @@
                 <!--TODO: docasne vyrazeno, v datech se hodnota nenachazi-->
                 <!--<mustExist/>
                 <mustMatchAny>
-                    <floatRange>
+                    <isInFloatRange>
                         <min>11732</min>
-                    </floatRange>
+                    </isInFloatRange>
                 </mustMatchAny>-->
             </rules>
         </validation>
@@ -221,9 +221,9 @@
                 <mustExist/>
                 <!--jakékoliv přirozené číslo-->
                 <mustMatchAny>
-                    <intRange>
+                    <isInIntRange>
                         <min>1</min>
-                    </intRange>
+                    </isInIntRange>
                 </mustMatchAny>
             </rules>
         </validation>
@@ -239,7 +239,7 @@
             <rules>
                 <mustExist/>
                 <mustMatchAny>
-                    <constant>4096</constant>
+                    <isExactly>4096</isExactly>
                 </mustMatchAny>
             </rules>
         </validation>
@@ -255,7 +255,7 @@
             <rules>
                 <mustExist/>
                 <mustMatchAny>
-                    <constant>4096</constant>
+                    <isExactly>4096</isExactly>
                 </mustMatchAny>
             </rules>
         </validation>
@@ -271,7 +271,7 @@
             <rules>
                 <mustExist/>
                 <mustMatchAny>
-                    <constant>2</constant>
+                    <isExactly>2</isExactly>
                 </mustMatchAny>
             </rules>
         </validation>
@@ -287,7 +287,7 @@
             <rules>
                 <mustExist/>
                 <mustMatchAny>
-                    <constant>1</constant>
+                    <isExactly>1</isExactly>
                 </mustMatchAny>
             </rules>
         </validation>
@@ -303,8 +303,8 @@
             <rules>
                 <mustExist/>
                 <mustMatchAny>
-                    <constant>5</constant>
-                    <constant>6</constant>
+                    <isExactly>5</isExactly>
+                    <isExactly>6</isExactly>
                 </mustMatchAny>
             </rules>
         </validation>
@@ -320,7 +320,7 @@
             <rules>
                 <mustExist/>
                 <mustMatchAny>
-                    <constant>4</constant>
+                    <isExactly>4</isExactly>
                 </mustMatchAny>
             </rules>
         </validation>
@@ -336,7 +336,7 @@
             <rules>
                 <mustExist/>
                 <mustMatchAny>
-                    <constant>4</constant>
+                    <isExactly>4</isExactly>
                 </mustMatchAny>
             </rules>
         </validation>
@@ -352,7 +352,7 @@
             <rules>
                 <mustExist/>
                 <mustMatchAny>
-                    <constant>1</constant>
+                    <isExactly>1</isExactly>
                 </mustMatchAny>
             </rules>
         </validation>

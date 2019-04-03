@@ -5,11 +5,11 @@ import nkp.pspValidator.shared.externalUtils.validation.Constraint;
 /**
  * Created by Martin Řehánek on 17.11.16.
  */
-public class IntRangeConstraint implements Constraint {
+public class IsInIntRangeConstraint implements Constraint {
     private final Integer min;
     private final Integer max;
 
-    public IntRangeConstraint(Integer min, Integer max) {
+    public IsInIntRangeConstraint(Integer min, Integer max) {
         this.min = min;
         this.max = max;
     }
