@@ -103,6 +103,7 @@
     <xs:complexType name="mustMatchAnyType">
         <xs:sequence>
             <xs:element name="constant" type="xs:string" minOccurs="0" maxOccurs="unbounded"/>
+            <xs:element name="endsWith" type="xs:string" minOccurs="0" maxOccurs="unbounded"/>
             <xs:element name="intRange" type="bfp:intRangeType" minOccurs="0"/>
             <xs:element name="floatRange" type="bfp:floatRangeType" minOccurs="0"/>
             <xs:element name="nTimesXRemainingY" type="bfp:nTimesXRemainingYType" minOccurs="0"/>

@@ -7,10 +7,12 @@ import java.util.List;
  * Created by Martin Řehánek on 17.11.16.
  */
 class Validation {
+    private final String name;
     private final DataExtraction dataExtraction;
     private final List<DataRule> dataRules;
 
-    public Validation(DataExtraction dataExtraction, List<DataRule> dataRules) {
+    public Validation(String name, DataExtraction dataExtraction, List<DataRule> dataRules) {
+        this.name = name;
         this.dataExtraction = dataExtraction;
         this.dataRules = dataRules;
     }
@@ -26,5 +28,9 @@ class Validation {
             }
         }
         return validationErrors;
+    }
+
+    public String getName() {
+        return name;
     }
 }

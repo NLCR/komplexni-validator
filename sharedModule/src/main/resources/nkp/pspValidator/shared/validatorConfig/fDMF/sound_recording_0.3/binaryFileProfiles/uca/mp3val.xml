@@ -6,10 +6,10 @@
     <fromText>
 
         <validation name="MPEG 1/2 Layer III">
-            <textDataExtraction resultType="STRING_LIST">
-                <allNonempty>
+            <textDataExtraction resultType="STRING">
+                <firstNonempty>
                     <regexp>MPEG [12] Layer III</regexp>
-                </allNonempty>
+                </firstNonempty>
             </textDataExtraction>
             <rules>
                 <mustExist/>

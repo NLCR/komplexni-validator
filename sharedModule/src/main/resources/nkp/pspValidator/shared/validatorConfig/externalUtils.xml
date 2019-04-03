@@ -321,7 +321,7 @@
                 </parser>
             </operatingSystem>
         </versionDetection>
-        <execution name="mp3">
+        <execution name="wav">
             <operatingSystem name="LINUX">
                 <command>${UTIL_PATH}shntool info ${TARGET_FILE}</command>
                 <parser>
