@@ -307,7 +307,7 @@
                 </parser>
             </operatingSystem>
             <operatingSystem name="WINDOWS">
-                <command>${UTIL_PATH}shntool -v</command>
+                <command>${UTIL_PATH}shntool.exe -v</command>
                 <parser>
                     <stream>STDERR</stream>
                     <regexp>shntool [\.0-9]+</regexp>
@@ -330,7 +330,7 @@
                 </parser>
             </operatingSystem>
             <operatingSystem name="WINDOWS">
-                <command>${UTIL_PATH}shntool info ${TARGET_FILE}</command>
+                <command>${UTIL_PATH}shntool.exe info ${TARGET_FILE}</command>
                 <parser>
                     <stream>STDOUT</stream>
                     <regexp>(?s).*</regexp>
@@ -356,7 +356,7 @@
                 </parser>
             </operatingSystem>
             <operatingSystem name="WINDOWS">
-                <command>${UTIL_PATH}mpck -V</command>
+                <command>${UTIL_PATH}mpck.exe -V</command>
                 <parser>
                     <stream>STDOUT</stream>
                     <regexp>mpck [\.0-9]+</regexp>
@@ -379,7 +379,7 @@
                 </parser>
             </operatingSystem>
             <operatingSystem name="WINDOWS">
-                <command>${UTIL_PATH}mpck ${TARGET_FILE}</command>
+                <command>${UTIL_PATH}mpck.exe ${TARGET_FILE}</command>
                 <parser>
                     <stream>STDOUT</stream>
                     <regexp>(?s).*</regexp>
