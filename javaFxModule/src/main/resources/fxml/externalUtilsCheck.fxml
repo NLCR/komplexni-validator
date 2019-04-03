@@ -8,7 +8,7 @@
       fx:controller="nkp.pspValidator.gui.ExternalUtilsCheckDialogController"
       fx:id="container"
       minWidth="700"
-      minHeight="700"
+      minHeight="650"
       alignment="CENTER"
 >
     <children>
