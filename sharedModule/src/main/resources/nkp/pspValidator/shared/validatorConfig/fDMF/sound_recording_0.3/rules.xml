@@ -2948,7 +2948,7 @@
         </rule>
 
         <rule name="SOURCE-AUDIO_FILES_VALID_BY_SHNTOOL">
-            <description>Všechny soubory SOURCE-AUDIO (wav) musí být validní vůči profilu pro binární soubory pro nástroj SHNTOOL.
+            <description>Všechny soubory SOURCE-AUDIO (wav) musí být validní vůči profilu pro binární soubory pro nástroj shntool.
             </description>
             <validation functionName="checkBinaryFilesValidByExternalUtil">
                 <params>
@@ -2963,9 +2963,9 @@
             </validation>
         </rule>
 
-        <!--TODO: vyresit, ze slozka i soubory nepovinne-->
+        <!--TODO: vyresit, ze slozka i soubory nepovinne a doplnit pro MASTER-COPY-AUDIO_FILES podle USER-COPY-AUDIO_FILES-->
         <!--<rule name="MASTER-COPY-AUDIO_FILES_VALID_BY_MP3VAL">
-            <description>Všechny soubory MASTER-COPY-AUDIO (mp3) musí být validní vůči profilu pro binární soubory pro nástroj MP3VAL.
+            <description>Všechny soubory MASTER-COPY-AUDIO (mp3) musí být validní vůči profilu pro binární soubory pro nástroj MP3val.
             </description>
             <validation functionName="checkBinaryFilesValidByExternalUtil">
                 <params>
@@ -2981,7 +2981,7 @@
         </rule>-->
 
         <rule name="USER-COPY-AUDIO_FILES_VALID_BY_MP3VAL">
-            <description>Všechny soubory USER-COPY-AUDIO (mp3) musí být validní vůči profilu pro binární soubory pro nástroj MP3VAL.
+            <description>Všechny soubory USER-COPY-AUDIO (mp3) musí být validní vůči profilu pro binární soubory pro nástroj MP3val.
             </description>
             <validation functionName="checkBinaryFilesValidByExternalUtil">
                 <params>
@@ -2991,6 +2991,23 @@
                     </value>
                     <value name="type" type="RESOURCE_TYPE">AUDIO_USER_COPY</value>
                     <value name="util" type="EXTERNAL_UTIL">MP3VAL</value>
+                    <value name="execution" type="STRING">mp3</value>
+                </params>
+            </validation>
+        </rule>
+
+
+        <rule name="USER-COPY-AUDIO_FILES_VALID_BY_CHECKMATE">
+            <description>Všechny soubory USER-COPY-AUDIO (mp3) musí být validní vůči profilu pro binární soubory pro nástroj Checkmate.
+            </description>
+            <validation functionName="checkBinaryFilesValidByExternalUtil">
+                <params>
+                    <value name="level" type="LEVEL">ERROR</value>
+                    <value name="files" type="FILE_LIST">
+                        <value-ref name="USER-COPY-AUDIO_FILES"/>
+                    </value>
+                    <value name="type" type="RESOURCE_TYPE">AUDIO_USER_COPY</value>
+                    <value name="util" type="EXTERNAL_UTIL">CHECKMATE</value>
                     <value name="execution" type="STRING">mp3</value>
                 </params>
             </validation>

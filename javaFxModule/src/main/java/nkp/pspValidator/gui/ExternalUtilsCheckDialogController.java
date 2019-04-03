@@ -33,6 +33,7 @@ public class ExternalUtilsCheckDialogController extends DialogController {
     // TODO: 2019-04-02 doplnit wiki
     private static final String MP3VAL_INSTALLATION_URL = "https://github.com/NLCR/komplexni-validator/wiki/Instalace#mp3val";
     private static final String SHNTOOL_INSTALLATION_URL = "https://github.com/NLCR/komplexni-validator/wiki/Instalace#shntool";
+    private static final String CHECKMATE_INSTALLATION_URL = "https://github.com/NLCR/komplexni-validator/wiki/Instalace#checkmate";
 
     private static final String HELP_URL = "https://github.com/NLCR/komplexni-validator/wiki/Instalace#instalace-n%C3%A1stroj%C5%AF-pro-validaci-obrazov%C3%BDch-soubor%C5%AF";
 
@@ -176,6 +177,29 @@ public class ExternalUtilsCheckDialogController extends DialogController {
     @FXML
     Button shntoolBtnInstall;
 
+    /*Checkmate*/
+
+    @FXML
+    Label checkmateStatusText;
+
+    @FXML
+    ProgressIndicator checkmateProgress;
+
+    @FXML
+    ImageView checkmateOkImg;
+
+    @FXML
+    ImageView checkmateErrorImg;
+
+    @FXML
+    Button checkmateBtnRetry;
+
+    @FXML
+    Button checkmateBtnSelectPath;
+
+    @FXML
+    Button checkmateBtnInstall;
+
 
     @FXML
     Button btnContinue;
@@ -281,6 +305,7 @@ public class ExternalUtilsCheckDialogController extends DialogController {
         checkKakadu();
         checkMp3val();
         checkShntool();
+        checkCheckmate();
     }
 
     public void continueInApp(ActionEvent actionEvent) {
@@ -315,6 +340,10 @@ public class ExternalUtilsCheckDialogController extends DialogController {
 
     public void checkShntool() {
         checkUtil(ExternalUtil.SHNTOOL, shntoolProgress, shntoolStatusText, shntoolOkImg, shntoolErrorImg, shntoolBtnRetry, shntoolBtnSelectPath, shntoolBtnInstall);
+    }
+
+    public void checkCheckmate() {
+        checkUtil(ExternalUtil.CHECKMATE, checkmateProgress, checkmateStatusText, checkmateOkImg, checkmateErrorImg, checkmateBtnRetry, checkmateBtnSelectPath, checkmateBtnInstall);
     }
 
     private void checkUtil(ExternalUtil util,
@@ -434,6 +463,16 @@ public class ExternalUtilsCheckDialogController extends DialogController {
         selectUtilPath(ConfigurationManager.PROP_SHNTOOL_DIR, defaultDir, ExternalUtil.SHNTOOL, () -> checkShntool());
     }
 
+    public void selectCheckmatePath(ActionEvent actionEvent) {
+        File defaultDir = null;
+        switch (getConfigurationManager().getPlatform().getOperatingSystem()) {
+            case WINDOWS:
+                defaultDir = new File("C:\\Program Files");
+                break;
+        }
+        selectUtilPath(ConfigurationManager.PROP_CHECKMATE_DIR, defaultDir, ExternalUtil.CHECKMATE, () -> checkCheckmate());
+    }
+
     private void selectUtilPath(String property, File defaultDir, ExternalUtil util, MyListener listener) {
         DirectoryChooser chooser = new DirectoryChooser();
         chooser.setTitle(String.format("Vyberte adresář se spustitelnými soubory %s", util.getUserFriendlyName()));
@@ -474,6 +513,10 @@ public class ExternalUtilsCheckDialogController extends DialogController {
 
     public void installShntool(ActionEvent actionEvent) {
         openUrl(SHNTOOL_INSTALLATION_URL);
+    }
+
+    public void installCheckmate(ActionEvent actionEvent) {
+        openUrl(CHECKMATE_INSTALLATION_URL);
     }
 
     public void showHelp(ActionEvent actionEvent) {
