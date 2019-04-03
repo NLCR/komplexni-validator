@@ -202,28 +202,27 @@ public class BinaryFileValidator {
     private Constraint buildConstraint(Element constraintEl) {
         String constraintName = constraintEl.getTagName();
         switch (constraintName) {
-            // TODO: 2019-04-03 prejmenovat na "isExactly", "isInIntRange" apod.
-            case "constant": {
-                String constant = constraintEl.getTextContent().trim();
-                return new ConstantConstraint(constant);
+            case "isExactly": {
+                String value = constraintEl.getTextContent().trim();
+                return new IsExactlyConstraint(value);
             }
             case "endsWith": {
                 String suffix = constraintEl.getTextContent().trim();
                 return new EndsWithConstraint(suffix);
             }
-            case "floatRange": {
+            case "isInFloatRange": {
                 Element minEl = XmlUtils.getFirstChildElementsByName(constraintEl, "min");
                 Float min = minEl == null ? null : Float.valueOf(minEl.getTextContent().trim());
                 Element maxEl = XmlUtils.getFirstChildElementsByName(constraintEl, "max");
                 Float max = maxEl == null ? null : Float.valueOf(maxEl.getTextContent().trim());
-                return new FlowRangeConstraint(min, max);
+                return new IsInFloatRangeConstraint(min, max);
             }
-            case "intRange": {
+            case "isInIntRange": {
                 Element minEl = XmlUtils.getFirstChildElementsByName(constraintEl, "min");
                 Integer min = minEl == null ? null : Integer.valueOf(minEl.getTextContent().trim());
                 Element maxEl = XmlUtils.getFirstChildElementsByName(constraintEl, "max");
                 Integer max = maxEl == null ? null : Integer.valueOf(maxEl.getTextContent().trim());
-                return new IntRangeConstraint(min, max);
+                return new IsInIntRangeConstraint(min, max);
             }
             case "nTimesXRemainingY": {
                 Integer n = Integer.valueOf(XmlUtils.getFirstChildElementsByName(constraintEl, "n").getTextContent().trim());

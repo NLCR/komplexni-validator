@@ -5,20 +5,20 @@ import nkp.pspValidator.shared.externalUtils.validation.Constraint;
 /**
  * Created by Martin Řehánek on 17.11.16.
  */
-public class ConstantConstraint implements Constraint {
-    private final String constant;
+public class IsExactlyConstraint implements Constraint {
+    private final String value;
 
-    public ConstantConstraint(String constant) {
-        this.constant = constant;
+    public IsExactlyConstraint(String value) {
+        this.value = value;
     }
 
     @Override
     public boolean matches(Object data) {
         String dataStr = data.toString();
-        return constant.equals(dataStr);
+        return value.equals(dataStr);
     }
 
     public String toString() {
-        return String.format("musí být přesně '%s'", constant);
+        return String.format("musí být přesně '%s'", value);
     }
 }

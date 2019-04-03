@@ -19,7 +19,7 @@
             <rules>
                 <mustExist/>
                 <mustMatchAny>
-                    <constant>Well-Formed and valid</constant>
+                    <isExactly>Well-Formed and valid</isExactly>
                 </mustMatchAny>
             </rules>
         </validation>
@@ -33,7 +33,7 @@
             <rules>
                 <mustExist/>
                 <mustMatchAny>
-                    <constant>WAVE</constant>
+                    <isExactly>WAVE</isExactly>
                 </mustMatchAny>
             </rules>
         </validation>

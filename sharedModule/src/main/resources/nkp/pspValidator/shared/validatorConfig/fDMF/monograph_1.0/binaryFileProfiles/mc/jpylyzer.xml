@@ -50,9 +50,9 @@
             <rules>
                 <mustExist/>
                 <mustMatchAny>
-                    <constant>jpylyzer</constant>
-                    <constant>jpylyzer.exe</constant>
-                    <constant>jpylyzer.py</constant>
+                    <isExactly>jpylyzer</isExactly>
+                    <isExactly>jpylyzer.exe</isExactly>
+                    <isExactly>jpylyzer.py</isExactly>
                 </mustMatchAny>
             </rules>
         </validation>
@@ -77,7 +77,7 @@
             <rules>
                 <mustExist/>
                 <mustMatchAny>
-                    <constant>True</constant>
+                    <isExactly>True</isExactly>
                 </mustMatchAny>
             </rules>
         </validation>
@@ -114,8 +114,8 @@
                 <mustExist/>
                 <!--povolene hodnoty "1" nebo "3"-->
                 <mustMatchAny>
-                    <constant>1</constant>
-                    <constant>3</constant>
+                    <isExactly>1</isExactly>
+                    <isExactly>3</isExactly>
                 </mustMatchAny>
             </rules>
         </validation>
@@ -129,7 +129,7 @@
             <rules>
                 <mustExist/>
                 <mustMatchAny>
-                    <constant>8</constant>
+                    <isExactly>8</isExactly>
                 </mustMatchAny>
             </rules>
         </validation>
@@ -145,8 +145,8 @@
                 <mustExist/>
                 (povolene hodnoty "sRGB" nebo "greyscale")
                 <mustMatchAny>
-                    <constant>sRGB</constant>
-                    <constant>greyscale</constant>
+                    <isExactly>sRGB</isExactly>
+                    <isExactly>greyscale</isExactly>
                 </mustMatchAny>
             </rules>
         </validation>
@@ -161,7 +161,7 @@
                 <mustExist/>
                 (TODO: docasne vyple, v datech se realne nachazi "Enumerated")
                 (<mustMatchAny>
-                    <constant>Restricted ICC</constant>
+                    <isExactly>Restricted ICC</isExactly>
                 </mustMatchAny>)
             </rules>
         </validation>-->
@@ -180,9 +180,9 @@
                 <mustExist/>
                 <!--rozsah hodnot, zde realná čísla-->
                 <mustMatchAny>
-                    <floatRange>
+                    <isInFloatRange>
                         <min>11732.0</min>
-                    </floatRange>
+                    </isInFloatRange>
                 </mustMatchAny>
             </rules>
         </validation>
@@ -199,9 +199,9 @@
             <rules>
                 <mustExist/>
                 <mustMatchAny>
-                    <floatRange>
+                    <isInFloatRange>
                         <min>11732.0</min>
-                    </floatRange>
+                    </isInFloatRange>
                 </mustMatchAny>
             </rules>
         </validation>
@@ -216,10 +216,10 @@
                 <mustExist/>
                 <!--jakékoliv přirozené číslo-->
                 <mustMatchAny>
-                    <intRange>
+                    <isInIntRange>
                         <min>1</min>
                         <!--maximum nedefinovano, tedy nekonecno-->
-                    </intRange>
+                    </isInIntRange>
                 </mustMatchAny>
             </rules>
         </validation>
@@ -233,7 +233,7 @@
             <rules>
                 <mustExist/>
                 <mustMatchAny>
-                    <constant>4096</constant>
+                    <isExactly>4096</isExactly>
                 </mustMatchAny>
             </rules>
         </validation>
@@ -247,7 +247,7 @@
             <rules>
                 <mustExist/>
                 <mustMatchAny>
-                    <constant>4096</constant>
+                    <isExactly>4096</isExactly>
                 </mustMatchAny>
             </rules>
         </validation>
@@ -261,8 +261,8 @@
             <rules>
                 <mustExist/>
                 <mustMatchAny>
-                    <constant>Yes</constant>
-                    <constant>yes</constant>
+                    <isExactly>Yes</isExactly>
+                    <isExactly>yes</isExactly>
                 </mustMatchAny>
             </rules>
         </validation>
@@ -314,8 +314,8 @@
             <rules>
                 <mustExist/>
                 <mustMatchAny>
-                    <constant>Yes</constant>
-                    <constant>yes</constant>
+                    <isExactly>Yes</isExactly>
+                    <isExactly>yes</isExactly>
                 </mustMatchAny>
             </rules>
         </validation>
@@ -329,9 +329,9 @@
             <rules>
                 <mustExist/>
                 <mustMatchAny>
-                    <constant>Yes</constant>
-                    <constant>yes</constant>
-                    <constant>YES</constant>
+                    <isExactly>Yes</isExactly>
+                    <isExactly>yes</isExactly>
+                    <isExactly>YES</isExactly>
                 </mustMatchAny>
             </rules>
         </validation>
@@ -345,7 +345,7 @@
             <rules>
                 <mustExist/>
                 <mustMatchAny>
-                    <constant>RPCL</constant>
+                    <isExactly>RPCL</isExactly>
                 </mustMatchAny>
             </rules>
         </validation>
@@ -359,7 +359,7 @@
             <rules>
                 <mustExist/>
                 <mustMatchAny>
-                    <constant>1</constant>
+                    <isExactly>1</isExactly>
                 </mustMatchAny>
             </rules>
         </validation>
@@ -373,8 +373,8 @@
             <rules>
                 <mustExist/>
                 <mustMatchAny>
-                    <constant>5</constant>
-                    <constant>6</constant>
+                    <isExactly>5</isExactly>
+                    <isExactly>6</isExactly>
                 </mustMatchAny>
             </rules>
         </validation>
@@ -388,7 +388,7 @@
             <rules>
                 <mustExist/>
                 <mustMatchAny>
-                    <constant>64</constant>
+                    <isExactly>64</isExactly>
                 </mustMatchAny>
             </rules>
         </validation>
@@ -402,7 +402,7 @@
             <rules>
                 <mustExist/>
                 <mustMatchAny>
-                    <constant>64</constant>
+                    <isExactly>64</isExactly>
                 </mustMatchAny>
             </rules>
         </validation>
@@ -416,8 +416,8 @@
             <rules>
                 <mustExist/>
                 <mustMatchAny>
-                    <constant>Yes</constant>
-                    <constant>yes</constant>
+                    <isExactly>Yes</isExactly>
+                    <isExactly>yes</isExactly>
                 </mustMatchAny>
             </rules>
         </validation>
@@ -431,7 +431,7 @@
             <rules>
                 <mustExist/>
                 <mustMatchAny>
-                    <constant>5-3 reversible</constant>
+                    <isExactly>5-3 reversible</isExactly>
                 </mustMatchAny>
             </rules>
         </validation>
