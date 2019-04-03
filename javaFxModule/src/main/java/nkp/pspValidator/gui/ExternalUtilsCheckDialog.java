@@ -25,7 +25,7 @@ public class ExternalUtilsCheckDialog extends AbstractDialog {
 
     @Override
     public int getWidth() {
-        return 700;
+        return 790;
     }
 
     @Override

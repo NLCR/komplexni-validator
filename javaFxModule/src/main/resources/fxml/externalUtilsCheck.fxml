@@ -7,7 +7,7 @@
       stylesheets="/css/externalUtilsCheck.css"
       fx:controller="nkp.pspValidator.gui.ExternalUtilsCheckDialogController"
       fx:id="container"
-      minWidth="700"
+      minWidth="790"
       minHeight="650"
       alignment="CENTER"
 >
@@ -25,8 +25,7 @@
             <ProgressIndicator fx:id="jhoveProgress"
                                GridPane.columnIndex="1"
                                GridPane.rowIndex="0"
-                               visible="false"
-            />
+                               visible="false"/>
 
             <ImageView fx:id="jhoveOkImg"
                        styleClass="result-image"
@@ -34,8 +33,7 @@
                        GridPane.rowIndex="0"
                        preserveRatio="true"
                        visible="false"
-                       style="-fx-background-color: BLACK"
-            >
+                       style="-fx-background-color: BLACK">
                 <image>
                     <Image url="@/img/Ok-30.png"/>
                 </image>
@@ -56,8 +54,7 @@
                     text="Zkusit znovu"
                     onAction="#checkJhove"
                     GridPane.columnIndex="2"
-                    GridPane.rowIndex="0"
-            >
+                    GridPane.rowIndex="0">
                 <graphic>
                     <ImageView>
                         <image>
@@ -67,27 +64,11 @@
                 </graphic>
             </Button>
 
-            <Button fx:id="jhoveBtnSelectPath"
-                    text="Nastavit adresář"
-                    onAction="#selectJhovePath"
-                    GridPane.columnIndex="3"
-                    GridPane.rowIndex="0"
-            >
-                <graphic>
-                    <ImageView>
-                        <image>
-                            <Image url="@/img/Add Folder-18.png"/>
-                        </image>
-                    </ImageView>
-                </graphic>
-            </Button>
-
             <Button fx:id="jhoveBtnInstall"
                     text="Instalovat"
                     onAction="#installJhove"
-                    GridPane.columnIndex="4"
-                    GridPane.rowIndex="0"
-            >
+                    GridPane.columnIndex="3"
+                    GridPane.rowIndex="0">
                 <graphic>
                     <ImageView>
                         <image>
@@ -97,14 +78,41 @@
                 </graphic>
             </Button>
 
+            <Button fx:id="jhoveBtnSelectPath"
+                    text="Nastavit adresář"
+                    onAction="#selectJhovePath"
+                    GridPane.columnIndex="4"
+                    GridPane.rowIndex="0">
+                <graphic>
+                    <ImageView>
+                        <image>
+                            <Image url="@/img/Add_Folder-18.png"/>
+                        </image>
+                    </ImageView>
+                </graphic>
+            </Button>
+
+            <Button fx:id="jhoveBtnRemovePath"
+                    text="Odebrat adresář"
+                    onAction="#removeJhovePath"
+                    GridPane.columnIndex="5"
+                    GridPane.rowIndex="0">
+                <graphic>
+                    <ImageView>
+                        <image>
+                            <Image url="@/img/Remove_Folder-18.png"/>
+                        </image>
+                    </ImageView>
+                </graphic>
+            </Button>
 
             <Label fx:id="jhoveStatusText"
                    styleClass="result-text"
                    GridPane.columnIndex="0"
                    GridPane.columnSpan="6"
                    GridPane.rowIndex="1"
-                   visible="false"
-            />
+                   visible="false"/>
+
 
             <!--JPYLYZER-->
             <Label text="Jpylyzer"
@@ -115,8 +123,7 @@
             <ProgressIndicator fx:id="jpylyzerProgress"
                                GridPane.columnIndex="1"
                                GridPane.rowIndex="3"
-                               visible="false"
-            />
+                               visible="false"/>
 
             <ImageView fx:id="jpylyzerOkImg"
                        styleClass="result-image"
@@ -124,8 +131,7 @@
                        GridPane.rowIndex="3"
                        preserveRatio="true"
                        visible="false"
-                       style="-fx-background-color: BLACK"
-            >
+                       style="-fx-background-color: BLACK">
                 <image>
                     <Image url="@/img/Ok-30.png"/>
                 </image>
@@ -146,8 +152,7 @@
                     text="Zkusit znovu"
                     onAction="#checkJpylyzer"
                     GridPane.columnIndex="2"
-                    GridPane.rowIndex="3"
-            >
+                    GridPane.rowIndex="3">
                 <graphic>
                     <ImageView>
                         <image>
@@ -157,27 +162,11 @@
                 </graphic>
             </Button>
 
-            <Button fx:id="jpylyzerBtnSelectPath"
-                    text="Nastavit adresář"
-                    onAction="#selectJpylyzerPath"
-                    GridPane.columnIndex="3"
-                    GridPane.rowIndex="3"
-            >
-                <graphic>
-                    <ImageView>
-                        <image>
-                            <Image url="@/img/Add Folder-18.png"/>
-                        </image>
-                    </ImageView>
-                </graphic>
-            </Button>
-
             <Button fx:id="jpylyzerBtnInstall"
                     text="Instalovat"
                     onAction="#installJpylyzer"
-                    GridPane.columnIndex="4"
-                    GridPane.rowIndex="3"
-            >
+                    GridPane.columnIndex="3"
+                    GridPane.rowIndex="3">
                 <graphic>
 
                     <ImageView>
@@ -188,14 +177,40 @@
                 </graphic>
             </Button>
 
+            <Button fx:id="jpylyzerBtnSelectPath"
+                    text="Nastavit adresář"
+                    onAction="#selectJpylyzerPath"
+                    GridPane.columnIndex="4"
+                    GridPane.rowIndex="3">
+                <graphic>
+                    <ImageView>
+                        <image>
+                            <Image url="@/img/Add_Folder-18.png"/>
+                        </image>
+                    </ImageView>
+                </graphic>
+            </Button>
+
+            <Button fx:id="jpylyzerBtnRemovePath"
+                    text="Odebrat adresář"
+                    onAction="#removeJpylyzerPath"
+                    GridPane.columnIndex="5"
+                    GridPane.rowIndex="3">
+                <graphic>
+                    <ImageView>
+                        <image>
+                            <Image url="@/img/Remove_Folder-18.png"/>
+                        </image>
+                    </ImageView>
+                </graphic>
+            </Button>
 
             <Label fx:id="jpylyzerStatusText"
                    styleClass="result-text"
                    GridPane.columnIndex="0"
                    GridPane.columnSpan="6"
                    GridPane.rowIndex="4"
-                   visible="false"
-            />
+                   visible="false"/>
 
 
             <!--IMAGE MAGICK-->
@@ -207,8 +222,7 @@
             <ProgressIndicator fx:id="imageMagickProgress"
                                GridPane.columnIndex="1"
                                GridPane.rowIndex="6"
-                               visible="false"
-            />
+                               visible="false"/>
 
             <ImageView fx:id="imageMagickOkImg"
                        styleClass="result-image"
@@ -216,8 +230,7 @@
                        GridPane.rowIndex="6"
                        preserveRatio="true"
                        visible="false"
-                       style="-fx-background-color: BLACK"
-            >
+                       style="-fx-background-color: BLACK">
                 <image>
                     <Image url="@/img/Ok-30.png"/>
                 </image>
@@ -238,8 +251,7 @@
                     text="Zkusit znovu"
                     onAction="#checkImageMagick"
                     GridPane.columnIndex="2"
-                    GridPane.rowIndex="6"
-            >
+                    GridPane.rowIndex="6">
                 <graphic>
                     <ImageView>
                         <image>
@@ -249,27 +261,11 @@
                 </graphic>
             </Button>
 
-            <Button fx:id="imageMagickBtnSelectPath"
-                    text="Nastavit adresář"
-                    onAction="#selectImageMagickPath"
-                    GridPane.columnIndex="3"
-                    GridPane.rowIndex="6"
-            >
-                <graphic>
-                    <ImageView>
-                        <image>
-                            <Image url="@/img/Add Folder-18.png"/>
-                        </image>
-                    </ImageView>
-                </graphic>
-            </Button>
-
             <Button fx:id="imageMagickBtnInstall"
                     text="Instalovat"
                     onAction="#installImageMagick"
-                    GridPane.columnIndex="4"
-                    GridPane.rowIndex="6"
-            >
+                    GridPane.columnIndex="3"
+                    GridPane.rowIndex="6">
                 <graphic>
 
                     <ImageView>
@@ -280,14 +276,40 @@
                 </graphic>
             </Button>
 
+            <Button fx:id="imageMagickBtnSelectPath"
+                    text="Nastavit adresář"
+                    onAction="#selectImageMagickPath"
+                    GridPane.columnIndex="4"
+                    GridPane.rowIndex="6">
+                <graphic>
+                    <ImageView>
+                        <image>
+                            <Image url="@/img/Add_Folder-18.png"/>
+                        </image>
+                    </ImageView>
+                </graphic>
+            </Button>
+
+            <Button fx:id="imageMagickBtnRemovePath"
+                    text="Odebrat adresář"
+                    onAction="#removeImageMagickPath"
+                    GridPane.columnIndex="5"
+                    GridPane.rowIndex="6">
+                <graphic>
+                    <ImageView>
+                        <image>
+                            <Image url="@/img/Remove_Folder-18.png"/>
+                        </image>
+                    </ImageView>
+                </graphic>
+            </Button>
 
             <Label fx:id="imageMagickStatusText"
                    styleClass="result-text"
                    GridPane.columnIndex="0"
                    GridPane.columnSpan="6"
                    GridPane.rowIndex="7"
-                   visible="false"
-            />
+                   visible="false"/>
 
 
             <!--KAKADU-->
@@ -299,8 +321,7 @@
             <ProgressIndicator fx:id="kakaduProgress"
                                GridPane.columnIndex="1"
                                GridPane.rowIndex="9"
-                               visible="false"
-            />
+                               visible="false"/>
 
             <ImageView fx:id="kakaduOkImg"
                        styleClass="result-image"
@@ -308,8 +329,7 @@
                        GridPane.rowIndex="9"
                        preserveRatio="true"
                        visible="false"
-                       style="-fx-background-color: BLACK"
-            >
+                       style="-fx-background-color: BLACK">
                 <image>
                     <Image url="@/img/Ok-30.png"/>
                 </image>
@@ -330,8 +350,7 @@
                     text="Zkusit znovu"
                     onAction="#checkKakadu"
                     GridPane.columnIndex="2"
-                    GridPane.rowIndex="9"
-            >
+                    GridPane.rowIndex="9">
                 <graphic>
                     <ImageView>
                         <image>
@@ -341,46 +360,55 @@
                 </graphic>
             </Button>
 
-            <Button fx:id="kakaduBtnSelectPath"
-                    text="Nastavit adresář"
-                    onAction="#selectKakaduPath"
-                    GridPane.columnIndex="3"
-                    GridPane.rowIndex="9"
-            >
-                <graphic>
-                    <ImageView>
-                        <image>
-                            <Image url="@/img/Add Folder-18.png"/>
-                        </image>
-                    </ImageView>
-                </graphic>
-            </Button>
-
             <Button fx:id="kakaduBtnInstall"
                     text="Instalovat"
                     onAction="#installKakadu"
-                    GridPane.columnIndex="4"
-                    GridPane.rowIndex="9"
-            >
+                    GridPane.columnIndex="3"
+                    GridPane.rowIndex="9">
                 <graphic>
-
                     <ImageView>
                         <image>
                             <Image url="@/img/About-18.png"/>
                         </image>
                     </ImageView>
                 </graphic>
-
             </Button>
 
+            <Button fx:id="kakaduBtnSelectPath"
+                    text="Nastavit adresář"
+                    onAction="#selectKakaduPath"
+                    GridPane.columnIndex="4"
+                    GridPane.rowIndex="9">
+                <graphic>
+                    <ImageView>
+                        <image>
+                            <Image url="@/img/Add_Folder-18.png"/>
+                        </image>
+                    </ImageView>
+                </graphic>
+            </Button>
+
+            <Button fx:id="kakaduBtnRemovePath"
+                    text="Odebrat adresář"
+                    onAction="#removeKakaduPath"
+                    GridPane.columnIndex="5"
+                    GridPane.rowIndex="9">
+                <graphic>
+                    <ImageView>
+                        <image>
+                            <Image url="@/img/Remove_Folder-18.png"/>
+                        </image>
+                    </ImageView>
+                </graphic>
+            </Button>
 
             <Label fx:id="kakaduStatusText"
                    styleClass="result-text"
                    GridPane.columnIndex="0"
                    GridPane.columnSpan="6"
                    GridPane.rowIndex="10"
-                   visible="false"
-            />
+                   visible="false"/>
+
 
             <!--MP3val-->
             <Label text="MP3val"
@@ -391,8 +419,7 @@
             <ProgressIndicator fx:id="mp3valProgress"
                                GridPane.columnIndex="1"
                                GridPane.rowIndex="11"
-                               visible="false"
-            />
+                               visible="false"/>
 
             <ImageView fx:id="mp3valOkImg"
                        styleClass="result-image"
@@ -400,8 +427,7 @@
                        GridPane.rowIndex="11"
                        preserveRatio="true"
                        visible="false"
-                       style="-fx-background-color: BLACK"
-            >
+                       style="-fx-background-color: BLACK">
                 <image>
                     <Image url="@/img/Ok-30.png"/>
                 </image>
@@ -422,8 +448,7 @@
                     text="Zkusit znovu"
                     onAction="#checkMp3val"
                     GridPane.columnIndex="2"
-                    GridPane.rowIndex="11"
-            >
+                    GridPane.rowIndex="11">
                 <graphic>
                     <ImageView>
                         <image>
@@ -433,29 +458,12 @@
                 </graphic>
             </Button>
 
-            <Button fx:id="mp3valBtnSelectPath"
-                    text="Nastavit adresář"
-                    onAction="#selectMp3valPath"
-                    GridPane.columnIndex="3"
-                    GridPane.rowIndex="11"
-            >
-                <graphic>
-                    <ImageView>
-                        <image>
-                            <Image url="@/img/Add Folder-18.png"/>
-                        </image>
-                    </ImageView>
-                </graphic>
-            </Button>
-
             <Button fx:id="mp3valBtnInstall"
                     text="Instalovat"
                     onAction="#installMp3val"
-                    GridPane.columnIndex="4"
-                    GridPane.rowIndex="11"
-            >
+                    GridPane.columnIndex="3"
+                    GridPane.rowIndex="11">
                 <graphic>
-
                     <ImageView>
                         <image>
                             <Image url="@/img/About-18.png"/>
@@ -465,14 +473,40 @@
 
             </Button>
 
+            <Button fx:id="mp3valBtnSelectPath"
+                    text="Nastavit adresář"
+                    onAction="#selectMp3valPath"
+                    GridPane.columnIndex="4"
+                    GridPane.rowIndex="11">
+                <graphic>
+                    <ImageView>
+                        <image>
+                            <Image url="@/img/Add_Folder-18.png"/>
+                        </image>
+                    </ImageView>
+                </graphic>
+            </Button>
+
+            <Button fx:id="mp3valBtnRemovePath"
+                    text="Odebrat adresář"
+                    onAction="#removeMp3valPath"
+                    GridPane.columnIndex="5"
+                    GridPane.rowIndex="11">
+                <graphic>
+                    <ImageView>
+                        <image>
+                            <Image url="@/img/Remove_Folder-18.png"/>
+                        </image>
+                    </ImageView>
+                </graphic>
+            </Button>
 
             <Label fx:id="mp3valStatusText"
                    styleClass="result-text"
                    GridPane.columnIndex="0"
                    GridPane.columnSpan="6"
                    GridPane.rowIndex="12"
-                   visible="false"
-            />
+                   visible="false"/>
 
             <!--shntool-->
             <Label text="shntool"
@@ -483,8 +517,7 @@
             <ProgressIndicator fx:id="shntoolProgress"
                                GridPane.columnIndex="1"
                                GridPane.rowIndex="13"
-                               visible="false"
-            />
+                               visible="false"/>
 
             <ImageView fx:id="shntoolOkImg"
                        styleClass="result-image"
@@ -492,8 +525,7 @@
                        GridPane.rowIndex="13"
                        preserveRatio="true"
                        visible="false"
-                       style="-fx-background-color: BLACK"
-            >
+                       style="-fx-background-color: BLACK">
                 <image>
                     <Image url="@/img/Ok-30.png"/>
                 </image>
@@ -514,8 +546,7 @@
                     text="Zkusit znovu"
                     onAction="#checkShntool"
                     GridPane.columnIndex="2"
-                    GridPane.rowIndex="13"
-            >
+                    GridPane.rowIndex="13">
                 <graphic>
                     <ImageView>
                         <image>
@@ -525,46 +556,54 @@
                 </graphic>
             </Button>
 
-            <Button fx:id="shntoolBtnSelectPath"
-                    text="Nastavit adresář"
-                    onAction="#selectShntoolPath"
-                    GridPane.columnIndex="3"
-                    GridPane.rowIndex="13"
-            >
-                <graphic>
-                    <ImageView>
-                        <image>
-                            <Image url="@/img/Add Folder-18.png"/>
-                        </image>
-                    </ImageView>
-                </graphic>
-            </Button>
-
             <Button fx:id="shntoolBtnInstall"
                     text="Instalovat"
                     onAction="#installShntool"
-                    GridPane.columnIndex="4"
-                    GridPane.rowIndex="13"
-            >
+                    GridPane.columnIndex="3"
+                    GridPane.rowIndex="13">
                 <graphic>
-
                     <ImageView>
                         <image>
                             <Image url="@/img/About-18.png"/>
                         </image>
                     </ImageView>
                 </graphic>
-
             </Button>
 
+            <Button fx:id="shntoolBtnSelectPath"
+                    text="Nastavit adresář"
+                    onAction="#selectShntoolPath"
+                    GridPane.columnIndex="4"
+                    GridPane.rowIndex="13">
+                <graphic>
+                    <ImageView>
+                        <image>
+                            <Image url="@/img/Add_Folder-18.png"/>
+                        </image>
+                    </ImageView>
+                </graphic>
+            </Button>
+
+            <Button fx:id="shntoolBtnRemovePath"
+                    text="Odebrat adresář"
+                    onAction="#removeShntoolPath"
+                    GridPane.columnIndex="5"
+                    GridPane.rowIndex="13">
+                <graphic>
+                    <ImageView>
+                        <image>
+                            <Image url="@/img/Remove_Folder-18.png"/>
+                        </image>
+                    </ImageView>
+                </graphic>
+            </Button>
 
             <Label fx:id="shntoolStatusText"
                    styleClass="result-text"
                    GridPane.columnIndex="0"
                    GridPane.columnSpan="6"
                    GridPane.rowIndex="14"
-                   visible="false"
-            />
+                   visible="false"/>
 
 
             <!--Checkmate-->
@@ -576,8 +615,7 @@
             <ProgressIndicator fx:id="checkmateProgress"
                                GridPane.columnIndex="1"
                                GridPane.rowIndex="15"
-                               visible="false"
-            />
+                               visible="false"/>
 
             <ImageView fx:id="checkmateOkImg"
                        styleClass="result-image"
@@ -585,8 +623,7 @@
                        GridPane.rowIndex="15"
                        preserveRatio="true"
                        visible="false"
-                       style="-fx-background-color: BLACK"
-            >
+                       style="-fx-background-color: BLACK">
                 <image>
                     <Image url="@/img/Ok-30.png"/>
                 </image>
@@ -607,8 +644,7 @@
                     text="Zkusit znovu"
                     onAction="#checkCheckmate"
                     GridPane.columnIndex="2"
-                    GridPane.rowIndex="15"
-            >
+                    GridPane.rowIndex="15">
                 <graphic>
                     <ImageView>
                         <image>
@@ -618,47 +654,54 @@
                 </graphic>
             </Button>
 
-            <Button fx:id="checkmateBtnSelectPath"
-                    text="Nastavit adresář"
-                    onAction="#selectCheckmatePath"
-                    GridPane.columnIndex="3"
-                    GridPane.rowIndex="15"
-            >
-                <graphic>
-                    <ImageView>
-                        <image>
-                            <Image url="@/img/Add Folder-18.png"/>
-                        </image>
-                    </ImageView>
-                </graphic>
-            </Button>
-
             <Button fx:id="checkmateBtnInstall"
                     text="Instalovat"
                     onAction="#installCheckmate"
-                    GridPane.columnIndex="4"
-                    GridPane.rowIndex="15"
-            >
+                    GridPane.columnIndex="3"
+                    GridPane.rowIndex="15">
                 <graphic>
-
                     <ImageView>
                         <image>
                             <Image url="@/img/About-18.png"/>
                         </image>
                     </ImageView>
                 </graphic>
-
             </Button>
 
+            <Button fx:id="checkmateBtnSelectPath"
+                    text="Nastavit adresář"
+                    onAction="#selectCheckmatePath"
+                    GridPane.columnIndex="4"
+                    GridPane.rowIndex="15">
+                <graphic>
+                    <ImageView>
+                        <image>
+                            <Image url="@/img/Add_Folder-18.png"/>
+                        </image>
+                    </ImageView>
+                </graphic>
+            </Button>
+
+            <Button fx:id="checkmateBtnRemovePath"
+                    text="Odebrat adresář"
+                    onAction="#removeCheckmatePath"
+                    GridPane.columnIndex="5"
+                    GridPane.rowIndex="15">
+                <graphic>
+                    <ImageView>
+                        <image>
+                            <Image url="@/img/Remove_Folder-18.png"/>
+                        </image>
+                    </ImageView>
+                </graphic>
+            </Button>
 
             <Label fx:id="checkmateStatusText"
                    styleClass="result-text"
                    GridPane.columnIndex="0"
                    GridPane.columnSpan="6"
                    GridPane.rowIndex="16"
-                   visible="false"
-            />
-
+                   visible="false"/>
 
         </GridPane>
 

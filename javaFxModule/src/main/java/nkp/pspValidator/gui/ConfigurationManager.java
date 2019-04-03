@@ -258,7 +258,11 @@ public class ConfigurationManager {
 
     public void setFile(String propertyName, File file) {
         try {
-            properties.setProperty(propertyName, file.getCanonicalPath());
+            if (file == null) {
+                properties.remove(propertyName);
+            } else {
+                properties.setProperty(propertyName, file.getCanonicalPath());
+            }
             saveProperties();
         } catch (IOException e) {
             throw new RuntimeException(e);
