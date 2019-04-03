@@ -59,6 +59,9 @@ public class DmfDetector {
         Pattern pattern = Pattern.compile(".*mets.*\\.xml", java.util.regex.Pattern.CASE_INSENSITIVE | java.util.regex.Pattern.UNICODE_CASE);
         File[] metsCandidates = pspRootDir.listFiles((dir, name) -> pattern.matcher(name).matches());
         if (metsCandidates.length >= 2) {
+            for(File metsCandidate: metsCandidates){
+                System.out.println(metsCandidate.getAbsolutePath());
+            }
             throw new PspDataException(pspRootDir,
                     String.format("nalezeno více možných souborů PRIMARY-METS, není jasné, který použít pro zjištění typu dokumentu (monografie/periodikum/zvuk)"));
         } else if (metsCandidates.length == 0) {
