@@ -73,7 +73,7 @@ public class Main {
         options.addOption(OptionBuilder
                 .withDescription(replaceUmlaut(
                         "Adresář pro ukládání xml protokolů s informacemi o validaci každého PSP balíku. Název souboru protokolu je odvozen od názvu PSP balíku a datumu+času začátku validace. " +
-                                "Pokud není parametr vyplněn, xml protokol se neukládá (kromě akce VALIDATE_PSP a vyplněného parametru xml-protocol-file)."))
+                                "Pokud není parametr vyplněn, xml protokol se neukládá (kromě akce VALIDATE_PSP a vyplněného parametru --xml-protocol-file)."))
                 .hasArg()
                 .withArgName("ADRESAR")
                 .withLongOpt(Params.XML_PROTOCOL_DIR)
@@ -81,8 +81,8 @@ public class Main {
         options.addOption(OptionBuilder
                 .withDescription(replaceUmlaut(
                         "Soubor pro uložení xml protokolu s informacemi o validaci PSP balíku. Použije se jen pro akci VALIDATE_PSP. " +
-                                "Pokud je zároveň vyplněn parametr xml-protocol-dir, použije se hodnota z xml-protocol-file. " +
-                                "Pokud není parametr (a zároveň není vyplněn ani xml-protocol-dir), xml protokol se neukládá. " +
+                                "Pokud je zároveň vyplněn parametr --xml-protocol-dir, použije se hodnota z --xml-protocol-file. " +
+                                "Pokud není parametr (a zároveň není vyplněn ani --xml-protocol-dir), xml protokol se neukládá. " +
                                 "Pokud soubor existuje, je nejprve smazán."))
                 .hasArg()
                 .withArgName("SOUBOR")
@@ -111,36 +111,53 @@ public class Main {
                 .withDescription(replaceUmlaut(
                         "Preferovaná verze DMF pro validaci monografií. " +
                                 "Použije se k validaci, pokud je balík typu Monografie, data balíku neobsahují informaci o vhodné verzi DMF Monografie " +
-                                "a parametr force-dmf-mon-version není vyplněn."))
+                                "a parametr --forced-dmf-mon-version není vyplněn."))
                 .hasArg()
                 .withArgName("VERZE")
-                .withLongOpt(Params.PREFER_DMF_MON_VERSION)
+                .withLongOpt(Params.PREFERRED_DMF_MON_VERSION)
                 .create());
 
         options.addOption(OptionBuilder
                 .withDescription(replaceUmlaut(
                         "Preferovaná verze DMF pro validaci periodik. " +
                                 "Použije se k validaci, pokud je balík typu Periodikum, data balíku neobsahují informaci o vhodné verzi DMF Periodikum " +
-                                "a parametr force-dmf-per-version není vyplněn."))
+                                "a parametr --forced-dmf-per-version není vyplněn."))
                 .hasArg()
                 .withArgName("VERZE")
-                .withLongOpt(Params.PREFER_DMF_PER_VERSION)
+                .withLongOpt(Params.PREFERRED_DMF_PER_VERSION)
+                .create());
+        options.addOption(OptionBuilder
+                .withDescription(replaceUmlaut(
+                        "Preferovaná verze DMF pro validaci zvukových dokumentů. " +
+                                "Použije se k validaci, pokud je balík typu Zvukový dokument, data balíku neobsahují informaci o vhodné verzi DMF Zvukové dokumenty " +
+                                "a parametr --forced-dmf-sr-version není vyplněn."))
+                .hasArg()
+                .withArgName("VERZE")
+                .withLongOpt(Params.PREFERRED_DMF_SR_VERSION)
                 .create());
         options.addOption(OptionBuilder
                 .withDescription(replaceUmlaut(
                         "Vynucená verze DMF pro validaci monografií. " +
-                                "Použije se k validaci všech balíků typu Monografie bez ohledu na data balíků a hodnotu parametru prefer-dmf-mon-version."))
+                                "Použije se k validaci všech balíků typu Monografie bez ohledu na data balíků a hodnotu parametru --preferred-dmf-mon-version."))
                 .hasArg()
                 .withArgName("VERZE")
-                .withLongOpt(Params.FORCE_DMF_MON_VERSION)
+                .withLongOpt(Params.FORCED_DMF_MON_VERSION)
                 .create());
         options.addOption(OptionBuilder
                 .withDescription(replaceUmlaut(
                         "Vynucená verze DMF pro validaci periodik. " +
-                                "Použije se k validaci všech balíků typu Periodikum bez ohledu na data balíků a hodnotu parametru prefer-dmf-per-version."))
+                                "Použije se k validaci všech balíků typu Periodikum bez ohledu na data balíků a hodnotu parametru --preferred-dmf-per-version."))
                 .hasArg()
                 .withArgName("VERZE")
-                .withLongOpt(Params.FORCE_DMF_PER_VERSION)
+                .withLongOpt(Params.FORCED_DMF_PER_VERSION)
+                .create());
+        options.addOption(OptionBuilder
+                .withDescription(replaceUmlaut(
+                        "Vynucená verze DMF pro validaci zvukových dokumentů. " +
+                                "Použije se k validaci všech balíků typu Zvukový dokument bez ohledu na data balíků a hodnotu parametru --preferred-dmf-sr-version."))
+                .hasArg()
+                .withArgName("VERZE")
+                .withLongOpt(Params.FORCED_DMF_SR_VERSION)
                 .create());
 
         options.addOption(OptionBuilder
@@ -172,7 +189,7 @@ public class Main {
                 .create());
 
         options.addOption(OptionBuilder
-                .withDescription(replaceUmlaut("Adresář typ s binárními soubory nástroje Jpylyzer." +
+                .withDescription(replaceUmlaut("Adresář s binárními soubory nástroje Jpylyzer." +
                         " Např. C:\\Program Files\\jpylyzer_1.17.0_win64 pro Windows, /usr/bin pro Linux."))
                 .hasArg()
                 .withArgName("ADRESAR")
@@ -181,10 +198,31 @@ public class Main {
 
         options.addOption(OptionBuilder
                 .withDescription(replaceUmlaut("Adresář s binárními soubory nástroje Kakadu." +
-                        " Např. C:\\Program Files\\Kakadu pro Windows, /usr/bin pro Linux, TODO pro MacOS."))
+                        " Např. C:\\Program Files\\Kakadu pro Windows, /usr/bin pro Linux."))
                 .hasArg()
                 .withArgName("ADRESAR")
                 .withLongOpt(Params.KAKADU_PATH)
+                .create());
+
+        options.addOption(OptionBuilder
+                .withDescription(replaceUmlaut("Adresář s binárními soubory nástroje MP3val."))
+                .hasArg()
+                .withArgName("ADRESAR")
+                .withLongOpt(Params.MP3VAL_PATH)
+                .create());
+
+        options.addOption(OptionBuilder
+                .withDescription(replaceUmlaut("Adresář s binárními soubory nástroje shntool."))
+                .hasArg()
+                .withArgName("ADRESAR")
+                .withLongOpt(Params.SHNTOOL_PATH)
+                .create());
+
+        options.addOption(OptionBuilder
+                .withDescription(replaceUmlaut("Adresář s binárními soubory nástroje Checkmate."))
+                .hasArg()
+                .withArgName("ADRESAR")
+                .withLongOpt(Params.CHECKMATE_PATH)
                 .create());
 
         options.addOption(OptionBuilder
@@ -205,6 +243,21 @@ public class Main {
         options.addOption(OptionBuilder
                 .withDescription(replaceUmlaut("Zakáže použití Kakadu."))
                 .withLongOpt(Params.DISABLE_KAKADU)
+                .create());
+
+        options.addOption(OptionBuilder
+                .withDescription(replaceUmlaut("Zakáže použití MP3val."))
+                .withLongOpt(Params.DISABLE_MP3VAL)
+                .create());
+
+        options.addOption(OptionBuilder
+                .withDescription(replaceUmlaut("Zakáže použití shntool."))
+                .withLongOpt(Params.DISABLE_SHNTOOL)
+                .create());
+
+        options.addOption(OptionBuilder
+                .withDescription(replaceUmlaut("Zakáže použití Checkmate."))
+                .withLongOpt(Params.DISABLE_CHECKMATE)
                 .create());
 
         options.addOption(OptionBuilder
@@ -313,22 +366,29 @@ public class Main {
 
                 //preferred dmf versions
                 String preferDmfMonVersion = null;
-                if (line.hasOption(Params.PREFER_DMF_MON_VERSION)) {
-                    preferDmfMonVersion = line.getOptionValue(Params.PREFER_DMF_MON_VERSION);
+                if (line.hasOption(Params.PREFERRED_DMF_MON_VERSION)) {
+                    preferDmfMonVersion = line.getOptionValue(Params.PREFERRED_DMF_MON_VERSION);
                 }
                 String preferDmfPerVersion = null;
-                if (line.hasOption(Params.PREFER_DMF_PER_VERSION)) {
-                    preferDmfPerVersion = line.getOptionValue(Params.PREFER_DMF_PER_VERSION);
+                if (line.hasOption(Params.PREFERRED_DMF_PER_VERSION)) {
+                    preferDmfPerVersion = line.getOptionValue(Params.PREFERRED_DMF_PER_VERSION);
                 }
-
-                //forced dmf versions
+                String preferDmfSrVersion = null;
+                if (line.hasOption(Params.PREFERRED_DMF_SR_VERSION)) {
+                    preferDmfSrVersion = line.getOptionValue(Params.PREFERRED_DMF_SR_VERSION);
+                }
+                //force dmf versions
                 String forceDmfMonVersion = null;
-                if (line.hasOption(Params.FORCE_DMF_MON_VERSION)) {
-                    forceDmfMonVersion = line.getOptionValue(Params.FORCE_DMF_MON_VERSION);
+                if (line.hasOption(Params.FORCED_DMF_MON_VERSION)) {
+                    forceDmfMonVersion = line.getOptionValue(Params.FORCED_DMF_MON_VERSION);
                 }
                 String forceDmfPerVersion = null;
-                if (line.hasOption(Params.FORCE_DMF_PER_VERSION)) {
-                    forceDmfPerVersion = line.getOptionValue(Params.FORCE_DMF_PER_VERSION);
+                if (line.hasOption(Params.FORCED_DMF_PER_VERSION)) {
+                    forceDmfPerVersion = line.getOptionValue(Params.FORCED_DMF_PER_VERSION);
+                }
+                String forceDmfSrVersion = null;
+                if (line.hasOption(Params.FORCED_DMF_SR_VERSION)) {
+                    forceDmfSrVersion = line.getOptionValue(Params.FORCED_DMF_SR_VERSION);
                 }
 
                 //verbosity
@@ -348,7 +408,7 @@ public class Main {
                     }
                 }
 
-                //image utils
+                //external utils
                 Map<ExternalUtil, File> utilsPaths = new HashMap<>();
                 Set<ExternalUtil> utilsDisabled = new HashSet<>();
                 if (line.hasOption(Params.DISABLE_IMAGEMAGICK)) {
@@ -379,14 +439,35 @@ public class Main {
                         utilsPaths.put(ExternalUtil.KAKADU, new File(line.getOptionValue(Params.KAKADU_PATH)));
                     }
                 }
+                if (line.hasOption(Params.DISABLE_MP3VAL)) {
+                    utilsDisabled.add(ExternalUtil.MP3VAL);
+                } else {
+                    if (line.hasOption(Params.MP3VAL_PATH)) {
+                        utilsPaths.put(ExternalUtil.MP3VAL, new File(line.getOptionValue(Params.MP3VAL_PATH)));
+                    }
+                }
+                if (line.hasOption(Params.DISABLE_SHNTOOL)) {
+                    utilsDisabled.add(ExternalUtil.SHNTOOL);
+                } else {
+                    if (line.hasOption(Params.SHNTOOL_PATH)) {
+                        utilsPaths.put(ExternalUtil.SHNTOOL, new File(line.getOptionValue(Params.SHNTOOL_PATH)));
+                    }
+                }
+                if (line.hasOption(Params.DISABLE_CHECKMATE)) {
+                    utilsDisabled.add(ExternalUtil.CHECKMATE);
+                } else {
+                    if (line.hasOption(Params.CHECKMATE_PATH)) {
+                        utilsPaths.put(ExternalUtil.CHECKMATE, new File(line.getOptionValue(Params.CHECKMATE_PATH)));
+                    }
+                }
 
                 DmfDetector.Params dmfDetectorParams = new DmfDetector.Params();
                 dmfDetectorParams.forcedDmfMonVersion = forceDmfMonVersion;
                 dmfDetectorParams.forcedDmfPerVersion = forceDmfPerVersion;
-                dmfDetectorParams.forcedDmfSRVersion = null;
+                dmfDetectorParams.forcedDmfSRVersion = forceDmfSrVersion;
                 dmfDetectorParams.preferredDmfMonVersion = preferDmfMonVersion;
                 dmfDetectorParams.preferredDmfPerVersion = preferDmfPerVersion;
-                dmfDetectorParams.preferredDmfSRVersion = null;
+                dmfDetectorParams.preferredDmfSRVersion = preferDmfSrVersion;
 
                 PrintStream out = System.out;
                 PrintStream err = System.err;
@@ -475,8 +556,8 @@ public class Main {
 
     private static void printHelp(Options options) {
         String header = replaceUmlaut("Validuje PSP balík, nebo sadu PSP balíků podle DMF*." +
-                " Typ DMF (Monografie/Periodikum) se vždy získává z dat jednotlivých PSP balíků." +
-                " Verze DMF použité pro validaci je možné ovlivnit parametry --prefer-dmf-mon-version, --prefer-dmf-per-version, --force-dmf-mon-version a --force-dmf-per-version." +
+                " Typ DMF (Monografie/Periodikum/Zvukový dokument) se vždy získává z dat jednotlivých PSP balíků." +
+                " Verze DMF použité pro validaci je možné ovlivnit parametry --preferred-dmf-mon-version, --preferred-dmf-per-version, --preferred-dmf-sr-version, --forced-dmf-mon-version, --forced-dmf-per-version a --forced-dmf-sr-version." +
                 " Dále je potřeba pomocí --config-dir uvést adresář, který obsahuje definice fDMF," +
                 " napr. monograph_1.3.2 nebo periodical_1.7.\n\n");
         String footer = replaceUmlaut("\n*Definice metadatových formátů. Více na http://www.ndk.cz/standardy-digitalizace/metadata.\n" +

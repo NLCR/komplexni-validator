@@ -1,6 +1,5 @@
 package nkp.pspValidator.cli;
 
-import nkp.pspValidator.shared.Dmf;
 import nkp.pspValidator.shared.FdmfRegistry;
 import nkp.pspValidator.shared.Platform;
 import nkp.pspValidator.shared.Validator;
@@ -175,19 +174,19 @@ public class MainTest {
 
         //DMF versions
         if (preferDmfModVersion != null) {
-            params.add(String.format("--%s", Params.PREFER_DMF_MON_VERSION));
+            params.add(String.format("--%s", Params.PREFERRED_DMF_MON_VERSION));
             params.add(preferDmfModVersion);
         }
         if (preferDmfPerVersion != null) {
-            params.add(String.format("--%s", Params.PREFER_DMF_PER_VERSION));
+            params.add(String.format("--%s", Params.PREFERRED_DMF_PER_VERSION));
             params.add(preferDmfPerVersion);
         }
         if (forceDmfModVersion != null) {
-            params.add(String.format("--%s", Params.FORCE_DMF_MON_VERSION));
+            params.add(String.format("--%s", Params.FORCED_DMF_MON_VERSION));
             params.add(forceDmfModVersion);
         }
         if (forceDmfPerVersion != null) {
-            params.add(String.format("--%s", Params.FORCE_DMF_PER_VERSION));
+            params.add(String.format("--%s", Params.FORCED_DMF_PER_VERSION));
             params.add(forceDmfPerVersion);
         }
 
