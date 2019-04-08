@@ -2794,9 +2794,7 @@
     </rules-section>-->
 
 
-    <!--TODO: projit tuto sekci-->
-    <!--<rules-section name="JPEG 2000"
-                   description="Kontrola obrázků MASTER-COPY a USER-COPY v JPEG 2000 za pomocí externích nástrojů">
+    <rules-section name="Obrazová data" description="Kontrola obrázků MASTER-COPY a USER-COPY v JPEG 2000 za pomocí externích nástrojů">
 
         <rule name="MASTER-COPY_FILES_VALID_BY_JPYLYZER">
             <description>Všechny soubory MASTER-COPY (jpeg 2000) musí být validní vůči profilu pro binární soubory pro nástroj Jpylyzer.
@@ -2918,7 +2916,7 @@
             </validation>
         </rule>
 
-    </rules-section>-->
+    </rules-section>
 
 
     <rules-section name="Zvuková data" description="Kontrola zvukových souborů (MP3, WAV) za pomocí externích nástrojů">
