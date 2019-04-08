@@ -75,7 +75,7 @@ public class MainTest {
         //devParams.getSectionsToRun().add("Struktura souborů");
         //devParams.getSectionsToRun().add("Bibliografická metadata");
         //devParams.getSectionsToRun().add("Identifikátory");
-        //devParams.getSectionsToRun().add("JPEG 2000");
+        //devParams.getSectionsToRun().add("Obrazová data");
         //devParams.getSectionsToRun().add("Bibliografická metadata");
         //devParams.getSectionsToRun().add("ALTO");
         //devParams.getSectionsToRun().add("Technická metadata");

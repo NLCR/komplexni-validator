@@ -2830,7 +2830,7 @@
 
     </rules-section>
 
-    <rules-section name="JPEG 2000"
+    <rules-section name="Obrazová data"
                    description="Kontrola obrázků MASTER-COPY a USER-COPY v JPEG 2000 za pomocí externích nástrojů">
 
         <rule name="MASTER-COPY_FILES_VALID_BY_JPYLYZER">
