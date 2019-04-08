@@ -14,7 +14,7 @@ import java.util.Set;
  */
 public class ConfigurationManager {
 
-    public static boolean DEV_MODE = true;
+    public static boolean DEV_MODE = false;
     public static boolean DEV_MODE_ONLY_SELECTED_SECTIONS = false;
 
     private static final String DEFAULT_LOG_DIR = "logs";
@@ -111,6 +111,7 @@ public class ConfigurationManager {
             logDir = new File(DEFAULT_LOG_DIR);
             setFile(PROP_LOG_DIR, logDir);
         }
+        logDir.mkdirs();
         //dictionaries
         initDictionary("siglaInstitutionCodes",
                 "kódy institucí (Sigla)",
