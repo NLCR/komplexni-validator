@@ -5,6 +5,7 @@ import nkp.pspValidator.shared.engine.Level;
 import nkp.pspValidator.shared.engine.ValueEvaluation;
 import nkp.pspValidator.shared.engine.ValueType;
 import nkp.pspValidator.shared.engine.exceptions.ContractException;
+import nkp.pspValidator.shared.engine.params.ValueParam;
 import nkp.pspValidator.shared.externalUtils.ExternalUtil;
 import nkp.pspValidator.shared.externalUtils.ResourceType;
 import nkp.pspValidator.shared.externalUtils.validation.BinaryFileProfile;
@@ -20,19 +21,21 @@ import java.util.List;
  */
 public class VfCheckBinaryFilesValidByExternalUtil extends ValidationFunction {
 
+    public static final String PARAM_NO_FILES_PROBLEM_LEVEL = "no_files_problem_level";
     public static final String PARAM_FILES = "files";
-    public static final String PARAM_LEVEL = "level";
     public static final String PARAM_TYPE = "type";
     public static final String PARAM_UTIL = "util";
     public static final String PARAM_EXECUTION = "execution";
+    public static final String PARAM_VALIDATION_PROBLEM_LEVEL = "validation_problem_level";
 
     public VfCheckBinaryFilesValidByExternalUtil(String name, Engine engine) {
         super(name, engine, new Contract()
+                .withValueParam(PARAM_NO_FILES_PROBLEM_LEVEL, ValueType.LEVEL, 0, 1)
                 .withValueParam(PARAM_FILES, ValueType.FILE_LIST, 1, 1)
-                .withValueParam(PARAM_LEVEL, ValueType.LEVEL, 1, 1)
                 .withValueParam(PARAM_TYPE, ValueType.RESOURCE_TYPE, 1, 1)
                 .withValueParam(PARAM_UTIL, ValueType.EXTERNAL_UTIL, 1, 1)
                 .withValueParam(PARAM_EXECUTION, ValueType.STRING, 1, 1)
+                .withValueParam(PARAM_VALIDATION_PROBLEM_LEVEL, ValueType.LEVEL, 0, 1)
         );
     }
 
@@ -41,16 +44,26 @@ public class VfCheckBinaryFilesValidByExternalUtil extends ValidationFunction {
         try {
             checkContractCompliance();
 
+            Level noFilesProblemLevel = Level.ERROR;
+            List<ValueParam> noFilesProblemLevelParams = valueParams.getParams(PARAM_NO_FILES_PROBLEM_LEVEL);
+            if (noFilesProblemLevelParams.size() == 1) {
+                ValueEvaluation eval = noFilesProblemLevelParams.get(0).getEvaluation();
+                noFilesProblemLevel = (Level) eval.getData();
+            }
+
             ValueEvaluation paramFiles = valueParams.getParams(PARAM_FILES).get(0).getEvaluation();
             List<File> files = (List<File>) paramFiles.getData();
             if (files == null) {
                 return invalidValueParamNull(PARAM_FILES, paramFiles);
+            } else if (files.isEmpty()) {
+                return singlErrorResult(invalid(noFilesProblemLevel, "prázdný seznam souborů"));
             }
 
-            ValueEvaluation paramLevel = valueParams.getParams(PARAM_LEVEL).get(0).getEvaluation();
-            Level level = (Level) paramLevel.getData();
-            if (level == null) {
-                return invalidValueParamNull(PARAM_LEVEL, paramLevel);
+            Level validationProblemLevel = Level.ERROR;
+            List<ValueParam> validationProblemLevelParams = valueParams.getParams(PARAM_VALIDATION_PROBLEM_LEVEL);
+            if (!validationProblemLevelParams.isEmpty()) {
+                ValueEvaluation eval = validationProblemLevelParams.get(0).getEvaluation();
+                validationProblemLevel = (Level) eval.getData();
             }
 
             ValueEvaluation paramType = valueParams.getParams(PARAM_TYPE).get(0).getEvaluation();
@@ -72,7 +85,7 @@ public class VfCheckBinaryFilesValidByExternalUtil extends ValidationFunction {
             }
 
             ExternalUtilExecution execution = new ExternalUtilExecution(executionName, util);
-            return validate(level, files, type, execution);
+            return validate(validationProblemLevel, files, type, execution);
         } catch (ContractException e) {
             return invalidContractNotMet(e);
         } catch (Exception e) {

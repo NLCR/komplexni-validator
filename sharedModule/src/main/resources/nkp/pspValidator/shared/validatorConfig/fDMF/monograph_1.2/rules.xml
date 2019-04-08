@@ -2524,7 +2524,6 @@
             </description>
             <validation functionName="checkBinaryFilesValidByExternalUtil">
                 <params>
-                    <value name="level" type="LEVEL">ERROR</value>
                     <value name="files" type="FILE_LIST">
                         <value-ref name="MASTER-COPY_FILES"/>
                     </value>
@@ -2540,7 +2539,6 @@
             </description>
             <validation functionName="checkBinaryFilesValidByExternalUtil">
                 <params>
-                    <value name="level" type="LEVEL">ERROR</value>
                     <value name="files" type="FILE_LIST">
                         <value-ref name="USER-COPY_FILES"/>
                     </value>
@@ -2556,7 +2554,6 @@
             </description>
             <validation functionName="checkBinaryFilesValidByExternalUtil">
                 <params>
-                    <value name="level" type="LEVEL">ERROR</value>
                     <value name="files" type="FILE_LIST">
                         <value-ref name="MASTER-COPY_FILES"/>
                     </value>
@@ -2572,7 +2569,6 @@
             </description>
             <validation functionName="checkBinaryFilesValidByExternalUtil">
                 <params>
-                    <value name="level" type="LEVEL">ERROR</value>
                     <value name="files" type="FILE_LIST">
                         <value-ref name="USER-COPY_FILES"/>
                     </value>
@@ -2588,7 +2584,6 @@
             </description>
             <validation functionName="checkBinaryFilesValidByExternalUtil">
                 <params>
-                    <value name="level" type="LEVEL">ERROR</value>
                     <value name="files" type="FILE_LIST">
                         <value-ref name="MASTER-COPY_FILES"/>
                     </value>
@@ -2604,7 +2599,6 @@
             </description>
             <validation functionName="checkBinaryFilesValidByExternalUtil">
                 <params>
-                    <value name="level" type="LEVEL">ERROR</value>
                     <value name="files" type="FILE_LIST">
                         <value-ref name="USER-COPY_FILES"/>
                     </value>
@@ -2620,7 +2614,6 @@
             </description>
             <validation functionName="checkBinaryFilesValidByExternalUtil">
                 <params>
-                    <value name="level" type="LEVEL">ERROR</value>
                     <value name="files" type="FILE_LIST">
                         <value-ref name="MASTER-COPY_FILES"/>
                     </value>
@@ -2636,7 +2629,6 @@
             </description>
             <validation functionName="checkBinaryFilesValidByExternalUtil">
                 <params>
-                    <value name="level" type="LEVEL">ERROR</value>
                     <value name="files" type="FILE_LIST">
                         <value-ref name="USER-COPY_FILES"/>
                     </value>
