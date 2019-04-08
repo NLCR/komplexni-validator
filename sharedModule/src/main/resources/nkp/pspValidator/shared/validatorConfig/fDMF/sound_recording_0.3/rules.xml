@@ -2803,7 +2803,6 @@
             </description>
             <validation functionName="checkBinaryFilesValidByExternalUtil">
                 <params>
-                    <value name="level" type="LEVEL">ERROR</value>
                     <value name="files" type="FILE_LIST">
                         <value-ref name="MASTER-COPY_FILES"/>
                     </value>
@@ -2819,7 +2818,6 @@
             </description>
             <validation functionName="checkBinaryFilesValidByExternalUtil">
                 <params>
-                    <value name="level" type="LEVEL">ERROR</value>
                     <value name="files" type="FILE_LIST">
                         <value-ref name="USER-COPY_FILES"/>
                     </value>
@@ -2835,7 +2833,6 @@
             </description>
             <validation functionName="checkBinaryFilesValidByExternalUtil">
                 <params>
-                    <value name="level" type="LEVEL">ERROR</value>
                     <value name="files" type="FILE_LIST">
                         <value-ref name="MASTER-COPY_FILES"/>
                     </value>
@@ -2851,7 +2848,6 @@
             </description>
             <validation functionName="checkBinaryFilesValidByExternalUtil">
                 <params>
-                    <value name="level" type="LEVEL">ERROR</value>
                     <value name="files" type="FILE_LIST">
                         <value-ref name="USER-COPY_FILES"/>
                     </value>
@@ -2867,7 +2863,6 @@
             </description>
             <validation functionName="checkBinaryFilesValidByExternalUtil">
                 <params>
-                    <value name="level" type="LEVEL">ERROR</value>
                     <value name="files" type="FILE_LIST">
                         <value-ref name="MASTER-COPY_FILES"/>
                     </value>
@@ -2883,7 +2878,6 @@
             </description>
             <validation functionName="checkBinaryFilesValidByExternalUtil">
                 <params>
-                    <value name="level" type="LEVEL">ERROR</value>
                     <value name="files" type="FILE_LIST">
                         <value-ref name="USER-COPY_FILES"/>
                     </value>
@@ -2899,7 +2893,6 @@
             </description>
             <validation functionName="checkBinaryFilesValidByExternalUtil">
                 <params>
-                    <value name="level" type="LEVEL">ERROR</value>
                     <value name="files" type="FILE_LIST">
                         <value-ref name="MASTER-COPY_FILES"/>
                     </value>
@@ -2915,7 +2908,6 @@
             </description>
             <validation functionName="checkBinaryFilesValidByExternalUtil">
                 <params>
-                    <value name="level" type="LEVEL">ERROR</value>
                     <value name="files" type="FILE_LIST">
                         <value-ref name="USER-COPY_FILES"/>
                     </value>
@@ -2929,14 +2921,12 @@
     </rules-section>-->
 
 
-    <!--TODO: dokoncit sekci pro validaci zvukovych dat-->
-    <rules-section name="ZVUKOVÁ DATA" description="Kontrola zvukových souborů (MP3, WAV) za pomocí externích nástrojů">
+    <rules-section name="Zvuková data" description="Kontrola zvukových souborů (MP3, WAV) za pomocí externích nástrojů">
         <rule name="SOURCE-AUDIO_FILES_VALID_BY_JHOVE">
             <description>Všechny soubory SOURCE-AUDIO (wav) musí být validní vůči profilu pro binární soubory pro nástroj JHOVE.
             </description>
             <validation functionName="checkBinaryFilesValidByExternalUtil">
                 <params>
-                    <value name="level" type="LEVEL">ERROR</value>
                     <value name="files" type="FILE_LIST">
                         <value-ref name="SOURCE-AUDIO_FILES"/>
                     </value>
@@ -2952,7 +2942,6 @@
             </description>
             <validation functionName="checkBinaryFilesValidByExternalUtil">
                 <params>
-                    <value name="level" type="LEVEL">ERROR</value>
                     <value name="files" type="FILE_LIST">
                         <value-ref name="SOURCE-AUDIO_FILES"/>
                     </value>
@@ -2963,13 +2952,12 @@
             </validation>
         </rule>
 
-        <!--TODO: vyresit, ze slozka i soubory nepovinne a doplnit pro MASTER-COPY-AUDIO_FILES podle USER-COPY-AUDIO_FILES-->
-        <!--<rule name="MASTER-COPY-AUDIO_FILES_VALID_BY_MP3VAL">
+        <rule name="MASTER-COPY-AUDIO_FILES_VALID_BY_MP3VAL">
             <description>Všechny soubory MASTER-COPY-AUDIO (mp3) musí být validní vůči profilu pro binární soubory pro nástroj MP3val.
             </description>
             <validation functionName="checkBinaryFilesValidByExternalUtil">
                 <params>
-                    <value name="level" type="LEVEL">ERROR</value>
+                    <value name="no_files_problem_level" type="LEVEL">INFO</value>
                     <value name="files" type="FILE_LIST">
                         <value-ref name="MASTER-COPY-AUDIO_FILES"/>
                     </value>
@@ -2978,14 +2966,29 @@
                     <value name="execution" type="STRING">mp3</value>
                 </params>
             </validation>
-        </rule>-->
+        </rule>
+
+        <rule name="MASTER-COPY-AUDIO_FILES_VALID_BY_CHECKMATE">
+            <description>Všechny soubory MASTER-COPY-AUDIO (mp3) musí být validní vůči profilu pro binární soubory pro nástroj Checkmate.
+            </description>
+            <validation functionName="checkBinaryFilesValidByExternalUtil">
+                <params>
+                    <value name="no_files_problem_level" type="LEVEL">INFO</value>
+                    <value name="files" type="FILE_LIST">
+                        <value-ref name="MASTER-COPY-AUDIO_FILES"/>
+                    </value>
+                    <value name="type" type="RESOURCE_TYPE">AUDIO_MASTER_COPY</value>
+                    <value name="util" type="EXTERNAL_UTIL">CHECKMATE</value>
+                    <value name="execution" type="STRING">mp3</value>
+                </params>
+            </validation>
+        </rule>
 
         <rule name="USER-COPY-AUDIO_FILES_VALID_BY_MP3VAL">
             <description>Všechny soubory USER-COPY-AUDIO (mp3) musí být validní vůči profilu pro binární soubory pro nástroj MP3val.
             </description>
             <validation functionName="checkBinaryFilesValidByExternalUtil">
                 <params>
-                    <value name="level" type="LEVEL">ERROR</value>
                     <value name="files" type="FILE_LIST">
                         <value-ref name="USER-COPY-AUDIO_FILES"/>
                     </value>
@@ -2996,13 +2999,11 @@
             </validation>
         </rule>
 
-
         <rule name="USER-COPY-AUDIO_FILES_VALID_BY_CHECKMATE">
             <description>Všechny soubory USER-COPY-AUDIO (mp3) musí být validní vůči profilu pro binární soubory pro nástroj Checkmate.
             </description>
             <validation functionName="checkBinaryFilesValidByExternalUtil">
                 <params>
-                    <value name="level" type="LEVEL">ERROR</value>
                     <value name="files" type="FILE_LIST">
                         <value-ref name="USER-COPY-AUDIO_FILES"/>
                     </value>

@@ -309,10 +309,14 @@
 
     <validationFunction functionName="checkBinaryFilesValidByExternalUtil">
         <params-def>
-            <value name="level" type="LEVEL"/>
+            <value name="no_files_problem_level" type="LEVEL" minOccurs="0" maxOccurs="1"
+                   description="úroveň chybové hlášky, pokud je seznam souborů prázdný, defaultně ERROR"/>
             <value name="files" type="FILE_LIST"/>
             <value name="type" type="RESOURCE_TYPE"/>
             <value name="util" type="EXTERNAL_UTIL"/>
+            <value name="execution" type="STRING"/>
+            <value name="validation_problem_level" type="LEVEL" minOccurs="0" maxOccurs="1"
+                   description="úroveň chybové hlášky pro samotnou validaci externím nástrojem, defaultně ERROR"/>
         </params-def>
     </validationFunction>
 

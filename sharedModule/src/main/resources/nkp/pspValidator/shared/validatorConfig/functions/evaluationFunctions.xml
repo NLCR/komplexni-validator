@@ -66,16 +66,20 @@
     </evaluationFunction>-->
 
     <evaluationFunction name="findFilesInDirByPattern" resultType="FILE_LIST">
-        <description>Vrátí seznam souborů v adresáři, které odpovídají vzoru.</description>
+        <description>Vrátí seznam souborů v adresáři, které odpovídají vzoru. Pokud nelze adresář vyhodnotit (null), vyhodí buď chybu, nebo vrátí prázdný seznam
+            a to podle hodnoty nepovinného parametru errorIfDirNull, defaultní hodnota je true.
+        </description>
         <params-def>
             <value name="dir" type="FILE"/>
+            <value name="errorIfDirNull" type="BOOLEAN" minOccurs="0" maxOccurs="1"/>
             <pattern name="pattern"/>
         </params-def>
     </evaluationFunction>
 
 
     <evaluationFunction name="getFirstFileFromFileList" resultType="FILE">
-        <description>Vrátí první položku ze seznamu. Pokud je seznam prázdný, vyhodí výjimku, případně vrátí null (jen, pokud je returnNullIfEmpty true)</description>
+        <description>Vrátí první položku ze seznamu. Pokud je seznam prázdný, vyhodí výjimku, případně vrátí null (jen, pokud je returnNullIfEmpty true)
+        </description>
         <params-def>
             <value name="files" type="FILE_LIST"/>
             <value name="returnNullIfEmpty" type="BOOLEAN" minOccurs="0"/>

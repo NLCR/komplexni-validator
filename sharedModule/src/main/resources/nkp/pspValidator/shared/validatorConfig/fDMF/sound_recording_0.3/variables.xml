@@ -442,6 +442,7 @@
                 <value name="dir" type="FILE">
                     <value-ref name="MASTER-COPY-AUDIO-DIR_FILE"/>
                 </value>
+                <value name="errorIfDirNull" type="BOOLEAN">false</value>
                 <pattern name="pattern">
                     <description>Vzor pro jména souborů MASTER-COPY-AUDIO v rámci adresáře MASTER-COPY-AUDIO-DIR.</description>
                     <expression caseSensitive="true">mca_${PSP_ID}_[0-9]+\.wav</expression>
