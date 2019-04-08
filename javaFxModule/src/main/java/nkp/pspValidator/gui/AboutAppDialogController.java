@@ -29,6 +29,9 @@ public class AboutAppDialogController extends DialogController {
     Text configDirText;
 
     @FXML
+    Text logsDirText;
+
+    @FXML
     Text devModeText;
 
     @Override
@@ -39,8 +42,17 @@ public class AboutAppDialogController extends DialogController {
             devModeLabel.setVisible(false);
             devModeText.setVisible(false);
         }
-        File validatorConfigDir = getConfigurationManager().getFileOrNull(ConfigurationManager.PROP_VALIDATOR_CONFIG_DIR);
-        configDirText.setText(validatorConfigDir.getAbsolutePath());
+        configDirText.setText(getConfigFilePathOrNull(ConfigurationManager.PROP_VALIDATOR_CONFIG_DIR));
+        logsDirText.setText(getConfigFilePathOrNull(ConfigurationManager.PROP_LOG_DIR));
+    }
+
+    private String getConfigFilePathOrNull(String propertyName) {
+        File file = getConfigurationManager().getFileOrNull(propertyName);
+        if (file == null) {
+            return "null";
+        } else {
+            return file.getAbsolutePath();
+        }
     }
 
     @Override
@@ -57,6 +69,19 @@ public class AboutAppDialogController extends DialogController {
     }
 
     public void openConfigDir(ActionEvent actionEvent) {
-        openUrl("file://" + getConfigurationManager().getFileOrNull(ConfigurationManager.PROP_VALIDATOR_CONFIG_DIR).getAbsolutePath());
+        openDirFromConfigProperty(ConfigurationManager.PROP_VALIDATOR_CONFIG_DIR);
     }
+
+    public void openLogsDir(ActionEvent actionEvent) {
+        openDirFromConfigProperty(ConfigurationManager.PROP_LOG_DIR);
+    }
+
+    private void openDirFromConfigProperty(String propertyName) {
+        File dirFile = getConfigurationManager().getFileOrNull(propertyName);
+        if (dirFile != null) {
+            String path = dirFile.getAbsolutePath();
+            openUrl("file://" + path);
+        }
+    }
+
 }

@@ -25,7 +25,7 @@ public class AboutAppDialog extends AbstractDialog {
 
     @Override
     public int getHeight() {
-        return 400;
+        return 450;
     }
 
     @Override

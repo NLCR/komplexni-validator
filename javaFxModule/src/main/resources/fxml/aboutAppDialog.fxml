@@ -8,7 +8,7 @@
       stylesheets="/css/aboutAppDialog.css"
       fx:controller="nkp.pspValidator.gui.AboutAppDialogController"
       fx:id="container"
-      minHeight="400"
+      minHeight="450"
       minWidth="700"
       alignment="CENTER_LEFT"
       spacing="0"
@@ -103,14 +103,33 @@
                     onAction="#openConfigDir"
             />
 
-
-            <Label text="Vývojářský mód"
-                   fx:id="devModeLabel"
+            <Label text="Adresář s logy"
                    GridPane.rowIndex="6"
                    GridPane.columnIndex="0"
             />
-            <Text fx:id="devModeText"
+            <Text text="/Users/martin/IdeaProjects/komplexni-validator/sharedModule/src/main/resources/nkp/pspValidator/shared/validatorConfig"
                   GridPane.rowIndex="6"
+                  GridPane.columnIndex="2"
+                  GridPane.hgrow="ALWAYS"
+                  fx:id="logsDirText"
+                  wrappingWidth="400"
+            />
+
+            <Button
+                    text="Otevřít"
+                    GridPane.rowIndex="6"
+                    GridPane.columnIndex="3"
+                    GridPane.hgrow="ALWAYS"
+                    onAction="#openLogsDir"
+            />
+
+            <Label text="Vývojářský mód"
+                   fx:id="devModeLabel"
+                   GridPane.rowIndex="7"
+                   GridPane.columnIndex="0"
+            />
+            <Text fx:id="devModeText"
+                  GridPane.rowIndex="7"
                   GridPane.columnIndex="2"
                   GridPane.hgrow="ALWAYS"
                   text="Ano, tuto verzi nepoužívejte pro produkční účely!"
