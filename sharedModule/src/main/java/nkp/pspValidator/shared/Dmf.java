@@ -55,7 +55,7 @@ public class Dmf implements Serializable {
                 case PERIODICAL:
                     return "Periodika";
                 case SOUND_RECORDING:
-                    return "Zvuky";
+                    return "Zvukové dokumenty";
                 default:
                     throw new IllegalStateException();
             }
