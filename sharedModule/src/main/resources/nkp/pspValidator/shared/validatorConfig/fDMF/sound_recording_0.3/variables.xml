@@ -234,7 +234,7 @@
                 </value>
                 <pattern name="pattern">
                     <description>Vzor pro jméno adresáře MASTER-COPY-AUDIO-DIR.</description>
-                    <expression caseSensitive="true">masater_copy_audio</expression>
+                    <expression caseSensitive="true">master_copy_audio</expression>
                 </pattern>
             </params>
         </evaluation>
