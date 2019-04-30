@@ -271,7 +271,7 @@
         <validation name="Velikost precints (1)">
             <xmlDataExtraction resultType="STRING_LIST">
                 <firstNonempty>
-                    <xpath>//j:properties/j:contiguousCodestreamBox/j:cod/j:precintSizeX</xpath>
+                    <xpath>//j:properties/j:contiguousCodestreamBox/j:cod/j:precinctSizeX</xpath>
                 </firstNonempty>
             </xmlDataExtraction>
             <rules>
@@ -290,7 +290,7 @@
         <validation name="Velikost precints (2)">
             <xmlDataExtraction resultType="STRING_LIST">
                 <firstNonempty>
-                    <xpath>//j:properties/j:contiguousCodestreamBox/j:cod/j:precintSizeY</xpath>
+                    <xpath>//j:properties/j:contiguousCodestreamBox/j:cod/j:precinctSizeY</xpath>
                 </firstNonempty>
             </xmlDataExtraction>
             <rules>
