@@ -440,24 +440,25 @@
                     <element name="mods:extent">
                         <expectedContent/>
                     </element>
+		</expectedElements>
+            </element>
 
                     <element name="mods:note" mandatory="false">
                         <expectedAttributes>
                             <!--chyby v DMF: neni jasna povinnost, navic ma byt "type", ne "Type"-->
                             <attribute name="type" mandatory="false">
-                                <expectedContent>
+                                <recommendedContent>
                                     <oneOf>
                                         <value>ownership</value>
                                         <value>version identification</value>
                                         <value>statement of responsibility</value>
                                     </oneOf>
-                                </expectedContent>
+                                </recommendedontent>
                             </attribute>
                         </expectedAttributes>
                         <expectedContent/>
                     </element>
-                </expectedElements>
-            </element>
+              
 
             <element name="mods:relatedItem" mandatory="false" ignoreUnexpectedChildElements="true">
                 <expectedAttributes>
