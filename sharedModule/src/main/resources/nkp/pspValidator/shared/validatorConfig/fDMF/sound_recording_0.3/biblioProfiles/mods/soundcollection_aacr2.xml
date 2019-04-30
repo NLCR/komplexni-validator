@@ -284,7 +284,9 @@
                             <!--nejasna povinnost v DMF-->
                             <attribute name="authority" mandatory="false">
                                 <expectedContent>
+				<!--dodatečně povolena hodnota i bez mezery, tj. "siglaADR", protože je předepsaná v ostatních DMF a bude předepsaná i ve vyšší verzi DMF pro zvuky-->
                                     <value>sigla ADR</value>
+				    <value>siglaADR</value>
                                 </expectedContent>
                             </attribute>
                         </expectedAttributes>
