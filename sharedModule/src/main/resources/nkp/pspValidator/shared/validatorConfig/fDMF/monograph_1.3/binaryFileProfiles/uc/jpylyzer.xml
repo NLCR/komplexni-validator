@@ -437,7 +437,7 @@
             </rules>
         </validation>
 
-        <validation name="Kompresní poměr">
+        <!--<validation name="Kompresní poměr">
             <xmlDataExtraction resultType="FLOAT">
                 <firstNonempty>
                     <xpath>//j:properties/j:compressionRatio</xpath>
@@ -452,7 +452,7 @@
                     </isInFloatRange>
                 </mustMatchAny>
             </rules>
-        </validation>
+        </validation>-->
 
         <validation name="Migrační sw">
             <xmlDataExtraction resultType="STRING">
