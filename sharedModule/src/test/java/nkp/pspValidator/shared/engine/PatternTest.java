@@ -224,7 +224,7 @@ public class PatternTest {
                 "       name=\"Jhove\" release=\"1.6\" date=\"2011-01-04\">\n" +
                 "    <date>2016-11-21T00:53:00+01:00</date>\n" +
                 "    <repInfo\n" +
-                "            uri=\"/home/martin/IdeaProjects/PspValidator/cliModule/../sharedModule/src/test/resources/monograph_1.2-invalid_images/b50eb6b0-f0a4-11e3-b72e-005056827e52/mastercopy/mc_b50eb6b0-f0a4-11e3-b72e-005056827e52_0007.jp2\">\n" +
+                "            uri=\"/home/martin/IdeaProjects/komplexni-validator/cliModule/../sharedModule/src/test/resources/monograph_1.2-invalid_images/b50eb6b0-f0a4-11e3-b72e-005056827e52/mastercopy/mc_b50eb6b0-f0a4-11e3-b72e-005056827e52_0007.jp2\">\n" +
                 "        <reportingModule release=\"1.3\" date=\"2007-01-08\">JPEG2000-hul</reportingModule>\n" +
                 "        <lastModified>2016-11-20T13:30:25+01:00</lastModified>\n" +
                 "        <size>677227</size>\n" +

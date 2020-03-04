@@ -1,4 +1,4 @@
-rootProject.name = 'PspValidator'
+rootProject.name = 'KomplexniValidator'
 include 'sharedModule'
 include 'javaFxModule'
 include 'cliModule'

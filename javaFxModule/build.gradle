@@ -82,7 +82,7 @@ jfx {
     //bundler = 'exe,linux.app,deb,rpm,dmg'
     //bundler = 'exe'
     //bundler = 'linux.app'
-    // vytvori javaFxModule\build\jfx\native\PspValidator, jeste je potreba pridat fDMF a vyrobit instalator
+    // vytvori javaFxModule\build\jfx\native\KomplexniValidator, jeste je potreba pridat fDMF a vyrobit instalator
 
     //bundler = 'windows.app'//bundler='ALL'
     appName = 'KomplexniValidatorGUI'
@@ -101,11 +101,11 @@ jfx {
 //jfxNative
 
 //bundler = 'windows.app'
-//V javaFxModule\build\jfx\native\PspValidator vytvori PspValidator.exe, adresar app s .jar, pribalenym jre, zatim
+//V javaFxModule\build\jfx\native\KomplexniValidator vytvori KomplexniValidator.exe, adresar app s .jar, pribalenym jre, zatim
 //Tohle pouzit s necim jako Inno Setup a vyrobit instalator vcetne fDMF
 
 //bundler = 'exe'
-//Vytvori instalator javaFxModule\build\jfx\native\PspValidator-version.exe
+//Vytvori instalator javaFxModule\build\jfx\native\KomplexniValidatorGUI-version.exe
 
 //32b instalator Win bude problem: https://github.com/FibreFoX/javafx-gradle-plugin/issues/22
 

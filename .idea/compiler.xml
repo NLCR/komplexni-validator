@@ -2,6 +2,14 @@
 <project version="4">
   <component name="CompilerConfiguration">
     <bytecodeTargetLevel>
+      <module name="KomplexniValidator.cliModule.main" target="1.8" />
+      <module name="KomplexniValidator.cliModule.test" target="1.8" />
+      <module name="KomplexniValidator.javaFxModule.main" target="1.8" />
+      <module name="KomplexniValidator.javaFxModule.test" target="1.8" />
+      <module name="KomplexniValidator.main" target="1.8" />
+      <module name="KomplexniValidator.sharedModule.main" target="1.8" />
+      <module name="KomplexniValidator.sharedModule.test" target="1.8" />
+      <module name="KomplexniValidator.test" target="1.8" />
       <module name="nkp.pspValidator.cliModule.main" target="1.8" />
       <module name="nkp.pspValidator.cliModule.test" target="1.8" />
       <module name="nkp.pspValidator.gui.javaFxModule.main" target="1.8" />
