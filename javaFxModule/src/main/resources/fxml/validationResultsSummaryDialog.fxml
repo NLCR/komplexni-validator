@@ -14,8 +14,6 @@
       spacing="0"
 >
 
-    <!--TODO: typo in name of this file - rename-->
-
     <padding>
         <Insets bottom="10" left="10" right="10" top="20"/>
     </padding>

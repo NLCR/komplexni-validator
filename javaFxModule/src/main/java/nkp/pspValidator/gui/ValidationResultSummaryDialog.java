@@ -18,7 +18,7 @@ public class ValidationResultSummaryDialog extends AbstractDialog {
 
     @Override
     public URL getFxmlResource() {
-        return getClass().getResource("/fxml/validationResulSummaryDialog.fxml");
+        return getClass().getResource("/fxml/validationResultsSummaryDialog.fxml");
     }
 
     @Override
