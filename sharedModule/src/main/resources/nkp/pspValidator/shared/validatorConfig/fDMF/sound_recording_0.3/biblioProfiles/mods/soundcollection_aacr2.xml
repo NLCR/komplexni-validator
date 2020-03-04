@@ -223,25 +223,25 @@
                     <element name="mods:extent">
                         <expectedContent/>
                     </element>
-		 </expectedElements>
+                </expectedElements>
             </element>
 
-                    <element name="mods:note" mandatory="false">
-                        <expectedAttributes>
-                            <!--chyby v DMF: neni jasna povinnost, navic ma byt "type", ne "Type"-->
-                            <attribute name="type" mandatory="false">
-                                <recommendedContent>
-                                    <oneOf>
-                                        <value>ownership</value>
-                                        <value>version identification</value>
-                                        <value>statement of responsibility</value>
-                                    </oneOf>
-                                </recommendedContent>
-                            </attribute>
-                        </expectedAttributes>
-                        <expectedContent/>
-                    </element>
-               
+            <element name="mods:note" mandatory="false">
+                <expectedAttributes>
+                    <!--chyby v DMF: neni jasna povinnost, navic ma byt "type", ne "Type"-->
+                    <attribute name="type" mandatory="false">
+                        <recommendedContent>
+                            <oneOf>
+                                <value>ownership</value>
+                                <value>version identification</value>
+                                <value>statement of responsibility</value>
+                            </oneOf>
+                        </recommendedContent>
+                    </attribute>
+                </expectedAttributes>
+                <expectedContent/>
+            </element>
+
 
             <element name="mods:relatedItem" mandatory="false" ignoreUnexpectedChildElements="true">
                 <expectedAttributes>
@@ -284,9 +284,11 @@
                             <!--nejasna povinnost v DMF-->
                             <attribute name="authority" mandatory="false">
                                 <expectedContent>
-				<!--dodatečně povolena hodnota i bez mezery, tj. "siglaADR", protože je předepsaná v ostatních DMF a bude předepsaná i ve vyšší verzi DMF pro zvuky-->
-                                    <value>sigla ADR</value>
-				    <value>siglaADR</value>
+                                    <oneOf>
+                                        <!--dodatečně povolena hodnota i bez mezery, tj. "siglaADR", protože je předepsaná v ostatních DMF a bude předepsaná i ve vyšší verzi DMF pro zvuky-->
+                                        <value>sigla ADR</value>
+                                        <value>siglaADR</value>
+                                    </oneOf>
                                 </expectedContent>
                             </attribute>
                         </expectedAttributes>
