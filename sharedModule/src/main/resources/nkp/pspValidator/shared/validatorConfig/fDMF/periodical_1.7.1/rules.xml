@@ -193,7 +193,7 @@
 
         <rule name="NO_OTHER_TL_FILES_FOUND">
             <description>
-                Krome definovaných a tolerovaných souborů a adresářů nesmí být v kořenovém adresáři nalezen žádný další soubor nebo adresář.
+                Kromě definovaných a tolerovaných souborů a adresářů nesmí být v kořenovém adresáři nalezen žádný další soubor nebo adresář.
             </description>
             <validation functionName="checkNoOtherFilesInDir">
                 <params>
