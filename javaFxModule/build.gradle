@@ -15,7 +15,7 @@ println "Java home: " + System.properties['java.home']
 //https://github.com/FibreFoX/javafx-gradle-plugin
 
 group 'nkp.pspValidator'
-version '2.1'
+version '2.1.1'
 
 //sourceCompatibility = 1.8
 
