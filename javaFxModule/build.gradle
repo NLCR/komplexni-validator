@@ -86,7 +86,7 @@ jfx {
 
     //bundler = 'windows.app'//bundler='ALL'
     appName = 'KomplexniValidatorGUI'
-    nativeReleaseVersion = "2.1"
+    nativeReleaseVersion = "2.1.1"
 
     //additionalAppResources = ['../sharedModule/src/main/resources/nkp/pspValidator/shared','src/main/resources/config']
     additionalAppResources = '../sharedModule/src/main/resources/nkp/pspValidator/shared'
