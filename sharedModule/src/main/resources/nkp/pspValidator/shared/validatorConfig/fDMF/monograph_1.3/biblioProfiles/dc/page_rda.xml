@@ -30,7 +30,7 @@
                 <expectedContent/>
             </element>
 
-            <element name="dc:coverage" errorMessage="Očekáván povinný element dc:coverage obsahující číslo strany.">
+            <element name="dc:coverage" mandatory="false">
                 <expectedContent/>
             </element>
 
