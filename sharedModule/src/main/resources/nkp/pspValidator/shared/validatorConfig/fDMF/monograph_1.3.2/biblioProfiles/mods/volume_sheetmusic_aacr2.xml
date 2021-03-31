@@ -275,7 +275,7 @@
                                 </expectedContent>
                             </attribute>
 
-                            <attribute name="type"/>
+                            <attribute name="type" mandatory="false"/>
                         </expectedAttributes>
                         <expectedContent/>
                     </element>
