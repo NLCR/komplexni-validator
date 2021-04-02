@@ -64,8 +64,9 @@
                                             </element>
                                         </expectedElements>
                                     </element>
-
-                                    <element name="premis:objectCategory" mandatory="true" repeatable="false">
+                                        
+                                         <!--Ve standardu je el. objectCategory uveden jako povinný element (vychází z Premis Dictionary), ale v xsd k PREMIS tento element není a další verze standardu PREMIS už jej taky nemají, proto zde změněno na nepovinný element, aby to nevedlo k nevaliditě dat-->
+                                    <element name="premis:objectCategory" mandatory="false" repeatable="false">
                                         <expectedContent/>
                                     </element>
 
