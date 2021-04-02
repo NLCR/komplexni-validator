@@ -36,8 +36,7 @@
                 <expectedContent/>
             </element>
 
-            <element name="dc:language"
-                     errorMessage="Očekáván povinný element dc:language obsahující přesné určení jazyka.">
+            <element name="dc:language" mandatory="false">
                 <expectedContent>
                     <fromDictionary name="iso6392languageCodes"/>
                 </expectedContent>
