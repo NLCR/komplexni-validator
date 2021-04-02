@@ -241,6 +241,8 @@
                     <oneOf>
                         <value>sound recording musical</value>
                         <value>sound recording nonmusical</value>
+			<value>sound recording-musical</value>
+                        <value>sound recording-nonmusical</value>
                     </oneOf>
                 </expectedContent>
             </element>
