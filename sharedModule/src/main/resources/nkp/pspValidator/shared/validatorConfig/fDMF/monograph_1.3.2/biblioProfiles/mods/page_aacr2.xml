@@ -104,7 +104,10 @@
                         <expectedAttributes>
                             <attribute name="type">
                                 <expectedContent>
+				   <oneOf>
                                     <value>page number</value>
+			 	    <value>pageNumber</value>
+				   </oneOf>
                                 </expectedContent>
                             </attribute>
                         </expectedAttributes>
