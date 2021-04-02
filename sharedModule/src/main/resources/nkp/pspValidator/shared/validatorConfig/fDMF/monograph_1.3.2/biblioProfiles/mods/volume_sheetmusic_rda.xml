@@ -544,7 +544,8 @@
                                 </expectedContent>
                             </attribute>
 
-                            <attribute name="type">
+			<!--V DMF je pro hudebniny type uveden jako povinný, všude jinde je ale MA, takže i u hudebniny by mělo být MA, proto změněno i zde, at to nevede k nevaliditě dat-->	
+                            <attribute name="type" mandatory="false">
                                 <expectedContent>
                                     <oneOf>
                                         <value>media</value>
