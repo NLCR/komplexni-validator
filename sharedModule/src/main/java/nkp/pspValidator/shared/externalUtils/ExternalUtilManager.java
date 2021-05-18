@@ -16,14 +16,14 @@ public class ExternalUtilManager {
 
     private final Map<ExternalUtil, UtilHandler> utilVersionDetectionHandlers;
     private final Map<ExternalUtilExecution, UtilHandler> utilExecutionHandlers;
-    private final Map<ExternalUtil, Boolean> utilAvaliable = new HashMap<>();
+    private final Map<ExternalUtil, Boolean> utilAvailable = new HashMap<>();
 
 
     public ExternalUtilManager(Map<ExternalUtil, UtilHandler> utilVersionDetectionHandlers, Map<ExternalUtilExecution, UtilHandler> utilExecutionHandlers) {
         this.utilVersionDetectionHandlers = utilVersionDetectionHandlers;
         this.utilExecutionHandlers = utilExecutionHandlers;
         for (ExternalUtil util : ExternalUtil.values()) {
-            utilAvaliable.put(util, false);
+            utilAvailable.put(util, false);
         }
     }
 
@@ -32,11 +32,11 @@ public class ExternalUtilManager {
     }
 
     public void setUtilAvailable(ExternalUtil util, boolean available) {
-        utilAvaliable.put(util, available);
+        utilAvailable.put(util, available);
     }
 
     public boolean isUtilAvailable(ExternalUtil util) {
-        return utilAvaliable.get(util);
+        return utilAvailable.get(util);
     }
 
     public boolean isUtilExecutionDefined(ExternalUtilExecution execution) {
