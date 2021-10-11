@@ -1,10 +1,19 @@
+//works with gradle 5.6.4, with gradle 6 this does not work due to lack of support for javafx-gradle-plugin
+//https://medium.com/@czerwinb/how-to-install-a-specific-gradle-version-on-your-mac-beab35051ee8
+//https://www.jetbrains.com/help/idea/gradle.html#gradle_version_install
+
+group 'nkp.pspValidator'
+version '2.1.1'
+
 apply plugin: 'java'
 apply plugin: 'application'
+
+System.setProperty("file.encoding", "UTF-8")
 
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
 
-//For plugin application, see https://docs.gradle.org/current/userguide/application_plugin.html
+//For plugin "application", see https://docs.gradle.org/current/userguide/application_plugin.html
 mainClassName = "nkp.pspValidator.shared.Main"
 
 repositories {
@@ -22,6 +31,8 @@ tasks.withType(JavaCompile) {
 }*/
 
 dependencies {
+    //pozor: nepoužívat 'implementation', protože to poslední verze javafx pluginu neumí
+    //https://github.com/FibreFoX/javafx-gradle-plugin/issues/116#issuecomment-376924075
     testCompile 'junit:junit:4.12'
     compile group: 'com.mycila', name: 'mycila-xmltool', version: '4.4.ga'
     // https://mvnrepository.com/artifact/com.github.nradov/abnffuzzer
@@ -32,10 +43,6 @@ dependencies {
     //compile group: 'net.sf.saxon', name: 'Saxon-HE', version: '9.7.0-14'
     compile 'org.json:json:20180813'
 }
-
-group 'nkp.pspValidator'
-version '2.1.1'
-
 
 //tohle udela zip, ale asi shared-logic.zip, asi na nic
 //see https://docs.gradle.org/current/userguide/javaLibraryDistribution_plugin.html
@@ -49,3 +56,12 @@ distributions {
         }
     }
 }
+
+//tasks:
+//gradle run - vybuildí a spustí nkp.pspValidator.shared.Main.main()
+
+//gradle jar - vyrobí build/libs/sharedModule-VERZE.jar
+//tasky pro javafx-gradle-plugin nefungují bez nachystaného jar v build/libs
+
+//gradle distZip - vyrobi build/distributions/shared-logic-VERSION.jar
+//aktualne k nicemu

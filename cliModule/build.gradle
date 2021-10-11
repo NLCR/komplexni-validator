@@ -22,10 +22,15 @@ tasks.withType(JavaCompile) {
 }*/
 
 dependencies {
-    testCompile 'junit:junit:4.12'
-    compile project(':sharedModule')
-    compile 'commons-cli:commons-cli:1.3.1'
+    //testCompile 'junit:junit:4.12'
+    //compile project(':sharedModule')
+    //compile 'commons-cli:commons-cli:1.3.1'
     //compile 'commons-cli:commons-cli:1.4-SNAPSHOT'
+
+    //gradle 5, 6
+    testImplementation 'junit:junit:4.12'
+    implementation project(':sharedModule')
+    implementation 'commons-cli:commons-cli:1.3.1'
 }
 
 group 'nkp.pspValidator'
@@ -39,10 +44,19 @@ task fatJar(type: Jar) {
                 'Main-Class': 'npk.pspValidator.cli.Main'
     }
     baseName = 'KomplexniValidatorCLI'
-    from { configurations.compile.collect { it.isDirectory() ? it : zipTree(it) } }
+    //https://stackoverflow.com/questions/47910578/not-able-to-copy-configurations-dependencies-after-upgrading-gradle-plugin-for-a
+    //from { configurations.compile.collect { it.isDirectory() ? it : zipTree(it) } }
+    //from { configurations.implementation.collect { it.isDirectory() ? it : zipTree(it) } }
+    //from { configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) } }
+    from { configurations.compileClasspath.collect { it.isDirectory() ? it : zipTree(it) } }
     with jar
 }
 
-//targets:
+//tasks:
 //gradle run - spusti Main (plugin application)
 //gradle fatJar - vybuildi jar v cliModule/build/libs
+
+//since gradle 4.9 we can use --args:
+//gradle run --args="--version"
+//gradle run --args="--help"
+//gradle run --args="--action VALIDATE_PSP --config-dir CONFIG_DIR --psp PSP_DIR"

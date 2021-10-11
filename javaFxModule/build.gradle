@@ -10,7 +10,7 @@ repositories {
 }
 */
 
-println "Java home: " + System.properties['java.home']
+//println "Java home: " + System.properties['java.home']
 
 //https://github.com/FibreFoX/javafx-gradle-plugin
 
@@ -44,21 +44,28 @@ buildscript {
 apply plugin: 'java'
 
 dependencies {
-    //testCompile group: 'junit', name: 'junit', version: '4.11'
-    //compile 'org.controlsfx:controlsfx:8.40.12'
-    //compile 'org.controlsfx:controlsfx:8.0.2'
+    //pozor: nepoužívat 'implementation', protože to poslední verze javafx pluginu neumí
+    //https://github.com/FibreFoX/javafx-gradle-plugin/issues/116#issuecomment-376924075
     compile project(':sharedModule')
+    compile 'joda-time:joda-time:2.10.1'
     //compile 'org.controlsfx:controlsfx:8.0.2'
     //compile 'org.controlsfx:controlsfx:8.0.2-developer-preview-2'
-    compile 'joda-time:joda-time:2.10.1'
+    //compile 'org.controlsfx:controlsfx:8.40.12'
+
+    //testCompile group: 'junit', name: 'junit', version: '4.11'
 }
 
 repositories {
     mavenCentral()
 }
 
+//gradle 3.3, 5.6.4
+//https://github.com/FibreFoX/javafx-gradle-plugin
 apply plugin: 'javafx-gradle-plugin'
 
+//gradle 6.2 (requires at least Java 11(55.0))
+//https://github.com/openjfx/javafx-gradle-plugin
+//apply plugin: 'org.openjfx.javafxplugin'
 
 jfx {
     verbose = true
@@ -67,7 +74,7 @@ jfx {
     jfxMainAppJarName = "KomplexniValidatorGUI.jar"
     deployDir = "src/main/deploy"
     useEnvironmentRelativeExecutables = true
-    libFolderName = "lib"
+    libFolderName = "lib" //od javafx-gradle-plugin verze 8.8.0
 
     // gradle jfxRun
     runJavaParameter = '-Xdebug -Xrunjdwp:transport=dt_socket,server=y,suspend=n,address=5005'
