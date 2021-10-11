@@ -51,7 +51,9 @@
 <xsd:schema targetNamespace="http://www.loc.gov/standards/alto/ns-v2#" xmlns="http://www.loc.gov/standards/alto/ns-v2#"
             xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xlink="http://www.w3.org/1999/xlink"
             elementFormDefault="qualified" attributeFormDefault="unqualified">
-    <xsd:import namespace="http://www.w3.org/1999/xlink" schemaLocation="http://www.loc.gov/standards/xlink/xlink.xsd"/>
+    <!--<xsd:import namespace="http://www.w3.org/1999/xlink" schemaLocation="http://www.loc.gov/standards/xlink/xlink.xsd"/>-->
+    <xsd:import namespace="http://www.w3.org/1999/xlink" schemaLocation="xlink.xsd"/>
+
     <xsd:element name="alto">
         <xsd:annotation>
             <xsd:documentation>ALTO (analyzed layout and text object) stores layout information and
