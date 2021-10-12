@@ -448,7 +448,8 @@
                 <mustMatchAny>
                     <isInFloatRange>
                         <min>6</min>
-                        <max>35</max>
+                        <!--Omezení na maximální hodnotu zrušeno https://github.com/NLCR/komplexni-validator/issues/106-->
+                        <!--<max>35</max>-->
                     </isInFloatRange>
                 </mustMatchAny>
             </rules>
