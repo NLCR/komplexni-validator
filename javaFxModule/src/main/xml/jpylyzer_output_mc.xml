@@ -128,7 +128,7 @@
             </siz>
             <cod>
                 <lcod>18</lcod>
-                <!-- SPEC: Precints (regiony) -->
+                <!-- SPEC: Precincts (regiony) -->
                 <!-- HODNOTY: yes -->
                 <precincts>yes</precincts>
                 <!-- SPEC: Sop -->
@@ -164,9 +164,9 @@
                 <!-- SPEC: transformace -->
                 <!-- HODNOTY: 5-3 reversible -->
                 <transformation>5-3 reversible</transformation>
-                <!-- SPEC: Velikost precints X -->
+                <!-- SPEC: Velikost precincts X -->
                 <!-- HODNOTY: 2krat 256, zbytek 128 -->
-                <!-- SPEC: Velikost precints Y-->
+                <!-- SPEC: Velikost precincts Y-->
                 <!-- HODNOTY: 2krat 256, zbytek 128 -->
                 <precinctSizeX>128</precinctSizeX>
                 <precinctSizeY>128</precinctSizeY>

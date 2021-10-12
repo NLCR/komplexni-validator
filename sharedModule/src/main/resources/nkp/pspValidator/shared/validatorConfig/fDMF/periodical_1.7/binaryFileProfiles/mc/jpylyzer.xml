@@ -253,7 +253,7 @@
             </rules>
         </validation>
 
-        <validation name="Precints (regiony)">
+        <validation name="Precincts (regiony)">
             <xmlDataExtraction resultType="STRING">
                 <firstNonempty>
                     <xpath>//j:properties/j:contiguousCodestreamBox/j:cod/j:precincts</xpath>
@@ -268,7 +268,7 @@
             </rules>
         </validation>
 
-        <validation name="Velikost precints (1)">
+        <validation name="Velikost precincts (1)">
             <xmlDataExtraction resultType="STRING_LIST">
                 <firstNonempty>
                     <xpath>//j:properties/j:contiguousCodestreamBox/j:cod/j:precinctSizeX</xpath>
@@ -287,7 +287,7 @@
             </rules>
         </validation>
 
-        <validation name="Velikost precints (2)">
+        <validation name="Velikost precincts (2)">
             <xmlDataExtraction resultType="STRING_LIST">
                 <firstNonempty>
                     <xpath>//j:properties/j:contiguousCodestreamBox/j:cod/j:precinctSizeY</xpath>

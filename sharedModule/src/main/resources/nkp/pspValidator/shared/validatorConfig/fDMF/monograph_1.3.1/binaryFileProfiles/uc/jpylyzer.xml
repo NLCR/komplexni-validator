@@ -253,7 +253,7 @@
             </rules>
         </validation>
 
-        <validation name="Precints (regiony)">
+        <validation name="Precincts (regiony)">
             <xmlDataExtraction resultType="STRING">
                 <firstNonempty>
                     <xpath>//j:properties/j:contiguousCodestreamBox/j:cod/j:precincts</xpath>
