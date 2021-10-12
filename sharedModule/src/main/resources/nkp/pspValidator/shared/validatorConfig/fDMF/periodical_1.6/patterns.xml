@@ -73,6 +73,7 @@
     <pattern-def name="TOLERATED_TL_FILENAME">
         <description>Vzory pro jména tolerovaných souborů.</description>
         <expression caseSensitive="true">LTP_MD\.xml</expression>
+        <expression caseSensitive="true">.DS_Store</expression>
     </pattern-def>
 
     <pattern-def name="SECONDARY-METS-DIR_FILENAME">

@@ -66,7 +66,22 @@ public class VfCheckFileListHasExactSize extends ValidationFunction {
 
     private ValidationResult validate(Integer expectedSize, List<File> fileList, Level level) {
         if (fileList.size() != expectedSize) {
-            return singlErrorResult(invalid(level, "seznam obsahuje %d souborů namísto očekávaných %d", fileList.size(), expectedSize));
+            if (expectedSize != 0) {
+                return singlErrorResult(invalid(level, "seznam obsahuje %d souborů namísto očekávaných %d", fileList.size(), expectedSize));
+            } else {
+                if (fileList.size() == 1) {
+                    return singlErrorResult(invalid(level, "nalezen neočekávaný soubor: %s", fileList.get(0).getAbsolutePath()));
+                } else {
+                    StringBuilder filenames = new StringBuilder();
+                    for (int i = 0; i < fileList.size(); i++) {
+                        filenames.append(fileList.get(i));
+                        if (i != fileList.size() - 1) {
+                            filenames.append(", ");
+                        }
+                    }
+                    return singlErrorResult(invalid(level, "nalezeno %d neočekávaných souborů: %s", fileList.size(), filenames.toString()));
+                }
+            }
         } else {
             return new ValidationResult();
         }
