@@ -22,6 +22,8 @@
                     <regexp>\A[0-9\.]+$</regexp>
                 </parser>
             </operatingSystem>
+
+            <!--jpylyzer 1.17-->
             <!--zdrojove kody z https://github.com/openpreserve/jpylyzer/releases a spousteni pres python-->
             <!--http://jpylyzer.openpreservation.org//installation.html-->
             <operatingSystem name="MAC">
@@ -31,6 +33,16 @@
                     <regexp>\A[0-9\.]+$</regexp>
                 </parser>
             </operatingSystem>
+
+            <!--jpylyzer 2.0 (not yet supported)-->
+            <!--<operatingSystem name="MAC">
+                <command>jpylyzer &#45;&#45;version</command>
+                <command>jpylyzer &#45;&#45;version</command>
+                <parser>
+                    <stream>STDOUT</stream>
+                    <regexp>(?s).*</regexp>
+                </parser>
+            </operatingSystem>-->
         </versionDetection>
         <execution name="jp2k">
             <operatingSystem name="LINUX">
@@ -47,6 +59,8 @@
                     <regexp>(?s).*</regexp>
                 </parser>
             </operatingSystem>
+
+            <!--jpylyzer 1.17-->
             <operatingSystem name="MAC">
                 <command>python ${UTIL_PATH}jpylyzer.py jp2In ${TARGET_FILE}</command>
                 <parser>
@@ -54,6 +68,15 @@
                     <regexp>(?s).*</regexp>
                 </parser>
             </operatingSystem>
+
+            <!--jpylyzer 2.0 (not yet supported)-->
+            <!--<operatingSystem name="MAC">
+                <command>jpylyzer jp2In ${TARGET_FILE}</command>
+                <parser>
+                    <stream>STDOUT</stream>
+                    <regexp>(?s).*</regexp>
+                </parser>
+            </operatingSystem>-->
         </execution>
     </util>
 
