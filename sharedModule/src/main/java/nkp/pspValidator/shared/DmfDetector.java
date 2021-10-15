@@ -21,9 +21,9 @@ import static nkp.pspValidator.shared.Dmf.Type.*;
 public class DmfDetector {
 
 
-    public static final String DEFAULT_MONOGRAPH_VERSION = "1.0";
-    public static final String DEFAULT_PERIODICAL_VERSION = "1.4";
-    public static final String DEFAULT_SOUND_RECORDING_VERSION = "0.2";
+    public static final String DEFAULT_MONOGRAPH_VERSION = "1.4";
+    public static final String DEFAULT_PERIODICAL_VERSION = "1.7.1";
+    public static final String DEFAULT_SOUND_RECORDING_VERSION = "0.3";
 
 
     /**

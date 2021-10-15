@@ -559,7 +559,7 @@ public class Main {
                 " Typ DMF (Monografie/Periodikum/Zvukový dokument) se vždy získává z dat jednotlivých PSP balíků." +
                 " Verze DMF použité pro validaci je možné ovlivnit parametry --preferred-dmf-mon-version, --preferred-dmf-per-version, --preferred-dmf-sr-version, --forced-dmf-mon-version, --forced-dmf-per-version a --forced-dmf-sr-version." +
                 " Dále je potřeba pomocí --config-dir uvést adresář, který obsahuje definice fDMF," +
-                " napr. monograph_1.3.2 nebo periodical_1.7.\n\n");
+                " napr. monograph_1.4 nebo periodical_1.7.\n\n");
         String footer = replaceUmlaut("\n*Definice metadatových formátů. Více na http://www.ndk.cz/standardy-digitalizace/metadata.\n" +
                 "Více informací o validátoru najdete na https://github.com/NLCR/komplexni-validator.");
         HelpFormatter formatter = new HelpFormatter();

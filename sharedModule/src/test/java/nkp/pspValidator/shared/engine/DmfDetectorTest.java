@@ -98,12 +98,19 @@ public class DmfDetectorTest {
 
 
     @Test
-    public void something() throws PspDataException, XmlFileParsingException, InvalidXPathExpressionException {
-        //mon
+    public void versions() throws PspDataException, XmlFileParsingException, InvalidXPathExpressionException {
+        //monograph
         File mon12Dir = new File("src/test/resources/monograph_1.2/b50eb6b0-f0a4-11e3-b72e-005056827e52");
         assertEquals(resolverMon(mon12Dir, null, "123").getVersion(), "123");
         assertEquals(resolverMon(mon12Dir, "1", "123").getVersion(), "123");
         assertEquals(resolverMon(mon12Dir, "1", null).getVersion(), "1.2");
+
+        //periodical
+        File per14Dir = new File("src/test/resources/periodical_1.4/ope301-00000v");
+        assertEquals(resolverPer(per14Dir, null, "123").getVersion(), "123");
+        assertEquals(resolverPer(per14Dir, "1", "123").getVersion(), "123");
+        assertEquals(resolverPer(per14Dir, "1", null).getVersion(), "1.4");
+
         //sound recording
         File sr03Dir = new File("src/test/resources/sound_recording_0.3/1234567890");
         assertEquals(resolverSr(sr03Dir, null, "123").getVersion(), "123");

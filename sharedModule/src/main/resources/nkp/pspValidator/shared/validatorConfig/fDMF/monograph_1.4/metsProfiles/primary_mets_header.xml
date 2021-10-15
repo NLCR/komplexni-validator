@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<metadataProfile
+        xmlns="http://www.nkp.cz/pspValidator/2.1.1/metadataProfile"
+        name="Primary METS header"
+        validatorVersion="2.1.1"
+        dmf="monograph_1.4"
+>
+
+    <info>
+        <text>
+            Profil pro validaci elementu mets:mets, zejména hlavičky mets:metsHdr v primárním METSu pro DMF Monografie 1.4.
+        </text>
+        <url description="Definice metadatových formátů pro digitalizaci monografických dokumentů">
+            http://www.ndk.cz/standardy-digitalizace/DMFmonografDok_12.pdf
+        </url>
+    </info>
+
+    <namespaces>
+        <namespace prefix="mets">http://www.loc.gov/METS/</namespace>
+    </namespaces>
+
+    <dictionaries>
+        <dictionary name="siglaInstitutionCodes"
+                    description="sigly knihoven"/>
+    </dictionaries>
+
+    <rootElement name="mets:mets">
+        <expectedAttributes>
+            <attribute name="LABEL" mandatory="true"/>
+            <attribute name="TYPE" mandatory="true">
+                <expectedContent>Monograph</expectedContent>
+            </attribute>
+            <attribute name="xsi:schemaLocation" mandatory="false"/>
+        </expectedAttributes>
+        <expectedElements>
+            <element name="mets:dmdSec" ignoreUnexpectedAttributes="true" ignoreUnexpectedChildElements="true"
+                     mandatory="false"/>
+            <element name="mets:fileSec" ignoreUnexpectedAttributes="true" ignoreUnexpectedChildElements="true"
+                     mandatory="false"/>
+            <element name="mets:structMap" ignoreUnexpectedAttributes="true" ignoreUnexpectedChildElements="true"
+                     mandatory="false"/>
+            <element name="mets:structLink" ignoreUnexpectedAttributes="true" ignoreUnexpectedChildElements="true"
+                     mandatory="false"/>
+
+            <element name="mets:metsHdr">
+                <expectedAttributes>
+                    <attribute name="LASTMODDATE" mandatory="true">
+                        <expectedContent>
+                            <!--TODO: validace ISO 8601 na urovni sekund-->
+                        </expectedContent>
+                    </attribute>
+                    <attribute name="CREATEDATE" mandatory="true">
+                        <expectedContent>
+                            <!--TODO: validace ISO 8601 na urovni sekund-->
+                        </expectedContent>
+                    </attribute>
+                </expectedAttributes>
+
+                <expectedElements>
+                    <element name="mets:agent" specification="@ROLE='CREATOR'">
+                        <expectedAttributes>
+                            <attribute name="ROLE" mandatory="true">
+                                <expectedContent>
+                                    <value>CREATOR</value>
+                                </expectedContent>
+                            </attribute>
+                            <attribute name="TYPE" mandatory="true">
+                                <expectedContent>
+                                    <value>ORGANIZATION</value>
+                                </expectedContent>
+                            </attribute>
+                        </expectedAttributes>
+                        <expectedElements>
+                            <element name="mets:name" mandatory="true">
+                                <recommendedContent>
+                                    <fromDictionary name="siglaInstitutionCodes"/>
+                                </recommendedContent>
+                            </element>
+                        </expectedElements>
+                    </element>
+
+                    <element name="mets:agent" specification="@ROLE='ARCHIVIST'">
+                        <expectedAttributes>
+                            <attribute name="ROLE" mandatory="true">
+                                <expectedContent>
+                                    <value>ARCHIVIST</value>
+                                </expectedContent>
+                            </attribute>
+                            <attribute name="TYPE" mandatory="true">
+                                <expectedContent>
+                                    <value>ORGANIZATION</value>
+                                </expectedContent>
+                            </attribute>
+                        </expectedAttributes>
+                        <expectedElements>
+                            <element name="mets:name" mandatory="true">
+                                <recommendedContent>
+                                    <fromDictionary name="siglaInstitutionCodes"/>
+                                </recommendedContent>
+                            </element>
+                        </expectedElements>
+                    </element>
+                </expectedElements>
+            </element>
+
+        </expectedElements>
+    </rootElement>
+
+</metadataProfile>
