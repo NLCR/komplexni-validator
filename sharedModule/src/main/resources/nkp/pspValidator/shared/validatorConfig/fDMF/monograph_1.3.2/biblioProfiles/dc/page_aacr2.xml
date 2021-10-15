@@ -34,10 +34,8 @@
                 <expectedContent/>
             </element>
 
-            <element name="dc:type" mandatory="true">
-                <expectedContent>
-                    <value>model:page</value>
-                </expectedContent>
+            <element name="dc:type" specification="text() = 'model:page'" mandatory="true" errorMessage="Chybí element dc:type obsahující hodnotu model:page">
+                <expectedContent/>
             </element>
 
             <element name="dc:description" mandatory="false">

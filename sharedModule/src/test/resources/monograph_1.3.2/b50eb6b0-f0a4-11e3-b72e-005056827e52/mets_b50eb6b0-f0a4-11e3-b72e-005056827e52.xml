@@ -118,7 +118,7 @@
                     <mods:identifier type="uuid">af85a560-c2a5-11e2-8b87-005056827e51</mods:identifier>
                     <mods:part type="titlePage">
                         <mods:detail type="page number">
-                            <number>0</number>
+                            <mods:number>0</mods:number>
                         </mods:detail>
                         <mods:extent unit="pages">
                             <mods:start>0</mods:start>
@@ -128,10 +128,10 @@
                         <mods:detail type="pageIndex">
                             <mods:number>1</mods:number>
                         </mods:detail>
-                        <mods:note>right</mods:note>
-                        <mods:genre type="titlePage">reprePage</mods:genre>
-                        <mods:typeOfResource>still image</mods:typeOfResource>
                     </mods:part>
+                    <mods:note>right</mods:note>
+                    <mods:genre type="titlePage">reprePage</mods:genre>
+                    <mods:typeOfResource>still image</mods:typeOfResource>
                 </mods:mods>
             </mets:xmlData>
         </mets:mdWrap>
@@ -141,7 +141,7 @@
             <mets:xmlData>
                 <oai_dc:dc>
                     <dc:identifier>uuid:af85a560-c2a5-11e2-8b87-005056827e51</dc:identifier>
-                    <dc:extent>1</dc:extent>
+                    <dc:coverage>1</dc:coverage>
                     <dc:type>image</dc:type>
                     <dc:type>model:page</dc:type>
                 </oai_dc:dc>
@@ -155,7 +155,7 @@
                     <mods:identifier type="uuid">af85a560-c2a5-11e2-8b87-005056827e61</mods:identifier>
                     <mods:part type="normalPage">
                         <mods:detail type="page number">
-                            <number>1</number>
+                            <mods:number>1</mods:number>
                         </mods:detail>
                         <mods:extent unit="pages">
                             <mods:start>1</mods:start>
@@ -165,9 +165,9 @@
                         <mods:detail type="pageIndex">
                             <mods:number>2</mods:number>
                         </mods:detail>
-                        <mods:note>left</mods:note>
-                        <mods:genre type="normalPage">page</mods:genre>
                     </mods:part>
+                    <mods:note>left</mods:note>
+                    <mods:genre type="normalPage">page</mods:genre>
                 </mods:mods>
             </mets:xmlData>
         </mets:mdWrap>
@@ -177,7 +177,7 @@
             <mets:xmlData>
                 <oai_dc:dc>
                     <dc:identifier>uuid:af85a560-c2a5-11e2-8b87-005056827e61</dc:identifier>
-                    <dc:extent>2</dc:extent>
+                    <dc:coverage>2</dc:coverage>
                     <dc:type>model:page</dc:type>
                 </oai_dc:dc>
             </mets:xmlData>
@@ -190,7 +190,7 @@
                     <mods:identifier type="uuid">af85a560-c2a5-11e2-8b87-005056827e63</mods:identifier>
                     <mods:part type="normalPage">
                         <mods:detail type="page number">
-                            <number>2</number>
+                            <mods:number>2</mods:number>
                         </mods:detail>
                         <mods:extent unit="pages">
                             <mods:start>2</mods:start>
@@ -200,9 +200,9 @@
                         <mods:detail type="pageIndex">
                             <mods:number>3</mods:number>
                         </mods:detail>
-                        <mods:note>right</mods:note>
-                        <mods:genre type="normalPage">page</mods:genre>
                     </mods:part>
+                    <mods:note>right</mods:note>
+                    <mods:genre type="normalPage">page</mods:genre>
                 </mods:mods>
             </mets:xmlData>
         </mets:mdWrap>
@@ -212,7 +212,7 @@
             <mets:xmlData>
                 <oai_dc:dc>
                     <dc:identifier>uuid:af85a560-c2a5-11e2-8b87-005056827e63</dc:identifier>
-                    <dc:extent>3</dc:extent>
+                    <dc:coverage>3</dc:coverage>
                     <dc:type>model:page</dc:type>
                 </oai_dc:dc>
             </mets:xmlData>
@@ -225,7 +225,7 @@
                     <mods:identifier type="uuid">af85a560-c2a5-11e2-8b87-005056827e64</mods:identifier>
                     <mods:part type="normalPage">
                         <mods:detail type="page number">
-                            <number>3</number>
+                            <mods:number>3</mods:number>
                         </mods:detail>
                         <mods:extent unit="pages">
                             <mods:start>3</mods:start>
@@ -235,9 +235,9 @@
                         <mods:detail type="pageIndex">
                             <mods:number>4</mods:number>
                         </mods:detail>
-                        <mods:note>left</mods:note>
-                        <mods:genre type="normalPage">page</mods:genre>
                     </mods:part>
+                    <mods:note>left</mods:note>
+                    <mods:genre type="normalPage">page</mods:genre>
                 </mods:mods>
             </mets:xmlData>
         </mets:mdWrap>
@@ -247,7 +247,7 @@
             <mets:xmlData>
                 <oai_dc:dc>
                     <dc:identifier>uuid:af85a560-c2a5-11e2-8b87-005056827e64</dc:identifier>
-                    <dc:extent>4</dc:extent>
+                    <dc:coverage>4</dc:coverage>
                     <dc:type>model:page</dc:type>
                 </oai_dc:dc>
             </mets:xmlData>
@@ -258,9 +258,9 @@
             <mets:xmlData>
                 <mods:mods ID="MODS_PAGE_0004">
                     <mods:identifier type="uuid">af85a560-c2a5-11e2-8b87-005056827e65</mods:identifier>
-                    <mods:part>
+                    <mods:part type="normalPage">
                         <mods:detail type="page number">
-                            <number>4</number>
+                            <mods:number>4</mods:number>
                         </mods:detail>
                         <mods:extent unit="pages">
                             <mods:start>4</mods:start>
@@ -270,9 +270,9 @@
                         <mods:detail type="pageIndex">
                             <mods:number>5</mods:number>
                         </mods:detail>
-                        <mods:note>right</mods:note>
-                        <mods:genre type="normalPage">page</mods:genre>
                     </mods:part>
+                    <mods:note>right</mods:note>
+                    <mods:genre type="normalPage">page</mods:genre>
                 </mods:mods>
             </mets:xmlData>
         </mets:mdWrap>
@@ -282,7 +282,7 @@
             <mets:xmlData>
                 <oai_dc:dc>
                     <dc:identifier>uuid:af85a560-c2a5-11e2-8b87-005056827e65</dc:identifier>
-                    <dc:extent>5</dc:extent>
+                    <dc:coverage>5</dc:coverage>
                     <dc:type>model:page</dc:type>
                 </oai_dc:dc>
             </mets:xmlData>
@@ -295,7 +295,7 @@
                     <mods:identifier type="uuid">af85a560-c2a5-11e2-8b87-005056827e66</mods:identifier>
                     <mods:part type="normalPage">
                         <mods:detail type="page number">
-                            <number>5</number>
+                            <mods:number>5</mods:number>
                         </mods:detail>
                         <mods:extent unit="pages">
                             <mods:start>5</mods:start>
@@ -305,9 +305,9 @@
                         <mods:detail type="pageIndex">
                             <mods:number>6</mods:number>
                         </mods:detail>
-                        <mods:note>left</mods:note>
-                        <mods:genre type="normalPage">page</mods:genre>
                     </mods:part>
+                    <mods:note>left</mods:note>
+                    <mods:genre type="normalPage">page</mods:genre>
                 </mods:mods>
             </mets:xmlData>
         </mets:mdWrap>
@@ -317,7 +317,7 @@
             <mets:xmlData>
                 <oai_dc:dc>
                     <dc:identifier>uuid:af85a560-c2a5-11e2-8b87-005056827e66</dc:identifier>
-                    <dc:extent>6</dc:extent>
+                    <dc:coverage>6</dc:coverage>
                     <dc:type>model:page</dc:type>
                 </oai_dc:dc>
             </mets:xmlData>
@@ -330,7 +330,7 @@
                     <mods:identifier type="uuid">af85a560-c2a5-11e2-8b87-005056827e67</mods:identifier>
                     <mods:part type="normalPage">
                         <mods:detail type="page number">
-                            <number>6</number>
+                            <mods:number>6</mods:number>
                         </mods:detail>
                         <mods:extent unit="pages">
                             <mods:start>6</mods:start>
@@ -340,9 +340,9 @@
                         <mods:detail type="pageIndex">
                             <mods:number>7</mods:number>
                         </mods:detail>
-                        <mods:note>right</mods:note>
-                        <mods:genre type="normalPage">page</mods:genre>
                     </mods:part>
+                    <mods:note>right</mods:note>
+                    <mods:genre type="normalPage">page</mods:genre>
                 </mods:mods>
             </mets:xmlData>
         </mets:mdWrap>
@@ -352,7 +352,7 @@
             <mets:xmlData>
                 <oai_dc:dc>
                     <dc:identifier>uuid:af85a560-c2a5-11e2-8b87-005056827e67</dc:identifier>
-                    <dc:extent>7</dc:extent>
+                    <dc:coverage>7</dc:coverage>
                     <dc:type>model:page</dc:type>
                 </oai_dc:dc>
             </mets:xmlData>
@@ -365,7 +365,7 @@
                     <mods:identifier type="uuid">af85a560-c2a5-11e2-8b87-005056827e68</mods:identifier>
                     <mods:part type="normalPage">
                         <mods:detail type="page number">
-                            <number>7</number>
+                            <mods:number>7</mods:number>
                         </mods:detail>
                         <mods:extent unit="pages">
                             <mods:start>7</mods:start>
@@ -375,9 +375,9 @@
                         <mods:detail type="pageIndex">
                             <mods:number>8</mods:number>
                         </mods:detail>
-                        <mods:note>left</mods:note>
-                        <mods:genre type="normalPage">page</mods:genre>
                     </mods:part>
+                    <mods:note>left</mods:note>
+                    <mods:genre type="normalPage">page</mods:genre>
                 </mods:mods>
             </mets:xmlData>
         </mets:mdWrap>
@@ -387,7 +387,7 @@
             <mets:xmlData>
                 <oai_dc:dc>
                     <dc:identifier>uuid:af85a560-c2a5-11e2-8b87-005056827e68</dc:identifier>
-                    <dc:extent>8</dc:extent>
+                    <dc:coverage>8</dc:coverage>
                     <dc:type>model:page</dc:type>
                 </oai_dc:dc>
             </mets:xmlData>
