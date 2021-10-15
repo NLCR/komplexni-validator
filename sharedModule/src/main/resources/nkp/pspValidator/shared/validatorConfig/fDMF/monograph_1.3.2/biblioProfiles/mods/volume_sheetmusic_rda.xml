@@ -530,7 +530,24 @@
 
             <element name="mods:physicalDescription">
                 <expectedElements>
-                    <element name="mods:form">
+                    <!-- see https://github.com/NLCR/komplexni-validator/issues/124 -->
+                    <element name="mods:form" specification="@type='media' and @authority='rdamedia'">
+                        <expectedAttributes>
+                            <attribute name="authority"/>
+                            <attribute name="type"></attribute>
+                        </expectedAttributes>
+                        <expectedContent/>
+                    </element>
+
+                    <element name="mods:form" specification="@type='carrier' and @authority='rdacarrier'">
+                        <expectedAttributes>
+                            <attribute name="type"></attribute>
+                            <attribute name="authority"/>
+                        </expectedAttributes>
+                        <expectedContent/>
+                    </element>
+
+                    <element name="mods:form" specification="not(@type)" mandatory="false">
                         <expectedAttributes>
                             <attribute name="authority">
                                 <expectedContent>
@@ -538,18 +555,9 @@
                                         <value>rdamedia</value>
                                         <value>rdacarrier</value>
                                         <value>marcform</value>
-                                        <value>marccategory</value>
                                         <value>marcsmd</value>
-                                    </oneOf>
-                                </expectedContent>
-                            </attribute>
-
-			<!--V DMF je pro hudebniny type uveden jako povinný, všude jinde je ale MA, takže i u hudebniny by mělo být MA, proto změněno i zde, at to nevede k nevaliditě dat-->	
-                            <attribute name="type" mandatory="false">
-                                <expectedContent>
-                                    <oneOf>
-                                        <value>media</value>
-                                        <value>carrier</value>
+                                        <value>marccategory</value>
+                                        <value>gmd</value>
                                     </oneOf>
                                 </expectedContent>
                             </attribute>

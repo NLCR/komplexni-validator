@@ -262,20 +262,21 @@
 
             <element name="mods:physicalDescription">
                 <expectedElements>
+                    <!--see https://github.com/NLCR/komplexni-validator/issues/124-->
                     <element name="mods:form">
                         <expectedAttributes>
                             <attribute name="authority">
                                 <expectedContent>
                                     <oneOf>
                                         <value>marcform</value>
-                                        <value>marccategory</value>
                                         <value>marcsmd</value>
+                                        <value>marccategory</value>
                                         <value>gmd</value>
                                     </oneOf>
                                 </expectedContent>
                             </attribute>
-
-                            <attribute name="type" mandatory="false"/>
+                            <!--@type je pro aacr2 zakazany-->
+                            <!--<attribute name="type" mandatory="false"/>-->
                         </expectedAttributes>
                         <expectedContent/>
                     </element>
