@@ -102,7 +102,7 @@
                         <expectedContent/>
                     </element>
 
-                    <!--namePart s celym jmenem-->
+                    <!--namePart obsahující celé jméno, nebo se nejedná o osobu-->
                     <element name="mods:namePart" specification="not(@type)" mandatory="false">
                         <expectedContent/>
                     </element>
