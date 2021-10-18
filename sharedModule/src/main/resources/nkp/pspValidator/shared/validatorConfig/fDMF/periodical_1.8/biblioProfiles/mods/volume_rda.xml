@@ -49,7 +49,7 @@
                             <oneOf>
                                 <value>personal</value>
                                 <value>corporate</value>
-                                <!--Neni tohle preklep? jinych verzich je tady "conference", proc je tady prave ta jedna hodnota cesky?
+                                <!--TODO: Neni tohle preklep? jinych verzich je tady "conference", proc je tady prave ta jedna hodnota cesky?
                                 Kazdopadne preklep, nebo ne, jednou je to ve standardu, tak to plati.-->
                                 <value>konference</value>
                                 <value>conference</value>
@@ -68,9 +68,18 @@
                 </expectedAttributes>
                 <expectedElements>
                     <element name="mods:namePart" mandatory="false">
-                        <!--Na s.35 neni u namePart definovan atribut 'type', ale slovne se o nem zminuje. Radeji ho definuji-->
                         <expectedAttributes>
-                            <attribute name="type" mandatory="false"/>
+                            <!--TODO: na s.39 je povinnost M, zároveň v textu "pokud se nejedná o osobu, type se nevyplňuje" (takže není povinný)-->
+                            <attribute name="type" mandatory="false">
+                                <expectedContent>
+                                    <oneOf>
+                                        <value>date</value>
+                                        <value>family</value>
+                                        <value>given</value>
+                                        <value>termsOfAddress</value>
+                                    </oneOf>
+                                </expectedContent>
+                            </attribute>
                         </expectedAttributes>
                         <expectedContent/>
                     </element>
