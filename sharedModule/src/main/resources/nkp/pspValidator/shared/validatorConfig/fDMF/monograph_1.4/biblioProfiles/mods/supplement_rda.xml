@@ -42,6 +42,10 @@
             <element name="mods:titleInfo" mandatory="false">
                 <!--DMF nespecifikuje, zda je titleInfo povinny element, nechavam nepovinny-->
                 <expectedElements>
+                    <element name="mods:nonSort" mandatory="false">
+                        <expectedContent/>
+                    </element>
+
                     <element name="mods:title">
                         <expectedContent/>
                     </element>

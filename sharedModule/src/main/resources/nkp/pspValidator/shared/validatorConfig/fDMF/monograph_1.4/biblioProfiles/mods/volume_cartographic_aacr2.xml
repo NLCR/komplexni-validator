@@ -53,6 +53,10 @@
                 </expectedAttributes>
 
                 <expectedElements>
+                    <element name="mods:nonSort" mandatory="false">
+                        <expectedContent/>
+                    </element>
+                    
                     <element name="mods:title">
                         <expectedContent/>
                     </element>
