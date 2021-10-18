@@ -389,7 +389,6 @@
                     </attribute>
                     <attribute name="otherType" mandatory="false"/>
                     <attribute name="otherTypeURI" mandatory="false"/>
-                    <!--chyba v DMF, viz https://github.com/NLCR/Standard_NDK/issues/80-->
                     <attribute name="otherTypeAuth" mandatory="false"/>
                     <attribute name="otherTypeAuthURI" mandatory="false"/>
                 </expectedAttributes>
