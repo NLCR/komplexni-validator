@@ -38,8 +38,7 @@
             </element>
 
             <element name="dc:creator" mandatory="false">
-                <expectedContent
-                />
+                <expectedContent/>
             </element>
 
             <element name="dc:type" specification="text() = 'model:map'"

@@ -38,7 +38,6 @@
             </element>
 
             <element name="dc:creator" mandatory="false">
-                    
                 <expectedContent/>
             </element>
 

@@ -693,7 +693,15 @@
 
             <element name="mods:relatedItem" mandatory="false" ignoreUnexpectedChildElements="true">
                 <expectedAttributes>
-                    <attribute name="type" mandatory="false"/>
+                    <attribute name="type" mandatory="false">
+                        <expectedContent>
+                            <oneOf>
+                                <value>series</value>
+                                <value>original</value>
+                                <value>isReferencedBy</value>
+                            </oneOf>
+                        </expectedContent>
+                    </attribute>
                     <attribute name="otherType" mandatory="false"/>
                     <attribute name="otherTypeURI" mandatory="false"/>
                     <attribute name="otherTypeAuth" mandatory="false"/>
