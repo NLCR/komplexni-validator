@@ -63,6 +63,7 @@
                                                 <value>copyrighted</value>
                                                 <value>pd</value>
                                                 <value>pd_expired</value>
+                                                <value>pd_holder</value>
                                                 <value>unknown</value>
                                             </oneOf>
                                         </expectedContent>
@@ -109,8 +110,7 @@
                                                 </expectedAttributes>
                                                 <expectedContent>
                                                     <!--TODO: can be empty-->
-                                                    <!--TODO: extra rule: pokud je element prazdny, musi byt pritomen
-                                                   neprazndy atribut iso.code-->
+                                                    <!--TODO: extra rule: pokud je element prazdny, musi byt pritomen neprazndy atribut iso.code-->
                                                 </expectedContent>
                                             </element>
                                         </expectedElements>
@@ -183,8 +183,7 @@
                                                 </expectedAttributes>
                                                 <expectedContent>
                                                     <!--TODO: can be empty-->
-                                                    <!--TODO: extra rule: pokud je element prazdny, musi byt pritomen
-                                                    neprazndy atribut iso.code-->
+                                                    <!--TODO: extra rule: pokud je element prazdny, musi byt pritomen neprazndy atribut iso.code-->
                                                 </expectedContent>
                                             </element>
 
@@ -270,7 +269,20 @@
                                     </element>
 
                                     <element name="cmd:general.note" mandatory="false" repeatable="true">
-                                        <expectedContent/>
+                                        <!--
+                                        TODO: Tohle je divne, obecna poznamka ma obsahovat prave nejaky vycet. Radeji davam recommended.
+                                        Dalo by se to svazat s copy copyright.status='pd_holder', ale porad i takovy copyright muze mit obecnou poznamku krome upresneni licence CC.
+                                        -->
+                                        <recommendedContent>
+                                            <oneOf>
+                                                <value>BY</value>
+                                                <value>BY-SA</value>
+                                                <value>BY-ND</value>
+                                                <value>BY-NC</value>
+                                                <value>BY-NC-SA</value>
+                                                <value>BY-NC-SC</value>
+                                            </oneOf>
+                                        </recommendedContent>
                                     </element>
                                 </expectedElements>
                             </element>
