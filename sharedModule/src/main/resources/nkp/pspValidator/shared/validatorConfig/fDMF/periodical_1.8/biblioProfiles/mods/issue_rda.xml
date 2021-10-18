@@ -364,7 +364,6 @@
                     </attribute>
                 </expectedAttributes>
                 <expectedElements>
-                    <!--v DMF n s.41 chybi priznak o povinnosti elementu - nechavam nepovinny-->
                     <element name="mods:detail" mandatory="false">
                         <expectedElements>
                             <element name="mods:caption" mandatory="false">
