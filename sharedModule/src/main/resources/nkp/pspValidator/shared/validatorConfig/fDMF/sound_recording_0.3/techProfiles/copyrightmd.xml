@@ -63,6 +63,7 @@
                                     <attribute name="copyright.status" mandatory="true">
                                         <expectedContent>
                                             <oneOf>
+                                                <!--TODO: spravne je 'copyrighted', bylo opraveno v mon-1.4-->
                                                 <value>Copyrighted</value>
                                                 <value>pd</value>
                                                 <value>pd_expired</value>

@@ -8,7 +8,7 @@
         Pravidla je možné dynamicky doplňovat/upravovat, ale je vždy nutné používat existující proměnné a vzory.
     </description>
 
-    <rules-section name="Struktura souborů" description="Struktura PSP balicku na urovni soboru">
+    <rules-section name="Struktura souborů" description="Struktura PSP balíčku na úrovni souborů">
 
 
         <!--psp dir-->
@@ -16,7 +16,7 @@
         <!--mozna tohle patri spise k INFO?-->
         <!--TODO: spis pouzit pattern a checkFilenameMatchesPattern, kdyz matches-->
         <rule name="PSP_DIR_MATCHES_PSP_ID">
-            <description>Název kořenového adresáře musí být schodný s PSP-ID.</description>
+            <description>Název kořenového adresáře musí být shodný s PSP-ID.</description>
             <validation functionName="checkFilenameMatchesPattern">
                 <params>
                     <value name="level" type="LEVEL">ERROR</value>
@@ -513,7 +513,7 @@
         </rule>
 
 
-        <!--počty souborů a délky názvů soborů v top-level adesářích-->
+        <!--počty souborů a délky názvů souborů v top-level adesářích-->
 
         <rule name="NUMBER_OF_FILES_IN_DIRS_MATCH">
             <description>Počet souborů ve všech adresářích se musí shodovat.</description>
