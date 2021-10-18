@@ -503,8 +503,7 @@
 
             <element name="mods:part" mandatory="false">
                 <expectedAttributes>
-                    <attribute name="type" mandatory="false">
-                        <!--neni urcene, jestli je povinny, nebo ne-->
+                    <attribute name="type">
                         <expectedContent>
                             <value>volume</value>
                         </expectedContent>
@@ -512,7 +511,6 @@
                 </expectedAttributes>
                 <expectedElements>
                     <element name="mods:detail" mandatory="false">
-                        <!--neni urcene, jestli je povinny, nebo ne-->
                         <expectedElements>
                             <element name="mods:caption" mandatory="false">
                                 <expectedContent/>
