@@ -375,13 +375,17 @@
                 <expectedContent/>
             </element>
 
-            <element name="mods:part" specification="mods:detail[@type='page number']" mandatory="false">
+            <element name="mods:part" specification="mods:detail[@type='page number'] or mods:detail[@type='pageNumber']" mandatory="false">
                 <expectedElements>
                     <element name="mods:detail" mandatory="false">
                         <expectedAttributes>
                             <attribute name="type">
                                 <expectedContent>
-                                    <value>page number</value>
+                                    <oneOf>
+                                        <value>page number</value>
+                                        <!--see https://github.com/NLCR/Standard_NDK/issues/136-->
+                                        <value>pageNumber</value>
+                                    </oneOf>
                                 </expectedContent>
                             </attribute>
                         </expectedAttributes>
