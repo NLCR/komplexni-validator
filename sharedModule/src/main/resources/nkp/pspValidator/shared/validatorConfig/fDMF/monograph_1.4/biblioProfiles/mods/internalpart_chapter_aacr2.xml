@@ -375,14 +375,48 @@
                 <expectedContent/>
             </element>
 
-            <element name="mods:part" mandatory="false">
+            <element name="mods:part" specification="mods:detail[@type='page number']" mandatory="false">
                 <expectedElements>
+                    <element name="mods:detail" mandatory="false">
+                        <expectedAttributes>
+                            <attribute name="type">
+                                <expectedContent>
+                                    <value>page number</value>
+                                </expectedContent>
+                            </attribute>
+                        </expectedAttributes>
+                        <expectedContent/>
+                    </element>
                     <element name="mods:extent" mandatory="false">
                         <expectedElements>
                             <element name="mods:start" mandatory="false">
                                 <expectedContent/>
                             </element>
+                            <element name="mods:end" mandatory="false">
+                                <expectedContent/>
+                            </element>
+                        </expectedElements>
+                    </element>
+                </expectedElements>
+            </element>
 
+            <element name="mods:part" specification="mods:detail[@type='pageIndex']" mandatory="false">
+                <expectedElements>
+                    <element name="mods:detail" mandatory="false">
+                        <expectedAttributes>
+                            <attribute name="type">
+                                <expectedContent>
+                                    <value>pageIndex</value>
+                                </expectedContent>
+                            </attribute>
+                        </expectedAttributes>
+                        <expectedContent/>
+                    </element>
+                    <element name="mods:extent" mandatory="false">
+                        <expectedElements>
+                            <element name="mods:start" mandatory="false">
+                                <expectedContent/>
+                            </element>
                             <element name="mods:end" mandatory="false">
                                 <expectedContent/>
                             </element>
