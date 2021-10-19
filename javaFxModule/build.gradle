@@ -47,6 +47,7 @@ dependencies {
     //pozor: nepoužívat 'implementation', protože to poslední verze javafx pluginu neumí
     //https://github.com/FibreFoX/javafx-gradle-plugin/issues/116#issuecomment-376924075
     compile project(':sharedModule')
+    implementation project(':sharedModule') //bez toho se u jfxJar nevytvori lib/sharedModule.jar
     compile 'joda-time:joda-time:2.10.1'
     //compile 'org.controlsfx:controlsfx:8.0.2'
     //compile 'org.controlsfx:controlsfx:8.0.2-developer-preview-2'
