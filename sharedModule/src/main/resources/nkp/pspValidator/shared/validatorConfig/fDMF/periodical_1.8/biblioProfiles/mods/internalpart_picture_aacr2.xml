@@ -322,22 +322,6 @@
                 <expectedContent/>
             </element>
 
-            <element name="mods:part" mandatory="false">
-                <expectedElements>
-                    <element name="mods:extent" mandatory="false">
-                        <expectedElements>
-                            <element name="mods:start" mandatory="false">
-                                <expectedContent/>
-                            </element>
-
-                            <element name="mods:end" mandatory="false">
-                                <expectedContent/>
-                            </element>
-                        </expectedElements>
-                    </element>
-                </expectedElements>
-            </element>
-
             <element name="mods:recordInfo">
                 <expectedElements>
                     <element name="mods:recordContentSource" mandatory="false">
