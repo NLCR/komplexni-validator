@@ -65,7 +65,7 @@
                             <oneOf>
                                 <value>personal</value>
                                 <value>corporate</value>
-                                <!--zase "konference" namisto "conference"-->
+                                <!--see https://github.com/NLCR/Standard_NDK/issues/147-->
                                 <value>konference</value>
                                 <value>conference</value>
                                 <value>family</value>

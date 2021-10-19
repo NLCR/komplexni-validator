@@ -66,9 +66,9 @@
                             <oneOf>
                                 <value>personal</value>
                                 <value>corporate</value>
-                                <!--zase "konference" namisto "conference"-->
+                                <!--see https://github.com/NLCR/Standard_NDK/issues/147-->
                                 <value>konference</value>
-				<value>conference</value>
+                                <value>conference</value>
                                 <value>family</value>
                             </oneOf>
                         </expectedContent>
@@ -116,7 +116,7 @@
             </element>
 
             <element name="mods:genre" specification="text()='article'">
-            <expectedAttributes>
+                <expectedAttributes>
                     <attribute name="type" mandatory="false">
                         <expectedContent>
                             <oneOf>
@@ -258,7 +258,7 @@
                 <expectedAttributes>
                     <!--NOTE: DMF neuvadi, jestli je authority povinny atribut, nechavam nepovinny-->
                     <attribute name="authority" mandatory="true">
-	                <!--NOTE: navíc nově povolena i hodnota Konspekt, tak aby prošel Konspekt bez atributu edition-->
+                        <!--NOTE: navíc nově povolena i hodnota Konspekt, tak aby prošel Konspekt bez atributu edition-->
                         <recommendedContent>
                             <oneOf>
                                 <value>udc</value>

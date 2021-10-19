@@ -83,8 +83,7 @@
                             <oneOf>
                                 <value>personal</value>
                                 <value>corporate</value>
-                                <!--Neni tohle preklep? jinych verzich je tady "conference", proc je tady prave ta jedna hodnota cesky?
-                                Kazdopadne preklep, nebo ne, jednou je to ve standardu, tak to plati.-->
+                                <!--see https://github.com/NLCR/Standard_NDK/issues/147-->
                                 <value>konference</value>
                                 <value>conference</value>
                                 <value>family</value>
@@ -93,15 +92,17 @@
                     </attribute>
 
                     <attribute name="usage" mandatory="false">
-                        <expectedContent>
+                        <!--TODO: neni jasne, jestli je hodnota 'primary' jedina mozna, nebo jen doporucena, proto nechavam recommended-->
+                        <recommendedContent>
                             <value>primary</value>
-                        </expectedContent>
+                        </recommendedContent>
                     </attribute>
                 </expectedAttributes>
                 <expectedElements>
                     <element name="mods:namePart" mandatory="false">
                         <expectedAttributes>
                             <attribute name="type" mandatory="false">
+                                <!--TODO: z kontextu je pro validator zrejme, ze neni povinny, nicmene chybi pismeno (M, R, ...) na str. 29-->
                                 <expectedContent>
                                     <oneOf>
                                         <value>date</value>
@@ -652,8 +653,7 @@
                                     <oneOf>
                                         <value>personal</value>
                                         <value>corporate</value>
-                                        <!--Neni tohle preklep? jinych verzich je tady "conference", proc je tady prave ta jedna hodnota cesky?
-                                        Kazdopadne preklep, nebo ne, jednou je to ve standardu, tak to plati.-->
+                                        <!--see https://github.com/NLCR/Standard_NDK/issues/147-->
                                         <value>konference</value>
                                         <value>family</value>
                                     </oneOf>

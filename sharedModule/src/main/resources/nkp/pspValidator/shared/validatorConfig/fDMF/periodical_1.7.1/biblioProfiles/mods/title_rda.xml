@@ -79,8 +79,7 @@
                             <oneOf>
                                 <value>personal</value>
                                 <value>corporate</value>
-                                <!--Neni tohle preklep? jinych verzich je tady "conference", proc je tady prave ta jedna hodnota cesky?
-                                Kazdopadne preklep, nebo ne, jednou je to ve standardu, tak to plati.-->
+                                <!--see https://github.com/NLCR/Standard_NDK/issues/147-->
                                 <value>konference</value>
                                 <value>conference</value>
                                 <value>family</value>
@@ -648,8 +647,7 @@
                                     <oneOf>
                                         <value>personal</value>
                                         <value>corporate</value>
-                                        <!--Neni tohle preklep? jinych verzich je tady "conference", proc je tady prave ta jedna hodnota cesky?
-                                        Kazdopadne preklep, nebo ne, jednou je to ve standardu, tak to plati.-->
+                                        <!--see https://github.com/NLCR/Standard_NDK/issues/147-->
                                         <value>konference</value>
                                         <value>family</value>
                                     </oneOf>
