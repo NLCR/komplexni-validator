@@ -3,7 +3,7 @@
 //https://www.jetbrains.com/help/idea/gradle.html#gradle_version_install
 
 group 'nkp.pspValidator'
-version '2.1.1'
+version '2.2'
 
 apply plugin: 'java'
 apply plugin: 'application'
