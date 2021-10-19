@@ -854,24 +854,21 @@
                             </attribute>
                         </expectedAttributes>
                         <expectedContent>
-                            <!--TODO: mozna regulernim vyrazem, resp. skupinou, protoze ten zapis muze byt dost ruzny - uz jenom oddelovace, viz. treba
-                            http://www.pelagodesign.com/blog/2009/05/20/iso-8601-date-validation-that-doesnt-suck/
-                            -->
+                            <!--TODO: validace ISO8601 na urovni minut-->
                         </expectedContent>
                     </element>
 
                     <element name="mods:recordChangeDate" mandatory="false">
-                        <!-- TODO: https://github.com/NLCR/Standard_NDK/issues/86 -->
-                        <!-- V DMF 1.7 není atribut encoding definován, ale logicky by měl být stejný zápis jako u recordCreationDate.
-                        Zde ale atribut definován nepovinný, protože není ve specifikaci DMF -->
                         <expectedAttributes>
-                            <attribute name="encoding" mandatory="false">
+                            <attribute name="encoding">
                                 <expectedContent>
                                     <value>iso8601</value>
                                 </expectedContent>
                             </attribute>
                         </expectedAttributes>
-                        <expectedContent/>
+                        <expectedContent>
+                            <!--TODO: validace ISO8601 na urovni minut-->
+                        </expectedContent>
                     </element>
 
                     <element name="mods:recordIdentifier" mandatory="false">
