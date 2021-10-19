@@ -128,10 +128,9 @@
                         </expectedElements>
                     </element>
 
-                    <!--není jasná povinnost elementu a atributu unit, viz https://github.com/NLCR/Standard_NDK/issues/82-->
                     <element name="mods:extent" mandatory="false">
                         <expectedAttributes>
-                            <attribute name="unit" mandatory="false">
+                            <attribute name="unit">
                                 <expectedContent>
                                     <value>pages</value>
                                 </expectedContent>
