@@ -36,8 +36,7 @@
                 <expectedContent/>
             </element>
 
-            <element name="dc:description"
-                     errorMessage="Očekáván povinný element dc:description obsahující pořadové číslo vydání.">
+            <element name="dc:description" mandatory="false">
                 <expectedContent/>
             </element>
 

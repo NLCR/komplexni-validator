@@ -44,7 +44,7 @@
                     <element name="mods:nonSort" mandatory="false">
                         <expectedContent/>
                     </element>
-                    
+
                     <element name="mods:title">
                         <expectedContent/>
                     </element>
@@ -53,7 +53,7 @@
                         <expectedContent/>
                     </element>
 
-                    <element name="mods:partNumber">
+                    <element name="mods:partNumber" mandatory="false">
                         <expectedContent/>
                     </element>
 

@@ -53,7 +53,7 @@
                         <expectedContent/>
                     </element>
 
-                    <element name="mods:partNumber">
+                    <element name="mods:partNumber" mandatory="false">
                         <expectedContent/>
                     </element>
 
