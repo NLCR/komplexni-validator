@@ -2339,7 +2339,7 @@
         </rule>
 
         <rule name="PRIMARY-METS_FILESEC_ALL_MASTER_COPY_FILES_REFERENCED">
-            <description>Element mets:fileSec v souboru PRIMARY-METS musí v elementu mets:fileGroup s atributem
+            <description>Element mets:fileSec v souboru PRIMARY-METS musí v elementu mets:fileGrp s atributem
                 ID="MC_IMGGRP" obsahovat odkazy na všechny soubory MASTER-COPY a žádné jiné.
             </description>
             <validation functionName="checkFileListsMatch">
@@ -2368,7 +2368,7 @@
         </rule>
 
         <rule name="PRIMARY-METS_FILESEC_ALL_USER_COPY_FILES_REFERENCED">
-            <description>Element mets:fileSec v souboru PRIMARY-METS musí v elementu mets:fileGroup s atributem
+            <description>Element mets:fileSec v souboru PRIMARY-METS musí v elementu mets:fileGrp s atributem
                 ID="UC_IMGGRP" obsahovat odkazy na všechny soubory USER-COPY a žádné jiné.
             </description>
             <validation functionName="checkFileListsMatch">
@@ -2397,7 +2397,7 @@
         </rule>
 
         <rule name="PRIMARY-METS_FILESEC_ALL_OCR_TEXT_FILES_REFERENCED">
-            <description>Element mets:fileSec v souboru PRIMARY-METS musí v elementu mets:fileGroup s atributem
+            <description>Element mets:fileSec v souboru PRIMARY-METS musí v elementu mets:fileGrp s atributem
                 ID="TXTGRP" obsahovat odkazy na všechny soubory OCR-TEXT a žádné jiné.
             </description>
             <validation functionName="checkFileListsMatch">
@@ -2426,7 +2426,7 @@
         </rule>
 
         <rule name="PRIMARY-METS_FILESEC_ALL_OCR_ALTO_FILES_REFERENCED">
-            <description>Element mets:fileSec v souboru PRIMARY-METS musí v elementu mets:fileGroup s atributem
+            <description>Element mets:fileSec v souboru PRIMARY-METS musí v elementu mets:fileGrp s atributem
                 ID="ALTOGRP" obsahovat odkazy na všechny soubory OCR-ALTO a žádné jiné.
             </description>
             <validation functionName="checkFileListsMatch">
@@ -2455,7 +2455,7 @@
         </rule>
 
         <rule name="PRIMARY-METS_FILESEC_ALL_SECONDARY_METS_FILES_REFERENCED">
-            <description>Element mets:fileSec v souboru PRIMARY-METS musí v elementu mets:fileGroup s atributem
+            <description>Element mets:fileSec v souboru PRIMARY-METS musí v elementu mets:fileGrp s atributem
                 ID="TECHMDGRP" obsahovat odkazy na všechny soubory SECONDARY-METS a žádné jiné.
             </description>
             <validation functionName="checkFileListsMatch">
@@ -2483,7 +2483,7 @@
         </rule>
 
         <rule name="PRIMARY-METS_FILESEC_ALL_SECONDARY_METS_FILES_REFERENCED">
-            <description>Element mets:fileSec v souboru PRIMARY-METS musí v elementu mets:fileGroup s atributem
+            <description>Element mets:fileSec v souboru PRIMARY-METS musí v elementu mets:fileGrp s atributem
                 ID="TECHMDGRP" obsahovat odkazy na všechny soubory SECONDARY-METS a žádné jiné.
             </description>
             <validation functionName="checkFileListsMatch">
@@ -2563,7 +2563,7 @@
         </rule>
 
         <rule name="SECONDARY-METS_FILESEC_MASTER_COPY_FILE_REFERENCED">
-            <description>Element mets:fileSec v každém souboru SECONDARY-METS musí v elementu mets:fileGroup s atributem
+            <description>Element mets:fileSec v každém souboru SECONDARY-METS musí v elementu mets:fileGrp s atributem
                 ID="MC_IMGGRP" obsahovat odkaz na správný soubor MASTER-COPY a žádné jiné odkazy.
             </description>
             <validation functionName="checkSecondaryMetsFilegroupReferencesSingleFile">
@@ -2583,7 +2583,7 @@
         </rule>
 
         <rule name="SECONDARY-METS_FILESEC_USER_COPY_FILE_REFERENCED">
-            <description>Element mets:fileSec v každém souboru SECONDARY-METS musí v elementu mets:fileGroup s atributem
+            <description>Element mets:fileSec v každém souboru SECONDARY-METS musí v elementu mets:fileGrp s atributem
                 ID="UC_IMGGRP" obsahovat odkaz na správný soubor USER-COPY a žádné jiné odkazy.
             </description>
             <validation functionName="checkSecondaryMetsFilegroupReferencesSingleFile">
@@ -2603,7 +2603,7 @@
         </rule>
 
         <rule name="SECONDARY-METS_FILESEC_OCR-ALTO_FILE_REFERENCED">
-            <description>Element mets:fileSec v každém souboru SECONDARY-METS musí v elementu mets:fileGroup s atributem
+            <description>Element mets:fileSec v každém souboru SECONDARY-METS musí v elementu mets:fileGrp s atributem
                 ID="ALTOGRP" obsahovat odkaz na správný soubor OCR-ALTO a žádné jiné odkazy.
             </description>
             <validation functionName="checkSecondaryMetsFilegroupReferencesSingleFile">
@@ -2623,7 +2623,7 @@
         </rule>
 
         <rule name="SECONDARY-METS_FILESEC_OCR-TEXT_FILE_REFERENCED">
-            <description>Element mets:fileSec v každém souboru SECONDARY-METS musí v elementu mets:fileGroup s atributem
+            <description>Element mets:fileSec v každém souboru SECONDARY-METS musí v elementu mets:fileGrp s atributem
                 ID="TXTGRP" obsahovat odkaz na správný soubor OCR-TEXT a žádné jiné odkazy.
             </description>
             <validation functionName="checkSecondaryMetsFilegroupReferencesSingleFile">
