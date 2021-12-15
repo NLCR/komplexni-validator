@@ -6,6 +6,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Hyperlink;
 import javafx.scene.control.Label;
 import javafx.scene.text.Text;
+import javafx.stage.DirectoryChooser;
 import javafx.stage.WindowEvent;
 import nkp.pspValidator.shared.Version;
 
@@ -70,6 +71,19 @@ public class AboutAppDialogController extends DialogController {
 
     public void openConfigDir(ActionEvent actionEvent) {
         openDirFromConfigProperty(ConfigurationManager.PROP_VALIDATOR_CONFIG_DIR);
+    }
+
+    public void changeLogsDir(ActionEvent actionEvent) {
+        DirectoryChooser chooser = new DirectoryChooser();
+        File currentDir = getConfigurationManager().getFileOrNull(ConfigurationManager.PROP_LOG_DIR);
+        if (currentDir != null && currentDir.exists()) {
+            chooser.setInitialDirectory(currentDir);
+        }
+        File selectedDirectory = chooser.showDialog(stage);
+        if (selectedDirectory != null) {
+            getConfigurationManager().setFile(ConfigurationManager.PROP_LOG_DIR, selectedDirectory);
+            logsDirText.setText(getConfigFilePathOrNull(ConfigurationManager.PROP_LOG_DIR));
+        }
     }
 
     public void openLogsDir(ActionEvent actionEvent) {

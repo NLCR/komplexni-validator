@@ -20,7 +20,7 @@ public class AboutAppDialog extends AbstractDialog {
 
     @Override
     public int getWidth() {
-        return 700;
+        return 770;
     }
 
     @Override

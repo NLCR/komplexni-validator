@@ -9,7 +9,7 @@
       fx:controller="nkp.pspValidator.gui.AboutAppDialogController"
       fx:id="container"
       minHeight="450"
-      minWidth="700"
+      minWidth="800"
       alignment="CENTER_LEFT"
       spacing="0"
 >
@@ -21,7 +21,7 @@
     <children>
 
         <Text styleClass="title"
-              wrappingWidth="650"
+              wrappingWidth="750"
               text="Komplexní validátor byl vyvinut pro Národní Knihovnu České republiky. Nástroj je určený k validaci PSP balíků podle standardu Definice metadatových formátů pro digitalizaci."
         />
         <GridPane alignment="CENTER" hgap="10" vgap="10">
@@ -33,6 +33,7 @@
             <Label text="Standardy pro metadata"
                    GridPane.rowIndex="0"
                    GridPane.columnIndex="0"
+                   minWidth="150"
             />
             <Hyperlink text="http://www.ndk.cz/standardy-digitalizace/metadata"
                        GridPane.rowIndex="0"
@@ -101,6 +102,7 @@
                     GridPane.columnIndex="3"
                     GridPane.hgrow="ALWAYS"
                     onAction="#openConfigDir"
+                    minWidth="65"
             />
 
             <Label text="Adresář s logy"
@@ -121,6 +123,16 @@
                     GridPane.columnIndex="3"
                     GridPane.hgrow="ALWAYS"
                     onAction="#openLogsDir"
+                    minWidth="65"
+            />
+
+            <Button
+                    text="Změnit"
+                    GridPane.rowIndex="6"
+                    GridPane.columnIndex="4"
+                    GridPane.hgrow="ALWAYS"
+                    onAction="#changeLogsDir"
+                    minWidth="65"
             />
 
             <Label text="Vývojářský mód"
@@ -141,7 +153,7 @@
             <padding>
                 <Insets bottom="5" left="10" right="10" top="5"/>
             </padding>
-            <Button onAction="#closeDialog" text="OK"/>
+            <Button onAction="#closeDialog" text="OK" minWidth="100"/>
         </HBox>
 
     </children>
