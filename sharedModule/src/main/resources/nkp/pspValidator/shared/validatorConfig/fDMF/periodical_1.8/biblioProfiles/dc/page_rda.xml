@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <metadataProfile
-        xmlns="http://www.nkp.cz/pspValidator/2.2.1/metadataProfile"
+        xmlns="http://www.nkp.cz/pspValidator/2.3/metadataProfile"
         name="DC page (RDA)"
-        validatorVersion="2.2.1"
+        validatorVersion="2.3"
         dmf="periodical_1.8"
 >
 
