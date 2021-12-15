@@ -30,18 +30,14 @@ public class MetadataProfileValidator {
         XPathExpression rootElXpathExpr = manager.buildXpath(rootElXpath);
         NodeList biblioRootEls = (NodeList) rootElXpathExpr.evaluate(doc.getDocumentElement(), XPathConstants.NODESET);
         if (biblioRootEls.getLength() == 0) {
-            result.addError(Level.ERROR, buildMessage(errorLabel, "nenalezen kořenový element %s:%s", rootElDef.getElementNameNsPrefix(), rootElDef.getElementName()));
+            result.addError(Level.ERROR, ErrorMessage.from(errorLabel, "nenalezen kořenový element %s:%s", rootElDef.getElementNameNsPrefix(), rootElDef.getElementName()).build());
         } else if (biblioRootEls.getLength() > 1) {
-            result.addError(Level.ERROR, buildMessage(errorLabel, "nalezeno více kořenových elementů %s:%s", rootElDef.getElementNameNsPrefix(), rootElDef.getElementName()));
+            result.addError(Level.ERROR, ErrorMessage.from(errorLabel, "nalezeno více kořenových elementů %s:%s", rootElDef.getElementNameNsPrefix(), rootElDef.getElementName()).build());
         } else { //continue - single root element
             Element biblioRootEl = (Element) biblioRootEls.item(0);
             checkElement(manager, result, biblioRootEl, rootElDef, null, null, errorLabel);
         }
         return result;
-    }
-
-    private static String buildMessage(String label, String messagePattern, Object... params) {
-        return String.format(label + ": " + messagePattern, params);
     }
 
     private static void checkElement(XmlManager manager, ValidationResult result, Element element, ExpectedElementDefinition definition, String parentPath, Integer positionOfElement, String errorLabel) throws InvalidXPathExpressionException, XPathExpressionException {
@@ -52,17 +48,16 @@ public class MetadataProfileValidator {
         checkChildrenElements(manager, result, element, thisElementPath, definition.getExpectedChildElementDefinitions(), definition.isIgnoreUnexpectedChildElements(), XmlUtils.getChildrenElements(element), errorLabel);
         //check element's text content
         if (definition.getExpectedContentDefinition() != null) {//expected content
-            //checkContent(manager, result, element, thisElementPath, definition.getExpectedContentDefinition(), errorLabel);
             String content = XmlUtils.getDirectTextContent(element);
             CheckingResult checkingResult = definition.getExpectedContentDefinition().checkAgainst(content);
             if (!checkingResult.matches()) {
-                result.addError(Level.ERROR, buildMessage(errorLabel, "%s: %s", thisElementPath, checkingResult.getErrorMessage()));
+                result.addError(Level.ERROR, ErrorMessage.from(errorLabel, "%s: %s", thisElementPath, checkingResult.getErrorMessage()).build());
             }
         } else if (definition.getRecommendedContentDefinition() != null) {//recommended content
             String content = XmlUtils.getDirectTextContent(element);
             CheckingResult checkingResult = definition.getRecommendedContentDefinition().checkAgainst(content);
             if (!checkingResult.matches()) {
-                result.addError(Level.WARNING, buildMessage(errorLabel, "%s: %s", thisElementPath, checkingResult.getErrorMessage()));
+                result.addError(Level.WARNING, ErrorMessage.from(errorLabel, "%s: %s", thisElementPath, checkingResult.getErrorMessage()).build());
             }
         }
         //check element's extra rules
@@ -73,7 +68,7 @@ public class MetadataProfileValidator {
         for (ExtraRule rule : extraRules) {
             CheckingResult checkingResult = rule.checkAgainst(manager, currentElement);
             if (!checkingResult.matches()) {
-                result.addError(Level.ERROR, buildMessage(errorLabel, "%s: %s", currentElementPath, checkingResult.getErrorMessage()));
+                result.addError(Level.ERROR, ErrorMessage.from(errorLabel, "%s: %s", currentElementPath, checkingResult.getErrorMessage()).build());
             }
         }
     }
@@ -97,7 +92,7 @@ public class MetadataProfileValidator {
             //defined attribute not found
             if (!found) {
                 if (attrDef.isMandatory()) { //ERROR if mandatory
-                    result.addError(Level.ERROR, buildMessage(errorLabel, "%s: nenalezen povinný atribut '%s'", parentElementPath, attrDef.getAttributeName()));
+                    result.addError(Level.ERROR, ErrorMessage.from(errorLabel, "%s: nenalezen povinný atribut '%s'", parentElementPath, attrDef.getAttributeName()).build());
                 } else { //ignore if not mandatory
                     //possibly problem INFO
                 }
@@ -108,7 +103,7 @@ public class MetadataProfileValidator {
             if (!positionsOfUsedAttrs.contains(i)) {
                 Attr attr = (Attr) foundAttrs.item(i);
                 if (!attr.getName().startsWith("xmlns:") && !ignoreUnexpectedAttributes) { //ignore namespace definitions
-                    result.addError(Level.WARNING, buildMessage(errorLabel, "%s: nalezen neočekávaný atribut '%s'", parentElementPath, attr.getName()));
+                    result.addError(Level.WARNING, ErrorMessage.from(errorLabel, "%s: nalezen neočekávaný atribut '%s'", parentElementPath, attr.getName()).build());
                 }
             }
         }
@@ -120,12 +115,12 @@ public class MetadataProfileValidator {
         if (attrExpectedContent != null) {
             CheckingResult checkingResult = attrExpectedContent.checkAgainst(attrValue);
             if (!checkingResult.matches()) {
-                result.addError(Level.ERROR, buildMessage(errorLabel, "%s/@%s: %s", parentElementPath, attrName, checkingResult.getErrorMessage()));
+                result.addError(Level.ERROR, ErrorMessage.from(errorLabel, "%s/@%s: %s", parentElementPath, attrName, checkingResult.getErrorMessage()).build());
             }
         } else if (attrRecommendedContent != null) {
             CheckingResult checkingResult = attrRecommendedContent.checkAgainst(attrValue);
             if (!checkingResult.matches()) {
-                result.addError(Level.WARNING, buildMessage(errorLabel, "%s/@%s: %s", parentElementPath, attrName, checkingResult.getErrorMessage()));
+                result.addError(Level.WARNING, ErrorMessage.from(errorLabel, "%s/@%s: %s", parentElementPath, attrName, checkingResult.getErrorMessage()).build());
             }
         }
     }
@@ -142,7 +137,6 @@ public class MetadataProfileValidator {
         return builder.toString();
     }
 
-
     private static void checkChildrenElements(XmlManager manager, ValidationResult result, Element rootElement, String parentElementPath, List<ExpectedElementDefinition> expectedElementDefinitions, boolean ignoreUnexpectedElements, List<Element> chilrenElements, String errorLabel) throws InvalidXPathExpressionException, XPathExpressionException {
         Set<Element> childrenRemaining = new HashSet<>();
         childrenRemaining.addAll(chilrenElements);
@@ -155,7 +149,7 @@ public class MetadataProfileValidator {
                 Element foundElementByXpath = (Element) foundElementsByXpath.item(i);
                 if (childrenRemaining.contains(foundElementByXpath)) { //i.e. actual element has not yet been consumed by another xpath
                     if (!elDef.isRepeatable() && found) {
-                        result.addError(Level.ERROR, buildMessage(errorLabel, "%s: nalezeno více výskytů neopakovatelného elementu '%s'", parentElementPath, elDef.buildRelativeXpath()));
+                        result.addError(Level.ERROR, ErrorMessage.from(errorLabel, "%s: nalezeno více výskytů neopakovatelného elementu '%s'", parentElementPath, elDef.buildRelativeXpath()).build());
                         childrenRemaining.remove(foundElementByXpath); //consume
                     } else {
                         found = true;
@@ -165,18 +159,23 @@ public class MetadataProfileValidator {
                     }
                 } else { //not found
                     if (elDef.isMandatory() && !found) {
-                        result.addError(Level.ERROR, buildMessage(errorLabel, "%s: nenalezen očekávaný povinný element '%s'", parentElementPath, elDef.buildRelativeXpath()));
+                        result.addError(Level.ERROR, ErrorMessage.from(errorLabel, "%s: nenalezen očekávaný povinný element '%s'", parentElementPath, elDef.buildRelativeXpath())
+                                .withCustomMessage(elDef.getErrorMessage())
+                                .build());
                     }
                 }
             }
             if (foundElementsByXpath.getLength() == 0 && elDef.isMandatory()) { //mandatory element not found
-                result.addError(Level.ERROR, buildMessage(errorLabel, "%s: nenalezen očekávaný povinný element '%s'", parentElementPath, elDef.buildRelativeXpath()));
+                result.addError(Level.ERROR, ErrorMessage.from(errorLabel, "%s: nenalezen očekávaný povinný element '%s'", parentElementPath, elDef.buildRelativeXpath())
+                        .withCustomMessage(elDef.getErrorMessage())
+                        .build());
             }
         }
         //unexpected element, warning
         for (Element element : childrenRemaining) {
             if (!ignoreUnexpectedElements) {
-                result.addError(Level.WARNING, buildMessage(errorLabel, "%s: nalezen neočekávaný element '%s' %s", parentElementPath, element.getTagName(), buildAttributeList(element)));
+                result.addError(Level.WARNING, ErrorMessage.from(errorLabel, "%s: nalezen neočekávaný element '%s' %s", parentElementPath, element.getTagName(), buildAttributeList(element))
+                        .build());
             }
         }
     }
@@ -197,6 +196,36 @@ public class MetadataProfileValidator {
             return builder.toString();
         } else {
             return "";
+        }
+    }
+
+    static class ErrorMessage {
+        private final String errorLabel;
+        private final String messagePattern;
+        private final Object[] messageParams;
+        private String customMessage;
+
+        private ErrorMessage(String errorLabel, String messagePattern, Object... messageParams) {
+            this.errorLabel = errorLabel;
+            this.messagePattern = messagePattern;
+            this.messageParams = messageParams;
+        }
+
+        public static ErrorMessage from(String errorLabel, String messagePattern, Object... messageParams) {
+            return new ErrorMessage(errorLabel, messagePattern, messageParams);
+        }
+
+        public ErrorMessage withCustomMessage(String customMessage) {
+            this.customMessage = customMessage;
+            return this;
+        }
+
+        public String build() {
+            if (customMessage != null && !customMessage.trim().isEmpty()) {
+                return String.format(errorLabel + ": " + messagePattern, messageParams) + ": " + customMessage;
+            } else {
+                return String.format(errorLabel + ": " + messagePattern, messageParams);
+            }
         }
     }
 
