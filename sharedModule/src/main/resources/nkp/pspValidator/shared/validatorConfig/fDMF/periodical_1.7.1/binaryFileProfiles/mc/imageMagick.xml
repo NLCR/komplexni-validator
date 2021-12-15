@@ -1,6 +1,6 @@
 <binaryFileProfile
-        xmlns="http://www.nkp.cz/pspValidator/2.2/binaryFileProfile"
-        validatorVersion="2.2"
+        xmlns="http://www.nkp.cz/pspValidator/2.2.1/binaryFileProfile"
+        validatorVersion="2.2.1"
         dmf="periodical_1.7.1"
 >
 <fromText>
