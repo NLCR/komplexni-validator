@@ -272,7 +272,9 @@
                         <expectedAttributes>
                             <attribute name="type"/>
                         </expectedAttributes>
-                        <expectedContent/>
+                        <expectedContent>
+                            <regexp>^[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}$</regexp>
+                        </expectedContent>
                     </element>
                     <element name="mods:identifier" specification="@type='issue number'" mandatory="false">
                         <expectedAttributes>
@@ -295,7 +297,9 @@
                 <expectedAttributes>
                     <attribute name="type"/>
                 </expectedAttributes>
-                <expectedContent/>
+                <expectedContent>
+                    <regexp>^[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}$</regexp>
+                </expectedContent>
             </element>
 
             <element name="mods:recordInfo">

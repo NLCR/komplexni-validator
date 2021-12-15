@@ -148,7 +148,9 @@
                         </expectedContent>
                     </attribute>
                 </expectedAttributes>
-                <expectedContent/>
+                <expectedContent>
+                    <regexp>^[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}$</regexp>
+                </expectedContent>
             </element>
 
             <!--dalsi identifikatory - urnnbn, jine (barcode, oclc, sysno, permalink apod.)-->
