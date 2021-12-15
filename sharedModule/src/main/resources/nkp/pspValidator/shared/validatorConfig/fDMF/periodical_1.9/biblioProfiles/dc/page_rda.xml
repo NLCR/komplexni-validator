@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<metadataProfile
+        xmlns="http://www.nkp.cz/pspValidator/2.3/metadataProfile"
+        name="DC page (RDA)"
+        validatorVersion="2.3"
+        dmf="periodical_1.9"
+>
+
+    <info>
+        <text>DMF Periodika 1.9 očekává Dublin Core verze 1.1. Dále se zde upřesňují očekávaná metadata stranu
+            pro záznamy zpracované podle katalogizačních pravidel RDA.
+        </text>
+        <url description="popis Dublin Core 1.1">http://dublincore.org/documents/dces/</url>
+        <url description="XSD pro Dublin Core 1.1">http://www.openarchives.org/OAI/2.0/oai_dc.xsd</url>
+    </info>
+
+    <namespaces>
+        <namespace prefix="oai_dc">http://www.openarchives.org/OAI/2.0/oai_dc/</namespace>
+        <namespace prefix="dc">http://purl.org/dc/elements/1.1/</namespace>
+    </namespaces>
+
+    <rootElement name="oai_dc:dc">
+        <expectedElements>
+
+            <element name="dc:title" mandatory="false">
+                <expectedContent/>
+            </element>
+
+            <element name="dc:identifier" errorMessage="Očekáván povinný element dc:identifier obsahující identifikátor uuid.">
+                <expectedContent/>
+            </element>
+
+            <element name="dc:coverage" mandatory="false">
+                <expectedContent/>
+            </element>
+
+            <element name="dc:type" mandatory="true">
+                <expectedContent>
+                    <value>model:page</value>
+                </expectedContent>
+            </element>
+
+            <element name="dc:description" mandatory="false">
+                <expectedContent/>
+            </element>
+
+        </expectedElements>
+    </rootElement>
+
+</metadataProfile>
+
+	

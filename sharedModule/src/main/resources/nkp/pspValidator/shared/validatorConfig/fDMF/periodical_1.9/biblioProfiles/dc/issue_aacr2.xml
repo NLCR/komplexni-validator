@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<metadataProfile
+        xmlns="http://www.nkp.cz/pspValidator/2.3/metadataProfile"
+        name="DC issue (AACR2)"
+        validatorVersion="2.3"
+        dmf="periodical_1.9"
+>
+    <info>
+        <text>DMF Periodika 1.9 očekává Dublin Core verze 1.1. Dále se zde upřesňují očekávaná metadata pro číslo
+            periodika pro záznamy zpracované podle katalogizačních pravidel AACR2.
+        </text>
+        <url description="popis Dublin Core 1.1">http://dublincore.org/documents/dces/</url>
+        <url description="XSD pro Dublin Core 1.1">http://www.openarchives.org/OAI/2.0/oai_dc.xsd</url>
+    </info>
+
+    <namespaces>
+        <namespace prefix="oai_dc">http://www.openarchives.org/OAI/2.0/oai_dc/</namespace>
+        <namespace prefix="dc">http://purl.org/dc/elements/1.1/</namespace>
+    </namespaces>
+
+    <dictionaries>
+        <dictionary name="marcRelatorCodes"
+                    description="kódy rolí podle MARC21"
+                    url="http://www.loc.gov/marc/relators/relaterm.html"/>
+        <dictionary name="iso6392languageCodes"
+                    description="kódy jazyků podle ISO 639-2"
+                    url="http://www.loc.gov/standards/iso639-2/php/code_list.php"/>
+        <dictionary name="siglaInstitutionCodes"
+                    description="sigly knihoven"/>
+    </dictionaries>
+
+    <rootElement name="oai_dc:dc">
+        <expectedElements>
+
+            <element name="dc:title" errorMessage="Očekáván povinný element dc:title obsahující název titulu.">
+                <expectedContent/>
+            </element>
+
+            <element name="dc:description" mandatory="false">
+                <expectedContent/>
+            </element>
+
+            <element name="dc:creator" mandatory="false">
+                <expectedContent/>
+            </element>
+
+            <element name="dc:type" specification="text() = 'model:periodicalitem'"
+                     errorMessage="Očekáván právě jeden povinný element dc:type obsahující text 'model:periodicalitem'.">
+                <expectedContent/>
+            </element>
+
+            <element name="dc:coverage" mandatory="false">
+                <expectedContent/>
+            </element>
+
+            <element name="dc:publisher" mandatory="false">
+                <expectedContent/>
+            </element>
+
+            <element name="dc:date" mandatory="false">
+                <expectedContent/>
+            </element>
+
+            <element name="dc:language"
+                     errorMessage="Očekáván povinný element dc:language obsahující přesné určení jazyka.">
+                <expectedContent>
+                    <fromDictionary name="iso6392languageCodes"/>
+                </expectedContent>
+            </element>
+
+            <element name="dc:format" mandatory="false">
+                <expectedContent/>
+            </element>
+
+            <element name="dc:subject" mandatory="false">
+                <expectedContent/>
+            </element>
+
+            <element name="dc:identifier" errorMessage="Očekáván alespoň jeden povinný element dc:identifier.">
+                <expectedContent/>
+            </element>
+
+            <element name="dc:source" mandatory="false">
+                <expectedContent/>
+            </element>
+
+        </expectedElements>
+    </rootElement>
+</metadataProfile>
+
+	

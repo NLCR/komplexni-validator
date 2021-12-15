@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<metadataProfile
+        xmlns="http://www.nkp.cz/pspValidator/2.3/metadataProfile"
+        name="MODS volume (RDA)"
+        validatorVersion="2.3"
+        dmf="periodical_1.9"
+>
+
+    <info>
+        <text>DMF Periodika 1.9 očekává MODS verze 3.6. Dále se zde upřesňují očekávaná metadata pro ročník periodika
+            pro záznamy zpracované podle katalogizačních pravidel RDA.
+        </text>
+        <url>http://www.loc.gov/standards/mods/</url>
+        <url description="XSD pro MODS 3.6">http://www.loc.gov/standards/mods/v3/mods-3-6.xsd</url>
+        <url description="popis MODS 3.6">http://www.loc.gov/standards/mods/mods-outline-3-6.html</url>
+    </info>
+
+    <namespaces>
+        <namespace prefix="mods">http://www.loc.gov/mods/v3</namespace>
+    </namespaces>
+
+    <dictionaries>
+        <dictionary name="marcRelatorCodes"
+                    description="kódy rolí podle MARC21"
+                    url="http://www.loc.gov/marc/relators/relaterm.html"/>
+    </dictionaries>
+
+    <rootElement name="mods:mods">
+        <expectedAttributes>
+            <attribute name="ID">
+                <expectedContent>
+                    <regexp>MODS_VOLUME_[0-9]{4}</regexp>>
+                </expectedContent>
+            </attribute>
+        </expectedAttributes>
+        <expectedElements>
+            <element name="mods:titleInfo">
+                <expectedElements>
+                    <element name="mods:partNumber" mandatory="false">
+                        <expectedContent/>
+                    </element>
+                </expectedElements>
+            </element>
+
+            <element name="mods:name" mandatory="false">
+                <expectedAttributes>
+                    <attribute name="type" mandatory="false">
+                        <expectedContent>
+                            <oneOf>
+                                <value>personal</value>
+                                <value>corporate</value>
+                                <!--see https://github.com/NLCR/Standard_NDK/issues/147-->
+                                <value>konference</value>
+                                <value>conference</value>
+                                <value>family</value>
+                            </oneOf>
+                        </expectedContent>
+                    </attribute>
+
+                    <attribute name="usage" mandatory="false">
+                        <!--TODO: neni jasne, jestli je hodnota 'primary' jedina mozna, nebo jen doporucena, proto nechavam recommended-->
+                        <recommendedContent>
+                            <value>primary</value>
+                        </recommendedContent>
+                    </attribute>
+                </expectedAttributes>
+                <expectedElements>
+                    <element name="mods:namePart" mandatory="false">
+                        <expectedAttributes>
+                            <!--TODO: na s.39 je povinnost M, zároveň v textu "pokud se nejedná o osobu, type se nevyplňuje" (takže není povinný)-->
+                            <attribute name="type" mandatory="false">
+                                <expectedContent>
+                                    <oneOf>
+                                        <value>date</value>
+                                        <value>family</value>
+                                        <value>given</value>
+                                        <value>termsOfAddress</value>
+                                    </oneOf>
+                                </expectedContent>
+                            </attribute>
+                        </expectedAttributes>
+                        <expectedContent/>
+                    </element>
+
+                    <element name="mods:nameIdentifier" mandatory="false">
+                        <expectedContent/>
+                    </element>
+
+                    <element name="mods:role" mandatory="false">
+                        <!--Kontrolovany slovnik je jen doporucovan-->
+                        <expectedElements>
+                            <element name="mods:roleTerm" mandatory="false">
+                                <expectedAttributes>
+                                    <attribute name="type">
+                                        <expectedContent>
+                                            <value>code</value>
+                                        </expectedContent>
+                                    </attribute>
+                                    <attribute name="authority" mandatory="false">
+                                        <recommendedContent>
+                                            <value>marcrelator</value>
+                                        </recommendedContent>
+                                    </attribute>
+                                </expectedAttributes>
+                                <recommendedContent>
+                                    <fromDictionary name="marcRelatorCodes"/>
+                                </recommendedContent>
+                            </element>
+                        </expectedElements>
+                    </element>
+                </expectedElements>
+            </element>
+
+            <element name="mods:genre" specification="text()='volume'"/>
+
+            <element name="mods:originInfo">
+                <expectedElements>
+                    <element name="mods:dateIssued">
+                        <expectedAttributes>
+                            <attribute name="point" mandatory="false">
+                                <expectedContent>
+                                    <!--neni jasne, jestli to jsou opravdu jedine dve povolene hodnoty-->
+                                    <!--<oneOf>
+                                        <value>start</value>
+                                        <value>end</value>
+                                    </oneOf>-->
+                                </expectedContent>
+                            </attribute>
+                            <attribute name="qualifier" mandatory="false">
+                                <expectedContent>
+                                    <!--approximate je jen doporucena hodnota, muze tam byt jinak cokoliv-->
+                                </expectedContent>
+                            </attribute>
+                        </expectedAttributes>
+                        <expectedContent/>
+                    </element>
+                </expectedElements>
+            </element>
+
+            <!--identifikatory-->
+
+            <element name="mods:identifier" specification="@type='uuid'">
+                <expectedAttributes>
+                    <attribute name="type"/>
+                    <attribute name="invalid" mandatory="false">
+                        <expectedContent>
+                            <value>yes</value>
+                        </expectedContent>
+                    </attribute>
+                </expectedAttributes>
+                <expectedContent>
+                    <regexp>^[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}$</regexp>
+                </expectedContent>
+            </element>
+
+            <!--dalsi identifikatory - urnnbn, jine (barcode, oclc, sysno, permalink apod.)-->
+            <element name="mods:identifier"
+                     specification="@type!='uuid'"
+                     mandatory="false">
+                <expectedAttributes>
+                    <attribute name="type"/>
+                    <attribute name="invalid" mandatory="false">
+                        <expectedContent>
+                            <value>yes</value>
+                        </expectedContent>
+                    </attribute>
+                </expectedAttributes>
+                <expectedContent/>
+            </element>
+
+            <element name="mods:physicalDescription" mandatory="false">
+                <expectedElements>
+                    <element name="mods:note" mandatory="false">
+                        <expectedContent/>
+                    </element>
+                </expectedElements>
+            </element>
+
+        </expectedElements>
+    </rootElement>
+</metadataProfile>
+
+	
