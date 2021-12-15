@@ -165,7 +165,7 @@ public class PspDirValidationConfigurationDialogController extends DialogControl
         //forced - Monograph
         List<String> forcedMonVersions = new ArrayList<>();
         forcedMonVersions.addAll(main.getValidationDataManager().getFdmfRegistry().getMonographFdmfVersions());
-        Collections.sort(forcedMonVersions, new VersionComparator());
+        Collections.sort(forcedMonVersions, new VersionComparator(true));
         if (forcedMonVersions != null) {
             ObservableList<String> monVersionsObservable = FXCollections.observableArrayList(forcedMonVersions);
             forcedMonVersionChoiceBox.setItems(monVersionsObservable);
@@ -186,7 +186,7 @@ public class PspDirValidationConfigurationDialogController extends DialogControl
         //forced - Periodical
         List<String> forcedPerVersions = new ArrayList<>();
         forcedPerVersions.addAll(main.getValidationDataManager().getFdmfRegistry().getPeriodicalFdmfVersions());
-        Collections.sort(forcedPerVersions, new VersionComparator());
+        Collections.sort(forcedPerVersions, new VersionComparator(true));
         if (forcedPerVersions != null) {
             ObservableList<String> perVersionsObservable = FXCollections.observableArrayList(forcedPerVersions);
             forcedPerVersionChoiceBox.setItems(perVersionsObservable);
@@ -207,7 +207,7 @@ public class PspDirValidationConfigurationDialogController extends DialogControl
         //forced - Sound recording
         List<String> forcedSRVersions = new ArrayList<>();
         forcedSRVersions.addAll(main.getValidationDataManager().getFdmfRegistry().getSoundRecordingFdmfVersions());
-        Collections.sort(forcedSRVersions, new VersionComparator());
+        Collections.sort(forcedSRVersions, new VersionComparator(true));
         if (forcedSRVersions != null) {
             ObservableList<String> srVersionsObservable = FXCollections.observableArrayList(forcedSRVersions);
             forcedSRVersionChoiceBox.setItems(srVersionsObservable);
@@ -228,7 +228,7 @@ public class PspDirValidationConfigurationDialogController extends DialogControl
         //preferred - Monograph
         List<String> preferredMonVersions = new ArrayList<>();
         preferredMonVersions.addAll(main.getValidationDataManager().getFdmfRegistry().getMonographFdmfVersions());
-        Collections.sort(preferredMonVersions, new VersionComparator());
+        Collections.sort(preferredMonVersions, new VersionComparator(true));
         if (preferredMonVersions != null) {
             ObservableList<String> monVersionsObservable = FXCollections.observableArrayList(preferredMonVersions);
             preferredMonVersionChoiceBox.setItems(monVersionsObservable);
@@ -249,7 +249,7 @@ public class PspDirValidationConfigurationDialogController extends DialogControl
         //preferred - Periodical
         List<String> preferredPerVersions = new ArrayList<>();
         preferredPerVersions.addAll(main.getValidationDataManager().getFdmfRegistry().getPeriodicalFdmfVersions());
-        Collections.sort(preferredPerVersions, new VersionComparator());
+        Collections.sort(preferredPerVersions, new VersionComparator(true));
         if (preferredPerVersions != null) {
             ObservableList<String> perVersionsObservable = FXCollections.observableArrayList(preferredPerVersions);
             preferredPerVersionChoiceBox.setItems(perVersionsObservable);
@@ -270,7 +270,7 @@ public class PspDirValidationConfigurationDialogController extends DialogControl
         //preferred - Sound recording
         List<String> preferredSRVersions = new ArrayList<>();
         preferredSRVersions.addAll(main.getValidationDataManager().getFdmfRegistry().getSoundRecordingFdmfVersions());
-        Collections.sort(preferredSRVersions, new VersionComparator());
+        Collections.sort(preferredSRVersions, new VersionComparator(true));
         if (preferredSRVersions != null) {
             ObservableList<String> srVersionsObservable = FXCollections.observableArrayList(preferredSRVersions);
             preferredSRVersionChoiceBox.setItems(srVersionsObservable);

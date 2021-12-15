@@ -21,6 +21,7 @@ import java.util.List;
 public class MainTest {
 
 
+    private static final String MON_1_4 = "/Users/martin/IdeaProjects/komplexni-validator-samples/src/test/resources/monografie/abc135-000itk";
     private static final String MON_1_2 = "../sharedModule/src/test/resources/monograph_1.2/b50eb6b0-f0a4-11e3-b72e-005056827e52";
     private static final String MON_1_2_MAP = "../sharedModule/src/test/resources/monograph_1.2_map/6e9a7000-65c0-11e6-85af-005056827e52";
     private static final String MON_1_2_INVALID_IMAGES = "../sharedModule/src/test/resources/monograph_1.2-invalid_images/b50eb6b0-f0a4-11e3-b72e-005056827e52";
@@ -76,10 +77,10 @@ public class MainTest {
         //devParams.getSectionsToRun().add("Bibliografická metadata");
         //devParams.getSectionsToRun().add("Identifikátory");
         //devParams.getSectionsToRun().add("Obrazová data");
-        //devParams.getSectionsToRun().add("Bibliografická metadata");
+        devParams.getSectionsToRun().add("Bibliografická metadata");
         //devParams.getSectionsToRun().add("ALTO");
         //devParams.getSectionsToRun().add("Technická metadata");
-        devParams.getSectionsToRun().add("METS hlavičky");
+        //devParams.getSectionsToRun().add("METS hlavičky");
         //devParams.getSectionsToRun().add("Autorskoprávní metadata");
         //devParams.getSectionsToRun().add("Sekundární METS filesec");
         //devParams.getSectionsToRun().add("Strukturální mapy");
@@ -93,8 +94,9 @@ public class MainTest {
                 //, MON_1_2
                 //, MON_1_2_MAP
                 //, MON_1_2_INVALID_IMAGES
+                , MON_1_4
                 //, PER_1_4
-                , PER_1_6
+                //, PER_1_6
                 //, PER_1_6_INFO_INVALID_NS
                 //, ZIP_1
                 //, ZIP_NOT_ZIP
@@ -108,9 +110,8 @@ public class MainTest {
                 , null
                 //, "1.4"
                 //, "1.6"
-                , null
-                //,"1.0"
-                //,"1.2"
+                //, null
+                , "1.4"
                 , null
                 //, "1.4"
                 //, "1.6"

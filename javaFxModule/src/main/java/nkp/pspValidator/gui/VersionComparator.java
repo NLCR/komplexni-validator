@@ -4,6 +4,16 @@ import java.util.Comparator;
 
 public class VersionComparator implements Comparator<String> {
 
+    private final boolean desc;
+
+    public VersionComparator() {
+        this.desc = false;
+    }
+
+    public VersionComparator(boolean desc) {
+        this.desc = desc;
+    }
+
     @Override
     public int compare(String o1, String o2) {
         if (o1 == null && o2 == null) {
@@ -24,9 +34,9 @@ public class VersionComparator implements Comparator<String> {
                         return currentSegmentCompared;
                     }
                 } else if (segments1.length == i) {
-                    return -1;
+                    return desc ? 1 : -1;
                 } else {
-                    return 1;
+                    return desc ? -1 : 1;
                 }
             }
         }
@@ -36,7 +46,8 @@ public class VersionComparator implements Comparator<String> {
         try {
             int first = Integer.valueOf(segment1);
             int second = Integer.valueOf(segment2);
-            return first - second;
+            int diff = first - second;
+            return desc ? diff * (-1) : diff;
         } catch (NumberFormatException e) {
             return segment1.compareTo(segment2);
         }
