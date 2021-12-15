@@ -93,8 +93,8 @@ public class MetadataProfileValidator {
             if (!found) {
                 if (attrDef.isMandatory()) { //ERROR if mandatory
                     result.addError(Level.ERROR, ErrorMessage.from(errorLabel, "%s: nenalezen povinný atribut '%s'", parentElementPath, attrDef.getAttributeName()).build());
-                } else { //ignore if not mandatory
-                    //possibly problem INFO
+                } else { //INFO if not mandatory
+                    result.addError(Level.INFO, ErrorMessage.from(errorLabel, "%s: nenalezen doporučený atribut '%s'", parentElementPath, attrDef.getAttributeName()).build());
                 }
             }
         }
@@ -157,18 +157,30 @@ public class MetadataProfileValidator {
                         checkElement(manager, result, foundElementByXpath, elDef, parentElementPath, position, errorLabel);
                         childrenRemaining.remove(foundElementByXpath); //consume
                     }
-                } else { //not found
-                    if (elDef.isMandatory() && !found) {
-                        result.addError(Level.ERROR, ErrorMessage.from(errorLabel, "%s: nenalezen očekávaný povinný element '%s'", parentElementPath, elDef.buildRelativeXpath())
-                                .withCustomMessage(elDef.getErrorMessage())
-                                .build());
+                } else {
+                    if (!found) { //element not found
+                        if (elDef.isMandatory()) { //ERROR if mandatory
+                            result.addError(Level.ERROR, ErrorMessage.from(errorLabel, "%s: nenalezen očekávaný povinný element '%s'", parentElementPath, elDef.buildRelativeXpath())
+                                    .withCustomMessage(elDef.getErrorMessage())
+                                    .build());
+                        } else { //INFO if not mandatory
+                            result.addError(Level.INFO, ErrorMessage.from(errorLabel, "%s: nenalezen očekávaný doporučený element '%s'", parentElementPath, elDef.buildRelativeXpath())
+                                    .withCustomMessage(elDef.getErrorMessage())
+                                    .build());
+                        }
                     }
                 }
             }
-            if (foundElementsByXpath.getLength() == 0 && elDef.isMandatory()) { //mandatory element not found
-                result.addError(Level.ERROR, ErrorMessage.from(errorLabel, "%s: nenalezen očekávaný povinný element '%s'", parentElementPath, elDef.buildRelativeXpath())
-                        .withCustomMessage(elDef.getErrorMessage())
-                        .build());
+            if (foundElementsByXpath.getLength() == 0) { //element not found
+                if (elDef.isMandatory()) { //ERROR if mandatory
+                    result.addError(Level.ERROR, ErrorMessage.from(errorLabel, "%s: nenalezen očekávaný povinný element '%s'", parentElementPath, elDef.buildRelativeXpath())
+                            .withCustomMessage(elDef.getErrorMessage())
+                            .build());
+                } else { //INFO if not mandatory
+                    result.addError(Level.INFO, ErrorMessage.from(errorLabel, "%s: nenalezen očekávaný doporučený element '%s'", parentElementPath, elDef.buildRelativeXpath())
+                            .withCustomMessage(elDef.getErrorMessage())
+                            .build());
+                }
             }
         }
         //unexpected element, warning
