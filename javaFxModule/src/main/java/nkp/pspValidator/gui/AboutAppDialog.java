@@ -30,7 +30,7 @@ public class AboutAppDialog extends AbstractDialog {
 
     @Override
     public String getTitle() {
-        return "O programu";
+        return "O aplikaci";
     }
 
     @Override

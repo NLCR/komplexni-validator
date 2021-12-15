@@ -42,55 +42,45 @@
                        onAction="#openHyperlink"
             />
 
-            <Label text="Autor software"
+            <Label text="Web projektu"
                    GridPane.rowIndex="1"
                    GridPane.columnIndex="0"
             />
-            <Text text="Martin Řehánek"
-                  GridPane.rowIndex="1"
-                  GridPane.columnIndex="2"
-                  GridPane.hgrow="ALWAYS"
-            />
-
-            <Label text="Web projektu"
-                   GridPane.rowIndex="2"
-                   GridPane.columnIndex="0"
-            />
             <Hyperlink text="https://github.com/NLCR/komplexni-validator"
-                       GridPane.rowIndex="2"
+                       GridPane.rowIndex="1"
                        GridPane.columnIndex="2"
                        GridPane.hgrow="ALWAYS"
                        onAction="#openHyperlink"
             />
 
             <Label text="Verze programu"
-                   GridPane.rowIndex="3"
+                   GridPane.rowIndex="2"
                    GridPane.columnIndex="0"
             />
             <Text fx:id="versionText"
-                  GridPane.rowIndex="3"
+                  GridPane.rowIndex="2"
                   GridPane.columnIndex="2"
                   GridPane.hgrow="ALWAYS"
                   text="1.0"
             />
 
             <Label text="Datum sestavení"
-                   GridPane.rowIndex="4"
+                   GridPane.rowIndex="3"
                    GridPane.columnIndex="0"
             />
             <Text text="1. 12. 2016"
-                  GridPane.rowIndex="4"
+                  GridPane.rowIndex="3"
                   GridPane.columnIndex="2"
                   GridPane.hgrow="ALWAYS"
                   fx:id="buildDateText"
             />
 
             <Label text="Konfigurační soubory"
-                   GridPane.rowIndex="5"
+                   GridPane.rowIndex="4"
                    GridPane.columnIndex="0"
             />
             <Text text="/Users/martin/IdeaProjects/komplexni-validator/sharedModule/src/main/resources/nkp/pspValidator/shared/validatorConfig"
-                  GridPane.rowIndex="5"
+                  GridPane.rowIndex="4"
                   GridPane.columnIndex="2"
                   GridPane.hgrow="ALWAYS"
                   fx:id="configDirText"
@@ -98,7 +88,7 @@
             />
             <Button
                     text="Otevřít"
-                    GridPane.rowIndex="5"
+                    GridPane.rowIndex="4"
                     GridPane.columnIndex="3"
                     GridPane.hgrow="ALWAYS"
                     onAction="#openConfigDir"
@@ -106,11 +96,11 @@
             />
 
             <Label text="Adresář s logy"
-                   GridPane.rowIndex="6"
+                   GridPane.rowIndex="5"
                    GridPane.columnIndex="0"
             />
             <Text text="/Users/martin/IdeaProjects/komplexni-validator/sharedModule/src/main/resources/nkp/pspValidator/shared/validatorConfig"
-                  GridPane.rowIndex="6"
+                  GridPane.rowIndex="5"
                   GridPane.columnIndex="2"
                   GridPane.hgrow="ALWAYS"
                   fx:id="logsDirText"
@@ -119,7 +109,7 @@
 
             <Button
                     text="Otevřít"
-                    GridPane.rowIndex="6"
+                    GridPane.rowIndex="5"
                     GridPane.columnIndex="3"
                     GridPane.hgrow="ALWAYS"
                     onAction="#openLogsDir"
@@ -128,7 +118,7 @@
 
             <Button
                     text="Změnit"
-                    GridPane.rowIndex="6"
+                    GridPane.rowIndex="5"
                     GridPane.columnIndex="4"
                     GridPane.hgrow="ALWAYS"
                     onAction="#changeLogsDir"
@@ -137,11 +127,11 @@
 
             <Label text="Vývojářský mód"
                    fx:id="devModeLabel"
-                   GridPane.rowIndex="7"
+                   GridPane.rowIndex="6"
                    GridPane.columnIndex="0"
             />
             <Text fx:id="devModeText"
-                  GridPane.rowIndex="7"
+                  GridPane.rowIndex="6"
                   GridPane.columnIndex="2"
                   GridPane.hgrow="ALWAYS"
                   text="Ano, tuto verzi nepoužívejte pro produkční účely!"

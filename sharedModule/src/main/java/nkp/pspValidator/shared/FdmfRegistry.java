@@ -41,55 +41,8 @@ public class FdmfRegistry {
 
     private void loadFdmfConfigs(ValidatorConfigurationManager validatorConfigManager, String fdmfDirPefix, Map<String, FdmfConfiguration> mapToStoreResults) throws ValidatorConfigurationException {
         File[] fdmfDirs = validatorConfigManager.getFdmfDir().listFiles((dir, name) -> name.matches(fdmfDirPefix + "_[0-9]+(\\.([0-9])+)*"));
-        /*List<File> fdmfDirsSorted = Arrays.asList(fdmfDirs).stream().sorted((first, second) -> {
-            String firstVersion = first.getName().split("_")[1];
-            String secondVersion = second.getName().split("_")[1];
-            String[] firstTokens = firstVersion.split("\\.");
-            String[] secondTokens = secondVersion.split("\\.");
-            System.out.println(firstVersion + ", " + secondVersion);
-            //for (int i = 0; (i < (firstTokens.length - 1)) || (i < (secondTokens.length - 1)); i++) {
-            for (int i = 0; true; i++) {
-                //System.out.println("i: " + i);
-                String firstNumStr = firstTokens.length == i ? null : firstTokens[i];
-                String secondNumStr = secondTokens.length == i ? null : secondTokens[i];
-                //System.out.println("first: " + firstNumStr + ", second: " + secondNumStr);
-                if (firstNumStr == null && secondNumStr == null) {
-                    int result = 1;
-                    //System.out.println(" zadny rozdil: " + result);
-                    //System.out.println();
-                    return result;
-                } else if (firstNumStr == null && secondNumStr != null) {
-                    int result = 1;
-                    //System.out.println("prvni null: " + result);
-                    //System.out.println(result < 0 ? firstVersion + " < " + secondVersion : secondVersion + " < " + firstVersion);
-                    //System.out.println();
-                    return result;
-                    //return 1;
-                } else if (secondNumStr == null && firstNumStr != null) {
-                    int result = -1;
-                    //System.out.println("druhy null: " + result);
-                    //System.out.println(result < 0 ? firstVersion + " < " + secondVersion : secondVersion + " < " + firstVersion);
-                    //System.out.println();
-                    return result;
-                    //return -1;
-                } else {
-                    //int result = Integer.valueOf(firstNumStr) - Integer.valueOf(secondNumStr);
-                    int result = Integer.valueOf(secondNumStr) - Integer.valueOf(firstNumStr);
-                    if (result != 0) {
-                        //System.out.println("rozdil: " + ": " + result);
-                        //System.out.println(result < 0 ? firstVersion + " < " + secondVersion : secondVersion + " < " + firstVersion);
-                        //System.out.println();
-                        return result;
-                    }
-                    //return Integer.valueOf(secondNumStr) - Integer.valueOf(firstNumStr);
-                    //return Integer.valueOf(firstNumStr) - Integer.valueOf(secondNumStr);
-                    //return result;
-                }
-            }
-        }).collect(Collectors.toList());*/
         for (File fdmfDir : fdmfDirs) {
             String versionNumber = fdmfDir.getName().substring(fdmfDirPefix.length() + 1);
-            System.out.println(fdmfDir.getName());
             mapToStoreResults.put(versionNumber, new FdmfConfiguration(
                     fdmfDir,
                     validatorConfigManager.getFdmfConfigXsd(),
