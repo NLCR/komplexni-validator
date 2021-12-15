@@ -1,0 +1,604 @@
+<fDMF xmlns="http://www.nkp.cz/pspValidator/2.3/fdmfConfig"
+      validatorVersion="2.3"
+      dmf="monograph_2.0"
+>
+    <description>
+        Zde jsou definovány proměnné. K jejich vyhodnocení jsou použity funkce, další proměnné, vzory a
+        konstanty.
+        Proměnné je možné dynamicky doplňovat/upravovat.
+        Nesmí ale nastat situace cyklu, tedy že by hodnota proměnné X závisela na proměnné/vzoru Y, která by závisela na
+        proměnné X.
+        Proměnné mohou obsahovat pouze velká písmena latinské abecedy, číslice a znaky '-','_';
+    </description>
+
+
+    <!--tj. musi byt dodano pres GUI nebo CLI-->
+    <value-def name="PSP_DIR" type="FILE">
+        <evaluation functionName="getProvidedFile">
+            <params>
+                <value name="file_id" type="STRING">PSP_DIR</value>
+            </params>
+        </evaluation>
+    </value-def>
+
+    <value-def name="PSP_ID" type="STRING">
+        <evaluation functionName="getStringByXpath">
+            <params>
+                <value name="xml_file" type="FILE">
+                    <!--pozor, tady se soubor INFO ziskava jinak, nez podle vzoru INFO_FILENAME.
+                    Protoze PSP_ID teprve zjistujeme, nemuzeme pouzit vzor INFO_FILENAME, ten ma hodnotu promenne PSP_ID
+                    jako svuj paramer.-->
+                    <!--jeden kandidat na soubor INFO-->
+                    <evaluation functionName="getFirstFileFromFileList">
+                        <params>
+                            <value name="files" type="FILE_LIST">
+                                <!--kandidati na soubor INFO podle vzoru a v danem adresari-->
+                                <evaluation functionName="findFilesInDirByPattern">
+                                    <params>
+                                        <value name="dir" type="FILE">
+                                            <value-ref name="PSP_DIR"/>
+                                        </value>
+                                        <pattern name="pattern">
+                                            <pattern-ref name="INFO_FILENAME_FOR_PSP_ID_DETECTION"/>
+                                        </pattern>
+                                    </params>
+                                </evaluation>
+                            </value>
+                        </params>
+                    </evaluation>
+                </value>
+                <value name="xpath" type="STRING">/info/packageid</value>
+                <value name="nsAware" type="BOOLEAN">false</value>
+            </params>
+        </evaluation>
+    </value-def>
+
+
+    <value-def name="INFO_FILES" type="FILE_LIST">
+        <evaluation functionName="findFilesInDirByPattern">
+            <params>
+                <value name="dir" type="FILE">
+                    <value-ref name="PSP_DIR"/>
+                </value>
+                <pattern name="pattern">
+                    <pattern-ref name="INFO_FILENAME"/>
+                </pattern>
+            </params>
+        </evaluation>
+    </value-def>
+
+    <value-def name="PRIMARY-METS_FILES" type="FILE_LIST">
+        <evaluation functionName="findFilesInDirByPattern">
+            <params>
+                <value name="dir" type="FILE">
+                    <value-ref name="PSP_DIR"/>
+                </value>
+                <pattern name="pattern">
+                    <pattern-ref name="PRIMARY-METS_FILENAME"/>
+                </pattern>
+            </params>
+        </evaluation>
+    </value-def>
+
+    <value-def name="CHECKSUM_FILES" type="FILE_LIST">
+        <evaluation functionName="findFilesInDirByPattern">
+            <params>
+                <value name="dir" type="FILE">
+                    <value-ref name="PSP_DIR"/>
+                </value>
+                <pattern name="pattern">
+                    <pattern-ref name="CHECKSUM_FILENAME"/>
+                </pattern>
+            </params>
+        </evaluation>
+    </value-def>
+
+
+    <value-def name="TOLERATED_TL_FILES" type="FILE_LIST">
+        <evaluation functionName="findFilesInDirByPattern">
+            <params>
+                <value name="dir" type="FILE">
+                    <value-ref name="PSP_DIR"/>
+                </value>
+                <pattern name="pattern">
+                    <pattern-ref name="TOLERATED_TL_FILENAME"/>
+                </pattern>
+            </params>
+        </evaluation>
+    </value-def>
+
+    <value-def name="INFO_FILE" type="FILE">
+        <evaluation functionName="getFirstFileFromFileList">
+            <params>
+                <value name="files" type="FILE_LIST">
+                    <value-ref name="INFO_FILES"/>
+                </value>
+            </params>
+        </evaluation>
+    </value-def>
+
+    <value-def name="PRIMARY-METS_FILE" type="FILE">
+        <evaluation functionName="getFirstFileFromFileList">
+            <params>
+                <value name="files" type="FILE_LIST">
+                    <value-ref name="PRIMARY-METS_FILES"/>
+                </value>
+            </params>
+        </evaluation>
+    </value-def>
+
+    <value-def name="CHECKSUM_FILE" type="FILE">
+        <evaluation functionName="getFirstFileFromFileList">
+            <params>
+                <value name="files" type="FILE_LIST">
+                    <value-ref name="CHECKSUM_FILES"/>
+                </value>
+            </params>
+        </evaluation>
+    </value-def>
+
+    <value-def name="SECONDARY-METS-DIR_FILES" type="FILE_LIST">
+        <evaluation functionName="findFilesInDirByPattern">
+            <params>
+                <value name="dir" type="FILE">
+                    <value-ref name="PSP_DIR"/>
+                </value>
+                <pattern name="pattern">
+                    <pattern-ref name="SECONDARY-METS-DIR_FILENAME"/>
+                </pattern>
+            </params>
+        </evaluation>
+    </value-def>
+
+    <value-def name="OCR-TEXT-DIR_FILES" type="FILE_LIST">
+        <evaluation functionName="findFilesInDirByPattern">
+            <params>
+                <value name="dir" type="FILE">
+                    <value-ref name="PSP_DIR"/>
+                </value>
+                <pattern name="pattern">
+                    <pattern-ref name="OCR-TEXT-DIR_FILENAME"/>
+                </pattern>
+            </params>
+        </evaluation>
+    </value-def>
+
+    <value-def name="OCR-ALTO-DIR_FILES" type="FILE_LIST">
+        <evaluation functionName="findFilesInDirByPattern">
+            <params>
+                <value name="dir" type="FILE">
+                    <value-ref name="PSP_DIR"/>
+                </value>
+                <pattern name="pattern">
+                    <pattern-ref name="OCR-ALTO-DIR_FILENAME"/>
+                </pattern>
+            </params>
+        </evaluation>
+    </value-def>
+
+
+    <value-def name="MASTER-COPY-DIR_FILES" type="FILE_LIST">
+        <evaluation functionName="findFilesInDirByPattern">
+            <params>
+                <value name="dir" type="FILE">
+                    <value-ref name="PSP_DIR"/>
+                </value>
+                <pattern name="pattern">
+                    <pattern-ref name="MASTER-COPY-DIR_FILENAME"/>
+                </pattern>
+            </params>
+        </evaluation>
+    </value-def>
+
+    <value-def name="USER-COPY-DIR_FILES" type="FILE_LIST">
+        <evaluation functionName="findFilesInDirByPattern">
+            <params>
+                <value name="dir" type="FILE">
+                    <value-ref name="PSP_DIR"/>
+                </value>
+                <pattern name="pattern">
+                    <pattern-ref name="USER-COPY-DIR_FILENAME"/>
+                </pattern>
+            </params>
+        </evaluation>
+    </value-def>
+
+    <value-def name="SECONDARY-METS-DIR_FILE" type="FILE">
+        <evaluation functionName="getFirstFileFromFileList">
+            <params>
+                <value name="files" type="FILE_LIST">
+                    <value-ref name="SECONDARY-METS-DIR_FILES"/>
+                </value>
+            </params>
+        </evaluation>
+    </value-def>
+
+    <value-def name="OCR-TEXT-DIR_FILE" type="FILE">
+        <evaluation functionName="getFirstFileFromFileList">
+            <params>
+                <value name="files" type="FILE_LIST">
+                    <value-ref name="OCR-TEXT-DIR_FILES"/>
+                </value>
+            </params>
+        </evaluation>
+    </value-def>
+
+    <value-def name="OCR-ALTO-DIR_FILE" type="FILE">
+        <evaluation functionName="getFirstFileFromFileList">
+            <params>
+                <value name="files" type="FILE_LIST">
+                    <value-ref name="OCR-ALTO-DIR_FILES"/>
+                </value>
+            </params>
+        </evaluation>
+    </value-def>
+
+    <value-def name="MASTER-COPY-DIR_FILE" type="FILE">
+        <evaluation functionName="getFirstFileFromFileList">
+            <params>
+                <value name="files" type="FILE_LIST">
+                    <value-ref name="MASTER-COPY-DIR_FILES"/>
+                </value>
+            </params>
+        </evaluation>
+    </value-def>
+
+    <value-def name="USER-COPY-DIR_FILE" type="FILE">
+        <evaluation functionName="getFirstFileFromFileList">
+            <params>
+                <value name="files" type="FILE_LIST">
+                    <value-ref name="USER-COPY-DIR_FILES"/>
+                </value>
+            </params>
+        </evaluation>
+    </value-def>
+
+    <value-def name="SECONDARY-METS_FILES" type="FILE_LIST">
+        <evaluation functionName="findFilesInDirByPattern">
+            <params>
+                <value name="dir" type="FILE">
+                    <value-ref name="SECONDARY-METS-DIR_FILE"/>
+                </value>
+                <pattern name="pattern">
+                    <pattern-ref name="SECONDARY-METS_FILENAME"/>
+                </pattern>
+            </params>
+        </evaluation>
+    </value-def>
+
+    <value-def name="OCR-TEXT_FILES" type="FILE_LIST">
+        <evaluation functionName="findFilesInDirByPattern">
+            <params>
+                <value name="dir" type="FILE">
+                    <value-ref name="OCR-TEXT-DIR_FILE"/>
+                </value>
+                <pattern name="pattern">
+                    <pattern-ref name="OCR-TEXT_FILENAME"/>
+                </pattern>
+            </params>
+        </evaluation>
+    </value-def>
+
+    <value-def name="OCR-ALTO_FILES" type="FILE_LIST">
+        <evaluation functionName="findFilesInDirByPattern">
+            <params>
+                <value name="dir" type="FILE">
+                    <value-ref name="OCR-ALTO-DIR_FILE"/>
+                </value>
+                <pattern name="pattern">
+                    <pattern-ref name="OCR-ALTO_FILENAME"/>
+                </pattern>
+            </params>
+        </evaluation>
+    </value-def>
+
+    <value-def name="MASTER-COPY_FILES" type="FILE_LIST">
+        <evaluation functionName="findFilesInDirByPattern">
+            <params>
+                <value name="dir" type="FILE">
+                    <value-ref name="MASTER-COPY-DIR_FILE"/>
+                </value>
+                <pattern name="pattern">
+                    <pattern-ref name="MASTER-COPY_FILENAME"/>
+                </pattern>
+            </params>
+        </evaluation>
+    </value-def>
+
+    <value-def name="USER-COPY_FILES" type="FILE_LIST">
+        <evaluation functionName="findFilesInDirByPattern">
+            <params>
+                <value name="dir" type="FILE">
+                    <value-ref name="USER-COPY-DIR_FILE"/>
+                </value>
+                <pattern name="pattern">
+                    <pattern-ref name="USER-COPY_FILENAME"/>
+                </pattern>
+            </params>
+        </evaluation>
+    </value-def>
+
+    <!--soubory XSD-->
+
+    <value-def name="INFO_XSD_FILE" type="FILE">
+        <evaluation functionName="getProvidedFile">
+            <params>
+                <value name="file_id" type="STRING">INFO_XSD_FILE</value>
+            </params>
+        </evaluation>
+    </value-def>
+
+    <value-def name="ALTO_XSD_FILE" type="FILE">
+        <evaluation functionName="getProvidedFile">
+            <params>
+                <value name="file_id" type="STRING">ALTO_XSD_FILE</value>
+            </params>
+        </evaluation>
+    </value-def>
+
+    <value-def name="CMD_XSD_FILE" type="FILE">
+        <evaluation functionName="getProvidedFile">
+            <params>
+                <value name="file_id" type="STRING">CMD_XSD_FILE</value>
+            </params>
+        </evaluation>
+    </value-def>
+
+    <value-def name="DC_XSD_FILE" type="FILE">
+        <evaluation functionName="getProvidedFile">
+            <params>
+                <value name="file_id" type="STRING">DC_XSD_FILE</value>
+            </params>
+        </evaluation>
+    </value-def>
+
+    <value-def name="METS_XSD_FILE" type="FILE">
+        <evaluation functionName="getProvidedFile">
+            <params>
+                <value name="file_id" type="STRING">METS_XSD_FILE</value>
+            </params>
+        </evaluation>
+    </value-def>
+
+    <value-def name="MIX_XSD_FILE" type="FILE">
+        <evaluation functionName="getProvidedFile">
+            <params>
+                <value name="file_id" type="STRING">MIX_XSD_FILE</value>
+            </params>
+        </evaluation>
+    </value-def>
+
+    <value-def name="MODS_XSD_FILE" type="FILE">
+        <evaluation functionName="getProvidedFile">
+            <params>
+                <value name="file_id" type="STRING">MODS_XSD_FILE</value>
+            </params>
+        </evaluation>
+    </value-def>
+
+    <value-def name="PREMIS_XSD_FILE" type="FILE">
+        <evaluation functionName="getProvidedFile">
+            <params>
+                <value name="file_id" type="STRING">PREMIS_XSD_FILE</value>
+            </params>
+        </evaluation>
+    </value-def>
+
+    <!--identifikátory-->
+
+    <!--volume-->
+    <value-def name="ID_TYPES_VOLUME_MANDATORY" type="STRING_LIST">
+        <description>seznam povinných typů identifikátorů pro úroveň VOLUME</description>
+        <evaluation functionName="buildListOfStrings">
+            <params>
+                <value name="string" type="STRING">uuid</value>
+                <value name="string" type="STRING">urnnbn</value>
+            </params>
+        </evaluation>
+    </value-def>
+
+    <value-def name="ID_TYPES_VOLUME_OPTIONAL" type="STRING_LIST">
+        <!--Zatím se nepužívá, jen pro přehled. -->
+        <description>seznam volitelných typů identifikátorů pro úroveň VOLUME</description>
+        <evaluation functionName="buildListOfStrings">
+            <params>
+                <value name="string" type="STRING">isbn</value>
+                <value name="string" type="STRING">ismn</value>
+                <value name="string" type="STRING">ccnb</value>
+            </params>
+        </evaluation>
+    </value-def>
+
+    <value-def name="ID_TYPES_VOLUME_PROHIBITED" type="STRING_LIST">
+        <description>seznam zakázaných typů identifikátorů pro úroveň VOLUME</description>
+        <evaluation functionName="buildListOfStrings">
+            <params>
+                <value name="string" type="STRING">issn</value>
+            </params>
+        </evaluation>
+    </value-def>
+
+    <!--title-->
+    <value-def name="ID_TYPES_TITLE_MANDATORY" type="STRING_LIST">
+        <description>seznam povinných typů identifikátorů pro úroveň TITLE</description>
+        <evaluation functionName="buildListOfStrings">
+            <params>
+                <value name="string" type="STRING">uuid</value>
+            </params>
+        </evaluation>
+    </value-def>
+
+    <value-def name="ID_TYPES_TITLE_OPTIONAL" type="STRING_LIST">
+        <!--Zatím se nepužívá, jen pro přehled. -->
+        <description>seznam volitelných typů identifikátorů pro úroveň TITLE</description>
+        <evaluation functionName="buildListOfStrings">
+            <params>
+                <value name="string" type="STRING">isbn</value>
+                <value name="string" type="STRING">ismn</value>
+                <value name="string" type="STRING">ccnb</value>
+                <value name="string" type="STRING">urnnbn</value>
+            </params>
+        </evaluation>
+    </value-def>
+
+    <value-def name="ID_TYPES_TITLE_PROHIBITED" type="STRING_LIST">
+        <description>seznam zakázaných typů identifikátorů pro úroveň TITLE</description>
+        <evaluation functionName="buildListOfStrings">
+            <params>
+                <!--<value name="string" type="STRING">issn</value>-->
+            </params>
+        </evaluation>
+    </value-def>
+
+    <!--supplement-->
+    <value-def name="ID_TYPES_SUPPLEMENT_MANDATORY" type="STRING_LIST">
+        <description>seznam povinných typů identifikátorů pro úroveň SUPPLEMENT</description>
+        <evaluation functionName="buildListOfStrings">
+            <params>
+                <value name="string" type="STRING">uuid</value>
+            </params>
+        </evaluation>
+    </value-def>
+
+    <value-def name="ID_TYPES_SUPPLEMENT_OPTIONAL" type="STRING_LIST">
+        <!--Zatím se nepužívá, jen pro přehled. -->
+        <description>seznam volitelných typů identifikátorů pro úroveň SUPPLEMENT</description>
+        <evaluation functionName="buildListOfStrings">
+            <params>
+                <value name="string" type="STRING">urnnbn</value>
+            </params>
+        </evaluation>
+    </value-def>
+
+    <value-def name="ID_TYPES_SUPPLEMENT_PROHIBITED" type="STRING_LIST">
+        <description>seznam zakázaných typů identifikátorů pro úroveň SUPPLEMENT</description>
+        <evaluation functionName="buildListOfStrings">
+            <params>
+                <!--<value name="string" type="STRING">issn</value>-->
+                <value name="string" type="STRING">isbn</value>
+                <value name="string" type="STRING">ismn</value>
+                <value name="string" type="STRING">ccnb</value>
+            </params>
+        </evaluation>
+    </value-def>
+
+    <!--chapter-->
+    <value-def name="ID_TYPES_CHAPTER_MANDATORY" type="STRING_LIST">
+        <description>seznam povinných typů identifikátorů pro úroveň CHAPTER</description>
+        <evaluation functionName="buildListOfStrings">
+            <params>
+                <value name="string" type="STRING">uuid</value>
+            </params>
+        </evaluation>
+    </value-def>
+
+    <value-def name="ID_TYPES_CHAPTER_OPTIONAL" type="STRING_LIST">
+        <!--Zatím se nepužívá, jen pro přehled. -->
+        <description>seznam volitelných typů identifikátorů pro úroveň CHAPTER</description>
+        <evaluation functionName="buildListOfStrings">
+            <params>
+                <value name="string" type="STRING">urnnbn</value>
+            </params>
+        </evaluation>
+    </value-def>
+
+    <value-def name="ID_TYPES_CHAPTER_PROHIBITED" type="STRING_LIST">
+        <description>seznam zakázaných typů identifikátorů pro úroveň CHAPTER</description>
+        <evaluation functionName="buildListOfStrings">
+            <params>
+                <!--<value name="string" type="STRING">issn</value>-->
+                <value name="string" type="STRING">isbn</value>
+                <value name="string" type="STRING">ismn</value>
+                <value name="string" type="STRING">ccnb</value>
+            </params>
+        </evaluation>
+    </value-def>
+
+    <!--picture-->
+    <value-def name="ID_TYPES_PICTURE_MANDATORY" type="STRING_LIST">
+        <description>seznam povinných typů identifikátorů pro úroveň PICTURE</description>
+        <evaluation functionName="buildListOfStrings">
+            <params>
+                <value name="string" type="STRING">uuid</value>
+            </params>
+        </evaluation>
+    </value-def>
+
+    <value-def name="ID_TYPES_PICTURE_OPTIONAL" type="STRING_LIST">
+        <!--Zatím se nepužívá, jen pro přehled. -->
+        <description>seznam volitelných typů identifikátorů pro úroveň PICTURE</description>
+        <evaluation functionName="buildListOfStrings">
+            <params>
+                <value name="string" type="STRING">urnnbn</value>
+            </params>
+        </evaluation>
+    </value-def>
+
+    <value-def name="ID_TYPES_PICTURE_PROHIBITED" type="STRING_LIST">
+        <description>seznam zakázaných typů identifikátorů pro úroveň PICTURE</description>
+        <evaluation functionName="buildListOfStrings">
+            <params>
+                <!--<value name="string" type="STRING">issn</value>-->
+                <value name="string" type="STRING">isbn</value>
+                <value name="string" type="STRING">ismn</value>
+                <value name="string" type="STRING">ccnb</value>
+            </params>
+        </evaluation>
+    </value-def>
+
+    <!--page-->
+    <value-def name="ID_TYPES_PAGE_MANDATORY" type="STRING_LIST">
+        <description>seznam povinných typů identifikátorů pro úroveň PAGE</description>
+        <evaluation functionName="buildListOfStrings">
+            <params>
+                <value name="string" type="STRING">uuid</value>
+            </params>
+        </evaluation>
+    </value-def>
+
+    <value-def name="ID_TYPES_PAGE_OPTIONAL" type="STRING_LIST">
+        <!--Zatím se nepužívá, jen pro přehled. -->
+        <description>seznam volitelných typů identifikátorů pro úroveň PAGE</description>
+        <evaluation functionName="buildListOfStrings">
+            <params>
+                <!--   <value name="string" type="STRING">urnnbn</value>-->
+            </params>
+        </evaluation>
+    </value-def>
+
+    <value-def name="ID_TYPES_PAGE_PROHIBITED" type="STRING_LIST">
+        <description>seznam zakázaných typů identifikátorů pro úroveň PAGE</description>
+        <evaluation functionName="buildListOfStrings">
+            <params>
+                <value name="string" type="STRING">urnnbn</value>
+                <value name="string" type="STRING">isbn</value>
+                <value name="string" type="STRING">ismn</value>
+                <value name="string" type="STRING">ccnb</value>
+            </params>
+        </evaluation>
+    </value-def>
+
+    <value-def name="INFO_IDENTIFIERS" type="IDENTIFIER_LIST">
+        <description>seznam identifikátorů ze souboru INFO</description>
+        <evaluation functionName="getIdentifiersFromInfoFile">
+            <params>
+                <value name="info_file" type="FILE">
+                    <value-ref name="INFO_FILE"/>
+                </value>
+            </params>
+        </evaluation>
+    </value-def>
+
+
+    <!--TODO: dodelat-->
+    <!--TODO: doplnit pro monografie-->
+    <!--BIBLIO PROFILY-->
+    <value-def name="BIBLIO_PROFILE_DC_TITLE" type="FILE">
+        <evaluation functionName="getProvidedFile">
+            <params>
+                <value name="file_id" type="STRING">BIBLIO_PROFILE_DC_TITLE</value>
+            </params>
+        </evaluation>
+    </value-def>
+
+</fDMF>

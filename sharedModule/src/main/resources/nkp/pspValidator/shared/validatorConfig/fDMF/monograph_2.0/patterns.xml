@@ -1,0 +1,179 @@
+<fDMF xmlns="http://www.nkp.cz/pspValidator/2.3/fdmfConfig"
+      validatorVersion="2.3"
+      dmf="monograph_2.0"
+>
+    <description>
+        Zde jsou definovány vzory. K jejich vyhodnocení jsou použity reguární výrazy a případně proměnné.
+        Vzory je možné dynamicky doplňovat/upravovat.
+        Nesmí ale nastat situace cyklu, tedy že by hodnota vzoru X závisela na vzoru/proměnné Y, který by závisel na
+        vzoru X.
+        Vzor (pattern) má jeden nebo více výrazů (expression). Hodnota (typicky proměnné) odpovídá vzoru, pokud odpovídá
+        alespoň jednomu výrazu. Výrazy vzoru jsou tedy vždy ve vztahu NEBO (OR).
+        Výraz může mít vstupní promměnné, v tom případě se např. pro proměnnou X nahradí všechny výskyty ${X} za hodnotu
+        proměnné X před samotným vyhodnocením výrazu. Lze použít pouze proměnné typu String.
+    </description>
+
+    <!--TODO: pro vzory bez vstupních proměných, které jsou jen jednou použité je rovnou zapisovat do definic proměnných-->
+
+    <pattern-def name="FILENAME">
+        <description>Vzor pro obecný soubor/adresář. Určuje povolené znaky v názvech souborů/adresářů, tedy písmena,
+            číslice, tečky, pomlčky, a podtržítka.
+        </description>
+        <!--per<=1.4, mon<=1.0-->
+        <!--<expression caseSensitive="false">[a-z0-9_\-\.]+</expression>-->
+
+        <!--per>=1.5, mon>=1.1-->
+        <expression caseSensitive="true">[a-z0-9_\-\.]+</expression>
+    </pattern-def>
+
+    <pattern-def name="INFO_FILENAME_FOR_PSP_ID_DETECTION">
+        <description>Vzor pro nalezení souboru INFO pouze za účelem získání PSP-ID z jeho obsahu.</description>
+
+        <!--per<=1.4, mon<=1.0-->
+        <!--<expression caseSensitive="false">info_.+\.xml</expression>
+        <expression caseSensitive="false">info\.xml</expression>-->
+
+        <!--per>=1.5, mon>=1.1-->
+        <expression caseSensitive="true">info_.+\.xml</expression>
+        <expression caseSensitive="true">info\.xml</expression>
+    </pattern-def>
+
+    <pattern-def name="INFO_FILENAME">
+        <description>Vzor pro jméno souboru INFO.</description>
+
+        <!--per<=1.4, mon<=1.0-->
+        <!--<expression caseSensitive="false">info_${PSP_ID}\.xml</expression>
+        <expression>info\.xml</expression>-->
+
+        <!--per>=1.5, mon>=1.1-->
+        <expression caseSensitive="true">info_${PSP_ID}\.xml</expression>
+        <expression>info\.xml</expression>
+    </pattern-def>
+
+    <pattern-def name="PRIMARY-METS_FILENAME">
+        <description>Vzor pro jméno souboru PRIMARY-METS.</description>
+
+        <!--per<=1.4, mon<=1.0-->
+        <!--<expression caseSensitive="false">mets_${PSP_ID}\.xml</expression>-->
+
+        <!--per>=1.5, mon>=1.1-->
+        <expression caseSensitive="true">mets_${PSP_ID}\.xml</expression>
+    </pattern-def>
+
+    <pattern-def name="CHECKSUM_FILENAME">
+        <description>Vzor pro jméno souboru CHECKSUM.</description>
+
+        <!--per<=1.4, mon<=1.0-->
+        <!--<expression caseSensitive="false">md5_${PSP_ID}\.md5</expression>-->
+
+        <!--per>=1.5, mon>=1.1-->
+        <expression caseSensitive="true">md5_${PSP_ID}\.md5</expression>
+    </pattern-def>
+
+    <pattern-def name="TOLERATED_TL_FILENAME">
+        <description>Vzory pro jména tolerovaných souborů.</description>
+        <expression caseSensitive="true">LTP_MD\.xml</expression>
+        <expression caseSensitive="true">.DS_Store</expression>
+    </pattern-def>
+
+    <pattern-def name="SECONDARY-METS-DIR_FILENAME">
+        <description>Vzor pro jméno adresáře SECONDARY-METS-DIR.</description>
+
+        <!--per<=1.4, mon<=1.0-->
+        <!--<expression caseSensitive="false">amdsec</expression>-->
+
+        <!--per>=1.5, mon>=1.1-->
+        <expression caseSensitive="true">amdsec</expression>
+    </pattern-def>
+
+    <pattern-def name="OCR-TEXT-DIR_FILENAME">
+        <description>Vzor pro jméno adresáře OCR-TEXT-DIR.</description>
+
+        <!--per<=1.4, mon<=1.0-->
+        <!--<expression caseSensitive="false">txt</expression>-->
+
+        <!--per>=1.5, mon>=1.1-->
+        <expression caseSensitive="true">txt</expression>
+    </pattern-def>
+
+    <pattern-def name="OCR-ALTO-DIR_FILENAME">
+        <description>Vzor pro jméno adresáře OCR-ALTO-DIR.</description>
+
+        <!--per<=1.4, mon<=1.0-->
+        <!--<expression caseSensitive="false">alto</expression>-->
+
+        <!--per>=1.5, mon>=1.1-->
+        <expression caseSensitive="true">alto</expression>
+    </pattern-def>
+
+    <pattern-def name="MASTER-COPY-DIR_FILENAME">
+        <description>Vzor pro jméno adresáře MASTER-COPY-DIR.</description>
+
+        <!--per<=1.4, mon<=1.0-->
+        <!--<expression caseSensitive="false">mastercopy</expression>-->
+
+        <!--per>=1.5, mon>=1.1-->
+        <expression caseSensitive="true">mastercopy</expression>
+    </pattern-def>
+
+    <pattern-def name="USER-COPY-DIR_FILENAME">
+        <description>Vzor pro jméno adresáře USER-COPY-DIR.</description>
+
+        <!--per<=1.4, mon<=1.0-->
+        <!--<expression caseSensitive="false">usercopy</expression>-->
+
+        <!--per>=1.5, mon>=1.1-->
+        <expression caseSensitive="true">usercopy</expression>
+    </pattern-def>
+
+    <pattern-def name="SECONDARY-METS_FILENAME">
+        <description>Vzor pro jména souborů SECONDARY-METS v rámci adresáře SECONDARY-METS-DIR.</description>
+
+        <!--per<=1.4, mon<=1.0-->
+        <!--<expression caseSensitive="false">amd_mets_${PSP_ID}_[0-9]+\.xml</expression>-->
+
+        <!--per>=1.5, mon>=1.1-->
+        <expression caseSensitive="true">amd_mets_${PSP_ID}_[0-9]+\.xml</expression>
+    </pattern-def>
+
+    <pattern-def name="OCR-TEXT_FILENAME">
+        <description>Vzor pro jména souborů OCR-TEXT v rámci adresáře OCR-TEXT-DIR.</description>
+
+        <!--per<=1.4, mon<=1.0-->
+        <!--<expression caseSensitive="false">txt_${PSP_ID}_[0-9]+\.txt</expression>-->
+
+        <!--per>=1.5, mon>=1.1-->
+        <expression caseSensitive="true">txt_${PSP_ID}_[0-9]+\.txt</expression>
+    </pattern-def>
+
+    <pattern-def name="OCR-ALTO_FILENAME">
+        <description>Vzor pro jména souborů OCR-ALTO v rámci adresáře OCR-ALTO-DIR.</description>
+
+        <!--per<=1.4, mon<=1.0-->
+        <!--<expression caseSensitive="false">alto_${PSP_ID}_[0-9]+\.xml</expression>-->
+
+        <!--per>=1.5, mon>=1.1-->
+        <expression caseSensitive="true">alto_${PSP_ID}_[0-9]+\.xml</expression>
+    </pattern-def>
+
+    <pattern-def name="MASTER-COPY_FILENAME">
+        <description>Vzor pro jména souborů MASTER-COPY v rámci adresáře MASTER-COPY-DIR.</description>
+
+        <!--per<=1.4, mon<=1.0-->
+        <!--<expression caseSensitive="false">mc_${PSP_ID}_[0-9]+\.jp2</expression>-->
+
+        <!--per>=1.5, mon>=1.1-->
+        <expression caseSensitive="true">mc_${PSP_ID}_[0-9]+\.jp2</expression>
+    </pattern-def>
+
+    <pattern-def name="USER-COPY_FILENAME">
+        <description>Vzor pro jména souborů USER-COPY v rámci adresáře USER-COPY-DIR.</description>
+
+        <!--per<=1.4, mon<=1.0-->
+        <!--<expression caseSensitive="false">uc_${PSP_ID}_[0-9]+\.jp2</expression>-->
+
+        <!--per>=1.5, mon>=1.1-->
+        <expression caseSensitive="true">uc_${PSP_ID}_[0-9]+\.jp2</expression>
+    </pattern-def>
+
+</fDMF>

@@ -1,0 +1,481 @@
+<binaryFileProfile
+        xmlns="http://www.nkp.cz/pspValidator/2.3/binaryFileProfile"
+        validatorVersion="2.3"
+        dmf="monograph_2.0"
+>
+    <fromXml>
+        <namespaces>
+            <namespace prefix="j">http://openpreservation.org/ns/jpylyzer/</namespace>
+        </namespaces>
+
+        <validation name="File name">
+            <xmlDataExtraction resultType="STRING">
+                <firstNonempty>
+                    <xpath>//j:fileInfo/j:fileName</xpath>
+                </firstNonempty>
+            </xmlDataExtraction>
+            <rules>
+                <mustExist/>
+            </rules>
+        </validation>
+
+        <validation name="Last modified">
+            <xmlDataExtraction resultType="STRING">
+                <firstNonempty>
+                    <xpath>//j:fileInfo/j:fileLastModified</xpath>
+                </firstNonempty>
+            </xmlDataExtraction>
+            <rules>
+                <mustExist/>
+            </rules>
+        </validation>
+
+        <validation name="Size">
+            <xmlDataExtraction resultType="STRING">
+                <firstNonempty>
+                    <xpath>//j:fileInfo/j:fileSizeInBytes</xpath>
+                </firstNonempty>
+            </xmlDataExtraction>
+            <rules>
+                <mustExist/>
+            </rules>
+        </validation>
+
+        <validation name="Tool name">
+            <xmlDataExtraction resultType="STRING">
+                <firstNonempty>
+                    <xpath>//j:toolInfo/j:toolName</xpath>
+                </firstNonempty>
+            </xmlDataExtraction>
+            <rules>
+                <mustExist/>
+                <mustMatchAny>
+                    <isExactly>jpylyzer</isExactly>
+                    <isExactly>jpylyzer.exe</isExactly>
+                    <isExactly>jpylyzer.py</isExactly>
+                </mustMatchAny>
+            </rules>
+        </validation>
+
+        <validation name="Tool version">
+            <xmlDataExtraction resultType="STRING">
+                <firstNonempty>
+                    <xpath>//j:toolInfo/j:toolVersion</xpath>
+                </firstNonempty>
+            </xmlDataExtraction>
+            <rules>
+                <mustExist/>
+            </rules>
+        </validation>
+
+        <validation name="Valid">
+            <xmlDataExtraction resultType="STRING">
+                <firstNonempty>
+                    <xpath>//j:isValidJP2</xpath>
+                </firstNonempty>
+            </xmlDataExtraction>
+            <rules>
+                <mustExist/>
+                <mustMatchAny>
+                    <isExactly>True</isExactly>
+                </mustMatchAny>
+            </rules>
+        </validation>
+
+        <validation name="Height">
+            <xmlDataExtraction resultType="STRING">
+                <firstNonempty>
+                    <xpath>//j:properties/j:jp2HeaderBox/j:imageHeaderBox/j:height</xpath>
+                </firstNonempty>
+            </xmlDataExtraction>
+            <rules>
+                <mustExist/>
+            </rules>
+        </validation>
+
+        <validation name="Width">
+            <xmlDataExtraction resultType="STRING">
+                <firstNonempty>
+                    <xpath>//j:properties/j:jp2HeaderBox/j:imageHeaderBox/j:width</xpath>
+                </firstNonempty>
+            </xmlDataExtraction>
+            <rules>
+                <mustExist/>
+            </rules>
+        </validation>
+
+        <validation name="Počet barevných komponent">
+            <xmlDataExtraction resultType="STRING">
+                <firstNonempty>
+                    <xpath>//j:properties/j:jp2HeaderBox/j:imageHeaderBox/j:nC</xpath>
+                </firstNonempty>
+            </xmlDataExtraction>
+            <rules>
+                <mustExist/>
+                <!--povolene hodnoty "1" nebo "3"-->
+                <mustMatchAny>
+                    <isExactly>1</isExactly>
+                    <isExactly>3</isExactly>
+
+                </mustMatchAny>
+            </rules>
+        </validation>
+
+        <validation name="Barevná hloubka">
+            <xmlDataExtraction resultType="STRING">
+                <firstNonempty>
+                    <xpath>//j:properties/j:contiguousCodestreamBox/j:siz/j:ssizDepth</xpath>
+                </firstNonempty>
+            </xmlDataExtraction>
+            <rules>
+                <mustExist/>
+                <mustMatchAny>
+                    <isExactly>8</isExactly>
+                </mustMatchAny>
+            </rules>
+        </validation>
+
+        <!--TODO: docasne vyple, protože neprochází obrazy s hodnotou Restricted ICC, aktuálně stačí, že obraz projde kontrolou na validitu-->
+        <!--<validation name="Color space (1)">
+            <xmlDataExtraction resultType="STRING">
+                <firstNonempty>
+                    <xpath>//j:properties/j:jp2HeaderBox/j:colourSpecificationBox/j:enumCS</xpath>
+                </firstNonempty>
+            </xmlDataExtraction>
+            <rules>
+                <mustExist/>
+                (povolene hodnoty "sRGB" nebo "greyscale")
+                <mustMatchAny>
+                    <isExactly>sRGB</isExactly>
+                    <isExactly>greyscale</isExactly>
+                </mustMatchAny>
+            </rules>
+        </validation>
+
+        <validation name="Color space (2)">
+            <xmlDataExtraction resultType="STRING">
+                <firstNonempty>
+                    <xpath>//j:properties/j:jp2HeaderBox/j:colourSpecificationBox/j:meth</xpath>
+                </firstNonempty>
+            </xmlDataExtraction>
+            <rules>
+                <mustExist/>
+                (TODO: docasne vyple, v datech se realne nachazi "Enumerated")
+                (<mustMatchAny>
+                    <isExactly>Restricted ICC</isExactly>
+                </mustMatchAny>)
+            </rules>
+        </validation>-->
+
+        <validation name="Rozlišení vertik.">
+            <xmlDataExtraction resultType="FLOAT">
+                <!--muze se nachazet na nekolika mistech, pouzije se prvni dostupna hodnota-->
+                <firstNonempty>
+                    <xpath>//j:properties/j:jp2HeaderBox/j:resolutionBox/j:captureResolutionBox/j:vRescInPixelsPerMeter
+                    </xpath>
+                    <xpath>//j:properties/j:jp2HeaderBox/j:resolutionBox/j:displayResolutionBox/j:vResdInPixelsPerMeter
+                    </xpath>
+                </firstNonempty>
+            </xmlDataExtraction>
+            <rules>
+                <mustExist/>
+                <!--rozsah hodnot, zde realná čísla-->
+                <mustMatchAny>
+                    <isInFloatRange>
+                        <min>11732.0</min>
+                    </isInFloatRange>
+                </mustMatchAny>
+            </rules>
+        </validation>
+
+        <validation name="Rozlišení horiz.">
+            <xmlDataExtraction resultType="FLOAT">
+                <firstNonempty>
+                    <xpath>//j:properties/j:jp2HeaderBox/j:resolutionBox/j:captureResolutionBox/j:hRescInPixelsPerMeter
+                    </xpath>
+                    <xpath>//j:properties/j:jp2HeaderBox/j:resolutionBox/j:displayResolutionBox/j:hResdInPixelsPerMeter
+                    </xpath>
+                </firstNonempty>
+            </xmlDataExtraction>
+            <rules>
+                <mustExist/>
+                <mustMatchAny>
+                    <isInFloatRange>
+                        <min>11732.0</min>
+                    </isInFloatRange>
+                </mustMatchAny>
+            </rules>
+        </validation>
+
+        <validation name="Počet dlaždic">
+            <xmlDataExtraction resultType="INTEGER">
+                <firstNonempty>
+                    <xpath>//j:properties/j:contiguousCodestreamBox/j:siz/j:numberOfTiles</xpath>
+                </firstNonempty>
+            </xmlDataExtraction>
+            <rules>
+                <mustExist/>
+                <!--jakékoliv přirozené číslo-->
+                <mustMatchAny>
+                    <isInIntRange>
+                        <min>1</min>
+                        <!--maximum nedefinovano, tedy nekonecno-->
+                    </isInIntRange>
+                </mustMatchAny>
+            </rules>
+        </validation>
+
+        <validation name="Velikost dlaždic (1)">
+            <xmlDataExtraction resultType="INTEGER">
+                <firstNonempty>
+                    <xpath>//j:properties/j:contiguousCodestreamBox/j:siz/j:xTsiz</xpath>
+                </firstNonempty>
+            </xmlDataExtraction>
+            <rules>
+                <mustExist/>
+                <mustMatchAny>
+                    <isExactly>1024</isExactly>
+                </mustMatchAny>
+            </rules>
+        </validation>
+
+        <validation name="Velikost dlaždic (2)">
+            <xmlDataExtraction resultType="INTEGER">
+                <firstNonempty>
+                    <xpath>//j:properties/j:contiguousCodestreamBox/j:siz/j:yTsiz</xpath>
+                </firstNonempty>
+            </xmlDataExtraction>
+            <rules>
+                <mustExist/>
+                <mustMatchAny>
+                    <isExactly>1024</isExactly>
+                </mustMatchAny>
+            </rules>
+        </validation>
+
+        <validation name="Precincts (regiony)">
+            <xmlDataExtraction resultType="STRING">
+                <firstNonempty>
+                    <xpath>//j:properties/j:contiguousCodestreamBox/j:cod/j:precincts</xpath>
+                </firstNonempty>
+            </xmlDataExtraction>
+            <rules>
+                <mustExist/>
+                <mustMatchAny>
+                    <isExactly>Yes</isExactly>
+                    <isExactly>yes</isExactly>
+                </mustMatchAny>
+            </rules>
+        </validation>
+
+        <validation name="Velikost precincts (1)">
+            <xmlDataExtraction resultType="STRING_LIST">
+                <firstNonempty>
+                    <xpath>//j:properties/j:contiguousCodestreamBox/j:cod/j:precinctSizeX</xpath>
+                </firstNonempty>
+            </xmlDataExtraction>
+            <rules>
+                <mustExist/>
+                <!--2krát hodnota 256; zbylé hodnoty 128-->
+                <mustMatchAny>
+                    <nTimesXRemainingY>
+                        <n>2</n>
+                        <x>256</x>
+                        <y>128</y>
+                    </nTimesXRemainingY>
+                </mustMatchAny>
+            </rules>
+        </validation>
+
+        <validation name="Velikost precincts (2)">
+            <xmlDataExtraction resultType="STRING_LIST">
+                <firstNonempty>
+                    <xpath>//j:properties/j:contiguousCodestreamBox/j:cod/j:precinctSizeY</xpath>
+                </firstNonempty>
+            </xmlDataExtraction>
+            <rules>
+                <mustExist/>
+                <!--2krát hodnota 256; zbylé hodnoty 128-->
+                <mustMatchAny>
+                    <nTimesXRemainingY>
+                        <n>2</n>
+                        <x>256</x>
+                        <y>128</y>
+                    </nTimesXRemainingY>
+                </mustMatchAny>
+            </rules>
+        </validation>
+
+        <!--<validation name="Sop">
+            <xmlDataExtraction resultType="STRING">
+                <firstNonempty>
+                    <xpath>//j:properties/j:contiguousCodestreamBox/j:cod/j:sop</xpath>
+                </firstNonempty>
+            </xmlDataExtraction>
+            <rules>
+                <mustExist/>
+                <mustMatchAny>
+                    <isExactly>No</isExactly>
+                    <isExactly>no</isExactly>
+                </mustMatchAny>
+            </rules>
+        </validation>
+
+        <validation name="Eph">
+            <xmlDataExtraction resultType="STRING">
+                <firstNonempty>
+                    <xpath>//j:properties/j:contiguousCodestreamBox/j:cod/j:eph</xpath>
+                </firstNonempty>
+            </xmlDataExtraction>
+            <rules>
+                <mustExist/>
+                <mustMatchAny>
+                    <isExactly>Yes</isExactly>
+                    <isExactly>yes</isExactly>
+                    <isExactly>YES</isExactly>
+                </mustMatchAny>
+            </rules>
+        </validation>-->
+
+        <validation name="Order">
+            <xmlDataExtraction resultType="STRING">
+                <firstNonempty>
+                    <xpath>//j:properties/j:contiguousCodestreamBox/j:cod/j:order</xpath>
+                </firstNonempty>
+            </xmlDataExtraction>
+            <rules>
+                <mustExist/>
+                <mustMatchAny>
+                    <isExactly>RPCL</isExactly>
+                </mustMatchAny>
+            </rules>
+        </validation>
+
+        <validation name="Layers">
+            <xmlDataExtraction resultType="STRING">
+                <firstNonempty>
+                    <xpath>//j:properties/j:contiguousCodestreamBox/j:cod/j:layers</xpath>
+                </firstNonempty>
+            </xmlDataExtraction>
+            <rules>
+                <mustExist/>
+                <mustMatchAny>
+                    <isExactly>12</isExactly>
+                </mustMatchAny>
+            </rules>
+        </validation>
+
+        <validation name="Levels">
+            <xmlDataExtraction resultType="STRING">
+                <firstNonempty>
+                    <xpath>//j:properties/j:contiguousCodestreamBox/j:cod/j:levels</xpath>
+                </firstNonempty>
+            </xmlDataExtraction>
+            <rules>
+                <mustExist/>
+                <mustMatchAny>
+                    <isExactly>5</isExactly>
+                    <isExactly>6</isExactly>
+                </mustMatchAny>
+            </rules>
+        </validation>
+
+        <validation name="Code block width">
+            <xmlDataExtraction resultType="STRING">
+                <firstNonempty>
+                    <xpath>//j:properties/j:contiguousCodestreamBox/j:cod/j:codeBlockWidth</xpath>
+                </firstNonempty>
+            </xmlDataExtraction>
+            <rules>
+                <mustExist/>
+                <mustMatchAny>
+                    <isExactly>64</isExactly>
+                </mustMatchAny>
+            </rules>
+        </validation>
+
+        <validation name="Code block height">
+            <xmlDataExtraction resultType="STRING">
+                <firstNonempty>
+                    <xpath>//j:properties/j:contiguousCodestreamBox/j:cod/j:codeBlockHeight</xpath>
+                </firstNonempty>
+            </xmlDataExtraction>
+            <rules>
+                <mustExist/>
+                <mustMatchAny>
+                    <isExactly>64</isExactly>
+                </mustMatchAny>
+            </rules>
+        </validation>
+
+        <validation name="Bypass">
+            <xmlDataExtraction resultType="STRING">
+                <firstNonempty>
+                    <xpath>//j:properties/j:contiguousCodestreamBox/j:cod/j:codingBypass</xpath>
+                </firstNonempty>
+            </xmlDataExtraction>
+            <rules>
+                <mustExist/>
+                <mustMatchAny>
+                    <isExactly>Yes</isExactly>
+                    <isExactly>yes</isExactly>
+                </mustMatchAny>
+            </rules>
+        </validation>
+
+        <validation name="Transformace">
+            <xmlDataExtraction resultType="STRING">
+                <firstNonempty>
+                    <xpath>//j:properties/j:contiguousCodestreamBox/j:cod/j:transformation</xpath>
+                </firstNonempty>
+            </xmlDataExtraction>
+            <rules>
+                <mustExist/>
+                <mustMatchAny>
+                    <isExactly>9-7 irreversible</isExactly>
+                </mustMatchAny>
+            </rules>
+        </validation>
+
+        <validation name="Kompresní poměr">
+            <xmlDataExtraction resultType="FLOAT">
+                <firstNonempty>
+                    <xpath>//j:properties/j:compressionRatio</xpath>
+                </firstNonempty>
+            </xmlDataExtraction>
+            <rules>
+                <mustExist/>
+                <mustMatchAny>
+                    <isInFloatRange>
+                        <min>6</min>
+                        <!--Omezení na maximální hodnotu zrušeno https://github.com/NLCR/komplexni-validator/issues/106-->
+                        <!--<max>35</max>-->
+                    </isInFloatRange>
+                </mustMatchAny>
+            </rules>
+        </validation>
+
+        <validation name="Migrační sw">
+            <xmlDataExtraction resultType="STRING">
+                <firstNonempty>
+                    <xpath>//j:properties/j:contiguousCodestreamBox/j:com/j:comment</xpath>
+                </firstNonempty>
+            </xmlDataExtraction>
+            <rules>
+                <mustExist/>
+            </rules>
+        </validation>
+
+        <validation name="regions_of_interest">
+            <xmlDataExtraction resultType="STRING">
+                <firstNonempty>
+                    <xpath>rgn</xpath>
+                </firstNonempty>
+            </xmlDataExtraction>
+            <rules>
+                <!--element se nesmi vyskytovat, jakakoliv hodnota je nepovolena-->
+                <mustNotExist/>
+            </rules>
+        </validation>
+    </fromXml>
+</binaryFileProfile>
