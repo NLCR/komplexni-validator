@@ -5,7 +5,6 @@ import nkp.pspValidator.shared.externalUtils.ExternalUtilManager;
 
 import java.io.File;
 import java.util.*;
-import java.util.stream.Collectors;
 
 /**
  * Created by Martin Řehánek on 2.11.16.
@@ -14,7 +13,7 @@ public class FdmfRegistry {
 
     private final Map<String, FdmfConfiguration> monographFdmfByVersion = new HashMap<>();
     private final Map<String, FdmfConfiguration> periodicalFdmfByVersion = new HashMap<>();
-    private final Map<String, FdmfConfiguration> soundRecordingFdmfByVersion = new HashMap<>();
+    private final Map<String, FdmfConfiguration> audioDocGramFdmfByVersion = new HashMap<>();
 
     public FdmfRegistry(ValidatorConfigurationManager validatorConfigManager) throws ValidatorConfigurationException {
         init(validatorConfigManager);
@@ -27,7 +26,7 @@ public class FdmfRegistry {
         for (FdmfConfiguration fdmfConfig : periodicalFdmfByVersion.values()) {
             fdmfConfig.initBinaryFileProfiles(externalUtilManager);
         }
-        for (FdmfConfiguration fdmfConfig : soundRecordingFdmfByVersion.values()) {
+        for (FdmfConfiguration fdmfConfig : audioDocGramFdmfByVersion.values()) {
             fdmfConfig.initBinaryFileProfiles(externalUtilManager);
         }
     }
@@ -35,8 +34,7 @@ public class FdmfRegistry {
     private void init(ValidatorConfigurationManager validatorConfigManager) throws ValidatorConfigurationException {
         loadFdmfConfigs(validatorConfigManager, "monograph", monographFdmfByVersion);
         loadFdmfConfigs(validatorConfigManager, "periodical", periodicalFdmfByVersion);
-        loadFdmfConfigs(validatorConfigManager, "sound_recording", soundRecordingFdmfByVersion);
-
+        loadFdmfConfigs(validatorConfigManager, "audio_doc_gram", audioDocGramFdmfByVersion);
     }
 
     private void loadFdmfConfigs(ValidatorConfigurationManager validatorConfigManager, String fdmfDirPefix, Map<String, FdmfConfiguration> mapToStoreResults) throws ValidatorConfigurationException {
@@ -59,8 +57,8 @@ public class FdmfRegistry {
         return periodicalFdmfByVersion.keySet();
     }
 
-    public Set<String> getSoundRecordingFdmfVersions() {
-        return soundRecordingFdmfByVersion.keySet();
+    public Set<String> getAudioDocGramFdmfVersions() {
+        return audioDocGramFdmfByVersion.keySet();
     }
 
     public FdmfConfiguration getMonographFdmfConfig(String dmfVersion) {
@@ -71,8 +69,8 @@ public class FdmfRegistry {
         return periodicalFdmfByVersion.get(dmfVersion);
     }
 
-    public FdmfConfiguration getSoundRecordingFdmfConfig(String dmfVersion) {
-        return soundRecordingFdmfByVersion.get(dmfVersion);
+    public FdmfConfiguration getAudioDocGramFdmfConfig(String dmfVersion) {
+        return audioDocGramFdmfByVersion.get(dmfVersion);
     }
 
     public FdmfConfiguration getFdmfConfig(Dmf dmf) throws UnknownFdmfException {
@@ -93,8 +91,8 @@ public class FdmfRegistry {
                     return file;
                 }
             }
-            case SOUND_RECORDING: {
-                FdmfConfiguration file = soundRecordingFdmfByVersion.get(dmf.getVersion());
+            case AUDIO_DOC_GRAM: {
+                FdmfConfiguration file = audioDocGramFdmfByVersion.get(dmf.getVersion());
                 if (file == null) {
                     throw new UnknownFdmfException(dmf);
                 } else {

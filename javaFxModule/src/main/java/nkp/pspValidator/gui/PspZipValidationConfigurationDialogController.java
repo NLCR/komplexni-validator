@@ -15,7 +15,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Set;
 
 /**
  * Created by Martin Řehánek on 13.12.16.
@@ -38,10 +37,10 @@ public class PspZipValidationConfigurationDialogController extends DialogControl
     CheckBox forcedPerVersionCheckBox;
 
     @FXML
-    ChoiceBox forcedSRVersionChoiceBox;
+    ChoiceBox forcedAdgVersionChoiceBox;
 
     @FXML
-    CheckBox forcedSRVersionCheckBox;
+    CheckBox forcedAdgVersionCheckBox;
 
     @FXML
     ChoiceBox preferredMonVersionChoiceBox;
@@ -56,10 +55,10 @@ public class PspZipValidationConfigurationDialogController extends DialogControl
     CheckBox preferredPerVersionCheckBox;
 
     @FXML
-    ChoiceBox preferredSRVersionChoiceBox;
+    ChoiceBox preferredAdgVersionChoiceBox;
 
     @FXML
-    CheckBox preferredSRVersionCheckBox;
+    CheckBox preferredAdgVersionCheckBox;
 
     @FXML
     Label errorMessageLabel;
@@ -119,23 +118,23 @@ public class PspZipValidationConfigurationDialogController extends DialogControl
         //forced
         boolean forcedMonVersionEnabled = mgr.getBooleanOrDefault(ConfigurationManager.PROP_FORCE_MON_VERSION_ENABLED, false);
         boolean forcedPerVersionEnabled = mgr.getBooleanOrDefault(ConfigurationManager.PROP_FORCE_PER_VERSION_ENABLED, false);
-        boolean forcedSRVersionEnabled = mgr.getBooleanOrDefault(ConfigurationManager.PROP_FORCE_SOUND_RECORDING_VERSION_ENABLED, false);
+        boolean forcedAdgVersionEnabled = mgr.getBooleanOrDefault(ConfigurationManager.PROP_FORCE_AUDIO_DOC_GRAM_VERSION_ENABLED, false);
         forcedMonVersionCheckBox.setSelected(forcedMonVersionEnabled);
         forcedMonVersionChoiceBox.setDisable(!forcedMonVersionEnabled);
         forcedPerVersionCheckBox.setSelected(forcedPerVersionEnabled);
         forcedPerVersionChoiceBox.setDisable(!forcedPerVersionEnabled);
-        forcedSRVersionCheckBox.setSelected(forcedSRVersionEnabled);
-        forcedSRVersionChoiceBox.setDisable(!forcedSRVersionEnabled);
+        forcedAdgVersionCheckBox.setSelected(forcedAdgVersionEnabled);
+        forcedAdgVersionChoiceBox.setDisable(!forcedAdgVersionEnabled);
         //preferred
         boolean preferredMonVersionEnabled = mgr.getBooleanOrDefault(ConfigurationManager.PROP_PREFER_MON_VERSION_ENABLED, false);
         boolean preferredPerVersionEnabled = mgr.getBooleanOrDefault(ConfigurationManager.PROP_PREFER_PER_VERSION_ENABLED, false);
-        boolean preferredSRVersionEnabled = mgr.getBooleanOrDefault(ConfigurationManager.PROP_PREFER_SOUND_RECORDING_VERSION_ENABLED, false);
+        boolean preferredAdgVersionEnabled = mgr.getBooleanOrDefault(ConfigurationManager.PROP_PREFER_AUDIO_DOC_GRAM_VERSION_ENABLED, false);
         preferredMonVersionCheckBox.setSelected(preferredMonVersionEnabled);
         preferredMonVersionChoiceBox.setDisable(!preferredMonVersionEnabled);
         preferredPerVersionCheckBox.setSelected(preferredPerVersionEnabled);
         preferredPerVersionChoiceBox.setDisable(!preferredPerVersionEnabled);
-        preferredSRVersionCheckBox.setSelected(preferredSRVersionEnabled);
-        preferredSRVersionChoiceBox.setDisable(!preferredSRVersionEnabled);
+        preferredAdgVersionCheckBox.setSelected(preferredAdgVersionEnabled);
+        preferredAdgVersionChoiceBox.setDisable(!preferredAdgVersionEnabled);
         //logs
         createTxtLog.setSelected(mgr.getBooleanOrDefault(ConfigurationManager.PROP_PSP_VALIDATION_CREATE_TXT_LOG, false));
         createXmlLog.setSelected(mgr.getBooleanOrDefault(ConfigurationManager.PROP_PSP_VALIDATION_CREATE_XML_LOG, false));
@@ -206,25 +205,25 @@ public class PspZipValidationConfigurationDialogController extends DialogControl
                 forcedPerVersionChoiceBox.getSelectionModel().selectFirst();
             }
         }
-        //forced - Sound recording
-        List<String> forcedSRVersions = new ArrayList<>();
-        forcedSRVersions.addAll(main.getValidationDataManager().getFdmfRegistry().getSoundRecordingFdmfVersions());
-        Collections.sort(forcedSRVersions, new VersionComparator());
-        if (forcedSRVersions != null) {
-            ObservableList<String> srVersionsObservable = FXCollections.observableArrayList(forcedSRVersions);
-            forcedSRVersionChoiceBox.setItems(srVersionsObservable);
-            String version = mgr.getStringOrDefault(ConfigurationManager.PROP_FORCE_SOUND_RECORDING_VERSION_CODE, null);
+        //forced - Audio document (gramophone)
+        List<String> forcedAdgVersions = new ArrayList<>();
+        forcedAdgVersions.addAll(main.getValidationDataManager().getFdmfRegistry().getAudioDocGramFdmfVersions());
+        Collections.sort(forcedAdgVersions, new VersionComparator());
+        if (forcedAdgVersions != null) {
+            ObservableList<String> adgVersionsObservable = FXCollections.observableArrayList(forcedAdgVersions);
+            forcedAdgVersionChoiceBox.setItems(adgVersionsObservable);
+            String version = mgr.getStringOrDefault(ConfigurationManager.PROP_FORCE_AUDIO_DOC_GRAM_VERSION_CODE, null);
             boolean found = false;
             if (version != null) {
-                for (int i = 0; i < srVersionsObservable.size(); i++) {
-                    if (version.equals(srVersionsObservable.get(i))) {
-                        forcedSRVersionChoiceBox.getSelectionModel().select(i);
+                for (int i = 0; i < adgVersionsObservable.size(); i++) {
+                    if (version.equals(adgVersionsObservable.get(i))) {
+                        forcedAdgVersionChoiceBox.getSelectionModel().select(i);
                         found = true;
                     }
                 }
             }
             if (!found) {
-                forcedSRVersionChoiceBox.getSelectionModel().selectFirst();
+                forcedAdgVersionChoiceBox.getSelectionModel().selectFirst();
             }
         }
         //preferred - Monograph
@@ -269,25 +268,25 @@ public class PspZipValidationConfigurationDialogController extends DialogControl
                 preferredPerVersionChoiceBox.getSelectionModel().selectFirst();
             }
         }
-        //preferred - Sound recording
-        List<String> preferredSRVersions = new ArrayList<>();
-        preferredSRVersions.addAll(main.getValidationDataManager().getFdmfRegistry().getSoundRecordingFdmfVersions());
-        Collections.sort(preferredSRVersions, new VersionComparator());
-        if (preferredSRVersions != null) {
-            ObservableList<String> srVersionsObservable = FXCollections.observableArrayList(preferredSRVersions);
-            preferredSRVersionChoiceBox.setItems(srVersionsObservable);
-            String version = mgr.getStringOrDefault(ConfigurationManager.PROP_PREFER_SOUND_RECORDING_VERSION_CODE, null);
+        //preferred - Audio document (gramophone)
+        List<String> preferredAdgVersions = new ArrayList<>();
+        preferredAdgVersions.addAll(main.getValidationDataManager().getFdmfRegistry().getAudioDocGramFdmfVersions());
+        Collections.sort(preferredAdgVersions, new VersionComparator());
+        if (preferredAdgVersions != null) {
+            ObservableList<String> adgVersionsObservable = FXCollections.observableArrayList(preferredAdgVersions);
+            preferredAdgVersionChoiceBox.setItems(adgVersionsObservable);
+            String version = mgr.getStringOrDefault(ConfigurationManager.PROP_PREFER_AUDIO_DOC_GRAM_VERSION_CODE, null);
             boolean found = false;
             if (version != null) {
-                for (int i = 0; i < srVersionsObservable.size(); i++) {
-                    if (version.equals(srVersionsObservable.get(i))) {
-                        preferredSRVersionChoiceBox.getSelectionModel().select(i);
+                for (int i = 0; i < adgVersionsObservable.size(); i++) {
+                    if (version.equals(adgVersionsObservable.get(i))) {
+                        preferredAdgVersionChoiceBox.getSelectionModel().select(i);
                         found = true;
                     }
                 }
             }
             if (!found) {
-                preferredSRVersionChoiceBox.getSelectionModel().selectFirst();
+                preferredAdgVersionChoiceBox.getSelectionModel().selectFirst();
             }
         }
     }
@@ -336,10 +335,10 @@ public class PspZipValidationConfigurationDialogController extends DialogControl
                 DmfDetector.Params params = new DmfDetector.Params();
                 params.forcedDmfMonVersion = forcedMonVersionChoiceBox.isDisabled() ? null : (String) forcedMonVersionChoiceBox.getSelectionModel().getSelectedItem();
                 params.forcedDmfPerVersion = forcedPerVersionChoiceBox.isDisabled() ? null : (String) forcedPerVersionChoiceBox.getSelectionModel().getSelectedItem();
-                params.forcedDmfSRVersion = forcedSRVersionChoiceBox.isDisabled() ? null : (String) forcedSRVersionChoiceBox.getSelectionModel().getSelectedItem();
+                params.forcedDmfAdgVersion = forcedAdgVersionChoiceBox.isDisabled() ? null : (String) forcedAdgVersionChoiceBox.getSelectionModel().getSelectedItem();
                 params.preferredDmfMonVersion = preferredMonVersionChoiceBox.isDisabled() ? null : (String) preferredMonVersionChoiceBox.getSelectionModel().getSelectedItem();
                 params.preferredDmfPerVersion = preferredPerVersionChoiceBox.isDisabled() ? null : (String) preferredPerVersionChoiceBox.getSelectionModel().getSelectedItem();
-                params.preferredDmfSRVersion = preferredSRVersionChoiceBox.isDisabled() ? null : (String) preferredSRVersionChoiceBox.getSelectionModel().getSelectedItem();
+                params.preferredDmfAdgVersion = preferredAdgVersionChoiceBox.isDisabled() ? null : (String) preferredAdgVersionChoiceBox.getSelectionModel().getSelectedItem();
                 int verbosity = getSelectedVerbosity();
                 //stage.hide();
                 main.unzipAndRunPspZipValidation(pspZipFile, params, createTxtLog.isSelected(), createXmlLog.isSelected(), verbosity);
@@ -381,11 +380,11 @@ public class PspZipValidationConfigurationDialogController extends DialogControl
         }
     }
 
-    public void forcedSRVersionChanged(ActionEvent actionEvent) {
-        boolean forced = forcedSRVersionCheckBox.isSelected();
-        forcedSRVersionChoiceBox.setDisable(!forced);
+    public void forcedAdgVersionChanged(ActionEvent actionEvent) {
+        boolean forced = forcedAdgVersionCheckBox.isSelected();
+        forcedAdgVersionChoiceBox.setDisable(!forced);
         if (getConfigurationManager() != null) {
-            getConfigurationManager().setBoolean(ConfigurationManager.PROP_FORCE_SOUND_RECORDING_VERSION_ENABLED, forced);
+            getConfigurationManager().setBoolean(ConfigurationManager.PROP_FORCE_AUDIO_DOC_GRAM_VERSION_ENABLED, forced);
         }
     }
 
@@ -403,10 +402,10 @@ public class PspZipValidationConfigurationDialogController extends DialogControl
         }
     }
 
-    public void forcedSRVersionChoiceboxChanged(ActionEvent actionEvent) {
-        String version = (String) forcedSRVersionChoiceBox.getSelectionModel().getSelectedItem();
+    public void forcedAdgVersionChoiceboxChanged(ActionEvent actionEvent) {
+        String version = (String) forcedAdgVersionChoiceBox.getSelectionModel().getSelectedItem();
         if (getConfigurationManager() != null) {
-            getConfigurationManager().setString(ConfigurationManager.PROP_FORCE_SOUND_RECORDING_VERSION_CODE, version);
+            getConfigurationManager().setString(ConfigurationManager.PROP_FORCE_AUDIO_DOC_GRAM_VERSION_CODE, version);
         }
     }
 
@@ -426,11 +425,11 @@ public class PspZipValidationConfigurationDialogController extends DialogControl
         }
     }
 
-    public void preferredSRVersionChanged(ActionEvent actionEvent) {
-        boolean preferred = preferredSRVersionCheckBox.isSelected();
-        preferredSRVersionChoiceBox.setDisable(!preferred);
+    public void preferredAdgVersionChanged(ActionEvent actionEvent) {
+        boolean preferred = preferredAdgVersionCheckBox.isSelected();
+        preferredAdgVersionChoiceBox.setDisable(!preferred);
         if (getConfigurationManager() != null) {
-            getConfigurationManager().setBoolean(ConfigurationManager.PROP_PREFER_SOUND_RECORDING_VERSION_ENABLED, preferred);
+            getConfigurationManager().setBoolean(ConfigurationManager.PROP_PREFER_AUDIO_DOC_GRAM_VERSION_ENABLED, preferred);
         }
     }
 
@@ -448,10 +447,10 @@ public class PspZipValidationConfigurationDialogController extends DialogControl
         }
     }
 
-    public void preferredSRVersionChoiceboxChanged(ActionEvent actionEvent) {
-        String version = (String) preferredSRVersionChoiceBox.getSelectionModel().getSelectedItem();
+    public void preferredAdgVersionChoiceboxChanged(ActionEvent actionEvent) {
+        String version = (String) preferredAdgVersionChoiceBox.getSelectionModel().getSelectedItem();
         if (getConfigurationManager() != null) {
-            getConfigurationManager().setString(ConfigurationManager.PROP_PREFER_SOUND_RECORDING_VERSION_CODE, version);
+            getConfigurationManager().setString(ConfigurationManager.PROP_PREFER_AUDIO_DOC_GRAM_VERSION_CODE, version);
         }
     }
 

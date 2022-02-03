@@ -23,16 +23,17 @@ public class DmfDetector {
 
     public static final String DEFAULT_MONOGRAPH_VERSION = "2.0";
     public static final String DEFAULT_PERIODICAL_VERSION = "1.8";
-    public static final String DEFAULT_SOUND_RECORDING_VERSION = "0.3";
+    public static final String DEFAULT_AUDIO_DOC_GRAM_VERSION = "0.5";
 
 
     /**
-     * Validátor zkontroluje hlavní mets soubor, konkrétně kořenový element <mets:mets> na hodnotu atributu TYPE. Možné hodnoty jsou „Monograph“ nebo „Periodical“. Platí:
+     * Validátor zkontroluje hlavní mets soubor, konkrétně kořenový element <mets:mets> na hodnotu atributu TYPE. Možné hodnoty jsou „Monograph“, „Periodical“, „sound recording“. Platí:
      * Pokud nenalezne atribut TYPE – chyba.
      * Pokud se vyskytne jiná než povolená hodnota atributu – chyba.
      * Pokud se vyskytuje hodnota „Monograph“, zachází validátor s balíčkem jako s monografií.
      * Pokud se vyskytuje hodnota „Periodical“, zachází validátor s balíčkem jako s periodikem.
-     * Pokud se vyskytuje hodnota „sound recording“, zachází validátor s balíčkem jako se zvukovým dokumentem.
+     * Pokud se vyskytuje hodnota „sound recording“, zachází validátor s balíčkem jako se zvukovým dokumentem gramofonové desky.
+     * //TODO: "audio cylinder" pro audio_doc
      */
     public Dmf.Type detectDmfType(File pspRootDir) throws PspDataException, XmlFileParsingException, InvalidXPathExpressionException {
 
@@ -46,7 +47,7 @@ public class DmfDetector {
             } else if ("Periodical".equals(docType)) {
                 return PERIODICAL;
             } else if ("sound recording".equals(docType)) {
-                return SOUND_RECORDING;
+                return AUDIO_DOC_GRAM;
             } else {
                 throw new PspDataException(pspRootDir, String.format("atribut TYPE elementu mods neobsahuje korektní typ (Monograph/Periodical/sound recording), ale hodnotu '%s'", docType));
             }
@@ -59,14 +60,14 @@ public class DmfDetector {
         Pattern pattern = Pattern.compile(".*mets.*\\.xml", java.util.regex.Pattern.CASE_INSENSITIVE | java.util.regex.Pattern.UNICODE_CASE);
         File[] metsCandidates = pspRootDir.listFiles((dir, name) -> pattern.matcher(name).matches());
         if (metsCandidates.length >= 2) {
-            for(File metsCandidate: metsCandidates){
+            for (File metsCandidate : metsCandidates) {
                 System.out.println(metsCandidate.getAbsolutePath());
             }
             throw new PspDataException(pspRootDir,
-                    String.format("nalezeno více možných souborů PRIMARY-METS, není jasné, který použít pro zjištění typu dokumentu (monografie/periodikum/zvuk)"));
+                    String.format("nalezeno více možných souborů PRIMARY-METS, není jasné, který použít pro zjištění typu dokumentu (monografie/periodikum/zvuk-gramodeska)"));
         } else if (metsCandidates.length == 0) {
             throw new PspDataException(pspRootDir,
-                    String.format("nenalezen soubor PRIMARY-METS pro zjištění typu dokumentu (monografie/periodikum/zvuk)"));
+                    String.format("nenalezen soubor PRIMARY-METS pro zjištění typu dokumentu (monografie/periodikum/zvuk-gramodeska)"));
         } else {
             return metsCandidates[0];
         }
@@ -140,8 +141,8 @@ public class DmfDetector {
             case PERIODICAL: {
                 return chooseVersion(PERIODICAL, pspRoot, params.forcedDmfPerVersion, params.preferredDmfPerVersion, DEFAULT_PERIODICAL_VERSION);
             }
-            case SOUND_RECORDING: {
-                return chooseVersion(SOUND_RECORDING, pspRoot, params.forcedDmfSRVersion, params.preferredDmfSRVersion, DEFAULT_SOUND_RECORDING_VERSION);
+            case AUDIO_DOC_GRAM: {
+                return chooseVersion(AUDIO_DOC_GRAM, pspRoot, params.forcedDmfAdgVersion, params.preferredDmfAdgVersion, DEFAULT_AUDIO_DOC_GRAM_VERSION);
             }
             default:
                 throw new IllegalStateException();
@@ -167,10 +168,10 @@ public class DmfDetector {
     public static class Params {
         public String preferredDmfMonVersion;
         public String preferredDmfPerVersion;
-        public String preferredDmfSRVersion;
+        public String preferredDmfAdgVersion;
         public String forcedDmfMonVersion;
         public String forcedDmfPerVersion;
-        public String forcedDmfSRVersion;
+        public String forcedDmfAdgVersion;
     }
 
 }

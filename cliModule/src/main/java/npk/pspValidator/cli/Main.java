@@ -111,7 +111,7 @@ public class Main {
                 .withDescription(replaceUmlaut(
                         "Preferovaná verze DMF pro validaci monografií. " +
                                 "Použije se k validaci, pokud je balík typu Monografie, data balíku neobsahují informaci o vhodné verzi DMF Monografie " +
-                                "a parametr --forced-dmf-mon-version není vyplněn."))
+                                "a parametr --" + Params.FORCED_DMF_MON_VERSION + " není vyplněn."))
                 .hasArg()
                 .withArgName("VERZE")
                 .withLongOpt(Params.PREFERRED_DMF_MON_VERSION)
@@ -121,24 +121,25 @@ public class Main {
                 .withDescription(replaceUmlaut(
                         "Preferovaná verze DMF pro validaci periodik. " +
                                 "Použije se k validaci, pokud je balík typu Periodikum, data balíku neobsahují informaci o vhodné verzi DMF Periodikum " +
-                                "a parametr --forced-dmf-per-version není vyplněn."))
+                                "a parametr --" + Params.FORCED_DMF_PER_VERSION + " není vyplněn."))
                 .hasArg()
                 .withArgName("VERZE")
                 .withLongOpt(Params.PREFERRED_DMF_PER_VERSION)
                 .create());
         options.addOption(OptionBuilder
                 .withDescription(replaceUmlaut(
-                        "Preferovaná verze DMF pro validaci zvukových dokumentů. " +
-                                "Použije se k validaci, pokud je balík typu Zvukový dokument, data balíku neobsahují informaci o vhodné verzi DMF Zvukové dokumenty " +
-                                "a parametr --forced-dmf-sr-version není vyplněn."))
+                        "Preferovaná verze DMF pro validaci zvukových dokumentů - gramodesek. " +
+                                "Použije se k validaci, pokud je balík typu Zvukový dokument (gramodeska), data balíku neobsahují informaci o vhodné verzi DMF Zvukové dokumenty " +
+                                "a parametr --" + Params.FORCED_DMF_ADG_VERSION + " není vyplněn."))
                 .hasArg()
                 .withArgName("VERZE")
-                .withLongOpt(Params.PREFERRED_DMF_SR_VERSION)
+                .withLongOpt(Params.PREFERRED_DMF_ADG_VERSION)
                 .create());
         options.addOption(OptionBuilder
                 .withDescription(replaceUmlaut(
                         "Vynucená verze DMF pro validaci monografií. " +
-                                "Použije se k validaci všech balíků typu Monografie bez ohledu na data balíků a hodnotu parametru --preferred-dmf-mon-version."))
+                                //"Použije se k validaci všech balíků typu Monografie bez ohledu na data balíků a hodnotu parametru --preferred-dmf-mon-version."))
+                                "Použije se k validaci všech balíků typu Monografie bez ohledu na data balíků a hodnotu parametru --" + Params.PREFERRED_DMF_MON_VERSION + "."))
                 .hasArg()
                 .withArgName("VERZE")
                 .withLongOpt(Params.FORCED_DMF_MON_VERSION)
@@ -146,18 +147,18 @@ public class Main {
         options.addOption(OptionBuilder
                 .withDescription(replaceUmlaut(
                         "Vynucená verze DMF pro validaci periodik. " +
-                                "Použije se k validaci všech balíků typu Periodikum bez ohledu na data balíků a hodnotu parametru --preferred-dmf-per-version."))
+                                "Použije se k validaci všech balíků typu Periodikum bez ohledu na data balíků a hodnotu parametru --" + Params.PREFERRED_DMF_PER_VERSION + "."))
                 .hasArg()
                 .withArgName("VERZE")
                 .withLongOpt(Params.FORCED_DMF_PER_VERSION)
                 .create());
         options.addOption(OptionBuilder
                 .withDescription(replaceUmlaut(
-                        "Vynucená verze DMF pro validaci zvukových dokumentů. " +
-                                "Použije se k validaci všech balíků typu Zvukový dokument bez ohledu na data balíků a hodnotu parametru --preferred-dmf-sr-version."))
+                        "Vynucená verze DMF pro validaci zvukových dokumentů - gramodesek. " +
+                                "Použije se k validaci všech balíků typu Zvukový dokument (gramodeska) bez ohledu na data balíků a hodnotu parametru --" + Params.PREFERRED_DMF_ADG_VERSION + "."))
                 .hasArg()
                 .withArgName("VERZE")
-                .withLongOpt(Params.FORCED_DMF_SR_VERSION)
+                .withLongOpt(Params.FORCED_DMF_ADG_VERSION)
                 .create());
 
         options.addOption(OptionBuilder
@@ -373,9 +374,9 @@ public class Main {
                 if (line.hasOption(Params.PREFERRED_DMF_PER_VERSION)) {
                     preferDmfPerVersion = line.getOptionValue(Params.PREFERRED_DMF_PER_VERSION);
                 }
-                String preferDmfSrVersion = null;
-                if (line.hasOption(Params.PREFERRED_DMF_SR_VERSION)) {
-                    preferDmfSrVersion = line.getOptionValue(Params.PREFERRED_DMF_SR_VERSION);
+                String preferDmfAdgVersion = null;
+                if (line.hasOption(Params.PREFERRED_DMF_ADG_VERSION)) {
+                    preferDmfAdgVersion = line.getOptionValue(Params.PREFERRED_DMF_ADG_VERSION);
                 }
                 //force dmf versions
                 String forceDmfMonVersion = null;
@@ -386,9 +387,9 @@ public class Main {
                 if (line.hasOption(Params.FORCED_DMF_PER_VERSION)) {
                     forceDmfPerVersion = line.getOptionValue(Params.FORCED_DMF_PER_VERSION);
                 }
-                String forceDmfSrVersion = null;
-                if (line.hasOption(Params.FORCED_DMF_SR_VERSION)) {
-                    forceDmfSrVersion = line.getOptionValue(Params.FORCED_DMF_SR_VERSION);
+                String forceDmfAdgVersion = null;
+                if (line.hasOption(Params.FORCED_DMF_ADG_VERSION)) {
+                    forceDmfAdgVersion = line.getOptionValue(Params.FORCED_DMF_ADG_VERSION);
                 }
 
                 //verbosity
@@ -464,10 +465,10 @@ public class Main {
                 DmfDetector.Params dmfDetectorParams = new DmfDetector.Params();
                 dmfDetectorParams.forcedDmfMonVersion = forceDmfMonVersion;
                 dmfDetectorParams.forcedDmfPerVersion = forceDmfPerVersion;
-                dmfDetectorParams.forcedDmfSRVersion = forceDmfSrVersion;
+                dmfDetectorParams.forcedDmfAdgVersion = forceDmfAdgVersion;
                 dmfDetectorParams.preferredDmfMonVersion = preferDmfMonVersion;
                 dmfDetectorParams.preferredDmfPerVersion = preferDmfPerVersion;
-                dmfDetectorParams.preferredDmfSRVersion = preferDmfSrVersion;
+                dmfDetectorParams.preferredDmfAdgVersion = preferDmfAdgVersion;
 
                 PrintStream out = System.out;
                 PrintStream err = System.err;
@@ -556,10 +557,16 @@ public class Main {
 
     private static void printHelp(Options options) {
         String header = replaceUmlaut("Validuje PSP balík, nebo sadu PSP balíků podle DMF*." +
-                " Typ DMF (Monografie/Periodikum/Zvukový dokument) se vždy získává z dat jednotlivých PSP balíků." +
-                " Verze DMF použité pro validaci je možné ovlivnit parametry --preferred-dmf-mon-version, --preferred-dmf-per-version, --preferred-dmf-sr-version, --forced-dmf-mon-version, --forced-dmf-per-version a --forced-dmf-sr-version." +
+                " Typ DMF (Monografie/Periodikum/Zvuk-gramodeska) se odvozuje z dat jednotlivých PSP balíků." +
+                " Verze DMF použité pro validaci lze ovlivnit parametry" +
+                " --" + Params.PREFERRED_DMF_MON_VERSION + "," +
+                " --" + Params.PREFERRED_DMF_PER_VERSION + "," +
+                " --" + Params.PREFERRED_DMF_ADG_VERSION + "," +
+                " --" + Params.FORCED_DMF_MON_VERSION + "," +
+                " --" + Params.FORCED_DMF_PER_VERSION + " a" +
+                " --" + Params.FORCED_DMF_ADG_VERSION + "." +
                 " Dále je potřeba pomocí --config-dir uvést adresář, který obsahuje definice fDMF," +
-                " napr. monograph_2.0 nebo periodical_1.7.\n\n");
+                " např. monograph_2.0, periodical_1.9, nebo audio_doc_gram_0.5.\n\n");
         String footer = replaceUmlaut("\n*Definice metadatových formátů. Více na http://www.ndk.cz/standardy-digitalizace/metadata.\n" +
                 "Více informací o validátoru najdete na https://github.com/NLCR/komplexni-validator.");
         HelpFormatter formatter = new HelpFormatter();

@@ -69,20 +69,20 @@
                        GridPane.rowIndex="4"
                        onAction="#forcedPerVersionChoiceboxChanged"/>
 
-            <!--Sound recording-->
-            <CheckBox fx:id="forcedSRVersionCheckBox"
-                      onAction="#forcedSRVersionChanged"
+            <!--Audio doc (gramophone)-->
+            <CheckBox fx:id="forcedAdgVersionCheckBox"
+                      onAction="#forcedAdgVersionChanged"
                       GridPane.columnIndex="0"
                       GridPane.rowIndex="5"
                       GridPane.halignment="RIGHT"
             />
 
-            <Label text="Zvuky" GridPane.columnIndex="1" GridPane.rowIndex="5"/>
+            <Label text="Zvuky (gramodesky)" GridPane.columnIndex="1" GridPane.rowIndex="5"/>
 
-            <ChoiceBox fx:id="forcedSRVersionChoiceBox"
+            <ChoiceBox fx:id="forcedAdgVersionChoiceBox"
                        GridPane.columnIndex="2" GridPane.columnSpan="2"
                        GridPane.rowIndex="5"
-                       onAction="#forcedSRVersionChoiceboxChanged"/>
+                       onAction="#forcedAdgVersionChoiceboxChanged"/>
 
             <!--PREFERRED-->
             <Label text="Preferované verze standardů. Jsou použity, když v datech balíku chybí verze DMF."
@@ -122,20 +122,20 @@
                        onAction="#preferredPerVersionChoiceboxChanged"
             />
 
-            <!--Sound recording-->
-            <CheckBox fx:id="preferredSRVersionCheckBox"
-                      onAction="#preferredSRVersionChanged"
+            <!--Audio doc (gramophone)-->
+            <CheckBox fx:id="preferredAdgVersionCheckBox"
+                      onAction="#preferredAdgVersionChanged"
                       GridPane.columnIndex="0"
                       GridPane.rowIndex="10"
                       GridPane.halignment="RIGHT"
             />
 
-            <Label text="Zvuky" GridPane.columnIndex="1" GridPane.rowIndex="10"/>
+            <Label text="Zvuky (gramodesky)" GridPane.columnIndex="1" GridPane.rowIndex="10"/>
 
-            <ChoiceBox fx:id="preferredSRVersionChoiceBox"
+            <ChoiceBox fx:id="preferredAdgVersionChoiceBox"
                        GridPane.columnIndex="2" GridPane.columnSpan="2"
                        GridPane.rowIndex="10"
-                       onAction="#preferredSRVersionChoiceboxChanged"
+                       onAction="#preferredAdgVersionChoiceboxChanged"
             />
 
             <!--PROTOCOLS-->

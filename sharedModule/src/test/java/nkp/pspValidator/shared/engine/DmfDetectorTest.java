@@ -111,12 +111,12 @@ public class DmfDetectorTest {
         assertEquals(resolverPer(per14Dir, "1", "123").getVersion(), "123");
         assertEquals(resolverPer(per14Dir, "1", null).getVersion(), "1.4");
 
-        //sound recording
-        File sr03Dir = new File("src/test/resources/sound_recording_0.3/1234567890");
-        assertEquals(resolverSr(sr03Dir, null, "123").getVersion(), "123");
-        assertEquals(resolverSr(sr03Dir, "1", "123").getVersion(), "123");
-        assertEquals(resolverSr(sr03Dir, null, null).getVersion(), "0.3");
-        assertEquals(resolverSr(sr03Dir, "1", null).getVersion(), "0.3");
+        //audio document gramophone
+        File adg03Dir = new File("src/test/resources/audio_doc_gram_0.3/1234567890");
+        assertEquals(resolverSr(adg03Dir, null, "123").getVersion(), "123");
+        assertEquals(resolverSr(adg03Dir, "1", "123").getVersion(), "123");
+        assertEquals(resolverSr(adg03Dir, null, null).getVersion(), "0.3");
+        assertEquals(resolverSr(adg03Dir, "1", null).getVersion(), "0.3");
     }
 
 
@@ -124,10 +124,10 @@ public class DmfDetectorTest {
         DmfDetector.Params params = new DmfDetector.Params();
         params.forcedDmfMonVersion = forced;
         params.forcedDmfPerVersion = null;
-        params.forcedDmfSRVersion = null;
+        params.forcedDmfAdgVersion = null;
         params.preferredDmfMonVersion = preferred;
         params.preferredDmfPerVersion = null;
-        params.preferredDmfSRVersion = null;
+        params.preferredDmfAdgVersion = null;
         return dmfDetector.resolveDmf(pspDir, params);
     }
 
@@ -135,10 +135,10 @@ public class DmfDetectorTest {
         DmfDetector.Params params = new DmfDetector.Params();
         params.forcedDmfMonVersion = null;
         params.forcedDmfPerVersion = forced;
-        params.forcedDmfSRVersion = null;
+        params.forcedDmfAdgVersion = null;
         params.preferredDmfMonVersion = null;
         params.preferredDmfPerVersion = preferred;
-        params.preferredDmfSRVersion = null;
+        params.preferredDmfAdgVersion = null;
         return dmfDetector.resolveDmf(pspDir, params);
     }
 
@@ -146,10 +146,10 @@ public class DmfDetectorTest {
         DmfDetector.Params params = new DmfDetector.Params();
         params.forcedDmfMonVersion = null;
         params.forcedDmfPerVersion = null;
-        params.forcedDmfSRVersion = forced;
+        params.forcedDmfAdgVersion = forced;
         params.preferredDmfMonVersion = null;
         params.preferredDmfPerVersion = null;
-        params.preferredDmfSRVersion = preferred;
+        params.preferredDmfAdgVersion = preferred;
         return dmfDetector.resolveDmf(pspDir, params);
     }
 

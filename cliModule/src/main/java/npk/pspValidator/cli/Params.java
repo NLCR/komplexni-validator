@@ -15,10 +15,10 @@ public class Params {
 
     public static final String PREFERRED_DMF_MON_VERSION = "preferred-dmf-mon-version";
     public static final String PREFERRED_DMF_PER_VERSION = "preferred-dmf-per-version";
-    public static final String PREFERRED_DMF_SR_VERSION = "preferred-dmf-sr-version";
+    public static final String PREFERRED_DMF_ADG_VERSION = "preferred-dmf-adg-version";
     public static final String FORCED_DMF_MON_VERSION = "forced-dmf-mon-version";
     public static final String FORCED_DMF_PER_VERSION = "forced-dmf-per-version";
-    public static final String FORCED_DMF_SR_VERSION = "forced-dmf-sr-version";
+    public static final String FORCED_DMF_ADG_VERSION = "forced-dmf-adg-version";
 
     public static final String IMAGEMAGICK_PATH = "imagemagick-path";
     public static final String JHOVE_PATH = "jhove-path";
