@@ -33,7 +33,7 @@ public class VfCheckNoFileIsDir extends ValidationFunction {
             if (files == null) {
                 //ignore
                 //return invalidValueParamNull(PARAM_FILES, paramFiles);
-                return new ValidationResult();
+                return ValidationResult.ok();
             }
 
             return validate(files);

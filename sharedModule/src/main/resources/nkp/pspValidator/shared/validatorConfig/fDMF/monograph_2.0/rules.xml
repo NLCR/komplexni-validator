@@ -920,50 +920,20 @@
     <rules-section name="Identifikátory" description="">
 
         <!--psp id-->
-        <!--Na žádost NKP zrušeno-->
-        <!--<rule name="PSP_ID_DERIVED_FROM_TITLE_ID">
-            <description>PSP-ID by měl být odvozen od některého z identifikátorů titulu, navíc pouze typu 'urnnbn' nebo
-                'uuid'.
-            </description>
-            <validation functionName="checkStringDerivedFromOneOfIdentifiers">
+        <rule name="PSP_ID_DERIVED_FROM_TITLE_ID">
+            <description>PSP-ID by měl být odvozen od některého z identifikátorů titulu, a to typu 'urnnbn' nebo 'uuid'</description>
+            <validation functionName="checkStringDerivedFromUrnnbnOrUuid">
                 <params>
                     <value name="string" type="STRING">
                         <value-ref name="PSP_ID"/>
                     </value>
-                    &lt;!&ndash;seznam identifikatoru&ndash;&gt;
+                    <!--seznam identifikatoru (dulezite jsou typy 'uuid' a 'urnnbn'-->
                     <value name="identifiers" type="IDENTIFIER_LIST">
-                        &lt;!&ndash;jeste omezeni na konkretni typy identifikatoru titulu, ze kterych muze byt psp-id odvozen&ndash;&gt;
-                        <evaluation functionName="filterIdentifersByTypes">
-                            <params>
-                                &lt;!&ndash;seznam identifikatoru (bere se zde z identifikatoru nalezenych v souboru INFO (tj. jen identifikatory titulu)&ndash;&gt;
-                                <value name="identifiers" type="IDENTIFIER_LIST">
-                                    <value-ref name="INFO_IDENTIFIERS"/>
-                                </value>
-                                <value name="types" type="STRING_LIST">
-                                    <evaluation functionName="buildListOfStrings">
-                                        <params>
-                                            <value name="string" type="STRING">uuid</value>
-                                            <value name="string" type="STRING">urnnbn</value>
-                                        </params>
-                                    </evaluation>
-                                </value>
-                            </params>
-                        </evaluation>
+                        <value-ref name="INFO_IDENTIFIERS"/>
                     </value>
-                    &lt;!&ndash;seznam prefixu, ktere se odstranuji z hodnot identifikatoru pred hledanim shody&ndash;&gt;
-                    <value name="id_prefixes" type="STRING_LIST">
-                        <evaluation functionName="buildListOfStrings">
-                            <params>
-                                <value name="string" type="STRING">cnb</value>
-                                <value name="string" type="STRING">uuid:</value>
-                                <value name="string" type="STRING">urn:nbn:cz:</value>
-                            </params>
-                        </evaluation>
-                    </value>
-                    <value name="min_match_length" type="INTEGER">6</value>>
                 </params>
             </validation>
-        </rule>-->
+        </rule>
 
         <!--info identifiers -->
 

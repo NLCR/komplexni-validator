@@ -43,7 +43,7 @@ public class VfCheckNoOtherFilesInDir extends ValidationFunction {
             if (rootDir == null) {
                 //ignore
                 //return invalidValueParamNull(PARAM_ROOT_DIR, paramRootDir);
-                return new ValidationResult();
+                return ValidationResult.ok();
             } else if (!rootDir.isDirectory()) {
                 return singlErrorResult(invalidFileIsNotDir(rootDir));
             } else if (!rootDir.canRead()) {

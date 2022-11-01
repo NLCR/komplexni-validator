@@ -83,7 +83,7 @@ public class VfCheckFileListSizeIsInRange extends ValidationFunction {
         } else if (maxSize != null && fileList.size() > maxSize) {
             return singlErrorResult(invalid(level, "seznam obsahuje %d souborů, což je více, než maximálních %d", fileList.size(), maxSize));
         } else {
-            return new ValidationResult();
+            return ValidationResult.ok();
         }
     }
 }

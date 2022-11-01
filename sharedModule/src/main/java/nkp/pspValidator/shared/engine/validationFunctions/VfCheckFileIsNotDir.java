@@ -47,7 +47,7 @@ public class VfCheckFileIsNotDir extends ValidationFunction {
         } else if (file.isDirectory()) {
             return singlErrorResult(invalidFileIsDir(file));
         } else {
-            return new ValidationResult();
+            return ValidationResult.ok();
         }
     }
 

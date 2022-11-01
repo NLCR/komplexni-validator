@@ -32,4 +32,8 @@ public class ValidationResult {
         return errors;
     }
 
+    public static ValidationResult ok() {
+        return new ValidationResult();
+    }
+
 }

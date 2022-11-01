@@ -202,6 +202,8 @@ public class Engine {
                 return new VfCheckUrnNbnIdentifiersRegistered(name, this);
             case "checkStringDerivedFromOneOfIdentifiers":
                 return new VfCheckStringDerivedFromOneOfIdentifiers(name, this);
+            case "checkStringDerivedFromUrnnbnOrUuid":
+                return new VfCheckStringDerivedFromUrnnbnOrUuid(name, this);
             case "checkDcIdentifiersHaveTypeAndValue":
                 return new VfCheckDcIdentifiersHaveTypeAndValue(name, this);
             case "checkPrimaryMetsFilesecContainsAllFilegroups":

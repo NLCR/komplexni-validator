@@ -83,7 +83,7 @@ public class VfCheckFileListHasExactSize extends ValidationFunction {
                 }
             }
         } else {
-            return new ValidationResult();
+            return ValidationResult.ok();
         }
     }
 }

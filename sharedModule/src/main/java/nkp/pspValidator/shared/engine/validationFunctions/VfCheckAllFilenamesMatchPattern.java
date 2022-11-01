@@ -33,7 +33,7 @@ public class VfCheckAllFilenamesMatchPattern extends ValidationFunction {
             if (files == null) {
                 //ignore
                 //return invalidValueParamNull(PARAM_FILES, paramFiles);
-                return new ValidationResult();
+                return ValidationResult.ok();
             }
 
             PatternEvaluation patternParam = patternParams.getParam(PARAM_PATTERN).getEvaluation();

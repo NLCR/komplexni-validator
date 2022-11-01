@@ -64,12 +64,12 @@ public class VfCheckFilenameMatchesPattern extends ValidationFunction {
 
     private ValidationResult validate(File file, PatternEvaluation paramPattern, Level level) {
         if (file == null) {
-            return new ValidationResult();
+            return ValidationResult.ok();
 
         } else if (!paramPattern.matches(file.getName())) {
             return singlErrorResult(invalid(level, "název souboru %s neodpovídá vzoru %s", file.getName(), paramPattern));
         } else {
-            return new ValidationResult();
+            return ValidationResult.ok();
         }
     }
 

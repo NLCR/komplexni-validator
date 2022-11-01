@@ -42,7 +42,7 @@ public class VfCheckFileIsDir extends ValidationFunction {
             File file = (File) paramFile.getData();
             if (file == null) {
                 if (ignoreIfFileIsNull) {
-                    return new ValidationResult();
+                    return ValidationResult.ok();
                 } else {
                     return invalidValueParamNull(PARAM_FILE, paramFile);
                 }
@@ -61,7 +61,7 @@ public class VfCheckFileIsDir extends ValidationFunction {
         } else if (!file.isDirectory()) {
             return singlErrorResult(invalidFileIsNotDir(file));
         } else {
-            return new ValidationResult();
+            return ValidationResult.ok();
         }
     }
 

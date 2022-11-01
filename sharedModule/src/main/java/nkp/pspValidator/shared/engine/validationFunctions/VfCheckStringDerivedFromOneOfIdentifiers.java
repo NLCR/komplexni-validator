@@ -69,7 +69,7 @@ public class VfCheckStringDerivedFromOneOfIdentifiers extends ValidationFunction
             int longestCommonSubstringLength = Utils.getLongestCommonSubstringLength(idValue, string);
             if (longestCommonSubstringLength >= minMatchLength) {
                 //System.out.println(String.format("match: %s, %s", string, idValue));
-                return new ValidationResult();
+                return ValidationResult.ok();
             }
         }
         return singlErrorResult(invalid(Level.WARNING,
