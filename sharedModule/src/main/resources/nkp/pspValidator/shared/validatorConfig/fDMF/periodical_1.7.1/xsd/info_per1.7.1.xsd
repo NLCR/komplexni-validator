@@ -81,7 +81,7 @@
 
     <xs:simpleType name="checksumType">
         <xs:restriction base="xs:string">
-            <xs:pattern value="MD5"/>
+            <xs:pattern value="md5"/>
         </xs:restriction>
     </xs:simpleType>
 
