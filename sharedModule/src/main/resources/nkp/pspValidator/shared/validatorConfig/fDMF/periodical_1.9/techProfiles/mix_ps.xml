@@ -53,15 +53,11 @@
                                         <expectedElements>
                                             <element name="mix:ObjectIdentifier" mandatory="false" repeatable="true">
                                                 <expectedElements>
-                                                    <!--Neni jasna povinnost - konflikt povinnost=M a vyskyt=0-1. Nechavam defenzivne nepovinne-->
-                                                    <element name="mix:objectIdentifierType" mandatory="true"
-                                                             repeatable="false">
+                                                    <element name="mix:objectIdentifierType" mandatory="true" repeatable="false">
                                                         <expectedContent/>
                                                     </element>
 
-                                                    <!--Neni jasna povinnost - konflikt povinnost=M a vyskyt=0-1. Nechavam defenzivne nepovinne-->
-                                                    <element name="mix:objectIdentifierValue" mandatory="true"
-                                                             repeatable="false">
+                                                    <element name="mix:objectIdentifierValue" mandatory="true" repeatable="false">
                                                         <expectedContent/>
                                                     </element>
                                                 </expectedElements>
@@ -71,29 +67,24 @@
                                                 <expectedContent/>
                                             </element>
 
-                                            <!--Neni jasna povinnost - konflikt povinnost=M a vyskyt=0-1. Nechavam defenzivne nepovinne-->
                                             <element name="mix:FormatDesignation" mandatory="true" repeatable="false">
                                                 <expectedElements>
-                                                    <!--Neni jasna povinnost - konflikt povinnost=M a vyskyt=0-1. Nechavam defenzivne nepovinne-->
                                                     <element name="mix:formatName" mandatory="true" repeatable="false">
                                                         <expectedContent/>
                                                     </element>
 
-                                                    <!--Neni jasna povinnost - konflikt povinnost=M a vyskyt=0-1. Nechavam defenzivne nepovinne-->
-                                                    <element name="mix:formatVersion" mandatory="true"
-                                                             repeatable="false">
+                                                    <element name="mix:formatVersion" mandatory="true" repeatable="false">
                                                         <expectedContent/>
                                                     </element>
                                                 </expectedElements>
                                             </element>
 
-                                            <!--Neni jasna povinnost - konflikt povinnost=M a vyskyt=0-1. Nechavam defenzivne nepovinne-->
                                             <element name="mix:byteOrder" mandatory="true" repeatable="false">
                                                 <expectedContent>
                                                     <oneOf>
                                                         <value>little endian</value>
                                                         <value>big endian</value>
-                                                        <!--Nejasne, jestli "middle (mix) endian", nebo "middle endian" a "mix endian", nechavam vse-->
+                                                        <!--TODO: Nejasne, jestli "middle (mix) endian", nebo "middle endian" a "mix endian", nechavam vse-->
                                                         <value>middle endian</value>
                                                         <value>mix endian</value>
                                                         <value>middle (mix) endian</value>
@@ -101,12 +92,9 @@
                                                 </expectedContent>
                                             </element>
 
-                                            <!--Neni jasna povinnost - konflikt povinnost=M a vyskyt=0-n. Nechavam defenzivne nepovinne-->
                                             <element name="mix:Compression" mandatory="true" repeatable="true">
                                                 <expectedElements>
-                                                    <!--Neni jasna povinnost - konflikt povinnost=M a vyskyt=0-1. Nechavam defenzivne nepovinne-->
-                                                    <element name="mix:compressionScheme" mandatory="true"
-                                                             repeatable="false">
+                                                    <element name="mix:compressionScheme" mandatory="true" repeatable="false">
                                                         <expectedContent/>
                                                     </element>
                                                 </expectedElements>
@@ -114,62 +102,41 @@
                                         </expectedElements>
                                     </element>
 
-                                    <!--Neni jasna povinnost - konflikt povinnost=M a vyskyt=0-1. Nechavam defenzivne nepovinne-->
                                     <element name="mix:BasicImageInformation" mandatory="true" repeatable="false">
                                         <expectedElements>
-                                            <!--Neni jasna povinnost - konflikt povinnost=M a vyskyt=0-1. Nechavam defenzivne nepovinne-->
-                                            <element name="mix:BasicImageCharacteristics" mandatory="true"
-                                                     repeatable="false">
+                                            <element name="mix:BasicImageCharacteristics" mandatory="true" repeatable="false">
                                                 <expectedElements>
-                                                    <!--Neni jasna povinnost - konflikt povinnost=M a vyskyt=0-1. Nechavam defenzivne nepovinne-->
                                                     <element name="mix:imageWidth" mandatory="true" repeatable="false">
                                                         <expectedContent>
                                                             <regexp>[0-9]+</regexp>
                                                         </expectedContent>
                                                     </element>
 
-                                                    <!--Neni jasna povinnost - konflikt povinnost=M a vyskyt=0-1. Nechavam defenzivne nepovinne-->
-                                                    <element name="mix:imageHeight" mandatory="true"
-                                                             repeatable="false">
+                                                    <element name="mix:imageHeight" mandatory="true" repeatable="false">
                                                         <expectedContent>
                                                             <regexp>[0-9]+</regexp>
                                                         </expectedContent>
                                                     </element>
 
-                                                    <!--Neni jasna povinnost - konflikt povinnost=M a vyskyt=0-1. Nechavam defenzivne nepovinne-->
-                                                    <element name="mix:PhotometricInterpretation" mandatory="true"
-                                                             repeatable="false">
+                                                    <element name="mix:PhotometricInterpretation" mandatory="true" repeatable="false">
                                                         <expectedElements>
-                                                            <!--Neni jasna povinnost - konflikt povinnost=M a vyskyt=0-1. Nechavam defenzivne nepovinne-->
-                                                            <element name="mix:colorSpace" mandatory="true"
-                                                                     repeatable="false">
+                                                            <element name="mix:colorSpace" mandatory="true" repeatable="false">
                                                                 <expectedContent/>
                                                             </element>
 
-                                                            <element name="mix:ColorProfile" mandatory="false"
-                                                                     repeatable="false">
+                                                            <element name="mix:ColorProfile" mandatory="false" repeatable="false">
                                                                 <expectedElements>
-                                                                    <!--Neni jasna povinnost - konflikt povinnost=M a vyskyt=0-1. Nechavam defenzivne nepovinne-->
-                                                                    <element name="mix:IccProfile" mandatory="false"
-                                                                             repeatable="false">
+                                                                    <element name="mix:IccProfile" mandatory="true" repeatable="false">
                                                                         <expectedElements>
-                                                                            <!--Neni jasna povinnost - konflikt povinnost=M a vyskyt=0-1. Nechavam defenzivne nepovinne-->
-                                                                            <element name="mix:iccProfileName"
-                                                                                     mandatory="false"
-                                                                                     repeatable="false">
+                                                                            <element name="mix:iccProfileName" mandatory="true" repeatable="false">
                                                                                 <expectedContent/>
                                                                             </element>
 
-                                                                            <!--Neni jasna povinnost - konflikt povinnost=M a vyskyt=0-1. Nechavam defenzivne nepovinne-->
-                                                                            <element name="mix:iccProfileVersion"
-                                                                                     mandatory="false"
-                                                                                     repeatable="false">
+                                                                            <element name="mix:iccProfileVersion" mandatory="true" repeatable="false">
                                                                                 <expectedContent/>
                                                                             </element>
 
-                                                                            <element name="mix:iccProfileURL"
-                                                                                     mandatory="false"
-                                                                                     repeatable="false">
+                                                                            <element name="mix:iccProfileURL" mandatory="false" repeatable="false">
                                                                                 <expectedContent/>
                                                                             </element>
                                                                         </expectedElements>
@@ -185,27 +152,21 @@
                                         </expectedElements>
                                     </element>
 
-                                    <!--Neni jasna povinnost - konflikt povinnost=M a vyskyt=0-1. Nechavam defenzivne nepovinne-->
                                     <element name="mix:ImageCaptureMetadata" mandatory="true" repeatable="false">
                                         <expectedElements>
                                             <element name="mix:SourceInformation" mandatory="false" repeatable="false">
                                                 <expectedElements>
-                                                    <!--Neni jasna povinnost - konflikt povinnost=M a vyskyt=0-1. Nechavam defenzivne nepovinne-->
                                                     <element name="mix:sourceType" mandatory="true" repeatable="false">
                                                         <expectedContent/>
                                                     </element>
 
                                                     <element name="mix:SourceID" mandatory="false" repeatable="true">
                                                         <expectedElements>
-                                                            <!--Neni jasna povinnost - konflikt povinnost=M a vyskyt=0-1. Nechavam defenzivne nepovinne-->
-                                                            <element name="mix:sourceIDType" mandatory="false"
-                                                                     repeatable="false">
+                                                            <element name="mix:sourceIDType" mandatory="true" repeatable="false">
                                                                 <expectedContent/>
                                                             </element>
 
-                                                            <!--Neni jasna povinnost - konflikt povinnost=M, vyskyt=0-1 a text "povinné". Nechavam povinne, protoze je to 2:1 pro povinnost elementu :-D -->
-                                                            <element name="mix:sourceIDValue" mandatory="true"
-                                                                     repeatable="false">
+                                                            <element name="mix:sourceIDValue" mandatory="true" repeatable="false">
                                                                 <expectedContent/>
                                                             </element>
                                                         </expectedElements>
@@ -213,28 +174,22 @@
                                                 </expectedElements>
                                             </element>
 
-                                            <!--Neni jasna povinnost - konflikt povinnost=M a vyskyt=0-1. Nechavam defenzivne nepovinne-->
-                                            <element name="mix:GeneralCaptureInformation" mandatory="true"
-                                                     repeatable="false">
+                                            <element name="mix:GeneralCaptureInformation" mandatory="true" repeatable="false">
                                                 <expectedElements>
-                                                    <!--Neni jasna povinnost - konflikt povinnost=M a vyskyt=0-1. Nechavam defenzivne nepovinne-->
-                                                    <element name="mix:dateTimeCreated" mandatory="true"
-                                                             repeatable="false">
+                                                    <element name="mix:dateTimeCreated" mandatory="true" repeatable="false">
                                                         <expectedContent>
+                                                            <!--TODO: iso8601-->
                                                             <!--TODO: mozna regulernim vyrazem, resp. skupinou, protoze ten zapis muze byt dost ruzny - uz jenom oddelovace, viz. treba
                                                                 http://www.pelagodesign.com/blog/2009/05/20/iso-8601-date-validation-that-doesnt-suck/
                                                              -->
                                                         </expectedContent>
                                                     </element>
 
-                                                    <!--Neni jasna povinnost - konflikt povinnost=M a vyskyt=0-1. Nechavam defenzivne nepovinne-->
-                                                    <element name="mix:imageProducer" mandatory="true"
-                                                             repeatable="false">
+                                                    <element name="mix:imageProducer" mandatory="true" repeatable="false">
                                                         <expectedContent/>
                                                     </element>
 
-                                                    <element name="mix:captureDevice" mandatory="false"
-                                                             repeatable="false">
+                                                    <element name="mix:captureDevice" mandatory="false" repeatable="false">
                                                         <expectedContent>
                                                             <oneOf>
                                                                 <value>reflection print scanner</value>
@@ -247,62 +202,43 @@
                                                 </expectedElements>
                                             </element>
 
-                                            <!--Neni jasna povinnost - konflikt povinnost=M a vyskyt=0-1. Nechavam defenzivne nepovinne-->
-                                            <element name="mix:ScannerCapture" mandatory="false" repeatable="false">
+                                            <element name="mix:ScannerCapture" mandatory="true" repeatable="false">
                                                 <expectedElements>
-                                                    <!--Neni jasna povinnost - konflikt povinnost=M a vyskyt=0-1. Nechavam defenzivne nepovinne-->
-                                                    <element name="mix:scannerManufacturer" mandatory="false"
-                                                             repeatable="false">
+                                                    <element name="mix:scannerManufacturer" mandatory="true" repeatable="false">
                                                         <expectedContent/>
                                                     </element>
 
-                                                    <!--Neni jasna povinnost - konflikt povinnost=M a vyskyt=0-1. Nechavam defenzivne nepovinne-->
-                                                    <element name="mix:ScannerModel" mandatory="false"
-                                                             repeatable="false">
+                                                    <element name="mix:ScannerModel" mandatory="true" repeatable="false">
                                                         <expectedElements>
-                                                            <!--Neni jasna povinnost - konflikt povinnost=M a vyskyt=0-1. Nechavam defenzivne nepovinne-->
-                                                            <element name="mix:scannerModelName" mandatory="false"
-                                                                     repeatable="false">
+                                                            <element name="mix:scannerModelName" mandatory="true" repeatable="false">
                                                                 <expectedContent/>
                                                             </element>
 
-                                                            <!--Neni jasna povinnost - konflikt povinnost=M a vyskyt=0-1. Nechavam defenzivne nepovinne-->
-                                                            <element name="mix:scannerModelNumber" mandatory="false"
-                                                                     repeatable="false">
+                                                            <element name="mix:scannerModelNumber" mandatory="true" repeatable="false">
                                                                 <expectedContent/>
                                                             </element>
 
-                                                            <!--Neni jasna povinnost - konflikt povinnost=M a vyskyt=0-1. Nechavam defenzivne nepovinne-->
-                                                            <element name="mix:scannerModelSerialNo" mandatory="false"
-                                                                     repeatable="false">
+                                                            <element name="mix:scannerModelSerialNo" mandatory="true" repeatable="false">
                                                                 <expectedContent/>
                                                             </element>
                                                         </expectedElements>
                                                     </element>
 
-                                                    <!--Neni jasna povinnost - konflikt povinnost=M a vyskyt=0-1. Nechavam defenzivne nepovinne-->
-                                                    <element name="mix:MaximumOpticalResolution" mandatory="false"
-                                                             repeatable="false">
+                                                    <element name="mix:MaximumOpticalResolution" mandatory="true" repeatable="false">
                                                         <expectedElements>
-                                                            <!--Neni jasna povinnost - konflikt povinnost=M a vyskyt=0-1. Nechavam defenzivne nepovinne-->
-                                                            <element name="mix:xOpticalResolution" mandatory="false"
-                                                                     repeatable="false">
+                                                            <element name="mix:xOpticalResolution" mandatory="true" repeatable="false">
                                                                 <expectedContent>
                                                                     <regexp>[0-9]+</regexp>
                                                                 </expectedContent>
                                                             </element>
 
-                                                            <!--Neni jasna povinnost - konflikt povinnost=M a vyskyt=0-1. Nechavam defenzivne nepovinne-->
-                                                            <element name="mix:yOpticalResolution" mandatory="false"
-                                                                     repeatable="false">
+                                                            <element name="mix:yOpticalResolution" mandatory="true" repeatable="false">
                                                                 <expectedContent>
                                                                     <regexp>[0-9]+</regexp>
                                                                 </expectedContent>
                                                             </element>
 
-                                                            <!--Neni jasna povinnost - konflikt povinnost=M a vyskyt=0-1. Nechavam defenzivne nepovinne-->
-                                                            <element name="mix:opticalResolutionUnit" mandatory="false"
-                                                                     repeatable="false">
+                                                            <element name="mix:opticalResolutionUnit" mandatory="true" repeatable="false">
                                                                 <expectedContent>
                                                                     <oneOf>
                                                                         <value>no absolute unit</value>
@@ -314,9 +250,7 @@
                                                         </expectedElements>
                                                     </element>
 
-                                                    <!--Neni jasna povinnost - konflikt povinnost=M a vyskyt=0-1. Nechavam defenzivne nepovinne-->
-                                                    <element name="mix:scannerSensor" mandatory="false"
-                                                             repeatable="false">
+                                                    <element name="mix:scannerSensor" mandatory="true" repeatable="false">
                                                         <expectedContent>
                                                             <oneOf>
                                                                 <value>undefined</value>
@@ -332,20 +266,13 @@
                                                         </expectedContent>
                                                     </element>
 
-                                                    <!--Neni jasna povinnost - konflikt povinnost=M a vyskyt=0-1. Nechavam defenzivne nepovinne-->
-                                                    <element name="mix:ScanningSystemSoftware" mandatory="false"
-                                                             repeatable="false">
+                                                    <element name="mix:ScanningSystemSoftware" mandatory="true" repeatable="false">
                                                         <expectedElements>
-                                                            <!--Neni jasna povinnost - konflikt povinnost=M a vyskyt=0-1. Nechavam defenzivne nepovinne-->
-                                                            <element name="mix:scanningSoftwareName" mandatory="false"
-                                                                     repeatable="false">
+                                                            <element name="mix:scanningSoftwareName" mandatory="true" repeatable="false">
                                                                 <expectedContent/>
                                                             </element>
 
-                                                            <!--Neni jasna povinnost - konflikt povinnost=M a vyskyt=0-1. Nechavam defenzivne nepovinne-->
-                                                            <element name="mix:scanningSoftwareVersionNo"
-                                                                     mandatory="false"
-                                                                     repeatable="false">
+                                                            <element name="mix:scanningSoftwareVersionNo" mandatory="true" repeatable="false">
                                                                 <expectedContent/>
                                                             </element>
                                                         </expectedElements>
@@ -356,51 +283,34 @@
                                             <element name="mix:DigitalCameraCapture" mandatory="false"
                                                      repeatable="false">
                                                 <expectedElements>
-                                                    <!--Neni jasna povinnost - konflikt povinnost=M a vyskyt=0-1. Nechavam defenzivne nepovinne-->
-                                                    <element name="mix:digitalCameraManufacturer" mandatory="false"
-                                                             repeatable="false">
+                                                    <element name="mix:digitalCameraManufacturer" mandatory="true" repeatable="false">
                                                         <expectedContent/>
                                                     </element>
 
-                                                    <!--Neni jasna povinnost - konflikt povinnost=M a vyskyt=0-1. Nechavam defenzivne nepovinne-->
-                                                    <element name="mix:DigitalCameraModel" mandatory="false"
-                                                             repeatable="false">
+                                                    <element name="mix:DigitalCameraModel" mandatory="true" repeatable="false">
                                                         <expectedElements>
-                                                            <!--Neni jasna povinnost - konflikt povinnost=M a vyskyt=0-1. Nechavam defenzivne nepovinne-->
-                                                            <element name="mix:digitalCameraModelName" mandatory="false"
-                                                                     repeatable="false">
+                                                            <element name="mix:digitalCameraModelName" mandatory="true" repeatable="false">
                                                                 <expectedContent/>
                                                             </element>
 
-                                                            <!--Neni jasna povinnost - konflikt povinnost=M a vyskyt=0-1. Nechavam defenzivne nepovinne-->
-                                                            <element name="mix:digitalCameraModelNumber"
-                                                                     mandatory="false"
-                                                                     repeatable="false">
+                                                            <element name="mix:digitalCameraModelNumber" mandatory="true" repeatable="false">
                                                                 <expectedContent/>
                                                             </element>
 
-                                                            <!--Neni jasna povinnost - konflikt povinnost=M a vyskyt=0-1. Nechavam defenzivne nepovinne-->
-                                                            <element name="mix:digitalCameraModelSerialNo"
-                                                                     mandatory="false"
-                                                                     repeatable="false">
+                                                            <element name="mix:digitalCameraModelSerialNo" mandatory="true" repeatable="false">
                                                                 <expectedContent/>
                                                             </element>
                                                         </expectedElements>
                                                     </element>
 
-                                                    <!--Neni jasna povinnost - konflikt povinnost=M a vyskyt=0-1. Nechavam defenzivne nepovinne-->
-                                                    <element name="mix:cameraSensor" mandatory="false"
-                                                             repeatable="false">
+                                                    <element name="mix:cameraSensor" mandatory="true" repeatable="false">
                                                         <expectedContent/>
                                                     </element>
 
-                                                    <!--Neni jasna povinnost - konflikt povinnost=M a vyskyt=0-1. Nechavam defenzivne nepovinne-->
-                                                    <element name="mix:CameraCaptureSettings" mandatory="false"
-                                                             repeatable="false">
+                                                    <element name="mix:CameraCaptureSettings" mandatory="true" repeatable="false">
                                                         <expectedElements>
-                                                            <!--Neni jasna opakovatelnost. Nechavam defenzivne opakovatelne-->
-                                                            <element name="mix:ImageData" mandatory="true"
-                                                                     repeatable="true">
+                                                            <!--TODO: Neni jasna opakovatelnost. Nechavam defenzivne opakovatelne-->
+                                                            <element name="mix:ImageData" mandatory="true" repeatable="true">
                                                                 <expectedElements>
                                                                     <element name="mix:fNumber" mandatory="false"
                                                                              repeatable="false">
@@ -412,14 +322,12 @@
                                                                         <expectedContent/>
                                                                     </element>
 
-                                                                    <element name="mix:isoSpeedRatings"
-                                                                             mandatory="false"
+                                                                    <element name="mix:isoSpeedRatings" mandatory="false"
                                                                              repeatable="false">
                                                                         <expectedContent/>
                                                                     </element>
 
-                                                                    <element name="mix:shutterSpeedValue"
-                                                                             mandatory="false"
+                                                                    <element name="mix:shutterSpeedValue" mandatory="false"
                                                                              repeatable="false">
                                                                         <expectedContent/>
                                                                     </element>
@@ -429,26 +337,22 @@
                                                                         <expectedContent/>
                                                                     </element>
 
-                                                                    <element name="mix:brightnessValue"
-                                                                             mandatory="false"
+                                                                    <element name="mix:brightnessValue" mandatory="false"
                                                                              repeatable="false">
                                                                         <expectedContent/>
                                                                     </element>
 
-                                                                    <element name="mix:exposureBiasValue"
-                                                                             mandatory="false"
+                                                                    <element name="mix:exposureBiasValue" mandatory="false"
                                                                              repeatable="false">
                                                                         <expectedContent/>
                                                                     </element>
 
-                                                                    <element name="mix:maxApertureValue"
-                                                                             mandatory="false"
+                                                                    <element name="mix:maxApertureValue" mandatory="false"
                                                                              repeatable="false">
                                                                         <expectedContent/>
                                                                     </element>
 
-                                                                    <element name="mix:subjectDistance"
-                                                                             mandatory="false"
+                                                                    <element name="mix:subjectDistance" mandatory="false"
                                                                              repeatable="false">
                                                                         <expectedContent/>
                                                                     </element>
@@ -498,8 +402,7 @@
                                                                         <expectedContent/>
                                                                     </element>
 
-                                                                    <element name="mix:PrintAspectRatio"
-                                                                             mandatory="false"
+                                                                    <element name="mix:PrintAspectRatio" mandatory="false"
                                                                              repeatable="false">
                                                                         <expectedContent/>
                                                                     </element>
@@ -510,29 +413,23 @@
                                                 </expectedElements>
                                             </element>
 
-                                            <!--Neni jasna povinnost - konflikt povinnost=M a vyskyt=0-1. Nechavam defenzivne nepovinne-->
                                             <element name="mix:orientation" mandatory="true" repeatable="false">
                                                 <expectedContent/>
                                             </element>
                                         </expectedElements>
                                     </element>
 
-                                    <!--Neni jasna povinnost - konflikt povinnost=M a vyskyt=0-1. Nechavam defenzivne nepovinne-->
                                     <element name="mix:ImageAssessmentMetadata" mandatory="true" repeatable="false">
                                         <expectedElements>
-                                            <!--Neni jasna povinnost - konflikt povinnost=M a vyskyt=0-1. Nechavam defenzivne nepovinne-->
                                             <element name="mix:SpatialMetrics" mandatory="true" repeatable="false">
                                                 <expectedElements>
-                                                    <element name="mix:samplingFrequencyPlane" mandatory="false"
-                                                             repeatable="false">
+                                                    <element name="mix:samplingFrequencyPlane" mandatory="false" repeatable="false">
                                                         <expectedContent/>
                                                     </element>
 
-                                                    <!--Neni jasna povinnost - konflikt povinnost=M a vyskyt=0-1. Nechavam defenzivne nepovinne-->
-                                                    <element name="mix:samplingFrequencyUnit" mandatory="false"
-                                                             repeatable="false">
+                                                    <element name="mix:samplingFrequencyUnit" mandatory="true" repeatable="false">
                                                         <expectedContent>
-                                                            <!--Muze byt z DMF nejasne, jestli jde o jedine povolenne hodnoty, nebo priklady hodnot.-->
+                                                            <!--TODO: Muze byt z DMF nejasne, jestli jde o jedine povolenne hodnoty, nebo priklady hodnot.-->
                                                             <oneOf>
                                                                 <value>no absolute unit of measurement</value>
                                                                 <value>in.</value>
@@ -541,20 +438,15 @@
                                                         </expectedContent>
                                                     </element>
 
-                                                    <element name="mix:xSamplingFrequency" mandatory="false"
-                                                             repeatable="false">
+                                                    <element name="mix:xSamplingFrequency" mandatory="false" repeatable="false">
                                                         <expectedElements>
-                                                            <!--Neni jasna povinnost - konflikt povinnost=M a vyskyt=0-1. Nechavam defenzivne nepovinne-->
-                                                            <element name="mix:numerator" mandatory="false"
-                                                                     repeatable="false">
+                                                            <element name="mix:numerator" mandatory="true" repeatable="false">
                                                                 <expectedContent>
                                                                     <regexp>[0-9]+</regexp>
                                                                 </expectedContent>
                                                             </element>
 
-                                                            <!--Neni jasna povinnost - konflikt povinnost=M a vyskyt=0-1. Nechavam defenzivne nepovinne-->
-                                                            <element name="mix:denominator" mandatory="false"
-                                                                     repeatable="false">
+                                                            <element name="mix:denominator" mandatory="true" repeatable="false">
                                                                 <expectedContent>
                                                                     <regexp>[0-9]+</regexp>
                                                                 </expectedContent>
@@ -562,20 +454,15 @@
                                                         </expectedElements>
                                                     </element>
 
-                                                    <element name="mix:ySamplingFrequency" mandatory="false"
-                                                             repeatable="false">
+                                                    <element name="mix:ySamplingFrequency" mandatory="false" repeatable="false">
                                                         <expectedElements>
-                                                            <!--Neni jasna povinnost - konflikt povinnost=M a vyskyt=0-1. Nechavam defenzivne nepovinne-->
-                                                            <element name="mix:numerator" mandatory="false"
-                                                                     repeatable="false">
+                                                            <element name="mix:numerator" mandatory="true" repeatable="false">
                                                                 <expectedContent>
                                                                     <regexp>[0-9]+</regexp>
                                                                 </expectedContent>
                                                             </element>
 
-                                                            <!--Neni jasna povinnost - konflikt povinnost=M a vyskyt=0-1. Nechavam defenzivne nepovinne-->
-                                                            <element name="mix:denominator" mandatory="false"
-                                                                     repeatable="false">
+                                                            <element name="mix:denominator" mandatory="true" repeatable="false">
                                                                 <expectedContent>
                                                                     <regexp>[0-9]+</regexp>
                                                                 </expectedContent>
@@ -585,20 +472,12 @@
                                                 </expectedElements>
                                             </element>
 
-                                            <!--Neni jasna povinnost - konflikt povinnost=M a vyskyt=0-1. Nechavam defenzivne nepovinne-->
                                             <element name="mix:ImageColorEncoding" mandatory="true" repeatable="false">
                                                 <expectedElements>
-                                                    <!--Neni jasna povinnost - konflikt povinnost=M a vyskyt=0-1. Nechavam defenzivne nepovinne-->
-                                                    <element name="mix:BitsPerSample" mandatory="true"
-                                                             repeatable="false">
+                                                    <element name="mix:BitsPerSample" mandatory="true" repeatable="false">
                                                         <expectedElements>
-                                                            <element name="mix:bitsPerSampleValue" mandatory="true"
-                                                                     repeatable="true">
-                                                                <!--TODO: jeste kontrolovat, ze je element pritomen-->
-                                                                <expectedContent>
-                                                                    <!--muze byt i float, opravdu? -->
-                                                                    <!--<regexp>[0-9]+</regexp>-->
-                                                                </expectedContent>
+                                                            <element name="mix:bitsPerSampleValue" mandatory="true" repeatable="true">
+                                                                <expectedContent/>
                                                             </element>
 
                                                             <element name="mix:bitsPerSampleUnit" mandatory="false"
@@ -608,9 +487,7 @@
                                                         </expectedElements>
                                                     </element>
 
-                                                    <!--Neni jasna povinnost - konflikt povinnost=M a vyskyt=0-1. Nechavam defenzivne nepovinne-->
-                                                    <element name="mix:samplesPerPixel" mandatory="true"
-                                                             repeatable="false">
+                                                    <element name="mix:samplesPerPixel" mandatory="true" repeatable="false">
                                                         <expectedContent>
                                                             <regexp>[0-9]+</regexp>
                                                         </expectedContent>
