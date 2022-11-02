@@ -91,7 +91,6 @@
                                                 <value>capture/XML_creation</value>
                                                 <value>capture/TXT_creation</value>
                                                 <value>migration/MC_creation</value>
-                                                <value>derivation/UC_creation</value>
                                                 <value>deletion/PS_deletion</value>
                                                 <!--Následující hodnota není uvedena v DMF, kde jsou uvedeny doporučené hodnoty (tj asi ne zcela povinné), ale v praxi se používá, přidána protože se jedná o akci která na datech reálně probíhá-->
                                                 <value>derivation/POSTPROCESSING_creation</value>
