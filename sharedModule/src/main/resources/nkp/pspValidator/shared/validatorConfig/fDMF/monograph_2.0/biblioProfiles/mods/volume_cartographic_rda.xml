@@ -37,6 +37,11 @@
                     <regexp>MODS_VOLUME_[0-9]{4}</regexp>>
                 </expectedContent>
             </attribute>
+            <attribute name="version" mandatory="false">
+                <expectedContent>
+                    <value>3.6</value>
+                </expectedContent>
+            </attribute>
         </expectedAttributes>
         <expectedElements>
             <element name="mods:titleInfo">
