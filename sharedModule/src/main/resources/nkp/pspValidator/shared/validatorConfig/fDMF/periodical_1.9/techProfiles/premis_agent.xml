@@ -52,13 +52,11 @@
                                 <expectedElements>
                                     <element name="premis:agentIdentifier" mandatory="true" repeatable="true">
                                         <expectedElements>
-                                            <element name="premis:agentIdentifierType" mandatory="true"
-                                                     repeatable="false">
+                                            <element name="premis:agentIdentifierType" mandatory="true" repeatable="false">
                                                 <expectedContent/>
                                             </element>
 
-                                            <element name="premis:agentIdentifierValue" mandatory="true"
-                                                     repeatable="false">
+                                            <element name="premis:agentIdentifierValue" mandatory="true" repeatable="false">
                                                 <expectedContent/>
                                             </element>
                                         </expectedElements>
@@ -68,7 +66,6 @@
                                         <expectedContent/>
                                     </element>
 
-                                    <!--Neni jasna povinnost - konflikt povinnost=M a vyskyt=0-n. UPDATE z NK: má být povinné, opraveno na povinné-->
                                     <element name="premis:agentType" mandatory="true" repeatable="false">
                                         <recommendedContent>
                                             <oneOf>

@@ -52,13 +52,11 @@
                                 <expectedElements>
                                     <element name="premis:eventIdentifier" mandatory="true" repeatable="false">
                                         <expectedElements>
-                                            <element name="premis:eventIdentifierType" mandatory="true"
-                                                     repeatable="false">
+                                            <element name="premis:eventIdentifierType" mandatory="true" repeatable="false">
                                                 <expectedContent/>
                                             </element>
 
-                                            <element name="premis:eventIdentifierValue" mandatory="true"
-                                                     repeatable="false">
+                                            <element name="premis:eventIdentifierValue" mandatory="true" repeatable="false">
                                                 <expectedContent/>
                                             </element>
                                         </expectedElements>
@@ -77,13 +75,13 @@
 
                                     <element name="premis:eventDateTime" mandatory="true" repeatable="false">
                                         <expectedContent>
+                                            <!--ISO 8601 (na úroveň vteřin)-->
                                             <!--TODO: mozna regulernim vyrazem, resp. skupinou, protoze ten zapis muze byt dost ruzny - uz jenom oddelovace, viz. treba
                                                 http://www.pelagodesign.com/blog/2009/05/20/iso-8601-date-validation-that-doesnt-suck/
                                             -->
                                         </expectedContent>
                                     </element>
 
-                                    <!--Neni jasna povinnost - konflikt povinnost=M a vyskyt=0-1. Nechavam defenzivne nepovinne-->
                                     <element name="premis:eventDetail" mandatory="true" repeatable="false">
                                         <recommendedContent>
                                             <oneOf>
@@ -92,7 +90,7 @@
                                                 <value>capture/TXT_creation</value>
                                                 <value>migration/MC_creation</value>
                                                 <value>deletion/PS_deletion</value>
-                                                <!--Následující hodnota není uvedena v DMF, kde jsou uvedeny doporučené hodnoty (tj asi ne zcela povinné), ale v praxi se používá, přidána protože se jedná o akci která na datech reálně probíhá-->
+                                                <!--TODO: Následující hodnota není uvedena v DMF, kde jsou uvedeny doporučené hodnoty (tj asi ne zcela povinné), ale v praxi se používá, přidána protože se jedná o akci která na datech reálně probíhá-->
                                                 <value>derivation/POSTPROCESSING_creation</value>
                                             </oneOf>
                                         </recommendedContent>
@@ -100,23 +98,19 @@
 
                                     <element name="premis:eventOutcomeInformation" mandatory="false" repeatable="true">
                                         <expectedElements>
-                                            <!--Neni jasna povinnost - konflikt povinnost=M a vyskyt=0-1. Nechavam defenzivne nepovinne-->
                                             <element name="premis:eventOutcome" mandatory="true" repeatable="false">
                                                 <expectedContent/>
                                             </element>
                                         </expectedElements>
                                     </element>
 
-                                    <!--Neni jasna povinnost - konflikt povinnost=M a vyskyt=0-n. Nechavam defenzivne nepovinne-->
                                     <element name="premis:linkingAgentIdentifier" mandatory="true" repeatable="true">
                                         <expectedElements>
-                                            <element name="premis:linkingAgentIdentifierType" mandatory="true"
-                                                     repeatable="false">
+                                            <element name="premis:linkingAgentIdentifierType" mandatory="true" repeatable="false">
                                                 <expectedContent/>
                                             </element>
 
-                                            <element name="premis:linkingAgentIdentifierValue" mandatory="true"
-                                                     repeatable="false">
+                                            <element name="premis:linkingAgentIdentifierValue" mandatory="true" repeatable="false">
                                                 <expectedContent/>
                                             </element>
 
@@ -126,16 +120,13 @@
                                         </expectedElements>
                                     </element>
 
-                                    <!--Neni jasna povinnost - konflikt povinnost=M a vyskyt=0-n. Nechavam defenzivne nepovinne-->
                                     <element name="premis:linkingObjectIdentifier" mandatory="true" repeatable="true">
                                         <expectedElements>
-                                            <element name="premis:linkingObjectIdentifierType" mandatory="true"
-                                                     repeatable="false">
+                                            <element name="premis:linkingObjectIdentifierType" mandatory="true" repeatable="false">
                                                 <expectedContent/>
                                             </element>
 
-                                            <element name="premis:linkingObjectIdentifierValue" mandatory="true"
-                                                     repeatable="false">
+                                            <element name="premis:linkingObjectIdentifierValue" mandatory="true" repeatable="false">
                                                 <expectedContent/>
                                             </element>
                                         </expectedElements>
