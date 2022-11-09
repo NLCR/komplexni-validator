@@ -31,6 +31,11 @@
                 <expectedContent/>
             </element>
 
+            <element name="dc:creator" mandatory="false">
+                <!--jmeno a prijmeni (mods:titleInfo/name/namePart), nebo cislo narodni autority (mods:titleInfo/name/nameIdentifier)-->
+                <expectedContent/>
+            </element>
+
             <element name="dc:type" specification="text() = 'model:monograph'"
                      errorMessage="Očekáván povinný element dc:type obsahující text 'model:monograph'.">
                 <expectedContent/>
@@ -42,8 +47,40 @@
                 </expectedContent>
             </element>
 
+            <element name="dc:coverage" mandatory="false">
+                <!--misto a zeme vydani (mods:originInfo/place/placeTerm)-->
+                <expectedContent/>
+            </element>
+
+            <element name="dc:date" mandatory="false">
+                <!--datum vydani predlohy (mods:originInfo/dateIssued), nebo datum copyrightu (mods:originInfo/copyrightDate) -->
+                <expectedContent/>
+            </element>
+
+            <element name="dc:publisher" mandatory="false">
+                <!--vydavatel/distributor/vyrobce predlohy (mods:originInfo/publisher) -->
+                <expectedContent/>
+            </element>
+
+            <element name="dc:format" errorMessage="Očekáván alespoň jeden povinný element dc:format obsahující údaje o fyzickém popisu zdroje/předlohy.">
+                <expectedContent/>
+            </element>
+
+            <element name="dc:description" mandatory="false">
+                <expectedContent/>
+            </element>
+
+            <element name="dc:subject" mandatory="false">
+                <expectedContent/>
+            </element>
+
             <element name="dc:identifier"
                      errorMessage="Očekáván alespoň jeden povinný element dc:identifier.">
+                <expectedContent/>
+            </element>
+
+            <element name="dc:source" mandatory="false">
+                <!--údaje o uložení popisovaného dokumentu (mods:location/*)-->
                 <expectedContent/>
             </element>
 
