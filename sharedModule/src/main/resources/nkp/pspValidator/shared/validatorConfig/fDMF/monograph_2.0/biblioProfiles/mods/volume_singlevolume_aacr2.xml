@@ -52,6 +52,7 @@
                                 <value>alternative</value>
                                 <value>translated</value>
                                 <value>uniform</value>
+                                <value>abbreviated</value>
                             </oneOf>
                         </expectedContent>
                     </attribute>
@@ -104,7 +105,11 @@
                         <expectedAttributes>
                             <attribute name="type"/>
                         </expectedAttributes>
-                        <expectedContent/>
+                        <expectedContent>
+                            <!--TODO: zvazit regulerni vyraz pro RRRR-RRRR, jenze text specifikace neni jednoznacny. Je RRRR-RRRR jediny povoleny format?
+                            Treba pokud je zname jen datum narozeni, nebo umrti, lze to uvest? Pokud ano, jak? Napr. pro narozeni, lze "RRRR-?", nebo "RRRR-", nebo "RRRR-????"?
+                            Co, kdyz je znama jen cast jednoho z datumu, slo by to taky? napr. pri narozeni ve 20. stoleti lze "19??-?" ?-->
+                        </expectedContent>
                     </element>
 
                     <element name="mods:namePart" specification="@type='family'" mandatory="false">
@@ -181,6 +186,8 @@
 
             <element name="mods:genre" specification="text()='volume'"/>
 
+            <element name="mods:genre" specification="not(text()='volume')" mandatory="false"/>
+
             <element name="mods:originInfo">
                 <expectedElements>
                     <element name="mods:place" mandatory="false">
@@ -214,9 +221,7 @@
                     <element name="mods:dateIssued">
                         <expectedAttributes>
                             <attribute name="encoding" mandatory="false"/>
-                            <attribute name="point" mandatory="false">
-                                <!--tohle je povinne, coz nedava uplne smysl, resp. problem s praxi-->
-                            </attribute>
+                            <attribute name="point" mandatory="false"/>
                             <attribute name="qualifier" mandatory="false"/>
                         </expectedAttributes>
                         <expectedContent/>
@@ -286,10 +291,10 @@
 
             <element name="mods:physicalDescription">
                 <expectedElements>
+                    <!--non-RDA form-->
                     <element name="mods:form">
                         <expectedAttributes>
-                            <!--neni jasne, jestli tohle ma byt povinne - je tam M/MA-->
-                            <attribute name="authority" mandatory="false">
+                            <attribute name="authority">
                                 <expectedContent>
                                     <oneOf>
                                         <value>marcform</value>
@@ -299,8 +304,6 @@
                                     </oneOf>
                                 </expectedContent>
                             </attribute>
-
-                            <attribute name="type" mandatory="false"/>
                         </expectedAttributes>
                         <expectedContent/>
                     </element>
@@ -341,37 +344,35 @@
                 </expectedAttributes>
                 <expectedElements>
                     <element name="mods:topic" mandatory="false">
-                        <!--V DMF je "použít kontrolovaný slovník, napříkld ... " - tj. kontrolovaný slovník NENÍ vyžadován DMF-->
+                        <!--V DMF je "použít kontrolovaný slovník, například ... " - tj. kontrolovaný slovník NENÍ vyžadován DMF-->
                         <expectedContent/>
                     </element>
 
                     <element name="mods:geographic" mandatory="false">
-                        <!--V DMF je "použít kontrolovaný slovník, napříkld ... " - tj. kontrolovaný slovník NENÍ vyžadován DMF-->
+                        <!--V DMF je "použít kontrolovaný slovník, například ... " - tj. kontrolovaný slovník NENÍ vyžadován DMF-->
                         <expectedContent/>
                     </element>
 
                     <element name="mods:temporal" mandatory="false">
-                        <!--V DMF je "použít kontrolovaný slovník, napříkld ... " - tj. kontrolovaný slovník NENÍ vyžadován DMF-->
+                        <!--V DMF je "použít kontrolovaný slovník, například ... " - tj. kontrolovaný slovník NENÍ vyžadován DMF-->
                         <expectedContent/>
                     </element>
 
                     <element name="mods:name" mandatory="false">
-                        <!--V DMF je "použít kontrolovaný slovník, napříkld ... " - tj. kontrolovaný slovník NENÍ vyžadován DMF-->
+                        <!--TODO: specifikace nejasna: bud textovy obsah (jmeno pripadne ze slovniku), nebo struktura stejna jako mods:mods/mods:name, ktery obsahuje podlementy, ne text-->
                         <expectedContent/>
                     </element>
                 </expectedElements>
             </element>
 
+            <!--Mezinarodni desetinne trideni-->
             <element name="mods:classification" specification="not(@edition)" mandatory="false">
-                <!--Mezinarodni desetinne trideni-->
                 <expectedAttributes>
-                    <!--NOTE: DMF neuvadi, jestli je authority povinny atribut, nechavam nepovinny-->
+                    <!--TODO: DMF neuvadi, jestli je authority povinny atribut, nechavam povinny-->
                     <attribute name="authority">
-                        <!--NOTE: povolena hodnota Konspekt, tak aby prochazely bez elementu edition-->
                         <recommendedContent>
                             <oneOf>
                                 <value>udc</value>
-                                <value>Konspekt</value>
                             </oneOf>
                         </recommendedContent>
                     </attribute>
@@ -379,12 +380,12 @@
                 <expectedContent/>
             </element>
 
+            <!--Konspekt-->
             <element name="mods:classification" specification="boolean(@edition)" mandatory="false">
-                <!--Konspekt-->
                 <expectedAttributes>
-                    <!--NOTE: DMF neuvadi, jestli je authority povinny atribut, necham, ze je nepovinny-->
                     <attribute name="authority">
                         <recommendedContent>
+                            <!--TODO: nejasne-->
                             <oneOf>
                                 <value>udc</value>
                                 <value>Konspekt</value>

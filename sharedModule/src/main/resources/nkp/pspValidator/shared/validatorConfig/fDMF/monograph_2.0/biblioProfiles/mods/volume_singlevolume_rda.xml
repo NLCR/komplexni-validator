@@ -52,6 +52,7 @@
                                 <value>alternative</value>
                                 <value>translated</value>
                                 <value>uniform</value>
+                                <value>abbreviated</value>
                             </oneOf>
                         </expectedContent>
                     </attribute>
@@ -181,6 +182,8 @@
 
             <element name="mods:genre" specification="text()='volume'"/>
 
+            <element name="mods:genre" specification="not(text()='volume')" mandatory="false"/>
+
             <element name="mods:originInfo" specification="@eventType='production'" mandatory="false">
                 <expectedAttributes>
                     <attribute name="eventType"/>
@@ -281,9 +284,7 @@
                     <element name="mods:dateIssued">
                         <expectedAttributes>
                             <attribute name="encoding" mandatory="false"/>
-                            <attribute name="point" mandatory="false">
-                                <!--tohle je povinne, coz nedava uplne smysl, resp. problem s praxi-->
-                            </attribute>
+                            <attribute name="point" mandatory="false"/>
                             <attribute name="qualifier" mandatory="false"/>
                         </expectedAttributes>
                         <expectedContent/>
@@ -538,29 +539,37 @@
 
             <element name="mods:physicalDescription">
                 <expectedElements>
+                    <!--non-RDA form-->
                     <element name="mods:form">
                         <expectedAttributes>
-                            <!--neni jasne, jestli tohle ma byt povinne - je tam M/MA-->
-                            <attribute name="authority" mandatory="false">
+                            <attribute name="authority">
                                 <expectedContent>
                                     <oneOf>
-                                        <value>rdamedia</value>
-                                        <value>rdacarrier</value>
                                         <value>marcform</value>
                                         <value>marccategory</value>
                                         <value>marcsmd</value>
+                                        <value>gmd</value>
                                     </oneOf>
                                 </expectedContent>
                             </attribute>
+                        </expectedAttributes>
+                        <expectedContent/>
+                    </element>
 
-                            <attribute name="type" mandatory="false">
-                                <expectedContent>
-                                    <oneOf>
-                                        <value>media</value>
-                                        <value>carrier</value>
-                                    </oneOf>
-                                </expectedContent>
-                            </attribute>
+                    <!--RDA authority="rdacarrier", type="carrier-->
+                    <element name="mods:form" specification="@authority='rdacarrier') and @type='carrier'" mandatory="false">
+                        <expectedAttributes>
+                            <attribute name="authority"/>
+                            <attribute name="type"/>
+                        </expectedAttributes>
+                        <expectedContent/>
+                    </element>
+
+                    <!--RDA authority="rdamedia", type="media-->
+                    <element name="mods:form" specification="@authority='rdamedia') and @type='media'" mandatory="false">
+                        <expectedAttributes>
+                            <attribute name="authority"/>
+                            <attribute name="type"/>
                         </expectedAttributes>
                         <expectedContent/>
                     </element>
@@ -601,36 +610,35 @@
                 </expectedAttributes>
                 <expectedElements>
                     <element name="mods:topic" mandatory="false">
-                        <!--V DMF je "použít kontrolovaný slovník, napříkld ... " - tj. kontrolovaný slovník NENÍ vyžadován DMF-->
+                        <!--V DMF je "použít kontrolovaný slovník, například ... " - tj. kontrolovaný slovník NENÍ vyžadován DMF-->
                         <expectedContent/>
                     </element>
 
                     <element name="mods:geographic" mandatory="false">
-                        <!--V DMF je "použít kontrolovaný slovník, napříkld ... " - tj. kontrolovaný slovník NENÍ vyžadován DMF-->
+                        <!--V DMF je "použít kontrolovaný slovník, například ... " - tj. kontrolovaný slovník NENÍ vyžadován DMF-->
                         <expectedContent/>
                     </element>
 
                     <element name="mods:temporal" mandatory="false">
-                        <!--V DMF je "použít kontrolovaný slovník, napříkld ... " - tj. kontrolovaný slovník NENÍ vyžadován DMF-->
+                        <!--V DMF je "použít kontrolovaný slovník, například ... " - tj. kontrolovaný slovník NENÍ vyžadován DMF-->
                         <expectedContent/>
                     </element>
 
                     <element name="mods:name" mandatory="false">
-                        <!--V DMF je "použít kontrolovaný slovník, napříkld ... " - tj. kontrolovaný slovník NENÍ vyžadován DMF-->
+                        <!--TODO: specifikace nejasna: bud textovy obsah (jmeno pripadne ze slovniku), nebo struktura stejna jako mods:mods/mods:name, ktery obsahuje podlementy, ne text-->
                         <expectedContent/>
                     </element>
                 </expectedElements>
             </element>
 
+            <!--Mezinarodni desetinne trideni-->
             <element name="mods:classification" specification="not(@edition)" mandatory="false">
-                <!--Mezinarodni desetinne trideni-->
                 <expectedAttributes>
-                    <!--NOTE: DMF neuvadi, jestli je authority povinny atribut, nechavam nepovinny. Z DMF není zřejmé co platí pro rda a co pro aacr2, povolena hodnota Konspekt, aby prošel element s tímto atributem i bez atributu edition-->
+                    <!--TODO: DMF neuvadi, jestli je authority povinny atribut, nechavam povinny-->
                     <attribute name="authority">
                         <recommendedContent>
                             <oneOf>
                                 <value>udc</value>
-                                <value>Konspekt</value>
                             </oneOf>
                         </recommendedContent>
                     </attribute>
@@ -638,12 +646,12 @@
                 <expectedContent/>
             </element>
 
+            <!--Konspekt-->
             <element name="mods:classification" specification="boolean(@edition)" mandatory="false">
-                <!--Konspekt-->
                 <expectedAttributes>
-                    <!--NOTE: DMF neuvadi, jestli je authority povinny atribut, necham, ze je nepovinny-->
                     <attribute name="authority">
                         <recommendedContent>
+                            <!--TODO: nejasne-->
                             <oneOf>
                                 <value>udc</value>
                                 <value>Konspekt</value>
