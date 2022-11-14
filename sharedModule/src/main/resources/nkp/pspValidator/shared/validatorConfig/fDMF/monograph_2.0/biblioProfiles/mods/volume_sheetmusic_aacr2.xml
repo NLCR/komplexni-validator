@@ -52,6 +52,7 @@
                                 <value>alternative</value>
                                 <value>translated</value>
                                 <value>uniform</value>
+                                <value>abbreviated</value>
                             </oneOf>
                         </expectedContent>
                     </attribute>
@@ -83,7 +84,7 @@
             <element name="mods:name" specification="not(mods:etal)" mandatory="false">
                 <expectedAttributes>
                     <attribute name="type" mandatory="false">
-                        <!--    V DMF není určeno, jestli je atribut povinný, takže nechávám, že není-->
+                        <!-- TODO: V textu DMF není určeno, jestli je atribut povinný, nechávám defenzivně nepovinný-->
                         <expectedContent>
                             <oneOf>
                                 <value>personal</value>
@@ -105,7 +106,9 @@
                         <expectedAttributes>
                             <attribute name="type"/>
                         </expectedAttributes>
-                        <expectedContent/>
+                        <expectedContent>
+                            <!--TODO: oproti jiným verzím volume není v textu uveden požadavek na obsah (RRRR-RRRR), je to záměr?-->
+                        </expectedContent>
                     </element>
 
                     <element name="mods:namePart" specification="@type='family'" mandatory="false">
@@ -182,6 +185,10 @@
 
             <element name="mods:genre" specification="text()='sheetmusic'"/>
 
+            <element name="mods:genre" specification="not(text()='sheetmusic')" mandatory="false">
+                <expectedContent/>
+            </element>
+
             <element name="mods:originInfo">
                 <expectedElements>
                     <element name="mods:place" mandatory="false">
@@ -215,9 +222,7 @@
                     <element name="mods:dateIssued">
                         <expectedAttributes>
                             <attribute name="encoding" mandatory="false"/>
-                            <attribute name="point" mandatory="false">
-                                <!--tohle je povinne, coz nedava uplne smysl, resp. problem s praxi-->
-                            </attribute>
+                            <attribute name="point" mandatory="false"/>
                             <attribute name="qualifier" mandatory="false"/>
                         </expectedAttributes>
                         <expectedContent/>
@@ -284,6 +289,7 @@
                                     </oneOf>
                                 </expectedContent>
                             </attribute>
+
                             <!--@type je pro aacr2 zakazany-->
                             <!--<attribute name="type" mandatory="false"/>-->
                         </expectedAttributes>
@@ -355,28 +361,36 @@
                 </expectedElements>
             </element>
 
+            <!--Mezinarodni desetinne trideni-->
             <element name="mods:classification" specification="not(@edition)" mandatory="false">
-                <!--Mezinarodni desetinne trideni-->
                 <expectedAttributes>
-                    <!--NOTE: DMF neuvadi, jestli je authority povinny atribut, nechavam nepovinny. -->
-                    <attribute name="authority" mandatory="true">
-                        <recommendedContent>
-                            <oneOf>
-                                <value>udc</value>
-                                <value>Konspekt</value>
-                            </oneOf>
-                        </recommendedContent>
+                    <!--TODO: DMF neuvadi, jestli je authority povinny atribut, nechavam nepovinny.-->
+                    <attribute name="authority">
+                        <expectedContent>
+                            <value>udc</value>
+                        </expectedContent>
                     </attribute>
                 </expectedAttributes>
                 <expectedContent/>
             </element>
 
+            <!--Konspekt-->
             <element name="mods:classification" specification="boolean(@edition)" mandatory="false">
-                <!--Konspekt-->
                 <expectedAttributes>
-                    <attribute name="authority"/>
+                    <attribute name="authority">
+                        <expectedContent>
+                            <oneOf>
+                                <value>udc</value>
+                                <value>Konspekt</value>
+                            </oneOf>
+                        </expectedContent>
+                    </attribute>
 
-                    <attribute name="edition"/>
+                    <attribute name="edition">
+                        <expectedContent>
+                            <value>Konspekt</value>
+                        </expectedContent>
+                    </attribute>
                 </expectedAttributes>
                 <expectedContent/>
             </element>
@@ -529,15 +543,16 @@
             <element name="mods:recordInfo">
                 <expectedElements>
                     <element name="mods:descriptionStandard" mandatory="false">
-                        <recommendedContent>
+                        <!--TODO: opravdu nepovinny? Slouzi k vyhodnoceni AACR2 od RDA-->
+                        <expectedContent>
                             <value>aacr</value>
-                        </recommendedContent>
+                        </expectedContent>
                     </element>
 
                     <element name="mods:recordContentSource" mandatory="false">
                         <expectedAttributes>
                             <attribute name="authority" mandatory="false">
-                                <!--neni urcene, jestli je povinny, nebo ne-->
+                                <!--TODO: neni urcene, jestli je povinny, nebo ne, nechavam defenziven nepovinny-->
                                 <expectedContent>
                                     <value>marcorg</value>
                                 </expectedContent>
