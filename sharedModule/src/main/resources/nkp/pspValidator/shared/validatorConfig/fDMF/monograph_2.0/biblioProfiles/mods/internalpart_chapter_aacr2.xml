@@ -34,7 +34,6 @@
         <expectedAttributes>
             <attribute name="ID">
                 <expectedContent>
-                    <!--V kapitole 7.3.1 se uvádí právě a pouze MODS_CHAP_*, MODS_PICT_* a nic dalšího-->
                     <regexp>MODS_CHAP_[0-9]{4}</regexp>>
                 </expectedContent>
             </attribute>
@@ -87,7 +86,9 @@
                         <expectedAttributes>
                             <attribute name="type"/>
                         </expectedAttributes>
-                        <expectedContent/>
+                        <expectedContent>
+                            <!--TODO: oproti jiným verzím volume není v textu uveden požadavek na obsah (RRRR-RRRR), je to záměr?-->
+                        </expectedContent>
                     </element>
 
                     <element name="mods:namePart" specification="@type='family'" mandatory="false">
@@ -152,7 +153,8 @@
                 </expectedElements>
             </element>
 
-            <element name="mods:genre" specification="text()='chapter' or text()='CHAPTER'">
+            <element name="mods:genre" specification="text()='chapter'">
+                <!--TODO: v drivejsich verzich fDMF je povolena i hodnota CHAPTER, byt v textu DMF se uvadi jen "chapter"-->
                 <expectedAttributes>
                     <attribute name="type" mandatory="false">
                         <expectedContent>
@@ -186,6 +188,10 @@
                 <recommendedContent>
                     <value>chapter</value>
                 </recommendedContent>
+            </element>
+
+            <element name="mods:genre" specification="not(text()='chapter')" mandatory="false">
+                <expectedContent/>
             </element>
 
             <element name="mods:language" mandatory="false">
@@ -222,7 +228,6 @@
                 <expectedElements>
                     <element name="mods:form" mandatory="false">
                         <expectedAttributes>
-                            <!--v DMF chybi informace o povinnosti, nechavam nepovinne-->
                             <attribute name="authority" mandatory="false">
                                 <expectedContent>
                                     <oneOf>
@@ -287,7 +292,7 @@
                             </attribute>
                         </expectedAttributes>
                         <expectedContent>
-                            <!--V DMF je "použít kontrolovaný slovník, napříkld ... " - tj. kontrolovaný slovník NENÍ vyžadován DMF-->
+                            <!--TODO: V DMF je "použít kontrolovaný slovník, napříkld ... " - tj. kontrolovaný slovník NENÍ vyžadován DMF-->
                         </expectedContent>
                     </element>
 
@@ -300,14 +305,13 @@
                             </attribute>
                         </expectedAttributes>
                         <expectedContent>
-                            <!--V DMF je "použít kontrolovaný slovník, napříkld ... " - tj. kontrolovaný slovník NENÍ vyžadován DMF-->
+                            <!--TODO: V DMF je "použít kontrolovaný slovník, napříkld ... " - tj. kontrolovaný slovník NENÍ vyžadován DMF-->
                         </expectedContent>
                     </element>
 
                     <element name="mods:name" mandatory="false">
                         <expectedAttributes>
-                            <attribute name="authority" mandatory="false">
-                                <!--v DNF není vyplněné, jestli je atribut povinný, nechávám tedy nepovinný-->
+                            <attribute name="authority">
                                 <expectedContent>
                                     <value>czenas</value>
                                 </expectedContent>
@@ -315,9 +319,8 @@
                         </expectedAttributes>
                         <expectedElements>
                             <element name="mods:namePart" mandatory="false">
-                                <!--v DNF není vyplněné, jestli je element povinný, nechávám tedy nepovinný-->
                                 <expectedContent>
-                                    <!--V DMF je "použít kontrolovaný slovník, napříkld ... " - tj. kontrolovaný slovník NENÍ vyžadován DMF-->
+                                    <!--TODO: V DMF je "použít kontrolovaný slovník, napříkld ... " - tj. kontrolovaný slovník NENÍ vyžadován DMF-->
                                 </expectedContent>
                             </element>
                         </expectedElements>
@@ -325,11 +328,10 @@
                 </expectedElements>
             </element>
 
+            <!--Mezinarodni desetinne trideni-->
             <element name="mods:classification" mandatory="false">
-                <!--Mezinarodni desetinne trideni-->
                 <expectedAttributes>
-                    <!--NOTE: DMF neuvadi, jestli je authority povinny atribut, nechavam nepovinny-->
-                    <attribute name="authority" mandatory="true">
+                    <attribute name="authority">
                         <recommendedContent>
                             <value>udc</value>
                         </recommendedContent>
@@ -382,21 +384,17 @@
                 <expectedContent/>
             </element>
 
-            <element name="mods:part" specification="mods:detail[@type='page number'] or mods:detail[@type='pageNumber']" mandatory="false">
+            <element name="mods:part" specification="@type='pageNumber'" mandatory="false">
+                <expectedAttributes>
+                    <attribute name="type"/>
+                </expectedAttributes>
                 <expectedElements>
                     <element name="mods:detail" mandatory="false">
-                        <expectedAttributes>
-                            <attribute name="type">
-                                <expectedContent>
-                                    <oneOf>
-                                        <value>page number</value>
-                                        <!--see https://github.com/NLCR/Standard_NDK/issues/136-->
-                                        <value>pageNumber</value>
-                                    </oneOf>
-                                </expectedContent>
-                            </attribute>
-                        </expectedAttributes>
-                        <expectedContent/>
+                        <expectedElements>
+                            <element name="mods:number">
+                                <expectedContent/>
+                            </element>
+                        </expectedElements>
                     </element>
                     <element name="mods:extent" mandatory="false">
                         <expectedElements>
@@ -411,17 +409,17 @@
                 </expectedElements>
             </element>
 
-            <element name="mods:part" specification="mods:detail[@type='pageIndex']" mandatory="false">
+            <element name="mods:part" specification="@type='pageIndex'" mandatory="false">
+                <expectedAttributes>
+                    <attribute name="type"/>
+                </expectedAttributes>
                 <expectedElements>
                     <element name="mods:detail" mandatory="false">
-                        <expectedAttributes>
-                            <attribute name="type">
-                                <expectedContent>
-                                    <value>pageIndex</value>
-                                </expectedContent>
-                            </attribute>
-                        </expectedAttributes>
-                        <expectedContent/>
+                        <expectedElements>
+                            <element name="mods:number">
+                                <expectedContent/>
+                            </element>
+                        </expectedElements>
                     </element>
                     <element name="mods:extent" mandatory="false">
                         <expectedElements>
@@ -444,11 +442,7 @@
 
                     <element name="mods:recordCreationDate">
                         <expectedAttributes>
-                            <attribute name="encoding" mandatory="false">
-                                <!--
-                                DMF neuvadi, jestli je atribut povinny, nechavam nepovinny
-                                https://github.com/NLCR/Standard_NDK/issues/160
-                                -->
+                            <attribute name="encoding">
                                 <expectedContent>
                                     <value>iso8601</value>
                                 </expectedContent>
@@ -466,11 +460,7 @@
 
                     <element name="mods:recordChangeDate" mandatory="false">
                         <expectedAttributes>
-                            <attribute name="encoding" mandatory="false">
-                                <!--
-                                DMF neuvadi, jestli je atribut povinny, nechavam nepovinny
-                                https://github.com/NLCR/Standard_NDK/issues/160
-                                -->
+                            <attribute name="encoding">
                                 <expectedContent>
                                     <value>iso8601</value>
                                 </expectedContent>
@@ -484,18 +474,6 @@
                                 <regexp>^(?&lt;year&gt;[0-9]{4})-(?&lt;month&gt;1[0-2]|0[1-9])-(?&lt;day&gt;3[01]|0[1-9]|[12][0-9])T(?&lt;hour&gt;2[0-3]|[01][0-9]):(?&lt;minute&gt;[0-5][0-9])(:(?&lt;second&gt;[0-5][0-9])(.(?&lt;millis&gt;[0-9]{3}))?)?(?&lt;timezone&gt;Z|[+-](2[0-3]|[01][0-9])(:([0-5][0-9])?)?)?$</regexp>
                             </oneOf>
                         </expectedContent>
-                    </element>
-
-                    <element name="mods:recordIdentifier" mandatory="false">
-                        <expectedAttributes>
-                            <attribute name="source" mandatory="false"/>
-                            <attribute name="encoding" mandatory="false">
-                                <expectedContent>
-                                    <value>iso8601</value>
-                                </expectedContent>
-                            </attribute>
-                        </expectedAttributes>
-                        <expectedContent/>
                     </element>
 
                     <element name="mods:recordOrigin" mandatory="false">
