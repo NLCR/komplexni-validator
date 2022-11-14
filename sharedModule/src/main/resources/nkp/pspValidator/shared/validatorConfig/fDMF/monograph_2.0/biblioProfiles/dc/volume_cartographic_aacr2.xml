@@ -46,6 +46,10 @@
                 <expectedContent/>
             </element>
 
+            <element name="dc:type" specification="not(text() = 'model:map')" mandatory="false">
+                <expectedContent/>
+            </element>
+
             <element name="dc:coverage" mandatory="false">
                 <expectedContent/>
             </element>

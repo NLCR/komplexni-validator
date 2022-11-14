@@ -52,6 +52,7 @@
                                 <value>alternative</value>
                                 <value>translated</value>
                                 <value>uniform</value>
+                                <value>abbreviated</value>
                             </oneOf>
                         </expectedContent>
                     </attribute>
@@ -83,6 +84,7 @@
             <element name="mods:name" specification="not(mods:etal)" mandatory="false">
                 <expectedAttributes>
                     <attribute name="type" mandatory="false">
+                        <!--TODO: v textu DMF není uvedena povinnost atributu, nechávám defenzinvně nepovinné-->
                         <expectedContent>
                             <oneOf>
                                 <value>personal</value>
@@ -104,7 +106,9 @@
                         <expectedAttributes>
                             <attribute name="type"/>
                         </expectedAttributes>
-                        <expectedContent/>
+                        <expectedContent>
+                            <!--TODO: oproti jiným verzím volume není v textu uveden požadavek na obsah (RRRR-RRRR), je to záměr?-->
+                        </expectedContent>
                     </element>
 
                     <element name="mods:namePart" specification="@type='family'" mandatory="false">
@@ -180,6 +184,10 @@
             </element>
 
             <element name="mods:genre" specification="text()='cartographic'"/>
+
+            <element name="mods:genre" specification="not(text()='cartographic')" mandatory="false">
+                <expectedContent/>
+            </element>
 
             <element name="mods:originInfo" specification="@eventType='production'" mandatory="false">
                 <expectedAttributes>
@@ -281,9 +289,7 @@
                     <element name="mods:dateIssued">
                         <expectedAttributes>
                             <attribute name="encoding" mandatory="false"/>
-                            <attribute name="point" mandatory="false">
-                                <!--tohle je povinne, coz nedava uplne smysl, resp. problem s praxi-->
-                            </attribute>
+                            <attribute name="point" mandatory="false"/>
                             <attribute name="qualifier" mandatory="false"/>
                         </expectedAttributes>
                         <expectedContent/>
@@ -542,6 +548,7 @@
                     <element name="mods:form">
                         <expectedAttributes>
                             <attribute name="authority" mandatory="false">
+                                <!--TODO: nejasná povinnost atributu authority-->
                                 <expectedContent>
                                     <oneOf>
                                         <value>rdamedia</value>
@@ -590,11 +597,11 @@
                             <oneOf>
                                 <value>czenas</value>
                                 <value>eczenas</value>
-                                <value>Konspekt</value>
                                 <value>czmesh</value>
                                 <value>mednas</value>
                                 <value>msvkth</value>
                                 <value>agrovoc</value>
+                                <value>Konspekt</value>
                             </oneOf>
                         </recommendedContent>
                     </attribute>
@@ -662,15 +669,14 @@
                 </expectedElements>
             </element>
 
+            <!--Mezinarodni desetinne trideni-->
             <element name="mods:classification" specification="not(@edition)" mandatory="false">
-                <!--Mezinarodni desetinne trideni-->
                 <expectedAttributes>
-                    <!--NOTE: DMF neuvadi, jestli je authority povinny atribut, nechavam nepovinny. Povolen atribut Konspekt, aby prošel element s tímto atributem i bez atributu edition-->
+                    <!--TODO: DMF neuvadi, jestli je authority povinny atribut, nechavam nepovinny.-->
                     <attribute name="authority">
                         <recommendedContent>
                             <oneOf>
                                 <value>udc</value>
-                                <value>Konspekt</value>
                             </oneOf>
                         </recommendedContent>
                     </attribute>
@@ -678,20 +684,23 @@
                 <expectedContent/>
             </element>
 
+            <!--Konspekt-->
             <element name="mods:classification" specification="boolean(@edition)" mandatory="false">
-                <!--Konspekt-->
                 <expectedAttributes>
-                    <!--NOTE: DMF neuvadi, jestli je authority povinny atribut, necham, ze je nepovinny-->
                     <attribute name="authority">
-                        <recommendedContent>
+                        <expectedContent>
                             <oneOf>
                                 <value>udc</value>
                                 <value>Konspekt</value>
                             </oneOf>
-                        </recommendedContent>
+                        </expectedContent>
                     </attribute>
 
-                    <attribute name="edition"/>
+                    <attribute name="edition">
+                        <expectedContent>
+                            <value>Konspekt</value>
+                        </expectedContent>
+                    </attribute>
                 </expectedAttributes>
                 <expectedContent/>
             </element>
@@ -832,6 +841,7 @@
             <element name="mods:recordInfo">
                 <expectedElements>
                     <element name="mods:descriptionStandard" mandatory="false">
+                        <!--TODO: opravdu nepovinny? Slouzi k vyhodnoceni AACR2 od RDA-->
                         <expectedContent>
                             <value>rda</value>
                         </expectedContent>
