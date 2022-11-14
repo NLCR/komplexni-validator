@@ -34,7 +34,7 @@
         <expectedAttributes>
             <attribute name="ID">
                 <expectedContent>
-                    <!--V kapitolo 7.3.1 se uvádí právě a pouze MODS_CHAP_*, MODS_PICT_* a nic dalšího-->
+                    <!--V kapitole 7.3.1 se uvádí právě a pouze MODS_CHAP_*, MODS_PICT_* a nic dalšího-->
                     <regexp>MODS_CHAP_[0-9]{4}</regexp>>
                 </expectedContent>
             </attribute>
