@@ -68,7 +68,7 @@
                 </expectedContent>
             </element>
 
-            <element name="mods:part" specification="mods:detail[@type!='pageIndex']" mandatory="false">
+            <element name="mods:part" specification="mods:detail[@type=='pageNumber']" mandatory="false">
                 <expectedAttributes>
                     <attribute name="type">
                         <recommendedContent>
@@ -113,13 +113,7 @@
                     <element name="mods:detail" mandatory="false">
                         <expectedAttributes>
                             <attribute name="type">
-                                <expectedContent>
-                                    <oneOf>
-                                        <value>page number</value>
-                                        <!--see https://github.com/NLCR/Standard_NDK/issues/136-->
-                                        <value>pageNumber</value>
-                                    </oneOf>
-                                </expectedContent>
+                                <expectedContent/>
                             </attribute>
                         </expectedAttributes>
                         <expectedElements>
@@ -152,9 +146,7 @@
                     <element name="mods:detail">
                         <expectedAttributes>
                             <attribute name="type">
-                                <expectedContent>
-                                    <value>pageIndex</value>
-                                </expectedContent>
+                                <expectedContent/>
                             </attribute>
                         </expectedAttributes>
                         <expectedElements>
