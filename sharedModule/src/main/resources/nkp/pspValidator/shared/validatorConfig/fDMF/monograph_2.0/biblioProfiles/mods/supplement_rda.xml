@@ -44,8 +44,7 @@
             </attribute>
         </expectedAttributes>
         <expectedElements>
-            <element name="mods:titleInfo" mandatory="false">
-                <!--DMF nespecifikuje, zda je titleInfo povinny element, nechavam nepovinny-->
+            <element name="mods:titleInfo">
                 <expectedElements>
                     <element name="mods:nonSort" mandatory="false">
                         <expectedContent/>
@@ -83,7 +82,9 @@
                         <expectedAttributes>
                             <attribute name="type"/>
                         </expectedAttributes>
-                        <expectedContent/>
+                        <expectedContent>
+                            <!--TODO: oproti jiným verzím volume není v textu uveden požadavek na obsah (RRRR-RRRR), je to záměr?-->
+                        </expectedContent>
                     </element>
 
                     <element name="mods:namePart" specification="@type='family'" mandatory="false">
@@ -391,7 +392,7 @@
                 </expectedElements>
             </element>
 
-            <element name="mods:language">
+            <element name="mods:language" mandatory="false">
                 <expectedElements>
                     <element name="mods:languageTerm">
                         <expectedAttributes>
@@ -488,26 +489,28 @@
                 <expectedElements>
                     <element name="mods:topic" mandatory="false">
                         <expectedContent>
-                            <!--V DMF je "použít kontrolovaný slovník, napříkld ... " - tj. kontrolovaný slovník NENÍ vyžadován DMF-->
+                            <!--TODO: V DMF je "použít kontrolovaný slovník, napříkld ... " - tj. kontrolovaný slovník NENÍ vyžadován DMF-->
                         </expectedContent>
                     </element>
 
                     <element name="mods:geographic" mandatory="false">
                         <expectedContent>
-                            <!--V DMF je "použít kontrolovaný slovník, napříkld ... " - tj. kontrolovaný slovník NENÍ vyžadován DMF-->
+                            <!--TODO: V DMF je "použít kontrolovaný slovník, napříkld ... " - tj. kontrolovaný slovník NENÍ vyžadován DMF-->
                         </expectedContent>
                     </element>
 
                     <element name="mods:temporal" mandatory="false">
                         <expectedContent>
-                            <!--V DMF je "použít kontrolovaný slovník, napříkld ... " - tj. kontrolovaný slovník NENÍ vyžadován DMF-->
+                            <!--TODO: V DMF je "použít kontrolovaný slovník, napříkld ... " - tj. kontrolovaný slovník NENÍ vyžadován DMF-->
                         </expectedContent>
                     </element>
 
                     <element name="mods:name" mandatory="false">
                         <expectedElements>
                             <element name="mods:namePart" mandatory="false">
-                                <expectedContent/>
+                                <expectedContent>
+                                    <!--TODO: V DMF je "použít kontrolovaný slovník, napříkld ... " - tj. kontrolovaný slovník NENÍ vyžadován DMF-->
+                                </expectedContent>
                             </element>
                         </expectedElements>
                     </element>
