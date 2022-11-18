@@ -185,9 +185,9 @@
                     </attribute>
                 </expectedAttributes>
 
-                <recommendedContent>
+                <expectedContent>
                     <value>chapter</value>
-                </recommendedContent>
+                </expectedContent>
             </element>
 
             <element name="mods:genre" specification="not(text()='chapter')" mandatory="false">
