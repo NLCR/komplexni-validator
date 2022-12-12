@@ -110,21 +110,19 @@
                                 <value>bibliographicalPortrait</value>
                                 <value>colophon</value>
                                 <value>interview</value>
+                                <!--TODO: je to anglicky, mělo by být "annotation"-->
                                 <value>anotation</value>
                             </oneOf>
                         </expectedContent>
                     </attribute>
                 </expectedAttributes>
                 <expectedElements>
+                    <!--TODO: nemel by by detail povinny (s.63)? Podobne jako u part/detail[@type='pageIndex'] -->
                     <element name="mods:detail" mandatory="false">
                         <expectedAttributes>
                             <attribute name="type">
                                 <expectedContent>
-                                    <oneOf>
-                                        <value>page number</value>
-                                        <!--see https://github.com/NLCR/Standard_NDK/issues/136-->
-                                        <value>pageNumber</value>
-                                    </oneOf>
+                                    <value>pageNumber</value>
                                 </expectedContent>
                             </attribute>
                         </expectedAttributes>
@@ -186,6 +184,10 @@
                     <attribute name="type">
                         <recommendedContent>
                             <oneOf>
+                                <!--
+                                Tohle jsou hodnoty z Pravidel pro popis. Ty ale nejsou navazane na verze DMF a muzou se nezavisle vyvijet.
+                                Coz je spis koncepcni problem - pri zmene Pravidel se de facto meni i uz vydane DMF.
+                                -->
                                 <value>titlePage</value>
                                 <value>tableOfContents</value>
                                 <value>blank</value>
