@@ -8,5 +8,5 @@ public class Version {
      * Version code may contain up to one hyphen separating actual version code from suffix dev/alpha/beta, etc.
      */
     public static String VERSION_CODE = "2.3";
-    public static String BUILD_DATE = "15. 12. 2021";
+    public static String BUILD_DATE = "12. 12. 2022";
 }
