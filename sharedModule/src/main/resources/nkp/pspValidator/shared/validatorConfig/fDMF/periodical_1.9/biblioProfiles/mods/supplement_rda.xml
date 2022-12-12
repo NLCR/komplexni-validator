@@ -400,7 +400,6 @@
                 <expectedElements>
                     <element name="mods:form">
                         <expectedAttributes>
-                            <!-- Viz https://github.com/NLCR/Standard_NDK/issues/88-->
                             <attribute name="authority" mandatory="false">
                                 <expectedContent>
                                     <oneOf>
@@ -488,24 +487,21 @@
                 </expectedElements>
             </element>
 
+            <!--Mezinarodni desetinne trideni-->
             <element name="mods:classification" specification="not(@edition)" mandatory="false">
-                <!--Mezinarodni desetinne trideni-->
                 <expectedAttributes>
-                    <!--NOTE: DMF neuvadi, jestli je authority povinny atribut, nechavam nepovinny. Neni zrejme co plati pro rda a aacr2, povolena nvíc i hodnota Konspekt aby prochazely elementy s touto hodnotou bez atributu edition-->
+                    <!--TODO: DMF neuvadi, jestli je authority povinny atribut, nechavam nepovinny. Neni zrejme co plati pro rda a aacr2, povolena nvíc i hodnota Konspekt aby prochazely elementy s touto hodnotou bez atributu edition-->
                     <attribute name="authority" mandatory="true">
                         <recommendedContent>
-                            <oneOf>
-                                <value>udc</value>
-                                <value>Konspekt</value>
-                            </oneOf>
+                            <value>udc</value>
                         </recommendedContent>
                     </attribute>
                 </expectedAttributes>
                 <expectedContent/>
             </element>
 
+            <!--Klasifikační údaje věcného třídění podle Konspektu-->
             <element name="mods:classification" specification="boolean(@edition)" mandatory="false">
-                <!--Klasifikační údaje věcného třídění podle Konspektu-->
                 <expectedAttributes>
                     <attribute name="authority">
                         <recommendedContent>
@@ -518,7 +514,7 @@
 
                     <attribute name="edition">
                         <expectedContent>
-                            <!--hodnota "Konspekt" je zde nejspíš jen doporučená-->
+                            <value>Konspekt</value>
                         </expectedContent>
                     </attribute>
                 </expectedAttributes>
