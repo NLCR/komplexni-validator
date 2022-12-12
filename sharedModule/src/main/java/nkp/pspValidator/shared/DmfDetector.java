@@ -22,7 +22,7 @@ public class DmfDetector {
 
 
     public static final String DEFAULT_MONOGRAPH_VERSION = "2.0";
-    public static final String DEFAULT_PERIODICAL_VERSION = "1.8";
+    public static final String DEFAULT_PERIODICAL_VERSION = "1.9";
     public static final String DEFAULT_AUDIO_DOC_GRAM_VERSION = "0.5";
 
 

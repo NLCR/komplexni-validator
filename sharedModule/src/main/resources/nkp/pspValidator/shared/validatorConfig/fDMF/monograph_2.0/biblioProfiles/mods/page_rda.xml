@@ -68,7 +68,7 @@
                 </expectedContent>
             </element>
 
-            <element name="mods:part" specification="mods:detail[@type=='pageNumber']" mandatory="false">
+            <element name="mods:part" specification="mods:detail[@type='pageNumber']" mandatory="false">
                 <expectedAttributes>
                     <attribute name="type">
                         <recommendedContent>
