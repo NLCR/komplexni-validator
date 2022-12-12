@@ -55,6 +55,7 @@
                 <expectedContent/>
             </element>
 
+            <!--TODO: je mozne, ze pro AACR2 je nepovinny-->
             <element name="dc:format"
                      errorMessage="Očekáván povinný element dc:date obsahující údaje o fyzické podobě dokumentu">
                 <expectedContent/>
@@ -68,7 +69,7 @@
                 <expectedContent/>
             </element>
 
-	        <element name="dc:source" mandatory="false">
+            <element name="dc:source" mandatory="false">
                 <expectedContent/>
             </element>
 

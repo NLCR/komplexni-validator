@@ -71,10 +71,12 @@
                         <expectedContent/>
                     </element>
 
+                    <!--TODO: v textu DMF je spatne oznacena uroven zanoreni (xxx namisto xx)-->
                     <element name="mods:partNumber" mandatory="false">
                         <expectedContent/>
                     </element>
 
+                    <!--TODO: v textu DMF je spatne oznacena uroven zanoreni (xxx namisto xx)-->
                     <element name="mods:partName" mandatory="false">
                         <expectedContent/>
                     </element>
@@ -88,8 +90,6 @@
                             <oneOf>
                                 <value>personal</value>
                                 <value>corporate</value>
-                                <!--see https://github.com/NLCR/Standard_NDK/issues/147-->
-                                <value>konference</value>
                                 <value>conference</value>
                                 <value>family</value>
                             </oneOf>
@@ -107,7 +107,7 @@
                     <element name="mods:namePart" mandatory="false">
                         <expectedAttributes>
                             <attribute name="type" mandatory="false">
-                                <!--TODO: z kontextu je pro validator zrejme, ze neni povinny, nicmene chybi pismeno (M, R, ...) na str. 29-->
+                                <!--TODO: z kontextu je pro validator zrejme, ze neni povinny, nicmene chybi pismeno (M, R, ...) na str. 30-->
                                 <expectedContent>
                                     <oneOf>
                                         <value>date</value>
@@ -121,6 +121,10 @@
                         <expectedContent/>
                     </element>
 
+                    <element name="mods:nameIdentifier" mandatory="false">
+                        <expectedContent/>
+                    </element>
+
                     <element name="mods:role" mandatory="false">
                         <expectedElements>
                             <element name="mods:roleTerm" mandatory="false">
@@ -130,7 +134,7 @@
                                             <value>code</value>
                                         </expectedContent>
                                     </attribute>
-                                    <attribute name="authority" mandatory="false">
+                                    <attribute name="authority">
                                         <recommendedContent>
                                             <value>marcrelator</value>
                                         </recommendedContent>
@@ -188,14 +192,13 @@
                         <expectedAttributes>
                             <attribute name="encoding" mandatory="false">
                                 <expectedContent>
-                                    <!--neni jasne, jestli povinna hodnota, ktera se smi vyplnit jen nekdy, ale kdyz uz, tak presne "marc", anebo "marc" jen nekdy, jindy klidne jina hodnota-->
+                                    <!--TODO: neni jasne, jestli povinna hodnota, ktera se smi vyplnit jen nekdy, ale kdyz uz, tak presne "marc", anebo "marc" jen nekdy, jindy klidne jina hodnota-->
                                     <!--<value>marc</value>-->
                                 </expectedContent>
                             </attribute>
                             <attribute name="point" mandatory="false">
-                                <!--tohle je povinne, coz nedava uplne smysl, resp. problem s praxi-->
                                 <expectedContent>
-                                    <!--neni jasne, jestli to jsou opravdu jedine dve povolene hodnoty-->
+                                    <!--TODO: neni jasne, jestli to jsou opravdu jedine dve povolene hodnoty-->
                                     <!--<oneOf>
                                         <value>start</value>
                                         <value>end</value>
@@ -281,10 +284,9 @@
 
             <element name="mods:physicalDescription">
                 <expectedElements>
+                    <!-- TODO: chybi informace o povinnosti elementu -->
                     <element name="mods:form">
                         <expectedAttributes>
-                            <!--neni jasne, jestli tohle ma byt povinne - je tam M/MA.
-                            Viz https://github.com/NLCR/Standard_NDK/issues/88-->
                             <attribute name="authority" mandatory="false">
                                 <expectedContent>
                                     <oneOf>
@@ -296,6 +298,7 @@
                                 </expectedContent>
                             </attribute>
 
+                            <!--TODO: takze pro AACR2 neni type ocekavan? Nebo byt muze (MA), ale nekontrolujeme hodnotu?-->
                             <attribute name="type" mandatory="false">
                                 <expectedContent>
                                     <oneOf>
@@ -360,7 +363,9 @@
                         <expectedAttributes>
                             <attribute name="authority" mandatory="false"/>
                         </expectedAttributes>
-                        <expectedContent/>
+                        <expectedContent>
+                            <value>marcgac</value>
+                        </expectedContent>
                     </element>
 
                     <element name="mods:temporal" mandatory="false">
@@ -375,8 +380,6 @@
                                     <oneOf>
                                         <value>personal</value>
                                         <value>corporate</value>
-                                        <!--see https://github.com/NLCR/Standard_NDK/issues/147-->
-                                        <value>konference</value>
                                         <value>conference</value>
                                         <value>family</value>
                                     </oneOf>
@@ -419,7 +422,7 @@
                                                     <value>code</value>
                                                 </expectedContent>
                                             </attribute>
-                                            <attribute name="authority" mandatory="false">
+                                            <attribute name="authority">
                                                 <recommendedContent>
                                                     <value>marcrelator</value>
                                                 </recommendedContent>
@@ -436,15 +439,14 @@
                 </expectedElements>
             </element>
 
+            <!--Mezinarodni desetinne trideni-->
             <element name="mods:classification" specification="not(@edition)" mandatory="false">
-                <!--Mezinarodni desetinne trideni-->
                 <expectedAttributes>
-                    <!--NOTE: z DMF není hned zřejmé, které hodnoty platí pro rda a které pro aacr2, proto jsou nyní povoleny obě-->
+                    <!--TODO: DMF neuvadi, jestli je authority povinny atribut, nechavam povinny-->
                     <attribute name="authority">
                         <recommendedContent>
                             <oneOf>
                                 <value>udc</value>
-                                <value>Konspekt</value>
                             </oneOf>
                         </recommendedContent>
                     </attribute>
@@ -452,12 +454,12 @@
                 <expectedContent/>
             </element>
 
+            <!--Konspekt-->
             <element name="mods:classification" specification="boolean(@edition)" mandatory="false">
-                <!--Konspekt-->
                 <expectedAttributes>
-                    <!--NOTE: DMF neuvadi, jestli je authority povinny atribut, necham, ze je nepovinny-->
                     <attribute name="authority">
                         <recommendedContent>
+                            <!--TODO: nejasne-->
                             <oneOf>
                                 <value>udc</value>
                                 <value>Konspekt</value>
@@ -531,7 +533,7 @@
                         <expectedContent/>
                     </element>
 
-                    <!--DMF si protireci: "pozn. u dokumentů v digitální podobě není možné vyplnit" a zaroven je element mandatory. Nechavam tedy nepovinny.-->
+                    <!--TODO: DMF si protireci: "pozn. u dokumentů v digitální podobě není možné vyplnit" a zaroven je element mandatory. Nechavam tedy nepovinny.-->
                     <element name="mods:physicalLocation" repeatable="false" mandatory="false">
                         <expectedAttributes>
                             <attribute name="authority" mandatory="false">
@@ -553,7 +555,7 @@
 
             <element name="mods:recordInfo">
                 <expectedElements>
-                    <element name="mods:descriptionStandard" mandatory="false">
+                    <element name="mods:descriptionStandard">
                         <recommendedContent>
                             <value>aacr</value>
                         </recommendedContent>
