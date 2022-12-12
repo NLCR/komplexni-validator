@@ -54,8 +54,6 @@
                             <oneOf>
                                 <value>personal</value>
                                 <value>corporate</value>
-                                <!--see https://github.com/NLCR/Standard_NDK/issues/147-->
-                                <value>konference</value>
                                 <value>conference</value>
                                 <value>family</value>
                             </oneOf>
@@ -72,7 +70,6 @@
                 <expectedElements>
                     <element name="mods:namePart" mandatory="false">
                         <expectedAttributes>
-                            <!--TODO: na s.39 je povinnost M, zároveň v textu "pokud se nejedná o osobu, type se nevyplňuje" (takže není povinný)-->
                             <attribute name="type" mandatory="false">
                                 <expectedContent>
                                     <oneOf>
@@ -101,7 +98,7 @@
                                             <value>code</value>
                                         </expectedContent>
                                     </attribute>
-                                    <attribute name="authority" mandatory="false">
+                                    <attribute name="authority">
                                         <recommendedContent>
                                             <value>marcrelator</value>
                                         </recommendedContent>
@@ -124,11 +121,10 @@
                         <expectedAttributes>
                             <attribute name="point" mandatory="false">
                                 <expectedContent>
-                                    <!--neni jasne, jestli to jsou opravdu jedine dve povolene hodnoty-->
-                                    <!--<oneOf>
+                                    <oneOf>
                                         <value>start</value>
                                         <value>end</value>
-                                    </oneOf>-->
+                                    </oneOf>
                                 </expectedContent>
                             </attribute>
                             <attribute name="qualifier" mandatory="false">
