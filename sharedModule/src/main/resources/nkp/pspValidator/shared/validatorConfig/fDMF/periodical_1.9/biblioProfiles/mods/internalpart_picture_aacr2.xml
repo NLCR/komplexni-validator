@@ -70,8 +70,6 @@
                             <oneOf>
                                 <value>personal</value>
                                 <value>corporate</value>
-                                <!--see https://github.com/NLCR/Standard_NDK/issues/147-->
-                                <value>konference</value>
                                 <value>conference</value>
                                 <value>family</value>
                             </oneOf>
@@ -108,7 +106,7 @@
                                             <value>code</value>
                                         </expectedContent>
                                     </attribute>
-                                    <attribute name="authority" mandatory="false">
+                                    <attribute name="authority">
                                         <recommendedContent>
                                             <value>marcrelator</value>
                                         </recommendedContent>
@@ -135,7 +133,7 @@
                 </expectedElements>
             </element>
 
-            <element name="mods:genre" specification="text()='picture' or text()='PICTURE'">
+            <element name="mods:genre" specification="text()='picture'">
                 <expectedAttributes>
                     <attribute name="type" mandatory="false">
                         <expectedContent>
@@ -153,9 +151,7 @@
                         </expectedContent>
                     </attribute>
                 </expectedAttributes>
-                <recommendedContent>
-                    <value>picture</value>
-                </recommendedContent>
+                <expectedContent/>
             </element>
 
             <element name="mods:physicalDescription" mandatory="false">
@@ -224,8 +220,7 @@
 
                     <element name="mods:name" mandatory="false">
                         <expectedAttributes>
-                            <attribute name="authority" mandatory="false">
-                                <!--v DNF není vyplněné, jestli je atribut povinný, nechávám tedy nepovinný-->
+                            <attribute name="authority">
                                 <expectedContent>
                                     <value>czenas</value>
                                 </expectedContent>
@@ -233,7 +228,6 @@
                         </expectedAttributes>
                         <expectedElements>
                             <element name="mods:namePart" mandatory="false">
-                                <!--v DNF není vyplněné, jestli je element povinný, nechávám tedy nepovinný-->
                                 <expectedContent>
                                     <!--V DMF je "použít kontrolovaný slovník, napříkld ... " - tj. kontrolovaný slovník NENÍ vyžadován DMF-->
                                 </expectedContent>
@@ -243,15 +237,13 @@
                 </expectedElements>
             </element>
 
+            <!--Mezinarodni desetinne trideni-->
             <element name="mods:classification" specification="not(@edition)" mandatory="false">
-                <!--Mezinarodni desetinne trideni-->
                 <expectedAttributes>
-                    <!--NOTE: DMF neuvadi, jestli je authority povinny atribut, nechavam nepovinny. Z DMF není zřejmé co platí pro rda a co pro aacr2, povolena hodnota Konspekt aby prošel element s touto hodnotou v atributu bez atributu edition-->
-                    <attribute name="authority" mandatory="true">
+                    <attribute name="authority">
                         <recommendedContent>
                             <oneOf>
                                 <value>udc</value>
-                                <value>Konspekt</value>
                             </oneOf>
                         </recommendedContent>
                     </attribute>
@@ -259,8 +251,8 @@
                 <expectedContent/>
             </element>
 
+            <!--Klasifikační údaje věcného třídění podle Konspektu-->
             <element name="mods:classification" specification="boolean(@edition)" mandatory="false">
-                <!--Klasifikační údaje věcného třídění podle Konspektu-->
                 <expectedAttributes>
                     <attribute name="authority">
                         <recommendedContent>
@@ -314,7 +306,7 @@
                 </expectedContent>
             </element>
 
-            <!--jine identifikatory - urnnbn, barcode, oclc, sysn, permalink, apod.-->
+            <!--jine identifikatory - barcode, oclc, sysn, permalink, apod.-->
             <element name="mods:identifier"
                      specification="@type!='uuid'"
                      mandatory="false">
