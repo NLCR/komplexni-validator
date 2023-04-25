@@ -644,11 +644,13 @@
 
                     <element name="mods:geographicCode" mandatory="false">
                         <expectedAttributes>
-                            <attribute name="authority" mandatory="false"/>
+                            <attribute name="authority" mandatory="false">
+                                <expectedContent>
+                                    <value>marcgac</value>
+                                </expectedContent>
+                            </attribute>
                         </expectedAttributes>
-                        <expectedContent>
-                            <value>marcgac</value>
-                        </expectedContent>
+                        <expectedContent/>
                     </element>
 
                     <element name="mods:temporal" mandatory="false">

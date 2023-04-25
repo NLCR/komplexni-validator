@@ -545,6 +545,8 @@
                             <attribute name="authority">
                                 <expectedContent>
                                     <oneOf>
+                                        <value>rdamedia</value>
+                                        <value>rdacarrier</value>
                                         <value>marcform</value>
                                         <value>marccategory</value>
                                         <value>marcsmd</value>
@@ -557,7 +559,7 @@
                     </element>
 
                     <!--RDA authority="rdacarrier", type="carrier-->
-                    <element name="mods:form" specification="@authority='rdacarrier') and @type='carrier'" mandatory="false">
+                    <element name="mods:form" specification="@authority='rdacarrier' and @type='carrier'" mandatory="false">
                         <expectedAttributes>
                             <attribute name="authority"/>
                             <attribute name="type"/>
