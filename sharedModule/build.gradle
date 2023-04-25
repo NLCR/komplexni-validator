@@ -42,6 +42,10 @@ dependencies {
     // https://mvnrepository.com/artifact/net.sf.saxon/Saxon-HE
     //compile group: 'net.sf.saxon', name: 'Saxon-HE', version: '9.7.0-14'
     compile 'org.json:json:20180813'
+
+    // https://mvnrepository.com/artifact/com.ibm.icu/icu4j
+    implementation 'com.ibm.icu:icu4j:51.1'
+
 }
 
 //tohle udela zip, ale asi shared-logic.zip, asi na nic

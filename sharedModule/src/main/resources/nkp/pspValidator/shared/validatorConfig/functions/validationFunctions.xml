@@ -56,6 +56,12 @@
         </params-def>
     </validationFunction>
 
+    <validationFunction name="checkAllFilesInUtf8">
+        <description>Zkontroluje, že všechny soubory jsou v kódování UTF-8</description>
+        <params-def>
+            <value name="files" type="FILE_LIST"/>
+        </params-def>
+    </validationFunction>
 
     <validationFunction name="checkFileIsDir">
         <description>Zkontroluje, že soubor existuje a je adresář (tedy zda není obyčejný soubor). Pokud je ignoreIfFileIsNull=true a soubor parametry file

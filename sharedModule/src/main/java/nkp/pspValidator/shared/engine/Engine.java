@@ -154,6 +154,8 @@ public class Engine {
                 return new VfCheckFilenameMatchesPattern(name, this);
             case "checkAllFilenamesMatchPattern":
                 return new VfCheckAllFilenamesMatchPattern(name, this);
+            case "checkAllFilesInUtf8":
+                return new VfCheckAllFilesInUtf8(name, this);
             case "checkFileIsDir":
                 return new VfCheckFileIsDir(name, this);
             case "checkFileIsNotDir":

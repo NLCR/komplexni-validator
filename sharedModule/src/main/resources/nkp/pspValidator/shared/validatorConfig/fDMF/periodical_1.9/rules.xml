@@ -3077,9 +3077,26 @@
 
     </rules-section>
 
+
+    <rules-section name="OCR TEXT" description="Kontrola textových přepisů.">
+
+        <rule name="OCR-TEXT_FILES_IN_UTF8">
+            <description>Všechny soubory OCR-TEXT musí být v kódování UTF-8.</description>
+            <validation functionName="checkAllFilesInUtf8">
+                <params>
+                    <value name="files" type="FILE_LIST">
+                        <value-ref name="OCR-TEXT_FILES"/>
+                    </value>
+                </params>
+            </validation>
+        </rule>
+
+    </rules-section>
+
+
     <rules-section name="OCR ALTO" description="Kontrola souborů ALTO.">
 
-        <rule name="ALTO_FILES_VALID_BY_XSD">
+        <rule name="OCR-ALTO_FILES_VALID_BY_XSD">
             <description>Soubory OCR-ALTO musí být validní podle XML Schema (alto_2.0.xsd).</description>
             <validation functionName="checkXmlIsValidByXsd">
                 <params>
@@ -3090,6 +3107,17 @@
                         <value-ref name="ALTO_XSD_FILE"/>
                     </value>
                     <value name="level" type="LEVEL">ERROR</value>
+                </params>
+            </validation>
+        </rule>
+
+        <rule name="OCR-ALTO_FILES_IN_UTF8">
+            <description>Všechny soubory OCR-ALTO musí být v kódování UTF-8.</description>
+            <validation functionName="checkAllFilesInUtf8">
+                <params>
+                    <value name="files" type="FILE_LIST">
+                        <value-ref name="OCR-ALTO_FILES"/>
+                    </value>
                 </params>
             </validation>
         </rule>
