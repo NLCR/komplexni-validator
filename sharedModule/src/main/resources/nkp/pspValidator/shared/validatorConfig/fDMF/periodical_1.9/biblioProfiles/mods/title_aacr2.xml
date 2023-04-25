@@ -508,9 +508,25 @@
                 </expectedContent>
             </element>
 
-            <!--dalsi identifikatory - ccnb, isbn, issn, jine (barcode, oclc, sysno, permalink apod.)-->
             <element name="mods:identifier"
-                     specification="@type!='uuid'"
+                     specification="@type='issn'"
+                     mandatory="false">
+                <expectedAttributes>
+                    <attribute name="type"/>
+                    <attribute name="invalid" mandatory="false">
+                        <expectedContent>
+                            <value>yes</value>
+                        </expectedContent>
+                    </attribute>
+                </expectedAttributes>
+                <expectedContent>
+                    <regexp>^[0-9]{4}-[0-9]{3}[0-9X]$</regexp>
+                </expectedContent>
+            </element>
+
+            <!--dalsi identifikatory - ccnb, isbn, jine (barcode, oclc, sysno, permalink apod.)-->
+            <element name="mods:identifier"
+                     specification="@type!='uuid' and @type!='issn'"
                      mandatory="false">
                 <expectedAttributes>
                     <attribute name="type"/>
