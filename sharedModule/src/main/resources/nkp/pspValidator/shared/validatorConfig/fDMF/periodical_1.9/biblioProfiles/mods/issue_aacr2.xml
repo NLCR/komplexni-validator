@@ -324,9 +324,25 @@
                 </expectedContent>
             </element>
 
-            <!--dalsi identifikatory - isbn, jine (barcode, oclc, sysno, permalink apod.)-->
             <element name="mods:identifier"
-                     specification="@type!='uuid' and @type!='urnnbn'"
+                     specification="@type='isbn'"
+                     mandatory="false">
+                <expectedAttributes>
+                    <attribute name="type"/>
+                    <attribute name="invalid" mandatory="false">
+                        <expectedContent>
+                            <value>yes</value>
+                        </expectedContent>
+                    </attribute>
+                </expectedAttributes>
+                <expectedContent>
+                    <regexp>^(97(8|9))?[0-9]{9}[0-9X]$</regexp>
+                </expectedContent>
+            </element>
+
+            <!--dalsi identifikatory - barcode, oclc, sysno, permalink apod.-->
+            <element name="mods:identifier"
+                     specification="@type!='uuid' and @type!='urnnbn' and @type!='isbn'"
                      mandatory="false">
                 <expectedAttributes>
                     <attribute name="type"/>

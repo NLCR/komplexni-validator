@@ -467,7 +467,9 @@
                         </expectedContent>
                     </attribute>
                 </expectedAttributes>
-                <expectedContent/>
+                <expectedContent>
+                    <regexp>^(97(8|9))?[0-9]{9}[0-9X]$</regexp>
+                </expectedContent>
             </element>
 
             <element name="mods:identifier" specification="@type='ismn'" mandatory="false">

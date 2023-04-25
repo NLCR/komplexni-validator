@@ -341,7 +341,6 @@
             </element>
 
             <!--    identifier-->
-
             <element name="mods:identifier" specification="@type='uuid'">
                 <expectedAttributes>
                     <attribute name="type"/>

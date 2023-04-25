@@ -464,9 +464,25 @@
                 </expectedContent>
             </element>
 
-            <!--jiny identifikator - ccnb, isbn, ismn, jiny (barcode, oclc, sysno, permalink)-->
             <element name="mods:identifier"
-                     specification="@type!='uuid' and @type!='urnnbn' and @type!='issn'"
+                     specification="@type='isbn'"
+                     mandatory="false">
+                <expectedAttributes>
+                    <attribute name="type"/>
+                    <attribute name="invalid" mandatory="false">
+                        <expectedContent>
+                            <value>yes</value>
+                        </expectedContent>
+                    </attribute>
+                </expectedAttributes>
+                <expectedContent>
+                    <regexp>^(97(8|9))?[0-9]{9}[0-9X]$</regexp>
+                </expectedContent>
+            </element>
+
+            <!--jiny identifikator - ccnb, ismn, jiny (barcode, oclc, sysno, permalink)-->
+            <element name="mods:identifier"
+                     specification="@type!='uuid' and @type!='urnnbn' and @type!='issn' and @type!='isbn'"
                      mandatory="false">
                 <expectedAttributes>
                     <attribute name="type" mandatory="false"/>
