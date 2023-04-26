@@ -41,4 +41,6 @@ public class Params {
     public static final String VERSION = "version";
     public static final String QUIT_AFTER_NTH_INVALID_PSP = "quit-after-nth-invalid-psp";
 
+    public static final String MINIFIED_PSP_DIR = "minified-psp-dir";
+
 }

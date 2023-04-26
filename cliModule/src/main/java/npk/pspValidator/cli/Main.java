@@ -42,13 +42,14 @@ public class Main {
         //https://commons.apache.org/proper/commons-cli/usage.html
         Options options = new Options();
         options.addOption(OptionBuilder
-                .withDescription(replaceUmlaut("Akce, která má být provedena. Povolené hodnoty jsou VALIDATE_PSP a VALIDATE_PSP_GROUP."))
+                .withDescription(replaceUmlaut("Akce, která má být provedena. Povolené hodnoty jsou VALIDATE_PSP, VALIDATE_PSP_GROUP a BUILD_MINIFIED_PACKAGE."))
                 .hasArg()
                 .withArgName("AKCE")
                 .withLongOpt(Params.ACTION)
                 .create("a"));
         options.addOption(OptionBuilder
-                .withDescription(replaceUmlaut("Adresář obsahující formalizované DMF pro jednotlivé verze standardu."))
+                .withDescription(replaceUmlaut("Adresář obsahující formalizované DMF pro jednotlivé verze standardu. " +
+                        "Parametr je povinný pro akce VALIDATE_PSP a VALIDATE_PSP_GROUP, u ostatních akcí je ignorován."))
                 .hasArg()
                 //.withArgName("ADRESÁŘ_FDMF")
                 .withArgName("ADRESAR_CONFIG")
@@ -57,7 +58,7 @@ public class Main {
         options.addOption(OptionBuilder
                 .withDescription(replaceUmlaut(
                         "Adresář, nebo soubor ZIP obsahující PSP balík. " +
-                                "Parametr je povinný pro akci VALIDATE_PSP, u ostatních akcí je ignorován."))
+                                "Parametr je povinný pro akce VALIDATE_PSP a BUILD_MINIFIED_PACKAGE, u ostatních akcí je ignorován."))
                 .hasArg()
                 .withArgName("ADRESAR/SOUBOR_ZIP")
                 .withLongOpt(Params.PSP)
@@ -69,6 +70,14 @@ public class Main {
                 .hasArg()
                 .withArgName("ADRESAR/SOUBOR_ZIP")
                 .withLongOpt(Params.PSP_GROUP)
+                .create());
+        options.addOption(OptionBuilder
+                .withDescription(replaceUmlaut(
+                        "Adresář, kam bude bude uložen minifikovaný PSP balík. " +
+                                "Parametr je povinný pro akci BUILD_MINIFIED_PACKAGE, u ostatních akcí je ignorován."))
+                .hasArg()
+                .withArgName("ADRESAR_PRO_MINIFIKOVANY_PSP")
+                .withLongOpt(Params.MINIFIED_PSP_DIR)
                 .create());
         options.addOption(OptionBuilder
                 .withDescription(replaceUmlaut(
@@ -298,18 +307,24 @@ public class Main {
                 }
 
                 //config dir
-                if (!line.hasOption(Params.CONFIG_DIR)) {
-                    System.err.println(String.format("Chyba: prázdný parametr --%s!", Params.CONFIG_DIR));
-                    printHelp(options);
-                    return;
+                File configDir = null;
+                switch (action) {
+                    case VALIDATE_PSP:
+                    case VALIDATE_PSP_GROUP:
+                        if (!line.hasOption(Params.CONFIG_DIR)) {
+                            System.err.println(String.format("Chyba: pro akci %s je parametr --%s povinný!", action, Params.CONFIG_DIR));
+                            printHelp(options);
+                            return;
+                        }
+                        configDir = new File(line.getOptionValue(Params.CONFIG_DIR));
                 }
-                File configDir = new File(line.getOptionValue(Params.CONFIG_DIR));
 
                 //psp / psp-group
                 File psp = null;
                 File pspGroup = null;
                 switch (action) {
-                    case VALIDATE_PSP: {
+                    case VALIDATE_PSP:
+                    case BUILD_MINIFIED_PACKAGE: {
                         if (!line.hasOption(Params.PSP)) {
                             System.err.println(String.format("Chyba: pro akci %s je parametr --%s povinný!", action, Params.PSP));
                             printHelp(options);
@@ -326,6 +341,20 @@ public class Main {
                             return;
                         } else {
                             pspGroup = new File(line.getOptionValue(Params.PSP_GROUP));
+                            break;
+                        }
+                    }
+                }
+
+                File minifiedPspDir = null;
+                switch (action) {
+                    case BUILD_MINIFIED_PACKAGE: {
+                        if (!line.hasOption(Params.MINIFIED_PSP_DIR)) {
+                            System.err.println(String.format("Chyba: pro akci %s je parametr --%s povinný!", action, Params.MINIFIED_PSP_DIR));
+                            printHelp(options);
+                            return;
+                        } else {
+                            minifiedPspDir = new File(line.getOptionValue(Params.MINIFIED_PSP_DIR));
                             break;
                         }
                     }
@@ -490,6 +519,9 @@ public class Main {
                                 utilsPaths, utilsDisabled,
                                 devParams);
                         break;
+                    case BUILD_MINIFIED_PACKAGE:
+                        buildMinifiedPackage(psp, minifiedPspDir);
+                        break;
                 }
             }
         } catch (ParseException exp) {
@@ -506,6 +538,12 @@ public class Main {
         } catch (InvalidXPathExpressionException e) {
             System.err.println("Chyba:" + e.getMessage());
         }
+    }
+
+    private static void buildMinifiedPackage(File psp, File minifiedPspDir) {
+        System.out.println("Vyrábím minifikovaný psp balík ze zdrojového balíku " + psp.getAbsolutePath());
+        System.out.println("Výsledek bude uložen do adresáře " + minifiedPspDir.getAbsolutePath());
+        System.out.println("TODO: implement");
     }
 
     /*Docasne odstrani diakritiku, dokud se neopravi problem s kodovanim na Windows*/
@@ -556,8 +594,11 @@ public class Main {
     }
 
     private static void printHelp(Options options) {
-        String header = replaceUmlaut("Validuje PSP balík, nebo sadu PSP balíků podle DMF*." +
-                " Typ DMF (Monografie/Periodikum/Zvuk-gramodeska) se odvozuje z dat jednotlivých PSP balíků." +
+        String header = replaceUmlaut("\n" +
+                "Validuje PSP balík/sadu PSP balíků podle DMF*, nebo vyrobí minifikovaný PSP balík.\n\n" +
+                "Validace:\n" +
+                "--------\n" +
+                "Typ DMF (Monografie/Periodikum/Zvuk-gramodeska) se odvozuje z dat jednotlivých PSP balíků." +
                 " Verze DMF použité pro validaci lze ovlivnit parametry" +
                 " --" + Params.PREFERRED_DMF_MON_VERSION + "," +
                 " --" + Params.PREFERRED_DMF_PER_VERSION + "," +
@@ -566,7 +607,12 @@ public class Main {
                 " --" + Params.FORCED_DMF_PER_VERSION + " a" +
                 " --" + Params.FORCED_DMF_ADG_VERSION + "." +
                 " Dále je potřeba pomocí --config-dir uvést adresář, který obsahuje definice fDMF," +
-                " např. monograph_2.0, periodical_1.9, nebo audio_doc_gram_0.5.\n\n");
+                " např. monograph_2.0, periodical_1.9, nebo audio_doc_gram_0.5.\n" +
+                "\n" +
+                "Výroba minifikovaného balíku:\n" +
+                "----------------------------\n" +
+                "Bude vyrobena kopie balíku s tím, že textové a obrazové soubory budou nahrazny prázdnými soubory se stejným jménem." +
+                "\n\n");
         String footer = replaceUmlaut("\n*Definice metadatových formátů. Více na http://www.ndk.cz/standardy-digitalizace/metadata.\n" +
                 "Více informací o validátoru najdete na https://github.com/NLCR/komplexni-validator.");
         HelpFormatter formatter = new HelpFormatter();

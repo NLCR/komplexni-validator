@@ -60,3 +60,4 @@ task fatJar(type: Jar) {
 //gradle run --args="--version"
 //gradle run --args="--help"
 //gradle run --args="--action VALIDATE_PSP --config-dir CONFIG_DIR --psp PSP_DIR"
+//gradle run --args="--action BUILD_MINIFIED_PACKAGE --psp PSP_DIR --minified-psp-dir MINIFIED_PSP_DIR"
