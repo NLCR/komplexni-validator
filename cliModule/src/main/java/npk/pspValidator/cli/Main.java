@@ -42,7 +42,7 @@ public class Main {
         //https://commons.apache.org/proper/commons-cli/usage.html
         Options options = new Options();
         options.addOption(OptionBuilder
-                .withDescription(replaceUmlaut("Akce, kterou má být provedena. Povolené hodnoty jsou VALIDATE_PSP a VALIDATE_PSP_GROUP."))
+                .withDescription(replaceUmlaut("Akce, která má být provedena. Povolené hodnoty jsou VALIDATE_PSP a VALIDATE_PSP_GROUP."))
                 .hasArg()
                 .withArgName("AKCE")
                 .withLongOpt(Params.ACTION)
