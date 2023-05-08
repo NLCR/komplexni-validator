@@ -15,6 +15,11 @@ import org.apache.commons.cli.*;
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintStream;
+import java.nio.file.FileVisitResult;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.SimpleFileVisitor;
+import java.nio.file.attribute.BasicFileAttributes;
 import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.zip.ZipException;
@@ -520,7 +525,8 @@ public class Main {
                                 devParams);
                         break;
                     case BUILD_MINIFIED_PACKAGE:
-                        buildMinifiedPackage(psp, minifiedPspDir);
+                        //TODO: level validace do CLI
+                        buildMinifiedPackage(psp, minifiedPspDir, 3);
                         break;
                 }
             }
@@ -540,10 +546,118 @@ public class Main {
         }
     }
 
-    private static void buildMinifiedPackage(File psp, File minifiedPspDir) {
-        System.out.println("Vyrábím minifikovaný psp balík ze zdrojového balíku " + psp.getAbsolutePath());
+    private static void buildMinifiedPackage(File pspDirOrZipFile, File minifiedPspDir, int level) {
+        System.out.println("Vyrábím minifikovaný psp balík ze zdrojového balíku " + pspDirOrZipFile.getAbsolutePath());
         System.out.println("Výsledek bude uložen do adresáře " + minifiedPspDir.getAbsolutePath());
-        System.out.println("TODO: implement");
+        //checkou minifiedPspDir
+        if (!minifiedPspDir.exists()) {
+            System.err.println(String.format("Chyba: adresář %s neexistuje!", minifiedPspDir.getAbsolutePath()));
+        } else if (!minifiedPspDir.isDirectory()) {
+            System.err.println(String.format("Chyba: soubor %s není adresář!", minifiedPspDir.getAbsolutePath()));
+        } else if (!minifiedPspDir.canWrite()) {
+            System.err.println(String.format("Chyba: nemůžu zapisovat do adresáře %s!", minifiedPspDir.getAbsolutePath()));
+        } else if (!pspDirOrZipFile.exists()) {
+            throw new IllegalStateException(String.format("Soubor %s neexistuje", pspDirOrZipFile.getAbsolutePath()));
+        } else {
+            try {
+                if (pspDirOrZipFile.isDirectory()) {
+                    if (!pspDirOrZipFile.canRead()) {
+                        throw new IllegalStateException(String.format("Nelze číst adresář %s", pspDirOrZipFile.getAbsolutePath()));
+                    }
+                    minifyPspDir(pspDirOrZipFile, minifiedPspDir, level);
+                } else {
+                    minifyPspZip(pspDirOrZipFile, minifiedPspDir, minifiedPspDir, level);
+                }
+            } catch (IOException e) {
+                throw new IllegalStateException("Chyba při minifikaci ", e);
+            }
+        }
+    }
+
+    private static void minifyPspZip(File pspZipFile, File tmpRootDir, File minifiedRootDir, int level) throws IOException {
+        try {
+            try {
+                new ZipFile(pspZipFile);
+            } catch (ZipException e) {
+                System.out.println(String.format("Soubor %s není adresář ani soubor ZIP, ignoruji.", pspZipFile.getAbsolutePath()));
+                return;
+            }
+            if (tmpRootDir == null) {
+                System.err.println(String.format("Chyba: prázdný parametr --%s: adresář pro dočasné soubory je potřeba pro rozbalení ZIP souboru %s!", Params.TMP_DIR, pspZipFile.getAbsolutePath()));
+            } else if (!tmpRootDir.exists()) {
+                System.err.println(String.format("Chyba: adresář %s neexistuje!", pspZipFile.getAbsolutePath()));
+            } else if (!tmpRootDir.isDirectory()) {
+                System.err.println(String.format("Chyba: soubor %s není adresář!", pspZipFile.getAbsolutePath()));
+            } else if (!tmpRootDir.canWrite()) {
+                System.err.println(String.format("Chyba: nemůžu zapisovat do adresáře %s!", pspZipFile.getAbsolutePath()));
+            } else {
+                File tmpPspDir = new File(tmpRootDir, pspZipFile.getName() + "_extracted");
+                if (tmpPspDir.exists()) {
+                    System.out.println(String.format("Mažu adresář %s", tmpPspDir.getAbsolutePath()));
+                    Utils.deleteNonemptyDir(tmpPspDir);
+                }
+                System.out.println(String.format("Rozbaluji %s do adresáře %s", pspZipFile.getAbsolutePath(), tmpPspDir.getAbsolutePath()));
+                Utils.unzip(pspZipFile, tmpPspDir);
+                System.out.println(tmpPspDir.getAbsolutePath());
+                minifyPspDir(tmpPspDir, minifiedRootDir, level);
+                Utils.deleteNonemptyDir(tmpPspDir);
+            }
+        } catch (IOException e) {
+            System.out.println(String.format("Chyba zpracování ZIP souboru %s: %s!", pspZipFile.getAbsolutePath(), e.getMessage()));
+        }
+    }
+
+    /**
+     * @param level uroven minifikace: 1: obrazky + audio, 2: obrazky + audio + txt, 3: obrazky + audio + txt + alto
+     */
+    private static void minifyPspDir(File pspDir, File minifiedRootDir, int level) throws IOException {
+        String newDirName = pspDir.getName() + "_minified";
+        File minifiedDir = new File(minifiedRootDir, newDirName);
+        if (minifiedDir.exists()) {
+            System.out.println("already exists, deleting: " + minifiedDir.getAbsolutePath());
+            Utils.deleteNonemptyDir(minifiedDir);
+        }
+        Files.walkFileTree(pspDir.toPath(), new SimpleFileVisitor<Path>() {
+            @Override
+            public FileVisitResult preVisitDirectory(Path dir, BasicFileAttributes attrs) throws IOException {
+                Path newDir = minifiedDir.toPath().resolve(pspDir.toPath().relativize(dir));
+                System.out.println("Creating directory: " + newDir);
+                Files.createDirectory(newDir);
+                return FileVisitResult.CONTINUE;
+            }
+
+            @Override
+            public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) throws IOException {
+                List<String> suffixesOfFilesToMinify;
+                if (level == 1) {
+                    suffixesOfFilesToMinify = Arrays.asList(".jp2", ".wav", ".mp3");
+                } else {
+                    suffixesOfFilesToMinify = Arrays.asList(".jp2", ".wav", ".mp3", ".txt");
+                }
+                boolean minify = false;
+                for (String suffix : suffixesOfFilesToMinify) {
+                    if (file.getFileName().toString().endsWith(suffix)) {
+                        minify = true;
+                        break;
+                    }
+                }
+                if (level >= 3) {
+                    if (file.getFileName().toString().contains("alto")) {
+                        minify = true;
+                    }
+                }
+                if (minify) {
+                    System.out.println("Minifying file: " + file);
+                    Path newFile = minifiedDir.toPath().resolve(pspDir.toPath().relativize(file));
+                    Files.createFile(newFile);
+                } else {
+                    Path newFile = minifiedDir.toPath().resolve(pspDir.toPath().relativize(file));
+                    System.out.println("Copying file: " + newFile);
+                    Files.copy(file, newFile);
+                }
+                return FileVisitResult.CONTINUE;
+            }
+        });
     }
 
     /*Docasne odstrani diakritiku, dokud se neopravi problem s kodovanim na Windows*/

@@ -9,6 +9,11 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.nio.file.FileVisitResult;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.SimpleFileVisitor;
+import java.nio.file.attribute.BasicFileAttributes;
 import java.util.*;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
@@ -234,14 +239,27 @@ public class Utils {
         }
     }
 
-    public static void deleteNonemptyDir(File unzippedDir) {
-        File[] files = unzippedDir.listFiles();
+    public static void deleteNonemptyDir(File dir) throws IOException {
+        /*File[] files = dir.listFiles();
         for (File file : files) {
             if (!file.delete() && file.isDirectory()) {
                 deleteNonemptyDir(file);
             }
         }
-        boolean deleted = unzippedDir.delete();
+        boolean deleted = dir.delete();*/
+        Files.walkFileTree(dir.toPath(), new SimpleFileVisitor<Path>() {
+            @Override
+            public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) throws IOException {
+                Files.delete(file);
+                return FileVisitResult.CONTINUE;
+            }
+
+            @Override
+            public FileVisitResult postVisitDirectory(Path dir, IOException exc) throws IOException {
+                Files.delete(dir);
+                return FileVisitResult.CONTINUE;
+            }
+        });
     }
 
     public static void unzip(File zipFile, File outFolder) throws IOException {
