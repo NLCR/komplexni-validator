@@ -56,13 +56,13 @@ public class VfCheckStringDerivedFromUrnnbnOrUuid extends ValidationFunction {
 
     ValidationResult validate(String string, String uuid, String urnnbn) {
         if (uuid == null && urnnbn == null) {
-            return singlErrorResult(invalid(Level.ERROR, "nenalezen žádný z identifikátorů UUID ani URN:NBN"));
+            return singlErrorResult(invalid(Level.ERROR, null, "nenalezen žádný z identifikátorů UUID ani URN:NBN"));
         }
         if (uuid != null && !uuid.matches("uuid:[a-f0-9]{8}(-[a-f0-9]{4}){3}-[a-f0-9]{12}")) {
-            return singlErrorResult(invalid(Level.ERROR, "hodnota '%s' není ve formátu UUID", uuid));
+            return singlErrorResult(invalid(Level.ERROR, null, "hodnota '%s' není ve formátu UUID", uuid));
         }
         if (urnnbn != null && !urnnbn.matches("urn:nbn:cz:[A-Za-z0-9]{2,6}-[A-Za-z0-9]{6}")) {
-            return singlErrorResult(invalid(Level.ERROR, "hodnota '%s' není ve formátu URN:NBN", urnnbn));
+            return singlErrorResult(invalid(Level.ERROR, null, "hodnota '%s' není ve formátu URN:NBN", urnnbn));
         }
         if (uuid != null && stringIsDerivedFromUUid(string, uuid)) {
             return ValidationResult.ok();
@@ -70,7 +70,7 @@ public class VfCheckStringDerivedFromUrnnbnOrUuid extends ValidationFunction {
         if (urnnbn != null && stringIsDerivedFromUrnNbn(string, urnnbn)) {
             return ValidationResult.ok();
         }
-        return singlErrorResult(invalid(Level.ERROR, "řetězec '%s' není odvozen od UUID ani URN:NBN", string));
+        return singlErrorResult(invalid(Level.ERROR, null, "řetězec '%s' není odvozen od UUID ani URN:NBN", string));
     }
 
     private boolean stringIsDerivedFromUrnNbn(String string, String urnnbn) {

@@ -74,7 +74,7 @@ public class VfCheckMetsAmdsecElementsMatchProfile extends ValidationFunction {
 
             MetadataProfile profile = engine.getTechnicalMetadataProfilesManager().buildProfile(profileId);
             if (profile == null) {
-                return singlErrorResult(invalid(Level.ERROR, "nenalezen profil '%s'", profileId));
+                return singlErrorResult(invalid(Level.ERROR, null, "nenalezen profil '%s'", profileId));
             } else {
                 return validate(metsFiles, elementXpath, elementMustExist, profile);
             }
@@ -130,24 +130,24 @@ public class VfCheckMetsAmdsecElementsMatchProfile extends ValidationFunction {
             Element amdSecEl = (Element) engine.buildXpath("/mets:mets/mets:amdSec").evaluate(doc, XPathConstants.NODE);
             if (amdSecEl == null) {
                 if (elementMustExist) {
-                    result.addError(invalid(Level.ERROR, "nenalezen element mets:amdSec v souboru %s", file.getName()));
+                    result.addError(invalid(Level.ERROR, file, "nenalezen element mets:amdSec"));
                 }
             } else {
                 NodeList nodesToValidate = (NodeList) engine.buildXpath(elementXpath).evaluate(amdSecEl, XPathConstants.NODESET);
                 if (nodesToValidate.getLength() == 0) {
                     if (elementMustExist) {
-                        result.addError(invalid(Level.ERROR, "v mets:amdSec nenalezen ani jeden element '%s' v souboru %s", elementXpath, file.getName()));
+                        result.addError(invalid(Level.ERROR, file, "v mets:amdSec nenalezen ani jeden element '%s' v souboru %s", elementXpath, file.getName()));
                     }
                 } else {
                     for (int i = 0; i < nodesToValidate.getLength(); i++) {
                         Node nodeToValidate = nodesToValidate.item(i);
                         if (nodeToValidate.getNodeType() != Node.ELEMENT_NODE) {
-                            result.addError(invalid(Level.ERROR, "výsledek '%s' není element (soubor %s)", elementXpath, file.getName()));
+                            result.addError(invalid(Level.ERROR, file, "výsledek '%s' není element", elementXpath));
                         } else {
                             Element elementToValidate = (Element) nodeToValidate;
                             String id = (String) engine.buildXpath("@ID").evaluate(elementToValidate, XPathConstants.STRING);
                             Document newDoc = XmlUtils.elementToNewDocument(elementToValidate, true);
-                            MetadataProfileValidator.validate(profile, newDoc, result, String.format("%s: %s", file.getName(), id));
+                            MetadataProfileValidator.validate(profile, file, newDoc, result, id);
                         }
                     }
                 }

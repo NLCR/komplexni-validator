@@ -66,12 +66,12 @@ public class VfCheckUrnNbnIdentifiersRegistered extends ValidationFunction {
         try {
             checker.check(urnNbn);
         } catch (IOException e) {
-            result.addError(Level.ERROR, "chyba připojení při zpracování identifikátoru %s: %s", urnNbn, e.getMessage());
+            result.addError(Level.ERROR, null, "chyba připojení při zpracování identifikátoru %s: %s", urnNbn, e.getMessage());
             e.printStackTrace();
         } catch (UrnNbnResolverChecker.ResolverError e) {
-            result.addError(Level.ERROR, e.getMessage());
+            result.addError(Level.ERROR, null, e.getMessage());
         } catch (UrnNbnResolverChecker.ResolverWarning e) {
-            result.addError(Level.WARNING, e.getMessage());
+            result.addError(Level.WARNING, null, e.getMessage());
         }
     }
 

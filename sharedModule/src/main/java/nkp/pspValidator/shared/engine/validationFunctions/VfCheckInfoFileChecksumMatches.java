@@ -67,7 +67,7 @@ public class VfCheckInfoFileChecksumMatches extends ValidationFunction {
             String checksumFilePath = ((String) checksumFileExp.evaluate(infoDoc, XPathConstants.STRING)).trim();
             File checksumFileFound = Utils.buildAbsoluteFile(infoFile.getParentFile(), checksumFilePath);
             if (!checksumFileFound.equals(checksumFileExisting.getAbsoluteFile())) {
-                result.addError(invalid(Level.ERROR,
+                result.addError(invalid(Level.ERROR, infoFile,
                         "element checksum obsahuje cestu ke špatnému souboru: namísto (%s) obsahuje (%s)",
                         checksumFileExisting.getAbsolutePath(), checksumFileFound.getAbsolutePath()));
             }
@@ -82,7 +82,7 @@ public class VfCheckInfoFileChecksumMatches extends ValidationFunction {
             }
             String hashComputed = Utils.computeHash(checksumFileExisting);
             if (!hashComputed.toUpperCase().equals(hashFound.toUpperCase())) {
-                result.addError(invalid(Level.ERROR,
+                result.addError(invalid(Level.ERROR, infoFile,
                         "uvedený kontrolní součet '%s' nesouhlasí s vypočítaným kontrolním součtem '%s' pro soubor %s",
                         hashFound, hashComputed, checksumFileExisting.getAbsolutePath()));
             }
@@ -93,9 +93,9 @@ public class VfCheckInfoFileChecksumMatches extends ValidationFunction {
         } catch (XPathExpressionException e) {
             result.addError(invalid(e));
         } catch (InvalidPathException e) {
-            result.addError(invalid(Level.ERROR, "cesta k souboru není zapsána korektně: '%s'", e.getPath()));
+            result.addError(invalid(Level.ERROR, infoFile, "cesta k souboru není zapsána korektně: '%s'", e.getPath()));
         } catch (HashComputationException e) {
-            result.addError(invalid(Level.ERROR, "chyba výpočtu kontrolního součtu souboru %s: %s", checksumFileExisting.getAbsolutePath(), e.getMessage()));
+            result.addError(invalid(Level.ERROR, infoFile, "chyba výpočtu kontrolního součtu souboru %s: %s", checksumFileExisting.getAbsolutePath(), e.getMessage()));
         } finally {
             return result;
         }

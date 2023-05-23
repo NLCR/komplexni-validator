@@ -49,61 +49,77 @@ public abstract class ValidationFunction implements Function {
 
     ValidationResult invalidContractNotMet(ContractException e) {
         ValidationResult result = new ValidationResult();
-        result.addError(Level.ERROR, String.format("%s: nesplněn kontrakt validační funkce: %s", getName(), e.getMessage()));
+        //result.addError(Level.ERROR, null, String.format("%s: nesplněn kontrakt validační funkce: %s", getName(), e.getMessage()));
+        result.addError(Level.ERROR, null, String.format("nesplněn kontrakt validační funkce: %s", e.getMessage()));
         return result;
     }
 
     ValidationResult invalidUnexpectedError(Throwable e) {
         ValidationResult result = new ValidationResult();
         String message = e.getMessage() != null ? e.getMessage() : e.toString();
-        result.addError(Level.ERROR, String.format("nečekaná chyba: %s", message));
+        result.addError(Level.ERROR, null, String.format("nečekaná chyba: %s", message));
         return result;
     }
 
     ValidationResult invalidValueParamNull(String paramName, ValueEvaluation paramEvaluation) {
         ValidationResult result = new ValidationResult();
-
         String message = paramEvaluation != null ? paramEvaluation.getErrorMessage() : null;
-        result.addError(Level.ERROR, String.format("%s: neznámá hodnota povinného parametru '%s': %s", getName(), paramName, message));
+        //result.addError(Level.ERROR, null, String.format("%s: neznámá hodnota povinného parametru '%s': %s", getName(), paramName, message));
+        result.addError(Level.ERROR, null, String.format("neznámá hodnota povinného parametru '%s': %s", paramName, message));
         return result;
     }
 
     ValidationResult invalidPatternParamNull(String paramName, PatternEvaluation paramEvaluation) {
         ValidationResult result = new ValidationResult();
-        result.addError(Level.ERROR, String.format("%s: neznámá hodnota poviného parametru (vzor) '%s': %s", getName(), paramName, paramEvaluation.getErrorMessage()));
+        //result.addError(Level.ERROR, null, String.format("%s: neznámá hodnota poviného parametru (vzor) '%s': %s", getName(), paramName, paramEvaluation.getErrorMessage()));
+        result.addError(Level.ERROR, null, String.format("neznámá hodnota poviného parametru (vzor) '%s': %s", paramName, paramEvaluation.getErrorMessage()));
         return result;
     }
 
     ValidationProblem invalidFileDoesNotExist(File file) {
-        return new ValidationProblem(Level.ERROR, String.format("%s: soubor %s neexistuje", getName(), file.getAbsoluteFile()));
+        //return new ValidationProblem(Level.ERROR, String.format("%s: soubor %s neexistuje", getName(), file.getAbsoluteFile()));
+        //return new ValidationProblem(Level.ERROR, file, String.format("%s: soubor neexistuje", getName()));
+        return new ValidationProblem(Level.ERROR, file, String.format("soubor neexistuje"));
     }
 
     ValidationProblem invalidFileIsDir(File file) {
-        return new ValidationProblem(Level.ERROR, String.format("%s: soubor %s je adresář", getName(), file.getAbsoluteFile()));
+        //return new ValidationProblem(Level.ERROR, String.format("%s: soubor %s je adresář", getName(), file.getAbsoluteFile()));
+        //return new ValidationProblem(Level.ERROR, file, String.format("%s: soubor je adresář", getName()));
+        return new ValidationProblem(Level.ERROR, file, String.format("soubor je adresář"));
     }
 
     ValidationProblem invalidFileIsNotDir(File file) {
-        return new ValidationProblem(Level.ERROR, String.format("%s: soubor %s není adresář", getName(), file.getAbsoluteFile()));
+        //return new ValidationProblem(Level.ERROR, String.format("%s: soubor %s není adresář", getName(), file.getAbsoluteFile()));
+        //return new ValidationProblem(Level.ERROR, file, String.format("%s: soubor není adresář", getName()));
+        return new ValidationProblem(Level.ERROR, file, String.format("soubor není adresář"));
     }
 
     ValidationProblem invalidCannotReadFile(File file) {
-        return new ValidationProblem(Level.ERROR, String.format("nelze číst soubor %s", file.getAbsoluteFile()));
+        //return new ValidationProblem(Level.ERROR, String.format("nelze číst soubor %s", file.getAbsoluteFile()));
+        //return new ValidationProblem(Level.ERROR, file, String.format("%s: nelze číst soubor", getName()));
+        return new ValidationProblem(Level.ERROR, file, String.format("soubor nelze číst"));
     }
 
+
     ValidationProblem invalidCannotReadDir(File dir) {
-        return new ValidationProblem(Level.ERROR, String.format("%s: nelze číst adresář %s", getName(), dir.getAbsoluteFile()));
+        //return new ValidationProblem(Level.ERROR, String.format("%s: nelze číst adresář %s", getName(), dir.getAbsoluteFile()));
+        //return new ValidationProblem(Level.ERROR, dir, String.format("%s: nelze číst adresář", getName()));
+        return new ValidationProblem(Level.ERROR, dir, String.format("adresář nelze číst"));
     }
 
     ValidationProblem invalid(Exception e) {
-        return new ValidationProblem(Level.ERROR, e.getMessage());
+        return new ValidationProblem(Level.ERROR, null, e.getMessage());
     }
 
-    ValidationProblem invalid(Level level, String errorMessage) {
-        return new ValidationProblem(level, String.format("%s: %s", getName(), errorMessage));
+    ValidationProblem invalid(Level level, File file, String errorMessage) {
+        //return new ValidationProblem(level, file, String.format("%s: %s", getName(), errorMessage));
+        //return new ValidationProblem(level, file, String.format("%s: %s", getName(), errorMessage));
+        return new ValidationProblem(level, file, String.format("%s", errorMessage));
     }
 
-    ValidationProblem invalid(Level level, String errorMessage, Object... errorMsgParams) {
-        return new ValidationProblem(level, String.format("%s: %s", getName(), String.format(errorMessage, errorMsgParams)));
+    ValidationProblem invalid(Level level, File file, String errorMessage, Object... errorMsgParams) {
+        //return new ValidationProblem(level, file, String.format("%s: %s", getName(), String.format(errorMessage, errorMsgParams)));
+        return new ValidationProblem(level, file, String.format("%s", String.format(errorMessage, errorMsgParams)));
     }
 
 

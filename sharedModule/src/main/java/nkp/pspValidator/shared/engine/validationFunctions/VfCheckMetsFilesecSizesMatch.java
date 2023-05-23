@@ -21,10 +21,7 @@ public class VfCheckMetsFilesecSizesMatch extends ValidationFunction {
     public static final String PARAM_METS_FILE = "mets_file";
 
     public VfCheckMetsFilesecSizesMatch(String name, Engine engine) {
-        super(name, engine, new Contract()
-                .withValueParam(PARAM_PSP_DIR, ValueType.FILE, 1, 1)
-                .withValueParam(PARAM_METS_FILE, ValueType.FILE, 1, 1)
-        );
+        super(name, engine, new Contract().withValueParam(PARAM_PSP_DIR, ValueType.FILE, 1, 1).withValueParam(PARAM_METS_FILE, ValueType.FILE, 1, 1));
     }
 
     @Override
@@ -68,7 +65,7 @@ public class VfCheckMetsFilesecSizesMatch extends ValidationFunction {
                 try {
                     checkFile(pspdir, (Element) fileElements.item(i));
                 } catch (SizeDifferenceException e) {
-                    result.addError(invalid(Level.WARNING, e.getMessage()));
+                    result.addError(invalid(Level.WARNING, e.getFile(), e.getMessage()));
                 } catch (Exception e) {
                     result.addError(invalid(e));
                 }
@@ -91,7 +88,7 @@ public class VfCheckMetsFilesecSizesMatch extends ValidationFunction {
         File file = Utils.buildAbsoluteFile(pspdir, filePath);
         long sizeComputed = file.length();
         if (sizeComputed != sizeExpected) {
-            throw new SizeDifferenceException(String.format("uvedená velikost (%d B) se liší od zjištěné velikosti (%d B) souboru %s", sizeExpected, sizeComputed, file.getAbsolutePath()));
+            throw new SizeDifferenceException(String.format("uvedená velikost (%d B) se liší od zjištěné velikosti (%d B) souboru", sizeExpected, sizeComputed), file);
         }
     }
 

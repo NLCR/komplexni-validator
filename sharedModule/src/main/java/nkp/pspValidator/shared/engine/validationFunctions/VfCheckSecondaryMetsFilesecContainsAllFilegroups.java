@@ -66,11 +66,11 @@ public class VfCheckSecondaryMetsFilesecContainsAllFilegroups extends Validation
     private void checkFileValid(File file, ValidationResult result) {
         try {
             Document doc = engine.getXmlDocument(file, true);
-            checkFileGroupOk(doc, "MC_IMGGRP", "Images", result);
-            checkFileGroupOk(doc, "UC_IMGGRP", "Images", result);
-            checkFileGroupOk(doc, "ALTOGRP", "Layout", result);
-            checkFileGroupOk(doc, "TXTGRP", "Text", result);
-            checkFilegroupsCount(doc, 4, result);
+            checkFileGroupOk(file, doc, "MC_IMGGRP", "Images", result);
+            checkFileGroupOk(file, doc, "UC_IMGGRP", "Images", result);
+            checkFileGroupOk(file, doc, "ALTOGRP", "Layout", result);
+            checkFileGroupOk(file, doc, "TXTGRP", "Text", result);
+            checkFilegroupsCount(file, doc, 4, result);
         } catch (InvalidXPathExpressionException e) {
             result.addError(invalid(e));
         } catch (XPathExpressionException e) {
@@ -80,23 +80,23 @@ public class VfCheckSecondaryMetsFilesecContainsAllFilegroups extends Validation
         }
     }
 
-    private void checkFilegroupsCount(Document doc, int expectedCount, ValidationResult result) throws InvalidXPathExpressionException, XPathExpressionException {
+    private void checkFilegroupsCount(File metsFile, Document doc, int expectedCount, ValidationResult result) throws InvalidXPathExpressionException, XPathExpressionException {
         XPathExpression xpath = engine.buildXpath("count(/mets:mets/mets:fileSec/mets:fileGrp)");
         int count = Integer.valueOf((String) xpath.evaluate(doc, XPathConstants.STRING));
         if (count != expectedCount) {
-            result.addError(invalid(Level.ERROR, "neočekávaný počet elementů mets:fileGrp (%d namísto %d)", count, expectedCount));
+            result.addError(invalid(Level.ERROR, metsFile, "neočekávaný počet elementů mets:fileGrp (%d namísto %d)", count, expectedCount));
         }
     }
 
-    private void checkFileGroupOk(Document doc, String id, String useExpected, ValidationResult result) throws InvalidXPathExpressionException, XPathExpressionException {
+    private void checkFileGroupOk(File metsFile, Document doc, String id, String useExpected, ValidationResult result) throws InvalidXPathExpressionException, XPathExpressionException {
         XPathExpression xpath = engine.buildXpath("/mets:mets/mets:fileSec/mets:fileGrp[@ID='" + id + "']");
         Element fileGrpEl = (Element) xpath.evaluate(doc, XPathConstants.NODE);
         if (fileGrpEl == null) {
-            result.addError(invalid(Level.ERROR, "nenalezen element mets:fileGrp s atributem ID=\"%s\"", id));
+            result.addError(invalid(Level.ERROR, metsFile, "nenalezen element mets:fileGrp s atributem ID=\"%s\"", id));
         } else {
             String useFound = fileGrpEl.getAttribute("USE");
             if (!useExpected.equals(useFound)) {
-                result.addError(invalid(Level.ERROR,
+                result.addError(invalid(Level.ERROR, metsFile,
                         "element mets:fileGrp s atributem ID=\"%s\" obsahuje nepovolenou hodnotu atributu USE: '%s' namísto očekávané '%s'",
                         id, useFound, useExpected));
             }

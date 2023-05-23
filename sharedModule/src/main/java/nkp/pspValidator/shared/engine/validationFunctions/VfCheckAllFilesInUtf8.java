@@ -48,10 +48,10 @@ public class VfCheckAllFilesInUtf8 extends ValidationFunction {
             try {
                 String encoding = detectEncoding(file);
                 if (!"UTF-8".equals(encoding)) {
-                    result.addError(invalid(Level.ERROR, "soubor %s není v kódování UTF-8, ale v %s", file.getName(), encoding));
+                    result.addError(invalid(Level.ERROR, file, "soubor není v kódování UTF-8, ale v %s", encoding));
                 }
             } catch (IOException e) {
-                result.addError(invalid(Level.ERROR, "chyba v detekci kódování souboru %s", file.getName()));
+                result.addError(invalid(Level.ERROR, file, "chyba v detekci kódování souboru"));
             }
         }
         return result;

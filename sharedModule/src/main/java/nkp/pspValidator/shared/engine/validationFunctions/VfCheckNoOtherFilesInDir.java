@@ -98,7 +98,7 @@ public class VfCheckNoOtherFilesInDir extends ValidationFunction {
         List<File> filesInDir = listAbsoluteFiles(rootDir);
         for (File file : filesInDir) {
             if (!filesExpected.contains(file)) {
-                result.addError(invalid(Level.ERROR, "nalezen nečekaný soubor %s v adresáři %s", file.getName(), rootDir.getAbsolutePath()));
+                result.addError(invalid(Level.ERROR, rootDir, "nalezen nečekaný soubor: %s", file.getName()));
             }
         }
         return result;

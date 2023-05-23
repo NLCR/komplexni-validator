@@ -87,7 +87,7 @@ public class VfCheckIdentifiersNoneTypePresent extends ValidationFunction {
         for (List<Identifier> idList : idListList) {
             for (Identifier idFound : idList) {
                 if (typesNotExpected.contains(idFound.getType())) {
-                    result.addError(invalid(Level.WARNING, "nalezen zakázaný identifikátor typu '%s' pro úroveň %s", idFound.getType(), levelName));
+                    result.addError(invalid(Level.WARNING, null, "nalezen zakázaný identifikátor typu '%s' pro úroveň %s", idFound.getType(), levelName));
                 }
             }
         }

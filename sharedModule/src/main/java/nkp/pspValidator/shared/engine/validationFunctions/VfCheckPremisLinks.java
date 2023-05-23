@@ -94,7 +94,7 @@ public class VfCheckPremisLinks extends ValidationFunction {
             Document doc = engine.getXmlDocument(file, true);
             Element amdSecEl = (Element) engine.buildXpath("/mets:mets/mets:amdSec").evaluate(doc, XPathConstants.NODE);
             if (amdSecEl == null) {
-                result.addError(invalid(Level.ERROR, "nenalezen element mets:amdSec v souboru %s", file.getName()));
+                result.addError(invalid(Level.ERROR, file, "nenalezen element mets:amdSec"));
             } else {
                 //identifiers must be unique
                 checkObjectIdsUnique(file, amdSecEl, result);
@@ -267,7 +267,7 @@ public class VfCheckPremisLinks extends ValidationFunction {
                     idMap.put(id, eventMetsId);
                 } else {
                     String colidingEventMetsId = idMap.get(id);
-                    result.addError(Level.ERROR, String.format("%s: identifikátor není unikátní: Objekty '%s' a '%s' mají stejný identifikátor (typ=\"%s\", hodnota=\"%s\")", file.getName(), eventMetsId, colidingEventMetsId, id.getType(), id.getValue()));
+                    result.addError(Level.ERROR, file, String.format("identifikátor není unikátní: Objekty '%s' a '%s' mají stejný identifikátor (typ=\"%s\", hodnota=\"%s\")", eventMetsId, colidingEventMetsId, id.getType(), id.getValue()));
                 }
             }
         }
@@ -285,7 +285,7 @@ public class VfCheckPremisLinks extends ValidationFunction {
                     idMap.put(id, eventMetsId);
                 } else {
                     String colidingEventMetsId = idMap.get(id);
-                    result.addError(Level.ERROR, String.format("%s: identifikátor není unikátní: Události '%s' a '%s' mají stejný identifikátor (typ=\"%s\", hodnota=\"%s\")", file.getName(), eventMetsId, colidingEventMetsId, id.getType(), id.getValue()));
+                    result.addError(Level.ERROR, file, String.format("identifikátor není unikátní: Události '%s' a '%s' mají stejný identifikátor (typ=\"%s\", hodnota=\"%s\")", eventMetsId, colidingEventMetsId, id.getType(), id.getValue()));
                 }
             }
         }
@@ -303,7 +303,7 @@ public class VfCheckPremisLinks extends ValidationFunction {
                     idMap.put(id, agentMetsId);
                 } else {
                     String colidingAgentMetsId = idMap.get(id);
-                    result.addError(Level.ERROR, String.format("%s: identifikátor není unikátní: Agenti '%s' a '%s' mají stejný identifikátor (typ=\"%s\", hodnota=\"%s\")", file.getName(), agentMetsId, colidingAgentMetsId, id.getType(), id.getValue()));
+                    result.addError(Level.ERROR, file, String.format("identifikátor není unikátní: Agenti '%s' a '%s' mají stejný identifikátor (typ=\"%s\", hodnota=\"%s\")", agentMetsId, colidingAgentMetsId, id.getType(), id.getValue()));
                 }
             }
         }
@@ -320,8 +320,8 @@ public class VfCheckPremisLinks extends ValidationFunction {
             for (Identifier relatedObjectId : relatedObjectIds) {
                 String relatedObjectMetsId = getMetsIdOfObjectByIdentifier(amdSecEl, relatedObjectId);
                 if (relatedObjectMetsId == null) {
-                    result.addError(Level.ERROR, String.format("%s: Objekt '%s' se odkazuje se na neexistující Objekt identifikátorem typu '%s' a hodnoty '%s'",
-                            file.getName(), objectMetsId, relatedObjectId.getType(), relatedObjectId.getValue()));
+                    result.addError(Level.ERROR, file, String.format("Objekt '%s' se odkazuje se na neexistující Objekt identifikátorem typu '%s' a hodnoty '%s'",
+                            objectMetsId, relatedObjectId.getType(), relatedObjectId.getValue()));
                 } else {
                     //System.err.println(String.format("%s -> %s -> %s", objectMetsId, relatedObjectId.toString(), relatedObjectMetsId));
                 }
@@ -339,8 +339,8 @@ public class VfCheckPremisLinks extends ValidationFunction {
             for (Identifier relatedEventId : relatedEventIds) {
                 String relatedEventtMetsId = getMetsIdOfEVentByIdentifier(amdSecEl, relatedEventId);
                 if (relatedEventtMetsId == null) {
-                    result.addError(Level.ERROR, String.format("%s: Objekt '%s' se odkazuje se na neexistující Událost identifikátorem typu '%s' a hodnoty '%s'",
-                            file.getName(), objectMetsId, relatedEventId.getType(), relatedEventId.getValue()));
+                    result.addError(Level.ERROR, file, String.format("Objekt '%s' se odkazuje se na neexistující Událost identifikátorem typu '%s' a hodnoty '%s'",
+                            objectMetsId, relatedEventId.getType(), relatedEventId.getValue()));
                 } else {
                     //System.err.println(String.format("%s -> %s -> %s", objectMetsId, relatedEventId.toString(), relatedEventtMetsId));
                 }
@@ -358,8 +358,8 @@ public class VfCheckPremisLinks extends ValidationFunction {
             for (Identifier linkingEventId : linkingEventIds) {
                 String relatedEventtMetsId = getMetsIdOfEVentByIdentifier(amdSecEl, linkingEventId);
                 if (relatedEventtMetsId == null) {
-                    result.addError(Level.ERROR, String.format("%s: Objekt '%s' se odkazuje se na neexistující Událost identifikátorem typu '%s' a hodnoty '%s'",
-                            file.getName(), objectMetsId, linkingEventId.getType(), linkingEventId.getValue()));
+                    result.addError(Level.ERROR, file, String.format("Objekt '%s' se odkazuje se na neexistující Událost identifikátorem typu '%s' a hodnoty '%s'",
+                            objectMetsId, linkingEventId.getType(), linkingEventId.getValue()));
                 } else {
                     //System.err.println(String.format("%s -> %s -> %s", objectMetsId, linkingEventId.toString(), relatedEventtMetsId));
                 }
@@ -377,8 +377,8 @@ public class VfCheckPremisLinks extends ValidationFunction {
             for (Identifier linkingObjectId : linkingObjectIds) {
                 String linkingObjectMetsId = getMetsIdOfObjectByIdentifier(amdSecEl, linkingObjectId);
                 if (linkingObjectMetsId == null) {
-                    result.addError(Level.ERROR, String.format("%s: Událost '%s' se odkazuje se na neexistující Objekt identifikátorem typu '%s' a hodnoty '%s'",
-                            file.getName(), eventMetsId, linkingObjectId.getType(), linkingObjectId.getValue()));
+                    result.addError(Level.ERROR, file, String.format("Událost '%s' se odkazuje se na neexistující Objekt identifikátorem typu '%s' a hodnoty '%s'",
+                            eventMetsId, linkingObjectId.getType(), linkingObjectId.getValue()));
                 } else {
                     //System.err.println(String.format("%s -> %s -> %s", eventMetsId, linkingObjectId.toString(), linkingObjectMetsId));
                 }
@@ -396,8 +396,8 @@ public class VfCheckPremisLinks extends ValidationFunction {
             for (Identifier linkingAgentId : linkingAgentIds) {
                 String linkingAgentMetsId = getMetsIdOfAgentByIdentifier(amdSecEl, linkingAgentId);
                 if (linkingAgentMetsId == null) {
-                    result.addError(Level.ERROR, String.format("%s: Událost '%s' se odkazuje se na neexistujícího Agenta identifikátorem typu '%s' a hodnoty '%s'",
-                            file.getName(), eventMetsId, linkingAgentId.getType(), linkingAgentId.getValue()));
+                    result.addError(Level.ERROR, file, String.format("Událost '%s' se odkazuje se na neexistujícího Agenta identifikátorem typu '%s' a hodnoty '%s'",
+                            eventMetsId, linkingAgentId.getType(), linkingAgentId.getValue()));
                 } else {
                     //System.err.println(String.format("%s -> %s -> %s", eventMetsId, linkingAgentId.toString(), linkingAgentMetsId));
                 }
@@ -409,9 +409,9 @@ public class VfCheckPremisLinks extends ValidationFunction {
     private void checkMcRefersToPs(File file, Element amdSecEl, ValidationResult result) throws InvalidXPathExpressionException, XPathExpressionException {
         NodeList mcEls = (NodeList) engine.buildXpath("mets:techMD[@ID=\"OBJ_002\"]").evaluate(amdSecEl, XPathConstants.NODESET);
         if (mcEls.getLength() == 0) {
-            result.addError(Level.ERROR, String.format("%s: Chybí objekt archivní kopie (ID=OBJ_002)", file.getName()));
+            result.addError(Level.ERROR, file, "Chybí objekt archivní kopie (ID=OBJ_002)");
         } else if (mcEls.getLength() > 1) {
-            result.addError(Level.ERROR, String.format("%s: Duplikovaný objekt archivní kopie (ID=OBJ_002)", file.getName()));
+            result.addError(Level.ERROR, file, "Duplikovaný objekt archivní kopie (ID=OBJ_002)");
         } else {
             Element mcEl = (Element) mcEls.item(0);
             List<Identifier> objectRelatedObjectsIdentifiers = getObjectRelatedObjectsIdentifiers(mcEl);
@@ -421,16 +421,16 @@ public class VfCheckPremisLinks extends ValidationFunction {
                     return;
                 }
             }
-            result.addError(Level.WARNING, String.format("%s: Chybí odkaz (relatedObject) z archivní kopie (ID=OBJ_002) na primární sken (ID=OBJ_001)", file.getName()));
+            result.addError(Level.WARNING, file, "Chybí odkaz (relatedObject) z archivní kopie (ID=OBJ_002) na primární sken (ID=OBJ_001)");
         }
     }
 
     private void checkAltoRefersToMc(File file, Element amdSecEl, ValidationResult result) throws InvalidXPathExpressionException, XPathExpressionException {
         NodeList altoEls = (NodeList) engine.buildXpath("mets:techMD[@ID=\"OBJ_003\"]").evaluate(amdSecEl, XPathConstants.NODESET);
         if (altoEls.getLength() == 0) {
-            result.addError(Level.ERROR, String.format("%s: Chybí objekt ALTO (ID=OBJ_003)", file.getName()));
+            result.addError(Level.ERROR, file, String.format("Chybí objekt ALTO (ID=OBJ_003)"));
         } else if (altoEls.getLength() > 1) {
-            result.addError(Level.ERROR, String.format("%s: Duplikovaný objekt ALTO (ID=OBJ_003)", file.getName()));
+            result.addError(Level.ERROR, file, String.format("Duplikovaný objekt ALTO (ID=OBJ_003)"));
         } else {
             Element mcEl = (Element) altoEls.item(0);
             List<Identifier> objectRelatedObjectsIdentifiers = getObjectRelatedObjectsIdentifiers(mcEl);
@@ -440,7 +440,7 @@ public class VfCheckPremisLinks extends ValidationFunction {
                     return;
                 }
             }
-            result.addError(Level.WARNING, String.format("%s: Chybí odkaz (relatedObject) z ALTO (ID=OBJ_003) na archivní kopii (ID=OBJ_002)", file.getName()));
+            result.addError(Level.WARNING, file, String.format("Chybí odkaz (relatedObject) z ALTO (ID=OBJ_003) na archivní kopii (ID=OBJ_002)"));
         }
     }
 

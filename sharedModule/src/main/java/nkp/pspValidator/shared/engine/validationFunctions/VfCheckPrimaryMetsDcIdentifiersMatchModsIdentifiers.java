@@ -69,15 +69,15 @@ public class VfCheckPrimaryMetsDcIdentifiersMatchModsIdentifiers extends Validat
                 Map<String, Set<String>> modsIdsPerSection = modsIdentifiers.get(sectionId);
                 Map<String, Set<String>> dcIdsPerSection = dcIdentifiers.get(sectionId);
                 if (modsIdsPerSection == null) {
-                    result.addError(invalid(Level.ERROR, "nenalezen element dmdSec s ID=MODSMD_%S", sectionId));
+                    result.addError(invalid(Level.ERROR, file, "nenalezen element dmdSec s ID=MODSMD_%S", sectionId));
                 } else if (dcIdsPerSection == null) {
-                    result.addError(invalid(Level.ERROR, "nenalezen element dmdSec s ID=DCMD_%S", sectionId));
+                    result.addError(invalid(Level.ERROR, file, "nenalezen element dmdSec s ID=DCMD_%S", sectionId));
                 } else {
                     Set<String> allIdTypes = new HashSet<>();
                     allIdTypes.addAll(modsIdsPerSection.keySet());
                     allIdTypes.addAll(dcIdsPerSection.keySet());
                     for (String idType : allIdTypes) {
-                        compareIds(idType, modsIdsPerSection.get(idType), dcIdsPerSection.get(idType), result, sectionId);
+                        compareIds(file, idType, modsIdsPerSection.get(idType), dcIdsPerSection.get(idType), result, sectionId);
                     }
                 }
             }
@@ -93,17 +93,17 @@ public class VfCheckPrimaryMetsDcIdentifiersMatchModsIdentifiers extends Validat
         }
     }
 
-    private void compareIds(String idType, Set<String> modsValues, Set<String> dcValues, ValidationResult result, String sectionId) {
+    private void compareIds(File modsFile, String idType, Set<String> modsValues, Set<String> dcValues, ValidationResult result, String sectionId) {
         if (modsValues == null || modsValues.isEmpty()) {
-            result.addError(invalid(Level.WARNING, "MODS neobsahuje identifikátor typu %s pro %s", idType, sectionId));
+            result.addError(invalid(Level.WARNING, modsFile, "MODS neobsahuje identifikátor typu %s pro %s", idType, sectionId));
         } else if (dcValues == null || dcValues.isEmpty()) {
-            result.addError(invalid(Level.WARNING, "DC neobsahuje identifikátor typu %s pro %s", idType, sectionId));
+            result.addError(invalid(Level.WARNING, modsFile, "DC neobsahuje identifikátor typu %s pro %s", idType, sectionId));
         } else {
             if (modsValues.size() == 1 && dcValues.size() == 1) {
                 String modsValue = modsValues.iterator().next();
                 String dcValue = dcValues.iterator().next();
                 if (!modsValue.equals(dcValue)) {
-                    result.addError(invalid(Level.WARNING, "hodnota jediného identifikátoru typu %s se liší mezi MODS (%s) a DC (%s) pro %s", idType, modsValue, dcValue, sectionId));
+                    result.addError(invalid(Level.WARNING, modsFile, "hodnota jediného identifikátoru typu %s se liší mezi MODS (%s) a DC (%s) pro %s", idType, modsValue, dcValue, sectionId));
                 }
             } else {
                 Set<String> modsValuesRemainging = new HashSet<>();
@@ -120,11 +120,11 @@ public class VfCheckPrimaryMetsDcIdentifiersMatchModsIdentifiers extends Validat
                 //log identifiers that are in mods and not in dc or vise versa
                 for (String modsValue : modsValuesRemainging) {
                     Identifier id = new Identifier(idType, modsValue);
-                    result.addError(invalid(Level.WARNING, "identifikátor '%s' nalezen v MODS záznamu, ale nenalezen v DC záznamu pro %s", id, sectionId));
+                    result.addError(invalid(Level.WARNING, null, "identifikátor '%s' nalezen v MODS záznamu, ale nenalezen v DC záznamu pro %s", id, sectionId));
                 }
                 for (String dcValue : dcValuesRemainging) {
                     Identifier id = new Identifier(idType, dcValue);
-                    result.addError(invalid(Level.WARNING, "identifikátor '%s' nalezen v DC záznamu, ale nenalezen v MODS záznamu pro %s", id, sectionId));
+                    result.addError(invalid(Level.WARNING, null, "identifikátor '%s' nalezen v DC záznamu, ale nenalezen v MODS záznamu pro %s", id, sectionId));
                 }
             }
         }

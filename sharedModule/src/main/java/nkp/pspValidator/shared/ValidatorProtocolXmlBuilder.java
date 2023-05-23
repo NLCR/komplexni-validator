@@ -88,10 +88,14 @@ public class ValidatorProtocolXmlBuilder {
     }
 
     private void appendErrorEl(Document doc, Element problemsEl, ValidationProblem error) {
+        //TODO: add package id
         Element problemEl = doc.createElement("problem");
         problemsEl.appendChild(problemEl);
         problemEl.setAttribute("level", error.getLevel().name());
-        problemEl.setTextContent(error.getMessage());
+        if (error.getFile() != null) {
+            problemEl.setAttribute("file", error.getFile().getName());
+        }
+        problemEl.setTextContent(error.getMessage(false));
     }
 
     private Element buildSummaryEl(Document doc, Long duration, Date startDate, Date finishDate, Integer problemsTotal, Map<Level, Integer> problemsByLevel, String vertict) {

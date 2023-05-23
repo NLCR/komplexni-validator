@@ -57,11 +57,11 @@ public class VfCheckXmlIsWellBuilt extends ValidationFunction {
         try {
             XmlUtils.buildDocumentFromFile(file, false);
         } catch (ParserConfigurationException e) {
-            result.addError(invalid(Level.ERROR, "ParserConfigurationException při zpracování souboru %s: %s", file.getAbsolutePath(), e.getMessage()));
+            result.addError(invalid(Level.ERROR, file, "ParserConfigurationException při zpracování souboru: %s", e.getMessage()));
         } catch (SAXException e) {
-            result.addError(invalid(Level.ERROR, "Nebyl nalezen well-built xml dokument v souboru %s: %s", file.getAbsolutePath(), e.getMessage()));
+            result.addError(invalid(Level.ERROR, file, "Nebyl nalezen well-built xml dokument v souboru: %s", e.getMessage()));
         } catch (IOException e) {
-            result.addError(invalid(Level.ERROR, "I/O chyba při zpracování souboru %s: %s", file.getAbsolutePath(), e.getMessage()));
+            result.addError(invalid(Level.ERROR, file, "I/O chyba při zpracování souboru: %s", e.getMessage()));
         }
         return result;
     }

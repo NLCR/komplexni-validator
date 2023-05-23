@@ -77,11 +77,11 @@ public class VfCheckFileListSizeIsInRange extends ValidationFunction {
 
     private ValidationResult validate(Integer minSize, Integer maxSize, List<File> fileList, Level level) {
         if (minSize == null && maxSize == null) {
-            return singlErrorResult(invalid(level, "je potřeba použít alespoň jeden z paramterů %s, %s", PARAM_MIN_SIZE, PARAM_MAX_SIZE));
+            return singlErrorResult(invalid(level, null, "je potřeba použít alespoň jeden z paramterů %s, %s", PARAM_MIN_SIZE, PARAM_MAX_SIZE));
         } else if (minSize != null && fileList.size() < minSize) {
-            return singlErrorResult(invalid(level, "seznam obsahuje %d souborů, což je méně, než minimálních %d", fileList.size(), minSize));
+            return singlErrorResult(invalid(level, null, "seznam obsahuje %d souborů, což je méně, než minimálních %d", fileList.size(), minSize));
         } else if (maxSize != null && fileList.size() > maxSize) {
-            return singlErrorResult(invalid(level, "seznam obsahuje %d souborů, což je více, než maximálních %d", fileList.size(), maxSize));
+            return singlErrorResult(invalid(level, null, "seznam obsahuje %d souborů, což je více, než maximálních %d", fileList.size(), maxSize));
         } else {
             return ValidationResult.ok();
         }

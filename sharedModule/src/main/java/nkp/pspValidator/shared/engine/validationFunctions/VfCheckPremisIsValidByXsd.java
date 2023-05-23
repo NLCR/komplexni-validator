@@ -119,11 +119,11 @@ public class VfCheckPremisIsValidByXsd extends ValidationFunction {
                 validate(techMdEl, metsFile, xsdFile, level, result, idPrefix.equals("OBJ_"));
             }
         } catch (XmlFileParsingException e) {
-            result.addError(invalid(level, "%s: %s", metsFile.getName(), e.getMessage()));
+            result.addError(invalid(level, metsFile, "%s", e.getMessage()));
         } catch (InvalidXPathExpressionException e) {
-            result.addError(invalid(level, "%s: %s", metsFile.getName(), e.getMessage()));
+            result.addError(invalid(level, metsFile, "%s", e.getMessage()));
         } catch (XPathExpressionException e) {
-            result.addError(invalid(level, "%s: %s", metsFile.getName(), e.getMessage()));
+            result.addError(invalid(level, metsFile, "%s", e.getMessage()));
         }
     }
 
@@ -137,7 +137,7 @@ public class VfCheckPremisIsValidByXsd extends ValidationFunction {
             XPathExpression xPath = engine.buildXpath(xpathStr);
             Element mixEl = (Element) xPath.evaluate(techMdEl, XPathConstants.NODE);
             if (mixEl == null) {
-                result.addError(invalid(level, "%s: %s: nenalezen element %s", metsFile.getName(), id, xpathStr));
+                result.addError(invalid(level, metsFile, "%s: nenalezen element %s", id, xpathStr));
             } else {
                 Document mixDoc = XmlUtils.elementToNewDocument(mixEl, true);
                 /*if(print){
@@ -156,15 +156,15 @@ public class VfCheckPremisIsValidByXsd extends ValidationFunction {
             }
 
         } catch (InvalidXPathExpressionException e) {
-            result.addError(invalid(level, "%s: %s: %s", metsFile.getName(), id, e.getMessage()));
+            result.addError(invalid(level, metsFile, "%s: %s", id, e.getMessage()));
         } catch (XPathExpressionException e) {
-            result.addError(invalid(level, "%s: %s: %s", metsFile.getName(), id, e.getMessage()));
+            result.addError(invalid(level, metsFile, "%s: %s", id, e.getMessage()));
         } catch (ParserConfigurationException e) {
-            result.addError(invalid(level, "%s: %s: %s", metsFile.getName(), id, e.getMessage()));
+            result.addError(invalid(level, metsFile, "%s: %s", id, e.getMessage()));
         } catch (SAXException e) {
-            result.addError(invalid(level, "%s: %s: %s", metsFile.getName(), id, e.getMessage()));
+            result.addError(invalid(level, metsFile, "%s: %s", id, e.getMessage()));
         } catch (IOException e) {
-            result.addError(invalid(level, "%s: %s: %s", metsFile.getName(), id, e.getMessage()));
+            result.addError(invalid(level, metsFile, "%s: %s", id, e.getMessage()));
         }
     }
 

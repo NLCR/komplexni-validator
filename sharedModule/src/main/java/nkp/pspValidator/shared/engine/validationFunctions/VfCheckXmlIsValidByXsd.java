@@ -33,12 +33,7 @@ public class VfCheckXmlIsValidByXsd extends ValidationFunction {
     public static final String PARAM_LEVEL = "level";
 
     public VfCheckXmlIsValidByXsd(String name, Engine engine) {
-        super(name, engine, new Contract()
-                .withValueParam(PARAM_XSD_FILE, ValueType.FILE, 1, 1)
-                .withValueParam(PARAM_LEVEL, ValueType.LEVEL, 0, 1)
-                .withValueParam(PARAM_XML_FILE, ValueType.FILE, 0, null)
-                .withValueParam(PARAM_XML_FILES, ValueType.FILE_LIST, 0, null)
-        );
+        super(name, engine, new Contract().withValueParam(PARAM_XSD_FILE, ValueType.FILE, 1, 1).withValueParam(PARAM_LEVEL, ValueType.LEVEL, 0, 1).withValueParam(PARAM_XML_FILE, ValueType.FILE, 0, null).withValueParam(PARAM_XML_FILES, ValueType.FILE_LIST, 0, null));
     }
 
     @Override
@@ -120,10 +115,9 @@ public class VfCheckXmlIsValidByXsd extends ValidationFunction {
             Validator validator = schema.newValidator();
             validator.validate(xmlFileSource);
         } catch (SAXException e) {
-            result.addError(level, "obsah souboru %s není validní podle Xml schema ze souboru %s: %s",
-                    xmlFile.getAbsolutePath(), xsdFile.getAbsolutePath(), e.getMessage());
+            result.addError(level, xmlFile, "obsah souboru není validní podle Xml schema ze souboru %s: %s", xsdFile.getAbsolutePath(), e.getMessage());
         } catch (IOException e) {
-            result.addError(Level.ERROR, "I/O chyba při čtení souboru %s: %s", xmlFile.getAbsolutePath(), e.getMessage());
+            result.addError(Level.ERROR, xmlFile, "I/O chyba při čtení souboru: %s", e.getMessage());
         }
     }
 

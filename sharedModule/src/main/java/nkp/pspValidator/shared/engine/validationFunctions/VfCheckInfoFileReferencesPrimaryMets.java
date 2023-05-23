@@ -84,9 +84,9 @@ public class VfCheckInfoFileReferencesPrimaryMets extends ValidationFunction {
             XPathExpression exp = engine.buildXpath("/info/mainmets");
             String primaryMetsFilenameFound = (String) exp.evaluate(infoDoc, XPathConstants.STRING);
             if (primaryMetsFilenameFound == null || primaryMetsFilenameFound.isEmpty()) {
-                result.addError(invalid(level, "soubor INFO neobsahuje odkaz na soubor PRIMARY-METS"));
+                result.addError(invalid(level, null, "soubor INFO neobsahuje odkaz na soubor PRIMARY-METS"));
             } else if (!primaryMetsFilenameFound.equals(primaryMetsFile.getName())) {
-                result.addError(invalid(Level.ERROR,
+                result.addError(invalid(Level.ERROR, infoFile,
                         "nalezený název souboru PRIMARY-METS (%s) se neshoduje se skutečným názvem (%s)",
                         primaryMetsFilenameFound, primaryMetsFile.getName()));
             }

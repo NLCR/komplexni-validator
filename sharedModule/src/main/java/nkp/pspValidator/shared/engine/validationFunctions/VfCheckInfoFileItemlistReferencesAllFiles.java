@@ -119,12 +119,12 @@ public class VfCheckInfoFileItemlistReferencesAllFiles extends ValidationFunctio
             if (!foundFiles.equals(expectedFiles)) {//something is different
                 for (File foundFile : foundFiles) {
                     if (!expectedFiles.contains(foundFile)) {
-                        result.addError(invalid(level, "soubor INFO se odkazuje na neočekávaný soubor %s", foundFile.getAbsolutePath()));
+                        result.addError(invalid(level, infoFile, "soubor INFO se odkazuje na neočekávaný soubor %s", foundFile.getAbsolutePath()));
                     }
                 }
                 for (File expectedFile : expectedFiles) {
                     if (!foundFiles.contains(expectedFile)) {
-                        result.addError(invalid(level, "soubor INFO se neodkazuje na očekávaný soubor %s", expectedFile.getAbsolutePath()));
+                        result.addError(invalid(level, infoFile, "soubor INFO se neodkazuje na očekávaný soubor %s", expectedFile.getAbsolutePath()));
                     }
                 }
             }

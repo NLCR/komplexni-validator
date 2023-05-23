@@ -94,7 +94,7 @@ public class VfCheckIdentifiersAllTypesPresent extends ValidationFunction {
             }
             for (String typeExpected : typesExpected) {
                 if (!typesFound.contains(typeExpected)) {
-                    result.addError(invalid(Level.ERROR, "nenalezen identifikátor typu '%s' pro úroveň %s", typeExpected, levelName));
+                    result.addError(invalid(Level.ERROR, null, "nenalezen identifikátor typu '%s' pro úroveň %s", typeExpected, levelName));
                 }
             }
         }

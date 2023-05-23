@@ -19,11 +19,7 @@ public class VfCheckFilenameMatchesPattern extends ValidationFunction {
 
 
     public VfCheckFilenameMatchesPattern(String name, Engine engine) {
-        super(name, engine, new Contract()
-                .withValueParam(PARAM_FILE, ValueType.FILE, 1, 1)
-                .withPatternParam(PARAM_PATTERN)
-                .withValueParam(PARAM_LEVEL, ValueType.LEVEL, 0, 1)
-        );
+        super(name, engine, new Contract().withValueParam(PARAM_FILE, ValueType.FILE, 1, 1).withPatternParam(PARAM_PATTERN).withValueParam(PARAM_LEVEL, ValueType.LEVEL, 0, 1));
     }
 
     @Override
@@ -67,7 +63,7 @@ public class VfCheckFilenameMatchesPattern extends ValidationFunction {
             return ValidationResult.ok();
 
         } else if (!paramPattern.matches(file.getName())) {
-            return singlErrorResult(invalid(level, "název souboru %s neodpovídá vzoru %s", file.getName(), paramPattern));
+            return singlErrorResult(invalid(level, file, "název souboru neodpovídá vzoru %s", paramPattern));
         } else {
             return ValidationResult.ok();
         }

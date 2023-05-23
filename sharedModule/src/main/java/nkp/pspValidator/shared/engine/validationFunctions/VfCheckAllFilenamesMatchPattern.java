@@ -54,7 +54,7 @@ public class VfCheckAllFilenamesMatchPattern extends ValidationFunction {
         ValidationResult result = new ValidationResult();
         for (File file : files) {
             if (!patternParam.matches(file.getName())) {
-                result.addError(invalid(Level.ERROR, "název souboru/adresáře '%s' neodpovídá vzoru %s", file.getName(), patternParam));
+                result.addError(invalid(Level.ERROR, file, "název souboru/adresáře  neodpovídá vzoru %s", patternParam));
             }
         }
         return result;

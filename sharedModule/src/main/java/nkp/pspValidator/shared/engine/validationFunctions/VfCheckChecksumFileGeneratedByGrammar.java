@@ -58,16 +58,16 @@ public class VfCheckChecksumFileGeneratedByGrammar extends ValidationFunction {
             while ((line = br.readLine()) != null) {
                 String[] parts = line.split("[ \\t]");//space or tabulator
                 if (parts.length == 1) {
-                    result.addError(invalid(Level.ERROR, "chybí oddělovač (mezera/tabulátor) na řádku '%s'", line));
+                    result.addError(invalid(Level.ERROR, file, "chybí oddělovač (mezera/tabulátor) na řádku '%s'", line));
                 } else if (!is32bHex(parts[0])) {
-                    result.addError(invalid(Level.INFO, "kontrolní součet není v 32B hexadecimálním zápisu, řádek: '%s'", line));
+                    result.addError(invalid(Level.INFO, file, "kontrolní součet není v 32B hexadecimálním zápisu, řádek: '%s'", line));
                 } else if (!isValidPath(parts[1])) {
-                    result.addError(invalid(Level.WARNING, "cesta k souboru není zapsána korektně, řádek: '%s'", line));
+                    result.addError(invalid(Level.WARNING, file, "cesta k souboru není zapsána korektně, řádek: '%s'", line));
                 }
             }
             br.close();
         } catch (IOException e) {
-            result.addError(invalid(Level.ERROR, "chyba při čtení souboru %s: %s", file.getAbsolutePath(), e.getMessage()));
+            result.addError(invalid(Level.ERROR, file, "chyba při čtení souboru: %s", e.getMessage()));
         } finally {
             try {
                 if (br != null) {

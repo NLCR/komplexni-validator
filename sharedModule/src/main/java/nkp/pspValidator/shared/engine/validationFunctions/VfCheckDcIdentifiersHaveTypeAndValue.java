@@ -63,19 +63,19 @@ public class VfCheckDcIdentifiersHaveTypeAndValue extends ValidationFunction {
                 Node node = nodes.item(i);
                 String identifier = node.getTextContent();
                 if (!identifier.contains(":")) {
-                    result.addError(invalid(Level.WARNING,
+                    result.addError(invalid(Level.WARNING, file,
                             "identifikátor \"%s\" není složen z typu a hodnoty oddělených dvojtečkou"
                             , identifier));
                 } else {
                     String[] tokens = identifier.split(":");
                     if (tokens.length == 1) {
-                        result.addError(invalid(Level.WARNING,
+                        result.addError(invalid(Level.WARNING, file,
                                 "identifikátor \"%s\" je složen z typu a hodnoty oddělených dvojtečkou, ale hodnota je prázdná"
                                 , identifier));
                     } else {
                         String first = tokens[0];
                         if (first.isEmpty()) {
-                            result.addError(invalid(Level.WARNING,
+                            result.addError(invalid(Level.WARNING, file,
                                     "identifikátor \"%s\" je složen z typu a hodnoty oddělených dvojtečkou, ale typ je prázdný"
                                     , identifier));
                         }

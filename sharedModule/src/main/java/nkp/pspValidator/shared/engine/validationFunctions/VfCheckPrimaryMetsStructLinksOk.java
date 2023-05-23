@@ -8,7 +8,6 @@ import nkp.pspValidator.shared.engine.ValueType;
 import nkp.pspValidator.shared.engine.exceptions.ContractException;
 import nkp.pspValidator.shared.engine.exceptions.InvalidXPathExpressionException;
 import nkp.pspValidator.shared.engine.exceptions.XmlFileParsingException;
-import nkp.pspValidator.shared.engine.params.ValueParam;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -17,7 +16,10 @@ import org.w3c.dom.NodeList;
 import javax.xml.xpath.XPathConstants;
 import javax.xml.xpath.XPathExpressionException;
 import java.io.File;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 /**
  * Created by Martin Řehánek on 1.11.16.
@@ -67,27 +69,24 @@ public class VfCheckPrimaryMetsStructLinksOk extends ValidationFunction {
                 String from = smLinkEl.getAttribute("xlink:from");
                 String to = smLinkEl.getAttribute("xlink:to");
                 if (from.isEmpty() && to.isEmpty()) {
-                    result.addError(Level.ERROR,
-                            "%s: nalezen element smLink s prázdnými/chybějícími atributy xlink:from a xlink:to",
-                            primaryMetsFile.getName());
+                    result.addError(Level.ERROR, primaryMetsFile,
+                            "nalezen element smLink s prázdnými/chybějícími atributy xlink:from a xlink:to");
                 } else if (from.isEmpty()) {
-                    result.addError(Level.ERROR,
-                            "%s: nalezen element smLink s prázdným/chybějícím atributem xlink:from (xlink:to='%s')",
-                            primaryMetsFile.getName(), to);
+                    result.addError(Level.ERROR, primaryMetsFile,
+                            "nalezen element smLink s prázdným/chybějícím atributem xlink:from (xlink:to='%s')", to);
                 } else if (to.isEmpty()) {
-                    result.addError(Level.ERROR,
-                            "%s: nalezen element smLink s prázdným/chybějícím atributem xlink:to (xlink:from='%s')",
-                            primaryMetsFile.getName(), from);
+                    result.addError(Level.ERROR, primaryMetsFile,
+                            "nalezen element smLink s prázdným/chybějícím atributem xlink:to (xlink:from='%s')", from);
                 } else {
                     if (!logicalObjectIds.contains(from)) {
-                        result.addError(Level.ERROR,
-                                "%s: nalezen element smLink s hodnotou atributu xlink:from (%s), která neodpovídá žádnému atributu mets:div/@ID v logické strukturální mapě",
-                                primaryMetsFile.getName(), from);
+                        result.addError(Level.ERROR, primaryMetsFile,
+                                "nalezen element smLink s hodnotou atributu xlink:from (%s), která neodpovídá žádnému atributu mets:div/@ID v logické strukturální mapě",
+                                from);
                     }
                     if (!pageIds.contains(to)) {
-                        result.addError(Level.ERROR,
-                                "%s: nalezen element smLink s hodnotou atributu xlink:to (%s), která neodpovídá žádné stránce ve fyzické strukturální mapě",
-                                primaryMetsFile.getName(), to);
+                        result.addError(Level.ERROR, primaryMetsFile,
+                                "nalezen element smLink s hodnotou atributu xlink:to (%s), která neodpovídá žádné stránce ve fyzické strukturální mapě",
+                                to);
                     } else {
                         pageIdsConected.add(to);
                     }
@@ -96,9 +95,9 @@ public class VfCheckPrimaryMetsStructLinksOk extends ValidationFunction {
 
             for (String pageId : pageIds) {
                 if (!pageIdsConected.contains(pageId)) {
-                    result.addError(Level.ERROR,
-                            "%s: sekce structLink neobsahuje záznam pro stránku %s",
-                            primaryMetsFile.getName(), pageId);
+                    result.addError(Level.ERROR, primaryMetsFile,
+                            "sekce structLink neobsahuje záznam pro stránku %s",
+                            pageId);
                 }
             }
         } catch (InvalidXPathExpressionException e) {

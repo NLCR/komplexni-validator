@@ -7,10 +7,10 @@ import nkp.pspValidator.shared.engine.ValueType;
 import nkp.pspValidator.shared.engine.exceptions.ContractException;
 import nkp.pspValidator.shared.engine.params.ValueParam;
 import nkp.pspValidator.shared.externalUtils.ExternalUtil;
+import nkp.pspValidator.shared.externalUtils.ExternalUtilExecution;
 import nkp.pspValidator.shared.externalUtils.ResourceType;
 import nkp.pspValidator.shared.externalUtils.validation.BinaryFileProfile;
 import nkp.pspValidator.shared.externalUtils.validation.BinaryFileValidator;
-import nkp.pspValidator.shared.externalUtils.ExternalUtilExecution;
 
 import java.io.File;
 import java.util.List;
@@ -56,7 +56,7 @@ public class VfCheckBinaryFilesValidByExternalUtil extends ValidationFunction {
             if (files == null) {
                 return invalidValueParamNull(PARAM_FILES, paramFiles);
             } else if (files.isEmpty()) {
-                return singlErrorResult(invalid(noFilesProblemLevel, "prázdný seznam souborů"));
+                return singlErrorResult(invalid(noFilesProblemLevel, null, "prázdný seznam souborů"));
             }
 
             Level validationProblemLevel = Level.ERROR;
@@ -97,24 +97,24 @@ public class VfCheckBinaryFilesValidByExternalUtil extends ValidationFunction {
     private ValidationResult validate(Level level, List<File> files, ResourceType type, ExternalUtilExecution execution) {
         BinaryFileValidator validator = engine.getBinaryFileValidator();
         if (!validator.isUtilAvailable(execution.getUtil())) {
-            return singlErrorResult(invalid(Level.INFO, "nástroj %s není dostupný", execution.getUtil().getUserFriendlyName()));
+            return singlErrorResult(invalid(Level.INFO, null, "nástroj %s není dostupný", execution.getUtil().getUserFriendlyName()));
         } else if (!validator.isUtilExecutionDefined(execution)) {
-            return singlErrorResult(invalid(Level.INFO, "pro nástroj %s není definováno spuštění '%s'", execution.getUtil().getUserFriendlyName(), execution.getName()));
+            return singlErrorResult(invalid(Level.INFO, null, "pro nástroj %s není definováno spuštění '%s'", execution.getUtil().getUserFriendlyName(), execution.getName()));
         } else {
             ValidationResult result = new ValidationResult();
             BinaryFileProfile profile = validator.getProfile(type, execution.getUtil());
             if (profile == null) {
-                return singlErrorResult(invalid(Level.ERROR, "nenalezen profil binárního souboru pro typ %s a nástroj %s", type, execution));
+                return singlErrorResult(invalid(Level.ERROR, null, "nenalezen profil binárního souboru pro typ %s a nástroj %s", type, execution));
             }
             for (File file : files) {
                 //System.out.println(String.format("validating (%s): %s", profile, file.getAbsolutePath()));
                 try {
                     List<String> problems = profile.validate(execution.getName(), file);
                     for (String problem : problems) {
-                        result.addError(invalid(level, "%s (soubor %s)", problem, file.getCanonicalPath()));
+                        result.addError(invalid(level, file, "%s", problem));
                     }
                 } catch (Exception e) {
-                    result.addError(invalid(Level.ERROR, "%s: (soubor %s)", e.getMessage(), file.getName()));
+                    result.addError(invalid(Level.ERROR, file, "%s", e.getMessage()));
                     e.printStackTrace();
                 }
                 //break;

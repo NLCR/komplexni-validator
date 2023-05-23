@@ -68,7 +68,7 @@ public class VfCheckMetsFilesecChecksumsMatch extends ValidationFunction {
                 try {
                     checkFile(pspdir, (Element) fileElements.item(i));
                 } catch (HashMismatchException e) {
-                    result.addError(invalid(Level.WARNING, e.getMessage()));
+                    result.addError(invalid(Level.WARNING, null, e.getMessage()));
                 } catch (Exception e) {
                     result.addError(invalid(e));
                 }

@@ -2,6 +2,7 @@ package nkp.pspValidator.shared.engine.validationFunctions;
 
 import nkp.pspValidator.shared.engine.Level;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,12 +21,12 @@ public class ValidationResult {
         errors.add(error);
     }
 
-    public void addError(Level level, String message) {
-        errors.add(new ValidationProblem(level, message));
+    public void addError(Level level, File file, String message) {
+        errors.add(new ValidationProblem(level, file, message));
     }
 
-    public void addError(Level level, String message, Object... params) {
-        errors.add(new ValidationProblem(level, String.format(message, params)));
+    public void addError(Level level, File file, String message, Object... params) {
+        errors.add(new ValidationProblem(level, file, String.format(message, params)));
     }
 
     public List<ValidationProblem> getProblems() {

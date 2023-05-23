@@ -63,7 +63,7 @@ public class VfCheckChecksumFileAllChecksumsMatch extends ValidationFunction {
                 while ((line = br.readLine()) != null) {
                     String[] parts = line.split("[ \\t]");//space or tabulator
                     if (parts.length == 1) {
-                        result.addError(invalid(Level.ERROR, "chybí oddělovač (mezera/tabulátor) na řádku '%s'", line));
+                        result.addError(invalid(Level.ERROR, checksumFile, "chybí oddělovač (mezera/tabulátor) na řádku '%s'", line));
                     } else {
                         String hashExpected = parts[0];
                         String filepath = parts[1];
@@ -71,21 +71,21 @@ public class VfCheckChecksumFileAllChecksumsMatch extends ValidationFunction {
                             File file = Utils.buildAbsoluteFile(pspRootDir, filepath);
                             String hashComputed = Utils.computeHash(file);
                             if (!hashComputed.toUpperCase().equals(hashExpected.toUpperCase())) {
-                                result.addError(invalid(Level.ERROR, "uvedený kontrolní součet '%s' nesouhlasí s vypočítaným kontrolním součtem '%s' pro soubor %s", hashExpected, hashComputed, file.getAbsolutePath()));
+                                result.addError(invalid(Level.ERROR, checksumFile, "uvedený kontrolní součet '%s' nesouhlasí s vypočítaným kontrolním součtem '%s' pro soubor %s", hashExpected, hashComputed, file.getName()));
                             }
                         } catch (InvalidPathException e) {
                             //TODO: tohle se vyskytuje vickrat, udelat pro to metodu
-                            result.addError(invalid(Level.ERROR, "cesta k souboru není zapsána korektně: '%s'", e.getPath()));
+                            result.addError(invalid(Level.ERROR, checksumFile, "cesta k souboru není zapsána korektně: '%s'", e.getPath()));
 
                         } catch (HashComputationException e) {
                             //TODO: tohle se vyskytuje vickrat, udelat pro to metodu
-                            result.addError(invalid(Level.ERROR, "chyba výpočtu kontrolního součtu souboru %s: %s", checksumFile.getAbsolutePath(), e.getMessage()));
+                            result.addError(invalid(Level.ERROR, checksumFile, "chyba výpočtu kontrolního součtu: %s", e.getMessage()));
                         }
                     }
                 }
                 br.close();
             } catch (IOException e) {
-                result.addError(invalid(Level.ERROR, "chyba při čtení souboru %s: %s", checksumFile.getAbsolutePath(), e.getMessage()));
+                result.addError(invalid(Level.ERROR, checksumFile, "chyba při čtení souboru: %s", e.getMessage()));
             } finally {
                 try {
                     if (br != null) {

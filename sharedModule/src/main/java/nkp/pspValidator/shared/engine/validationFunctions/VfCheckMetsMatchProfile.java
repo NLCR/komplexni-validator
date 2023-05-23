@@ -91,7 +91,7 @@ public class VfCheckMetsMatchProfile extends ValidationFunction {
         try {
             MetadataProfile profile = engine.getMetsProfilesManager().buildProfile(profileId);
             if (profile == null) {
-                result.addError(invalid(Level.ERROR, "nenalezen profil '%s' pro validaci METS záznamů", profileId));
+                result.addError(invalid(Level.ERROR, null, "nenalezen profil '%s' pro validaci METS záznamů", profileId));
             } else {
                 for (File metFile : metsFiles) {
                     validateMets(profile, metFile, result);
@@ -109,7 +109,8 @@ public class VfCheckMetsMatchProfile extends ValidationFunction {
 
     private void validateMets(MetadataProfile profile, File metsFile, ValidationResult result) throws XmlFileParsingException, XPathExpressionException, InvalidXPathExpressionException {
         Document metsDoc = engine.getXmlDocument(metsFile, true);
-        MetadataProfileValidator.validate(profile, metsDoc, result, metsFile.getName());
+        //MetadataProfileValidator.validate(profile, metsFile, metsDoc, result, metsFile.getName());
+        MetadataProfileValidator.validate(profile, metsFile, metsDoc, result, null);
     }
 
 }

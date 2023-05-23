@@ -173,7 +173,7 @@ public class Validator {
                     Map<Level, Integer> ruleProblemsByLevel = state.getRuleProblemsByLevel(rule);
                     textLogger.logRuleStart(rule.getName(), rule.getDescription(), ruleProblemsTotal, ruleProblemsByLevel);
                     for (ValidationProblem error : result.getProblems()) {
-                        textLogger.logRuleError(error.getLevel(), error.getMessage());
+                        textLogger.logRuleError(error.getLevel(), error.getMessage(true));
                     }
                 }
             }

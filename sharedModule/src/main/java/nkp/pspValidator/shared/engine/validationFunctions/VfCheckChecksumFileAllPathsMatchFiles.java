@@ -106,7 +106,7 @@ public class VfCheckChecksumFileAllPathsMatchFiles extends ValidationFunction {
                 while ((line = br.readLine()) != null) {
                     String[] parts = line.split("[ \\t]");//space or tabulator
                     if (parts.length == 1) {
-                        result.addError(invalid(Level.ERROR, "chybí oddělovač (mezera/tabulátor) na řádku '%s'", line));
+                        result.addError(invalid(Level.ERROR, checksumFile, "chybí oddělovač (mezera/tabulátor) na řádku '%s'", line));
                     } else {
                         String hash = parts[0];
                         String filepath = parts[1];
@@ -114,14 +114,14 @@ public class VfCheckChecksumFileAllPathsMatchFiles extends ValidationFunction {
                             File file = Utils.buildAbsoluteFile(pspRootDir, filepath);
                             filesFromFile.add(file);
                         } catch (InvalidPathException e) {
-                            result.addError(invalid(Level.ERROR, "cesta k souboru není zapsána korektně: '%s'", e.getPath()));
+                            result.addError(invalid(Level.ERROR, checksumFile, "cesta k souboru není zapsána korektně: '%s'", e.getPath()));
                         }
                     }
                 }
                 br.close();
                 checkSetsAreSame(result, filesFromParams, filesFromFile);
             } catch (IOException e) {
-                result.addError(invalid(Level.ERROR, "chyba při čtení souboru %s: %s", checksumFile.getAbsolutePath(), e.getMessage()));
+                result.addError(invalid(Level.ERROR, checksumFile, "chyba při čtení souboru: %s", e.getMessage()));
                 return result;
             } finally {
                 try {
@@ -144,13 +144,13 @@ public class VfCheckChecksumFileAllPathsMatchFiles extends ValidationFunction {
     private void checkSetsAreSame(ValidationResult result, Set<File> filesFromParams, Set<File> filesFromFile) {
         for (File file : filesFromParams) {
             if (!filesFromFile.contains(file)) {
-                result.addError(invalid(Level.ERROR, "nenalezen záznam pro soubor %s", file.getAbsolutePath()));
+                result.addError(invalid(Level.ERROR, file, "nenalezen záznam pro soubor"));
             }
         }
 
         for (File file : filesFromFile) {
             if (!filesFromParams.contains(file)) {
-                result.addError(invalid(Level.ERROR, "nalezený soubor nebyl očekáván: %s", file.getAbsolutePath()));
+                result.addError(invalid(Level.ERROR, file, "nalezený soubor nebyl očekáván"));
             }
         }
     }
