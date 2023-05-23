@@ -576,7 +576,7 @@
                     </element>
 
                     <!--RDA authority="rdamedia", type="media-->
-                    <element name="mods:form" specification="@authority='rdamedia') and @type='media'" mandatory="false">
+                    <element name="mods:form" specification="@authority='rdamedia' and @type='media'" mandatory="false">
                         <expectedAttributes>
                             <attribute name="authority"/>
                             <attribute name="type"/>
