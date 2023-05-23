@@ -152,7 +152,7 @@ public class VfCheckBinaryFilesValidByExternalUtilTest {
             ValidationFunction validationFunction = buildValidationFunction(ExternalUtil.KAKADU, ResourceType.IMAGE_MASTER_COPY, FILES_OK_MC);
             ValidationResult result = validationFunction.validate();
             for (ValidationProblem problem : result.getProblems()) {
-                assertNull(problem.getMessage());
+                assertNull(problem.getMessage(true));
             }
             assertFalse(result.hasProblems());
         }
@@ -164,7 +164,7 @@ public class VfCheckBinaryFilesValidByExternalUtilTest {
             ValidationFunction validationFunction = buildValidationFunction(ExternalUtil.KAKADU, ResourceType.IMAGE_MASTER_COPY, FILES_OK_UC);
             ValidationResult result = validationFunction.validate();
             for (ValidationProblem problem : result.getProblems()) {
-                assertNull(problem.getMessage());
+                assertNull(problem.getMessage(true));
             }
             assertFalse(result.hasProblems());
         }
@@ -176,7 +176,7 @@ public class VfCheckBinaryFilesValidByExternalUtilTest {
             ValidationFunction validationFunction = buildValidationFunction(ExternalUtil.IMAGE_MAGICK, ResourceType.IMAGE_MASTER_COPY, FILES_OK_MC);
             ValidationResult result = validationFunction.validate();
             for (ValidationProblem problem : result.getProblems()) {
-                assertNull(problem.getMessage());
+                assertNull(problem.getMessage(true));
             }
             assertFalse(result.hasProblems());
         }
@@ -189,7 +189,7 @@ public class VfCheckBinaryFilesValidByExternalUtilTest {
             ValidationResult result = validationFunction.validate();
             //verze ImageMagick-7.0.3-Q16 pro Windows najde chybu v souboru UC_cnb001652709-001_0233.jp2
             for (ValidationProblem problem : result.getProblems()) {
-                assertNull(problem.getMessage());
+                assertNull(problem.getMessage(true));
             }
             assertFalse(result.hasProblems());
         }
@@ -202,7 +202,7 @@ public class VfCheckBinaryFilesValidByExternalUtilTest {
             ValidationFunction validationFunction = buildValidationFunction(ExternalUtil.JPYLYZER, ResourceType.IMAGE_MASTER_COPY, FILES_OK_MC);
             ValidationResult result = validationFunction.validate();
             for (ValidationProblem problem : result.getProblems()) {
-                assertNull(problem.getMessage());
+                assertNull(problem.getMessage(true));
             }
             assertFalse(result.hasProblems());
         }
@@ -214,7 +214,7 @@ public class VfCheckBinaryFilesValidByExternalUtilTest {
             ValidationFunction validationFunction = buildValidationFunction(ExternalUtil.JPYLYZER, ResourceType.IMAGE_USER_COPY, FILES_OK_UC);
             ValidationResult result = validationFunction.validate();
             for (ValidationProblem problem : result.getProblems()) {
-                assertNull(problem.getMessage());
+                assertNull(problem.getMessage(true));
             }
             assertFalse(result.hasProblems());
         }
@@ -226,7 +226,7 @@ public class VfCheckBinaryFilesValidByExternalUtilTest {
             ValidationFunction validationFunction = buildValidationFunction(ExternalUtil.JHOVE, ResourceType.IMAGE_MASTER_COPY, FILES_OK_MC);
             ValidationResult result = validationFunction.validate();
             for (ValidationProblem problem : result.getProblems()) {
-                assertNull(problem.getMessage());
+                assertNull(problem.getMessage(true));
             }
             assertFalse(result.hasProblems());
         }
@@ -238,7 +238,7 @@ public class VfCheckBinaryFilesValidByExternalUtilTest {
             ValidationFunction validationFunction = buildValidationFunction(ExternalUtil.JHOVE, ResourceType.IMAGE_USER_COPY, FILES_OK_UC);
             ValidationResult result = validationFunction.validate();
             for (ValidationProblem problem : result.getProblems()) {
-                assertNull(problem.getMessage());
+                assertNull(problem.getMessage(true));
             }
             assertFalse(result.hasProblems());
         }
