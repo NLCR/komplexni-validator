@@ -4,6 +4,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
+
 <BorderPane xmlns:fx="http://javafx.com/fxml"
             stylesheets="/css/main.css"
             fx:controller="nkp.pspValidator.gui.MainController"
@@ -133,6 +134,7 @@
 
                                 <Label fx:id="problemsRuleDescriptionLbl"/>
                                 <Label text="Problémy:"/>
+                                <ChoiceBox fx:id="problemsFilterChoicebox" onAction="#problemsFilterChoiceboxChanged"/>
                             </children>
                         </VBox>
                         <StackPane>

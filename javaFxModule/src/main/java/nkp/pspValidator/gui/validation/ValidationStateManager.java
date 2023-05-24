@@ -164,8 +164,15 @@ public class ValidationStateManager {
         updateRuleObservable(rule);
     }
 
-    public ObservableList<ValidationProblem> getProblemsObservable(Integer sectionId, Integer ruleId) {
-
-        return problemsObservableBySectionAndRuleId.get(new Pair<>(sectionId, ruleId));
+    public ObservableList<ValidationProblem> getProblemsObservable(Integer sectionId, Integer ruleId, String filter) {
+        ObservableList<ValidationProblem> validationProblemObservableList = problemsObservableBySectionAndRuleId.get(new Pair<>(sectionId, ruleId));
+        if ("ERROR, WARNING".equals(filter)) {
+            return validationProblemObservableList.filtered(validationProblem ->
+                    validationProblem.getLevel().equals(Level.ERROR) || validationProblem.getLevel().equals(Level.WARNING));
+        } else if ("ERROR".equals(filter)) {
+            return validationProblemObservableList.filtered(validationProblem -> validationProblem.getLevel().equals(Level.ERROR));
+        } else {
+            return validationProblemObservableList;
+        }
     }
 }

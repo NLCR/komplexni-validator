@@ -1,5 +1,7 @@
 package nkp.pspValidator.gui;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.application.Platform;
 import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
@@ -11,9 +13,9 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 import javafx.stage.Window;
+import nkp.pspValidator.gui.skipping.Skipped;
 import nkp.pspValidator.gui.skipping.SkippedManager;
 import nkp.pspValidator.gui.skipping.SkippedManagerImpl;
-import nkp.pspValidator.gui.skipping.Skipped;
 import nkp.pspValidator.gui.validation.*;
 import nkp.pspValidator.shared.*;
 import nkp.pspValidator.shared.engine.Level;
@@ -72,6 +74,9 @@ public class MainController extends AbstractController implements ValidationStat
     ImageView statusImgStopped;
 
     //sections
+    @FXML
+    ChoiceBox problemsFilterChoicebox;
+
     @FXML
     ListView<SectionWithState> sectionList;
 
@@ -443,20 +448,30 @@ public class MainController extends AbstractController implements ValidationStat
             problemsSectionNameLbl.setText(selectedSection.getName() + ": ");
             problemsRuleNameLbl.setText(rule.getName());
             problemsRuleDescriptionLbl.setText(rule.getDescription());
+            List<String> problemsFilterChoices = new ArrayList<>();
+            problemsFilterChoices.add("ERROR, WARNING, INFO");
+            problemsFilterChoices.add("ERROR, WARNING");
+            problemsFilterChoices.add("ERROR");
+            ObservableList<String> problemsFilterChoicesObservables = FXCollections.observableArrayList(problemsFilterChoices);
+            problemsFilterChoicebox.setItems(problemsFilterChoicesObservables);
+            problemsFilterChoicebox.getSelectionModel().select(0);
             switch (rule.getState()) {
                 case FINISHED:
                     problemsProgressIndicator.setVisible(false);
                     problemList.setVisible(true);
-                    problemList.setItems(validationStateManager.getProblemsObservable(rule.getSectionId(), rule.getId()));
+                    problemList.setItems(validationStateManager.getProblemsObservable(rule.getSectionId(), rule.getId(), "ERROR, WARNING, INFO"));
                     problemList.refresh();
+                    problemsFilterChoicebox.setVisible(true);
                     break;
                 case RUNNING:
                     problemsProgressIndicator.setVisible(true);
                     problemList.setVisible(false);
+                    problemsFilterChoicebox.setVisible(false);
                     break;
                 case WAITING:
                     problemsProgressIndicator.setVisible(false);
                     problemList.setVisible(false);
+                    problemsFilterChoicebox.setVisible(false);
                     break;
             }
         } else { //rule je null
@@ -613,5 +628,11 @@ public class MainController extends AbstractController implements ValidationStat
 
     private enum TotalState {
         IDLE, RUNNING, FINISHED, ERROR, STOPPED;
+    }
+
+    public void problemsFilterChoiceboxChanged(ActionEvent actionEvent) {
+        String filter = (String) problemsFilterChoicebox.getSelectionModel().getSelectedItem();
+        problemList.setItems(validationStateManager.getProblemsObservable(this.selectedRule.getSectionId(), this.selectedRule.getId(), filter));
+        problemList.refresh();
     }
 }
