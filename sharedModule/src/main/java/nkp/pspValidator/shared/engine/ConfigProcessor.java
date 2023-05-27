@@ -8,8 +8,8 @@ import nkp.pspValidator.shared.engine.exceptions.ValidatorConfigurationException
 import nkp.pspValidator.shared.engine.types.EntityType;
 import nkp.pspValidator.shared.engine.types.MetadataFormat;
 import nkp.pspValidator.shared.engine.validationFunctions.ValidationFunction;
-import nkp.pspValidator.shared.externalUtils.ResourceType;
 import nkp.pspValidator.shared.externalUtils.ExternalUtil;
+import nkp.pspValidator.shared.externalUtils.ResourceType;
 import org.w3c.dom.Element;
 
 import java.io.File;
@@ -65,6 +65,11 @@ public class ConfigProcessor {
         engine.defineNamespace("premis", premisEl.getTextContent());
         Element xlinkEl = XmlUtils.getChildrenElementsByName(childEl, "namespace-xlink").get(0);
         engine.defineNamespace("xlink", xlinkEl.getTextContent());
+        List<Element> aes57Els = XmlUtils.getChildrenElementsByName(childEl, "namespace-aes57");
+        if (!aes57Els.isEmpty()) {
+            Element aes57El = aes57Els.get(0);
+            engine.defineNamespace("aes57", aes57El.getTextContent());
+        }
     }
 
     private void processRulesSectionDefinition(Engine engine, Element rulesSectionEl, Integer ruleId) throws ValidatorConfigurationException {

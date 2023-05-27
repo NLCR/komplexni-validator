@@ -1,0 +1,1701 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Schema for committee development use only - not published - see www.aes.org/standards -->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="urn:ebu:metadata-schema:ebuCore_2010" xmlns:dc="http://purl.org/dc/elements/1.1/" targetNamespace="urn:ebu:metadata-schema:ebuCore_2010" elementFormDefault="qualified" attributeFormDefault="unqualified">
+    <xs:import namespace="http://www.w3.org/XML/1998/namespace" schemaLocation="xml.xsd"/>
+    <xs:import namespace="http://purl.org/dc/elements/1.1/" schemaLocation="simpledc20021212.xsd"/>
+    <xs:element name="ebuCoreMain" type="ebuCoreMainType"/>
+    <xs:annotation>
+        <xs:documentation> The following Creative Commons Rights apply to the use of this EBU resource:
+            http://creativecommons.org/licenses/by-nc-sa/3.0/ Owner: EBU Technical Department
+            Author: Jean-Pierre Evain Contact: evain@ebu.ch </xs:documentation>
+    </xs:annotation>
+    <xs:complexType name="ebuCoreMainType">
+        <xs:annotation>
+            <xs:documentation> ebuCoreMain is the body of a document using the EBU Core metadata set
+            </xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="coreMetadata" type="coreMetadataType"/>
+            <xs:element name="metadataProvider" type="entityType" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>Identifies the metadata provider, e.g. the contributing archive.
+                        The organisation Id or name provide the archive ID or name required for OAI
+                        metadata harvesting operation. </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+        <xs:attribute name="schema" default="ebuCoreMetadataSet_20100820.xsd">
+            <xs:annotation>
+                <xs:documentation> The name of the schema for OAI management. </xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="version" default="1.2">
+            <xs:annotation>
+                <xs:documentation> The version of the schema for OAI management. </xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="dateLastModified" type="xs:date">
+            <xs:annotation>
+                <xs:documentation> The date of edition of the metadata instance for OAI management
+                </xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="documentId" type="xs:NMTOKEN">
+            <xs:annotation>
+                <xs:documentation> The unique Identifier of the metadata instance for OAI management
+                </xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+    </xs:complexType>
+    <xs:complexType name="coreMetadataType">
+        <xs:annotation>
+            <xs:documentation>The document containing all the core information regarding the
+                resource</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:sequence>
+                <xs:element name="title" type="titleType" minOccurs="0" maxOccurs="unbounded">
+                    <xs:annotation>
+                        <xs:documentation>A Title is the ‘main’ name given to a resource e.g. a media
+                            item, a media object, or a sequence as specified by the associated title
+                            type. It corresponds for a series to the series title, for a programme
+                            to the programme title, for an item to the item title, etc. Titles are
+                            recorded as they appear. The Title is the name by which a resource is
+                            formally known and that everyone should use to refer to or search for
+                            that particular resource. The Title may be provided in several
+                            languages. If present, the attributionDate attribute indicates when the
+                            Title was attributed. A Title is the ‘main’ name given to a resource
+                            e.g. a media item, a media object, or a sequence as specified by the
+                            associated title type. It corresponds for a series to the series title,
+                            for a programme to the programme title, for an item to the item title,
+                            etc. Titles are recorded as they appear. The Title is the name by which
+                            a resource is formally known and that everyone should use to refer to or
+                            search for that particular resource. The Title may be provided in
+                            several languages. If present, the attributionDate attribute indicates
+                            when the Title was attributed. </xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                <xs:element name="alternativeTitle" type="alternativeTitleType" minOccurs="0" maxOccurs="unbounded">
+                    <xs:annotation>
+                        <xs:documentation>An Alternative Title is the name other than the ‘main’ Title
+                            given to a resource. The type of title is defined by the typeGroup of
+                            attributes. The status of the title is defined by the statusGroup of
+                            attributes. Alternative Titles are recorded as they appear. An
+                            Alternative Title may be attributed to a resource for several reasons
+                            described using the status (e.g. working title) and type (e.g. series
+                            title) attributes. The alternativeTitle may be provided in several
+                            languages. It is sometimes common practice to put dates into the
+                            alternativeTitle. If present, the attributionDate (indicating when the
+                            alternativeTitle was attributed) in the date attribute should be
+                            consistent. </xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+            </xs:sequence>
+            <xs:element name="creator" type="entityType" minOccurs="0" maxOccurs="unbounded">
+                <xs:annotation>
+                    <xs:documentation> The descriptor creator identifies an ‘entity’ (a person, group
+                        of persons or organisation) primarily responsible for creating the content
+                        of the resource - behind the camera. Different roles may be considered as
+                        representing a creator, e.g. a producer, an author, etc. Creator is a
+                        sub-class of Contributor. </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="subject" type="subjectType" minOccurs="0" maxOccurs="unbounded">
+                <xs:annotation>
+                    <xs:documentation> The generalised topic that represents the intellectual content
+                        of the resource. Typically, a subject is expressed by keywords, key phrases.
+                        Free text, controlled vocabularies, authorities, or formal classification
+                        schemes (codes) may be employed when selecting descriptive subject terms.
+                        Persons as subjects are also placed here. Genre of the content is defined
+                        under element “ebucore:type/ebucore:genre” </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="description" type="descriptionType" minOccurs="0" maxOccurs="unbounded">
+                <xs:annotation>
+                    <xs:documentation>Free-form text or a narrative to report general notes, abstracts,
+                        or summaries about the intellectual content of a resource. The information
+                        may be in the form of a paragraph giving an individual program description,
+                        anecdotal interpretations, or brief content reviews. The description may
+                        also consist of outlines, lists, bullet points, edit decision lists,
+                        indexes, or tables of content, a reference to a graphical representation of
+                        content or even a pointer (URI, URL) to an external resource. A running
+                        order can also be provided as a description. For a Radio or television
+                        programme a running order can be used as description. A description can be
+                        provided in different languages. </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="publisher" type="entityType" minOccurs="0" maxOccurs="unbounded">
+                <xs:annotation>
+                    <xs:documentation>A publisher is a person, an organization, or a service.
+                        Typically, the name of a Publisher should be used to indicate the entity
+                        primarily responsible for distributing or making a resource available to
+                        others e.g. by broadcasting, selling, leasing, renting and other modes of
+                        distribution.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="contributor" type="entityType" minOccurs="0" maxOccurs="unbounded">
+                <xs:annotation>
+                    <xs:documentation> The descriptor contributor identifies a person or organization
+                        that has made substantial creative contributions to the content of a
+                        resource. Refers particularly (but not only) to participation in front of
+                        the camera. If in doubt whether an entity is a creator or contributor use
+                        the element contributor.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="date" type="dateType" minOccurs="0" maxOccurs="unbounded">
+                <xs:annotation>
+                    <xs:documentation> Dates associated with events occurring during the life of the
+                        resource. Typically, Date will be associated with the creation, modification
+                        or availability of the resource.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="type" type="typeType" minOccurs="0" maxOccurs="unbounded">
+                <xs:annotation>
+                    <xs:documentation>The nature or genre of the resource. Type includes terms
+                        describing general categories, functions, genres, or aggregation levels for
+                        content. Recommended best practice is to select a value from a controlled
+                        vocabulary. To describe the physical or digital manifestation of the
+                        resource, use the FORMAT element.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="format" type="formatType" minOccurs="0" maxOccurs="unbounded">
+                <xs:annotation>
+                    <xs:documentation> The physical or digital manifestation of the resource. Use the
+                        descriptor Format to identify the format of a particular resource as it
+                        exists in its physical or digital form. Physical form = an actual physical
+                        form that occupies physical space, e.g. a tape. Digital form = a digital
+                        file residing on a server or hard drive. Format may be used to determine the
+                        software, hardware or other equipment needed to display or operate the
+                        resource.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="identifier" type="identifierType" minOccurs="0" maxOccurs="unbounded">
+                <xs:annotation>
+                    <xs:documentation> A unique, unambiguous reference or identifier for a resource
+                        within a given context. Best practice is to identify the resource (whether
+                        analogue or digital) by means of a string or number corresponding to an
+                        established or formal identification system if one exists. Otherwise, use an
+                        identification method that is in use within your agency, station, production
+                        company, office, or institution. It is also possible to enter more than one,
+                        different but still unique, identifier for the same
+                        resource.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element ref="dc:source" minOccurs="0" maxOccurs="unbounded">
+                <xs:annotation>
+                    <xs:documentation>Reference to the resource (s) from which the current resource is
+                        derived in whole or in part. If no label or number is available, the title
+                        and/or the statement of responsibility etc. of the digitized recording is
+                        recorded here. For a digitized radio programme the production number is
+                        normally given here. The Recommended best practice is to use a unique
+                        identifier to identify the physical source that has been used to create the
+                        digital resource. In the case of a digitized analogue recording, it is the
+                        recording used for digitization which is the source. For commercial
+                        recordings the label and number is normally given here. Example: Eurovision
+                        feed 2007-07-16T19:20:30.45+01:00</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="language" type="languageType" minOccurs="0" maxOccurs="unbounded">
+                <xs:annotation>
+                    <xs:documentation> Identifies languages and their use in the intellectual content
+                        of the resource. Recommended best practice for the values of the Language
+                        element is defined by RFC 1766, which includes a two-letter Language Code
+                        (taken from the ISO Standard 639), followed optionally, by a two-letter
+                        Country Code (taken from the ISO Standard 3166). For example, 'en' for
+                        English, 'fr' for French, or 'en-uk' for English used in the United Kingdom.
+                        More contextual information can be provided using the “note”
+                        attribute.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="relation" type="relationType" minOccurs="0" maxOccurs="unbounded">
+                <xs:annotation>
+                    <xs:documentation> Recommended best practice is to reference the resource (to which
+                        the current resource under description is related) by means of a string or
+                        number conforming to a formal identification system. Relation is used to
+                        show the relation in content to another resource. For example, "IsPartOf" is
+                        used to show the relation between a part of a radio programme and the whole
+                        programme or between a track and a record album. A resource can be
+                        identified by its title, or an identifier (possibly a URI). The related item
+                        has its own separate metadata record. Relation is used to provide a name, an
+                        identification number or ID, or a locator where the related item can be
+                        found.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="isVersionOf" type="relationType" minOccurs="0" maxOccurs="unbounded">
+                <xs:annotation>
+                    <xs:documentation> A reference to the resource that the current resource is a
+                        version of </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="hasVersion" type="relationType" minOccurs="0" maxOccurs="unbounded">
+                <xs:annotation>
+                    <xs:documentation> A reference to another version of the resource </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="isReplacedBy" type="relationType" minOccurs="0" maxOccurs="unbounded">
+                <xs:annotation>
+                    <xs:documentation> A reference to a resource replacing the current resource
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="replaces" type="relationType" minOccurs="0" maxOccurs="unbounded">
+                <xs:annotation>
+                    <xs:documentation> A reference to a resource that the current resource replaces
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="isRequiredBy" type="relationType" minOccurs="0" maxOccurs="unbounded">
+                <xs:annotation>
+                    <xs:documentation> A reference to a resource requiring the current resource
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="requires" type="relationType" minOccurs="0" maxOccurs="unbounded">
+                <xs:annotation>
+                    <xs:documentation> A reference to a resource that the current resource requires
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="isPartOf" type="relationType" minOccurs="0" maxOccurs="unbounded">
+                <xs:annotation>
+                    <xs:documentation> A reference to a resource that the current resource is a part of
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="hasPart" type="relationType" minOccurs="0" maxOccurs="unbounded">
+                <xs:annotation>
+                    <xs:documentation> A reference to a resource that forms part of the current
+                        resource </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="isReferencedBy" type="relationType" minOccurs="0" maxOccurs="unbounded">
+                <xs:annotation>
+                    <xs:documentation> A reference to a resource that references the current resource
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="references" type="relationType" minOccurs="0" maxOccurs="unbounded">
+                <xs:annotation>
+                    <xs:documentation> A reference to a resource that the current resource references
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="isFormatOf" type="relationType" minOccurs="0" maxOccurs="unbounded">
+                <xs:annotation>
+                    <xs:documentation> A reference to a resource with which the current resource shares
+                        a format </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="hasFormat" type="relationType" minOccurs="0" maxOccurs="unbounded">
+                <xs:annotation>
+                    <xs:documentation> A format in which the resource is also available
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="isEpisodeOf" type="relationType" minOccurs="0" maxOccurs="unbounded">
+                <xs:annotation>
+                    <xs:documentation> A reference to a series the current resource is an episode of
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="isMemberOf" type="relationType" minOccurs="0" maxOccurs="unbounded">
+                <xs:annotation>
+                    <xs:documentation> A reference to a group the current resource is an member of
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="coverage" type="coverageType" minOccurs="0" maxOccurs="unbounded">
+                <xs:annotation>
+                    <xs:documentation>Coverage is used to show various time and place aspects of the
+                        subject of the content. Coverage will typically include spatial location (a
+                        place name or geographic coordinates), temporal period (a period label,
+                        date, or date range) or jurisdiction (such as a named administrative
+                        entity). Recommended best practice is to select a value from a controlled
+                        vocabulary (for example, the Thesaurus of Geographic Names) and that, where
+                        appropriate, named places or time periods be used in preference to numeric
+                        identifiers such as sets of coordinates or date ranges.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="rights" type="rightsType" minOccurs="0" maxOccurs="unbounded">
+                <xs:annotation>
+                    <xs:documentation>An all-purpose field to identify information (rights management
+                        statement or reference to a service providing such information e.g. via a
+                        URL) about copyright, intellectual property rights or other property rights
+                        held in and over a resource, stating whether access is open or restricted in
+                        some way. If dates, times, territories and availability periods are
+                        associated with a right, they should be included. If the Rights element is
+                        absent, no assumptions can be made about the status of these and other
+                        rights with respect to the resource.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="version" type="dc:elementType" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation xml:lang="en">UK Version, US Version, home video version, etc.
+                        Mapping to Dublin Core would be made using a description
+                        element</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="publicationHistory" type="publicationHistoryType" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation> To provide information on the publication history.
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="part" type="coreMetadataType" minOccurs="0" maxOccurs="unbounded">
+                <xs:annotation>
+                    <xs:documentation>To identify parts/segments/fragments within the
+                        resource.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="titleType">
+        <xs:annotation>
+            <xs:documentation> The name given to a resource e.g. a media item, media object, sequence.
+                For a series – use the series title; for a programme – a programme title; for an
+                item – an item title. etc. Titles are recorded as they appear.</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element ref="dc:title">
+                <xs:annotation>
+                    <xs:documentation> The EBU core metadata set is built as a refinement of the Dublin
+                        Core. Free-text to provide the main title by which the resource is known.
+                        The title can be provided in different languages. The language in which the
+                        title is provided can be provided using elementType’s lang attribute.
+                        Example: ‘the fifth element’ </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+        <xs:attribute name="attributiondate" type="xs:date">
+            <xs:annotation>
+                <xs:documentation> Defines the date of attribution of this Title. </xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="note" type="xs:string">
+            <xs:annotation>
+                <xs:documentation> Optional additional contextual information. </xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+    </xs:complexType>
+    <xs:complexType name="alternativeTitleType">
+        <xs:annotation>
+            <xs:documentation> The name given to a resource e.g. a media item, media object, sequence.
+                For a series – use the series title; for a programme – a programme title; for an
+                item – an item title. etc. Titles are recorded as they appear.</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element ref="dc:title">
+                <xs:annotation>
+                    <xs:documentation> The EBU core metadata set is built as a refinement of the Dublin
+                        Core. Free-text to provide alternative titles by which the resource is
+                        known. The language in which the title is provided can be provided using
+                        elementType’s lang attribute. Example: ‘the fifth element’ </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+        <xs:attributeGroup ref="typeGroup">
+            <xs:annotation>
+                <xs:documentation> The typeGroup is used to define the type of alternative title. This
+                    can be an associated title like a series title.</xs:documentation>
+            </xs:annotation>
+        </xs:attributeGroup>
+        <xs:attributeGroup ref="statusGroup">
+            <xs:annotation>
+                <xs:documentation> The statusGroup is used to define the status of the Title such as
+                    short, long, full, abridged, working, transmission, published, international,
+                    subtitle, original, secondary, alternative, pledged, etc. The name of the format
+                    can be provided in the form of a text label, or a link to a code of a
+                    classification scheme, optionally accompanied by a definition. the status 'main'
+                    shall not be used for alternativeTitle as this applies to the Title
+                    only.</xs:documentation>
+            </xs:annotation>
+        </xs:attributeGroup>
+        <xs:attributeGroup ref="dateGroup">
+            <xs:annotation>
+                <xs:documentation> Defines the date of attribution of this Title. </xs:documentation>
+            </xs:annotation>
+        </xs:attributeGroup>
+        <xs:attribute name="note" type="xs:string">
+            <xs:annotation>
+                <xs:documentation> Optional additional contextual information. </xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+    </xs:complexType>
+    <xs:complexType name="identifierType">
+        <xs:annotation>
+            <xs:documentation> A unique, unambiguous reference or identifier for a resource within a
+                given context. Best practice is to identify the resource (whether analogue or
+                digital) by means of a string or number corresponding to an established or formal
+                identification system if one exists. Otherwise, use an identification method that is
+                in use within your agency, station, production company, office, or institution. It
+                is also possible to enter different but unique identifiers for the same resource.
+            </xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element ref="dc:identifier">
+                <xs:annotation>
+                    <xs:documentation> The EBU core metadata set is built as a refinement of the Dublin
+                        Core. Free text to provide an identifier. Example: 06.0A.2B.34.01.01.01.01
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+        <xs:attribute name="attributor" type="xs:string">
+            <xs:annotation>
+                <xs:documentation>To identify the source of attribution of the
+                    identifier.</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attributeGroup ref="typeGroup">
+            <xs:annotation>
+                <xs:documentation> The typeGroup is used to define the type of Identifier e.g. Main or
+                    Alternative </xs:documentation>
+            </xs:annotation>
+        </xs:attributeGroup>
+        <xs:attributeGroup ref="formatGroup">
+            <xs:annotation>
+                <xs:documentation> Use to define the format and possibly syntax of the identifier. Used
+                    in combination with the resource Identifier. It can denote the agency or
+                    institution which specified or assigned it e.g. SMPTE UMID, ISO ISAN, IETF URI,
+                    ISRC, custom.</xs:documentation>
+            </xs:annotation>
+        </xs:attributeGroup>
+        <xs:attribute name="note" type="xs:string">
+            <xs:annotation>
+                <xs:documentation> Optional additional contextual information. </xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+    </xs:complexType>
+    <xs:complexType name="subjectType">
+        <xs:annotation>
+            <xs:documentation>The generalised topic of that represents the intellectual content of the
+                resource. Typically, a subject is expressed by keywords, key phrases, or even
+                specific classification codes. Controlled vocabularies, authorities, or formal
+                classification schemes may be employed when selecting descriptive subject terms. It
+                is possible to employ both keywords, derived from a formal classification scheme,
+                such as Dewey or UDC, and genres/subgenres such as those produced by TV-Anytime or
+                Escort, to cover Subject(s) and Genre(s) and enter as appropriate Subject Type
+                below. Persons as subjects are also placed here. Genre of the content is placed
+                under element Type. </xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element ref="dc:subject">
+                <xs:annotation>
+                    <xs:documentation>To express the subject in the form of free text. </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="subjectCode" type="xs:anyURI" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>To alternatively express the subject using predefined terms
+                        expressed by classification codes. Reference data: - Library of Congress
+                        Subject Heading (LCSH), Library of Congress Classification (LCC), Medical
+                        Subject Headings (MeSH), Dewey Decimal Classification (DDC), Dansk
+                        decimalklassedeling 5.utgave (DK5), Klassifikasjonssystem för svenska
+                        bibliotek (SAB), Universal Decimal Classification (UDC), Norske emneord -
+                        http://cv.iptc.org/newscodes/subjectcode/. Example:
+                        http://cv.iptc.org/newscodes/subjectcode/#15065000 </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="subjectDefinition" type="xs:string" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>An optional definition. Example: ‘the subject is about tennis
+                        (sport, game)’ </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+        <xs:attributeGroup ref="typeGroup">
+            <xs:annotation>
+                <xs:documentation>To define the source of reference for subject such as a reference
+                    document or classification scheme.</xs:documentation>
+            </xs:annotation>
+        </xs:attributeGroup>
+        <xs:attribute name="note" type="xs:string">
+            <xs:annotation>
+                <xs:documentation> Optional additional contextual information. </xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+    </xs:complexType>
+    <xs:complexType name="typeType">
+        <xs:annotation>
+            <xs:documentation>The nature or genre of the content of the resource. Type includes terms
+                describing general categories, functions, genres, or aggregation levels for content.
+                Recommended best practice is to select a value from a controlled vocabulary. To
+                describe the physical or digital manifestation of the resource, use the FORMAT
+                element. </xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element ref="dc:type" minOccurs="0" maxOccurs="unbounded">
+                <xs:annotation>
+                    <xs:documentation> The EBU core metadata set is built as a refinement of the Dublin
+                        Core. </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="genre" minOccurs="0" maxOccurs="unbounded">
+                <xs:annotation>
+                    <xs:documentation>A type element specifically dedicated to the description of a
+                        resource genre</xs:documentation>
+                </xs:annotation>
+                <xs:complexType>
+                    <xs:attributeGroup ref="typeGroup">
+                        <xs:annotation>
+                            <xs:documentation>To define the Type reference data.</xs:documentation>
+                        </xs:annotation>
+                    </xs:attributeGroup>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="objectType" minOccurs="0" maxOccurs="unbounded">
+                <xs:annotation>
+                    <xs:documentation>A type element specifically dedicated to the description of type
+                        of resource being describe e.g. programme, item, episode</xs:documentation>
+                </xs:annotation>
+                <xs:complexType>
+                    <xs:attributeGroup ref="typeGroup">
+                        <xs:annotation>
+                            <xs:documentation>To define the Type reference data.</xs:documentation>
+                        </xs:annotation>
+                    </xs:attributeGroup>
+                </xs:complexType>
+            </xs:element>
+        </xs:sequence>
+        <xs:attribute name="note" type="xs:string">
+            <xs:annotation>
+                <xs:documentation> Optional additional contextual information. </xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+    </xs:complexType>
+    <xs:complexType name="descriptionType">
+        <xs:annotation>
+            <xs:documentation>Free-form text or a narrative to report general notes, abstracts, or
+                summaries about the intellectual content of a resource. The information may be in
+                the form of a paragraph giving an individual program description, anecdotal
+                interpretations, or brief content reviews. The description may also consist of
+                outlines, lists, bullet points, edit decision lists, indexes, or tables of content,
+                a reference to a graphical representation of content or even a pointer (URI, URL) to
+                an external resource. For a Radio or television programme a running order can be
+                used as description. A description can be provided in different languages.
+            </xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element ref="dc:description">
+                <xs:annotation>
+                    <xs:documentation> The EBU core metadata set is built as a refinement of the Dublin
+                        Core. Free text to provide a description of the resource. The description
+                        can be repeated in different languages as specified by the entityType’s lang
+                        attribute. The type of description is defined in the type group of
+                        attributes.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+        <xs:attributeGroup ref="typeGroup">
+            <xs:annotation>
+                <xs:documentation> To define the form of presentation for the information: Annotation,
+                    abstract, summary, review, table of content, synopsis, shot list, edit decision
+                    list, promotional information, purpose, script, outline, rundown,
+                    selection/excerpt, transcript, bookmarks, theme, highlights, running order, etc.
+                </xs:documentation>
+            </xs:annotation>
+        </xs:attributeGroup>
+        <xs:attribute name="note" type="xs:string">
+            <xs:annotation>
+                <xs:documentation> Optional additional contextual information. </xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+    </xs:complexType>
+    <xs:complexType name="coverageType">
+        <xs:annotation>
+            <xs:documentation>Coverage will typically include spatial location (a place name or
+                geographic coordinates), temporal period (a period label, date, or date range) or
+                jurisdiction (such as a named administrative entity). Recommended best practice is
+                to select a value from a controlled vocabulary (for example, the Thesaurus of
+                Geographic Names) and that, where appropriate, named places or time periods be used
+                in preference to numeric identifiers such as sets of coordinates or date
+                ranges.</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element ref="dc:coverage" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation> The EBU core metadata set is built as a refinement of the Dublin
+                        Core. </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="temporal" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>Temporal characteristics of the content of the resource. To
+                        indicate e.g. specific date, time or period aspects of the subject of the
+                        resource in complement to Description. </xs:documentation>
+                </xs:annotation>
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="PeriodOfTime" minOccurs="0">
+                            <xs:complexType>
+                                <xs:attributeGroup ref="dateGroup">
+                                    <xs:annotation>
+                                        <xs:documentation>The period of time depicted in the
+                                            resource.</xs:documentation>
+                                    </xs:annotation>
+                                </xs:attributeGroup>
+                            </xs:complexType>
+                        </xs:element>
+                    </xs:sequence>
+                    <xs:attributeGroup ref="typeGroup">
+                        <xs:annotation>
+                            <xs:documentation> To precise the type of temporal information
+                                provided.</xs:documentation>
+                        </xs:annotation>
+                    </xs:attributeGroup>
+                    <xs:attribute name="note" type="xs:string">
+                        <xs:annotation>
+                            <xs:documentation> Optional additional contextual information.
+                            </xs:documentation>
+                        </xs:annotation>
+                    </xs:attribute>
+                    <xs:attribute name="periodId" type="xs:anyURI">
+                        <xs:annotation>
+                            <xs:documentation>An identifier to support the management of time periods
+                                (e.g. historical or repetitive event) in databases and
+                                RDF</xs:documentation>
+                        </xs:annotation>
+                    </xs:attribute>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="spatial" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>Spatial characteristics of the content of the resource. To
+                        indicate e.g. specific place and location aspects of the subject of the
+                        resource in complement to Description. </xs:documentation>
+                </xs:annotation>
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="location" minOccurs="0" maxOccurs="unbounded">
+                            <xs:annotation>
+                                <xs:documentation>To indicate e.g. specific place and location aspects
+                                    of the resource in complement to Description.</xs:documentation>
+                            </xs:annotation>
+                            <xs:complexType>
+                                <xs:sequence>
+                                    <xs:element name="name" type="xs:string" minOccurs="0">
+                                        <xs:annotation>
+                                            <xs:documentation>Any location name in free
+                                                text</xs:documentation>
+                                        </xs:annotation>
+                                    </xs:element>
+                                    <xs:sequence minOccurs="0">
+                                        <xs:annotation>
+                                            <xs:documentation> Optional geospatial coordinates. 'posy'
+                                                is the latitude. 'posx' is the longitude. Both are
+                                                expressed in digital degrees</xs:documentation>
+                                        </xs:annotation>
+                                        <xs:element name="posy" type="xs:float"/>
+                                        <xs:element name="posx" type="xs:float"/>
+                                    </xs:sequence>
+                                    <xs:element name="code" type="xs:anyURI" minOccurs="0">
+                                        <xs:annotation>
+                                            <xs:documentation>A location identified by a code from a
+                                                predefined list of locations.</xs:documentation>
+                                        </xs:annotation>
+                                    </xs:element>
+                                </xs:sequence>
+                                <xs:attributeGroup ref="typeGroup">
+                                    <xs:annotation>
+                                        <xs:documentation>To precise the type of place and
+                                            location.</xs:documentation>
+                                    </xs:annotation>
+                                </xs:attributeGroup>
+                                <xs:attribute name="note" type="xs:string">
+                                    <xs:annotation>
+                                        <xs:documentation>To provide additional information on the type
+                                            of location described, e.g. countries, regions,
+                                            cities</xs:documentation>
+                                    </xs:annotation>
+                                </xs:attribute>
+                                <xs:attribute name="locationId" type="xs:anyURI">
+                                    <xs:annotation>
+                                        <xs:documentation>An identifier to support the management of
+                                            location in databases and RDF</xs:documentation>
+                                    </xs:annotation>
+                                </xs:attribute>
+                            </xs:complexType>
+                        </xs:element>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="rightsType">
+        <xs:annotation>
+            <xs:documentation>An all-purpose field to identify information (rights management statement
+                or reference to a service providing such information e.g. via a URL) about
+                copyright, intellectual property rights or other property rights held in and over a
+                resource, stating whether open access or restricted in some way. If dates, times,
+                territories and availability periods are associated with a right, they should be
+                included. If the Rights element is absent, no assumptions can be made about the
+                status of these and other rights with respect to the resource. </xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element ref="dc:rights" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation> The EBU core metadata set is built as a refinement of the Dublin
+                        Core. An element to express any form of rights related
+                        matters.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="rightsLink" type="xs:anyURI" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>A url pointing to a declaration of rights</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="rightsHolder" type="entityType" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>To identify the person or organisation holding or managing the
+                        rights related to the resource. </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="exploitationIssues" type="dc:elementType" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>Use to state any other restrictions, such as non-rights ones,
+                        e.g. legal. State by media, territory, scope (restriction on whole item or
+                        extracts) and possibly language. The presence of this information can be
+                        used by asset management system implementing traffic lights like mechanism
+                        to signal that content may be subject to particular restrictions to be
+                        clarified before exploitation. </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="coverage" type="coverageType" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation> Specifies a specific start date, end date or period for the
+                        availability of the item or the date from which the rights or exploitation
+                        issues apply. It may refer to start dates for the availability of an item
+                        that is used within a particular geographical area e.g. broadcast locally,
+                        regionally, nationally or internationally, or for web-based distribution. A
+                        specific time may also be associated with the date.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="rightsClearanceFlag" type="xs:boolean" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation> A flag to signal if content is subject to rights open issues
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="disclaimer" type="dc:elementType" minOccurs="0" maxOccurs="unbounded">
+                <xs:annotation>
+                    <xs:documentation> A field for a disclaimer about the content, its content, and its
+                        use. </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="rightsId" type="identifierType" minOccurs="0" maxOccurs="unbounded">
+                <xs:annotation>
+                    <xs:documentation> A identifier related to rights, e.g. attributed for a particular
+                        purpose by a specific agency in the context of use and exploitation.
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+        <xs:attributeGroup ref="typeGroup">
+            <xs:annotation>
+                <xs:documentation> To define the type of rights information provided.</xs:documentation>
+            </xs:annotation>
+        </xs:attributeGroup>
+        <xs:attribute name="note" type="xs:string">
+            <xs:annotation>
+                <xs:documentation> Optional additional contextual information. </xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+    </xs:complexType>
+    <xs:complexType name="formatType">
+        <xs:annotation>
+            <xs:documentation>The physical or digital manifestation of the resource. Use the descriptor
+                Format to identify the format of a particular resource as it exists in its physical
+                or digital form. Physical form = an actual physical form that occupies physical
+                space, e.g. a tape. Digital form = a digital file residing on a server or hard
+                drive. Format may be used to determine the software, hardware or other equipment
+                needed to display or operate the resource. </xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element ref="dc:format" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation> The EBU core metadata set is built as a refinement of the Dublin
+                        Core. Free text to provide information on the format.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="width" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>The width of the image or picture. Used as numerator to define
+                        the aspect ratio for video content. Otherwsie, see aspect
+                        ratio.</xs:documentation>
+                </xs:annotation>
+                <xs:complexType>
+                    <xs:simpleContent>
+                        <xs:extension base="xs:nonNegativeInteger">
+                            <xs:attribute name="unit" type="xs:string">
+                                <xs:annotation>
+                                    <xs:documentation> An attribute to specify the unit in which the
+                                        width is expressed. </xs:documentation>
+                                </xs:annotation>
+                            </xs:attribute>
+                        </xs:extension>
+                    </xs:simpleContent>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="height" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>The height of the image or picture. Used as denominator to define
+                        the aspect ratio for video content. Otherwsie, see aspect
+                        ratio.</xs:documentation>
+                </xs:annotation>
+                <xs:complexType>
+                    <xs:simpleContent>
+                        <xs:extension base="xs:nonNegativeInteger">
+                            <xs:attribute name="unit" type="xs:string">
+                                <xs:annotation>
+                                    <xs:documentation> An attribute to specify the unit in which the
+                                        height is expressed. </xs:documentation>
+                                </xs:annotation>
+                            </xs:attribute>
+                        </xs:extension>
+                    </xs:simpleContent>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="medium" minOccurs="0" maxOccurs="unbounded">
+                <xs:annotation>
+                    <xs:documentation>The material or physical carrier of the resource. If a file, it
+                        should be the carrier format.</xs:documentation>
+                </xs:annotation>
+                <xs:complexType>
+                    <xs:attributeGroup ref="typeGroup"/>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="mimeType" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>Define the main MIME type as defined by IANA: e.g. audio, video,
+                        text, application</xs:documentation>
+                </xs:annotation>
+                <xs:complexType>
+                    <xs:attributeGroup ref="typeGroup"/>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="videoFormat" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation> used to list all the characteristics of the video signal
+                    </xs:documentation>
+                </xs:annotation>
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="aspectRatio" minOccurs="0">
+                            <xs:annotation>
+                                <xs:documentation>A string to define e.g. the ratio of the picture (the
+                                    width by the height), for instance '4:3' or '16 9' (rational).
+                                    The format of the aspect ratio is precised in the format
+                                    attributes</xs:documentation>
+                            </xs:annotation>
+                            <xs:complexType>
+                                <xs:simpleContent>
+                                    <xs:extension base="xs:string">
+                                        <xs:attributeGroup ref="formatGroup">
+                                            <xs:annotation>
+                                                <xs:documentation>To define the type of format used to
+                                                    represent the aspect ratio and an example in the
+                                                    definition e.g. formatLabel='rational' and
+                                                    formatDefinition='e.g. 16 9 (number, space,
+                                                    number)'</xs:documentation>
+                                            </xs:annotation>
+                                        </xs:attributeGroup>
+                                        <xs:attribute name="note" type="xs:string"/>
+                                    </xs:extension>
+                                </xs:simpleContent>
+                            </xs:complexType>
+                        </xs:element>
+                        <xs:element name="videoEncoding" minOccurs="0">
+                            <xs:annotation>
+                                <xs:documentation> Used to express the encoding parameters of the
+                                    resource e.g. H264 for a video channel.</xs:documentation>
+                            </xs:annotation>
+                            <xs:complexType>
+                                <xs:attributeGroup ref="typeGroup"/>
+                            </xs:complexType>
+                        </xs:element>
+                        <xs:element name="videoTrack" minOccurs="0" maxOccurs="unbounded">
+                            <xs:annotation>
+                                <xs:documentation>To describe the main features of video tracks such as
+                                    in mutliview systems</xs:documentation>
+                            </xs:annotation>
+                            <xs:complexType>
+                                <xs:sequence>
+                                    <xs:element name="videoTrackId" type="xs:NMTOKEN" minOccurs="0">
+                                        <xs:annotation>
+                                            <xs:documentation> The track ID or track number
+                                            </xs:documentation>
+                                        </xs:annotation>
+                                    </xs:element>
+                                    <xs:element name="videoTrackName" type="xs:string" minOccurs="0">
+                                        <xs:annotation>
+                                            <xs:documentation> The track name </xs:documentation>
+                                        </xs:annotation>
+                                    </xs:element>
+                                </xs:sequence>
+                                <xs:attributeGroup ref="typeGroup">
+                                    <xs:annotation>
+                                        <xs:documentation> The type of video track e.g. particular view
+                                            angle. </xs:documentation>
+                                    </xs:annotation>
+                                </xs:attributeGroup>
+                            </xs:complexType>
+                        </xs:element>
+                        <xs:element name="videoTechnicalAttributeString" minOccurs="0" maxOccurs="unbounded">
+                            <xs:annotation>
+                                <xs:documentation> A user defined technical attribute to provide
+                                    information on the Video Format (in addition to the video
+                                    encoding format already provided in channel/encoding): colour
+                                    scheme, scanning format, etc. Examples: 1/ value=50,
+                                    Black&amp;White, value=progresssive attribute label=scan
+                                    type, etc.</xs:documentation>
+                            </xs:annotation>
+                            <xs:complexType>
+                                <xs:simpleContent>
+                                    <xs:extension base="xs:string">
+                                        <xs:attributeGroup ref="typeGroup"/>
+                                        <xs:attributeGroup ref="formatGroup"/>
+                                    </xs:extension>
+                                </xs:simpleContent>
+                            </xs:complexType>
+                        </xs:element>
+                        <xs:element name="videoTechnicalAttributeInteger" minOccurs="0" maxOccurs="unbounded">
+                            <xs:annotation>
+                                <xs:documentation> A user defined technical attribute to provide
+                                    information on the Video Format (in addition to the video
+                                    encoding format already provided in channel/encoding): frame
+                                    rate, sampling rate, etc. Examples: frame rate value=50,
+                                    attribute label= frame rate , the bitrate for this particular
+                                    channel, etc.</xs:documentation>
+                            </xs:annotation>
+                            <xs:complexType>
+                                <xs:simpleContent>
+                                    <xs:extension base="xs:integer">
+                                        <xs:attributeGroup ref="typeGroup"/>
+                                    </xs:extension>
+                                </xs:simpleContent>
+                            </xs:complexType>
+                        </xs:element>
+                        <xs:element name="videoTechnicalAttributeFlag" minOccurs="0" maxOccurs="unbounded">
+                            <xs:annotation>
+                                <xs:documentation> A user defined technical attribute to provide
+                                    information on the Video Format (in addition to the video
+                                    encoding format already provided in channel/encoding): e.g. HD
+                                    flag</xs:documentation>
+                            </xs:annotation>
+                            <xs:complexType>
+                                <xs:simpleContent>
+                                    <xs:extension base="xs:boolean">
+                                        <xs:attributeGroup ref="typeGroup"/>
+                                    </xs:extension>
+                                </xs:simpleContent>
+                            </xs:complexType>
+                        </xs:element>
+                        <xs:element name="videoTechnicalAttributeFloat" minOccurs="0" maxOccurs="unbounded">
+                            <xs:annotation>
+                                <xs:documentation> A user defined technical attribute to provide
+                                    information on the Video Format (in addition to the video
+                                    encoding format already provided in
+                                    channel/encoding)</xs:documentation>
+                            </xs:annotation>
+                            <xs:complexType>
+                                <xs:simpleContent>
+                                    <xs:extension base="xs:float">
+                                        <xs:attributeGroup ref="typeGroup"/>
+                                    </xs:extension>
+                                </xs:simpleContent>
+                            </xs:complexType>
+                        </xs:element>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="audioFormat" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation> used to list all the characteristics of the audio signal
+                    </xs:documentation>
+                </xs:annotation>
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="audioEncoding" minOccurs="0">
+                            <xs:annotation>
+                                <xs:documentation> To define the audio compression format of the
+                                    resource e.g. AAC for an audio channel.</xs:documentation>
+                            </xs:annotation>
+                            <xs:complexType>
+                                <xs:attributeGroup ref="typeGroup"/>
+                            </xs:complexType>
+                        </xs:element>
+                        <xs:element name="audioTrackConfiguration" minOccurs="0">
+                            <xs:annotation>
+                                <xs:documentation> To define the audio track configuration. Used to express the arrangement or audio tracks e.g.
+                                    'stereo', '2+1', 'surround', 'surround (7+1)'</xs:documentation>
+                            </xs:annotation>
+                            <xs:complexType>
+                                <xs:simpleContent>
+                                    <xs:extension base="xs:string">
+                                        <xs:attributeGroup ref="typeGroup"/>
+                                    </xs:extension>
+                                </xs:simpleContent>
+                            </xs:complexType>
+                        </xs:element>
+                        <xs:element name="audioTrack" minOccurs="0" maxOccurs="unbounded">
+                            <xs:annotation>
+                                <xs:documentation> To describe the track allocation e.g. in conformance with
+                                    EBU R123 </xs:documentation>
+                            </xs:annotation>
+                            <xs:complexType>
+                                <xs:sequence>
+                                    <xs:element name="audioTrackId" type="xs:NMTOKEN" minOccurs="0">
+                                        <xs:annotation>
+                                            <xs:documentation> The track number </xs:documentation>
+                                        </xs:annotation>
+                                    </xs:element>
+                                    <xs:element name="audioTrackName" type="xs:string" minOccurs="0">
+                                        <xs:annotation>
+                                            <xs:documentation> The track name</xs:documentation>
+                                        </xs:annotation>
+                                    </xs:element>
+                                    <xs:element name="audioTrackLanguage" type="languageType" minOccurs="0">
+                                        <xs:annotation>
+                                            <xs:documentation> The track language </xs:documentation>
+                                        </xs:annotation>
+                                    </xs:element>
+                                </xs:sequence>
+                                <xs:attributeGroup ref="typeGroup">
+                                    <xs:annotation>
+                                        <xs:documentation> The track type </xs:documentation>
+                                    </xs:annotation>
+                                </xs:attributeGroup>
+                            </xs:complexType>
+                        </xs:element>
+                        <xs:element name="audioTechnicalAttributeString" minOccurs="0" maxOccurs="unbounded">
+                            <xs:annotation>
+                                <xs:documentation> To provide information on the Audio Format(in
+                                    addition to the audio encoding format already provided in
+                                    channel/encoding): restricted for information that cannot be
+                                    represented in the format of integers or boolean
+                                    flags</xs:documentation>
+                            </xs:annotation>
+                            <xs:complexType>
+                                <xs:simpleContent>
+                                    <xs:extension base="xs:string">
+                                        <xs:attributeGroup ref="typeGroup"/>
+                                        <xs:attributeGroup ref="formatGroup"/>
+                                    </xs:extension>
+                                </xs:simpleContent>
+                            </xs:complexType>
+                        </xs:element>
+                        <xs:element name="audioTechnicalAttributeInteger" minOccurs="0" maxOccurs="unbounded">
+                            <xs:annotation>
+                                <xs:documentation> To provide information on the Audio Format(in
+                                    addition to the audio encoding format already provided in
+                                    channel/encoding): sample rate, etc. Examples: 1/ value=44800,
+                                    attribute label = sample rate, attribute definition=Hz, the
+                                    bitrate for this particular channel, etc. </xs:documentation>
+                            </xs:annotation>
+                            <xs:complexType>
+                                <xs:simpleContent>
+                                    <xs:extension base="xs:integer">
+                                        <xs:attributeGroup ref="typeGroup"/>
+                                    </xs:extension>
+                                </xs:simpleContent>
+                            </xs:complexType>
+                        </xs:element>
+                        <xs:element name="audioTechnicalAttributeFlag" minOccurs="0" maxOccurs="unbounded">
+                            <xs:annotation>
+                                <xs:documentation> To provide information on the Audio Format(in
+                                    addition to the audio encoding format already provided in
+                                    channel/encoding) in the form of flags e.g. constant bitrate
+                                    flag </xs:documentation>
+                            </xs:annotation>
+                            <xs:complexType>
+                                <xs:simpleContent>
+                                    <xs:extension base="xs:boolean">
+                                        <xs:attributeGroup ref="typeGroup"/>
+                                    </xs:extension>
+                                </xs:simpleContent>
+                            </xs:complexType>
+                        </xs:element>
+                        <xs:element name="audioTechnicalAttributeFloat" minOccurs="0" maxOccurs="unbounded">
+                            <xs:annotation>
+                                <xs:documentation/>
+                            </xs:annotation>
+                            <xs:complexType>
+                                <xs:simpleContent>
+                                    <xs:extension base="xs:float">
+                                        <xs:attributeGroup ref="typeGroup"/>
+                                    </xs:extension>
+                                </xs:simpleContent>
+                            </xs:complexType>
+                        </xs:element>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="fileFormat" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation> To provide information on the file / wrapper format in
+                        complement to the stream encoding information provided in 'channel', e.g.
+                        mp3, wave, Quicktime, ogg..</xs:documentation>
+                </xs:annotation>
+                <xs:complexType>
+                    <xs:attributeGroup ref="formatGroup"/>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="captioningFormat" minOccurs="0" maxOccurs="unbounded">
+                <xs:annotation>
+                    <xs:documentation> Used to provide information on the captioning format and purpose
+                    </xs:documentation>
+                </xs:annotation>
+                <xs:complexType>
+                    <xs:complexContent>
+                        <xs:extension base="languageType">
+                            <xs:attributeGroup ref="formatGroup">
+                                <xs:annotation>
+                                    <xs:documentation>To specify the format of captioning / subtitling
+                                        being used</xs:documentation>
+                                </xs:annotation>
+                            </xs:attributeGroup>
+                            <xs:attribute name="captioningSourceUri" type="xs:anyURI">
+                                <xs:annotation>
+                                    <xs:documentation>A pointer to the file with the captioning /
+                                        subtitling.</xs:documentation>
+                                </xs:annotation>
+                            </xs:attribute>
+                        </xs:extension>
+                    </xs:complexContent>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="signingFormat" minOccurs="0" maxOccurs="unbounded">
+                <xs:annotation>
+                    <xs:documentation> Used to provide information on the signing format and purpose
+                    </xs:documentation>
+                </xs:annotation>
+                <xs:complexType>
+                    <xs:complexContent>
+                        <xs:extension base="languageType">
+                            <xs:attributeGroup ref="formatGroup"/>
+                        </xs:extension>
+                    </xs:complexContent>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="start" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>The beginning point for playback of a time-based media item, such
+                        as digital video or audio. Use in combination with Duration to identify a
+                        sequence or segment of a media item that has a fixed start time and end
+                        time.</xs:documentation>
+                </xs:annotation>
+                <xs:complexType>
+                    <xs:choice>
+                        <xs:element name="timecode">
+                            <xs:simpleType>
+                                <xs:restriction base="xs:string">
+                                    <xs:pattern value="[0-9][0-9]:[0-5][0-9]:[0-5][0-9]:[0-9][0-9]"/>
+                                </xs:restriction>
+                            </xs:simpleType>
+                        </xs:element>
+                        <xs:element name="normalPlayTime" type="xs:time"/>
+                        <xs:element name="editUnitNumber" type="editUnitNumberType">
+                            <xs:annotation>
+                                <xs:documentation>A number of edit units. An editUnit is the inverse of
+                                    the edit rate, or corrected edit rate as the result of
+                                    editUnit=1/(editrate*(factorNumerator/factorDenominator))</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element name="time">
+                            <xs:complexType>
+                                <xs:simpleContent>
+                                    <xs:extension base="xs:string">
+                                        <xs:attributeGroup ref="formatGroup"/>
+                                    </xs:extension>
+                                </xs:simpleContent>
+                            </xs:complexType>
+                        </xs:element>
+                    </xs:choice>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="duration" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>The time duration/extent of the resource</xs:documentation>
+                </xs:annotation>
+                <xs:complexType>
+                    <xs:choice>
+                        <xs:element name="timecode">
+                            <xs:simpleType>
+                                <xs:restriction base="xs:string">
+                                    <xs:pattern value="[0-9][0-9]:[0-5][0-9]:[0-5][0-9]:[0-9][0-9]"/>
+                                </xs:restriction>
+                            </xs:simpleType>
+                        </xs:element>
+                        <xs:element name="normalPlayTime" type="xs:duration"/>
+                        <xs:element name="editUnitNumber" type="editUnitNumberType">
+                            <xs:annotation>
+                                <xs:documentation>A number of edit units. An editUnit is the inverse of
+                                    the edit rate, or corrected edit rate as the result of
+                                    editUnit=1/(editrate*(factorNumerator/factorDenominator))</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element name="time">
+                            <xs:complexType>
+                                <xs:simpleContent>
+                                    <xs:extension base="xs:string">
+                                        <xs:attributeGroup ref="formatGroup"/>
+                                    </xs:extension>
+                                </xs:simpleContent>
+                            </xs:complexType>
+                        </xs:element>
+                    </xs:choice>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="fileSize" type="xs:nonNegativeInteger" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>To indicate the storage requirements or file size of a digital
+                        resource. The file size is expressed in bytes.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="filename" type="xs:string" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation> The name of the file as it appears in the location path or url.
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="locator" type="xs:string" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>An "address for a resource". For an organisation or producer
+                        acting as caretaker for a media resource, Format Location may contain
+                        information about a specific shelf location for an asset, including an
+                        organisation's name, departmental name, shelf id. and contact information.
+                        The Format Location for a data file or web page may include a complete URI
+                        with a domain, path, filename or html URL. Examples: "Archives Building A,
+                        Row J, Shelf 2", "d://playout/server/content.mpg",
+                        "http://www.ebu.ch/CorporateVideo.avi".</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="technicalAttributeString" minOccurs="0" maxOccurs="unbounded">
+                <xs:annotation>
+                    <xs:documentation> To provide a user defined technical attribute. </xs:documentation>
+                </xs:annotation>
+                <xs:complexType>
+                    <xs:simpleContent>
+                        <xs:extension base="xs:string">
+                            <xs:attributeGroup ref="typeGroup"/>
+                            <xs:attributeGroup ref="formatGroup"/>
+                        </xs:extension>
+                    </xs:simpleContent>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="technicalAttributeInteger" minOccurs="0" maxOccurs="unbounded">
+                <xs:annotation>
+                    <xs:documentation> To provide a user defined technical attribute. </xs:documentation>
+                </xs:annotation>
+                <xs:complexType>
+                    <xs:simpleContent>
+                        <xs:extension base="xs:integer">
+                            <xs:attributeGroup ref="typeGroup"/>
+                        </xs:extension>
+                    </xs:simpleContent>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="technicalAttributeFlag" minOccurs="0" maxOccurs="unbounded">
+                <xs:annotation>
+                    <xs:documentation> To provide a user defined technical attribute. </xs:documentation>
+                </xs:annotation>
+                <xs:complexType>
+                    <xs:simpleContent>
+                        <xs:extension base="xs:boolean">
+                            <xs:attributeGroup ref="typeGroup"/>
+                        </xs:extension>
+                    </xs:simpleContent>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="technicalAttributeFloat" minOccurs="0" maxOccurs="unbounded">
+                <xs:annotation>
+                    <xs:documentation> To provide a user defined technical attribute. </xs:documentation>
+                </xs:annotation>
+                <xs:complexType>
+                    <xs:simpleContent>
+                        <xs:extension base="xs:float">
+                            <xs:attributeGroup ref="typeGroup"/>
+                        </xs:extension>
+                    </xs:simpleContent>
+                </xs:complexType>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="editUnitNumberType">
+        <xs:simpleContent>
+            <xs:extension base="xs:long">
+                <xs:attribute name="editRate" type="xs:positiveInteger" use="required">
+                    <xs:annotation>
+                        <xs:documentation>The base number of frames or samples
+                            per seconds. This base number can be corrected by
+                            a factor calculated as the result of
+                            'factorNumerator/factorDenominator'
+                        </xs:documentation>
+                    </xs:annotation>
+                </xs:attribute>
+                <xs:attribute name="factorNumerator" type="xs:positiveInteger" default="1">
+                    <xs:annotation>
+                        <xs:documentation>The numerator of the correction
+                            factor</xs:documentation>
+                    </xs:annotation>
+                </xs:attribute>
+                <xs:attribute name="factorDenominator" type="xs:positiveInteger" default="1">
+                    <xs:annotation>
+                        <xs:documentation>The denominator of the correction
+                            factor</xs:documentation>
+                    </xs:annotation>
+                </xs:attribute>
+            </xs:extension>
+        </xs:simpleContent>
+    </xs:complexType>
+    <xs:complexType name="relationType">
+        <xs:annotation>
+            <xs:documentation>Recommended best practice is to reference the resource by means of a
+                string or number conforming to a formal identification system. Relation is used to
+                show the relation in content to another resource. For example, "IsPartOf" is used to
+                show the relation between a part of a radio programme and the whole programme, or
+                between a track and a record album. A resource can be identified by its title, or
+                preferably by an identifier. Relation is used to provide a name, locator, accession,
+                identification number or ID where the related item can be obtained or found.
+            </xs:documentation>
+        </xs:annotation>
+        <xs:choice>
+            <xs:element ref="dc:relation">
+                <xs:annotation>
+                    <xs:documentation> The EBU core metadata set is built as a refinement of the Dublin
+                        Core. A title would be given using this element.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="relationIdentifier" type="identifierType">
+                <xs:annotation>
+                    <xs:documentation> An identifier would be given using this element.
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="relationLink" type="xs:anyURI">
+                <xs:annotation>
+                    <xs:documentation> A link to related material. </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:choice>
+        <xs:attributeGroup ref="typeGroup">
+            <xs:annotation>
+                <xs:documentation>To show the type of relation to another resource, e.g. identifies
+                    ways in which the resource is related by intellectual content to some other
+                    resource.</xs:documentation>
+            </xs:annotation>
+        </xs:attributeGroup>
+        <xs:attribute name="runningOrderNumber" type="xs:integer">
+            <xs:annotation>
+                <xs:documentation> If exists, it provides the ranking/running order within an ordered
+                    list.</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="note" type="xs:string">
+            <xs:annotation>
+                <xs:documentation> Optional additional contextual information. </xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+    </xs:complexType>
+    <xs:complexType name="languageType">
+        <xs:annotation>
+            <xs:documentation> MODIF VERSION 1.2</xs:documentation>
+            <xs:documentation>Identifies languages and their use in the intellectual content of the
+                resource. Recommended best practice for the values of the Language element is
+                defined by RFC 1766, which includes a two-letter Language Code (taken from the ISO
+                Standard 639), followed optionally, by a two-letter Country Code (taken from the ISO
+                Standard 3166). For example, 'en' for English, 'fr' for French, or 'en-UK' for
+                English used in the United Kingdom. The usage of the language is also defined.
+            </xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element ref="dc:language" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation> The EBU core metadata set is built as a refinement of the Dublin
+                        Core. </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+        <xs:attributeGroup ref="typeGroup">
+            <xs:annotation>
+                <xs:documentation> Indicates the purpose of the language described by the Language
+                    element e.g. Main original language, main dubbed language, additional original
+                    language, additional dubbed language, descriptive video information,
+                    supplemental commentary, Director's commentary, audio description, supplementary
+                    audio programme, educational notes, voice over, original commentary, dubbed
+                    commentary, original narration, dubbed narration, dubbed dialogue, interviewer
+                    language, interviewee language, text description for the hard-of-hearing,
+                    titles, subtitles, song lyrics, sign language, dubbed sign language, transcript,
+                    caption, open caption, closed caption.</xs:documentation>
+            </xs:annotation>
+        </xs:attributeGroup>
+        <xs:attribute name="note" type="xs:string">
+            <xs:annotation>
+                <xs:documentation> Optional additional contextual information. </xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+    </xs:complexType>
+    <xs:complexType name="dateType">
+        <xs:annotation>
+            <xs:documentation>Dates associated with events occurring during the life of the resource.
+                Typically, Date will be associated e.g. with the creation or availability of the
+                resource. </xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element ref="dc:date" minOccurs="0" maxOccurs="unbounded">
+                <xs:annotation>
+                    <xs:documentation> The EBU core metadata set is built as a refinement of the Dublin
+                        Core. </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="created" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>To specify the creation date for a particular version or
+                        rendition of a resource across its life cycle. It is the moment in time that
+                        the resource was finalized during its production process and is forwarded to
+                        other divisions or agencies to make it ready for publication or
+                        distribution. A specific time may also be associated with the
+                        date.</xs:documentation>
+                </xs:annotation>
+                <xs:complexType>
+                    <xs:attributeGroup ref="dateGroup"/>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="issued" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>Date of formal issuance (e.g. publication) of the resource.
+                        Specifies the formal date for a particular version or rendition of a
+                        resource has been made ready or officially released for distribution,
+                        publication or consumption, e.g. the broadcasting date of a radio programme.
+                        A specific time may also be associated with the date. </xs:documentation>
+                </xs:annotation>
+                <xs:complexType>
+                    <xs:attributeGroup ref="dateGroup"/>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="modified" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>The date when the resource was last modified</xs:documentation>
+                </xs:annotation>
+                <xs:complexType>
+                    <xs:attributeGroup ref="dateGroup"/>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="digitised" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>The date when the resource was digitised</xs:documentation>
+                </xs:annotation>
+                <xs:complexType>
+                    <xs:attributeGroup ref="dateGroup"/>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="alternative" minOccurs="0" maxOccurs="unbounded">
+                <xs:annotation>
+                    <xs:documentation>An alternative particular date for which the type can be
+                        defined.</xs:documentation>
+                </xs:annotation>
+                <xs:complexType>
+                    <xs:attributeGroup ref="dateGroup"/>
+                    <xs:attributeGroup ref="typeGroup"/>
+                </xs:complexType>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="publicationHistoryType">
+        <xs:annotation>
+            <xs:documentation>To provide information about the publication history which falls outside
+                the entries under transmission date/times below. </xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="firstTransmissionDate" type="xs:date" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>The first transmission date</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="firstTransmissionTime" type="xs:time" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>The first transmission time</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="firstTransmissionChannel" type="xs:string" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>The channel on which the title was first
+                        transmitted</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:sequence minOccurs="0" maxOccurs="unbounded">
+                <xs:element name="repeatDate" type="xs:date" minOccurs="0">
+                    <xs:annotation>
+                        <xs:documentation>The date on which content was re-transmitted</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                <xs:element name="repeatTime" type="xs:time" minOccurs="0">
+                    <xs:annotation>
+                        <xs:documentation>The time on which content was re-transmitted</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                <xs:element name="repeatChannel" type="dc:elementType" minOccurs="0">
+                    <xs:annotation>
+                        <xs:documentation>The channel on which the resource was
+                            re-transmitted</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+            </xs:sequence>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="entityType">
+        <xs:annotation>
+            <xs:documentation>To identify a person, group of persons or organisation</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="contactDetails" type="contactDetailsType" minOccurs="0" maxOccurs="unbounded">
+                <xs:annotation>
+                    <xs:documentation> Minimum information providing means to further identify and
+                        contact the entity. </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="organisationDetails" type="organisationDetailsType" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>Minimum information providing means to further identify and
+                        contact the entity as an organisation. Cardinality is '1'. Only one
+                        organisation is acting as an entity or only one organisation is associated
+                        to a person in relation to is occupation in the context of the current
+                        content description</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="role" minOccurs="0" maxOccurs="unbounded">
+                <xs:annotation>
+                    <xs:documentation> Used to identify the function fulfilled by the person, group or
+                        organisation described as an entity. This is used to detail the role of a
+                        'contributor'. This also applies to e.g. 'creator' as several functions can
+                        be seen as participating to the creative process </xs:documentation>
+                </xs:annotation>
+                <xs:complexType>
+                    <xs:attributeGroup ref="typeGroup"/>
+                </xs:complexType>
+            </xs:element>
+        </xs:sequence>
+        <xs:attribute name="entityId" type="xs:anyURI"/>
+    </xs:complexType>
+    <xs:complexType name="nameType">
+        <xs:sequence>
+            <xs:annotation>
+                <xs:documentation> name is used for a company name or if the given cannot be
+                    differentiated from the family name</xs:documentation>
+            </xs:annotation>
+            <xs:choice>
+                <xs:element name="name" type="xs:string"/>
+                <xs:sequence>
+                    <xs:element name="givenName" type="xs:string"/>
+                    <xs:element name="familyName" type="xs:string"/>
+                </xs:sequence>
+            </xs:choice>
+        </xs:sequence>
+        <xs:attribute name="id" type="xs:anyURI"/>
+    </xs:complexType>
+    <xs:complexType name="contactDetailsType">
+        <xs:sequence>
+            <xs:element name="name" type="nameType"/>
+            <xs:element name="contactEmailAddress" type="xs:string" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>The e-mail address through which the contact can be directly
+                        accessed</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="address" type="addressType" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>The address of the contact. This is the personal address if
+                        provided. A professional address is provided in the organisation
+                        details</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="contactOccupation" type="xs:string" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>The job function of the contact</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="stageName" type="xs:string" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>For example, in the case the contact is a performing
+                        actor/actress, the stage name will be the fictitious character's
+                        name</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="relatedContacts" type="entityType" minOccurs="0" maxOccurs="unbounded">
+                <xs:annotation>
+                    <xs:documentation> This is used to identify contacts related to the contact being
+                        described </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+        <xs:attribute name="contactId" type="xs:anyURI"/>
+    </xs:complexType>
+    <xs:complexType name="organisationDetailsType">
+        <xs:sequence>
+            <xs:element name="organisationName" type="dc:elementType"/>
+            <xs:element name="organisationDepartment" type="dc:elementType" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>To identify one or more production area / department / service
+                        where the resource was created/originated, in free text</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="organisationWebAddress" type="xs:string" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation> The web address where additional information can be found
+                        regarding the company </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="address" type="addressType" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>The organisation address is also the professional address of the
+                        contact in the context of the content being described and in relation to the
+                        contact occupation provided in the contact details</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="contacts" type="entityType" minOccurs="0" maxOccurs="unbounded">
+                <xs:annotation>
+                    <xs:documentation> Useful to provide contact information particularly is no other
+                        person information is otherwise provided. </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+        <xs:attribute name="organisationId" type="xs:anyURI"/>
+    </xs:complexType>
+    <xs:complexType name="addressType">
+        <xs:annotation>
+            <xs:documentation xml:lang="EN"> Provides address details for an organisation
+            </xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="addressLine" type="xs:string" minOccurs="0" maxOccurs="unbounded"/>
+            <xs:element name="addressTownCity" type="xs:string" minOccurs="0"/>
+            <xs:element name="addressCountyState" type="xs:string" minOccurs="0"/>
+            <xs:element name="addressDeliveryCode" type="xs:string" minOccurs="0"/>
+            <xs:element name="country" type="xs:string" minOccurs="0"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:attributeGroup name="typeGroup">
+        <xs:attribute name="typeLabel" type="xs:string"/>
+        <xs:attribute name="typeDefinition" type="xs:string"/>
+        <xs:attribute name="typeLink" type="xs:anyURI"/>
+    </xs:attributeGroup>
+    <xs:attributeGroup name="formatGroup">
+        <xs:attribute name="formatLabel" type="xs:string"/>
+        <xs:attribute name="formatDefinition" type="xs:string"/>
+        <xs:attribute name="formatLink" type="xs:anyURI"/>
+    </xs:attributeGroup>
+    <xs:attributeGroup name="statusGroup">
+        <xs:attribute name="statusLabel" type="xs:string"/>
+        <xs:attribute name="statusDefinition" type="xs:string"/>
+        <xs:attribute name="statusLink" type="xs:anyURI"/>
+    </xs:attributeGroup>
+    <xs:attributeGroup name="dateGroup">
+        <xs:attribute name="startYear" type="xs:gYear"/>
+        <xs:attribute name="startDate" type="xs:date"/>
+        <xs:attribute name="startTime" type="xs:time"/>
+        <xs:attribute name="endYear" type="xs:gYear"/>
+        <xs:attribute name="endDate" type="xs:date"/>
+        <xs:attribute name="endTime" type="xs:time"/>
+        <xs:attribute name="period" type="xs:string"/>
+    </xs:attributeGroup>
+</xs:schema>

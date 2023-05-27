@@ -67,6 +67,11 @@
                     <xs:documentation>prefix xlink</xs:documentation>
                 </xs:annotation>
             </xs:element>
+            <xs:element name="namespace-aes57" type="xs:string" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>prefix aes57</xs:documentation>
+                </xs:annotation>
+            </xs:element>
         </xs:sequence>
     </xs:complexType>
 

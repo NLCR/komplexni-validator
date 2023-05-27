@@ -547,6 +547,14 @@
         </evaluation>
     </value-def>
 
+    <value-def name="AES57_XSD_FILE" type="FILE">
+        <evaluation functionName="getProvidedFile">
+            <params>
+                <value name="file_id" type="STRING">AES57_XSD_FILE</value>
+            </params>
+        </evaluation>
+    </value-def>
+
     <!--identifikátory-->
 
     <value-def name="INFO_IDENTIFIERS" type="IDENTIFIER_LIST">

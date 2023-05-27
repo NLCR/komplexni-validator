@@ -247,6 +247,8 @@ public class Engine {
                 return new VfCheckBibliographicMetadataMatchProfile(name, this);
             case "checkMixIsValidByXsd":
                 return new VfCheckMixIsValidByXsd(name, this);
+            case "checkAes57IsValidByXsd":
+                return new VfCheckAes57IsValidByXsd(name, this);
             case "checkPremisIsValidByXsd":
                 return new VfCheckPremisIsValidByXsd(name, this);
             case "checkCopyrightMdIsValidByXsd":

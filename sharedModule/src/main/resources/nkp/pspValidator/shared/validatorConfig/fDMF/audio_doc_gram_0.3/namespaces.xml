@@ -25,6 +25,8 @@
         <namespace-premis>info:lc/xmlns/premis-v2</namespace-premis>
         <!--prefix xlink-->
         <namespace-xlink>http://www.w3.org/1999/xlink</namespace-xlink>
+        <!--prefix aes57-->
+        <namespace-aes57>http://www.aes.org/audioObject</namespace-aes57>
 
     </namespaces>
 </fDMF>

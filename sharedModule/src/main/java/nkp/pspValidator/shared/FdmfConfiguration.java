@@ -2,8 +2,8 @@ package nkp.pspValidator.shared;
 
 import nkp.pspValidator.shared.engine.exceptions.ValidatorConfigurationException;
 import nkp.pspValidator.shared.externalUtils.ExternalUtil;
-import nkp.pspValidator.shared.externalUtils.ResourceType;
 import nkp.pspValidator.shared.externalUtils.ExternalUtilManager;
+import nkp.pspValidator.shared.externalUtils.ResourceType;
 import nkp.pspValidator.shared.externalUtils.validation.BinaryFileValidator;
 
 import javax.xml.XMLConstants;
@@ -76,6 +76,7 @@ public class FdmfConfiguration {
         providedFiles.put("MIX_XSD_FILE", findXsdFile(xsdRoot, "MIX", "mix_[0-9]+(\\.([0-9])+)*\\.xsd"));
         providedFiles.put("MODS_XSD_FILE", findXsdFile(xsdRoot, "MODS", "mods_[0-9]+(\\.([0-9])+)*\\.xsd"));
         providedFiles.put("PREMIS_XSD_FILE", findXsdFile(xsdRoot, "PREMIS", "premis_[0-9]+(\\.([0-9])+)*\\.xsd"));
+        providedFiles.put("AES57_XSD_FILE", findXsdFile(xsdRoot, "AES57", "aes57_[0-9]+(\\.([0-9])+)*\\.xsd"));
 
         //nacteni konfiguracnich souboru - jmennych prostoru, vzdoru, promennych, pravidel
         validateAndRegisterFdmfConfig(fdmfRoot, "namespaces.xml");
@@ -197,7 +198,9 @@ public class FdmfConfiguration {
     private static File findXsdFile(File xsdDir, String formatName, String filePattern) throws ValidatorConfigurationException {
         File[] files = xsdDir.listFiles((dir, name) -> name.matches(filePattern));
         if (files.length == 0) {
-            throw new ValidatorConfigurationException(String.format("nenalezen soubor XSD pro validaci formátu %s", formatName));
+            //throw new ValidatorConfigurationException(String.format("nenalezen soubor XSD pro validaci formátu %s", formatName));
+            System.err.println(String.format("nenalezen soubor XSD pro validaci formátu %s", formatName));
+            return null;
         } else if (files.length > 1) {
             throw new ValidatorConfigurationException(String.format("nalezeno více souborů XSD pro validaci formátu %s a není jasné, který použít", formatName));
         } else {
