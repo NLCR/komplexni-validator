@@ -1,6 +1,6 @@
 <fDMF xmlns="http://www.nkp.cz/pspValidator/2.3/fdmfConfig"
       validatorVersion="2.3"
-      dmf="audio_doc_gram_0.3"
+      dmf="audio_doc_gram_0.4"
 >
     <description>
         Zde jsou definovány validační pravidla. K samotným validacím se používají validační funkce, jejichž parametry
@@ -1226,7 +1226,7 @@
 
 
         <rule name="INFO_XML_VALID_BY_XSD">
-            <description>Soubor INFO by měl být validní podle XML Schema (info_adg0.3).</description>
+            <description>Soubor INFO by měl být validní podle XML Schema (info_adg0.4).</description>
             <validation functionName="checkXmlIsValidByXsd">
                 <params>
                     <value name="xml_file" type="FILE">

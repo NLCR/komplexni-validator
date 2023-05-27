@@ -53,8 +53,9 @@ public class ValidatorFactoryRegistryTest {
         assertTrue(registry.getPeriodicalFdmfVersions().contains("1.8"));
         assertTrue(registry.getPeriodicalFdmfVersions().contains("1.9"));
 
-        assertEquals(2, registry.getAudioDocGramFdmfVersions().size());
+        assertEquals(3, registry.getAudioDocGramFdmfVersions().size());
         assertTrue(registry.getAudioDocGramFdmfVersions().contains("0.3"));
+        assertTrue(registry.getAudioDocGramFdmfVersions().contains("0.4"));
         assertTrue(registry.getAudioDocGramFdmfVersions().contains("0.5"));
     }
 

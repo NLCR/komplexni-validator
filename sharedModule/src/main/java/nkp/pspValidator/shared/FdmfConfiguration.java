@@ -68,7 +68,7 @@ public class FdmfConfiguration {
         //nacteni xsd pro metadata
         File xsdRoot = new File(fdmfRoot, XSD_DIR);
         checkDirExistAndReadable(xsdRoot);
-        providedFiles.put("INFO_XSD_FILE", findXsdFile(xsdRoot, "INFO(DMF)", "info_(mon|per|sr)[0-9]+(\\.([0-9])+)*\\.xsd"));
+        providedFiles.put("INFO_XSD_FILE", findXsdFile(xsdRoot, "INFO(DMF)", "info_(mon|per|adg)[0-9]+(\\.([0-9])+)*\\.xsd"));
         providedFiles.put("ALTO_XSD_FILE", findXsdFile(xsdRoot, "ALTO", "alto_[0-9]+(\\.([0-9])+)*\\.xsd"));
         providedFiles.put("CMD_XSD_FILE", findXsdFile(xsdRoot, "copyrightMD", "cmd_[0-9]+(\\.([0-9])+)*\\.xsd"));
         providedFiles.put("DC_XSD_FILE", findXsdFile(xsdRoot, "Dublin Core", "dc_[0-9]+(\\.([0-9])+)*\\.xsd"));
