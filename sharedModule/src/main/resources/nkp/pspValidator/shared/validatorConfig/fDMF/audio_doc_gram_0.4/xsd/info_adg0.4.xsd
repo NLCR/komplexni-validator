@@ -87,6 +87,7 @@
 
     <xs:simpleType name="metadataVersion">
         <xs:restriction base="xs:string">
+            <!--pozor, v textu DMF na straně 16 se uvádí jen verze 0.3 a 1.0, což ale nedává smysl-->
             <xs:enumeration value="0.3"/>
             <xs:enumeration value="0.4"/>
         </xs:restriction>

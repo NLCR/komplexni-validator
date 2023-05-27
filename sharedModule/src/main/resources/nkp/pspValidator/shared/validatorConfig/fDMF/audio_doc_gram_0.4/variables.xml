@@ -149,7 +149,7 @@
                 </value>
                 <pattern name="pattern">
                     <description>Vzor pro jméno adresáře SECONDARY-METS-DIR.</description>
-                    <expression caseSensitive="true">amd_sec</expression>
+                    <expression caseSensitive="true">amdsec</expression>
                 </pattern>
             </params>
         </evaluation>
@@ -192,7 +192,7 @@
                 </value>
                 <pattern name="pattern">
                     <description>Vzor pro jméno adresáře MASTER-COPY-DIR.</description>
-                    <expression caseSensitive="true">master_copy</expression>
+                    <expression caseSensitive="true">mastercopy</expression>
                 </pattern>
             </params>
         </evaluation>
@@ -206,7 +206,7 @@
                 </value>
                 <pattern name="pattern">
                     <description>Vzor pro jméno adresáře USER-COPY-DIR.</description>
-                    <expression caseSensitive="true">user_copy</expression>
+                    <expression caseSensitive="true">usercopy</expression>
                 </pattern>
             </params>
         </evaluation>
@@ -234,7 +234,7 @@
                 </value>
                 <pattern name="pattern">
                     <description>Vzor pro jméno adresáře MASTER-COPY-AUDIO-DIR.</description>
-                    <expression caseSensitive="true">master_copy_audio</expression>
+                    <expression caseSensitive="true">mastercopy_audio</expression>
                 </pattern>
             </params>
         </evaluation>
@@ -248,7 +248,7 @@
                 </value>
                 <pattern name="pattern">
                     <description>Vzor pro jméno adresáře USER-COPY-AUDIO-DIR.</description>
-                    <expression caseSensitive="true">user_copy_audio</expression>
+                    <expression caseSensitive="true">usercopy_audio</expression>
                 </pattern>
             </params>
         </evaluation>
