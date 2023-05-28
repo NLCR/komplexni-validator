@@ -370,9 +370,11 @@
                     <attribute name="objectPart" mandatory="false">
                         <recommendedContent>
                             <oneOf>
-                                <value>Sung or spoken text</value>
-                                <value>Translation</value>
-                                <value>Libretto</value>
+                                <value>sung or spoken text</value>
+                                <value>translation</value>
+                                <value>libretto</value>
+                                <!--TODO: v textu DMF typo, je tam "accompanying materiál" (str. 41)-->
+                                <value>accompanying materiál</value>
                             </oneOf>
                         </recommendedContent>
                     </attribute>

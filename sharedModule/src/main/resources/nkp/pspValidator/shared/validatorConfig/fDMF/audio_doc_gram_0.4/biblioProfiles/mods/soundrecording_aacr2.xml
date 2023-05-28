@@ -211,9 +211,10 @@
                     <attribute name="objectPart" mandatory="false">
                         <recommendedContent>
                             <oneOf>
-                                <value>Sung or spoken text</value>
-                                <value>Translation</value>
-                                <value>Libretto</value>
+                                <value>sung or spoken text</value>
+                                <value>translation</value>
+                                <value>libretto</value>
+                                <value>accompanying materiál</value>
                             </oneOf>
                         </recommendedContent>
                     </attribute>
