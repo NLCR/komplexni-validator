@@ -153,7 +153,6 @@
                 </expectedContent>
             </element>
 
-            <!--<element name="mods:genre" specification="@type='model'">-->
             <element name="mods:genre">
                 <expectedAttributes>
                     <attribute name="type">
