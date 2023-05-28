@@ -258,7 +258,9 @@
 
     <xsd:complexType name="formatRegionListType">
         <xsd:sequence>
-            <xsd:element name="formatRegion" type="baseFormatRegionType" minOccurs="0" maxOccurs="unbounded"/>
+            <!--zmena oproti puvodnimu XSD:-->
+            <!--<xsd:element name="formatRegion" type="baseFormatRegionType" minOccurs="0" maxOccurs="unbounded"/>-->
+            <xsd:element name="formatRegion" type="formatRegionType" minOccurs="0" maxOccurs="unbounded"/>
         </xsd:sequence>
     </xsd:complexType>
 

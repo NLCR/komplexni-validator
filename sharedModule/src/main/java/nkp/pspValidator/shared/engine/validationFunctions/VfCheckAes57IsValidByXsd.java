@@ -104,11 +104,20 @@ public class VfCheckAes57IsValidByXsd extends ValidationFunction {
     private void validate(File metsFile, File xsdFile, Level level, ValidationResult result) {
         try {
             Document metsDoc = engine.getXmlDocument(metsFile, true);
-            XPathExpression xPath = engine.buildXpath("/mets:mets/mets:amdSec/mets:techMD[starts-with(@ID,'AES57_')]");
-            NodeList techMdEls = (NodeList) xPath.evaluate(metsDoc, XPathConstants.NODESET);
+
+            //techMD
+            XPathExpression techMdXpath = engine.buildXpath("/mets:mets/mets:amdSec/mets:techMD[starts-with(@ID,'AES57_')]");
+            NodeList techMdEls = (NodeList) techMdXpath.evaluate(metsDoc, XPathConstants.NODESET);
             for (int i = 0; i < techMdEls.getLength(); i++) {
                 Element techMdEl = (Element) techMdEls.item(i);
                 validate(techMdEl, metsFile, xsdFile, level, result);
+            }
+            //sourceMD
+            XPathExpression sourceMdXpath = engine.buildXpath("/mets:mets/mets:amdSec/mets:sourceMD[starts-with(@ID,'AES57_')]");
+            NodeList sourceMdEls = (NodeList) sourceMdXpath.evaluate(metsDoc, XPathConstants.NODESET);
+            for (int i = 0; i < sourceMdEls.getLength(); i++) {
+                Element sourceMdEl = (Element) sourceMdEls.item(i);
+                validate(sourceMdEl, metsFile, xsdFile, level, result);
             }
         } catch (XmlFileParsingException e) {
             result.addError(invalid(level, metsFile, "%s", e.getMessage()));

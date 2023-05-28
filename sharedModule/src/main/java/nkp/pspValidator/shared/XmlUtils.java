@@ -105,7 +105,7 @@ public class XmlUtils {
         return builder.toString();
     }
 
-    public static String elementToXml(Element element) throws TransformerException {
+    public static String elementToString(Element element) throws TransformerException {
         StringWriter writer = new StringWriter();
         Transformer transformer = TransformerFactory.newInstance().newTransformer();
         transformer.transform(new DOMSource(element), new StreamResult(writer));
