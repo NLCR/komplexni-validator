@@ -54,6 +54,10 @@
                 </expectedAttributes>
 
                 <expectedElements>
+                    <element name="mods:nonSort" mandatory="false">
+                        <expectedContent/>
+                    </element>
+                    
                     <element name="mods:title">
                         <expectedContent/>
                     </element>
@@ -241,7 +245,7 @@
                     <oneOf>
                         <value>sound recording musical</value>
                         <value>sound recording nonmusical</value>
-			<value>sound recording-musical</value>
+                        <value>sound recording-musical</value>
                         <value>sound recording-nonmusical</value>
                     </oneOf>
                 </expectedContent>
