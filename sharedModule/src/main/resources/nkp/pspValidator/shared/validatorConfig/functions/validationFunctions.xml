@@ -36,6 +36,7 @@
         <description>Zkontroluje, že mají všechny seznamy souborů stejnou velikost.</description>
         <params-def>
             <value name="files" type="FILE_LIST" description="List of files" min="2" max="unbound"/>
+            <value name="files_optional" type="FILE_LIST" description="List of files, ignored if empty" max="unbound"/>
         </params-def>
     </validationFunction>
 

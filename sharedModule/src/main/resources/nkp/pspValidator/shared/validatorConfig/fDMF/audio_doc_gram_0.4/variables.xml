@@ -351,15 +351,31 @@
     </value-def>
 
 
-    <value-def name="SECONDARY-METS_FILES" type="FILE_LIST">
+    <!--TODO: rozdelit na AUDIO a IMAGE-->
+
+    <value-def name="SECONDARY-METS-IMAGE_FILES" type="FILE_LIST">
         <evaluation functionName="findFilesInDirByPattern">
             <params>
                 <value name="dir" type="FILE">
                     <value-ref name="SECONDARY-METS-DIR_FILE"/>
                 </value>
                 <pattern name="pattern">
-                    <description>Vzor pro jména souborů SECONDARY-METS v rámci adresáře SECONDARY-METS-DIR.</description>
+                    <description>Vzor pro jména souborů SECONDARY-METS-IMAGE v rámci adresáře SECONDARY-METS-DIR.</description>
                     <expression caseSensitive="true">amd_mets_${PSP_ID}_[0-9]+\.xml</expression>
+                </pattern>
+            </params>
+        </evaluation>
+    </value-def>
+
+    <value-def name="SECONDARY-METS-AUDIO_FILES" type="FILE_LIST">
+        <evaluation functionName="findFilesInDirByPattern">
+            <params>
+                <value name="dir" type="FILE">
+                    <value-ref name="SECONDARY-METS-DIR_FILE"/>
+                </value>
+                <pattern name="pattern">
+                    <description>Vzor pro jména souborů SECONDARY-METS-AUDIO v rámci adresáře SECONDARY-METS-DIR.</description>
+                    <expression caseSensitive="true">amd_mets_audio_${PSP_ID}_[0-9]+\.xml</expression>
                 </pattern>
             </params>
         </evaluation>

@@ -18,11 +18,13 @@ import java.util.List;
 public class VfCheckAllFileListsHaveSameSize extends ValidationFunction {
 
     public static final String PARAM_FILES = "files";
+    public static final String PARAM_FILES_OPTIONAL = "files_optional";
 
 
     public VfCheckAllFileListsHaveSameSize(String name, Engine engine) {
         super(name, engine, new Contract()
                 .withValueParam(PARAM_FILES, ValueType.FILE_LIST, 2, null)
+                .withValueParam(PARAM_FILES_OPTIONAL, ValueType.FILE_LIST, 0, null)
         );
     }
 
@@ -31,9 +33,9 @@ public class VfCheckAllFileListsHaveSameSize extends ValidationFunction {
         try {
             checkContractCompliance();
 
+            List<List<File>> list = new ArrayList<>();
 
             List<ValueParam> params = valueParams.getParams(PARAM_FILES);
-            List<List<File>> list = new ArrayList<>();
             for (ValueParam param : params) {
                 ValueEvaluation paramEvaluation = param.getEvaluation();
                 List<File> files = (List<File>) paramEvaluation.getData();
@@ -44,6 +46,16 @@ public class VfCheckAllFileListsHaveSameSize extends ValidationFunction {
                     list.add(files);
                 }
             }
+
+            List<ValueParam> paramsOptional = valueParams.getParams(PARAM_FILES_OPTIONAL);
+            for (ValueParam param : paramsOptional) {
+                ValueEvaluation paramEvaluation = param.getEvaluation();
+                List<File> files = (List<File>) paramEvaluation.getData();
+                if (files != null && !files.isEmpty()) {
+                    list.add(files);
+                }
+            }
+
             return validate(list);
         } catch (ContractException e) {
             return invalidContractNotMet(e);
@@ -60,7 +72,7 @@ public class VfCheckAllFileListsHaveSameSize extends ValidationFunction {
                 size = list.size();
             } else {
                 if (size != list.size()) {
-                    result.addError(invalid(Level.ERROR, null,"nalezeny různé velikosti seznamů souborů, např. %d a %d", size, list.size()));
+                    result.addError(invalid(Level.ERROR, null, "nalezeny různé velikosti seznamů souborů, např. %d a %d", size, list.size()));
                 }
             }
         }

@@ -611,12 +611,26 @@
 
         <!--názvy souborů v top-level adresářích obsahují jen povolené znaky-->
 
-        <rule name="SECONDARY-METS_FILENAMES_VALID">
-            <description>Názvy všech souborů SECONDARY-METS musí obsahovat jen povolené znaky.</description>
+        <rule name="SECONDARY-METS-IMAGE_FILENAMES_VALID">
+            <description>Názvy všech souborů SECONDARY-METS-IMAGE musí obsahovat jen povolené znaky.</description>
             <validation functionName="checkAllFilenamesMatchPattern">
                 <params>
                     <value name="files" type="FILE_LIST">
-                        <value-ref name="SECONDARY-METS_FILES"/>
+                        <value-ref name="SECONDARY-METS-IMAGE_FILES"/>
+                    </value>
+                    <pattern name="pattern">
+                        <pattern-ref name="FILENAME"/>
+                    </pattern>
+                </params>
+            </validation>
+        </rule>
+
+        <rule name="SECONDARY-METS-AUDIO_FILENAMES_VALID">
+            <description>Názvy všech souborů SECONDARY-METS-AUDIO musí obsahovat jen povolené znaky.</description>
+            <validation functionName="checkAllFilenamesMatchPattern">
+                <params>
+                    <value name="files" type="FILE_LIST">
+                        <value-ref name="SECONDARY-METS-AUDIO_FILES"/>
                     </value>
                     <pattern name="pattern">
                         <pattern-ref name="FILENAME"/>
@@ -747,7 +761,16 @@
             <validation functionName="checkAllFileListsHaveSameSize">
                 <params>
                     <value name="files" type="FILE_LIST">
-                        <value-ref name="SECONDARY-METS_FILES"/>
+                        <evaluation functionName="mergeFiles">
+                            <params>
+                                <value name="file_list" type="FILE_LIST">
+                                    <value-ref name="SECONDARY-METS-IMAGE_FILES"/>
+                                </value>
+                                <value name="file_list" type="FILE_LIST">
+                                    <value-ref name="SECONDARY-METS-AUDIO_FILES"/>
+                                </value>
+                            </params>
+                        </evaluation>
                     </value>
                     <value name="files" type="FILE_LIST">
                         <evaluation functionName="mergeFiles">
@@ -792,7 +815,8 @@
                     <value name="files" type="FILE_LIST">
                         <value-ref name="SOURCE-AUDIO_FILES"/>
                     </value>
-                    <value name="files" type="FILE_LIST">
+                    <!--mastercopy_audio je nepovinné-->
+                    <value name="files_optional" type="FILE_LIST">
                         <value-ref name="MASTER-COPY-AUDIO_FILES"/>
                     </value>
                     <value name="files" type="FILE_LIST">
@@ -805,14 +829,27 @@
 
         <!--délky názvů souborů v top-level adesářích-->
 
-        <rule name="SECONDARY-METS_FILENAMES_LENGTHS_SAME">
-            <description>Délky názvů všech souborů SECONDARY-METS musí být stejné. Tedy čísla stran jsou zarovnaná na
+        <rule name="SECONDARY-METS-IMAGE_FILENAMES_LENGTHS_SAME">
+            <description>Délky názvů všech souborů SECONDARY-METS-IMAGE musí být stejné. Tedy čísla stran jsou zarovnaná na
                 stejný počet nul.
             </description>
             <validation functionName="checkFilenamesLengthsSame">
                 <params>
                     <value name="files" type="FILE_LIST">
-                        <value-ref name="SECONDARY-METS_FILES"/>
+                        <value-ref name="SECONDARY-METS-IMAGE_FILES"/>
+                    </value>
+                </params>
+            </validation>
+        </rule>
+
+        <rule name="SECONDARY-METS-AUDIO_FILENAMES_LENGTHS_SAME">
+            <description>Délky názvů všech souborů SECONDARY-METS-AUDIO musí být stejné. Tedy čísla stran jsou zarovnaná na
+                stejný počet nul.
+            </description>
+            <validation functionName="checkFilenamesLengthsSame">
+                <params>
+                    <value name="files" type="FILE_LIST">
+                        <value-ref name="SECONDARY-METS-AUDIO_FILES"/>
                     </value>
                 </params>
             </validation>
@@ -912,12 +949,23 @@
 
         <!--žádný ze souborů v top-level adresářích není adresář-->
 
-        <rule name="SECONDARY-METS_FILES_ARE_NOT_DIRS">
-            <description>Žádný soubor SECONDARY-METS nesmí být adresář.</description>
+        <rule name="SECONDARY-METS-IMAGE_FILES_ARE_NOT_DIRS">
+            <description>Žádný soubor SECONDARY-METS-IMAGE nesmí být adresář.</description>
             <validation functionName="checkNoFileIsDir">
                 <params>
                     <value name="files" type="FILE_LIST">
-                        <value-ref name="SECONDARY-METS_FILES"/>
+                        <value-ref name="SECONDARY-METS-IMAGE_FILES"/>
+                    </value>
+                </params>
+            </validation>
+        </rule>
+
+        <rule name="SECONDARY-METS-AUDIO_FILES_ARE_NOT_DIRS">
+            <description>Žádný soubor SECONDARY-METS-AUDIO nesmí být adresář.</description>
+            <validation functionName="checkNoFileIsDir">
+                <params>
+                    <value name="files" type="FILE_LIST">
+                        <value-ref name="SECONDARY-METS-AUDIO_FILES"/>
                     </value>
                 </params>
             </validation>
@@ -1013,7 +1061,10 @@
                         <value-ref name="SECONDARY-METS-DIR_FILE"/>
                     </value>
                     <value name="files" type="FILE_LIST">
-                        <value-ref name="SECONDARY-METS_FILES"/>
+                        <value-ref name="SECONDARY-METS-IMAGE_FILES"/>
+                    </value>
+                    <value name="files" type="FILE_LIST">
+                        <value-ref name="SECONDARY-METS-AUDIO_FILES"/>
                     </value>
                 </params>
             </validation>
@@ -1165,7 +1216,10 @@
                         <value-ref name="PRIMARY-METS_FILE"/>
                     </value>
                     <value name="files" type="FILE_LIST">
-                        <value-ref name="SECONDARY-METS_FILES"/>
+                        <value-ref name="SECONDARY-METS-IMAGE_FILES"/>
+                    </value>
+                    <value name="files" type="FILE_LIST">
+                        <value-ref name="SECONDARY-METS-AUDIO_FILES"/>
                     </value>
                     <value name="files" type="FILE_LIST">
                         <value-ref name="OCR-TEXT_FILES"/>
@@ -1302,7 +1356,10 @@
                         <value-ref name="PRIMARY-METS_FILE"/>
                     </value>
                     <value name="files" type="FILE_LIST">
-                        <value-ref name="SECONDARY-METS_FILES"/>
+                        <value-ref name="SECONDARY-METS-IMAGE_FILES"/>
+                    </value>
+                    <value name="files" type="FILE_LIST">
+                        <value-ref name="SECONDARY-METS-AUDIO_FILES"/>
                     </value>
                     <value name="files" type="FILE_LIST">
                         <value-ref name="OCR-TEXT_FILES"/>
@@ -2305,14 +2362,25 @@
                 </params>
             </validation>
         </rule>
-
-        <rule name="SECONDARY_METS_HEADER_MATCH_PROFILE">
-            <description>Sekundární METS musí obsahovat hlavičku metsHdr, která musí splňovat požadovaný profil.
+        <rule name="SECONDARY-METS-IMAGE_HEADER_MATCH_PROFILE">
+            <description>Sekundární METS (pro obrázek) musí obsahovat hlavičku metsHdr, která musí splňovat požadovaný profil.
             </description>
             <validation functionName="checkMetsMatchProfile">
                 <params>
                     <value name="mets_files" type="FILE_LIST">
-                        <value-ref name="SECONDARY-METS_FILES"/>
+                        <value-ref name="SECONDARY-METS-IMAGE_FILES"/>
+                    </value>
+                    <value name="profile" type="STRING">secondary_mets_header</value>
+                </params>
+            </validation>
+        </rule>
+        <rule name="SECONDARY-METS-AUDIO_HEADER_MATCH_PROFILE">
+            <description>Sekundární METS (pro audio) musí obsahovat hlavičku metsHdr, která musí splňovat požadovaný profil.
+            </description>
+            <validation functionName="checkMetsMatchProfile">
+                <params>
+                    <value name="mets_files" type="FILE_LIST">
+                        <value-ref name="SECONDARY-METS-AUDIO_FILES"/>
                     </value>
                     <value name="profile" type="STRING">secondary_mets_header</value>
                 </params>
@@ -3132,12 +3200,13 @@
     <!--TODO: projit tuto sekci a zejmena proverit, ze SECONDARY-METS_FILES obsahuje soubory secondary_mets pro obrazove ale i zvukove soubory-->
     <rules-section name="Technická metadata" description="Kontrola technických (MIX, PREMIS, AES57) metadat.">
 
+        <!--SECONDARY-METS_FILES-->
         <rule name="MIX_VALID_BY_XSD">
-            <description>Záznamy MIX v souborech SECONDARY-METS musí být validní podle XML Schema (mix_2.0.xsd).</description>
+            <description>Záznamy MIX v souborech SECONDARY-METS-IMAGE musí být validní podle XML Schema (mix_2.0.xsd).</description>
             <validation functionName="checkMixIsValidByXsd">
                 <params>
                     <value name="mets_files" type="FILE_LIST">
-                        <value-ref name="SECONDARY-METS_FILES"/>
+                        <value-ref name="SECONDARY-METS-IMAGE_FILES"/>
                     </value>
                     <value name="xsd_file" type="FILE">
                         <value-ref name="MIX_XSD_FILE"/>
@@ -3148,11 +3217,11 @@
         </rule>
 
         <rule name="MIX_FOR_ORIGINAL_SCAN_MATCHES_PROFILE">
-            <description>Záznamy MIX v souborech SECONDARY-METS pro původní skeny musí splňovat profil.</description>
+            <description>Záznamy MIX v souborech SECONDARY-METS-IMAGE pro původní skeny musí splňovat profil.</description>
             <validation functionName="checkMetsAmdsecElementsMatchProfile">
                 <params>
                     <value name="mets_files" type="FILE_LIST">
-                        <value-ref name="SECONDARY-METS_FILES"/>
+                        <value-ref name="SECONDARY-METS-IMAGE_FILES"/>
                     </value>
                     <value name="element_xpath" type="STRING">mets:techMD[@ID="MIX_001"]</value>
                     <value name="element_must_exist" type="BOOLEAN">true</value>
@@ -3162,11 +3231,11 @@
         </rule>
 
         <rule name="MIX_FOR_FIRST_MASTER_COPY_MATCHES_PROFILE">
-            <description>Záznamy MIX v souborech SECONDARY-METS pro první verze archivních kopií musí splňovat profil.</description>
+            <description>Záznamy MIX v souborech SECONDARY-METS-IMAGE pro první verze archivních kopií musí splňovat profil.</description>
             <validation functionName="checkMetsAmdsecElementsMatchProfile">
                 <params>
                     <value name="mets_files" type="FILE_LIST">
-                        <value-ref name="SECONDARY-METS_FILES"/>
+                        <value-ref name="SECONDARY-METS-IMAGE_FILES"/>
                     </value>
                     <value name="element_xpath" type="STRING">mets:techMD[@ID="MIX_002"]</value>
                     <value name="element_must_exist" type="BOOLEAN">true</value>
@@ -3176,11 +3245,11 @@
         </rule>
 
         <rule name="MIX_FOR_OTHER_MASTER_COPIES_MATCHES_PROFILE">
-            <description>Záznamy MIX v souborech SECONDARY-METS pro další verze archivních kopií, pokud existují, musí splňovat profil.</description>
+            <description>Záznamy MIX v souborech SECONDARY-METS-IMAGE pro další verze archivních kopií, pokud existují, musí splňovat profil.</description>
             <validation functionName="checkMetsAmdsecElementsMatchProfile">
                 <params>
                     <value name="mets_files" type="FILE_LIST">
-                        <value-ref name="SECONDARY-METS_FILES"/>
+                        <value-ref name="SECONDARY-METS-IMAGE_FILES"/>
                     </value>
                     <value name="element_xpath" type="STRING">mets:techMD[not(@ID="MIX_001") and not(@ID="MIX_002") and
                         starts-with(@ID,"MIX_")]
@@ -3192,13 +3261,29 @@
         </rule>
 
 
-        <rule name="PREMIS_VALID_BY_XSD">
-            <description>Záznamy PREMIS v souborech SECONDARY-METS musí být validní podle XML Schema (premis_2.2.xsd).
+        <rule name="PREMIS-IMAGE_VALID_BY_XSD">
+            <description>Záznamy PREMIS v souborech SECONDARY-METS-IMAGE musí být validní podle XML Schema (premis_2.2.xsd).
             </description>
             <validation functionName="checkPremisIsValidByXsd">
                 <params>
                     <value name="mets_files" type="FILE_LIST">
-                        <value-ref name="SECONDARY-METS_FILES"/>
+                        <value-ref name="SECONDARY-METS-IMAGE_FILES"/>
+                    </value>
+                    <value name="xsd_file" type="FILE">
+                        <value-ref name="PREMIS_XSD_FILE"/>
+                    </value>
+                    <value name="level" type="LEVEL">ERROR</value>
+                </params>
+            </validation>
+        </rule>
+
+        <rule name="PREMIS-AUDIO_VALID_BY_XSD">
+            <description>Záznamy PREMIS v souborech SECONDARY-METS-IMAGE musí být validní podle XML Schema (premis_2.2.xsd).
+            </description>
+            <validation functionName="checkPremisIsValidByXsd">
+                <params>
+                    <value name="mets_files" type="FILE_LIST">
+                        <value-ref name="SECONDARY-METS-AUDIO_FILES"/>
                     </value>
                     <value name="xsd_file" type="FILE">
                         <value-ref name="PREMIS_XSD_FILE"/>
@@ -3214,7 +3299,10 @@
             <validation functionName="checkMetsAmdsecElementsMatchProfile">
                 <params>
                     <value name="mets_files" type="FILE_LIST">
-                        <value-ref name="SECONDARY-METS_FILES"/>
+                        <value-ref name="SECONDARY-METS-IMAGE_FILES"/>
+                    </value>
+                    <value name="mets_files" type="FILE_LIST">
+                        <value-ref name="SECONDARY-METS-AUDIO_FILES"/>
                     </value>
                     <value name="element_xpath" type="STRING">mets:techMD[@ID="OBJ_001"]</value>
                     <value name="element_must_exist" type="BOOLEAN">true</value>
@@ -3229,7 +3317,10 @@
             <validation functionName="checkMetsAmdsecElementsMatchProfile">
                 <params>
                     <value name="mets_files" type="FILE_LIST">
-                        <value-ref name="SECONDARY-METS_FILES"/>
+                        <value-ref name="SECONDARY-METS-IMAGE_FILES"/>
+                    </value>
+                    <value name="mets_files" type="FILE_LIST">
+                        <value-ref name="SECONDARY-METS-AUDIO_FILES"/>
                     </value>
                     <value name="element_xpath" type="STRING">mets:techMD[@ID="OBJ_002"]</value>
                     <value name="element_must_exist" type="BOOLEAN">true</value>
@@ -3244,7 +3335,10 @@
             <validation functionName="checkMetsAmdsecElementsMatchProfile">
                 <params>
                     <value name="mets_files" type="FILE_LIST">
-                        <value-ref name="SECONDARY-METS_FILES"/>
+                        <value-ref name="SECONDARY-METS-IMAGE_FILES"/>
+                    </value>
+                    <value name="mets_files" type="FILE_LIST">
+                        <value-ref name="SECONDARY-METS-AUDIO_FILES"/>
                     </value>
                     <value name="element_xpath" type="STRING">mets:techMD[@ID="OBJ_003"]</value>
                     <value name="element_must_exist" type="BOOLEAN">true</value>
@@ -3259,7 +3353,10 @@
             <validation functionName="checkMetsAmdsecElementsMatchProfile">
                 <params>
                     <value name="mets_files" type="FILE_LIST">
-                        <value-ref name="SECONDARY-METS_FILES"/>
+                        <value-ref name="SECONDARY-METS-IMAGE_FILES"/>
+                    </value>
+                    <value name="mets_files" type="FILE_LIST">
+                        <value-ref name="SECONDARY-METS-AUDIO_FILES"/>
                     </value>
                     <value name="element_xpath" type="STRING">mets:digiprovMD[starts-with(@ID,"EVT_")]</value>
                     <value name="element_must_exist" type="BOOLEAN">true</value>
@@ -3274,7 +3371,10 @@
             <validation functionName="checkMetsAmdsecElementsMatchProfile">
                 <params>
                     <value name="mets_files" type="FILE_LIST">
-                        <value-ref name="SECONDARY-METS_FILES"/>
+                        <value-ref name="SECONDARY-METS-IMAGE_FILES"/>
+                    </value>
+                    <value name="mets_files" type="FILE_LIST">
+                        <value-ref name="SECONDARY-METS-AUDIO_FILES"/>
                     </value>
                     <value name="element_xpath" type="STRING">mets:digiprovMD[starts-with(@ID,"AGENT_")]</value>
                     <value name="element_must_exist" type="BOOLEAN">true</value>
@@ -3288,7 +3388,10 @@
             <validation functionName="checkPremisLinks">
                 <params>
                     <value name="mets_files" type="FILE_LIST">
-                        <value-ref name="SECONDARY-METS_FILES"/>
+                        <value-ref name="SECONDARY-METS-IMAGE_FILES"/>
+                    </value>
+                    <value name="mets_files" type="FILE_LIST">
+                        <value-ref name="SECONDARY-METS-AUDIO_FILES"/>
                     </value>
                 </params>
             </validation>
@@ -3296,11 +3399,11 @@
 
 
         <rule name="AES57_VALID_BY_XSD">
-            <description>Záznamy AES57 v souborech SECONDARY-METS musí být validní podle XML Schema (aes57_1.0.xsd).</description>
+            <description>Záznamy AES57 v souborech SECONDARY-METS-AUDIO musí být validní podle XML Schema (aes57_1.0.xsd).</description>
             <validation functionName="checkAes57IsValidByXsd">
                 <params>
                     <value name="mets_files" type="FILE_LIST">
-                        <value-ref name="SECONDARY-METS_FILES"/>
+                        <value-ref name="SECONDARY-METS-AUDIO_FILES"/>
                     </value>
                     <value name="xsd_file" type="FILE">
                         <value-ref name="AES57_XSD_FILE"/>
@@ -3327,7 +3430,10 @@
                         <value-ref name="PRIMARY-METS_FILE"/>
                     </value>
                     <value name="mets_files" type="FILE_LIST">
-                        <value-ref name="SECONDARY-METS_FILES"/>
+                        <value-ref name="SECONDARY-METS-IMAGE_FILES"/>
+                    </value>
+                    <value name="mets_files" type="FILE_LIST">
+                        <value-ref name="SECONDARY-METS-AUDIO_FILES"/>
                     </value>
                     <value name="xsd_file" type="FILE">
                         <value-ref name="CMD_XSD_FILE"/>
@@ -3344,7 +3450,10 @@
             <validation functionName="checkMetsAmdsecElementsMatchProfile">
                 <params>
                     <value name="mets_files" type="FILE_LIST">
-                        <value-ref name="SECONDARY-METS_FILES"/>
+                        <value-ref name="SECONDARY-METS-IMAGE_FILES"/>
+                    </value>
+                    <value name="mets_files" type="FILE_LIST">
+                        <value-ref name="SECONDARY-METS-AUDIO_FILES"/>
                     </value>
                     <value name="element_xpath" type="STRING">mets:rightsMD</value>
                     <value name="element_must_exist" type="BOOLEAN">false</value>
