@@ -248,12 +248,13 @@
                             </element>
                         </expectedElements>
                     </element>
-                    <element name="mods:genre" specification="@type='model'">
+                    <element name="mods:genre">
                         <expectedAttributes>
-                            <attribute name="type"/>
+                            <!--TODO: neni jasna povinnost atributu type-->
+                            <attribute name="type" mandatory="false"/>
                         </expectedAttributes>
                         <expectedContent>
-                            <value>soundcollection</value>
+                            <value>sound collection</value>
                         </expectedContent>
                     </element>
                     <element name="mods:identifier" specification="@type='uuid'" mandatory="false">

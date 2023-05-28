@@ -421,9 +421,9 @@
                     <attribute name="displayLabel">
                         <expectedContent>
                             <oneOf>
-                                <value>contents</value>
-                                <value>incomplete contents</value>
-                                <value>partial contents</value>
+                                <value>Contents</value>
+                                <value>Incomplete contents</value>
+                                <value>Partial contents</value>
                             </oneOf>
                         </expectedContent>
                     </attribute>
@@ -507,10 +507,10 @@
                             </oneOf>
                         </expectedContent>
                     </attribute>
-                    <attribute name="edition" mandatory="true">
+                    <!--TODO: (str. 43) neni zrejme, co se ma vyplnit, kdyz je zdrojem MARC:072 $9 (u MARC:072 $a tam ma byt "Konspekt), nechavam edition nepovinny-->
+                    <attribute name="edition" mandatory="false">
                         <expectedContent>
                             <oneOf>
-                                <!--TODO: (str. 43) neni zrejme, co se ma vyplnit, kdyz je zdrojem MARC:072 $9 (u MARC:072 $a tam ma byt "Konspekt)-->
                                 <value>Konspekt</value>
                             </oneOf>
                         </expectedContent>
