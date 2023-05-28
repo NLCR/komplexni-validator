@@ -67,7 +67,6 @@
                 </expectedAttributes>
 
                 <expectedElements>
-                    <!--chyba v DMF: atribut ROLE v METS 1.11 nesmí nabývat hodnoty 'creator' a TYPE 'organization'-->
                     <element name="mets:agent" specification="@ROLE='CREATOR'">
                         <expectedAttributes>
                             <attribute name="ROLE" mandatory="true">
@@ -90,7 +89,6 @@
                         </expectedElements>
                     </element>
 
-                    <!--chyba v DMF: atribut ROLE v METS 1.11 nesmí nabývat hodnoty 'archivist' a TYPE 'organization' -->
                     <element name="mets:agent" specification="@ROLE='ARCHIVIST'">
                         <expectedAttributes>
                             <attribute name="ROLE" mandatory="true">
