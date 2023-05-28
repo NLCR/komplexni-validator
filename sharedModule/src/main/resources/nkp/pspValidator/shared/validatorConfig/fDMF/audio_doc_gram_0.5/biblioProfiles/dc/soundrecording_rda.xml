@@ -43,7 +43,7 @@
                 <expectedContent/>
             </element>
 
-            <element name="dc:coverage" errorMessage="Očekáván minimálně jeden povinný element dc:coverage obsahující údaje o rozsahu.">
+            <element name="dc:format" errorMessage="Očekáván minimálně jeden povinný element dc:format obsahující údaje o rozsahu.">
                 <expectedContent/>
             </element>
 
@@ -58,7 +58,7 @@
                 <expectedContent/>
             </element>
 
-	<!--dc:subject ve standardu uveden jako povinný k mods:topic, ale nadřazený element mds:subject je nepovinný, tj. i dc:subject by měl být nepovinný-->
+            <!--dc:subject ve standardu uveden jako povinný k mods:topic, ale nadřazený element mds:subject je nepovinný, tj. i dc:subject by měl být nepovinný-->
             <element name="dc:subject"
                      errorMessage="Očekáván alespoň jeden povinný element dc:subject obsahující výraz specifikující nebo charakterizující obsah titulu.">
                 <expectedContent/>
