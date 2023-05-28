@@ -3300,9 +3300,9 @@
                     <value name="mets_files" type="FILE_LIST">
                         <value-ref name="SECONDARY-METS-IMAGE_FILES"/>
                     </value>
-                    <value name="mets_files" type="FILE_LIST">
+                    <!--<value name="mets_files" type="FILE_LIST">
                         <value-ref name="SECONDARY-METS-AUDIO_FILES"/>
-                    </value>
+                    </value>-->
                     <value name="element_xpath" type="STRING">mets:techMD[@ID="OBJ_001"]</value>
                     <value name="element_must_exist" type="BOOLEAN">true</value>
                     <value name="profile_id" type="STRING">premis_object_ps</value>
@@ -3318,9 +3318,9 @@
                     <value name="mets_files" type="FILE_LIST">
                         <value-ref name="SECONDARY-METS-IMAGE_FILES"/>
                     </value>
-                    <value name="mets_files" type="FILE_LIST">
+                    <!--<value name="mets_files" type="FILE_LIST">
                         <value-ref name="SECONDARY-METS-AUDIO_FILES"/>
-                    </value>
+                    </value>-->
                     <value name="element_xpath" type="STRING">mets:techMD[@ID="OBJ_002"]</value>
                     <value name="element_must_exist" type="BOOLEAN">true</value>
                     <value name="profile_id" type="STRING">premis_object_mc</value>
@@ -3336,9 +3336,9 @@
                     <value name="mets_files" type="FILE_LIST">
                         <value-ref name="SECONDARY-METS-IMAGE_FILES"/>
                     </value>
-                    <value name="mets_files" type="FILE_LIST">
+                    <!--<value name="mets_files" type="FILE_LIST">
                         <value-ref name="SECONDARY-METS-AUDIO_FILES"/>
-                    </value>
+                    </value>-->
                     <value name="element_xpath" type="STRING">mets:techMD[@ID="OBJ_003"]</value>
                     <value name="element_must_exist" type="BOOLEAN">true</value>
                     <value name="profile_id" type="STRING">premis_object_alto</value>
@@ -3389,9 +3389,9 @@
                     <value name="mets_files" type="FILE_LIST">
                         <value-ref name="SECONDARY-METS-IMAGE_FILES"/>
                     </value>
-                    <value name="mets_files" type="FILE_LIST">
+                    <!--<value name="mets_files" type="FILE_LIST">
                         <value-ref name="SECONDARY-METS-AUDIO_FILES"/>
-                    </value>
+                    </value>-->
                 </params>
             </validation>
         </rule>
