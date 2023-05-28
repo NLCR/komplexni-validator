@@ -144,7 +144,12 @@
                 </expectedContent>
             </element>
 
-            <element name="mods:genre" specification="text()='sound recording'" mandatory="false"/>
+            <!--<element name="mods:genre" specification="text()='sound collection'" mandatory="false"/>-->
+            <element name="mods:genre" mandatory="false">
+                <expectedContent>
+                    <value>sound collection</value>
+                </expectedContent>
+            </element>
 
             <!--originInfo-->
 

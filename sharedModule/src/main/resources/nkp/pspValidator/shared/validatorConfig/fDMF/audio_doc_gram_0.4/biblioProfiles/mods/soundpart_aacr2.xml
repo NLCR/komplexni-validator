@@ -140,9 +140,11 @@
                 </expectedContent>
             </element>
 
-            <element name="mods:genre" specification="@type='model'">
+            <!--<element name="mods:genre" specification="@type='model'">-->
+            <element name="mods:genre">
                 <expectedAttributes>
-                    <attribute name="type"/>
+                    <!--TODO: str.46: není jasná povinnost, atribut je uveden na stejném řádku, jako element. Předpokládáme, že povinost se vztahuje k elementu a necháváme atribut nepovinný-->
+                    <attribute name="type" mandatory="false"/>
                 </expectedAttributes>
                 <expectedContent>
                     <value>sound part</value>

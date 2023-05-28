@@ -150,17 +150,21 @@
                 </expectedContent>
             </element>
 
-            <!--v dmf formulovano nejasne, co ma obsahovat, predpokladam, ze se mysli atribut type-->
-            <element name="mods:genre" specification="@type='model'">
+            <!--<element name="mods:genre" specification="@type='model'">-->
+            <element name="mods:genre">
                 <expectedAttributes>
-                    <attribute name="type"/>
+                    <attribute name="type">
+                        <expectedContent>
+                            <oneOf>
+                                <value>cover</value>
+                                <value>booklet</value>
+                                <value>imgdisc</value>
+                            </oneOf>
+                        </expectedContent>
+                    </attribute>
                 </expectedAttributes>
                 <expectedContent>
-                    <oneOf>
-                        <value>cover</value>
-                        <value>booklet</value>
-                        <value>imgdisc</value>
-                    </oneOf>
+                    <value>supplement</value>
                 </expectedContent>
             </element>
 
