@@ -82,6 +82,10 @@
                                     <element name="premis:agentNote" mandatory="false" repeatable="true">
                                         <expectedContent/>
                                     </element>
+
+                                    <element name="premis:agentExtension" mandatory="false" repeatable="true">
+                                        <expectedContent/>
+                                    </element>
                                 </expectedElements>
                             </element>
                         </expectedElements>
