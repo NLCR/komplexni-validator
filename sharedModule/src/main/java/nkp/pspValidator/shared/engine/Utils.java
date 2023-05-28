@@ -239,6 +239,15 @@ public class Utils {
         }
     }
 
+    public static String setToString(Set<String> set) {
+        if (set == null) {
+            return null;
+        }
+        List<String> list = new ArrayList<>(set);
+        return listToString(list);
+    }
+
+
     public static void deleteNonemptyDir(File dir) throws IOException {
         /*File[] files = dir.listFiles();
         for (File file : files) {

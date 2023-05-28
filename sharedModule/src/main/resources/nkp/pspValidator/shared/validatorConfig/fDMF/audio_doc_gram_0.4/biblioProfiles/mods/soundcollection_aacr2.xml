@@ -282,14 +282,14 @@
                 </expectedContent>
             </element>
 
-            <element name="mods:identifier" specification="@type='urn:nbn'">
+            <element name="mods:identifier" specification="@type='urnnbn'">
                 <expectedAttributes>
                     <attribute name="type"/>
                 </expectedAttributes>
                 <expectedContent/>
             </element>
 
-            <element name="mods:identifier" specification="@type!='uuid' and @type!='urn:nbn'" mandatory="false">
+            <element name="mods:identifier" specification="@type!='uuid' and @type!='urnnbn'" mandatory="false">
                 <expectedAttributes>
                     <attribute name="type"/>
                 </expectedAttributes>

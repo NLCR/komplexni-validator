@@ -2254,8 +2254,7 @@
         </rule>
 
         <rule name="MODS_IDENTIFIERS_URN_NBN_VALID">
-            <description>Všechny identifikátory URN:NBN napříč MODS záznamy musí platnou podobu (např.
-                urn:nbn:cz:abd005-00012z).
+            <description>Všechny identifikátory URN:NBN napříč MODS záznamy musí platnou podobu (např. urn:nbn:cz:abd005-00012z).
             </description>
             <validation functionName="checkUrnNbnIdentifiersValid">
                 <params>
