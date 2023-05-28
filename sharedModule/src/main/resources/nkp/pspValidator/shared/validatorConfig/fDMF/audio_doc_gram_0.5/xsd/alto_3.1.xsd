@@ -86,6 +86,10 @@
     3. The description of the attribute ROTATION is changed to the rotation of the contents of a block and not the block itself. The attribute is inherited by all sub elements.
 -->
 
+<!--
+    From http://www.loc.gov/alto/v3/alto.xsd
+-->
+
 <xsd:schema xmlns="http://www.loc.gov/standards/alto/ns-v3#" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xlink="http://www.w3.org/1999/xlink" targetNamespace="http://www.loc.gov/standards/alto/ns-v3#" elementFormDefault="qualified" attributeFormDefault="unqualified" version="3.1">
     <!--<xsd:import namespace="http://www.w3.org/1999/xlink" schemaLocation="http://www.loc.gov/standards/xlink/xlink.xsd"/>-->
     <xsd:import namespace="http://www.w3.org/1999/xlink" schemaLocation="xlink.xsd"/>

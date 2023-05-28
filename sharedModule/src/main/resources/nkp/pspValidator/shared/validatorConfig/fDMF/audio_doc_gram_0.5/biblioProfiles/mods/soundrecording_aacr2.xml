@@ -54,6 +54,10 @@
                 </expectedAttributes>
 
                 <expectedElements>
+                    <element name="mods:nonSort" mandatory="false">
+                        <expectedContent/>
+                    </element>
+
                     <element name="mods:title">
                         <expectedContent/>
                     </element>
@@ -117,6 +121,10 @@
                         <expectedContent/>
                     </element>
 
+                    <element name="mods:nameIdentifier" mandatory="false">
+                        <expectedContent/>
+                    </element>
+
                     <element name="mods:role" mandatory="false">
                         <expectedElements>
                             <element name="mods:roleTerm">
@@ -143,12 +151,14 @@
                 </expectedElements>
             </element>
 
-            <element name="mods:genre" specification="@type='model'">
+            <!--<element name="mods:genre" specification="@type='model'">-->
+            <element name="mods:genre">
                 <expectedAttributes>
-                    <attribute name="type"/>
+                    <!--TODO: str.39: není jasná povinnost, atribut je uveden na stejném řádku, jako element. Předpokládáme, že povinost se vztahuje k elementu a necháváme atribut nepovinný-->
+                    <attribute name="type" mandatory="false"/>
                 </expectedAttributes>
                 <expectedContent>
-                    <value>soundrecording</value>
+                    <value>sound recording</value>
                 </expectedContent>
             </element>
 
@@ -201,9 +211,10 @@
                     <attribute name="objectPart" mandatory="false">
                         <recommendedContent>
                             <oneOf>
-                                <value>Sung or spoken text</value>
-                                <value>Translation</value>
-                                <value>Libretto</value>
+                                <value>sung or spoken text</value>
+                                <value>translation</value>
+                                <value>libretto</value>
+                                <value>accompanying materiál</value>
                             </oneOf>
                         </recommendedContent>
                     </attribute>
@@ -239,9 +250,7 @@
             <element name="mods:typeOfResource" mandatory="false">
                 <expectedContent>
                     <oneOf>
-                        <value>sound recording musical</value>
-                        <value>sound recording nonmusical</value>
-			<value>sound recording-musical</value>
+                        <value>sound recording-musical</value>
                         <value>sound recording-nonmusical</value>
                     </oneOf>
                 </expectedContent>
@@ -252,9 +261,9 @@
                     <attribute name="displayLabel">
                         <expectedContent>
                             <oneOf>
-                                <value>contents</value>
-                                <value>incomplete contents</value>
-                                <value>partial contents</value>
+                                <value>Contents</value>
+                                <value>Incomplete contents</value>
+                                <value>Partial contents</value>
                             </oneOf>
                         </expectedContent>
                     </attribute>
@@ -308,10 +317,16 @@
 
                     <element name="mods:name" mandatory="false">
                         <!--V DMF je "použít kontrolovaný slovník, například ... " - tj. kontrolovaný slovník NENÍ vyžadován DMF-->
-                        <expectedContent/>
+                        <expectedElements>
+                            <element name="mods:namePart" mandatory="false">
+                                <expectedContent/>
+                            </element>
+                            <element name="mods:nameIdentifier" mandatory="false">
+                                <expectedContent/>
+                            </element>
+                        </expectedElements>
                     </element>
 
-                    <!--v DMF je prehozen title a title info: title je NAD titleinfo-->
                     <element name="mods:titleInfo" mandatory="false">
                         <expectedElements>
                             <element name="mods:title">
@@ -322,11 +337,33 @@
                 </expectedElements>
             </element>
 
+            <element name="mods:classification" mandatory="false">
+                <expectedAttributes>
+                    <attribute name="authority" mandatory="true">
+                        <expectedContent>
+                            <oneOf>
+                                <value>udc</value>
+                                <value>Konspekt</value>
+                            </oneOf>
+                        </expectedContent>
+                    </attribute>
+                    <!--TODO: (str. 43) neni zrejme, co se ma vyplnit, kdyz je zdrojem MARC:072 $9 (u MARC:072 $a tam ma byt "Konspekt), nechavam edition nepovinny-->
+                    <attribute name="edition" mandatory="false">
+                        <expectedContent>
+                            <oneOf>
+                                <value>Konspekt</value>
+                            </oneOf>
+                        </expectedContent>
+                    </attribute>
+                </expectedAttributes>
+                <expectedContent/>
+            </element>
+
             <element name="mods:relatedItem" mandatory="false" ignoreUnexpectedChildElements="true"/>
 
             <!--  identifikátory -->
 
-            <element name="mods:identifier" specification="@type='uuid'" mandatory="false">
+            <element name="mods:identifier" specification="@type='uuid'">
                 <expectedAttributes>
                     <attribute name="type"/>
                 </expectedAttributes>
@@ -335,14 +372,14 @@
                 </expectedContent>
             </element>
 
-            <element name="mods:identifier" specification="@type='issue-number'" mandatory="false">
+            <element name="mods:identifier" specification="@type='issue number'" mandatory="false">
                 <expectedAttributes>
                     <attribute name="type"/>
                 </expectedAttributes>
                 <expectedContent/>
             </element>
 
-            <element name="mods:identifier" specification="@type='matrix-number'" mandatory="false">
+            <element name="mods:identifier" specification="@type='matrix number'" mandatory="false">
                 <expectedAttributes>
                     <attribute name="type"/>
                 </expectedAttributes>

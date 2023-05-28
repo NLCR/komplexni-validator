@@ -39,8 +39,8 @@
                 <expectedContent/>
             </element>
 
-            <element name="dc:type" specification="text() = 'sound recording'"
-                     errorMessage="Očekáván povinný element dc:type obsahující text 'sound recording'.">
+            <element name="dc:type" specification="text() = 'model:soundpart'"
+                     errorMessage="Očekáván povinný element dc:type obsahující text 'model:soundpart'.">
                 <expectedContent/>
             </element>
 

@@ -116,6 +116,10 @@
                         <expectedContent/>
                     </element>
 
+                    <element name="mods:nameIdentifier" mandatory="false">
+                        <expectedContent/>
+                    </element>
+
                     <element name="mods:role" mandatory="false">
                         <expectedElements>
                             <element name="mods:roleTerm" mandatory="false">
@@ -142,21 +146,28 @@
 
             <element name="mods:typeOfResource">
                 <expectedContent>
-                    <value>text</value>
+                    <oneOf>
+                        <value>text</value>
+                        <value>still image</value>
+                    </oneOf>
                 </expectedContent>
             </element>
 
-            <!--v dmf formulovano nejasne, co ma obsahovat, predpokladam, ze se mysli atribut type-->
-            <element name="mods:genre" specification="@type='model'">
+            <!--<element name="mods:genre" specification="@type='model'">-->
+            <element name="mods:genre">
                 <expectedAttributes>
-                    <attribute name="type"/>
+                    <attribute name="type">
+                        <expectedContent>
+                            <oneOf>
+                                <value>cover</value>
+                                <value>booklet</value>
+                                <value>imgdisc</value>
+                            </oneOf>
+                        </expectedContent>
+                    </attribute>
                 </expectedAttributes>
                 <expectedContent>
-                    <oneOf>
-                        <value>cover</value>
-                        <value>booklet</value>
-                        <value>imgdisc</value>
-                    </oneOf>
+                    <value>supplement</value>
                 </expectedContent>
             </element>
 
@@ -237,15 +248,16 @@
                             </element>
                         </expectedElements>
                     </element>
-                    <element name="mods:genre" specification="@type='model'">
+                    <element name="mods:genre">
                         <expectedAttributes>
-                            <attribute name="type"/>
+                            <!--TODO: neni jasna povinnost atributu type-->
+                            <attribute name="type" mandatory="false"/>
                         </expectedAttributes>
                         <expectedContent>
-                            <value>soundcollection</value>
+                            <value>sound collection</value>
                         </expectedContent>
                     </element>
-                    <element name="mods:identifier" specification="@type='uuid'">
+                    <element name="mods:identifier" specification="@type='uuid'" mandatory="false">
                         <expectedAttributes>
                             <attribute name="type"/>
                         </expectedAttributes>

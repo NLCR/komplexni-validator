@@ -38,6 +38,11 @@
                 <expectedContent/>
             </element>
 
+            <element name="dc:type" specification="text() = 'model:soundrecording'"
+                     errorMessage="Očekáván povinný element dc:type obsahující text 'model:soundrecording'.">
+                <expectedContent/>
+            </element>
+
             <element name="dc:coverage" errorMessage="Očekáván minimálně jeden povinný element dc:coverage obsahující údaje o rozsahu.">
                 <expectedContent/>
             </element>
