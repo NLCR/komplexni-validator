@@ -253,7 +253,7 @@
                             <value>soundcollection</value>
                         </expectedContent>
                     </element>
-                    <element name="mods:identifier" specification="@type='uuid'">
+                    <element name="mods:identifier" specification="@type='uuid'" mandatory="false">
                         <expectedAttributes>
                             <attribute name="type"/>
                         </expectedAttributes>

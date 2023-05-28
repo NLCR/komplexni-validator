@@ -136,6 +136,7 @@
 
             <element name="mods:typeOfResource">
                 <expectedContent>
+                    <!--TODO: asi chyba v DMF (str. 46), patri sem spis "sound part"-->
                     <value>sound recording</value>
                 </expectedContent>
             </element>
@@ -180,7 +181,7 @@
 
             <!--  identifikátory -->
 
-            <element name="mods:identifier" specification="@type='uuid'" mandatory="false">
+            <element name="mods:identifier" specification="@type='uuid'">
                 <expectedAttributes>
                     <attribute name="type"/>
                 </expectedAttributes>

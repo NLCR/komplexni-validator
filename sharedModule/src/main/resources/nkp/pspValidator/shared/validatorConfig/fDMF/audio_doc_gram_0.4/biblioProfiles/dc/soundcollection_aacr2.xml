@@ -43,16 +43,6 @@
                 <expectedContent/>
             </element>
 
-            <element name="dc:type" mandatory="false">
-                <expectedContent>
-                    <oneOf>
-                        <value>sound recording</value>
-                        <value>sound recording-musical</value>
-                        <value>sound recording-nonmusical</value>
-                    </oneOf>
-                </expectedContent>
-            </element>
-
             <element name="dc:date" mandatory="true" errorMessage="Očekáván povinný element dc:date obsahující datum vydání předlohy.">
                 <expectedContent/>
             </element>

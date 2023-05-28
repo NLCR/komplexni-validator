@@ -408,8 +408,8 @@
             <element name="mods:typeOfResource" mandatory="false">
                 <expectedContent>
                     <oneOf>
-                        <value>sound recording musical</value>
-                        <value>sound recording nonmusical</value>
+                        <value>sound recording-musical</value>
+                        <value>sound recording-nonmusical</value>
                     </oneOf>
                 </expectedContent>
             </element>
@@ -475,10 +475,16 @@
 
                     <element name="mods:name" mandatory="false">
                         <!--V DMF je "použít kontrolovaný slovník, například ... " - tj. kontrolovaný slovník NENÍ vyžadován DMF-->
-                        <expectedContent/>
+                        <expectedElements>
+                            <element name="mods:namePart" mandatory="false">
+                                <expectedContent/>
+                            </element>
+                            <element name="mods:nameIdentifier" mandatory="false">
+                                <expectedContent/>
+                            </element>
+                        </expectedElements>
                     </element>
 
-                    <!--v DMF je prehozen title a title info: title je NAD titleinfo-->
                     <element name="mods:titleInfo" mandatory="false">
                         <expectedElements>
                             <element name="mods:title">
@@ -489,11 +495,33 @@
                 </expectedElements>
             </element>
 
+            <element name="mods:classification" mandatory="false">
+                <expectedAttributes>
+                    <attribute name="authority" mandatory="true">
+                        <expectedContent>
+                            <oneOf>
+                                <value>udc</value>
+                                <value>Konspekt</value>
+                            </oneOf>
+                        </expectedContent>
+                    </attribute>
+                    <attribute name="edition" mandatory="true">
+                        <expectedContent>
+                            <oneOf>
+                                <!--TODO: (str. 43) neni zrejme, co se ma vyplnit, kdyz je zdrojem MARC:072 $9 (u MARC:072 $a tam ma byt "Konspekt)-->
+                                <value>Konspekt</value>
+                            </oneOf>
+                        </expectedContent>
+                    </attribute>
+                </expectedAttributes>
+                <expectedContent/>
+            </element>
+
             <element name="mods:relatedItem" mandatory="false" ignoreUnexpectedChildElements="true"/>
 
             <!--  identifikátory -->
 
-            <element name="mods:identifier" specification="@type='uuid'" mandatory="false">
+            <element name="mods:identifier" specification="@type='uuid'">
                 <expectedAttributes>
                     <attribute name="type"/>
                 </expectedAttributes>
@@ -502,14 +530,14 @@
                 </expectedContent>
             </element>
 
-            <element name="mods:identifier" specification="@type='issue-number'" mandatory="false">
+            <element name="mods:identifier" specification="@type='issue number'" mandatory="false">
                 <expectedAttributes>
                     <attribute name="type"/>
                 </expectedAttributes>
                 <expectedContent/>
             </element>
 
-            <element name="mods:identifier" specification="@type='matrix-number'" mandatory="false">
+            <element name="mods:identifier" specification="@type='matrix number'" mandatory="false">
                 <expectedAttributes>
                     <attribute name="type"/>
                 </expectedAttributes>

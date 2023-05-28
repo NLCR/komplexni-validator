@@ -331,6 +331,13 @@
                     </element>
 
                     <element name="mods:recordContentSource" mandatory="false">
+                        <expectedAttributes>
+                            <attribute name="authority" mandatory="false">
+                                <expectedContent>
+                                    <value>marcorg</value>
+                                </expectedContent>
+                            </attribute>
+                        </expectedAttributes>
                         <expectedContent/>
                     </element>
 
@@ -348,6 +355,10 @@
                             http://www.pelagodesign.com/blog/2009/05/20/iso-8601-date-validation-that-doesnt-suck/
                             -->
                         </expectedContent>
+                    </element>
+
+                    <element name="mods:recordIdentifier" mandatory="false">
+                        <expectedContent/>
                     </element>
 
                     <element name="mods:recordChangeDate" mandatory="false">
