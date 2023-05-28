@@ -600,9 +600,8 @@
         <description>seznam volitelných typů identifikátorů pro úroveň SOUNDCOLLECTION</description>
         <evaluation functionName="buildListOfStrings">
             <params>
-                <value name="string" type="STRING">isbn</value>
-                <value name="string" type="STRING">ismn</value>
-                <value name="string" type="STRING">ccnb</value>
+                <value name="string" type="STRING">matrixnumber</value>
+                <value name="string" type="STRING">local</value>
             </params>
         </evaluation>
     </value-def>
@@ -631,10 +630,9 @@
         <description>seznam volitelných typů identifikátorů pro úroveň SOUNDRECORDING</description>
         <evaluation functionName="buildListOfStrings">
             <params>
-                <value name="string" type="STRING">urnnbn</value>
-                <value name="string" type="STRING">isbn</value>
-                <value name="string" type="STRING">ismn</value>
-                <value name="string" type="STRING">ccnb</value>
+                <value name="string" type="STRING">issuenumber</value>
+                <value name="string" type="STRING">matrixnumber</value>
+                <value name="string" type="STRING">local</value>
             </params>
         </evaluation>
     </value-def>
@@ -644,6 +642,7 @@
         <evaluation functionName="buildListOfStrings">
             <params>
                 <!--<value name="string" type="STRING">issn</value>-->
+                <value name="string" type="STRING">urnnbn</value>
             </params>
         </evaluation>
     </value-def>
@@ -663,7 +662,7 @@
         <description>seznam volitelných typů identifikátorů pro úroveň SOUNDPART</description>
         <evaluation functionName="buildListOfStrings">
             <params>
-                <value name="string" type="STRING">urnnbn</value>
+                <value name="string" type="STRING">local</value>
             </params>
         </evaluation>
     </value-def>
@@ -672,9 +671,11 @@
         <description>seznam zakázaných typů identifikátorů pro úroveň SOUNDPART</description>
         <evaluation functionName="buildListOfStrings">
             <params>
+                <value name="string" type="STRING">urnnbn</value>
                 <!--   <value name="string" type="STRING">isbn</value>
                    <value name="string" type="STRING">ismn</value>
                    <value name="string" type="STRING">ccnb</value>-->
+                <value name="string" type="STRING">urnnbn</value>
             </params>
         </evaluation>
     </value-def>
@@ -694,7 +695,8 @@
         <description>seznam volitelných typů identifikátorů pro úroveň SUPPLEMENT</description>
         <evaluation functionName="buildListOfStrings">
             <params>
-                <value name="string" type="STRING">urnnbn</value>
+                <value name="string" type="STRING">issuenumber</value>
+                <!--<value name="string" type="STRING">local</value>-->
             </params>
         </evaluation>
     </value-def>
@@ -703,10 +705,12 @@
         <description>seznam zakázaných typů identifikátorů pro úroveň SUPPLEMENT</description>
         <evaluation functionName="buildListOfStrings">
             <params>
+                <value name="string" type="STRING">urnnbn</value>
                 <!--<value name="string" type="STRING">issn</value>-->
                 <!-- <value name="string" type="STRING">isbn</value>
                  <value name="string" type="STRING">ismn</value>
                  <value name="string" type="STRING">ccnb</value>-->
+                <value name="string" type="STRING">urnnbn</value>
             </params>
         </evaluation>
     </value-def>
