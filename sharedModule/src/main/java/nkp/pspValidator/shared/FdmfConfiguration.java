@@ -199,7 +199,7 @@ public class FdmfConfiguration {
         File[] files = xsdDir.listFiles((dir, name) -> name.matches(filePattern));
         if (files.length == 0) {
             //throw new ValidatorConfigurationException(String.format("nenalezen soubor XSD pro validaci formátu %s", formatName));
-            System.err.println(String.format("nenalezen soubor XSD pro validaci formátu %s", formatName));
+            //System.err.println(String.format("nenalezen soubor XSD pro validaci formátu %s", formatName));
             return null;
         } else if (files.length > 1) {
             throw new ValidatorConfigurationException(String.format("nalezeno více souborů XSD pro validaci formátu %s a není jasné, který použít", formatName));
