@@ -575,10 +575,6 @@
                         </expectedContent>
                     </element>
 
-                    <element name="mods:recordIdentifier" mandatory="false">
-                        <expectedContent/>
-                    </element>
-
                     <element name="mods:recordChangeDate" mandatory="false">
                         <expectedAttributes>
                             <attribute name="encoding" mandatory="true">
@@ -604,6 +600,13 @@
                                 <value>human prepared</value>
                             </oneOf>
                         </expectedContent>
+                    </element>
+
+                    <element name="mods:recordIdentifier" mandatory="false">
+                        <expectedAttributes>
+                            <attribute name="source" mandatory="false"/>
+                        </expectedAttributes>
+                        <expectedContent/>
                     </element>
 
                     <element name="mods:languageOfCataloging" mandatory="false">

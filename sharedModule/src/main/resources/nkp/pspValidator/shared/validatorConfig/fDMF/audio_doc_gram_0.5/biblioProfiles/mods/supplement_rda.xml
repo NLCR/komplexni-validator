@@ -376,7 +376,6 @@
                                 <expectedAttributes>
                                     <attribute name="authority" mandatory="false">
                                         <expectedContent>
-                                            <!--nicmene DMF nevyzaduje, aby hodnota byla podle iso639-2b-->
                                             <value>iso639-2b</value>
                                         </expectedContent>
                                     </attribute>
