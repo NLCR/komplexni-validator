@@ -1,0 +1,540 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<metadataProfile
+        xmlns="http://www.nkp.cz/pspValidator/2.3/metadataProfile"
+        name="MIX PS (primarní sken)"
+        validatorVersion="2.3"
+        dmf="audio_gram_0.4"
+>
+
+    <info>
+        <text>
+            Profil pro validaci MIX záznamu primárního skenu (PS) stránky v sekundárním METSu pro DMF Zvuk-gramodesky 0.4.
+        </text>
+        <url description="popis formátu MIX">http://www.loc.gov/standards/mix/</url>
+        <url description="XSD pro MIX 2.0">http://www.loc.gov/standards/mix/mix.xsd</url>
+    </info>
+
+    <namespaces>
+        <namespace prefix="mets">http://www.loc.gov/METS/</namespace>
+        <namespace prefix="mix">http://www.loc.gov/mix/v20</namespace>
+    </namespaces>
+
+    <rootElement name="mets:techMD">
+        <expectedAttributes>
+            <attribute name="ID">
+                <expectedContent>
+                    <value>MIX_001</value>
+                </expectedContent>
+            </attribute>
+        </expectedAttributes>
+
+        <expectedElements>
+            <element name="mets:mdWrap">
+                <expectedAttributes>
+                    <attribute name="MDTYPE">
+                        <expectedContent>
+                            <value>NISOIMG</value>
+                        </expectedContent>
+                    </attribute>
+
+                    <attribute name="MIMETYPE">
+                        <expectedContent>
+                            <value>text/xml</value>
+                        </expectedContent>
+                    </attribute>
+                </expectedAttributes>
+
+                <expectedElements>
+                    <element name="mets:xmlData">
+                        <expectedElements>
+                            <element name="mix:mix">
+                                <expectedElements>
+                                    <!--v DMF neni uvedeno, jestli je povinny, nebo ne -->
+                                    <element name="mix:BasicDigitalObjectInformation" mandatory="false">
+                                        <expectedElements>
+                                            <element name="mix:ObjectIdentifier" mandatory="true" repeatable="true">
+                                                <expectedElements>
+                                                    <element name="mix:objectIdentifierType" mandatory="true" repeatable="false">
+                                                        <expectedContent/>
+                                                    </element>
+
+                                                    <element name="mix:objectIdentifierValue" mandatory="true" repeatable="false">
+                                                        <expectedContent/>
+                                                    </element>
+                                                </expectedElements>
+                                            </element>
+
+                                            <element name="mix:fileSize" mandatory="false" repeatable="false">
+                                                <expectedContent/>
+                                            </element>
+
+                                            <element name="mix:FormatDesignation" mandatory="true" repeatable="false">
+                                                <expectedElements>
+                                                    <element name="mix:formatName" mandatory="true" repeatable="false">
+                                                        <expectedContent/>
+                                                    </element>
+
+                                                    <element name="mix:formatVersion" mandatory="true" repeatable="false">
+                                                        <expectedContent/>
+                                                    </element>
+                                                </expectedElements>
+                                            </element>
+
+                                            <element name="mix:byteOrder" mandatory="true" repeatable="false">
+                                                <expectedContent>
+                                                    <oneOf>
+                                                        <value>little endian</value>
+                                                        <value>big endian</value>
+                                                        <!--Nejasne, jestli "middle (mix) endian", nebo "middle endian" a "mix endian", nechavam vse-->
+                                                        <value>middle endian</value>
+                                                        <value>mix endian</value>
+                                                        <value>middle (mix) endian</value>
+                                                    </oneOf>
+                                                </expectedContent>
+                                            </element>
+
+                                            <element name="mix:Compression" mandatory="true" repeatable="false">
+                                                <expectedElements>
+                                                    <element name="mix:compressionScheme" mandatory="true" repeatable="false">
+                                                        <expectedContent/>
+                                                    </element>
+                                                </expectedElements>
+                                            </element>
+                                        </expectedElements>
+                                    </element>
+
+                                    <element name="mix:BasicImageInformation" mandatory="true" repeatable="false">
+                                        <expectedElements>
+                                            <element name="mix:BasicImageCharacteristics" mandatory="true" repeatable="false">
+                                                <expectedElements>
+                                                    <element name="mix:imageWidth" mandatory="true" repeatable="false">
+                                                        <expectedContent>
+                                                            <regexp>[0-9]+</regexp>
+                                                        </expectedContent>
+                                                    </element>
+
+                                                    <element name="mix:imageHeight" mandatory="true" repeatable="false">
+                                                        <expectedContent>
+                                                            <regexp>[0-9]+</regexp>
+                                                        </expectedContent>
+                                                    </element>
+
+                                                    <element name="mix:PhotometricInterpretation" mandatory="false" repeatable="false">
+                                                        <expectedElements>
+                                                            <element name="mix:colorSpace" mandatory="true" repeatable="false">
+                                                                <expectedContent/>
+                                                            </element>
+
+                                                            <element name="mix:ColorProfile" mandatory="false" repeatable="false">
+                                                                <expectedElements>
+                                                                    <element name="mix:IccProfile" mandatory="true" repeatable="false">
+                                                                        <expectedElements>
+                                                                            <element name="mix:iccProfileName"
+                                                                                     mandatory="true"
+                                                                                     repeatable="false">
+                                                                                <expectedContent/>
+                                                                            </element>
+
+                                                                            <element name="mix:iccProfileVersion"
+                                                                                     mandatory="true"
+                                                                                     repeatable="false">
+                                                                                <expectedContent/>
+                                                                            </element>
+
+                                                                            <element name="mix:iccProfileURL"
+                                                                                     mandatory="false"
+                                                                                     repeatable="false">
+                                                                                <expectedContent/>
+                                                                            </element>
+                                                                        </expectedElements>
+                                                                    </element>
+                                                                </expectedElements>
+                                                            </element>
+                                                        </expectedElements>
+                                                    </element>
+                                                </expectedElements>
+                                            </element>
+                                        </expectedElements>
+                                    </element>
+
+                                    <element name="mix:ImageCaptureMetadata" mandatory="true" repeatable="false">
+                                        <expectedElements>
+                                            <element name="mix:SourceInformation" mandatory="false" repeatable="false">
+                                                <expectedElements>
+                                                    <element name="mix:sourceType" mandatory="true" repeatable="false">
+                                                        <expectedContent/>
+                                                    </element>
+
+                                                    <element name="mix:SourceID" mandatory="false" repeatable="true">
+                                                        <expectedElements>
+                                                            <element name="mix:sourceIDType" mandatory="true" repeatable="false">
+                                                                <expectedContent/>
+                                                            </element>
+
+                                                            <element name="mix:sourceIDValue" mandatory="true" repeatable="false">
+                                                                <expectedContent/>
+                                                            </element>
+                                                        </expectedElements>
+                                                    </element>
+                                                </expectedElements>
+                                            </element>
+
+                                            <element name="mix:GeneralCaptureInformation" mandatory="true" repeatable="false">
+                                                <expectedElements>
+                                                    <element name="mix:dateTimeCreated" mandatory="true" repeatable="false">
+                                                        <expectedContent>
+                                                            <!--TODO: mozna regulernim vyrazem, resp. skupinou, protoze ten zapis muze byt dost ruzny - uz jenom oddelovace, viz. treba
+                                                                http://www.pelagodesign.com/blog/2009/05/20/iso-8601-date-validation-that-doesnt-suck/
+                                                             -->
+                                                        </expectedContent>
+                                                    </element>
+
+                                                    <element name="mix:imageProducer" mandatory="true" repeatable="false">
+                                                        <expectedContent/>
+                                                    </element>
+
+                                                    <element name="mix:captureDevice" mandatory="false" repeatable="false">
+                                                        <expectedContent>
+                                                            <oneOf>
+                                                                <value>reflection print scanner</value>
+                                                                <value>transmission scanner</value>
+                                                                <value>digital still camera</value>
+                                                                <value>still from video</value>
+                                                            </oneOf>
+                                                        </expectedContent>
+                                                    </element>
+                                                </expectedElements>
+                                            </element>
+
+                                            <element name="mix:scannerCapture" mandatory="false" repeatable="false">
+                                                <expectedElements>
+                                                    <element name="mix:scannerManufacturer" mandatory="true" repeatable="false">
+                                                        <expectedContent/>
+                                                    </element>
+
+                                                    <element name="mix:ScannerModel" mandatory="true" repeatable="false">
+                                                        <expectedElements>
+                                                            <element name="mix:scannerModelName" mandatory="true" repeatable="false">
+                                                                <expectedContent/>
+                                                            </element>
+
+                                                            <element name="mix:scannerModelNumber" mandatory="true" repeatable="false">
+                                                                <expectedContent/>
+                                                            </element>
+
+                                                            <element name="mix:scannerModelSerialNo" mandatory="true" repeatable="false">
+                                                                <expectedContent/>
+                                                            </element>
+                                                        </expectedElements>
+                                                    </element>
+
+                                                    <element name="mix:MaximumOpticalResolution" mandatory="true" repeatable="false">
+                                                        <expectedElements>
+                                                            <element name="mix:xOpticalResolution" mandatory="true" repeatable="false">
+                                                                <expectedContent>
+                                                                    <regexp>[0-9]+</regexp>
+                                                                </expectedContent>
+                                                            </element>
+
+                                                            <element name="mix:yOpticalResolution" mandatory="true" repeatable="false">
+                                                                <expectedContent>
+                                                                    <regexp>[0-9]+</regexp>
+                                                                </expectedContent>
+                                                            </element>
+
+                                                            <element name="mix:opticalResolutionUnit" mandatory="true" repeatable="false">
+                                                                <expectedContent>
+                                                                    <oneOf>
+                                                                        <value>no absolute unit</value>
+                                                                        <value>in.</value>
+                                                                        <value>cm</value>
+                                                                    </oneOf>
+                                                                </expectedContent>
+                                                            </element>
+                                                        </expectedElements>
+                                                    </element>
+
+                                                    <element name="mix:scannerSensor" mandatory="true" repeatable="false">
+                                                        <expectedContent>
+                                                            <oneOf>
+                                                                <value>undefined</value>
+                                                                <value>MonochromeLinear</value>
+                                                                <value>ColorTriLinear</value>
+                                                                <value>ColorSequentialLinear</value>
+                                                                <value>MonochromeArea</value>
+                                                                <value>OneChipColourArea</value>
+                                                                <value>TwoChipColorArea</value>
+                                                                <value>ThreeChipColorArea</value>
+                                                                <value>ColorSequentialArea</value>
+                                                            </oneOf>
+                                                        </expectedContent>
+                                                    </element>
+
+                                                    <element name="mix:ScanningSystemSoftware" mandatory="true" repeatable="false">
+                                                        <expectedElements>
+                                                            <element name="mix:scanningSoftwareName" mandatory="true" repeatable="false">
+                                                                <expectedContent/>
+                                                            </element>
+
+                                                            <element name="mix:scanningSoftwareVersionNo" mandatory="true" repeatable="true">
+                                                                <expectedContent/>
+                                                            </element>
+                                                        </expectedElements>
+                                                    </element>
+                                                </expectedElements>
+                                            </element>
+
+                                            <!--v DMF chyba?, uvádí se špatně digitalCameraCapture, nemá být DigitalCameraCapture-->
+                                            <element name="mix:digitalCameraCapture" mandatory="false" repeatable="false">
+                                                <expectedElements>
+                                                    <!--Neni jasna povinnost - konflikt povinnost=M a vyskyt=0-1. Nechavam defenzivne nepovinne-->
+                                                    <element name="mix:digitalCameraManufacturer" mandatory="false" repeatable="false">
+                                                        <expectedContent/>
+                                                    </element>
+
+                                                    <!--Neni jasna povinnost - konflikt povinnost=M a vyskyt=0-1. Nechavam defenzivne nepovinne-->
+                                                    <element name="mix:DigitalCameraModel" mandatory="false" repeatable="false">
+                                                        <expectedElements>
+                                                            <!--Neni jasna povinnost - konflikt povinnost=M a vyskyt=0-1. Nechavam defenzivne nepovinne-->
+                                                            <element name="mix:digitalCameraModelName" mandatory="false" repeatable="false">
+                                                                <expectedContent/>
+                                                            </element>
+
+                                                            <element name="mix:digitalCameraModelNumber" mandatory="true" repeatable="false">
+                                                                <expectedContent/>
+                                                            </element>
+
+                                                            <element name="mix:digitalCameraModelSerialNo" mandatory="true" repeatable="false">
+                                                                <expectedContent/>
+                                                            </element>
+                                                        </expectedElements>
+                                                    </element>
+
+                                                    <!--TODO: chyba v textu DMF? "camerar"-->
+                                                    <element name="mix:cameraSensor" mandatory="true" repeatable="false">
+                                                        <expectedContent/>
+                                                    </element>
+
+                                                    <element name="mix:CameraCaptureSettings" mandatory="true" repeatable="false">
+                                                        <expectedElements>
+                                                            <!--Chybi informace o opakovatelnosti. Nechavam defenzivne opakovatelne-->
+                                                            <element name="mix:ImageData" mandatory="true" repeatable="true">
+                                                                <expectedElements>
+                                                                    <!--u subelementu neni definovanna povinnost a opakovatelnost, nechavam defenzivne nepovinne a opakovatelne-->
+                                                                    <element name="mix:fNumber"
+                                                                             mandatory="false"
+                                                                             repeatable="true">
+                                                                        <expectedContent/>
+                                                                    </element>
+
+                                                                    <element name="mix:exposureTime"
+                                                                             mandatory="false"
+                                                                             repeatable="true">
+                                                                        <expectedContent/>
+                                                                    </element>
+
+                                                                    <element name="mix:isoSpeedRatings"
+                                                                             mandatory="false"
+                                                                             repeatable="true">
+                                                                        <expectedContent/>
+                                                                    </element>
+
+                                                                    <element name="mix:shutterSpeedValue"
+                                                                             mandatory="false"
+                                                                             repeatable="true">
+                                                                        <expectedContent/>
+                                                                    </element>
+
+                                                                    <element name="mix:apertureValue"
+                                                                             mandatory="false"
+                                                                             repeatable="false">
+                                                                        <expectedContent/>
+                                                                    </element>
+
+                                                                    <element name="mix:brightnessValue"
+                                                                             mandatory="false"
+                                                                             repeatable="true">
+                                                                        <expectedContent/>
+                                                                    </element>
+
+                                                                    <element name="mix:exposureBiasValue"
+                                                                             mandatory="false"
+                                                                             repeatable="true">
+                                                                        <expectedContent/>
+                                                                    </element>
+
+                                                                    <element name="mix:maxApertureValue"
+                                                                             mandatory="false"
+                                                                             repeatable="true">
+                                                                        <expectedContent/>
+                                                                    </element>
+
+                                                                    <element name="mix:subjectDistance"
+                                                                             mandatory="false"
+                                                                             repeatable="true">
+                                                                        <expectedContent/>
+                                                                    </element>
+
+                                                                    <element name="mix:meteringMode"
+                                                                             mandatory="false"
+                                                                             repeatable="true">
+                                                                        <expectedContent/>
+                                                                    </element>
+
+                                                                    <element name="mix:lightSource"
+                                                                             mandatory="false"
+                                                                             repeatable="true">
+                                                                        <expectedContent/>
+                                                                    </element>
+
+                                                                    <element name="mix:flash"
+                                                                             mandatory="false"
+                                                                             repeatable="true">
+                                                                        <expectedContent/>
+                                                                    </element>
+
+                                                                    <element name="mix:focalLength"
+                                                                             mandatory="false"
+                                                                             repeatable="true">
+                                                                        <expectedContent/>
+                                                                    </element>
+
+                                                                    <element name="mix:backLight"
+                                                                             mandatory="false"
+                                                                             repeatable="true">
+                                                                        <expectedContent/>
+                                                                    </element>
+
+                                                                    <element name="mix:exposureIndex"
+                                                                             mandatory="false"
+                                                                             repeatable="true">
+                                                                        <expectedContent/>
+                                                                    </element>
+
+                                                                    <element name="mix:sensingMethod"
+                                                                             mandatory="false"
+                                                                             repeatable="true">
+                                                                        <expectedContent/>
+                                                                    </element>
+
+                                                                    <element name="mix:cfaPattern"
+                                                                             mandatory="false"
+                                                                             repeatable="true">
+                                                                        <expectedContent/>
+                                                                    </element>
+
+                                                                    <element name="mix:autoFocus"
+                                                                             mandatory="false"
+                                                                             repeatable="true">
+                                                                        <expectedContent/>
+                                                                    </element>
+
+                                                                    <element name="mix:PrintAspectRatio"
+                                                                             mandatory="false"
+                                                                             repeatable="true">
+                                                                        <expectedContent/>
+                                                                    </element>
+                                                                </expectedElements>
+                                                            </element>
+                                                        </expectedElements>
+                                                    </element>
+                                                </expectedElements>
+                                            </element>
+
+                                            <element name="mix:orientation" mandatory="true" repeatable="false">
+                                                <expectedContent/>
+                                            </element>
+                                        </expectedElements>
+                                    </element>
+
+                                    <element name="mix:ImageAssessmentMetadata" mandatory="true" repeatable="false">
+                                        <expectedElements>
+                                            <element name="mix:SpatialMetrics" mandatory="true" repeatable="false">
+                                                <expectedElements>
+                                                    <element name="mix:samplingFrequencyPlane" mandatory="false" repeatable="false">
+                                                        <expectedContent/>
+                                                    </element>
+
+                                                    <element name="mix:samplingFrequencyUnit" mandatory="true" repeatable="false">
+                                                        <!--Muze byt z DMF nejasne, jestli jde o jedine povolenne hodnoty, nebo priklady hodnot, nechavam recommended.-->
+                                                        <recommendedContent>
+                                                            <oneOf>
+                                                                <value>no absolute unit of measurement</value>
+                                                                <value>in.</value>
+                                                                <value>cm</value>
+                                                            </oneOf>
+                                                        </recommendedContent>
+                                                    </element>
+
+                                                    <element name="mix:xSamplingFrequency" mandatory="false" repeatable="false">
+                                                        <expectedElements>
+                                                            <element name="mix:numerator" mandatory="true" repeatable="false">
+                                                                <expectedContent>
+                                                                    <regexp>[0-9]+</regexp>
+                                                                </expectedContent>
+                                                            </element>
+
+                                                            <element name="mix:denominator" mandatory="true" repeatable="false">
+                                                                <expectedContent>
+                                                                    <regexp>[0-9]+</regexp>
+                                                                </expectedContent>
+                                                            </element>
+                                                        </expectedElements>
+                                                    </element>
+
+                                                    <element name="mix:ySamplingFrequency" mandatory="false" repeatable="false">
+                                                        <expectedElements>
+                                                            <!--Neni jasna povinnost - konflikt povinnost=M a vyskyt=0-1. Nechavam defenzivne nepovinne-->
+                                                            <element name="mix:numerator" mandatory="false" repeatable="false">
+                                                                <expectedContent>
+                                                                    <regexp>[0-9]+</regexp>
+                                                                </expectedContent>
+                                                            </element>
+
+                                                            <!--Neni jasna povinnost - konflikt povinnost=M a vyskyt=0-1. Nechavam defenzivne nepovinne-->
+                                                            <element name="mix:denominator" mandatory="false" repeatable="false">
+                                                                <expectedContent>
+                                                                    <regexp>[0-9]+</regexp>
+                                                                </expectedContent>
+                                                            </element>
+                                                        </expectedElements>
+                                                    </element>
+                                                </expectedElements>
+                                            </element>
+
+                                            <element name="mix:ImageColorEncoding" mandatory="true" repeatable="false">
+                                                <expectedElements>
+                                                    <!--tohle je trochu zmatene v samotnem MIX, podle xsd muze byt v bitsPerSampleValue jen kladne cele cislo, ale bitsPerSampleUnit muze nabyvat i hodnoty "floating point"-->
+                                                    <element name="mix:BitsPerSample" mandatory="true" repeatable="false">
+                                                        <expectedElements>
+                                                            <element name="mix:bitsPerSampleValue" mandatory="true" repeatable="true">
+                                                                <expectedContent>
+                                                                    <regexp>[0-9]+</regexp>
+                                                                </expectedContent>
+                                                            </element>
+
+                                                            <element name="mix:bitsPerSampleUnit" mandatory="false" repeatable="false">
+                                                                <expectedContent/>
+                                                            </element>
+                                                        </expectedElements>
+                                                    </element>
+
+                                                    <element name="mix:samplesPerPixel" mandatory="true" repeatable="false">
+                                                        <expectedContent>
+                                                            <regexp>[0-9]+</regexp>
+                                                        </expectedContent>
+                                                    </element>
+                                                </expectedElements>
+                                            </element>
+                                        </expectedElements>
+                                    </element>
+                                </expectedElements>
+                            </element>
+                        </expectedElements>
+                    </element>
+                </expectedElements>
+            </element>
+        </expectedElements>
+    </rootElement>
+
+</metadataProfile>

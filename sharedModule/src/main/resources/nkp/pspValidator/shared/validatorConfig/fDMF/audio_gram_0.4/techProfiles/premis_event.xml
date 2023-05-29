@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<metadataProfile
+        xmlns="http://www.nkp.cz/pspValidator/2.3/metadataProfile"
+        name="PREMIS Event"
+        validatorVersion="2.3"
+        dmf="audio_gram_0.4"
+>
+
+    <info>
+        <text>
+            Profil pro validaci PREMIS Event záznamu stránky v sekundárním METSu pro DMF Zvuk-gramodesky 0.4.
+        </text>
+        <url description="popis formátu PREMIS">http://www.loc.gov/standards/premis/</url>
+        <url description="XSD pro PREMIS 2.2">http://www.loc.gov/standards/premis/v2/premis-v2-2.xsd</url>
+    </info>
+
+    <namespaces>
+        <namespace prefix="mets">http://www.loc.gov/METS/</namespace>
+        <namespace prefix="premis">info:lc/xmlns/premis-v2</namespace>
+        <namespace prefix="xsi">http://www.w3.org/2001/XMLSchema-instance</namespace>
+    </namespaces>
+
+    <rootElement name="mets:digiprovMD">
+        <expectedAttributes>
+            <attribute name="ID">
+                <expectedContent>
+                    <regexp>EVT_[0-9]{3}</regexp>
+                </expectedContent>
+            </attribute>
+        </expectedAttributes>
+
+        <expectedElements>
+            <element name="mets:mdWrap">
+                <expectedAttributes>
+                    <attribute name="MDTYPE">
+                        <expectedContent>
+                            <value>PREMIS</value>
+                        </expectedContent>
+                    </attribute>
+
+                    <attribute name="MIMETYPE">
+                        <expectedContent>
+                            <value>text/xml</value>
+                        </expectedContent>
+                    </attribute>
+                </expectedAttributes>
+
+                <expectedElements>
+                    <element name="mets:xmlData">
+                        <expectedElements>
+                            <element name="premis:event" mandatory="true" repeatable="false">
+                                <expectedElements>
+                                    <element name="premis:eventIdentifier" mandatory="true" repeatable="false">
+                                        <expectedElements>
+                                            <element name="premis:eventIdentifierType" mandatory="true" repeatable="false">
+                                                <expectedContent/>
+                                            </element>
+
+                                            <element name="premis:eventIdentifierValue" mandatory="true" repeatable="false">
+                                                <expectedContent/>
+                                            </element>
+                                        </expectedElements>
+                                    </element>
+
+                                    <element name="premis:eventType" mandatory="true" repeatable="false">
+                                        <recommendedContent>
+                                            <oneOf>
+                                                <value>capture</value>
+                                                <value>migration</value>
+                                                <value>derivation</value>
+                                                <value>deletion</value>
+                                            </oneOf>
+                                        </recommendedContent>
+                                    </element>
+
+                                    <element name="premis:eventDateTime" mandatory="true" repeatable="false">
+                                        <expectedContent>
+                                            <!--TODO: mozna regulernim vyrazem, resp. skupinou, protoze ten zapis muze byt dost ruzny - uz jenom oddelovace, viz. treba
+                                                http://www.pelagodesign.com/blog/2009/05/20/iso-8601-date-validation-that-doesnt-suck/
+                                            -->
+                                        </expectedContent>
+                                    </element>
+
+                                    <!--Neni jasna povinnost - konflikt povinnost=M a vyskyt=0-1. Nechavam defenzivne nepovinne-->
+                                    <element name="premis:eventDetail" mandatory="true" repeatable="false">
+                                        <recommendedContent>
+                                            <oneOf>
+                                                <value>capture/digitization</value>
+                                                <value>capture/XML_creation</value>
+                                                <value>capture/TXT_creation</value>
+                                                <value>migration/MC_creation</value>
+                                                <value>derivation/UC_creation</value>
+                                                <value>deletion/PS_deletion</value>
+                                                <!--Následující hodnota není uvedena v DMF, kde jsou uvedeny doporučené hodnoty (tj asi ne zcela povinné), ale v praxi se používá, přidána protože se jedná o akci která na datech reálně probíhá-->
+                                                <value>derivation/POSTPROCESSING_creation</value>
+                                            </oneOf>
+                                        </recommendedContent>
+                                    </element>
+
+                                    <element name="premis:eventOutcomeInformation" mandatory="false" repeatable="true">
+                                        <expectedElements>
+                                            <element name="premis:eventOutcome" mandatory="true" repeatable="false">
+                                                <expectedContent/>
+                                            </element>
+                                        </expectedElements>
+                                    </element>
+
+                                    <element name="premis:linkingAgentIdentifier" mandatory="true" repeatable="true">
+                                        <expectedElements>
+                                            <element name="premis:linkingAgentIdentifierType" mandatory="true" repeatable="false">
+                                                <expectedContent/>
+                                            </element>
+
+                                            <element name="premis:linkingAgentIdentifierValue" mandatory="true" repeatable="false">
+                                                <expectedContent/>
+                                            </element>
+
+                                            <element name="premis:linkingAgentRole" mandatory="false" repeatable="true">
+                                                <expectedContent/>
+                                            </element>
+                                        </expectedElements>
+                                    </element>
+
+                                    <!--Neni jasna povinnost - konflikt povinnost=M a vyskyt=0-n. Nechavam defenzivne nepovinne-->
+                                    <element name="premis:linkingObjectIdentifier" mandatory="true" repeatable="true">
+                                        <expectedElements>
+                                            <element name="premis:linkingObjectIdentifierType" mandatory="true"
+                                                     repeatable="false">
+                                                <expectedContent/>
+                                            </element>
+
+                                            <element name="premis:linkingObjectIdentifierValue" mandatory="true"
+                                                     repeatable="false">
+                                                <expectedContent/>
+                                            </element>
+                                        </expectedElements>
+                                    </element>
+                                </expectedElements>
+                            </element>
+                        </expectedElements>
+                    </element>
+                </expectedElements>
+            </element>
+        </expectedElements>
+    </rootElement>
+
+</metadataProfile>

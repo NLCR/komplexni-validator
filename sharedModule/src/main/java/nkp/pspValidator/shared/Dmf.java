@@ -45,7 +45,7 @@ public class Dmf implements Serializable {
     }
 
     public enum Type implements Serializable {
-        MONOGRAPH, PERIODICAL, AUDIO_DOC_GRAM;
+        MONOGRAPH, PERIODICAL, AUDIO_GRAM;
 
         @Override
         public String toString() {
@@ -54,7 +54,7 @@ public class Dmf implements Serializable {
                     return "Monografie";
                 case PERIODICAL:
                     return "Periodika";
-                case AUDIO_DOC_GRAM:
+                case AUDIO_GRAM:
                     return "Zvukové dokumenty (gramodesky)";
                 default:
                     throw new IllegalStateException();

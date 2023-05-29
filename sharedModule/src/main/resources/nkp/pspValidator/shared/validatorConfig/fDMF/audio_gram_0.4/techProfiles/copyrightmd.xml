@@ -1,0 +1,280 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<metadataProfile
+        xmlns="http://www.nkp.cz/pspValidator/2.3/metadataProfile"
+        name="Copyright MD"
+        validatorVersion="2.3"
+        dmf="audio_gram_0.4"
+>
+
+    <info>
+        <text>
+            Profil pro validaci Copyrigh MD záznamu stránky v sekundárním METSu pro DMF Zvuk-gramodesky 0.4.
+        </text>
+        <url description="popis formátu copyrightMD">http://www.cdlib.org/groups/rmg/</url>
+        <url description="XSD pro copyrightMD 0.91">http://www.cdlib.org/groups/rmg/docs/copyrightMD.xsd</url>
+    </info>
+
+    <namespaces>
+        <namespace prefix="mets">http://www.loc.gov/METS/</namespace>
+        <namespace prefix="cmd">http://www.cdlib.org/inside/diglib/copyrightMD</namespace>
+    </namespaces>
+
+    <dictionaries>
+        <dictionary name="iso31661Alpha2languageCodes"
+                    description="kódy jazyků podle ISO 3166-1 alpha 2 (dvojznakové kódy)"
+                    url="https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2"/>
+    </dictionaries>
+
+    <rootElement name="mets:rightsMD">
+        <expectedAttributes>
+            <!--z DMF neni jasna povinnost-->
+            <attribute name="ID" mandatory="false"/>
+        </expectedAttributes>
+
+        <expectedElements>
+            <element name="mets:mdWrap">
+                <expectedAttributes>
+                    <attribute name="MDTYPE">
+                        <expectedContent>
+                            <value>OTHER</value>
+                        </expectedContent>
+                    </attribute>
+
+                    <!--z DMF neni jasna povinnost-->
+                    <attribute name="OTHERMDTYPE" mandatory="false">
+                        <expectedContent>
+                            <value>CopyrightMD</value>
+                        </expectedContent>
+                    </attribute>
+
+                    <!--z DMF neni jasna povinnost-->
+                    <attribute name="MIMETYPE" mandatory="false">
+                        <expectedContent>
+                            <value>text/xml</value>
+                        </expectedContent>
+                    </attribute>
+                </expectedAttributes>
+
+                <expectedElements>
+                    <element name="mets:xmlData">
+                        <expectedElements>
+                            <element name="cmd:copyright" mandatory="true" repeatable="false">
+                                <expectedAttributes>
+                                    <attribute name="copyright.status" mandatory="true">
+                                        <expectedContent>
+                                            <oneOf>
+                                                <value>copyrighted</value>
+                                                <value>pd</value>
+                                                <value>pd_expired</value>
+                                                <value>pd_holder</value>
+                                                <value>unknown</value>
+                                            </oneOf>
+                                        </expectedContent>
+                                    </attribute>
+
+                                    <attribute name="publication.status" mandatory="true">
+                                        <expectedContent>
+                                            <oneOf>
+                                                <value>published</value>
+                                                <value>unpublished</value>
+                                                <value>unknown</value>
+                                            </oneOf>
+                                        </expectedContent>
+                                    </attribute>
+                                </expectedAttributes>
+
+                                <expectedElements>
+                                    <element name="cmd:creation" mandatory="false" repeatable="false">
+                                        <expectedElements>
+                                            <element name="cmd:year.creation" mandatory="false" repeatable="false">
+                                                <expectedAttributes>
+                                                    <attribute name="year.type" mandatory="false">
+                                                        <expectedContent>
+                                                            <oneOf>
+                                                                <value>exact</value>
+                                                                <value>approximate</value>
+                                                                <value>unknown</value>
+                                                            </oneOf>
+                                                        </expectedContent>
+                                                    </attribute>
+                                                </expectedAttributes>
+                                                <expectedContent>
+                                                    <regexp>[0-9]{4}</regexp>
+                                                </expectedContent>
+                                            </element>
+
+                                            <element name="cmd:country.creation" mandatory="false" repeatable="false">
+                                                <expectedAttributes>
+                                                    <attribute name="iso.code" mandatory="false">
+                                                        <expectedContent>
+                                                            <fromDictionary name="iso31661Alpha2languageCodes"/>
+                                                        </expectedContent>
+                                                    </attribute>
+                                                </expectedAttributes>
+                                                <expectedContent/>
+                                            </element>
+                                        </expectedElements>
+                                    </element>
+
+                                    <element name="cmd:creator" mandatory="false" repeatable="false">
+                                        <expectedElements>
+                                            <element name="cmd:creator.corporate" mandatory="false" repeatable="true">
+                                                <expectedContent/>
+                                            </element>
+
+                                            <element name="cmd:creator.person" mandatory="false" repeatable="true">
+                                                <expectedElements>
+                                                    <element name="cmd:name" mandatory="false" repeatable="false">
+                                                        <expectedContent/>
+                                                    </element>
+
+                                                    <element name="cmd:year.birth" mandatory="false" repeatable="false">
+                                                        <expectedAttributes>
+                                                            <attribute name="year.type" mandatory="false">
+                                                                <expectedContent>
+                                                                    <oneOf>
+                                                                        <value>exact</value>
+                                                                        <value>approximate</value>
+                                                                        <value>unknown</value>
+                                                                    </oneOf>
+                                                                </expectedContent>
+                                                            </attribute>
+                                                        </expectedAttributes>
+                                                        <expectedContent>
+                                                            <regexp>[0-9]{4}</regexp>
+                                                        </expectedContent>
+                                                    </element>
+
+                                                    <element name="cmd:year.death" mandatory="false" repeatable="false">
+                                                        <expectedAttributes>
+                                                            <attribute name="year.type" mandatory="false">
+                                                                <expectedContent>
+                                                                    <oneOf>
+                                                                        <value>exact</value>
+                                                                        <value>approximate</value>
+                                                                        <value>unknown</value>
+                                                                    </oneOf>
+                                                                </expectedContent>
+                                                            </attribute>
+                                                        </expectedAttributes>
+                                                        <expectedContent>
+                                                            <regexp>[0-9]{4}</regexp>
+                                                        </expectedContent>
+                                                    </element>
+                                                </expectedElements>
+                                            </element>
+
+                                            <element name="cmd:note" mandatory="false" repeatable="true">
+                                                <expectedContent/>
+                                            </element>
+                                        </expectedElements>
+                                    </element>
+
+                                    <element name="cmd:publication" mandatory="false" repeatable="false">
+                                        <expectedElements>
+                                            <element name="cmd:country.publication" mandatory="false"
+                                                     repeatable="false">
+                                                <expectedAttributes>
+                                                    <attribute name="iso.code" mandatory="false">
+                                                        <expectedContent>
+                                                            <fromDictionary name="iso31661Alpha2languageCodes"/>
+                                                        </expectedContent>
+                                                    </attribute>
+                                                </expectedAttributes>
+                                                <expectedContent/>
+                                            </element>
+
+                                            <element name="cmd:publisher" mandatory="false" repeatable="false">
+                                                <expectedContent/>
+                                            </element>
+
+                                            <element name="cmd:year.publication" mandatory="false" repeatable="false">
+                                                <expectedAttributes>
+                                                    <attribute name="year.type" mandatory="false">
+                                                        <expectedContent>
+                                                            <oneOf>
+                                                                <value>exact</value>
+                                                                <value>approximate</value>
+                                                                <value>unknown</value>
+                                                            </oneOf>
+                                                        </expectedContent>
+                                                    </attribute>
+                                                </expectedAttributes>
+                                                <expectedContent>
+                                                    <regexp>[0-9]{4}</regexp>
+                                                </expectedContent>
+                                            </element>
+
+                                            <element name="cmd:year.copyright" mandatory="false" repeatable="false">
+                                                <expectedAttributes>
+                                                    <attribute name="year.type" mandatory="false">
+                                                        <expectedContent>
+                                                            <oneOf>
+                                                                <value>exact</value>
+                                                                <value>approximate</value>
+                                                                <value>unknown</value>
+                                                            </oneOf>
+                                                        </expectedContent>
+                                                    </attribute>
+                                                </expectedAttributes>
+                                                <expectedContent>
+                                                    <regexp>[0-9]{4}</regexp>
+                                                </expectedContent>
+                                            </element>
+
+                                            <element name="cmd:year.renewal" mandatory="false" repeatable="false">
+                                                <expectedAttributes>
+                                                    <attribute name="year.type" mandatory="false">
+                                                        <expectedContent>
+                                                            <oneOf>
+                                                                <value>exact</value>
+                                                                <value>approximate</value>
+                                                                <value>unknown</value>
+                                                            </oneOf>
+                                                        </expectedContent>
+                                                    </attribute>
+                                                </expectedAttributes>
+                                                <expectedContent>
+                                                    <regexp>[0-9]{4}</regexp>
+                                                </expectedContent>
+                                            </element>
+
+                                            <element name="cmd:note" mandatory="false" repeatable="true">
+                                                <expectedContent/>
+                                            </element>
+                                        </expectedElements>
+                                    </element>
+
+                                    <element name="cmd:rights.holder" mandatory="false" repeatable="false">
+                                        <expectedElements>
+                                            <element name="cmd:contact" mandatory="false" repeatable="true">
+                                                <expectedContent/>
+                                            </element>
+
+                                            <element name="cmd:name" mandatory="false" repeatable="false">
+                                                <expectedContent/>
+                                            </element>
+
+                                            <element name="cmd:note" mandatory="false" repeatable="true">
+                                                <expectedContent/>
+                                            </element>
+                                        </expectedElements>
+                                    </element>
+
+                                    <element name="cmd:notice" mandatory="false" repeatable="false">
+                                        <expectedContent/>
+                                    </element>
+
+                                    <element name="cmd:general.note" mandatory="false" repeatable="true">
+                                        <expectedContent/>
+                                    </element>
+                                </expectedElements>
+                            </element>
+                        </expectedElements>
+                    </element>
+                </expectedElements>
+            </element>
+        </expectedElements>
+    </rootElement>
+
+</metadataProfile>

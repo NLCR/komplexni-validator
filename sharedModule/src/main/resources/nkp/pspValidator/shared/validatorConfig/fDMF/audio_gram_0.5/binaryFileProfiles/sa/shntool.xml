@@ -1,0 +1,93 @@
+<binaryFileProfile
+        xmlns="http://www.nkp.cz/pspValidator/2.3/binaryFileProfile"
+        validatorVersion="2.3"
+        dmf="audio_gram_0.5"
+>
+    <fromText>
+
+        <validation name="WAVE format musí mít hodnotu '(Microsoft PCM)'">
+            <textDataExtraction resultType="STRING">
+                <firstNonempty>
+                    <regexp>WAVE format:.*</regexp>
+                </firstNonempty>
+            </textDataExtraction>
+            <rules>
+                <mustExist/>
+                <mustMatchAny>
+                    <endsWith>(Microsoft PCM)</endsWith>
+                </mustMatchAny>
+            </rules>
+        </validation>
+
+        <validation name="Bits/sample musí mít hodnotu '24'">
+            <textDataExtraction resultType="STRING">
+                <firstNonempty>
+                    <regexp>Bits/sample:.*</regexp>
+                </firstNonempty>
+            </textDataExtraction>
+            <rules>
+                <mustExist/>
+                <mustMatchAny>
+                    <endsWith>24</endsWith>
+                </mustMatchAny>
+            </rules>
+        </validation>
+
+        <validation name="Samples/sec musí mít hodnotu '96000'">
+            <textDataExtraction resultType="STRING">
+                <firstNonempty>
+                    <regexp>Samples/sec:.*</regexp>
+                </firstNonempty>
+            </textDataExtraction>
+            <rules>
+                <mustExist/>
+                <mustMatchAny>
+                    <endsWith>96000</endsWith>
+                </mustMatchAny>
+            </rules>
+        </validation>
+
+        <validation name="File is compressed musí mít hodnotu 'no'">
+            <textDataExtraction resultType="STRING">
+                <firstNonempty>
+                    <regexp>File is compressed:.*</regexp>
+                </firstNonempty>
+            </textDataExtraction>
+            <rules>
+                <mustExist/>
+                <mustMatchAny>
+                    <endsWith>no</endsWith>
+                </mustMatchAny>
+            </rules>
+        </validation>
+
+        <validation name="Inconsistent header musí mít hodnotu 'no'">
+            <textDataExtraction resultType="STRING">
+                <firstNonempty>
+                    <regexp>Inconsistent header:.*</regexp>
+                </firstNonempty>
+            </textDataExtraction>
+            <rules>
+                <mustExist/>
+                <mustMatchAny>
+                    <endsWith>no</endsWith>
+                </mustMatchAny>
+            </rules>
+        </validation>
+
+        <validation name="File probably truncated musí mít hodnotu 'no'">
+            <textDataExtraction resultType="STRING">
+                <firstNonempty>
+                    <regexp>File probably truncated:.*</regexp>
+                </firstNonempty>
+            </textDataExtraction>
+            <rules>
+                <mustExist/>
+                <mustMatchAny>
+                    <endsWith>no</endsWith>
+                </mustMatchAny>
+            </rules>
+        </validation>
+
+    </fromText>
+</binaryFileProfile>

@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<metadataProfile
+        xmlns="http://www.nkp.cz/pspValidator/2.3/metadataProfile"
+        name="DC sound recording (AACR2)"
+        validatorVersion="2.3"
+        dmf="audio_gram_0.4"
+>
+    <info>
+        <text>
+            DMF Zvuk-gramodesky 0.4 očekává Dublin Core verze 1.1. Dále se zde upřesňují očekávaná metadata pro zvukové skladby
+            pro záznamy zpracované podle katalogizačních pravidel AACR2.
+        </text>
+        <url description="popis Dublin Core 1.1">http://dublincore.org/documents/dces/</url>
+        <url description="XSD pro Dublin Core 1.1">http://www.openarchives.org/OAI/2.0/oai_dc.xsd</url>
+    </info>
+
+    <namespaces>
+        <namespace prefix="oai_dc">http://www.openarchives.org/OAI/2.0/oai_dc/</namespace>
+        <namespace prefix="dc">http://purl.org/dc/elements/1.1/</namespace>
+    </namespaces>
+
+    <dictionaries>
+        <dictionary name="iso6392languageCodes"
+                    description="kódy jazyků podle ISO 639-2"
+                    url="http://www.loc.gov/standards/iso639-2/php/code_list.php"
+        />
+    </dictionaries>
+
+    <rootElement name="oai_dc:dc">
+        <expectedElements>
+
+            <element name="dc:title"
+                     errorMessage="Očekáván povinný element dc:title obsahující název, případně podnázev skladby.">
+                <expectedContent/>
+            </element>
+
+            <element name="dc:creator" mandatory="false">
+                <expectedContent/>
+            </element>
+
+            <element name="dc:type" specification="text() = 'model:soundrecording'"
+                     errorMessage="Očekáván povinný element dc:type obsahující text 'model:soundrecording'.">
+                <expectedContent/>
+            </element>
+
+            <element name="dc:coverage" errorMessage="Očekáván minimálně jeden povinný element dc:coverage obsahující údaje o rozsahu.">
+                <expectedContent/>
+            </element>
+
+            <element name="dc:language"
+                     errorMessage="Očekáván alespoň jeden povinný element dc:language obsahující přesné určení jazyka kódem z kontrolovaného slovníku ISO 639-2.">
+                <expectedContent>
+                    <fromDictionary name="iso6392languageCodes"/>
+                </expectedContent>
+            </element>
+
+            <element name="dc:description" mandatory="false">
+                <expectedContent/>
+            </element>
+
+	<!--dc:subject ve standardu uveden jako povinný k mods:topic, ale nadřazený element mds:subject je nepovinný, tj. i dc:subject by měl být nepovinný-->
+            <element name="dc:subject" mandatory="false"
+                     errorMessage="Očekáván alespoň jeden povinný element dc:subject obsahující výraz specifikující nebo charakterizující obsah titulu.">
+                <expectedContent/>
+            </element>
+
+        </expectedElements>
+    </rootElement>
+</metadataProfile>
+
+	

@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<metadataProfile
+        xmlns="http://www.nkp.cz/pspValidator/2.3/metadataProfile"
+        name="DC sound collection (AACR2)"
+        validatorVersion="2.3"
+        dmf="audio_gram_0.4"
+>
+
+    <info>
+        <text>
+            DMF Zvuk-gramodesky 0.4 očekává Dublin Core verze 1.1. Dále se zde upřesňují očekávaná metadata pro zvukový dokument
+            pro záznamy zpracované podle katalogizačních pravidel AACR2.
+        </text>
+        <url description="popis Dublin Core 1.1">http://dublincore.org/documents/dces/</url>
+        <url description="XSD pro Dublin Core 1.1">http://www.openarchives.org/OAI/2.0/oai_dc.xsd</url>
+    </info>
+
+    <namespaces>
+        <namespace prefix="oai_dc">http://www.openarchives.org/OAI/2.0/oai_dc/</namespace>
+        <namespace prefix="dc">http://purl.org/dc/elements/1.1/</namespace>
+    </namespaces>
+
+    <dictionaries>
+        <dictionary name="iso6392languageCodes"
+                    description="kódy jazyků podle ISO 639-2"
+                    url="http://www.loc.gov/standards/iso639-2/php/code_list.php"/>
+    </dictionaries>
+
+    <rootElement name="oai_dc:dc">
+        <expectedElements>
+
+            <element name="dc:title"
+                     errorMessage="Očekáván povinný element dc:title obsahující název, případně podnázev zvukového dokumentu.">
+                <expectedContent/>
+            </element>
+
+            <element name="dc:creator" mandatory="false">
+                <expectedContent/>
+            </element>
+
+            <element name="dc:type" specification="text() = 'model:soundcollection'"
+                     errorMessage="Očekáván povinný element dc:type obsahující text 'model:soundcollection'.">
+                <expectedContent/>
+            </element>
+
+            <element name="dc:date" mandatory="true" errorMessage="Očekáván povinný element dc:date obsahující datum vydání předlohy.">
+                <expectedContent/>
+            </element>
+
+            <element name="dc:format" mandatory="true" errorMessage="Očekáván povinný element dc:format obsahující údaje o fyzické podobě dokumentu.">
+                <expectedContent/>
+            </element>
+
+            <element name="dc:coverage"
+                     errorMessage="Očekáván povinný element dc:coverage obsahující údaje o rozsahu, případně údaje o místě spojeném s vydáním, výrobou nebo původem dokumentu.">
+                <expectedContent/>
+            </element>
+
+            <element name="dc:description" mandatory="false">
+                <expectedContent/>
+            </element>
+
+            <element name="dc:identifier" errorMessage="Očekáván alespoň jeden povinný element dc:identifier.">
+                <expectedContent/>
+            </element>
+
+            <element name="dc:source"
+                     errorMessage="Očekáván povinný element dc:source obsahující signaturu nebo lokalizační údaje o dokumentu, případně údaje o instituci, kde je dokument uložen.">
+                <expectedContent/>
+            </element>
+
+        </expectedElements>
+    </rootElement>
+
+</metadataProfile>
+
+	

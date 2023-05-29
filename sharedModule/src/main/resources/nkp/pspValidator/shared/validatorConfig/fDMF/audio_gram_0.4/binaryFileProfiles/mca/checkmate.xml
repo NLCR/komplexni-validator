@@ -1,0 +1,80 @@
+<binaryFileProfile
+        xmlns="http://www.nkp.cz/pspValidator/2.3/binaryFileProfile"
+        validatorVersion="2.3"
+        dmf="audio_gram_0.4"
+>
+    <fromText>
+
+        <validation name="version musí mít hodnotu 'MPEG v1.0'">
+            <textDataExtraction resultType="STRING">
+                <firstNonempty>
+                    <regexp>\s+version\s+.*</regexp>
+                </firstNonempty>
+            </textDataExtraction>
+            <rules>
+                <mustExist/>
+                <mustMatchAny>
+                    <endsWith>MPEG v1.0</endsWith>
+                </mustMatchAny>
+            </rules>
+        </validation>
+
+        <validation name="layer musí mít hodnotu '3'">
+            <textDataExtraction resultType="STRING">
+                <firstNonempty>
+                    <regexp>\s+layer\s+.*</regexp>
+                </firstNonempty>
+            </textDataExtraction>
+            <rules>
+                <mustExist/>
+                <mustMatchAny>
+                    <endsWith>3</endsWith>
+                </mustMatchAny>
+            </rules>
+        </validation>
+
+        <validation name="bitrate musí mít hodnotu '128000 bps'">
+            <textDataExtraction resultType="STRING">
+                <firstNonempty>
+                    <regexp>\s+bitrate\s+.*</regexp>
+                </firstNonempty>
+            </textDataExtraction>
+            <rules>
+                <mustExist/>
+                <mustMatchAny>
+                    <endsWith>128000 bps</endsWith>
+                </mustMatchAny>
+            </rules>
+        </validation>
+
+        <validation name="errors musí mít hodnotu 'none'">
+            <textDataExtraction resultType="STRING">
+                <firstNonempty>
+                    <regexp>\s+errors\s+.*</regexp>
+                </firstNonempty>
+            </textDataExtraction>
+            <rules>
+                <mustExist/>
+                <mustMatchAny>
+                    <endsWith>none</endsWith>
+                </mustMatchAny>
+            </rules>
+        </validation>
+
+        <validation name="result musí mít hodnotu 'ok'">
+            <textDataExtraction resultType="STRING">
+                <firstNonempty>
+                    <regexp>\s+result\s+.*</regexp>
+                </firstNonempty>
+            </textDataExtraction>
+            <rules>
+                <mustExist/>
+                <mustMatchAny>
+                    <endsWith>ok</endsWith>
+                    <endsWith>Ok</endsWith>
+                </mustMatchAny>
+            </rules>
+        </validation>
+
+    </fromText>
+</binaryFileProfile>

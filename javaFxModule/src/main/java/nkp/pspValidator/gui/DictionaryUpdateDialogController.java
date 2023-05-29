@@ -164,7 +164,7 @@ public class DictionaryUpdateDialogController extends DialogController {
             if (newValue.startsWith("CHYBA")) {
                 lblStatus.setText(newValue);
             } else {
-                lblStatus.setText("Slovník úspěšně aktualizován!");
+                lblStatus.setText("Slovník byl úspěšně aktualizován!");
                 //update syncDate property
                 main.getConfigurationManager().setString(ConfigurationManager.propDictionarySyncDate(dictionaryName), todayDate());
                 //reload dictionary manager

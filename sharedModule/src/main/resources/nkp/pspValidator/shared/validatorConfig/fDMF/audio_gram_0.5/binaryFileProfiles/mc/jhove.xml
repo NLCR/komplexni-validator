@@ -1,0 +1,385 @@
+<binaryFileProfile
+        xmlns="http://www.nkp.cz/pspValidator/2.3/binaryFileProfile"
+        validatorVersion="2.3"
+        dmf="audio_gram_0.5"
+>
+    <fromXml>
+        <namespaces>
+            <!--<defaultNamespace>http://hul.harvard.edu/ois/xml/ns/jhove</defaultNamespace>-->
+            <namespace prefix="j">http://hul.harvard.edu/ois/xml/ns/jhove</namespace>
+            <namespace prefix="j2">http://schema.openpreservation.org/ois/xml/ns/jhove</namespace>
+            <namespace prefix="m">http://www.loc.gov/mix/v20</namespace>
+        </namespaces>
+
+        <validation name="Last modified">
+            <xmlDataExtraction resultType="STRING">
+                <firstNonempty>
+                    <xpath>//j:repInfo/j:lastModified</xpath>
+                    <xpath>//j2:repInfo/j2:lastModified</xpath>
+                </firstNonempty>
+            </xmlDataExtraction>
+            <rules>
+                <!--povolen jakykoliv retezec znaku-->
+                <mustExist/>
+            </rules>
+        </validation>
+
+        <validation name="Size">
+            <xmlDataExtraction resultType="STRING">
+                <firstNonempty>
+                    <xpath>//j:repInfo/j:lastModified</xpath>
+                    <xpath>//j2:repInfo/j2:lastModified</xpath>
+                </firstNonempty>
+            </xmlDataExtraction>
+            <rules>
+                <mustExist/>
+            </rules>
+        </validation>
+
+        <validation name="Tool name">
+            <xmlDataExtraction resultType="STRING">
+                <firstNonempty>
+                    <xpath>/j:jhove/@name</xpath>
+                    <xpath>/j2:jhove/@name</xpath>
+                </firstNonempty>
+            </xmlDataExtraction>
+            <rules>
+                <mustExist/>
+                <mustMatchAny>
+                    <isExactly>Jhove</isExactly>
+                </mustMatchAny>
+            </rules>
+        </validation>
+
+        <validation name="Tool version">
+            <xmlDataExtraction resultType="STRING">
+                <firstNonempty>
+                    <xpath>/j:jhove/@release</xpath>
+                    <xpath>/j2:jhove/@release</xpath>
+                </firstNonempty>
+            </xmlDataExtraction>
+            <rules>
+                <mustExist/>
+            </rules>
+        </validation>
+
+        <validation name="Identifikace formátu">
+            <xmlDataExtraction resultType="STRING">
+                <firstNonempty>
+                    <xpath>//j:repInfo/j:format</xpath>
+                    <xpath>//j2:repInfo/j2:format</xpath>
+                </firstNonempty>
+            </xmlDataExtraction>
+            <rules>
+                <mustExist/>
+                <mustMatchAny>
+                    <isExactly>JPEG 2000</isExactly>
+                </mustMatchAny>
+            </rules>
+        </validation>
+
+        <validation name="valid">
+            <xmlDataExtraction resultType="STRING">
+                <firstNonempty>
+                    <xpath>//j:repInfo/j:status</xpath>
+                    <xpath>//j2:repInfo/j2:status</xpath>
+                </firstNonempty>
+            </xmlDataExtraction>
+            <rules>
+                <mustExist/>
+                <mustMatchAny>
+                    <isExactly>Well-Formed and valid</isExactly>
+                </mustMatchAny>
+            </rules>
+        </validation>
+
+        <validation name="Height">
+            <xmlDataExtraction resultType="STRING">
+                <firstNonempty>
+                    <xpath>//j:property[j:name='YSize']/j:values/j:value</xpath>
+                    <xpath>//j2:property[j2:name='YSize']/j2:values/j2:value</xpath>
+                </firstNonempty>
+            </xmlDataExtraction>
+            <rules>
+                <mustExist/>
+            </rules>
+        </validation>
+
+        <validation name="Width">
+            <xmlDataExtraction resultType="STRING">
+                <firstNonempty>
+                    <xpath>//j:property[j:name='XSize']/j:values/j:value</xpath>
+                    <xpath>//j2:property[j2:name='XSize']/j2:values/j2:value</xpath>
+                </firstNonempty>
+            </xmlDataExtraction>
+            <rules>
+                <mustExist/>
+            </rules>
+        </validation>
+
+        <validation name="Počet barevných komponent">
+            <xmlDataExtraction resultType="STRING">
+                <firstNonempty>
+                    <xpath>//j:property[j:name='CSize']/j:values/j:value</xpath>
+                    <xpath>//j2:property[j2:name='CSize']/j2:values/j2:value</xpath>
+                    <xpath>//m:ImageColorEncoding/m:samplesPerPixel</xpath>
+                </firstNonempty>
+            </xmlDataExtraction>
+            <rules>
+                <mustExist/>
+                <!--povolene hodnoty "1" nebo "3"-->
+                <mustMatchAny>
+                    <isExactly>1</isExactly>
+                    <isExactly>3</isExactly>
+
+                </mustMatchAny>
+            </rules>
+        </validation>
+
+        <validation name="Barevná hloubka">
+            <xmlDataExtraction resultType="STRING">
+                <firstNonempty>
+                    <!--pozor, v datech byva vice dve hodnoty, nebo zadna. vybiram prvni-->
+                    <xpath>//m:ImageColorEncoding/m:BitsPerSample/m:bitsPerSampleValue[1]</xpath>
+                </firstNonempty>
+            </xmlDataExtraction>
+            <rules>
+                <!--TODO: docasne vyrazeno, vzdy v datech neni a nekdy je tam vice hodnot-->
+                <!-- <mustExist/>
+                <mustMatchAny>
+                    <isExactly>8</isExactly>
+                </mustMatchAny>-->
+            </rules>
+        </validation>
+
+        <!--TODO: docasne vyple, protože neprochází obrazy s hodnotou Restricted ICC-->
+        <!--<validation name="Color space (1)">
+            <xmlDataExtraction resultType="STRING">
+                <firstNonempty>
+                    <xpath>//j:property[j:name='EnumCS']/j:values/j:value</xpath>
+                    <xpath>//j2:property[j2:name='EnumCS']/j2:values/j2:value</xpath>
+                </firstNonempty>
+            </xmlDataExtraction>
+            <rules>
+                <mustExist/>
+                (povolene hodnoty "sRGB" nebo "greyscale")
+                <mustMatchAny>
+                    <isExactly>sRGB</isExactly>
+                    <isExactly>Greyscale</isExactly>
+                </mustMatchAny>
+            </rules>
+        </validation>
+
+        <validation name="Color space (2)">
+            <xmlDataExtraction resultType="STRING">
+                <firstNonempty>
+                    <xpath>//j:property[j:name='Method']/j:values/j:value</xpath>
+                    <xpath>//j2:property[j2:name='Method']/j2:values/j2:value</xpath>
+                </firstNonempty>
+            </xmlDataExtraction>
+            <rules>
+                <mustExist/>
+                (TODO: docasne vyrazeno, v realnych datech byva "Enumerated Colorspace")
+                (<mustMatchAny>
+                    <isExactly>Restricted ICC Profile</isExactly>
+                </mustMatchAny>)
+            </rules>
+        </validation>-->
+
+        <validation name="Rozlišení vertik.">
+            <xmlDataExtraction resultType="FLOAT">
+                <firstNonempty>
+                    <xpath>//j:property[j:name='VertResolution']/j:values/j:property[j:name='Numerator']/j:values/j:value</xpath>
+                    <xpath>//j2:property[j2:name='VertResolution']/j2:values/j2:property[j2:name='Numerator']/j2:values/j2:value</xpath>
+                </firstNonempty>
+            </xmlDataExtraction>
+            <rules>
+                <!--TODO: docasne vyrazeno, v datech se hodnota nenachazi-->
+                <!--<mustExist/>
+                <mustMatchAny>
+                    <isInFloatRange>
+                        <min>11732</min>
+                    </isInFloatRange>
+                </mustMatchAny>-->
+            </rules>
+        </validation>
+
+        <validation name="Rozlišení horiz.">
+            <xmlDataExtraction resultType="FLOAT">
+                <firstNonempty>
+                    <xpath>//j:property[j:name='HorizResolution']/j:values/j:property[j:name='Numerator']/j:values/j:value</xpath>
+                    <xpath>//j2:property[j2:name='HorizResolution']/j2:values/j2:property[j2:name='Numerator']/j2:values/j2:value</xpath>
+                </firstNonempty>
+            </xmlDataExtraction>
+            <rules>
+                <!--TODO: docasne vyrazeno, v datech se hodnota nenachazi-->
+                <!--<mustExist/>
+                <mustMatchAny>
+                    <isInFloatRange>
+                        <min>11732</min>
+                    </isInFloatRange>
+                </mustMatchAny>-->
+            </rules>
+        </validation>
+
+        <validation name="Počet dlaždic">
+            <xmlDataExtraction resultType="INTEGER">
+                <firstNonempty>
+                    <xpath>count(.//j:name[text()='TilePart'])</xpath>
+                    <xpath>count(.//j2:name[text()='TilePart'])</xpath>
+                </firstNonempty>
+            </xmlDataExtraction>
+            <rules>
+                <mustExist/>
+                <!--jakékoliv přirozené číslo-->
+                <mustMatchAny>
+                    <isInIntRange>
+                        <min>1</min>
+                    </isInIntRange>
+                </mustMatchAny>
+            </rules>
+        </validation>
+
+        <validation name="Velikost dlaždic (1)">
+            <xmlDataExtraction resultType="INTEGER">
+                <firstNonempty>
+                    <xpath>
+                        //j:property[j:name='Codestream']/j:values/j:property[j:name='ImageAndTileSize']/j:values/j:property[j:name='XTSize']/j:values/j:value
+                    </xpath>
+                    <xpath>
+                        //j2:property[j2:name='Codestream']/j2:values/j2:property[j2:name='ImageAndTileSize']/j2:values/j2:property[j2:name='XTSize']/j2:values/j2:value
+                    </xpath>
+                </firstNonempty>
+            </xmlDataExtraction>
+            <rules>
+                <mustExist/>
+                <mustMatchAny>
+                    <isExactly>4096</isExactly>
+                </mustMatchAny>
+            </rules>
+        </validation>
+
+        <validation name="Velikost dlaždic (2)">
+            <xmlDataExtraction resultType="INTEGER">
+                <firstNonempty>
+                    <xpath>
+                        //j:property[j:name='Codestream']/j:values/j:property[j:name='ImageAndTileSize']/j:values/j:property[j:name='YTSize']/j:values/j:value
+                    </xpath>
+                    <xpath>
+                        //j2:property[j2:name='Codestream']/j2:values/j2:property[j2:name='ImageAndTileSize']/j2:values/j2:property[j2:name='YTSize']/j2:values/j2:value
+                    </xpath>
+                </firstNonempty>
+            </xmlDataExtraction>
+            <rules>
+                <mustExist/>
+                <mustMatchAny>
+                    <isExactly>4096</isExactly>
+                </mustMatchAny>
+            </rules>
+        </validation>
+
+        <validation name="Order">
+            <xmlDataExtraction resultType="STRING">
+                <firstNonempty>
+                    <xpath>//j:property[j:name='ProgressionOrder']/j:values/j:value</xpath>
+                    <xpath>//j2:property[j2:name='ProgressionOrder']/j2:values/j2:value</xpath>
+                </firstNonempty>
+            </xmlDataExtraction>
+            <rules>
+                <mustExist/>
+                <mustMatchAny>
+                    <isExactly>2</isExactly>
+                </mustMatchAny>
+            </rules>
+        </validation>
+
+        <validation name="Layers">
+            <xmlDataExtraction resultType="STRING">
+                <firstNonempty>
+                    <xpath>//j:property[j:name='NumberOfLayers']/j:values/j:value</xpath>
+                    <xpath>//j2:property[j2:name='NumberOfLayers']/j2:values/j2:value</xpath>
+                </firstNonempty>
+            </xmlDataExtraction>
+            <rules>
+                <mustExist/>
+                <mustMatchAny>
+                    <isExactly>1</isExactly>
+                </mustMatchAny>
+            </rules>
+        </validation>
+
+        <validation name="Levels">
+            <xmlDataExtraction resultType="STRING">
+                <firstNonempty>
+                    <xpath>//j:property[j:name='NumberDecompositionLevels']/j:values/j:value</xpath>
+                    <xpath>//j2:property[j2:name='NumberDecompositionLevels']/j2:values/j2:value</xpath>
+                </firstNonempty>
+            </xmlDataExtraction>
+            <rules>
+                <mustExist/>
+                <mustMatchAny>
+                    <isExactly>5</isExactly>
+                    <isExactly>6</isExactly>
+                </mustMatchAny>
+            </rules>
+        </validation>
+
+        <validation name="Code block width">
+            <xmlDataExtraction resultType="STRING">
+                <firstNonempty>
+                    <xpath>//j:property[j:name='CodeBlockWidth']/j:values/j:value</xpath>
+                    <xpath>//j2:property[j2:name='CodeBlockWidth']/j2:values/j2:value</xpath>
+                </firstNonempty>
+            </xmlDataExtraction>
+            <rules>
+                <mustExist/>
+                <mustMatchAny>
+                    <isExactly>4</isExactly>
+                </mustMatchAny>
+            </rules>
+        </validation>
+
+        <validation name="Code block height">
+            <xmlDataExtraction resultType="STRING">
+                <firstNonempty>
+                    <xpath>//j:property[j:name='CodeBlockHeight']/j:values/j:value</xpath>
+                    <xpath>//j2:property[j2:name='CodeBlockHeight']/j2:values/j2:value</xpath>
+                </firstNonempty>
+            </xmlDataExtraction>
+            <rules>
+                <mustExist/>
+                <mustMatchAny>
+                    <isExactly>4</isExactly>
+                </mustMatchAny>
+            </rules>
+        </validation>
+
+        <validation name="Transformace">
+            <xmlDataExtraction resultType="STRING">
+                <firstNonempty>
+                    <xpath>//j:property[j:name='Transformation']/j:values/j:value</xpath>
+                    <xpath>//j2:property[j2:name='Transformation']/j2:values/j2:value</xpath>
+                </firstNonempty>
+            </xmlDataExtraction>
+            <rules>
+                <mustExist/>
+                <mustMatchAny>
+                    <isExactly>1</isExactly>
+                </mustMatchAny>
+            </rules>
+        </validation>
+
+        <validation name="Migrační sw">
+            <xmlDataExtraction resultType="STRING">
+                <firstNonempty>
+                    <xpath>//j:property[j:name='Comments']/j:values/j:property[j:name='Comment']/j:values/j:value</xpath>
+                    <xpath>//j2:property[j2:name='Comments']/j2:values/j2:property[j2:name='Comment']/j2:values/j2:value</xpath>
+                </firstNonempty>
+            </xmlDataExtraction>
+            <rules>
+                <mustExist/>
+            </rules>
+        </validation>
+
+    </fromXml>
+</binaryFileProfile>

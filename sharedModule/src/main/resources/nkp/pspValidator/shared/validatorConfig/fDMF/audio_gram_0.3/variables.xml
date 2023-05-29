@@ -1,0 +1,699 @@
+<fDMF xmlns="http://www.nkp.cz/pspValidator/2.3/fdmfConfig"
+      validatorVersion="2.3"
+      dmf="audio_gram_0.3"
+>
+    <description>
+        Zde jsou definovány proměnné. K jejich vyhodnocení jsou použity funkce, další proměnné, vzory a
+        konstanty.
+        Proměnné je možné dynamicky doplňovat/upravovat.
+        Nesmí ale nastat situace cyklu, tedy že by hodnota proměnné X závisela na proměnné/vzoru Y, která by závisela na
+        proměnné X.
+        Proměnné mohou obsahovat pouze velká písmena latinské abecedy, číslice a znaky '-','_';
+    </description>
+
+
+    <!--tj. musi byt dodano pres GUI nebo CLI-->
+    <value-def name="PSP_DIR" type="FILE">
+        <evaluation functionName="getProvidedFile">
+            <params>
+                <value name="file_id" type="STRING">PSP_DIR</value>
+            </params>
+        </evaluation>
+    </value-def>
+
+    <value-def name="PSP_ID" type="STRING">
+        <evaluation functionName="getStringByXpath">
+            <params>
+                <value name="xml_file" type="FILE">
+                    <!--pozor, tady se soubor INFO ziskava jinak, nez podle vzoru INFO_FILENAME.
+                    Protoze PSP_ID teprve zjistujeme, nemuzeme pouzit vzor INFO_FILENAME, ten ma hodnotu promenne PSP_ID
+                    jako svuj paramer.-->
+                    <!--jeden kandidat na soubor INFO-->
+                    <evaluation functionName="getFirstFileFromFileList">
+                        <params>
+                            <value name="files" type="FILE_LIST">
+                                <!--kandidati na soubor INFO podle vzoru a v danem adresari-->
+                                <evaluation functionName="findFilesInDirByPattern">
+                                    <params>
+                                        <value name="dir" type="FILE">
+                                            <value-ref name="PSP_DIR"/>
+                                        </value>
+                                        <pattern name="pattern">
+                                            <pattern-ref name="INFO_FILENAME_FOR_PSP_ID_DETECTION"/>
+                                        </pattern>
+                                    </params>
+                                </evaluation>
+                            </value>
+                        </params>
+                    </evaluation>
+                </value>
+                <value name="xpath" type="STRING">/info/packageid</value>
+                <value name="nsAware" type="BOOLEAN">false</value>
+            </params>
+        </evaluation>
+    </value-def>
+
+
+    <value-def name="INFO_FILES" type="FILE_LIST">
+        <evaluation functionName="findFilesInDirByPattern">
+            <params>
+                <value name="dir" type="FILE">
+                    <value-ref name="PSP_DIR"/>
+                </value>
+                <pattern name="pattern">
+                    <description>Vzor pro jméno souboru INFO.</description>
+                    <expression caseSensitive="true">info_${PSP_ID}\.xml</expression>
+                    <expression>info\.xml</expression>
+                </pattern>
+            </params>
+        </evaluation>
+    </value-def>
+
+    <value-def name="PRIMARY-METS_FILES" type="FILE_LIST">
+        <evaluation functionName="findFilesInDirByPattern">
+            <params>
+                <value name="dir" type="FILE">
+                    <value-ref name="PSP_DIR"/>
+                </value>
+                <pattern name="pattern">
+                    <description>Vzor pro jméno souboru PRIMARY-METS.</description>
+                    <expression caseSensitive="true">main_mets_${PSP_ID}\.xml</expression>
+                </pattern>
+            </params>
+        </evaluation>
+    </value-def>
+
+    <value-def name="CHECKSUM_FILES" type="FILE_LIST">
+        <evaluation functionName="findFilesInDirByPattern">
+            <params>
+                <value name="dir" type="FILE">
+                    <value-ref name="PSP_DIR"/>
+                </value>
+                <pattern name="pattern">
+                    <description>Vzor pro jméno souboru CHECKSUM.</description>
+                    <expression caseSensitive="true">md5_${PSP_ID}\.md5</expression>
+                </pattern>
+            </params>
+        </evaluation>
+    </value-def>
+
+    <value-def name="TOLERATED_TL_FILES" type="FILE_LIST">
+        <evaluation functionName="findFilesInDirByPattern">
+            <params>
+                <value name="dir" type="FILE">
+                    <value-ref name="PSP_DIR"/>
+                </value>
+                <pattern name="pattern">
+                    <description>Vzory pro jména tolerovaných souborů.</description>
+                    <expression caseSensitive="true">LTP_MD\.xml</expression>
+                </pattern>
+            </params>
+        </evaluation>
+    </value-def>
+
+    <value-def name="INFO_FILE" type="FILE">
+        <evaluation functionName="getFirstFileFromFileList">
+            <params>
+                <value name="files" type="FILE_LIST">
+                    <value-ref name="INFO_FILES"/>
+                </value>
+            </params>
+        </evaluation>
+    </value-def>
+
+    <value-def name="PRIMARY-METS_FILE" type="FILE">
+        <evaluation functionName="getFirstFileFromFileList">
+            <params>
+                <value name="files" type="FILE_LIST">
+                    <value-ref name="PRIMARY-METS_FILES"/>
+                </value>
+            </params>
+        </evaluation>
+    </value-def>
+
+    <value-def name="CHECKSUM_FILE" type="FILE">
+        <evaluation functionName="getFirstFileFromFileList">
+            <params>
+                <value name="files" type="FILE_LIST">
+                    <value-ref name="CHECKSUM_FILES"/>
+                </value>
+            </params>
+        </evaluation>
+    </value-def>
+
+    <value-def name="SECONDARY-METS-DIR_FILES" type="FILE_LIST">
+        <evaluation functionName="findFilesInDirByPattern">
+            <params>
+                <value name="dir" type="FILE">
+                    <value-ref name="PSP_DIR"/>
+                </value>
+                <pattern name="pattern">
+                    <description>Vzor pro jméno adresáře SECONDARY-METS-DIR.</description>
+                    <expression caseSensitive="true">amd_sec</expression>
+                </pattern>
+            </params>
+        </evaluation>
+    </value-def>
+
+    <value-def name="OCR-TEXT-DIR_FILES" type="FILE_LIST">
+        <evaluation functionName="findFilesInDirByPattern">
+            <params>
+                <value name="dir" type="FILE">
+                    <value-ref name="PSP_DIR"/>
+                </value>
+                <pattern name="pattern">
+                    <description>Vzor pro jméno adresáře OCR-TEXT-DIR.</description>
+                    <expression caseSensitive="true">txt</expression>
+                </pattern>
+            </params>
+        </evaluation>
+    </value-def>
+
+    <value-def name="OCR-ALTO-DIR_FILES" type="FILE_LIST">
+        <evaluation functionName="findFilesInDirByPattern">
+            <params>
+                <value name="dir" type="FILE">
+                    <value-ref name="PSP_DIR"/>
+                </value>
+                <pattern name="pattern">
+                    <description>Vzor pro jméno adresáře OCR-ALTO-DIR.</description>
+                    <expression caseSensitive="true">alto</expression>
+                </pattern>
+            </params>
+        </evaluation>
+    </value-def>
+
+
+    <value-def name="MASTER-COPY-DIR_FILES" type="FILE_LIST">
+        <evaluation functionName="findFilesInDirByPattern">
+            <params>
+                <value name="dir" type="FILE">
+                    <value-ref name="PSP_DIR"/>
+                </value>
+                <pattern name="pattern">
+                    <description>Vzor pro jméno adresáře MASTER-COPY-DIR.</description>
+                    <expression caseSensitive="true">master_copy</expression>
+                </pattern>
+            </params>
+        </evaluation>
+    </value-def>
+
+    <value-def name="USER-COPY-DIR_FILES" type="FILE_LIST">
+        <evaluation functionName="findFilesInDirByPattern">
+            <params>
+                <value name="dir" type="FILE">
+                    <value-ref name="PSP_DIR"/>
+                </value>
+                <pattern name="pattern">
+                    <description>Vzor pro jméno adresáře USER-COPY-DIR.</description>
+                    <expression caseSensitive="true">user_copy</expression>
+                </pattern>
+            </params>
+        </evaluation>
+    </value-def>
+
+    <value-def name="SOURCE-AUDIO-DIR_FILES" type="FILE_LIST">
+        <evaluation functionName="findFilesInDirByPattern">
+            <params>
+                <value name="dir" type="FILE">
+                    <value-ref name="PSP_DIR"/>
+                </value>
+                <pattern name="pattern">
+                    <description>Vzor pro jméno adresáře SOURCE-AUDIO-DIR.</description>
+                    <expression caseSensitive="true">source_audio</expression>
+                </pattern>
+            </params>
+        </evaluation>
+    </value-def>
+
+    <value-def name="MASTER-COPY-AUDIO-DIR_FILES" type="FILE_LIST">
+        <evaluation functionName="findFilesInDirByPattern">
+            <params>
+                <value name="dir" type="FILE">
+                    <value-ref name="PSP_DIR"/>
+                </value>
+                <pattern name="pattern">
+                    <description>Vzor pro jméno adresáře MASTER-COPY-AUDIO-DIR.</description>
+                    <expression caseSensitive="true">master_copy_audio</expression>
+                </pattern>
+            </params>
+        </evaluation>
+    </value-def>
+
+    <value-def name="USER-COPY-AUDIO-DIR_FILES" type="FILE_LIST">
+        <evaluation functionName="findFilesInDirByPattern">
+            <params>
+                <value name="dir" type="FILE">
+                    <value-ref name="PSP_DIR"/>
+                </value>
+                <pattern name="pattern">
+                    <description>Vzor pro jméno adresáře USER-COPY-AUDIO-DIR.</description>
+                    <expression caseSensitive="true">user_copy_audio</expression>
+                </pattern>
+            </params>
+        </evaluation>
+    </value-def>
+
+    <value-def name="CATALOG-ENTRY-DIR_FILES" type="FILE_LIST">
+        <evaluation functionName="findFilesInDirByPattern">
+            <params>
+                <value name="dir" type="FILE">
+                    <value-ref name="PSP_DIR"/>
+                </value>
+                <pattern name="pattern">
+                    <description>Vzor pro jméno adresáře CATALOG-ENTRY-DIR.</description>
+                    <expression caseSensitive="true">catalog_entry</expression>
+                </pattern>
+            </params>
+        </evaluation>
+    </value-def>
+
+    <value-def name="SECONDARY-METS-DIR_FILE" type="FILE">
+        <evaluation functionName="getFirstFileFromFileList">
+            <params>
+                <value name="files" type="FILE_LIST">
+                    <value-ref name="SECONDARY-METS-DIR_FILES"/>
+                </value>
+            </params>
+        </evaluation>
+    </value-def>
+
+    <value-def name="OCR-TEXT-DIR_FILE" type="FILE">
+        <evaluation functionName="getFirstFileFromFileList">
+            <params>
+                <value name="files" type="FILE_LIST">
+                    <value-ref name="OCR-TEXT-DIR_FILES"/>
+                </value>
+            </params>
+        </evaluation>
+    </value-def>
+
+    <value-def name="OCR-ALTO-DIR_FILE" type="FILE">
+        <evaluation functionName="getFirstFileFromFileList">
+            <params>
+                <value name="files" type="FILE_LIST">
+                    <value-ref name="OCR-ALTO-DIR_FILES"/>
+                </value>
+            </params>
+        </evaluation>
+    </value-def>
+
+    <value-def name="MASTER-COPY-DIR_FILE" type="FILE">
+        <evaluation functionName="getFirstFileFromFileList">
+            <params>
+                <value name="files" type="FILE_LIST">
+                    <value-ref name="MASTER-COPY-DIR_FILES"/>
+                </value>
+            </params>
+        </evaluation>
+    </value-def>
+
+    <value-def name="USER-COPY-DIR_FILE" type="FILE">
+        <evaluation functionName="getFirstFileFromFileList">
+            <params>
+                <value name="files" type="FILE_LIST">
+                    <value-ref name="USER-COPY-DIR_FILES"/>
+                </value>
+            </params>
+        </evaluation>
+    </value-def>
+
+    <value-def name="SOURCE-AUDIO-DIR_FILE" type="FILE">
+        <evaluation functionName="getFirstFileFromFileList">
+            <params>
+                <value name="files" type="FILE_LIST">
+                    <value-ref name="SOURCE-AUDIO-DIR_FILES"/>
+                </value>
+            </params>
+        </evaluation>
+    </value-def>
+
+    <!--tento adresar neni povinny, promena muze obsahovat null-->
+    <value-def name="MASTER-COPY-AUDIO-DIR_FILE" type="FILE">
+        <evaluation functionName="getFirstFileFromFileList">
+            <params>
+                <value name="files" type="FILE_LIST">
+                    <value-ref name="MASTER-COPY-AUDIO-DIR_FILES"/>
+                </value>
+                <value name="returnNullIfEmpty" type="BOOLEAN">true</value>
+            </params>
+        </evaluation>
+    </value-def>
+
+    <value-def name="USER-COPY-AUDIO-DIR_FILE" type="FILE">
+        <evaluation functionName="getFirstFileFromFileList">
+            <params>
+                <value name="files" type="FILE_LIST">
+                    <value-ref name="USER-COPY-AUDIO-DIR_FILES"/>
+                </value>
+            </params>
+        </evaluation>
+    </value-def>
+
+
+    <value-def name="SECONDARY-METS_FILES" type="FILE_LIST">
+        <evaluation functionName="findFilesInDirByPattern">
+            <params>
+                <value name="dir" type="FILE">
+                    <value-ref name="SECONDARY-METS-DIR_FILE"/>
+                </value>
+                <pattern name="pattern">
+                    <description>Vzor pro jména souborů SECONDARY-METS v rámci adresáře SECONDARY-METS-DIR.</description>
+                    <expression caseSensitive="true">amd_mets_${PSP_ID}_[0-9]+\.xml</expression>
+                </pattern>
+            </params>
+        </evaluation>
+    </value-def>
+
+    <value-def name="OCR-TEXT_FILES" type="FILE_LIST">
+        <evaluation functionName="findFilesInDirByPattern">
+            <params>
+                <value name="dir" type="FILE">
+                    <value-ref name="OCR-TEXT-DIR_FILE"/>
+                </value>
+                <pattern name="pattern">
+                    <description>Vzor pro jména souborů OCR-TEXT v rámci adresáře OCR-TEXT-DIR.</description>
+                    <expression caseSensitive="true">txt_${PSP_ID}_[0-9]+\.txt</expression>
+                </pattern>
+            </params>
+        </evaluation>
+    </value-def>
+
+    <value-def name="OCR-ALTO_FILES" type="FILE_LIST">
+        <evaluation functionName="findFilesInDirByPattern">
+            <params>
+                <value name="dir" type="FILE">
+                    <value-ref name="OCR-ALTO-DIR_FILE"/>
+                </value>
+                <pattern name="pattern">
+                    <description>Vzor pro jména souborů OCR-ALTO v rámci adresáře OCR-ALTO-DIR.</description>
+                    <expression caseSensitive="true">alto_${PSP_ID}_[0-9]+\.xml</expression>
+                </pattern>
+            </params>
+        </evaluation>
+    </value-def>
+
+    <value-def name="MASTER-COPY_FILES" type="FILE_LIST">
+        <evaluation functionName="findFilesInDirByPattern">
+            <params>
+                <value name="dir" type="FILE">
+                    <value-ref name="MASTER-COPY-DIR_FILE"/>
+                </value>
+                <pattern name="pattern">
+                    <description>Vzor pro jména souborů MASTER-COPY v rámci adresáře MASTER-COPY-DIR.</description>
+                    <expression caseSensitive="true">mc_${PSP_ID}_[0-9]+\.jp2</expression>
+                </pattern>
+            </params>
+        </evaluation>
+    </value-def>
+
+    <value-def name="USER-COPY_FILES" type="FILE_LIST">
+        <evaluation functionName="findFilesInDirByPattern">
+            <params>
+                <value name="dir" type="FILE">
+                    <value-ref name="USER-COPY-DIR_FILE"/>
+                </value>
+                <pattern name="pattern">
+                    <description>Vzor pro jména souborů USER-COPY v rámci adresáře USER-COPY-DIR.</description>
+                    <expression caseSensitive="true">uc_${PSP_ID}_[0-9]+\.jp2</expression>
+                </pattern>
+            </params>
+        </evaluation>
+    </value-def>
+
+    <value-def name="SOURCE-AUDIO_FILES" type="FILE_LIST">
+        <evaluation functionName="findFilesInDirByPattern">
+            <params>
+                <value name="dir" type="FILE">
+                    <value-ref name="SOURCE-AUDIO-DIR_FILE"/>
+                </value>
+                <pattern name="pattern">
+                    <description>Vzor pro jména souborů SOURCE-AUDIO v rámci adresáře SOURCE-AUDIO-DIR.</description>
+                    <expression caseSensitive="true">sa_${PSP_ID}_[0-9]+\.wav</expression>
+                    <expression caseSensitive="true">sa_${PSP_ID}_[0-9]+_[0-9]+\.wav</expression>
+                </pattern>
+            </params>
+        </evaluation>
+    </value-def>
+
+    <value-def name="MASTER-COPY-AUDIO_FILES" type="FILE_LIST">
+        <evaluation functionName="findFilesInDirByPattern">
+            <params>
+                <value name="dir" type="FILE">
+                    <value-ref name="MASTER-COPY-AUDIO-DIR_FILE"/>
+                </value>
+                <value name="errorIfDirNull" type="BOOLEAN">false</value>
+                <pattern name="pattern">
+                    <description>Vzor pro jména souborů MASTER-COPY-AUDIO v rámci adresáře MASTER-COPY-AUDIO-DIR.</description>
+                    <expression caseSensitive="true">mca_${PSP_ID}_[0-9]+\.wav</expression>
+                    <expression caseSensitive="true">mca_${PSP_ID}_[0-9]+_[0-9]+\.wav</expression>
+                </pattern>
+            </params>
+        </evaluation>
+    </value-def>
+
+    <value-def name="USER-COPY-AUDIO_FILES" type="FILE_LIST">
+        <evaluation functionName="findFilesInDirByPattern">
+            <params>
+                <value name="dir" type="FILE">
+                    <value-ref name="USER-COPY-AUDIO-DIR_FILE"/>
+                </value>
+                <pattern name="pattern">
+                    <description>Vzor pro jména souborů USER-COPY-AUDIO v rámci adresáře USER-COPY-AUDIO-DIR.</description>
+                    <expression caseSensitive="true">uca_${PSP_ID}_[0-9]+\.mp3</expression>
+                    <expression caseSensitive="true">uca_${PSP_ID}_[0-9]+_[0-9]+\.mp3</expression>
+                </pattern>
+            </params>
+        </evaluation>
+    </value-def>
+
+    <value-def name="CATALOG-ENTRY_FILES" type="FILE_LIST">
+        <evaluation functionName="findFilesInDirByPattern">
+            <params>
+                <value name="dir" type="FILE">
+                    <value-ref name="CATALOG-ENTRY-DIR_FILE"/>
+                </value>
+                <pattern name="pattern">
+                    <description>Vzor pro jména souborů CATALOG-ENTRY v rámci adresáře CATALOG-ENTRY-DIR.</description>
+                    <expression caseSensitive="true">.+\.xml</expression>
+                </pattern>
+            </params>
+        </evaluation>
+    </value-def>
+
+    <!--soubory XSD-->
+
+    <value-def name="INFO_XSD_FILE" type="FILE">
+        <evaluation functionName="getProvidedFile">
+            <params>
+                <value name="file_id" type="STRING">INFO_XSD_FILE</value>
+            </params>
+        </evaluation>
+    </value-def>
+
+    <value-def name="ALTO_XSD_FILE" type="FILE">
+        <evaluation functionName="getProvidedFile">
+            <params>
+                <value name="file_id" type="STRING">ALTO_XSD_FILE</value>
+            </params>
+        </evaluation>
+    </value-def>
+
+    <value-def name="CMD_XSD_FILE" type="FILE">
+        <evaluation functionName="getProvidedFile">
+            <params>
+                <value name="file_id" type="STRING">CMD_XSD_FILE</value>
+            </params>
+        </evaluation>
+    </value-def>
+
+    <value-def name="DC_XSD_FILE" type="FILE">
+        <evaluation functionName="getProvidedFile">
+            <params>
+                <value name="file_id" type="STRING">DC_XSD_FILE</value>
+            </params>
+        </evaluation>
+    </value-def>
+
+    <value-def name="METS_XSD_FILE" type="FILE">
+        <evaluation functionName="getProvidedFile">
+            <params>
+                <value name="file_id" type="STRING">METS_XSD_FILE</value>
+            </params>
+        </evaluation>
+    </value-def>
+
+    <value-def name="MIX_XSD_FILE" type="FILE">
+        <evaluation functionName="getProvidedFile">
+            <params>
+                <value name="file_id" type="STRING">MIX_XSD_FILE</value>
+            </params>
+        </evaluation>
+    </value-def>
+
+    <value-def name="MODS_XSD_FILE" type="FILE">
+        <evaluation functionName="getProvidedFile">
+            <params>
+                <value name="file_id" type="STRING">MODS_XSD_FILE</value>
+            </params>
+        </evaluation>
+    </value-def>
+
+    <value-def name="PREMIS_XSD_FILE" type="FILE">
+        <evaluation functionName="getProvidedFile">
+            <params>
+                <value name="file_id" type="STRING">PREMIS_XSD_FILE</value>
+            </params>
+        </evaluation>
+    </value-def>
+
+    <value-def name="AES57_XSD_FILE" type="FILE">
+        <evaluation functionName="getProvidedFile">
+            <params>
+                <value name="file_id" type="STRING">AES57_XSD_FILE</value>
+            </params>
+        </evaluation>
+    </value-def>
+
+    <!--identifikátory-->
+
+    <value-def name="INFO_IDENTIFIERS" type="IDENTIFIER_LIST">
+        <description>seznam identifikátorů ze souboru INFO</description>
+        <evaluation functionName="getIdentifiersFromInfoFile">
+            <params>
+                <value name="info_file" type="FILE">
+                    <value-ref name="INFO_FILE"/>
+                </value>
+            </params>
+        </evaluation>
+    </value-def>
+
+    <!--soundcollection-->
+    <value-def name="ID_TYPES_SOUNDCOLLECTION_MANDATORY" type="STRING_LIST">
+        <description>seznam povinných typů identifikátorů pro úroveň SOUNDCOLLECTION</description>
+        <evaluation functionName="buildListOfStrings">
+            <params>
+                <value name="string" type="STRING">uuid</value>
+                <value name="string" type="STRING">urnnbn</value>
+            </params>
+        </evaluation>
+    </value-def>
+
+    <value-def name="ID_TYPES_SOUNDCOLLECTION_OPTIONAL" type="STRING_LIST">
+        <!--Zatím se nepužívá, jen pro přehled. -->
+        <description>seznam volitelných typů identifikátorů pro úroveň SOUNDCOLLECTION</description>
+        <evaluation functionName="buildListOfStrings">
+            <params>
+                <value name="string" type="STRING">isbn</value>
+                <value name="string" type="STRING">ismn</value>
+                <value name="string" type="STRING">ccnb</value>
+            </params>
+        </evaluation>
+    </value-def>
+
+    <value-def name="ID_TYPES_SOUNDCOLLECTION_PROHIBITED" type="STRING_LIST">
+        <description>seznam zakázaných typů identifikátorů pro úroveň SOUNDCOLLECTION</description>
+        <evaluation functionName="buildListOfStrings">
+            <params>
+                <!--<value name="string" type="STRING">issn</value>-->
+            </params>
+        </evaluation>
+    </value-def>
+
+    <!--soundrecording-->
+    <value-def name="ID_TYPES_SOUNDRECORDING_MANDATORY" type="STRING_LIST">
+        <description>seznam povinných typů identifikátorů pro úroveň SOUNDRECORDING</description>
+        <evaluation functionName="buildListOfStrings">
+            <params>
+                <value name="string" type="STRING">uuid</value>
+            </params>
+        </evaluation>
+    </value-def>
+
+    <value-def name="ID_TYPES_SOUNDRECORDING_OPTIONAL" type="STRING_LIST">
+        <!--Zatím se nepužívá, jen pro přehled. -->
+        <description>seznam volitelných typů identifikátorů pro úroveň SOUNDRECORDING</description>
+        <evaluation functionName="buildListOfStrings">
+            <params>
+                <value name="string" type="STRING">urnnbn</value>
+                <value name="string" type="STRING">isbn</value>
+                <value name="string" type="STRING">ismn</value>
+                <value name="string" type="STRING">ccnb</value>
+            </params>
+        </evaluation>
+    </value-def>
+
+    <value-def name="ID_TYPES_SOUNDRECORDING_PROHIBITED" type="STRING_LIST">
+        <description>seznam zakázaných typů identifikátorů pro úroveň SOUNDRECORDING</description>
+        <evaluation functionName="buildListOfStrings">
+            <params>
+                <!--<value name="string" type="STRING">issn</value>-->
+            </params>
+        </evaluation>
+    </value-def>
+
+    <!--soundpart-->
+    <value-def name="ID_TYPES_SOUNDPART_MANDATORY" type="STRING_LIST">
+        <description>seznam povinných typů identifikátorů pro úroveň SOUNDPART</description>
+        <evaluation functionName="buildListOfStrings">
+            <params>
+                <value name="string" type="STRING">uuid</value>
+            </params>
+        </evaluation>
+    </value-def>
+
+    <value-def name="ID_TYPES_SOUNDPART_OPTIONAL" type="STRING_LIST">
+        <!--Zatím se nepužívá, jen pro přehled. -->
+        <description>seznam volitelných typů identifikátorů pro úroveň SOUNDPART</description>
+        <evaluation functionName="buildListOfStrings">
+            <params>
+                <value name="string" type="STRING">urnnbn</value>
+            </params>
+        </evaluation>
+    </value-def>
+
+    <value-def name="ID_TYPES_SOUNDPART_PROHIBITED" type="STRING_LIST">
+        <description>seznam zakázaných typů identifikátorů pro úroveň SOUNDPART</description>
+        <evaluation functionName="buildListOfStrings">
+            <params>
+                <!--   <value name="string" type="STRING">isbn</value>
+                   <value name="string" type="STRING">ismn</value>
+                   <value name="string" type="STRING">ccnb</value>-->
+            </params>
+        </evaluation>
+    </value-def>
+
+    <!--supplement-->
+    <value-def name="ID_TYPES_SUPPLEMENT_MANDATORY" type="STRING_LIST">
+        <description>seznam povinných typů identifikátorů pro úroveň SUPPLEMENT</description>
+        <evaluation functionName="buildListOfStrings">
+            <params>
+                <value name="string" type="STRING">uuid</value>
+            </params>
+        </evaluation>
+    </value-def>
+
+    <value-def name="ID_TYPES_SUPPLEMENT_OPTIONAL" type="STRING_LIST">
+        <!--Zatím se nepužívá, jen pro přehled. -->
+        <description>seznam volitelných typů identifikátorů pro úroveň SUPPLEMENT</description>
+        <evaluation functionName="buildListOfStrings">
+            <params>
+                <value name="string" type="STRING">urnnbn</value>
+            </params>
+        </evaluation>
+    </value-def>
+
+    <value-def name="ID_TYPES_SUPPLEMENT_PROHIBITED" type="STRING_LIST">
+        <description>seznam zakázaných typů identifikátorů pro úroveň SUPPLEMENT</description>
+        <evaluation functionName="buildListOfStrings">
+            <params>
+                <!--<value name="string" type="STRING">issn</value>-->
+                <!-- <value name="string" type="STRING">isbn</value>
+                 <value name="string" type="STRING">ismn</value>
+                 <value name="string" type="STRING">ccnb</value>-->
+            </params>
+        </evaluation>
+    </value-def>
+
+
+</fDMF>

@@ -118,7 +118,7 @@ public class PspZipValidationConfigurationDialogController extends DialogControl
         //forced
         boolean forcedMonVersionEnabled = mgr.getBooleanOrDefault(ConfigurationManager.PROP_FORCE_MON_VERSION_ENABLED, false);
         boolean forcedPerVersionEnabled = mgr.getBooleanOrDefault(ConfigurationManager.PROP_FORCE_PER_VERSION_ENABLED, false);
-        boolean forcedAdgVersionEnabled = mgr.getBooleanOrDefault(ConfigurationManager.PROP_FORCE_AUDIO_DOC_GRAM_VERSION_ENABLED, false);
+        boolean forcedAdgVersionEnabled = mgr.getBooleanOrDefault(ConfigurationManager.PROP_FORCE_AUDIO_GRAM_VERSION_ENABLED, false);
         forcedMonVersionCheckBox.setSelected(forcedMonVersionEnabled);
         forcedMonVersionChoiceBox.setDisable(!forcedMonVersionEnabled);
         forcedPerVersionCheckBox.setSelected(forcedPerVersionEnabled);
@@ -128,7 +128,7 @@ public class PspZipValidationConfigurationDialogController extends DialogControl
         //preferred
         boolean preferredMonVersionEnabled = mgr.getBooleanOrDefault(ConfigurationManager.PROP_PREFER_MON_VERSION_ENABLED, false);
         boolean preferredPerVersionEnabled = mgr.getBooleanOrDefault(ConfigurationManager.PROP_PREFER_PER_VERSION_ENABLED, false);
-        boolean preferredAdgVersionEnabled = mgr.getBooleanOrDefault(ConfigurationManager.PROP_PREFER_AUDIO_DOC_GRAM_VERSION_ENABLED, false);
+        boolean preferredAdgVersionEnabled = mgr.getBooleanOrDefault(ConfigurationManager.PROP_PREFER_AUDIO_GRAM_VERSION_ENABLED, false);
         preferredMonVersionCheckBox.setSelected(preferredMonVersionEnabled);
         preferredMonVersionChoiceBox.setDisable(!preferredMonVersionEnabled);
         preferredPerVersionCheckBox.setSelected(preferredPerVersionEnabled);
@@ -207,12 +207,12 @@ public class PspZipValidationConfigurationDialogController extends DialogControl
         }
         //forced - Audio document (gramophone)
         List<String> forcedAdgVersions = new ArrayList<>();
-        forcedAdgVersions.addAll(main.getValidationDataManager().getFdmfRegistry().getAudioDocGramFdmfVersions());
+        forcedAdgVersions.addAll(main.getValidationDataManager().getFdmfRegistry().getAudioGramFdmfVersions());
         Collections.sort(forcedAdgVersions, new VersionComparator());
         if (forcedAdgVersions != null) {
             ObservableList<String> adgVersionsObservable = FXCollections.observableArrayList(forcedAdgVersions);
             forcedAdgVersionChoiceBox.setItems(adgVersionsObservable);
-            String version = mgr.getStringOrDefault(ConfigurationManager.PROP_FORCE_AUDIO_DOC_GRAM_VERSION_CODE, null);
+            String version = mgr.getStringOrDefault(ConfigurationManager.PROP_FORCE_AUDIO_GRAM_VERSION_CODE, null);
             boolean found = false;
             if (version != null) {
                 for (int i = 0; i < adgVersionsObservable.size(); i++) {
@@ -270,12 +270,12 @@ public class PspZipValidationConfigurationDialogController extends DialogControl
         }
         //preferred - Audio document (gramophone)
         List<String> preferredAdgVersions = new ArrayList<>();
-        preferredAdgVersions.addAll(main.getValidationDataManager().getFdmfRegistry().getAudioDocGramFdmfVersions());
+        preferredAdgVersions.addAll(main.getValidationDataManager().getFdmfRegistry().getAudioGramFdmfVersions());
         Collections.sort(preferredAdgVersions, new VersionComparator());
         if (preferredAdgVersions != null) {
             ObservableList<String> adgVersionsObservable = FXCollections.observableArrayList(preferredAdgVersions);
             preferredAdgVersionChoiceBox.setItems(adgVersionsObservable);
-            String version = mgr.getStringOrDefault(ConfigurationManager.PROP_PREFER_AUDIO_DOC_GRAM_VERSION_CODE, null);
+            String version = mgr.getStringOrDefault(ConfigurationManager.PROP_PREFER_DOC_GRAM_VERSION_CODE, null);
             boolean found = false;
             if (version != null) {
                 for (int i = 0; i < adgVersionsObservable.size(); i++) {
@@ -384,7 +384,7 @@ public class PspZipValidationConfigurationDialogController extends DialogControl
         boolean forced = forcedAdgVersionCheckBox.isSelected();
         forcedAdgVersionChoiceBox.setDisable(!forced);
         if (getConfigurationManager() != null) {
-            getConfigurationManager().setBoolean(ConfigurationManager.PROP_FORCE_AUDIO_DOC_GRAM_VERSION_ENABLED, forced);
+            getConfigurationManager().setBoolean(ConfigurationManager.PROP_FORCE_AUDIO_GRAM_VERSION_ENABLED, forced);
         }
     }
 
@@ -405,7 +405,7 @@ public class PspZipValidationConfigurationDialogController extends DialogControl
     public void forcedAdgVersionChoiceboxChanged(ActionEvent actionEvent) {
         String version = (String) forcedAdgVersionChoiceBox.getSelectionModel().getSelectedItem();
         if (getConfigurationManager() != null) {
-            getConfigurationManager().setString(ConfigurationManager.PROP_FORCE_AUDIO_DOC_GRAM_VERSION_CODE, version);
+            getConfigurationManager().setString(ConfigurationManager.PROP_FORCE_AUDIO_GRAM_VERSION_CODE, version);
         }
     }
 
@@ -429,7 +429,7 @@ public class PspZipValidationConfigurationDialogController extends DialogControl
         boolean preferred = preferredAdgVersionCheckBox.isSelected();
         preferredAdgVersionChoiceBox.setDisable(!preferred);
         if (getConfigurationManager() != null) {
-            getConfigurationManager().setBoolean(ConfigurationManager.PROP_PREFER_AUDIO_DOC_GRAM_VERSION_ENABLED, preferred);
+            getConfigurationManager().setBoolean(ConfigurationManager.PROP_PREFER_AUDIO_GRAM_VERSION_ENABLED, preferred);
         }
     }
 
@@ -450,7 +450,7 @@ public class PspZipValidationConfigurationDialogController extends DialogControl
     public void preferredAdgVersionChoiceboxChanged(ActionEvent actionEvent) {
         String version = (String) preferredAdgVersionChoiceBox.getSelectionModel().getSelectedItem();
         if (getConfigurationManager() != null) {
-            getConfigurationManager().setString(ConfigurationManager.PROP_PREFER_AUDIO_DOC_GRAM_VERSION_CODE, version);
+            getConfigurationManager().setString(ConfigurationManager.PROP_PREFER_DOC_GRAM_VERSION_CODE, version);
         }
     }
 

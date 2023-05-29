@@ -1,0 +1,3482 @@
+<fDMF xmlns="http://www.nkp.cz/pspValidator/2.3/fdmfConfig"
+      validatorVersion="2.3"
+      dmf="audio_gram_0.5"
+>
+    <description>
+        Zde jsou definovány validační pravidla. K samotným validacím se používají validační funkce, jejichž parametry
+        jsou definované proměnné, vzory a konstanty.
+        Pravidla je možné dynamicky doplňovat/upravovat, ale je vždy nutné používat existující proměnné a vzory.
+    </description>
+
+    <rules-section name="Struktura souborů" description="Struktura PSP balíčku na úrovni souborů">
+
+        <!--psp dir-->
+
+        <!--mozna tohle patri spise k INFO?-->
+        <!--TODO: spis pouzit pattern a checkFilenameMatchesPattern, kdyz matches-->
+        <rule name="PSP_DIR_MATCHES_PSP_ID">
+            <description>Název kořenového adresáře musí být shodný s PSP-ID.</description>
+            <validation functionName="checkFilenameMatchesPattern">
+                <params>
+                    <value name="level" type="LEVEL">ERROR</value>
+                    <value name="file" type="FILE">
+                        <value-ref name="PSP_DIR"/>
+                    </value>
+                    <pattern name="pattern">
+                        <expression caseSensitive="true">${PSP_ID}</expression>
+                    </pattern>
+                </params>
+            </validation>
+        </rule>
+
+
+        <!--právě jeden každý top-level soubor-->
+
+        <rule name="SINGLE_INFO_FILE_FOUND">
+            <description>Musí být nalezen nanejvýše jeden soubor INFO. Pokud nalezen není, je soubor špatně pojmenován, nebo
+                opravdu chybí.
+            </description>
+            <validation functionName="checkFilelistHasExactSize">
+                <params>
+                    <value name="files" type="FILE_LIST">
+                        <value-ref name="INFO_FILES"/>
+                    </value>
+                    <value name="size" type="INTEGER">1</value>
+                </params>
+            </validation>
+        </rule>
+
+        <rule name="SINGLE_PRIMARY-METS_FILE_FOUND">
+            <description>Musí být nalezen nanejvýše jeden soubor PRIMARY-METS. Pokud nalezen není, je soubor špatně
+                pojmenován, nebo opravdu chybí.
+            </description>
+            <validation functionName="checkFilelistHasExactSize">
+                <params>
+                    <value name="files" type="FILE_LIST">
+                        <value-ref name="PRIMARY-METS_FILES"/>
+                    </value>
+                    <value name="size" type="INTEGER">1</value>
+                </params>
+            </validation>
+        </rule>
+
+        <rule name="SINGLE_CHECKSUM_FILE_FOUND">
+            <description>Musí být nalezen nanejvýše jeden soubor CHECKSUM. Pokud nalezen není, je soubor špatně pojmenován,
+                nebo opravdu chybí.
+            </description>
+            <validation functionName="checkFilelistHasExactSize">
+                <params>
+                    <value name="files" type="FILE_LIST">
+                        <value-ref name="CHECKSUM_FILES"/>
+                    </value>
+                    <value name="size" type="INTEGER">1</value>
+                </params>
+            </validation>
+        </rule>
+
+
+        <!--názvy top-level souborů obsahují povolené znaky-->
+
+        <rule name="INFO_FILENAME_VALID">
+            <description>Název souboru INFO smí obsahovat jen povolené znaky.</description>
+            <validation functionName="checkFilenameMatchesPattern">
+                <params>
+                    <value name="file" type="FILE">
+                        <value-ref name="INFO_FILE"/>
+                    </value>
+                    <pattern name="pattern">
+                        <pattern-ref name="FILENAME"/>
+                    </pattern>
+                </params>
+            </validation>
+        </rule>
+
+        <rule name="PRIMARY-METS_FILENAME_VALID">
+            <description>Název souboru PRIMARY-METS smí obsahovat jen povolené znaky.</description>
+            <validation functionName="checkFilenameMatchesPattern">
+                <params>
+                    <value name="file" type="FILE">
+                        <value-ref name="PRIMARY-METS_FILE"/>
+                    </value>
+                    <pattern name="pattern">
+                        <pattern-ref name="FILENAME"/>
+                    </pattern>
+                </params>
+            </validation>
+        </rule>
+
+        <rule name="CHECKSUM_FILENAME_VALID">
+            <description>Název souboru CHECKSUM smí obsahovat jen povolené znaky.</description>
+            <validation functionName="checkFilenameMatchesPattern">
+                <params>
+                    <value name="file" type="FILE">
+                        <value-ref name="CHECKSUM_FILE"/>
+                    </value>
+                    <pattern name="pattern">
+                        <pattern-ref name="FILENAME"/>
+                    </pattern>
+                </params>
+            </validation>
+        </rule>
+
+
+        <!--top-level soubory nejsou adresáře-->
+
+        <rule name="INFO_IS_NOT_DIR">
+            <description>Soubor INFO nesmí být adresář, ale obyčejný soubor.</description>
+            <validation functionName="checkFileIsNotDir">
+                <params>
+                    <value name="file" type="FILE">
+                        <value-ref name="INFO_FILE"/>
+                    </value>
+                </params>
+            </validation>
+        </rule>
+
+        <rule name="PRIMARY-METS_IS_NOT_DIR">
+            <description>Soubor PRIMARY-METS nesmí být adresář, ale obyčejný soubor.</description>
+            <validation functionName="checkFileIsNotDir">
+                <params>
+                    <value name="file" type="FILE">
+                        <value-ref name="PRIMARY-METS_FILE"/>
+                    </value>
+                </params>
+            </validation>
+        </rule>
+
+        <rule name="CHECKSUM_IS_NOT_DIR">
+            <description>Soubor CHECKSUM nesmí být adresář, ale obyčejný soubor.</description>
+            <validation functionName="checkFileIsNotDir">
+                <params>
+                    <value name="file" type="FILE">
+                        <value-ref name="CHECKSUM_FILE"/>
+                    </value>
+                </params>
+            </validation>
+        </rule>
+
+
+        <!--žádné top-level soubory/adresáře kromě očekávaných a tolerovaných-->
+
+        <rule name="TOLERATED_TL_FILES_ARE_NOT_DIRS">
+            <description>Žádný tolerovaný soubor v kořenovém adresáři nesmí být adresář.</description>
+            <validation functionName="checkNoFileIsDir">
+                <params>
+                    <value name="files" type="FILE_LIST">
+                        <value-ref name="TOLERATED_TL_FILES"/>
+                    </value>
+                </params>
+            </validation>
+        </rule>
+
+        <rule name="NO_TOLERATED_TL_FILES_FOUND">
+            <description>Ideálně by v kořenovém adresáři neměl být nalezen žádný tolerovaný soubor.</description>
+            <validation functionName="checkFilelistHasExactSize">
+                <params>
+                    <value name="files" type="FILE_LIST">
+                        <value-ref name="TOLERATED_TL_FILES"/>
+                    </value>
+                    <value name="size" type="INTEGER">0</value>
+                    <value name="level" type="LEVEL">WARNING</value>
+                </params>
+            </validation>
+            <!--
+                        <validation functionName="CHECK_FILE_LIST_EMPTY">
+                            <params>
+                                <value name="files" type="FILE_LIST">
+                                    <value-ref name="TOLERATED_TL_FILES"/>
+                                </value>
+                            </params>
+                        </validation>-->
+        </rule>
+
+        <rule name="NO_OTHER_TL_FILES_FOUND">
+            <description>
+                Kromě definovaných a tolerovaných souborů a adresářů nesmí být v kořenovém adresáři nalezen žádný další soubor nebo adresář.
+            </description>
+            <validation functionName="checkNoOtherFilesInDir">
+                <params>
+                    <value name="root_dir" type="FILE">
+                        <value-ref name="PSP_DIR"/>
+                    </value>
+                    <value name="file" type="FILE">
+                        <value-ref name="INFO_FILE"/>
+                    </value>
+                    <value name="file" type="FILE">
+                        <value-ref name="PRIMARY-METS_FILE"/>
+                    </value>
+                    <value name="file" type="FILE">
+                        <value-ref name="CHECKSUM_FILE"/>
+                    </value>
+                    <value name="files" type="FILE_LIST">
+                        <value-ref name="TOLERATED_TL_FILES"/>
+                    </value>
+                    <value name="file" type="FILE">
+                        <value-ref name="SECONDARY-METS-DIR_FILE"/>
+                    </value>
+                    <value name="file" type="FILE">
+                        <value-ref name="OCR-TEXT-DIR_FILE"/>
+                    </value>
+                    <value name="file" type="FILE">
+                        <value-ref name="OCR-ALTO-DIR_FILE"/>
+                    </value>
+                    <value name="file" type="FILE">
+                        <value-ref name="MASTER-COPY-DIR_FILE"/>
+                    </value>
+                    <value name="file" type="FILE">
+                        <value-ref name="USER-COPY-DIR_FILE"/>
+                    </value>
+                    <!--audio-->
+                    <value name="file" type="FILE">
+                        <value-ref name="SOURCE-AUDIO-DIR_FILE"/>
+                    </value>
+                    <value name="file" type="FILE">
+                        <value-ref name="MASTER-COPY-AUDIO-DIR_FILE"/>
+                    </value>
+                    <value name="file" type="FILE">
+                        <value-ref name="USER-COPY-AUDIO-DIR_FILE"/>
+                    </value>
+                </params>
+            </validation>
+        </rule>
+
+
+        <!--právě jeden každý top-level adresář-->
+
+
+        <rule name="SINGLE_SECONDARY-METS-DIR_FOUND">
+            <description>Musí být nalezen právě jeden adresář SECONDARY-METS-DIR. Pokud nalezen není, je
+                adresář špatně pojmenován, nebo opravdu chybí.
+            </description>
+            <validation functionName="checkFilelistHasExactSize">
+                <params>
+                    <value name="files" type="FILE_LIST">
+                        <value-ref name="SECONDARY-METS-DIR_FILES"/>
+                    </value>
+                    <value name="size" type="INTEGER">1</value>
+                </params>
+            </validation>
+        </rule>
+
+        <rule name="SINGLE_OCR-TEXT-DIR_FOUND">
+            <description>Musí být nalezen právě jeden adresář OCR-TEXT-DIR. Pokud nalezen není, je adresář
+                špatně pojmenován, nebo opravdu chybí.
+            </description>
+            <validation functionName="checkFilelistHasExactSize">
+                <params>
+                    <value name="files" type="FILE_LIST">
+                        <value-ref name="OCR-TEXT-DIR_FILES"/>
+                    </value>
+                    <value name="size" type="INTEGER">1</value>
+                </params>
+            </validation>
+        </rule>
+
+        <rule name="SINGLE_OCR-ALTO-DIR_FOUND">
+            <description>Musí být nalezen právě jeden adresář OCR-ALTO-DIR. Pokud nalezen není, je adresář
+                špatně pojmenován, nebo opravdu chybí.
+            </description>
+            <validation functionName="checkFilelistHasExactSize">
+                <params>
+                    <value name="files" type="FILE_LIST">
+                        <value-ref name="OCR-ALTO-DIR_FILES"/>
+                    </value>
+                    <value name="size" type="INTEGER">1</value>
+                </params>
+            </validation>
+        </rule>
+
+        <rule name="SINGLE_MASTER-COPY-DIR_FOUND">
+            <description>Musí být nalezen právě jeden adresář MASTER-COPY-DIR. Pokud nalezen není, je adresář
+                špatně pojmenován, nebo opravdu chybí.
+            </description>
+            <validation functionName="checkFilelistHasExactSize">
+                <params>
+                    <value name="files" type="FILE_LIST">
+                        <value-ref name="MASTER-COPY-DIR_FILES"/>
+                    </value>
+                    <value name="size" type="INTEGER">1</value>
+                </params>
+            </validation>
+        </rule>
+
+        <rule name="SINGLE_USER-COPY-DIR_FOUND">
+            <description>Musí být nalezen právě jeden adresář USER-COPY-DIR. Pokud nalezen není, je adresář
+                špatně pojmenován, nebo opravdu chybí.
+            </description>
+            <validation functionName="checkFilelistHasExactSize">
+                <params>
+                    <value name="files" type="FILE_LIST">
+                        <value-ref name="USER-COPY-DIR_FILES"/>
+                    </value>
+                    <value name="size" type="INTEGER">1</value>
+                </params>
+            </validation>
+        </rule>
+
+        <rule name="SINGLE_SOURCE-AUDIO-DIR_FOUND">
+            <description>Musí být nalezen právě jeden adresář SOURCE-AUDIO-DIR. Pokud nalezen není, je adresář
+                špatně pojmenován, nebo opravdu chybí.
+            </description>
+            <validation functionName="checkFilelistHasExactSize">
+                <params>
+                    <value name="files" type="FILE_LIST">
+                        <value-ref name="SOURCE-AUDIO-DIR_FILES"/>
+                    </value>
+                    <value name="size" type="INTEGER">1</value>
+                </params>
+            </validation>
+        </rule>
+
+        <rule name="SINGLE_MASTER-COPY-AUDIO-DIR_FOUND">
+            <description>Musí být nalezen nejvýše jeden adresář MASTER-COPY-AUDIO-DIR. Pokud nalezen není, je adresář
+                špatně pojmenován, nebo opravdu chybí.
+            </description>
+            <validation functionName="checkFilelistSizeInRange">
+                <params>
+                    <value name="files" type="FILE_LIST">
+                        <value-ref name="MASTER-COPY-AUDIO-DIR_FILES"/>
+                    </value>
+                    <value name="max_size" type="INTEGER">1</value>
+                </params>
+            </validation>
+        </rule>
+
+        <rule name="SINGLE_USER-COPY-AUDIO-DIR_FOUND">
+            <description>Musí být nalezen právě jeden adresář USER-COPY-AUDIO-DIR. Pokud nalezen není, je adresář
+                špatně pojmenován, nebo opravdu chybí.
+            </description>
+            <validation functionName="checkFilelistHasExactSize">
+                <params>
+                    <value name="files" type="FILE_LIST">
+                        <value-ref name="USER-COPY-AUDIO-DIR_FILES"/>
+                    </value>
+                    <value name="size" type="INTEGER">1</value>
+                </params>
+            </validation>
+        </rule>
+
+        <rule name="SINGLE_CATALOG-ENTRY-DIR_FOUND">
+            <description>Musí být nalezen nejvýše jeden adresář CATALOG-ENTRY-DIR. Pokud nalezen není, je adresář
+                špatně pojmenován, nebo opravdu chybí.
+            </description>
+            <validation functionName="checkFilelistSizeInRange">
+                <params>
+                    <value name="files" type="FILE_LIST">
+                        <value-ref name="CATALOG-ENTRY-DIR_FILES"/>
+                    </value>
+                    <value name="max_size" type="INTEGER">1</value>
+                </params>
+            </validation>
+        </rule>
+
+        <!--názvy top-level adresářů obsahují povolené znaky-->
+
+        <rule name="SECONDARY-METS-DIR_FILENAME_VALID">
+            <description>Název adresáře SECONDARY-METS-DIR musí obsahovat jen povolené znaky.</description>
+            <validation functionName="checkFilenameMatchesPattern">
+                <params>
+                    <value name="file" type="FILE">
+                        <value-ref name="SECONDARY-METS-DIR_FILE"/>
+                    </value>
+                    <pattern name="pattern">
+                        <pattern-ref name="FILENAME"/>
+                    </pattern>
+                </params>
+            </validation>
+        </rule>
+
+        <rule name="OCR-TEXT-DIR_FILENAME_VALID">
+            <description>Název adresáře OCR-TEXT-DIR musí obsahovat jen povolené znaky.</description>
+            <validation functionName="checkFilenameMatchesPattern">
+                <params>
+                    <value name="file" type="FILE">
+                        <value-ref name="OCR-TEXT-DIR_FILE"/>
+                    </value>
+                    <pattern name="pattern">
+                        <pattern-ref name="FILENAME"/>
+                    </pattern>
+                </params>
+            </validation>
+        </rule>
+
+        <rule name="OCR-ALTO-DIR_FILENAME_VALID">
+            <description>Název adresáře OCR-ALTO-DIR musí obsahovat jen povolené znaky.</description>
+            <validation functionName="checkFilenameMatchesPattern">
+                <params>
+                    <value name="file" type="FILE">
+                        <value-ref name="OCR-ALTO-DIR_FILE"/>
+                    </value>
+                    <pattern name="pattern">
+                        <pattern-ref name="FILENAME"/>
+                    </pattern>
+                </params>
+            </validation>
+        </rule>
+
+        <rule name="MASTER-COPY-DIR_FILENAME_VALID">
+            <description>Název adresáře MASTER-COPY-DIR musí obsahovat jen povolené znaky.
+            </description>
+            <validation functionName="checkFilenameMatchesPattern">
+                <params>
+                    <value name="file" type="FILE">
+                        <value-ref name="MASTER-COPY-DIR_FILE"/>
+                    </value>
+                    <pattern name="pattern">
+                        <pattern-ref name="FILENAME"/>
+                    </pattern>
+                </params>
+            </validation>
+        </rule>
+
+        <rule name="USER-COPY-DIR_FILENAME_VALID">
+            <description>Název adresáře USER-COPY-DIR musí obsahovat jen povolené znaky.
+            </description>
+            <validation functionName="checkFilenameMatchesPattern">
+                <params>
+                    <value name="file" type="FILE">
+                        <value-ref name="USER-COPY-DIR_FILE"/>
+                    </value>
+                    <pattern name="pattern">
+                        <pattern-ref name="FILENAME"/>
+                    </pattern>
+                </params>
+            </validation>
+        </rule>
+
+        <rule name="SOURCE-AUDIO-DIR_FILENAME_VALID">
+            <description>Název adresáře SOURCE-AUDIO-DIR musí obsahovat jen povolené znaky.
+            </description>
+            <validation functionName="checkFilenameMatchesPattern">
+                <params>
+                    <value name="file" type="FILE">
+                        <value-ref name="SOURCE-AUDIO-DIR_FILE"/>
+                    </value>
+                    <pattern name="pattern">
+                        <pattern-ref name="FILENAME"/>
+                    </pattern>
+                </params>
+            </validation>
+        </rule>
+
+        <rule name="MASTER-COPY-AUDIO-DIR_FILENAME_VALID">
+            <description>Název adresáře MASTER-COPY-AUDIO-DIR musí obsahovat jen povolené znaky.
+            </description>
+            <validation functionName="checkFilenameMatchesPattern">
+                <params>
+                    <value name="file" type="FILE">
+                        <value-ref name="MASTER-COPY-AUDIO-DIR_FILE"/>
+                    </value>
+                    <pattern name="pattern">
+                        <pattern-ref name="FILENAME"/>
+                    </pattern>
+                </params>
+            </validation>
+        </rule>
+
+        <rule name="USER-COPY-AUDIO-DIR_FILENAME_VALID">
+            <description>Název adresáře USER-COPY-AUDIO-DIR musí obsahovat jen povolené znaky.
+            </description>
+            <validation functionName="checkFilenameMatchesPattern">
+                <params>
+                    <value name="file" type="FILE">
+                        <value-ref name="USER-COPY-AUDIO-DIR_FILE"/>
+                    </value>
+                    <pattern name="pattern">
+                        <pattern-ref name="FILENAME"/>
+                    </pattern>
+                </params>
+            </validation>
+        </rule>
+
+        <rule name="CATALOG-ENTRY-DIR_FILENAME_VALID">
+            <description>Název adresáře CATALOG-ENTRY-DIR musí obsahovat jen povolené znaky.
+            </description>
+            <validation functionName="checkFilenameMatchesPattern">
+                <params>
+                    <value name="file" type="FILE">
+                        <value-ref name="CATALOG-ENTRY-DIR_FILE"/>
+                    </value>
+                    <pattern name="pattern">
+                        <pattern-ref name="FILENAME"/>
+                    </pattern>
+                </params>
+            </validation>
+        </rule>
+
+
+        <!--top-level adresáře jsou adresáře (ne obyčejné soubory)-->
+
+        <rule name="SECONDARY-METS-DIR_IS_DIR">
+            <description>Soubor SECONDARY-METS-DIR musí být adresář a ne obyčejný soubor.</description>
+            <validation functionName="checkFileIsDir">
+                <params>
+                    <value name="file" type="FILE">
+                        <value-ref name="SECONDARY-METS-DIR_FILE"/>
+                    </value>
+                </params>
+            </validation>
+        </rule>
+
+        <rule name="OCR-TEXT-DIR_IS_DIR">
+            <description>Soubor OCR-TEXT-DIR musí být adresář a ne obyčejný soubor.</description>
+            <validation functionName="checkFileIsDir">
+                <params>
+                    <value name="file" type="FILE">
+                        <value-ref name="OCR-TEXT-DIR_FILE"/>
+                    </value>
+                </params>
+            </validation>
+        </rule>
+
+        <rule name="OCR-ALTO-DIR_IS_DIR">
+            <description>Soubor OCR-ALTO-DIR musí být adresář a ne obyčejný soubor.</description>
+            <validation functionName="checkFileIsDir">
+                <params>
+                    <value name="file" type="FILE">
+                        <value-ref name="OCR-ALTO-DIR_FILE"/>
+                    </value>
+                </params>
+            </validation>
+        </rule>
+
+        <rule name="MASTER-COPY-DIR_IS_DIR">
+            <description>Soubor MASTER-COPY-DIR musí být adresář a ne obyčejný soubor.</description>
+            <validation functionName="checkFileIsDir">
+                <params>
+                    <value name="file" type="FILE">
+                        <value-ref name="MASTER-COPY-DIR_FILE"/>
+                    </value>
+                </params>
+            </validation>
+        </rule>
+
+        <rule name="USER-COPY-DIR_IS_DIR">
+            <description>Soubor USER-COPY-DIR musí být adresář a ne obyčejný soubor.</description>
+            <validation functionName="checkFileIsDir">
+                <params>
+                    <value name="file" type="FILE">
+                        <value-ref name="USER-COPY-DIR_FILE"/>
+                    </value>
+                </params>
+            </validation>
+        </rule>
+
+        <rule name="SOURCE-AUDIO-DIR_IS_DIR">
+            <description>Soubor SOURCE-AUDIO-DIR musí být adresář a ne obyčejný soubor.</description>
+            <validation functionName="checkFileIsDir">
+                <params>
+                    <value name="file" type="FILE">
+                        <value-ref name="SOURCE-AUDIO-DIR_FILE"/>
+                    </value>
+                </params>
+            </validation>
+        </rule>
+
+        <rule name="MASTER-COPY-AUDIO-DIR_IS_DIR">
+            <description>Soubor MASTER-COPY-AUDIO-DIR musí být adresář a ne obyčejný soubor.</description>
+            <validation functionName="checkFileIsDir">
+                <params>
+                    <value name="file" type="FILE">
+                        <value-ref name="MASTER-COPY-AUDIO-DIR_FILE"/>
+                    </value>
+                    <value name="ignoreIfFileIsNull" type="BOOLEAN">true</value>
+                </params>
+            </validation>
+        </rule>
+
+        <rule name="USER-COPY-DIR_IS_DIR">
+            <description>Soubor USER-COPY-AUDIO-DIR musí být adresář a ne obyčejný soubor.</description>
+            <validation functionName="checkFileIsDir">
+                <params>
+                    <value name="file" type="FILE">
+                        <value-ref name="USER-COPY-AUDIO-DIR_FILE"/>
+                    </value>
+                </params>
+            </validation>
+        </rule>
+
+        <rule name="CATALOG-ENTRY-DIR_IS_DIR">
+            <description>Soubor CATALOG-ENTRY-DIR musí být adresář a ne obyčejný soubor.</description>
+            <validation functionName="checkFileIsDir">
+                <params>
+                    <value name="file" type="FILE">
+                        <value-ref name="CATALOG-ENTRY-DIR_FILE"/>
+                    </value>
+                    <value name="ignoreIfFileIsNull" type="BOOLEAN">true</value>
+                </params>
+            </validation>
+        </rule>
+
+
+        <!--názvy souborů v top-level adresářích obsahují jen povolené znaky-->
+
+        <rule name="SECONDARY-METS-IMAGE_FILENAMES_VALID">
+            <description>Názvy všech souborů SECONDARY-METS-IMAGE musí obsahovat jen povolené znaky.</description>
+            <validation functionName="checkAllFilenamesMatchPattern">
+                <params>
+                    <value name="files" type="FILE_LIST">
+                        <value-ref name="SECONDARY-METS-IMAGE_FILES"/>
+                    </value>
+                    <pattern name="pattern">
+                        <pattern-ref name="FILENAME"/>
+                    </pattern>
+                </params>
+            </validation>
+        </rule>
+
+        <rule name="SECONDARY-METS-AUDIO_FILENAMES_VALID">
+            <description>Názvy všech souborů SECONDARY-METS-AUDIO musí obsahovat jen povolené znaky.</description>
+            <validation functionName="checkAllFilenamesMatchPattern">
+                <params>
+                    <value name="files" type="FILE_LIST">
+                        <value-ref name="SECONDARY-METS-AUDIO_FILES"/>
+                    </value>
+                    <pattern name="pattern">
+                        <pattern-ref name="FILENAME"/>
+                    </pattern>
+                </params>
+            </validation>
+        </rule>
+
+        <rule name="OCR-TEXT_FILENAMES_VALID">
+            <description>Názvy všech souborů OCR-TEXT musí obsahovat jen povolené znaky.</description>
+            <validation functionName="checkAllFilenamesMatchPattern">
+                <params>
+                    <value name="files" type="FILE_LIST">
+                        <value-ref name="OCR-TEXT_FILES"/>
+                    </value>
+                    <pattern name="pattern">
+                        <pattern-ref name="FILENAME"/>
+                    </pattern>
+                </params>
+            </validation>
+        </rule>
+
+        <rule name="OCR-ALTO_FILENAMES_VALID">
+            <description>Názvy všech souborů OCR-ALTO musí obsahovat jen povolené znaky.</description>
+            <validation functionName="checkAllFilenamesMatchPattern">
+                <params>
+                    <value name="files" type="FILE_LIST">
+                        <value-ref name="OCR-ALTO_FILES"/>
+                    </value>
+                    <pattern name="pattern">
+                        <pattern-ref name="FILENAME"/>
+                    </pattern>
+                </params>
+            </validation>
+        </rule>
+
+        <rule name="MASTER-COPY_FILENAMES_VALID">
+            <description>Názvy všech souborů MASTER-COPY musí obsahovat jen povolené znaky.</description>
+            <validation functionName="checkAllFilenamesMatchPattern">
+                <params>
+                    <value name="files" type="FILE_LIST">
+                        <value-ref name="MASTER-COPY_FILES"/>
+                    </value>
+                    <pattern name="pattern">
+                        <pattern-ref name="FILENAME"/>
+                    </pattern>
+                </params>
+            </validation>
+        </rule>
+
+        <rule name="USER-COPY_FILENAMES_VALID">
+            <description>Názvy všech souborů USER-COPY musí obsahovat jen povolené znaky.</description>
+            <validation functionName="checkAllFilenamesMatchPattern">
+                <params>
+                    <value name="files" type="FILE_LIST">
+                        <value-ref name="USER-COPY_FILES"/>
+                    </value>
+                    <pattern name="pattern">
+                        <pattern-ref name="FILENAME"/>
+                    </pattern>
+                </params>
+            </validation>
+        </rule>
+
+        <rule name="SOURCE-AUDIO_FILENAMES_VALID">
+            <description>Názvy všech souborů SOURCE-AUDIO musí obsahovat jen povolené znaky.</description>
+            <validation functionName="checkAllFilenamesMatchPattern">
+                <params>
+                    <value name="files" type="FILE_LIST">
+                        <value-ref name="SOURCE-AUDIO_FILES"/>
+                    </value>
+                    <pattern name="pattern">
+                        <pattern-ref name="FILENAME"/>
+                    </pattern>
+                </params>
+            </validation>
+        </rule>
+
+        <rule name="MASTER-COPY-AUDIO_FILENAMES_VALID">
+            <description>Názvy všech souborů MASTER-COPY-AUDIO musí obsahovat jen povolené znaky.</description>
+            <validation functionName="checkAllFilenamesMatchPattern">
+                <params>
+                    <value name="files" type="FILE_LIST">
+                        <value-ref name="MASTER-COPY-AUDIO_FILES"/>
+                    </value>
+                    <pattern name="pattern">
+                        <pattern-ref name="FILENAME"/>
+                    </pattern>
+                </params>
+            </validation>
+        </rule>
+
+        <rule name="USER-COPY-AUDIO_FILENAMES_VALID">
+            <description>Názvy všech souborů USER-COPY-AUDIO musí obsahovat jen povolené znaky.</description>
+            <validation functionName="checkAllFilenamesMatchPattern">
+                <params>
+                    <value name="files" type="FILE_LIST">
+                        <value-ref name="USER-COPY-AUDIO_FILES"/>
+                    </value>
+                    <pattern name="pattern">
+                        <pattern-ref name="FILENAME"/>
+                    </pattern>
+                </params>
+            </validation>
+        </rule>
+
+        <rule name="CATALOG-ENTRY_FILENAMES_VALID">
+            <description>Názvy všech souborů CATALOG-ENTRY musí obsahovat jen povolené znaky.</description>
+            <validation functionName="checkAllFilenamesMatchPattern">
+                <params>
+                    <value name="files" type="FILE_LIST">
+                        <value-ref name="CATALOG-ENTRY_FILES"/>
+                    </value>
+                    <pattern name="pattern">
+                        <pattern-ref name="FILENAME"/>
+                    </pattern>
+                </params>
+            </validation>
+        </rule>
+
+
+        <!--počty souborů v top-level adesářích-->
+
+        <rule name="NUMBER_OF_FILES_IN_SECONDARY-METS-DIRS_OK">
+            <description>Počet souborů v adresáři SECONDARY-METS-DIR se musí shodovat s celkovým počtem souborů v adresářích SOURCE-AUDIO-DIR a
+                MASTER-COPY-DIR. Neboli pro každý obraz i zvuk musí existovat sekundární METS soubor s technickými metadaty.
+            </description>
+            <validation functionName="checkAllFileListsHaveSameSize">
+                <params>
+                    <value name="files" type="FILE_LIST">
+                        <evaluation functionName="mergeFiles">
+                            <params>
+                                <value name="file_list" type="FILE_LIST">
+                                    <value-ref name="SECONDARY-METS-IMAGE_FILES"/>
+                                </value>
+                                <value name="file_list" type="FILE_LIST">
+                                    <value-ref name="SECONDARY-METS-AUDIO_FILES"/>
+                                </value>
+                            </params>
+                        </evaluation>
+                    </value>
+                    <value name="files" type="FILE_LIST">
+                        <evaluation functionName="mergeFiles">
+                            <params>
+                                <value name="file_list" type="FILE_LIST">
+                                    <value-ref name="MASTER-COPY_FILES"/>
+                                </value>
+                                <value name="file_list" type="FILE_LIST">
+                                    <value-ref name="SOURCE-AUDIO_FILES"/>
+                                </value>
+                            </params>
+                        </evaluation>
+                    </value>
+                </params>
+            </validation>
+        </rule>
+
+        <rule name="NUMBER_OF_FILES_IN_IMAGE-DIRS_MATCH">
+            <description>Počet souborů ve všech adresářích vztahujících se k stránkám se musí shodovat.</description>
+            <validation functionName="checkAllFileListsHaveSameSize">
+                <params>
+                    <value name="files" type="FILE_LIST">
+                        <value-ref name="OCR-TEXT_FILES"/>
+                    </value>
+                    <value name="files" type="FILE_LIST">
+                        <value-ref name="OCR-ALTO_FILES"/>
+                    </value>
+                    <value name="files" type="FILE_LIST">
+                        <value-ref name="MASTER-COPY_FILES"/>
+                    </value>
+                    <value name="files" type="FILE_LIST">
+                        <value-ref name="USER-COPY_FILES"/>
+                    </value>
+                </params>
+            </validation>
+        </rule>
+
+        <rule name="NUMBER_OF_FILES_IN_AUDIO-DIRS_MATCH">
+            <description>Počet souborů ve všech adresářích vztahujících se k zvukům se musí shodovat.</description>
+            <validation functionName="checkAllFileListsHaveSameSize">
+                <params>
+                    <value name="files" type="FILE_LIST">
+                        <value-ref name="SOURCE-AUDIO_FILES"/>
+                    </value>
+                    <!--mastercopy_audio je nepovinné-->
+                    <value name="files_optional" type="FILE_LIST">
+                        <value-ref name="MASTER-COPY-AUDIO_FILES"/>
+                    </value>
+                    <value name="files" type="FILE_LIST">
+                        <value-ref name="USER-COPY-AUDIO_FILES"/>
+                    </value>
+                </params>
+            </validation>
+        </rule>
+
+
+        <!--délky názvů souborů v top-level adesářích-->
+
+        <rule name="SECONDARY-METS-IMAGE_FILENAMES_LENGTHS_SAME">
+            <description>Délky názvů všech souborů SECONDARY-METS-IMAGE musí být stejné. Tedy čísla stran jsou zarovnaná na
+                stejný počet nul.
+            </description>
+            <validation functionName="checkFilenamesLengthsSame">
+                <params>
+                    <value name="files" type="FILE_LIST">
+                        <value-ref name="SECONDARY-METS-IMAGE_FILES"/>
+                    </value>
+                </params>
+            </validation>
+        </rule>
+
+        <rule name="SECONDARY-METS-AUDIO_FILENAMES_LENGTHS_SAME">
+            <description>Délky názvů všech souborů SECONDARY-METS-AUDIO musí být stejné. Tedy čísla stran jsou zarovnaná na
+                stejný počet nul.
+            </description>
+            <validation functionName="checkFilenamesLengthsSame">
+                <params>
+                    <value name="files" type="FILE_LIST">
+                        <value-ref name="SECONDARY-METS-AUDIO_FILES"/>
+                    </value>
+                </params>
+            </validation>
+        </rule>
+
+        <rule name="OCR-TEXT_FILENAMES_LENGTHS_SAME">
+            <description>Délky názvů všech souborů OCR-TEXT musí být stejné. Tedy čísla stran jsou zarovnaná na stejný
+                počet nul.
+            </description>
+            <validation functionName="checkFilenamesLengthsSame">
+                <params>
+                    <value name="files" type="FILE_LIST">
+                        <value-ref name="OCR-TEXT_FILES"/>
+                    </value>
+                </params>
+            </validation>
+        </rule>
+
+        <rule name="OCR-ALTO_FILENAMES_LENGTHS_SAME">
+            <description>Délky názvů všech souborů OCR-ALTO musí být stejné. Tedy čísla stran jsou zarovnaná na stejný
+                počet nul.
+            </description>
+            <validation functionName="checkFilenamesLengthsSame">
+                <params>
+                    <value name="files" type="FILE_LIST">
+                        <value-ref name="OCR-ALTO_FILES"/>
+                    </value>
+                </params>
+            </validation>
+        </rule>
+
+        <rule name="MASTER-COPY_FILENAMES_LENGTHS_SAME">
+            <description>Délky názvů všech souborů MASTER-COPY musí být stejné. Tedy čísla stran jsou zarovnaná na
+                stejný počet nul.
+            </description>
+            <validation functionName="checkFilenamesLengthsSame">
+                <params>
+                    <value name="files" type="FILE_LIST">
+                        <value-ref name="MASTER-COPY_FILES"/>
+                    </value>
+                </params>
+            </validation>
+        </rule>
+
+        <rule name="USER-COPY_FILENAMES_LENGTHS_SAME">
+            <description>Délky názvů všech souborů USER-COPY musí být stejné. Tedy čísla stran jsou zarovnaná na stejný
+                počet nul.
+            </description>
+            <validation functionName="checkFilenamesLengthsSame">
+                <params>
+                    <value name="files" type="FILE_LIST">
+                        <value-ref name="USER-COPY_FILES"/>
+                    </value>
+                </params>
+            </validation>
+        </rule>
+
+        <rule name="SOURCE-AUDIO_FILENAMES_LENGTHS_SAME">
+            <description>Délky názvů všech souborů SOURCE-AUDIO musí být stejné. Tedy čísla desek a/nebo skladeb jsou zarovnaná na
+                stejný počet nul.
+            </description>
+            <validation functionName="checkFilenamesLengthsSame">
+                <params>
+                    <value name="files" type="FILE_LIST">
+                        <value-ref name="SOURCE-AUDIO_FILES"/>
+                    </value>
+                </params>
+            </validation>
+        </rule>
+
+        <rule name="MASTER-COPY-AUDIO_FILENAMES_LENGTHS_SAME">
+            <description>Délky názvů všech souborů MASTER-COPY-AUDIO musí být stejné. Tedy čísla desek a/nebo skladeb jsou zarovnaná na
+                stejný počet nul.
+            </description>
+            <validation functionName="checkFilenamesLengthsSame">
+                <params>
+                    <value name="files" type="FILE_LIST">
+                        <value-ref name="MASTER-COPY-AUDIO_FILES"/>
+                    </value>
+                </params>
+            </validation>
+        </rule>
+
+        <rule name="USER-COPY-AUDIO_FILENAMES_LENGTHS_SAME">
+            <description>Délky názvů všech souborů USER-COPY-AUDIO musí být stejné. Tedy čísla desek a/nebo skladeb jsou zarovnaná na stejný
+                počet nul.
+            </description>
+            <validation functionName="checkFilenamesLengthsSame">
+                <params>
+                    <value name="files" type="FILE_LIST">
+                        <value-ref name="USER-COPY-AUDIO_FILES"/>
+                    </value>
+                </params>
+            </validation>
+        </rule>
+
+
+        <!--žádný ze souborů v top-level adresářích není adresář-->
+
+        <rule name="SECONDARY-METS-IMAGE_FILES_ARE_NOT_DIRS">
+            <description>Žádný soubor SECONDARY-METS-IMAGE nesmí být adresář.</description>
+            <validation functionName="checkNoFileIsDir">
+                <params>
+                    <value name="files" type="FILE_LIST">
+                        <value-ref name="SECONDARY-METS-IMAGE_FILES"/>
+                    </value>
+                </params>
+            </validation>
+        </rule>
+
+        <rule name="SECONDARY-METS-AUDIO_FILES_ARE_NOT_DIRS">
+            <description>Žádný soubor SECONDARY-METS-AUDIO nesmí být adresář.</description>
+            <validation functionName="checkNoFileIsDir">
+                <params>
+                    <value name="files" type="FILE_LIST">
+                        <value-ref name="SECONDARY-METS-AUDIO_FILES"/>
+                    </value>
+                </params>
+            </validation>
+        </rule>
+
+        <rule name="OCR-TEXT_FILES_ARE_NOT_DIRS">
+            <description>Žádný soubor OCR-TEXT nesmí být adresář.</description>
+            <validation functionName="checkNoFileIsDir">
+                <params>
+                    <value name="files" type="FILE_LIST">
+                        <value-ref name="OCR-TEXT_FILES"/>
+                    </value>
+                </params>
+            </validation>
+        </rule>
+
+        <rule name="OCR-ALTO_FILES_ARE_NOT_DIRS">
+            <description>Žádný soubor OCR-ALTO nesmí být adresář.</description>
+            <validation functionName="checkNoFileIsDir">
+                <params>
+                    <value name="files" type="FILE_LIST">
+                        <value-ref name="OCR-ALTO_FILES"/>
+                    </value>
+                </params>
+            </validation>
+        </rule>
+
+        <rule name="MASTER-COPY_FILES_ARE_NOT_DIRS">
+            <description>Žádný soubor MASTER-COPY nesmí být adresář.</description>
+            <validation functionName="checkNoFileIsDir">
+                <params>
+                    <value name="files" type="FILE_LIST">
+                        <value-ref name="MASTER-COPY_FILES"/>
+                    </value>
+                </params>
+            </validation>
+        </rule>
+
+        <rule name="USER-COPY_FILES_ARE_NOT_DIRS">
+            <description>Žádný soubor USER-COPY nesmí být adresář.</description>
+            <validation functionName="checkNoFileIsDir">
+                <params>
+                    <value name="files" type="FILE_LIST">
+                        <value-ref name="USER-COPY_FILES"/>
+                    </value>
+                </params>
+            </validation>
+        </rule>
+
+
+        <rule name="SOURCE-AUDIO_FILES_ARE_NOT_DIRS">
+            <description>Žádný soubor SOURCE-AUDIO nesmí být adresář.</description>
+            <validation functionName="checkNoFileIsDir">
+                <params>
+                    <value name="files" type="FILE_LIST">
+                        <value-ref name="SOURCE-AUDIO_FILES"/>
+                    </value>
+                </params>
+            </validation>
+        </rule>
+
+        <rule name="MASTER-COPY-AUDIO_FILES_ARE_NOT_DIRS">
+            <description>Žádný soubor MASTER-COPY-AUDIO nesmí být adresář.</description>
+            <validation functionName="checkNoFileIsDir">
+                <params>
+                    <value name="files" type="FILE_LIST">
+                        <value-ref name="MASTER-COPY-AUDIO_FILES"/>
+                    </value>
+                </params>
+            </validation>
+        </rule>
+
+        <rule name="USER-COPY-AUDIO_FILES_ARE_NOT_DIRS">
+            <description>Žádný soubor USER-COPY-AUDIO nesmí být adresář.</description>
+            <validation functionName="checkNoFileIsDir">
+                <params>
+                    <value name="files" type="FILE_LIST">
+                        <value-ref name="USER-COPY-AUDIO_FILES"/>
+                    </value>
+                </params>
+            </validation>
+        </rule>
+
+
+        <!--žádné další soubory v top-level adresářích-->
+
+        <rule name="NO_EXTRA_FILES_IN_SECONDARY-METS-DIR">
+            <description>Kromě souborů SECONDARY-METS nesmí adresář SECONDARY-METS-DIR obsahovat žádné další soubory.
+            </description>
+            <validation functionName="checkNoOtherFilesInDir">
+                <params>
+                    <value name="root_dir" type="FILE">
+                        <value-ref name="SECONDARY-METS-DIR_FILE"/>
+                    </value>
+                    <value name="files" type="FILE_LIST">
+                        <value-ref name="SECONDARY-METS-IMAGE_FILES"/>
+                    </value>
+                    <value name="files" type="FILE_LIST">
+                        <value-ref name="SECONDARY-METS-AUDIO_FILES"/>
+                    </value>
+                </params>
+            </validation>
+        </rule>
+
+        <rule name="NO_EXTRA_FILES_IN_OCR-TEXT-DIR">
+            <description>Kromě souborů OCR-TEXT nesmí adresář OCR-TEXT-DIR obsahovat žádné další soubory.</description>
+            <validation functionName="checkNoOtherFilesInDir">
+                <params>
+                    <value name="root_dir" type="FILE">
+                        <value-ref name="OCR-TEXT-DIR_FILE"/>
+                    </value>
+                    <value name="files" type="FILE_LIST">
+                        <value-ref name="OCR-TEXT_FILES"/>
+                    </value>
+                </params>
+            </validation>
+        </rule>
+
+        <rule name="NO_EXTRA_FILES_IN_OCR-ALTO-DIR">
+            <description>Kromě souborů OCR-ALTO nesmí adresář OCR-ALTO-DIR obsahovat žádné další soubory.</description>
+            <validation functionName="checkNoOtherFilesInDir">
+                <params>
+                    <value name="root_dir" type="FILE">
+                        <value-ref name="OCR-ALTO-DIR_FILE"/>
+                    </value>
+                    <value name="files" type="FILE_LIST">
+                        <value-ref name="OCR-ALTO_FILES"/>
+                    </value>
+                </params>
+            </validation>
+        </rule>
+
+        <rule name="NO_EXTRA_FILES_IN_MASTER-COPY-DIR">
+            <description>Kromě souborů MASTER-COPY nesmí adresář MASTER-COPY-DIR obsahovat žádné další soubory.
+            </description>
+            <validation functionName="checkNoOtherFilesInDir">
+                <params>
+                    <value name="root_dir" type="FILE">
+                        <value-ref name="MASTER-COPY-DIR_FILE"/>
+                    </value>
+                    <value name="files" type="FILE_LIST">
+                        <value-ref name="MASTER-COPY_FILES"/>
+                    </value>
+                </params>
+            </validation>
+        </rule>
+
+        <rule name="NO_EXTRA_FILES_IN_USER-COPY-DIR">
+            <description>Kromě souborů USER-COPY nesmí adresář USER-COPY-DIR obsahovat žádné další soubory.
+            </description>
+            <validation functionName="checkNoOtherFilesInDir">
+                <params>
+                    <value name="root_dir" type="FILE">
+                        <value-ref name="USER-COPY-DIR_FILE"/>
+                    </value>
+                    <value name="files" type="FILE_LIST">
+                        <value-ref name="USER-COPY_FILES"/>
+                    </value>
+                </params>
+            </validation>
+        </rule>
+
+        <rule name="NO_EXTRA_FILES_IN_SOURCE-AUDIO-DIR">
+            <description>Kromě souborů SOURCE-AUDIO nesmí adresář SOURCE-AUDIO-DIR obsahovat žádné další soubory.
+            </description>
+            <validation functionName="checkNoOtherFilesInDir">
+                <params>
+                    <value name="root_dir" type="FILE">
+                        <value-ref name="SOURCE-AUDIO-DIR_FILE"/>
+                    </value>
+                    <value name="files" type="FILE_LIST">
+                        <value-ref name="SOURCE-AUDIO_FILES"/>
+                    </value>
+                </params>
+            </validation>
+        </rule>
+
+        <rule name="NO_EXTRA_FILES_IN_MASTER-COPY-AUDIO-DIR">
+            <description>Kromě souborů MASTER-COPY-AUDIO nesmí adresář MASTER-COPY-AUDIO-DIR obsahovat žádné další soubory.
+            </description>
+            <validation functionName="checkNoOtherFilesInDir">
+                <params>
+                    <value name="root_dir" type="FILE">
+                        <value-ref name="MASTER-COPY-AUDIO-DIR_FILE"/>
+                    </value>
+                    <value name="files" type="FILE_LIST">
+                        <value-ref name="MASTER-COPY-AUDIO_FILES"/>
+                    </value>
+                </params>
+            </validation>
+        </rule>
+
+        <rule name="NO_EXTRA_FILES_IN_USER-COPY-AUDIO-DIR">
+            <description>Kromě souborů USER-COPY-AUDIO nesmí adresář USER-COPY-AUDIO-DIR obsahovat žádné další soubory.
+            </description>
+            <validation functionName="checkNoOtherFilesInDir">
+                <params>
+                    <value name="root_dir" type="FILE">
+                        <value-ref name="USER-COPY-AUDIO-DIR_FILE"/>
+                    </value>
+                    <value name="files" type="FILE_LIST">
+                        <value-ref name="USER-COPY-AUDIO_FILES"/>
+                    </value>
+                </params>
+            </validation>
+        </rule>
+
+        <rule name="NO_EXTRA_FILES_IN_CATALOG-ENTRY-DIR">
+            <description>Kromě souborů CATALOG-ENTRY nesmí adresář CATALOG-ENTRY-DIR obsahovat žádné další soubory.
+            </description>
+            <validation functionName="checkNoOtherFilesInDir">
+                <params>
+                    <value name="root_dir" type="FILE">
+                        <value-ref name="CATALOG-ENTRY-DIR_FILE"/>
+                    </value>
+                    <value name="files" type="FILE_LIST">
+                        <value-ref name="CATALOG-ENTRY_FILES"/>
+                    </value>
+                </params>
+            </validation>
+        </rule>
+
+    </rules-section>
+
+
+    <rules-section name="Soubor CHECKSUM"
+                   description="Kontrola souboru CHECKSUM, odkazů na další soubory a shody kontrolních součtů.">
+
+        <rule name="CHECKSUM_FILE_GENERATED_BY_GRAMMAR">
+            <description>Soubor CHECKSUM by měl být generován předepsanou ABNF gramatikou.</description>
+            <validation functionName="checkChecksumFileGeneratedByGrammar">
+                <params>
+                    <value name="checksum_file" type="FILE">
+                        <value-ref name="CHECKSUM_FILE"/>
+                    </value>
+                </params>
+            </validation>
+        </rule>
+
+        <rule name="CHECKSUM_FILE_ALL_PATHS_MATCH_FILES">
+            <description>Soubor CHECKSUM musí obsahovat záznamy pro každý uvedený soubor a žádný jiný.</description>
+            <validation functionName="checkChecksumFileAllPathsMatchFiles">
+                <params>
+                    <value name="checksum_file" type="FILE">
+                        <value-ref name="CHECKSUM_FILE"/>
+                    </value>
+                    <value name="file" type="FILE">
+                        <value-ref name="PRIMARY-METS_FILE"/>
+                    </value>
+                    <value name="files" type="FILE_LIST">
+                        <value-ref name="SECONDARY-METS-IMAGE_FILES"/>
+                    </value>
+                    <value name="files" type="FILE_LIST">
+                        <value-ref name="SECONDARY-METS-AUDIO_FILES"/>
+                    </value>
+                    <value name="files" type="FILE_LIST">
+                        <value-ref name="OCR-TEXT_FILES"/>
+                    </value>
+                    <value name="files" type="FILE_LIST">
+                        <value-ref name="OCR-ALTO_FILES"/>
+                    </value>
+                    <value name="files" type="FILE_LIST">
+                        <value-ref name="MASTER-COPY_FILES"/>
+                    </value>
+                    <value name="files" type="FILE_LIST">
+                        <value-ref name="USER-COPY_FILES"/>
+                    </value>
+                    <value name="files" type="FILE_LIST">
+                        <value-ref name="SOURCE-AUDIO_FILES"/>
+                    </value>
+                    <value name="files" type="FILE_LIST">
+                        <value-ref name="MASTER-COPY-AUDIO_FILES"/>
+                    </value>
+                    <value name="files" type="FILE_LIST">
+                        <value-ref name="USER-COPY-AUDIO_FILES"/>
+                    </value>
+                    <value name="files" type="FILE_LIST">
+                        <value-ref name="CATALOG-ENTRY_FILES"/>
+                    </value>
+                </params>
+            </validation>
+        </rule>
+
+        <rule name="CHECKSUM_FILE_ALL_CHECKSUMS_MATCH">
+            <description>Všechny kontrolní součty v souborů odkazovaných v souboru CHECKSUM musí souhlasit.
+            </description>
+            <validation functionName="checkChecksumFileAllChecksumsMatch">
+                <params>
+                    <value name="checksum_file" type="FILE">
+                        <value-ref name="CHECKSUM_FILE"/>
+                    </value>
+                </params>
+            </validation>
+        </rule>
+
+    </rules-section>
+
+
+    <rules-section name="Soubor INFO"
+                   description="Validace souboru INFO - odkazování na ostatní soubory, kontrolní součet pro soubor CHECKSUM, atd.">
+
+        <rule name="INFO_XML_WELL_BUILT">
+            <description>Soubor INFO musí být korektní (well-built) xml soubor.</description>
+            <validation functionName="checkXmlIsWellBuilt">
+                <params>
+                    <value name="xml_file" type="FILE">
+                        <value-ref name="INFO_FILE"/>
+                    </value>
+                </params>
+            </validation>
+        </rule>
+
+
+        <rule name="INFO_XML_VALID_BY_XSD">
+            <description>Soubor INFO by měl být validní podle XML Schema (info_adg0.5).</description>
+            <validation functionName="checkXmlIsValidByXsd">
+                <params>
+                    <value name="xml_file" type="FILE">
+                        <value-ref name="INFO_FILE"/>
+                    </value>
+                    <value name="xsd_file" type="FILE">
+                        <value-ref name="INFO_XSD_FILE"/>
+                    </value>
+                    <value name="level" type="LEVEL">WARNING</value>
+                </params>
+            </validation>
+        </rule>
+
+
+        <!--METS Profile requirement id infoxml6-->
+        <rule name="INFO_REFERENCES_PRIMARY-METS">
+            <description>Soubor INFO se musí odkazovat na soubor PRIMARY-METS přes element mainmets.</description>
+            <validation functionName="checkInfoFileReferencesPrimaryMets">
+                <params>
+                    <value name="info_file" type="FILE">
+                        <value-ref name="INFO_FILE"/>
+                    </value>
+                    <value name="primary-mets_file" type="FILE">
+                        <value-ref name="PRIMARY-METS_FILE"/>
+                    </value>
+                </params>
+            </validation>
+        </rule>
+
+        <!--METS Profile requirement id infoxml13-->
+        <rule name="INFO_ITEMTOTAL_MATCHES_ITEMS_COUNT">
+            <description>V souboru INFO musí počet elementů item souhlasit s hodnotou atributu itemtotal elementu
+                itemlist.
+            </description>
+            <!--mozne delat i nejak takhle, zatim ale asi neni potreba takova variabilita-->
+            <!--<validation functionName="checkFilelistHasExactSize">
+                <params>
+                    <value name="files" type="FILE_LIST">
+                        <value-ref name="INFO_ITEMS"/>
+                    </value>
+                    <value name="size" type="INTEGER">
+                        <value-ref name="INFO_ITELMTOTAL"/>
+                    </value>
+                </params>
+            </validation>-->
+            <validation functionName="checkInfoFileItemsCountMatchesItemtotal">
+                <params>
+                    <value name="info_file" type="FILE">
+                        <value-ref name="INFO_FILE"/>
+                    </value>
+                </params>
+            </validation>
+
+        </rule>
+
+        <!--METS Profile requirement id infoxml13-->
+        <rule name="INFO_ITEMLIST_REFERENCES_ALL_FILES">
+            <description>Soubor INFO se musí odkazovat na všechny uvedené soubory přes elementy item a na žádné další.
+            </description>
+            <validation functionName="checkInfoFileItemlistReferencesAllFiles">
+                <params>
+                    <value name="info_file" type="FILE">
+                        <value-ref name="INFO_FILE"/>
+                    </value>
+                    <value name="level" type="LEVEL">ERROR</value>
+                    <value name="file" type="FILE">
+                        <value-ref name="INFO_FILE"/>
+                    </value>
+                    <value name="file" type="FILE">
+                        <value-ref name="CHECKSUM_FILE"/>
+                    </value>
+                    <value name="file" type="FILE">
+                        <value-ref name="PRIMARY-METS_FILE"/>
+                    </value>
+                    <value name="files" type="FILE_LIST">
+                        <value-ref name="SECONDARY-METS-IMAGE_FILES"/>
+                    </value>
+                    <value name="files" type="FILE_LIST">
+                        <value-ref name="SECONDARY-METS-AUDIO_FILES"/>
+                    </value>
+                    <value name="files" type="FILE_LIST">
+                        <value-ref name="OCR-TEXT_FILES"/>
+                    </value>
+                    <value name="files" type="FILE_LIST">
+                        <value-ref name="OCR-ALTO_FILES"/>
+                    </value>
+                    <value name="files" type="FILE_LIST">
+                        <value-ref name="MASTER-COPY_FILES"/>
+                    </value>
+                    <value name="files" type="FILE_LIST">
+                        <value-ref name="USER-COPY_FILES"/>
+                    </value>
+                    <value name="files" type="FILE_LIST">
+                        <value-ref name="SOURCE-AUDIO_FILES"/>
+                    </value>
+                    <value name="files" type="FILE_LIST">
+                        <value-ref name="MASTER-COPY-AUDIO_FILES"/>
+                    </value>
+                    <value name="files" type="FILE_LIST">
+                        <value-ref name="USER-COPY-AUDIO_FILES"/>
+                    </value>
+                    <value name="files" type="FILE_LIST">
+                        <value-ref name="CATALOG-ENTRY_FILES"/>
+                    </value>
+                </params>
+            </validation>
+        </rule>
+
+        <!--METS Profile requirement id infoxml14-->
+        <rule name="INFO_CHECKSUM_FILE_CHECKSUM_MATCHES">
+            <description>Soubor INFO se musí odkazovat na existující soubor CHECKSUM přes element checksum a kontrolní
+                součet se musí shodovat.
+            </description>
+            <validation functionName="checkInfoFileChecksumMatches">
+                <params>
+                    <value name="info_file" type="FILE">
+                        <value-ref name="INFO_FILE"/>
+                    </value>
+                    <value name="checksum_file" type="FILE">
+                        <value-ref name="CHECKSUM_FILE"/>
+                    </value>
+                </params>
+            </validation>
+        </rule>
+
+
+    </rules-section>
+
+
+    <rules-section name="Identifikátory" description="">
+
+        <!--psp id-->
+        <!--Na žádost NKP zrušeno-->
+        <!--<rule name="PSP_ID_DERIVED_FROM_TITLE_ID">
+            <description>PSP-ID by měl být odvozen od některého z identifikátorů titulu, navíc pouze typu 'urnnbn' nebo
+                'uuid'.
+            </description>
+            <validation functionName="checkStringDerivedFromOneOfIdentifiers">
+                <params>
+                    <value name="string" type="STRING">
+                        <value-ref name="PSP_ID"/>
+                    </value>
+                    &lt;!&ndash;seznam identifikatoru&ndash;&gt;
+                    <value name="identifiers" type="IDENTIFIER_LIST">
+                        &lt;!&ndash;jeste omezeni na konkretni typy identifikatoru titulu, ze kterych muze byt psp-id odvozen&ndash;&gt;
+                        <evaluation functionName="filterIdentifersByTypes">
+                            <params>
+                                &lt;!&ndash;seznam identifikatoru (bere se zde z identifikatoru nalezenych v souboru INFO (tj. jen identifikatory titulu)&ndash;&gt;
+                                <value name="identifiers" type="IDENTIFIER_LIST">
+                                    <value-ref name="INFO_IDENTIFIERS"/>
+                                </value>
+                                <value name="types" type="STRING_LIST">
+                                    <evaluation functionName="buildListOfStrings">
+                                        <params>
+                                            <value name="string" type="STRING">uuid</value>
+                                            <value name="string" type="STRING">urnnbn</value>
+                                        </params>
+                                    </evaluation>
+                                </value>
+                            </params>
+                        </evaluation>
+                    </value>
+                    &lt;!&ndash;seznam prefixu, ktere se odstranuji z hodnot identifikatoru pred hledanim shody&ndash;&gt;
+                    <value name="id_prefixes" type="STRING_LIST">
+                        <evaluation functionName="buildListOfStrings">
+                            <params>
+                                <value name="string" type="STRING">cnb</value>
+                                <value name="string" type="STRING">uuid:</value>
+                                <value name="string" type="STRING">urn:nbn:cz:</value>
+                            </params>
+                        </evaluation>
+                    </value>
+                    <value name="min_match_length" type="INTEGER">6</value>>
+                </params>
+            </validation>
+        </rule>-->
+
+        <!--info identifiers -->
+
+        <rule name="INFO_NO_DUPLICATE_IDENTIFIERS">
+            <description>Soubor INFO nesmí obsahovat duplikované identifikátory (tedy více identifikátorů stejného
+                typu).
+            </description>
+            <validation functionName="checkIdentifiersNoDuplicates">
+                <params>
+                    <value name="identifier_list" type="IDENTIFIER_LIST">
+                        <value-ref name="INFO_IDENTIFIERS"/>
+                    </value>
+                </params>
+            </validation>
+        </rule>
+
+
+        <!--DC identifiers -->
+
+        <rule name="DC_IDENTIFIERS_NO_WHITE_SPACES">
+            <description>Identifikátory v Dublin Core záznamech by neměly obsahovat bílé znaky.</description>
+            <validation functionName="checkDcIdentifiersDoNotContainWhiteSpaces">
+                <params>
+                    <value name="primary-mets_file" type="FILE">
+                        <value-ref name="PRIMARY-METS_FILE"/>
+                    </value>
+                </params>
+            </validation>
+        </rule>
+
+        <rule name="DC_IDENTIFIERS_CONTAIN_TYPE_AND_VALUE">
+            <description>Identifikátory v Dublin Core záznamech by měly obsahovat typ a hodnotu oddělěné dvojtečkou
+                (např. barCode:2610161505).
+            </description>
+            <validation functionName="checkDcIdentifiersHaveTypeAndValue">
+                <params>
+                    <value name="primary-mets_file" type="FILE">
+                        <value-ref name="PRIMARY-METS_FILE"/>
+                    </value>
+                </params>
+            </validation>
+        </rule>
+
+        <!--soundcollection-->
+        <rule name="DC_MANDATORY_IDENTIFIERS_PRESENT_LEVEL_SOUNDCOLLECTION">
+            <description>
+                Úroveň SOUNDCOLLECTION musí obsahovat všechny povinné identifikátory v záznamu Dublin Core.
+            </description>
+            <validation functionName="checkIdentifiersAllTypesPresent">
+                <params>
+                    <value name="identifier_list_list" type="IDENTIFIER_LIST_LIST">
+                        <!--seznam obsahujici seznam identifikatoru DC pro kazdy zaznam dmdSec pro dc-->
+                        <evaluation functionName="getDcIdentifiersForEachDmdsecId">
+                            <params>
+                                <value name="dmdsec_ids" type="STRING_LIST">
+                                    <!--seznam identifikatoru (dmdSec ID)-->
+                                    <evaluation functionName="getStringListByXpath">
+                                        <params>
+                                            <value name="xml_file" type="FILE">
+                                                <value-ref name="PRIMARY-METS_FILE"/>
+                                            </value>
+                                            <value name="xpath" type="STRING">
+                                                /mets:mets/mets:dmdSec[starts-with(@ID, "DCMD_SOUNDCOLLECTION")]/@ID
+                                            </value>
+                                        </params>
+                                    </evaluation>
+                                </value>
+                                <value name="mets_file" type="FILE">
+                                    <value-ref name="PRIMARY-METS_FILE"/>
+                                </value>
+                            </params>
+                        </evaluation>
+                    </value>
+                    <value name="id_types" type="STRING_LIST">
+                        <value-ref name="ID_TYPES_SOUNDCOLLECTION_MANDATORY"/>
+                    </value>
+                    <value name="level_name" type="STRING">SOUNDCOLLECTION</value>
+                </params>
+            </validation>
+        </rule>
+
+        <rule name="DC_PROHIBITED_IDENTIFIERS_NOT_PRESENT_LEVEL_SOUNDCOLLECTION">
+            <description>
+                Úroveň SOUNDCOLLECTION nesmí obsahovat žádné zakázané identifikátory v záznamu Dublin Core.
+            </description>
+            <validation functionName="checkIdentifiersNoneTypePresent">
+                <params>
+                    <value name="identifier_list_list" type="IDENTIFIER_LIST_LIST">
+                        <!--seznam obsahujici seznam identifikatoru DC pro kazdy zaznam dmdSec pro dc-->
+                        <evaluation functionName="getDcIdentifiersForEachDmdsecId">
+                            <params>
+                                <value name="dmdsec_ids" type="STRING_LIST">
+                                    <!--seznam identifikatoru (dmdSec ID)-->
+                                    <evaluation functionName="getStringListByXpath">
+                                        <params>
+                                            <value name="xml_file" type="FILE">
+                                                <value-ref name="PRIMARY-METS_FILE"/>
+                                            </value>
+                                            <value name="xpath" type="STRING">
+                                                /mets:mets/mets:dmdSec[starts-with(@ID, "DCMD_SOUNDCOLLECTION")]/@ID
+                                            </value>
+                                        </params>
+                                    </evaluation>
+                                </value>
+                                <value name="mets_file" type="FILE">
+                                    <value-ref name="PRIMARY-METS_FILE"/>
+                                </value>
+                            </params>
+                        </evaluation>
+                    </value>
+                    <value name="id_types" type="STRING_LIST">
+                        <value-ref name="ID_TYPES_SOUNDCOLLECTION_PROHIBITED"/>
+                    </value>
+                    <value name="level_name" type="STRING">SOUNDCOLLECTION</value>
+                </params>
+            </validation>
+        </rule>
+
+        <!--soundrecording-->
+        <rule name="DC_MANDATORY_IDENTIFIERS_PRESENT_LEVEL_SOUNDRECORDING">
+            <description>
+                Úroveň SOUNDRECORDING musí obsahovat všechny povinné identifikátory v záznamu Dublin Core.
+            </description>
+            <validation functionName="checkIdentifiersAllTypesPresent">
+                <params>
+                    <value name="identifier_list_list" type="IDENTIFIER_LIST_LIST">
+                        <!--seznam obsahujici seznam identifikatoru DC pro kazdy zaznam dmdSec pro dc-->
+                        <evaluation functionName="getDcIdentifiersForEachDmdsecId">
+                            <params>
+                                <value name="dmdsec_ids" type="STRING_LIST">
+                                    <!--seznam identifikatoru (dmdSec ID)-->
+                                    <evaluation functionName="getStringListByXpath">
+                                        <params>
+                                            <value name="xml_file" type="FILE">
+                                                <value-ref name="PRIMARY-METS_FILE"/>
+                                            </value>
+                                            <value name="xpath" type="STRING">
+                                                /mets:mets/mets:dmdSec[starts-with(@ID, "DCMD_SOUNDRECORDING")]/@ID
+                                            </value>
+                                        </params>
+                                    </evaluation>
+                                </value>
+                                <value name="mets_file" type="FILE">
+                                    <value-ref name="PRIMARY-METS_FILE"/>
+                                </value>
+                            </params>
+                        </evaluation>
+                    </value>
+                    <value name="id_types" type="STRING_LIST">
+                        <value-ref name="ID_TYPES_SOUNDRECORDING_MANDATORY"/>
+                    </value>
+                    <value name="level_name" type="STRING">SOUNDRECORDING</value>
+                </params>
+            </validation>
+        </rule>
+
+        <rule name="DC_PROHIBITED_IDENTIFIERS_NOT_PRESENT_LEVEL_SOUNDRECORDING">
+            <description>
+                Úroveň SOUNDRECORDING nesmí obsahovat žádné zakázané identifikátory v záznamu Dublin Core.
+            </description>
+            <validation functionName="checkIdentifiersNoneTypePresent">
+                <params>
+                    <value name="identifier_list_list" type="IDENTIFIER_LIST_LIST">
+                        <!--seznam obsahujici seznam identifikatoru DC pro kazdy zaznam dmdSec pro dc-->
+                        <evaluation functionName="getDcIdentifiersForEachDmdsecId">
+                            <params>
+                                <value name="dmdsec_ids" type="STRING_LIST">
+                                    <!--seznam identifikatoru (dmdSec ID)-->
+                                    <evaluation functionName="getStringListByXpath">
+                                        <params>
+                                            <value name="xml_file" type="FILE">
+                                                <value-ref name="PRIMARY-METS_FILE"/>
+                                            </value>
+                                            <value name="xpath" type="STRING">
+                                                /mets:mets/mets:dmdSec[starts-with(@ID, "DCMD_SOUNDRECORDING")]/@ID
+                                            </value>
+                                        </params>
+                                    </evaluation>
+                                </value>
+                                <value name="mets_file" type="FILE">
+                                    <value-ref name="PRIMARY-METS_FILE"/>
+                                </value>
+                            </params>
+                        </evaluation>
+                    </value>
+                    <value name="id_types" type="STRING_LIST">
+                        <value-ref name="ID_TYPES_SOUNDRECORDING_PROHIBITED"/>
+                    </value>
+                    <value name="level_name" type="STRING">SOUNDRECORDING</value>
+                </params>
+            </validation>
+        </rule>
+
+        <!--soundpart-->
+        <rule name="DC_MANDATORY_IDENTIFIERS_PRESENT_LEVEL_SOUNDPART">
+            <description>
+                Úroveň SOUNDPART musí obsahovat všechny povinné identifikátory v záznamu Dublin Core.
+            </description>
+            <validation functionName="checkIdentifiersAllTypesPresent">
+                <params>
+                    <value name="identifier_list_list" type="IDENTIFIER_LIST_LIST">
+                        <!--seznam obsahujici seznam identifikatoru DC pro kazdy zaznam dmdSec pro dc-->
+                        <evaluation functionName="getDcIdentifiersForEachDmdsecId">
+                            <params>
+                                <value name="dmdsec_ids" type="STRING_LIST">
+                                    <!--seznam identifikatoru (dmdSec ID)-->
+                                    <evaluation functionName="getStringListByXpath">
+                                        <params>
+                                            <value name="xml_file" type="FILE">
+                                                <value-ref name="PRIMARY-METS_FILE"/>
+                                            </value>
+                                            <value name="xpath" type="STRING">
+                                                /mets:mets/mets:dmdSec[starts-with(@ID, "DCMD_SOUNDPART")]/@ID
+                                            </value>
+                                        </params>
+                                    </evaluation>
+                                </value>
+                                <value name="mets_file" type="FILE">
+                                    <value-ref name="PRIMARY-METS_FILE"/>
+                                </value>
+                            </params>
+                        </evaluation>
+                    </value>
+                    <value name="id_types" type="STRING_LIST">
+                        <value-ref name="ID_TYPES_SOUNDPART_MANDATORY"/>
+                    </value>
+                    <value name="level_name" type="STRING">SOUNDPART</value>
+                </params>
+            </validation>
+        </rule>
+
+        <rule name="DC_PROHIBITED_IDENTIFIERS_NOT_PRESENT_LEVEL_SOUNDPART">
+            <description>
+                Úroveň SOUNDPART nesmí obsahovat žádné zakázané identifikátory v záznamu Dublin Core.
+            </description>
+            <validation functionName="checkIdentifiersNoneTypePresent">
+                <params>
+                    <value name="identifier_list_list" type="IDENTIFIER_LIST_LIST">
+                        <!--seznam obsahujici seznam identifikatoru DC pro kazdy zaznam dmdSec pro dc-->
+                        <evaluation functionName="getDcIdentifiersForEachDmdsecId">
+                            <params>
+                                <value name="dmdsec_ids" type="STRING_LIST">
+                                    <!--seznam identifikatoru (dmdSec ID)-->
+                                    <evaluation functionName="getStringListByXpath">
+                                        <params>
+                                            <value name="xml_file" type="FILE">
+                                                <value-ref name="PRIMARY-METS_FILE"/>
+                                            </value>
+                                            <value name="xpath" type="STRING">
+                                                /mets:mets/mets:dmdSec[starts-with(@ID, "DCMD_SOUNDPART")]/@ID
+                                            </value>
+                                        </params>
+                                    </evaluation>
+                                </value>
+                                <value name="mets_file" type="FILE">
+                                    <value-ref name="PRIMARY-METS_FILE"/>
+                                </value>
+                            </params>
+                        </evaluation>
+                    </value>
+                    <value name="id_types" type="STRING_LIST">
+                        <value-ref name="ID_TYPES_SOUNDPART_PROHIBITED"/>
+                    </value>
+                    <value name="level_name" type="STRING">SUPPLEMENT</value>
+                </params>
+            </validation>
+        </rule>
+
+        <!-- supplement -->
+        <rule name="DC_MANDATORY_IDENTIFIERS_PRESENT_LEVEL_SUPPLEMENT">
+            <description>
+                Úroveň SUPPLEMENT musí obsahovat všechny povinné identifikátory v záznamu Dublin Core.
+            </description>
+            <validation functionName="checkIdentifiersAllTypesPresent">
+                <params>
+                    <value name="identifier_list_list" type="IDENTIFIER_LIST_LIST">
+                        <!--seznam obsahujici seznam identifikatoru DC pro kazdy zaznam dmdSec pro dc-->
+                        <evaluation functionName="getDcIdentifiersForEachDmdsecId">
+                            <params>
+                                <value name="dmdsec_ids" type="STRING_LIST">
+                                    <!--seznam identifikatoru (dmdSec ID)-->
+                                    <evaluation functionName="getStringListByXpath">
+                                        <params>
+                                            <value name="xml_file" type="FILE">
+                                                <value-ref name="PRIMARY-METS_FILE"/>
+                                            </value>
+                                            <value name="xpath" type="STRING">
+                                                /mets:mets/mets:dmdSec[starts-with(@ID, "DCMD_SUPPL")]/@ID
+                                            </value>
+                                        </params>
+                                    </evaluation>
+                                </value>
+                                <value name="mets_file" type="FILE">
+                                    <value-ref name="PRIMARY-METS_FILE"/>
+                                </value>
+                            </params>
+                        </evaluation>
+                    </value>
+                    <value name="id_types" type="STRING_LIST">
+                        <value-ref name="ID_TYPES_SUPPLEMENT_MANDATORY"/>
+                    </value>
+                    <value name="level_name" type="STRING">SUPPLEMENT</value>
+                </params>
+            </validation>
+        </rule>
+
+        <rule name="DC_PROHIBITED_IDENTIFIERS_NOT_PRESENT_LEVEL_SUPPLEMENT">
+            <description>
+                Úroveň SUPPLEMENT nesmí obsahovat žádné zakázané identifikátory v záznamu Dublin Core.
+            </description>
+            <validation functionName="checkIdentifiersNoneTypePresent">
+                <params>
+                    <value name="identifier_list_list" type="IDENTIFIER_LIST_LIST">
+                        <!--seznam obsahujici seznam identifikatoru DC pro kazdy zaznam dmdSec pro dc-->
+                        <evaluation functionName="getDcIdentifiersForEachDmdsecId">
+                            <params>
+                                <value name="dmdsec_ids" type="STRING_LIST">
+                                    <!--seznam identifikatoru (dmdSec ID)-->
+                                    <evaluation functionName="getStringListByXpath">
+                                        <params>
+                                            <value name="xml_file" type="FILE">
+                                                <value-ref name="PRIMARY-METS_FILE"/>
+                                            </value>
+                                            <value name="xpath" type="STRING">
+                                                /mets:mets/mets:dmdSec[starts-with(@ID, "DCMD_SUPPL")]/@ID
+                                            </value>
+                                        </params>
+                                    </evaluation>
+                                </value>
+                                <value name="mets_file" type="FILE">
+                                    <value-ref name="PRIMARY-METS_FILE"/>
+                                </value>
+                            </params>
+                        </evaluation>
+                    </value>
+                    <value name="id_types" type="STRING_LIST">
+                        <value-ref name="ID_TYPES_SUPPLEMENT_PROHIBITED"/>
+                    </value>
+                    <value name="level_name" type="STRING">SUPPLEMENT</value>
+                </params>
+            </validation>
+        </rule>
+
+        <rule name="DC_IDENTIFIERS_NO_DUPLICATES_WITHIN_DMDSEC">
+            <description>Identifikátory v jednotlivých Dublin Core záznamech by měly mít unikátní typ.
+                Neměly by se tedy objevit dva a více identikátorů stejného typu v jednom záznamu.
+            </description>
+
+            <validation functionName="checkIdentifiersNoDuplicateTypes">
+                <params>
+                    <value name="identifier_list_list" type="IDENTIFIER_LIST_LIST">
+                        <!--seznam obsahujici seznam identifikatoru DC pro kazdy zaznam dmdSec pro dc-->
+                        <evaluation functionName="getDcIdentifiersForEachDmdsecId">
+                            <params>
+                                <value name="dmdsec_ids" type="STRING_LIST">
+                                    <!--seznam identifikatoru (dmdSec ID)-->
+                                    <evaluation functionName="getStringListByXpath">
+                                        <params>
+                                            <value name="xml_file" type="FILE">
+                                                <value-ref name="PRIMARY-METS_FILE"/>
+                                            </value>
+                                            <value name="xpath" type="STRING">
+                                                /mets:mets/mets:dmdSec[starts-with(@ID, "DCMD")]/@ID
+                                            </value>
+                                        </params>
+                                    </evaluation>
+                                </value>
+                                <value name="mets_file" type="FILE">
+                                    <value-ref name="PRIMARY-METS_FILE"/>
+                                </value>
+                            </params>
+                        </evaluation>
+                    </value>
+                </params>
+            </validation>
+        </rule>
+
+        <rule name="DC_IDENTIFIERS_NO_DUPLICATES_ACROSS_DMDSECS">
+            <description>Identifikátory napříč Dublin Core záznamy by měly být unikátní.
+                Na různých úrovní popisu se tedy nesmí objevit dva totožné identifikátory (shodný typ i hodnota).
+            </description>
+
+            <validation functionName="checkIdentifiersNoDuplicates">
+                <params>
+                    <value name="identifier_list" type="IDENTIFIER_LIST">
+                        <!--spojeni vsech identifikatoru do jednoho seznamu-->
+                        <evaluation functionName="mergeIdentifiers">
+                            <params>
+                                <value name="identifier_list_list" type="IDENTIFIER_LIST_LIST">
+                                    <!--seznam obsahujici seznam identifikatoru DC pro kazdy zaznam dmdSec pro dc-->
+                                    <evaluation functionName="getDcIdentifiersForEachDmdsecId">
+                                        <params>
+                                            <value name="dmdsec_ids" type="STRING_LIST">
+                                                <!--seznam identifikatoru (dmdSec ID)-->
+                                                <evaluation functionName="getStringListByXpath">
+                                                    <params>
+                                                        <value name="xml_file" type="FILE">
+                                                            <value-ref name="PRIMARY-METS_FILE"/>
+                                                        </value>
+                                                        <value name="xpath" type="STRING">
+                                                            /mets:mets/mets:dmdSec[starts-with(@ID, "DCMD")]/@ID
+                                                        </value>
+                                                    </params>
+                                                </evaluation>
+                                            </value>
+                                            <value name="mets_file" type="FILE">
+                                                <value-ref name="PRIMARY-METS_FILE"/>
+                                            </value>
+                                        </params>
+                                    </evaluation>
+                                </value>
+                            </params>
+                        </evaluation>
+                    </value>
+                </params>
+            </validation>
+        </rule>
+
+
+        <!--MODS identifiers -->
+
+        <!--soundcollection-->
+        <rule name="MODS_MANDATORY_IDENTIFIERS_PRESENT_LEVEL_SOUNDCOLLECTION">
+            <description>
+                Úroveň SOUNDCOLLECTION musí obsahovat všechny povinné identifikátory v záznamu MODS.
+            </description>
+            <validation functionName="checkIdentifiersAllTypesPresent">
+                <params>
+                    <value name="identifier_list_list" type="IDENTIFIER_LIST_LIST">
+                        <!--seznam obsahujici seznam identifikatoru pro kazdy zaznam dmdSec pro MODS-->
+                        <evaluation functionName="getModsIdentifiersForEachDmdsecId">
+                            <params>
+                                <value name="dmdsec_ids" type="STRING_LIST">
+                                    <!--seznam identifikatoru (dmdSec ID)-->
+                                    <evaluation functionName="getStringListByXpath">
+                                        <params>
+                                            <value name="xml_file" type="FILE">
+                                                <value-ref name="PRIMARY-METS_FILE"/>
+                                            </value>
+                                            <value name="xpath" type="STRING">
+                                                /mets:mets/mets:dmdSec[starts-with(@ID, "MODSMD_SOUNDCOLLECTION")]/@ID
+                                            </value>
+                                        </params>
+                                    </evaluation>
+                                </value>
+                                <value name="mets_file" type="FILE">
+                                    <value-ref name="PRIMARY-METS_FILE"/>
+                                </value>
+                            </params>
+                        </evaluation>
+                    </value>
+                    <value name="id_types" type="STRING_LIST">
+                        <value-ref name="ID_TYPES_SOUNDCOLLECTION_MANDATORY"/>
+                    </value>
+                    <value name="level_name" type="STRING">SOUNDCOLLECTION</value>
+                </params>
+            </validation>
+        </rule>
+
+        <rule name="MODS_PROHIBITED_IDENTIFIERS_NOT_PRESENT_LEVEL_SOUNDCOLLECTION">
+            <description>
+                Úroveň SOUNDCOLLECTION nesmí obsahovat žádné zakázané identifikátory v záznamu MODS.
+            </description>
+            <validation functionName="checkIdentifiersNoneTypePresent">
+                <params>
+                    <value name="identifier_list_list" type="IDENTIFIER_LIST_LIST">
+                        <!--seznam obsahujici seznam identifikatoru pro kazdy zaznam dmdSec pro MODS-->
+                        <evaluation functionName="getModsIdentifiersForEachDmdsecId">
+                            <params>
+                                <value name="dmdsec_ids" type="STRING_LIST">
+                                    <!--seznam identifikatoru (dmdSec ID)-->
+                                    <evaluation functionName="getStringListByXpath">
+                                        <params>
+                                            <value name="xml_file" type="FILE">
+                                                <value-ref name="PRIMARY-METS_FILE"/>
+                                            </value>
+                                            <value name="xpath" type="STRING">
+                                                /mets:mets/mets:dmdSec[starts-with(@ID, "MODSMD_SOUNDCOLLECTION")]/@ID
+                                            </value>
+                                        </params>
+                                    </evaluation>
+                                </value>
+                                <value name="mets_file" type="FILE">
+                                    <value-ref name="PRIMARY-METS_FILE"/>
+                                </value>
+                            </params>
+                        </evaluation>
+                    </value>
+                    <value name="id_types" type="STRING_LIST">
+                        <value-ref name="ID_TYPES_SOUNDCOLLECTION_PROHIBITED"/>
+                    </value>
+                    <value name="level_name" type="STRING">SOUNDCOLLECTION</value>
+                </params>
+            </validation>
+        </rule>
+
+        <!--soundrecording-->
+        <rule name="MODS_MANDATORY_IDENTIFIERS_PRESENT_LEVEL_SOUNDRECORDING">
+            <description>
+                Úroveň SOUNDRECORDING musí obsahovat všechny povinné identifikátory v záznamu MODS.
+            </description>
+            <validation functionName="checkIdentifiersAllTypesPresent">
+                <params>
+                    <value name="identifier_list_list" type="IDENTIFIER_LIST_LIST">
+                        <!--seznam obsahujici seznam identifikatoru pro kazdy zaznam dmdSec pro MODS-->
+                        <evaluation functionName="getModsIdentifiersForEachDmdsecId">
+                            <params>
+                                <value name="dmdsec_ids" type="STRING_LIST">
+                                    <!--seznam identifikatoru (dmdSec ID)-->
+                                    <evaluation functionName="getStringListByXpath">
+                                        <params>
+                                            <value name="xml_file" type="FILE">
+                                                <value-ref name="PRIMARY-METS_FILE"/>
+                                            </value>
+                                            <value name="xpath" type="STRING">
+                                                /mets:mets/mets:dmdSec[starts-with(@ID, "MODSMD_SOUNDRECORDING")]/@ID
+                                            </value>
+                                        </params>
+                                    </evaluation>
+                                </value>
+                                <value name="mets_file" type="FILE">
+                                    <value-ref name="PRIMARY-METS_FILE"/>
+                                </value>
+                            </params>
+                        </evaluation>
+                    </value>
+                    <value name="id_types" type="STRING_LIST">
+                        <value-ref name="ID_TYPES_SOUNDRECORDING_MANDATORY"/>
+                    </value>
+                    <value name="level_name" type="STRING">SOUNDRECORDING</value>
+                </params>
+            </validation>
+        </rule>
+
+        <rule name="MODS_PROHIBITED_IDENTIFIERS_NOT_PRESENT_LEVEL_SOUNDRECORDING">
+            <description>
+                Úroveň SOUNDRECORDING nesmí obsahovat žádné zakázané identifikátory v záznamu MODS.
+            </description>
+            <validation functionName="checkIdentifiersNoneTypePresent">
+                <params>
+                    <value name="identifier_list_list" type="IDENTIFIER_LIST_LIST">
+                        <!--seznam obsahujici seznam identifikatoru pro kazdy zaznam dmdSec pro MODS-->
+                        <evaluation functionName="getModsIdentifiersForEachDmdsecId">
+                            <params>
+                                <value name="dmdsec_ids" type="STRING_LIST">
+                                    <!--seznam identifikatoru (dmdSec ID)-->
+                                    <evaluation functionName="getStringListByXpath">
+                                        <params>
+                                            <value name="xml_file" type="FILE">
+                                                <value-ref name="PRIMARY-METS_FILE"/>
+                                            </value>
+                                            <value name="xpath" type="STRING">
+                                                /mets:mets/mets:dmdSec[starts-with(@ID, "MODSMD_SOUNDRECORDING")]/@ID
+                                            </value>
+                                        </params>
+                                    </evaluation>
+                                </value>
+                                <value name="mets_file" type="FILE">
+                                    <value-ref name="PRIMARY-METS_FILE"/>
+                                </value>
+                            </params>
+                        </evaluation>
+                    </value>
+                    <value name="id_types" type="STRING_LIST">
+                        <value-ref name="ID_TYPES_SOUNDRECORDING_PROHIBITED"/>
+                    </value>
+                    <value name="level_name" type="STRING">SOUNDRECORDING</value>
+                </params>
+            </validation>
+        </rule>
+
+        <!-- soundpart -->
+        <rule name="MODS_MANDATORY_IDENTIFIERS_PRESENT_LEVEL_SOUNDPART">
+            <description>
+                Úroveň SOUNDPART musí obsahovat všechny povinné identifikátory v záznamu MODS.
+            </description>
+            <validation functionName="checkIdentifiersAllTypesPresent">
+                <params>
+                    <value name="identifier_list_list" type="IDENTIFIER_LIST_LIST">
+                        <!--seznam obsahujici seznam identifikatoru pro kazdy zaznam dmdSec pro MODS-->
+                        <evaluation functionName="getModsIdentifiersForEachDmdsecId">
+                            <params>
+                                <value name="dmdsec_ids" type="STRING_LIST">
+                                    <!--seznam identifikatoru (dmdSec ID)-->
+                                    <evaluation functionName="getStringListByXpath">
+                                        <params>
+                                            <value name="xml_file" type="FILE">
+                                                <value-ref name="PRIMARY-METS_FILE"/>
+                                            </value>
+                                            <value name="xpath" type="STRING">
+                                                /mets:mets/mets:dmdSec[starts-with(@ID, "MODSMD_SOUNDPART")]/@ID
+                                            </value>
+                                        </params>
+                                    </evaluation>
+                                </value>
+                                <value name="mets_file" type="FILE">
+                                    <value-ref name="PRIMARY-METS_FILE"/>
+                                </value>
+                            </params>
+                        </evaluation>
+                    </value>
+                    <value name="id_types" type="STRING_LIST">
+                        <value-ref name="ID_TYPES_SOUNDPART_MANDATORY"/>
+                    </value>
+                    <value name="level_name" type="STRING">SOUNDPART</value>
+                </params>
+            </validation>
+        </rule>
+
+        <rule name="MODS_PROHIBITED_IDENTIFIERS_NOT_PRESENT_LEVEL_SOUNDPART">
+            <description>
+                Úroveň SOUNDPART nesmí obsahovat žádné zakázané identifikátory v záznamu MODS.
+            </description>
+            <validation functionName="checkIdentifiersNoneTypePresent">
+                <params>
+                    <value name="identifier_list_list" type="IDENTIFIER_LIST_LIST">
+                        <!--seznam obsahujici seznam identifikatoru pro kazdy zaznam dmdSec pro MODS-->
+                        <evaluation functionName="getModsIdentifiersForEachDmdsecId">
+                            <params>
+                                <value name="dmdsec_ids" type="STRING_LIST">
+                                    <!--seznam identifikatoru (dmdSec ID)-->
+                                    <evaluation functionName="getStringListByXpath">
+                                        <params>
+                                            <value name="xml_file" type="FILE">
+                                                <value-ref name="PRIMARY-METS_FILE"/>
+                                            </value>
+                                            <value name="xpath" type="STRING">
+                                                /mets:mets/mets:dmdSec[starts-with(@ID, "MODSMD_SOUNDPART")]/@ID
+                                            </value>
+                                        </params>
+                                    </evaluation>
+                                </value>
+                                <value name="mets_file" type="FILE">
+                                    <value-ref name="PRIMARY-METS_FILE"/>
+                                </value>
+                            </params>
+                        </evaluation>
+                    </value>
+                    <value name="id_types" type="STRING_LIST">
+                        <value-ref name="ID_TYPES_SOUNDPART_PROHIBITED"/>
+                    </value>
+                    <value name="level_name" type="STRING">SOUNDPART</value>
+                </params>
+            </validation>
+        </rule>
+
+        <!--supplement-->
+        <rule name="MODS_MANDATORY_IDENTIFIERS_PRESENT_LEVEL_SUPPLEMENT">
+            <description>
+                Úroveň SUPPLEMENT musí obsahovat všechny povinné identifikátory v záznamu MODS.
+            </description>
+            <validation functionName="checkIdentifiersAllTypesPresent">
+                <params>
+                    <value name="identifier_list_list" type="IDENTIFIER_LIST_LIST">
+                        <!--seznam obsahujici seznam identifikatoru pro kazdy zaznam dmdSec pro MODS-->
+                        <evaluation functionName="getModsIdentifiersForEachDmdsecId">
+                            <params>
+                                <value name="dmdsec_ids" type="STRING_LIST">
+                                    <!--seznam identifikatoru (dmdSec ID)-->
+                                    <evaluation functionName="getStringListByXpath">
+                                        <params>
+                                            <value name="xml_file" type="FILE">
+                                                <value-ref name="PRIMARY-METS_FILE"/>
+                                            </value>
+                                            <value name="xpath" type="STRING">
+                                                /mets:mets/mets:dmdSec[starts-with(@ID, "MODSMD_SUPPL")]/@ID
+                                            </value>
+                                        </params>
+                                    </evaluation>
+                                </value>
+                                <value name="mets_file" type="FILE">
+                                    <value-ref name="PRIMARY-METS_FILE"/>
+                                </value>
+                            </params>
+                        </evaluation>
+                    </value>
+                    <value name="id_types" type="STRING_LIST">
+                        <value-ref name="ID_TYPES_SUPPLEMENT_MANDATORY"/>
+                    </value>
+                    <value name="level_name" type="STRING">SUPPLEMENT</value>
+                </params>
+            </validation>
+        </rule>
+
+        <rule name="MODS_PROHIBITED_IDENTIFIERS_NOT_PRESENT_LEVEL_SUPPLEMENT">
+            <description>
+                Úroveň SUPPLEMENT nesmí obsahovat žádné zakázané identifikátory v záznamu MODS.
+            </description>
+            <validation functionName="checkIdentifiersNoneTypePresent">
+                <params>
+                    <value name="identifier_list_list" type="IDENTIFIER_LIST_LIST">
+                        <!--seznam obsahujici seznam identifikatoru pro kazdy zaznam dmdSec pro MODS-->
+                        <evaluation functionName="getModsIdentifiersForEachDmdsecId">
+                            <params>
+                                <value name="dmdsec_ids" type="STRING_LIST">
+                                    <!--seznam identifikatoru (dmdSec ID)-->
+                                    <evaluation functionName="getStringListByXpath">
+                                        <params>
+                                            <value name="xml_file" type="FILE">
+                                                <value-ref name="PRIMARY-METS_FILE"/>
+                                            </value>
+                                            <value name="xpath" type="STRING">
+                                                /mets:mets/mets:dmdSec[starts-with(@ID, "MODSMD_SUPPL")]/@ID
+                                            </value>
+                                        </params>
+                                    </evaluation>
+                                </value>
+                                <value name="mets_file" type="FILE">
+                                    <value-ref name="PRIMARY-METS_FILE"/>
+                                </value>
+                            </params>
+                        </evaluation>
+                    </value>
+                    <value name="id_types" type="STRING_LIST">
+                        <value-ref name="ID_TYPES_SUPPLEMENT_PROHIBITED"/>
+                    </value>
+                    <value name="level_name" type="STRING">SUPPLEMENT</value>
+                </params>
+            </validation>
+        </rule>
+
+        <rule name="MODS_IDENTIFIERS_NO_DUPLICATES_WITHIN_DMDSEC">
+            <description>Identifikátory v jednotlivých MODS záznamech by měly mít unikátní typ.
+                Neměly by se tedy objevit dva a více identikátorů stejného typu v jednom záznamu.
+            </description>
+
+            <validation functionName="checkIdentifiersNoDuplicateTypes">
+                <params>
+                    <value name="identifier_list_list" type="IDENTIFIER_LIST_LIST">
+                        <!--seznam obsahujici seznam identifikatoru pro kazdy zaznam dmdSec pro MODS-->
+                        <evaluation functionName="getModsIdentifiersForEachDmdsecId">
+                            <params>
+                                <value name="dmdsec_ids" type="STRING_LIST">
+                                    <!--seznam identifikatoru (dmdSec ID)-->
+                                    <evaluation functionName="getStringListByXpath">
+                                        <params>
+                                            <value name="xml_file" type="FILE">
+                                                <value-ref name="PRIMARY-METS_FILE"/>
+                                            </value>
+                                            <value name="xpath" type="STRING">
+                                                /mets:mets/mets:dmdSec[starts-with(@ID, "MODSMD")]/@ID
+                                            </value>
+                                        </params>
+                                    </evaluation>
+                                </value>
+                                <value name="mets_file" type="FILE">
+                                    <value-ref name="PRIMARY-METS_FILE"/>
+                                </value>
+                            </params>
+                        </evaluation>
+                    </value>
+                </params>
+            </validation>
+        </rule>
+
+        <rule name="MODS_IDENTIFIERS_NO_DUPLICATES_ACROSS_DMDSECS">
+            <description>Identifikátory napříč MODS záznamy by měly být unikátní.
+                Na různých úrovní popisu se tedy nesmí objevit dva totožné identifikátory (shodný typ i hodnota).
+            </description>
+
+            <validation functionName="checkIdentifiersNoDuplicates">
+                <params>
+                    <value name="identifier_list" type="IDENTIFIER_LIST">
+                        <!--spojeni vsech identifikatoru do jednoho seznamu-->
+                        <evaluation functionName="mergeIdentifiers">
+                            <params>
+                                <value name="identifier_list_list" type="IDENTIFIER_LIST_LIST">
+                                    <!--seznam obsahujici seznam identifikatoru pro kazdy zaznam dmdSec pro MODS-->
+                                    <evaluation functionName="getModsIdentifiersForEachDmdsecId">
+                                        <params>
+                                            <value name="dmdsec_ids" type="STRING_LIST">
+                                                <!--seznam identifikatoru (dmdSec ID)-->
+                                                <evaluation functionName="getStringListByXpath">
+                                                    <params>
+                                                        <value name="xml_file" type="FILE">
+                                                            <value-ref name="PRIMARY-METS_FILE"/>
+                                                        </value>
+                                                        <value name="xpath" type="STRING">
+                                                            /mets:mets/mets:dmdSec[starts-with(@ID, "MODSMD")]/@ID
+                                                        </value>
+                                                    </params>
+                                                </evaluation>
+                                            </value>
+                                            <value name="mets_file" type="FILE">
+                                                <value-ref name="PRIMARY-METS_FILE"/>
+                                            </value>
+                                        </params>
+                                    </evaluation>
+                                </value>
+                            </params>
+                        </evaluation>
+                    </value>
+                </params>
+            </validation>
+        </rule>
+
+        <rule name="MODS_IDENTIFIERS_URN_NBN_VALID">
+            <description>Všechny identifikátory URN:NBN napříč MODS záznamy musí platnou podobu (např. urn:nbn:cz:abd005-00012z).
+            </description>
+            <validation functionName="checkUrnNbnIdentifiersValid">
+                <params>
+                    <value name="identifier_list" type="IDENTIFIER_LIST">
+                        <!--spojeni vsech identifikatoru do jednoho seznamu-->
+                        <evaluation functionName="mergeIdentifiers">
+                            <params>
+                                <value name="identifier_list_list" type="IDENTIFIER_LIST_LIST">
+                                    <!--seznam obsahujici seznam identifikatoru pro kazdy zaznam dmdSec pro MODS-->
+                                    <evaluation functionName="getModsIdentifiersForEachDmdsecId">
+                                        <params>
+                                            <value name="dmdsec_ids" type="STRING_LIST">
+                                                <!--seznam identifikatoru (dmdSec ID)-->
+                                                <evaluation functionName="getStringListByXpath">
+                                                    <params>
+                                                        <value name="xml_file" type="FILE">
+                                                            <value-ref name="PRIMARY-METS_FILE"/>
+                                                        </value>
+                                                        <value name="xpath" type="STRING">
+                                                            /mets:mets/mets:dmdSec[starts-with(@ID, "MODSMD")]/@ID
+                                                        </value>
+                                                    </params>
+                                                </evaluation>
+                                            </value>
+                                            <value name="mets_file" type="FILE">
+                                                <value-ref name="PRIMARY-METS_FILE"/>
+                                            </value>
+                                        </params>
+                                    </evaluation>
+                                </value>
+                            </params>
+                        </evaluation>
+                    </value>
+                </params>
+            </validation>
+        </rule>
+
+        <rule name="MODS_IDENTIFIERS_URN_NBN_REGISTERED">
+            <description>Všechny identifikátory URN:NBN napříč MODS záznamy musí registrovány v URN:NBN Resolveru NKP.
+            </description>
+            <validation functionName="checkUrnNbnIdentifiersRegistered">
+                <params>
+                    <value name="identifier_list" type="IDENTIFIER_LIST">
+                        <!--spojeni vsech identifikatoru do jednoho seznamu-->
+                        <evaluation functionName="mergeIdentifiers">
+                            <params>
+                                <value name="identifier_list_list" type="IDENTIFIER_LIST_LIST">
+                                    <!--seznam obsahujici seznam identifikatoru pro kazdy zaznam dmdSec pro MODS-->
+                                    <evaluation functionName="getModsIdentifiersForEachDmdsecId">
+                                        <params>
+                                            <value name="dmdsec_ids" type="STRING_LIST">
+                                                <!--seznam identifikatoru (dmdSec ID)-->
+                                                <evaluation functionName="getStringListByXpath">
+                                                    <params>
+                                                        <value name="xml_file" type="FILE">
+                                                            <value-ref name="PRIMARY-METS_FILE"/>
+                                                        </value>
+                                                        <value name="xpath" type="STRING">
+                                                            /mets:mets/mets:dmdSec[starts-with(@ID, "MODSMD")]/@ID
+                                                        </value>
+                                                    </params>
+                                                </evaluation>
+                                            </value>
+                                            <value name="mets_file" type="FILE">
+                                                <value-ref name="PRIMARY-METS_FILE"/>
+                                            </value>
+                                        </params>
+                                    </evaluation>
+                                </value>
+                            </params>
+                        </evaluation>
+                    </value>
+                </params>
+            </validation>
+        </rule>
+
+        <!--shoda identifikatorů v mods, dc-->
+        <rule name="PRIMARY-METS_DC_IDENTIFIER_MATCH_MODS_IDENTIFIERS">
+            <description>Identifikátory v DC se musí shodovat s identifikátory v MODS pro všechny úrovně popisu.
+            </description>
+            <validation functionName="checkPrimaryMetsDcIdentifiersMatchModsIdentifiers">
+                <params>
+                    <value name="primary-mets_file" type="FILE">
+                        <value-ref name="PRIMARY-METS_FILE"/>
+                    </value>
+                </params>
+            </validation>
+        </rule>
+
+    </rules-section>
+
+
+    <rules-section name="METS hlavičky" description="Kontrola hlaviček primárního a sekundárních METS záznamů">
+
+        <rule name="PRIMARY_METS_HEADER_MATCHES_PROFILE">
+            <description>Primární METS musí obsahovat hlavičku metsHdr, která musí splňovat požadovaný profil.
+            </description>
+            <validation functionName="checkMetsMatchProfile">
+                <params>
+                    <value name="mets_file" type="FILE">
+                        <value-ref name="PRIMARY-METS_FILE"/>
+                    </value>
+                    <value name="profile" type="STRING">primary_mets_header</value>
+                </params>
+            </validation>
+        </rule>
+        <rule name="SECONDARY-METS-IMAGE_HEADER_MATCH_PROFILE">
+            <description>Sekundární METS (pro obrázek) musí obsahovat hlavičku metsHdr, která musí splňovat požadovaný profil.
+            </description>
+            <validation functionName="checkMetsMatchProfile">
+                <params>
+                    <value name="mets_files" type="FILE_LIST">
+                        <value-ref name="SECONDARY-METS-IMAGE_FILES"/>
+                    </value>
+                    <value name="profile" type="STRING">secondary_mets_header</value>
+                </params>
+            </validation>
+        </rule>
+        <rule name="SECONDARY-METS-AUDIO_HEADER_MATCH_PROFILE">
+            <description>Sekundární METS (pro audio) musí obsahovat hlavičku metsHdr, která musí splňovat požadovaný profil.
+            </description>
+            <validation functionName="checkMetsMatchProfile">
+                <params>
+                    <value name="mets_files" type="FILE_LIST">
+                        <value-ref name="SECONDARY-METS-AUDIO_FILES"/>
+                    </value>
+                    <value name="profile" type="STRING">secondary_mets_header</value>
+                </params>
+            </validation>
+        </rule>
+
+    </rules-section>
+
+
+    <!--TODO: projit tuto sekci-->
+    <!--<rules-section name="Primární METS filesec" description="">
+
+        <rule name="PRIMARY-METS_FILESEC_ALL_FILEGROUPS_PRESENT">
+            <description>Element mets:fileSec v souboru PRIMARY-METS musí obsahovat elementy mets:fileGrp s definovanými
+                hodnotami ID a USE a žádné další.
+            </description>
+            <validation functionName="checkPrimaryMetsFilesecContainsAllFilegroups">
+                <params>
+                    <value name="primary-mets_file" type="FILE">
+                        <value-ref name="PRIMARY-METS_FILE"/>
+                    </value>
+                </params>
+            </validation>
+        </rule>
+
+        <rule name="PRIMARY-METS_FILESEC_ALL_MASTER_COPY_FILES_REFERENCED">
+            <description>Element mets:fileSec v souboru PRIMARY-METS musí v elementu mets:fileGrp s atributem
+                ID="MC_IMGGRP" obsahovat odkazy na všechny soubory MASTER-COPY a žádné jiné.
+            </description>
+            <validation functionName="checkFileListsMatch">
+                <params>
+                    <value name="expected_files" type="FILE_LIST">
+                        <value-ref name="MASTER-COPY_FILES"/>
+                    </value>
+                    <value name="found_files" type="FILE_LIST">
+                        <evaluation functionName="getFileListByXpath">
+                            <params>
+                                <value name="psp_dir" type="FILE">
+                                    <value-ref name="PSP_DIR"/>
+                                </value>
+
+                                <value name="xml_file" type="FILE">
+                                    <value-ref name="PRIMARY-METS_FILE"/>
+                                </value>
+                                <value name="xpath" type="STRING">
+                                    /mets:mets/mets:fileSec/mets:fileGrp[@ID='MC_IMGGRP']/mets:file/mets:FLocat[@LOCTYPE='URL']/@xlink:href
+                                </value>
+                            </params>
+                        </evaluation>
+                    </value>
+                </params>
+            </validation>
+        </rule>
+
+        <rule name="PRIMARY-METS_FILESEC_ALL_USER_COPY_FILES_REFERENCED">
+            <description>Element mets:fileSec v souboru PRIMARY-METS musí v elementu mets:fileGrp s atributem
+                ID="UC_IMGGRP" obsahovat odkazy na všechny soubory USER-COPY a žádné jiné.
+            </description>
+            <validation functionName="checkFileListsMatch">
+                <params>
+                    <value name="expected_files" type="FILE_LIST">
+                        <value-ref name="USER-COPY_FILES"/>
+                    </value>
+                    <value name="found_files" type="FILE_LIST">
+                        <evaluation functionName="getFileListByXpath">
+                            <params>
+                                <value name="psp_dir" type="FILE">
+                                    <value-ref name="PSP_DIR"/>
+                                </value>
+
+                                <value name="xml_file" type="FILE">
+                                    <value-ref name="PRIMARY-METS_FILE"/>
+                                </value>
+                                <value name="xpath" type="STRING">
+                                    /mets:mets/mets:fileSec/mets:fileGrp[@ID='UC_IMGGRP']/mets:file/mets:FLocat[@LOCTYPE='URL']/@xlink:href
+                                </value>
+                            </params>
+                        </evaluation>
+                    </value>
+                </params>
+            </validation>
+        </rule>
+
+        <rule name="PRIMARY-METS_FILESEC_ALL_OCR_TEXT_FILES_REFERENCED">
+            <description>Element mets:fileSec v souboru PRIMARY-METS musí v elementu mets:fileGrp s atributem
+                ID="TXTGRP" obsahovat odkazy na všechny soubory OCR-TEXT a žádné jiné.
+            </description>
+            <validation functionName="checkFileListsMatch">
+                <params>
+                    <value name="expected_files" type="FILE_LIST">
+                        <value-ref name="OCR-TEXT_FILES"/>
+                    </value>
+                    <value name="found_files" type="FILE_LIST">
+                        <evaluation functionName="getFileListByXpath">
+                            <params>
+                                <value name="psp_dir" type="FILE">
+                                    <value-ref name="PSP_DIR"/>
+                                </value>
+
+                                <value name="xml_file" type="FILE">
+                                    <value-ref name="PRIMARY-METS_FILE"/>
+                                </value>
+                                <value name="xpath" type="STRING">
+                                    /mets:mets/mets:fileSec/mets:fileGrp[@ID='TXTGRP']/mets:file/mets:FLocat[@LOCTYPE='URL']/@xlink:href
+                                </value>
+                            </params>
+                        </evaluation>
+                    </value>
+                </params>
+            </validation>
+        </rule>
+
+        <rule name="PRIMARY-METS_FILESEC_ALL_OCR_ALTO_FILES_REFERENCED">
+            <description>Element mets:fileSec v souboru PRIMARY-METS musí v elementu mets:fileGrp s atributem
+                ID="ALTOGRP" obsahovat odkazy na všechny soubory OCR-ALTO a žádné jiné.
+            </description>
+            <validation functionName="checkFileListsMatch">
+                <params>
+                    <value name="expected_files" type="FILE_LIST">
+                        <value-ref name="OCR-ALTO_FILES"/>
+                    </value>
+                    <value name="found_files" type="FILE_LIST">
+                        <evaluation functionName="getFileListByXpath">
+                            <params>
+                                <value name="psp_dir" type="FILE">
+                                    <value-ref name="PSP_DIR"/>
+                                </value>
+
+                                <value name="xml_file" type="FILE">
+                                    <value-ref name="PRIMARY-METS_FILE"/>
+                                </value>
+                                <value name="xpath" type="STRING">
+                                    /mets:mets/mets:fileSec/mets:fileGrp[@ID='ALTOGRP']/mets:file/mets:FLocat[@LOCTYPE='URL']/@xlink:href
+                                </value>
+                            </params>
+                        </evaluation>
+                    </value>
+                </params>
+            </validation>
+        </rule>
+
+        <rule name="PRIMARY-METS_FILESEC_ALL_SECONDARY_METS_FILES_REFERENCED">
+            <description>Element mets:fileSec v souboru PRIMARY-METS musí v elementu mets:fileGrp s atributem
+                ID="TECHMDGRP" obsahovat odkazy na všechny soubory SECONDARY-METS a žádné jiné.
+            </description>
+            <validation functionName="checkFileListsMatch">
+                <params>
+                    <value name="expected_files" type="FILE_LIST">
+                        <value-ref name="SECONDARY-METS_FILES"/>
+                    </value>
+                    <value name="found_files" type="FILE_LIST">
+                        <evaluation functionName="getFileListByXpath">
+                            <params>
+                                <value name="psp_dir" type="FILE">
+                                    <value-ref name="PSP_DIR"/>
+                                </value>
+                                <value name="xml_file" type="FILE">
+                                    <value-ref name="PRIMARY-METS_FILE"/>
+                                </value>
+                                <value name="xpath" type="STRING">
+                                    /mets:mets/mets:fileSec/mets:fileGrp[@ID='TECHMDGRP']/mets:file/mets:FLocat[@LOCTYPE='URL']/@xlink:href
+                                </value>
+                            </params>
+                        </evaluation>
+                    </value>
+                </params>
+            </validation>
+        </rule>
+
+        <rule name="PRIMARY-METS_FILESEC_ALL_SECONDARY_METS_FILES_REFERENCED">
+            <description>Element mets:fileSec v souboru PRIMARY-METS musí v elementu mets:fileGrp s atributem
+                ID="TECHMDGRP" obsahovat odkazy na všechny soubory SECONDARY-METS a žádné jiné.
+            </description>
+            <validation functionName="checkFileListsMatch">
+                <params>
+                    <value name="expected_files" type="FILE_LIST">
+                        <value-ref name="SECONDARY-METS_FILES"/>
+                    </value>
+                    <value name="found_files" type="FILE_LIST">
+                        <evaluation functionName="getFileListByXpath">
+                            <params>
+                                <value name="psp_dir" type="FILE">
+                                    <value-ref name="PSP_DIR"/>
+                                </value>
+                                <value name="xml_file" type="FILE">
+                                    <value-ref name="PRIMARY-METS_FILE"/>
+                                </value>
+                                <value name="xpath" type="STRING">
+                                    /mets:mets/mets:fileSec/mets:fileGrp[@ID='TECHMDGRP']/mets:file/mets:FLocat[@LOCTYPE='URL']/@xlink:href
+                                </value>
+                            </params>
+                        </evaluation>
+                    </value>
+                </params>
+            </validation>
+        </rule>
+
+        <rule name="PRIMARY-METS_FILESEC_SIZES_MATCH">
+            <description>Velikosti souborů v bytech uvedené v atributu SIZE všech elementů mets:file se musí shodovat se
+                skutečnými velikostmi souborů odkazovaných v elementech mets:FLocat.
+            </description>
+            <validation functionName="checkMetsFilesecSizesMatch">
+                <params>
+                    <value name="psp_dir" type="FILE">
+                        <value-ref name="PSP_DIR"/>
+                    </value>
+                    <value name="mets_file" type="FILE">
+                        <value-ref name="PRIMARY-METS_FILE"/>
+                    </value>
+                </params>
+            </validation>
+        </rule>
+
+        <rule name="PRIMARY-METS_FILESEC_CHECKSUMS_MATCH">
+            <description>Kontrolní součty souborů uvedené v atributu CHECKSUM všech elementů mets:file se musí shodovat
+                s vypočítanými kontrolními součty souborů odkazovaných v elementech mets:FLocat.
+            </description>
+            <validation functionName="checkMetsFilesecChecksumsMatch">
+                <params>
+                    <value name="psp_dir" type="FILE">
+                        <value-ref name="PSP_DIR"/>
+                    </value>
+                    <value name="mets_file" type="FILE">
+                        <value-ref name="PRIMARY-METS_FILE"/>
+                    </value>
+                </params>
+            </validation>
+        </rule>
+
+    </rules-section>-->
+
+
+    <!--TODO: projit tuto sekci-->
+    <!--<rules-section name="Sekundární METS filesec"
+                   description="Sekce mets:fileSec v sekundárních METS souborech musí obsahovat korektní odkazy na soubory s popisy jednotlivých stran (master a user kopie, textové a alto ocr)">
+
+        <rule name="SECONDARY-METS_FILESEC_ALL_FILEGROUPS_PRESENT">
+            <description>Element mets:fileSec v každém souboru SECONDARY-METS musí obsahovat elementy mets:fileGrp s
+                definovanými hodnotami atributů ID a USE a žádné další.
+            </description>
+            <validation functionName="checkSecondaryMetsFilesecContainsAllFilegroups">
+                <params>
+                    <value name="secondary-mets_files" type="FILE_LIST">
+                        <value-ref name="SECONDARY-METS_FILES"/>
+                    </value>
+                </params>
+            </validation>
+        </rule>
+
+        <rule name="SECONDARY-METS_FILESEC_MASTER_COPY_FILE_REFERENCED">
+            <description>Element mets:fileSec v každém souboru SECONDARY-METS musí v elementu mets:fileGrp s atributem
+                ID="MC_IMGGRP" obsahovat odkaz na správný soubor MASTER-COPY a žádné jiné odkazy.
+            </description>
+            <validation functionName="checkSecondaryMetsFilegroupReferencesSingleFile">
+                <params>
+                    <value name="psp_dir" type="FILE">
+                        <value-ref name="PSP_DIR"/>
+                    </value>
+                    <value name="secondary-mets_files" type="FILE_LIST">
+                        <value-ref name="SECONDARY-METS_FILES"/>
+                    </value>
+                    <value name="referenced_files" type="FILE_LIST">
+                        <value-ref name="MASTER-COPY_FILES"/>
+                    </value>
+                    <value name="filegroup_id" type="STRING">MC_IMGGRP</value>
+                </params>
+            </validation>
+        </rule>
+
+        <rule name="SECONDARY-METS_FILESEC_USER_COPY_FILE_REFERENCED">
+            <description>Element mets:fileSec v každém souboru SECONDARY-METS musí v elementu mets:fileGrp s atributem
+                ID="UC_IMGGRP" obsahovat odkaz na správný soubor USER-COPY a žádné jiné odkazy.
+            </description>
+            <validation functionName="checkSecondaryMetsFilegroupReferencesSingleFile">
+                <params>
+                    <value name="psp_dir" type="FILE">
+                        <value-ref name="PSP_DIR"/>
+                    </value>
+                    <value name="secondary-mets_files" type="FILE_LIST">
+                        <value-ref name="SECONDARY-METS_FILES"/>
+                    </value>
+                    <value name="referenced_files" type="FILE_LIST">
+                        <value-ref name="USER-COPY_FILES"/>
+                    </value>
+                    <value name="filegroup_id" type="STRING">UC_IMGGRP</value>
+                </params>
+            </validation>
+        </rule>
+
+        <rule name="SECONDARY-METS_FILESEC_OCR-ALTO_FILE_REFERENCED">
+            <description>Element mets:fileSec v každém souboru SECONDARY-METS musí v elementu mets:fileGrp s atributem
+                ID="ALTOGRP" obsahovat odkaz na správný soubor OCR-ALTO a žádné jiné odkazy.
+            </description>
+            <validation functionName="checkSecondaryMetsFilegroupReferencesSingleFile">
+                <params>
+                    <value name="psp_dir" type="FILE">
+                        <value-ref name="PSP_DIR"/>
+                    </value>
+                    <value name="secondary-mets_files" type="FILE_LIST">
+                        <value-ref name="SECONDARY-METS_FILES"/>
+                    </value>
+                    <value name="referenced_files" type="FILE_LIST">
+                        <value-ref name="OCR-ALTO_FILES"/>
+                    </value>
+                    <value name="filegroup_id" type="STRING">ALTOGRP</value>
+                </params>
+            </validation>
+        </rule>
+
+        <rule name="SECONDARY-METS_FILESEC_OCR-TEXT_FILE_REFERENCED">
+            <description>Element mets:fileSec v každém souboru SECONDARY-METS musí v elementu mets:fileGrp s atributem
+                ID="TXTGRP" obsahovat odkaz na správný soubor OCR-TEXT a žádné jiné odkazy.
+            </description>
+            <validation functionName="checkSecondaryMetsFilegroupReferencesSingleFile">
+                <params>
+                    <value name="psp_dir" type="FILE">
+                        <value-ref name="PSP_DIR"/>
+                    </value>
+                    <value name="secondary-mets_files" type="FILE_LIST">
+                        <value-ref name="SECONDARY-METS_FILES"/>
+                    </value>
+                    <value name="referenced_files" type="FILE_LIST">
+                        <value-ref name="OCR-TEXT_FILES"/>
+                    </value>
+                    <value name="filegroup_id" type="STRING">TXTGRP</value>
+                </params>
+            </validation>
+        </rule>
+
+    </rules-section>-->
+
+
+    <!--TODO: projit tuto sekci-->
+    <!--<rules-section name="Strukturální mapy"
+                   description="Kontrola fyzických a logických strukturálních map v METS záznamech">
+
+        <rule name="PRIMARY-METS_LOGICAL_STRUCTURAL_MAP_CORRECT">
+            <description>Logická strukturální mapa v souboru PRIMARY-METS musí odkazovat jen na povolené typy obsahu a
+                DMDID musí odkazovat na existující metadataové záznamy.
+            </description>
+            <validation functionName="checkPrimaryMetsLogicalMapOk">
+                <params>
+                    <value name="primary-mets_file" type="FILE">
+                        <value-ref name="PRIMARY-METS_FILE"/>
+                    </value>
+                    <value name="div_types_allowed" type="STRING_LIST">
+                        <evaluation functionName="buildListOfStrings">
+                            <params>
+                                <value name="string" type="STRING">MONOGRAPH</value>
+                                <value name="string" type="STRING">VOLUME</value>
+                                <value name="string" type="STRING">SUPPLEMENT</value>
+                                <value name="string" type="STRING">CHAPTER</value>
+                                <value name="string" type="STRING">TITLE</value>
+                                <value name="string" type="STRING">SUBTITLE</value>
+                                <value name="string" type="STRING">AUTHOR</value>
+                                <value name="string" type="STRING">TRANSLATOR</value>
+                                <value name="string" type="STRING">NORMAL_TEXT</value>
+                                <value name="string" type="STRING">PICTURE</value>
+                                <value name="string" type="STRING">CAPTION</value>
+                                <value name="string" type="STRING">PICT_AUTHOR</value>
+                                <value name="string" type="STRING">PICT_TITLE</value>
+                                <value name="string" type="STRING">IMAGE</value>
+                                <value name="string" type="STRING">NOTE</value>
+                                <value name="string" type="STRING">CHAPTER_PART</value>
+                                <value name="string" type="STRING">PAGE</value>
+                            </params>
+                        </evaluation>
+                    </value>
+                </params>
+            </validation>
+        </rule>
+
+        <rule name="PRIMARY-METS_PHYSICAL_STRUCTURAL_MAP_CORRECT">
+            <description>Fyzická strukturální mapa v souboru PRIMARY-METS musí korektně odkazovat na všechny soubory
+                odkazované v elementu fileSec a žádné jiné.
+            </description>
+            <validation functionName="checkPrimaryMetsPhysicalMapOk">
+                <params>
+                    <value name="primary-mets_file" type="FILE">
+                        <value-ref name="PRIMARY-METS_FILE"/>
+                    </value>
+                    &lt;!&ndash;Ze specifikace není jednoznačně zřejmé, jak plnit atribut TYPE- zda monograph nebo Monograph, proto dočasně zakomentováno&ndash;&gt;
+                    &lt;!&ndash;<value name="expected_top_level_div_type" type="STRING">monograph</value>&ndash;&gt;
+                    <value name="filegroups_to_check" type="STRING_LIST">
+                        <evaluation functionName="buildListOfStrings">
+                            <params>
+                                <value name="string" type="STRING">MC_IMGGRP</value>
+                                <value name="string" type="STRING">UC_IMGGRP</value>
+                                <value name="string" type="STRING">ALTOGRP</value>
+                                <value name="string" type="STRING">TXTGRP</value>
+                                <value name="string" type="STRING">TECHMDGRP</value>
+                            </params>
+                        </evaluation>
+                    </value>
+                    <value name="page_types" type="STRING_LIST">
+                        <evaluation functionName="buildListOfStrings">
+                            <params>
+                                &lt;!&ndash;https://docs.google.com/document/d/1zSriHPdnUY5d_tKv0M8a6nEym560DKh2H6XZ24tGAEw/edit?pli=1#heading=h.g5ucgez1xrbr&ndash;&gt;
+                                &lt;!&ndash;základní typy&ndash;&gt;
+                                <value name="string" type="STRING">titlePage</value>
+                                <value name="string" type="STRING">tableOfContents</value>
+                                <value name="string" type="STRING">blank</value>
+                                <value name="string" type="STRING">advertisement</value>
+                                <value name="string" type="STRING">normalPage</value>
+                                <value name="string" type="STRING">jacket</value>
+                                <value name="string" type="STRING">cover</value>
+                                <value name="string" type="STRING">frontCover</value>
+                                <value name="string" type="STRING">frontEndPaper</value>
+                                <value name="string" type="STRING">backCover</value>
+                                <value name="string" type="STRING">backEndPaper</value>
+                                <value name="string" type="STRING">frontEndSheet</value>
+                                <value name="string" type="STRING">backEndSheet</value>
+                                <value name="string" type="STRING">spine</value>
+                                <value name="string" type="STRING">frontJacket</value>
+
+                                &lt;!&ndash;další typy&ndash;&gt;
+                                <value name="string" type="STRING">index</value>
+                                <value name="string" type="STRING">illustration</value>
+                                <value name="string" type="STRING">listOfIllustrations</value>
+                                <value name="string" type="STRING">map</value>
+                                <value name="string" type="STRING">listOfMaps</value>
+                                <value name="string" type="STRING">listOfTables</value>
+                                <value name="string" type="STRING">table</value>
+                                <value name="string" type="STRING">flyLeaf</value>
+                                <value name="string" type="STRING">dedication</value>
+                                <value name="string" type="STRING">errata</value>
+                                <value name="string" type="STRING">frontispiece</value>
+                                <value name="string" type="STRING">edge</value>
+                                <value name="string" type="STRING">imprimatur</value>
+                                <value name="string" type="STRING">appendix</value>
+                                <value name="string" type="STRING">bibliography</value>
+                                <value name="string" type="STRING">sheetMusic</value>
+                                <value name="string" type="STRING">impressum</value>
+                            </params>
+                        </evaluation>
+                    </value>
+                </params>
+            </validation>
+        </rule>
+
+        <rule name="PRIMARY-METS_STRUCT_LINKS_CORRECT">
+            <description>Sekce structLink v souboru PRIMARY-METS musí přes elementy smLink propojovat objekty logické
+                strukturální mapy se stranami z fyzické strukturální mapy.
+            </description>
+            <validation functionName="checkPrimaryMetsStructLinksOk">
+                <params>
+                    <value name="primary-mets_file" type="FILE">
+                        <value-ref name="PRIMARY-METS_FILE"/>
+                    </value>
+                </params>
+            </validation>
+        </rule>
+
+        <rule name="SECONDARY-METS_PHYSICAL_STRUCTURAL_MAP_CORRECT">
+            <description>Fyzická strukturální mapa v každém souboru SECONDARY-METS musí odkazovat všechny soubory
+                odkazované v elementu fileSec a žádné jiné.
+            </description>
+            <validation functionName="checkSecondaryMetsPhysicalMapOk">
+                <params>
+                    <value name="secondary-mets_files" type="FILE_LIST">
+                        <value-ref name="SECONDARY-METS_FILES"/>
+                    </value>
+                    <value name="expected_page_type" type="STRING">MONOGRAPH_PAGE</value>
+                    <value name="filegroups_to_check" type="STRING_LIST">
+                        <evaluation functionName="buildListOfStrings">
+                            <params>
+                                <value name="string" type="STRING">MC_IMGGRP</value>
+                                &lt;!&ndash;O UC se DMF nezminuje, ale v realnych zaznamech se vyskytuji, takze asi "chyba v DMF"&ndash;&gt;
+                                <value name="string" type="STRING">UC_IMGGRP</value>
+                                <value name="string" type="STRING">ALTOGRP</value>
+                                <value name="string" type="STRING">TXTGRP</value>
+                            </params>
+                        </evaluation>
+                    </value>
+                </params>
+            </validation>
+        </rule>
+
+    </rules-section>-->
+
+
+    <rules-section name="Obrazová data" description="Kontrola obrázků MASTER-COPY a USER-COPY v JPEG 2000 za pomocí externích nástrojů">
+
+        <rule name="MASTER-COPY_FILES_VALID_BY_JPYLYZER">
+            <description>Všechny soubory MASTER-COPY (jpeg 2000) musí být validní vůči profilu pro binární soubory pro nástroj Jpylyzer.
+            </description>
+            <validation functionName="checkBinaryFilesValidByExternalUtil">
+                <params>
+                    <value name="files" type="FILE_LIST">
+                        <value-ref name="MASTER-COPY_FILES"/>
+                    </value>
+                    <value name="type" type="RESOURCE_TYPE">IMAGE_MASTER_COPY</value>
+                    <value name="util" type="EXTERNAL_UTIL">JPYLYZER</value>
+                    <value name="execution" type="STRING">jp2k</value>
+                </params>
+            </validation>
+        </rule>
+
+        <rule name="USER-COPY_FILES_VALID_BY_JPYLYZER">
+            <description>Všechny soubory USER-COPY (jpeg 2000) musí být validní vůči profilu pro binární soubory pro nástroj Jpylyzer.
+            </description>
+            <validation functionName="checkBinaryFilesValidByExternalUtil">
+                <params>
+                    <value name="files" type="FILE_LIST">
+                        <value-ref name="USER-COPY_FILES"/>
+                    </value>
+                    <value name="type" type="RESOURCE_TYPE">IMAGE_USER_COPY</value>
+                    <value name="util" type="EXTERNAL_UTIL">JPYLYZER</value>
+                    <value name="execution" type="STRING">jp2k</value>
+                </params>
+            </validation>
+        </rule>
+
+        <rule name="MASTER-COPY_FILES_VALID_BY_JHOVE">
+            <description>Všechny soubory MASTER-COPY (jpeg 2000) musí být validní vůči profilu pro binární soubory pro nástroj JHOVE.
+            </description>
+            <validation functionName="checkBinaryFilesValidByExternalUtil">
+                <params>
+                    <value name="files" type="FILE_LIST">
+                        <value-ref name="MASTER-COPY_FILES"/>
+                    </value>
+                    <value name="type" type="RESOURCE_TYPE">IMAGE_MASTER_COPY</value>
+                    <value name="util" type="EXTERNAL_UTIL">JHOVE</value>
+                    <value name="execution" type="STRING">jp2k</value>
+                </params>
+            </validation>
+        </rule>
+
+        <rule name="USER-COPY_FILES_VALID_BY_JHOVE">
+            <description>Všechny soubory USER-COPY (jpeg 2000) musí být validní vůči profilu pro binární soubory pro nástroj JHOVE.
+            </description>
+            <validation functionName="checkBinaryFilesValidByExternalUtil">
+                <params>
+                    <value name="files" type="FILE_LIST">
+                        <value-ref name="USER-COPY_FILES"/>
+                    </value>
+                    <value name="type" type="RESOURCE_TYPE">IMAGE_USER_COPY</value>
+                    <value name="util" type="EXTERNAL_UTIL">JHOVE</value>
+                    <value name="execution" type="STRING">jp2k</value>
+                </params>
+            </validation>
+        </rule>
+
+        <rule name="MASTER-COPY_FILES_VALID_BY_KAKADU">
+            <description>Všechny soubory MASTER-COPY (jpeg 2000) musí být validní vůči profilu pro binární soubory pro nástroj Kakadu.
+            </description>
+            <validation functionName="checkBinaryFilesValidByExternalUtil">
+                <params>
+                    <value name="files" type="FILE_LIST">
+                        <value-ref name="MASTER-COPY_FILES"/>
+                    </value>
+                    <value name="type" type="RESOURCE_TYPE">IMAGE_MASTER_COPY</value>
+                    <value name="util" type="EXTERNAL_UTIL">KAKADU</value>
+                    <value name="execution" type="STRING">jp2k</value>
+                </params>
+            </validation>
+        </rule>
+
+        <rule name="USER-COPY_FILES_VALID_BY_KAKADU">
+            <description>Všechny soubory USER-COPY (jpeg 2000) musí být validní vůči profilu pro binární soubory pro nástroj Kakadu.
+            </description>
+            <validation functionName="checkBinaryFilesValidByExternalUtil">
+                <params>
+                    <value name="files" type="FILE_LIST">
+                        <value-ref name="USER-COPY_FILES"/>
+                    </value>
+                    <value name="type" type="RESOURCE_TYPE">IMAGE_USER_COPY</value>
+                    <value name="util" type="EXTERNAL_UTIL">KAKADU</value>
+                    <value name="execution" type="STRING">jp2k</value>
+                </params>
+            </validation>
+        </rule>
+
+        <rule name="MASTER-COPY_FILES_VALID_BY_IMAGE_MAGICK">
+            <description>Všechny soubory MASTER-COPY (jpeg 2000) musí být validní vůči profilu pro binární soubory pro nástroj ImageMagick.
+            </description>
+            <validation functionName="checkBinaryFilesValidByExternalUtil">
+                <params>
+                    <value name="files" type="FILE_LIST">
+                        <value-ref name="MASTER-COPY_FILES"/>
+                    </value>
+                    <value name="type" type="RESOURCE_TYPE">IMAGE_MASTER_COPY</value>
+                    <value name="util" type="EXTERNAL_UTIL">IMAGE_MAGICK</value>
+                    <value name="execution" type="STRING">jp2k</value>
+                </params>
+            </validation>
+        </rule>
+
+        <rule name="USER-COPY_FILES_VALID_BY_IMAGE_MAGICK">
+            <description>Všechny soubory USER-COPY (jpeg 2000) musí být validní vůči profilu pro binární soubory pro nástroj ImageMagick.
+            </description>
+            <validation functionName="checkBinaryFilesValidByExternalUtil">
+                <params>
+                    <value name="files" type="FILE_LIST">
+                        <value-ref name="USER-COPY_FILES"/>
+                    </value>
+                    <value name="type" type="RESOURCE_TYPE">IMAGE_USER_COPY</value>
+                    <value name="util" type="EXTERNAL_UTIL">IMAGE_MAGICK</value>
+                    <value name="execution" type="STRING">jp2k</value>
+                </params>
+            </validation>
+        </rule>
+
+    </rules-section>
+
+
+    <rules-section name="Zvuková data" description="Kontrola zvukových souborů (MP3, WAV) za pomocí externích nástrojů">
+        <rule name="SOURCE-AUDIO_FILES_VALID_BY_JHOVE">
+            <description>Všechny soubory SOURCE-AUDIO (wav) musí být validní vůči profilu pro binární soubory pro nástroj JHOVE.
+            </description>
+            <validation functionName="checkBinaryFilesValidByExternalUtil">
+                <params>
+                    <value name="files" type="FILE_LIST">
+                        <value-ref name="SOURCE-AUDIO_FILES"/>
+                    </value>
+                    <value name="type" type="RESOURCE_TYPE">AUDIO_SOURCE</value>
+                    <value name="util" type="EXTERNAL_UTIL">JHOVE</value>
+                    <value name="execution" type="STRING">wav</value>
+                </params>
+            </validation>
+        </rule>
+
+        <rule name="SOURCE-AUDIO_FILES_VALID_BY_SHNTOOL">
+            <description>Všechny soubory SOURCE-AUDIO (wav) musí být validní vůči profilu pro binární soubory pro nástroj shntool.
+            </description>
+            <validation functionName="checkBinaryFilesValidByExternalUtil">
+                <params>
+                    <value name="files" type="FILE_LIST">
+                        <value-ref name="SOURCE-AUDIO_FILES"/>
+                    </value>
+                    <value name="type" type="RESOURCE_TYPE">AUDIO_SOURCE</value>
+                    <value name="util" type="EXTERNAL_UTIL">SHNTOOL</value>
+                    <value name="execution" type="STRING">wav</value>
+                </params>
+            </validation>
+        </rule>
+
+        <rule name="MASTER-COPY-AUDIO_FILES_VALID_BY_MP3VAL">
+            <description>Všechny soubory MASTER-COPY-AUDIO (mp3) musí být validní vůči profilu pro binární soubory pro nástroj MP3val.
+            </description>
+            <validation functionName="checkBinaryFilesValidByExternalUtil">
+                <params>
+                    <value name="no_files_problem_level" type="LEVEL">INFO</value>
+                    <value name="files" type="FILE_LIST">
+                        <value-ref name="MASTER-COPY-AUDIO_FILES"/>
+                    </value>
+                    <value name="type" type="RESOURCE_TYPE">AUDIO_MASTER_COPY</value>
+                    <value name="util" type="EXTERNAL_UTIL">MP3VAL</value>
+                    <value name="execution" type="STRING">mp3</value>
+                </params>
+            </validation>
+        </rule>
+
+        <rule name="MASTER-COPY-AUDIO_FILES_VALID_BY_CHECKMATE">
+            <description>Všechny soubory MASTER-COPY-AUDIO (mp3) musí být validní vůči profilu pro binární soubory pro nástroj Checkmate.
+            </description>
+            <validation functionName="checkBinaryFilesValidByExternalUtil">
+                <params>
+                    <value name="no_files_problem_level" type="LEVEL">INFO</value>
+                    <value name="files" type="FILE_LIST">
+                        <value-ref name="MASTER-COPY-AUDIO_FILES"/>
+                    </value>
+                    <value name="type" type="RESOURCE_TYPE">AUDIO_MASTER_COPY</value>
+                    <value name="util" type="EXTERNAL_UTIL">CHECKMATE</value>
+                    <value name="execution" type="STRING">mp3</value>
+                </params>
+            </validation>
+        </rule>
+
+        <rule name="USER-COPY-AUDIO_FILES_VALID_BY_MP3VAL">
+            <description>Všechny soubory USER-COPY-AUDIO (mp3) musí být validní vůči profilu pro binární soubory pro nástroj MP3val.
+            </description>
+            <validation functionName="checkBinaryFilesValidByExternalUtil">
+                <params>
+                    <value name="files" type="FILE_LIST">
+                        <value-ref name="USER-COPY-AUDIO_FILES"/>
+                    </value>
+                    <value name="type" type="RESOURCE_TYPE">AUDIO_USER_COPY</value>
+                    <value name="util" type="EXTERNAL_UTIL">MP3VAL</value>
+                    <value name="execution" type="STRING">mp3</value>
+                </params>
+            </validation>
+        </rule>
+
+        <rule name="USER-COPY-AUDIO_FILES_VALID_BY_CHECKMATE">
+            <description>Všechny soubory USER-COPY-AUDIO (mp3) musí být validní vůči profilu pro binární soubory pro nástroj Checkmate.
+            </description>
+            <validation functionName="checkBinaryFilesValidByExternalUtil">
+                <params>
+                    <value name="files" type="FILE_LIST">
+                        <value-ref name="USER-COPY-AUDIO_FILES"/>
+                    </value>
+                    <value name="type" type="RESOURCE_TYPE">AUDIO_USER_COPY</value>
+                    <value name="util" type="EXTERNAL_UTIL">CHECKMATE</value>
+                    <value name="execution" type="STRING">mp3</value>
+                </params>
+            </validation>
+        </rule>
+
+    </rules-section>
+
+
+    <rules-section name="Bibliografická metadata"
+                   description="validace obsahů bibliografických metadat v MODS a Dubline Core v souboru PRIMARY-METS">
+
+        <rule name="BIBLIOGRAPHIC_METADATA_MATCH_PROFILE_SOUNDCOLLECTION">
+            <description>Bibliografická metadata pro entitu typu SOUNDCOLLECTION musí splňovat požadovaný profil pro záznamy v
+                Dublin Core i MODS.
+            </description>
+            <validation functionName="checkBibliographicMetadataMatchProfile">
+                <params>
+                    <value name="mets_file" type="FILE">
+                        <value-ref name="PRIMARY-METS_FILE"/>
+                    </value>
+                    <value name="entity_type" type="ENTITY_TYPE">SOUNDCOLLECTION</value>
+                    <value name="profile_detection_xpath" type="STRING">concat('soundcollection',null)</value>
+                    <value name="xsd_file_dc" type="FILE">
+                        <value-ref name="DC_XSD_FILE"/>
+                    </value>
+                    <value name="xsd_file_mods" type="FILE">
+                        <value-ref name="MODS_XSD_FILE"/>
+                    </value>
+                </params>
+            </validation>
+        </rule>
+
+        <rule name="BIBLIOGRAPHIC_METADATA_MATCH_PROFILE_SOUNDRECORDING">
+            <description>Bibliografická metadata pro entitu typu SOUNDRECORDING musí splňovat požadovaný profil pro záznamy v
+                Dublin Core i MODS.
+            </description>
+            <validation functionName="checkBibliographicMetadataMatchProfile">
+                <params>
+                    <value name="mets_file" type="FILE">
+                        <value-ref name="PRIMARY-METS_FILE"/>
+                    </value>
+                    <value name="entity_type" type="ENTITY_TYPE">SOUNDRECORDING</value>
+                    <value name="profile_detection_xpath" type="STRING">concat('soundrecording',null)</value>
+
+                    <value name="xsd_file_dc" type="FILE">
+                        <value-ref name="DC_XSD_FILE"/>
+                    </value>
+                    <value name="xsd_file_mods" type="FILE">
+                        <value-ref name="MODS_XSD_FILE"/>
+                    </value>
+                </params>
+            </validation>
+        </rule>
+
+        <rule name="BIBLIOGRAPHIC_METADATA_MATCH_PROFILE_SOUNDPART">
+            <description>Bibliografická metadata pro entitu typu SOUNDPART musí splňovat požadovaný profil pro záznamy v
+                Dublin Core i MODS.
+            </description>
+            <validation functionName="checkBibliographicMetadataMatchProfile">
+                <params>
+                    <value name="mets_file" type="FILE">
+                        <value-ref name="PRIMARY-METS_FILE"/>
+                    </value>
+                    <value name="entity_type" type="ENTITY_TYPE">SOUNDPART</value>
+                    <value name="profile_detection_xpath" type="STRING">concat('soundpart',null)</value>
+
+                    <value name="xsd_file_dc" type="FILE">
+                        <value-ref name="DC_XSD_FILE"/>
+                    </value>
+                    <value name="xsd_file_mods" type="FILE">
+                        <value-ref name="MODS_XSD_FILE"/>
+                    </value>
+                </params>
+            </validation>
+        </rule>
+
+        <rule name="BIBLIOGRAPHIC_METADATA_MATCH_PROFILE_SUPPLEMENT">
+            <description>Bibliografická metadata pro entitu typu SUPPLEMENT musí splňovat požadovaný profil pro záznamy
+                v Dublin Core i MODS.
+            </description>
+            <validation functionName="checkBibliographicMetadataMatchProfile">
+                <params>
+                    <value name="mets_file" type="FILE">
+                        <value-ref name="PRIMARY-METS_FILE"/>
+                    </value>
+                    <value name="entity_type" type="ENTITY_TYPE">SUPPLEMENT</value>
+                    <value name="profile_detection_xpath" type="STRING">concat('supplement',null)</value>
+                    <value name="xsd_file_dc" type="FILE">
+                        <value-ref name="DC_XSD_FILE"/>
+                    </value>
+                    <value name="xsd_file_mods" type="FILE">
+                        <value-ref name="MODS_XSD_FILE"/>
+                    </value>
+                </params>
+            </validation>
+        </rule>
+
+    </rules-section>
+
+
+    <rules-section name="OCR ALTO" description="Kontrola souborů ALTO.">
+
+        <rule name="ALTO_FILES_VALID_BY_XSD">
+            <description>Soubory OCR-ALTO musí být validní podle XML Schema (alto_2.0.xsd).</description>
+            <validation functionName="checkXmlIsValidByXsd">
+                <params>
+                    <value name="xml_files" type="FILE_LIST">
+                        <value-ref name="OCR-ALTO_FILES"/>
+                    </value>
+                    <value name="xsd_file" type="FILE">
+                        <value-ref name="ALTO_XSD_FILE"/>
+                    </value>
+                    <value name="level" type="LEVEL">ERROR</value>
+                </params>
+            </validation>
+        </rule>
+
+        <!--TODO: kontrola ALTO oproti profilu-->
+
+    </rules-section>
+
+
+    <!--TODO: projit tuto sekci a zejmena proverit, ze SECONDARY-METS_FILES obsahuje soubory secondary_mets pro obrazove ale i zvukove soubory-->
+    <rules-section name="Technická metadata" description="Kontrola technických (MIX, PREMIS, AES57) metadat.">
+
+        <!--SECONDARY-METS_FILES-->
+        <rule name="MIX_VALID_BY_XSD">
+            <description>Záznamy MIX v souborech SECONDARY-METS-IMAGE musí být validní podle XML Schema (mix_2.0.xsd).</description>
+            <validation functionName="checkMixIsValidByXsd">
+                <params>
+                    <value name="mets_files" type="FILE_LIST">
+                        <value-ref name="SECONDARY-METS-IMAGE_FILES"/>
+                    </value>
+                    <value name="xsd_file" type="FILE">
+                        <value-ref name="MIX_XSD_FILE"/>
+                    </value>
+                    <value name="level" type="LEVEL">ERROR</value>
+                </params>
+            </validation>
+        </rule>
+
+        <rule name="MIX_FOR_ORIGINAL_SCAN_MATCHES_PROFILE">
+            <description>Záznamy MIX v souborech SECONDARY-METS-IMAGE pro původní skeny musí splňovat profil.</description>
+            <validation functionName="checkMetsAmdsecElementsMatchProfile">
+                <params>
+                    <value name="mets_files" type="FILE_LIST">
+                        <value-ref name="SECONDARY-METS-IMAGE_FILES"/>
+                    </value>
+                    <value name="element_xpath" type="STRING">mets:techMD[@ID="MIX_001"]</value>
+                    <value name="element_must_exist" type="BOOLEAN">true</value>
+                    <value name="profile_id" type="STRING">mix_ps</value>
+                </params>
+            </validation>
+        </rule>
+
+        <rule name="MIX_FOR_FIRST_MASTER_COPY_MATCHES_PROFILE">
+            <description>Záznamy MIX v souborech SECONDARY-METS-IMAGE pro první verze archivních kopií musí splňovat profil.</description>
+            <validation functionName="checkMetsAmdsecElementsMatchProfile">
+                <params>
+                    <value name="mets_files" type="FILE_LIST">
+                        <value-ref name="SECONDARY-METS-IMAGE_FILES"/>
+                    </value>
+                    <value name="element_xpath" type="STRING">mets:techMD[@ID="MIX_002"]</value>
+                    <value name="element_must_exist" type="BOOLEAN">true</value>
+                    <value name="profile_id" type="STRING">mix_mc</value>
+                </params>
+            </validation>
+        </rule>
+
+        <rule name="MIX_FOR_OTHER_MASTER_COPIES_MATCHES_PROFILE">
+            <description>Záznamy MIX v souborech SECONDARY-METS-IMAGE pro další verze archivních kopií, pokud existují, musí splňovat profil.</description>
+            <validation functionName="checkMetsAmdsecElementsMatchProfile">
+                <params>
+                    <value name="mets_files" type="FILE_LIST">
+                        <value-ref name="SECONDARY-METS-IMAGE_FILES"/>
+                    </value>
+                    <value name="element_xpath" type="STRING">mets:techMD[not(@ID="MIX_001") and not(@ID="MIX_002") and
+                        starts-with(@ID,"MIX_")]
+                    </value>
+                    <value name="element_must_exist" type="BOOLEAN">false</value>
+                    <value name="profile_id" type="STRING">mix_mc</value>
+                </params>
+            </validation>
+        </rule>
+
+
+        <rule name="PREMIS-IMAGE_VALID_BY_XSD">
+            <description>Záznamy PREMIS v souborech SECONDARY-METS-IMAGE musí být validní podle XML Schema (premis_2.2.xsd).
+            </description>
+            <validation functionName="checkPremisIsValidByXsd">
+                <params>
+                    <value name="mets_files" type="FILE_LIST">
+                        <value-ref name="SECONDARY-METS-IMAGE_FILES"/>
+                    </value>
+                    <value name="xsd_file" type="FILE">
+                        <value-ref name="PREMIS_XSD_FILE"/>
+                    </value>
+                    <value name="level" type="LEVEL">ERROR</value>
+                </params>
+            </validation>
+        </rule>
+
+        <rule name="PREMIS-AUDIO_VALID_BY_XSD">
+            <description>Záznamy PREMIS v souborech SECONDARY-METS-IMAGE musí být validní podle XML Schema (premis_2.2.xsd).
+            </description>
+            <validation functionName="checkPremisIsValidByXsd">
+                <params>
+                    <value name="mets_files" type="FILE_LIST">
+                        <value-ref name="SECONDARY-METS-AUDIO_FILES"/>
+                    </value>
+                    <value name="xsd_file" type="FILE">
+                        <value-ref name="PREMIS_XSD_FILE"/>
+                    </value>
+                    <value name="level" type="LEVEL">ERROR</value>
+                </params>
+            </validation>
+        </rule>
+
+        <rule name="PREMIS_OBJECT_FOR_ORIGINAL_SCAN_MATCHES_PROFILE">
+            <description>Záznamy PREMIS Object v souborech SECONDARY-METS pro původní skeny musí splňovat profil.
+            </description>
+            <validation functionName="checkMetsAmdsecElementsMatchProfile">
+                <params>
+                    <value name="mets_files" type="FILE_LIST">
+                        <value-ref name="SECONDARY-METS-IMAGE_FILES"/>
+                    </value>
+                    <!--<value name="mets_files" type="FILE_LIST">
+                        <value-ref name="SECONDARY-METS-AUDIO_FILES"/>
+                    </value>-->
+                    <value name="element_xpath" type="STRING">mets:techMD[@ID="OBJ_001"]</value>
+                    <value name="element_must_exist" type="BOOLEAN">true</value>
+                    <value name="profile_id" type="STRING">premis_object_ps</value>
+                </params>
+            </validation>
+        </rule>
+
+        <rule name="PREMIS_OBJECT_FOR_MASTER_COPY_MATCHES_PROFILE">
+            <description>Záznamy PREMIS Object v souborech SECONDARY-METS pro archivní kopie musí splňovat profil.
+            </description>
+            <validation functionName="checkMetsAmdsecElementsMatchProfile">
+                <params>
+                    <value name="mets_files" type="FILE_LIST">
+                        <value-ref name="SECONDARY-METS-IMAGE_FILES"/>
+                    </value>
+                    <!--<value name="mets_files" type="FILE_LIST">
+                        <value-ref name="SECONDARY-METS-AUDIO_FILES"/>
+                    </value>-->
+                    <value name="element_xpath" type="STRING">mets:techMD[@ID="OBJ_002"]</value>
+                    <value name="element_must_exist" type="BOOLEAN">true</value>
+                    <value name="profile_id" type="STRING">premis_object_mc</value>
+                </params>
+            </validation>
+        </rule>
+
+        <rule name="PREMIS_OBJECT_FOR_ALTO_OCR_MATCHES_PROFILE">
+            <description>Záznamy PREMIS Object v souborech SECONDARY-METS pro ALTO OCR musí splňovat profil.
+            </description>
+            <validation functionName="checkMetsAmdsecElementsMatchProfile">
+                <params>
+                    <value name="mets_files" type="FILE_LIST">
+                        <value-ref name="SECONDARY-METS-IMAGE_FILES"/>
+                    </value>
+                    <!--<value name="mets_files" type="FILE_LIST">
+                        <value-ref name="SECONDARY-METS-AUDIO_FILES"/>
+                    </value>-->
+                    <value name="element_xpath" type="STRING">mets:techMD[@ID="OBJ_003"]</value>
+                    <value name="element_must_exist" type="BOOLEAN">true</value>
+                    <value name="profile_id" type="STRING">premis_object_alto</value>
+                </params>
+            </validation>
+        </rule>
+
+        <rule name="PREMIS_EVENT_MATCHES_PROFILE">
+            <description>Záznamy PREMIS Event v souborech SECONDARY-METS musí splňovat profil.
+            </description>
+            <validation functionName="checkMetsAmdsecElementsMatchProfile">
+                <params>
+                    <value name="mets_files" type="FILE_LIST">
+                        <value-ref name="SECONDARY-METS-IMAGE_FILES"/>
+                    </value>
+                    <value name="mets_files" type="FILE_LIST">
+                        <value-ref name="SECONDARY-METS-AUDIO_FILES"/>
+                    </value>
+                    <value name="element_xpath" type="STRING">mets:digiprovMD[starts-with(@ID,"EVT_")]</value>
+                    <value name="element_must_exist" type="BOOLEAN">true</value>
+                    <value name="profile_id" type="STRING">premis_event</value>
+                </params>
+            </validation>
+        </rule>
+
+        <rule name="PREMIS_AGENT_MATCHES_PROFILE">
+            <description>Záznamy PREMIS Event v souborech SECONDARY-METS musí splňovat profil.
+            </description>
+            <validation functionName="checkMetsAmdsecElementsMatchProfile">
+                <params>
+                    <value name="mets_files" type="FILE_LIST">
+                        <value-ref name="SECONDARY-METS-IMAGE_FILES"/>
+                    </value>
+                    <value name="mets_files" type="FILE_LIST">
+                        <value-ref name="SECONDARY-METS-AUDIO_FILES"/>
+                    </value>
+                    <value name="element_xpath" type="STRING">mets:digiprovMD[starts-with(@ID,"AGENT_")]</value>
+                    <value name="element_must_exist" type="BOOLEAN">true</value>
+                    <value name="profile_id" type="STRING">premis_agent</value>
+                </params>
+            </validation>
+        </rule>
+
+        <rule name="PREMIS_LINKING_CORRECT">
+            <description>Odkazy mezi PREMIS Objekty, Událostmi a Agenty musí být korektní a úplné.</description>
+            <validation functionName="checkPremisLinks">
+                <params>
+                    <value name="mets_files" type="FILE_LIST">
+                        <value-ref name="SECONDARY-METS-IMAGE_FILES"/>
+                    </value>
+                    <!--<value name="mets_files" type="FILE_LIST">
+                        <value-ref name="SECONDARY-METS-AUDIO_FILES"/>
+                    </value>-->
+                </params>
+            </validation>
+        </rule>
+
+
+        <rule name="AES57_VALID_BY_XSD">
+            <description>Záznamy AES57 v souborech SECONDARY-METS-AUDIO musí být validní podle XML Schema (aes57_1.0.xsd).</description>
+            <validation functionName="checkAes57IsValidByXsd">
+                <params>
+                    <value name="mets_files" type="FILE_LIST">
+                        <value-ref name="SECONDARY-METS-AUDIO_FILES"/>
+                    </value>
+                    <value name="xsd_file" type="FILE">
+                        <value-ref name="AES57_XSD_FILE"/>
+                    </value>
+                    <value name="level" type="LEVEL">ERROR</value>
+                </params>
+            </validation>
+        </rule>
+
+        <!--TODO: validation of aes57 records with techProfiles-->
+
+    </rules-section>
+
+
+    <rules-section name="Autorskoprávní metadata" description="Kontrola autorskoprávních (CopyrightMD) metadat.">
+
+        <rule name="COPYRIGHTMD_VALID_BY_XSD">
+            <description>
+                Záznamy CopyrightMD v souboru PRIMARY-METS a souborech SECONDARY-METS musí být validní podle XML Schema (cmd_0.91.xsd).
+            </description>
+            <validation functionName="checkCopyrightMdIsValidByXsd">
+                <params>
+                    <value name="mets_file" type="FILE">
+                        <value-ref name="PRIMARY-METS_FILE"/>
+                    </value>
+                    <value name="mets_files" type="FILE_LIST">
+                        <value-ref name="SECONDARY-METS-IMAGE_FILES"/>
+                    </value>
+                    <value name="mets_files" type="FILE_LIST">
+                        <value-ref name="SECONDARY-METS-AUDIO_FILES"/>
+                    </value>
+                    <value name="xsd_file" type="FILE">
+                        <value-ref name="CMD_XSD_FILE"/>
+                    </value>
+                    <value name="level" type="LEVEL">ERROR</value>
+                </params>
+            </validation>
+        </rule>
+
+        <rule name="COPYRIGHTMD_IN_SECONDARY_METS_MATCH_PROFILE">
+            <description>
+                Záznamy CopyrightMD v souborech SECONDARY-METS, pokud existují, musí splňovat profil.
+            </description>
+            <validation functionName="checkMetsAmdsecElementsMatchProfile">
+                <params>
+                    <value name="mets_files" type="FILE_LIST">
+                        <value-ref name="SECONDARY-METS-IMAGE_FILES"/>
+                    </value>
+                    <value name="mets_files" type="FILE_LIST">
+                        <value-ref name="SECONDARY-METS-AUDIO_FILES"/>
+                    </value>
+                    <value name="element_xpath" type="STRING">mets:rightsMD</value>
+                    <value name="element_must_exist" type="BOOLEAN">false</value>
+                    <value name="profile_id" type="STRING">copyrightmd</value>
+                </params>
+            </validation>
+        </rule>
+
+        <rule name="COPYRIGHTMD_IN_PRIMARY_METS_MATCH_PROFILE">
+            <description>
+                Záznamy CopyrightMD v souboru PRIMARY-METS, pokud existují, musí splňovat profil.
+            </description>
+            <validation functionName="checkMetsAmdsecElementsMatchProfile">
+                <params>
+                    <value name="mets_file" type="FILE">
+                        <value-ref name="PRIMARY-METS_FILE"/>
+                    </value>
+                    <value name="element_xpath" type="STRING">mets:rightsMD</value>
+                    <value name="element_must_exist" type="BOOLEAN">false</value>
+                    <value name="profile_id" type="STRING">copyrightmd</value>
+                </params>
+            </validation>
+        </rule>
+
+    </rules-section>
+
+</fDMF>

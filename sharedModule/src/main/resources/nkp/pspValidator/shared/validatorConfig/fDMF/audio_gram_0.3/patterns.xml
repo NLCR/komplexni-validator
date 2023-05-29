@@ -1,0 +1,32 @@
+<fDMF xmlns="http://www.nkp.cz/pspValidator/2.3/fdmfConfig"
+      validatorVersion="2.3"
+      dmf="audio_gram_0.3"
+>
+    <description>
+        Zde jsou definovány vzory. K jejich vyhodnocení jsou použity reguární výrazy a případně proměnné.
+        Vzory je možné dynamicky doplňovat/upravovat.
+        Nesmí ale nastat situace cyklu, tedy že by hodnota vzoru X závisela na vzoru/proměnné Y, který by závisel na
+        vzoru X.
+        Vzor (pattern) má jeden nebo více výrazů (expression). Hodnota (typicky proměnné) odpovídá vzoru, pokud odpovídá
+        alespoň jednomu výrazu. Výrazy vzoru jsou tedy vždy ve vztahu NEBO (OR).
+        Výraz může mít vstupní promměnné, v tom případě se např. pro proměnnou X nahradí všechny výskyty ${X} za hodnotu
+        proměnné X před samotným vyhodnocením výrazu. Lze použít pouze proměnné typu String.
+    </description>
+
+    <pattern-def name="FILENAME">
+        <description>
+            Vzor pro obecný soubor/adresář. Určuje povolené znaky v názvech souborů/adresářů,
+            tedy písmena, číslice, tečky, pomlčky, a podtržítka.
+        </description>
+        <expression caseSensitive="true">[a-z0-9_\-\.]+</expression>
+    </pattern-def>
+
+    <pattern-def name="INFO_FILENAME_FOR_PSP_ID_DETECTION">
+        <description>
+            Vzor pro nalezení souboru INFO pouze za účelem získání PSP-ID z jeho obsahu.
+        </description>
+        <expression caseSensitive="true">info_.+\.xml</expression>
+        <expression caseSensitive="true">info\.xml</expression>
+    </pattern-def>
+
+</fDMF>

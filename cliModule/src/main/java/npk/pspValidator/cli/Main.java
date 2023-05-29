@@ -721,7 +721,7 @@ public class Main {
                 " --" + Params.FORCED_DMF_PER_VERSION + " a" +
                 " --" + Params.FORCED_DMF_ADG_VERSION + "." +
                 " Dále je potřeba pomocí --config-dir uvést adresář, který obsahuje definice fDMF," +
-                " např. monograph_2.0, periodical_1.9, nebo audio_doc_gram_0.5.\n" +
+                " např. monograph_2.0, periodical_1.9, nebo audio_gram_0.5.\n" +
                 "\n" +
                 "Výroba minifikovaného balíku:\n" +
                 "----------------------------\n" +

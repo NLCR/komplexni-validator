@@ -1,0 +1,21 @@
+<binaryFileProfile
+        xmlns="http://www.nkp.cz/pspValidator/2.3/binaryFileProfile"
+        validatorVersion="2.3"
+        dmf="audio_gram_0.3"
+>
+    <fromText>
+
+        <validation name="no_errors">
+            <textDataExtraction resultType="STRING_LIST">
+                <allNonempty>
+                    <regexp>(?m)^Error.*$</regexp>
+                    <regexp>(?ms)identify:((?!identify).)*</regexp>
+                </allNonempty>
+            </textDataExtraction>
+            <rules>
+                <mustNotExist/>
+            </rules>
+        </validation>
+
+    </fromText>
+</binaryFileProfile>

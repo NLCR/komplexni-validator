@@ -1,0 +1,305 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<metadataProfile
+        xmlns="http://www.nkp.cz/pspValidator/2.3/metadataProfile"
+        name="PREMIS Object pro MC (archivní kopie)"
+        validatorVersion="2.3"
+        dmf="audio_gram_0.3"
+>
+
+    <info>
+        <text>
+            Profil pro validaci PREMIS Object záznamu archivní kopie (MC) stránky v sekundárním METSu pro DMF Zvuk-gramodesky 0.3.
+        </text>
+        <url description="popis formátu PREMIS">http://www.loc.gov/standards/premis/</url>
+        <url description="XSD pro PREMIS 2.2">http://www.loc.gov/standards/premis/v2/premis-v2-2.xsd</url>
+    </info>
+
+    <namespaces>
+        <namespace prefix="mets">http://www.loc.gov/METS/</namespace>
+        <namespace prefix="premis">info:lc/xmlns/premis-v2</namespace>
+        <namespace prefix="xsi">http://www.w3.org/2001/XMLSchema-instance</namespace>
+    </namespaces>
+
+    <rootElement name="mets:techMD">
+        <expectedAttributes>
+            <attribute name="ID">
+                <expectedContent>
+                    <value>OBJ_002</value>
+                </expectedContent>
+            </attribute>
+        </expectedAttributes>
+
+        <expectedElements>
+            <element name="mets:mdWrap">
+                <expectedAttributes>
+                    <attribute name="MDTYPE">
+                        <expectedContent>
+                            <value>PREMIS</value>
+                        </expectedContent>
+                    </attribute>
+
+                    <attribute name="MIMETYPE">
+                        <expectedContent>
+                            <value>text/xml</value>
+                        </expectedContent>
+                    </attribute>
+                </expectedAttributes>
+
+                <expectedElements>
+                    <element name="mets:xmlData">
+                        <expectedElements>
+                            <element name="premis:object" mandatory="true" repeatable="false">
+                                <expectedAttributes>
+                                    <attribute name="xsi:type">
+                                        <expectedContent>
+                                            <oneOf>
+                                                <value>file</value>
+                                                <value>representation</value>
+                                                <value>bitstream</value>
+                                                <!--hodnoty premis:* neodpovídají striktně specifikaci, v DMF uvedeny nejsou, ale v praxi se používají -->
+                                                <value>premis:file</value>
+                                                <value>premis:representation</value>
+                                                <value>premis:bitstream</value>
+                                            </oneOf>
+                                        </expectedContent>
+                                    </attribute>
+                                </expectedAttributes>
+                                <expectedElements>
+                                    <element name="premis:objectIdentifier" mandatory="true" repeatable="true">
+                                        <expectedElements>
+                                            <element name="premis:objectIdentifierType" mandatory="true"
+                                                     repeatable="false">
+                                                <expectedContent/>
+                                            </element>
+
+                                            <element name="premis:objectIdentifierValue" mandatory="true"
+                                                     repeatable="false">
+                                                <expectedContent/>
+                                            </element>
+                                        </expectedElements>
+                                    </element>
+
+                                    <!--Neni jasna povinnost - konflikt povinnost=M a vyskyt=0-n. Nechavam defenzivne nepovinne-->
+                                    <element name="premis:preservationLevel" mandatory="true" repeatable="true">
+                                        <expectedElements>
+                                            <element name="premis:preservationLevelValue" mandatory="true"
+                                                     repeatable="false">
+                                                <expectedContent>
+                                                    <value>preservation</value>
+                                                </expectedContent>
+                                            </element>
+
+                                            <element name="premis:preservationLevelDateAssigned" mandatory="false"
+                                                     repeatable="false">
+                                                <expectedContent>
+                                                    <oneOf>
+                                                        <regexp>[0-9]{4}-[0-9]{2}-[0-9]{2}</regexp>
+                                                        <regexp>[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}</regexp>
+                                                    </oneOf>
+                                                </expectedContent>
+                                            </element>
+                                        </expectedElements>
+                                    </element>
+
+                                    <element name="premis:objectCharacteristics" mandatory="true" repeatable="true">
+                                        <expectedElements>
+                                            <element name="premis:compositionLevel" mandatory="true" repeatable="false">
+                                                <recommendedContent>
+                                                    <oneOf>
+                                                        <value>0</value>
+                                                        <value>1</value>
+                                                        <value>2</value>
+                                                    </oneOf>
+                                                </recommendedContent>
+                                            </element>
+
+                                            <!--Neni jasna povinnost - konflikt povinnost=M a vyskyt=0-n. Nechavam defenzivne nepovinne-->
+                                            <element name="premis:fixity" mandatory="true" repeatable="true">
+                                                <expectedElements>
+                                                    <element name="premis:messageDigestAlgorithm" mandatory="true"
+                                                             repeatable="false">
+                                                        <expectedContent/>
+                                                    </element>
+
+                                                    <element name="premis:messageDigest" mandatory="true"
+                                                             repeatable="false">
+                                                        <expectedContent/>
+                                                    </element>
+                                                    <!--Neni jasna povinnost - konflikt povinnost=M a vyskyt=0-n. Nechavam defenzivne nepovinne-->
+                                                    <element name="premis:messageDigestOriginator" mandatory="true"
+                                                             repeatable="false">
+                                                        <expectedContent/>
+                                                    </element>
+                                                </expectedElements>
+                                            </element>
+
+                                            <!--Neni jasna povinnost - konflikt povinnost=M a vyskyt=0-n. Nechavam defenzivne nepovinne-->
+                                            <element name="premis:size" mandatory="true" repeatable="false">
+                                                <expectedContent>
+                                                    <regexp>[0-9]+</regexp>
+                                                </expectedContent>
+                                            </element>
+
+                                            <element name="premis:format" mandatory="true" repeatable="true">
+                                                <expectedElements>
+                                                    <!--Neni jasna povinnost - konflikt povinnost=M a vyskyt=0-n. Nechavam defenzivne nepovinne-->
+                                                    <element name="premis:formatDesignation" mandatory="true"
+                                                             repeatable="false">
+                                                        <expectedElements>
+                                                            <element name="premis:formatName" mandatory="true"
+                                                                     repeatable="false">
+                                                                <expectedContent/>
+                                                            </element>
+
+                                                            <!--Neni jasna povinnost - konflikt povinnost=M a vyskyt=0-n. Nechavam defenzivne nepovinne-->
+                                                            <element name="premis:formatVersion" mandatory="true"
+                                                                     repeatable="false">
+                                                                <expectedContent/>
+                                                            </element>
+                                                        </expectedElements>
+                                                    </element>
+
+                                                    <!--Neni jasna povinnost - konflikt povinnost=M a vyskyt=0-n. Nechavam defenzivne nepovinne-->
+                                                    <element name="premis:formatRegistry" mandatory="true"
+                                                             repeatable="false">
+                                                        <expectedElements>
+                                                            <element name="premis:formatRegistryName" mandatory="true"
+                                                                     repeatable="false">
+                                                                <expectedContent/>
+                                                            </element>
+
+                                                            <element name="premis:formatRegistryKey" mandatory="true"
+                                                                     repeatable="false">
+                                                                <expectedContent/>
+                                                            </element>
+                                                        </expectedElements>
+                                                    </element>
+                                                </expectedElements>
+                                            </element>
+
+                                            <!--Neni jasna povinnost - konflikt povinnost=M a vyskyt=0-n. Nechavam defenzivne nepovinne-->
+                                            <element name="premis:creatingApplication" mandatory="true"
+                                                     repeatable="true">
+                                                <expectedElements>
+                                                    <!--Neni jasna povinnost - konflikt povinnost=M a vyskyt=0-1. Nechavam defenzivne nepovinne-->
+                                                    <element name="premis:creatingApplicationName" mandatory="true"
+                                                             repeatable="false">
+                                                        <expectedContent/>
+                                                    </element>
+
+                                                    <!--Neni jasna povinnost - konflikt povinnost=M a vyskyt=0-1. Nechavam defenzivne nepovinne-->
+                                                    <element name="premis:creatingApplicationVersion" mandatory="true"
+                                                             repeatable="false">
+                                                        <expectedContent/>
+                                                    </element>
+
+                                                    <!--Neni jasna povinnost - konflikt povinnost=M a vyskyt=0-1. Nechavam defenzivne nepovinne-->
+                                                    <element name="premis:dateCreatedByApplication" mandatory="true"
+                                                             repeatable="false">
+                                                        <expectedContent>
+                                                            <!--TODO: mozna regulernim vyrazem, resp. skupinou, protoze ten zapis muze byt dost ruzny - uz jenom oddelovace, viz. treba
+                                                                http://www.pelagodesign.com/blog/2009/05/20/iso-8601-date-validation-that-doesnt-suck/
+                                                            -->
+                                                        </expectedContent>
+                                                    </element>
+                                                </expectedElements>
+                                            </element>
+                                        </expectedElements>
+                                    </element>
+
+                                    <!--Neni jasna povinnost - konflikt povinnost=M a vyskyt=0-1. Nechavam defenzivne nepovinne-->
+                                    <element name="premis:originalName" mandatory="true" repeatable="false">
+                                        <expectedContent/>
+                                    </element>
+
+                                    <!--Neni jasna povinnost - konflikt povinnost=M a vyskyt=0-n. Nechavam defenzivne nepovinne-->
+                                    <element name="premis:relationship" mandatory="true" repeatable="true">
+                                        <expectedElements>
+                                            <element name="premis:relationshipType" mandatory="true" repeatable="false">
+                                                <expectedContent>derivation</expectedContent>
+                                            </element>
+
+                                            <element name="premis:relationshipSubType" mandatory="true"
+                                                     repeatable="false">
+                                                <expectedContent>
+                                                    <value>created from</value>
+                                                </expectedContent>
+                                                <!--<recommendedContent>
+                                                    <oneOf>
+                                                        <value>created from</value>
+                                                        <value>has source</value>
+                                                        <value>is source of</value>
+                                                        <value>has sibling</value>
+                                                        <value>has part</value>
+                                                        <value>is part of</value>
+                                                        <value>has root</value>
+                                                        <value>includes</value>
+                                                        <value>is included in</value>
+                                                    </oneOf>
+                                                </recommendedContent>-->
+                                            </element>
+
+                                            <element name="premis:relatedObjectIdentification" mandatory="true"
+                                                     repeatable="true">
+                                                <expectedElements>
+                                                    <element name="premis:relatedObjectIdentifierType" mandatory="true"
+                                                             repeatable="false">
+                                                        <expectedContent/>
+                                                    </element>
+
+                                                    <element name="premis:relatedObjectIdentifierValue" mandatory="true"
+                                                             repeatable="false">
+                                                        <expectedContent/>
+                                                    </element>
+                                                </expectedElements>
+                                            </element>
+
+                                            <!--Neni jasna povinnost - konflikt povinnost=M a vyskyt=0-n. Nechavam defenzivne nepovinne-->
+                                            <element name="premis:relatedEventIdentification" mandatory="true"
+                                                     repeatable="true">
+                                                <expectedElements>
+                                                    <element name="premis:relatedEventIdentifierType" mandatory="true"
+                                                             repeatable="false">
+                                                        <expectedContent/>
+                                                    </element>
+
+                                                    <element name="premis:relatedEventIdentifierValue" mandatory="true"
+                                                             repeatable="false">
+                                                        <expectedContent/>
+                                                    </element>
+
+                                                    <element name="premis:relatedEventSequence" mandatory="false"
+                                                             repeatable="false">
+                                                        <expectedContent/>
+                                                    </element>
+                                                </expectedElements>
+                                            </element>
+                                        </expectedElements>
+
+                                    </element>
+
+                                    <!--Neni jasna povinnost - konflikt povinnost=M a vyskyt=0-n. Nechavam defenzivne nepovinne-->
+                                    <element name="premis:linkingEventIdentifier" mandatory="false"
+                                             repeatable="true">
+                                        <expectedElements>
+                                            <element name="premis:linkingEventIdentifierType" mandatory="true"
+                                                     repeatable="true">
+                                                <expectedContent/>
+                                            </element>
+
+                                            <element name="premis:linkingEventIdentifierValue" mandatory="true"
+                                                     repeatable="true">
+                                                <expectedContent/>
+                                            </element>
+                                        </expectedElements>
+                                    </element>
+                                </expectedElements>
+                            </element>
+                        </expectedElements>
+                    </element>
+                </expectedElements>
+            </element>
+        </expectedElements>
+    </rootElement>
+
+</metadataProfile>

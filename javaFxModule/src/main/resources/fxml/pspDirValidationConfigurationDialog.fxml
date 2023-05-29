@@ -77,7 +77,7 @@
                       GridPane.halignment="RIGHT"
             />
 
-            <Label text="Zvuky (gramodesky)" GridPane.columnIndex="1" GridPane.rowIndex="5"/>
+            <Label text="Audio (gramodesky)" GridPane.columnIndex="1" GridPane.rowIndex="5"/>
 
             <ChoiceBox fx:id="forcedAdgVersionChoiceBox"
                        GridPane.columnIndex="2" GridPane.columnSpan="2"
@@ -130,7 +130,7 @@
                       GridPane.halignment="RIGHT"
             />
 
-            <Label text="Zvuky (gramodesky)" GridPane.columnIndex="1" GridPane.rowIndex="10"/>
+            <Label text="Audio (gramodesky)" GridPane.columnIndex="1" GridPane.rowIndex="10"/>
 
             <ChoiceBox fx:id="preferredAdgVersionChoiceBox"
                        GridPane.columnIndex="2" GridPane.columnSpan="2"

@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<metadataProfile
+        xmlns="http://www.nkp.cz/pspValidator/2.3/metadataProfile"
+        name="Primary METS header"
+        validatorVersion="2.3"
+        dmf="audio_gram_0.5"
+>
+
+    <info>
+        <text>
+            Profil pro validaci elementu mets:mets, zejména hlavičky mets:metsHdr v primárním METSu pro DMF Zvuk-gramodesky 0.5.
+        </text>
+        <url description="Definice metadatových formátů pro digitalizaci zvukových dokumentů">
+            https://www.ndk.cz/standardy-digitalizace/DMFzvuk03_web.pdf
+        </url>
+    </info>
+
+    <namespaces>
+        <namespace prefix="mets">http://www.loc.gov/METS/</namespace>
+    </namespaces>
+
+    <dictionaries>
+        <dictionary name="siglaInstitutionCodes"
+                    description="sigly knihoven"/>
+    </dictionaries>
+
+    <rootElement name="mets:mets">
+        <expectedAttributes>
+            <attribute name="LABEL" mandatory="true"/>
+            <attribute name="TYPE" mandatory="true">
+                <expectedContent>sound recording</expectedContent>
+            </attribute>
+            <attribute name="xsi:schemaLocation" mandatory="false"/>
+        </expectedAttributes>
+        <expectedElements>
+            <element name="mets:dmdSec" ignoreUnexpectedAttributes="true" ignoreUnexpectedChildElements="true"
+                     mandatory="false"/>
+            <element name="mets:fileSec" ignoreUnexpectedAttributes="true" ignoreUnexpectedChildElements="true"
+                     mandatory="false"/>
+            <element name="mets:structMap" ignoreUnexpectedAttributes="true" ignoreUnexpectedChildElements="true"
+                     mandatory="false"/>
+            <element name="mets:structLink" ignoreUnexpectedAttributes="true" ignoreUnexpectedChildElements="true"
+                     mandatory="false"/>
+
+            <element name="mets:metsHdr">
+                <expectedAttributes>
+                    <attribute name="LASTMODDATE" mandatory="true">
+                        <expectedContent>
+                            <oneOf>
+                                <!--ISO 8601 na úroveň alespoň sekund (basic format): např. 20190830T153501, 20190830T153530+01, 20190830T153544-23:30,20190830T153559.123-->
+                                <regexp>^(?&lt;year&gt;[0-9]{4})(?&lt;month&gt;1[0-2]|0[1-9])(?&lt;day&gt;3[01]|0[1-9]|[12][0-9])T(?&lt;hour&gt;2[0-3]|[01][0-9])(?&lt;minute&gt;[0-5][0-9])(?&lt;second&gt;[0-5][0-9](.(?&lt;millis&gt;[0-9]{3}))?)?(?&lt;timezone&gt;Z|[+-](2[0-3]|[01][0-9])([0-5][0-9])?)$</regexp>
+                                <!--ISO 8601 na úroveň alespoň sekund (extended format): např. 2019-08-30T15:35:01+01:00, 2019-08-30T15:35:44-23:30, 2019-08-30T15:35:59.123Z -->
+                                <regexp>^(?&lt;year&gt;[0-9]{4})-(?&lt;month&gt;1[0-2]|0[1-9])-(?&lt;day&gt;3[01]|0[1-9]|[12][0-9])T(?&lt;hour&gt;2[0-3]|[01][0-9]):(?&lt;minute&gt;[0-5][0-9])(:(?&lt;second&gt;[0-5][0-9])(.(?&lt;millis&gt;[0-9]{3}))?)?(?&lt;timezone&gt;Z|[+-](2[0-3]|[01][0-9])(:([0-5][0-9])?)?)$</regexp>
+                            </oneOf>
+                        </expectedContent>
+                    </attribute>
+                    <attribute name="CREATEDATE" mandatory="true">
+                        <expectedContent>
+                            <oneOf>
+                                <!--ISO 8601 na úroveň alespoň sekund (basic format): např. 20190830T153501, 20190830T153530+01, 20190830T153544-23:30,20190830T153559.123-->
+                                <regexp>^(?&lt;year&gt;[0-9]{4})(?&lt;month&gt;1[0-2]|0[1-9])(?&lt;day&gt;3[01]|0[1-9]|[12][0-9])T(?&lt;hour&gt;2[0-3]|[01][0-9])(?&lt;minute&gt;[0-5][0-9])(?&lt;second&gt;[0-5][0-9](.(?&lt;millis&gt;[0-9]{3}))?)?(?&lt;timezone&gt;Z|[+-](2[0-3]|[01][0-9])([0-5][0-9])?)$</regexp>
+                                <!--ISO 8601 na úroveň alespoň sekund (extended format): např. 2019-08-30T15:35:01+01:00, 2019-08-30T15:35:44-23:30, 2019-08-30T15:35:59.123Z -->
+                                <regexp>^(?&lt;year&gt;[0-9]{4})-(?&lt;month&gt;1[0-2]|0[1-9])-(?&lt;day&gt;3[01]|0[1-9]|[12][0-9])T(?&lt;hour&gt;2[0-3]|[01][0-9]):(?&lt;minute&gt;[0-5][0-9])(:(?&lt;second&gt;[0-5][0-9])(.(?&lt;millis&gt;[0-9]{3}))?)?(?&lt;timezone&gt;Z|[+-](2[0-3]|[01][0-9])(:([0-5][0-9])?)?)$</regexp>
+                            </oneOf>
+                        </expectedContent>
+                    </attribute>
+                </expectedAttributes>
+
+                <expectedElements>
+                    <element name="mets:agent" specification="@ROLE='CREATOR'">
+                        <expectedAttributes>
+                            <attribute name="ROLE" mandatory="true">
+                                <expectedContent>
+                                    <value>CREATOR</value>
+                                </expectedContent>
+                            </attribute>
+                            <attribute name="TYPE" mandatory="true">
+                                <expectedContent>
+                                    <value>ORGANIZATION</value>
+                                </expectedContent>
+                            </attribute>
+                        </expectedAttributes>
+                        <expectedElements>
+                            <element name="mets:name" mandatory="true">
+                                <recommendedContent>
+                                    <fromDictionary name="siglaInstitutionCodes"/>
+                                </recommendedContent>
+                            </element>
+                        </expectedElements>
+                    </element>
+
+                    <element name="mets:agent" specification="@ROLE='ARCHIVIST'">
+                        <expectedAttributes>
+                            <attribute name="ROLE" mandatory="true">
+                                <expectedContent>
+                                    <value>ARCHIVIST</value>
+                                </expectedContent>
+                            </attribute>
+                            <attribute name="TYPE" mandatory="true">
+                                <expectedContent>
+                                    <value>ORGANIZATION</value>
+                                </expectedContent>
+                            </attribute>
+                        </expectedAttributes>
+                        <expectedElements>
+                            <element name="mets:name" mandatory="true">
+                                <recommendedContent>
+                                    <fromDictionary name="siglaInstitutionCodes"/>
+                                </recommendedContent>
+                            </element>
+                        </expectedElements>
+                    </element>
+                </expectedElements>
+            </element>
+
+        </expectedElements>
+    </rootElement>
+
+</metadataProfile>

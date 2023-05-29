@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<metadataProfile
+        xmlns="http://www.nkp.cz/pspValidator/2.3/metadataProfile"
+        name="PREMIS Agent"
+        validatorVersion="2.3"
+        dmf="audio_gram_0.5"
+>
+
+    <info>
+        <text>
+            Profil pro validaci PREMIS Agent záznamu stránky v sekundárním METSu pro DMF Zvuk-gramodesky 0.5.
+        </text>
+        <url description="popis formátu PREMIS">http://www.loc.gov/standards/premis/</url>
+        <url description="XSD pro PREMIS 2.2">http://www.loc.gov/standards/premis/v2/premis-v2-2.xsd</url>
+    </info>
+
+    <namespaces>
+        <namespace prefix="mets">http://www.loc.gov/METS/</namespace>
+        <namespace prefix="premis">info:lc/xmlns/premis-v2</namespace>
+        <namespace prefix="xsi">http://www.w3.org/2001/XMLSchema-instance</namespace>
+    </namespaces>
+
+    <rootElement name="mets:digiprovMD">
+        <expectedAttributes>
+            <attribute name="ID">
+                <expectedContent>
+                    <regexp>AGENT_[0-9]{3}</regexp>
+                </expectedContent>
+            </attribute>
+        </expectedAttributes>
+
+        <expectedElements>
+            <element name="mets:mdWrap">
+                <expectedAttributes>
+                    <attribute name="MDTYPE">
+                        <expectedContent>
+                            <value>PREMIS</value>
+                        </expectedContent>
+                    </attribute>
+
+                    <attribute name="MIMETYPE">
+                        <expectedContent>
+                            <value>text/xml</value>
+                        </expectedContent>
+                    </attribute>
+                </expectedAttributes>
+
+                <expectedElements>
+                    <element name="mets:xmlData">
+                        <expectedElements>
+                            <element name="premis:agent" mandatory="true" repeatable="false">
+                                <expectedElements>
+                                    <element name="premis:agentIdentifier" mandatory="true" repeatable="true">
+                                        <expectedElements>
+                                            <element name="premis:agentIdentifierType" mandatory="true"
+                                                     repeatable="false">
+                                                <expectedContent/>
+                                            </element>
+
+                                            <element name="premis:agentIdentifierValue" mandatory="true"
+                                                     repeatable="false">
+                                                <expectedContent/>
+                                            </element>
+                                        </expectedElements>
+                                    </element>
+
+                                    <element name="premis:agentName" mandatory="false" repeatable="true">
+                                        <expectedContent/>
+                                    </element>
+
+                                    <!--Neni jasna povinnost - konflikt povinnost=M a vyskyt=0-n. Nechavam defenzivne nepovinne-->
+                                    <element name="premis:agentType" mandatory="true" repeatable="false">
+                                        <recommendedContent>
+                                            <oneOf>
+                                                <value>organization</value>
+                                                <value>person</value>
+                                                <value>software</value>
+                                            </oneOf>
+                                        </recommendedContent>
+                                    </element>
+
+                                    <element name="premis:agentNote" mandatory="false" repeatable="true">
+                                        <expectedContent/>
+                                    </element>
+
+                                    <element name="premis:agentExtension" mandatory="false" repeatable="true">
+                                        <expectedContent/>
+                                    </element>
+                                </expectedElements>
+                            </element>
+                        </expectedElements>
+                    </element>
+                </expectedElements>
+            </element>
+        </expectedElements>
+    </rootElement>
+
+</metadataProfile>

@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<metadataProfile
+        xmlns="http://www.nkp.cz/pspValidator/2.3/metadataProfile"
+        name="Secondary METS header"
+        validatorVersion="2.3"
+        dmf="audio_gram_0.3"
+>
+
+    <info>
+        <text>
+            Profil pro validaci elementu mets:mets, zejména hlavičky mets:metsHdr v sekundárním METSu pro DMF Zvuk-gramodesky 0.3.
+        </text>
+        <url description="Definice metadatových formátů pro digitalizaci zvukových dokumentů">
+            https://www.ndk.cz/standardy-digitalizace/DMFzvuk03_web.pdf
+        </url>
+    </info>
+
+    <namespaces>
+        <namespace prefix="mets">http://www.loc.gov/METS/</namespace>
+    </namespaces>
+
+    <dictionaries>
+        <dictionary name="siglaInstitutionCodes"
+                    description="sigly knihoven"/>
+    </dictionaries>
+
+    <rootElement name="mets:mets">
+        <expectedAttributes>
+            <attribute name="LABEL" mandatory="true"/>
+            <attribute name="TYPE" mandatory="true">
+                <expectedContent>Monograph</expectedContent>
+            </attribute>
+            <attribute name="xsi:schemaLocation" mandatory="false"/>
+        </expectedAttributes>
+        <expectedElements>
+            <element name="mets:dmdSec" ignoreUnexpectedAttributes="true" ignoreUnexpectedChildElements="true"
+                     mandatory="false"/>
+            <element name="mets:fileSec" ignoreUnexpectedAttributes="true" ignoreUnexpectedChildElements="true"
+                     mandatory="false"/>
+            <element name="mets:structMap" ignoreUnexpectedAttributes="true" ignoreUnexpectedChildElements="true"
+                     mandatory="false"/>
+            <element name="mets:structLink" ignoreUnexpectedAttributes="true" ignoreUnexpectedChildElements="true"
+                     mandatory="false"/>
+            <element name="mets:amdSec" ignoreUnexpectedAttributes="true" ignoreUnexpectedChildElements="true"
+                     mandatory="false"/>
+            <element name="mets:metsHdr" ignoreUnexpectedChildElements="true" ignoreUnexpectedAttributes="true"/>
+        </expectedElements>
+    </rootElement>
+
+</metadataProfile>

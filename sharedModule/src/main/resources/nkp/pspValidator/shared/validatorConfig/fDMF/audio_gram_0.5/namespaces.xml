@@ -1,0 +1,32 @@
+<fDMF xmlns="http://www.nkp.cz/pspValidator/2.3/fdmfConfig"
+      validatorVersion="2.3"
+      dmf="audio_gram_0.5"
+>
+
+    <namespaces>
+        <!--Zde jsou definovány jednotlivé jmenné prostory pro různé formáty. Uvedené prefixy musí být použity ve všech pravidlech. -->
+
+        <!--prefix mets-->
+        <namespace-mets>http://www.loc.gov/METS/</namespace-mets>
+        <!--prefix mods-->
+        <namespace-mods>http://www.loc.gov/mods/v3</namespace-mods>
+        <!--prefix oai_dc-->
+        <namespace-oai_dc>http://www.openarchives.org/OAI/2.0/oai_dc/</namespace-oai_dc>
+        <!--prefix dc-->
+        <namespace-dublin_core>http://purl.org/dc/elements/1.1/</namespace-dublin_core>
+
+        <!--prefix alto-->
+        <namespace-alto>http://www.loc.gov/standards/alto/ns-v3#</namespace-alto>
+        <!--prefix cmd-->
+        <namespace-copyright_md>http://www.cdlib.org/inside/diglib/copyrightMD</namespace-copyright_md>
+        <!--prefix mix-->
+        <namespace-mix>http://www.loc.gov/mix/v20</namespace-mix>
+        <!--prefix premis-->
+        <namespace-premis>info:lc/xmlns/premis-v2</namespace-premis>
+        <!--prefix xlink-->
+        <namespace-xlink>http://www.w3.org/1999/xlink</namespace-xlink>
+        <!--prefix aes57-->
+        <namespace-aes57>http://www.aes.org/audioObject</namespace-aes57>
+
+    </namespaces>
+</fDMF>

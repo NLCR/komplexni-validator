@@ -4,7 +4,9 @@ import nkp.pspValidator.shared.engine.exceptions.ValidatorConfigurationException
 import nkp.pspValidator.shared.externalUtils.ExternalUtilManager;
 
 import java.io.File;
-import java.util.*;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Set;
 
 /**
  * Created by Martin Řehánek on 2.11.16.
@@ -13,7 +15,7 @@ public class FdmfRegistry {
 
     private final Map<String, FdmfConfiguration> monographFdmfByVersion = new HashMap<>();
     private final Map<String, FdmfConfiguration> periodicalFdmfByVersion = new HashMap<>();
-    private final Map<String, FdmfConfiguration> audioDocGramFdmfByVersion = new HashMap<>();
+    private final Map<String, FdmfConfiguration> audioGramFdmfByVersion = new HashMap<>();
 
     public FdmfRegistry(ValidatorConfigurationManager validatorConfigManager) throws ValidatorConfigurationException {
         init(validatorConfigManager);
@@ -26,7 +28,7 @@ public class FdmfRegistry {
         for (FdmfConfiguration fdmfConfig : periodicalFdmfByVersion.values()) {
             fdmfConfig.initBinaryFileProfiles(externalUtilManager);
         }
-        for (FdmfConfiguration fdmfConfig : audioDocGramFdmfByVersion.values()) {
+        for (FdmfConfiguration fdmfConfig : audioGramFdmfByVersion.values()) {
             fdmfConfig.initBinaryFileProfiles(externalUtilManager);
         }
     }
@@ -34,7 +36,7 @@ public class FdmfRegistry {
     private void init(ValidatorConfigurationManager validatorConfigManager) throws ValidatorConfigurationException {
         loadFdmfConfigs(validatorConfigManager, "monograph", monographFdmfByVersion);
         loadFdmfConfigs(validatorConfigManager, "periodical", periodicalFdmfByVersion);
-        loadFdmfConfigs(validatorConfigManager, "audio_doc_gram", audioDocGramFdmfByVersion);
+        loadFdmfConfigs(validatorConfigManager, "audio_gram", audioGramFdmfByVersion);
     }
 
     private void loadFdmfConfigs(ValidatorConfigurationManager validatorConfigManager, String fdmfDirPefix, Map<String, FdmfConfiguration> mapToStoreResults) throws ValidatorConfigurationException {
@@ -57,8 +59,8 @@ public class FdmfRegistry {
         return periodicalFdmfByVersion.keySet();
     }
 
-    public Set<String> getAudioDocGramFdmfVersions() {
-        return audioDocGramFdmfByVersion.keySet();
+    public Set<String> getAudioGramFdmfVersions() {
+        return audioGramFdmfByVersion.keySet();
     }
 
     public FdmfConfiguration getMonographFdmfConfig(String dmfVersion) {
@@ -69,8 +71,8 @@ public class FdmfRegistry {
         return periodicalFdmfByVersion.get(dmfVersion);
     }
 
-    public FdmfConfiguration getAudioDocGramFdmfConfig(String dmfVersion) {
-        return audioDocGramFdmfByVersion.get(dmfVersion);
+    public FdmfConfiguration getAudioGramFdmfConfig(String dmfVersion) {
+        return audioGramFdmfByVersion.get(dmfVersion);
     }
 
     public FdmfConfiguration getFdmfConfig(Dmf dmf) throws UnknownFdmfException {
@@ -91,8 +93,8 @@ public class FdmfRegistry {
                     return file;
                 }
             }
-            case AUDIO_DOC_GRAM: {
-                FdmfConfiguration file = audioDocGramFdmfByVersion.get(dmf.getVersion());
+            case AUDIO_GRAM: {
+                FdmfConfiguration file = audioGramFdmfByVersion.get(dmf.getVersion());
                 if (file == null) {
                     throw new UnknownFdmfException(dmf);
                 } else {

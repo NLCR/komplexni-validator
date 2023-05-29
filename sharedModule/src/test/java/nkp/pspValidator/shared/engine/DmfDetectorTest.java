@@ -112,7 +112,7 @@ public class DmfDetectorTest {
         assertEquals(resolverPer(per14Dir, "1", null).getVersion(), "1.4");
 
         //audio document gramophone
-        File adg03Dir = new File("src/test/resources/audio_doc_gram_0.3/1234567890");
+        File adg03Dir = new File("src/test/resources/audio_gram_0.3/1234567890");
         assertEquals(resolverSr(adg03Dir, null, "123").getVersion(), "123");
         assertEquals(resolverSr(adg03Dir, "1", "123").getVersion(), "123");
         assertEquals(resolverSr(adg03Dir, null, null).getVersion(), "0.3");

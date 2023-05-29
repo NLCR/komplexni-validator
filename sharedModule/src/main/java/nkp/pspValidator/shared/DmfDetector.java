@@ -23,7 +23,7 @@ public class DmfDetector {
 
     public static final String DEFAULT_MONOGRAPH_VERSION = "2.0";
     public static final String DEFAULT_PERIODICAL_VERSION = "1.9";
-    public static final String DEFAULT_AUDIO_DOC_GRAM_VERSION = "0.5";
+    public static final String DEFAULT_AUDIO_GRAM_VERSION = "0.5";
 
 
     /**
@@ -33,7 +33,7 @@ public class DmfDetector {
      * Pokud se vyskytuje hodnota „Monograph“, zachází validátor s balíčkem jako s monografií.
      * Pokud se vyskytuje hodnota „Periodical“, zachází validátor s balíčkem jako s periodikem.
      * Pokud se vyskytuje hodnota „sound recording“, zachází validátor s balíčkem jako se zvukovým dokumentem gramofonové desky.
-     * //TODO: "audio cylinder" pro audio_doc
+     * //TODO: "audio cylinder" pro audio_fono
      */
     public Dmf.Type detectDmfType(File pspRootDir) throws PspDataException, XmlFileParsingException, InvalidXPathExpressionException {
 
@@ -47,7 +47,7 @@ public class DmfDetector {
             } else if ("Periodical".equals(docType)) {
                 return PERIODICAL;
             } else if ("sound recording".equals(docType)) {
-                return AUDIO_DOC_GRAM;
+                return AUDIO_GRAM;
             } else {
                 throw new PspDataException(pspRootDir, String.format("atribut TYPE elementu mods neobsahuje korektní typ (Monograph/Periodical/sound recording), ale hodnotu '%s'", docType));
             }
@@ -141,8 +141,8 @@ public class DmfDetector {
             case PERIODICAL: {
                 return chooseVersion(PERIODICAL, pspRoot, params.forcedDmfPerVersion, params.preferredDmfPerVersion, DEFAULT_PERIODICAL_VERSION);
             }
-            case AUDIO_DOC_GRAM: {
-                return chooseVersion(AUDIO_DOC_GRAM, pspRoot, params.forcedDmfAdgVersion, params.preferredDmfAdgVersion, DEFAULT_AUDIO_DOC_GRAM_VERSION);
+            case AUDIO_GRAM: {
+                return chooseVersion(AUDIO_GRAM, pspRoot, params.forcedDmfAdgVersion, params.preferredDmfAdgVersion, DEFAULT_AUDIO_GRAM_VERSION);
             }
             default:
                 throw new IllegalStateException();
