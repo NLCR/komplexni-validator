@@ -1,0 +1,45 @@
+<binaryFileProfile
+        xmlns="http://www.nkp.cz/pspValidator/2.3/binaryFileProfile"
+        validatorVersion="2.3"
+        dmf="audio_fono_0.3"
+>
+    <fromXml>
+        <namespaces>
+            <!--<defaultNamespace>http://hul.harvard.edu/ois/xml/ns/jhove</defaultNamespace>-->
+            <namespace prefix="j">http://hul.harvard.edu/ois/xml/ns/jhove</namespace>
+            <namespace prefix="j2">http://schema.openpreservation.org/ois/xml/ns/jhove</namespace>
+            <namespace prefix="m">http://www.loc.gov/mix/v20</namespace>
+        </namespaces>
+
+        <validation name="Status">
+            <xmlDataExtraction resultType="STRING">
+                <firstNonempty>
+                    <xpath>//j:repInfo/j:status</xpath>
+                    <xpath>//j2:repInfo/j2:status</xpath>
+                </firstNonempty>
+            </xmlDataExtraction>
+            <rules>
+                <mustExist/>
+                <mustMatchAny>
+                    <isExactly>Well-Formed and valid</isExactly>
+                </mustMatchAny>
+            </rules>
+        </validation>
+
+        <validation name="Identifikace formátu">
+            <xmlDataExtraction resultType="STRING">
+                <firstNonempty>
+                    <xpath>//j:repInfo/j:format</xpath>
+                    <xpath>//j2:repInfo/j2:format</xpath>
+                </firstNonempty>
+            </xmlDataExtraction>
+            <rules>
+                <mustExist/>
+                <mustMatchAny>
+                    <isExactly>WAVE</isExactly>
+                </mustMatchAny>
+            </rules>
+        </validation>
+
+    </fromXml>
+</binaryFileProfile>

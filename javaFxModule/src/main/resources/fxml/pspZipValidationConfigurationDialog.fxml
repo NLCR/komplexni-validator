@@ -6,7 +6,7 @@
 <VBox xmlns:fx="http://javafx.com/fxml"
       fx:controller="nkp.pspValidator.gui.PspZipValidationConfigurationDialogController"
       fx:id="container"
-      minHeight="650"
+      minHeight="750"
       minWidth="650"
       alignment="CENTER"
       spacing="20"
@@ -77,32 +77,47 @@
                       GridPane.halignment="RIGHT"
             />
 
-            <Label text="Zvuky (gramodesky)" GridPane.columnIndex="1" GridPane.rowIndex="5"/>
+            <Label text="Audio (gramodesky)" GridPane.columnIndex="1" GridPane.rowIndex="5"/>
 
             <ChoiceBox fx:id="forcedAdgVersionChoiceBox"
                        GridPane.columnIndex="2" GridPane.columnSpan="2"
                        GridPane.rowIndex="5"
                        onAction="#forcedAdgVersionChoiceboxChanged"/>
 
+            <!--Audio doc (phonocylinder)-->
+            <CheckBox fx:id="forcedAdfVersionCheckBox"
+                      onAction="#forcedAdfVersionChanged"
+                      GridPane.columnIndex="0"
+                      GridPane.rowIndex="6"
+                      GridPane.halignment="RIGHT"
+            />
+
+            <Label text="Audio (fonoválečky)" GridPane.columnIndex="1" GridPane.rowIndex="6"/>
+
+            <ChoiceBox fx:id="forcedAdfVersionChoiceBox"
+                       GridPane.columnIndex="2" GridPane.columnSpan="2"
+                       GridPane.rowIndex="6"
+                       onAction="#forcedAdfVersionChoiceboxChanged"/>
+
             <!--PREFERRED-->
             <Label text="Preferované verze standardů. Jsou použity, když v datech balíku chybí verze DMF."
                    GridPane.columnIndex="0"
                    GridPane.columnSpan="3"
-                   GridPane.rowIndex="7"/>
+                   GridPane.rowIndex="8"/>
 
             <!--Monograph-->
             <CheckBox fx:id="preferredMonVersionCheckBox"
                       onAction="#preferredMonVersionChanged"
                       GridPane.columnIndex="0"
-                      GridPane.rowIndex="8"
+                      GridPane.rowIndex="9"
                       GridPane.halignment="RIGHT"
             />
 
-            <Label text="Monografie" GridPane.columnIndex="1" GridPane.rowIndex="8"/>
+            <Label text="Monografie" GridPane.columnIndex="1" GridPane.rowIndex="9"/>
 
             <ChoiceBox fx:id="preferredMonVersionChoiceBox"
                        GridPane.columnIndex="2"
-                       GridPane.rowIndex="8"
+                       GridPane.rowIndex="9"
                        onAction="#preferredMonVersionChoiceboxChanged"
             />
 
@@ -110,66 +125,82 @@
             <CheckBox fx:id="preferredPerVersionCheckBox"
                       onAction="#preferredPerVersionChanged"
                       GridPane.columnIndex="0"
-                      GridPane.rowIndex="9"
+                      GridPane.rowIndex="10"
                       GridPane.halignment="RIGHT"
             />
 
-            <Label text="Periodika" GridPane.columnIndex="1" GridPane.rowIndex="9"/>
+            <Label text="Periodika" GridPane.columnIndex="1" GridPane.rowIndex="10"/>
 
             <ChoiceBox fx:id="preferredPerVersionChoiceBox"
                        onAction="#preferredPerVersionChoiceboxChanged"
                        GridPane.columnIndex="2" GridPane.columnSpan="2"
-                       GridPane.rowIndex="9"
+                       GridPane.rowIndex="10"
             />
 
             <!--Audio doc (gramophone)-->
             <CheckBox fx:id="preferredAdgVersionCheckBox"
                       onAction="#preferredAdgVersionChanged"
                       GridPane.columnIndex="0"
-                      GridPane.rowIndex="10"
+                      GridPane.rowIndex="11"
                       GridPane.halignment="RIGHT"
             />
 
-            <Label text="Audio (gramodesky)" GridPane.columnIndex="1" GridPane.rowIndex="10"/>
+            <Label text="Audio (gramodesky)" GridPane.columnIndex="1" GridPane.rowIndex="11"/>
 
             <ChoiceBox fx:id="preferredAdgVersionChoiceBox"
                        GridPane.columnIndex="2" GridPane.columnSpan="2"
-                       GridPane.rowIndex="10"
+                       GridPane.rowIndex="11"
                        onAction="#preferredAdgVersionChoiceboxChanged"
+            />
+
+            <!--Audio doc (phonocylinders)-->
+            <CheckBox fx:id="preferredAdfVersionCheckBox"
+                      onAction="#preferredAdfVersionChanged"
+                      GridPane.columnIndex="0"
+                      GridPane.rowIndex="12"
+                      GridPane.halignment="RIGHT"
+            />
+
+            <Label text="Audio (fonoválečky)" GridPane.columnIndex="1" GridPane.rowIndex="12"/>
+
+            <ChoiceBox fx:id="preferredAdfVersionChoiceBox"
+                       GridPane.columnIndex="2" GridPane.columnSpan="2"
+                       GridPane.rowIndex="12"
+                       onAction="#preferredAdfVersionChoiceboxChanged"
             />
 
             <!--PROTOCOLS-->
             <Label text="Vytvořit protokol v XML"
                    GridPane.columnIndex="0"
-                   GridPane.rowIndex="12"
+                   GridPane.rowIndex="14"
                    GridPane.columnSpan="2"
             />
 
             <CheckBox fx:id="createXmlLog"
                       GridPane.columnIndex="2"
-                      GridPane.rowIndex="12"
+                      GridPane.rowIndex="14"
                       onAction="#createXmlLogChanged"
             />
 
             <Label text="Vytvořit textový log"
                    GridPane.columnIndex="0"
-                   GridPane.rowIndex="13"
+                   GridPane.rowIndex="15"
                    GridPane.columnSpan="2"
             />
 
             <CheckBox fx:id="createTxtLog"
                       GridPane.columnIndex="2"
-                      GridPane.rowIndex="13"
+                      GridPane.rowIndex="15"
                       onAction="#createTxtLogChanged"
             />
 
             <!--Verbosity-->
             <Label text="Podrobnost textového logu"
                    GridPane.columnIndex="0"
-                   GridPane.rowIndex="14"
+                   GridPane.rowIndex="16"
             />
 
-            <HBox GridPane.rowIndex="14"
+            <HBox GridPane.rowIndex="16"
                   GridPane.columnIndex="2"
                   GridPane.columnSpan="3"
                   spacing="8">
@@ -184,7 +215,7 @@
                 />
             </HBox>
 
-            <HBox GridPane.rowIndex="15"
+            <HBox GridPane.rowIndex="17"
                   GridPane.columnIndex="2"
                   GridPane.columnSpan="3"
                   spacing="10">

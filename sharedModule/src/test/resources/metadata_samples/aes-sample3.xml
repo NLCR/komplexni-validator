@@ -1,0 +1,31 @@
+<aes:audioObject
+        xmlns:aes="http://www.aes.org/audioObject"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.aes.org/audioObject aes57_1.0.xsd"
+
+        ID="sa-1111"
+        title="Arie vodnika z opery Rusalka, Pochod podloudníků z opery Hubička"
+        analogDigitalFlag="ANALOG"
+        schemaVersion="1.0.0"
+        generation="Original"
+        disposition="returned to stacks">
+    <aes:format specificationVersion="">Gramophone record</aes:format>
+    <aes:use useType="ORIGINAL_MASTER"/>
+    <aes:primaryIdentifier identifierType="OTHER">TODO</aes:primaryIdentifier>
+    <aes:face ID="Side_1" direction="NONE" audioObjectRef="" label="">
+        <aes:timeline>
+            <aes:startTime editRate=""></aes:startTime>
+            <aes:duration editRate=""></aes:duration>
+        </aes:timeline>
+        <aes:region ID="" formatRef="" faceRef="" label="">
+            <aes:timeRange>
+                <aes:startTime editRate=""></aes:startTime>
+                <aes:duration editRate=""></aes:duration>
+            </aes:timeRange>
+            <aes:numChannels></aes:numChannels>
+            <aes:stream ID="" label="" faceRegionRef="">
+                <aes:channelAssignment channelNum=""/>
+            </aes:stream>
+        </aes:region>
+    </aes:face>
+</aes:audioObject>

@@ -1,0 +1,50 @@
+<aes:audioObject
+        xmlns:aes="http://www.aes.org/audioObject"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.aes.org/audioObject aes57_1.0.xsd"
+
+        ID="mca_1234567890_0002_obj"
+        title="Arie vodnika z opery Rusalka, Pochod podloudníků z opery Hubička"
+        analogDigitalFlag="FILE_DIGITAL"
+        schemaVersion="1.0.0"
+        disposition="TODO"
+>
+    <aes:format specificationVersion="2 PCM Encoding">Broadcast Wave</aes:format>
+    <aes:audioDataEncoding>PCM audio in integer format</aes:audioDataEncoding>
+    <aes:byteOrder>LITTLE_ENDIAN</aes:byteOrder>
+    <aes:firstSampleOffset>80</aes:firstSampleOffset>
+    <aes:audioDataBlockSize>6</aes:audioDataBlockSize>
+    <aes:use useType="PRESERVATION_MASTER"/>
+    <aes:primaryIdentifier identifierType="FILE_NAME">mca_1234567890_0002</aes:primaryIdentifier>
+    <aes:fileChecksum>
+        <aes:checksumValue>FC2BF3D40E1C13EAB950B9AC84EC73E8</aes:checksumValue>
+        <aes:checksumKind>MD5</aes:checksumKind>
+        <aes:checksumCreateDate>2017-07-18T15:54:46-05:00</aes:checksumCreateDate>
+    </aes:fileChecksum>
+    <aes:face ID="Side_2" direction="NONE" audioObjectRef="mca_1234567890_0002" label="2">
+        <aes:timeline>
+            <aes:startTime editRate="96000">0</aes:startTime>
+            <aes:duration editRate="96000">17616390</aes:duration>
+        </aes:timeline>
+        <aes:region ID="mca_1234567890_0002" formatRef="WAVE" faceRef="Side_2" label="Region 1">
+            <aes:timeRange>
+                <aes:startTime editRate="96000">0</aes:startTime>
+                <aes:duration editRate="96000">17616390</aes:duration>
+            </aes:timeRange>
+            <aes:numChannels>2</aes:numChannels>
+            <aes:stream ID="mca_1234567890_0002a" label="1" faceRegionRef="mca_1234567890_0002">
+                <aes:channelAssignment channelNum="1" leftRightPosition="-100"/>
+            </aes:stream>
+            <aes:stream ID="mca_1234567890_0002b" label="2" faceRegionRef="mca_1234567890_0002">
+                <aes:channelAssignment channelNum="2" leftRightPosition="100"/>
+            </aes:stream>
+        </aes:region>
+    </aes:face>
+    <aes:formatList>
+        <aes:formatRegion ID="WAVE" label="audio/x-wave" ownerRef="mca_1234567890_0002">
+            <aes:bitDepth>24</aes:bitDepth>
+            <aes:sampleRate>96000.0</aes:sampleRate>
+            <aes:soundField>STEREO</aes:soundField>
+        </aes:formatRegion>
+    </aes:formatList>
+</aes:audioObject>

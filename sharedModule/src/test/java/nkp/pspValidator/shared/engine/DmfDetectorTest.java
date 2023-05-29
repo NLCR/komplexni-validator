@@ -49,6 +49,21 @@ public class DmfDetectorTest {
         }
     }
 
+    @Test
+    public void detectDmfTypeAudioGram() {
+        File pspRootDir = new File("src/test/resources/audio_gram_0.3/1234567890");
+        try {
+            Dmf.Type dmfType = dmfDetector.detectDmfType(pspRootDir);
+            assertEquals(Dmf.Type.AUDIO_GRAM, dmfType);
+        } catch (PspDataException e) {
+            fail(e.getMessage());
+        } catch (XmlFileParsingException e) {
+            fail(e.getMessage());
+        } catch (InvalidXPathExpressionException e) {
+            fail(e.getMessage());
+        }
+    }
+
 
     @Test
     public void detectDmfTypeInvalid() {
@@ -96,6 +111,21 @@ public class DmfDetectorTest {
         }
     }
 
+    @Test
+    public void detectDmfVersionAudioGram() {
+        File pspRootDir = new File("src/test/resources/audio_gram_0.3/1234567890");
+        try {
+            String version = dmfDetector.detectDmfVersionFromInfoFile(Dmf.Type.AUDIO_GRAM, pspRootDir);
+            assertEquals("0.3", version);
+        } catch (PspDataException e) {
+            fail(e.getMessage());
+        } catch (XmlFileParsingException e) {
+            fail(e.getMessage());
+        } catch (InvalidXPathExpressionException e) {
+            fail(e.getMessage());
+        }
+    }
+
 
     @Test
     public void versions() throws PspDataException, XmlFileParsingException, InvalidXPathExpressionException {
@@ -113,10 +143,10 @@ public class DmfDetectorTest {
 
         //audio document gramophone
         File adg03Dir = new File("src/test/resources/audio_gram_0.3/1234567890");
-        assertEquals(resolverSr(adg03Dir, null, "123").getVersion(), "123");
-        assertEquals(resolverSr(adg03Dir, "1", "123").getVersion(), "123");
-        assertEquals(resolverSr(adg03Dir, null, null).getVersion(), "0.3");
-        assertEquals(resolverSr(adg03Dir, "1", null).getVersion(), "0.3");
+        assertEquals(resolverAudioGram(adg03Dir, null, "123").getVersion(), "123");
+        assertEquals(resolverAudioGram(adg03Dir, "1", "123").getVersion(), "123");
+        assertEquals(resolverAudioGram(adg03Dir, null, null).getVersion(), "0.3");
+        assertEquals(resolverAudioGram(adg03Dir, "1", null).getVersion(), "0.3");
     }
 
 
@@ -125,9 +155,11 @@ public class DmfDetectorTest {
         params.forcedDmfMonVersion = forced;
         params.forcedDmfPerVersion = null;
         params.forcedDmfAdgVersion = null;
+        params.forcedDmfAdfVersion = null;
         params.preferredDmfMonVersion = preferred;
         params.preferredDmfPerVersion = null;
         params.preferredDmfAdgVersion = null;
+        params.preferredDmfAdfVersion = null;
         return dmfDetector.resolveDmf(pspDir, params);
     }
 
@@ -136,20 +168,24 @@ public class DmfDetectorTest {
         params.forcedDmfMonVersion = null;
         params.forcedDmfPerVersion = forced;
         params.forcedDmfAdgVersion = null;
+        params.forcedDmfAdfVersion = null;
         params.preferredDmfMonVersion = null;
         params.preferredDmfPerVersion = preferred;
         params.preferredDmfAdgVersion = null;
+        params.preferredDmfAdfVersion = null;
         return dmfDetector.resolveDmf(pspDir, params);
     }
 
-    private Dmf resolverSr(File pspDir, String preferred, String forced) throws PspDataException, XmlFileParsingException, InvalidXPathExpressionException {
+    private Dmf resolverAudioGram(File pspDir, String preferred, String forced) throws PspDataException, XmlFileParsingException, InvalidXPathExpressionException {
         DmfDetector.Params params = new DmfDetector.Params();
         params.forcedDmfMonVersion = null;
         params.forcedDmfPerVersion = null;
         params.forcedDmfAdgVersion = forced;
+        params.forcedDmfAdfVersion = null;
         params.preferredDmfMonVersion = null;
         params.preferredDmfPerVersion = null;
         params.preferredDmfAdgVersion = preferred;
+        params.preferredDmfAdfVersion = null;
         return dmfDetector.resolveDmf(pspDir, params);
     }
 

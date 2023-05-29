@@ -125,6 +125,7 @@ public class Main extends Application {
     }
 
     public void runPspDirValidation(File pspDir, DmfDetector.Params dmDetectorParams, boolean createTxtLog, boolean createXmlLog, int verbosity) {
+
         //because the possible unzip dialog cannot close it's parent dialog
         dialogStage.close();
         mainController.runPspDirValidation(pspDir, dmDetectorParams, createTxtLog, createXmlLog, verbosity);

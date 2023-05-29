@@ -151,6 +151,15 @@ public class Main {
                 .create());
         options.addOption(OptionBuilder
                 .withDescription(replaceUmlaut(
+                        "Preferovaná verze DMF pro validaci zvukových dokumentů - fonoválečků. " +
+                                "Použije se k validaci, pokud je balík typu Zvukový dokument (fonováleček), data balíku neobsahují informaci o vhodné verzi DMF Zvukové dokumenty " +
+                                "a parametr --" + Params.FORCED_DMF_ADF_VERSION + " není vyplněn."))
+                .hasArg()
+                .withArgName("VERZE")
+                .withLongOpt(Params.PREFERRED_DMF_ADF_VERSION)
+                .create());
+        options.addOption(OptionBuilder
+                .withDescription(replaceUmlaut(
                         "Vynucená verze DMF pro validaci monografií. " +
                                 //"Použije se k validaci všech balíků typu Monografie bez ohledu na data balíků a hodnotu parametru --preferred-dmf-mon-version."))
                                 "Použije se k validaci všech balíků typu Monografie bez ohledu na data balíků a hodnotu parametru --" + Params.PREFERRED_DMF_MON_VERSION + "."))
@@ -173,6 +182,14 @@ public class Main {
                 .hasArg()
                 .withArgName("VERZE")
                 .withLongOpt(Params.FORCED_DMF_ADG_VERSION)
+                .create());
+        options.addOption(OptionBuilder
+                .withDescription(replaceUmlaut(
+                        "Vynucená verze DMF pro validaci zvukových dokumentů - fonoválečků. " +
+                                "Použije se k validaci všech balíků typu Zvukový dokument (fonováleček) bez ohledu na data balíků a hodnotu parametru --" + Params.PREFERRED_DMF_ADF_VERSION + "."))
+                .hasArg()
+                .withArgName("VERZE")
+                .withLongOpt(Params.FORCED_DMF_ADF_VERSION)
                 .create());
 
         options.addOption(OptionBuilder
@@ -412,6 +429,10 @@ public class Main {
                 if (line.hasOption(Params.PREFERRED_DMF_ADG_VERSION)) {
                     preferDmfAdgVersion = line.getOptionValue(Params.PREFERRED_DMF_ADG_VERSION);
                 }
+                String preferDmfAdfVersion = null;
+                if (line.hasOption(Params.PREFERRED_DMF_ADF_VERSION)) {
+                    preferDmfAdfVersion = line.getOptionValue(Params.PREFERRED_DMF_ADF_VERSION);
+                }
                 //force dmf versions
                 String forceDmfMonVersion = null;
                 if (line.hasOption(Params.FORCED_DMF_MON_VERSION)) {
@@ -424,6 +445,10 @@ public class Main {
                 String forceDmfAdgVersion = null;
                 if (line.hasOption(Params.FORCED_DMF_ADG_VERSION)) {
                     forceDmfAdgVersion = line.getOptionValue(Params.FORCED_DMF_ADG_VERSION);
+                }
+                String forceDmfAdfVersion = null;
+                if (line.hasOption(Params.FORCED_DMF_ADF_VERSION)) {
+                    forceDmfAdfVersion = line.getOptionValue(Params.FORCED_DMF_ADF_VERSION);
                 }
 
                 //verbosity
@@ -500,9 +525,11 @@ public class Main {
                 dmfDetectorParams.forcedDmfMonVersion = forceDmfMonVersion;
                 dmfDetectorParams.forcedDmfPerVersion = forceDmfPerVersion;
                 dmfDetectorParams.forcedDmfAdgVersion = forceDmfAdgVersion;
+                dmfDetectorParams.forcedDmfAdfVersion = forceDmfAdfVersion;
                 dmfDetectorParams.preferredDmfMonVersion = preferDmfMonVersion;
                 dmfDetectorParams.preferredDmfPerVersion = preferDmfPerVersion;
                 dmfDetectorParams.preferredDmfAdgVersion = preferDmfAdgVersion;
+                dmfDetectorParams.preferredDmfAdfVersion = preferDmfAdfVersion;
 
                 PrintStream out = System.out;
                 PrintStream err = System.err;

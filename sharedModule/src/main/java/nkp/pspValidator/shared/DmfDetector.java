@@ -24,6 +24,7 @@ public class DmfDetector {
     public static final String DEFAULT_MONOGRAPH_VERSION = "2.0";
     public static final String DEFAULT_PERIODICAL_VERSION = "1.9";
     public static final String DEFAULT_AUDIO_GRAM_VERSION = "0.5";
+    public static final String DEFAULT_AUDIO_FONO_VERSION = "0.3";
 
 
     /**
@@ -48,6 +49,8 @@ public class DmfDetector {
                 return PERIODICAL;
             } else if ("sound recording".equals(docType)) {
                 return AUDIO_GRAM;
+            } else if ("audio cylinder".equals(docType)) {
+                return AUDIO_FONO;
             } else {
                 throw new PspDataException(pspRootDir, String.format("atribut TYPE elementu mods neobsahuje korektní typ (Monograph/Periodical/sound recording), ale hodnotu '%s'", docType));
             }
@@ -144,6 +147,9 @@ public class DmfDetector {
             case AUDIO_GRAM: {
                 return chooseVersion(AUDIO_GRAM, pspRoot, params.forcedDmfAdgVersion, params.preferredDmfAdgVersion, DEFAULT_AUDIO_GRAM_VERSION);
             }
+            case AUDIO_FONO: {
+                return chooseVersion(AUDIO_FONO, pspRoot, params.forcedDmfAdfVersion, params.preferredDmfAdfVersion, DEFAULT_AUDIO_FONO_VERSION);
+            }
             default:
                 throw new IllegalStateException();
         }
@@ -169,9 +175,11 @@ public class DmfDetector {
         public String preferredDmfMonVersion;
         public String preferredDmfPerVersion;
         public String preferredDmfAdgVersion;
+        public String preferredDmfAdfVersion;
         public String forcedDmfMonVersion;
         public String forcedDmfPerVersion;
         public String forcedDmfAdgVersion;
+        public String forcedDmfAdfVersion;
     }
 
 }

@@ -47,12 +47,16 @@ public class ConfigurationManager {
     public static final String PROP_FORCE_PER_VERSION_CODE = "force.periodical.version.code";
     public static final String PROP_FORCE_AUDIO_GRAM_VERSION_ENABLED = "force.audio_gram.version.enabled";
     public static final String PROP_FORCE_AUDIO_GRAM_VERSION_CODE = "force.audio_gram.version.code";
+    public static final String PROP_FORCE_AUDIO_FONO_VERSION_ENABLED = "force.audio_fono.version.enabled";
+    public static final String PROP_FORCE_AUDIO_FONO_VERSION_CODE = "force.audio_fono.version.code";
     public static final String PROP_PREFER_MON_VERSION_ENABLED = "prefer.monograph.version.enabled";
     public static final String PROP_PREFER_MON_VERSION_CODE = "prefer.monograph.version.code";
     public static final String PROP_PREFER_PER_VERSION_ENABLED = "prefer.periodical.version.enabled";
     public static final String PROP_PREFER_PER_VERSION_CODE = "prefer.periodical.version.code";
     public static final String PROP_PREFER_AUDIO_GRAM_VERSION_ENABLED = "prefer.audio_gram.version.enabled";
-    public static final String PROP_PREFER_DOC_GRAM_VERSION_CODE = "prefer.audio_gram.version.code";
+    public static final String PROP_PREFER_AUDIO_GRAM_VERSION_CODE = "prefer.audio_gram.version.code";
+    public static final String PROP_PREFER_AUDIO_FONO_VERSION_ENABLED = "prefer.audio_fono.version.enabled";
+    public static final String PROP_PREFER_AUDIO_FONO_VERSION_CODE = "prefer.audio_fono.version.code";
     public static final String PROP_PSP_VALIDATION_CREATE_TXT_LOG = "psp_validation.create_txt_log";
     public static final String PROP_PSP_VALIDATION_CREATE_XML_LOG = "psp_validation.create_xml_log";
     public static final String PROP_LOG_DIR = "validation.log_dir";
