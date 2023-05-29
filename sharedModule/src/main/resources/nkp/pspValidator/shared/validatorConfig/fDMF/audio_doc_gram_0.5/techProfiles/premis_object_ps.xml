@@ -109,27 +109,21 @@
                                                 </recommendedContent>
                                             </element>
 
-                                            <!--Neni jasna povinnost - konflikt povinnost=M a vyskyt=0-n. Nechavam defenzivne nepovinne-->
                                             <element name="premis:fixity" mandatory="true" repeatable="true">
                                                 <expectedElements>
-                                                    <element name="premis:messageDigestAlgorithm" mandatory="true"
-                                                             repeatable="false">
+                                                    <element name="premis:messageDigestAlgorithm" mandatory="true" repeatable="false">
                                                         <expectedContent/>
                                                     </element>
 
-                                                    <element name="premis:messageDigest" mandatory="true"
-                                                             repeatable="false">
+                                                    <element name="premis:messageDigest" mandatory="true" repeatable="false">
                                                         <expectedContent/>
                                                     </element>
-                                                    <!--Neni jasna povinnost - konflikt povinnost=M a vyskyt=0-n. Nechavam defenzivne nepovinne-->
-                                                    <element name="premis:messageDigestOriginator" mandatory="true"
-                                                             repeatable="false">
+                                                    <element name="premis:messageDigestOriginator" mandatory="true" repeatable="false">
                                                         <expectedContent/>
                                                     </element>
                                                 </expectedElements>
                                             </element>
 
-                                            <!--Neni jasna povinnost - konflikt povinnost=M a vyskyt=0-n. Nechavam defenzivne nepovinne-->
                                             <element name="premis:size" mandatory="true" repeatable="false">
                                                 <expectedContent>
                                                     <regexp>[0-9]+</regexp>
@@ -138,18 +132,13 @@
 
                                             <element name="premis:format" mandatory="true" repeatable="true">
                                                 <expectedElements>
-                                                    <!--Neni jasna povinnost - konflikt povinnost=M a vyskyt=0-n. Nechavam defenzivne nepovinne-->
-                                                    <element name="premis:formatDesignation" mandatory="true"
-                                                             repeatable="false">
+                                                    <element name="premis:formatDesignation" mandatory="true" repeatable="false">
                                                         <expectedElements>
-                                                            <element name="premis:formatName" mandatory="true"
-                                                                     repeatable="false">
+                                                            <element name="premis:formatName" mandatory="true" repeatable="false">
                                                                 <expectedContent/>
                                                             </element>
 
-                                                            <!--Neni jasna povinnost - konflikt povinnost=M a vyskyt=0-n. Nechavam defenzivne nepovinne-->
-                                                            <element name="premis:formatVersion" mandatory="true"
-                                                                     repeatable="false">
+                                                            <element name="premis:formatVersion" mandatory="true" repeatable="false">
                                                                 <expectedContent/>
                                                             </element>
                                                         </expectedElements>
@@ -169,29 +158,24 @@
                                                 </expectedElements>
                                             </element>
 
-                                            <!--Neni jasna povinnost - konflikt povinnost=M a vyskyt=0-n. Nechavam defenzivne nepovinne-->
-                                            <element name="premis:creatingApplication" mandatory="true"
-                                                     repeatable="true">
+                                            <element name="premis:creatingApplication" mandatory="true" repeatable="true">
                                                 <expectedElements>
-                                                    <!--Neni jasna povinnost - konflikt povinnost=M a vyskyt=0-1. Nechavam defenzivne nepovinne-->
-                                                    <element name="premis:creatingApplicationName" mandatory="true"
-                                                             repeatable="false">
+                                                    <element name="premis:creatingApplicationName" mandatory="true" repeatable="false">
                                                         <expectedContent/>
                                                     </element>
 
-                                                    <!--Neni jasna povinnost - konflikt povinnost=M a vyskyt=0-1. Nechavam defenzivne nepovinne-->
-                                                    <element name="premis:creatingApplicationVersion" mandatory="true"
-                                                             repeatable="false">
+                                                    <element name="premis:creatingApplicationVersion" mandatory="true" repeatable="false">
                                                         <expectedContent/>
                                                     </element>
 
-                                                    <!--Neni jasna povinnost - konflikt povinnost=M a vyskyt=0-1. Nechavam defenzivne nepovinne-->
-                                                    <element name="premis:dateCreatedByApplication" mandatory="true"
-                                                             repeatable="false">
+                                                    <element name="premis:dateCreatedByApplication" mandatory="true" repeatable="false">
                                                         <expectedContent>
-                                                            <!--TODO: mozna regulernim vyrazem, resp. skupinou, protoze ten zapis muze byt dost ruzny - uz jenom oddelovace, viz. treba
-                                                                http://www.pelagodesign.com/blog/2009/05/20/iso-8601-date-validation-that-doesnt-suck/
-                                                            -->
+                                                            <oneOf>
+                                                                <!--ISO 8601 na úroveň alespoň sekund (basic format): např. 20190830T153501, 20190830T153530+01, 20190830T153544-23:30,20190830T153559.123-->
+                                                                <regexp>^(?&lt;year&gt;[0-9]{4})(?&lt;month&gt;1[0-2]|0[1-9])(?&lt;day&gt;3[01]|0[1-9]|[12][0-9])T(?&lt;hour&gt;2[0-3]|[01][0-9])(?&lt;minute&gt;[0-5][0-9])(?&lt;second&gt;[0-5][0-9](.(?&lt;millis&gt;[0-9]{3}))?)?(?&lt;timezone&gt;Z|[+-](2[0-3]|[01][0-9])([0-5][0-9])?)$</regexp>
+                                                                <!--ISO 8601 na úroveň alespoň sekund (extended format): např. 2019-08-30T15:35:01+01:00, 2019-08-30T15:35:44-23:30, 2019-08-30T15:35:59.123Z -->
+                                                                <regexp>^(?&lt;year&gt;[0-9]{4})-(?&lt;month&gt;1[0-2]|0[1-9])-(?&lt;day&gt;3[01]|0[1-9]|[12][0-9])T(?&lt;hour&gt;2[0-3]|[01][0-9]):(?&lt;minute&gt;[0-5][0-9])(:(?&lt;second&gt;[0-5][0-9])(.(?&lt;millis&gt;[0-9]{3}))?)?(?&lt;timezone&gt;Z|[+-](2[0-3]|[01][0-9])(:([0-5][0-9])?)?)$</regexp>
+                                                            </oneOf>
                                                         </expectedContent>
                                                     </element>
                                                 </expectedElements>
@@ -199,22 +183,17 @@
                                         </expectedElements>
                                     </element>
 
-                                    <!--Neni jasna povinnost - konflikt povinnost=M a vyskyt=0-1. Nechavam defenzivne nepovinne-->
                                     <element name="premis:originalName" mandatory="true" repeatable="false">
                                         <expectedContent/>
                                     </element>
 
-                                    <!--Neni jasna povinnost - konflikt povinnost=M a vyskyt=0-n. Nechavam defenzivne nepovinne-->
-                                    <element name="premis:linkingEventIdentifier" mandatory="true"
-                                             repeatable="true">
+                                    <element name="premis:linkingEventIdentifier" mandatory="true" repeatable="true">
                                         <expectedElements>
-                                            <element name="premis:linkingEventIdentifierType" mandatory="true"
-                                                     repeatable="true">
+                                            <element name="premis:linkingEventIdentifierType" mandatory="true" repeatable="false">
                                                 <expectedContent/>
                                             </element>
 
-                                            <element name="premis:linkingEventIdentifierValue" mandatory="true"
-                                                     repeatable="true">
+                                            <element name="premis:linkingEventIdentifierValue" mandatory="true" repeatable="false">
                                                 <expectedContent/>
                                             </element>
                                         </expectedElements>
