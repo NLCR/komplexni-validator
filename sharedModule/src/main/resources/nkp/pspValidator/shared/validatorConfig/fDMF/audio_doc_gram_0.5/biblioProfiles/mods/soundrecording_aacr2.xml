@@ -340,15 +340,6 @@
                         <expectedContent>
                             <oneOf>
                                 <value>udc</value>
-                                <value>Konspekt</value>
-                            </oneOf>
-                        </expectedContent>
-                    </attribute>
-                    <!--TODO: (str. 43) neni zrejme, co se ma vyplnit, kdyz je zdrojem MARC:072 $9 (u MARC:072 $a tam ma byt "Konspekt), nechavam edition nepovinny-->
-                    <attribute name="edition" mandatory="false">
-                        <expectedContent>
-                            <oneOf>
-                                <value>Konspekt</value>
                             </oneOf>
                         </expectedContent>
                     </attribute>
