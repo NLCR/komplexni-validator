@@ -43,6 +43,14 @@
                 <expectedContent/>
             </element>
 
+            <element name="dc:coverage" mandatory="false">
+                <expectedContent/>
+            </element>
+
+            <element name="dc:publisher" mandatory="false">
+                <expectedContent/>
+            </element>
+
             <element name="dc:date" mandatory="true" errorMessage="Očekáván povinný element dc:date obsahující datum vydání předlohy.">
                 <expectedContent/>
             </element>
