@@ -613,7 +613,7 @@
                                 <expectedAttributes>
                                     <attribute name="authority" mandatory="false">
                                         <expectedContent>
-                                            <value>“iso639-2b</value>
+                                            <value>iso639-2b</value>
                                         </expectedContent>
                                     </attribute>
                                 </expectedAttributes>
