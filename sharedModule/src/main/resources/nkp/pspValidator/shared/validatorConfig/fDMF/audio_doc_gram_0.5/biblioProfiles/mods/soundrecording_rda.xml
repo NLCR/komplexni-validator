@@ -42,7 +42,6 @@
         <expectedElements>
             <element name="mods:titleInfo">
                 <expectedAttributes>
-                    <!-- v DMF není uvedena povinnost atributu-->
                     <attribute name="type" mandatory="false">
                         <expectedContent>
                             <oneOf>
@@ -444,7 +443,6 @@
 
             <element name="mods:subject" mandatory="false">
                 <expectedAttributes>
-                    <!--v DMF není určeno, zda je atribut povinný-->
                     <attribute name="authority" mandatory="false">
                         <recommendedContent>
                             <oneOf>
@@ -488,6 +486,10 @@
                                 <expectedContent/>
                             </element>
                         </expectedElements>
+                    </element>
+
+                    <element name="mods:genre" mandatory="false">
+                        <expectedContent/>
                     </element>
                 </expectedElements>
             </element>
