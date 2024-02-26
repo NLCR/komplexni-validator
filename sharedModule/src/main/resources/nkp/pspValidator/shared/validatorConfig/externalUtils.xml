@@ -7,42 +7,54 @@
 <externalUtils>
     <util name="JPYLYZER">
         <versionDetection>
+            <!--jpylyzer 1.17-->
+            <!--
             <operatingSystem name="LINUX">
-                <command>${UTIL_PATH}jpylyzer --version</command>
+                <command>${UTIL_PATH}jpylyzer &#45;&#45;version</command>
                 <parser>
                     <stream>STDERR</stream>
-                    <!--      <regexp>(?s).*</regexp>-->
                     <regexp>\A[0-9\.]+$</regexp>
+                </parser>
+            </operatingSystem>
+            <operatingSystem name="WINDOWS">
+                <command>${UTIL_PATH}jpylyzer.exe &#45;&#45;version</command>
+                <parser>
+                    <stream>STDERR</stream>
+                    <regexp>\A[0-9\.]+$</regexp>
+                </parser>
+            </operatingSystem>-->
+            <!--zdrojove kody z https://github.com/openpreserve/jpylyzer/releases a spousteni pres python-->
+            <!--http://jpylyzer.openpreservation.org//installation.html-->
+            <!-- <operatingSystem name="MAC">
+                 <command>python ${UTIL_PATH}jpylyzer.py &#45;&#45;version</command>
+                 <parser>
+                     <stream>STDERR</stream>
+                     <regexp>\A[0-9\.]+$</regexp>
+                 </parser>
+             </operatingSystem>-->
+
+            <!--jpylyzer 2.2.0-->
+            <operatingSystem name="LINUX">
+                <command>jpylyzer --version</command>
+                <parser>
+                    <stream>STDOUT</stream>
+                    <regexp>(?s).*</regexp>
                 </parser>
             </operatingSystem>
             <operatingSystem name="WINDOWS">
                 <command>${UTIL_PATH}jpylyzer.exe --version</command>
                 <parser>
-                    <stream>STDERR</stream>
-                    <regexp>\A[0-9\.]+$</regexp>
+                    <stream>STDOUT</stream>
+                    <regexp>(?s).*</regexp>
                 </parser>
             </operatingSystem>
-
-            <!--jpylyzer 1.17-->
-            <!--zdrojove kody z https://github.com/openpreserve/jpylyzer/releases a spousteni pres python-->
-            <!--http://jpylyzer.openpreservation.org//installation.html-->
             <operatingSystem name="MAC">
-                <command>python ${UTIL_PATH}jpylyzer.py --version</command>
-                <parser>
-                    <stream>STDERR</stream>
-                    <regexp>\A[0-9\.]+$</regexp>
-                </parser>
-            </operatingSystem>
-
-            <!--jpylyzer 2.0 (not yet supported)-->
-            <!--<operatingSystem name="MAC">
-                <command>jpylyzer &#45;&#45;version</command>
-                <command>jpylyzer &#45;&#45;version</command>
+                <command>jpylyzer --version</command>
                 <parser>
                     <stream>STDOUT</stream>
                     <regexp>(?s).*</regexp>
                 </parser>
-            </operatingSystem>-->
+            </operatingSystem>
         </versionDetection>
         <execution name="jp2k">
             <operatingSystem name="LINUX">
@@ -61,22 +73,22 @@
             </operatingSystem>
 
             <!--jpylyzer 1.17-->
-            <operatingSystem name="MAC">
+            <!--<operatingSystem name="MAC">
                 <command>python ${UTIL_PATH}jpylyzer.py jp2In ${TARGET_FILE}</command>
                 <parser>
                     <stream>STDOUT</stream>
                     <regexp>(?s).*</regexp>
                 </parser>
-            </operatingSystem>
+            </operatingSystem>-->
 
-            <!--jpylyzer 2.0 (not yet supported)-->
-            <!--<operatingSystem name="MAC">
+            <!--jpylyzer 2.2.0-->
+            <operatingSystem name="MAC">
                 <command>jpylyzer jp2In ${TARGET_FILE}</command>
                 <parser>
                     <stream>STDOUT</stream>
                     <regexp>(?s).*</regexp>
                 </parser>
-            </operatingSystem>-->
+            </operatingSystem>
         </execution>
     </util>
 
@@ -138,6 +150,7 @@
     </util>
 
     <util name="JHOVE">
+        <!-- instalace: https://github.com/NLCR/komplexni-validator/wiki/Instalace#jhove -->
         <versionDetection>
             <operatingSystem name="LINUX">
                 <command>${UTIL_PATH}jhove --version</command>
@@ -148,10 +161,6 @@
                 </parser>
             </operatingSystem>
             <operatingSystem name="WINDOWS">
-                <!--TODO: v aplikaci vyzadovat minimalni verzi 1.14
-                http://openpreservation.org/news/jhove-1-14-released/
-                instalace: stahnout jhove-latest.jar (instalator) a spustit double click nebo java -jar jhove-latest.jar
-                -->
                 <command>${UTIL_PATH}jhove.bat --version</command>
                 <parser>
                     <stream>STDOUT</stream>
@@ -160,8 +169,6 @@
                     <!--<regexp>(?m)^.*$</regexp>-->
                 </parser>
             </operatingSystem>
-            <!--instalace podle http://jhove.openpreservation.org/getting-started/-->
-            <!--stahnout jhove-latest.jar a double click spusti instalator (predpoklad jre)-->
             <operatingSystem name="MAC">
                 <command>${UTIL_PATH}jhove --version</command>
                 <parser>

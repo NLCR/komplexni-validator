@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<metadataProfile
+        xmlns="http://www.nkp.cz/pspValidator/2.4/metadataProfile"
+        name="DC internal part - article (RDA)"
+        validatorVersion="2.4"
+        dmf="periodical_2.0"
+>
+
+    <info>
+        <text>DMF Periodika 2.0 očekává Dublin Core verze 1.1. Dále se zde upřesňují očekávaná metadata pro vnitřní
+            část typu článek pro záznamy zpracované podle katalogizačních pravidel RDA.
+        </text>
+        <url description="popis Dublin Core 1.1">http://dublincore.org/documents/dces/</url>
+        <url description="XSD pro Dublin Core 1.1">http://www.openarchives.org/OAI/2.0/oai_dc.xsd</url>
+    </info>
+
+    <namespaces>
+        <namespace prefix="oai_dc">http://www.openarchives.org/OAI/2.0/oai_dc/</namespace>
+        <namespace prefix="dc">http://purl.org/dc/elements/1.1/</namespace>
+    </namespaces>
+
+    <dictionaries>
+        <dictionary name="marcRelatorCodes"
+                    description="kódy rolí podle MARC21"
+                    url="http://www.loc.gov/marc/relators/relaterm.html"/>
+        <dictionary name="iso6392languageCodes"
+                    description="kódy jazyků podle ISO 639-2"
+                    url="http://www.loc.gov/standards/iso639-2/php/code_list.php"/>
+        <dictionary name="siglaInstitutionCodes"
+                    description="sigly knihoven"/>
+    </dictionaries>
+
+    <rootElement name="oai_dc:dc">
+        <expectedElements>
+
+            <element name="dc:title"
+                     errorMessage="Očekáván povinný element dc:title obsahující název, podnázev, nebo číslo článku.">
+                <expectedContent/>
+            </element>
+
+            <element name="dc:creator" mandatory="false">
+                <expectedContent/>
+            </element>
+
+            <element name="dc:type" specification="text() = 'model:internalpart'"
+                     errorMessage="Očekáván povinný element dc:type obsahující text 'model:internalpart'.">
+                <expectedContent/>
+            </element>
+
+            <element name="dc:language"
+                     errorMessage="Očekáván alespoň jeden povinný element dc:language obsahující přesné určení jazyka kódem z kontrolovaného slovníku ISO 639-2.">
+                <expectedContent>
+                    <fromDictionary name="iso6392languageCodes"/>
+                </expectedContent>
+            </element>
+
+            <element name="dc:format" mandatory="false">
+                <expectedContent/>
+            </element>
+
+            <element name="dc:description" mandatory="false">
+                <expectedContent/>
+            </element>
+
+            <element name="dc:subject" errorMessage="Očekáván alespoň jeden povinný element dc:subject.">
+                <expectedContent/>
+            </element>
+
+            <element name="dc:identifier" errorMessage="Očekáván alespoň jeden povinný element dc:identifier.">
+                <expectedContent/>
+            </element>
+
+            <element name="dc:coverage" mandatory="false">
+                <expectedContent/>
+            </element>
+
+        </expectedElements>
+    </rootElement>
+
+</metadataProfile>
+
+	

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <metadataProfile
-        xmlns="http://www.nkp.cz/pspValidator/2.3/metadataProfile"
+        xmlns="http://www.nkp.cz/pspValidator/2.4/metadataProfile"
         name="MODS issue (RDA)"
-        validatorVersion="2.3"
+        validatorVersion="2.4"
         dmf="periodical_1.7.1"
 >
 
@@ -263,17 +263,17 @@
             <element name="mods:subject" mandatory="false">
                 <expectedElements>
                     <element name="mods:topic" mandatory="false">
-                        <!--V DMF je "použít kontrolovaný slovník, napříkld ... " - tj. kontrolovaný slovník NENÍ vyžadován DMF-->
+                        <!--V DMF je "použít kontrolovaný slovník, například ... " - tj. kontrolovaný slovník NENÍ vyžadován DMF-->
                         <expectedContent/>
                     </element>
 
                     <element name="mods:temporal" mandatory="false">
-                        <!--V DMF je "použít kontrolovaný slovník, napříkld ... " - tj. kontrolovaný slovník NENÍ vyžadován DMF-->
+                        <!--V DMF je "použít kontrolovaný slovník, například ... " - tj. kontrolovaný slovník NENÍ vyžadován DMF-->
                         <expectedContent/>
                     </element>
 
                     <element name="mods:name" mandatory="false">
-                        <!--V DMF je "použít kontrolovaný slovník, napříkld ... " - tj. kontrolovaný slovník NENÍ vyžadován DMF-->
+                        <!--V DMF je "použít kontrolovaný slovník, například ... " - tj. kontrolovaný slovník NENÍ vyžadován DMF-->
                         <expectedElements>
                             <element name="mods:namePart">
                                 <expectedContent/>

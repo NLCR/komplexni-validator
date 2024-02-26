@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <metadataProfile
-        xmlns="http://www.nkp.cz/pspValidator/2.3/metadataProfile"
+        xmlns="http://www.nkp.cz/pspValidator/2.4/metadataProfile"
         name="MODS supplement (RDA)"
-        validatorVersion="2.3"
+        validatorVersion="2.4"
         dmf="monograph_2.0"
 >
 
@@ -489,19 +489,19 @@
                 <expectedElements>
                     <element name="mods:topic" mandatory="false">
                         <expectedContent>
-                            <!--TODO: V DMF je "použít kontrolovaný slovník, napříkld ... " - tj. kontrolovaný slovník NENÍ vyžadován DMF-->
+                            <!--TODO: V DMF je "použít kontrolovaný slovník, například ... " - tj. kontrolovaný slovník NENÍ vyžadován DMF-->
                         </expectedContent>
                     </element>
 
                     <element name="mods:geographic" mandatory="false">
                         <expectedContent>
-                            <!--TODO: V DMF je "použít kontrolovaný slovník, napříkld ... " - tj. kontrolovaný slovník NENÍ vyžadován DMF-->
+                            <!--TODO: V DMF je "použít kontrolovaný slovník, například ... " - tj. kontrolovaný slovník NENÍ vyžadován DMF-->
                         </expectedContent>
                     </element>
 
                     <element name="mods:temporal" mandatory="false">
                         <expectedContent>
-                            <!--TODO: V DMF je "použít kontrolovaný slovník, napříkld ... " - tj. kontrolovaný slovník NENÍ vyžadován DMF-->
+                            <!--TODO: V DMF je "použít kontrolovaný slovník, například ... " - tj. kontrolovaný slovník NENÍ vyžadován DMF-->
                         </expectedContent>
                     </element>
 
@@ -509,7 +509,7 @@
                         <expectedElements>
                             <element name="mods:namePart" mandatory="false">
                                 <expectedContent>
-                                    <!--TODO: V DMF je "použít kontrolovaný slovník, napříkld ... " - tj. kontrolovaný slovník NENÍ vyžadován DMF-->
+                                    <!--TODO: V DMF je "použít kontrolovaný slovník, například ... " - tj. kontrolovaný slovník NENÍ vyžadován DMF-->
                                 </expectedContent>
                             </element>
                         </expectedElements>

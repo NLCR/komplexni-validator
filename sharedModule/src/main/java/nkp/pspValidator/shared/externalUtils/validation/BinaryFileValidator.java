@@ -34,6 +34,10 @@ public class BinaryFileValidator {
         this.externalUtilManager = externalUtilManager;
     }
 
+    public boolean isUtilDisabled(ExternalUtil util) {
+        return externalUtilManager.isUtilDisabled(util);
+    }
+
     public boolean isUtilAvailable(ExternalUtil util) {
         return externalUtilManager.isUtilAvailable(util);
     }

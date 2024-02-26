@@ -51,10 +51,10 @@ public class Platform {
         //http://stackoverflow.com/questions/10846105/all-possible-values-os-arch-in-32bit-jre-and-in-64bit-jre
         String osArch = System.getProperty("os.arch");
         OsArchitecture osArchitecture = null;
-        if (osArch.contains("32") || osArch.contains("x86")) {
-            osArchitecture = OsArchitecture.B32;
-        } else if (osArch.contains("64")) {
+        if (osArch.contains("64")) {
             osArchitecture = OsArchitecture.B64;
+        } else if (osArch.contains("32") || osArch.contains("x86")) {
+            osArchitecture = OsArchitecture.B32;
         }
 
         return new Platform(operatingSystem, osArchitecture, osName, osArch);

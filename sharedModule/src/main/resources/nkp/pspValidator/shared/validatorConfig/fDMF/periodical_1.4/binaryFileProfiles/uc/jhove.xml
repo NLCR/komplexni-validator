@@ -1,13 +1,13 @@
 <binaryFileProfile
-        xmlns="http://www.nkp.cz/pspValidator/2.3/binaryFileProfile"
-        validatorVersion="2.3"
+        xmlns="http://www.nkp.cz/pspValidator/2.4/binaryFileProfile"
+        validatorVersion="2.4"
         dmf="periodical_1.4"
 >
     <fromXml>
         <namespaces>
-            <!--<defaultNamespace>http://hul.harvard.edu/ois/xml/ns/jhove</defaultNamespace>-->
-            <namespace prefix="j">http://hul.harvard.edu/ois/xml/ns/jhove</namespace>
-            <namespace prefix="j2">http://schema.openpreservation.org/ois/xml/ns/jhove</namespace>
+            <!--<defaultNamespace>http://schema.openpreservation.org/ois/xml/ns/jhove</defaultNamespace>-->
+            <namespace prefix="j">http://schema.openpreservation.org/ois/xml/ns/jhove</namespace>
+            <namespace prefix="j2">http://hul.harvard.edu/ois/xml/ns/jhove</namespace>
             <namespace prefix="m">http://www.loc.gov/mix/v20</namespace>
         </namespaces>
 

@@ -60,7 +60,7 @@ public class MetadataProfileParser {
     private void checkValidatorVersionCorrect(String versionFromProfile, File profileXmlFile) throws ValidatorConfigurationException {
         String versionPure = Version.VERSION_CODE;
         if (versionPure.contains("-")) {
-            //everything after "-" is fair game, i.e. validator in version 2.0-dev-whatever will work with metadata-profile with validatorVersion="2.3"
+            //everything after "-" is fair game, i.e. validator in version 2.0-dev-whatever will work with metadata-profile with validatorVersion="2.0"
             versionPure = versionPure.split("-")[0];
         }
         if (!versionPure.equals(versionFromProfile)) {

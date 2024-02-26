@@ -1,11 +1,12 @@
 <binaryFileProfile
-        xmlns="http://www.nkp.cz/pspValidator/2.3/binaryFileProfile"
-        validatorVersion="2.3"
+        xmlns="http://www.nkp.cz/pspValidator/2.4/binaryFileProfile"
+        validatorVersion="2.4"
         dmf="audio_gram_0.4"
 >
     <fromXml>
         <namespaces>
-            <namespace prefix="j">http://openpreservation.org/ns/jpylyzer/</namespace>
+            <!--<namespace prefix="j">http://openpreservation.org/ns/jpylyzer/</namespace>-->
+            <namespace prefix="j">http://openpreservation.org/ns/jpylyzer/v2/</namespace>
         </namespaces>
 
         <validation name="File name">

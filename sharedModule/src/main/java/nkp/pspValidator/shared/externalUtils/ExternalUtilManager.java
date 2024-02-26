@@ -5,7 +5,9 @@ import nkp.pspValidator.shared.externalUtils.UtilHandler.Parser;
 
 import java.io.File;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -18,6 +20,7 @@ public class ExternalUtilManager {
     private final Map<ExternalUtilExecution, UtilHandler> utilExecutionHandlers;
     private final Map<String, Boolean> utilAvailable = new HashMap<>();
 
+    private final Set<ExternalUtil> utilsDisabled = new HashSet<>();
 
     public ExternalUtilManager(Map<ExternalUtil, UtilHandler> utilVersionDetectionHandlers, Map<ExternalUtilExecution, UtilHandler> utilExecutionHandlers) {
         this.utilVersionDetectionHandlers = utilVersionDetectionHandlers;
@@ -25,6 +28,14 @@ public class ExternalUtilManager {
         for (ExternalUtil util : ExternalUtil.values()) {
             utilAvailable.put(util.name(), true);
         }
+    }
+
+    public void setUtilDisabled(ExternalUtil util) {
+        utilsDisabled.add(util);
+    }
+
+    public boolean isUtilDisabled(ExternalUtil util) {
+        return utilsDisabled.contains(util);
     }
 
     public boolean isVersionDetectionDefined(ExternalUtil type) {
@@ -151,6 +162,5 @@ public class ExternalUtilManager {
             }
         }
     }
-
 
 }

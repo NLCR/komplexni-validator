@@ -1,5 +1,5 @@
 group 'nkp.pspValidator'
-version '2.3'
+version '2.4-beta'
 
 System.setProperty("file.encoding", "UTF-8")
 

@@ -96,7 +96,9 @@ public class VfCheckBinaryFilesValidByExternalUtil extends ValidationFunction {
 
     private ValidationResult validate(Level level, List<File> files, ResourceType type, ExternalUtilExecution execution) {
         BinaryFileValidator validator = engine.getBinaryFileValidator();
-        if (!validator.isUtilAvailable(execution.getUtil())) {
+        if (validator.isUtilDisabled(execution.getUtil())) {
+            return singlErrorResult(invalid(Level.INFO, null, "nástroj %s je vypnutý", execution.getUtil().getUserFriendlyName()));
+        } else if (!validator.isUtilAvailable(execution.getUtil())) {
             return singlErrorResult(invalid(Level.INFO, null, "nástroj %s není dostupný", execution.getUtil().getUserFriendlyName()));
         } else if (!validator.isUtilExecutionDefined(execution)) {
             return singlErrorResult(invalid(Level.INFO, null, "pro nástroj %s není definováno spuštění '%s'", execution.getUtil().getUserFriendlyName(), execution.getName()));

@@ -25,6 +25,8 @@ public class MainTest {
     private static final String MON_1_2 = "../sharedModule/src/test/resources/monograph_1.2/b50eb6b0-f0a4-11e3-b72e-005056827e52";
     private static final String MON_1_2_MAP = "../sharedModule/src/test/resources/monograph_1.2_map/6e9a7000-65c0-11e6-85af-005056827e52";
     private static final String MON_1_2_INVALID_IMAGES = "../sharedModule/src/test/resources/monograph_1.2-invalid_images/b50eb6b0-f0a4-11e3-b72e-005056827e52";
+    private static final String MON_2_0_SINGLEVOLUME = "/Users/martin/IdeaProjects/komplexni-validator-samples/src/test/resources/monografie/vzorovy_balicek_monografie_2.1_jednosvazkova/0ad7d080-aa89-11ec-adf7-5ef3fc9bb22f";
+    private static final String MON_2_0_MULTIVOLUME = "/Users/martin/IdeaProjects/komplexni-validator-samples/src/test/resources/monografie/vzorovy_balicek_monografie_2.1_vicesvazkova/47647030-3fb3-11e7-ad33-5ef3fc9ae867";
 
     private static final String PER_1_6 = "../sharedModule/src/test/resources/periodical_1.6/7033d800-0935-11e4-beed-5ef3fc9ae867";
 
@@ -43,47 +45,58 @@ public class MainTest {
 
     @org.junit.Test
     public void cli() throws InvalidXPathExpressionException, PspDataException, ValidatorConfigurationException, XmlFileParsingException, FdmfRegistry.UnknownFdmfException {
+
         Platform platform = Platform.detectOs();
         String configDir = null;
         String imageMagickPath = null;
         String jhovePath = null;
         String jpylyzerPath = null;
         String kakaduPath = null;
+        String xmlProtocolsDir = null;
+
+        String MON_1_2_INVALIDIMAGES = null;
 
         switch (platform.getOperatingSystem()) {
             case WINDOWS:
                 configDir = "..\\sharedModule\\src\\main\\resources\\nkp\\pspValidator\\shared\\validatorConfig";
                 imageMagickPath = "C:\\Program Files\\ImageMagick-7.0.3-Q16";
-                jhovePath = "C:\\Users\\Lenovo\\Documents\\software\\jhove";
-                jpylyzerPath = "C:\\Users\\Lenovo\\Documents\\software\\jpylyzer_1.17.0_win64";
+                jhovePath = "C:\\Users\\Lenovo\\OneDrive\\Dokumenty\\software\\jhove-1.29";
+                jpylyzerPath = "C:\\Users\\Lenovo\\OneDrive\\Dokumenty\\software\\jpylyzer_2.2.0_win64";
                 kakaduPath = "C:\\Program Files (x86)\\Kakadu\\";
+                xmlProtocolsDir = "C:\\Users\\Lenovo\\komplexni-validator-protocols";
+                MON_1_2_INVALIDIMAGES = "C:\\Users\\Lenovo\\tmp\\b50eb6b0-f0a4-11e3-b72e-005056827e52";
                 break;
             case LINUX:
                 configDir = "../sharedModule/src/main/resources/nkp/pspValidator/shared/validatorConfig";
+                jhovePath = "/home/martin/Software/jhove-1.29";
                 kakaduPath = "/home/martin/zakazky/NKP-Komplexni_Validator/utility/kakadu/KDU78_Demo_Apps_for_Linux-x86-64_160226";
+                xmlProtocolsDir = "/home/martin/tmp/komplexni-validator-protocols";
+                MON_1_2_INVALIDIMAGES = "/home/martin/tmp/b50eb6b0-f0a4-11e3-b72e-005056827e52";
                 break;
             case MAC:
                 configDir = "../sharedModule/src/main/resources/nkp/pspValidator/shared/validatorConfig";
-                jhovePath = "/Users/martinrehanek/Software/jhove";
+                jhovePath = "/Users/martin/Software/jhove-1.29";
                 imageMagickPath = "/opt/local/bin";
                 jpylyzerPath = "/Users/martinrehanek/Software/jpylyzer-1.17.0/jpylyzer";
+                xmlProtocolsDir = "/Users/martin/tmp/komplexni-validator-protocols";
+                MON_1_2_INVALIDIMAGES = "/Users/martin/tmp/b50eb6b0-f0a4-11e3-b72e-005056827e52";
+                break;
         }
 
         Validator.DevParams devParams = new Validator.DevParams();
 
-        //devParams.getSectionsToRun().add("Soubor CHECKSUM");
-        //devParams.getSectionsToRun().add("Soubor INFO");
-        //devParams.getSectionsToRun().add("Struktura souborů");
-        //devParams.getSectionsToRun().add("Bibliografická metadata");
-        //devParams.getSectionsToRun().add("Identifikátory");
-        //devParams.getSectionsToRun().add("Obrazová data");
+        devParams.getSectionsToRun().add("Soubor CHECKSUM");
+        devParams.getSectionsToRun().add("Soubor INFO");
+        devParams.getSectionsToRun().add("Struktura souborů");
         devParams.getSectionsToRun().add("Bibliografická metadata");
-        //devParams.getSectionsToRun().add("ALTO");
-        //devParams.getSectionsToRun().add("Technická metadata");
-        //devParams.getSectionsToRun().add("METS hlavičky");
-        //devParams.getSectionsToRun().add("Autorskoprávní metadata");
-        //devParams.getSectionsToRun().add("Sekundární METS filesec");
-        //devParams.getSectionsToRun().add("Strukturální mapy");
+        devParams.getSectionsToRun().add("Identifikátory");
+        //devParams.getSectionsToRun().add("Obrazová data");
+        /*devParams.getSectionsToRun().add("ALTO");
+        devParams.getSectionsToRun().add("Technická metadata");
+        devParams.getSectionsToRun().add("METS hlavičky");
+        devParams.getSectionsToRun().add("Autorskoprávní metadata");
+        devParams.getSectionsToRun().add("Sekundární METS filesec");
+        devParams.getSectionsToRun().add("Strukturální mapy");*/
 
         Main.main(devParams, buildParams(
                 Action.VALIDATE_PSP,
@@ -94,7 +107,10 @@ public class MainTest {
                 //, MON_1_2
                 //, MON_1_2_MAP
                 //, MON_1_2_INVALID_IMAGES
-                , MON_1_4
+                //, MON_1_4
+                //, MON_1_2_INVALIDIMAGES
+                //, MON_2_0_SINGLEVOLUME
+                , MON_2_0_MULTIVOLUME
                 //, PER_1_4
                 //, PER_1_6
                 //, PER_1_6_INFO_INVALID_NS
@@ -111,12 +127,12 @@ public class MainTest {
                 //, "1.4"
                 //, "1.6"
                 //, null
-                , "2.0"
+                , null//, "2.0"
                 , null
                 //, "1.4"
                 //, "1.6"
-                , 2 //verbosity
-                , "/tmp/protocols"
+                , 2 //verbosity (3: vsechno, 2: jen sekce a pravidla s chybami a popisy jednotlivych chyb, 1: jen pocty chyb v sekcich s chybami, bez popisu jednotlivych chyb, 0: nic)
+                , xmlProtocolsDir //xml protocol dir
                 , null//"src/test/resources/protocol.xml" //xml protocol
                 , imageMagickPath //null //imageMagick path
                 , jhovePath //jhove path
@@ -126,6 +142,9 @@ public class MainTest {
                 , true //disable jhove
                 , true //disable jpylyzer
                 , true//disable kakadu
+                , true //disable mp3val
+                , true //disable shntool
+                , true //disable checkmate
         ));
     }
 
@@ -135,7 +154,8 @@ public class MainTest {
                                  String preferDmfModVersion, String preferDmfPerVersion, String forceDmfModVersion, String forceDmfPerVersion,
                                  Integer verbosity, String xmlProtocolDir, String xmlProtocolFile,
                                  String imageMagickPath, String jhovePath, String jpylyzerPath, String kakaduPath,
-                                 boolean disableImageMagick, boolean disableJhove, boolean disableJpylyzer, boolean disableKakadu
+                                 boolean disableImageMagick, boolean disableJhove, boolean disableJpylyzer, boolean disableKakadu,
+                                 boolean disableMp3val, boolean disableShntool, boolean disableCheckmate
     ) {
         List<String> params = new ArrayList<>();
         //action
@@ -226,7 +246,15 @@ public class MainTest {
         if (disableKakadu) {
             params.add(String.format("--%s", Params.DISABLE_KAKADU));
         }
-
+        if (disableMp3val) {
+            params.add(String.format("--%s", Params.DISABLE_MP3VAL));
+        }
+        if (disableShntool) {
+            params.add(String.format("--%s", Params.DISABLE_SHNTOOL));
+        }
+        if (disableCheckmate) {
+            params.add(String.format("--%s", Params.DISABLE_CHECKMATE));
+        }
         Object[] array = params.toArray();
         return Arrays.copyOf(array, array.length, String[].class);
     }

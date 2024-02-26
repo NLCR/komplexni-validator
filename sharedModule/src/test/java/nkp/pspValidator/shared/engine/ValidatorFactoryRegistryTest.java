@@ -31,12 +31,12 @@ public class ValidatorFactoryRegistryTest {
     }
 
     @Test
-    public void versions() throws ValidatorConfigurationException {
+    public void versionsMon() throws ValidatorConfigurationException {
         File validatorConfigDir = new File("src/main/resources/nkp/pspValidator/shared/validatorConfig");
         ValidatorConfigurationManager validatorConfigManager = new ValidatorConfigurationManager(validatorConfigDir);
         FdmfRegistry registry = new FdmfRegistry(validatorConfigManager);
 
-        assertEquals(7, registry.getMonographFdmfVersions().size());
+        assertEquals(8, registry.getMonographFdmfVersions().size());
         assertTrue(registry.getMonographFdmfVersions().contains("1.0"));
         assertTrue(registry.getMonographFdmfVersions().contains("1.2"));
         assertTrue(registry.getMonographFdmfVersions().contains("1.3"));
@@ -44,19 +44,42 @@ public class ValidatorFactoryRegistryTest {
         assertTrue(registry.getMonographFdmfVersions().contains("1.3.2"));
         assertTrue(registry.getMonographFdmfVersions().contains("1.4"));
         assertTrue(registry.getMonographFdmfVersions().contains("2.0"));
+        assertTrue(registry.getMonographFdmfVersions().contains("2.1"));
+    }
 
-        assertEquals(6, registry.getPeriodicalFdmfVersions().size());
+    @Test
+    public void versionsPer() throws ValidatorConfigurationException {
+        File validatorConfigDir = new File("src/main/resources/nkp/pspValidator/shared/validatorConfig");
+        ValidatorConfigurationManager validatorConfigManager = new ValidatorConfigurationManager(validatorConfigDir);
+        FdmfRegistry registry = new FdmfRegistry(validatorConfigManager);
+
+        assertEquals(7, registry.getPeriodicalFdmfVersions().size());
         assertTrue(registry.getPeriodicalFdmfVersions().contains("1.4"));
         assertTrue(registry.getPeriodicalFdmfVersions().contains("1.6"));
         assertTrue(registry.getPeriodicalFdmfVersions().contains("1.7"));
         assertTrue(registry.getPeriodicalFdmfVersions().contains("1.7.1"));
         assertTrue(registry.getPeriodicalFdmfVersions().contains("1.8"));
         assertTrue(registry.getPeriodicalFdmfVersions().contains("1.9"));
+        assertTrue(registry.getPeriodicalFdmfVersions().contains("2.0"));
+    }
+
+    @Test
+    public void versionsAudioGram() throws ValidatorConfigurationException {
+        File validatorConfigDir = new File("src/main/resources/nkp/pspValidator/shared/validatorConfig");
+        ValidatorConfigurationManager validatorConfigManager = new ValidatorConfigurationManager(validatorConfigDir);
+        FdmfRegistry registry = new FdmfRegistry(validatorConfigManager);
 
         assertEquals(3, registry.getAudioGramFdmfVersions().size());
         assertTrue(registry.getAudioGramFdmfVersions().contains("0.3"));
         assertTrue(registry.getAudioGramFdmfVersions().contains("0.4"));
         assertTrue(registry.getAudioGramFdmfVersions().contains("0.5"));
+    }
+
+    @Test
+    public void versionsAudioFono() throws ValidatorConfigurationException {
+        File validatorConfigDir = new File("src/main/resources/nkp/pspValidator/shared/validatorConfig");
+        ValidatorConfigurationManager validatorConfigManager = new ValidatorConfigurationManager(validatorConfigDir);
+        FdmfRegistry registry = new FdmfRegistry(validatorConfigManager);
 
         assertEquals(1, registry.getAudioFonoFdmfVersions().size());
         assertTrue(registry.getAudioFonoFdmfVersions().contains("0.3"));

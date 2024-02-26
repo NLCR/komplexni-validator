@@ -34,7 +34,7 @@ dependencies {
 }
 
 group 'nkp.pspValidator'
-version '2.3'
+version '2.4-beta'
 
 //https://www.mkyong.com/gradle/gradle-create-a-jar-file-with-dependencies/
 task fatJar(type: Jar) {

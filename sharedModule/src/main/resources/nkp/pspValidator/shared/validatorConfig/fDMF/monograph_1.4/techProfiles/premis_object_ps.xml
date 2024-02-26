@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <metadataProfile
-        xmlns="http://www.nkp.cz/pspValidator/2.3/metadataProfile"
+        xmlns="http://www.nkp.cz/pspValidator/2.4/metadataProfile"
         name="PREMIS Object pro PS (primární sken)"
-        validatorVersion="2.3"
+        validatorVersion="2.4"
         dmf="monograph_1.4"
 >
 
@@ -165,7 +165,9 @@
                                                         <expectedElements>
                                                             <element name="premis:formatRegistryName" mandatory="true"
                                                                      repeatable="false">
-                                                                <expectedContent/>
+                                                                <expectedContent>
+                                                                    <value>PRONOM</value>
+                                                                </expectedContent>
                                                             </element>
 
                                                             <element name="premis:formatRegistryKey" mandatory="true"

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <metadataProfile
-        xmlns="http://www.nkp.cz/pspValidator/2.3/metadataProfile"
+        xmlns="http://www.nkp.cz/pspValidator/2.4/metadataProfile"
         name="MODS internal part - picture (RDA)"
-        validatorVersion="2.3"
+        validatorVersion="2.4"
         dmf="periodical_1.6"
 >
 
@@ -178,7 +178,7 @@
 
                     <element name="mods:geographic" mandatory="false">
                         <expectedContent>
-                            <!--V DMF je "použít kontrolovaný slovník, napříkld ... " - tj. kontrolovaný slovník NENÍ vyžadován DMF-->
+                            <!--V DMF je "použít kontrolovaný slovník, například ... " - tj. kontrolovaný slovník NENÍ vyžadován DMF-->
                         </expectedContent>
                     </element>
 
@@ -191,7 +191,7 @@
                             </attribute>
                         </expectedAttributes>
                         <expectedContent>
-                            <!--V DMF je "použít kontrolovaný slovník, napříkld ... " - tj. kontrolovaný slovník NENÍ vyžadován DMF-->
+                            <!--V DMF je "použít kontrolovaný slovník, například ... " - tj. kontrolovaný slovník NENÍ vyžadován DMF-->
                         </expectedContent>
                     </element>
 
@@ -208,7 +208,7 @@
                             <element name="mods:namePart" mandatory="false">
                                 <!--v DNF není vyplněné, jestli je element povinný, nechávám tedy nepovinný-->
                                 <expectedContent>
-                                    <!--V DMF je "použít kontrolovaný slovník, napříkld ... " - tj. kontrolovaný slovník NENÍ vyžadován DMF-->
+                                    <!--V DMF je "použít kontrolovaný slovník, například ... " - tj. kontrolovaný slovník NENÍ vyžadován DMF-->
                                 </expectedContent>
                             </element>
                         </expectedElements>
