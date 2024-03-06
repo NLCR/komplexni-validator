@@ -264,6 +264,7 @@
                 <mustMatchAny>
                     <isExactly>Yes</isExactly>
                     <isExactly>yes</isExactly>
+                    <isExactly>user defined</isExactly>
                 </mustMatchAny>
             </rules>
         </validation>
