@@ -71,12 +71,10 @@
                         <expectedContent/>
                     </element>
 
-                    <!--TODO: v textu DMF je spatne oznacena uroven zanoreni (xxx namisto xx)-->
                     <element name="mods:partNumber" mandatory="false">
                         <expectedContent/>
                     </element>
 
-                    <!--TODO: v textu DMF je spatne oznacena uroven zanoreni (xxx namisto xx)-->
                     <element name="mods:partName" mandatory="false">
                         <expectedContent/>
                     </element>
@@ -284,7 +282,6 @@
 
             <element name="mods:physicalDescription">
                 <expectedElements>
-                    <!-- TODO: chybi informace o povinnosti elementu -->
                     <element name="mods:form">
                         <expectedAttributes>
                             <attribute name="authority" mandatory="false">
@@ -444,7 +441,6 @@
             <!--Mezinarodni desetinne trideni-->
             <element name="mods:classification" specification="not(@edition)" mandatory="false">
                 <expectedAttributes>
-                    <!--TODO: DMF neuvadi, jestli je authority povinny atribut, nechavam povinny-->
                     <attribute name="authority">
                         <recommendedContent>
                             <oneOf>
@@ -461,7 +457,6 @@
                 <expectedAttributes>
                     <attribute name="authority">
                         <recommendedContent>
-                            <!--TODO: nejasne-->
                             <oneOf>
                                 <value>udc</value>
                                 <value>Konspekt</value>
@@ -479,8 +474,14 @@
                     <attribute name="type" mandatory="false">
                         <expectedContent>
                             <oneOf>
-                                <value>series</value>
+                                <value>preceding</value>
+                                <value>succeeding</value>
                                 <value>original</value>
+                                <value>host</value>
+                                <value>constituent</value>
+                                <value>series</value>
+                                <value>otherVersion</value>
+                                <value>otherFormat</value>
                                 <value>isReferencedBy</value>
                             </oneOf>
                         </expectedContent>
@@ -557,16 +558,6 @@
 
             <element name="mods:location" mandatory="false">
                 <expectedElements>
-                    <element name="mods:url" mandatory="false">
-                        <expectedAttributes>
-                            <attribute name="note" mandatory="false"/>
-                            <attribute name="displayLabel" mandatory="false"/>
-                            <attribute name="usage" mandatory="false"/>
-                            <attribute name="access" mandatory="false"/>
-                        </expectedAttributes>
-                        <expectedContent/>
-                    </element>
-
                     <!--TODO: DMF si protireci: "pozn. u dokumentů v digitální podobě není možné vyplnit" a zaroven je element mandatory. Nechavam tedy nepovinny.-->
                     <element name="mods:physicalLocation" repeatable="false" mandatory="false">
                         <expectedAttributes>
@@ -582,6 +573,16 @@
                     </element>
 
                     <element name="mods:shelfLocator">
+                        <expectedContent/>
+                    </element>
+
+                    <element name="mods:url" mandatory="false">
+                        <expectedAttributes>
+                            <attribute name="note" mandatory="false"/>
+                            <attribute name="displayLabel" mandatory="false"/>
+                            <attribute name="usage" mandatory="false"/>
+                            <attribute name="access" mandatory="false"/>
+                        </expectedAttributes>
                         <expectedContent/>
                     </element>
                 </expectedElements>
