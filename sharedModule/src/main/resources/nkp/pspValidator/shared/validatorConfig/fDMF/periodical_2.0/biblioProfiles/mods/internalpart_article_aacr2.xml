@@ -316,8 +316,14 @@
                     <attribute name="type" mandatory="false">
                         <expectedContent>
                             <oneOf>
-                                <value>series</value>
+                                <value>preceding</value>
+                                <value>succeeding</value>
                                 <value>original</value>
+                                <value>host</value>
+                                <value>constituent</value>
+                                <value>series</value>
+                                <value>otherVersion</value>
+                                <value>otherFormat</value>
                                 <value>isReferencedBy</value>
                             </oneOf>
                         </expectedContent>
