@@ -387,7 +387,6 @@
             <!--Mezinarodni desetinne trideni-->
             <element name="mods:classification" specification="not(@edition)" mandatory="false">
                 <expectedAttributes>
-                    <!--TODO: DMF neuvadi, jestli je authority povinny atribut, nechavam nepovinny. Neni zrejme co plati pro rda a aacr2, povolena nvíc i hodnota Konspekt aby prochazely elementy s touto hodnotou bez atributu edition-->
                     <attribute name="authority" mandatory="true">
                         <recommendedContent>
                             <value>udc</value>
