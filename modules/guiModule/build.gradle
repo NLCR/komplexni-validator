@@ -1,0 +1,184 @@
+//build.gradle starts here
+plugins {
+    id 'java'
+    id 'application'
+    //id 'org.openjfx.javafxplugin' version '0.0.13'
+    id 'org.openjfx.javafxplugin' version '0.1.0'
+    id 'com.github.johnrengelman.shadow' version '7.0.0'
+}
+
+group 'nkp.pspValidator'
+version '2.4-beta2'
+
+java {
+    targetCompatibility = JavaVersion.VERSION_17
+    sourceCompatibility = JavaVersion.VERSION_17
+}
+
+//sourceCompatibility = '17'
+//targetCompatibility = '17'
+
+tasks.withType(JavaCompile) {
+    options.encoding = 'UTF-8'
+}
+
+repositories {
+    mavenCentral()
+}
+
+jar {
+    manifest {
+        attributes(
+                //'Main-Class': 'nkp.pspValidator.gui.Main'
+                'Main-Class': 'nkp.pspValidator.gui.Launcher'
+        )
+    }
+    from {
+        configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) }
+    }{
+        // Set the duplicates strategy here
+        duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+    }
+}
+
+shadowJar {
+    // Include sharedModule classes explicitly
+    //from project(':modules:sharedModule').sourceSets.main.output
+    from { project(':modules:sharedModule').tasks.named('jar').get().archiveFile }
+
+
+    configurations = [project.configurations.runtimeClasspath]
+
+    archiveBaseName.set('guiModule')
+    archiveVersion.set('2.4-beta2')
+    archiveClassifier.set('shadow') // Typically set to empty for the main artifact
+    manifest {
+        attributes 'Main-Class': 'nkp.pspValidator.gui.Main'
+    }
+    configurations = [project.configurations.runtimeClasspath]
+    mergeServiceFiles {
+        include 'META-INF/services/*'
+    }
+
+    // Explicitly include JavaFX modules and their dependencies
+    dependencies {
+        include(dependency('org.openjfx:javafx-base:17.0.2'))
+        include(dependency('org.openjfx:javafx-controls:17.0.2'))
+        include(dependency('org.openjfx:javafx-fxml:17.0.2'))
+        include(dependency('org.openjfx:javafx-media:17.0.2'))
+        include(dependency('org.openjfx:javafx-graphics:17.0.2'))
+    }
+}
+
+javafx {
+    //version = '14'//u verze 11 je problem s fontem
+    version = '17'
+    configuration = 'implementation'
+    //modules = [ 'javafx.controls', 'javafx.fxml' ]
+    //modules = ['javafx.controls', 'javafx.fxml', 'javafx.base']
+    modules = ['javafx.base', 'javafx.controls', 'javafx.fxml', 'javafx.media']
+
+}
+
+application {
+    //mainModule = 'guiModule'
+    //mainClass = 'nkp.pspValidator.gui.Main'
+    mainClass = 'nkp.pspValidator.gui.Launcher'
+}
+
+dependencies {
+    // Your dependencies here
+    implementation project(':modules:sharedModule')
+    implementation 'joda-time:joda-time:2.10.13'
+
+    // JavaFX dependencies
+    //https://se-education.org/guides/tutorials/javaFxPart1.html#setting-up-java-fx
+    /*String javaFxVersion = '17.0.7'
+
+    implementation group: 'org.openjfx', name: 'javafx-base', version: javaFxVersion, classifier: 'win'
+    implementation group: 'org.openjfx', name: 'javafx-base', version: javaFxVersion, classifier: 'mac'
+    implementation group: 'org.openjfx', name: 'javafx-base', version: javaFxVersion, classifier: 'linux'
+    implementation group: 'org.openjfx', name: 'javafx-controls', version: javaFxVersion, classifier: 'win'
+    implementation group: 'org.openjfx', name: 'javafx-controls', version: javaFxVersion, classifier: 'mac'
+    implementation group: 'org.openjfx', name: 'javafx-controls', version: javaFxVersion, classifier: 'linux'
+    implementation group: 'org.openjfx', name: 'javafx-fxml', version: javaFxVersion, classifier: 'win'
+    implementation group: 'org.openjfx', name: 'javafx-fxml', version: javaFxVersion, classifier: 'mac'
+    implementation group: 'org.openjfx', name: 'javafx-fxml', version: javaFxVersion, classifier: 'linux'
+    implementation group: 'org.openjfx', name: 'javafx-graphics', version: javaFxVersion, classifier: 'win'
+    implementation group: 'org.openjfx', name: 'javafx-graphics', version: javaFxVersion, classifier: 'mac'
+    implementation group: 'org.openjfx', name: 'javafx-graphics', version: javaFxVersion, classifier: 'linux'*/
+
+    // JavaFX dependencies
+    String javaFxVersion = '17.0.2' // Make sure this version is compatible with Java 17
+
+    implementation "org.openjfx:javafx-base:$javaFxVersion"
+    implementation "org.openjfx:javafx-controls:$javaFxVersion"
+    implementation "org.openjfx:javafx-fxml:$javaFxVersion"
+    implementation "org.openjfx:javafx-media:$javaFxVersion"
+    implementation "org.openjfx:javafx-graphics:$javaFxVersion"
+}
+
+task printRuntimeClasspath {
+    doLast {
+        configurations.runtimeClasspath.each { println it }
+    }
+}
+
+// Add this line to run this task automatically before shadowJar
+shadowJar.dependsOn printRuntimeClasspath
+
+task jpackage(type: Exec) {
+    // Replace non-digit characters with a dot for the app-version
+    def compatibleVersion = version.replaceAll(/[^0-9]+/, '.')
+    // Define the name of your application
+    //def appName = "KomplexniValidator_${version}"
+    def appName = "KomplexniValidator"
+    // Define the output directory for the installer
+    def outputDir = 'build/jpackage'
+    // Define the input directory where the JAR file and other resources are located
+    def inputDir = 'build/libs'
+    // Define the path to the main JAR file of your application
+    //def mainJar = "guiModule-${version}.jar"
+    def mainJar = "guiModule-${version}-shadow.jar"
+    // Define the main class of your application
+    //def mainClassName = 'nkp.pspValidator.gui.Main'
+    def mainClassName = 'nkp.pspValidator.gui.Launcher'
+    // Specify the image directory (if you have one)
+    def imageDir = 'build/image/resources/img'
+    // Specify the icon path (if you have one)
+    def iconPath = 'src/main/resources/img/appIcon/appIcon.icns'
+
+    // Make sure this task is executed after the application is built
+    dependsOn 'build'
+
+    // Use the jpackage command-line tool to create the installer
+    commandLine 'jpackage',
+            //'--type', 'dmg', // Change to 'exe' for Windows or 'deb' for Debian-based Linux distributions
+            '--dest', outputDir,
+            '--name', appName,
+            '--input', inputDir,
+            '--main-jar', mainJar,
+            '--main-class', mainClassName,
+            '--icon', iconPath,
+            '--type', 'pkg',
+            '--app-version', compatibleVersion
+    // Additional options can be added here, such as '--vendor', '--resource-dir', etc.
+
+    // Only if you have created a custom runtime image
+    // '--runtime-image', imageDir
+
+    // Setting the Java options for the application; include any JVM args you need
+    doFirst {
+        environment 'JAVA_HOME', System.getenv('JAVA_HOME')
+    }
+}
+
+//run - spusti GUI
+//./gradlew :modules:guiModule:run
+
+//jpackage - build instalatoru
+//./gradlew :modules:guiModule:jpackage
+
+
+//build.gradle ends here
+

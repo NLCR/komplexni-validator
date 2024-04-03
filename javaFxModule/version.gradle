@@ -1,9 +1,0 @@
-//TODO: presunout
-gradle.ext {
-    //javafxGradlePluginVersion = '8.7.1-SNAPSHOT'
-    //javafxGradlePluginVersion = '8.7.0'
-    //resi problem s gradlem 3.3 https://github.com/FibreFoX/javafx-gradle-plugin/issues/52
-    //javafxGradlePluginVersion = '8.7.0'
-    javafxGradlePluginVersion = '8.8.0'
-    //javafxGradlePluginVersion = '8.8.2'
-}

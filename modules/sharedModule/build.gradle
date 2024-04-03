@@ -1,0 +1,65 @@
+//build.gradle starts here
+plugins {
+    id 'java'
+}
+
+group 'nkp.pspValidator'
+version '2.4-beta2'
+
+// Create a JAR task
+jar {
+    from {
+        configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) }
+    } {
+        exclude "META-INF/*.SF", "META-INF/*.DSA", "META-INF/*.RSA"
+        duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+    }
+    manifest {
+        attributes('Main-Class': 'nkp.pspValidator.shared.Main')
+    }
+    archiveFileName = "sharedModule-${version}.jar"
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    //pozor: nepoužívat 'implementation', protože to poslední verze javafx pluginu neumí
+    //TODO: still relevant?
+    //https://github.com/FibreFoX/javafx-gradle-plugin/issues/116#issuecomment-376924075
+    testImplementation 'junit:junit:4.12'
+    implementation group: 'com.mycila', name: 'mycila-xmltool', version: '4.4.ga'
+    // https://mvnrepository.com/artifact/com.github.nradov/abnffuzzer
+    // compile group: 'com.github.nradov', name: 'abnffuzzer', version: '0.1.11'
+    implementation 'commons-codec:commons-codec:1.10'
+    // SAXON - if xpath 2.0 was needed eventually
+    // https://mvnrepository.com/artifact/net.sf.saxon/Saxon-HE
+    //compile group: 'net.sf.saxon', name: 'Saxon-HE', version: '9.7.0-14'
+    implementation 'org.json:json:20180813'
+
+    // https://mvnrepository.com/artifact/com.ibm.icu/icu4j
+    implementation 'com.ibm.icu:icu4j:51.1'
+}
+
+task run(type: JavaExec) {
+    classpath = sourceSets.main.runtimeClasspath
+    main = 'nkp.pspValidator.shared.Main'
+}
+
+task runWithTestArgs(type: JavaExec) {
+    classpath = sourceSets.main.runtimeClasspath
+    main = 'nkp.pspValidator.shared.Main'
+    args = ['arg1', 'arg2']
+}
+
+//build - vyrobi  modules/sharedModule/build/libs/sharedModule-VERZE.jar
+//./gradlew :modules:sharedModule:jar
+
+//run - spusti nkp.pspValidator.shared.Main.main()
+//./gradlew :modules:sharedModule:run
+
+//runWithTestArgs - spusti nkp.pspValidator.shared.Main.main("arg1", "arg2")
+//./gradlew :modules:sharedModule:runWithTestArgs
+
+//build.gradle ends here

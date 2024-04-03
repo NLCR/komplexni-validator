@@ -10,7 +10,7 @@ import java.security.NoSuchAlgorithmException;
 public class Main {
 
     public static void main(String[] args) throws IOException, KeyStoreException, KeyManagementException, NoSuchAlgorithmException, UrnNbnResolverChecker.ResolverError {
-        //System.out.println("hello from shared module");
+        System.out.println("Hello from shared module. Args: " + buildArgsString(args));
         //checkUrnNbns();
     }
 
@@ -46,6 +46,13 @@ public class Main {
         }
     }
 
+    private static String buildArgsString(String[] args) {
+        StringBuilder sb = new StringBuilder();
+        for (String arg : args) {
+            sb.append(arg).append(" ");
+        }
+        return sb.toString();
+    }
 
 }
 
