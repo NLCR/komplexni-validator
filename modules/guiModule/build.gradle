@@ -139,6 +139,8 @@ task jpackage(type: Exec) {
     def outputDir = 'build/jpackage'
     // Define the input directory where the JAR file and other resources are located
     def inputDir = 'build/libs'
+    //TODO: fix this hack
+    def resourceDir = '../sharedModule/src/main/resources/nkp/pspValidator/shared/validatorConfig'
     // Define the path to the main JAR file of your application
     //def mainJar = "guiModule-${version}.jar"
     def mainJar = "guiModule-${version}-shadow.jar"
@@ -148,9 +150,12 @@ task jpackage(type: Exec) {
     // Specify the image directory (if you have one)
     def imageDir = 'build/image/resources/img'
     // Specify the icon path (if you have one)
-    //def iconPath = 'src/main/resources/img/appIcon/appIcon.icns'
+
+    //MacOs
+    def iconPath = 'src/main/resources/img/appIcon/appIcon.icns'
+
     //Windows:
-    def iconPath = 'src/main/resources/img/appIcon/icon_48x48.ico'
+    //def iconPath = 'src/main/resources/img/appIcon/icon_48x48.ico'
 
     // Make sure this task is executed after the application is built
     dependsOn 'build'
@@ -158,16 +163,19 @@ task jpackage(type: Exec) {
     // Use the jpackage command-line tool to create the installer
     commandLine 'jpackage',
             //'--type', 'dmg', // Change to 'exe' for Windows or 'deb' for Debian-based Linux distributions
+            //'--type', 'exe',
+            '--type', 'pkg',
             '--dest', outputDir,
             '--name', appName,
-            '--description', 'Komplexni_Validator_baliku_PSP',
-            '--vendor', 'Narodni_knihovna_CR',
+            //'--description', 'Komplexni_Validator_baliku_PSP',
+            //'--vendor', 'Narodni_knihovna_CR',
             '--input', inputDir,
             '--main-jar', mainJar,
             '--main-class', mainClassName,
+            '--resource-dir', resourceDir,
             '--icon', iconPath,
-            '--type', 'exe',
             '--app-version', compatibleVersion
+
     // Additional options can be added here, such as '--vendor', '--resource-dir', etc.
 
     // Only if you have created a custom runtime image
