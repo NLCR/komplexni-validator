@@ -68,9 +68,9 @@ public class Main extends Application {
             //title
             primaryStage.setTitle("Komplexní validátor " + Version.VERSION_CODE);
             //icon
-            addIconIfFound(primaryStage, "img/appIcon/appIcon16.png");
-            addIconIfFound(primaryStage, "img/appIcon/appIcon32.png");
-            addIconIfFound(primaryStage, "img/appIcon/appIcon48.png");
+            addIconIfFound(primaryStage, "img/appIcon/appIcon.iconset/icon_16x16.png");
+            addIconIfFound(primaryStage, "img/appIcon/appIcon.iconset/icon_32x32.png");
+            addIconIfFound(primaryStage, "img/appIcon/appIcon.iconset/icon_48x48.png");
 
             //window size and position
             primaryStage.setResizable(true);
