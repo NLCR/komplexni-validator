@@ -41,7 +41,7 @@ task fatJar(type: Jar) {
     manifest {
         attributes 'Implementation-Title': 'Komplexni validator CLI',
                 'Implementation-Version': version,
-                'Main-Class': 'npk.pspValidator.cli.Main'
+                'Main-Class': 'nkp.pspValidator.cli.Main'
     }
     baseName = 'KomplexniValidatorCLI'
     //https://stackoverflow.com/questions/47910578/not-able-to-copy-configurations-dependencies-after-upgrading-gradle-plugin-for-a
