@@ -7,9 +7,9 @@ import nkp.pspValidator.shared.engine.exceptions.InvalidXPathExpressionException
 import nkp.pspValidator.shared.engine.exceptions.PspDataException;
 import nkp.pspValidator.shared.engine.exceptions.ValidatorConfigurationException;
 import nkp.pspValidator.shared.engine.exceptions.XmlFileParsingException;
-import npk.pspValidator.cli.Action;
-import npk.pspValidator.cli.Main;
-import npk.pspValidator.cli.Params;
+import nkp.pspValidator.cli.Action;
+import nkp.pspValidator.cli.Main;
+import nkp.pspValidator.cli.Params;
 
 import java.util.ArrayList;
 import java.util.Arrays;

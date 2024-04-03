@@ -1,4 +1,4 @@
-package npk.pspValidator.cli;
+package nkp.pspValidator.cli;
 
 /**
  * Created by Martin Řehánek on 10.4.17.
