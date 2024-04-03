@@ -57,6 +57,12 @@ task runTestMinify(type: JavaExec) {
     ]
 }
 
+compileJava.options.encoding = 'UTF-8'
+
+tasks.withType(JavaCompile) {
+    options.encoding = 'UTF-8'
+}
+
 //build - vyrobi  modules/cliModule/build/libs/cliModule-VERZE.jar
 //./gradlew :modules:cliModule:jar
 

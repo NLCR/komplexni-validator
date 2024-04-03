@@ -53,6 +53,12 @@ task runWithTestArgs(type: JavaExec) {
     args = ['arg1', 'arg2']
 }
 
+compileJava.options.encoding = 'UTF-8'
+
+tasks.withType(JavaCompile) {
+    options.encoding = 'UTF-8'
+}
+
 //build - vyrobi  modules/sharedModule/build/libs/sharedModule-VERZE.jar
 //./gradlew :modules:sharedModule:jar
 
