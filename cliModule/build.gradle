@@ -5,7 +5,7 @@ sourceCompatibility = 1.8
 targetCompatibility = 1.8
 
 //For plugin application, see https://docs.gradle.org/current/userguide/application_plugin.html
-mainClassName = "npk.pspValidator.cli.Main"
+mainClassName = "nkp.pspValidator.cli.Main"
 
 repositories {
     mavenCentral()
