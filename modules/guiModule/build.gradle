@@ -148,7 +148,9 @@ task jpackage(type: Exec) {
     // Specify the image directory (if you have one)
     def imageDir = 'build/image/resources/img'
     // Specify the icon path (if you have one)
-    def iconPath = 'src/main/resources/img/appIcon/appIcon.icns'
+    //def iconPath = 'src/main/resources/img/appIcon/appIcon.icns'
+    //Windows:
+    def iconPath = 'src/main/resources/img/appIcon/icon_48x48.ico'
 
     // Make sure this task is executed after the application is built
     dependsOn 'build'
@@ -158,11 +160,13 @@ task jpackage(type: Exec) {
             //'--type', 'dmg', // Change to 'exe' for Windows or 'deb' for Debian-based Linux distributions
             '--dest', outputDir,
             '--name', appName,
+            '--description', 'Komplexni_Validator_baliku_PSP',
+            '--vendor', 'Narodni_knihovna_CR',
             '--input', inputDir,
             '--main-jar', mainJar,
             '--main-class', mainClassName,
             '--icon', iconPath,
-            '--type', 'pkg',
+            '--type', 'exe',
             '--app-version', compatibleVersion
     // Additional options can be added here, such as '--vendor', '--resource-dir', etc.
 
