@@ -1,4 +1,4 @@
-package npk.pspValidator.cli;
+package nkp.pspValidator.cli;
 
 import nkp.pspValidator.shared.*;
 import nkp.pspValidator.shared.engine.Utils;
