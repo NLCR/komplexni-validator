@@ -148,7 +148,9 @@
                                                     <element name="premis:formatRegistry" mandatory="true" repeatable="false">
                                                         <expectedElements>
                                                             <element name="premis:formatRegistryName" mandatory="true" repeatable="false">
-                                                                <expectedContent/>
+                                                                <expectedContent>
+                                                                    <value>PRONOM</value>
+                                                                </expectedContent>
                                                             </element>
 
                                                             <element name="premis:formatRegistryKey" mandatory="true" repeatable="false">
