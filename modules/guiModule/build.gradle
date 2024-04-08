@@ -52,7 +52,7 @@ shadowJar {
     configurations = [project.configurations.runtimeClasspath]
 
     archiveBaseName.set('guiModule')
-    archiveVersion.set('2.4')
+    archiveVersion.set('2.4.1')
     archiveClassifier.set('shadow') // Typically set to empty for the main artifact
     manifest {
         attributes 'Main-Class': 'nkp.pspValidator.gui.Main'
