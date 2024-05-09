@@ -348,7 +348,7 @@
                         </expectedContent>
                     </element>
 
-                    <element name="mods:shelfLocator">
+                    <element name="mods:shelfLocator" mandatory="false">
                         <expectedContent/>
                     </element>
                 </expectedElements>
