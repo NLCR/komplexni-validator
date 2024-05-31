@@ -107,7 +107,7 @@
                                 <value>imprimatur</value>
                                 <value>appendix</value>
                                 <value>bibliography</value>
-                                <value>sheetmusic</value>
+                                <value>sheetMusic</value>
                                 <value>impressum</value>
                             </oneOf>
                         </recommendedContent>
@@ -249,5 +249,3 @@
         </expectedElements>
     </rootElement>
 </metadataProfile>
-
-	

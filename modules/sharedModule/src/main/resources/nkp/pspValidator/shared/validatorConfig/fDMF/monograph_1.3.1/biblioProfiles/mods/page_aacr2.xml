@@ -93,7 +93,9 @@
                                 <value>imprimatur</value>
                                 <value>appendix</value>
                                 <value>bibliography</value>
+                                <!--sheetmusic vs. sheetMusic: nekonzistence mezi DMF a PPP-->
                                 <value>sheetmusic</value>
+                                <value>sheetMusic</value>
                                 <value>impressum</value>
                             </oneOf>
                         </recommendedContent>
@@ -237,5 +239,3 @@
         </expectedElements>
     </rootElement>
 </metadataProfile>
-
-	
