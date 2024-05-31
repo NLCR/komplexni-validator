@@ -241,7 +241,7 @@
 
                                     </element>
 
-                                    <element name="premis:linkingEventIdentifier" mandatory="true" repeatable="true">
+                                    <element name="premis:linkingEventIdentifier" mandatory="false" repeatable="true">
                                         <expectedElements>
                                             <element name="premis:linkingEventIdentifierType" mandatory="true" repeatable="true">
                                                 <expectedContent/>
