@@ -247,32 +247,33 @@
                                             </element>
 
                                             <!--Neni jasna povinnost - konflikt povinnost=M a vyskyt=0-1, viz DMF Monografie 1.3: s. 85. Nechavam defenzivne nepovinne-->
+                                            <!--ScannerCapture musi zustat nepovinny, viz github.com/NLCR/Standard_NDK/issues/186-->
                                             <element name="mix:ScannerCapture" mandatory="false" repeatable="false">
                                                 <expectedElements>
                                                     <!--Neni jasna povinnost - konflikt povinnost=M a vyskyt=0-1, viz DMF Monografie 1.3: s. 85. Nechavam defenzivne nepovinne-->
-                                                    <element name="mix:scannerManufacturer" mandatory="false"
+                                                    <element name="mix:scannerManufacturer" mandatory="true"
                                                              repeatable="false">
                                                         <expectedContent/>
                                                     </element>
 
                                                     <!--Neni jasna povinnost - konflikt povinnost=M a vyskyt=0-1, viz DMF Monografie 1.3: s. 85. Nechavam defenzivne nepovinne-->
-                                                    <element name="mix:ScannerModel" mandatory="false"
+                                                    <element name="mix:ScannerModel" mandatory="true"
                                                              repeatable="false">
                                                         <expectedElements>
                                                             <!--Neni jasna povinnost - konflikt povinnost=M a vyskyt=0-1, viz DMF Monografie 1.3: s. 85. Nechavam defenzivne nepovinne-->
-                                                            <element name="mix:scannerModelName" mandatory="false"
+                                                            <element name="mix:scannerModelName" mandatory="true"
                                                                      repeatable="false">
                                                                 <expectedContent/>
                                                             </element>
 
                                                             <!--Neni jasna povinnost - konflikt povinnost=M a vyskyt=0-1, viz DMF Monografie 1.3: s. 85. Nechavam defenzivne nepovinne-->
-                                                            <element name="mix:scannerModelNumber" mandatory="false"
+                                                            <element name="mix:scannerModelNumber" mandatory="true"
                                                                      repeatable="false">
                                                                 <expectedContent/>
                                                             </element>
 
                                                             <!--Neni jasna povinnost - konflikt povinnost=M a vyskyt=0-1, viz DMF Monografie 1.3: s. 85. Nechavam defenzivne nepovinne-->
-                                                            <element name="mix:scannerModelSerialNo" mandatory="false"
+                                                            <element name="mix:scannerModelSerialNo" mandatory="true"
                                                                      repeatable="false">
                                                                 <expectedContent/>
                                                             </element>
@@ -280,11 +281,11 @@
                                                     </element>
 
                                                     <!--Neni jasna povinnost - konflikt povinnost=M a vyskyt=0-1, viz DMF Monografie 1.3: s. 85. Nechavam defenzivne nepovinne-->
-                                                    <element name="mix:MaximumOpticalResolution" mandatory="false"
+                                                    <element name="mix:MaximumOpticalResolution" mandatory="true"
                                                              repeatable="false">
                                                         <expectedElements>
                                                             <!--Neni jasna povinnost - konflikt povinnost=M a vyskyt=0-1, viz DMF Monografie 1.3: s. 85. Nechavam defenzivne nepovinne-->
-                                                            <element name="mix:xOpticalResolution" mandatory="false"
+                                                            <element name="mix:xOpticalResolution" mandatory="true"
                                                                      repeatable="false">
                                                                 <expectedContent>
                                                                     <regexp>[0-9]+</regexp>
@@ -292,7 +293,7 @@
                                                             </element>
 
                                                             <!--Neni jasna povinnost - konflikt povinnost=M a vyskyt=0-1, viz DMF Monografie 1.3: s. 85. Nechavam defenzivne nepovinne-->
-                                                            <element name="mix:yOpticalResolution" mandatory="false"
+                                                            <element name="mix:yOpticalResolution" mandatory="true"
                                                                      repeatable="false">
                                                                 <expectedContent>
                                                                     <regexp>[0-9]+</regexp>
@@ -300,7 +301,7 @@
                                                             </element>
 
                                                             <!--Neni jasna povinnost - konflikt povinnost=M a vyskyt=0-1, viz DMF Monografie 1.3: s. 85. Nechavam defenzivne nepovinne-->
-                                                            <element name="mix:opticalResolutionUnit" mandatory="false"
+                                                            <element name="mix:opticalResolutionUnit" mandatory="true"
                                                                      repeatable="false">
                                                                 <expectedContent>
                                                                     <oneOf>
@@ -314,7 +315,7 @@
                                                     </element>
 
                                                     <!--Neni jasna povinnost - konflikt povinnost=M a vyskyt=0-1, viz DMF Monografie 1.3: s. 86. Nechavam defenzivne nepovinne-->
-                                                    <element name="mix:scannerSensor" mandatory="false"
+                                                    <element name="mix:scannerSensor" mandatory="true"
                                                              repeatable="false">
                                                         <expectedContent>
                                                             <oneOf>
@@ -332,18 +333,18 @@
                                                     </element>
 
                                                     <!--Neni jasna povinnost - konflikt povinnost=M a vyskyt=0-1, viz DMF Monografie 1.3: s. 86. Nechavam defenzivne nepovinne-->
-                                                    <element name="mix:ScanningSystemSoftware" mandatory="false"
+                                                    <element name="mix:ScanningSystemSoftware" mandatory="true"
                                                              repeatable="false">
                                                         <expectedElements>
                                                             <!--Neni jasna povinnost - konflikt povinnost=M a vyskyt=0-1, viz DMF Monografie 1.3: s. 86. Nechavam defenzivne nepovinne-->
-                                                            <element name="mix:scanningSoftwareName" mandatory="false"
+                                                            <element name="mix:scanningSoftwareName" mandatory="true"
                                                                      repeatable="false">
                                                                 <expectedContent/>
                                                             </element>
 
                                                             <!--Neni jasna povinnost - konflikt povinnost=M a vyskyt=0-1, viz DMF Monografie 1.3: s. 86. Nechavam defenzivne nepovinne-->
                                                             <element name="mix:scanningSoftwareVersionNo"
-                                                                     mandatory="false"
+                                                                     mandatory="true"
                                                                      repeatable="false">
                                                                 <expectedContent/>
                                                             </element>
@@ -356,31 +357,31 @@
                                                      repeatable="false">
                                                 <expectedElements>
                                                     <!--Neni jasna povinnost - konflikt povinnost=M a vyskyt=0-1, viz DMF Monografie 1.3: s. 86. Nechavam defenzivne nepovinne-->
-                                                    <element name="mix:digitalCameraManufacturer" mandatory="false"
+                                                    <element name="mix:digitalCameraManufacturer" mandatory="true"
                                                              repeatable="false">
                                                         <expectedContent/>
                                                     </element>
 
                                                     <!--Neni jasna povinnost - konflikt povinnost=M a vyskyt=0-1, viz DMF Monografie 1.3: s. 86. Nechavam defenzivne nepovinne-->
-                                                    <element name="mix:DigitalCameraModel" mandatory="false"
+                                                    <element name="mix:DigitalCameraModel" mandatory="true"
                                                              repeatable="false">
                                                         <expectedElements>
                                                             <!--Neni jasna povinnost - konflikt povinnost=M a vyskyt=0-1, viz DMF Monografie 1.3: s. 86. Nechavam defenzivne nepovinne-->
-                                                            <element name="mix:digitalCameraModelName" mandatory="false"
+                                                            <element name="mix:digitalCameraModelName" mandatory="true"
                                                                      repeatable="false">
                                                                 <expectedContent/>
                                                             </element>
 
                                                             <!--Neni jasna povinnost - konflikt povinnost=M a vyskyt=0-1, viz DMF Monografie 1.3: s. 86. Nechavam defenzivne nepovinne-->
                                                             <element name="mix:digitalCameraModelNumber"
-                                                                     mandatory="false"
+                                                                     mandatory="true"
                                                                      repeatable="false">
                                                                 <expectedContent/>
                                                             </element>
 
                                                             <!--Neni jasna povinnost - konflikt povinnost=M a vyskyt=0-1, viz DMF Monografie 1.3: s. 86. Nechavam defenzivne nepovinne-->
                                                             <element name="mix:digitalCameraModelSerialNo"
-                                                                     mandatory="false"
+                                                                     mandatory="true"
                                                                      repeatable="false">
                                                                 <expectedContent/>
                                                             </element>
@@ -388,13 +389,13 @@
                                                     </element>
 
                                                     <!--Neni jasna povinnost - konflikt povinnost=M a vyskyt=0-1, viz DMF Monografie 1.3: s. 86. Nechavam defenzivne nepovinne-->
-                                                    <element name="mix:cameraSensor" mandatory="false"
+                                                    <element name="mix:cameraSensor" mandatory="true"
                                                              repeatable="false">
                                                         <expectedContent/>
                                                     </element>
 
                                                     <!--Neni jasna povinnost - konflikt povinnost=M a vyskyt=0-1, viz DMF Monografie 1.3: s. 86. Nechavam defenzivne nepovinne-->
-                                                    <element name="mix:CameraCaptureSettings" mandatory="false"
+                                                    <element name="mix:CameraCaptureSettings" mandatory="true"
                                                              repeatable="false">
                                                         <expectedElements>
                                                             <!--Chybi informace o opakovatelnosti. Nechavam defenzivne opakovatelne-->

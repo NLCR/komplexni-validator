@@ -119,7 +119,7 @@
                                                         </expectedContent>
                                                     </element>
 
-                                                    <element name="mix:PhotometricInterpretation" mandatory="false" repeatable="false">
+                                                    <element name="mix:PhotometricInterpretation" mandatory="true" repeatable="false">
                                                         <expectedElements>
                                                             <element name="mix:colorSpace" mandatory="true" repeatable="false">
                                                                 <expectedContent/>
@@ -127,16 +127,16 @@
 
                                                             <element name="mix:ColorProfile" mandatory="false" repeatable="false">
                                                                 <expectedElements>
-                                                                    <element name="mix:IccProfile" mandatory="true" repeatable="false">
+                                                                    <element name="mix:IccProfile" mandatory="false" repeatable="false">
                                                                         <expectedElements>
                                                                             <element name="mix:iccProfileName"
-                                                                                     mandatory="true"
+                                                                                     mandatory="false"
                                                                                      repeatable="false">
                                                                                 <expectedContent/>
                                                                             </element>
 
                                                                             <element name="mix:iccProfileVersion"
-                                                                                     mandatory="true"
+                                                                                     mandatory="false"
                                                                                      repeatable="false">
                                                                                 <expectedContent/>
                                                                             </element>

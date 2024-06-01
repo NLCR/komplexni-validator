@@ -201,8 +201,9 @@
                                                     </element>
                                                 </expectedElements>
                                             </element>
+                                             <!--ScannerCapture musi zustat nepovinny, viz github.com/NLCR/Standard_NDK/issues/186-->
 
-                                            <element name="mix:ScannerCapture" mandatory="true" repeatable="false">
+                                            <element name="mix:ScannerCapture" mandatory="false" repeatable="false">
                                                 <expectedElements>
                                                     <element name="mix:scannerManufacturer" mandatory="true" repeatable="false">
                                                         <expectedContent/>
