@@ -599,12 +599,6 @@
             </element>
 
         </expectedElements>
-        <extraRules>
-            <!--  Musí existovat alespoň jeden element originInfo a to s atributem eventType=publication nebo eventType=production -->
-            <existsAtLeastOnce xpath="mods:originInfo[@eventType='publication' or @eventType='production']"/>
-        </extraRules>
     </rootElement>
 
 </metadataProfile>
-
-	
