@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified"
-           targetNamespace="http://www.nkp.cz/pspValidator/2.4.1/binaryFileProfile"
-           xmlns:bfp="http://www.nkp.cz/pspValidator/2.4.1/binaryFileProfile"
+           targetNamespace="http://www.nkp.cz/pspValidator/2.4.2/binaryFileProfile"
+           xmlns:bfp="http://www.nkp.cz/pspValidator/2.4.2/binaryFileProfile"
            xmlns:xs="http://www.w3.org/2001/XMLSchema">
 
     <xs:element name="binaryFileProfile">
