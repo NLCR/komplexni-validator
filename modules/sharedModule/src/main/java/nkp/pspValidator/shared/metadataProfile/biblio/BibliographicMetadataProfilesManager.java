@@ -67,6 +67,7 @@ public class BibliographicMetadataProfilesManager {
     public MetadataProfile buildProfile(String fileId, MetadataFormat format, CatalogingConventions conventions) {
         File file = getProfileFile(fileId, format, conventions);
         if (file == null) {
+            System.err.println("file is null");
             return null;
         } else {
             try {

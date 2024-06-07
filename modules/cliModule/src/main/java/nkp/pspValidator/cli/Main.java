@@ -6,12 +6,22 @@ import nkp.pspValidator.shared.engine.exceptions.InvalidXPathExpressionException
 import nkp.pspValidator.shared.engine.exceptions.PspDataException;
 import nkp.pspValidator.shared.engine.exceptions.ValidatorConfigurationException;
 import nkp.pspValidator.shared.engine.exceptions.XmlFileParsingException;
+import nkp.pspValidator.shared.engine.types.MetadataFormat;
+import nkp.pspValidator.shared.engine.validationFunctions.ValidationResult;
 import nkp.pspValidator.shared.externalUtils.CliCommand;
 import nkp.pspValidator.shared.externalUtils.ExternalUtil;
 import nkp.pspValidator.shared.externalUtils.ExternalUtilManager;
 import nkp.pspValidator.shared.externalUtils.ExternalUtilManagerFactory;
+import nkp.pspValidator.shared.metadataProfile.DictionaryManager;
+import nkp.pspValidator.shared.metadataProfile.MetadataProfile;
+import nkp.pspValidator.shared.metadataProfile.MetadataProfileParser;
+import nkp.pspValidator.shared.metadataProfile.MetadataProfileValidator;
 import org.apache.commons.cli.*;
+import org.w3c.dom.Document;
+import org.xml.sax.SAXException;
 
+import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.xpath.XPathExpressionException;
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintStream;
@@ -47,7 +57,7 @@ public class Main {
         //https://commons.apache.org/proper/commons-cli/usage.html
         Options options = new Options();
         options.addOption(OptionBuilder
-                .withDescription(replaceUmlaut("Akce, která má být provedena. Povolené hodnoty jsou VALIDATE_PSP, VALIDATE_PSP_GROUP a BUILD_MINIFIED_PACKAGE."))
+                .withDescription(replaceUmlaut("Akce, která má být provedena. Povolené hodnoty jsou VALIDATE_PSP, VALIDATE_PSP_GROUP, BUILD_MINIFIED_PACKAGE a VALIDATE_METADATA_BY_PROFILE."))
                 .hasArg()
                 .withArgName("AKCE")
                 .withLongOpt(Params.ACTION)
@@ -110,6 +120,22 @@ public class Main {
                 .withArgName("ADRESAR")
                 .withLongOpt(Params.TMP_DIR)
                 .create("t"));
+        options.addOption(OptionBuilder
+                .withDescription(replaceUmlaut(
+                        "Identifikátor metadatového profilu. Např.: 'monograph_2.1:biblio:dc:volume_singlevolume_aacr2' nebo 'periodical_2.0:tech:premis_agent'." +
+                                "Určeno pro akci VALIDATE_METADATA_BY_PROFILE."))
+                .hasArg()
+                .withArgName("PROFILE_ID")
+                .withLongOpt(Params.METADATA_PROFILE_ID)
+                .create());
+        options.addOption(OptionBuilder
+                .withDescription(replaceUmlaut(
+                        "Metadatový soubor pro validaci podle metadatového profilu." +
+                                "Určeno pro akci VALIDATE_METADATA_BY_PROFILE."))
+                .hasArg()
+                .withArgName("SOUBOR_S_METADATY")
+                .withLongOpt(Params.METADATA_FILE)
+                .create());
         /*TODO: implement*/
        /* options.addOption(OptionBuilder
                 .withDescription(replaceUmlaut(
@@ -333,6 +359,7 @@ public class Main {
                 switch (action) {
                     case VALIDATE_PSP:
                     case VALIDATE_PSP_GROUP:
+                    case VALIDATE_METADATA_BY_PROFILE:
                         if (!line.hasOption(Params.CONFIG_DIR)) {
                             System.err.println(String.format("Chyba: pro akci %s je parametr --%s povinný!", action, Params.CONFIG_DIR));
                             printHelp(options);
@@ -396,6 +423,28 @@ public class Main {
                 File tmpDir = null;
                 if (line.hasOption(Params.TMP_DIR)) {
                     tmpDir = new File(line.getOptionValue(Params.TMP_DIR));
+                }
+
+                String metadataProfileId = null;
+                File metadataFile = null;
+                switch (action) {
+                    case VALIDATE_METADATA_BY_PROFILE: {
+                        if (!line.hasOption(Params.METADATA_PROFILE_ID)) {
+                            System.err.println(String.format("Chyba: pro akci %s je parametr --%s povinný!", action, Params.METADATA_PROFILE_ID));
+                            printHelp(options);
+                            return;
+                        } else {
+                            metadataProfileId = line.getOptionValue(Params.METADATA_PROFILE_ID);
+                        }
+                        if (!line.hasOption(Params.METADATA_FILE)) {
+                            System.err.println(String.format("Chyba: pro akci %s je parametr --%s povinný!", action, Params.METADATA_FILE));
+                            printHelp(options);
+                            return;
+                        } else {
+                            metadataFile = new File(line.getOptionValue(Params.METADATA_FILE));
+                        }
+                        break;
+                    }
                 }
 
                 //quitAfterInvalidPsps
@@ -555,6 +604,19 @@ public class Main {
                         //TODO: level validace do CLI
                         buildMinifiedPackage(psp, minifiedPspDir, 3);
                         break;
+                    case VALIDATE_METADATA_BY_PROFILE:
+                        ValidationResult result = validateMetadataByProfile(configDir, metadataProfileId, metadataFile);
+                        if (result != null) {
+                            if (result.hasProblems()) {
+                                result.getProblems().forEach(p -> System.out.println(p.getLevel() + ": " + p.getMessage(false)));
+                            } else {
+                                System.out.println("No problems found in file " + metadataFile.getName() + " against profile " + metadataProfileId);
+                            }
+                        }
+                        break;
+                    case DEV:
+                        dev();
+                        break;
                 }
             }
         } catch (ParseException exp) {
@@ -571,6 +633,74 @@ public class Main {
         } catch (InvalidXPathExpressionException e) {
             System.err.println("Chyba:" + e.getMessage());
         }
+    }
+
+    private static ValidationResult validateMetadataByProfile(File validatorConfigDir, String profileId, File metadataFile) {
+        try {
+            System.out.println("Validating against profile " + profileId + " file " + metadataFile);
+            String[] profileTokens = profileId.split(":");
+            String dmf = profileTokens[0];
+            DictionaryManager dm = new DictionaryManager(new File(validatorConfigDir, "dictionaries"));
+            MetadataProfileParser metadataProfileParser = new MetadataProfileParser(dm);
+            switch (profileTokens[1]) {
+                case "biblio": {
+                    String metadataFormatStr = profileTokens[2];
+                    MetadataFormat metadataFormat = null;
+                    if (metadataFormatStr.equals("dc")) {
+                        metadataFormat = MetadataFormat.DC;
+                    } else if (metadataFormatStr.equals("mods")) {
+                        metadataFormat = MetadataFormat.MODS;
+                    } else {
+                        System.out.println("Unknown metadata format: " + metadataFormatStr);
+                        return null;
+                    }
+                    String profileName = profileTokens[3];
+                    File profileFile = new File(validatorConfigDir, "fDMF/" + dmf + "/biblioProfiles/" + metadataFormatStr + "/" + profileName + ".xml");
+                    if (!profileFile.exists()) {
+                        System.out.println("Profile file does not exist: " + profileFile.getAbsolutePath());
+                        return null;
+                    }
+                    MetadataProfile metadataProfile = metadataProfileParser.parseProfile(profileFile);
+                    Document metadataDoc = XmlUtils.buildDocumentFromFile(metadataFile, true);
+                    ValidationResult result = new ValidationResult();
+                    MetadataProfileValidator.validate(metadataProfile, metadataFile, metadataDoc, result, null);
+                    return result;
+                }
+                case "tech": {
+                    String profileName = profileTokens[2];
+                    File profileFile = new File(validatorConfigDir, "fDMF/" + dmf + "/techProfiles/" + profileName + ".xml");
+                    if (!profileFile.exists()) {
+                        System.out.println("Profile file does not exist: " + profileFile.getAbsolutePath());
+                        return null;
+                    }
+                    MetadataProfile metadataProfile = metadataProfileParser.parseProfile(profileFile);
+                    Document metadataDoc = XmlUtils.buildDocumentFromFile(metadataFile, true);
+                    ValidationResult result = new ValidationResult();
+                    MetadataProfileValidator.validate(metadataProfile, metadataFile, metadataDoc, result, null);
+                    return result;
+                }
+                default:
+                    System.out.println("Unknown profile type: " + profileTokens[1]);
+                    return null;
+            }
+        } catch (ValidatorConfigurationException e) {
+            throw new RuntimeException(e);
+        } catch (XPathExpressionException e) {
+            throw new RuntimeException(e);
+        } catch (ParserConfigurationException e) {
+            throw new RuntimeException(e);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        } catch (InvalidXPathExpressionException e) {
+            throw new RuntimeException(e);
+        } catch (SAXException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    private static void dev() {
+        System.out.println("DEV");
+        nkp.pspValidator.shared.Main.templateTest();
     }
 
     private static void buildMinifiedPackage(File pspDirOrZipFile, File minifiedPspDir, int level) {
