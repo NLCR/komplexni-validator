@@ -637,7 +637,7 @@ public class Main {
 
     private static ValidationResult validateMetadataByProfile(File validatorConfigDir, String profileId, File metadataFile) {
         try {
-            System.out.println("Validating against profile " + profileId + " file " + metadataFile);
+            System.out.println("Validuji oproti profilu " + profileId + " soubor " + metadataFile);
             String[] profileTokens = profileId.split(":");
             String dmf = profileTokens[0];
             DictionaryManager dm = new DictionaryManager(new File(validatorConfigDir, "dictionaries"));
