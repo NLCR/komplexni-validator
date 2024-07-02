@@ -934,21 +934,22 @@
     <rules-section name="Identifikátory" description="">
 
         <!--psp id-->
-        <rule name="PSP_ID_DERIVED_FROM_TITLE_ID">
+        <!--docasne vypnuto, viz issue  #162-->
+        <!--<rule name="PSP_ID_DERIVED_FROM_TITLE_ID">
             <description>PSP-ID by měl být odvozen od některého z identifikátorů titulu, a to typu 'urnnbn' nebo 'uuid'</description>
             <validation functionName="checkStringDerivedFromUrnnbnOrUuid">
                 <params>
                     <value name="string" type="STRING">
                         <value-ref name="PSP_ID"/>
                     </value>
-                    <!--seznam identifikatoru (dulezite jsou typy 'uuid' a 'urnnbn'-->
+                    &lt;!&ndash;seznam identifikatoru (dulezite jsou typy 'uuid' a 'urnnbn'&ndash;&gt;
                     <value name="identifiers" type="IDENTIFIER_LIST">
                         <value-ref name="INFO_IDENTIFIERS"/>
                     </value>
                 </params>
             </validation>
         </rule>
-
+        -->
         <!--info identifiers -->
 
         <rule name="INFO_NO_DUPLICATE_IDENTIFIERS">
