@@ -1,5 +1,5 @@
-<fDMF xmlns="http://www.nkp.cz/pspValidator/2.4.1/fdmfConfig"
-      validatorVersion="2.4.1"
+<fDMF xmlns="http://www.nkp.cz/pspValidator/2.4.2/fdmfConfig"
+      validatorVersion="2.4.2"
       dmf="periodical_1.9"
 >
     <description>
@@ -934,21 +934,22 @@
     <rules-section name="Identifikátory" description="">
 
         <!--psp id-->
-        <rule name="PSP_ID_DERIVED_FROM_TITLE_ID">
+        <!--docasne vypnuto, viz issue  #162-->
+        <!--<rule name="PSP_ID_DERIVED_FROM_TITLE_ID">
             <description>PSP-ID by měl být odvozen od některého z identifikátorů titulu, a to typu 'urnnbn' nebo 'uuid'</description>
             <validation functionName="checkStringDerivedFromUrnnbnOrUuid">
                 <params>
                     <value name="string" type="STRING">
                         <value-ref name="PSP_ID"/>
                     </value>
-                    <!--seznam identifikatoru (dulezite jsou typy 'uuid' a 'urnnbn'-->
+                    &lt;!&ndash;seznam identifikatoru (dulezite jsou typy 'uuid' a 'urnnbn'&ndash;&gt;
                     <value name="identifiers" type="IDENTIFIER_LIST">
                         <value-ref name="INFO_IDENTIFIERS"/>
                     </value>
                 </params>
             </validation>
         </rule>
-
+        -->
         <!--info identifiers -->
 
         <rule name="INFO_NO_DUPLICATE_IDENTIFIERS">
@@ -3076,10 +3077,12 @@
         </rule>
 
     </rules-section>
-
-
+<!--Vypnuto kvuli issue #151 a #157-->
+<!--
     <rules-section name="OCR TEXT" description="Kontrola textových přepisů.">
 
+        
+        
         <rule name="OCR-TEXT_FILES_IN_UTF8">
             <description>Všechny soubory OCR-TEXT musí být v kódování UTF-8.</description>
             <validation functionName="checkAllFilesInUtf8">
@@ -3090,9 +3093,9 @@
                 </params>
             </validation>
         </rule>
-
+       
     </rules-section>
-
+ -->
 
     <rules-section name="OCR ALTO" description="Kontrola souborů ALTO.">
 
@@ -3111,6 +3114,9 @@
             </validation>
         </rule>
 
+
+        <!--Vypnuto kvuli issue #151 a #157-->
+        <!--
         <rule name="OCR-ALTO_FILES_IN_UTF8">
             <description>Všechny soubory OCR-ALTO musí být v kódování UTF-8.</description>
             <validation functionName="checkAllFilesInUtf8">
@@ -3121,6 +3127,7 @@
                 </params>
             </validation>
         </rule>
+        -->
 
         <!--TODO: kontrola ALTO oproti profilu-->
 
