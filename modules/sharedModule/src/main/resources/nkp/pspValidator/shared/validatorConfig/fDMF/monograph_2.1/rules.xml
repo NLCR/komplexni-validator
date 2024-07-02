@@ -2882,8 +2882,8 @@
         </rule>
 
     </rules-section>
-
-
+<!--Vypnuto kvuli issue #151 a #157-->
+    <!--
     <rules-section name="OCR TEXT" description="Kontrola textových přepisů.">
 
         <rule name="OCR-TEXT_FILES_IN_UTF8">
@@ -2898,7 +2898,7 @@
         </rule>
 
     </rules-section>
-
+    -->
 
     <rules-section name="OCR ALTO" description="Kontrola souborů ALTO.">
 
@@ -2917,6 +2917,8 @@
             </validation>
         </rule>
 
+        <!--Vypnuto kvuli issue #151 a #157-->
+        <!--
         <rule name="OCR-ALTO_FILES_IN_UTF8">
             <description>Všechny soubory OCR-ALTO musí být v kódování UTF-8.</description>
             <validation functionName="checkAllFilesInUtf8">
@@ -2927,7 +2929,7 @@
                 </params>
             </validation>
         </rule>
-
+        -->
         <!--TODO: kontrola ALTO oproti profilu-->
 
     </rules-section>
