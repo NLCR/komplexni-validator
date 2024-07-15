@@ -1,6 +1,6 @@
 <binaryFileProfile
-        xmlns="http://www.nkp.cz/pspValidator/2.4.1/binaryFileProfile"
-        validatorVersion="2.4.1"
+        xmlns="http://www.nkp.cz/pspValidator/2.4.2/binaryFileProfile"
+        validatorVersion="2.4.2"
         dmf="audio_gram_0.5"
 >
     <fromXml>
@@ -72,7 +72,7 @@
         <validation name="Valid">
             <xmlDataExtraction resultType="STRING">
                 <firstNonempty>
-                    <xpath>//j:isValidJP2</xpath>
+                    <xpath>//j:isValid</xpath>
                 </firstNonempty>
             </xmlDataExtraction>
             <rules>
