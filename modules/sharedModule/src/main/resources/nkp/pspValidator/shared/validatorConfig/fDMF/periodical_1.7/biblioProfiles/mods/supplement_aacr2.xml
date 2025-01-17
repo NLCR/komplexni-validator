@@ -199,9 +199,7 @@
                     </element>
 
                     <element name="mods:frequency" mandatory="false">
-                        <expectedContent>
-                            <value>monographic</value>
-                        </expectedContent>
+                        <expectedContent/>
                     </element>
                 </expectedElements>
             </element>
@@ -248,9 +246,7 @@
                     </element>
 
                     <element name="mods:frequency" mandatory="false">
-                        <expectedContent>
-                            <value>monographic</value>
-                        </expectedContent>
+                        <expectedContent/>
                     </element>
                 </expectedElements>
             </element>
