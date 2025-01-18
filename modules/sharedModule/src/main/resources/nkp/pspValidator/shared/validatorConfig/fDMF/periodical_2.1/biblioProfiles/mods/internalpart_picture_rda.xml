@@ -7,12 +7,12 @@
 >
 
     <info>
-        <text>DMF Periodika 2.0 očekává MODS verze 3.6. Dále se zde upřesňují očekávaná metadata pro vnitřní část typu
+        <text>DMF Periodika 2.1 očekává MODS verze 3.8. Dále se zde upřesňují očekávaná metadata pro vnitřní část typu
             obraz pro záznamy zpracované podle katalogizačních pravidel RDA.
         </text>
         <url>http://www.loc.gov/standards/mods/</url>
-        <url description="XSD pro MODS 3.6">http://www.loc.gov/standards/mods/v3/mods-3-6.xsd</url>
-        <url description="popis MODS 3.6">http://www.loc.gov/standards/mods/mods-outline-3-6.html</url>
+        <url description="XSD pro MODS 3.8">http://www.loc.gov/standards/mods/v3/mods-3-8.xsd</url>
+        <url description="popis MODS 3.8">https://www.loc.gov/standards/mods/userguide/</url>
     </info>
 
     <namespaces>
@@ -384,5 +384,3 @@
     </rootElement>
 
 </metadataProfile>
-
-	

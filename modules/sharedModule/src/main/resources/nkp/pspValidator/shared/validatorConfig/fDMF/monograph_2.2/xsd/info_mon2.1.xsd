@@ -1,5 +1,5 @@
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
-    <!--XML Schema pro soubor INFO pro DMF Monografie 2.1-->
+    <!--XML Schema pro soubor INFO pro DMF Monografie 2.2-->
 
     <!--METS Profile requirement id infoxml2-->
     <xs:element name="info">

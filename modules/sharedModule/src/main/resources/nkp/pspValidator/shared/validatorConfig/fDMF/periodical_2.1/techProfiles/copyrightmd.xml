@@ -8,7 +8,7 @@
 
     <info>
         <text>
-            Profil pro validaci Copyrigh MD záznamu stránky v sekundárním METSu pro DMF Periodika 2.0.
+            Profil pro validaci Copyrigh MD záznamu stránky v sekundárním METSu pro DMF Periodika 2.1.
         </text>
         <url description="popis formátu copyrightMD">http://www.cdlib.org/groups/rmg/</url>
         <url description="XSD pro copyrightMD 0.91">http://www.cdlib.org/groups/rmg/docs/copyrightMD.xsd</url>

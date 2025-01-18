@@ -8,7 +8,7 @@
 
     <info>
         <text>
-            Profil pro validaci PREMIS Object záznamu primárního skenu (PS) stránky v sekundárním METSu pro DMF Monografie 2.1.
+            Profil pro validaci PREMIS Object záznamu primárního skenu (PS) stránky v sekundárním METSu pro DMF Monografie 2.2.
         </text>
         <url description="popis formátu PREMIS">http://www.loc.gov/standards/premis/</url>
         <url description="XSD pro PREMIS 2.2">http://www.loc.gov/standards/premis/v2/premis-v2-2.xsd</url>
