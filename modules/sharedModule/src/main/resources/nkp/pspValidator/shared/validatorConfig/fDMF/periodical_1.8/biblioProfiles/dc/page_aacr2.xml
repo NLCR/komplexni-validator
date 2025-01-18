@@ -30,7 +30,7 @@
                 <expectedContent/>
             </element>
 
-            <element name="dc:coverage" mandatory="false">
+            <element name="dc:coverage" mandatory="true">
                 <expectedContent/>
             </element>
 
