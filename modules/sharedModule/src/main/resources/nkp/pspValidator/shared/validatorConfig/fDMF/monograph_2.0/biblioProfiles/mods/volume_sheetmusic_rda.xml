@@ -686,13 +686,13 @@
             <element name="mods:relatedItem" mandatory="false" ignoreUnexpectedChildElements="true">
                 <expectedAttributes>
                     <attribute name="type" mandatory="false">
-                        <expectedContent>
+                        <recommendedContent>
                             <oneOf>
                                 <value>series</value>
                                 <value>original</value>
                                 <value>isReferencedBy</value>
                             </oneOf>
-                        </expectedContent>
+                        </recommendedContent>
                     </attribute>
                     <attribute name="otherType" mandatory="false"/>
                     <attribute name="otherTypeURI" mandatory="false"/>
