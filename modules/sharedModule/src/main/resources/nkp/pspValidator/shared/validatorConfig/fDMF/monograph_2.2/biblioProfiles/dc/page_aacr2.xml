@@ -3,7 +3,7 @@
         xmlns="http://www.nkp.cz/pspValidator/2.4.2/metadataProfile"
         name="DC page (AACR2)"
         validatorVersion="2.4.2"
-        dmf="monograph_2.1"
+        dmf="monograph_2.2"
 >
 
     <info>

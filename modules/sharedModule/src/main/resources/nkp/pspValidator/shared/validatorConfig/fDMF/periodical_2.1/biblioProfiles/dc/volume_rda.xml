@@ -3,7 +3,7 @@
         xmlns="http://www.nkp.cz/pspValidator/2.4.2/metadataProfile"
         name="DC volume (RDA)"
         validatorVersion="2.4.2"
-        dmf="periodical_2.0"
+        dmf="periodical_2.1"
 >
     <info>
         <text>DMF Periodika 2.0 očekává Dublin Core verze 1.1. Dále se zde upřesňují očekávaná metadata pro ročník

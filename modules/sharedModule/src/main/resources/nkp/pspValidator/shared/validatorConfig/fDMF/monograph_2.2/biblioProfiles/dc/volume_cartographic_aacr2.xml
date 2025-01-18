@@ -3,7 +3,7 @@
         xmlns="http://www.nkp.cz/pspValidator/2.4.2/metadataProfile"
         name="DC cartographic volume (AACR2)"
         validatorVersion="2.4.2"
-        dmf="monograph_2.1"
+        dmf="monograph_2.2"
 >
     <info>
         <text>DMF Monografie 2.1 očekává Dublin Core verze 1.1. Dále se zde upřesňují očekávaná metadata pro svazek

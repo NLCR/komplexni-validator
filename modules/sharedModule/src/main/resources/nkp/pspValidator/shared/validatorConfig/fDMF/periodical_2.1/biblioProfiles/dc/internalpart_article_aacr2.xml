@@ -3,7 +3,7 @@
         xmlns="http://www.nkp.cz/pspValidator/2.4.2/metadataProfile"
         name="DC internal part - article (AACR2)"
         validatorVersion="2.4.2"
-        dmf="periodical_2.0"
+        dmf="periodical_2.1"
 >
 
     <info>
