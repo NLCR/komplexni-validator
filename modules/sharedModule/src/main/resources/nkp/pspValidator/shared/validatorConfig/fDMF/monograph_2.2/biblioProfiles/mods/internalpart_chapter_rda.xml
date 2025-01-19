@@ -275,6 +275,9 @@
                                     </oneOf>
                                 </expectedContent>
                             </attribute>
+                            <attribute name="mods:valueURI" mandatory="false">
+                                <expectedContent/>
+                            </attribute>
                         </expectedAttributes>
                         <expectedContent/>
                     </element>
@@ -297,6 +300,9 @@
                                 <expectedContent>
                                     <value>czenas</value>
                                 </expectedContent>
+                            </attribute>
+                            <attribute name="mods:valueURI" mandatory="false">
+                                <expectedContent/>
                             </attribute>
                         </expectedAttributes>
                         <expectedContent>

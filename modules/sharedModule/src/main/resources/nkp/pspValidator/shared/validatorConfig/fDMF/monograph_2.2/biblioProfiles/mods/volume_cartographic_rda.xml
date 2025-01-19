@@ -683,11 +683,21 @@
                     </element>
 
                     <element name="mods:geographic" mandatory="false">
+                        <expectedAttributes>
+                            <attribute name="valueURI" mandatory="false">
+                                <expectedContent/>
+                            </attribute>
+                        </expectedAttributes>
                         <!--V DMF je "použít kontrolovaný slovník, například ... " - tj. kontrolovaný slovník NENÍ vyžadován DMF-->
                         <expectedContent/>
                     </element>
 
                     <element name="mods:topic" mandatory="false">
+                        <expectedAttributes>
+                            <attribute name="valueURI" mandatory="false">
+                                <expectedContent/>
+                            </attribute>
+                        </expectedAttributes>
                         <!--V DMF je "použít kontrolovaný slovník, například ... " - tj. kontrolovaný slovník NENÍ vyžadován DMF-->
                         <expectedContent/>
                     </element>
