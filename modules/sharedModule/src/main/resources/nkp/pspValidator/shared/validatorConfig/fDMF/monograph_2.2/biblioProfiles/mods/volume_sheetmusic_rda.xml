@@ -225,8 +225,21 @@
                         </expectedElements>
                     </element>
 
-                    <element name="mods:publisher" mandatory="false">
-                        <expectedContent/>
+                    <element name="mods:agent" mandatory="false">
+                        <expectedElements>
+                            <element name="mods:namePart" mandatory="true">
+                                <expectedContent/>
+                            </element>
+                            <element name="mods:role" mandatory="true">
+                                <expectedElements>
+                                    <element name="mods:roleTerm" mandatory="true">
+                                        <expectedContent>
+                                            <value>producer</value>
+                                        </expectedContent>
+                                    </element>
+                                </expectedElements>
+                            </element>
+                        </expectedElements>
                     </element>
 
                     <element name="mods:dateOther" mandatory="false">
@@ -283,8 +296,21 @@
                         </expectedElements>
                     </element>
 
-                    <element name="mods:publisher" mandatory="false">
-                        <expectedContent/>
+                    <element name="mods:agent" mandatory="false">
+                        <expectedElements>
+                            <element name="mods:namePart" mandatory="true">
+                                <expectedContent/>
+                            </element>
+                            <element name="mods:role" mandatory="true">
+                                <expectedElements>
+                                    <element name="mods:roleTerm" mandatory="true">
+                                        <expectedContent>
+                                            <value>publisher</value>
+                                        </expectedContent>
+                                    </element>
+                                </expectedElements>
+                            </element>
+                        </expectedElements>
                     </element>
 
                     <element name="mods:dateIssued">
@@ -345,8 +371,21 @@
                         </expectedElements>
                     </element>
 
-                    <element name="mods:publisher" mandatory="false">
-                        <expectedContent/>
+                    <element name="mods:agent" mandatory="false">
+                        <expectedElements>
+                            <element name="mods:namePart" mandatory="true">
+                                <expectedContent/>
+                            </element>
+                            <element name="mods:role" mandatory="true">
+                                <expectedElements>
+                                    <element name="mods:roleTerm" mandatory="true">
+                                        <expectedContent>
+                                            <value>distributor</value>
+                                        </expectedContent>
+                                    </element>
+                                </expectedElements>
+                            </element>
+                        </expectedElements>
                     </element>
 
                     <element name="mods:dateOther" mandatory="false">
@@ -409,8 +448,21 @@
                         </expectedElements>
                     </element>
 
-                    <element name="mods:publisher" mandatory="false">
-                        <expectedContent/>
+                    <element name="mods:agent" mandatory="false">
+                        <expectedElements>
+                            <element name="mods:namePart" mandatory="true">
+                                <expectedContent/>
+                            </element>
+                            <element name="mods:role" mandatory="true">
+                                <expectedElements>
+                                    <element name="mods:roleTerm" mandatory="true">
+                                        <expectedContent>
+                                            <value>manufacturer</value>
+                                        </expectedContent>
+                                    </element>
+                                </expectedElements>
+                            </element>
+                        </expectedElements>
                     </element>
 
                     <element name="mods:dateOther" mandatory="false">
@@ -473,8 +525,19 @@
                         </expectedElements>
                     </element>
 
-                    <element name="mods:publisher" mandatory="false">
-                        <expectedContent/>
+                    <element name="mods:agent" mandatory="false">
+                        <expectedElements>
+                            <element name="mods:namePart" mandatory="true">
+                                <expectedContent/>
+                            </element>
+                            <element name="mods:role" mandatory="true">
+                                <expectedElements>
+                                    <element name="mods:roleTerm" mandatory="true">
+                                        <expectedContent/>
+                                    </element>
+                                </expectedElements>
+                            </element>
+                        </expectedElements>
                     </element>
 
                     <element name="mods:copyrightDate">
