@@ -32,6 +32,7 @@
                                     <xs:simpleType>
                                         <xs:restriction base="xs:string">
                                             <xs:enumeration value="isbn"/>
+                                            <xs:enumeration value="ismn"/>
                                             <xs:enumeration value="issn"/>
                                             <xs:enumeration value="ccnb"/>
                                             <xs:enumeration value="urnnbn"/>
@@ -99,6 +100,7 @@
             <xs:enumeration value="1.4"/>
             <xs:enumeration value="2.0"/>
             <xs:enumeration value="2.1"/>
+            <xs:enumeration value="2.2"/>
         </xs:restriction>
     </xs:simpleType>
 
