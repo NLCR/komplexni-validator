@@ -393,8 +393,14 @@
                     </element>
 
                     <element name="mods:name" mandatory="false">
-                        <!--TODO: specifikace nejasna: bud textovy obsah (jmeno pripadne ze slovniku), nebo struktura stejna jako mods:mods/mods:name, ktery obsahuje podlementy, ne text-->
-                        <expectedContent/>
+                        <expectedElements>
+                            <element name="mods:namePart" mandatory="true">
+                                <expectedContent/>
+                            </element>
+                            <element name="mods:nameIdentifier" mandatory="false">
+                                <expectedContent/>
+                            </element>
+                        </expectedElements>
                     </element>
                 </expectedElements>
             </element>

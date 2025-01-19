@@ -392,33 +392,11 @@
                     </element>
 
                     <element name="mods:name" mandatory="false">
-                        <!--Tady neni úplně jasné, co může/musi element obsahovat. V DMF se píše
-                        "Struktura a atributy stejné jako pro údaje o původcích – viz element <name>"
-                        Nicméně dále se struktura upřesňuje uvedením namePart bez dalšího popisu atributů
-                        a už se nemluví třeba o role.
-                        Udělal jsem kompromis - požadují se stejné atributy, jako u nadřazeného name,
-                        ale jen jediný subelement namePart s celým obsahem, žádné elementy role.-->
-                        <expectedAttributes>
-                            <attribute name="type" mandatory="false">
-                                <expectedContent>
-                                    <oneOf>
-                                        <value>personal</value>
-                                        <value>corporate</value>
-                                        <value>conference</value>
-                                        <value>family</value>
-                                    </oneOf>
-                                </expectedContent>
-                            </attribute>
-
-                            <attribute name="usage" mandatory="false">
-                                <expectedContent>
-                                    <value>primary</value>
-                                </expectedContent>
-                            </attribute>
-                        </expectedAttributes>
                         <expectedElements>
-                            <!--namePart obsahující celé jméno, nebo se nejedná o osobu-->
-                            <element name="mods:namePart" specification="not(@type)">
+                            <element name="mods:namePart" mandatory="true">
+                                <expectedContent/>
+                            </element>
+                            <element name="mods:nameIdentifier" mandatory="false">
                                 <expectedContent/>
                             </element>
                         </expectedElements>

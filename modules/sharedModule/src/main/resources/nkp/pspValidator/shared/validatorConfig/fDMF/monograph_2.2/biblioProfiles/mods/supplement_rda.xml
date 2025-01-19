@@ -590,10 +590,11 @@
 
                     <element name="mods:name" mandatory="false">
                         <expectedElements>
-                            <element name="mods:namePart" mandatory="false">
-                                <expectedContent>
-                                    <!--TODO: V DMF je "použít kontrolovaný slovník, například ... " - tj. kontrolovaný slovník NENÍ vyžadován DMF-->
-                                </expectedContent>
+                            <element name="mods:namePart" mandatory="true">
+                                <expectedContent/>
+                            </element>
+                            <element name="mods:nameIdentifier" mandatory="false">
+                                <expectedContent/>
                             </element>
                         </expectedElements>
                     </element>

@@ -714,8 +714,14 @@
                     </element>
 
                     <element name="mods:name" mandatory="false">
-                        <!--V DMF je "použít kontrolovaný slovník, například ... " - tj. kontrolovaný slovník NENÍ vyžadován DMF-->
-                        <expectedContent/>
+                        <expectedElements>
+                            <element name="mods:namePart" mandatory="true">
+                                <expectedContent/>
+                            </element>
+                            <element name="mods:nameIdentifier" mandatory="false">
+                                <expectedContent/>
+                            </element>
+                        </expectedElements>
                     </element>
                 </expectedElements>
             </element>
