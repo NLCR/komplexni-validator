@@ -731,7 +731,7 @@
                         <expectedAttributes>
                             <attribute name="authority" mandatory="false">
                                 <expectedContent>
-                                    <value>marcorg</value>
+                                    <value>siglaADR</value>
                                 </expectedContent>
                             </attribute>
                         </expectedAttributes>
