@@ -376,36 +376,21 @@
                 </expectedElements>
             </element>
 
-            <element name="mods:classification" specification="not(@edition)" mandatory="false">
-                <!--Mezinarodni desetinne trideni-->
+            <!--Konspekt a mezinarodni desetinne trideni dohromady-->
+            <element name="mods:classification" mandatory="false">
                 <expectedAttributes>
                     <attribute name="authority">
-                        <recommendedContent>
-                            <oneOf>
-                                <value>udc</value>
-                                <value>Konspekt</value>
-                            </oneOf>
-                        </recommendedContent>
-                    </attribute>
-                </expectedAttributes>
-                <expectedContent/>
-            </element>
-
-            <element name="mods:classification" specification="boolean(@edition)" mandatory="false">
-                <!--Klasifikační údaje věcného třídění podle Konspektu-->
-                <expectedAttributes>
-                    <attribute name="authority">
-                        <recommendedContent>
-                            <oneOf>
-                                <value>udc</value>
-                                <value>Konspekt</value>
-                            </oneOf>
-                        </recommendedContent>
-                    </attribute>
-
-                    <attribute name="edition">
                         <expectedContent>
-                            <!--hodnota "Konspekt" je zde nejspíš jen doporučená-->
+                            <oneOf>
+                                <value>udc</value>
+                                <value>Konspekt</value>
+                            </oneOf>
+                        </expectedContent>
+                    </attribute>
+
+                    <attribute name="edition" mandatory="false">
+                        <expectedContent>
+                            <value>Konspekt</value>
                         </expectedContent>
                     </attribute>
                 </expectedAttributes>
