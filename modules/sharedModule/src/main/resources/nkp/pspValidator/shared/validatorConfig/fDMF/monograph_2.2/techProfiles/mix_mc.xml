@@ -139,7 +139,7 @@
                                                                                 <expectedContent/>
                                                                             </element>
 
-                                                                            <element name="mix:iccProfileURL" mandatory="false" repeatable="false">
+                                                                            <element name="mix:iccProfileURI" mandatory="false" repeatable="false">
                                                                                 <expectedContent/>
                                                                             </element>
                                                                         </expectedElements>
@@ -303,7 +303,7 @@
                                                                 </expectedContent>
                                                             </element>
 
-                                                            <element name="mix:targetID" mandatory="true" repeatable="true">
+                                                            <element name="mix:TargetID" mandatory="true" repeatable="true">
                                                                 <expectedElements>
                                                                     <element name="mix:targetManufacturer" mandatory="true" repeatable="false">
                                                                         <expectedContent/>
