@@ -651,7 +651,7 @@
 
                     <element name="mods:languageOfCataloging" mandatory="false">
                         <expectedElements>
-                            <element name="mods:languageTerm" mandatory="false">
+                            <element name="mods:languageTerm" mandatory="true">
                                 <expectedAttributes>
                                     <attribute name="authority" mandatory="false">
                                         <expectedContent>
