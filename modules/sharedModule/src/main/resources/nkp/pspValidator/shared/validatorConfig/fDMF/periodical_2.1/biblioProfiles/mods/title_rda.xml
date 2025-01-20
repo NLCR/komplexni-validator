@@ -797,33 +797,23 @@
                 </expectedElements>
             </element>
 
-            <!--Mezinarodni desetinne trideni-->
-            <element name="mods:classification" specification="not(@edition)" mandatory="false">
+            <!--Konspekt a mezinarodni desetinne trideni dohromady-->
+            <element name="mods:classification" mandatory="false">
                 <expectedAttributes>
                     <attribute name="authority">
-                        <recommendedContent>
-                            <oneOf>
-                                <value>udc</value>
-                            </oneOf>
-                        </recommendedContent>
-                    </attribute>
-                </expectedAttributes>
-                <expectedContent/>
-            </element>
-
-            <!--Konspekt-->
-            <element name="mods:classification" specification="boolean(@edition)" mandatory="false">
-                <expectedAttributes>
-                    <attribute name="authority">
-                        <recommendedContent>
+                        <expectedContent>
                             <oneOf>
                                 <value>udc</value>
                                 <value>Konspekt</value>
                             </oneOf>
-                        </recommendedContent>
+                        </expectedContent>
                     </attribute>
 
-                    <attribute name="edition"/>
+                    <attribute name="edition" mandatory="false">
+                        <expectedContent>
+                            <value>Konspekt</value>
+                        </expectedContent>
+                    </attribute>
                 </expectedAttributes>
                 <expectedContent/>
             </element>
