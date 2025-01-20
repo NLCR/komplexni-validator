@@ -35,7 +35,6 @@
                                             <xs:enumeration value="isbn"/>
                                             <xs:enumeration value="issn"/>
                                             <xs:enumeration value="ccnb"/>
-                                            <xs:enumeration value="urnnbn"/>
                                             <xs:enumeration value="uuid"/>
                                         </xs:restriction>
                                     </xs:simpleType>
@@ -98,6 +97,7 @@
             <xs:enumeration value="1.8"/>
             <xs:enumeration value="1.9"/>
             <xs:enumeration value="2.0"/>
+            <xs:enumeration value="2.1"/>
         </xs:restriction>
     </xs:simpleType>
 
