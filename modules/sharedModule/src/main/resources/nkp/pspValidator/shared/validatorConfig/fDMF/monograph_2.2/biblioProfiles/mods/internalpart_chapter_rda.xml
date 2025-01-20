@@ -80,6 +80,11 @@
                             </oneOf>
                         </expectedContent>
                     </attribute>
+                    <attribute name="usage" mandatory="false">
+                        <expectedContent>
+                            <value>primary</value>
+                        </expectedContent>
+                    </attribute>
                 </expectedAttributes>
                 <expectedElements>
                     <element name="mods:namePart" specification="@type='date'" mandatory="false">
