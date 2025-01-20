@@ -54,6 +54,10 @@
                         <expectedContent/>
                     </element>
 
+                    <element name="mods:subTitle" mandatory="false">
+                        <expectedContent/>
+                    </element>
+
                     <element name="mods:partNumber" mandatory="false">
                         <expectedContent/>
                     </element>
