@@ -84,6 +84,14 @@
                         <expectedContent/>
                     </element>
 
+                    <element name="mods:alternativeName" mandatory="false">
+                        <expectedElements>
+                            <element name="mods:namePart" mandatory="true">
+                                <expectedContent/>
+                            </element>
+                        </expectedElements>
+                    </element>
+
                     <element name="mods:nameIdentifier" mandatory="false">
                         <expectedContent/>
                     </element>
@@ -180,5 +188,3 @@
         </expectedElements>
     </rootElement>
 </metadataProfile>
-
-	
