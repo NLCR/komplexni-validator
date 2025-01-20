@@ -667,6 +667,20 @@
             </element>
 
             <element name="mods:subject" mandatory="false">
+                <expectedAttributes>
+                    <attribute name="authority" mandatory="false">
+                        <recommendedContent>
+                            <oneOf>
+                                <value>czenas</value>
+                                <value>eczenas</value>
+                                <value>Konspekt</value>
+                                <value>czmesh</value>
+                                <value>mednas</value>
+                                <value>msvkth</value>
+                            </oneOf>
+                        </recommendedContent>
+                    </attribute>
+                </expectedAttributes>
                 <expectedElements>
                     <element name="mods:topic" mandatory="false">
                         <expectedAttributes>
