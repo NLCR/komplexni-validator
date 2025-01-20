@@ -34,7 +34,7 @@
             </attribute>
             <attribute name="version" mandatory="false">
                 <expectedContent>
-                    <value>3.6</value>
+                    <value>3.8</value>
                 </expectedContent>
             </attribute>
         </expectedAttributes>
