@@ -107,7 +107,7 @@
 
                     <element name="mods:role" mandatory="false">
                         <expectedElements>
-                            <element name="mods:roleTerm" mandatory="false">
+                            <element name="mods:roleTerm" mandatory="true">
                                 <expectedAttributes>
                                     <attribute name="type">
                                         <expectedContent>
