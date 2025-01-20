@@ -114,7 +114,7 @@
 
             <element name="mods:name" mandatory="false">
                 <expectedAttributes>
-                    <attribute name="type">
+                    <attribute name="type" mandatory="false">
                         <expectedContent>
                             <oneOf>
                                 <value>personal</value>
@@ -213,7 +213,10 @@
                                 <expectedAttributes>
                                     <attribute name="type" mandatory="false">
                                         <expectedContent>
-                                            <!--doporucena hodnota 'text', ale asi mozne cokoli-->
+                                            <oneOf>
+                                                <value>text</value>
+                                                <value>code</value>
+                                            </oneOf>
                                         </expectedContent>
                                     </attribute>
 
@@ -336,6 +339,19 @@
             </element>
 
             <element name="mods:subject" mandatory="false">
+                <expectedAttributes>
+                    <attribute name="authority" mandatory="false">
+                        <expectedContent>
+                            <oneOf>
+                                <value>czenas</value>
+                                <value>eczenas</value>
+                                <value>mednas</value>
+                                <value>czmesh</value>
+                                <value>Konspekt</value>
+                            </oneOf>
+                        </expectedContent>
+                    </attribute>
+                </expectedAttributes>
                 <expectedElements>
                     <element name="mods:topic" mandatory="false">
                         <expectedAttributes>
@@ -430,7 +446,7 @@
 
             <element name="mods:location" mandatory="false">
                 <expectedElements>
-                    <element name="mods:physicalLocation" mandatory="false" repeatable="false">
+                    <element name="mods:physicalLocation" mandatory="true" repeatable="false">
                         <expectedAttributes>
                             <attribute name="authority" mandatory="false">
                                 <expectedContent>
