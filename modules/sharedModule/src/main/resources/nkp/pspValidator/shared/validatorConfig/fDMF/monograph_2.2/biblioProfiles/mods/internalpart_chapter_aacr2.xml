@@ -242,24 +242,7 @@
                 </extraRules>
             </element>
 
-            <element name="mods:physicalDescription" mandatory="false">
-                <expectedElements>
-                    <element name="mods:form" mandatory="false">
-                        <expectedAttributes>
-                            <attribute name="authority" mandatory="true">
-                                <expectedContent>
-                                    <oneOf>
-                                        <value>marcform</value>
-                                        <value>marcsmd</value>
-                                        <value>gmd</value>
-                                    </oneOf>
-                                </expectedContent>
-                            </attribute>
-                        </expectedAttributes>
-                        <expectedContent/>
-                    </element>
-                </expectedElements>
-            </element>
+
 
             <element name="mods:abstract" mandatory="false">
                 <expectedContent/>
@@ -270,6 +253,20 @@
             </element>
 
             <element name="mods:subject" mandatory="false">
+                <expectedAttributes>
+                    <attribute name="authority" mandatory="false">
+                        <expectedContent>
+                            <oneOf>
+                                <value>czenas</value>
+                                <value>eczenas</value>
+                                <value>czmesh</value>
+                                <value>mednas</value>
+                                <value>msvkth</value>
+                                <value>agrovoc</value>
+                            </oneOf>
+                        </expectedContent>
+                    </attribute>
+                </expectedAttributes>
                 <expectedElements>
                     <element name="mods:topic">
                         <expectedAttributes>
