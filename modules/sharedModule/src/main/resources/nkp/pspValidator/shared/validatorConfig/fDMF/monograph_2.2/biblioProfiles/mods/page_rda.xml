@@ -71,44 +71,50 @@
             <element name="mods:part" specification="mods:detail[@type='pageNumber']" mandatory="false">
                 <expectedAttributes>
                     <attribute name="type">
-                        <recommendedContent>
+                        <expectedContent>
                             <!--POZOR: v textu DMF (s. 104) dále neuvedeno, namísto toho:
                             Možné hodnoty vychází z povolených hodnot v aktuální verzi Pravidel pro popis monografií-->
                             <oneOf>
+                                <!-- seznam dle PPP mono v2.3 ze dne 17.12.2024, s. 8-12. -->
                                 <value>frontJacket</value>
-                                <value>titlePage</value>
-                                <value>tableOfContents</value>
-                                <value>blank</value>
-                                <value>advertisement</value>
-                                <value>normalPage</value>
-                                <value>jacket</value>
                                 <value>cover</value>
                                 <value>frontCover</value>
-                                <value>frontEndPaper</value>
                                 <value>backCover</value>
-                                <value>backEndPaper</value>
                                 <value>frontEndSheet</value>
                                 <value>backEndSheet</value>
-                                <value>spine</value>
-                                <value>index</value>
+                                <value>frontEndPaper</value>
+                                <value>backEndPaper</value>
+                                <value>titlePage</value>
+                                <value>preface</value>
+                                <value>introduction</value>
+                                <value>normalPage</value>
+                                <value>blank</value>
                                 <value>illustration</value>
-                                <value>listOfIllustrations</value>
                                 <value>map</value>
-                                <value>listOfMaps</value>
-                                <value>listOfTables</value>
                                 <value>table</value>
-                                <value>flyLeaf</value>
+                                <value>advertisement</value>
+                                <value>impressum</value>
+                                <value>colophon</value>
+                                <value>frontispiece</value>
+                                <value>imprimatur</value>
                                 <value>dedication</value>
                                 <value>errata</value>
-                                <value>frontispiece</value>
-                                <value>edge</value>
-                                <value>imprimatur</value>
+                                <value>sheetMusic</value>
                                 <value>appendix</value>
                                 <value>bibliography</value>
-                                <value>sheetMusic</value>
-                                <value>impressum</value>
+                                <value>afterword</value>
+                                <value>conclusion</value>
+                                <value>tableOfContents</value>
+                                <value>index</value>
+                                <value>listOfIllustrations</value>
+                                <value>listOfMaps</value>
+                                <value>listOfTables</value>
+                                <value>edge</value>
+                                <value>spine</value>
+                                <value>jacket</value>
+                                <value>flyLeaf</value>
                             </oneOf>
-                        </recommendedContent>
+                        </expectedContent>
                     </attribute>
                 </expectedAttributes>
                 <expectedElements>
@@ -177,44 +183,48 @@
                         POZOR: v textu DMF (s. 105) dále neuvedeno, namísto toho:
                         Možné hodnoty vychází z povolených hodnot v aktuální verzi Pravidel pro popis monografií
                         -->
-                        <recommendedContent>
+                        <expectedContent>
                             <oneOf>
-                                <value>titlePage</value>
-                                <value>tableOfContents</value>
-                                <value>blank</value>
-                                <value>advertisement</value>
-                                <value>normalPage</value>
-                                <value>jacket</value>
+                                <!-- seznam dle PPP mono v2.3 ze dne 17.12.2024, s. 8-12. -->
+                                <value>frontJacket</value>
                                 <value>cover</value>
                                 <value>frontCover</value>
-                                <value>frontEndPaper</value>
                                 <value>backCover</value>
-                                <value>backEndPaper</value>
                                 <value>frontEndSheet</value>
                                 <value>backEndSheet</value>
-                                <value>spine</value>
-                                <value>frontJacket</value>
-
-                                <!--další typy-->
-                                <value>index</value>
+                                <value>frontEndPaper</value>
+                                <value>backEndPaper</value>
+                                <value>titlePage</value>
+                                <value>preface</value>
+                                <value>introduction</value>
+                                <value>normalPage</value>
+                                <value>blank</value>
                                 <value>illustration</value>
-                                <value>listOfIllustrations</value>
                                 <value>map</value>
-                                <value>listOfMaps</value>
-                                <value>listOfTables</value>
                                 <value>table</value>
-                                <value>flyLeaf</value>
+                                <value>advertisement</value>
+                                <value>impressum</value>
+                                <value>colophon</value>
+                                <value>frontispiece</value>
+                                <value>imprimatur</value>
                                 <value>dedication</value>
                                 <value>errata</value>
-                                <value>frontispiece</value>
-                                <value>edge</value>
-                                <value>imprimatur</value>
+                                <value>sheetMusic</value>
                                 <value>appendix</value>
                                 <value>bibliography</value>
-                                <value>sheetMusic</value>
-                                <value>impressum</value>
+                                <value>afterword</value>
+                                <value>conclusion</value>
+                                <value>tableOfContents</value>
+                                <value>index</value>
+                                <value>listOfIllustrations</value>
+                                <value>listOfMaps</value>
+                                <value>listOfTables</value>
+                                <value>edge</value>
+                                <value>spine</value>
+                                <value>jacket</value>
+                                <value>flyLeaf</value>
                             </oneOf>
-                        </recommendedContent>
+                        </expectedContent>
                     </attribute>
                 </expectedAttributes>
                 <expectedContent>
