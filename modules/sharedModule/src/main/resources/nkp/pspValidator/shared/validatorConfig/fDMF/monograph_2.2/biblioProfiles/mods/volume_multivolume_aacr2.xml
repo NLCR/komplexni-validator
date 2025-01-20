@@ -249,6 +249,21 @@
                         <expectedContent/>
                     </element>
 
+                    <element name="mods:dateOther" mandatory="false">
+                        <expectedAttributes>
+                            <attribute name="type">
+                                <expectedContent>
+                                    <value>manufacture</value>
+                                </expectedContent>
+                            </attribute>
+                        </expectedAttributes>
+                        <expectedContent/>
+                    </element>
+
+                    <element name="mods:copyrightDate" mandatory="false">
+                        <expectedContent/>
+                    </element>
+
                     <element name="mods:dateCreated" mandatory="false">
                         <expectedContent/>
                     </element>
@@ -506,6 +521,19 @@
                 </expectedContent>
             </element>
 
+            <!--identifier issn-->
+            <element name="mods:identifier" specification="@type='issn'" mandatory="false">
+                <expectedAttributes>
+                    <attribute name="type"/>
+                    <attribute name="invalid" mandatory="false">
+                        <expectedContent>
+                            <value>yes</value>
+                        </expectedContent>
+                    </attribute>
+                </expectedAttributes>
+                <expectedContent/>
+            </element>
+
             <!--identifier ismnb-->
             <element name="mods:identifier" specification="@type='ismn'" mandatory="false">
                 <expectedAttributes>
@@ -521,7 +549,7 @@
 
             <!--identifier other-->
             <element name="mods:identifier"
-                     specification="@type!='uuid' and @type!='urnnbn' and @type!='ccnb' and @type!='isbn' and @type!='ismn'"
+                     specification="@type!='uuid' and @type!='urnnbn' and @type!='ccnb' and @type!='isbn' and @type!='issn' and @type!='ismn'"
                      mandatory="false">
                 <expectedAttributes>
                     <attribute name="type" mandatory="false"/>

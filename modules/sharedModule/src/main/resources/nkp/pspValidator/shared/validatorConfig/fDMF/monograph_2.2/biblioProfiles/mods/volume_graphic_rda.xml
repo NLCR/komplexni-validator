@@ -807,6 +807,18 @@
                 <expectedContent/>
             </element>
 
+            <element name="mods:identifier" specification="@type='issn'" mandatory="false">
+                <expectedAttributes>
+                    <attribute name="type"/>
+                    <attribute name="invalid" mandatory="false">
+                        <expectedContent>
+                            <value>yes</value>
+                        </expectedContent>
+                    </attribute>
+                </expectedAttributes>
+                <expectedContent/>
+            </element>
+
             <element name="mods:identifier" specification="@type='isbn'" mandatory="false">
                 <expectedAttributes>
                     <attribute name="type"/>
@@ -822,7 +834,7 @@
             </element>
 
             <element name="mods:identifier"
-                     specification="@type!='urnnbn' and @type!='uuid' and @type!='ccnb' and @type!='isbn'"
+                     specification="@type!='urnnbn' and @type!='uuid' and @type!='ccnb' and @type!='isbn' and @type!='issn'"
                      mandatory="false">
                 <expectedAttributes>
                     <attribute name="type" mandatory="false"/>
