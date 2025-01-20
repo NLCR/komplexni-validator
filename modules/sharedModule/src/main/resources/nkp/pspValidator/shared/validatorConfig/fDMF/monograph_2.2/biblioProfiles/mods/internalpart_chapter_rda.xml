@@ -172,26 +172,31 @@
                     <attribute name="type" mandatory="false">
                         <expectedContent>
                             <oneOf>
-                                <value>table of content</value>
-                                <value>advertisement</value>
                                 <value>abstract</value>
-                                <value>introduction</value>
-                                <value>review</value>
-                                <value>dedication</value>
+                                <value>annotation</value>
                                 <value>bibliography</value>
-                                <value>editorsNote</value>
-                                <value>preface</value>
-                                <value>chapter</value>
                                 <value>article</value>
-                                <value>index</value>
-                                <value>otherNote</value>
-                                <value>contributors</value>
-                                <value>debate</value>
-                                <value>figure</value>
+                                <value>dedication</value>
+                                <value>afterword</value>
+                                <value>editorsNote</value>
+                                <value>advertisement</value>
+                                <value>chapter</value>
+                                <value>bibliographicalPortrait</value>
                                 <value>obituary</value>
-                                <value>remark</value>
+                                <value>sheetMusic</value>
+                                <value>tableOfContents</value>
+                                <value>subchapter</value>
+                                <value>preface</value>
+                                <value>contributors</value>
+                                <value>review</value>
+                                <value>index</value>
+                                <value>summary</value>
+                                <value>interview</value>
                                 <value>study</value>
                                 <value>technicalPlanScheme</value>
+                                <value>introduction</value>
+                                <value>conclusion</value>
+                                <value>otherNote</value>
                                 <value>unspecified</value>
                             </oneOf>
                         </expectedContent>

@@ -173,14 +173,15 @@
                     <attribute name="type" mandatory="false">
                         <expectedContent>
                             <oneOf>
-                                <value>table</value>
-                                <value>illustration</value>
-                                <value>chart</value>
                                 <value>photograph</value>
+                                <value>chart</value>
                                 <value>graphic</value>
-                                <value>map</value>
+                                <value>illustration</value>
                                 <value>advertisement</value>
-                                <value>cover</value>
+                                <value>map</value>
+                                <value>plate</value>
+                                <value>table</value>
+                                <value>technicalPlanScheme</value>
                                 <value>unspecified</value>
                             </oneOf>
                         </expectedContent>
