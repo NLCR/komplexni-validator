@@ -898,24 +898,7 @@
                 </expectedElements>
             </element>
 
-            <element name="mods:part" mandatory="false">
-                <expectedAttributes>
-                    <attribute name="type" mandatory="false">
-                        <expectedContent>
-                            <value>volume</value>
-                        </expectedContent>
-                    </attribute>
-                </expectedAttributes>
-                <expectedElements>
-                    <element name="mods:detail" mandatory="false">
-                        <expectedElements>
-                            <element name="mods:caption" mandatory="false">
-                                <expectedContent/>
-                            </element>
-                        </expectedElements>
-                    </element>
-                </expectedElements>
-            </element>
+            
 
             <element name="mods:recordInfo">
                 <expectedElements>
