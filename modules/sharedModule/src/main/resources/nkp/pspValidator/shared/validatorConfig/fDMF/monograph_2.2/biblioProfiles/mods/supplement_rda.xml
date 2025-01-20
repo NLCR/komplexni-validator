@@ -80,6 +80,11 @@
                             </oneOf>
                         </expectedContent>
                     </attribute>
+                    <attribute name="usage" mandatory="false">
+                        <expectedContent>
+                            <value>primary</value>
+                        </expectedContent>
+                    </attribute>
                 </expectedAttributes>
                 <expectedElements>
                     <element name="mods:namePart" specification="@type='date'" mandatory="false">
@@ -131,14 +136,14 @@
 
                     <element name="mods:role" mandatory="false">
                         <expectedElements>
-                            <element name="mods:roleTerm" mandatory="false">
+                            <element name="mods:roleTerm" mandatory="true">
                                 <expectedAttributes>
                                     <attribute name="type">
                                         <expectedContent>
                                             <value>code</value>
                                         </expectedContent>
                                     </attribute>
-                                    <attribute name="authority" mandatory="false">
+                                    <attribute name="authority" mandatory="true">
                                         <recommendedContent>
                                             <value>marcrelator</value>
                                         </recommendedContent>
