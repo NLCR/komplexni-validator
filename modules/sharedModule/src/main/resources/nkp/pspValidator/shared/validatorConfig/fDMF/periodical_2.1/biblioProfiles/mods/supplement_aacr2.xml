@@ -197,8 +197,24 @@
                         </expectedElements>
                     </element>
 
-                    <element name="mods:publisher" mandatory="false">
-                        <expectedContent/>
+                    <element name="mods:agent" mandatory="false">
+                        <expectedElements>
+                            <element name="mods:namePart" mandatory="true">
+                                <expectedContent/>
+                            </element>
+                            <element name="mods:role" mandatory="true">
+                                <expectedElements>
+                                    <element name="mods:roleTerm" mandatory="true">
+                                        <expectedContent>
+                                            <oneOf>
+                                                <value>publisher</value>
+                                                <value>manufacturer</value>
+                                            </oneOf>
+                                        </expectedContent>
+                                    </element>
+                                </expectedElements>
+                            </element>
+                        </expectedElements>
                     </element>
 
                     <element name="mods:dateIssued" mandatory="false">
