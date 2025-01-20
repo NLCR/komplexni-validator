@@ -566,7 +566,9 @@
                                 </expectedContent>
                             </attribute>
                         </expectedAttributes>
-                        <expectedContent/>
+                        <expectedContent>
+                            <fromDictionary name="siglaInstitutionCodes"/>
+                        </expectedContent>
                     </element>
 
                     <element name="mods:recordCreationDate">
