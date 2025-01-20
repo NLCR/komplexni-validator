@@ -242,11 +242,19 @@
                                     </oneOf>
                                 </expectedContent>
                             </attribute>
+                            <attribute name="valueURI" mandatory="false">
+                                <expectedContent/>
+                            </attribute>
                         </expectedAttributes>
                         <expectedContent/>
                     </element>
 
                     <element name="mods:geographic" mandatory="false">
+                        <expectedAttributes>
+                            <attribute name="valueURI" mandatory="false">
+                                <expectedContent/>
+                            </attribute>
+                        </expectedAttributes>
                         <expectedContent>
                             <!--V DMF je "použít kontrolovaný slovník, například ... " - tj. kontrolovaný slovník NENÍ vyžadován DMF-->
                         </expectedContent>
