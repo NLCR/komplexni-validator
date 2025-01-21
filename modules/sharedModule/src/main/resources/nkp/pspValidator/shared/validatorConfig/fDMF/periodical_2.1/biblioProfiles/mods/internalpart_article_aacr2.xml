@@ -206,7 +206,7 @@
                 </extraRules>
             </element>
 
-            
+
 
             <element name="mods:abstract" mandatory="false">
                 <expectedContent/>
@@ -271,10 +271,11 @@
                             </attribute>
                         </expectedAttributes>
                         <expectedElements>
-                            <element name="mods:namePart" mandatory="false">
-                                <expectedContent>
-                                    <!--V DMF je "použít kontrolovaný slovník, například ... " - tj. kontrolovaný slovník NENÍ vyžadován DMF-->
-                                </expectedContent>
+                            <element name="mods:namePart">
+                                <expectedContent/>
+                            </element>
+                            <element name="mods:nameIdentifier" mandatory="false">
+                                <expectedContent/>
                             </element>
                         </expectedElements>
                     </element>
