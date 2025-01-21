@@ -80,6 +80,11 @@
                             </oneOf>
                         </expectedContent>
                     </attribute>
+                    <attribute name="usage" mandatory="false">
+                        <expectedContent>
+                            <value>primary</value>
+                        </expectedContent>
+                    </attribute>
                 </expectedAttributes>
                 <expectedElements>
                     <element name="mods:namePart" mandatory="false">
@@ -201,23 +206,7 @@
                 </extraRules>
             </element>
 
-            <element name="mods:physicalDescription" mandatory="false">
-                <expectedElements>
-                    <element name="mods:form" mandatory="false">
-                        <expectedAttributes>
-                            <attribute name="authority" mandatory="false">
-                                <recommendedContent>
-                                    <oneOf>
-                                        <value>marcform</value>
-                                        <value>gmd</value>
-                                    </oneOf>
-                                </recommendedContent>
-                            </attribute>
-                        </expectedAttributes>
-                        <expectedContent/>
-                    </element>
-                </expectedElements>
-            </element>
+            
 
             <element name="mods:abstract" mandatory="false">
                 <expectedContent/>
