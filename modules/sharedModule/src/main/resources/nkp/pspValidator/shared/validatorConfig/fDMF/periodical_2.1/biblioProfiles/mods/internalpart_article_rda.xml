@@ -156,18 +156,32 @@
                     <attribute name="type" mandatory="false">
                         <expectedContent>
                             <oneOf>
-                                <value>news</value>
-                                <value>table of content</value>
-                                <value>advertisement</value>
+                                <!-- seznam dle PPP perio v8.6 ze dne 17.12.2024, s. 14-16. -->
                                 <value>abstract</value>
-                                <value>introduction</value>
-                                <value>review</value>
-                                <value>dedication</value>
+                                <value>annotation</value>
                                 <value>bibliography</value>
+                                <value>dedication</value>
+                                <value>afterword</value>
                                 <value>editorsNote</value>
+                                <value>mainArticle</value>
+                                <value>advertisement</value>
+                                <value>bibliographicalPortrait</value>
+                                <value>obituary</value>
+                                <value>sheetMusic</value>
+                                <value>tableOfContents</value>
                                 <value>preface</value>
-                                <value>mainarticle</value>
+                                <value>contributors</value>
+                                <value>review</value>
                                 <value>index</value>
+                                <value>summary</value>
+                                <value>interview</value>
+                                <value>study</value>
+                                <value>technicalPlanScheme</value>
+                                <value>introduction</value>
+                                <value>editorial</value>
+                                <value>conclusion</value>
+                                <value>news</value>
+                                <value>otherNote</value>
                                 <value>unspecified</value>
                             </oneOf>
                         </expectedContent>

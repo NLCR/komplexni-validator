@@ -151,14 +151,16 @@
                     <attribute name="type" mandatory="false">
                         <expectedContent>
                             <oneOf>
-                                <value>table</value>
-                                <value>illustration</value>
-                                <value>chart</value>
+                                <!-- seznam dle PPP perio v8.6 ze dne 17.12.2024, s. 16-17. -->
                                 <value>photograph</value>
+                                <value>chart</value>
                                 <value>graphic</value>
-                                <value>map</value>
+                                <value>illustration</value>
                                 <value>advertisement</value>
-                                <value>cover</value>
+                                <value>map</value>
+                                <value>plate</value>
+                                <value>table</value>
+                                <value>technicalPlanScheme</value>
                                 <value>unspecified</value>
                             </oneOf>
                         </expectedContent>
