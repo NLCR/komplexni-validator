@@ -71,6 +71,16 @@
             <!--mutační vydání-->
             <element name="mods:titleInfo" mandatory="false" specification="boolean(@otherType)">
                 <expectedAttributes>
+                    <attribute name="type" mandatory="false">
+                        <expectedContent>
+                            <oneOf>
+                                <value>abbreviated</value>
+                                <value>alternative</value>
+                                <value>translated</value>
+                                <value>uniform</value>
+                            </oneOf>
+                        </expectedContent>
+                    </attribute>
                     <attribute name="otherType">
                         <expectedContent>
                             <value>mutational edition</value>
@@ -83,18 +93,6 @@
                     </element>
 
                     <element name="mods:title">
-                        <expectedAttributes>
-                            <attribute name="type" mandatory="false">
-                                <expectedContent>
-                                    <oneOf>
-                                        <value>abbreviated</value>
-                                        <value>alternative</value>
-                                        <value>translated</value>
-                                        <value>uniform</value>
-                                    </oneOf>
-                                </expectedContent>
-                            </attribute>
-                        </expectedAttributes>
                         <expectedContent/>
                     </element>
 
@@ -380,6 +378,30 @@
                         </expectedElements>
                     </element>
                 </expectedElements>
+            </element>
+
+            <element name="mods:relatedItem" mandatory="false" ignoreUnexpectedChildElements="true">
+                <expectedAttributes>
+                    <attribute name="type" mandatory="false">
+                        <expectedContent>
+                            <oneOf>
+                                <value>preceding</value>
+                                <value>succeeding</value>
+                                <value>original</value>
+                                <value>host</value>
+                                <value>constituent</value>
+                                <value>series</value>
+                                <value>otherVersion</value>
+                                <value>otherFormat</value>
+                                <value>isReferencedBy</value>
+                            </oneOf>
+                        </expectedContent>
+                    </attribute>
+                    <attribute name="otherType" mandatory="false"/>
+                    <attribute name="otherTypeURI" mandatory="false"/>
+                    <attribute name="otherTypeAuth" mandatory="false"/>
+                    <attribute name="otherTypeAuthURI" mandatory="false"/>
+                </expectedAttributes>
             </element>
 
             <!--identifikatory-->
