@@ -430,7 +430,10 @@
 
                     <element name="mods:name" mandatory="false">
                         <expectedElements>
-                            <element name="mods:namePart" mandatory="false">
+                            <element name="mods:namePart" mandatory="true">
+                                <expectedContent/>
+                            </element>
+                            <element name="mods:nameIdentifier" mandatory="false">
                                 <expectedContent/>
                             </element>
                         </expectedElements>
