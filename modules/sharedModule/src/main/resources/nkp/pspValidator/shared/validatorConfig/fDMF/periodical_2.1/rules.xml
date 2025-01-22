@@ -2717,56 +2717,38 @@
                     <value name="page_types" type="STRING_LIST">
                         <evaluation functionName="buildListOfStrings">
                             <params>
-                                <!--https://docs.google.com/document/d/1zSriHPdnUY5d_tKv0M8a6nEym560DKh2H6XZ24tGAEw/edit?pli=1#heading=h.g5ucgez1xrbr-->
-                                <!--základní typy-->
-                                <value name="string" type="STRING">titlePage</value>
-                                <value name="string" type="STRING">tableOfContents</value>
-                                <value name="string" type="STRING">blank</value>
-                                <value name="string" type="STRING">advertisement</value>
-                                <value name="string" type="STRING">normalPage</value>
-                                <value name="string" type="STRING">jacket</value>
+                                <!-- seznam dle PPP perio v8.6 ze dne 17.12.2024, s. 8-12. -->
                                 <value name="string" type="STRING">cover</value>
                                 <value name="string" type="STRING">frontCover</value>
-                                <value name="string" type="STRING">frontMatter</value>
                                 <value name="string" type="STRING">backCover</value>
-                                <value name="string" type="STRING">backMatter</value>
                                 <value name="string" type="STRING">frontEndSheet</value>
                                 <value name="string" type="STRING">backEndSheet</value>
-                                <value name="string" type="STRING">spine</value>
-                                <value name="string" type="STRING">frontJacket</value>
-
-                                <!--další typy-->
-                                <value name="string" type="STRING">index</value>
+                                <value name="string" type="STRING">frontEndPaper</value>
+                                <value name="string" type="STRING">backEndPaper</value>
+                                <value name="string" type="STRING">titlePage</value>
+                                <value name="string" type="STRING">preface</value>
+                                <value name="string" type="STRING">introduction</value>
+                                <value name="string" type="STRING">normalPage</value>
+                                <value name="string" type="STRING">blank</value>
                                 <value name="string" type="STRING">illustration</value>
-                                <value name="string" type="STRING">listOfIllustrations</value>
                                 <value name="string" type="STRING">map</value>
-                                <value name="string" type="STRING">listOfMaps</value>
-                                <value name="string" type="STRING">listOfTables</value>
                                 <value name="string" type="STRING">table</value>
-                                <value name="string" type="STRING">flyLeaf</value>
+                                <value name="string" type="STRING">advertisement</value>
+                                <value name="string" type="STRING">colophon</value>
                                 <value name="string" type="STRING">dedication</value>
                                 <value name="string" type="STRING">errata</value>
-                                <value name="string" type="STRING">frontispiece</value>
-                                <value name="string" type="STRING">edge</value>
-                                <value name="string" type="STRING">printPermission</value>
-                                <value name="string" type="STRING">appendix</value>
-                                <value name="string" type="STRING">bibliography</value>
                                 <value name="string" type="STRING">sheetMusic</value>
-                                <value name="string" type="STRING">impressum</value>
-
-
-                                <!--Další možné typy stran pro vnitřní část dokumentu-article, doplněno z Pravidel pro popis periodik v. 8.3.1-->
-                                <value name="string" type="STRING">news</value>
-                                <value name="string" type="STRING">abstract</value>
-                                <value name="string" type="STRING">introduction</value>
-                                <value name="string" type="STRING">review</value>
-                                <value name="string" type="STRING">mainArticle</value>
-                                <value name="string" type="STRING">editorial</value>
-                                <value name="string" type="STRING">obituary</value>
-                                <value name="string" type="STRING">bibliographicalPortrait</value>
-                                <value name="string" type="STRING">colophon</value>
-                                <value name="string" type="STRING">interview</value>
-                                <value name="string" type="STRING">anotation</value>
+                                <value name="string" type="STRING">bibliography</value>
+                                <value name="string" type="STRING">afterword</value>
+                                <value name="string" type="STRING">conclusion</value>
+                                <value name="string" type="STRING">tableOfContents</value>
+                                <value name="string" type="STRING">index</value>
+                                <value name="string" type="STRING">listOfIllustrations</value>
+                                <value name="string" type="STRING">listOfMaps</value>
+                                <value name="string" type="STRING">listOfTables</value>
+                                <value name="string" type="STRING">spine</value>
+                                <value name="string" type="STRING">jacket</value>
+                                <value name="string" type="STRING">flyleaf</value>
                             </params>
                         </evaluation>
                     </value>

@@ -74,44 +74,38 @@
                     <attribute name="type">
                         <expectedContent>
                             <oneOf>
-                                <value>titlePage</value>
-                                <value>tableOfContents</value>
-                                <value>blank</value>
-                                <value>advertisement</value>
-                                <value>normalPage</value>
-                                <value>index</value>
-                                <value>listOfIllustrations</value>
-                                <value>illustration</value>
-                                <value>map</value>
-                                <value>listOfMaps</value>
-                                <value>listOfTables</value>
-                                <value>table</value>
-                                <value>bibliography</value>
-                                <value>dedication</value>
-                                <value>errata</value>
+                                <!-- seznam dle PPP perio v8.6 ze dne 17.12.2024, s. 8-12. -->
                                 <value>cover</value>
                                 <value>frontCover</value>
                                 <value>backCover</value>
                                 <value>frontEndSheet</value>
                                 <value>backEndSheet</value>
-                                <value>spine</value>
-                                <value>flyLeaf</value>
-                                <value>jacket</value>
-                                <value>frontJacket</value>
-
-                                <!--jen pro stranyv v ramci vnitrni casti (article)-->
-                                <value>news</value>
-                                <value>abstract</value>
+                                <value>frontEndPaper</value>
+                                <value>backEndPaper</value>
+                                <value>titlePage</value>
+                                <value>preface</value>
                                 <value>introduction</value>
-                                <value>review</value>
-                                <value>mainArticle</value>
-                                <value>editorial</value>
-                                <value>obituary</value>
-                                <value>bibliographicalPortrait</value>
+                                <value>normalPage</value>
+                                <value>blank</value>
+                                <value>illustration</value>
+                                <value>map</value>
+                                <value>table</value>
+                                <value>advertisement</value>
                                 <value>colophon</value>
-                                <value>interview</value>
-                                <!--TODO: je to anglicky, mělo by být "annotation"-->
-                                <value>anotation</value>
+                                <value>dedication</value>
+                                <value>errata</value>
+                                <value>sheetMusic</value>
+                                <value>bibliography</value>
+                                <value>afterword</value>
+                                <value>conclusion</value>
+                                <value>tableOfContents</value>
+                                <value>index</value>
+                                <value>listOfIllustrations</value>
+                                <value>listOfMaps</value>
+                                <value>listOfTables</value>
+                                <value>spine</value>
+                                <value>jacket</value>
+                                <value>flyleaf</value>
                             </oneOf>
                         </expectedContent>
                     </attribute>
@@ -257,5 +251,3 @@
         </expectedElements>
     </rootElement>
 </metadataProfile>
-
-	
