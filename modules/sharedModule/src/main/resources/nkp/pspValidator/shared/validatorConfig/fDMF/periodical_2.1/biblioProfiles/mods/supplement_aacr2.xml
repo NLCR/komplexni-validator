@@ -459,6 +459,30 @@
                 <expectedContent/>
             </element>
 
+            <element name="mods:relatedItem" mandatory="false" ignoreUnexpectedChildElements="true">
+                <expectedAttributes>
+                    <attribute name="type" mandatory="false">
+                        <expectedContent>
+                            <oneOf>
+                                <value>preceding</value>
+                                <value>succeeding</value>
+                                <value>original</value>
+                                <value>host</value>
+                                <value>constituent</value>
+                                <value>series</value>
+                                <value>otherVersion</value>
+                                <value>otherFormat</value>
+                                <value>isReferencedBy</value>
+                            </oneOf>
+                        </expectedContent>
+                    </attribute>
+                    <attribute name="otherType" mandatory="false"/>
+                    <attribute name="otherTypeURI" mandatory="false"/>
+                    <attribute name="otherTypeAuth" mandatory="false"/>
+                    <attribute name="otherTypeAuthURI" mandatory="false"/>
+                </expectedAttributes>
+            </element>
+
             <!-- identifiers -->
 
             <element name="mods:identifier" specification="@type='uuid'">
@@ -534,6 +558,103 @@
                     </attribute>
                 </expectedAttributes>
                 <expectedContent/>
+            </element>
+
+            <element name="mods:location" mandatory="false">
+                <expectedElements>
+                    <element name="mods:physicalLocation" mandatory="true" repeatable="false">
+                        <expectedAttributes>
+                            <attribute name="authority" mandatory="false">
+                                <expectedContent>
+                                    <value>siglaADR</value>
+                                </expectedContent>
+                            </attribute>
+                        </expectedAttributes>
+                        <expectedContent>
+                            <fromDictionary name="siglaInstitutionCodes"/>
+                        </expectedContent>
+                    </element>
+
+                    <element name="mods:shelfLocator" mandatory="false">
+                        <expectedContent/>
+                    </element>
+
+                    <element name="mods:url" mandatory="false">
+                        <expectedAttributes>
+                            <attribute name="note" mandatory="false"/>
+                        </expectedAttributes>
+                        <expectedContent/>
+                    </element>
+                </expectedElements>
+            </element>
+
+            <element name="mods:recordInfo">
+                <expectedElements>
+                    <element name="mods:descriptionStandard">
+                        <expectedContent>
+                            <value>aacr</value>
+                        </expectedContent>
+                    </element>
+
+                    <element name="mods:recordContentSource" mandatory="false">
+                        <expectedAttributes>
+                            <attribute name="authority" mandatory="false">
+                                <expectedContent>
+                                    <value>siglaADR</value>
+                                </expectedContent>
+                            </attribute>
+                        </expectedAttributes>
+                        <expectedContent>
+                            <fromDictionary name="siglaInstitutionCodes"/>
+                        </expectedContent>
+                    </element>
+
+                    <element name="mods:recordCreationDate">
+                        <expectedAttributes>
+                            <attribute name="encoding">
+                                <expectedContent>
+                                    <value>iso8601</value>
+                                </expectedContent>
+                            </attribute>
+                        </expectedAttributes>
+                        <expectedContent>
+                            <oneOf>
+                                <!--ISO 8601 na úroveň alespoň minut (basic format): např. 20190830T1535+01, 20190830T153544-23:30, 20190830T153559.123-->
+                                <regexp>^(?&lt;year&gt;[0-9]{4})(?&lt;month&gt;1[0-2]|0[1-9])(?&lt;day&gt;3[01]|0[1-9]|[12][0-9])T(?&lt;hour&gt;2[0-3]|[01][0-9])(?&lt;minute&gt;[0-5][0-9])(?&lt;second&gt;[0-5][0-9](.(?&lt;millis&gt;[0-9]{3}))?)?(?&lt;timezone&gt;Z|[+-](2[0-3]|[01][0-9])([0-5][0-9])?)?$</regexp>
+                                <!--ISO 8601 na úroveň alespoň minut (extended format): např. 2019-08-30T15:35+01:00, 2019-08-30T15:35:44-23:30, 2019-08-30T15:35:59.123Z -->
+                                <regexp>^(?&lt;year&gt;[0-9]{4})-(?&lt;month&gt;1[0-2]|0[1-9])-(?&lt;day&gt;3[01]|0[1-9]|[12][0-9])T(?&lt;hour&gt;2[0-3]|[01][0-9]):(?&lt;minute&gt;[0-5][0-9])(:(?&lt;second&gt;[0-5][0-9])(.(?&lt;millis&gt;[0-9]{3}))?)?(?&lt;timezone&gt;Z|[+-](2[0-3]|[01][0-9])(:([0-5][0-9])?)?)?$</regexp>
+                            </oneOf>
+                        </expectedContent>
+                    </element>
+
+                    <element name="mods:recordChangeDate" mandatory="false">
+                        <expectedAttributes>
+                            <attribute name="encoding">
+                                <expectedContent>
+                                    <value>iso8601</value>
+                                </expectedContent>
+                            </attribute>
+                        </expectedAttributes>
+                        <expectedContent>
+                            <oneOf>
+                                <!--ISO 8601 na úroveň alespoň minut (basic format): např. 20190830T1535+01, 20190830T153544-23:30, 20190830T153559.123-->
+                                <regexp>^(?&lt;year&gt;[0-9]{4})(?&lt;month&gt;1[0-2]|0[1-9])(?&lt;day&gt;3[01]|0[1-9]|[12][0-9])T(?&lt;hour&gt;2[0-3]|[01][0-9])(?&lt;minute&gt;[0-5][0-9])(?&lt;second&gt;[0-5][0-9](.(?&lt;millis&gt;[0-9]{3}))?)?(?&lt;timezone&gt;Z|[+-](2[0-3]|[01][0-9])([0-5][0-9])?)?$</regexp>
+                                <!--ISO 8601 na úroveň alespoň minut (extended format): např. 2019-08-30T15:35+01:00, 2019-08-30T15:35:44-23:30, 2019-08-30T15:35:59.123Z -->
+                                <regexp>^(?&lt;year&gt;[0-9]{4})-(?&lt;month&gt;1[0-2]|0[1-9])-(?&lt;day&gt;3[01]|0[1-9]|[12][0-9])T(?&lt;hour&gt;2[0-3]|[01][0-9]):(?&lt;minute&gt;[0-5][0-9])(:(?&lt;second&gt;[0-5][0-9])(.(?&lt;millis&gt;[0-9]{3}))?)?(?&lt;timezone&gt;Z|[+-](2[0-3]|[01][0-9])(:([0-5][0-9])?)?)?$</regexp>
+                            </oneOf>
+                        </expectedContent>
+                    </element>
+
+                    <element name="mods:recordOrigin" mandatory="false">
+                        <recommendedContent>
+                            <oneOf>
+                                <value>machine generated</value>
+                                <value>human prepared</value>
+                            </oneOf>
+                        </recommendedContent>
+                    </element>
+
+                </expectedElements>
             </element>
 
         </expectedElements>
