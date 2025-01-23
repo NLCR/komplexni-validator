@@ -136,7 +136,7 @@
                                                                                 <expectedContent/>
                                                                             </element>
 
-                                                                            <element name="mix:iccProfileURL" mandatory="false" repeatable="false">
+                                                                            <element name="mix:iccProfileURI" mandatory="false" repeatable="false">
                                                                                 <expectedContent/>
                                                                             </element>
                                                                         </expectedElements>
