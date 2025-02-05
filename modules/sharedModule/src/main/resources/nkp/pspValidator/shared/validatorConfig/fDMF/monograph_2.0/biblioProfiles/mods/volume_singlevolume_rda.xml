@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <metadataProfile
-        xmlns="http://www.nkp.cz/pspValidator/2.4.2/metadataProfile"
+        xmlns="http://www.nkp.cz/pspValidator/2.5/metadataProfile"
         name="MODS volume of multivolume monographic (RDA)"
-        validatorVersion="2.4.2"
+        validatorVersion="2.5"
         dmf="monograph_2.0"
 >
 
@@ -669,13 +669,13 @@
             <element name="mods:relatedItem" mandatory="false" ignoreUnexpectedChildElements="true">
                 <expectedAttributes>
                     <attribute name="type" mandatory="false">
-                        <expectedContent>
+                        <recommendedContent>
                             <oneOf>
                                 <value>series</value>
                                 <value>original</value>
                                 <value>isReferencedBy</value>
                             </oneOf>
-                        </expectedContent>
+                        </recommendedContent>
                     </attribute>
                     <attribute name="otherType" mandatory="false"/>
                     <attribute name="otherTypeURI" mandatory="false"/>
@@ -736,7 +736,7 @@
                     </attribute>
                 </expectedAttributes>
                 <expectedContent>
-                    <regexp>^(97(8|9))?[0-9]{9}[0-9X]$</regexp>
+                    <regexp>^(?:ISBN(?:-1[03])?:? )?(?=[0-9X]{10}$|(?=(?:[0-9]+[- ]){3})[- 0-9X]{13}$|97[89][0-9]{10}$|(?=(?:[0-9]+[- ]){4})[- 0-9]{17}$)(?:97[89][- ]?)?[0-9]{1,5}[- ]?[0-9]+[- ]?[0-9]+[- ]?[0-9X]$</regexp>
                 </expectedContent>
             </element>
 

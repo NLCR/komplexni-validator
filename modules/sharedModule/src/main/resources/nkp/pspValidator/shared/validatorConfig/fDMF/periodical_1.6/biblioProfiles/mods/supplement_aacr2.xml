@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <metadataProfile
-        xmlns="http://www.nkp.cz/pspValidator/2.4.2/metadataProfile"
+        xmlns="http://www.nkp.cz/pspValidator/2.5/metadataProfile"
         name="MODS supplement (AACR2)"
-        validatorVersion="2.4.2"
+        validatorVersion="2.5"
         dmf="periodical_1.6"
 >
 
@@ -183,9 +183,7 @@
                     </element>
 
                     <element name="mods:frequency" mandatory="false">
-                        <expectedContent>
-                            <value>monographic</value>
-                        </expectedContent>
+                        <expectedContent/>
                     </element>
                 </expectedElements>
             </element>
@@ -232,9 +230,7 @@
                     </element>
 
                     <element name="mods:frequency" mandatory="false">
-                        <expectedContent>
-                            <value>monographic</value>
-                        </expectedContent>
+                        <expectedContent/>
                     </element>
                 </expectedElements>
             </element>
@@ -438,5 +434,3 @@
     </rootElement>
 
 </metadataProfile>
-
-	

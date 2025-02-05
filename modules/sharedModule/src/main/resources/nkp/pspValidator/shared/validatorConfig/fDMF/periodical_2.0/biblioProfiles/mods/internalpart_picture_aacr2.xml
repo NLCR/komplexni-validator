@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <metadataProfile
-        xmlns="http://www.nkp.cz/pspValidator/2.4.2/metadataProfile"
+        xmlns="http://www.nkp.cz/pspValidator/2.5/metadataProfile"
         name="MODS internal part - picture (AACR2)"
-        validatorVersion="2.4.2"
+        validatorVersion="2.5"
         dmf="periodical_2.0"
 >
 
