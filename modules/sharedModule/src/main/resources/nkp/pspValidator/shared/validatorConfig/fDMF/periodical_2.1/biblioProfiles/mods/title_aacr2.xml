@@ -164,6 +164,10 @@
 
             <element name="mods:genre" specification="text()='title'"/>
 
+            <element name="mods:genre" specification="not(text()='title')" mandatory="false">
+                <expectedContent/>
+            </element>
+
             <element name="mods:originInfo">
                 <expectedElements>
                     <element name="mods:place" mandatory="false">

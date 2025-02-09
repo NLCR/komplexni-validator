@@ -204,6 +204,10 @@
                 <expectedContent/>
             </element>
 
+            <element name="mods:genre" specification="not(text()='issue')" mandatory="false">
+                <expectedContent/>
+            </element>
+
             <element name="mods:originInfo" mandatory="false">
                 <expectedElements>
                     <element name="mods:place" mandatory="false">
