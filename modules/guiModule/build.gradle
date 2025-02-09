@@ -8,7 +8,7 @@ plugins {
 }
 
 group 'nkp.pspValidator'
-version '2.5-beta'
+version '2.5'
 
 java {
     //targetCompatibility = JavaVersion.VERSION_17
@@ -52,7 +52,7 @@ shadowJar {
     configurations = [project.configurations.runtimeClasspath]
 
     archiveBaseName.set('guiModule')
-    archiveVersion.set('2.5-beta')
+    archiveVersion.set('2.5')
     archiveClassifier.set('shadow') // Typically set to empty for the main artifact
     manifest {
         attributes 'Main-Class': 'nkp.pspValidator.gui.Main'

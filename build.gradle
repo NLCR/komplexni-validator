@@ -7,7 +7,7 @@ allprojects {
 subprojects {
     //apply plugin: 'java'
 
-    version '2.5-beta'
+    version '2.5'
     //sourceCompatibility = '17'
     //targetCompatibility = '17'
 
