@@ -21,7 +21,7 @@
     <rootElement name="oai_dc:dc">
         <expectedElements>
 
-            <element name="dc:description" mandatory="false">
+            <element name="dc:title" mandatory="false">
                 <expectedContent/>
             </element>
 
@@ -31,6 +31,10 @@
 
             <element name="dc:type" specification="text() = 'model:periodicalvolume'"
                      errorMessage="Očekáván právě jeden povinný element dc:type obsahující text 'model:periodicalvolume'.">
+                <expectedContent/>
+            </element>
+
+            <element name="dc:type" specification="not(text() = 'model:periodicalvolume')" mandatory="false">
                 <expectedContent/>
             </element>
 
@@ -46,5 +50,3 @@
         </expectedElements>
     </rootElement>
 </metadataProfile>
-
-	
