@@ -547,7 +547,7 @@
                         </expectedElements>
                     </element>
 
-                    <element name="mods:copyrightDate">
+                    <element name="mods:copyrightDate" mandatory="false">
                         <expectedContent/>
                     </element>
 
