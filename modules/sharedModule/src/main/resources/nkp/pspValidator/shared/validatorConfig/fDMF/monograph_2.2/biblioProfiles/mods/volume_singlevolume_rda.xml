@@ -532,9 +532,10 @@
                             <element name="mods:namePart" mandatory="true">
                                 <expectedContent/>
                             </element>
-                            <element name="mods:role" mandatory="true">
+                            <!--z DMF není zřejmé, že mods:role se pro copyright nevyplňuje. Nastavuji proto na mandatory false-->
+                            <element name="mods:role" mandatory="false">
                                 <expectedElements>
-                                    <element name="mods:roleTerm" mandatory="true">
+                                    <element name="mods:roleTerm" mandatory="false">
                                         <expectedContent/>
                                     </element>
                                 </expectedElements>
