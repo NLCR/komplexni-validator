@@ -77,12 +77,16 @@ public class VfCheckUrnNbnIdentifiersRegistered extends ValidationFunction {
             e.printStackTrace();
         } catch (UrnNbnResolverChecker.ResolverError e) {
             result.addError(Level.ERROR, null, e.getMessage());
+            //e.printStackTrace();
         } catch (UrnNbnResolverChecker.ResolverWarning e) {
             result.addError(Level.WARNING, null, e.getMessage());
+            //e.printStackTrace();
         } catch (XPathExpressionException e) {
             result.addError(Level.ERROR, null, e.getMessage());
+            e.printStackTrace();
         } catch (InvalidXPathExpressionException e) {
             result.addError(Level.ERROR, null, e.getMessage());
+            e.printStackTrace();
         }
     }
 

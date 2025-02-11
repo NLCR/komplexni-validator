@@ -146,28 +146,28 @@ public class UrnNbnResolverChecker {
 
         if (digitalDocument.has("periodical")) { //https://resolver.nkp.cz/api/v5/resolver/urn:nbn:cz:bve302-000004?format=json
             titleInfo = digitalDocument.getJSONObject("periodical").getJSONObject("titleInfo");
-            System.out.println("TODO: check PERIODICAL");
+            System.out.println("TODO: check PERIODICAL for " + urnNbn);
         } else if (digitalDocument.has("periodicalVolume")) { //https://resolver.nkp.cz/api/v5/resolver/urn:nbn:cz:bve302-000005?format=json
             titleInfo = digitalDocument.getJSONObject("periodicalVolume").getJSONObject("titleInfo");
-            System.out.println("TODO: check PERIODICAL VOLUME");
+            System.out.println("TODO: check PERIODICAL VOLUME for " + urnNbn);
         } else if (digitalDocument.has("periodicalIssue")) {//https://resolver.nkp.cz/api/v6/resolver/urn:nbn:cz:abg001-0005lt?format=json
             titleInfo = digitalDocument.getJSONObject("periodicalIssue").getJSONObject("titleInfo");
-            System.out.println("TODO: check PERIODICAL ISSUE");
+            checkMetadata("PERIODICAL_ISSUE", titleInfo, urnNbn);
         } else if (digitalDocument.has("monograph")) { //https://resolver.nkp.cz/api/v6/resolver/urn:nbn:cz:mzk-006obk?format=json
             titleInfo = digitalDocument.getJSONObject("monograph").getJSONObject("titleInfo");
-            System.out.println("TODO: check MONOGRAPH");
+            System.out.println("TODO: check MONOGRAPH for " + urnNbn);
         } else if (digitalDocument.has("monographVolume")) { //https://resolver.nkp.cz/api/v5/resolver/urn:nbn:cz:nk-003do9?format=json
             titleInfo = digitalDocument.getJSONObject("monographVolume").getJSONObject("titleInfo");
             checkMetadata("MONOGRAPH_VOLUME", titleInfo, urnNbn);
         } else if (digitalDocument.has("thesis")) { //https://resolver.nkp.cz/api/v5/resolver/urn:nbn:cz:bve302-000007?format=json
             titleInfo = digitalDocument.getJSONObject("thesis").getJSONObject("titleInfo");
-            System.out.println("TODO: check THESIS");
+            System.out.println("TODO: check THESIS for " + urnNbn);
         } else if (digitalDocument.has("analytical")) { //https://resolver.nkp.cz/api/v6/resolver/urn:nbn:cz:pna001-00cxz5?format=json
             titleInfo = digitalDocument.getJSONObject("analytical").getJSONObject("titleInfo");
-            System.out.println("TODO: check ANALYTICAL");
+            System.out.println("TODO: check ANALYTICAL for " + urnNbn);
         } else if (digitalDocument.has("otherEntity")) { //https://resolver.nkp.cz/api/v5/resolver/urn:nbn:cz:abg001-0003ig?format=json
             titleInfo = digitalDocument.getJSONObject("otherEntity").getJSONObject("titleInfo");
-            System.out.println("TODO: check OTHER ENTITY");
+            System.out.println("TODO: check OTHER ENTITY for " + urnNbn);
         } else {
             //unexpected data structure
             System.err.println("ERROR: unexpected data structure in digDocMetadata");
@@ -175,15 +175,52 @@ public class UrnNbnResolverChecker {
     }
 
     private void checkMetadata(String czidlo_type, JSONObject titleInfo, String urnNbn) throws XPathExpressionException, IOException, InvalidXPathExpressionException, MetadataMismatchException {
-        //System.out.println("checking metadata for " + urnNbn + ", type: " + czidlo_type);
+        System.out.println("checking metadata for " + urnNbn + ", type: " + czidlo_type);
         switch (czidlo_type) {
             case "MONOGRAPH_VOLUME":
                 String modsType = "VOLUME";
                 Node modsMetadata = metadataByUrnNbn.getMetadataByType(urnNbn, "VOLUME");
                 checkMonographVolumeMetadata(czidlo_type, modsType, modsMetadata, titleInfo, urnNbn);
                 break;
+            case "PERIODICAL_ISSUE":
+                modsType = "ISSUE";
+                modsMetadata = metadataByUrnNbn.getMetadataByType(urnNbn, "ISSUE");
+                checkPeriodicalIssueMetadata(czidlo_type, modsType, modsMetadata, titleInfo, urnNbn);
+                break;
             default:
                 System.out.println("TODO: implement checking for " + czidlo_type);
+        }
+    }
+
+    private void checkPeriodicalIssueMetadata(String czidloType, String modsType, Node modsMetadata, JSONObject titleInfo, String urnNbn) {
+        if (modsMetadata != null) {
+            try {
+                /*
+                MODS:title muze obsahovat nazev issue, ale i nazev periodika, zatimcoe CZIDLO má periodicalTitle, volumeTitle, issueTitle
+                see https://standardy.ndk.cz/ndk/standardy-digitalizace/DMF_periodika_2.1_final_17_12_24.pdf (str 37)
+                napr.:
+                --------------------
+                <mods:titleInfo>
+                   <mods:title>Nové slunce</mods:title>
+                   <mods:partNumber>1</mods:partNumber>
+                </mods:titleInfo>
+                --------------------
+                "titleInfo": {
+                      "periodicalTitle": "Nové slunce",
+                      "volumeTitle": "4",
+                      "issueTitle": "1"
+                    }
+                --------------------
+               */
+                checkDataMatch(
+                        (String) buildXpath("mods:titleInfo/mods:partNumber").evaluate(modsMetadata, XPathConstants.STRING),
+                        titleInfo.getString("issueTitle"), urnNbn, czidloType, modsType
+                );
+            } catch (Exception e) {
+                System.err.println("ERROR: " + e.getMessage());
+            }
+        } else {
+            System.out.println("MODS metadata not found for " + urnNbn);
         }
     }
 

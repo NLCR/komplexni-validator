@@ -116,16 +116,17 @@ public class MainTest {
                 , "/tmp"
 
                 //, MON_1_2
-                , MON_2_1_MULTIVOLUME
+                //, MON_2_1_MULTIVOLUME
                 //, MON_1_2_MAP
                 //, MON_1_2_INVALID_IMAGES
                 //, MON_1_4
                 //, MON_1_2_INVALIDIMAGES
                 //, MON_2_0_SINGLEVOLUME
                 //, MON_2_0_MULTIVOLUME
+                //, MON_2_1_MULTIVOLUME
                 //, PER_1_4
                 //, PER_1_6
-                //, PER_2_0
+                , PER_2_0
                 //, PER_1_6_INFO_INVALID_NS
                 //, ZIP_1
                 //, ZIP_NOT_ZIP
