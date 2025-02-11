@@ -1,12 +1,11 @@
 package nkp.pspValidator.shared.engine.validationFunctions;
 
-import com.ibm.icu.text.CharsetDetector;
-import com.ibm.icu.text.CharsetMatch;
 import nkp.pspValidator.shared.engine.Engine;
 import nkp.pspValidator.shared.engine.Level;
 import nkp.pspValidator.shared.engine.ValueEvaluation;
 import nkp.pspValidator.shared.engine.ValueType;
 import nkp.pspValidator.shared.engine.exceptions.ContractException;
+import nkp.pspValidator.shared.engine.utils.EncodingUtils;
 
 import java.io.*;
 import java.util.List;
@@ -39,7 +38,6 @@ public class VfCheckAllFilesInUtf8 extends ValidationFunction {
         } catch (Throwable e) {
             return invalidUnexpectedError(e);
         }
-
     }
 
     private ValidationResult validate(List<File> files) {
@@ -58,12 +56,7 @@ public class VfCheckAllFilesInUtf8 extends ValidationFunction {
     }
 
     private String detectEncoding(File file) throws IOException {
-        try (InputStream is = new FileInputStream(file)) {
-            CharsetDetector detector = new CharsetDetector();
-            detector.setText(new BufferedInputStream(is));
-            CharsetMatch match = detector.detect();
-            return match.getName();
-        }
+        return EncodingUtils.detectEncoding(file);
     }
 
 }

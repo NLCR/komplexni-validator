@@ -96,10 +96,12 @@ public class MainTest {
         //devParams.getSectionsToRun().add("Soubor CHECKSUM");
         //devParams.getSectionsToRun().add("Soubor INFO");
         //devParams.getSectionsToRun().add("Struktura souborů");
-        devParams.getSectionsToRun().add("Bibliografická metadata");
+        //devParams.getSectionsToRun().add("Bibliografická metadata");
         //devParams.getSectionsToRun().add("Identifikátory");
         //devParams.getSectionsToRun().add("Obrazová data");
-        /*devParams.getSectionsToRun().add("ALTO");
+        devParams.getSectionsToRun().add("OCR ALTO");
+        devParams.getSectionsToRun().add("OCR TEXT");
+        /*
         devParams.getSectionsToRun().add("Technická metadata");
         devParams.getSectionsToRun().add("METS hlavičky");
         devParams.getSectionsToRun().add("Autorskoprávní metadata");
