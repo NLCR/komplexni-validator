@@ -4,7 +4,7 @@ plugins {
 }
 
 group 'nkp.pspValidator'
-version '2.5-beta'
+version '2.4.1'
 
 // Create a JAR task
 jar {
@@ -54,16 +54,6 @@ task runDev(type: JavaExec) {
     args = ['--action', "DEV"]
 }
 
-task runDevValidate(type: JavaExec) {
-    classpath = sourceSets.main.runtimeClasspath
-    main = 'nkp.pspValidator.cli.Main'
-    args = ['--action', "VALIDATE_PSP",
-            //'--psp', '/Users/martin/IdeaProjects/komplexni-validator/modules/sharedModule/src/test/resources/audio_gram_0.3/aba007-0001w2',
-            '--psp', '/Users/martin/IdeaProjects/komplexni-validator/modules/sharedModule/src/test/resources/monograph_1.2/map/6e9a7000-65c0-11e6-85af-005056827e52',
-            '--config-dir', '/Users/martin/IdeaProjects/komplexni-validator/modules/sharedModule/src/main/resources/nkp/pspValidator/shared/validatorConfig',
-    ]
-}
-
 task runDevMinify(type: JavaExec) {
     classpath = sourceSets.main.runtimeClasspath
     main = 'nkp.pspValidator.cli.Main'
@@ -73,7 +63,17 @@ task runDevMinify(type: JavaExec) {
     ]
 }
 
-task runDevValidateProfile(type: JavaExec) {
+task runDevMrValidate(type: JavaExec) {
+    classpath = sourceSets.main.runtimeClasspath
+    main = 'nkp.pspValidator.cli.Main'
+    args = ['--action', "VALIDATE_PSP",
+            '--psp', '/Users/martinrehanek/TrineraProjects/KramarskeTisky/data/input/sample1/input/tmp/_ndk-package/2610798805-2025_02_10-14_55_56,336/6b8b3124-f791-4ac3-a2da-d5a5f927ad72',
+            '--config-dir', '/Users/martinrehanek/IdeaProjects/komplexni-validator/modules/sharedModule/src/main/resources/nkp/pspValidator/shared/validatorConfig',
+            '--forced-dmf-mon-version', '2.1'
+    ]
+}
+
+task runDevMrValidateProfile(type: JavaExec) {
     classpath = sourceSets.main.runtimeClasspath
     main = 'nkp.pspValidator.cli.Main'
     args = ['--action', "VALIDATE_METADATA_BY_PROFILE",
@@ -110,5 +110,12 @@ tasks.withType(JavaCompile) {
 //runDevMinify - spusti CLI s akci BUILD_MINIFIED_PACKAGE a hardcoded parametry
 //./gradlew :modules:cliModule:runDevMinify
 
-//runDevValidateProfile - spusti CLI s akci VALIDATE_METADATA_BY_PROFILE a hardcoded parametry
-//./gradlew :modules:cliModule:runDevValidateProfile
+
+//hardcoded for Martin Řehánek
+//============================
+
+//runDevMrValidateProfile - spusti CLI s akci VALIDATE_METADATA_BY_PROFILE a hardcoded parametry
+//./gradlew :modules:cliModule:runDevMrValidateProfile
+
+//runDevMrValidate - spusti CLI s akci VALIDATE_PSP a hardcoded parametry
+//./gradlew :modules:cliModule:runDevMrValidate
