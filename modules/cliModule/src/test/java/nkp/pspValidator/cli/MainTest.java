@@ -28,6 +28,8 @@ public class MainTest {
     private static final String MON_1_2_INVALID_IMAGES = "../sharedModule/src/test/resources/monograph_1.2-invalid_images/b50eb6b0-f0a4-11e3-b72e-005056827e52";
     private static final String MON_2_0_SINGLEVOLUME = HOME_DIR + "/IdeaProjects/komplexni-validator-samples/src/test/resources/monografie/vzorovy_balicek_monografie_2.1_jednosvazkova/0ad7d080-aa89-11ec-adf7-5ef3fc9bb22f";
     private static final String MON_2_0_MULTIVOLUME = HOME_DIR + "/IdeaProjects/komplexni-validator-samples/src/test/resources/monografie/vzorovy_balicek_monografie_2.1_vicesvazkova/47647030-3fb3-11e7-ad33-5ef3fc9ae867";
+    private static final String MON_2_1_MULTIVOLUME = HOME_DIR + "/TrineraProjects/Validator/samples-new/Vzorovy_balicek_vicesvazek_2_1/47647030-3fb3-11e7-ad33-5ef3fc9ae867";
+
 
     private static final String PER_1_6 = "../sharedModule/src/test/resources/periodical_1.6/7033d800-0935-11e4-beed-5ef3fc9ae867";
 
@@ -90,11 +92,11 @@ public class MainTest {
 
         Validator.DevParams devParams = new Validator.DevParams();
 
-        devParams.getSectionsToRun().add("Soubor CHECKSUM");
-        devParams.getSectionsToRun().add("Soubor INFO");
-        devParams.getSectionsToRun().add("Struktura souborů");
+        //devParams.getSectionsToRun().add("Soubor CHECKSUM");
+        //devParams.getSectionsToRun().add("Soubor INFO");
+        //devParams.getSectionsToRun().add("Struktura souborů");
         devParams.getSectionsToRun().add("Bibliografická metadata");
-        devParams.getSectionsToRun().add("Identifikátory");
+        //devParams.getSectionsToRun().add("Identifikátory");
         //devParams.getSectionsToRun().add("Obrazová data");
         /*devParams.getSectionsToRun().add("ALTO");
         devParams.getSectionsToRun().add("Technická metadata");
@@ -109,7 +111,8 @@ public class MainTest {
                 configDir
                 , "/tmp"
 
-                , MON_1_2
+                //, MON_1_2
+                , MON_2_1_MULTIVOLUME
                 //, MON_1_2_MAP
                 //, MON_1_2_INVALID_IMAGES
                 //, MON_1_4
@@ -125,6 +128,7 @@ public class MainTest {
                 , null//GROUP
                 //, GROUP_ZIP
 
+                //preferred DMF versions
                 , null
                 //,"1.0"
                 //,"1.2"
@@ -132,7 +136,9 @@ public class MainTest {
                 //, "1.4"
                 //, "1.6"
                 //, null
-                , null//, "2.0"
+
+                //forced DMF versions
+                , "2.2"
                 , null
                 //, "1.4"
                 //, "1.6"

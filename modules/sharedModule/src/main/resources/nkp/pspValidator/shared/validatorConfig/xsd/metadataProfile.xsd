@@ -151,6 +151,7 @@
             <xs:element name="oneOf" type="oneOfType"/>
             <xs:element name="value" type="valueType"/>
             <xs:element name="regexp" type="regexpType"/>
+            <xs:element name="isbn" type="isbnType"/>
             <xs:element name="fromDictionary" type="dictionaryReferenceType"/>
         </xs:choice>
     </xs:complexType>
@@ -159,11 +160,16 @@
         <xs:choice maxOccurs="unbounded">
             <xs:element name="value" type="valueType"/>
             <xs:element name="regexp" type="regexpType"/>
+            <xs:element name="isbn" type="isbnType"/>
             <xs:element name="fromDictionary" type="dictionaryReferenceType"/>
         </xs:choice>
     </xs:complexType>
 
     <xs:simpleType name="valueType">
+        <xs:restriction base="xs:string"/>
+    </xs:simpleType>
+
+    <xs:simpleType name="isbnType">
         <xs:restriction base="xs:string"/>
     </xs:simpleType>
 
