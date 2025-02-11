@@ -81,6 +81,8 @@ public class ValidatorProtocolTextBuilder {
         if (out != null) {
             String verdict = valid ? "validní" : "nevalidní";
             out.println(String.format("\nCelkem: %s, balík je: %s", buildSummary(totalProblemsSum, totalProblemsByLevel), verdict));
+            out.println(String.format("Validováno Komplexním Validátorem ve verzi %s, build z %s", Version.VERSION_CODE, Version.BUILD_DATE));
+            out.println();
         }
     }
 
