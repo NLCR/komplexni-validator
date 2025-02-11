@@ -28,7 +28,7 @@ public class Main {
     }
 
     private static void checkUrnNbns() throws KeyManagementException, NoSuchAlgorithmException, IOException, KeyStoreException {
-        UrnNbnResolverChecker checker = new UrnNbnResolverChecker();
+        UrnNbnResolverChecker checker = new UrnNbnResolverChecker(null);
         //init();
         //ACTIVE
         check(checker, "urn:nbn:cz:mzk-0001vw");
@@ -56,6 +56,10 @@ public class Main {
             System.out.println("ERROR: " + e.getMessage());
         } catch (UrnNbnResolverChecker.ResolverWarning e) {
             System.out.println("WARNING: " + e.getMessage());
+        } catch (XPathExpressionException e) {
+            System.out.println("ERROR: " + e.getMessage());
+        } catch (InvalidXPathExpressionException e) {
+            System.out.println("ERROR: " + e.getMessage());
         }
     }
 

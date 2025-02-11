@@ -97,10 +97,11 @@ public class MainTest {
         //devParams.getSectionsToRun().add("Soubor INFO");
         //devParams.getSectionsToRun().add("Struktura souborů");
         //devParams.getSectionsToRun().add("Bibliografická metadata");
-        //devParams.getSectionsToRun().add("Identifikátory");
+        devParams.getSectionsToRun().add("Identifikátory");
         //devParams.getSectionsToRun().add("Obrazová data");
-        devParams.getSectionsToRun().add("OCR ALTO");
-        devParams.getSectionsToRun().add("OCR TEXT");
+        //devParams.getSectionsToRun().add("OCR ALTO");
+        //devParams.getSectionsToRun().add("OCR TEXT");
+        //devParams.getSectionsToRun().add("TEST");
         /*
         devParams.getSectionsToRun().add("Technická metadata");
         devParams.getSectionsToRun().add("METS hlavičky");
@@ -115,7 +116,7 @@ public class MainTest {
                 , "/tmp"
 
                 //, MON_1_2
-                //, MON_2_1_MULTIVOLUME
+                , MON_2_1_MULTIVOLUME
                 //, MON_1_2_MAP
                 //, MON_1_2_INVALID_IMAGES
                 //, MON_1_4
@@ -124,7 +125,7 @@ public class MainTest {
                 //, MON_2_0_MULTIVOLUME
                 //, PER_1_4
                 //, PER_1_6
-                , PER_2_0
+                //, PER_2_0
                 //, PER_1_6_INFO_INVALID_NS
                 //, ZIP_1
                 //, ZIP_NOT_ZIP
@@ -166,7 +167,7 @@ public class MainTest {
     private String[] buildParams(Action action,
                                  String configDir, String tmpDir,
                                  String pspDir, String pspGroupDir,
-                                 String preferDmfModVersion, String preferDmfPerVersion, String forceDmfModVersion, String forceDmfPerVersion,
+                                 String preferDmfMonVersion, String preferDmfPerVersion, String forceDmfMonVersion, String forceDmfPerVersion,
                                  Integer verbosity, String xmlProtocolDir, String xmlProtocolFile,
                                  String imageMagickPath, String jhovePath, String jpylyzerPath, String kakaduPath,
                                  boolean disableImageMagick, boolean disableJhove, boolean disableJpylyzer, boolean disableKakadu,
@@ -209,17 +210,17 @@ public class MainTest {
         //TODO: quit-after-nth-invalid-psp
 
         //DMF versions
-        if (preferDmfModVersion != null) {
+        if (preferDmfMonVersion != null) {
             params.add(String.format("--%s", Params.PREFERRED_DMF_MON_VERSION));
-            params.add(preferDmfModVersion);
+            params.add(preferDmfMonVersion);
         }
         if (preferDmfPerVersion != null) {
             params.add(String.format("--%s", Params.PREFERRED_DMF_PER_VERSION));
             params.add(preferDmfPerVersion);
         }
-        if (forceDmfModVersion != null) {
+        if (forceDmfMonVersion != null) {
             params.add(String.format("--%s", Params.FORCED_DMF_MON_VERSION));
-            params.add(forceDmfModVersion);
+            params.add(forceDmfMonVersion);
         }
         if (forceDmfPerVersion != null) {
             params.add(String.format("--%s", Params.FORCED_DMF_PER_VERSION));

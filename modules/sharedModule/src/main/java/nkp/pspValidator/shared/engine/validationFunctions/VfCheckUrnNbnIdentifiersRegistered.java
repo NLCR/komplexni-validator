@@ -6,9 +6,12 @@ import nkp.pspValidator.shared.engine.Level;
 import nkp.pspValidator.shared.engine.ValueEvaluation;
 import nkp.pspValidator.shared.engine.ValueType;
 import nkp.pspValidator.shared.engine.exceptions.ContractException;
+import nkp.pspValidator.shared.engine.exceptions.InvalidXPathExpressionException;
 import nkp.pspValidator.shared.engine.types.Identifier;
 import nkp.pspValidator.shared.engine.utils.UrnNbnResolverChecker;
 
+import javax.xml.xpath.XPathExpressionException;
+import java.io.File;
 import java.io.IOException;
 import java.security.KeyManagementException;
 import java.security.NoSuchAlgorithmException;
@@ -20,10 +23,12 @@ import java.util.List;
 public class VfCheckUrnNbnIdentifiersRegistered extends ValidationFunction {
 
     public static final String PARAM_IDENTIFIER_LIST = "identifier_list";
+    private static final String PARAM_METS_FILE = "mets_file";
 
     public VfCheckUrnNbnIdentifiersRegistered(String name, Engine engine) {
         super(name, engine, new Contract()
                 .withValueParam(PARAM_IDENTIFIER_LIST, ValueType.IDENTIFIER_LIST, 1, 1)
+                .withValueParam(PARAM_METS_FILE, ValueType.FILE, 0, 1)
         );
     }
 
@@ -37,7 +42,9 @@ public class VfCheckUrnNbnIdentifiersRegistered extends ValidationFunction {
             if (identifiers == null) {
                 return invalidValueParamNull(PARAM_IDENTIFIER_LIST, paramEvaluation);
             }
-            return validate(identifiers);
+            ValueEvaluation paramMetsFileEval = valueParams.getParams(PARAM_METS_FILE).get(0).getEvaluation();
+            File metsFile = (File) paramMetsFileEval.getData();
+            return validate(identifiers, metsFile);
         } catch (ContractException e) {
             return invalidContractNotMet(e);
         } catch (Throwable e) {
@@ -45,9 +52,9 @@ public class VfCheckUrnNbnIdentifiersRegistered extends ValidationFunction {
         }
     }
 
-    private ValidationResult validate(List<Identifier> identifiers) {
+    private ValidationResult validate(List<Identifier> identifiers, File metsFile) {
         try {
-            UrnNbnResolverChecker checker = new UrnNbnResolverChecker();
+            UrnNbnResolverChecker checker = new UrnNbnResolverChecker(metsFile);
             ValidationResult result = new ValidationResult();
             for (Identifier identifier : identifiers) {
                 if (identifier.getType().equals("urnnbn")) {
@@ -72,6 +79,10 @@ public class VfCheckUrnNbnIdentifiersRegistered extends ValidationFunction {
             result.addError(Level.ERROR, null, e.getMessage());
         } catch (UrnNbnResolverChecker.ResolverWarning e) {
             result.addError(Level.WARNING, null, e.getMessage());
+        } catch (XPathExpressionException e) {
+            result.addError(Level.ERROR, null, e.getMessage());
+        } catch (InvalidXPathExpressionException e) {
+            result.addError(Level.ERROR, null, e.getMessage());
         }
     }
 
