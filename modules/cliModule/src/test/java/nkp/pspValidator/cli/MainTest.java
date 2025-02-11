@@ -44,6 +44,7 @@ public class MainTest {
     //private static final String PER_1_6_INFO_INVALID_NS = HOME_DIR + "/zakazky/NKP-Komplexni_Validator/data/per_1.6_invalid_info_ns/aba008-000310";
 
     private static final String PER_1_4 = "../sharedModule/src/test/resources/periodical_1.4/ope301-00000v";
+    private static final String PER_2_0 = HOME_DIR + "/TrineraProjects/Validator/samples-new/vzorovy_balicek_periodika_2/a685f910-f6ee-11ec-aa77-005056827e52";
 
 
     @org.junit.Test
@@ -112,7 +113,7 @@ public class MainTest {
                 , "/tmp"
 
                 //, MON_1_2
-                , MON_2_1_MULTIVOLUME
+                //, MON_2_1_MULTIVOLUME
                 //, MON_1_2_MAP
                 //, MON_1_2_INVALID_IMAGES
                 //, MON_1_4
@@ -121,6 +122,7 @@ public class MainTest {
                 //, MON_2_0_MULTIVOLUME
                 //, PER_1_4
                 //, PER_1_6
+                , PER_2_0
                 //, PER_1_6_INFO_INVALID_NS
                 //, ZIP_1
                 //, ZIP_NOT_ZIP
@@ -139,7 +141,7 @@ public class MainTest {
 
                 //forced DMF versions
                 , "2.2"
-                , null
+                , "2.1"
                 //, "1.4"
                 //, "1.6"
                 , 2 //verbosity (3: vsechno, 2: jen sekce a pravidla s chybami a popisy jednotlivych chyb, 1: jen pocty chyb v sekcich s chybami, bez popisu jednotlivych chyb, 0: nic)
