@@ -303,6 +303,8 @@ public class MetadataProfileParser {
                 return new ContentDefinitionRegexp(expectedContentChildEl.getTextContent().trim());
             case "isbn":
                 return new ContentDefinitionIsbn();
+            case "issn":
+                return new ContentDefinitionIssn();
             case "fromDictionary":
                 String dictionaryName = expectedContentChildEl.getAttribute("name");
                 if (!profile.getDeclaredDictionaries().contains(dictionaryName)) {

@@ -38,14 +38,14 @@ public class ContentDefinitionIsbnTest {
     public void testEmpty() {
         CheckingResult checkingResult = new ContentDefinitionIsbn().checkAgainst("");
         assertFalse(checkingResult.matches());
-        assertEquals("prázdná hodnota", checkingResult.getErrorMessage());
+        assertEquals("neplatné ISBN: prázdná hodnota", checkingResult.getErrorMessage());
     }
 
     @Test
     public void testNull() {
         CheckingResult checkingResult = new ContentDefinitionIsbn().checkAgainst(null);
         assertFalse(checkingResult.matches());
-        assertEquals("prázdná hodnota", checkingResult.getErrorMessage());
+        assertEquals("neplatné ISBN: prázdná hodnota", checkingResult.getErrorMessage());
     }
 
     private void testForValidSampleIsbn13(String isbn) {

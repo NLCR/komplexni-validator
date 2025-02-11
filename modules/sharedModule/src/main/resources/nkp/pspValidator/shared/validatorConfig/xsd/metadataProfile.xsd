@@ -152,6 +152,7 @@
             <xs:element name="value" type="valueType"/>
             <xs:element name="regexp" type="regexpType"/>
             <xs:element name="isbn" type="isbnType"/>
+            <xs:element name="issn" type="issnType"/>
             <xs:element name="fromDictionary" type="dictionaryReferenceType"/>
         </xs:choice>
     </xs:complexType>
@@ -161,6 +162,7 @@
             <xs:element name="value" type="valueType"/>
             <xs:element name="regexp" type="regexpType"/>
             <xs:element name="isbn" type="isbnType"/>
+            <xs:element name="issn" type="issnType"/>
             <xs:element name="fromDictionary" type="dictionaryReferenceType"/>
         </xs:choice>
     </xs:complexType>
@@ -169,11 +171,15 @@
         <xs:restriction base="xs:string"/>
     </xs:simpleType>
 
+    <xs:simpleType name="regexpType">
+        <xs:restriction base="xs:string"/>
+    </xs:simpleType>
+
     <xs:simpleType name="isbnType">
         <xs:restriction base="xs:string"/>
     </xs:simpleType>
 
-    <xs:simpleType name="regexpType">
+    <xs:simpleType name="issnType">
         <xs:restriction base="xs:string"/>
     </xs:simpleType>
 
