@@ -20,25 +20,26 @@ import java.util.List;
  */
 public class MainTest {
 
+    private static final String HOME_DIR = System.getProperty("user.home");
 
-    private static final String MON_1_4 = "/Users/martin/IdeaProjects/komplexni-validator-samples/src/test/resources/monografie/abc135-000itk";
+    private static final String MON_1_4 = HOME_DIR + "/IdeaProjects/komplexni-validator-samples/src/test/resources/monografie/abc135-000itk";
     private static final String MON_1_2 = "../sharedModule/src/test/resources/monograph_1.2/b50eb6b0-f0a4-11e3-b72e-005056827e52";
     private static final String MON_1_2_MAP = "../sharedModule/src/test/resources/monograph_1.2_map/6e9a7000-65c0-11e6-85af-005056827e52";
     private static final String MON_1_2_INVALID_IMAGES = "../sharedModule/src/test/resources/monograph_1.2-invalid_images/b50eb6b0-f0a4-11e3-b72e-005056827e52";
-    private static final String MON_2_0_SINGLEVOLUME = "/Users/martin/IdeaProjects/komplexni-validator-samples/src/test/resources/monografie/vzorovy_balicek_monografie_2.1_jednosvazkova/0ad7d080-aa89-11ec-adf7-5ef3fc9bb22f";
-    private static final String MON_2_0_MULTIVOLUME = "/Users/martin/IdeaProjects/komplexni-validator-samples/src/test/resources/monografie/vzorovy_balicek_monografie_2.1_vicesvazkova/47647030-3fb3-11e7-ad33-5ef3fc9ae867";
+    private static final String MON_2_0_SINGLEVOLUME = HOME_DIR + "/IdeaProjects/komplexni-validator-samples/src/test/resources/monografie/vzorovy_balicek_monografie_2.1_jednosvazkova/0ad7d080-aa89-11ec-adf7-5ef3fc9bb22f";
+    private static final String MON_2_0_MULTIVOLUME = HOME_DIR + "/IdeaProjects/komplexni-validator-samples/src/test/resources/monografie/vzorovy_balicek_monografie_2.1_vicesvazkova/47647030-3fb3-11e7-ad33-5ef3fc9ae867";
 
     private static final String PER_1_6 = "../sharedModule/src/test/resources/periodical_1.6/7033d800-0935-11e4-beed-5ef3fc9ae867";
 
-    private static final String ZIP_1 = "/home/martin/zakazky/NKP-Komplexni_Validator/data/group/7033d800-0935-11e4-beed-5ef3fc9ae867.zip";
-    private static final String ZIP_2 = "/home/martin/zakazky/NKP-Komplexni_Validator/data/group/ope301-00000v.zip";
-    private static final String ZIP_NOT_ZIP = "/home/martin/zakazky/NKP-Komplexni_Validator/data/group/not_a_zip.txt";
+    private static final String ZIP_1 = HOME_DIR + "/zakazky/NKP-Komplexni_Validator/data/group/7033d800-0935-11e4-beed-5ef3fc9ae867.zip";
+    private static final String ZIP_2 = HOME_DIR + "/zakazky/NKP-Komplexni_Validator/data/group/ope301-00000v.zip";
+    private static final String ZIP_NOT_ZIP = HOME_DIR + "/zakazky/NKP-Komplexni_Validator/data/group/not_a_zip.txt";
 
-    private static final String GROUP = "/home/martin/zakazky/NKP-Komplexni_Validator/data/group/";
-    private static final String GROUP_ZIP = "/home/martin/zakazky/NKP-Komplexni_Validator/data/group.zip";
+    private static final String GROUP = HOME_DIR + "/zakazky/NKP-Komplexni_Validator/data/group/";
+    private static final String GROUP_ZIP = HOME_DIR + "/zakazky/NKP-Komplexni_Validator/data/group.zip";
 
     //private static final String PER_1_6 = "../sharedModule/src/test/resources/periodical_1.6/ope301-00000v";
-    //private static final String PER_1_6_INFO_INVALID_NS = "/home/martin/zakazky/NKP-Komplexni_Validator/data/per_1.6_invalid_info_ns/aba008-000310";
+    //private static final String PER_1_6_INFO_INVALID_NS = HOME_DIR + "/zakazky/NKP-Komplexni_Validator/data/per_1.6_invalid_info_ns/aba008-000310";
 
     private static final String PER_1_4 = "../sharedModule/src/test/resources/periodical_1.4/ope301-00000v";
 
@@ -46,7 +47,7 @@ public class MainTest {
     @org.junit.Test
     public void cli() throws InvalidXPathExpressionException, PspDataException, ValidatorConfigurationException, XmlFileParsingException, FdmfRegistry.UnknownFdmfException {
         //temporarily disable tests TODO: fix and enable
-        if (true) return;
+        //if (true) return;
 
         Platform platform = Platform.detectOs();
         String configDir = null;
@@ -55,6 +56,7 @@ public class MainTest {
         String jpylyzerPath = null;
         String kakaduPath = null;
         String xmlProtocolsDir = null;
+        String xmlProtocolFile = null;
 
         String MON_1_2_INVALIDIMAGES = null;
 
@@ -62,26 +64,27 @@ public class MainTest {
             case WINDOWS:
                 configDir = "..\\sharedModule\\src\\main\\resources\\nkp\\pspValidator\\shared\\validatorConfig";
                 imageMagickPath = "C:\\Program Files\\ImageMagick-7.0.3-Q16";
-                jhovePath = "C:\\Users\\Lenovo\\OneDrive\\Dokumenty\\software\\jhove-1.29";
-                jpylyzerPath = "C:\\Users\\Lenovo\\OneDrive\\Dokumenty\\software\\jpylyzer_2.2.0_win64";
+                jhovePath = HOME_DIR + "\\OneDrive\\Dokumenty\\software\\jhove-1.29";
+                jpylyzerPath = HOME_DIR + "\\OneDrive\\Dokumenty\\software\\jpylyzer_2.2.0_win64";
                 kakaduPath = "C:\\Program Files (x86)\\Kakadu\\";
-                xmlProtocolsDir = "C:\\Users\\Lenovo\\komplexni-validator-protocols";
-                MON_1_2_INVALIDIMAGES = "C:\\Users\\Lenovo\\tmp\\b50eb6b0-f0a4-11e3-b72e-005056827e52";
+                xmlProtocolsDir = HOME_DIR + "\\komplexni-validator-protocols";
+                MON_1_2_INVALIDIMAGES = HOME_DIR + "\\tmp\\b50eb6b0-f0a4-11e3-b72e-005056827e52";
                 break;
             case LINUX:
                 configDir = "../sharedModule/src/main/resources/nkp/pspValidator/shared/validatorConfig";
-                jhovePath = "/home/martin/Software/jhove-1.29";
-                kakaduPath = "/home/martin/zakazky/NKP-Komplexni_Validator/utility/kakadu/KDU78_Demo_Apps_for_Linux-x86-64_160226";
-                xmlProtocolsDir = "/home/martin/tmp/komplexni-validator-protocols";
-                MON_1_2_INVALIDIMAGES = "/home/martin/tmp/b50eb6b0-f0a4-11e3-b72e-005056827e52";
+                jhovePath = HOME_DIR + "/Software/jhove-1.29";
+                kakaduPath = HOME_DIR + "/zakazky/NKP-Komplexni_Validator/utility/kakadu/KDU78_Demo_Apps_for_Linux-x86-64_160226";
+                xmlProtocolsDir = HOME_DIR + "/tmp/komplexni-validator-protocols";
+                MON_1_2_INVALIDIMAGES = HOME_DIR + "/tmp/b50eb6b0-f0a4-11e3-b72e-005056827e52";
                 break;
             case MAC:
                 configDir = "../sharedModule/src/main/resources/nkp/pspValidator/shared/validatorConfig";
-                jhovePath = "/Users/martin/Software/jhove-1.29";
+                jhovePath = HOME_DIR + "/Software/jhove-1.29";
                 imageMagickPath = "/opt/local/bin";
-                jpylyzerPath = "/Users/martinrehanek/Software/jpylyzer-1.17.0/jpylyzer";
-                xmlProtocolsDir = "/Users/martin/tmp/komplexni-validator-protocols";
-                MON_1_2_INVALIDIMAGES = "/Users/martin/tmp/b50eb6b0-f0a4-11e3-b72e-005056827e52";
+                jpylyzerPath = HOME_DIR + "/Software/jpylyzer-1.17.0/jpylyzer";
+                xmlProtocolsDir = HOME_DIR + "/tmp/komplexni-validator-protocols";
+                xmlProtocolFile = HOME_DIR + "/tmp/komplexni-validator-protocols/protocol.xml";
+                MON_1_2_INVALIDIMAGES = HOME_DIR + "/tmp/b50eb6b0-f0a4-11e3-b72e-005056827e52";
                 break;
         }
 
@@ -106,13 +109,13 @@ public class MainTest {
                 configDir
                 , "/tmp"
 
-                //, MON_1_2
+                , MON_1_2
                 //, MON_1_2_MAP
                 //, MON_1_2_INVALID_IMAGES
                 //, MON_1_4
                 //, MON_1_2_INVALIDIMAGES
                 //, MON_2_0_SINGLEVOLUME
-                , MON_2_0_MULTIVOLUME
+                //, MON_2_0_MULTIVOLUME
                 //, PER_1_4
                 //, PER_1_6
                 //, PER_1_6_INFO_INVALID_NS
@@ -135,7 +138,7 @@ public class MainTest {
                 //, "1.6"
                 , 2 //verbosity (3: vsechno, 2: jen sekce a pravidla s chybami a popisy jednotlivych chyb, 1: jen pocty chyb v sekcich s chybami, bez popisu jednotlivych chyb, 0: nic)
                 , xmlProtocolsDir //xml protocol dir
-                , null//"src/test/resources/protocol.xml" //xml protocol
+                , xmlProtocolFile //xml protocol
                 , imageMagickPath //null //imageMagick path
                 , jhovePath //jhove path
                 , jpylyzerPath //jpylyzer path
