@@ -34,7 +34,8 @@
         <!--právě jeden každý top-level soubor-->
 
         <rule name="SINGLE_INFO_FILE_FOUND">
-            <description>Musí být nalezen nanejvýše jeden soubor INFO. Pokud nalezen není, je soubor špatně pojmenován, nebo
+            <description>Musí být nalezen nanejvýše jeden soubor INFO. Pokud nalezen není, je soubor špatně pojmenován,
+                nebo
                 opravdu chybí.
             </description>
             <validation functionName="checkFilelistHasExactSize">
@@ -62,7 +63,8 @@
         </rule>
 
         <rule name="SINGLE_CHECKSUM_FILE_FOUND">
-            <description>Musí být nalezen nanejvýše jeden soubor CHECKSUM. Pokud nalezen není, je soubor špatně pojmenován,
+            <description>Musí být nalezen nanejvýše jeden soubor CHECKSUM. Pokud nalezen není, je soubor špatně
+                pojmenován,
                 nebo opravdu chybí.
             </description>
             <validation functionName="checkFilelistHasExactSize">
@@ -193,7 +195,8 @@
 
         <rule name="NO_OTHER_TL_FILES_FOUND">
             <description>
-                Kromě definovaných a tolerovaných souborů a adresářů nesmí být v kořenovém adresáři nalezen žádný další soubor nebo adresář.
+                Kromě definovaných a tolerovaných souborů a adresářů nesmí být v kořenovém adresáři nalezen žádný další
+                soubor nebo adresář.
             </description>
             <validation functionName="checkNoOtherFilesInDir">
                 <params>
@@ -2235,7 +2238,8 @@
         </rule>
 
         <rule name="MODS_IDENTIFIERS_URN_NBN_REGISTERED">
-            <description>Všechny identifikátory URN:NBN napříč MODS záznamy musí být registrovány v URN:NBN Resolveru NKP a shodovat se ve vybraných metadatech
+            <description>Všechny identifikátory URN:NBN napříč MODS záznamy musí být registrovány v URN:NBN Resolveru
+                NKP a shodovat se ve vybraných metadatech
             </description>
             <validation functionName="checkUrnNbnIdentifiersRegistered">
                 <params>
@@ -2269,9 +2273,12 @@
                             </params>
                         </evaluation>
                     </value>
+                    <!--TODO: tohle odkomentovat pro kontrolu v MODS oproti CZIDLO-->
+                    <!--
                     <value name="mets_file" type="FILE">
-                        <value-ref name="PRIMARY-METS_FILE"/>
+                       <value-ref name="PRIMARY-METS_FILE"/>
                     </value>
+                    -->
                 </params>
             </validation>
         </rule>
@@ -2790,7 +2797,8 @@
                    description="Kontrola obrázků MASTER-COPY a USER-COPY v JPEG 2000 za pomocí externích nástrojů">
 
         <rule name="MASTER-COPY_FILES_VALID_BY_JPYLYZER">
-            <description>Všechny soubory MASTER-COPY (jpeg 2000) musí být validní vůči profilu pro binární soubory pro nástroj Jpylyzer.
+            <description>Všechny soubory MASTER-COPY (jpeg 2000) musí být validní vůči profilu pro binární soubory pro
+                nástroj Jpylyzer.
             </description>
             <validation functionName="checkBinaryFilesValidByExternalUtil">
                 <params>
@@ -2805,7 +2813,8 @@
         </rule>
 
         <rule name="USER-COPY_FILES_VALID_BY_JPYLYZER">
-            <description>Všechny soubory USER-COPY (jpeg 2000) musí být validní vůči profilu pro binární soubory pro nástroj Jpylyzer.
+            <description>Všechny soubory USER-COPY (jpeg 2000) musí být validní vůči profilu pro binární soubory pro
+                nástroj Jpylyzer.
             </description>
             <validation functionName="checkBinaryFilesValidByExternalUtil">
                 <params>
@@ -2820,7 +2829,8 @@
         </rule>
 
         <rule name="MASTER-COPY_FILES_VALID_BY_JHOVE">
-            <description>Všechny soubory MASTER-COPY (jpeg 2000) musí být validní vůči profilu pro binární soubory pro nástroj JHOVE.
+            <description>Všechny soubory MASTER-COPY (jpeg 2000) musí být validní vůči profilu pro binární soubory pro
+                nástroj JHOVE.
             </description>
             <validation functionName="checkBinaryFilesValidByExternalUtil">
                 <params>
@@ -2835,7 +2845,8 @@
         </rule>
 
         <rule name="USER-COPY_FILES_VALID_BY_JHOVE">
-            <description>Všechny soubory USER-COPY (jpeg 2000) musí být validní vůči profilu pro binární soubory pro nástroj JHOVE.
+            <description>Všechny soubory USER-COPY (jpeg 2000) musí být validní vůči profilu pro binární soubory pro
+                nástroj JHOVE.
             </description>
             <validation functionName="checkBinaryFilesValidByExternalUtil">
                 <params>
@@ -2850,7 +2861,8 @@
         </rule>
 
         <rule name="MASTER-COPY_FILES_VALID_BY_KAKADU">
-            <description>Všechny soubory MASTER-COPY (jpeg 2000) musí být validní vůči profilu pro binární soubory pro nástroj Kakadu.
+            <description>Všechny soubory MASTER-COPY (jpeg 2000) musí být validní vůči profilu pro binární soubory pro
+                nástroj Kakadu.
             </description>
             <validation functionName="checkBinaryFilesValidByExternalUtil">
                 <params>
@@ -2865,7 +2877,8 @@
         </rule>
 
         <rule name="USER-COPY_FILES_VALID_BY_KAKADU">
-            <description>Všechny soubory USER-COPY (jpeg 2000) musí být validní vůči profilu pro binární soubory pro nástroj Kakadu.
+            <description>Všechny soubory USER-COPY (jpeg 2000) musí být validní vůči profilu pro binární soubory pro
+                nástroj Kakadu.
             </description>
             <validation functionName="checkBinaryFilesValidByExternalUtil">
                 <params>
@@ -2880,7 +2893,8 @@
         </rule>
 
         <rule name="MASTER-COPY_FILES_VALID_BY_IMAGE_MAGICK">
-            <description>Všechny soubory MASTER-COPY (jpeg 2000) musí být validní vůči profilu pro binární soubory pro nástroj ImageMagick.
+            <description>Všechny soubory MASTER-COPY (jpeg 2000) musí být validní vůči profilu pro binární soubory pro
+                nástroj ImageMagick.
             </description>
             <validation functionName="checkBinaryFilesValidByExternalUtil">
                 <params>
@@ -2895,7 +2909,8 @@
         </rule>
 
         <rule name="USER-COPY_FILES_VALID_BY_IMAGE_MAGICK">
-            <description>Všechny soubory USER-COPY (jpeg 2000) musí být validní vůči profilu pro binární soubory pro nástroj ImageMagick.
+            <description>Všechny soubory USER-COPY (jpeg 2000) musí být validní vůči profilu pro binární soubory pro
+                nástroj ImageMagick.
             </description>
             <validation functionName="checkBinaryFilesValidByExternalUtil">
                 <params>

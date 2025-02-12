@@ -2109,9 +2109,12 @@
                             </params>
                         </evaluation>
                     </value>
+                    <!--TODO: tohle odkomentovat pro kontrolu v MODS oproti CZIDLO-->
+                    <!--
                     <value name="mets_file" type="FILE">
-                        <value-ref name="PRIMARY-METS_FILE"/>
+                       <value-ref name="PRIMARY-METS_FILE"/>
                     </value>
+                    -->
                 </params>
             </validation>
         </rule>
