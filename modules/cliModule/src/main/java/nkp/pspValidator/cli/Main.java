@@ -622,6 +622,8 @@ public class Main {
         } catch (ParseException exp) {
             System.err.println("Chyba parsování parametrů: " + exp.getMessage());
             printHelp(options);
+        } catch (CliParamExeption e) {
+            System.err.println("Chyba: " + e.getMessage());
         } catch (XmlFileParsingException e) {
             System.err.println("Chyba:" + e.getMessage());
         } catch (ValidatorConfigurationException e) {
@@ -635,10 +637,13 @@ public class Main {
         }
     }
 
-    private static ValidationResult validateMetadataByProfile(File validatorConfigDir, String profileId, File metadataFile) {
+    private static ValidationResult validateMetadataByProfile(File validatorConfigDir, String profileId, File metadataFile) throws CliParamExeption {
         try {
             System.out.println("Validuji oproti profilu " + profileId + " soubor " + metadataFile);
             String[] profileTokens = profileId.split(":");
+            if (profileTokens.length < 3) {
+                throw new CliParamExeption("Neplatné id profilu '" + profileId + "'");
+            }
             String dmf = profileTokens[0];
             DictionaryManager dm = new DictionaryManager(new File(validatorConfigDir, "dictionaries"));
             MetadataProfileParser metadataProfileParser = new MetadataProfileParser(dm);
@@ -651,14 +656,15 @@ public class Main {
                     } else if (metadataFormatStr.equals("mods")) {
                         metadataFormat = MetadataFormat.MODS;
                     } else {
-                        System.out.println("Unknown metadata format: " + metadataFormatStr);
-                        return null;
+                        throw new CliParamExeption("Neznámý metadatový formát '" + metadataFormatStr + "'");
+                    }
+                    if (profileTokens.length < 4) {
+                        throw new CliParamExeption("Neplatné id profilu '" + profileId + "'");
                     }
                     String profileName = profileTokens[3];
                     File profileFile = new File(validatorConfigDir, "fDMF/" + dmf + "/biblioProfiles/" + metadataFormatStr + "/" + profileName + ".xml");
                     if (!profileFile.exists()) {
-                        System.out.println("Profile file does not exist: " + profileFile.getAbsolutePath());
-                        return null;
+                        throw new CliParamExeption("Soubor metadatového profile neexistuje: " + profileFile.getAbsolutePath());
                     }
                     MetadataProfile metadataProfile = metadataProfileParser.parseProfile(profileFile);
                     Document metadataDoc = XmlUtils.buildDocumentFromFile(metadataFile, true);
@@ -670,8 +676,7 @@ public class Main {
                     String profileName = profileTokens[2];
                     File profileFile = new File(validatorConfigDir, "fDMF/" + dmf + "/techProfiles/" + profileName + ".xml");
                     if (!profileFile.exists()) {
-                        System.out.println("Profile file does not exist: " + profileFile.getAbsolutePath());
-                        return null;
+                        throw new CliParamExeption("Soubor metadatového profile neexistuje: " + profileFile.getAbsolutePath());
                     }
                     MetadataProfile metadataProfile = metadataProfileParser.parseProfile(profileFile);
                     Document metadataDoc = XmlUtils.buildDocumentFromFile(metadataFile, true);
@@ -680,8 +685,7 @@ public class Main {
                     return result;
                 }
                 default:
-                    System.out.println("Unknown profile type: " + profileTokens[1]);
-                    return null;
+                    throw new CliParamExeption("Neznámý druh metadatového profilu '" + profileTokens[1] + "'");
             }
         } catch (ValidatorConfigurationException e) {
             throw new RuntimeException(e);
