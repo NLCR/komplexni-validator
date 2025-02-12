@@ -125,8 +125,8 @@ public class MainTest {
                 //, MON_2_0_MULTIVOLUME
                 //, MON_2_1_MULTIVOLUME
                 //, PER_1_4
-                //, PER_1_6
-                , PER_2_0
+                , PER_1_6
+                //, PER_2_0
                 //, PER_1_6_INFO_INVALID_NS
                 //, ZIP_1
                 //, ZIP_NOT_ZIP
