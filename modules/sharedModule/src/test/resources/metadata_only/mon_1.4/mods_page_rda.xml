@@ -1,0 +1,19 @@
+<mods:mods ID="MODS_PAGE_0078" xmlns:mods="http://www.loc.gov/mods/v3">
+    <mods:identifier type="uuid">b4bea030-40a6-11e7-ad33-5ef3fc9ae867</mods:identifier>
+    <mods:part type="normalPage">
+        <mods:detail type="pageNumber">
+            <mods:number>75</mods:number>
+        </mods:detail>
+        <mods:extent unit="pages">
+            <mods:start>75</mods:start>
+        </mods:extent>
+    </mods:part>
+    <mods:part>
+        <mods:detail type="pageIndex">
+            <mods:number>78</mods:number>
+        </mods:detail>
+    </mods:part>
+    <mods:note>right</mods:note>
+    <mods:genre type="normalPage">page</mods:genre>
+    <mods:typeOfResource>text</mods:typeOfResource>
+</mods:mods>

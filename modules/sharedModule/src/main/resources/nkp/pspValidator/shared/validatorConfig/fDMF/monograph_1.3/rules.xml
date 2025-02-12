@@ -2116,7 +2116,7 @@
         </rule>
 
         <rule name="MODS_IDENTIFIERS_URN_NBN_REGISTERED">
-            <description>Všechny identifikátory URN:NBN napříč MODS záznamy musí registrovány v URN:NBN Resolveru NKP.
+            <description>Všechny identifikátory URN:NBN napříč MODS záznamy musí být registrovány v URN:NBN Resolveru NKP a shodovat se ve vybraných metadatech
             </description>
             <validation functionName="checkUrnNbnIdentifiersRegistered">
                 <params>

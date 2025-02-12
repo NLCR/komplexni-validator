@@ -1,9 +1,9 @@
 package nkp.pspValidator.shared.metadataProfile.biblio;
 
-import nkp.pspValidator.shared.metadataProfile.MetadataProfileParser;
-import nkp.pspValidator.shared.metadataProfile.MetadataProfile;
 import nkp.pspValidator.shared.engine.exceptions.ValidatorConfigurationException;
 import nkp.pspValidator.shared.engine.types.MetadataFormat;
+import nkp.pspValidator.shared.metadataProfile.MetadataProfile;
+import nkp.pspValidator.shared.metadataProfile.MetadataProfileParser;
 
 import java.io.File;
 import java.util.HashMap;
@@ -26,21 +26,21 @@ public class BibliographicMetadataProfilesManager {
         data.put(MODS, new HashMap<>());
     }
 
-    public void processFile(File file, MetadataFormat format) throws ValidatorConfigurationException {
-        //System.err.println("processing: " + file.getName() + ", " + format);
+    public void registerProfileFile(File profileFile, MetadataFormat format) throws ValidatorConfigurationException {
+        //System.err.println("BibliographicMetadataProfilesManager: registering File: " + profileFile.getAbsoluteFile() + ", " + format);
         //just test-parsing so that we reveal potential errors before actually processing it
-        parser.parseProfile(file);
+        parser.parseProfile(profileFile);
         Map<CatalogingConventions, Map<String, File>> conventionsMapMap = data.get(format);
-        String filename = file.getName();
-        String filenameWithoutSuffix = file.getName().substring(0, filename.length() - ".xml".length());
-        CatalogingConventions conventions = detectCatalogingConventions(filenameWithoutSuffix, file);
+        String filename = profileFile.getName();
+        String filenameWithoutSuffix = profileFile.getName().substring(0, filename.length() - ".xml".length());
+        CatalogingConventions conventions = detectCatalogingConventions(filenameWithoutSuffix, profileFile);
         Map<String, File> filenameFileMap = conventionsMapMap.get(conventions);
         if (filenameFileMap == null) {
             filenameFileMap = new HashMap<>();
         }
         conventionsMapMap.put(conventions, filenameFileMap);
         String fileId = buildFileId(filenameWithoutSuffix, conventions);
-        filenameFileMap.put(fileId, file);
+        filenameFileMap.put(fileId, profileFile);
     }
 
     private CatalogingConventions detectCatalogingConventions(String filenameWithoutSuffix, File file) throws ValidatorConfigurationException {
@@ -67,6 +67,7 @@ public class BibliographicMetadataProfilesManager {
     public MetadataProfile buildProfile(String fileId, MetadataFormat format, CatalogingConventions conventions) {
         File file = getProfileFile(fileId, format, conventions);
         if (file == null) {
+            System.err.println("file is null");
             return null;
         } else {
             try {

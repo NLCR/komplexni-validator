@@ -45,4 +45,7 @@ public class Params {
 
     public static final String MINIFIED_PSP_DIR = "minified-psp-dir";
 
+    public static final String METADATA_PROFILE_ID = "metadata-profile-id";
+    public static final String METADATA_FILE = "metadata-file";
+
 }

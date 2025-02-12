@@ -6,6 +6,7 @@ plugins {
 group 'nkp.pspValidator'
 version '2.5'
 
+
 // Create a JAR task
 jar {
     manifest {
@@ -48,12 +49,42 @@ task runVersion(type: JavaExec) {
     args = ['--version']
 }
 
-task runTestMinify(type: JavaExec) {
+task runDev(type: JavaExec) {
+    classpath = sourceSets.main.runtimeClasspath
+    main = 'nkp.pspValidator.cli.Main'
+    args = ['--action', "DEV"]
+}
+
+
+def homeDir = System.getProperty("user.home")
+
+task runDevMrMinify(type: JavaExec) {
     classpath = sourceSets.main.runtimeClasspath
     main = 'nkp.pspValidator.cli.Main'
     args = ['--action', "BUILD_MINIFIED_PACKAGE",
-            '--psp', '/Users/martin/IdeaProjects/komplexni-validator/modules/sharedModule/src/test/resources/monograph_1.2/b50eb6b0-f0a4-11e3-b72e-005056827e52',
-            '--minified-psp-dir', '/Users/martin/tmp/komplexni-validator',
+            '--psp', "${homeDir}/TrineraProjects/Validator/komplexni-validator/modules/sharedModule/src/test/resources/monograph_1.2/b50eb6b0-f0a4-11e3-b72e-005056827e52",
+            '--minified-psp-dir', "${homeDir}/TrineraProjects/Validator/tmp/komplexni-validator",
+    ]
+}
+
+task runDevMrValidate(type: JavaExec) {
+    classpath = sourceSets.main.runtimeClasspath
+    main = 'nkp.pspValidator.cli.Main'
+    args = ['--action', "VALIDATE_PSP",
+            '--psp', "${homeDir}/TrineraProjects/KramarskeTisky/data/input/sample1/input/tmp/_ndk-package/2610798805-2025_02_10-14_55_56,336/6b8b3124-f791-4ac3-a2da-d5a5f927ad72",
+            '--config-dir', "${homeDir}/TrineraProjects/Validator/komplexni-validator/modules/sharedModule/src/main/resources/nkp/pspValidator/shared/validatorConfig",
+            '--forced-dmf-mon-version', '2.1'
+    ]
+}
+
+
+task runDevMrValidateProfile(type: JavaExec) {
+    classpath = sourceSets.main.runtimeClasspath
+    main = 'nkp.pspValidator.cli.Main'
+    args = ['--action', "VALIDATE_METADATA_BY_PROFILE",
+            '--config-dir', "${homeDir}/TrineraProjects/Validator/komplexni-validator/modules/sharedModule/src/main/resources/nkp/pspValidator/shared/validatorConfig",
+            '--metadata-profile-id', 'monograph_1.4:biblio:mods:page_rda',
+            '--metadata-file', "${homeDir}/TrineraProjects/Validator/komplexni-validator/modules/sharedModule/src/test/resources/metadata_only/mon_1.4/mods_page_rda.xml"
     ]
 }
 
@@ -75,6 +106,21 @@ tasks.withType(JavaCompile) {
 //runVersion - spusti nkp.pspValidator.shared.Main.main("--version")
 //./gradlew :modules:cliModule:runVersion
 
-//runTestMinify - spusti CLI s akci BUILD_MINIFIED_PACKAGE
-//./gradlew :modules:cliModule:runTestMinify
+//runDev - spusti nkp.pspValidator.shared.Main.main("--action DEV")
+//./gradlew :modules:cliModule:runDev
 
+//runDevValidate -spusti CLI s akci VALIDATE_PSP a hardcoded parametry
+//./gradlew :modules:cliModule:runDevValidate
+
+
+//hardcoded for Martin Řehánek
+//============================
+
+//runDevMrMinify - spusti CLI s akci BUILD_MINIFIED_PACKAGE a hardcoded parametry
+//./gradlew :modules:cliModule:runDevMrMinify
+
+//runDevMrValidateProfile - spusti CLI s akci VALIDATE_METADATA_BY_PROFILE a hardcoded parametry
+//./gradlew :modules:cliModule:runDevMrValidateProfile
+
+//runDevMrValidate - spusti CLI s akci VALIDATE_PSP a hardcoded parametry
+//./gradlew :modules:cliModule:runDevMrValidate

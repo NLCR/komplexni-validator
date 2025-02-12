@@ -65,7 +65,8 @@
     </validationFunction>
 
     <validationFunction name="checkFileIsDir">
-        <description>Zkontroluje, že soubor existuje a je adresář (tedy zda není obyčejný soubor). Pokud je ignoreIfFileIsNull=true a soubor parametry file
+        <description>Zkontroluje, že soubor existuje a je adresář (tedy zda není obyčejný soubor). Pokud je
+            ignoreIfFileIsNull=true a soubor parametry file
             obsahuje null, není vyhozena výjimka, ale vyhodnocení skončí bez detekce chyby.
         </description>
         <params-def>
@@ -289,10 +290,12 @@
     </validationFunction>
 
     <validationFunction name="checkUrnNbnIdentifiersRegistered">
-        <description>Ověří, že všechny identifikátory typu urnnbn jsou registrovány v URN:NBN Resolveru NKP.</description>
+        <description>Ověří, že všechny identifikátory typu urnnbn jsou registrovány v URN:NBN Resolveru NKP.
+        </description>
         <params-def>
             <value name="identifier_list" type="IDENTIFIER_LIST"
                    description="Seznam identifikátorů, použity budou jen ty, které jsou typu urnnbn."/>
+            <value name="primary-mets_file" type="FILE"/>
         </params-def>
     </validationFunction>
 

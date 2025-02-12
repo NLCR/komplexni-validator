@@ -1,0 +1,14 @@
+<mets:digiprovMD ID="AGENT_004" xmlns:mets="http://www.loc.gov/METS/">
+    <mets:mdWrap MDTYPE="PREMIS" MIMETYPE="text/xml">
+        <mets:xmlData>
+            <premis:agent xmlns:premis="info:lc/xmlns/premis-v2">
+                <premis:agentIdentifier>
+                    <premis:agentIdentifierType>EE_Sirius_NDK_UserID</premis:agentIdentifierType>
+                    <premis:agentIdentifierValue>54</premis:agentIdentifierValue>
+                </premis:agentIdentifier>
+                <premis:agentName>Tenciánová</premis:agentName>
+                <premis:agentType>person</premis:agentType>
+            </premis:agent>
+        </mets:xmlData>
+    </mets:mdWrap>
+</mets:digiprovMD>

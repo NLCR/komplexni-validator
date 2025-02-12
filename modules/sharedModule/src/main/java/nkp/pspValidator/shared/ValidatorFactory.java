@@ -36,10 +36,10 @@ public class ValidatorFactory {
         // process bibliographic profile files
         BibliographicMetadataProfilesManager biblioMgr = new BibliographicMetadataProfilesManager(new MetadataProfileParser(dictionaryManager));
         for (File profileFile : fdmfConfiguration.getBiblioDcProfiles()) {
-            biblioMgr.processFile(profileFile, MetadataFormat.DC);
+            biblioMgr.registerProfileFile(profileFile, MetadataFormat.DC);
         }
         for (File profileFile : fdmfConfiguration.getBiblioModsProfiles()) {
-            biblioMgr.processFile(profileFile, MetadataFormat.MODS);
+            biblioMgr.registerProfileFile(profileFile, MetadataFormat.MODS);
         }
         engine.setBibliographicMetadataProfilesManager(biblioMgr);
 

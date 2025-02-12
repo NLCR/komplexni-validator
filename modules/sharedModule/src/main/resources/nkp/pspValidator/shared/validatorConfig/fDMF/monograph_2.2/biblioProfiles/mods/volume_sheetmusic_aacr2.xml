@@ -494,7 +494,9 @@
                         </expectedContent>
                     </attribute>
                 </expectedAttributes>
-                <expectedContent/>
+                <expectedContent>
+                    <isbn/>
+                </expectedContent>
             </element>
 
             <element name="mods:identifier" specification="@type='ismn'" mandatory="false">

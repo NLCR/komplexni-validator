@@ -34,10 +34,16 @@ public class ValidatorProtocolXmlBuilder {
             Element protocolEl = doc.createElement("protocol");
             doc.appendChild(protocolEl);
 
+            Element validatorEl = doc.createElement("validator");
+            protocolEl.appendChild(validatorEl);
+            validatorEl.setAttribute("version", Version.VERSION_CODE);
+            validatorEl.setAttribute("buildDate", Version.BUILD_DATE);
+
             Long duration = protocol.getGlobalFinishTime() - protocol.getGlobalStartTime();
             Date startDate = new Date(protocol.getGlobalStartTime());
             Date finishDAte = new Date(protocol.getGlobalFinishTime());
             String verdict = protocol.isValid() ? "VALID" : "INVALID";
+
             Element summaryEl = buildSummaryEl(doc, duration, startDate, finishDAte, protocol.getGlobalProblemsTotal(), protocol.getGlobalProblemsByLevel(), verdict);
             protocolEl.appendChild(summaryEl);
 
