@@ -39,6 +39,10 @@
                 <expectedContent/>
             </element>
 
+            <element name="dc:type" specification="not(text() = 'model:periodical')" mandatory="false">
+                <expectedContent/>
+            </element>
+
             <element name="dc:coverage" mandatory="false">
                 <expectedContent/>
             </element>
@@ -47,7 +51,7 @@
                 <expectedContent/>
             </element>
 
-            <element name="dc:date" errorMessage="Očekáván povinný element dc:date obsahující datum vydání předlohy">
+            <element name="dc:date" errorMessage="Očekáván povinný element dc:date obsahující datum vydání předlohy" mandatory="false">
                 <expectedContent/>
             </element>
 
@@ -67,7 +71,7 @@
             <element name="dc:identifier" errorMessage="Očekáván alespoň jeden povinný element dc:identifier.">
                 <expectedContent/>
             </element>
- 
+
 	        <element name="dc:source" mandatory="false">
                 <expectedContent/>
             </element>
@@ -76,5 +80,3 @@
     </rootElement>
 
 </metadataProfile>
-
-	

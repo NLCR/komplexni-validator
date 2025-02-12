@@ -48,14 +48,10 @@
             </element>
 
             <element name="dc:language"
-                     errorMessage="Očekáván alespoň jeden povinný element dc:language obsahující přesné určení jazyka kódem z kontrolovaného slovníku ISO 639-2.">
+                     errorMessage="Očekáván alespoň jeden povinný element dc:language obsahující přesné určení jazyka kódem z kontrolovaného slovníku ISO 639-2." mandatory="false">
                 <expectedContent>
                     <fromDictionary name="iso6392languageCodes"/>
                 </expectedContent>
-            </element>
-
-            <element name="dc:format" mandatory="false">
-                <expectedContent/>
             </element>
 
             <element name="dc:description" mandatory="false">
@@ -78,5 +74,3 @@
     </rootElement>
 
 </metadataProfile>
-
-	

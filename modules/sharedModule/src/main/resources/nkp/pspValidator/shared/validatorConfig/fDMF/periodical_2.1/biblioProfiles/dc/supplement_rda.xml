@@ -51,6 +51,10 @@
                 <expectedContent/>
             </element>
 
+            <element name="dc:type" specification="not(text() = 'model:supplement')" mandatory="false">
+                <expectedContent/>
+            </element>
+
             <element name="dc:coverage" mandatory="false">
                 <expectedContent/>
             </element>
@@ -83,9 +87,11 @@
                 <expectedContent/>
             </element>
 
+            <element name="dc:source" mandatory="false">
+                <expectedContent/>
+            </element>
+
         </expectedElements>
     </rootElement>
 
 </metadataProfile>
-
-	

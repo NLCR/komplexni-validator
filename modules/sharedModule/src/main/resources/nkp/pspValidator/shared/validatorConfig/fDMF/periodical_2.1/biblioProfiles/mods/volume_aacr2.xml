@@ -123,6 +123,10 @@
 
             <element name="mods:genre" specification="text()='volume'"/>
 
+            <element name="mods:genre" specification="not(text()='volume')" mandatory="false">
+                <expectedContent/>
+            </element>
+
             <element name="mods:originInfo">
                 <expectedElements>
                     <element name="mods:dateIssued">

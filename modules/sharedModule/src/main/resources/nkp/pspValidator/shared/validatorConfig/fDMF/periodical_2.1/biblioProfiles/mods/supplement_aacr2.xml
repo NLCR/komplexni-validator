@@ -183,6 +183,10 @@
                 <expectedContent/>
             </element>
 
+            <element name="mods:genre" specification="not(text()='supplement')" mandatory="false">
+                <expectedContent/>
+            </element>
+
             <!--vydavatel-->
             <element name="mods:originInfo" specification="not(@transliteration='printer')" mandatory="false">
                 <expectedElements>

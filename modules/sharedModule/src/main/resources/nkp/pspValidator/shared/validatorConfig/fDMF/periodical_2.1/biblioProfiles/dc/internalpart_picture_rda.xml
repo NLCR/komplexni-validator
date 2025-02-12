@@ -47,10 +47,6 @@
                 <expectedContent/>
             </element>
 
-            <element name="dc:format" mandatory="false">
-                <expectedContent/>
-            </element>
-
             <element name="dc:description" mandatory="false">
                 <expectedContent/>
             </element>
@@ -71,5 +67,3 @@
     </rootElement>
 
 </metadataProfile>
-
-	
