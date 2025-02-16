@@ -7,9 +7,6 @@ import nkp.pspValidator.shared.engine.exceptions.InvalidXPathExpressionException
 import nkp.pspValidator.shared.engine.exceptions.PspDataException;
 import nkp.pspValidator.shared.engine.exceptions.ValidatorConfigurationException;
 import nkp.pspValidator.shared.engine.exceptions.XmlFileParsingException;
-import nkp.pspValidator.cli.Action;
-import nkp.pspValidator.cli.Main;
-import nkp.pspValidator.cli.Params;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -23,6 +20,7 @@ public class MainTest {
     private static final String HOME_DIR = System.getProperty("user.home");
 
     private static final String MON_1_4 = HOME_DIR + "/IdeaProjects/komplexni-validator-samples/src/test/resources/monografie/abc135-000itk";
+    private static final String MON_1_4_URN = HOME_DIR + "/TrineraProjects/Validator/samples-new/osa001-00117i";
     private static final String MON_1_2 = "../sharedModule/src/test/resources/monograph_1.2/b50eb6b0-f0a4-11e3-b72e-005056827e52";
     private static final String MON_1_2_MAP = "../sharedModule/src/test/resources/monograph_1.2_map/6e9a7000-65c0-11e6-85af-005056827e52";
     private static final String MON_1_2_INVALID_IMAGES = "../sharedModule/src/test/resources/monograph_1.2-invalid_images/b50eb6b0-f0a4-11e3-b72e-005056827e52";
@@ -44,6 +42,7 @@ public class MainTest {
     //private static final String PER_1_6_INFO_INVALID_NS = HOME_DIR + "/zakazky/NKP-Komplexni_Validator/data/per_1.6_invalid_info_ns/aba008-000310";
 
     private static final String PER_1_4 = "../sharedModule/src/test/resources/periodical_1.4/ope301-00000v";
+    private static final String PER_1_8_URN = HOME_DIR + "/TrineraProjects/Validator/samples-new/pna001-00daz9";
     private static final String PER_2_0 = HOME_DIR + "/TrineraProjects/Validator/samples-new/vzorovy_balicek_periodika_2/a685f910-f6ee-11ec-aa77-005056827e52";
 
 
@@ -120,12 +119,14 @@ public class MainTest {
                 //, MON_1_2_MAP
                 //, MON_1_2_INVALID_IMAGES
                 //, MON_1_4
+                //, MON_1_4_URN
                 //, MON_1_2_INVALIDIMAGES
                 //, MON_2_0_SINGLEVOLUME
                 //, MON_2_0_MULTIVOLUME
                 //, MON_2_1_MULTIVOLUME
                 //, PER_1_4
-                , PER_1_6
+                //, PER_1_6
+                , PER_1_8_URN
                 //, PER_2_0
                 //, PER_1_6_INFO_INVALID_NS
                 //, ZIP_1
@@ -144,7 +145,7 @@ public class MainTest {
                 //, null
 
                 //forced DMF versions
-                , "2.2"
+                , "2.1"
                 , "2.1"
                 //, "1.4"
                 //, "1.6"

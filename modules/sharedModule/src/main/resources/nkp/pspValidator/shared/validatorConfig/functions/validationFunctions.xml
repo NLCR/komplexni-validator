@@ -295,7 +295,7 @@
         <params-def>
             <value name="identifier_list" type="IDENTIFIER_LIST"
                    description="Seznam identifikátorů, použity budou jen ty, které jsou typu urnnbn."/>
-            <value name="primary-mets_file" type="FILE"/>
+            <value name="primary-mets_file" type="FILE" min="0" maxOccurs="1"/>
         </params-def>
     </validationFunction>
 
