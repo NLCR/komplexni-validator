@@ -28,7 +28,7 @@ public class UrnNbnResolverChecker {
 
     public UrnNbnResolverChecker(File metsFile) throws NoSuchAlgorithmException, KeyManagementException {
         this.sslSocketFactory = initSslSocketFactory();
-        this.metadataByUrnNbn = extractMetadataByUrnNbn(metsFile);
+        this.metadataByUrnNbn = metsFile == null ? null : extractMetadataByUrnNbn(metsFile);
     }
 
     private UrnNbnMetadataMapping extractMetadataByUrnNbn(File metsFile) {
