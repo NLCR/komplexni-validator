@@ -7,6 +7,7 @@ import nkp.pspValidator.shared.engine.ValueEvaluation;
 import nkp.pspValidator.shared.engine.ValueType;
 import nkp.pspValidator.shared.engine.exceptions.ContractException;
 import nkp.pspValidator.shared.engine.exceptions.InvalidXPathExpressionException;
+import nkp.pspValidator.shared.engine.params.ValueParam;
 import nkp.pspValidator.shared.engine.types.Identifier;
 import nkp.pspValidator.shared.engine.utils.UrnNbnResolverChecker;
 
@@ -36,14 +37,17 @@ public class VfCheckUrnNbnIdentifiersRegistered extends ValidationFunction {
     public ValidationResult validate() {
         try {
             checkContractCompliance();
-
             ValueEvaluation paramEvaluation = valueParams.getParams(PARAM_IDENTIFIER_LIST).get(0).getEvaluation();
             List<Identifier> identifiers = (List<Identifier>) paramEvaluation.getData();
             if (identifiers == null) {
                 return invalidValueParamNull(PARAM_IDENTIFIER_LIST, paramEvaluation);
             }
-            ValueEvaluation paramMetsFileEval = valueParams.getParams(PARAM_METS_FILE).get(0).getEvaluation();
-            File metsFile = (File) paramMetsFileEval.getData();
+            File metsFile = null;
+            List<ValueParam> paramsMetsFile = valueParams.getParams(PARAM_METS_FILE);
+            if (paramsMetsFile.size() != 0) {
+                ValueEvaluation paramMetsFileEval = paramsMetsFile.get(0).getEvaluation();
+                metsFile = (File) paramMetsFileEval.getData();
+            }
             return validate(identifiers, metsFile);
         } catch (ContractException e) {
             return invalidContractNotMet(e);
