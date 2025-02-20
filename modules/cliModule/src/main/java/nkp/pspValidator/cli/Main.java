@@ -610,7 +610,7 @@ public class Main {
                             if (result.hasProblems()) {
                                 result.getProblems().forEach(p -> System.out.println(p.getLevel() + ": " + p.getMessage(false)));
                             } else {
-                                System.out.println("No problems found in file " + metadataFile.getName() + " against profile " + metadataProfileId);
+                                System.out.println("Nenalezeny žádné problémy po validaci souboru " + metadataFile.getName() + " oproti profilu " + metadataProfileId);
                             }
                         }
                         break;
@@ -651,13 +651,13 @@ public class Main {
                     } else if (metadataFormatStr.equals("mods")) {
                         metadataFormat = MetadataFormat.MODS;
                     } else {
-                        System.out.println("Unknown metadata format: " + metadataFormatStr);
+                        System.out.println("Neznámý metadatový formát: " + metadataFormatStr);
                         return null;
                     }
                     String profileName = profileTokens[3];
                     File profileFile = new File(validatorConfigDir, "fDMF/" + dmf + "/biblioProfiles/" + metadataFormatStr + "/" + profileName + ".xml");
                     if (!profileFile.exists()) {
-                        System.out.println("Profile file does not exist: " + profileFile.getAbsolutePath());
+                        System.out.println("Profil neexistuje: " + profileFile.getAbsolutePath());
                         return null;
                     }
                     MetadataProfile metadataProfile = metadataProfileParser.parseProfile(profileFile);
@@ -670,7 +670,7 @@ public class Main {
                     String profileName = profileTokens[2];
                     File profileFile = new File(validatorConfigDir, "fDMF/" + dmf + "/techProfiles/" + profileName + ".xml");
                     if (!profileFile.exists()) {
-                        System.out.println("Profile file does not exist: " + profileFile.getAbsolutePath());
+                        System.out.println("Soubor profilu neexistuje: " + profileFile.getAbsolutePath());
                         return null;
                     }
                     MetadataProfile metadataProfile = metadataProfileParser.parseProfile(profileFile);
@@ -680,7 +680,7 @@ public class Main {
                     return result;
                 }
                 default:
-                    System.out.println("Unknown profile type: " + profileTokens[1]);
+                    System.out.println("Neznámý typ profilu: " + profileTokens[1]);
                     return null;
             }
         } catch (ValidatorConfigurationException e) {
