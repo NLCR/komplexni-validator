@@ -71,9 +71,16 @@ task runDevMrValidate(type: JavaExec) {
     classpath = sourceSets.main.runtimeClasspath
     main = 'nkp.pspValidator.cli.Main'
     args = ['--action', "VALIDATE_PSP",
-            '--psp', "${homeDir}/TrineraProjects/KramarskeTisky/data/input/sample1/input/tmp/_ndk-package/2610798805-2025_02_10-14_55_56,336/6b8b3124-f791-4ac3-a2da-d5a5f927ad72",
+            '--psp', "${homeDir}/TrineraProjects/KramarskeTisky/data/input/sample1/input/tmp/_ndk-package/2610798805-2025_02_18-17_21_12,336/d7742610-73d6-476f-84af-c15a7156c5a6",
             '--config-dir', "${homeDir}/TrineraProjects/Validator/komplexni-validator/modules/sharedModule/src/main/resources/nkp/pspValidator/shared/validatorConfig",
             '--forced-dmf-mon-version', '2.1'
+            , '--disable-imagemagick'
+            , '--disable-imagemagick'
+            , '--disable-imagemagick'
+            , '--disable-kakadu'
+            , '--disable-mp3val'
+            , '--disable-shntool'
+            , '--disable-checkmate'
     ]
 }
 

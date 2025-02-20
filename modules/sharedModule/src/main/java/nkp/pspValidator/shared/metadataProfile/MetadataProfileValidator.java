@@ -103,7 +103,12 @@ public class MetadataProfileValidator {
         for (int i = 0; i < foundAttrs.getLength(); i++) {
             if (!positionsOfUsedAttrs.contains(i)) {
                 Attr attr = (Attr) foundAttrs.item(i);
-                if (!attr.getName().startsWith("xmlns:") && !ignoreUnexpectedAttributes) { //ignore namespace definitions
+                if (!attr.getName().startsWith("xmlns") //except for namespace declarations
+                        // - namespace prefix definitions (xmlns:mets="http://www.loc.gov/METS/")
+                        // - default namespace declaration (xmlns="http://www.loc.gov/METS/")
+                        &&
+                        !ignoreUnexpectedAttributes //and if not ignoring unexpected attributes
+                ) {
                     result.addError(Level.WARNING, metadataFile, ErrorMessage.from(errorLabel, "%s: nalezen neočekávaný atribut '%s'", parentElementPath, attr.getName()).build());
                 }
             }
