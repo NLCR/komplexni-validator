@@ -642,8 +642,16 @@ public class Main {
             String dmf = profileTokens[0];
             DictionaryManager dm = new DictionaryManager(new File(validatorConfigDir, "dictionaries"));
             MetadataProfileParser metadataProfileParser = new MetadataProfileParser(dm);
+            if (profileTokens.length == 1) {
+                System.out.println("Chybí typ profilu (fDmf=" + profileTokens[0] + ")");
+                return null;
+            }
             switch (profileTokens[1]) {
                 case "biblio": {
+                    if (profileTokens.length == 2) {
+                        System.out.println("Chybí metadatový formát (fDmf=" + profileTokens[0] + ", typ=" + profileTokens[1] + ")");
+                        return null;
+                    }
                     String metadataFormatStr = profileTokens[2];
                     MetadataFormat metadataFormat = null;
                     if (metadataFormatStr.equals("dc")) {
@@ -651,13 +659,17 @@ public class Main {
                     } else if (metadataFormatStr.equals("mods")) {
                         metadataFormat = MetadataFormat.MODS;
                     } else {
-                        System.out.println("Neznámý metadatový formát: " + metadataFormatStr);
+                        System.out.println("Neznámý metadatový formát: " + metadataFormatStr + " (fDmf=" + profileTokens[0] + ", typ=" + profileTokens[1] + ")");
+                        return null;
+                    }
+                    if (profileTokens.length == 3) {
+                        System.out.println("Chybí název profilu (fDmf=" + profileTokens[0] + ", typ=" + profileTokens[1] + ", formát=" + profileTokens[2] + ")");
                         return null;
                     }
                     String profileName = profileTokens[3];
                     File profileFile = new File(validatorConfigDir, "fDMF/" + dmf + "/biblioProfiles/" + metadataFormatStr + "/" + profileName + ".xml");
                     if (!profileFile.exists()) {
-                        System.out.println("Profil neexistuje: " + profileFile.getAbsolutePath());
+                        System.out.println("Soubor profilu neexistuje: " + profileFile.getName() + " (fDmf=" + profileTokens[0] + ", typ=" + profileTokens[1] + ", formát=" + profileTokens[2] + ")");
                         return null;
                     }
                     MetadataProfile metadataProfile = metadataProfileParser.parseProfile(profileFile);
@@ -667,10 +679,14 @@ public class Main {
                     return result;
                 }
                 case "tech": {
+                    if (profileTokens.length == 2) {
+                        System.out.println("Chybí název profilu (fDmf=" + profileTokens[0] + ", typ=" + profileTokens[1] + ")");
+                        return null;
+                    }
                     String profileName = profileTokens[2];
                     File profileFile = new File(validatorConfigDir, "fDMF/" + dmf + "/techProfiles/" + profileName + ".xml");
                     if (!profileFile.exists()) {
-                        System.out.println("Soubor profilu neexistuje: " + profileFile.getAbsolutePath());
+                        System.out.println("Soubor profilu neexistuje: " + profileFile.getName() + " (fDmf=" + profileTokens[0] + ", typ=" + profileTokens[1] + ")");
                         return null;
                     }
                     MetadataProfile metadataProfile = metadataProfileParser.parseProfile(profileFile);
@@ -680,7 +696,7 @@ public class Main {
                     return result;
                 }
                 default:
-                    System.out.println("Neznámý typ profilu: " + profileTokens[1]);
+                    System.out.println("Neznámý typ profilu: " + profileTokens[1] + " (fDmf=" + profileTokens[0] + ")");
                     return null;
             }
         } catch (ValidatorConfigurationException e) {

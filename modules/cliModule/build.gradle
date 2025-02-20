@@ -90,6 +90,14 @@ task runDevMrValidateProfile(type: JavaExec) {
     main = 'nkp.pspValidator.cli.Main'
     args = ['--action', "VALIDATE_METADATA_BY_PROFILE",
             '--config-dir', "${homeDir}/TrineraProjects/Validator/komplexni-validator/modules/sharedModule/src/main/resources/nkp/pspValidator/shared/validatorConfig",
+            //'--metadata-profile-id', 'monograph_1.4', //Chybí typ profilu (fDmf=monograph_1.4)
+            //'--metadata-profile-id', 'monograph_1.4:blbost', //Neznámý typ profilu: blbost (fDmf=monograph_1.4)
+            //'--metadata-profile-id', 'monograph_1.4:biblio', //Chybí metadatový formát (fDmf=monograph_1.4, typ=biblio)
+            //'--metadata-profile-id', 'monograph_1.4:biblio:blbost', //Neznámý metadatový formát: blbost (fDmf=monograph_1.4, typ=biblio)
+            //'--metadata-profile-id', 'monograph_1.4:biblio:mods', //Chybí název profilu (fDmf=monograph_1.4, typ=biblio, formát=mods)
+            //'--metadata-profile-id', 'monograph_1.4:biblio:mods:blbost', //Soubor profilu neexistuje: blbost.xml (fDmf=monograph_1.4, typ=biblio, formát=mods)
+            //'--metadata-profile-id', 'monograph_1.4:tech', //Chybí název profilu (fDmf=monograph_1.4, typ=tech)
+            //'--metadata-profile-id', 'monograph_1.4:tech:blbost', //Soubor profilu neexistuje: blbost.xml (fDmf=monograph_1.4, typ=tech)
             '--metadata-profile-id', 'monograph_1.4:biblio:mods:page_rda',
             '--metadata-file', "${homeDir}/TrineraProjects/Validator/komplexni-validator/modules/sharedModule/src/test/resources/metadata_only/mon_1.4/mods_page_rda.xml"
     ]
