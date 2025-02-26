@@ -49,6 +49,9 @@ public class UrnNbnResolverChecker {
                     NodeList modsIdEls = (NodeList) buildXpath("mods:identifier[@type='urnnbn']").evaluate(element, XPathConstants.NODESET);
                     if (modsIdEls.getLength() != 0) {
                         String urnNbn = modsIdEls.item(0).getTextContent(); //just first identifier of type urnnbn
+                        if (entityType.equals("ART") || entityType.equals("CHAP")) {
+                            entityType = "ART/CHAP";
+                        }
                         metadataMapping.addMetadataByUrn(urnNbn, entityType, element);
                     }
                 }
@@ -171,6 +174,7 @@ public class UrnNbnResolverChecker {
             System.out.println("TODO: check THESIS for " + urnNbn);
         } else if (digitalDocument.has("analytical")) { //https://resolver.nkp.cz/api/v6/resolver/urn:nbn:cz:pna001-00cxz5?format=json
             titleInfo = digitalDocument.getJSONObject("analytical").getJSONObject("titleInfo");
+            //tohle může být článek v periodiku, nebo kapitola v monografii
             checkMetadata("ANALYTICAL", titleInfo, urnNbn);
         } else if (digitalDocument.has("otherEntity")) { //https://resolver.nkp.cz/api/v5/resolver/urn:nbn:cz:abg001-0003ig?format=json
             titleInfo = digitalDocument.getJSONObject("otherEntity").getJSONObject("titleInfo");
@@ -183,7 +187,7 @@ public class UrnNbnResolverChecker {
     }
 
     private void checkMetadata(String czidlo_type, JSONObject titleInfo, String urnNbn) throws XPathExpressionException, IOException, InvalidXPathExpressionException, MetadataMismatchException {
-        System.out.println("checking metadata for " + urnNbn + ", czidlo_type: " + czidlo_type);
+        //System.out.println("checking metadata for " + urnNbn + ", czidlo_type: " + czidlo_type);
         String modsType;
         Node modsMetadata;
         switch (czidlo_type) {
@@ -198,25 +202,25 @@ public class UrnNbnResolverChecker {
                 checkPeriodicalIssueMetadata(czidlo_type, modsType, modsMetadata, titleInfo, urnNbn);
                 break;
             case "ANALYTICAL":
-                modsType = "ART";
+                modsType = "ART/CHAP";
                 modsMetadata = metadataMapping.getMetadataByUrnAndEntityType(urnNbn, modsType);
-                checkPeriodicalArticleMetadata(czidlo_type, modsType, modsMetadata, titleInfo, urnNbn);
+                checkAnalyticalMetadata(czidlo_type, modsType, modsMetadata, titleInfo, urnNbn);
                 break;
             default:
                 System.out.println("TODO: implement checking for " + czidlo_type);
         }
     }
 
-    private void checkPeriodicalArticleMetadata(String czidloType, String modsType, Node articleMods, JSONObject titleInfo, String urnNbn) throws InvalidXPathExpressionException, XPathExpressionException, MetadataMismatchException {
-        if (articleMods != null) {
-            //article title
+    private void checkAnalyticalMetadata(String czidloType, String modsType, Node analMods, JSONObject titleInfo, String urnNbn) throws InvalidXPathExpressionException, XPathExpressionException, MetadataMismatchException {
+        if (analMods != null) { //periodical ART or monograph CHAP
+            //article/chapter title
             checkDataMatch(
-                    (String) buildXpath("mods:titleInfo/mods:title").evaluate(articleMods, XPathConstants.STRING),
+                    (String) buildXpath("mods:titleInfo/mods:title").evaluate(analMods, XPathConstants.STRING),
                     titleInfo.getString("title"), urnNbn, czidloType, modsType
             );
-            //article subtitle (nepovinný)
+            //article/chapter subtitle (nepovinný)
             checkDataMatch(
-                    (String) buildXpath("mods:titleInfo/mods:subTitle").evaluate(articleMods, XPathConstants.STRING),
+                    (String) buildXpath("mods:titleInfo/mods:subTitle").evaluate(analMods, XPathConstants.STRING),
                     titleInfo.optString("subTitle", null), urnNbn, czidloType, modsType
             );
         } else {
