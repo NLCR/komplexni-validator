@@ -572,13 +572,23 @@
         </evaluation>
     </value-def>
 
-
     <value-def name="INFO_IDENTIFIERS" type="IDENTIFIER_LIST">
         <description>seznam identifikátorů ze souboru INFO</description>
         <evaluation functionName="getIdentifiersFromInfoFile">
             <params>
                 <value name="info_file" type="FILE">
                     <value-ref name="INFO_FILE"/>
+                </value>
+            </params>
+        </evaluation>
+    </value-def>
+
+    <value-def name="IE_IDENTIFIERS" type="IDENTIFIER_LIST">
+        <description>seznam identifikátorů intelektuální entity ze souboru PRIMARY-METS</description>
+        <evaluation functionName="getIeIdentifiersFromPrimaryMetsFile">
+            <params>
+                <value name="primary_mets_file" type="FILE">
+                    <value-ref name="PRIMARY-METS_FILE"/>
                 </value>
             </params>
         </evaluation>

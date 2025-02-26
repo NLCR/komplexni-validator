@@ -84,7 +84,6 @@ task runDevMrValidate(type: JavaExec) {
     ]
 }
 
-
 task runDevMrValidateProfile(type: JavaExec) {
     classpath = sourceSets.main.runtimeClasspath
     main = 'nkp.pspValidator.cli.Main'

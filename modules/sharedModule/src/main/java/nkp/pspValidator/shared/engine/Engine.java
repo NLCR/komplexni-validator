@@ -125,6 +125,8 @@ public class Engine {
                 return new EfGetStringListByXpath(name, this);
             case "getIdentifiersFromInfoFile":
                 return new EfGetIdentifiersFromInfoFile(name, this);
+            case "getIeIdentifiersFromPrimaryMetsFile":
+                return new EfGetIeIdentifiersFromPrimaryMetsFile(name, this);
             case "buildListOfStrings":
                 return new EfBuildListOfStrings(name, this);
             case "filterIdentifersByTypes":
