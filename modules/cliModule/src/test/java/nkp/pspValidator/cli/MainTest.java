@@ -148,8 +148,8 @@ public class MainTest {
                 //, null
 
                 //forced DMF versions
-                , null//"2.1"
-                , null//"2.1"
+                , "2.2"
+                , "2.1"
                 //, "1.4"
                 //, "1.6"
                 , 2 //verbosity (3: vsechno, 2: jen sekce a pravidla s chybami a popisy jednotlivych chyb, 1: jen pocty chyb v sekcich s chybami, bez popisu jednotlivych chyb, 0: nic)

@@ -2107,6 +2107,10 @@
                             </params>
                         </evaluation>
                     </value>
+                    <!--zakomentovat pro vypnutí kontroly metadat oproti CZIDLO-->
+                    <value name="mets_file" type="FILE">
+                        <value-ref name="PRIMARY-METS_FILE"/>
+                    </value>
                 </params>
             </validation>
         </rule>
