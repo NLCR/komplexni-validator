@@ -144,21 +144,20 @@ public class UrnNbnResolverChecker {
         }
     }
 
-    private void checkMetadataMatch(String urnNbn) throws IOException, XPathExpressionException, InvalidXPathExpressionException, MetadataMismatchException {
+    private void checkMetadataMatch(String urnNbn) throws IOException, XPathExpressionException, InvalidXPathExpressionException, MetadataMismatchException, ResolverWarning {
         JSONObject digDocMetadata = getDigDocMetadata(urnNbn);
         //System.out.println(digDocMetadata.toString(2));
         JSONObject digitalDocument = digDocMetadata.getJSONObject("digitalDocument");
         JSONObject titleInfo = null;
 
-        if (digitalDocument.has("periodical")) { //https://resolver.nkp.cz/api/v5/resolver/urn:nbn:cz:bve302-000004?format=json
+        /*if (digitalDocument.has("periodical")) { //https://resolver.nkp.cz/api/v5/resolver/urn:nbn:cz:bve302-000004?format=json
             titleInfo = digitalDocument.getJSONObject("periodical").getJSONObject("titleInfo");
-            //TODO
             System.out.println("TODO: check PERIODICAL for " + urnNbn);
         } else if (digitalDocument.has("periodicalVolume")) { //https://resolver.nkp.cz/api/v5/resolver/urn:nbn:cz:bve302-000005?format=json
             titleInfo = digitalDocument.getJSONObject("periodicalVolume").getJSONObject("titleInfo");
-            //TODO
             System.out.println("TODO: check PERIODICAL VOLUME for " + urnNbn);
-        } else if (digitalDocument.has("periodicalIssue")) {//https://resolver.nkp.cz/api/v6/resolver/urn:nbn:cz:abg001-0005lt?format=json
+        } else*/
+        if (digitalDocument.has("periodicalIssue")) {//https://resolver.nkp.cz/api/v6/resolver/urn:nbn:cz:abg001-0005lt?format=json
             titleInfo = digitalDocument.getJSONObject("periodicalIssue").getJSONObject("titleInfo");
             checkMetadata("PERIODICAL_ISSUE", titleInfo, urnNbn);
         } else if (digitalDocument.has("monograph")) { //https://resolver.nkp.cz/api/v6/resolver/urn:nbn:cz:mzk-006obk?format=json
@@ -167,21 +166,20 @@ public class UrnNbnResolverChecker {
         } else if (digitalDocument.has("monographVolume")) { //https://resolver.nkp.cz/api/v5/resolver/urn:nbn:cz:nk-003do9?format=json
             titleInfo = digitalDocument.getJSONObject("monographVolume").getJSONObject("titleInfo");
             checkMetadata("MONOGRAPH_VOLUME", titleInfo, urnNbn);
-        } else if (digitalDocument.has("thesis")) { //https://resolver.nkp.cz/api/v5/resolver/urn:nbn:cz:bve302-000007?format=json
+        }/* else if (digitalDocument.has("thesis")) { //https://resolver.nkp.cz/api/v5/resolver/urn:nbn:cz:bve302-000007?format=json
             titleInfo = digitalDocument.getJSONObject("thesis").getJSONObject("titleInfo");
-            //TODO
             System.out.println("TODO: check THESIS for " + urnNbn);
-        } else if (digitalDocument.has("analytical")) { //https://resolver.nkp.cz/api/v6/resolver/urn:nbn:cz:pna001-00cxz5?format=json
+        } */ else if (digitalDocument.has("analytical")) { //https://resolver.nkp.cz/api/v6/resolver/urn:nbn:cz:pna001-00cxz5?format=json
             titleInfo = digitalDocument.getJSONObject("analytical").getJSONObject("titleInfo");
             //tohle může být článek v periodiku, nebo kapitola v monografii
             checkMetadata("ANALYTICAL", titleInfo, urnNbn);
-        } else if (digitalDocument.has("otherEntity")) { //https://resolver.nkp.cz/api/v5/resolver/urn:nbn:cz:abg001-0003ig?format=json
+        } /*else if (digitalDocument.has("otherEntity")) { //https://resolver.nkp.cz/api/v5/resolver/urn:nbn:cz:abg001-0003ig?format=json
             titleInfo = digitalDocument.getJSONObject("otherEntity").getJSONObject("titleInfo");
-            //TODO
             System.out.println("TODO: check OTHER ENTITY for " + urnNbn);
-        } else {
+        } */ else {
             //unexpected data structure
-            System.err.println("ERROR: unexpected data structure in digDocMetadata");
+            //System.err.println("ERROR: unexpected data structure in digDocMetadata");
+            throw new ResolverWarning("Unexpected data structure in digDocMetadata for %s", urnNbn);
         }
     }
 
