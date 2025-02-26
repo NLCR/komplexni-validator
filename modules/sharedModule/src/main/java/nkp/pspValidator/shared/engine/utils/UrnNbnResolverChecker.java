@@ -20,6 +20,7 @@ import java.security.KeyManagementException;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 import java.security.cert.X509Certificate;
+import java.util.Objects;
 
 public class UrnNbnResolverChecker {
 
@@ -42,12 +43,12 @@ public class UrnNbnResolverChecker {
             for (int i = 0; i < modsEls.getLength(); i++) {
                 Element element = (Element) modsEls.item(i);
                 String id = element.getAttribute("ID");
-                if (id != null && !id.isEmpty()) {
+                if (!id.isEmpty()) {
                     metadataMapping.addMetadataById(id, element);
                     String entityType = id.split("_")[1];
-                    NodeList modsIdEls = (NodeList) buildXpath("//mods:identifier[@type='urnnbn']").evaluate(metsDoc, XPathConstants.NODESET);
+                    NodeList modsIdEls = (NodeList) buildXpath("mods:identifier[@type='urnnbn']").evaluate(element, XPathConstants.NODESET);
                     if (modsIdEls.getLength() != 0) {
-                        String urnNbn = modsIdEls.item(0).getTextContent();
+                        String urnNbn = modsIdEls.item(0).getTextContent(); //just first identifier of type urnnbn
                         metadataMapping.addMetadataByUrn(urnNbn, entityType, element);
                     }
                 }
@@ -121,10 +122,11 @@ public class UrnNbnResolverChecker {
                         try {
                             checkMetadataMatch(urnNbn);
                         } catch (MetadataMismatchException e) {
+                            //throw new ResolverError(e.getMessage());
                             throw new ResolverWarning(e.getMessage());
                         }
                     } else {
-                        //OK, no metadata checking
+                        //no metadata checking
                     }
                     break;
             }
@@ -169,8 +171,7 @@ public class UrnNbnResolverChecker {
             System.out.println("TODO: check THESIS for " + urnNbn);
         } else if (digitalDocument.has("analytical")) { //https://resolver.nkp.cz/api/v6/resolver/urn:nbn:cz:pna001-00cxz5?format=json
             titleInfo = digitalDocument.getJSONObject("analytical").getJSONObject("titleInfo");
-            //TODO
-            System.out.println("TODO: check ANALYTICAL for " + urnNbn);
+            checkMetadata("ANALYTICAL", titleInfo, urnNbn);
         } else if (digitalDocument.has("otherEntity")) { //https://resolver.nkp.cz/api/v5/resolver/urn:nbn:cz:abg001-0003ig?format=json
             titleInfo = digitalDocument.getJSONObject("otherEntity").getJSONObject("titleInfo");
             //TODO
@@ -182,26 +183,49 @@ public class UrnNbnResolverChecker {
     }
 
     private void checkMetadata(String czidlo_type, JSONObject titleInfo, String urnNbn) throws XPathExpressionException, IOException, InvalidXPathExpressionException, MetadataMismatchException {
-        System.out.println("checking metadata for " + urnNbn + ", type: " + czidlo_type);
+        System.out.println("checking metadata for " + urnNbn + ", czidlo_type: " + czidlo_type);
+        String modsType;
+        Node modsMetadata;
         switch (czidlo_type) {
             case "MONOGRAPH_VOLUME":
-                String modsType = "VOLUME";
-                Node modsMetadata = metadataMapping.getMetadataByUrnAndEntityType(urnNbn, "VOLUME");
+                modsType = "VOLUME";
+                modsMetadata = metadataMapping.getMetadataByUrnAndEntityType(urnNbn, modsType);
                 checkMonographVolumeMetadata(czidlo_type, modsType, modsMetadata, titleInfo, urnNbn);
                 break;
             case "PERIODICAL_ISSUE":
                 modsType = "ISSUE";
-                modsMetadata = metadataMapping.getMetadataByUrnAndEntityType(urnNbn, "ISSUE");
+                modsMetadata = metadataMapping.getMetadataByUrnAndEntityType(urnNbn, modsType);
                 checkPeriodicalIssueMetadata(czidlo_type, modsType, modsMetadata, titleInfo, urnNbn);
+                break;
+            case "ANALYTICAL":
+                modsType = "ART";
+                modsMetadata = metadataMapping.getMetadataByUrnAndEntityType(urnNbn, modsType);
+                checkPeriodicalArticleMetadata(czidlo_type, modsType, modsMetadata, titleInfo, urnNbn);
                 break;
             default:
                 System.out.println("TODO: implement checking for " + czidlo_type);
         }
     }
 
-    private void checkPeriodicalIssueMetadata(String czidloType, String modsType, Node issueMods, JSONObject titleInfo, String urnNbn) {
+    private void checkPeriodicalArticleMetadata(String czidloType, String modsType, Node articleMods, JSONObject titleInfo, String urnNbn) throws InvalidXPathExpressionException, XPathExpressionException, MetadataMismatchException {
+        if (articleMods != null) {
+            //article title
+            checkDataMatch(
+                    (String) buildXpath("mods:titleInfo/mods:title").evaluate(articleMods, XPathConstants.STRING),
+                    titleInfo.getString("title"), urnNbn, czidloType, modsType
+            );
+            //article subtitle (nepovinný)
+            checkDataMatch(
+                    (String) buildXpath("mods:titleInfo/mods:subTitle").evaluate(articleMods, XPathConstants.STRING),
+                    titleInfo.optString("subTitle", null), urnNbn, czidloType, modsType
+            );
+        } else {
+            System.out.println("MODS metadata not found for " + urnNbn);
+        }
+    }
+
+    private void checkPeriodicalIssueMetadata(String czidloType, String modsType, Node issueMods, JSONObject titleInfo, String urnNbn) throws InvalidXPathExpressionException, XPathExpressionException, MetadataMismatchException {
         if (issueMods != null) {
-            try {
                 /*
                 MODS:title muze obsahovat nazev issue, ale i nazev periodika, zatimcoe CZIDLO má periodicalTitle, volumeTitle, issueTitle
                 see https://standardy.ndk.cz/ndk/standardy-digitalizace/DMF_periodika_2.1_final_17_12_24.pdf (str 37)
@@ -239,30 +263,27 @@ public class UrnNbnResolverChecker {
                 }
                 ======================
                */
-                //periodical title
-                Node titleMods = metadataMapping.getMetadataById("MODS_TITLE_0001");
-                if (titleMods != null) {
-                    checkDataMatch(
-                            (String) buildXpath("mods:titleInfo/mods:title").evaluate(titleMods, XPathConstants.STRING),
-                            titleInfo.getString("periodicalTitle"), urnNbn, czidloType, modsType
-                    );
-                }
-                //volume title
-                Node volumeMods = metadataMapping.getMetadataById("MODS_VOLUME_0001");
-                if (volumeMods != null) {
-                    checkDataMatch(
-                            (String) buildXpath("mods:titleInfo/mods:partNumber").evaluate(volumeMods, XPathConstants.STRING),
-                            titleInfo.getString("volumeTitle"), urnNbn, czidloType, modsType
-                    );
-                }
-                //issue title
+            //periodical titleS
+            Node titleMods = metadataMapping.getMetadataById("MODS_TITLE_0001");
+            if (titleMods != null) {
                 checkDataMatch(
-                        (String) buildXpath("mods:titleInfo/mods:partNumber").evaluate(issueMods, XPathConstants.STRING),
-                        titleInfo.getString("issueTitle"), urnNbn, czidloType, modsType
+                        (String) buildXpath("mods:titleInfo/mods:title").evaluate(titleMods, XPathConstants.STRING),
+                        titleInfo.getString("periodicalTitle"), urnNbn, czidloType, modsType
                 );
-            } catch (Exception e) {
-                System.err.println("ERROR: " + e.getMessage());
             }
+            //volume title
+            Node volumeMods = metadataMapping.getMetadataById("MODS_VOLUME_0001");
+            if (volumeMods != null) {
+                checkDataMatch(
+                        (String) buildXpath("mods:titleInfo/mods:partNumber").evaluate(volumeMods, XPathConstants.STRING),
+                        titleInfo.getString("volumeTitle"), urnNbn, czidloType, modsType
+                );
+            }
+            //issue title
+            checkDataMatch(
+                    (String) buildXpath("mods:titleInfo/mods:partNumber").evaluate(issueMods, XPathConstants.STRING),
+                    titleInfo.getString("issueTitle"), urnNbn, czidloType, modsType
+            );
         } else {
             System.out.println("MODS metadata not found for " + urnNbn);
         }
@@ -295,19 +316,14 @@ public class UrnNbnResolverChecker {
         if (differs(first, second)) {
             throw new MetadataMismatchException(urnNbn, czidloType, modsType, first, second);
         } else {
-            System.out.println("OK: metadata for " + urnNbn + " matches");
+            //System.out.println("match: " + urnNbn + ", czidloType: " + czidloType + ", modsType: " + modsType + "  first: " + first + ", second: " + second);
         }
     }
 
     private boolean differs(String first, String second) {
-        boolean differ = first == null && second != null || first != null && !first.equals(second);
-        /*if (!differ) {
-            System.out.println("first: " + first);
-            System.out.printf("second: " + second);
-            System.out.println("differs: " + differ);
-        }*/
-        return differ;
-        //return true;
+        boolean same = (first == null || first.trim().isEmpty()) && (second == null || second.trim().isEmpty()) //both empty
+                || Objects.equals(first, second);
+        return !same;
     }
 
     private JSONObject getDigDocMetadata(String urnNbn) throws IOException {

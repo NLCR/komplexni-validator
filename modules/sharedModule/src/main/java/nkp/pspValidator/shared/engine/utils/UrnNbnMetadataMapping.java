@@ -19,6 +19,7 @@ public class UrnNbnMetadataMapping {
     }
 
     public void addMetadataByUrn(String urnNbn, String entityType, Node node) {
+        //System.out.println("adding metadata for urnNbn: " + urnNbn + ", entityType: " + entityType);
         UrnNbnMetadata metadata = new UrnNbnMetadata();
         metadata.entityType = entityType;
         metadata.node = node;
@@ -32,6 +33,9 @@ public class UrnNbnMetadataMapping {
 
     public Node getMetadataByUrnAndEntityType(String urnNbn, String entityType) {
         List<UrnNbnMetadata> urnNbnMetadata = metadataByUrn.get(urnNbn);
+        if (urnNbnMetadata == null) {
+            return null;
+        }
         for (UrnNbnMetadata metadata : urnNbnMetadata) {
             if (metadata.entityType.equals(entityType)) {
                 return metadata.node;
