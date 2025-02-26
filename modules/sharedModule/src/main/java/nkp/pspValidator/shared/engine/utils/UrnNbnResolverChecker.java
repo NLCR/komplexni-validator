@@ -163,8 +163,7 @@ public class UrnNbnResolverChecker {
             checkMetadata("PERIODICAL_ISSUE", titleInfo, urnNbn);
         } else if (digitalDocument.has("monograph")) { //https://resolver.nkp.cz/api/v6/resolver/urn:nbn:cz:mzk-006obk?format=json
             titleInfo = digitalDocument.getJSONObject("monograph").getJSONObject("titleInfo");
-            //TODO
-            System.out.println("TODO: check MONOGRAPH for " + urnNbn);
+            checkMetadata("MONOGRAPH", titleInfo, urnNbn);
         } else if (digitalDocument.has("monographVolume")) { //https://resolver.nkp.cz/api/v5/resolver/urn:nbn:cz:nk-003do9?format=json
             titleInfo = digitalDocument.getJSONObject("monographVolume").getJSONObject("titleInfo");
             checkMetadata("MONOGRAPH_VOLUME", titleInfo, urnNbn);
@@ -191,6 +190,11 @@ public class UrnNbnResolverChecker {
         String modsType;
         Node modsMetadata;
         switch (czidlo_type) {
+            case "MONOGRAPH":
+                modsType = "VOLUME";
+                modsMetadata = metadataMapping.getMetadataByUrnAndEntityType(urnNbn, modsType);
+                checkMonographMetadata(czidlo_type, modsType, modsMetadata, titleInfo, urnNbn);
+                break;
             case "MONOGRAPH_VOLUME":
                 modsType = "VOLUME";
                 modsMetadata = metadataMapping.getMetadataByUrnAndEntityType(urnNbn, modsType);
@@ -208,6 +212,23 @@ public class UrnNbnResolverChecker {
                 break;
             default:
                 System.out.println("TODO: implement checking for " + czidlo_type);
+        }
+    }
+
+    private void checkMonographMetadata(String czidloType, String modsType, Node modsMetadata, JSONObject titleInfo, String urnNbn) throws InvalidXPathExpressionException, XPathExpressionException, MetadataMismatchException {
+        if (modsMetadata != null) {
+            //monograph title
+            checkDataMatch(
+                    (String) buildXpath("mods:titleInfo/mods:title").evaluate(modsMetadata, XPathConstants.STRING),
+                    titleInfo.getString("title"), urnNbn, czidloType, modsType
+            );
+            //monograph subtitle (nepovinný)
+            checkDataMatch(
+                    (String) buildXpath("mods:titleInfo/mods:subTitle").evaluate(modsMetadata, XPathConstants.STRING),
+                    titleInfo.optString("subTitle", null), urnNbn, czidloType, modsType
+            );
+        } else {
+            System.out.println("MODS metadata not found for " + urnNbn);
         }
     }
 
@@ -267,7 +288,7 @@ public class UrnNbnResolverChecker {
                 }
                 ======================
                */
-            //periodical titleS
+            //periodical title
             Node titleMods = metadataMapping.getMetadataById("MODS_TITLE_0001");
             if (titleMods != null) {
                 checkDataMatch(
@@ -293,23 +314,17 @@ public class UrnNbnResolverChecker {
         }
     }
 
-    private void checkMonographVolumeMetadata(String czidlo_type, String modsType, Node modsMetadata, JSONObject titleInfo, String urnNbn) throws IOException, InvalidXPathExpressionException, XPathExpressionException, MetadataMismatchException {
+    private void checkMonographVolumeMetadata(String czidloType, String modsType, Node modsMetadata, JSONObject titleInfo, String urnNbn) throws IOException, InvalidXPathExpressionException, XPathExpressionException, MetadataMismatchException {
         if (modsMetadata != null) {
-            /*
-            System.out.println(titleInfo.toString(2));
-            try {
-                System.out.println(XmlUtils.elementToString((Element) modsMetadata));
-            } catch (Exception e) {
-                System.err.println("ERROR: " + e.getMessage());
-            }
-            */
+            //monograph title
             checkDataMatch(
                     (String) buildXpath("mods:titleInfo/mods:title").evaluate(modsMetadata, XPathConstants.STRING),
-                    titleInfo.getString("monographTitle"), urnNbn, czidlo_type, modsType
+                    titleInfo.getString("monographTitle"), urnNbn, czidloType, modsType
             );
+            //monograph volume title
             checkDataMatch(
                     (String) buildXpath("mods:titleInfo/mods:partNumber").evaluate(modsMetadata, XPathConstants.STRING),
-                    titleInfo.getString("volumeTitle"), urnNbn, czidlo_type, modsType
+                    titleInfo.getString("volumeTitle"), urnNbn, czidloType, modsType
             );
         } else {
             System.out.println("MODS metadata not found for " + urnNbn);
