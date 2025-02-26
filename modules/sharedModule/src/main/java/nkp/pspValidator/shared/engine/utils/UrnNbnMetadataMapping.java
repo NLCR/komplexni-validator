@@ -9,33 +9,43 @@ import java.util.Map;
 
 public class UrnNbnMetadataMapping {
 
-    private final Map<String, List<UrnNbnMetadata>> result = new HashMap<>();
+    private final Map<String, List<UrnNbnMetadata>> metadataByUrn = new HashMap<>();
+    private final Map<String, Node> metadataById = new HashMap<>();
+
 
     public static class UrnNbnMetadata {
-        public String type;
+        public String entityType;
         public Node node;
     }
 
-    public void addMetadata(String urnNbn, String type, Node node) {
+    public void addMetadataByUrn(String urnNbn, String entityType, Node node) {
         UrnNbnMetadata metadata = new UrnNbnMetadata();
-        metadata.type = type;
+        metadata.entityType = entityType;
         metadata.node = node;
-        List<UrnNbnMetadata> list = result.get(urnNbn);
+        List<UrnNbnMetadata> list = metadataByUrn.get(urnNbn);
         if (list == null) {
             list = new ArrayList<>();
-            result.put(urnNbn, list);
+            metadataByUrn.put(urnNbn, list);
         }
         list.add(metadata);
     }
 
-    public Node getMetadataByType(String urnNbn, String type) {
-        List<UrnNbnMetadata> urnNbnMetadata = result.get(urnNbn);
+    public Node getMetadataByUrnAndEntityType(String urnNbn, String entityType) {
+        List<UrnNbnMetadata> urnNbnMetadata = metadataByUrn.get(urnNbn);
         for (UrnNbnMetadata metadata : urnNbnMetadata) {
-            if (metadata.type.equals(type)) {
+            if (metadata.entityType.equals(entityType)) {
                 return metadata.node;
             }
         }
         return null;
+    }
+
+    public void addMetadataById(String id, Node node) {
+        metadataById.put(id, node);
+    }
+
+    public Node getMetadataById(String id) {
+        return metadataById.get(id);
     }
 
 }

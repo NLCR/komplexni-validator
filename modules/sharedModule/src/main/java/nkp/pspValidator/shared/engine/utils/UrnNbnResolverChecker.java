@@ -24,11 +24,11 @@ import java.security.cert.X509Certificate;
 public class UrnNbnResolverChecker {
 
     private final SSLSocketFactory sslSocketFactory;
-    private final UrnNbnMetadataMapping metadataByUrnNbn;
+    private final UrnNbnMetadataMapping metadataMapping;
 
     public UrnNbnResolverChecker(File metsFile) throws NoSuchAlgorithmException, KeyManagementException {
         this.sslSocketFactory = initSslSocketFactory();
-        this.metadataByUrnNbn = metsFile == null ? null : extractMetadataByUrnNbn(metsFile);
+        this.metadataMapping = metsFile == null ? null : extractMetadataByUrnNbn(metsFile);
     }
 
     private UrnNbnMetadataMapping extractMetadataByUrnNbn(File metsFile) {
@@ -43,11 +43,12 @@ public class UrnNbnResolverChecker {
                 Element element = (Element) modsEls.item(i);
                 String id = element.getAttribute("ID");
                 if (id != null && !id.isEmpty()) {
-                    String type = id.split("_")[1];
+                    metadataMapping.addMetadataById(id, element);
+                    String entityType = id.split("_")[1];
                     NodeList modsIdEls = (NodeList) buildXpath("//mods:identifier[@type='urnnbn']").evaluate(metsDoc, XPathConstants.NODESET);
                     if (modsIdEls.getLength() != 0) {
                         String urnNbn = modsIdEls.item(0).getTextContent();
-                        metadataMapping.addMetadata(urnNbn, type, element);
+                        metadataMapping.addMetadataByUrn(urnNbn, entityType, element);
                     }
                 }
             }
@@ -116,7 +117,7 @@ public class UrnNbnResolverChecker {
                 default:
                     throw new ResolverError("Neznámý stav \"%s\" Resolveru pro Identifikátor \"%s\"", status, urnNbn);
                 case "ACTIVE":
-                    if (metadataByUrnNbn != null) {
+                    if (metadataMapping != null) {
                         try {
                             checkMetadataMatch(urnNbn);
                         } catch (MetadataMismatchException e) {
@@ -146,27 +147,33 @@ public class UrnNbnResolverChecker {
 
         if (digitalDocument.has("periodical")) { //https://resolver.nkp.cz/api/v5/resolver/urn:nbn:cz:bve302-000004?format=json
             titleInfo = digitalDocument.getJSONObject("periodical").getJSONObject("titleInfo");
+            //TODO
             System.out.println("TODO: check PERIODICAL for " + urnNbn);
         } else if (digitalDocument.has("periodicalVolume")) { //https://resolver.nkp.cz/api/v5/resolver/urn:nbn:cz:bve302-000005?format=json
             titleInfo = digitalDocument.getJSONObject("periodicalVolume").getJSONObject("titleInfo");
+            //TODO
             System.out.println("TODO: check PERIODICAL VOLUME for " + urnNbn);
         } else if (digitalDocument.has("periodicalIssue")) {//https://resolver.nkp.cz/api/v6/resolver/urn:nbn:cz:abg001-0005lt?format=json
             titleInfo = digitalDocument.getJSONObject("periodicalIssue").getJSONObject("titleInfo");
             checkMetadata("PERIODICAL_ISSUE", titleInfo, urnNbn);
         } else if (digitalDocument.has("monograph")) { //https://resolver.nkp.cz/api/v6/resolver/urn:nbn:cz:mzk-006obk?format=json
             titleInfo = digitalDocument.getJSONObject("monograph").getJSONObject("titleInfo");
+            //TODO
             System.out.println("TODO: check MONOGRAPH for " + urnNbn);
         } else if (digitalDocument.has("monographVolume")) { //https://resolver.nkp.cz/api/v5/resolver/urn:nbn:cz:nk-003do9?format=json
             titleInfo = digitalDocument.getJSONObject("monographVolume").getJSONObject("titleInfo");
             checkMetadata("MONOGRAPH_VOLUME", titleInfo, urnNbn);
         } else if (digitalDocument.has("thesis")) { //https://resolver.nkp.cz/api/v5/resolver/urn:nbn:cz:bve302-000007?format=json
             titleInfo = digitalDocument.getJSONObject("thesis").getJSONObject("titleInfo");
+            //TODO
             System.out.println("TODO: check THESIS for " + urnNbn);
         } else if (digitalDocument.has("analytical")) { //https://resolver.nkp.cz/api/v6/resolver/urn:nbn:cz:pna001-00cxz5?format=json
             titleInfo = digitalDocument.getJSONObject("analytical").getJSONObject("titleInfo");
+            //TODO
             System.out.println("TODO: check ANALYTICAL for " + urnNbn);
         } else if (digitalDocument.has("otherEntity")) { //https://resolver.nkp.cz/api/v5/resolver/urn:nbn:cz:abg001-0003ig?format=json
             titleInfo = digitalDocument.getJSONObject("otherEntity").getJSONObject("titleInfo");
+            //TODO
             System.out.println("TODO: check OTHER ENTITY for " + urnNbn);
         } else {
             //unexpected data structure
@@ -179,12 +186,12 @@ public class UrnNbnResolverChecker {
         switch (czidlo_type) {
             case "MONOGRAPH_VOLUME":
                 String modsType = "VOLUME";
-                Node modsMetadata = metadataByUrnNbn.getMetadataByType(urnNbn, "VOLUME");
+                Node modsMetadata = metadataMapping.getMetadataByUrnAndEntityType(urnNbn, "VOLUME");
                 checkMonographVolumeMetadata(czidlo_type, modsType, modsMetadata, titleInfo, urnNbn);
                 break;
             case "PERIODICAL_ISSUE":
                 modsType = "ISSUE";
-                modsMetadata = metadataByUrnNbn.getMetadataByType(urnNbn, "ISSUE");
+                modsMetadata = metadataMapping.getMetadataByUrnAndEntityType(urnNbn, "ISSUE");
                 checkPeriodicalIssueMetadata(czidlo_type, modsType, modsMetadata, titleInfo, urnNbn);
                 break;
             default:
@@ -192,28 +199,65 @@ public class UrnNbnResolverChecker {
         }
     }
 
-    private void checkPeriodicalIssueMetadata(String czidloType, String modsType, Node modsMetadata, JSONObject titleInfo, String urnNbn) {
-        if (modsMetadata != null) {
+    private void checkPeriodicalIssueMetadata(String czidloType, String modsType, Node issueMods, JSONObject titleInfo, String urnNbn) {
+        if (issueMods != null) {
             try {
                 /*
                 MODS:title muze obsahovat nazev issue, ale i nazev periodika, zatimcoe CZIDLO má periodicalTitle, volumeTitle, issueTitle
                 see https://standardy.ndk.cz/ndk/standardy-digitalizace/DMF_periodika_2.1_final_17_12_24.pdf (str 37)
-                napr.:
-                --------------------
+                Proto musime poskladat nazev periodika, volume a issue z MODS ruznych urovni. Napr.:
+
+                METS
+                =====================
+                ------------------------
+                MODS_ISSUE_0001 (issue):
+                ------------------------
                 <mods:titleInfo>
-                   <mods:title>Nové slunce</mods:title>
-                   <mods:partNumber>1</mods:partNumber>
+                    <mods:title>Číslo čtvrté</mods:title>
+                    <mods:partNumber>4</mods:partNumber>
                 </mods:titleInfo>
+                --------------------------
+                MODS_VOLUME_0001 (volume):
+                --------------------------
+                <mods:titleInfo>
+                    <mods:partNumber>1</mods:partNumber>
+                </mods:titleInfo>
+                --------------------------
+                MODS_TITLE_0001 (title):
+                --------------------------
+                <mods:titleInfo>
+                    <mods:title>Nová Plzeň</mods:title>
+                    <mods:subTitle>časopis věnovaný zábavě a vědění</mods:subTitle>
+                </mods:titleInfo>
+                =====================
+                CZIDLO
                 --------------------
                 "titleInfo": {
-                      "periodicalTitle": "Nové slunce",
-                      "volumeTitle": "4",
-                      "issueTitle": "1"
-                    }
-                --------------------
+                     "volumeTitle": "1",
+                     "issueTitle": "4",
+                     "periodicalTitle": "Nová Plzeň"
+                }
+                ======================
                */
+                //periodical title
+                Node titleMods = metadataMapping.getMetadataById("MODS_TITLE_0001");
+                if (titleMods != null) {
+                    checkDataMatch(
+                            (String) buildXpath("mods:titleInfo/mods:title").evaluate(titleMods, XPathConstants.STRING),
+                            titleInfo.getString("periodicalTitle"), urnNbn, czidloType, modsType
+                    );
+                }
+                //volume title
+                Node volumeMods = metadataMapping.getMetadataById("MODS_VOLUME_0001");
+                if (volumeMods != null) {
+                    checkDataMatch(
+                            (String) buildXpath("mods:titleInfo/mods:partNumber").evaluate(volumeMods, XPathConstants.STRING),
+                            titleInfo.getString("volumeTitle"), urnNbn, czidloType, modsType
+                    );
+                }
+                //issue title
                 checkDataMatch(
-                        (String) buildXpath("mods:titleInfo/mods:partNumber").evaluate(modsMetadata, XPathConstants.STRING),
+                        (String) buildXpath("mods:titleInfo/mods:partNumber").evaluate(issueMods, XPathConstants.STRING),
                         titleInfo.getString("issueTitle"), urnNbn, czidloType, modsType
                 );
             } catch (Exception e) {
