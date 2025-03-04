@@ -25,6 +25,7 @@ public class DmfDetector {
     public static final String DEFAULT_PERIODICAL_VERSION = "2.1";
     public static final String DEFAULT_AUDIO_GRAM_VERSION = "0.5";
     public static final String DEFAULT_AUDIO_FONO_VERSION = "0.3";
+    public static final String DEFAULT_DATA_DISC_VERSION = "0.1";
 
 
     /**
@@ -34,7 +35,8 @@ public class DmfDetector {
      * Pokud se vyskytuje hodnota „Monograph“, zachází validátor s balíčkem jako s monografií.
      * Pokud se vyskytuje hodnota „Periodical“, zachází validátor s balíčkem jako s periodikem.
      * Pokud se vyskytuje hodnota „sound recording“, zachází validátor s balíčkem jako se zvukovým dokumentem gramofonové desky.
-     * //TODO: "audio cylinder" pro audio_fono
+     * Pokud se vyskytuje hodnota „audio cylinder“, zachází validátor s balíčkem jako se zvukovým dokumentem fonoválečku.
+     * Pokud se vyskytuje hodnota „data_disc“, zachází validátor s balíčkem jako s datovým diskem.
      */
     public Dmf.Type detectDmfType(File pspRootDir) throws PspDataException, XmlFileParsingException, InvalidXPathExpressionException {
 
@@ -51,6 +53,8 @@ public class DmfDetector {
                 return AUDIO_GRAM;
             } else if ("audio cylinder".equals(docType)) {
                 return AUDIO_FONO;
+            } else if ("data_disc".equals(docType)) {
+                return DATA_DISC;
             } else {
                 throw new PspDataException(pspRootDir, String.format("atribut TYPE elementu mods neobsahuje korektní typ (Monograph/Periodical/sound recording), ale hodnotu '%s'", docType));
             }
@@ -150,6 +154,8 @@ public class DmfDetector {
             case AUDIO_FONO: {
                 return chooseVersion(AUDIO_FONO, pspRoot, params.forcedDmfAdfVersion, params.preferredDmfAdfVersion, DEFAULT_AUDIO_FONO_VERSION);
             }
+            case DATA_DISC:
+                return chooseVersion(DATA_DISC, pspRoot, params.forcedDmfDadVersion, params.preferredDmfDadVersion, DEFAULT_DATA_DISC_VERSION);
             default:
                 throw new IllegalStateException();
         }
@@ -176,10 +182,12 @@ public class DmfDetector {
         public String preferredDmfPerVersion;
         public String preferredDmfAdgVersion;
         public String preferredDmfAdfVersion;
+        public String preferredDmfDadVersion;
         public String forcedDmfMonVersion;
         public String forcedDmfPerVersion;
         public String forcedDmfAdgVersion;
         public String forcedDmfAdfVersion;
+        public String forcedDmfDadVersion;
     }
 
 }

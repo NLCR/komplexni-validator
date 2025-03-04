@@ -189,5 +189,4 @@ public class DmfDetectorTest {
         return dmfDetector.resolveDmf(pspDir, params);
     }
 
-
 }

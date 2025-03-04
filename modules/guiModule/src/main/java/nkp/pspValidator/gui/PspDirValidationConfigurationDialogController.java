@@ -396,10 +396,12 @@ public class PspDirValidationConfigurationDialogController extends DialogControl
                 params.forcedDmfPerVersion = forcedPerVersionChoiceBox.isDisabled() ? null : (String) forcedPerVersionChoiceBox.getSelectionModel().getSelectedItem();
                 params.forcedDmfAdgVersion = forcedAdgVersionChoiceBox.isDisabled() ? null : (String) forcedAdgVersionChoiceBox.getSelectionModel().getSelectedItem();
                 params.forcedDmfAdfVersion = forcedAdfVersionChoiceBox.isDisabled() ? null : (String) forcedAdfVersionChoiceBox.getSelectionModel().getSelectedItem();
+                params.forcedDmfDadVersion = null; //TODO: DAD
                 params.preferredDmfMonVersion = preferredMonVersionChoiceBox.isDisabled() ? null : (String) preferredMonVersionChoiceBox.getSelectionModel().getSelectedItem();
                 params.preferredDmfPerVersion = preferredPerVersionChoiceBox.isDisabled() ? null : (String) preferredPerVersionChoiceBox.getSelectionModel().getSelectedItem();
                 params.preferredDmfAdgVersion = preferredAdgVersionChoiceBox.isDisabled() ? null : (String) preferredAdgVersionChoiceBox.getSelectionModel().getSelectedItem();
                 params.preferredDmfAdfVersion = preferredAdfVersionChoiceBox.isDisabled() ? null : (String) preferredAdfVersionChoiceBox.getSelectionModel().getSelectedItem();
+                params.preferredDmfDadVersion = null; //TODO: DAD
                 int verbosity = getSelectedVerbosity();
                 stage.hide();
                 main.runPspDirValidation(pspDir, params, createTxtLog.isSelected(), createXmlLog.isSelected(), verbosity);
