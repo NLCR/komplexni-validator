@@ -19,6 +19,7 @@ public class MainTest {
 
     private static final String HOME_DIR = System.getProperty("user.home");
 
+    //Monograph
     private static final String MON_1_4 = HOME_DIR + "/IdeaProjects/komplexni-validator-samples/src/test/resources/monografie/abc135-000itk";
     //private static final String MON_1_4_URN = HOME_DIR + "/TrineraProjects/Validator/samples-new/osa001-00117i";
     private static final String MON_1_4_URN = "../sharedModule/src/test/resources/nove/osa001-00117i";
@@ -29,24 +30,24 @@ public class MainTest {
     private static final String MON_2_0_MULTIVOLUME = HOME_DIR + "/IdeaProjects/komplexni-validator-samples/src/test/resources/monografie/vzorovy_balicek_monografie_2.1_vicesvazkova/47647030-3fb3-11e7-ad33-5ef3fc9ae867";
     private static final String MON_2_1_MULTIVOLUME = HOME_DIR + "/TrineraProjects/Validator/samples-new/Vzorovy_balicek_vicesvazek_2_1/47647030-3fb3-11e7-ad33-5ef3fc9ae867";
 
-
+    //Periodical
     private static final String PER_1_6 = "../sharedModule/src/test/resources/periodical_1.6/7033d800-0935-11e4-beed-5ef3fc9ae867";
-
-    private static final String ZIP_1 = HOME_DIR + "/zakazky/NKP-Komplexni_Validator/data/group/7033d800-0935-11e4-beed-5ef3fc9ae867.zip";
-    private static final String ZIP_2 = HOME_DIR + "/zakazky/NKP-Komplexni_Validator/data/group/ope301-00000v.zip";
-    private static final String ZIP_NOT_ZIP = HOME_DIR + "/zakazky/NKP-Komplexni_Validator/data/group/not_a_zip.txt";
-
-    private static final String GROUP = HOME_DIR + "/zakazky/NKP-Komplexni_Validator/data/group/";
-    private static final String GROUP_ZIP = HOME_DIR + "/zakazky/NKP-Komplexni_Validator/data/group.zip";
-
     //private static final String PER_1_6 = "../sharedModule/src/test/resources/periodical_1.6/ope301-00000v";
     //private static final String PER_1_6_INFO_INVALID_NS = HOME_DIR + "/zakazky/NKP-Komplexni_Validator/data/per_1.6_invalid_info_ns/aba008-000310";
-
     private static final String PER_1_4 = "../sharedModule/src/test/resources/periodical_1.4/ope301-00000v";
     private static final String PER_1_8_URN = "../sharedModule/src/test/resources/nove/pna001-00daz9";
     //private static final String PER_1_8_URN = HOME_DIR + "/TrineraProjects/Validator/samples-new/pna001-00daz9";
-
     private static final String PER_2_0 = HOME_DIR + "/TrineraProjects/Validator/samples-new/vzorovy_balicek_periodika_2/a685f910-f6ee-11ec-aa77-005056827e52";
+
+    //DataDisc
+    private static final String DAT_0_1 = HOME_DIR + "/TrineraProjects/Validator/komplexni-validator/modules/sharedModule/src/test/resources/data_disc_0.1/b50eb6b0-f0a4-11e3-b72e-005056827e52";
+
+    //Zip
+    private static final String ZIP_1 = HOME_DIR + "/zakazky/NKP-Komplexni_Validator/data/group/7033d800-0935-11e4-beed-5ef3fc9ae867.zip";
+    private static final String ZIP_2 = HOME_DIR + "/zakazky/NKP-Komplexni_Validator/data/group/ope301-00000v.zip";
+    private static final String ZIP_NOT_ZIP = HOME_DIR + "/zakazky/NKP-Komplexni_Validator/data/group/not_a_zip.txt";
+    private static final String GROUP = HOME_DIR + "/zakazky/NKP-Komplexni_Validator/data/group/";
+    private static final String GROUP_ZIP = HOME_DIR + "/zakazky/NKP-Komplexni_Validator/data/group.zip";
 
 
     @org.junit.Test
@@ -95,11 +96,11 @@ public class MainTest {
 
         Validator.DevParams devParams = new Validator.DevParams();
 
+        devParams.getSectionsToRun().add("Struktura souborů");
+        devParams.getSectionsToRun().add("Soubor INFO");
         //devParams.getSectionsToRun().add("Soubor CHECKSUM");
-        //devParams.getSectionsToRun().add("Soubor INFO");
-        //devParams.getSectionsToRun().add("Struktura souborů");
         //devParams.getSectionsToRun().add("Bibliografická metadata");
-        devParams.getSectionsToRun().add("Identifikátory");
+        //devParams.getSectionsToRun().add("Identifikátory");
         //devParams.getSectionsToRun().add("Obrazová data");
         //devParams.getSectionsToRun().add("OCR ALTO");
         //devParams.getSectionsToRun().add("OCR TEXT");
@@ -129,9 +130,10 @@ public class MainTest {
                 //, MON_2_1_MULTIVOLUME
                 //, PER_1_4
                 //, PER_1_6
-                , PER_1_8_URN
+                //, PER_1_8_URN
                 //, PER_2_0
                 //, PER_1_6_INFO_INVALID_NS
+                , DAT_0_1
                 //, ZIP_1
                 //, ZIP_NOT_ZIP
 

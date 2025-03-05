@@ -322,14 +322,27 @@
         </evaluation>
     </value-def>
 
-    <value-def name="SECONDARY-METS_FILES" type="FILE_LIST">
+    <value-def name="SECONDARY-METS-IMG_FILES" type="FILE_LIST">
         <evaluation functionName="findFilesInDirByPattern">
             <params>
                 <value name="dir" type="FILE">
                     <value-ref name="SECONDARY-METS-DIR_FILE"/>
                 </value>
                 <pattern name="pattern">
-                    <pattern-ref name="SECONDARY-METS_FILENAME"/>
+                    <pattern-ref name="SECONDARY-METS-IMG_FILENAME"/>
+                </pattern>
+            </params>
+        </evaluation>
+    </value-def>
+
+    <value-def name="SECONDARY-METS-ISO_FILES" type="FILE_LIST">
+        <evaluation functionName="findFilesInDirByPattern">
+            <params>
+                <value name="dir" type="FILE">
+                    <value-ref name="SECONDARY-METS-DIR_FILE"/>
+                </value>
+                <pattern name="pattern">
+                    <pattern-ref name="SECONDARY-METS-ISO_FILENAME"/>
                 </pattern>
             </params>
         </evaluation>
@@ -383,6 +396,55 @@
                 <pattern name="pattern">
                     <pattern-ref name="USER-COPY_FILENAME"/>
                 </pattern>
+            </params>
+        </evaluation>
+    </value-def>
+
+    <value-def name="ISOIMAGE_FILES" type="FILE_LIST">
+        <evaluation functionName="findFilesInDirByPattern">
+            <params>
+                <value name="dir" type="FILE">
+                    <value-ref name="ISOIMAGE-DIR_FILE"/>
+                </value>
+                <pattern name="pattern">
+                    <pattern-ref name="ISOIMAGE_FILENAME"/>
+                </pattern>
+            </params>
+        </evaluation>
+    </value-def>
+
+    <value-def name="FIFOID_FILES" type="FILE_LIST">
+        <evaluation functionName="findFilesInDirByPattern">
+            <params>
+                <value name="dir" type="FILE">
+                    <value-ref name="FIFOID-DIR_FILE"/>
+                </value>
+                <pattern name="pattern">
+                    <pattern-ref name="FIFOID_FILENAME"/>
+                </pattern>
+            </params>
+        </evaluation>
+    </value-def>
+
+    <value-def name="CATALOG-ENTRY_FILES" type="FILE_LIST">
+        <evaluation functionName="findFilesInDirByPattern">
+            <params>
+                <value name="dir" type="FILE">
+                    <value-ref name="CATALOG-ENTRY-DIR_FILE"/>
+                </value>
+                <pattern name="pattern">
+                    <pattern-ref name="CATALOG-ENTRY_FILENAME"/>
+                </pattern>
+            </params>
+        </evaluation>
+    </value-def>
+
+    <value-def name="CATALOG-ENTRY_FILE" type="FILE">
+        <evaluation functionName="getFirstFileFromFileList">
+            <params>
+                <value name="files" type="FILE_LIST">
+                    <value-ref name="CATALOG-ENTRY_FILES"/>
+                </value>
             </params>
         </evaluation>
     </value-def>

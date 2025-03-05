@@ -141,14 +141,14 @@
         <expression caseSensitive="true">catalog_entry</expression>
     </pattern-def>
 
-    <pattern-def name="SECONDARY-METS_FILENAME">
-        <description>Vzor pro jména souborů SECONDARY-METS v rámci adresáře SECONDARY-METS-DIR.</description>
-
-        <!--per<=1.4, mon<=1.0-->
-        <!--<expression caseSensitive="false">amd_mets_${PSP_ID}_[0-9]+\.xml</expression>-->
-
-        <!--per>=1.5, mon>=1.1-->
+    <pattern-def name="SECONDARY-METS-IMG_FILENAME">
+        <description>Vzor pro jména souborů SECONDARY-METS-IMG v rámci adresáře SECONDARY-METS-DIR.</description>
         <expression caseSensitive="true">amd_mets_${PSP_ID}_[0-9]+\.xml</expression>
+    </pattern-def>
+
+    <pattern-def name="SECONDARY-METS-ISO_FILENAME">
+        <description>Vzor pro jména souborů SECONDARY-METS-ISO v rámci adresáře SECONDARY-METS-DIR.</description>
+        <expression caseSensitive="true">amd_mets_isoimg_${PSP_ID}_[0-9]+\.xml</expression>
     </pattern-def>
 
     <pattern-def name="OCR-TEXT_FILENAME">
@@ -190,5 +190,21 @@
         <!--per>=1.5, mon>=1.1-->
         <expression caseSensitive="true">uc_${PSP_ID}_[0-9]+\.jp2</expression>
     </pattern-def>
+
+    <pattern-def name="ISOIMAGE_FILENAME">
+        <description>Vzor pro jména souborů ISOIMAGE v rámci adresáře ISOIMAGE-DIR.</description>
+        <expression caseSensitive="true">isoimg_${PSP_ID}_[0-9]+\.iso</expression>
+    </pattern-def>
+
+    <pattern-def name="FIFOID_FILENAME">
+        <description>Vzor pro jména souborů FIFOID v rámci adresáře FIFOID-DIR.</description>
+        <expression caseSensitive="true">fifoid_${PSP_ID}_[0-9]+\.xml</expression>
+    </pattern-def>
+
+    <pattern-def name="CATALOG-ENTRY_FILENAME">
+        <description>Vzor pro jména souborů CATALOG-ENTRY v rámci adresáře CATALOG-ENTRY-DIR.</description>
+        <expression caseSensitive="true">cat_entry_${PSP_ID}\.xml</expression>
+    </pattern-def>
+
 
 </fDMF>

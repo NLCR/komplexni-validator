@@ -505,12 +505,26 @@
 
         <!--názvy souborů v top-level adresářích obsahují jen povolené znaky-->
 
-        <rule name="SECONDARY-METS_FILENAMES_VALID">
-            <description>Všechny soubory SECONDARY-METS musí obsahovat jen povolené znaky.</description>
+        <rule name="SECONDARY-METS-IMG_FILENAMES_VALID">
+            <description>Všechny soubory SECONDARY-METS-IMG musí obsahovat jen povolené znaky.</description>
             <validation functionName="checkAllFilenamesMatchPattern">
                 <params>
                     <value name="files" type="FILE_LIST">
-                        <value-ref name="SECONDARY-METS_FILES"/>
+                        <value-ref name="SECONDARY-METS-IMG_FILES"/>
+                    </value>
+                    <pattern name="pattern">
+                        <pattern-ref name="FILENAME"/>
+                    </pattern>
+                </params>
+            </validation>
+        </rule>
+
+        <rule name="SECONDARY-METS-ISO_FILENAMES_VALID">
+            <description>Všechny soubory SECONDARY-METS-ISO musí obsahovat jen povolené znaky.</description>
+            <validation functionName="checkAllFilenamesMatchPattern">
+                <params>
+                    <value name="files" type="FILE_LIST">
+                        <value-ref name="SECONDARY-METS-ISO_FILES"/>
                     </value>
                     <pattern name="pattern">
                         <pattern-ref name="FILENAME"/>
@@ -575,15 +589,14 @@
             </validation>
         </rule>
 
-
         <!--počty souborů a délky názvů souborů v top-level adesářích-->
 
         <rule name="NUMBER_OF_FILES_IN_DIRS_MATCH">
-            <description>Počet souborů ve všech adresářích se musí shodovat.</description>
+            <description>Počet souborů popisujících stránky se musí shodovat.</description>
             <validation functionName="checkAllFileListsHaveSameSize">
                 <params>
                     <value name="files" type="FILE_LIST">
-                        <value-ref name="SECONDARY-METS_FILES"/>
+                        <value-ref name="SECONDARY-METS-IMG_FILES"/>
                     </value>
                     <value name="files" type="FILE_LIST">
                         <value-ref name="OCR-TEXT_FILES"/>
@@ -601,14 +614,44 @@
             </validation>
         </rule>
 
-        <rule name="SECONDARY-METS_FILENAMES_LENGTHS_SAME">
-            <description>Délky názvů všech souborů SECONDARY-METS musí být stejné. Tedy čísla stran jsou zarovnaná na
+        <rule name="NUMBER_OF_FILES_IN_DIRS_MATCH">
+            <description>Počet souborů popisující iso image se musí shodovat.</description>
+            <validation functionName="checkAllFileListsHaveSameSize">
+                <params>
+                    <value name="files" type="FILE_LIST">
+                        <value-ref name="ISOIMAGE_FILES"/>
+                    </value>
+                    <value name="files" type="FILE_LIST">
+                        <value-ref name="SECONDARY-METS-ISO_FILES"/>
+                    </value>
+                    <value name="files" type="FILE_LIST">
+                        <value-ref name="FIFOID_FILES"/>
+                    </value>
+                </params>
+            </validation>
+        </rule>
+
+        <rule name="SECONDARY-METS-IMG_FILENAMES_LENGTHS_SAME">
+            <description>Délky názvů všech souborů SECONDARY-METS-IMG musí být stejné. Tedy čísla stran jsou zarovnaná na
                 stejný počet nul.
             </description>
             <validation functionName="checkFilenamesLengthsSame">
                 <params>
                     <value name="files" type="FILE_LIST">
-                        <value-ref name="SECONDARY-METS_FILES"/>
+                        <value-ref name="SECONDARY-METS-IMG_FILES"/>
+                    </value>
+                </params>
+            </validation>
+        </rule>
+
+        <rule name="SECONDARY-METS-ISO_FILENAMES_LENGTHS_SAME">
+            <description>Délky názvů všech souborů SECONDARY-METS-ISO musí být stejné. Tedy čísla stran jsou zarovnaná na
+                stejný počet nul.
+            </description>
+            <validation functionName="checkFilenamesLengthsSame">
+                <params>
+                    <value name="files" type="FILE_LIST">
+                        <value-ref name="SECONDARY-METS-ISO_FILES"/>
                     </value>
                 </params>
             </validation>
@@ -661,6 +704,32 @@
                 <params>
                     <value name="files" type="FILE_LIST">
                         <value-ref name="USER-COPY_FILES"/>
+                    </value>
+                </params>
+            </validation>
+        </rule>
+
+        <rule name="ISOIMAGE_FILENAMES_LENGTHS_SAME">
+            <description>Délky názvů všech souborů ISOIMAGE musí být stejné. Tedy čísla stran jsou zarovnaná na stejný
+                počet nul.
+            </description>
+            <validation functionName="checkFilenamesLengthsSame">
+                <params>
+                    <value name="files" type="FILE_LIST">
+                        <value-ref name="ISOIMAGE_FILES"/>
+                    </value>
+                </params>
+            </validation>
+        </rule>
+
+        <rule name="FIFOID_FILENAMES_LENGTHS_SAME">
+            <description>Délky názvů všech souborů FIFOID musí být stejné. Tedy čísla stran jsou zarovnaná na stejný
+                počet nul.
+            </description>
+            <validation functionName="checkFilenamesLengthsSame">
+                <params>
+                    <value name="files" type="FILE_LIST">
+                        <value-ref name="FIFOID_FILES"/>
                     </value>
                 </params>
             </validation>
@@ -736,7 +805,10 @@
                         <value-ref name="SECONDARY-METS-DIR_FILE"/>
                     </value>
                     <value name="files" type="FILE_LIST">
-                        <value-ref name="SECONDARY-METS_FILES"/>
+                        <value-ref name="SECONDARY-METS-IMG_FILES"/>
+                    </value>
+                    <value name="files" type="FILE_LIST">
+                        <value-ref name="SECONDARY-METS-ISO_FILES"/>
                     </value>
                 </params>
             </validation>
@@ -952,7 +1024,10 @@
                         <value-ref name="PRIMARY-METS_FILE"/>
                     </value>
                     <value name="files" type="FILE_LIST">
-                        <value-ref name="SECONDARY-METS_FILES"/>
+                        <value-ref name="SECONDARY-METS-IMG_FILES"/>
+                    </value>
+                    <value name="files" type="FILE_LIST">
+                        <value-ref name="SECONDARY-METS-ISO_FILES"/>
                     </value>
                     <value name="files" type="FILE_LIST">
                         <value-ref name="OCR-TEXT_FILES"/>
@@ -965,6 +1040,15 @@
                     </value>
                     <value name="files" type="FILE_LIST">
                         <value-ref name="USER-COPY_FILES"/>
+                    </value>
+                    <value name="files" type="FILE_LIST">
+                        <value-ref name="ISOIMAGE_FILES"/>
+                    </value>
+                    <value name="files" type="FILE_LIST">
+                        <value-ref name="FIFOID_FILES"/>
+                    </value>
+                    <value name="file" type="FILE">
+                        <value-ref name="CATALOG-ENTRY_FILE"/>
                     </value>
                 </params>
             </validation>
@@ -2227,7 +2311,7 @@
             <validation functionName="checkMetsMatchProfile">
                 <params>
                     <value name="mets_files" type="FILE_LIST">
-                        <value-ref name="SECONDARY-METS_FILES"/>
+                        <value-ref name="SECONDARY-METS-IMG_FILES"/>
                     </value>
                     <value name="profile" type="STRING">secondary_mets_header</value>
                 </params>
@@ -2374,7 +2458,7 @@
             <validation functionName="checkFileListsMatch">
                 <params>
                     <value name="expected_files" type="FILE_LIST">
-                        <value-ref name="SECONDARY-METS_FILES"/>
+                        <value-ref name="SECONDARY-METS-IMG_FILES"/>
                     </value>
                     <value name="found_files" type="FILE_LIST">
                         <evaluation functionName="getFileListByXpath">
@@ -2402,7 +2486,7 @@
             <validation functionName="checkFileListsMatch">
                 <params>
                     <value name="expected_files" type="FILE_LIST">
-                        <value-ref name="SECONDARY-METS_FILES"/>
+                        <value-ref name="SECONDARY-METS-IMG_FILES"/>
                     </value>
                     <value name="found_files" type="FILE_LIST">
                         <evaluation functionName="getFileListByXpath">
@@ -2467,7 +2551,7 @@
             <validation functionName="checkSecondaryMetsFilesecContainsAllFilegroups">
                 <params>
                     <value name="secondary-mets_files" type="FILE_LIST">
-                        <value-ref name="SECONDARY-METS_FILES"/>
+                        <value-ref name="SECONDARY-METS-IMG_FILES"/>
                     </value>
                 </params>
             </validation>
@@ -2483,7 +2567,7 @@
                         <value-ref name="PSP_DIR"/>
                     </value>
                     <value name="secondary-mets_files" type="FILE_LIST">
-                        <value-ref name="SECONDARY-METS_FILES"/>
+                        <value-ref name="SECONDARY-METS-IMG_FILES"/>
                     </value>
                     <value name="referenced_files" type="FILE_LIST">
                         <value-ref name="MASTER-COPY_FILES"/>
@@ -2503,7 +2587,7 @@
                         <value-ref name="PSP_DIR"/>
                     </value>
                     <value name="secondary-mets_files" type="FILE_LIST">
-                        <value-ref name="SECONDARY-METS_FILES"/>
+                        <value-ref name="SECONDARY-METS-IMG_FILES"/>
                     </value>
                     <value name="referenced_files" type="FILE_LIST">
                         <value-ref name="USER-COPY_FILES"/>
@@ -2523,7 +2607,7 @@
                         <value-ref name="PSP_DIR"/>
                     </value>
                     <value name="secondary-mets_files" type="FILE_LIST">
-                        <value-ref name="SECONDARY-METS_FILES"/>
+                        <value-ref name="SECONDARY-METS-IMG_FILES"/>
                     </value>
                     <value name="referenced_files" type="FILE_LIST">
                         <value-ref name="OCR-ALTO_FILES"/>
@@ -2543,7 +2627,7 @@
                         <value-ref name="PSP_DIR"/>
                     </value>
                     <value name="secondary-mets_files" type="FILE_LIST">
-                        <value-ref name="SECONDARY-METS_FILES"/>
+                        <value-ref name="SECONDARY-METS-IMG_FILES"/>
                     </value>
                     <value name="referenced_files" type="FILE_LIST">
                         <value-ref name="OCR-TEXT_FILES"/>
@@ -2684,7 +2768,7 @@
             <validation functionName="checkSecondaryMetsPhysicalMapOk">
                 <params>
                     <value name="secondary-mets_files" type="FILE_LIST">
-                        <value-ref name="SECONDARY-METS_FILES"/>
+                        <value-ref name="SECONDARY-METS-IMG_FILES"/>
                     </value>
                     <value name="expected_page_type" type="STRING">MONOGRAPH_PAGE</value>
                     <value name="filegroups_to_check" type="STRING_LIST">
@@ -3040,7 +3124,7 @@
             <validation functionName="checkMixIsValidByXsd">
                 <params>
                     <value name="mets_files" type="FILE_LIST">
-                        <value-ref name="SECONDARY-METS_FILES"/>
+                        <value-ref name="SECONDARY-METS-IMG_FILES"/>
                     </value>
                     <value name="xsd_file" type="FILE">
                         <value-ref name="MIX_XSD_FILE"/>
@@ -3055,7 +3139,7 @@
             <validation functionName="checkMetsAmdsecElementsMatchProfile">
                 <params>
                     <value name="mets_files" type="FILE_LIST">
-                        <value-ref name="SECONDARY-METS_FILES"/>
+                        <value-ref name="SECONDARY-METS-IMG_FILES"/>
                     </value>
                     <value name="element_xpath" type="STRING">mets:techMD[@ID="MIX_001"]</value>
                     <value name="element_must_exist" type="BOOLEAN">true</value>
@@ -3070,7 +3154,7 @@
             <validation functionName="checkMetsAmdsecElementsMatchProfile">
                 <params>
                     <value name="mets_files" type="FILE_LIST">
-                        <value-ref name="SECONDARY-METS_FILES"/>
+                        <value-ref name="SECONDARY-METS-IMG_FILES"/>
                     </value>
                     <value name="element_xpath" type="STRING">mets:techMD[@ID="MIX_002"]</value>
                     <value name="element_must_exist" type="BOOLEAN">true</value>
@@ -3086,7 +3170,7 @@
             <validation functionName="checkMetsAmdsecElementsMatchProfile">
                 <params>
                     <value name="mets_files" type="FILE_LIST">
-                        <value-ref name="SECONDARY-METS_FILES"/>
+                        <value-ref name="SECONDARY-METS-IMG_FILES"/>
                     </value>
                     <value name="element_xpath" type="STRING">mets:techMD[not(@ID="MIX_001") and not(@ID="MIX_002") and
                         starts-with(@ID,"MIX_")]
@@ -3103,7 +3187,7 @@
             <validation functionName="checkPremisIsValidByXsd">
                 <params>
                     <value name="mets_files" type="FILE_LIST">
-                        <value-ref name="SECONDARY-METS_FILES"/>
+                        <value-ref name="SECONDARY-METS-IMG_FILES"/>
                     </value>
                     <value name="xsd_file" type="FILE">
                         <value-ref name="PREMIS_XSD_FILE"/>
@@ -3119,7 +3203,7 @@
             <validation functionName="checkMetsAmdsecElementsMatchProfile">
                 <params>
                     <value name="mets_files" type="FILE_LIST">
-                        <value-ref name="SECONDARY-METS_FILES"/>
+                        <value-ref name="SECONDARY-METS-IMG_FILES"/>
                     </value>
                     <value name="element_xpath" type="STRING">mets:techMD[@ID="OBJ_001"]</value>
                     <value name="element_must_exist" type="BOOLEAN">true</value>
@@ -3134,7 +3218,7 @@
             <validation functionName="checkMetsAmdsecElementsMatchProfile">
                 <params>
                     <value name="mets_files" type="FILE_LIST">
-                        <value-ref name="SECONDARY-METS_FILES"/>
+                        <value-ref name="SECONDARY-METS-IMG_FILES"/>
                     </value>
                     <value name="element_xpath" type="STRING">mets:techMD[@ID="OBJ_002"]</value>
                     <value name="element_must_exist" type="BOOLEAN">true</value>
@@ -3149,7 +3233,7 @@
             <validation functionName="checkMetsAmdsecElementsMatchProfile">
                 <params>
                     <value name="mets_files" type="FILE_LIST">
-                        <value-ref name="SECONDARY-METS_FILES"/>
+                        <value-ref name="SECONDARY-METS-IMG_FILES"/>
                     </value>
                     <value name="element_xpath" type="STRING">mets:techMD[@ID="OBJ_003"]</value>
                     <value name="element_must_exist" type="BOOLEAN">true</value>
@@ -3164,7 +3248,7 @@
             <validation functionName="checkMetsAmdsecElementsMatchProfile">
                 <params>
                     <value name="mets_files" type="FILE_LIST">
-                        <value-ref name="SECONDARY-METS_FILES"/>
+                        <value-ref name="SECONDARY-METS-IMG_FILES"/>
                     </value>
                     <value name="element_xpath" type="STRING">mets:digiprovMD[starts-with(@ID,"EVT_")]</value>
                     <value name="element_must_exist" type="BOOLEAN">true</value>
@@ -3179,7 +3263,7 @@
             <validation functionName="checkMetsAmdsecElementsMatchProfile">
                 <params>
                     <value name="mets_files" type="FILE_LIST">
-                        <value-ref name="SECONDARY-METS_FILES"/>
+                        <value-ref name="SECONDARY-METS-IMG_FILES"/>
                     </value>
                     <value name="element_xpath" type="STRING">mets:digiprovMD[starts-with(@ID,"AGENT_")]</value>
                     <value name="element_must_exist" type="BOOLEAN">true</value>
@@ -3193,7 +3277,7 @@
             <validation functionName="checkPremisLinks">
                 <params>
                     <value name="mets_files" type="FILE_LIST">
-                        <value-ref name="SECONDARY-METS_FILES"/>
+                        <value-ref name="SECONDARY-METS-IMG_FILES"/>
                     </value>
                 </params>
             </validation>
@@ -3213,7 +3297,7 @@
                         <value-ref name="PRIMARY-METS_FILE"/>
                     </value>
                     <value name="mets_files" type="FILE_LIST">
-                        <value-ref name="SECONDARY-METS_FILES"/>
+                        <value-ref name="SECONDARY-METS-IMG_FILES"/>
                     </value>
                     <value name="xsd_file" type="FILE">
                         <value-ref name="CMD_XSD_FILE"/>
@@ -3229,7 +3313,7 @@
             <validation functionName="checkMetsAmdsecElementsMatchProfile">
                 <params>
                     <value name="mets_files" type="FILE_LIST">
-                        <value-ref name="SECONDARY-METS_FILES"/>
+                        <value-ref name="SECONDARY-METS-IMG_FILES"/>
                     </value>
                     <value name="element_xpath" type="STRING">mets:rightsMD</value>
                     <value name="element_must_exist" type="BOOLEAN">false</value>
