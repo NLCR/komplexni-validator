@@ -126,6 +126,21 @@
         <expression caseSensitive="true">usercopy</expression>
     </pattern-def>
 
+    <pattern-def name="ISOIMAGE-DIR_FILENAME">
+        <description>Vzor pro jméno adresáře ISOIMAGE-DIR.</description>
+        <expression caseSensitive="true">isoimage</expression>
+    </pattern-def>
+
+    <pattern-def name="FIFOID-DIR_FILENAME">
+        <description>Vzor pro jméno adresáře FIFOID-DIR.</description>
+        <expression caseSensitive="true">fifoid</expression>
+    </pattern-def>
+
+    <pattern-def name="CATALOG-ENTRY-DIR_FILENAME">
+        <description>Vzor pro jméno adresáře CATOLOG-ENTRY-DIR.</description>
+        <expression caseSensitive="true">catalog_entry</expression>
+    </pattern-def>
+
     <pattern-def name="SECONDARY-METS_FILENAME">
         <description>Vzor pro jména souborů SECONDARY-METS v rámci adresáře SECONDARY-METS-DIR.</description>
 

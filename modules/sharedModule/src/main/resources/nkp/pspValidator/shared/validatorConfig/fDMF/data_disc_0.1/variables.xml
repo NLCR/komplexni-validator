@@ -203,6 +203,45 @@
         </evaluation>
     </value-def>
 
+    <value-def name="ISOIMAGE-DIR_FILES" type="FILE_LIST">
+        <evaluation functionName="findFilesInDirByPattern">
+            <params>
+                <value name="dir" type="FILE">
+                    <value-ref name="PSP_DIR"/>
+                </value>
+                <pattern name="pattern">
+                    <pattern-ref name="ISOIMAGE-DIR_FILENAME"/>
+                </pattern>
+            </params>
+        </evaluation>
+    </value-def>
+
+    <value-def name="FIFOID-DIR_FILES" type="FILE_LIST">
+        <evaluation functionName="findFilesInDirByPattern">
+            <params>
+                <value name="dir" type="FILE">
+                    <value-ref name="PSP_DIR"/>
+                </value>
+                <pattern name="pattern">
+                    <pattern-ref name="FIFOID-DIR_FILENAME"/>
+                </pattern>
+            </params>
+        </evaluation>
+    </value-def>
+
+    <value-def name="CATALOG-ENTRY-DIR_FILES" type="FILE_LIST">
+        <evaluation functionName="findFilesInDirByPattern">
+            <params>
+                <value name="dir" type="FILE">
+                    <value-ref name="PSP_DIR"/>
+                </value>
+                <pattern name="pattern">
+                    <pattern-ref name="CATALOG-ENTRY-DIR_FILENAME"/>
+                </pattern>
+            </params>
+        </evaluation>
+    </value-def>
+
     <value-def name="SECONDARY-METS-DIR_FILE" type="FILE">
         <evaluation functionName="getFirstFileFromFileList">
             <params>
@@ -248,6 +287,36 @@
             <params>
                 <value name="files" type="FILE_LIST">
                     <value-ref name="USER-COPY-DIR_FILES"/>
+                </value>
+            </params>
+        </evaluation>
+    </value-def>
+
+    <value-def name="ISOIMAGE-DIR_FILE" type="FILE">
+        <evaluation functionName="getFirstFileFromFileList">
+            <params>
+                <value name="files" type="FILE_LIST">
+                    <value-ref name="ISOIMAGE-DIR_FILES"/>
+                </value>
+            </params>
+        </evaluation>
+    </value-def>
+
+    <value-def name="FIFOID-DIR_FILE" type="FILE">
+        <evaluation functionName="getFirstFileFromFileList">
+            <params>
+                <value name="files" type="FILE_LIST">
+                    <value-ref name="FIFOID-DIR_FILES"/>
+                </value>
+            </params>
+        </evaluation>
+    </value-def>
+
+    <value-def name="CATALOG-ENTRY-DIR_FILE" type="FILE">
+        <evaluation functionName="getFirstFileFromFileList">
+            <params>
+                <value name="files" type="FILE_LIST">
+                    <value-ref name="CATALOG-ENTRY-DIR_FILES"/>
                 </value>
             </params>
         </evaluation>

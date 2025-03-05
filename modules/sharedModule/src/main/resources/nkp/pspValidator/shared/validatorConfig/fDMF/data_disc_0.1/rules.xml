@@ -220,6 +220,18 @@
                     <value name="file" type="FILE">
                         <value-ref name="USER-COPY-DIR_FILE"/>
                     </value>
+                    <value name="file" type="FILE">
+                        <value-ref name="USER-COPY-DIR_FILE"/>
+                    </value>
+                    <value name="file" type="FILE">
+                        <value-ref name="ISOIMAGE-DIR_FILE"/>
+                    </value>
+                    <value name="file" type="FILE">
+                        <value-ref name="FIFOID-DIR_FILE"/>
+                    </value>
+                    <value name="file" type="FILE">
+                        <value-ref name="CATALOG-ENTRY-DIR_FILE"/>
+                    </value>
                 </params>
             </validation>
         </rule>
@@ -291,6 +303,34 @@
                 <params>
                     <value name="files" type="FILE_LIST">
                         <value-ref name="USER-COPY-DIR_FILES"/>
+                    </value>
+                    <value name="size" type="INTEGER">1</value>
+                </params>
+            </validation>
+        </rule>
+
+        <rule name="SINGLE_ISOIMAGE-DIR_FILE_FOUND">
+            <description>Musí být nalezen právě jeden adresář ISOIMAGE-DIR. Pokud nalezen není, je adresář
+                špatně pojmenován, nebo opravdu chybí.
+            </description>
+            <validation functionName="checkFilelistHasExactSize">
+                <params>
+                    <value name="files" type="FILE_LIST">
+                        <value-ref name="ISOIMAGE-DIR_FILES"/>
+                    </value>
+                    <value name="size" type="INTEGER">1</value>
+                </params>
+            </validation>
+        </rule>
+
+        <rule name="SINGLE_FIFOID-DIR_FILE_FOUND">
+            <description>Musí být nalezen právě jeden adresář FIFOID-DIR. Pokud nalezen není, je adresář
+                špatně pojmenován, nebo opravdu chybí.
+            </description>
+            <validation functionName="checkFilelistHasExactSize">
+                <params>
+                    <value name="files" type="FILE_LIST">
+                        <value-ref name="FIFOID-DIR_FILES"/>
                     </value>
                     <value name="size" type="INTEGER">1</value>
                 </params>
@@ -424,6 +464,39 @@
                 <params>
                     <value name="file" type="FILE">
                         <value-ref name="USER-COPY-DIR_FILE"/>
+                    </value>
+                </params>
+            </validation>
+        </rule>
+
+        <rule name="ISOIMAGE-DIR_IS_DIR">
+            <description>Soubor ISOIMAGE-DIR musí být adresář a ne obyčejný soubor.</description>
+            <validation functionName="checkFileIsDir">
+                <params>
+                    <value name="file" type="FILE">
+                        <value-ref name="ISOIMAGE-DIR_FILE"/>
+                    </value>
+                </params>
+            </validation>
+        </rule>
+
+        <rule name="FIFOID-DIR_IS_DIR">
+            <description>Soubor FIFOID-DIR musí být adresář a ne obyčejný soubor.</description>
+            <validation functionName="checkFileIsDir">
+                <params>
+                    <value name="file" type="FILE">
+                        <value-ref name="FIFOID-DIR_FILE"/>
+                    </value>
+                </params>
+            </validation>
+        </rule>
+
+        <rule name="CATALOG-ENTRY-DIR_IS_DIR">
+            <description>Soubor CATALOG-ENTRY-DIR musí být adresář a ne obyčejný soubor.</description>
+            <validation functionName="checkFileIsDir">
+                <params>
+                    <value name="file" type="FILE">
+                        <value-ref name="CATALOG-ENTRY-DIR_FILE"/>
                     </value>
                 </params>
             </validation>
