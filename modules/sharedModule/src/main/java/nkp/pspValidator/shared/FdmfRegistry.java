@@ -17,6 +17,7 @@ public class FdmfRegistry {
     private final Map<String, FdmfConfiguration> periodicalFdmfByVersion = new HashMap<>();
     private final Map<String, FdmfConfiguration> audioGramFdmfByVersion = new HashMap<>();
     private final Map<String, FdmfConfiguration> audioFonoFdmfByVersion = new HashMap<>();
+    private final Map<String, FdmfConfiguration> dataDiscFdmfByVersion = new HashMap<>();
 
     public FdmfRegistry(ValidatorConfigurationManager validatorConfigManager) throws ValidatorConfigurationException {
         init(validatorConfigManager);
@@ -35,6 +36,9 @@ public class FdmfRegistry {
         for (FdmfConfiguration fdmfConfig : audioFonoFdmfByVersion.values()) {
             fdmfConfig.initBinaryFileProfiles(externalUtilManager);
         }
+        for (FdmfConfiguration fdmfConfig : dataDiscFdmfByVersion.values()) {
+            fdmfConfig.initBinaryFileProfiles(externalUtilManager);
+        }
     }
 
     private void init(ValidatorConfigurationManager validatorConfigManager) throws ValidatorConfigurationException {
@@ -42,6 +46,7 @@ public class FdmfRegistry {
         loadFdmfConfigs(validatorConfigManager, "periodical", periodicalFdmfByVersion);
         loadFdmfConfigs(validatorConfigManager, "audio_gram", audioGramFdmfByVersion);
         loadFdmfConfigs(validatorConfigManager, "audio_fono", audioFonoFdmfByVersion);
+        loadFdmfConfigs(validatorConfigManager, "data_disc", dataDiscFdmfByVersion);
     }
 
     private void loadFdmfConfigs(ValidatorConfigurationManager validatorConfigManager, String fdmfDirPefix, Map<String, FdmfConfiguration> mapToStoreResults) throws ValidatorConfigurationException {
@@ -72,6 +77,10 @@ public class FdmfRegistry {
         return audioFonoFdmfByVersion.keySet();
     }
 
+    public Set<String> getDataDiscFdmfVersions() {
+        return dataDiscFdmfByVersion.keySet();
+    }
+
     public FdmfConfiguration getMonographFdmfConfig(String dmfVersion) {
         return monographFdmfByVersion.get(dmfVersion);
     }
@@ -86,6 +95,10 @@ public class FdmfRegistry {
 
     public FdmfConfiguration getAudioFonoFdmfConfig(String dmfVersion) {
         return audioFonoFdmfByVersion.get(dmfVersion);
+    }
+
+    public FdmfConfiguration getDataDiscFdmfConfig(String dmfVersion) {
+        return dataDiscFdmfByVersion.get(dmfVersion);
     }
 
 
@@ -117,6 +130,14 @@ public class FdmfRegistry {
             }
             case AUDIO_FONO: {
                 FdmfConfiguration file = audioFonoFdmfByVersion.get(dmf.getVersion());
+                if (file == null) {
+                    throw new UnknownFdmfException(dmf);
+                } else {
+                    return file;
+                }
+            }
+            case DATA_DISC: {
+                FdmfConfiguration file = dataDiscFdmfByVersion.get(dmf.getVersion());
                 if (file == null) {
                     throw new UnknownFdmfException(dmf);
                 } else {
