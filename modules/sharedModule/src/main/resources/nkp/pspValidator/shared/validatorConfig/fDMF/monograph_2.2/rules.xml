@@ -804,7 +804,7 @@
 
 
         <rule name="INFO_XML_VALID_BY_XSD">
-            <description>Soubor INFO by měl být validní podle XML Schema (info_mon2.1.xsd).</description>
+            <description>Soubor INFO by měl být validní podle XML Schema (info_mon_2.2.xsd).</description>
             <validation functionName="checkXmlIsValidByXsd">
                 <params>
                     <value name="xml_file" type="FILE">
