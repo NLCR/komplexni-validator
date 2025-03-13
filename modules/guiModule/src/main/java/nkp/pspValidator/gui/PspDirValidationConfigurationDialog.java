@@ -25,12 +25,12 @@ public class PspDirValidationConfigurationDialog extends AbstractDialog {
 
     @Override
     public int getHeight() {
-        return 750;
+        return 800;
     }
 
     @Override
     public String getTitle() {
-        return "Nastavení validace PSP balíku";
+        return "Nastavení validace PSP balíku (adresář)";
     }
 
     @Override
