@@ -1045,7 +1045,10 @@
                         <value-ref name="PRIMARY-METS_FILE"/>
                     </value>
                     <value name="files" type="FILE_LIST">
-                        <value-ref name="SECONDARY-METS_FILES"/>
+                        <value-ref name="SECONDARY-METS-IMG_FILES"/>
+                    </value>
+                    <value name="files" type="FILE_LIST">
+                        <value-ref name="SECONDARY-METS-ISO_FILES"/>
                     </value>
                     <value name="files" type="FILE_LIST">
                         <value-ref name="OCR-TEXT_FILES"/>
@@ -3226,7 +3229,6 @@
         </rule>
 
     </rules-section>
-
 
     <rules-section name="OCR ALTO" description="Kontrola souborů ALTO.">
 
