@@ -2012,6 +2012,9 @@
                     <value name="mets_files" type="FILE_LIST">
                         <value-ref name="SECONDARY-METS-IMG_FILES"/>
                     </value>
+                    <value name="mets_files" type="FILE_LIST">
+                        <value-ref name="SECONDARY-METS-ISO_FILES"/>
+                    </value>
                     <value name="profile" type="STRING">secondary_mets_header</value>
                 </params>
             </validation>
