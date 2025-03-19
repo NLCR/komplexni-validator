@@ -95,22 +95,21 @@ public class MainTest {
         }
 
         Validator.DevParams devParams = new Validator.DevParams();
-
-        devParams.getSectionsToRun().add("Struktura souborů");
-        devParams.getSectionsToRun().add("Soubor INFO");
+        //devParams.getSectionsToRun().add("Struktura souborů");
         //devParams.getSectionsToRun().add("Soubor CHECKSUM");
-        //devParams.getSectionsToRun().add("Bibliografická metadata");
+        //devParams.getSectionsToRun().add("Soubor INFO");
         //devParams.getSectionsToRun().add("Identifikátory");
-        //devParams.getSectionsToRun().add("Obrazová data");
-        //devParams.getSectionsToRun().add("OCR ALTO");
         //devParams.getSectionsToRun().add("OCR TEXT");
+        //devParams.getSectionsToRun().add("OCR ALTO");
+        //devParams.getSectionsToRun().add("METS hlavičky");
+        //devParams.getSectionsToRun().add("Obrazová data");
+        //devParams.getSectionsToRun().add("Bibliografická metadata");
+        //devParams.getSectionsToRun().add("Technická metadata");
+        //devParams.getSectionsToRun().add("Primární METS filesec");
+        //devParams.getSectionsToRun().add("Sekundární METS filesec");
+        //devParams.getSectionsToRun().add("Strukturální mapy");
         //devParams.getSectionsToRun().add("TEST");
-        /*
-        devParams.getSectionsToRun().add("Technická metadata");
-        devParams.getSectionsToRun().add("METS hlavičky");
         devParams.getSectionsToRun().add("Autorskoprávní metadata");
-        devParams.getSectionsToRun().add("Sekundární METS filesec");
-        devParams.getSectionsToRun().add("Strukturální mapy");*/
 
         Main.main(devParams, buildParams(
                 Action.VALIDATE_PSP,
