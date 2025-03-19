@@ -18,6 +18,7 @@ import org.xml.sax.SAXException;
 
 import javax.xml.XMLConstants;
 import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.transform.TransformerException;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.validation.Schema;
 import javax.xml.validation.SchemaFactory;
@@ -135,14 +136,16 @@ public class VfCheckPremisIsValidByXsd extends ValidationFunction {
             }*/
             String xpathStr = "mets:mdWrap/mets:xmlData/*[1]";
             XPathExpression xPath = engine.buildXpath(xpathStr);
-            Element mixEl = (Element) xPath.evaluate(techMdEl, XPathConstants.NODE);
-            if (mixEl == null) {
+            Element premisEl = (Element) xPath.evaluate(techMdEl, XPathConstants.NODE);
+            if (premisEl == null) {
                 result.addError(invalid(level, metsFile, "%s: nenalezen element %s", id, xpathStr));
             } else {
-                Document mixDoc = XmlUtils.elementToNewDocument(mixEl, true);
-                /*if(print){
+                //try preventing issue https://github.com/NLCR/komplexni-validator/issues/13, still doesn't work
+                premisEl.setAttribute("xmlns:premis", "info:lc/xmlns/premis-v2");
+                Document mixDoc = XmlUtils.elementToNewDocument(premisEl, true);
+                /*if(print || true){
                     try {
-                        System.out.println(XmlUtils.elementToXml(mixDoc.getDocumentElement()));
+                        System.out.println(XmlUtils.elementToString(mixDoc.getDocumentElement()));
                     } catch (TransformerException e) {
                         e.printStackTrace();
                     }

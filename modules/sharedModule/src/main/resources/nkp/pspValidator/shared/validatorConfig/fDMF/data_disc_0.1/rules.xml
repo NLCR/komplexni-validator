@@ -2808,7 +2808,8 @@
             </validation>
         </rule>
 
-        <rule name="PREMIS_VALID_BY_XSD">
+        <!--disabled because of issue 13 https://github.com/NLCR/komplexni-validator/issues/13-->
+        <!--<rule name="PREMIS_VALID_BY_XSD">
             <description>Záznamy PREMIS v souborech SECONDARY-METS musí být validní podle XML Schema (premis_2.2.xsd).
             </description>
             <validation functionName="checkPremisIsValidByXsd">
@@ -2822,7 +2823,7 @@
                     <value name="level" type="LEVEL">ERROR</value>
                 </params>
             </validation>
-        </rule>
+        </rule>-->
 
         <rule name="PREMIS_OBJECT_FOR_ORIGINAL_SCAN_MATCHES_PROFILE">
             <description>Záznamy PREMIS Object v souborech SECONDARY-METS pro původní skeny musí splňovat profil.
