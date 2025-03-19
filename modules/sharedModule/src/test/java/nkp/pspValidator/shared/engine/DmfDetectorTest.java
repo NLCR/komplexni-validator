@@ -126,7 +126,6 @@ public class DmfDetectorTest {
         }
     }
 
-
     @Test
     public void versions() throws PspDataException, XmlFileParsingException, InvalidXPathExpressionException {
         //monograph
@@ -156,10 +155,14 @@ public class DmfDetectorTest {
         params.forcedDmfPerVersion = null;
         params.forcedDmfAdgVersion = null;
         params.forcedDmfAdfVersion = null;
+        params.forcedDmfDadVersion = null;
+
         params.preferredDmfMonVersion = preferred;
         params.preferredDmfPerVersion = null;
         params.preferredDmfAdgVersion = null;
         params.preferredDmfAdfVersion = null;
+        params.preferredDmfDadVersion = null;
+
         return dmfDetector.resolveDmf(pspDir, params);
     }
 
@@ -169,10 +172,14 @@ public class DmfDetectorTest {
         params.forcedDmfPerVersion = forced;
         params.forcedDmfAdgVersion = null;
         params.forcedDmfAdfVersion = null;
+        params.forcedDmfDadVersion = null;
+
         params.preferredDmfMonVersion = null;
         params.preferredDmfPerVersion = preferred;
         params.preferredDmfAdgVersion = null;
         params.preferredDmfAdfVersion = null;
+        params.preferredDmfDadVersion = null;
+
         return dmfDetector.resolveDmf(pspDir, params);
     }
 
@@ -182,10 +189,31 @@ public class DmfDetectorTest {
         params.forcedDmfPerVersion = null;
         params.forcedDmfAdgVersion = forced;
         params.forcedDmfAdfVersion = null;
+        params.forcedDmfDadVersion = null;
+
         params.preferredDmfMonVersion = null;
         params.preferredDmfPerVersion = null;
         params.preferredDmfAdgVersion = preferred;
         params.preferredDmfAdfVersion = null;
+        params.preferredDmfDadVersion = null;
+
+        return dmfDetector.resolveDmf(pspDir, params);
+    }
+
+    private Dmf resolverAudioFono(File pspDir, String preferred, String forced) throws PspDataException, XmlFileParsingException, InvalidXPathExpressionException {
+        DmfDetector.Params params = new DmfDetector.Params();
+        params.forcedDmfMonVersion = null;
+        params.forcedDmfPerVersion = null;
+        params.forcedDmfAdgVersion = null;
+        params.forcedDmfAdfVersion = forced;
+        params.forcedDmfDadVersion = null;
+
+        params.preferredDmfMonVersion = null;
+        params.preferredDmfPerVersion = null;
+        params.preferredDmfAdgVersion = null;
+        params.preferredDmfAdfVersion = preferred;
+        params.preferredDmfDadVersion = null;
+
         return dmfDetector.resolveDmf(pspDir, params);
     }
 

@@ -9,6 +9,7 @@ public enum EntityType {
     ISSUE("ISSUE"), ARTICLE("ART"), //jen periodika
     CHAPTER("CHAP"), //jen monografie
     SOUNDCOLLECTION("SOUNDCOLLECTION"), SOUNDRECORDING("SOUNDRECORDING"), SOUNDPART("SOUNDPART"),//jen zvuky
+    DATACOLLECTION("DATACOLLECTION"), DISC("DISC"),//jen datové disky
     ;
 
     private final String dmdSecCode;
