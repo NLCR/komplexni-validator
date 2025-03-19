@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<metadataProfile
+        xmlns="http://www.nkp.cz/pspValidator/2.5/metadataProfile"
+        name="DC disc (RDA)"
+        validatorVersion="2.5"
+        dmf="data_disc_0.1"
+>
+
+    <info>
+        <text>
+            DMF Datové disky 0.1 očekává Dublin Core verze 1.1.
+            Dále se zde upřesňují očekávaná metadata pro disk pro záznamy zpracované podle katalogizačních
+            pravidel RDA.
+        </text>
+        <url description="popis Dublin Core 1.1">http://dublincore.org/documents/dces/</url>
+        <url description="XSD pro Dublin Core 1.1">http://www.openarchives.org/OAI/2.0/oai_dc.xsd</url>
+    </info>
+
+    <namespaces>
+        <namespace prefix="oai_dc">http://www.openarchives.org/OAI/2.0/oai_dc/</namespace>
+        <namespace prefix="dc">http://purl.org/dc/elements/1.1/</namespace>
+    </namespaces>
+
+    <dictionaries>
+        <dictionary name="iso6392languageCodes"
+                    description="kódy jazyků podle ISO 639-2"
+                    url="http://www.loc.gov/standards/iso639-2/php/code_list.php"/>
+    </dictionaries>
+
+    <rootElement name="oai_dc:dc">
+        <expectedElements>
+
+            <element name="dc:title"
+                     errorMessage="Očekáván povinný element dc:title obsahující název titulu, případně podnázev.">
+                <expectedContent/>
+            </element>
+
+            <element name="dc:description" mandatory="false">
+                <!--mods:titleInfo/mods:partNumber or mods:titleInfo/mods:partName or mods:note -->
+                <expectedContent/>
+            </element>
+
+            <element name="dc:creator" mandatory="false">
+                <!--mods:name/mods:namePart  or mods:name/mods:nameIdentifier-->
+                <expectedContent/>
+            </element>
+
+            <element name="dc:type" specification="text() = 'model:disc'"
+                     errorMessage="Očekáván povinný element dc:type obsahující text 'model:disc'.">
+                <expectedContent/>
+            </element>
+
+            <element name="dc:coverage" mandatory="false">
+                <!--mods:originInfo/mods:place/mods:placeTerm -->
+                <expectedContent/>
+            </element>
+
+            <element name="dc:publisher" mandatory="false">
+                <!--mods:originInfo/mods:agent/mods:namePart -->
+                <expectedContent/>
+            </element>
+
+            <element name="dc:date" mandatory="true"
+                     errorMessage="Očekáván povinný element dc:date obsahující datum vydání.">
+                <expectedContent/>
+            </element>
+
+            <element name="dc:format" mandatory="false">
+                <!--mods:physicalDescription/mods:form or mods:physicalDescription/mods:extent-->
+                <expectedContent/>
+            </element>
+
+            <element name="dc:subject" mandatory="false">
+                <!--
+                mods:subject/mods:topic or mods:subject/mods:geographic or
+                mods:subject/mods:temporal or mods:subject/mods:name/mods:namePart or
+                mods:subject/mods:titleInfo/mods:title or mods:classification
+                -->
+                <expectedContent/>
+            </element>
+
+            <element name="dc:identifier" errorMessage="Očekáván alespoň jeden povinný element dc:identifier.">
+                <expectedContent/>
+            </element>
+
+            <element name="dc:source" mandatory="false">
+                <!--mods:location/mods:physicalLocation or mods:location/mods:shelfLocator -->
+                <expectedContent/>
+            </element>
+
+        </expectedElements>
+    </rootElement>
+
+</metadataProfile>
+
+	

@@ -2627,7 +2627,8 @@
                    description="validace obsahů bibliografických metadat v MODS a Dubline Core v souboru PRIMARY-METS">
 
         <rule name="BIBLIOGRAPHIC_METADATA_MATCH_PROFILE_DATACOLLECTION">
-            <description>Bibliografická metadata pro entitu typu DATACOLLECTION musí splňovat požadovaný profil pro záznamy v
+            <description>Bibliografická metadata pro entitu typu DATACOLLECTION musí splňovat požadovaný profil pro
+                záznamy v
                 Dublin Core i MODS.
             </description>
             <validation functionName="checkBibliographicMetadataMatchProfile">
@@ -2637,6 +2638,27 @@
                     </value>
                     <value name="entity_type" type="ENTITY_TYPE">DATACOLLECTION</value>
                     <value name="profile_detection_xpath" type="STRING">concat('datacollection',null)</value>
+                    <value name="xsd_file_dc" type="FILE">
+                        <value-ref name="DC_XSD_FILE"/>
+                    </value>
+                    <value name="xsd_file_mods" type="FILE">
+                        <value-ref name="MODS_XSD_FILE"/>
+                    </value>
+                </params>
+            </validation>
+        </rule>
+
+        <rule name="BIBLIOGRAPHIC_METADATA_MATCH_PROFILE_DISC">
+            <description>Bibliografická metadata pro entitu typu DISC musí splňovat požadovaný profil pro záznamy v
+                Dublin Core i MODS.
+            </description>
+            <validation functionName="checkBibliographicMetadataMatchProfile">
+                <params>
+                    <value name="mets_file" type="FILE">
+                        <value-ref name="PRIMARY-METS_FILE"/>
+                    </value>
+                    <value name="entity_type" type="ENTITY_TYPE">DISC</value>
+                    <value name="profile_detection_xpath" type="STRING">concat('disc',null)</value>
                     <value name="xsd_file_dc" type="FILE">
                         <value-ref name="DC_XSD_FILE"/>
                     </value>
