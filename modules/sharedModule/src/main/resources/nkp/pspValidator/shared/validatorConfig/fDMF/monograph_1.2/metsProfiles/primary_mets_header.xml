@@ -37,6 +37,8 @@
         <expectedElements>
             <element name="mets:dmdSec" ignoreUnexpectedAttributes="true" ignoreUnexpectedChildElements="true"
                      mandatory="false"/>
+            <element name="mets:amdSec" ignoreUnexpectedAttributes="true" ignoreUnexpectedChildElements="true"
+                     mandatory="false"/>
             <element name="mets:fileSec" ignoreUnexpectedAttributes="true" ignoreUnexpectedChildElements="true"
                      mandatory="false"/>
             <element name="mets:structMap" ignoreUnexpectedAttributes="true" ignoreUnexpectedChildElements="true"
