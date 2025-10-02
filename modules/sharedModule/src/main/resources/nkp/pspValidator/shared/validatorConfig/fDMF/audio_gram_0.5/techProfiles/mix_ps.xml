@@ -209,7 +209,7 @@
                                                 </expectedElements>
                                             </element>
 
-                                            <element name="mix:scannerCapture" mandatory="false" repeatable="false">
+                                            <element name="mix:ScannerCapture" mandatory="false" repeatable="false">
                                                 <expectedElements>
                                                     <element name="mix:scannerManufacturer" mandatory="true" repeatable="false">
                                                         <expectedContent/>
