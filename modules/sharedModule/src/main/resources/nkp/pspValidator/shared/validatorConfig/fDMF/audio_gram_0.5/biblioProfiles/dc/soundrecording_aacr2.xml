@@ -59,13 +59,10 @@
             </element>
 
             <!--dc:subject ve standardu uveden jako povinný k mods:topic, ale nadřazený element mds:subject je nepovinný, tj. i dc:subject by měl být nepovinný-->
-            <element name="dc:subject" mandatory="false"
-                     errorMessage="Očekáván alespoň jeden povinný element dc:subject obsahující výraz specifikující nebo charakterizující obsah titulu.">
+            <element name="dc:subject" mandatory="false">
                 <expectedContent/>
             </element>
 
         </expectedElements>
     </rootElement>
 </metadataProfile>
-
-	

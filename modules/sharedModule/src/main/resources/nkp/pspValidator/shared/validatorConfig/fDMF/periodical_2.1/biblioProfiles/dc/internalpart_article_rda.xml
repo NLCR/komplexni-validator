@@ -58,7 +58,7 @@
                 <expectedContent/>
             </element>
 
-            <element name="dc:subject" errorMessage="Očekáván alespoň jeden povinný element dc:subject.">
+            <element name="dc:subject" mandatory="false">
                 <expectedContent/>
             </element>
 
