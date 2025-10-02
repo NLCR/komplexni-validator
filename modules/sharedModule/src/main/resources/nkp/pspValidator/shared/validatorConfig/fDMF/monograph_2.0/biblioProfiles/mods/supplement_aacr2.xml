@@ -276,6 +276,9 @@
                                         <value>marccategory</value>
                                         <value>marcsmd</value>
                                         <value>gmd</value>
+                                        <!--DMF nepředepisuje <recordInfo> pro úroveň SUPPL, z toho důvodu je zde nutné uvést i hodnoty pro RDA-->
+                                        <value>rdamedia</value>
+                                        <value>rdacarrier</value>
                                     </oneOf>
                                 </expectedContent>
                             </attribute>
@@ -488,5 +491,3 @@
     </rootElement>
 
 </metadataProfile>
-
-	
