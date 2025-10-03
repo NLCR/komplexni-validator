@@ -99,7 +99,8 @@
                         <value-ref name="PRIMARY-METS_FILE"/>
                     </value>
                     <pattern name="pattern">
-                        <pattern-ref name="FILENAME"/>
+                        <!--MAIN_METS namísto FILENAME, viz issue #208. V novějších fDMF změnit zpět na FILENAME.-->
+                        <pattern-ref name="MAIN_METS"/>
                     </pattern>
                 </params>
             </validation>

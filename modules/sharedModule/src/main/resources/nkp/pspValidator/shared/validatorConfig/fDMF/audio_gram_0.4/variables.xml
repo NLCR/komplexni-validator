@@ -76,8 +76,12 @@
                     <value-ref name="PSP_DIR"/>
                 </value>
                 <pattern name="pattern">
+                    <!--
+                        V issue #208 byla zmíněna potřeba přijímat balíčky s main_mets_*.xml i s mets_*.xml. Níže je upraven regex tak, aby validátor našel obě názvové varianty metsu.
+                        V novějších fDMF bude nutné upravit dle nově navrženého názvu metsu.
+                    -->
                     <description>Vzor pro jméno souboru PRIMARY-METS.</description>
-                    <expression caseSensitive="true">main_mets_${PSP_ID}\.xml</expression>
+                    <expression caseSensitive="true">(:?main_)?mets_${PSP_ID}\.xml</expression>
                 </pattern>
             </params>
         </evaluation>
