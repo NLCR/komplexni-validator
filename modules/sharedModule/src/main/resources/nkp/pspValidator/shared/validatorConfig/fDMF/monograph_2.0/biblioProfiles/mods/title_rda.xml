@@ -95,7 +95,7 @@
                         <expectedContent>
                             <!--RRRR-RRRR-->
                             <!--TODO: mozna kontrolovat dukladneji, napr. min. a max cisel, maximalni rozsah (130 let?), prvni cislo mensi-->
-                            <regexp>[0-9]{4}-[0-9]{4}</regexp>
+                            <regexp>[0-9]{4}-(:?[0-9]{4})?</regexp>
                         </expectedContent>
                     </element>
 
