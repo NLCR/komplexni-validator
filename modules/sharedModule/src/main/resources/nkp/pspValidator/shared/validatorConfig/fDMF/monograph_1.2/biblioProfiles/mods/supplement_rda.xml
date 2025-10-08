@@ -421,7 +421,7 @@
                                 </recommendedContent>
                             </attribute>
 
-                            <attribute name="type">
+                            <attribute name="type" mandatory="false">
                                 <expectedContent>
                                     <oneOf>
                                         <value>media</value>
@@ -625,5 +625,3 @@
     </rootElement>
 
 </metadataProfile>
-
-	

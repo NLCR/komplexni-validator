@@ -523,11 +523,12 @@
                                         <value>marcform</value>
                                         <value>marccategory</value>
                                         <value>marcsmd</value>
+                                        <value>gmd</value>
                                     </oneOf>
                                 </expectedContent>
                             </attribute>
 
-                            <attribute name="type">
+                            <attribute name="type" mandatory="false">
                                 <expectedContent>
                                     <oneOf>
                                         <value>media</value>
