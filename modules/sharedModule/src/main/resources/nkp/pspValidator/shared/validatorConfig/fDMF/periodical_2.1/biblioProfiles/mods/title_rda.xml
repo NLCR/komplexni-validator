@@ -777,18 +777,18 @@
             <element name="mods:classification" mandatory="false">
                 <expectedAttributes>
                     <attribute name="authority">
-                        <expectedContent>
+                        <recommendedContent>
                             <oneOf>
                                 <value>udc</value>
                                 <value>Konspekt</value>
                             </oneOf>
-                        </expectedContent>
+                        </recommendedContent>
                     </attribute>
 
                     <attribute name="edition" mandatory="false">
-                        <expectedContent>
+                        <recommendedContent>
                             <value>Konspekt</value>
-                        </expectedContent>
+                        </recommendedContent>
                     </attribute>
                 </expectedAttributes>
                 <expectedContent/>
