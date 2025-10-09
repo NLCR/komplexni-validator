@@ -428,7 +428,7 @@
                 <expectedElements>
                     <element name="mods:form">
                         <expectedAttributes>
-                            <attribute name="authority" mandatory="false">
+                            <attribute name="authority">
                                 <expectedContent>
                                     <oneOf>
                                         <value>rdamedia</value>
@@ -440,19 +440,16 @@
                                     </oneOf>
                                 </expectedContent>
                             </attribute>
-
                             <attribute name="type" mandatory="false">
                                 <expectedContent>
                                     <oneOf>
-                                        <value>media</value>
                                         <value>carrier</value>
+                                        <value>media</value>
                                     </oneOf>
                                 </expectedContent>
                             </attribute>
                         </expectedAttributes>
-                        <expectedContent>
-                            <!--Navrhovane hodnoty "print", "electronic" ale nejspíš ne vyžadované-->
-                        </expectedContent>
+                        <expectedContent />
                     </element>
 
                     <element name="mods:extent" mandatory="false">

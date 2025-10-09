@@ -539,10 +539,10 @@
 
             <element name="mods:physicalDescription">
                 <expectedElements>
-                    <!--non-RDA form-->
+
                     <element name="mods:form">
                         <expectedAttributes>
-                            <attribute name="authority" mandatory="false">
+                            <attribute name="authority">
                                 <expectedContent>
                                     <oneOf>
                                         <value>rdamedia</value>
@@ -554,24 +554,14 @@
                                     </oneOf>
                                 </expectedContent>
                             </attribute>
-                        </expectedAttributes>
-                        <expectedContent/>
-                    </element>
-
-                    <!--RDA authority="rdacarrier", type="carrier-->
-                    <element name="mods:form" specification="@authority='rdacarrier' and @type='carrier'" mandatory="false">
-                        <expectedAttributes>
-                            <attribute name="authority"/>
-                            <attribute name="type"/>
-                        </expectedAttributes>
-                        <expectedContent/>
-                    </element>
-
-                    <!--RDA authority="rdamedia", type="media-->
-                    <element name="mods:form" specification="@authority='rdamedia' and @type='media'" mandatory="false">
-                        <expectedAttributes>
-                            <attribute name="authority"/>
-                            <attribute name="type"/>
+                            <attribute name="type" mandatory="false">
+                                <expectedContent>
+                                    <oneOf>
+                                        <value>carrier</value>
+                                        <value>media</value>
+                                    </oneOf>
+                                </expectedContent>
+                            </attribute>
                         </expectedAttributes>
                         <expectedContent/>
                     </element>
