@@ -545,10 +545,9 @@
             <element name="mods:physicalDescription">
                 <expectedElements>
                     <!-- see https://github.com/NLCR/komplexni-validator/issues/124 -->
-                    <!--non-RDA form-->
-                    <element name="mods:form" specification="not(@authority='rdamedia') and not(@authority='rdacarrier')">
+                    <element name="mods:form">
                         <expectedAttributes>
-                            <attribute name="authority" mandatory="false">
+                            <attribute name="authority">
                                 <expectedContent>
                                     <oneOf>
                                         <value>rdamedia</value>
@@ -560,28 +559,16 @@
                                     </oneOf>
                                 </expectedContent>
                             </attribute>
-
-                            <attribute name="type" mandatory="false"/>
+                            <attribute name="type" mandatory="false">
+                                <expectedContent>
+                                    <oneOf>
+                                        <value>carrier</value>
+                                        <value>media</value>
+                                    </oneOf>
+                                </expectedContent>
+                            </attribute>
                         </expectedAttributes>
-                        <expectedContent/>
-                    </element>
-
-                    <!--RDA authority="rdacarrier", type="carrier-->
-                    <element name="mods:form" specification="@authority='rdacarrier' and @type='carrier'" mandatory="false">
-                        <expectedAttributes>
-                            <attribute name="authority"/>
-                            <attribute name="type"/>
-                        </expectedAttributes>
-                        <expectedContent/>
-                    </element>
-
-                    <!--RDA authority="rdamedia", type="media-->
-                    <element name="mods:form" specification="@authority='rdamedia' and @type='media'" mandatory="false">
-                        <expectedAttributes>
-                            <attribute name="authority"/>
-                            <attribute name="type"/>
-                        </expectedAttributes>
-                        <expectedContent/>
+                        <expectedContent />
                     </element>
 
                     <element name="mods:extent" mandatory="false">
