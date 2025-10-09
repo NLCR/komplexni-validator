@@ -520,23 +520,20 @@
                 </expectedElements>
             </element>
 
+            <!--Mezinarodni desetinne trideni-->
             <element name="mods:classification" specification="not(@edition)" mandatory="false">
-                <!--Mezinarodni desetinne trideni-->
                 <expectedAttributes>
                     <attribute name="authority">
                         <recommendedContent>
-                            <oneOf>
-                                <value>udc</value>
-                                <value>Konspekt</value>
-                            </oneOf>
+                            <value>udc</value>
                         </recommendedContent>
                     </attribute>
                 </expectedAttributes>
-                <expectedContent/>
+                <expectedContent />
             </element>
 
+            <!--Konspekt-->
             <element name="mods:classification" specification="boolean(@edition)" mandatory="false">
-                <!--Klasifikační údaje věcného třídění podle Konspektu-->
                 <expectedAttributes>
                     <attribute name="authority">
                         <recommendedContent>
@@ -546,14 +543,13 @@
                             </oneOf>
                         </recommendedContent>
                     </attribute>
-
                     <attribute name="edition">
-                        <expectedContent>
-                            <!--hodnota "Konspekt" je zde nejspíš jen doporučená-->
-                        </expectedContent>
+                        <recommendedContent>
+                            <value>Konspekt</value>
+                        </recommendedContent>
                     </attribute>
                 </expectedAttributes>
-                <expectedContent/>
+                <expectedContent />
             </element>
 
 

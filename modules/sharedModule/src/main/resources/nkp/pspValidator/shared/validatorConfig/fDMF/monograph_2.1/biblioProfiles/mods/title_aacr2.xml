@@ -381,12 +381,12 @@
             <element name="mods:classification" specification="not(@edition)" mandatory="false">
                 <expectedAttributes>
                     <attribute name="authority">
-                        <expectedContent>
+                        <recommendedContent>
                             <value>udc</value>
-                        </expectedContent>
+                        </recommendedContent>
                     </attribute>
                 </expectedAttributes>
-                <expectedContent/>
+                <expectedContent />
             </element>
 
             <!--Konspekt-->
@@ -406,7 +406,7 @@
                         </recommendedContent>
                     </attribute>
                 </expectedAttributes>
-                <expectedContent/>
+                <expectedContent />
             </element>
 
             <!--identifier uuid-->
@@ -600,5 +600,3 @@
         </expectedElements>
     </rootElement>
 </metadataProfile>
-
-	
