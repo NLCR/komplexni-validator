@@ -672,37 +672,33 @@
             <!--Mezinarodni desetinne trideni-->
             <element name="mods:classification" specification="not(@edition)" mandatory="false">
                 <expectedAttributes>
-                    <!--TODO: DMF neuvadi, jestli je authority povinny atribut, nechavam nepovinny.-->
                     <attribute name="authority">
                         <recommendedContent>
-                            <oneOf>
-                                <value>udc</value>
-                            </oneOf>
+                            <value>udc</value>
                         </recommendedContent>
                     </attribute>
                 </expectedAttributes>
-                <expectedContent/>
+                <expectedContent />
             </element>
 
             <!--Konspekt-->
             <element name="mods:classification" specification="boolean(@edition)" mandatory="false">
                 <expectedAttributes>
                     <attribute name="authority">
-                        <expectedContent>
+                        <recommendedContent>
                             <oneOf>
                                 <value>udc</value>
                                 <value>Konspekt</value>
                             </oneOf>
-                        </expectedContent>
+                        </recommendedContent>
                     </attribute>
-
                     <attribute name="edition">
-                        <expectedContent>
+                        <recommendedContent>
                             <value>Konspekt</value>
-                        </expectedContent>
+                        </recommendedContent>
                     </attribute>
                 </expectedAttributes>
-                <expectedContent/>
+                <expectedContent />
             </element>
 
             <element name="mods:relatedItem" mandatory="false" ignoreUnexpectedChildElements="true">
@@ -936,5 +932,3 @@
     </rootElement>
 
 </metadataProfile>
-
-	

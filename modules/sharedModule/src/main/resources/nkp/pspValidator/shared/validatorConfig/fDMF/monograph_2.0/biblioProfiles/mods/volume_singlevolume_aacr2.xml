@@ -368,16 +368,13 @@
             <!--Mezinarodni desetinne trideni-->
             <element name="mods:classification" specification="not(@edition)" mandatory="false">
                 <expectedAttributes>
-                    <!--TODO: DMF neuvadi, jestli je authority povinny atribut, nechavam povinny-->
                     <attribute name="authority">
                         <recommendedContent>
-                            <oneOf>
-                                <value>udc</value>
-                            </oneOf>
+                            <value>udc</value>
                         </recommendedContent>
                     </attribute>
                 </expectedAttributes>
-                <expectedContent/>
+                <expectedContent />
             </element>
 
             <!--Konspekt-->
@@ -385,17 +382,19 @@
                 <expectedAttributes>
                     <attribute name="authority">
                         <recommendedContent>
-                            <!--TODO: nejasne-->
                             <oneOf>
                                 <value>udc</value>
                                 <value>Konspekt</value>
                             </oneOf>
                         </recommendedContent>
                     </attribute>
-
-                    <attribute name="edition"/>
+                    <attribute name="edition">
+                        <recommendedContent>
+                            <value>Konspekt</value>
+                        </recommendedContent>
+                    </attribute>
                 </expectedAttributes>
-                <expectedContent/>
+                <expectedContent />
             </element>
 
             <element name="mods:relatedItem" mandatory="false" ignoreUnexpectedChildElements="true">
@@ -636,5 +635,3 @@
     </rootElement>
 
 </metadataProfile>
-
-	

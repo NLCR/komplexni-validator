@@ -368,14 +368,13 @@
             <!--Mezinarodni desetinne trideni-->
             <element name="mods:classification" specification="not(@edition)" mandatory="false">
                 <expectedAttributes>
-                    <!--TODO: DMF neuvadi, jestli je authority povinny atribut, z logiky veci ("vylpnit hodnotu udc") vyplývá, že ano. Nechavam povinný-->
                     <attribute name="authority">
-                        <expectedContent>
+                        <recommendedContent>
                             <value>udc</value>
-                        </expectedContent>
+                        </recommendedContent>
                     </attribute>
                 </expectedAttributes>
-                <expectedContent/>
+                <expectedContent />
             </element>
 
             <!--Konspekt-->
@@ -395,7 +394,7 @@
                         </recommendedContent>
                     </attribute>
                 </expectedAttributes>
-                <expectedContent/>
+                <expectedContent />
             </element>
 
             <!--identifier uuid-->
@@ -589,5 +588,3 @@
         </expectedElements>
     </rootElement>
 </metadataProfile>
-
-	
