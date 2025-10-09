@@ -494,16 +494,16 @@
             <!--Mezinarodni desetinne trideni-->
             <element name="mods:classification" specification="not(@edition)" mandatory="false">
                 <expectedAttributes>
-                    <attribute name="authority" mandatory="true">
+                    <attribute name="authority">
                         <recommendedContent>
                             <value>udc</value>
                         </recommendedContent>
                     </attribute>
                 </expectedAttributes>
-                <expectedContent/>
+                <expectedContent />
             </element>
 
-            <!--Klasifikační údaje věcného třídění podle Konspektu-->
+            <!--Konspekt-->
             <element name="mods:classification" specification="boolean(@edition)" mandatory="false">
                 <expectedAttributes>
                     <attribute name="authority">
@@ -514,14 +514,13 @@
                             </oneOf>
                         </recommendedContent>
                     </attribute>
-
                     <attribute name="edition">
-                        <expectedContent>
+                        <recommendedContent>
                             <value>Konspekt</value>
-                        </expectedContent>
+                        </recommendedContent>
                     </attribute>
                 </expectedAttributes>
-                <expectedContent/>
+                <expectedContent />
             </element>
 
             <!-- identifiers -->

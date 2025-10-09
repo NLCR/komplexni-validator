@@ -281,16 +281,14 @@
                 <expectedAttributes>
                     <attribute name="authority">
                         <recommendedContent>
-                            <oneOf>
-                                <value>udc</value>
-                            </oneOf>
+                            <value>udc</value>
                         </recommendedContent>
                     </attribute>
                 </expectedAttributes>
-                <expectedContent/>
+                <expectedContent />
             </element>
 
-            <!--Klasifikační údaje věcného třídění podle Konspektu-->
+            <!--Konspekt-->
             <element name="mods:classification" specification="boolean(@edition)" mandatory="false">
                 <expectedAttributes>
                     <attribute name="authority">
@@ -301,14 +299,13 @@
                             </oneOf>
                         </recommendedContent>
                     </attribute>
-
                     <attribute name="edition">
-                        <expectedContent>
-                            <!--hodnota "Konspekt" je zde nejspíš jen doporučená-->
-                        </expectedContent>
+                        <recommendedContent>
+                            <value>Konspekt</value>
+                        </recommendedContent>
                     </attribute>
                 </expectedAttributes>
-                <expectedContent/>
+                <expectedContent />
             </element>
 
             <element name="mods:relatedItem" mandatory="false" ignoreUnexpectedChildElements="true">

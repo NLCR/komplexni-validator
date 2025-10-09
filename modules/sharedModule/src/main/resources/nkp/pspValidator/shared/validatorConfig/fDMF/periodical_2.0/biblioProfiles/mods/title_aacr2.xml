@@ -443,13 +443,11 @@
                 <expectedAttributes>
                     <attribute name="authority">
                         <recommendedContent>
-                            <oneOf>
-                                <value>udc</value>
-                            </oneOf>
+                            <value>udc</value>
                         </recommendedContent>
                     </attribute>
                 </expectedAttributes>
-                <expectedContent/>
+                <expectedContent />
             </element>
 
             <!--Konspekt-->
@@ -463,10 +461,13 @@
                             </oneOf>
                         </recommendedContent>
                     </attribute>
-
-                    <attribute name="edition"/>
+                    <attribute name="edition">
+                        <recommendedContent>
+                            <value>Konspekt</value>
+                        </recommendedContent>
+                    </attribute>
                 </expectedAttributes>
-                <expectedContent/>
+                <expectedContent />
             </element>
 
             <element name="mods:relatedItem" mandatory="false" ignoreUnexpectedChildElements="true">
@@ -677,5 +678,3 @@
         </expectedElements>
     </rootElement>
 </metadataProfile>
-
-	
