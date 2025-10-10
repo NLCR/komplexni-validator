@@ -4,7 +4,7 @@ plugins {
 }
 
 group 'nkp.pspValidator'
-version '2.6'
+version '2.6.1-beta'
 
 
 // Create a JAR task
