@@ -412,22 +412,20 @@
                                         <value>marcform</value>
                                         <value>marccategory</value>
                                         <value>marcsmd</value>
+                                        <value>gmd</value>
                                     </oneOf>
                                 </expectedContent>
                             </attribute>
-
                             <attribute name="type" mandatory="false">
                                 <expectedContent>
                                     <oneOf>
-                                        <value>media</value>
                                         <value>carrier</value>
+                                        <value>media</value>
                                     </oneOf>
                                 </expectedContent>
                             </attribute>
                         </expectedAttributes>
-                        <expectedContent>
-                            <!--Navrhovane hodnoty "print", "electronic" ale nejspíš ne vyžadované-->
-                        </expectedContent>
+                        <expectedContent />
                     </element>
 
                     <element name="mods:extent" mandatory="false">
