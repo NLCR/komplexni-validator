@@ -100,10 +100,13 @@ public class ValidatorProtocolXmlBuilder {
         Element problemEl = doc.createElement("problem");
         problemsEl.appendChild(problemEl);
         problemEl.setAttribute("level", error.getLevel().name());
+        problemEl.setTextContent(error.getSimpleMessage() == null ? error.getFullMessage() : error.getSimpleMessage());
         if (error.getFile() != null) {
             problemEl.setAttribute("file", toPackageRelativePath(packageParentPath, error.getFile()));
         }
-        problemEl.setTextContent(error.getSimpleMessage() == null ? error.getFullMessage() : error.getSimpleMessage());
+        if (error.getXsdFile() != null) {
+            problemEl.setAttribute("xsdFile", error.getXsdFile().getAbsolutePath());
+        }
     }
 
     private String toPackageRelativePath(String packagePath, File file) {
