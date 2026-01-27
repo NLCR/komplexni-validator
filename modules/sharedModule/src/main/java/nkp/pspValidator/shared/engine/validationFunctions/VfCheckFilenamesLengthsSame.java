@@ -52,7 +52,11 @@ public class VfCheckFilenamesLengthsSame extends ValidationFunction {
             if (expectedLength == null) {
                 expectedLength = length;
             } else if (length != expectedLength) {
-                result.addError(invalid(Level.ERROR, file, "název souboru má odlišnou délku (%d) od ostatních názvů (%d)", length, expectedLength));
+                result.addError(new ValidationProblem(Level.ERROR, String.format("název souboru má odlišnou délku (%d) od ostatních názvů (%d)", length, expectedLength))
+                        .withSimpleMessage("název souboru má odlišnou délku od ostatních názvů")
+                        .withFile(file)
+                        .withExpectedAndActualValues(String.valueOf(expectedLength), String.valueOf(length))
+                );
             }
         }
         return result;
