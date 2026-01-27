@@ -107,6 +107,12 @@ public class ValidatorProtocolXmlBuilder {
         if (error.getXsdFile() != null) {
             problemEl.setAttribute("xsdFile", error.getXsdFile().getAbsolutePath());
         }
+        if (error.getExpectedValue() != null) {
+            problemEl.setAttribute("expectedValue", error.getExpectedValue());
+        }
+        if (error.getActualValue() != null) {
+            problemEl.setAttribute("actualValue", error.getActualValue());
+        }
     }
 
     private String toPackageRelativePath(String packagePath, File file) {

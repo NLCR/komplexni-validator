@@ -70,8 +70,13 @@ public class VfCheckChecksumFileAllChecksumsMatch extends ValidationFunction {
                         try {
                             File file = Utils.buildAbsoluteFile(pspRootDir, filepath);
                             String hashComputed = Utils.computeHash(file);
-                            if (!hashComputed.toUpperCase().equals(hashExpected.toUpperCase())) {
-                                result.addError(invalid(Level.ERROR, checksumFile, "uvedený kontrolní součet '%s' nesouhlasí s vypočítaným kontrolním součtem '%s' pro soubor %s", hashExpected, hashComputed, file.getName()));
+                            if (!hashComputed.equalsIgnoreCase(hashExpected)) {
+                                result.addError(new ValidationProblem(Level.ERROR,
+                                        String.format("uvedený kontrolní součet '%s' nesouhlasí s vypočítaným kontrolním součtem '%s' pro soubor %s", hashExpected, hashComputed, file.getAbsolutePath()))
+                                        .withFile(file)
+                                        .withSimpleMessage("Kontrolní součet nesouhlasí")
+                                        .withExpectedAndActualValues(hashExpected, hashComputed)
+                                );
                             }
                         } catch (InvalidPathException e) {
                             //TODO: tohle se vyskytuje vickrat, udelat pro to metodu
