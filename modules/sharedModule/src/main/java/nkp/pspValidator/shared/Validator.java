@@ -31,17 +31,20 @@ public class Validator {
         return engine;
     }
 
-    public void run(File xmlProtocolFile,
-                    PrintStream out,
-                    int verbosity,
-                    DevParams devParams,
-                    Set<String> skippedSections,
-                    ValidationState.ProgressListener progressListener,
-                    ValidationState.ProgressController progressController) {
+    public void run(
+            File packageFile,
+            File xmlProtocolFile,
+            PrintStream out,
+            int verbosity,
+            DevParams devParams,
+            Set<String> skippedSections,
+            ValidationState.ProgressListener progressListener,
+            ValidationState.ProgressController progressController) {
         switch (verbosity) {
             case 3:
                 //vsechno, vcetne sekci a pravidel bez chyb
-                run(xmlProtocolFile, out,
+                run(packageFile,
+                        xmlProtocolFile, out,
                         true, true, true, true,
                         devParams,
                         skippedSections,
@@ -49,7 +52,8 @@ public class Validator {
                 break;
             case 2:
                 //jen sekce a pravidla s chybami a popisy jednotlivych chyb (default)
-                run(xmlProtocolFile, out,
+                run(packageFile,
+                        xmlProtocolFile, out,
                         true, false, true, false,
                         devParams,
                         skippedSections,
@@ -57,7 +61,8 @@ public class Validator {
                 break;
             case 1:
                 //jen pocty chyb v sekcich s chybami, bez popisu jednotlivych chyb
-                run(xmlProtocolFile, out,
+                run(packageFile,
+                        xmlProtocolFile, out,
                         true, false, false, false,
                         devParams,
                         skippedSections,
@@ -65,7 +70,8 @@ public class Validator {
                 break;
             case 0:
                 //jen valid/not valid
-                run(xmlProtocolFile, out,
+                run(packageFile,
+                        xmlProtocolFile, out,
                         false, false, false, false,
                         devParams,
                         skippedSections,
@@ -76,14 +82,15 @@ public class Validator {
         }
     }
 
-    private void run(File xmlOutputFile,
-                     PrintStream out,
-                     boolean printSectionsWithProblems, boolean printSectionsWithoutProblems,
-                     boolean printRulesWithProblems, boolean printRulesWithoutProblems,
-                     DevParams devParams,
-                     Set<String> skippedSections,
-                     ValidationState.ProgressListener progressListener,
-                     ValidationState.ProgressController progressController
+    private void run(
+            File packageFile, File xmlOutputFile,
+            PrintStream out,
+            boolean printSectionsWithProblems, boolean printSectionsWithoutProblems,
+            boolean printRulesWithProblems, boolean printRulesWithoutProblems,
+            DevParams devParams,
+            Set<String> skippedSections,
+            ValidationState.ProgressListener progressListener,
+            ValidationState.ProgressController progressController
     ) {
         ValidatorProtocolTextBuilder textLogger = new ValidatorProtocolTextBuilder(out);
         boolean sectionsUnlimitted = devParams == null || devParams.getSectionsToRun() == null || devParams.getSectionsToRun().isEmpty();
@@ -121,7 +128,7 @@ public class Validator {
                 textLogger.logPackageSummary(state.getGlobalProblemsTotal(), state.getGlobalProblemsByLevel(), state.isValid());
                 if (xmlOutputFile != null) {
                     textLogger.logXmlExportStarted(xmlOutputFile);
-                    new ValidatorProtocolXmlBuilder().buildXmlOutput(xmlOutputFile, state);
+                    new ValidatorProtocolXmlBuilder().buildXmlOutput(packageFile, xmlOutputFile, state);
                     //TODO: tohle nepatri do textoveho logu
                     textLogger.logXmlExportCreated();
                 }

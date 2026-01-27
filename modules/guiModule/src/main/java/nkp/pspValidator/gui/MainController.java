@@ -199,7 +199,8 @@ public class MainController extends AbstractController implements ValidationStat
                     if (isCancelled()) {
                         return null;
                     }
-                    validator.run(logXmlFile, out,
+                    validator.run(pspDir,
+                            logXmlFile, out,
                             verbosity,
                             devParams,
                             toSetOfSkippedSectionNames(skippedManager, dmf),
