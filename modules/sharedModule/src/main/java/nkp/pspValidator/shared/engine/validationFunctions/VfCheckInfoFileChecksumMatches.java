@@ -81,10 +81,14 @@ public class VfCheckInfoFileChecksumMatches extends ValidationFunction {
                 hashFound = hashFoundUc.trim();
             }
             String hashComputed = Utils.computeHash(checksumFileExisting);
-            if (!hashComputed.toUpperCase().equals(hashFound.toUpperCase())) {
-                result.addError(invalid(Level.ERROR, infoFile,
-                        "uvedený kontrolní součet '%s' nesouhlasí s vypočítaným kontrolním součtem '%s' pro soubor %s",
-                        hashFound, hashComputed, checksumFileExisting.getAbsolutePath()));
+            if (!hashComputed.equalsIgnoreCase(hashFound)) {
+                result.addError(
+                        new ValidationProblem(Level.ERROR, String.format("uvedený kontrolní součet '%s' nesouhlasí s vypočítaným kontrolním součtem '%s' pro soubor %s",
+                                hashFound, hashComputed, checksumFileExisting.getAbsolutePath()))
+                                .withFile(checksumFileFound)
+                                .withSimpleMessage("Kontrolní součet nesouhlasí")
+                                .withExpectedAndActualValues(hashFound, hashComputed)
+                );
             }
         } catch (XmlFileParsingException e) {
             result.addError(invalid(e));

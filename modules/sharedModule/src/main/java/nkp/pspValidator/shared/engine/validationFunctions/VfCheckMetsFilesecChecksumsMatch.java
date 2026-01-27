@@ -65,8 +65,12 @@ public class VfCheckMetsFilesecChecksumsMatch extends ValidationFunction {
             XPathExpression xpath = engine.buildXpath("//mets:fileSec/mets:fileGrp/mets:file");
             NodeList fileElements = (NodeList) xpath.evaluate(doc, XPathConstants.NODESET);
             for (int i = 0; i < fileElements.getLength(); i++) {
+                String section = "//mets:fileSec/mets:fileGrp/mets:file" + "[" + (i + 1) + "]";
                 try {
-                    checkFile(pspdir, (Element) fileElements.item(i));
+                    ValidationProblem problem = checkFile(pspdir, (Element) fileElements.item(i), section);
+                    if (problem != null) {
+                        result.addError(problem);
+                    }
                 } catch (HashMismatchException e) {
                     result.addError(invalid(Level.WARNING, null, e.getMessage()));
                 } catch (Exception e) {
@@ -84,15 +88,20 @@ public class VfCheckMetsFilesecChecksumsMatch extends ValidationFunction {
         }
     }
 
-    private void checkFile(File pspdir, Element fileEl) throws InvalidXPathExpressionException, XPathExpressionException, InvalidPathException, HashComputationException, HashMismatchException {
+    private ValidationProblem checkFile(File pspdir, Element fileEl, String section) throws InvalidXPathExpressionException, XPathExpressionException, InvalidPathException, HashComputationException, HashMismatchException {
         String hashExpected = fileEl.getAttribute("CHECKSUM");
         XPathExpression xpath = engine.buildXpath("mets:FLocat/@xlink:href");
         String filePath = (String) xpath.evaluate(fileEl, XPathConstants.STRING);
         File file = Utils.buildAbsoluteFile(pspdir, filePath);
         String hashComputed = Utils.computeHash(file);
-        if (!hashComputed.toUpperCase().equals(hashExpected.toUpperCase())) {
-            throw new HashMismatchException(String.format("uvedený kontrolní součet (%s) se liší od vypočítaného kontrolního součtu (%s) souboru %s", hashExpected, hashComputed, file.getAbsolutePath()));
+        if (!hashComputed.equalsIgnoreCase(hashExpected)) {
+            return new ValidationProblem(Level.ERROR,
+                    String.format("uvedený kontrolní součet '%s' nesouhlasí s vypočítaným kontrolním součtem '%s' pro soubor %s", hashExpected, hashComputed, file.getAbsolutePath()))
+                    .withFile(file)
+                    .withSimpleMessage("Kontrolní součet nesouhlasí")
+                    .withExpectedAndActualValues(hashExpected, hashComputed);
         }
+        return null;
     }
 
 }
