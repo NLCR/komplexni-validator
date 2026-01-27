@@ -3,9 +3,6 @@ plugins {
     id 'java'
 }
 
-group 'nkp.pspValidator'
-version '2.6.1'
-
 // Create a JAR task
 jar {
     from {
@@ -17,11 +14,7 @@ jar {
     manifest {
         attributes('Main-Class': 'nkp.pspValidator.shared.Main')
     }
-    archiveFileName = "sharedModule-${version}.jar"
-}
-
-repositories {
-    mavenCentral()
+    archiveFileName = "sharedModule-${project.version}.jar"
 }
 
 dependencies {

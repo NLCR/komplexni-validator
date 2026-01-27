@@ -2,13 +2,9 @@
 plugins {
     id 'java'
     id 'application'
-    //id 'org.openjfx.javafxplugin' version '0.0.13'
     id 'org.openjfx.javafxplugin' version '0.1.0'
     id 'com.github.johnrengelman.shadow' version '8.1.1'
 }
-
-group 'nkp.pspValidator'
-version '2.6.1'
 
 java {
     //targetCompatibility = JavaVersion.VERSION_17
@@ -24,10 +20,6 @@ compileJava.options.encoding = 'UTF-8'
 
 tasks.withType(JavaCompile).configureEach {
     options.encoding = 'UTF-8'
-}
-
-repositories {
-    mavenCentral()
 }
 
 jar {
@@ -54,7 +46,7 @@ shadowJar {
     configurations = [project.configurations.runtimeClasspath]
 
     archiveBaseName.set('guiModule')
-    archiveVersion.set('2.6.1')
+    archiveVersion.set(project.version.toString())
     archiveClassifier.set('shadow') // Typically set to empty for the main artifact
     manifest {
         attributes 'Main-Class': 'nkp.pspValidator.gui.Main'
