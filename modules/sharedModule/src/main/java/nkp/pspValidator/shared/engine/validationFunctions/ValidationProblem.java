@@ -20,6 +20,7 @@ public class ValidationProblem {
     private final File xsdFile;
     private final String expectedValue;
     private final String actualValue;
+    private final String pattern;
 
     public ValidationProblem(Level level, String fullMessage) {
         this.level = level;
@@ -29,9 +30,10 @@ public class ValidationProblem {
         this.xsdFile = null;
         this.expectedValue = null;
         this.actualValue = null;
+        this.pattern = null;
     }
 
-    private ValidationProblem(Level level, String fullMessage, String simpleMessage, File file, File xsdFile, String expectedValue, String actualValue) {
+    private ValidationProblem(Level level, String fullMessage, String simpleMessage, File file, File xsdFile, String expectedValue, String actualValue, String pattern) {
         this.level = level;
         this.fullMessage = fullMessage;
         this.simpleMessage = simpleMessage;
@@ -39,22 +41,27 @@ public class ValidationProblem {
         this.xsdFile = xsdFile;
         this.expectedValue = expectedValue;
         this.actualValue = actualValue;
+        this.pattern = pattern;
     }
 
     public ValidationProblem withSimpleMessage(String simpleMessage) {
-        return new ValidationProblem(this.level, this.fullMessage, simpleMessage, this.file, this.xsdFile, this.expectedValue, this.actualValue);
+        return new ValidationProblem(this.level, this.fullMessage, simpleMessage, this.file, this.xsdFile, this.expectedValue, this.actualValue, this.pattern);
     }
 
     public ValidationProblem withFile(File file) {
-        return new ValidationProblem(this.level, this.fullMessage, this.simpleMessage, file, this.xsdFile, this.expectedValue, this.actualValue);
+        return new ValidationProblem(this.level, this.fullMessage, this.simpleMessage, file, this.xsdFile, this.expectedValue, this.actualValue, this.pattern);
     }
 
     public ValidationProblem withXsdFile(File xsdFile) {
-        return new ValidationProblem(this.level, this.fullMessage, this.simpleMessage, this.file, xsdFile, this.expectedValue, this.actualValue);
+        return new ValidationProblem(this.level, this.fullMessage, this.simpleMessage, this.file, xsdFile, this.expectedValue, this.actualValue, this.pattern);
     }
 
     public ValidationProblem withExpectedAndActualValues(String expectedValue, String actualValue) {
-        return new ValidationProblem(this.level, this.fullMessage, this.simpleMessage, this.file, this.xsdFile, expectedValue, actualValue);
+        return new ValidationProblem(this.level, this.fullMessage, this.simpleMessage, this.file, this.xsdFile, expectedValue, actualValue, this.pattern);
+    }
+
+    public ValidationProblem withPattern(String pattern) {
+        return new ValidationProblem(this.level, this.fullMessage, this.simpleMessage, this.file, this.xsdFile, this.expectedValue, this.actualValue, pattern);
     }
 
     public Level getLevel() {
@@ -86,5 +93,9 @@ public class ValidationProblem {
 
     public String getActualValue() {
         return actualValue;
+    }
+
+    public String getPattern() {
+        return pattern;
     }
 }
