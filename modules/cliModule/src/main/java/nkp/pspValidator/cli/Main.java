@@ -1170,7 +1170,7 @@ public class Main {
         Validator validator = ValidatorFactory.buildValidator(fdmfConfig, pspDir, validatorConfigManager.getDictionaryManager());
         out.println(String.format("Validátor inicializován, spouštím validace"));
         ValidationState.ProgressListener progressListener = null;
-        validator.run(xmlProtocolFile, out, verbosity, devParams, null, progressListener, null);
+        validator.run(pspDir, xmlProtocolFile, out, verbosity, devParams, null, progressListener, null);
     }
 
 

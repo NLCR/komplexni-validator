@@ -25,8 +25,9 @@ import java.util.Map;
  */
 public class ValidatorProtocolXmlBuilder {
 
-    public void buildXmlOutput(File xmlOutputFile, ValidationState protocol) {
+    public void buildXmlOutput(File packageFile, File xmlOutputFile, ValidationState protocol) {
         try {
+            //TODO: add package id, or filename
             DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
             DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
             Document doc = dBuilder.newDocument();
@@ -46,6 +47,8 @@ public class ValidatorProtocolXmlBuilder {
 
             Element summaryEl = buildSummaryEl(doc, duration, startDate, finishDAte, protocol.getGlobalProblemsTotal(), protocol.getGlobalProblemsByLevel(), verdict);
             protocolEl.appendChild(summaryEl);
+
+            String packageParentPath = packageFile.getParentFile().getAbsolutePath();
 
             Element sectionsEl = doc.createElement("sections");
             protocolEl.appendChild(sectionsEl);
@@ -73,7 +76,7 @@ public class ValidatorProtocolXmlBuilder {
                         if (rule.getResult().hasProblems()) {
                             Element problemsEl = (Element) ruleSummaryEl.getElementsByTagName("problems").item(0);
                             for (ValidationProblem error : rule.getResult().getProblems()) {
-                                appendErrorEl(doc, problemsEl, error);
+                                appendErrorEl(packageParentPath, doc, problemsEl, error);
                             }
                         }
                     }
@@ -93,15 +96,23 @@ public class ValidatorProtocolXmlBuilder {
         }
     }
 
-    private void appendErrorEl(Document doc, Element problemsEl, ValidationProblem error) {
-        //TODO: add package id
+    private void appendErrorEl(String packageParentPath, Document doc, Element problemsEl, ValidationProblem error) {
         Element problemEl = doc.createElement("problem");
         problemsEl.appendChild(problemEl);
         problemEl.setAttribute("level", error.getLevel().name());
         if (error.getFile() != null) {
-            problemEl.setAttribute("file", error.getFile().getAbsolutePath()); //TODO: extrahovat jen path od korene baliku
+            problemEl.setAttribute("file", toPackageRelativePath(packageParentPath, error.getFile()));
         }
         problemEl.setTextContent(error.getSimpleMessage() == null ? error.getFullMessage() : error.getSimpleMessage());
+    }
+
+    private String toPackageRelativePath(String packagePath, File file) {
+        String path = file.getAbsolutePath();
+        if (path.startsWith(packagePath)) {
+            return path.substring(packagePath.length() + 1);
+        } else {
+            return path;
+        }
     }
 
     private Element buildSummaryEl(Document doc, Long duration, Date startDate, Date finishDate, Integer problemsTotal, Map<Level, Integer> problemsByLevel, String vertict) {
