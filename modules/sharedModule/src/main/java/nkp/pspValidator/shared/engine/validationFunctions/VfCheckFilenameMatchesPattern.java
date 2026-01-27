@@ -61,9 +61,12 @@ public class VfCheckFilenameMatchesPattern extends ValidationFunction {
     private ValidationResult validate(File file, PatternEvaluation paramPattern, Level level) {
         if (file == null) {
             return ValidationResult.ok();
-
         } else if (!paramPattern.matches(file.getName())) {
-            return singlErrorResult(invalid(level, file, "název souboru neodpovídá vzoru %s", paramPattern));
+            return singlErrorResult(new ValidationProblem(level, String.format("název souboru/adresáře neodpovídá vzoru %s", paramPattern))
+                    .withSimpleMessage("název souboru/adresáře neodpovídá vzoru")
+                    .withFile(file)
+                    .withPattern(paramPattern.toString())
+            );
         } else {
             return ValidationResult.ok();
         }

@@ -47,14 +47,17 @@ public class VfCheckAllFilenamesMatchPattern extends ValidationFunction {
         } catch (Throwable e) {
             return invalidUnexpectedError(e);
         }
-
     }
 
     private ValidationResult validate(List<File> files, PatternEvaluation patternParam) {
         ValidationResult result = new ValidationResult();
         for (File file : files) {
             if (!patternParam.matches(file.getName())) {
-                result.addError(invalid(Level.ERROR, file, "název souboru/adresáře  neodpovídá vzoru %s", patternParam));
+                result.addError(new ValidationProblem(Level.ERROR, String.format("název souboru/adresáře neodpovídá vzoru %s", patternParam))
+                        .withSimpleMessage("název souboru/adresáře neodpovídá vzoru")
+                        .withFile(file)
+                        .withPattern(patternParam.toString())
+                );
             }
         }
         return result;
