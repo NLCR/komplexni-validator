@@ -2,6 +2,8 @@ allprojects {
     repositories {
         mavenCentral()
     }
+    group = 'nkp.pspValidator'
+    version = findProperty('appVersion') ?: '0.0.0'
 }
 
 subprojects {
@@ -15,14 +17,6 @@ subprojects {
 
     tasks.withType(JavaCompile).configureEach {
         options.encoding = 'UTF-8'
-    }
-
-    version '2.6.1'
-    //sourceCompatibility = '17'
-    //targetCompatibility = '17'
-
-    repositories {
-        mavenCentral()
     }
 
     dependencies {

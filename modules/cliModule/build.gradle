@@ -3,10 +3,6 @@ plugins {
     //id 'application'
 }
 
-group 'nkp.pspValidator'
-version '2.6.1'
-
-
 // Create a JAR task
 jar {
     manifest {
@@ -18,11 +14,7 @@ jar {
     } {
         duplicatesStrategy = DuplicatesStrategy.EXCLUDE
     }
-    archiveFileName = "cliModule-${version}.jar"
-}
-
-repositories {
-    mavenCentral()
+    archiveFileName = "cliModule-${project.version}.jar"
 }
 
 dependencies {
