@@ -11,35 +11,52 @@ public class ValidationProblem {
 
     private final Level level;
 
-    private final File file;
-    private final String description;
+    private final String fullMessage;
 
-    public ValidationProblem(Level level, File file, String description) {
+    private final String simpleMessage;
+
+    //custom attributres
+    private final File file;
+
+    public ValidationProblem(Level level, String fullMessage) {
         this.level = level;
+        this.fullMessage = fullMessage;
+        this.simpleMessage = null;
+        this.file = null;
+    }
+
+    private ValidationProblem(Level level, String fullMessage, String simpleMessage, File file) {
+        this.level = level;
+        this.fullMessage = fullMessage;
+        this.simpleMessage = simpleMessage;
         this.file = file;
-        this.description = description;
+    }
+
+    public ValidationProblem withSimpleMessage(String simpleMessage) {
+        return new ValidationProblem(this.level, this.fullMessage, simpleMessage, this.file);
+    }
+
+    public ValidationProblem withFile(File file) {
+        return new ValidationProblem(this.level, this.fullMessage, this.simpleMessage, file);
     }
 
     public Level getLevel() {
         return level;
     }
 
+    public String getFullMessage() {
+        if (fullMessage == null) { //fallbacke to simple message or empty string
+            return simpleMessage != null ? simpleMessage : "";
+        }
+        return fullMessage;
+    }
+
+    public String getSimpleMessage() {
+        return simpleMessage;
+    }
+
     public File getFile() {
         return file;
     }
 
-    //TODO: change to getMessage a getDescription
-    public String getMessage(boolean full) {
-        if (full) {
-            StringBuilder builder = new StringBuilder();
-            if (file != null) {
-                builder.append(file.getName()).append(": ");
-            }
-            //TODO: dalsi veci
-            builder.append(description);
-            return builder.toString();
-        } else {
-            return description;
-        }
-    }
 }

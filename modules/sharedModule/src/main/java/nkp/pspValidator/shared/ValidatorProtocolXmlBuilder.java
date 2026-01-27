@@ -99,9 +99,9 @@ public class ValidatorProtocolXmlBuilder {
         problemsEl.appendChild(problemEl);
         problemEl.setAttribute("level", error.getLevel().name());
         if (error.getFile() != null) {
-            problemEl.setAttribute("file", error.getFile().getName());
+            problemEl.setAttribute("file", error.getFile().getAbsolutePath()); //TODO: extrahovat jen path od korene baliku
         }
-        problemEl.setTextContent(error.getMessage(false));
+        problemEl.setTextContent(error.getSimpleMessage() == null ? error.getFullMessage() : error.getSimpleMessage());
     }
 
     private Element buildSummaryEl(Document doc, Long duration, Date startDate, Date finishDate, Integer problemsTotal, Map<Level, Integer> problemsByLevel, String vertict) {

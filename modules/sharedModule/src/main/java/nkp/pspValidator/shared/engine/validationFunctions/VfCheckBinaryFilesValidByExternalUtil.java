@@ -97,16 +97,16 @@ public class VfCheckBinaryFilesValidByExternalUtil extends ValidationFunction {
     private ValidationResult validate(Level level, List<File> files, ResourceType type, ExternalUtilExecution execution) {
         BinaryFileValidator validator = engine.getBinaryFileValidator();
         if (validator.isUtilDisabled(execution.getUtil())) {
-            return singlErrorResult(invalid(Level.INFO, null, "nástroj %s je vypnutý", execution.getUtil().getUserFriendlyName()));
+            return singlErrorResult(invalid(Level.INFO, "nástroj %s je vypnutý", execution.getUtil().getUserFriendlyName()));
         } else if (!validator.isUtilAvailable(execution.getUtil())) {
-            return singlErrorResult(invalid(Level.INFO, null, "nástroj %s není dostupný", execution.getUtil().getUserFriendlyName()));
+            return singlErrorResult(invalid(Level.INFO, "nástroj %s není dostupný", execution.getUtil().getUserFriendlyName()));
         } else if (!validator.isUtilExecutionDefined(execution)) {
-            return singlErrorResult(invalid(Level.INFO, null, "pro nástroj %s není definováno spuštění '%s'", execution.getUtil().getUserFriendlyName(), execution.getName()));
+            return singlErrorResult(invalid(Level.INFO, "pro nástroj %s není definováno spuštění '%s'", execution.getUtil().getUserFriendlyName(), execution.getName()));
         } else {
             ValidationResult result = new ValidationResult();
             BinaryFileProfile profile = validator.getProfile(type, execution.getUtil());
             if (profile == null) {
-                return singlErrorResult(invalid(Level.ERROR, null, "nenalezen profil binárního souboru pro typ %s a nástroj %s", type, execution));
+                return singlErrorResult(invalid(Level.ERROR, "nenalezen profil binárního souboru pro typ %s a nástroj %s", type, execution));
             }
             for (File file : files) {
                 //System.out.println(String.format("validating (%s): %s", profile, file.getAbsolutePath()));

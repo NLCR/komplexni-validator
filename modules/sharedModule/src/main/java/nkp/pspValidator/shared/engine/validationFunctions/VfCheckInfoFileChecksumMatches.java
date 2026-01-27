@@ -47,7 +47,7 @@ public class VfCheckInfoFileChecksumMatches extends ValidationFunction {
             } else if (checksumFile.isDirectory()) {
                 return singlErrorResult(invalidFileIsDir(checksumFile));
             } else if (!checksumFile.canRead()) {
-                return singlErrorResult(invalidCannotReadDir(checksumFile));
+                return singlErrorResult(invalidCannotReadFile(checksumFile));
             }
 
             return validate(infoFile, checksumFile);

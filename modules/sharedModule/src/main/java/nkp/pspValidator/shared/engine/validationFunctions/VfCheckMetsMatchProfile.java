@@ -91,7 +91,7 @@ public class VfCheckMetsMatchProfile extends ValidationFunction {
         try {
             MetadataProfile profile = engine.getMetsProfilesManager().buildProfile(profileId);
             if (profile == null) {
-                result.addError(invalid(Level.ERROR, null, "nenalezen profil '%s' pro validaci METS záznamů", profileId));
+                result.addError(invalid(Level.ERROR, "nenalezen profil '%s' pro validaci METS záznamů", profileId));
             } else {
                 for (File metFile : metsFiles) {
                     validateMets(profile, metFile, result);

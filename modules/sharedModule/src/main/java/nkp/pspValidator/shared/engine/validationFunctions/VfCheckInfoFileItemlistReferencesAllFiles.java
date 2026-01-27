@@ -51,7 +51,7 @@ public class VfCheckInfoFileItemlistReferencesAllFiles extends ValidationFunctio
             } else if (infoFile.isDirectory()) {
                 return singlErrorResult(invalidFileIsDir(infoFile));
             } else if (!infoFile.canRead()) {
-                return singlErrorResult(invalidCannotReadDir(infoFile));
+                return singlErrorResult(invalidCannotReadFile(infoFile));
             }
 
             ValueEvaluation paramLevel = valueParams.getParams(PARAM_LEVEL).get(0).getEvaluation();

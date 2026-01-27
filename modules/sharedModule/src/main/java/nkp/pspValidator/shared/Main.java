@@ -95,7 +95,7 @@ public class Main {
         );
         if (result != null) {
             if (result.hasProblems()) {
-                result.getProblems().forEach(p -> System.out.println(p.getLevel() + ": " + p.getMessage(false)));
+                result.getProblems().forEach(p -> System.out.println(p.getLevel() + ": " + p.getFullMessage()));
             } else {
                 System.out.println("No problems found in file " + metadataFile.getName() + " against profile " + profile);
             }
