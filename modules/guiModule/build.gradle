@@ -18,6 +18,8 @@ java {
 //sourceCompatibility = '17'
 //targetCompatibility = '17'
 
+def javafxVersion = '17.0.18'
+
 compileJava.options.encoding = 'UTF-8'
 
 tasks.withType(JavaCompile).configureEach {
@@ -63,6 +65,7 @@ shadowJar {
     }
 
     // Explicitly include JavaFX modules and their dependencies
+    /*
     dependencies {
         include(dependency('org.openjfx:javafx-base:17.0.2'))
         include(dependency('org.openjfx:javafx-controls:17.0.2'))
@@ -70,16 +73,13 @@ shadowJar {
         include(dependency('org.openjfx:javafx-media:17.0.2'))
         include(dependency('org.openjfx:javafx-graphics:17.0.2'))
     }
+     */
 }
 
 javafx {
-    //version = '14'//u verze 11 je problem s fontem
-    version = '17'
+    version = javafxVersion
     configuration = 'implementation'
-    //modules = [ 'javafx.controls', 'javafx.fxml' ]
-    //modules = ['javafx.controls', 'javafx.fxml', 'javafx.base']
     modules = ['javafx.base', 'javafx.controls', 'javafx.fxml', 'javafx.media']
-
 }
 
 application {
@@ -111,13 +111,16 @@ dependencies {
     implementation group: 'org.openjfx', name: 'javafx-graphics', version: javaFxVersion, classifier: 'linux'*/
 
     // JavaFX dependencies
-    String javaFxVersion = '17.0.2' // Make sure this version is compatible with Java 17
+    //String javaFxVersion = '17.0.18' // Make sure this version is compatible with Java 17
 
+    //tohle řeší javafx plugin
+    /*
     implementation "org.openjfx:javafx-base:$javaFxVersion"
     implementation "org.openjfx:javafx-controls:$javaFxVersion"
     implementation "org.openjfx:javafx-fxml:$javaFxVersion"
     implementation "org.openjfx:javafx-media:$javaFxVersion"
     implementation "org.openjfx:javafx-graphics:$javaFxVersion"
+    */
 }
 
 tasks.register('printRuntimeClasspath') {
