@@ -42,20 +42,20 @@ dependencies {
     implementation 'com.ibm.icu:icu4j:51.1'
 }
 
-task run(type: JavaExec) {
+tasks.register('run', JavaExec) {
     classpath = sourceSets.main.runtimeClasspath
-    main = 'nkp.pspValidator.shared.Main'
+    mainClass.set('nkp.pspValidator.shared.Main')
 }
 
-task runWithTestArgs(type: JavaExec) {
+tasks.register('runWithTestArgs', JavaExec) {
     classpath = sourceSets.main.runtimeClasspath
-    main = 'nkp.pspValidator.shared.Main'
+    mainClass.set('nkp.pspValidator.shared.Main')
     args = ['arg1', 'arg2']
 }
 
 compileJava.options.encoding = 'UTF-8'
 
-tasks.withType(JavaCompile) {
+tasks.withType(JavaCompile).configureEach {
     options.encoding = 'UTF-8'
 }
 

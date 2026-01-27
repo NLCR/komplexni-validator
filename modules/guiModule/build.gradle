@@ -4,7 +4,7 @@ plugins {
     id 'application'
     //id 'org.openjfx.javafxplugin' version '0.0.13'
     id 'org.openjfx.javafxplugin' version '0.1.0'
-    id 'com.github.johnrengelman.shadow' version '7.0.0'
+    id 'com.github.johnrengelman.shadow' version '8.1.1'
 }
 
 group 'nkp.pspValidator'
@@ -20,7 +20,7 @@ java {
 
 compileJava.options.encoding = 'UTF-8'
 
-tasks.withType(JavaCompile) {
+tasks.withType(JavaCompile).configureEach {
     options.encoding = 'UTF-8'
 }
 
@@ -37,7 +37,7 @@ jar {
     }
     from {
         configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) }
-    }{
+    } {
         // Set the duplicates strategy here
         duplicatesStrategy = DuplicatesStrategy.EXCLUDE
     }
@@ -120,7 +120,7 @@ dependencies {
     implementation "org.openjfx:javafx-graphics:$javaFxVersion"
 }
 
-task printRuntimeClasspath {
+tasks.register('printRuntimeClasspath') {
     doLast {
         configurations.runtimeClasspath.each { println it }
     }
@@ -129,7 +129,7 @@ task printRuntimeClasspath {
 // Add this line to run this task automatically before shadowJar
 shadowJar.dependsOn printRuntimeClasspath
 
-task jpackage(type: Exec) {
+tasks.register('jpackage', Exec) {
     // Replace non-digit characters with a dot for the app-version
     def compatibleVersion = version.replaceAll(/[^0-9]+/, '.')
     // Define the name of your application

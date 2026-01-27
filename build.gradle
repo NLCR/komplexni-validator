@@ -5,7 +5,17 @@ allprojects {
 }
 
 subprojects {
-    //apply plugin: 'java'
+    apply plugin: 'java'
+
+    java {
+        toolchain {
+            languageVersion = JavaLanguageVersion.of(17) // Fixed to Java 17 for compilation. Java 21 for runtime
+        }
+    }
+
+    tasks.withType(JavaCompile).configureEach {
+        options.encoding = 'UTF-8'
+    }
 
     version '2.6.1'
     //sourceCompatibility = '17'
