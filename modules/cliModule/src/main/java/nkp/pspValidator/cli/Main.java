@@ -635,7 +635,7 @@ public class Main {
                         ValidationResult result = validateMetadataByProfile(configDir, metadataProfileId, metadataFile);
                         if (result != null) {
                             if (result.hasProblems()) {
-                                result.getProblems().forEach(p -> System.out.println(p.getLevel() + ": " + p.getMessage(false)));
+                                result.getProblems().forEach(p -> System.out.println(p.getLevel() + ": " + p.getFullMessage()));
                             } else {
                                 System.out.println("Nenalezeny žádné problémy po validaci souboru " + metadataFile.getName() + " oproti profilu " + metadataProfileId);
                             }

@@ -74,7 +74,7 @@ public class VfCheckMetsAmdsecElementsMatchProfile extends ValidationFunction {
 
             MetadataProfile profile = engine.getTechnicalMetadataProfilesManager().buildProfile(profileId);
             if (profile == null) {
-                return singlErrorResult(invalid(Level.ERROR, null, "nenalezen profil '%s'", profileId));
+                return singlErrorResult(invalid(Level.ERROR, "nenalezen profil '%s'", profileId));
             } else {
                 return validate(metsFiles, elementXpath, elementMustExist, profile);
             }

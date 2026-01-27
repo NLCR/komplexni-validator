@@ -66,12 +66,14 @@ public class VfCheckFileListsMatch extends ValidationFunction {
         if (!filesExpectedSet.equals(filesFoundSet)) {//something is different
             for (File foundFile : filesFoundSet) {
                 if (!filesExpectedSet.contains(foundFile)) {
-                    result.addError(invalid(Level.ERROR, null, "nalezen neočekávaný soubor %s", foundFile.getAbsolutePath()));
+                    result.addError(invalid(Level.ERROR, "nalezen neočekávaný soubor %s", foundFile.getAbsolutePath())
+                            .withFile(foundFile).withSimpleMessage("nalezen neočekávaný soubor"));
                 }
             }
             for (File expectedFile : filesExpectedSet) {
                 if (!filesFoundSet.contains(expectedFile)) {
-                    result.addError(invalid(Level.ERROR, null, "nenalezen očekávaný soubor %s", expectedFile.getAbsolutePath()));
+                    result.addError(invalid(Level.ERROR, "nenalezen očekávaný soubor %s", expectedFile.getAbsolutePath())
+                            .withFile(expectedFile).withSimpleMessage("nenalezen očekávaný soubor"));
                 }
             }
         }

@@ -72,7 +72,7 @@ public class VfCheckStringDerivedFromOneOfIdentifiers extends ValidationFunction
                 return ValidationResult.ok();
             }
         }
-        return singlErrorResult(invalid(Level.WARNING, null,
+        return singlErrorResult(invalid(Level.WARNING,
                 "nenalezena shoda pro žádný z %d nalezených identifikátorů (%s)",
                 identifiers.size(), buildIdTypeList(identifiers)));
     }

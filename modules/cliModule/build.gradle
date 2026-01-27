@@ -53,8 +53,8 @@ tasks.register('runDevMrMinify', JavaExec) {
     classpath = sourceSets.main.runtimeClasspath
     mainClass.set('nkp.pspValidator.cli.Main')
     args = ['--action', "BUILD_MINIFIED_PACKAGE",
-            '--psp', "${homeDir}/TrineraProjects/Validator/komplexni-validator/modules/sharedModule/src/test/resources/monograph_1.2/b50eb6b0-f0a4-11e3-b72e-005056827e52",
-            '--minified-psp-dir', "${homeDir}/TrineraProjects/Validator/tmp/komplexni-validator",
+            '--psp', "${homeDir}/TrineraProjects/KomplexniValidator/komplexni-validator/modules/sharedModule/src/test/resources/monograph_1.2/b50eb6b0-f0a4-11e3-b72e-005056827e52",
+            '--minified-psp-dir', "${homeDir}/TrineraProjects/KomplexniValidator/tmp/komplexni-validator",
     ]
 }
 
@@ -62,10 +62,11 @@ tasks.register('runDevMrValidate', JavaExec) {
     classpath = sourceSets.main.runtimeClasspath
     mainClass.set('nkp.pspValidator.cli.Main')
     args = ['--action', "VALIDATE_PSP"
-            //, '--psp', "${homeDir}/TrineraProjects/Validator/komplexni-validator/modules/sharedModule/src/test/resources/data_disc_0.1/osa001-00117i"
-            , '--psp', "${homeDir}/TrineraProjects/Validator/tmp/komplexni-validator/b50eb6b0-f0a4-11e3-b72e-005056827e52_minified"
+            //, '--psp', "${homeDir}/TrineraProjects/KomplexniValidator/komplexni-validator/modules/sharedModule/src/test/resources/data_disc_0.1/osa001-00117i"
+            , '--psp', "${homeDir}/TrineraProjects/KomplexniValidator/tmp/komplexni-validator/b50eb6b0-f0a4-11e3-b72e-005056827e52_minified"
             //, '--psp', "${homeDir}/TrineraProjects/KramarskeTisky/data/input/sample1/input/tmp/_ndk-package/2610798805-2025_02_18-17_21_12,336/d7742610-73d6-476f-84af-c15a7156c5a6"
-            , '--config-dir', "${homeDir}/TrineraProjects/Validator/komplexni-validator/modules/sharedModule/src/main/resources/nkp/pspValidator/shared/validatorConfig"
+            , '--config-dir', "${homeDir}/TrineraProjects/KomplexniValidator/komplexni-validator/modules/sharedModule/src/main/resources/nkp/pspValidator/shared/validatorConfig"
+            , '--xml-protocol-file', "${homeDir}/TrineraProjects/KomplexniValidator/tmp/komplexni-validator/validation_protocol.xml"
             , '--forced-dmf-mon-version', '2.1'
             , '--forced-dmf-dad-version', '0.1'
             , '--preferred-dmf-dad-version', '0.1'
@@ -83,7 +84,7 @@ tasks.register('runDevMrValidateProfile', JavaExec) {
     classpath = sourceSets.main.runtimeClasspath
     mainClass.set('nkp.pspValidator.cli.Main')
     args = ['--action', "VALIDATE_METADATA_BY_PROFILE",
-            '--config-dir', "${homeDir}/TrineraProjects/Validator/komplexni-validator/modules/sharedModule/src/main/resources/nkp/pspValidator/shared/validatorConfig",
+            '--config-dir', "${homeDir}/TrineraProjects/KomplexniValidator/komplexni-validator/modules/sharedModule/src/main/resources/nkp/pspValidator/shared/validatorConfig",
             //'--metadata-profile-id', 'monograph_1.4', //Chybí typ profilu (fDmf=monograph_1.4)
             //'--metadata-profile-id', 'monograph_1.4:blbost', //Neznámý typ profilu: blbost (fDmf=monograph_1.4)
             //'--metadata-profile-id', 'monograph_1.4:biblio', //Chybí metadatový formát (fDmf=monograph_1.4, typ=biblio)
@@ -93,7 +94,7 @@ tasks.register('runDevMrValidateProfile', JavaExec) {
             //'--metadata-profile-id', 'monograph_1.4:tech', //Chybí název profilu (fDmf=monograph_1.4, typ=tech)
             //'--metadata-profile-id', 'monograph_1.4:tech:blbost', //Soubor profilu neexistuje: blbost.xml (fDmf=monograph_1.4, typ=tech)
             '--metadata-profile-id', 'monograph_1.4:biblio:mods:page_rda',
-            '--metadata-file', "${homeDir}/TrineraProjects/Validator/komplexni-validator/modules/sharedModule/src/test/resources/metadata_only/mon_1.4/mods_page_rda.xml"
+            '--metadata-file', "${homeDir}/TrineraProjects/KomplexniValidator/komplexni-validator/modules/sharedModule/src/test/resources/metadata_only/mon_1.4/mods_page_rda.xml"
     ]
 }
 

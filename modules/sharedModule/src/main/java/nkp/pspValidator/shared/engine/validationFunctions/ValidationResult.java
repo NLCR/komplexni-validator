@@ -22,11 +22,11 @@ public class ValidationResult {
     }
 
     public void addError(Level level, File file, String message) {
-        errors.add(new ValidationProblem(level, file, message));
+        errors.add(new ValidationProblem(level, message).withFile(file));
     }
 
     public void addError(Level level, File file, String message, Object... params) {
-        errors.add(new ValidationProblem(level, file, String.format(message, params)));
+        errors.add(new ValidationProblem(level, String.format(message, params)).withFile(file));
     }
 
     public List<ValidationProblem> getProblems() {

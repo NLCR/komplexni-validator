@@ -77,51 +77,68 @@ public abstract class ValidationFunction implements Function {
     }
 
     ValidationProblem invalidFileDoesNotExist(File file) {
-        //return new ValidationProblem(Level.ERROR, String.format("%s: soubor %s neexistuje", getName(), file.getAbsoluteFile()));
-        //return new ValidationProblem(Level.ERROR, file, String.format("%s: soubor neexistuje", getName()));
-        return new ValidationProblem(Level.ERROR, file, String.format("soubor neexistuje"));
+        if (file == null) {
+            return new ValidationProblem(Level.ERROR, "soubor neexistuje: null")
+                    .withSimpleMessage("soubor neexistuje");
+        }
+        return new ValidationProblem(Level.ERROR, String.format("soubor neexistuje: %s" + file.getAbsoluteFile()))
+                .withFile(file).withSimpleMessage("soubor neexistuje");
     }
 
     ValidationProblem invalidFileIsDir(File file) {
-        //return new ValidationProblem(Level.ERROR, String.format("%s: soubor %s je adresář", getName(), file.getAbsoluteFile()));
-        //return new ValidationProblem(Level.ERROR, file, String.format("%s: soubor je adresář", getName()));
-        return new ValidationProblem(Level.ERROR, file, String.format("soubor je adresář"));
+        if (file == null) {
+            return new ValidationProblem(Level.ERROR, "soubor je adresář: null")
+                    .withSimpleMessage("soubor je adresář");
+        }
+        return new ValidationProblem(Level.ERROR, String.format("soubor je adresář: %s", file.getAbsoluteFile()))
+                .withFile(file).withSimpleMessage("soubor je adresář");
     }
 
     ValidationProblem invalidFileIsNotDir(File file) {
-        //return new ValidationProblem(Level.ERROR, String.format("%s: soubor %s není adresář", getName(), file.getAbsoluteFile()));
-        //return new ValidationProblem(Level.ERROR, file, String.format("%s: soubor není adresář", getName()));
-        return new ValidationProblem(Level.ERROR, file, String.format("soubor není adresář"));
+        if (file == null) {
+            return new ValidationProblem(Level.ERROR, "soubor není adresář: null")
+                    .withSimpleMessage("soubor není adresář");
+        }
+        return new ValidationProblem(Level.ERROR, String.format("soubor není adresář: %s", file.getAbsoluteFile()))
+                .withFile(file).withSimpleMessage("soubor není adresář");
     }
 
     ValidationProblem invalidCannotReadFile(File file) {
-        //return new ValidationProblem(Level.ERROR, String.format("nelze číst soubor %s", file.getAbsoluteFile()));
-        //return new ValidationProblem(Level.ERROR, file, String.format("%s: nelze číst soubor", getName()));
-        return new ValidationProblem(Level.ERROR, file, String.format("soubor nelze číst"));
+        if (file == null) {
+            return new ValidationProblem(Level.ERROR, "soubor nelze číst: null")
+                    .withSimpleMessage("soubor nelze číst");
+        }
+        return new ValidationProblem(Level.ERROR, String.format("soubor nelze číst: %s", file.getAbsoluteFile()))
+                .withFile(file).withSimpleMessage("soubor nelze číst");
     }
 
-
     ValidationProblem invalidCannotReadDir(File dir) {
-        //return new ValidationProblem(Level.ERROR, String.format("%s: nelze číst adresář %s", getName(), dir.getAbsoluteFile()));
-        //return new ValidationProblem(Level.ERROR, dir, String.format("%s: nelze číst adresář", getName()));
-        return new ValidationProblem(Level.ERROR, dir, String.format("adresář nelze číst"));
+        return new ValidationProblem(Level.ERROR, String.format("adresář nelze číst: %s", dir.getAbsoluteFile()))
+                .withFile(dir).withSimpleMessage("adresář nelze číst");
     }
 
     ValidationProblem invalid(Exception e) {
-        return new ValidationProblem(Level.ERROR, null, e.getMessage());
+        return new ValidationProblem(Level.ERROR, e.getMessage());
     }
 
     ValidationProblem invalid(Level level, File file, String errorMessage) {
-        //return new ValidationProblem(level, file, String.format("%s: %s", getName(), errorMessage));
-        //return new ValidationProblem(level, file, String.format("%s: %s", getName(), errorMessage));
-        return new ValidationProblem(level, file, String.format("%s", errorMessage));
+        return new ValidationProblem(level, String.format("%s", errorMessage))
+                .withFile(file).withSimpleMessage(errorMessage);
+    }
+
+    ValidationProblem invalid(Level level, String errorMessage, Object... errorMsgParams) {
+        if (errorMsgParams == null || errorMsgParams.length == 0) {
+            return new ValidationProblem(level, "null");
+        }
+        return new ValidationProblem(level, String.format("%s", String.format(errorMessage, errorMsgParams)));
     }
 
     ValidationProblem invalid(Level level, File file, String errorMessage, Object... errorMsgParams) {
-        //return new ValidationProblem(level, file, String.format("%s: %s", getName(), String.format(errorMessage, errorMsgParams)));
-        return new ValidationProblem(level, file, String.format("%s", String.format(errorMessage, errorMsgParams)));
+        if (errorMsgParams == null || errorMsgParams.length == 0) {
+            return new ValidationProblem(level, "null").withFile(file);
+        }
+        return new ValidationProblem(level, String.format("%s", String.format(errorMessage, errorMsgParams))).withFile(file);
     }
-
 
     @Override
     public ValidationFunction withValueParam(String paramName, ValueType valueType, ValueEvaluation valueEvaluation) {
