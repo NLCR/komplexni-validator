@@ -63,7 +63,11 @@ public class VfCheckChecksumFileAllChecksumsMatch extends ValidationFunction {
                 while ((line = br.readLine()) != null) {
                     String[] parts = line.split("[ \\t]");//space or tabulator
                     if (parts.length == 1) {
-                        result.addError(invalid(Level.ERROR, checksumFile, "chybí oddělovač (mezera/tabulátor) na řádku '%s'", line));
+                        result.addError(
+                                new ValidationProblem(Level.ERROR, String.format("chybí oddělovač (mezera/tabulátor) na řádku '%s'", line))
+                                        .withSimpleMessage("chybí oddělovač (mezera/tabulátor)")
+                                        .withReferencedValue(line)
+                        );
                     } else {
                         String hashExpected = parts[0];
                         String filepath = parts[1];

@@ -28,6 +28,7 @@ public class ValidatorProtocolXmlBuilder {
     public void buildXmlOutput(File packageFile, File xmlOutputFile, ValidationState protocol) {
         try {
             //TODO: add package id, or filename
+            //TODO: fdmf version used
             DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
             DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
             Document doc = dBuilder.newDocument();
@@ -99,7 +100,7 @@ public class ValidatorProtocolXmlBuilder {
     private void appendErrorEl(String packageParentPath, Document doc, Element problemsEl, ValidationProblem error) {
         Element problemEl = doc.createElement("problem");
         problemsEl.appendChild(problemEl);
-        problemEl.setAttribute("level", error.getLevel().name());
+        problemEl.setAttribute("_level", error.getLevel().name());
         problemEl.setTextContent(error.getSimpleMessage() == null ? error.getFullMessage() : error.getSimpleMessage());
         if (error.getFile() != null) {
             problemEl.setAttribute("file", toPackageRelativePath(packageParentPath, error.getFile()));
@@ -118,6 +119,9 @@ public class ValidatorProtocolXmlBuilder {
         }
         if (error.getReferencedFile() != null) {
             problemEl.setAttribute("referencedFile", toPackageRelativePath(packageParentPath, error.getReferencedFile()));
+        }
+        if (error.getReferencedValue() != null) {
+            problemEl.setAttribute("referencedValue", error.getReferencedValue());
         }
     }
 
