@@ -106,7 +106,11 @@ public class VfCheckChecksumFileAllPathsMatchFiles extends ValidationFunction {
                 while ((line = br.readLine()) != null) {
                     String[] parts = line.split("[ \\t]");//space or tabulator
                     if (parts.length == 1) {
-                        result.addError(invalid(Level.ERROR, checksumFile, "chybí oddělovač (mezera/tabulátor) na řádku '%s'", line));
+                        result.addError(
+                                new ValidationProblem(Level.ERROR, String.format("chybí oddělovač (mezera/tabulátor) na řádku '%s'", line))
+                                        .withSimpleMessage("chybí oddělovač (mezera/tabulátor)")
+                                        .withReferencedValue(line)
+                        );
                     } else {
                         String hash = parts[0];
                         String filepath = parts[1];
@@ -114,7 +118,12 @@ public class VfCheckChecksumFileAllPathsMatchFiles extends ValidationFunction {
                             File file = Utils.buildAbsoluteFile(pspRootDir, filepath);
                             filesFromFile.add(file);
                         } catch (InvalidPathException e) {
-                            result.addError(invalid(Level.ERROR, checksumFile, "cesta k souboru není zapsána korektně: '%s'", e.getPath()));
+                            result.addError(
+                                    new ValidationProblem(Level.ERROR, String.format("cesta k souboru není zapsána korektně: '%s'", e.getPath()))
+                                            .withSimpleMessage("cesta k souboru není zapsána korektně")
+                                            .withFile(checksumFile)
+                                            .withReferencedValue(e.getPath())
+                            );
                         }
                     }
                 }

@@ -58,11 +58,26 @@ public class VfCheckChecksumFileGeneratedByGrammar extends ValidationFunction {
             while ((line = br.readLine()) != null) {
                 String[] parts = line.split("[ \\t]");//space or tabulator
                 if (parts.length == 1) {
-                    result.addError(invalid(Level.ERROR, file, "chybí oddělovač (mezera/tabulátor) na řádku '%s'", line));
+                    result.addError(
+                            new ValidationProblem(Level.ERROR, String.format("chybí oddělovač (mezera/tabulátor) na řádku '%s'", line))
+                                    .withSimpleMessage("chybí oddělovač (mezera/tabulátor)")
+                                    .withFile(file)
+                                    .withReferencedValue(line)
+                    );
                 } else if (!is32bHex(parts[0])) {
-                    result.addError(invalid(Level.INFO, file, "kontrolní součet není v 32B hexadecimálním zápisu, řádek: '%s'", line));
+                    result.addError(
+                            new ValidationProblem(Level.INFO, String.format("kontrolní součet není v 32B hexadecimálním zápisu, řádek: '%s'", line))
+                                    .withSimpleMessage("kontrolní součet není v 32B hexadecimálním zápisu")
+                                    .withFile(file)
+                                    .withReferencedValue(line)
+                    );
                 } else if (!isValidPath(parts[1])) {
-                    result.addError(invalid(Level.WARNING, file, "cesta k souboru není zapsána korektně, řádek: '%s'", line));
+                    result.addError(
+                            new ValidationProblem(Level.WARNING, String.format("cesta k souboru není zapsána korektně, řádek: '%s'", line))
+                                    .withSimpleMessage("cesta k souboru není zapsána korektně")
+                                    .withFile(file)
+                                    .withReferencedValue(line)
+                    );
                 }
             }
             br.close();
