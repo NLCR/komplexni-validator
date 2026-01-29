@@ -116,6 +116,9 @@ public class ValidatorProtocolXmlBuilder {
         if (error.getPattern() != null) {
             problemEl.setAttribute("pattern", error.getPattern());
         }
+        if (error.getReferencedFile() != null) {
+            problemEl.setAttribute("referencedFile", toPackageRelativePath(packageParentPath, error.getReferencedFile()));
+        }
     }
 
     private String toPackageRelativePath(String packagePath, File file) {

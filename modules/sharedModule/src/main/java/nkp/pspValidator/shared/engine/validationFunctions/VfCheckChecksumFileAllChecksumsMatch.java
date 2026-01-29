@@ -83,8 +83,13 @@ public class VfCheckChecksumFileAllChecksumsMatch extends ValidationFunction {
                             result.addError(invalid(Level.ERROR, checksumFile, "cesta k souboru není zapsána korektně: '%s'", e.getPath()));
 
                         } catch (HashComputationException e) {
-                            //TODO: tohle se vyskytuje vickrat, udelat pro to metodu
-                            result.addError(invalid(Level.ERROR, checksumFile, "chyba výpočtu kontrolního součtu: %s", e.getMessage()));
+                            result.addError(
+                                    //invalid(Level.ERROR, checksumFile, "chyba výpočtu kontrolního součtu: %s", e.getMessage())
+                                    new ValidationProblem(Level.ERROR, String.format("chyba výpočtu kontrolního součtu pro soubor %s: %s", filepath, e.getMessage()))
+                                            .withFile(checksumFile)
+                                            .withReferencedFile(e.getFile())
+                                            .withSimpleMessage(e.getMessage())
+                            );
                         }
                     }
                 }
