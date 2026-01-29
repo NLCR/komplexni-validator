@@ -67,9 +67,13 @@ public class VfCheckInfoFileChecksumMatches extends ValidationFunction {
             String checksumFilePath = ((String) checksumFileExp.evaluate(infoDoc, XPathConstants.STRING)).trim();
             File checksumFileFound = Utils.buildAbsoluteFile(infoFile.getParentFile(), checksumFilePath);
             if (!checksumFileFound.equals(checksumFileExisting.getAbsoluteFile())) {
-                result.addError(invalid(Level.ERROR, infoFile,
-                        "element checksum obsahuje cestu ke špatnému souboru: namísto (%s) obsahuje (%s)",
-                        checksumFileExisting.getAbsolutePath(), checksumFileFound.getAbsolutePath()));
+                result.addError(
+                        new ValidationProblem(Level.ERROR, String.format("element checksum obsahuje cestu ke špatnému souboru: namísto (%s) obsahuje (%s)",
+                                checksumFileExisting.getAbsolutePath(), checksumFileFound.getAbsolutePath()))
+                                .withFile(infoFile)
+                                .withSimpleMessage("element checksum obsahuje cestu ke špatnému souboru")
+                                .withExpectedAndActualValues(checksumFileExisting.getName(), checksumFilePath)
+                );
             }
             //check that computed hash and hash from INFO file match
             String hashFoundLc = (String) engine.buildXpath("/info/checksum/@checksum").evaluate(infoDoc, XPathConstants.STRING);
