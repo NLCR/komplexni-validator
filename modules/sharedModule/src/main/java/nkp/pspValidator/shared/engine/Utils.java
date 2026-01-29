@@ -120,7 +120,12 @@ public class Utils {
             fis.close();
             return md5;
         } catch (Exception e) {
-            throw new HashComputationException(e.getMessage());
+            String message = e.getMessage();
+            if (message.matches(".* \\(.*\\)")) { //txt_b50eb6b0-f0a4-11e3-b72e-005056827e52_0001.txt (No such file or directory) -> No such file or directory
+                //rozdělit mezerou levou závorkou, vzít část napravo a odstranit pravou závorku na konec
+                message = message.split(" \\(")[1].replaceAll("\\)$", "");
+            }
+            throw new HashComputationException(file, message);
         } finally {
             if (fis != null) {
                 try {
