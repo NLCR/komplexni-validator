@@ -85,15 +85,25 @@ public class VfCheckPrimaryMetsPhysicalMapOk extends ValidationFunction {
                 String filePath = String.format("/mets:mets/mets:fileSec/mets:fileGrp[@ID='%s']/mets:file", filegroupId);
                 NodeList fileEls = (NodeList) engine.buildXpath(filePath).evaluate(doc, XPathConstants.NODESET);
                 if (fileEls == null || fileEls.getLength() == 0) {
-                    result.addError(Level.WARNING, primaryMetsFile, "nenalezeny elementy %s", filePath);
+                    //result.addError(Level.WARNING, primaryMetsFile, "nenalezeny elementy %s", filePath);
+                    result.addError(new ValidationProblem(Level.WARNING, String.format("nenalezeny elementy %s", filePath))
+                            .withFile(primaryMetsFile)
+                            .withSimpleMessage("nenalezeny elementy fileGrp")
+                            .withElementSpec(filePath)
+                    );
                 } else {
                     Set<String> fileIds = new HashSet<>();
                     for (int i = 0; i < fileEls.getLength(); i++) {
                         Element fileEl = (Element) fileEls.item(i);
                         String fileId = fileEl.getAttribute("ID");
                         if (fileId.isEmpty()) {
-                            result.addError(Level.WARNING, primaryMetsFile, "některý z elementů %s má chybějící/prázdný atribut ID",
-                                    filePath);
+                            /*result.addError(Level.WARNING, primaryMetsFile, "některý z elementů %s má chybějící/prázdný atribut ID",
+                                    filePath);*/
+                            result.addError(new ValidationProblem(Level.WARNING, String.format("některý z elementů %s má chybějící/prázdný atribut ID", filePath))
+                                    .withFile(primaryMetsFile)
+                                    .withSimpleMessage("některý z elementů file má chybějící/prázdný atribut ID")
+                                    .withElementSpec(filePath)
+                            );
                         } else {
                             fileIds.add(fileId);
                         }
@@ -105,68 +115,117 @@ public class VfCheckPrimaryMetsPhysicalMapOk extends ValidationFunction {
             String structMapXpath = "/mets:mets/mets:structMap[@TYPE='PHYSICAL']";
             Element structMapEl = (Element) engine.buildXpath(structMapXpath).evaluate(doc, XPathConstants.NODE);
             if (structMapEl == null) {
-                result.addError(Level.ERROR, primaryMetsFile, "chybí fyzická strukturální mapa (%s)", structMapXpath);
+                //result.addError(Level.ERROR, primaryMetsFile, "chybí fyzická strukturální mapa (%s)", structMapXpath);
+                result.addError(new ValidationProblem(Level.ERROR, String.format("chybí fyzická strukturální mapa (%s)", structMapXpath))
+                        .withFile(primaryMetsFile)
+                        .withSimpleMessage("chybí fyzická strukturální mapa")
+                        .withElementSpec(structMapXpath)
+                );
             } else {
                 //top-level div
                 String topLevelDivPath = expectedTopLevelDivType == null ? "mets:div[@TYPE]" : String.format("mets:div[@TYPE='%s']", expectedTopLevelDivType);
                 Element topLevelDivEl = (Element) engine.buildXpath(topLevelDivPath).evaluate(structMapEl, XPathConstants.NODE);
                 if (topLevelDivEl == null) {
-                    result.addError(Level.ERROR, primaryMetsFile,
-                            "fyzická strukturální mapa neobsahuje element %s", topLevelDivPath);
+                    //result.addError(Level.ERROR, primaryMetsFile, "fyzická strukturální mapa neobsahuje element %s", topLevelDivPath);
+                    result.addError(new ValidationProblem(Level.ERROR, String.format("fyzická strukturální mapa neobsahuje element %s", topLevelDivPath))
+                            .withFile(primaryMetsFile)
+                            .withSimpleMessage("fyzická strukturální mapa neobsahuje požadovaný element div")
+                            .withElementSpec(topLevelDivPath)
+                    );
                 } else {
                     //DMDID
                     String dmdid = topLevelDivEl.getAttribute("DMDID");
                     if (dmdid.isEmpty()) {
-                        result.addError(Level.ERROR, primaryMetsFile, "atribut DMDID chybí, nebo je prázdný");
+                        //result.addError(Level.ERROR, primaryMetsFile, "atribut DMDID chybí, nebo je prázdný");
+                        result.addError(new ValidationProblem(Level.ERROR, "atribut DMDID chybí, nebo je prázdný")
+                                .withFile(primaryMetsFile)
+                                .withSimpleMessage("atribut DMDID chybí, nebo je prázdný")
+                        );
                     } else {
                         String dmdSecPath = String.format("/mets:mets/mets:dmdSec[@ID='%s']", dmdid);
                         Element dmdSecEl = (Element) engine.buildXpath(dmdSecPath).evaluate(doc, XPathConstants.NODE);
                         if (dmdSecEl == null) {
-                            result.addError(Level.ERROR, primaryMetsFile, "fyzická strukturální mapa se odkazuje na neexistující záznam %s", dmdSecPath);
+                            //result.addError(Level.ERROR, primaryMetsFile, "fyzická strukturální mapa se odkazuje na neexistující záznam %s", dmdSecPath);
+                            result.addError(new ValidationProblem(Level.ERROR, String.format("fyzická strukturální mapa se odkazuje na neexistující záznam %s", dmdSecPath))
+                                    .withFile(primaryMetsFile)
+                                    .withSimpleMessage("fyzická strukturální mapa se odkazuje na neexistující záznam dmdSec")
+                                    .withElementSpec(dmdSecPath)
+                            );
                         }
                     }
                     //page divs
                     NodeList pageDivEls = (NodeList) engine.buildXpath("mets:div").evaluate(topLevelDivEl, XPathConstants.NODESET);
                     if (pageDivEls.getLength() == 0) {
-                        result.addError(Level.ERROR, primaryMetsFile, "fyzická strukturální mapa neobsahuje žádný záznam stránky");
+                        //result.addError(Level.ERROR, primaryMetsFile, "fyzická strukturální mapa neobsahuje žádný záznam stránky");
+                        result.addError(new ValidationProblem(Level.ERROR, "fyzická strukturální mapa neobsahuje žádný záznam stránky")
+                                .withFile(primaryMetsFile)
+                                .withSimpleMessage("fyzická strukturální mapa neobsahuje žádný záznam stránky")
+                        );
                     }
                     for (int i = 0; i < pageDivEls.getLength(); i++) {
                         Element pageDivEl = (Element) pageDivEls.item(i);
                         //ID
                         String pageId = pageDivEl.getAttribute("ID");
                         if (pageId.isEmpty()) {
-                            result.addError(Level.ERROR, primaryMetsFile, "některý ze záznamů stránek ve fyzické strukturální mapě má prázdný/chybějící atribut ID", primaryMetsFile.getName());
+                            //result.addError(Level.ERROR, primaryMetsFile, "některý ze záznamů stránek ve fyzické strukturální mapě má prázdný/chybějící atribut ID", primaryMetsFile.getName());
+                            result.addError(new ValidationProblem(Level.ERROR, "některý ze záznamů stránek ve fyzické strukturální mapě má prázdný/chybějící atribut ID")
+                                    .withFile(primaryMetsFile)
+                                    .withSimpleMessage("některý ze záznamů stránek ve fyzické strukturální mapě má prázdný/chybějící atribut ID")
+                            );
                         }
                         //TYPE
                         String pageType = pageDivEl.getAttribute("TYPE");
                         if (pageType.isEmpty()) {
-                            result.addError(Level.ERROR, primaryMetsFile, "záznam stránky %s ve fyzické strukturální mapě má prázdný/chybějící atribut TYPE",
-                                    pageId);
+                            //result.addError(Level.ERROR, primaryMetsFile, "záznam stránky %s ve fyzické strukturální mapě má prázdný/chybějící atribut TYPE",pageId);
+                            result.addError(new ValidationProblem(Level.ERROR, String.format("záznam stránky %s ve fyzické strukturální mapě má prázdný/chybějící atribut TYPE", pageId))
+                                    .withFile(primaryMetsFile)
+                                    .withSimpleMessage("záznam stránky ve fyzické strukturální mapě má prázdný/chybějící atribut TYPE")
+                                    .withReferencedValue("pageId:" + pageId)
+                            );
                         } else {
                             if (!pageTypes.contains(pageType)) {
-                                result.addError(Level.WARNING, primaryMetsFile,
+                                /*result.addError(Level.WARNING, primaryMetsFile,
                                         "záznam stránky %s ve fyzické strukturální mapě: nepovolená hodnota atributu TYPE ('%s')",
-                                        pageId, pageType);
+                                        pageId, pageType);*/
+                                result.addError(new ValidationProblem(Level.WARNING, String.format("záznam stránky %s ve fyzické strukturální mapě: nepovolená hodnota atributu TYPE ('%s')", pageId, pageType))
+                                        .withFile(primaryMetsFile)
+                                        .withSimpleMessage("záznam stránky ve fyzické strukturální mapě: nepovolená hodnota atributu TYPE")
+                                        .withReferencedValue("pageId:" + pageId)
+                                        .withExpectedAndActualValues(null, pageType)
+                                );
                             }
                         }
                         //ORDERLABEL
                         String pageOrderLabel = pageDivEl.getAttribute("ORDERLABEL");
                         if (pageOrderLabel.isEmpty()) {
-                            result.addError(Level.ERROR, primaryMetsFile,
-                                    "záznam stránky %s ve fyzické strukturální mapě má prázdný/chybějící atribut ORDERLABEL", pageId);
+                            //result.addError(Level.ERROR, primaryMetsFile, "záznam stránky %s ve fyzické strukturální mapě má prázdný/chybějící atribut ORDERLABEL", pageId);
+                            result.addError(new ValidationProblem(Level.ERROR, String.format("záznam stránky %s ve fyzické strukturální mapě má prázdný/chybějící atribut ORDERLABEL", pageId))
+                                    .withFile(primaryMetsFile)
+                                    .withSimpleMessage("záznam stránky ve fyzické strukturální mapě má prázdný/chybějící atribut ORDERLABEL")
+                                    .withReferencedValue("pageId:" + pageId)
+                            );
                         }
 
-                        //ORDERLABEL
+                        //ORDER
                         String pageOrder = pageDivEl.getAttribute("ORDER");
                         if (pageOrder.isEmpty()) {
-                            result.addError(Level.ERROR, primaryMetsFile,
-                                    "záznam stránky %s ve fyzické strukturální mapě má prázdný/chybějící atribut ORDER", pageId);
+                            //result.addError(Level.ERROR, primaryMetsFile, "záznam stránky %s ve fyzické strukturální mapě má prázdný/chybějící atribut ORDER", pageId);
+                            result.addError(new ValidationProblem(Level.ERROR, String.format("záznam stránky %s ve fyzické strukturální mapě má prázdný/chybějící atribut ORDER", pageId))
+                                    .withFile(primaryMetsFile)
+                                    .withSimpleMessage("záznam stránky ve fyzické strukturální mapě má prázdný/chybějící atribut ORDER")
+                                    .withReferencedValue("pageId:" + pageId)
+                            );
                         } else {
                             try {
                                 Integer.valueOf(pageOrder);
                             } catch (NumberFormatException e) {
-                                result.addError(Level.ERROR, primaryMetsFile,
-                                        "hodnota atributu ORDER ('%s') v záznamu stránky %s ve fyzické strukturální mapě není číslo", pageOrder, pageId);
+                                //result.addError(Level.ERROR, primaryMetsFile, "hodnota atributu ORDER ('%s') v záznamu stránky %s ve fyzické strukturální mapě není číslo", pageOrder, pageId);
+                                result.addError(new ValidationProblem(Level.ERROR, String.format("hodnota atributu ORDER ('%s') v záznamu stránky %s ve fyzické strukturální mapě není číslo", pageOrder, pageId))
+                                        .withFile(primaryMetsFile)
+                                        .withSimpleMessage("hodnota atributu ORDER v záznamu stránky ve fyzické strukturální mapě není číslo")
+                                        .withReferencedValue("pageId:" + pageId)
+                                        .withExpectedAndActualValues(null, pageOrder)
+                                );
                             }
                         }
 
@@ -184,16 +243,22 @@ public class VfCheckPrimaryMetsPhysicalMapOk extends ValidationFunction {
                                 }
                             }
                             if (!found) {
-                                result.addError(Level.ERROR, primaryMetsFile,
-                                        "nalezen odkaz na neznámý záznam souboru %s v záznamu stránky %s ve fyzické strukturální mapě",
-                                        fptrFileId, pageId);
+                                //result.addError(Level.ERROR, primaryMetsFile, "nalezen odkaz na neznámý záznam souboru %s v záznamu stránky %s ve fyzické strukturální mapě", fptrFileId, pageId);
+                                result.addError(new ValidationProblem(Level.ERROR, String.format("nalezen odkaz na neznámý záznam souboru %s v záznamu stránky %s ve fyzické strukturální mapě", fptrFileId, pageId))
+                                        .withFile(primaryMetsFile)
+                                        .withSimpleMessage("nalezen odkaz na neznámý záznam souboru v záznamu stránky ve fyzické strukturální mapě")
+                                        .withReferencedValue("pageId:" + pageId + ", fileId:" + fptrFileId)
+                                );
                             }
                         }
                         for (String fileGroup : fileIdsByFilegroup.keySet()) {
                             if (!fileGroupsUsed.contains(fileGroup)) {
-                                result.addError(Level.ERROR, primaryMetsFile,
-                                        "pro stránku %s nenalezen žádný odkaz na soubor ze skupiny %s ve fyzické strukturální mapě",
-                                        pageId, fileGroup);
+                                //result.addError(Level.ERROR, primaryMetsFile, "pro stránku %s nenalezen žádný odkaz na soubor ze skupiny %s ve fyzické strukturální mapě", pageId, fileGroup);
+                                result.addError(new ValidationProblem(Level.ERROR, String.format("pro stránku %s nenalezen žádný odkaz na soubor ze skupiny %s ve fyzické strukturální mapě", pageId, fileGroup))
+                                        .withFile(primaryMetsFile)
+                                        .withSimpleMessage("pro stránku nenalezen žádný odkaz na soubor ze specifikované skupiny ve fyzické strukturální mapě")
+                                        .withReferencedValue("pageId:" + pageId + ", fileGroup:" + fileGroup)
+                                );
                             }
                         }
                     }
