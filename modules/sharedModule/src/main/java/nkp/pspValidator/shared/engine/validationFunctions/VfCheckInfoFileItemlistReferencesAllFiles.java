@@ -121,7 +121,8 @@ public class VfCheckInfoFileItemlistReferencesAllFiles extends ValidationFunctio
                     if (!expectedFiles.contains(foundFile)) {
                         result.addError(new ValidationProblem(level, String.format("soubor INFO se odkazuje na neočekávaný soubor: %s", foundFile.getAbsolutePath()))
                                 .withSimpleMessage("soubor INFO se odkazuje na neočekávaný soubor")
-                                .withFile(foundFile)
+                                .withFile(infoFile)
+                                .withReferencedFile(foundFile)
                         );
                     }
                 }
@@ -129,7 +130,8 @@ public class VfCheckInfoFileItemlistReferencesAllFiles extends ValidationFunctio
                     if (!foundFiles.contains(expectedFile)) {
                         result.addError(new ValidationProblem(level, String.format("soubor INFO se neodkazuje na očekávaný soubor: %s", expectedFile.getAbsolutePath()))
                                 .withSimpleMessage("soubor INFO se neodkazuje na očekávaný soubor")
-                                .withFile(expectedFile)
+                                .withFile(infoFile)
+                                .withReferencedFile(expectedFile)
                         );
                     }
                 }
