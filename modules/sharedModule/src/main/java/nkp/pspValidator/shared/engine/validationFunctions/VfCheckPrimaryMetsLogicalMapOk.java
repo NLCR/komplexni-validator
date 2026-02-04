@@ -66,7 +66,12 @@ public class VfCheckPrimaryMetsLogicalMapOk extends ValidationFunction {
             String structMapXpath = "/mets:mets/mets:structMap[@TYPE='LOGICAL']";
             Element structMapEl = (Element) engine.buildXpath(structMapXpath).evaluate(doc, XPathConstants.NODE);
             if (structMapEl == null) {
-                result.addError(Level.ERROR, primaryMetsFile, "chybí logická strukturální mapa (%s)", structMapXpath);
+                //result.addError(Level.ERROR, primaryMetsFile, "chybí logická strukturální mapa (%s)", structMapXpath);
+                result.addError(new ValidationProblem(Level.ERROR, String.format("chybí logická strukturální mapa (%s)", structMapXpath))
+                        .withFile(primaryMetsFile)
+                        .withSimpleMessage("chybí logická strukturální mapa")
+                        .withElementSpec(structMapXpath)
+                );
             } else {
                 checkDivs(primaryMetsFile, doc, structMapEl, structMapXpath, divTypesAllowed, result);
             }
@@ -88,14 +93,30 @@ public class VfCheckPrimaryMetsLogicalMapOk extends ValidationFunction {
             String id = divEl.getAttribute("ID");
             String path = id.isEmpty() ? String.format("%s/mets:div[%d]", parentPath, i) : String.format("%s/mets:div[ID='%s']", parentPath, id);
             if (id.isEmpty()) {
-                result.addError(Level.ERROR, primaryMetsFile, "%s: prázdný/chybějící atribut ID", path);
+                //result.addError(Level.ERROR, primaryMetsFile, "%s: prázdný/chybějící atribut ID", path);
+                result.addError(new ValidationProblem(Level.ERROR, String.format("%s: prázdný/chybějící atribut ID", path))
+                        .withFile(primaryMetsFile)
+                        .withSimpleMessage("prázdný/chybějící atribut ID")
+                        .withElementSpec(path)
+                );
             }
             String type = divEl.getAttribute("TYPE");
             if (type.isEmpty()) {
-                result.addError(Level.ERROR, primaryMetsFile, "%s: prázdný/chybějící atribut TYPE", path);
+                //result.addError(Level.ERROR, primaryMetsFile, "%s: prázdný/chybějící atribut TYPE", path);
+                result.addError(new ValidationProblem(Level.ERROR, String.format("%s: prázdný/chybějící atribut TYPE", path))
+                        .withFile(primaryMetsFile)
+                        .withSimpleMessage("prázdný/chybějící atribut TYPE")
+                        .withElementSpec(path)
+                );
             } else {
                 if (!divTypesAllowed.contains(type)) {
-                    result.addError(Level.ERROR, primaryMetsFile, "%s: nepovolená hodnota atributu TYPE: '%s'", path, type);
+                    //result.addError(Level.ERROR, primaryMetsFile, "%s: nepovolená hodnota atributu TYPE: '%s'", path, type);
+                    result.addError(new ValidationProblem(Level.ERROR, String.format("%s: nepovolená hodnota atributu TYPE: '%s'", path, type))
+                            .withFile(primaryMetsFile)
+                            .withSimpleMessage("nepovolená hodnota atributu TYPE")
+                            .withElementSpec(path)
+                            .withExpectedAndActualValues(null, type)
+                    );
                 }
             }
 
@@ -105,7 +126,13 @@ public class VfCheckPrimaryMetsLogicalMapOk extends ValidationFunction {
                 String dmdSecPath = String.format("/mets:mets/mets:dmdSec[@ID='%s']", dmdid);
                 Element dmdSecEl = (Element) engine.buildXpath(dmdSecPath).evaluate(doc, XPathConstants.NODE);
                 if (dmdSecEl == null) {
-                    result.addError(Level.ERROR, primaryMetsFile, "%s: odkaz na neexistující metadatový záznam %s", path, dmdSecPath);
+                    //result.addError(Level.ERROR, primaryMetsFile, "%s: odkaz na neexistující metadatový záznam %s", path, dmdSecPath);
+                    result.addError(new ValidationProblem(Level.ERROR, String.format("%s: odkaz na neexistující metadatový záznam %s", path, dmdSecPath))
+                            .withFile(primaryMetsFile)
+                            .withSimpleMessage("odkaz na neexistující metadatový záznam")
+                            .withElementSpec(path)
+                            .withReferencedValue(dmdid)
+                    );
                 }
             }
 
