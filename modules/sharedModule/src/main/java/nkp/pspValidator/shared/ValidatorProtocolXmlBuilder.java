@@ -131,6 +131,18 @@ public class ValidatorProtocolXmlBuilder {
         if (error.getReferencedValue() != null) {
             problemEl.setAttribute("referencedValue", error.getReferencedValue());
         }
+        if (error.getParentElementSpec() != null) {
+            problemEl.setAttribute("parentElementSpec", error.getParentElementSpec());
+        }
+        if (error.getAttributeSpec() != null) {
+            problemEl.setAttribute("attributeSpec", error.getAttributeSpec());
+        }
+        if (error.getLabel() != null) {
+            problemEl.setAttribute("label", error.getLabel());
+        }
+        if (error.getElementSpec() != null) {
+            problemEl.setAttribute("elementSpec", error.getElementSpec());
+        }
     }
 
     private String toPackageRelativePath(String packagePath, File file) {

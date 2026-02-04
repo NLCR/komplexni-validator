@@ -4,6 +4,7 @@ import nkp.pspValidator.shared.XmlUtils;
 import nkp.pspValidator.shared.engine.Level;
 import nkp.pspValidator.shared.engine.XmlManager;
 import nkp.pspValidator.shared.engine.exceptions.InvalidXPathExpressionException;
+import nkp.pspValidator.shared.engine.validationFunctions.ValidationProblem;
 import nkp.pspValidator.shared.engine.validationFunctions.ValidationResult;
 import org.w3c.dom.*;
 
@@ -11,6 +12,7 @@ import javax.xml.xpath.XPathConstants;
 import javax.xml.xpath.XPathExpression;
 import javax.xml.xpath.XPathExpressionException;
 import java.io.File;
+import java.sql.SQLOutput;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -31,9 +33,21 @@ public class MetadataProfileValidator {
         XPathExpression rootElXpathExpr = manager.buildXpath(rootElXpath);
         NodeList biblioRootEls = (NodeList) rootElXpathExpr.evaluate(doc.getDocumentElement(), XPathConstants.NODESET);
         if (biblioRootEls.getLength() == 0) {
-            result.addError(Level.ERROR, metadataFile, ErrorMessage.from(errorLabel, "nenalezen kořenový element %s:%s", rootElDef.getElementNameNsPrefix(), rootElDef.getElementName()).build());
+            //result.addError(Level.ERROR, metadataFile, ErrorMessage.from(errorLabel, "nenalezen kořenový element %s:%s", rootElDef.getElementNameNsPrefix(), rootElDef.getElementName()).build());
+            result.addError(new ValidationProblem(Level.ERROR, String.format("nenalezen kořenový element %s:%s", rootElDef.getElementNameNsPrefix(), rootElDef.getElementName()))
+                    .withFile(metadataFile)
+                    .withSimpleMessage("nenalezen kořenový element")
+                    .withLabel(errorLabel)
+                    .withElementSpec(rootElDef.buildRelativeXpath())
+            );
         } else if (biblioRootEls.getLength() > 1) {
-            result.addError(Level.ERROR, metadataFile, ErrorMessage.from(errorLabel, "nalezeno více kořenových elementů %s:%s", rootElDef.getElementNameNsPrefix(), rootElDef.getElementName()).build());
+            //result.addError(Level.ERROR, metadataFile, ErrorMessage.from(errorLabel, "nalezeno více kořenových elementů %s:%s", rootElDef.getElementNameNsPrefix(), rootElDef.getElementName()).build());
+            result.addError(new ValidationProblem(Level.ERROR, String.format("nalezeno více kořenových elementů %s:%s", rootElDef.getElementNameNsPrefix(), rootElDef.getElementName()))
+                    .withFile(metadataFile)
+                    .withSimpleMessage("nalezeno více kořenových elementů")
+                    .withLabel(errorLabel)
+                    .withElementSpec(rootElDef.buildRelativeXpath())
+            );
         } else { //continue - single root element
             Element biblioRootEl = (Element) biblioRootEls.item(0);
             checkElement(manager, metadataFile, result, biblioRootEl, rootElDef, null, null, errorLabel);
@@ -52,13 +66,25 @@ public class MetadataProfileValidator {
             String content = XmlUtils.getDirectTextContent(element);
             CheckingResult checkingResult = definition.getExpectedContentDefinition().checkAgainst(content);
             if (!checkingResult.matches()) {
-                result.addError(Level.ERROR, metadataFile, ErrorMessage.from(errorLabel, "%s: %s", thisElementPath, checkingResult.getErrorMessage()).build());
+                //result.faddError(Level.ERROR, metadataFile, ErrorMessage.from(errorLabel, "%s: %s", thisElementPath, checkingResult.getErrorMessage()).build());
+                result.addError(new ValidationProblem(Level.ERROR, String.format("%s: %s", thisElementPath, checkingResult.getErrorMessage()))
+                        .withFile(metadataFile)
+                        .withSimpleMessage(checkingResult.getErrorMessage())
+                        .withLabel(errorLabel)
+                        .withElementSpec(thisElementPath)
+                );
             }
         } else if (definition.getRecommendedContentDefinition() != null) {//recommended content
             String content = XmlUtils.getDirectTextContent(element);
             CheckingResult checkingResult = definition.getRecommendedContentDefinition().checkAgainst(content);
             if (!checkingResult.matches()) {
-                result.addError(Level.WARNING, metadataFile, ErrorMessage.from(errorLabel, "%s: %s", thisElementPath, checkingResult.getErrorMessage()).build());
+                //result.addError(Level.WARNING, metadataFile, ErrorMessage.from(errorLabel, "%s: %s", thisElementPath, checkingResult.getErrorMessage()).build());
+                result.addError(new ValidationProblem(Level.WARNING, String.format("%s: %s", thisElementPath, checkingResult.getErrorMessage()))
+                        .withFile(metadataFile)
+                        .withSimpleMessage(checkingResult.getErrorMessage())
+                        .withLabel(errorLabel)
+                        .withElementSpec(thisElementPath)
+                );
             }
         }
         //check element's extra rules
@@ -69,7 +95,13 @@ public class MetadataProfileValidator {
         for (ExtraRule rule : extraRules) {
             CheckingResult checkingResult = rule.checkAgainst(manager, currentElement);
             if (!checkingResult.matches()) {
-                result.addError(Level.ERROR, metadataFile, ErrorMessage.from(errorLabel, "%s: %s", currentElementPath, checkingResult.getErrorMessage()).build());
+                //result.addError(Level.ERROR, metadataFile, ErrorMessage.from(errorLabel, "%s: %s", currentElementPath, checkingResult.getErrorMessage()).build());
+                result.addError(new ValidationProblem(Level.ERROR, String.format("%s: %s", currentElementPath, checkingResult.getErrorMessage()))
+                        .withFile(metadataFile)
+                        .withSimpleMessage(checkingResult.getErrorMessage())
+                        .withLabel(errorLabel)
+                        .withElementSpec(currentElementPath)
+                );
             }
         }
     }
@@ -93,9 +125,25 @@ public class MetadataProfileValidator {
             //defined attribute not found
             if (!found) {
                 if (attrDef.isMandatory()) { //ERROR if mandatory
-                    result.addError(Level.ERROR, metadataFile, ErrorMessage.from(errorLabel, "%s: nenalezen povinný atribut '%s'", parentElementPath, attrDef.getAttributeName()).build());
+                    //result.addError(Level.ERROR, metadataFile, ErrorMessage.from(errorLabel, "%s: nenalezen povinný atribut '%s'", parentElementPath, attrDef.getAttributeName()).build());
+                    result.addError(new ValidationProblem(Level.ERROR, String.format("%s: nenalezen povinný atribut '%s',", parentElementPath, attrDef.getAttributeName()))
+                            .withFile(metadataFile)
+                            .withSimpleMessage("nenalezen povinný atribut")
+                            .withLabel(errorLabel)
+                            .withParentElementPath(parentElementPath)
+                            .withAttributeSpec(attrDef.getAttributeName())
+                    );
+
+
                 } else { //INFO if not mandatory
-                    result.addError(Level.INFO, metadataFile, ErrorMessage.from(errorLabel, "%s: nenalezen doporučený atribut '%s'", parentElementPath, attrDef.getAttributeName()).build());
+                    //result.addError(Level.INFO, metadataFile, ErrorMessage.from(errorLabel, "%s: nenalezen doporučený atribut '%s'", parentElementPath, attrDef.getAttributeName()).build());
+                    result.addError(new ValidationProblem(Level.INFO, String.format("%s: nenalezen doporučený atribut '%s',", parentElementPath, attrDef.getAttributeName()))
+                            .withFile(metadataFile)
+                            .withSimpleMessage("nenalezen doporučený atribut")
+                            .withLabel(errorLabel)
+                            .withParentElementPath(parentElementPath)
+                            .withAttributeSpec(attrDef.getAttributeName())
+                    );
                 }
             }
         }
@@ -109,7 +157,14 @@ public class MetadataProfileValidator {
                         &&
                         !ignoreUnexpectedAttributes //and if not ignoring unexpected attributes
                 ) {
-                    result.addError(Level.WARNING, metadataFile, ErrorMessage.from(errorLabel, "%s: nalezen neočekávaný atribut '%s'", parentElementPath, attr.getName()).build());
+                    //result.addError(Level.WARNING, metadataFile, ErrorMessage.from(errorLabel, "%s: nalezen neočekávaný atribut '%s'", parentElementPath, attr.getName()).build());
+                    result.addError(new ValidationProblem(Level.WARNING, String.format("%s: nalezen neočekávaný atribut '%s'", parentElementPath, attr.getName()))
+                            .withFile(metadataFile)
+                            .withSimpleMessage("nalezen neočekávaný atribut")
+                            .withLabel(errorLabel)
+                            .withParentElementPath(parentElementPath)
+                            .withAttributeSpec(attr.getName())
+                    );
                 }
             }
         }
@@ -121,12 +176,26 @@ public class MetadataProfileValidator {
         if (attrExpectedContent != null) {
             CheckingResult checkingResult = attrExpectedContent.checkAgainst(attrValue);
             if (!checkingResult.matches()) {
-                result.addError(Level.ERROR, metadataFile, ErrorMessage.from(errorLabel, "%s/@%s: %s", parentElementPath, attrName, checkingResult.getErrorMessage()).build());
+                //result.addError(Level.ERROR, metadataFile, ErrorMessage.from(errorLabel, "%s/@%s: %s", parentElementPath, attrName, checkingResult.getErrorMessage()).build());
+                result.addError(new ValidationProblem(Level.ERROR, String.format("%s/@%s: %s", parentElementPath, attrName, checkingResult.getErrorMessage()))
+                        .withFile(metadataFile)
+                        .withSimpleMessage(checkingResult.getErrorMessage())
+                        .withLabel(errorLabel)
+                        .withParentElementPath(parentElementPath)
+                        .withAttributeSpec(attrName)
+                );
             }
         } else if (attrRecommendedContent != null) {
             CheckingResult checkingResult = attrRecommendedContent.checkAgainst(attrValue);
             if (!checkingResult.matches()) {
-                result.addError(Level.WARNING, metadataFile, ErrorMessage.from(errorLabel, "%s/@%s: %s", parentElementPath, attrName, checkingResult.getErrorMessage()).build());
+                //result.addError(Level.WARNING, metadataFile, ErrorMessage.from(errorLabel, "%s/@%s: %s", parentElementPath, attrName, checkingResult.getErrorMessage()).build());
+                result.addError(new ValidationProblem(Level.WARNING, String.format("%s/@%s: %s", parentElementPath, attrName, checkingResult.getErrorMessage()))
+                        .withFile(metadataFile)
+                        .withSimpleMessage(checkingResult.getErrorMessage())
+                        .withLabel(errorLabel)
+                        .withParentElementPath(parentElementPath)
+                        .withAttributeSpec(attrName)
+                );
             }
         }
     }
@@ -155,7 +224,15 @@ public class MetadataProfileValidator {
                 Element foundElementByXpath = (Element) foundElementsByXpath.item(i);
                 if (childrenRemaining.contains(foundElementByXpath)) { //i.e. actual element has not yet been consumed by another xpath
                     if (!elDef.isRepeatable() && found) {
-                        result.addError(Level.ERROR, metadataFile, ErrorMessage.from(errorLabel, "%s: nalezeno více výskytů neopakovatelného elementu '%s'", parentElementPath, elDef.buildRelativeXpath()).build());
+                        String elementSpec = elDef.buildRelativeXpath();
+                        //result.addError(Level.ERROR, metadataFile, ErrorMessage.from(errorLabel, "%s: nalezeno více výskytů neopakovatelného elementu '%s'", parentElementPath, elementSpec).build());
+                        result.addError(new ValidationProblem(Level.ERROR, String.format("%s: nalezeno více výskytů neopakovatelného elementu '%s'", parentElementPath, elementSpec))
+                                .withFile(metadataFile)
+                                .withSimpleMessage("nalezeno více výskytů neopakovatelného elementu")
+                                .withLabel(errorLabel)
+                                .withParentElementPath(parentElementPath)
+                                .withElementSpec(elementSpec)
+                        );
                         childrenRemaining.remove(foundElementByXpath); //consume
                     } else {
                         found = true;
@@ -165,35 +242,78 @@ public class MetadataProfileValidator {
                     }
                 } else {
                     if (!found) { //element not found
+                        String elementSpec = elDef.buildRelativeXpath();
                         if (elDef.isMandatory()) { //ERROR if mandatory
-                            result.addError(Level.ERROR, metadataFile, ErrorMessage.from(errorLabel, "%s: nenalezen očekávaný povinný element '%s'", parentElementPath, elDef.buildRelativeXpath())
+                            /*result.addError(Level.ERROR, metadataFile, ErrorMessage.from(errorLabel, "%s: nenalezen očekávaný povinný element '%s'", parentElementPath, elementSpec)
                                     .withCustomMessage(elDef.getErrorMessage())
-                                    .build());
+                                    .build());*/
+                            result.addError(new ValidationProblem(Level.ERROR, String.format("%s: nenalezen očekávaný povinný element '%s'", parentElementPath, elementSpec))
+                                    .withFile(metadataFile)
+                                    .withSimpleMessage("nenalezen očekávaný povinný element")
+                                    .withLabel(errorLabel)
+                                    .withParentElementPath(parentElementPath)
+                                    .withElementSpec(elementSpec)
+                            );
+
                         } else { //INFO if not mandatory
-                            result.addError(Level.INFO, metadataFile, ErrorMessage.from(errorLabel, "%s: nenalezen očekávaný doporučený element '%s'", parentElementPath, elDef.buildRelativeXpath())
+                            /*result.addError(Level.INFO, metadataFile, ErrorMessage.from(errorLabel, "%s: nenalezen očekávaný doporučený element '%s'", parentElementPath, elementSpec)
                                     .withCustomMessage(elDef.getErrorMessage())
-                                    .build());
+                                    .build());*/
+                            result.addError(new ValidationProblem(Level.INFO, String.format("%s: nenalezen očekávaný doporučený element '%s'", parentElementPath, elementSpec))
+                                    .withFile(metadataFile)
+                                    .withSimpleMessage("nenalezen očekávaný doporučený element")
+                                    .withLabel(errorLabel)
+                                    .withParentElementPath(parentElementPath)
+                                    .withElementSpec(elementSpec)
+                            );
                         }
                     }
                 }
             }
             if (foundElementsByXpath.getLength() == 0) { //element not found
+                String elementSpec = elDef.buildRelativeXpath();
                 if (elDef.isMandatory()) { //ERROR if mandatory
-                    result.addError(Level.ERROR, metadataFile, ErrorMessage.from(errorLabel, "%s: nenalezen očekávaný povinný element '%s'", parentElementPath, elDef.buildRelativeXpath())
+                    /*result.addError(Level.ERROR, metadataFile, ErrorMessage.from(errorLabel, "%s: nenalezen očekávaný povinný element '%s'", parentElementPath, elementSpec)
                             .withCustomMessage(elDef.getErrorMessage())
-                            .build());
+                            .build());*/
+                    result.addError(new ValidationProblem(Level.ERROR, String.format("%s: nenalezen očekávaný povinný element '%s'", parentElementPath, elementSpec))
+                            .withFile(metadataFile)
+                            .withSimpleMessage("nenalezen očekávaný povinný element")
+                            .withLabel(errorLabel)
+                            .withParentElementPath(parentElementPath)
+                            .withElementSpec(elementSpec)
+                    );
+
                 } else { //INFO if not mandatory
-                    result.addError(Level.INFO, metadataFile, ErrorMessage.from(errorLabel, "%s: nenalezen očekávaný doporučený element '%s'", parentElementPath, elDef.buildRelativeXpath())
+                    /*result.addError(Level.INFO, metadataFile, ErrorMessage.from(errorLabel, "%s: nenalezen očekávaný doporučený element '%s'", parentElementPath, elementSpec)
                             .withCustomMessage(elDef.getErrorMessage())
-                            .build());
+                            .build());*/
+                    result.addError(new ValidationProblem(Level.INFO, String.format("%s: nenalezen očekávaný doporučený element '%s'", parentElementPath, elementSpec))
+                            .withFile(metadataFile)
+                            .withSimpleMessage("nenalezen očekávaný doporučený element")
+                            .withLabel(errorLabel)
+                            .withParentElementPath(parentElementPath)
+                            .withElementSpec(elementSpec)
+                    );
                 }
             }
         }
         //unexpected element, warning
         for (Element element : childrenRemaining) {
             if (!ignoreUnexpectedElements) {
+                String attributeSpec = buildAttributeList(element);
+                String elementSpec = element.getTagName();
+                /*System.out.println("attribute list: " + elementSpec);
                 result.addError(Level.WARNING, metadataFile, ErrorMessage.from(errorLabel, "%s: nalezen neočekávaný element '%s' %s", parentElementPath, element.getTagName(), buildAttributeList(element))
-                        .build());
+                        .build());*/
+                result.addError(new ValidationProblem(Level.WARNING, String.format("%s: nalezen neočekávaný element '%s' %s", parentElementPath, elementSpec, attributeSpec))
+                        .withFile(metadataFile)
+                        .withSimpleMessage("nalezen neočekávaný element")
+                        .withLabel(errorLabel)
+                        .withParentElementPath(parentElementPath)
+                        .withElementSpec(elementSpec)
+                        .withAttributeSpec(attributeSpec)
+                );
             }
         }
     }
