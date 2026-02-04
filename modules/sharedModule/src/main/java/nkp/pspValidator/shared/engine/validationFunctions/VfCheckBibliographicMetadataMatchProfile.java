@@ -281,10 +281,22 @@ public class VfCheckBibliographicMetadataMatchProfile extends ValidationFunction
             validator.validate(source);
             return true;
         } catch (SAXException e) {
-            result.addError(invalid(Level.ERROR, metsFile, "záznam %s není validní podle  %s: %s", dmdSecId, xsdFile.getName(), e.getMessage()));
+            result.addError(
+                    //invalid(Level.ERROR, metsFile, "záznam %s není validní podle  %s: %s", dmdSecId, xsdFile.getName(), e.getMessage())
+                    new ValidationProblem(Level.ERROR, String.format("záznam %s není validní podle  %s: %s", dmdSecId, xsdFile.getName(), e.getMessage()))
+                            .withSimpleMessage("není validní podle XSD: " + e.getMessage())
+                            .withFile(metsFile)
+                            .withLabel(dmdSecId)
+            );
             return false;
         } catch (IOException e) {
-            result.addError(invalid(Level.ERROR, metsFile, "I/O chyba při čtení záznamu %s: %s", dmdSecId, e.getMessage()));
+            result.addError(
+                    //invalid(Level.ERROR, metsFile, "I/O chyba při čtení záznamu %s: %s", dmdSecId, e.getMessage())
+                    new ValidationProblem(Level.ERROR, String.format("I/O chyba při čtení záznamu %s: %s", dmdSecId, e.getMessage()))
+                            .withSimpleMessage("I/O chyba při čtení záznamu: " + e.getMessage())
+                            .withFile(metsFile)
+                            .withLabel(dmdSecId)
+            );
             return false;
         }
     }
