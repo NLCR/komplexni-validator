@@ -25,10 +25,8 @@ import java.util.Map;
  */
 public class ValidatorProtocolXmlBuilder {
 
-    public void buildXmlOutput(File packageFile, File xmlOutputFile, ValidationState protocol) {
+    public void buildXmlOutput(File xmlOutputFile, ValidationState protocol) {
         try {
-            //TODO: add package id, or filename
-            //TODO: fdmf version used
             DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
             DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
             Document doc = dBuilder.newDocument();
@@ -41,6 +39,16 @@ public class ValidatorProtocolXmlBuilder {
             validatorEl.setAttribute("version", Version.VERSION_CODE);
             validatorEl.setAttribute("buildDate", Version.BUILD_DATE);
 
+            Element fDmfEl = doc.createElement("fdmf");
+            protocolEl.appendChild(fDmfEl);
+            fDmfEl.setAttribute("type", protocol.getDmfUsed().getType().toString());
+            fDmfEl.setAttribute("version", protocol.getDmfUsed().getVersion());
+
+            Element packageEl = doc.createElement("package");
+            protocolEl.appendChild(packageEl);
+            packageEl.setAttribute("fileName", protocol.getPackageFile().getName());
+            packageEl.setAttribute("parentDir", protocol.getPackageFile().getParentFile().getAbsolutePath());
+
             Long duration = protocol.getGlobalFinishTime() - protocol.getGlobalStartTime();
             Date startDate = new Date(protocol.getGlobalStartTime());
             Date finishDAte = new Date(protocol.getGlobalFinishTime());
@@ -49,7 +57,7 @@ public class ValidatorProtocolXmlBuilder {
             Element summaryEl = buildSummaryEl(doc, duration, startDate, finishDAte, protocol.getGlobalProblemsTotal(), protocol.getGlobalProblemsByLevel(), verdict);
             protocolEl.appendChild(summaryEl);
 
-            String packageParentPath = packageFile.getParentFile().getAbsolutePath();
+            String packageParentPath = protocol.getPackageFile().getParentFile().getAbsolutePath();
 
             Element sectionsEl = doc.createElement("sections");
             protocolEl.appendChild(sectionsEl);

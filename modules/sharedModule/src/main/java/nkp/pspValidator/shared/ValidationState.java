@@ -6,6 +6,7 @@ import nkp.pspValidator.shared.engine.RulesSection;
 import nkp.pspValidator.shared.engine.validationFunctions.ValidationProblem;
 import nkp.pspValidator.shared.engine.validationFunctions.ValidationResult;
 
+import java.io.File;
 import java.util.*;
 
 /**
@@ -17,6 +18,8 @@ public class ValidationState {
 
     private final ProgressListener progressListener;
 
+    private File packageFile;
+    private Dmf dmfUsed;
     //times for durations
     private long globalStartTime;
     private long globalFinishTime;
@@ -315,6 +318,22 @@ public class ValidationState {
 
     public boolean sectionWasExecuted(RulesSection section) {
         return sectionsProcessed.contains(section.getId());
+    }
+
+    public void setPackageFile(File packageFile) {
+        this.packageFile = packageFile;
+    }
+
+    public File getPackageFile() {
+        return packageFile;
+    }
+
+    public Dmf getDmfUsed() {
+        return dmfUsed;
+    }
+
+    public void setDmfUsed(Dmf dmfUsed) {
+        this.dmfUsed = dmfUsed;
     }
 
 
