@@ -72,7 +72,10 @@ public class VfCheckAllFileListsHaveSameSize extends ValidationFunction {
                 size = list.size();
             } else {
                 if (size != list.size()) {
-                    result.addError(invalid(Level.ERROR, "nalezeny různé velikosti seznamů souborů, např. %d a %d", size, list.size()));
+                    result.addError(new ValidationProblem(Level.WARNING, String.format("nalezeny různé velikosti seznamů souborů, např. %d a %d", size, list.size()))
+                            .withSimpleMessage("nalezeny různé velikosti seznamů souborů")
+                            .withExpectedAndActualValues(null, String.format("např. %d a %d", size, list.size()))
+                    );
                 }
             }
         }
