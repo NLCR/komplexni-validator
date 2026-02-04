@@ -39,7 +39,7 @@ public class Validator {
             DevParams devParams,
             Set<String> skippedSections,
             ValidationState.ProgressListener progressListener,
-            ValidationState.ProgressController progressController) {
+            ValidationState.ProgressController progressController, Dmf dmfUsed) {
         switch (verbosity) {
             case 3:
                 //vsechno, vcetne sekci a pravidel bez chyb
@@ -48,7 +48,7 @@ public class Validator {
                         true, true, true, true,
                         devParams,
                         skippedSections,
-                        progressListener, progressController);
+                        progressListener, progressController, dmfUsed);
                 break;
             case 2:
                 //jen sekce a pravidla s chybami a popisy jednotlivych chyb (default)
@@ -57,7 +57,7 @@ public class Validator {
                         true, false, true, false,
                         devParams,
                         skippedSections,
-                        progressListener, progressController);
+                        progressListener, progressController, dmfUsed);
                 break;
             case 1:
                 //jen pocty chyb v sekcich s chybami, bez popisu jednotlivych chyb
@@ -66,7 +66,7 @@ public class Validator {
                         true, false, false, false,
                         devParams,
                         skippedSections,
-                        progressListener, progressController);
+                        progressListener, progressController, dmfUsed);
                 break;
             case 0:
                 //jen valid/not valid
@@ -75,7 +75,7 @@ public class Validator {
                         false, false, false, false,
                         devParams,
                         skippedSections,
-                        progressListener, progressController);
+                        progressListener, progressController, dmfUsed);
                 break;
             default:
                 throw new IllegalStateException(String.format("Nepovolená hodnota verbosity: %d. Hodnota musí být v intervalu [0-3]", verbosity));
@@ -90,13 +90,16 @@ public class Validator {
             DevParams devParams,
             Set<String> skippedSections,
             ValidationState.ProgressListener progressListener,
-            ValidationState.ProgressController progressController
-    ) {
+            ValidationState.ProgressController progressController,
+            Dmf dmfUsed) {
         ValidatorProtocolTextBuilder textLogger = new ValidatorProtocolTextBuilder(out);
         boolean sectionsUnlimitted = devParams == null || devParams.getSectionsToRun() == null || devParams.getSectionsToRun().isEmpty();
         boolean noSectionsSkipped = skippedSections == null || skippedSections.isEmpty();
 
         ValidationState state = initState(progressListener);
+        state.setPackageFile(packageFile);
+        state.setDmfUsed(dmfUsed);
+
         List<RulesSection> rulesSections = state.getSections();
         state.reportValidationsStarted();
         if (progressController == null || !progressController.shouldCancel()) {
@@ -128,7 +131,7 @@ public class Validator {
                 textLogger.logPackageSummary(state.getGlobalProblemsTotal(), state.getGlobalProblemsByLevel(), state.isValid());
                 if (xmlOutputFile != null) {
                     textLogger.logXmlExportStarted(xmlOutputFile);
-                    new ValidatorProtocolXmlBuilder().buildXmlOutput(packageFile, xmlOutputFile, state);
+                    new ValidatorProtocolXmlBuilder().buildXmlOutput(xmlOutputFile, state);
                     //TODO: tohle nepatri do textoveho logu
                     textLogger.logXmlExportCreated();
                 }

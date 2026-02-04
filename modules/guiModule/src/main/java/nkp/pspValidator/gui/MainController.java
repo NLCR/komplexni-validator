@@ -205,7 +205,7 @@ public class MainController extends AbstractController implements ValidationStat
                             devParams,
                             toSetOfSkippedSectionNames(skippedManager, dmf),
                             MainController.this,
-                            MainController.this);
+                            MainController.this, dmf);
                     //updateStatus(String.format("Validace balíku %s hotova.", pspDir.getAbsolutePath()));
                 } /*catch (InterruptedException e) {
                     updateStatusFromWorkerThread(String.format("Validace balíku zrušena."), TotalState.STOPPED);
