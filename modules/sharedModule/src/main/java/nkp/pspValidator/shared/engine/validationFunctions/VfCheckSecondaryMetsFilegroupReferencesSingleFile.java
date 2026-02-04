@@ -89,28 +89,53 @@ public class VfCheckSecondaryMetsFilegroupReferencesSingleFile extends Validatio
                 XPathExpression xPathExpression = engine.buildXpath(xpathStr);
                 NodeList nodes = (NodeList) xPathExpression.evaluate(secondaryMetsDoc, XPathConstants.NODESET);
                 //System.err.println("nodes:" + nodes.getLength());
+                String label = String.format("fileSec/fileGrp s ID '%s", filegroupId);
                 if (nodes.getLength() == 0) {
-                    result.addError(Level.ERROR, secondaryMetsFile, "fileSec/fileGrp s ID '%s' neobsahuje element file (sekundární mets %s)",
-                            filegroupId, FileUtils.toLimitedPath(secondaryMetsFile, 1));
+                    /*result.addError(Level.ERROR, secondaryMetsFile, "fileSec/fileGrp s ID '%s' neobsahuje element file (sekundární mets %s)",
+                            filegroupId, FileUtils.toLimitedPath(secondaryMetsFile, 1));*/
+                    result.addError(new ValidationProblem(Level.ERROR, String.format("fileSec/fileGrp s ID '%s' neobsahuje element file (sekundární mets %s)", filegroupId, FileUtils.toLimitedPath(secondaryMetsFile, 1)))
+                            .withSimpleMessage("fileSec/fileGrp neobsahuje element file")
+                            .withLabel(label)
+                            .withReferencedFile(secondaryMetsFile)
+                    );
                 } else if (nodes.getLength() > 1) {
-                    result.addError(Level.ERROR, secondaryMetsFile, "fileSec/fileGrp s ID '%s' obsahuje více elementů file (sekundární mets %s)",
-                            filegroupId, FileUtils.toLimitedPath(secondaryMetsFile, 1));
+                    /*result.addError(Level.ERROR, secondaryMetsFile, "fileSec/fileGrp s ID '%s' obsahuje více elementů file (sekundární mets %s)",
+                            filegroupId, FileUtils.toLimitedPath(secondaryMetsFile, 1));*/
+                    result.addError(new ValidationProblem(Level.ERROR, String.format("fileSec/fileGrp s ID '%s' obsahuje více elementů file (sekundární mets %s)", filegroupId, FileUtils.toLimitedPath(secondaryMetsFile, 1)))
+                            .withSimpleMessage("fileSec/fileGrp obsahuje více elementů file")
+                            .withLabel(label)
+                            .withReferencedValue(FileUtils.toLimitedPath(secondaryMetsFile, 1))
+                    );
                 } else {
                     String path = nodes.item(0).getNodeValue();
                     //System.err.println("path: " + path);
                     File referencedFile = Utils.buildAbsoluteFile(pspRootDir, path);
                     if (!contains(referencedFiles, referencedFile)) {//check if referenced file in candidate files set
-                        result.addError(Level.ERROR, secondaryMetsFile,
+                        /*result.addError(Level.ERROR, secondaryMetsFile,
                                 "fileSec/fileGrp s ID '%s': odkazovaný soubor (%s) není mezi očekávanými soubory (sekundární mets %s)",
-                                filegroupId, path, FileUtils.toLimitedPath(secondaryMetsFile, 1));
+                                filegroupId, path, FileUtils.toLimitedPath(secondaryMetsFile, 1));*/
+                        result.addError(new ValidationProblem(Level.ERROR, String.format("fileSec/fileGrp s ID '%s': odkazovaný soubor (%s) není mezi očekávanými soubory (sekundární mets %s)", filegroupId, path, FileUtils.toLimitedPath(secondaryMetsFile, 1)))
+                                .withSimpleMessage("odkazovaný soubor není mezi očekávanými soubory")
+                                .withLabel(label)
+                                .withFile(secondaryMetsFile)
+                                .withReferencedFile(referencedFile)
+                                .withReferencedValue(path)
+                        );
                         /*for (File r : referencedFiles) {
                             System.err.println("r: " + r.getName());
                         }*/
                     } else {
                         if (!matches(referencedFile, pageId)) { //check if page id matches
-                            result.addError(Level.ERROR, secondaryMetsFile,
+                            /*result.addError(Level.ERROR, secondaryMetsFile,
                                     "fileSec/fileGrp s ID '%s': odkazovaný soubor (%s) nesouhlasí pro stránku %s (sekundární mets %s)",
-                                    filegroupId, FileUtils.toLimitedPath(referencedFile, 1), pageId, FileUtils.toLimitedPath(secondaryMetsFile, 1));
+                                    filegroupId, FileUtils.toLimitedPath(referencedFile, 1), pageId, FileUtils.toLimitedPath(secondaryMetsFile, 1));*/
+                            result.addError(new ValidationProblem(Level.ERROR, String.format("fileSec/fileGrp s ID '%s': odkazovaný soubor (%s) nesouhlasí pro stránku %s (sekundární mets %s)", filegroupId, FileUtils.toLimitedPath(referencedFile, 1), pageId, FileUtils.toLimitedPath(secondaryMetsFile, 1)))
+                                    .withSimpleMessage("odkazovaný soubor nesouhlasí pro stránku")
+                                    .withLabel(label)
+                                    .withFile(secondaryMetsFile)
+                                    .withReferencedFile(referencedFile)
+                                    .withReferencedValue(FileUtils.toLimitedPath(referencedFile, 1))
+                            );
                         }
                     }
                 }
