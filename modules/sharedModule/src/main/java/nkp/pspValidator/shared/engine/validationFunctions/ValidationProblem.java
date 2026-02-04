@@ -27,6 +27,7 @@ public class ValidationProblem {
     private final String parentElementSpec;
     private final String attributeSpec;
     private final String elementSpec;
+    private final String toolName;
 
     public ValidationProblem(Level level, String fullMessage) {
         this.level = level;
@@ -43,11 +44,13 @@ public class ValidationProblem {
         this.parentElementSpec = null;
         this.attributeSpec = null;
         this.elementSpec = null;
+        this.toolName = null;
     }
 
     private ValidationProblem(Level level, String fullMessage, String simpleMessage, File file, File xsdFile,
                               String expectedValue, String actualValue, String pattern, File referencedFile, String referencedValue,
-                              String label, String parentElementSpec, String attributeSpec, String elementSpec) {
+                              String label, String parentElementSpec, String attributeSpec, String elementSpec,
+                              String toolName) {
         this.level = level;
         this.fullMessage = fullMessage;
         this.simpleMessage = simpleMessage;
@@ -62,73 +65,92 @@ public class ValidationProblem {
         this.parentElementSpec = parentElementSpec;
         this.attributeSpec = attributeSpec;
         this.elementSpec = elementSpec;
+        this.toolName = toolName;
     }
 
     public ValidationProblem withSimpleMessage(String simpleMessage) {
         return new ValidationProblem(this.level, this.fullMessage, simpleMessage, this.file, this.xsdFile,
                 this.expectedValue, this.actualValue, this.pattern, this.referencedFile, this.referencedValue,
-                this.label, this.parentElementSpec, this.attributeSpec, this.elementSpec);
+                this.label, this.parentElementSpec, this.attributeSpec, this.elementSpec,
+                this.toolName);
     }
 
     public ValidationProblem withFile(File file) {
         return new ValidationProblem(this.level, this.fullMessage, this.simpleMessage, file, this.xsdFile,
                 this.expectedValue, this.actualValue, this.pattern, this.referencedFile, this.referencedValue,
-                this.label, this.parentElementSpec, this.attributeSpec, this.elementSpec);
+                this.label, this.parentElementSpec, this.attributeSpec, this.elementSpec,
+                this.toolName);
     }
 
     public ValidationProblem withXsdFile(File xsdFile) {
         return new ValidationProblem(this.level, this.fullMessage, this.simpleMessage, this.file, xsdFile,
                 this.expectedValue, this.actualValue, this.pattern, this.referencedFile, this.referencedValue,
-                this.label, this.parentElementSpec, this.attributeSpec, this.elementSpec);
+                this.label, this.parentElementSpec, this.attributeSpec, this.elementSpec,
+                this.toolName);
     }
 
     public ValidationProblem withExpectedAndActualValues(String expectedValue, String actualValue) {
         return new ValidationProblem(this.level, this.fullMessage, this.simpleMessage, this.file, this.xsdFile,
                 expectedValue, actualValue, this.pattern, this.referencedFile, this.referencedValue,
-                this.label, this.parentElementSpec, this.attributeSpec, this.elementSpec);
+                this.label, this.parentElementSpec, this.attributeSpec, this.elementSpec,
+                this.toolName);
     }
 
     public ValidationProblem withPattern(String pattern) {
         return new ValidationProblem(this.level, this.fullMessage, this.simpleMessage, this.file, this.xsdFile,
                 this.expectedValue, this.actualValue, pattern, this.referencedFile, this.referencedValue,
-                this.label, this.parentElementSpec, this.attributeSpec, this.elementSpec);
+                this.label, this.parentElementSpec, this.attributeSpec, this.elementSpec,
+                this.toolName);
     }
 
     public ValidationProblem withReferencedFile(File file) {
         return new ValidationProblem(this.level, this.fullMessage, this.simpleMessage, this.file, this.xsdFile,
                 this.expectedValue, this.actualValue, this.pattern, file, this.referencedValue,
-                this.label, this.parentElementSpec, this.attributeSpec, this.elementSpec);
+                this.label, this.parentElementSpec, this.attributeSpec, this.elementSpec,
+                this.toolName);
     }
 
     public ValidationProblem withReferencedValue(String referencedValue) {
         return new ValidationProblem(this.level, this.fullMessage, this.simpleMessage, this.file, this.xsdFile,
                 this.expectedValue, this.actualValue, this.pattern, this.referencedFile, referencedValue,
-                this.label, this.parentElementSpec, this.attributeSpec, this.elementSpec);
+                this.label, this.parentElementSpec, this.attributeSpec, this.elementSpec,
+                this.toolName);
     }
 
     public ValidationProblem withLabel(String label) {
         return new ValidationProblem(this.level, this.fullMessage, this.simpleMessage, this.file, this.xsdFile,
                 this.expectedValue, this.actualValue, this.pattern, this.referencedFile, this.referencedValue,
-                label, this.parentElementSpec, this.attributeSpec, this.elementSpec);
+                label, this.parentElementSpec, this.attributeSpec, this.elementSpec,
+                this.toolName);
     }
 
     public ValidationProblem withParentElementPath(String parentElementSpec) {
         return new ValidationProblem(this.level, this.fullMessage, this.simpleMessage, this.file, this.xsdFile,
                 this.expectedValue, this.actualValue, this.pattern, this.referencedFile, this.referencedValue,
-                this.label, parentElementSpec, this.attributeSpec, this.elementSpec);
+                this.label, parentElementSpec, this.attributeSpec, this.elementSpec,
+                this.toolName);
     }
 
     public ValidationProblem withAttributeSpec(String attributeSpec) {
         return new ValidationProblem(this.level, this.fullMessage, this.simpleMessage, this.file, this.xsdFile,
                 this.expectedValue, this.actualValue, this.pattern, this.referencedFile, this.referencedValue,
-                this.label, this.parentElementSpec, attributeSpec, this.elementSpec);
+                this.label, this.parentElementSpec, attributeSpec, this.elementSpec,
+                this.toolName);
     }
 
 
     public ValidationProblem withElementSpec(String elementSpec) {
         return new ValidationProblem(this.level, this.fullMessage, this.simpleMessage, this.file, this.xsdFile,
                 this.expectedValue, this.actualValue, this.pattern, this.referencedFile, this.referencedValue,
-                this.label, this.parentElementSpec, this.attributeSpec, elementSpec);
+                this.label, this.parentElementSpec, this.attributeSpec, elementSpec,
+                this.toolName);
+    }
+
+    public ValidationProblem withToolName(String toolName) {
+        return new ValidationProblem(this.level, this.fullMessage, this.simpleMessage, this.file, this.xsdFile,
+                this.expectedValue, this.actualValue, this.pattern, this.referencedFile, this.referencedValue,
+                this.label, this.parentElementSpec, this.attributeSpec, this.elementSpec,
+                toolName);
     }
 
     public Level getLevel() {
@@ -189,4 +211,9 @@ public class ValidationProblem {
     public String getElementSpec() {
         return elementSpec;
     }
+
+    public String getToolName() {
+        return toolName;
+    }
+
 }
