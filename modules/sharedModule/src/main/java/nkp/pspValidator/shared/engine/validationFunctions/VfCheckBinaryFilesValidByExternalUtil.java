@@ -97,26 +97,61 @@ public class VfCheckBinaryFilesValidByExternalUtil extends ValidationFunction {
     private ValidationResult validate(Level level, List<File> files, ResourceType type, ExternalUtilExecution execution) {
         BinaryFileValidator validator = engine.getBinaryFileValidator();
         if (validator.isUtilDisabled(execution.getUtil())) {
-            return singlErrorResult(invalid(Level.INFO, "nástroj %s je vypnutý", execution.getUtil().getUserFriendlyName()));
+            return singlErrorResult(
+                    //invalid(Level.INFO, "nástroj %s je vypnutý", execution.getUtil().getUserFriendlyName())
+                    new ValidationProblem(Level.INFO, String.format("nástroj %s je vypnutý", execution.getUtil().getUserFriendlyName()))
+                            .withSimpleMessage("nástroj je vypnutý")
+                            .withToolName(execution.getUtil().getUserFriendlyName())
+            );
         } else if (!validator.isUtilAvailable(execution.getUtil())) {
-            return singlErrorResult(invalid(Level.INFO, "nástroj %s není dostupný", execution.getUtil().getUserFriendlyName()));
+            return singlErrorResult(
+                    //invalid(Level.INFO, "nástroj %s není dostupný", execution.getUtil().getUserFriendlyName())
+                    new ValidationProblem(Level.INFO, String.format("nástroj %s není dostupný", execution.getUtil().getUserFriendlyName()))
+                            .withSimpleMessage("nástroj není dostupný")
+                            .withToolName(execution.getUtil().getUserFriendlyName())
+            );
         } else if (!validator.isUtilExecutionDefined(execution)) {
-            return singlErrorResult(invalid(Level.INFO, "pro nástroj %s není definováno spuštění '%s'", execution.getUtil().getUserFriendlyName(), execution.getName()));
+            return singlErrorResult(
+                    //invalid(Level.INFO, "pro nástroj %s není definováno spuštění '%s'", execution.getUtil().getUserFriendlyName(), execution.getName())
+                    new ValidationProblem(Level.INFO, String.format("pro nástroj %s není definováno spuštění '%s'", execution.getUtil().getUserFriendlyName(), execution.getName()))
+                            .withSimpleMessage("není definováno spuštění nástroje")
+                            .withToolName(execution.getUtil().getUserFriendlyName())
+                            .withReferencedValue(execution.getName())
+            );
         } else {
             ValidationResult result = new ValidationResult();
             BinaryFileProfile profile = validator.getProfile(type, execution.getUtil());
             if (profile == null) {
-                return singlErrorResult(invalid(Level.ERROR, "nenalezen profil binárního souboru pro typ %s a nástroj %s", type, execution));
+                return singlErrorResult(
+                        //invalid(Level.ERROR, "nenalezen profil binárního souboru pro typ %s a nástroj %s", type, execution)
+                        new ValidationProblem(Level.ERROR, String.format("nenalezen profil binárního souboru pro typ %s a nástroj %s", type, execution))
+                                .withSimpleMessage("nenalezen profil binárního souboru")
+                                .withLabel(type.name())
+                                .withToolName(execution.getUtil().getUserFriendlyName())
+                                .withReferencedValue(execution.getName())
+                );
             }
             for (File file : files) {
                 //System.out.println(String.format("validating (%s): %s", profile, file.getAbsolutePath()));
                 try {
                     List<String> problems = profile.validate(execution.getName(), file);
                     for (String problem : problems) {
-                        result.addError(invalid(level, file, "%s", problem));
+                        result.addError(
+                                //invalid(level, file, "%s", problem)
+                                new ValidationProblem(level, problem)
+                                        .withReferencedFile(file)
+                                        .withSimpleMessage(problem)
+                                        .withToolName(execution.getUtil().getUserFriendlyName())
+                        );
                     }
                 } catch (Exception e) {
-                    result.addError(invalid(Level.ERROR, file, "%s", e.getMessage()));
+                    result.addError(
+                            //invalid(Level.ERROR, file, "%s", e.getMessage())
+                            new ValidationProblem(Level.ERROR, String.format("%s", e.getMessage()))
+                                    .withReferencedFile(file)
+                                    .withSimpleMessage(e.getMessage())
+                                    .withToolName(execution.getUtil().getUserFriendlyName())
+                    );
                     e.printStackTrace();
                 }
                 //break;
