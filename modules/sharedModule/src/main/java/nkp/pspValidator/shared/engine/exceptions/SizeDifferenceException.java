@@ -8,12 +8,29 @@ import java.io.File;
 public class SizeDifferenceException extends Exception {
 
     private final File file;
-    public SizeDifferenceException(String message, File file) {
-        super(message);
+    private final long sizeExpected;
+    private final long sizeActual;
+
+    public SizeDifferenceException(File file, long sizeExpected, long sizeActual) {
+        super(String.format("uvedená velikost (%d B) se liší od zjištěné velikosti (%d B) souboru", sizeExpected, sizeActual));
         this.file = file;
+        this.sizeExpected = sizeExpected;
+        this.sizeActual = sizeActual;
     }
 
     public File getFile() {
         return file;
+    }
+
+    public long getSizeExpected() {
+        return sizeExpected;
+    }
+
+    public long getSizeActual() {
+        return sizeActual;
+    }
+
+    public String getSimpleMessage() {
+        return "uvedná velikost se liší od zjištěné velikosti souboru (v bytech)";
     }
 }
