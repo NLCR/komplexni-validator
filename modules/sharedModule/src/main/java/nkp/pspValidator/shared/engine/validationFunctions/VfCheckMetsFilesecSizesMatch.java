@@ -65,7 +65,12 @@ public class VfCheckMetsFilesecSizesMatch extends ValidationFunction {
                 try {
                     checkFile(pspdir, (Element) fileElements.item(i));
                 } catch (SizeDifferenceException e) {
-                    result.addError(invalid(Level.WARNING, e.getFile(), e.getMessage()));
+                    result.addError(new ValidationProblem(Level.WARNING, e.getMessage())
+                            .withSimpleMessage(e.getSimpleMessage())
+                            .withReferencedFile(e.getFile())
+                            .withFile(metsFile)
+                            .withExpectedAndActualValues(String.valueOf(e.getSizeExpected()), String.valueOf(e.getSizeActual()))
+                    );
                 } catch (Exception e) {
                     result.addError(invalid(e));
                 }
@@ -88,7 +93,7 @@ public class VfCheckMetsFilesecSizesMatch extends ValidationFunction {
         File file = Utils.buildAbsoluteFile(pspdir, filePath);
         long sizeComputed = file.length();
         if (sizeComputed != sizeExpected) {
-            throw new SizeDifferenceException(String.format("uvedená velikost (%d B) se liší od zjištěné velikosti (%d B) souboru", sizeExpected, sizeComputed), file);
+            throw new SizeDifferenceException(file, sizeExpected, sizeComputed);
         }
     }
 
