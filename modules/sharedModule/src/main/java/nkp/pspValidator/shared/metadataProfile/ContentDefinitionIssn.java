@@ -29,6 +29,21 @@ public class ContentDefinitionIssn implements ContentDefinition {
                 public String getErrorMessage() {
                     return "neplatné ISSN: prázdná hodnota";
                 }
+
+                @Override
+                public String getSimpleErrorMessage() {
+                    return "neplatné ISSN: prázdná hodnota";
+                }
+
+                @Override
+                public String getActualValue() {
+                    return null;
+                }
+
+                @Override
+                public String getValueSpecification() {
+                    return REGEXP;
+                }
             };
         }
         if (!valueFound.matches(REGEXP)) {
@@ -37,6 +52,21 @@ public class ContentDefinitionIssn implements ContentDefinition {
                 public String getErrorMessage() {
                     return String.format("neplatné ISSN: '%s' neodpovídá regulárním výrazu '%s'", valueFound, REGEXP);
                 }
+
+                @Override
+                public String getSimpleErrorMessage() {
+                    return "neplatné ISSN: neodpovídá regulárnímu výrazu";
+                }
+
+                @Override
+                public String getActualValue() {
+                    return valueFound;
+                }
+
+                @Override
+                public String getValueSpecification() {
+                    return REGEXP;
+                }
             };
         }
         if (!checksumOk(valueFound)) {
@@ -44,6 +74,21 @@ public class ContentDefinitionIssn implements ContentDefinition {
                 @Override
                 public String getErrorMessage() {
                     return String.format("neplatné ISSN: '%s' nesedí kontrolní součet", valueFound);
+                }
+
+                @Override
+                public String getSimpleErrorMessage() {
+                    return "neplatné ISSN: nesedí kontrolní součet";
+                }
+
+                @Override
+                public String getActualValue() {
+                    return valueFound;
+                }
+
+                @Override
+                public String getValueSpecification() {
+                    return REGEXP;
                 }
             };
         }

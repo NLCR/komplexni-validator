@@ -13,6 +13,21 @@ public class ContentDefinitionAnything implements ContentDefinition {
                 public String getErrorMessage() {
                     return "prázdná hodnota";
                 }
+
+                @Override
+                public String getSimpleErrorMessage() {
+                    return "prázdná hodnota";
+                }
+
+                @Override
+                public String getActualValue() {
+                    return null;
+                }
+
+                @Override
+                public String getValueSpecification() {
+                    return null;
+                }
             };
         } else { //value same
             return new CheckingResultMatch();

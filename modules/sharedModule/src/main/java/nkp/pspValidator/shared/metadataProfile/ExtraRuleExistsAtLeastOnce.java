@@ -39,23 +39,25 @@ public class ExtraRuleExistsAtLeastOnce implements ExtraRule {
                             return String.format("musí být přítomen alespoň jeden výskyt %s. %s", xpath, description);
                         }
                     }
+
+                    @Override
+                    public String getSimpleErrorMessage() {
+                        return description == null ? "musí být přítomen alespoň jeden výskyt" : "musí být přítomen alespoň jeden výskyt (" + description + ")";
+                    }
+
+                    @Override
+                    public String getActualValue() {
+                        return null;
+                    }
+
+                    @Override
+                    public String getValueSpecification() {
+                        return xpath;
+                    }
                 };
             }
-
-        } catch (InvalidXPathExpressionException e) {
-            return new CheckingResultFail() {
-                @Override
-                public String getErrorMessage() {
-                    return e.getMessage();
-                }
-            };
-        } catch (XPathExpressionException e) {
-            return new CheckingResultFail() {
-                @Override
-                public String getErrorMessage() {
-                    return e.getMessage();
-                }
-            };
+        } catch (InvalidXPathExpressionException | XPathExpressionException e) {
+            return new CheckingResultFailByException(e);
         }
     }
 }

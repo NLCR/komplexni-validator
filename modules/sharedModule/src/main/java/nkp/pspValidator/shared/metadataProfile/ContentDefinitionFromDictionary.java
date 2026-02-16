@@ -22,6 +22,21 @@ public class ContentDefinitionFromDictionary implements ContentDefinition {
                 public String getErrorMessage() {
                     return "prázdná hodnota";
                 }
+
+                @Override
+                public String getSimpleErrorMessage() {
+                    return "prázdná hodnota";
+                }
+
+                @Override
+                public String getActualValue() {
+                    return null;
+                }
+
+                @Override
+                public String getValueSpecification() {
+                    return "slovník '" + dictionaryName + "'";
+                }
             };
         } else if (dictionaryValues.contains(valueFound)) {
             return new CheckingResultMatch();
@@ -30,6 +45,21 @@ public class ContentDefinitionFromDictionary implements ContentDefinition {
                 @Override
                 public String getErrorMessage() {
                     return String.format("hodnota '%s' nenalezena v kontrolovaném slovníku '%s'", valueFound, dictionaryName);
+                }
+
+                @Override
+                public String getSimpleErrorMessage() {
+                    return "hodnota nenalezena v kontrolovaném slovníku";
+                }
+
+                @Override
+                public String getActualValue() {
+                    return valueFound;
+                }
+
+                @Override
+                public String getValueSpecification() {
+                    return "slovník '" + dictionaryName + "'";
                 }
             };
         }

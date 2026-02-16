@@ -177,6 +177,9 @@ public class ValidatorProtocolXmlBuilder {
         if (error.getActualValue() != null) {
             problemEl.setAttribute("actualValue", error.getActualValue());
         }
+        if (error.getValueSpec() != null) {
+            problemEl.setAttribute("valueSpec", error.getValueSpec());
+        }
         if (error.getPattern() != null) {
             problemEl.setAttribute("pattern", error.getPattern());
         }

@@ -42,24 +42,27 @@ public class ExtraRuleExistsAtMostOnce implements ExtraRule {
                                     xpath, occurences, content, description);
                         }
                     }
+
+                    @Override
+                    public String getSimpleErrorMessage() {
+                        return description == null ? "povolen nejvýše jeden výskyt" : "povolen nejvýše jeden výskyt (" + description + ")";
+                    }
+
+                    @Override
+                    public String getActualValue() {
+                        return occurences + ":" + nodelistToString(elementsByXpath);
+                    }
+
+                    @Override
+                    public String getValueSpecification() {
+                        return xpath;
+                    }
                 };
             } else {
                 return new CheckingResultMatch();
             }
-        } catch (InvalidXPathExpressionException e) {
-            return new CheckingResultFail() {
-                @Override
-                public String getErrorMessage() {
-                    return e.getMessage();
-                }
-            };
-        } catch (XPathExpressionException e) {
-            return new CheckingResultFail() {
-                @Override
-                public String getErrorMessage() {
-                    return e.getMessage();
-                }
-            };
+        } catch (InvalidXPathExpressionException | XPathExpressionException e) {
+            return new CheckingResultFailByException(e);
         }
     }
 
