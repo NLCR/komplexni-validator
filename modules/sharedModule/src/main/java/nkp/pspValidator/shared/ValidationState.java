@@ -18,7 +18,10 @@ public class ValidationState {
 
     private final ProgressListener progressListener;
 
+    //package
     private File packageFile;
+    private InfoExtractor.InfoData infoData;
+    //dmf
     private Dmf dmfUsed;
     //times for durations
     private long globalStartTime;
@@ -326,6 +329,14 @@ public class ValidationState {
 
     public File getPackageFile() {
         return packageFile;
+    }
+
+    public InfoExtractor.InfoData getInfoData() {
+        return infoData;
+    }
+
+    public void setInfoData(InfoExtractor.InfoData infoData) {
+        this.infoData = infoData;
     }
 
     public Dmf getDmfUsed() {

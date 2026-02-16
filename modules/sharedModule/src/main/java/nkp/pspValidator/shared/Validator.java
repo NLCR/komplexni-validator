@@ -98,6 +98,7 @@ public class Validator {
 
         ValidationState state = initState(progressListener);
         state.setPackageFile(packageFile);
+        state.setInfoData(InfoExtractor.extract(packageFile));
         state.setDmfUsed(dmfUsed);
 
         List<RulesSection> rulesSections = state.getSections();
