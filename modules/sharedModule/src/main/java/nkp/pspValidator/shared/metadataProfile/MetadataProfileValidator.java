@@ -12,7 +12,6 @@ import javax.xml.xpath.XPathConstants;
 import javax.xml.xpath.XPathExpression;
 import javax.xml.xpath.XPathExpressionException;
 import java.io.File;
-import java.sql.SQLOutput;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -67,24 +66,36 @@ public class MetadataProfileValidator {
             CheckingResult checkingResult = definition.getExpectedContentDefinition().checkAgainst(content);
             if (!checkingResult.matches()) {
                 //result.faddError(Level.ERROR, metadataFile, ErrorMessage.from(errorLabel, "%s: %s", thisElementPath, checkingResult.getErrorMessage()).build());
-                result.addError(new ValidationProblem(Level.ERROR, String.format("%s: %s", thisElementPath, checkingResult.getErrorMessage()))
+                ValidationProblem problem = new ValidationProblem(Level.ERROR, String.format("%s: %s", thisElementPath, checkingResult.getErrorMessage()))
                         .withFile(metadataFile)
-                        .withSimpleMessage(checkingResult.getErrorMessage())
+                        .withSimpleMessage(checkingResult.getSimpleErrorMessage())
                         .withLabel(errorLabel)
-                        .withElementSpec(thisElementPath)
-                );
+                        .withElementSpec(thisElementPath);
+                if (checkingResult.getActualValue() != null) {
+                    problem = problem.withActualValue(checkingResult.getActualValue());
+                }
+                if (checkingResult.getValueSpecification() != null) {
+                    problem = problem.withValueSpec(checkingResult.getValueSpecification());
+                }
+                result.addError(problem);
             }
         } else if (definition.getRecommendedContentDefinition() != null) {//recommended content
             String content = XmlUtils.getDirectTextContent(element);
             CheckingResult checkingResult = definition.getRecommendedContentDefinition().checkAgainst(content);
             if (!checkingResult.matches()) {
                 //result.addError(Level.WARNING, metadataFile, ErrorMessage.from(errorLabel, "%s: %s", thisElementPath, checkingResult.getErrorMessage()).build());
-                result.addError(new ValidationProblem(Level.WARNING, String.format("%s: %s", thisElementPath, checkingResult.getErrorMessage()))
+                ValidationProblem problem = new ValidationProblem(Level.WARNING, String.format("%s: %s", thisElementPath, checkingResult.getErrorMessage()))
                         .withFile(metadataFile)
-                        .withSimpleMessage(checkingResult.getErrorMessage())
+                        .withSimpleMessage(checkingResult.getSimpleErrorMessage())
                         .withLabel(errorLabel)
-                        .withElementSpec(thisElementPath)
-                );
+                        .withElementSpec(thisElementPath);
+                if (checkingResult.getActualValue() != null) {
+                    problem = problem.withActualValue(checkingResult.getActualValue());
+                }
+                if (checkingResult.getValueSpecification() != null) {
+                    problem = problem.withValueSpec(checkingResult.getValueSpecification());
+                }
+                result.addError(problem);
             }
         }
         //check element's extra rules
@@ -96,12 +107,18 @@ public class MetadataProfileValidator {
             CheckingResult checkingResult = rule.checkAgainst(manager, currentElement);
             if (!checkingResult.matches()) {
                 //result.addError(Level.ERROR, metadataFile, ErrorMessage.from(errorLabel, "%s: %s", currentElementPath, checkingResult.getErrorMessage()).build());
-                result.addError(new ValidationProblem(Level.ERROR, String.format("%s: %s", currentElementPath, checkingResult.getErrorMessage()))
+                ValidationProblem problem = new ValidationProblem(Level.ERROR, String.format("%s: %s", currentElementPath, checkingResult.getErrorMessage()))
                         .withFile(metadataFile)
-                        .withSimpleMessage(checkingResult.getErrorMessage())
+                        .withSimpleMessage(checkingResult.getSimpleErrorMessage())
                         .withLabel(errorLabel)
-                        .withElementSpec(currentElementPath)
-                );
+                        .withElementSpec(currentElementPath);
+                if (checkingResult.getActualValue() != null) {
+                    problem = problem.withActualValue(checkingResult.getActualValue());
+                }
+                if (checkingResult.getValueSpecification() != null) {
+                    problem = problem.withValueSpec(checkingResult.getValueSpecification());
+                }
+                result.addError(problem);
             }
         }
     }
@@ -177,25 +194,37 @@ public class MetadataProfileValidator {
             CheckingResult checkingResult = attrExpectedContent.checkAgainst(attrValue);
             if (!checkingResult.matches()) {
                 //result.addError(Level.ERROR, metadataFile, ErrorMessage.from(errorLabel, "%s/@%s: %s", parentElementPath, attrName, checkingResult.getErrorMessage()).build());
-                result.addError(new ValidationProblem(Level.ERROR, String.format("%s/@%s: %s", parentElementPath, attrName, checkingResult.getErrorMessage()))
+                ValidationProblem problem = new ValidationProblem(Level.ERROR, String.format("%s/@%s: %s", parentElementPath, attrName, checkingResult.getErrorMessage()))
                         .withFile(metadataFile)
-                        .withSimpleMessage(checkingResult.getErrorMessage())
+                        .withSimpleMessage(checkingResult.getSimpleErrorMessage())
                         .withLabel(errorLabel)
                         .withParentElementPath(parentElementPath)
-                        .withAttributeSpec(attrName)
-                );
+                        .withAttributeSpec(attrName);
+                if (checkingResult.getActualValue() != null) {
+                    problem = problem.withActualValue(checkingResult.getActualValue());
+                }
+                if (checkingResult.getValueSpecification() != null) {
+                    problem = problem.withValueSpec(checkingResult.getValueSpecification());
+                }
+                result.addError(problem);
             }
         } else if (attrRecommendedContent != null) {
             CheckingResult checkingResult = attrRecommendedContent.checkAgainst(attrValue);
             if (!checkingResult.matches()) {
                 //result.addError(Level.WARNING, metadataFile, ErrorMessage.from(errorLabel, "%s/@%s: %s", parentElementPath, attrName, checkingResult.getErrorMessage()).build());
-                result.addError(new ValidationProblem(Level.WARNING, String.format("%s/@%s: %s", parentElementPath, attrName, checkingResult.getErrorMessage()))
+                ValidationProblem problem = new ValidationProblem(Level.WARNING, String.format("%s/@%s: %s", parentElementPath, attrName, checkingResult.getErrorMessage()))
                         .withFile(metadataFile)
-                        .withSimpleMessage(checkingResult.getErrorMessage())
+                        .withSimpleMessage(checkingResult.getSimpleErrorMessage())
                         .withLabel(errorLabel)
                         .withParentElementPath(parentElementPath)
-                        .withAttributeSpec(attrName)
-                );
+                        .withAttributeSpec(attrName);
+                if (checkingResult.getActualValue() != null) {
+                    problem = problem.withActualValue(checkingResult.getActualValue());
+                }
+                if (checkingResult.getValueSpecification() != null) {
+                    problem = problem.withValueSpec(checkingResult.getValueSpecification());
+                }
+                result.addError(problem);
             }
         }
     }

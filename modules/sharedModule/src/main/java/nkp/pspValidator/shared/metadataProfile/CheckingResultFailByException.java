@@ -1,22 +1,25 @@
 package nkp.pspValidator.shared.metadataProfile;
 
-/**
- * Created by Martin Řehánek on 27.1.17.
- */
-public class CheckingResultMatch implements CheckingResult {
-    @Override
-    public boolean matches() {
-        return true;
+public class CheckingResultFailByException implements CheckingResult {
+
+    private final Exception e;
+
+    public CheckingResultFailByException(Exception e) {
+        this.e = e;
     }
 
     @Override
+    public boolean matches() {
+        return false;
+    }
+
     public String getErrorMessage() {
-        return null;
+        return e.getMessage();
     }
 
     @Override
     public String getSimpleErrorMessage() {
-        return null;
+        return e.getMessage();
     }
 
     @Override

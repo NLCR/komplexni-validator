@@ -21,6 +21,21 @@ public class ContentDefinitionOneOf implements ContentDefinition {
                 public String getErrorMessage() {
                     return "prázdná hodnota";
                 }
+
+                @Override
+                public String getSimpleErrorMessage() {
+                    return "prázdná hodnota";
+                }
+
+                @Override
+                public String getActualValue() {
+                    return null;
+                }
+
+                @Override
+                public String getValueSpecification() {
+                    return candidatesToString();
+                }
             };
         } else {
             for (ContentDefinition candidate : candidates) {
@@ -32,6 +47,21 @@ public class ContentDefinitionOneOf implements ContentDefinition {
                 @Override
                 public String getErrorMessage() {
                     return String.format("hodnota '%s' nesplňuje žádnou ze specifikací %s", valueFound, candidatesToString());
+                }
+
+                @Override
+                public String getSimpleErrorMessage() {
+                    return "hodnota nesplňuje žádnou ze specifikací";
+                }
+
+                @Override
+                public String getActualValue() {
+                    return valueFound;
+                }
+
+                @Override
+                public String getValueSpecification() {
+                    return candidatesToString();
                 }
             };
         }

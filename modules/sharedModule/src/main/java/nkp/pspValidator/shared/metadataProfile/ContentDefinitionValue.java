@@ -18,12 +18,42 @@ public class ContentDefinitionValue implements ContentDefinition {
                 public String getErrorMessage() {
                     return "prázdná hodnota";
                 }
+
+                @Override
+                public String getSimpleErrorMessage() {
+                    return "prázdná hodnota";
+                }
+
+                @Override
+                public String getActualValue() {
+                    return null;
+                }
+
+                @Override
+                public String getValueSpecification() {
+                    return valueExpected;
+                }
             };
         } else if (!valueFound.equals(valueExpected)) { //value different
             return new CheckingResultFail() {
                 @Override
                 public String getErrorMessage() {
                     return String.format("hodnota '%s' neodpovídá očekávané/doporučené hodnotě '%s'", valueFound, valueExpected);
+                }
+
+                @Override
+                public String getSimpleErrorMessage() {
+                    return "hodnota neodpovídá očekávané/doporučené hodnotě";
+                }
+
+                @Override
+                public String getActualValue() {
+                    return valueFound;
+                }
+
+                @Override
+                public String getValueSpecification() {
+                    return valueExpected;
                 }
             };
         } else { //value same

@@ -43,6 +43,20 @@ public class ContentDefinitionIsbn implements ContentDefinition {
                 public String getErrorMessage() {
                     return "neplatné ISBN: prázdná hodnota";
                 }
+
+                public String getSimpleErrorMessage() {
+                    return "neplatné ISBN: prázdná hodnota";
+                }
+
+                @Override
+                public String getActualValue() {
+                    return null;
+                }
+
+                @Override
+                public String getValueSpecification() {
+                    return REGEXP;
+                }
             };
         }
         if (!valueFound.matches(REGEXP)) {
@@ -51,6 +65,20 @@ public class ContentDefinitionIsbn implements ContentDefinition {
                 public String getErrorMessage() {
                     return String.format("neplatné ISBN: '%s' neodpovídá regulárním výrazu '%s'", valueFound, REGEXP);
                 }
+
+                public String getSimpleErrorMessage() {
+                    return "neplatné ISBN: neodpovídá regulárnímu výrazu";
+                }
+
+                @Override
+                public String getActualValue() {
+                    return valueFound;
+                }
+
+                @Override
+                public String getValueSpecification() {
+                    return REGEXP;
+                }
             };
         }
         if (!checksumOk(valueFound)) {
@@ -58,6 +86,20 @@ public class ContentDefinitionIsbn implements ContentDefinition {
                 @Override
                 public String getErrorMessage() {
                     return String.format("neplatné ISBN: '%s' nesedí kontrolní součet", valueFound);
+                }
+
+                public String getSimpleErrorMessage() {
+                    return "neplatné ISBN: nesedí kontrolní součet";
+                }
+
+                @Override
+                public String getActualValue() {
+                    return valueFound;
+                }
+
+                @Override
+                public String getValueSpecification() {
+                    return null;
                 }
             };
         }

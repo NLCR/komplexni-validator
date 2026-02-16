@@ -20,6 +20,20 @@ public class ContentDefinitionRegexp implements ContentDefinition {
                 public String getErrorMessage() {
                     return "prázdná hodnota";
                 }
+
+                public String getSimpleErrorMessage() {
+                    return "prázdná hodnota";
+                }
+
+                @Override
+                public String getActualValue() {
+                    return null;
+                }
+
+                @Override
+                public String getValueSpecification() {
+                    return regexp;
+                }
             };
         }
         if (Pattern.matches(regexp, valueFound)) {
@@ -29,6 +43,20 @@ public class ContentDefinitionRegexp implements ContentDefinition {
                 @Override
                 public String getErrorMessage() {
                     return String.format("hodnota '%s' neodpovídá regulárním výrazu '%s'", valueFound, regexp);
+                }
+
+                public String getSimpleErrorMessage() {
+                    return "hodnota neodpovídá regulárnímu výrazu";
+                }
+
+                @Override
+                public String getActualValue() {
+                    return valueFound;
+                }
+
+                @Override
+                public String getValueSpecification() {
+                    return regexp;
                 }
             };
         }

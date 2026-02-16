@@ -7,4 +7,10 @@ public interface CheckingResult {
     public boolean matches();
 
     public String getErrorMessage();
+
+    public String getSimpleErrorMessage();
+
+    public String getActualValue();
+
+    public String getValueSpecification();
 }
