@@ -18,6 +18,7 @@ import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 import java.io.File;
 import java.util.Date;
+import java.util.Formatter;
 import java.util.Map;
 
 /**
@@ -37,7 +38,7 @@ public class ValidatorProtocolXmlBuilder {
             Element validatorEl = doc.createElement("validator");
             protocolEl.appendChild(validatorEl);
             validatorEl.setAttribute("version", Version.VERSION_CODE);
-            validatorEl.setAttribute("buildDate", Version.BUILD_DATE);
+            validatorEl.setAttribute("buildDate", convertBuilDate(Version.BUILD_DATE));
 
             Element fDmfEl = doc.createElement("fdmf");
             protocolEl.appendChild(fDmfEl);
@@ -81,7 +82,7 @@ public class ValidatorProtocolXmlBuilder {
                     infoEl.setAttribute("creator", infoData.creator());
                 }
                 if (infoData.size() != null) {
-                    infoEl.setAttribute("size", infoData.size().toString());
+                    infoEl.setAttribute("sizeKB", infoData.size().toString());
                 }
             }
 
@@ -141,6 +142,24 @@ public class ValidatorProtocolXmlBuilder {
         }
     }
 
+    private String convertBuilDate(String buildDate) {
+        //convert 7. 11. 2025 to 2025-11-07
+        try {
+            String[] tokens = buildDate.split("\\.\\s*");
+            if (tokens.length == 3) {
+                int day = Integer.parseInt(tokens[0]);
+                int month = Integer.parseInt(tokens[1]);
+                int year = Integer.parseInt(tokens[2]);
+                return String.format("%04d-%02d-%02d", year, month, day);
+            } else {
+                return buildDate;
+            }
+        } catch (NumberFormatException e) {
+            e.printStackTrace();
+            return buildDate;
+        }
+    }
+
     private void appendErrorEl(String packageParentPath, Document doc, Element problemsEl, ValidationProblem error) {
         Element problemEl = doc.createElement("problem");
         problemsEl.appendChild(problemEl);
@@ -196,13 +215,13 @@ public class ValidatorProtocolXmlBuilder {
     private Element buildSummaryEl(Document doc, Long duration, Date startDate, Date finishDate, Integer problemsTotal, Map<Level, Integer> problemsByLevel, String vertict) {
         Element summaryEl = doc.createElement("summary");
         if (duration != null) {
-            summaryEl.setAttribute("duration", String.format("%d ms", duration));
+            summaryEl.setAttribute("durationMs", duration.toString());
         }
         if (startDate != null) {
-            summaryEl.setAttribute("startTime", startDate.toString());
+            summaryEl.setAttribute("startTime", String.format("%tFT%<tT", startDate));
         }
         if (finishDate != null) {
-            summaryEl.setAttribute("finishTime", finishDate.toString());
+            summaryEl.setAttribute("finishTime", String.format("%tFT%<tT", finishDate));
         }
 
         if (vertict != null) {
