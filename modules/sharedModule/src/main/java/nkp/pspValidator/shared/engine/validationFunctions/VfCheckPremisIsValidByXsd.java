@@ -119,12 +119,13 @@ public class VfCheckPremisIsValidByXsd extends ValidationFunction {
                 Element techMdEl = (Element) techMdEls.item(i);
                 validate(techMdEl, metsFile, xsdFile, level, result, idPrefix.equals("OBJ_"));
             }
-        } catch (XmlFileParsingException e) {
-            result.addError(invalid(level, metsFile, "%s", e.getMessage()));
-        } catch (InvalidXPathExpressionException e) {
-            result.addError(invalid(level, metsFile, "%s", e.getMessage()));
-        } catch (XPathExpressionException e) {
-            result.addError(invalid(level, metsFile, "%s", e.getMessage()));
+        } catch (XmlFileParsingException | InvalidXPathExpressionException | XPathExpressionException e) {
+            result.addError(new ValidationProblem(level, e.getMessage())
+                    .withFile(metsFile)
+                    .withXsdFile(xsdFile)
+                    .withLabel(amdSecElement)
+                    .withSimpleMessage(e.getMessage())
+            );
         }
     }
 
@@ -138,7 +139,14 @@ public class VfCheckPremisIsValidByXsd extends ValidationFunction {
             XPathExpression xPath = engine.buildXpath(xpathStr);
             Element premisEl = (Element) xPath.evaluate(techMdEl, XPathConstants.NODE);
             if (premisEl == null) {
-                result.addError(invalid(level, metsFile, "%s: nenalezen element %s", id, xpathStr));
+                result.addError(new ValidationProblem(level, String.format("%s: nenalezen element %s", id, xpathStr))
+                        .withFile(metsFile)
+                        .withXsdFile(xsdFile)
+                        .withLabel(id)
+                        .withSimpleMessage("element nenalezen")
+                        .withReferencedValue(xpathStr)
+                );
+
             } else {
                 //try preventing issue https://github.com/NLCR/komplexni-validator/issues/13, still doesn't work
                 premisEl.setAttribute("xmlns:premis", "info:lc/xmlns/premis-v2");
@@ -158,16 +166,14 @@ public class VfCheckPremisIsValidByXsd extends ValidationFunction {
                 validator.validate(source);
             }
 
-        } catch (InvalidXPathExpressionException e) {
-            result.addError(invalid(level, metsFile, "%s: %s", id, e.getMessage()));
-        } catch (XPathExpressionException e) {
-            result.addError(invalid(level, metsFile, "%s: %s", id, e.getMessage()));
-        } catch (ParserConfigurationException e) {
-            result.addError(invalid(level, metsFile, "%s: %s", id, e.getMessage()));
-        } catch (SAXException e) {
-            result.addError(invalid(level, metsFile, "%s: %s", id, e.getMessage()));
-        } catch (IOException e) {
-            result.addError(invalid(level, metsFile, "%s: %s", id, e.getMessage()));
+        } catch (InvalidXPathExpressionException | XPathExpressionException |
+                 ParserConfigurationException | SAXException | IOException e) {
+            result.addError(new ValidationProblem(level, String.format("%s: %s", id, e.getMessage()))
+                    .withFile(metsFile)
+                    .withXsdFile(xsdFile)
+                    .withLabel(id)
+                    .withSimpleMessage(e.getMessage())
+            );
         }
     }
 
