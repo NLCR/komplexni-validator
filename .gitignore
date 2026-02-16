@@ -205,3 +205,6 @@ gradle-app.setting
 /modules/guiModule/config.properties
 /modules/guiModule/logs/
 /.java-version
+/samples/
+.idea/copilot.xml
+.idea/copilot*
