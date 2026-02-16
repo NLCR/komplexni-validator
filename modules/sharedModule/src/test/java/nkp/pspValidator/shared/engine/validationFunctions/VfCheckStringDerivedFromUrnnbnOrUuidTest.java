@@ -62,7 +62,7 @@ public class VfCheckStringDerivedFromUrnnbnOrUuidTest {
     public void derivedFromUrnNbn() {
         VfCheckStringDerivedFromUrnnbnOrUuid vf = new VfCheckStringDerivedFromUrnnbnOrUuid(VF_NAME, engine);
         for (ValidationProblem p : vf.validate("osa001-001kl9", null, "urn:nbn:cz:osa001-001kl9").getProblems()) {
-            System.out.printf(p.getMessage(true));
+            System.out.printf(p.getFullMessage());
         }
         assertFalse(vf.validate("osa001-001kl9", null, "urn:nbn:cz:osa001-001kl9").hasProblems());
     }

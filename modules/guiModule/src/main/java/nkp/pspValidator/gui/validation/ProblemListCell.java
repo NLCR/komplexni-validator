@@ -87,7 +87,7 @@ public class ProblemListCell extends ListCell<ValidationProblem> {
     }
 
     public void populate(ValidationProblem problem) {
-        message.setText(problem.getMessage(true));
+        message.setText(problem.getFullMessage());
         switch (problem.getLevel()) {
             case ERROR:
                 imgError.setVisible(true);
