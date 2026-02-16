@@ -44,16 +44,52 @@ public class ValidatorProtocolXmlBuilder {
             fDmfEl.setAttribute("type", protocol.getDmfUsed().getType().toString());
             fDmfEl.setAttribute("version", protocol.getDmfUsed().getVersion());
 
+            //package
             Element packageEl = doc.createElement("package");
             protocolEl.appendChild(packageEl);
-            packageEl.setAttribute("fileName", protocol.getPackageFile().getName());
-            packageEl.setAttribute("parentDir", protocol.getPackageFile().getParentFile().getAbsolutePath());
+            //package file
+            Element fileEl = doc.createElement("file");
+            packageEl.appendChild(fileEl);
+            fileEl.setAttribute("fileName", protocol.getPackageFile().getName());
+            fileEl.setAttribute("parentDir", protocol.getPackageFile().getParentFile().getAbsolutePath());
+            //package INFO
+            InfoExtractor.InfoData infoData = protocol.getInfoData();
+            if (infoData != null) {
+                Element infoEl = doc.createElement("info");
+                packageEl.appendChild(infoEl);
+                if (infoData.created() != null) {
+                    infoEl.setAttribute("created", infoData.created());
+                }
+                if (infoData.metadataversion() != null) {
+                    infoEl.setAttribute("metadataVersion", infoData.metadataversion());
+                }
+                if (infoData.packageid() != null) {
+                    infoEl.setAttribute("packageId", infoData.packageid());
+                }
+                if (infoData.titleIds() != null) {
+                    for (InfoExtractor.TitleId titleId : infoData.titleIds()) {
+                        infoEl.setAttribute("titleId_" + titleId.type(), titleId.value());
+                    }
+                }
+                if (infoData.collection() != null) {
+                    infoEl.setAttribute("collection", infoData.collection());
+                }
+                if (infoData.institution() != null) {
+                    infoEl.setAttribute("institution", infoData.institution());
+                }
+                if (infoData.creator() != null) {
+                    infoEl.setAttribute("creator", infoData.creator());
+                }
+                if (infoData.size() != null) {
+                    infoEl.setAttribute("size", infoData.size().toString());
+                }
+            }
 
+            //validation summary
             Long duration = protocol.getGlobalFinishTime() - protocol.getGlobalStartTime();
             Date startDate = new Date(protocol.getGlobalStartTime());
             Date finishDAte = new Date(protocol.getGlobalFinishTime());
             String verdict = protocol.isValid() ? "VALID" : "INVALID";
-
             Element summaryEl = buildSummaryEl(doc, duration, startDate, finishDAte, protocol.getGlobalProblemsTotal(), protocol.getGlobalProblemsByLevel(), verdict);
             protocolEl.appendChild(summaryEl);
 
