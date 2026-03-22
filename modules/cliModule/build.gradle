@@ -136,6 +136,5 @@ tasks.withType(JavaCompile) {
 
 //runDevMrValidate - spusti CLI s akci VALIDATE_PSP a hardcoded parametry
 //./gradlew :modules:cliModule:runDevMrValidate
-//./gradlew :modules:cliModule:runDevMrValidate2
 
 

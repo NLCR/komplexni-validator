@@ -122,5 +122,13 @@ public class XmlUtils {
         return newDocument;
     }
 
-
+    public static Document newDocument(boolean nsAware) {
+        DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
+        dbf.setNamespaceAware(nsAware);
+        try {
+            return dbf.newDocumentBuilder().newDocument();
+        } catch (ParserConfigurationException e) {
+            throw new RuntimeException(e);
+        }
+    }
 }

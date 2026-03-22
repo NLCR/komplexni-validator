@@ -114,6 +114,7 @@ public class VfCheckPremisIsValidByXsd extends ValidationFunction {
         try {
             Document metsDoc = engine.getXmlDocument(metsFile, true);
             String xpathStr = String.format("/mets:mets/mets:amdSec/%s[starts-with(@ID,'%s')]", amdSecElement, idPrefix);
+            System.err.println("xpathStr:" + xpathStr);
             NodeList techMdEls = (NodeList) engine.buildXpath(xpathStr).evaluate(metsDoc, XPathConstants.NODESET);
             for (int i = 0; i < techMdEls.getLength(); i++) {
                 Element techMdEl = (Element) techMdEls.item(i);
@@ -132,12 +133,10 @@ public class VfCheckPremisIsValidByXsd extends ValidationFunction {
     private void validate(Element techMdEl, File metsFile, File xsdFile, Level level, ValidationResult result, boolean print) {
         String id = techMdEl.getAttribute("ID");
         try {
-            /*if(!metsFile.getName().endsWith("1.xml")){
-                return;
-            }*/
             String xpathStr = "mets:mdWrap/mets:xmlData/*[1]";
             XPathExpression xPath = engine.buildXpath(xpathStr);
             Element premisEl = (Element) xPath.evaluate(techMdEl, XPathConstants.NODE);
+
             if (premisEl == null) {
                 result.addError(new ValidationProblem(level, String.format("%s: nenalezen element %s", id, xpathStr))
                         .withFile(metsFile)
@@ -146,34 +145,66 @@ public class VfCheckPremisIsValidByXsd extends ValidationFunction {
                         .withSimpleMessage("element nenalezen")
                         .withReferencedValue(xpathStr)
                 );
-
-            } else {
-                //try preventing issue https://github.com/NLCR/komplexni-validator/issues/13, still doesn't work
-                premisEl.setAttribute("xmlns:premis", "info:lc/xmlns/premis-v2");
-                Document mixDoc = XmlUtils.elementToNewDocument(premisEl, true);
-                /*if(print || true){
-                    try {
-                        System.out.println(XmlUtils.elementToString(mixDoc.getDocumentElement()));
-                    } catch (TransformerException e) {
-                        e.printStackTrace();
-                    }
-                }*/
-                DOMSource source = new DOMSource(mixDoc);
-                SchemaFactory schemaFactory = SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
-                schemaFactory.setResourceResolver(new XsdImportsResourceResolver(xsdFile.getParentFile()));
-                Schema schema = schemaFactory.newSchema(xsdFile);
-                Validator validator = schema.newValidator();
-                validator.validate(source);
+                return;
             }
 
-        } catch (InvalidXPathExpressionException | XPathExpressionException |
-                 ParserConfigurationException | SAXException | IOException e) {
+            // vytvoření nového dokumentu
+            Document mixDoc = XmlUtils.newDocument(true);
+
+            // hluboký import elementu do nového dokumentu
+            Element importedPremisEl = (Element) mixDoc.importNode(premisEl, true);
+            mixDoc.appendChild(importedPremisEl);
+
+            // explicitní doplnění namespace deklarací potřebných pro validaci QName v xsi:type
+            ensureNamespaceDeclaration(importedPremisEl, "premis", "info:lc/xmlns/premis-v2");
+            ensureNamespaceDeclaration(importedPremisEl, "xsi", XMLConstants.W3C_XML_SCHEMA_INSTANCE_NS_URI);
+
+            // volitelně: pokud by PREMIS data používala i další prefixy, lze je doplnit stejně
+            // ensureNamespaceDeclaration(importedPremisEl, "mix", "http://www.loc.gov/mix/v20");
+
+            if (print) {
+                try {
+                    System.out.println(XmlUtils.elementToString(importedPremisEl));
+                } catch (TransformerException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            DOMSource source = new DOMSource(mixDoc);
+
+            SchemaFactory schemaFactory = SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
+            schemaFactory.setResourceResolver(new XsdImportsResourceResolver(xsdFile.getParentFile()));
+            Schema schema = schemaFactory.newSchema(xsdFile);
+
+            Validator validator = schema.newValidator();
+            validator.validate(source);
+
+        } catch (InvalidXPathExpressionException
+                 | XPathExpressionException
+                 | SAXException
+                 | IOException e) {
             result.addError(new ValidationProblem(level, String.format("%s: %s", id, e.getMessage()))
                     .withFile(metsFile)
                     .withXsdFile(xsdFile)
                     .withLabel(id)
                     .withSimpleMessage(e.getMessage())
             );
+        }
+    }
+
+    private void ensureNamespaceDeclaration(Element element, String prefix, String namespaceUri) {
+        String attrName = prefix == null || prefix.isEmpty() ? "xmlns" : "xmlns:" + prefix;
+
+        if (prefix == null || prefix.isEmpty()) {
+            String current = element.getAttributeNS(XMLConstants.XMLNS_ATTRIBUTE_NS_URI, "xmlns");
+            if (current == null || current.isEmpty()) {
+                element.setAttributeNS(XMLConstants.XMLNS_ATTRIBUTE_NS_URI, attrName, namespaceUri);
+            }
+        } else {
+            String current = element.getAttributeNS(XMLConstants.XMLNS_ATTRIBUTE_NS_URI, prefix);
+            if (current == null || current.isEmpty()) {
+                element.setAttributeNS(XMLConstants.XMLNS_ATTRIBUTE_NS_URI, attrName, namespaceUri);
+            }
         }
     }
 
