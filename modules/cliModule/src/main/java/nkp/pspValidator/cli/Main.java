@@ -104,7 +104,7 @@ public class Main {
                 .create());
         options.addOption(OptionBuilder
                 .withDescription(replaceUmlaut(
-                        "Soubor pro uložení xml protokolu s informacemi o validaci PSP balíku. Použije se jen pro akci VALIDATE_PSP. " +
+                        "Soubor pro uložení xml protokolu s informacemi o validaci PSP balíku. Použije se jen pro akce VALIDATE_PSP a VALIDATE_METADATA_BY_PROFILE. " +
                                 "Pokud je zároveň vyplněn parametr --xml-protocol-dir, použije se hodnota z --xml-protocol-file. " +
                                 "Pokud není parametr (a zároveň není vyplněn ani --xml-protocol-dir), xml protokol se neukládá. " +
                                 "Pokud soubor existuje, je nejprve smazán."))
@@ -632,7 +632,20 @@ public class Main {
                         buildMinifiedPackage(psp, minifiedPspDir, 3);
                         break;
                     case VALIDATE_METADATA_BY_PROFILE:
+                        long startTime = System.currentTimeMillis();
                         ValidationResult result = validateMetadataByProfile(configDir, metadataProfileId, metadataFile);
+                        long finishTime = System.currentTimeMillis();
+                        if (xmlProtocolFile == null) {
+                            if (xmlProtocolDir != null) {
+                                SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy_MM_dd_HH_mm_ss");
+                                String filename = String.format("%s_%s.xml", simpleDateFormat.format(new Date(System.currentTimeMillis())), metadataFile.getName());
+                                xmlProtocolFile = new File(xmlProtocolDir, filename);
+                            }
+                        }
+                        if (xmlProtocolFile != null) {
+                            System.out.println("Ukládám xml protokol do souboru: " + xmlProtocolFile.getAbsolutePath());
+                            new ValidatorProtocolXmlBuilder().buildProfileXmlOutput(xmlProtocolFile, metadataFile, metadataProfileId, result, startTime, finishTime);
+                        }
                         if (result != null) {
                             if (result.hasProblems()) {
                                 result.getProblems().forEach(p -> System.out.println(p.getLevel() + ": " + p.getFullMessage()));

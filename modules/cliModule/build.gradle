@@ -66,7 +66,8 @@ tasks.register('runDevMrValidate', JavaExec) {
             //, '--psp', "${homeDir}/TrineraProjects/KramarskeTisky/data/input/sample1/input/tmp/_ndk-package/2610798805-2025_02_18-17_21_12,336/d7742610-73d6-476f-84af-c15a7156c5a6"
             //, '--psp', "${homeDir}/TrineraProjects/KomplexniValidator/komplexni-validator/samples/m-sample/d73977f2-254b-4d37-a4b7-e9a8f5b97111"
             , '--psp', "${homeDir}/TrineraProjects/KomplexniValidator/komplexni-validator/samples/b50eb6b0-f0a4-11e3-b72e-005056827e52_minified"
-            , '--xml-protocol-file', "${homeDir}/TrineraProjects/KomplexniValidator/komplexni-validator/samples/validation_protocol.xml"
+            , '--xml-protocol-file', "${homeDir}/TrineraProjects/KomplexniValidator/komplexni-validator/samples/package_validation_protocol.xml"
+            //, '--xml-protocol-dir', "${homeDir}/TrineraProjects/KomplexniValidator/komplexni-validator/samples/"
 
             , '--config-dir', "${homeDir}/TrineraProjects/KomplexniValidator/komplexni-validator/modules/sharedModule/src/main/resources/nkp/pspValidator/shared/validatorConfig"
             , '--forced-dmf-mon-version', '2.1'
@@ -96,7 +97,9 @@ tasks.register('runDevMrValidateProfile', JavaExec) {
             //'--metadata-profile-id', 'monograph_1.4:tech', //Chybí název profilu (fDmf=monograph_1.4, typ=tech)
             //'--metadata-profile-id', 'monograph_1.4:tech:blbost', //Soubor profilu neexistuje: blbost.xml (fDmf=monograph_1.4, typ=tech)
             '--metadata-profile-id', 'monograph_1.4:biblio:mods:page_rda',
-            '--metadata-file', "${homeDir}/TrineraProjects/KomplexniValidator/komplexni-validator/modules/sharedModule/src/test/resources/metadata_only/mon_1.4/mods_page_rda.xml"
+            '--metadata-file', "${homeDir}/TrineraProjects/KomplexniValidator/komplexni-validator/modules/sharedModule/src/test/resources/metadata_only/mon_1.4/mods_page_rda.xml",
+            '--xml-protocol-file', "${homeDir}/TrineraProjects/KomplexniValidator/komplexni-validator/samples/profile_validation_protocol.xml"
+            //'--xml-protocol-dir', "${homeDir}/TrineraProjects/KomplexniValidator/komplexni-validator/samples/"
     ]
 }
 

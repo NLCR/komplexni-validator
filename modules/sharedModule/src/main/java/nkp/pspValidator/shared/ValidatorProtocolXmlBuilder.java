@@ -4,6 +4,7 @@ import nkp.pspValidator.shared.engine.Level;
 import nkp.pspValidator.shared.engine.Rule;
 import nkp.pspValidator.shared.engine.RulesSection;
 import nkp.pspValidator.shared.engine.validationFunctions.ValidationProblem;
+import nkp.pspValidator.shared.engine.validationFunctions.ValidationResult;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
@@ -18,13 +19,89 @@ import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 import java.io.File;
 import java.util.Date;
-import java.util.Formatter;
 import java.util.Map;
 
 /**
  * Created by Martin Řehánek on 15.12.16.
  */
 public class ValidatorProtocolXmlBuilder {
+
+    public void buildProfileXmlOutput(File xmlOutputFile, File metadataFile, String profileId, ValidationResult result, long startTime, long finishTime) {
+        try {
+            if (result == null) {
+                return; //no xml output for empty result
+            }
+            DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
+            DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
+            Document doc = dBuilder.newDocument();
+
+            Element protocolEl = doc.createElement("protocol");
+            doc.appendChild(protocolEl);
+            protocolEl.setAttribute("type", "profile");
+
+            Element validatorEl = doc.createElement("validator");
+            protocolEl.appendChild(validatorEl);
+            validatorEl.setAttribute("version", Version.VERSION_CODE);
+            validatorEl.setAttribute("buildDate", convertBuilDate(Version.BUILD_DATE));
+
+            Element profileEl = doc.createElement("profile");
+            protocolEl.appendChild(profileEl);
+            profileEl.setAttribute("id", profileId);
+
+            Element metadataFileEl = doc.createElement("metadataFile");
+            protocolEl.appendChild(metadataFileEl);
+            metadataFileEl.setAttribute("parentDir", metadataFile.getParentFile().getAbsolutePath());
+            metadataFileEl.setAttribute("fileName", metadataFile.getName());
+
+            Element summaryEl = doc.createElement("summary");
+            protocolEl.appendChild(summaryEl);
+            Long duration = finishTime - startTime;
+            Date startDate = new Date(startTime);
+            Date finishDate = new Date(finishTime);
+            summaryEl.setAttribute("durationMs", duration.toString());
+            summaryEl.setAttribute("startTime", String.format("%tFT%<tT", startDate));
+            summaryEl.setAttribute("finishTime", String.format("%tFT%<tT", finishDate));
+
+            if (result.hasProblems()) {
+                Element problemsEl = doc.createElement("problems");
+                protocolEl.appendChild(problemsEl);
+                problemsEl.setAttribute("total", result.getProblems().size() + "");
+                int infoCount = 0;
+                int warningCount = 0;
+                int errorCount = 0;
+                for (ValidationProblem problem : result.getProblems()) {
+                    switch (problem.getLevel()) {
+                        case INFO:
+                            infoCount++;
+                            break;
+                        case WARNING:
+                            warningCount++;
+                            break;
+                        case ERROR:
+                            errorCount++;
+                            break;
+                    }
+                    appendErrorEl("", doc, problemsEl, problem);
+                }
+                problemsEl.setAttribute("INFO", infoCount + "");
+                problemsEl.setAttribute("WARNING", warningCount + "");
+                problemsEl.setAttribute("ERROR", errorCount + "");
+                summaryEl.setAttribute("verdict", errorCount > 0 ? "INVALID" : "VALID");
+            }
+
+            TransformerFactory transformerFactory = TransformerFactory.newInstance();
+            Transformer transformer = transformerFactory.newTransformer();
+            DOMSource source = new DOMSource(doc);
+            StreamResult consoleResult = new StreamResult(xmlOutputFile);
+            transformer.transform(source, consoleResult);
+        } catch (TransformerConfigurationException e) {
+            e.printStackTrace();
+        } catch (TransformerException e) {
+            e.printStackTrace();
+        } catch (ParserConfigurationException e) {
+            e.printStackTrace();
+        }
+    }
 
     public void buildXmlOutput(File xmlOutputFile, ValidationState protocol) {
         try {
@@ -34,6 +111,7 @@ public class ValidatorProtocolXmlBuilder {
 
             Element protocolEl = doc.createElement("protocol");
             doc.appendChild(protocolEl);
+            protocolEl.setAttribute("type", "package");
 
             Element validatorEl = doc.createElement("validator");
             protocolEl.appendChild(validatorEl);
@@ -89,9 +167,9 @@ public class ValidatorProtocolXmlBuilder {
             //validation summary
             Long duration = protocol.getGlobalFinishTime() - protocol.getGlobalStartTime();
             Date startDate = new Date(protocol.getGlobalStartTime());
-            Date finishDAte = new Date(protocol.getGlobalFinishTime());
+            Date finishDate = new Date(protocol.getGlobalFinishTime());
             String verdict = protocol.isValid() ? "VALID" : "INVALID";
-            Element summaryEl = buildSummaryEl(doc, duration, startDate, finishDAte, protocol.getGlobalProblemsTotal(), protocol.getGlobalProblemsByLevel(), verdict);
+            Element summaryEl = buildSummaryEl(doc, duration, startDate, finishDate, protocol.getGlobalProblemsTotal(), protocol.getGlobalProblemsByLevel(), verdict);
             protocolEl.appendChild(summaryEl);
 
             String packageParentPath = protocol.getPackageFile().getParentFile().getAbsolutePath();
@@ -215,7 +293,7 @@ public class ValidatorProtocolXmlBuilder {
         }
     }
 
-    private Element buildSummaryEl(Document doc, Long duration, Date startDate, Date finishDate, Integer problemsTotal, Map<Level, Integer> problemsByLevel, String vertict) {
+    private Element buildSummaryEl(Document doc, Long duration, Date startDate, Date finishDate, Integer problemsTotal, Map<Level, Integer> problemsByLevel, String verdict) {
         Element summaryEl = doc.createElement("summary");
         if (duration != null) {
             summaryEl.setAttribute("durationMs", duration.toString());
@@ -227,8 +305,8 @@ public class ValidatorProtocolXmlBuilder {
             summaryEl.setAttribute("finishTime", String.format("%tFT%<tT", finishDate));
         }
 
-        if (vertict != null) {
-            summaryEl.setAttribute("verdict", vertict);
+        if (verdict != null) {
+            summaryEl.setAttribute("verdict", verdict);
         }
 
         Element problemsEl = doc.createElement("problems");
