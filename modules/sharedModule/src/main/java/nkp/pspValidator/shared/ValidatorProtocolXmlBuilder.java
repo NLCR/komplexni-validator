@@ -8,13 +8,11 @@ import nkp.pspValidator.shared.engine.validationFunctions.ValidationResult;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
+import javax.xml.XMLConstants;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.transform.Transformer;
-import javax.xml.transform.TransformerConfigurationException;
-import javax.xml.transform.TransformerException;
-import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.*;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 import java.io.File;
@@ -26,35 +24,48 @@ import java.util.Map;
  */
 public class ValidatorProtocolXmlBuilder {
 
-    public void buildProfileXmlOutput(File xmlOutputFile, File metadataFile, String profileId, ValidationResult result, long startTime, long finishTime) {
+    final static String NS = "http://www.nkp.cz/pspValidator/2.6.1/validationProtocol";
+    final static String XSI_NS = XMLConstants.W3C_XML_SCHEMA_INSTANCE_NS_URI;
+    final static String XSD_URL = "https://raw.githubusercontent.com/NLCR/komplexni-validator/refs/heads/master/modules/sharedModule/src/main/resources/nkp/pspValidator/shared/validatorConfig/xsd/validationProtocol.xsd";
+    //TODO: change XSD_URL to one of:
+    //final static String XSD_URL = "https://raw.githubusercontent.com/NLCR/komplexni-validator/v2.6.1/modules/sharedModule/src/main/resources/nkp/pspValidator/shared/validatorConfig/xsd/validationProtocol.xsd";
+    //final static String XSD_URL = "https://docs.validator.nkp.cz/xsd/2.6.1/validationProtocol.xsd";
+
+    private void setNamespaceAndSchemaLocation(Element element) {
+        element.setAttributeNS(XMLConstants.XMLNS_ATTRIBUTE_NS_URI, "xmlns", NS);
+        element.setAttributeNS(XMLConstants.XMLNS_ATTRIBUTE_NS_URI, "xmlns:xsi", XSI_NS);
+        element.setAttributeNS(
+                XSI_NS,
+                "xsi:schemaLocation",
+                NS + " " + XSD_URL
+        );
+    }
+
+    public void buildProfileValidationXmlOutput(File xmlOutputFile, File metadataFile, String profileId, ValidationResult result, long startTime, long finishTime) {
         try {
             if (result == null) {
                 return; //no xml output for empty result
             }
             DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
+            dbFactory.setNamespaceAware(true);
             DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
             Document doc = dBuilder.newDocument();
 
-            Element protocolEl = doc.createElement("protocol");
-            doc.appendChild(protocolEl);
+            Element protocolEl = createRootElement(doc, "protocol");
             protocolEl.setAttribute("type", "profile");
 
-            Element validatorEl = doc.createElement("validator");
-            protocolEl.appendChild(validatorEl);
+            Element validatorEl = createChildElement(protocolEl, "validator");
             validatorEl.setAttribute("version", Version.VERSION_CODE);
             validatorEl.setAttribute("buildDate", convertBuilDate(Version.BUILD_DATE));
 
-            Element profileEl = doc.createElement("profile");
-            protocolEl.appendChild(profileEl);
+            Element profileEl = createChildElement(protocolEl, "profile");
             profileEl.setAttribute("id", profileId);
 
-            Element metadataFileEl = doc.createElement("metadataFile");
-            protocolEl.appendChild(metadataFileEl);
+            Element metadataFileEl = createChildElement(protocolEl, "metadataFile");
             metadataFileEl.setAttribute("parentDir", metadataFile.getParentFile().getAbsolutePath());
             metadataFileEl.setAttribute("fileName", metadataFile.getName());
 
-            Element summaryEl = doc.createElement("summary");
-            protocolEl.appendChild(summaryEl);
+            Element summaryEl = createChildElement(protocolEl, "summary");
             Long duration = finishTime - startTime;
             Date startDate = new Date(startTime);
             Date finishDate = new Date(finishTime);
@@ -63,8 +74,7 @@ public class ValidatorProtocolXmlBuilder {
             summaryEl.setAttribute("finishTime", String.format("%tFT%<tT", finishDate));
 
             if (result.hasProblems()) {
-                Element problemsEl = doc.createElement("problems");
-                protocolEl.appendChild(problemsEl);
+                Element problemsEl = createChildElement(protocolEl, "problems");
                 problemsEl.setAttribute("total", result.getProblems().size() + "");
                 int infoCount = 0;
                 int warningCount = 0;
@@ -91,51 +101,58 @@ public class ValidatorProtocolXmlBuilder {
 
             TransformerFactory transformerFactory = TransformerFactory.newInstance();
             Transformer transformer = transformerFactory.newTransformer();
+            transformer.setOutputProperty(OutputKeys.INDENT, "yes");
+            transformer.setOutputProperty(OutputKeys.ENCODING, "UTF-8");
+
             DOMSource source = new DOMSource(doc);
             StreamResult consoleResult = new StreamResult(xmlOutputFile);
             transformer.transform(source, consoleResult);
-        } catch (TransformerConfigurationException e) {
-            e.printStackTrace();
-        } catch (TransformerException e) {
-            e.printStackTrace();
-        } catch (ParserConfigurationException e) {
+        } catch (TransformerException | ParserConfigurationException e) {
             e.printStackTrace();
         }
     }
 
-    public void buildXmlOutput(File xmlOutputFile, ValidationState protocol) {
+    private Element createChildElement(Element parent, String elName) {
+        Element childEl = parent.getOwnerDocument().createElementNS(NS, elName);
+        parent.appendChild(childEl);
+        return childEl;
+    }
+
+    private Element createRootElement(Document doc, String elName) {
+        Element rootEl = doc.createElementNS(NS, elName);
+        setNamespaceAndSchemaLocation(rootEl);
+        doc.appendChild(rootEl);
+        return rootEl;
+    }
+
+    public void buildPackageValidationXmlOutput(File xmlOutputFile, ValidationState protocol) {
         try {
             DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
+            dbFactory.setNamespaceAware(true);
             DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
             Document doc = dBuilder.newDocument();
 
-            Element protocolEl = doc.createElement("protocol");
-            doc.appendChild(protocolEl);
+            Element protocolEl = createRootElement(doc, "protocol");
             protocolEl.setAttribute("type", "package");
 
-            Element validatorEl = doc.createElement("validator");
-            protocolEl.appendChild(validatorEl);
+            Element validatorEl = createChildElement(protocolEl, "validator");
             validatorEl.setAttribute("version", Version.VERSION_CODE);
             validatorEl.setAttribute("buildDate", convertBuilDate(Version.BUILD_DATE));
 
-            Element fDmfEl = doc.createElement("fdmf");
-            protocolEl.appendChild(fDmfEl);
+            Element fDmfEl = createChildElement(protocolEl, "fdmf");
             fDmfEl.setAttribute("type", protocol.getDmfUsed().getType().toString());
             fDmfEl.setAttribute("version", protocol.getDmfUsed().getVersion());
 
             //package
-            Element packageEl = doc.createElement("package");
-            protocolEl.appendChild(packageEl);
+            Element packageEl = createChildElement(protocolEl, "package");
             //package file
-            Element fileEl = doc.createElement("file");
-            packageEl.appendChild(fileEl);
+            Element fileEl = createChildElement(packageEl, "file");
             fileEl.setAttribute("fileName", protocol.getPackageFile().getName());
             fileEl.setAttribute("parentDir", protocol.getPackageFile().getParentFile().getAbsolutePath());
             //package INFO
             InfoExtractor.InfoData infoData = protocol.getInfoData();
             if (infoData != null) {
-                Element infoEl = doc.createElement("info");
-                packageEl.appendChild(infoEl);
+                Element infoEl = createChildElement(packageEl, "info");
                 if (infoData.created() != null) {
                     infoEl.setAttribute("created", infoData.created());
                 }
@@ -174,11 +191,9 @@ public class ValidatorProtocolXmlBuilder {
 
             String packageParentPath = protocol.getPackageFile().getParentFile().getAbsolutePath();
 
-            Element sectionsEl = doc.createElement("sections");
-            protocolEl.appendChild(sectionsEl);
+            Element sectionsEl = createChildElement(protocolEl, "sections");
             for (RulesSection section : protocol.getSections()) {
-                Element sectionEl = doc.createElement("section");
-                sectionsEl.appendChild(sectionEl);
+                Element sectionEl = createChildElement(sectionsEl, "section");
                 sectionEl.setAttribute("name", section.getName());
                 if (section.getDescription() != null) {
                     sectionEl.setAttribute("description", section.getDescription());
@@ -188,8 +203,7 @@ public class ValidatorProtocolXmlBuilder {
                             protocol.getSectionProblemsTotal(section), protocol.getSectionProblemsByLevel(section), null);
                     sectionEl.appendChild(sectionSummaryEl);
                     for (Rule rule : protocol.getRules(section)) {
-                        Element ruleEl = doc.createElement("rule");
-                        sectionEl.appendChild(ruleEl);
+                        Element ruleEl = createChildElement(sectionEl, "rule");
                         ruleEl.setAttribute("name", rule.getName());
                         if (rule.getDescription() != null) {
                             ruleEl.setAttribute("description", rule.getDescription());
@@ -208,14 +222,13 @@ public class ValidatorProtocolXmlBuilder {
             }
             TransformerFactory transformerFactory = TransformerFactory.newInstance();
             Transformer transformer = transformerFactory.newTransformer();
+            transformer.setOutputProperty(OutputKeys.INDENT, "yes");
+            transformer.setOutputProperty(OutputKeys.ENCODING, "UTF-8");
+
             DOMSource source = new DOMSource(doc);
             StreamResult consoleResult = new StreamResult(xmlOutputFile);
             transformer.transform(source, consoleResult);
-        } catch (TransformerConfigurationException e) {
-            e.printStackTrace();
-        } catch (TransformerException e) {
-            e.printStackTrace();
-        } catch (ParserConfigurationException e) {
+        } catch (TransformerException | ParserConfigurationException e) {
             e.printStackTrace();
         }
     }
@@ -239,8 +252,9 @@ public class ValidatorProtocolXmlBuilder {
     }
 
     private void appendErrorEl(String packageParentPath, Document doc, Element problemsEl, ValidationProblem error) {
-        Element problemEl = doc.createElement("problem");
-        problemsEl.appendChild(problemEl);
+        //Element problemEl = doc.createElementNS(NS, "problem");
+        //problemsEl.appendChild(problemEl);
+        Element problemEl = createChildElement(problemsEl, "problem");
         problemEl.setAttribute("_level", error.getLevel().name());
         problemEl.setTextContent(error.getSimpleMessage() == null ? error.getFullMessage() : error.getSimpleMessage());
         if (error.getFile() != null) {
@@ -294,7 +308,7 @@ public class ValidatorProtocolXmlBuilder {
     }
 
     private Element buildSummaryEl(Document doc, Long duration, Date startDate, Date finishDate, Integer problemsTotal, Map<Level, Integer> problemsByLevel, String verdict) {
-        Element summaryEl = doc.createElement("summary");
+        Element summaryEl = doc.createElementNS(NS, "summary");
         if (duration != null) {
             summaryEl.setAttribute("durationMs", duration.toString());
         }
@@ -309,8 +323,7 @@ public class ValidatorProtocolXmlBuilder {
             summaryEl.setAttribute("verdict", verdict);
         }
 
-        Element problemsEl = doc.createElement("problems");
-        summaryEl.appendChild(problemsEl);
+        Element problemsEl = createChildElement(summaryEl, "problems");
         problemsEl.setAttribute("total", problemsTotal.toString());
         for (Level level : problemsByLevel.keySet()) {
             Integer problems = problemsByLevel.get(level);

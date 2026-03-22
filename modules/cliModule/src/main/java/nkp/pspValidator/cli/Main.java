@@ -644,7 +644,7 @@ public class Main {
                         }
                         if (xmlProtocolFile != null) {
                             System.out.println("Ukládám xml protokol do souboru: " + xmlProtocolFile.getAbsolutePath());
-                            new ValidatorProtocolXmlBuilder().buildProfileXmlOutput(xmlProtocolFile, metadataFile, metadataProfileId, result, startTime, finishTime);
+                            new ValidatorProtocolXmlBuilder().buildProfileValidationXmlOutput(xmlProtocolFile, metadataFile, metadataProfileId, result, startTime, finishTime);
                         }
                         if (result != null) {
                             if (result.hasProblems()) {

@@ -132,7 +132,7 @@ public class Validator {
                 textLogger.logPackageSummary(state.getGlobalProblemsTotal(), state.getGlobalProblemsByLevel(), state.isValid());
                 if (xmlOutputFile != null) {
                     textLogger.logXmlExportStarted(xmlOutputFile);
-                    new ValidatorProtocolXmlBuilder().buildXmlOutput(xmlOutputFile, state);
+                    new ValidatorProtocolXmlBuilder().buildPackageValidationXmlOutput(xmlOutputFile, state);
                     //TODO: tohle nepatri do textoveho logu
                     textLogger.logXmlExportCreated();
                 }

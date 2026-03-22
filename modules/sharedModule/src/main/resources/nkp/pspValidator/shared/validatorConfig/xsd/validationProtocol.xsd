@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema
+        xmlns:xs="http://www.w3.org/2001/XMLSchema"
+        targetNamespace="http://www.nkp.cz/pspValidator/2.6.1/validationProtocol"
+        xmlns="http://www.nkp.cz/pspValidator/2.6.1/validationProtocol"
+        elementFormDefault="qualified"
+        attributeFormDefault="unqualified">
+
+    <xs:element name="protocol" type="ProtocolType"/>
+
+    <xs:complexType name="ProtocolType">
+        <xs:sequence>
+            <xs:element name="validator" type="ValidatorType"/>
+
+            <xs:choice>
+                <xs:sequence>
+                    <xs:element name="profile" type="ProfileType"/>
+                    <xs:element name="metadataFile" type="MetadataFileType"/>
+                    <xs:element name="summary" type="SummaryType"/>
+                    <xs:element name="problems" type="ProblemsType" minOccurs="0"/>
+                </xs:sequence>
+
+                <xs:sequence>
+                    <xs:element name="fdmf" type="FdmfType"/>
+                    <xs:element name="package" type="PackageType"/>
+                    <xs:element name="summary" type="SummaryType"/>
+                    <xs:element name="sections" type="SectionsType"/>
+                </xs:sequence>
+            </xs:choice>
+        </xs:sequence>
+
+        <xs:attribute name="type" use="required">
+            <xs:simpleType>
+                <xs:restriction base="xs:string">
+                    <xs:enumeration value="profile"/>
+                    <xs:enumeration value="package"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
+    </xs:complexType>
+
+    <xs:complexType name="ValidatorType">
+        <xs:attribute name="version" type="xs:string" use="required"/>
+        <xs:attribute name="buildDate" type="xs:string" use="required"/>
+    </xs:complexType>
+
+    <xs:complexType name="ProfileType">
+        <xs:attribute name="id" type="xs:string" use="required"/>
+    </xs:complexType>
+
+    <xs:complexType name="MetadataFileType">
+        <xs:attribute name="parentDir" type="xs:string" use="required"/>
+        <xs:attribute name="fileName" type="xs:string" use="required"/>
+    </xs:complexType>
+
+    <xs:complexType name="FdmfType">
+        <xs:attribute name="type" type="xs:string" use="required"/>
+        <xs:attribute name="version" type="xs:string" use="required"/>
+    </xs:complexType>
+
+    <xs:complexType name="PackageType">
+        <xs:sequence>
+            <xs:element name="file" type="MetadataFileType"/>
+            <xs:element name="info" type="InfoType" minOccurs="0"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="InfoType">
+        <xs:attribute name="created" type="xs:string" use="optional"/>
+        <xs:attribute name="metadataVersion" type="xs:string" use="optional"/>
+        <xs:attribute name="packageId" type="xs:string" use="optional"/>
+        <xs:attribute name="collection" type="xs:string" use="optional"/>
+        <xs:attribute name="institution" type="xs:string" use="optional"/>
+        <xs:attribute name="creator" type="xs:string" use="optional"/>
+        <xs:attribute name="sizeKB" type="xs:long" use="optional"/>
+        <xs:anyAttribute processContents="lax"/>
+    </xs:complexType>
+
+    <xs:complexType name="SummaryType">
+        <xs:sequence>
+            <xs:element name="problems" type="ProblemsType" minOccurs="0"/>
+        </xs:sequence>
+        <xs:attribute name="durationMs" type="xs:long" use="optional"/>
+        <xs:attribute name="startTime" type="xs:string" use="optional"/>
+        <xs:attribute name="finishTime" type="xs:string" use="optional"/>
+        <xs:attribute name="verdict" use="optional">
+            <xs:simpleType>
+                <xs:restriction base="xs:string">
+                    <xs:enumeration value="VALID"/>
+                    <xs:enumeration value="INVALID"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
+    </xs:complexType>
+
+    <xs:complexType name="ProblemsType">
+        <xs:sequence>
+            <xs:element name="problem" type="ProblemType" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+        <xs:attribute name="total" type="xs:int" use="required"/>
+        <xs:attribute name="INFO" type="xs:int" use="optional"/>
+        <xs:attribute name="WARNING" type="xs:int" use="optional"/>
+        <xs:attribute name="ERROR" type="xs:int" use="optional"/>
+    </xs:complexType>
+
+    <xs:complexType name="ProblemType">
+        <xs:simpleContent>
+            <xs:extension base="xs:string">
+                <xs:attribute name="_level" use="required">
+                    <xs:simpleType>
+                        <xs:restriction base="xs:string">
+                            <xs:enumeration value="INFO"/>
+                            <xs:enumeration value="WARNING"/>
+                            <xs:enumeration value="ERROR"/>
+                        </xs:restriction>
+                    </xs:simpleType>
+                </xs:attribute>
+                <xs:attribute name="file" type="xs:string" use="optional"/>
+                <xs:attribute name="xsdFile" type="xs:string" use="optional"/>
+                <xs:attribute name="expectedValue" type="xs:string" use="optional"/>
+                <xs:attribute name="actualValue" type="xs:string" use="optional"/>
+                <xs:attribute name="valueSpec" type="xs:string" use="optional"/>
+                <xs:attribute name="pattern" type="xs:string" use="optional"/>
+                <xs:attribute name="referencedFile" type="xs:string" use="optional"/>
+                <xs:attribute name="referencedValue" type="xs:string" use="optional"/>
+                <xs:attribute name="parentElementSpec" type="xs:string" use="optional"/>
+                <xs:attribute name="attributeSpec" type="xs:string" use="optional"/>
+                <xs:attribute name="label" type="xs:string" use="optional"/>
+                <xs:attribute name="elementSpec" type="xs:string" use="optional"/>
+                <xs:attribute name="toolName" type="xs:string" use="optional"/>
+            </xs:extension>
+        </xs:simpleContent>
+    </xs:complexType>
+
+    <xs:complexType name="SectionsType">
+        <xs:sequence>
+            <xs:element name="section" type="SectionType" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="SectionType">
+        <xs:sequence>
+            <xs:element name="summary" type="SummaryType" minOccurs="0"/>
+            <xs:element name="rule" type="RuleType" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+        <xs:attribute name="name" type="xs:string" use="required"/>
+        <xs:attribute name="description" type="xs:string" use="optional"/>
+    </xs:complexType>
+
+    <xs:complexType name="RuleType">
+        <xs:sequence>
+            <xs:element name="summary" type="SummaryType"/>
+        </xs:sequence>
+        <xs:attribute name="name" type="xs:string" use="required"/>
+        <xs:attribute name="description" type="xs:string" use="optional"/>
+    </xs:complexType>
+
+</xs:schema>
