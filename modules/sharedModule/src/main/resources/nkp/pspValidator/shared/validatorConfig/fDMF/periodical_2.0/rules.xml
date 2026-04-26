@@ -964,9 +964,7 @@
         </rule>
 
         <rule name="INFO_INDENTIFIERS_MATCH_TOP_LEVEL_MODS_IDENTIFIERS">
-            <description>Identifikátory v souboru INFO by měly odpovídat identifikátorům na úrovni TITLE (v případě
-                vícesvazkové monografie) nebo VOLUME (v případě jednosvazkové monografie) v záznamu MODS.
-            </description>
+            <description>Identifikátory v souboru INFO by měly odpovídat identifikátorům na úrovni TITLE v záznamu MODS.</description>
             <validation functionName="checkInfoFileIdentifiersMatchTopLevelModsIdentifiers">
                 <params>
                     <value name="info_file_identifier_list" type="IDENTIFIER_LIST">
