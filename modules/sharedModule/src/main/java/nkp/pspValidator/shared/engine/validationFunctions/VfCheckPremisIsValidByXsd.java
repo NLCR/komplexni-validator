@@ -17,8 +17,6 @@ import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
 import javax.xml.XMLConstants;
-import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.transform.TransformerException;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.validation.Schema;
 import javax.xml.validation.SchemaFactory;
@@ -114,11 +112,10 @@ public class VfCheckPremisIsValidByXsd extends ValidationFunction {
         try {
             Document metsDoc = engine.getXmlDocument(metsFile, true);
             String xpathStr = String.format("/mets:mets/mets:amdSec/%s[starts-with(@ID,'%s')]", amdSecElement, idPrefix);
-            System.err.println("xpathStr:" + xpathStr);
             NodeList techMdEls = (NodeList) engine.buildXpath(xpathStr).evaluate(metsDoc, XPathConstants.NODESET);
             for (int i = 0; i < techMdEls.getLength(); i++) {
                 Element techMdEl = (Element) techMdEls.item(i);
-                validate(techMdEl, metsFile, xsdFile, level, result, idPrefix.equals("OBJ_"));
+                validate(techMdEl, metsFile, xsdFile, level, result);
             }
         } catch (XmlFileParsingException | InvalidXPathExpressionException | XPathExpressionException e) {
             result.addError(new ValidationProblem(level, e.getMessage())
@@ -130,7 +127,7 @@ public class VfCheckPremisIsValidByXsd extends ValidationFunction {
         }
     }
 
-    private void validate(Element techMdEl, File metsFile, File xsdFile, Level level, ValidationResult result, boolean print) {
+    private void validate(Element techMdEl, File metsFile, File xsdFile, Level level, ValidationResult result) {
         String id = techMdEl.getAttribute("ID");
         try {
             String xpathStr = "mets:mdWrap/mets:xmlData/*[1]";
@@ -161,14 +158,6 @@ public class VfCheckPremisIsValidByXsd extends ValidationFunction {
 
             // volitelně: pokud by PREMIS data používala i další prefixy, lze je doplnit stejně
             // ensureNamespaceDeclaration(importedPremisEl, "mix", "http://www.loc.gov/mix/v20");
-
-            if (print) {
-                try {
-                    System.out.println(XmlUtils.elementToString(importedPremisEl));
-                } catch (TransformerException e) {
-                    e.printStackTrace();
-                }
-            }
 
             DOMSource source = new DOMSource(mixDoc);
 
