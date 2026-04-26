@@ -929,9 +929,6 @@
             </validation>
         </rule>
 
-        <!--TODO:identifikatory v INFO-->
-
-
     </rules-section>
 
     <rules-section name="Identifikátory" description="">
@@ -954,7 +951,7 @@
             </validation>
         </rule>
 
-        <!--info identifiers -->
+        <!--INFO identifiers -->
 
         <rule name="INFO_NO_DUPLICATE_IDENTIFIERS">
             <description>Soubor INFO nesmí obsahovat duplikované identifikátory (tedy více identifikátorů stejného
@@ -965,6 +962,44 @@
                     <value name="identifier_list" type="IDENTIFIER_LIST">
                         <value-ref name="INFO_IDENTIFIERS"/>
                     </value>
+                </params>
+            </validation>
+        </rule>
+
+        <rule name="INFO_INDENTIFIERS_MATCH_TOP_LEVEL_MODS_IDENTIFIERS">
+            <description>Identifikátory v souboru INFO by měly odpovídat identifikátorům na úrovni TITLE (v případě
+                vícesvazkové monografie) nebo VOLUME (v případě jednosvazkové monografie) v záznamu MODS.
+            </description>
+            <validation functionName="checkInfoFileIdentifiersMatchTopLevelModsIdentifiers">
+                <params>
+                    <value name="info_file_identifier_list" type="IDENTIFIER_LIST">
+                        <value-ref name="INFO_IDENTIFIERS"/>
+                    </value>
+
+                    <value name="mets_identifier_list_list" type="IDENTIFIER_LIST_LIST">
+                        <!--seznam obsahujici seznam identifikatoru pro kazdy zaznam dmdSec pro MODS-->
+                        <evaluation functionName="getModsIdentifiersForEachDmdsecId">
+                            <params>
+                                <value name="dmdsec_ids" type="STRING_LIST">
+                                    <!--seznam identifikatoru (dmdSec ID)-->
+                                    <evaluation functionName="getStringListByXpath">
+                                        <params>
+                                            <value name="xml_file" type="FILE">
+                                                <value-ref name="PRIMARY-METS_FILE"/>
+                                            </value>
+                                            <value name="xpath" type="STRING">
+                                                /mets:mets/mets:dmdSec[starts-with(@ID, "MODSMD_TITLE")]/@ID
+                                            </value>
+                                        </params>
+                                    </evaluation>
+                                </value>
+                                <value name="mets_file" type="FILE">
+                                    <value-ref name="PRIMARY-METS_FILE"/>
+                                </value>
+                            </params>
+                        </evaluation>
+                    </value>
+
                 </params>
             </validation>
         </rule>

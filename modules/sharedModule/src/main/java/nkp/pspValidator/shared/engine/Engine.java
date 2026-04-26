@@ -216,7 +216,8 @@ public class Engine {
                 return new VfCheckPrimaryMetsDcIdentifiersMatchModsIdentifiers(name, this);
             case "checkFileListsMatch":
                 return new VfCheckFileListsMatch(name, this);
-
+            case "checkInfoFileIdentifiersMatchTopLevelModsIdentifiers":
+                return new VfCheckInfoFileIdentifiersMatchTopLevelModsIdentifiers(name, this);
 
             //mets
             case "checkMetsFilesecSizesMatch":

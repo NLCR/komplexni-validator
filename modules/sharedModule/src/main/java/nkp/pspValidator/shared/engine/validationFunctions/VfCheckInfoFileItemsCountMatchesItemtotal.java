@@ -40,7 +40,7 @@ public class VfCheckInfoFileItemsCountMatchesItemtotal extends ValidationFunctio
             } else if (infoFile.isDirectory()) {
                 return singlErrorResult(invalidFileIsDir(infoFile));
             } else if (!infoFile.canRead()) {
-                return singlErrorResult(invalidCannotReadDir(infoFile));
+                return singlErrorResult(invalidCannotReadFile(infoFile));
             }
 
             return validate(infoFile);

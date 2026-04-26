@@ -218,6 +218,20 @@
         </params-def>
     </validationFunction>
 
+    <validationFunction name="checkInfoFileIdentifiersMatchTopLevelModsIdentifiers">
+        <description>Zkontroluje, že identifikátory uvedené v souboru INFO odpovídají identifikátorům v MODS záznamu na
+            nejvyšší úrovni popisu (např. monografie, periodikum, ...).
+        </description>
+        <params-def>
+            <value name="info_file_identifier_list" type="IDENTIFIER_LIST" min="1" maxOccurs="1"
+                   description="seznam identifikátorů z INFO souboru"/>
+            <value name="mets_identifier_list_list" type="IDENTIFIER_LIST_LIST" min="1" maxOccurs="1"
+                   description="seznam seznamů identifikátorů z MODS záznamu na nejvyšší úrovni popisu (primární)"/>
+            <value name="mets_identifier_list_list_2" type="IDENTIFIER_LIST_LIST" min="0" maxOccurs="1"
+                   description="seznam seznamů identifikátorů z MODS záznamu na nejvyšší úrovni popisu (sekundární), použije se, pokud je primární seznam prázdný"/>
+        </params-def>
+    </validationFunction>
+
     <validationFunction name="checkIdentifiersAllTypesPresent">
         <description>Zkontroluje, že seznamy identifikátorů obsahují všechny požadované typy identifikátorů.
         </description>

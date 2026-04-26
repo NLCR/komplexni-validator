@@ -37,8 +37,6 @@ public class VfCheckInfoFileReferencesPrimaryMets extends ValidationFunction {
     @Override
     public ValidationResult validate() {
         try {
-
-
             checkContractCompliance();
 
             ValueEvaluation paramInfoFile = valueParams.getParams(PARAM_INFO_FILE).get(0).getEvaluation();
@@ -48,13 +46,17 @@ public class VfCheckInfoFileReferencesPrimaryMets extends ValidationFunction {
             } else if (infoFile.isDirectory()) {
                 return singlErrorResult(invalidFileIsDir(infoFile));
             } else if (!infoFile.canRead()) {
-                return singlErrorResult(invalidCannotReadDir(infoFile));
+                return singlErrorResult(invalidCannotReadFile(infoFile));
             }
 
             ValueEvaluation paramPrimaryMetsFile = valueParams.getParams(PARAM_PRIMARY_METS_FILE).get(0).getEvaluation();
             File primaryMetsFile = (File) paramPrimaryMetsFile.getData();
             if (primaryMetsFile == null) {
                 return invalidValueParamNull(PARAM_PRIMARY_METS_FILE, paramPrimaryMetsFile);
+            } else if (primaryMetsFile.isDirectory()) {
+                return singlErrorResult(invalidFileIsDir(primaryMetsFile));
+            } else if (!primaryMetsFile.canRead()) {
+                return singlErrorResult(invalidCannotReadFile(primaryMetsFile));
             }
 
             Level level = Level.ERROR;
