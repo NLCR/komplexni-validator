@@ -62,7 +62,7 @@ public class VfCheckInfoFileIdentifiersMatchTopLevelModsIdentifiers extends Vali
                 ValueEvaluation eval = param.getEvaluation();
                 List<List<Identifier>> listList = (List<List<Identifier>>) eval.getData();
                 if (listList == null) {
-                    return invalidValueParamNull(PARAM_IDENTIFIER_LIST_LIST, eval);
+                    return invalidValueParamNull(PARAM_IDENTIFIER_LIST_LIST_2, eval);
                 } else {
                     modsIidListList2.addAll(listList);
                 }

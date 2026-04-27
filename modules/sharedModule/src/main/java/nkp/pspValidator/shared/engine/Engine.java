@@ -127,6 +127,8 @@ public class Engine {
                 return new EfGetIdentifiersFromInfoFile(name, this);
             case "getIeIdentifiersFromPrimaryMetsFile":
                 return new EfGetIeIdentifiersFromPrimaryMetsFile(name, this);
+            case "selectIeIdentifiersFromPrimaryMetsFile":
+                return new EfSelectIeIdentifiersFromPrimaryMetsFile(name, this);
             case "buildListOfStrings":
                 return new EfBuildListOfStrings(name, this);
             case "filterIdentifersByTypes":

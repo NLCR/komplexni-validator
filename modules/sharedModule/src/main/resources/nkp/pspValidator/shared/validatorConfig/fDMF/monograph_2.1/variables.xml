@@ -591,10 +591,31 @@
 
     <value-def name="IE_IDENTIFIERS" type="IDENTIFIER_LIST">
         <description>seznam identifikátorů intelektuální entity ze souboru PRIMARY-METS</description>
-        <evaluation functionName="getIeIdentifiersFromPrimaryMetsFile">
+        <evaluation functionName="selectIeIdentifiersFromPrimaryMetsFile">
             <params>
-                <value name="primary_mets_file" type="FILE">
-                    <value-ref name="PRIMARY-METS_FILE"/>
+                <!--primární hodnoty - pro VOLUME-->
+                <value name="mets_identifier_list_list" type="IDENTIFIER_LIST_LIST">
+                    <!--seznam obsahujici seznam identifikatoru pro kazdy zaznam dmdSec pro MODS-->
+                    <evaluation functionName="getModsIdentifiersForEachDmdsecId">
+                        <params>
+                            <value name="dmdsec_ids" type="STRING_LIST">
+                                <!--seznam identifikatoru (dmdSec ID)-->
+                                <evaluation functionName="getStringListByXpath">
+                                    <params>
+                                        <value name="xml_file" type="FILE">
+                                            <value-ref name="PRIMARY-METS_FILE"/>
+                                        </value>
+                                        <value name="xpath" type="STRING">
+                                            /mets:mets/mets:dmdSec[starts-with(@ID, "MODSMD_VOLUME")]/@ID
+                                        </value>
+                                    </params>
+                                </evaluation>
+                            </value>
+                            <value name="mets_file" type="FILE">
+                                <value-ref name="PRIMARY-METS_FILE"/>
+                            </value>
+                        </params>
+                    </evaluation>
                 </value>
             </params>
         </evaluation>

@@ -17,6 +17,10 @@ import javax.xml.xpath.XPathExpressionException;
 import java.io.File;
 import java.util.*;
 
+/**
+ * @deprecated Replaced with EfSelectIeIdentifiersFromPrimaryMetsFile with more precise IE id selection
+ */
+@Deprecated
 public class EfGetIeIdentifiersFromPrimaryMetsFile extends EvaluationFunction {
 
     private static final String PARAM_PRIMARY_METS_FILE = "primary_mets_file";
