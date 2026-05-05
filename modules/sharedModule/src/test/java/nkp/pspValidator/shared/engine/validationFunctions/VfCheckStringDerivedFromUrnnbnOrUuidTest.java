@@ -1,6 +1,7 @@
 package nkp.pspValidator.shared.engine.validationFunctions;
 
 import nkp.pspValidator.shared.engine.Engine;
+import nkp.pspValidator.shared.engine.Level;
 import nkp.pspValidator.shared.engine.types.Identifier;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -9,6 +10,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import static junit.framework.TestCase.assertFalse;
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 public class VfCheckStringDerivedFromUrnnbnOrUuidTest {
@@ -32,7 +34,18 @@ public class VfCheckStringDerivedFromUrnnbnOrUuidTest {
     @Test
     public void derivedFromUuid() {
         VfCheckStringDerivedFromUrnnbnOrUuid vf = new VfCheckStringDerivedFromUrnnbnOrUuid(VF_NAME, engine);
-        assertFalse(vf.validate("b50eb6b0-f0a4-11e3-b72e-005056827e52", "uuid:b50eb6b0-f0a4-11e3-b72e-005056827e52", null).hasProblems());
+        assertFalse(vf.validate("b50eb6b0-f0a4-11e3-b72e-005056827e52", "b50eb6b0-f0a4-11e3-b72e-005056827e52", null).hasProblems());
+    }
+
+    @Test
+    public void derivedFromUuidWithPrefix() {
+        VfCheckStringDerivedFromUrnnbnOrUuid vf = new VfCheckStringDerivedFromUrnnbnOrUuid(VF_NAME, engine);
+        ValidationResult result = vf.validate("b50eb6b0-f0a4-11e3-b72e-005056827e52", "uuid:b50eb6b0-f0a4-11e3-b72e-005056827e52", null);
+        List<ValidationProblem> problems = result.getProblems();
+        assertEquals(1, problems.size()); //only single problem
+        ValidationProblem problem = problems.get(0);
+        assertEquals(Level.WARNING, problem.getLevel()); //warning
+        assertEquals("identifikátor UUID by měl být bez prefixu 'uuid:'", problem.getSimpleMessage());
     }
 
     @Test
@@ -40,7 +53,6 @@ public class VfCheckStringDerivedFromUrnnbnOrUuidTest {
         VfCheckStringDerivedFromUrnnbnOrUuid vf = new VfCheckStringDerivedFromUrnnbnOrUuid(VF_NAME, engine);
         assertTrue(vf.validate("uuid:b50eb6b0-f0a4-11e3-b72e-005056827e52", "uuid:b50eb6b0-f0a4-11e3-b72e-005056827e52", null).hasProblems());
         assertTrue(vf.validate("f0a4-11e3-b72e-005056827e52", "uuid:b50eb6b0-f0a4-11e3-b72e-005056827e52", null).hasProblems());
-        assertTrue(vf.validate("b50eb6b0-f0a4-11e3-b72e", "uuid:b50eb6b0-f0a4-11e3-b72e-005056827e52", null).hasProblems());
     }
 
     @Test
@@ -48,7 +60,6 @@ public class VfCheckStringDerivedFromUrnnbnOrUuidTest {
         VfCheckStringDerivedFromUrnnbnOrUuid vf = new VfCheckStringDerivedFromUrnnbnOrUuid(VF_NAME, engine);
         assertTrue(vf.validate("b50eb6b0-f0a4-11e3-b72e-005056827e52", "uuid;b50eb6b0-f0a4-11e3-b72e-005056827e52", null).hasProblems());
         assertTrue(vf.validate("b50eb6b0-f0a4-11e3-b72e-005056827e52", "UUID:b50eb6b0-f0a4-11e3-b72e-005056827e52", null).hasProblems());
-        assertTrue(vf.validate("b50eb6b0-f0a4-11e3-b72e-005056827e52", "b50eb6b0-f0a4-11e3-b72e-005056827e52", null).hasProblems());
 
         assertTrue(vf.validate("b50eb6b0-f0a4-11e3-005056827e52", "uuid:b50eb6b0-f0a4-11e3-005056827e52", null).hasProblems());
         assertTrue(vf.validate("b50eb6b0-f0a4-11e3-b72e-b72e-005056827e52", "uuid:b50eb6b0-f0a4-11e3-b72e-b72e-005056827e52", null).hasProblems());
