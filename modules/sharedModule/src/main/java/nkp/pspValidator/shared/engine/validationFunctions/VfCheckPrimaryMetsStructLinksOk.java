@@ -69,24 +69,36 @@ public class VfCheckPrimaryMetsStructLinksOk extends ValidationFunction {
                 String from = smLinkEl.getAttribute("xlink:from");
                 String to = smLinkEl.getAttribute("xlink:to");
                 if (from.isEmpty() && to.isEmpty()) {
-                    result.addError(Level.ERROR, primaryMetsFile,
-                            "nalezen element smLink s prázdnými/chybějícími atributy xlink:from a xlink:to");
+                    result.addError(new ValidationProblem(Level.ERROR, "nalezen element smLink s prázdnými/chybějícími atributy xlink:from a xlink:to")
+                            .withSimpleMessage("nalezen element smLink s prázdnými/chybějícími atributy xlink:from a xlink:to")
+                            .withFile(primaryMetsFile)
+                    );
                 } else if (from.isEmpty()) {
-                    result.addError(Level.ERROR, primaryMetsFile,
-                            "nalezen element smLink s prázdným/chybějícím atributem xlink:from (xlink:to='%s')", to);
+                    result.addError(new ValidationProblem(Level.ERROR, String.format("nalezen element smLink s prázdným/chybějícím atributem xlink:from (xlink:to='%s')", to))
+                            .withSimpleMessage("nalezen element smLink s prázdným/chybějícím atributem xlink:from (xlink:to='%s')")
+                            .withFile(primaryMetsFile)
+                            .withReferencedValue("xlink:to=" + to)
+                    );
                 } else if (to.isEmpty()) {
-                    result.addError(Level.ERROR, primaryMetsFile,
-                            "nalezen element smLink s prázdným/chybějícím atributem xlink:to (xlink:from='%s')", from);
+                    result.addError(new ValidationProblem(Level.ERROR, String.format("nalezen element smLink s prázdným/chybějícím atributem xlink:to (xlink:from='%s')", from))
+                            .withSimpleMessage("nalezen element smLink s prázdným/chybějícím atributem xlink:to")
+                            .withFile(primaryMetsFile)
+                            .withReferencedValue("xlink:from=" + from)
+                    );
                 } else {
                     if (!logicalObjectIds.contains(from)) {
-                        result.addError(Level.ERROR, primaryMetsFile,
-                                "nalezen element smLink s hodnotou atributu xlink:from (%s), která neodpovídá žádnému atributu mets:div/@ID v logické strukturální mapě",
-                                from);
+                        result.addError(new ValidationProblem(Level.ERROR, String.format("nalezen element smLink s hodnotou atributu xlink:from (%s), která neodpovídá žádnému atributu mets:div/@ID v logické strukturální mapě", from))
+                                .withSimpleMessage("nalezen element smLink s hodnotou atributu xlink:from, která neodpovídá žádnému atributu mets:div/@ID v logické strukturální mapě")
+                                .withFile(primaryMetsFile)
+                                .withReferencedValue("xlink:from=" + from)
+                        );
                     }
                     if (!pageIds.contains(to)) {
-                        result.addError(Level.ERROR, primaryMetsFile,
-                                "nalezen element smLink s hodnotou atributu xlink:to (%s), která neodpovídá žádné stránce ve fyzické strukturální mapě",
-                                to);
+                        result.addError(new ValidationProblem(Level.ERROR, String.format("nalezen element smLink s hodnotou atributu xlink:to (%s), která neodpovídá žádné stránce ve fyzické strukturální mapě", to))
+                                .withSimpleMessage("nalezen element smLink s hodnotou atributu xlink:to, která neodpovídá žádné stránce ve fyzické strukturální mapě")
+                                .withFile(primaryMetsFile)
+                                .withReferencedValue("xlink:to=" + to)
+                        );
                     } else {
                         pageIdsConected.add(to);
                     }
@@ -95,9 +107,11 @@ public class VfCheckPrimaryMetsStructLinksOk extends ValidationFunction {
 
             for (String pageId : pageIds) {
                 if (!pageIdsConected.contains(pageId)) {
-                    result.addError(Level.ERROR, primaryMetsFile,
-                            "sekce structLink neobsahuje záznam pro stránku %s",
-                            pageId);
+                    result.addError(new ValidationProblem(Level.ERROR, String.format("sekce structLink neobsahuje záznam pro stránku %s", pageId))
+                            .withSimpleMessage("sekce structLink neobsahuje záznam pro stránku")
+                            .withFile(primaryMetsFile)
+                            .withReferencedValue(pageId)
+                    );
                 }
             }
         } catch (InvalidXPathExpressionException e) {
