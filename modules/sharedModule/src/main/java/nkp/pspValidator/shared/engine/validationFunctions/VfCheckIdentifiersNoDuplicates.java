@@ -89,7 +89,11 @@ public class VfCheckIdentifiersNoDuplicates extends ValidationFunction {
                     if (valueFound == null) {
                         map.put(id.getType(), id.getValue());
                     } else if (valueFound.equals(id.getValue())) {
-                        result.addError(invalid(Level.WARNING, "seznam obsahuje duplikovaný identifikátor '%s'", id.toString()));
+                        result.addError(new ValidationProblem(Level.WARNING, String.format("seznam obsahuje duplikovaný identifikátor '%s'", id.toString()))
+                                .withSimpleMessage("seznam obsahuje duplikovaný identifikátor")
+                                .withLabel("id_type=" + id.getType())
+                                .withReferencedValue(id.toString())
+                        );
                     }
                 }
             }
