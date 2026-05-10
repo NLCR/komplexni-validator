@@ -108,6 +108,8 @@ public class VfCheckInfoFileIdentifiersMatchTopLevelModsIdentifiers extends Vali
         }
 
         //check if everything in mets-top-level_ids is present in info_ids
+        //disabled duo to specifics of different DMFs
+        /*
         for (int i = 0; i < topLevelModsIds.size(); i++) {
             Identifier idFromMods = topLevelModsIds.get(i);
             if (!listContainsItem(infoIds, idFromMods)) {
@@ -117,6 +119,7 @@ public class VfCheckInfoFileIdentifiersMatchTopLevelModsIdentifiers extends Vali
                 );
             }
         }
+        */
 
         return result;
     }
