@@ -55,28 +55,84 @@ public class VfCheckInfoFileItemsCountMatchesItemtotal extends ValidationFunctio
         ValidationResult result = new ValidationResult();
         try {
             Document infoDoc = engine.getXmlDocument(infoFile, false);
-            Integer itemTotalLc = Integer.valueOf((String) engine.buildXpath("/info/itemlist/@itemtotal").evaluate(infoDoc, XPathConstants.STRING));
-            Integer itemTotalUc = Integer.valueOf((String) engine.buildXpath("/info/itemlist/@ITEMTOTAL").evaluate(infoDoc, XPathConstants.STRING));
-            Integer itemTotal = null;
-            if (itemTotalLc != null) {
-                itemTotal = itemTotalLc;
-            } else if (itemTotalUc != null) {
-                itemTotal = itemTotalUc;
+            Integer itemTotal = extractItemTotal(infoDoc, result);
+            if (itemTotal == null) {
+                result.addError(new ValidationProblem(Level.ERROR, "nenalezen atribut itemtotal/ITEMTOTAL v elementu itemlist")
+                        .withFile(infoFile)
+                );
             }
-            XPathExpression itemsExp = engine.buildXpath("count(/info/itemlist/item)");
-            Integer items = Integer.valueOf((String) itemsExp.evaluate(infoDoc, XPathConstants.STRING));
-            if (items != itemTotal) {
-                return singlErrorResult(invalid(Level.ERROR, infoFile, "počet elementů item (%s) nesouhlasí s obsahem atributu itemtotal (%s)", items, itemTotal));
+
+            Integer itemsSize = extractItemsSize(infoDoc, result);
+            if (itemsSize == null) {
+                result.addError(new ValidationProblem(Level.ERROR, "nepodařilo se zjistit počet elementů itemlist/item v info souboru")
+                        .withFile(infoFile)
+                );
+            }
+
+            if (itemsSize != null && itemTotal != null) {
+                if (!itemsSize.equals(itemTotal)) {
+                    //return singlErrorResult(invalid(Level.ERROR, infoFile, "počet elementů item (%s) nesouhlasí s obsahem atributu itemtotal (%s)", items, itemTotal));
+                    result.addError(new ValidationProblem(Level.ERROR, String.format("počet elementů item (%s) nesouhlasí s obsahem atributu itemtotal/ITEMTOTAL (%s)", itemsSize, itemTotal))
+                            .withSimpleMessage("počet elementů item nesouhlasí s obsahem atributu itemtotal/ITEMTOTAL")
+                            .withExpectedAndActualValues(itemsSize.toString(), itemTotal.toString())
+                            .withFile(infoFile)
+                    );
+                }
             }
         } catch (XmlFileParsingException e) {
             result.addError(invalid(e));
+        }
+        return result;
+    }
+
+    private Integer extractItemsSize(Document infoDoc, ValidationResult result) {
+        try {
+            XPathExpression itemsExp = engine.buildXpath("count(/info/itemlist/item)");
+            return Integer.valueOf((String) itemsExp.evaluate(infoDoc, XPathConstants.STRING));
         } catch (InvalidXPathExpressionException e) {
             result.addError(invalid(e));
         } catch (XPathExpressionException e) {
             result.addError(invalid(e));
-        } finally {
-            return result;
+        } catch (Throwable e) {
+            result.addError(new ValidationProblem(Level.ERROR, e.getMessage()));
         }
+        return null;
+    }
+
+    private Integer extractItemTotal(Document infoDoc, ValidationResult result) {
+        try {
+            //itemtotal
+            String itemTotalLcStr = (String) engine.buildXpath("/info/itemlist/@itemtotal").evaluate(infoDoc, XPathConstants.STRING);
+            if (itemTotalLcStr != null) {
+                try {
+                    return Integer.valueOf(itemTotalLcStr);
+                } catch (NumberFormatException e) {
+                    result.addError(new ValidationProblem(Level.ERROR, "neplatný formát čísla v atributu itemtotal: " + itemTotalLcStr)
+                            .withSimpleMessage("neplatný formát čísla v atributu itemtotal")
+                            .withReferencedValue(itemTotalLcStr)
+                    );
+                }
+            }
+
+            //ITEMTOTAL
+            String itemTotaLUcStr = (String) engine.buildXpath("/info/itemlist/@ITEMTOTAL").evaluate(infoDoc, XPathConstants.STRING);
+            if (itemTotaLUcStr != null && !itemTotaLUcStr.isEmpty()) {
+                try {
+                    return Integer.valueOf(itemTotaLUcStr);
+                } catch (NumberFormatException e) {
+                    result.addError(new ValidationProblem(Level.ERROR, "neplatný formát čísla v atributu ITEMTOTAL: " + itemTotaLUcStr)
+                            .withSimpleMessage("neplatný formát čísla v atributu ITEMTOTAL")
+                            .withReferencedValue(itemTotaLUcStr)
+                    );
+                }
+            }
+
+        } catch (InvalidXPathExpressionException e) {
+            result.addError(invalid(e));
+        } catch (Throwable e) {
+            result.addError(new ValidationProblem(Level.ERROR, e.getMessage()));
+        }
+        return null;
     }
 
 }
