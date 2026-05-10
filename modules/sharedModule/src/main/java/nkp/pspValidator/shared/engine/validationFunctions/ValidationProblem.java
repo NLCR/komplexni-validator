@@ -29,7 +29,7 @@ public class ValidationProblem {
     private final String attributeSpec;
     private final String elementSpec;
     private final String toolName;
-
+    private final String errorDetails;
 
     public ValidationProblem(Level level, String fullMessage) {
         this.level = level;
@@ -48,13 +48,14 @@ public class ValidationProblem {
         this.elementSpec = null;
         this.toolName = null;
         this.valueSpec = null;
+        this.errorDetails = null;
     }
 
     private ValidationProblem(Level level, String fullMessage, String simpleMessage, File file, File xsdFile,
                               String expectedValue, String actualValue, String valueSpec, String pattern,
                               File referencedFile, String referencedValue,
                               String label, String parentElementSpec, String attributeSpec, String elementSpec,
-                              String toolName) {
+                              String toolName, String errorDetails) {
         this.level = level;
         this.fullMessage = fullMessage;
         this.simpleMessage = simpleMessage;
@@ -71,6 +72,7 @@ public class ValidationProblem {
         this.attributeSpec = attributeSpec;
         this.elementSpec = elementSpec;
         this.toolName = toolName;
+        this.errorDetails = errorDetails;
     }
 
     public ValidationProblem withSimpleMessage(String simpleMessage) {
@@ -78,7 +80,7 @@ public class ValidationProblem {
                 this.expectedValue, this.actualValue, this.valueSpec, this.pattern,
                 this.referencedFile, this.referencedValue,
                 this.label, this.parentElementSpec, this.attributeSpec, this.elementSpec,
-                this.toolName);
+                this.toolName, null);
     }
 
     public ValidationProblem withFile(File file) {
@@ -86,7 +88,7 @@ public class ValidationProblem {
                 this.expectedValue, this.actualValue, this.valueSpec, this.pattern,
                 this.referencedFile, this.referencedValue,
                 this.label, this.parentElementSpec, this.attributeSpec, this.elementSpec,
-                this.toolName);
+                this.toolName, null);
     }
 
     public ValidationProblem withXsdFile(File xsdFile) {
@@ -94,7 +96,7 @@ public class ValidationProblem {
                 this.expectedValue, this.actualValue, this.valueSpec, this.pattern,
                 this.referencedFile, this.referencedValue,
                 this.label, this.parentElementSpec, this.attributeSpec, this.elementSpec,
-                this.toolName);
+                this.toolName, null);
     }
 
     public ValidationProblem withExpectedAndActualValues(String expectedValue, String actualValue) {
@@ -102,7 +104,7 @@ public class ValidationProblem {
                 expectedValue, actualValue, this.valueSpec, this.pattern,
                 this.referencedFile, this.referencedValue,
                 this.label, this.parentElementSpec, this.attributeSpec, this.elementSpec,
-                this.toolName);
+                this.toolName, null);
     }
 
     public ValidationProblem withActualValue(String actualValue) {
@@ -110,7 +112,7 @@ public class ValidationProblem {
                 this.expectedValue, actualValue, this.valueSpec, this.pattern,
                 this.referencedFile, this.referencedValue,
                 this.label, this.parentElementSpec, this.attributeSpec, this.elementSpec,
-                this.toolName);
+                this.toolName, null);
     }
 
     public ValidationProblem withValueSpec(String valueSpec) {
@@ -118,7 +120,7 @@ public class ValidationProblem {
                 this.expectedValue, this.actualValue, valueSpec, this.pattern,
                 this.referencedFile, this.referencedValue,
                 this.label, this.parentElementSpec, this.attributeSpec, this.elementSpec,
-                this.toolName);
+                this.toolName, null);
     }
 
     public ValidationProblem withPattern(String pattern) {
@@ -126,7 +128,7 @@ public class ValidationProblem {
                 this.expectedValue, this.actualValue, this.valueSpec, pattern,
                 this.referencedFile, this.referencedValue,
                 this.label, this.parentElementSpec, this.attributeSpec, this.elementSpec,
-                this.toolName);
+                this.toolName, null);
     }
 
     public ValidationProblem withReferencedFile(File referencedFile) {
@@ -134,7 +136,7 @@ public class ValidationProblem {
                 this.expectedValue, this.actualValue, this.valueSpec, this.pattern,
                 referencedFile, this.referencedValue,
                 this.label, this.parentElementSpec, this.attributeSpec, this.elementSpec,
-                this.toolName);
+                this.toolName, null);
     }
 
     public ValidationProblem withReferencedValue(String referencedValue) {
@@ -142,7 +144,7 @@ public class ValidationProblem {
                 this.expectedValue, this.actualValue, this.valueSpec, this.pattern,
                 this.referencedFile, referencedValue,
                 this.label, this.parentElementSpec, this.attributeSpec, this.elementSpec,
-                this.toolName);
+                this.toolName, null);
     }
 
     public ValidationProblem withLabel(String label) {
@@ -150,7 +152,7 @@ public class ValidationProblem {
                 this.expectedValue, this.actualValue, this.valueSpec, this.pattern,
                 this.referencedFile, this.referencedValue,
                 label, this.parentElementSpec, this.attributeSpec, this.elementSpec,
-                this.toolName);
+                this.toolName, null);
     }
 
     public ValidationProblem withParentElementPath(String parentElementSpec) {
@@ -158,7 +160,7 @@ public class ValidationProblem {
                 this.expectedValue, this.actualValue, this.valueSpec, this.pattern,
                 this.referencedFile, this.referencedValue,
                 this.label, parentElementSpec, this.attributeSpec, this.elementSpec,
-                this.toolName);
+                this.toolName, null);
     }
 
     public ValidationProblem withAttributeSpec(String attributeSpec) {
@@ -166,7 +168,7 @@ public class ValidationProblem {
                 this.expectedValue, this.actualValue, this.valueSpec, this.pattern,
                 this.referencedFile, this.referencedValue,
                 this.label, this.parentElementSpec, attributeSpec, this.elementSpec,
-                this.toolName);
+                this.toolName, null);
     }
 
 
@@ -175,7 +177,7 @@ public class ValidationProblem {
                 this.expectedValue, this.actualValue, this.valueSpec, this.pattern,
                 this.referencedFile, this.referencedValue,
                 this.label, this.parentElementSpec, this.attributeSpec, elementSpec,
-                this.toolName);
+                this.toolName, null);
     }
 
     public ValidationProblem withToolName(String toolName) {
@@ -183,7 +185,15 @@ public class ValidationProblem {
                 this.expectedValue, this.actualValue, this.valueSpec, this.pattern,
                 this.referencedFile, this.referencedValue,
                 this.label, this.parentElementSpec, this.attributeSpec, this.elementSpec,
-                toolName);
+                toolName, null);
+    }
+
+    public ValidationProblem withErrorDetails(String errorDetails) {
+        return new ValidationProblem(this.level, this.fullMessage, this.simpleMessage, this.file, this.xsdFile,
+                this.expectedValue, this.actualValue, this.valueSpec, this.pattern,
+                this.referencedFile, this.referencedValue,
+                this.label, this.parentElementSpec, this.attributeSpec, this.elementSpec,
+                this.toolName, errorDetails);
     }
 
     public Level getLevel() {
@@ -191,7 +201,7 @@ public class ValidationProblem {
     }
 
     public String getFullMessage() {
-        if (fullMessage == null) { //fallbacke to simple message or empty string
+        if (fullMessage == null) { //fallback to simple message or empty string
             return simpleMessage != null ? simpleMessage : "";
         }
         return fullMessage;
@@ -251,6 +261,10 @@ public class ValidationProblem {
 
     public String getToolName() {
         return toolName;
+    }
+
+    public String getErrorDetails() {
+        return errorDetails;
     }
 
 }

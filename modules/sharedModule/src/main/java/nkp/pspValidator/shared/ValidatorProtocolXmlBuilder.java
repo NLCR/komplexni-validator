@@ -296,6 +296,9 @@ public class ValidatorProtocolXmlBuilder {
         if (error.getToolName() != null) {
             problemEl.setAttribute("toolName", error.getToolName());
         }
+        if (error.getErrorDetails() != null) {
+            problemEl.setAttribute("errorDetails", error.getErrorDetails());
+        }
     }
 
     private String toPackageRelativePath(String packagePath, File file) {

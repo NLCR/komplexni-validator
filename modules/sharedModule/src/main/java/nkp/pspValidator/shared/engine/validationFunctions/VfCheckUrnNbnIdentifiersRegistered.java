@@ -77,20 +77,35 @@ public class VfCheckUrnNbnIdentifiersRegistered extends ValidationFunction {
         try {
             checker.check(urnNbn);
         } catch (IOException e) {
-            result.addError(Level.ERROR, null, "chyba připojení při zpracování identifikátoru %s: %s", urnNbn, e.getMessage());
-            e.printStackTrace();
+            result.addError(new ValidationProblem(Level.ERROR, String.format("chyba připojení při zpracování identifikátoru %s: %s", urnNbn, e.getMessage()))
+                    .withSimpleMessage("chyba připojení při zpracování identifikátoru urn:nbn")
+                    .withReferencedValue(urnNbn)
+                    .withErrorDetails(e.getMessage())
+            );
         } catch (UrnNbnResolverChecker.ResolverError e) {
-            result.addError(Level.ERROR, null, e.getMessage());
-            //e.printStackTrace();
+            result.addError(new ValidationProblem(Level.ERROR, String.format("chyba od resolveru URN:NBN při zpracování identifikátoru %s: %s", urnNbn, e.getMessage()))
+                    .withSimpleMessage("chyba od resolveru URN:NBN")
+                    .withReferencedValue(urnNbn)
+                    .withErrorDetails(e.getMessage())
+            );
         } catch (UrnNbnResolverChecker.ResolverWarning e) {
-            result.addError(Level.WARNING, null, e.getMessage());
-            //e.printStackTrace();
+            result.addError(new ValidationProblem(Level.WARNING, String.format("varování od resolveru URN:NBN při zpracování identifikátoru %s: %s", urnNbn, e.getMessage()))
+                    .withSimpleMessage("varování od resolveru URN:NBN")
+                    .withReferencedValue(urnNbn)
+                    .withErrorDetails(e.getMessage())
+            );
         } catch (XPathExpressionException e) {
-            result.addError(Level.ERROR, null, e.getMessage());
-            e.printStackTrace();
+            result.addError(new ValidationProblem(Level.ERROR, String.format("chyba při zpracování XPath výrazu při zpracování identifikátoru %s: %s", urnNbn, e.getMessage()))
+                    .withSimpleMessage("chyba při zpracování XPath výrazu")
+                    .withReferencedValue(urnNbn)
+                    .withErrorDetails(e.getMessage())
+            );
         } catch (InvalidXPathExpressionException e) {
-            result.addError(Level.ERROR, null, e.getMessage());
-            e.printStackTrace();
+            result.addError(new ValidationProblem(Level.ERROR, String.format("neplatný XPath výraz při zpracování identifikátoru %s: %s", urnNbn, e.getMessage()))
+                    .withSimpleMessage("neplatný XPath výraz")
+                    .withReferencedValue(urnNbn)
+                    .withErrorDetails(e.getMessage())
+            );
         }
     }
 
