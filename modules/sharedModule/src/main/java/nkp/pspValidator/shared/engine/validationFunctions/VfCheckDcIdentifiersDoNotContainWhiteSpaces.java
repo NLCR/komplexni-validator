@@ -63,7 +63,11 @@ public class VfCheckDcIdentifiersDoNotContainWhiteSpaces extends ValidationFunct
                 Node node = nodes.item(i);
                 String identifier = node.getTextContent();
                 if (identifier.matches(".*\\s.*")) {
-                    result.addError(invalid(Level.WARNING, file, "identifikátor '%s' obsahuje bílé znaky", identifier));
+                    result.addError(new ValidationProblem(Level.INFO, String.format("identifikátor '%s' by neměl obsahovat bílé znaky", identifier))
+                            .withFile(file)
+                            .withReferencedValue(identifier)
+                            .withSimpleMessage("identifikátor by neměl obsahovat bílé znaky")
+                    );
                 }
             }
         } catch (XmlFileParsingException e) {
