@@ -106,7 +106,7 @@
     <xs:complexType name="ProblemType">
         <xs:simpleContent>
             <xs:extension base="xs:string">
-                <xs:attribute name="_level" use="required">
+                <xs:attribute name="level" use="required">
                     <xs:simpleType>
                         <xs:restriction base="xs:string">
                             <xs:enumeration value="INFO"/>

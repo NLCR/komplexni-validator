@@ -255,7 +255,7 @@ public class ValidatorProtocolXmlBuilder {
         //Element problemEl = doc.createElementNS(NS, "problem");
         //problemsEl.appendChild(problemEl);
         Element problemEl = createChildElement(problemsEl, "problem");
-        problemEl.setAttribute("_level", error.getLevel().name());
+        problemEl.setAttribute("level", error.getLevel().name());
         problemEl.setTextContent(error.getSimpleMessage() == null ? error.getFullMessage() : error.getSimpleMessage());
         if (error.getFile() != null) {
             problemEl.setAttribute("file", toPackageRelativePath(packageParentPath, error.getFile()));
