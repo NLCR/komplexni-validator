@@ -47,7 +47,9 @@ public class VfCheckUrnNbnIdentifiersValid extends ValidationFunction {
         for (Identifier identifier : identifiers) {
             if (identifier.getType().equals("urnnbn")) {
                 if (!identifier.getValue().toLowerCase().matches(regexp)) {
-                    result.addError(invalid(Level.ERROR, null, "identifikátor \"" + identifier.getValue() + "\" neodpovídá platné syntaxi"));
+                    result.addError(new ValidationProblem(Level.ERROR, String.format("identifikátor %s neodpovídá platné syntaxi", identifier.getValue()))
+                            .withReferencedValue(identifier.getValue())
+                            .withSimpleMessage("identifikátor urn:nbn neodpovídá platné syntaxi"));
                 }
             }
         }
