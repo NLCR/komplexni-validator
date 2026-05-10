@@ -90,7 +90,11 @@ public class VfCheckSecondaryMetsPhysicalMapOk extends ValidationFunction {
                 String fileIdXpath = String.format("/mets:mets/mets:fileSec/mets:fileGrp[@ID='%s']/mets:file/@ID", filegroupId);
                 String fileId = (String) engine.buildXpath(fileIdXpath).evaluate(doc, XPathConstants.STRING);
                 if (fileId == null || fileId.isEmpty()) {
-                    result.addError(Level.WARNING, file, "nenalezena hodnota %s", fileIdXpath);
+                    result.addError(new ValidationProblem(Level.WARNING, String.format("nenalezena hodnota %s", fileIdXpath))
+                            .withSimpleMessage("nenalezena hodnota xpath")
+                            .withFile(file)
+                            .withPattern(fileIdXpath)
+                    );
                 } else {
                     fileIdsFromFileSec.add(fileId);
                 }
@@ -99,12 +103,21 @@ public class VfCheckSecondaryMetsPhysicalMapOk extends ValidationFunction {
             String structMapXpath = "/mets:mets/mets:structMap[@TYPE='PHYSICAL']";
             Element structMapEl = (Element) engine.buildXpath(structMapXpath).evaluate(doc, XPathConstants.NODE);
             if (structMapEl == null) {
-                result.addError(Level.ERROR, file, "chybí fyzická strukturální mapa (%s)", structMapXpath);
+                result.addError(new ValidationProblem(Level.ERROR, String.format("chybí fyzická strukturální mapa (%s)", structMapXpath))
+                        .withSimpleMessage("chybí fyzická strukturální mapa")
+                        .withFile(file)
+                        .withPattern(structMapXpath)
+                );
             } else {
                 String topLevelDivPath = String.format("mets:div[@TYPE='%s']", expectedPageType);
                 Element topLevelDivEl = (Element) engine.buildXpath(topLevelDivPath).evaluate(structMapEl, XPathConstants.NODE);
                 if (topLevelDivEl == null) {
-                    result.addError(Level.ERROR, file, "fyzická strukturální mapa neobsahuje element %s", topLevelDivPath);
+                    result.addError(new ValidationProblem(Level.ERROR, String.format("fyzická strukturální mapa neobsahuje element %s", topLevelDivPath))
+                            .withSimpleMessage("fyzická strukturální mapa neobsahuje element s očekávanou hodnotou atributu TYPE")
+                            .withFile(file)
+                            .withPattern(topLevelDivPath)
+                    );
+
                 } else {
                     NodeList nodeList = (NodeList) engine.buildXpath("mets:fptr/@FILEID").evaluate(topLevelDivEl, XPathConstants.NODESET);
                     List<String> fileIdsFromStructMap = new ArrayList<>();
@@ -117,14 +130,22 @@ public class VfCheckSecondaryMetsPhysicalMapOk extends ValidationFunction {
                     //all files from fileSec must be referenced in structMap
                     for (String fileIdFromFileSec : fileIdsFromFileSec) {
                         if (!fileIdsFromStructMap.contains(fileIdFromFileSec)) {
-                            result.addError(Level.ERROR, file, "fyzická strukturální mapa neobsahuje odkaz na soubor %s", fileIdFromFileSec);
+                            result.addError(new ValidationProblem(Level.ERROR, String.format("fyzická strukturální mapa neobsahuje odkaz na soubor %s", fileIdFromFileSec))
+                                    .withSimpleMessage("fyzická strukturální mapa neobsahuje odkaz na soubor uvedený ve fileSec")
+                                    .withFile(file)
+                                    .withReferencedValue(fileIdFromFileSec)
+                            );
                         }
                     }
 
                     //all files in structMap must also be referenced in fileSec
                     for (String fileIdFromStructMap : fileIdsFromStructMap) {
                         if (!fileIdsFromFileSec.contains(fileIdFromStructMap)) {
-                            result.addError(Level.ERROR, file, "fyzická strukturální mapa obsahuje odkaz na neočekávaný soubor %s", fileIdFromStructMap);
+                            result.addError(new ValidationProblem(Level.ERROR, String.format("fyzická strukturální mapa obsahuje odkaz na neočekávaný soubor %s", fileIdFromStructMap))
+                                    .withSimpleMessage("fyzická strukturální mapa obsahuje odkaz na neočekávaný soubor, který není uveden ve fileSec")
+                                    .withFile(file)
+                                    .withReferencedValue(fileIdFromStructMap)
+                            );
                         }
                     }
                 }
