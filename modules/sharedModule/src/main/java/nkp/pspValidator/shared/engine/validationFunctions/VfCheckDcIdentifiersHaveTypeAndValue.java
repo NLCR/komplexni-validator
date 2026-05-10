@@ -63,21 +63,27 @@ public class VfCheckDcIdentifiersHaveTypeAndValue extends ValidationFunction {
                 Node node = nodes.item(i);
                 String identifier = node.getTextContent();
                 if (!identifier.contains(":")) {
-                    result.addError(invalid(Level.WARNING, file,
-                            "identifikátor \"%s\" není složen z typu a hodnoty oddělených dvojtečkou"
-                            , identifier));
+                    result.addError(new ValidationProblem(Level.WARNING, String.format("identifikátor \"%s\" není složen z typu a hodnoty oddělených dvojtečkou", identifier))
+                            .withSimpleMessage("identifikátor není složen z typu a hodnoty oddělených dvojtečkou")
+                            .withReferencedValue(identifier)
+                            .withFile(file)
+                    );
                 } else {
                     String[] tokens = identifier.split(":");
                     if (tokens.length == 1) {
-                        result.addError(invalid(Level.WARNING, file,
-                                "identifikátor \"%s\" je složen z typu a hodnoty oddělených dvojtečkou, ale hodnota je prázdná"
-                                , identifier));
+                        result.addError(new ValidationProblem(Level.WARNING, String.format("identifikátor \"%s\" je složen z typu a hodnoty oddělených dvojtečkou, ale hodnota je prázdná", identifier))
+                                .withSimpleMessage("identifikátor je složen z typu a hodnoty oddělených dvojtečkou, ale hodnota je prázdná")
+                                .withReferencedValue(identifier)
+                                .withFile(file)
+                        );
                     } else {
                         String first = tokens[0];
                         if (first.isEmpty()) {
-                            result.addError(invalid(Level.WARNING, file,
-                                    "identifikátor \"%s\" je složen z typu a hodnoty oddělených dvojtečkou, ale typ je prázdný"
-                                    , identifier));
+                            result.addError(new ValidationProblem(Level.WARNING, String.format("identifikátor \"%s\" je složen z typu a hodnoty oddělených dvojtečkou, ale typ je prázdný", identifier))
+                                    .withSimpleMessage("identifikátor je složen z typu a hodnoty oddělených dvojtečkou, ale typ je prázdný")
+                                    .withReferencedValue(identifier)
+                                    .withFile(file)
+                            );
                         }
                     }
                 }
