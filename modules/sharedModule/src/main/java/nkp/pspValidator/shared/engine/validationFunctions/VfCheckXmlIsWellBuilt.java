@@ -11,6 +11,7 @@ import org.xml.sax.SAXException;
 import javax.xml.parsers.ParserConfigurationException;
 import java.io.File;
 import java.io.IOException;
+import java.rmi.ServerError;
 
 
 /**
@@ -35,7 +36,14 @@ public class VfCheckXmlIsWellBuilt extends ValidationFunction {
             ValueEvaluation paramXmlFile = valueParams.getParams(PARAM_XML_FILE).get(0).getEvaluation();
             File xmlFile = (File) paramXmlFile.getData();
             if (xmlFile == null) {
-                return invalidValueParamNull(PARAM_XML_FILE, paramXmlFile);
+                //docela hack, protože ta chyba probublává a mohla by tam být jiná chyba volání checkXmlIsWellBuilt, např. použítí nedefinované reference na soubor
+                ValidationResult result = new ValidationResult();
+                result.addError(new ValidationProblem(Level.ERROR, String.format("chyba parsování xml: %s ", paramXmlFile.getErrorMessage()))
+                        .withSimpleMessage("chyba parsování xml")
+                        .withErrorDetails(paramXmlFile.getErrorMessage())
+                );
+                return result;
+                //return invalidValueParamNull(PARAM_XML_FILE, paramXmlFile);
             } else if (!xmlFile.exists()) {
                 return singlErrorResult(invalidFileDoesNotExist(xmlFile));
             } else if (xmlFile.isDirectory()) {
