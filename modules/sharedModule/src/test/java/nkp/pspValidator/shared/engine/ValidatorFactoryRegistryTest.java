@@ -36,7 +36,7 @@ public class ValidatorFactoryRegistryTest {
         ValidatorConfigurationManager validatorConfigManager = new ValidatorConfigurationManager(validatorConfigDir);
         FdmfRegistry registry = new FdmfRegistry(validatorConfigManager);
 
-        assertEquals(9, registry.getMonographFdmfVersions().size());
+        assertEquals(10, registry.getMonographFdmfVersions().size());
         assertTrue(registry.getMonographFdmfVersions().contains("1.0"));
         assertTrue(registry.getMonographFdmfVersions().contains("1.2"));
         assertTrue(registry.getMonographFdmfVersions().contains("1.3"));
@@ -46,6 +46,7 @@ public class ValidatorFactoryRegistryTest {
         assertTrue(registry.getMonographFdmfVersions().contains("2.0"));
         assertTrue(registry.getMonographFdmfVersions().contains("2.1"));
         assertTrue(registry.getMonographFdmfVersions().contains("2.2"));
+        assertTrue(registry.getMonographFdmfVersions().contains("2.3"));
     }
 
     @Test
@@ -54,7 +55,7 @@ public class ValidatorFactoryRegistryTest {
         ValidatorConfigurationManager validatorConfigManager = new ValidatorConfigurationManager(validatorConfigDir);
         FdmfRegistry registry = new FdmfRegistry(validatorConfigManager);
 
-        assertEquals(8, registry.getPeriodicalFdmfVersions().size());
+        assertEquals(9, registry.getPeriodicalFdmfVersions().size());
         assertTrue(registry.getPeriodicalFdmfVersions().contains("1.4"));
         assertTrue(registry.getPeriodicalFdmfVersions().contains("1.6"));
         assertTrue(registry.getPeriodicalFdmfVersions().contains("1.7"));
@@ -63,6 +64,7 @@ public class ValidatorFactoryRegistryTest {
         assertTrue(registry.getPeriodicalFdmfVersions().contains("1.9"));
         assertTrue(registry.getPeriodicalFdmfVersions().contains("2.0"));
         assertTrue(registry.getPeriodicalFdmfVersions().contains("2.1"));
+        assertTrue(registry.getPeriodicalFdmfVersions().contains("2.2"));
     }
 
     @Test
