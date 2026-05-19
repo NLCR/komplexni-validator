@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <metadataProfile
-        xmlns="http://www.nkp.cz/pspValidator/2.6.1/metadataProfile"
+        xmlns="http://www.nkp.cz/pspValidator/2.7/metadataProfile"
         name="MODS sound recording (RDA)"
-        validatorVersion="2.6.1"
+        validatorVersion="2.7"
         dmf="audio_gram_0.5"
 >
 
