@@ -25,7 +25,7 @@ public class PspZipValidationConfigurationDialog extends AbstractDialog {
 
     @Override
     public int getHeight() {
-        return 800;
+        return 930;
     }
 
     @Override
