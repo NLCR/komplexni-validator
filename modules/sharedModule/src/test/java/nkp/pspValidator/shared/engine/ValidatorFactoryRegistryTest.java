@@ -73,10 +73,11 @@ public class ValidatorFactoryRegistryTest {
         ValidatorConfigurationManager validatorConfigManager = new ValidatorConfigurationManager(validatorConfigDir);
         FdmfRegistry registry = new FdmfRegistry(validatorConfigManager);
 
-        assertEquals(3, registry.getAudioGramFdmfVersions().size());
+        assertEquals(4, registry.getAudioGramFdmfVersions().size());
         assertTrue(registry.getAudioGramFdmfVersions().contains("0.3"));
         assertTrue(registry.getAudioGramFdmfVersions().contains("0.4"));
         assertTrue(registry.getAudioGramFdmfVersions().contains("0.5"));
+        assertTrue(registry.getAudioGramFdmfVersions().contains("1.0"));
     }
 
     @Test
@@ -85,8 +86,9 @@ public class ValidatorFactoryRegistryTest {
         ValidatorConfigurationManager validatorConfigManager = new ValidatorConfigurationManager(validatorConfigDir);
         FdmfRegistry registry = new FdmfRegistry(validatorConfigManager);
 
-        assertEquals(1, registry.getAudioFonoFdmfVersions().size());
+        assertEquals(2, registry.getAudioFonoFdmfVersions().size());
         assertTrue(registry.getAudioFonoFdmfVersions().contains("0.3"));
+        assertTrue(registry.getAudioFonoFdmfVersions().contains("1.0"));
     }
 
 }

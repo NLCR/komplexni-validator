@@ -796,7 +796,7 @@
 
                     
 
-                    <element name="mods:descriptionStandard" mandatory="true">
+                    <element name="mods:descriptionStandard">
                         <expectedContent>
                             <value>aacr</value>
                         </expectedContent>
@@ -830,8 +830,6 @@
             </element>
         </expectedElements>
         <extraRules>
-            <!--  Musí existovat alespoň jeden element originInfo a to s atributem eventType=publication nebo eventType=production -->
-            <existsAtLeastOnce xpath="mods:originInfo[@eventType='publication' or @eventType='production']"/>
             <!-- povinně se vyplní alespoň v jednom originInfo -->
             <existsAtLeastOnce xpath="mods:originInfo/mods:issuance"/>
         </extraRules>

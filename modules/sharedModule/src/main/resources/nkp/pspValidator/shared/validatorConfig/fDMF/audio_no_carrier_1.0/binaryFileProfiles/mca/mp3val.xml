@@ -1,0 +1,20 @@
+<binaryFileProfile
+        xmlns="http://www.nkp.cz/pspValidator/2.7/binaryFileProfile"
+        validatorVersion="2.7"
+        dmf="audio_no_carrier_1.0"
+>
+    <fromText>
+
+        <validation name="MPEG 1/2 Layer III">
+            <textDataExtraction resultType="STRING">
+                <firstNonempty>
+                    <regexp>MPEG [12] Layer III</regexp>
+                </firstNonempty>
+            </textDataExtraction>
+            <rules>
+                <mustExist/>
+            </rules>
+        </validation>
+
+    </fromText>
+</binaryFileProfile>

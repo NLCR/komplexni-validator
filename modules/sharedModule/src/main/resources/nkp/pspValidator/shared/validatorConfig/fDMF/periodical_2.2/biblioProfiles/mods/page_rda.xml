@@ -258,7 +258,7 @@
                     </oneOf>
                 </expectedContent>
             </element>
-            <element name="mods:physicalDescription">
+            <element name="mods:physicalDescription" mandatory="false">
                 <expectedElements>
                     <element name="mods:extent" mandatory="false">
                         <expectedContent/>

@@ -1101,7 +1101,7 @@
 
                     
 
-                    <element name="mods:descriptionStandard" mandatory="true">
+                    <element name="mods:descriptionStandard">
                         <expectedContent>
                             <value>rda</value>
                         </expectedContent>

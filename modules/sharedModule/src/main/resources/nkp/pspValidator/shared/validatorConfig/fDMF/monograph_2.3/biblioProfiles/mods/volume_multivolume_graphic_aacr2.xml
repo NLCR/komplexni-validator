@@ -815,7 +815,7 @@
 
                     
 
-                    <element name="mods:descriptionStandard" mandatory="true">
+                    <element name="mods:descriptionStandard">
                         <expectedContent>
                             <value>aacr</value>
                         </expectedContent>
