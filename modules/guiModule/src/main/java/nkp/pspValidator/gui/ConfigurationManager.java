@@ -49,6 +49,10 @@ public class ConfigurationManager {
     public static final String PROP_FORCE_AUDIO_GRAM_VERSION_CODE = "force.audio_gram.version.code";
     public static final String PROP_FORCE_AUDIO_FONO_VERSION_ENABLED = "force.audio_fono.version.enabled";
     public static final String PROP_FORCE_AUDIO_FONO_VERSION_CODE = "force.audio_fono.version.code";
+    public static final String PROP_FORCE_AUDIO_DISC_VERSION_ENABLED = "force.audio_disc.version.enabled";
+    public static final String PROP_FORCE_AUDIO_DISC_VERSION_CODE = "force.audio_disc.version.code";
+    public static final String PROP_FORCE_AUDIO_NO_CARRIER_VERSION_ENABLED = "force.audio_no_carrier.version.enabled";
+    public static final String PROP_FORCE_AUDIO_NO_CARRIER_VERSION_CODE = "force.audio_no_carrier.version.code";
     public static final String PROP_FORCE_DIGITAL_DISC_VERSION_ENABLED = "force.digital_disc.version.enabled";
     public static final String PROP_FORCE_DIGITAL_DISC_VERSION_CODE = "force.digital_disc.version.code";
     public static final String PROP_PREFER_MON_VERSION_ENABLED = "prefer.monograph.version.enabled";
@@ -59,6 +63,10 @@ public class ConfigurationManager {
     public static final String PROP_PREFER_AUDIO_GRAM_VERSION_CODE = "prefer.audio_gram.version.code";
     public static final String PROP_PREFER_AUDIO_FONO_VERSION_ENABLED = "prefer.audio_fono.version.enabled";
     public static final String PROP_PREFER_AUDIO_FONO_VERSION_CODE = "prefer.audio_fono.version.code";
+    public static final String PROP_PREFER_AUDIO_DISC_VERSION_ENABLED = "prefer.audio_disc.version.enabled";
+    public static final String PROP_PREFER_AUDIO_DISC_VERSION_CODE = "prefer.audio_disc.version.code";
+    public static final String PROP_PREFER_AUDIO_NO_CARRIER_VERSION_ENABLED = "prefer.audio_no_carrier.version.enabled";
+    public static final String PROP_PREFER_AUDIO_NO_CARRIER_VERSION_CODE = "prefer.audio_no_carrier.version.code";
     public static final String PROP_PREFER_DIGITAL_DISC_VERSION_ENABLED = "prefer.digital_disc.version.enabled";
     public static final String PROP_PREFER_DIGITAL_DISC_VERSION_CODE = "prefer.digital_disc.version.code";
     public static final String PROP_PSP_VALIDATION_CREATE_TXT_LOG = "psp_validation.create_txt_log";

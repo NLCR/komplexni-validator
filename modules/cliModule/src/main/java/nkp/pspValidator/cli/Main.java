@@ -499,6 +499,14 @@ public class Main {
                 if (line.hasOption(Params.PREFERRED_DMF_ADF_VERSION)) {
                     preferDmfAdfVersion = line.getOptionValue(Params.PREFERRED_DMF_ADF_VERSION);
                 }
+                String preferDmfAdiVersion = null;
+                if (line.hasOption(Params.PREFERRED_DMF_ADI_VERSION)) {
+                    preferDmfAdiVersion = line.getOptionValue(Params.PREFERRED_DMF_ADI_VERSION);
+                }
+                String preferDmfAdnVersion = null;
+                if (line.hasOption(Params.PREFERRED_DMF_ADN_VERSION)) {
+                    preferDmfAdnVersion = line.getOptionValue(Params.PREFERRED_DMF_ADN_VERSION);
+                }
                 String preferredDmfDadVersion = null;
                 if (line.hasOption(Params.PREFERRED_DMF_DAD_VERSION)) {
                     preferredDmfDadVersion = line.getOptionValue(Params.PREFERRED_DMF_DAD_VERSION);
@@ -519,6 +527,14 @@ public class Main {
                 String forceDmfAdfVersion = null;
                 if (line.hasOption(Params.FORCED_DMF_ADF_VERSION)) {
                     forceDmfAdfVersion = line.getOptionValue(Params.FORCED_DMF_ADF_VERSION);
+                }
+                String forceDmfAdiVersion = null;
+                if (line.hasOption(Params.FORCED_DMF_ADI_VERSION)) {
+                    forceDmfAdiVersion = line.getOptionValue(Params.FORCED_DMF_ADI_VERSION);
+                }
+                String forceDmfAdnVersion = null;
+                if (line.hasOption(Params.FORCED_DMF_ADN_VERSION)) {
+                    forceDmfAdnVersion = line.getOptionValue(Params.FORCED_DMF_ADN_VERSION);
                 }
                 String forcedDmfDadVersion = null;
                 if (line.hasOption(Params.FORCED_DMF_DAD_VERSION)) {
@@ -600,11 +616,15 @@ public class Main {
                 dmfDetectorParams.forcedDmfPerVersion = forceDmfPerVersion;
                 dmfDetectorParams.forcedDmfAdgVersion = forceDmfAdgVersion;
                 dmfDetectorParams.forcedDmfAdfVersion = forceDmfAdfVersion;
+                dmfDetectorParams.forcedDmfAdiVersion = forceDmfAdiVersion;
+                dmfDetectorParams.forcedDmfAdnVersion = forceDmfAdnVersion;
                 dmfDetectorParams.forcedDmfDadVersion = forcedDmfDadVersion;
                 dmfDetectorParams.preferredDmfMonVersion = preferDmfMonVersion;
                 dmfDetectorParams.preferredDmfPerVersion = preferDmfPerVersion;
                 dmfDetectorParams.preferredDmfAdgVersion = preferDmfAdgVersion;
                 dmfDetectorParams.preferredDmfAdfVersion = preferDmfAdfVersion;
+                dmfDetectorParams.preferredDmfAdiVersion = preferDmfAdiVersion;
+                dmfDetectorParams.preferredDmfAdnVersion = preferDmfAdnVersion;
                 dmfDetectorParams.preferredDmfDadVersion = preferredDmfDadVersion;
 
                 PrintStream out = System.out;

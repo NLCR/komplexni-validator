@@ -45,7 +45,7 @@ public class Dmf implements Serializable {
     }
 
     public enum Type implements Serializable {
-        MONOGRAPH, PERIODICAL, AUDIO_GRAM, AUDIO_FONO, DATA_DISC;
+        MONOGRAPH, PERIODICAL, AUDIO_GRAM, AUDIO_FONO, AUDIO_DISC, AUDIO_NO_CARRIER, DATA_DISC;
 
         @Override
         public String toString() {
@@ -58,6 +58,10 @@ public class Dmf implements Serializable {
                     return "Zvukové dokumenty (gramodesky)";
                 case AUDIO_FONO:
                     return "Zvukové dokumenty (fonoválečky)";
+                case AUDIO_DISC:
+                    return "Zvukové dokumenty (zvukové disky)";
+                case AUDIO_NO_CARRIER:
+                    return "Zvukové dokumenty (bez nosiče)";
                 case DATA_DISC:
                     return "Datové disky";
                 default:

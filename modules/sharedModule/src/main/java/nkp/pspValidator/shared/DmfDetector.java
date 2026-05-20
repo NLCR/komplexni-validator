@@ -23,8 +23,10 @@ public class DmfDetector {
 
     public static final String DEFAULT_MONOGRAPH_VERSION = "2.2";
     public static final String DEFAULT_PERIODICAL_VERSION = "2.1";
-    public static final String DEFAULT_AUDIO_GRAM_VERSION = "0.5";
-    public static final String DEFAULT_AUDIO_FONO_VERSION = "0.3";
+    public static final String DEFAULT_AUDIO_GRAM_VERSION = "1.0";
+    public static final String DEFAULT_AUDIO_FONO_VERSION = "1.0";
+    public static final String DEFAULT_AUDIO_DISC_VERSION = "1.0";
+    public static final String DEFAULT_AUDIO_NO_CARRIER_VERSION = "1.0";
     public static final String DEFAULT_DATA_DISC_VERSION = "0.1";
 
 
@@ -53,6 +55,10 @@ public class DmfDetector {
                 return AUDIO_GRAM;
             } else if ("audio cylinder".equals(docType)) {
                 return AUDIO_FONO;
+            }  else if ("audio disc".equals(docType)) {
+                return AUDIO_DISC;
+            }  else if ("digital audio".equals(docType)) {
+                return AUDIO_NO_CARRIER;
             } else if ("data_disc".equals(docType)) {
                 return DATA_DISC;
             } else {
@@ -154,6 +160,12 @@ public class DmfDetector {
             case AUDIO_FONO: {
                 return chooseVersion(AUDIO_FONO, pspRoot, params.forcedDmfAdfVersion, params.preferredDmfAdfVersion, DEFAULT_AUDIO_FONO_VERSION);
             }
+            case AUDIO_DISC: {
+                return chooseVersion(AUDIO_DISC, pspRoot, params.forcedDmfAdiVersion, params.preferredDmfAdiVersion, DEFAULT_AUDIO_DISC_VERSION);
+            }
+            case AUDIO_NO_CARRIER: {
+                return chooseVersion(AUDIO_NO_CARRIER, pspRoot, params.forcedDmfAdnVersion, params.preferredDmfAdnVersion, DEFAULT_AUDIO_NO_CARRIER_VERSION);
+            }
             case DATA_DISC:
                 return chooseVersion(DATA_DISC, pspRoot, params.forcedDmfDadVersion, params.preferredDmfDadVersion, DEFAULT_DATA_DISC_VERSION);
             default:
@@ -182,11 +194,15 @@ public class DmfDetector {
         public String preferredDmfPerVersion;
         public String preferredDmfAdgVersion;
         public String preferredDmfAdfVersion;
+        public String preferredDmfAdiVersion;
+        public String preferredDmfAdnVersion;
         public String preferredDmfDadVersion;
         public String forcedDmfMonVersion;
         public String forcedDmfPerVersion;
         public String forcedDmfAdgVersion;
         public String forcedDmfAdfVersion;
+        public String forcedDmfAdiVersion;
+        public String forcedDmfAdnVersion;
         public String forcedDmfDadVersion;
     }
 

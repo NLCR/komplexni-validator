@@ -49,6 +49,18 @@ public class PspZipValidationConfigurationDialogController extends DialogControl
     CheckBox forcedAdfVersionCheckBox;
 
     @FXML
+    ChoiceBox forcedAdiVersionChoiceBox;
+
+    @FXML
+    CheckBox forcedAdiVersionCheckBox;
+
+    @FXML
+    ChoiceBox forcedAdnVersionChoiceBox;
+
+    @FXML
+    CheckBox forcedAdnVersionCheckBox;
+
+    @FXML
     ChoiceBox forcedDadVersionChoiceBox;
 
     @FXML
@@ -77,6 +89,18 @@ public class PspZipValidationConfigurationDialogController extends DialogControl
 
     @FXML
     CheckBox preferredAdfVersionCheckBox;
+
+    @FXML
+    ChoiceBox preferredAdiVersionChoiceBox;
+
+    @FXML
+    CheckBox preferredAdiVersionCheckBox;
+
+    @FXML
+    ChoiceBox preferredAdnVersionChoiceBox;
+
+    @FXML
+    CheckBox preferredAdnVersionCheckBox;
 
     @FXML
     ChoiceBox preferredDadVersionChoiceBox;
@@ -144,6 +168,8 @@ public class PspZipValidationConfigurationDialogController extends DialogControl
         boolean forcedPerVersionEnabled = mgr.getBooleanOrDefault(ConfigurationManager.PROP_FORCE_PER_VERSION_ENABLED, false);
         boolean forcedAdgVersionEnabled = mgr.getBooleanOrDefault(ConfigurationManager.PROP_FORCE_AUDIO_GRAM_VERSION_ENABLED, false);
         boolean forcedAdfVersionEnabled = mgr.getBooleanOrDefault(ConfigurationManager.PROP_FORCE_AUDIO_FONO_VERSION_ENABLED, false);
+        boolean forcedAdiVersionEnabled = mgr.getBooleanOrDefault(ConfigurationManager.PROP_FORCE_AUDIO_DISC_VERSION_ENABLED, false);
+        boolean forcedAdnVersionEnabled = mgr.getBooleanOrDefault(ConfigurationManager.PROP_FORCE_AUDIO_NO_CARRIER_VERSION_ENABLED, false);
         boolean forcedDadVersionEnabled = mgr.getBooleanOrDefault(ConfigurationManager.PROP_FORCE_DIGITAL_DISC_VERSION_ENABLED, false);
         forcedMonVersionCheckBox.setSelected(forcedMonVersionEnabled);
         forcedMonVersionChoiceBox.setDisable(!forcedMonVersionEnabled);
@@ -153,6 +179,10 @@ public class PspZipValidationConfigurationDialogController extends DialogControl
         forcedAdgVersionChoiceBox.setDisable(!forcedAdgVersionEnabled);
         forcedAdfVersionCheckBox.setSelected(forcedAdfVersionEnabled);
         forcedAdfVersionChoiceBox.setDisable(!forcedAdfVersionEnabled);
+        forcedAdiVersionCheckBox.setSelected(forcedAdiVersionEnabled);
+        forcedAdiVersionChoiceBox.setDisable(!forcedAdiVersionEnabled);
+        forcedAdnVersionCheckBox.setSelected(forcedAdnVersionEnabled);
+        forcedAdnVersionChoiceBox.setDisable(!forcedAdnVersionEnabled);
         forcedDadVersionCheckBox.setSelected(forcedDadVersionEnabled);
         forcedDadVersionChoiceBox.setDisable(!forcedDadVersionEnabled);
         //preferred
@@ -160,6 +190,8 @@ public class PspZipValidationConfigurationDialogController extends DialogControl
         boolean preferredPerVersionEnabled = mgr.getBooleanOrDefault(ConfigurationManager.PROP_PREFER_PER_VERSION_ENABLED, false);
         boolean preferredAdgVersionEnabled = mgr.getBooleanOrDefault(ConfigurationManager.PROP_PREFER_AUDIO_GRAM_VERSION_ENABLED, false);
         boolean preferredAdfVersionEnabled = mgr.getBooleanOrDefault(ConfigurationManager.PROP_PREFER_AUDIO_FONO_VERSION_ENABLED, false);
+        boolean preferredAdiVersionEnabled = mgr.getBooleanOrDefault(ConfigurationManager.PROP_PREFER_AUDIO_DISC_VERSION_ENABLED, false);
+        boolean preferredAdnVersionEnabled = mgr.getBooleanOrDefault(ConfigurationManager.PROP_PREFER_AUDIO_NO_CARRIER_VERSION_ENABLED, false);
         boolean preferredDadVersionEnabled = mgr.getBooleanOrDefault(ConfigurationManager.PROP_PREFER_DIGITAL_DISC_VERSION_ENABLED, false);
         preferredMonVersionCheckBox.setSelected(preferredMonVersionEnabled);
         preferredMonVersionChoiceBox.setDisable(!preferredMonVersionEnabled);
@@ -169,6 +201,10 @@ public class PspZipValidationConfigurationDialogController extends DialogControl
         preferredAdgVersionChoiceBox.setDisable(!preferredAdgVersionEnabled);
         preferredAdfVersionCheckBox.setSelected(preferredAdfVersionEnabled);
         preferredAdfVersionChoiceBox.setDisable(!preferredAdfVersionEnabled);
+        preferredAdiVersionCheckBox.setSelected(preferredAdiVersionEnabled);
+        preferredAdiVersionChoiceBox.setDisable(!preferredAdiVersionEnabled);
+        preferredAdnVersionCheckBox.setSelected(preferredAdnVersionEnabled);
+        preferredAdnVersionChoiceBox.setDisable(!preferredAdnVersionEnabled);
         preferredDadVersionCheckBox.setSelected(preferredDadVersionEnabled);
         preferredDadVersionChoiceBox.setDisable(!preferredDadVersionEnabled);
         //logs
@@ -283,6 +319,48 @@ public class PspZipValidationConfigurationDialogController extends DialogControl
                 forcedAdfVersionChoiceBox.getSelectionModel().selectFirst();
             }
         }
+        //forced - Audio document (audio disc)
+        List<String> forcedAdiVersions = new ArrayList<>();
+        forcedAdiVersions.addAll(main.getValidationDataManager().getFdmfRegistry().getAudioDiscFdmfVersions());
+        Collections.sort(forcedAdiVersions, new VersionComparator());
+        if (forcedAdiVersions != null) {
+            ObservableList<String> adiVersionsObservable = FXCollections.observableArrayList(forcedAdiVersions);
+            forcedAdiVersionChoiceBox.setItems(adiVersionsObservable);
+            String version = mgr.getStringOrDefault(ConfigurationManager.PROP_FORCE_AUDIO_DISC_VERSION_CODE, null);
+            boolean found = false;
+            if (version != null) {
+                for (int i = 0; i < adiVersionsObservable.size(); i++) {
+                    if (version.equals(adiVersionsObservable.get(i))) {
+                        forcedAdiVersionChoiceBox.getSelectionModel().select(i);
+                        found = true;
+                    }
+                }
+            }
+            if (!found) {
+                forcedAdiVersionChoiceBox.getSelectionModel().selectFirst();
+            }
+        }
+        //forced - Audio document (no carrier)
+        List<String> forcedAdnVersions = new ArrayList<>();
+        forcedAdnVersions.addAll(main.getValidationDataManager().getFdmfRegistry().getAudioNoCarrierFdmfVersions());
+        Collections.sort(forcedAdnVersions, new VersionComparator());
+        if (forcedAdnVersions != null) {
+            ObservableList<String> adnVersionsObservable = FXCollections.observableArrayList(forcedAdnVersions);
+            forcedAdnVersionChoiceBox.setItems(adnVersionsObservable);
+            String version = mgr.getStringOrDefault(ConfigurationManager.PROP_FORCE_AUDIO_NO_CARRIER_VERSION_CODE, null);
+            boolean found = false;
+            if (version != null) {
+                for (int i = 0; i < adnVersionsObservable.size(); i++) {
+                    if (version.equals(adnVersionsObservable.get(i))) {
+                        forcedAdnVersionChoiceBox.getSelectionModel().select(i);
+                        found = true;
+                    }
+                }
+            }
+            if (!found) {
+                forcedAdnVersionChoiceBox.getSelectionModel().selectFirst();
+            }
+        }
         //forced - Data disc
         List<String> forcedDadVersions = new ArrayList<>();
         forcedDadVersions.addAll(main.getValidationDataManager().getFdmfRegistry().getDataDiscFdmfVersions());
@@ -388,6 +466,48 @@ public class PspZipValidationConfigurationDialogController extends DialogControl
                 preferredAdfVersionChoiceBox.getSelectionModel().selectFirst();
             }
         }
+        //preferred - Audio document (audio disc)
+        List<String> preferredAdiVersions = new ArrayList<>();
+        preferredAdiVersions.addAll(main.getValidationDataManager().getFdmfRegistry().getAudioDiscFdmfVersions());
+        Collections.sort(preferredAdiVersions, new VersionComparator());
+        if (preferredAdiVersions != null) {
+            ObservableList<String> AdiVersionsObservable = FXCollections.observableArrayList(preferredAdiVersions);
+            preferredAdiVersionChoiceBox.setItems(AdiVersionsObservable);
+            String version = mgr.getStringOrDefault(ConfigurationManager.PROP_PREFER_AUDIO_DISC_VERSION_CODE, null);
+            boolean found = false;
+            if (version != null) {
+                for (int i = 0; i < AdiVersionsObservable.size(); i++) {
+                    if (version.equals(AdiVersionsObservable.get(i))) {
+                        preferredAdiVersionChoiceBox.getSelectionModel().select(i);
+                        found = true;
+                    }
+                }
+            }
+            if (!found) {
+                preferredAdiVersionChoiceBox.getSelectionModel().selectFirst();
+            }
+        }
+        //preferred - Audio document (no carrier)
+        List<String> preferredAdnVersions = new ArrayList<>();
+        preferredAdnVersions.addAll(main.getValidationDataManager().getFdmfRegistry().getAudioNoCarrierFdmfVersions());
+        Collections.sort(preferredAdnVersions, new VersionComparator());
+        if (preferredAdnVersions != null) {
+            ObservableList<String> AdnVersionsObservable = FXCollections.observableArrayList(preferredAdnVersions);
+            preferredAdnVersionChoiceBox.setItems(AdnVersionsObservable);
+            String version = mgr.getStringOrDefault(ConfigurationManager.PROP_PREFER_AUDIO_NO_CARRIER_VERSION_CODE, null);
+            boolean found = false;
+            if (version != null) {
+                for (int i = 0; i < AdnVersionsObservable.size(); i++) {
+                    if (version.equals(AdnVersionsObservable.get(i))) {
+                        preferredAdnVersionChoiceBox.getSelectionModel().select(i);
+                        found = true;
+                    }
+                }
+            }
+            if (!found) {
+                preferredAdnVersionChoiceBox.getSelectionModel().selectFirst();
+            }
+        }
         //preferred - Data disc
         List<String> preferredDadVersions = new ArrayList<>();
         preferredDadVersions.addAll(main.getValidationDataManager().getFdmfRegistry().getDataDiscFdmfVersions());
@@ -457,11 +577,15 @@ public class PspZipValidationConfigurationDialogController extends DialogControl
                 params.forcedDmfPerVersion = forcedPerVersionChoiceBox.isDisabled() ? null : (String) forcedPerVersionChoiceBox.getSelectionModel().getSelectedItem();
                 params.forcedDmfAdgVersion = forcedAdgVersionChoiceBox.isDisabled() ? null : (String) forcedAdgVersionChoiceBox.getSelectionModel().getSelectedItem();
                 params.forcedDmfAdfVersion = forcedAdfVersionChoiceBox.isDisabled() ? null : (String) forcedAdfVersionChoiceBox.getSelectionModel().getSelectedItem();
+                params.forcedDmfAdiVersion = forcedAdiVersionChoiceBox.isDisabled() ? null : (String) forcedAdiVersionChoiceBox.getSelectionModel().getSelectedItem();
+                params.forcedDmfAdnVersion = forcedAdnVersionChoiceBox.isDisabled() ? null : (String) forcedAdnVersionChoiceBox.getSelectionModel().getSelectedItem();
                 params.forcedDmfDadVersion = forcedDadVersionChoiceBox.isDisabled() ? null : (String) forcedDadVersionChoiceBox.getSelectionModel().getSelectedItem();
                 params.preferredDmfMonVersion = preferredMonVersionChoiceBox.isDisabled() ? null : (String) preferredMonVersionChoiceBox.getSelectionModel().getSelectedItem();
                 params.preferredDmfPerVersion = preferredPerVersionChoiceBox.isDisabled() ? null : (String) preferredPerVersionChoiceBox.getSelectionModel().getSelectedItem();
                 params.preferredDmfAdgVersion = preferredAdgVersionChoiceBox.isDisabled() ? null : (String) preferredAdgVersionChoiceBox.getSelectionModel().getSelectedItem();
                 params.preferredDmfAdfVersion = preferredAdfVersionChoiceBox.isDisabled() ? null : (String) preferredAdfVersionChoiceBox.getSelectionModel().getSelectedItem();
+                params.preferredDmfAdiVersion = preferredAdiVersionChoiceBox.isDisabled() ? null : (String) preferredAdiVersionChoiceBox.getSelectionModel().getSelectedItem();
+                params.preferredDmfAdnVersion = preferredAdnVersionChoiceBox.isDisabled() ? null : (String) preferredAdnVersionChoiceBox.getSelectionModel().getSelectedItem();
                 params.preferredDmfDadVersion = preferredDadVersionChoiceBox.isDisabled() ? null : (String) preferredDadVersionChoiceBox.getSelectionModel().getSelectedItem();
                 int verbosity = getSelectedVerbosity();
                 //stage.hide();
@@ -520,6 +644,23 @@ public class PspZipValidationConfigurationDialogController extends DialogControl
         }
     }
 
+    public void forcedAdiVersionChanged(ActionEvent actionEvent) {
+        boolean forced = forcedAdiVersionCheckBox.isSelected();
+        forcedAdiVersionChoiceBox.setDisable(!forced);
+        if (getConfigurationManager() != null) {
+            getConfigurationManager().setBoolean(ConfigurationManager.PROP_FORCE_AUDIO_DISC_VERSION_ENABLED, forced);
+        }
+    }
+
+
+    public void forcedAdnVersionChanged(ActionEvent actionEvent) {
+        boolean forced = forcedAdnVersionCheckBox.isSelected();
+        forcedAdnVersionChoiceBox.setDisable(!forced);
+        if (getConfigurationManager() != null) {
+            getConfigurationManager().setBoolean(ConfigurationManager.PROP_FORCE_AUDIO_NO_CARRIER_VERSION_ENABLED, forced);
+        }
+    }
+
     public void forcedDadVersionChanged(ActionEvent actionEvent) {
         boolean forced = forcedDadVersionCheckBox.isSelected();
         forcedDadVersionChoiceBox.setDisable(!forced);
@@ -553,6 +694,21 @@ public class PspZipValidationConfigurationDialogController extends DialogControl
         String version = (String) forcedAdfVersionChoiceBox.getSelectionModel().getSelectedItem();
         if (getConfigurationManager() != null) {
             getConfigurationManager().setString(ConfigurationManager.PROP_FORCE_AUDIO_FONO_VERSION_CODE, version);
+        }
+    }
+
+    public void forcedAdiVersionChoiceboxChanged(ActionEvent actionEvent) {
+        String version = (String) forcedAdiVersionChoiceBox.getSelectionModel().getSelectedItem();
+        if (getConfigurationManager() != null) {
+            getConfigurationManager().setString(ConfigurationManager.PROP_FORCE_AUDIO_DISC_VERSION_CODE, version);
+        }
+    }
+
+
+    public void forcedAdnVersionChoiceboxChanged(ActionEvent actionEvent) {
+        String version = (String) forcedAdnVersionChoiceBox.getSelectionModel().getSelectedItem();
+        if (getConfigurationManager() != null) {
+            getConfigurationManager().setString(ConfigurationManager.PROP_FORCE_AUDIO_NO_CARRIER_VERSION_CODE, version);
         }
     }
 
@@ -595,6 +751,23 @@ public class PspZipValidationConfigurationDialogController extends DialogControl
         }
     }
 
+    public void preferredAdiVersionChanged(ActionEvent actionEvent) {
+        boolean preferred = preferredAdiVersionCheckBox.isSelected();
+        preferredAdiVersionChoiceBox.setDisable(!preferred);
+        if (getConfigurationManager() != null) {
+            getConfigurationManager().setBoolean(ConfigurationManager.PROP_PREFER_AUDIO_DISC_VERSION_ENABLED, preferred);
+        }
+    }
+
+
+    public void preferredAdnVersionChanged(ActionEvent actionEvent) {
+        boolean preferred = preferredAdnVersionCheckBox.isSelected();
+        preferredAdnVersionChoiceBox.setDisable(!preferred);
+        if (getConfigurationManager() != null) {
+            getConfigurationManager().setBoolean(ConfigurationManager.PROP_PREFER_AUDIO_NO_CARRIER_VERSION_ENABLED, preferred);
+        }
+    }
+
     public void preferreDadVersionChanged(ActionEvent actionEvent) {
         boolean preferred = preferredDadVersionCheckBox.isSelected();
         preferredDadVersionChoiceBox.setDisable(!preferred);
@@ -628,6 +801,21 @@ public class PspZipValidationConfigurationDialogController extends DialogControl
         String version = (String) preferredAdfVersionChoiceBox.getSelectionModel().getSelectedItem();
         if (getConfigurationManager() != null) {
             getConfigurationManager().setString(ConfigurationManager.PROP_PREFER_AUDIO_FONO_VERSION_CODE, version);
+        }
+    }
+
+    public void preferredAdiVersionChoiceboxChanged(ActionEvent actionEvent) {
+        String version = (String) preferredAdiVersionChoiceBox.getSelectionModel().getSelectedItem();
+        if (getConfigurationManager() != null) {
+            getConfigurationManager().setString(ConfigurationManager.PROP_PREFER_AUDIO_DISC_VERSION_CODE, version);
+        }
+    }
+
+
+    public void preferredAdnVersionChoiceboxChanged(ActionEvent actionEvent) {
+        String version = (String) preferredAdnVersionChoiceBox.getSelectionModel().getSelectedItem();
+        if (getConfigurationManager() != null) {
+            getConfigurationManager().setString(ConfigurationManager.PROP_PREFER_AUDIO_NO_CARRIER_VERSION_CODE, version);
         }
     }
 
