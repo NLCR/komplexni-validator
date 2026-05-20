@@ -7,7 +7,7 @@
       fx:controller="nkp.pspValidator.gui.PspZipValidationConfigurationDialogController"
       fx:id="container"
       minHeight="930"
-      minWidth="650"
+      minWidth="750"
       alignment="CENTER"
       spacing="20"
 >
