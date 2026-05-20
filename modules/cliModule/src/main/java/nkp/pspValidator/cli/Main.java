@@ -186,6 +186,24 @@ public class Main {
                 .create());
         options.addOption(OptionBuilder
                 .withDescription(replaceUmlaut(
+                        "Preferovaná verze DMF pro validaci zvukových dokumentů - zvukových disků. " +
+                                "Použije se k validaci, pokud je balík typu Zvukový dokument (zvukový disk), data balíku neobsahují informaci o vhodné verzi DMF Zvukové dokumenty " +
+                                "a parametr --" + Params.FORCED_DMF_ADI_VERSION + " není vyplněn."))
+                .hasArg()
+                .withArgName("VERZE")
+                .withLongOpt(Params.PREFERRED_DMF_ADI_VERSION)
+                .create());
+        options.addOption(OptionBuilder
+                .withDescription(replaceUmlaut(
+                        "Preferovaná verze DMF pro validaci zvukových dokumentů - zvukových dokumentů bez nosiče. " +
+                                "Použije se k validaci, pokud je balík typu Zvukový dokument (zvukové dokumenty bez nosiče), data balíku neobsahují informaci o vhodné verzi DMF Zvukové dokumenty " +
+                                "a parametr --" + Params.FORCED_DMF_ADN_VERSION + " není vyplněn."))
+                .hasArg()
+                .withArgName("VERZE")
+                .withLongOpt(Params.PREFERRED_DMF_ADN_VERSION)
+                .create());
+        options.addOption(OptionBuilder
+                .withDescription(replaceUmlaut(
                         "Preferovaná verze DMF pro validaci datových disků. " +
                                 "Použije se k validaci, pokud je balík typu Datový disk, data balíku neobsahují informaci o vhodné verzi DMF Datové disky " +
                                 "a parametr --" + Params.FORCED_DMF_DAD_VERSION + " není vyplněn."))
@@ -225,6 +243,22 @@ public class Main {
                 .hasArg()
                 .withArgName("VERZE")
                 .withLongOpt(Params.FORCED_DMF_ADF_VERSION)
+                .create());
+        options.addOption(OptionBuilder
+                .withDescription(replaceUmlaut(
+                        "Vynucená verze DMF pro validaci zvukových dokumentů - zvukových disků. " +
+                                "Použije se k validaci všech balíků typu Zvukový dokument (zvukový disk) bez ohledu na data balíků a hodnotu parametru --" + Params.PREFERRED_DMF_ADI_VERSION + "."))
+                .hasArg()
+                .withArgName("VERZE")
+                .withLongOpt(Params.FORCED_DMF_ADI_VERSION)
+                .create());
+        options.addOption(OptionBuilder
+                .withDescription(replaceUmlaut(
+                        "Vynucená verze DMF pro validaci zvukových dokumentů - zvukových dokumentů bez nosiče. " +
+                                "Použije se k validaci všech balíků typu Zvukový dokument (zvukový dokument bez nosiče) bez ohledu na data balíků a hodnotu parametru --" + Params.PREFERRED_DMF_ADN_VERSION + "."))
+                .hasArg()
+                .withArgName("VERZE")
+                .withLongOpt(Params.FORCED_DMF_ADN_VERSION)
                 .create());
         options.addOption(OptionBuilder
                 .withDescription(replaceUmlaut(
