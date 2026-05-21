@@ -53,10 +53,24 @@ public class SkippedManagerImpl implements SkippedManager {
         //audio fonographic cylinder
         List<String> adfVersions = new ArrayList<>();
         adfVersions.addAll(mgr.getFdmfRegistry().getAudioFonoFdmfVersions());
-        Collections.sort(adgVersions, new VersionComparator());
+        Collections.sort(adfVersions, new VersionComparator());
         for (String adfVersion : adfVersions) {
             result.add(new Dmf(Dmf.Type.AUDIO_FONO, adfVersion));
         }
+        //audio disc
+        List<String> adiVersions = new ArrayList<>();
+        adiVersions.addAll(mgr.getFdmfRegistry().getAudioDiscFdmfVersions());
+        Collections.sort(adiVersions, new VersionComparator());
+        for (String adiVersion : adiVersions) {
+            result.add(new Dmf(Dmf.Type.AUDIO_DISC, adiVersion));
+        }        
+        //audio no carrier
+        List<String> adnVersions = new ArrayList<>();
+        adnVersions.addAll(mgr.getFdmfRegistry().getAudioDiscFdmfVersions());
+        Collections.sort(adnVersions, new VersionComparator());
+        for (String adnVersion : adnVersions) {
+            result.add(new Dmf(Dmf.Type.AUDIO_NO_CARRIER, adnVersion));
+        }        
         //data disc
         List<String> daDVersions = new ArrayList<>();
         daDVersions.addAll(mgr.getFdmfRegistry().getDataDiscFdmfVersions());
