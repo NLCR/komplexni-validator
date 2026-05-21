@@ -1,5 +1,5 @@
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
-    <!--XML Schema pro soubor INFO pro DMF Zvuk-fonoválečky 0.3-->
+    <!--XML Schema pro soubor INFO pro DMF Zvuk-fonoválečky 1.0-->
 
     <!--METS Profile requirement id infoxml2-->
     <xs:element name="info">
@@ -90,6 +90,7 @@
             <xs:enumeration value="0.1"/>
             <xs:enumeration value="0.2"/>
             <xs:enumeration value="0.3"/>
+            <xs:enumeration value="1.0"/>
         </xs:restriction>
     </xs:simpleType>
 
