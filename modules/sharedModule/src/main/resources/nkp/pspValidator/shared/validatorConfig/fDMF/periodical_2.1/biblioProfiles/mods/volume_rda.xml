@@ -32,7 +32,7 @@
                     <regexp>MODS_VOLUME_[0-9]{4}</regexp>>
                 </expectedContent>
             </attribute>
-            <attribute name="version" mandatory="false">
+            <attribute name="version">
                 <expectedContent>
                     <value>3.8</value>
                 </expectedContent>
