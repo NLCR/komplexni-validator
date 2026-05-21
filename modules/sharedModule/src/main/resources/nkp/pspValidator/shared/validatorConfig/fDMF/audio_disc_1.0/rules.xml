@@ -99,8 +99,7 @@
                         <value-ref name="PRIMARY-METS_FILE"/>
                     </value>
                     <pattern name="pattern">
-                        <!--MAIN_METS namísto FILENAME, viz issue #208. V novějších fDMF změnit zpět na FILENAME.-->
-                        <pattern-ref name="MAIN_METS"/>
+                        <pattern-ref name="FILENAME"/>
                     </pattern>
                 </params>
             </validation>
@@ -1281,7 +1280,7 @@
 
 
         <rule name="INFO_XML_VALID_BY_XSD">
-            <description>Soubor INFO by měl být validní podle XML Schema (info_adg_0.5.xsd).</description>
+            <description>Soubor INFO by měl být validní podle XML Schema (info_adi_1.0.xsd).</description>
             <validation functionName="checkXmlIsValidByXsd">
                 <params>
                     <value name="xml_file" type="FILE">

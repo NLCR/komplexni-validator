@@ -77,7 +77,7 @@
                                         </expectedElements>
                                     </element>
 
-                                    <element name="premis:preservationLevel" mandatory="false" repeatable="true">
+                                    <element name="premis:preservationLevel" repeatable="true">
                                         <expectedElements>
                                             <element name="premis:preservationLevelValue" mandatory="true" repeatable="false">
                                                 <expectedContent>

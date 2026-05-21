@@ -88,7 +88,7 @@
                                                         <!--Nejasne, jestli "middle (mix) endian", nebo "middle endian" a "mix endian", nechavam vse-->
                                                         <value>middle endian</value>
                                                         <value>mix endian</value>
-                                                        <value>middle (mix) endian</value>
+
                                                     </oneOf>
                                                 </expectedContent>
                                             </element>
@@ -141,7 +141,7 @@
                                                                                 <expectedContent/>
                                                                             </element>
 
-                                                                            <element name="mix:iccProfileURL"
+                                                                            <element name="mix:iccProfileURI"
                                                                                      mandatory="false"
                                                                                      repeatable="false">
                                                                                 <expectedContent/>

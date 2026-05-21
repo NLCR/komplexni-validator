@@ -412,7 +412,7 @@
 
                     
 
-                    <element name="mods:descriptionStandard" mandatory="true">
+                    <element name="mods:descriptionStandard" mandatory="false">
                         <expectedContent>
                             <value>rda</value>
                         </expectedContent>

@@ -698,6 +698,17 @@
                 </expectedElements>
             </element>
             <element name="mods:tableOfContents" mandatory="false">
+                <expectedAttributes>
+                    <attribute name="displayLabel">
+                        <expectedContent>
+                            <oneOf>
+                                <value>Contents</value>
+                                <value>Incomplete contents</value>
+                                <value>Partial contents</value>
+                            </oneOf>
+                        </expectedContent>
+                    </attribute>
+                </expectedAttributes>
                 <expectedContent/>
             </element>
             <element name="mods:note" mandatory="false">
@@ -995,7 +1006,7 @@
 
                     
 
-                    <element name="mods:descriptionStandard" mandatory="true">
+                    <element name="mods:descriptionStandard">
                         <expectedContent>
                             <value>rda</value>
                         </expectedContent>
