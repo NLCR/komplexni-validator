@@ -225,6 +225,9 @@
                         <value-ref name="OCR-ALTO-DIR_FILE"/>
                     </value>
                     <value name="file" type="FILE">
+                        <value-ref name="ORIGINALDATA-DIR_FILE"/>
+                    </value>
+                    <value name="file" type="FILE">
                         <value-ref name="MASTER-COPY-DIR_FILE"/>
                     </value>
                     <value name="file" type="FILE">

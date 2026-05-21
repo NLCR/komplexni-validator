@@ -226,6 +226,9 @@
                     <value name="file" type="FILE">
                         <value-ref name="USER-COPY-DIR_FILE"/>
                     </value>
+                    <value name="file" type="FILE">
+                        <value-ref name="ORIGINALDATA-DIR_FILE"/>
+                    </value>
                     <!--audio-->
                     <value name="file" type="FILE">
                         <value-ref name="SOURCE-AUDIO-DIR_FILE"/>

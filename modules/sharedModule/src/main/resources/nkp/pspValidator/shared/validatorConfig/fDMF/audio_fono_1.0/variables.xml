@@ -1,6 +1,6 @@
 <fDMF xmlns="http://www.nkp.cz/pspValidator/2.7/fdmfConfig"
       validatorVersion="2.7"
-      dmf="audio_fono_1.0"
+      dmf="audio_disc_1.0"
 >
     <description>
         Zde jsou definovány proměnné. K jejich vyhodnocení jsou použity funkce, další proměnné, vzory a
@@ -77,8 +77,7 @@
                 </value>
                 <pattern name="pattern">
                     <!--
-                        V issue #208 byla zmíněna potřeba přijímat balíčky s main_mets_*.xml i s mets_*.xml. Níže je
-                    upraven regex tak, aby validátor našel obě názvové varianty metsu.
+                        V issue #208 byla zmíněna potřeba přijímat balíčky s main_mets_*.xml i s mets_*.xml. Níže je upraven regex tak, aby validátor našel obě názvové varianty metsu.
                         V novějších fDMF bude nutné upravit dle nově navrženého názvu metsu.
                     -->
                     <description>Vzor pro jméno souboru PRIMARY-METS.</description>
@@ -202,6 +201,20 @@
             </params>
         </evaluation>
     </value-def>
+    
+    <value-def name="ORIGINALDATA-DIR_FILES" type="FILE_LIST">
+        <evaluation functionName="findFilesInDirByPattern">
+            <params>
+                <value name="dir" type="FILE">
+                    <value-ref name="PSP_DIR"/>
+                </value>
+                <pattern name="pattern">
+                    <description>Vzor pro jméno adresáře ORIGINALDATA-DIR.</description>
+                    <expression caseSensitive="true">originaldata</expression>
+                </pattern>
+            </params>
+        </evaluation>
+    </value-def>
 
     <value-def name="USER-COPY-DIR_FILES" type="FILE_LIST">
         <evaluation functionName="findFilesInDirByPattern">
@@ -308,6 +321,16 @@
             <params>
                 <value name="files" type="FILE_LIST">
                     <value-ref name="MASTER-COPY-DIR_FILES"/>
+                </value>
+            </params>
+        </evaluation>
+    </value-def>
+    
+    <value-def name="ORIGINALDATA-DIR_FILE" type="FILE">
+        <evaluation functionName="getFirstFileFromFileList">
+            <params>
+                <value name="files" type="FILE_LIST">
+                    <value-ref name="ORIGINALDATA-DIR_FILES"/>
                 </value>
             </params>
         </evaluation>

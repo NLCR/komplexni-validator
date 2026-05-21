@@ -175,6 +175,21 @@
             </params>
         </evaluation>
     </value-def>
+    
+    
+    <value-def name="ORIGINALDATA-DIR_FILES" type="FILE_LIST">
+        <evaluation functionName="findFilesInDirByPattern">
+            <params>
+                <value name="dir" type="FILE">
+                    <value-ref name="PSP_DIR"/>
+                </value>
+                <pattern name="pattern">
+                    <description>Vzor pro jméno adresáře ORIGINALDATA-DIR.</description>
+                    <expression caseSensitive="true">originaldata</expression>
+                </pattern>
+            </params>
+        </evaluation>
+    </value-def>
 
 
     <value-def name="MASTER-COPY-DIR_FILES" type="FILE_LIST">
@@ -228,6 +243,16 @@
             <params>
                 <value name="files" type="FILE_LIST">
                     <value-ref name="OCR-ALTO-DIR_FILES"/>
+                </value>
+            </params>
+        </evaluation>
+    </value-def>
+    
+    <value-def name="ORIGINALDATA-DIR_FILE" type="FILE">
+        <evaluation functionName="getFirstFileFromFileList">
+            <params>
+                <value name="files" type="FILE_LIST">
+                    <value-ref name="ORIGINALDATA-DIR_FILES"/>
                 </value>
             </params>
         </evaluation>
