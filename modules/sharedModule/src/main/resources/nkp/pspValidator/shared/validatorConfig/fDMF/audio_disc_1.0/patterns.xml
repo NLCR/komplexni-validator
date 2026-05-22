@@ -21,14 +21,6 @@
         <expression caseSensitive="true">[a-z0-9_\-\.]+</expression>
     </pattern-def>
 
-    <pattern-def name="MAIN_METS">
-        <description>
-            Protože jsme dle požadavku v issue #208 museli upravit proměnnou PRIMARY-METS_FILE, aby validátor nalezl a pracoval s mets i main_mets,
-            zavádíme tento pattern, abychom mohli zároveň vymáhat název hlavního metadatového souboru striktně dle DMF (main_mets).
-        </description>
-        <expression caseSensitive="true">^(?=[a-z0-9_.-]+$)main_mets_${PSP_ID}\.xml$</expression>
-    </pattern-def>
-
     <pattern-def name="INFO_FILENAME_FOR_PSP_ID_DETECTION">
         <description>
             Vzor pro nalezení souboru INFO pouze za účelem získání PSP-ID z jeho obsahu.

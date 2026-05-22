@@ -78,7 +78,7 @@
                 <pattern name="pattern">
                     <!--
                         V issue #208 byla zmíněna potřeba přijímat balíčky s main_mets_*.xml i s mets_*.xml. Níže je upraven regex tak, aby validátor našel obě názvové varianty metsu.
-                        V novějších fDMF bude nutné upravit dle nově navrženého názvu metsu.
+                        Ve fDMF pro audio 1.0 už vynucujeme tvar "mets_*.xml" a při jeho nedodržení je hlášena chyba. Regex níže však stále ponecháváme, aby validátor nalezl obě varianty metsu.
                     -->
                     <description>Vzor pro jméno souboru PRIMARY-METS.</description>
                     <expression caseSensitive="true">(:?main_)?mets_${PSP_ID}\.xml</expression>
