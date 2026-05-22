@@ -82,7 +82,10 @@
                                             <element name="premis:preservationLevelValue" mandatory="true"
                                                      repeatable="false">
                                                 <expectedContent>
-                                                    <value>deleted</value>
+                                                    <oneOf>
+                                                        <value>deleted</value>
+                                                        <value>bit-level</value>
+                                                    </oneOf>
                                                 </expectedContent>
                                             </element>
 
