@@ -116,7 +116,7 @@ public class VfCheckXmlIsValidByXsd extends ValidationFunction {
             validator.validate(xmlFileSource);
         } catch (SAXException e) {
             //result.addError(level, xmlFile, "obsah souboru není validní podle Xml schema ze souboru %s: %s", xsdFile.getAbsolutePath(), e.getMessage());
-            result.addError(new ValidationProblem(Level.ERROR, String.format("obsah souboru není validní podle Xml schema ze souboru %s: %s", xsdFile.getAbsolutePath(), e.getMessage()))
+            result.addError(new ValidationProblem(Level.ERROR, String.format("obsah souboru %s není validní podle Xml schema ze souboru %s: %s", xmlFile, xsdFile.getAbsolutePath(), e.getMessage()))
                     .withFile(xmlFile)
                     .withXsdFile(xsdFile)
                     .withSimpleMessage("obsah souboru není validní podle XSD schématu: " + e.getMessage())
