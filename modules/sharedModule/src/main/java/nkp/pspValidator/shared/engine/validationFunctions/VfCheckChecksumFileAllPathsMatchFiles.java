@@ -153,13 +153,21 @@ public class VfCheckChecksumFileAllPathsMatchFiles extends ValidationFunction {
     private void checkSetsAreSame(ValidationResult result, Set<File> filesFromParams, Set<File> filesFromFile) {
         for (File file : filesFromParams) {
             if (!filesFromFile.contains(file)) {
-                result.addError(invalid(Level.ERROR, file, "nenalezen záznam pro soubor"));
+                result.addError(
+                    new ValidationProblem(Level.ERROR, String.format("nenalezen záznam pro soubor: '%s'", file))
+                        .withSimpleMessage("nenalezen záznam pro soubor")
+                        .withFile(file)
+                );
             }
         }
 
         for (File file : filesFromFile) {
             if (!filesFromParams.contains(file)) {
-                result.addError(invalid(Level.ERROR, file, "nalezený soubor nebyl očekáván"));
+                result.addError(
+                    new ValidationProblem(Level.ERROR, String.format("nalezený soubor nebyl očekáván: '%s'", file))
+                        .withSimpleMessage("nalezený soubor nebyl očekáván")
+                        .withFile(file)
+                );
             }
         }
     }
