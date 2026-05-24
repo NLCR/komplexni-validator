@@ -2992,7 +2992,7 @@
     <rules-section name="OCR ALTO" description="Kontrola souborů ALTO.">
 
         <rule name="OCR-ALTO_FILES_VALID_BY_XSD">
-            <description>Soubory OCR-ALTO musí být validní podle XML Schema (alto_2.0.xsd).</description>
+            <description>Soubory OCR-ALTO musí být validní podle XML Schema (alto_4.4.xsd).</description>
             <validation functionName="checkXmlIsValidByXsd">
                 <params>
                     <value name="xml_files" type="FILE_LIST">
