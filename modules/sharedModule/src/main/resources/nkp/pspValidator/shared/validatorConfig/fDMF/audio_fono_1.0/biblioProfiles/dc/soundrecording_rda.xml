@@ -53,6 +53,10 @@
                 </expectedContent>
             </element>
 
+            <element name="dc:identifier" errorMessage="Očekáván alespoň jeden povinný element dc:identifier.">
+                <expectedContent/>
+            </element>
+
             <element name="dc:description" mandatory="false">
                 <expectedContent/>
             </element>
