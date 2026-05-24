@@ -31,11 +31,15 @@
                                 <xs:attribute name="type" use="required">
                                     <xs:simpleType>
                                         <xs:restriction base="xs:string">
-                                            <!--podle seznamu na str. 13-->
                                             <xs:enumeration value="isbn"/>
                                             <xs:enumeration value="issn"/>
                                             <xs:enumeration value="ccnb"/>
                                             <xs:enumeration value="urnnbn"/>
+                                            <xs:enumeration value="uuid"/>
+                                            <xs:enumeration value="issuenumber"/>
+                                            <xs:enumeration value="matrixnumber"/>
+                                            <xs:enumeration value="upc"/>
+                                            <xs:enumeration value="ean"/>
                                         </xs:restriction>
                                     </xs:simpleType>
                                 </xs:attribute>
