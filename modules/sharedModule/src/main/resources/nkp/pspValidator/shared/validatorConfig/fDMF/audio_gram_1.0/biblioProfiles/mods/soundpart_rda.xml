@@ -198,9 +198,9 @@
             <element name="mods:genre" specification="not(text()='sound part')" mandatory="false">
                 <expectedAttributes>
                     <attribute name="authority" mandatory="false">
-                        <expectedContent>
+                        <recommendedContent>
                             <value>czenas</value>
-                        </expectedContent>
+                        </recommendedContent>
                     </attribute>
                 </expectedAttributes>
                 <expectedContent/>
@@ -355,9 +355,9 @@
                     <element name="mods:recordContentSource" mandatory="false">
                         <expectedAttributes>
                             <attribute name="authority" mandatory="false">
-                                <expectedContent>
+                                <recommendedContent>
                                     <value>siglaADR</value>
-                                </expectedContent>
+                                </recommendedContent>
                             </attribute>
                         </expectedAttributes>
                         <expectedContent>

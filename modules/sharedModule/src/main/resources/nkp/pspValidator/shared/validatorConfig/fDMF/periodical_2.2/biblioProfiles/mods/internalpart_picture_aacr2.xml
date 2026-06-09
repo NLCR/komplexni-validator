@@ -216,9 +216,9 @@
             <element name="mods:genre" specification="not(text()='picture')" mandatory="false">
                 <expectedAttributes>
                     <attribute name="authority" mandatory="false">
-                        <expectedContent>
+                        <recommendedContent>
                             <value>czenas</value>
-                        </expectedContent>
+                        </recommendedContent>
                     </attribute>
                 </expectedAttributes>
                 <expectedContent/>
@@ -237,9 +237,9 @@
                                 </attribute>
 
                                 <attribute name="authority">
-                                    <expectedContent>
+                                    <recommendedContent>
                                         <value>iso639-2b</value>
-                                    </expectedContent>
+                                    </recommendedContent>
                                 </attribute>
                             </expectedAttributes>
                             <expectedContent>

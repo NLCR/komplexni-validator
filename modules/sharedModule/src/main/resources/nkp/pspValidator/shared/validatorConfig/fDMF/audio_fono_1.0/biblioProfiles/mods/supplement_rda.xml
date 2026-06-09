@@ -230,9 +230,9 @@
             <element name="mods:genre" specification="not(text()='supplement')" mandatory="false">
                 <expectedAttributes>
                     <attribute name="authority" mandatory="false">
-                        <expectedContent>
+                        <recommendedContent>
                             <value>czenas</value>
-                        </expectedContent>
+                        </recommendedContent>
                     </attribute>
                 </expectedAttributes>
                 <expectedContent/>
@@ -251,9 +251,9 @@
                                 </attribute>
 
                                 <attribute name="authority">
-                                    <expectedContent>
+                                    <recommendedContent>
                                         <value>iso639-2b</value>
-                                    </expectedContent>
+                                    </recommendedContent>
                                 </attribute>
                             </expectedAttributes>
                             <expectedContent>
@@ -283,12 +283,12 @@
                             <element name="mods:placeTerm" mandatory="false">
                                 <expectedAttributes>
                                     <attribute name="type">
-                                        <expectedContent>
+                                        <recommendedContent>
                                             <oneOf>
                                                 <value>code</value>
                                                 <value>text</value>
                                             </oneOf>
-                                        </expectedContent>
+                                        </recommendedContent>
                                     </attribute>
 
                                     <attribute name="authority" mandatory="false">
@@ -568,9 +568,9 @@
                     <element name="mods:recordContentSource" mandatory="false">
                         <expectedAttributes>
                             <attribute name="authority" mandatory="false">
-                                <expectedContent>
+                                <recommendedContent>
                                     <value>siglaADR</value>
-                                </expectedContent>
+                                </recommendedContent>
                             </attribute>
                         </expectedAttributes>
                         <expectedContent>
@@ -635,10 +635,10 @@
                             <element name="mods:languageTerm" mandatory="true">
                                 <expectedAttributes>
                                     <attribute name="authority" mandatory="false">
-                                        <expectedContent>
+                                        <recommendedContent>
                                             <!--nicmene DMF nevyzaduje, aby hodnota byla podle iso639-2b-->
                                             <value>iso639-2b</value>
-                                        </expectedContent>
+                                        </recommendedContent>
                                     </attribute>
                                     <attribute name="type" mandatory="false">
                                         <expectedContent>

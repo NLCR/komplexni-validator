@@ -179,9 +179,9 @@
             <element name="mods:genre" specification="not(text()='volume')" mandatory="false">
                 <expectedAttributes>
                     <attribute name="authority" mandatory="false">
-                        <expectedContent>
+                        <recommendedContent>
                             <value>czenas</value>
-                        </expectedContent>
+                        </recommendedContent>
                     </attribute>
                 </expectedAttributes>
                 <expectedContent/>
