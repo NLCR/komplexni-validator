@@ -167,7 +167,7 @@
                     </expectedElements>
                 </element>
 
-            <element name="mods:genre">
+            <element name="mods:genre" specification="text()='volume'">
 
 
                 <expectedContent>

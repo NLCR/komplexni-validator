@@ -186,7 +186,7 @@
                         </oneOf>
                 </expectedContent>
             </element>
-            <element name="mods:genre">
+            <element name="mods:genre" specification="text()='sound part'">
 
 
                 <expectedContent>
