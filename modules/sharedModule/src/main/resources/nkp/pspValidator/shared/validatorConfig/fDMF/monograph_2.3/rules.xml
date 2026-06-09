@@ -2858,22 +2858,14 @@
                     <value name="entity_type" type="ENTITY_TYPE">VOLUME</value>
                     <value name="profile_detection_xpath" type="STRING">
                         concat(
-                        substring('volume_singlevolume_sheetmusic', 1 div boolean(./mods:genre[text()='sheetmusic' or
-                        text()='SHEETMUSIC'])),
-                        substring('volume_singlevolume_cartographic', 1 div boolean(./mods:genre[text()='cartographic' or
-                        text()='CARTOGRAPHIC'])),
-                        substring('volume_singlevolume_graphic', 1 div boolean(./mods:genre[text()='graphic' or text()='GRAPHIC'])),
-                        substring('volume_multivolume_sheetmusic', 1 div boolean(./mods:genre[text()='sheetmusic' or text()='SHEETMUSIC']
-                        and //mets:dmdSec[contains(@ID,'TITLE')])),
-                        substring('volume_multivolume_cartographic', 1 div boolean(./mods:genre[text()='cartographic' or text()='CARTOGRAPHIC']
-                        and //mets:dmdSec[contains(@ID,'TITLE')])),
-                        substring('volume_multivolume_graphic', 1 div boolean(./mods:genre[text()='graphic' or text()='GRAPHIC']
-                        and //mets:dmdSec[contains(@ID,'TITLE')])),
-                        substring('volume_multivolume', 1 div boolean(./mods:genre[text()='volume' or text()='VOLUME']
-                        and //mets:dmdSec[contains(@ID,'TITLE')])),
-                        substring('volume_singlevolume', 1 div boolean(./mods:genre[text()='volume' or text()='VOLUME']
-                        and not(//mets:dmdSec[contains(@ID,'TITLE')]))
-                        ))
+                        'volume_',
+                        substring('multi', 1 div boolean(//mets:dmdSec[contains(@ID,'TITLE')])),
+                        substring('single', 1 div not(//mets:dmdSec[contains(@ID,'TITLE')])),
+                        'volume',
+                        substring('_sheetmusic', 1 div boolean(./mods:genre[text()='sheetmusic' or text()='SHEETMUSIC'])),
+                        substring('_cartographic', 1 div boolean(./mods:genre[text()='cartographic' or text()='CARTOGRAPHIC'])),
+                        substring('_graphic', 1 div boolean(./mods:genre[text()='graphic' or text()='GRAPHIC']))
+                        )
                     </value>
                     <value name="xsd_file_dc" type="FILE">
                         <value-ref name="DC_XSD_FILE"/>
