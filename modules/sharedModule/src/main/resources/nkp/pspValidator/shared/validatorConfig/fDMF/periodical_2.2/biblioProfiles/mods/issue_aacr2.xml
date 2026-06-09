@@ -232,6 +232,23 @@
             <element name="mods:genre" specification="text()='issue'">
 
 
+                <expectedAttributes>
+                    <attribute name="type" mandatory="false">
+                        <expectedContent>
+                            <oneOf>
+                                <value>normal</value>
+                                <value>morning</value>
+                                <value>afternoon</value>
+                                <value>evening</value>
+                                <value>corrected</value>
+                                <value>special</value>
+                                <value>supplement</value>
+                                <regexp>sequence_[0-9]+</regexp>
+                            </oneOf>
+                        </expectedContent>
+                    </attribute>
+                </expectedAttributes>
+
                 <expectedContent>
                     <value>issue</value>
                 </expectedContent>
