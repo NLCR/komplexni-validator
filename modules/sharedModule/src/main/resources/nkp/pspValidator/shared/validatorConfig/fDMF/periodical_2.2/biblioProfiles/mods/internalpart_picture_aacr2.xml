@@ -317,7 +317,12 @@
                         <expectedContent/>
                     </element>
 
-                    <element name="mods:name">
+                    <element name="mods:name" mandatory="false">
+                        <expectedAttributes>
+                            <attribute name="authority">
+                                <expectedContent/>
+                            </attribute>
+                        </expectedAttributes>
                         <expectedElements>
                             <element name="mods:namePart">
                                 <expectedContent/>
