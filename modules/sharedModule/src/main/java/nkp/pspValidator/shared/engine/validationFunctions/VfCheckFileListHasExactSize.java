@@ -70,7 +70,10 @@ public class VfCheckFileListHasExactSize extends ValidationFunction {
                 return singlErrorResult(invalid(level, "seznam obsahuje %d souborů namísto očekávaných %d", fileList.size(), expectedSize));
             } else {
                 if (fileList.size() == 1) {
-                    return singlErrorResult(invalid(level, fileList.get(0), "nalezen neočekávaný soubor"));
+                    return singlErrorResult(invalid(level, fileList.get(0), "nalezen neočekávaný soubor: %s", fileList.get(0))
+                                            .withFile(fileList.get(0))
+                                            .withSimpleMessage("nalezen neočekávaný soubor")
+                                        );
                 } else {
                     StringBuilder filenames = new StringBuilder();
                     for (int i = 0; i < fileList.size(); i++) {
