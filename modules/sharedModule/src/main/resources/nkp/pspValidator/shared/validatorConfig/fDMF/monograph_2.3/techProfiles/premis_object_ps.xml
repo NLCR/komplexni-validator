@@ -24,7 +24,7 @@
         <expectedAttributes>
             <attribute name="ID">
                 <expectedContent>
-                    <value>OBJ_001</value>
+                    <regexp>OBJ_[0-9]{3}</regexp>
                 </expectedContent>
             </attribute>
         </expectedAttributes>

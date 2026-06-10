@@ -3104,7 +3104,11 @@
                     <value name="mets_files" type="FILE_LIST">
                         <value-ref name="SECONDARY-METS_FILES"/>
                     </value>
-                    <value name="element_xpath" type="STRING">mets:techMD[@ID="OBJ_001"]</value>
+                    <value name="element_xpath" type="STRING">
+                        mets:techMD[starts-with(@ID, 'OBJ_') and 
+                                    mets:mdWrap/mets:xmlData/premis:object/premis:preservationLevel/premis:preservationLevelValue[text() = 'deleted']
+                                    ]
+                    </value>
                     <value name="element_must_exist" type="BOOLEAN">true</value>
                     <value name="profile_id" type="STRING">premis_object_ps</value>
                 </params>
@@ -3119,7 +3123,12 @@
                     <value name="mets_files" type="FILE_LIST">
                         <value-ref name="SECONDARY-METS_FILES"/>
                     </value>
-                    <value name="element_xpath" type="STRING">mets:techMD[@ID="OBJ_002"]</value>
+                    <value name="element_xpath" type="STRING">
+                        mets:techMD[starts-with(@ID, 'OBJ_') and 
+                                    mets:mdWrap/mets:xmlData/premis:object/premis:preservationLevel/premis:preservationLevelValue[text() = 'preservation'] and
+                                    mets:mdWrap/mets:xmlData/premis:object/premis:objectCharacteristics/premis:format/premis:formatDesignation/premis:formatName[starts-with(text(), 'image/')]
+                                    ]
+                    </value>
                     <value name="element_must_exist" type="BOOLEAN">true</value>
                     <value name="profile_id" type="STRING">premis_object_mc</value>
                 </params>
@@ -3134,7 +3143,12 @@
                     <value name="mets_files" type="FILE_LIST">
                         <value-ref name="SECONDARY-METS_FILES"/>
                     </value>
-                    <value name="element_xpath" type="STRING">mets:techMD[@ID="OBJ_003"]</value>
+                    <value name="element_xpath" type="STRING">
+                        mets:techMD[starts-with(@ID, 'OBJ_') and 
+                                    mets:mdWrap/mets:xmlData/premis:object/premis:preservationLevel/premis:preservationLevelValue[text() = 'preservation'] and
+                                    mets:mdWrap/mets:xmlData/premis:object/premis:objectCharacteristics/premis:format/premis:formatDesignation/premis:formatName[text() = 'text/xml']
+                                    ]
+                    </value>
                     <value name="element_must_exist" type="BOOLEAN">true</value>
                     <value name="profile_id" type="STRING">premis_object_alto</value>
                 </params>
