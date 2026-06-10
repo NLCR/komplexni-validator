@@ -33,7 +33,7 @@ public class MetadataProfileValidator {
         NodeList biblioRootEls = (NodeList) rootElXpathExpr.evaluate(doc.getDocumentElement(), XPathConstants.NODESET);
         if (biblioRootEls.getLength() == 0) {
             //result.addError(Level.ERROR, metadataFile, ErrorMessage.from(errorLabel, "nenalezen kořenový element %s:%s", rootElDef.getElementNameNsPrefix(), rootElDef.getElementName()).build());
-            result.addError(new ValidationProblem(Level.ERROR, String.format("nenalezen kořenový element %s:%s", rootElDef.getElementNameNsPrefix(), rootElDef.getElementName()))
+            result.addError(new ValidationProblem(Level.ERROR, String.format("%s: %s: nenalezen kořenový element %s:%s", metadataFile.getName(), errorLabel, rootElDef.getElementNameNsPrefix(), rootElDef.getElementName()))
                     .withFile(metadataFile)
                     .withSimpleMessage("nenalezen kořenový element")
                     .withLabel(errorLabel)
@@ -41,7 +41,7 @@ public class MetadataProfileValidator {
             );
         } else if (biblioRootEls.getLength() > 1) {
             //result.addError(Level.ERROR, metadataFile, ErrorMessage.from(errorLabel, "nalezeno více kořenových elementů %s:%s", rootElDef.getElementNameNsPrefix(), rootElDef.getElementName()).build());
-            result.addError(new ValidationProblem(Level.ERROR, String.format("nalezeno více kořenových elementů %s:%s", rootElDef.getElementNameNsPrefix(), rootElDef.getElementName()))
+            result.addError(new ValidationProblem(Level.ERROR, String.format("%s: %s: nalezeno více kořenových elementů %s:%s", metadataFile.getName(), errorLabel, rootElDef.getElementNameNsPrefix(), rootElDef.getElementName()))
                     .withFile(metadataFile)
                     .withSimpleMessage("nalezeno více kořenových elementů")
                     .withLabel(errorLabel)
@@ -66,7 +66,7 @@ public class MetadataProfileValidator {
             CheckingResult checkingResult = definition.getExpectedContentDefinition().checkAgainst(content);
             if (!checkingResult.matches()) {
                 //result.faddError(Level.ERROR, metadataFile, ErrorMessage.from(errorLabel, "%s: %s", thisElementPath, checkingResult.getErrorMessage()).build());
-                ValidationProblem problem = new ValidationProblem(Level.ERROR, String.format("%s: %s", thisElementPath, checkingResult.getErrorMessage()))
+                ValidationProblem problem = new ValidationProblem(Level.ERROR, String.format("%s: %s: %s: %s", metadataFile.getName(), errorLabel, thisElementPath, checkingResult.getErrorMessage()))
                         .withFile(metadataFile)
                         .withSimpleMessage(checkingResult.getSimpleErrorMessage())
                         .withLabel(errorLabel)
@@ -84,7 +84,7 @@ public class MetadataProfileValidator {
             CheckingResult checkingResult = definition.getRecommendedContentDefinition().checkAgainst(content);
             if (!checkingResult.matches()) {
                 //result.addError(Level.WARNING, metadataFile, ErrorMessage.from(errorLabel, "%s: %s", thisElementPath, checkingResult.getErrorMessage()).build());
-                ValidationProblem problem = new ValidationProblem(Level.WARNING, String.format("%s: %s", thisElementPath, checkingResult.getErrorMessage()))
+                ValidationProblem problem = new ValidationProblem(Level.WARNING, String.format("%s: %s: %s: %s", metadataFile.getName(), errorLabel, thisElementPath, checkingResult.getErrorMessage()))
                         .withFile(metadataFile)
                         .withSimpleMessage(checkingResult.getSimpleErrorMessage())
                         .withLabel(errorLabel)
@@ -107,7 +107,7 @@ public class MetadataProfileValidator {
             CheckingResult checkingResult = rule.checkAgainst(manager, currentElement);
             if (!checkingResult.matches()) {
                 //result.addError(Level.ERROR, metadataFile, ErrorMessage.from(errorLabel, "%s: %s", currentElementPath, checkingResult.getErrorMessage()).build());
-                ValidationProblem problem = new ValidationProblem(Level.ERROR, String.format("%s: %s", currentElementPath, checkingResult.getErrorMessage()))
+                ValidationProblem problem = new ValidationProblem(Level.ERROR, String.format("%s: %s: %s: %s", metadataFile.getName(), errorLabel, currentElementPath, checkingResult.getErrorMessage()))
                         .withFile(metadataFile)
                         .withSimpleMessage(checkingResult.getSimpleErrorMessage())
                         .withLabel(errorLabel)
@@ -143,7 +143,7 @@ public class MetadataProfileValidator {
             if (!found) {
                 if (attrDef.isMandatory()) { //ERROR if mandatory
                     //result.addError(Level.ERROR, metadataFile, ErrorMessage.from(errorLabel, "%s: nenalezen povinný atribut '%s'", parentElementPath, attrDef.getAttributeName()).build());
-                    result.addError(new ValidationProblem(Level.ERROR, String.format("%s: nenalezen povinný atribut '%s',", parentElementPath, attrDef.getAttributeName()))
+                    result.addError(new ValidationProblem(Level.ERROR, String.format("%s: %s: %s: nenalezen povinný atribut '%s',", metadataFile.getName(), errorLabel, parentElementPath, attrDef.getAttributeName()))
                             .withFile(metadataFile)
                             .withSimpleMessage("nenalezen povinný atribut")
                             .withLabel(errorLabel)
@@ -154,7 +154,7 @@ public class MetadataProfileValidator {
 
                 } else { //INFO if not mandatory
                     //result.addError(Level.INFO, metadataFile, ErrorMessage.from(errorLabel, "%s: nenalezen doporučený atribut '%s'", parentElementPath, attrDef.getAttributeName()).build());
-                    result.addError(new ValidationProblem(Level.INFO, String.format("%s: nenalezen doporučený atribut '%s',", parentElementPath, attrDef.getAttributeName()))
+                    result.addError(new ValidationProblem(Level.INFO, String.format("%s: %s: %s: nenalezen doporučený atribut '%s',", metadataFile.getName(), errorLabel, parentElementPath, attrDef.getAttributeName()))
                             .withFile(metadataFile)
                             .withSimpleMessage("nenalezen doporučený atribut")
                             .withLabel(errorLabel)
@@ -175,7 +175,7 @@ public class MetadataProfileValidator {
                         !ignoreUnexpectedAttributes //and if not ignoring unexpected attributes
                 ) {
                     //result.addError(Level.WARNING, metadataFile, ErrorMessage.from(errorLabel, "%s: nalezen neočekávaný atribut '%s'", parentElementPath, attr.getName()).build());
-                    result.addError(new ValidationProblem(Level.WARNING, String.format("%s: nalezen neočekávaný atribut '%s'", parentElementPath, attr.getName()))
+                    result.addError(new ValidationProblem(Level.WARNING, String.format("%s: %s: %s: nalezen neočekávaný atribut '%s'", metadataFile.getName(), errorLabel, parentElementPath, attr.getName()))
                             .withFile(metadataFile)
                             .withSimpleMessage("nalezen neočekávaný atribut")
                             .withLabel(errorLabel)
@@ -194,7 +194,7 @@ public class MetadataProfileValidator {
             CheckingResult checkingResult = attrExpectedContent.checkAgainst(attrValue);
             if (!checkingResult.matches()) {
                 //result.addError(Level.ERROR, metadataFile, ErrorMessage.from(errorLabel, "%s/@%s: %s", parentElementPath, attrName, checkingResult.getErrorMessage()).build());
-                ValidationProblem problem = new ValidationProblem(Level.ERROR, String.format("%s/@%s: %s", parentElementPath, attrName, checkingResult.getErrorMessage()))
+                ValidationProblem problem = new ValidationProblem(Level.ERROR, String.format("%s: %s: %s/@%s: %s", metadataFile.getName(), errorLabel, parentElementPath, attrName, checkingResult.getErrorMessage()))
                         .withFile(metadataFile)
                         .withSimpleMessage(checkingResult.getSimpleErrorMessage())
                         .withLabel(errorLabel)
@@ -212,7 +212,7 @@ public class MetadataProfileValidator {
             CheckingResult checkingResult = attrRecommendedContent.checkAgainst(attrValue);
             if (!checkingResult.matches()) {
                 //result.addError(Level.WARNING, metadataFile, ErrorMessage.from(errorLabel, "%s/@%s: %s", parentElementPath, attrName, checkingResult.getErrorMessage()).build());
-                ValidationProblem problem = new ValidationProblem(Level.WARNING, String.format("%s/@%s: %s", parentElementPath, attrName, checkingResult.getErrorMessage()))
+                ValidationProblem problem = new ValidationProblem(Level.WARNING, String.format("%s: %s: %s/@%s: %s", metadataFile.getName(), errorLabel, parentElementPath, attrName, checkingResult.getErrorMessage()))
                         .withFile(metadataFile)
                         .withSimpleMessage(checkingResult.getSimpleErrorMessage())
                         .withLabel(errorLabel)
@@ -255,7 +255,7 @@ public class MetadataProfileValidator {
                     if (!elDef.isRepeatable() && found) {
                         String elementSpec = elDef.buildRelativeXpath();
                         //result.addError(Level.ERROR, metadataFile, ErrorMessage.from(errorLabel, "%s: nalezeno více výskytů neopakovatelného elementu '%s'", parentElementPath, elementSpec).build());
-                        result.addError(new ValidationProblem(Level.ERROR, String.format("%s: nalezeno více výskytů neopakovatelného elementu '%s'", parentElementPath, elementSpec))
+                        result.addError(new ValidationProblem(Level.ERROR, String.format("%s: %s: %s: nalezeno více výskytů neopakovatelného elementu '%s'", metadataFile.getName(), errorLabel, parentElementPath, elementSpec))
                                 .withFile(metadataFile)
                                 .withSimpleMessage("nalezeno více výskytů neopakovatelného elementu")
                                 .withLabel(errorLabel)
@@ -276,7 +276,7 @@ public class MetadataProfileValidator {
                             /*result.addError(Level.ERROR, metadataFile, ErrorMessage.from(errorLabel, "%s: nenalezen očekávaný povinný element '%s'", parentElementPath, elementSpec)
                                     .withCustomMessage(elDef.getErrorMessage())
                                     .build());*/
-                            result.addError(new ValidationProblem(Level.ERROR, String.format("%s: nenalezen očekávaný povinný element '%s'", parentElementPath, elementSpec))
+                            result.addError(new ValidationProblem(Level.ERROR, String.format("%s: %s: %s: nenalezen očekávaný povinný element '%s'", metadataFile.getName(), errorLabel, parentElementPath, elementSpec))
                                     .withFile(metadataFile)
                                     .withSimpleMessage("nenalezen očekávaný povinný element")
                                     .withLabel(errorLabel)
@@ -288,7 +288,7 @@ public class MetadataProfileValidator {
                             /*result.addError(Level.INFO, metadataFile, ErrorMessage.from(errorLabel, "%s: nenalezen očekávaný doporučený element '%s'", parentElementPath, elementSpec)
                                     .withCustomMessage(elDef.getErrorMessage())
                                     .build());*/
-                            result.addError(new ValidationProblem(Level.INFO, String.format("%s: nenalezen očekávaný doporučený element '%s'", parentElementPath, elementSpec))
+                            result.addError(new ValidationProblem(Level.INFO, String.format("%s: %s: %s: nenalezen očekávaný doporučený element '%s'", metadataFile.getName(), errorLabel, parentElementPath, elementSpec))
                                     .withFile(metadataFile)
                                     .withSimpleMessage("nenalezen očekávaný doporučený element")
                                     .withLabel(errorLabel)
@@ -305,7 +305,7 @@ public class MetadataProfileValidator {
                     /*result.addError(Level.ERROR, metadataFile, ErrorMessage.from(errorLabel, "%s: nenalezen očekávaný povinný element '%s'", parentElementPath, elementSpec)
                             .withCustomMessage(elDef.getErrorMessage())
                             .build());*/
-                    result.addError(new ValidationProblem(Level.ERROR, String.format("%s: nenalezen očekávaný povinný element '%s'", parentElementPath, elementSpec))
+                    result.addError(new ValidationProblem(Level.ERROR, String.format("%s: %s: %s: nenalezen očekávaný povinný element '%s'", metadataFile.getName(), errorLabel, parentElementPath, elementSpec))
                             .withFile(metadataFile)
                             .withSimpleMessage("nenalezen očekávaný povinný element")
                             .withLabel(errorLabel)
@@ -317,7 +317,7 @@ public class MetadataProfileValidator {
                     /*result.addError(Level.INFO, metadataFile, ErrorMessage.from(errorLabel, "%s: nenalezen očekávaný doporučený element '%s'", parentElementPath, elementSpec)
                             .withCustomMessage(elDef.getErrorMessage())
                             .build());*/
-                    result.addError(new ValidationProblem(Level.INFO, String.format("%s: nenalezen očekávaný doporučený element '%s'", parentElementPath, elementSpec))
+                    result.addError(new ValidationProblem(Level.INFO, String.format("%s: %s: %s: nenalezen očekávaný doporučený element '%s'", metadataFile.getName(), errorLabel, parentElementPath, elementSpec))
                             .withFile(metadataFile)
                             .withSimpleMessage("nenalezen očekávaný doporučený element")
                             .withLabel(errorLabel)
@@ -335,7 +335,7 @@ public class MetadataProfileValidator {
                 /*System.out.println("attribute list: " + elementSpec);
                 result.addError(Level.WARNING, metadataFile, ErrorMessage.from(errorLabel, "%s: nalezen neočekávaný element '%s' %s", parentElementPath, element.getTagName(), buildAttributeList(element))
                         .build());*/
-                result.addError(new ValidationProblem(Level.WARNING, String.format("%s: nalezen neočekávaný element '%s' %s", parentElementPath, elementSpec, attributeSpec))
+                result.addError(new ValidationProblem(Level.WARNING, String.format("%s: %s: %s: nalezen neočekávaný element '%s' %s", metadataFile.getName(), errorLabel, parentElementPath, elementSpec, attributeSpec))
                         .withFile(metadataFile)
                         .withSimpleMessage("nalezen neočekávaný element")
                         .withLabel(errorLabel)
