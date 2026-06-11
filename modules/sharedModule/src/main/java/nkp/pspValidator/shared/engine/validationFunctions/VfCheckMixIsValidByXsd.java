@@ -144,15 +144,36 @@ public class VfCheckMixIsValidByXsd extends ValidationFunction {
             }
 
         } catch (InvalidXPathExpressionException e) {
-            result.addError(invalid(level, metsFile, "%s: %s", id, e.getMessage()));
+           // result.addError(invalid(level, metsFile, "%s: %s", id, e.getMessage()));
+            result.addError(new ValidationProblem(level, String.format("%s: %s: %s", metsFile.getName(), id, e.getMessage()))
+                .withFile(metsFile)
+                .withLabel(id)
+                .withXsdFile(xsdFile)
+                .withSimpleMessage(e.getMessage()));
         } catch (XPathExpressionException e) {
-            result.addError(invalid(level, metsFile, "%s: %s", id, e.getMessage()));
+            result.addError(new ValidationProblem(level, String.format("%s: %s: %s", metsFile.getName(), id, e.getMessage()))
+                .withFile(metsFile)
+                .withLabel(id)
+                .withXsdFile(xsdFile)
+                .withSimpleMessage(e.getMessage()));
         } catch (ParserConfigurationException e) {
-            result.addError(invalid(level, metsFile, "%s: %s", id, e.getMessage()));
+            result.addError(new ValidationProblem(level, String.format("%s: %s: %s", metsFile.getName(), id, e.getMessage()))
+                .withFile(metsFile)
+                .withLabel(id)
+                .withXsdFile(xsdFile)
+                .withSimpleMessage(e.getMessage()));
         } catch (SAXException e) {
-            result.addError(invalid(level, metsFile, "%s: %s", id, e.getMessage()));
+            result.addError(new ValidationProblem(level, String.format("%s: %s: %s", metsFile.getName(), id, e.getMessage()))
+                .withFile(metsFile)
+                .withLabel(id)
+                .withXsdFile(xsdFile)
+                .withSimpleMessage(e.getMessage()));
         } catch (IOException e) {
-            result.addError(invalid(level, metsFile, "%s: %s", id, e.getMessage()));
+            result.addError(new ValidationProblem(level, String.format("%s: %s: %s", metsFile.getName(), id, e.getMessage()))
+                .withFile(metsFile)
+                .withLabel(id)
+                .withXsdFile(xsdFile)
+                .withSimpleMessage(e.getMessage()));
         }
     }
 
