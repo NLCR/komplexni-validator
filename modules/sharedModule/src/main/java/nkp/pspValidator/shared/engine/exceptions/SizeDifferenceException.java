@@ -12,7 +12,7 @@ public class SizeDifferenceException extends Exception {
     private final long sizeActual;
 
     public SizeDifferenceException(File file, long sizeExpected, long sizeActual) {
-        super(String.format("uvedená velikost (%d B) se liší od zjištěné velikosti (%d B) souboru", sizeExpected, sizeActual));
+        super(String.format("uvedená velikost (%d B) se liší od zjištěné velikosti (%d B) souboru %s", sizeExpected, sizeActual, file.getName()));
         this.file = file;
         this.sizeExpected = sizeExpected;
         this.sizeActual = sizeActual;
