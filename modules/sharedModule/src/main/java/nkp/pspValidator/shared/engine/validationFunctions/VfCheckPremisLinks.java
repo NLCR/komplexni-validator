@@ -116,11 +116,6 @@ public class VfCheckPremisLinks extends ValidationFunction {
                 //events must refer to existing linking agents
                 checkEventsReferToExistingLinkingAgents(file, amdSecEl, result);
 
-                //rerefences
-                //OBJ_002 (MC) should refer to OBJ_001 (PS) through relatedObjectIdentification
-                checkMcRefersToPs(file, amdSecEl, result);
-                //OBJ_003 (ALTO) should refer to OBJ_002 (MC) through relatedObjectIdentification
-                checkAltoRefersToMc(file, amdSecEl, result);
             }
         } catch (InvalidXPathExpressionException e) {
             result.addError(invalid(e));
@@ -442,70 +437,4 @@ public class VfCheckPremisLinks extends ValidationFunction {
             }
         }
     }
-
-    //check static references
-    private void checkMcRefersToPs(File file, Element amdSecEl, ValidationResult result) throws InvalidXPathExpressionException, XPathExpressionException {
-        NodeList mcEls = (NodeList) engine.buildXpath("mets:techMD[@ID=\"OBJ_002\"]").evaluate(amdSecEl, XPathConstants.NODESET);
-        if (mcEls.getLength() == 0) {
-            result.addError(new ValidationProblem(Level.ERROR, String.format("%s: Chybí objekt archivní kopie (ID=OBJ_002)", file.getName()))
-                    .withFile(file)
-                    .withSimpleMessage("chybí objekt archivní kopie")
-                    .withLabel("OBJ_002")
-            );
-        } else if (mcEls.getLength() > 1) {
-            result.addError(new ValidationProblem(Level.ERROR, String.format("%s: Duplikovaný objekt archivní kopie (ID=OBJ_002)", file.getName()))
-                    .withFile(file)
-                    .withSimpleMessage("duplikovaný objekt archivní kopie")
-                    .withLabel("OBJ_002")
-            );
-        } else {
-            Element mcEl = (Element) mcEls.item(0);
-            List<Identifier> objectRelatedObjectsIdentifiers = getObjectRelatedObjectsIdentifiers(mcEl);
-            for (Identifier id : objectRelatedObjectsIdentifiers) {
-                String metsId = getMetsIdOfObjectByIdentifier(amdSecEl, id);
-                if ("OBJ_001".equals(metsId)) {
-                    return;
-                }
-            }
-            result.addError(new ValidationProblem(Level.WARNING, String.format("%s: Chybí odkaz (relatedObject) z archivní kopie (ID=OBJ_002) na primární sken (ID=OBJ_001)", file.getName()))
-                    .withFile(file)
-                    .withSimpleMessage("chybí odkaz z archivní kopie na primární sken")
-                    .withLabel("OBJ_002")
-                    .withReferencedValue("OBJ_001")
-            );
-        }
-    }
-
-    private void checkAltoRefersToMc(File file, Element amdSecEl, ValidationResult result) throws InvalidXPathExpressionException, XPathExpressionException {
-        NodeList altoEls = (NodeList) engine.buildXpath("mets:techMD[@ID=\"OBJ_003\"]").evaluate(amdSecEl, XPathConstants.NODESET);
-        if (altoEls.getLength() == 0) {
-            result.addError(new ValidationProblem(Level.ERROR, String.format("%s: Chybí objekt ALTO (ID=OBJ_003)", file.getName()))
-                    .withFile(file)
-                    .withSimpleMessage("chybí objekt ALTO")
-                    .withLabel("OBJ_003")
-            );
-        } else if (altoEls.getLength() > 1) {
-            result.addError(new ValidationProblem(Level.ERROR, String.format("%s: Duplikovaný objekt ALTO (ID=OBJ_003)", file.getName()))
-                    .withFile(file)
-                    .withSimpleMessage("duplikovaný objekt ALTO")
-                    .withLabel("OBJ_003")
-            );
-        } else {
-            Element mcEl = (Element) altoEls.item(0);
-            List<Identifier> objectRelatedObjectsIdentifiers = getObjectRelatedObjectsIdentifiers(mcEl);
-            for (Identifier id : objectRelatedObjectsIdentifiers) {
-                String metsId = getMetsIdOfObjectByIdentifier(amdSecEl, id);
-                if ("OBJ_002".equals(metsId)) {
-                    return;
-                }
-            }
-            result.addError(new ValidationProblem(Level.WARNING, String.format("%s: Chybí odkaz (relatedObject) z ALTO (ID=OBJ_003) na archivní kopii (ID=OBJ_002)", file.getName()))
-                    .withFile(file)
-                    .withSimpleMessage("chybí odkaz z ALTO na archivní kopii")
-                    .withLabel("OBJ_003")
-                    .withReferencedValue("OBJ_002")
-            );
-        }
-    }
-
 }
