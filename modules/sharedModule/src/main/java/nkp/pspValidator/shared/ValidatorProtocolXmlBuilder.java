@@ -24,9 +24,9 @@ import java.util.Map;
  */
 public class ValidatorProtocolXmlBuilder {
 
-    final static String NS = "http://www.nkp.cz/pspValidator/2.6.1/validationProtocol";
+    final static String NS = "http://www.nkp.cz/pspValidator/2.7/validationProtocol";
     final static String XSI_NS = XMLConstants.W3C_XML_SCHEMA_INSTANCE_NS_URI;
-    final static String XSD_URL = "https://raw.githubusercontent.com/NLCR/komplexni-validator/refs/heads/master/modules/sharedModule/src/main/resources/nkp/pspValidator/shared/validatorConfig/xsd/validationProtocol.xsd";
+    final static String XSD_URL = "https://raw.githubusercontent.com/NLCR/komplexni-validator/refs/tags/v2.7/modules/sharedModule/src/main/resources/nkp/pspValidator/shared/validatorConfig/xsd/validationProtocol.xsd";
     //TODO: change XSD_URL to one of:
     //final static String XSD_URL = "https://raw.githubusercontent.com/NLCR/komplexni-validator/v2.6.1/modules/sharedModule/src/main/resources/nkp/pspValidator/shared/validatorConfig/xsd/validationProtocol.xsd";
     //final static String XSD_URL = "https://docs.validator.nkp.cz/xsd/2.6.1/validationProtocol.xsd";
