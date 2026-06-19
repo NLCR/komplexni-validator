@@ -3246,7 +3246,7 @@
                 </params>
             </validation>
         </rule>
-        
+
         <rule name="PREMIS_OBJECT_FOR_ORIGINAL_SCAN_MATCHES_PROFILE">
             <description>Záznamy PREMIS Object v souborech SECONDARY-METS pro původní skeny musí splňovat profil.
             </description>

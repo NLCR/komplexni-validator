@@ -322,7 +322,7 @@
                         <expectedElements>
                             <element name="mods:placeTerm" mandatory="false">
                                 <expectedAttributes>
-                                    <attribute name="type">
+                                    <attribute name="type" mandatory="false">
                                         <recommendedContent>
                                             <oneOf>
                                                 <value>code</value>
