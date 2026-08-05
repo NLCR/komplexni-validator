@@ -28,18 +28,7 @@
                     <xs:complexType>
                         <xs:simpleContent>
                             <xs:extension base="xs:string">
-                                <xs:attribute name="type" use="required">
-                                    <xs:simpleType>
-                                        <xs:restriction base="xs:string">
-                                            <xs:enumeration value="isbn"/>
-                                            <xs:enumeration value="issn"/>
-                                            <xs:enumeration value="ismn"/>
-                                            <xs:enumeration value="ccnb"/>
-                                            <xs:enumeration value="urnnbn"/>
-                                            <xs:enumeration value="uuid"/>
-                                        </xs:restriction>
-                                    </xs:simpleType>
-                                </xs:attribute>
+                                <xs:attribute name="type" type="xs:string" use="required"/>
                             </xs:extension>
                         </xs:simpleContent>
                     </xs:complexType>
