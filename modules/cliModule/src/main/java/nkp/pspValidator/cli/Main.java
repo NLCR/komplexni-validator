@@ -213,6 +213,15 @@ public class Main {
                 .create());
         options.addOption(OptionBuilder
                 .withDescription(replaceUmlaut(
+                        "Preferovaná verze DMF pro validaci jednotek fondu. " +
+                                "Použije se k validaci, pokud je balík typu Jednotka fondu, data balíku neobsahují informaci o vhodné verzi DMF Jednotky fondu " +
+                                "a parametr --" + Params.FORCED_DMF_FDU_VERSION + " není vyplněn."))
+                .hasArg()
+                .withArgName("VERZE")
+                .withLongOpt(Params.PREFERRED_DMF_FDU_VERSION)
+                .create());
+        options.addOption(OptionBuilder
+                .withDescription(replaceUmlaut(
                         "Vynucená verze DMF pro validaci monografií. " +
                                 //"Použije se k validaci všech balíků typu Monografie bez ohledu na data balíků a hodnotu parametru --preferred-dmf-mon-version."))
                                 "Použije se k validaci všech balíků typu Monografie bez ohledu na data balíků a hodnotu parametru --" + Params.PREFERRED_DMF_MON_VERSION + "."))
@@ -267,6 +276,14 @@ public class Main {
                 .hasArg()
                 .withArgName("VERZE")
                 .withLongOpt(Params.FORCED_DMF_DAD_VERSION)
+                .create());
+        options.addOption(OptionBuilder
+                .withDescription(replaceUmlaut(
+                        "Vynucená verze DMF pro validaci jednotek fondu. " +
+                                "Použije se k validaci všech balíků typu Jednotka fondu bez ohledu na data balíků a hodnotu parametru --" + Params.PREFERRED_DMF_FDU_VERSION + "."))
+                .hasArg()
+                .withArgName("VERZE")
+                .withLongOpt(Params.FORCED_DMF_FDU_VERSION)
                 .create());
 
         options.addOption(OptionBuilder
@@ -545,6 +562,10 @@ public class Main {
                 if (line.hasOption(Params.PREFERRED_DMF_DAD_VERSION)) {
                     preferredDmfDadVersion = line.getOptionValue(Params.PREFERRED_DMF_DAD_VERSION);
                 }
+                String preferredDmfFduVersion = null;
+                if (line.hasOption(Params.PREFERRED_DMF_FDU_VERSION)) {
+                    preferredDmfFduVersion = line.getOptionValue(Params.PREFERRED_DMF_FDU_VERSION);
+                }
                 //force dmf versions
                 String forceDmfMonVersion = null;
                 if (line.hasOption(Params.FORCED_DMF_MON_VERSION)) {
@@ -573,6 +594,10 @@ public class Main {
                 String forcedDmfDadVersion = null;
                 if (line.hasOption(Params.FORCED_DMF_DAD_VERSION)) {
                     forcedDmfDadVersion = line.getOptionValue(Params.FORCED_DMF_DAD_VERSION);
+                }
+                String forcedDmfFduVersion = null;
+                if (line.hasOption(Params.FORCED_DMF_FDU_VERSION)) {
+                    forcedDmfFduVersion = line.getOptionValue(Params.FORCED_DMF_FDU_VERSION);
                 }
 
                 //verbosity
@@ -653,6 +678,7 @@ public class Main {
                 dmfDetectorParams.forcedDmfAdiVersion = forceDmfAdiVersion;
                 dmfDetectorParams.forcedDmfAdnVersion = forceDmfAdnVersion;
                 dmfDetectorParams.forcedDmfDadVersion = forcedDmfDadVersion;
+                dmfDetectorParams.forcedDmfFduVersion = forcedDmfFduVersion;
                 dmfDetectorParams.preferredDmfMonVersion = preferDmfMonVersion;
                 dmfDetectorParams.preferredDmfPerVersion = preferDmfPerVersion;
                 dmfDetectorParams.preferredDmfAdgVersion = preferDmfAdgVersion;
@@ -660,6 +686,7 @@ public class Main {
                 dmfDetectorParams.preferredDmfAdiVersion = preferDmfAdiVersion;
                 dmfDetectorParams.preferredDmfAdnVersion = preferDmfAdnVersion;
                 dmfDetectorParams.preferredDmfDadVersion = preferredDmfDadVersion;
+                dmfDetectorParams.preferredDmfFduVersion = preferredDmfFduVersion;
 
                 PrintStream out = System.out;
                 PrintStream err = System.err;

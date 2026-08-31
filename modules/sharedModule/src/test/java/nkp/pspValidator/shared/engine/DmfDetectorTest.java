@@ -66,6 +66,39 @@ public class DmfDetectorTest {
 
 
     @Test
+    public void detectDmfTypeFundUnit() throws PspDataException, XmlFileParsingException, InvalidXPathExpressionException {
+        //DMF Jednotky fondu: tri hodnoty METS/@TYPE pro jeden typ DMF, porovnani case-insensitive
+        assertEquals(Dmf.Type.FUND_UNIT, dmfDetector.detectDmfType(new File("src/test/resources/fund_unit_0.1/clipping/nk-00027x")));
+        assertEquals(Dmf.Type.FUND_UNIT, dmfDetector.detectDmfType(new File("src/test/resources/fund_unit_0.1/clipping_index/nk-00027y")));
+        assertEquals(Dmf.Type.FUND_UNIT, dmfDetector.detectDmfType(new File("src/test/resources/fund_unit_0.1/card_index/nk-00027z")));
+        assertEquals(Dmf.Type.FUND_UNIT, dmfDetector.detectDmfType(new File("src/test/resources/fund_unit_0.1/card_index_lowercase/nk-00028a")));
+    }
+
+    @Test
+    public void detectDmfVersionFundUnit() throws PspDataException, XmlFileParsingException, InvalidXPathExpressionException {
+        File pspRootDir = new File("src/test/resources/fund_unit_0.1/clipping/nk-00027x");
+        assertEquals("0.1", dmfDetector.detectDmfVersionFromInfoFile(Dmf.Type.FUND_UNIT, pspRootDir));
+    }
+
+    @Test
+    public void versionsFundUnit() throws PspDataException, XmlFileParsingException, InvalidXPathExpressionException {
+        File fduDir = new File("src/test/resources/fund_unit_0.1/clipping/nk-00027x");
+        //forced > info > preferred > default
+        assertEquals("123", resolverFundUnit(fduDir, null, "123").getVersion());
+        assertEquals("123", resolverFundUnit(fduDir, "1", "123").getVersion());
+        assertEquals("0.1", resolverFundUnit(fduDir, "1", null).getVersion());
+        assertEquals("0.1", resolverFundUnit(fduDir, null, null).getVersion());
+        assertEquals(Dmf.Type.FUND_UNIT, resolverFundUnit(fduDir, null, null).getType());
+    }
+
+    private Dmf resolverFundUnit(File pspDir, String preferred, String forced) throws PspDataException, XmlFileParsingException, InvalidXPathExpressionException {
+        DmfDetector.Params params = new DmfDetector.Params();
+        params.forcedDmfFduVersion = forced;
+        params.preferredDmfFduVersion = preferred;
+        return dmfDetector.resolveDmf(pspDir, params);
+    }
+
+    @Test
     public void detectDmfTypeInvalid() {
         File pspRootDir = new File("src/test/resources/monograph_wrongType/b50eb6b0-f0a4-11e3-b72e-005056827e52");
         try {

@@ -20,6 +20,7 @@ public class Params {
     public static final String PREFERRED_DMF_ADI_VERSION = "preferred-dmf-adi-version";
     public static final String PREFERRED_DMF_ADN_VERSION = "preferred-dmf-adn-version";
     public static final String PREFERRED_DMF_DAD_VERSION = "preferred-dmf-dad-version";
+    public static final String PREFERRED_DMF_FDU_VERSION = "preferred-dmf-fdu-version";
 
     public static final String FORCED_DMF_MON_VERSION = "forced-dmf-mon-version";
     public static final String FORCED_DMF_PER_VERSION = "forced-dmf-per-version";
@@ -28,6 +29,7 @@ public class Params {
     public static final String FORCED_DMF_ADI_VERSION = "forced-dmf-adi-version";
     public static final String FORCED_DMF_ADN_VERSION = "forced-dmf-adn-version";
     public static final String FORCED_DMF_DAD_VERSION = "forced-dmf-dad-version";
+    public static final String FORCED_DMF_FDU_VERSION = "forced-dmf-fdu-version";
 
     public static final String IMAGEMAGICK_PATH = "imagemagick-path";
     public static final String JHOVE_PATH = "jhove-path";

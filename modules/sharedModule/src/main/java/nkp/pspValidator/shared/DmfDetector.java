@@ -28,6 +28,7 @@ public class DmfDetector {
     public static final String DEFAULT_AUDIO_DISC_VERSION = "1.0";
     public static final String DEFAULT_AUDIO_NO_CARRIER_VERSION = "1.0";
     public static final String DEFAULT_DATA_DISC_VERSION = "0.1";
+    public static final String DEFAULT_FUND_UNIT_VERSION = "0.1";
 
 
     /**
@@ -39,6 +40,8 @@ public class DmfDetector {
      * Pokud se vyskytuje hodnota „sound recording“, zachází validátor s balíčkem jako se zvukovým dokumentem gramofonové desky.
      * Pokud se vyskytuje hodnota „audio cylinder“, zachází validátor s balíčkem jako se zvukovým dokumentem fonoválečku.
      * Pokud se vyskytuje hodnota „data_disc“, zachází validátor s balíčkem jako s datovým diskem.
+     * Pokud se vyskytuje hodnota „Clipping“, „Clipping index“ nebo „Card index“ (bez ohledu na velikost písmen),
+     * zachází validátor s balíčkem jako s jednotkou fondu (DMF Jednotky fondu).
      */
     public Dmf.Type detectDmfType(File pspRootDir) throws PspDataException, XmlFileParsingException, InvalidXPathExpressionException {
 
@@ -61,12 +64,24 @@ public class DmfDetector {
                 return AUDIO_NO_CARRIER;
             } else if ("data_disc".equals(docType)) {
                 return DATA_DISC;
+            } else if (isFundUnitType(docType)) {
+                return FUND_UNIT;
             } else {
-                throw new PspDataException(pspRootDir, String.format("atribut TYPE elementu mods neobsahuje korektní typ (Monograph/Periodical/sound recording), ale hodnotu '%s'", docType));
+                throw new PspDataException(pspRootDir, String.format("atribut TYPE elementu mets neobsahuje korektní typ (Monograph/Periodical/sound recording/audio cylinder/audio disc/digital audio/data_disc/Clipping/Clipping index/Card index), ale hodnotu '%s'", docType));
             }
         } catch (XPathExpressionException e) {
             throw new InvalidXPathExpressionException("", String.format("chyba v zápisu Xpath: %s", e.getMessage()));
         }
+    }
+
+    /**
+     * DMF Jednotky fondu 0.1 používá pro jeden standard tři hodnoty METS/@TYPE (podle typu jednotky).
+     * Specifikace není jednoznačná ve velikosti písmen, proto se porovnává case-insensitive.
+     */
+    private boolean isFundUnitType(String docType) {
+        return "clipping".equalsIgnoreCase(docType)
+                || "clipping index".equalsIgnoreCase(docType)
+                || "card index".equalsIgnoreCase(docType);
     }
 
     private File findPrimaryMetsFile(File pspRootDir) throws PspDataException {
@@ -168,6 +183,8 @@ public class DmfDetector {
             }
             case DATA_DISC:
                 return chooseVersion(DATA_DISC, pspRoot, params.forcedDmfDadVersion, params.preferredDmfDadVersion, DEFAULT_DATA_DISC_VERSION);
+            case FUND_UNIT:
+                return chooseVersion(FUND_UNIT, pspRoot, params.forcedDmfFduVersion, params.preferredDmfFduVersion, DEFAULT_FUND_UNIT_VERSION);
             default:
                 throw new IllegalStateException();
         }
@@ -197,6 +214,7 @@ public class DmfDetector {
         public String preferredDmfAdiVersion;
         public String preferredDmfAdnVersion;
         public String preferredDmfDadVersion;
+        public String preferredDmfFduVersion;
         public String forcedDmfMonVersion;
         public String forcedDmfPerVersion;
         public String forcedDmfAdgVersion;
@@ -204,6 +222,7 @@ public class DmfDetector {
         public String forcedDmfAdiVersion;
         public String forcedDmfAdnVersion;
         public String forcedDmfDadVersion;
+        public String forcedDmfFduVersion;
     }
 
 }

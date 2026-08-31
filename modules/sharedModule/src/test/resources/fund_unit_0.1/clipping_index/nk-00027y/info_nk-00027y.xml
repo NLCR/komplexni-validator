@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<info>
+    <created>2026-09-01T10:00:00</created>
+    <metadataversion>0.1</metadataversion>
+    <packageid>nk-00027y</packageid>
+    <mainmets>mets_nk-00027y.xml</mainmets>
+    <titleid type="uuid">5f6a8c2e-1111-4d0e-9a3b-000000000001</titleid>
+    <collection>Testovací kolekce</collection>
+    <institution>NK ČR</institution>
+    <creator>ABA001</creator>
+    <size>1</size>
+    <itemlist itemtotal="2">
+        <item>\info_nk-00027y.xml</item>
+        <item>\mets_nk-00027y.xml</item>
+    </itemlist>
+    <checksum type="MD5" checksum="d41d8cd98f00b204e9800998ecf8427e">\md5_nk-00027y.md5</checksum>
+</info>

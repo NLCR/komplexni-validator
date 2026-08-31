@@ -10,6 +10,7 @@ public enum EntityType {
     CHAPTER("CHAP"), //jen monografie
     SOUNDCOLLECTION("SOUNDCOLLECTION"), SOUNDRECORDING("SOUNDRECORDING"), SOUNDPART("SOUNDPART"),//jen zvuky
     DATACOLLECTION("DATACOLLECTION"), DISC("DISC"),//jen datové disky
+    UNITCOLLECTION("UNITCOLLECTION"), DIRECTORY("DIRECTORY"), UNIT("UNIT"),//jen jednotky fondu
     ;
 
     private final String dmdSecCode;
