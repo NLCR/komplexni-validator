@@ -208,7 +208,9 @@ public class VfCheckBibliographicMetadataMatchProfile extends ValidationFunction
     }
 
     private List<String> detectEntityIds(Document metsDoc, EntityType entityType) throws InvalidXPathExpressionException, XPathExpressionException {
-        XPathExpression xPathExpression = engine.buildXpath("/mets:mets/mets:dmdSec[contains(@ID, \"" + entityType.getDmdSecCode() + "\")]/@ID");
+        //starts-with misto contains: kod UNIT by jinak odpovidal i UNITCOLLECTION
+        String code = entityType.getDmdSecCode();
+        XPathExpression xPathExpression = engine.buildXpath("/mets:mets/mets:dmdSec[starts-with(@ID, \"MODSMD_" + code + "_\") or starts-with(@ID, \"DCMD_" + code + "_\")]/@ID");
         NodeList idAttrs = (NodeList) xPathExpression.evaluate(metsDoc, XPathConstants.NODESET);
         Set<String> set = new HashSet<>(idAttrs.getLength());
         for (int i = 0; i < idAttrs.getLength(); i++) {
