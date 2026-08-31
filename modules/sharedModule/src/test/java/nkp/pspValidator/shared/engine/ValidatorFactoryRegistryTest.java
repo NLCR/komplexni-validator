@@ -111,4 +111,14 @@ public class ValidatorFactoryRegistryTest {
         assertTrue(registry.getAudioNoCarrierFdmfVersions().contains("1.0"));
     }
 
+
+    @Test
+    public void versionsFundUnit() throws ValidatorConfigurationException {
+        File validatorConfigDir = new File("src/main/resources/nkp/pspValidator/shared/validatorConfig");
+        ValidatorConfigurationManager validatorConfigManager = new ValidatorConfigurationManager(validatorConfigDir);
+        FdmfRegistry registry = new FdmfRegistry(validatorConfigManager);
+
+        assertEquals(1, registry.getFundUnitFdmfVersions().size());
+        assertTrue(registry.getFundUnitFdmfVersions().contains("0.1"));
+    }
 }
