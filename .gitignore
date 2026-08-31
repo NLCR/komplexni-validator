@@ -208,3 +208,6 @@ gradle-app.setting
 /samples/
 .idea/copilot.xml
 .idea/copilot*
+### Lokalni poznamky
+.local/
+TODO.md
