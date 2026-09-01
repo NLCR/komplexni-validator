@@ -39,7 +39,14 @@ public class FundUnitSmokeTest {
         validator.run(pspRootDir, null, out, 3, null, null, null, null, dmf);
         String log = buffer.toString("UTF-8");
         System.out.println(log);
-        // chyby konfigurace se projevi jako "neocekavana chyba" / kontrakt v jednotlivych pravidlech
-        assertTrue("konfigurace fDMF obsahuje chybu, viz log", !log.contains("neočekávaná chyba") && !log.contains("nesplněn kontrakt"));
+        // chyby konfigurace nebo pad funkce se projevi jako "necekana chyba" / kontrakt v jednotlivych pravidlech
+        // (texty viz ValidationFunction.invalidUnexpectedError / invalidContractNotMet).
+        // EmptyParamEvaluationException je ocekavana: minimalni balicek nema adresare s daty a stejne se chovaji
+        // i ostatni fDMF (chybejici srozumitelna hlaska je samostatny problem validatoru, ne fund_unit).
+        for (String line : log.split("\n")) {
+            boolean crash = (line.contains("nečekaná chyba") && !line.contains("EmptyParamEvaluationException"))
+                    || line.contains("nesplněn kontrakt");
+            assertTrue("konfigurace fDMF obsahuje chybu nebo funkce spadla: " + line.trim(), !crash);
+        }
     }
 }

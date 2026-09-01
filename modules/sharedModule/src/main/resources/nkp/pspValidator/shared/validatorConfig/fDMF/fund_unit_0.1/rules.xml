@@ -1010,8 +1010,8 @@
 
         <!--psp id-->
         <rule name="PSP_ID_DERIVED_FROM_IE_ID">
-            <description>PSP-ID by měl být odvozen od některého z identifikátorů intelektuální entity, a to typu
-                'urnnbn' nebo 'uuid'
+            <description>PSP-ID by měl být odvozen od některého z identifikátorů intelektuální entity (UNIT), a to typu
+                'urnnbn' nebo 'uuid' (DMF Jednotky fondu 0.1, kap. 6, s. 15).
             </description>
             <validation functionName="checkStringDerivedFromUrnnbnOrUuid">
                 <params>
@@ -1042,7 +1042,8 @@
         </rule>
         
         <rule name="INFO_INDENTIFIERS_MATCH_TOP_LEVEL_MODS_IDENTIFIERS">
-            <description>Identifikátory v souboru INFO by měly odpovídat identifikátorům na úrovni DATACOLLECTION v záznamu MODS.
+            <description>Identifikátory v souboru INFO (titleid) by měly odpovídat identifikátorům na úrovni UNITCOLLECTION
+                v záznamu MODS (DMF Jednotky fondu 0.1, kap. 5.1: titleid nese identifikátory kolekce).
             </description>
             <validation functionName="checkInfoFileIdentifiersMatchTopLevelModsIdentifiers">
                 <params>
@@ -1050,7 +1051,7 @@
                         <value-ref name="INFO_IDENTIFIERS"/>
                     </value>
                     
-                    <!--primární hodnoty - pro TITLE (pokud existují, jde o vícesvazkovou monografii)-->
+                    <!--identifikátory kolekce (UNITCOLLECTION)-->
                     <value name="mets_identifier_list_list" type="IDENTIFIER_LIST_LIST">
                         <!--seznam obsahujici seznam identifikatoru pro kazdy zaznam dmdSec pro MODS-->
                         <evaluation functionName="getModsIdentifiersForEachDmdsecId">
@@ -1063,7 +1064,7 @@
                                                 <value-ref name="PRIMARY-METS_FILE"/>
                                             </value>
                                             <value name="xpath" type="STRING">
-                                                /mets:mets/mets:dmdSec[starts-with(@ID, "MODSMD_DATACOLLECTION")]/@ID
+                                                /mets:mets/mets:dmdSec[starts-with(@ID, "MODSMD_UNITCOLLECTION_")]/@ID
                                             </value>
                                         </params>
                                     </evaluation>
@@ -1073,7 +1074,7 @@
                                 </value>
                             </params>
                         </evaluation>
-                    </value>                    
+                    </value>
                     
                 </params>
             </validation>
@@ -1105,26 +1106,26 @@
             </validation>
         </rule>
 
-        <!--datacollection-->
-        <rule name="DC_MANDATORY_IDENTIFIERS_PRESENT_LEVEL_DATACOLLECTION">
+        <!--unitcollection (kolekce)-->
+        <rule name="DC_MANDATORY_IDENTIFIERS_PRESENT_LEVEL_UNITCOLLECTION">
             <description>
-                Úroveň DATACOLLECTION musí obsahovat všechny povinné identifikátory v záznamu Dublin Core.
+                Úroveň UNITCOLLECTION musí obsahovat všechny povinné identifikátory v záznamu Dublin Core.
             </description>
             <validation functionName="checkIdentifiersAllTypesPresent">
                 <params>
                     <value name="identifier_list_list" type="IDENTIFIER_LIST_LIST">
-                        <!--seznam obsahujici seznam identifikatoru DC pro kazdy zaznam dmdSec pro dc-->
+                        <!--seznam obsahujici seznam identifikatoru pro kazdy zaznam dmdSec pro Dublin Core-->
                         <evaluation functionName="getDcIdentifiersForEachDmdsecId">
                             <params>
                                 <value name="dmdsec_ids" type="STRING_LIST">
-                                    <!--seznam identifikatoru (dmdSec ID)-->
+                                    <!--seznam identifikatoru (dmdSec ID); podtrzitko na konci je nutne kvuli UNIT vs UNITCOLLECTION-->
                                     <evaluation functionName="getStringListByXpath">
                                         <params>
                                             <value name="xml_file" type="FILE">
                                                 <value-ref name="PRIMARY-METS_FILE"/>
                                             </value>
                                             <value name="xpath" type="STRING">
-                                                /mets:mets/mets:dmdSec[starts-with(@ID, "DCMD_DATACOLLECTION")]/@ID
+                                                /mets:mets/mets:dmdSec[starts-with(@ID, "DCMD_UNITCOLLECTION_")]/@ID
                                             </value>
                                         </params>
                                     </evaluation>
@@ -1136,32 +1137,32 @@
                         </evaluation>
                     </value>
                     <value name="id_types" type="STRING_LIST">
-                        <value-ref name="ID_TYPES_DATACOLLECTION_MANDATORY"/>
+                        <value-ref name="ID_TYPES_UNITCOLLECTION_MANDATORY"/>
                     </value>
-                    <value name="level_name" type="STRING">DATACOLLECTION</value>
+                    <value name="level_name" type="STRING">UNITCOLLECTION</value>
                 </params>
             </validation>
         </rule>
 
-        <rule name="DC_PROHIBITED_IDENTIFIERS_NOT_PRESENT_LEVEL_DATACOLLECTION">
+        <rule name="DC_PROHIBITED_IDENTIFIERS_NOT_PRESENT_LEVEL_UNITCOLLECTION">
             <description>
-                Úroveň DATACOLLECTION nesmí obsahovat žádné zakázané identifikátory v záznamu Dublin Core.
+                Úroveň UNITCOLLECTION nesmí obsahovat žádné zakázané identifikátory v záznamu Dublin Core. Zákazy jsou výklad DMF 0.1, proto jen WARNING.
             </description>
             <validation functionName="checkIdentifiersNoneTypePresent">
                 <params>
                     <value name="identifier_list_list" type="IDENTIFIER_LIST_LIST">
-                        <!--seznam obsahujici seznam identifikatoru DC pro kazdy zaznam dmdSec pro dc-->
+                        <!--seznam obsahujici seznam identifikatoru pro kazdy zaznam dmdSec pro Dublin Core-->
                         <evaluation functionName="getDcIdentifiersForEachDmdsecId">
                             <params>
                                 <value name="dmdsec_ids" type="STRING_LIST">
-                                    <!--seznam identifikatoru (dmdSec ID)-->
+                                    <!--seznam identifikatoru (dmdSec ID); podtrzitko na konci je nutne kvuli UNIT vs UNITCOLLECTION-->
                                     <evaluation functionName="getStringListByXpath">
                                         <params>
                                             <value name="xml_file" type="FILE">
                                                 <value-ref name="PRIMARY-METS_FILE"/>
                                             </value>
                                             <value name="xpath" type="STRING">
-                                                /mets:mets/mets:dmdSec[starts-with(@ID, "DCMD_DATACOLLECTION")]/@ID
+                                                /mets:mets/mets:dmdSec[starts-with(@ID, "DCMD_UNITCOLLECTION_")]/@ID
                                             </value>
                                         </params>
                                     </evaluation>
@@ -1173,33 +1174,34 @@
                         </evaluation>
                     </value>
                     <value name="id_types" type="STRING_LIST">
-                        <value-ref name="ID_TYPES_DATACOLLECTION_PROHIBITED"/>
+                        <value-ref name="ID_TYPES_UNITCOLLECTION_PROHIBITED"/>
                     </value>
-                    <value name="level_name" type="STRING">DATACOLLECTION</value>
+                    <value name="level_name" type="STRING">UNITCOLLECTION</value>
+                    <value name="level" type="LEVEL">WARNING</value>
                 </params>
             </validation>
         </rule>
 
-        <!--disc-->
-        <rule name="DC_MANDATORY_IDENTIFIERS_PRESENT_LEVEL_DISC">
+        <!--directory (složka, nepovinná)-->
+        <rule name="DC_MANDATORY_IDENTIFIERS_PRESENT_LEVEL_DIRECTORY">
             <description>
-                Úroveň DISC musí obsahovat všechny povinné identifikátory v záznamu Dublin Core.
+                Úroveň DIRECTORY musí obsahovat všechny povinné identifikátory v záznamu Dublin Core.
             </description>
             <validation functionName="checkIdentifiersAllTypesPresent">
                 <params>
                     <value name="identifier_list_list" type="IDENTIFIER_LIST_LIST">
-                        <!--seznam obsahujici seznam identifikatoru DC pro kazdy zaznam dmdSec pro dc-->
+                        <!--seznam obsahujici seznam identifikatoru pro kazdy zaznam dmdSec pro Dublin Core-->
                         <evaluation functionName="getDcIdentifiersForEachDmdsecId">
                             <params>
                                 <value name="dmdsec_ids" type="STRING_LIST">
-                                    <!--seznam identifikatoru (dmdSec ID)-->
+                                    <!--seznam identifikatoru (dmdSec ID); podtrzitko na konci je nutne kvuli UNIT vs UNITCOLLECTION-->
                                     <evaluation functionName="getStringListByXpath">
                                         <params>
                                             <value name="xml_file" type="FILE">
                                                 <value-ref name="PRIMARY-METS_FILE"/>
                                             </value>
                                             <value name="xpath" type="STRING">
-                                                /mets:mets/mets:dmdSec[starts-with(@ID, "DCMD_DISC")]/@ID
+                                                /mets:mets/mets:dmdSec[starts-with(@ID, "DCMD_DIRECTORY_")]/@ID
                                             </value>
                                         </params>
                                     </evaluation>
@@ -1211,32 +1213,32 @@
                         </evaluation>
                     </value>
                     <value name="id_types" type="STRING_LIST">
-                        <value-ref name="ID_TYPES_DISC_MANDATORY"/>
+                        <value-ref name="ID_TYPES_DIRECTORY_MANDATORY"/>
                     </value>
-                    <value name="level_name" type="STRING">DISC</value>
+                    <value name="level_name" type="STRING">DIRECTORY</value>
                 </params>
             </validation>
         </rule>
 
-        <rule name="DC_PROHIBITED_IDENTIFIERS_NOT_PRESENT_LEVEL_DISC">
+        <rule name="DC_PROHIBITED_IDENTIFIERS_NOT_PRESENT_LEVEL_DIRECTORY">
             <description>
-                Úroveň DISC nesmí obsahovat žádné zakázané identifikátory v záznamu Dublin Core.
+                Úroveň DIRECTORY nesmí obsahovat žádné zakázané identifikátory v záznamu Dublin Core. Zákazy jsou výklad DMF 0.1, proto jen WARNING.
             </description>
             <validation functionName="checkIdentifiersNoneTypePresent">
                 <params>
                     <value name="identifier_list_list" type="IDENTIFIER_LIST_LIST">
-                        <!--seznam obsahujici seznam identifikatoru DC pro kazdy zaznam dmdSec pro dc-->
+                        <!--seznam obsahujici seznam identifikatoru pro kazdy zaznam dmdSec pro Dublin Core-->
                         <evaluation functionName="getDcIdentifiersForEachDmdsecId">
                             <params>
                                 <value name="dmdsec_ids" type="STRING_LIST">
-                                    <!--seznam identifikatoru (dmdSec ID)-->
+                                    <!--seznam identifikatoru (dmdSec ID); podtrzitko na konci je nutne kvuli UNIT vs UNITCOLLECTION-->
                                     <evaluation functionName="getStringListByXpath">
                                         <params>
                                             <value name="xml_file" type="FILE">
                                                 <value-ref name="PRIMARY-METS_FILE"/>
                                             </value>
                                             <value name="xpath" type="STRING">
-                                                /mets:mets/mets:dmdSec[starts-with(@ID, "DCMD_DISC")]/@ID
+                                                /mets:mets/mets:dmdSec[starts-with(@ID, "DCMD_DIRECTORY_")]/@ID
                                             </value>
                                         </params>
                                     </evaluation>
@@ -1248,33 +1250,34 @@
                         </evaluation>
                     </value>
                     <value name="id_types" type="STRING_LIST">
-                        <value-ref name="ID_TYPES_DISC_PROHIBITED"/>
+                        <value-ref name="ID_TYPES_DIRECTORY_PROHIBITED"/>
                     </value>
-                    <value name="level_name" type="STRING">DISC</value>
+                    <value name="level_name" type="STRING">DIRECTORY</value>
+                    <value name="level" type="LEVEL">WARNING</value>
                 </params>
             </validation>
         </rule>
 
-        <!--supplement-->
-        <rule name="DC_MANDATORY_IDENTIFIERS_PRESENT_LEVEL_SUPPLEMENT">
+        <!--unit (jednotka fondu)-->
+        <rule name="DC_MANDATORY_IDENTIFIERS_PRESENT_LEVEL_UNIT">
             <description>
-                Úroveň SUPPLEMENT musí obsahovat všechny povinné identifikátory v záznamu Dublin Core.
+                Úroveň UNIT musí obsahovat všechny povinné identifikátory v záznamu Dublin Core.
             </description>
             <validation functionName="checkIdentifiersAllTypesPresent">
                 <params>
                     <value name="identifier_list_list" type="IDENTIFIER_LIST_LIST">
-                        <!--seznam obsahujici seznam identifikatoru DC pro kazdy zaznam dmdSec pro dc-->
+                        <!--seznam obsahujici seznam identifikatoru pro kazdy zaznam dmdSec pro Dublin Core-->
                         <evaluation functionName="getDcIdentifiersForEachDmdsecId">
                             <params>
                                 <value name="dmdsec_ids" type="STRING_LIST">
-                                    <!--seznam identifikatoru (dmdSec ID)-->
+                                    <!--seznam identifikatoru (dmdSec ID); podtrzitko na konci je nutne kvuli UNIT vs UNITCOLLECTION-->
                                     <evaluation functionName="getStringListByXpath">
                                         <params>
                                             <value name="xml_file" type="FILE">
                                                 <value-ref name="PRIMARY-METS_FILE"/>
                                             </value>
                                             <value name="xpath" type="STRING">
-                                                /mets:mets/mets:dmdSec[starts-with(@ID, "DCMD_SUPPL")]/@ID
+                                                /mets:mets/mets:dmdSec[starts-with(@ID, "DCMD_UNIT_")]/@ID
                                             </value>
                                         </params>
                                     </evaluation>
@@ -1286,32 +1289,32 @@
                         </evaluation>
                     </value>
                     <value name="id_types" type="STRING_LIST">
-                        <value-ref name="ID_TYPES_SUPPLEMENT_MANDATORY"/>
+                        <value-ref name="ID_TYPES_UNIT_MANDATORY"/>
                     </value>
-                    <value name="level_name" type="STRING">SUPPLEMENT</value>
+                    <value name="level_name" type="STRING">UNIT</value>
                 </params>
             </validation>
         </rule>
 
-        <rule name="DC_PROHIBITED_IDENTIFIERS_NOT_PRESENT_LEVEL_SUPPLEMENT">
+        <rule name="DC_PROHIBITED_IDENTIFIERS_NOT_PRESENT_LEVEL_UNIT">
             <description>
-                Úroveň SUPPLEMENT nesmí obsahovat žádné zakázané identifikátory v záznamu Dublin Core.
+                Úroveň UNIT nesmí obsahovat žádné zakázané identifikátory v záznamu Dublin Core. Zákazy jsou výklad DMF 0.1, proto jen WARNING.
             </description>
             <validation functionName="checkIdentifiersNoneTypePresent">
                 <params>
                     <value name="identifier_list_list" type="IDENTIFIER_LIST_LIST">
-                        <!--seznam obsahujici seznam identifikatoru DC pro kazdy zaznam dmdSec pro dc-->
+                        <!--seznam obsahujici seznam identifikatoru pro kazdy zaznam dmdSec pro Dublin Core-->
                         <evaluation functionName="getDcIdentifiersForEachDmdsecId">
                             <params>
                                 <value name="dmdsec_ids" type="STRING_LIST">
-                                    <!--seznam identifikatoru (dmdSec ID)-->
+                                    <!--seznam identifikatoru (dmdSec ID); podtrzitko na konci je nutne kvuli UNIT vs UNITCOLLECTION-->
                                     <evaluation functionName="getStringListByXpath">
                                         <params>
                                             <value name="xml_file" type="FILE">
                                                 <value-ref name="PRIMARY-METS_FILE"/>
                                             </value>
                                             <value name="xpath" type="STRING">
-                                                /mets:mets/mets:dmdSec[starts-with(@ID, "DCMD_SUPPL")]/@ID
+                                                /mets:mets/mets:dmdSec[starts-with(@ID, "DCMD_UNIT_")]/@ID
                                             </value>
                                         </params>
                                     </evaluation>
@@ -1323,12 +1326,90 @@
                         </evaluation>
                     </value>
                     <value name="id_types" type="STRING_LIST">
-                        <value-ref name="ID_TYPES_SUPPLEMENT_PROHIBITED"/>
+                        <value-ref name="ID_TYPES_UNIT_PROHIBITED"/>
                     </value>
-                    <value name="level_name" type="STRING">SUPPLEMENT</value>
+                    <value name="level_name" type="STRING">UNIT</value>
+                    <value name="level" type="LEVEL">WARNING</value>
                 </params>
             </validation>
         </rule>
+
+        <!--page (strana)-->
+        <rule name="DC_MANDATORY_IDENTIFIERS_PRESENT_LEVEL_PAGE">
+            <description>
+                Úroveň PAGE musí obsahovat všechny povinné identifikátory v záznamu Dublin Core.
+            </description>
+            <validation functionName="checkIdentifiersAllTypesPresent">
+                <params>
+                    <value name="identifier_list_list" type="IDENTIFIER_LIST_LIST">
+                        <!--seznam obsahujici seznam identifikatoru pro kazdy zaznam dmdSec pro Dublin Core-->
+                        <evaluation functionName="getDcIdentifiersForEachDmdsecId">
+                            <params>
+                                <value name="dmdsec_ids" type="STRING_LIST">
+                                    <!--seznam identifikatoru (dmdSec ID); podtrzitko na konci je nutne kvuli UNIT vs UNITCOLLECTION-->
+                                    <evaluation functionName="getStringListByXpath">
+                                        <params>
+                                            <value name="xml_file" type="FILE">
+                                                <value-ref name="PRIMARY-METS_FILE"/>
+                                            </value>
+                                            <value name="xpath" type="STRING">
+                                                /mets:mets/mets:dmdSec[starts-with(@ID, "DCMD_PAGE_")]/@ID
+                                            </value>
+                                        </params>
+                                    </evaluation>
+                                </value>
+                                <value name="mets_file" type="FILE">
+                                    <value-ref name="PRIMARY-METS_FILE"/>
+                                </value>
+                            </params>
+                        </evaluation>
+                    </value>
+                    <value name="id_types" type="STRING_LIST">
+                        <value-ref name="ID_TYPES_PAGE_MANDATORY"/>
+                    </value>
+                    <value name="level_name" type="STRING">PAGE</value>
+                </params>
+            </validation>
+        </rule>
+
+        <rule name="DC_PROHIBITED_IDENTIFIERS_NOT_PRESENT_LEVEL_PAGE">
+            <description>
+                Úroveň PAGE nesmí obsahovat žádné zakázané identifikátory v záznamu Dublin Core. Zákazy jsou výklad DMF 0.1, proto jen WARNING.
+            </description>
+            <validation functionName="checkIdentifiersNoneTypePresent">
+                <params>
+                    <value name="identifier_list_list" type="IDENTIFIER_LIST_LIST">
+                        <!--seznam obsahujici seznam identifikatoru pro kazdy zaznam dmdSec pro Dublin Core-->
+                        <evaluation functionName="getDcIdentifiersForEachDmdsecId">
+                            <params>
+                                <value name="dmdsec_ids" type="STRING_LIST">
+                                    <!--seznam identifikatoru (dmdSec ID); podtrzitko na konci je nutne kvuli UNIT vs UNITCOLLECTION-->
+                                    <evaluation functionName="getStringListByXpath">
+                                        <params>
+                                            <value name="xml_file" type="FILE">
+                                                <value-ref name="PRIMARY-METS_FILE"/>
+                                            </value>
+                                            <value name="xpath" type="STRING">
+                                                /mets:mets/mets:dmdSec[starts-with(@ID, "DCMD_PAGE_")]/@ID
+                                            </value>
+                                        </params>
+                                    </evaluation>
+                                </value>
+                                <value name="mets_file" type="FILE">
+                                    <value-ref name="PRIMARY-METS_FILE"/>
+                                </value>
+                            </params>
+                        </evaluation>
+                    </value>
+                    <value name="id_types" type="STRING_LIST">
+                        <value-ref name="ID_TYPES_PAGE_PROHIBITED"/>
+                    </value>
+                    <value name="level_name" type="STRING">PAGE</value>
+                    <value name="level" type="LEVEL">WARNING</value>
+                </params>
+            </validation>
+        </rule>
+
 
         <rule name="DC_IDENTIFIERS_NO_DUPLICATES_WITHIN_DMDSEC">
             <description>Identifikátory v jednotlivých Dublin Core záznamech by měly mít unikátní typ.
@@ -1408,10 +1489,10 @@
 
         <!--MODS identifiers -->
 
-        <!--datacollection-->
-        <rule name="MODS_MANDATORY_IDENTIFIERS_PRESENT_LEVEL_DATACOLLECTION">
+        <!--unitcollection (kolekce)-->
+        <rule name="MODS_MANDATORY_IDENTIFIERS_PRESENT_LEVEL_UNITCOLLECTION">
             <description>
-                Úroveň DATACOLLECTION musí obsahovat všechny povinné identifikátory v záznamu MODS.
+                Úroveň UNITCOLLECTION musí obsahovat všechny povinné identifikátory v záznamu MODS.
             </description>
             <validation functionName="checkIdentifiersAllTypesPresent">
                 <params>
@@ -1420,14 +1501,14 @@
                         <evaluation functionName="getModsIdentifiersForEachDmdsecId">
                             <params>
                                 <value name="dmdsec_ids" type="STRING_LIST">
-                                    <!--seznam identifikatoru (dmdSec ID)-->
+                                    <!--seznam identifikatoru (dmdSec ID); podtrzitko na konci je nutne kvuli UNIT vs UNITCOLLECTION-->
                                     <evaluation functionName="getStringListByXpath">
                                         <params>
                                             <value name="xml_file" type="FILE">
                                                 <value-ref name="PRIMARY-METS_FILE"/>
                                             </value>
                                             <value name="xpath" type="STRING">
-                                                /mets:mets/mets:dmdSec[starts-with(@ID, "MODSMD_DATACOLLECTION")]/@ID
+                                                /mets:mets/mets:dmdSec[starts-with(@ID, "MODSMD_UNITCOLLECTION_")]/@ID
                                             </value>
                                         </params>
                                     </evaluation>
@@ -1439,16 +1520,16 @@
                         </evaluation>
                     </value>
                     <value name="id_types" type="STRING_LIST">
-                        <value-ref name="ID_TYPES_DATACOLLECTION_MANDATORY"/>
+                        <value-ref name="ID_TYPES_UNITCOLLECTION_MANDATORY"/>
                     </value>
-                    <value name="level_name" type="STRING">DATACOLLECTION</value>
+                    <value name="level_name" type="STRING">UNITCOLLECTION</value>
                 </params>
             </validation>
         </rule>
 
-        <rule name="MODS_PROHIBITED_IDENTIFIERS_NOT_PRESENT_LEVEL_DATACOLLECTION">
+        <rule name="MODS_PROHIBITED_IDENTIFIERS_NOT_PRESENT_LEVEL_UNITCOLLECTION">
             <description>
-                Úroveň DATACOLLECTION nesmí obsahovat žádné zakázané identifikátory v záznamu MODS.
+                Úroveň UNITCOLLECTION nesmí obsahovat žádné zakázané identifikátory v záznamu MODS. Zákazy jsou výklad DMF 0.1, proto jen WARNING.
             </description>
             <validation functionName="checkIdentifiersNoneTypePresent">
                 <params>
@@ -1457,14 +1538,14 @@
                         <evaluation functionName="getModsIdentifiersForEachDmdsecId">
                             <params>
                                 <value name="dmdsec_ids" type="STRING_LIST">
-                                    <!--seznam identifikatoru (dmdSec ID)-->
+                                    <!--seznam identifikatoru (dmdSec ID); podtrzitko na konci je nutne kvuli UNIT vs UNITCOLLECTION-->
                                     <evaluation functionName="getStringListByXpath">
                                         <params>
                                             <value name="xml_file" type="FILE">
                                                 <value-ref name="PRIMARY-METS_FILE"/>
                                             </value>
                                             <value name="xpath" type="STRING">
-                                                /mets:mets/mets:dmdSec[starts-with(@ID, "MODSMD_DATACOLLECTION")]/@ID
+                                                /mets:mets/mets:dmdSec[starts-with(@ID, "MODSMD_UNITCOLLECTION_")]/@ID
                                             </value>
                                         </params>
                                     </evaluation>
@@ -1476,17 +1557,18 @@
                         </evaluation>
                     </value>
                     <value name="id_types" type="STRING_LIST">
-                        <value-ref name="ID_TYPES_DATACOLLECTION_PROHIBITED"/>
+                        <value-ref name="ID_TYPES_UNITCOLLECTION_PROHIBITED"/>
                     </value>
-                    <value name="level_name" type="STRING">DATACOLLECTION</value>
+                    <value name="level_name" type="STRING">UNITCOLLECTION</value>
+                    <value name="level" type="LEVEL">WARNING</value>
                 </params>
             </validation>
         </rule>
 
-        <!--disc-->
-        <rule name="MODS_MANDATORY_IDENTIFIERS_PRESENT_LEVEL_DISC">
+        <!--directory (složka, nepovinná)-->
+        <rule name="MODS_MANDATORY_IDENTIFIERS_PRESENT_LEVEL_DIRECTORY">
             <description>
-                Úroveň DISC musí obsahovat všechny povinné identifikátory v záznamu MODS.
+                Úroveň DIRECTORY musí obsahovat všechny povinné identifikátory v záznamu MODS.
             </description>
             <validation functionName="checkIdentifiersAllTypesPresent">
                 <params>
@@ -1495,14 +1577,14 @@
                         <evaluation functionName="getModsIdentifiersForEachDmdsecId">
                             <params>
                                 <value name="dmdsec_ids" type="STRING_LIST">
-                                    <!--seznam identifikatoru (dmdSec ID)-->
+                                    <!--seznam identifikatoru (dmdSec ID); podtrzitko na konci je nutne kvuli UNIT vs UNITCOLLECTION-->
                                     <evaluation functionName="getStringListByXpath">
                                         <params>
                                             <value name="xml_file" type="FILE">
                                                 <value-ref name="PRIMARY-METS_FILE"/>
                                             </value>
                                             <value name="xpath" type="STRING">
-                                                /mets:mets/mets:dmdSec[starts-with(@ID, "MODSMD_DISC")]/@ID
+                                                /mets:mets/mets:dmdSec[starts-with(@ID, "MODSMD_DIRECTORY_")]/@ID
                                             </value>
                                         </params>
                                     </evaluation>
@@ -1514,16 +1596,16 @@
                         </evaluation>
                     </value>
                     <value name="id_types" type="STRING_LIST">
-                        <value-ref name="ID_TYPES_DISC_MANDATORY"/>
+                        <value-ref name="ID_TYPES_DIRECTORY_MANDATORY"/>
                     </value>
-                    <value name="level_name" type="STRING">DISC</value>
+                    <value name="level_name" type="STRING">DIRECTORY</value>
                 </params>
             </validation>
         </rule>
 
-        <rule name="MODS_PROHIBITED_IDENTIFIERS_NOT_PRESENT_LEVEL_DISC">
+        <rule name="MODS_PROHIBITED_IDENTIFIERS_NOT_PRESENT_LEVEL_DIRECTORY">
             <description>
-                Úroveň DISC nesmí obsahovat žádné zakázané identifikátory v záznamu MODS.
+                Úroveň DIRECTORY nesmí obsahovat žádné zakázané identifikátory v záznamu MODS. Zákazy jsou výklad DMF 0.1, proto jen WARNING.
             </description>
             <validation functionName="checkIdentifiersNoneTypePresent">
                 <params>
@@ -1532,14 +1614,14 @@
                         <evaluation functionName="getModsIdentifiersForEachDmdsecId">
                             <params>
                                 <value name="dmdsec_ids" type="STRING_LIST">
-                                    <!--seznam identifikatoru (dmdSec ID)-->
+                                    <!--seznam identifikatoru (dmdSec ID); podtrzitko na konci je nutne kvuli UNIT vs UNITCOLLECTION-->
                                     <evaluation functionName="getStringListByXpath">
                                         <params>
                                             <value name="xml_file" type="FILE">
                                                 <value-ref name="PRIMARY-METS_FILE"/>
                                             </value>
                                             <value name="xpath" type="STRING">
-                                                /mets:mets/mets:dmdSec[starts-with(@ID, "MODSMD_DISC")]/@ID
+                                                /mets:mets/mets:dmdSec[starts-with(@ID, "MODSMD_DIRECTORY_")]/@ID
                                             </value>
                                         </params>
                                     </evaluation>
@@ -1551,17 +1633,18 @@
                         </evaluation>
                     </value>
                     <value name="id_types" type="STRING_LIST">
-                        <value-ref name="ID_TYPES_DISC_PROHIBITED"/>
+                        <value-ref name="ID_TYPES_DIRECTORY_PROHIBITED"/>
                     </value>
-                    <value name="level_name" type="STRING">DISC</value>
+                    <value name="level_name" type="STRING">DIRECTORY</value>
+                    <value name="level" type="LEVEL">WARNING</value>
                 </params>
             </validation>
         </rule>
 
-        <!--supplement-->
-        <rule name="MODS_MANDATORY_IDENTIFIERS_PRESENT_LEVEL_SUPPLEMENT">
+        <!--unit (jednotka fondu)-->
+        <rule name="MODS_MANDATORY_IDENTIFIERS_PRESENT_LEVEL_UNIT">
             <description>
-                Úroveň SUPPLEMENT musí obsahovat všechny povinné identifikátory v záznamu MODS.
+                Úroveň UNIT musí obsahovat všechny povinné identifikátory v záznamu MODS.
             </description>
             <validation functionName="checkIdentifiersAllTypesPresent">
                 <params>
@@ -1570,14 +1653,14 @@
                         <evaluation functionName="getModsIdentifiersForEachDmdsecId">
                             <params>
                                 <value name="dmdsec_ids" type="STRING_LIST">
-                                    <!--seznam identifikatoru (dmdSec ID)-->
+                                    <!--seznam identifikatoru (dmdSec ID); podtrzitko na konci je nutne kvuli UNIT vs UNITCOLLECTION-->
                                     <evaluation functionName="getStringListByXpath">
                                         <params>
                                             <value name="xml_file" type="FILE">
                                                 <value-ref name="PRIMARY-METS_FILE"/>
                                             </value>
                                             <value name="xpath" type="STRING">
-                                                /mets:mets/mets:dmdSec[starts-with(@ID, "MODSMD_SUPPL")]/@ID
+                                                /mets:mets/mets:dmdSec[starts-with(@ID, "MODSMD_UNIT_")]/@ID
                                             </value>
                                         </params>
                                     </evaluation>
@@ -1589,16 +1672,16 @@
                         </evaluation>
                     </value>
                     <value name="id_types" type="STRING_LIST">
-                        <value-ref name="ID_TYPES_SUPPLEMENT_MANDATORY"/>
+                        <value-ref name="ID_TYPES_UNIT_MANDATORY"/>
                     </value>
-                    <value name="level_name" type="STRING">SUPPLEMENT</value>
+                    <value name="level_name" type="STRING">UNIT</value>
                 </params>
             </validation>
         </rule>
 
-        <rule name="MODS_PROHIBITED_IDENTIFIERS_NOT_PRESENT_LEVEL_SUPPLEMENT">
+        <rule name="MODS_PROHIBITED_IDENTIFIERS_NOT_PRESENT_LEVEL_UNIT">
             <description>
-                Úroveň SUPPLEMENT nesmí obsahovat žádné zakázané identifikátory v záznamu MODS.
+                Úroveň UNIT nesmí obsahovat žádné zakázané identifikátory v záznamu MODS. Zákazy jsou výklad DMF 0.1, proto jen WARNING.
             </description>
             <validation functionName="checkIdentifiersNoneTypePresent">
                 <params>
@@ -1607,14 +1690,14 @@
                         <evaluation functionName="getModsIdentifiersForEachDmdsecId">
                             <params>
                                 <value name="dmdsec_ids" type="STRING_LIST">
-                                    <!--seznam identifikatoru (dmdSec ID)-->
+                                    <!--seznam identifikatoru (dmdSec ID); podtrzitko na konci je nutne kvuli UNIT vs UNITCOLLECTION-->
                                     <evaluation functionName="getStringListByXpath">
                                         <params>
                                             <value name="xml_file" type="FILE">
                                                 <value-ref name="PRIMARY-METS_FILE"/>
                                             </value>
                                             <value name="xpath" type="STRING">
-                                                /mets:mets/mets:dmdSec[starts-with(@ID, "MODSMD_SUPPL")]/@ID
+                                                /mets:mets/mets:dmdSec[starts-with(@ID, "MODSMD_UNIT_")]/@ID
                                             </value>
                                         </params>
                                     </evaluation>
@@ -1626,12 +1709,90 @@
                         </evaluation>
                     </value>
                     <value name="id_types" type="STRING_LIST">
-                        <value-ref name="ID_TYPES_SUPPLEMENT_PROHIBITED"/>
+                        <value-ref name="ID_TYPES_UNIT_PROHIBITED"/>
                     </value>
-                    <value name="level_name" type="STRING">SUPPLEMENT</value>
+                    <value name="level_name" type="STRING">UNIT</value>
+                    <value name="level" type="LEVEL">WARNING</value>
                 </params>
             </validation>
         </rule>
+
+        <!--page (strana)-->
+        <rule name="MODS_MANDATORY_IDENTIFIERS_PRESENT_LEVEL_PAGE">
+            <description>
+                Úroveň PAGE musí obsahovat všechny povinné identifikátory v záznamu MODS.
+            </description>
+            <validation functionName="checkIdentifiersAllTypesPresent">
+                <params>
+                    <value name="identifier_list_list" type="IDENTIFIER_LIST_LIST">
+                        <!--seznam obsahujici seznam identifikatoru pro kazdy zaznam dmdSec pro MODS-->
+                        <evaluation functionName="getModsIdentifiersForEachDmdsecId">
+                            <params>
+                                <value name="dmdsec_ids" type="STRING_LIST">
+                                    <!--seznam identifikatoru (dmdSec ID); podtrzitko na konci je nutne kvuli UNIT vs UNITCOLLECTION-->
+                                    <evaluation functionName="getStringListByXpath">
+                                        <params>
+                                            <value name="xml_file" type="FILE">
+                                                <value-ref name="PRIMARY-METS_FILE"/>
+                                            </value>
+                                            <value name="xpath" type="STRING">
+                                                /mets:mets/mets:dmdSec[starts-with(@ID, "MODSMD_PAGE_")]/@ID
+                                            </value>
+                                        </params>
+                                    </evaluation>
+                                </value>
+                                <value name="mets_file" type="FILE">
+                                    <value-ref name="PRIMARY-METS_FILE"/>
+                                </value>
+                            </params>
+                        </evaluation>
+                    </value>
+                    <value name="id_types" type="STRING_LIST">
+                        <value-ref name="ID_TYPES_PAGE_MANDATORY"/>
+                    </value>
+                    <value name="level_name" type="STRING">PAGE</value>
+                </params>
+            </validation>
+        </rule>
+
+        <rule name="MODS_PROHIBITED_IDENTIFIERS_NOT_PRESENT_LEVEL_PAGE">
+            <description>
+                Úroveň PAGE nesmí obsahovat žádné zakázané identifikátory v záznamu MODS. Zákazy jsou výklad DMF 0.1, proto jen WARNING.
+            </description>
+            <validation functionName="checkIdentifiersNoneTypePresent">
+                <params>
+                    <value name="identifier_list_list" type="IDENTIFIER_LIST_LIST">
+                        <!--seznam obsahujici seznam identifikatoru pro kazdy zaznam dmdSec pro MODS-->
+                        <evaluation functionName="getModsIdentifiersForEachDmdsecId">
+                            <params>
+                                <value name="dmdsec_ids" type="STRING_LIST">
+                                    <!--seznam identifikatoru (dmdSec ID); podtrzitko na konci je nutne kvuli UNIT vs UNITCOLLECTION-->
+                                    <evaluation functionName="getStringListByXpath">
+                                        <params>
+                                            <value name="xml_file" type="FILE">
+                                                <value-ref name="PRIMARY-METS_FILE"/>
+                                            </value>
+                                            <value name="xpath" type="STRING">
+                                                /mets:mets/mets:dmdSec[starts-with(@ID, "MODSMD_PAGE_")]/@ID
+                                            </value>
+                                        </params>
+                                    </evaluation>
+                                </value>
+                                <value name="mets_file" type="FILE">
+                                    <value-ref name="PRIMARY-METS_FILE"/>
+                                </value>
+                            </params>
+                        </evaluation>
+                    </value>
+                    <value name="id_types" type="STRING_LIST">
+                        <value-ref name="ID_TYPES_PAGE_PROHIBITED"/>
+                    </value>
+                    <value name="level_name" type="STRING">PAGE</value>
+                    <value name="level" type="LEVEL">WARNING</value>
+                </params>
+            </validation>
+        </rule>
+
 
         <rule name="MODS_IDENTIFIERS_NO_DUPLICATES_WITHIN_DMDSEC">
             <description>Identifikátory v jednotlivých MODS záznamech by měly mít unikátní typ.
@@ -2143,24 +2304,20 @@
                         <value-ref name="PRIMARY-METS_FILE"/>
                     </value>
                     <value name="div_types_allowed" type="STRING_LIST">
+                        <!--DMF Jednotky fondu 0.1, kap. 7.6 (s. 45-46): UNITCOLLECTION (M), DIRECTORY (O), UNIT (M) s vnořenými
+                        částmi; div PAGE je v logické mapě nepovinný-->
                         <evaluation functionName="buildListOfStrings">
                             <params>
-                                <value name="string" type="STRING">MONOGRAPH</value>
-                                <value name="string" type="STRING">VOLUME</value>
-                                <value name="string" type="STRING">SUPPLEMENT</value>
-                                <value name="string" type="STRING">CHAPTER</value>
+                                <value name="string" type="STRING">UNITCOLLECTION</value>
+                                <value name="string" type="STRING">DIRECTORY</value>
+                                <value name="string" type="STRING">UNIT</value>
                                 <value name="string" type="STRING">TITLE</value>
                                 <value name="string" type="STRING">SUBTITLE</value>
                                 <value name="string" type="STRING">AUTHOR</value>
                                 <value name="string" type="STRING">TRANSLATOR</value>
                                 <value name="string" type="STRING">NORMAL_TEXT</value>
                                 <value name="string" type="STRING">PICTURE</value>
-                                <value name="string" type="STRING">CAPTION</value>
-                                <value name="string" type="STRING">PICT_AUTHOR</value>
-                                <value name="string" type="STRING">PICT_TITLE</value>
-                                <value name="string" type="STRING">IMAGE</value>
                                 <value name="string" type="STRING">NOTE</value>
-                                <value name="string" type="STRING">CHAPTER_PART</value>
                                 <value name="string" type="STRING">PAGE</value>
                             </params>
                         </evaluation>
@@ -2178,8 +2335,8 @@
                     <value name="primary-mets_file" type="FILE">
                         <value-ref name="PRIMARY-METS_FILE"/>
                     </value>
-                    <!--Ze specifikace není jednoznačně zřejmé, jak plnit atribut TYPE- zda monograph nebo Monograph, proto dočasně zakomentováno-->
-                    <!--<value name="expected_top_level_div_type" type="STRING">monograph</value>-->
+                    <!--DMF Jednotky fondu 0.1 (s. 44) uvádí TYPE rodičovského divu jen příkladem („např. Unit“), proto se nekontroluje; viz otázka Q5 pro NKP-->
+                    <!--<value name="expected_top_level_div_type" type="STRING">UNIT</value>-->
                     <value name="filegroups_to_check" type="STRING_LIST">
                         <evaluation functionName="buildListOfStrings">
                             <params>
@@ -2192,46 +2349,43 @@
                         </evaluation>
                     </value>
                     <value name="page_types" type="STRING_LIST">
+                        <!--DMF Jednotky fondu 0.1, kap. 7.6 (s. 44) odkazuje na typy stran dle Pravidel pro popis periodik; seznam převzat
+                        z fDMF periodical_2.2-->
                         <evaluation functionName="buildListOfStrings">
                             <params>
-                                <!-- seznam dle PPP mono v2.3 ze dne 17.12.2024, s. 8-12. -->
-                                <value name="string" type="STRING">frontJacket</value>
                                 <value name="string" type="STRING">cover</value>
                                 <value name="string" type="STRING">frontCover</value>
                                 <value name="string" type="STRING">backCover</value>
-                                <value name="string" type="STRING">frontEndSheet</value>
-                                <value name="string" type="STRING">backEndSheet</value>
-                                <value name="string" type="STRING">frontEndPaper</value>
-                                <value name="string" type="STRING">backEndPaper</value>
-                                <value name="string" type="STRING">titlePage</value>
-                                <value name="string" type="STRING">preface</value>
-                                <value name="string" type="STRING">introduction</value>
+                                <value name="string" type="STRING">errata</value>
+                                <value name="string" type="STRING">spine</value>
                                 <value name="string" type="STRING">normalPage</value>
                                 <value name="string" type="STRING">blank</value>
-                                <value name="string" type="STRING">illustration</value>
-                                <value name="string" type="STRING">map</value>
-                                <value name="string" type="STRING">table</value>
-                                <value name="string" type="STRING">advertisement</value>
-                                <value name="string" type="STRING">impressum</value>
-                                <value name="string" type="STRING">colophon</value>
-                                <value name="string" type="STRING">frontispiece</value>
-                                <value name="string" type="STRING">imprimatur</value>
-                                <value name="string" type="STRING">dedication</value>
-                                <value name="string" type="STRING">errata</value>
-                                <value name="string" type="STRING">sheetMusic</value>
-                                <value name="string" type="STRING">appendix</value>
-                                <value name="string" type="STRING">bibliography</value>
-                                <value name="string" type="STRING">afterword</value>
-                                <value name="string" type="STRING">conclusion</value>
-                                <value name="string" type="STRING">tableOfContents</value>
-                                <value name="string" type="STRING">index</value>
+                                <value name="string" type="STRING">jacket</value>
+                                <value name="string" type="STRING">frontEndPaper</value>
+                                <value name="string" type="STRING">backEndPaper</value>
+                                <value name="string" type="STRING">frontEndSheet</value>
+                                <value name="string" type="STRING">backEndSheet</value>
+                                <value name="string" type="STRING">frontJacket</value>
                                 <value name="string" type="STRING">listOfIllustrations</value>
                                 <value name="string" type="STRING">listOfMaps</value>
                                 <value name="string" type="STRING">listOfTables</value>
-                                <value name="string" type="STRING">edge</value>
-                                <value name="string" type="STRING">spine</value>
-                                <value name="string" type="STRING">jacket</value>
-                                <value name="string" type="STRING">flyLeaf</value>
+                                <value name="string" type="STRING">colophon</value>
+                                <value name="string" type="STRING">titlePage</value>
+                                <value name="string" type="STRING">flyleaf</value>
+                                <value name="string" type="STRING">bibliography</value>
+                                <value name="string" type="STRING">dedication</value>
+                                <value name="string" type="STRING">afterword</value>
+                                <value name="string" type="STRING">illustration</value>
+                                <value name="string" type="STRING">advertisement</value>
+                                <value name="string" type="STRING">map</value>
+                                <value name="string" type="STRING">sheetMusic</value>
+                                <value name="string" type="STRING">tableOfContents</value>
+                                <value name="string" type="STRING">preface</value>
+                                <value name="string" type="STRING">index</value>
+                                <value name="string" type="STRING">table</value>
+                                <value name="string" type="STRING">introduction</value>
+                                <value name="string" type="STRING">conclusion</value>
+ 
                             </params>
                         </evaluation>
                     </value>
@@ -2261,7 +2415,8 @@
                     <value name="secondary-mets_files" type="FILE_LIST">
                         <value-ref name="SECONDARY-METS_FILES"/>
                     </value>
-                    <value name="expected_page_type" type="STRING">MONOGRAPH_PAGE</value>
+                    <!--DMF Jednotky fondu 0.1, kap. 7.6.2 (s. 46): jediný div TYPE="UNIT"-->
+                    <value name="expected_page_type" type="STRING">UNIT</value>
                     <value name="filegroups_to_check" type="STRING_LIST">
                         <evaluation functionName="buildListOfStrings">
                             <params>
@@ -2415,51 +2570,8 @@
     <rules-section name="Bibliografická metadata"
                    description="validace obsahů bibliografických metadat v MODS a Dubline Core v souboru PRIMARY-METS">
 
-        <rule name="BIBLIOGRAPHIC_METADATA_MATCH_PROFILE_DATACOLLECTION">
-            <description>Bibliografická metadata pro entitu typu DATACOLLECTION musí splňovat požadovaný profil pro
-                záznamy v
-                Dublin Core i MODS.
-            </description>
-            <validation functionName="checkBibliographicMetadataMatchProfile">
-                <params>
-                    <value name="mets_file" type="FILE">
-                        <value-ref name="PRIMARY-METS_FILE"/>
-                    </value>
-                    <value name="entity_type" type="ENTITY_TYPE">DATACOLLECTION</value>
-                    <value name="profile_detection_xpath" type="STRING">concat('datacollection',null)</value>
-                    <value name="xsd_file_dc" type="FILE">
-                        <value-ref name="DC_XSD_FILE"/>
-                    </value>
-                    <value name="xsd_file_mods" type="FILE">
-                        <value-ref name="MODS_XSD_FILE"/>
-                    </value>
-                </params>
-            </validation>
-        </rule>
-
-        <rule name="BIBLIOGRAPHIC_METADATA_MATCH_PROFILE_DISC">
-            <description>Bibliografická metadata pro entitu typu DISC musí splňovat požadovaný profil pro záznamy v
-                Dublin Core i MODS.
-            </description>
-            <validation functionName="checkBibliographicMetadataMatchProfile">
-                <params>
-                    <value name="mets_file" type="FILE">
-                        <value-ref name="PRIMARY-METS_FILE"/>
-                    </value>
-                    <value name="entity_type" type="ENTITY_TYPE">DISC</value>
-                    <value name="profile_detection_xpath" type="STRING">concat('disc',null)</value>
-                    <value name="xsd_file_dc" type="FILE">
-                        <value-ref name="DC_XSD_FILE"/>
-                    </value>
-                    <value name="xsd_file_mods" type="FILE">
-                        <value-ref name="MODS_XSD_FILE"/>
-                    </value>
-                </params>
-            </validation>
-        </rule>
-
-        <rule name="BIBLIOGRAPHIC_METADATA_MATCH_PROFILE_SUPPLEMENT">
-            <description>Bibliografická metadata pro entitu typu SUPPLEMENT musí splňovat požadovaný profil pro záznamy
+        <rule name="BIBLIOGRAPHIC_METADATA_MATCH_PROFILE_UNITCOLLECTION">
+            <description>Bibliografická metadata pro entitu typu UNITCOLLECTION musí splňovat požadovaný profil pro záznamy
                 v Dublin Core i MODS.
             </description>
             <validation functionName="checkBibliographicMetadataMatchProfile">
@@ -2467,8 +2579,75 @@
                     <value name="mets_file" type="FILE">
                         <value-ref name="PRIMARY-METS_FILE"/>
                     </value>
-                    <value name="entity_type" type="ENTITY_TYPE">SUPPLEMENT</value>
-                    <value name="profile_detection_xpath" type="STRING">concat('supplement',null)</value>
+                    <value name="entity_type" type="ENTITY_TYPE">UNITCOLLECTION</value>
+                    <!--profil se nevybírá podle genre (varianty clipping/clippingIndex/cardIndex řeší oneOf v profilu), název je konstantní-->
+                    <value name="profile_detection_xpath" type="STRING">concat('unitcollection',null)</value>
+                    <value name="xsd_file_dc" type="FILE">
+                        <value-ref name="DC_XSD_FILE"/>
+                    </value>
+                    <value name="xsd_file_mods" type="FILE">
+                        <value-ref name="MODS_XSD_FILE"/>
+                    </value>
+                </params>
+            </validation>
+        </rule>
+
+        <rule name="BIBLIOGRAPHIC_METADATA_MATCH_PROFILE_DIRECTORY">
+            <description>Bibliografická metadata pro entitu typu DIRECTORY musí splňovat požadovaný profil pro záznamy
+                v Dublin Core i MODS. Úroveň DIRECTORY je nepovinná.
+            </description>
+            <validation functionName="checkBibliographicMetadataMatchProfile">
+                <params>
+                    <value name="mets_file" type="FILE">
+                        <value-ref name="PRIMARY-METS_FILE"/>
+                    </value>
+                    <value name="entity_type" type="ENTITY_TYPE">DIRECTORY</value>
+                    <!--profil se nevybírá podle genre (varianty clipping/clippingIndex/cardIndex řeší oneOf v profilu), název je konstantní-->
+                    <value name="profile_detection_xpath" type="STRING">concat('directory',null)</value>
+                    <value name="xsd_file_dc" type="FILE">
+                        <value-ref name="DC_XSD_FILE"/>
+                    </value>
+                    <value name="xsd_file_mods" type="FILE">
+                        <value-ref name="MODS_XSD_FILE"/>
+                    </value>
+                </params>
+            </validation>
+        </rule>
+
+        <rule name="BIBLIOGRAPHIC_METADATA_MATCH_PROFILE_UNIT">
+            <description>Bibliografická metadata pro entitu typu UNIT musí splňovat požadovaný profil pro záznamy
+                v Dublin Core i MODS.
+            </description>
+            <validation functionName="checkBibliographicMetadataMatchProfile">
+                <params>
+                    <value name="mets_file" type="FILE">
+                        <value-ref name="PRIMARY-METS_FILE"/>
+                    </value>
+                    <value name="entity_type" type="ENTITY_TYPE">UNIT</value>
+                    <!--profil se nevybírá podle genre (varianty clipping/clippingIndex/cardIndex řeší oneOf v profilu), název je konstantní-->
+                    <value name="profile_detection_xpath" type="STRING">concat('unit',null)</value>
+                    <value name="xsd_file_dc" type="FILE">
+                        <value-ref name="DC_XSD_FILE"/>
+                    </value>
+                    <value name="xsd_file_mods" type="FILE">
+                        <value-ref name="MODS_XSD_FILE"/>
+                    </value>
+                </params>
+            </validation>
+        </rule>
+
+        <rule name="BIBLIOGRAPHIC_METADATA_MATCH_PROFILE_PAGE">
+            <description>Bibliografická metadata pro entitu typu PAGE musí splňovat požadovaný profil pro záznamy
+                v Dublin Core i MODS.
+            </description>
+            <validation functionName="checkBibliographicMetadataMatchProfile">
+                <params>
+                    <value name="mets_file" type="FILE">
+                        <value-ref name="PRIMARY-METS_FILE"/>
+                    </value>
+                    <value name="entity_type" type="ENTITY_TYPE">PAGE</value>
+                    <!--profil se nevybírá podle genre (varianty clipping/clippingIndex/cardIndex řeší oneOf v profilu), název je konstantní-->
+                    <value name="profile_detection_xpath" type="STRING">concat('page',null)</value>
                     <value name="xsd_file_dc" type="FILE">
                         <value-ref name="DC_XSD_FILE"/>
                     </value>

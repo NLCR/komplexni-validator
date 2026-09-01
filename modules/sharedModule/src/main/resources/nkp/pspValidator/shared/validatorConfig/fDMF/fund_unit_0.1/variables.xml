@@ -440,26 +440,25 @@
     <!--identifikátory-->
 
     <!--datacollection-->
-    <value-def name="ID_TYPES_DATACOLLECTION_MANDATORY" type="STRING_LIST">
-        <description>seznam povinných typů identifikátorů pro úroveň DATACOLLECTION</description>
+    <!--Identifikátory podle DMF Jednotky fondu 0.1, kap. 4 (s. 9) a profilů MODS (kap. 7.3). UUID povinné na všech
+    úrovních, URN:NBN povinné jen na úrovni UNIT. Zákazy na úrovních UNITCOLLECTION/DIRECTORY/PAGE jsou náš výklad
+    („jiný interní identifikátor“), proto se v pravidlech hlásí jako WARNING, dokud NK nepotvrdí.-->
+
+    <!--unitcollection (kolekce)-->
+    <value-def name="ID_TYPES_UNITCOLLECTION_MANDATORY" type="STRING_LIST">
+        <description>seznam povinných typů identifikátorů pro úroveň UNITCOLLECTION</description>
         <evaluation functionName="buildListOfStrings">
             <params>
                 <value name="string" type="STRING">uuid</value>
-                <value name="string" type="STRING">urnnbn</value>
             </params>
         </evaluation>
     </value-def>
 
-    <value-def name="ID_TYPES_DATACOLLECTION_OPTIONAL" type="STRING_LIST">
-        <!--Zatím se nepužívá, jen pro přehled. -->
-        <description>seznam volitelných typů identifikátorů pro úroveň DATACOLLECTION</description>
+    <value-def name="ID_TYPES_UNITCOLLECTION_OPTIONAL" type="STRING_LIST">
+        <!--Zatím se nepoužívá, jen pro přehled.-->
+        <description>seznam volitelných typů identifikátorů pro úroveň UNITCOLLECTION</description>
         <evaluation functionName="buildListOfStrings">
             <params>
-                <value name="string" type="STRING">ccnb</value>
-                <value name="string" type="STRING">isbn</value>
-                <value name="string" type="STRING">ismn</value>
-                <value name="string" type="STRING">issn</value>
-                <!--other-->
                 <value name="string" type="STRING">barcode</value>
                 <value name="string" type="STRING">sysno</value>
                 <value name="string" type="STRING">oclc</value>
@@ -468,18 +467,22 @@
         </evaluation>
     </value-def>
 
-    <value-def name="ID_TYPES_DATACOLLECTION_PROHIBITED" type="STRING_LIST">
-        <description>seznam zakázaných typů identifikátorů pro úroveň DATACOLLECTION</description>
+    <value-def name="ID_TYPES_UNITCOLLECTION_PROHIBITED" type="STRING_LIST">
+        <description>seznam zakázaných typů identifikátorů pro úroveň UNITCOLLECTION</description>
         <evaluation functionName="buildListOfStrings">
             <params>
-                <!--nothing?-->
+                <value name="string" type="STRING">urnnbn</value>
+                <value name="string" type="STRING">ccnb</value>
+                <value name="string" type="STRING">isbn</value>
+                <value name="string" type="STRING">ismn</value>
+                <value name="string" type="STRING">issn</value>
             </params>
         </evaluation>
     </value-def>
 
-    <!--disc-->
-    <value-def name="ID_TYPES_DISC_MANDATORY" type="STRING_LIST">
-        <description>seznam povinných typů identifikátorů pro úroveň DISC</description>
+    <!--directory (složka)-->
+    <value-def name="ID_TYPES_DIRECTORY_MANDATORY" type="STRING_LIST">
+        <description>seznam povinných typů identifikátorů pro úroveň DIRECTORY</description>
         <evaluation functionName="buildListOfStrings">
             <params>
                 <value name="string" type="STRING">uuid</value>
@@ -487,22 +490,22 @@
         </evaluation>
     </value-def>
 
-    <value-def name="ID_TYPES_DISC_OPTIONAL" type="STRING_LIST">
-        <!--Zatím se nepužívá, jen pro přehled. -->
-        <description>seznam volitelných typů identifikátorů pro úroveň DISC</description>
+    <value-def name="ID_TYPES_DIRECTORY_OPTIONAL" type="STRING_LIST">
+        <!--Zatím se nepoužívá, jen pro přehled.-->
+        <description>seznam volitelných typů identifikátorů pro úroveň DIRECTORY</description>
         <evaluation functionName="buildListOfStrings">
             <params>
-                <!--other-->
                 <value name="string" type="STRING">barcode</value>
                 <value name="string" type="STRING">sysno</value>
                 <value name="string" type="STRING">oclc</value>
                 <value name="string" type="STRING">permalink</value>
+                <value name="string" type="STRING">accession</value>
             </params>
         </evaluation>
     </value-def>
 
-    <value-def name="ID_TYPES_DISC_PROHIBITED" type="STRING_LIST">
-        <description>seznam zakázaných typů identifikátorů pro úroveň DISC</description>
+    <value-def name="ID_TYPES_DIRECTORY_PROHIBITED" type="STRING_LIST">
+        <description>seznam zakázaných typů identifikátorů pro úroveň DIRECTORY</description>
         <evaluation functionName="buildListOfStrings">
             <params>
                 <value name="string" type="STRING">urnnbn</value>
@@ -514,9 +517,46 @@
         </evaluation>
     </value-def>
 
-    <!--supplement-->
-    <value-def name="ID_TYPES_SUPPLEMENT_MANDATORY" type="STRING_LIST">
-        <description>seznam povinných typů identifikátorů pro úroveň SUPPLEMENT</description>
+    <!--unit (jednotka fondu, intelektuální entita, nositel URN:NBN)-->
+    <value-def name="ID_TYPES_UNIT_MANDATORY" type="STRING_LIST">
+        <description>seznam povinných typů identifikátorů pro úroveň UNIT</description>
+        <evaluation functionName="buildListOfStrings">
+            <params>
+                <value name="string" type="STRING">uuid</value>
+                <value name="string" type="STRING">urnnbn</value>
+            </params>
+        </evaluation>
+    </value-def>
+
+    <value-def name="ID_TYPES_UNIT_OPTIONAL" type="STRING_LIST">
+        <!--Zatím se nepoužívá, jen pro přehled. ccnb/isbn/issn zdrojového dokumentu patří do relatedItem, ne sem.-->
+        <description>seznam volitelných typů identifikátorů pro úroveň UNIT</description>
+        <evaluation functionName="buildListOfStrings">
+            <params>
+                <value name="string" type="STRING">barcode</value>
+                <value name="string" type="STRING">sysno</value>
+                <value name="string" type="STRING">oclc</value>
+                <value name="string" type="STRING">permalink</value>
+                <value name="string" type="STRING">accession</value>
+            </params>
+        </evaluation>
+    </value-def>
+
+    <value-def name="ID_TYPES_UNIT_PROHIBITED" type="STRING_LIST">
+        <description>seznam zakázaných typů identifikátorů pro úroveň UNIT</description>
+        <evaluation functionName="buildListOfStrings">
+            <params>
+                <value name="string" type="STRING">ccnb</value>
+                <value name="string" type="STRING">isbn</value>
+                <value name="string" type="STRING">ismn</value>
+                <value name="string" type="STRING">issn</value>
+            </params>
+        </evaluation>
+    </value-def>
+
+    <!--page (strana)-->
+    <value-def name="ID_TYPES_PAGE_MANDATORY" type="STRING_LIST">
+        <description>seznam povinných typů identifikátorů pro úroveň PAGE</description>
         <evaluation functionName="buildListOfStrings">
             <params>
                 <value name="string" type="STRING">uuid</value>
@@ -524,9 +564,18 @@
         </evaluation>
     </value-def>
 
-    <value-def name="ID_TYPES_SUPPLEMENT_OPTIONAL" type="STRING_LIST">
-        <!--Zatím se nepužívá, jen pro přehled. -->
-        <description>seznam volitelných typů identifikátorů pro úroveň SUPPLEMENT</description>
+    <value-def name="ID_TYPES_PAGE_OPTIONAL" type="STRING_LIST">
+        <!--Zatím se nepoužívá, jen pro přehled.-->
+        <description>seznam volitelných typů identifikátorů pro úroveň PAGE</description>
+        <evaluation functionName="buildListOfStrings">
+            <params>
+                <!--nic-->
+            </params>
+        </evaluation>
+    </value-def>
+
+    <value-def name="ID_TYPES_PAGE_PROHIBITED" type="STRING_LIST">
+        <description>seznam zakázaných typů identifikátorů pro úroveň PAGE</description>
         <evaluation functionName="buildListOfStrings">
             <params>
                 <value name="string" type="STRING">urnnbn</value>
@@ -534,15 +583,11 @@
                 <value name="string" type="STRING">isbn</value>
                 <value name="string" type="STRING">ismn</value>
                 <value name="string" type="STRING">issn</value>
-            </params>
-        </evaluation>
-    </value-def>
-
-    <value-def name="ID_TYPES_SUPPLEMENT_PROHIBITED" type="STRING_LIST">
-        <description>seznam zakázaných typů identifikátorů pro úroveň SUPPLEMENT</description>
-        <evaluation functionName="buildListOfStrings">
-            <params>
-                <!--nothing-->
+                <value name="string" type="STRING">barcode</value>
+                <value name="string" type="STRING">sysno</value>
+                <value name="string" type="STRING">oclc</value>
+                <value name="string" type="STRING">permalink</value>
+                <value name="string" type="STRING">accession</value>
             </params>
         </evaluation>
     </value-def>
@@ -559,24 +604,34 @@
     </value-def>
 
     <value-def name="IE_IDENTIFIERS" type="IDENTIFIER_LIST">
-        <description>seznam identifikátorů intelektuální entity ze souboru PRIMARY-METS</description>
-        <evaluation functionName="getIeIdentifiersFromPrimaryMetsFile">
+        <description>seznam identifikátorů intelektuální entity (UNIT) ze souboru PRIMARY-METS</description>
+        <!--Funkce getIeIdentifiersFromPrimaryMetsFile má prefixy IE zadrátované (ISSUE/SUPPL/VOLUME), proto se IE vybírá
+        datově podle dmdSec ID, stejně jako u monografií.-->
+        <evaluation functionName="selectIeIdentifiersFromPrimaryMetsFile">
             <params>
-                <value name="primary_mets_file" type="FILE">
-                    <value-ref name="PRIMARY-METS_FILE"/>
+                <value name="mets_identifier_list_list" type="IDENTIFIER_LIST_LIST">
+                    <!--seznam obsahujici seznam identifikatoru pro kazdy zaznam dmdSec pro MODS-->
+                    <evaluation functionName="getModsIdentifiersForEachDmdsecId">
+                        <params>
+                            <value name="dmdsec_ids" type="STRING_LIST">
+                                <!--seznam identifikatoru (dmdSec ID); podtrzitko na konci je nutne, jinak by odpovidalo i UNITCOLLECTION-->
+                                <evaluation functionName="getStringListByXpath">
+                                    <params>
+                                        <value name="xml_file" type="FILE">
+                                            <value-ref name="PRIMARY-METS_FILE"/>
+                                        </value>
+                                        <value name="xpath" type="STRING">
+                                            /mets:mets/mets:dmdSec[starts-with(@ID, "MODSMD_UNIT_")]/@ID
+                                        </value>
+                                    </params>
+                                </evaluation>
+                            </value>
+                            <value name="mets_file" type="FILE">
+                                <value-ref name="PRIMARY-METS_FILE"/>
+                            </value>
+                        </params>
+                    </evaluation>
                 </value>
-            </params>
-        </evaluation>
-    </value-def>
-
-
-    <!--TODO: dodelat-->
-    <!--TODO: doplnit pro monografie-->
-    <!--BIBLIO PROFILY-->
-    <value-def name="BIBLIO_PROFILE_DC_TITLE" type="FILE">
-        <evaluation functionName="getProvidedFile">
-            <params>
-                <value name="file_id" type="STRING">BIBLIO_PROFILE_DC_TITLE</value>
             </params>
         </evaluation>
     </value-def>
