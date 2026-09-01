@@ -36,6 +36,9 @@ public class VfCheckStringDerivedFromUrnnbnOrUuid extends ValidationFunction {
 
             ValueEvaluation paramIdentifiersEval = valueParams.getParams(PARAM_IDENTIFIERS).get(0).getEvaluation();
             List<Identifier> identifiers = (List<Identifier>) paramIdentifiersEval.getData();
+            if (identifiers == null) {
+                return invalidValueParamNull(PARAM_IDENTIFIERS, paramIdentifiersEval);
+            }
             String uuid = null;
             String urnnbn = null;
             for (Identifier id : identifiers) {

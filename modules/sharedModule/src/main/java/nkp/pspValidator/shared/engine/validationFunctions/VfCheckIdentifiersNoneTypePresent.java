@@ -20,6 +20,7 @@ public class VfCheckIdentifiersNoneTypePresent extends ValidationFunction {
     public static final String PARAM_IDENTIFIER_LIST_LIST = "identifier_list_list";
     public static final String PARAM_ID_TYPES = "id_types";
     public static final String PARAM_ID_LEVEL_NAME = "level_name";
+    public static final String PARAM_LEVEL = "level";
 
     public VfCheckIdentifiersNoneTypePresent(String name, Engine engine) {
         super(name, engine, new Contract()
@@ -27,6 +28,7 @@ public class VfCheckIdentifiersNoneTypePresent extends ValidationFunction {
                 .withValueParam(PARAM_IDENTIFIER_LIST_LIST, ValueType.IDENTIFIER_LIST_LIST, 0, null)
                 .withValueParam(PARAM_ID_TYPES, ValueType.STRING_LIST, 1, 1)
                 .withValueParam(PARAM_ID_LEVEL_NAME, ValueType.STRING, 1, 1)
+                .withValueParam(PARAM_LEVEL, ValueType.LEVEL, 0, 1)
         );
     }
 
@@ -74,7 +76,19 @@ public class VfCheckIdentifiersNoneTypePresent extends ValidationFunction {
             }
 
 
-            return validate(levelName, types, idListList);
+            //level (optional, default WARNING to keep behaviour of older fDMFs)
+            Level level = Level.WARNING;
+            List<ValueParam> paramsLevel = valueParams.getParams(PARAM_LEVEL);
+            if (!paramsLevel.isEmpty()) {
+                ValueEvaluation evaluation = paramsLevel.get(0).getEvaluation();
+                if (evaluation.getData() == null) {
+                    return invalidValueParamNull(PARAM_LEVEL, evaluation);
+                } else {
+                    level = (Level) evaluation.getData();
+                }
+            }
+
+            return validate(levelName, types, idListList, level);
         } catch (ContractException e) {
             return invalidContractNotMet(e);
         } catch (Throwable e) {
@@ -82,12 +96,12 @@ public class VfCheckIdentifiersNoneTypePresent extends ValidationFunction {
         }
     }
 
-    private ValidationResult validate(String levelName, List<String> typesNotExpected, List<List<Identifier>> idListList) {
+    private ValidationResult validate(String levelName, List<String> typesNotExpected, List<List<Identifier>> idListList, Level level) {
         ValidationResult result = new ValidationResult();
         for (List<Identifier> idList : idListList) {
             for (Identifier idFound : idList) {
                 if (typesNotExpected.contains(idFound.getType())) {
-                    result.addError(invalid(Level.WARNING, "nalezen zakázaný identifikátor typu '%s' pro úroveň %s", idFound.getType(), levelName));
+                    result.addError(invalid(level, "nalezen zakázaný identifikátor typu '%s' pro úroveň %s", idFound.getType(), levelName));
                 }
             }
         }
