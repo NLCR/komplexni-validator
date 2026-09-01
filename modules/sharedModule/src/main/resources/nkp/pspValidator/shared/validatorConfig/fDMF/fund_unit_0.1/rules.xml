@@ -828,7 +828,9 @@
         </rule>
 
         <rule name="CHECKSUM_FILE_ALL_PATHS_MATCH_FILES">
-            <description>Soubor CHECKSUM musí obsahovat záznamy pro každý uvedený soubor a žádný jiný.</description>
+            <description>Soubor CHECKSUM musí obsahovat záznamy pro každý uvedený soubor a žádný jiný (DMF Jednotky fondu 0.1,
+                kap. 5.8: všechny soubory balíčku kromě info.xml a souboru .md5, tedy včetně catalog_entry).
+            </description>
             <validation functionName="checkChecksumFileAllPathsMatchFiles">
                 <params>
                     <value name="checksum_file" type="FILE">
@@ -836,6 +838,9 @@
                     </value>
                     <value name="file" type="FILE">
                         <value-ref name="PRIMARY-METS_FILE"/>
+                    </value>
+                    <value name="file" type="FILE">
+                        <value-ref name="CATALOG-ENTRY_FILE"/>
                     </value>
                     <value name="files" type="FILE_LIST">
                         <value-ref name="SECONDARY-METS_FILES"/>

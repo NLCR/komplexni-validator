@@ -72,6 +72,8 @@
                                                 <value>organization</value>
                                                 <value>person</value>
                                                 <value>software</value>
+                                                <!--doplněno v DMF Periodika 2.2 (historie verzí, kap. 7.5.3), platí i pro Jednotky fondu 0.1-->
+                                                <value>hardware</value>
                                             </oneOf>
                                         </recommendedContent>
                                     </element>
