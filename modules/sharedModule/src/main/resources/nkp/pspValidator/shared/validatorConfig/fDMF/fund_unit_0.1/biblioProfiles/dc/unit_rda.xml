@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<metadataProfile
+        xmlns="http://www.nkp.cz/pspValidator/2.7/metadataProfile"
+        name="DC unit (RDA)"
+        validatorVersion="2.7"
+        dmf="fund_unit_0.1"
+>
+
+    <info>
+        <text>DMF Jednotky fondu 0.1 očekává Dublin Core verze 1.1. Dále se zde upřesňují očekávaná metadata pro dílčí jednotku fondu (UNIT, kap. 7.3.3)
+            pro záznamy zpracované podle katalogizačních pravidel RDA. DC vzniká mapováním z MODS (sloupec Element DC ve spec).
+        </text>
+        <url description="Definice metadatových formátů pro jednotky fondu (draft 0.1, 9. 12. 2025)">https://standardy.ndk.cz/ndk/standardy-digitalizace</url>
+        <url description="popis Dublin Core 1.1">http://dublincore.org/documents/dces/</url>
+        <url description="XSD pro Dublin Core 1.1">http://www.openarchives.org/OAI/2.0/oai_dc.xsd</url>
+    </info>
+
+    <namespaces>
+        <namespace prefix="oai_dc">http://www.openarchives.org/OAI/2.0/oai_dc/</namespace>
+        <namespace prefix="dc">http://purl.org/dc/elements/1.1/</namespace>
+    </namespaces>
+
+    <dictionaries>
+        <dictionary name="iso6392languageCodes"
+                    description="kódy jazyků podle ISO 639-2"
+                    url="http://www.loc.gov/standards/iso639-2/php/code_list.php"/>
+    </dictionaries>
+
+    <rootElement name="oai_dc:dc">
+        <expectedAttributes>
+            <attribute name="xsi:schemaLocation" mandatory="false"/>
+        </expectedAttributes>
+        <expectedElements>
+            <element name="dc:title"
+                     errorMessage="Očekáván povinný element dc:title s názvem jednotky fondu.">
+                <expectedContent/>
+            </element>
+            <element name="dc:type" specification="text()='model:unit'"
+                     errorMessage="Očekáván povinný element dc:type obsahující text 'model:unit'.">
+                <expectedContent/>
+            </element>
+            <element name="dc:type" specification="not(text()='model:unit')" mandatory="false">
+                <expectedContent/>
+            </element>
+            <element name="dc:identifier"
+                     errorMessage="Očekáván alespoň jeden povinný element dc:identifier (uuid:..., urnnbn:...).">
+                <expectedContent/>
+            </element>
+            <element name="dc:language" mandatory="false">
+                <expectedContent>
+                    <fromDictionary name="iso6392languageCodes"/>
+                </expectedContent>
+            </element>
+            <element name="dc:creator" mandatory="false">
+                <expectedContent/>
+            </element>
+            <element name="dc:contributor" mandatory="false">
+                <expectedContent/>
+            </element>
+            <element name="dc:date" mandatory="false">
+                <expectedContent/>
+            </element>
+            <element name="dc:format" mandatory="false">
+                <expectedContent/>
+            </element>
+            <element name="dc:description" mandatory="false">
+                <expectedContent/>
+            </element>
+            <element name="dc:subject" mandatory="false">
+                <expectedContent/>
+            </element>
+            <element name="dc:source" mandatory="false">
+                <expectedContent/>
+            </element>
+            <element name="dc:publisher" mandatory="false">
+                <expectedContent/>
+            </element>
+            <element name="dc:coverage" mandatory="false">
+                <expectedContent/>
+            </element>
+            <element name="dc:relation" mandatory="false">
+                <expectedContent/>
+            </element>
+            <element name="dc:rights" mandatory="false">
+                <expectedContent/>
+            </element>
+        </expectedElements>
+    </rootElement>
+</metadataProfile>

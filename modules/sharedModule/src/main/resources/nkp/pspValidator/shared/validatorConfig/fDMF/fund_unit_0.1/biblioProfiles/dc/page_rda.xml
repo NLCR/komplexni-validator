@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<metadataProfile
+        xmlns="http://www.nkp.cz/pspValidator/2.7/metadataProfile"
+        name="DC page (RDA)"
+        validatorVersion="2.7"
+        dmf="fund_unit_0.1"
+>
+
+    <info>
+        <text>DMF Jednotky fondu 0.1 očekává Dublin Core verze 1.1. Dále se zde upřesňují očekávaná metadata pro stranu (PAGE, kap. 7.3.4)
+            pro záznamy zpracované podle katalogizačních pravidel RDA. DC vzniká mapováním z MODS (sloupec Element DC ve spec).
+        </text>
+        <url description="Definice metadatových formátů pro jednotky fondu (draft 0.1, 9. 12. 2025)">https://standardy.ndk.cz/ndk/standardy-digitalizace</url>
+        <url description="popis Dublin Core 1.1">http://dublincore.org/documents/dces/</url>
+        <url description="XSD pro Dublin Core 1.1">http://www.openarchives.org/OAI/2.0/oai_dc.xsd</url>
+    </info>
+
+    <namespaces>
+        <namespace prefix="oai_dc">http://www.openarchives.org/OAI/2.0/oai_dc/</namespace>
+        <namespace prefix="dc">http://purl.org/dc/elements/1.1/</namespace>
+    </namespaces>
+
+    <dictionaries>
+    </dictionaries>
+
+    <rootElement name="oai_dc:dc">
+        <expectedAttributes>
+            <attribute name="xsi:schemaLocation" mandatory="false"/>
+        </expectedAttributes>
+        <expectedElements>
+            <element name="dc:identifier"
+                     errorMessage="Očekáván alespoň jeden povinný element dc:identifier (uuid:...).">
+                <expectedContent/>
+            </element>
+            <element name="dc:title" mandatory="false">
+                <expectedContent/>
+            </element>
+            <element name="dc:type" mandatory="false">
+                <expectedContent/>
+            </element>
+            <element name="dc:description" mandatory="false">
+                <expectedContent/>
+            </element>
+            <element name="dc:coverage" mandatory="false">
+                <expectedContent/>
+            </element>
+            <element name="dc:format" mandatory="false">
+                <expectedContent/>
+            </element>
+        </expectedElements>
+    </rootElement>
+</metadataProfile>
