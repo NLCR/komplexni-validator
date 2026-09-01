@@ -128,14 +128,15 @@ public abstract class ValidationFunction implements Function {
 
     ValidationProblem invalid(Level level, String errorMessage, Object... errorMsgParams) {
         if (errorMsgParams == null || errorMsgParams.length == 0) {
-            return new ValidationProblem(level, "null");
+            //no params: message is used as is (previously produced literal "null", see e.g. PSP_ID_DERIVED_FROM_IE_ID)
+            return new ValidationProblem(level, errorMessage);
         }
         return new ValidationProblem(level, String.format("%s", String.format(errorMessage, errorMsgParams)));
     }
 
     ValidationProblem invalid(Level level, File file, String errorMessage, Object... errorMsgParams) {
         if (errorMsgParams == null || errorMsgParams.length == 0) {
-            return new ValidationProblem(level, "null").withFile(file);
+            return new ValidationProblem(level, errorMessage).withFile(file);
         }
         return new ValidationProblem(level, String.format("%s", String.format(errorMessage, errorMsgParams))).withFile(file);
     }
