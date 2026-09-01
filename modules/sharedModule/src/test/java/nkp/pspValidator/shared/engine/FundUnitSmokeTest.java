@@ -20,8 +20,20 @@ public class FundUnitSmokeTest {
 
     @Test
     public void buildAndRunOverMinimalPackage() throws Exception {
+        runAndCheckNoCrash(new File("src/test/resources/fund_unit_0.1/clipping/nk-00027x"));
+    }
+
+    /**
+     * Synteticky balicek vygenerovany src/test/tools/gen_fund_unit_package.py (vystrizek, 2 strany).
+     * Zatim se kontroluje jen, ze zadna funkce nespadne; po doplneni biblio profilu (K5) pribude kontrola validity.
+     */
+    @Test
+    public void buildAndRunOverGeneratedClipping() throws Exception {
+        runAndCheckNoCrash(new File("src/test/resources/fund_unit_0.1/valid_clipping/nk-00027x"));
+    }
+
+    private void runAndCheckNoCrash(File pspRootDir) throws Exception {
         File validatorConfigDir = new File("src/main/resources/nkp/pspValidator/shared/validatorConfig");
-        File pspRootDir = new File("src/test/resources/fund_unit_0.1/clipping/nk-00027x");
         ValidatorConfigurationManager configManager = new ValidatorConfigurationManager(validatorConfigDir);
         FdmfRegistry registry = new FdmfRegistry(configManager);
         Dmf dmf = new DmfDetector().resolveDmf(pspRootDir, new DmfDetector.Params());

@@ -1,0 +1,316 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mets:mets xmlns:mets="http://www.loc.gov/METS/" xmlns:mods="http://www.loc.gov/mods/v3" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:mix="http://www.loc.gov/mix/v20" xmlns:premis="info:lc/xmlns/premis-v2" LABEL="Výstřižek: Klementinum a jeho knihovny" TYPE="Clipping" xsi:schemaLocation="http://www.loc.gov/METS/ http://www.loc.gov/standards/mets/mets.xsd http://www.loc.gov/mods/v3 http://www.loc.gov/standards/mods/v3/mods-3-8.xsd http://purl.org/dc/elements/1.1/ http://dublincore.org/schemas/xmls/simpledc20021212.xsd http://www.openarchives.org/OAI/2.0/oai_dc/ http://www.openarchives.org/OAI/2.0/oai_dc.xsd http://www.loc.gov/mix/v20 http://www.loc.gov/standards/mix/mix20/mix20.xsd info:lc/xmlns/premis-v2 http://www.loc.gov/standards/premis/v2/premis-v2-2.xsd">
+    <mets:metsHdr CREATEDATE="2026-09-01T10:00:00" LASTMODDATE="2026-09-01T10:00:00">
+        <mets:agent ROLE="CREATOR" TYPE="ORGANIZATION">
+            <mets:name>ABA001</mets:name>
+        </mets:agent>
+        <mets:agent ROLE="ARCHIVIST" TYPE="ORGANIZATION">
+            <mets:name>ABA001</mets:name>
+        </mets:agent>
+    </mets:metsHdr>
+    <mets:dmdSec ID="MODSMD_UNITCOLLECTION_0001">
+        <mets:mdWrap MDTYPE="MODS" MDTYPEVERSION="3.8" MIMETYPE="text/xml">
+            <mets:xmlData>
+                    <mods:mods ID="MODS_UNITCOLLECTION_0001" version="3.8">
+                        <mods:titleInfo>
+                            <mods:title>Výstřižky ke Klementinu</mods:title>
+                            <mods:subTitle>sbírka novinových výstřižků o Klementinu a jeho knihovnách</mods:subTitle>
+                        </mods:titleInfo>
+                        <mods:name type="corporate">
+                            <mods:namePart>Národní knihovna České republiky</mods:namePart>
+                            <mods:role>
+                                <mods:roleTerm type="code" authority="marcrelator">col</mods:roleTerm>
+                            </mods:role>
+                        </mods:name>
+                        <mods:genre>unit collection</mods:genre>
+                        <mods:originInfo>
+                            <mods:dateCreated point="start">1920</mods:dateCreated>
+                            <mods:dateCreated point="end" qualifier="approximate">1965</mods:dateCreated>
+                        </mods:originInfo>
+                        <mods:physicalDescription>
+                            <mods:extent>12 složek</mods:extent>
+                            <mods:note>část výstřižků poškozena vlhkostí</mods:note>
+                        </mods:physicalDescription>
+                        <mods:note>Sbírka výstřižků shromážděná v knihovně.</mods:note>
+                        <mods:subject authority="czenas">
+                            <mods:topic>dějiny knihoven</mods:topic>
+                            <mods:geographic>Klementinum (Praha, Česko)</mods:geographic>
+                        </mods:subject>
+                        <mods:identifier type="uuid">5f6a8c2e-1111-4d0e-9a3b-000000000001</mods:identifier>
+                        <mods:identifier type="sysno">000123456</mods:identifier>
+                        <mods:location>
+                            <mods:physicalLocation authority="siglaADR">ABA001</mods:physicalLocation>
+                            <mods:shelfLocator>54 A 001</mods:shelfLocator>
+                        </mods:location>
+                        <mods:recordInfo>
+                            <mods:descriptionStandard>rda</mods:descriptionStandard>
+                            <mods:recordContentSource authority="siglaADR">ABA001</mods:recordContentSource>
+                            <mods:recordCreationDate encoding="iso8601">2026-09-01T10:00:00</mods:recordCreationDate>
+                            <mods:recordChangeDate encoding="iso8601">2026-09-01T10:00:00</mods:recordChangeDate>
+                            <mods:recordOrigin>human prepared</mods:recordOrigin>
+                            <mods:languageOfCataloging>
+                                <mods:languageTerm authority="iso639-2b" type="code">cze</mods:languageTerm>
+                            </mods:languageOfCataloging>
+                        </mods:recordInfo>
+                    </mods:mods>
+            </mets:xmlData>
+        </mets:mdWrap>
+    </mets:dmdSec>
+    <mets:dmdSec ID="DCMD_UNITCOLLECTION_0001">
+        <mets:mdWrap MDTYPE="DC" MIMETYPE="text/xml">
+            <mets:xmlData>
+                <oai_dc:dc xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/oai_dc/ http://www.openarchives.org/OAI/2.0/oai_dc.xsd">
+                    <dc:title>Výstřižky ke Klementinu : sbírka novinových výstřižků o Klementinu a jeho knihovnách</dc:title>
+                    <dc:creator>Národní knihovna České republiky</dc:creator>
+                    <dc:type>model:unitcollection</dc:type>
+                    <dc:date>1920-1965</dc:date>
+                    <dc:format>12 složek</dc:format>
+                    <dc:description>Sbírka výstřižků shromážděná v knihovně.</dc:description>
+                    <dc:subject>dějiny knihoven</dc:subject>
+                    <dc:subject>Klementinum (Praha, Česko)</dc:subject>
+                    <dc:identifier>uuid:5f6a8c2e-1111-4d0e-9a3b-000000000001</dc:identifier>
+                    <dc:identifier>sysno:000123456</dc:identifier>
+                    <dc:source>ABA001</dc:source>
+                    <dc:source>54 A 001</dc:source>
+                </oai_dc:dc>
+            </mets:xmlData>
+        </mets:mdWrap>
+    </mets:dmdSec>
+    <mets:dmdSec ID="MODSMD_UNIT_0001">
+        <mets:mdWrap MDTYPE="MODS" MDTYPEVERSION="3.8" MIMETYPE="text/xml">
+            <mets:xmlData>
+                    <mods:mods ID="MODS_UNIT_0001" version="3.8">
+                        <mods:titleInfo>
+                            <mods:title>Klementinum a jeho knihovny</mods:title>
+                            <mods:subTitle>k výročí Národní a universitní knihovny</mods:subTitle>
+                        </mods:titleInfo>
+                        <mods:name type="personal" usage="primary">
+                            <mods:namePart type="family">Novák</mods:namePart>
+                            <mods:namePart type="given">Jan</mods:namePart>
+                            <mods:nameIdentifier>jk01090123</mods:nameIdentifier>
+                            <mods:role>
+                                <mods:roleTerm type="code" authority="marcrelator">aut</mods:roleTerm>
+                            </mods:role>
+                        </mods:name>
+                        <mods:genre>clipping</mods:genre>
+                        <mods:genre>článek</mods:genre>
+                        <mods:language>
+                            <mods:languageTerm type="code" authority="iso639-2b">cze</mods:languageTerm>
+                        </mods:language>
+                        <mods:physicalDescription>
+                            <mods:form authority="marcform">print</mods:form>
+                            <mods:extent>4 části článku</mods:extent>
+                            <mods:note>výstřižek nalepen na kartonu</mods:note>
+                        </mods:physicalDescription>
+                        <mods:note>Výstřižek z deníku České slovo.</mods:note>
+                        <mods:subject authority="czenas">
+                            <mods:topic>knihovny</mods:topic>
+                            <mods:geographic>Praha (Česko)</mods:geographic>
+                            <mods:temporal>20. století</mods:temporal>
+                        </mods:subject>
+                        <mods:relatedItem type="host">
+                            <mods:titleInfo>
+                                <mods:title>České slovo</mods:title>
+                            </mods:titleInfo>
+                            <mods:originInfo eventType="publication">
+                                <mods:place>
+                                    <mods:placeTerm type="text">Praha</mods:placeTerm>
+                                    <mods:placeTerm type="code" authority="marccountry">xr</mods:placeTerm>
+                                </mods:place>
+                                <mods:agent>
+                                    <mods:namePart>Melantrich</mods:namePart>
+                                    <mods:role>
+                                        <mods:roleTerm type="text">publisher</mods:roleTerm>
+                                    </mods:role>
+                                </mods:agent>
+                                <mods:dateIssued>1932</mods:dateIssued>
+                            </mods:originInfo>
+                            <mods:note type="kramerius-uuid" xlink:href="uuid:1a2b3c4d-0000-4000-8000-000000000099">Kramerius-digitalizovaná verze periodika</mods:note>
+                            <mods:identifier type="issn">1802-7253</mods:identifier>
+                            <mods:part>
+                                <mods:detail type="volume">
+                                    <mods:number>24</mods:number>
+                                </mods:detail>
+                                <mods:detail type="issue">
+                                    <mods:number>112</mods:number>
+                                </mods:detail>
+                            </mods:part>
+                        </mods:relatedItem>
+                        <mods:identifier type="uuid">5f6a8c2e-3333-4d0e-9a3b-000000000003</mods:identifier>
+                        <mods:identifier type="urnnbn">urn:nbn:cz:nk-00027x</mods:identifier>
+                        <mods:identifier type="barcode">2610123456</mods:identifier>
+                        <mods:location>
+                            <mods:physicalLocation authority="siglaADR">ABA001</mods:physicalLocation>
+                            <mods:shelfLocator>54 A 001/3/12</mods:shelfLocator>
+                        </mods:location>
+                        <mods:recordInfo>
+                            <mods:descriptionStandard>rda</mods:descriptionStandard>
+                            <mods:recordContentSource authority="siglaADR">ABA001</mods:recordContentSource>
+                            <mods:recordCreationDate encoding="iso8601">2026-09-01T10:00:00</mods:recordCreationDate>
+                            <mods:recordChangeDate encoding="iso8601">2026-09-01T10:00:00</mods:recordChangeDate>
+                            <mods:recordOrigin>human prepared</mods:recordOrigin>
+                            <mods:languageOfCataloging>
+                                <mods:languageTerm authority="iso639-2b" type="code">cze</mods:languageTerm>
+                            </mods:languageOfCataloging>
+                        </mods:recordInfo>
+                    </mods:mods>
+            </mets:xmlData>
+        </mets:mdWrap>
+    </mets:dmdSec>
+    <mets:dmdSec ID="DCMD_UNIT_0001">
+        <mets:mdWrap MDTYPE="DC" MIMETYPE="text/xml">
+            <mets:xmlData>
+                <oai_dc:dc xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/oai_dc/ http://www.openarchives.org/OAI/2.0/oai_dc.xsd">
+                    <dc:title>Klementinum a jeho knihovny : k výročí Národní a universitní knihovny</dc:title>
+                    <dc:creator>Novák, Jan</dc:creator>
+                    <dc:type>model:unit</dc:type>
+                    <dc:type>článek</dc:type>
+                    <dc:language>cze</dc:language>
+                    <dc:format>print</dc:format>
+                    <dc:format>4 části článku</dc:format>
+                    <dc:description>Výstřižek z deníku České slovo.</dc:description>
+                    <dc:subject>knihovny</dc:subject>
+                    <dc:subject>Praha (Česko)</dc:subject>
+                    <dc:subject>20. století</dc:subject>
+                    <dc:identifier>uuid:5f6a8c2e-3333-4d0e-9a3b-000000000003</dc:identifier>
+                    <dc:identifier>urnnbn:urn:nbn:cz:nk-00027x</dc:identifier>
+                    <dc:identifier>barcode:2610123456</dc:identifier>
+                    <dc:source>ABA001</dc:source>
+                    <dc:source>54 A 001/3/12</dc:source>
+                </oai_dc:dc>
+            </mets:xmlData>
+        </mets:mdWrap>
+    </mets:dmdSec>
+    <mets:dmdSec ID="MODSMD_PAGE_0001">
+        <mets:mdWrap MDTYPE="MODS" MDTYPEVERSION="3.8" MIMETYPE="text/xml">
+            <mets:xmlData>
+                    <mods:mods ID="MODS_PAGE_0001" version="3.8">
+                        <mods:identifier type="uuid">5f6a8c2e-4444-4d0e-9a3b-000000000001</mods:identifier>
+                        <mods:part>
+                            <mods:detail type="pageNumber">
+                                <mods:number>1</mods:number>
+                            </mods:detail>
+                        </mods:part>
+                        <mods:part>
+                            <mods:detail type="pageIndex">
+                                <mods:number>1</mods:number>
+                            </mods:detail>
+                        </mods:part>
+                        <mods:typeOfResource>text</mods:typeOfResource>
+                    </mods:mods>
+            </mets:xmlData>
+        </mets:mdWrap>
+    </mets:dmdSec>
+    <mets:dmdSec ID="DCMD_PAGE_0001">
+        <mets:mdWrap MDTYPE="DC" MIMETYPE="text/xml">
+            <mets:xmlData>
+                <oai_dc:dc xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/oai_dc/ http://www.openarchives.org/OAI/2.0/oai_dc.xsd">
+                    <dc:identifier>uuid:5f6a8c2e-4444-4d0e-9a3b-000000000001</dc:identifier>
+                    <dc:type>text</dc:type>
+                </oai_dc:dc>
+            </mets:xmlData>
+        </mets:mdWrap>
+    </mets:dmdSec>
+    <mets:dmdSec ID="MODSMD_PAGE_0002">
+        <mets:mdWrap MDTYPE="MODS" MDTYPEVERSION="3.8" MIMETYPE="text/xml">
+            <mets:xmlData>
+                    <mods:mods ID="MODS_PAGE_0002" version="3.8">
+                        <mods:identifier type="uuid">5f6a8c2e-4444-4d0e-9a3b-000000000002</mods:identifier>
+                        <mods:part>
+                            <mods:detail type="pageNumber">
+                                <mods:number>2</mods:number>
+                            </mods:detail>
+                        </mods:part>
+                        <mods:part>
+                            <mods:detail type="pageIndex">
+                                <mods:number>2</mods:number>
+                            </mods:detail>
+                        </mods:part>
+                        <mods:typeOfResource>text</mods:typeOfResource>
+                    </mods:mods>
+            </mets:xmlData>
+        </mets:mdWrap>
+    </mets:dmdSec>
+    <mets:dmdSec ID="DCMD_PAGE_0002">
+        <mets:mdWrap MDTYPE="DC" MIMETYPE="text/xml">
+            <mets:xmlData>
+                <oai_dc:dc xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/oai_dc/ http://www.openarchives.org/OAI/2.0/oai_dc.xsd">
+                    <dc:identifier>uuid:5f6a8c2e-4444-4d0e-9a3b-000000000002</dc:identifier>
+                    <dc:type>text</dc:type>
+                </oai_dc:dc>
+            </mets:xmlData>
+        </mets:mdWrap>
+    </mets:dmdSec>
+    <mets:fileSec>
+        <mets:fileGrp ID="MC_IMGGRP" USE="Images">
+            <mets:file ID="MC_0001" MIMETYPE="image/jp2" SIZE="268" CHECKSUMTYPE="MD5" CHECKSUM="3460836f1b8bdb2ae5c87079ab38c5ac" SEQ="0" CREATED="2026-09-01T10:00:00">
+                <mets:FLocat LOCTYPE="URL" xlink:href="mastercopy/mc_nk-00027x_0001.jp2"/>
+            </mets:file>
+            <mets:file ID="MC_0002" MIMETYPE="image/jp2" SIZE="268" CHECKSUMTYPE="MD5" CHECKSUM="47a5b7b395b0781647f2aaa717bef083" SEQ="1" CREATED="2026-09-01T10:00:00">
+                <mets:FLocat LOCTYPE="URL" xlink:href="mastercopy/mc_nk-00027x_0002.jp2"/>
+            </mets:file>
+        </mets:fileGrp>
+        <mets:fileGrp ID="UC_IMGGRP" USE="Images">
+            <mets:file ID="UC_0001" MIMETYPE="image/jp2" SIZE="268" CHECKSUMTYPE="MD5" CHECKSUM="3a33839d2bb92cc076bfd6ecf0eb7ffd" SEQ="0" CREATED="2026-09-01T10:00:00">
+                <mets:FLocat LOCTYPE="URL" xlink:href="usercopy/uc_nk-00027x_0001.jp2"/>
+            </mets:file>
+            <mets:file ID="UC_0002" MIMETYPE="image/jp2" SIZE="268" CHECKSUMTYPE="MD5" CHECKSUM="75b7b17823ad68a0d81db7991c9c3072" SEQ="1" CREATED="2026-09-01T10:00:00">
+                <mets:FLocat LOCTYPE="URL" xlink:href="usercopy/uc_nk-00027x_0002.jp2"/>
+            </mets:file>
+        </mets:fileGrp>
+        <mets:fileGrp ID="ALTOGRP" USE="Layout">
+            <mets:file ID="ALTO_0001" MIMETYPE="text/xml" SIZE="1933" CHECKSUMTYPE="MD5" CHECKSUM="baaa0bdcb58040339c1affbd1e700158" SEQ="0" CREATED="2026-09-01T10:00:00">
+                <mets:FLocat LOCTYPE="URL" xlink:href="alto/alto_nk-00027x_0001.xml"/>
+            </mets:file>
+            <mets:file ID="ALTO_0002" MIMETYPE="text/xml" SIZE="1933" CHECKSUMTYPE="MD5" CHECKSUM="c7909f6688c6944f6cdb79d88446a1cb" SEQ="1" CREATED="2026-09-01T10:00:00">
+                <mets:FLocat LOCTYPE="URL" xlink:href="alto/alto_nk-00027x_0002.xml"/>
+            </mets:file>
+        </mets:fileGrp>
+        <mets:fileGrp ID="TXTGRP" USE="Text">
+            <mets:file ID="TXT_0001" MIMETYPE="text/plain" SIZE="109" CHECKSUMTYPE="MD5" CHECKSUM="30fad5e3374c943de743e15c1e5c06db" SEQ="0" CREATED="2026-09-01T10:00:00">
+                <mets:FLocat LOCTYPE="URL" xlink:href="txt/txt_nk-00027x_0001.txt"/>
+            </mets:file>
+            <mets:file ID="TXT_0002" MIMETYPE="text/plain" SIZE="109" CHECKSUMTYPE="MD5" CHECKSUM="c360bad9113f9795fc338af3fc32fd06" SEQ="1" CREATED="2026-09-01T10:00:00">
+                <mets:FLocat LOCTYPE="URL" xlink:href="txt/txt_nk-00027x_0002.txt"/>
+            </mets:file>
+        </mets:fileGrp>
+        <mets:fileGrp ID="TECHMDGRP" USE="Technical Metadata">
+            <mets:file ID="AMD_METS_0001" MIMETYPE="text/xml" SIZE="36770" CHECKSUMTYPE="MD5" CHECKSUM="47c9235ec3119070d98fbb0890a7db7c" SEQ="0" CREATED="2026-09-01T10:00:00">
+                <mets:FLocat LOCTYPE="URL" xlink:href="amdsec/amd_mets_nk-00027x_0001.xml"/>
+            </mets:file>
+            <mets:file ID="AMD_METS_0002" MIMETYPE="text/xml" SIZE="36770" CHECKSUMTYPE="MD5" CHECKSUM="6fcf127c989e902f198a8f666c6c1887" SEQ="1" CREATED="2026-09-01T10:00:00">
+                <mets:FLocat LOCTYPE="URL" xlink:href="amdsec/amd_mets_nk-00027x_0002.xml"/>
+            </mets:file>
+        </mets:fileGrp>
+    </mets:fileSec>
+    <mets:structMap TYPE="LOGICAL" LABEL="Logical_Structure">
+        <mets:div TYPE="UNITCOLLECTION" ID="UNITCOLLECTION_0001" LABEL="Výstřižky ke Klementinu" DMDID="MODSMD_UNITCOLLECTION_0001">
+                <mets:div TYPE="UNIT" ID="UNIT_0001" LABEL="Výstřižek: Klementinum a jeho knihovny" DMDID="MODSMD_UNIT_0001">
+                    <mets:div TYPE="TITLE" ID="TITLE_0001"/>
+                    <mets:div TYPE="NORMAL_TEXT" ID="NORMAL_TEXT_0001"/>
+                </mets:div>
+        </mets:div>
+    </mets:structMap>
+    <mets:structMap TYPE="PHYSICAL" LABEL="Physical_Structure">
+        <mets:div TYPE="UNIT" ID="DIV_P_0000" LABEL="Výstřižek: Klementinum a jeho knihovny" DMDID="MODSMD_UNIT_0001">
+            <mets:div TYPE="normalPage" ID="DIV_PAGE_0001" ORDER="1" ORDERLABEL="1" DMDID="MODSMD_PAGE_0001">
+                <mets:fptr FILEID="MC_0001"/>
+                <mets:fptr FILEID="UC_0001"/>
+                <mets:fptr FILEID="ALTO_0001"/>
+                <mets:fptr FILEID="TXT_0001"/>
+                <mets:fptr FILEID="AMD_METS_0001"/>
+            </mets:div>
+            <mets:div TYPE="normalPage" ID="DIV_PAGE_0002" ORDER="2" ORDERLABEL="2" DMDID="MODSMD_PAGE_0002">
+                <mets:fptr FILEID="MC_0002"/>
+                <mets:fptr FILEID="UC_0002"/>
+                <mets:fptr FILEID="ALTO_0002"/>
+                <mets:fptr FILEID="TXT_0002"/>
+                <mets:fptr FILEID="AMD_METS_0002"/>
+            </mets:div>
+        </mets:div>
+    </mets:structMap>
+    <mets:structLink>
+        <mets:smLink xlink:from="UNIT_0001" xlink:to="DIV_PAGE_0001"/>
+        <mets:smLink xlink:from="UNIT_0001" xlink:to="DIV_PAGE_0002"/>
+    </mets:structLink>
+</mets:mets>
