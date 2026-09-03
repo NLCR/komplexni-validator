@@ -10,7 +10,7 @@
     <collection>Výstřižky ke Klementinu</collection>
     <institution>Národní knihovna České republiky</institution>
     <creator>ABA001</creator>
-    <size>98</size>
+    <size>134</size>
     <itemlist itemtotal="14">
         <item>\alto\alto_nk-00027x_0001.xml</item>
         <item>\alto\alto_nk-00027x_0002.xml</item>
@@ -27,6 +27,6 @@
         <item>\usercopy\uc_nk-00027x_0002.jp2</item>
         <item>\info_nk-00027x.xml</item>
     </itemlist>
-    <checksum type="md5" checksum="269db827af31e5ae67396d0541e0eac3">\md5_nk-00027x.md5</checksum>
+    <checksum type="md5" checksum="73c315ed2680a496d855b6c71c8113fd">\md5_nk-00027x.md5</checksum>
     <note>Syntetický testovací balíček pro Komplexní validátor (gen_fund_unit_package.py).</note>
 </info>

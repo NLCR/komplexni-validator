@@ -325,24 +325,24 @@
     </mets:dmdSec>
     <mets:fileSec>
         <mets:fileGrp ID="MC_IMGGRP" USE="Images">
-            <mets:file ID="MC_0001" MIMETYPE="image/jp2" SIZE="268" CHECKSUMTYPE="MD5" CHECKSUM="3460836f1b8bdb2ae5c87079ab38c5ac" SEQ="0" CREATED="2026-09-01T10:00:00">
+            <mets:file ID="MC_0001" MIMETYPE="image/jp2" SIZE="10736" CHECKSUMTYPE="MD5" CHECKSUM="b563f819b949af5ae44e803254a237e0" SEQ="0" CREATED="2026-09-01T10:00:00">
                 <mets:FLocat LOCTYPE="URL" xlink:href="mastercopy/mc_nk-00027z_0001.jp2"/>
             </mets:file>
-            <mets:file ID="MC_0002" MIMETYPE="image/jp2" SIZE="268" CHECKSUMTYPE="MD5" CHECKSUM="47a5b7b395b0781647f2aaa717bef083" SEQ="1" CREATED="2026-09-01T10:00:00">
+            <mets:file ID="MC_0002" MIMETYPE="image/jp2" SIZE="10736" CHECKSUMTYPE="MD5" CHECKSUM="b563f819b949af5ae44e803254a237e0" SEQ="1" CREATED="2026-09-01T10:00:00">
                 <mets:FLocat LOCTYPE="URL" xlink:href="mastercopy/mc_nk-00027z_0002.jp2"/>
             </mets:file>
-            <mets:file ID="MC_0003" MIMETYPE="image/jp2" SIZE="268" CHECKSUMTYPE="MD5" CHECKSUM="f686dc7bc5bf074ed6985af5bf3db342" SEQ="2" CREATED="2026-09-01T10:00:00">
+            <mets:file ID="MC_0003" MIMETYPE="image/jp2" SIZE="10736" CHECKSUMTYPE="MD5" CHECKSUM="b563f819b949af5ae44e803254a237e0" SEQ="2" CREATED="2026-09-01T10:00:00">
                 <mets:FLocat LOCTYPE="URL" xlink:href="mastercopy/mc_nk-00027z_0003.jp2"/>
             </mets:file>
         </mets:fileGrp>
         <mets:fileGrp ID="UC_IMGGRP" USE="Images">
-            <mets:file ID="UC_0001" MIMETYPE="image/jp2" SIZE="268" CHECKSUMTYPE="MD5" CHECKSUM="3a33839d2bb92cc076bfd6ecf0eb7ffd" SEQ="0" CREATED="2026-09-01T10:00:00">
+            <mets:file ID="UC_0001" MIMETYPE="image/jp2" SIZE="8167" CHECKSUMTYPE="MD5" CHECKSUM="895bda600f4a32acd5343b2bc390ee38" SEQ="0" CREATED="2026-09-01T10:00:00">
                 <mets:FLocat LOCTYPE="URL" xlink:href="usercopy/uc_nk-00027z_0001.jp2"/>
             </mets:file>
-            <mets:file ID="UC_0002" MIMETYPE="image/jp2" SIZE="268" CHECKSUMTYPE="MD5" CHECKSUM="75b7b17823ad68a0d81db7991c9c3072" SEQ="1" CREATED="2026-09-01T10:00:00">
+            <mets:file ID="UC_0002" MIMETYPE="image/jp2" SIZE="8167" CHECKSUMTYPE="MD5" CHECKSUM="895bda600f4a32acd5343b2bc390ee38" SEQ="1" CREATED="2026-09-01T10:00:00">
                 <mets:FLocat LOCTYPE="URL" xlink:href="usercopy/uc_nk-00027z_0002.jp2"/>
             </mets:file>
-            <mets:file ID="UC_0003" MIMETYPE="image/jp2" SIZE="268" CHECKSUMTYPE="MD5" CHECKSUM="ce3ab45b309909e079116a2b90061e59" SEQ="2" CREATED="2026-09-01T10:00:00">
+            <mets:file ID="UC_0003" MIMETYPE="image/jp2" SIZE="8167" CHECKSUMTYPE="MD5" CHECKSUM="895bda600f4a32acd5343b2bc390ee38" SEQ="2" CREATED="2026-09-01T10:00:00">
                 <mets:FLocat LOCTYPE="URL" xlink:href="usercopy/uc_nk-00027z_0003.jp2"/>
             </mets:file>
         </mets:fileGrp>
@@ -369,13 +369,13 @@
             </mets:file>
         </mets:fileGrp>
         <mets:fileGrp ID="TECHMDGRP" USE="Technical Metadata">
-            <mets:file ID="AMD_METS_0001" MIMETYPE="text/xml" SIZE="36778" CHECKSUMTYPE="MD5" CHECKSUM="84aeec9708df9fd493955dbaf30c26d6" SEQ="0" CREATED="2026-09-01T10:00:00">
+            <mets:file ID="AMD_METS_0001" MIMETYPE="text/xml" SIZE="36783" CHECKSUMTYPE="MD5" CHECKSUM="2857f738fc882484a28e291a11f85dbc" SEQ="0" CREATED="2026-09-01T10:00:00">
                 <mets:FLocat LOCTYPE="URL" xlink:href="amdsec/amd_mets_nk-00027z_0001.xml"/>
             </mets:file>
-            <mets:file ID="AMD_METS_0002" MIMETYPE="text/xml" SIZE="36778" CHECKSUMTYPE="MD5" CHECKSUM="cfb879ce50e92e17a885d32668fe538f" SEQ="1" CREATED="2026-09-01T10:00:00">
+            <mets:file ID="AMD_METS_0002" MIMETYPE="text/xml" SIZE="36783" CHECKSUMTYPE="MD5" CHECKSUM="6dd9d133c22f08527fc6859454b26c1c" SEQ="1" CREATED="2026-09-01T10:00:00">
                 <mets:FLocat LOCTYPE="URL" xlink:href="amdsec/amd_mets_nk-00027z_0002.xml"/>
             </mets:file>
-            <mets:file ID="AMD_METS_0003" MIMETYPE="text/xml" SIZE="36778" CHECKSUMTYPE="MD5" CHECKSUM="644b2c85920dec7a724e18f1244578cf" SEQ="2" CREATED="2026-09-01T10:00:00">
+            <mets:file ID="AMD_METS_0003" MIMETYPE="text/xml" SIZE="36783" CHECKSUMTYPE="MD5" CHECKSUM="2e7f63190ee03109f9f219574c8f3180" SEQ="2" CREATED="2026-09-01T10:00:00">
                 <mets:FLocat LOCTYPE="URL" xlink:href="amdsec/amd_mets_nk-00027z_0003.xml"/>
             </mets:file>
         </mets:fileGrp>

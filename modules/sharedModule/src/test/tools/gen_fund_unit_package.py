@@ -13,7 +13,8 @@ Pouziti:
 Obrazove soubory jsou jen placeholdery (validace obrazu se v testech vypina), ale velikosti a MD5
 v METS/MD5/INFO odpovidaji skutecnemu obsahu, aby prosly kontroly checksumu.
 
-Mutace (pro K6) se pridavaji postupne; kazda je jednoducha zmena vygenerovanych dat.
+Mutace (K6): --mutation NAME, seznam pres --list-mutations; kazda je jednoducha zmena vygenerovanych dat
+a komentar u ni rika, ktere pravidlo ma chybu odhalit.
 """
 import argparse
 import hashlib
@@ -840,8 +841,31 @@ def info_xml(psp: str, items: list, size_kb: int, md5_name: str, md5_digest: str
 
 # ----------------------------------------------------------------------------------------------------
 
-def generate(target: str, variant: str, pages: int, with_directory: bool, standard: str, mutations: set):
+MUTATIONS = {
+    "missing-urnnbn": "UNIT bez identifikátoru urnnbn (MODS i DC) -> MODS_MANDATORY_IDENTIFIERS_PRESENT_LEVEL_UNIT, PSP_ID_DERIVED_FROM_IE_ID",
+    "wrong-genre": "genre jednotky 'article' místo clipping/clippingIndex/cardIndex -> BIBLIOGRAPHIC_METADATA_MATCH_PROFILE_UNIT",
+    "bad-checksum": "špatný MD5 prvního MC v souboru .md5 -> CHECKSUM_FILE_ALL_CHECKSUMS_MATCH",
+    "structlink-gap": "chybí smLink na poslední stranu -> PRIMARY-METS_STRUCT_LINKS_CORRECT",
+    "itemtotal-mismatch": "itemtotal v INFO o 1 vyšší -> INFO_ITEMTOTAL_MATCHES_ITEMS_COUNT",
+    "no-unit-dmdsec": "chybí dmdSec UNIT (zůstává UNITCOLLECTION) -> test kolize UNIT/UNITCOLLECTION; MODS_MANDATORY_IDENTIFIERS_PRESENT_LEVEL_UNIT, PSP_ID_DERIVED_FROM_IE_ID, mapy",
+    "alto-2.0": "ALTO v namespace ns-v2 -> OCR-ALTO_FILES_VALID_BY_XSD",
+    "wrong-mets-type": "mets/@TYPE 'Monograph' -> DmfDetector rozpozná jako monografii (balík se validuje jinou fDMF)",
+    "wrong-dc-type": "dc:type jednotky 'model:monograph' -> BIBLIOGRAPHIC_METADATA_MATCH_PROFILE_UNIT (DC)",
+    "urnnbn-prohibited-on-collection": "urnnbn navíc na UNITCOLLECTION -> MODS_PROHIBITED_IDENTIFIERS_NOT_PRESENT_LEVEL_UNITCOLLECTION (WARNING)",
+    "page-type-unknown": "TYPE stránky 'weirdPage' ve fyzické mapě -> PRIMARY-METS_PHYSICAL_STRUCTURAL_MAP_CORRECT (WARNING)",
+}
+
+
+def generate(target: str, variant: str, pages: int, with_directory: bool, standard: str, mutations: set,
+             jp2_mc: str = None, jp2_uc: str = None):
+    unknown = mutations - set(MUTATIONS)
+    if unknown:
+        sys.exit("neznámé mutace: " + ", ".join(sorted(unknown)) + "; známé: " + ", ".join(sorted(MUTATIONS)))
     mets_type, genre, label, extent = VARIANTS[variant]
+    if "wrong-mets-type" in mutations:
+        mets_type = "Monograph"
+    if "wrong-genre" in mutations:
+        genre = "article"
     psp = os.path.basename(os.path.normpath(target))
     urnnbn = f"urn:nbn:cz:{psp}" if not psp.count("-") == 4 else f"urn:nbn:cz:nk-00027x"
     os.makedirs(target, exist_ok=True)
@@ -862,28 +886,51 @@ def generate(target: str, variant: str, pages: int, with_directory: bool, standa
     for i in range(1, pages + 1):
         p = f"{i:04d}"
         files = {
-            "mc": put(f"mastercopy/mc_{psp}_{p}.jp2", jp2_placeholder(f"mc{i}")),
-            "uc": put(f"usercopy/uc_{psp}_{p}.jp2", jp2_placeholder(f"uc{i}")),
-            "alto": put(f"alto/alto_{psp}_{p}.xml", alto_xml(i).replace("{psp}", psp)),
+            "mc": put(f"mastercopy/mc_{psp}_{p}.jp2", open(jp2_mc, "rb").read() if jp2_mc else jp2_placeholder(f"mc{i}")),
+            "uc": put(f"usercopy/uc_{psp}_{p}.jp2", open(jp2_uc, "rb").read() if jp2_uc else jp2_placeholder(f"uc{i}")),
+            "alto": put(f"alto/alto_{psp}_{p}.xml", alto_xml(i).replace("{psp}", psp)
+                        .replace("alto/ns-v4#", "alto/ns-v2#") if "alto-2.0" in mutations
+                        else alto_xml(i).replace("{psp}", psp)),
             "txt": put(f"txt/txt_{psp}_{p}.txt", txt_content(i)),
         }
         files["amd"] = put(f"amdsec/amd_mets_{psp}_{p}.xml", amd_mets_xml(psp, mets_type, label, i, files))
         page_files[i] = files
 
     put(f"catalog_entry/cat_entry_{psp}.xml", catalog_entry_xml(urnnbn))
-    mets_rel = put(f"mets_{psp}.xml", main_mets_xml(psp, mets_type, label, genre, extent, urnnbn, standard, pages,
-                                                    with_directory, page_files))
+    mets = main_mets_xml(psp, mets_type, label, genre, extent, urnnbn, standard, pages, with_directory, page_files)
+    if "missing-urnnbn" in mutations:
+        mets = mets.replace(f'<mods:identifier type="urnnbn">{urnnbn}</mods:identifier>', "")
+        mets = mets.replace(f"<dc:identifier>urnnbn:{urnnbn}</dc:identifier>", "")
+    if "structlink-gap" in mutations:
+        mets = mets.replace(f'<mets:smLink xlink:from="UNIT_0001" xlink:to="DIV_PAGE_{pages:04d}"/>', "")
+    if "no-unit-dmdsec" in mutations:
+        a = mets.index('<mets:dmdSec ID="MODSMD_UNIT_0001">'); b = mets.index('</mets:dmdSec>', mets.index('<mets:dmdSec ID="DCMD_UNIT_0001">')) + len('</mets:dmdSec>')
+        mets = mets[:a] + mets[b:]
+    if "wrong-dc-type" in mutations:
+        mets = mets.replace("<dc:type>model:unit</dc:type>", "<dc:type>model:monograph</dc:type>")
+    if "urnnbn-prohibited-on-collection" in mutations:
+        mets = mets.replace(f'<mods:identifier type="uuid">{COLLECTION_UUID}</mods:identifier>',
+                            f'<mods:identifier type="uuid">{COLLECTION_UUID}</mods:identifier>\n                        <mods:identifier type="urnnbn">urn:nbn:cz:nk-00099z</mods:identifier>')
+    if "page-type-unknown" in mutations:
+        mets = mets.replace('<mets:div TYPE="normalPage" ID="DIV_PAGE_0001"', '<mets:div TYPE="weirdPage" ID="DIV_PAGE_0001"')
+    mets_rel = put(f"mets_{psp}.xml", mets)
 
     # MD5: vsechny soubory krome info a md5 (spec kap. 5.8), cesty absolutni vuci koreni balicku
     md5_name = f"md5_{psp}.md5"
     md5_lines = "".join(f"{md5_bytes(data)} /{rel}\r\n" for rel, data in sorted(written.items()))
+    if "bad-checksum" in mutations:
+        first_mc = f"mastercopy/mc_{psp}_0001.jp2"
+        md5_lines = md5_lines.replace(md5_bytes(written[first_mc]), "0" * 32)
     md5_rel = put(md5_name, md5_lines)
 
     # INFO: itemlist vsech souboru vc. info.xml (spec kap. 5.1), size v kB bez info.xml
     info_name = f"info_{psp}.xml"
     items = sorted(written.keys()) + [info_name]
     size_kb = max(1, sum(len(d) for d in written.values()) // 1024)
-    put(info_name, info_xml(psp, items, size_kb, md5_name, md5_rel[2]))
+    info = info_xml(psp, items, size_kb, md5_name, md5_rel[2])
+    if "itemtotal-mismatch" in mutations:
+        info = info.replace(f'itemtotal="{len(items)}"', f'itemtotal="{len(items) + 1}"')
+    put(info_name, info)
     return target
 
 
@@ -894,9 +941,16 @@ def main():
     ap.add_argument("--pages", type=int, default=2)
     ap.add_argument("--with-directory", action="store_true", help="pridat uroven DIRECTORY")
     ap.add_argument("--standard", choices=("aacr", "rda"), default="rda")
-    ap.add_argument("--mutation", action="append", default=[], help="nazev mutace (zatim zadne)")
+    ap.add_argument("--mutation", action="append", default=[], help="nazev mutace, viz --list-mutations")
+    ap.add_argument("--list-mutations", action="store_true")
+    ap.add_argument("--jp2-mc", help="skutecny JP2 soubor pouzity pro vsechny archivni kopie (misto placeholderu)")
+    ap.add_argument("--jp2-uc", help="skutecny JP2 soubor pouzity pro vsechny uzivatelske kopie (misto placeholderu)")
     a = ap.parse_args()
-    generate(a.target, a.variant, a.pages, a.with_directory, a.standard, set(a.mutation))
+    if a.list_mutations:
+        for k, v in MUTATIONS.items():
+            print(f"{k}: {v}")
+        return
+    generate(a.target, a.variant, a.pages, a.with_directory, a.standard, set(a.mutation), a.jp2_mc, a.jp2_uc)
     print("OK:", a.target)
 
 
