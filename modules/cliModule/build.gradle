@@ -83,6 +83,21 @@ tasks.register('runDevMrValidate', JavaExec) {
     ]
 }
 
+//runDevValidateFundUnit - validace syntetickeho balicku DMF Jednotky fondu 0.1 z testovacich zdroju (bez externich nastroju)
+//./gradlew :modules:cliModule:runDevValidateFundUnit
+tasks.register('runDevValidateFundUnit', JavaExec) {
+    classpath = sourceSets.main.runtimeClasspath
+    mainClass.set('nkp.pspValidator.cli.Main')
+    args = ['--action', "VALIDATE_PSP"
+            , '--psp', "${rootDir}/modules/sharedModule/src/test/resources/fund_unit_0.1/valid_clipping/nk-00027x"
+            , '--config-dir', "${rootDir}/modules/sharedModule/src/main/resources/nkp/pspValidator/shared/validatorConfig"
+            , '--forced-dmf-fdu-version', '0.1'
+            , '--disable-imagemagick', '--disable-jhove', '--disable-jpylyzer', '--disable-kakadu'
+            , '--disable-mp3val', '--disable-shntool', '--disable-checkmate'
+            , '-v', '2'
+    ]
+}
+
 tasks.register('runDevMrValidateProfile', JavaExec) {
     classpath = sourceSets.main.runtimeClasspath
     mainClass.set('nkp.pspValidator.cli.Main')
