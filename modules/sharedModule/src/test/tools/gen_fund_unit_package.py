@@ -28,6 +28,7 @@ SIGLA = "ABA001"
 COLLECTION_UUID = "5f6a8c2e-1111-4d0e-9a3b-000000000001"
 DIRECTORY_UUID = "5f6a8c2e-2222-4d0e-9a3b-000000000002"
 UNIT_UUID = "5f6a8c2e-3333-4d0e-9a3b-000000000003"
+UNIT_TITLE = "Klementinum a jeho knihovny"
 PAGE_UUID_PREFIX = "5f6a8c2e-4444-4d0e-9a3b-0000000000"  # + 2 cislice
 
 VARIANTS = {
@@ -627,7 +628,7 @@ def mods_unit(standard: str, genre: str, extent: str, urnnbn: str) -> str:
     return dmdsec_mods("MODSMD_UNIT_0001", f'''
                     <mods:mods ID="MODS_UNIT_0001" version="3.8">
                         <mods:titleInfo>
-                            <mods:title>Klementinum a jeho knihovny</mods:title>
+                            <mods:title>{UNIT_TITLE}</mods:title>
                             <mods:subTitle>k výročí Národní a universitní knihovny</mods:subTitle>
                         </mods:titleInfo>
                         <mods:name type="personal" usage="primary">
@@ -677,7 +678,7 @@ def mods_unit(standard: str, genre: str, extent: str, urnnbn: str) -> str:
 
 def dc_unit(extent: str, urnnbn: str) -> str:
     return dmdsec_dc("DCMD_UNIT_0001", f'''
-                    <dc:title>Klementinum a jeho knihovny : k výročí Národní a universitní knihovny</dc:title>
+                    <dc:title>{UNIT_TITLE} : k výročí Národní a universitní knihovny</dc:title>
                     <dc:creator>Novák, Jan</dc:creator>
                     <dc:type>model:unit</dc:type>
                     <dc:type>článek</dc:type>
@@ -857,7 +858,7 @@ MUTATIONS = {
 
 
 def generate(target: str, variant: str, pages: int, with_directory: bool, standard: str, mutations: set,
-             jp2_mc: str = None, jp2_uc: str = None):
+             jp2_mc: str = None, jp2_uc: str = None, urnnbn_override: str = None, unit_title: str = None):
     unknown = mutations - set(MUTATIONS)
     if unknown:
         sys.exit("neznámé mutace: " + ", ".join(sorted(unknown)) + "; známé: " + ", ".join(sorted(MUTATIONS)))
@@ -867,7 +868,10 @@ def generate(target: str, variant: str, pages: int, with_directory: bool, standa
     if "wrong-genre" in mutations:
         genre = "article"
     psp = os.path.basename(os.path.normpath(target))
-    urnnbn = f"urn:nbn:cz:{psp}" if not psp.count("-") == 4 else f"urn:nbn:cz:nk-00027x"
+    urnnbn = urnnbn_override or (f"urn:nbn:cz:{psp}" if not psp.count("-") == 4 else f"urn:nbn:cz:nk-00027x")
+    global UNIT_TITLE
+    if unit_title:
+        UNIT_TITLE = unit_title
     os.makedirs(target, exist_ok=True)
     for d in ("mastercopy", "usercopy", "alto", "txt", "amdsec", "catalog_entry"):
         os.makedirs(os.path.join(target, d), exist_ok=True)
@@ -945,12 +949,15 @@ def main():
     ap.add_argument("--list-mutations", action="store_true")
     ap.add_argument("--jp2-mc", help="skutecny JP2 soubor pouzity pro vsechny archivni kopie (misto placeholderu)")
     ap.add_argument("--jp2-uc", help="skutecny JP2 soubor pouzity pro vsechny uzivatelske kopie (misto placeholderu)")
+    ap.add_argument("--urnnbn", help="URN:NBN jednotky (default odvozeny z nazvu balicku); PSP_ID pak nesedi, pouzit jen pro test Resolveru")
+    ap.add_argument("--unit-title", help="nazev jednotky (mods:title / dc:title), napr. pro shodu s Resolverem")
     a = ap.parse_args()
     if a.list_mutations:
         for k, v in MUTATIONS.items():
             print(f"{k}: {v}")
         return
-    generate(a.target, a.variant, a.pages, a.with_directory, a.standard, set(a.mutation), a.jp2_mc, a.jp2_uc)
+    generate(a.target, a.variant, a.pages, a.with_directory, a.standard, set(a.mutation), a.jp2_mc, a.jp2_uc,
+             a.urnnbn, a.unit_title)
     print("OK:", a.target)
 
 

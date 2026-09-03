@@ -173,10 +173,11 @@ public class UrnNbnResolverChecker {
             titleInfo = digitalDocument.getJSONObject("analytical").getJSONObject("titleInfo");
             //tohle může být článek v periodiku, nebo kapitola v monografii
             checkMetadata("ANALYTICAL", titleInfo, urnNbn);
-        } /*else if (digitalDocument.has("otherEntity")) { //https://resolver.nkp.cz/api/v5/resolver/urn:nbn:cz:abg001-0003ig?format=json
+        } else if (digitalDocument.has("otherEntity")) { //https://resolver.nkp.cz/api/v5/resolver/urn:nbn:cz:abg001-0003ig?format=json
+            //DMF Jednotky fondu 0.1 (kap. 4): URN:NBN jednotky fondu se registruje jako typ dokumentu OTHER
             titleInfo = digitalDocument.getJSONObject("otherEntity").getJSONObject("titleInfo");
-            System.out.println("TODO: check OTHER ENTITY for " + urnNbn);
-        } */ else {
+            checkMetadata("OTHER", titleInfo, urnNbn);
+        } else {
             //unexpected data structure
             //System.err.println("ERROR: unexpected data structure in digDocMetadata");
             throw new ResolverWarning("Unexpected data structure in digDocMetadata for %s", urnNbn);
@@ -208,6 +209,12 @@ public class UrnNbnResolverChecker {
                 modsMetadata = metadataMapping.getMetadataByUrnAndEntityType(urnNbn, modsType);
                 checkAnalyticalMetadata(czidlo_type, modsType, modsMetadata, titleInfo, urnNbn);
                 break;
+            case "OTHER":
+                //zatim jedina entita validatoru registrovana jako OTHER je UNIT (jednotka fondu)
+                modsType = "UNIT";
+                modsMetadata = metadataMapping.getMetadataByUrnAndEntityType(urnNbn, modsType);
+                checkOtherEntityMetadata(czidlo_type, modsType, modsMetadata, titleInfo, urnNbn);
+                break;
             default:
                 System.out.println("TODO: implement checking for " + czidlo_type);
         }
@@ -221,6 +228,23 @@ public class UrnNbnResolverChecker {
                     titleInfo.getString("title"), urnNbn, czidloType, modsType
             );
             //monograph subtitle (nepovinný)
+            checkDataMatch(
+                    (String) buildXpath("mods:titleInfo/mods:subTitle").evaluate(modsMetadata, XPathConstants.STRING),
+                    titleInfo.optString("subTitle", null), urnNbn, czidloType, modsType
+            );
+        } else {
+            System.out.println("MODS metadata not found for " + urnNbn);
+        }
+    }
+
+    private void checkOtherEntityMetadata(String czidloType, String modsType, Node modsMetadata, JSONObject titleInfo, String urnNbn) throws InvalidXPathExpressionException, XPathExpressionException, MetadataMismatchException {
+        if (modsMetadata != null) {
+            //title (Resolver: otherEntity.titleInfo.title)
+            checkDataMatch(
+                    (String) buildXpath("mods:titleInfo/mods:title").evaluate(modsMetadata, XPathConstants.STRING),
+                    titleInfo.getString("title"), urnNbn, czidloType, modsType
+            );
+            //subtitle (nepovinný)
             checkDataMatch(
                     (String) buildXpath("mods:titleInfo/mods:subTitle").evaluate(modsMetadata, XPathConstants.STRING),
                     titleInfo.optString("subTitle", null), urnNbn, czidloType, modsType
