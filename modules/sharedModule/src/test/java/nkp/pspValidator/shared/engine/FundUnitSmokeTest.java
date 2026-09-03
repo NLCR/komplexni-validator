@@ -24,15 +24,32 @@ public class FundUnitSmokeTest {
     }
 
     /**
-     * Synteticky balicek vygenerovany src/test/tools/gen_fund_unit_package.py (vystrizek, 2 strany).
-     * Zatim se kontroluje jen, ze zadna funkce nespadne; po doplneni biblio profilu (K5) pribude kontrola validity.
+     * Synteticky balicek vygenerovany src/test/tools/gen_fund_unit_package.py (vystrizek, RDA, 2 strany).
+     * Musi byt validni (zadny ERROR); externi nastroje jsou vypnute, obrazy se nekontroluji.
      */
     @Test
-    public void buildAndRunOverGeneratedClipping() throws Exception {
-        runAndCheckNoCrash(new File("src/test/resources/fund_unit_0.1/valid_clipping/nk-00027x"));
+    public void generatedClippingIsValid() throws Exception {
+        String log = runAndCheckNoCrash(new File("src/test/resources/fund_unit_0.1/valid_clipping/nk-00027x"));
+        assertValid(log);
     }
 
-    private void runAndCheckNoCrash(File pspRootDir) throws Exception {
+    /**
+     * Soubor kartotecnich listku s urovni DIRECTORY (RDA, 3 strany), pokryva profily directory_*.
+     */
+    @Test
+    public void generatedCardIndexWithDirectoryIsValid() throws Exception {
+        String log = runAndCheckNoCrash(new File("src/test/resources/fund_unit_0.1/valid_card_index_directory/nk-00027z"));
+        assertValid(log);
+    }
+
+    private void assertValid(String log) {
+        for (String line : log.split("\n")) {
+            assertTrue("neocekavany ERROR: " + line.trim(), !line.trim().startsWith("ERROR:"));
+        }
+        assertTrue("balik ma byt validni", log.contains("balík je: validní"));
+    }
+
+    private String runAndCheckNoCrash(File pspRootDir) throws Exception {
         File validatorConfigDir = new File("src/main/resources/nkp/pspValidator/shared/validatorConfig");
         ValidatorConfigurationManager configManager = new ValidatorConfigurationManager(validatorConfigDir);
         FdmfRegistry registry = new FdmfRegistry(configManager);
@@ -60,5 +77,6 @@ public class FundUnitSmokeTest {
                     || line.contains("nesplněn kontrakt");
             assertTrue("konfigurace fDMF obsahuje chybu nebo funkce spadla: " + line.trim(), !crash);
         }
+        return log;
     }
 }
