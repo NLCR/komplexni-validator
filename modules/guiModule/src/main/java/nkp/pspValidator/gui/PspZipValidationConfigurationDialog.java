@@ -25,7 +25,7 @@ public class PspZipValidationConfigurationDialog extends AbstractDialog {
 
     @Override
     public int getHeight() {
-        return 930;
+        return 620; //dvousloupcove rozlozeni typu dokumentu
     }
 
     @Override

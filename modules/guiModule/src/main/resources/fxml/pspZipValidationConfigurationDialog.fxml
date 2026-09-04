@@ -3,371 +3,165 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<!--
+  Rozložení: typy dokumentů ve dvou sloupcích (vlevo tištěné dokumenty a datové disky, vpravo zvukové dokumenty),
+  zvlášť pro vynucené a preferované verze. Sloupce GridPane: 0 CheckBox, 1 Label, 2 ChoiceBox | 3 mezera | 4 CheckBox, 5 Label, 6 ChoiceBox.
+-->
 <VBox xmlns:fx="http://javafx.com/fxml"
       fx:controller="nkp.pspValidator.gui.PspZipValidationConfigurationDialogController"
       fx:id="container"
-      minHeight="930"
       minWidth="750"
       alignment="CENTER"
-      spacing="20"
+      spacing="10"
 >
 
     <children>
 
-        <GridPane alignment="CENTER" hgap="10" vgap="10">
+        <GridPane alignment="CENTER" hgap="10" vgap="8">
             <padding>
-                <Insets bottom="10" left="10" right="10" top="20"/>
+                <Insets bottom="10" left="15" right="15" top="15"/>
             </padding>
+            <!--sloupce: 0 CheckBox, 1 Label, 2 ChoiceBox | 3 mezera | 4 CheckBox, 5 Label, 6 ChoiceBox; popisky maji stejnou sirku-->
+            <columnConstraints>
+                <ColumnConstraints halignment="RIGHT" minWidth="30"/>
+                <ColumnConstraints minWidth="160" prefWidth="160"/>
+                <ColumnConstraints minWidth="70"/>
+                <ColumnConstraints minWidth="40"/>
+                <ColumnConstraints halignment="RIGHT" minWidth="30"/>
+                <ColumnConstraints minWidth="160" prefWidth="160"/>
+                <ColumnConstraints minWidth="70" hgrow="ALWAYS"/>
+            </columnConstraints>
 
-            <!--PSP dir-->
-            <Label text="Zip soubor PSP balíku"
-                   GridPane.columnIndex="0"
-                   GridPane.rowIndex="0"
-                   GridPane.columnSpan="2"
-            />
+            <!--PSP source-->
+            <Label text="Zip soubor PSP balíku" GridPane.columnIndex="0" GridPane.columnSpan="2" GridPane.rowIndex="0" GridPane.halignment="LEFT"/>
             <TextField fx:id="pspZipTextField" minWidth="250"
-                       GridPane.columnIndex="2"
-                       GridPane.rowIndex="0"
-                       GridPane.columnSpan="1"
-                       GridPane.hgrow="ALWAYS"
-            />
-            <Button onAction="#selectPspDir" text="Vybrat" GridPane.columnIndex="3" GridPane.rowIndex="0"/>
+                       GridPane.columnIndex="2" GridPane.columnSpan="4" GridPane.rowIndex="0" GridPane.hgrow="ALWAYS"/>
+            <Button onAction="#selectPspDir" text="Vybrat" GridPane.columnIndex="6" GridPane.rowIndex="0"/>
 
             <!--FORCED-->
-            <Label text="Vynutit validaci proti konkrétním verzím DMF" GridPane.columnIndex="0"
-                   GridPane.columnSpan="3"
-                   GridPane.rowIndex="2"/>
-
-            <!--Monograph-->
-            <CheckBox fx:id="forcedMonVersionCheckBox"
-                      onAction="#forcedMonVersionChanged"
-                      GridPane.columnIndex="0"
-                      GridPane.rowIndex="3"
-                      GridPane.halignment="RIGHT"
-            />
-
+            <Label text="Vynutit validaci proti konkrétním verzím DMF" GridPane.columnIndex="0" GridPane.columnSpan="7" GridPane.rowIndex="2" GridPane.halignment="LEFT"/>
+            <!--Monografie | Audio (gramodesky)-->
+            <CheckBox fx:id="forcedMonVersionCheckBox" onAction="#forcedMonVersionChanged"
+                      GridPane.columnIndex="0" GridPane.rowIndex="3" GridPane.halignment="RIGHT"/>
             <Label text="Monografie" GridPane.columnIndex="1" GridPane.rowIndex="3"/>
-
-            <ChoiceBox fx:id="forcedMonVersionChoiceBox"
-                       onAction="#forcedMonVersionChoiceboxChanged"
-                       GridPane.columnIndex="2"
-                       GridPane.rowIndex="3"/>
-
-
-            <!--Periodical-->
-            <CheckBox fx:id="forcedPerVersionCheckBox"
-                      onAction="#forcedPerVersionChanged"
-                      GridPane.columnIndex="0"
-                      GridPane.rowIndex="4"
-                      GridPane.halignment="RIGHT"
-            />
-
+            <ChoiceBox fx:id="forcedMonVersionChoiceBox" onAction="#forcedMonVersionChoiceboxChanged"
+                       GridPane.columnIndex="2" GridPane.rowIndex="3"/>
+            <CheckBox fx:id="forcedAdgVersionCheckBox" onAction="#forcedAdgVersionChanged"
+                      GridPane.columnIndex="4" GridPane.rowIndex="3" GridPane.halignment="RIGHT"/>
+            <Label text="Audio (gramodesky)" GridPane.columnIndex="5" GridPane.rowIndex="3"/>
+            <ChoiceBox fx:id="forcedAdgVersionChoiceBox" onAction="#forcedAdgVersionChoiceboxChanged"
+                       GridPane.columnIndex="6" GridPane.rowIndex="3"/>
+            <!--Periodika | Audio (fonoválečky)-->
+            <CheckBox fx:id="forcedPerVersionCheckBox" onAction="#forcedPerVersionChanged"
+                      GridPane.columnIndex="0" GridPane.rowIndex="4" GridPane.halignment="RIGHT"/>
             <Label text="Periodika" GridPane.columnIndex="1" GridPane.rowIndex="4"/>
-
-            <ChoiceBox fx:id="forcedPerVersionChoiceBox"
-                       GridPane.columnIndex="2" GridPane.columnSpan="2"
-                       GridPane.rowIndex="4"
-                       onAction="#forcedPerVersionChoiceboxChanged"/>
-
-            <!--Audio doc (gramophone)-->
-            <CheckBox fx:id="forcedAdgVersionCheckBox"
-                      onAction="#forcedAdgVersionChanged"
-                      GridPane.columnIndex="0"
-                      GridPane.rowIndex="5"
-                      GridPane.halignment="RIGHT"
-            />
-
-            <Label text="Audio (gramodesky)" GridPane.columnIndex="1" GridPane.rowIndex="5"/>
-
-            <ChoiceBox fx:id="forcedAdgVersionChoiceBox"
-                       GridPane.columnIndex="2" GridPane.columnSpan="2"
-                       GridPane.rowIndex="5"
-                       onAction="#forcedAdgVersionChoiceboxChanged"/>
-
-            <!--Audio doc (fonocylinder)-->
-            <CheckBox fx:id="forcedAdfVersionCheckBox"
-                      onAction="#forcedAdfVersionChanged"
-                      GridPane.columnIndex="0"
-                      GridPane.rowIndex="6"
-                      GridPane.halignment="RIGHT"
-            />
-
-            <Label text="Audio (fonoválečky)" GridPane.columnIndex="1" GridPane.rowIndex="6"/>
-
-            <ChoiceBox fx:id="forcedAdfVersionChoiceBox"
-                       GridPane.columnIndex="2" GridPane.columnSpan="2"
-                       GridPane.rowIndex="6"
-                       onAction="#forcedAdfVersionChoiceboxChanged"/>
-            
-            
-            <!--Audio doc (audio disc)-->
-            <CheckBox fx:id="forcedAdiVersionCheckBox"
-                      onAction="#forcedAdiVersionChanged"
-                      GridPane.columnIndex="0"
-                      GridPane.rowIndex="7"
-                      GridPane.halignment="RIGHT"
-                />
-            
-            <Label text="Audio (zvukové disky)" GridPane.columnIndex="1" GridPane.rowIndex="7"/>
-            
-            <ChoiceBox fx:id="forcedAdiVersionChoiceBox"
-                       GridPane.columnIndex="2" GridPane.columnSpan="2"
-                       GridPane.rowIndex="7"
-                       onAction="#forcedAdiVersionChoiceboxChanged"/>
-            
-            <!--Audio doc (digital audio)-->
-            <CheckBox fx:id="forcedAdnVersionCheckBox"
-                      onAction="#forcedAdnVersionChanged"
-                      GridPane.columnIndex="0"
-                      GridPane.rowIndex="8"
-                      GridPane.halignment="RIGHT"
-                />
-            
-            <Label text="Audio (bez nosiče)" GridPane.columnIndex="1" GridPane.rowIndex="8"/>
-            
-            <ChoiceBox fx:id="forcedAdnVersionChoiceBox"
-                       GridPane.columnIndex="2" GridPane.columnSpan="2"
-                       GridPane.rowIndex="8"
-                       onAction="#forcedAdnVersionChoiceboxChanged"/>            
-            
-            
-            
-            <!--Digital discs-->
-            <CheckBox fx:id="forcedDadVersionCheckBox"
-                      onAction="#forcedDadVersionChanged"
-                      GridPane.columnIndex="0"
-                      GridPane.rowIndex="9"
-                      GridPane.halignment="RIGHT"
-            />
-
-            <Label text="Datové disky" GridPane.columnIndex="1" GridPane.rowIndex="9"/>
-
-            <ChoiceBox fx:id="forcedDadVersionChoiceBox"
-                       GridPane.columnIndex="2" GridPane.columnSpan="2"
-                       GridPane.rowIndex="9"
-                       onAction="#forcedDadVersionChoiceboxChanged"/>
-
-            <!--Fund units (jednotky fondu)-->
-            <CheckBox fx:id="forcedFduVersionCheckBox"
-                      onAction="#forcedFduVersionChanged"
-                      GridPane.columnIndex="0"
-                      GridPane.rowIndex="10"
-                      GridPane.halignment="RIGHT"
-            />
-
-            <Label text="Jednotky fondu" GridPane.columnIndex="1" GridPane.rowIndex="10"/>
-
-            <ChoiceBox fx:id="forcedFduVersionChoiceBox"
-                       GridPane.columnIndex="2" GridPane.columnSpan="2"
-                       GridPane.rowIndex="10"
-                       onAction="#forcedFduVersionChoiceboxChanged"/>
-
+            <ChoiceBox fx:id="forcedPerVersionChoiceBox" onAction="#forcedPerVersionChoiceboxChanged"
+                       GridPane.columnIndex="2" GridPane.rowIndex="4"/>
+            <CheckBox fx:id="forcedAdfVersionCheckBox" onAction="#forcedAdfVersionChanged"
+                      GridPane.columnIndex="4" GridPane.rowIndex="4" GridPane.halignment="RIGHT"/>
+            <Label text="Audio (fonoválečky)" GridPane.columnIndex="5" GridPane.rowIndex="4"/>
+            <ChoiceBox fx:id="forcedAdfVersionChoiceBox" onAction="#forcedAdfVersionChoiceboxChanged"
+                       GridPane.columnIndex="6" GridPane.rowIndex="4"/>
+            <!--Datové disky | Audio (zvukové disky)-->
+            <CheckBox fx:id="forcedDadVersionCheckBox" onAction="#forcedDadVersionChanged"
+                      GridPane.columnIndex="0" GridPane.rowIndex="5" GridPane.halignment="RIGHT"/>
+            <Label text="Datové disky" GridPane.columnIndex="1" GridPane.rowIndex="5"/>
+            <ChoiceBox fx:id="forcedDadVersionChoiceBox" onAction="#forcedDadVersionChoiceboxChanged"
+                       GridPane.columnIndex="2" GridPane.rowIndex="5"/>
+            <CheckBox fx:id="forcedAdiVersionCheckBox" onAction="#forcedAdiVersionChanged"
+                      GridPane.columnIndex="4" GridPane.rowIndex="5" GridPane.halignment="RIGHT"/>
+            <Label text="Audio (zvukové disky)" GridPane.columnIndex="5" GridPane.rowIndex="5"/>
+            <ChoiceBox fx:id="forcedAdiVersionChoiceBox" onAction="#forcedAdiVersionChoiceboxChanged"
+                       GridPane.columnIndex="6" GridPane.rowIndex="5"/>
+            <!--Jednotky fondu | Audio (bez nosiče)-->
+            <CheckBox fx:id="forcedFduVersionCheckBox" onAction="#forcedFduVersionChanged"
+                      GridPane.columnIndex="0" GridPane.rowIndex="6" GridPane.halignment="RIGHT"/>
+            <Label text="Jednotky fondu" GridPane.columnIndex="1" GridPane.rowIndex="6"/>
+            <ChoiceBox fx:id="forcedFduVersionChoiceBox" onAction="#forcedFduVersionChoiceboxChanged"
+                       GridPane.columnIndex="2" GridPane.rowIndex="6"/>
+            <CheckBox fx:id="forcedAdnVersionCheckBox" onAction="#forcedAdnVersionChanged"
+                      GridPane.columnIndex="4" GridPane.rowIndex="6" GridPane.halignment="RIGHT"/>
+            <Label text="Audio (bez nosiče)" GridPane.columnIndex="5" GridPane.rowIndex="6"/>
+            <ChoiceBox fx:id="forcedAdnVersionChoiceBox" onAction="#forcedAdnVersionChoiceboxChanged"
+                       GridPane.columnIndex="6" GridPane.rowIndex="6"/>
 
             <!--PREFERRED-->
-            <Label text="Preferované verze standardů. Jsou použity, když v datech balíku chybí verze DMF."
-                   GridPane.columnIndex="0"
-                   GridPane.columnSpan="3"
-                   GridPane.rowIndex="12"/>
-
-            <!--Monograph-->
-            <CheckBox fx:id="preferredMonVersionCheckBox"
-                      onAction="#preferredMonVersionChanged"
-                      GridPane.columnIndex="0"
-                      GridPane.rowIndex="13"
-                      GridPane.halignment="RIGHT"
-            />
-
-            <Label text="Monografie" GridPane.columnIndex="1" GridPane.rowIndex="13"/>
-
-            <ChoiceBox fx:id="preferredMonVersionChoiceBox"
-                       GridPane.columnIndex="2"
-                       GridPane.rowIndex="13"
-                       onAction="#preferredMonVersionChoiceboxChanged"
-            />
-
-            <!--Periodical-->
-            <CheckBox fx:id="preferredPerVersionCheckBox"
-                      onAction="#preferredPerVersionChanged"
-                      GridPane.columnIndex="0"
-                      GridPane.rowIndex="14"
-                      GridPane.halignment="RIGHT"
-            />
-
-            <Label text="Periodika" GridPane.columnIndex="1" GridPane.rowIndex="14"/>
-
-            <ChoiceBox fx:id="preferredPerVersionChoiceBox"
-                       GridPane.columnIndex="2" GridPane.columnSpan="2"
-                       GridPane.rowIndex="14"
-                       onAction="#preferredPerVersionChoiceboxChanged"
-            />
-
-            <!--Audio doc (gramophone)-->
-            <CheckBox fx:id="preferredAdgVersionCheckBox"
-                      onAction="#preferredAdgVersionChanged"
-                      GridPane.columnIndex="0"
-                      GridPane.rowIndex="15"
-                      GridPane.halignment="RIGHT"
-            />
-
-            <Label text="Audio (gramodesky)" GridPane.columnIndex="1" GridPane.rowIndex="15"/>
-
-            <ChoiceBox fx:id="preferredAdgVersionChoiceBox"
-                       GridPane.columnIndex="2" GridPane.columnSpan="2"
-                       GridPane.rowIndex="15"
-                       onAction="#preferredAdgVersionChoiceboxChanged"
-            />
-
-            <!--Audio doc (fonocylinders)-->
-            <CheckBox fx:id="preferredAdfVersionCheckBox"
-                      onAction="#preferredAdfVersionChanged"
-                      GridPane.columnIndex="0"
-                      GridPane.rowIndex="16"
-                      GridPane.halignment="RIGHT"
-            />
-
-            <Label text="Audio (fonoválečky)" GridPane.columnIndex="1" GridPane.rowIndex="16"/>
-
-            <ChoiceBox fx:id="preferredAdfVersionChoiceBox"
-                       GridPane.columnIndex="2" GridPane.columnSpan="2"
-                       GridPane.rowIndex="16"
-                       onAction="#preferredAdfVersionChoiceboxChanged"
-            />
-            
-            
-            <!--Audio doc (audio disc)-->
-            <CheckBox fx:id="preferredAdiVersionCheckBox"
-                      onAction="#preferredAdiVersionChanged"
-                      GridPane.columnIndex="0"
-                      GridPane.rowIndex="17"
-                      GridPane.halignment="RIGHT"
-                />
-            
-            <Label text="Audio (zvukové disky)" GridPane.columnIndex="1" GridPane.rowIndex="17"/>
-            
-            <ChoiceBox fx:id="preferredAdiVersionChoiceBox"
-                       GridPane.columnIndex="2" GridPane.columnSpan="2"
-                       GridPane.rowIndex="17"
-                       onAction="#preferredAdiVersionChoiceboxChanged"/>
-            
-            <!--Audio doc (digital audio)-->
-            <CheckBox fx:id="preferredAdnVersionCheckBox"
-                      onAction="#preferredAdnVersionChanged"
-                      GridPane.columnIndex="0"
-                      GridPane.rowIndex="18"
-                      GridPane.halignment="RIGHT"
-                />
-            
-            <Label text="Audio (bez nosiče)" GridPane.columnIndex="1" GridPane.rowIndex="18"/>
-            
-            <ChoiceBox fx:id="preferredAdnVersionChoiceBox"
-                       GridPane.columnIndex="2" GridPane.columnSpan="2"
-                       GridPane.rowIndex="18"
-                       onAction="#preferredAdnVersionChoiceboxChanged"/>            
-            
-            <!--Digital discs-->
-            <CheckBox fx:id="preferredDadVersionCheckBox"
-                      onAction="#preferreDadVersionChanged"
-                      GridPane.columnIndex="0"
-                      GridPane.rowIndex="19"
-                      GridPane.halignment="RIGHT"
-            />
-
-            <Label text="Datové disky" GridPane.columnIndex="1" GridPane.rowIndex="19"/>
-
-            <ChoiceBox fx:id="preferredDadVersionChoiceBox"
-                       GridPane.columnIndex="2" GridPane.columnSpan="2"
-                       GridPane.rowIndex="19"
-                       onAction="#preferredDadVersionChoiceboxChanged"
-            />
-
-            <!--Fund units (jednotky fondu)-->
-            <CheckBox fx:id="preferredFduVersionCheckBox"
-                      onAction="#preferredFduVersionChanged"
-                      GridPane.columnIndex="0"
-                      GridPane.rowIndex="20"
-                      GridPane.halignment="RIGHT"
-            />
-
-            <Label text="Jednotky fondu" GridPane.columnIndex="1" GridPane.rowIndex="20"/>
-
-            <ChoiceBox fx:id="preferredFduVersionChoiceBox"
-                       GridPane.columnIndex="2" GridPane.columnSpan="2"
-                       GridPane.rowIndex="20"
-                       onAction="#preferredFduVersionChoiceboxChanged"
-            />
+            <Label text="Preferované verze standardů. Jsou použity, když v datech balíku chybí verze DMF." GridPane.columnIndex="0" GridPane.columnSpan="7" GridPane.rowIndex="8" GridPane.halignment="LEFT"/>
+            <!--Monografie | Audio (gramodesky)-->
+            <CheckBox fx:id="preferredMonVersionCheckBox" onAction="#preferredMonVersionChanged"
+                      GridPane.columnIndex="0" GridPane.rowIndex="9" GridPane.halignment="RIGHT"/>
+            <Label text="Monografie" GridPane.columnIndex="1" GridPane.rowIndex="9"/>
+            <ChoiceBox fx:id="preferredMonVersionChoiceBox" onAction="#preferredMonVersionChoiceboxChanged"
+                       GridPane.columnIndex="2" GridPane.rowIndex="9"/>
+            <CheckBox fx:id="preferredAdgVersionCheckBox" onAction="#preferredAdgVersionChanged"
+                      GridPane.columnIndex="4" GridPane.rowIndex="9" GridPane.halignment="RIGHT"/>
+            <Label text="Audio (gramodesky)" GridPane.columnIndex="5" GridPane.rowIndex="9"/>
+            <ChoiceBox fx:id="preferredAdgVersionChoiceBox" onAction="#preferredAdgVersionChoiceboxChanged"
+                       GridPane.columnIndex="6" GridPane.rowIndex="9"/>
+            <!--Periodika | Audio (fonoválečky)-->
+            <CheckBox fx:id="preferredPerVersionCheckBox" onAction="#preferredPerVersionChanged"
+                      GridPane.columnIndex="0" GridPane.rowIndex="10" GridPane.halignment="RIGHT"/>
+            <Label text="Periodika" GridPane.columnIndex="1" GridPane.rowIndex="10"/>
+            <ChoiceBox fx:id="preferredPerVersionChoiceBox" onAction="#preferredPerVersionChoiceboxChanged"
+                       GridPane.columnIndex="2" GridPane.rowIndex="10"/>
+            <CheckBox fx:id="preferredAdfVersionCheckBox" onAction="#preferredAdfVersionChanged"
+                      GridPane.columnIndex="4" GridPane.rowIndex="10" GridPane.halignment="RIGHT"/>
+            <Label text="Audio (fonoválečky)" GridPane.columnIndex="5" GridPane.rowIndex="10"/>
+            <ChoiceBox fx:id="preferredAdfVersionChoiceBox" onAction="#preferredAdfVersionChoiceboxChanged"
+                       GridPane.columnIndex="6" GridPane.rowIndex="10"/>
+            <!--Datové disky | Audio (zvukové disky)-->
+            <CheckBox fx:id="preferredDadVersionCheckBox" onAction="#preferreDadVersionChanged"
+                      GridPane.columnIndex="0" GridPane.rowIndex="11" GridPane.halignment="RIGHT"/>
+            <Label text="Datové disky" GridPane.columnIndex="1" GridPane.rowIndex="11"/>
+            <ChoiceBox fx:id="preferredDadVersionChoiceBox" onAction="#preferredDadVersionChoiceboxChanged"
+                       GridPane.columnIndex="2" GridPane.rowIndex="11"/>
+            <CheckBox fx:id="preferredAdiVersionCheckBox" onAction="#preferredAdiVersionChanged"
+                      GridPane.columnIndex="4" GridPane.rowIndex="11" GridPane.halignment="RIGHT"/>
+            <Label text="Audio (zvukové disky)" GridPane.columnIndex="5" GridPane.rowIndex="11"/>
+            <ChoiceBox fx:id="preferredAdiVersionChoiceBox" onAction="#preferredAdiVersionChoiceboxChanged"
+                       GridPane.columnIndex="6" GridPane.rowIndex="11"/>
+            <!--Jednotky fondu | Audio (bez nosiče)-->
+            <CheckBox fx:id="preferredFduVersionCheckBox" onAction="#preferredFduVersionChanged"
+                      GridPane.columnIndex="0" GridPane.rowIndex="12" GridPane.halignment="RIGHT"/>
+            <Label text="Jednotky fondu" GridPane.columnIndex="1" GridPane.rowIndex="12"/>
+            <ChoiceBox fx:id="preferredFduVersionChoiceBox" onAction="#preferredFduVersionChoiceboxChanged"
+                       GridPane.columnIndex="2" GridPane.rowIndex="12"/>
+            <CheckBox fx:id="preferredAdnVersionCheckBox" onAction="#preferredAdnVersionChanged"
+                      GridPane.columnIndex="4" GridPane.rowIndex="12" GridPane.halignment="RIGHT"/>
+            <Label text="Audio (bez nosiče)" GridPane.columnIndex="5" GridPane.rowIndex="12"/>
+            <ChoiceBox fx:id="preferredAdnVersionChoiceBox" onAction="#preferredAdnVersionChoiceboxChanged"
+                       GridPane.columnIndex="6" GridPane.rowIndex="12"/>
 
             <!--PROTOCOLS-->
-            <Label text="Vytvořit protokol v XML"
-                   GridPane.columnIndex="0"
-                   GridPane.rowIndex="22"
-                   GridPane.columnSpan="2"
-            />
+            <Label text="Vytvořit protokol v XML" GridPane.columnIndex="0" GridPane.columnSpan="2" GridPane.rowIndex="14" GridPane.halignment="LEFT"/>
+            <CheckBox fx:id="createXmlLog" onAction="#createXmlLogChanged" GridPane.columnIndex="2" GridPane.rowIndex="14"/>
 
-            <CheckBox fx:id="createXmlLog"
-                      onAction="#createXmlLogChanged"
-                      GridPane.columnIndex="2"
-                      GridPane.rowIndex="22"
-            />
-
-            <Label text="Vytvořit textový log"
-                   GridPane.columnIndex="0"
-                   GridPane.rowIndex="23"
-                   GridPane.columnSpan="2"
-            />
-
-            <CheckBox fx:id="createTxtLog"
-                      onAction="#createTxtLogChanged"
-                      GridPane.columnIndex="2"
-                      GridPane.rowIndex="23"
-            />
+            <Label text="Vytvořit textový log" GridPane.columnIndex="0" GridPane.columnSpan="2" GridPane.rowIndex="15" GridPane.halignment="LEFT"/>
+            <CheckBox fx:id="createTxtLog" onAction="#createTxtLogChanged" GridPane.columnIndex="2" GridPane.rowIndex="15"/>
 
             <!--Verbosity-->
-            <Label text="Podrobnost textového logu"
-                   GridPane.columnIndex="0"
-                   GridPane.rowIndex="24"
-            />
-
-            <HBox GridPane.rowIndex="24"
-                  GridPane.columnIndex="2"
-                  GridPane.columnSpan="3"
-                  spacing="8">
-                <ToggleButton fx:id="verbosityLevel3"
-                              selected="true"
-                              text="úplně vše"
-                              onAction="#onVerbositySwitched"
-                />
-                <ToggleButton fx:id="verbosityLevel2"
-                              text="jen sekce a pravidla obsahující chyby"
-                              onAction="#onVerbositySwitched"
-                />
+            <Label text="Podrobnost textového logu" GridPane.columnIndex="0" GridPane.columnSpan="2" GridPane.rowIndex="16" GridPane.halignment="LEFT"/>
+            <HBox GridPane.rowIndex="16" GridPane.columnIndex="2" GridPane.columnSpan="5" spacing="8">
+                <ToggleButton fx:id="verbosityLevel3" selected="true" text="úplně vše" onAction="#onVerbositySwitched"/>
+                <ToggleButton fx:id="verbosityLevel2" text="jen sekce a pravidla obsahující chyby" onAction="#onVerbositySwitched"/>
             </HBox>
-
-            <HBox GridPane.rowIndex="25"
-                  GridPane.columnIndex="2"
-                  GridPane.columnSpan="3"
-                  spacing="10">
-                <ToggleButton fx:id="verbosityLevel1"
-                              text="jen sekce obsahující chyby"
-                              onAction="#onVerbositySwitched"
-                />
-                <ToggleButton fx:id="verbosityLevel0"
-                              text="jen validní/nevalidní"
-                              onAction="#onVerbositySwitched"
-                />
+            <HBox GridPane.rowIndex="17" GridPane.columnIndex="2" GridPane.columnSpan="5" spacing="8">
+                <ToggleButton fx:id="verbosityLevel1" text="jen sekce obsahující chyby" onAction="#onVerbositySwitched"/>
+                <ToggleButton fx:id="verbosityLevel0" text="jen validní/nevalidní" onAction="#onVerbositySwitched"/>
             </HBox>
 
         </GridPane>
 
         <HBox alignment="CENTER">
             <padding>
-                <Insets bottom="10" left="10" right="10" top="10"/>
+                <Insets bottom="5" left="10" right="10" top="5"/>
             </padding>
             <Label fx:id="errorMessageLabel" text="" textFill="#f80202"/>
         </HBox>
 
         <HBox alignment="CENTER" spacing="10">
             <padding>
-                <Insets bottom="5" left="10" right="10" top="5"/>
+                <Insets bottom="10" left="10" right="10" top="5"/>
             </padding>
             <Button onAction="#validate" text="Validovat"/>
             <Button onAction="#closeDialog" text="Zavřít"/>
