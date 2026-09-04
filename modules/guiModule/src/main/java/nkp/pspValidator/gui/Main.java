@@ -112,6 +112,14 @@ public class Main extends Application {
         }
     }
 
+    public Stage getPrimaryStage() {
+        return primaryStage;
+    }
+
+    public Stage getDialogStage() {
+        return dialogStage;
+    }
+
     public ConfigurationManager getConfigurationManager() {
         return configurationManager;
     }

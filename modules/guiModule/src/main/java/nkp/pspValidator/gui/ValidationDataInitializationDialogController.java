@@ -116,7 +116,12 @@ public class ValidationDataInitializationDialogController extends DialogControll
                     if (result.isOk()) {//ok
                         state = DialogState.FINISHED;
                         main.setValidationDataManager(validationDataManager);
-                        continueInApp(null);
+                        if (SnapshotMode.isEnabled()) {
+                            stage.close();
+                            SnapshotMode.start(main);
+                        } else {
+                            continueInApp(null);
+                        }
                     } else {//error
                         state = DialogState.ERROR;
                         imgError.setVisible(true);

@@ -35,6 +35,24 @@ public abstract class AbstractDialog {
     public abstract void setControllerData(DialogController controller);
 
     public void show() {
+        prepare();
+        if (!stage.isShowing()) {
+            stage.showAndWait();
+        }
+    }
+
+    /**
+     * Otevře dialog bez blokování (pro SnapshotMode); vrátí použitý Stage.
+     */
+    public Stage showNonBlocking() {
+        prepare();
+        if (!stage.isShowing()) {
+            stage.show();
+        }
+        return stage;
+    }
+
+    private void prepare() {
         try {
             // FIXME: 10.4.18 nefunguje, u vetsiny dialogu vraci isResizable() false, presto se daji zvetsovat
             stage.setResizable(isResizable());
@@ -61,9 +79,6 @@ public abstract class AbstractDialog {
         } catch (Exception e) {
             //should never happen
             throw new RuntimeException(e);
-        }
-        if (!stage.isShowing()) {
-            stage.showAndWait();
         }
     }
 }

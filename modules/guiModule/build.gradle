@@ -191,3 +191,17 @@ tasks.register('jpackage', Exec) {
 
 //build.gradle ends here
 
+//runSnapshots - otevre dialogy GUI a ulozi jejich snimky do PNG (kontrola vzhledu, viz SnapshotMode)
+//./gradlew :modules:guiModule:runSnapshots -PsnapshotDir=/tmp/snap [-Psnapshot=main,pspDir,pspZip] [-PsnapshotDelayMs=800]
+tasks.register('runSnapshots', JavaExec) {
+    classpath = sourceSets.main.runtimeClasspath
+    mainClass.set('nkp.pspValidator.gui.Launcher')
+    def dir = project.findProperty('snapshotDir') ?: "${rootDir}/build/gui-snapshots"
+    systemProperty 'kv.snapshotDir', dir
+    if (project.hasProperty('snapshot')) {
+        systemProperty 'kv.snapshot', project.property('snapshot')
+    }
+    if (project.hasProperty('snapshotDelayMs')) {
+        systemProperty 'kv.snapshotDelayMs', project.property('snapshotDelayMs')
+    }
+}
