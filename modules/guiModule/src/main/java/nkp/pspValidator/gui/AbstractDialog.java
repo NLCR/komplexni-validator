@@ -57,15 +57,22 @@ public abstract class AbstractDialog {
             // FIXME: 10.4.18 nefunguje, u vetsiny dialogu vraci isResizable() false, presto se daji zvetsovat
             stage.setResizable(isResizable());
             stage.setTitle(getTitle());
-            //set size
+            //set size; height is limited by the visible screen area so that bottom buttons stay reachable
+            //(kv.maxDialogHeight is a dev hook to simulate a small screen, see SnapshotMode)
+            Rectangle2D visualBounds = Screen.getPrimary().getVisualBounds();
+            double maxHeight = visualBounds.getHeight();
+            Integer devMaxHeight = Integer.getInteger("kv.maxDialogHeight");
+            if (devMaxHeight != null) {
+                maxHeight = Math.min(maxHeight, devMaxHeight);
+            }
+            double height = Math.min(getHeight(), maxHeight);
             stage.setWidth(getWidth());
             stage.setMinWidth(getWidth());
-            stage.setHeight(getHeight());
-            stage.setMinHeight(getHeight());
-            //center in screen
-            Rectangle2D visualBounds = Screen.getPrimary().getVisualBounds();
-            stage.setX((visualBounds.getMaxX() - getWidth()) / 2);
-            stage.setY((visualBounds.getMaxY() - getHeight()) / 2);
+            stage.setHeight(height);
+            stage.setMinHeight(Math.min(height, 400));
+            //center in visible screen area
+            stage.setX(visualBounds.getMinX() + (visualBounds.getWidth() - getWidth()) / 2);
+            stage.setY(visualBounds.getMinY() + (visualBounds.getHeight() - height) / 2);
 
             FXMLLoader loader = new FXMLLoader(getFxmlResource());
             Parent root = (Parent) loader.load();

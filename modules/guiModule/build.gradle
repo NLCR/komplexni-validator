@@ -204,4 +204,7 @@ tasks.register('runSnapshots', JavaExec) {
     if (project.hasProperty('snapshotDelayMs')) {
         systemProperty 'kv.snapshotDelayMs', project.property('snapshotDelayMs')
     }
+    if (project.hasProperty('maxDialogHeight')) { //simulace mensiho displeje
+        systemProperty 'kv.maxDialogHeight', project.property('maxDialogHeight')
+    }
 }
