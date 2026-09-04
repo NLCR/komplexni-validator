@@ -145,26 +145,41 @@
                        GridPane.rowIndex="9"
                        onAction="#forcedDadVersionChoiceboxChanged"/>
 
+            <!--Fund units (jednotky fondu)-->
+            <CheckBox fx:id="forcedFduVersionCheckBox"
+                      onAction="#forcedFduVersionChanged"
+                      GridPane.columnIndex="0"
+                      GridPane.rowIndex="10"
+                      GridPane.halignment="RIGHT"
+            />
+
+            <Label text="Jednotky fondu" GridPane.columnIndex="1" GridPane.rowIndex="10"/>
+
+            <ChoiceBox fx:id="forcedFduVersionChoiceBox"
+                       GridPane.columnIndex="2" GridPane.columnSpan="2"
+                       GridPane.rowIndex="10"
+                       onAction="#forcedFduVersionChoiceboxChanged"/>
+
 
             <!--PREFERRED-->
             <Label text="Preferované verze standardů. Jsou použity, když v datech balíku chybí verze DMF."
                    GridPane.columnIndex="0"
                    GridPane.columnSpan="3"
-                   GridPane.rowIndex="10"/>
+                   GridPane.rowIndex="11"/>
 
             <!--Monograph-->
             <CheckBox fx:id="preferredMonVersionCheckBox"
                       onAction="#preferredMonVersionChanged"
                       GridPane.columnIndex="0"
-                      GridPane.rowIndex="11"
+                      GridPane.rowIndex="12"
                       GridPane.halignment="RIGHT"
             />
 
-            <Label text="Monografie" GridPane.columnIndex="1" GridPane.rowIndex="11"/>
+            <Label text="Monografie" GridPane.columnIndex="1" GridPane.rowIndex="12"/>
 
             <ChoiceBox fx:id="preferredMonVersionChoiceBox"
                        GridPane.columnIndex="2"
-                       GridPane.rowIndex="11"
+                       GridPane.rowIndex="12"
                        onAction="#preferredMonVersionChoiceboxChanged"
             />
 
@@ -172,15 +187,15 @@
             <CheckBox fx:id="preferredPerVersionCheckBox"
                       onAction="#preferredPerVersionChanged"
                       GridPane.columnIndex="0"
-                      GridPane.rowIndex="12"
+                      GridPane.rowIndex="13"
                       GridPane.halignment="RIGHT"
             />
 
-            <Label text="Periodika" GridPane.columnIndex="1" GridPane.rowIndex="12"/>
+            <Label text="Periodika" GridPane.columnIndex="1" GridPane.rowIndex="13"/>
 
             <ChoiceBox fx:id="preferredPerVersionChoiceBox"
                        GridPane.columnIndex="2" GridPane.columnSpan="2"
-                       GridPane.rowIndex="12"
+                       GridPane.rowIndex="13"
                        onAction="#preferredPerVersionChoiceboxChanged"
             />
 
@@ -188,15 +203,15 @@
             <CheckBox fx:id="preferredAdgVersionCheckBox"
                       onAction="#preferredAdgVersionChanged"
                       GridPane.columnIndex="0"
-                      GridPane.rowIndex="13"
+                      GridPane.rowIndex="14"
                       GridPane.halignment="RIGHT"
             />
 
-            <Label text="Audio (gramodesky)" GridPane.columnIndex="1" GridPane.rowIndex="13"/>
+            <Label text="Audio (gramodesky)" GridPane.columnIndex="1" GridPane.rowIndex="14"/>
 
             <ChoiceBox fx:id="preferredAdgVersionChoiceBox"
                        GridPane.columnIndex="2" GridPane.columnSpan="2"
-                       GridPane.rowIndex="13"
+                       GridPane.rowIndex="14"
                        onAction="#preferredAdgVersionChoiceboxChanged"
             />
 
@@ -204,15 +219,15 @@
             <CheckBox fx:id="preferredAdfVersionCheckBox"
                       onAction="#preferredAdfVersionChanged"
                       GridPane.columnIndex="0"
-                      GridPane.rowIndex="14"
+                      GridPane.rowIndex="15"
                       GridPane.halignment="RIGHT"
             />
 
-            <Label text="Audio (fonoválečky)" GridPane.columnIndex="1" GridPane.rowIndex="14"/>
+            <Label text="Audio (fonoválečky)" GridPane.columnIndex="1" GridPane.rowIndex="15"/>
 
             <ChoiceBox fx:id="preferredAdfVersionChoiceBox"
                        GridPane.columnIndex="2" GridPane.columnSpan="2"
-                       GridPane.rowIndex="14"
+                       GridPane.rowIndex="15"
                        onAction="#preferredAdfVersionChoiceboxChanged"
             />
             
@@ -220,30 +235,30 @@
             <CheckBox fx:id="preferredAdiVersionCheckBox"
                       onAction="#preferredAdiVersionChanged"
                       GridPane.columnIndex="0"
-                      GridPane.rowIndex="15"
+                      GridPane.rowIndex="16"
                       GridPane.halignment="RIGHT"
                 />
             
-            <Label text="Audio (zvukové disky)" GridPane.columnIndex="1" GridPane.rowIndex="15"/>
+            <Label text="Audio (zvukové disky)" GridPane.columnIndex="1" GridPane.rowIndex="16"/>
             
             <ChoiceBox fx:id="preferredAdiVersionChoiceBox"
                        GridPane.columnIndex="2" GridPane.columnSpan="2"
-                       GridPane.rowIndex="15"
+                       GridPane.rowIndex="16"
                        onAction="#preferredAdiVersionChoiceboxChanged"/>
             
             <!--Audio doc (digital audio)-->
             <CheckBox fx:id="preferredAdnVersionCheckBox"
                       onAction="#preferredAdnVersionChanged"
                       GridPane.columnIndex="0"
-                      GridPane.rowIndex="16"
+                      GridPane.rowIndex="17"
                       GridPane.halignment="RIGHT"
                 />
             
-            <Label text="Audio (bez nosiče)" GridPane.columnIndex="1" GridPane.rowIndex="16"/>
+            <Label text="Audio (bez nosiče)" GridPane.columnIndex="1" GridPane.rowIndex="17"/>
             
             <ChoiceBox fx:id="preferredAdnVersionChoiceBox"
                        GridPane.columnIndex="2" GridPane.columnSpan="2"
-                       GridPane.rowIndex="16"
+                       GridPane.rowIndex="17"
                        onAction="#preferredAdnVersionChoiceboxChanged"/>            
             
             
@@ -252,50 +267,66 @@
             <CheckBox fx:id="preferredDadVersionCheckBox"
                       onAction="#preferreDadVersionChanged"
                       GridPane.columnIndex="0"
-                      GridPane.rowIndex="17"
+                      GridPane.rowIndex="18"
                       GridPane.halignment="RIGHT"
             />
 
-            <Label text="Datové disky" GridPane.columnIndex="1" GridPane.rowIndex="17"/>
+            <Label text="Datové disky" GridPane.columnIndex="1" GridPane.rowIndex="18"/>
 
             <ChoiceBox fx:id="preferredDadVersionChoiceBox"
                        GridPane.columnIndex="2" GridPane.columnSpan="2"
-                       GridPane.rowIndex="17"
+                       GridPane.rowIndex="18"
                        onAction="#preferredDadVersionChoiceboxChanged"
+            />
+
+            <!--Fund units (jednotky fondu)-->
+            <CheckBox fx:id="preferredFduVersionCheckBox"
+                      onAction="#preferredFduVersionChanged"
+                      GridPane.columnIndex="0"
+                      GridPane.rowIndex="19"
+                      GridPane.halignment="RIGHT"
+            />
+
+            <Label text="Jednotky fondu" GridPane.columnIndex="1" GridPane.rowIndex="19"/>
+
+            <ChoiceBox fx:id="preferredFduVersionChoiceBox"
+                       GridPane.columnIndex="2" GridPane.columnSpan="2"
+                       GridPane.rowIndex="19"
+                       onAction="#preferredFduVersionChoiceboxChanged"
             />
 
             <!--PROTOCOLS-->
             <Label text="Vytvořit protokol v XML"
                    GridPane.columnIndex="0"
-                   GridPane.rowIndex="19"
+                   GridPane.rowIndex="21"
                    GridPane.columnSpan="2"
             />
 
             <CheckBox fx:id="createXmlLog"
                       onAction="#createXmlLogChanged"
                       GridPane.columnIndex="2"
-                      GridPane.rowIndex="19"
+                      GridPane.rowIndex="21"
             />
 
             <Label text="Vytvořit textový log"
                    GridPane.columnIndex="0"
-                   GridPane.rowIndex="20"
+                   GridPane.rowIndex="22"
                    GridPane.columnSpan="2"
             />
 
             <CheckBox fx:id="createTxtLog"
                       onAction="#createTxtLogChanged"
                       GridPane.columnIndex="2"
-                      GridPane.rowIndex="20"
+                      GridPane.rowIndex="22"
             />
 
             <!--Verbosity-->
             <Label text="Podrobnost textového logu"
                    GridPane.columnIndex="0"
-                   GridPane.rowIndex="21"
+                   GridPane.rowIndex="23"
             />
 
-            <HBox GridPane.rowIndex="21"
+            <HBox GridPane.rowIndex="23"
                   GridPane.columnIndex="2"
                   GridPane.columnSpan="3"
                   spacing="8">
@@ -310,7 +341,7 @@
                 />
             </HBox>
 
-            <HBox GridPane.rowIndex="22"
+            <HBox GridPane.rowIndex="24"
                   GridPane.columnIndex="2"
                   GridPane.columnSpan="3"
                   spacing="10">

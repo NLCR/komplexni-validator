@@ -66,7 +66,7 @@ public class SkippedManagerImpl implements SkippedManager {
         }        
         //audio no carrier
         List<String> adnVersions = new ArrayList<>();
-        adnVersions.addAll(mgr.getFdmfRegistry().getAudioDiscFdmfVersions());
+        adnVersions.addAll(mgr.getFdmfRegistry().getAudioNoCarrierFdmfVersions());
         Collections.sort(adnVersions, new VersionComparator());
         for (String adnVersion : adnVersions) {
             result.add(new Dmf(Dmf.Type.AUDIO_NO_CARRIER, adnVersion));
@@ -77,6 +77,13 @@ public class SkippedManagerImpl implements SkippedManager {
         Collections.sort(daDVersions, new VersionComparator());
         for (String dadVersion : daDVersions) {
             result.add(new Dmf(Dmf.Type.DATA_DISC, dadVersion));
+        }
+        //fund unit (jednotky fondu)
+        List<String> fduVersions = new ArrayList<>();
+        fduVersions.addAll(mgr.getFdmfRegistry().getFundUnitFdmfVersions());
+        Collections.sort(fduVersions, new VersionComparator());
+        for (String fduVersion : fduVersions) {
+            result.add(new Dmf(Dmf.Type.FUND_UNIT, fduVersion));
         }
 
         return result;
