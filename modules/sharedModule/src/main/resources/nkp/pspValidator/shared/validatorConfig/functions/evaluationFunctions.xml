@@ -51,6 +51,14 @@
         </params-def>
     </evaluationFunction>
 
+    <evaluationFunction name="getProvidedFiles" resultType="FILE_LIST">
+        <description>Seznam souborů poskytnutý volajícím programem pod jedním id (např. ALTO_XSD_FILES = všechna XSD pro
+            různé verze ALTO v adresáři xsd/ dané fDMF).</description>
+        <params-def>
+            <value name="files_id" type="STRING"/>
+        </params-def>
+    </evaluationFunction>
+
     <evaluationFunction name="getProvidedInteger" resultType="INTEGER">
         <description>Hodnota proměnné typue INTEGER bude poskytnuta volajícím programem.</description>
         <params>

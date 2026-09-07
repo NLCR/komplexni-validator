@@ -45,6 +45,8 @@ public class FdmfConfiguration {
     private final File metadataProfileXsd;
 
     private final Map<String, File> providedFiles = new HashMap<>();
+    //seznamy souboru poskytovane pod jednim id (napr. vsechna XSD pro ruzne verze ALTO)
+    private final Map<String, List<File>> providedFileLists = new HashMap<>();
     private final List<File> fdmfConfigFiles = new ArrayList<>();
     private final List<File> biblioModsProfiles = new ArrayList<>();
     private final List<File> biblioDcProfiles = new ArrayList<>();
@@ -69,7 +71,12 @@ public class FdmfConfiguration {
         File xsdRoot = new File(fdmfRoot, XSD_DIR);
         checkDirExistAndReadable(xsdRoot);
         providedFiles.put("INFO_XSD_FILE", findXsdFile(xsdRoot, "INFO(DMF)", "info_(mon|per|adg|adf|adi|adn|dad|fdu)_[0-9]+(\\.([0-9])+)*\\.xsd"));
-        providedFiles.put("ALTO_XSD_FILE", findXsdFile(xsdRoot, "ALTO", "alto_[0-9]+(\\.([0-9])+)*\\.xsd"));
+        //ALTO: fDMF muze obsahovat XSD pro vice verzi (predpis OCR pripousti ALTO 2.0 a novejsi). ALTO_XSD_FILE je pak
+        //nejnovejsi verze (kvuli starsim pravidlum s jedinym XSD), ALTO_XSD_FILES vsechny; vyber podle namespace
+        //dela validacni funkce checkXmlIsValidByXsdByNamespace.
+        List<File> altoXsdFiles = findXsdFiles(xsdRoot, "alto_[0-9]+(\\.([0-9])+)*\\.xsd");
+        providedFileLists.put("ALTO_XSD_FILES", altoXsdFiles);
+        providedFiles.put("ALTO_XSD_FILE", altoXsdFiles.isEmpty() ? null : altoXsdFiles.get(altoXsdFiles.size() - 1));
         providedFiles.put("CMD_XSD_FILE", findXsdFile(xsdRoot, "copyrightMD", "cmd_[0-9]+(\\.([0-9])+)*\\.xsd"));
         providedFiles.put("DC_XSD_FILE", findXsdFile(xsdRoot, "Dublin Core", "dc_[0-9]+(\\.([0-9])+)*\\.xsd"));
         providedFiles.put("METS_XSD_FILE", findXsdFile(xsdRoot, "METS", "mets_[0-9]+(\\.([0-9])+)*\\.xsd"));
@@ -195,6 +202,47 @@ public class FdmfConfiguration {
         }
     }
 
+    /**
+     * Vsechny XSD soubory odpovidajici vzoru, serazene podle verze v nazvu (napr. alto_2.0.xsd, alto_3.1.xsd, alto_4.4.xsd).
+     */
+    private static List<File> findXsdFiles(File xsdDir, String filePattern) throws ValidatorConfigurationException {
+        File[] files = xsdDir.listFiles((dir, name) -> name.matches(filePattern));
+        List<File> result = new ArrayList<>();
+        if (files == null) {
+            return result;
+        }
+        for (File file : files) {
+            if (file.isDirectory()) {
+                throw new ValidatorConfigurationException(String.format("soubor %s je adresář", file.getAbsolutePath()));
+            }
+            checkFileExistAndReadable(file);
+            result.add(file);
+        }
+        result.sort((a, b) -> compareVersions(versionFromXsdName(a.getName()), versionFromXsdName(b.getName())));
+        return result;
+    }
+
+    /**
+     * Z nazvu typu alto_4.4.xsd vrati "4.4"; kdyz nazev verzi neobsahuje, vrati prazdny retezec.
+     */
+    public static String versionFromXsdName(String fileName) {
+        java.util.regex.Matcher m = java.util.regex.Pattern.compile("_([0-9]+(\\.[0-9]+)*)\\.xsd$").matcher(fileName);
+        return m.find() ? m.group(1) : "";
+    }
+
+    private static int compareVersions(String a, String b) {
+        String[] pa = a.isEmpty() ? new String[0] : a.split("\\.");
+        String[] pb = b.isEmpty() ? new String[0] : b.split("\\.");
+        for (int i = 0; i < Math.max(pa.length, pb.length); i++) {
+            int na = i < pa.length ? Integer.parseInt(pa[i]) : 0;
+            int nb = i < pb.length ? Integer.parseInt(pb[i]) : 0;
+            if (na != nb) {
+                return Integer.compare(na, nb);
+            }
+        }
+        return 0;
+    }
+
     private static File findXsdFile(File xsdDir, String formatName, String filePattern) throws ValidatorConfigurationException {
         File[] files = xsdDir.listFiles((dir, name) -> name.matches(filePattern));
         if (files.length == 0) {
@@ -224,6 +272,10 @@ public class FdmfConfiguration {
 
     public Map<String, File> getProvidedFiles() {
         return providedFiles;
+    }
+
+    public Map<String, List<File>> getProvidedFileLists() {
+        return providedFileLists;
     }
 
     public List<File> getFdmfConfigFiles() {

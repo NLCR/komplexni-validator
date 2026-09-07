@@ -10,6 +10,7 @@ import nkp.pspValidator.shared.engine.exceptions.ValidatorConfigurationException
 import nkp.pspValidator.shared.engine.types.MetadataFormat;
 
 import java.io.File;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -27,6 +28,10 @@ public class ValidatorFactory {
             File file = providedFiles.get(id);
             //System.out.println(String.format("id: %s, provided file: %s", id, file.getAbsolutePath()));
             engine.setProvidedFile(id, file);
+        }
+        Map<String, List<File>> providedFileLists = fdmfConfiguration.getProvidedFileLists();
+        for (String id : providedFileLists.keySet()) {
+            engine.setProvidedFileList(id, providedFileLists.get(id));
         }
         // init configuration files (patterns, variables, rules)
         for (File configFile : fdmfConfiguration.getFdmfConfigFiles()) {

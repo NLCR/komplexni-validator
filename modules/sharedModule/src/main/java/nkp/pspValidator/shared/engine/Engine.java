@@ -83,6 +83,10 @@ public class Engine {
         providedVarsManager.addFile(fileId, value);
     }
 
+    public void setProvidedFileList(String fileListId, List<File> value) {
+        providedVarsManager.addFileList(fileListId, value);
+    }
+
     //config files
     public void processConfigFile(File configFile) throws ValidatorConfigurationException {
         configProcessor.processConfigFile(this, configFile);
@@ -111,6 +115,8 @@ public class Engine {
         switch (name) {
             case "getProvidedFile":
                 return new EfGetProvidedFile(name, this);
+            case "getProvidedFiles":
+                return new EfGetProvidedFiles(name, this);
             case "getProvidedString":
                 return new EfGetProvidedString(name, this);
             case "getProvidedInteger":
@@ -182,6 +188,10 @@ public class Engine {
                 return new VfCheckXmlIsWellBuilt(name, this);
             case "checkXmlIsValidByXsd":
                 return new VfCheckXmlIsValidByXsd(name, this);
+            case "checkXmlIsValidByXsdByNamespace":
+                return new VfCheckXmlIsValidByXsdByNamespace(name, this);
+            case "checkXmlFilesShareRootNamespace":
+                return new VfCheckXmlFilesShareRootNamespace(name, this);
             case "checkInfoFileReferencesPrimaryMets":
                 return new VfCheckInfoFileReferencesPrimaryMets(name, this);
             case "checkInfoFileItemsCountMatchesItemtotal":
@@ -358,11 +368,16 @@ public class Engine {
     public class ProvidedVarsManager {
 
         private final Map<String, File> files = new HashMap<>();
+        private final Map<String, List<File>> fileLists = new HashMap<>();
         private final Map<String, String> strings = new HashMap<>();
         private final Map<String, Integer> integers = new HashMap<>();
 
         public File getProvidedFile(String fileId) {
             return files.get(fileId);
+        }
+
+        public List<File> getProvidedFileList(String fileListId) {
+            return fileLists.get(fileListId);
         }
 
         public String getProvidedString(String stringId) {
@@ -375,6 +390,10 @@ public class Engine {
 
         public void addFile(String fileId, File file) {
             files.put(fileId, file);
+        }
+
+        public void addFileList(String fileListId, List<File> list) {
+            fileLists.put(fileListId, list);
         }
 
         public void addString(String stringId, String value) {

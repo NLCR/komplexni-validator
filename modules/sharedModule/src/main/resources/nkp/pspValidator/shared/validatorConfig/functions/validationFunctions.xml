@@ -154,6 +154,29 @@
         </params-def>
     </validationFunction>
 
+    <validationFunction name="checkXmlIsValidByXsdByNamespace">
+        <description>Zkontroluje, že soubory obsahují xml validní podle XML Schema (XSD), přičemž schéma se pro každý soubor
+            vybere podle namespace jeho kořenového elementu (targetNamespace XSD). Pro formáty s více přípustnými verzemi
+            lišícími se namespace, např. ALTO 2.x/3.x/4.x. Soubor s namespace bez odpovídajícího XSD je chyba.
+        </description>
+        <params-def>
+            <value name="xsd_files" type="FILE_LIST" description="Všechna přípustná XSD (každé s jiným targetNamespace)."/>
+            <value name="xml_file" type="FILE"/>
+            <value name="xml_files" type="FILE_LIST"/>
+            <value name="level" type="LEVEL" description="Úroveň chybové hlášky (výchozí ERROR)." minOccurs="0" maxOccurs="1"/>
+        </params-def>
+    </validationFunction>
+
+    <validationFunction name="checkXmlFilesShareRootNamespace">
+        <description>Zkontroluje, že všechny XML soubory mají stejný namespace kořenového elementu, tj. stejnou verzi
+            formátu (např. všechna ALTO v balíčku v jedné verzi). Soubory, které nejsou XML, se přeskočí.
+        </description>
+        <params-def>
+            <value name="xml_files" type="FILE_LIST"/>
+            <value name="level" type="LEVEL" description="Úroveň chybové hlášky (výchozí WARNING)." minOccurs="0" maxOccurs="1"/>
+        </params-def>
+    </validationFunction>
+
     <validationFunction name="checkInfoFileReferencesPrimaryMets">
         <description>Zkontroluje, že se soubor INFO odkazuje na soubor PRIMARY-METS přes element mainMets.</description>
         <params-def>
