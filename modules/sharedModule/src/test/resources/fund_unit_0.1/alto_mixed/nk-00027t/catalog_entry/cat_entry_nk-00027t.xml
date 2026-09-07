@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<record xmlns="http://www.loc.gov/MARC21/slim">
+    <leader>00000naa a2200000 i 4500</leader>
+    <controlfield tag="001">000123456</controlfield>
+    <controlfield tag="003">CZ PrNK</controlfield>
+    <datafield tag="245" ind1="1" ind2="0">
+        <subfield code="a">Klementinum a jeho knihovny :</subfield>
+        <subfield code="b">k výročí Národní a universitní knihovny /</subfield>
+        <subfield code="c">Jan Novák.</subfield>
+    </datafield>
+    <datafield tag="024" ind1="7" ind2=" ">
+        <subfield code="a">urn:nbn:cz:nk-00027t</subfield>
+        <subfield code="2">urnnbn</subfield>
+    </datafield>
+</record>

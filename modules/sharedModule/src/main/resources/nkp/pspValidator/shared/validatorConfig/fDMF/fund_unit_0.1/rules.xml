@@ -2687,16 +2687,33 @@
     <rules-section name="OCR ALTO" description="Kontrola souborů ALTO.">
 
         <rule name="OCR-ALTO_FILES_VALID_BY_XSD">
-            <description>Soubory OCR-ALTO musí být validní podle XML Schema (alto_2.0.xsd).</description>
-            <validation functionName="checkXmlIsValidByXsd">
+            <description>Soubory OCR-ALTO musí být validní podle XML Schema pro verzi ALTO danou namespace kořenového elementu
+                (alto_2.0.xsd, alto_3.1.xsd, alto_4.4.xsd). DMF Jednotky fondu 0.1 tab. 1.4 a kap. 7.8 odkazují na předpis
+                OCR (ALTO XML a TXT OCR) 1.0 (17. 12. 2024), který připouští ALTO 2.0 a novější; soubor s jiným namespace je chyba.
+            </description>
+            <validation functionName="checkXmlIsValidByXsdByNamespace">
                 <params>
                     <value name="xml_files" type="FILE_LIST">
                         <value-ref name="OCR-ALTO_FILES"/>
                     </value>
-                    <value name="xsd_file" type="FILE">
-                        <value-ref name="ALTO_XSD_FILE"/>
+                    <value name="xsd_files" type="FILE_LIST">
+                        <value-ref name="ALTO_XSD_FILES"/>
                     </value>
                     <value name="level" type="LEVEL">ERROR</value>
+                </params>
+            </validation>
+        </rule>
+
+        <rule name="OCR-ALTO_FILES_SAME_VERSION">
+            <description>Všechny soubory OCR-ALTO v balíčku by měly mít stejnou verzi ALTO (stejný namespace kořenového elementu).
+                Předpis OCR míchání verzí neřeší, proto jen WARNING (viz dotaz Q2 pro NK ČR).
+            </description>
+            <validation functionName="checkXmlFilesShareRootNamespace">
+                <params>
+                    <value name="xml_files" type="FILE_LIST">
+                        <value-ref name="OCR-ALTO_FILES"/>
+                    </value>
+                    <value name="level" type="LEVEL">WARNING</value>
                 </params>
             </validation>
         </rule>

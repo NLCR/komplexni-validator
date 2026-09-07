@@ -42,6 +42,47 @@ public class FundUnitSmokeTest {
         assertValid(log);
     }
 
+    /**
+     * ALTO 2.0 (namespace ns-v2#): predpis OCR (ALTO XML a TXT OCR) 1.0 pripousti ALTO 2.0 a novejsi, fDMF vybira XSD
+     * podle namespace (K8). Balicek musi byt validni.
+     */
+    @Test
+    public void generatedClippingWithAlto2IsValid() throws Exception {
+        String log = runAndCheckNoCrash(new File("src/test/resources/fund_unit_0.1/valid_clipping_alto2/nk-00027v"));
+        assertValid(log);
+    }
+
+    /**
+     * ALTO 3.0 (namespace ns-v3#), tj. verze, kterou zapisuje tesseract; validuje se proti alto_3.1.xsd.
+     */
+    @Test
+    public void generatedClippingWithAlto3IsValid() throws Exception {
+        String log = runAndCheckNoCrash(new File("src/test/resources/fund_unit_0.1/valid_clipping_alto3/nk-00027u"));
+        assertValid(log);
+    }
+
+    /**
+     * Smisene verze ALTO v jednom balicku (prvni strana 2.0, druha 4.4): kazdy soubor je validni podle sveho XSD,
+     * ale pravidlo OCR-ALTO_FILES_SAME_VERSION hlasi WARNING. Balicek zustava validni (zadny ERROR).
+     */
+    @Test
+    public void generatedClippingWithMixedAltoVersionsWarns() throws Exception {
+        String log = runAndCheckNoCrash(new File("src/test/resources/fund_unit_0.1/alto_mixed/nk-00027t"));
+        assertValid(log);
+        assertTrue("ocekavan WARNING o nejednotne verzi ALTO", log.contains("nemají jednotnou verzi formátu"));
+    }
+
+    /**
+     * ALTO v neznamem namespace (ns-v9#): zadne XSD neodpovida, pravidlo OCR-ALTO_FILES_VALID_BY_XSD hlasi ERROR
+     * "nepodporovana verze", balicek je nevalidni.
+     */
+    @Test
+    public void generatedClippingWithUnknownAltoVersionIsInvalid() throws Exception {
+        String log = runAndCheckNoCrash(new File("src/test/resources/fund_unit_0.1/alto_unknown/nk-00027s"));
+        assertTrue("ocekavan ERROR o nepodporovane verzi ALTO", log.contains("nepodporovanou verzi formátu"));
+        assertTrue("balik ma byt nevalidni", log.contains("balík je: nevalidní"));
+    }
+
     private void assertValid(String log) {
         for (String line : log.split("\n")) {
             assertTrue("neocekavany ERROR: " + line.trim(), !line.trim().startsWith("ERROR:"));

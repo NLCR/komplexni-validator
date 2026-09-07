@@ -389,6 +389,16 @@
         </evaluation>
     </value-def>
 
+    <!--vsechna XSD pro pripustne verze ALTO (2.x, 3.x, 4.x; predpis OCR (ALTO XML a TXT OCR) 1.0 pripousti ALTO 2.0 a novejsi);
+    vyber podle namespace korenoveho elementu dela checkXmlIsValidByXsdByNamespace-->
+    <value-def name="ALTO_XSD_FILES" type="FILE_LIST">
+        <evaluation functionName="getProvidedFiles">
+            <params>
+                <value name="files_id" type="STRING">ALTO_XSD_FILES</value>
+            </params>
+        </evaluation>
+    </value-def>
+
     <value-def name="CMD_XSD_FILE" type="FILE">
         <evaluation functionName="getProvidedFile">
             <params>

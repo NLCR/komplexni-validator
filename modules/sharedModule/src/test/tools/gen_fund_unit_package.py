@@ -68,11 +68,22 @@ def jp2_placeholder(seed: str) -> bytes:
     return sig + body
 
 
-def alto_xml(page_no: int) -> str:
+ALTO_VERSIONS = {
+    # verze -> (namespace, schemaLocation); predpis OCR (ALTO XML a TXT OCR) 1.0 pripousti ALTO 2.0 a novejsi
+    "2.0": ("http://www.loc.gov/standards/alto/ns-v2#", "http://www.loc.gov/standards/alto/alto-v2.0.xsd"),
+    "3.0": ("http://www.loc.gov/standards/alto/ns-v3#", "http://www.loc.gov/alto/v3/alto-3-0.xsd"),
+    "4.4": ("http://www.loc.gov/standards/alto/ns-v4#", "http://www.loc.gov/standards/alto/v4/alto-4-4.xsd"),
+    # neexistujici verze pro mutaci alto-unknown-version
+    "9.9": ("http://www.loc.gov/standards/alto/ns-v9#", "http://www.loc.gov/standards/alto/v9/alto-9-9.xsd"),
+}
+
+
+def alto_xml(page_no: int, version: str = "4.4") -> str:
+    ns, loc = ALTO_VERSIONS[version]
     return f'''<?xml version="1.0" encoding="UTF-8"?>
-<alto xmlns="http://www.loc.gov/standards/alto/ns-v4#" xmlns:xlink="http://www.w3.org/1999/xlink"
+<alto xmlns="{ns}" xmlns:xlink="http://www.w3.org/1999/xlink"
       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-      xsi:schemaLocation="http://www.loc.gov/standards/alto/ns-v4# http://www.loc.gov/standards/alto/v4/alto-4-4.xsd">
+      xsi:schemaLocation="{ns} {loc}">
     <Description>
         <MeasurementUnit>pixel</MeasurementUnit>
         <sourceImageInformation>
@@ -849,7 +860,8 @@ MUTATIONS = {
     "structlink-gap": "chybí smLink na poslední stranu -> PRIMARY-METS_STRUCT_LINKS_CORRECT",
     "itemtotal-mismatch": "itemtotal v INFO o 1 vyšší -> INFO_ITEMTOTAL_MATCHES_ITEMS_COUNT",
     "no-unit-dmdsec": "chybí dmdSec UNIT (zůstává UNITCOLLECTION) -> test kolize UNIT/UNITCOLLECTION; MODS_MANDATORY_IDENTIFIERS_PRESENT_LEVEL_UNIT, PSP_ID_DERIVED_FROM_IE_ID, mapy",
-    "alto-2.0": "ALTO v namespace ns-v2 -> OCR-ALTO_FILES_VALID_BY_XSD",
+    "alto-mixed": "prvni strana ALTO 2.0, ostatni podle --alto-version -> OCR-ALTO_FILES_SAME_VERSION (WARNING)",
+    "alto-unknown-version": "ALTO v neexistujicim namespace ns-v9 -> OCR-ALTO_FILES_VALID_BY_XSD (nepodporovana verze)",
     "wrong-mets-type": "mets/@TYPE 'Monograph' -> DmfDetector rozpozná jako monografii (balík se validuje jinou fDMF)",
     "wrong-dc-type": "dc:type jednotky 'model:monograph' -> BIBLIOGRAPHIC_METADATA_MATCH_PROFILE_UNIT (DC)",
     "urnnbn-prohibited-on-collection": "urnnbn navíc na UNITCOLLECTION -> MODS_PROHIBITED_IDENTIFIERS_NOT_PRESENT_LEVEL_UNITCOLLECTION (WARNING)",
@@ -857,8 +869,17 @@ MUTATIONS = {
 }
 
 
+def alto_version_for_page(page_no: int, alto_version: str, mutations: set) -> str:
+    if "alto-unknown-version" in mutations:
+        return "9.9"
+    if "alto-mixed" in mutations and page_no == 1:
+        return "2.0" if alto_version != "2.0" else "4.4"
+    return alto_version
+
+
 def generate(target: str, variant: str, pages: int, with_directory: bool, standard: str, mutations: set,
-             jp2_mc: str = None, jp2_uc: str = None, urnnbn_override: str = None, unit_title: str = None):
+             jp2_mc: str = None, jp2_uc: str = None, urnnbn_override: str = None, unit_title: str = None,
+             alto_version: str = "4.4"):
     unknown = mutations - set(MUTATIONS)
     if unknown:
         sys.exit("neznámé mutace: " + ", ".join(sorted(unknown)) + "; známé: " + ", ".join(sorted(MUTATIONS)))
@@ -892,9 +913,8 @@ def generate(target: str, variant: str, pages: int, with_directory: bool, standa
         files = {
             "mc": put(f"mastercopy/mc_{psp}_{p}.jp2", open(jp2_mc, "rb").read() if jp2_mc else jp2_placeholder(f"mc{i}")),
             "uc": put(f"usercopy/uc_{psp}_{p}.jp2", open(jp2_uc, "rb").read() if jp2_uc else jp2_placeholder(f"uc{i}")),
-            "alto": put(f"alto/alto_{psp}_{p}.xml", alto_xml(i).replace("{psp}", psp)
-                        .replace("alto/ns-v4#", "alto/ns-v2#") if "alto-2.0" in mutations
-                        else alto_xml(i).replace("{psp}", psp)),
+            "alto": put(f"alto/alto_{psp}_{p}.xml", alto_xml(i, alto_version_for_page(i, alto_version, mutations))
+                        .replace("{psp}", psp)),
             "txt": put(f"txt/txt_{psp}_{p}.txt", txt_content(i)),
         }
         files["amd"] = put(f"amdsec/amd_mets_{psp}_{p}.xml", amd_mets_xml(psp, mets_type, label, i, files))
@@ -951,13 +971,15 @@ def main():
     ap.add_argument("--jp2-uc", help="skutecny JP2 soubor pouzity pro vsechny uzivatelske kopie (misto placeholderu)")
     ap.add_argument("--urnnbn", help="URN:NBN jednotky (default odvozeny z nazvu balicku); PSP_ID pak nesedi, pouzit jen pro test Resolveru")
     ap.add_argument("--unit-title", help="nazev jednotky (mods:title / dc:title), napr. pro shodu s Resolverem")
+    ap.add_argument("--alto-version", choices=("2.0", "3.0", "4.4"), default="4.4",
+                    help="verze ALTO souboru (namespace); predpis OCR pripousti 2.0 a novejsi, fDMF fund_unit_0.1 ma XSD 2.0/3.1/4.4")
     a = ap.parse_args()
     if a.list_mutations:
         for k, v in MUTATIONS.items():
             print(f"{k}: {v}")
         return
     generate(a.target, a.variant, a.pages, a.with_directory, a.standard, set(a.mutation), a.jp2_mc, a.jp2_uc,
-             a.urnnbn, a.unit_title)
+             a.urnnbn, a.unit_title, a.alto_version)
     print("OK:", a.target)
 
 

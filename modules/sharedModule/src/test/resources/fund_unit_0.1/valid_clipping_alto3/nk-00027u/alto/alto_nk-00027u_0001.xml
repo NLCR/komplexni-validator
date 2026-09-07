@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<alto xmlns="http://www.loc.gov/standards/alto/ns-v3#" xmlns:xlink="http://www.w3.org/1999/xlink"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:schemaLocation="http://www.loc.gov/standards/alto/ns-v3# http://www.loc.gov/alto/v3/alto-3-0.xsd">
+    <Description>
+        <MeasurementUnit>pixel</MeasurementUnit>
+        <sourceImageInformation>
+            <fileName>mc_nk-00027u_0001.jp2</fileName>
+        </sourceImageInformation>
+        <OCRProcessing ID="OCR_1">
+            <ocrProcessingStep>
+                <processingDateTime>2026-09-01T10:00:00</processingDateTime>
+                <processingSoftware>
+                    <softwareCreator>ABBYY</softwareCreator>
+                    <softwareName>ABBYY FineReader Server</softwareName>
+                    <softwareVersion>14.0</softwareVersion>
+                </processingSoftware>
+            </ocrProcessingStep>
+        </OCRProcessing>
+    </Description>
+    <Layout>
+        <Page ID="PAGE_0001" PHYSICAL_IMG_NR="1" HEIGHT="2806" WIDTH="1685">
+            <PrintSpace HEIGHT="2600" WIDTH="1500" HPOS="90" VPOS="100">
+                <TextBlock ID="BLOCK_0001_1" HEIGHT="60" WIDTH="800" HPOS="100" VPOS="120">
+                    <TextLine ID="LINE_0001_1" HEIGHT="40" WIDTH="800" HPOS="100" VPOS="130">
+                        <String ID="STR_0001_1" CONTENT="Klementinum" HEIGHT="40" WIDTH="380" HPOS="100" VPOS="130"/>
+                        <SP WIDTH="20" HPOS="480" VPOS="130"/>
+                        <String ID="STR_0001_2" CONTENT="strana" HEIGHT="40" WIDTH="200" HPOS="500" VPOS="130"/>
+                        <SP WIDTH="20" HPOS="700" VPOS="130"/>
+                        <String ID="STR_0001_3" CONTENT="1" HEIGHT="40" WIDTH="40" HPOS="720" VPOS="130"/>
+                    </TextLine>
+                </TextBlock>
+            </PrintSpace>
+        </Page>
+    </Layout>
+</alto>

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<info>
+    <created>2026-09-01T10:00:00</created>
+    <metadataversion>0.1</metadataversion>
+    <packageid>nk-00027v</packageid>
+    <mainmets>mets_nk-00027v.xml</mainmets>
+    <validation version="2.7">Valid</validation>
+    <titleid type="uuid">5f6a8c2e-1111-4d0e-9a3b-000000000001</titleid>
+    <titleid type="sysno">000123456</titleid>
+    <collection>Výstřižky ke Klementinu</collection>
+    <institution>Národní knihovna České republiky</institution>
+    <creator>ABA001</creator>
+    <size>134</size>
+    <itemlist itemtotal="14">
+        <item>\alto\alto_nk-00027v_0001.xml</item>
+        <item>\alto\alto_nk-00027v_0002.xml</item>
+        <item>\amdsec\amd_mets_nk-00027v_0001.xml</item>
+        <item>\amdsec\amd_mets_nk-00027v_0002.xml</item>
+        <item>\catalog_entry\cat_entry_nk-00027v.xml</item>
+        <item>\mastercopy\mc_nk-00027v_0001.jp2</item>
+        <item>\mastercopy\mc_nk-00027v_0002.jp2</item>
+        <item>\md5_nk-00027v.md5</item>
+        <item>\mets_nk-00027v.xml</item>
+        <item>\txt\txt_nk-00027v_0001.txt</item>
+        <item>\txt\txt_nk-00027v_0002.txt</item>
+        <item>\usercopy\uc_nk-00027v_0001.jp2</item>
+        <item>\usercopy\uc_nk-00027v_0002.jp2</item>
+        <item>\info_nk-00027v.xml</item>
+    </itemlist>
+    <checksum type="md5" checksum="c936e3357ecbcf4607b1c62ecf158331">\md5_nk-00027v.md5</checksum>
+    <note>Syntetický testovací balíček pro Komplexní validátor (gen_fund_unit_package.py).</note>
+</info>
