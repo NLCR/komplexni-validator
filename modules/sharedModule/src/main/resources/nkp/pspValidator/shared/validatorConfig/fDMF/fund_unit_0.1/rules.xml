@@ -2354,8 +2354,9 @@
                         </evaluation>
                     </value>
                     <value name="page_types" type="STRING_LIST">
-                        <!--DMF Jednotky fondu 0.1, kap. 7.6 (s. 44) odkazuje na typy stran dle Pravidel pro popis periodik; seznam převzat
-                        z fDMF periodical_2.2-->
+                        <!--DMF Jednotky fondu 0.1, kap. 7.6.1 (s. 44) odkazuje na typy stran dle Pravidel pro popis periodik (v8.6).
+                        Seznam odpovídá tabulce v kap. 1.2.2 Pravidel pro popis periodik, dokument verze 8.6 ze 17. 12. 2024
+                        (sloupce "Typ strany" a "Typ strany/Vnitřní část", 32 hodnot); shodný se seznamem ve fDMF periodical_2.2-->
                         <evaluation functionName="buildListOfStrings">
                             <params>
                                 <value name="string" type="STRING">cover</value>
