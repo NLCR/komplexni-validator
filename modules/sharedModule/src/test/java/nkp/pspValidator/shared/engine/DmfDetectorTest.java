@@ -67,11 +67,21 @@ public class DmfDetectorTest {
 
     @Test
     public void detectDmfTypeFundUnit() throws PspDataException, XmlFileParsingException, InvalidXPathExpressionException {
-        //DMF Jednotky fondu: tri hodnoty METS/@TYPE pro jeden typ DMF, porovnani case-insensitive
+        //DMF Jednotky fondu: tri hodnoty METS/@TYPE pro jeden typ DMF, porovnani presne vcetne velikosti pismen
         assertEquals(Dmf.Type.FUND_UNIT, dmfDetector.detectDmfType(new File("src/test/resources/fund_unit_0.1/clipping/nk-00027x")));
         assertEquals(Dmf.Type.FUND_UNIT, dmfDetector.detectDmfType(new File("src/test/resources/fund_unit_0.1/clipping_index/nk-00027y")));
         assertEquals(Dmf.Type.FUND_UNIT, dmfDetector.detectDmfType(new File("src/test/resources/fund_unit_0.1/card_index/nk-00027z")));
-        assertEquals(Dmf.Type.FUND_UNIT, dmfDetector.detectDmfType(new File("src/test/resources/fund_unit_0.1/card_index_lowercase/nk-00028a")));
+    }
+
+    @Test
+    public void detectDmfTypeFundUnitWrongCase() throws XmlFileParsingException, InvalidXPathExpressionException {
+        //"card index" malymi pismeny neni platna hodnota (spec s. 17), balik se nesmi rozpoznat
+        try {
+            dmfDetector.detectDmfType(new File("src/test/resources/fund_unit_0.1/card_index_lowercase/nk-00028a"));
+            fail();
+        } catch (PspDataException e) {
+            //ok
+        }
     }
 
     @Test

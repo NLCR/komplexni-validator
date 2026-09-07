@@ -40,7 +40,7 @@ public class DmfDetector {
      * Pokud se vyskytuje hodnota „sound recording“, zachází validátor s balíčkem jako se zvukovým dokumentem gramofonové desky.
      * Pokud se vyskytuje hodnota „audio cylinder“, zachází validátor s balíčkem jako se zvukovým dokumentem fonoválečku.
      * Pokud se vyskytuje hodnota „data_disc“, zachází validátor s balíčkem jako s datovým diskem.
-     * Pokud se vyskytuje hodnota „Clipping“, „Clipping index“ nebo „Card index“ (bez ohledu na velikost písmen),
+     * Pokud se vyskytuje hodnota „Clipping“, „Clipping index“ nebo „Card index“ (přesně, včetně velikosti písmen),
      * zachází validátor s balíčkem jako s jednotkou fondu (DMF Jednotky fondu).
      */
     public Dmf.Type detectDmfType(File pspRootDir) throws PspDataException, XmlFileParsingException, InvalidXPathExpressionException {
@@ -75,13 +75,13 @@ public class DmfDetector {
     }
 
     /**
-     * DMF Jednotky fondu 0.1 používá pro jeden standard tři hodnoty METS/@TYPE (podle typu jednotky).
-     * Specifikace není jednoznačná ve velikosti písmen, proto se porovnává case-insensitive.
+     * DMF Jednotky fondu 0.1 používá pro jeden standard tři hodnoty METS/@TYPE (podle typu jednotky, kap. 7.1).
+     * Porovnává se přesně včetně velikosti písmen, stejně jako u ostatních typů dokumentů.
      */
     private boolean isFundUnitType(String docType) {
-        return "clipping".equalsIgnoreCase(docType)
-                || "clipping index".equalsIgnoreCase(docType)
-                || "card index".equalsIgnoreCase(docType);
+        return "Clipping".equals(docType)
+                || "Clipping index".equals(docType)
+                || "Card index".equals(docType);
     }
 
     private File findPrimaryMetsFile(File pspRootDir) throws PspDataException {
