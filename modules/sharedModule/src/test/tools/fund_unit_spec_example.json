@@ -1,0 +1,102 @@
+{
+  "sigla": "ABG001",
+  "institution": "Městská knihovna v Praze",
+  "created": "2026-09-08T10:00:00",
+  "captured": "2025-06-01T00:00:00",
+  "standard": "rda",
+  "source_root": "/cesta/ke/zdrojovym/skenum",
+  "note": "Vzorový balíček podle DMF Jednotky fondu 0.1 sestavený nástrojem build_fund_unit_package.py.",
+  "agents": {
+    "scanner": {
+      "id": "MLP-skener",
+      "name": "skener MLP (typ neuveden)",
+      "type": "hardware"
+    },
+    "processing": {
+      "id": "MLP-zpracovani",
+      "name": "zpracování obrazu MLP (ořez archivního skenu, nástroj neuveden)",
+      "type": "software"
+    }
+  },
+  "collection": {
+    "uuid": "bba8087e-e779-4aaa-b156-73aaca851963",
+    "title": "Divadelní dokumentace DIFI",
+    "subtitle": "soubory výstřižků k inscenacím pražských divadel",
+    "names": [
+      {
+        "type": "corporate",
+        "name": "Městská knihovna v Praze",
+        "role": "col"
+      }
+    ],
+    "dates": {
+      "start": "2014",
+      "end": "2014"
+    },
+    "extent": "2 soubory výstřižků",
+    "note": "Každý soubor výstřižků tvoří karta inscenace se soupisem recenzí a vlastní výstřižky.",
+    "subjects": [
+      {
+        "topic": "divadelní inscenace"
+      },
+      {
+        "topic": "divadelní kritika"
+      },
+      {
+        "geographic": "Praha (Česko)"
+      }
+    ],
+    "shelf": "DIFI"
+  },
+  "units": [
+    {
+      "psp": "d60b3469-1cb4-4be9-a091-e944a01e1d98",
+      "uuid": "d60b3469-1cb4-4be9-a091-e944a01e1d98",
+      "urnnbn": "urn:nbn:cz:abg001-9zz005",
+      "type": "clippingIndex",
+      "title": "Illies, Florian: 1913",
+      "subtitle": "Divadlo v Dlouhé, Praha, premiéra 14. 10. 2014, režie Barbara Herz",
+      "names": [
+        {
+          "family": "Illies",
+          "given": "Florian",
+          "role": "aut"
+        },
+        {
+          "family": "Herz",
+          "given": "Barbara",
+          "role": "drt"
+        }
+      ],
+      "extent": "1 karta a 1 výstřižek",
+      "note": "Karta inscenace se soupisem recenzí; recenze: Jiří P. Kříž, O půlnoci se v Dlouhé připíjí na rok 1914, Právo 16. 10. 2014. Datace: 2014.",
+      "subjects": [
+        {
+          "topic": "divadelní inscenace"
+        },
+        {
+          "topic": "Divadlo v Dlouhé"
+        }
+      ],
+      "identifiers": {
+        "signature": "SIG_2177906"
+      },
+      "shelf": "DIFI SIG_2177906",
+      "pages": [
+        {
+          "mc": "DIFI/SIG_2177906/MC/2177906_01.jp2",
+          "ac": "DIFI/SIG_2177906/AC/2177906_01.jp2",
+          "type": "cover",
+          "title": "Karta inscenace"
+        },
+        {
+          "mc": "DIFI/SIG_2177906/MC/2177906_02.jp2",
+          "ac": "DIFI/SIG_2177906/AC/2177906_02.jp2",
+          "type": "normalPage",
+          "title": "Jiří P. Kříž: O půlnoci se v Dlouhé připíjí na rok 1914 (Právo 16. 10. 2014)"
+        }
+      ]
+    }
+  ],
+  "_comment": "Ukázkový předpis: jedna kolekce (UNITCOLLECTION) a jedna jednotka typu clippingIndex; cesty v pages jsou relativní k source_root. Volitelné: directory (DIRECTORY), host (relatedItem), identifiers, shelf, logical_parts, agents."
+}
