@@ -303,15 +303,15 @@
 
 
         <rule name="SINGLE_CATALOG-ENTRY-DIR_FILE_FOUND">
-            <description>Musí být nalezen právě jeden adresář CATALOG-ENTRY-DIR. Pokud nalezen není, je adresář
-                špatně pojmenován, nebo opravdu chybí.
+            <description>Adresář CATALOG-ENTRY-DIR je nepovinný (DMF Jednotky fondu 0.1, kap. 5.9), smí být nejvýše jeden.
             </description>
-            <validation functionName="checkFilelistHasExactSize">
+            <validation functionName="checkFilelistSizeInRange">
                 <params>
                     <value name="files" type="FILE_LIST">
                         <value-ref name="CATALOG-ENTRY-DIR_FILES"/>
                     </value>
-                    <value name="size" type="INTEGER">1</value>
+                    <value name="min_size" type="INTEGER">0</value>
+                    <value name="max_size" type="INTEGER">1</value>
                 </params>
             </validation>
         </rule>
@@ -451,12 +451,13 @@
 
 
         <rule name="CATALOG-ENTRY-DIR_IS_DIR">
-            <description>Soubor CATALOG-ENTRY-DIR musí být adresář a ne obyčejný soubor.</description>
+            <description>Soubor CATALOG-ENTRY-DIR, pokud existuje, musí být adresář a ne obyčejný soubor.</description>
             <validation functionName="checkFileIsDir">
                 <params>
                     <value name="file" type="FILE">
                         <value-ref name="CATALOG-ENTRY-DIR_FILE"/>
                     </value>
+                    <value name="ignoreIfFileIsNull" type="BOOLEAN">true</value>
                 </params>
             </validation>
         </rule>
@@ -839,8 +840,8 @@
                     <value name="file" type="FILE">
                         <value-ref name="PRIMARY-METS_FILE"/>
                     </value>
-                    <value name="file" type="FILE">
-                        <value-ref name="CATALOG-ENTRY_FILE"/>
+                    <value name="files" type="FILE_LIST">
+                        <value-ref name="CATALOG-ENTRY_FILES"/>
                     </value>
                     <value name="files" type="FILE_LIST">
                         <value-ref name="SECONDARY-METS_FILES"/>
@@ -982,8 +983,8 @@
                     <value name="files" type="FILE_LIST">
                         <value-ref name="USER-COPY_FILES"/>
                     </value>
-                    <value name="file" type="FILE">
-                        <value-ref name="CATALOG-ENTRY_FILE"/>
+                    <value name="files" type="FILE_LIST">
+                        <value-ref name="CATALOG-ENTRY_FILES"/>
                     </value>
                 </params>
             </validation>

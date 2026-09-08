@@ -270,12 +270,14 @@
 
 
 
+    <!--slozka catalog_entry je nepovinna (DMF Jednotky fondu 0.1, kap. 5.9: "Tato slozka neni povinna"), proto null misto chyby-->
     <value-def name="CATALOG-ENTRY-DIR_FILE" type="FILE">
         <evaluation functionName="getFirstFileFromFileList">
             <params>
                 <value name="files" type="FILE_LIST">
                     <value-ref name="CATALOG-ENTRY-DIR_FILES"/>
                 </value>
+                <value name="returnNullIfEmpty" type="BOOLEAN">true</value>
             </params>
         </evaluation>
     </value-def>
@@ -354,6 +356,7 @@
                 <value name="dir" type="FILE">
                     <value-ref name="CATALOG-ENTRY-DIR_FILE"/>
                 </value>
+                <value name="errorIfDirNull" type="BOOLEAN">false</value>
                 <pattern name="pattern">
                     <pattern-ref name="CATALOG-ENTRY_FILENAME"/>
                 </pattern>
@@ -367,6 +370,7 @@
                 <value name="files" type="FILE_LIST">
                     <value-ref name="CATALOG-ENTRY_FILES"/>
                 </value>
+                <value name="returnNullIfEmpty" type="BOOLEAN">true</value>
             </params>
         </evaluation>
     </value-def>
