@@ -35,6 +35,8 @@ metadat, profily binárních souborů):
 Verze DMF se určuje z METS `TYPE` a z `metadataversion` v info.xml; parametry `--preferred-dmf-<typ>-version`
 a `--forced-dmf-<typ>-version` (typ `mon`, `per`, `adg`, `adf`, `adi`, `adn`, `dad`, `fdu`) ji upřednostní nebo vynutí.
 Verze ALTO a jejich kontrola: viz [ALTO.md](ALTO.md).
+Kontrola registrace URN:NBN se ptá produkčního Resolveru (https://resolver.nkp.cz); parametr `--urnnbn-resolver-url`
+ji přepne na jinou instalaci, např. testovací https://resolver-test.nkp.cz.
 
 ## Sestavení a spuštění
 

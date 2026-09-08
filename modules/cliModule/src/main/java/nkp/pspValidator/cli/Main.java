@@ -1,5 +1,6 @@
 package nkp.pspValidator.cli;
 
+import nkp.pspValidator.shared.engine.utils.UrnNbnResolverChecker;
 import nkp.pspValidator.shared.*;
 import nkp.pspValidator.shared.engine.Utils;
 import nkp.pspValidator.shared.engine.exceptions.InvalidXPathExpressionException;
@@ -284,6 +285,16 @@ public class Main {
                 .hasArg()
                 .withArgName("VERZE")
                 .withLongOpt(Params.FORCED_DMF_FDU_VERSION)
+                .create());
+
+        options.addOption(OptionBuilder
+                .withDescription(replaceUmlaut(
+                        "Základní URL Resolveru URN:NBN (CZIDLO) pro kontrolu registrace identifikátorů." +
+                                " Výchozí je produkční instalace " + UrnNbnResolverChecker.DEFAULT_RESOLVER_BASE_URL + "." +
+                                " Pro testování lze zadat např. https://resolver-test.nkp.cz."))
+                .hasArg()
+                .withArgName("URL")
+                .withLongOpt(Params.URNNBN_RESOLVER_URL)
                 .create());
 
         options.addOption(OptionBuilder
@@ -598,6 +609,11 @@ public class Main {
                 String forcedDmfFduVersion = null;
                 if (line.hasOption(Params.FORCED_DMF_FDU_VERSION)) {
                     forcedDmfFduVersion = line.getOptionValue(Params.FORCED_DMF_FDU_VERSION);
+                }
+
+                //Resolver URN:NBN
+                if (line.hasOption(Params.URNNBN_RESOLVER_URL)) {
+                    UrnNbnResolverChecker.setResolverBaseUrl(line.getOptionValue(Params.URNNBN_RESOLVER_URL));
                 }
 
                 //verbosity

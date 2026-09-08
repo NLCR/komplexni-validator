@@ -24,6 +24,25 @@ import java.util.Objects;
 
 public class UrnNbnResolverChecker {
 
+    public static final String DEFAULT_RESOLVER_BASE_URL = "https://resolver.nkp.cz";
+    /**
+     * Zakladni URL Resolveru (CZIDLO). Vychozi je produkce; pro vyvoj a testovani lze prepnout na jinou instalaci
+     * (napr. https://resolver-test.nkp.cz), CLI parametr --urnnbn-resolver-url. Nastavuje se pred spustenim validace.
+     */
+    private static String resolverBaseUrl = DEFAULT_RESOLVER_BASE_URL;
+
+    public static void setResolverBaseUrl(String baseUrl) {
+        if (baseUrl == null || baseUrl.trim().isEmpty()) {
+            resolverBaseUrl = DEFAULT_RESOLVER_BASE_URL;
+        } else {
+            resolverBaseUrl = baseUrl.trim().replaceAll("/+$", "");
+        }
+    }
+
+    public static String getResolverBaseUrl() {
+        return resolverBaseUrl;
+    }
+
     private final SSLSocketFactory sslSocketFactory;
     private final UrnNbnMetadataMapping metadataMapping;
 
@@ -369,7 +388,7 @@ public class UrnNbnResolverChecker {
 
     private JSONObject getDigDocMetadata(String urnNbn) throws IOException {
         //URL url = new URL(String.format("https://resolver-dev.nkp.cz/api/v5/resolver/%s?format=json", urnNbn));
-        URL url = new URL(String.format("https://resolver.nkp.cz/api/v5/resolver/%s?format=json", urnNbn));
+        URL url = new URL(String.format("%s/api/v5/resolver/%s?format=json", resolverBaseUrl, urnNbn));
         HttpsURLConnection con = (HttpsURLConnection) url.openConnection();
         con.setSSLSocketFactory(sslSocketFactory);
         con.setRequestMethod("GET");
@@ -390,7 +409,7 @@ public class UrnNbnResolverChecker {
 
     private JSONObject getUrnNbnStatus(String urnNbn) throws IOException {
         //URL url = new URL(String.format("https://resolver-dev.nkp.cz/api/v5/urnnbn/%s?format=json", urnNbn));
-        URL url = new URL(String.format("https://resolver.nkp.cz/api/v5/urnnbn/%s?format=json", urnNbn));
+        URL url = new URL(String.format("%s/api/v5/urnnbn/%s?format=json", resolverBaseUrl, urnNbn));
         HttpsURLConnection con = (HttpsURLConnection) url.openConnection();
         con.setSSLSocketFactory(sslSocketFactory);
         con.setRequestMethod("GET");
