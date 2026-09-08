@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <metadataProfile
-        xmlns="http://www.nkp.cz/pspValidator/2.7/metadataProfile"
+        xmlns="http://www.nkp.cz/pspValidator/2.8/metadataProfile"
         name="MODS internal part - article (RDA)"
-        validatorVersion="2.7"
+        validatorVersion="2.8"
         dmf="periodical_2.2"
 >
 

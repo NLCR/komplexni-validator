@@ -1,6 +1,6 @@
 <binaryFileProfile
-        xmlns="http://www.nkp.cz/pspValidator/2.7/binaryFileProfile"
-        validatorVersion="2.7"
+        xmlns="http://www.nkp.cz/pspValidator/2.8/binaryFileProfile"
+        validatorVersion="2.8"
         dmf="audio_gram_1.0"
 >
     <fromText>
