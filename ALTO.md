@@ -1,6 +1,6 @@
 # Verze ALTO v Komplexním validátoru
 
-Pracovní přehled, stav k 8. 9. 2026. Text se bude měnit; po vzniku README.md bude do něj začleněn nebo z něj odkazován.
+Pracovní přehled, stav k 8. 9. 2026; text se bude měnit. Odkazuje na něj [README.md](README.md).
 
 ## Jak validátor ALTO kontroluje
 
