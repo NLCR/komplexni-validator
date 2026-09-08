@@ -21,13 +21,16 @@ Predpis (JSON), viz fund_unit_spec_example.json vedle tohoto skriptu:
     "collection": {"uuid": ..., "title": ..., ...},              # UNITCOLLECTION (spolecna pro vsechny jednotky)
     "units": [ {"psp": "<uuid>", "type": "clipping", "uuid": ..., "urnnbn": ..., "title": ...,
                 "directory": {...} | null, "pages": [{"mc": "rel/cesta.jp2", "ac": "rel/cesta.jp2", "type": "normalPage",
-                "pageNumber": "84"}], ...} ]
+                "pageNumber": "84", "alto": "rel/hotove.alto.xml", "txt": "rel/hotove.txt"}], ...} ]
+  Volitelna pole strany alto/txt: prevzit hotove OCR misto tesseractu (agent OCR pak nastavit v agents.ocr,
+  datum OCR eventu v "ocr_created").
   }
 Kazda jednotka = jeden SIP balicek <vystupni_adresar>/<psp>. Mezivysledky (PNG, OCR) jsou v <vystupni_adresar>/.work.
 """
 import argparse
 import json
 import os
+import re
 import shutil
 import struct
 import subprocess
@@ -309,8 +312,14 @@ def amd_mets_real(psp: str, mets_type: str, label: str, page_no: int, files: dic
     objects += gen.premis_object("OBJ_003", alto_id, "preservation", alto[1], alto[2], "text/xml", "1.0", "fmt/101",
                                  ag["ocr"]["name"], ag["ocr"]["version"], os.path.basename(alto[0]),
                                  relationship=gen.premis_relationship(mc_id, ev_alto))
-    events += (gen.premis_event("EVT_004", ev_alto, "capture", "capture/XML_creation", ag["ocr"]["id"], "software", alto_id)
-               + gen.premis_event("EVT_005", ev_txt, "capture", "capture/TXT_creation", ag["ocr"]["id"], "software", alto_id))
+    # OCR eventy mohou nest jine datum nez sestaveni balicku (prevzate ALTO z drivejsiho zpracovani: spec["ocr_created"])
+    saved_created = gen.CREATED
+    gen.CREATED = spec.get("ocr_created", created)
+    try:
+        events += (gen.premis_event("EVT_004", ev_alto, "capture", "capture/XML_creation", ag["ocr"]["id"], "software", alto_id)
+                   + gen.premis_event("EVT_005", ev_txt, "capture", "capture/TXT_creation", ag["ocr"]["id"], "software", alto_id))
+    finally:
+        gen.CREATED = saved_created
     agents_xml = (gen.premis_agent("AGENT_001", ag["scanner"]["id"], ag["scanner"]["name"], ag["scanner"]["type"])
                   + gen.premis_agent("AGENT_002", ag["processing"]["id"], ag["processing"]["name"], ag["processing"]["type"])
                   + gen.premis_agent("AGENT_003", ag["kakadu"]["id"], ag["kakadu"]["name"], ag["kakadu"]["type"])
@@ -752,8 +761,25 @@ class Tools:
             os.remove(tif)
         return open(uc, "rb").read()
 
-    def ocr(self, mc_jp2: str, mc_name: str, created: str, agency: str):
-        """Vrati (alto_xml_bytes, txt_bytes); ALTO 3.0 z tesseractu s doplnenym fileName a processingDateTime."""
+    def ocr(self, mc_jp2: str, mc_name: str, created: str, agency: str, alto_src: str = None, txt_src: str = None):
+        """Vrati (alto_xml_bytes, txt_bytes). Bez alto_src/txt_src: ALTO 3.0 z tesseractu s doplnenym fileName,
+        processingDateTime a processingAgency. S alto_src/txt_src: prevzate soubory (napr. ALTO 2.0 od ABBYY z drivejsiho
+        zpracovani); v ALTO se upravi jen sourceImageInformation/fileName, pokud element existuje."""
+        if alto_src:
+            alto_bytes = open(alto_src, "rb").read()
+            txt_bytes = open(txt_src, "rb").read() if txt_src else b""
+            root_ns = re.search(rb'<alto[^>]*\sxmlns="([^"]+)"', alto_bytes)
+            if root_ns:
+                ns_uri = root_ns.group(1).decode()
+                ET.register_namespace("", ns_uri)
+                ET.register_namespace("xsi", "http://www.w3.org/2001/XMLSchema-instance")
+                ET.register_namespace("xlink", "http://www.w3.org/1999/xlink")
+                root = ET.fromstring(alto_bytes)
+                fn = root.find(f"{{{ns_uri}}}Description/{{{ns_uri}}}sourceImageInformation/{{{ns_uri}}}fileName")
+                if fn is not None:
+                    fn.text = mc_name
+                    alto_bytes = b'<?xml version="1.0" encoding="UTF-8"?>\n' + ET.tostring(root, encoding="utf-8")
+            return alto_bytes, txt_bytes
         base = os.path.join(self.work, os.path.basename(mc_jp2) + ".ocr")
         if not (os.path.exists(base + ".xml") and os.path.exists(base + ".txt")):
             run(["tesseract", self.png(mc_jp2), base, "-l", self.lang, "alto", "txt"])
@@ -817,7 +843,9 @@ def build_unit(spec: dict, u: dict, out_root: str, tools: Tools, no_uc: bool):
             # popise se pod jeho nazvem hodnotami MC
             ac = {"name": os.path.basename(ac_src),
                   "props": jp2_props(ac_src) if os.path.getsize(ac_src) > 0 else mc_props}
-        alto_bytes, txt_bytes = tools.ocr(mc_src, mc_name, created, spec["institution"])
+        alto_bytes, txt_bytes = tools.ocr(mc_src, mc_name, created, spec["institution"],
+                                          os.path.join(src_root, page["alto"]) if page.get("alto") else None,
+                                          os.path.join(src_root, page["txt"]) if page.get("txt") else None)
         files = {
             "mc": put(f"mastercopy/{mc_name}", open(mc_src, "rb").read()),
             "uc": put(f"usercopy/uc_{psp}_{p}.jp2", open(mc_src, "rb").read() if no_uc else tools.user_copy(mc_src)),
