@@ -126,7 +126,8 @@ shadowJar.dependsOn printRuntimeClasspath
 
 tasks.register('jpackage', Exec) {
     // Replace non-digit characters with a dot for the app-version
-    def compatibleVersion = version.replaceAll(/[^0-9]+/, '.')
+    // and trim leading/trailing dots (e.g. "2.8-beta" -> "2.8", jpackage rejects "2.8.")
+    def compatibleVersion = version.replaceAll(/[^0-9]+/, '.').replaceAll(/^\.+|\.+$/, '')
     // Define the name of your application
     //def appName = "KomplexniValidator_${version}"
     def appName = "KomplexniValidator"
