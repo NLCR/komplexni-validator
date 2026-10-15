@@ -796,7 +796,8 @@
                     <value name="files" type="FILE_LIST">
                         <value-ref name="OCR-TEXT_FILES"/>
                     </value>
-                    <value name="files" type="FILE_LIST">
+                    <!--adresář ALTO může chybět, jeho absenci hlásí SINGLE_OCR-ALTO-DIR_FOUND; tady by jen zdvojil chybu-->
+                    <value name="files_optional" type="FILE_LIST">
                         <value-ref name="OCR-ALTO_FILES"/>
                     </value>
                     <value name="files" type="FILE_LIST">

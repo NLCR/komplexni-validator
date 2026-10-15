@@ -405,6 +405,7 @@
                 <value name="dir" type="FILE">
                     <value-ref name="OCR-ALTO-DIR_FILE"/>
                 </value>
+                <value name="errorIfDirNull" type="BOOLEAN">false</value>
                 <pattern name="pattern">
                     <description>Vzor pro jména souborů OCR-ALTO v rámci adresáře OCR-ALTO-DIR.</description>
                     <expression caseSensitive="true">alto_${PSP_ID}_[0-9]+\.xml</expression>
