@@ -124,6 +124,13 @@ tasks.register('printRuntimeClasspath') {
 // Add this line to run this task automatically before shadowJar
 shadowJar.dependsOn printRuntimeClasspath
 
+def validatorConfigSourceDir = project(':modules:sharedModule').layout.projectDirectory.dir('src/main/resources/nkp/pspValidator/shared/validatorConfig')
+
+tasks.register('syncValidatorConfigForJpackage', Sync) {
+    from validatorConfigSourceDir
+    into layout.buildDirectory.dir('libs/validatorConfig')
+}
+
 tasks.register('jpackage', Exec) {
     // Replace non-digit characters with a dot for the app-version
     // and trim leading/trailing dots (e.g. "2.8-beta" -> "2.8", jpackage rejects "2.8.")
@@ -147,20 +154,25 @@ tasks.register('jpackage', Exec) {
     def imageDir = 'build/image/resources/img'
     // Specify the icon path (if you have one)
 
-    //MacOs
-    def iconPath = 'src/main/resources/img/appIcon/appIcon.icns'
+    def iconPath = ''
 
-    //Windows:
-    //def iconPath = 'src/main/resources/img/appIcon/icon_48x48.ico'
+    String osName = System.getProperty("os.name").toLowerCase();
+    if (osName.startsWith("windows")) {
+        iconPath = 'src/main/resources/img/appIcon/icon_48x48.ico'
+    } else if (osName.startsWith("linux")) {
+        iconPath = 'src/main/resources/img/appIcon/icon_48x48.ico'
+    } else if (osName.startsWith("mac")) {
+        iconPath = 'src/main/resources/img/appIcon/appIcon.icns'
+    }
 
     // Make sure this task is executed after the application is built
-    dependsOn 'build'
+    dependsOn 'build', 'syncValidatorConfigForJpackage'
 
     // Use the jpackage command-line tool to create the installer
     commandLine 'jpackage',
             //'--type', 'dmg', // Change to 'exe' for Windows or 'deb' for Debian-based Linux distributions
             //'--type', 'exe',
-            '--type', 'pkg',
+            '--type', 'exe',
             '--dest', outputDir,
             '--name', appName,
             //'--description', 'Komplexni_Validator_baliku_PSP',
@@ -170,7 +182,10 @@ tasks.register('jpackage', Exec) {
             '--main-class', mainClassName,
             '--resource-dir', resourceDir,
             '--icon', iconPath,
-            '--app-version', compatibleVersion
+            '--app-version', compatibleVersion,
+            '--win-dir-chooser',
+            '--win-per-user-install',
+            '--win-shortcut-prompt'
 
     // Additional options can be added here, such as '--vendor', '--resource-dir', etc.
 
