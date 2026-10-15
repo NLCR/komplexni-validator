@@ -31,6 +31,7 @@ public class Params {
     public static final String FORCED_DMF_DAD_VERSION = "forced-dmf-dad-version";
     public static final String FORCED_DMF_FDU_VERSION = "forced-dmf-fdu-version";
     public static final String URNNBN_RESOLVER_URL = "urnnbn-resolver-url";
+    public static final String URNNBN_RESOLVER_ALLOW_HTTP = "urnnbn-resolver-allow-http";
 
     public static final String IMAGEMAGICK_PATH = "imagemagick-path";
     public static final String JHOVE_PATH = "jhove-path";

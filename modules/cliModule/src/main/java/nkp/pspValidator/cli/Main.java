@@ -291,10 +291,19 @@ public class Main {
                 .withDescription(replaceUmlaut(
                         "Základní URL Resolveru URN:NBN (CZIDLO) pro kontrolu registrace identifikátorů." +
                                 " Výchozí je produkční instalace " + UrnNbnResolverChecker.DEFAULT_RESOLVER_BASE_URL + "." +
-                                " Pro testování lze zadat např. https://resolver-test.nkp.cz."))
+                                " Pro testování lze zadat např. https://resolver-test.nkp.cz." +
+                                " Adresa http:// je povolená jen s přepínačem --" + Params.URNNBN_RESOLVER_ALLOW_HTTP + "." +
+                                " Přesměrování z http na https validátor neprovádí, je třeba zadat cílovou adresu."))
                 .hasArg()
                 .withArgName("URL")
                 .withLongOpt(Params.URNNBN_RESOLVER_URL)
+                .create());
+
+        options.addOption(OptionBuilder
+                .withDescription(replaceUmlaut(
+                        "Povolí Resolver URN:NBN na http:// (parametr --" + Params.URNNBN_RESOLVER_URL + ")," +
+                                " určeno pro lokální testovací instalace bez TLS."))
+                .withLongOpt(Params.URNNBN_RESOLVER_ALLOW_HTTP)
                 .create());
 
         options.addOption(OptionBuilder
@@ -613,7 +622,14 @@ public class Main {
 
                 //Resolver URN:NBN
                 if (line.hasOption(Params.URNNBN_RESOLVER_URL)) {
-                    UrnNbnResolverChecker.setResolverBaseUrl(line.getOptionValue(Params.URNNBN_RESOLVER_URL));
+                    try {
+                        UrnNbnResolverChecker.setResolverBaseUrl(line.getOptionValue(Params.URNNBN_RESOLVER_URL),
+                                line.hasOption(Params.URNNBN_RESOLVER_ALLOW_HTTP));
+                    } catch (IllegalArgumentException e) {
+                        System.err.println(String.format("Chyba: %s!", e.getMessage()));
+                        printHelp(options);
+                        return;
+                    }
                 }
 
                 //verbosity

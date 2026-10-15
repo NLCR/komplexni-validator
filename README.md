@@ -36,7 +36,9 @@ Verze DMF se určuje z METS `TYPE` a z `metadataversion` v info.xml; parametry `
 a `--forced-dmf-<typ>-version` (typ `mon`, `per`, `adg`, `adf`, `adi`, `adn`, `dad`, `fdu`) ji upřednostní nebo vynutí.
 Verze ALTO a jejich kontrola: viz [ALTO.md](ALTO.md).
 Kontrola registrace URN:NBN se ptá produkčního Resolveru (https://resolver.nkp.cz); parametr `--urnnbn-resolver-url`
-ji přepne na jinou instalaci, např. testovací https://resolver-test.nkp.cz.
+ji přepne na jinou instalaci, např. testovací https://resolver-test.nkp.cz. Adresa http:// (lokální testovací instalace
+bez TLS) je povolená jen s přepínačem `--urnnbn-resolver-allow-http`; přesměrování z http na https validátor neprovádí,
+je třeba zadat cílovou adresu.
 
 ## Sestavení a spuštění
 
