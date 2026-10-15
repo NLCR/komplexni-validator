@@ -160,7 +160,7 @@ tasks.register('jpackage', Exec) {
     if (osName.startsWith("windows")) {
         iconPath = 'src/main/resources/img/appIcon/icon_48x48.ico'
     } else if (osName.startsWith("linux")) {
-        iconPath = 'src/main/resources/img/appIcon/icon_48x48.ico'
+        iconPath = 'src/main/resources/img/appIcon/icon_48x48.png'
     } else if (osName.startsWith("mac")) {
         iconPath = 'src/main/resources/img/appIcon/appIcon.icns'
     }
