@@ -15,6 +15,8 @@ import javax.xml.xpath.*;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.security.KeyManagementException;
 import java.security.NoSuchAlgorithmException;
@@ -32,11 +34,38 @@ public class UrnNbnResolverChecker {
     private static String resolverBaseUrl = DEFAULT_RESOLVER_BASE_URL;
 
     public static void setResolverBaseUrl(String baseUrl) {
+        setResolverBaseUrl(baseUrl, false);
+    }
+
+    /**
+     * Nastavi zakladni URL Resolveru. Povolene je https://, http:// jen s allowHttp (lokalni testovaci instalace bez TLS,
+     * CLI prepinac --urnnbn-resolver-allow-http). Prazdna hodnota znamena vychozi produkcni instalaci.
+     *
+     * @throws IllegalArgumentException pokud URL neni platna, nema hostitele, ma jine schema nez http(s) nebo je http bez allowHttp
+     */
+    public static void setResolverBaseUrl(String baseUrl, boolean allowHttp) {
         if (baseUrl == null || baseUrl.trim().isEmpty()) {
             resolverBaseUrl = DEFAULT_RESOLVER_BASE_URL;
-        } else {
-            resolverBaseUrl = baseUrl.trim().replaceAll("/+$", "");
+            return;
         }
+        String normalized = baseUrl.trim().replaceAll("/+$", "");
+        URL url;
+        try {
+            url = new URL(normalized);
+        } catch (MalformedURLException e) {
+            throw new IllegalArgumentException(String.format("neplatná URL Resolveru URN:NBN \"%s\" (očekáváno např. https://resolver-test.nkp.cz)", baseUrl));
+        }
+        String protocol = url.getProtocol();
+        if (!"https".equals(protocol) && !"http".equals(protocol)) {
+            throw new IllegalArgumentException(String.format("URL Resolveru URN:NBN \"%s\" musí začínat https:// (http:// jen pro testovací instalace)", baseUrl));
+        }
+        if (url.getHost() == null || url.getHost().isEmpty()) {
+            throw new IllegalArgumentException(String.format("URL Resolveru URN:NBN \"%s\" neobsahuje hostitele", baseUrl));
+        }
+        if ("http".equals(protocol) && !allowHttp) {
+            throw new IllegalArgumentException(String.format("Resolver URN:NBN na http:// (\"%s\") je povolený jen pro testovací instalace, v CLI přepínačem --urnnbn-resolver-allow-http", baseUrl));
+        }
+        resolverBaseUrl = normalized;
     }
 
     public static String getResolverBaseUrl() {
@@ -126,7 +155,7 @@ public class UrnNbnResolverChecker {
     public void check(String urnNbn) throws IOException, ResolverError, ResolverWarning, XPathExpressionException, InvalidXPathExpressionException {
         //if (true) throw new IOException("TEMPORARILY DISABLED");
         //System.err.println("checking URN:NBN: " + urnNbn);
-        JSONObject urnNbnStatusObj = getUrnNbnStatus(urnNbn);
+        JSONObject urnNbnStatusObj = getJson(String.format("/api/v5/urnnbn/%s?format=json", urnNbn));
         if (urnNbnStatusObj.has("urnNbn")) {
             JSONObject urnNbnObj = urnNbnStatusObj.getJSONObject("urnNbn");
             String status = urnNbnObj.getString("status");
@@ -164,7 +193,7 @@ public class UrnNbnResolverChecker {
     }
 
     private void checkMetadataMatch(String urnNbn) throws IOException, XPathExpressionException, InvalidXPathExpressionException, MetadataMismatchException, ResolverWarning {
-        JSONObject digDocMetadata = getDigDocMetadata(urnNbn);
+        JSONObject digDocMetadata = getJson(String.format("/api/v5/resolver/%s?format=json", urnNbn));
         //System.out.println(digDocMetadata.toString(2));
         JSONObject digitalDocument = digDocMetadata.getJSONObject("digitalDocument");
         JSONObject titleInfo = null;
@@ -386,46 +415,33 @@ public class UrnNbnResolverChecker {
         return !same;
     }
 
-    private JSONObject getDigDocMetadata(String urnNbn) throws IOException {
-        //URL url = new URL(String.format("https://resolver-dev.nkp.cz/api/v5/resolver/%s?format=json", urnNbn));
-        URL url = new URL(String.format("%s/api/v5/resolver/%s?format=json", resolverBaseUrl, urnNbn));
-        HttpsURLConnection con = (HttpsURLConnection) url.openConnection();
-        con.setSSLSocketFactory(sslSocketFactory);
+    /**
+     * GET na Resolver (cesta relativne k resolverBaseUrl), odpoved jako JSON. SSL factory jen u https, http jen u testovacich
+     * instalaci (viz setResolverBaseUrl). Presmerovani v ramci protokolu projde HttpURLConnection sama; presmerovani mezi
+     * http a https zamerne neprovadi a vrati 3xx, to se hlasi jako chyba s cilovou adresou.
+     */
+    private JSONObject getJson(String path) throws IOException {
+        URL url = new URL(resolverBaseUrl + path);
+        HttpURLConnection con = (HttpURLConnection) url.openConnection();
+        if (con instanceof HttpsURLConnection) {
+            ((HttpsURLConnection) con).setSSLSocketFactory(sslSocketFactory);
+        }
         con.setRequestMethod("GET");
         con.setConnectTimeout(5000);
         con.setReadTimeout(5000);
         con.setInstanceFollowRedirects(true);
 
-        InputStream responseStream = null;
-        if (con.getResponseCode() == 200) {
-            responseStream = con.getInputStream();
-        } else {
-            responseStream = con.getErrorStream();
+        int responseCode = con.getResponseCode();
+        if (responseCode >= 300 && responseCode < 400) {
+            throw new IOException(String.format("Resolver přesměroval %s na %s (HTTP %d); přesměrování mezi http a https validátor neprovádí, zadejte cílovou adresu v --urnnbn-resolver-url",
+                    url, con.getHeaderField("Location"), responseCode));
+        }
+        InputStream responseStream = responseCode == 200 ? con.getInputStream() : con.getErrorStream();
+        if (responseStream == null) {
+            throw new IOException(String.format("prázdná odpověď Resolveru %s (HTTP %d)", url, responseCode));
         }
         JSONTokener tokener = new JSONTokener(responseStream);
-        JSONObject responseObj = new JSONObject(tokener);
-        return responseObj;
-    }
-
-    private JSONObject getUrnNbnStatus(String urnNbn) throws IOException {
-        //URL url = new URL(String.format("https://resolver-dev.nkp.cz/api/v5/urnnbn/%s?format=json", urnNbn));
-        URL url = new URL(String.format("%s/api/v5/urnnbn/%s?format=json", resolverBaseUrl, urnNbn));
-        HttpsURLConnection con = (HttpsURLConnection) url.openConnection();
-        con.setSSLSocketFactory(sslSocketFactory);
-        con.setRequestMethod("GET");
-        con.setConnectTimeout(5000);
-        con.setReadTimeout(5000);
-        con.setInstanceFollowRedirects(true);
-
-        InputStream responseStream = null;
-        if (con.getResponseCode() == 200) {
-            responseStream = con.getInputStream();
-        } else {
-            responseStream = con.getErrorStream();
-        }
-        JSONTokener tokener = new JSONTokener(responseStream);
-        JSONObject responseObj = new JSONObject(tokener);
-        return responseObj;
+        return new JSONObject(tokener);
     }
 
 

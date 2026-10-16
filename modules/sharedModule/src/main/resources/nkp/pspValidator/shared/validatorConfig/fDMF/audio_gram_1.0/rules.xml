@@ -798,7 +798,8 @@
                     <value name="files" type="FILE_LIST">
                         <value-ref name="OCR-TEXT_FILES"/>
                     </value>
-                    <value name="files" type="FILE_LIST">
+                    <!--adresář ALTO může chybět, jeho absenci hlásí SINGLE_OCR-ALTO-DIR_FOUND; tady by jen zdvojil chybu-->
+                    <value name="files_optional" type="FILE_LIST">
                         <value-ref name="OCR-ALTO_FILES"/>
                     </value>
                     <value name="files" type="FILE_LIST">
@@ -3220,21 +3221,35 @@
 
     <rules-section name="OCR ALTO" description="Kontrola souborů ALTO.">
 
-        <rule name="ALTO_FILES_VALID_BY_XSD">
-            <description>Soubory OCR-ALTO musí být validní podle XML Schema (alto_4.4.xsd).</description>
-            <validation functionName="checkXmlIsValidByXsd">
+        <rule name="OCR-ALTO_FILES_VALID_BY_XSD">
+            <description>Soubory OCR-ALTO musí být validní podle XML Schema pro verzi ALTO danou namespace kořenového elementu (alto_2.1.xsd, alto_3.1.xsd, alto_4.4.xsd).</description>
+            <validation functionName="checkXmlIsValidByXsdByNamespace">
                 <params>
                     <value name="xml_files" type="FILE_LIST">
                         <value-ref name="OCR-ALTO_FILES"/>
                     </value>
-                    <value name="xsd_file" type="FILE">
-                        <value-ref name="ALTO_XSD_FILE"/>
+                    <value name="xsd_files" type="FILE_LIST">
+                        <value-ref name="ALTO_XSD_FILES"/>
                     </value>
                     <value name="level" type="LEVEL">ERROR</value>
                 </params>
             </validation>
         </rule>
 
+        <rule name="OCR-ALTO_FILES_SAME_VERSION">
+            <description>Všechny soubory OCR-ALTO v balíčku by měly mít stejnou verzi ALTO (stejný namespace kořenového elementu).
+                Předpis OCR míchání verzí neřeší, proto jen WARNING (viz dotaz Q2 pro NK ČR).
+            </description>
+            <validation functionName="checkXmlFilesShareRootNamespace">
+                <params>
+                    <value name="xml_files" type="FILE_LIST">
+                        <value-ref name="OCR-ALTO_FILES"/>
+                    </value>
+                    <value name="level" type="LEVEL">WARNING</value>
+                </params>
+            </validation>
+        </rule>
+        
         <!--TODO: kontrola ALTO oproti profilu-->
 
     </rules-section>

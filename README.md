@@ -36,7 +36,9 @@ Verze DMF se určuje z METS `TYPE` a z `metadataversion` v info.xml; parametry `
 a `--forced-dmf-<typ>-version` (typ `mon`, `per`, `adg`, `adf`, `adi`, `adn`, `dad`, `fdu`) ji upřednostní nebo vynutí.
 Verze ALTO a jejich kontrola: viz [ALTO.md](ALTO.md).
 Kontrola registrace URN:NBN se ptá produkčního Resolveru (https://resolver.nkp.cz); parametr `--urnnbn-resolver-url`
-ji přepne na jinou instalaci, např. testovací https://resolver-test.nkp.cz.
+ji přepne na jinou instalaci, např. testovací https://resolver-test.nkp.cz. Adresa http:// (lokální testovací instalace
+bez TLS) je povolená jen s přepínačem `--urnnbn-resolver-allow-http`; přesměrování z http na https validátor neprovádí,
+je třeba zadat cílovou adresu.
 
 ## Sestavení a spuštění
 
@@ -49,7 +51,7 @@ Vyžaduje JDK 17 pro kompilaci (Gradle toolchain), běh na Javě 17 nebo 21.
 
 CLI (nápověda `--help`), příklad validace balíčku s konfigurací z repozitáře a bez externích nástrojů:
 
-    java -cp "cliModule-<verze>.jar:<závislosti>" nkp.pspValidator.cli.Main \
+    java -jar cliModule-<verze>.jar \
         --action VALIDATE_PSP --psp /cesta/k/balicku \
         --config-dir modules/sharedModule/src/main/resources/nkp/pspValidator/shared/validatorConfig \
         --xml-protocol-file protokol.xml \
@@ -57,7 +59,7 @@ CLI (nápověda `--help`), příklad validace balíčku s konfigurací z repozit
         --disable-mp3val --disable-shntool --disable-checkmate
 
 Akce: `VALIDATE_PSP`, `VALIDATE_PSP_GROUP`, `VALIDATE_METADATA_BY_PROFILE`, `BUILD_MINIFIED_PACKAGE`. Vydaný CLI
-zip obsahuje spouštěcí skript se všemi závislostmi. Externí nástroje (ImageMagick, JHOVE, Jpylyzer, Kakadu, mp3val,
+zip obsahuje jar se všemi závislostmi (`KomplexniValidatorCLI.jar`) a adresář `validatorConfig`. Externí nástroje (ImageMagick, JHOVE, Jpylyzer, Kakadu, mp3val,
 shntool, Checkmate) se zadávají cestou (`--<nástroj>-path`) nebo vypínají (`--disable-<nástroj>`); instalátory
 JHOVE a Jpylyzer jsou v `installers/`.
 
@@ -72,7 +74,8 @@ aplikace (`Version.java`, část před pomlčkou).
 ## Verze
 
 Verze aplikace je v `gradle.properties` (`appVersion`) a v `modules/sharedModule/.../Version.java` (`VERSION_CODE`,
-`BUILD_DATE`). Vydání se značí tagem `vX.Y` a publikuje jako GitHub release.
+`BUILD_DATE`). Vydání se značí tagem `vX.Y` a publikuje jako GitHub release; postup vydání, assets a jejich
+sestavení (`tools/release/build-assets.sh`): viz [release.md](release.md).
 
 ## Licence
 

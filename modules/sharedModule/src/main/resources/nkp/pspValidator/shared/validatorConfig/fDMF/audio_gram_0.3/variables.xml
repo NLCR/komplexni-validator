@@ -390,6 +390,7 @@
                 <value name="dir" type="FILE">
                     <value-ref name="OCR-ALTO-DIR_FILE"/>
                 </value>
+                <value name="errorIfDirNull" type="BOOLEAN">false</value>
                 <pattern name="pattern">
                     <description>Vzor pro jména souborů OCR-ALTO v rámci adresáře OCR-ALTO-DIR.</description>
                     <expression caseSensitive="true">alto_${PSP_ID}_[0-9]+\.xml</expression>
@@ -496,6 +497,14 @@
         </evaluation>
     </value-def>
 
+    <value-def name="ALTO_XSD_FILES" type="FILE_LIST">
+        <evaluation functionName="getProvidedFiles">
+            <params>
+                <value name="files_id" type="STRING">ALTO_XSD_FILES</value>
+            </params>
+        </evaluation>
+    </value-def>
+    
     <value-def name="ALTO_XSD_FILE" type="FILE">
         <evaluation functionName="getProvidedFile">
             <params>
