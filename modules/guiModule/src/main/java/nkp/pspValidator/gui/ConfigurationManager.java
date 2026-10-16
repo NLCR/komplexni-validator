@@ -18,7 +18,18 @@ public class ConfigurationManager {
     public static boolean DEV_MODE_ONLY_SELECTED_SECTIONS = false;
 
     private static final String DEFAULT_LOG_DIR = "logs";
-    private static final String DEFAULT_FDMF_DIR = "validatorConfig";
+    private String getDefaultFdmfDir() {
+        switch (platform.getOperatingSystem()) {
+            case WINDOWS:
+                return "app/validatorConfig";
+            case LINUX:
+                return "../lib/app/validatorConfig"; // počítáme s app-image (portable) distribucí
+            case MAC:
+                return "validatorConfig"; // todo: ověřit, jak je to s jpackage a adresou v MacOs
+            default:
+                throw new IllegalStateException("Nepodporovaný operační systém.");
+        }
+    }
 
     private static File CONFIG_FILE_PRODUCTION = new File("config.properties");
     private static File CONFIG_FILE_DEV_WIN = new File("../../resources/main/dev/config-win.properties");
@@ -122,7 +133,7 @@ public class ConfigurationManager {
         //validator config dir
         File validatorConfigDir = getFileOrNull(PROP_VALIDATOR_CONFIG_DIR);
         if (validatorConfigDir == null) {
-            validatorConfigDir = new File(DEFAULT_FDMF_DIR);
+            validatorConfigDir = new File(getDefaultFdmfDir());
             setFile(PROP_VALIDATOR_CONFIG_DIR, validatorConfigDir);
         }
         //log dir
