@@ -155,24 +155,38 @@ tasks.register('jpackage', Exec) {
     // Specify the icon path (if you have one)
 
     def iconPath = ''
+    // typ balíčku a volby specifické pro platformu; přepsat lze -PjpackageType=app-image (portable)
+    def packageType = ''
+    def platformOptions = []
 
     String osName = System.getProperty("os.name").toLowerCase();
     if (osName.startsWith("windows")) {
         iconPath = 'src/main/resources/img/appIcon/icon_48x48.ico'
+        packageType = 'exe'
+        platformOptions = ['--win-dir-chooser', '--win-per-user-install', '--win-shortcut-prompt']
     } else if (osName.startsWith("linux")) {
         iconPath = 'src/main/resources/img/appIcon/icon_48x48.png'
+        packageType = 'app-image'
     } else if (osName.startsWith("mac")) {
         iconPath = 'src/main/resources/img/appIcon/appIcon.icns'
+        // dmg: uživatel přetáhne aplikaci do Aplikací, nepotřebuje práva správce (pkg je vyžaduje)
+        packageType = 'dmg'
+        platformOptions = ['--mac-package-identifier', 'cz.nkp.pspValidator.gui']
+    }
+    if (project.hasProperty('jpackageType')) {
+        packageType = project.property('jpackageType')
+    }
+    // volby instalátoru nejdou s app-image
+    if (packageType == 'app-image') {
+        platformOptions = platformOptions.findAll { !it.startsWith('--win-') }
     }
 
     // Make sure this task is executed after the application is built
     dependsOn 'build', 'syncValidatorConfigForJpackage'
 
     // Use the jpackage command-line tool to create the installer
-    commandLine 'jpackage',
-            //'--type', 'dmg', // Change to 'exe' for Windows or 'deb' for Debian-based Linux distributions
-            //'--type', 'exe',
-            '--type', 'exe',
+    commandLine(['jpackage',
+            '--type', packageType,
             '--dest', outputDir,
             '--name', appName,
             //'--description', 'Komplexni_Validator_baliku_PSP',
@@ -182,10 +196,7 @@ tasks.register('jpackage', Exec) {
             '--main-class', mainClassName,
             '--resource-dir', resourceDir,
             '--icon', iconPath,
-            '--app-version', compatibleVersion,
-            '--win-dir-chooser',
-            '--win-per-user-install',
-            '--win-shortcut-prompt'
+            '--app-version', compatibleVersion] + platformOptions)
 
     // Additional options can be added here, such as '--vendor', '--resource-dir', etc.
 
