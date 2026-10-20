@@ -137,7 +137,7 @@
     </pattern-def>
 
     <pattern-def name="CATALOG-ENTRY-DIR_FILENAME">
-        <description>Vzor pro jméno adresáře CATOLOG-ENTRY-DIR.</description>
+        <description>Vzor pro jméno adresáře CATALOG-ENTRY-DIR.</description>
         <expression caseSensitive="true">catalog_entry</expression>
     </pattern-def>
 
