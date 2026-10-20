@@ -232,7 +232,7 @@ public class UrnNbnResolverChecker {
         }
     }
 
-    private void checkMetadata(String czidlo_type, JSONObject titleInfo, String urnNbn) throws XPathExpressionException, IOException, InvalidXPathExpressionException, MetadataMismatchException {
+    private void checkMetadata(String czidlo_type, JSONObject titleInfo, String urnNbn) throws ResolverWarning, XPathExpressionException, IOException, InvalidXPathExpressionException, MetadataMismatchException {
         //System.out.println("checking metadata for " + urnNbn + ", czidlo_type: " + czidlo_type);
         String modsType;
         Node modsMetadata;
@@ -264,16 +264,16 @@ public class UrnNbnResolverChecker {
                 checkOtherEntityMetadata(czidlo_type, modsType, modsMetadata, titleInfo, urnNbn);
                 break;
             default:
-                System.out.println("TODO: implement checking for " + czidlo_type);
+                throw new ResolverWarning("porovnání metadat s Resolverem pro typ entity %s není implementováno (%s)", czidlo_type, urnNbn);
         }
     }
 
-    private void checkMonographMetadata(String czidloType, String modsType, Node modsMetadata, JSONObject titleInfo, String urnNbn) throws InvalidXPathExpressionException, XPathExpressionException, MetadataMismatchException {
+    private void checkMonographMetadata(String czidloType, String modsType, Node modsMetadata, JSONObject titleInfo, String urnNbn) throws ResolverWarning, InvalidXPathExpressionException, XPathExpressionException, MetadataMismatchException {
         if (modsMetadata != null) {
             //monograph title
             checkDataMatch(
                     (String) buildXpath("mods:titleInfo/mods:title").evaluate(modsMetadata, XPathConstants.STRING),
-                    titleInfo.getString("title"), urnNbn, czidloType, modsType
+                    titleInfo.optString("title", null), urnNbn, czidloType, modsType
             );
             //monograph subtitle (nepovinný)
             checkDataMatch(
@@ -281,16 +281,16 @@ public class UrnNbnResolverChecker {
                     titleInfo.optString("subTitle", null), urnNbn, czidloType, modsType
             );
         } else {
-            System.out.println("MODS metadata not found for " + urnNbn);
+            throw new ResolverWarning("v METS nenalezen záznam MODS pro %s (typ %s), metadata nelze porovnat s Resolverem", urnNbn, modsType);
         }
     }
 
-    private void checkOtherEntityMetadata(String czidloType, String modsType, Node modsMetadata, JSONObject titleInfo, String urnNbn) throws InvalidXPathExpressionException, XPathExpressionException, MetadataMismatchException {
+    private void checkOtherEntityMetadata(String czidloType, String modsType, Node modsMetadata, JSONObject titleInfo, String urnNbn) throws ResolverWarning, InvalidXPathExpressionException, XPathExpressionException, MetadataMismatchException {
         if (modsMetadata != null) {
             //title (Resolver: otherEntity.titleInfo.title)
             checkDataMatch(
                     (String) buildXpath("mods:titleInfo/mods:title").evaluate(modsMetadata, XPathConstants.STRING),
-                    titleInfo.getString("title"), urnNbn, czidloType, modsType
+                    titleInfo.optString("title", null), urnNbn, czidloType, modsType
             );
             //subtitle (nepovinný)
             checkDataMatch(
@@ -298,16 +298,16 @@ public class UrnNbnResolverChecker {
                     titleInfo.optString("subTitle", null), urnNbn, czidloType, modsType
             );
         } else {
-            System.out.println("MODS metadata not found for " + urnNbn);
+            throw new ResolverWarning("v METS nenalezen záznam MODS pro %s (typ %s), metadata nelze porovnat s Resolverem", urnNbn, modsType);
         }
     }
 
-    private void checkAnalyticalMetadata(String czidloType, String modsType, Node analMods, JSONObject titleInfo, String urnNbn) throws InvalidXPathExpressionException, XPathExpressionException, MetadataMismatchException {
+    private void checkAnalyticalMetadata(String czidloType, String modsType, Node analMods, JSONObject titleInfo, String urnNbn) throws ResolverWarning, InvalidXPathExpressionException, XPathExpressionException, MetadataMismatchException {
         if (analMods != null) { //periodical ART or monograph CHAP
             //article/chapter title
             checkDataMatch(
                     (String) buildXpath("mods:titleInfo/mods:title").evaluate(analMods, XPathConstants.STRING),
-                    titleInfo.getString("title"), urnNbn, czidloType, modsType
+                    titleInfo.optString("title", null), urnNbn, czidloType, modsType
             );
             //article/chapter subtitle (nepovinný)
             checkDataMatch(
@@ -315,11 +315,11 @@ public class UrnNbnResolverChecker {
                     titleInfo.optString("subTitle", null), urnNbn, czidloType, modsType
             );
         } else {
-            System.out.println("MODS metadata not found for " + urnNbn);
+            throw new ResolverWarning("v METS nenalezen záznam MODS pro %s (typ %s), metadata nelze porovnat s Resolverem", urnNbn, modsType);
         }
     }
 
-    private void checkPeriodicalIssueMetadata(String czidloType, String modsType, Node issueMods, JSONObject titleInfo, String urnNbn) throws InvalidXPathExpressionException, XPathExpressionException, MetadataMismatchException {
+    private void checkPeriodicalIssueMetadata(String czidloType, String modsType, Node issueMods, JSONObject titleInfo, String urnNbn) throws ResolverWarning, InvalidXPathExpressionException, XPathExpressionException, MetadataMismatchException {
         if (issueMods != null) {
                 /*
                 MODS:title muze obsahovat nazev issue, ale i nazev periodika, zatimcoe CZIDLO má periodicalTitle, volumeTitle, issueTitle
@@ -363,7 +363,7 @@ public class UrnNbnResolverChecker {
             if (titleMods != null) {
                 checkDataMatch(
                         (String) buildXpath("mods:titleInfo/mods:title").evaluate(titleMods, XPathConstants.STRING),
-                        titleInfo.getString("periodicalTitle"), urnNbn, czidloType, modsType
+                        titleInfo.optString("periodicalTitle", null), urnNbn, czidloType, modsType
                 );
             }
             //volume title
@@ -371,33 +371,33 @@ public class UrnNbnResolverChecker {
             if (volumeMods != null) {
                 checkDataMatch(
                         (String) buildXpath("mods:titleInfo/mods:partNumber").evaluate(volumeMods, XPathConstants.STRING),
-                        titleInfo.getString("volumeTitle"), urnNbn, czidloType, modsType
+                        titleInfo.optString("volumeTitle", null), urnNbn, czidloType, modsType
                 );
             }
             //issue title
             checkDataMatch(
                     (String) buildXpath("mods:titleInfo/mods:partNumber").evaluate(issueMods, XPathConstants.STRING),
-                    titleInfo.getString("issueTitle"), urnNbn, czidloType, modsType
+                    titleInfo.optString("issueTitle", null), urnNbn, czidloType, modsType
             );
         } else {
-            System.out.println("MODS metadata not found for " + urnNbn);
+            throw new ResolverWarning("v METS nenalezen záznam MODS pro %s (typ %s), metadata nelze porovnat s Resolverem", urnNbn, modsType);
         }
     }
 
-    private void checkMonographVolumeMetadata(String czidloType, String modsType, Node modsMetadata, JSONObject titleInfo, String urnNbn) throws IOException, InvalidXPathExpressionException, XPathExpressionException, MetadataMismatchException {
+    private void checkMonographVolumeMetadata(String czidloType, String modsType, Node modsMetadata, JSONObject titleInfo, String urnNbn) throws ResolverWarning, IOException, InvalidXPathExpressionException, XPathExpressionException, MetadataMismatchException {
         if (modsMetadata != null) {
             //monograph title
             checkDataMatch(
                     (String) buildXpath("mods:titleInfo/mods:title").evaluate(modsMetadata, XPathConstants.STRING),
-                    titleInfo.getString("monographTitle"), urnNbn, czidloType, modsType
+                    titleInfo.optString("monographTitle", null), urnNbn, czidloType, modsType
             );
             //monograph volume title
             checkDataMatch(
                     (String) buildXpath("mods:titleInfo/mods:partNumber").evaluate(modsMetadata, XPathConstants.STRING),
-                    titleInfo.getString("volumeTitle"), urnNbn, czidloType, modsType
+                    titleInfo.optString("volumeTitle", null), urnNbn, czidloType, modsType
             );
         } else {
-            System.out.println("MODS metadata not found for " + urnNbn);
+            throw new ResolverWarning("v METS nenalezen záznam MODS pro %s (typ %s), metadata nelze porovnat s Resolverem", urnNbn, modsType);
         }
     }
 
