@@ -88,6 +88,7 @@ public class DmfDetectorTest {
     public void detectDmfVersionFundUnit() throws PspDataException, XmlFileParsingException, InvalidXPathExpressionException {
         File pspRootDir = new File("src/test/resources/fund_unit_0.1/clipping/nk-00027x");
         assertEquals("0.1", dmfDetector.detectDmfVersionFromInfoFile(Dmf.Type.FUND_UNIT, pspRootDir));
+        assertEquals("0.2", dmfDetector.detectDmfVersionFromInfoFile(Dmf.Type.FUND_UNIT, new File("src/test/resources/fund_unit_0.2/valid_clipping/nk-00027x")));
     }
 
     @Test

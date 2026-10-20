@@ -1,6 +1,9 @@
 #!/usr/bin/env python3
 """
-Generator synthetickeho SIP balicku podle DMF Jednotky fondu 0.1 (draft, 9. 12. 2025).
+Generator synthetickeho SIP balicku podle DMF Jednotky fondu 0.1 (9. 12. 2025) nebo 0.2 (draft, 20. 10. 2026);
+verze se voli pres --standard-version (default 0.1, aby zustaly reprodukovatelne balicky v src/test/resources/fund_unit_0.1).
+Rozdily 0.2: metadataversion 0.2, u strany mods:genre s atributem type a dc:type model:page, u jednotky
+relatedItem/part/extent (rozsah stran ve zdroji).
 
 Balicek je stavěn primo z tabulek specifikace (kap. 5, 6, 7), ne z hotove fDMF, aby slouzil jako
 nezavisla kontrola pravidel. Kapitoly amdSec/fileSec/copyright spec prebira z DMF Periodika 2.1,
@@ -8,7 +11,7 @@ proto amd_mets vychazi z perio 2.1/2.2 (kap. 7.5, 7.6, 7.7.2).
 
 Pouziti:
     python3 gen_fund_unit_package.py <cilovy_adresar_balicku> [--variant clipping|clipping_index|card_index]
-                                     [--pages N] [--with-directory] [--mutation NAME]...
+                                     [--pages N] [--with-directory] [--mutation NAME]... [--standard-version 0.1|0.2]
 
 Obrazove soubory jsou jen placeholdery (validace obrazu se v testech vypina), ale velikosti a MD5
 v METS/MD5/INFO odpovidaji skutecnemu obsahu, aby prosly kontroly checksumu.
@@ -30,6 +33,7 @@ DIRECTORY_UUID = "5f6a8c2e-2222-4d0e-9a3b-000000000002"
 UNIT_UUID = "5f6a8c2e-3333-4d0e-9a3b-000000000003"
 UNIT_TITLE = "Klementinum a jeho knihovny"
 PAGE_UUID_PREFIX = "5f6a8c2e-4444-4d0e-9a3b-0000000000"  # + 2 cislice
+DMF_VERSION = "0.1"  # nastavuje generate() podle --standard-version
 
 VARIANTS = {
     # varianta: (METS @TYPE, mods:genre, LABEL, extent)
@@ -678,13 +682,24 @@ def mods_unit(standard: str, genre: str, extent: str, urnnbn: str) -> str:
                                 </mods:detail>
                                 <mods:detail type="issue">
                                     <mods:number>112</mods:number>
-                                </mods:detail>
+                                </mods:detail>{source_extent()}
                             </mods:part>
                         </mods:relatedItem>
                         <mods:identifier type="uuid">{UNIT_UUID}</mods:identifier>
                         <mods:identifier type="urnnbn">{urnnbn}</mods:identifier>
                         <mods:identifier type="barcode">2610123456</mods:identifier>{mods_location("54 A 001/3/12")}{mods_record_info(standard)}
                     </mods:mods>''')
+
+
+def source_extent() -> str:
+    # DMF 0.2: relatedItem/part/extent (R) = rozsah stran jednotky ve zdrojovem dokumentu (pripominka Q5 k 0.1)
+    if DMF_VERSION == "0.1":
+        return ""
+    return '''
+                                <mods:extent unit="pages">
+                                    <mods:start>3</mods:start>
+                                    <mods:end>3</mods:end>
+                                </mods:extent>'''
 
 
 def dc_unit(extent: str, urnnbn: str) -> str:
@@ -720,14 +735,22 @@ def mods_page(i: int) -> str:
                             <mods:detail type="pageIndex">
                                 <mods:number>{i}</mods:number>
                             </mods:detail>
-                        </mods:part>
+                        </mods:part>{page_genre()}
                         <mods:typeOfResource>text</mods:typeOfResource>
                     </mods:mods>''')
 
 
+def page_genre() -> str:
+    # DMF 0.2 (kap. 7.4.4): genre (M) page/reprePage/variantPage s atributem type (M) = typ strany; v 0.1 chybelo
+    if DMF_VERSION == "0.1":
+        return ""
+    return '''
+                        <mods:genre type="normalPage">page</mods:genre>'''
+
+
 def dc_page(i: int) -> str:
     return dmdsec_dc(f"DCMD_PAGE_{i:04d}", f'''
-                    <dc:identifier>uuid:{page_uuid(i)}</dc:identifier>
+                    <dc:identifier>uuid:{page_uuid(i)}</dc:identifier>{"" if DMF_VERSION == "0.1" else chr(10) + "                    <dc:type>model:page</dc:type>"}
                     <dc:type>text</dc:type>''')
 
 
@@ -833,7 +856,7 @@ def info_xml(psp: str, items: list, size_kb: int, md5_name: str, md5_digest: str
     return f'''<?xml version="1.0" encoding="UTF-8"?>
 <info>
     <created>{CREATED}</created>
-    <metadataversion>0.1</metadataversion>
+    <metadataversion>{DMF_VERSION}</metadataversion>
     <packageid>{psp}</packageid>
     <mainmets>mets_{psp}.xml</mainmets>
     <validation version="2.7">Valid</validation>
@@ -866,6 +889,10 @@ MUTATIONS = {
     "wrong-dc-type": "dc:type jednotky 'model:monograph' -> BIBLIOGRAPHIC_METADATA_MATCH_PROFILE_UNIT (DC)",
     "urnnbn-prohibited-on-collection": "urnnbn navíc na UNITCOLLECTION -> MODS_PROHIBITED_IDENTIFIERS_NOT_PRESENT_LEVEL_UNITCOLLECTION (WARNING)",
     "page-type-unknown": "TYPE stránky 'weirdPage' ve fyzické mapě -> PRIMARY-METS_PHYSICAL_STRUCTURAL_MAP_CORRECT (WARNING)",
+    "page-no-genre": "(0.2) strany bez mods:genre -> BIBLIOGRAPHIC_METADATA_MATCH_PROFILE_PAGE (v 0.1 genre strany není)",
+    "directory-dc-collection": "(s --with-directory) dc:type složky 'model:collection' jako v DMF 0.1 -> v 0.2 BIBLIOGRAPHIC_METADATA_MATCH_PROFILE_DIRECTORY (DC), v 0.1 tolerováno",
+    "duplicate-page-uuid": "(--pages >= 3) poslední strana má uuid předposlední (MODS i DC) -> MODS/DC_IDENTIFIERS_NO_DUPLICATES_ACROSS_DMDSECS; odhalí chybu porovnání jen s první hodnotou",
+    "origininfo-no-eventtype": "(RDA) originInfo zdroje bez eventType -> v 0.2 BIBLIOGRAPHIC_METADATA_MATCH_PROFILE_UNIT (eventType M), v 0.1 prochází",
 }
 
 
@@ -879,7 +906,9 @@ def alto_version_for_page(page_no: int, alto_version: str, mutations: set) -> st
 
 def generate(target: str, variant: str, pages: int, with_directory: bool, standard: str, mutations: set,
              jp2_mc: str = None, jp2_uc: str = None, urnnbn_override: str = None, unit_title: str = None,
-             alto_version: str = "4.4"):
+             alto_version: str = "4.4", standard_version: str = "0.1"):
+    global DMF_VERSION
+    DMF_VERSION = standard_version
     unknown = mutations - set(MUTATIONS)
     if unknown:
         sys.exit("neznámé mutace: " + ", ".join(sorted(unknown)) + "; známé: " + ", ".join(sorted(MUTATIONS)))
@@ -937,6 +966,16 @@ def generate(target: str, variant: str, pages: int, with_directory: bool, standa
                             f'<mods:identifier type="uuid">{COLLECTION_UUID}</mods:identifier>\n                        <mods:identifier type="urnnbn">urn:nbn:cz:nk-00099z</mods:identifier>')
     if "page-type-unknown" in mutations:
         mets = mets.replace('<mets:div TYPE="normalPage" ID="DIV_PAGE_0001"', '<mets:div TYPE="weirdPage" ID="DIV_PAGE_0001"')
+    if "page-no-genre" in mutations:
+        mets = mets.replace(page_genre(), "")
+    if "directory-dc-collection" in mutations:
+        mets = mets.replace("<dc:type>model:directory</dc:type>", "<dc:type>model:collection</dc:type>")
+    if "duplicate-page-uuid" in mutations:
+        if pages < 3:
+            sys.exit("mutace duplicate-page-uuid potřebuje --pages >= 3")
+        mets = mets.replace(page_uuid(pages), page_uuid(pages - 1))
+    if "origininfo-no-eventtype" in mutations:
+        mets = mets.replace('<mods:originInfo eventType="publication">', "<mods:originInfo>")
     mets_rel = put(f"mets_{psp}.xml", mets)
 
     # MD5: vsechny soubory krome info a md5 (spec kap. 5.8), cesty absolutni vuci koreni balicku
@@ -971,6 +1010,8 @@ def main():
     ap.add_argument("--jp2-uc", help="skutecny JP2 soubor pouzity pro vsechny uzivatelske kopie (misto placeholderu)")
     ap.add_argument("--urnnbn", help="URN:NBN jednotky (default odvozeny z nazvu balicku); PSP_ID pak nesedi, pouzit jen pro test Resolveru")
     ap.add_argument("--unit-title", help="nazev jednotky (mods:title / dc:title), napr. pro shodu s Resolverem")
+    ap.add_argument("--standard-version", choices=("0.1", "0.2"), default="0.1",
+                    help="verze DMF Jednotky fondu, podle ktere se balicek staví (metadataversion v INFO)")
     ap.add_argument("--alto-version", choices=("2.0", "3.0", "4.4"), default="4.4",
                     help="verze ALTO souboru (namespace); predpis OCR pripousti 2.0 a novejsi, fDMF fund_unit_0.1 ma XSD 2.0/3.1/4.4")
     a = ap.parse_args()
@@ -979,7 +1020,7 @@ def main():
             print(f"{k}: {v}")
         return
     generate(a.target, a.variant, a.pages, a.with_directory, a.standard, set(a.mutation), a.jp2_mc, a.jp2_uc,
-             a.urnnbn, a.unit_title, a.alto_version)
+             a.urnnbn, a.unit_title, a.alto_version, a.standard_version)
     print("OK:", a.target)
 
 

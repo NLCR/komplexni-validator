@@ -34,28 +34,6 @@ public class FundUnitSmokeTest {
     }
 
     /**
-     * fund_unit_0.2 nad balickem vytvorenym podle 0.1 (vynucena verze 0.2): konfigurace se nacte a jedine chyby jsou ty,
-     * ktere DMF 0.2 nove vyzaduje u strany (mods:genre a dc:type model:page). Docasne, nez pribudou balicky 0.2
-     * z generatoru (K4); pak test nahradit kontrolou validniho balicku 0.2.
-     */
-    @Test
-    public void fundUnit02ConfigLoadsAndValidatesClipping() throws Exception {
-        String log = runAndCheckNoCrash(new File("src/test/resources/fund_unit_0.1/valid_clipping/nk-00027x"), "0.2");
-        assertTrue("validace ma bezet podle fund_unit_0.2", log.contains("0.2"));
-        int pageErrors = 0;
-        for (String line : log.split("\n")) {
-            String l = line.trim();
-            if (l.startsWith("ERROR:")) {
-                boolean expected = l.contains("MODSMD_PAGE_") && l.contains("mods:genre")
-                        || l.contains("DCMD_PAGE_") && l.contains("model:page");
-                assertTrue("neocekavany ERROR: " + l, expected);
-                pageErrors++;
-            }
-        }
-        assertTrue("ocekavany ERROR u genre/dc:type strany podle DMF 0.2", pageErrors > 0);
-    }
-
-    /**
      * Soubor kartotecnich listku s urovni DIRECTORY (RDA, 3 strany), pokryva profily directory_*.
      */
     @Test
@@ -103,6 +81,73 @@ public class FundUnitSmokeTest {
         String log = runAndCheckNoCrash(new File("src/test/resources/fund_unit_0.1/alto_unknown/nk-00027s"));
         assertTrue("ocekavan ERROR o nepodporovane verzi ALTO", log.contains("nepodporovanou verzi formátu"));
         assertTrue("balik ma byt nevalidni", log.contains("balík je: nevalidní"));
+    }
+
+    // ---- fund_unit_0.2: balicky z gen_fund_unit_package.py --standard-version 0.2 (verze se bere z INFO metadataversion)
+
+    @Test
+    public void fundUnit02GeneratedClippingIsValid() throws Exception {
+        String log = runAndCheckNoCrash(new File("src/test/resources/fund_unit_0.2/valid_clipping/nk-00027x"));
+        assertTrue("validace ma bezet podle fund_unit_0.2", log.contains("0.2"));
+        assertValid(log);
+    }
+
+    @Test
+    public void fundUnit02GeneratedCardIndexWithDirectoryIsValid() throws Exception {
+        String log = runAndCheckNoCrash(new File("src/test/resources/fund_unit_0.2/valid_card_index_directory/nk-00027z"));
+        assertValid(log);
+    }
+
+    /**
+     * DMF 0.2: strana musi mit mods:genre (M); balicek podle 0.1 bez nej je v 0.2 nevalidni.
+     */
+    @Test
+    public void fundUnit02PageWithoutGenreIsInvalid() throws Exception {
+        String log = runAndCheckNoCrash(new File("src/test/resources/fund_unit_0.2/page_no_genre/nk-00027r"));
+        assertHasError(log, "MODSMD_PAGE_0001", "mods:genre");
+    }
+
+    /**
+     * Duplicitni uuid u jine nez prvni strany (A, B, B): puvodni VfCheckIdentifiersNoDuplicates to neodhalila.
+     */
+    @Test
+    public void fundUnit02DuplicatePageUuidIsInvalid() throws Exception {
+        String log = runAndCheckNoCrash(new File("src/test/resources/fund_unit_0.2/duplicate_page_uuid/nk-00027q"));
+        assertHasError(log, "duplikovaný identifikátor", "uuid:");
+    }
+
+    /**
+     * DMF 0.2 opravila dc:type slozky na model:directory; hodnota model:collection z 0.1 uz neprochazi.
+     */
+    @Test
+    public void fundUnit02DirectoryDcCollectionIsInvalid() throws Exception {
+        String log = runAndCheckNoCrash(new File("src/test/resources/fund_unit_0.2/directory_dc_collection/nk-00027p"));
+        assertHasError(log, "DCMD_DIRECTORY_0001", "model:directory");
+    }
+
+    /**
+     * DMF 0.2: v RDA ma originInfo zdrojoveho dokumentu povinny atribut eventType.
+     */
+    @Test
+    public void fundUnit02SourceOriginInfoWithoutEventTypeIsInvalid() throws Exception {
+        String log = runAndCheckNoCrash(new File("src/test/resources/fund_unit_0.2/origininfo_no_eventtype/nk-00027n"));
+        assertHasError(log, "MODSMD_UNIT_0001", "eventType");
+    }
+
+    private void assertHasError(String log, String... fragments) {
+        for (String line : log.split("\n")) {
+            String l = line.trim();
+            if (l.startsWith("ERROR:")) {
+                boolean all = true;
+                for (String f : fragments) {
+                    all &= l.contains(f);
+                }
+                if (all) {
+                    return;
+                }
+            }
+        }
+        assertTrue("ocekavan ERROR obsahujici " + String.join(" + ", fragments), false);
     }
 
     private void assertValid(String log) {
