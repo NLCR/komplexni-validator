@@ -9,9 +9,9 @@ import nkp.pspValidator.shared.engine.params.ValueParam;
 import nkp.pspValidator.shared.engine.types.Identifier;
 
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
-import java.util.Map;
+import java.util.Set;
 
 /**
  * Created by Martin Řehánek on 27.10.16.
@@ -78,17 +78,15 @@ public class VfCheckIdentifiersNoDuplicates extends ValidationFunction {
         }
     }
 
-    private ValidationResult validate(List<List<Identifier>> idListList, List<String> ignoredTypes) {
+    ValidationResult validate(List<List<Identifier>> idListList, List<String> ignoredTypes) {
         ValidationResult result = new ValidationResult();
         for (List<Identifier> idList : idListList) {
-            //System.out.println(Utils.listToString(idList));
-            Map<String, String> map = new HashMap<>();
+            // duplicita = stejny typ i hodnota; porovnava se se vsemi drivejsimi identifikatory tehoz typu, ne jen s prvnim
+            // (puvodni mapa typ -> prvni hodnota neodhalila napr. uuid A, B, B)
+            Set<Identifier> seen = new HashSet<>();
             for (Identifier id : idList) {
                 if (!ignoredTypes.contains(id.getType())) {
-                    String valueFound = map.get(id.getType());
-                    if (valueFound == null) {
-                        map.put(id.getType(), id.getValue());
-                    } else if (valueFound.equals(id.getValue())) {
+                    if (!seen.add(id)) {
                         result.addError(new ValidationProblem(Level.ERROR, String.format("seznam obsahuje duplikovaný identifikátor '%s'", id.toString()))
                                 .withSimpleMessage("seznam obsahuje duplikovaný identifikátor")
                                 .withLabel("id_type=" + id.getType())
