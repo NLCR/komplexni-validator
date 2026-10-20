@@ -1049,7 +1049,8 @@
         
         <rule name="INFO_INDENTIFIERS_MATCH_TOP_LEVEL_MODS_IDENTIFIERS">
             <description>Identifikátory v souboru INFO (titleid) by měly odpovídat identifikátorům na úrovni UNITCOLLECTION
-                v záznamu MODS (DMF Jednotky fondu 0.2, kap. 7.1: titleid nese identifikátory kolekce).
+                v záznamu MODS (DMF Jednotky fondu 0.2, kap. 7.1: titleid nese všechny platné identifikátory kolekce). Identifikátor
+                z INFO, který v MODS není, je chyba; platný identifikátor kolekce z MODS, který v INFO chybí, je varování.
             </description>
             <validation functionName="checkInfoFileIdentifiersMatchTopLevelModsIdentifiers">
                 <params>
@@ -1081,7 +1082,9 @@
                             </params>
                         </evaluation>
                     </value>
-                    
+                    <!--DMF 0.2, kap. 7.1: titleid = všechny platné identifikátory kolekce; chybějící jen jako WARNING,
+                    dokud NK neupřesní popis atributu type (připomínky k draftu 0.2, bod 3.4)-->
+                    <value name="check_mods_identifiers_in_info" type="BOOLEAN">true</value>
                 </params>
             </validation>
         </rule>
@@ -1152,7 +1155,7 @@
 
         <rule name="DC_PROHIBITED_IDENTIFIERS_NOT_PRESENT_LEVEL_UNITCOLLECTION">
             <description>
-                Úroveň UNITCOLLECTION nesmí obsahovat žádné zakázané identifikátory v záznamu Dublin Core. Zákazy jsou výklad DMF 0.1, proto jen WARNING.
+                Úroveň UNITCOLLECTION nesmí obsahovat žádné zakázané identifikátory v záznamu Dublin Core. Zákazy jsou výklad DMF 0.2, proto jen WARNING.
             </description>
             <validation functionName="checkIdentifiersNoneTypePresent">
                 <params>
@@ -1228,7 +1231,7 @@
 
         <rule name="DC_PROHIBITED_IDENTIFIERS_NOT_PRESENT_LEVEL_DIRECTORY">
             <description>
-                Úroveň DIRECTORY nesmí obsahovat žádné zakázané identifikátory v záznamu Dublin Core. Zákazy jsou výklad DMF 0.1, proto jen WARNING.
+                Úroveň DIRECTORY nesmí obsahovat žádné zakázané identifikátory v záznamu Dublin Core. Zákazy jsou výklad DMF 0.2, proto jen WARNING.
             </description>
             <validation functionName="checkIdentifiersNoneTypePresent">
                 <params>
@@ -1304,7 +1307,7 @@
 
         <rule name="DC_PROHIBITED_IDENTIFIERS_NOT_PRESENT_LEVEL_UNIT">
             <description>
-                Úroveň UNIT nesmí obsahovat žádné zakázané identifikátory v záznamu Dublin Core. Zákazy jsou výklad DMF 0.1, proto jen WARNING.
+                Úroveň UNIT nesmí obsahovat žádné zakázané identifikátory v záznamu Dublin Core. Zákazy jsou výklad DMF 0.2, proto jen WARNING.
             </description>
             <validation functionName="checkIdentifiersNoneTypePresent">
                 <params>
@@ -1380,7 +1383,7 @@
 
         <rule name="DC_PROHIBITED_IDENTIFIERS_NOT_PRESENT_LEVEL_PAGE">
             <description>
-                Úroveň PAGE nesmí obsahovat žádné zakázané identifikátory v záznamu Dublin Core. Zákazy jsou výklad DMF 0.1, proto jen WARNING.
+                Úroveň PAGE nesmí obsahovat žádné zakázané identifikátory v záznamu Dublin Core. Zákazy jsou výklad DMF 0.2, proto jen WARNING.
             </description>
             <validation functionName="checkIdentifiersNoneTypePresent">
                 <params>
@@ -1535,7 +1538,7 @@
 
         <rule name="MODS_PROHIBITED_IDENTIFIERS_NOT_PRESENT_LEVEL_UNITCOLLECTION">
             <description>
-                Úroveň UNITCOLLECTION nesmí obsahovat žádné zakázané identifikátory v záznamu MODS. Zákazy jsou výklad DMF 0.1, proto jen WARNING.
+                Úroveň UNITCOLLECTION nesmí obsahovat žádné zakázané identifikátory v záznamu MODS. Zákazy jsou výklad DMF 0.2, proto jen WARNING.
             </description>
             <validation functionName="checkIdentifiersNoneTypePresent">
                 <params>
@@ -1611,7 +1614,7 @@
 
         <rule name="MODS_PROHIBITED_IDENTIFIERS_NOT_PRESENT_LEVEL_DIRECTORY">
             <description>
-                Úroveň DIRECTORY nesmí obsahovat žádné zakázané identifikátory v záznamu MODS. Zákazy jsou výklad DMF 0.1, proto jen WARNING.
+                Úroveň DIRECTORY nesmí obsahovat žádné zakázané identifikátory v záznamu MODS. Zákazy jsou výklad DMF 0.2, proto jen WARNING.
             </description>
             <validation functionName="checkIdentifiersNoneTypePresent">
                 <params>
@@ -1687,7 +1690,7 @@
 
         <rule name="MODS_PROHIBITED_IDENTIFIERS_NOT_PRESENT_LEVEL_UNIT">
             <description>
-                Úroveň UNIT nesmí obsahovat žádné zakázané identifikátory v záznamu MODS. Zákazy jsou výklad DMF 0.1, proto jen WARNING.
+                Úroveň UNIT nesmí obsahovat žádné zakázané identifikátory v záznamu MODS. Zákazy jsou výklad DMF 0.2, proto jen WARNING.
             </description>
             <validation functionName="checkIdentifiersNoneTypePresent">
                 <params>
@@ -1763,7 +1766,7 @@
 
         <rule name="MODS_PROHIBITED_IDENTIFIERS_NOT_PRESENT_LEVEL_PAGE">
             <description>
-                Úroveň PAGE nesmí obsahovat žádné zakázané identifikátory v záznamu MODS. Zákazy jsou výklad DMF 0.1, proto jen WARNING.
+                Úroveň PAGE nesmí obsahovat žádné zakázané identifikátory v záznamu MODS. Zákazy jsou výklad DMF 0.2, proto jen WARNING.
             </description>
             <validation functionName="checkIdentifiersNoneTypePresent">
                 <params>
@@ -2341,8 +2344,9 @@
                     <value name="primary-mets_file" type="FILE">
                         <value-ref name="PRIMARY-METS_FILE"/>
                     </value>
-                    <!--DMF Jednotky fondu 0.2 uvádí TYPE rodičovského divu jen příkladem („např. Unit“), proto se nekontroluje; viz otázka Q5 pro NKP-->
-                    <!--<value name="expected_top_level_div_type" type="STRING">UNIT</value>-->
+                    <!--DMF Jednotky fondu 0.2, kap. 7.7.1: TYPE rodičovského divu "UNIT" (v 0.1 „např. Unit“, opraveno podle připomínky E3;
+                    v draftu 0.2 zůstalo „např.“, NK hodnotu potvrdila)-->
+                    <value name="expected_top_level_div_type" type="STRING">UNIT</value>
                     <value name="filegroups_to_check" type="STRING_LIST">
                         <evaluation functionName="buildListOfStrings">
                             <params>

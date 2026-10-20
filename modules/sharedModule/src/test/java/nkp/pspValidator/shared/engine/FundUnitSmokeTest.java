@@ -34,14 +34,25 @@ public class FundUnitSmokeTest {
     }
 
     /**
-     * fund_unit_0.2 (zatim kopie 0.1 s upravenymi odkazy na kapitoly DMF 0.2): konfigurace se nacte a balicek
-     * vytvoreny podle 0.1 projde i pri vynucene verzi 0.2. Vlastni balicky 0.2 pribudou s generatorem (K4).
+     * fund_unit_0.2 nad balickem vytvorenym podle 0.1 (vynucena verze 0.2): konfigurace se nacte a jedine chyby jsou ty,
+     * ktere DMF 0.2 nove vyzaduje u strany (mods:genre a dc:type model:page). Docasne, nez pribudou balicky 0.2
+     * z generatoru (K4); pak test nahradit kontrolou validniho balicku 0.2.
      */
     @Test
     public void fundUnit02ConfigLoadsAndValidatesClipping() throws Exception {
         String log = runAndCheckNoCrash(new File("src/test/resources/fund_unit_0.1/valid_clipping/nk-00027x"), "0.2");
         assertTrue("validace ma bezet podle fund_unit_0.2", log.contains("0.2"));
-        assertValid(log);
+        int pageErrors = 0;
+        for (String line : log.split("\n")) {
+            String l = line.trim();
+            if (l.startsWith("ERROR:")) {
+                boolean expected = l.contains("MODSMD_PAGE_") && l.contains("mods:genre")
+                        || l.contains("DCMD_PAGE_") && l.contains("model:page");
+                assertTrue("neocekavany ERROR: " + l, expected);
+                pageErrors++;
+            }
+        }
+        assertTrue("ocekavany ERROR u genre/dc:type strany podle DMF 0.2", pageErrors > 0);
     }
 
     /**

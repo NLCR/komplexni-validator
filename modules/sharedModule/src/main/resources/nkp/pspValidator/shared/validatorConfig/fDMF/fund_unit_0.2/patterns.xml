@@ -135,7 +135,8 @@
 
     <pattern-def name="SECONDARY-METS_FILENAME">
         <description>Vzor pro jména souborů SECONDARY-METS v rámci adresáře SECONDARY-METS-DIR.</description>
-        <expression caseSensitive="true">amd_mets_${PSP_ID}_[0-9]+\.xml</expression>
+        <!--DMF Jednotky fondu 0.2, kap. 6: čtyřmístné pořadové číslo-->
+        <expression caseSensitive="true">amd_mets_${PSP_ID}_[0-9]{4}\.xml</expression>
     </pattern-def>
 
 
@@ -146,7 +147,8 @@
         <!--<expression caseSensitive="false">txt_${PSP_ID}_[0-9]+\.txt</expression>-->
 
         <!--per>=1.5, mon>=1.1-->
-        <expression caseSensitive="true">txt_${PSP_ID}_[0-9]+\.txt</expression>
+        <!--DMF Jednotky fondu 0.2, kap. 6: čtyřmístné pořadové číslo-->
+        <expression caseSensitive="true">txt_${PSP_ID}_[0-9]{4}\.txt</expression>
     </pattern-def>
 
     <pattern-def name="OCR-ALTO_FILENAME">
@@ -156,7 +158,8 @@
         <!--<expression caseSensitive="false">alto_${PSP_ID}_[0-9]+\.xml</expression>-->
 
         <!--per>=1.5, mon>=1.1-->
-        <expression caseSensitive="true">alto_${PSP_ID}_[0-9]+\.xml</expression>
+        <!--DMF Jednotky fondu 0.2, kap. 6: čtyřmístné pořadové číslo-->
+        <expression caseSensitive="true">alto_${PSP_ID}_[0-9]{4}\.xml</expression>
     </pattern-def>
 
     <pattern-def name="MASTER-COPY_FILENAME">
@@ -166,7 +169,8 @@
         <!--<expression caseSensitive="false">mc_${PSP_ID}_[0-9]+\.jp2</expression>-->
 
         <!--per>=1.5, mon>=1.1-->
-        <expression caseSensitive="true">mc_${PSP_ID}_[0-9]+\.jp2</expression>
+        <!--DMF Jednotky fondu 0.2, kap. 6: čtyřmístné pořadové číslo-->
+        <expression caseSensitive="true">mc_${PSP_ID}_[0-9]{4}\.jp2</expression>
     </pattern-def>
 
     <pattern-def name="USER-COPY_FILENAME">
@@ -176,7 +180,8 @@
         <!--<expression caseSensitive="false">uc_${PSP_ID}_[0-9]+\.jp2</expression>-->
 
         <!--per>=1.5, mon>=1.1-->
-        <expression caseSensitive="true">uc_${PSP_ID}_[0-9]+\.jp2</expression>
+        <!--DMF Jednotky fondu 0.2, kap. 6: čtyřmístné pořadové číslo-->
+        <expression caseSensitive="true">uc_${PSP_ID}_[0-9]{4}\.jp2</expression>
     </pattern-def>
 
 

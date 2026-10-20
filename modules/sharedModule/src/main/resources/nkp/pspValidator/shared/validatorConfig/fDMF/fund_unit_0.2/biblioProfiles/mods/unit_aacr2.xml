@@ -452,9 +452,12 @@
                         </expectedAttributes>
                         <expectedContent/>
                     </element>
+                    <!--part (MA): ročník a číslo zdrojového periodika (detail) a rozsah stran jednotky ve zdroji (extent, R;
+                    DMF 0.2 doplnila podle připomínky Q5). DMF 0.2 má detail jako M a part "pouze pro periodika", takže rozsah
+                    u monografie zapsat nejde; než NK rozhodne (připomínky k draftu 0.2, bod 2.2), part bez detail prochází.-->
                     <element name="mods:part" mandatory="false">
                         <expectedElements>
-                            <element name="mods:detail">
+                            <element name="mods:detail" mandatory="false">
                                 <expectedAttributes>
                                     <attribute name="type">
                                         <expectedContent>
@@ -467,6 +470,23 @@
                                 </expectedAttributes>
                                 <expectedElements>
                                     <element name="mods:number">
+                                        <expectedContent/>
+                                    </element>
+                                </expectedElements>
+                            </element>
+                            <element name="mods:extent" mandatory="false">
+                                <expectedAttributes>
+                                    <attribute name="unit">
+                                        <expectedContent>
+                                            <value>pages</value>
+                                        </expectedContent>
+                                    </attribute>
+                                </expectedAttributes>
+                                <expectedElements>
+                                    <element name="mods:start" mandatory="false">
+                                        <expectedContent/>
+                                    </element>
+                                    <element name="mods:end" mandatory="false">
                                         <expectedContent/>
                                     </element>
                                 </expectedElements>

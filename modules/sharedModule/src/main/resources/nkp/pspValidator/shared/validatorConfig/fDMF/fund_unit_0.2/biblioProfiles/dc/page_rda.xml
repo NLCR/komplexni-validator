@@ -35,7 +35,12 @@
             <element name="dc:title" mandatory="false">
                 <expectedContent/>
             </element>
-            <element name="dc:type" mandatory="false">
+            <!--dc:type model:page (M): mapování z mods:genre strany (DMF 0.2, kap. 7.4.4; v 0.1 chybělo, připomínka Q4)-->
+            <element name="dc:type" specification="text()='model:page'"
+                     errorMessage="Očekáván povinný element dc:type obsahující text 'model:page'.">
+                <expectedContent/>
+            </element>
+            <element name="dc:type" specification="not(text()='model:page')" mandatory="false">
                 <expectedContent/>
             </element>
             <element name="dc:description" mandatory="false">

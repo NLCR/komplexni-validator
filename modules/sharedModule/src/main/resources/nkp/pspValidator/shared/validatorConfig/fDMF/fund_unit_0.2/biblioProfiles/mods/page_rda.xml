@@ -114,6 +114,59 @@
                     </element>
                 </expectedElements>
             </element>
+            <!--genre (M): "page", "reprePage" nebo "variantPage" (DMF 0.2 doplnila, v 0.1 chyběl; připomínka Q4).
+            Atribut type (M): typ strany podle Pravidel pro popis periodik, seznam shodný s page_types v rules.xml
+            (Pravidla 8.7; DMF 0.2 odkazuje na 8.8, doplnit po jejich vydání). Význam a počet "variantPage" DMF neupřesňuje,
+            dotaz pro NK (připomínky k draftu 0.2, bod 3.6).-->
+            <element name="mods:genre">
+                <expectedAttributes>
+                    <attribute name="type">
+                        <expectedContent>
+                            <oneOf>
+                                <value>cover</value>
+                                <value>frontCover</value>
+                                <value>backCover</value>
+                                <value>errata</value>
+                                <value>spine</value>
+                                <value>normalPage</value>
+                                <value>blank</value>
+                                <value>jacket</value>
+                                <value>frontEndPaper</value>
+                                <value>backEndPaper</value>
+                                <value>frontEndSheet</value>
+                                <value>backEndSheet</value>
+                                <value>frontJacket</value>
+                                <value>listOfIllustrations</value>
+                                <value>listOfMaps</value>
+                                <value>listOfTables</value>
+                                <value>colophon</value>
+                                <value>titlePage</value>
+                                <value>flyleaf</value>
+                                <value>bibliography</value>
+                                <value>dedication</value>
+                                <value>afterword</value>
+                                <value>illustration</value>
+                                <value>advertisement</value>
+                                <value>map</value>
+                                <value>sheetMusic</value>
+                                <value>tableOfContents</value>
+                                <value>preface</value>
+                                <value>index</value>
+                                <value>table</value>
+                                <value>introduction</value>
+                                <value>conclusion</value>
+                            </oneOf>
+                        </expectedContent>
+                    </attribute>
+                </expectedAttributes>
+                <expectedContent>
+                    <oneOf>
+                        <value>page</value>
+                        <value>reprePage</value>
+                        <value>variantPage</value>
+                    </oneOf>
+                </expectedContent>
+            </element>
             <element name="mods:typeOfResource" mandatory="false">
                 <expectedContent>
                     <oneOf>

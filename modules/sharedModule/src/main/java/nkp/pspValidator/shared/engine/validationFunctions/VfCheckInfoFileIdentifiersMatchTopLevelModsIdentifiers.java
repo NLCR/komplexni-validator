@@ -16,12 +16,15 @@ public class VfCheckInfoFileIdentifiersMatchTopLevelModsIdentifiers extends Vali
     public static final String PARAM_INFO_IDENTIFIER_LIST = "info_file_identifier_list";
     public static final String PARAM_IDENTIFIER_LIST_LIST = "mets_identifier_list_list";
     public static final String PARAM_IDENTIFIER_LIST_LIST_2 = "mets_identifier_list_list_2";
+    // volitelně i opačný směr: identifikátor z top-level MODS, který v INFO chybí, je varování (fund_unit_0.2, DMF kap. 7.1)
+    public static final String PARAM_CHECK_MODS_IDS_IN_INFO = "check_mods_identifiers_in_info";
 
     public VfCheckInfoFileIdentifiersMatchTopLevelModsIdentifiers(String name, Engine engine) {
         super(name, engine, new Contract()
                 .withValueParam(PARAM_INFO_IDENTIFIER_LIST, ValueType.IDENTIFIER_LIST, 1, 1)
                 .withValueParam(PARAM_IDENTIFIER_LIST_LIST, ValueType.IDENTIFIER_LIST_LIST, 1, 1)
                 .withValueParam(PARAM_IDENTIFIER_LIST_LIST_2, ValueType.IDENTIFIER_LIST_LIST, 0, 1)
+                .withValueParam(PARAM_CHECK_MODS_IDS_IN_INFO, ValueType.BOOLEAN, 0, 1)
         );
     }
 
@@ -68,7 +71,13 @@ public class VfCheckInfoFileIdentifiersMatchTopLevelModsIdentifiers extends Vali
                 }
             }
 
-            return validate(infoFileIdList, modsIdListList1, modsIidListList2);
+            boolean checkModsIdsInInfo = false;
+            List<ValueParam> checkModsIdsInInfoParams = valueParams.getParams(PARAM_CHECK_MODS_IDS_IN_INFO);
+            if (checkModsIdsInInfoParams.size() == 1) {
+                checkModsIdsInInfo = (boolean) checkModsIdsInInfoParams.get(0).getEvaluation().getData();
+            }
+
+            return validate(infoFileIdList, modsIdListList1, modsIidListList2, checkModsIdsInInfo);
         } catch (ContractException e) {
             return invalidContractNotMet(e);
         } catch (Throwable e) {
@@ -76,7 +85,7 @@ public class VfCheckInfoFileIdentifiersMatchTopLevelModsIdentifiers extends Vali
         }
     }
 
-    private ValidationResult validate(List<Identifier> infoFileIdList, List<List<Identifier>> idListList, List<List<Identifier>> idListList2) {
+    private ValidationResult validate(List<Identifier> infoFileIdList, List<List<Identifier>> idListList, List<List<Identifier>> idListList2, boolean checkModsIdsInInfo) {
         //identifiers from MODS
         //prefer idListList, then idListList2 and use first list available
         List<Identifier> metsTopLevelIdList = null;
@@ -90,10 +99,10 @@ public class VfCheckInfoFileIdentifiersMatchTopLevelModsIdentifiers extends Vali
                             .withSimpleMessage("nenalezeny identifikátory z MODS pro porovnání s identifikátory z info souboru")
             );
         }
-        return matchInfoIdsAndTopLevelModsIds(infoFileIdList, metsTopLevelIdList);
+        return matchInfoIdsAndTopLevelModsIds(infoFileIdList, metsTopLevelIdList, checkModsIdsInInfo);
     }
 
-    private ValidationResult matchInfoIdsAndTopLevelModsIds(List<Identifier> infoIds, List<Identifier> topLevelModsIds) {
+    private ValidationResult matchInfoIdsAndTopLevelModsIds(List<Identifier> infoIds, List<Identifier> topLevelModsIds, boolean checkModsIdsInInfo) {
         ValidationResult result = new ValidationResult();
 
         //check if everything in info_ids is present in mets-top-level_ids
@@ -108,18 +117,18 @@ public class VfCheckInfoFileIdentifiersMatchTopLevelModsIdentifiers extends Vali
         }
 
         //check if everything in mets-top-level_ids is present in info_ids
-        //disabled duo to specifics of different DMFs
-        /*
-        for (int i = 0; i < topLevelModsIds.size(); i++) {
-            Identifier idFromMods = topLevelModsIds.get(i);
-            if (!listContainsItem(infoIds, idFromMods)) {
-                result.addError(new ValidationProblem(Level.ERROR, String.format("identifikátor z top-level MODS záznamu '%s' není přítomen mezi identifikátory z INFO souboru", idFromMods))
-                        .withSimpleMessage("identifikátor z top-level MODS záznamu není přítomen mezi identifikátory z INFO souboru")
-                        .withReferencedValue(idFromMods.toString())
-                );
+        //only on request (fund_unit_0.2), other DMFs don't require it; WARNING only
+        if (checkModsIdsInInfo) {
+            for (int i = 0; i < topLevelModsIds.size(); i++) {
+                Identifier idFromMods = topLevelModsIds.get(i);
+                if (!listContainsItem(infoIds, idFromMods)) {
+                    result.addError(new ValidationProblem(Level.WARNING, String.format("identifikátor z top-level MODS záznamu '%s' není přítomen mezi identifikátory z INFO souboru", idFromMods))
+                            .withSimpleMessage("identifikátor z top-level MODS záznamu není přítomen mezi identifikátory z INFO souboru")
+                            .withReferencedValue(idFromMods.toString())
+                    );
+                }
             }
         }
-        */
 
         return result;
     }
