@@ -3,12 +3,12 @@
         xmlns="http://www.nkp.cz/pspValidator/2.8/metadataProfile"
         name="MODS unit (RDA)"
         validatorVersion="2.8"
-        dmf="fund_unit_0.1"
+        dmf="fund_unit_0.2"
 >
 
     <info>
-        <text>DMF Jednotky fondu 0.1 očekává MODS verze 3.8. Dále se zde upřesňují očekávaná metadata pro dílčí jednotku
-            fondu (UNIT: výstřižek, soubor výstřižků nebo soubor kartotéčních lístků; kap. 7.3.3, s. 33-41) pro záznamy
+        <text>DMF Jednotky fondu 0.2 očekává MODS verze 3.8. Dále se zde upřesňují očekávaná metadata pro dílčí jednotku
+            fondu (UNIT: výstřižek, soubor výstřižků nebo soubor kartotéčních lístků; kap. 7.4.3) pro záznamy
             zpracované podle katalogizačních pravidel RDA. Varianta jednotky se rozlišuje hodnotou mods:genre.
         </text>
         <url description="Definice metadatových formátů pro jednotky fondu (draft 0.1, 9. 12. 2025)">https://standardy.ndk.cz/ndk/standardy-digitalizace</url>
@@ -169,7 +169,7 @@
                     </element>
                 </expectedElements>
             </element>
-            <!--genre (M): jedna ze tří hodnot podle typu jednotky (spec s. 35); atribut type (O) odkazuje na Pravidla pro popis periodik-->
+            <!--genre (M): jedna ze tří hodnot podle typu jednotky; atribut type (O) odkazuje na Pravidla pro popis periodik-->
             <element name="mods:genre" specification="text()='clipping' or text()='clippingIndex' or text()='cardIndex'">
                 <expectedAttributes>
                     <attribute name="type" mandatory="false"/>
@@ -291,7 +291,7 @@
                     </element>
                 </expectedElements>
             </element>
-            <!--relatedItem (MA): zdrojový dokument jednotky (spec s. 37-40); může obsahovat libovolné další elementy MODS-->
+            <!--relatedItem (MA): zdrojový dokument jednotky; může obsahovat libovolné další elementy MODS-->
             <element name="mods:relatedItem" mandatory="false" ignoreUnexpectedChildElements="true">
                 <expectedAttributes>
                     <attribute name="type" mandatory="false">
@@ -333,7 +333,7 @@
                         </expectedElements>
                     </element>
                     <!--RDA: originInfo (MA) s atributem eventType podle druhého indikátoru pole 264; alespoň jeden výskyt
-                    production nebo publication (spec s. 38). Rozlišení hodnot roleTerm podle eventType.-->
+                    production nebo publication. Rozlišení hodnot roleTerm podle eventType.-->
                     <element name="mods:originInfo" specification="@eventType='production'" mandatory="false">
                         <expectedAttributes>
                             <attribute name="eventType"/>
@@ -829,7 +829,7 @@
                 <extraRules>
                     <existsAtLeastOnce
                             xpath="mods:originInfo[@eventType='production' or @eventType='publication']"
-                            description="V RDA musí být alespoň jeden originInfo s eventType production nebo publication (spec s. 38)"
+                            description="V RDA musí být alespoň jeden originInfo s eventType production nebo publication"
                     />
                 </extraRules>
             </element>

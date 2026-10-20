@@ -3,12 +3,12 @@
         xmlns="http://www.nkp.cz/pspValidator/2.8/metadataProfile"
         name="MODS page (AACR2)"
         validatorVersion="2.8"
-        dmf="fund_unit_0.1"
+        dmf="fund_unit_0.2"
 >
 
     <info>
-        <text>DMF Jednotky fondu 0.1 očekává MODS verze 3.8. Dále se zde upřesňují očekávaná metadata pro stranu
-            (PAGE, kap. 7.3.4, s. 42-43). Strana nerozlišuje katalogizační pravidla, profil AACR2 je shodný s druhým.
+        <text>DMF Jednotky fondu 0.2 očekává MODS verze 3.8. Dále se zde upřesňují očekávaná metadata pro stranu
+            (PAGE, kap. 7.4.4). Strana nerozlišuje katalogizační pravidla, profil AACR2 je shodný s druhým.
         </text>
         <url description="Definice metadatových formátů pro jednotky fondu (draft 0.1, 9. 12. 2025)">https://standardy.ndk.cz/ndk/standardy-digitalizace</url>
         <url>http://www.loc.gov/standards/mods/</url>

@@ -1,5 +1,5 @@
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
-    <!--XML Schema pro soubor INFO pro DMF Jednotky fondu 0.1-->
+    <!--XML Schema pro soubor INFO pro DMF Jednotky fondu 0.2-->
 
     <!--METS Profile requirement id infoxml2-->
     <xs:element name="info">
@@ -78,7 +78,9 @@
     <xs:simpleType name="metadataVersion">
         <xs:restriction base="xs:string">
             <!--tohle se lisi podle verze DMF (fDMF), jejiz soucasti je tenhle soubor-->
+            <!--DMF Jednotky fondu 0.2, kap. 7.1: povolené hodnoty 0.1 a 0.2 (verze DMF, podle ktere byl balicek vytvoren)-->
             <xs:enumeration value="0.1"/>
+            <xs:enumeration value="0.2"/>
         </xs:restriction>
     </xs:simpleType>
 

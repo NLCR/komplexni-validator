@@ -3,12 +3,12 @@
         xmlns="http://www.nkp.cz/pspValidator/2.8/metadataProfile"
         name="MODS directory (RDA)"
         validatorVersion="2.8"
-        dmf="fund_unit_0.1"
+        dmf="fund_unit_0.2"
 >
 
     <info>
-        <text>DMF Jednotky fondu 0.1 očekává MODS verze 3.8. Dále se zde upřesňují očekávaná metadata pro složku
-            (DIRECTORY, kap. 7.3.2, s. 27-32) pro záznamy zpracované podle katalogizačních pravidel RDA. Úroveň je nepovinná.
+        <text>DMF Jednotky fondu 0.2 očekává MODS verze 3.8. Dále se zde upřesňují očekávaná metadata pro složku
+            (DIRECTORY, kap. 7.4.2) pro záznamy zpracované podle katalogizačních pravidel RDA. Úroveň je nepovinná.
         </text>
         <url description="Definice metadatových formátů pro jednotky fondu (draft 0.1, 9. 12. 2025)">https://standardy.ndk.cz/ndk/standardy-digitalizace</url>
         <url>http://www.loc.gov/standards/mods/</url>
@@ -162,7 +162,7 @@
                     </element>
                 </expectedElements>
             </element>
-            <!--genre (M): hodnota "directory" (spec s. 29); další genre (R) pro žánr předlohy-->
+            <!--genre (M): hodnota "directory"; další genre (R) pro žánr předlohy-->
             <element name="mods:genre" specification="text()='directory'">
                 <expectedContent>
                     <value>directory</value>

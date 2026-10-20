@@ -3,11 +3,11 @@
         xmlns="http://www.nkp.cz/pspValidator/2.8/metadataProfile"
         name="DC page (RDA)"
         validatorVersion="2.8"
-        dmf="fund_unit_0.1"
+        dmf="fund_unit_0.2"
 >
 
     <info>
-        <text>DMF Jednotky fondu 0.1 očekává Dublin Core verze 1.1. Dále se zde upřesňují očekávaná metadata pro stranu (PAGE, kap. 7.3.4)
+        <text>DMF Jednotky fondu 0.2 očekává Dublin Core verze 1.1. Dále se zde upřesňují očekávaná metadata pro stranu (PAGE, kap. 7.4.4)
             pro záznamy zpracované podle katalogizačních pravidel RDA. DC vzniká mapováním z MODS (sloupec Element DC ve spec).
         </text>
         <url description="Definice metadatových formátů pro jednotky fondu (draft 0.1, 9. 12. 2025)">https://standardy.ndk.cz/ndk/standardy-digitalizace</url>

@@ -1,6 +1,6 @@
 <fDMF xmlns="http://www.nkp.cz/pspValidator/2.8/fdmfConfig"
       validatorVersion="2.8"
-      dmf="fund_unit_0.1"
+      dmf="fund_unit_0.2"
 >
     <description>
         Zde jsou definovány validační pravidla. K samotným validacím se používají validační funkce, jejichž parametry
@@ -303,7 +303,7 @@
 
 
         <rule name="SINGLE_CATALOG-ENTRY-DIR_FILE_FOUND">
-            <description>Adresář CATALOG-ENTRY-DIR je nepovinný (DMF Jednotky fondu 0.1, kap. 5.9), smí být nejvýše jeden.
+            <description>Adresář CATALOG-ENTRY-DIR je nepovinný (DMF Jednotky fondu 0.2, kap. 5.9), smí být nejvýše jeden.
             </description>
             <validation functionName="checkFilelistSizeInRange">
                 <params>
@@ -829,7 +829,7 @@
         </rule>
 
         <rule name="CHECKSUM_FILE_ALL_PATHS_MATCH_FILES">
-            <description>Soubor CHECKSUM musí obsahovat záznamy pro každý uvedený soubor a žádný jiný (DMF Jednotky fondu 0.1,
+            <description>Soubor CHECKSUM musí obsahovat záznamy pro každý uvedený soubor a žádný jiný (DMF Jednotky fondu 0.2,
                 kap. 5.8: všechny soubory balíčku kromě info.xml a souboru .md5, tedy včetně catalog_entry).
             </description>
             <validation functionName="checkChecksumFileAllPathsMatchFiles">
@@ -893,7 +893,7 @@
 
 
         <rule name="INFO_XML_VALID_BY_XSD">
-            <description>Soubor INFO by měl být validní podle XML Schema (info_dad_0.1.xsd).</description>
+            <description>Soubor INFO by měl být validní podle XML Schema (info_fdu_0.2.xsd).</description>
             <validation functionName="checkXmlIsValidByXsd">
                 <params>
                     <value name="xml_file" type="FILE">
@@ -1017,7 +1017,7 @@
         <!--psp id-->
         <rule name="PSP_ID_DERIVED_FROM_IE_ID">
             <description>PSP-ID by měl být odvozen od některého z identifikátorů intelektuální entity (UNIT), a to typu
-                'urnnbn' nebo 'uuid' (DMF Jednotky fondu 0.1, kap. 6, s. 15).
+                'urnnbn' nebo 'uuid' (DMF Jednotky fondu 0.2, kap. 6).
             </description>
             <validation functionName="checkStringDerivedFromUrnnbnOrUuid">
                 <params>
@@ -1049,7 +1049,7 @@
         
         <rule name="INFO_INDENTIFIERS_MATCH_TOP_LEVEL_MODS_IDENTIFIERS">
             <description>Identifikátory v souboru INFO (titleid) by měly odpovídat identifikátorům na úrovni UNITCOLLECTION
-                v záznamu MODS (DMF Jednotky fondu 0.1, kap. 5.1: titleid nese identifikátory kolekce).
+                v záznamu MODS (DMF Jednotky fondu 0.2, kap. 7.1: titleid nese identifikátory kolekce).
             </description>
             <validation functionName="checkInfoFileIdentifiersMatchTopLevelModsIdentifiers">
                 <params>
@@ -2310,7 +2310,7 @@
                         <value-ref name="PRIMARY-METS_FILE"/>
                     </value>
                     <value name="div_types_allowed" type="STRING_LIST">
-                        <!--DMF Jednotky fondu 0.1, kap. 7.6 (s. 45-46): UNITCOLLECTION (M), DIRECTORY (O), UNIT (M) s vnořenými
+                        <!--DMF Jednotky fondu 0.2, kap. 7.7: UNITCOLLECTION (M), DIRECTORY (O), UNIT (M) s vnořenými
                         částmi; div PAGE je v logické mapě nepovinný-->
                         <evaluation functionName="buildListOfStrings">
                             <params>
@@ -2341,7 +2341,7 @@
                     <value name="primary-mets_file" type="FILE">
                         <value-ref name="PRIMARY-METS_FILE"/>
                     </value>
-                    <!--DMF Jednotky fondu 0.1 (s. 44) uvádí TYPE rodičovského divu jen příkladem („např. Unit“), proto se nekontroluje; viz otázka Q5 pro NKP-->
+                    <!--DMF Jednotky fondu 0.2 uvádí TYPE rodičovského divu jen příkladem („např. Unit“), proto se nekontroluje; viz otázka Q5 pro NKP-->
                     <!--<value name="expected_top_level_div_type" type="STRING">UNIT</value>-->
                     <value name="filegroups_to_check" type="STRING_LIST">
                         <evaluation functionName="buildListOfStrings">
@@ -2355,7 +2355,7 @@
                         </evaluation>
                     </value>
                     <value name="page_types" type="STRING_LIST">
-                        <!--DMF Jednotky fondu 0.1, kap. 7.6.1 (s. 44) odkazuje na typy stran dle Pravidel pro popis periodik (v8.6).
+                        <!--DMF Jednotky fondu 0.2, kap. 7.7.1 odkazuje na typy stran dle Pravidel pro popis periodik (v8.6).
                         Seznam odpovídá tabulce v kap. 1.2.2 Pravidel pro popis periodik, dokument verze 8.6 ze 17. 12. 2024
                         (sloupce "Typ strany" a "Typ strany/Vnitřní část", 32 hodnot); verze 8.7 (22. 12. 2025) hodnoty nemění, jen opravuje
                         velikost písmen (jacket, colophon, flyleaf, frontJacket). Shodný se seznamem ve fDMF periodical_2.2-->
@@ -2423,7 +2423,7 @@
                     <value name="secondary-mets_files" type="FILE_LIST">
                         <value-ref name="SECONDARY-METS_FILES"/>
                     </value>
-                    <!--DMF Jednotky fondu 0.1, kap. 7.6.2 (s. 46): jediný div TYPE="UNIT"-->
+                    <!--DMF Jednotky fondu 0.2, kap. 7.7.2: jediný div TYPE="UNIT"-->
                     <value name="expected_page_type" type="STRING">UNIT</value>
                     <value name="filegroups_to_check" type="STRING_LIST">
                         <evaluation functionName="buildListOfStrings">
@@ -2689,7 +2689,7 @@
 
         <rule name="OCR-ALTO_FILES_VALID_BY_XSD">
             <description>Soubory OCR-ALTO musí být validní podle XML Schema pro verzi ALTO danou namespace kořenového elementu
-                (alto_2.1.xsd, alto_3.1.xsd, alto_4.4.xsd; nejvyšší minor každého majora). DMF Jednotky fondu 0.1 tab. 1.4 a kap. 7.8 odkazují na předpis
+                (alto_2.1.xsd, alto_3.1.xsd, alto_4.4.xsd; nejvyšší minor každého majora). DMF Jednotky fondu 0.2 tab. 1.4 a kap. 7.9 odkazují na předpis
                 OCR (ALTO XML a TXT OCR) 1.0 (17. 12. 2024), který připouští ALTO 2.0 a novější; soubor s jiným namespace je chyba.
             </description>
             <validation functionName="checkXmlIsValidByXsdByNamespace">

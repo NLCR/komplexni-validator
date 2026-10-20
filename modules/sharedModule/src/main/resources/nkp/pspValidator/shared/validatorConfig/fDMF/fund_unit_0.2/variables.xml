@@ -1,6 +1,6 @@
 <fDMF xmlns="http://www.nkp.cz/pspValidator/2.8/fdmfConfig"
       validatorVersion="2.8"
-      dmf="fund_unit_0.1"
+      dmf="fund_unit_0.2"
 >
     <description>
         Zde jsou definovány proměnné. K jejich vyhodnocení jsou použity funkce, další proměnné, vzory a
@@ -270,7 +270,7 @@
 
 
 
-    <!--slozka catalog_entry je nepovinna (DMF Jednotky fondu 0.1, kap. 5.9: "Tato slozka neni povinna"), proto null misto chyby-->
+    <!--slozka catalog_entry je nepovinna (DMF Jednotky fondu 0.2, kap. 5.9: "Tato slozka neni povinna"), proto null misto chyby-->
     <value-def name="CATALOG-ENTRY-DIR_FILE" type="FILE">
         <evaluation functionName="getFirstFileFromFileList">
             <params>
@@ -454,7 +454,7 @@
     <!--identifikátory-->
 
     <!--datacollection-->
-    <!--Identifikátory podle DMF Jednotky fondu 0.1, kap. 4 (s. 9) a profilů MODS (kap. 7.3). UUID povinné na všech
+    <!--Identifikátory podle DMF Jednotky fondu 0.2, kap. 4 a profilů MODS (kap. 7.4). UUID povinné na všech
     úrovních, URN:NBN povinné jen na úrovni UNIT. Zákazy na úrovních UNITCOLLECTION/DIRECTORY/PAGE jsou náš výklad
     („jiný interní identifikátor“), proto se v pravidlech hlásí jako WARNING, dokud NK nepotvrdí.-->
 

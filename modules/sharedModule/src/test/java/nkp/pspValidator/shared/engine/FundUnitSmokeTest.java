@@ -13,7 +13,7 @@ import java.io.PrintStream;
 import static org.junit.Assert.assertTrue;
 
 /**
- * Smoke test fDMF fund_unit_0.1: konfigurace se nacte, validator se sestavi a projde vsechna pravidla
+ * Smoke test fDMF fund_unit_0.1 a fund_unit_0.2: konfigurace se nacte, validator se sestavi a projde vsechna pravidla
  * nad minimalnim balickem bez vyjimky. Neresi, ze balicek je validni (neni, chybi mu vetsina souboru).
  */
 public class FundUnitSmokeTest {
@@ -30,6 +30,17 @@ public class FundUnitSmokeTest {
     @Test
     public void generatedClippingIsValid() throws Exception {
         String log = runAndCheckNoCrash(new File("src/test/resources/fund_unit_0.1/valid_clipping/nk-00027x"));
+        assertValid(log);
+    }
+
+    /**
+     * fund_unit_0.2 (zatim kopie 0.1 s upravenymi odkazy na kapitoly DMF 0.2): konfigurace se nacte a balicek
+     * vytvoreny podle 0.1 projde i pri vynucene verzi 0.2. Vlastni balicky 0.2 pribudou s generatorem (K4).
+     */
+    @Test
+    public void fundUnit02ConfigLoadsAndValidatesClipping() throws Exception {
+        String log = runAndCheckNoCrash(new File("src/test/resources/fund_unit_0.1/valid_clipping/nk-00027x"), "0.2");
+        assertTrue("validace ma bezet podle fund_unit_0.2", log.contains("0.2"));
         assertValid(log);
     }
 
@@ -91,10 +102,16 @@ public class FundUnitSmokeTest {
     }
 
     private String runAndCheckNoCrash(File pspRootDir) throws Exception {
+        return runAndCheckNoCrash(pspRootDir, null);
+    }
+
+    private String runAndCheckNoCrash(File pspRootDir, String forcedFduVersion) throws Exception {
         File validatorConfigDir = new File("src/main/resources/nkp/pspValidator/shared/validatorConfig");
         ValidatorConfigurationManager configManager = new ValidatorConfigurationManager(validatorConfigDir);
         FdmfRegistry registry = new FdmfRegistry(configManager);
-        Dmf dmf = new DmfDetector().resolveDmf(pspRootDir, new DmfDetector.Params());
+        DmfDetector.Params params = new DmfDetector.Params();
+        params.forcedDmfFduVersion = forcedFduVersion;
+        Dmf dmf = new DmfDetector().resolveDmf(pspRootDir, params);
         FdmfConfiguration fdmfConfig = registry.getFdmfConfig(dmf);
         ExternalUtilManager utilManager = new ExternalUtilManagerFactory(configManager.getExternalUtilsConfigFile())
                 .buildExternalUtilManager(Platform.detectOs().getOperatingSystem());

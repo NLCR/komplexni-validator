@@ -118,7 +118,8 @@ public class ValidatorFactoryRegistryTest {
         ValidatorConfigurationManager validatorConfigManager = new ValidatorConfigurationManager(validatorConfigDir);
         FdmfRegistry registry = new FdmfRegistry(validatorConfigManager);
 
-        assertEquals(1, registry.getFundUnitFdmfVersions().size());
+        assertEquals(2, registry.getFundUnitFdmfVersions().size());
         assertTrue(registry.getFundUnitFdmfVersions().contains("0.1"));
+        assertTrue(registry.getFundUnitFdmfVersions().contains("0.2"));
     }
 }
