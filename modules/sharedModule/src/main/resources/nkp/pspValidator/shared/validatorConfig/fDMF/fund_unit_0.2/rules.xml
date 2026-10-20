@@ -1047,6 +1047,24 @@
             </validation>
         </rule>
         
+        <rule name="INFO_IDENTIFIER_TYPES_KNOWN">
+            <description>Typy identifikátorů v souboru INFO (titleid/@type) by měly být z výčtu DMF Jednotky fondu 0.2, kap. 4;
+                jiný typ je nutné konzultovat s odd. standardů, proto jen WARNING.
+            </description>
+            <validation functionName="checkIdentifiersOnlyTypesPresent">
+                <params>
+                    <value name="identifier_list" type="IDENTIFIER_LIST">
+                        <value-ref name="INFO_IDENTIFIERS"/>
+                    </value>
+                    <value name="id_types" type="STRING_LIST">
+                        <value-ref name="ID_TYPES_KNOWN"/>
+                    </value>
+                    <value name="level_name" type="STRING">INFO</value>
+                    <value name="level" type="LEVEL">WARNING</value>
+                </params>
+            </validation>
+        </rule>
+
         <rule name="INFO_INDENTIFIERS_MATCH_TOP_LEVEL_MODS_IDENTIFIERS">
             <description>Identifikátory v souboru INFO (titleid) by měly odpovídat identifikátorům na úrovni UNITCOLLECTION
                 v záznamu MODS (DMF Jednotky fondu 0.2, kap. 7.1: titleid nese všechny platné identifikátory kolekce). Identifikátor
@@ -1419,6 +1437,42 @@
             </validation>
         </rule>
 
+
+        <rule name="DC_IDENTIFIER_TYPES_KNOWN">
+            <description>Typy identifikátorů ve všech záznamech Dublin Core by měly být z výčtu DMF Jednotky fondu 0.2, kap. 4;
+                jiný typ je nutné konzultovat s odd. standardů, proto jen WARNING.
+            </description>
+            <validation functionName="checkIdentifiersOnlyTypesPresent">
+                <params>
+                    <value name="identifier_list_list" type="IDENTIFIER_LIST_LIST">
+                        <evaluation functionName="getDcIdentifiersForEachDmdsecId">
+                            <params>
+                                <value name="dmdsec_ids" type="STRING_LIST">
+                                    <evaluation functionName="getStringListByXpath">
+                                        <params>
+                                            <value name="xml_file" type="FILE">
+                                                <value-ref name="PRIMARY-METS_FILE"/>
+                                            </value>
+                                            <value name="xpath" type="STRING">
+                                                /mets:mets/mets:dmdSec[starts-with(@ID, "DCMD_")]/@ID
+                                            </value>
+                                        </params>
+                                    </evaluation>
+                                </value>
+                                <value name="mets_file" type="FILE">
+                                    <value-ref name="PRIMARY-METS_FILE"/>
+                                </value>
+                            </params>
+                        </evaluation>
+                    </value>
+                    <value name="id_types" type="STRING_LIST">
+                        <value-ref name="ID_TYPES_KNOWN"/>
+                    </value>
+                    <value name="level_name" type="STRING">Dublin Core</value>
+                    <value name="level" type="LEVEL">WARNING</value>
+                </params>
+            </validation>
+        </rule>
 
         <rule name="DC_IDENTIFIERS_NO_DUPLICATES_WITHIN_DMDSEC">
             <description>Identifikátory v jednotlivých Dublin Core záznamech by měly mít unikátní typ.
@@ -1802,6 +1856,44 @@
             </validation>
         </rule>
 
+
+        <rule name="MODS_IDENTIFIER_TYPES_KNOWN">
+            <description>Typy identifikátorů ve všech záznamech MODS by měly být z výčtu DMF Jednotky fondu 0.2, kap. 4;
+                jiný typ je nutné konzultovat s odd. standardů, proto jen WARNING.
+            </description>
+            <validation functionName="checkIdentifiersOnlyTypesPresent">
+                <params>
+                    <value name="identifier_list_list" type="IDENTIFIER_LIST_LIST">
+                        <evaluation functionName="getModsIdentifiersForEachDmdsecId">
+                            <params>
+                                <value name="dmdsec_ids" type="STRING_LIST">
+                                    <evaluation functionName="getStringListByXpath">
+                                        <params>
+                                            <value name="xml_file" type="FILE">
+                                                <value-ref name="PRIMARY-METS_FILE"/>
+                                            </value>
+                                            <value name="xpath" type="STRING">
+                                                /mets:mets/mets:dmdSec[starts-with(@ID, "MODSMD_")]/@ID
+                                            </value>
+                                        </params>
+                                    </evaluation>
+                                </value>
+                                <value name="mets_file" type="FILE">
+                                    <value-ref name="PRIMARY-METS_FILE"/>
+                                </value>
+                                <!--výčet typů platí i pro neplatné identifikátory (invalid="yes")-->
+                                <value name="include_invalid" type="BOOLEAN">true</value>
+                            </params>
+                        </evaluation>
+                    </value>
+                    <value name="id_types" type="STRING_LIST">
+                        <value-ref name="ID_TYPES_KNOWN"/>
+                    </value>
+                    <value name="level_name" type="STRING">MODS</value>
+                    <value name="level" type="LEVEL">WARNING</value>
+                </params>
+            </validation>
+        </rule>
 
         <rule name="MODS_IDENTIFIERS_NO_DUPLICATES_WITHIN_DMDSEC">
             <description>Identifikátory v jednotlivých MODS záznamech by měly mít unikátní typ.

@@ -210,6 +210,8 @@ public class Engine {
                 return new VfCheckIdentifiersAllTypesPresent(name, this);
             case "checkIdentifiersNoneTypePresent":
                 return new VfCheckIdentifiersNoneTypePresent(name, this);
+            case "checkIdentifiersOnlyTypesPresent":
+                return new VfCheckIdentifiersOnlyTypesPresent(name, this);
             case "checkDcIdentifiersDoNotContainWhiteSpaces":
                 return new VfCheckDcIdentifiersDoNotContainWhiteSpaces(name, this);
             case "checkUrnNbnIdentifiersValid":

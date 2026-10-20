@@ -568,6 +568,36 @@
         </evaluation>
     </value-def>
 
+    <value-def name="ID_TYPES_KNOWN" type="STRING_LIST">
+        <!--DMF Jednotky fondu 0.2, kap. 4: základní identifikátory (uuid, urnnbn, ccnb, issn/issn-l, isbn, ismn) a výčet
+        "jiných identifikátorů"; názvy jsou case sensitive, typ mimo výčet se má konzultovat s odd. standardů, proto jen
+        WARNING (připomínky k draftu 0.2, bod 3.2). Platí pro všechny úrovně, MODS, DC i titleid v INFO.-->
+        <description>seznam všech typů identifikátorů známých DMF Jednotky fondu 0.2 (kap. 4)</description>
+        <evaluation functionName="buildListOfStrings">
+            <params>
+                <value name="string" type="STRING">uuid</value>
+                <value name="string" type="STRING">urnnbn</value>
+                <value name="string" type="STRING">ccnb</value>
+                <value name="string" type="STRING">issn</value>
+                <value name="string" type="STRING">issn-l</value>
+                <value name="string" type="STRING">isbn</value>
+                <value name="string" type="STRING">ismn</value>
+                <value name="string" type="STRING">barcode</value>
+                <value name="string" type="STRING">sysno</value>
+                <value name="string" type="STRING">oclc</value>
+                <value name="string" type="STRING">lccn</value>
+                <value name="string" type="STRING">doi</value>
+                <value name="string" type="STRING">handle</value>
+                <value name="string" type="STRING">permalink</value>
+                <value name="string" type="STRING">accession</value>
+                <value name="string" type="STRING">local</value>
+                <value name="string" type="STRING">contract</value>
+                <value name="string" type="STRING">bcbt</value>
+                <value name="string" type="STRING">knihopis</value>
+            </params>
+        </evaluation>
+    </value-def>
+
     <!--page (strana)-->
     <value-def name="ID_TYPES_PAGE_MANDATORY" type="STRING_LIST">
         <description>seznam povinných typů identifikátorů pro úroveň PAGE</description>

@@ -281,6 +281,21 @@
         </params-def>
     </validationFunction>
 
+    <validationFunction name="checkIdentifiersOnlyTypesPresent">
+        <description>Zkontroluje, že všechny identifikátory v seznamech mají typ z povoleného seznamu (protějšek
+            checkIdentifiersNoneTypePresent). Úroveň hlášení je volitelná, výchozí WARNING.
+        </description>
+        <params-def>
+            <value name="identifier_list" type="IDENTIFIER_LIST" min="0" maxOccurs="unbounded"
+                   description="seznam identifikátorů, jejichž typy se kontrolují"/>
+            <value name="identifier_list_list" type="IDENTIFIER_LIST_LIST" min="0" maxOccurs="unbounded"
+                   description="seznam seznamů identifikátorů"/>
+            <value name="id_types" type="STRING_LIST" description="povolené typy identifikátorů"/>
+            <value name="level_name" type="STRING" description="název úrovně popisu nebo zdroje (jen do hlášky)"/>
+            <value name="level" type="LEVEL" min="0" description="úroveň hlášení, výchozí WARNING"/>
+        </params-def>
+    </validationFunction>
+
     <!--DEPRECATED, replaced with checkStringDerivedFromUrnnbnOrUuid -->
     <validationFunction name="checkStringDerivedFromOneOfIdentifiers">
         <description>Ověří, že řetězec je odvozen od některého z identifikátoru. Vztah "být

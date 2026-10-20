@@ -134,6 +134,26 @@ public class FundUnitSmokeTest {
         assertHasError(log, "MODSMD_UNIT_0001", "eventType");
     }
 
+    /**
+     * DMF 0.2, kap. 4: typ identifikatoru mimo vycet je jen WARNING (ma se konzultovat s odd. standardu).
+     */
+    @Test
+    public void fundUnit02UnknownIdentifierTypeWarns() throws Exception {
+        String log = runAndCheckNoCrash(new File("src/test/resources/fund_unit_0.2/unknown_identifier_type/nk-00027m"));
+        assertValid(log);
+        assertHasLine(log, "WARNING:", "neznámého typu 'inventory'");
+    }
+
+    private void assertHasLine(String log, String prefix, String fragment) {
+        for (String line : log.split("\n")) {
+            String l = line.trim();
+            if (l.startsWith(prefix) && l.contains(fragment)) {
+                return;
+            }
+        }
+        assertTrue("ocekavan radek " + prefix + " obsahujici " + fragment, false);
+    }
+
     private void assertHasError(String log, String... fragments) {
         for (String line : log.split("\n")) {
             String l = line.trim();

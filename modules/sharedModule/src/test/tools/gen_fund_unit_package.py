@@ -893,6 +893,7 @@ MUTATIONS = {
     "directory-dc-collection": "(s --with-directory) dc:type složky 'model:collection' jako v DMF 0.1 -> v 0.2 BIBLIOGRAPHIC_METADATA_MATCH_PROFILE_DIRECTORY (DC), v 0.1 tolerováno",
     "duplicate-page-uuid": "(--pages >= 3) poslední strana má uuid předposlední (MODS i DC) -> MODS/DC_IDENTIFIERS_NO_DUPLICATES_ACROSS_DMDSECS; odhalí chybu porovnání jen s první hodnotou",
     "origininfo-no-eventtype": "(RDA) originInfo zdroje bez eventType -> v 0.2 BIBLIOGRAPHIC_METADATA_MATCH_PROFILE_UNIT (eventType M), v 0.1 prochází",
+    "unknown-identifier-type": "(0.2) identifikátor jednotky typu 'inventory' místo barcode (MODS i DC) -> MODS/DC_IDENTIFIER_TYPES_KNOWN (WARNING)",
 }
 
 
@@ -976,6 +977,9 @@ def generate(target: str, variant: str, pages: int, with_directory: bool, standa
         mets = mets.replace(page_uuid(pages), page_uuid(pages - 1))
     if "origininfo-no-eventtype" in mutations:
         mets = mets.replace('<mods:originInfo eventType="publication">', "<mods:originInfo>")
+    if "unknown-identifier-type" in mutations:
+        mets = mets.replace('<mods:identifier type="barcode">', '<mods:identifier type="inventory">')
+        mets = mets.replace("<dc:identifier>barcode:", "<dc:identifier>inventory:")
     mets_rel = put(f"mets_{psp}.xml", mets)
 
     # MD5: vsechny soubory krome info a md5 (spec kap. 5.8), cesty absolutni vuci koreni balicku

@@ -3,6 +3,7 @@ package nkp.pspValidator.shared.engine.evaluationFunctions;
 import nkp.pspValidator.shared.engine.Engine;
 import nkp.pspValidator.shared.engine.ValueEvaluation;
 import nkp.pspValidator.shared.engine.ValueType;
+import nkp.pspValidator.shared.engine.params.ValueParam;
 import nkp.pspValidator.shared.engine.exceptions.ContractException;
 import nkp.pspValidator.shared.engine.exceptions.InvalidXPathExpressionException;
 import nkp.pspValidator.shared.engine.exceptions.XmlFileParsingException;
@@ -25,12 +26,15 @@ public class EfGetModsIdentifiersForEachDmdsecId extends EvaluationFunction {
 
     private static final String PARAM_DMDSEC_IDS = "dmdsec_ids";
     private static final String PARAM_METS_FILE = "mets_file";
+    // volitelne: vratit i identifikatory s invalid="yes" (napr. pro kontrolu typu identifikatoru); vychozi false
+    private static final String PARAM_INCLUDE_INVALID = "include_invalid";
 
     public EfGetModsIdentifiersForEachDmdsecId(String name, Engine engine) {
         super(name, engine, new Contract()
                 .withReturnType(ValueType.IDENTIFIER_LIST_LIST)
                 .withValueParam(PARAM_DMDSEC_IDS, ValueType.STRING_LIST, 1, 1)
                 .withValueParam(PARAM_METS_FILE, ValueType.FILE, 1, 1)
+                .withValueParam(PARAM_INCLUDE_INVALID, ValueType.BOOLEAN, 0, 1)
         );
     }
 
@@ -57,7 +61,13 @@ public class EfGetModsIdentifiersForEachDmdsecId extends EvaluationFunction {
                 return errorResultCannotReadFile(metsFile);
             }
 
-            return evaluate(dmdsecIds, metsFile);
+            boolean includeInvalid = false;
+            List<ValueParam> includeInvalidParams = valueParams.getParams(PARAM_INCLUDE_INVALID);
+            if (includeInvalidParams.size() == 1) {
+                includeInvalid = (boolean) includeInvalidParams.get(0).getEvaluation().getData();
+            }
+
+            return evaluate(dmdsecIds, metsFile, includeInvalid);
         } catch (ContractException e) {
             return errorResultContractNotMet(e);
         } catch (Throwable e) {
@@ -65,7 +75,7 @@ public class EfGetModsIdentifiersForEachDmdsecId extends EvaluationFunction {
         }
     }
 
-    private ValueEvaluation evaluate(List<String> dmdsecIds, File xmlFile) {
+    private ValueEvaluation evaluate(List<String> dmdsecIds, File xmlFile, boolean includeInvalid) {
         try {
             List<List<Identifier>> result = new ArrayList<>();
             for (String dmdSecId : dmdsecIds) {
@@ -76,7 +86,9 @@ public class EfGetModsIdentifiersForEachDmdsecId extends EvaluationFunction {
                     return errorResult("dokument neobsahuje právě jeden element dmdSec s ID=" + dmdSecId);
                 }
                 Element dmdsecEl = (Element) dmdSecNodes.item(0);
-                XPathExpression xpathIdentifier = engine.buildXpath("mets:mdWrap/mets:xmlData/mods:mods/mods:identifier[not(@invalid='yes')]");
+                XPathExpression xpathIdentifier = engine.buildXpath(includeInvalid
+                        ? "mets:mdWrap/mets:xmlData/mods:mods/mods:identifier"
+                        : "mets:mdWrap/mets:xmlData/mods:mods/mods:identifier[not(@invalid='yes')]");
                 NodeList idEls = (NodeList) xpathIdentifier.evaluate(dmdsecEl, XPathConstants.NODESET);
                 List<Identifier> idList = new ArrayList<>();
                 for (int i = 0; i < idEls.getLength(); i++) {

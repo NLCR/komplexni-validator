@@ -60,7 +60,9 @@
             <element name="dc:date" mandatory="false">
                 <expectedContent/>
             </element>
-            <element name="dc:format" mandatory="false">
+            <!--dc:format (M): mapování z mods:physicalDescription/extent (M); podle legendy DMF 0.2 platí povinnost i pro DC-->
+            <element name="dc:format"
+                     errorMessage="Očekáván povinný element dc:format (rozsah jednotky, mapování z mods:physicalDescription/extent).">
                 <expectedContent/>
             </element>
             <element name="dc:description" mandatory="false">

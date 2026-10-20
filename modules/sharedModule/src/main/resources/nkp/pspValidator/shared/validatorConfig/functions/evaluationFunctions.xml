@@ -153,6 +153,18 @@
     </evaluationFunction>
 
 
+    <evaluationFunction name="getModsIdentifiersForEachDmdsecId" resultType="IDENTIFIER_LIST_LIST">
+        <description>Vrátí seznam seznamů identifikátorů z MODS - pro každý dmdSec jeden seznam. Identifikátory
+            s atributem invalid="yes" se vynechávají, pokud není include_invalid true.
+        </description>
+        <params-def>
+            <value name="dmdsec_ids" type="STRING_LIST"/>
+            <value name="mets_file" type="FILE"/>
+            <value name="include_invalid" type="BOOLEAN" min="0"
+                   description="true: vrátit i neplatné identifikátory (invalid=&quot;yes&quot;), výchozí false"/>
+        </params-def>
+    </evaluationFunction>
+
     <evaluationFunction name="getDcIdentifiersForEachDmdsecId" resultType="IDENTIFIER_LIST_LIST">
         <description>Vrátí seznam seznamů identifikátorů z Dublin Core - pro každý dmdSec jeden seznam.</description>
         <params-def>

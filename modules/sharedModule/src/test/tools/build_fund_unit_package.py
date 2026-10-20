@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Sestaveni SIP balicku podle DMF Jednotky fondu 0.1 z realnych skenu (JP2) a popisnych metadat v JSON predpisu.
+Sestaveni SIP balicku podle DMF Jednotky fondu 0.1 nebo 0.2 (--standard-version, default 0.1) z realnych skenu (JP2) a popisnych metadat v JSON predpisu.
 
 Doplnuje gen_fund_unit_package.py (synteticky generator): pouziva jeho stavebni bloky pro PREMIS, METS a MODS,
 ale obrazy, OCR a technicka metadata vychazeji ze skutecnych souboru:
@@ -702,6 +702,9 @@ def main_mets(psp: str, spec: dict, u: dict, page_files: dict, page_uuids: dict,
 '''
 
 
+DMF_VERSION = "0.1"  # nastavuje main() podle --standard-version
+
+
 def info_xml(psp: str, spec: dict, items: list, size_kb: int, md5_name: str, md5_digest: str, created: str) -> str:
     c = spec["collection"]
     item_els = "".join(f"\n        <item>\\{p.replace('/', chr(92))}</item>" for p in items)
@@ -711,7 +714,7 @@ def info_xml(psp: str, spec: dict, items: list, size_kb: int, md5_name: str, md5
     return f'''<?xml version="1.0" encoding="UTF-8"?>
 <info>
     <created>{created}</created>
-    <metadataversion>0.1</metadataversion>
+    <metadataversion>{DMF_VERSION}</metadataversion>
     <packageid>{psp}</packageid>
     <mainmets>mets_{psp}.xml</mainmets>
     <validation version="2.7">Valid</validation>{titleids}
@@ -722,7 +725,7 @@ def info_xml(psp: str, spec: dict, items: list, size_kb: int, md5_name: str, md5
     <itemlist itemtotal="{len(items)}">{item_els}
     </itemlist>
     <checksum type="md5" checksum="{md5_digest}">\\{md5_name}</checksum>
-    <note>{esc(spec.get("note", "Vzorový balíček podle DMF Jednotky fondu 0.1 sestavený nástrojem build_fund_unit_package.py."))}</note>
+    <note>{esc(spec.get("note", f"Vzorový balíček podle DMF Jednotky fondu {DMF_VERSION} sestavený nástrojem build_fund_unit_package.py."))}</note>
 </info>
 '''
 
@@ -895,7 +898,12 @@ def main():
     ap.add_argument("--kakadu-bin", default=KAKADU_BIN_DEFAULT)
     ap.add_argument("--kakadu-lib", default=KAKADU_LIB_DEFAULT)
     ap.add_argument("--lang", default="ces", help="jazyk tesseractu")
+    ap.add_argument("--standard-version", choices=("0.1", "0.2"), default="0.1",
+                    help="verze DMF Jednotky fondu (metadataversion v INFO); popisná metadata pro 0.2 (genre strany, "
+                         "extent zdroje) zatím builder nedoplňuje, viz plán 2.9 K6")
     a = ap.parse_args()
+    global DMF_VERSION
+    DMF_VERSION = a.standard_version
     spec = json.load(open(a.spec, encoding="utf-8"))
     tools = Tools(a.kakadu_bin, a.kakadu_lib, a.lang, os.path.join(a.out, ".work"))
     units = [u for u in spec["units"] if not a.unit or u["psp"] in a.unit]
