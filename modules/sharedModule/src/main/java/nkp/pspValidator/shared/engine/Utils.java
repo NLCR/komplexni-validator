@@ -93,7 +93,6 @@ public class Utils {
         }
         // tenhle tvar nesmi ale zacinat na tecky ani lomitka
         if (filePath.matches("^[\\./\\\\]+.*")) {
-            System.out.println(filePath);
             throw new InvalidPathException(filePath);
         }
         String[] segments = filePath.split("[\\\\/]");
