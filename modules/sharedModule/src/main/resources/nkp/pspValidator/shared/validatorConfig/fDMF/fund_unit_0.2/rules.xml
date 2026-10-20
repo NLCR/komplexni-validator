@@ -1035,9 +1035,7 @@
         <!--info identifiers -->
 
         <rule name="INFO_NO_DUPLICATE_IDENTIFIERS">
-            <description>Soubor INFO nesmí obsahovat duplikované identifikátory (tedy více identifikátorů stejného
-                typu).
-            </description>
+            <description>Soubor INFO nesmí obsahovat duplikované identifikátory (stejný typ i hodnota).</description>
             <validation functionName="checkIdentifiersNoDuplicates">
                 <params>
                     <value name="identifier_list" type="IDENTIFIER_LIST">

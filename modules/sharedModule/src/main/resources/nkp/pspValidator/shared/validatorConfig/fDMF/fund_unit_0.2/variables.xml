@@ -490,6 +490,7 @@
                 <value name="string" type="STRING">isbn</value>
                 <value name="string" type="STRING">ismn</value>
                 <value name="string" type="STRING">issn</value>
+                <value name="string" type="STRING">issn-l</value>
             </params>
         </evaluation>
     </value-def>
@@ -527,6 +528,7 @@
                 <value name="string" type="STRING">isbn</value>
                 <value name="string" type="STRING">ismn</value>
                 <value name="string" type="STRING">issn</value>
+                <value name="string" type="STRING">issn-l</value>
             </params>
         </evaluation>
     </value-def>
@@ -564,6 +566,7 @@
                 <value name="string" type="STRING">isbn</value>
                 <value name="string" type="STRING">ismn</value>
                 <value name="string" type="STRING">issn</value>
+                <value name="string" type="STRING">issn-l</value>
             </params>
         </evaluation>
     </value-def>
@@ -627,6 +630,7 @@
                 <value name="string" type="STRING">isbn</value>
                 <value name="string" type="STRING">ismn</value>
                 <value name="string" type="STRING">issn</value>
+                <value name="string" type="STRING">issn-l</value>
                 <value name="string" type="STRING">barcode</value>
                 <value name="string" type="STRING">sysno</value>
                 <value name="string" type="STRING">oclc</value>

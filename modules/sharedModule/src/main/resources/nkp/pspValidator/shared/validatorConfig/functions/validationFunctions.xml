@@ -250,6 +250,8 @@
                    description="seznam identifikátorů z INFO souboru"/>
             <value name="mets_identifier_list_list" type="IDENTIFIER_LIST_LIST" min="1" maxOccurs="1"
                    description="seznam seznamů identifikátorů z MODS záznamu na nejvyšší úrovni popisu (primární)"/>
+            <value name="check_mods_identifiers_in_info" type="BOOLEAN" min="0"
+                   description="true: navíc WARNING pro identifikátor z top-level MODS (bez invalid=yes), který v INFO chybí; výchozí false"/>
             <value name="mets_identifier_list_list_2" type="IDENTIFIER_LIST_LIST" min="0" maxOccurs="1"
                    description="seznam seznamů identifikátorů z MODS záznamu na nejvyšší úrovni popisu (sekundární), použije se, pokud je primární seznam prázdný"/>
         </params-def>

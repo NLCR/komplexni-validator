@@ -74,7 +74,11 @@ public class VfCheckInfoFileIdentifiersMatchTopLevelModsIdentifiers extends Vali
             boolean checkModsIdsInInfo = false;
             List<ValueParam> checkModsIdsInInfoParams = valueParams.getParams(PARAM_CHECK_MODS_IDS_IN_INFO);
             if (checkModsIdsInInfoParams.size() == 1) {
-                checkModsIdsInInfo = (boolean) checkModsIdsInInfoParams.get(0).getEvaluation().getData();
+                ValueEvaluation eval = checkModsIdsInInfoParams.get(0).getEvaluation();
+                if (eval.getData() == null) {
+                    return invalidValueParamNull(PARAM_CHECK_MODS_IDS_IN_INFO, eval);
+                }
+                checkModsIdsInInfo = (boolean) eval.getData();
             }
 
             return validate(infoFileIdList, modsIdListList1, modsIidListList2, checkModsIdsInInfo);
@@ -85,7 +89,7 @@ public class VfCheckInfoFileIdentifiersMatchTopLevelModsIdentifiers extends Vali
         }
     }
 
-    private ValidationResult validate(List<Identifier> infoFileIdList, List<List<Identifier>> idListList, List<List<Identifier>> idListList2, boolean checkModsIdsInInfo) {
+    ValidationResult validate(List<Identifier> infoFileIdList, List<List<Identifier>> idListList, List<List<Identifier>> idListList2, boolean checkModsIdsInInfo) {
         //identifiers from MODS
         //prefer idListList, then idListList2 and use first list available
         List<Identifier> metsTopLevelIdList = null;

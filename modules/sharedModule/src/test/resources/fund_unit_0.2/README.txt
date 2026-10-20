@@ -10,3 +10,7 @@ src/test/tools/gen_fund_unit_package.py s --standard-version 0.2 a reálnými JP
   unknown_identifier_type/nk-00027m    --mutation unknown-identifier-type
 
 Vždy navíc --jp2-mc src/test/tools/jp2/mc.jp2 --jp2-uc src/test/tools/jp2/uc.jp2. Testy: FundUnitSmokeTest.
+  unknown_identifier_type_invalid/nk-00027l --mutation unknown-identifier-type-invalid
+  info_missing_collection_id/nk-00027k --mutation info-missing-collection-id
+  top_div_type_unit_lowercase/nk-00027j --mutation top-div-type-unit-lowercase
+  unit_dc_no_format/nk-00027i          --mutation unit-dc-no-format

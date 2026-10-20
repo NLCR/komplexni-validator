@@ -10,7 +10,7 @@
         <text>DMF Jednotky fondu 0.2 očekává Dublin Core verze 1.1. Dále se zde upřesňují očekávaná metadata pro složku (DIRECTORY, kap. 7.4.2)
             pro záznamy zpracované podle katalogizačních pravidel AACR2. DC vzniká mapováním z MODS (sloupec Element DC ve spec).
         </text>
-        <url description="Definice metadatových formátů pro jednotky fondu (draft 0.1, 9. 12. 2025)">https://standardy.ndk.cz/ndk/standardy-digitalizace</url>
+        <url description="Definice metadatových formátů pro jednotky fondu (draft 0.2, 20. 10. 2026)">https://standardy.ndk.cz/ndk/standardy-digitalizace</url>
         <url description="popis Dublin Core 1.1">http://dublincore.org/documents/dces/</url>
         <url description="XSD pro Dublin Core 1.1">http://www.openarchives.org/OAI/2.0/oai_dc.xsd</url>
     </info>
@@ -43,7 +43,7 @@
             </element>
             <!--další dc:type jen pro žánr předlohy (mapování z opakovaného mods:genre); jiné hodnoty model:* (např. zděděné
             model:collection) jsou chyba-->
-            <element name="dc:type" specification="not(text()='model:directory') and not(starts-with(text(), 'model:'))" mandatory="false">
+            <element name="dc:type" specification="not(starts-with(text(), 'model:'))" mandatory="false">
                 <expectedContent/>
             </element>
             <element name="dc:identifier"

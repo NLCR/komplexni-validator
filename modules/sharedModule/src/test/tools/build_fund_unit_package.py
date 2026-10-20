@@ -904,6 +904,9 @@ def main():
     a = ap.parse_args()
     global DMF_VERSION
     DMF_VERSION = a.standard_version
+    if DMF_VERSION != "0.1":
+        sys.exit("builder zatím umí jen DMF 0.1: pro 0.2 chybí genre strany, dc:type model:page a extent zdroje "
+                 "(plán 2.9, K6); balíček s metadataversion 0.2 by v validátoru nebyl validní")
     spec = json.load(open(a.spec, encoding="utf-8"))
     tools = Tools(a.kakadu_bin, a.kakadu_lib, a.lang, os.path.join(a.out, ".work"))
     units = [u for u in spec["units"] if not a.unit or u["psp"] in a.unit]

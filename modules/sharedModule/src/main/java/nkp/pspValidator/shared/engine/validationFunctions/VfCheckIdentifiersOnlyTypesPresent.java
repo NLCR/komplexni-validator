@@ -76,7 +76,7 @@ public class VfCheckIdentifiersOnlyTypesPresent extends ValidationFunction {
             }
 
 
-            //level (optional, default WARNING to keep behaviour of older fDMFs)
+            //level (optional, default WARNING: DMF mimo vycet typ pripousti po konzultaci)
             Level level = Level.WARNING;
             List<ValueParam> paramsLevel = valueParams.getParams(PARAM_LEVEL);
             if (!paramsLevel.isEmpty()) {
@@ -101,7 +101,11 @@ public class VfCheckIdentifiersOnlyTypesPresent extends ValidationFunction {
         for (List<Identifier> idList : idListList) {
             for (Identifier idFound : idList) {
                 if (!typesAllowed.contains(idFound.getType())) {
-                    result.addError(invalid(level, "nalezen identifikátor neznámého typu '%s' (%s); povolené typy viz seznam v konfiguraci", idFound.getType(), levelName));
+                    result.addError(new ValidationProblem(level, String.format("%s: identifikátor '%s' má typ '%s' mimo výčet povolených typů", levelName, idFound, idFound.getType()))
+                            .withSimpleMessage("typ identifikátoru mimo výčet povolených typů")
+                            .withLabel("id_type=" + idFound.getType())
+                            .withReferencedValue(idFound.toString())
+                    );
                 }
             }
         }

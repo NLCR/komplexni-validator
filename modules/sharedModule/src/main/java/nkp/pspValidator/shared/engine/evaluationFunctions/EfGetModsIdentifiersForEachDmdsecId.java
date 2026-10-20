@@ -64,7 +64,11 @@ public class EfGetModsIdentifiersForEachDmdsecId extends EvaluationFunction {
             boolean includeInvalid = false;
             List<ValueParam> includeInvalidParams = valueParams.getParams(PARAM_INCLUDE_INVALID);
             if (includeInvalidParams.size() == 1) {
-                includeInvalid = (boolean) includeInvalidParams.get(0).getEvaluation().getData();
+                ValueEvaluation eval = includeInvalidParams.get(0).getEvaluation();
+                if (eval.getData() == null) {
+                    return errorResultParamNull(PARAM_INCLUDE_INVALID, eval);
+                }
+                includeInvalid = (boolean) eval.getData();
             }
 
             return evaluate(dmdsecIds, metsFile, includeInvalid);

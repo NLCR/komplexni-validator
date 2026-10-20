@@ -894,6 +894,10 @@ MUTATIONS = {
     "duplicate-page-uuid": "(--pages >= 3) poslední strana má uuid předposlední (MODS i DC) -> MODS/DC_IDENTIFIERS_NO_DUPLICATES_ACROSS_DMDSECS; odhalí chybu porovnání jen s první hodnotou",
     "origininfo-no-eventtype": "(RDA) originInfo zdroje bez eventType -> v 0.2 BIBLIOGRAPHIC_METADATA_MATCH_PROFILE_UNIT (eventType M), v 0.1 prochází",
     "unknown-identifier-type": "(0.2) identifikátor jednotky typu 'inventory' místo barcode (MODS i DC) -> MODS/DC_IDENTIFIER_TYPES_KNOWN (WARNING)",
+    "unknown-identifier-type-invalid": "(0.2) jednotka má navíc neplatný identifikátor (invalid=\"yes\") neznámého typu 'inventory' jen v MODS -> MODS_IDENTIFIER_TYPES_KNOWN (WARNING, include_invalid)",
+    "info-missing-collection-id": "(0.2) v INFO chybí titleid sysno kolekce -> INFO_INDENTIFIERS_MATCH_TOP_LEVEL_MODS_IDENTIFIERS (WARNING, opačný směr)",
+    "top-div-type-unit-lowercase": "(0.2) TYPE rodičovského divu fyzické mapy 'Unit' místo UNIT -> PRIMARY-METS_PHYSICAL_STRUCTURAL_MAP_CORRECT",
+    "unit-dc-no-format": "(0.2) DC jednotky bez dc:format -> BIBLIOGRAPHIC_METADATA_MATCH_PROFILE_UNIT (DC)",
 }
 
 
@@ -913,6 +917,14 @@ def generate(target: str, variant: str, pages: int, with_directory: bool, standa
     unknown = mutations - set(MUTATIONS)
     if unknown:
         sys.exit("neznámé mutace: " + ", ".join(sorted(unknown)) + "; známé: " + ", ".join(sorted(MUTATIONS)))
+    # mutace, ktere by v dane kombinaci parametru nic nezmenily
+    needs_02 = {"page-no-genre", "unknown-identifier-type-invalid", "info-missing-collection-id", "top-div-type-unit-lowercase", "unit-dc-no-format"} & mutations
+    if needs_02 and standard_version == "0.1":
+        sys.exit("mutace " + ", ".join(sorted(needs_02)) + " mají smysl jen s --standard-version 0.2 (v 0.1 by nic nezměnily nebo by nebyly chybou)")
+    if "directory-dc-collection" in mutations and not with_directory:
+        sys.exit("mutace directory-dc-collection potřebuje --with-directory")
+    if "origininfo-no-eventtype" in mutations and standard != "rda":
+        sys.exit("mutace origininfo-no-eventtype potřebuje --standard rda")
     mets_type, genre, label, extent = VARIANTS[variant]
     if "wrong-mets-type" in mutations:
         mets_type = "Monograph"
@@ -980,6 +992,13 @@ def generate(target: str, variant: str, pages: int, with_directory: bool, standa
     if "unknown-identifier-type" in mutations:
         mets = mets.replace('<mods:identifier type="barcode">', '<mods:identifier type="inventory">')
         mets = mets.replace("<dc:identifier>barcode:", "<dc:identifier>inventory:")
+    if "unknown-identifier-type-invalid" in mutations:
+        mets = mets.replace('<mods:identifier type="barcode">2610123456</mods:identifier>',
+                            '<mods:identifier type="barcode">2610123456</mods:identifier>\n                        <mods:identifier type="inventory" invalid="yes">INV-1</mods:identifier>')
+    if "top-div-type-unit-lowercase" in mutations:
+        mets = mets.replace('<mets:div TYPE="UNIT" ID="DIV_P_0000"', '<mets:div TYPE="Unit" ID="DIV_P_0000"')
+    if "unit-dc-no-format" in mutations:
+        mets = mets.replace("<dc:format>print</dc:format>\n", "").replace(f"<dc:format>{extent}</dc:format>\n", "")
     mets_rel = put(f"mets_{psp}.xml", mets)
 
     # MD5: vsechny soubory krome info a md5 (spec kap. 5.8), cesty absolutni vuci koreni balicku
@@ -995,6 +1014,8 @@ def generate(target: str, variant: str, pages: int, with_directory: bool, standa
     items = sorted(written.keys()) + [info_name]
     size_kb = max(1, sum(len(d) for d in written.values()) // 1024)
     info = info_xml(psp, items, size_kb, md5_name, md5_rel[2])
+    if "info-missing-collection-id" in mutations:
+        info = info.replace('    <titleid type="sysno">000123456</titleid>\n', "")
     if "itemtotal-mismatch" in mutations:
         info = info.replace(f'itemtotal="{len(items)}"', f'itemtotal="{len(items) + 1}"')
     put(info_name, info)

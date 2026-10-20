@@ -10,7 +10,7 @@
         <text>DMF Jednotky fondu 0.2 očekává Dublin Core verze 1.1. Dále se zde upřesňují očekávaná metadata pro kolekci (UNITCOLLECTION, kap. 7.4.1)
             pro záznamy zpracované podle katalogizačních pravidel AACR2. DC vzniká mapováním z MODS (sloupec Element DC ve spec).
         </text>
-        <url description="Definice metadatových formátů pro jednotky fondu (draft 0.1, 9. 12. 2025)">https://standardy.ndk.cz/ndk/standardy-digitalizace</url>
+        <url description="Definice metadatových formátů pro jednotky fondu (draft 0.2, 20. 10. 2026)">https://standardy.ndk.cz/ndk/standardy-digitalizace</url>
         <url description="popis Dublin Core 1.1">http://dublincore.org/documents/dces/</url>
         <url description="XSD pro Dublin Core 1.1">http://www.openarchives.org/OAI/2.0/oai_dc.xsd</url>
     </info>

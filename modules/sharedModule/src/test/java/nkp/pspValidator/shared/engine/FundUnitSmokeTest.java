@@ -10,6 +10,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.PrintStream;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 /**
@@ -87,8 +88,9 @@ public class FundUnitSmokeTest {
 
     @Test
     public void fundUnit02GeneratedClippingIsValid() throws Exception {
-        String log = runAndCheckNoCrash(new File("src/test/resources/fund_unit_0.2/valid_clipping/nk-00027x"));
-        assertTrue("validace ma bezet podle fund_unit_0.2", log.contains("0.2"));
+        File dir = new File("src/test/resources/fund_unit_0.2/valid_clipping/nk-00027x");
+        assertEquals("0.2", new DmfDetector().resolveDmf(dir, new DmfDetector.Params()).getVersion());
+        String log = runAndCheckNoCrash(dir);
         assertValid(log);
     }
 
@@ -141,7 +143,45 @@ public class FundUnitSmokeTest {
     public void fundUnit02UnknownIdentifierTypeWarns() throws Exception {
         String log = runAndCheckNoCrash(new File("src/test/resources/fund_unit_0.2/unknown_identifier_type/nk-00027m"));
         assertValid(log);
-        assertHasLine(log, "WARNING:", "neznámého typu 'inventory'");
+        assertHasLine(log, "WARNING:", "typ 'inventory'");
+    }
+
+    /**
+     * include_invalid: neznamy typ identifikatoru se hlasi i u neplatneho (invalid="yes") identifikatoru v MODS.
+     */
+    @Test
+    public void fundUnit02UnknownTypeOfInvalidIdentifierWarns() throws Exception {
+        String log = runAndCheckNoCrash(new File("src/test/resources/fund_unit_0.2/unknown_identifier_type_invalid/nk-00027l"));
+        assertValid(log);
+        assertHasLine(log, "WARNING:", "typ 'inventory'");
+    }
+
+    /**
+     * DMF 0.2, kap. 7.1: titleid = vsechny platne identifikatory kolekce; chybejici je jen WARNING.
+     */
+    @Test
+    public void fundUnit02InfoMissingCollectionIdWarns() throws Exception {
+        String log = runAndCheckNoCrash(new File("src/test/resources/fund_unit_0.2/info_missing_collection_id/nk-00027k"));
+        assertValid(log);
+        assertHasLine(log, "WARNING:", "sysno:000123456");
+    }
+
+    /**
+     * TYPE rodicovskeho divu fyzicke mapy musi byt UNIT (E3); "Unit" z DMF 0.1 je chyba.
+     */
+    @Test
+    public void fundUnit02TopDivTypeUnitLowercaseIsInvalid() throws Exception {
+        String log = runAndCheckNoCrash(new File("src/test/resources/fund_unit_0.2/top_div_type_unit_lowercase/nk-00027j"));
+        assertHasError(log, "UNIT");
+    }
+
+    /**
+     * dc:format jednotky je v 0.2 povinny.
+     */
+    @Test
+    public void fundUnit02UnitDcWithoutFormatIsInvalid() throws Exception {
+        String log = runAndCheckNoCrash(new File("src/test/resources/fund_unit_0.2/unit_dc_no_format/nk-00027i"));
+        assertHasError(log, "DCMD_UNIT_0001", "dc:format");
     }
 
     private void assertHasLine(String log, String prefix, String fragment) {
@@ -178,16 +218,10 @@ public class FundUnitSmokeTest {
     }
 
     private String runAndCheckNoCrash(File pspRootDir) throws Exception {
-        return runAndCheckNoCrash(pspRootDir, null);
-    }
-
-    private String runAndCheckNoCrash(File pspRootDir, String forcedFduVersion) throws Exception {
         File validatorConfigDir = new File("src/main/resources/nkp/pspValidator/shared/validatorConfig");
         ValidatorConfigurationManager configManager = new ValidatorConfigurationManager(validatorConfigDir);
         FdmfRegistry registry = new FdmfRegistry(configManager);
-        DmfDetector.Params params = new DmfDetector.Params();
-        params.forcedDmfFduVersion = forcedFduVersion;
-        Dmf dmf = new DmfDetector().resolveDmf(pspRootDir, params);
+        Dmf dmf = new DmfDetector().resolveDmf(pspRootDir, new DmfDetector.Params());
         FdmfConfiguration fdmfConfig = registry.getFdmfConfig(dmf);
         ExternalUtilManager utilManager = new ExternalUtilManagerFactory(configManager.getExternalUtilsConfigFile())
                 .buildExternalUtilManager(Platform.detectOs().getOperatingSystem());

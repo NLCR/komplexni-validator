@@ -11,7 +11,7 @@
             fondu (UNIT: výstřižek, soubor výstřižků nebo soubor kartotéčních lístků; kap. 7.4.3) pro záznamy
             zpracované podle katalogizačních pravidel RDA. Varianta jednotky se rozlišuje hodnotou mods:genre.
         </text>
-        <url description="Definice metadatových formátů pro jednotky fondu (draft 0.1, 9. 12. 2025)">https://standardy.ndk.cz/ndk/standardy-digitalizace</url>
+        <url description="Definice metadatových formátů pro jednotky fondu (draft 0.2, 20. 10. 2026)">https://standardy.ndk.cz/ndk/standardy-digitalizace</url>
         <url>http://www.loc.gov/standards/mods/</url>
         <url description="XSD pro MODS 3.8">http://www.loc.gov/standards/mods/v3/mods-3-8.xsd</url>
         <url description="popis MODS 3.8">https://www.loc.gov/standards/mods/userguide/</url>
