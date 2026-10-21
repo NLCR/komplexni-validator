@@ -2449,10 +2449,11 @@
                         </evaluation>
                     </value>
                     <value name="page_types" type="STRING_LIST">
-                        <!--DMF Jednotky fondu 0.2, kap. 7.7.1 odkazuje na typy stran dle Pravidel pro popis periodik (v8.6).
-                        Seznam odpovídá tabulce v kap. 1.2.2 Pravidel pro popis periodik, dokument verze 8.6 ze 17. 12. 2024
-                        (sloupce "Typ strany" a "Typ strany/Vnitřní část", 32 hodnot); verze 8.7 (22. 12. 2025) hodnoty nemění, jen opravuje
-                        velikost písmen (jacket, colophon, flyleaf, frontJacket). Shodný se seznamem ve fDMF periodical_2.2-->
+                        <!--DMF Jednotky fondu 0.2, kap. 7.7.1 odkazuje na typy stran dle Pravidel pro popis periodik (v8.8).
+                        Seznam odpovídá tabulce v kap. 1.2.2 Pravidel pro popis periodik, dokument verze 8.8 z 21. 10. 2026
+                        (sloupce "Typ strany" a "Typ strany/Vnitřní část", 33 hodnot); proti verzi 8.7 (22. 12. 2025) přibyl
+                        "generalView" (Celkový pohled). Shodný se seznamem v profilech strany (biblioProfiles/mods/page_*.xml);
+                        fDMF periodical_2.2 (Pravidla 8.7) "generalView" nezná-->
                         <evaluation functionName="buildListOfStrings">
                             <params>
                                 <value name="string" type="STRING">cover</value>
@@ -2487,6 +2488,7 @@
                                 <value name="string" type="STRING">table</value>
                                 <value name="string" type="STRING">introduction</value>
                                 <value name="string" type="STRING">conclusion</value>
+                                <value name="string" type="STRING">generalView</value>
  
                             </params>
                         </evaluation>
