@@ -136,7 +136,11 @@
                                                     <element name="premis:formatDesignation" mandatory="true" repeatable="false">
                                                         <expectedElements>
                                                             <element name="premis:formatName" mandatory="true" repeatable="false">
-                                                                <expectedContent/>
+                                                                <expectedContent>
+                                                                    <!--DMF Periodika 2.3 (kap. 7.5.1, platí pro Jednotky fondu 0.2 přes odkaz v kap. 7.5): hodnota vždy
+                                                                    s předponou "image/" nebo "text/" dle MIME types, např. image/tiff, image/jp2, text/xml-->
+                                                                    <regexp>^(image|text)/[A-Za-z0-9][A-Za-z0-9!#$&amp;^_.+-]*$</regexp>
+                                                                </expectedContent>
                                                             </element>
 
                                                             <element name="premis:formatVersion" mandatory="true" repeatable="false">
@@ -186,6 +190,62 @@
 
                                     <element name="premis:originalName" mandatory="true" repeatable="false">
                                         <expectedContent/>
+                                    </element>
+
+                                    <!--DMF Periodika 2.3 (kap. 7.5.1) umožňuje relationship nově i pro původní sken (PS), nepovinné;
+                                    struktura jako v premis_object_mc.xml, ale relatedObjectIdentification a relatedEventIdentification jsou
+                                    nepovinné (DMF je pro PS neuvádí, sloupec jen MC, XML)-->
+                                    <element name="premis:relationship" mandatory="false" repeatable="true">
+                                        <expectedElements>
+                                            <element name="premis:relationshipType" mandatory="true" repeatable="false">
+                                                <expectedContent>derivation</expectedContent>
+                                            </element>
+
+                                            <element name="premis:relationshipSubType" mandatory="true" repeatable="false">
+                                                <recommendedContent>
+                                                    <oneOf>
+                                                        <value>created from</value>
+                                                        <value>has source</value>
+                                                        <value>is source of</value>
+                                                        <value>has sibling</value>
+                                                        <value>has part</value>
+                                                        <value>is part of</value>
+                                                        <value>has root</value>
+                                                        <value>includes</value>
+                                                        <value>is included in</value>
+                                                    </oneOf>
+                                                </recommendedContent>
+                                            </element>
+
+                                            <element name="premis:relatedObjectIdentification" mandatory="false" repeatable="true">
+                                                <expectedElements>
+                                                    <element name="premis:relatedObjectIdentifierType" mandatory="true" repeatable="false">
+                                                        <expectedContent/>
+                                                    </element>
+
+                                                    <element name="premis:relatedObjectIdentifierValue" mandatory="true" repeatable="false">
+                                                        <expectedContent/>
+                                                    </element>
+                                                </expectedElements>
+                                            </element>
+
+                                            <element name="premis:relatedEventIdentification" mandatory="false" repeatable="true">
+                                                <expectedElements>
+                                                    <element name="premis:relatedEventIdentifierType" mandatory="true" repeatable="false">
+                                                        <expectedContent/>
+                                                    </element>
+
+                                                    <element name="premis:relatedEventIdentifierValue" mandatory="true" repeatable="false">
+                                                        <expectedContent/>
+                                                    </element>
+
+                                                    <element name="premis:relatedEventSequence" mandatory="false" repeatable="false">
+                                                        <expectedContent/>
+                                                    </element>
+                                                </expectedElements>
+                                            </element>
+                                        </expectedElements>
+
                                     </element>
 
                                     <element name="premis:linkingEventIdentifier" mandatory="true" repeatable="true">

@@ -70,7 +70,11 @@
                                             <element name="mix:FormatDesignation" mandatory="true" repeatable="false">
                                                 <expectedElements>
                                                     <element name="mix:formatName" mandatory="true" repeatable="false">
-                                                        <expectedContent/>
+                                                        <expectedContent>
+                                                            <!--DMF Periodika 2.3 (kap. 7.5.4, platí pro Jednotky fondu 0.2 přes odkaz v kap. 7.5): hodnota vždy
+                                                            s předponou "image/" nebo "text/" dle MIME types, např. image/tiff, image/jp2-->
+                                                            <regexp>^(image|text)/[A-Za-z0-9][A-Za-z0-9!#$&amp;^_.+-]*$</regexp>
+                                                        </expectedContent>
                                                     </element>
 
                                                     <element name="mix:formatVersion" mandatory="true" repeatable="false">
@@ -201,7 +205,10 @@
                                                     </element>
                                                 </expectedElements>
                                             </element>
-                                             <!--ScannerCapture musi zustat nepovinny, viz github.com/NLCR/Standard_NDK/issues/186-->
+                                            <!--ScannerCapture (MA): DMF Periodika 2.3 (kap. 7.5.4) doplnila "povinné, pokud je používán skener",
+                                            DigitalCameraCapture je "povinné, pokud je používán fotoaparát a není používán skener". Podmínku
+                                            "aspoň jedno z obou" profil vyjádřit neumí, oba elementy proto zůstávají nepovinné
+                                            (viz také github.com/NLCR/Standard_NDK/issues/186)-->
 
                                             <element name="mix:ScannerCapture" mandatory="false" repeatable="false">
                                                 <expectedElements>
@@ -305,7 +312,19 @@
                                                     </element>
 
                                                     <element name="mix:cameraSensor" mandatory="true" repeatable="false">
-                                                        <expectedContent/>
+                                                        <!--DMF Periodika 2.3 (kap. 7.5.4): jedna z hodnot dle standardu MIX; jen WARNING-->
+                                                        <recommendedContent>
+                                                            <oneOf>
+                                                                <value>undefined</value>
+                                                                <value>MonochromeLinear</value>
+                                                                <value>ColorTriLinear</value>
+                                                                <value>ColorSequentialLinear</value>
+                                                                <value>MonochromeArea</value>
+                                                                <value>OneChipColorArea</value>
+                                                                <value>TwoChipColorArea</value>
+                                                                <value>ThreeChipColorArea</value>
+                                                            </oneOf>
+                                                        </recommendedContent>
                                                     </element>
 
                                                     <element name="mix:CameraCaptureSettings" mandatory="true" repeatable="false">

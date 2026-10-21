@@ -898,6 +898,7 @@ MUTATIONS = {
     "info-missing-collection-id": "(0.2) v INFO chybí titleid sysno kolekce -> INFO_INDENTIFIERS_MATCH_TOP_LEVEL_MODS_IDENTIFIERS (WARNING, opačný směr)",
     "top-div-type-unit-lowercase": "(0.2) TYPE rodičovského divu fyzické mapy 'Unit' místo UNIT -> PRIMARY-METS_PHYSICAL_STRUCTURAL_MAP_CORRECT",
     "unit-dc-no-format": "(0.2) DC jednotky bez dc:format -> BIBLIOGRAPHIC_METADATA_MATCH_PROFILE_UNIT (DC)",
+    "premis-format-not-mime": "(0.2) formatName MC první strany 'JPEG 2000' místo image/jp2 (PREMIS i MIX) -> AMD-METS_*_MATCH_PROFILE (DMF Periodika 2.3 kap. 7.5 vyžaduje MIME)",
 }
 
 
@@ -918,7 +919,8 @@ def generate(target: str, variant: str, pages: int, with_directory: bool, standa
     if unknown:
         sys.exit("neznámé mutace: " + ", ".join(sorted(unknown)) + "; známé: " + ", ".join(sorted(MUTATIONS)))
     # mutace, ktere by v dane kombinaci parametru nic nezmenily
-    needs_02 = {"page-no-genre", "unknown-identifier-type-invalid", "info-missing-collection-id", "top-div-type-unit-lowercase", "unit-dc-no-format"} & mutations
+    needs_02 = {"page-no-genre", "unknown-identifier-type-invalid", "info-missing-collection-id", "top-div-type-unit-lowercase", "unit-dc-no-format",
+                "premis-format-not-mime"} & mutations
     if needs_02 and standard_version == "0.1":
         sys.exit("mutace " + ", ".join(sorted(needs_02)) + " mají smysl jen s --standard-version 0.2 (v 0.1 by nic nezměnily nebo by nebyly chybou)")
     if "directory-dc-collection" in mutations and not with_directory:
@@ -959,7 +961,13 @@ def generate(target: str, variant: str, pages: int, with_directory: bool, standa
                         .replace("{psp}", psp)),
             "txt": put(f"txt/txt_{psp}_{p}.txt", txt_content(i)),
         }
-        files["amd"] = put(f"amdsec/amd_mets_{psp}_{p}.xml", amd_mets_xml(psp, mets_type, label, i, files))
+        amd = amd_mets_xml(psp, mets_type, label, i, files)
+        if "premis-format-not-mime" in mutations and i == 1:
+            assert amd.count("<premis:formatName>image/jp2</premis:formatName>") == 1
+            assert amd.count("<mix:formatName>image/jp2</mix:formatName>") == 1
+            amd = amd.replace("<premis:formatName>image/jp2</premis:formatName>", "<premis:formatName>JPEG 2000</premis:formatName>") \
+                .replace("<mix:formatName>image/jp2</mix:formatName>", "<mix:formatName>JPEG 2000</mix:formatName>")
+        files["amd"] = put(f"amdsec/amd_mets_{psp}_{p}.xml", amd)
         page_files[i] = files
 
     put(f"catalog_entry/cat_entry_{psp}.xml", catalog_entry_xml(urnnbn))

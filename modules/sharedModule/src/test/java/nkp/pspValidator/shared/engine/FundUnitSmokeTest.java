@@ -184,6 +184,17 @@ public class FundUnitSmokeTest {
         assertHasError(log, "DCMD_UNIT_0001", "dc:format");
     }
 
+    /**
+     * formatName v PREMIS Object i MIX musi byt MIME typ s predponou image/ nebo text/ (DMF Periodika 2.3, kap. 7.5,
+     * na kterou DMF Jednotky fondu 0.2 odkazuje).
+     */
+    @Test
+    public void fundUnit02FormatNameNotMimeIsInvalid() throws Exception {
+        String log = runAndCheckNoCrash(new File("src/test/resources/fund_unit_0.2/premis_format_not_mime/nk-00027h"));
+        assertHasError(log, "premis:formatName", "JPEG 2000");
+        assertHasError(log, "mix:formatName", "JPEG 2000");
+    }
+
     private void assertHasLine(String log, String prefix, String fragment) {
         for (String line : log.split("\n")) {
             String l = line.trim();

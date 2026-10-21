@@ -136,7 +136,11 @@
                                                     <element name="premis:formatDesignation" mandatory="true" repeatable="false">
                                                         <expectedElements>
                                                             <element name="premis:formatName" mandatory="true" repeatable="false">
-                                                                <expectedContent/>
+                                                                <expectedContent>
+                                                                    <!--DMF Periodika 2.3 (kap. 7.5.1, platí pro Jednotky fondu 0.2 přes odkaz v kap. 7.5): hodnota vždy
+                                                                    s předponou "image/" nebo "text/" dle MIME types, např. image/tiff, image/jp2, text/xml-->
+                                                                    <regexp>^(image|text)/[A-Za-z0-9][A-Za-z0-9!#$&amp;^_.+-]*$</regexp>
+                                                                </expectedContent>
                                                             </element>
 
                                                             <element name="premis:formatVersion" mandatory="true" repeatable="false">
