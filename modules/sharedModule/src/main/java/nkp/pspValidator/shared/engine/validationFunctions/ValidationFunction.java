@@ -81,7 +81,7 @@ public abstract class ValidationFunction implements Function {
             return new ValidationProblem(Level.ERROR, "soubor neexistuje: null")
                     .withSimpleMessage("soubor neexistuje");
         }
-        return new ValidationProblem(Level.ERROR, String.format("soubor neexistuje: %s" + file.getAbsoluteFile()))
+        return new ValidationProblem(Level.ERROR, String.format("soubor neexistuje: %s", file.getAbsoluteFile()))
                 .withFile(file).withSimpleMessage("soubor neexistuje");
     }
 

@@ -757,7 +757,11 @@ public class Main {
                         }
                         if (xmlProtocolFile != null) {
                             System.out.println("Ukládám xml protokol do souboru: " + xmlProtocolFile.getAbsolutePath());
-                            new ValidatorProtocolXmlBuilder().buildProfileValidationXmlOutput(xmlProtocolFile, metadataFile, metadataProfileId, result, startTime, finishTime);
+                            try {
+                                new ValidatorProtocolXmlBuilder().buildProfileValidationXmlOutput(xmlProtocolFile, metadataFile, metadataProfileId, result, startTime, finishTime);
+                            } catch (IOException e) {
+                                System.err.println("ERROR: " + e.getMessage());
+                            }
                         }
                         if (result != null) {
                             if (result.hasProblems()) {

@@ -16,6 +16,7 @@ import javax.xml.transform.*;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 import java.io.File;
+import java.io.IOException;
 import java.util.Date;
 import java.util.Map;
 
@@ -41,7 +42,10 @@ public class ValidatorProtocolXmlBuilder {
         );
     }
 
-    public void buildProfileValidationXmlOutput(File xmlOutputFile, File metadataFile, String profileId, ValidationResult result, long startTime, long finishTime) {
+    /**
+     * @throws IOException pokud se protokol nepodaří sestavit nebo zapsat (dříve se chyba jen vypsala na stderr a volající hlásil úspěch)
+     */
+    public void buildProfileValidationXmlOutput(File xmlOutputFile, File metadataFile, String profileId, ValidationResult result, long startTime, long finishTime) throws IOException {
         try {
             if (result == null) {
                 return; //no xml output for empty result
@@ -62,7 +66,7 @@ public class ValidatorProtocolXmlBuilder {
             profileEl.setAttribute("id", profileId);
 
             Element metadataFileEl = createChildElement(protocolEl, "metadataFile");
-            metadataFileEl.setAttribute("parentDir", metadataFile.getParentFile().getAbsolutePath());
+            metadataFileEl.setAttribute("parentDir", metadataFile.getAbsoluteFile().getParentFile().getAbsolutePath());
             metadataFileEl.setAttribute("fileName", metadataFile.getName());
 
             Element summaryEl = createChildElement(protocolEl, "summary");
@@ -108,7 +112,7 @@ public class ValidatorProtocolXmlBuilder {
             StreamResult consoleResult = new StreamResult(xmlOutputFile);
             transformer.transform(source, consoleResult);
         } catch (TransformerException | ParserConfigurationException e) {
-            e.printStackTrace();
+            throw new IOException(String.format("nelze zapsat xml protokol do souboru %s: %s", xmlOutputFile.getAbsolutePath(), e.getMessage()), e);
         }
     }
 
@@ -125,7 +129,10 @@ public class ValidatorProtocolXmlBuilder {
         return rootEl;
     }
 
-    public void buildPackageValidationXmlOutput(File xmlOutputFile, ValidationState protocol) {
+    /**
+     * @throws IOException pokud se protokol nepodaří sestavit nebo zapsat
+     */
+    public void buildPackageValidationXmlOutput(File xmlOutputFile, ValidationState protocol) throws IOException {
         try {
             DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
             dbFactory.setNamespaceAware(true);
@@ -148,7 +155,7 @@ public class ValidatorProtocolXmlBuilder {
             //package file
             Element fileEl = createChildElement(packageEl, "file");
             fileEl.setAttribute("fileName", protocol.getPackageFile().getName());
-            fileEl.setAttribute("parentDir", protocol.getPackageFile().getParentFile().getAbsolutePath());
+            fileEl.setAttribute("parentDir", protocol.getPackageFile().getAbsoluteFile().getParentFile().getAbsolutePath());
             //package INFO
             InfoExtractor.InfoData infoData = protocol.getInfoData();
             if (infoData != null) {
@@ -189,7 +196,7 @@ public class ValidatorProtocolXmlBuilder {
             Element summaryEl = buildSummaryEl(doc, duration, startDate, finishDate, protocol.getGlobalProblemsTotal(), protocol.getGlobalProblemsByLevel(), verdict);
             protocolEl.appendChild(summaryEl);
 
-            String packageParentPath = protocol.getPackageFile().getParentFile().getAbsolutePath();
+            String packageParentPath = protocol.getPackageFile().getAbsoluteFile().getParentFile().getAbsolutePath();
 
             Element sectionsEl = createChildElement(protocolEl, "sections");
             for (RulesSection section : protocol.getSections()) {
@@ -229,7 +236,7 @@ public class ValidatorProtocolXmlBuilder {
             StreamResult consoleResult = new StreamResult(xmlOutputFile);
             transformer.transform(source, consoleResult);
         } catch (TransformerException | ParserConfigurationException e) {
-            e.printStackTrace();
+            throw new IOException(String.format("nelze zapsat xml protokol do souboru %s: %s", xmlOutputFile.getAbsolutePath(), e.getMessage()), e);
         }
     }
 

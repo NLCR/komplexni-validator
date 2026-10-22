@@ -8,6 +8,7 @@ import nkp.pspValidator.shared.engine.validationFunctions.ValidationProblem;
 import nkp.pspValidator.shared.engine.validationFunctions.ValidationResult;
 
 import java.io.File;
+import java.io.IOException;
 import java.io.PrintStream;
 import java.util.*;
 
@@ -132,9 +133,14 @@ public class Validator {
                 textLogger.logPackageSummary(state.getGlobalProblemsTotal(), state.getGlobalProblemsByLevel(), state.isValid());
                 if (xmlOutputFile != null) {
                     textLogger.logXmlExportStarted(xmlOutputFile);
-                    new ValidatorProtocolXmlBuilder().buildPackageValidationXmlOutput(xmlOutputFile, state);
-                    //TODO: tohle nepatri do textoveho logu
-                    textLogger.logXmlExportCreated();
+                    try {
+                        new ValidatorProtocolXmlBuilder().buildPackageValidationXmlOutput(xmlOutputFile, state);
+                        //TODO: tohle nepatri do textoveho logu
+                        textLogger.logXmlExportCreated();
+                    } catch (IOException e) {
+                        textLogger.logXmlExportFailed(e.getMessage());
+                        System.err.println("ERROR: " + e.getMessage());
+                    }
                 }
             } else {
                 state.reportValidationsCanceled();

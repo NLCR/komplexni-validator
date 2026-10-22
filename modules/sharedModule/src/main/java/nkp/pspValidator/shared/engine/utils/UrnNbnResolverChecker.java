@@ -13,6 +13,8 @@ import org.w3c.dom.NodeList;
 import javax.net.ssl.*;
 import javax.xml.xpath.*;
 import java.io.File;
+import java.nio.charset.StandardCharsets;
+import java.io.InputStreamReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
@@ -440,7 +442,8 @@ public class UrnNbnResolverChecker {
         if (responseStream == null) {
             throw new IOException(String.format("prázdná odpověď Resolveru %s (HTTP %d)", url, responseCode));
         }
-        JSONTokener tokener = new JSONTokener(responseStream);
+        // odpověď Resolveru je UTF-8; JSONTokener(InputStream) by použil kódování platformy (na Windows rozbije diakritiku, issue #202)
+        JSONTokener tokener = new JSONTokener(new InputStreamReader(responseStream, StandardCharsets.UTF_8));
         return new JSONObject(tokener);
     }
 
