@@ -72,6 +72,8 @@
                                                 <value>organization</value>
                                                 <value>person</value>
                                                 <value>software</value>
+                                                <!--DMF Monografie 2.3, kap. 7.5.3 (issue #245)-->
+                                                <value>hardware</value>
                                             </oneOf>
                                         </recommendedContent>
                                     </element>

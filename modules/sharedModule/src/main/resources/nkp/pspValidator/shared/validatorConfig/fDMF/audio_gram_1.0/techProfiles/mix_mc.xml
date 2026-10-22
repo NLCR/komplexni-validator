@@ -190,7 +190,8 @@
 
                                                             <element name="mix:EncodingOptions" mandatory="true" repeatable="false">
                                                                 <expectedElements>
-                                                                    <element name="mix:tiles" mandatory="true" repeatable="false">
+                                                                    <!--element se v MIX 2.0 jmenuje Tiles (velké T), viz xsd/mix_2.0.xsd; dříve chybně mix:tiles (issue #256)-->
+                                                    <element name="mix:Tiles" mandatory="true" repeatable="false">
                                                                         <expectedElements>
                                                                             <element name="mix:tileWidth"
                                                                                      mandatory="true"

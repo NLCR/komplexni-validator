@@ -204,18 +204,12 @@
                     <attribute name="type">
                         <expectedContent>
                             <oneOf>
-                                <value>text</value>
-                                <value>cartographic</value>
-                                <value>notated music</value>
-                                <value>sound recording</value>
-                                <value>sound recording-musical</value>
-                                <value>sound recording-nonmusical</value>
-                                <value>kit</value>
-                                <value>still image</value>
-                                <value>moving image</value>
-                                <value>three dimensional object</value>
-                                <value>software, multimedia</value>
-                                <value>mixed material</value>
+                                <!--typ přílohy podle DMF Zvuk 1.0 (kap. 7.4.4) a Pravidel pro popis zvukových dokumentů 2.0 (kap. 1.3);
+                                dříve zde byl omylem výčet typeOfResource (issue #257)-->
+                                <value>cover</value>
+                                <value>booklet</value>
+                                <value>imgdisc</value>
+                                <value>micrograph</value>
                             </oneOf>
                         </expectedContent>
                     </attribute>
