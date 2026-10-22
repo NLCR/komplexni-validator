@@ -311,7 +311,8 @@
 
             <element name="mods:physicalDescription" mandatory="false">
                 <expectedElements>
-                    <element name="mods:form">
+                    <!--form je podle DMF Datové disky 0.1 (kap. 7.3.1, úroveň kolekce) MA, ne M (issue #254)-->
+                    <element name="mods:form" mandatory="false">
                         <expectedAttributes>
                             <attribute name="authority" mandatory="false"/>
                             <attribute name="type" mandatory="false"/>
