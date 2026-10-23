@@ -331,7 +331,7 @@
                                                                 <expectedContent/>
                                                             </element>
 
-                                                            <element name="mix:performaceData" mandatory="false" repeatable="true">
+                                                            <element name="mix:performanceData" mandatory="false" repeatable="true">
                                                                 <expectedContent/>
                                                             </element>
                                                         </expectedElements>
