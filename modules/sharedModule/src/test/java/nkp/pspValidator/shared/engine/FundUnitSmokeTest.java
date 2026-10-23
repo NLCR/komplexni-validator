@@ -195,6 +195,24 @@ public class FundUnitSmokeTest {
         assertHasError(log, "mix:formatName", "JPEG 2000");
     }
 
+    /**
+     * relatedItem/part zdroje bez detail je v 0.2 chyba: detail je M, pri pouziti part aspon jeden (NK 23. 10. 2026).
+     */
+    @Test
+    public void fundUnit02SourcePartWithoutDetailIsInvalid() throws Exception {
+        String log = runAndCheckNoCrash(new File("src/test/resources/fund_unit_0.2/part_no_detail/nk-00027g"));
+        assertHasError(log, "MODSMD_UNIT_0001", "mods:detail");
+    }
+
+    /**
+     * Staci jeden detail (napr. jen cislo bez rocniku), obe hodnoty nejsou nutne (NK 23. 10. 2026).
+     */
+    @Test
+    public void fundUnit02SourcePartWithIssueDetailOnlyIsValid() throws Exception {
+        String log = runAndCheckNoCrash(new File("src/test/resources/fund_unit_0.2/part_issue_only/nk-00027f"));
+        assertValid(log);
+    }
+
     private void assertHasLine(String log, String prefix, String fragment) {
         for (String line : log.split("\n")) {
             String l = line.trim();

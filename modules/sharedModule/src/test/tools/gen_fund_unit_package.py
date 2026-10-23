@@ -899,6 +899,8 @@ MUTATIONS = {
     "top-div-type-unit-lowercase": "(0.2) TYPE rodičovského divu fyzické mapy 'Unit' místo UNIT -> PRIMARY-METS_PHYSICAL_STRUCTURAL_MAP_CORRECT",
     "unit-dc-no-format": "(0.2) DC jednotky bez dc:format -> BIBLIOGRAPHIC_METADATA_MATCH_PROFILE_UNIT (DC)",
     "premis-format-not-mime": "(0.2) formatName MC první strany 'JPEG 2000' místo image/jp2 (PREMIS i MIX) -> AMD-METS_*_MATCH_PROFILE (DMF Periodika 2.3 kap. 7.5 vyžaduje MIME)",
+    "part-no-detail": "(0.2) relatedItem/part zdroje jen s extent, bez detail -> BIBLIOGRAPHIC_METADATA_MATCH_PROFILE_UNIT (detail M, aspoň jeden; NK 23. 10. 2026)",
+    "part-issue-only": "(0.2) relatedItem/part zdroje jen s detail type=issue (bez ročníku) -> validní (NK 23. 10. 2026: stačí aspoň jeden detail)",
 }
 
 
@@ -920,7 +922,7 @@ def generate(target: str, variant: str, pages: int, with_directory: bool, standa
         sys.exit("neznámé mutace: " + ", ".join(sorted(unknown)) + "; známé: " + ", ".join(sorted(MUTATIONS)))
     # mutace, ktere by v dane kombinaci parametru nic nezmenily
     needs_02 = {"page-no-genre", "unknown-identifier-type-invalid", "info-missing-collection-id", "top-div-type-unit-lowercase", "unit-dc-no-format",
-                "premis-format-not-mime"} & mutations
+                "premis-format-not-mime", "part-no-detail", "part-issue-only"} & mutations
     if needs_02 and standard_version == "0.1":
         sys.exit("mutace " + ", ".join(sorted(needs_02)) + " mají smysl jen s --standard-version 0.2 (v 0.1 by nic nezměnily nebo by nebyly chybou)")
     if "directory-dc-collection" in mutations and not with_directory:
@@ -1005,6 +1007,17 @@ def generate(target: str, variant: str, pages: int, with_directory: bool, standa
                             '<mods:identifier type="barcode">2610123456</mods:identifier>\n                        <mods:identifier type="inventory" invalid="yes">INV-1</mods:identifier>')
     if "top-div-type-unit-lowercase" in mutations:
         mets = mets.replace('<mets:div TYPE="UNIT" ID="DIV_P_0000"', '<mets:div TYPE="Unit" ID="DIV_P_0000"')
+    if "part-no-detail" in mutations or "part-issue-only" in mutations:
+        part_details = """                                <mods:detail type="volume">
+                                    <mods:number>24</mods:number>
+                                </mods:detail>
+                                <mods:detail type="issue">
+                                    <mods:number>112</mods:number>
+                                </mods:detail>"""
+        assert mets.count(part_details) == 1
+        mets = mets.replace(part_details, "" if "part-no-detail" in mutations else """                                <mods:detail type="issue">
+                                    <mods:number>112</mods:number>
+                                </mods:detail>""")
     if "unit-dc-no-format" in mutations:
         mets = mets.replace("<dc:format>print</dc:format>\n", "").replace(f"<dc:format>{extent}</dc:format>\n", "")
     mets_rel = put(f"mets_{psp}.xml", mets)

@@ -452,12 +452,13 @@
                         </expectedAttributes>
                         <expectedContent/>
                     </element>
-                    <!--part (MA): ročník a číslo zdrojového periodika (detail) a rozsah stran jednotky ve zdroji (extent, R;
-                    DMF 0.2 doplnila podle připomínky Q5). DMF 0.2 má detail jako M a part "pouze pro periodika", takže rozsah
-                    u monografie zapsat nejde; než NK rozhodne (připomínky k draftu 0.2, bod 2.2), part bez detail prochází.-->
+                    <!--part (MA, jen pro periodikum): ročník a číslo zdrojového periodika (detail) a rozsah stran jednotky ve zdroji
+                    (extent, R; DMF 0.2 doplnila podle připomínky Q5). detail je M: při použití part aspoň jeden detail (ročník nebo
+                    číslo, obojí není nutné), rozhodnutí NK 23. 10. 2026 k připomínkám k draftu 0.2, bod 2.2. Zdroj-monografie se
+                    zapisuje přes titleInfo/partNumber a partName, ne přes part.-->
                     <element name="mods:part" mandatory="false">
                         <expectedElements>
-                            <element name="mods:detail" mandatory="false">
+                            <element name="mods:detail" mandatory="true" repeatable="true">
                                 <expectedAttributes>
                                     <attribute name="type">
                                         <expectedContent>
