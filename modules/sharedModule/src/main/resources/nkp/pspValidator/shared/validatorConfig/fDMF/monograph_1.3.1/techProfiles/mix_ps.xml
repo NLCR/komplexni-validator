@@ -150,7 +150,7 @@
                                                                                 <expectedContent/>
                                                                             </element>
 
-                                                                            <element name="mix:iccProfileURL"
+                                                                            <element name="mix:iccProfileURI"
                                                                                      mandatory="false"
                                                                                      repeatable="false">
                                                                                 <expectedContent/>
@@ -402,7 +402,7 @@
                                                                         <expectedContent/>
                                                                     </element>
 
-                                                                    <element name="mix:subjectDistance"
+                                                                    <element name="mix:SubjectDistance"
                                                                              mandatory="false"
                                                                              repeatable="false">
                                                                         <expectedContent/>
