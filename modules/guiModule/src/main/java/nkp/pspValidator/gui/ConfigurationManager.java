@@ -1,6 +1,7 @@
 package nkp.pspValidator.gui;
 
 import nkp.pspValidator.shared.Dmf;
+import nkp.pspValidator.shared.OperatingSystem;
 import nkp.pspValidator.shared.Platform;
 
 import java.io.*;
@@ -18,7 +19,22 @@ public class ConfigurationManager {
     public static boolean DEV_MODE_ONLY_SELECTED_SECTIONS = false;
 
     private static final String DEFAULT_LOG_DIR = "logs";
-    private static final String DEFAULT_FDMF_DIR = "validatorConfig";
+    private String getDefaultFdmfDir() {
+        switch (platform.getOperatingSystem()) {
+            case WINDOWS:
+                return "app/validatorConfig";
+            case LINUX:
+                return "../lib/app/validatorConfig"; // počítáme s app-image (portable) distribucí
+            case MAC:
+                if (isMacAppBundle()) {
+                    // jpackage .app: konfigurace je vedle jaru v Contents/app
+                    return new File(getAppJarDir(), "validatorConfig").getAbsolutePath();
+                }
+                return "validatorConfig";
+            default:
+                throw new IllegalStateException("Nepodporovaný operační systém.");
+        }
+    }
 
     private static File CONFIG_FILE_PRODUCTION = new File("config.properties");
     private static File CONFIG_FILE_DEV_WIN = new File("../../resources/main/dev/config-win.properties");
@@ -121,14 +137,20 @@ public class ConfigurationManager {
     private void initDefaultProperties() {
         //validator config dir
         File validatorConfigDir = getFileOrNull(PROP_VALIDATOR_CONFIG_DIR);
+        // macOS .app: konfigurace z bundlu se bere vždy z právě spuštěné aplikace (jinak by nová verze nebo přesunutá
+        // aplikace použila pravidla ze staré .app); vlastní adresář mimo bundle zvolený uživatelem zůstává
+        if (validatorConfigDir != null && isMacAppBundle()
+                && (validatorConfigDir.getPath().contains(".app/Contents/app/") || !validatorConfigDir.isDirectory())) {
+            validatorConfigDir = null;
+        }
         if (validatorConfigDir == null) {
-            validatorConfigDir = new File(DEFAULT_FDMF_DIR);
+            validatorConfigDir = new File(getDefaultFdmfDir());
             setFile(PROP_VALIDATOR_CONFIG_DIR, validatorConfigDir);
         }
         //log dir
         File logDir = getFileOrNull(PROP_LOG_DIR);
         if (logDir == null) {
-            logDir = new File(DEFAULT_LOG_DIR);
+            logDir = new File(getDefaultLogDir());
             setFile(PROP_LOG_DIR, logDir);
         }
         logDir.mkdirs();
@@ -166,7 +188,41 @@ public class ConfigurationManager {
         }
     }
 
+    /**
+     * Aplikace běží z macOS balíčku vytvořeného přes jpackage (launcher nastavuje jpackage.app-path).
+     * Spuštěná z Finderu má pracovní adresář "/", proto zapisovatelné soubory nesmí být relativní.
+     */
+    private boolean isMacAppBundle() {
+        return platform.getOperatingSystem() == OperatingSystem.MAC
+                && System.getProperty("jpackage.app-path") != null;
+    }
+
+    private static File getAppJarDir() {
+        try {
+            return new File(ConfigurationManager.class.getProtectionDomain().getCodeSource().getLocation().toURI()).getParentFile();
+        } catch (Exception e) {
+            throw new IllegalStateException("nelze zjistit umístění aplikace", e);
+        }
+    }
+
+    // ~/Library/Application Support/KomplexniValidator: config.properties a logy aplikace z macOS balíčku
+    private static File getMacUserDataDir() {
+        return new File(System.getProperty("user.home"), "Library/Application Support/KomplexniValidator");
+    }
+
+    private String getDefaultLogDir() {
+        if (isMacAppBundle()) {
+            return new File(getMacUserDataDir(), DEFAULT_LOG_DIR).getAbsolutePath();
+        }
+        return DEFAULT_LOG_DIR;
+    }
+
     private File selectConfigFile() {
+        if (!DEV_MODE && isMacAppBundle()) {
+            File dir = getMacUserDataDir();
+            dir.mkdirs();
+            return new File(dir, CONFIG_FILE_PRODUCTION.getName());
+        }
         if (DEV_MODE) {
             switch (platform.getOperatingSystem()) {
                 case LINUX:
