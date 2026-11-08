@@ -351,7 +351,7 @@
                                                                         <expectedContent/>
                                                                     </element>
 
-                                                                    <element name="mix:subjectDistance" mandatory="false"
+                                                                    <element name="mix:SubjectDistance" mandatory="false"
                                                                              repeatable="false">
                                                                         <expectedContent/>
                                                                     </element>

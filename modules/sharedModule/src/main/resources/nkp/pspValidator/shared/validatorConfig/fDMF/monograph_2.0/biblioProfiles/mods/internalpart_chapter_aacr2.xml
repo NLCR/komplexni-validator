@@ -232,6 +232,8 @@
                                 <expectedContent>
                                     <oneOf>
                                         <value>marcform</value>
+                                        <!--marccategory je platná hodnota autority podle MODS, DMF ji nevylučuje (issue #218, potvrzeno NK 2026-04-09)-->
+                                        <value>marccategory</value>
                                         <value>marcsmd</value>
                                         <value>gmd</value>
                                     </oneOf>

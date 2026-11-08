@@ -67,7 +67,7 @@ public class BibliographicMetadataProfilesManager {
     public MetadataProfile buildProfile(String fileId, MetadataFormat format, CatalogingConventions conventions) {
         File file = getProfileFile(fileId, format, conventions);
         if (file == null) {
-            System.err.println("file is null (format: " + format + ", conventions: " + conventions + ", fileId: " + fileId + ")");
+            // chybejici profil je chyba konfigurace fDMF; volajici hlasi null do protokolu, na stdout/stderr se nic nepise
             return null;
         } else {
             try {

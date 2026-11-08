@@ -75,6 +75,8 @@
                                                 <value>organization</value>
                                                 <value>person</value>
                                                 <value>software</value>
+                                                <!--DMF Zvuk 1.0, kap. 7.5.3 (issue #245)-->
+                                                <value>hardware</value>
                                             </oneOf>
                                         </recommendedContent>
                                     </element>

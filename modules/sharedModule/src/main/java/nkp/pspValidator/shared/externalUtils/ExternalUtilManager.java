@@ -93,8 +93,6 @@ public class ExternalUtilManager {
         if (rawOutput != null && !rawOutput.isEmpty()) {
             String parsed = parseData(rawOutput, parser);
             if (parsed == null || parsed.isEmpty()) {
-                System.out.println("'" + rawOutput + "'");
-
                 throw new CliCommand.CliCommandException("verze nenalezena ve výstupu: " + rawOutput);
             } else {
                 return parsed.trim();

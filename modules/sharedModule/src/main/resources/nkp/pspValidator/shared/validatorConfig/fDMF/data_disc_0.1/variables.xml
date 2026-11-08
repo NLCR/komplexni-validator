@@ -459,6 +459,14 @@
         </evaluation>
     </value-def>
 
+    <value-def name="ALTO_XSD_FILES" type="FILE_LIST">
+        <evaluation functionName="getProvidedFiles">
+            <params>
+                <value name="files_id" type="STRING">ALTO_XSD_FILES</value>
+            </params>
+        </evaluation>
+    </value-def>
+
     <value-def name="ALTO_XSD_FILE" type="FILE">
         <evaluation functionName="getProvidedFile">
             <params>
@@ -637,11 +645,33 @@
     </value-def>
 
     <value-def name="IE_IDENTIFIERS" type="IDENTIFIER_LIST">
-        <description>seznam identifikátorů intelektuální entity ze souboru PRIMARY-METS</description>
-        <evaluation functionName="getIeIdentifiersFromPrimaryMetsFile">
+        <description>seznam identifikátorů intelektuální entity (DATACOLLECTION) ze souboru PRIMARY-METS</description>
+        <!--Funkce getIeIdentifiersFromPrimaryMetsFile má prefixy IE zadrátované (ISSUE/SUPPL/VOLUME), proto se IE vybírá
+        datově podle dmdSec ID, stejně jako u monografií a jednotek fondu; pro DATACOLLECTION dřív vracela prázdný seznam a PSP_ID_DERIVED_FROM_IE_ID končil chybou null.-->
+        <evaluation functionName="selectIeIdentifiersFromPrimaryMetsFile">
             <params>
-                <value name="primary_mets_file" type="FILE">
-                    <value-ref name="PRIMARY-METS_FILE"/>
+                <value name="mets_identifier_list_list" type="IDENTIFIER_LIST_LIST">
+                    <!--seznam obsahujici seznam identifikatoru pro kazdy zaznam dmdSec pro MODS-->
+                    <evaluation functionName="getModsIdentifiersForEachDmdsecId">
+                        <params>
+                            <value name="dmdsec_ids" type="STRING_LIST">
+                                <!--seznam identifikatoru (dmdSec ID); podtrzitko na konci je nutne, jen jedna uroven DATACOLLECTION-->
+                                <evaluation functionName="getStringListByXpath">
+                                    <params>
+                                        <value name="xml_file" type="FILE">
+                                            <value-ref name="PRIMARY-METS_FILE"/>
+                                        </value>
+                                        <value name="xpath" type="STRING">
+                                            /mets:mets/mets:dmdSec[starts-with(@ID, "MODSMD_DATACOLLECTION_")]/@ID
+                                        </value>
+                                    </params>
+                                </evaluation>
+                            </value>
+                            <value name="mets_file" type="FILE">
+                                <value-ref name="PRIMARY-METS_FILE"/>
+                            </value>
+                        </params>
+                    </evaluation>
                 </value>
             </params>
         </evaluation>

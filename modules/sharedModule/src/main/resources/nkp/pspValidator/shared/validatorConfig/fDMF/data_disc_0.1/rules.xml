@@ -221,9 +221,6 @@
                         <value-ref name="USER-COPY-DIR_FILE"/>
                     </value>
                     <value name="file" type="FILE">
-                        <value-ref name="USER-COPY-DIR_FILE"/>
-                    </value>
-                    <value name="file" type="FILE">
                         <value-ref name="ISOIMAGE-DIR_FILE"/>
                     </value>
                     <value name="file" type="FILE">
@@ -671,8 +668,8 @@
             </validation>
         </rule>
 
-        <rule name="NUMBER_OF_FILES_IN_DIRS_MATCH">
-            <description>Počet souborů popisující iso image se musí shodovat.</description>
+        <rule name="NUMBER_OF_ISO_FILES_IN_DIRS_MATCH">
+            <description>Počet souborů popisujících ISO image (ISOIMAGE, SECONDARY-METS-ISO, FIFOID) se musí shodovat.</description>
             <validation functionName="checkAllFileListsHaveSameSize">
                 <params>
                     <value name="files" type="FILE_LIST">
@@ -1061,6 +1058,15 @@
                     </value>
                     <value name="files" type="FILE_LIST">
                         <value-ref name="USER-COPY_FILES"/>
+                    </value>
+                    <value name="files" type="FILE_LIST">
+                        <value-ref name="ISOIMAGE_FILES"/>
+                    </value>
+                    <value name="files" type="FILE_LIST">
+                        <value-ref name="FIFOID_FILES"/>
+                    </value>
+                    <value name="files" type="FILE_LIST">
+                        <value-ref name="CATALOG-ENTRY_FILES"/>
                     </value>
                 </params>
             </validation>
@@ -2218,34 +2224,6 @@
             </validation>
         </rule>
 
-        <rule name="PRIMARY-METS_FILESEC_ALL_SECONDARY_METS_FILES_REFERENCED">
-            <description>Element mets:fileSec v souboru PRIMARY-METS musí v elementu mets:fileGrp s atributem
-                ID="TECHMDGRP" obsahovat odkazy na všechny soubory SECONDARY-METS a žádné jiné.
-            </description>
-            <validation functionName="checkFileListsMatch">
-                <params>
-                    <value name="expected_files" type="FILE_LIST">
-                        <value-ref name="SECONDARY-METS-IMG_FILES"/>
-                    </value>
-                    <value name="found_files" type="FILE_LIST">
-                        <evaluation functionName="getFileListByXpath">
-                            <params>
-                                <value name="psp_dir" type="FILE">
-                                    <value-ref name="PSP_DIR"/>
-                                </value>
-                                <value name="xml_file" type="FILE">
-                                    <value-ref name="PRIMARY-METS_FILE"/>
-                                </value>
-                                <value name="xpath" type="STRING">
-                                    /mets:mets/mets:fileSec/mets:fileGrp[@ID='TECHMDGRP']/mets:file/mets:FLocat[@LOCTYPE='URL']/@xlink:href
-                                </value>
-                            </params>
-                        </evaluation>
-                    </value>
-                </params>
-            </validation>
-        </rule>
-
         <rule name="PRIMARY-METS_FILESEC_SIZES_MATCH">
             <description>Velikosti souborů v bytech uvedené v atributu SIZE všech elementů mets:file se musí shodovat se
                 skutečnými velikostmi souborů odkazovaných v elementech mets:FLocat.
@@ -2762,16 +2740,30 @@
     <rules-section name="OCR ALTO" description="Kontrola souborů ALTO.">
 
         <rule name="OCR-ALTO_FILES_VALID_BY_XSD">
-            <description>Soubory OCR-ALTO musí být validní podle XML Schema (alto_2.0.xsd).</description>
-            <validation functionName="checkXmlIsValidByXsd">
+            <description>Soubory OCR-ALTO musí být validní podle XML Schema pro verzi ALTO danou namespace kořenového elementu (alto_2.1.xsd, alto_3.1.xsd, alto_4.4.xsd).</description>
+            <validation functionName="checkXmlIsValidByXsdByNamespace">
                 <params>
                     <value name="xml_files" type="FILE_LIST">
                         <value-ref name="OCR-ALTO_FILES"/>
                     </value>
-                    <value name="xsd_file" type="FILE">
-                        <value-ref name="ALTO_XSD_FILE"/>
+                    <value name="xsd_files" type="FILE_LIST">
+                        <value-ref name="ALTO_XSD_FILES"/>
                     </value>
                     <value name="level" type="LEVEL">ERROR</value>
+                </params>
+            </validation>
+        </rule>
+
+        <rule name="OCR-ALTO_FILES_SAME_VERSION">
+            <description>Všechny soubory OCR-ALTO v balíčku by měly mít stejnou verzi ALTO (stejný namespace kořenového elementu).
+                Předpis OCR míchání verzí neřeší, proto jen WARNING (viz dotaz Q2 pro NK ČR).
+            </description>
+            <validation functionName="checkXmlFilesShareRootNamespace">
+                <params>
+                    <value name="xml_files" type="FILE_LIST">
+                        <value-ref name="OCR-ALTO_FILES"/>
+                    </value>
+                    <value name="level" type="LEVEL">WARNING</value>
                 </params>
             </validation>
         </rule>

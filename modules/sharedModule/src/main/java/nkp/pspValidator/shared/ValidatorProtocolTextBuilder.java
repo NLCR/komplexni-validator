@@ -98,4 +98,10 @@ public class ValidatorProtocolTextBuilder {
         }
     }
 
+    public void logXmlExportFailed(String reason) {
+        if (out != null) {
+            out.println("Xml export se nepodařilo vytvořit: " + reason);
+        }
+    }
+
 }
