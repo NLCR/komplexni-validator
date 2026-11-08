@@ -5,6 +5,7 @@ import nkp.pspValidator.shared.OperatingSystem;
 import nkp.pspValidator.shared.Platform;
 
 import java.io.*;
+import java.nio.file.Path;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Properties;
@@ -19,22 +20,8 @@ public class ConfigurationManager {
     public static boolean DEV_MODE_ONLY_SELECTED_SECTIONS = false;
 
     private static final String DEFAULT_LOG_DIR = "logs";
-    private String getDefaultFdmfDir() {
-        switch (platform.getOperatingSystem()) {
-            case WINDOWS:
-                return "app/validatorConfig";
-            case LINUX:
-                return "../lib/app/validatorConfig"; // počítáme s app-image (portable) distribucí
-            case MAC:
-                if (isMacAppBundle()) {
-                    // jpackage .app: konfigurace je vedle jaru v Contents/app
-                    return new File(getAppJarDir(), "validatorConfig").getAbsolutePath();
-                }
-                return "validatorConfig";
-            default:
-                throw new IllegalStateException("Nepodporovaný operační systém.");
-        }
-    }
+    private static final String VALIDATOR_CONFIG_DIR_NAME = "validatorConfig";
+    private static final String USER_DATA_DIR_NAME = "KomplexniValidator";
 
     private static File CONFIG_FILE_PRODUCTION = new File("config.properties");
     private static File CONFIG_FILE_DEV_WIN = new File("../../resources/main/dev/config-win.properties");
@@ -120,12 +107,18 @@ public class ConfigurationManager {
     public static final String PROP_TEXT_LOG_VERBOSITY = "text_log.verbosity";
 
     private final Platform platform;
+    private final Locations locations;
     private final File configFile;
     private final Properties properties = new Properties();
 
     public ConfigurationManager(Platform platform) throws IOException {
+        this(platform, Locations.detect(platform));
+    }
+
+    ConfigurationManager(Platform platform, Locations locations) throws IOException {
         try {
             this.platform = platform;
+            this.locations = locations;
             this.configFile = selectConfigFile();
             loadProperties();
             initDefaultProperties();
@@ -137,20 +130,19 @@ public class ConfigurationManager {
     private void initDefaultProperties() {
         //validator config dir
         File validatorConfigDir = getFileOrNull(PROP_VALIDATOR_CONFIG_DIR);
-        // macOS .app: konfigurace z bundlu se bere vždy z právě spuštěné aplikace (jinak by nová verze nebo přesunutá
-        // aplikace použila pravidla ze staré .app); vlastní adresář mimo bundle zvolený uživatelem zůstává
-        if (validatorConfigDir != null && isMacAppBundle()
-                && (validatorConfigDir.getPath().contains(".app/Contents/app/") || !validatorConfigDir.isDirectory())) {
+        // konfigurace z instalace se bere vždy z právě spuštěné aplikace (jinak by nová verze nebo přesunutá aplikace
+        // použila pravidla ze staré instalace); vlastní existující adresář mimo instalaci zvolený uživatelem zůstává
+        if (validatorConfigDir != null && !DEV_MODE && locations.isStaleValidatorConfigDir(validatorConfigDir)) {
             validatorConfigDir = null;
         }
         if (validatorConfigDir == null) {
-            validatorConfigDir = new File(getDefaultFdmfDir());
+            validatorConfigDir = locations.defaultValidatorConfigDir;
             setFile(PROP_VALIDATOR_CONFIG_DIR, validatorConfigDir);
         }
         //log dir
         File logDir = getFileOrNull(PROP_LOG_DIR);
         if (logDir == null) {
-            logDir = new File(getDefaultLogDir());
+            logDir = locations.defaultLogDir;
             setFile(PROP_LOG_DIR, logDir);
         }
         logDir.mkdirs();
@@ -188,43 +180,13 @@ public class ConfigurationManager {
         }
     }
 
-    /**
-     * Aplikace běží z macOS balíčku vytvořeného přes jpackage (launcher nastavuje jpackage.app-path).
-     * Spuštěná z Finderu má pracovní adresář "/", proto zapisovatelné soubory nesmí být relativní.
-     */
-    private boolean isMacAppBundle() {
-        return platform.getOperatingSystem() == OperatingSystem.MAC
-                && System.getProperty("jpackage.app-path") != null;
-    }
-
-    private static File getAppJarDir() {
-        try {
-            return new File(ConfigurationManager.class.getProtectionDomain().getCodeSource().getLocation().toURI()).getParentFile();
-        } catch (Exception e) {
-            throw new IllegalStateException("nelze zjistit umístění aplikace", e);
-        }
-    }
-
-    // ~/Library/Application Support/KomplexniValidator: config.properties a logy aplikace z macOS balíčku
-    private static File getMacUserDataDir() {
-        return new File(System.getProperty("user.home"), "Library/Application Support/KomplexniValidator");
-    }
-
-    private String getDefaultLogDir() {
-        if (isMacAppBundle()) {
-            return new File(getMacUserDataDir(), DEFAULT_LOG_DIR).getAbsolutePath();
-        }
-        return DEFAULT_LOG_DIR;
-    }
-
     private File selectConfigFile() {
-        if (!DEV_MODE && isMacAppBundle()) {
-            File dir = getMacUserDataDir();
-            dir.mkdirs();
-            return new File(dir, CONFIG_FILE_PRODUCTION.getName());
-        }
         if (DEV_MODE) {
-            switch (platform.getOperatingSystem()) {
+            OperatingSystem os = platform.getOperatingSystem();
+            if (os == null) {
+                return CONFIG_FILE_PRODUCTION;
+            }
+            switch (os) {
                 case LINUX:
                     return CONFIG_FILE_DEV_LINUX;
                 case WINDOWS:
@@ -234,8 +196,170 @@ public class ConfigurationManager {
                 default:
                     return CONFIG_FILE_PRODUCTION;
             }
-        } else {
-            return CONFIG_FILE_PRODUCTION;
+        }
+        if (locations.userDataDir != null) {
+            locations.userDataDir.mkdirs();
+            File configFile = new File(locations.userDataDir, CONFIG_FILE_PRODUCTION.getName());
+            if (!configFile.exists()) {
+                // jednorázová migrace nastavení z verze 2.8 (cesty k nástrojům, přeskočené sekce, ...), která
+                // config.properties ukládala do pracovního adresáře; zastaralá cesta ke konfiguraci se opraví níže
+                File legacy = locations.findLegacyConfigFile(CONFIG_FILE_PRODUCTION.getName());
+                if (legacy != null) {
+                    try {
+                        java.nio.file.Files.copy(legacy.toPath(), configFile.toPath());
+                    } catch (IOException e) {
+                        // bez migrace, aplikace začne s výchozím nastavením
+                    }
+                }
+            }
+            return configFile;
+        }
+        return CONFIG_FILE_PRODUCTION;
+    }
+
+    /**
+     * Umístění souborů aplikace podle způsobu spuštění. Jen výpočet cest, nic nezapisuje (testovatelné bez JavaFX).
+     * <p>
+     * Aplikace z jpackage (instalátor, portable, macOS .app; launcher nastavuje systémovou vlastnost
+     * {@code jpackage.app-path}): konfigurace validace je vedle hlavního jaru ({@code app/validatorConfig} na Windows,
+     * {@code lib/app/validatorConfig} na Linuxu, {@code Contents/app/validatorConfig} na macOS), vždy absolutně, protože
+     * pracovní adresář je libovolný (z Finderu "/", ze zástupce ve Windows různě). Zapisovatelné soubory
+     * ({@code config.properties}, výchozí adresář logů) jsou mimo instalaci, ta nemusí být zapisovatelná a při
+     * odinstalaci nebo aktualizaci se maže: Windows {@code %APPDATA%\KomplexniValidator}, Linux
+     * {@code $XDG_CONFIG_HOME/KomplexniValidator} (výchozí {@code ~/.config}), macOS
+     * {@code ~/Library/Application Support/KomplexniValidator}.
+     * <p>
+     * Mimo jpackage (java -jar z GUI zipu, IDE) a na neznámém OS: {@code validatorConfig} vedle jaru, pokud existuje,
+     * jinak {@code validatorConfig} v pracovním adresáři; {@code config.properties} a {@code logs} v pracovním adresáři
+     * (chování verze 2.8).
+     */
+    static final class Locations {
+        /** spuštěno z aplikace vytvořené přes jpackage na známém OS */
+        final boolean jpackage;
+        /** adresář hlavního jaru, null pokud ho nelze zjistit */
+        final File appJarDir;
+        final File defaultValidatorConfigDir;
+        final File defaultLogDir;
+        /** adresář pro config.properties, null = pracovní adresář */
+        final File userDataDir;
+        /** pracovní adresář (kvůli migraci config.properties z verze 2.8; v testech podstrčený) */
+        final File workingDir;
+
+        private Locations(boolean jpackage, File appJarDir, File defaultValidatorConfigDir, File defaultLogDir, File userDataDir, File workingDir) {
+            this.jpackage = jpackage;
+            this.appJarDir = appJarDir;
+            this.defaultValidatorConfigDir = defaultValidatorConfigDir;
+            this.defaultLogDir = defaultLogDir;
+            this.userDataDir = userDataDir;
+            this.workingDir = workingDir;
+        }
+
+        static Locations detect(Platform platform) {
+            return resolve(platform == null ? null : platform.getOperatingSystem(),
+                    System.getProperty("jpackage.app-path") != null,
+                    getAppJarDirOrNull(),
+                    new File(System.getProperty("user.home")),
+                    System.getenv("APPDATA"),
+                    System.getenv("XDG_CONFIG_HOME"),
+                    new File("."));
+        }
+
+        /**
+         * @param os            null = neznámý OS, chová se jako mimo jpackage
+         * @param jpackage      je nastavena systémová vlastnost jpackage.app-path
+         * @param appJarDir     adresář hlavního jaru, null pokud ho nelze zjistit (pak jako mimo jpackage)
+         * @param userHome      domovský adresář uživatele
+         * @param appData       proměnná prostředí APPDATA (Windows), může být null
+         * @param xdgConfigHome proměnná prostředí XDG_CONFIG_HOME (Linux), může být null
+         * @param workingDir    pracovní adresář (jen pro vyhledání config.properties z verze 2.8)
+         */
+        static Locations resolve(OperatingSystem os, boolean jpackage, File appJarDir, File userHome,
+                                 String appData, String xdgConfigHome, File workingDir) {
+            if (jpackage && os != null && appJarDir != null) {
+                File userDataDir = getUserDataDir(os, userHome, appData, xdgConfigHome).getAbsoluteFile();
+                return new Locations(true, appJarDir.getAbsoluteFile(),
+                        new File(appJarDir, VALIDATOR_CONFIG_DIR_NAME).getAbsoluteFile(),
+                        new File(userDataDir, DEFAULT_LOG_DIR),
+                        userDataDir, workingDir);
+            }
+            File validatorConfigDir = new File(VALIDATOR_CONFIG_DIR_NAME);
+            if (appJarDir != null) {
+                File besideJar = new File(appJarDir, VALIDATOR_CONFIG_DIR_NAME);
+                if (besideJar.isDirectory()) {
+                    validatorConfigDir = besideJar.getAbsoluteFile();
+                }
+            }
+            return new Locations(false, appJarDir, validatorConfigDir, new File(DEFAULT_LOG_DIR), null, workingDir);
+        }
+
+        private static File getUserDataDir(OperatingSystem os, File userHome, String appData, String xdgConfigHome) {
+            switch (os) {
+                case WINDOWS:
+                    if (appData != null && !appData.isEmpty()) {
+                        return new File(appData, USER_DATA_DIR_NAME);
+                    }
+                    return new File(userHome, "AppData/Roaming/" + USER_DATA_DIR_NAME);
+                case LINUX:
+                    // podle XDG Base Directory musí být XDG_CONFIG_HOME absolutní, jinak se ignoruje
+                    if (xdgConfigHome != null && !xdgConfigHome.isEmpty() && new File(xdgConfigHome).isAbsolute()) {
+                        return new File(xdgConfigHome, USER_DATA_DIR_NAME);
+                    }
+                    return new File(userHome, ".config/" + USER_DATA_DIR_NAME);
+                case MAC:
+                default:
+                    return new File(userHome, "Library/Application Support/" + USER_DATA_DIR_NAME);
+            }
+        }
+
+        /**
+         * Uložená cesta ke konfiguraci validace se nahradí výchozí, pokud neexistuje (přesun portable, reinstalace
+         * jinam) nebo leží uvnitř instalace z jpackage (této nebo jiné verze, i macOS .app).
+         */
+        boolean isStaleValidatorConfigDir(File dir) {
+            if (!dir.isDirectory()) {
+                return true;
+            }
+            if (!jpackage) {
+                // java -jar: existující adresář zvolený uživatelem se nikdy nepřepisuje
+                return false;
+            }
+            // adresář aplikace: rodič adresáře jaru (Windows <instalace>, Linux <instalace>/lib, macOS Contents)
+            if (appJarDir.getParentFile() != null) {
+                Path appDir = appJarDir.getParentFile().toPath().toAbsolutePath().normalize();
+                if (dir.toPath().toAbsolutePath().normalize().startsWith(appDir)) {
+                    return true;
+                }
+            }
+            // jiná (starší, přesunutá) macOS .app této aplikace; na Windows a Linuxu starou instalaci odstraní
+            // aktualizace a přesunutý portable adresář zachytí kontrola existence výše
+            String path = dir.getAbsolutePath().replace('\\', '/');
+            return path.contains("/KomplexniValidator.app/Contents/app/");
+        }
+
+        /**
+         * Soubor config.properties z verze 2.8 a starších (v pracovním adresáři, u instalace ve Windows typicky
+         * v adresáři aplikace); použije se jednou pro migraci nastavení do adresáře uživatele.
+         */
+        File findLegacyConfigFile(String fileName) {
+            File inWorkingDir = new File(workingDir, fileName);
+            if (inWorkingDir.isFile()) {
+                return inWorkingDir;
+            }
+            if (appJarDir != null && appJarDir.getParentFile() != null) {
+                File inAppDir = new File(appJarDir.getParentFile(), fileName);
+                if (inAppDir.isFile()) {
+                    return inAppDir;
+                }
+            }
+            return null;
+        }
+    }
+
+    private static File getAppJarDirOrNull() {
+        try {
+            return new File(ConfigurationManager.class.getProtectionDomain().getCodeSource().getLocation().toURI()).getParentFile();
+        } catch (Exception e) {
+            return null;
         }
     }
 

@@ -18,7 +18,13 @@ Každý release má šest souborů, `<tag>` je např. `v2.8`:
 **Portable** je aplikace, která se neinstaluje: zip se rozbalí kamkoli a spustí se `KomplexniValidator.exe` (Windows)
 nebo `bin/KomplexniValidator` (Linux). Obsahuje vlastní Javu (adresář `runtime`), na stroji tedy nemusí být Java
 a nejsou potřeba práva správce. Technicky jde o výstup `jpackage --type app-image`, tedy totéž, co instalátor
-nakopíruje do Program Files. Konfigurace validace je uvnitř v `app/validatorConfig` (Linux `lib/app/validatorConfig`).
+nakopíruje do cílového adresáře. Konfigurace validace je uvnitř v `app/validatorConfig` (Linux `lib/app/validatorConfig`),
+`config.properties` a logy mimo aplikaci: Windows `%APPDATA%\KomplexniValidator`, Linux `~/.config/KomplexniValidator`
+(nebo `$XDG_CONFIG_HOME/KomplexniValidator`).
+
+**Windows instalátor** instaluje jen pro přihlášeného uživatele, bez práv správce, do
+`%LOCALAPPDATA%\KomplexniValidator` (adresář lze v průvodci změnit). Vytvoří zástupce v nabídce Start (složka
+„Komplexní validátor“) a na ploše (průvodce se zeptá). Instalace vyšší verze starou verzi sama odinstaluje.
 
 **macOS dmg** obsahuje aplikaci `KomplexniValidator.app` s vlastní Javou, uživatel ji přetáhne do Aplikací (práva
 správce nejsou potřeba). Konfigurace validace je v bundlu (`Contents/app/validatorConfig`), `config.properties` a logy
@@ -75,38 +81,58 @@ Kontrola: CLI zip rozbalit a validovat testovací balíček, např.
 
 Výpis končí verzí a datem buildu z kroku 1.
 
-### Windows portable a instalátor (ručně na Windows)
+### Windows instalátor a portable (ručně na Windows x64)
 
-Současný postup, zatím bez skriptu (ladí se):
+Úloha `jpackage` v `modules/guiModule/build.gradle` volí typ balíčku, ikonu a volby podle OS a výstup sama pojmenuje
+podle tabulky výše. V `build.gradle` se před buildem nic ručně nemění. `validatorConfig` přidá úloha
+`syncValidatorConfigForJpackage` (společně s jarem do `build/jpackage-input`), testy se nespouštějí (krok 2).
 
-Úloha `jpackage` volí typ balíčku, ikonu a volby podle OS (Windows `exe` s instalací pro uživatele a volbou adresáře,
-macOS `dmg`, Linux `app-image`) a sama nakopíruje `validatorConfig` do `build/libs` (úloha `syncValidatorConfigForJpackage`).
-Typ lze přepsat parametrem `-PjpackageType=app-image` (portable). Postup platí od úpravy úlohy (větev `build_config`);
-u v2.8 a starších se typ a ikona přepínaly ručně v `build.gradle` a `validatorConfig` se kopíroval ručně.
+1. Jednorázová příprava stroje (Windows 10 nebo 11 x64):
+   - **JDK 17 x64**, např. Temurin z <https://adoptium.net/temurin/releases/?version=17> (instalátor `.msi`,
+     v průvodci zapnout „Set JAVA_HOME variable“ a „Add to PATH“). JDK s JavaFX není potřeba.
+   - **WiX Toolset 3.14** z <https://github.com/wixtoolset/wix3/releases> (soubor `wix314.exe`, nebo `wix314-binaries.zip`
+     rozbalený např. do `C:\wix314`). Adresář s `candle.exe` a `light.exe` přidat do proměnné PATH (Start → „Upravit
+     proměnné prostředí systému“ → Proměnné prostředí → Path → Nový; instalátor `wix314.exe` ho přidává do
+     `C:\Program Files (x86)\WiX Toolset v3.14\bin`). jpackage 17 neumí WiX 4 ani 5.
+   - Kontrola v novém okně příkazového řádku (`cmd`): `java -version` ukazuje 17, `candle -?` vypíše nápovědu WiX.
+2. `git checkout <tag>`, v kořeni repozitáře:
 
-1. Na Windows x64 JDK 17 (u v2.7 a v2.8-beta JDK s JavaFX), pro instalátor WiX Toolset 3.x na PATH
-   (jpackage 17 neumí WiX 4/5).
-2. `git checkout <tag>`, pak `gradlew.bat clean :modules:guiModule:jpackage` (instalátor) a
-   `gradlew.bat :modules:guiModule:jpackage -PjpackageType=app-image` (portable); výstup v
-   `modules/guiModule/build/jpackage/`.
-3. Přejmenovat podle tabulky: instalátor na `KomplexniValidatorGUI-<tag>_Windows_x86_64_installer.exe`, adresář
-   app-image na `KomplexniValidatorGUI-<tag>_Windows_x86_64_portable` a ten zabalit do zipu stejného jména.
-4. Kontrola: aplikace se spustí, „O aplikaci“ ukazuje verzi a datum buildu, instalátor projde.
+        gradlew.bat clean :modules:guiModule:jpackage
+        gradlew.bat :modules:guiModule:jpackage -PjpackageType=app-image
+
+   Úloha na začátku vypíše použitý `jpackage` (z `JAVA_HOME`, jinak z PATH) a jeho verzi. Výstup v
+   `modules\guiModule\build\jpackage\`: `KomplexniValidatorGUI-<tag>_Windows_x86_64_installer.exe`,
+   adresář `KomplexniValidatorGUI-<tag>_Windows_x86_64_portable` a zip stejného jména. Jiný typ instalátoru
+   `-PjpackageType=msi`.
+3. Volitelně podpis: NK podepisuje exe ručně mimo build svým certifikátem (např.
+   `signtool sign /fd SHA256 /tr http://timestamp.digicert.com /td SHA256 /a <soubor>.exe`), před nahráním do release.
+   Název souboru se podpisem nemění.
+4. Kontrola instalátoru: spustit, projít průvodce (cíl `%LOCALAPPDATA%\KomplexniValidator`, bez dotazu na práva
+   správce), aplikace je v nabídce Start ve složce „Komplexní validátor“ (a na ploše, pokud byl zástupce zvolen),
+   spustí se, „O aplikaci“ ukazuje verzi, datum buildu a cestu ke konfiguraci v instalaci
+   (`...\KomplexniValidator\app\validatorConfig`), validace balíčku proběhne. Odinstalace přes Nastavení → Aplikace.
+   Instalace vyšší verze přes nižší starou nahradí; stejná verze (beta a finální mají stejné číslo `x.y.0`) hlásí, že
+   je produkt už nainstalovaný, betu je pak nutné nejdřív odinstalovat.
+5. Kontrola portable: zip rozbalit jinam, spustit `KomplexniValidator.exe`, „O aplikaci“ jako výše.
 
 ### macOS dmg (ručně na Macu s Apple Silicon)
 
-1. JDK 17 s `jpackage` na PATH (např. Temurin 17); JavaFX pro macOS arm64 dodá gradle plugin do jaru, JDK s JavaFX
-   není potřeba. Gradle a jpackage musí běžet nativně na arm64, jinak vznikne balík pro Intel.
-2. `git checkout <tag>`, `./gradlew clean :modules:guiModule:jpackage`, výstup
-   `modules/guiModule/build/jpackage/KomplexniValidator-<verze>.dmg`.
-3. Přejmenovat na `KomplexniValidatorGUI-<tag>_macOS_AppleSilicon_installer.dmg`.
-4. Kontrola bez instalace a bez zápisu do domovského adresáře: dmg připojit (`hdiutil attach -readonly`), aplikaci
+1. JDK 17 arm64 (např. Temurin 17); `jpackage` se bere z `JAVA_HOME`, jinak z PATH (úloha vypíše, který). JavaFX pro
+   macOS arm64 dodá gradle plugin do jaru, JDK s JavaFX není potřeba. Gradle a jpackage musí běžet nativně na arm64,
+   jinak vznikne balík pro Intel (pak má název `_macOS_Intel_`).
+2. `git checkout <tag>`, `JAVA_HOME=$(/usr/libexec/java_home -v 17) ./gradlew clean :modules:guiModule:jpackage`,
+   výstup `modules/guiModule/build/jpackage/KomplexniValidatorGUI-<tag>_macOS_AppleSilicon_installer.dmg`.
+   Dmg není podepsané ani notarizované (případný `codesign` a notarizace by šly ručně po buildu).
+3. Kontrola bez instalace a bez zápisu do domovského adresáře: dmg připojit (`hdiutil attach -readonly`), aplikaci
    zkopírovat do dočasného adresáře a spustit z `/` v režimu snímků:
 
         cd / && JAVA_TOOL_OPTIONS="-Duser.home=<tmp>/home -Dkv.snapshotDir=<tmp>/snap" \
             <tmp>/KomplexniValidator.app/Contents/MacOS/KomplexniValidator
 
    V `<tmp>/snap` musí vzniknout snímky všech dialogů, `about.png` ukazuje verzi, datum a cestu ke konfiguraci v bundlu.
+
+`-PjpackageType=app-image` na Macu dá `KomplexniValidator.app` (název zůstává, jinak by ji Finder nebral jako
+aplikaci) a zip `KomplexniValidatorGUI-<tag>_macOS_AppleSilicon_portable.zip`; nevydává se.
 
 ## 5. GitHub release
 

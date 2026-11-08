@@ -84,6 +84,7 @@ dependencies {
     // Your dependencies here
     implementation project(':modules:sharedModule')
     implementation 'joda-time:joda-time:2.10.13'
+    testImplementation 'junit:junit:4.13.1'
 
     // JavaFX dependencies
     //https://se-education.org/guides/tutorials/javaFxPart1.html#setting-up-java-fx
@@ -126,94 +127,212 @@ shadowJar.dependsOn printRuntimeClasspath
 
 def validatorConfigSourceDir = project(':modules:sharedModule').layout.projectDirectory.dir('src/main/resources/nkp/pspValidator/shared/validatorConfig')
 
+// Vstup pro jpackage (--input): jen aktuální shadow jar a validatorConfig. Sync smaže vše ostatní, takže se do instalace
+// nedostanou jary starších verzí ani obyčejný jar z build/libs.
+def jpackageInputDir = layout.buildDirectory.dir('jpackage-input')
 tasks.register('syncValidatorConfigForJpackage', Sync) {
-    from validatorConfigSourceDir
-    into layout.buildDirectory.dir('libs/validatorConfig')
+    from(tasks.named('shadowJar'))
+    from(validatorConfigSourceDir) {
+        into 'validatorConfig'
+    }
+    into jpackageInputDir
 }
 
+/*
+ * jpackage: instalátor nebo portable aplikace GUI (podrobně release.md kap. 4). V tomto souboru se před buildem nic
+ * ručně nemění: typ balíčku, ikona a volby se volí podle OS, na kterém Gradle běží.
+ *
+ *   ./gradlew :modules:guiModule:jpackage                            instalátor (Windows exe, macOS dmg; Linux app-image)
+ *   ./gradlew :modules:guiModule:jpackage -PjpackageType=app-image   portable aplikace, zabalená do zipu
+ *   -PjpackageType=exe|msi|dmg|pkg|app-image                         jiný typ než výchozí
+ *   (na Windows gradlew.bat místo ./gradlew)
+ *
+ * Požadavky: Windows: JDK 17 x64 (např. Temurin) a WiX Toolset 3.14 na PATH (candle.exe, light.exe; jpackage 17
+ * neumí WiX 4/5). macOS: JDK 17 arm64 pro Apple Silicon (x64 JDK dá balík pro Intel). jpackage se bere z JAVA_HOME,
+ * když je nastavená, jinak z PATH. Balík je vždy pro OS a architekturu stroje, na kterém se staví (shadow jar obsahuje
+ * nativní knihovny JavaFX jen pro tuto platformu).
+ *
+ * Výstup v build/jpackage/, pojmenovaný podle release.md (tag v<appVersion>), např.
+ * KomplexniValidatorGUI-v2.9_Windows_x86_64_installer.exe nebo KomplexniValidatorGUI-v2.9_Windows_x86_64_portable.zip.
+ */
+
+// Pevný UpgradeCode instalátoru pro Windows. NESMÍ SE MĚNIT: podle něj Windows Installer pozná, že jde o tentýž produkt,
+// a při instalaci vyšší verze starou odinstaluje. S jiným UUID by zůstaly nainstalované dvě verze vedle sebe.
+// Hodnota je ta, kterou jpackage 17 odvozoval sám bez --win-upgrade-uuid a bez --vendor
+// (UUID.nameUUIDFromBytes("UpgradeCode/Unknown/KomplexniValidator"), WinMsiBundler.getUpgradeCode), takže na ni navazují
+// i instalace z dřívějších verzí, které vznikly bez této volby. Po přidání --vendor by se odvozená hodnota změnila,
+// proto je zapsaná napevno.
+def WIN_UPGRADE_UUID = 'ee66a593-8af0-330e-8ca6-6eba6842a038'
+
+// Údaje v instalátoru (Windows „Programy a funkce“, vlastnosti exe). Bez diakritiky: jpackage 17 předává texty do WiX
+// s kódovou stránkou 1252 (MsiInstallerStrings_en.wxl), znaky jako Č, č, ů v ní nejsou a light.exe by skončil chybou
+// LGHT0311. Název skupiny v nabídce Start obsahuje jen í a á, ty v 1252 jsou.
+def JPACKAGE_VENDOR = 'Narodni knihovna CR'
+def JPACKAGE_DESCRIPTION = 'Komplexni validator baliku PSP'
+def WIN_MENU_GROUP = 'Komplexní validátor'
+
 tasks.register('jpackage', Exec) {
-    // Replace non-digit characters with a dot for the app-version
-    // and trim leading/trailing dots (e.g. "2.8-beta" -> "2.8", jpackage rejects "2.8.")
-    def compatibleVersion = version.replaceAll(/[^0-9]+/, '.').replaceAll(/^\.+|\.+$/, '')
-    // Define the name of your application
-    //def appName = "KomplexniValidator_${version}"
-    def appName = "KomplexniValidator"
-    // Define the output directory for the installer
-    def outputDir = 'build/jpackage'
-    // Define the input directory where the JAR file and other resources are located
-    def inputDir = 'build/libs'
-    //TODO: fix this hack
-    def resourceDir = '../sharedModule/src/main/resources/nkp/pspValidator/shared/validatorConfig'
-    // Define the path to the main JAR file of your application
-    //def mainJar = "guiModule-${version}.jar"
-    def mainJar = "guiModule-${version}-shadow.jar"
-    // Define the main class of your application
-    //def mainClassName = 'nkp.pspValidator.gui.Main'
+    group = 'distribution'
+    description = 'Sestaví instalátor nebo portable aplikaci GUI přes jpackage (viz komentář v build.gradle a release.md).'
+    dependsOn 'shadowJar', 'syncValidatorConfigForJpackage'
+
+    def appName = 'KomplexniValidator'
+    def outputDir = layout.buildDirectory.dir('jpackage').get().asFile
+    def inputDir = jpackageInputDir.get().asFile
+    def appVersionString = project.version.toString()
+    def tag = "v${appVersionString}"
+    def mainJarName = "guiModule-${appVersionString}-shadow.jar"
     def mainClassName = 'nkp.pspValidator.gui.Launcher'
-    // Specify the image directory (if you have one)
-    def imageDir = 'build/image/resources/img'
-    // Specify the icon path (if you have one)
+    def requestedType = project.findProperty('jpackageType')
 
-    def iconPath = ''
-    // typ balíčku a volby specifické pro platformu; přepsat lze -PjpackageType=app-image (portable)
-    def packageType = ''
-    def platformOptions = []
+    // nastaví se v doFirst, používá doLast
+    def packageType = null
+    def appVersionNumeric = null
+    def platformLabel = null
 
-    String osName = System.getProperty("os.name").toLowerCase();
-    if (osName.startsWith("windows")) {
-        iconPath = 'src/main/resources/img/appIcon/icon_48x48.ico'
-        packageType = 'exe'
-        platformOptions = ['--win-dir-chooser', '--win-per-user-install', '--win-shortcut-prompt']
-    } else if (osName.startsWith("linux")) {
-        iconPath = 'src/main/resources/img/appIcon/icon_48x48.png'
-        packageType = 'app-image'
-    } else if (osName.startsWith("mac")) {
-        iconPath = 'src/main/resources/img/appIcon/appIcon.icns'
-        // dmg: uživatel přetáhne aplikaci do Aplikací, nepotřebuje práva správce (pkg je vyžaduje)
-        packageType = 'dmg'
-        platformOptions = ['--mac-package-identifier', 'cz.nkp.pspValidator.gui']
-    }
-    if (project.hasProperty('jpackageType')) {
-        packageType = project.property('jpackageType')
-    }
-    // volby instalátoru nejdou s app-image
-    if (packageType == 'app-image') {
-        platformOptions = platformOptions.findAll { !it.startsWith('--win-') }
-    }
-
-    // Make sure this task is executed after the application is built
-    dependsOn 'build', 'syncValidatorConfigForJpackage'
-
-    // Use the jpackage command-line tool to create the installer
-    commandLine(['jpackage',
-            '--type', packageType,
-            '--dest', outputDir,
-            '--name', appName,
-            //'--description', 'Komplexni_Validator_baliku_PSP',
-            //'--vendor', 'Narodni_knihovna_CR',
-            '--input', inputDir,
-            '--main-jar', mainJar,
-            '--main-class', mainClassName,
-            '--resource-dir', resourceDir,
-            '--icon', iconPath,
-            '--app-version', compatibleVersion] + platformOptions)
-
-    // Additional options can be added here, such as '--vendor', '--resource-dir', etc.
-
-    // Only if you have created a custom runtime image
-    // '--runtime-image', imageDir
-
-    // Setting the Java options for the application; include any JVM args you need
     doFirst {
-        environment 'JAVA_HOME', System.getenv('JAVA_HOME')
+        String osName = System.getProperty('os.name').toLowerCase()
+        String osArch = System.getProperty('os.arch').toLowerCase()
+        String iconPath
+        List<String> platformOptions = []
+        if (osName.startsWith('windows')) {
+            iconPath = 'src/main/resources/img/appIcon/appIcon.ico'
+            packageType = 'exe'
+            platformLabel = (osArch == 'amd64' || osArch == 'x86_64') ? 'Windows_x86_64' : "Windows_${osArch}"
+            // instalace pro uživatele do %LOCALAPPDATA%\KomplexniValidator bez práv správce, s volbou adresáře,
+            // zástupci v nabídce Start a na ploše (dialog se zeptá, zda je vytvořit)
+            platformOptions = ['--win-per-user-install', '--win-dir-chooser',
+                               '--win-menu', '--win-menu-group', WIN_MENU_GROUP,
+                               '--win-shortcut', '--win-shortcut-prompt',
+                               '--win-upgrade-uuid', WIN_UPGRADE_UUID]
+        } else if (osName.startsWith('linux')) {
+            // stejná ikona jako v tools/release/docker-build-linux.sh
+            iconPath = 'src/main/resources/img/appIcon/appIcon-256.png'
+            packageType = 'app-image'
+            platformLabel = (osArch == 'amd64' || osArch == 'x86_64') ? 'Linux_x64' : "Linux_${osArch}"
+        } else if (osName.startsWith('mac')) {
+            iconPath = 'src/main/resources/img/appIcon/appIcon.icns'
+            // dmg: uživatel přetáhne aplikaci do Aplikací, nepotřebuje práva správce (pkg je vyžaduje)
+            packageType = 'dmg'
+            platformLabel = osArch == 'aarch64' ? 'macOS_AppleSilicon' : 'macOS_Intel'
+            platformOptions = ['--mac-package-identifier', 'cz.nkp.pspValidator.gui']
+        } else {
+            throw new GradleException("jpackage: nepodporovaný operační systém '${System.getProperty('os.name')}', " +
+                    "podporované jsou Windows, macOS a Linux.")
+        }
+        if (requestedType != null) {
+            packageType = requestedType.toString()
+            if (!(packageType in ['exe', 'msi', 'dmg', 'pkg', 'app-image'])) {
+                throw new GradleException("jpackage: neznámý typ -PjpackageType=${packageType}, povolené: exe, msi, dmg, pkg, app-image.")
+            }
+        }
+        // volby instalátoru nejdou s app-image
+        if (packageType == 'app-image') {
+            def withoutWin = []
+            for (int i = 0; i < platformOptions.size(); i++) {
+                String opt = platformOptions[i]
+                if (opt.startsWith('--win-')) {
+                    // volby s hodnotou: hodnotu vynechat taky
+                    if (opt in ['--win-menu-group', '--win-upgrade-uuid']) {
+                        i++
+                    }
+                } else {
+                    withoutWin << opt
+                }
+            }
+            platformOptions = withoutWin
+        }
+
+        // jpackage chce číselnou verzi x.y.z: "2.9" -> "2.9.0", "2.9-beta" -> "2.9.0", "2.9.1" -> "2.9.1".
+        // Omezení MSI (Windows): stejná verze znamená „už nainstalováno“, beta a finální verze téže verze mají stejné
+        // číslo a liší se jen obsahem; před instalací finální verze přes betu je proto nutné betu odinstalovat.
+        // macOS (CFBundleVersion) i Windows (MSI) přijímají tři složky, první musí být nenulová.
+        def m = appVersionString =~ /^(\d+)(?:\.(\d+))?(?:\.(\d+))?/
+        if (!m.find()) {
+            throw new GradleException("jpackage: appVersion '${appVersionString}' nezačíná číslem verze.")
+        }
+        appVersionNumeric = [m.group(1), m.group(2) ?: '0', m.group(3) ?: '0'].join('.')
+
+        String javaHome = System.getenv('JAVA_HOME')
+        String exeSuffix = osName.startsWith('windows') ? '.exe' : ''
+        String jpackageBin = (javaHome != null && !javaHome.isEmpty()) ? new File(javaHome, "bin/jpackage${exeSuffix}").path : 'jpackage'
+        def versionOut = new ByteArrayOutputStream()
+        project.exec {
+            commandLine jpackageBin, '--version'
+            standardOutput = versionOut
+        }
+        println "jpackage: ${jpackageBin} (verze ${versionOut.toString().trim()}), typ ${packageType}, app-version ${appVersionNumeric}"
+
+        // starý výstup téhož typu smazat, jinak jpackage nebo přejmenování skončí chybou na existujícím cíli;
+        // výstupy jiných typů (např. instalátor vedle portable) zůstávají
+        String prefix = "KomplexniValidatorGUI-${tag}_${platformLabel}"
+        if (packageType == 'app-image') {
+            project.delete(new File(outputDir, appName), new File(outputDir, "${appName}.app"),
+                    new File(outputDir, "${prefix}_portable"), new File(outputDir, "${prefix}_portable.zip"))
+        } else {
+            project.delete(new File(outputDir, "${appName}-${appVersionNumeric}.${packageType}"),
+                    new File(outputDir, "${prefix}_installer.${packageType}"))
+        }
+
+        commandLine([jpackageBin,
+                     '--type', packageType,
+                     '--dest', outputDir.path,
+                     '--name', appName,
+                     '--vendor', JPACKAGE_VENDOR,
+                     '--description', JPACKAGE_DESCRIPTION,
+                     '--input', inputDir.path,
+                     '--main-jar', mainJarName,
+                     '--main-class', mainClassName,
+                     '--icon', iconPath,
+                     '--app-version', appVersionNumeric] + platformOptions)
+    }
+
+    // pojmenování výstupu podle release.md
+    doLast {
+        String prefix = "KomplexniValidatorGUI-${tag}_${platformLabel}"
+        if (packageType == 'app-image') {
+            File zipFile = new File(outputDir, "${prefix}_portable.zip")
+            if (platformLabel.startsWith('macOS')) {
+                // .app musí zůstat pojmenovaná KomplexniValidator.app (jinak ji Finder nebere jako aplikaci),
+                // do zipu jde tak, jak je
+                File app = new File(outputDir, "${appName}.app")
+                project.exec {
+                    workingDir outputDir
+                    // -y: symlinky v runtime zachovat jako symlinky
+                    commandLine 'zip', '-qry', zipFile.name, app.name
+                }
+                println "jpackage: ${app} a ${zipFile}"
+            } else {
+                File dir = new File(outputDir, "${prefix}_portable")
+                if (!new File(outputDir, appName).renameTo(dir)) {
+                    throw new GradleException("jpackage: nelze přejmenovat ${appName} na ${dir.name}")
+                }
+                if (platformLabel.startsWith('Windows')) {
+                    ant.zip(destfile: zipFile, basedir: outputDir, includes: "${dir.name}/**")
+                } else {
+                    project.exec {
+                        workingDir outputDir
+                        commandLine 'zip', '-qry', zipFile.name, dir.name
+                    }
+                }
+                println "jpackage: ${dir} a ${zipFile}"
+            }
+        } else {
+            File built = new File(outputDir, "${appName}-${appVersionNumeric}.${packageType}")
+            File target = new File(outputDir, "${prefix}_installer.${packageType}")
+            if (!built.renameTo(target)) {
+                throw new GradleException("jpackage: nenalezen výstup ${built} nebo ho nelze přejmenovat na ${target.name}")
+            }
+            println "jpackage: ${target}"
+        }
     }
 }
 
 //run - spusti GUI
 //./gradlew :modules:guiModule:run
 
-//jpackage - build instalatoru
-//./gradlew :modules:guiModule:jpackage
+//jpackage - build instalatoru nebo portable aplikace (viz komentar u ulohy jpackage)
+//./gradlew :modules:guiModule:jpackage [-PjpackageType=app-image]
 
 
 //build.gradle ends here
