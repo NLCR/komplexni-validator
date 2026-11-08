@@ -3,6 +3,7 @@ package nkp.pspValidator.shared.engine.utils;
 import nkp.pspValidator.shared.NamespaceContextImpl;
 import nkp.pspValidator.shared.XmlUtils;
 import nkp.pspValidator.shared.engine.exceptions.InvalidXPathExpressionException;
+import org.json.JSONException;
 import org.json.JSONObject;
 import org.json.JSONTokener;
 import org.w3c.dom.Document;
@@ -24,6 +25,8 @@ import java.security.KeyManagementException;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 import java.security.cert.X509Certificate;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Objects;
 
 public class UrnNbnResolverChecker {
@@ -155,8 +158,16 @@ public class UrnNbnResolverChecker {
     }
 
     public void check(String urnNbn) throws IOException, ResolverError, ResolverWarning, XPathExpressionException, InvalidXPathExpressionException {
-        //if (true) throw new IOException("TEMPORARILY DISABLED");
-        //System.err.println("checking URN:NBN: " + urnNbn);
+        try {
+            checkStatusAndMetadata(urnNbn);
+        } catch (JSONException e) {
+            //HTML misto JSON (napr. 502/503 z proxy), chybejici klic (status, error, digitalDocument...) nebo jiny tvar odpovedi:
+            //chyba jen u tohoto URN:NBN, ostatni identifikatory se kontroluji dal
+            throw new ResolverError("neplatná odpověď Resolveru: " + e.getMessage());
+        }
+    }
+
+    private void checkStatusAndMetadata(String urnNbn) throws IOException, ResolverError, ResolverWarning, XPathExpressionException, InvalidXPathExpressionException {
         JSONObject urnNbnStatusObj = getJson(String.format("/api/v5/urnnbn/%s?format=json", urnNbn));
         if (urnNbnStatusObj.has("urnNbn")) {
             JSONObject urnNbnObj = urnNbnStatusObj.getJSONObject("urnNbn");
@@ -175,8 +186,12 @@ public class UrnNbnResolverChecker {
                         try {
                             checkMetadataMatch(urnNbn);
                         } catch (MetadataMismatchException e) {
-                            //throw new ResolverError(e.getMessage());
+                            //zprava muze obsahovat '%' z metadat, proto konstruktor bez formatovani
                             throw new ResolverWarning(e.getMessage());
+                        } catch (JSONException | IOException e) {
+                            //registrace je potvrzena (ACTIVE), jen porovnani metadat se nepovedlo (odpoved /resolver/ bez
+                            //digitalDocument, HTML misto JSON, vypadek site): stejne jako neshoda metadat jen WARNING
+                            throw new ResolverWarning("metadata identifikátoru \"" + urnNbn + "\" nelze porovnat s Resolverem: " + e.getMessage());
                         }
                     } else {
                         //no metadata checking
@@ -208,24 +223,24 @@ public class UrnNbnResolverChecker {
             System.out.println("TODO: check PERIODICAL VOLUME for " + urnNbn);
         } else*/
         if (digitalDocument.has("periodicalIssue")) {//https://resolver.nkp.cz/api/v6/resolver/urn:nbn:cz:abg001-0005lt?format=json
-            titleInfo = digitalDocument.getJSONObject("periodicalIssue").getJSONObject("titleInfo");
+            titleInfo = titleInfoOf(digitalDocument.getJSONObject("periodicalIssue"));
             checkMetadata("PERIODICAL_ISSUE", titleInfo, urnNbn);
         } else if (digitalDocument.has("monograph")) { //https://resolver.nkp.cz/api/v6/resolver/urn:nbn:cz:mzk-006obk?format=json
-            titleInfo = digitalDocument.getJSONObject("monograph").getJSONObject("titleInfo");
+            titleInfo = titleInfoOf(digitalDocument.getJSONObject("monograph"));
             checkMetadata("MONOGRAPH", titleInfo, urnNbn);
         } else if (digitalDocument.has("monographVolume")) { //https://resolver.nkp.cz/api/v5/resolver/urn:nbn:cz:nk-003do9?format=json
-            titleInfo = digitalDocument.getJSONObject("monographVolume").getJSONObject("titleInfo");
+            titleInfo = titleInfoOf(digitalDocument.getJSONObject("monographVolume"));
             checkMetadata("MONOGRAPH_VOLUME", titleInfo, urnNbn);
         }/* else if (digitalDocument.has("thesis")) { //https://resolver.nkp.cz/api/v5/resolver/urn:nbn:cz:bve302-000007?format=json
             titleInfo = digitalDocument.getJSONObject("thesis").getJSONObject("titleInfo");
             System.out.println("TODO: check THESIS for " + urnNbn);
         } */ else if (digitalDocument.has("analytical")) { //https://resolver.nkp.cz/api/v6/resolver/urn:nbn:cz:pna001-00cxz5?format=json
-            titleInfo = digitalDocument.getJSONObject("analytical").getJSONObject("titleInfo");
+            titleInfo = titleInfoOf(digitalDocument.getJSONObject("analytical"));
             //tohle může být článek v periodiku, nebo kapitola v monografii
             checkMetadata("ANALYTICAL", titleInfo, urnNbn);
         } else if (digitalDocument.has("otherEntity")) { //https://resolver.nkp.cz/api/v5/resolver/urn:nbn:cz:abg001-0003ig?format=json
             //DMF Jednotky fondu 0.1 (kap. 4): URN:NBN jednotky fondu se registruje jako typ dokumentu OTHER
-            titleInfo = digitalDocument.getJSONObject("otherEntity").getJSONObject("titleInfo");
+            titleInfo = titleInfoOf(digitalDocument.getJSONObject("otherEntity"));
             checkMetadata("OTHER", titleInfo, urnNbn);
         } else {
             //unexpected data structure
@@ -234,36 +249,64 @@ public class UrnNbnResolverChecker {
         }
     }
 
+    /**
+     * titleInfo entity z Resolveru; kdyz chybi, neporovnava se nic (chybejici klic = nekontroluje se).
+     */
+    private JSONObject titleInfoOf(JSONObject entity) {
+        JSONObject titleInfo = entity.optJSONObject("titleInfo");
+        return titleInfo != null ? titleInfo : new JSONObject();
+    }
+
+    /**
+     * Najde v METS zaznam MODS s danym URN:NBN, jehoz typ (cast ID za MODS_, napr. MODS_VOLUME_0001 -> VOLUME) odpovida
+     * typu entity v Resolveru. Typy se zkousi v poradi, vrati se prvni nalezeny.
+     *
+     * @throws ResolverWarning kdyz zadny zaznam MODS s timto URN:NBN nema odpovidajici typ
+     */
+    private UrnNbnMetadataMapping.UrnNbnMetadata findModsForResolverType(String urnNbn, String czidloType, String... modsTypes) throws ResolverWarning {
+        for (String modsType : modsTypes) {
+            Node node = metadataMapping.getMetadataByUrnAndEntityType(urnNbn, modsType);
+            if (node != null) {
+                UrnNbnMetadataMapping.UrnNbnMetadata found = new UrnNbnMetadataMapping.UrnNbnMetadata();
+                found.entityType = modsType;
+                found.node = node;
+                return found;
+            }
+        }
+        List<String> typesInMets = metadataMapping.getEntityTypesByUrn(urnNbn);
+        if (typesInMets.isEmpty()) {
+            throw new ResolverWarning("v METS nenalezen záznam MODS pro %s, metadata nelze porovnat s Resolverem", urnNbn);
+        }
+        throw new ResolverWarning("typ entity v Resolveru (%s) neodpovídá žádnému záznamu MODS s tímto URN:NBN (%s; typ záznamu MODS v METS: %s, očekáváno: %s), metadata nelze porovnat s Resolverem",
+                czidloType, urnNbn, String.join(", ", typesInMets), String.join(", ", Arrays.asList(modsTypes)));
+    }
+
     private void checkMetadata(String czidlo_type, JSONObject titleInfo, String urnNbn) throws ResolverWarning, XPathExpressionException, IOException, InvalidXPathExpressionException, MetadataMismatchException {
         //System.out.println("checking metadata for " + urnNbn + ", czidlo_type: " + czidlo_type);
-        String modsType;
-        Node modsMetadata;
+        UrnNbnMetadataMapping.UrnNbnMetadata mods;
         switch (czidlo_type) {
             case "MONOGRAPH":
-                modsType = "VOLUME";
-                modsMetadata = metadataMapping.getMetadataByUrnAndEntityType(urnNbn, modsType);
-                checkMonographMetadata(czidlo_type, modsType, modsMetadata, titleInfo, urnNbn);
+                //svazek monografie, priloha (MODS_SUPPL_*, ve starsich balicich i MODS_SUPPLEMENT_*) muze mit vlastni URN:NBN
+                mods = findModsForResolverType(urnNbn, czidlo_type, "VOLUME", "SUPPL", "SUPPLEMENT");
+                checkMonographMetadata(czidlo_type, mods.entityType, mods.node, titleInfo, urnNbn);
                 break;
             case "MONOGRAPH_VOLUME":
-                modsType = "VOLUME";
-                modsMetadata = metadataMapping.getMetadataByUrnAndEntityType(urnNbn, modsType);
-                checkMonographVolumeMetadata(czidlo_type, modsType, modsMetadata, titleInfo, urnNbn);
+                mods = findModsForResolverType(urnNbn, czidlo_type, "VOLUME", "SUPPL", "SUPPLEMENT");
+                checkMonographVolumeMetadata(czidlo_type, mods.entityType, mods.node, titleInfo, urnNbn);
                 break;
             case "PERIODICAL_ISSUE":
-                modsType = "ISSUE";
-                modsMetadata = metadataMapping.getMetadataByUrnAndEntityType(urnNbn, modsType);
-                checkPeriodicalIssueMetadata(czidlo_type, modsType, modsMetadata, titleInfo, urnNbn);
+                mods = findModsForResolverType(urnNbn, czidlo_type, "ISSUE");
+                checkPeriodicalIssueMetadata(czidlo_type, mods.entityType, mods.node, titleInfo, urnNbn);
                 break;
             case "ANALYTICAL":
-                modsType = "ART/CHAP";
-                modsMetadata = metadataMapping.getMetadataByUrnAndEntityType(urnNbn, modsType);
-                checkAnalyticalMetadata(czidlo_type, modsType, modsMetadata, titleInfo, urnNbn);
+                mods = findModsForResolverType(urnNbn, czidlo_type, "ART/CHAP");
+                checkAnalyticalMetadata(czidlo_type, mods.entityType, mods.node, titleInfo, urnNbn);
                 break;
             case "OTHER":
-                //zatim jedina entita validatoru registrovana jako OTHER je UNIT (jednotka fondu)
-                modsType = "UNIT";
-                modsMetadata = metadataMapping.getMetadataByUrnAndEntityType(urnNbn, modsType);
-                checkOtherEntityMetadata(czidlo_type, modsType, modsMetadata, titleInfo, urnNbn);
+                //jako OTHER se registruje jednotka fondu (DMF JF kap. 4); u zvuku (SOUNDCOLLECTION) a datovych disku
+                //(DATACOLLECTION) predpoklad, typ registrace je treba overit s NK
+                mods = findModsForResolverType(urnNbn, czidlo_type, "UNIT", "SOUNDCOLLECTION", "DATACOLLECTION");
+                checkOtherEntityMetadata(czidlo_type, mods.entityType, mods.node, titleInfo, urnNbn);
                 break;
             default:
                 throw new ResolverWarning("porovnání metadat s Resolverem pro typ entity %s není implementováno (%s)", czidlo_type, urnNbn);
@@ -403,7 +446,14 @@ public class UrnNbnResolverChecker {
         }
     }
 
+    /**
+     * @param first  hodnota z MODS
+     * @param second hodnota z Resolveru; null = Resolver klic nevratil, porovnani se preskoci
+     */
     private void checkDataMatch(String first, String second, String urnNbn, String czidloType, String modsType) throws MetadataMismatchException {
+        if (second == null) {
+            return;
+        }
         if (differs(first, second)) {
             throw new MetadataMismatchException(urnNbn, czidloType, modsType, first, second);
         } else {
@@ -444,7 +494,11 @@ public class UrnNbnResolverChecker {
         }
         // odpověď Resolveru je UTF-8; JSONTokener(InputStream) by použil kódování platformy (na Windows rozbije diakritiku, issue #202)
         JSONTokener tokener = new JSONTokener(new InputStreamReader(responseStream, StandardCharsets.UTF_8));
-        return new JSONObject(tokener);
+        try {
+            return new JSONObject(tokener);
+        } catch (JSONException e) {
+            throw new JSONException(String.format("%s (HTTP %d): %s", url, responseCode, e.getMessage()), e);
+        }
     }
 
 
@@ -461,6 +515,13 @@ public class UrnNbnResolverChecker {
     }
 
     public static class ResolverWarning extends Exception {
+
+        /**
+         * Zprava bez formatovani (muze obsahovat '%', napr. z nazvu titulu).
+         */
+        public ResolverWarning(String message) {
+            super(message);
+        }
 
         public ResolverWarning(String messageTemplate, Object... params) {
             super(String.format(messageTemplate, params));

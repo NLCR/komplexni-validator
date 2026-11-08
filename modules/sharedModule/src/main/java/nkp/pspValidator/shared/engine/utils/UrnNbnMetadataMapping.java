@@ -44,6 +44,20 @@ public class UrnNbnMetadataMapping {
         return null;
     }
 
+    /**
+     * Typy entit (napr. VOLUME, SUPPL, ART/CHAP) vsech zaznamu MODS s danym URN:NBN, prazdny seznam kdyz zadny neni.
+     */
+    public List<String> getEntityTypesByUrn(String urnNbn) {
+        List<String> result = new ArrayList<>();
+        List<UrnNbnMetadata> urnNbnMetadata = metadataByUrn.get(urnNbn);
+        if (urnNbnMetadata != null) {
+            for (UrnNbnMetadata metadata : urnNbnMetadata) {
+                result.add(metadata.entityType);
+            }
+        }
+        return result;
+    }
+
     public void addMetadataById(String id, Node node) {
         metadataById.put(id, node);
     }

@@ -2203,7 +2203,17 @@
             <validation functionName="checkFileListsMatch">
                 <params>
                     <value name="expected_files" type="FILE_LIST">
-                        <value-ref name="SECONDARY-METS-IMG_FILES"/>
+                        <!--sekundarni METS obrazu (amd_mets_img) i ISO obrazu (amd_mets_isoimg); ISO obrazy jsou nepovinne, prazdny seznam nevadi-->
+                        <evaluation functionName="mergeFiles">
+                            <params>
+                                <value name="file_list" type="FILE_LIST">
+                                    <value-ref name="SECONDARY-METS-IMG_FILES"/>
+                                </value>
+                                <value name="file_list" type="FILE_LIST">
+                                    <value-ref name="SECONDARY-METS-ISO_FILES"/>
+                                </value>
+                            </params>
+                        </evaluation>
                     </value>
                     <value name="found_files" type="FILE_LIST">
                         <evaluation functionName="getFileListByXpath">

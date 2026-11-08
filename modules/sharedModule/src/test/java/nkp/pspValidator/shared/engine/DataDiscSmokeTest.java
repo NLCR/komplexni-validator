@@ -45,5 +45,8 @@ public class DataDiscSmokeTest {
                     || line.contains("nesplněn kontrakt");
             assertTrue("konfigurace fDMF obsahuje chybu nebo funkce spadla: " + line.trim(), !crash);
         }
+        //pravidla data_disc se opravdu spustila (ne jen detekce typu) a validace dobehla do souhrnu
+        assertTrue("v logu chybí pravidlo NUMBER_OF_ISO_FILES_IN_DIRS_MATCH z data_disc_0.1", log.contains("NUMBER_OF_ISO_FILES_IN_DIRS_MATCH"));
+        assertTrue("v logu chybí souhrn validace", log.contains("balík je:"));
     }
 }
