@@ -901,6 +901,15 @@ MUTATIONS = {
     "premis-format-not-mime": "(0.2) formatName MC první strany 'JPEG 2000' místo image/jp2 (PREMIS i MIX) -> AMD-METS_*_MATCH_PROFILE (DMF Periodika 2.3 kap. 7.5 vyžaduje MIME)",
     "part-no-detail": "(0.2) relatedItem/part zdroje jen s extent, bez detail -> BIBLIOGRAPHIC_METADATA_MATCH_PROFILE_UNIT (detail M, aspoň jeden; NK 23. 10. 2026)",
     "part-issue-only": "(0.2) relatedItem/part zdroje jen s detail type=issue (bez ročníku) -> validní (NK 23. 10. 2026: stačí aspoň jeden detail)",
+    "detail-with-title-and-extent": "(0.2) detail volume i issue zdroje s vnořeným mods:title (finál 0.2, R), vedle part/extent unit=pages se start/end ze základu 0.2 -> validní",
+    "source-monograph-partnumber": "(0.2) zdroj jako vícesvazková monografie: relatedItem/titleInfo s partNumber a partName (finál 0.2, MA), bez mods:part a bez ISSN -> validní",
+    "page-generalview": "(0.2) první strana typu generalView (Pravidla pro popis periodik 8.8): genre type i TYPE divu ve fyzické mapě -> validní",
+    "logical-map-pages": "(0.2) logická mapa s div PAGE (LABEL, ID, DMDID, ORDER) pro každou stranu pod UNIT (finál 0.2: PAGE O) -> validní",
+    "detail-wrong-type": "(0.2) relatedItem/part zdroje navíc s detail type=pageNumber (povoleno jen volume, issue) -> BIBLIOGRAPHIC_METADATA_MATCH_PROFILE_UNIT",
+    "page-genre-no-type": "(0.2) genre první strany bez atributu type (M) -> BIBLIOGRAPHIC_METADATA_MATCH_PROFILE_PAGE",
+    "page-dc-no-type": "(0.2) DC první strany bez dc:type model:page -> BIBLIOGRAPHIC_METADATA_MATCH_PROFILE_PAGE (DC)",
+    "amdmets-no-uc-filegrp": "amd_mets první strany bez fileGrp UC_IMGGRP (i bez fptr na UC) -> SECONDARY-METS_FILESEC_ALL_FILEGROUPS_PRESENT, SECONDARY-METS_FILESEC_USER_COPY_FILE_REFERENCED",
+    "extra-file-in-catalog-entry": "cizí soubor (poznamka.txt) v adresáři catalog_entry, zapsaný v MD5 i INFO -> NO_EXTRA_FILES_IN_CATALOG-ENTRY-DIR",
 }
 
 
@@ -922,7 +931,9 @@ def generate(target: str, variant: str, pages: int, with_directory: bool, standa
         sys.exit("neznámé mutace: " + ", ".join(sorted(unknown)) + "; známé: " + ", ".join(sorted(MUTATIONS)))
     # mutace, ktere by v dane kombinaci parametru nic nezmenily
     needs_02 = {"page-no-genre", "unknown-identifier-type-invalid", "info-missing-collection-id", "top-div-type-unit-lowercase", "unit-dc-no-format",
-                "premis-format-not-mime", "part-no-detail", "part-issue-only"} & mutations
+                "premis-format-not-mime", "part-no-detail", "part-issue-only", "detail-with-title-and-extent",
+                "source-monograph-partnumber", "page-generalview", "logical-map-pages", "detail-wrong-type",
+                "page-genre-no-type", "page-dc-no-type"} & mutations
     if needs_02 and standard_version == "0.1":
         sys.exit("mutace " + ", ".join(sorted(needs_02)) + " mají smysl jen s --standard-version 0.2 (v 0.1 by nic nezměnily nebo by nebyly chybou)")
     if "directory-dc-collection" in mutations and not with_directory:
@@ -969,10 +980,17 @@ def generate(target: str, variant: str, pages: int, with_directory: bool, standa
             assert amd.count("<mix:formatName>image/jp2</mix:formatName>") == 1
             amd = amd.replace("<premis:formatName>image/jp2</premis:formatName>", "<premis:formatName>JPEG 2000</premis:formatName>") \
                 .replace("<mix:formatName>image/jp2</mix:formatName>", "<mix:formatName>JPEG 2000</mix:formatName>")
+        if "amdmets-no-uc-filegrp" in mutations and i == 1:
+            uc_grp = amd[amd.index('\n        <mets:fileGrp ID="UC_IMGGRP"'):amd.index('</mets:fileGrp>', amd.index('<mets:fileGrp ID="UC_IMGGRP"')) + len('</mets:fileGrp>')]
+            uc_fptr = f'\n            <mets:fptr FILEID="UC_{p}"/>'
+            assert amd.count(uc_grp) == 1 and amd.count(uc_fptr) == 1
+            amd = amd.replace(uc_grp, "").replace(uc_fptr, "")
         files["amd"] = put(f"amdsec/amd_mets_{psp}_{p}.xml", amd)
         page_files[i] = files
 
     put(f"catalog_entry/cat_entry_{psp}.xml", catalog_entry_xml(urnnbn))
+    if "extra-file-in-catalog-entry" in mutations:
+        put("catalog_entry/poznamka.txt", "Poznámka zpracovatele, do balíčku nepatří.\n")
     mets = main_mets_xml(psp, mets_type, label, genre, extent, urnnbn, standard, pages, with_directory, page_files)
     if "missing-urnnbn" in mutations:
         mets = mets.replace(f'<mods:identifier type="urnnbn">{urnnbn}</mods:identifier>', "")
@@ -1018,6 +1036,56 @@ def generate(target: str, variant: str, pages: int, with_directory: bool, standa
         mets = mets.replace(part_details, "" if "part-no-detail" in mutations else """                                <mods:detail type="issue">
                                     <mods:number>112</mods:number>
                                 </mods:detail>""")
+    if "detail-with-title-and-extent" in mutations:
+        assert mets.count('<mods:extent unit="pages">') == 1
+        for typ, number, title in (("volume", "24", "Ročník XXIV"), ("issue", "112", "Velikonoční číslo")):
+            old_detail = f"""<mods:detail type="{typ}">
+                                    <mods:number>{number}</mods:number>"""
+            assert mets.count(old_detail) == 1
+            mets = mets.replace(old_detail, old_detail + f"""
+                                    <mods:title>{title}</mods:title>""")
+    if "source-monograph-partnumber" in mutations:
+        a = mets.index("                            <mods:part>\n                                <mods:detail type=\"volume\">")
+        b = mets.index("</mods:part>", a) + len("</mods:part>\n")
+        mets = mets[:a] + mets[b:]
+        old_title = """<mods:titleInfo>
+                                <mods:title>České slovo</mods:title>
+                            </mods:titleInfo>"""
+        issn = '\n                            <mods:identifier type="issn">1802-7253</mods:identifier>'
+        assert mets.count(old_title) == 1 and mets.count(issn) == 1
+        mets = mets.replace(old_title, """<mods:titleInfo>
+                                <mods:title>Dějiny Klementina</mods:title>
+                                <mods:partNumber>2</mods:partNumber>
+                                <mods:partName>Knihovny jezuitské koleje</mods:partName>
+                            </mods:titleInfo>""").replace(issn, "")
+    if "page-generalview" in mutations:
+        old_genre = '<mods:genre type="normalPage">page</mods:genre>'
+        old_div = '<mets:div TYPE="normalPage" ID="DIV_PAGE_0001"'
+        assert mets.count(old_div) == 1 and mets.count(old_genre) == pages
+        mets = mets.replace(old_genre, '<mods:genre type="generalView">page</mods:genre>', 1) \
+            .replace(old_div, '<mets:div TYPE="generalView" ID="DIV_PAGE_0001"')
+    if "logical-map-pages" in mutations:
+        last_part = '<mets:div TYPE="NORMAL_TEXT" ID="NORMAL_TEXT_0001"/>'
+        assert mets.count(last_part) == 1
+        mets = mets.replace(last_part, last_part + "".join(f"""
+                    <mets:div TYPE="PAGE" ID="PAGE_{i:04d}" LABEL="Strana {i}" ORDER="{i}" DMDID="MODSMD_PAGE_{i:04d}"/>""" for i in range(1, pages + 1)))
+    if "detail-wrong-type" in mutations:
+        issue_detail = """<mods:detail type="issue">
+                                    <mods:number>112</mods:number>
+                                </mods:detail>"""
+        assert mets.count(issue_detail) == 1
+        mets = mets.replace(issue_detail, issue_detail + """
+                                <mods:detail type="pageNumber">
+                                    <mods:number>3</mods:number>
+                                </mods:detail>""")
+    if "page-genre-no-type" in mutations:
+        old_genre = '<mods:genre type="normalPage">page</mods:genre>'
+        assert mets.count(old_genre) == pages
+        mets = mets.replace(old_genre, "<mods:genre>page</mods:genre>", 1)
+    if "page-dc-no-type" in mutations:
+        page_dc_type = f"<dc:identifier>uuid:{page_uuid(1)}</dc:identifier>\n                    <dc:type>model:page</dc:type>"
+        assert mets.count(page_dc_type) == 1
+        mets = mets.replace(page_dc_type, f"<dc:identifier>uuid:{page_uuid(1)}</dc:identifier>")
     if "unit-dc-no-format" in mutations:
         mets = mets.replace("<dc:format>print</dc:format>\n", "").replace(f"<dc:format>{extent}</dc:format>\n", "")
     mets_rel = put(f"mets_{psp}.xml", mets)
@@ -1026,8 +1094,11 @@ def generate(target: str, variant: str, pages: int, with_directory: bool, standa
     md5_name = f"md5_{psp}.md5"
     md5_lines = "".join(f"{md5_bytes(data)} /{rel}\r\n" for rel, data in sorted(written.items()))
     if "bad-checksum" in mutations:
+        # jen radek prvniho MC: s --jp2-mc maji vsechny MC stejny obsah i MD5, nahrazeni hodnoty by zmenilo vsechny
         first_mc = f"mastercopy/mc_{psp}_0001.jp2"
-        md5_lines = md5_lines.replace(md5_bytes(written[first_mc]), "0" * 32)
+        first_line = f"{md5_bytes(written[first_mc])} /{first_mc}\r\n"
+        assert md5_lines.count(first_line) == 1
+        md5_lines = md5_lines.replace(first_line, f"{'0' * 32} /{first_mc}\r\n")
     md5_rel = put(md5_name, md5_lines)
 
     # INFO: itemlist vsech souboru vc. info.xml (spec kap. 5.1), size v kB bez info.xml
