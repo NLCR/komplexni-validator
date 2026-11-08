@@ -9,14 +9,12 @@ allprojects {
 subprojects {
     apply plugin: 'java'
 
-    java {
-        toolchain {
-            languageVersion = JavaLanguageVersion.of(17) // Fixed to Java 17 for compilation. Java 21 for runtime
-        }
-    }
-
+    // Kompilace pro Javu 17 (CLI a GUI zip bezi na Jave 17+), ale bez toolchainu: build jde pustit s libovolnym
+    // JDK 17 nebo novejsim (napr. jen JDK 21 na Windows), nic dalsiho nemusi byt nainstalovane. Instalatory z jpackage
+    // si pribali runtime toho JDK, kterym se stavi.
     tasks.withType(JavaCompile).configureEach {
         options.encoding = 'UTF-8'
+        options.release = 17
     }
 
     dependencies {

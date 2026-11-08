@@ -88,8 +88,9 @@ podle tabulky výše. V `build.gradle` se před buildem nic ručně nemění. `v
 `syncValidatorConfigForJpackage` (společně s jarem do `build/jpackage-input`), testy se nespouštějí (krok 2).
 
 1. Jednorázová příprava stroje (Windows 10 nebo 11 x64):
-   - **JDK 17 x64**, např. Temurin z <https://adoptium.net/temurin/releases/?version=17> (instalátor `.msi`,
-     v průvodci zapnout „Set JAVA_HOME variable“ a „Add to PATH“). JDK s JavaFX není potřeba.
+   - **JDK 17 nebo 21 x64**, např. Temurin z <https://adoptium.net/temurin/releases/> (instalátor `.msi`,pu
+     v průvodci zapnout „Set JAVA_HOME variable“ a „Add to PATH“). JDK s JavaFX není potřeba; kompilace je vždy pro Javu 17
+     (`options.release = 17`), instalátor si přibalí runtime použitého JDK.
    - **WiX Toolset 3.14** z <https://github.com/wixtoolset/wix3/releases> (soubor `wix314.exe`, nebo `wix314-binaries.zip`
      rozbalený např. do `C:\wix314`). Adresář s `candle.exe` a `light.exe` přidat do proměnné PATH (Start → „Upravit
      proměnné prostředí systému“ → Proměnné prostředí → Path → Nový; instalátor `wix314.exe` ho přidává do
