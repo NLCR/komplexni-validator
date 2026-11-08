@@ -71,6 +71,8 @@ public class Main extends Application {
             addIconIfFound(primaryStage, "img/appIcon/appIcon.iconset/icon_16x16.png");
             addIconIfFound(primaryStage, "img/appIcon/appIcon.iconset/icon_32x32.png");
             addIconIfFound(primaryStage, "img/appIcon/appIcon.iconset/icon_48x48.png");
+            addIconIfFound(primaryStage, "img/appIcon/appIcon.iconset/icon_128x128.png");
+            addIconIfFound(primaryStage, "img/appIcon/appIcon.iconset/icon_256x256.png");
 
             //window size and position
             primaryStage.setResizable(true);
@@ -106,9 +108,11 @@ public class Main extends Application {
     }
 
     private void addIconIfFound(Stage stage, String path) {
-        Image icon = new Image(path);
-        if (icon != null) {
-            stage.getIcons().add(icon);
+        // chybějící ikona nesmí shodit start aplikace (Image bez resource hází IllegalArgumentException)
+        try {
+            stage.getIcons().add(new Image(path));
+        } catch (IllegalArgumentException e) {
+            System.err.println("ikona okna nenalezena: " + path);
         }
     }
 

@@ -16,6 +16,7 @@ for s in 16 32 128 256 512; do
     render "$((s*2))" "$SET/icon_${s}x${s}@2x.png"
 done
 
+render 48 "$SET/icon_48x48.png"      # ikona okna aplikace (Main.addIconIfFound), nepatri k iconutil, ale nevadi mu
 render 256 "$DIR/appIcon-256.png"
 
 if command -v iconutil >/dev/null; then
