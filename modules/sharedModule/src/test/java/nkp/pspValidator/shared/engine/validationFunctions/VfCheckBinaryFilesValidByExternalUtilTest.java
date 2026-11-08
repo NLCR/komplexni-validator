@@ -466,7 +466,7 @@ public class VfCheckBinaryFilesValidByExternalUtilTest {
 
     private static void assertNoProblemContains(ValidationResult result, String fragment) {
         for (ValidationProblem p : result.getProblems()) {
-            assertFalse("neocekavana hlaska: " + p.getMessage(), p.getMessage().contains(fragment));
+            assertFalse("neocekavana hlaska: " + p.getFullMessage(), p.getFullMessage().contains(fragment));
         }
     }
 }
