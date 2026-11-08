@@ -51,8 +51,8 @@ public class AllFdmfSmokeTest {
 
     @BeforeClass
     public static void loadRegistry() throws Exception {
-        configManager = FdmfTestSupport.configManager();
-        registry = new FdmfRegistry(configManager);
+        configManager = FdmfTestSupport.sharedConfigManager();
+        registry = FdmfTestSupport.sharedRegistry();
     }
 
     @Test

@@ -35,6 +35,13 @@ dependencies {
     implementation 'com.ibm.icu:icu4j:51.1'
 }
 
+// Testy nevolaji Resolver URN:NBN (pravidlo MODS_IDENTIFIERS_URN_NBN_REGISTERED skonci INFO "preskocena"):
+// testy bezi bez site a nezavisi na stavu cizich identifikatoru v produkcnim Resolveru.
+// Viz VfCheckUrnNbnIdentifiersRegistered.PROP_SKIP_RESOLVER.
+tasks.withType(Test).configureEach {
+    systemProperty 'kv.skipUrnNbnResolver', 'true'
+}
+
 tasks.register('run', JavaExec) {
     classpath = sourceSets.main.runtimeClasspath
     mainClass.set('nkp.pspValidator.shared.Main')

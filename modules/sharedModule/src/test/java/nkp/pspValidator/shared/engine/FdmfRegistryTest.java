@@ -3,7 +3,6 @@ package nkp.pspValidator.shared.engine;
 import nkp.pspValidator.shared.Dmf;
 import nkp.pspValidator.shared.DmfDetector;
 import nkp.pspValidator.shared.FdmfRegistry;
-import nkp.pspValidator.shared.ValidatorConfigurationManager;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
@@ -26,8 +25,7 @@ public class FdmfRegistryTest {
 
     @BeforeClass
     public static void loadRegistry() throws Exception {
-        ValidatorConfigurationManager configManager = FdmfTestSupport.configManager();
-        registry = new FdmfRegistry(configManager);
+        registry = FdmfTestSupport.sharedRegistry();
     }
 
     @Test

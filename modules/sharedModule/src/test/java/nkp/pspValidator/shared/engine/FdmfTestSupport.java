@@ -11,17 +11,49 @@ import java.io.PrintStream;
 import java.util.Set;
 
 /**
- * Pomocny kod pro testy nad vsemi fDMF (AllFdmfSmokeTest, FdmfRegistryTest).
+ * Pomocny kod pro testy nad fDMF (AllFdmfSmokeTest, FdmfRegistryTest, FundUnitSmokeTest, DataDiscSmokeTest).
  */
 final class FdmfTestSupport {
 
     static final File VALIDATOR_CONFIG_DIR = new File("src/main/resources/nkp/pspValidator/shared/validatorConfig");
+
+    private static ValidatorConfigurationManager sharedConfigManager;
+    private static FdmfRegistry sharedRegistry;
 
     private FdmfTestSupport() {
     }
 
     static ValidatorConfigurationManager configManager() throws Exception {
         return new ValidatorConfigurationManager(VALIDATOR_CONFIG_DIR);
+    }
+
+    /**
+     * Jedna instance pro vsechny testy v JVM (lina inicializace). Nacteni konfigurace a stavba FdmfRegistry (XSD validace
+     * vsech fDMF) trva kolem 0,4 s a smoke testy ji jinak opakovaly v kazdem testu. Sdileni je bezpecne: ValidatorConfigurationManager,
+     * DictionaryManager a FdmfConfiguration po inicializaci drzi jen soubory a slovniky, validace je nemeni; Engine,
+     * profily metadat i ExternalUtilManager si kazdy beh stavi znovu (viz run, ValidatorFactory.buildValidator).
+     * Vyjimka: FdmfConfiguration.initBinaryFileProfiles prepise BinaryFileValidator, run ho vola pred kazdym behem
+     * se vsemi nastroji vypnutymi, takze vysledek je vzdy stejny (testy bezi v jednom vlakne).
+     */
+    static synchronized ValidatorConfigurationManager sharedConfigManager() throws Exception {
+        if (sharedConfigManager == null) {
+            sharedConfigManager = configManager();
+        }
+        return sharedConfigManager;
+    }
+
+    static synchronized FdmfRegistry sharedRegistry() throws Exception {
+        if (sharedRegistry == null) {
+            sharedRegistry = new FdmfRegistry(sharedConfigManager());
+        }
+        return sharedRegistry;
+    }
+
+    /**
+     * Jako run(registry, configManager, dmf, dir), se sdilenou konfiguraci a FdmfRegistry.
+     */
+    static String run(Dmf dmf, File pspRootDir) throws Exception {
+        return run(sharedRegistry(), sharedConfigManager(), dmf, pspRootDir);
     }
 
     /**

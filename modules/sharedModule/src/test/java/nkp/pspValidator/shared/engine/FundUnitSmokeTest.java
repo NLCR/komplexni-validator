@@ -1,14 +1,9 @@
 package nkp.pspValidator.shared.engine;
 
 import nkp.pspValidator.shared.*;
-import nkp.pspValidator.shared.externalUtils.ExternalUtil;
-import nkp.pspValidator.shared.externalUtils.ExternalUtilManager;
-import nkp.pspValidator.shared.externalUtils.ExternalUtilManagerFactory;
 import org.junit.Test;
 
-import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.io.PrintStream;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
@@ -542,23 +537,9 @@ public class FundUnitSmokeTest {
     }
 
     private String runAndCheckNoCrash(File pspRootDir) throws Exception {
-        File validatorConfigDir = new File("src/main/resources/nkp/pspValidator/shared/validatorConfig");
-        ValidatorConfigurationManager configManager = new ValidatorConfigurationManager(validatorConfigDir);
-        FdmfRegistry registry = new FdmfRegistry(configManager);
         Dmf dmf = new DmfDetector().resolveDmf(pspRootDir, new DmfDetector.Params());
-        FdmfConfiguration fdmfConfig = registry.getFdmfConfig(dmf);
-        ExternalUtilManager utilManager = new ExternalUtilManagerFactory(configManager.getExternalUtilsConfigFile())
-                .buildExternalUtilManager(Platform.detectOs().getOperatingSystem());
-        for (ExternalUtil util : ExternalUtil.values()) {
-            utilManager.setUtilDisabled(util);
-        }
-        fdmfConfig.initBinaryFileProfiles(utilManager);
-        Validator validator = ValidatorFactory.buildValidator(fdmfConfig, pspRootDir, configManager.getDictionaryManager());
-
-        ByteArrayOutputStream buffer = new ByteArrayOutputStream();
-        PrintStream out = new PrintStream(buffer, true, "UTF-8");
-        validator.run(pspRootDir, null, out, 3, null, null, null, null, dmf);
-        String log = buffer.toString("UTF-8");
+        // konfigurace a FdmfRegistry jsou sdilene (FdmfTestSupport), Validator a Engine se stavi pro kazdy beh znovu
+        String log = FdmfTestSupport.run(dmf, pspRootDir);
         System.out.println(log);
         // chyby konfigurace nebo pad funkce se projevi jako "necekana chyba" / kontrakt v jednotlivych pravidlech
         // (texty viz ValidationFunction.invalidUnexpectedError / invalidContractNotMet).
