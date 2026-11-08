@@ -5,12 +5,17 @@ import nkp.pspValidator.shared.DmfDetector;
 import nkp.pspValidator.shared.engine.exceptions.InvalidXPathExpressionException;
 import nkp.pspValidator.shared.engine.exceptions.PspDataException;
 import nkp.pspValidator.shared.engine.exceptions.XmlFileParsingException;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.TemporaryFolder;
 
 import java.io.File;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
 
 import static junit.framework.TestCase.fail;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 /**
  * Created by Martin Řehánek on 2.11.16.
@@ -18,6 +23,9 @@ import static org.junit.Assert.assertEquals;
 public class DmfDetectorTest {
 
     private final DmfDetector dmfDetector = new DmfDetector();
+
+    @Rule
+    public TemporaryFolder tmp = new TemporaryFolder();
 
     @Test
     public void detectDmfTypeMonograph() {
@@ -259,6 +267,266 @@ public class DmfDetectorTest {
         params.preferredDmfDadVersion = null;
 
         return dmfDetector.resolveDmf(pspDir, params);
+    }
+
+
+    // ---- typy z minimalnich METS vyrobenych v docasnem adresari ----
+
+    private File psp(String metsType, String infoVersion) throws Exception {
+        File dir = tmp.newFolder();
+        String typeAttr = metsType == null ? "" : " TYPE=\"" + metsType + "\"";
+        write(new File(dir, "mets_x.xml"), "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<mets:mets xmlns:mets=\"http://www.loc.gov/METS/\" LABEL=\"x\"" + typeAttr + "/>");
+        if (infoVersion != null) {
+            write(new File(dir, "info_x.xml"), "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<info><metadataversion>" + infoVersion + "</metadataversion></info>");
+        }
+        return dir;
+    }
+
+    private static void write(File file, String content) throws Exception {
+        Files.write(file.toPath(), content.getBytes(StandardCharsets.UTF_8));
+    }
+
+    @Test
+    public void detectDmfTypeAudioFono() throws Exception {
+        assertEquals(Dmf.Type.AUDIO_FONO, dmfDetector.detectDmfType(psp("audio cylinder", null)));
+    }
+
+    @Test
+    public void detectDmfTypeAudioDisc() throws Exception {
+        assertEquals(Dmf.Type.AUDIO_DISC, dmfDetector.detectDmfType(psp("audio disc", null)));
+    }
+
+    @Test
+    public void detectDmfTypeAudioNoCarrier() throws Exception {
+        assertEquals(Dmf.Type.AUDIO_NO_CARRIER, dmfDetector.detectDmfType(psp("digital audio", null)));
+    }
+
+    @Test
+    public void detectDmfTypeDataDiscFromSample() throws Exception {
+        assertEquals(Dmf.Type.DATA_DISC, dmfDetector.detectDmfType(new File("src/test/resources/data_disc_0.1/minimal/nk-00028d")));
+    }
+
+    @Test
+    public void detectDmfTypeTrimsWhitespace() throws Exception {
+        assertEquals(Dmf.Type.MONOGRAPH, dmfDetector.detectDmfType(psp("  Monograph \n", null)));
+    }
+
+    @Test
+    public void detectDmfTypeIsCaseSensitive() throws Exception {
+        for (String wrong : new String[]{"monograph", "AUDIO DISC", "Digital audio", "Data_disc", "Sound Recording"}) {
+            try {
+                dmfDetector.detectDmfType(psp(wrong, null));
+                fail("typ '" + wrong + "' nema byt rozpoznan");
+            } catch (PspDataException e) {
+                assertTrue(e.getMessage(), e.getMessage().contains("'" + wrong + "'"));
+            }
+        }
+    }
+
+    @Test
+    public void detectDmfTypeUnknownValueMessage() throws Exception {
+        try {
+            dmfDetector.detectDmfType(psp("Neznamy typ", null));
+            fail();
+        } catch (PspDataException e) {
+            assertTrue(e.getMessage(), e.getMessage().contains("'Neznamy typ'"));
+            assertTrue(e.getMessage(), e.getMessage().contains("atribut TYPE"));
+        }
+    }
+
+    @Test
+    public void detectDmfTypeMissingTypeAttribute() throws Exception {
+        try {
+            dmfDetector.detectDmfType(psp(null, null));
+            fail();
+        } catch (PspDataException e) {
+            //chybejici atribut se chova jako prazdna hodnota
+            assertTrue(e.getMessage(), e.getMessage().contains("hodnotu ''"));
+        }
+    }
+
+    @Test
+    public void detectDmfTypeNoMets() throws Exception {
+        File dir = tmp.newFolder();
+        write(new File(dir, "info_x.xml"), "<info/>");
+        try {
+            dmfDetector.detectDmfType(dir);
+            fail();
+        } catch (PspDataException e) {
+            assertTrue(e.getMessage(), e.getMessage().contains("nenalezen soubor PRIMARY-METS"));
+        }
+    }
+
+    @Test
+    public void detectDmfTypeTwoMetsListsCandidates() throws Exception {
+        File dir = psp("Monograph", null);
+        write(new File(dir, "METS_second.XML"), "<mets/>");
+        try {
+            dmfDetector.detectDmfType(dir);
+            fail();
+        } catch (PspDataException e) {
+            assertTrue(e.getMessage(), e.getMessage().contains("nalezeno více možných souborů PRIMARY-METS"));
+            assertTrue(e.getMessage(), e.getMessage().contains("mets_x.xml"));
+            assertTrue(e.getMessage(), e.getMessage().contains("METS_second.XML"));
+        }
+    }
+
+    @Test
+    public void detectDmfTypeMalformedXml() throws Exception {
+        File dir = tmp.newFolder();
+        write(new File(dir, "mets_x.xml"), "<mets:mets xmlns:mets=\"http://www.loc.gov/METS/\" TYPE=\"Monograph\"><nezavreno>");
+        try {
+            dmfDetector.detectDmfType(dir);
+            fail();
+        } catch (XmlFileParsingException e) {
+            assertTrue(e.getMessage(), e.getMessage().contains("chyba parsování xml"));
+            assertTrue(e.getMessage(), e.getMessage().contains("mets_x.xml"));
+        }
+    }
+
+    @Test
+    public void detectDmfTypeEmptyMetsFile() throws Exception {
+        File dir = tmp.newFolder();
+        write(new File(dir, "mets_x.xml"), "");
+        try {
+            dmfDetector.detectDmfType(dir);
+            fail();
+        } catch (XmlFileParsingException e) {
+            //ok
+        }
+    }
+
+    @Test
+    public void detectDmfVersionNoInfo() throws Exception {
+        try {
+            dmfDetector.detectDmfVersionFromInfoFile(Dmf.Type.MONOGRAPH, psp("Monograph", null));
+            fail();
+        } catch (PspDataException e) {
+            assertTrue(e.getMessage(), e.getMessage().contains("nenalezen soubor INFO"));
+        }
+    }
+
+    @Test
+    public void detectDmfVersionTwoInfos() throws Exception {
+        File dir = psp("Monograph", "1.0");
+        write(new File(dir, "info_second.xml"), "<info/>");
+        try {
+            dmfDetector.detectDmfVersionFromInfoFile(Dmf.Type.MONOGRAPH, dir);
+            fail();
+        } catch (PspDataException e) {
+            assertTrue(e.getMessage(), e.getMessage().contains("více možných souborů INFO"));
+        }
+    }
+
+    @Test
+    public void detectDmfVersionEmptyAndCamelCaseElement() throws Exception {
+        assertEquals(null, dmfDetector.detectDmfVersionFromInfoFile(Dmf.Type.MONOGRAPH, psp("Monograph", "  ")));
+        File dir = tmp.newFolder();
+        write(new File(dir, "info_x.xml"), "<info><metadataVersion> 1.7 </metadataVersion></info>");
+        assertEquals("1.7", dmfDetector.detectDmfVersionFromInfoFile(Dmf.Type.MONOGRAPH, dir));
+    }
+
+    // ---- poradi forced > info > preferred > default pro dalsi typy ----
+
+    private Dmf resolve(String metsType, String infoVersion, DmfDetector.Params params) throws Exception {
+        //INFO bez verze (prazdny element) = verze neni v INFO uvedena
+        return dmfDetector.resolveDmf(psp(metsType, infoVersion == null ? "" : infoVersion), params);
+    }
+
+    @Test
+    public void versionsAudioFono() throws Exception {
+        DmfDetector.Params p = new DmfDetector.Params();
+        p.forcedDmfAdfVersion = "F";
+        p.preferredDmfAdfVersion = "P";
+        assertEquals("F", resolve("audio cylinder", "I", p).getVersion());
+        p.forcedDmfAdfVersion = null;
+        assertEquals("I", resolve("audio cylinder", "I", p).getVersion());
+        assertEquals("P", resolve("audio cylinder", null, p).getVersion());
+        p.preferredDmfAdfVersion = null;
+        assertEquals(DmfDetector.DEFAULT_AUDIO_FONO_VERSION, resolve("audio cylinder", null, p).getVersion());
+        assertEquals(Dmf.Type.AUDIO_FONO, resolve("audio cylinder", null, p).getType());
+    }
+
+    @Test
+    public void versionsAudioDisc() throws Exception {
+        DmfDetector.Params p = new DmfDetector.Params();
+        p.forcedDmfAdiVersion = "F";
+        p.preferredDmfAdiVersion = "P";
+        assertEquals("F", resolve("audio disc", "I", p).getVersion());
+        p.forcedDmfAdiVersion = null;
+        assertEquals("I", resolve("audio disc", "I", p).getVersion());
+        assertEquals("P", resolve("audio disc", null, p).getVersion());
+        p.preferredDmfAdiVersion = null;
+        assertEquals(DmfDetector.DEFAULT_AUDIO_DISC_VERSION, resolve("audio disc", null, p).getVersion());
+        assertEquals(Dmf.Type.AUDIO_DISC, resolve("audio disc", null, p).getType());
+    }
+
+    @Test
+    public void versionsAudioNoCarrier() throws Exception {
+        DmfDetector.Params p = new DmfDetector.Params();
+        p.forcedDmfAdnVersion = "F";
+        p.preferredDmfAdnVersion = "P";
+        assertEquals("F", resolve("digital audio", "I", p).getVersion());
+        p.forcedDmfAdnVersion = null;
+        assertEquals("I", resolve("digital audio", "I", p).getVersion());
+        assertEquals("P", resolve("digital audio", null, p).getVersion());
+        p.preferredDmfAdnVersion = null;
+        assertEquals(DmfDetector.DEFAULT_AUDIO_NO_CARRIER_VERSION, resolve("digital audio", null, p).getVersion());
+        assertEquals(Dmf.Type.AUDIO_NO_CARRIER, resolve("digital audio", null, p).getType());
+    }
+
+    @Test
+    public void versionsDataDisc() throws Exception {
+        File dir = new File("src/test/resources/data_disc_0.1/minimal/nk-00028d");
+        DmfDetector.Params p = new DmfDetector.Params();
+        p.forcedDmfDadVersion = "F";
+        p.preferredDmfDadVersion = "P";
+        assertEquals("F", dmfDetector.resolveDmf(dir, p).getVersion());
+        p.forcedDmfDadVersion = null;
+        //verze z INFO vzorku
+        String fromInfo = dmfDetector.detectDmfVersionFromInfoFile(Dmf.Type.DATA_DISC, dir);
+        assertEquals(fromInfo, dmfDetector.resolveDmf(dir, p).getVersion());
+        //bez verze v INFO: preferred, pak default
+        assertEquals("P", resolve("data_disc", null, p).getVersion());
+        p.preferredDmfDadVersion = null;
+        assertEquals(DmfDetector.DEFAULT_DATA_DISC_VERSION, resolve("data_disc", null, p).getVersion());
+        assertEquals(Dmf.Type.DATA_DISC, resolve("data_disc", null, p).getType());
+    }
+
+    @Test
+    public void versionsDefaultsForMonographPeriodicalAudioGram() throws Exception {
+        DmfDetector.Params p = new DmfDetector.Params();
+        assertEquals(DmfDetector.DEFAULT_MONOGRAPH_VERSION, resolve("Monograph", "  ", p).getVersion());
+        assertEquals(DmfDetector.DEFAULT_PERIODICAL_VERSION, resolve("Periodical", "  ", p).getVersion());
+        assertEquals(DmfDetector.DEFAULT_AUDIO_GRAM_VERSION, resolve("sound recording", "  ", p).getVersion());
+        assertEquals(DmfDetector.DEFAULT_FUND_UNIT_VERSION, resolve("Clipping", "  ", p).getVersion());
+    }
+
+    @Test
+    public void versionsForcedDoesNotNeedInfoFile() throws Exception {
+        DmfDetector.Params p = new DmfDetector.Params();
+        p.forcedDmfAdiVersion = "F";
+        assertEquals("F", dmfDetector.resolveDmf(psp("audio disc", null), p).getVersion());
+    }
+
+    @Test
+    public void versionsWithoutForcedRequireInfoFile() throws Exception {
+        try {
+            dmfDetector.resolveDmf(psp("audio disc", null), new DmfDetector.Params());
+            fail();
+        } catch (PspDataException e) {
+            assertTrue(e.getMessage(), e.getMessage().contains("INFO"));
+        }
+    }
+
+    @Test
+    public void resolveDmfUnknownTypeFails() throws Exception {
+        try {
+            resolve("neznamy", "1.0", new DmfDetector.Params());
+            fail();
+        } catch (PspDataException e) {
+            //ok
+        }
     }
 
 }
