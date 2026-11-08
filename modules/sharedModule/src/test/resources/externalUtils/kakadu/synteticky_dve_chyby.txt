@@ -1,0 +1,5 @@
+Kakadu Core Error:
+Expected to find EPH marker following packet header.  Found 0x0 instead.
+Kakadu Core Error:
+Out-of-sequence SOP marker found while attempting to read a packet from the
+code-stream!

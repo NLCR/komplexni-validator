@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jhove xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://schema.openpreservation.org/ois/xml/ns/jhove" xsi:schemaLocation="http://schema.openpreservation.org/ois/xml/ns/jhove https://schema.openpreservation.org/ois/xml/xsd/jhove/1.9/jhove.xsd" name="Jhove" release="1.29.0-SNAPSHOT" date="2024-02-18">
+ <date>2026-11-08T23:25:45+01:00</date>
+ <repInfo uri="src/test/resources/jpeg2000/nevalidni/u0911e.jp2">
+  <reportingModule release="1.4.4" date="2023-03-16">JPEG2000-hul</reportingModule>
+  <lastModified>2025-06-20T12:27:51+02:00</lastModified>
+  <size>5000</size>
+  <format>JPEG 2000</format>
+  <status>Not well-formed</status>
+  <sigMatch>
+  <module>JPEG2000-hul</module>
+  </sigMatch>
+  <messages>
+   <message offset="95" severity="error" id="JPEG2000-HUL-5">Incorrect Box size for UUID List Box</message>
+  </messages>
+  <mimeType>image/jp2</mimeType>
+ </repInfo>
+</jhove>

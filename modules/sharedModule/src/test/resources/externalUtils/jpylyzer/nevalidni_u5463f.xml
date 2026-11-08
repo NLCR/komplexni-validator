@@ -1,0 +1,32 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<jpylyzer xmlns="http://openpreservation.org/ns/jpylyzer/v2/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://openpreservation.org/ns/jpylyzer/v2/ http://jpylyzer.openpreservation.org/jpylyzer-v-2-2.xsd">
+<toolInfo>
+    <toolName>jpylyzer</toolName>
+    <toolVersion>2.2.0</toolVersion>
+</toolInfo>
+<file>
+    <fileInfo>
+        <fileName>u5463f.jp2</fileName>
+        <filePath>src/test/resources/jpeg2000/nevalidni/u5463f.jp2</filePath>
+        <fileSizeInBytes>0</fileSizeInBytes>
+        <fileLastModified>2025-06-20T12:27:51</fileLastModified>
+    </fileInfo>
+    <statusInfo>
+        <success>True</success>
+    </statusInfo>
+    <isValid format="jp2">False</isValid>
+    <tests>
+        <containsSignatureBox>False</containsSignatureBox>
+        <containsFileTypeBox>False</containsFileTypeBox>
+        <containsJP2HeaderBox>False</containsJP2HeaderBox>
+        <containsContiguousCodestreamBox>False</containsContiguousCodestreamBox>
+        <firstBoxIsSignatureBox>False</firstBoxIsSignatureBox>
+        <secondBoxIsFileTypeBox>False</secondBoxIsFileTypeBox>
+        <locationJP2HeaderBoxIsValid>False</locationJP2HeaderBoxIsValid>
+    </tests>
+    <properties/>
+    <warnings>
+        <warning>empty file src/test/resources/jpeg2000/nevalidni/u5463f.jp2</warning>
+    </warnings>
+</file>
+</jpylyzer>

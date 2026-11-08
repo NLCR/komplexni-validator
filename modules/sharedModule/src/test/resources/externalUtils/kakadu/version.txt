@@ -1,0 +1,4 @@
+This is Kakadu's "kdu_expand" application.
+    Compiled against the Kakadu core system, version v8.5
+    Current core system version is v8.5
+    Block decoding capabilities: J2K1+HTOPT

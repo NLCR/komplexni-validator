@@ -1,0 +1,385 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jhove xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://schema.openpreservation.org/ois/xml/ns/jhove" xsi:schemaLocation="http://schema.openpreservation.org/ois/xml/ns/jhove https://schema.openpreservation.org/ois/xml/xsd/jhove/1.9/jhove.xsd" name="Jhove" release="1.29.0-SNAPSHOT" date="2024-02-18">
+ <date>2026-11-08T23:25:43+01:00</date>
+ <repInfo uri="src/test/tools/jp2/uc.jp2">
+  <reportingModule release="1.4.4" date="2023-03-16">JPEG2000-hul</reportingModule>
+  <lastModified>2026-09-24T11:19:18+02:00</lastModified>
+  <size>8167</size>
+  <format>JPEG 2000</format>
+  <status>Well-Formed and valid</status>
+  <sigMatch>
+  <module>JPEG2000-hul</module>
+  </sigMatch>
+  <mimeType>image/jp2</mimeType>
+  <profiles>
+   <profile>JP2</profile>
+  </profiles>
+  <properties>
+   <property>
+    <name>JPEG2000Metadata</name>
+    <values arity="List" type="Property">
+    <property>
+     <name>Brand</name>
+     <values arity="Scalar" type="String">
+      <value>jp2 </value>
+     </values>
+    </property>
+    <property>
+     <name>MinorVersion</name>
+     <values arity="Scalar" type="Long">
+      <value>0</value>
+     </values>
+    </property>
+    <property>
+     <name>Compatibility</name>
+     <values arity="List" type="String">
+      <value>jp2 </value>
+     </values>
+    </property>
+    <property>
+     <name>ColorspaceUnknown</name>
+     <values arity="Scalar" type="Boolean">
+      <value>true</value>
+     </values>
+    </property>
+    <property>
+     <name>ColorSpecs</name>
+     <values arity="List" type="Property">
+     <property>
+      <name>ColorSpec</name>
+      <values arity="List" type="Property">
+      <property>
+       <name>Method</name>
+       <values arity="Scalar" type="String">
+        <value>Enumerated Colorspace</value>
+       </values>
+      </property>
+      <property>
+       <name>Precedence</name>
+       <values arity="Scalar" type="Integer">
+        <value>0</value>
+       </values>
+      </property>
+      <property>
+       <name>Approx</name>
+       <values arity="Scalar" type="Integer">
+        <value>0</value>
+       </values>
+      </property>
+      <property>
+       <name>EnumCS</name>
+       <values arity="Scalar" type="String">
+        <value>sRGB</value>
+       </values>
+      </property>
+      </values>
+     </property>
+     </values>
+    </property>
+    <property>
+     <name>Codestreams</name>
+     <values arity="List" type="Property">
+     <property>
+      <name>Codestream</name>
+      <values arity="List" type="Property">
+      <property>
+       <name>ImageAndTileSize</name>
+       <values arity="List" type="Property">
+       <property>
+        <name>Capabilities</name>
+        <values arity="Scalar" type="Integer">
+         <value>0</value>
+        </values>
+       </property>
+       <property>
+        <name>XSize</name>
+        <values arity="Scalar" type="Integer">
+         <value>1685</value>
+        </values>
+       </property>
+       <property>
+        <name>YSize</name>
+        <values arity="Scalar" type="Integer">
+         <value>2806</value>
+        </values>
+       </property>
+       <property>
+        <name>XOSize</name>
+        <values arity="Scalar" type="Integer">
+         <value>0</value>
+        </values>
+       </property>
+       <property>
+        <name>YOSize</name>
+        <values arity="Scalar" type="Integer">
+         <value>0</value>
+        </values>
+       </property>
+       <property>
+        <name>XTSize</name>
+        <values arity="Scalar" type="Integer">
+         <value>1685</value>
+        </values>
+       </property>
+       <property>
+        <name>YTSize</name>
+        <values arity="Scalar" type="Integer">
+         <value>2806</value>
+        </values>
+       </property>
+       <property>
+        <name>XTOSize</name>
+        <values arity="Scalar" type="Integer">
+         <value>0</value>
+        </values>
+       </property>
+       <property>
+        <name>YTOSize</name>
+        <values arity="Scalar" type="Integer">
+         <value>0</value>
+        </values>
+       </property>
+       <property>
+        <name>CSize</name>
+        <values arity="Scalar" type="Integer">
+         <value>3</value>
+        </values>
+       </property>
+       <property>
+        <name>SSize</name>
+        <values arity="Array" type="Integer">
+         <value>7</value>
+         <value>1</value>
+         <value>1</value>
+        </values>
+       </property>
+       <property>
+        <name>XRSize</name>
+        <values arity="Array" type="Integer">
+         <value>7</value>
+         <value>1</value>
+         <value>1</value>
+        </values>
+       </property>
+       <property>
+        <name>YRSize</name>
+        <values arity="Array" type="Integer">
+         <value>7</value>
+         <value>1</value>
+         <value>1</value>
+        </values>
+       </property>
+       </values>
+      </property>
+      <property>
+       <name>CodingStyleDefault</name>
+       <values arity="List" type="Property">
+       <property>
+        <name>CodingStyle</name>
+        <values arity="Scalar" type="Integer">
+         <value>0</value>
+        </values>
+       </property>
+       <property>
+        <name>ProgressionOrder</name>
+        <values arity="Scalar" type="Integer">
+         <value>2</value>
+        </values>
+       </property>
+       <property>
+        <name>NumberOfLayers</name>
+        <values arity="Scalar" type="Integer">
+         <value>8</value>
+        </values>
+       </property>
+       <property>
+        <name>MultipleComponentTransformation</name>
+        <values arity="Scalar" type="Integer">
+         <value>1</value>
+        </values>
+       </property>
+       <property>
+        <name>NumberDecompositionLevels</name>
+        <values arity="Scalar" type="Integer">
+         <value>5</value>
+        </values>
+       </property>
+       <property>
+        <name>CodeBlockWidth</name>
+        <values arity="Scalar" type="Integer">
+         <value>4</value>
+        </values>
+       </property>
+       <property>
+        <name>CodeBlockHeight</name>
+        <values arity="Scalar" type="Integer">
+         <value>4</value>
+        </values>
+       </property>
+       <property>
+        <name>CodeBlockStyle</name>
+        <values arity="Scalar" type="Integer">
+         <value>0</value>
+        </values>
+       </property>
+       <property>
+        <name>Transformation</name>
+        <values arity="Scalar" type="Integer">
+         <value>0</value>
+        </values>
+       </property>
+       </values>
+      </property>
+      <property>
+       <name>QuantizationDefault</name>
+       <values arity="List" type="Property">
+       <property>
+        <name>QuantizationStyle</name>
+        <values arity="Scalar" type="Integer">
+         <value>34</value>
+        </values>
+       </property>
+       <property>
+        <name>StepValue</name>
+        <values arity="Array" type="Integer">
+         <value>30494</value>
+         <value>30442</value>
+         <value>30442</value>
+         <value>30396</value>
+         <value>28416</value>
+         <value>28416</value>
+         <value>28386</value>
+         <value>26444</value>
+         <value>26444</value>
+         <value>26468</value>
+         <value>20483</value>
+         <value>20483</value>
+         <value>20549</value>
+         <value>22482</value>
+         <value>22482</value>
+         <value>22369</value>
+        </values>
+       </property>
+       </values>
+      </property>
+      <property>
+       <name>NisoImageMetadata</name>
+       <values arity="Scalar" type="NISOImageMetadata">
+        <value>
+      <mix:mix xmlns:mix="http://www.loc.gov/mix/v20" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.loc.gov/mix/v20 http://www.loc.gov/standards/mix/mix20/mix20.xsd">
+       <mix:BasicDigitalObjectInformation>
+        <mix:ObjectIdentifier>
+         <mix:objectIdentifierType>JHOVE</mix:objectIdentifierType>
+        </mix:ObjectIdentifier>
+        <mix:FormatDesignation>
+         <mix:formatName>image/jp2</mix:formatName>
+        </mix:FormatDesignation>
+        <mix:byteOrder>big endian</mix:byteOrder>
+        <mix:Compression>
+         <mix:compressionScheme>JPEG2000 Lossy</mix:compressionScheme>
+          <mix:compressionRatio>
+           <mix:numerator>1737</mix:numerator>
+          </mix:compressionRatio>
+        </mix:Compression>
+       </mix:BasicDigitalObjectInformation>
+       <mix:BasicImageInformation>
+        <mix:BasicImageCharacteristics>
+         <mix:imageWidth>1685</mix:imageWidth>
+         <mix:imageHeight>2806</mix:imageHeight>
+        </mix:BasicImageCharacteristics>
+        <mix:SpecialFormatCharacteristics>
+         <mix:JPEG2000>
+          <mix:EncodingOptions>
+           <mix:Tiles>
+            <mix:tileWidth>1685</mix:tileWidth>
+            <mix:tileHeight>2806</mix:tileHeight>
+           </mix:Tiles>
+           <mix:qualityLayers>8</mix:qualityLayers>
+           <mix:resolutionLevels>5</mix:resolutionLevels>
+          </mix:EncodingOptions>
+         </mix:JPEG2000>
+        </mix:SpecialFormatCharacteristics>
+       </mix:BasicImageInformation>
+       <mix:ImageAssessmentMetadata>
+        <mix:ImageColorEncoding>
+         <mix:BitsPerSample>
+          <mix:bitsPerSampleValue>8</mix:bitsPerSampleValue>
+          <mix:bitsPerSampleValue>8</mix:bitsPerSampleValue>
+          <mix:bitsPerSampleValue>8</mix:bitsPerSampleValue>
+          <mix:bitsPerSampleUnit>integer</mix:bitsPerSampleUnit>
+         </mix:BitsPerSample>
+         <mix:samplesPerPixel>3</mix:samplesPerPixel>
+        </mix:ImageColorEncoding>
+       </mix:ImageAssessmentMetadata>
+      </mix:mix>
+        </value>
+       </values>
+      </property>
+      <property>
+       <name>Tiles</name>
+       <values arity="List" type="Property">
+       <property>
+        <name>Tile</name>
+        <values arity="List" type="Property">
+        <property>
+         <name>TilePart</name>
+         <values arity="List" type="Property">
+         <property>
+          <name>Index</name>
+          <values arity="Scalar" type="Integer">
+           <value>0</value>
+          </values>
+         </property>
+         <property>
+          <name>Length</name>
+          <values arity="Scalar" type="Long">
+           <value>7748</value>
+          </values>
+         </property>
+         </values>
+        </property>
+        </values>
+       </property>
+       </values>
+      </property>
+      <property>
+       <name>Comments</name>
+       <values arity="List" type="Property">
+       <property>
+        <name>Comment</name>
+        <values arity="Scalar" type="String">
+         <value>Kakadu-v8.5</value>
+        </values>
+       </property>
+       <property>
+        <name>Comment</name>
+        <values arity="Scalar" type="String">
+         <value>Kdu-Layer-Info: log_2{Delta-D(squared-error)/Delta-L(bytes)}, L(bytes)
+ -22.1,  3.4e+03
+ -23.3,  4.0e+03
+ -24.4,  4.4e+03
+ -25.6,  5.0e+03
+ -26.8,  5.8e+03
+ -28.0,  7.6e+03
+ -29.1,  8.0e+03
+ -29.1,  3.0e+05
+</value>
+        </values>
+       </property>
+       </values>
+      </property>
+      </values>
+     </property>
+     </values>
+    </property>
+    </values>
+   </property>
+  </properties>
+  <checksums>
+   <checksum type="CRC32">f4910c57</checksum>
+   <checksum type="MD5">895bda600f4a32acd5343b2bc390ee38</checksum>
+   <checksum type="SHA-1">5d10ab550e9711e1a2ba62a3bbb880e09f6d2e99</checksum>
+   <checksum type="SHA-256">83c680ee73dbe386f5855dba3f958d94edec624c8a23bf129fd1418d0052a412</checksum>
+  </checksums>
+ </repInfo>
+</jhove>

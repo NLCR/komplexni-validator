@@ -1,0 +1,5 @@
+Kakadu Core Error:
+Out-of-sequence SOP marker found while attempting to read a packet from the
+code-stream!
+    Found sequence number 0, but expected 392.
+Use the resilient option if you would like to try to recover from this error.

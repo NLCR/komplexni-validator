@@ -1,0 +1,238 @@
+package nkp.pspValidator.shared.externalUtils.validation.rules.constraints;
+
+import org.junit.Test;
+
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.Locale;
+
+import static org.junit.Assert.*;
+
+/**
+ * Omezeni (constraints) z profilu binarnich souboru: kazde s hodnotou, ktera vyhovi, a s hodnotou, ktera nevyhovi.
+ * Hodnoty odpovidaji tomu, co extrakce vraci z vystupu nastroju (String, Integer, Float, List&lt;String&gt;).
+ */
+public class ConstraintsTest {
+
+    // isExactly
+
+    @Test
+    public void isExactlyMatchesSameString() {
+        IsExactlyConstraint c = new IsExactlyConstraint("RPCL");
+        assertTrue(c.matches("RPCL"));
+        assertFalse(c.matches("LRCP"));
+        assertFalse(c.matches("rpcl"));
+        assertFalse(c.matches("RPCL "));
+    }
+
+    @Test
+    public void isExactlyComparesToStringOfNonStringData() {
+        // profily pouzivaji isExactly i pro extrakci typu INTEGER (Velikost dlaždic, 4096)
+        IsExactlyConstraint c = new IsExactlyConstraint("4096");
+        assertTrue(c.matches(4096));
+        assertFalse(c.matches(1024));
+        // Float se prevede na "4096.0"
+        assertFalse(c.matches(4096.0f));
+    }
+
+    @Test
+    public void isExactlyNullThrowsNpe() {
+        // známá vada: null (hodnota nenalezena) neni osetrena, matches(null) skonci NullPointerException.
+        // V profilech pred mustMatchAny vzdy stoji mustExist a Validation konci u prvniho pravidla s chybou,
+        // takze se null k omezeni v praxi nedostane.
+        try {
+            new IsExactlyConstraint("x").matches(null);
+            fail("očekávána NullPointerException");
+        } catch (NullPointerException e) {
+            // soucasne chovani
+        }
+    }
+
+    @Test
+    public void isExactlyToString() {
+        assertEquals("musí být přesně 'True'", new IsExactlyConstraint("True").toString());
+    }
+
+    // endsWith
+
+    @Test
+    public void endsWithMatchesSuffix() {
+        EndsWithConstraint c = new EndsWithConstraint("irreversible");
+        assertTrue(c.matches("9-7 irreversible"));
+        assertTrue(c.matches("irreversible"));
+        assertFalse(c.matches("5-3 reversible"));
+        assertFalse(c.matches("irreversible "));
+    }
+
+    @Test
+    public void endsWithUsesToStringOfData() {
+        EndsWithConstraint c = new EndsWithConstraint("96");
+        assertTrue(c.matches(4096));
+        assertFalse(c.matches(1024));
+    }
+
+    @Test
+    public void endsWithEmptySuffixMatchesAnything() {
+        assertTrue(new EndsWithConstraint("").matches(""));
+        assertTrue(new EndsWithConstraint("").matches("cokoli"));
+    }
+
+    @Test
+    public void endsWithNullThrowsNpe() {
+        // známá vada: stejne jako isExactly, null neni osetrena
+        try {
+            new EndsWithConstraint("x").matches(null);
+            fail("očekávána NullPointerException");
+        } catch (NullPointerException e) {
+            // soucasne chovani
+        }
+    }
+
+    @Test
+    public void endsWithToString() {
+        assertEquals("musí končit na '.jp2'", new EndsWithConstraint(".jp2").toString());
+    }
+
+    // isInIntRange
+
+    @Test
+    public void isInIntRangeMinOnly() {
+        IsInIntRangeConstraint c = new IsInIntRangeConstraint(1, null);
+        assertTrue(c.matches(1));
+        assertTrue(c.matches(Integer.MAX_VALUE));
+        assertFalse(c.matches(0));
+        assertFalse(c.matches(-5));
+        assertFalse(c.matches(null));
+    }
+
+    @Test
+    public void isInIntRangeMaxOnly() {
+        IsInIntRangeConstraint c = new IsInIntRangeConstraint(null, 10);
+        assertTrue(c.matches(10));
+        assertTrue(c.matches(Integer.MIN_VALUE));
+        assertFalse(c.matches(11));
+    }
+
+    @Test
+    public void isInIntRangeBothBoundsInclusive() {
+        IsInIntRangeConstraint c = new IsInIntRangeConstraint(5, 6);
+        assertTrue(c.matches(5));
+        assertTrue(c.matches(6));
+        assertFalse(c.matches(4));
+        assertFalse(c.matches(7));
+    }
+
+    @Test
+    public void isInIntRangeNoBoundsMatchesAnyInteger() {
+        IsInIntRangeConstraint c = new IsInIntRangeConstraint(null, null);
+        assertTrue(c.matches(0));
+        assertFalse(c.matches(null));
+    }
+
+    @Test(expected = ClassCastException.class)
+    public void isInIntRangeWithStringThrowsClassCast() {
+        // známá vada: omezeni predpoklada Integer (extrakce resultType INTEGER); pri chybne konfiguraci
+        // (resultType STRING) skonci ClassCastException misto chyby validace
+        new IsInIntRangeConstraint(1, null).matches("5");
+    }
+
+    @Test
+    public void isInIntRangeToString() {
+        assertEquals("musí být v intervalu <1, 2>", new IsInIntRangeConstraint(1, 2).toString());
+        assertEquals("musí být alespoň 1", new IsInIntRangeConstraint(1, null).toString());
+        assertEquals("musí být nejvýše 2", new IsInIntRangeConstraint(null, 2).toString());
+        assertEquals("musí být číslo (integer)", new IsInIntRangeConstraint(null, null).toString());
+    }
+
+    // isInFloatRange
+
+    @Test
+    public void isInFloatRangeMinOnly() {
+        // Rozlišení: min 11732.0 (300 DPI v pixelech na metr)
+        IsInFloatRangeConstraint c = new IsInFloatRangeConstraint(11732.0f, null);
+        assertTrue(c.matches(11811.0f));
+        assertTrue(c.matches(11732.0f));
+        assertFalse(c.matches(2834.65f));
+        assertFalse(c.matches(null));
+    }
+
+    @Test
+    public void isInFloatRangeMaxOnlyAndBoth() {
+        assertTrue(new IsInFloatRangeConstraint(null, 35.0f).matches(35.0f));
+        assertFalse(new IsInFloatRangeConstraint(null, 35.0f).matches(35.01f));
+        IsInFloatRangeConstraint both = new IsInFloatRangeConstraint(6.0f, 35.0f);
+        assertTrue(both.matches(6.0f));
+        assertTrue(both.matches(20.5f));
+        assertFalse(both.matches(2.67f));
+        assertFalse(both.matches(40.0f));
+        assertTrue(new IsInFloatRangeConstraint(null, null).matches(-1.0f));
+    }
+
+    @Test(expected = ClassCastException.class)
+    public void isInFloatRangeWithIntegerThrowsClassCast() {
+        // známá vada: stejne jako isInIntRange, typ hodnoty se nekontroluje
+        new IsInFloatRangeConstraint(1.0f, null).matches(5);
+    }
+
+    @Test
+    public void isInFloatRangeToStringDependsOnLocale() {
+        // známá vada (kosmeticka): String.format bez Locale, desetinny oddelovac podle systemu
+        // (v ceskem prostredi "musí být alespoň 6,000000", v anglickem "6.000000")
+        Locale original = Locale.getDefault();
+        try {
+            Locale.setDefault(Locale.ROOT);
+            assertEquals("musí být alespoň 6.000000", new IsInFloatRangeConstraint(6.0f, null).toString());
+            assertEquals("musí být nejvýše 35.000000", new IsInFloatRangeConstraint(null, 35.0f).toString());
+            assertEquals("musí být v intervalu <6.000000, 35.000000>", new IsInFloatRangeConstraint(6.0f, 35.0f).toString());
+            assertEquals("musí být číslo (float)", new IsInFloatRangeConstraint(null, null).toString());
+            Locale.setDefault(new Locale("cs", "CZ"));
+            assertEquals("musí být alespoň 6,000000", new IsInFloatRangeConstraint(6.0f, null).toString());
+        } finally {
+            Locale.setDefault(original);
+        }
+    }
+
+    // nTimesXRemainingY
+
+    @Test
+    public void nTimesXRemainingYMatchesProfileExample() {
+        // Velikost precincts: 2krat 256, zbytek 128 (vystup Jpylyzeru precinctSizeX/Y)
+        NTimesXRemainingYConstraint c = new NTimesXRemainingYConstraint(2, "256", "128");
+        assertTrue(c.matches(Arrays.asList("256", "256", "128", "128", "128", "128")));
+        assertTrue(c.matches(Arrays.asList("128", "256", "128", "256")));
+    }
+
+    @Test
+    public void nTimesXRemainingYFailsOnTooManyX() {
+        NTimesXRemainingYConstraint c = new NTimesXRemainingYConstraint(2, "256", "128");
+        assertFalse(c.matches(Arrays.asList("256", "256", "256", "128")));
+        // realny vystup Jpylyzeru pro odlis_od_prof_mc/precint2.jp2
+        assertFalse(c.matches(Arrays.asList("256", "256", "256", "256", "256", "256")));
+    }
+
+    @Test
+    public void nTimesXRemainingYFailsOnUnknownValue() {
+        NTimesXRemainingYConstraint c = new NTimesXRemainingYConstraint(2, "256", "128");
+        // realny vystup Jpylyzeru pro src/test/tools/jp2/uc.jp2 (vychozi precincts)
+        assertFalse(c.matches(Arrays.asList("32768", "32768", "32768")));
+        assertFalse(c.matches(null));
+    }
+
+    @Test
+    public void nTimesXRemainingYAllowsFewerThanNTimesX() {
+        // známá vada (nebo nejasnost zadani): "n" je horni mez, ne presny pocet. Profil rika "2krát hodnota 256",
+        // ale projde i seznam bez jedine 256, i prazdny seznam.
+        NTimesXRemainingYConstraint c = new NTimesXRemainingYConstraint(2, "256", "128");
+        assertTrue(c.matches(Arrays.asList("128", "128", "128")));
+        assertTrue(c.matches(Arrays.asList("256", "128")));
+        assertTrue(c.matches(Collections.emptyList()));
+    }
+
+    @Test
+    public void nTimesXRemainingYHasNoReadableToString() {
+        // známá vada: chybi toString(), v hlaseni MustMatchAnyDR se proto objevi nazev tridy a hash
+        // ("neodpovídá žádnému z omezení: [nkp...NTimesXRemainingYConstraint@1b2c3d]"), viz BinaryFileProfileTest
+        String s = new NTimesXRemainingYConstraint(2, "256", "128").toString();
+        assertTrue(s, s.startsWith(NTimesXRemainingYConstraint.class.getName() + "@"));
+    }
+}
