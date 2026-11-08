@@ -1,0 +1,958 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<protocol xmlns="http://www.nkp.cz/pspValidator/2.9/validationProtocol" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" type="package" xsi:schemaLocation="http://www.nkp.cz/pspValidator/2.9/validationProtocol https://raw.githubusercontent.com/NLCR/komplexni-validator/refs/tags/v2.9/modules/sharedModule/src/main/resources/nkp/pspValidator/shared/validatorConfig/xsd/validationProtocol.xsd">
+    <validator buildDate="[BUILD_DATE]" version="[VERZE]"/>
+    <fdmf type="Jednotky fondu" version="0.2"/>
+    <package>
+        <file fileName="nk-00027x" parentDir="[MODUL]/src/test/resources/fund_unit_0.2/valid_clipping"/>
+        <info collection="Výstřižky ke Klementinu" created="2026-09-01T10:00:00" creator="ABA001" institution="Národní knihovna České republiky" metadataVersion="0.2" packageId="nk-00027x" sizeKB="134" titleId_sysno="000123456" titleId_uuid="5f6a8c2e-1111-4d0e-9a3b-000000000001"/>
+    </package>
+    <summary durationMs="[MS]" finishTime="[CAS]" startTime="[CAS]" verdict="VALID">
+        <problems INFO="140" total="140"/>
+    </summary>
+    <sections>
+        <section description="Struktura PSP balíčku na úrovni souborů" name="Struktura souborů">
+            <summary durationMs="[MS]">
+                <problems total="0"/>
+            </summary>
+            <rule description="Název kořenového adresáře musí být shodný s PSP-ID." name="PSP_DIR_MATCHES_PSP_ID">
+                <summary durationMs="[MS]">
+                    <problems total="0"/>
+                </summary>
+            </rule>
+            <rule description="Musí být nalezen nanejvýše jeden soubor INFO. Pokud nalezen není, je soubor špatně pojmenován, nebo opravdu chybí." name="SINGLE_INFO_FILE_FOUND">
+                <summary durationMs="[MS]">
+                    <problems total="0"/>
+                </summary>
+            </rule>
+            <rule description="Musí být nalezen nanejvýše jeden soubor PRIMARY-METS. Pokud nalezen není, je soubor špatně pojmenován, nebo opravdu chybí." name="SINGLE_PRIMARY-METS_FILE_FOUND">
+                <summary durationMs="[MS]">
+                    <problems total="0"/>
+                </summary>
+            </rule>
+            <rule description="Musí být nalezen nanejvýše jeden soubor CHECKSUM. Pokud nalezen není, je soubor špatně pojmenován, nebo opravdu chybí." name="SINGLE_CHECKSUM_FILE_FOUND">
+                <summary durationMs="[MS]">
+                    <problems total="0"/>
+                </summary>
+            </rule>
+            <rule description="Název souboru INFO smí obsahovat jen povolené znaky." name="INFO_FILENAME_VALID">
+                <summary durationMs="[MS]">
+                    <problems total="0"/>
+                </summary>
+            </rule>
+            <rule description="Název souboru PRIMARY-METS smí obsahovat jen povolené znaky." name="PRIMARY-METS_FILENAME_VALID">
+                <summary durationMs="[MS]">
+                    <problems total="0"/>
+                </summary>
+            </rule>
+            <rule description="Název souboru CHECKSUM smí obsahovat jen povolené znaky." name="CHECKSUM_FILENAME_VALID">
+                <summary durationMs="[MS]">
+                    <problems total="0"/>
+                </summary>
+            </rule>
+            <rule description="Soubor INFO nesmí být adresář, ale obyčejný soubor." name="INFO_IS_NOT_DIR">
+                <summary durationMs="[MS]">
+                    <problems total="0"/>
+                </summary>
+            </rule>
+            <rule description="Soubor PRIMARY-METS nesmí být adresář, ale obyčejný soubor." name="PRIMARY-METS_IS_NOT_DIR">
+                <summary durationMs="[MS]">
+                    <problems total="0"/>
+                </summary>
+            </rule>
+            <rule description="Soubor CHECKSUM nesmí být adresář, ale obyčejný soubor." name="CHECKSUM_IS_NOT_DIR">
+                <summary durationMs="[MS]">
+                    <problems total="0"/>
+                </summary>
+            </rule>
+            <rule description="Žádný tolerovaný soubor v kořenovém adresáři nesmí být adresář." name="TOLERATED_TL_FILES_ARE_NOT_DIRS">
+                <summary durationMs="[MS]">
+                    <problems total="0"/>
+                </summary>
+            </rule>
+            <rule description="Ideálně by v kořenovém adresáři neměl být nalezen žádný tolerovaný soubor." name="NO_TOLERATED_TL_FILES_FOUND">
+                <summary durationMs="[MS]">
+                    <problems total="0"/>
+                </summary>
+            </rule>
+            <rule description="Kromě definovaných a tolerovaných souborů a adresářů nesmí být v kořenovém adresáři nalezen žádný další soubor nebo adresář." name="NO_OTHER_TL_FILES_FOUND">
+                <summary durationMs="[MS]">
+                    <problems total="0"/>
+                </summary>
+            </rule>
+            <rule description="Musí být nalezen právě jeden adresář SECONDARY-METS-DIR. Pokud nalezen není, je adresář špatně pojmenován, nebo opravdu chybí." name="SINGLE_SECONDARY-METS-DIR_FILE_FOUND">
+                <summary durationMs="[MS]">
+                    <problems total="0"/>
+                </summary>
+            </rule>
+            <rule description="Musí být nalezen právě jeden adresář OCR-TEXT-DIR. Pokud nalezen není, je adresář špatně pojmenován, nebo opravdu chybí." name="SINGLE_OCR-TEXT-DIR_FILE_FOUND">
+                <summary durationMs="[MS]">
+                    <problems total="0"/>
+                </summary>
+            </rule>
+            <rule description="Musí být nalezen právě jeden adresář OCR-ALTO-DIR. Pokud nalezen není, je adresář špatně pojmenován, nebo opravdu chybí." name="SINGLE_OCR-ALTO-DIR_FILE_FOUND">
+                <summary durationMs="[MS]">
+                    <problems total="0"/>
+                </summary>
+            </rule>
+            <rule description="Musí být nalezen právě jeden adresář MASTER-COPY-DIR. Pokud nalezen není, je adresář špatně pojmenován, nebo opravdu chybí." name="SINGLE_MASTER-COPY-DIR_FILE_FOUND">
+                <summary durationMs="[MS]">
+                    <problems total="0"/>
+                </summary>
+            </rule>
+            <rule description="Musí být nalezen právě jeden adresář USER-COPY-DIR. Pokud nalezen není, je adresář špatně pojmenován, nebo opravdu chybí." name="SINGLE_USER-COPY-DIR_FILE_FOUND">
+                <summary durationMs="[MS]">
+                    <problems total="0"/>
+                </summary>
+            </rule>
+            <rule description="Adresář CATALOG-ENTRY-DIR je nepovinný (DMF Jednotky fondu 0.2, kap. 5.9), smí být nejvýše jeden." name="SINGLE_CATALOG-ENTRY-DIR_FILE_FOUND">
+                <summary durationMs="[MS]">
+                    <problems total="0"/>
+                </summary>
+            </rule>
+            <rule description="Název adresáře SECONDARY-METS-DIR musí obsahovat jen povolené znaky." name="SECONDARY-METS-DIR_FILENAME_VALID">
+                <summary durationMs="[MS]">
+                    <problems total="0"/>
+                </summary>
+            </rule>
+            <rule description="Název adresáře OCR-TEXT-DIR musí obsahovat jen povolené znaky." name="OCR-TEXT-DIR_FILENAME_VALID">
+                <summary durationMs="[MS]">
+                    <problems total="0"/>
+                </summary>
+            </rule>
+            <rule description="Název adresáře OCR-ALTO-DIR musí obsahovat jen povolené znaky." name="OCR-ALTO-DIR_FILENAME_VALID">
+                <summary durationMs="[MS]">
+                    <problems total="0"/>
+                </summary>
+            </rule>
+            <rule description="Název adresáře MASTER-COPY-DIR musí obsahovat jen povolené znaky." name="MASTER-COPY-DIR_FILENAME_VALID">
+                <summary durationMs="[MS]">
+                    <problems total="0"/>
+                </summary>
+            </rule>
+            <rule description="Název adresáře USER-COPY-DIR musí obsahovat jen povolené znaky." name="USER-COPY-DIR_FILENAME_VALID">
+                <summary durationMs="[MS]">
+                    <problems total="0"/>
+                </summary>
+            </rule>
+            <rule description="Soubor SECONDARY-METS-DIR musí být adresář a ne obyčejný soubor." name="SECONDARY-METS-DIR_IS_DIR">
+                <summary durationMs="[MS]">
+                    <problems total="0"/>
+                </summary>
+            </rule>
+            <rule description="Soubor OCR-TEXT-DIR musí být adresář a ne obyčejný soubor." name="OCR-TEXT-DIR_IS_DIR">
+                <summary durationMs="[MS]">
+                    <problems total="0"/>
+                </summary>
+            </rule>
+            <rule description="Soubor OCR-ALTO-DIR musí být adresář a ne obyčejný soubor." name="OCR-ALTO-DIR_IS_DIR">
+                <summary durationMs="[MS]">
+                    <problems total="0"/>
+                </summary>
+            </rule>
+            <rule description="Soubor MASTER-COPY-DIR musí být adresář a ne obyčejný soubor." name="MASTER-COPY-DIR_IS_DIR">
+                <summary durationMs="[MS]">
+                    <problems total="0"/>
+                </summary>
+            </rule>
+            <rule description="Soubor USER-COPY-DIR musí být adresář a ne obyčejný soubor." name="USER-COPY-DIR_IS_DIR">
+                <summary durationMs="[MS]">
+                    <problems total="0"/>
+                </summary>
+            </rule>
+            <rule description="Soubor CATALOG-ENTRY-DIR, pokud existuje, musí být adresář a ne obyčejný soubor." name="CATALOG-ENTRY-DIR_IS_DIR">
+                <summary durationMs="[MS]">
+                    <problems total="0"/>
+                </summary>
+            </rule>
+            <rule description="Všechny soubory SECONDARY-METS musí obsahovat jen povolené znaky." name="SECONDARY-METS_FILENAMES_VALID">
+                <summary durationMs="[MS]">
+                    <problems total="0"/>
+                </summary>
+            </rule>
+            <rule description="Všechny soubory OCR-TEXT musí obsahovat jen povolené znaky." name="OCR-TEXT_FILENAMES_VALID">
+                <summary durationMs="[MS]">
+                    <problems total="0"/>
+                </summary>
+            </rule>
+            <rule description="Všechny soubory OCR-ALTO musí obsahovat jen povolené znaky." name="OCR-ALTO_FILENAMES_VALID">
+                <summary durationMs="[MS]">
+                    <problems total="0"/>
+                </summary>
+            </rule>
+            <rule description="Všechny soubory MASTER-COPY musí obsahovat jen povolené znaky." name="MASTER-COPY_FILENAMES_VALID">
+                <summary durationMs="[MS]">
+                    <problems total="0"/>
+                </summary>
+            </rule>
+            <rule description="Všechny soubory USER-COPY musí obsahovat jen povolené znaky." name="USER-COPY_FILENAMES_VALID">
+                <summary durationMs="[MS]">
+                    <problems total="0"/>
+                </summary>
+            </rule>
+            <rule description="Všechny soubory CATALOG-ENTRY musí obsahovat jen povolené znaky." name="CATALOG-ENTRY_FILENAMES_VALID">
+                <summary durationMs="[MS]">
+                    <problems total="0"/>
+                </summary>
+            </rule>
+            <rule description="Počet souborů popisujících stránky se musí shodovat." name="NUMBER_OF_FILES_IN_DIRS_MATCH">
+                <summary durationMs="[MS]">
+                    <problems total="0"/>
+                </summary>
+            </rule>
+            <rule description="Délky názvů všech souborů SECONDARY-METS musí být stejné. Tedy čísla stran jsou zarovnaná na stejný počet nul." name="SECONDARY-METS_FILENAMES_LENGTHS_SAME">
+                <summary durationMs="[MS]">
+                    <problems total="0"/>
+                </summary>
+            </rule>
+            <rule description="Délky názvů všech souborů OCR-TEXT musí být stejné. Tedy čísla stran jsou zarovnaná na stejný počet nul." name="OCR-TEXT_FILENAMES_LENGTHS_SAME">
+                <summary durationMs="[MS]">
+                    <problems total="0"/>
+                </summary>
+            </rule>
+            <rule description="Délky názvů všech souborů OCR-ALTO musí být stejné. Tedy čísla stran jsou zarovnaná na stejný počet nul." name="OCR-ALTO_FILENAMES_LENGTHS_SAME">
+                <summary durationMs="[MS]">
+                    <problems total="0"/>
+                </summary>
+            </rule>
+            <rule description="Délky názvů všech souborů MASTER-COPY musí být stejné. Tedy čísla stran jsou zarovnaná na stejný počet nul." name="MASTER-COPY_FILENAMES_LENGTHS_SAME">
+                <summary durationMs="[MS]">
+                    <problems total="0"/>
+                </summary>
+            </rule>
+            <rule description="Délky názvů všech souborů USER-COPY musí být stejné. Tedy čísla stran jsou zarovnaná na stejný počet nul." name="USER-COPY_FILENAMES_LENGTHS_SAME">
+                <summary durationMs="[MS]">
+                    <problems total="0"/>
+                </summary>
+            </rule>
+            <rule description="Žádný soubor SECONDARY-METS nesmí být adresář." name="SECONDARY-METS_FILES_ARE_NOT_DIRS">
+                <summary durationMs="[MS]">
+                    <problems total="0"/>
+                </summary>
+            </rule>
+            <rule description="Žádný soubor OCR-TEXT nesmí být adresář." name="OCR-TEXT_FILES_ARE_NOT_DIRS">
+                <summary durationMs="[MS]">
+                    <problems total="0"/>
+                </summary>
+            </rule>
+            <rule description="Žádný soubor OCR-ALTO nesmí být adresář." name="OCR-ALTO_FILES_ARE_NOT_DIRS">
+                <summary durationMs="[MS]">
+                    <problems total="0"/>
+                </summary>
+            </rule>
+            <rule description="Žádný soubor MASTER-COPY nesmí být adresář." name="MASTER-COPY_FILES_ARE_NOT_DIRS">
+                <summary durationMs="[MS]">
+                    <problems total="0"/>
+                </summary>
+            </rule>
+            <rule description="Žádný soubor USER-COPY nesmí být adresář." name="USER-COPY_FILES_ARE_NOT_DIRS">
+                <summary durationMs="[MS]">
+                    <problems total="0"/>
+                </summary>
+            </rule>
+            <rule description="Žádný soubor CATALOG-ENTRY nesmí být adresář." name="CATALOG-ENTRY_FILES_ARE_NOT_DIRS">
+                <summary durationMs="[MS]">
+                    <problems total="0"/>
+                </summary>
+            </rule>
+            <rule description="Kromě souborů SECONDARY-METS nesmí adresář SECONDARY-METS-DIR obsahovat žádné další soubory." name="NO_EXTRA_FILES_IN_SECONDARY-METS-DIR">
+                <summary durationMs="[MS]">
+                    <problems total="0"/>
+                </summary>
+            </rule>
+            <rule description="Kromě souborů OCR-TEXT nesmí adresář OCR-TEXT-DIR obsahovat žádné další soubory." name="NO_EXTRA_FILES_IN_OCR-TEXT-DIR">
+                <summary durationMs="[MS]">
+                    <problems total="0"/>
+                </summary>
+            </rule>
+            <rule description="Kromě souborů OCR-ALTO nesmí adresář OCR-ALTO-DIR obsahovat žádné další soubory." name="NO_EXTRA_FILES_IN_OCR-ALTO-DIR">
+                <summary durationMs="[MS]">
+                    <problems total="0"/>
+                </summary>
+            </rule>
+            <rule description="Kromě souborů MASTER-COPY nesmí adresář MASTER-COPY-DIR obsahovat žádné další soubory." name="NO_EXTRA_FILES_IN_MASTER-COPY-DIR">
+                <summary durationMs="[MS]">
+                    <problems total="0"/>
+                </summary>
+            </rule>
+            <rule description="Kromě souborů USER-COPY nesmí adresář USER-COPY-DIR obsahovat žádné další soubory." name="NO_EXTRA_FILES_IN_USER-COPY-DIR">
+                <summary durationMs="[MS]">
+                    <problems total="0"/>
+                </summary>
+            </rule>
+            <rule description="Kromě souborů CATALOG-ENTRY nesmí adresář CATALOG-ENTRY-DIR obsahovat žádné další soubory." name="NO_EXTRA_FILES_IN_CATALOG-ENTRY-DIR">
+                <summary durationMs="[MS]">
+                    <problems total="0"/>
+                </summary>
+            </rule>
+        </section>
+        <section description="Kontrola souboru CHECKSUM, odkazů na další soubory a shody kontrolních součtů." name="Soubor CHECKSUM">
+            <summary durationMs="[MS]">
+                <problems total="0"/>
+            </summary>
+            <rule description="Soubor CHECKSUM by měl být generován předepsanou ABNF gramatikou." name="CHECKSUM_FILE_GENERATED_BY_GRAMMAR">
+                <summary durationMs="[MS]">
+                    <problems total="0"/>
+                </summary>
+            </rule>
+            <rule description="Soubor CHECKSUM musí obsahovat záznamy pro každý uvedený soubor a žádný jiný (DMF Jednotky fondu 0.2, kap. 5.8: všechny soubory balíčku kromě info.xml a souboru .md5, tedy včetně catalog_entry)." name="CHECKSUM_FILE_ALL_PATHS_MATCH_FILES">
+                <summary durationMs="[MS]">
+                    <problems total="0"/>
+                </summary>
+            </rule>
+            <rule description="Všechny kontrolní součty v souborů odkazovaných v souboru CHECKSUM musí souhlasit." name="CHECKSUM_FILE_ALL_CHECKSUMS_MATCH">
+                <summary durationMs="[MS]">
+                    <problems total="0"/>
+                </summary>
+            </rule>
+        </section>
+        <section description="Validace souboru INFO - odkazování na ostatní soubory, kontrolní součet pro soubor CHECKSUM, atd." name="Soubor INFO">
+            <summary durationMs="[MS]">
+                <problems total="0"/>
+            </summary>
+            <rule description="Soubor INFO musí být korektní (well-built) xml soubor." name="INFO_XML_WELL_BUILT">
+                <summary durationMs="[MS]">
+                    <problems total="0"/>
+                </summary>
+            </rule>
+            <rule description="Soubor INFO by měl být validní podle XML Schema (info_fdu_0.2.xsd)." name="INFO_XML_VALID_BY_XSD">
+                <summary durationMs="[MS]">
+                    <problems total="0"/>
+                </summary>
+            </rule>
+            <rule description="Soubor INFO se musí odkazovat na soubor PRIMARY-METS přes element mainmets." name="INFO_REFERENCES_PRIMARY-METS">
+                <summary durationMs="[MS]">
+                    <problems total="0"/>
+                </summary>
+            </rule>
+            <rule description="V souboru INFO musí počet elementů item souhlasit s hodnotou atributu itemtotal elementu itemlist." name="INFO_ITEMTOTAL_MATCHES_ITEMS_COUNT">
+                <summary durationMs="[MS]">
+                    <problems total="0"/>
+                </summary>
+            </rule>
+            <rule description="Soubor INFO se musí odkazovat na všechny uvedené soubory přes elementy item a na žádné další." name="INFO_ITEMLIST_REFERENCES_ALL_FILES">
+                <summary durationMs="[MS]">
+                    <problems total="0"/>
+                </summary>
+            </rule>
+            <rule description="Soubor INFO se musí odkazovat na existující soubor CHECKSUM přes element checksum a kontrolní součet se musí shodovat." name="INFO_CHECKSUM_FILE_CHECKSUM_MATCHES">
+                <summary durationMs="[MS]">
+                    <problems total="0"/>
+                </summary>
+            </rule>
+        </section>
+        <section name="Identifikátory">
+            <summary durationMs="[MS]">
+                <problems INFO="1" total="1"/>
+            </summary>
+            <rule description="PSP-ID by měl být odvozen od některého z identifikátorů intelektuální entity (UNIT), a to typu 'urnnbn' nebo 'uuid' (DMF Jednotky fondu 0.2, kap. 6)." name="PSP_ID_DERIVED_FROM_IE_ID">
+                <summary durationMs="[MS]">
+                    <problems total="0"/>
+                </summary>
+            </rule>
+            <rule description="Soubor INFO nesmí obsahovat duplikované identifikátory (stejný typ i hodnota)." name="INFO_NO_DUPLICATE_IDENTIFIERS">
+                <summary durationMs="[MS]">
+                    <problems total="0"/>
+                </summary>
+            </rule>
+            <rule description="Typy identifikátorů v souboru INFO (titleid/@type) by měly být z výčtu DMF Jednotky fondu 0.2, kap. 4; jiný typ je nutné konzultovat s odd. standardů, proto jen WARNING." name="INFO_IDENTIFIER_TYPES_KNOWN">
+                <summary durationMs="[MS]">
+                    <problems total="0"/>
+                </summary>
+            </rule>
+            <rule description="Identifikátory v souboru INFO (titleid) by měly odpovídat identifikátorům na úrovni UNITCOLLECTION v záznamu MODS (DMF Jednotky fondu 0.2, kap. 7.1: titleid nese všechny platné identifikátory kolekce). Identifikátor z INFO, který v MODS není, je chyba; platný identifikátor kolekce z MODS, který v INFO chybí, je varování." name="INFO_INDENTIFIERS_MATCH_TOP_LEVEL_MODS_IDENTIFIERS">
+                <summary durationMs="[MS]">
+                    <problems total="0"/>
+                </summary>
+            </rule>
+            <rule description="Soubor INFO musí obsahovat identifikátor kolekce typu uuid (titleid type=&quot;uuid&quot;, DMF Jednotky fondu 0.2, kap. 7.1: „povinná hodnota: uuid“)." name="INFO_MANDATORY_IDENTIFIERS_PRESENT">
+                <summary durationMs="[MS]">
+                    <problems total="0"/>
+                </summary>
+            </rule>
+            <rule description="Identifikátory v Dublin Core záznamech by neměly obsahovat bílé znaky." name="DC_IDENTIFIERS_NO_WHITE_SPACES">
+                <summary durationMs="[MS]">
+                    <problems total="0"/>
+                </summary>
+            </rule>
+            <rule description="Identifikátory v Dublin Core záznamech by měly obsahovat typ a hodnotu oddělěné dvojtečkou (např. barCode:2610161505)." name="DC_IDENTIFIERS_CONTAIN_TYPE_AND_VALUE">
+                <summary durationMs="[MS]">
+                    <problems total="0"/>
+                </summary>
+            </rule>
+            <rule description="Úroveň UNITCOLLECTION musí obsahovat všechny povinné identifikátory v záznamu Dublin Core." name="DC_MANDATORY_IDENTIFIERS_PRESENT_LEVEL_UNITCOLLECTION">
+                <summary durationMs="[MS]">
+                    <problems total="0"/>
+                </summary>
+            </rule>
+            <rule description="Úroveň UNITCOLLECTION nesmí obsahovat žádné zakázané identifikátory v záznamu Dublin Core. Zákazy jsou výklad DMF 0.2, proto jen WARNING." name="DC_PROHIBITED_IDENTIFIERS_NOT_PRESENT_LEVEL_UNITCOLLECTION">
+                <summary durationMs="[MS]">
+                    <problems total="0"/>
+                </summary>
+            </rule>
+            <rule description="Úroveň DIRECTORY musí obsahovat všechny povinné identifikátory v záznamu Dublin Core." name="DC_MANDATORY_IDENTIFIERS_PRESENT_LEVEL_DIRECTORY">
+                <summary durationMs="[MS]">
+                    <problems total="0"/>
+                </summary>
+            </rule>
+            <rule description="Úroveň DIRECTORY nesmí obsahovat žádné zakázané identifikátory v záznamu Dublin Core. Zákazy jsou výklad DMF 0.2, proto jen WARNING." name="DC_PROHIBITED_IDENTIFIERS_NOT_PRESENT_LEVEL_DIRECTORY">
+                <summary durationMs="[MS]">
+                    <problems total="0"/>
+                </summary>
+            </rule>
+            <rule description="Úroveň UNIT musí obsahovat všechny povinné identifikátory v záznamu Dublin Core." name="DC_MANDATORY_IDENTIFIERS_PRESENT_LEVEL_UNIT">
+                <summary durationMs="[MS]">
+                    <problems total="0"/>
+                </summary>
+            </rule>
+            <rule description="Úroveň UNIT nesmí obsahovat žádné zakázané identifikátory v záznamu Dublin Core. Zákazy jsou výklad DMF 0.2, proto jen WARNING." name="DC_PROHIBITED_IDENTIFIERS_NOT_PRESENT_LEVEL_UNIT">
+                <summary durationMs="[MS]">
+                    <problems total="0"/>
+                </summary>
+            </rule>
+            <rule description="Úroveň PAGE musí obsahovat všechny povinné identifikátory v záznamu Dublin Core." name="DC_MANDATORY_IDENTIFIERS_PRESENT_LEVEL_PAGE">
+                <summary durationMs="[MS]">
+                    <problems total="0"/>
+                </summary>
+            </rule>
+            <rule description="Úroveň PAGE nesmí obsahovat žádné zakázané identifikátory v záznamu Dublin Core. Zákazy jsou výklad DMF 0.2, proto jen WARNING." name="DC_PROHIBITED_IDENTIFIERS_NOT_PRESENT_LEVEL_PAGE">
+                <summary durationMs="[MS]">
+                    <problems total="0"/>
+                </summary>
+            </rule>
+            <rule description="Typy identifikátorů ve všech záznamech Dublin Core by měly být z výčtu DMF Jednotky fondu 0.2, kap. 4; jiný typ je nutné konzultovat s odd. standardů, proto jen WARNING." name="DC_IDENTIFIER_TYPES_KNOWN">
+                <summary durationMs="[MS]">
+                    <problems total="0"/>
+                </summary>
+            </rule>
+            <rule description="Identifikátory v jednotlivých Dublin Core záznamech by měly mít unikátní typ. Neměly by se tedy objevit dva a více identikátorů stejného typu v jednom záznamu." name="DC_IDENTIFIERS_NO_DUPLICATES_WITHIN_DMDSEC">
+                <summary durationMs="[MS]">
+                    <problems total="0"/>
+                </summary>
+            </rule>
+            <rule description="Identifikátory napříč Dublin Core záznamy by měly být unikátní. Na různých úrovní popisu se tedy nesmí objevit dva totožné identifikátory (shodný typ i hodnota)." name="DC_IDENTIFIERS_NO_DUPLICATES_ACROSS_DMDSECS">
+                <summary durationMs="[MS]">
+                    <problems total="0"/>
+                </summary>
+            </rule>
+            <rule description="Úroveň UNITCOLLECTION musí obsahovat všechny povinné identifikátory v záznamu MODS." name="MODS_MANDATORY_IDENTIFIERS_PRESENT_LEVEL_UNITCOLLECTION">
+                <summary durationMs="[MS]">
+                    <problems total="0"/>
+                </summary>
+            </rule>
+            <rule description="Úroveň UNITCOLLECTION nesmí obsahovat žádné zakázané identifikátory v záznamu MODS. Zákazy jsou výklad DMF 0.2, proto jen WARNING." name="MODS_PROHIBITED_IDENTIFIERS_NOT_PRESENT_LEVEL_UNITCOLLECTION">
+                <summary durationMs="[MS]">
+                    <problems total="0"/>
+                </summary>
+            </rule>
+            <rule description="Úroveň DIRECTORY musí obsahovat všechny povinné identifikátory v záznamu MODS." name="MODS_MANDATORY_IDENTIFIERS_PRESENT_LEVEL_DIRECTORY">
+                <summary durationMs="[MS]">
+                    <problems total="0"/>
+                </summary>
+            </rule>
+            <rule description="Úroveň DIRECTORY nesmí obsahovat žádné zakázané identifikátory v záznamu MODS. Zákazy jsou výklad DMF 0.2, proto jen WARNING." name="MODS_PROHIBITED_IDENTIFIERS_NOT_PRESENT_LEVEL_DIRECTORY">
+                <summary durationMs="[MS]">
+                    <problems total="0"/>
+                </summary>
+            </rule>
+            <rule description="Úroveň UNIT musí obsahovat všechny povinné identifikátory v záznamu MODS." name="MODS_MANDATORY_IDENTIFIERS_PRESENT_LEVEL_UNIT">
+                <summary durationMs="[MS]">
+                    <problems total="0"/>
+                </summary>
+            </rule>
+            <rule description="Úroveň UNIT nesmí obsahovat žádné zakázané identifikátory v záznamu MODS. Zákazy jsou výklad DMF 0.2, proto jen WARNING." name="MODS_PROHIBITED_IDENTIFIERS_NOT_PRESENT_LEVEL_UNIT">
+                <summary durationMs="[MS]">
+                    <problems total="0"/>
+                </summary>
+            </rule>
+            <rule description="Úroveň PAGE musí obsahovat všechny povinné identifikátory v záznamu MODS." name="MODS_MANDATORY_IDENTIFIERS_PRESENT_LEVEL_PAGE">
+                <summary durationMs="[MS]">
+                    <problems total="0"/>
+                </summary>
+            </rule>
+            <rule description="Úroveň PAGE nesmí obsahovat žádné zakázané identifikátory v záznamu MODS. Zákazy jsou výklad DMF 0.2, proto jen WARNING." name="MODS_PROHIBITED_IDENTIFIERS_NOT_PRESENT_LEVEL_PAGE">
+                <summary durationMs="[MS]">
+                    <problems total="0"/>
+                </summary>
+            </rule>
+            <rule description="Typy identifikátorů ve všech záznamech MODS by měly být z výčtu DMF Jednotky fondu 0.2, kap. 4; jiný typ je nutné konzultovat s odd. standardů, proto jen WARNING." name="MODS_IDENTIFIER_TYPES_KNOWN">
+                <summary durationMs="[MS]">
+                    <problems total="0"/>
+                </summary>
+            </rule>
+            <rule description="Identifikátory v jednotlivých MODS záznamech by měly mít unikátní typ. Neměly by se tedy objevit dva a více identikátorů stejného typu v jednom záznamu." name="MODS_IDENTIFIERS_NO_DUPLICATES_WITHIN_DMDSEC">
+                <summary durationMs="[MS]">
+                    <problems total="0"/>
+                </summary>
+            </rule>
+            <rule description="Identifikátory napříč MODS záznamy by měly být unikátní. Na různých úrovní popisu se tedy nesmí objevit dva totožné identifikátory (shodný typ i hodnota)." name="MODS_IDENTIFIERS_NO_DUPLICATES_ACROSS_DMDSECS">
+                <summary durationMs="[MS]">
+                    <problems total="0"/>
+                </summary>
+            </rule>
+            <rule description="Všechny identifikátory URN:NBN napříč MODS záznamy musí platnou podobu (např. urn:nbn:cz:abd005-00012z)." name="MODS_IDENTIFIERS_URN_NBN_VALID">
+                <summary durationMs="[MS]">
+                    <problems total="0"/>
+                </summary>
+            </rule>
+            <rule description="Všechny identifikátory URN:NBN napříč MODS záznamy musí být registrovány v URN:NBN Resolveru NKP a shodovat se ve vybraných metadatech" name="MODS_IDENTIFIERS_URN_NBN_REGISTERED">
+                <summary durationMs="[MS]">
+                    <problems INFO="1" total="1">
+                        <problem level="INFO">kontrola registrace URN:NBN v Resolveru přeskočena</problem>
+                    </problems>
+                </summary>
+            </rule>
+            <rule description="Identifikátory v DC se musí shodovat s identifikátory v MODS pro všechny úrovně popisu." name="PRIMARY-METS_DC_IDENTIFIER_MATCH_MODS_IDENTIFIERS">
+                <summary durationMs="[MS]">
+                    <problems total="0"/>
+                </summary>
+            </rule>
+        </section>
+        <section description="Kontrola hlaviček primárního a sekundárních METS záznamů" name="METS hlavičky">
+            <summary durationMs="[MS]">
+                <problems INFO="1" total="1"/>
+            </summary>
+            <rule description="Primární METS musí obsahovat hlavičku metsHdr, která musí splňovat požadovaný profil." name="PRIMARY_METS_HEADER_MATCHES_PROFILE">
+                <summary durationMs="[MS]">
+                    <problems INFO="1" total="1">
+                        <problem elementSpec="mets:amdSec" file="nk-00027x/mets_nk-00027x.xml" level="INFO" parentElementSpec="/mets:mets">nenalezen očekávaný doporučený element</problem>
+                    </problems>
+                </summary>
+            </rule>
+            <rule description="Sekundární METS musí obsahovat hlavičku metsHdr, která musí splňovat požadovaný profil." name="SECONDARY_METS_HEADER_MATCH_PROFILE">
+                <summary durationMs="[MS]">
+                    <problems total="0"/>
+                </summary>
+            </rule>
+        </section>
+        <section name="Primární METS filesec">
+            <summary durationMs="[MS]">
+                <problems total="0"/>
+            </summary>
+            <rule description="Element mets:fileSec v souboru PRIMARY-METS musí obsahovat elementy mets:fileGrp s definovanými hodnotami ID a USE a žádné další." name="PRIMARY-METS_FILESEC_ALL_FILEGROUPS_PRESENT">
+                <summary durationMs="[MS]">
+                    <problems total="0"/>
+                </summary>
+            </rule>
+            <rule description="Element mets:fileSec v souboru PRIMARY-METS musí v elementu mets:fileGrp s atributem ID=&quot;MC_IMGGRP&quot; obsahovat odkazy na všechny soubory MASTER-COPY a žádné jiné." name="PRIMARY-METS_FILESEC_ALL_MASTER_COPY_FILES_REFERENCED">
+                <summary durationMs="[MS]">
+                    <problems total="0"/>
+                </summary>
+            </rule>
+            <rule description="Element mets:fileSec v souboru PRIMARY-METS musí v elementu mets:fileGrp s atributem ID=&quot;UC_IMGGRP&quot; obsahovat odkazy na všechny soubory USER-COPY a žádné jiné." name="PRIMARY-METS_FILESEC_ALL_USER_COPY_FILES_REFERENCED">
+                <summary durationMs="[MS]">
+                    <problems total="0"/>
+                </summary>
+            </rule>
+            <rule description="Element mets:fileSec v souboru PRIMARY-METS musí v elementu mets:fileGrp s atributem ID=&quot;TXTGRP&quot; obsahovat odkazy na všechny soubory OCR-TEXT a žádné jiné." name="PRIMARY-METS_FILESEC_ALL_OCR_TEXT_FILES_REFERENCED">
+                <summary durationMs="[MS]">
+                    <problems total="0"/>
+                </summary>
+            </rule>
+            <rule description="Element mets:fileSec v souboru PRIMARY-METS musí v elementu mets:fileGrp s atributem ID=&quot;ALTOGRP&quot; obsahovat odkazy na všechny soubory OCR-ALTO a žádné jiné." name="PRIMARY-METS_FILESEC_ALL_OCR_ALTO_FILES_REFERENCED">
+                <summary durationMs="[MS]">
+                    <problems total="0"/>
+                </summary>
+            </rule>
+            <rule description="Element mets:fileSec v souboru PRIMARY-METS musí v elementu mets:fileGrp s atributem ID=&quot;TECHMDGRP&quot; obsahovat odkazy na všechny soubory SECONDARY-METS a žádné jiné." name="PRIMARY-METS_FILESEC_ALL_SECONDARY_METS_FILES_REFERENCED">
+                <summary durationMs="[MS]">
+                    <problems total="0"/>
+                </summary>
+            </rule>
+            <rule description="Velikosti souborů v bytech uvedené v atributu SIZE všech elementů mets:file se musí shodovat se skutečnými velikostmi souborů odkazovaných v elementech mets:FLocat." name="PRIMARY-METS_FILESEC_SIZES_MATCH">
+                <summary durationMs="[MS]">
+                    <problems total="0"/>
+                </summary>
+            </rule>
+            <rule description="Kontrolní součty souborů uvedené v atributu CHECKSUM všech elementů mets:file se musí shodovat s vypočítanými kontrolními součty souborů odkazovaných v elementech mets:FLocat." name="PRIMARY-METS_FILESEC_CHECKSUMS_MATCH">
+                <summary durationMs="[MS]">
+                    <problems total="0"/>
+                </summary>
+            </rule>
+        </section>
+        <section description="Sekce mets:fileSec v sekundárních METS souborech musí obsahovat korektní odkazy na soubory s popisy jednotlivých stran (master a user kopie, textové a alto ocr)" name="Sekundární METS filesec">
+            <summary durationMs="[MS]">
+                <problems total="0"/>
+            </summary>
+            <rule description="Element mets:fileSec v každém souboru SECONDARY-METS musí obsahovat elementy mets:fileGrp s definovanými hodnotami atributů ID a USE a žádné další." name="SECONDARY-METS_FILESEC_ALL_FILEGROUPS_PRESENT">
+                <summary durationMs="[MS]">
+                    <problems total="0"/>
+                </summary>
+            </rule>
+            <rule description="Element mets:fileSec v každém souboru SECONDARY-METS musí v elementu mets:fileGrp s atributem ID=&quot;MC_IMGGRP&quot; obsahovat odkaz na správný soubor MASTER-COPY a žádné jiné odkazy." name="SECONDARY-METS_FILESEC_MASTER_COPY_FILE_REFERENCED">
+                <summary durationMs="[MS]">
+                    <problems total="0"/>
+                </summary>
+            </rule>
+            <rule description="Element mets:fileSec v každém souboru SECONDARY-METS musí v elementu mets:fileGrp s atributem ID=&quot;UC_IMGGRP&quot; obsahovat odkaz na správný soubor USER-COPY a žádné jiné odkazy." name="SECONDARY-METS_FILESEC_USER_COPY_FILE_REFERENCED">
+                <summary durationMs="[MS]">
+                    <problems total="0"/>
+                </summary>
+            </rule>
+            <rule description="Element mets:fileSec v každém souboru SECONDARY-METS musí v elementu mets:fileGrp s atributem ID=&quot;ALTOGRP&quot; obsahovat odkaz na správný soubor OCR-ALTO a žádné jiné odkazy." name="SECONDARY-METS_FILESEC_OCR-ALTO_FILE_REFERENCED">
+                <summary durationMs="[MS]">
+                    <problems total="0"/>
+                </summary>
+            </rule>
+            <rule description="Element mets:fileSec v každém souboru SECONDARY-METS musí v elementu mets:fileGrp s atributem ID=&quot;TXTGRP&quot; obsahovat odkaz na správný soubor OCR-TEXT a žádné jiné odkazy." name="SECONDARY-METS_FILESEC_OCR-TEXT_FILE_REFERENCED">
+                <summary durationMs="[MS]">
+                    <problems total="0"/>
+                </summary>
+            </rule>
+        </section>
+        <section description="Kontrola fyzických a logických strukturálních map v METS záznamech" name="Strukturální mapy">
+            <summary durationMs="[MS]">
+                <problems total="0"/>
+            </summary>
+            <rule description="Logická strukturální mapa v souboru PRIMARY-METS musí odkazovat jen na povolené typy obsahu a DMDID musí odkazovat na existující metadataové záznamy." name="PRIMARY-METS_LOGICAL_STRUCTURAL_MAP_CORRECT">
+                <summary durationMs="[MS]">
+                    <problems total="0"/>
+                </summary>
+            </rule>
+            <rule description="Fyzická strukturální mapa v souboru PRIMARY-METS musí korektně odkazovat na všechny soubory odkazované v elementu fileSec a žádné jiné." name="PRIMARY-METS_PHYSICAL_STRUCTURAL_MAP_CORRECT">
+                <summary durationMs="[MS]">
+                    <problems total="0"/>
+                </summary>
+            </rule>
+            <rule description="Sekce structLink v souboru PRIMARY-METS musí přes elementy smLink propojovat objekty logické strukturální mapy se stranami z fyzické strukturální mapy." name="PRIMARY-METS_STRUCT_LINKS_CORRECT">
+                <summary durationMs="[MS]">
+                    <problems total="0"/>
+                </summary>
+            </rule>
+            <rule description="Fyzická strukturální mapa v každém souboru SECONDARY-METS musí odkazovat všechny soubory odkazované v elementu fileSec a žádné jiné." name="SECONDARY-METS_PHYSICAL_STRUCTURAL_MAP_CORRECT">
+                <summary durationMs="[MS]">
+                    <problems total="0"/>
+                </summary>
+            </rule>
+        </section>
+        <section description="Kontrola obrázků MASTER-COPY a USER-COPY v JPEG 2000 za pomocí externích nástrojů" name="Obrazová data">
+            <summary durationMs="[MS]">
+                <problems INFO="8" total="8"/>
+            </summary>
+            <rule description="Všechny soubory MASTER-COPY (jpeg 2000) musí být validní vůči profilu pro binární soubory pro nástroj Jpylyzer." name="MASTER-COPY_FILES_VALID_BY_JPYLYZER">
+                <summary durationMs="[MS]">
+                    <problems INFO="1" total="1">
+                        <problem level="INFO" toolName="Jpylyzer">nástroj je vypnutý</problem>
+                    </problems>
+                </summary>
+            </rule>
+            <rule description="Všechny soubory USER-COPY (jpeg 2000) musí být validní vůči profilu pro binární soubory pro nástroj Jpylyzer." name="USER-COPY_FILES_VALID_BY_JPYLYZER">
+                <summary durationMs="[MS]">
+                    <problems INFO="1" total="1">
+                        <problem level="INFO" toolName="Jpylyzer">nástroj je vypnutý</problem>
+                    </problems>
+                </summary>
+            </rule>
+            <rule description="Všechny soubory MASTER-COPY (jpeg 2000) musí být validní vůči profilu pro binární soubory pro nástroj JHOVE." name="MASTER-COPY_FILES_VALID_BY_JHOVE">
+                <summary durationMs="[MS]">
+                    <problems INFO="1" total="1">
+                        <problem level="INFO" toolName="JHOVE">nástroj je vypnutý</problem>
+                    </problems>
+                </summary>
+            </rule>
+            <rule description="Všechny soubory USER-COPY (jpeg 2000) musí být validní vůči profilu pro binární soubory pro nástroj JHOVE." name="USER-COPY_FILES_VALID_BY_JHOVE">
+                <summary durationMs="[MS]">
+                    <problems INFO="1" total="1">
+                        <problem level="INFO" toolName="JHOVE">nástroj je vypnutý</problem>
+                    </problems>
+                </summary>
+            </rule>
+            <rule description="Všechny soubory MASTER-COPY (jpeg 2000) musí být validní vůči profilu pro binární soubory pro nástroj Kakadu." name="MASTER-COPY_FILES_VALID_BY_KAKADU">
+                <summary durationMs="[MS]">
+                    <problems INFO="1" total="1">
+                        <problem level="INFO" toolName="Kakadu">nástroj je vypnutý</problem>
+                    </problems>
+                </summary>
+            </rule>
+            <rule description="Všechny soubory USER-COPY (jpeg 2000) musí být validní vůči profilu pro binární soubory pro nástroj Kakadu." name="USER-COPY_FILES_VALID_BY_KAKADU">
+                <summary durationMs="[MS]">
+                    <problems INFO="1" total="1">
+                        <problem level="INFO" toolName="Kakadu">nástroj je vypnutý</problem>
+                    </problems>
+                </summary>
+            </rule>
+            <rule description="Všechny soubory MASTER-COPY (jpeg 2000) musí být validní vůči profilu pro binární soubory pro nástroj ImageMagick." name="MASTER-COPY_FILES_VALID_BY_IMAGE_MAGICK">
+                <summary durationMs="[MS]">
+                    <problems INFO="1" total="1">
+                        <problem level="INFO" toolName="ImageMagick">nástroj je vypnutý</problem>
+                    </problems>
+                </summary>
+            </rule>
+            <rule description="Všechny soubory USER-COPY (jpeg 2000) musí být validní vůči profilu pro binární soubory pro nástroj ImageMagick." name="USER-COPY_FILES_VALID_BY_IMAGE_MAGICK">
+                <summary durationMs="[MS]">
+                    <problems INFO="1" total="1">
+                        <problem level="INFO" toolName="ImageMagick">nástroj je vypnutý</problem>
+                    </problems>
+                </summary>
+            </rule>
+        </section>
+        <section description="validace obsahů bibliografických metadat v MODS a Dubline Core v souboru PRIMARY-METS" name="Bibliografická metadata">
+            <summary durationMs="[MS]">
+                <problems INFO="96" total="96"/>
+            </summary>
+            <rule description="Bibliografická metadata pro entitu typu UNITCOLLECTION musí splňovat požadovaný profil pro záznamy v Dublin Core i MODS." name="BIBLIOGRAPHIC_METADATA_MATCH_PROFILE_UNITCOLLECTION">
+                <summary durationMs="[MS]">
+                    <problems INFO="32" total="32">
+                        <problem elementSpec="dc:type[not(starts-with(text(), 'model:'))]" file="nk-00027x/mets_nk-00027x.xml" label="DCMD_UNITCOLLECTION_0001" level="INFO" parentElementSpec="/oai_dc:dc">nenalezen očekávaný doporučený element</problem>
+                        <problem elementSpec="dc:language" file="nk-00027x/mets_nk-00027x.xml" label="DCMD_UNITCOLLECTION_0001" level="INFO" parentElementSpec="/oai_dc:dc">nenalezen očekávaný doporučený element</problem>
+                        <problem elementSpec="dc:contributor" file="nk-00027x/mets_nk-00027x.xml" label="DCMD_UNITCOLLECTION_0001" level="INFO" parentElementSpec="/oai_dc:dc">nenalezen očekávaný doporučený element</problem>
+                        <problem elementSpec="dc:publisher" file="nk-00027x/mets_nk-00027x.xml" label="DCMD_UNITCOLLECTION_0001" level="INFO" parentElementSpec="/oai_dc:dc">nenalezen očekávaný doporučený element</problem>
+                        <problem elementSpec="dc:coverage" file="nk-00027x/mets_nk-00027x.xml" label="DCMD_UNITCOLLECTION_0001" level="INFO" parentElementSpec="/oai_dc:dc">nenalezen očekávaný doporučený element</problem>
+                        <problem elementSpec="dc:relation" file="nk-00027x/mets_nk-00027x.xml" label="DCMD_UNITCOLLECTION_0001" level="INFO" parentElementSpec="/oai_dc:dc">nenalezen očekávaný doporučený element</problem>
+                        <problem elementSpec="dc:rights" file="nk-00027x/mets_nk-00027x.xml" label="DCMD_UNITCOLLECTION_0001" level="INFO" parentElementSpec="/oai_dc:dc">nenalezen očekávaný doporučený element</problem>
+                        <problem attributeSpec="type" file="nk-00027x/mets_nk-00027x.xml" label="MODSMD_UNITCOLLECTION_0001" level="INFO" parentElementSpec="/mods:mods/mods:titleInfo">nenalezen doporučený atribut</problem>
+                        <problem elementSpec="mods:nonSort" file="nk-00027x/mets_nk-00027x.xml" label="MODSMD_UNITCOLLECTION_0001" level="INFO" parentElementSpec="/mods:mods/mods:titleInfo">nenalezen očekávaný doporučený element</problem>
+                        <problem elementSpec="mods:partNumber" file="nk-00027x/mets_nk-00027x.xml" label="MODSMD_UNITCOLLECTION_0001" level="INFO" parentElementSpec="/mods:mods/mods:titleInfo">nenalezen očekávaný doporučený element</problem>
+                        <problem elementSpec="mods:partName" file="nk-00027x/mets_nk-00027x.xml" label="MODSMD_UNITCOLLECTION_0001" level="INFO" parentElementSpec="/mods:mods/mods:titleInfo">nenalezen očekávaný doporučený element</problem>
+                        <problem attributeSpec="usage" file="nk-00027x/mets_nk-00027x.xml" label="MODSMD_UNITCOLLECTION_0001" level="INFO" parentElementSpec="/mods:mods/mods:name[not(mods:etal)]">nenalezen doporučený atribut</problem>
+                        <problem elementSpec="mods:namePart[@type='date']" file="nk-00027x/mets_nk-00027x.xml" label="MODSMD_UNITCOLLECTION_0001" level="INFO" parentElementSpec="/mods:mods/mods:name[not(mods:etal)]">nenalezen očekávaný doporučený element</problem>
+                        <problem elementSpec="mods:namePart[@type='family']" file="nk-00027x/mets_nk-00027x.xml" label="MODSMD_UNITCOLLECTION_0001" level="INFO" parentElementSpec="/mods:mods/mods:name[not(mods:etal)]">nenalezen očekávaný doporučený element</problem>
+                        <problem elementSpec="mods:namePart[@type='given']" file="nk-00027x/mets_nk-00027x.xml" label="MODSMD_UNITCOLLECTION_0001" level="INFO" parentElementSpec="/mods:mods/mods:name[not(mods:etal)]">nenalezen očekávaný doporučený element</problem>
+                        <problem elementSpec="mods:namePart[@type='termsOfAddress']" file="nk-00027x/mets_nk-00027x.xml" label="MODSMD_UNITCOLLECTION_0001" level="INFO" parentElementSpec="/mods:mods/mods:name[not(mods:etal)]">nenalezen očekávaný doporučený element</problem>
+                        <problem elementSpec="mods:alternativeName" file="nk-00027x/mets_nk-00027x.xml" label="MODSMD_UNITCOLLECTION_0001" level="INFO" parentElementSpec="/mods:mods/mods:name[not(mods:etal)]">nenalezen očekávaný doporučený element</problem>
+                        <problem elementSpec="mods:nameIdentifier" file="nk-00027x/mets_nk-00027x.xml" label="MODSMD_UNITCOLLECTION_0001" level="INFO" parentElementSpec="/mods:mods/mods:name[not(mods:etal)]">nenalezen očekávaný doporučený element</problem>
+                        <problem elementSpec="mods:name[mods:etal]" file="nk-00027x/mets_nk-00027x.xml" label="MODSMD_UNITCOLLECTION_0001" level="INFO" parentElementSpec="/mods:mods">nenalezen očekávaný doporučený element</problem>
+                        <problem elementSpec="mods:genre[not(text()='unit collection')]" file="nk-00027x/mets_nk-00027x.xml" label="MODSMD_UNITCOLLECTION_0001" level="INFO" parentElementSpec="/mods:mods">nenalezen očekávaný doporučený element</problem>
+                        <problem attributeSpec="qualifier" file="nk-00027x/mets_nk-00027x.xml" label="MODSMD_UNITCOLLECTION_0001" level="INFO" parentElementSpec="/mods:mods/mods:originInfo/mods:dateCreated[0]">nenalezen doporučený atribut</problem>
+                        <problem attributeSpec="type" file="nk-00027x/mets_nk-00027x.xml" label="MODSMD_UNITCOLLECTION_0001" level="INFO" parentElementSpec="/mods:mods/mods:note">nenalezen doporučený atribut</problem>
+                        <problem attributeSpec="valueURI" file="nk-00027x/mets_nk-00027x.xml" label="MODSMD_UNITCOLLECTION_0001" level="INFO" parentElementSpec="/mods:mods/mods:subject/mods:topic">nenalezen doporučený atribut</problem>
+                        <problem attributeSpec="valueURI" file="nk-00027x/mets_nk-00027x.xml" label="MODSMD_UNITCOLLECTION_0001" level="INFO" parentElementSpec="/mods:mods/mods:subject/mods:geographic">nenalezen doporučený atribut</problem>
+                        <problem elementSpec="mods:temporal" file="nk-00027x/mets_nk-00027x.xml" label="MODSMD_UNITCOLLECTION_0001" level="INFO" parentElementSpec="/mods:mods/mods:subject">nenalezen očekávaný doporučený element</problem>
+                        <problem elementSpec="mods:name" file="nk-00027x/mets_nk-00027x.xml" label="MODSMD_UNITCOLLECTION_0001" level="INFO" parentElementSpec="/mods:mods/mods:subject">nenalezen očekávaný doporučený element</problem>
+                        <problem attributeSpec="invalid" file="nk-00027x/mets_nk-00027x.xml" label="MODSMD_UNITCOLLECTION_0001" level="INFO" parentElementSpec="/mods:mods/mods:identifier[@type='uuid']">nenalezen doporučený atribut</problem>
+                        <problem attributeSpec="invalid" file="nk-00027x/mets_nk-00027x.xml" label="MODSMD_UNITCOLLECTION_0001" level="INFO" parentElementSpec="/mods:mods/mods:identifier[@type!='uuid']">nenalezen doporučený atribut</problem>
+                        <problem elementSpec="mods:location[mods:physicalLocation[@authority='ICO']]" file="nk-00027x/mets_nk-00027x.xml" label="MODSMD_UNITCOLLECTION_0001" level="INFO" parentElementSpec="/mods:mods">nenalezen očekávaný doporučený element</problem>
+                        <problem elementSpec="mods:location[mods:physicalLocation[@authority='NARP']]" file="nk-00027x/mets_nk-00027x.xml" label="MODSMD_UNITCOLLECTION_0001" level="INFO" parentElementSpec="/mods:mods">nenalezen očekávaný doporučený element</problem>
+                        <problem elementSpec="mods:location[not(mods:physicalLocation/@authority)]" file="nk-00027x/mets_nk-00027x.xml" label="MODSMD_UNITCOLLECTION_0001" level="INFO" parentElementSpec="/mods:mods">nenalezen očekávaný doporučený element</problem>
+                        <problem elementSpec="mods:recordIdentifier" file="nk-00027x/mets_nk-00027x.xml" label="MODSMD_UNITCOLLECTION_0001" level="INFO" parentElementSpec="/mods:mods/mods:recordInfo">nenalezen očekávaný doporučený element</problem>
+                    </problems>
+                </summary>
+            </rule>
+            <rule description="Bibliografická metadata pro entitu typu DIRECTORY musí splňovat požadovaný profil pro záznamy v Dublin Core i MODS. Úroveň DIRECTORY je nepovinná." name="BIBLIOGRAPHIC_METADATA_MATCH_PROFILE_DIRECTORY">
+                <summary durationMs="[MS]">
+                    <problems total="0"/>
+                </summary>
+            </rule>
+            <rule description="Bibliografická metadata pro entitu typu UNIT musí splňovat požadovaný profil pro záznamy v Dublin Core i MODS." name="BIBLIOGRAPHIC_METADATA_MATCH_PROFILE_UNIT">
+                <summary durationMs="[MS]">
+                    <problems INFO="48" total="48">
+                        <problem elementSpec="dc:contributor" file="nk-00027x/mets_nk-00027x.xml" label="DCMD_UNIT_0001" level="INFO" parentElementSpec="/oai_dc:dc">nenalezen očekávaný doporučený element</problem>
+                        <problem elementSpec="dc:date" file="nk-00027x/mets_nk-00027x.xml" label="DCMD_UNIT_0001" level="INFO" parentElementSpec="/oai_dc:dc">nenalezen očekávaný doporučený element</problem>
+                        <problem elementSpec="dc:publisher" file="nk-00027x/mets_nk-00027x.xml" label="DCMD_UNIT_0001" level="INFO" parentElementSpec="/oai_dc:dc">nenalezen očekávaný doporučený element</problem>
+                        <problem elementSpec="dc:coverage" file="nk-00027x/mets_nk-00027x.xml" label="DCMD_UNIT_0001" level="INFO" parentElementSpec="/oai_dc:dc">nenalezen očekávaný doporučený element</problem>
+                        <problem elementSpec="dc:relation" file="nk-00027x/mets_nk-00027x.xml" label="DCMD_UNIT_0001" level="INFO" parentElementSpec="/oai_dc:dc">nenalezen očekávaný doporučený element</problem>
+                        <problem elementSpec="dc:rights" file="nk-00027x/mets_nk-00027x.xml" label="DCMD_UNIT_0001" level="INFO" parentElementSpec="/oai_dc:dc">nenalezen očekávaný doporučený element</problem>
+                        <problem attributeSpec="type" file="nk-00027x/mets_nk-00027x.xml" label="MODSMD_UNIT_0001" level="INFO" parentElementSpec="/mods:mods/mods:titleInfo">nenalezen doporučený atribut</problem>
+                        <problem elementSpec="mods:nonSort" file="nk-00027x/mets_nk-00027x.xml" label="MODSMD_UNIT_0001" level="INFO" parentElementSpec="/mods:mods/mods:titleInfo">nenalezen očekávaný doporučený element</problem>
+                        <problem elementSpec="mods:partNumber" file="nk-00027x/mets_nk-00027x.xml" label="MODSMD_UNIT_0001" level="INFO" parentElementSpec="/mods:mods/mods:titleInfo">nenalezen očekávaný doporučený element</problem>
+                        <problem elementSpec="mods:partName" file="nk-00027x/mets_nk-00027x.xml" label="MODSMD_UNIT_0001" level="INFO" parentElementSpec="/mods:mods/mods:titleInfo">nenalezen očekávaný doporučený element</problem>
+                        <problem elementSpec="mods:namePart[@type='date']" file="nk-00027x/mets_nk-00027x.xml" label="MODSMD_UNIT_0001" level="INFO" parentElementSpec="/mods:mods/mods:name[not(mods:etal)]">nenalezen očekávaný doporučený element</problem>
+                        <problem elementSpec="mods:namePart[@type='termsOfAddress']" file="nk-00027x/mets_nk-00027x.xml" label="MODSMD_UNIT_0001" level="INFO" parentElementSpec="/mods:mods/mods:name[not(mods:etal)]">nenalezen očekávaný doporučený element</problem>
+                        <problem elementSpec="mods:namePart[not(@type)]" file="nk-00027x/mets_nk-00027x.xml" label="MODSMD_UNIT_0001" level="INFO" parentElementSpec="/mods:mods/mods:name[not(mods:etal)]">nenalezen očekávaný doporučený element</problem>
+                        <problem elementSpec="mods:alternativeName" file="nk-00027x/mets_nk-00027x.xml" label="MODSMD_UNIT_0001" level="INFO" parentElementSpec="/mods:mods/mods:name[not(mods:etal)]">nenalezen očekávaný doporučený element</problem>
+                        <problem elementSpec="mods:affiliation" file="nk-00027x/mets_nk-00027x.xml" label="MODSMD_UNIT_0001" level="INFO" parentElementSpec="/mods:mods/mods:name[not(mods:etal)]">nenalezen očekávaný doporučený element</problem>
+                        <problem elementSpec="mods:name[mods:etal]" file="nk-00027x/mets_nk-00027x.xml" label="MODSMD_UNIT_0001" level="INFO" parentElementSpec="/mods:mods">nenalezen očekávaný doporučený element</problem>
+                        <problem attributeSpec="type" file="nk-00027x/mets_nk-00027x.xml" label="MODSMD_UNIT_0001" level="INFO" parentElementSpec="/mods:mods/mods:genre[text()='clipping' or text()='clippingIndex' or text()='cardIndex']">nenalezen doporučený atribut</problem>
+                        <problem attributeSpec="type" file="nk-00027x/mets_nk-00027x.xml" label="MODSMD_UNIT_0001" level="INFO" parentElementSpec="/mods:mods/mods:genre[not(text()='clipping' or text()='clippingIndex' or text()='cardIndex')]">nenalezen doporučený atribut</problem>
+                        <problem attributeSpec="authority" file="nk-00027x/mets_nk-00027x.xml" label="MODSMD_UNIT_0001" level="INFO" parentElementSpec="/mods:mods/mods:genre[not(text()='clipping' or text()='clippingIndex' or text()='cardIndex')]">nenalezen doporučený atribut</problem>
+                        <problem attributeSpec="type" file="nk-00027x/mets_nk-00027x.xml" label="MODSMD_UNIT_0001" level="INFO" parentElementSpec="/mods:mods/mods:note">nenalezen doporučený atribut</problem>
+                        <problem attributeSpec="valueURI" file="nk-00027x/mets_nk-00027x.xml" label="MODSMD_UNIT_0001" level="INFO" parentElementSpec="/mods:mods/mods:subject/mods:topic">nenalezen doporučený atribut</problem>
+                        <problem attributeSpec="valueURI" file="nk-00027x/mets_nk-00027x.xml" label="MODSMD_UNIT_0001" level="INFO" parentElementSpec="/mods:mods/mods:subject/mods:geographic">nenalezen doporučený atribut</problem>
+                        <problem elementSpec="mods:name" file="nk-00027x/mets_nk-00027x.xml" label="MODSMD_UNIT_0001" level="INFO" parentElementSpec="/mods:mods/mods:subject">nenalezen očekávaný doporučený element</problem>
+                        <problem elementSpec="mods:nonSort" file="nk-00027x/mets_nk-00027x.xml" label="MODSMD_UNIT_0001" level="INFO" parentElementSpec="/mods:mods/mods:relatedItem/mods:titleInfo">nenalezen očekávaný doporučený element</problem>
+                        <problem elementSpec="mods:subTitle" file="nk-00027x/mets_nk-00027x.xml" label="MODSMD_UNIT_0001" level="INFO" parentElementSpec="/mods:mods/mods:relatedItem/mods:titleInfo">nenalezen očekávaný doporučený element</problem>
+                        <problem elementSpec="mods:partNumber" file="nk-00027x/mets_nk-00027x.xml" label="MODSMD_UNIT_0001" level="INFO" parentElementSpec="/mods:mods/mods:relatedItem/mods:titleInfo">nenalezen očekávaný doporučený element</problem>
+                        <problem elementSpec="mods:partName" file="nk-00027x/mets_nk-00027x.xml" label="MODSMD_UNIT_0001" level="INFO" parentElementSpec="/mods:mods/mods:relatedItem/mods:titleInfo">nenalezen očekávaný doporučený element</problem>
+                        <problem elementSpec="mods:originInfo[not(@eventType)]" file="nk-00027x/mets_nk-00027x.xml" label="MODSMD_UNIT_0001" level="INFO" parentElementSpec="/mods:mods/mods:relatedItem">nenalezen očekávaný doporučený element</problem>
+                        <problem elementSpec="mods:originInfo[@eventType='production']" file="nk-00027x/mets_nk-00027x.xml" label="MODSMD_UNIT_0001" level="INFO" parentElementSpec="/mods:mods/mods:relatedItem">nenalezen očekávaný doporučený element</problem>
+                        <problem attributeSpec="authority" file="nk-00027x/mets_nk-00027x.xml" label="MODSMD_UNIT_0001" level="INFO" parentElementSpec="/mods:mods/mods:relatedItem/mods:originInfo[@eventType='publication']/mods:place/mods:placeTerm[0]">nenalezen doporučený atribut</problem>
+                        <problem attributeSpec="authority" file="nk-00027x/mets_nk-00027x.xml" label="MODSMD_UNIT_0001" level="INFO" parentElementSpec="/mods:mods/mods:relatedItem/mods:originInfo[@eventType='publication']/mods:agent/mods:role/mods:roleTerm">nenalezen doporučený atribut</problem>
+                        <problem attributeSpec="encoding" file="nk-00027x/mets_nk-00027x.xml" label="MODSMD_UNIT_0001" level="INFO" parentElementSpec="/mods:mods/mods:relatedItem/mods:originInfo[@eventType='publication']/mods:dateIssued">nenalezen doporučený atribut</problem>
+                        <problem attributeSpec="point" file="nk-00027x/mets_nk-00027x.xml" label="MODSMD_UNIT_0001" level="INFO" parentElementSpec="/mods:mods/mods:relatedItem/mods:originInfo[@eventType='publication']/mods:dateIssued">nenalezen doporučený atribut</problem>
+                        <problem attributeSpec="qualifier" file="nk-00027x/mets_nk-00027x.xml" label="MODSMD_UNIT_0001" level="INFO" parentElementSpec="/mods:mods/mods:relatedItem/mods:originInfo[@eventType='publication']/mods:dateIssued">nenalezen doporučený atribut</problem>
+                        <problem elementSpec="mods:originInfo[@eventType='distribution']" file="nk-00027x/mets_nk-00027x.xml" label="MODSMD_UNIT_0001" level="INFO" parentElementSpec="/mods:mods/mods:relatedItem">nenalezen očekávaný doporučený element</problem>
+                        <problem elementSpec="mods:originInfo[@eventType='manufacture']" file="nk-00027x/mets_nk-00027x.xml" label="MODSMD_UNIT_0001" level="INFO" parentElementSpec="/mods:mods/mods:relatedItem">nenalezen očekávaný doporučený element</problem>
+                        <problem elementSpec="mods:originInfo[@eventType='copyright']" file="nk-00027x/mets_nk-00027x.xml" label="MODSMD_UNIT_0001" level="INFO" parentElementSpec="/mods:mods/mods:relatedItem">nenalezen očekávaný doporučený element</problem>
+                        <problem elementSpec="mods:note[not(@type='kramerius-uuid')]" file="nk-00027x/mets_nk-00027x.xml" label="MODSMD_UNIT_0001" level="INFO" parentElementSpec="/mods:mods/mods:relatedItem">nenalezen očekávaný doporučený element</problem>
+                        <problem attributeSpec="invalid" file="nk-00027x/mets_nk-00027x.xml" label="MODSMD_UNIT_0001" level="INFO" parentElementSpec="/mods:mods/mods:relatedItem/mods:identifier">nenalezen doporučený atribut</problem>
+                        <problem elementSpec="mods:title" file="nk-00027x/mets_nk-00027x.xml" label="MODSMD_UNIT_0001" level="INFO" parentElementSpec="/mods:mods/mods:relatedItem/mods:part/mods:detail[0]">nenalezen očekávaný doporučený element</problem>
+                        <problem elementSpec="mods:title" file="nk-00027x/mets_nk-00027x.xml" label="MODSMD_UNIT_0001" level="INFO" parentElementSpec="/mods:mods/mods:relatedItem/mods:part/mods:detail[1]">nenalezen očekávaný doporučený element</problem>
+                        <problem attributeSpec="invalid" file="nk-00027x/mets_nk-00027x.xml" label="MODSMD_UNIT_0001" level="INFO" parentElementSpec="/mods:mods/mods:identifier[@type='uuid']">nenalezen doporučený atribut</problem>
+                        <problem attributeSpec="invalid" file="nk-00027x/mets_nk-00027x.xml" label="MODSMD_UNIT_0001" level="INFO" parentElementSpec="/mods:mods/mods:identifier[@type='urnnbn']">nenalezen doporučený atribut</problem>
+                        <problem attributeSpec="invalid" file="nk-00027x/mets_nk-00027x.xml" label="MODSMD_UNIT_0001" level="INFO" parentElementSpec="/mods:mods/mods:identifier[@type!='uuid' and @type!='urnnbn']">nenalezen doporučený atribut</problem>
+                        <problem elementSpec="mods:location[mods:physicalLocation[@authority='ICO']]" file="nk-00027x/mets_nk-00027x.xml" label="MODSMD_UNIT_0001" level="INFO" parentElementSpec="/mods:mods">nenalezen očekávaný doporučený element</problem>
+                        <problem elementSpec="mods:location[mods:physicalLocation[@authority='NARP']]" file="nk-00027x/mets_nk-00027x.xml" label="MODSMD_UNIT_0001" level="INFO" parentElementSpec="/mods:mods">nenalezen očekávaný doporučený element</problem>
+                        <problem elementSpec="mods:location[not(mods:physicalLocation/@authority)]" file="nk-00027x/mets_nk-00027x.xml" label="MODSMD_UNIT_0001" level="INFO" parentElementSpec="/mods:mods">nenalezen očekávaný doporučený element</problem>
+                        <problem elementSpec="mods:recordIdentifier" file="nk-00027x/mets_nk-00027x.xml" label="MODSMD_UNIT_0001" level="INFO" parentElementSpec="/mods:mods/mods:recordInfo">nenalezen očekávaný doporučený element</problem>
+                    </problems>
+                </summary>
+            </rule>
+            <rule description="Bibliografická metadata pro entitu typu PAGE musí splňovat požadovaný profil pro záznamy v Dublin Core i MODS." name="BIBLIOGRAPHIC_METADATA_MATCH_PROFILE_PAGE">
+                <summary durationMs="[MS]">
+                    <problems INFO="16" total="16">
+                        <problem file="nk-00027x/mets_nk-00027x.xml" label="MODSMD_PAGE_0002" level="INFO" referencedValue="PAGE_0002">neobsahuje informaci o použitých katalogizačních pravidlech; validuji proti AACR2</problem>
+                        <problem elementSpec="dc:title" file="nk-00027x/mets_nk-00027x.xml" label="DCMD_PAGE_0002" level="INFO" parentElementSpec="/oai_dc:dc">nenalezen očekávaný doporučený element</problem>
+                        <problem elementSpec="dc:description" file="nk-00027x/mets_nk-00027x.xml" label="DCMD_PAGE_0002" level="INFO" parentElementSpec="/oai_dc:dc">nenalezen očekávaný doporučený element</problem>
+                        <problem elementSpec="dc:coverage" file="nk-00027x/mets_nk-00027x.xml" label="DCMD_PAGE_0002" level="INFO" parentElementSpec="/oai_dc:dc">nenalezen očekávaný doporučený element</problem>
+                        <problem elementSpec="dc:format" file="nk-00027x/mets_nk-00027x.xml" label="DCMD_PAGE_0002" level="INFO" parentElementSpec="/oai_dc:dc">nenalezen očekávaný doporučený element</problem>
+                        <problem elementSpec="mods:titleInfo" file="nk-00027x/mets_nk-00027x.xml" label="MODSMD_PAGE_0002" level="INFO" parentElementSpec="/mods:mods">nenalezen očekávaný doporučený element</problem>
+                        <problem attributeSpec="invalid" file="nk-00027x/mets_nk-00027x.xml" label="MODSMD_PAGE_0002" level="INFO" parentElementSpec="/mods:mods/mods:identifier[@type='uuid']">nenalezen doporučený atribut</problem>
+                        <problem elementSpec="mods:physicalDescription" file="nk-00027x/mets_nk-00027x.xml" label="MODSMD_PAGE_0002" level="INFO" parentElementSpec="/mods:mods">nenalezen očekávaný doporučený element</problem>
+                        <problem file="nk-00027x/mets_nk-00027x.xml" label="MODSMD_PAGE_0001" level="INFO" referencedValue="PAGE_0001">neobsahuje informaci o použitých katalogizačních pravidlech; validuji proti AACR2</problem>
+                        <problem elementSpec="dc:title" file="nk-00027x/mets_nk-00027x.xml" label="DCMD_PAGE_0001" level="INFO" parentElementSpec="/oai_dc:dc">nenalezen očekávaný doporučený element</problem>
+                        <problem elementSpec="dc:description" file="nk-00027x/mets_nk-00027x.xml" label="DCMD_PAGE_0001" level="INFO" parentElementSpec="/oai_dc:dc">nenalezen očekávaný doporučený element</problem>
+                        <problem elementSpec="dc:coverage" file="nk-00027x/mets_nk-00027x.xml" label="DCMD_PAGE_0001" level="INFO" parentElementSpec="/oai_dc:dc">nenalezen očekávaný doporučený element</problem>
+                        <problem elementSpec="dc:format" file="nk-00027x/mets_nk-00027x.xml" label="DCMD_PAGE_0001" level="INFO" parentElementSpec="/oai_dc:dc">nenalezen očekávaný doporučený element</problem>
+                        <problem elementSpec="mods:titleInfo" file="nk-00027x/mets_nk-00027x.xml" label="MODSMD_PAGE_0001" level="INFO" parentElementSpec="/mods:mods">nenalezen očekávaný doporučený element</problem>
+                        <problem attributeSpec="invalid" file="nk-00027x/mets_nk-00027x.xml" label="MODSMD_PAGE_0001" level="INFO" parentElementSpec="/mods:mods/mods:identifier[@type='uuid']">nenalezen doporučený atribut</problem>
+                        <problem elementSpec="mods:physicalDescription" file="nk-00027x/mets_nk-00027x.xml" label="MODSMD_PAGE_0001" level="INFO" parentElementSpec="/mods:mods">nenalezen očekávaný doporučený element</problem>
+                    </problems>
+                </summary>
+            </rule>
+        </section>
+        <section description="Kontrola textových přepisů." name="OCR TEXT">
+            <summary durationMs="[MS]">
+                <problems total="0"/>
+            </summary>
+            <rule description="Všechny soubory OCR-TEXT musí být v kódování UTF-8." name="OCR-TEXT_FILES_IN_UTF8">
+                <summary durationMs="[MS]">
+                    <problems total="0"/>
+                </summary>
+            </rule>
+        </section>
+        <section description="Kontrola souborů ALTO." name="OCR ALTO">
+            <summary durationMs="[MS]">
+                <problems total="0"/>
+            </summary>
+            <rule description="Soubory OCR-ALTO musí být validní podle XML Schema pro verzi ALTO danou namespace kořenového elementu (alto_2.1.xsd, alto_3.1.xsd, alto_4.4.xsd; nejvyšší minor každého majora). DMF Jednotky fondu 0.2 tab. 1.4 a kap. 7.9 odkazují na předpis OCR (ALTO XML a TXT OCR) 1.0 (17. 12. 2024), který připouští ALTO 2.0 a novější; soubor s jiným namespace je chyba." name="OCR-ALTO_FILES_VALID_BY_XSD">
+                <summary durationMs="[MS]">
+                    <problems total="0"/>
+                </summary>
+            </rule>
+            <rule description="Všechny soubory OCR-ALTO v balíčku by měly mít stejnou verzi ALTO (stejný namespace kořenového elementu). Předpis OCR (ALTO XML a TXT OCR) 1.0, na který DMF odkazuje, míchání verzí neřeší, proto jen WARNING." name="OCR-ALTO_FILES_SAME_VERSION">
+                <summary durationMs="[MS]">
+                    <problems total="0"/>
+                </summary>
+            </rule>
+            <rule description="Všechny soubory OCR-ALTO musí být v kódování UTF-8." name="OCR-ALTO_FILES_IN_UTF8">
+                <summary durationMs="[MS]">
+                    <problems total="0"/>
+                </summary>
+            </rule>
+        </section>
+        <section description="Kontrola technických (MIX, PREMIS) metadat." name="Technická metadata">
+            <summary durationMs="[MS]">
+                <problems INFO="34" total="34"/>
+            </summary>
+            <rule description="Záznamy MIX v souborech SECONDARY-METS musí být validní podle XML Schema (mix_2.0.xsd)." name="MIX_VALID_BY_XSD">
+                <summary durationMs="[MS]">
+                    <problems total="0"/>
+                </summary>
+            </rule>
+            <rule description="Záznamy MIX v souborech SECONDARY-METS pro původní skeny musí splňovat profil." name="MIX_FOR_ORIGINAL_SCAN_MATCHES_PROFILE">
+                <summary durationMs="[MS]">
+                    <problems INFO="10" total="10">
+                        <problem elementSpec="mix:fileSize" file="nk-00027x/amdsec/amd_mets_nk-00027x_0002.xml" label="MIX_001" level="INFO" parentElementSpec="/mets:techMD/mets:mdWrap/mets:xmlData/mix:mix/mix:BasicDigitalObjectInformation">nenalezen očekávaný doporučený element</problem>
+                        <problem elementSpec="mix:ColorProfile" file="nk-00027x/amdsec/amd_mets_nk-00027x_0002.xml" label="MIX_001" level="INFO" parentElementSpec="/mets:techMD/mets:mdWrap/mets:xmlData/mix:mix/mix:BasicImageInformation/mix:BasicImageCharacteristics/mix:PhotometricInterpretation">nenalezen očekávaný doporučený element</problem>
+                        <problem elementSpec="mix:SourceInformation" file="nk-00027x/amdsec/amd_mets_nk-00027x_0002.xml" label="MIX_001" level="INFO" parentElementSpec="/mets:techMD/mets:mdWrap/mets:xmlData/mix:mix/mix:ImageCaptureMetadata">nenalezen očekávaný doporučený element</problem>
+                        <problem elementSpec="mix:DigitalCameraCapture" file="nk-00027x/amdsec/amd_mets_nk-00027x_0002.xml" label="MIX_001" level="INFO" parentElementSpec="/mets:techMD/mets:mdWrap/mets:xmlData/mix:mix/mix:ImageCaptureMetadata">nenalezen očekávaný doporučený element</problem>
+                        <problem elementSpec="mix:samplingFrequencyPlane" file="nk-00027x/amdsec/amd_mets_nk-00027x_0002.xml" label="MIX_001" level="INFO" parentElementSpec="/mets:techMD/mets:mdWrap/mets:xmlData/mix:mix/mix:ImageAssessmentMetadata/mix:SpatialMetrics">nenalezen očekávaný doporučený element</problem>
+                        <problem elementSpec="mix:fileSize" file="nk-00027x/amdsec/amd_mets_nk-00027x_0001.xml" label="MIX_001" level="INFO" parentElementSpec="/mets:techMD/mets:mdWrap/mets:xmlData/mix:mix/mix:BasicDigitalObjectInformation">nenalezen očekávaný doporučený element</problem>
+                        <problem elementSpec="mix:ColorProfile" file="nk-00027x/amdsec/amd_mets_nk-00027x_0001.xml" label="MIX_001" level="INFO" parentElementSpec="/mets:techMD/mets:mdWrap/mets:xmlData/mix:mix/mix:BasicImageInformation/mix:BasicImageCharacteristics/mix:PhotometricInterpretation">nenalezen očekávaný doporučený element</problem>
+                        <problem elementSpec="mix:SourceInformation" file="nk-00027x/amdsec/amd_mets_nk-00027x_0001.xml" label="MIX_001" level="INFO" parentElementSpec="/mets:techMD/mets:mdWrap/mets:xmlData/mix:mix/mix:ImageCaptureMetadata">nenalezen očekávaný doporučený element</problem>
+                        <problem elementSpec="mix:DigitalCameraCapture" file="nk-00027x/amdsec/amd_mets_nk-00027x_0001.xml" label="MIX_001" level="INFO" parentElementSpec="/mets:techMD/mets:mdWrap/mets:xmlData/mix:mix/mix:ImageCaptureMetadata">nenalezen očekávaný doporučený element</problem>
+                        <problem elementSpec="mix:samplingFrequencyPlane" file="nk-00027x/amdsec/amd_mets_nk-00027x_0001.xml" label="MIX_001" level="INFO" parentElementSpec="/mets:techMD/mets:mdWrap/mets:xmlData/mix:mix/mix:ImageAssessmentMetadata/mix:SpatialMetrics">nenalezen očekávaný doporučený element</problem>
+                    </problems>
+                </summary>
+            </rule>
+            <rule description="Záznamy MIX v souborech SECONDARY-METS pro první verze archivních kopií musí splňovat profil." name="MIX_FOR_FIRST_MASTER_COPY_MATCHES_PROFILE">
+                <summary durationMs="[MS]">
+                    <problems INFO="10" total="10">
+                        <problem elementSpec="mix:fileSize" file="nk-00027x/amdsec/amd_mets_nk-00027x_0002.xml" label="MIX_002" level="INFO" parentElementSpec="/mets:techMD/mets:mdWrap/mets:xmlData/mix:mix/mix:BasicDigitalObjectInformation">nenalezen očekávaný doporučený element</problem>
+                        <problem elementSpec="mix:ColorProfile" file="nk-00027x/amdsec/amd_mets_nk-00027x_0002.xml" label="MIX_002" level="INFO" parentElementSpec="/mets:techMD/mets:mdWrap/mets:xmlData/mix:mix/mix:BasicImageInformation/mix:BasicImageCharacteristics/mix:PhotometricInterpretation">nenalezen očekávaný doporučený element</problem>
+                        <problem elementSpec="mix:samplingFrequencyPlane" file="nk-00027x/amdsec/amd_mets_nk-00027x_0002.xml" label="MIX_002" level="INFO" parentElementSpec="/mets:techMD/mets:mdWrap/mets:xmlData/mix:mix/mix:ImageAssessmentMetadata/mix:SpatialMetrics">nenalezen očekávaný doporučený element</problem>
+                        <problem elementSpec="mix:TargetData" file="nk-00027x/amdsec/amd_mets_nk-00027x_0002.xml" label="MIX_002" level="INFO" parentElementSpec="/mets:techMD/mets:mdWrap/mets:xmlData/mix:mix/mix:ImageAssessmentMetadata/mix:ImageColorEncoding">nenalezen očekávaný doporučený element</problem>
+                        <problem elementSpec="mix:processingAgency" file="nk-00027x/amdsec/amd_mets_nk-00027x_0002.xml" label="MIX_002" level="INFO" parentElementSpec="/mets:techMD/mets:mdWrap/mets:xmlData/mix:mix/mix:ChangeHistory/mix:ImageProcessing">nenalezen očekávaný doporučený element</problem>
+                        <problem elementSpec="mix:fileSize" file="nk-00027x/amdsec/amd_mets_nk-00027x_0001.xml" label="MIX_002" level="INFO" parentElementSpec="/mets:techMD/mets:mdWrap/mets:xmlData/mix:mix/mix:BasicDigitalObjectInformation">nenalezen očekávaný doporučený element</problem>
+                        <problem elementSpec="mix:ColorProfile" file="nk-00027x/amdsec/amd_mets_nk-00027x_0001.xml" label="MIX_002" level="INFO" parentElementSpec="/mets:techMD/mets:mdWrap/mets:xmlData/mix:mix/mix:BasicImageInformation/mix:BasicImageCharacteristics/mix:PhotometricInterpretation">nenalezen očekávaný doporučený element</problem>
+                        <problem elementSpec="mix:samplingFrequencyPlane" file="nk-00027x/amdsec/amd_mets_nk-00027x_0001.xml" label="MIX_002" level="INFO" parentElementSpec="/mets:techMD/mets:mdWrap/mets:xmlData/mix:mix/mix:ImageAssessmentMetadata/mix:SpatialMetrics">nenalezen očekávaný doporučený element</problem>
+                        <problem elementSpec="mix:TargetData" file="nk-00027x/amdsec/amd_mets_nk-00027x_0001.xml" label="MIX_002" level="INFO" parentElementSpec="/mets:techMD/mets:mdWrap/mets:xmlData/mix:mix/mix:ImageAssessmentMetadata/mix:ImageColorEncoding">nenalezen očekávaný doporučený element</problem>
+                        <problem elementSpec="mix:processingAgency" file="nk-00027x/amdsec/amd_mets_nk-00027x_0001.xml" label="MIX_002" level="INFO" parentElementSpec="/mets:techMD/mets:mdWrap/mets:xmlData/mix:mix/mix:ChangeHistory/mix:ImageProcessing">nenalezen očekávaný doporučený element</problem>
+                    </problems>
+                </summary>
+            </rule>
+            <rule description="Záznamy MIX v souborech SECONDARY-METS pro další verze archivních kopií, pokud existují, musí splňovat profil." name="MIX_FOR_OTHER_MASTER_COPIES_MATCHES_PROFILE">
+                <summary durationMs="[MS]">
+                    <problems total="0"/>
+                </summary>
+            </rule>
+            <rule description="Záznamy PREMIS Object v souborech SECONDARY-METS pro původní skeny musí splňovat profil." name="PREMIS_OBJECT_FOR_ORIGINAL_SCAN_MATCHES_PROFILE">
+                <summary durationMs="[MS]">
+                    <problems INFO="2" total="2">
+                        <problem elementSpec="premis:relationship" file="nk-00027x/amdsec/amd_mets_nk-00027x_0002.xml" label="OBJ_001" level="INFO" parentElementSpec="/mets:techMD/mets:mdWrap/mets:xmlData/premis:object">nenalezen očekávaný doporučený element</problem>
+                        <problem elementSpec="premis:relationship" file="nk-00027x/amdsec/amd_mets_nk-00027x_0001.xml" label="OBJ_001" level="INFO" parentElementSpec="/mets:techMD/mets:mdWrap/mets:xmlData/premis:object">nenalezen očekávaný doporučený element</problem>
+                    </problems>
+                </summary>
+            </rule>
+            <rule description="Záznamy PREMIS Object v souborech SECONDARY-METS pro archivní kopie musí splňovat profil." name="PREMIS_OBJECT_FOR_MASTER_COPY_MATCHES_PROFILE">
+                <summary durationMs="[MS]">
+                    <problems INFO="2" total="2">
+                        <problem elementSpec="premis:relatedEventSequence" file="nk-00027x/amdsec/amd_mets_nk-00027x_0002.xml" label="OBJ_002" level="INFO" parentElementSpec="/mets:techMD/mets:mdWrap/mets:xmlData/premis:object/premis:relationship/premis:relatedEventIdentification">nenalezen očekávaný doporučený element</problem>
+                        <problem elementSpec="premis:relatedEventSequence" file="nk-00027x/amdsec/amd_mets_nk-00027x_0001.xml" label="OBJ_002" level="INFO" parentElementSpec="/mets:techMD/mets:mdWrap/mets:xmlData/premis:object/premis:relationship/premis:relatedEventIdentification">nenalezen očekávaný doporučený element</problem>
+                    </problems>
+                </summary>
+            </rule>
+            <rule description="Záznamy PREMIS Object v souborech SECONDARY-METS pro ALTO OCR musí splňovat profil." name="PREMIS_OBJECT_FOR_ALTO_OCR_MATCHES_PROFILE">
+                <summary durationMs="[MS]">
+                    <problems INFO="2" total="2">
+                        <problem elementSpec="premis:relatedEventSequence" file="nk-00027x/amdsec/amd_mets_nk-00027x_0002.xml" label="OBJ_003" level="INFO" parentElementSpec="/mets:techMD/mets:mdWrap/mets:xmlData/premis:object/premis:relationship/premis:relatedEventIdentification">nenalezen očekávaný doporučený element</problem>
+                        <problem elementSpec="premis:relatedEventSequence" file="nk-00027x/amdsec/amd_mets_nk-00027x_0001.xml" label="OBJ_003" level="INFO" parentElementSpec="/mets:techMD/mets:mdWrap/mets:xmlData/premis:object/premis:relationship/premis:relatedEventIdentification">nenalezen očekávaný doporučený element</problem>
+                    </problems>
+                </summary>
+            </rule>
+            <rule description="Záznamy PREMIS Event v souborech SECONDARY-METS musí splňovat profil." name="PREMIS_EVENT_MATCHES_PROFILE">
+                <summary durationMs="[MS]">
+                    <problems total="0"/>
+                </summary>
+            </rule>
+            <rule description="Záznamy PREMIS Event v souborech SECONDARY-METS musí splňovat profil." name="PREMIS_AGENT_MATCHES_PROFILE">
+                <summary durationMs="[MS]">
+                    <problems INFO="8" total="8">
+                        <problem elementSpec="premis:agentNote" file="nk-00027x/amdsec/amd_mets_nk-00027x_0002.xml" label="AGENT_001" level="INFO" parentElementSpec="/mets:digiprovMD/mets:mdWrap/mets:xmlData/premis:agent">nenalezen očekávaný doporučený element</problem>
+                        <problem elementSpec="premis:agentNote" file="nk-00027x/amdsec/amd_mets_nk-00027x_0002.xml" label="AGENT_002" level="INFO" parentElementSpec="/mets:digiprovMD/mets:mdWrap/mets:xmlData/premis:agent">nenalezen očekávaný doporučený element</problem>
+                        <problem elementSpec="premis:agentNote" file="nk-00027x/amdsec/amd_mets_nk-00027x_0002.xml" label="AGENT_003" level="INFO" parentElementSpec="/mets:digiprovMD/mets:mdWrap/mets:xmlData/premis:agent">nenalezen očekávaný doporučený element</problem>
+                        <problem elementSpec="premis:agentNote" file="nk-00027x/amdsec/amd_mets_nk-00027x_0002.xml" label="AGENT_004" level="INFO" parentElementSpec="/mets:digiprovMD/mets:mdWrap/mets:xmlData/premis:agent">nenalezen očekávaný doporučený element</problem>
+                        <problem elementSpec="premis:agentNote" file="nk-00027x/amdsec/amd_mets_nk-00027x_0001.xml" label="AGENT_001" level="INFO" parentElementSpec="/mets:digiprovMD/mets:mdWrap/mets:xmlData/premis:agent">nenalezen očekávaný doporučený element</problem>
+                        <problem elementSpec="premis:agentNote" file="nk-00027x/amdsec/amd_mets_nk-00027x_0001.xml" label="AGENT_002" level="INFO" parentElementSpec="/mets:digiprovMD/mets:mdWrap/mets:xmlData/premis:agent">nenalezen očekávaný doporučený element</problem>
+                        <problem elementSpec="premis:agentNote" file="nk-00027x/amdsec/amd_mets_nk-00027x_0001.xml" label="AGENT_003" level="INFO" parentElementSpec="/mets:digiprovMD/mets:mdWrap/mets:xmlData/premis:agent">nenalezen očekávaný doporučený element</problem>
+                        <problem elementSpec="premis:agentNote" file="nk-00027x/amdsec/amd_mets_nk-00027x_0001.xml" label="AGENT_004" level="INFO" parentElementSpec="/mets:digiprovMD/mets:mdWrap/mets:xmlData/premis:agent">nenalezen očekávaný doporučený element</problem>
+                    </problems>
+                </summary>
+            </rule>
+            <rule description="Odkazy mezi PREMIS Objekty, Událostmi a Agenty musí být korektní a úplné." name="PREMIS_LINKING_CORRECT">
+                <summary durationMs="[MS]">
+                    <problems total="0"/>
+                </summary>
+            </rule>
+        </section>
+        <section description="Kontrola autorskoprávních (CopyrightMD) metadat." name="Autorskoprávní metadata">
+            <summary durationMs="[MS]">
+                <problems total="0"/>
+            </summary>
+            <rule description="Záznamy CopyrightMD v souboru PRIMARY-METS a souborech SECONDARY-METS musí být validní podle XML Schema (cmd_0.91.xsd)." name="COPYRIGHTMD_VALID_BY_XSD">
+                <summary durationMs="[MS]">
+                    <problems total="0"/>
+                </summary>
+            </rule>
+            <rule description="Záznamy CopyrightMD v souborech SECONDARY-METS, pokud existují, musí splňovat profil." name="COPYRIGHTMD_IN_SECONDARY_METS_MATCH_PROFILE">
+                <summary durationMs="[MS]">
+                    <problems total="0"/>
+                </summary>
+            </rule>
+            <rule description="Záznamy CopyrightMD v souboru PRIMARY-METS, pokud existují, musí splňovat profil." name="COPYRIGHTMD_IN_PRIMARY_METS_MATCH_PROFILE">
+                <summary durationMs="[MS]">
+                    <problems total="0"/>
+                </summary>
+            </rule>
+        </section>
+    </sections>
+</protocol>

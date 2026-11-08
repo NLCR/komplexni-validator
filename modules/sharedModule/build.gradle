@@ -40,6 +40,21 @@ dependencies {
 // Viz VfCheckUrnNbnIdentifiersRegistered.PROP_SKIP_RESOLVER.
 tasks.withType(Test).configureEach {
     systemProperty 'kv.skipUrnNbnResolver', 'true'
+    // pregenerovani golden protokolu (ProtocolGoldenTest): ./gradlew :modules:sharedModule:test --tests '*ProtocolGoldenTest' -Dkv.updateGolden=true
+    if (System.getProperty('kv.updateGolden') != null) {
+        systemProperty 'kv.updateGolden', System.getProperty('kv.updateGolden')
+    }
+}
+
+// Cesty k obrazovym nastrojum pro VfCheckBinaryFilesValidByExternalUtilTest (adresar s nastrojem), napr.
+// ./gradlew :modules:sharedModule:test --tests '*VfCheckBinaryFilesValidByExternalUtilTest' -Djhove.path=/opt/jhove
+// Bez nich se nastroj hleda v PATH; kdyz chybi, testy nastroje se preskoci.
+tasks.withType(Test).configureEach {
+    ['jpylyzer.path', 'jhove.path', 'kakadu.path', 'imagemagick.path'].each { prop ->
+        if (System.getProperty(prop) != null) {
+            systemProperty prop, System.getProperty(prop)
+        }
+    }
 }
 
 tasks.register('run', JavaExec) {

@@ -11,7 +11,7 @@ import java.io.PrintStream;
 import java.util.Set;
 
 /**
- * Pomocny kod pro testy nad fDMF (AllFdmfSmokeTest, FdmfRegistryTest, FundUnitSmokeTest, DataDiscSmokeTest).
+ * Pomocny kod pro testy nad fDMF (AllFdmfSmokeTest, FdmfRegistryTest, FundUnitSmokeTest, DataDiscSmokeTest, ProtocolGoldenTest).
  */
 final class FdmfTestSupport {
 
@@ -133,6 +133,21 @@ final class FdmfTestSupport {
      * @return log validace (verbosity 3)
      */
     static String run(FdmfRegistry registry, ValidatorConfigurationManager configManager, Dmf dmf, File pspRootDir) throws Exception {
+        return run(registry, configManager, dmf, pspRootDir, 3, null);
+    }
+
+    /**
+     * Jako run(dmf, dir), s volitelnou verbosity (0 az 3, viz Validator.run) a volitelnym XML protokolem
+     * (xmlProtocolFile null = bez XML, jako CLI bez --xml-protocol-file).
+     *
+     * @return textovy log validace v dane verbosity
+     */
+    static String run(Dmf dmf, File pspRootDir, int verbosity, File xmlProtocolFile) throws Exception {
+        return run(sharedRegistry(), sharedConfigManager(), dmf, pspRootDir, verbosity, xmlProtocolFile);
+    }
+
+    private static String run(FdmfRegistry registry, ValidatorConfigurationManager configManager, Dmf dmf, File pspRootDir,
+                              int verbosity, File xmlProtocolFile) throws Exception {
         FdmfConfiguration fdmfConfig = registry.getFdmfConfig(dmf);
         ExternalUtilManager utilManager = new ExternalUtilManagerFactory(configManager.getExternalUtilsConfigFile())
                 .buildExternalUtilManager(Platform.detectOs().getOperatingSystem());
@@ -143,7 +158,7 @@ final class FdmfTestSupport {
         Validator validator = ValidatorFactory.buildValidator(fdmfConfig, pspRootDir, configManager.getDictionaryManager());
         ByteArrayOutputStream buffer = new ByteArrayOutputStream();
         PrintStream out = new PrintStream(buffer, true, "UTF-8");
-        validator.run(pspRootDir, null, out, 3, null, null, null, null, dmf);
+        validator.run(pspRootDir, xmlProtocolFile, out, verbosity, null, null, null, null, dmf);
         return buffer.toString("UTF-8");
     }
 }

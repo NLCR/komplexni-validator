@@ -1,0 +1,474 @@
+
+Sekce Struktura souborů: 0 problémů
+-----------------------------------
+Pravidlo PSP_DIR_MATCHES_PSP_ID: 0 problémů
+	Název kořenového adresáře musí být shodný s PSP-ID.
+Pravidlo SINGLE_INFO_FILE_FOUND: 0 problémů
+	Musí být nalezen nanejvýše jeden soubor INFO. Pokud nalezen není, je soubor špatně pojmenován, nebo opravdu chybí.
+Pravidlo SINGLE_PRIMARY-METS_FILE_FOUND: 0 problémů
+	Musí být nalezen nanejvýše jeden soubor PRIMARY-METS. Pokud nalezen není, je soubor špatně pojmenován, nebo opravdu chybí.
+Pravidlo SINGLE_CHECKSUM_FILE_FOUND: 0 problémů
+	Musí být nalezen nanejvýše jeden soubor CHECKSUM. Pokud nalezen není, je soubor špatně pojmenován, nebo opravdu chybí.
+Pravidlo INFO_FILENAME_VALID: 0 problémů
+	Název souboru INFO smí obsahovat jen povolené znaky.
+Pravidlo PRIMARY-METS_FILENAME_VALID: 0 problémů
+	Název souboru PRIMARY-METS smí obsahovat jen povolené znaky.
+Pravidlo CHECKSUM_FILENAME_VALID: 0 problémů
+	Název souboru CHECKSUM smí obsahovat jen povolené znaky.
+Pravidlo INFO_IS_NOT_DIR: 0 problémů
+	Soubor INFO nesmí být adresář, ale obyčejný soubor.
+Pravidlo PRIMARY-METS_IS_NOT_DIR: 0 problémů
+	Soubor PRIMARY-METS nesmí být adresář, ale obyčejný soubor.
+Pravidlo CHECKSUM_IS_NOT_DIR: 0 problémů
+	Soubor CHECKSUM nesmí být adresář, ale obyčejný soubor.
+Pravidlo TOLERATED_TL_FILES_ARE_NOT_DIRS: 0 problémů
+	Žádný tolerovaný soubor v kořenovém adresáři nesmí být adresář.
+Pravidlo NO_TOLERATED_TL_FILES_FOUND: 0 problémů
+	Ideálně by v kořenovém adresáři neměl být nalezen žádný tolerovaný soubor.
+Pravidlo NO_OTHER_TL_FILES_FOUND: 0 problémů
+	Kromě definovaných a tolerovaných souborů a adresářů nesmí být v kořenovém adresáři nalezen žádný další soubor nebo adresář.
+Pravidlo SINGLE_SECONDARY-METS-DIR_FILE_FOUND: 0 problémů
+	Musí být nalezen právě jeden adresář SECONDARY-METS-DIR. Pokud nalezen není, je adresář špatně pojmenován, nebo opravdu chybí.
+Pravidlo SINGLE_OCR-TEXT-DIR_FILE_FOUND: 0 problémů
+	Musí být nalezen právě jeden adresář OCR-TEXT-DIR. Pokud nalezen není, je adresář špatně pojmenován, nebo opravdu chybí.
+Pravidlo SINGLE_OCR-ALTO-DIR_FILE_FOUND: 0 problémů
+	Musí být nalezen právě jeden adresář OCR-ALTO-DIR. Pokud nalezen není, je adresář špatně pojmenován, nebo opravdu chybí.
+Pravidlo SINGLE_MASTER-COPY-DIR_FILE_FOUND: 0 problémů
+	Musí být nalezen právě jeden adresář MASTER-COPY-DIR. Pokud nalezen není, je adresář špatně pojmenován, nebo opravdu chybí.
+Pravidlo SINGLE_USER-COPY-DIR_FILE_FOUND: 0 problémů
+	Musí být nalezen právě jeden adresář USER-COPY-DIR. Pokud nalezen není, je adresář špatně pojmenován, nebo opravdu chybí.
+Pravidlo SINGLE_CATALOG-ENTRY-DIR_FILE_FOUND: 0 problémů
+	Adresář CATALOG-ENTRY-DIR je nepovinný (DMF Jednotky fondu 0.2, kap. 5.9), smí být nejvýše jeden.
+Pravidlo SECONDARY-METS-DIR_FILENAME_VALID: 0 problémů
+	Název adresáře SECONDARY-METS-DIR musí obsahovat jen povolené znaky.
+Pravidlo OCR-TEXT-DIR_FILENAME_VALID: 0 problémů
+	Název adresáře OCR-TEXT-DIR musí obsahovat jen povolené znaky.
+Pravidlo OCR-ALTO-DIR_FILENAME_VALID: 0 problémů
+	Název adresáře OCR-ALTO-DIR musí obsahovat jen povolené znaky.
+Pravidlo MASTER-COPY-DIR_FILENAME_VALID: 0 problémů
+	Název adresáře MASTER-COPY-DIR musí obsahovat jen povolené znaky.
+Pravidlo USER-COPY-DIR_FILENAME_VALID: 0 problémů
+	Název adresáře USER-COPY-DIR musí obsahovat jen povolené znaky.
+Pravidlo SECONDARY-METS-DIR_IS_DIR: 0 problémů
+	Soubor SECONDARY-METS-DIR musí být adresář a ne obyčejný soubor.
+Pravidlo OCR-TEXT-DIR_IS_DIR: 0 problémů
+	Soubor OCR-TEXT-DIR musí být adresář a ne obyčejný soubor.
+Pravidlo OCR-ALTO-DIR_IS_DIR: 0 problémů
+	Soubor OCR-ALTO-DIR musí být adresář a ne obyčejný soubor.
+Pravidlo MASTER-COPY-DIR_IS_DIR: 0 problémů
+	Soubor MASTER-COPY-DIR musí být adresář a ne obyčejný soubor.
+Pravidlo USER-COPY-DIR_IS_DIR: 0 problémů
+	Soubor USER-COPY-DIR musí být adresář a ne obyčejný soubor.
+Pravidlo CATALOG-ENTRY-DIR_IS_DIR: 0 problémů
+	Soubor CATALOG-ENTRY-DIR, pokud existuje, musí být adresář a ne obyčejný soubor.
+Pravidlo SECONDARY-METS_FILENAMES_VALID: 0 problémů
+	Všechny soubory SECONDARY-METS musí obsahovat jen povolené znaky.
+Pravidlo OCR-TEXT_FILENAMES_VALID: 0 problémů
+	Všechny soubory OCR-TEXT musí obsahovat jen povolené znaky.
+Pravidlo OCR-ALTO_FILENAMES_VALID: 0 problémů
+	Všechny soubory OCR-ALTO musí obsahovat jen povolené znaky.
+Pravidlo MASTER-COPY_FILENAMES_VALID: 0 problémů
+	Všechny soubory MASTER-COPY musí obsahovat jen povolené znaky.
+Pravidlo USER-COPY_FILENAMES_VALID: 0 problémů
+	Všechny soubory USER-COPY musí obsahovat jen povolené znaky.
+Pravidlo CATALOG-ENTRY_FILENAMES_VALID: 0 problémů
+	Všechny soubory CATALOG-ENTRY musí obsahovat jen povolené znaky.
+Pravidlo NUMBER_OF_FILES_IN_DIRS_MATCH: 0 problémů
+	Počet souborů popisujících stránky se musí shodovat.
+Pravidlo SECONDARY-METS_FILENAMES_LENGTHS_SAME: 0 problémů
+	Délky názvů všech souborů SECONDARY-METS musí být stejné. Tedy čísla stran jsou zarovnaná na stejný počet nul.
+Pravidlo OCR-TEXT_FILENAMES_LENGTHS_SAME: 0 problémů
+	Délky názvů všech souborů OCR-TEXT musí být stejné. Tedy čísla stran jsou zarovnaná na stejný počet nul.
+Pravidlo OCR-ALTO_FILENAMES_LENGTHS_SAME: 0 problémů
+	Délky názvů všech souborů OCR-ALTO musí být stejné. Tedy čísla stran jsou zarovnaná na stejný počet nul.
+Pravidlo MASTER-COPY_FILENAMES_LENGTHS_SAME: 0 problémů
+	Délky názvů všech souborů MASTER-COPY musí být stejné. Tedy čísla stran jsou zarovnaná na stejný počet nul.
+Pravidlo USER-COPY_FILENAMES_LENGTHS_SAME: 0 problémů
+	Délky názvů všech souborů USER-COPY musí být stejné. Tedy čísla stran jsou zarovnaná na stejný počet nul.
+Pravidlo SECONDARY-METS_FILES_ARE_NOT_DIRS: 0 problémů
+	Žádný soubor SECONDARY-METS nesmí být adresář.
+Pravidlo OCR-TEXT_FILES_ARE_NOT_DIRS: 0 problémů
+	Žádný soubor OCR-TEXT nesmí být adresář.
+Pravidlo OCR-ALTO_FILES_ARE_NOT_DIRS: 0 problémů
+	Žádný soubor OCR-ALTO nesmí být adresář.
+Pravidlo MASTER-COPY_FILES_ARE_NOT_DIRS: 0 problémů
+	Žádný soubor MASTER-COPY nesmí být adresář.
+Pravidlo USER-COPY_FILES_ARE_NOT_DIRS: 0 problémů
+	Žádný soubor USER-COPY nesmí být adresář.
+Pravidlo CATALOG-ENTRY_FILES_ARE_NOT_DIRS: 0 problémů
+	Žádný soubor CATALOG-ENTRY nesmí být adresář.
+Pravidlo NO_EXTRA_FILES_IN_SECONDARY-METS-DIR: 0 problémů
+	Kromě souborů SECONDARY-METS nesmí adresář SECONDARY-METS-DIR obsahovat žádné další soubory.
+Pravidlo NO_EXTRA_FILES_IN_OCR-TEXT-DIR: 0 problémů
+	Kromě souborů OCR-TEXT nesmí adresář OCR-TEXT-DIR obsahovat žádné další soubory.
+Pravidlo NO_EXTRA_FILES_IN_OCR-ALTO-DIR: 0 problémů
+	Kromě souborů OCR-ALTO nesmí adresář OCR-ALTO-DIR obsahovat žádné další soubory.
+Pravidlo NO_EXTRA_FILES_IN_MASTER-COPY-DIR: 0 problémů
+	Kromě souborů MASTER-COPY nesmí adresář MASTER-COPY-DIR obsahovat žádné další soubory.
+Pravidlo NO_EXTRA_FILES_IN_USER-COPY-DIR: 0 problémů
+	Kromě souborů USER-COPY nesmí adresář USER-COPY-DIR obsahovat žádné další soubory.
+Pravidlo NO_EXTRA_FILES_IN_CATALOG-ENTRY-DIR: 0 problémů
+	Kromě souborů CATALOG-ENTRY nesmí adresář CATALOG-ENTRY-DIR obsahovat žádné další soubory.
+
+Sekce Soubor CHECKSUM: 0 problémů
+---------------------------------
+Pravidlo CHECKSUM_FILE_GENERATED_BY_GRAMMAR: 0 problémů
+	Soubor CHECKSUM by měl být generován předepsanou ABNF gramatikou.
+Pravidlo CHECKSUM_FILE_ALL_PATHS_MATCH_FILES: 0 problémů
+	Soubor CHECKSUM musí obsahovat záznamy pro každý uvedený soubor a žádný jiný (DMF Jednotky fondu 0.2, kap. 5.8: všechny soubory balíčku kromě info.xml a souboru .md5, tedy včetně catalog_entry).
+Pravidlo CHECKSUM_FILE_ALL_CHECKSUMS_MATCH: 0 problémů
+	Všechny kontrolní součty v souborů odkazovaných v souboru CHECKSUM musí souhlasit.
+
+Sekce Soubor INFO: 0 problémů
+-----------------------------
+Pravidlo INFO_XML_WELL_BUILT: 0 problémů
+	Soubor INFO musí být korektní (well-built) xml soubor.
+Pravidlo INFO_XML_VALID_BY_XSD: 0 problémů
+	Soubor INFO by měl být validní podle XML Schema (info_fdu_0.2.xsd).
+Pravidlo INFO_REFERENCES_PRIMARY-METS: 0 problémů
+	Soubor INFO se musí odkazovat na soubor PRIMARY-METS přes element mainmets.
+Pravidlo INFO_ITEMTOTAL_MATCHES_ITEMS_COUNT: 0 problémů
+	V souboru INFO musí počet elementů item souhlasit s hodnotou atributu itemtotal elementu itemlist.
+Pravidlo INFO_ITEMLIST_REFERENCES_ALL_FILES: 0 problémů
+	Soubor INFO se musí odkazovat na všechny uvedené soubory přes elementy item a na žádné další.
+Pravidlo INFO_CHECKSUM_FILE_CHECKSUM_MATCHES: 0 problémů
+	Soubor INFO se musí odkazovat na existující soubor CHECKSUM přes element checksum a kontrolní součet se musí shodovat.
+
+Sekce Identifikátory: 1 problém (1x INFO)
+-----------------------------------------
+Pravidlo PSP_ID_DERIVED_FROM_IE_ID: 0 problémů
+	PSP-ID by měl být odvozen od některého z identifikátorů intelektuální entity (UNIT), a to typu 'urnnbn' nebo 'uuid' (DMF Jednotky fondu 0.2, kap. 6).
+Pravidlo INFO_NO_DUPLICATE_IDENTIFIERS: 0 problémů
+	Soubor INFO nesmí obsahovat duplikované identifikátory (stejný typ i hodnota).
+Pravidlo INFO_IDENTIFIER_TYPES_KNOWN: 0 problémů
+	Typy identifikátorů v souboru INFO (titleid/@type) by měly být z výčtu DMF Jednotky fondu 0.2, kap. 4; jiný typ je nutné konzultovat s odd. standardů, proto jen WARNING.
+Pravidlo INFO_INDENTIFIERS_MATCH_TOP_LEVEL_MODS_IDENTIFIERS: 0 problémů
+	Identifikátory v souboru INFO (titleid) by měly odpovídat identifikátorům na úrovni UNITCOLLECTION v záznamu MODS (DMF Jednotky fondu 0.2, kap. 7.1: titleid nese všechny platné identifikátory kolekce). Identifikátor z INFO, který v MODS není, je chyba; platný identifikátor kolekce z MODS, který v INFO chybí, je varování.
+Pravidlo INFO_MANDATORY_IDENTIFIERS_PRESENT: 0 problémů
+	Soubor INFO musí obsahovat identifikátor kolekce typu uuid (titleid type="uuid", DMF Jednotky fondu 0.2, kap. 7.1: „povinná hodnota: uuid“).
+Pravidlo DC_IDENTIFIERS_NO_WHITE_SPACES: 0 problémů
+	Identifikátory v Dublin Core záznamech by neměly obsahovat bílé znaky.
+Pravidlo DC_IDENTIFIERS_CONTAIN_TYPE_AND_VALUE: 0 problémů
+	Identifikátory v Dublin Core záznamech by měly obsahovat typ a hodnotu oddělěné dvojtečkou (např. barCode:2610161505).
+Pravidlo DC_MANDATORY_IDENTIFIERS_PRESENT_LEVEL_UNITCOLLECTION: 0 problémů
+	Úroveň UNITCOLLECTION musí obsahovat všechny povinné identifikátory v záznamu Dublin Core.
+Pravidlo DC_PROHIBITED_IDENTIFIERS_NOT_PRESENT_LEVEL_UNITCOLLECTION: 0 problémů
+	Úroveň UNITCOLLECTION nesmí obsahovat žádné zakázané identifikátory v záznamu Dublin Core. Zákazy jsou výklad DMF 0.2, proto jen WARNING.
+Pravidlo DC_MANDATORY_IDENTIFIERS_PRESENT_LEVEL_DIRECTORY: 0 problémů
+	Úroveň DIRECTORY musí obsahovat všechny povinné identifikátory v záznamu Dublin Core.
+Pravidlo DC_PROHIBITED_IDENTIFIERS_NOT_PRESENT_LEVEL_DIRECTORY: 0 problémů
+	Úroveň DIRECTORY nesmí obsahovat žádné zakázané identifikátory v záznamu Dublin Core. Zákazy jsou výklad DMF 0.2, proto jen WARNING.
+Pravidlo DC_MANDATORY_IDENTIFIERS_PRESENT_LEVEL_UNIT: 0 problémů
+	Úroveň UNIT musí obsahovat všechny povinné identifikátory v záznamu Dublin Core.
+Pravidlo DC_PROHIBITED_IDENTIFIERS_NOT_PRESENT_LEVEL_UNIT: 0 problémů
+	Úroveň UNIT nesmí obsahovat žádné zakázané identifikátory v záznamu Dublin Core. Zákazy jsou výklad DMF 0.2, proto jen WARNING.
+Pravidlo DC_MANDATORY_IDENTIFIERS_PRESENT_LEVEL_PAGE: 0 problémů
+	Úroveň PAGE musí obsahovat všechny povinné identifikátory v záznamu Dublin Core.
+Pravidlo DC_PROHIBITED_IDENTIFIERS_NOT_PRESENT_LEVEL_PAGE: 0 problémů
+	Úroveň PAGE nesmí obsahovat žádné zakázané identifikátory v záznamu Dublin Core. Zákazy jsou výklad DMF 0.2, proto jen WARNING.
+Pravidlo DC_IDENTIFIER_TYPES_KNOWN: 0 problémů
+	Typy identifikátorů ve všech záznamech Dublin Core by měly být z výčtu DMF Jednotky fondu 0.2, kap. 4; jiný typ je nutné konzultovat s odd. standardů, proto jen WARNING.
+Pravidlo DC_IDENTIFIERS_NO_DUPLICATES_WITHIN_DMDSEC: 0 problémů
+	Identifikátory v jednotlivých Dublin Core záznamech by měly mít unikátní typ. Neměly by se tedy objevit dva a více identikátorů stejného typu v jednom záznamu.
+Pravidlo DC_IDENTIFIERS_NO_DUPLICATES_ACROSS_DMDSECS: 0 problémů
+	Identifikátory napříč Dublin Core záznamy by měly být unikátní. Na různých úrovní popisu se tedy nesmí objevit dva totožné identifikátory (shodný typ i hodnota).
+Pravidlo MODS_MANDATORY_IDENTIFIERS_PRESENT_LEVEL_UNITCOLLECTION: 0 problémů
+	Úroveň UNITCOLLECTION musí obsahovat všechny povinné identifikátory v záznamu MODS.
+Pravidlo MODS_PROHIBITED_IDENTIFIERS_NOT_PRESENT_LEVEL_UNITCOLLECTION: 0 problémů
+	Úroveň UNITCOLLECTION nesmí obsahovat žádné zakázané identifikátory v záznamu MODS. Zákazy jsou výklad DMF 0.2, proto jen WARNING.
+Pravidlo MODS_MANDATORY_IDENTIFIERS_PRESENT_LEVEL_DIRECTORY: 0 problémů
+	Úroveň DIRECTORY musí obsahovat všechny povinné identifikátory v záznamu MODS.
+Pravidlo MODS_PROHIBITED_IDENTIFIERS_NOT_PRESENT_LEVEL_DIRECTORY: 0 problémů
+	Úroveň DIRECTORY nesmí obsahovat žádné zakázané identifikátory v záznamu MODS. Zákazy jsou výklad DMF 0.2, proto jen WARNING.
+Pravidlo MODS_MANDATORY_IDENTIFIERS_PRESENT_LEVEL_UNIT: 0 problémů
+	Úroveň UNIT musí obsahovat všechny povinné identifikátory v záznamu MODS.
+Pravidlo MODS_PROHIBITED_IDENTIFIERS_NOT_PRESENT_LEVEL_UNIT: 0 problémů
+	Úroveň UNIT nesmí obsahovat žádné zakázané identifikátory v záznamu MODS. Zákazy jsou výklad DMF 0.2, proto jen WARNING.
+Pravidlo MODS_MANDATORY_IDENTIFIERS_PRESENT_LEVEL_PAGE: 0 problémů
+	Úroveň PAGE musí obsahovat všechny povinné identifikátory v záznamu MODS.
+Pravidlo MODS_PROHIBITED_IDENTIFIERS_NOT_PRESENT_LEVEL_PAGE: 0 problémů
+	Úroveň PAGE nesmí obsahovat žádné zakázané identifikátory v záznamu MODS. Zákazy jsou výklad DMF 0.2, proto jen WARNING.
+Pravidlo MODS_IDENTIFIER_TYPES_KNOWN: 0 problémů
+	Typy identifikátorů ve všech záznamech MODS by měly být z výčtu DMF Jednotky fondu 0.2, kap. 4; jiný typ je nutné konzultovat s odd. standardů, proto jen WARNING.
+Pravidlo MODS_IDENTIFIERS_NO_DUPLICATES_WITHIN_DMDSEC: 0 problémů
+	Identifikátory v jednotlivých MODS záznamech by měly mít unikátní typ. Neměly by se tedy objevit dva a více identikátorů stejného typu v jednom záznamu.
+Pravidlo MODS_IDENTIFIERS_NO_DUPLICATES_ACROSS_DMDSECS: 0 problémů
+	Identifikátory napříč MODS záznamy by měly být unikátní. Na různých úrovní popisu se tedy nesmí objevit dva totožné identifikátory (shodný typ i hodnota).
+Pravidlo MODS_IDENTIFIERS_URN_NBN_VALID: 0 problémů
+	Všechny identifikátory URN:NBN napříč MODS záznamy musí platnou podobu (např. urn:nbn:cz:abd005-00012z).
+Pravidlo MODS_IDENTIFIERS_URN_NBN_REGISTERED: 1 problém (1x INFO)
+	Všechny identifikátory URN:NBN napříč MODS záznamy musí být registrovány v URN:NBN Resolveru NKP a shodovat se ve vybraných metadatech
+	INFO: kontrola registrace URN:NBN v Resolveru přeskočena (systémová vlastnost kv.skipUrnNbnResolver=true), identifikátorů urn:nbn: 1
+Pravidlo PRIMARY-METS_DC_IDENTIFIER_MATCH_MODS_IDENTIFIERS: 0 problémů
+	Identifikátory v DC se musí shodovat s identifikátory v MODS pro všechny úrovně popisu.
+
+Sekce METS hlavičky: 1 problém (1x INFO)
+----------------------------------------
+Pravidlo PRIMARY_METS_HEADER_MATCHES_PROFILE: 1 problém (1x INFO)
+	Primární METS musí obsahovat hlavičku metsHdr, která musí splňovat požadovaný profil.
+	INFO: mets_nk-00027x.xml: null: /mets:mets: nenalezen očekávaný doporučený element 'mets:amdSec'
+Pravidlo SECONDARY_METS_HEADER_MATCH_PROFILE: 0 problémů
+	Sekundární METS musí obsahovat hlavičku metsHdr, která musí splňovat požadovaný profil.
+
+Sekce Primární METS filesec: 0 problémů
+---------------------------------------
+Pravidlo PRIMARY-METS_FILESEC_ALL_FILEGROUPS_PRESENT: 0 problémů
+	Element mets:fileSec v souboru PRIMARY-METS musí obsahovat elementy mets:fileGrp s definovanými hodnotami ID a USE a žádné další.
+Pravidlo PRIMARY-METS_FILESEC_ALL_MASTER_COPY_FILES_REFERENCED: 0 problémů
+	Element mets:fileSec v souboru PRIMARY-METS musí v elementu mets:fileGrp s atributem ID="MC_IMGGRP" obsahovat odkazy na všechny soubory MASTER-COPY a žádné jiné.
+Pravidlo PRIMARY-METS_FILESEC_ALL_USER_COPY_FILES_REFERENCED: 0 problémů
+	Element mets:fileSec v souboru PRIMARY-METS musí v elementu mets:fileGrp s atributem ID="UC_IMGGRP" obsahovat odkazy na všechny soubory USER-COPY a žádné jiné.
+Pravidlo PRIMARY-METS_FILESEC_ALL_OCR_TEXT_FILES_REFERENCED: 0 problémů
+	Element mets:fileSec v souboru PRIMARY-METS musí v elementu mets:fileGrp s atributem ID="TXTGRP" obsahovat odkazy na všechny soubory OCR-TEXT a žádné jiné.
+Pravidlo PRIMARY-METS_FILESEC_ALL_OCR_ALTO_FILES_REFERENCED: 0 problémů
+	Element mets:fileSec v souboru PRIMARY-METS musí v elementu mets:fileGrp s atributem ID="ALTOGRP" obsahovat odkazy na všechny soubory OCR-ALTO a žádné jiné.
+Pravidlo PRIMARY-METS_FILESEC_ALL_SECONDARY_METS_FILES_REFERENCED: 0 problémů
+	Element mets:fileSec v souboru PRIMARY-METS musí v elementu mets:fileGrp s atributem ID="TECHMDGRP" obsahovat odkazy na všechny soubory SECONDARY-METS a žádné jiné.
+Pravidlo PRIMARY-METS_FILESEC_SIZES_MATCH: 0 problémů
+	Velikosti souborů v bytech uvedené v atributu SIZE všech elementů mets:file se musí shodovat se skutečnými velikostmi souborů odkazovaných v elementech mets:FLocat.
+Pravidlo PRIMARY-METS_FILESEC_CHECKSUMS_MATCH: 0 problémů
+	Kontrolní součty souborů uvedené v atributu CHECKSUM všech elementů mets:file se musí shodovat s vypočítanými kontrolními součty souborů odkazovaných v elementech mets:FLocat.
+
+Sekce Sekundární METS filesec: 0 problémů
+-----------------------------------------
+Pravidlo SECONDARY-METS_FILESEC_ALL_FILEGROUPS_PRESENT: 0 problémů
+	Element mets:fileSec v každém souboru SECONDARY-METS musí obsahovat elementy mets:fileGrp s definovanými hodnotami atributů ID a USE a žádné další.
+Pravidlo SECONDARY-METS_FILESEC_MASTER_COPY_FILE_REFERENCED: 0 problémů
+	Element mets:fileSec v každém souboru SECONDARY-METS musí v elementu mets:fileGrp s atributem ID="MC_IMGGRP" obsahovat odkaz na správný soubor MASTER-COPY a žádné jiné odkazy.
+Pravidlo SECONDARY-METS_FILESEC_USER_COPY_FILE_REFERENCED: 0 problémů
+	Element mets:fileSec v každém souboru SECONDARY-METS musí v elementu mets:fileGrp s atributem ID="UC_IMGGRP" obsahovat odkaz na správný soubor USER-COPY a žádné jiné odkazy.
+Pravidlo SECONDARY-METS_FILESEC_OCR-ALTO_FILE_REFERENCED: 0 problémů
+	Element mets:fileSec v každém souboru SECONDARY-METS musí v elementu mets:fileGrp s atributem ID="ALTOGRP" obsahovat odkaz na správný soubor OCR-ALTO a žádné jiné odkazy.
+Pravidlo SECONDARY-METS_FILESEC_OCR-TEXT_FILE_REFERENCED: 0 problémů
+	Element mets:fileSec v každém souboru SECONDARY-METS musí v elementu mets:fileGrp s atributem ID="TXTGRP" obsahovat odkaz na správný soubor OCR-TEXT a žádné jiné odkazy.
+
+Sekce Strukturální mapy: 0 problémů
+-----------------------------------
+Pravidlo PRIMARY-METS_LOGICAL_STRUCTURAL_MAP_CORRECT: 0 problémů
+	Logická strukturální mapa v souboru PRIMARY-METS musí odkazovat jen na povolené typy obsahu a DMDID musí odkazovat na existující metadataové záznamy.
+Pravidlo PRIMARY-METS_PHYSICAL_STRUCTURAL_MAP_CORRECT: 0 problémů
+	Fyzická strukturální mapa v souboru PRIMARY-METS musí korektně odkazovat na všechny soubory odkazované v elementu fileSec a žádné jiné.
+Pravidlo PRIMARY-METS_STRUCT_LINKS_CORRECT: 0 problémů
+	Sekce structLink v souboru PRIMARY-METS musí přes elementy smLink propojovat objekty logické strukturální mapy se stranami z fyzické strukturální mapy.
+Pravidlo SECONDARY-METS_PHYSICAL_STRUCTURAL_MAP_CORRECT: 0 problémů
+	Fyzická strukturální mapa v každém souboru SECONDARY-METS musí odkazovat všechny soubory odkazované v elementu fileSec a žádné jiné.
+
+Sekce Obrazová data: 8 problémů (8x INFO)
+-----------------------------------------
+Pravidlo MASTER-COPY_FILES_VALID_BY_JPYLYZER: 1 problém (1x INFO)
+	Všechny soubory MASTER-COPY (jpeg 2000) musí být validní vůči profilu pro binární soubory pro nástroj Jpylyzer.
+	INFO: nástroj Jpylyzer je vypnutý
+Pravidlo USER-COPY_FILES_VALID_BY_JPYLYZER: 1 problém (1x INFO)
+	Všechny soubory USER-COPY (jpeg 2000) musí být validní vůči profilu pro binární soubory pro nástroj Jpylyzer.
+	INFO: nástroj Jpylyzer je vypnutý
+Pravidlo MASTER-COPY_FILES_VALID_BY_JHOVE: 1 problém (1x INFO)
+	Všechny soubory MASTER-COPY (jpeg 2000) musí být validní vůči profilu pro binární soubory pro nástroj JHOVE.
+	INFO: nástroj JHOVE je vypnutý
+Pravidlo USER-COPY_FILES_VALID_BY_JHOVE: 1 problém (1x INFO)
+	Všechny soubory USER-COPY (jpeg 2000) musí být validní vůči profilu pro binární soubory pro nástroj JHOVE.
+	INFO: nástroj JHOVE je vypnutý
+Pravidlo MASTER-COPY_FILES_VALID_BY_KAKADU: 1 problém (1x INFO)
+	Všechny soubory MASTER-COPY (jpeg 2000) musí být validní vůči profilu pro binární soubory pro nástroj Kakadu.
+	INFO: nástroj Kakadu je vypnutý
+Pravidlo USER-COPY_FILES_VALID_BY_KAKADU: 1 problém (1x INFO)
+	Všechny soubory USER-COPY (jpeg 2000) musí být validní vůči profilu pro binární soubory pro nástroj Kakadu.
+	INFO: nástroj Kakadu je vypnutý
+Pravidlo MASTER-COPY_FILES_VALID_BY_IMAGE_MAGICK: 1 problém (1x INFO)
+	Všechny soubory MASTER-COPY (jpeg 2000) musí být validní vůči profilu pro binární soubory pro nástroj ImageMagick.
+	INFO: nástroj ImageMagick je vypnutý
+Pravidlo USER-COPY_FILES_VALID_BY_IMAGE_MAGICK: 1 problém (1x INFO)
+	Všechny soubory USER-COPY (jpeg 2000) musí být validní vůči profilu pro binární soubory pro nástroj ImageMagick.
+	INFO: nástroj ImageMagick je vypnutý
+
+Sekce Bibliografická metadata: 96 problémů (96x INFO)
+-----------------------------------------------------
+Pravidlo BIBLIOGRAPHIC_METADATA_MATCH_PROFILE_UNITCOLLECTION: 32 problémů (32x INFO)
+	Bibliografická metadata pro entitu typu UNITCOLLECTION musí splňovat požadovaný profil pro záznamy v Dublin Core i MODS.
+	INFO: mets_nk-00027x.xml: DCMD_UNITCOLLECTION_0001: /oai_dc:dc: nenalezen očekávaný doporučený element 'dc:type[not(starts-with(text(), 'model:'))]'
+	INFO: mets_nk-00027x.xml: DCMD_UNITCOLLECTION_0001: /oai_dc:dc: nenalezen očekávaný doporučený element 'dc:language'
+	INFO: mets_nk-00027x.xml: DCMD_UNITCOLLECTION_0001: /oai_dc:dc: nenalezen očekávaný doporučený element 'dc:contributor'
+	INFO: mets_nk-00027x.xml: DCMD_UNITCOLLECTION_0001: /oai_dc:dc: nenalezen očekávaný doporučený element 'dc:publisher'
+	INFO: mets_nk-00027x.xml: DCMD_UNITCOLLECTION_0001: /oai_dc:dc: nenalezen očekávaný doporučený element 'dc:coverage'
+	INFO: mets_nk-00027x.xml: DCMD_UNITCOLLECTION_0001: /oai_dc:dc: nenalezen očekávaný doporučený element 'dc:relation'
+	INFO: mets_nk-00027x.xml: DCMD_UNITCOLLECTION_0001: /oai_dc:dc: nenalezen očekávaný doporučený element 'dc:rights'
+	INFO: mets_nk-00027x.xml: MODSMD_UNITCOLLECTION_0001: /mods:mods/mods:titleInfo: nenalezen doporučený atribut 'type',
+	INFO: mets_nk-00027x.xml: MODSMD_UNITCOLLECTION_0001: /mods:mods/mods:titleInfo: nenalezen očekávaný doporučený element 'mods:nonSort'
+	INFO: mets_nk-00027x.xml: MODSMD_UNITCOLLECTION_0001: /mods:mods/mods:titleInfo: nenalezen očekávaný doporučený element 'mods:partNumber'
+	INFO: mets_nk-00027x.xml: MODSMD_UNITCOLLECTION_0001: /mods:mods/mods:titleInfo: nenalezen očekávaný doporučený element 'mods:partName'
+	INFO: mets_nk-00027x.xml: MODSMD_UNITCOLLECTION_0001: /mods:mods/mods:name[not(mods:etal)]: nenalezen doporučený atribut 'usage',
+	INFO: mets_nk-00027x.xml: MODSMD_UNITCOLLECTION_0001: /mods:mods/mods:name[not(mods:etal)]: nenalezen očekávaný doporučený element 'mods:namePart[@type='date']'
+	INFO: mets_nk-00027x.xml: MODSMD_UNITCOLLECTION_0001: /mods:mods/mods:name[not(mods:etal)]: nenalezen očekávaný doporučený element 'mods:namePart[@type='family']'
+	INFO: mets_nk-00027x.xml: MODSMD_UNITCOLLECTION_0001: /mods:mods/mods:name[not(mods:etal)]: nenalezen očekávaný doporučený element 'mods:namePart[@type='given']'
+	INFO: mets_nk-00027x.xml: MODSMD_UNITCOLLECTION_0001: /mods:mods/mods:name[not(mods:etal)]: nenalezen očekávaný doporučený element 'mods:namePart[@type='termsOfAddress']'
+	INFO: mets_nk-00027x.xml: MODSMD_UNITCOLLECTION_0001: /mods:mods/mods:name[not(mods:etal)]: nenalezen očekávaný doporučený element 'mods:alternativeName'
+	INFO: mets_nk-00027x.xml: MODSMD_UNITCOLLECTION_0001: /mods:mods/mods:name[not(mods:etal)]: nenalezen očekávaný doporučený element 'mods:nameIdentifier'
+	INFO: mets_nk-00027x.xml: MODSMD_UNITCOLLECTION_0001: /mods:mods: nenalezen očekávaný doporučený element 'mods:name[mods:etal]'
+	INFO: mets_nk-00027x.xml: MODSMD_UNITCOLLECTION_0001: /mods:mods: nenalezen očekávaný doporučený element 'mods:genre[not(text()='unit collection')]'
+	INFO: mets_nk-00027x.xml: MODSMD_UNITCOLLECTION_0001: /mods:mods/mods:originInfo/mods:dateCreated[0]: nenalezen doporučený atribut 'qualifier',
+	INFO: mets_nk-00027x.xml: MODSMD_UNITCOLLECTION_0001: /mods:mods/mods:note: nenalezen doporučený atribut 'type',
+	INFO: mets_nk-00027x.xml: MODSMD_UNITCOLLECTION_0001: /mods:mods/mods:subject/mods:topic: nenalezen doporučený atribut 'valueURI',
+	INFO: mets_nk-00027x.xml: MODSMD_UNITCOLLECTION_0001: /mods:mods/mods:subject/mods:geographic: nenalezen doporučený atribut 'valueURI',
+	INFO: mets_nk-00027x.xml: MODSMD_UNITCOLLECTION_0001: /mods:mods/mods:subject: nenalezen očekávaný doporučený element 'mods:temporal'
+	INFO: mets_nk-00027x.xml: MODSMD_UNITCOLLECTION_0001: /mods:mods/mods:subject: nenalezen očekávaný doporučený element 'mods:name'
+	INFO: mets_nk-00027x.xml: MODSMD_UNITCOLLECTION_0001: /mods:mods/mods:identifier[@type='uuid']: nenalezen doporučený atribut 'invalid',
+	INFO: mets_nk-00027x.xml: MODSMD_UNITCOLLECTION_0001: /mods:mods/mods:identifier[@type!='uuid']: nenalezen doporučený atribut 'invalid',
+	INFO: mets_nk-00027x.xml: MODSMD_UNITCOLLECTION_0001: /mods:mods: nenalezen očekávaný doporučený element 'mods:location[mods:physicalLocation[@authority='ICO']]'
+	INFO: mets_nk-00027x.xml: MODSMD_UNITCOLLECTION_0001: /mods:mods: nenalezen očekávaný doporučený element 'mods:location[mods:physicalLocation[@authority='NARP']]'
+	INFO: mets_nk-00027x.xml: MODSMD_UNITCOLLECTION_0001: /mods:mods: nenalezen očekávaný doporučený element 'mods:location[not(mods:physicalLocation/@authority)]'
+	INFO: mets_nk-00027x.xml: MODSMD_UNITCOLLECTION_0001: /mods:mods/mods:recordInfo: nenalezen očekávaný doporučený element 'mods:recordIdentifier'
+Pravidlo BIBLIOGRAPHIC_METADATA_MATCH_PROFILE_DIRECTORY: 0 problémů
+	Bibliografická metadata pro entitu typu DIRECTORY musí splňovat požadovaný profil pro záznamy v Dublin Core i MODS. Úroveň DIRECTORY je nepovinná.
+Pravidlo BIBLIOGRAPHIC_METADATA_MATCH_PROFILE_UNIT: 48 problémů (48x INFO)
+	Bibliografická metadata pro entitu typu UNIT musí splňovat požadovaný profil pro záznamy v Dublin Core i MODS.
+	INFO: mets_nk-00027x.xml: DCMD_UNIT_0001: /oai_dc:dc: nenalezen očekávaný doporučený element 'dc:contributor'
+	INFO: mets_nk-00027x.xml: DCMD_UNIT_0001: /oai_dc:dc: nenalezen očekávaný doporučený element 'dc:date'
+	INFO: mets_nk-00027x.xml: DCMD_UNIT_0001: /oai_dc:dc: nenalezen očekávaný doporučený element 'dc:publisher'
+	INFO: mets_nk-00027x.xml: DCMD_UNIT_0001: /oai_dc:dc: nenalezen očekávaný doporučený element 'dc:coverage'
+	INFO: mets_nk-00027x.xml: DCMD_UNIT_0001: /oai_dc:dc: nenalezen očekávaný doporučený element 'dc:relation'
+	INFO: mets_nk-00027x.xml: DCMD_UNIT_0001: /oai_dc:dc: nenalezen očekávaný doporučený element 'dc:rights'
+	INFO: mets_nk-00027x.xml: MODSMD_UNIT_0001: /mods:mods/mods:titleInfo: nenalezen doporučený atribut 'type',
+	INFO: mets_nk-00027x.xml: MODSMD_UNIT_0001: /mods:mods/mods:titleInfo: nenalezen očekávaný doporučený element 'mods:nonSort'
+	INFO: mets_nk-00027x.xml: MODSMD_UNIT_0001: /mods:mods/mods:titleInfo: nenalezen očekávaný doporučený element 'mods:partNumber'
+	INFO: mets_nk-00027x.xml: MODSMD_UNIT_0001: /mods:mods/mods:titleInfo: nenalezen očekávaný doporučený element 'mods:partName'
+	INFO: mets_nk-00027x.xml: MODSMD_UNIT_0001: /mods:mods/mods:name[not(mods:etal)]: nenalezen očekávaný doporučený element 'mods:namePart[@type='date']'
+	INFO: mets_nk-00027x.xml: MODSMD_UNIT_0001: /mods:mods/mods:name[not(mods:etal)]: nenalezen očekávaný doporučený element 'mods:namePart[@type='termsOfAddress']'
+	INFO: mets_nk-00027x.xml: MODSMD_UNIT_0001: /mods:mods/mods:name[not(mods:etal)]: nenalezen očekávaný doporučený element 'mods:namePart[not(@type)]'
+	INFO: mets_nk-00027x.xml: MODSMD_UNIT_0001: /mods:mods/mods:name[not(mods:etal)]: nenalezen očekávaný doporučený element 'mods:alternativeName'
+	INFO: mets_nk-00027x.xml: MODSMD_UNIT_0001: /mods:mods/mods:name[not(mods:etal)]: nenalezen očekávaný doporučený element 'mods:affiliation'
+	INFO: mets_nk-00027x.xml: MODSMD_UNIT_0001: /mods:mods: nenalezen očekávaný doporučený element 'mods:name[mods:etal]'
+	INFO: mets_nk-00027x.xml: MODSMD_UNIT_0001: /mods:mods/mods:genre[text()='clipping' or text()='clippingIndex' or text()='cardIndex']: nenalezen doporučený atribut 'type',
+	INFO: mets_nk-00027x.xml: MODSMD_UNIT_0001: /mods:mods/mods:genre[not(text()='clipping' or text()='clippingIndex' or text()='cardIndex')]: nenalezen doporučený atribut 'type',
+	INFO: mets_nk-00027x.xml: MODSMD_UNIT_0001: /mods:mods/mods:genre[not(text()='clipping' or text()='clippingIndex' or text()='cardIndex')]: nenalezen doporučený atribut 'authority',
+	INFO: mets_nk-00027x.xml: MODSMD_UNIT_0001: /mods:mods/mods:note: nenalezen doporučený atribut 'type',
+	INFO: mets_nk-00027x.xml: MODSMD_UNIT_0001: /mods:mods/mods:subject/mods:topic: nenalezen doporučený atribut 'valueURI',
+	INFO: mets_nk-00027x.xml: MODSMD_UNIT_0001: /mods:mods/mods:subject/mods:geographic: nenalezen doporučený atribut 'valueURI',
+	INFO: mets_nk-00027x.xml: MODSMD_UNIT_0001: /mods:mods/mods:subject: nenalezen očekávaný doporučený element 'mods:name'
+	INFO: mets_nk-00027x.xml: MODSMD_UNIT_0001: /mods:mods/mods:relatedItem/mods:titleInfo: nenalezen očekávaný doporučený element 'mods:nonSort'
+	INFO: mets_nk-00027x.xml: MODSMD_UNIT_0001: /mods:mods/mods:relatedItem/mods:titleInfo: nenalezen očekávaný doporučený element 'mods:subTitle'
+	INFO: mets_nk-00027x.xml: MODSMD_UNIT_0001: /mods:mods/mods:relatedItem/mods:titleInfo: nenalezen očekávaný doporučený element 'mods:partNumber'
+	INFO: mets_nk-00027x.xml: MODSMD_UNIT_0001: /mods:mods/mods:relatedItem/mods:titleInfo: nenalezen očekávaný doporučený element 'mods:partName'
+	INFO: mets_nk-00027x.xml: MODSMD_UNIT_0001: /mods:mods/mods:relatedItem: nenalezen očekávaný doporučený element 'mods:originInfo[not(@eventType)]'
+	INFO: mets_nk-00027x.xml: MODSMD_UNIT_0001: /mods:mods/mods:relatedItem: nenalezen očekávaný doporučený element 'mods:originInfo[@eventType='production']'
+	INFO: mets_nk-00027x.xml: MODSMD_UNIT_0001: /mods:mods/mods:relatedItem/mods:originInfo[@eventType='publication']/mods:place/mods:placeTerm[0]: nenalezen doporučený atribut 'authority',
+	INFO: mets_nk-00027x.xml: MODSMD_UNIT_0001: /mods:mods/mods:relatedItem/mods:originInfo[@eventType='publication']/mods:agent/mods:role/mods:roleTerm: nenalezen doporučený atribut 'authority',
+	INFO: mets_nk-00027x.xml: MODSMD_UNIT_0001: /mods:mods/mods:relatedItem/mods:originInfo[@eventType='publication']/mods:dateIssued: nenalezen doporučený atribut 'encoding',
+	INFO: mets_nk-00027x.xml: MODSMD_UNIT_0001: /mods:mods/mods:relatedItem/mods:originInfo[@eventType='publication']/mods:dateIssued: nenalezen doporučený atribut 'point',
+	INFO: mets_nk-00027x.xml: MODSMD_UNIT_0001: /mods:mods/mods:relatedItem/mods:originInfo[@eventType='publication']/mods:dateIssued: nenalezen doporučený atribut 'qualifier',
+	INFO: mets_nk-00027x.xml: MODSMD_UNIT_0001: /mods:mods/mods:relatedItem: nenalezen očekávaný doporučený element 'mods:originInfo[@eventType='distribution']'
+	INFO: mets_nk-00027x.xml: MODSMD_UNIT_0001: /mods:mods/mods:relatedItem: nenalezen očekávaný doporučený element 'mods:originInfo[@eventType='manufacture']'
+	INFO: mets_nk-00027x.xml: MODSMD_UNIT_0001: /mods:mods/mods:relatedItem: nenalezen očekávaný doporučený element 'mods:originInfo[@eventType='copyright']'
+	INFO: mets_nk-00027x.xml: MODSMD_UNIT_0001: /mods:mods/mods:relatedItem: nenalezen očekávaný doporučený element 'mods:note[not(@type='kramerius-uuid')]'
+	INFO: mets_nk-00027x.xml: MODSMD_UNIT_0001: /mods:mods/mods:relatedItem/mods:identifier: nenalezen doporučený atribut 'invalid',
+	INFO: mets_nk-00027x.xml: MODSMD_UNIT_0001: /mods:mods/mods:relatedItem/mods:part/mods:detail[0]: nenalezen očekávaný doporučený element 'mods:title'
+	INFO: mets_nk-00027x.xml: MODSMD_UNIT_0001: /mods:mods/mods:relatedItem/mods:part/mods:detail[1]: nenalezen očekávaný doporučený element 'mods:title'
+	INFO: mets_nk-00027x.xml: MODSMD_UNIT_0001: /mods:mods/mods:identifier[@type='uuid']: nenalezen doporučený atribut 'invalid',
+	INFO: mets_nk-00027x.xml: MODSMD_UNIT_0001: /mods:mods/mods:identifier[@type='urnnbn']: nenalezen doporučený atribut 'invalid',
+	INFO: mets_nk-00027x.xml: MODSMD_UNIT_0001: /mods:mods/mods:identifier[@type!='uuid' and @type!='urnnbn']: nenalezen doporučený atribut 'invalid',
+	INFO: mets_nk-00027x.xml: MODSMD_UNIT_0001: /mods:mods: nenalezen očekávaný doporučený element 'mods:location[mods:physicalLocation[@authority='ICO']]'
+	INFO: mets_nk-00027x.xml: MODSMD_UNIT_0001: /mods:mods: nenalezen očekávaný doporučený element 'mods:location[mods:physicalLocation[@authority='NARP']]'
+	INFO: mets_nk-00027x.xml: MODSMD_UNIT_0001: /mods:mods: nenalezen očekávaný doporučený element 'mods:location[not(mods:physicalLocation/@authority)]'
+	INFO: mets_nk-00027x.xml: MODSMD_UNIT_0001: /mods:mods/mods:recordInfo: nenalezen očekávaný doporučený element 'mods:recordIdentifier'
+Pravidlo BIBLIOGRAPHIC_METADATA_MATCH_PROFILE_PAGE: 16 problémů (16x INFO)
+	Bibliografická metadata pro entitu typu PAGE musí splňovat požadovaný profil pro záznamy v Dublin Core i MODS.
+	INFO: záznam MODSMD_PAGE_0002 neobsahuje informaci o použitých katalogizačních pravidlech; validuji PAGE_0002 oproti AACR2
+	INFO: mets_nk-00027x.xml: DCMD_PAGE_0002: /oai_dc:dc: nenalezen očekávaný doporučený element 'dc:title'
+	INFO: mets_nk-00027x.xml: DCMD_PAGE_0002: /oai_dc:dc: nenalezen očekávaný doporučený element 'dc:description'
+	INFO: mets_nk-00027x.xml: DCMD_PAGE_0002: /oai_dc:dc: nenalezen očekávaný doporučený element 'dc:coverage'
+	INFO: mets_nk-00027x.xml: DCMD_PAGE_0002: /oai_dc:dc: nenalezen očekávaný doporučený element 'dc:format'
+	INFO: mets_nk-00027x.xml: MODSMD_PAGE_0002: /mods:mods: nenalezen očekávaný doporučený element 'mods:titleInfo'
+	INFO: mets_nk-00027x.xml: MODSMD_PAGE_0002: /mods:mods/mods:identifier[@type='uuid']: nenalezen doporučený atribut 'invalid',
+	INFO: mets_nk-00027x.xml: MODSMD_PAGE_0002: /mods:mods: nenalezen očekávaný doporučený element 'mods:physicalDescription'
+	INFO: záznam MODSMD_PAGE_0001 neobsahuje informaci o použitých katalogizačních pravidlech; validuji PAGE_0001 oproti AACR2
+	INFO: mets_nk-00027x.xml: DCMD_PAGE_0001: /oai_dc:dc: nenalezen očekávaný doporučený element 'dc:title'
+	INFO: mets_nk-00027x.xml: DCMD_PAGE_0001: /oai_dc:dc: nenalezen očekávaný doporučený element 'dc:description'
+	INFO: mets_nk-00027x.xml: DCMD_PAGE_0001: /oai_dc:dc: nenalezen očekávaný doporučený element 'dc:coverage'
+	INFO: mets_nk-00027x.xml: DCMD_PAGE_0001: /oai_dc:dc: nenalezen očekávaný doporučený element 'dc:format'
+	INFO: mets_nk-00027x.xml: MODSMD_PAGE_0001: /mods:mods: nenalezen očekávaný doporučený element 'mods:titleInfo'
+	INFO: mets_nk-00027x.xml: MODSMD_PAGE_0001: /mods:mods/mods:identifier[@type='uuid']: nenalezen doporučený atribut 'invalid',
+	INFO: mets_nk-00027x.xml: MODSMD_PAGE_0001: /mods:mods: nenalezen očekávaný doporučený element 'mods:physicalDescription'
+
+Sekce OCR TEXT: 0 problémů
+--------------------------
+Pravidlo OCR-TEXT_FILES_IN_UTF8: 0 problémů
+	Všechny soubory OCR-TEXT musí být v kódování UTF-8.
+
+Sekce OCR ALTO: 0 problémů
+--------------------------
+Pravidlo OCR-ALTO_FILES_VALID_BY_XSD: 0 problémů
+	Soubory OCR-ALTO musí být validní podle XML Schema pro verzi ALTO danou namespace kořenového elementu (alto_2.1.xsd, alto_3.1.xsd, alto_4.4.xsd; nejvyšší minor každého majora). DMF Jednotky fondu 0.2 tab. 1.4 a kap. 7.9 odkazují na předpis OCR (ALTO XML a TXT OCR) 1.0 (17. 12. 2024), který připouští ALTO 2.0 a novější; soubor s jiným namespace je chyba.
+Pravidlo OCR-ALTO_FILES_SAME_VERSION: 0 problémů
+	Všechny soubory OCR-ALTO v balíčku by měly mít stejnou verzi ALTO (stejný namespace kořenového elementu). Předpis OCR (ALTO XML a TXT OCR) 1.0, na který DMF odkazuje, míchání verzí neřeší, proto jen WARNING.
+Pravidlo OCR-ALTO_FILES_IN_UTF8: 0 problémů
+	Všechny soubory OCR-ALTO musí být v kódování UTF-8.
+
+Sekce Technická metadata: 34 problémů (34x INFO)
+------------------------------------------------
+Pravidlo MIX_VALID_BY_XSD: 0 problémů
+	Záznamy MIX v souborech SECONDARY-METS musí být validní podle XML Schema (mix_2.0.xsd).
+Pravidlo MIX_FOR_ORIGINAL_SCAN_MATCHES_PROFILE: 10 problémů (10x INFO)
+	Záznamy MIX v souborech SECONDARY-METS pro původní skeny musí splňovat profil.
+	INFO: amd_mets_nk-00027x_0002.xml: MIX_001: /mets:techMD/mets:mdWrap/mets:xmlData/mix:mix/mix:BasicDigitalObjectInformation: nenalezen očekávaný doporučený element 'mix:fileSize'
+	INFO: amd_mets_nk-00027x_0002.xml: MIX_001: /mets:techMD/mets:mdWrap/mets:xmlData/mix:mix/mix:BasicImageInformation/mix:BasicImageCharacteristics/mix:PhotometricInterpretation: nenalezen očekávaný doporučený element 'mix:ColorProfile'
+	INFO: amd_mets_nk-00027x_0002.xml: MIX_001: /mets:techMD/mets:mdWrap/mets:xmlData/mix:mix/mix:ImageCaptureMetadata: nenalezen očekávaný doporučený element 'mix:SourceInformation'
+	INFO: amd_mets_nk-00027x_0002.xml: MIX_001: /mets:techMD/mets:mdWrap/mets:xmlData/mix:mix/mix:ImageCaptureMetadata: nenalezen očekávaný doporučený element 'mix:DigitalCameraCapture'
+	INFO: amd_mets_nk-00027x_0002.xml: MIX_001: /mets:techMD/mets:mdWrap/mets:xmlData/mix:mix/mix:ImageAssessmentMetadata/mix:SpatialMetrics: nenalezen očekávaný doporučený element 'mix:samplingFrequencyPlane'
+	INFO: amd_mets_nk-00027x_0001.xml: MIX_001: /mets:techMD/mets:mdWrap/mets:xmlData/mix:mix/mix:BasicDigitalObjectInformation: nenalezen očekávaný doporučený element 'mix:fileSize'
+	INFO: amd_mets_nk-00027x_0001.xml: MIX_001: /mets:techMD/mets:mdWrap/mets:xmlData/mix:mix/mix:BasicImageInformation/mix:BasicImageCharacteristics/mix:PhotometricInterpretation: nenalezen očekávaný doporučený element 'mix:ColorProfile'
+	INFO: amd_mets_nk-00027x_0001.xml: MIX_001: /mets:techMD/mets:mdWrap/mets:xmlData/mix:mix/mix:ImageCaptureMetadata: nenalezen očekávaný doporučený element 'mix:SourceInformation'
+	INFO: amd_mets_nk-00027x_0001.xml: MIX_001: /mets:techMD/mets:mdWrap/mets:xmlData/mix:mix/mix:ImageCaptureMetadata: nenalezen očekávaný doporučený element 'mix:DigitalCameraCapture'
+	INFO: amd_mets_nk-00027x_0001.xml: MIX_001: /mets:techMD/mets:mdWrap/mets:xmlData/mix:mix/mix:ImageAssessmentMetadata/mix:SpatialMetrics: nenalezen očekávaný doporučený element 'mix:samplingFrequencyPlane'
+Pravidlo MIX_FOR_FIRST_MASTER_COPY_MATCHES_PROFILE: 10 problémů (10x INFO)
+	Záznamy MIX v souborech SECONDARY-METS pro první verze archivních kopií musí splňovat profil.
+	INFO: amd_mets_nk-00027x_0002.xml: MIX_002: /mets:techMD/mets:mdWrap/mets:xmlData/mix:mix/mix:BasicDigitalObjectInformation: nenalezen očekávaný doporučený element 'mix:fileSize'
+	INFO: amd_mets_nk-00027x_0002.xml: MIX_002: /mets:techMD/mets:mdWrap/mets:xmlData/mix:mix/mix:BasicImageInformation/mix:BasicImageCharacteristics/mix:PhotometricInterpretation: nenalezen očekávaný doporučený element 'mix:ColorProfile'
+	INFO: amd_mets_nk-00027x_0002.xml: MIX_002: /mets:techMD/mets:mdWrap/mets:xmlData/mix:mix/mix:ImageAssessmentMetadata/mix:SpatialMetrics: nenalezen očekávaný doporučený element 'mix:samplingFrequencyPlane'
+	INFO: amd_mets_nk-00027x_0002.xml: MIX_002: /mets:techMD/mets:mdWrap/mets:xmlData/mix:mix/mix:ImageAssessmentMetadata/mix:ImageColorEncoding: nenalezen očekávaný doporučený element 'mix:TargetData'
+	INFO: amd_mets_nk-00027x_0002.xml: MIX_002: /mets:techMD/mets:mdWrap/mets:xmlData/mix:mix/mix:ChangeHistory/mix:ImageProcessing: nenalezen očekávaný doporučený element 'mix:processingAgency'
+	INFO: amd_mets_nk-00027x_0001.xml: MIX_002: /mets:techMD/mets:mdWrap/mets:xmlData/mix:mix/mix:BasicDigitalObjectInformation: nenalezen očekávaný doporučený element 'mix:fileSize'
+	INFO: amd_mets_nk-00027x_0001.xml: MIX_002: /mets:techMD/mets:mdWrap/mets:xmlData/mix:mix/mix:BasicImageInformation/mix:BasicImageCharacteristics/mix:PhotometricInterpretation: nenalezen očekávaný doporučený element 'mix:ColorProfile'
+	INFO: amd_mets_nk-00027x_0001.xml: MIX_002: /mets:techMD/mets:mdWrap/mets:xmlData/mix:mix/mix:ImageAssessmentMetadata/mix:SpatialMetrics: nenalezen očekávaný doporučený element 'mix:samplingFrequencyPlane'
+	INFO: amd_mets_nk-00027x_0001.xml: MIX_002: /mets:techMD/mets:mdWrap/mets:xmlData/mix:mix/mix:ImageAssessmentMetadata/mix:ImageColorEncoding: nenalezen očekávaný doporučený element 'mix:TargetData'
+	INFO: amd_mets_nk-00027x_0001.xml: MIX_002: /mets:techMD/mets:mdWrap/mets:xmlData/mix:mix/mix:ChangeHistory/mix:ImageProcessing: nenalezen očekávaný doporučený element 'mix:processingAgency'
+Pravidlo MIX_FOR_OTHER_MASTER_COPIES_MATCHES_PROFILE: 0 problémů
+	Záznamy MIX v souborech SECONDARY-METS pro další verze archivních kopií, pokud existují, musí splňovat profil.
+Pravidlo PREMIS_OBJECT_FOR_ORIGINAL_SCAN_MATCHES_PROFILE: 2 problémy (2x INFO)
+	Záznamy PREMIS Object v souborech SECONDARY-METS pro původní skeny musí splňovat profil.
+	INFO: amd_mets_nk-00027x_0002.xml: OBJ_001: /mets:techMD/mets:mdWrap/mets:xmlData/premis:object: nenalezen očekávaný doporučený element 'premis:relationship'
+	INFO: amd_mets_nk-00027x_0001.xml: OBJ_001: /mets:techMD/mets:mdWrap/mets:xmlData/premis:object: nenalezen očekávaný doporučený element 'premis:relationship'
+Pravidlo PREMIS_OBJECT_FOR_MASTER_COPY_MATCHES_PROFILE: 2 problémy (2x INFO)
+	Záznamy PREMIS Object v souborech SECONDARY-METS pro archivní kopie musí splňovat profil.
+	INFO: amd_mets_nk-00027x_0002.xml: OBJ_002: /mets:techMD/mets:mdWrap/mets:xmlData/premis:object/premis:relationship/premis:relatedEventIdentification: nenalezen očekávaný doporučený element 'premis:relatedEventSequence'
+	INFO: amd_mets_nk-00027x_0001.xml: OBJ_002: /mets:techMD/mets:mdWrap/mets:xmlData/premis:object/premis:relationship/premis:relatedEventIdentification: nenalezen očekávaný doporučený element 'premis:relatedEventSequence'
+Pravidlo PREMIS_OBJECT_FOR_ALTO_OCR_MATCHES_PROFILE: 2 problémy (2x INFO)
+	Záznamy PREMIS Object v souborech SECONDARY-METS pro ALTO OCR musí splňovat profil.
+	INFO: amd_mets_nk-00027x_0002.xml: OBJ_003: /mets:techMD/mets:mdWrap/mets:xmlData/premis:object/premis:relationship/premis:relatedEventIdentification: nenalezen očekávaný doporučený element 'premis:relatedEventSequence'
+	INFO: amd_mets_nk-00027x_0001.xml: OBJ_003: /mets:techMD/mets:mdWrap/mets:xmlData/premis:object/premis:relationship/premis:relatedEventIdentification: nenalezen očekávaný doporučený element 'premis:relatedEventSequence'
+Pravidlo PREMIS_EVENT_MATCHES_PROFILE: 0 problémů
+	Záznamy PREMIS Event v souborech SECONDARY-METS musí splňovat profil.
+Pravidlo PREMIS_AGENT_MATCHES_PROFILE: 8 problémů (8x INFO)
+	Záznamy PREMIS Event v souborech SECONDARY-METS musí splňovat profil.
+	INFO: amd_mets_nk-00027x_0002.xml: AGENT_001: /mets:digiprovMD/mets:mdWrap/mets:xmlData/premis:agent: nenalezen očekávaný doporučený element 'premis:agentNote'
+	INFO: amd_mets_nk-00027x_0002.xml: AGENT_002: /mets:digiprovMD/mets:mdWrap/mets:xmlData/premis:agent: nenalezen očekávaný doporučený element 'premis:agentNote'
+	INFO: amd_mets_nk-00027x_0002.xml: AGENT_003: /mets:digiprovMD/mets:mdWrap/mets:xmlData/premis:agent: nenalezen očekávaný doporučený element 'premis:agentNote'
+	INFO: amd_mets_nk-00027x_0002.xml: AGENT_004: /mets:digiprovMD/mets:mdWrap/mets:xmlData/premis:agent: nenalezen očekávaný doporučený element 'premis:agentNote'
+	INFO: amd_mets_nk-00027x_0001.xml: AGENT_001: /mets:digiprovMD/mets:mdWrap/mets:xmlData/premis:agent: nenalezen očekávaný doporučený element 'premis:agentNote'
+	INFO: amd_mets_nk-00027x_0001.xml: AGENT_002: /mets:digiprovMD/mets:mdWrap/mets:xmlData/premis:agent: nenalezen očekávaný doporučený element 'premis:agentNote'
+	INFO: amd_mets_nk-00027x_0001.xml: AGENT_003: /mets:digiprovMD/mets:mdWrap/mets:xmlData/premis:agent: nenalezen očekávaný doporučený element 'premis:agentNote'
+	INFO: amd_mets_nk-00027x_0001.xml: AGENT_004: /mets:digiprovMD/mets:mdWrap/mets:xmlData/premis:agent: nenalezen očekávaný doporučený element 'premis:agentNote'
+Pravidlo PREMIS_LINKING_CORRECT: 0 problémů
+	Odkazy mezi PREMIS Objekty, Událostmi a Agenty musí být korektní a úplné.
+
+Sekce Autorskoprávní metadata: 0 problémů
+-----------------------------------------
+Pravidlo COPYRIGHTMD_VALID_BY_XSD: 0 problémů
+	Záznamy CopyrightMD v souboru PRIMARY-METS a souborech SECONDARY-METS musí být validní podle XML Schema (cmd_0.91.xsd).
+Pravidlo COPYRIGHTMD_IN_SECONDARY_METS_MATCH_PROFILE: 0 problémů
+	Záznamy CopyrightMD v souborech SECONDARY-METS, pokud existují, musí splňovat profil.
+Pravidlo COPYRIGHTMD_IN_PRIMARY_METS_MATCH_PROFILE: 0 problémů
+	Záznamy CopyrightMD v souboru PRIMARY-METS, pokud existují, musí splňovat profil.
+
+Celkem: 140 problémů (140x INFO), balík je: validní
+Validováno Komplexním Validátorem ve verzi [VERZE], build z [BUILD_DATE]
+
+Vytvářím xml export do souboru [TMP]/fund-unit-0.2-valid-clipping.xml.
+Xml export vytvořen a uložen.
