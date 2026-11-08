@@ -1,6 +1,7 @@
 # Vydání nové verze
 
-Postup vydání Komplexního validátoru (CLI a GUI) jako GitHub release. Ověřeno na v2.8-beta (24. 9. 2026).
+Postup vydání Komplexního validátoru (CLI a GUI) jako GitHub release. Ověřeno na v2.8-beta (24. 9. 2026), aktualizováno pro v2.9
+(8. 11. 2026).
 
 ## Assets
 

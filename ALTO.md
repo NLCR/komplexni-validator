@@ -1,6 +1,6 @@
 # Verze ALTO v Komplexním validátoru
 
-Pracovní přehled, stav k 15. 10. 2026; text se bude měnit. Odkazuje na něj [README.md](README.md).
+Pracovní přehled, stav k 8. 11. 2026 (verze 2.9); text se bude měnit. Odkazuje na něj [README.md](README.md).
 
 ## Jak validátor ALTO kontroluje
 
@@ -41,15 +41,15 @@ Verze v textu DMF jsou z tabulky 1.4 a z kapitoly OCR; od DMF Monografie 2.2 a P
 | Periodika 2.2 | 2.0 a 4.4; kap. 7.9 předpis OCR 1.0 | 2.1, 3.1, 4.4 | podporováno |
 | Zvuk 0.3, 0.4, 0.5 (gramodesky, fonoválečky) | 2.0 a 3.1 | 2.1, 3.1 | podporováno |
 | Zvuk 1.0 (audio_gram, audio_fono, audio_disc, audio_no_carrier) | 3.1 a 4.4; kap. 7.9 předpis OCR 1.0 | 2.1, 3.1, 4.4 | podporováno |
-| Datové disky 0.1 | 2.0 | 2.0 | souhlasí |
-| Jednotky fondu 0.1 | 2.0 a 4.4; kap. 7.8 „aktuální v době vydání“ | 2.1, 3.1, 4.4 | podporováno |
+| Datové disky 0.1 | 2.0; kap. 7.8 „poslední verze aktuální v době implementace nebo verze předchozí“ | 2.1, 3.1, 4.4 | podporováno |
+| Jednotky fondu 0.1, 0.2 | 2.0 a 4.4; kap. 7.8 „aktuální v době vydání“ | 2.1, 3.1, 4.4 (obě verze stejně) | podporováno |
 
 DMF starší než Monografie 1.1 a Periodika 1.5 verzi ALTO neuvádějí. Oficiální vzorové balíčky NK (monografie 2.2,
 periodikum 2.1, vícesvazková monografie 2.2) mají ALTO 2.0.
 
 ## Plán
 
-Známé omezení: u fDMF se schématem `alto_2.1.xsd` (Monografie 2.3, Periodika 2.2, Zvuk, Jednotky fondu) neprojde
+Známé omezení: u fDMF se schématem `alto_2.1.xsd` (Monografie 2.3, Periodika 2.2, Zvuk, Datové disky, Jednotky fondu) neprojde
 soubor ALTO 2.0 bez `MeasurementUnit`. Řešením je pro `ns-v2#` přijmout soubor validní proti 2.0 nebo 2.1; plánováno
 v navazujícím rozvoji.
 
