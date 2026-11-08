@@ -1007,8 +1007,7 @@
             </validation>
         </rule>
 
-        <!--TODO:identifikatory v INFO-->
-
+        <!--identifikátory v INFO viz sekce Identifikátory (INFO_*)-->
 
     </rules-section>
 
@@ -1098,9 +1097,31 @@
                             </params>
                         </evaluation>
                     </value>
-                    <!--DMF 0.2, kap. 7.1: titleid = všechny platné identifikátory kolekce; chybějící jen jako WARNING,
-                    dokud NK neupřesní popis atributu type (připomínky k draftu 0.2, bod 3.4)-->
+                    <!--DMF 0.2, kap. 7.1: titleid = všechny platné identifikátory kolekce (M); identifikátor kolekce,
+                    který v INFO chybí, se hlásí jako WARNING. Povinný uuid hlídá pravidlo INFO_MANDATORY_IDENTIFIERS_PRESENT
+                    jako ERROR, ostatní typy kap. 7.1 uvádí jen jako „další možná hodnota“.-->
                     <value name="check_mods_identifiers_in_info" type="BOOLEAN">true</value>
+                </params>
+            </validation>
+        </rule>
+
+        <rule name="INFO_MANDATORY_IDENTIFIERS_PRESENT">
+            <description>Soubor INFO musí obsahovat identifikátor kolekce typu uuid (titleid type="uuid", DMF Jednotky
+                fondu 0.2, kap. 7.1: „povinná hodnota: uuid“).
+            </description>
+            <validation functionName="checkIdentifiersAllTypesPresent">
+                <params>
+                    <value name="identifier_list" type="IDENTIFIER_LIST">
+                        <value-ref name="INFO_IDENTIFIERS"/>
+                    </value>
+                    <value name="id_types" type="STRING_LIST">
+                        <evaluation functionName="buildListOfStrings">
+                            <params>
+                                <value name="string" type="STRING">uuid</value>
+                            </params>
+                        </evaluation>
+                    </value>
+                    <value name="level_name" type="STRING">INFO</value>
                 </params>
             </validation>
         </rule>
@@ -2434,8 +2455,8 @@
                     <value name="primary-mets_file" type="FILE">
                         <value-ref name="PRIMARY-METS_FILE"/>
                     </value>
-                    <!--DMF Jednotky fondu 0.2, kap. 7.7.1: TYPE rodičovského divu "UNIT" (v 0.1 „např. Unit“, opraveno podle připomínky E3;
-                    v draftu 0.2 zůstalo „např.“, NK hodnotu potvrdila)-->
+                    <!--DMF Jednotky fondu 0.2, kap. 7.7.1: TYPE rodičovského divu „hodnota "UNIT"“ (v 0.1 „např. Unit“,
+                    opraveno podle připomínky E3; finální text 0.2 z 2. 11. 2026 hodnotu předepisuje)-->
                     <value name="expected_top_level_div_type" type="STRING">UNIT</value>
                     <value name="filegroups_to_check" type="STRING_LIST">
                         <evaluation functionName="buildListOfStrings">
@@ -2525,7 +2546,7 @@
                         <evaluation functionName="buildListOfStrings">
                             <params>
                                 <value name="string" type="STRING">MC_IMGGRP</value>
-                                <!--O UC se DMF nezminuje, ale v realnych zaznamech se vyskytuji, takze asi "chyba v DMF"-->
+                                <!--UC patří mezi reprezentace stránky v amd_mets podle DMF Jednotky fondu 0.2, kap. 5.6 a 7.7.2-->
                                 <value name="string" type="STRING">UC_IMGGRP</value>
                                 <value name="string" type="STRING">ALTOGRP</value>
                                 <value name="string" type="STRING">TXTGRP</value>
@@ -2803,7 +2824,7 @@
 
         <rule name="OCR-ALTO_FILES_SAME_VERSION">
             <description>Všechny soubory OCR-ALTO v balíčku by měly mít stejnou verzi ALTO (stejný namespace kořenového elementu).
-                Předpis OCR míchání verzí neřeší, proto jen WARNING (viz dotaz Q2 pro NK ČR).
+                Předpis OCR (ALTO XML a TXT OCR) 1.0, na který DMF odkazuje, míchání verzí neřeší, proto jen WARNING.
             </description>
             <validation functionName="checkXmlFilesShareRootNamespace">
                 <params>

@@ -133,7 +133,10 @@ public class FundUnitSmokeTest {
     @Test
     public void fundUnit02SourceOriginInfoWithoutEventTypeIsInvalid() throws Exception {
         String log = runAndCheckNoCrash(new File("src/test/resources/fund_unit_0.2/origininfo_no_eventtype/nk-00027n"));
-        assertHasError(log, "MODSMD_UNIT_0001", "eventType");
+        assertRuleProblem(log, "BIBLIOGRAPHIC_METADATA_MATCH_PROFILE_UNIT", "ERROR:", "MODSMD_UNIT_0001", "nenalezen povinný atribut 'eventType'");
+        // jedina chyba, zadne varovani za potomky originInfo (place, agent, dateIssued) ani druha chyba z extraRule
+        assertEquals(1, countRuleProblems(log, "BIBLIOGRAPHIC_METADATA_MATCH_PROFILE_UNIT", "ERROR:"));
+        assertEquals(0, countRuleProblems(log, "BIBLIOGRAPHIC_METADATA_MATCH_PROFILE_UNIT", "WARNING:"));
     }
 
     /**
@@ -416,6 +419,45 @@ public class FundUnitSmokeTest {
     }
 
     /**
+     * metsHdr v amd_mets ma stejne povinne udaje jako v hlavnim METS (DMF 0.2, kap. 7.3), vcetne agenta CREATOR.
+     */
+    @Test
+    public void fundUnit02AmdMetsWithoutCreatorAgentIsInvalid() throws Exception {
+        String log = runAndCheckNoCrash(new File("src/test/resources/fund_unit_0.2/amdmets_no_agent/nk-00026f"));
+        assertRuleProblem(log, "SECONDARY_METS_HEADER_MATCH_PROFILE", "ERROR:", "amd_mets_nk-00026f_0001.xml", "@ROLE='CREATOR'");
+        assertNoLine(log, "ERROR:", "amd_mets_nk-00026f_0002.xml");
+    }
+
+    /**
+     * relatedItem type="series" jen s titleInfo: originInfo je MA, pravidlo "aspon jeden production/publication"
+     * plati jen pro relatedItem, ktery originInfo ma.
+     */
+    @Test
+    public void fundUnit02SeriesWithoutOriginInfoIsValid() throws Exception {
+        String log = runAndCheckNoCrash(new File("src/test/resources/fund_unit_0.2/source_series_no_origininfo/nk-00026e"));
+        assertValid(log);
+    }
+
+    /**
+     * INFO bez titleid type="uuid" (DMF 0.2, kap. 7.1: povinna hodnota uuid).
+     */
+    @Test
+    public void fundUnit02InfoWithoutUuidIsInvalid() throws Exception {
+        String log = runAndCheckNoCrash(new File("src/test/resources/fund_unit_0.2/info_no_uuid/nk-00026d"));
+        assertRuleProblem(log, "INFO_MANDATORY_IDENTIFIERS_PRESENT", "ERROR:", "'uuid'", "INFO");
+    }
+
+    /**
+     * DC jednotky s dalsim dc:type model:* (model:monograph vedle model:unit): neocekavany element, jen WARNING.
+     */
+    @Test
+    public void fundUnit02UnitDcWithExtraModelWarns() throws Exception {
+        String log = runAndCheckNoCrash(new File("src/test/resources/fund_unit_0.2/unit_dc_extra_model/nk-00026c"));
+        assertValid(log);
+        assertRuleProblem(log, "BIBLIOGRAPHIC_METADATA_MATCH_PROFILE_UNIT", "WARNING:", "DCMD_UNIT_0001", "dc:type");
+    }
+
+    /**
      * Radek s prefixem (ERROR:, WARNING:) a vsemi fragmenty musi byt v sekci daneho pravidla ("Pravidlo NAZEV: ...").
      */
     private void assertRuleProblem(String log, String rule, String prefix, String... fragments) {
@@ -438,6 +480,25 @@ public class FundUnitSmokeTest {
             }
         }
         assertTrue("ocekavan " + prefix + " pravidla " + rule + " obsahujici " + String.join(" + ", fragments), false);
+    }
+
+    /**
+     * Pocet radku s prefixem (ERROR:, WARNING:) v sekci daneho pravidla.
+     */
+    private int countRuleProblems(String log, String rule, String prefix) {
+        String currentRule = null;
+        int count = 0;
+        for (String line : log.split("\n")) {
+            if (line.startsWith("Pravidlo ")) {
+                int colon = line.indexOf(':');
+                currentRule = colon < 0 ? line.substring("Pravidlo ".length()).trim() : line.substring("Pravidlo ".length(), colon);
+                continue;
+            }
+            if (rule.equals(currentRule) && line.trim().startsWith(prefix)) {
+                count++;
+            }
+        }
+        return count;
     }
 
     private void assertNoLine(String log, String prefix, String fragment) {

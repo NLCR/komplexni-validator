@@ -41,3 +41,7 @@ jen ostatní parametry. Testy: FundUnitSmokeTest.
   page_dc_no_type/nk-00026i            --mutation page-dc-no-type
   amdmets_no_uc_filegrp/nk-00026h      --mutation amdmets-no-uc-filegrp
   extra_file_in_catalog_entry/nk-00026g --mutation extra-file-in-catalog-entry
+  amdmets_no_agent/nk-00026f           --mutation amdmets-no-agent
+  source_series_no_origininfo/nk-00026e --mutation source-series-no-origininfo
+  info_no_uuid/nk-00026d               --mutation info-no-uuid
+  unit_dc_extra_model/nk-00026c        --mutation unit-dc-extra-model

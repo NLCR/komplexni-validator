@@ -41,8 +41,8 @@
                      errorMessage="Očekáván povinný element dc:type obsahující text 'model:directory'.">
                 <expectedContent/>
             </element>
-            <!--další dc:type jen pro žánr předlohy (mapování z opakovaného mods:genre); jiné hodnoty model:* (např. zděděné
-            model:collection) jsou chyba-->
+            <!--další dc:type jen pro žánr předlohy (mapování z opakovaného mods:genre); jiná hodnota model:* (např. zděděné
+            model:collection) neodpovídá žádné definici a hlásí se jako varování (neočekávaný element)-->
             <element name="dc:type" specification="not(starts-with(text(), 'model:'))" mandatory="false">
                 <expectedContent/>
             </element>

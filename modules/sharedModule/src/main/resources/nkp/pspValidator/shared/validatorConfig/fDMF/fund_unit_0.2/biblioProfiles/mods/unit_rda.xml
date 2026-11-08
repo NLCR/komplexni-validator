@@ -334,8 +334,11 @@
                     </element>
                     <!--RDA: originInfo (MA) s atributem eventType (M, DMF 0.2 povinnost doplnila) podle druhého indikátoru
                     pole 264; alespoň jeden výskyt production nebo publication. Rozlišení hodnot roleTerm podle eventType.
-                    originInfo bez eventType by jinak prošel jako neočekávaný potomek relatedItem, proto je zachycen zvlášť.-->
+                    originInfo bez eventType by jinak prošel jako neočekávaný potomek relatedItem, proto je zachycen zvlášť;
+                    jeho potomci se nekontrolují (ignoreUnexpectedChildElements), aby chybějící eventType nehlásil navíc
+                    varování za každý place, agent a dateIssued.-->
                     <element name="mods:originInfo" specification="not(@eventType)" mandatory="false"
+                             ignoreUnexpectedChildElements="true"
                              errorMessage="V RDA musí mít každý originInfo zdrojového dokumentu atribut eventType.">
                         <expectedAttributes>
                             <attribute name="eventType"/>
@@ -858,10 +861,14 @@
                         </expectedElements>
                     </element>
                 </expectedElements>
+                <!--originInfo je MA: relatedItem bez originInfo (např. type="series" jen s titleInfo) projde (self::*), pokud
+                    originInfo s eventType je, musí aspoň jeden mít eventType production nebo publication. originInfo
+                    bez eventType hlásí už definice výše, proto se tu nepočítá (jedna chyba místo dvou). XPath se vyhodnocuje
+                    nad každým relatedItem zvlášť, pravidlo splní libovolný nalezený uzel.-->
                 <extraRules>
                     <existsAtLeastOnce
-                            xpath="mods:originInfo[@eventType='production' or @eventType='publication']"
-                            description="V RDA musí být alespoň jeden originInfo s eventType production nebo publication"
+                            xpath="self::*[not(mods:originInfo[@eventType])] | mods:originInfo[@eventType='production' or @eventType='publication']"
+                            description="V RDA musí mít relatedItem s originInfo alespoň jeden originInfo s eventType production nebo publication"
                     />
                 </extraRules>
             </element>

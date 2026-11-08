@@ -910,6 +910,10 @@ MUTATIONS = {
     "page-dc-no-type": "(0.2) DC první strany bez dc:type model:page -> BIBLIOGRAPHIC_METADATA_MATCH_PROFILE_PAGE (DC)",
     "amdmets-no-uc-filegrp": "amd_mets první strany bez fileGrp UC_IMGGRP (i bez fptr na UC) -> SECONDARY-METS_FILESEC_ALL_FILEGROUPS_PRESENT, SECONDARY-METS_FILESEC_USER_COPY_FILE_REFERENCED",
     "extra-file-in-catalog-entry": "cizí soubor (poznamka.txt) v adresáři catalog_entry, zapsaný v MD5 i INFO -> NO_EXTRA_FILES_IN_CATALOG-ENTRY-DIR",
+    "amdmets-no-agent": "(0.2) metsHdr v amd_mets první strany bez agenta CREATOR -> SECONDARY_METS_HEADER_MATCH_PROFILE (DMF 0.2 kap. 7.3: hlavička i pro amd_mets)",
+    "source-series-no-origininfo": "(0.2) navíc relatedItem type=series jen s titleInfo (bez originInfo), vedle zdroje host -> validní (originInfo je MA)",
+    "info-no-uuid": "(0.2) INFO bez titleid type=uuid -> INFO_MANDATORY_IDENTIFIERS_PRESENT (DMF 0.2 kap. 7.1: povinná hodnota uuid)",
+    "unit-dc-extra-model": "(0.2) DC jednotky navíc s dc:type model:monograph vedle model:unit -> BIBLIOGRAPHIC_METADATA_MATCH_PROFILE_UNIT (WARNING, neočekávaný element)",
 }
 
 
@@ -933,7 +937,8 @@ def generate(target: str, variant: str, pages: int, with_directory: bool, standa
     needs_02 = {"page-no-genre", "unknown-identifier-type-invalid", "info-missing-collection-id", "top-div-type-unit-lowercase", "unit-dc-no-format",
                 "premis-format-not-mime", "part-no-detail", "part-issue-only", "detail-with-title-and-extent",
                 "source-monograph-partnumber", "page-generalview", "logical-map-pages", "detail-wrong-type",
-                "page-genre-no-type", "page-dc-no-type"} & mutations
+                "page-genre-no-type", "page-dc-no-type", "amdmets-no-agent", "source-series-no-origininfo", "info-no-uuid",
+                "unit-dc-extra-model"} & mutations
     if needs_02 and standard_version == "0.1":
         sys.exit("mutace " + ", ".join(sorted(needs_02)) + " mají smysl jen s --standard-version 0.2 (v 0.1 by nic nezměnily nebo by nebyly chybou)")
     if "directory-dc-collection" in mutations and not with_directory:
@@ -985,6 +990,13 @@ def generate(target: str, variant: str, pages: int, with_directory: bool, standa
             uc_fptr = f'\n            <mets:fptr FILEID="UC_{p}"/>'
             assert amd.count(uc_grp) == 1 and amd.count(uc_fptr) == 1
             amd = amd.replace(uc_grp, "").replace(uc_fptr, "")
+        if "amdmets-no-agent" in mutations and i == 1:
+            creator = f"""
+        <mets:agent ROLE="CREATOR" TYPE="ORGANIZATION">
+            <mets:name>{SIGLA}</mets:name>
+        </mets:agent>"""
+            assert amd.count(creator) == 1
+            amd = amd.replace(creator, "")
         files["amd"] = put(f"amdsec/amd_mets_{psp}_{p}.xml", amd)
         page_files[i] = files
 
@@ -1086,6 +1098,20 @@ def generate(target: str, variant: str, pages: int, with_directory: bool, standa
         page_dc_type = f"<dc:identifier>uuid:{page_uuid(1)}</dc:identifier>\n                    <dc:type>model:page</dc:type>"
         assert mets.count(page_dc_type) == 1
         mets = mets.replace(page_dc_type, f"<dc:identifier>uuid:{page_uuid(1)}</dc:identifier>")
+    if "source-series-no-origininfo" in mutations:
+        host_end = """                            </mods:part>
+                        </mods:relatedItem>"""
+        assert mets.count(host_end) == 1
+        mets = mets.replace(host_end, host_end + """
+                        <mods:relatedItem type="series">
+                            <mods:titleInfo>
+                                <mods:title>Výstřižky z tisku</mods:title>
+                            </mods:titleInfo>
+                        </mods:relatedItem>""")
+    if "unit-dc-extra-model" in mutations:
+        assert mets.count("<dc:type>model:unit</dc:type>") == 1
+        mets = mets.replace("<dc:type>model:unit</dc:type>",
+                            "<dc:type>model:unit</dc:type>\n                    <dc:type>model:monograph</dc:type>")
     if "unit-dc-no-format" in mutations:
         mets = mets.replace("<dc:format>print</dc:format>\n", "").replace(f"<dc:format>{extent}</dc:format>\n", "")
     mets_rel = put(f"mets_{psp}.xml", mets)
@@ -1106,6 +1132,10 @@ def generate(target: str, variant: str, pages: int, with_directory: bool, standa
     items = sorted(written.keys()) + [info_name]
     size_kb = max(1, sum(len(d) for d in written.values()) // 1024)
     info = info_xml(psp, items, size_kb, md5_name, md5_rel[2])
+    if "info-no-uuid" in mutations:
+        uuid_line = f'    <titleid type="uuid">{COLLECTION_UUID}</titleid>\n'
+        assert info.count(uuid_line) == 1
+        info = info.replace(uuid_line, "")
     if "info-missing-collection-id" in mutations:
         info = info.replace('    <titleid type="sysno">000123456</titleid>\n', "")
     if "itemtotal-mismatch" in mutations:

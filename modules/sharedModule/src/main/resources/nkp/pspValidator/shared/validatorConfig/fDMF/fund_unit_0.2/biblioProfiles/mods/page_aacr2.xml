@@ -117,7 +117,8 @@
             <!--genre (M): "page", "reprePage" nebo "variantPage" (DMF 0.2 doplnila, v 0.1 chyběl; připomínka Q4).
             Atribut type (M): typ strany podle Pravidel pro popis periodik, seznam shodný s page_types v rules.xml
             (Pravidla 8.8 z 21. 10. 2026, kap. 1.2.2, 33 hodnot; proti 8.7 přibyl "generalView"). Význam a počet "variantPage"
-            DMF neupřesňuje (DMF Periodika 2.3 jen "variantní strana"), dotaz pro NK (připomínky k draftu 0.2, bod 3.6).-->
+            neupřesňuje ani finální text 0.2 (2. 11. 2026), platí DMF Periodika 2.3 („variantní strana“), proto bez
+            dalšího omezení.-->
             <element name="mods:genre">
                 <expectedAttributes>
                     <attribute name="type">

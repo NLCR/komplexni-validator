@@ -39,7 +39,9 @@
                      errorMessage="Očekáván povinný element dc:type obsahující text 'model:unitcollection'.">
                 <expectedContent/>
             </element>
-            <element name="dc:type" specification="not(text()='model:unitcollection')" mandatory="false">
+            <!--další dc:type jen pro žánr předlohy (mapování z mods:genre, typeOfResource); jiná hodnota model:* (např.
+            model:monograph) neodpovídá žádné definici a hlásí se jako varování (neočekávaný element), stejně jako u složky-->
+            <element name="dc:type" specification="not(starts-with(text(), 'model:'))" mandatory="false">
                 <expectedContent/>
             </element>
             <element name="dc:identifier"

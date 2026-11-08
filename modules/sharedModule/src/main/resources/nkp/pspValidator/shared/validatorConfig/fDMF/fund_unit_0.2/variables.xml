@@ -456,7 +456,8 @@
     <!--datacollection-->
     <!--Identifikátory podle DMF Jednotky fondu 0.2, kap. 4 a profilů MODS (kap. 7.4). UUID povinné na všech
     úrovních, URN:NBN povinné jen na úrovni UNIT. Zákazy na úrovních UNITCOLLECTION/DIRECTORY/PAGE jsou náš výklad
-    („jiný interní identifikátor“), proto se v pravidlech hlásí jako WARNING, dokud NK nepotvrdí.-->
+    („jiný interní identifikátor“); finální text 0.2 (2. 11. 2026) je neupřesnil, zásadnější změny identifikátorů
+    NK odložila na další aktualizaci DMF (odpověď 23. 10. 2026), proto se v pravidlech hlásí jako WARNING.-->
 
     <!--unitcollection (kolekce)-->
     <value-def name="ID_TYPES_UNITCOLLECTION_MANDATORY" type="STRING_LIST">
@@ -622,6 +623,7 @@
     </value-def>
 
     <value-def name="ID_TYPES_PAGE_PROHIBITED" type="STRING_LIST">
+        <!--DMF Jednotky fondu 0.2, kap. 4: strana má jen UUID, ostatní typy z výčtu kap. 4 (ID_TYPES_KNOWN) jsou zakázané-->
         <description>seznam zakázaných typů identifikátorů pro úroveň PAGE</description>
         <evaluation functionName="buildListOfStrings">
             <params>
@@ -636,6 +638,13 @@
                 <value name="string" type="STRING">oclc</value>
                 <value name="string" type="STRING">permalink</value>
                 <value name="string" type="STRING">accession</value>
+                <value name="string" type="STRING">lccn</value>
+                <value name="string" type="STRING">doi</value>
+                <value name="string" type="STRING">handle</value>
+                <value name="string" type="STRING">local</value>
+                <value name="string" type="STRING">contract</value>
+                <value name="string" type="STRING">bcbt</value>
+                <value name="string" type="STRING">knihopis</value>
             </params>
         </evaluation>
     </value-def>

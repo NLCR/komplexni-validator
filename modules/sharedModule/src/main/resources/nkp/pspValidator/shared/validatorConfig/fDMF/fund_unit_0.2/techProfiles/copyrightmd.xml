@@ -270,18 +270,16 @@
 
                                     <element name="cmd:general.note" mandatory="false" repeatable="true">
                                         <!--
-                                        TODO: Tohle je divne, obecna poznamka ma obsahovat prave nejaky vycet. Radeji davam recommended.
-                                        Dalo by se to svazat s copy copyright.status='pd_holder', ale porad i takovy copyright muze mit obecnou poznamku krome upresneni licence CC.
+                                        DMF Periodika 2.3, kap. 8 (na kterou odkazuje DMF Jednotky fondu 0.2), povinnost MA:
+                                        „zapíše se hodnota ”Access free“, kterou je možné doplnit o druh a verzi licence,
+                                        např. „Acces free via CC BY 4.0““. Druhy licencí (BY, BY-SA, BY-ND, BY-NC, BY-NC-SA,
+                                        v DMF „BY-NC-NC“) jsou jen výčet pro upřesnění, ne samostatná hodnota (Periodika 2.2
+                                        je uváděla jako možné hodnoty). Regexp připouští i překlep „Acces“ z příkladu v DMF.
+                                        Jen doporučená hodnota (WARNING): MA neříká, kdy je element povinný, a pole slouží
+                                        i k jiným informacím o autorských právech.
                                         -->
                                         <recommendedContent>
-                                            <oneOf>
-                                                <value>BY</value>
-                                                <value>BY-SA</value>
-                                                <value>BY-ND</value>
-                                                <value>BY-NC</value>
-                                                <value>BY-NC-SA</value>
-                                                <value>BY-NC-SC</value>
-                                            </oneOf>
+                                            <regexp>^Acc?ess free( via .+)?$</regexp>
                                         </recommendedContent>
                                     </element>
                                 </expectedElements>
