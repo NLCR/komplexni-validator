@@ -1,7 +1,7 @@
 <metadataProfile
-        xmlns="http://www.nkp.cz/pspValidator/2.8/metadataProfile"
+        xmlns="http://www.nkp.cz/pspValidator/2.9/metadataProfile"
         name="DC sound part (RDA)"
-        validatorVersion="2.8"
+        validatorVersion="2.9"
         dmf="audio_no_carrier_1.0"
 >
 

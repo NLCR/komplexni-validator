@@ -7,6 +7,6 @@ public class Version {
     /**
      * Version code may contain up to one hyphen separating actual version code from suffix dev/alpha/beta, etc.
      */
-    public static String VERSION_CODE = "2.8"; //cast pred pomlckou musi odpovidat validatorVersion v konfiguracnich souborech (fDMF, profily)
-    public static String BUILD_DATE = "16. 10. 2026";
+    public static String VERSION_CODE = "2.9"; //cast pred pomlckou musi odpovidat validatorVersion v konfiguracnich souborech (fDMF, profily)
+    public static String BUILD_DATE = "8. 11. 2026";
 }
