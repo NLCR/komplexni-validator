@@ -27,10 +27,14 @@ cp -R modules/sharedModule/src/main/resources/nkp/pspValidator/shared/validatorC
 # jpackage bere jen čísla: 2.8-beta -> 2.8
 APP_VERSION="$(echo "$VERSION" | sed -E 's/[^0-9]+/./g; s/^\.+|\.+$//g')"
 
+# ikona: od 2.9 appIcon-256.png (generuje tools/release/make-icons.sh), starší tagy mají jen 48px PNG
+ICON=modules/guiModule/src/main/resources/img/appIcon/appIcon-256.png
+[ -f "$ICON" ] || ICON=modules/guiModule/src/main/resources/img/appIcon/appIcon.iconset/icon_48x48.png
+
 mkdir -p /w/out
 jpackage --type app-image --dest /w/out/img --name KomplexniValidator --input "$LIBS" \
     --main-jar "guiModule-$VERSION-shadow.jar" --main-class nkp.pspValidator.gui.Launcher \
     --app-version "$APP_VERSION" \
-    --icon modules/guiModule/src/main/resources/img/appIcon/appIcon.iconset/icon_48x48.png
+    --icon "$ICON"
 
 cp "modules/cliModule/build/libs/cliModule-$VERSION.jar" "$LIBS/guiModule-$VERSION.jar" /w/out/

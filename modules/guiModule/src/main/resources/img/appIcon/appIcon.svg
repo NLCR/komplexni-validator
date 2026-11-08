@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" width="48" height="48">
+  <!-- Ikona Komplexniho validatoru, prekreslena jako vektor podle puvodni 48px bitmapy (barvy zachovany) -->
+  <!-- dokument se zahnutym rohem -->
+  <path d="M8 3 H31 L39 11 V44 H8 Z" fill="#90caf9"/>
+  <path d="M31 3 V11 H39 Z" fill="#e1f5fe"/>
+  <!-- zeleny kruh se zatrzitkem -->
+  <circle cx="37.5" cy="37.5" r="9.5" fill="#43a047"/>
+  <polygon points="31.6,38.2 33.5,36.3 36.2,39.0 41.6,33.6 43.5,35.5 36.2,42.8" fill="#dcedc8"/>
+</svg>
