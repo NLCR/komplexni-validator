@@ -7,6 +7,8 @@ import org.junit.Test;
 import java.io.File;
 import java.util.List;
 
+import static org.junit.Assert.assertFalse;
+
 /**
  * Created by Martin Řehánek on 29.10.16.
  */
@@ -14,10 +16,10 @@ public class ConfigProcessorTest {
 
 
     @Test
-    public void initPatterns() {
+    public void initPatterns() throws ValidatorConfigurationException {
         File pspRootDir = new File("src/test/resources/monograph_1.2/b50eb6b0-f0a4-11e3-b72e-005056827e52");
 
-        try {
+        {
             Engine engine = new Engine(null);
             engine.setProvidedFile("PSP_DIR", pspRootDir);
 
@@ -64,8 +66,7 @@ public class ConfigProcessorTest {
                     }
                 }
             }
-        } catch (ValidatorConfigurationException e) {
-            System.out.println("chyba v konfiguraci: " + e.getMessage());
+            assertFalse("konfigurace neobsahuje zadne sekce pravidel", rulesSections.isEmpty());
         }
     }
 }
