@@ -1,0 +1,88 @@
+<fDMF xmlns="http://www.nkp.cz/pspValidator/3.0/fdmfConfig"
+      validatorVersion="3.0"
+      dmf="emonograph_3.1"
+>
+    <description>
+        Zde jsou definovány vzory. K jejich vyhodnocení jsou použity reguární výrazy a případně proměnné.
+        Vzory je možné dynamicky doplňovat/upravovat.
+        Nesmí ale nastat situace cyklu, tedy že by hodnota vzoru X závisela na vzoru/proměnné Y, který by závisel na
+        vzoru X.
+        Vzor (pattern) má jeden nebo více výrazů (expression). Hodnota (typicky proměnné) odpovídá vzoru, pokud odpovídá
+        alespoň jednomu výrazu. Výrazy vzoru jsou tedy vždy ve vztahu NEBO (OR).
+        Výraz může mít vstupní promměnné, v tom případě se např. pro proměnnou X nahradí všechny výskyty ${X} za hodnotu
+        proměnné X před samotným vyhodnocením výrazu. Lze použít pouze proměnné typu String.
+    </description>
+
+    <!--TODO: pro vzory bez vstupních proměných, které jsou jen jednou použité je rovnou zapisovat do definic proměnných-->
+
+    <pattern-def name="FILENAME">
+        <description>Vzor pro obecný soubor/adresář. Určuje povolené znaky v názvech souborů/adresářů, tedy písmena,
+            číslice, tečky, pomlčky, a podtržítka.
+        </description>
+        <expression caseSensitive="true">[a-z0-9_\-\.]+</expression>
+    </pattern-def>
+
+    <pattern-def name="INFO_FILENAME_FOR_PSP_ID_DETECTION">
+        <description>Vzor pro nalezení souboru INFO pouze za účelem získání PSP-ID z jeho obsahu.</description>
+        <expression caseSensitive="true">info_.+\.xml</expression>
+        <expression caseSensitive="true">info\.xml</expression>
+    </pattern-def>
+
+    <pattern-def name="INFO_FILENAME">
+        <description>Vzor pro jméno souboru INFO.</description>
+        <expression caseSensitive="true">info_${PSP_ID}\.xml</expression>
+        <expression>info\.xml</expression>
+    </pattern-def>
+
+    <pattern-def name="PRIMARY-METS_FILENAME">
+        <description>Vzor pro jméno souboru PRIMARY-METS.</description>
+        <expression caseSensitive="true">mets_${PSP_ID}\.xml</expression>
+    </pattern-def>
+
+    <pattern-def name="CHECKSUM_FILENAME">
+        <description>Vzor pro jméno souboru CHECKSUM.</description>
+        <expression caseSensitive="true">.+\.md5</expression>
+    </pattern-def>
+
+    <pattern-def name="ORIGINAL-DIR_FILENAME">
+        <description>Vzor pro jméno souboru ORIGINAL.</description>
+        <expression caseSensitive="true">original</expression>
+    </pattern-def>
+
+    <pattern-def name="TOLERATED_TL_FILENAME">
+        <description>Vzory pro jména tolerovaných souborů.</description>
+        <expression caseSensitive="true">LTP_MD\.xml</expression>
+        <expression caseSensitive="true">.DS_Store</expression>
+    </pattern-def>
+
+    <pattern-def name="ORIGINAL-COPY-PDF_FILENAME">
+        <description>Vzor pro jména PDF souborů v rámci adresáře ORIGINAL-DIR.</description>
+        <expression caseSensitive="true">oc.+\.pdf</expression>
+    </pattern-def>
+
+    <pattern-def name="ORIGINAL-COPY-EPUB_FILENAME">
+        <description>Vzor pro jména EPUB souborů v rámci adresáře ORIGINAL-DIR.</description>
+        <expression caseSensitive="true">oc.+\.epub</expression>
+    </pattern-def>
+
+    <!--nepovinná složka originaldata (DMF e-monografie 3.1, kap. 3.1.3 a 4), issue VEP #19-->
+    <pattern-def name="ORIGINALDATA-DIR_FILENAME">
+        <description>Vzor pro jméno adresáře ORIGINALDATA-DIR.</description>
+        <expression caseSensitive="true">originaldata</expression>
+    </pattern-def>
+
+    <pattern-def name="ORIGINALDATA-OD_FILENAME">
+        <description>Vzor pro jména původních nearchivních souborů v rámci adresáře ORIGINALDATA-DIR: předpona "od",
+            přípona podle původního formátu (např. od_nk-00027x.pdf).
+        </description>
+        <expression caseSensitive="true">od.+\.[^.]+</expression>
+    </pattern-def>
+
+    <pattern-def name="ORIGINALDATA-CONV_FILENAME">
+        <description>Vzor pro jména konverzních souborů v rámci adresáře ORIGINALDATA-DIR: předpona "conv", přípona
+            .xml (např. conv_nk-00027x.xml).
+        </description>
+        <expression caseSensitive="true">conv.+\.xml</expression>
+    </pattern-def>
+
+</fDMF>
