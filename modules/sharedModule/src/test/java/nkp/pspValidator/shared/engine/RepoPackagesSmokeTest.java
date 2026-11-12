@@ -25,7 +25,9 @@ import static org.junit.Assert.*;
  * <ol>
  *     <li>v logu neni "nečekaná chyba" (krome EmptyParamEvaluationException) ani "nesplněn kontrakt",</li>
  *     <li>detekovany typ a verze DMF odpovida,</li>
- *     <li>pocty ERROR a WARNING a verdikt se nezmenily (stav 2.9, 8. 11. 2026),</li>
+ *     <li>pocty ERROR a WARNING a verdikt se nezmenily (stav 2.9, 8. 11. 2026; 12. 11. 2026 oprava: checkXmlIsValidByXsd
+ *     respektuje parametr level, INFO_XML_VALID_BY_XSD je WARNING, proto u 6 balicku -1 ERROR / +1 WARNING a monograph_1.3.2
+ *     je validni),</li>
  *     <li>v logu jsou 2 az 4 konkretni ocekavane hlasky (pravidlo + fragment), aby test nepresel, kdyz jedna chyba
  *     nahradi jinou a pocty zustanou stejne.</li>
  * </ol>
@@ -47,6 +49,7 @@ public class RepoPackagesSmokeTest {
     private static final String RESOURCES = "src/test/resources/";
     private static final Set<String> EXCLUDED_RULES = Collections.singleton("MODS_IDENTIFIERS_URN_NBN_REGISTERED");
     private static final String VERDICT_INVALID = "balík je: nevalidní";
+    private static final String VERDICT_VALID = "balík je: validní";
 
     private static ValidatorConfigurationManager configManager;
     private static FdmfRegistry registry;
@@ -81,8 +84,8 @@ public class RepoPackagesSmokeTest {
      * prepoctu souctu. Hlavni chyby: PREMIS agentNote prazdne (32x), nesouhlas checksumu ve fileSec (10x) a v md5 (3x),
      * extra soubory .jp2.bak, logicka mapa s TYPE 'Monograph', INFO s titleid typu uuid (XSD 1.2 ho nezna).
      */
-    private static final int MON_1_2_ERRORS = 50;
-    private static final int MON_1_2_WARNINGS = 24;
+    private static final int MON_1_2_ERRORS = 49;
+    private static final int MON_1_2_WARNINGS = 25;
 
     /**
      * monograph_1.2/map, 6e9a7000 (kartograficky dokument): navic LTP_MD.xml v koreni, DC bez dc:type model:monograph,
@@ -95,22 +98,22 @@ public class RepoPackagesSmokeTest {
      * monograph_1.3.1, b50eb6b0: INFO s checksum type 'MD5' (XSD chce 'md5'), DC zaznamy stran nevalidni podle
      * dc_1.1.xsd (element dc:extent, 9x).
      */
-    private static final int MON_1_3_1_ERRORS = 10;
-    private static final int MON_1_3_1_WARNINGS = 3;
+    private static final int MON_1_3_1_ERRORS = 9;
+    private static final int MON_1_3_1_WARNINGS = 4;
 
     /**
-     * monograph_1.3.2, b50eb6b0: jen INFO s checksum type 'MD5'; varovani k atributu mods/@version a dc:type u strany.
+     * monograph_1.3.2, b50eb6b0: jen INFO s checksum type 'MD5' (od 12. 11. 2026 WARNING, balicek validni); varovani k atributu mods/@version a dc:type u strany.
      */
-    private static final int MON_1_3_2_ERRORS = 1;
-    private static final int MON_1_3_2_WARNINGS = 4;
+    private static final int MON_1_3_2_ERRORS = 0;
+    private static final int MON_1_3_2_WARNINGS = 5;
 
     /**
      * periodical_1.4, ope301-00000v: stary balicek (velka pismena v nazvech, info.xml bez namespace podle XSD,
      * md5 soubor bez prefixu md5_, cesty s '.\'). Hlavni chyby: PREMIS odkazy na Windows cesty (220x),
      * nesouhlas checksumu ve fileSec (40x), DC/MODS titulu a cisla neodpovida profilu.
      */
-    private static final int PER_1_4_ERRORS = 271;
-    private static final int PER_1_4_WARNINGS = 228;
+    private static final int PER_1_4_ERRORS = 270;
+    private static final int PER_1_4_WARNINGS = 229;
 
     /**
      * periodical_1.6, 7033d800: PREMIS agentNote prazdne (60x), duplicitni identifikatory agentu (PREMIS_LINKING 20x),
@@ -123,8 +126,8 @@ public class RepoPackagesSmokeTest {
      * periodical_1.7.1, df53c210: zmenseny balicek (ITEMTOTAL 203, ale jen 18 polozek), INFO s checksum type 'MD5',
      * DC zaznamy stran nevalidni podle dc_1.1.xsd (dc:extent, 4x).
      */
-    private static final int PER_1_7_1_ERRORS = 6;
-    private static final int PER_1_7_1_WARNINGS = 3;
+    private static final int PER_1_7_1_ERRORS = 5;
+    private static final int PER_1_7_1_WARNINGS = 4;
 
     /**
      * audio_gram_0.3, 1234567890: ukazkovy balicek s vymyslenymi identifikatory (neplatna UUID), prazdne soubory
@@ -146,8 +149,8 @@ public class RepoPackagesSmokeTest {
      * data_disc_0.1/minimal, nk-00028d: umele minimalni balicek (jen info a mets, viz DataDiscSmokeTest), chybi vsechny
      * adresare a md5, METS bez fileSec a strukturalnich map.
      */
-    private static final int DAD_0_1_MINIMAL_ERRORS = 75;
-    private static final int DAD_0_1_MINIMAL_WARNINGS = 5;
+    private static final int DAD_0_1_MINIMAL_ERRORS = 74;
+    private static final int DAD_0_1_MINIMAL_WARNINGS = 6;
 
     @Parameterized.Parameters(name = "{0}")
     public static Collection<Object[]> packages() {
@@ -246,7 +249,8 @@ public class RepoPackagesSmokeTest {
                     || line.contains("nesplněn kontrakt");
             assertFalse("funkce spadla nebo konfigurace obsahuje chybu: " + line.trim(), crash);
         }
-        assertTrue("v logu chybi verdikt '" + VERDICT_INVALID + "'", log.contains(VERDICT_INVALID));
+        String expectedVerdict = expectedErrors == 0 ? VERDICT_VALID : VERDICT_INVALID;
+        assertTrue("v logu chybi verdikt '" + expectedVerdict + "'", log.contains(expectedVerdict));
 
         int[] counts = RepoPackagesSupport.countErrorsAndWarnings(log, EXCLUDED_RULES);
         assertEquals("pocet ERROR (bez " + EXCLUDED_RULES + ")", expectedErrors, counts[0]);

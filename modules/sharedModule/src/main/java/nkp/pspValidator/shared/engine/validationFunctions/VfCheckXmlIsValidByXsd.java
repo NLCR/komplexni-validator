@@ -115,8 +115,9 @@ public class VfCheckXmlIsValidByXsd extends ValidationFunction {
             Validator validator = schema.newValidator();
             validator.validate(xmlFileSource);
         } catch (SAXException e) {
-            //result.addError(level, xmlFile, "obsah souboru není validní podle Xml schema ze souboru %s: %s", xsdFile.getAbsolutePath(), e.getMessage());
-            result.addError(new ValidationProblem(Level.ERROR, String.format("obsah souboru %s není validní podle Xml schema ze souboru %s: %s", xmlFile, xsdFile.getAbsolutePath(), e.getMessage()))
+            //uroven z parametru level pravidla (napr. INFO_XML_VALID_BY_XSD ma ve vsech fDMF WARNING); do 3.0 se parametr
+            //nacetl, ale ignoroval a hlasil se vzdy ERROR
+            result.addError(new ValidationProblem(level, String.format("obsah souboru %s není validní podle Xml schema ze souboru %s: %s", xmlFile, xsdFile.getAbsolutePath(), e.getMessage()))
                     .withFile(xmlFile)
                     .withXsdFile(xsdFile)
                     .withSimpleMessage("obsah souboru není validní podle XSD schématu: " + e.getMessage())
