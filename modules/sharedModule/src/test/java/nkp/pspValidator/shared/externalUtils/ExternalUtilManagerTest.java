@@ -225,7 +225,7 @@ public class ExternalUtilManagerTest {
         String parsed = manager.runUtilExecution(new ExternalUtilExecution("pdf", ExternalUtil.VERAPDF), new File("dummy.pdf"));
         assertTrue(parsed.startsWith("<?xml"));
         assertTrue(parsed.endsWith("</report>"));
-        List<String> errors = loadProfile(manager, "vep-2.4_emonograph_3.0", "pdf", ExternalUtil.VERAPDF).validate("pdf", new File("dummy.pdf"));
+        List<String> errors = loadProfile(manager, "emonograph_3.0", "pdf", ExternalUtil.VERAPDF).validate("pdf", new File("dummy.pdf"));
         assertTrue(errors.toString(), errors.contains("Soubor musí být validní: hodnota \"false\" neodpovídá žádnému z omezení: [musí být přesně 'true']"));
     }
 
@@ -242,7 +242,7 @@ public class ExternalUtilManagerTest {
         File target = new File(tmp.getRoot(), "a b.epub");
         String parsed = manager.runUtilExecution(new ExternalUtilExecution("epub", ExternalUtil.EPUBCHECK), target);
         assertTrue(parsed, parsed.startsWith("<?xml"));
-        List<String> errors = loadProfile(manager, "vep-2.4_emonograph_3.0", "epub", ExternalUtil.EPUBCHECK).validate("epub", target);
+        List<String> errors = loadProfile(manager, "emonograph_3.0", "epub", ExternalUtil.EPUBCHECK).validate("epub", target);
         assertEquals(Arrays.asList(
                 "Soubor musí být validní: hodnota \"Not well-formed\" neodpovídá žádnému z omezení: [musí být přesně 'Well-formed']",
                 "Detekce chybových hlášek: zakázaná hodnota nalezena: RSC-012, ERROR, [Fragment identifier is not defined.], toc.ncx (18-75)"

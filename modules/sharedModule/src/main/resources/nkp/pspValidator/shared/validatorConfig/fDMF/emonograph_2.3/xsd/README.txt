@@ -1,0 +1,1 @@
+Tento adresář obsahuje Xml Schémata pro validaci komponent stamotných PSP balíků, zejména popisných a strukturálních metadat.

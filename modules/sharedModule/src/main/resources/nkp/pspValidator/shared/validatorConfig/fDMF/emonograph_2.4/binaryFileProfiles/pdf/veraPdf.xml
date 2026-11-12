@@ -1,0 +1,55 @@
+<binaryFileProfile
+        xmlns="http://www.nkp.cz/pspValidator/3.0/binaryFileProfile"
+        validatorVersion="3.0"
+        dmf="emonograph_2.4"
+>
+    <fromXml>
+
+        <validation name="Soubor musí být validní">
+            <xmlDataExtraction resultType="STRING">
+                <firstNonempty>
+                    <xpath>//validationReport/@isCompliant</xpath>
+                </firstNonempty>
+            </xmlDataExtraction>
+            <rules>
+                <mustExist/>
+                <mustMatchAny>
+                    <isExactly>true</isExactly>
+                </mustMatchAny>
+            </rules>
+        </validation>
+
+        <validation name="Soubor PDF/A by měl být v podporované verzi">
+            <xmlDataExtraction resultType="STRING">
+                <firstNonempty>
+                    <xpath>//validationReport/@profileName</xpath>
+                </firstNonempty>
+            </xmlDataExtraction>
+            <rules>
+                <mustExist/>
+                <!--veraPDF od verze 1.2x vypisuje úroveň malým písmenem ("PDF/A-1b validation profile"), starší verze velkým;
+                    startsWith rozlišuje velikost písmen, proto jsou uvedeny obě varianty (riziko R1)-->
+                <mustMatchAny level="WARNING">
+                    <startsWith>PDF/A-1A</startsWith>
+                    <startsWith>PDF/A-1a</startsWith>
+                    <startsWith>PDF/A-1B</startsWith>
+                    <startsWith>PDF/A-1b</startsWith>
+                    <startsWith>PDF/A-2A</startsWith>
+                    <startsWith>PDF/A-2a</startsWith>
+                    <startsWith>PDF/A-2B</startsWith>
+                    <startsWith>PDF/A-2b</startsWith>
+                    <startsWith>PDF/A-2U</startsWith>
+                    <startsWith>PDF/A-2u</startsWith>
+
+                    <!--known unsupported versions -->
+                    <!--<startsWith>PDF/A-3A</startsWith>
+                    <startsWith>PDF/A-3B</startsWith>
+                    <startsWith>PDF/A-3U</startsWith>-->
+                </mustMatchAny>
+            </rules>
+        </validation>
+
+    </fromXml>
+
+
+</binaryFileProfile>

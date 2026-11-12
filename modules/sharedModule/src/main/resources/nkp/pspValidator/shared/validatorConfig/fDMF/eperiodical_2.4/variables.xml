@@ -1,0 +1,494 @@
+<fDMF xmlns="http://www.nkp.cz/pspValidator/3.0/fdmfConfig"
+      validatorVersion="3.0"
+      dmf="eperiodical_2.4"
+>
+    <description>
+        Zde jsou definovány proměnné. K jejich vyhodnocení jsou použity funkce, další proměnné, vzory a
+        konstanty.
+        Proměnné je možné dynamicky doplňovat/upravovat.
+        Nesmí ale nastat situace cyklu, tedy že by hodnota proměnné X závisela na proměnné/vzoru Y, která by závisela na
+        proměnné X.
+        Proměnné mohou obsahovat pouze velká písmena latinské abecedy, číslice a znaky '-','_';
+    </description>
+
+
+    <!--tj. musi byt dodano pres GUI nebo CLI-->
+    <value-def name="PSP_DIR" type="FILE">
+        <evaluation functionName="getProvidedFile">
+            <params>
+                <value name="file_id" type="STRING">PSP_DIR</value>
+            </params>
+        </evaluation>
+    </value-def>
+
+    <value-def name="PSP_ID" type="STRING">
+        <evaluation functionName="getStringByXpath">
+            <params>
+                <value name="xml_file" type="FILE">
+                    <!--pozor, tady se soubor INFO ziskava jinak, nez podle vzoru INFO_FILENAME.
+                    Protoze PSP_ID teprve zjistujeme, nemuzeme pouzit vzor INFO_FILENAME, ten ma hodnotu promenne PSP_ID
+                    jako svuj paramer.-->
+                    <!--jeden kandidat na soubor INFO-->
+                    <evaluation functionName="getFirstFileFromFileList">
+                        <params>
+                            <value name="files" type="FILE_LIST">
+                                <!--kandidati na soubor INFO podle vzoru a v danem adresari-->
+                                <evaluation functionName="findFilesInDirByPattern">
+                                    <params>
+                                        <value name="dir" type="FILE">
+                                            <value-ref name="PSP_DIR"/>
+                                        </value>
+                                        <pattern name="pattern">
+                                            <pattern-ref name="INFO_FILENAME_FOR_PSP_ID_DETECTION"/>
+                                        </pattern>
+                                    </params>
+                                </evaluation>
+                            </value>
+                        </params>
+                    </evaluation>
+                </value>
+                <value name="xpath" type="STRING">/info/packageid</value>
+                <value name="nsAware" type="BOOLEAN">false</value>
+            </params>
+        </evaluation>
+    </value-def>
+
+
+    <value-def name="INFO_FILES" type="FILE_LIST">
+        <evaluation functionName="findFilesInDirByPattern">
+            <params>
+                <value name="dir" type="FILE">
+                    <value-ref name="PSP_DIR"/>
+                </value>
+                <pattern name="pattern">
+                    <pattern-ref name="INFO_FILENAME"/>
+                </pattern>
+            </params>
+        </evaluation>
+    </value-def>
+
+    <value-def name="PRIMARY-METS_FILES" type="FILE_LIST">
+        <evaluation functionName="findFilesInDirByPattern">
+            <params>
+                <value name="dir" type="FILE">
+                    <value-ref name="PSP_DIR"/>
+                </value>
+                <pattern name="pattern">
+                    <pattern-ref name="PRIMARY-METS_FILENAME"/>
+                </pattern>
+            </params>
+        </evaluation>
+    </value-def>
+
+    <value-def name="CHECKSUM_FILES" type="FILE_LIST">
+        <evaluation functionName="findFilesInDirByPattern">
+            <params>
+                <value name="dir" type="FILE">
+                    <value-ref name="PSP_DIR"/>
+                </value>
+                <pattern name="pattern">
+                    <pattern-ref name="CHECKSUM_FILENAME"/>
+                </pattern>
+            </params>
+        </evaluation>
+    </value-def>
+
+    <value-def name="TOLERATED_TL_FILES" type="FILE_LIST">
+        <evaluation functionName="findFilesInDirByPattern">
+            <params>
+                <value name="dir" type="FILE">
+                    <value-ref name="PSP_DIR"/>
+                </value>
+                <pattern name="pattern">
+                    <pattern-ref name="TOLERATED_TL_FILENAME"/>
+                </pattern>
+            </params>
+        </evaluation>
+    </value-def>
+
+    <value-def name="INFO_FILE" type="FILE">
+        <evaluation functionName="getFirstFileFromFileList">
+            <params>
+                <value name="files" type="FILE_LIST">
+                    <value-ref name="INFO_FILES"/>
+                </value>
+            </params>
+        </evaluation>
+    </value-def>
+
+    <value-def name="PRIMARY-METS_FILE" type="FILE">
+        <evaluation functionName="getFirstFileFromFileList">
+            <params>
+                <value name="files" type="FILE_LIST">
+                    <value-ref name="PRIMARY-METS_FILES"/>
+                </value>
+            </params>
+        </evaluation>
+    </value-def>
+
+    <value-def name="CHECKSUM_FILE" type="FILE">
+        <evaluation functionName="getFirstFileFromFileList">
+            <params>
+                <value name="files" type="FILE_LIST">
+                    <value-ref name="CHECKSUM_FILES"/>
+                </value>
+            </params>
+        </evaluation>
+    </value-def>
+
+    <value-def name="ORIGINAL-DIR_FILES" type="FILE_LIST">
+        <evaluation functionName="findFilesInDirByPattern">
+            <params>
+                <value name="dir" type="FILE">
+                    <value-ref name="PSP_DIR"/>
+                </value>
+                <pattern name="pattern">
+                    <pattern-ref name="ORIGINAL-DIR_FILENAME"/>
+                </pattern>
+            </params>
+        </evaluation>
+    </value-def>
+
+    <value-def name="ORIGINAL-DIR_FILE" type="FILE">
+        <evaluation functionName="getFirstFileFromFileList">
+            <params>
+                <value name="files" type="FILE_LIST">
+                    <value-ref name="ORIGINAL-DIR_FILES"/>
+                </value>
+            </params>
+        </evaluation>
+    </value-def>
+
+    <value-def name="ORIGINAL-COPY-PDF_FILES" type="FILE_LIST">
+        <evaluation functionName="findFilesInDirByPattern">
+            <params>
+                <value name="dir" type="FILE">
+                    <value-ref name="ORIGINAL-DIR_FILE"/>
+                </value>
+                <pattern name="pattern">
+                    <pattern-ref name="ORIGINAL-COPY-PDF_FILENAME"/>
+                </pattern>
+            </params>
+        </evaluation>
+    </value-def>
+
+    <value-def name="ORIGINAL-COPY-EPUB_FILES" type="FILE_LIST">
+        <evaluation functionName="findFilesInDirByPattern">
+            <params>
+                <value name="dir" type="FILE">
+                    <value-ref name="ORIGINAL-DIR_FILE"/>
+                </value>
+                <pattern name="pattern">
+                    <pattern-ref name="ORIGINAL-COPY-EPUB_FILENAME"/>
+                </pattern>
+            </params>
+        </evaluation>
+    </value-def>
+
+    <!--soubory XSD-->
+
+    <value-def name="INFO_XSD_FILE" type="FILE">
+        <evaluation functionName="getProvidedFile">
+            <params>
+                <value name="file_id" type="STRING">INFO_XSD_FILE</value>
+            </params>
+        </evaluation>
+    </value-def>
+
+    <value-def name="CMD_XSD_FILE" type="FILE">
+        <evaluation functionName="getProvidedFile">
+            <params>
+                <value name="file_id" type="STRING">CMD_XSD_FILE</value>
+            </params>
+        </evaluation>
+    </value-def>
+
+    <value-def name="DC_XSD_FILE" type="FILE">
+        <evaluation functionName="getProvidedFile">
+            <params>
+                <value name="file_id" type="STRING">DC_XSD_FILE</value>
+            </params>
+        </evaluation>
+    </value-def>
+
+    <value-def name="METS_XSD_FILE" type="FILE">
+        <evaluation functionName="getProvidedFile">
+            <params>
+                <value name="file_id" type="STRING">METS_XSD_FILE</value>
+            </params>
+        </evaluation>
+    </value-def>
+
+    <value-def name="MIX_XSD_FILE" type="FILE">
+        <evaluation functionName="getProvidedFile">
+            <params>
+                <value name="file_id" type="STRING">MIX_XSD_FILE</value>
+            </params>
+        </evaluation>
+    </value-def>
+
+    <value-def name="MODS_XSD_FILE" type="FILE">
+        <evaluation functionName="getProvidedFile">
+            <params>
+                <value name="file_id" type="STRING">MODS_XSD_FILE</value>
+            </params>
+        </evaluation>
+    </value-def>
+
+    <value-def name="PREMIS_XSD_FILE" type="FILE">
+        <evaluation functionName="getProvidedFile">
+            <params>
+                <value name="file_id" type="STRING">PREMIS_XSD_FILE</value>
+            </params>
+        </evaluation>
+    </value-def>
+
+    <value-def name="COPYRIGHT_MD_XSD_FILE" type="FILE">
+        <evaluation functionName="getProvidedFile">
+            <params>
+                <value name="file_id" type="STRING">COPYRIGHT_MD_XSD_FILE</value>
+            </params>
+        </evaluation>
+    </value-def>
+
+    <value-def name="DOCUMENT_MD_XSD_FILE" type="FILE">
+        <evaluation functionName="getProvidedFile">
+            <params>
+                <value name="file_id" type="STRING">DOCUMENT_MD_XSD_FILE</value>
+            </params>
+        </evaluation>
+    </value-def>
+
+    <value-def name="NDKTECH_XSD_FILE" type="FILE">
+        <evaluation functionName="getProvidedFile">
+            <params>
+                <value name="file_id" type="STRING">NDKTECH_XSD_FILE</value>
+            </params>
+        </evaluation>
+    </value-def>
+
+    <!--identifikátory-->
+
+    <!--title-->
+    <value-def name="ID_TYPES_TITLE_MANDATORY" type="STRING_LIST">
+        <description>seznam povinných typů identifikátorů pro úroveň TITLE</description>
+        <evaluation functionName="buildListOfStrings">
+            <params>
+                <value name="string" type="STRING">uuid</value>
+            </params>
+        </evaluation>
+    </value-def>
+
+    <value-def name="ID_TYPES_TITLE_OPTIONAL" type="STRING_LIST">
+        <!--Zatím se nepužívá, jen pro přehled. -->
+        <description>seznam volitelných typů identifikátorů pro úroveň TITLE</description>
+        <evaluation functionName="buildListOfStrings">
+            <params>
+                <value name="string" type="STRING">ccnb</value>
+                <value name="string" type="STRING">issn</value>
+                <value name="string" type="STRING">ismn</value>
+            </params>
+        </evaluation>
+    </value-def>
+
+    <value-def name="ID_TYPES_TITLE_PROHIBITED" type="STRING_LIST">
+        <description>seznam zakázaných typů identifikátorů pro úroveň TITLE</description>
+        <evaluation functionName="buildListOfStrings">
+            <params>
+                <value name="string" type="STRING">urnnbn</value>
+            </params>
+        </evaluation>
+    </value-def>
+
+    <!--volume-->
+    <value-def name="ID_TYPES_VOLUME_MANDATORY" type="STRING_LIST">
+        <description>seznam povinných typů identifikátorů pro úroveň VOLUME</description>
+        <evaluation functionName="buildListOfStrings">
+            <params>
+                <value name="string" type="STRING">uuid</value>
+            </params>
+        </evaluation>
+    </value-def>
+
+    <value-def name="ID_TYPES_VOLUME_OPTIONAL" type="STRING_LIST">
+        <!--Zatím se nepužívá, jen pro přehled. -->
+        <!--urnnbn: DMF uvádí u ročníku "urnnbn" (R), proto není mezi zakázanými-->
+        <description>seznam volitelných typů identifikátorů pro úroveň VOLUME</description>
+        <evaluation functionName="buildListOfStrings">
+            <params>
+                <value name="string" type="STRING">urnnbn</value>
+            </params>
+        </evaluation>
+    </value-def>
+
+    <value-def name="ID_TYPES_VOLUME_PROHIBITED" type="STRING_LIST">
+        <description>seznam zakázaných typů identifikátorů pro úroveň VOLUME</description>
+        <evaluation functionName="buildListOfStrings">
+            <params>
+                <value name="string" type="STRING">issn</value>
+                <value name="string" type="STRING">ccnb</value>
+            </params>
+        </evaluation>
+    </value-def>
+
+    <!--issue-->
+    <value-def name="ID_TYPES_ISSUE_MANDATORY" type="STRING_LIST">
+        <description>seznam povinných typů identifikátorů pro úroveň VOLUME</description>
+        <evaluation functionName="buildListOfStrings">
+            <params>
+                <value name="string" type="STRING">uuid</value>
+            </params>
+        </evaluation>
+    </value-def>
+
+    <value-def name="ID_TYPES_ISSUE_OPTIONAL" type="STRING_LIST">
+        <!--Zatím se nepužívá, jen pro přehled. -->
+        <description>seznam volitelných typů identifikátorů pro úroveň VOLUME</description>
+        <evaluation functionName="buildListOfStrings">
+            <params>
+                <value name="string" type="STRING">isbn</value>
+                <value name="string" type="STRING">issn</value>
+                <value name="string" type="STRING">urnnbn</value>
+            </params>
+        </evaluation>
+    </value-def>
+
+    <value-def name="ID_TYPES_ISSUE_PROHIBITED" type="STRING_LIST">
+        <description>seznam zakázaných typů identifikátorů pro úroveň VOLUME</description>
+        <evaluation functionName="buildListOfStrings">
+            <params>
+                <value name="string" type="STRING">ccnb</value>
+            </params>
+        </evaluation>
+    </value-def>
+
+    <!--article-->
+    <value-def name="ID_TYPES_ARTICLE_MANDATORY" type="STRING_LIST">
+        <description>seznam povinných typů identifikátorů pro úroveň ARTICLE</description>
+        <evaluation functionName="buildListOfStrings">
+            <params>
+                <value name="string" type="STRING">uuid</value>
+            </params>
+        </evaluation>
+    </value-def>
+
+    <value-def name="ID_TYPES_ARTICLE_OPTIONAL" type="STRING_LIST">
+        <!--Zatím se nepužívá, jen pro přehled. -->
+        <description>seznam volitelných typů identifikátorů pro úroveň ARTICLE</description>
+        <evaluation functionName="buildListOfStrings">
+            <params>
+                <value name="string" type="STRING">urnnbn</value>
+            </params>
+        </evaluation>
+    </value-def>
+
+    <value-def name="ID_TYPES_ARTICLE_PROHIBITED" type="STRING_LIST">
+        <description>seznam zakázaných typů identifikátorů pro úroveň ARTICLE</description>
+        <evaluation functionName="buildListOfStrings">
+            <params>
+                <value name="string" type="STRING">issn</value>
+                <value name="string" type="STRING">ccnb</value>
+            </params>
+        </evaluation>
+    </value-def>
+
+    <!--supplement-->
+    <value-def name="ID_TYPES_SUPPLEMENT_MANDATORY" type="STRING_LIST">
+        <description>seznam povinných typů identifikátorů pro úroveň SUPPLEMENT</description>
+        <evaluation functionName="buildListOfStrings">
+            <params>
+                <value name="string" type="STRING">uuid</value>
+            </params>
+        </evaluation>
+    </value-def>
+
+    <value-def name="ID_TYPES_SUPPLEMENT_OPTIONAL" type="STRING_LIST">
+        <!--Zatím se nepužívá, jen pro přehled. -->
+        <description>seznam volitelných typů identifikátorů pro úroveň SUPPLEMENT</description>
+        <evaluation functionName="buildListOfStrings">
+            <params>
+                <value name="string" type="STRING">urnnbn</value>
+                <value name="string" type="STRING">ccnb</value>
+                <value name="string" type="STRING">isbn</value>
+                <value name="string" type="STRING">ismn</value>
+                <value name="string" type="STRING">issn</value>
+            </params>
+        </evaluation>
+    </value-def>
+
+    <value-def name="ID_TYPES_SUPPLEMENT_PROHIBITED" type="STRING_LIST">
+        <description>seznam zakázaných typů identifikátorů pro úroveň SUPPLEMENT</description>
+        <evaluation functionName="buildListOfStrings">
+            <params/>
+        </evaluation>
+    </value-def>
+
+    <value-def name="INFO_IDENTIFIERS" type="IDENTIFIER_LIST">
+        <description>seznam identifikátorů ze souboru INFO</description>
+        <evaluation functionName="getIdentifiersFromInfoFile">
+            <params>
+                <value name="info_file" type="FILE">
+                    <value-ref name="INFO_FILE"/>
+                </value>
+            </params>
+        </evaluation>
+    </value-def>
+
+    <value-def name="IE_IDENTIFIERS" type="IDENTIFIER_LIST">
+        <description>seznam identifikátorů intelektuální entity ze souboru PRIMARY-METS</description>
+        <evaluation functionName="selectIeIdentifiersFromPrimaryMetsFile">
+            <params>
+                <!--primární hodnoty - pro ISSUE-->
+                <value name="mets_identifier_list_list" type="IDENTIFIER_LIST_LIST">
+                    <!--seznam obsahujici seznam identifikatoru pro kazdy zaznam dmdSec pro MODS-->
+                    <evaluation functionName="getModsIdentifiersForEachDmdsecId">
+                        <params>
+                            <value name="dmdsec_ids" type="STRING_LIST">
+                                <!--seznam identifikatoru (dmdSec ID)-->
+                                <evaluation functionName="getStringListByXpath">
+                                    <params>
+                                        <value name="xml_file" type="FILE">
+                                            <value-ref name="PRIMARY-METS_FILE"/>
+                                        </value>
+                                        <value name="xpath" type="STRING">
+                                            /mets:mets/mets:dmdSec[starts-with(@ID, "MODSMD_ISSUE")]/@ID
+                                        </value>
+                                    </params>
+                                </evaluation>
+                            </value>
+                            <value name="mets_file" type="FILE">
+                                <value-ref name="PRIMARY-METS_FILE"/>
+                            </value>
+                        </params>
+                    </evaluation>
+                </value>
+
+                <!-- sekundární hodnoty - pro SUPPLEMENT-->
+                <value name="mets_identifier_list_list_2" type="IDENTIFIER_LIST_LIST">
+                    <!--seznam obsahujici seznam identifikatoru pro kazdy zaznam dmdSec pro MODS-->
+                    <evaluation functionName="getModsIdentifiersForEachDmdsecId">
+                        <params>
+                            <value name="dmdsec_ids" type="STRING_LIST">
+                                <!--seznam identifikatoru (dmdSec ID)-->
+                                <evaluation functionName="getStringListByXpath">
+                                    <params>
+                                        <value name="xml_file" type="FILE">
+                                            <value-ref name="PRIMARY-METS_FILE"/>
+                                        </value>
+                                        <value name="xpath" type="STRING">
+                                            /mets:mets/mets:dmdSec[starts-with(@ID, "MODSMD_SUPPL")]/@ID
+                                        </value>
+                                    </params>
+                                </evaluation>
+                            </value>
+                            <value name="mets_file" type="FILE">
+                                <value-ref name="PRIMARY-METS_FILE"/>
+                            </value>
+                        </params>
+                    </evaluation>
+                </value>
+            </params>
+        </evaluation>
+    </value-def>
+
+</fDMF>

@@ -314,6 +314,75 @@
                 </expectedElements>
             </element>
 
+            <!--úroveň příloha (nepovinná, issue VEP #20)-->
+            <element name="mets:dmdSec" specification="starts-with(@ID,'MODSMD_SUPPL')" mandatory="false">
+                <expectedAttributes>
+                    <attribute name="ID" mandatory="true">
+                        <expectedContent>
+                            <regexp>MODSMD_SUPPL_[0-9]{4}</regexp>
+                        </expectedContent>
+                    </attribute>
+                </expectedAttributes>
+                <expectedElements>
+                    <element name="mets:mdWrap">
+                        <expectedAttributes>
+                            <attribute name="MDTYPE" mandatory="false">
+                                <expectedContent>
+                                    <value>MODS</value>
+                                </expectedContent>
+                            </attribute>
+                            <attribute name="MDTYPEVERSION" mandatory="false">
+                                <expectedContent>
+                                    <regexp>[1-9]+(\.([1-9])+)*</regexp>
+                                </expectedContent>
+                            </attribute>
+                            <attribute name="MIMETYPE" mandatory="false">
+                                <expectedContent>
+                                    <value>text/xml</value>
+                                </expectedContent>
+                            </attribute>
+                        </expectedAttributes>
+                        <expectedElements>
+                            <element name="mets:xmlData" ignoreUnexpectedChildElements="true"/>
+                        </expectedElements>
+                    </element>
+                </expectedElements>
+            </element>
+
+            <element name="mets:dmdSec" specification="starts-with(@ID,'DCMD_SUPPL')" mandatory="false">
+                <expectedAttributes>
+                    <attribute name="ID" mandatory="true">
+                        <expectedContent>
+                            <regexp>DCMD_SUPPL_[0-9]{4}</regexp>
+                        </expectedContent>
+                    </attribute>
+                </expectedAttributes>
+                <expectedElements>
+                    <element name="mets:mdWrap">
+                        <expectedAttributes>
+                            <attribute name="MDTYPE" mandatory="false">
+                                <expectedContent>
+                                    <value>DC</value>
+                                </expectedContent>
+                            </attribute>
+                            <attribute name="MDTYPEVERSION" mandatory="false">
+                                <expectedContent>
+                                    <regexp>[1-9]+(\.([1-9])+)*</regexp>
+                                </expectedContent>
+                            </attribute>
+                            <attribute name="MIMETYPE" mandatory="false">
+                                <expectedContent>
+                                    <value>text/xml</value>
+                                </expectedContent>
+                            </attribute>
+                        </expectedAttributes>
+                        <expectedElements>
+                            <element name="mets:xmlData" ignoreUnexpectedChildElements="true"/>
+                        </expectedElements>
+                    </element>
+                </expectedElements>
+            </element>
+
             <!--technická a administrativní metadata (strana 45)-->
             <element name="mets:amdSec" specification="./mets:techMD|./mets:digiprovMD">
                 <expectedAttributes>

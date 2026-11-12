@@ -3,8 +3,8 @@
 Vstupy pro testy parsování výstupů nástrojů bez samotných nástrojů (balíček
 `nkp.pspValidator.shared.externalUtils`, viz `ExternalUtilsTestSupport`). Testy vezmou uložený
 text, podstrčí ho místo spuštění procesu (`CannedOutputExternalUtilManager`) a vyhodnotí nad ním
-profily binárních souborů z fDMF (`binaryFileProfiles/{mc,uc}/*.xml`, u veraPDF a EPUBCheck fixture
-v `profiles/`), extrakce a pravidla.
+profily binárních souborů z fDMF (`binaryFileProfiles/{mc,uc}/*.xml`, u veraPDF a EPUBCheck
+`binaryFileProfiles/{pdf,epub}/*.xml` z `emonograph_3.0`), extrakce a pravidla.
 
 Obrazové nástroje pořízeny 8. 11. 2026 na macOS (Apple Silicon), veraPDF a EPUBCheck 12. 11. 2026. Absolutní cesty ve výstupech jsou nahrazené cestou
 relativní k `modules/sharedModule` (např. `src/test/tools/jp2/mc.jp2`), jinak jsou výstupy beze změny.
@@ -89,13 +89,12 @@ Názvy souborů obrazových nástrojů: `<adresář vstupu>_<název vstupu>`, vs
   nevypíše (ověřeno se syntetickým EPUB s `META-INF/encryption.xml`), validace „Kontrola DRM“ profilu VEP proto
   s aktuální verzí nic nenajde.
 
-## Profily e-publikací (fixture)
+## Profily e-publikací
 
-`profiles/vep-2.4_emonograph_3.0/binaryFileProfiles/{pdf/veraPdf.xml,epub/epubCheck.xml}`: kopie profilů fDMF
-`emonograph_3.0` z VEP 2.4 (`.local/vep-2.4/validatorConfig`), změněn jen jmenný prostor
-(`http://www.nkp.cz/pspValidator/3.0/binaryFileProfile`) a `validatorVersion="3.0"`. Slouží testům, dokud fDMF
-e-publikací nejsou v `validatorConfig/fDMF` (krok P4); obsah včetně známých vad (R1, `application/font‐wof`) je
-beze změny.
+Testy berou profily veraPDF a EPUBCheck přímo z fDMF `emonograph_3.0` (port z VEP 2.4, krok P4). Profily všech
+e-fDMF jsou až na atribut `dmf` (a název validace DRM u e-periodik) shodné. Proti VEP je opravené riziko R1
+(veraPDF 1.30 vypisuje `PDF/A-1b` malým písmenem, profil přijímá obě varianty); známá vada
+`application/font‐wof` (R3) zůstává.
 
 ## Obnovení
 

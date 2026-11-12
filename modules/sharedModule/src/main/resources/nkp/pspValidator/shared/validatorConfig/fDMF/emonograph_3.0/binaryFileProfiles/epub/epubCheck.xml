@@ -38,6 +38,9 @@
             </rules>
         </validation>
 
+        <!--EPUBCheck 5.x hlásí RSC-004 (šifrovaný obsah) jen jako INFO a do XML výstupu ho nevypíše, takže tato
+            validace s aktuálními verzemi nic nenajde. Validace zůstává beze změny (port z VEP), čeká na dotaz NK,
+            zda a jak DRM kontrolovat.-->
         <validation name="Kontrola na nepřítomnost DRM">
             <xmlDataExtraction resultType="STRING_LIST">
                 <allNonempty>

@@ -336,9 +336,12 @@
 
     <value-def name="ID_TYPES_VOLUME_OPTIONAL" type="STRING_LIST">
         <!--Zatím se nepužívá, jen pro přehled. -->
+        <!--urnnbn: DMF uvádí u ročníku "urnnbn" (R), proto není mezi zakázanými-->
         <description>seznam volitelných typů identifikátorů pro úroveň VOLUME</description>
         <evaluation functionName="buildListOfStrings">
-            <params></params>
+            <params>
+                <value name="string" type="STRING">urnnbn</value>
+            </params>
         </evaluation>
     </value-def>
 
@@ -346,7 +349,6 @@
         <description>seznam zakázaných typů identifikátorů pro úroveň VOLUME</description>
         <evaluation functionName="buildListOfStrings">
             <params>
-                <value name="string" type="STRING">urnnbn</value>
                 <value name="string" type="STRING">issn</value>
                 <value name="string" type="STRING">ccnb</value>
             </params>
@@ -451,6 +453,63 @@
             <params>
                 <value name="info_file" type="FILE">
                     <value-ref name="INFO_FILE"/>
+                </value>
+            </params>
+        </evaluation>
+    </value-def>
+
+    <value-def name="IE_IDENTIFIERS" type="IDENTIFIER_LIST">
+        <description>seznam identifikátorů intelektuální entity ze souboru PRIMARY-METS</description>
+        <evaluation functionName="selectIeIdentifiersFromPrimaryMetsFile">
+            <params>
+                <!--primární hodnoty - pro ISSUE-->
+                <value name="mets_identifier_list_list" type="IDENTIFIER_LIST_LIST">
+                    <!--seznam obsahujici seznam identifikatoru pro kazdy zaznam dmdSec pro MODS-->
+                    <evaluation functionName="getModsIdentifiersForEachDmdsecId">
+                        <params>
+                            <value name="dmdsec_ids" type="STRING_LIST">
+                                <!--seznam identifikatoru (dmdSec ID)-->
+                                <evaluation functionName="getStringListByXpath">
+                                    <params>
+                                        <value name="xml_file" type="FILE">
+                                            <value-ref name="PRIMARY-METS_FILE"/>
+                                        </value>
+                                        <value name="xpath" type="STRING">
+                                            /mets:mets/mets:dmdSec[starts-with(@ID, "MODSMD_ISSUE")]/@ID
+                                        </value>
+                                    </params>
+                                </evaluation>
+                            </value>
+                            <value name="mets_file" type="FILE">
+                                <value-ref name="PRIMARY-METS_FILE"/>
+                            </value>
+                        </params>
+                    </evaluation>
+                </value>
+
+                <!-- sekundární hodnoty - pro SUPPLEMENT-->
+                <value name="mets_identifier_list_list_2" type="IDENTIFIER_LIST_LIST">
+                    <!--seznam obsahujici seznam identifikatoru pro kazdy zaznam dmdSec pro MODS-->
+                    <evaluation functionName="getModsIdentifiersForEachDmdsecId">
+                        <params>
+                            <value name="dmdsec_ids" type="STRING_LIST">
+                                <!--seznam identifikatoru (dmdSec ID)-->
+                                <evaluation functionName="getStringListByXpath">
+                                    <params>
+                                        <value name="xml_file" type="FILE">
+                                            <value-ref name="PRIMARY-METS_FILE"/>
+                                        </value>
+                                        <value name="xpath" type="STRING">
+                                            /mets:mets/mets:dmdSec[starts-with(@ID, "MODSMD_SUPPL")]/@ID
+                                        </value>
+                                    </params>
+                                </evaluation>
+                            </value>
+                            <value name="mets_file" type="FILE">
+                                <value-ref name="PRIMARY-METS_FILE"/>
+                            </value>
+                        </params>
+                    </evaluation>
                 </value>
             </params>
         </evaluation>

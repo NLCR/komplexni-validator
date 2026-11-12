@@ -1,0 +1,96 @@
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+    <!--XML Schema pro soubor INFO pro DMF Eborn Monografie 2.4-->
+
+    <!--METS Profile requirement id infoxml2-->
+    <xs:element name="info">
+        <xs:complexType>
+            <xs:sequence>
+                <!--METS Profile requirement id infoxml3-->
+                <xs:element type="xs:dateTime" name="created"/>
+                <!--METS Profile requirement id infoxml4-->
+                <xs:element type="metadataVersion" name="metadataversion"/>
+                <!--METS Profile requirement id infoxml5-->
+                <xs:element type="xs:string" name="packageid"/>
+                <!--METS Profile requirement id infoxml6-->
+                <xs:element type="xs:string" name="mainmets"/>
+                <!--METS Profile requirement id infoxml7-->
+                <xs:element name="validation" minOccurs="0">
+                    <xs:complexType>
+                        <xs:simpleContent>
+                            <xs:extension base="xs:string">
+                                <xs:attribute name="version" type="xs:string"/>
+                            </xs:extension>
+                        </xs:simpleContent>
+                    </xs:complexType>
+                </xs:element>
+                <!--METS Profile requirement id infoxml8-->
+                <xs:element name="titleid" maxOccurs="unbounded">
+                    <xs:complexType>
+                        <xs:simpleContent>
+                            <xs:extension base="xs:string">
+                                <xs:attribute name="type" use="required">
+                                    <xs:simpleType>
+                                        <xs:restriction base="xs:string">
+                                            <xs:enumeration value="isbn"/>
+                                            <xs:enumeration value="issn"/>
+                                            <xs:enumeration value="ccnb"/>
+                                            <xs:enumeration value="urnnbn"/>
+                                            <xs:enumeration value="uuid"/>
+                                        </xs:restriction>
+                                    </xs:simpleType>
+                                </xs:attribute>
+                            </xs:extension>
+                        </xs:simpleContent>
+                    </xs:complexType>
+                </xs:element>
+
+                <!--METS Profile requirement id infoxml9-->
+                <xs:element type="xs:string" name="collection" minOccurs="0"/>
+                <!--METS Profile requirement id infoxml10-->
+                <xs:element type="xs:string" name="institution" minOccurs="0"/>
+                <!--METS Profile requirement id infoxml11-->
+                <xs:element type="xs:string" name="creator"/>
+                <!--METS Profile requirement id infoxml12-->
+                <!--TODO: kontrolovat tohle (samozrejme mimo XSD)?-->
+                <xs:element type="xs:int" name="size"/>
+                <!--METS Profile requirement id infoxml13-->
+                <xs:element name="itemlist">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element type="xs:anyURI" name="item" maxOccurs="unbounded"/>
+                        </xs:sequence>
+                        <xs:attribute type="xs:integer" name="itemtotal" use="required"/>
+                    </xs:complexType>
+                </xs:element>
+                <!--METS Profile requirement id infoxml14-->
+                <xs:element name="checksum">
+                    <xs:complexType>
+                        <xs:simpleContent>
+                            <xs:extension base="xs:anyURI">
+                                <xs:attribute type="checksumType" name="type" use="required"/>
+                                <xs:attribute type="xs:string" name="checksum" use="required"/>
+                            </xs:extension>
+                        </xs:simpleContent>
+                    </xs:complexType>
+                </xs:element>
+                <!--METS Profile requirement id infoxml15-->
+                <xs:element type="xs:string" name="note" minOccurs="0"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:simpleType name="checksumType">
+        <xs:restriction base="xs:string">
+            <xs:pattern value="md5"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:simpleType name="metadataVersion">
+        <xs:restriction base="xs:string">
+            <!--tohle se lisi podle verze DMF (fDMF), jejiz soucasti je tenhle soubor-->
+            <xs:enumeration value="2.3"/>
+            <xs:enumeration value="2.4"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+</xs:schema>

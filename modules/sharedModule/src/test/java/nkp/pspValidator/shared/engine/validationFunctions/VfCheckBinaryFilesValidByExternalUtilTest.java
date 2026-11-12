@@ -28,7 +28,7 @@ import static org.junit.Assert.*;
  * napr. {@code ./gradlew :modules:sharedModule:test --tests '*VfCheckBinaryFilesValidByExternalUtilTest' -Djhove.path=/opt/jhove}.
  * Dostupnost se overi detekci verze jako v aplikaci; kdyz nastroj chybi, je test preskoceny (Assume), ne zeleny.
  * <p>
- * veraPDF a EPUBCheck (fixture profilu vep-2.4_emonograph_3.0, fDMF e-publikaci zatim v repu nejsou) nad
+ * veraPDF a EPUBCheck (profily fDMF emonograph_3.0) nad
  * src/test/resources/epublikace: veraPDF z PATH nebo -Dverapdf.path, EPUBCheck jen s -Depubcheck.path (adresar
  * s epubcheck.jar, spousti se "java -jar"), napr. -Dverapdf.path=$(brew --prefix)/bin -Depubcheck.path=$(brew --prefix epubcheck)/libexec.
  * Gradle predava systemove vlastnosti *.path testum (build.gradle sharedModule).
@@ -41,7 +41,10 @@ public class VfCheckBinaryFilesValidByExternalUtilTest {
     private static final File EXAMPLES_ROOT_DIR = new File("src/test/resources/jpeg2000");
     private static final File TOOLS_JP2_DIR = new File("src/test/tools/jp2");
     private static final File EPUBLIKACE_DIR = new File("src/test/resources/epublikace");
-    private static final String EPUB_PROFILES_FIXTURE = "vep-2.4_emonograph_3.0";
+    private static final String EPUB_PROFILES_FIXTURE = "emonograph_3.0";
+    private static final String PDFA_CONSTRAINTS = "[musí začínat na 'PDF/A-1A',musí začínat na 'PDF/A-1a',musí začínat na 'PDF/A-1B',"
+            + "musí začínat na 'PDF/A-1b',musí začínat na 'PDF/A-2A',musí začínat na 'PDF/A-2a',musí začínat na 'PDF/A-2B',"
+            + "musí začínat na 'PDF/A-2b',musí začínat na 'PDF/A-2U',musí začínat na 'PDF/A-2u']";
     private static final Dmf DMF = new Dmf(Dmf.Type.FUND_UNIT, "0.2");
 
     private static final Map<ExternalUtil, String> PATH_PROPERTIES = new EnumMap<>(ExternalUtil.class);
@@ -297,7 +300,7 @@ public class VfCheckBinaryFilesValidByExternalUtilTest {
     @Test
     public void levelFromProfileOverridesValidationProblemLevel() throws Exception {
         CannedOutputExternalUtilManager manager = new CannedOutputExternalUtilManager()
-                .withOutput(ExternalUtil.VERAPDF, ExternalUtilsTestSupport.output("verapdf", "noncompliant_dummy.xml"));
+                .withOutput(ExternalUtil.VERAPDF, ExternalUtilsTestSupport.output("verapdf", "noncompliant_dummy_flavour_3b.xml"));
         List<File> files = Collections.singletonList(new File("dummy.pdf"));
         // rules.xml VEP validation_problem_level nezadava (ERROR); "PDF/A v podporované verzi" ma v profilu level="WARNING"
         for (Level rulesLevel : new Level[]{null, Level.ERROR, Level.INFO}) {
@@ -306,8 +309,8 @@ public class VfCheckBinaryFilesValidByExternalUtilTest {
             Level expected = rulesLevel == null ? Level.ERROR : rulesLevel;
             assertEquals(Arrays.asList(
                     expected + ": Soubor musí být validní: hodnota \"false\" neodpovídá žádnému z omezení: [musí být přesně 'true']",
-                    "WARNING: Soubor PDF/A by měl být v podporované verzi: hodnota \"PDF/A-1b validation profile\" neodpovídá žádnému z omezení: "
-                            + "[musí začínat na 'PDF/A-1A',musí začínat na 'PDF/A-1B',musí začínat na 'PDF/A-2A',musí začínat na 'PDF/A-2B',musí začínat na 'PDF/A-2U']"
+                    "WARNING: Soubor PDF/A by měl být v podporované verzi: hodnota \"PDF/A-3b validation profile\" neodpovídá žádnému z omezení: "
+                            + PDFA_CONSTRAINTS
             ), levelsAndMessages(result));
             for (ValidationProblem problem : result.getProblems()) {
                 assertEquals("veraPDF", problem.getToolName());
@@ -601,9 +604,8 @@ public class VfCheckBinaryFilesValidByExternalUtilTest {
     @Test
     public void veraPdfCompliantPdfA1b() {
         assumeAvailable(ExternalUtil.VERAPDF);
-        // dummy_PDFA-1B.pdf (22 kB, z test resources VEP) je PDF/A-1b; WARNING je riziko R1 (profil VEP ceka "PDF/A-1B")
-        assertEquals(Collections.singletonList("WARNING: Soubor PDF/A by měl být v podporované verzi: hodnota \"PDF/A-1b validation profile\" neodpovídá žádnému z omezení: "
-                        + "[musí začínat na 'PDF/A-1A',musí začínat na 'PDF/A-1B',musí začínat na 'PDF/A-2A',musí začínat na 'PDF/A-2B',musí začínat na 'PDF/A-2U']"),
+        // dummy_PDFA-1B.pdf (22 kB, z test resources VEP) je PDF/A-1b; bez WARNING diky oprave R1 (profil VEP cekal jen "PDF/A-1B")
+        assertEquals(Collections.<String>emptyList(),
                 levelsAndMessages(validateEPublication(ExternalUtil.VERAPDF, new File(EPUBLIKACE_DIR, "dummy_PDFA-1B.pdf"))));
     }
 
@@ -611,10 +613,9 @@ public class VfCheckBinaryFilesValidByExternalUtilTest {
     public void veraPdfPdfWithoutPdfA() {
         assumeAvailable(ExternalUtil.VERAPDF);
         // synteticky_bez_pdfa.pdf (329 B): platne PDF 1.4 bez PDF/A, veraPDF zvoli PDF/A-1b a soubor nevyhovi
-        List<String> problems = levelsAndMessages(validateEPublication(ExternalUtil.VERAPDF, new File(EPUBLIKACE_DIR, "synteticky_bez_pdfa.pdf")));
-        assertEquals(problems.toString(), 2, problems.size());
-        assertEquals("ERROR: Soubor musí být validní: hodnota \"false\" neodpovídá žádnému z omezení: [musí být přesně 'true']", problems.get(0));
-        assertTrue(problems.get(1), problems.get(1).startsWith("WARNING: Soubor PDF/A by měl být v podporované verzi: "));
+        // (verze "PDF/A-1b" je po oprave R1 podporovana, zustava jen chyba validity)
+        assertEquals(Collections.singletonList("ERROR: Soubor musí být validní: hodnota \"false\" neodpovídá žádnému z omezení: [musí být přesně 'true']"),
+                levelsAndMessages(validateEPublication(ExternalUtil.VERAPDF, new File(EPUBLIKACE_DIR, "synteticky_bez_pdfa.pdf"))));
     }
 
     @Test

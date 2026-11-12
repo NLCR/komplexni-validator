@@ -55,11 +55,11 @@ metadat, profily binárních souborů):
 | zvuk bez nosiče | `digital audio` | 1.0 |
 | datové disky | `data_disc` | 0.1 |
 | jednotky fondu | `Clipping`, `Clipping index`, `Card index` | 0.1, 0.2 |
-| e-monografie | `electronic_monograph` | 3.0 |
-| e-periodika | `electronic_periodical` | 2.5 |
+| e-monografie | `electronic_monograph` | 2.3, 2.4, 3.0 |
+| e-periodika | `electronic_periodical` | 2.3, 2.4, 2.5 |
 | skládaná e-periodika | `electronic_coll_journal` | 1.3 |
 
-Celkem 33 konfigurací. Když balíček verzi neuvádí, použije se výchozí (konstanty `DEFAULT_*_VERSION` v
+Celkem 37 konfigurací. Když balíček verzi neuvádí, použije se výchozí (konstanty `DEFAULT_*_VERSION` v
 `DmfDetector.java`): monografie 2.3, periodika 2.2, gramodesky 1.0, fonoválečky 1.0, kompaktní disky 1.0, zvuk bez
 nosiče 1.0, datové disky 0.1, jednotky fondu 0.2, e-monografie 3.0, e-periodika 2.5, skládaná e-periodika 1.3.
 

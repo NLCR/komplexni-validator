@@ -31,7 +31,7 @@ import static org.junit.Assert.*;
  * (CannedOutputExternalUtilManager). Ocekavane chyby odpovidaji soucasnemu chovani pri vystupech
  * Jpylyzer 2.2.0, JHOVE 1.29, Kakadu 8.5 a ImageMagick 7.1 (viz src/test/resources/externalUtils/README.md).
  * <p>
- * Profily veraPDF a EPUBCheck jsou zatim fixture vep-2.4_emonograph_3.0 (kopie profilu VEP 2.4 s jmennym prostorem 3.0),
+ * Profily veraPDF a EPUBCheck jsou z fDMF emonograph_3.0 (binaryFileProfiles/{pdf,epub}, port VEP 2.4 s opravou R1),
  * vystupy veraPDF 1.30 a EPUBCheck 5.4.0.
  */
 public class BinaryFileProfileTest {
@@ -472,11 +472,13 @@ public class BinaryFileProfileTest {
         assertTrue("zkontrolováno: " + checked, checked >= 200);
     }
 
-    // veraPDF 1.30 (fixture profilu vep-2.4_emonograph_3.0/pdf/veraPdf.xml)
+    // veraPDF 1.30 (profil fDMF emonograph_3.0/binaryFileProfiles/pdf/veraPdf.xml)
 
-    private static final String PDF_FIXTURE = "vep-2.4_emonograph_3.0";
+    private static final String PDF_FIXTURE = "emonograph_3.0";
     private static final String R1_WARNING = "WARNING: Soubor PDF/A by měl být v podporované verzi: hodnota \"%s\" neodpovídá žádnému z omezení: "
-            + "[musí začínat na 'PDF/A-1A',musí začínat na 'PDF/A-1B',musí začínat na 'PDF/A-2A',musí začínat na 'PDF/A-2B',musí začínat na 'PDF/A-2U']";
+            + "[musí začínat na 'PDF/A-1A',musí začínat na 'PDF/A-1a',musí začínat na 'PDF/A-1B',musí začínat na 'PDF/A-1b',"
+            + "musí začínat na 'PDF/A-2A',musí začínat na 'PDF/A-2a',musí začínat na 'PDF/A-2B',musí začínat na 'PDF/A-2b',"
+            + "musí začínat na 'PDF/A-2U',musí začínat na 'PDF/A-2u']";
     private static final String NOT_COMPLIANT = "Soubor musí být validní: hodnota \"false\" neodpovídá žádnému z omezení: [musí být přesně 'true']";
 
     private static List<String> problems(ExternalUtil util, String copy, String outputName) throws Exception {
@@ -494,23 +496,17 @@ public class BinaryFileProfileTest {
     }
 
     @Test
-    public void veraPdfCompliantPdfA1bGetsWarningBecauseOfLowercaseLevel() throws Exception {
-        // riziko R1 (zafixovane dnesni chovani, oprava profilu je krok P4): veraPDF od 1.2x vypisuje "PDF/A-1b validation
-        // profile" s malym pismenem urovne, profil VEP ceka "PDF/A-1B" (startsWith rozlisuje velikost pismen), takze
-        // i vyhovujici PDF/A-1b dostane WARNING "nepodporovaná verze"
-        assertEquals(Collections.singletonList(String.format(R1_WARNING, "PDF/A-1b validation profile")),
-                problems(ExternalUtil.VERAPDF, "pdf", "compliant_PDFA-1B.xml"));
-        assertEquals(Collections.singletonList(String.format(R1_WARNING, "PDF/A-1a validation profile")),
-                problems(ExternalUtil.VERAPDF, "pdf", "compliant_PDFA-1A.xml"));
-        assertEquals(Collections.singletonList(String.format(R1_WARNING, "PDF/A-2b validation profile")),
-                problems(ExternalUtil.VERAPDF, "pdf", "compliant_PDFA-2B.xml"));
-        assertEquals(Collections.singletonList(String.format(R1_WARNING, "PDF/A-2u validation profile")),
-                problems(ExternalUtil.VERAPDF, "pdf", "compliant_PDFA-2U.xml"));
+    public void veraPdfCompliantPdfAWithLowercaseLevelIsSupported() throws Exception {
+        // riziko R1 (opraveno v P4): veraPDF od 1.2x vypisuje "PDF/A-1b validation profile" s malym pismenem urovne,
+        // profil VEP cekal jen "PDF/A-1B" (startsWith rozlisuje velikost pismen); profil KV ma obe varianty
+        for (String output : new String[]{"compliant_PDFA-1B.xml", "compliant_PDFA-1A.xml", "compliant_PDFA-2B.xml", "compliant_PDFA-2U.xml"}) {
+            assertEquals(output, Collections.emptyList(), problems(ExternalUtil.VERAPDF, "pdf", output));
+        }
     }
 
     @Test
     public void veraPdfCompliantPdfA3bIsUnsupportedVersion() throws Exception {
-        // PDF/A-3 profil VEP nepodporuje (zakomentovano), WARNING by byl i po oprave R1
+        // PDF/A-3 profil VEP nepodporuje (zakomentovano), WARNING zustava i po oprave R1
         assertEquals(Collections.singletonList(String.format(R1_WARNING, "PDF/A-3b validation profile")),
                 problems(ExternalUtil.VERAPDF, "pdf", "compliant_PDFA-3B.xml"));
     }
@@ -518,10 +514,8 @@ public class BinaryFileProfileTest {
     @Test
     public void veraPdfNonCompliant() throws Exception {
         // bez urovne v profilu (mustMatchAny u isCompliant) plati validation_problem_level z rules.xml
-        assertEquals(Arrays.asList(NOT_COMPLIANT, String.format(R1_WARNING, "PDF/A-1b validation profile")),
-                problems(ExternalUtil.VERAPDF, "pdf", "noncompliant_dummy.xml"));
-        assertEquals(Arrays.asList(NOT_COMPLIANT, String.format(R1_WARNING, "PDF/A-2b validation profile")),
-                problems(ExternalUtil.VERAPDF, "pdf", "noncompliant_dummy_flavour_2b.xml"));
+        assertEquals(Collections.singletonList(NOT_COMPLIANT), problems(ExternalUtil.VERAPDF, "pdf", "noncompliant_dummy.xml"));
+        assertEquals(Collections.singletonList(NOT_COMPLIANT), problems(ExternalUtil.VERAPDF, "pdf", "noncompliant_dummy_flavour_2b.xml"));
         assertEquals(Arrays.asList(NOT_COMPLIANT, String.format(R1_WARNING, "PDF/A-3b validation profile")),
                 problems(ExternalUtil.VERAPDF, "pdf", "noncompliant_dummy_flavour_3b.xml"));
     }
@@ -536,7 +530,7 @@ public class BinaryFileProfileTest {
         assertEquals(expected, problems(ExternalUtil.VERAPDF, "pdf", "not_pdf.xml"));
     }
 
-    // EPUBCheck 5.4.0 (fixture profilu vep-2.4_emonograph_3.0/epub/epubCheck.xml)
+    // EPUBCheck 5.4.0 (profil fDMF emonograph_3.0/binaryFileProfiles/epub/epubCheck.xml)
 
     private static final String NOT_WELL_FORMED = "Soubor musí být validní: hodnota \"Not well-formed\" neodpovídá žádnému z omezení: [musí být přesně 'Well-formed']";
 
@@ -599,7 +593,7 @@ public class BinaryFileProfileTest {
 
     @Test
     public void ePublicationFixtureProfilesAreValidByXsd() throws Exception {
-        // FdmfConfiguration validuje profily proti binaryFileProfile.xsd (level, startsWith); fixture musi projit stejne
+        // FdmfConfiguration validuje profily proti binaryFileProfile.xsd (level, startsWith); profily e-publikaci musi projit
         javax.xml.validation.Validator xsdValidator = SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI)
                 .newSchema(new File(ExternalUtilsTestSupport.VALIDATOR_CONFIG_DIR, "xsd/binaryFileProfile.xsd")).newValidator();
         for (String[] copyAndUtil : new String[][]{{"pdf", "VERAPDF"}, {"epub", "EPUBCHECK"}}) {

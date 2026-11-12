@@ -1,0 +1,1753 @@
+<fDMF xmlns="http://www.nkp.cz/pspValidator/3.0/fdmfConfig"
+      validatorVersion="3.0"
+      dmf="eperiodical_2.3"
+>
+    <description>
+        Zde jsou definovány validační pravidla. K samotným validacím se používají validační funkce, jejichž parametry
+        jsou definované proměnné, vzory a konstanty.
+        Pravidla je možné dynamicky doplňovat/upravovat, ale je vždy nutné používat existující proměnné a vzory.
+    </description>
+
+    <rules-section name="Struktura souborů" description="Struktura PSP balicku na urovni soboru">
+
+        <!--mozna tohle patri spise k INFO?-->
+        <rule name="PSP_DIR_MATCHES_PSP_ID">
+            <description>Název kořenového adresáře musí být schodný s PSP-ID.</description>
+            <validation functionName="checkFilenameMatchesPattern">
+                <params>
+                    <value name="level" type="LEVEL">ERROR</value>
+                    <value name="file" type="FILE">
+                        <value-ref name="PSP_DIR"/>
+                    </value>
+                    <pattern name="pattern">
+                        <expression caseSensitive="true">${PSP_ID}</expression>
+                    </pattern>
+                </params>
+            </validation>
+        </rule>
+
+
+        <!--právě jeden každý top-level soubor-->
+
+        <rule name="SINGLE_INFO_FILE_FOUND">
+            <description>Musí být nalezen nanejvýše jeden soubor INFO. Pokud nalezen není, je soubor špatně pojmenován, nebo
+                opravdu chybí.
+            </description>
+            <validation functionName="checkFilelistHasExactSize">
+                <params>
+                    <value name="files" type="FILE_LIST">
+                        <value-ref name="INFO_FILES"/>
+                    </value>
+                    <value name="size" type="INTEGER">1</value>
+                </params>
+            </validation>
+        </rule>
+
+        <rule name="SINGLE_PRIMARY-METS_FILE_FOUND">
+            <description>Musí být nalezen nanejvýše jeden soubor PRIMARY-METS. Pokud nalezen není, je soubor špatně
+                pojmenován, nebo opravdu chybí.
+            </description>
+            <validation functionName="checkFilelistHasExactSize">
+                <params>
+                    <value name="files" type="FILE_LIST">
+                        <value-ref name="PRIMARY-METS_FILES"/>
+                    </value>
+                    <value name="size" type="INTEGER">1</value>
+                </params>
+            </validation>
+        </rule>
+
+        <rule name="SINGLE_CHECKSUM_FILE_FOUND">
+            <description>Musí být nalezen nanejvýše jeden soubor CHECKSUM. Pokud nalezen není, je soubor špatně pojmenován,
+                nebo opravdu chybí.
+            </description>
+            <validation functionName="checkFilelistHasExactSize">
+                <params>
+                    <value name="files" type="FILE_LIST">
+                        <value-ref name="CHECKSUM_FILES"/>
+                    </value>
+                    <value name="size" type="INTEGER">1</value>
+                </params>
+            </validation>
+        </rule>
+
+
+        <!--názvy top-level souborů obsahují povolené znaky-->
+
+        <rule name="INFO_FILENAME_VALID">
+            <description>Název souboru INFO smí obsahovat jen povolené znaky.</description>
+            <validation functionName="checkFilenameMatchesPattern">
+                <params>
+                    <value name="file" type="FILE">
+                        <value-ref name="INFO_FILE"/>
+                    </value>
+                    <pattern name="pattern">
+                        <pattern-ref name="FILENAME"/>
+                    </pattern>
+                </params>
+            </validation>
+        </rule>
+
+        <rule name="PRIMARY-METS_FILENAME_VALID">
+            <description>Název souboru PRIMARY-METS smí obsahovat jen povolené znaky.</description>
+            <validation functionName="checkFilenameMatchesPattern">
+                <params>
+                    <value name="file" type="FILE">
+                        <value-ref name="PRIMARY-METS_FILE"/>
+                    </value>
+                    <pattern name="pattern">
+                        <pattern-ref name="FILENAME"/>
+                    </pattern>
+                </params>
+            </validation>
+        </rule>
+
+        <rule name="CHECKSUM_FILENAME_VALID">
+            <description>Název souboru CHECKSUM smí obsahovat jen povolené znaky.</description>
+            <validation functionName="checkFilenameMatchesPattern">
+                <params>
+                    <value name="file" type="FILE">
+                        <value-ref name="CHECKSUM_FILE"/>
+                    </value>
+                    <pattern name="pattern">
+                        <pattern-ref name="FILENAME"/>
+                    </pattern>
+                </params>
+            </validation>
+        </rule>
+
+
+        <!--top-level soubory nejsou adresáře-->
+
+        <rule name="INFO_IS_NOT_DIR">
+            <description>Soubor INFO nesmí být adresář, ale obyčejný soubor.</description>
+            <validation functionName="checkFileIsNotDir">
+                <params>
+                    <value name="file" type="FILE">
+                        <value-ref name="INFO_FILE"/>
+                    </value>
+                </params>
+            </validation>
+        </rule>
+
+        <rule name="PRIMARY-METS_IS_NOT_DIR">
+            <description>Soubor PRIMARY-METS nesmí být adresář, ale obyčejný soubor.</description>
+            <validation functionName="checkFileIsNotDir">
+                <params>
+                    <value name="file" type="FILE">
+                        <value-ref name="PRIMARY-METS_FILE"/>
+                    </value>
+                </params>
+            </validation>
+        </rule>
+
+        <rule name="CHECKSUM_IS_NOT_DIR">
+            <description>Soubor CHECKSUM nesmí být adresář, ale obyčejný soubor.</description>
+            <validation functionName="checkFileIsNotDir">
+                <params>
+                    <value name="file" type="FILE">
+                        <value-ref name="CHECKSUM_FILE"/>
+                    </value>
+                </params>
+            </validation>
+        </rule>
+
+
+        <!--žádné top-level soubory/adresáře kromě očekávaných a tolerovaných-->
+
+        <rule name="TOLERATED_TL_FILES_ARE_NOT_DIRS">
+            <description>Žádný tolerovaný soubor v kořenovém adresáři nesmí být adresář.</description>
+            <validation functionName="checkNoFileIsDir">
+                <params>
+                    <value name="files" type="FILE_LIST">
+                        <value-ref name="TOLERATED_TL_FILES"/>
+                    </value>
+                </params>
+            </validation>
+        </rule>
+
+        <rule name="NO_TOLERATED_TL_FILES_FOUND">
+            <description>Ideálně by v kořenovém adresáři neměl být nalezen žádný tolerovaný soubor.</description>
+            <validation functionName="checkFilelistHasExactSize">
+                <params>
+                    <value name="files" type="FILE_LIST">
+                        <value-ref name="TOLERATED_TL_FILES"/>
+                    </value>
+                    <value name="size" type="INTEGER">0</value>
+                    <value name="level" type="LEVEL">WARNING</value>
+                </params>
+            </validation>
+            <!--
+                        <validation functionName="CHECK_FILE_LIST_EMPTY">
+                            <params>
+                                <value name="files" type="FILE_LIST">
+                                    <value-ref name="TOLERATED_TL_FILES"/>
+                                </value>
+                            </params>
+                        </validation>-->
+        </rule>
+
+        <rule name="NO_OTHER_TL_FILES_FOUND">
+            <description>
+                Kromě definovaných a tolerovaných souborů a adresářů nesmí být v kořenovém adresáři nalezen žádný další soubor nebo adresář.
+            </description>
+            <validation functionName="checkNoOtherFilesInDir">
+                <params>
+                    <value name="root_dir" type="FILE">
+                        <value-ref name="PSP_DIR"/>
+                    </value>
+                    <value name="file" type="FILE">
+                        <value-ref name="INFO_FILE"/>
+                    </value>
+                    <value name="file" type="FILE">
+                        <value-ref name="PRIMARY-METS_FILE"/>
+                    </value>
+                    <value name="file" type="FILE">
+                        <value-ref name="CHECKSUM_FILE"/>
+                    </value>
+                    <value name="files" type="FILE_LIST">
+                        <value-ref name="TOLERATED_TL_FILES"/>
+                    </value>
+                    <value name="file" type="FILE">
+                        <value-ref name="ORIGINAL-DIR_FILE"/>
+                    </value>
+                </params>
+            </validation>
+        </rule>
+
+
+        <!--právě jeden každý top-level adresář-->
+
+        <rule name="SINGLE_ORIGINAL-DIR-DIR_FILE_FOUND">
+            <description>Musí být nalezen právě jeden adresář ORIGINAL. Pokud nalezen není, je
+                adresář špatně pojmenován, nebo opravdu chybí.
+            </description>
+            <validation functionName="checkFilelistHasExactSize">
+                <params>
+                    <value name="files" type="FILE_LIST">
+                        <value-ref name="ORIGINAL-DIR_FILES"/>
+                    </value>
+                    <value name="size" type="INTEGER">1</value>
+                </params>
+            </validation>
+        </rule>
+
+
+        <!--názvy top-level adresářů obsahují povolené znaky-->
+
+        <rule name="ORIGINAL-DIR_FILE_VALID">
+            <description>Název adresáře ORIGINAL musí obsahovat jen povolené znaky.</description>
+            <validation functionName="checkFilenameMatchesPattern">
+                <params>
+                    <value name="file" type="FILE">
+                        <value-ref name="ORIGINAL-DIR_FILE"/>
+                    </value>
+                    <pattern name="pattern">
+                        <pattern-ref name="FILENAME"/>
+                    </pattern>
+                </params>
+            </validation>
+        </rule>
+
+
+        <!--top-level adresáře jsou adresáře (ne obyčejné soubory)-->
+
+        <rule name="ORIGINAL-DIR_FILE_IS_DIR">
+            <description>Soubor ORIGINAL musí být adresář a ne obyčejný soubor.</description>
+            <validation functionName="checkFileIsDir">
+                <params>
+                    <value name="file" type="FILE">
+                        <value-ref name="ORIGINAL-DIR_FILE"/>
+                    </value>
+                </params>
+            </validation>
+        </rule>
+
+
+        <!--top-level adresáře jsou adresáře (ne obyčejné soubory)-->
+
+        <rule name="ORIGINAL-DIR_FILE_IS_DIR">
+            <description>Soubor ORIGINAL musí být adresář a ne obyčejný soubor.</description>
+            <validation functionName="checkFileIsDir">
+                <params>
+                    <value name="file" type="FILE">
+                        <value-ref name="ORIGINAL-DIR_FILE"/>
+                    </value>
+                </params>
+            </validation>
+        </rule>
+
+
+        <!--názvy souborů v adresáři original obsahují jen povolené znaky-->
+
+        <rule name="ORIGINAL-COPY_FILENAMES_VALID">
+            <description>Všechny soubory ORIGINAL-COPY musí obsahovat jen povolené znaky.</description>
+            <validation functionName="checkAllFilenamesMatchPattern">
+                <params>
+                    <value name="files" type="FILE_LIST">
+                        <evaluation functionName="mergeFiles">
+                            <params>
+                                <value name="file_list" type="FILE_LIST">
+                                    <value-ref name="ORIGINAL-COPY-PDF_FILES"/>
+                                </value>
+                                <value name="file_list" type="FILE_LIST">
+                                    <value-ref name="ORIGINAL-COPY-EPUB_FILES"/>
+                                </value>
+                            </params>
+                        </evaluation>
+                    </value>
+
+                    <pattern name="pattern">
+                        <pattern-ref name="FILENAME"/>
+                    </pattern>
+                </params>
+            </validation>
+        </rule>
+
+
+        <!--žádný ze souborů v adresáři original není adresář-->
+
+        <rule name="ORIGINAL-COPY_FILES_ARE_NOT_DIRS">
+            <description>Žádný soubor ORIGINAL-COPY nesmí být adresář.</description>
+            <validation functionName="checkNoFileIsDir">
+                <params>
+                    <value name="files" type="FILE_LIST">
+                        <evaluation functionName="mergeFiles">
+                            <params>
+                                <value name="file_list" type="FILE_LIST">
+                                    <value-ref name="ORIGINAL-COPY-PDF_FILES"/>
+                                </value>
+                                <value name="file_list" type="FILE_LIST">
+                                    <value-ref name="ORIGINAL-COPY-EPUB_FILES"/>
+                                </value>
+                            </params>
+                        </evaluation>
+                    </value>
+                </params>
+            </validation>
+        </rule>
+
+
+        <!--žádné další soubory v adresáři original -->
+
+        <rule name="NO_EXTRA_FILES_IN_ORIGINAL-DIR">
+            <description>Kromě souborů ORIGINAL-COPY nesmí adresář ORIGINAL obsahovat žádné další soubory.</description>
+            <validation functionName="checkNoOtherFilesInDir">
+                <params>
+                    <value name="root_dir" type="FILE">
+                        <value-ref name="ORIGINAL-DIR_FILE"/>
+                    </value>
+                    <value name="files" type="FILE_LIST">
+                        <value-ref name="ORIGINAL-COPY-PDF_FILES"/>
+                    </value>
+                    <value name="files" type="FILE_LIST">
+                        <value-ref name="ORIGINAL-COPY-EPUB_FILES"/>
+                    </value>
+                </params>
+            </validation>
+        </rule>
+
+    </rules-section>
+
+    <rules-section name="Soubor CHECKSUM"
+                   description="Kontrola souboru CHECKSUM, odkazů na další soubory a shody kontrolních součtů.">
+
+        <rule name="CHECKSUM_FILE_GENERATED_BY_GRAMMAR">
+            <description>Soubor CHECKSUM by měl být generován předepsanou ABNF gramatikou.</description>
+            <validation functionName="checkChecksumFileGeneratedByGrammar">
+                <params>
+                    <value name="checksum_file" type="FILE">
+                        <value-ref name="CHECKSUM_FILE"/>
+                    </value>
+                </params>
+            </validation>
+        </rule>
+
+        <rule name="CHECKSUM_FILE_ALL_PATHS_MATCH_FILES">
+            <description>Soubor CHECKSUM musí obsahovat záznamy pro každý uvedený soubor a žádný jiný.</description>
+            <validation functionName="checkChecksumFileAllPathsMatchFiles">
+                <params>
+                    <value name="checksum_file" type="FILE">
+                        <value-ref name="CHECKSUM_FILE"/>
+                    </value>
+                    <value name="file" type="FILE">
+                        <value-ref name="PRIMARY-METS_FILE"/>
+                    </value>
+                    <value name="files" type="FILE_LIST">
+                        <value-ref name="ORIGINAL-COPY-PDF_FILES"/>
+                    </value>
+                    <value name="files" type="FILE_LIST">
+                        <value-ref name="ORIGINAL-COPY-EPUB_FILES"/>
+                    </value>
+                </params>
+            </validation>
+        </rule>
+
+        <rule name="CHECKSUM_FILE_ALL_CHECKSUMS_MATCH">
+            <description>Všechny kontrolní součty v souborů odkazovaných v souboru CHECKSUM musí souhlasit.
+            </description>
+            <validation functionName="checkChecksumFileAllChecksumsMatch">
+                <params>
+                    <value name="checksum_file" type="FILE">
+                        <value-ref name="CHECKSUM_FILE"/>
+                    </value>
+                </params>
+            </validation>
+        </rule>
+
+    </rules-section>
+
+    <rules-section name="Soubor INFO"
+                   description="Validace souboru INFO - odkazování na ostatní soubory, kontrolní součet pro soubor CHECKSUM, atd.">
+
+        <rule name="INFO_XML_WELL_BUILT">
+            <description>Soubor INFO musí být korektní (well-built) xml soubor.</description>
+            <validation functionName="checkXmlIsWellBuilt">
+                <params>
+                    <value name="xml_file" type="FILE">
+                        <value-ref name="INFO_FILE"/>
+                    </value>
+                </params>
+            </validation>
+        </rule>
+
+        <rule name="INFO_XML_VALID_BY_XSD">
+            <description>Soubor INFO by měl být validní podle XML Schema (info_epe_2.3.xsd).</description>
+            <validation functionName="checkXmlIsValidByXsd">
+                <params>
+                    <value name="xml_file" type="FILE">
+                        <value-ref name="INFO_FILE"/>
+                    </value>
+                    <value name="xsd_file" type="FILE">
+                        <value-ref name="INFO_XSD_FILE"/>
+                    </value>
+                    <value name="level" type="LEVEL">WARNING</value>
+                </params>
+            </validation>
+        </rule>
+
+        <!--METS Profile requirement id infoxml6-->
+        <rule name="INFO_REFERENCES_PRIMARY-METS">
+            <description>Soubor INFO se musí odkazovat na soubor PRIMARY-METS přes element mainmets.</description>
+            <validation functionName="checkInfoFileReferencesPrimaryMets">
+                <params>
+                    <value name="info_file" type="FILE">
+                        <value-ref name="INFO_FILE"/>
+                    </value>
+                    <value name="primary-mets_file" type="FILE">
+                        <value-ref name="PRIMARY-METS_FILE"/>
+                    </value>
+                </params>
+            </validation>
+        </rule>
+
+        <!--METS Profile requirement id infoxml13-->
+        <rule name="INFO_ITEMTOTAL_MATCHES_ITEMS_COUNT">
+            <description>V souboru INFO musí počet elementů item souhlasit s hodnotou atributu itemtotal elementu
+                itemlist.
+            </description>
+            <!--mozne delat i nejak takhle, zatim ale asi neni potreba takova variabilita-->
+            <!--<validation functionName="checkFilelistHasExactSize">
+                <params>
+                    <value name="files" type="FILE_LIST">
+                        <value-ref name="INFO_ITEMS"/>
+                    </value>
+                    <value name="size" type="INTEGER">
+                        <value-ref name="INFO_ITELMTOTAL"/>
+                    </value>
+                </params>
+            </validation>-->
+            <validation functionName="checkInfoFileItemsCountMatchesItemtotal">
+                <params>
+                    <value name="info_file" type="FILE">
+                        <value-ref name="INFO_FILE"/>
+                    </value>
+                </params>
+            </validation>
+
+        </rule>
+
+        <!--METS Profile requirement id infoxml13-->
+        <rule name="INFO_ITEMLIST_REFERENCES_ALL_FILES">
+            <description>Soubor INFO se musí odkazovat na všechny uvedené soubory přes elementy item a na žádné další.
+            </description>
+            <validation functionName="checkInfoFileItemlistReferencesAllFiles">
+                <params>
+                    <value name="info_file" type="FILE">
+                        <value-ref name="INFO_FILE"/>
+                    </value>
+                    <value name="level" type="LEVEL">ERROR</value>
+                    <value name="file" type="FILE">
+                        <value-ref name="INFO_FILE"/>
+                    </value>
+                    <value name="file" type="FILE">
+                        <value-ref name="CHECKSUM_FILE"/>
+                    </value>
+                    <value name="file" type="FILE">
+                        <value-ref name="PRIMARY-METS_FILE"/>
+                    </value>
+                    <value name="files" type="FILE_LIST">
+                        <value-ref name="ORIGINAL-COPY-PDF_FILES"/>
+                    </value>
+                    <value name="files" type="FILE_LIST">
+                        <value-ref name="ORIGINAL-COPY-EPUB_FILES"/>
+                    </value>
+                </params>
+            </validation>
+        </rule>
+
+        <!--METS Profile requirement id infoxml14-->
+        <rule name="INFO_CHECKSUM_FILE_CHECKSUM_MATCHES">
+            <description>Soubor INFO se musí odkazovat na existující soubor CHECKSUM přes element checksum a kontrolní
+                součet se musí shodovat.
+            </description>
+            <validation functionName="checkInfoFileChecksumMatches">
+                <params>
+                    <value name="info_file" type="FILE">
+                        <value-ref name="INFO_FILE"/>
+                    </value>
+                    <value name="checksum_file" type="FILE">
+                        <value-ref name="CHECKSUM_FILE"/>
+                    </value>
+                </params>
+            </validation>
+        </rule>
+
+        <!--TODO:identifikatory v INFO-->
+
+    </rules-section>
+
+    <rules-section name="Identifikátory" description="Kontrola idenfitikátorů (info.xml, mets - MODS, DC)">
+
+        <!--psp id-->
+        <rule name="PSP_ID_DERIVED_FROM_IE_ID">
+            <description>PSP-ID by měl být odvozen od některého z identifikátorů intelektuální entity, a to typu
+                'urnnbn' nebo 'uuid'
+            </description>
+            <validation functionName="checkStringDerivedFromUrnnbnOrUuid">
+                <params>
+                    <value name="string" type="STRING">
+                        <value-ref name="PSP_ID"/>
+                    </value>
+                    <!--seznam identifikatoru (dulezite jsou typy 'uuid' a 'urnnbn')-->
+                    <value name="identifiers" type="IDENTIFIER_LIST">
+                        <value-ref name="IE_IDENTIFIERS"/>
+                    </value>
+                </params>
+            </validation>
+        </rule>
+
+
+        <!--info identifiers -->
+
+        <rule name="INFO_NO_DUPLICATE_IDENTIFIERS">
+            <description>Soubor INFO nesmí obsahovat více identifikátorů stejného typu.</description>
+            <validation functionName="checkIdentifiersNoDuplicateTypes">
+                <params>
+                    <value name="identifier_list" type="IDENTIFIER_LIST">
+                        <value-ref name="INFO_IDENTIFIERS"/>
+                    </value>
+                </params>
+            </validation>
+        </rule>
+
+
+        <!--DC identifiers -->
+
+        <rule name="DC_IDENTIFIERS_NO_WHITE_SPACES">
+            <description>Identifikátory v Dublin Core záznamech by neměly obsahovat bílé znaky.</description>
+            <validation functionName="checkDcIdentifiersDoNotContainWhiteSpaces">
+                <params>
+                    <value name="primary-mets_file" type="FILE">
+                        <value-ref name="PRIMARY-METS_FILE"/>
+                    </value>
+                </params>
+            </validation>
+        </rule>
+
+        <rule name="DC_IDENTIFIERS_CONTAIN_TYPE_AND_VALUE">
+            <description>Identifikátory v Dublin Core záznamech by měly obsahovat typ a hodnotu oddělěné dvojtečkou
+                (např. barCode:2610161505).
+            </description>
+            <validation functionName="checkDcIdentifiersHaveTypeAndValue">
+                <params>
+                    <value name="primary-mets_file" type="FILE">
+                        <value-ref name="PRIMARY-METS_FILE"/>
+                    </value>
+                </params>
+            </validation>
+        </rule>
+
+        <!--title-->
+        <rule name="DC_MANDATORY_IDENTIFIERS_PRESENT_LEVEL_TITLE">
+            <description>
+                Úroveň TITLE musí obsahovat všechny povinné identifikátory v záznamu Dublin Core.
+            </description>
+            <validation functionName="checkIdentifiersAllTypesPresent">
+                <params>
+                    <value name="identifier_list_list" type="IDENTIFIER_LIST_LIST">
+                        <!--seznam obsahujici seznam identifikatoru DC pro kazdy zaznam dmdSec pro dc-->
+                        <evaluation functionName="getDcIdentifiersForEachDmdsecId">
+                            <params>
+                                <value name="dmdsec_ids" type="STRING_LIST">
+                                    <!--seznam identifikatoru (dmdSec ID)-->
+                                    <evaluation functionName="getStringListByXpath">
+                                        <params>
+                                            <value name="xml_file" type="FILE">
+                                                <value-ref name="PRIMARY-METS_FILE"/>
+                                            </value>
+                                            <value name="xpath" type="STRING">
+                                                /mets:mets/mets:dmdSec[starts-with(@ID, "DCMD_TITLE")]/@ID
+                                            </value>
+                                        </params>
+                                    </evaluation>
+                                </value>
+                                <value name="mets_file" type="FILE">
+                                    <value-ref name="PRIMARY-METS_FILE"/>
+                                </value>
+                            </params>
+                        </evaluation>
+                    </value>
+                    <value name="id_types" type="STRING_LIST">
+                        <value-ref name="ID_TYPES_TITLE_MANDATORY"/>
+                    </value>
+                    <value name="level_name" type="STRING">TITLE</value>
+                </params>
+            </validation>
+        </rule>
+
+        <rule name="DC_PROHIBITED_IDENTIFIERS_NOT_PRESENT_LEVEL_TITLE">
+            <description>
+                Úroveň TITLE nesmí obsahovat žádné zakázané identifikátory v záznamu Dublin Core.
+            </description>
+            <validation functionName="checkIdentifiersNoneTypePresent">
+                <params>
+                    <value name="identifier_list_list" type="IDENTIFIER_LIST_LIST">
+                        <!--seznam obsahujici seznam identifikatoru DC pro kazdy zaznam dmdSec pro dc-->
+                        <evaluation functionName="getDcIdentifiersForEachDmdsecId">
+                            <params>
+                                <value name="dmdsec_ids" type="STRING_LIST">
+                                    <!--seznam identifikatoru (dmdSec ID)-->
+                                    <evaluation functionName="getStringListByXpath">
+                                        <params>
+                                            <value name="xml_file" type="FILE">
+                                                <value-ref name="PRIMARY-METS_FILE"/>
+                                            </value>
+                                            <value name="xpath" type="STRING">
+                                                /mets:mets/mets:dmdSec[starts-with(@ID, "DCMD_TITLE")]/@ID
+                                            </value>
+                                        </params>
+                                    </evaluation>
+                                </value>
+                                <value name="mets_file" type="FILE">
+                                    <value-ref name="PRIMARY-METS_FILE"/>
+                                </value>
+                            </params>
+                        </evaluation>
+                    </value>
+                    <value name="id_types" type="STRING_LIST">
+                        <value-ref name="ID_TYPES_TITLE_PROHIBITED"/>
+                    </value>
+                    <value name="level_name" type="STRING">TITLE</value>
+                </params>
+            </validation>
+        </rule>
+
+        <!--volume-->
+        <rule name="DC_MANDATORY_IDENTIFIERS_PRESENT_LEVEL_VOLUME">
+            <description>
+                Úroveň VOLUME musí obsahovat všechny povinné identifikátory v záznamu Dublin Core.
+            </description>
+            <validation functionName="checkIdentifiersAllTypesPresent">
+                <params>
+                    <value name="identifier_list_list" type="IDENTIFIER_LIST_LIST">
+                        <!--seznam obsahujici seznam identifikatoru DC pro kazdy zaznam dmdSec pro dc-->
+                        <evaluation functionName="getDcIdentifiersForEachDmdsecId">
+                            <params>
+                                <value name="dmdsec_ids" type="STRING_LIST">
+                                    <!--seznam identifikatoru (dmdSec ID)-->
+                                    <evaluation functionName="getStringListByXpath">
+                                        <params>
+                                            <value name="xml_file" type="FILE">
+                                                <value-ref name="PRIMARY-METS_FILE"/>
+                                            </value>
+                                            <value name="xpath" type="STRING">
+                                                /mets:mets/mets:dmdSec[starts-with(@ID, "DCMD_VOLUME")]/@ID
+                                            </value>
+                                        </params>
+                                    </evaluation>
+                                </value>
+                                <value name="mets_file" type="FILE">
+                                    <value-ref name="PRIMARY-METS_FILE"/>
+                                </value>
+                            </params>
+                        </evaluation>
+                    </value>
+                    <value name="id_types" type="STRING_LIST">
+                        <value-ref name="ID_TYPES_VOLUME_MANDATORY"/>
+                    </value>
+                    <value name="level_name" type="STRING">VOLUME</value>
+                </params>
+            </validation>
+        </rule>
+
+        <rule name="DC_PROHIBITED_IDENTIFIERS_NOT_PRESENT_LEVEL_VOLUME">
+            <description>
+                Úroveň VOLUME nesmí obsahovat žádné zakázané identifikátory v záznamu Dublin Core.
+            </description>
+            <validation functionName="checkIdentifiersNoneTypePresent">
+                <params>
+                    <value name="identifier_list_list" type="IDENTIFIER_LIST_LIST">
+                        <!--seznam obsahujici seznam identifikatoru DC pro kazdy zaznam dmdSec pro dc-->
+                        <evaluation functionName="getDcIdentifiersForEachDmdsecId">
+                            <params>
+                                <value name="dmdsec_ids" type="STRING_LIST">
+                                    <!--seznam identifikatoru (dmdSec ID)-->
+                                    <evaluation functionName="getStringListByXpath">
+                                        <params>
+                                            <value name="xml_file" type="FILE">
+                                                <value-ref name="PRIMARY-METS_FILE"/>
+                                            </value>
+                                            <value name="xpath" type="STRING">
+                                                /mets:mets/mets:dmdSec[starts-with(@ID, "DCMD_VOLUME")]/@ID
+                                            </value>
+                                        </params>
+                                    </evaluation>
+                                </value>
+                                <value name="mets_file" type="FILE">
+                                    <value-ref name="PRIMARY-METS_FILE"/>
+                                </value>
+                            </params>
+                        </evaluation>
+                    </value>
+                    <value name="id_types" type="STRING_LIST">
+                        <value-ref name="ID_TYPES_VOLUME_PROHIBITED"/>
+                    </value>
+                    <value name="level_name" type="STRING">VOLUME</value>
+                </params>
+            </validation>
+        </rule>
+
+        <!--issue-->
+        <rule name="DC_MANDATORY_IDENTIFIERS_PRESENT_LEVEL_ISSUE">
+            <description>
+                Úroveň ISSUE musí obsahovat všechny povinné identifikátory v záznamu Dublin Core.
+            </description>
+            <validation functionName="checkIdentifiersAllTypesPresent">
+                <params>
+                    <value name="identifier_list_list" type="IDENTIFIER_LIST_LIST">
+                        <!--seznam obsahujici seznam identifikatoru DC pro kazdy zaznam dmdSec pro dc-->
+                        <evaluation functionName="getDcIdentifiersForEachDmdsecId">
+                            <params>
+                                <value name="dmdsec_ids" type="STRING_LIST">
+                                    <!--seznam identifikatoru (dmdSec ID)-->
+                                    <evaluation functionName="getStringListByXpath">
+                                        <params>
+                                            <value name="xml_file" type="FILE">
+                                                <value-ref name="PRIMARY-METS_FILE"/>
+                                            </value>
+                                            <value name="xpath" type="STRING">
+                                                /mets:mets/mets:dmdSec[starts-with(@ID, "DCMD_ISSUE")]/@ID
+                                            </value>
+                                        </params>
+                                    </evaluation>
+                                </value>
+                                <value name="mets_file" type="FILE">
+                                    <value-ref name="PRIMARY-METS_FILE"/>
+                                </value>
+                            </params>
+                        </evaluation>
+                    </value>
+                    <value name="id_types" type="STRING_LIST">
+                        <value-ref name="ID_TYPES_ISSUE_MANDATORY"/>
+                    </value>
+                    <value name="level_name" type="STRING">ISSUE</value>
+                </params>
+            </validation>
+        </rule>
+
+        <rule name="DC_PROHIBITED_IDENTIFIERS_NOT_PRESENT_LEVEL_ISSUE">
+            <description>
+                Úroveň ISSUE nesmí obsahovat žádné zakázané identifikátory v záznamu Dublin Core.
+            </description>
+            <validation functionName="checkIdentifiersNoneTypePresent">
+                <params>
+                    <value name="identifier_list_list" type="IDENTIFIER_LIST_LIST">
+                        <!--seznam obsahujici seznam identifikatoru DC pro kazdy zaznam dmdSec pro dc-->
+                        <evaluation functionName="getDcIdentifiersForEachDmdsecId">
+                            <params>
+                                <value name="dmdsec_ids" type="STRING_LIST">
+                                    <!--seznam identifikatoru (dmdSec ID)-->
+                                    <evaluation functionName="getStringListByXpath">
+                                        <params>
+                                            <value name="xml_file" type="FILE">
+                                                <value-ref name="PRIMARY-METS_FILE"/>
+                                            </value>
+                                            <value name="xpath" type="STRING">
+                                                /mets:mets/mets:dmdSec[starts-with(@ID, "DCMD_ISSUE")]/@ID
+                                            </value>
+                                        </params>
+                                    </evaluation>
+                                </value>
+                                <value name="mets_file" type="FILE">
+                                    <value-ref name="PRIMARY-METS_FILE"/>
+                                </value>
+                            </params>
+                        </evaluation>
+                    </value>
+                    <value name="id_types" type="STRING_LIST">
+                        <value-ref name="ID_TYPES_ISSUE_PROHIBITED"/>
+                    </value>
+                    <value name="level_name" type="STRING">ISSUE</value>
+                </params>
+            </validation>
+        </rule>
+
+        <!--supplement-->
+        <rule name="DC_MANDATORY_IDENTIFIERS_PRESENT_LEVEL_SUPPLEMENT">
+            <description>
+                Úroveň SUPPLEMENT musí obsahovat všechny povinné identifikátory v záznamu Dublin Core.
+            </description>
+            <validation functionName="checkIdentifiersAllTypesPresent">
+                <params>
+                    <value name="identifier_list_list" type="IDENTIFIER_LIST_LIST">
+                        <!--seznam obsahujici seznam identifikatoru DC pro kazdy zaznam dmdSec pro dc-->
+                        <evaluation functionName="getDcIdentifiersForEachDmdsecId">
+                            <params>
+                                <value name="dmdsec_ids" type="STRING_LIST">
+                                    <!--seznam identifikatoru (dmdSec ID)-->
+                                    <evaluation functionName="getStringListByXpath">
+                                        <params>
+                                            <value name="xml_file" type="FILE">
+                                                <value-ref name="PRIMARY-METS_FILE"/>
+                                            </value>
+                                            <value name="xpath" type="STRING">
+                                                /mets:mets/mets:dmdSec[starts-with(@ID, "DCMD_SUPPL")]/@ID
+                                            </value>
+                                        </params>
+                                    </evaluation>
+                                </value>
+                                <value name="mets_file" type="FILE">
+                                    <value-ref name="PRIMARY-METS_FILE"/>
+                                </value>
+                            </params>
+                        </evaluation>
+                    </value>
+                    <value name="id_types" type="STRING_LIST">
+                        <value-ref name="ID_TYPES_SUPPLEMENT_MANDATORY"/>
+                    </value>
+                    <value name="level_name" type="STRING">SUPPLEMENT</value>
+                </params>
+            </validation>
+        </rule>
+
+        <rule name="DC_PROHIBITED_IDENTIFIERS_NOT_PRESENT_LEVEL_SUPPLEMENT">
+            <description>
+                Úroveň SUPPLEMENT nesmí obsahovat žádné zakázané identifikátory v záznamu Dublin Core.
+            </description>
+            <validation functionName="checkIdentifiersNoneTypePresent">
+                <params>
+                    <value name="identifier_list_list" type="IDENTIFIER_LIST_LIST">
+                        <!--seznam obsahujici seznam identifikatoru DC pro kazdy zaznam dmdSec pro dc-->
+                        <evaluation functionName="getDcIdentifiersForEachDmdsecId">
+                            <params>
+                                <value name="dmdsec_ids" type="STRING_LIST">
+                                    <!--seznam identifikatoru (dmdSec ID)-->
+                                    <evaluation functionName="getStringListByXpath">
+                                        <params>
+                                            <value name="xml_file" type="FILE">
+                                                <value-ref name="PRIMARY-METS_FILE"/>
+                                            </value>
+                                            <value name="xpath" type="STRING">
+                                                /mets:mets/mets:dmdSec[starts-with(@ID, "DCMD_SUPPL")]/@ID
+                                            </value>
+                                        </params>
+                                    </evaluation>
+                                </value>
+                                <value name="mets_file" type="FILE">
+                                    <value-ref name="PRIMARY-METS_FILE"/>
+                                </value>
+                            </params>
+                        </evaluation>
+                    </value>
+                    <value name="id_types" type="STRING_LIST">
+                        <value-ref name="ID_TYPES_SUPPLEMENT_PROHIBITED"/>
+                    </value>
+                    <value name="level_name" type="STRING">SUPPLEMENT</value>
+                </params>
+            </validation>
+        </rule>
+
+        <!--article-->
+        <rule name="DC_MANDATORY_IDENTIFIERS_PRESENT_LEVEL_ARTICLE">
+            <description>
+                Úroveň ARTICLE musí obsahovat všechny povinné identifikátory v záznamu Dublin Core.
+            </description>
+            <validation functionName="checkIdentifiersAllTypesPresent">
+                <params>
+                    <value name="identifier_list_list" type="IDENTIFIER_LIST_LIST">
+                        <!--seznam obsahujici seznam identifikatoru DC pro kazdy zaznam dmdSec pro dc-->
+                        <evaluation functionName="getDcIdentifiersForEachDmdsecId">
+                            <params>
+                                <value name="dmdsec_ids" type="STRING_LIST">
+                                    <!--seznam identifikatoru (dmdSec ID)-->
+                                    <evaluation functionName="getStringListByXpath">
+                                        <params>
+                                            <value name="xml_file" type="FILE">
+                                                <value-ref name="PRIMARY-METS_FILE"/>
+                                            </value>
+                                            <value name="xpath" type="STRING">
+                                                /mets:mets/mets:dmdSec[starts-with(@ID, "DCMD_ART")]/@ID
+                                            </value>
+                                        </params>
+                                    </evaluation>
+                                </value>
+                                <value name="mets_file" type="FILE">
+                                    <value-ref name="PRIMARY-METS_FILE"/>
+                                </value>
+                            </params>
+                        </evaluation>
+                    </value>
+                    <value name="id_types" type="STRING_LIST">
+                        <value-ref name="ID_TYPES_ARTICLE_MANDATORY"/>
+                    </value>
+                    <value name="level_name" type="STRING">ARTICLE</value>
+                </params>
+            </validation>
+        </rule>
+
+        <rule name="DC_PROHIBITED_IDENTIFIERS_NOT_PRESENT_LEVEL_ARTICLE">
+            <description>
+                Úroveň ARTICLE nesmí obsahovat žádné zakázané identifikátory v záznamu Dublin Core.
+            </description>
+            <validation functionName="checkIdentifiersNoneTypePresent">
+                <params>
+                    <value name="identifier_list_list" type="IDENTIFIER_LIST_LIST">
+                        <!--seznam obsahujici seznam identifikatoru DC pro kazdy zaznam dmdSec pro dc-->
+                        <evaluation functionName="getDcIdentifiersForEachDmdsecId">
+                            <params>
+                                <value name="dmdsec_ids" type="STRING_LIST">
+                                    <!--seznam identifikatoru (dmdSec ID)-->
+                                    <evaluation functionName="getStringListByXpath">
+                                        <params>
+                                            <value name="xml_file" type="FILE">
+                                                <value-ref name="PRIMARY-METS_FILE"/>
+                                            </value>
+                                            <value name="xpath" type="STRING">
+                                                /mets:mets/mets:dmdSec[starts-with(@ID, "DCMD_ART")]/@ID
+                                            </value>
+                                        </params>
+                                    </evaluation>
+                                </value>
+                                <value name="mets_file" type="FILE">
+                                    <value-ref name="PRIMARY-METS_FILE"/>
+                                </value>
+                            </params>
+                        </evaluation>
+                    </value>
+                    <value name="id_types" type="STRING_LIST">
+                        <value-ref name="ID_TYPES_ARTICLE_PROHIBITED"/>
+                    </value>
+                    <value name="level_name" type="STRING">ARTICLE</value>
+                </params>
+            </validation>
+        </rule>
+
+        <!-- duplicate identifiers -->
+        <rule name="DC_IDENTIFIERS_NO_DUPLICATES_WITHIN_DMDSEC">
+            <description>Identifikátory v jednotlivých Dublin Core záznamech by měly mít unikátní typ.
+                Neměly by se tedy objevit dva a více identikátorů stejného typu v jednom záznamu.
+            </description>
+
+            <validation functionName="checkIdentifiersNoDuplicateTypes">
+                <params>
+                    <value name="identifier_list_list" type="IDENTIFIER_LIST_LIST">
+                        <!--seznam obsahujici seznam identifikatoru DC pro kazdy zaznam dmdSec pro dc-->
+                        <evaluation functionName="getDcIdentifiersForEachDmdsecId">
+                            <params>
+                                <value name="dmdsec_ids" type="STRING_LIST">
+                                    <!--seznam identifikatoru (dmdSec ID)-->
+                                    <evaluation functionName="getStringListByXpath">
+                                        <params>
+                                            <value name="xml_file" type="FILE">
+                                                <value-ref name="PRIMARY-METS_FILE"/>
+                                            </value>
+                                            <value name="xpath" type="STRING">
+                                                /mets:mets/mets:dmdSec[starts-with(@ID, "DCMD")]/@ID
+                                            </value>
+                                        </params>
+                                    </evaluation>
+                                </value>
+                                <value name="mets_file" type="FILE">
+                                    <value-ref name="PRIMARY-METS_FILE"/>
+                                </value>
+                            </params>
+                        </evaluation>
+                    </value>
+                </params>
+            </validation>
+        </rule>
+
+        <rule name="DC_IDENTIFIERS_NO_DUPLICATES_ACROSS_DMDSECS">
+            <description>Identifikátory napříč Dublin Core záznamy by měly být unikátní.
+                Na různých úrovní popisu se tedy nesmí objevit dva totožné identifikátory (shodný typ i hodnota).
+            </description>
+
+            <validation functionName="checkIdentifiersNoDuplicates">
+                <params>
+                    <value name="identifier_list" type="IDENTIFIER_LIST">
+                        <!--spojeni vsech identifikatoru do jednoho seznamu-->
+                        <evaluation functionName="mergeIdentifiers">
+                            <params>
+                                <value name="identifier_list_list" type="IDENTIFIER_LIST_LIST">
+                                    <!--seznam obsahujici seznam identifikatoru DC pro kazdy zaznam dmdSec pro dc-->
+                                    <evaluation functionName="getDcIdentifiersForEachDmdsecId">
+                                        <params>
+                                            <value name="dmdsec_ids" type="STRING_LIST">
+                                                <!--seznam identifikatoru (dmdSec ID)-->
+                                                <evaluation functionName="getStringListByXpath">
+                                                    <params>
+                                                        <value name="xml_file" type="FILE">
+                                                            <value-ref name="PRIMARY-METS_FILE"/>
+                                                        </value>
+                                                        <value name="xpath" type="STRING">
+                                                            /mets:mets/mets:dmdSec[starts-with(@ID, "DCMD")]/@ID
+                                                        </value>
+                                                    </params>
+                                                </evaluation>
+                                            </value>
+                                            <value name="mets_file" type="FILE">
+                                                <value-ref name="PRIMARY-METS_FILE"/>
+                                            </value>
+                                        </params>
+                                    </evaluation>
+                                </value>
+                            </params>
+                        </evaluation>
+                    </value>
+                </params>
+            </validation>
+        </rule>
+
+
+        <!--MODS identifiers -->
+
+        <!--title-->
+        <rule name="MODS_MANDATORY_IDENTIFIERS_PRESENT_LEVEL_TITLE">
+            <description>
+                Úroveň TITLE musí obsahovat všechny povinné identifikátory v záznamu MODS.
+            </description>
+            <validation functionName="checkIdentifiersAllTypesPresent">
+                <params>
+                    <value name="identifier_list_list" type="IDENTIFIER_LIST_LIST">
+                        <!--seznam obsahujici seznam identifikatoru pro kazdy zaznam dmdSec pro MODS-->
+                        <evaluation functionName="getModsIdentifiersForEachDmdsecId">
+                            <params>
+                                <value name="dmdsec_ids" type="STRING_LIST">
+                                    <!--seznam identifikatoru (dmdSec ID)-->
+                                    <evaluation functionName="getStringListByXpath">
+                                        <params>
+                                            <value name="xml_file" type="FILE">
+                                                <value-ref name="PRIMARY-METS_FILE"/>
+                                            </value>
+                                            <value name="xpath" type="STRING">
+                                                /mets:mets/mets:dmdSec[starts-with(@ID, "MODSMD_TITLE")]/@ID
+                                            </value>
+                                        </params>
+                                    </evaluation>
+                                </value>
+                                <value name="mets_file" type="FILE">
+                                    <value-ref name="PRIMARY-METS_FILE"/>
+                                </value>
+                            </params>
+                        </evaluation>
+                    </value>
+                    <value name="id_types" type="STRING_LIST">
+                        <value-ref name="ID_TYPES_TITLE_MANDATORY"/>
+                    </value>
+                    <value name="level_name" type="STRING">TITLE</value>
+                </params>
+            </validation>
+        </rule>
+
+        <rule name="MODS_PROHIBITED_IDENTIFIERS_NOT_PRESENT_LEVEL_TITLE">
+            <description>
+                Úroveň TITLE nesmí obsahovat žádné zakázané identifikátory v záznamu MODS.
+            </description>
+            <validation functionName="checkIdentifiersNoneTypePresent">
+                <params>
+                    <value name="identifier_list_list" type="IDENTIFIER_LIST_LIST">
+                        <!--seznam obsahujici seznam identifikatoru pro kazdy zaznam dmdSec pro MODS-->
+                        <evaluation functionName="getModsIdentifiersForEachDmdsecId">
+                            <params>
+                                <value name="dmdsec_ids" type="STRING_LIST">
+                                    <!--seznam identifikatoru (dmdSec ID)-->
+                                    <evaluation functionName="getStringListByXpath">
+                                        <params>
+                                            <value name="xml_file" type="FILE">
+                                                <value-ref name="PRIMARY-METS_FILE"/>
+                                            </value>
+                                            <value name="xpath" type="STRING">
+                                                /mets:mets/mets:dmdSec[starts-with(@ID, "MODSMD_TITLE")]/@ID
+                                            </value>
+                                        </params>
+                                    </evaluation>
+                                </value>
+                                <value name="mets_file" type="FILE">
+                                    <value-ref name="PRIMARY-METS_FILE"/>
+                                </value>
+                            </params>
+                        </evaluation>
+                    </value>
+                    <value name="id_types" type="STRING_LIST">
+                        <value-ref name="ID_TYPES_TITLE_PROHIBITED"/>
+                    </value>
+                    <value name="level_name" type="STRING">TITLE</value>
+                </params>
+            </validation>
+        </rule>
+
+        <!--volume-->
+        <rule name="MODS_MANDATORY_IDENTIFIERS_PRESENT_LEVEL_VOLUME">
+            <description>
+                Úroveň VOLUME musí obsahovat všechny povinné identifikátory v záznamu MODS.
+            </description>
+            <validation functionName="checkIdentifiersAllTypesPresent">
+                <params>
+                    <value name="identifier_list_list" type="IDENTIFIER_LIST_LIST">
+                        <!--seznam obsahujici seznam identifikatoru pro kazdy zaznam dmdSec pro MODS-->
+                        <evaluation functionName="getModsIdentifiersForEachDmdsecId">
+                            <params>
+                                <value name="dmdsec_ids" type="STRING_LIST">
+                                    <!--seznam identifikatoru (dmdSec ID)-->
+                                    <evaluation functionName="getStringListByXpath">
+                                        <params>
+                                            <value name="xml_file" type="FILE">
+                                                <value-ref name="PRIMARY-METS_FILE"/>
+                                            </value>
+                                            <value name="xpath" type="STRING">
+                                                /mets:mets/mets:dmdSec[starts-with(@ID, "MODSMD_VOLUME")]/@ID
+                                            </value>
+                                        </params>
+                                    </evaluation>
+                                </value>
+                                <value name="mets_file" type="FILE">
+                                    <value-ref name="PRIMARY-METS_FILE"/>
+                                </value>
+                            </params>
+                        </evaluation>
+                    </value>
+                    <value name="id_types" type="STRING_LIST">
+                        <value-ref name="ID_TYPES_VOLUME_MANDATORY"/>
+                    </value>
+                    <value name="level_name" type="STRING">VOLUME</value>
+                </params>
+            </validation>
+        </rule>
+
+        <rule name="MODS_PROHIBITED_IDENTIFIERS_NOT_PRESENT_LEVEL_VOLUME">
+            <description>
+                Úroveň VOLUME nesmí obsahovat žádné zakázané identifikátory v záznamu MODS.
+            </description>
+            <validation functionName="checkIdentifiersNoneTypePresent">
+                <params>
+                    <value name="identifier_list_list" type="IDENTIFIER_LIST_LIST">
+                        <!--seznam obsahujici seznam identifikatoru pro kazdy zaznam dmdSec pro MODS-->
+                        <evaluation functionName="getModsIdentifiersForEachDmdsecId">
+                            <params>
+                                <value name="dmdsec_ids" type="STRING_LIST">
+                                    <!--seznam identifikatoru (dmdSec ID)-->
+                                    <evaluation functionName="getStringListByXpath">
+                                        <params>
+                                            <value name="xml_file" type="FILE">
+                                                <value-ref name="PRIMARY-METS_FILE"/>
+                                            </value>
+                                            <value name="xpath" type="STRING">
+                                                /mets:mets/mets:dmdSec[starts-with(@ID, "MODSMD_VOLUME")]/@ID
+                                            </value>
+                                        </params>
+                                    </evaluation>
+                                </value>
+                                <value name="mets_file" type="FILE">
+                                    <value-ref name="PRIMARY-METS_FILE"/>
+                                </value>
+                            </params>
+                        </evaluation>
+                    </value>
+                    <value name="id_types" type="STRING_LIST">
+                        <value-ref name="ID_TYPES_VOLUME_PROHIBITED"/>
+                    </value>
+                    <value name="level_name" type="STRING">VOLUME</value>
+                </params>
+            </validation>
+        </rule>
+
+        <!--issue-->
+        <rule name="MODS_MANDATORY_IDENTIFIERS_PRESENT_LEVEL_ISSUE">
+            <description>
+                Úroveň ISSUE musí obsahovat všechny povinné identifikátory v záznamu MODS.
+            </description>
+            <validation functionName="checkIdentifiersAllTypesPresent">
+                <params>
+                    <value name="identifier_list_list" type="IDENTIFIER_LIST_LIST">
+                        <!--seznam obsahujici seznam identifikatoru pro kazdy zaznam dmdSec pro MODS-->
+                        <evaluation functionName="getModsIdentifiersForEachDmdsecId">
+                            <params>
+                                <value name="dmdsec_ids" type="STRING_LIST">
+                                    <!--seznam identifikatoru (dmdSec ID)-->
+                                    <evaluation functionName="getStringListByXpath">
+                                        <params>
+                                            <value name="xml_file" type="FILE">
+                                                <value-ref name="PRIMARY-METS_FILE"/>
+                                            </value>
+                                            <value name="xpath" type="STRING">
+                                                /mets:mets/mets:dmdSec[starts-with(@ID, "MODSMD_ISSUE")]/@ID
+                                            </value>
+                                        </params>
+                                    </evaluation>
+                                </value>
+                                <value name="mets_file" type="FILE">
+                                    <value-ref name="PRIMARY-METS_FILE"/>
+                                </value>
+                            </params>
+                        </evaluation>
+                    </value>
+                    <value name="id_types" type="STRING_LIST">
+                        <value-ref name="ID_TYPES_ISSUE_MANDATORY"/>
+                    </value>
+                    <value name="level_name" type="STRING">ISSUE</value>
+                </params>
+            </validation>
+        </rule>
+
+        <rule name="MODS_PROHIBITED_IDENTIFIERS_NOT_PRESENT_LEVEL_ISSUE">
+            <description>
+                Úroveň ISSUE nesmí obsahovat žádné zakázané identifikátory v záznamu MODS.
+            </description>
+            <validation functionName="checkIdentifiersNoneTypePresent">
+                <params>
+                    <value name="identifier_list_list" type="IDENTIFIER_LIST_LIST">
+                        <!--seznam obsahujici seznam identifikatoru pro kazdy zaznam dmdSec pro MODS-->
+                        <evaluation functionName="getModsIdentifiersForEachDmdsecId">
+                            <params>
+                                <value name="dmdsec_ids" type="STRING_LIST">
+                                    <!--seznam identifikatoru (dmdSec ID)-->
+                                    <evaluation functionName="getStringListByXpath">
+                                        <params>
+                                            <value name="xml_file" type="FILE">
+                                                <value-ref name="PRIMARY-METS_FILE"/>
+                                            </value>
+                                            <value name="xpath" type="STRING">
+                                                /mets:mets/mets:dmdSec[starts-with(@ID, "MODSMD_ISSUE")]/@ID
+                                            </value>
+                                        </params>
+                                    </evaluation>
+                                </value>
+                                <value name="mets_file" type="FILE">
+                                    <value-ref name="PRIMARY-METS_FILE"/>
+                                </value>
+                            </params>
+                        </evaluation>
+                    </value>
+                    <value name="id_types" type="STRING_LIST">
+                        <value-ref name="ID_TYPES_ISSUE_PROHIBITED"/>
+                    </value>
+                    <value name="level_name" type="STRING">ISSUE</value>
+                </params>
+            </validation>
+        </rule>
+
+        <!--supplement-->
+        <rule name="MODS_MANDATORY_IDENTIFIERS_PRESENT_LEVEL_SUPPLEMENT">
+            <description>
+                Úroveň SUPPLEMENT musí obsahovat všechny povinné identifikátory v záznamu MODS.
+            </description>
+            <validation functionName="checkIdentifiersAllTypesPresent">
+                <params>
+                    <value name="identifier_list_list" type="IDENTIFIER_LIST_LIST">
+                        <!--seznam obsahujici seznam identifikatoru pro kazdy zaznam dmdSec pro MODS-->
+                        <evaluation functionName="getModsIdentifiersForEachDmdsecId">
+                            <params>
+                                <value name="dmdsec_ids" type="STRING_LIST">
+                                    <!--seznam identifikatoru (dmdSec ID)-->
+                                    <evaluation functionName="getStringListByXpath">
+                                        <params>
+                                            <value name="xml_file" type="FILE">
+                                                <value-ref name="PRIMARY-METS_FILE"/>
+                                            </value>
+                                            <value name="xpath" type="STRING">
+                                                /mets:mets/mets:dmdSec[starts-with(@ID, "MODSMD_SUPPL")]/@ID
+                                            </value>
+                                        </params>
+                                    </evaluation>
+                                </value>
+                                <value name="mets_file" type="FILE">
+                                    <value-ref name="PRIMARY-METS_FILE"/>
+                                </value>
+                            </params>
+                        </evaluation>
+                    </value>
+                    <value name="id_types" type="STRING_LIST">
+                        <value-ref name="ID_TYPES_SUPPLEMENT_MANDATORY"/>
+                    </value>
+                    <value name="level_name" type="STRING">SUPPLEMENT</value>
+                </params>
+            </validation>
+        </rule>
+
+        <rule name="MODS_PROHIBITED_IDENTIFIERS_NOT_PRESENT_LEVEL_SUPPLEMENT">
+            <description>
+                Úroveň SUPPLEMENT nesmí obsahovat žádné zakázané identifikátory v záznamu MODS.
+            </description>
+            <validation functionName="checkIdentifiersNoneTypePresent">
+                <params>
+                    <value name="identifier_list_list" type="IDENTIFIER_LIST_LIST">
+                        <!--seznam obsahujici seznam identifikatoru pro kazdy zaznam dmdSec pro MODS-->
+                        <evaluation functionName="getModsIdentifiersForEachDmdsecId">
+                            <params>
+                                <value name="dmdsec_ids" type="STRING_LIST">
+                                    <!--seznam identifikatoru (dmdSec ID)-->
+                                    <evaluation functionName="getStringListByXpath">
+                                        <params>
+                                            <value name="xml_file" type="FILE">
+                                                <value-ref name="PRIMARY-METS_FILE"/>
+                                            </value>
+                                            <value name="xpath" type="STRING">
+                                                /mets:mets/mets:dmdSec[starts-with(@ID, "MODSMD_SUPPL")]/@ID
+                                            </value>
+                                        </params>
+                                    </evaluation>
+                                </value>
+                                <value name="mets_file" type="FILE">
+                                    <value-ref name="PRIMARY-METS_FILE"/>
+                                </value>
+                            </params>
+                        </evaluation>
+                    </value>
+                    <value name="id_types" type="STRING_LIST">
+                        <value-ref name="ID_TYPES_SUPPLEMENT_PROHIBITED"/>
+                    </value>
+                    <value name="level_name" type="STRING">SUPPLEMENT</value>
+                </params>
+            </validation>
+        </rule>
+
+        <!--article-->
+        <rule name="MODS_MANDATORY_IDENTIFIERS_PRESENT_LEVEL_ARTICLE">
+            <description>
+                Úroveň ARTICLE musí obsahovat všechny povinné identifikátory v záznamu MODS.
+            </description>
+            <validation functionName="checkIdentifiersAllTypesPresent">
+                <params>
+                    <value name="identifier_list_list" type="IDENTIFIER_LIST_LIST">
+                        <!--seznam obsahujici seznam identifikatoru pro kazdy zaznam dmdSec pro MODS-->
+                        <evaluation functionName="getModsIdentifiersForEachDmdsecId">
+                            <params>
+                                <value name="dmdsec_ids" type="STRING_LIST">
+                                    <!--seznam identifikatoru (dmdSec ID)-->
+                                    <evaluation functionName="getStringListByXpath">
+                                        <params>
+                                            <value name="xml_file" type="FILE">
+                                                <value-ref name="PRIMARY-METS_FILE"/>
+                                            </value>
+                                            <value name="xpath" type="STRING">
+                                                /mets:mets/mets:dmdSec[starts-with(@ID, "MODSMD_ART")]/@ID
+                                            </value>
+                                        </params>
+                                    </evaluation>
+                                </value>
+                                <value name="mets_file" type="FILE">
+                                    <value-ref name="PRIMARY-METS_FILE"/>
+                                </value>
+                            </params>
+                        </evaluation>
+                    </value>
+                    <value name="id_types" type="STRING_LIST">
+                        <value-ref name="ID_TYPES_ARTICLE_MANDATORY"/>
+                    </value>
+                    <value name="level_name" type="STRING">ARTICLE</value>
+                </params>
+            </validation>
+        </rule>
+
+        <rule name="MODS_PROHIBITED_IDENTIFIERS_NOT_PRESENT_LEVEL_ARTICLE">
+            <description>
+                Úroveň ARTICLE nesmí obsahovat žádné zakázané identifikátory v záznamu MODS.
+            </description>
+            <validation functionName="checkIdentifiersNoneTypePresent">
+                <params>
+                    <value name="identifier_list_list" type="IDENTIFIER_LIST_LIST">
+                        <!--seznam obsahujici seznam identifikatoru pro kazdy zaznam dmdSec pro MODS-->
+                        <evaluation functionName="getModsIdentifiersForEachDmdsecId">
+                            <params>
+                                <value name="dmdsec_ids" type="STRING_LIST">
+                                    <!--seznam identifikatoru (dmdSec ID)-->
+                                    <evaluation functionName="getStringListByXpath">
+                                        <params>
+                                            <value name="xml_file" type="FILE">
+                                                <value-ref name="PRIMARY-METS_FILE"/>
+                                            </value>
+                                            <value name="xpath" type="STRING">
+                                                /mets:mets/mets:dmdSec[starts-with(@ID, "MODSMD_ART")]/@ID
+                                            </value>
+                                        </params>
+                                    </evaluation>
+                                </value>
+                                <value name="mets_file" type="FILE">
+                                    <value-ref name="PRIMARY-METS_FILE"/>
+                                </value>
+                            </params>
+                        </evaluation>
+                    </value>
+                    <value name="id_types" type="STRING_LIST">
+                        <value-ref name="ID_TYPES_ARTICLE_PROHIBITED"/>
+                    </value>
+                    <value name="level_name" type="STRING">ARTICLE</value>
+                </params>
+            </validation>
+        </rule>
+
+
+        <!-- duplicate identifiers -->
+        <rule name="MODS_IDENTIFIERS_NO_DUPLICATES_WITHIN_DMDSEC">
+            <description>Identifikátory v jednotlivých MODS záznamech by měly mít unikátní typ.
+                Neměly by se tedy objevit dva a více identikátorů stejného typu v jednom záznamu.
+            </description>
+
+            <validation functionName="checkIdentifiersNoDuplicateTypes">
+                <params>
+                    <value name="identifier_list_list" type="IDENTIFIER_LIST_LIST">
+                        <!--seznam obsahujici seznam identifikatoru pro kazdy zaznam dmdSec pro MODS-->
+                        <evaluation functionName="getModsIdentifiersForEachDmdsecId">
+                            <params>
+                                <value name="dmdsec_ids" type="STRING_LIST">
+                                    <!--seznam identifikatoru (dmdSec ID)-->
+                                    <evaluation functionName="getStringListByXpath">
+                                        <params>
+                                            <value name="xml_file" type="FILE">
+                                                <value-ref name="PRIMARY-METS_FILE"/>
+                                            </value>
+                                            <value name="xpath" type="STRING">
+                                                /mets:mets/mets:dmdSec[starts-with(@ID, "MODSMD")]/@ID
+                                            </value>
+                                        </params>
+                                    </evaluation>
+                                </value>
+                                <value name="mets_file" type="FILE">
+                                    <value-ref name="PRIMARY-METS_FILE"/>
+                                </value>
+                            </params>
+                        </evaluation>
+                    </value>
+                </params>
+            </validation>
+        </rule>
+
+        <rule name="MODS_IDENTIFIERS_NO_DUPLICATES_ACROSS_DMDSECS">
+            <description>Identifikátory napříč MODS záznamy by měly být unikátní.
+                Na různých úrovní popisu se tedy nesmí objevit dva totožné identifikátory (shodný typ i hodnota).
+            </description>
+
+            <validation functionName="checkIdentifiersNoDuplicates">
+                <params>
+                    <value name="identifier_list" type="IDENTIFIER_LIST">
+                        <!--spojeni vsech identifikatoru do jednoho seznamu-->
+                        <evaluation functionName="mergeIdentifiers">
+                            <params>
+                                <value name="identifier_list_list" type="IDENTIFIER_LIST_LIST">
+                                    <!--seznam obsahujici seznam identifikatoru pro kazdy zaznam dmdSec pro MODS-->
+                                    <evaluation functionName="getModsIdentifiersForEachDmdsecId">
+                                        <params>
+                                            <value name="dmdsec_ids" type="STRING_LIST">
+                                                <!--seznam identifikatoru (dmdSec ID)-->
+                                                <evaluation functionName="getStringListByXpath">
+                                                    <params>
+                                                        <value name="xml_file" type="FILE">
+                                                            <value-ref name="PRIMARY-METS_FILE"/>
+                                                        </value>
+                                                        <value name="xpath" type="STRING">
+                                                            /mets:mets/mets:dmdSec[starts-with(@ID, "MODSMD")]/@ID
+                                                        </value>
+                                                    </params>
+                                                </evaluation>
+                                            </value>
+                                            <value name="mets_file" type="FILE">
+                                                <value-ref name="PRIMARY-METS_FILE"/>
+                                            </value>
+                                        </params>
+                                    </evaluation>
+                                </value>
+                            </params>
+                        </evaluation>
+                    </value>
+                </params>
+            </validation>
+        </rule>
+
+        <!-- urn:nbn -->
+        <rule name="MODS_IDENTIFIERS_URN_NBN_VALID">
+            <description>Všechny identifikátory URN:NBN napříč MODS záznamy musí platnou podobu (např.
+                urn:nbn:cz:abd005-00012z).
+            </description>
+            <validation functionName="checkUrnNbnIdentifiersValid">
+                <params>
+                    <value name="identifier_list" type="IDENTIFIER_LIST">
+                        <!--spojeni vsech identifikatoru do jednoho seznamu-->
+                        <evaluation functionName="mergeIdentifiers">
+                            <params>
+                                <value name="identifier_list_list" type="IDENTIFIER_LIST_LIST">
+                                    <!--seznam obsahujici seznam identifikatoru pro kazdy zaznam dmdSec pro MODS-->
+                                    <evaluation functionName="getModsIdentifiersForEachDmdsecId">
+                                        <params>
+                                            <value name="dmdsec_ids" type="STRING_LIST">
+                                                <!--seznam identifikatoru (dmdSec ID)-->
+                                                <evaluation functionName="getStringListByXpath">
+                                                    <params>
+                                                        <value name="xml_file" type="FILE">
+                                                            <value-ref name="PRIMARY-METS_FILE"/>
+                                                        </value>
+                                                        <value name="xpath" type="STRING">
+                                                            /mets:mets/mets:dmdSec[starts-with(@ID, "MODSMD")]/@ID
+                                                        </value>
+                                                    </params>
+                                                </evaluation>
+                                            </value>
+                                            <value name="mets_file" type="FILE">
+                                                <value-ref name="PRIMARY-METS_FILE"/>
+                                            </value>
+                                        </params>
+                                    </evaluation>
+                                </value>
+                            </params>
+                        </evaluation>
+                    </value>
+                </params>
+            </validation>
+        </rule>
+
+        <rule name="MODS_IDENTIFIERS_URN_NBN_REGISTERED">
+            <description>Všechny identifikátory URN:NBN napříč MODS záznamy musí registrovány v URN:NBN Resolveru NKP.
+            </description>
+            <validation functionName="checkUrnNbnIdentifiersRegistered">
+                <params>
+                    <value name="identifier_list" type="IDENTIFIER_LIST">
+                        <!--spojeni vsech identifikatoru do jednoho seznamu-->
+                        <evaluation functionName="mergeIdentifiers">
+                            <params>
+                                <value name="identifier_list_list" type="IDENTIFIER_LIST_LIST">
+                                    <!--seznam obsahujici seznam identifikatoru pro kazdy zaznam dmdSec pro MODS-->
+                                    <evaluation functionName="getModsIdentifiersForEachDmdsecId">
+                                        <params>
+                                            <value name="dmdsec_ids" type="STRING_LIST">
+                                                <!--seznam identifikatoru (dmdSec ID)-->
+                                                <evaluation functionName="getStringListByXpath">
+                                                    <params>
+                                                        <value name="xml_file" type="FILE">
+                                                            <value-ref name="PRIMARY-METS_FILE"/>
+                                                        </value>
+                                                        <value name="xpath" type="STRING">
+                                                            /mets:mets/mets:dmdSec[starts-with(@ID, "MODSMD")]/@ID
+                                                        </value>
+                                                    </params>
+                                                </evaluation>
+                                            </value>
+                                            <value name="mets_file" type="FILE">
+                                                <value-ref name="PRIMARY-METS_FILE"/>
+                                            </value>
+                                        </params>
+                                    </evaluation>
+                                </value>
+                            </params>
+                        </evaluation>
+                    </value>
+                </params>
+            </validation>
+        </rule>
+
+        <!-- match of identifiers in MODS and DC -->
+        <rule name="PRIMARY-METS_DC_IDENTIFIER_MATCH_MODS_IDENTIFIERS">
+            <description>Identifikátory v DC se musí shodovat s identifikátory v MODS pro všechny úrovně popisu.
+            </description>
+            <validation functionName="checkPrimaryMetsDcIdentifiersMatchModsIdentifiers">
+                <params>
+                    <value name="primary-mets_file" type="FILE">
+                        <value-ref name="PRIMARY-METS_FILE"/>
+                    </value>
+                </params>
+            </validation>
+        </rule>
+
+    </rules-section>
+
+    <rules-section name="METS hlavičky" description="Kontrola hlaviček primárního a sekundárních METS záznamů">
+
+        <rule name="PRIMARY_METS_HEADER_MATCHES_PROFILE">
+            <description>Primární METS musí obsahovat hlavičku metsHdr, která musí splňovat požadovaný profil.
+            </description>
+            <validation functionName="checkMetsMatchProfile">
+                <params>
+                    <value name="mets_file" type="FILE">
+                        <value-ref name="PRIMARY-METS_FILE"/>
+                    </value>
+                    <value name="profile" type="STRING">primary_mets_header</value>
+                </params>
+            </validation>
+        </rule>
+
+    </rules-section>
+
+    <!--TODO: "Primární METS filesec"-->
+
+    <!--TODO: "Strukturální mapy"-->
+
+    <!--TODO: Technická metadata-->
+
+    <!--TODO: "Autorskoprávní metadata"-->
+
+    <rules-section name="Bibliografická metadata"
+                   description="validace obsahů bibliografických metadat v MODS a Dubline Core v souboru PRIMARY-METS">
+
+        <rule name="BIBLIOGRAPHIC_METADATA_MATCH_PROFILE_TITLE">
+            <description>Bibliografická metadata pro entitu typu TITLE musí splňovat požadovaný profil pro záznamy v
+                Dublin Core i MODS.
+            </description>
+            <validation functionName="checkBibliographicMetadataMatchProfile">
+                <params>
+                    <value name="mets_file" type="FILE">
+                        <value-ref name="PRIMARY-METS_FILE"/>
+                    </value>
+                    <value name="entity_type" type="ENTITY_TYPE">TITLE</value>
+                    <value name="profile_detection_xpath" type="STRING">concat('title',null)</value>
+                    <value name="xsd_file_dc" type="FILE">
+                        <value-ref name="DC_XSD_FILE"/>
+                    </value>
+                    <value name="xsd_file_mods" type="FILE">
+                        <value-ref name="MODS_XSD_FILE"/>
+                    </value>
+                </params>
+            </validation>
+        </rule>
+
+        <rule name="BIBLIOGRAPHIC_METADATA_MATCH_PROFILE_VOLUME">
+            <description>Bibliografická metadata pro entitu typu VOLUME musí splňovat požadovaný profil pro záznamy v
+                Dublin Core i MODS.
+            </description>
+            <validation functionName="checkBibliographicMetadataMatchProfile">
+                <params>
+                    <value name="mets_file" type="FILE">
+                        <value-ref name="PRIMARY-METS_FILE"/>
+                    </value>
+                    <value name="entity_type" type="ENTITY_TYPE">VOLUME</value>
+                    <value name="profile_detection_xpath" type="STRING">concat('volume',null)</value>
+                    <value name="xsd_file_dc" type="FILE">
+                        <value-ref name="DC_XSD_FILE"/>
+                    </value>
+                    <value name="xsd_file_mods" type="FILE">
+                        <value-ref name="MODS_XSD_FILE"/>
+                    </value>
+                </params>
+            </validation>
+        </rule>
+
+        <rule name="BIBLIOGRAPHIC_METADATA_MATCH_PROFILE_ISSUE">
+            <description>Bibliografická metadata pro entitu typu ISSUE musí splňovat požadovaný profil pro záznamy v
+                Dublin Core i MODS.
+            </description>
+            <validation functionName="checkBibliographicMetadataMatchProfile">
+                <params>
+                    <value name="mets_file" type="FILE">
+                        <value-ref name="PRIMARY-METS_FILE"/>
+                    </value>
+                    <value name="entity_type" type="ENTITY_TYPE">ISSUE</value>
+                    <value name="profile_detection_xpath" type="STRING">concat('issue',null)</value>
+                    <value name="xsd_file_dc" type="FILE">
+                        <value-ref name="DC_XSD_FILE"/>
+                    </value>
+                    <value name="xsd_file_mods" type="FILE">
+                        <value-ref name="MODS_XSD_FILE"/>
+                    </value>
+                </params>
+            </validation>
+        </rule>
+
+        <rule name="BIBLIOGRAPHIC_METADATA_MATCH_PROFILE_ARTICLE">
+            <description>Bibliografická metadata pro entitu typu ARTICLE musí splňovat požadovaný profil pro záznamy
+                v Dublin Core i MODS.
+            </description>
+            <validation functionName="checkBibliographicMetadataMatchProfile">
+                <params>
+                    <value name="mets_file" type="FILE">
+                        <value-ref name="PRIMARY-METS_FILE"/>
+                    </value>
+                    <value name="entity_type" type="ENTITY_TYPE">ARTICLE</value>
+                    <value name="profile_detection_xpath" type="STRING">concat('article',null)</value>
+                    <value name="xsd_file_dc" type="FILE">
+                        <value-ref name="DC_XSD_FILE"/>
+                    </value>
+                    <value name="xsd_file_mods" type="FILE">
+                        <value-ref name="MODS_XSD_FILE"/>
+                    </value>
+                </params>
+            </validation>
+        </rule>
+
+        <rule name="BIBLIOGRAPHIC_METADATA_MATCH_PROFILE_SUPPLEMENT">
+            <description>Bibliografická metadata pro entitu typu SUPPLEMENT musí splňovat požadovaný profil pro záznamy
+                v Dublin Core i MODS.
+            </description>
+            <validation functionName="checkBibliographicMetadataMatchProfile">
+                <params>
+                    <value name="mets_file" type="FILE">
+                        <value-ref name="PRIMARY-METS_FILE"/>
+                    </value>
+                    <value name="entity_type" type="ENTITY_TYPE">SUPPLEMENT</value>
+                    <value name="profile_detection_xpath" type="STRING">concat('supplement',null)</value>
+                    <value name="xsd_file_dc" type="FILE">
+                        <value-ref name="DC_XSD_FILE"/>
+                    </value>
+                    <value name="xsd_file_mods" type="FILE">
+                        <value-ref name="MODS_XSD_FILE"/>
+                    </value>
+                </params>
+            </validation>
+        </rule>
+
+    </rules-section>
+
+    <rules-section name="Soubory původních kopií" description="Kontrola souborů ORIGINAL-COPY_FILES v PDF nebo EPUB">
+
+        <rule name="ORIGINAL-COPY-PDF_FILES_VALID_BY_VERAPDF">
+            <description>Všechny soubory ORIGINAL-COPY-PDF_FILES v PDF musí být validní vůči profilu pro binární soubory pro nástroj veraPDF.
+            </description>
+            <validation functionName="checkBinaryFilesValidByExternalUtil">
+                <params>
+                    <value name="files" type="FILE_LIST">
+                        <value-ref name="ORIGINAL-COPY-PDF_FILES"/>
+                    </value>
+                    <value name="type" type="RESOURCE_TYPE">ORIGINAL_COPY_PDF</value>
+                    <value name="util" type="EXTERNAL_UTIL">VERAPDF</value>
+                    <value name="execution" type="STRING">pdf</value>
+                    <value name="ignore_empty_file_list" type="BOOLEAN">TRUE</value>
+                </params>
+            </validation>
+        </rule>
+
+        <rule name="ORIGINAL-COPY-EPUB_FILES_VALID_BY_EPUBCHECK">
+            <description>Všechny soubory ORIGINAL-COPY-EPUB_FILES v PDF musí být validní vůči profilu pro binární soubory pro nástroj EPUBCheck.
+            </description>
+            <validation functionName="checkBinaryFilesValidByExternalUtil">
+                <params>
+                    <value name="files" type="FILE_LIST">
+                        <value-ref name="ORIGINAL-COPY-EPUB_FILES"/>
+                    </value>
+                    <value name="type" type="RESOURCE_TYPE">ORIGINAL_COPY_EPUB</value>
+                    <value name="util" type="EXTERNAL_UTIL">EPUBCHECK</value>
+                    <value name="execution" type="STRING">epub</value>
+                    <value name="ignore_empty_file_list" type="BOOLEAN">TRUE</value>
+                </params>
+            </validation>
+        </rule>
+
+    </rules-section>
+
+</fDMF>

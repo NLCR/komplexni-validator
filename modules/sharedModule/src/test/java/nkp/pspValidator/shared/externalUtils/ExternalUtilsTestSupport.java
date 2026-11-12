@@ -31,11 +31,6 @@ public final class ExternalUtilsTestSupport {
     public static final File VALIDATOR_CONFIG_DIR = new File("src/main/resources/nkp/pspValidator/shared/validatorConfig");
     public static final File EXTERNAL_UTILS_CONFIG = new File(VALIDATOR_CONFIG_DIR, "externalUtils.xml");
     public static final File FDMF_DIR = new File(VALIDATOR_CONFIG_DIR, "fDMF");
-    /**
-     * Profily binarnich souboru, ktere zatim nejsou v zadnem fDMF (vep-2.4_emonograph_3.0: veraPdf.xml a epubCheck.xml
-     * z VEP 2.4 s jmennym prostorem 3.0, dokud fDMF e-publikaci nejsou v repu, viz README.md v externalUtils).
-     */
-    public static final File PROFILE_FIXTURES_DIR = new File(OUTPUTS_DIR, "profiles");
 
     private ExternalUtilsTestSupport() {
     }
@@ -61,14 +56,11 @@ public final class ExternalUtilsTestSupport {
     }
 
     /**
-     * Profil binarnich souboru pro dane fDMF a typ kopie, napr. profileFile("fund_unit_0.2", "mc", ExternalUtil.JPYLYZER).
-     * fDMF se hleda v konfiguraci aplikace, jinak mezi fixtures (PROFILE_FIXTURES_DIR).
+     * Profil binarnich souboru pro dane fDMF z konfigurace aplikace a typ kopie, napr.
+     * profileFile("fund_unit_0.2", "mc", ExternalUtil.JPYLYZER) nebo profileFile("emonograph_3.0", "pdf", ExternalUtil.VERAPDF).
      */
     public static File profileFile(String fdmf, String copy, ExternalUtil util) {
         File fdmfDir = new File(FDMF_DIR, fdmf);
-        if (!fdmfDir.isDirectory()) {
-            fdmfDir = new File(PROFILE_FIXTURES_DIR, fdmf);
-        }
         return new File(new File(new File(fdmfDir, "binaryFileProfiles"), copy), util.getProfileFileName());
     }
 
