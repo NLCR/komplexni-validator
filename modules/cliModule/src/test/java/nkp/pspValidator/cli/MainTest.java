@@ -71,6 +71,14 @@ public class MainTest {
     }
 
     @Test
+    public void helpListsVeraPdfAndEpubCheckOptions() throws Exception {
+        Main.main(null, new String[]{"--" + Params.HELP});
+        for (String option : new String[]{Params.VERAPDF_PATH, Params.EPUBCHECK_PATH, Params.DISABLE_VERAPDF, Params.DISABLE_EPUBCHECK}) {
+            assertTrue(option, stdout().contains("--" + option));
+        }
+    }
+
+    @Test
     public void versionPrintsVersion() throws Exception {
         Main.main(null, new String[]{"--" + Params.VERSION});
         assertTrue(stdout().contains("Komplexni validator CLI verze"));
@@ -111,7 +119,7 @@ public class MainTest {
 
     private static String[] noTools() {
         return new String[]{"--disable-imagemagick", "--disable-jhove", "--disable-jpylyzer", "--disable-kakadu",
-                "--disable-mp3val", "--disable-shntool", "--disable-checkmate"};
+                "--disable-mp3val", "--disable-shntool", "--disable-checkmate", "--disable-verapdf", "--disable-epubcheck"};
     }
 
     private static String[] validateArgs(String psp) {
@@ -164,6 +172,38 @@ public class MainTest {
         f.setNamespaceAware(true);
         Document doc = f.newDocumentBuilder().parse(xml);
         assertEquals(NS_PROTOCOL, doc.getDocumentElement().getNamespaceURI());
+    }
+
+    @Test
+    public void veraPdfAndEpubCheckCanBeDisabled() throws Exception {
+        Main.main(null, validateArgs(CLIPPING_02));
+        String o = stdout();
+        assertTrue(o, o.contains("Vypnuto použití nástroje veraPDF."));
+        assertTrue(o, o.contains("Vypnuto použití nástroje EPUBCheck."));
+        assertFalse(o, o.contains("Kontroluji dostupnost nástroje"));
+    }
+
+    @Test
+    public void toolWithFailedVersionDetectionIsUnavailable() throws Exception {
+        // nalez 27: po neuspesne detekci verze se nastroj oznaci jako nedostupny; validace pak u pravidla hlasi
+        // jednu INFO hlasku "nástroj ... není dostupný" misto ERROR "Cannot run program" u kazdeho souboru
+        File missing = new File(tmp.getRoot(), "neexistuje");
+        String[] args = concat(validateArgs(CLIPPING_02), "--" + Params.JHOVE_PATH, missing.getPath(),
+                "--" + Params.VERAPDF_PATH, missing.getPath(), "--" + Params.EPUBCHECK_PATH, missing.getPath());
+        args = java.util.Arrays.stream(args)
+                .filter(a -> !a.equals("--" + Params.DISABLE_JHOVE) && !a.equals("--" + Params.DISABLE_VERAPDF) && !a.equals("--" + Params.DISABLE_EPUBCHECK))
+                .toArray(String[]::new);
+        Main.main(null, args);
+        String o = stdout();
+        assertTrue(o, o.contains("Kontroluji dostupnost nástroje JHOVE: nenalezen ("));
+        assertTrue(o, o.contains("Kontroluji dostupnost nástroje veraPDF: nenalezen ("));
+        // EPUBCheck se spousti pres java -jar <cesta>/epubcheck.jar: java se najde, chybu o chybejicim jaru vypise
+        // na stderr a stdout je prazdny ("nenalezen (prázdný výstup)")
+        assertTrue(o, o.contains("Kontroluji dostupnost nástroje EPUBCheck: nenalezen ("));
+        assertTrue(o, o.contains("Pravidlo MASTER-COPY_FILES_VALID_BY_JHOVE: 1 problém (1x INFO)"));
+        assertTrue(o, o.contains("INFO: nástroj JHOVE není dostupný"));
+        assertFalse(o, o.contains("ERROR: Cannot run program"));
+        assertTrue(o, o.contains("balík je: validní"));
     }
 
     @Test

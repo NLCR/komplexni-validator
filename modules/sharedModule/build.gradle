@@ -69,11 +69,11 @@ tasks.withType(Test).configureEach {
     }
 }
 
-// Cesty k obrazovym nastrojum pro VfCheckBinaryFilesValidByExternalUtilTest (adresar s nastrojem), napr.
+// Cesty k externim nastrojum (obrazove, veraPDF, EPUBCheck) pro VfCheckBinaryFilesValidByExternalUtilTest (adresar s nastrojem), napr.
 // ./gradlew :modules:sharedModule:test --tests '*VfCheckBinaryFilesValidByExternalUtilTest' -Djhove.path=/opt/jhove
 // Bez nich se nastroj hleda v PATH; kdyz chybi, testy nastroje se preskoci.
 tasks.withType(Test).configureEach {
-    ['jpylyzer.path', 'jhove.path', 'kakadu.path', 'imagemagick.path'].each { prop ->
+    ['jpylyzer.path', 'jhove.path', 'kakadu.path', 'imagemagick.path', 'verapdf.path', 'epubcheck.path'].each { prop ->
         if (System.getProperty(prop) != null) {
             systemProperty prop, System.getProperty(prop)
         }

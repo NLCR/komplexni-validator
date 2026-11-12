@@ -372,6 +372,22 @@ public class Main {
                 .create());
 
         options.addOption(OptionBuilder
+                .withDescription(replaceUmlaut("Adresář nástroje veraPDF (obsahuje skript verapdf, resp. verapdf.bat)." +
+                        " Např. C:\\Program Files\\verapdf pro Windows, $(brew --prefix)/bin pro macOS s Homebrew."))
+                .hasArg()
+                .withArgName("ADRESAR")
+                .withLongOpt(Params.VERAPDF_PATH)
+                .create());
+
+        options.addOption(OptionBuilder
+                .withDescription(replaceUmlaut("Adresář nástroje EPUBCheck (obsahuje epubcheck.jar a adresář lib), spouští se přes java z PATH." +
+                        " Např. C:\\epubcheck-5.4.0 pro Windows, $(brew --prefix epubcheck)/libexec pro macOS s Homebrew."))
+                .hasArg()
+                .withArgName("ADRESAR")
+                .withLongOpt(Params.EPUBCHECK_PATH)
+                .create());
+
+        options.addOption(OptionBuilder
                 .withDescription(replaceUmlaut("Zakáže použití ImageMagick."))
                 .withLongOpt(Params.DISABLE_IMAGEMAGICK)
                 .create());
@@ -404,6 +420,16 @@ public class Main {
         options.addOption(OptionBuilder
                 .withDescription(replaceUmlaut("Zakáže použití Checkmate."))
                 .withLongOpt(Params.DISABLE_CHECKMATE)
+                .create());
+
+        options.addOption(OptionBuilder
+                .withDescription(replaceUmlaut("Zakáže použití veraPDF."))
+                .withLongOpt(Params.DISABLE_VERAPDF)
+                .create());
+
+        options.addOption(OptionBuilder
+                .withDescription(replaceUmlaut("Zakáže použití EPUBCheck."))
+                .withLongOpt(Params.DISABLE_EPUBCHECK)
                 .create());
 
         options.addOption(OptionBuilder
@@ -699,6 +725,20 @@ public class Main {
                 } else {
                     if (line.hasOption(Params.CHECKMATE_PATH)) {
                         utilsPaths.put(ExternalUtil.CHECKMATE, new File(line.getOptionValue(Params.CHECKMATE_PATH)));
+                    }
+                }
+                if (line.hasOption(Params.DISABLE_VERAPDF)) {
+                    utilsDisabled.add(ExternalUtil.VERAPDF);
+                } else {
+                    if (line.hasOption(Params.VERAPDF_PATH)) {
+                        utilsPaths.put(ExternalUtil.VERAPDF, new File(line.getOptionValue(Params.VERAPDF_PATH)));
+                    }
+                }
+                if (line.hasOption(Params.DISABLE_EPUBCHECK)) {
+                    utilsDisabled.add(ExternalUtil.EPUBCHECK);
+                } else {
+                    if (line.hasOption(Params.EPUBCHECK_PATH)) {
+                        utilsPaths.put(ExternalUtil.EPUBCHECK, new File(line.getOptionValue(Params.EPUBCHECK_PATH)));
                     }
                 }
 
@@ -1311,10 +1351,11 @@ public class Main {
                 externalUtilManager.setUtilDisabled(util);
             } else {
                 out.print(String.format("Kontroluji dostupnost nástroje %s: ", util.getUserFriendlyName()));
+                //po neuspesne detekci se nastroj oznaci jako nedostupny, validace pak hlasi jednu INFO hlasku
+                //"nástroj ... není dostupný" misto chyby spusteni u kazdeho souboru (stejne jako GUI)
                 if (!externalUtilManager.isVersionDetectionDefined(util)) {
+                    externalUtilManager.setUtilAvailable(util, false);
                     out.println("není definován způsob detekce verze");
-                } else if (!externalUtilManager.isUtilAvailable(util)) {
-                    out.println("není definován způsob spuštění");
                 } else {
                     try {
                         String version = externalUtilManager.runUtilVersionDetection(util);
@@ -1322,9 +1363,11 @@ public class Main {
                             externalUtilManager.setUtilAvailable(util, true);
                             out.println("nalezen, verze: " + version);
                         } else {
+                            externalUtilManager.setUtilAvailable(util, false);
                             out.println("nenalezen");
                         }
                     } catch (CliCommand.CliCommandException e) {
+                        externalUtilManager.setUtilAvailable(util, false);
                         out.println(String.format("nenalezen (%s)", e.getMessage()));
                     }
                 }

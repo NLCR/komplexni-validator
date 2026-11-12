@@ -40,6 +40,8 @@ public class ConfigurationManager {
     public static final String PROP_MP3VAL_DIR = "mp3val.dir";
     public static final String PROP_SHNTOOL_DIR = "shntool.dir";
     public static final String PROP_CHECKMATE_DIR = "checkmate.dir";
+    public static final String PROP_VERAPDF_DIR = "verapdf.dir";
+    public static final String PROP_EPUBCHECK_DIR = "epubcheck.dir";
 
     //validation
     public static final String PROP_LAST_PSP_DIR = "last.psp.dir";

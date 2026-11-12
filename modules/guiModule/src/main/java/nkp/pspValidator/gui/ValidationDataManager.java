@@ -34,6 +34,8 @@ public class ValidationDataManager {
         externalUtilManager.setPath(ExternalUtil.MP3VAL, configurationManager.getFileOrNull(ConfigurationManager.PROP_MP3VAL_DIR));
         externalUtilManager.setPath(ExternalUtil.SHNTOOL, configurationManager.getFileOrNull(ConfigurationManager.PROP_SHNTOOL_DIR));
         externalUtilManager.setPath(ExternalUtil.CHECKMATE, configurationManager.getFileOrNull(ConfigurationManager.PROP_CHECKMATE_DIR));
+        externalUtilManager.setPath(ExternalUtil.VERAPDF, configurationManager.getFileOrNull(ConfigurationManager.PROP_VERAPDF_DIR));
+        externalUtilManager.setPath(ExternalUtil.EPUBCHECK, configurationManager.getFileOrNull(ConfigurationManager.PROP_EPUBCHECK_DIR));
     }
 
     public void setFdmfRegistry(FdmfRegistry fdmfRegistry) {

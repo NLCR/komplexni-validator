@@ -35,7 +35,7 @@
 
             <!--jpylyzer 2.2.0-->
             <operatingSystem name="LINUX">
-                <command>jpylyzer --version</command>
+                <command>${UTIL_PATH}jpylyzer --version</command>
                 <parser>
                     <stream>STDOUT</stream>
                     <regexp>(?s).*</regexp>
@@ -49,7 +49,7 @@
                 </parser>
             </operatingSystem>
             <operatingSystem name="MAC">
-                <command>jpylyzer --version</command>
+                <command>${UTIL_PATH}jpylyzer --version</command>
                 <parser>
                     <stream>STDOUT</stream>
                     <regexp>(?s).*</regexp>
@@ -83,7 +83,7 @@
 
             <!--jpylyzer 2.2.0-->
             <operatingSystem name="MAC">
-                <command>jpylyzer jp2In ${TARGET_FILE}</command>
+                <command>${UTIL_PATH}jpylyzer jp2In ${TARGET_FILE}</command>
                 <parser>
                     <stream>STDOUT</stream>
                     <regexp>(?s).*</regexp>
@@ -425,5 +425,106 @@
         </execution>
     </util>
 
+    <util name="VERAPDF">
+        <!-- instalace: https://github.com/NLCR/komplexni-validator/wiki/Instalace#verapdf -->
+        <!-- ${UTIL_PATH} je instalační adresář veraPDF (se skriptem verapdf, resp. verapdf.bat), u Homebrew na macOS např. /opt/homebrew/bin -->
+        <versionDetection>
+            <operatingSystem name="LINUX">
+                <command>${UTIL_PATH}verapdf --version</command>
+                <parser>
+                    <stream>STDOUT</stream>
+                    <regexp>veraPDF [0-9\.]+</regexp>
+                </parser>
+            </operatingSystem>
+            <operatingSystem name="WINDOWS">
+                <command>${UTIL_PATH}verapdf.bat --version</command>
+                <parser>
+                    <stream>STDOUT</stream>
+                    <regexp>veraPDF [0-9\.]+</regexp>
+                </parser>
+            </operatingSystem>
+            <operatingSystem name="MAC">
+                <command>${UTIL_PATH}verapdf --version</command>
+                <parser>
+                    <stream>STDOUT</stream>
+                    <regexp>veraPDF [0-9\.]+</regexp>
+                </parser>
+            </operatingSystem>
+        </versionDetection>
+        <execution name="pdf">
+            <operatingSystem name="LINUX">
+                <command>${UTIL_PATH}verapdf ${TARGET_FILE}</command>
+                <parser>
+                    <stream>STDOUT</stream>
+                    <regexp>(?s).*</regexp>
+                </parser>
+            </operatingSystem>
+            <operatingSystem name="WINDOWS">
+                <command>${UTIL_PATH}verapdf.bat ${TARGET_FILE}</command>
+                <parser>
+                    <stream>STDOUT</stream>
+                    <regexp>(?s).*</regexp>
+                </parser>
+            </operatingSystem>
+            <operatingSystem name="MAC">
+                <command>${UTIL_PATH}verapdf ${TARGET_FILE}</command>
+                <parser>
+                    <stream>STDOUT</stream>
+                    <regexp>(?s).*</regexp>
+                </parser>
+            </operatingSystem>
+        </execution>
+    </util>
+
+    <util name="EPUBCHECK">
+        <!-- instalace: https://github.com/NLCR/komplexni-validator/wiki/Instalace#epubcheck -->
+        <!-- ${UTIL_PATH} je adresář s epubcheck.jar (a podadresářem lib), u Homebrew na macOS např. /opt/homebrew/opt/epubcheck/libexec; java se bere z PATH -->
+        <versionDetection>
+            <operatingSystem name="LINUX">
+                <command>java -jar ${UTIL_PATH}epubcheck.jar --version</command>
+                <parser>
+                    <stream>STDOUT</stream>
+                    <regexp>EPUBCheck v[0-9\.]+</regexp>
+                </parser>
+            </operatingSystem>
+            <operatingSystem name="WINDOWS">
+                <command>java -jar ${UTIL_PATH}epubcheck.jar --version</command>
+                <parser>
+                    <stream>STDOUT</stream>
+                    <regexp>EPUBCheck v[0-9\.]+</regexp>
+                </parser>
+            </operatingSystem>
+            <operatingSystem name="MAC">
+                <command>java -jar ${UTIL_PATH}epubcheck.jar --version</command>
+                <parser>
+                    <stream>STDOUT</stream>
+                    <regexp>EPUBCheck v[0-9\.]+</regexp>
+                </parser>
+            </operatingSystem>
+        </versionDetection>
+        <execution name="epub">
+            <operatingSystem name="LINUX">
+                <command>java -jar ${UTIL_PATH}epubcheck.jar --out - -q ${TARGET_FILE}</command>
+                <parser>
+                    <stream>STDOUT</stream>
+                    <regexp>(?s).*</regexp>
+                </parser>
+            </operatingSystem>
+            <operatingSystem name="WINDOWS">
+                <command>java -jar ${UTIL_PATH}epubcheck.jar --out - -q ${TARGET_FILE}</command>
+                <parser>
+                    <stream>STDOUT</stream>
+                    <regexp>(?s).*</regexp>
+                </parser>
+            </operatingSystem>
+            <operatingSystem name="MAC">
+                <command>java -jar ${UTIL_PATH}epubcheck.jar --out - -q ${TARGET_FILE}</command>
+                <parser>
+                    <stream>STDOUT</stream>
+                    <regexp>(?s).*</regexp>
+                </parser>
+            </operatingSystem>
+        </execution>
+    </util>
 
 </externalUtils>

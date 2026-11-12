@@ -703,6 +703,200 @@
                    GridPane.rowIndex="16"
                    visible="false"/>
 
+            <!--veraPDF-->
+            <Label text="veraPDF"
+                   styleClass="util-name"
+                   GridPane.columnIndex="0"
+                   GridPane.rowIndex="17"/>
+
+            <ProgressIndicator fx:id="verapdfProgress"
+                               GridPane.columnIndex="1"
+                               GridPane.rowIndex="17"
+                               visible="false"/>
+
+            <ImageView fx:id="verapdfOkImg"
+                       styleClass="result-image"
+                       GridPane.columnIndex="1"
+                       GridPane.rowIndex="17"
+                       preserveRatio="true"
+                       visible="false"
+                       style="-fx-background-color: BLACK">
+                <image>
+                    <Image url="@/img/Ok-30.png"/>
+                </image>
+            </ImageView>
+
+            <ImageView fx:id="verapdfErrorImg"
+                       styleClass="result-image"
+                       GridPane.columnIndex="1"
+                       GridPane.rowIndex="17"
+                       GridPane.halignment="CENTER"
+                       visible="false">
+                <image>
+                    <Image url="@/img/Error-30.png"/>
+                </image>
+            </ImageView>
+
+            <Button fx:id="verapdfBtnRetry"
+                    text="Zkusit znovu"
+                    onAction="#checkVerapdf"
+                    GridPane.columnIndex="2"
+                    GridPane.rowIndex="17">
+                <graphic>
+                    <ImageView>
+                        <image>
+                            <Image url="@/img/Synchronize-18.png"/>
+                        </image>
+                    </ImageView>
+                </graphic>
+            </Button>
+
+            <Button fx:id="verapdfBtnInstall"
+                    text="Instalovat"
+                    onAction="#installVerapdf"
+                    GridPane.columnIndex="3"
+                    GridPane.rowIndex="17">
+                <graphic>
+                    <ImageView>
+                        <image>
+                            <Image url="@/img/About-18.png"/>
+                        </image>
+                    </ImageView>
+                </graphic>
+            </Button>
+
+            <Button fx:id="verapdfBtnSelectPath"
+                    text="Nastavit adresář"
+                    onAction="#selectVerapdfPath"
+                    GridPane.columnIndex="4"
+                    GridPane.rowIndex="17">
+                <graphic>
+                    <ImageView>
+                        <image>
+                            <Image url="@/img/Add_Folder-18.png"/>
+                        </image>
+                    </ImageView>
+                </graphic>
+            </Button>
+
+            <Button fx:id="verapdfBtnRemovePath"
+                    text="Odebrat adresář"
+                    onAction="#removeVerapdfPath"
+                    GridPane.columnIndex="5"
+                    GridPane.rowIndex="17">
+                <graphic>
+                    <ImageView>
+                        <image>
+                            <Image url="@/img/Remove_Folder-18.png"/>
+                        </image>
+                    </ImageView>
+                </graphic>
+            </Button>
+
+            <Label fx:id="verapdfStatusText"
+                   styleClass="result-text"
+                   GridPane.columnIndex="0"
+                   GridPane.columnSpan="6"
+                   GridPane.rowIndex="18"
+                   visible="false"/>
+
+            <!--EPUBCheck-->
+            <Label text="EPUBCheck"
+                   styleClass="util-name"
+                   GridPane.columnIndex="0"
+                   GridPane.rowIndex="19"/>
+
+            <ProgressIndicator fx:id="epubcheckProgress"
+                               GridPane.columnIndex="1"
+                               GridPane.rowIndex="19"
+                               visible="false"/>
+
+            <ImageView fx:id="epubcheckOkImg"
+                       styleClass="result-image"
+                       GridPane.columnIndex="1"
+                       GridPane.rowIndex="19"
+                       preserveRatio="true"
+                       visible="false"
+                       style="-fx-background-color: BLACK">
+                <image>
+                    <Image url="@/img/Ok-30.png"/>
+                </image>
+            </ImageView>
+
+            <ImageView fx:id="epubcheckErrorImg"
+                       styleClass="result-image"
+                       GridPane.columnIndex="1"
+                       GridPane.rowIndex="19"
+                       GridPane.halignment="CENTER"
+                       visible="false">
+                <image>
+                    <Image url="@/img/Error-30.png"/>
+                </image>
+            </ImageView>
+
+            <Button fx:id="epubcheckBtnRetry"
+                    text="Zkusit znovu"
+                    onAction="#checkEpubcheck"
+                    GridPane.columnIndex="2"
+                    GridPane.rowIndex="19">
+                <graphic>
+                    <ImageView>
+                        <image>
+                            <Image url="@/img/Synchronize-18.png"/>
+                        </image>
+                    </ImageView>
+                </graphic>
+            </Button>
+
+            <Button fx:id="epubcheckBtnInstall"
+                    text="Instalovat"
+                    onAction="#installEpubcheck"
+                    GridPane.columnIndex="3"
+                    GridPane.rowIndex="19">
+                <graphic>
+                    <ImageView>
+                        <image>
+                            <Image url="@/img/About-18.png"/>
+                        </image>
+                    </ImageView>
+                </graphic>
+            </Button>
+
+            <Button fx:id="epubcheckBtnSelectPath"
+                    text="Nastavit adresář"
+                    onAction="#selectEpubcheckPath"
+                    GridPane.columnIndex="4"
+                    GridPane.rowIndex="19">
+                <graphic>
+                    <ImageView>
+                        <image>
+                            <Image url="@/img/Add_Folder-18.png"/>
+                        </image>
+                    </ImageView>
+                </graphic>
+            </Button>
+
+            <Button fx:id="epubcheckBtnRemovePath"
+                    text="Odebrat adresář"
+                    onAction="#removeEpubcheckPath"
+                    GridPane.columnIndex="5"
+                    GridPane.rowIndex="19">
+                <graphic>
+                    <ImageView>
+                        <image>
+                            <Image url="@/img/Remove_Folder-18.png"/>
+                        </image>
+                    </ImageView>
+                </graphic>
+            </Button>
+
+            <Label fx:id="epubcheckStatusText"
+                   styleClass="result-text"
+                   GridPane.columnIndex="0"
+                   GridPane.columnSpan="6"
+                   GridPane.rowIndex="20"
+                   visible="false"/>
+
         </GridPane>
 
         <StackPane>

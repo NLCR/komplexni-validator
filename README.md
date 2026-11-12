@@ -89,7 +89,7 @@ CLI (nápověda `--help`, verze `--version`), příklad validace balíčku s kon
         --config-dir modules/sharedModule/src/main/resources/nkp/pspValidator/shared/validatorConfig \
         --xml-protocol-file protokol.xml \
         --disable-imagemagick --disable-jhove --disable-jpylyzer --disable-kakadu \
-        --disable-mp3val --disable-shntool --disable-checkmate
+        --disable-mp3val --disable-shntool --disable-checkmate --disable-verapdf --disable-epubcheck
 
 Akce (`-a`, `--action`): `VALIDATE_PSP`, `VALIDATE_PSP_GROUP` (`--psp-group`), `VALIDATE_METADATA_BY_PROFILE`
 (`--metadata-profile-id`, `--metadata-file`), `BUILD_MINIFIED_PACKAGE` (`--psp`, `--minified-psp-dir`). XML protokol:
@@ -97,10 +97,38 @@ Akce (`-a`, `--action`): `VALIDATE_PSP`, `VALIDATE_PSP_GROUP` (`--psp-group`), `
 `--tmp-dir` (`-t`). Podrobnost výpisu `-v` (`--verbosity`, 0 až 3, výchozí 2). Vydaný CLI zip obsahuje jar se všemi
 závislostmi (`KomplexniValidatorCLI.jar`) a adresář `validatorConfig`.
 
-Externí nástroje (ImageMagick, JHOVE, Jpylyzer, Kakadu, MP3val, shntool, Checkmate) se zadávají adresářem
-(`--<nástroj>-path`, např. `--jhove-path`) nebo vypínají (`--disable-<nástroj>`); bez cesty se hledají v PATH.
-Validátor verze nástrojů nekontroluje, jen je vypíše. Instalátory JHOVE a Jpylyzer jsou v adresáři `installers/`
-repozitáře (nejsou součástí vydaných zipů).
+Externí nástroje (ImageMagick, JHOVE, Jpylyzer, Kakadu, MP3val, shntool, Checkmate, veraPDF, EPUBCheck) se zadávají
+adresářem (`--<nástroj>-path`, např. `--jhove-path`) nebo vypínají (`--disable-<nástroj>`); bez cesty se hledají
+v PATH. Validátor verze nástrojů nekontroluje, jen je vypíše. Nástroj, jehož verzi se nepodaří zjistit, se pro
+validaci vypne: pravidlo pak hlásí jednu informaci „nástroj … není dostupný“ (dříve CLI hlásilo chybu spuštění
+u každého souboru). Instalátory JHOVE a Jpylyzer jsou v adresáři `installers/` repozitáře (nejsou součástí
+vydaných zipů).
+
+### veraPDF a EPUBCheck (e-publikace)
+
+Soubory PDF a EPUB e-publikací kontrolují [veraPDF](https://verapdf.org/) (validace PDF/A) a
+[EPUBCheck](https://github.com/w3c/epubcheck). Doporučené minimální verze: veraPDF 1.24 (sjednocený formát XML
+výstupu), EPUBCheck 5.0 (EPUB 3.3); ověřeno s veraPDF 1.30 a EPUBCheck 5.4.0. Oba nástroje potřebují Javu
+(veraPDF 8, 11, 17 nebo 21, EPUBCheck 8 a novější).
+
+| nástroj | parametr CLI | adresář, který se zadává (CLI i dialog „Kontrola externích nástrojů“ v GUI) |
+|---|---|---|
+| veraPDF | `--verapdf-path` | instalační adresář se skriptem `verapdf` (Windows `verapdf.bat`) |
+| EPUBCheck | `--epubcheck-path` | rozbalený zip s `epubcheck.jar` a podadresářem `lib` |
+
+Instalace na macOS přes Homebrew (`brew install verapdf epubcheck`):
+
+    --verapdf-path "$(brew --prefix)/bin"
+    --epubcheck-path "$(brew --prefix epubcheck)/libexec"
+
+U EPUBCheck se nesmí zadat `$(brew --prefix)/bin`: je tam jen spouštěcí skript `epubcheck` bez `epubcheck.jar`.
+Homebrew formule veraPDF má verzi 1.30.2, `verapdf --version` ale vypíše `veraPDF 1.30.0` (verze aplikační části,
+knihovny jsou 1.30.2); jde o stejnou instalaci. Jinde: veraPDF z https://software.verapdf.org/releases/verapdf-installer.zip
+(instalátor, spustit `java -jar` na rozbalený jar), EPUBCheck jako zip z https://github.com/w3c/epubcheck/releases.
+
+EPUBCheck se spouští příkazem `java -jar <adresář>/epubcheck.jar`, kde `java` je program z PATH, ne Java, ve které
+běží validátor. Na stroji bez `java` v PATH (typicky GUI z instalátoru, které má vlastní přibalenou Javu) EPUBCheck
+nepoběží a validace ho ohlásí jako nedostupný; je potřeba nainstalovat Javu 8 nebo novější a přidat ji do PATH.
 
 ## Konfigurace validace
 

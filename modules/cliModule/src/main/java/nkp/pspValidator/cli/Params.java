@@ -40,6 +40,8 @@ public class Params {
     public static final String MP3VAL_PATH = "mp3val-path";
     public static final String SHNTOOL_PATH = "shntool-path";
     public static final String CHECKMATE_PATH = "checkmate-path";
+    public static final String VERAPDF_PATH = "verapdf-path";
+    public static final String EPUBCHECK_PATH = "epubcheck-path";
 
     public static final String DISABLE_IMAGEMAGICK = "disable-imagemagick";
     public static final String DISABLE_JHOVE = "disable-jhove";
@@ -48,6 +50,8 @@ public class Params {
     public static final String DISABLE_MP3VAL = "disable-mp3val";
     public static final String DISABLE_SHNTOOL = "disable-shntool";
     public static final String DISABLE_CHECKMATE = "disable-checkmate";
+    public static final String DISABLE_VERAPDF = "disable-verapdf";
+    public static final String DISABLE_EPUBCHECK = "disable-epubcheck";
 
     public static final String VERBOSITY = "verbosity";
     public static final String HELP = "help";

@@ -32,6 +32,8 @@ public class FdmfConfiguration {
     private static final String DIR_BFP_SOURCE_AUDIO_SOURCE = "sa";
     private static final String DIR_BFP_SOURCE_AUDIO_MASTER_COPY = "mca";
     private static final String DIR_BFP_SOURCE_AUDIO_USER_COPY = "uca";
+    private static final String DIR_BFP_SOURCE_ORIGINAL_COPY_PDF = "pdf";
+    private static final String DIR_BFP_SOURCE_ORIGINAL_COPY_EPUB = "epub";
 
     private static final String DIR_BIBLIO_PROFILES_DIR = "biblioProfiles";
     private static final String DIR_BP_TYPE_DC = "dc";
@@ -199,6 +201,10 @@ public class FdmfConfiguration {
                 return new File(rootFile, DIR_BFP_SOURCE_AUDIO_MASTER_COPY);
             case AUDIO_USER_COPY:
                 return new File(rootFile, DIR_BFP_SOURCE_AUDIO_USER_COPY);
+            case ORIGINAL_COPY_PDF:
+                return new File(rootFile, DIR_BFP_SOURCE_ORIGINAL_COPY_PDF);
+            case ORIGINAL_COPY_EPUB:
+                return new File(rootFile, DIR_BFP_SOURCE_ORIGINAL_COPY_EPUB);
             default:
                 throw new IllegalStateException();
         }

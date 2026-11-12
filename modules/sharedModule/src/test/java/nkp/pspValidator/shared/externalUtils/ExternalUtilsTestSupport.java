@@ -14,7 +14,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Pomocny kod pro testy parsovani vystupu externich nastroju (Jpylyzer, JHOVE, Kakadu, ImageMagick) bez samotnych nastroju.
+ * Pomocny kod pro testy parsovani vystupu externich nastroju (Jpylyzer, JHOVE, Kakadu, ImageMagick, veraPDF, EPUBCheck)
+ * bez samotnych nastroju.
  * <p>
  * Ulozene vystupy jsou v src/test/resources/externalUtils/&lt;nastroj&gt;/, popis (verze, prikaz, datum, synteticke vystupy)
  * v README.md tamtez.
@@ -30,6 +31,11 @@ public final class ExternalUtilsTestSupport {
     public static final File VALIDATOR_CONFIG_DIR = new File("src/main/resources/nkp/pspValidator/shared/validatorConfig");
     public static final File EXTERNAL_UTILS_CONFIG = new File(VALIDATOR_CONFIG_DIR, "externalUtils.xml");
     public static final File FDMF_DIR = new File(VALIDATOR_CONFIG_DIR, "fDMF");
+    /**
+     * Profily binarnich souboru, ktere zatim nejsou v zadnem fDMF (vep-2.4_emonograph_3.0: veraPdf.xml a epubCheck.xml
+     * z VEP 2.4 s jmennym prostorem 3.0, dokud fDMF e-publikaci nejsou v repu, viz README.md v externalUtils).
+     */
+    public static final File PROFILE_FIXTURES_DIR = new File(OUTPUTS_DIR, "profiles");
 
     private ExternalUtilsTestSupport() {
     }
@@ -55,10 +61,39 @@ public final class ExternalUtilsTestSupport {
     }
 
     /**
-     * Adresar profilu binarnich souboru pro dane fDMF a typ kopie, napr. profileFile("fund_unit_0.2", "mc", ExternalUtil.JPYLYZER).
+     * Profil binarnich souboru pro dane fDMF a typ kopie, napr. profileFile("fund_unit_0.2", "mc", ExternalUtil.JPYLYZER).
+     * fDMF se hleda v konfiguraci aplikace, jinak mezi fixtures (PROFILE_FIXTURES_DIR).
      */
     public static File profileFile(String fdmf, String copy, ExternalUtil util) {
-        return new File(new File(new File(new File(FDMF_DIR, fdmf), "binaryFileProfiles"), copy), util.getProfileFileName());
+        File fdmfDir = new File(FDMF_DIR, fdmf);
+        if (!fdmfDir.isDirectory()) {
+            fdmfDir = new File(PROFILE_FIXTURES_DIR, fdmf);
+        }
+        return new File(new File(new File(fdmfDir, "binaryFileProfiles"), copy), util.getProfileFileName());
+    }
+
+    /**
+     * Typ zdroje podle adresare profilu (stejne jako FdmfConfiguration.buildSourceTypeDir).
+     */
+    public static ResourceType resourceType(String copy) {
+        switch (copy) {
+            case "mc":
+                return ResourceType.IMAGE_MASTER_COPY;
+            case "uc":
+                return ResourceType.IMAGE_USER_COPY;
+            case "sa":
+                return ResourceType.AUDIO_SOURCE;
+            case "mca":
+                return ResourceType.AUDIO_MASTER_COPY;
+            case "uca":
+                return ResourceType.AUDIO_USER_COPY;
+            case "pdf":
+                return ResourceType.ORIGINAL_COPY_PDF;
+            case "epub":
+                return ResourceType.ORIGINAL_COPY_EPUB;
+            default:
+                throw new IllegalArgumentException("neznámý adresář profilů " + copy);
+        }
     }
 
     /**
@@ -66,7 +101,7 @@ public final class ExternalUtilsTestSupport {
      */
     public static BinaryFileProfile loadProfile(ExternalUtilManager manager, String fdmf, String copy, ExternalUtil util) throws Exception {
         BinaryFileValidator validator = new BinaryFileValidator(manager);
-        ResourceType type = "mc".equals(copy) ? ResourceType.IMAGE_MASTER_COPY : ResourceType.IMAGE_USER_COPY;
+        ResourceType type = resourceType(copy);
         validator.registerProfile(type, util, profileFile(fdmf, copy, util));
         return validator.getProfile(type, util);
     }
