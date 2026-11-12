@@ -414,7 +414,7 @@
                         <expectedAttributes>
                             <attribute name="type">
                                 <expectedContent>
-                                    <value>siglaADR</value>
+                                    <value>sigla ADR</value><!--DMF e-periodika 2.3: hodnota „sigla ADR“ s mezerou (siglaADR až od 2.6); oprava 12. 11. 2026-->
                                 </expectedContent>
                             </attribute>
                         </expectedAttributes>

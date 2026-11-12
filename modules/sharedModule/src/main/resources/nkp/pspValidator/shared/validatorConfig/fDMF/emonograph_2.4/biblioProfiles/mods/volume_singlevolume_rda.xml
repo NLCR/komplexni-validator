@@ -41,7 +41,8 @@
         <expectedElements>
             <element name="mods:titleInfo">
                 <expectedAttributes>
-                    <attribute name="type">
+                    <!--DMF e-monografie 2.4 kap. 5.4.3 (RDA): hlavní název je bez type, type jen u dalších názvů; VEP měl atribut povinný (oprava 12. 11. 2026)-->
+                    <attribute name="type" mandatory="false">
                         <expectedContent>
                             <oneOf>
                                 <value>abbreviated</value>

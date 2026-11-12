@@ -1552,7 +1552,7 @@
         </rule>
 
         <rule name="ORIGINAL-COPY-EPUB_FILES_VALID_BY_EPUBCHECK">
-            <description>Všechny soubory ORIGINAL-COPY-EPUB_FILES v PDF musí být validní vůči profilu pro binární soubory pro nástroj EPUBCheck.
+            <description>Všechny soubory ORIGINAL-COPY-EPUB_FILES v EPUB musí být validní vůči profilu pro binární soubory pro nástroj EPUBCheck.
             </description>
             <validation functionName="checkBinaryFilesValidByExternalUtil">
                 <params>
