@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<info>
+  <created>2026-11-12T10:00:00</created>
+  <metadataversion>3.1</metadataversion>
+  <packageid>aba007-p5m312</packageid>
+  <mainmets>mets_aba007-p5m312.xml</mainmets>
+  <validation version="3.0">Valid</validation>
+  <titleid type="uuid">5e0b0001-0000-4000-8000-000000000001</titleid>
+  <titleid type="urnnbn">urn:nbn:cz:aba007-p5m312</titleid>
+  <titleid type="ccnb">cnb003300001</titleid>
+  <titleid type="isbn">978-80-7050-000-1</titleid>
+  <institution>ABA007</institution>
+  <creator>ABA007</creator>
+  <size>39</size>
+  <itemlist itemtotal="6">
+    <item>/md5_aba007-p5m312.md5</item>
+    <item>/mets_aba007-p5m312.xml</item>
+    <item>/original/oc_aba007-p5m312.pdf</item>
+    <item>/originaldata/conv_aba007-p5m312.xml</item>
+    <item>/originaldata/od_aba007-p5m312.pdf</item>
+    <item>/info_aba007-p5m312.xml</item>
+  </itemlist>
+  <checksum type="md5" checksum="15ad757e96ea2cffb33d007e1663344e">md5_aba007-p5m312.md5</checksum>
+</info>

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<info>
+  <created>2026-11-12T10:00:00</created>
+  <metadataversion>1.3</metadataversion>
+  <packageid>5e0b0003-0000-4000-8000-000000000135</packageid>
+  <mainmets>mets_5e0b0003-0000-4000-8000-000000000135.xml</mainmets>
+  <validation version="3.0">Valid</validation>
+  <titleid type="uuid">5e0b0002-0000-4000-8000-000000000002</titleid>
+  <titleid type="issn">2533-784X</titleid>
+  <titleid type="ccnb">cnb002883931</titleid>
+  <institution>ABA007</institution>
+  <creator>ABA007</creator>
+  <size>80</size>
+  <itemlist itemtotal="10">
+    <item>/amdsec/amd_mets_5e0b0003-0000-4000-8000-000000000135_0001.xml</item>
+    <item>/amdsec/amd_mets_5e0b0003-0000-4000-8000-000000000135_0002.xml</item>
+    <item>/md5_5e0b0003-0000-4000-8000-000000000135.md5</item>
+    <item>/mets_5e0b0003-0000-4000-8000-000000000135.xml</item>
+    <item>/original/oc_5e0b0003-0000-4000-8000-000000000135_0001.pdf</item>
+    <item>/original/oc_5e0b0003-0000-4000-8000-000000000135_0002.pdf</item>
+    <item>/originaldata/conv_5e0b0003-0000-4000-8000-000000000135_0001.xml</item>
+    <item>/originaldata/od_5e0b0003-0000-4000-8000-000000000135_0001.pdf</item>
+    <item>/originaldata/puvodni.pdf</item>
+    <item>/info_5e0b0003-0000-4000-8000-000000000135.xml</item>
+  </itemlist>
+  <checksum type="md5" checksum="795c2524578cd2f8485ce5a1698cda85">md5_5e0b0003-0000-4000-8000-000000000135.md5</checksum>
+</info>

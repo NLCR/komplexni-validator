@@ -1,0 +1,418 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mets:mets xmlns:mets="http://www.loc.gov/METS/" xmlns:mods="http://www.loc.gov/mods/v3" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/" xmlns:premis="info:lc/xmlns/premis-v2" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" LABEL="A / Věda a výzkum, 9, 1" TYPE="electronic_periodical">
+  <mets:metsHdr CREATEDATE="2026-11-12T10:00:00" LASTMODDATE="2026-11-12T10:00:00">
+    <mets:agent ROLE="CREATOR" TYPE="ORGANIZATION">
+      <mets:name>ABA007</mets:name>
+    </mets:agent>
+    <mets:agent ROLE="ARCHIVIST" TYPE="ORGANIZATION">
+      <mets:name>ABA007</mets:name>
+    </mets:agent>
+  </mets:metsHdr>
+  <mets:dmdSec ID="MODSMD_TITLE_0001">
+    <mets:mdWrap MDTYPE="MODS" MDTYPEVERSION="3.6" MIMETYPE="text/xml">
+      <mets:xmlData>
+        <mods:mods ID="MODS_TITLE_0001">
+          <mods:titleInfo>
+            <mods:title>A / Věda a výzkum</mods:title>
+          </mods:titleInfo>
+          <mods:name type="corporate">
+            <mods:namePart>Akademie věd České republiky</mods:namePart>
+            <mods:nameIdentifier>kn20010709016</mods:nameIdentifier>
+          </mods:name>
+          <mods:typeOfResource>text</mods:typeOfResource>
+          <mods:genre>electronic title</mods:genre>
+          <mods:originInfo eventType="publication">
+            <mods:place>
+              <mods:placeTerm authority="marccountry" type="code">xr</mods:placeTerm>
+            </mods:place>
+            <mods:place>
+              <mods:placeTerm type="text">Praha</mods:placeTerm>
+            </mods:place>
+            <mods:publisher>Středisko společných činností AV ČR</mods:publisher>
+            <mods:dateIssued>2017-</mods:dateIssued>
+            <mods:issuance>continuing</mods:issuance>
+            <mods:frequency>4x ročně</mods:frequency>
+          </mods:originInfo>
+          <mods:language>
+            <mods:languageTerm authority="iso639-2b" type="code">cze</mods:languageTerm>
+          </mods:language>
+          <mods:physicalDescription>
+            <mods:form authority="marcform">electronic</mods:form>
+            <mods:form authority="rdamedia" type="media">počítač</mods:form>
+            <mods:form authority="rdacarrier" type="carrier">online zdroj</mods:form>
+            <mods:digitalOrigin>born digital</mods:digitalOrigin>
+          </mods:physicalDescription>
+          <mods:identifier type="uuid">5e0b0002-0000-4000-8000-000000000002</mods:identifier>
+          <mods:identifier type="issn">2533-784X</mods:identifier>
+          <mods:identifier type="ccnb">cnb002883931</mods:identifier>
+          <mods:location>
+            <mods:physicalLocation authority="siglaADR">ABA007</mods:physicalLocation>
+            <mods:shelfLocator>PD 642</mods:shelfLocator>
+          </mods:location>
+          <mods:subject authority="czenas">
+            <mods:topic>věda</mods:topic>
+          </mods:subject>
+          <mods:classification authority="udc" edition="Konspekt">001</mods:classification>
+          <mods:classification authority="Konspekt">12</mods:classification>
+          <mods:recordInfo>
+            <mods:recordContentSource authority="marcorg">ABA007</mods:recordContentSource>
+            <mods:recordCreationDate encoding="iso8601">20261112T100000</mods:recordCreationDate>
+            <mods:recordChangeDate encoding="iso8601">20261112T100000</mods:recordChangeDate>
+            <mods:recordIdentifier source="CZ-PrNK">000300001</mods:recordIdentifier>
+            <mods:recordOrigin>machine generated</mods:recordOrigin>
+            <mods:descriptionStandard>rda</mods:descriptionStandard>
+          </mods:recordInfo>
+        </mods:mods>
+      </mets:xmlData>
+    </mets:mdWrap>
+  </mets:dmdSec>
+  <mets:dmdSec ID="DCMD_TITLE_0001">
+    <mets:mdWrap MDTYPE="DC" MIMETYPE="text/xml">
+      <mets:xmlData>
+        <oai_dc:dc>
+          <dc:title>A / Věda a výzkum</dc:title>
+          <dc:creator>Akademie věd České republiky</dc:creator>
+          <dc:type>model:electronicperiodical</dc:type>
+          <dc:coverage>xr</dc:coverage>
+          <dc:coverage>Praha</dc:coverage>
+          <dc:publisher>Středisko společných činností AV ČR</dc:publisher>
+          <dc:date>2017-</dc:date>
+          <dc:description>born digital</dc:description>
+          <dc:identifier>uuid:5e0b0002-0000-4000-8000-000000000002</dc:identifier>
+          <dc:identifier>issn:2533-784X</dc:identifier>
+          <dc:identifier>ccnb:cnb002883931</dc:identifier>
+          <dc:source>ABA007</dc:source>
+          <dc:source>PD 642</dc:source>
+          <dc:subject>věda</dc:subject>
+          <dc:subject>001</dc:subject>
+          <dc:subject>12</dc:subject>
+        </oai_dc:dc>
+      </mets:xmlData>
+    </mets:mdWrap>
+  </mets:dmdSec>
+  <mets:dmdSec ID="MODSMD_VOLUME_0001">
+    <mets:mdWrap MDTYPE="MODS" MDTYPEVERSION="3.6" MIMETYPE="text/xml">
+      <mets:xmlData>
+        <mods:mods ID="MODS_VOLUME_0001">
+          <mods:titleInfo>
+            <mods:partNumber>9</mods:partNumber>
+          </mods:titleInfo>
+          <mods:genre>electronic volume</mods:genre>
+          <mods:originInfo>
+            <mods:dateIssued>2026</mods:dateIssued>
+          </mods:originInfo>
+          <mods:identifier type="uuid">5e0b0001-0000-4000-8000-000000000001</mods:identifier>
+          <mods:recordInfo>
+            <mods:recordCreationDate encoding="iso8601">20261112T100000</mods:recordCreationDate>
+            <mods:recordChangeDate encoding="iso8601">20261112T100000</mods:recordChangeDate>
+            <mods:recordOrigin>machine generated</mods:recordOrigin>
+          </mods:recordInfo>
+        </mods:mods>
+      </mets:xmlData>
+    </mets:mdWrap>
+  </mets:dmdSec>
+  <mets:dmdSec ID="DCMD_VOLUME_0001">
+    <mets:mdWrap MDTYPE="DC" MIMETYPE="text/xml">
+      <mets:xmlData>
+        <oai_dc:dc>
+          <dc:description>9</dc:description>
+          <dc:type>model:periodicalvolume</dc:type>
+          <dc:identifier>uuid:5e0b0001-0000-4000-8000-000000000001</dc:identifier>
+          <dc:date>2026</dc:date>
+        </oai_dc:dc>
+      </mets:xmlData>
+    </mets:mdWrap>
+  </mets:dmdSec>
+  <mets:dmdSec ID="MODSMD_ISSUE_0001">
+    <mets:mdWrap MDTYPE="MODS" MDTYPEVERSION="3.6" MIMETYPE="text/xml">
+      <mets:xmlData>
+        <mods:mods ID="MODS_ISSUE_0001">
+          <mods:titleInfo>
+            <mods:title>A / Věda a výzkum</mods:title>
+            <mods:partNumber>1</mods:partNumber>
+          </mods:titleInfo>
+          <mods:genre type="normal">electronic issue</mods:genre>
+          <mods:originInfo>
+            <mods:place>
+              <mods:placeTerm authority="marccountry" type="code">xr</mods:placeTerm>
+            </mods:place>
+            <mods:place>
+              <mods:placeTerm type="text">Praha</mods:placeTerm>
+            </mods:place>
+            <mods:publisher>Středisko společných činností AV ČR</mods:publisher>
+            <mods:dateIssued>12.11.2026</mods:dateIssued>
+          </mods:originInfo>
+          <mods:language>
+            <mods:languageTerm authority="iso639-2b" type="code">cze</mods:languageTerm>
+          </mods:language>
+          <mods:physicalDescription>
+            <mods:digitalOrigin>born digital</mods:digitalOrigin>
+          </mods:physicalDescription>
+          <mods:location>
+            <mods:physicalLocation authority="siglaADR">ABA007</mods:physicalLocation>
+            <mods:shelfLocator>PD 642</mods:shelfLocator>
+          </mods:location>
+          <mods:identifier type="urnnbn">urn:nbn:cz:aba007-p5i001</mods:identifier>
+          <mods:identifier type="uuid">5e0b0003-0000-4000-8000-000000000253</mods:identifier>
+          <mods:recordInfo>
+            <mods:recordContentSource authority="marcorg">ABA007</mods:recordContentSource>
+            <mods:recordCreationDate encoding="iso8601">20261112T100000</mods:recordCreationDate>
+            <mods:recordChangeDate encoding="iso8601">20261112T100000</mods:recordChangeDate>
+            <mods:recordOrigin>machine generated</mods:recordOrigin>
+            <mods:descriptionStandard>rda</mods:descriptionStandard>
+          </mods:recordInfo>
+        </mods:mods>
+      </mets:xmlData>
+    </mets:mdWrap>
+  </mets:dmdSec>
+  <mets:dmdSec ID="DCMD_ISSUE_0001">
+    <mets:mdWrap MDTYPE="DC" MIMETYPE="text/xml">
+      <mets:xmlData>
+        <oai_dc:dc>
+          <dc:title>A / Věda a výzkum</dc:title>
+          <dc:description>1</dc:description>
+          <dc:type>model:periodicalitem</dc:type>
+          <dc:date>12.11.2026</dc:date>
+          <dc:coverage>xr</dc:coverage>
+          <dc:coverage>Praha</dc:coverage>
+          <dc:publisher>Středisko společných činností AV ČR</dc:publisher>
+          <dc:language>cze</dc:language>
+          <dc:identifier>urnnbn:urn:nbn:cz:aba007-p5i001</dc:identifier>
+          <dc:identifier>uuid:5e0b0003-0000-4000-8000-000000000253</dc:identifier>
+          <dc:description>born digital</dc:description>
+          <dc:source>ABA007</dc:source>
+          <dc:source>PD 642</dc:source>
+        </oai_dc:dc>
+      </mets:xmlData>
+    </mets:mdWrap>
+  </mets:dmdSec>
+  <mets:dmdSec ID="MODSMD_ART_0001">
+    <mets:mdWrap MDTYPE="MODS" MDTYPEVERSION="3.6" MIMETYPE="text/xml">
+      <mets:xmlData>
+        <mods:mods ID="MODS_ART_0001">
+          <mods:titleInfo>
+            <mods:title>Článek 1</mods:title>
+          </mods:titleInfo>
+          <mods:name type="personal">
+            <mods:namePart type="family">Svoboda</mods:namePart>
+            <mods:namePart type="given">Petr</mods:namePart>
+            <mods:role>
+              <mods:roleTerm authority="marcrelator" type="code">aut</mods:roleTerm>
+            </mods:role>
+          </mods:name>
+          <mods:genre type="editorial">electronic article</mods:genre>
+          <mods:language>
+            <mods:languageTerm authority="iso639-2b" type="code">cze</mods:languageTerm>
+          </mods:language>
+          <mods:physicalDescription>
+            <mods:form>electronic</mods:form>
+            <mods:digitalOrigin>born digital</mods:digitalOrigin>
+          </mods:physicalDescription>
+          <mods:identifier type="uuid">5e0b0006-0000-4000-8000-000000000001</mods:identifier>
+          <mods:recordInfo>
+            <mods:recordContentSource authority="marcorg">ABA007</mods:recordContentSource>
+            <mods:recordCreationDate encoding="iso8601">20261112T100000</mods:recordCreationDate>
+            <mods:recordChangeDate encoding="iso8601">20261112T100000</mods:recordChangeDate>
+            <mods:recordOrigin>machine generated</mods:recordOrigin>
+            <mods:descriptionStandard>rda</mods:descriptionStandard>
+          </mods:recordInfo>
+        </mods:mods>
+      </mets:xmlData>
+    </mets:mdWrap>
+  </mets:dmdSec>
+  <mets:dmdSec ID="DCMD_ART_0001">
+    <mets:mdWrap MDTYPE="DC" MIMETYPE="text/xml">
+      <mets:xmlData>
+        <oai_dc:dc>
+          <dc:title>Článek 1</dc:title>
+          <dc:creator>Svoboda, Petr</dc:creator>
+          <dc:type>model:internalpart</dc:type>
+          <dc:language>cze</dc:language>
+          <dc:format>electronic</dc:format>
+          <dc:description>born digital</dc:description>
+          <dc:identifier>uuid:5e0b0006-0000-4000-8000-000000000001</dc:identifier>
+        </oai_dc:dc>
+      </mets:xmlData>
+    </mets:mdWrap>
+  </mets:dmdSec>
+  <mets:dmdSec ID="MODSMD_ART_0002">
+    <mets:mdWrap MDTYPE="MODS" MDTYPEVERSION="3.6" MIMETYPE="text/xml">
+      <mets:xmlData>
+        <mods:mods ID="MODS_ART_0002">
+          <mods:titleInfo>
+            <mods:title>Článek 2</mods:title>
+          </mods:titleInfo>
+          <mods:name type="personal">
+            <mods:namePart type="family">Svoboda</mods:namePart>
+            <mods:namePart type="given">Petr</mods:namePart>
+            <mods:role>
+              <mods:roleTerm authority="marcrelator" type="code">aut</mods:roleTerm>
+            </mods:role>
+          </mods:name>
+          <mods:genre type="mainArticle">electronic article</mods:genre>
+          <mods:language>
+            <mods:languageTerm authority="iso639-2b" type="code">cze</mods:languageTerm>
+          </mods:language>
+          <mods:physicalDescription>
+            <mods:form>electronic</mods:form>
+            <mods:digitalOrigin>born digital</mods:digitalOrigin>
+          </mods:physicalDescription>
+          <mods:identifier type="uuid">5e0b0006-0000-4000-8000-000000000002</mods:identifier>
+          <mods:recordInfo>
+            <mods:recordContentSource authority="marcorg">ABA007</mods:recordContentSource>
+            <mods:recordCreationDate encoding="iso8601">20261112T100000</mods:recordCreationDate>
+            <mods:recordChangeDate encoding="iso8601">20261112T100000</mods:recordChangeDate>
+            <mods:recordOrigin>machine generated</mods:recordOrigin>
+            <mods:descriptionStandard>rda</mods:descriptionStandard>
+          </mods:recordInfo>
+        </mods:mods>
+      </mets:xmlData>
+    </mets:mdWrap>
+  </mets:dmdSec>
+  <mets:dmdSec ID="DCMD_ART_0002">
+    <mets:mdWrap MDTYPE="DC" MIMETYPE="text/xml">
+      <mets:xmlData>
+        <oai_dc:dc>
+          <dc:title>Článek 2</dc:title>
+          <dc:creator>Svoboda, Petr</dc:creator>
+          <dc:type>model:internalpart</dc:type>
+          <dc:language>cze</dc:language>
+          <dc:format>electronic</dc:format>
+          <dc:description>born digital</dc:description>
+          <dc:identifier>uuid:5e0b0006-0000-4000-8000-000000000002</dc:identifier>
+        </oai_dc:dc>
+      </mets:xmlData>
+    </mets:mdWrap>
+  </mets:dmdSec>
+  <mets:amdSec ID="AMD_ISSUE_0001">
+    <mets:techMD ID="OBJ_001">
+      <mets:mdWrap MDTYPE="PREMIS" MIMETYPE="text/xml">
+        <mets:xmlData>
+          <premis:object xsi:type="premis:file">
+            <premis:objectIdentifier>
+              <premis:objectIdentifierType>ObjectID</premis:objectIdentifierType>
+              <premis:objectIdentifierValue>oc_0001</premis:objectIdentifierValue>
+            </premis:objectIdentifier>
+            <premis:preservationLevel>
+              <premis:preservationLevelValue>logical preservation</premis:preservationLevelValue>
+              <premis:preservationLevelDateAssigned>2026-11-12</premis:preservationLevelDateAssigned>
+            </premis:preservationLevel>
+            <premis:objectCharacteristics>
+              <premis:compositionLevel>0</premis:compositionLevel>
+              <premis:fixity>
+                <premis:messageDigestAlgorithm>MD5</premis:messageDigestAlgorithm>
+                <premis:messageDigest>1711a4d0ffea1d631237f9f64b97c808</premis:messageDigest>
+                <premis:messageDigestOriginator>JHOVE</premis:messageDigestOriginator>
+              </premis:fixity>
+              <premis:size>22353</premis:size>
+              <premis:format>
+                <premis:formatDesignation>
+                  <premis:formatName>application/pdf</premis:formatName>
+                  <premis:formatVersion>1b</premis:formatVersion>
+                </premis:formatDesignation>
+                <premis:formatRegistry>
+                  <premis:formatRegistryName>PRONOM</premis:formatRegistryName>
+                  <premis:formatRegistryKey>fmt/95</premis:formatRegistryKey>
+                </premis:formatRegistry>
+              </premis:format>
+              <premis:creatingApplication>
+                <premis:creatingApplicationName>GPL Ghostscript</premis:creatingApplicationName>
+                <premis:creatingApplicationVersion>1.0</premis:creatingApplicationVersion>
+                <premis:dateCreatedByApplication>2026-11-12T10:00:00</premis:dateCreatedByApplication>
+              </premis:creatingApplication>
+              <premis:objectCharacteristicsExtension>
+                <docmd:document xmlns:docmd="http://www.fcla.edu/docmd">
+                  <docmd:PageCount>1</docmd:PageCount>
+                  <docmd:Language>cze</docmd:Language>
+                  <docmd:documentMetadataExtension>
+                    <ndktech:ndktech xmlns:ndktech="http://www.ndk.cz/standardy-digitalizace/ndktech/1.1">
+                      <ndktech:imagesCount>0</ndktech:imagesCount>
+                      <ndktech:indirectObjectsNumber>4</ndktech:indirectObjectsNumber>
+                    </ndktech:ndktech>
+                  </docmd:documentMetadataExtension>
+                </docmd:document>
+              </premis:objectCharacteristicsExtension>
+            </premis:objectCharacteristics>
+            <premis:originalName>oc_5e0b0003-0000-4000-8000-000000000253.pdf</premis:originalName>
+            <premis:linkingEventIdentifier>
+              <premis:linkingEventIdentifierType>EventID</premis:linkingEventIdentifierType>
+              <premis:linkingEventIdentifierValue>event_001</premis:linkingEventIdentifierValue>
+            </premis:linkingEventIdentifier>
+          </premis:object>
+        </mets:xmlData>
+      </mets:mdWrap>
+    </mets:techMD>
+    <mets:digiprovMD ID="EVT_001">
+      <mets:mdWrap MDTYPE="PREMIS" MIMETYPE="text/xml">
+        <mets:xmlData>
+          <premis:event>
+            <premis:eventIdentifier>
+              <premis:eventIdentifierType>EventID</premis:eventIdentifierType>
+              <premis:eventIdentifierValue>event_001</premis:eventIdentifierValue>
+            </premis:eventIdentifier>
+            <premis:eventType>creation</premis:eventType>
+            <premis:eventDateTime>2026-11-12T10:00:00</premis:eventDateTime>
+            <premis:eventDetail>creation</premis:eventDetail>
+            <premis:eventOutcomeInformation>
+              <premis:eventOutcome>successful</premis:eventOutcome>
+            </premis:eventOutcomeInformation>
+            <premis:linkingAgentIdentifier>
+              <premis:linkingAgentIdentifierType>AgentID</premis:linkingAgentIdentifierType>
+              <premis:linkingAgentIdentifierValue>agent_001</premis:linkingAgentIdentifierValue>
+              <premis:linkingAgentRole>software</premis:linkingAgentRole>
+            </premis:linkingAgentIdentifier>
+            <premis:linkingObjectIdentifier>
+              <premis:linkingObjectIdentifierType>ObjectID</premis:linkingObjectIdentifierType>
+              <premis:linkingObjectIdentifierValue>oc_0001</premis:linkingObjectIdentifierValue>
+            </premis:linkingObjectIdentifier>
+          </premis:event>
+        </mets:xmlData>
+      </mets:mdWrap>
+    </mets:digiprovMD>
+    <mets:digiprovMD ID="AGENT_001">
+      <mets:mdWrap MDTYPE="PREMIS" MIMETYPE="text/xml">
+        <mets:xmlData>
+          <premis:agent>
+            <premis:agentIdentifier>
+              <premis:agentIdentifierType>AgentID</premis:agentIdentifierType>
+              <premis:agentIdentifierValue>agent_001</premis:agentIdentifierValue>
+            </premis:agentIdentifier>
+            <premis:agentName>calibre 7.0</premis:agentName>
+            <premis:agentType>software</premis:agentType>
+          </premis:agent>
+        </mets:xmlData>
+      </mets:mdWrap>
+    </mets:digiprovMD>
+  </mets:amdSec>
+  <mets:amdSec ID="AMD_RIGHTS_0001">
+    <mets:rightsMD ID="RIGHTS_0001">
+      <mets:mdWrap MDTYPE="OTHER" MIMETYPE="text/xml" OTHERMDTYPE="CopyrightMD">
+        <mets:xmlData>
+          <copyright copyright.status="copyrighted" publication.status="published"/>
+        </mets:xmlData>
+      </mets:mdWrap>
+    </mets:rightsMD>
+  </mets:amdSec>
+  <mets:fileSec>
+    <mets:fileGrp ID="OC_EBGRP" USE="master">
+      <mets:file ID="oc_5e0b0003-0000-4000-8000-000000000253" MIMETYPE="application/pdf" SIZE="22353" CHECKSUMTYPE="MD5" CHECKSUM="1711a4d0ffea1d631237f9f64b97c808" SEQ="1" CREATED="2026-11-12T10:00:00">
+        <mets:FLocat LOCTYPE="URL" xlink:href="/original/oc_5e0b0003-0000-4000-8000-000000000253.pdf"/>
+      </mets:file>
+    </mets:fileGrp>
+  </mets:fileSec>
+  <mets:structMap>
+    <mets:div ID="TITLE_0001" TYPE="TITLE" DMDID="MODSMD_TITLE_0001">
+      <mets:div ID="VOLUME_0001" TYPE="VOLUME" DMDID="MODSMD_VOLUME_0001" LABEL="9">
+        <mets:div ID="ISSUE_0001" TYPE="ISSUE" DMDID="MODSMD_ISSUE_0001" ADMID="RIGHTS_0001" LABEL="1">
+          <mets:div ID="DOCUMENT_0001" TYPE="DOCUMENT" LABEL="oc_5e0b0003-0000-4000-8000-000000000253">
+            <mets:div ID="FILE_0001" TYPE="FILE" LABEL="oc_5e0b0003-0000-4000-8000-000000000253" ADMID="OBJ_001">
+              <mets:fptr FILEID="oc_5e0b0003-0000-4000-8000-000000000253"/>
+            </mets:div>
+          </mets:div>
+            <mets:div ID="ART_0001" TYPE="ARTICLE" DMDID="MODSMD_ART_0001" LABEL="Článek 1" ORDER="1"/>
+            <mets:div ID="ART_0002" TYPE="ARTICLE" DMDID="MODSMD_ART_0002" LABEL="Článek 2" ORDER="2"/>
+        </mets:div>
+      </mets:div>
+    </mets:div>
+  </mets:structMap>
+</mets:mets>

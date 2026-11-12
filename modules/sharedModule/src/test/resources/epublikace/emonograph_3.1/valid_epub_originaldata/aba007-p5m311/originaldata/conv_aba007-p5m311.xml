@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<conversion>
+  <source>od_aba007-p5m311.pdf</source>
+  <target>oc_aba007-p5m311.epub</target>
+  <tool>GPL Ghostscript 10.0</tool>
+  <result>PDF/A-1b</result>
+</conversion>

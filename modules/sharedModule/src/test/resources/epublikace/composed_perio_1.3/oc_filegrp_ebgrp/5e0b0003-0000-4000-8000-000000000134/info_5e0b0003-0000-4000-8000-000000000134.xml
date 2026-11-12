@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<info>
+  <created>2026-11-12T10:00:00</created>
+  <metadataversion>1.3</metadataversion>
+  <packageid>5e0b0003-0000-4000-8000-000000000134</packageid>
+  <mainmets>mets_5e0b0003-0000-4000-8000-000000000134.xml</mainmets>
+  <validation version="3.0">Valid</validation>
+  <titleid type="uuid">5e0b0002-0000-4000-8000-000000000002</titleid>
+  <titleid type="issn">2533-784X</titleid>
+  <titleid type="ccnb">cnb002883931</titleid>
+  <institution>ABA007</institution>
+  <creator>ABA007</creator>
+  <size>75</size>
+  <itemlist itemtotal="7">
+    <item>/amdsec/amd_mets_5e0b0003-0000-4000-8000-000000000134_0001.xml</item>
+    <item>/amdsec/amd_mets_5e0b0003-0000-4000-8000-000000000134_0002.xml</item>
+    <item>/md5_5e0b0003-0000-4000-8000-000000000134.md5</item>
+    <item>/mets_5e0b0003-0000-4000-8000-000000000134.xml</item>
+    <item>/original/oc_5e0b0003-0000-4000-8000-000000000134_0001.pdf</item>
+    <item>/original/oc_5e0b0003-0000-4000-8000-000000000134_0002.pdf</item>
+    <item>/info_5e0b0003-0000-4000-8000-000000000134.xml</item>
+  </itemlist>
+  <checksum type="md5" checksum="e6e54d71d6ce991458bc8ffa4e649c67">md5_5e0b0003-0000-4000-8000-000000000134.md5</checksum>
+</info>

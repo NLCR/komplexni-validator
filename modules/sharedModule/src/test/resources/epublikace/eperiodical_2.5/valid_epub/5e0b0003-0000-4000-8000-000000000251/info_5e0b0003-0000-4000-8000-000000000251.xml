@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<info>
+  <created>2026-11-12T10:00:00</created>
+  <metadataversion>2.5</metadataversion>
+  <packageid>5e0b0003-0000-4000-8000-000000000251</packageid>
+  <mainmets>mets_5e0b0003-0000-4000-8000-000000000251.xml</mainmets>
+  <validation version="3.0">Valid</validation>
+  <titleid type="uuid">5e0b0002-0000-4000-8000-000000000002</titleid>
+  <titleid type="issn">2533-784X</titleid>
+  <titleid type="ccnb">cnb002883931</titleid>
+  <institution>ABA007</institution>
+  <creator>ABA007</creator>
+  <size>22</size>
+  <itemlist itemtotal="4">
+    <item>/md5_5e0b0003-0000-4000-8000-000000000251.md5</item>
+    <item>/mets_5e0b0003-0000-4000-8000-000000000251.xml</item>
+    <item>/original/oc_5e0b0003-0000-4000-8000-000000000251.epub</item>
+    <item>/info_5e0b0003-0000-4000-8000-000000000251.xml</item>
+  </itemlist>
+  <checksum type="md5" checksum="7e40e687c8b74b937b9ad58aa54077ea">md5_5e0b0003-0000-4000-8000-000000000251.md5</checksum>
+</info>
