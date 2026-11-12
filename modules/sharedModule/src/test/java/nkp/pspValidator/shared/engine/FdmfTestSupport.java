@@ -86,6 +86,12 @@ final class FdmfTestSupport {
                 return "data_disc";
             case FUND_UNIT:
                 return "fund_unit";
+            case EMONOGRAPH:
+                return "emonograph";
+            case EPERIODICAL:
+                return "eperiodical";
+            case COMPERIODICAL:
+                return "composed_perio";
             default:
                 throw new IllegalStateException("neznamy typ " + type);
         }
@@ -122,6 +128,12 @@ final class FdmfTestSupport {
                 return registry.getDataDiscFdmfVersions();
             case FUND_UNIT:
                 return registry.getFundUnitFdmfVersions();
+            case EMONOGRAPH:
+                return registry.getEmonographFdmfVersions();
+            case EPERIODICAL:
+                return registry.getEperiodicalFdmfVersions();
+            case COMPERIODICAL:
+                return registry.getComposedPeriodicalFdmfVersions();
             default:
                 throw new IllegalStateException("neznamy typ " + type);
         }

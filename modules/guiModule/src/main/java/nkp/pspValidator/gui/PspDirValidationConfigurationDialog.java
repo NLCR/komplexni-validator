@@ -25,7 +25,7 @@ public class PspDirValidationConfigurationDialog extends AbstractDialog {
 
     @Override
     public int getHeight() {
-        return 620; //dvousloupcove rozlozeni typu dokumentu
+        return 760; //dvousloupcove rozlozeni typu dokumentu, 6 + 5 radku v kazde sekci
     }
 
     @Override

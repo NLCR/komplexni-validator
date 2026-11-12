@@ -1,0 +1,20 @@
+<binaryFileProfile
+        xmlns="http://www.nkp.cz/pspValidator/3.0/binaryFileProfile"
+        validatorVersion="3.0"
+        dmf="eperiodical_2.5"
+>
+    <fromText>
+
+        <validation name="no_errors">
+            <textDataExtraction resultType="STRING_LIST">
+                <allNonempty>
+                    <regexp>(?ms)Kakadu Core Error:((?!Kakadu Core Error).)*</regexp>
+                </allNonempty>
+            </textDataExtraction>
+            <rules>
+                <mustNotExist/>
+            </rules>
+        </validation>
+
+    </fromText>
+</binaryFileProfile>

@@ -85,6 +85,27 @@ public class SkippedManagerImpl implements SkippedManager {
         for (String fduVersion : fduVersions) {
             result.add(new Dmf(Dmf.Type.FUND_UNIT, fduVersion));
         }
+        //e-monograph (e-monografie)
+        List<String> emoVersions = new ArrayList<>();
+        emoVersions.addAll(mgr.getFdmfRegistry().getEmonographFdmfVersions());
+        Collections.sort(emoVersions, new VersionComparator());
+        for (String emoVersion : emoVersions) {
+            result.add(new Dmf(Dmf.Type.EMONOGRAPH, emoVersion));
+        }
+        //e-periodical (e-periodika)
+        List<String> epeVersions = new ArrayList<>();
+        epeVersions.addAll(mgr.getFdmfRegistry().getEperiodicalFdmfVersions());
+        Collections.sort(epeVersions, new VersionComparator());
+        for (String epeVersion : epeVersions) {
+            result.add(new Dmf(Dmf.Type.EPERIODICAL, epeVersion));
+        }
+        //composed e-periodical (skladana e-periodika)
+        List<String> sepVersions = new ArrayList<>();
+        sepVersions.addAll(mgr.getFdmfRegistry().getComposedPeriodicalFdmfVersions());
+        Collections.sort(sepVersions, new VersionComparator());
+        for (String sepVersion : sepVersions) {
+            result.add(new Dmf(Dmf.Type.COMPERIODICAL, sepVersion));
+        }
 
         return result;
     }

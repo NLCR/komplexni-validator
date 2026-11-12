@@ -503,6 +503,84 @@ public class DmfDetectorTest {
     }
 
     @Test
+    public void detectDmfTypeEpublications() throws Exception {
+        //hodnoty METS/@TYPE podle metsProfiles fDMF validatoru e-publikaci (VEP 2.4), presna shoda
+        assertEquals(Dmf.Type.EMONOGRAPH, dmfDetector.detectDmfType(psp("electronic_monograph", null)));
+        assertEquals(Dmf.Type.EPERIODICAL, dmfDetector.detectDmfType(psp("electronic_periodical", null)));
+        assertEquals(Dmf.Type.COMPERIODICAL, dmfDetector.detectDmfType(psp("electronic_coll_journal", null)));
+    }
+
+    @Test
+    public void detectDmfTypeEpublicationWrongCase() throws Exception {
+        try {
+            dmfDetector.detectDmfType(psp("Electronic_monograph", null));
+            fail();
+        } catch (PspDataException e) {
+            //hlaska vyjmenovava i typy e-publikaci
+            assertTrue(e.getMessage(), e.getMessage().contains("electronic_monograph/electronic_periodical/electronic_coll_journal"));
+        }
+    }
+
+    @Test
+    public void detectDmfVersionEpublications() throws Exception {
+        assertEquals("3.0", dmfDetector.detectDmfVersionFromInfoFile(Dmf.Type.EMONOGRAPH, psp("electronic_monograph", "3.0")));
+        assertEquals("2.5", dmfDetector.detectDmfVersionFromInfoFile(Dmf.Type.EPERIODICAL, psp("electronic_periodical", "2.5")));
+        assertEquals("1.3", dmfDetector.detectDmfVersionFromInfoFile(Dmf.Type.COMPERIODICAL, psp("electronic_coll_journal", "1.3")));
+    }
+
+    @Test
+    public void versionsEmonograph() throws Exception {
+        DmfDetector.Params p = new DmfDetector.Params();
+        p.forcedDmfEmoVersion = "F";
+        p.preferredDmfEmoVersion = "P";
+        assertEquals("F", resolve("electronic_monograph", "I", p).getVersion());
+        p.forcedDmfEmoVersion = null;
+        assertEquals("I", resolve("electronic_monograph", "I", p).getVersion());
+        assertEquals("P", resolve("electronic_monograph", null, p).getVersion());
+        p.preferredDmfEmoVersion = null;
+        assertEquals(DmfDetector.DEFAULT_EMONOGRAPH_VERSION, resolve("electronic_monograph", null, p).getVersion());
+        assertEquals(Dmf.Type.EMONOGRAPH, resolve("electronic_monograph", null, p).getType());
+    }
+
+    @Test
+    public void versionsEperiodical() throws Exception {
+        DmfDetector.Params p = new DmfDetector.Params();
+        p.forcedDmfEpeVersion = "F";
+        p.preferredDmfEpeVersion = "P";
+        assertEquals("F", resolve("electronic_periodical", "I", p).getVersion());
+        p.forcedDmfEpeVersion = null;
+        assertEquals("I", resolve("electronic_periodical", "I", p).getVersion());
+        assertEquals("P", resolve("electronic_periodical", null, p).getVersion());
+        p.preferredDmfEpeVersion = null;
+        assertEquals(DmfDetector.DEFAULT_EPERIODICAL_VERSION, resolve("electronic_periodical", null, p).getVersion());
+        assertEquals(Dmf.Type.EPERIODICAL, resolve("electronic_periodical", null, p).getType());
+    }
+
+    @Test
+    public void versionsComposedPeriodical() throws Exception {
+        DmfDetector.Params p = new DmfDetector.Params();
+        p.forcedDmfSepVersion = "F";
+        p.preferredDmfSepVersion = "P";
+        assertEquals("F", resolve("electronic_coll_journal", "I", p).getVersion());
+        p.forcedDmfSepVersion = null;
+        assertEquals("I", resolve("electronic_coll_journal", "I", p).getVersion());
+        assertEquals("P", resolve("electronic_coll_journal", null, p).getVersion());
+        p.preferredDmfSepVersion = null;
+        assertEquals(DmfDetector.DEFAULT_COMPERIODICAL_VERSION, resolve("electronic_coll_journal", null, p).getVersion());
+        assertEquals(Dmf.Type.COMPERIODICAL, resolve("electronic_coll_journal", null, p).getType());
+    }
+
+    @Test
+    public void versionsEpublicationParamsDoNotLeakToOtherTypes() throws Exception {
+        //vynucena verze e-monografie se nesmi pouzit pro monografii ani e-periodikum
+        DmfDetector.Params p = new DmfDetector.Params();
+        p.forcedDmfEmoVersion = "F";
+        assertEquals("I", resolve("Monograph", "I", p).getVersion());
+        assertEquals("I", resolve("electronic_periodical", "I", p).getVersion());
+        assertEquals("I", resolve("electronic_coll_journal", "I", p).getVersion());
+    }
+
+    @Test
     public void versionsForcedDoesNotNeedInfoFile() throws Exception {
         DmfDetector.Params p = new DmfDetector.Params();
         p.forcedDmfAdiVersion = "F";

@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+	Editor: Florida Center for Library Automation (FCLA) and Harvard University Library (HUL)
+	Released: March 17, 2009
+	June 2, 2010 Change: Make PageCount element optional to account for PDFs whose pageCount cannot be determined.
+	Oct 29, 2012 Change: Per request from National Library of France,
+	                     1. Add optional Reference element for URLs declared in the document.
+	                     2. Add hasFixedLayout, hasAudio, hasVideo and hasScripts features.
+	                     3. Add optional documentMetadataExtension section for extending DocumentMD.
+	November 16, 2012 Change: Make documentMetadataExtension repeatable
+	May 9, 2016 Change: Per request from Harvard Library, add hasHyperlinks, hasEmbeddedResources features.
+-->
+
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:docmd="http://www.fcla.edu/dls/md/docmd" targetNamespace="http://www.fcla.edu/docmd" elementFormDefault="qualified" attributeFormDefault="unqualified">
+    <xs:element name="document">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="PageCount" minOccurs="0" maxOccurs="1">
+                    <xs:simpleType>
+                        <xs:restriction base="xs:integer">
+                            <xs:minInclusive value="0"/>
+                        </xs:restriction>
+                    </xs:simpleType>
+                </xs:element>
+                <xs:element name="WordCount" minOccurs="0" maxOccurs="1">
+                    <xs:simpleType>
+                        <xs:restriction base="xs:integer">
+                            <xs:minInclusive value="0"/>
+                        </xs:restriction>
+                    </xs:simpleType>
+                </xs:element>
+                <xs:element name="CharacterCount" minOccurs="0" maxOccurs="1">
+                    <xs:simpleType>
+                        <xs:restriction base="xs:integer">
+                            <xs:minInclusive value="0"/>
+                        </xs:restriction>
+                    </xs:simpleType>
+                </xs:element>
+                <xs:element name="ParagraphCount" minOccurs="0" maxOccurs="1">
+                    <xs:simpleType>
+                        <xs:restriction base="xs:integer">
+                            <xs:minInclusive value="0"/>
+                        </xs:restriction>
+                    </xs:simpleType>
+                </xs:element>
+                <xs:element name="LineCount" minOccurs="0" maxOccurs="1">
+                    <xs:simpleType>
+                        <xs:restriction base="xs:integer">
+                            <xs:minInclusive value="0"/>
+                        </xs:restriction>
+                    </xs:simpleType>
+                </xs:element>
+                <xs:element name="TableCount" minOccurs="0" maxOccurs="1">
+                    <xs:simpleType>
+                        <xs:restriction base="xs:integer">
+                            <xs:minInclusive value="0"/>
+                        </xs:restriction>
+                    </xs:simpleType>
+                </xs:element>
+                <xs:element name="GraphicsCount" minOccurs="0" maxOccurs="1">
+                    <xs:simpleType>
+                        <xs:restriction base="xs:integer">
+                            <xs:minInclusive value="0"/>
+                        </xs:restriction>
+                    </xs:simpleType>
+                </xs:element>
+                <xs:element name="Language" minOccurs="0" maxOccurs="unbounded" type="xs:string"/>
+                <xs:element name="Font" minOccurs="0" maxOccurs="unbounded">
+                    <xs:complexType>
+                        <xs:attribute name="FontName" type="xs:string"/>
+                        <xs:attribute name="isEmbedded" type="xs:boolean"/>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element name="Reference" minOccurs="0" maxOccurs="unbounded" type="xs:string"/>
+                <xs:element name="Features" minOccurs="0" maxOccurs="unbounded">
+                    <xs:simpleType>
+                        <xs:restriction base="xs:string">
+                            <xs:enumeration value="isTagged"/>
+                            <xs:enumeration value="hasOutline"/>
+                            <xs:enumeration value="hasThumbnails"/>
+                            <xs:enumeration value="hasLayers"/>
+                            <xs:enumeration value="hasForms"/>
+                            <xs:enumeration value="hasAnnotations"/>
+                            <xs:enumeration value="hasAttachments"/>
+                            <xs:enumeration value="useTransparency"/>
+                            <xs:enumeration value="hasFixedLayout"/>
+                            <xs:enumeration value="hasAudio"/>
+                            <xs:enumeration value="hasVideo"/>
+                            <xs:enumeration value="hasScripts"/>
+                            <xs:enumeration value="hasHyperlinks"/>
+                            <xs:enumeration value="hasEmbeddedResources"/>
+                        </xs:restriction>
+                    </xs:simpleType>
+                </xs:element>
+                <xs:element name="documentMetadataExtension" minOccurs="0" maxOccurs="unbounded">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:any namespace="##any" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+</xs:schema>

@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	targetNamespace="http://www.ndk.cz/standardy-digitalizace/ndktech" xmlns:ndktech="http://www.ndk.cz/standardy-digitalizace/ndktech"
+	elementFormDefault="qualified">
+
+	<xs:annotation>
+		<xs:documentation>
+			Popis technických metadat pro soubory typu EPUB a PDF/A. 12.8.2014 AiP SAFE, rev.15.12.2017 NK
+		</xs:documentation>
+	</xs:annotation>
+	
+	<!--  Root element declaration  -->                 
+	<xs:element name="ndktech" type="ndktech:TechnicalType" >
+		<xs:annotation>
+			<xs:documentation>
+				Kořenový element.
+			</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	
+	<!--  Definitions of complex types  -->    
+	<xs:complexType name="TechnicalType">
+		<xs:sequence>
+			<!--  Pro EPUB  -->
+			<xs:element name="mediatypes" type="ndktech:MediaTypesType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+						Obsahuje všechny typy souborů uložených v kontejneru EPUB (MIME type v souladu s IANA.org). Např.
+						'application/xhtml+xml'.
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="entries" type="ndktech:EntriesComplexType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+						Slouží k popisu obsahu EPUB dokumentu, obsahuje jednotlivé položky v EPUB dokumentu (tak jak EPUB vypadá, když se rozbalí). 
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+	
+			<!--  Pro PDF  -->
+			<xs:element name="filters" type="ndktech:FiltersType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+						Obsahuje použité filtry v PDF, např.'FlateDecode'
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="profiles" type="ndktech:ProfilesType"	minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+						Obsahuje použité profily v PDF, např. 'Linearized PDF'
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="colorspaces" type="ndktech:ColorSpacesType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+						Obsahuje seznam použitých barevných prostorů v PDF. Např. 'RGB'.
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="imagesCount" type="xs:nonNegativeInteger" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+						Obsahuje počet obrázků v PDF dokumentu. 
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="indirectObjectsNumber" type="xs:nonNegativeInteger" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+						Obsahuje počet objektů v PDF dokumentu. 
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	
+	<xs:complexType name="MediaTypesType">
+		<xs:sequence>
+			<xs:element name="mediatype" type="xs:string" maxOccurs="unbounded" />
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="FiltersType">
+		<xs:sequence>
+			<xs:element name="filter" type="xs:string" maxOccurs="unbounded" />
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="ProfilesType">
+		<xs:sequence>
+			<xs:element name="profile" type="xs:string" maxOccurs="unbounded" />
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="ColorSpacesType">
+		<xs:sequence>
+			<xs:element name="colorspace" type="xs:string" maxOccurs="unbounded" />
+			<xs:element name="iccprofile" type="ndktech:IccProfileType" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+		
+	<xs:complexType name="IccProfileType">
+		<xs:sequence>
+			<xs:element name="iccprofilename" type="xs:string" maxOccurs="unbounded" />
+			<xs:element name="iccprofileversion" type="xs:string" maxOccurs="unbounded" />
+		</xs:sequence>
+	</xs:complexType>
+			
+	<xs:complexType name="EntriesComplexType">
+		<xs:sequence>
+			<xs:element name="entry" type="xs:string" maxOccurs="unbounded" />
+		</xs:sequence>
+	</xs:complexType>
+
+</xs:schema> 

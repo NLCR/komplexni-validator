@@ -1,0 +1,965 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<metadataProfile
+    xmlns="http://www.nkp.cz/pspValidator/3.0/metadataProfile"
+    name="MODS digitized article of composed periodical (AACR2)"
+    validatorVersion="3.0"
+    dmf="composed-perio_1.3"
+>
+    <info>
+        <text>DMF Elektronické publikace (skládaná periodika) 1.3 očekává MODS verze 3.8. Dále se zde upřesňují očekávaná metadata pro článek (dosken) periodika pro záznamy zpracované podle katalogizačních pravidel AACR2.</text>
+        <url>http://www.loc.gov/standards/mods/</url>
+        <url description="XSD pro MODS 3.8">http://www.loc.gov/standards/mods/v3/mods-3-8.xsd</url>
+        <url description="Popis MODS">https://www.loc.gov/standards/mods/userguide/</url>
+    </info>
+
+    <namespaces>
+        <namespace prefix="mods">http://www.loc.gov/mods/v3</namespace>
+    </namespaces>
+
+    <dictionaries>
+        <dictionary name="marcRelatorCodes"/>
+        <dictionary name="iso6392languageCodes"/>
+    </dictionaries>
+
+    <rootElement name="mods:mods">
+        <expectedAttributes>
+            <attribute name="ID">
+                <expectedContent>
+                    <regexp>^MODS_ART_[0-9]{4}$</regexp>
+
+                </expectedContent>
+
+            </attribute>
+            <attribute name="version">
+                <expectedContent>
+                    <value>3.8</value>
+
+                </expectedContent>
+
+            </attribute>
+        </expectedAttributes>
+        <expectedElements>
+            <element name="mods:titleInfo">
+                <expectedAttributes>
+                    <attribute name="type" mandatory="false">
+                        <expectedContent>
+                            <oneOf>
+                                <value>abbreviated</value>
+
+                                <value>alternative</value>
+
+                                <value>translated</value>
+
+                                <value>uniform</value>
+
+                            </oneOf>
+                        </expectedContent>
+
+                    </attribute>
+                </expectedAttributes>
+                <expectedElements>
+                    <element name="mods:nonSort" mandatory="false">
+                        <expectedContent/>
+
+                    </element>
+
+                    <element name="mods:title">
+                        <expectedContent/>
+
+                    </element>
+
+                    <element name="mods:subTitle" mandatory="false">
+                        <expectedContent/>
+
+                    </element>
+
+                    <element name="mods:partNumber" mandatory="false">
+                        <expectedContent/>
+
+                    </element>
+
+                    <element name="mods:partName" mandatory="false">
+                        <expectedContent/>
+
+                    </element>
+
+                </expectedElements>
+            </element>
+
+            <element name="mods:name" mandatory="false">
+                <expectedAttributes>
+                    <attribute name="type" mandatory="false">
+                        <expectedContent>
+                            <oneOf>
+                                <value>personal</value>
+
+                                <value>corporate</value>
+
+                                <value>conference</value>
+
+                                <value>family</value>
+
+                            </oneOf>
+                        </expectedContent>
+
+                    </attribute>
+                    <attribute name="usage" mandatory="false">
+                        <expectedContent>
+                            <value>primary</value>
+
+                        </expectedContent>
+
+                    </attribute>
+                </expectedAttributes>
+                <expectedElements>
+                    <element name="mods:namePart" mandatory="false" specification="@type='date'">
+                        <expectedAttributes>
+                            <attribute name="type">
+                                <expectedContent/>
+
+                            </attribute>
+                        </expectedAttributes>
+                        <expectedContent/>
+
+                    </element>
+
+                    <element name="mods:namePart" mandatory="false" specification="@type='family'">
+                        <expectedAttributes>
+                            <attribute name="type">
+                                <expectedContent/>
+
+                            </attribute>
+                        </expectedAttributes>
+                        <expectedContent/>
+
+                    </element>
+
+                    <element name="mods:namePart" mandatory="false" specification="@type='given'">
+                        <expectedAttributes>
+                            <attribute name="type">
+                                <expectedContent/>
+
+                            </attribute>
+                        </expectedAttributes>
+                        <expectedContent/>
+
+                    </element>
+
+                    <element name="mods:namePart" mandatory="false" specification="@type='termsOfAddress'">
+                        <expectedAttributes>
+                            <attribute name="type">
+                                <expectedContent/>
+
+                            </attribute>
+                        </expectedAttributes>
+                        <expectedContent/>
+
+                    </element>
+
+                    <element name="mods:namePart" mandatory="false" specification="not(@type)">
+                        <expectedContent/>
+
+                    </element>
+
+                    <element name="mods:alternativeName" mandatory="false">
+                        <expectedElements>
+                            <element name="mods:namePart">
+                                <expectedContent/>
+
+                            </element>
+
+                        </expectedElements>
+                    </element>
+
+                    <element name="mods:nameIdentifier" mandatory="false">
+                        <expectedAttributes>
+                            <attribute name="type" mandatory="false">
+                                <recommendedContent/>
+
+                            </attribute>
+                        </expectedAttributes>
+                        <expectedContent/>
+
+                    </element>
+
+                    <element name="mods:etal" mandatory="false" repeatable="false">
+                        <expectedContent/>
+
+                    </element>
+
+                    <element name="mods:role" mandatory="false">
+                        <expectedElements>
+                            <element name="mods:roleTerm">
+                                <expectedAttributes>
+                                    <attribute name="type">
+                                        <expectedContent>
+                                            <value>code</value>
+
+                                        </expectedContent>
+
+                                    </attribute>
+                                    <attribute name="authority">
+                                        <expectedContent>
+                                            <value>marcrelator</value>
+
+                                        </expectedContent>
+
+                                    </attribute>
+                                </expectedAttributes>
+                                <expectedContent>
+                                    <fromDictionary name="marcRelatorCodes"/>
+
+                                </expectedContent>
+
+                            </element>
+
+                        </expectedElements>
+                    </element>
+
+                    <element name="mods:affiliation" mandatory="false">
+                        <expectedContent/>
+
+                    </element>
+
+                </expectedElements>
+                <extraRules>
+                    <existsAtLeastOnce xpath="mods:namePart"/>
+                </extraRules>
+            </element>
+
+            <element name="mods:genre" mandatory="false" specification="@type='peer-reviewed'">
+                <expectedAttributes>
+                    <attribute name="type" mandatory="false">
+                        <expectedContent>
+                            <value>peer-reviewed</value>
+
+                        </expectedContent>
+
+                    </attribute>
+                </expectedAttributes>
+                <recommendedContent>
+                    <oneOf>
+                        <value>article</value>
+
+                        <value>electronic article</value>
+
+                    </oneOf>
+                </recommendedContent>
+
+            </element>
+
+            <element name="mods:genre" mandatory="false" specification="not(self::mods:genre[@type='peer-reviewed'])">
+                <expectedAttributes>
+                    <attribute name="type" mandatory="false">
+                        <recommendedContent>
+                            <oneOf>
+                                <value>cover</value>
+
+                                <value>colophon</value>
+
+                                <value>obituary</value>
+
+                                <value>bibliographical portrait</value>
+
+                                <value>interview</value>
+
+                                <value>annotations</value>
+
+                                <value>title page</value>
+
+                                <value>direktory</value>
+
+                                <value>news</value>
+
+                                <value>table of content</value>
+
+                                <value>advertisement</value>
+
+                                <value>abstract</value>
+
+                                <value>introduction</value>
+
+                                <value>review</value>
+
+                                <value>dedication</value>
+
+                                <value>bibliography</value>
+
+                                <value>editorsNote</value>
+
+                                <value>preface</value>
+
+                                <value>main article</value>
+
+                                <value>index</value>
+
+                                <value>unspecified</value>
+
+                            </oneOf>
+                        </recommendedContent>
+
+                    </attribute>
+                </expectedAttributes>
+                <expectedContent>
+                    <oneOf>
+                        <value>article</value>
+
+                        <value>electronic article</value>
+
+                    </oneOf>
+                </expectedContent>
+
+            </element>
+
+            <element name="mods:language" mandatory="false">
+                <expectedAttributes>
+                    <attribute name="objectPart" mandatory="false">
+                        <recommendedContent>
+                            <oneOf>
+                                <value>summary</value>
+
+                                <value>table of contents</value>
+
+                                <value>accompanying material</value>
+
+                                <value>translation</value>
+
+                            </oneOf>
+                        </recommendedContent>
+
+                    </attribute>
+                </expectedAttributes>
+                <expectedElements>
+                    <element name="mods:languageTerm">
+                        <expectedAttributes>
+                            <attribute name="type">
+                                <expectedContent>
+                                    <value>code</value>
+
+                                </expectedContent>
+
+                            </attribute>
+                            <attribute name="authority">
+                                <expectedContent>
+                                    <value>iso639-2b</value>
+
+                                </expectedContent>
+
+                            </attribute>
+                        </expectedAttributes>
+                        <expectedContent>
+                            <fromDictionary name="iso6392languageCodes"/>
+
+                        </expectedContent>
+
+                    </element>
+
+                </expectedElements>
+            </element>
+
+            <element name="mods:abstract" mandatory="false">
+                <recommendedContent/>
+
+            </element>
+
+            <element name="mods:subject" mandatory="false">
+                <expectedAttributes>
+                    <attribute name="authority" mandatory="false">
+                        <recommendedContent/>
+
+                    </attribute>
+                </expectedAttributes>
+                <expectedElements>
+                    <element name="mods:topic" mandatory="false">
+                        <expectedAttributes>
+                            <attribute name="valueURI" mandatory="false">
+                                <recommendedContent/>
+
+                            </attribute>
+                        </expectedAttributes>
+                        <recommendedContent/>
+
+                    </element>
+
+                    <element name="mods:geographic" mandatory="false">
+                        <expectedAttributes>
+                            <attribute name="valueURI" mandatory="false">
+                                <recommendedContent/>
+
+                            </attribute>
+                        </expectedAttributes>
+                        <recommendedContent/>
+
+                    </element>
+
+                    <element name="mods:temporal" mandatory="false">
+                        <recommendedContent/>
+
+                    </element>
+
+                    <element name="mods:name" mandatory="false">
+                        <expectedElements>
+                            <element name="mods:namePart">
+                                <expectedContent/>
+
+                            </element>
+
+                            <element name="mods:nameIdentifier" mandatory="false">
+                                <expectedContent/>
+
+                            </element>
+
+                        </expectedElements>
+                    </element>
+
+                </expectedElements>
+            </element>
+
+            <element name="mods:classification" mandatory="false">
+                <expectedAttributes>
+                    <attribute name="authority">
+                        <expectedContent>
+                            <oneOf>
+                                <value>udc</value>
+
+                                <value>Konspekt</value>
+
+                                <value>lcc</value>
+
+                                <value>ddc</value>
+
+                                <value>nlm</value>
+
+                                <value>sudocs</value>
+
+                                <value>candocs</value>
+
+                                <value>contents of $2</value>
+
+                            </oneOf>
+                        </expectedContent>
+
+                    </attribute>
+                    <attribute name="edition" mandatory="false">
+                        <expectedContent>
+                            <value>Konspekt</value>
+
+                        </expectedContent>
+
+                    </attribute>
+                </expectedAttributes>
+                <recommendedContent/>
+
+            </element>
+
+            <element name="mods:relatedItem" mandatory="false" specification="@type='references'">
+                <expectedAttributes>
+                    <attribute name="type">
+                        <expectedContent>
+                            <value>references</value>
+
+                        </expectedContent>
+
+                    </attribute>
+                    <attribute name="ID" mandatory="false">
+                        <recommendedContent>
+                            <regexp>^ref[0-9]{4}$</regexp>
+
+                        </recommendedContent>
+
+                    </attribute>
+                </expectedAttributes>
+                <expectedElements>
+                    <element name="mods:titleInfo">
+                        <expectedElements>
+                            <element name="mods:title">
+                                <expectedContent/>
+
+                            </element>
+
+                            <element name="mods:partNumber" mandatory="false">
+                                <expectedContent/>
+
+                            </element>
+
+                        </expectedElements>
+                    </element>
+
+                    <element name="mods:name" mandatory="false">
+                        <expectedElements>
+                            <element name="mods:namePart" specification="@type='family'">
+                                <expectedAttributes>
+                                    <attribute name="type">
+                                        <expectedContent/>
+
+                                    </attribute>
+                                </expectedAttributes>
+                                <expectedContent/>
+
+                            </element>
+
+                            <element name="mods:namePart" mandatory="false" specification="@type='given'">
+                                <expectedAttributes>
+                                    <attribute name="type">
+                                        <expectedContent/>
+
+                                    </attribute>
+                                </expectedAttributes>
+                                <expectedContent/>
+
+                            </element>
+
+                            <element name="mods:namePart" mandatory="false" specification="not(@type)">
+                                <expectedContent/>
+
+                            </element>
+
+                        </expectedElements>
+                        <extraRules>
+                            <existsAtLeastOnce xpath="mods:namePart"/>
+                        </extraRules>
+                    </element>
+
+                    <element name="mods:originInfo" mandatory="false">
+                        <expectedElements>
+                            <element name="mods:dateIssued" mandatory="false">
+                                <expectedContent/>
+
+                            </element>
+
+                            <element name="mods:edition" mandatory="false">
+                                <expectedContent/>
+
+                            </element>
+
+                        </expectedElements>
+                    </element>
+
+                    <element name="mods:identifier" mandatory="false">
+                        <expectedAttributes>
+                            <attribute name="type">
+                                <expectedContent>
+                                    <oneOf>
+                                        <value>doi</value>
+
+                                        <value>isbn</value>
+
+                                    </oneOf>
+                                </expectedContent>
+
+                            </attribute>
+                        </expectedAttributes>
+                        <expectedContent/>
+
+                    </element>
+
+                    <element name="mods:part" mandatory="false">
+                        <expectedElements>
+                            <element name="mods:extent">
+                                <expectedAttributes>
+                                    <attribute name="unit">
+                                        <expectedContent>
+                                            <value>pages</value>
+
+                                        </expectedContent>
+
+                                    </attribute>
+                                </expectedAttributes>
+                                <expectedElements>
+                                    <element name="mods:start">
+                                        <expectedContent/>
+
+                                    </element>
+
+                                    <element name="mods:end" mandatory="false">
+                                        <recommendedContent/>
+
+                                    </element>
+
+                                </expectedElements>
+                            </element>
+
+                        </expectedElements>
+                    </element>
+
+                    <element name="mods:relatedItem" mandatory="false">
+                        <expectedAttributes>
+                            <attribute name="type">
+                                <expectedContent>
+                                    <value>host</value>
+
+                                </expectedContent>
+
+                            </attribute>
+                        </expectedAttributes>
+                        <expectedElements>
+                            <element name="mods:titleInfo" mandatory="false">
+                                <expectedElements>
+                                    <element name="mods:title">
+                                        <expectedContent/>
+
+                                    </element>
+
+                                </expectedElements>
+                            </element>
+
+                            <element name="mods:originInfo" mandatory="false">
+                                <expectedElements>
+                                    <element name="mods:dateIssued" mandatory="false">
+                                        <expectedContent/>
+
+                                    </element>
+
+                                    <element name="mods:edition" mandatory="false">
+                                        <expectedContent/>
+
+                                    </element>
+
+                                </expectedElements>
+                            </element>
+
+                            <element name="mods:identifier" mandatory="false">
+                                <expectedAttributes>
+                                    <attribute name="type">
+                                        <expectedContent>
+                                            <oneOf>
+                                                <value>isbn</value>
+
+                                                <value>issn</value>
+
+                                            </oneOf>
+                                        </expectedContent>
+
+                                    </attribute>
+                                </expectedAttributes>
+                                <recommendedContent/>
+
+                            </element>
+
+                            <element name="mods:part" mandatory="false">
+                                <expectedElements>
+                                    <element name="mods:detail" specification="@type=&quot;volume&quot;">
+                                        <expectedAttributes>
+                                            <attribute name="type">
+                                                <expectedContent>
+                                                    <oneOf>
+                                                        <value>volume</value>
+
+                                                        <value>issue</value>
+
+                                                    </oneOf>
+                                                </expectedContent>
+
+                                            </attribute>
+                                        </expectedAttributes>
+                                        <expectedElements>
+                                            <element name="mods:number">
+                                                <expectedContent/>
+
+                                            </element>
+
+                                        </expectedElements>
+                                    </element>
+
+                                    <element name="mods:detail" specification="@type=&quot;issue&quot;">
+                                        <expectedAttributes>
+                                            <attribute name="type">
+                                                <expectedContent>
+                                                    <oneOf>
+                                                        <value>volume</value>
+
+                                                        <value>issue</value>
+
+                                                    </oneOf>
+                                                </expectedContent>
+
+                                            </attribute>
+                                        </expectedAttributes>
+                                        <expectedElements>
+                                            <element name="mods:number">
+                                                <expectedContent/>
+
+                                            </element>
+
+                                        </expectedElements>
+                                    </element>
+
+                                    <element name="mods:detail" mandatory="false" specification="not(self::mods:detail[@type=&quot;volume&quot;] or self::mods:detail[@type=&quot;issue&quot;])">
+                                        <expectedAttributes>
+                                            <attribute name="type">
+                                                <expectedContent>
+                                                    <oneOf>
+                                                        <value>volume</value>
+
+                                                        <value>issue</value>
+
+                                                    </oneOf>
+                                                </expectedContent>
+
+                                            </attribute>
+                                        </expectedAttributes>
+                                        <expectedElements>
+                                            <element name="mods:number">
+                                                <expectedContent/>
+
+                                            </element>
+
+                                        </expectedElements>
+                                    </element>
+
+                                </expectedElements>
+                            </element>
+
+                        </expectedElements>
+                    </element>
+
+                    <element name="mods:note" mandatory="false">
+                        <expectedAttributes>
+                            <attribute name="type">
+                                <expectedContent>
+                                    <value>source note</value>
+
+                                </expectedContent>
+
+                            </attribute>
+                        </expectedAttributes>
+                        <expectedContent/>
+
+                    </element>
+
+                </expectedElements>
+            </element>
+
+            <element name="mods:relatedItem" mandatory="false" specification="not(self::mods:relatedItem[@type='references'])" ignoreUnexpectedChildElements="true">
+                <expectedAttributes>
+                    <attribute name="type" mandatory="false">
+                        <recommendedContent>
+                            <oneOf>
+                                <value>preceding</value>
+
+                                <value>succeeding</value>
+
+                                <value>original</value>
+
+                                <value>host</value>
+
+                                <value>constituent</value>
+
+                                <value>series</value>
+
+                                <value>otherVersion</value>
+
+                                <value>otherFormat</value>
+
+                                <value>isReferencedBy</value>
+
+                                <value>references</value>
+
+                                <value>reviewOf</value>
+
+                            </oneOf>
+                        </recommendedContent>
+
+                    </attribute>
+                </expectedAttributes>
+                <expectedContent/>
+
+            </element>
+
+            <element name="mods:identifier" specification="@type = 'uuid'">
+                <expectedAttributes>
+                    <attribute name="type">
+                        <expectedContent/>
+
+                    </attribute>
+                </expectedAttributes>
+                <expectedContent/>
+
+            </element>
+
+            <element name="mods:identifier" mandatory="false" specification="@type = 'urnnbn'">
+                <expectedAttributes>
+                    <attribute name="type">
+                        <expectedContent/>
+
+                    </attribute>
+                </expectedAttributes>
+                <expectedContent/>
+
+            </element>
+
+            <element name="mods:identifier" mandatory="false" specification="
+  @type
+  and not(
+    @type = 'uuid'
+    or @type = 'urnnbn'
+  )
+">
+                <expectedAttributes>
+                    <attribute name="type">
+                        <expectedContent/>
+
+                    </attribute>
+                </expectedAttributes>
+                <recommendedContent/>
+
+            </element>
+
+            <element name="mods:identifier" mandatory="false" specification="not(self::mods:identifier[@type = 'uuid'] or self::mods:identifier[@type = 'urnnbn'] or self::mods:identifier[
+  @type
+  and not(
+    @type = 'uuid'
+    or @type = 'urnnbn'
+  )
+])">
+                <expectedAttributes>
+                    <attribute name="type">
+                        <expectedContent/>
+
+                    </attribute>
+                </expectedAttributes>
+                <expectedContent/>
+
+            </element>
+
+            <element name="mods:location" mandatory="false">
+                <expectedElements>
+                    <element name="mods:url" mandatory="false">
+                        <expectedAttributes>
+                            <attribute name="note" mandatory="false">
+                                <recommendedContent/>
+
+                            </attribute>
+                            <attribute name="usage" mandatory="false">
+                                <recommendedContent>
+                                    <value>primary</value>
+
+                                </recommendedContent>
+
+                            </attribute>
+                        </expectedAttributes>
+                        <expectedContent/>
+
+                    </element>
+
+                </expectedElements>
+            </element>
+
+            <element name="mods:part" mandatory="false">
+                <expectedElements>
+                    <element name="mods:extent" mandatory="false">
+                        <expectedElements>
+                            <element name="mods:start" mandatory="false">
+                                <expectedContent/>
+
+                            </element>
+
+                            <element name="mods:end" mandatory="false">
+                                <expectedContent/>
+
+                            </element>
+
+                        </expectedElements>
+                    </element>
+
+                </expectedElements>
+            </element>
+
+            <element name="mods:recordInfo" mandatory="false">
+                <expectedElements>
+                    <element name="mods:descriptionStandard" mandatory="false">
+                        <expectedContent>
+                            <oneOf>
+                                <value>aacr</value>
+
+                                <value>rda</value>
+
+                            </oneOf>
+                        </expectedContent>
+
+                    </element>
+
+                    <element name="mods:recordContentSource" mandatory="false">
+                        <expectedAttributes>
+                            <attribute name="authority" mandatory="false">
+                                <recommendedContent>
+                                    <value>siglaADR</value>
+
+                                </recommendedContent>
+
+                            </attribute>
+                        </expectedAttributes>
+                        <recommendedContent/>
+
+                    </element>
+
+                    <element name="mods:recordCreationDate">
+                        <expectedAttributes>
+                            <attribute name="encoding">
+                                <expectedContent>
+                                    <value>iso8601</value>
+
+                                </expectedContent>
+
+                            </attribute>
+                        </expectedAttributes>
+                        <expectedContent/>
+
+                    </element>
+
+                    <element name="mods:recordChangeDate" mandatory="false">
+                        <expectedAttributes>
+                            <attribute name="encoding">
+                                <expectedContent>
+                                    <value>iso8601</value>
+
+                                </expectedContent>
+
+                            </attribute>
+                        </expectedAttributes>
+                        <expectedContent/>
+
+                    </element>
+
+                    <element name="mods:recordOrigin" mandatory="false">
+                        <recommendedContent>
+                            <oneOf>
+                                <value>machine generated</value>
+
+                                <value>human prepared</value>
+
+                            </oneOf>
+                        </recommendedContent>
+
+                    </element>
+
+                </expectedElements>
+            </element>
+
+            <element name="mods:physicalDescription" mandatory="false">
+                <expectedElements>
+                    <element name="mods:form" mandatory="false">
+                        <recommendedContent>
+                            <value>print</value>
+
+                        </recommendedContent>
+
+                    </element>
+
+                    <element name="mods:note">
+                        <expectedContent>
+                            <value>dosken</value>
+
+                        </expectedContent>
+
+                    </element>
+
+                </expectedElements>
+            </element>
+
+        </expectedElements>
+        <extraRules>
+            <existsAtLeastOnce xpath="mods:genre"/>
+        </extraRules>
+    </rootElement>
+</metadataProfile>

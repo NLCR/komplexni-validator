@@ -1,0 +1,48 @@
+<binaryFileProfile
+        xmlns="http://www.nkp.cz/pspValidator/3.0/binaryFileProfile"
+        validatorVersion="3.0"
+        dmf="composed_perio_1.3"
+>
+    <fromXml>
+
+        <validation name="Soubor musí být validní">
+            <xmlDataExtraction resultType="STRING">
+                <firstNonempty>
+                    <xpath>//validationReport/@isCompliant</xpath>
+                </firstNonempty>
+            </xmlDataExtraction>
+            <rules>
+                <mustExist/>
+                <mustMatchAny>
+                    <isExactly>true</isExactly>
+                </mustMatchAny>
+            </rules>
+        </validation>
+
+        <validation name="Soubor PDF/A by měl být v podporované verzi">
+            <xmlDataExtraction resultType="STRING">
+                <firstNonempty>
+                    <xpath>//validationReport/@profileName</xpath>
+                </firstNonempty>
+            </xmlDataExtraction>
+            <rules>
+                <mustExist/>
+                <mustMatchAny level="WARNING">
+                    <startsWith>PDF/A-1A</startsWith>
+                    <startsWith>PDF/A-1B</startsWith>
+                    <startsWith>PDF/A-2A</startsWith>
+                    <startsWith>PDF/A-2B</startsWith>
+                    <startsWith>PDF/A-2U</startsWith>
+
+                    <!--known unsupported versions -->
+                    <!--<startsWith>PDF/A-3A</startsWith>
+                    <startsWith>PDF/A-3B</startsWith>
+                    <startsWith>PDF/A-3U</startsWith>-->
+                </mustMatchAny>
+            </rules>
+        </validation>
+
+    </fromXml>
+
+
+</binaryFileProfile>

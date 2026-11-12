@@ -55,14 +55,19 @@ metadat, profily binárních souborů):
 | zvuk bez nosiče | `digital audio` | 1.0 |
 | datové disky | `data_disc` | 0.1 |
 | jednotky fondu | `Clipping`, `Clipping index`, `Card index` | 0.1, 0.2 |
+| e-monografie | `electronic_monograph` | 3.0 |
+| e-periodika | `electronic_periodical` | 2.5 |
+| skládaná e-periodika | `electronic_coll_journal` | 1.3 |
 
-Celkem 30 konfigurací. Když balíček verzi neuvádí, použije se výchozí (konstanty `DEFAULT_*_VERSION` v
+Celkem 33 konfigurací. Když balíček verzi neuvádí, použije se výchozí (konstanty `DEFAULT_*_VERSION` v
 `DmfDetector.java`): monografie 2.3, periodika 2.2, gramodesky 1.0, fonoválečky 1.0, kompaktní disky 1.0, zvuk bez
-nosiče 1.0, datové disky 0.1, jednotky fondu 0.2.
+nosiče 1.0, datové disky 0.1, jednotky fondu 0.2, e-monografie 3.0, e-periodika 2.5, skládaná e-periodika 1.3.
 
 Typ DMF se určuje z METS `TYPE`, verze z `metadataversion` v info.xml. Pořadí: `--forced-dmf-<typ>-version`
 (vynutí verzi vždy), jinak `metadataversion` z info.xml, jinak `--preferred-dmf-<typ>-version`, jinak výchozí verze
-(typ je `mon`, `per`, `adg`, `adf`, `adi`, `adn`, `dad`, `fdu`, např. `--forced-dmf-fdu-version 0.1`).
+(typ je `mon`, `per`, `adg`, `adf`, `adi`, `adn`, `dad`, `fdu`, `emo`, `epe`, `sep`, např. `--forced-dmf-fdu-version 0.1`).
+Volby Validátoru e-publikací `--forced-dmf-emon-version`, `--forced-dmf-eper-version`, `--forced-dmf-comper-version`
+(a obdobně `--preferred-…`) se přijímají jako zastaralé aliasy voleb pro `emo`, `epe`, `sep`.
 Verze ALTO a jejich kontrola: viz [ALTO.md](ALTO.md).
 Kontrola registrace URN:NBN se ptá produkčního Resolveru (https://resolver.nkp.cz); parametr `--urnnbn-resolver-url`
 ji přepne na jinou instalaci, např. testovací https://resolver-test.nkp.cz. Adresa http:// (lokální testovací instalace

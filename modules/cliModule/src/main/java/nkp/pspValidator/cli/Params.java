@@ -21,6 +21,9 @@ public class Params {
     public static final String PREFERRED_DMF_ADN_VERSION = "preferred-dmf-adn-version";
     public static final String PREFERRED_DMF_DAD_VERSION = "preferred-dmf-dad-version";
     public static final String PREFERRED_DMF_FDU_VERSION = "preferred-dmf-fdu-version";
+    public static final String PREFERRED_DMF_EMO_VERSION = "preferred-dmf-emo-version";
+    public static final String PREFERRED_DMF_EPE_VERSION = "preferred-dmf-epe-version";
+    public static final String PREFERRED_DMF_SEP_VERSION = "preferred-dmf-sep-version";
 
     public static final String FORCED_DMF_MON_VERSION = "forced-dmf-mon-version";
     public static final String FORCED_DMF_PER_VERSION = "forced-dmf-per-version";
@@ -30,6 +33,17 @@ public class Params {
     public static final String FORCED_DMF_ADN_VERSION = "forced-dmf-adn-version";
     public static final String FORCED_DMF_DAD_VERSION = "forced-dmf-dad-version";
     public static final String FORCED_DMF_FDU_VERSION = "forced-dmf-fdu-version";
+    public static final String FORCED_DMF_EMO_VERSION = "forced-dmf-emo-version";
+    public static final String FORCED_DMF_EPE_VERSION = "forced-dmf-epe-version";
+    public static final String FORCED_DMF_SEP_VERSION = "forced-dmf-sep-version";
+
+    //zastarale aliasy voleb z Validatoru e-publikaci (VEP), prijimaji se kvuli skriptum jeho uzivatelu
+    public static final String PREFERRED_DMF_EMON_VERSION_DEPRECATED = "preferred-dmf-emon-version";
+    public static final String PREFERRED_DMF_EPER_VERSION_DEPRECATED = "preferred-dmf-eper-version";
+    public static final String PREFERRED_DMF_COMPER_VERSION_DEPRECATED = "preferred-dmf-comper-version";
+    public static final String FORCED_DMF_EMON_VERSION_DEPRECATED = "forced-dmf-emon-version";
+    public static final String FORCED_DMF_EPER_VERSION_DEPRECATED = "forced-dmf-eper-version";
+    public static final String FORCED_DMF_COMPER_VERSION_DEPRECATED = "forced-dmf-comper-version";
     public static final String URNNBN_RESOLVER_URL = "urnnbn-resolver-url";
     public static final String URNNBN_RESOLVER_ALLOW_HTTP = "urnnbn-resolver-allow-http";
 

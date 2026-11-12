@@ -29,6 +29,9 @@ public class DmfDetector {
     public static final String DEFAULT_AUDIO_NO_CARRIER_VERSION = "1.0";
     public static final String DEFAULT_DATA_DISC_VERSION = "0.1";
     public static final String DEFAULT_FUND_UNIT_VERSION = "0.2";
+    public static final String DEFAULT_EMONOGRAPH_VERSION = "3.0";
+    public static final String DEFAULT_EPERIODICAL_VERSION = "2.5";
+    public static final String DEFAULT_COMPERIODICAL_VERSION = "1.3";
 
 
     /**
@@ -42,6 +45,9 @@ public class DmfDetector {
      * Pokud se vyskytuje hodnota „data_disc“, zachází validátor s balíčkem jako s datovým diskem.
      * Pokud se vyskytuje hodnota „Clipping“, „Clipping index“ nebo „Card index“ (přesně, včetně velikosti písmen),
      * zachází validátor s balíčkem jako s jednotkou fondu (DMF Jednotky fondu).
+     * Pokud se vyskytuje hodnota „electronic_monograph“, zachází validátor s balíčkem jako s e-monografií.
+     * Pokud se vyskytuje hodnota „electronic_periodical“, zachází validátor s balíčkem jako s e-periodikem.
+     * Pokud se vyskytuje hodnota „electronic_coll_journal“, zachází validátor s balíčkem jako se skládaným e-periodikem.
      */
     public Dmf.Type detectDmfType(File pspRootDir) throws PspDataException, XmlFileParsingException, InvalidXPathExpressionException {
 
@@ -66,8 +72,14 @@ public class DmfDetector {
                 return DATA_DISC;
             } else if (isFundUnitType(docType)) {
                 return FUND_UNIT;
+            } else if ("electronic_monograph".equals(docType)) {
+                return EMONOGRAPH;
+            } else if ("electronic_periodical".equals(docType)) {
+                return EPERIODICAL;
+            } else if ("electronic_coll_journal".equals(docType)) {
+                return COMPERIODICAL;
             } else {
-                throw new PspDataException(pspRootDir, String.format("atribut TYPE elementu mets neobsahuje korektní typ (Monograph/Periodical/sound recording/audio cylinder/audio disc/digital audio/data_disc/Clipping/Clipping index/Card index), ale hodnotu '%s'", docType));
+                throw new PspDataException(pspRootDir, String.format("atribut TYPE elementu mets neobsahuje korektní typ (Monograph/Periodical/sound recording/audio cylinder/audio disc/digital audio/data_disc/Clipping/Clipping index/Card index/electronic_monograph/electronic_periodical/electronic_coll_journal), ale hodnotu '%s'", docType));
             }
         } catch (XPathExpressionException e) {
             throw new InvalidXPathExpressionException("", String.format("chyba v zápisu Xpath: %s", e.getMessage()));
@@ -186,6 +198,12 @@ public class DmfDetector {
                 return chooseVersion(DATA_DISC, pspRoot, params.forcedDmfDadVersion, params.preferredDmfDadVersion, DEFAULT_DATA_DISC_VERSION);
             case FUND_UNIT:
                 return chooseVersion(FUND_UNIT, pspRoot, params.forcedDmfFduVersion, params.preferredDmfFduVersion, DEFAULT_FUND_UNIT_VERSION);
+            case EMONOGRAPH:
+                return chooseVersion(EMONOGRAPH, pspRoot, params.forcedDmfEmoVersion, params.preferredDmfEmoVersion, DEFAULT_EMONOGRAPH_VERSION);
+            case EPERIODICAL:
+                return chooseVersion(EPERIODICAL, pspRoot, params.forcedDmfEpeVersion, params.preferredDmfEpeVersion, DEFAULT_EPERIODICAL_VERSION);
+            case COMPERIODICAL:
+                return chooseVersion(COMPERIODICAL, pspRoot, params.forcedDmfSepVersion, params.preferredDmfSepVersion, DEFAULT_COMPERIODICAL_VERSION);
             default:
                 throw new IllegalStateException();
         }
@@ -216,6 +234,9 @@ public class DmfDetector {
         public String preferredDmfAdnVersion;
         public String preferredDmfDadVersion;
         public String preferredDmfFduVersion;
+        public String preferredDmfEmoVersion;
+        public String preferredDmfEpeVersion;
+        public String preferredDmfSepVersion;
         public String forcedDmfMonVersion;
         public String forcedDmfPerVersion;
         public String forcedDmfAdgVersion;
@@ -224,6 +245,9 @@ public class DmfDetector {
         public String forcedDmfAdnVersion;
         public String forcedDmfDadVersion;
         public String forcedDmfFduVersion;
+        public String forcedDmfEmoVersion;
+        public String forcedDmfEpeVersion;
+        public String forcedDmfSepVersion;
     }
 
 }

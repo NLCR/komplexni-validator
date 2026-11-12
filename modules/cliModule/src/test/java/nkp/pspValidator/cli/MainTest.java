@@ -223,6 +223,83 @@ public class MainTest {
         assertFalse(o, o.contains("Jednotky fondu 0.2"));
     }
 
+    /**
+     * Minimalni balik e-publikace (jen METS s TYPE a INFO s verzi) pro overeni volby verze DMF; validace sama
+     * na takovem baliku hlasi chyby, testy kontroluji jen pouzitou verzi standardu.
+     */
+    private File minimalEpublicationPsp(String metsType, String infoVersion) throws Exception {
+        File dir = tmp.newFolder("epub-" + metsType);
+        Files.write(new File(dir, "mets_x.xml").toPath(), ("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n"
+                + "<mets:mets xmlns:mets=\"http://www.loc.gov/METS/\" LABEL=\"x\" TYPE=\"" + metsType + "\"/>").getBytes("UTF-8"));
+        Files.write(new File(dir, "info_x.xml").toPath(), ("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n"
+                + "<info><metadataversion>" + infoVersion + "</metadataversion></info>").getBytes("UTF-8"));
+        return dir;
+    }
+
+    private void assertForcedVersion(String metsType, String option, String version, String expected) throws Exception {
+        //verze v INFO (9.9) neexistuje, vynucena verze ma prednost
+        File psp = minimalEpublicationPsp(metsType, "9.9");
+        Main.main(null, concat(validateArgs(psp.getPath()), "--" + option, version));
+        String o = stdout();
+        assertTrue(o, o.contains("Bude použita verze standardu " + expected));
+        assertFalse(o, o.contains("9.9"));
+    }
+
+    @Test
+    public void validatePspForcedVersionEmonograph() throws Exception {
+        assertForcedVersion("electronic_monograph", Params.FORCED_DMF_EMO_VERSION, "3.0", "E-monografie 3.0");
+    }
+
+    @Test
+    public void validatePspForcedVersionEperiodical() throws Exception {
+        assertForcedVersion("electronic_periodical", Params.FORCED_DMF_EPE_VERSION, "2.5", "E-periodika 2.5");
+    }
+
+    @Test
+    public void validatePspForcedVersionComposedPeriodical() throws Exception {
+        assertForcedVersion("electronic_coll_journal", Params.FORCED_DMF_SEP_VERSION, "1.3", "Skládaná e-periodika 1.3");
+    }
+
+    @Test
+    public void validatePspForcedVersionDeprecatedVepAliases() throws Exception {
+        //volby Validatoru e-publikaci (emon/eper/comper) funguji jako zastarale aliasy
+        assertForcedVersion("electronic_monograph", Params.FORCED_DMF_EMON_VERSION_DEPRECATED, "3.0", "E-monografie 3.0");
+        out.reset();
+        assertForcedVersion("electronic_periodical", Params.FORCED_DMF_EPER_VERSION_DEPRECATED, "2.5", "E-periodika 2.5");
+        out.reset();
+        assertForcedVersion("electronic_coll_journal", Params.FORCED_DMF_COMPER_VERSION_DEPRECATED, "1.3", "Skládaná e-periodika 1.3");
+    }
+
+    @Test
+    public void validatePspMainOptionTakesPrecedenceOverDeprecatedAlias() throws Exception {
+        File psp = minimalEpublicationPsp("electronic_monograph", "9.9");
+        Main.main(null, concat(validateArgs(psp.getPath()), "--" + Params.FORCED_DMF_EMON_VERSION_DEPRECATED, "2.9",
+                "--" + Params.FORCED_DMF_EMO_VERSION, "3.0"));
+        assertTrue(stdout(), stdout().contains("Bude použita verze standardu E-monografie 3.0"));
+    }
+
+    @Test
+    public void validatePspPreferredVersionEpublication() throws Exception {
+        //bez verze v INFO se pouzije preferovana verze (i pres zastaraly alias)
+        File psp = minimalEpublicationPsp("electronic_periodical", "");
+        Main.main(null, concat(validateArgs(psp.getPath()), "--" + Params.PREFERRED_DMF_EPER_VERSION_DEPRECATED, "2.5"));
+        assertTrue(stdout(), stdout().contains("Bude použita verze standardu E-periodika 2.5"));
+    }
+
+    @Test
+    public void helpMarksVepOptionsAsDeprecated() throws Exception {
+        Main.main(null, new String[]{"--" + Params.HELP});
+        String o = stdout();
+        for (String option : new String[]{Params.FORCED_DMF_EMO_VERSION, Params.FORCED_DMF_EPE_VERSION, Params.FORCED_DMF_SEP_VERSION,
+                Params.PREFERRED_DMF_EMO_VERSION, Params.PREFERRED_DMF_EPE_VERSION, Params.PREFERRED_DMF_SEP_VERSION,
+                Params.FORCED_DMF_COMPER_VERSION_DEPRECATED}) {
+            assertTrue(option, o.contains("--" + option));
+        }
+        //HelpFormatter zalamuje popis, porovnava se bez zalomeni
+        String flat = o.replaceAll("\\s+", " ");
+        assertTrue(o, flat.contains("--" + Params.FORCED_DMF_EMON_VERSION_DEPRECATED + " <VERZE> Zastarale, pouzijte --" + Params.FORCED_DMF_EMO_VERSION + "."));
+    }
+
     @Test
     public void validatePspZip() throws Exception {
         File zip = new File(tmp.newFolder("zip"), "balik.zip");

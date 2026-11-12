@@ -73,7 +73,7 @@ public class FdmfConfiguration {
         //nacteni xsd pro metadata
         File xsdRoot = new File(fdmfRoot, XSD_DIR);
         checkDirExistAndReadable(xsdRoot);
-        providedFiles.put("INFO_XSD_FILE", findXsdFile(xsdRoot, "INFO(DMF)", "info_(mon|per|adg|adf|adi|adn|dad|fdu)_[0-9]+(\\.([0-9])+)*\\.xsd"));
+        providedFiles.put("INFO_XSD_FILE", findXsdFile(xsdRoot, "INFO(DMF)", "info_(mon|per|adg|adf|adi|adn|dad|fdu|emo|epe|sep)_[0-9]+(\\.([0-9])+)*\\.xsd"));
         //ALTO: fDMF muze obsahovat XSD pro vice verzi (predpis OCR pripousti ALTO 2.0 a novejsi). ALTO_XSD_FILE je pak
         //nejnovejsi verze (kvuli starsim pravidlum s jedinym XSD), ALTO_XSD_FILES vsechny; vyber podle namespace
         //dela validacni funkce checkXmlIsValidByXsdByNamespace.

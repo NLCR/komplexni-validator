@@ -70,6 +70,21 @@ public class PspDirValidationConfigurationDialogController extends DialogControl
 
     @FXML
     CheckBox forcedFduVersionCheckBox;
+    @FXML
+    ChoiceBox forcedEmoVersionChoiceBox;
+
+    @FXML
+    CheckBox forcedEmoVersionCheckBox;
+    @FXML
+    ChoiceBox forcedEpeVersionChoiceBox;
+
+    @FXML
+    CheckBox forcedEpeVersionCheckBox;
+    @FXML
+    ChoiceBox forcedSepVersionChoiceBox;
+
+    @FXML
+    CheckBox forcedSepVersionCheckBox;
 
     @FXML
     ChoiceBox preferredMonVersionChoiceBox;
@@ -117,6 +132,21 @@ public class PspDirValidationConfigurationDialogController extends DialogControl
 
     @FXML
     CheckBox preferredFduVersionCheckBox;
+    @FXML
+    ChoiceBox preferredEmoVersionChoiceBox;
+
+    @FXML
+    CheckBox preferredEmoVersionCheckBox;
+    @FXML
+    ChoiceBox preferredEpeVersionChoiceBox;
+
+    @FXML
+    CheckBox preferredEpeVersionCheckBox;
+    @FXML
+    ChoiceBox preferredSepVersionChoiceBox;
+
+    @FXML
+    CheckBox preferredSepVersionCheckBox;
 
     @FXML
     Label errorMessageLabel;
@@ -182,6 +212,9 @@ public class PspDirValidationConfigurationDialogController extends DialogControl
         boolean forcedAdnVersionEnabled = mgr.getBooleanOrDefault(ConfigurationManager.PROP_FORCE_AUDIO_NO_CARRIER_VERSION_ENABLED, false);
         boolean forcedDadVersionEnabled = mgr.getBooleanOrDefault(ConfigurationManager.PROP_FORCE_DIGITAL_DISC_VERSION_ENABLED, false);
         boolean forcedFduVersionEnabled = mgr.getBooleanOrDefault(ConfigurationManager.PROP_FORCE_FUND_UNIT_VERSION_ENABLED, false);
+        boolean forcedEmoVersionEnabled = mgr.getBooleanOrDefault(ConfigurationManager.PROP_FORCE_EMONOGRAPH_VERSION_ENABLED, false);
+        boolean forcedEpeVersionEnabled = mgr.getBooleanOrDefault(ConfigurationManager.PROP_FORCE_EPERIODICAL_VERSION_ENABLED, false);
+        boolean forcedSepVersionEnabled = mgr.getBooleanOrDefault(ConfigurationManager.PROP_FORCE_COMPERIODICAL_VERSION_ENABLED, false);
         forcedMonVersionCheckBox.setSelected(forcedMonVersionEnabled);
         forcedMonVersionChoiceBox.setDisable(!forcedMonVersionEnabled);
         forcedPerVersionCheckBox.setSelected(forcedPerVersionEnabled);
@@ -198,6 +231,12 @@ public class PspDirValidationConfigurationDialogController extends DialogControl
         forcedDadVersionChoiceBox.setDisable(!forcedDadVersionEnabled);
         forcedFduVersionCheckBox.setSelected(forcedFduVersionEnabled);
         forcedFduVersionChoiceBox.setDisable(!forcedFduVersionEnabled);
+        forcedEmoVersionCheckBox.setSelected(forcedEmoVersionEnabled);
+        forcedEmoVersionChoiceBox.setDisable(!forcedEmoVersionEnabled);
+        forcedEpeVersionCheckBox.setSelected(forcedEpeVersionEnabled);
+        forcedEpeVersionChoiceBox.setDisable(!forcedEpeVersionEnabled);
+        forcedSepVersionCheckBox.setSelected(forcedSepVersionEnabled);
+        forcedSepVersionChoiceBox.setDisable(!forcedSepVersionEnabled);
         //preferred
         boolean preferredMonVersionEnabled = mgr.getBooleanOrDefault(ConfigurationManager.PROP_PREFER_MON_VERSION_ENABLED, false);
         boolean preferredPerVersionEnabled = mgr.getBooleanOrDefault(ConfigurationManager.PROP_PREFER_PER_VERSION_ENABLED, false);
@@ -207,6 +246,9 @@ public class PspDirValidationConfigurationDialogController extends DialogControl
         boolean preferredAdnVersionEnabled = mgr.getBooleanOrDefault(ConfigurationManager.PROP_PREFER_AUDIO_NO_CARRIER_VERSION_ENABLED, false);
         boolean preferredDadVersionEnabled = mgr.getBooleanOrDefault(ConfigurationManager.PROP_PREFER_DIGITAL_DISC_VERSION_ENABLED, false);
         boolean preferredFduVersionEnabled = mgr.getBooleanOrDefault(ConfigurationManager.PROP_PREFER_FUND_UNIT_VERSION_ENABLED, false);
+        boolean preferredEmoVersionEnabled = mgr.getBooleanOrDefault(ConfigurationManager.PROP_PREFER_EMONOGRAPH_VERSION_ENABLED, false);
+        boolean preferredEpeVersionEnabled = mgr.getBooleanOrDefault(ConfigurationManager.PROP_PREFER_EPERIODICAL_VERSION_ENABLED, false);
+        boolean preferredSepVersionEnabled = mgr.getBooleanOrDefault(ConfigurationManager.PROP_PREFER_COMPERIODICAL_VERSION_ENABLED, false);
         preferredMonVersionCheckBox.setSelected(preferredMonVersionEnabled);
         preferredMonVersionChoiceBox.setDisable(!preferredMonVersionEnabled);
         preferredPerVersionCheckBox.setSelected(preferredPerVersionEnabled);
@@ -223,6 +265,12 @@ public class PspDirValidationConfigurationDialogController extends DialogControl
         preferredDadVersionChoiceBox.setDisable(!preferredDadVersionEnabled);
         preferredFduVersionCheckBox.setSelected(preferredFduVersionEnabled);
         preferredFduVersionChoiceBox.setDisable(!preferredFduVersionEnabled);
+        preferredEmoVersionCheckBox.setSelected(preferredEmoVersionEnabled);
+        preferredEmoVersionChoiceBox.setDisable(!preferredEmoVersionEnabled);
+        preferredEpeVersionCheckBox.setSelected(preferredEpeVersionEnabled);
+        preferredEpeVersionChoiceBox.setDisable(!preferredEpeVersionEnabled);
+        preferredSepVersionCheckBox.setSelected(preferredSepVersionEnabled);
+        preferredSepVersionChoiceBox.setDisable(!preferredSepVersionEnabled);
         //logs
         createTxtLog.setSelected(mgr.getBooleanOrDefault(ConfigurationManager.PROP_PSP_VALIDATION_CREATE_TXT_LOG, false));
         createXmlLog.setSelected(mgr.getBooleanOrDefault(ConfigurationManager.PROP_PSP_VALIDATION_CREATE_XML_LOG, false));
@@ -419,6 +467,69 @@ public class PspDirValidationConfigurationDialogController extends DialogControl
                 forcedFduVersionChoiceBox.getSelectionModel().selectFirst();
             }
         }
+        //forced - E-monograph
+        List<String> forcedEmoVersions = new ArrayList<>();
+        forcedEmoVersions.addAll(main.getValidationDataManager().getFdmfRegistry().getEmonographFdmfVersions());
+        Collections.sort(forcedEmoVersions, new VersionComparator(true));
+        if (forcedEmoVersions != null) {
+            ObservableList<String> emoVersionsObservable = FXCollections.observableArrayList(forcedEmoVersions);
+            forcedEmoVersionChoiceBox.setItems(emoVersionsObservable);
+            String version = mgr.getStringOrDefault(ConfigurationManager.PROP_FORCE_EMONOGRAPH_VERSION_CODE, null);
+            boolean found = false;
+            if (version != null) {
+                for (int i = 0; i < emoVersionsObservable.size(); i++) {
+                    if (version.equals(emoVersionsObservable.get(i))) {
+                        forcedEmoVersionChoiceBox.getSelectionModel().select(i);
+                        found = true;
+                    }
+                }
+            }
+            if (!found) {
+                forcedEmoVersionChoiceBox.getSelectionModel().selectFirst();
+            }
+        }
+        //forced - E-periodical
+        List<String> forcedEpeVersions = new ArrayList<>();
+        forcedEpeVersions.addAll(main.getValidationDataManager().getFdmfRegistry().getEperiodicalFdmfVersions());
+        Collections.sort(forcedEpeVersions, new VersionComparator(true));
+        if (forcedEpeVersions != null) {
+            ObservableList<String> epeVersionsObservable = FXCollections.observableArrayList(forcedEpeVersions);
+            forcedEpeVersionChoiceBox.setItems(epeVersionsObservable);
+            String version = mgr.getStringOrDefault(ConfigurationManager.PROP_FORCE_EPERIODICAL_VERSION_CODE, null);
+            boolean found = false;
+            if (version != null) {
+                for (int i = 0; i < epeVersionsObservable.size(); i++) {
+                    if (version.equals(epeVersionsObservable.get(i))) {
+                        forcedEpeVersionChoiceBox.getSelectionModel().select(i);
+                        found = true;
+                    }
+                }
+            }
+            if (!found) {
+                forcedEpeVersionChoiceBox.getSelectionModel().selectFirst();
+            }
+        }
+        //forced - Composed e-periodical
+        List<String> forcedSepVersions = new ArrayList<>();
+        forcedSepVersions.addAll(main.getValidationDataManager().getFdmfRegistry().getComposedPeriodicalFdmfVersions());
+        Collections.sort(forcedSepVersions, new VersionComparator(true));
+        if (forcedSepVersions != null) {
+            ObservableList<String> sepVersionsObservable = FXCollections.observableArrayList(forcedSepVersions);
+            forcedSepVersionChoiceBox.setItems(sepVersionsObservable);
+            String version = mgr.getStringOrDefault(ConfigurationManager.PROP_FORCE_COMPERIODICAL_VERSION_CODE, null);
+            boolean found = false;
+            if (version != null) {
+                for (int i = 0; i < sepVersionsObservable.size(); i++) {
+                    if (version.equals(sepVersionsObservable.get(i))) {
+                        forcedSepVersionChoiceBox.getSelectionModel().select(i);
+                        found = true;
+                    }
+                }
+            }
+            if (!found) {
+                forcedSepVersionChoiceBox.getSelectionModel().selectFirst();
+            }
+        }
         //preferred - Monograph
         List<String> preferredMonVersions = new ArrayList<>();
         preferredMonVersions.addAll(main.getValidationDataManager().getFdmfRegistry().getMonographFdmfVersions());
@@ -587,6 +698,69 @@ public class PspDirValidationConfigurationDialogController extends DialogControl
                 preferredFduVersionChoiceBox.getSelectionModel().selectFirst();
             }
         }
+        //preferred - E-monograph
+        List<String> preferredEmoVersions = new ArrayList<>();
+        preferredEmoVersions.addAll(main.getValidationDataManager().getFdmfRegistry().getEmonographFdmfVersions());
+        Collections.sort(preferredEmoVersions, new VersionComparator(true));
+        if (preferredEmoVersions != null) {
+            ObservableList<String> emoVersionsObservable = FXCollections.observableArrayList(preferredEmoVersions);
+            preferredEmoVersionChoiceBox.setItems(emoVersionsObservable);
+            String version = mgr.getStringOrDefault(ConfigurationManager.PROP_PREFER_EMONOGRAPH_VERSION_CODE, null);
+            boolean found = false;
+            if (version != null) {
+                for (int i = 0; i < emoVersionsObservable.size(); i++) {
+                    if (version.equals(emoVersionsObservable.get(i))) {
+                        preferredEmoVersionChoiceBox.getSelectionModel().select(i);
+                        found = true;
+                    }
+                }
+            }
+            if (!found) {
+                preferredEmoVersionChoiceBox.getSelectionModel().selectFirst();
+            }
+        }
+        //preferred - E-periodical
+        List<String> preferredEpeVersions = new ArrayList<>();
+        preferredEpeVersions.addAll(main.getValidationDataManager().getFdmfRegistry().getEperiodicalFdmfVersions());
+        Collections.sort(preferredEpeVersions, new VersionComparator(true));
+        if (preferredEpeVersions != null) {
+            ObservableList<String> epeVersionsObservable = FXCollections.observableArrayList(preferredEpeVersions);
+            preferredEpeVersionChoiceBox.setItems(epeVersionsObservable);
+            String version = mgr.getStringOrDefault(ConfigurationManager.PROP_PREFER_EPERIODICAL_VERSION_CODE, null);
+            boolean found = false;
+            if (version != null) {
+                for (int i = 0; i < epeVersionsObservable.size(); i++) {
+                    if (version.equals(epeVersionsObservable.get(i))) {
+                        preferredEpeVersionChoiceBox.getSelectionModel().select(i);
+                        found = true;
+                    }
+                }
+            }
+            if (!found) {
+                preferredEpeVersionChoiceBox.getSelectionModel().selectFirst();
+            }
+        }
+        //preferred - Composed e-periodical
+        List<String> preferredSepVersions = new ArrayList<>();
+        preferredSepVersions.addAll(main.getValidationDataManager().getFdmfRegistry().getComposedPeriodicalFdmfVersions());
+        Collections.sort(preferredSepVersions, new VersionComparator(true));
+        if (preferredSepVersions != null) {
+            ObservableList<String> sepVersionsObservable = FXCollections.observableArrayList(preferredSepVersions);
+            preferredSepVersionChoiceBox.setItems(sepVersionsObservable);
+            String version = mgr.getStringOrDefault(ConfigurationManager.PROP_PREFER_COMPERIODICAL_VERSION_CODE, null);
+            boolean found = false;
+            if (version != null) {
+                for (int i = 0; i < sepVersionsObservable.size(); i++) {
+                    if (version.equals(sepVersionsObservable.get(i))) {
+                        preferredSepVersionChoiceBox.getSelectionModel().select(i);
+                        found = true;
+                    }
+                }
+            }
+            if (!found) {
+                preferredSepVersionChoiceBox.getSelectionModel().selectFirst();
+            }
+        }
     }
 
     public void selectPspDir(ActionEvent actionEvent) {
@@ -638,6 +812,9 @@ public class PspDirValidationConfigurationDialogController extends DialogControl
                 params.forcedDmfAdnVersion = forcedAdnVersionChoiceBox.isDisabled() ? null : (String) forcedAdnVersionChoiceBox.getSelectionModel().getSelectedItem();
                 params.forcedDmfDadVersion = forcedDadVersionChoiceBox.isDisabled() ? null : (String) forcedDadVersionChoiceBox.getSelectionModel().getSelectedItem();
                 params.forcedDmfFduVersion = forcedFduVersionChoiceBox.isDisabled() ? null : (String) forcedFduVersionChoiceBox.getSelectionModel().getSelectedItem();
+                params.forcedDmfEmoVersion = forcedEmoVersionChoiceBox.isDisabled() ? null : (String) forcedEmoVersionChoiceBox.getSelectionModel().getSelectedItem();
+                params.forcedDmfEpeVersion = forcedEpeVersionChoiceBox.isDisabled() ? null : (String) forcedEpeVersionChoiceBox.getSelectionModel().getSelectedItem();
+                params.forcedDmfSepVersion = forcedSepVersionChoiceBox.isDisabled() ? null : (String) forcedSepVersionChoiceBox.getSelectionModel().getSelectedItem();
                 params.preferredDmfMonVersion = preferredMonVersionChoiceBox.isDisabled() ? null : (String) preferredMonVersionChoiceBox.getSelectionModel().getSelectedItem();
                 params.preferredDmfPerVersion = preferredPerVersionChoiceBox.isDisabled() ? null : (String) preferredPerVersionChoiceBox.getSelectionModel().getSelectedItem();
                 params.preferredDmfAdgVersion = preferredAdgVersionChoiceBox.isDisabled() ? null : (String) preferredAdgVersionChoiceBox.getSelectionModel().getSelectedItem();
@@ -646,6 +823,9 @@ public class PspDirValidationConfigurationDialogController extends DialogControl
                 params.preferredDmfAdnVersion = preferredAdnVersionChoiceBox.isDisabled() ? null : (String) preferredAdnVersionChoiceBox.getSelectionModel().getSelectedItem();
                 params.preferredDmfDadVersion = preferredDadVersionChoiceBox.isDisabled() ? null : (String) preferredDadVersionChoiceBox.getSelectionModel().getSelectedItem();
                 params.preferredDmfFduVersion = preferredFduVersionChoiceBox.isDisabled() ? null : (String) preferredFduVersionChoiceBox.getSelectionModel().getSelectedItem();
+                params.preferredDmfEmoVersion = preferredEmoVersionChoiceBox.isDisabled() ? null : (String) preferredEmoVersionChoiceBox.getSelectionModel().getSelectedItem();
+                params.preferredDmfEpeVersion = preferredEpeVersionChoiceBox.isDisabled() ? null : (String) preferredEpeVersionChoiceBox.getSelectionModel().getSelectedItem();
+                params.preferredDmfSepVersion = preferredSepVersionChoiceBox.isDisabled() ? null : (String) preferredSepVersionChoiceBox.getSelectionModel().getSelectedItem();
                 int verbosity = getSelectedVerbosity();
                 stage.hide();
                 main.runPspDirValidation(pspDir, params, createTxtLog.isSelected(), createXmlLog.isSelected(), verbosity);
@@ -735,6 +915,30 @@ public class PspDirValidationConfigurationDialogController extends DialogControl
         }
     }
 
+    public void forcedEmoVersionChanged(ActionEvent actionEvent) {
+        boolean forced = forcedEmoVersionCheckBox.isSelected();
+        forcedEmoVersionChoiceBox.setDisable(!forced);
+        if (getConfigurationManager() != null) {
+            getConfigurationManager().setBoolean(ConfigurationManager.PROP_FORCE_EMONOGRAPH_VERSION_ENABLED, forced);
+        }
+    }
+
+    public void forcedEpeVersionChanged(ActionEvent actionEvent) {
+        boolean forced = forcedEpeVersionCheckBox.isSelected();
+        forcedEpeVersionChoiceBox.setDisable(!forced);
+        if (getConfigurationManager() != null) {
+            getConfigurationManager().setBoolean(ConfigurationManager.PROP_FORCE_EPERIODICAL_VERSION_ENABLED, forced);
+        }
+    }
+
+    public void forcedSepVersionChanged(ActionEvent actionEvent) {
+        boolean forced = forcedSepVersionCheckBox.isSelected();
+        forcedSepVersionChoiceBox.setDisable(!forced);
+        if (getConfigurationManager() != null) {
+            getConfigurationManager().setBoolean(ConfigurationManager.PROP_FORCE_COMPERIODICAL_VERSION_ENABLED, forced);
+        }
+    }
+
     public void forcedMonVersionChoiceboxChanged(ActionEvent actionEvent) {
         String version = (String) forcedMonVersionChoiceBox.getSelectionModel().getSelectedItem();
         if (getConfigurationManager() != null) {
@@ -788,6 +992,27 @@ public class PspDirValidationConfigurationDialogController extends DialogControl
         String version = (String) forcedFduVersionChoiceBox.getSelectionModel().getSelectedItem();
         if (getConfigurationManager() != null) {
             getConfigurationManager().setString(ConfigurationManager.PROP_FORCE_FUND_UNIT_VERSION_CODE, version);
+        }
+    }
+
+    public void forcedEmoVersionChoiceboxChanged(ActionEvent actionEvent) {
+        String version = (String) forcedEmoVersionChoiceBox.getSelectionModel().getSelectedItem();
+        if (getConfigurationManager() != null) {
+            getConfigurationManager().setString(ConfigurationManager.PROP_FORCE_EMONOGRAPH_VERSION_CODE, version);
+        }
+    }
+
+    public void forcedEpeVersionChoiceboxChanged(ActionEvent actionEvent) {
+        String version = (String) forcedEpeVersionChoiceBox.getSelectionModel().getSelectedItem();
+        if (getConfigurationManager() != null) {
+            getConfigurationManager().setString(ConfigurationManager.PROP_FORCE_EPERIODICAL_VERSION_CODE, version);
+        }
+    }
+
+    public void forcedSepVersionChoiceboxChanged(ActionEvent actionEvent) {
+        String version = (String) forcedSepVersionChoiceBox.getSelectionModel().getSelectedItem();
+        if (getConfigurationManager() != null) {
+            getConfigurationManager().setString(ConfigurationManager.PROP_FORCE_COMPERIODICAL_VERSION_CODE, version);
         }
     }
 
@@ -855,6 +1080,30 @@ public class PspDirValidationConfigurationDialogController extends DialogControl
         }
     }
 
+    public void preferredEmoVersionChanged(ActionEvent actionEvent) {
+        boolean preferred = preferredEmoVersionCheckBox.isSelected();
+        preferredEmoVersionChoiceBox.setDisable(!preferred);
+        if (getConfigurationManager() != null) {
+            getConfigurationManager().setBoolean(ConfigurationManager.PROP_PREFER_EMONOGRAPH_VERSION_ENABLED, preferred);
+        }
+    }
+
+    public void preferredEpeVersionChanged(ActionEvent actionEvent) {
+        boolean preferred = preferredEpeVersionCheckBox.isSelected();
+        preferredEpeVersionChoiceBox.setDisable(!preferred);
+        if (getConfigurationManager() != null) {
+            getConfigurationManager().setBoolean(ConfigurationManager.PROP_PREFER_EPERIODICAL_VERSION_ENABLED, preferred);
+        }
+    }
+
+    public void preferredSepVersionChanged(ActionEvent actionEvent) {
+        boolean preferred = preferredSepVersionCheckBox.isSelected();
+        preferredSepVersionChoiceBox.setDisable(!preferred);
+        if (getConfigurationManager() != null) {
+            getConfigurationManager().setBoolean(ConfigurationManager.PROP_PREFER_COMPERIODICAL_VERSION_ENABLED, preferred);
+        }
+    }
+
     public void preferredMonVersionChoiceboxChanged(ActionEvent actionEvent) {
         String version = (String) preferredMonVersionChoiceBox.getSelectionModel().getSelectedItem();
         if (getConfigurationManager() != null) {
@@ -908,6 +1157,27 @@ public class PspDirValidationConfigurationDialogController extends DialogControl
         String version = (String) preferredFduVersionChoiceBox.getSelectionModel().getSelectedItem();
         if (getConfigurationManager() != null) {
             getConfigurationManager().setString(ConfigurationManager.PROP_PREFER_FUND_UNIT_VERSION_CODE, version);
+        }
+    }
+
+    public void preferredEmoVersionChoiceboxChanged(ActionEvent actionEvent) {
+        String version = (String) preferredEmoVersionChoiceBox.getSelectionModel().getSelectedItem();
+        if (getConfigurationManager() != null) {
+            getConfigurationManager().setString(ConfigurationManager.PROP_PREFER_EMONOGRAPH_VERSION_CODE, version);
+        }
+    }
+
+    public void preferredEpeVersionChoiceboxChanged(ActionEvent actionEvent) {
+        String version = (String) preferredEpeVersionChoiceBox.getSelectionModel().getSelectedItem();
+        if (getConfigurationManager() != null) {
+            getConfigurationManager().setString(ConfigurationManager.PROP_PREFER_EPERIODICAL_VERSION_CODE, version);
+        }
+    }
+
+    public void preferredSepVersionChoiceboxChanged(ActionEvent actionEvent) {
+        String version = (String) preferredSepVersionChoiceBox.getSelectionModel().getSelectedItem();
+        if (getConfigurationManager() != null) {
+            getConfigurationManager().setString(ConfigurationManager.PROP_PREFER_COMPERIODICAL_VERSION_CODE, version);
         }
     }
 

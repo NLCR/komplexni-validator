@@ -62,6 +62,9 @@ public class FdmfRegistryTest {
         assertDefault(Dmf.Type.AUDIO_NO_CARRIER, DmfDetector.DEFAULT_AUDIO_NO_CARRIER_VERSION);
         assertDefault(Dmf.Type.DATA_DISC, DmfDetector.DEFAULT_DATA_DISC_VERSION);
         assertDefault(Dmf.Type.FUND_UNIT, DmfDetector.DEFAULT_FUND_UNIT_VERSION);
+        assertDefault(Dmf.Type.EMONOGRAPH, DmfDetector.DEFAULT_EMONOGRAPH_VERSION);
+        assertDefault(Dmf.Type.EPERIODICAL, DmfDetector.DEFAULT_EPERIODICAL_VERSION);
+        assertDefault(Dmf.Type.COMPERIODICAL, DmfDetector.DEFAULT_COMPERIODICAL_VERSION);
     }
 
     @Test

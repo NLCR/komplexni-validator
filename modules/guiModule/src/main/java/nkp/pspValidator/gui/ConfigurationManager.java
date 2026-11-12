@@ -62,6 +62,12 @@ public class ConfigurationManager {
     public static final String PROP_FORCE_DIGITAL_DISC_VERSION_CODE = "force.digital_disc.version.code";
     public static final String PROP_FORCE_FUND_UNIT_VERSION_ENABLED = "force.fund_unit.version.enabled";
     public static final String PROP_FORCE_FUND_UNIT_VERSION_CODE = "force.fund_unit.version.code";
+    public static final String PROP_FORCE_EMONOGRAPH_VERSION_ENABLED = "force.emonograph.version.enabled";
+    public static final String PROP_FORCE_EMONOGRAPH_VERSION_CODE = "force.emonograph.version.code";
+    public static final String PROP_FORCE_EPERIODICAL_VERSION_ENABLED = "force.eperiodical.version.enabled";
+    public static final String PROP_FORCE_EPERIODICAL_VERSION_CODE = "force.eperiodical.version.code";
+    public static final String PROP_FORCE_COMPERIODICAL_VERSION_ENABLED = "force.composed_perio.version.enabled";
+    public static final String PROP_FORCE_COMPERIODICAL_VERSION_CODE = "force.composed_perio.version.code";
     public static final String PROP_PREFER_MON_VERSION_ENABLED = "prefer.monograph.version.enabled";
     public static final String PROP_PREFER_MON_VERSION_CODE = "prefer.monograph.version.code";
     public static final String PROP_PREFER_PER_VERSION_ENABLED = "prefer.periodical.version.enabled";
@@ -78,6 +84,12 @@ public class ConfigurationManager {
     public static final String PROP_PREFER_DIGITAL_DISC_VERSION_CODE = "prefer.digital_disc.version.code";
     public static final String PROP_PREFER_FUND_UNIT_VERSION_ENABLED = "prefer.fund_unit.version.enabled";
     public static final String PROP_PREFER_FUND_UNIT_VERSION_CODE = "prefer.fund_unit.version.code";
+    public static final String PROP_PREFER_EMONOGRAPH_VERSION_ENABLED = "prefer.emonograph.version.enabled";
+    public static final String PROP_PREFER_EMONOGRAPH_VERSION_CODE = "prefer.emonograph.version.code";
+    public static final String PROP_PREFER_EPERIODICAL_VERSION_ENABLED = "prefer.eperiodical.version.enabled";
+    public static final String PROP_PREFER_EPERIODICAL_VERSION_CODE = "prefer.eperiodical.version.code";
+    public static final String PROP_PREFER_COMPERIODICAL_VERSION_ENABLED = "prefer.composed_perio.version.enabled";
+    public static final String PROP_PREFER_COMPERIODICAL_VERSION_CODE = "prefer.composed_perio.version.code";
     public static final String PROP_PSP_VALIDATION_CREATE_TXT_LOG = "psp_validation.create_txt_log";
     public static final String PROP_PSP_VALIDATION_CREATE_XML_LOG = "psp_validation.create_xml_log";
     public static final String PROP_LOG_DIR = "validation.log_dir";

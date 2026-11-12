@@ -223,6 +223,33 @@ public class Main {
                 .create());
         options.addOption(OptionBuilder
                 .withDescription(replaceUmlaut(
+                        "Preferovaná verze DMF pro validaci e-monografií. " +
+                                "Použije se k validaci, pokud je balík typu E-monografie, data balíku neobsahují informaci o vhodné verzi DMF E-monografie " +
+                                "a parametr --" + Params.FORCED_DMF_EMO_VERSION + " není vyplněn."))
+                .hasArg()
+                .withArgName("VERZE")
+                .withLongOpt(Params.PREFERRED_DMF_EMO_VERSION)
+                .create());
+        options.addOption(OptionBuilder
+                .withDescription(replaceUmlaut(
+                        "Preferovaná verze DMF pro validaci e-periodik. " +
+                                "Použije se k validaci, pokud je balík typu E-periodikum, data balíku neobsahují informaci o vhodné verzi DMF E-periodika " +
+                                "a parametr --" + Params.FORCED_DMF_EPE_VERSION + " není vyplněn."))
+                .hasArg()
+                .withArgName("VERZE")
+                .withLongOpt(Params.PREFERRED_DMF_EPE_VERSION)
+                .create());
+        options.addOption(OptionBuilder
+                .withDescription(replaceUmlaut(
+                        "Preferovaná verze DMF pro validaci skládaných e-periodik. " +
+                                "Použije se k validaci, pokud je balík typu Skládané e-periodikum, data balíku neobsahují informaci o vhodné verzi DMF Skládaná e-periodika " +
+                                "a parametr --" + Params.FORCED_DMF_SEP_VERSION + " není vyplněn."))
+                .hasArg()
+                .withArgName("VERZE")
+                .withLongOpt(Params.PREFERRED_DMF_SEP_VERSION)
+                .create());
+        options.addOption(OptionBuilder
+                .withDescription(replaceUmlaut(
                         "Vynucená verze DMF pro validaci monografií. " +
                                 //"Použije se k validaci všech balíků typu Monografie bez ohledu na data balíků a hodnotu parametru --preferred-dmf-mon-version."))
                                 "Použije se k validaci všech balíků typu Monografie bez ohledu na data balíků a hodnotu parametru --" + Params.PREFERRED_DMF_MON_VERSION + "."))
@@ -285,6 +312,72 @@ public class Main {
                 .hasArg()
                 .withArgName("VERZE")
                 .withLongOpt(Params.FORCED_DMF_FDU_VERSION)
+                .create());
+        options.addOption(OptionBuilder
+                .withDescription(replaceUmlaut(
+                        "Vynucená verze DMF pro validaci e-monografií. " +
+                                "Použije se k validaci všech balíků typu E-monografie bez ohledu na data balíků a hodnotu parametru --" + Params.PREFERRED_DMF_EMO_VERSION + "."))
+                .hasArg()
+                .withArgName("VERZE")
+                .withLongOpt(Params.FORCED_DMF_EMO_VERSION)
+                .create());
+        options.addOption(OptionBuilder
+                .withDescription(replaceUmlaut(
+                        "Vynucená verze DMF pro validaci e-periodik. " +
+                                "Použije se k validaci všech balíků typu E-periodikum bez ohledu na data balíků a hodnotu parametru --" + Params.PREFERRED_DMF_EPE_VERSION + "."))
+                .hasArg()
+                .withArgName("VERZE")
+                .withLongOpt(Params.FORCED_DMF_EPE_VERSION)
+                .create());
+        options.addOption(OptionBuilder
+                .withDescription(replaceUmlaut(
+                        "Vynucená verze DMF pro validaci skládaných e-periodik. " +
+                                "Použije se k validaci všech balíků typu Skládané e-periodikum bez ohledu na data balíků a hodnotu parametru --" + Params.PREFERRED_DMF_SEP_VERSION + "."))
+                .hasArg()
+                .withArgName("VERZE")
+                .withLongOpt(Params.FORCED_DMF_SEP_VERSION)
+                .create());
+        options.addOption(OptionBuilder
+                .withDescription(replaceUmlaut(
+                        "Zastaralé, použijte --" + Params.PREFERRED_DMF_EMO_VERSION + "."))
+                .hasArg()
+                .withArgName("VERZE")
+                .withLongOpt(Params.PREFERRED_DMF_EMON_VERSION_DEPRECATED)
+                .create());
+        options.addOption(OptionBuilder
+                .withDescription(replaceUmlaut(
+                        "Zastaralé, použijte --" + Params.PREFERRED_DMF_EPE_VERSION + "."))
+                .hasArg()
+                .withArgName("VERZE")
+                .withLongOpt(Params.PREFERRED_DMF_EPER_VERSION_DEPRECATED)
+                .create());
+        options.addOption(OptionBuilder
+                .withDescription(replaceUmlaut(
+                        "Zastaralé, použijte --" + Params.PREFERRED_DMF_SEP_VERSION + "."))
+                .hasArg()
+                .withArgName("VERZE")
+                .withLongOpt(Params.PREFERRED_DMF_COMPER_VERSION_DEPRECATED)
+                .create());
+        options.addOption(OptionBuilder
+                .withDescription(replaceUmlaut(
+                        "Zastaralé, použijte --" + Params.FORCED_DMF_EMO_VERSION + "."))
+                .hasArg()
+                .withArgName("VERZE")
+                .withLongOpt(Params.FORCED_DMF_EMON_VERSION_DEPRECATED)
+                .create());
+        options.addOption(OptionBuilder
+                .withDescription(replaceUmlaut(
+                        "Zastaralé, použijte --" + Params.FORCED_DMF_EPE_VERSION + "."))
+                .hasArg()
+                .withArgName("VERZE")
+                .withLongOpt(Params.FORCED_DMF_EPER_VERSION_DEPRECATED)
+                .create());
+        options.addOption(OptionBuilder
+                .withDescription(replaceUmlaut(
+                        "Zastaralé, použijte --" + Params.FORCED_DMF_SEP_VERSION + "."))
+                .hasArg()
+                .withArgName("VERZE")
+                .withLongOpt(Params.FORCED_DMF_COMPER_VERSION_DEPRECATED)
                 .create());
 
         options.addOption(OptionBuilder
@@ -645,6 +738,13 @@ public class Main {
                 if (line.hasOption(Params.FORCED_DMF_FDU_VERSION)) {
                     forcedDmfFduVersion = line.getOptionValue(Params.FORCED_DMF_FDU_VERSION);
                 }
+                //e-publikace: hlavni volba ma prednost pred zastaralym aliasem z VEP
+                String preferredDmfEmoVersion = optionValueOrAlias(line, Params.PREFERRED_DMF_EMO_VERSION, Params.PREFERRED_DMF_EMON_VERSION_DEPRECATED);
+                String preferredDmfEpeVersion = optionValueOrAlias(line, Params.PREFERRED_DMF_EPE_VERSION, Params.PREFERRED_DMF_EPER_VERSION_DEPRECATED);
+                String preferredDmfSepVersion = optionValueOrAlias(line, Params.PREFERRED_DMF_SEP_VERSION, Params.PREFERRED_DMF_COMPER_VERSION_DEPRECATED);
+                String forcedDmfEmoVersion = optionValueOrAlias(line, Params.FORCED_DMF_EMO_VERSION, Params.FORCED_DMF_EMON_VERSION_DEPRECATED);
+                String forcedDmfEpeVersion = optionValueOrAlias(line, Params.FORCED_DMF_EPE_VERSION, Params.FORCED_DMF_EPER_VERSION_DEPRECATED);
+                String forcedDmfSepVersion = optionValueOrAlias(line, Params.FORCED_DMF_SEP_VERSION, Params.FORCED_DMF_COMPER_VERSION_DEPRECATED);
 
                 //Resolver URN:NBN
                 if (line.hasOption(Params.URNNBN_RESOLVER_URL)) {
@@ -751,6 +851,9 @@ public class Main {
                 dmfDetectorParams.forcedDmfAdnVersion = forceDmfAdnVersion;
                 dmfDetectorParams.forcedDmfDadVersion = forcedDmfDadVersion;
                 dmfDetectorParams.forcedDmfFduVersion = forcedDmfFduVersion;
+                dmfDetectorParams.forcedDmfEmoVersion = forcedDmfEmoVersion;
+                dmfDetectorParams.forcedDmfEpeVersion = forcedDmfEpeVersion;
+                dmfDetectorParams.forcedDmfSepVersion = forcedDmfSepVersion;
                 dmfDetectorParams.preferredDmfMonVersion = preferDmfMonVersion;
                 dmfDetectorParams.preferredDmfPerVersion = preferDmfPerVersion;
                 dmfDetectorParams.preferredDmfAdgVersion = preferDmfAdgVersion;
@@ -759,6 +862,9 @@ public class Main {
                 dmfDetectorParams.preferredDmfAdnVersion = preferDmfAdnVersion;
                 dmfDetectorParams.preferredDmfDadVersion = preferredDmfDadVersion;
                 dmfDetectorParams.preferredDmfFduVersion = preferredDmfFduVersion;
+                dmfDetectorParams.preferredDmfEmoVersion = preferredDmfEmoVersion;
+                dmfDetectorParams.preferredDmfEpeVersion = preferredDmfEpeVersion;
+                dmfDetectorParams.preferredDmfSepVersion = preferredDmfSepVersion;
 
                 PrintStream out = System.out;
                 PrintStream err = System.err;
@@ -1031,6 +1137,19 @@ public class Main {
     }
 
     /*Docasne odstrani diakritiku, dokud se neopravi problem s kodovanim na Windows*/
+    /**
+     * Hodnota volby, pripadne jejiho zastaraleho aliasu (volby Validatoru e-publikaci). Hlavni volba ma prednost.
+     */
+    private static String optionValueOrAlias(CommandLine line, String option, String deprecatedAlias) {
+        if (line.hasOption(option)) {
+            return line.getOptionValue(option);
+        } else if (line.hasOption(deprecatedAlias)) {
+            return line.getOptionValue(deprecatedAlias);
+        } else {
+            return null;
+        }
+    }
+
     private static String replaceUmlaut(String string) {
         Map<String, String> replacements = new HashMap<>();
         replacements.put("á", "a");
