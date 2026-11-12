@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xs:schema
         xmlns:xs="http://www.w3.org/2001/XMLSchema"
-        targetNamespace="http://www.nkp.cz/pspValidator/2.9/metadataProfile"
-        xmlns="http://www.nkp.cz/pspValidator/2.9/metadataProfile"
+        targetNamespace="http://www.nkp.cz/pspValidator/3.0/metadataProfile"
+        xmlns="http://www.nkp.cz/pspValidator/3.0/metadataProfile"
         elementFormDefault="qualified"
         attributeFormDefault="unqualified"
 >
@@ -82,7 +82,7 @@
             </xs:sequence>
 
             <xs:attribute name="name" type="xs:string" use="optional"/>
-            <xs:attribute name="validatorVersion" type="xs:string"/>
+            <xs:attribute name="validatorVersion" type="xs:string" use="required"/>
             <xs:attribute name="dmf" type="xs:string"/>
         </xs:complexType>
     </xs:element>

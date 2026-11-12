@@ -243,13 +243,14 @@ tasks.register('jpackage', Exec) {
             platformOptions = withoutWin
         }
 
-        // jpackage chce číselnou verzi x.y.z: "2.9" -> "2.9.0", "2.9-beta" -> "2.9.0", "2.9.1" -> "2.9.1".
+        // jpackage chce číselnou verzi x.y.z: "3.0" -> "3.0.0", "3.0-alpha.0" -> "3.0.0", "3.0-beta" -> "3.0.0",
+        // "3.0.1" -> "3.0.1". Suffix za první pomlčkou (i s čísly, alpha.0) se zahodí, chybějící složky doplní nula.
         // Omezení MSI (Windows): stejná verze znamená „už nainstalováno“, beta a finální verze téže verze mají stejné
         // číslo a liší se jen obsahem; před instalací finální verze přes betu je proto nutné betu odinstalovat.
         // macOS (CFBundleVersion) i Windows (MSI) přijímají tři složky, první musí být nenulová.
-        def m = appVersionString =~ /^(\d+)(?:\.(\d+))?(?:\.(\d+))?/
+        def m = appVersionString.split('-', 2)[0] =~ /^(\d+)(?:\.(\d+))?(?:\.(\d+))?$/
         if (!m.find()) {
-            throw new GradleException("jpackage: appVersion '${appVersionString}' nezačíná číslem verze.")
+            throw new GradleException("jpackage: appVersion '${appVersionString}' nemá před pomlčkou číselnou verzi x[.y[.z]].")
         }
         appVersionNumeric = [m.group(1), m.group(2) ?: '0', m.group(3) ?: '0'].join('.')
 

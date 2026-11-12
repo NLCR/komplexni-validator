@@ -30,8 +30,8 @@ public class MetadataProfileParser {
         MetadataProfile metadataProfile = new MetadataProfile();
         XMLTag doc = XMLDoc.from(profileXmlFile, true); //ignoring namespaces
         metadataProfile.setDmf(doc.getAttribute("dmf"));
-        metadataProfile.setValidatorVersion(doc.getAttribute("validatorVersion"));
-        checkValidatorVersionCorrect(metadataProfile.getValidatorVersion(), profileXmlFile);
+        metadataProfile.setValidatorVersion(doc.findAttribute("validatorVersion"));
+        Version.checkConfigValidatorVersion(metadataProfile.getValidatorVersion(), profileXmlFile);
         //TODO: podobne testovat dmf
 
         for (Element childEl : doc.getChildElement()) {
@@ -55,17 +55,6 @@ public class MetadataProfileParser {
             }
         }
         return metadataProfile;
-    }
-
-    private void checkValidatorVersionCorrect(String versionFromProfile, File profileXmlFile) throws ValidatorConfigurationException {
-        String versionPure = Version.VERSION_CODE;
-        if (versionPure.contains("-")) {
-            //everything after "-" is fair game, i.e. validator in version 2.0-dev-whatever will work with metadata-profile with validatorVersion="2.0"
-            versionPure = versionPure.split("-")[0];
-        }
-        if (!versionPure.equals(versionFromProfile)) {
-            throw new ValidatorConfigurationException("nesouhlasí verze validátoru - očekávaná '%s', nalezena '%s' v souboru %s", versionPure, versionFromProfile, profileXmlFile.getAbsolutePath());
-        }
     }
 
     private Map<String, String> parseNamespaces(Element namespacesEl) {

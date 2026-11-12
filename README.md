@@ -107,13 +107,13 @@ repozitáře (nejsou součástí vydaných zipů).
 Pravidla jsou datová (XML) a jsou popsaná přímo v souborech fDMF: `rules.xml` (pravidla), `variables.xml`
 (proměnné), `patterns.xml` (vzory názvů souborů), `namespaces.xml`, adresáře `xsd/`, `biblioProfiles/`,
 `techProfiles/`, `metsProfiles/`, `binaryFileProfiles/`. Dostupné validační a evaluační funkce s parametry jsou
-vypsané ve `validatorConfig/functions/`. Atribut `validatorVersion` konfiguračních souborů musí odpovídat verzi
-aplikace (`Version.java`, část před pomlčkou).
+vypsané ve `validatorConfig/functions/`. Atribut `validatorVersion` konfiguračních souborů musí mít stejnou major
+verzi jako aplikace (konfigurace „3.0“ i „3.1“ projde s validátorem 3.x).
 
 ## Verze
 
-Verze aplikace je v `gradle.properties` (`appVersion`) a v `modules/sharedModule/.../Version.java` (`VERSION_CODE`,
-`BUILD_DATE`). Vydání se značí tagem `vX.Y` a publikuje jako GitHub release; postup vydání, assets a jejich
+Verze aplikace je jen v `gradle.properties` (`appVersion`), verzi a datum buildu z ní při buildu generuje Gradle
+pro třídu `Version`. Vydání se značí tagem `vX.Y` a publikuje jako GitHub release; postup vydání, assets a jejich
 sestavení (`tools/release/build-assets.sh`): viz [release.md](release.md).
 
 ## Licence

@@ -25,9 +25,10 @@ import java.util.Map;
  */
 public class ValidatorProtocolXmlBuilder {
 
-    final static String NS = "http://www.nkp.cz/pspValidator/2.9/validationProtocol";
+    final static String NS = "http://www.nkp.cz/pspValidator/3.0/validationProtocol";
     final static String XSI_NS = XMLConstants.W3C_XML_SCHEMA_INSTANCE_NS_URI;
-    final static String XSD_URL = "https://raw.githubusercontent.com/NLCR/komplexni-validator/refs/tags/v2.9/modules/sharedModule/src/main/resources/nkp/pspValidator/shared/validatorConfig/xsd/validationProtocol.xsd";
+    //predvydani (alpha, beta) odkazuji na vetev master, pri vydani se XSD_URL prepne na tag finalni verze (v3.0), viz release.md kap. 1
+    final static String XSD_URL = "https://raw.githubusercontent.com/NLCR/komplexni-validator/master/modules/sharedModule/src/main/resources/nkp/pspValidator/shared/validatorConfig/xsd/validationProtocol.xsd";
     //TODO: change XSD_URL to one of:
     //final static String XSD_URL = "https://raw.githubusercontent.com/NLCR/komplexni-validator/v2.6.1/modules/sharedModule/src/main/resources/nkp/pspValidator/shared/validatorConfig/xsd/validationProtocol.xsd";
     //final static String XSD_URL = "https://docs.validator.nkp.cz/xsd/2.6.1/validationProtocol.xsd";
@@ -60,7 +61,7 @@ public class ValidatorProtocolXmlBuilder {
 
             Element validatorEl = createChildElement(protocolEl, "validator");
             validatorEl.setAttribute("version", Version.VERSION_CODE);
-            validatorEl.setAttribute("buildDate", convertBuilDate(Version.BUILD_DATE));
+            validatorEl.setAttribute("buildDate", (Version.BUILD_DATE_ISO != null ? Version.BUILD_DATE_ISO : convertBuilDate(Version.BUILD_DATE)));
 
             Element profileEl = createChildElement(protocolEl, "profile");
             profileEl.setAttribute("id", profileId);
@@ -144,7 +145,7 @@ public class ValidatorProtocolXmlBuilder {
 
             Element validatorEl = createChildElement(protocolEl, "validator");
             validatorEl.setAttribute("version", Version.VERSION_CODE);
-            validatorEl.setAttribute("buildDate", convertBuilDate(Version.BUILD_DATE));
+            validatorEl.setAttribute("buildDate", (Version.BUILD_DATE_ISO != null ? Version.BUILD_DATE_ISO : convertBuilDate(Version.BUILD_DATE)));
 
             Element fDmfEl = createChildElement(protocolEl, "fdmf");
             fDmfEl.setAttribute("type", protocol.getDmfUsed().getType().toString());

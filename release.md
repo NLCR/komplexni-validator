@@ -1,7 +1,7 @@
 # Vydání nové verze
 
 Postup vydání Komplexního validátoru (CLI a GUI) jako GitHub release. Ověřeno na v2.8-beta (24. 9. 2026), aktualizováno pro v2.9
-(8. 11. 2026).
+(8. 11. 2026) a pro verzování od 3.0 (12. 11. 2026).
 
 ## Assets
 
@@ -35,14 +35,21 @@ Intel se nevydává nic (lze použít GUI zip s Javou s JavaFX).
 
 ## 1. Příprava verze
 
-- `gradle.properties`: `appVersion`, např. `2.8-beta`.
-- `modules/sharedModule/src/main/java/nkp/pspValidator/shared/Version.java`: `VERSION_CODE` (stejně jako `appVersion`)
-  a `BUILD_DATE` (datum vydání, formát `24. 9. 2026`).
-- `ValidatorProtocolXmlBuilder.XSD_URL`: odkaz na XSD protokolu na tagu vydání (`refs/tags/<tag>/...`).
-- Při změně minor verze (např. 2.7 → 2.8) navíc hromadná změna atributu `validatorVersion` ve všech konfiguračních
-  souborech a namespace protokolu (vzor: commit 53e1404e „change to version 2.8“, 1451 souborů). Část `VERSION_CODE`
-  před pomlčkou se musí shodovat s `validatorVersion`, jinak se konfigurace nenačte.
-- Commit ve stylu „set version to 2.8-beta“.
+- `gradle.properties`: `appVersion`, např. `3.0-beta` nebo `3.0.1`. Je to jediné místo s verzí aplikace: Gradle
+  z něj při buildu vygeneruje `version.properties` (verze a datum buildu, v `modules/sharedModule/build/generated/`,
+  ne v gitu) a z něj ji čte `Version` (`VERSION_CODE`, `BUILD_DATE`) pro CLI `--version`, GUI a protokoly. Datum
+  buildu je den sestavení, ručně se nenastavuje. Při běhu z IDE bez Gradle buildu je verze `0.0.0-dev`, datum
+  „neznámé“ a kontrola `validatorVersion` je vypnutá.
+- Atribut `validatorVersion` konfiguračních souborů (fDMF, profily metadat, profily binárních souborů) se porovnává
+  jen s **major** verzí aplikace: aplikace 3.x (3.0-alpha.0, 3.0, 3.0.1, 3.2) načte konfiguraci s `validatorVersion`
+  „3.0“ i „3.1“, s „2.9“ ne. Nové konfigurace nesou verzi platnou při vzniku (dnes „3.0“), při minor a patch vydání
+  se atribut nemění.
+- Hromadná změna (atribut `validatorVersion` a namespace `pspValidator/X.Y/` v konfiguraci, XSD a protokolu, vzor:
+  commit 36094cb5 „set version to 2.9“) je potřeba jen při změně **major** verze, příště u 4.0.
+- `ValidatorProtocolXmlBuilder.XSD_URL`: předvydání (alpha, beta) odkazují na větev `master`
+  (`.../komplexni-validator/master/...`); při finálním vydání se přepne na tag vydání (`refs/tags/v3.0/...`)
+  a po vydání zpět na `master`.
+- Commit ve stylu „set version to 3.0-beta“.
 
 ## 2. Build a testy
 
@@ -154,7 +161,7 @@ Položky ideálně s odkazem na issue (`issue #123: ...`).
 
 ## 6. Po vydání
 
-- Finální verze po betě: zopakovat kroky 1 až 5 s verzí bez přípony (`VERSION_CODE`, `appVersion`, `BUILD_DATE`,
-  `XSD_URL` na nový tag).
+- Finální verze po betě: zopakovat kroky 1 až 5 s verzí bez přípony (`appVersion`, `XSD_URL` na nový tag).
+- Po finálním vydání vrátit `XSD_URL` na větev `master` a `appVersion` na další předvydání (např. `3.1-alpha.0`).
 - Webový validátor (repozitáře `komplexni-validator-web-backend` a `-frontend`) spouští CLI jar s adresářem
   `validatorConfig` na serveru: nasadit obsah CLI zipu a ověřit, že backend čte namespace protokolu nové verze.

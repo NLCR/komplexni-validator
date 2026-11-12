@@ -35,6 +35,29 @@ dependencies {
     implementation 'com.ibm.icu:icu4j:51.1'
 }
 
+// Verze aplikace a datum buildu pro nkp.pspValidator.shared.Version: jedinym zdrojem verze je appVersion
+// v gradle.properties. Soubor se generuje do build/ (ne do src/, v gitu neni). Datum se bere az pri behu tasku
+// a task neni nikdy up-to-date (je levny), aby datum buildu nezustalo stare ani s configuration cache.
+def versionResourcesDir = layout.buildDirectory.dir('generated/resources/version')
+def generateVersionProperties = tasks.register('generateVersionProperties') {
+    def appVersion = project.version.toString()
+    inputs.property('appVersion', appVersion)
+    outputs.dir(versionResourcesDir)
+    outputs.upToDateWhen { false }
+    doLast {
+        def today = java.time.LocalDate.now()
+        def buildDate = "${today.dayOfMonth}. ${today.monthValue}. ${today.year}"
+        def buildDateIso = today.toString()
+        def file = versionResourcesDir.get().file('nkp/pspValidator/shared/version.properties').asFile
+        file.parentFile.mkdirs()
+        file.text = "# generovano Gradle (modules/sharedModule/build.gradle), needitovat\n" +
+                "version=${appVersion}\n" +
+                "buildDate=${buildDate}\n" +
+                "buildDateIso=${buildDateIso}\n"
+    }
+}
+sourceSets.main.resources.srcDir(generateVersionProperties)
+
 // Testy nevolaji Resolver URN:NBN (pravidlo MODS_IDENTIFIERS_URN_NBN_REGISTERED skonci INFO "preskocena"):
 // testy bezi bez site a nezavisi na stavu cizich identifikatoru v produkcnim Resolveru.
 // Viz VfCheckUrnNbnIdentifiersRegistered.PROP_SKIP_RESOLVER.
