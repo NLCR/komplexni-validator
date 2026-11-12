@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<protocol xmlns="http://www.nkp.cz/pspValidator/2.9/validationProtocol" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" type="package" xsi:schemaLocation="http://www.nkp.cz/pspValidator/2.9/validationProtocol https://raw.githubusercontent.com/NLCR/komplexni-validator/refs/tags/v2.9/modules/sharedModule/src/main/resources/nkp/pspValidator/shared/validatorConfig/xsd/validationProtocol.xsd">
+<protocol xmlns="http://www.nkp.cz/pspValidator/3.0/validationProtocol" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" type="package" xsi:schemaLocation="http://www.nkp.cz/pspValidator/3.0/validationProtocol https://raw.githubusercontent.com/NLCR/komplexni-validator/master/modules/sharedModule/src/main/resources/nkp/pspValidator/shared/validatorConfig/xsd/validationProtocol.xsd">
     <validator buildDate="[BUILD_DATE]" version="[VERZE]"/>
     <fdmf type="Monografie" version="1.3.2"/>
     <package>

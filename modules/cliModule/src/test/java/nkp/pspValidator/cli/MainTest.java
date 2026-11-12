@@ -28,7 +28,7 @@ public class MainTest {
     private static final String RES = "../sharedModule/src/test/resources/";
     private static final String CONFIG = "../sharedModule/src/main/resources/nkp/pspValidator/shared/validatorConfig";
     private static final String CLIPPING_02 = RES + "fund_unit_0.2/valid_clipping/nk-00027x";
-    private static final String NS_PROTOCOL_29 = "http://www.nkp.cz/pspValidator/2.9/validationProtocol";
+    private static final String NS_PROTOCOL = "http://www.nkp.cz/pspValidator/3.0/validationProtocol";
 
     @Rule
     public TemporaryFolder tmp = new TemporaryFolder();
@@ -163,7 +163,7 @@ public class MainTest {
         DocumentBuilderFactory f = DocumentBuilderFactory.newInstance();
         f.setNamespaceAware(true);
         Document doc = f.newDocumentBuilder().parse(xml);
-        assertEquals(NS_PROTOCOL_29, doc.getDocumentElement().getNamespaceURI());
+        assertEquals(NS_PROTOCOL, doc.getDocumentElement().getNamespaceURI());
     }
 
     @Test

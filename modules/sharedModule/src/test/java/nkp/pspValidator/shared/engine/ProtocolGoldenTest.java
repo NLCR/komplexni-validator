@@ -38,7 +38,7 @@ import static org.junit.Assert.*;
  * validatoru a datum buildu (paticka textu, element validator) se nahradi [VERZE] a [BUILD_DATE]; v XML casy
  * startTime/finishTime ([CAS]) a delky durationMs ([MS]); ve Windows oddelovace cest za zastupnym retezcem na /; konce radku na \n.
  * Zastupne retezce jsou v hranatych zavorkach, aby golden XML zustalo dobre formovane. Namespace a schemaLocation XML protokolu obsahuji verzi
- * (2.9) a normalizovane nejsou: zmena verze protokolu je zamerna a golden soubory se pri ni pregeneruji.
+ * (3.0) a normalizovane nejsou: zmena verze protokolu je zamerna a golden soubory se pri ni pregeneruji.
  * <p>
  * Pregenerovani golden souboru (po zamerne zmene hlasek, pravidel nebo formatu protokolu):
  * <pre>
@@ -51,7 +51,7 @@ import static org.junit.Assert.*;
 @RunWith(Parameterized.class)
 public class ProtocolGoldenTest {
 
-    static final String PROTOCOL_NS = "http://www.nkp.cz/pspValidator/2.9/validationProtocol";
+    static final String PROTOCOL_NS = "http://www.nkp.cz/pspValidator/3.0/validationProtocol";
     static final File GOLDEN_DIR = new File("src/test/resources/golden");
     static final File PROTOCOL_XSD = new File(FdmfTestSupport.VALIDATOR_CONFIG_DIR, "xsd/validationProtocol.xsd");
 
