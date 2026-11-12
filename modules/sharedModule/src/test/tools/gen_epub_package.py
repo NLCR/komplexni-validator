@@ -4,7 +4,9 @@ Generator syntetickeho SIP balicku elektronicke publikace (krok P5 plánu portu 
 
   --type emo  e-monografie (DMF Elektronické publikace – monografie 2.3, 2.4, 3.0, 3.1)
   --type epe  e-periodika (DMF Elektronické publikace – periodika 2.3, 2.4, 2.5, 2.6)
-  --type sep  skládaná e-periodika (DMF 1.3, varianta A: original/, amdsec/, nepovinná originaldata/)
+  --type sep  skládaná e-periodika (DMF 1.3): varianta A (doskeny nejsou obrazy, kap. 3.1: original/, amdsec/,
+              nepovinná originaldata/) nebo --variant b (doskeny zpracované jako obrazy, kap. 3.2: navíc mastercopy/,
+              usercopy/, alto/, txt/ a amd_mets pro každou stranu doskenu)
 
 Balicek je stavěn z tabulek DMF (kap. 3 struktura, 4 názvová konvence, 5 metadata), šablony MODS a DC vycházejí
 z oficiálních vzorků NK (e-monografie 3.0 a e-periodika 2.5, EPUB) zkrácených na minimum a z profilů v
@@ -18,7 +20,14 @@ Nazev cilového adresáre je PSP-ID:
 Pouziti:
     python3 gen_epub_package.py <cilovy_adresar_balicku> --type emo|epe|sep --version X.Y
         [--format pdf|epub] [--standard aacr|rda] [--chapters N] [--articles N] [--with-supplement]
-        [--with-originaldata] [--mutation NAME]... [--pdf SOUBOR] [--epub SOUBOR] [--od SOUBOR]
+        [--with-originaldata] [--variant a|b] [--scanned N] [--alto-version 2.0|4.4]
+        [--mutation NAME]... [--pdf SOUBOR] [--epub SOUBOR] [--od SOUBOR]
+
+Varianta B (jen --type sep): prvních --scanned článků (default 1) jsou doskeny zpracované jako obrazy, každý jedna
+strana: mc_*.jp2 a uc_*.jp2 (skutečné JPEG 2000 z src/test/tools/jp2), alto_*.xml (ALTO 4.4 nebo 2.0), txt_*.txt
+a vlastní amd_mets s PREMIS (PS, MC, ALTO), MIX (PS, MC), událostmi a agenty; ostatní články mají archivní kopii
+v original/. Pořadové číslo v názvech je pořadí článku v čísle a je společné pro všechny soubory článku (oc, mc, uc,
+alto, txt, amd_mets), protože KV páruje amd_mets se soubory stránky podle čísla (nejasnost N10).
 
 Archivní kopie je skutečný soubor (--pdf, --epub; default malé soubory ze src/test/resources/epublikace), velikosti
 a MD5 v METS, PREMIS, MD5 a INFO odpovídají obsahu. Mutace: --mutation NAME, seznam přes --list-mutations; každá je
@@ -37,6 +46,8 @@ RES = os.path.normpath(os.path.join(HERE, "..", "resources", "epublikace"))
 DEFAULT_PDF = os.path.join(RES, "dummy_PDFA-1B.pdf")
 DEFAULT_EPUB = os.path.join(RES, "synteticky_epub3.epub")
 DEFAULT_OD = os.path.join(RES, "synteticky_bez_pdfa.pdf")
+JP2_MC = os.path.join(HERE, "jp2", "mc.jp2")
+JP2_UC = os.path.join(HERE, "jp2", "uc.jp2")
 
 CREATED = "2026-11-12T10:00:00"
 CREATED_DAY = "2026-11-12"
@@ -108,6 +119,18 @@ MUTATIONS = {
     "missing-original-file": "archivní kopie uvedená v md5, itemlistu a METS chybí na disku -> CHECKSUM_FILE_ALL_PATHS_MATCH_FILES, "
                              "INFO_ITEMLIST_REFERENCES_ALL_FILES",
     "itemtotal-mismatch": "itemtotal v INFO o 1 vyšší -> INFO_ITEMTOTAL_MATCHES_ITEMS_COUNT",
+    "b-missing-alto-dir": "(sep, varianta B) bez složky alto: žádné soubory ALTO, fileGrp ALTOGRP, odkazy fptr ani PREMIS "
+                          "ALTO (konzistentně vynecháno) -> PRIMARY-METS_PHYSICAL_MAP_COMPLETE_PAGES_* (ERROR, stránka "
+                          "neúplná), SECONDARY-METS_FILESEC_ALL_FILEGROUPS_PRESENT, PREMIS_OBJECT_FOR_ALTO_OCR_MATCHES_PROFILE, "
+                          "NUMBER_OF_FILES_IN_IMAGE_DIRS_MATCH (WARNING); DMF 1.3 kap. 3.2: ve variantě B je alto povinná",
+    "b-mc-uc-count-mismatch": "(sep, varianta B, --scanned >= 2) poslední strana doskenu bez uživatelské kopie (soubor, fileGrp, "
+                              "fptr) -> NUMBER_OF_FILES_IN_IMAGE_DIRS_MATCH (WARNING), PRIMARY-METS_PHYSICAL_MAP_COMPLETE_PAGES_* "
+                              "(ERROR), SECONDARY-METS_FILESEC_ALL_FILEGROUPS_PRESENT",
+    "b-alto-mixed-versions": "(sep, varianta B, --scanned >= 2) první strana ALTO 2.0, ostatní podle --alto-version -> "
+                             "OCR-ALTO_FILES_SAME_VERSION (WARNING), balík zůstává validní",
+    "b-page-amdmets-missing": "(sep, varianta B) první strana doskenu bez vedlejšího METS (soubor, TECHMDGRP, fptr) -> "
+                              "NUMBER_OF_SECONDARY-METS_FILES_MATCHES_ORIGINAL-COPY_AND_MASTER-COPY_FILES (WARNING), "
+                              "PRIMARY-METS_PHYSICAL_MAP_COMPLETE_PAGES_* (ERROR); DMF 1.3 kap. 3.2: amd_mets pro každou stranu",
     "oc-filegrp-ebgrp": "(sep) fileGrp archivních kopií OC_EBGRP (jako e-periodika) místo OC_EBSFL -> "
                         "PRIMARY_METS_HEADER_MATCHES_PROFILE jen WARNING (DMF 1.3 kap. 5.6: úvod uvádí OC_EBGRP, "
                         "kap. 5.6.1 OC_EBSFL; nejasnost N2, profil OC_EBGRP úmyslně připouští), balík zůstává validní",
@@ -567,6 +590,218 @@ def perio_article(ctx, n: int) -> str:
             dmdsec(f"DCMD_ART_{n:04d}", "DC", ctx.mods, dc))
 
 
+def perio_article_scanned(ctx, n: int) -> str:
+    """článek zpracovaný jako dosken (DMF 1.3 kap. 5.4.4, s. 48–50): genre "article", form "print", note "dosken",
+    bez digitalOrigin; v DC dc:format "print" a dc:description "dosken" (mapování z tabulky)"""
+    uid = part_uuid(6, n)
+    mods = mods_open(f"MODS_ART_{n:04d}", ctx) + f"""          <mods:titleInfo>
+            <mods:title>Obálka (dosken {n})</mods:title>
+          </mods:titleInfo>
+          <mods:genre type="cover">article</mods:genre>
+          <mods:language>
+            <mods:languageTerm authority="iso639-2b" type="code">cze</mods:languageTerm>
+          </mods:language>
+          <mods:physicalDescription>
+            <mods:form>print</mods:form>
+            <mods:note>dosken</mods:note>
+          </mods:physicalDescription>
+          <mods:identifier type="uuid">{uid}</mods:identifier>
+{record_info(ctx, with_language=False, authority=src_authority(ctx))}        </mods:mods>
+"""
+    dc = f"""        <oai_dc:dc>
+          <dc:title>Obálka (dosken {n})</dc:title>
+          <dc:type>model:internalpart</dc:type>
+          <dc:language>cze</dc:language>
+          <dc:format>print</dc:format>
+          <dc:description>dosken</dc:description>
+          <dc:identifier>uuid:{uid}</dc:identifier>
+        </oai_dc:dc>
+"""
+    return (dmdsec(f"MODSMD_ART_{n:04d}", "MODS", ctx.mods, mods) +
+            dmdsec(f"DCMD_ART_{n:04d}", "DC", ctx.mods, dc))
+
+
+# ---- varianta B: OCR a MIX (šablony podle gen_fund_unit_package.py)
+
+ALTO_NS = {
+    # předpis OCR (ALTO XML a TXT OCR) 1.0 připouští ALTO 2.0 a novější, DMF 1.3 kap. 1.3 uvádí 2.0 a 4.4
+    "2.0": ("http://www.loc.gov/standards/alto/ns-v2#", "http://www.loc.gov/standards/alto/alto-v2.0.xsd"),
+    "4.4": ("http://www.loc.gov/standards/alto/ns-v4#", "http://www.loc.gov/standards/alto/v4/alto-4-4.xsd"),
+}
+
+
+def alto_xml(psp: str, n: int, version: str) -> str:
+    ns, loc = ALTO_NS[version]
+    return f"""<?xml version="1.0" encoding="UTF-8"?>
+<alto xmlns="{ns}" xmlns:xlink="http://www.w3.org/1999/xlink"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:schemaLocation="{ns} {loc}">
+  <Description>
+    <MeasurementUnit>pixel</MeasurementUnit>
+    <sourceImageInformation>
+      <fileName>mc_{psp}_{n:04d}.jp2</fileName>
+    </sourceImageInformation>
+    <OCRProcessing ID="OCR_1">
+      <ocrProcessingStep>
+        <processingDateTime>{CREATED}</processingDateTime>
+        <processingSoftware>
+          <softwareCreator>ABBYY</softwareCreator>
+          <softwareName>ABBYY FineReader Server</softwareName>
+          <softwareVersion>14.0</softwareVersion>
+        </processingSoftware>
+      </ocrProcessingStep>
+    </OCRProcessing>
+  </Description>
+  <Layout>
+    <Page ID="PAGE_{n:04d}" PHYSICAL_IMG_NR="{n}" HEIGHT="2806" WIDTH="1685">
+      <PrintSpace HEIGHT="2600" WIDTH="1500" HPOS="90" VPOS="100">
+        <TextBlock ID="BLOCK_{n:04d}_1" HEIGHT="60" WIDTH="800" HPOS="100" VPOS="120">
+          <TextLine ID="LINE_{n:04d}_1" HEIGHT="40" WIDTH="800" HPOS="100" VPOS="130">
+            <String ID="STR_{n:04d}_1" CONTENT="Obálka" HEIGHT="40" WIDTH="300" HPOS="100" VPOS="130"/>
+            <SP WIDTH="20" HPOS="400" VPOS="130"/>
+            <String ID="STR_{n:04d}_2" CONTENT="čísla" HEIGHT="40" WIDTH="200" HPOS="420" VPOS="130"/>
+          </TextLine>
+        </TextBlock>
+      </PrintSpace>
+    </Page>
+  </Layout>
+</alto>
+"""
+
+
+def txt_content(n: int) -> str:
+    return f"Obálka čísla, dosken {n}\nTestovací OCR text s diakritikou: příliš žluťoučký kůň.\n"
+
+
+MIX_ASSESSMENT = """              <mix:ImageAssessmentMetadata>
+                <mix:SpatialMetrics>
+                  <mix:samplingFrequencyUnit>in.</mix:samplingFrequencyUnit>
+                  <mix:xSamplingFrequency>
+                    <mix:numerator>300</mix:numerator>
+                    <mix:denominator>1</mix:denominator>
+                  </mix:xSamplingFrequency>
+                  <mix:ySamplingFrequency>
+                    <mix:numerator>300</mix:numerator>
+                    <mix:denominator>1</mix:denominator>
+                  </mix:ySamplingFrequency>
+                </mix:SpatialMetrics>
+                <mix:ImageColorEncoding>
+                  <mix:BitsPerSample>
+                    <mix:bitsPerSampleValue>8</mix:bitsPerSampleValue>
+                    <mix:bitsPerSampleValue>8</mix:bitsPerSampleValue>
+                    <mix:bitsPerSampleValue>8</mix:bitsPerSampleValue>
+                    <mix:bitsPerSampleUnit>integer</mix:bitsPerSampleUnit>
+                  </mix:BitsPerSample>
+                  <mix:samplesPerPixel>3</mix:samplesPerPixel>
+                </mix:ImageColorEncoding>
+              </mix:ImageAssessmentMetadata>
+"""
+
+
+def mix_wrap(md_id: str, body: str) -> str:
+    return f"""    <mets:techMD ID="{md_id}">
+      <mets:mdWrap MDTYPE="NISOIMG" MIMETYPE="text/xml">
+        <mets:xmlData>
+          <mix:mix xmlns:mix="http://www.loc.gov/mix/v20">
+{body}          </mix:mix>
+        </mets:xmlData>
+      </mets:mdWrap>
+    </mets:techMD>
+"""
+
+
+def mix_basic(ident, fmt_name, fmt_ver, byte_order, compression, special=""):
+    return f"""            <mix:BasicDigitalObjectInformation>
+              <mix:ObjectIdentifier>
+                <mix:objectIdentifierType>ObjectID</mix:objectIdentifierType>
+                <mix:objectIdentifierValue>{ident}</mix:objectIdentifierValue>
+              </mix:ObjectIdentifier>
+              <mix:FormatDesignation>
+                <mix:formatName>{fmt_name}</mix:formatName>
+                <mix:formatVersion>{fmt_ver}</mix:formatVersion>
+              </mix:FormatDesignation>
+              <mix:byteOrder>{byte_order}</mix:byteOrder>
+              <mix:Compression>
+                <mix:compressionScheme>{compression}</mix:compressionScheme>
+              </mix:Compression>
+            </mix:BasicDigitalObjectInformation>
+            <mix:BasicImageInformation>
+              <mix:BasicImageCharacteristics>
+                <mix:imageWidth>1685</mix:imageWidth>
+                <mix:imageHeight>2806</mix:imageHeight>
+                <mix:PhotometricInterpretation>
+                  <mix:colorSpace>RGB</mix:colorSpace>
+                </mix:PhotometricInterpretation>
+              </mix:BasicImageCharacteristics>
+{special}            </mix:BasicImageInformation>
+"""
+
+
+def mix_ps_xml(md_id: str, ident: str) -> str:
+    """MIX primárního skenu (DMF 1.3 kap. 5.5.2, sloupec PS): s ImageCaptureMetadata"""
+    capture = f"""            <mix:ImageCaptureMetadata>
+              <mix:GeneralCaptureInformation>
+                <mix:dateTimeCreated>{CREATED}</mix:dateTimeCreated>
+                <mix:imageProducer>Národní knihovna ČR</mix:imageProducer>
+                <mix:captureDevice>reflection print scanner</mix:captureDevice>
+              </mix:GeneralCaptureInformation>
+              <mix:ScannerCapture>
+                <mix:scannerManufacturer>Zeutschel</mix:scannerManufacturer>
+                <mix:ScannerModel>
+                  <mix:scannerModelName>OS</mix:scannerModelName>
+                  <mix:scannerModelNumber>15000</mix:scannerModelNumber>
+                  <mix:scannerModelSerialNo>TEST-0001</mix:scannerModelSerialNo>
+                </mix:ScannerModel>
+                <mix:MaximumOpticalResolution>
+                  <mix:xOpticalResolution>600</mix:xOpticalResolution>
+                  <mix:yOpticalResolution>600</mix:yOpticalResolution>
+                  <mix:opticalResolutionUnit>in.</mix:opticalResolutionUnit>
+                </mix:MaximumOpticalResolution>
+                <mix:scannerSensor>ColorTriLinear</mix:scannerSensor>
+                <mix:ScanningSystemSoftware>
+                  <mix:scanningSoftwareName>Omniscan</mix:scanningSoftwareName>
+                  <mix:scanningSoftwareVersionNo>12.0</mix:scanningSoftwareVersionNo>
+                </mix:ScanningSystemSoftware>
+              </mix:ScannerCapture>
+              <mix:orientation>normal*</mix:orientation>
+            </mix:ImageCaptureMetadata>
+"""
+    return mix_wrap(md_id, mix_basic(ident, "image/tiff", "6.0", "little endian", "Uncompressed") + capture
+                    + MIX_ASSESSMENT)
+
+
+def mix_mc_xml(md_id: str, ident: str, source: str) -> str:
+    """MIX archivní kopie (DMF 1.3 kap. 5.5.2, sloupec MC): JPEG2000 v SpecialFormatCharacteristics, ChangeHistory"""
+    special = """              <mix:SpecialFormatCharacteristics>
+                <mix:JPEG2000>
+                  <mix:CodecCompliance>
+                    <mix:codec>Kakadu</mix:codec>
+                    <mix:codecVersion>8.5</mix:codecVersion>
+                    <mix:codestreamProfile>P1</mix:codestreamProfile>
+                    <mix:complianceClass>C1</mix:complianceClass>
+                  </mix:CodecCompliance>
+                  <mix:EncodingOptions>
+                    <mix:Tiles>
+                      <mix:tileWidth>4096</mix:tileWidth>
+                      <mix:tileHeight>4096</mix:tileHeight>
+                    </mix:Tiles>
+                    <mix:qualityLayers>1</mix:qualityLayers>
+                    <mix:resolutionLevels>5</mix:resolutionLevels>
+                  </mix:EncodingOptions>
+                </mix:JPEG2000>
+              </mix:SpecialFormatCharacteristics>
+"""
+    history = f"""            <mix:ChangeHistory>
+              <mix:ImageProcessing>
+                <mix:dateTimeProcessed>{CREATED}</mix:dateTimeProcessed>
+                <mix:sourceData>{source}</mix:sourceData>
+              </mix:ImageProcessing>
+            </mix:ChangeHistory>
+"""
+    return mix_wrap(md_id, mix_basic(ident, "image/jp2", "1.0", "big endian", "JPEG 2000 Lossless", special)
+                    + MIX_ASSESSMENT + history)
+
+
 # ------------------------------------------------------------------------------------------------ PREMIS, hlavička
 
 def mets_hdr(indent="  ") -> str:
@@ -586,6 +821,10 @@ FORMAT_INFO = {
     "pdf": ("application/pdf", "application/pdf", "1b", "fmt/95", "GPL Ghostscript"),
     "epub": ("application/epub+zip", "application/epub+zip", "3.0", "fmt/483", "calibre"),
     "od": ("application/pdf", "application/pdf", "1.4", "fmt/18", "Microsoft Word"),
+    # varianta B: primární sken (není v balíčku), archivní kopie obrazu, ALTO
+    "tif": ("image/tiff", "image/tiff", "6.0", "fmt/353", "Omniscan"),
+    "jp2": ("image/jp2", "image/jp2", "1.0", "x-fmt/392", "Kakadu kdu_compress"),
+    "alto": ("text/xml", "text/xml", "1.0", "fmt/101", "ABBYY FineReader Server"),
 }
 
 
@@ -748,7 +987,8 @@ class Ctx:
 
 
 def generate(target, ptype, version, fmt="pdf", standard="rda", chapters=1, articles=2, with_supplement=False,
-             with_originaldata=False, mutations=(), pdf=DEFAULT_PDF, epub=DEFAULT_EPUB, od=DEFAULT_OD):
+             with_originaldata=False, mutations=(), pdf=DEFAULT_PDF, epub=DEFAULT_EPUB, od=DEFAULT_OD,
+             variant="a", scanned=1, alto_version="4.4"):
     mutations = set(mutations)
     unknown = mutations - set(MUTATIONS)
     if unknown:
@@ -766,6 +1006,16 @@ def generate(target, ptype, version, fmt="pdf", standard="rda", chapters=1, arti
         if bad and not cond:
             sys.exit("mutace " + ", ".join(sorted(bad)) + " " + msg)
     need(ptype == "sep", {"missing-amdsec", "oc-filegrp-ebgrp"}, "mají smysl jen pro --type sep")
+    if variant == "b" and ptype != "sep":
+        sys.exit("--variant b (doskeny zpracované jako obrazy) má smysl jen pro --type sep")
+    if variant != "b":
+        scanned = 0
+    elif not 1 <= scanned < articles:
+        sys.exit("--scanned musí být aspoň 1 a menší než --articles (složka original je povinná i ve variantě B)")
+    b_mut = {m for m in MUTATIONS if m.startswith("b-")}
+    need(variant == "b", b_mut, "mají smysl jen pro --type sep --variant b")
+    need(scanned >= 2, {"b-mc-uc-count-mismatch", "b-alto-mixed-versions"}, "potřebují --scanned 2 a víc")
+    need(not ("missing-amdsec" in mutations and variant == "b"), {"missing-amdsec"}, "je jen pro variantu A")
     need(with_originaldata, {"originaldata-not-in-md5", "originaldata-bad-name"}, "potřebují --with-originaldata")
     need(ptype in ("emo", "epe"), {"supplement-dmdsec", "pdf-and-epub-both"}, "mají smysl jen pro --type emo a epe")
     need(not with_supplement, {"supplement-dmdsec"}, "nic nezmění, příloha už je dána --with-supplement")
@@ -779,6 +1029,7 @@ def generate(target, ptype, version, fmt="pdf", standard="rda", chapters=1, arti
     ctx = Ctx()
     ctx.type, ctx.version, ctx.mods, ctx.standard, ctx.mutations = ptype, version, mods_version, standard, mutations
     ctx.target = target
+    ctx.variant, ctx.scanned = variant, scanned
     if ptype == "emo":
         if not URNNBN_PSP_RE.match(psp):
             sys.exit(f"pro e-monografii musí být název balíčku druhá část URN:NBN (např. aba007-p5m301), ne '{psp}'")
@@ -813,11 +1064,30 @@ def generate(target, ptype, version, fmt="pdf", standard="rda", chapters=1, arti
 
     # ---- archivní kopie
     oc_files = []  # (rel, data, ext)
+    pages = []  # varianta B: strany doskenů, {"n": pořadí článku, "mc"/"uc"/"alto"/"txt": (rel, data) nebo None}
     if ptype == "sep":
-        for n in range(1, articles + 1):
+        for n in range(scanned + 1, articles + 1):
             ext = fmt
             rel = f"original/oc_{psp}_{n:04d}.{ext}"
             oc_files.append((rel, put(rel, read(pdf if ext == "pdf" else epub)), ext))
+        for n in range(1, scanned + 1):
+            pg = {"n": n}
+            pg["mc"] = (f"mastercopy/mc_{psp}_{n:04d}.jp2", put(f"mastercopy/mc_{psp}_{n:04d}.jp2", read(JP2_MC)))
+            if "b-mc-uc-count-mismatch" in mutations and n == scanned:
+                pg["uc"] = None
+            else:
+                pg["uc"] = (f"usercopy/uc_{psp}_{n:04d}.jp2", put(f"usercopy/uc_{psp}_{n:04d}.jp2", read(JP2_UC)))
+            if "b-missing-alto-dir" in mutations:
+                pg["alto"] = None
+            else:
+                av = alto_version
+                if "b-alto-mixed-versions" in mutations and n == 1:
+                    av = "2.0" if alto_version != "2.0" else "4.4"
+                rel = f"alto/alto_{psp}_{n:04d}.xml"
+                pg["alto"] = (rel, put(rel, alto_xml(psp, n, av)))
+            rel = f"txt/txt_{psp}_{n:04d}.txt"
+            pg["txt"] = (rel, put(rel, txt_content(n)))
+            pages.append(pg)
     else:
         exts = ["pdf", "epub"] if "pdf-and-epub-both" in mutations else [fmt]
         for i, ext in enumerate(exts, 1):
@@ -826,6 +1096,7 @@ def generate(target, ptype, version, fmt="pdf", standard="rda", chapters=1, arti
             oc_files.append((rel, put(rel, read(pdf if ext == "pdf" else epub)), ext))
     if "extra-file-in-original" in mutations:
         put("original/poznamka.txt", "poznámka, která do složky original nepatří\n")
+    ctx.pages = pages
 
     # ---- originaldata (DMF 3.1/2.6 kap. 3.1.3, 1.3 kap. 3.1)
     od_files = []
@@ -1005,28 +1276,83 @@ def build_epe_mets(ctx, psp, oc_files, od_files, articles, with_suppl):
 """
 
 
+def page_amd_mets(ctx, psp, pg) -> str:
+    """vedlejší METS stránky doskenu (varianta B, DMF 1.3 kap. 3.2, 5.5, 5.6.3, 5.7.2.1): PREMIS Object pro primární
+    sken (deleted), MC a ALTO (logical preservation), MIX pro PS a MC, události a agenti; fileSec se skupinami
+    MC_IMGGRP, UC_IMGGRP, ALTOGRP a TXTGRP (praxe Periodik, N9) a fyzická mapa s jedním divem EPERIODICAL_ARTICLE"""
+    n = pg["n"]
+    ps_id, mc_id, alto_id = f"ps_{n:04d}", f"mc_{n:04d}", f"alto_{n:04d}"
+    ps_data = f"primarni sken {psp} {n}".encode()
+    objs = premis_object("OBJ_001", ps_id, "deleted", ps_data, "tif", f"sken_{n:04d}.tif", events=["event_001"], ext=False)
+    objs += premis_object("OBJ_002", mc_id, "logical preservation", pg["mc"][1], "jp2", os.path.basename(pg["mc"][0]),
+                          rel=ps_id, events=["event_002"], ext=False)
+    evs = premis_event("EVT_001", "event_001", "capture", "agent_001", [ps_id])
+    evs += premis_event("EVT_002", "event_002", "migration", "agent_002", [ps_id, mc_id])
+    ags = premis_agent("AGENT_001", "agent_001", "Zeutschel OS 15000") + premis_agent("AGENT_002", "agent_002", "Kakadu 8.5")
+    if pg["alto"]:
+        objs += premis_object("OBJ_003", alto_id, "logical preservation", pg["alto"][1], "alto",
+                              os.path.basename(pg["alto"][0]), rel=mc_id, events=["event_003"], ext=False)
+        evs += premis_event("EVT_003", "event_003", "capture", "agent_003", [mc_id, alto_id])
+        ags += premis_agent("AGENT_003", "agent_003", "ABBYY FineReader Server 14")
+    mixes = mix_ps_xml("MIX_001", ps_id) + mix_mc_xml("MIX_002", mc_id, f"sken_{n:04d}.tif")
+    groups = [("MC_IMGGRP", "Images", "mc", "image/jp2", "OBJ_002 MIX_002"), ("UC_IMGGRP", "Images", "uc", "image/jp2", None),
+              ("ALTOGRP", "Layout", "alto", "text/xml", "OBJ_003"), ("TXTGRP", "Text", "txt", "text/plain", None)]
+    fs, fptrs = "", ""
+    for gid, use, key, mime, admid in groups:
+        if not pg[key]:
+            continue
+        fid = f"{key}_{psp}_{n:04d}"
+        fs += (f'    <mets:fileGrp ID="{gid}" USE="{use}">\n'
+               + file_entry(fid, "/" + pg[key][0], pg[key][1], mime, 1, admid=admid) + "    </mets:fileGrp>\n")
+        fptrs += f'      <mets:fptr FILEID="{fid}"/>\n'
+    return f"""<?xml version="1.0" encoding="UTF-8"?>
+<mets:mets {METS_NS} LABEL="{PERIO_TITLE}, 9, 1" TYPE="{METS_TYPE['sep']}">
+{mets_hdr()}  <mets:amdSec ID="AMD_METS_{n:04d}">
+{objs}{mixes}{evs}{ags}  </mets:amdSec>
+  <mets:fileSec>
+{fs}  </mets:fileSec>
+  <mets:structMap TYPE="PHYSICAL" LABEL="Physical_Structure">
+    <mets:div ID="DIV_P_ART_{n:04d}" TYPE="EPERIODICAL_ARTICLE" ORDER="{n}">
+{fptrs}    </mets:div>
+  </mets:structMap>
+</mets:mets>
+"""
+
+
 def build_sep_mets(ctx, psp, oc_files, od_files, put):
-    """Skládané e-periodikum 1.3, varianta A: každý článek má archivní kopii a vedlejší METS v amdsec (kap. 5.3)"""
+    """Skládané e-periodikum 1.3. Varianta A: každý článek má archivní kopii a vedlejší METS v amdsec (kap. 3.1, 5.5).
+    Varianta B: prvních ctx.scanned článků jsou doskeny zpracované jako obrazy (kap. 3.2), číslo článku je společné
+    pro všechny jeho soubory."""
     with_amdsec = "missing-amdsec" not in ctx.mutations
     od_data = open_od(ctx, od_files)
-    amds = []
+    pages = ctx.pages
+    first_oc = ctx.scanned + 1
+    # články v pořadí: ("scan", n, strana) nebo ("oc", n, (rel, data, ext))
+    arts = [("scan", pg["n"], pg) for pg in pages] + [("oc", first_oc + i, oc) for i, oc in enumerate(oc_files)]
+    amds = {}  # n -> (rel, data)
     if with_amdsec:
-        for n, (rel, data, ext) in enumerate(oc_files, 1):
-            oc_name = os.path.basename(rel)
-            if n == 1 and od_data is not None:
-                objs = premis_object("OBJ_001", "od_0001", "bit-level", od_data, "od", os.path.basename(od_files[0]),
-                                     events=["event_001"])
-                objs += premis_object("OBJ_002", "oc_0001", "logical preservation", data, ext, oc_name, rel="od_0001",
-                                      events=["event_001"])
-                evs = premis_event("EVT_001", "event_001", "migration", "agent_001", ["od_0001", "oc_0001"])
-                admid = "OBJ_002"
+        for kind, n, item in arts:
+            if kind == "scan":
+                if "b-page-amdmets-missing" in ctx.mutations and n == 1:
+                    continue
+                amd = page_amd_mets(ctx, psp, item)
             else:
-                objs = premis_object("OBJ_001", f"oc_{n:04d}", "logical preservation", data, ext, oc_name,
-                                     events=["event_001"])
-                evs = premis_event("EVT_001", "event_001", "E-born creation", "agent_001", [f"oc_{n:04d}"])
-                admid = "OBJ_001"
-            ag = premis_agent("AGENT_001", "agent_001", "GPL Ghostscript 10.0")
-            amd = f"""<?xml version="1.0" encoding="UTF-8"?>
+                rel, data, ext = item
+                oc_name = os.path.basename(rel)
+                if n == first_oc and od_data is not None:
+                    objs = premis_object("OBJ_001", "od_0001", "bit-level", od_data, "od", os.path.basename(od_files[0]),
+                                         events=["event_001"])
+                    objs += premis_object("OBJ_002", f"oc_{n:04d}", "logical preservation", data, ext, oc_name,
+                                          rel="od_0001", events=["event_001"])
+                    evs = premis_event("EVT_001", "event_001", "migration", "agent_001", ["od_0001", f"oc_{n:04d}"])
+                    admid = "OBJ_002"
+                else:
+                    objs = premis_object("OBJ_001", f"oc_{n:04d}", "logical preservation", data, ext, oc_name,
+                                         events=["event_001"])
+                    evs = premis_event("EVT_001", "event_001", "E-born creation", "agent_001", [f"oc_{n:04d}"])
+                    admid = "OBJ_001"
+                ag = premis_agent("AGENT_001", "agent_001", "GPL Ghostscript 10.0")
+                amd = f"""<?xml version="1.0" encoding="UTF-8"?>
 <mets:mets {METS_NS} LABEL="{PERIO_TITLE}, 9, 1" TYPE="{METS_TYPE['sep']}">
 {mets_hdr()}  <mets:amdSec ID="AMD_METS_{n:04d}">
 {objs}{evs}{ag}  </mets:amdSec>
@@ -1042,37 +1368,62 @@ def build_sep_mets(ctx, psp, oc_files, od_files, put):
 </mets:mets>
 """
             amd_rel = f"amdsec/amd_mets_{psp}_{n:04d}.xml"
-            amds.append((amd_rel, put(amd_rel, amd)))
+            amds[n] = (amd_rel, put(amd_rel, amd))
 
-    articles = len(oc_files)
+    articles = len(arts)
     dmd = (perio_title(ctx) + perio_volume(ctx) + perio_issue(ctx)
-           + "".join(perio_article(ctx, n) for n in range(1, articles + 1)))
+           + "".join(perio_article_scanned(ctx, n) if kind == "scan" else perio_article(ctx, n) for kind, n, _ in arts))
     grp = "OC_EBGRP" if "oc-filegrp-ebgrp" in ctx.mutations else "OC_EBSFL"
     fs = f'  <mets:fileSec>\n    <mets:fileGrp ID="{grp}" USE="master">\n'
-    fs += "".join(file_entry(f"oc_{psp}_{n:04d}", "/" + rel, data, FORMAT_INFO[ext][0], n)
-                  for n, (rel, data, ext) in enumerate(oc_files, 1))
+    fs += "".join(file_entry(f"oc_{psp}_{n:04d}", "/" + item[0], item[1], FORMAT_INFO[item[2]][0], i)
+                  for i, (kind, n, item) in enumerate([a for a in arts if a[0] == "oc"], 1))
     fs += "    </mets:fileGrp>\n"
+    # varianta B (kap. 5.6.2, s. 90–91); SEQ jen u MC a UC
+    for gid, use, key, mime, seq in (("MC_IMGGRP", "Images", "mc", "image/jp2", True),
+                                     ("UC_IMGGRP", "Images", "uc", "image/jp2", True),
+                                     ("ALTOGRP", "Layout", "alto", "text/xml", False),
+                                     ("TXTGRP", "Text", "txt", "text/plain", False)):
+        files = [(pg["n"], pg[key]) for pg in pages if pg[key]]
+        if not files:
+            continue
+        fs += f'    <mets:fileGrp ID="{gid}" USE="{use}">\n'
+        for i, (n, (rel, data)) in enumerate(files, 1):
+            entry = file_entry(f"{key}_{psp}_{n:04d}", "/" + rel, data, mime, i)
+            fs += entry if seq else entry.replace(f' SEQ="{i}"', "")
+        fs += "    </mets:fileGrp>\n"
     if amds:
         fs += '    <mets:fileGrp ID="TECHMDGRP" USE="Technical Metadata">\n'
-        fs += "".join(file_entry(f"amd_mets_{psp}_{n:04d}", "/" + rel, data, "text/xml", n)
-                      for n, (rel, data) in enumerate(amds, 1))
+        fs += "".join(file_entry(f"amd_mets_{psp}_{n:04d}", "/" + rel, data, "text/xml", i)
+                      for i, (n, (rel, data)) in enumerate(sorted(amds.items()), 1))
         fs += "    </mets:fileGrp>\n"
     fs += "  </mets:fileSec>\n"
-    types = [article_type(ctx, n) for n in range(1, articles + 1)]
-    phys = "".join(f'      <mets:div ID="DIV_P_ART_{n:04d}" TYPE="{types[n - 1]}" LABEL="Článek {n}" ORDER="{n}">\n'
-                   f'        <mets:fptr FILEID="oc_{psp}_{n:04d}"/>\n'
-                   + (f'        <mets:fptr FILEID="amd_mets_{psp}_{n:04d}"/>\n' if amds else "")
-                   + "      </mets:div>\n" for n in range(1, articles + 1))
-    logi = "".join(f"""            <mets:div ID="ART_{n:04d}" TYPE="ARTICLE" DMDID="MODSMD_ART_{n:04d}" LABEL="Článek {n}" ORDER="{n}">
-              <mets:div ID="DOCUMENT_{n:04d}" TYPE="DOCUMENT" LABEL="oc_{psp}_{n:04d}">
-                <mets:div ID="FILE_{n:04d}" TYPE="FILE" LABEL="oc_{psp}_{n:04d}">
-                  <mets:fptr FILEID="oc_{psp}_{n:04d}"/>
+    phys, logi = "", ""
+    for kind, n, item in arts:
+        if kind == "scan":
+            label = f"Obálka (dosken {n})"
+            atype = "cover"
+            fptrs = "".join(f'        <mets:fptr FILEID="{key}_{psp}_{n:04d}"/>\n'
+                            for key in ("mc", "uc", "alto", "txt") if item[key])
+            main_fid = f"mc_{psp}_{n:04d}"
+        else:
+            label = f"Článek {n}"
+            atype = article_type(ctx, n)
+            fptrs = f'        <mets:fptr FILEID="oc_{psp}_{n:04d}"/>\n'
+            main_fid = f"oc_{psp}_{n:04d}"
+        if n in amds:
+            fptrs += f'        <mets:fptr FILEID="amd_mets_{psp}_{n:04d}"/>\n'
+        phys += (f'      <mets:div ID="DIV_P_ART_{n:04d}" TYPE="{atype}" LABEL="{label}" ORDER="{n}">\n'
+                 + fptrs + "      </mets:div>\n")
+        logi += f"""            <mets:div ID="ART_{n:04d}" TYPE="ARTICLE" DMDID="MODSMD_ART_{n:04d}" LABEL="{label}" ORDER="{n}">
+              <mets:div ID="DOCUMENT_{n:04d}" TYPE="DOCUMENT" LABEL="{main_fid}">
+                <mets:div ID="FILE_{n:04d}" TYPE="FILE" LABEL="{main_fid}">
+                  <mets:fptr FILEID="{main_fid}"/>
                 </mets:div>
               </mets:div>
             </mets:div>
-""" for n in range(1, articles + 1))
+"""
     links = "".join(f'    <mets:smLink xlink:from="ART_{n:04d}" xlink:to="DIV_P_ART_{n:04d}"/>\n'
-                    for n in range(1, articles + 1))
+                    for _, n, _ in arts)
     rights_sec = rights(ctx).replace('ID="AMD_RIGHTS_0001"', 'ID="AMD_ISSUE_0001"')
     return f"""<?xml version="1.0" encoding="UTF-8"?>
 <mets:mets {METS_NS} LABEL="{PERIO_TITLE}, 9, 1" TYPE="{METS_TYPE['sep']}">
@@ -1102,9 +1453,13 @@ def main():
     ap.add_argument("--format", choices=("pdf", "epub"), default="pdf", help="formát archivní kopie")
     ap.add_argument("--standard", choices=("aacr", "rda"), default="rda", help="popis podle AACR2 nebo RDA")
     ap.add_argument("--chapters", type=int, default=1, help="(emo) počet kapitol")
-    ap.add_argument("--articles", type=int, default=2, help="(epe, sep) počet článků; u sep i počet archivních kopií")
+    ap.add_argument("--articles", type=int, default=2, help="(epe, sep) počet článků; u sep varianty A i počet archivních kopií, ve variantě B včetně doskenů")
     ap.add_argument("--with-supplement", action="store_true", help="(emo, epe) příloha (dmdSec SUPPL)")
     ap.add_argument("--with-originaldata", action="store_true", help="(emo 3.1, epe 2.6, sep 1.3) složka originaldata")
+    ap.add_argument("--variant", choices=("a", "b"), default="a",
+                    help="(sep) varianta balíčku: a = doskeny nejsou obrazy (kap. 3.1), b = doskeny jako obrazy (kap. 3.2)")
+    ap.add_argument("--scanned", type=int, default=1, help="(sep --variant b) počet článků zpracovaných jako dosken (první články)")
+    ap.add_argument("--alto-version", choices=("2.0", "4.4"), default="4.4", help="(sep --variant b) verze ALTO")
     ap.add_argument("--mutation", action="append", default=[], help="název mutace, viz --list-mutations")
     ap.add_argument("--list-mutations", action="store_true")
     ap.add_argument("--pdf", default=DEFAULT_PDF, help="PDF/A pro archivní kopie (default dummy_PDFA-1B.pdf)")
@@ -1118,7 +1473,7 @@ def main():
     if not a.target or not a.type or not a.version:
         ap.error("chybí cílový adresář, --type nebo --version")
     generate(a.target, a.type, a.version, a.format, a.standard, a.chapters, a.articles, a.with_supplement,
-             a.with_originaldata, a.mutation, a.pdf, a.epub, a.od)
+             a.with_originaldata, a.mutation, a.pdf, a.epub, a.od, a.variant, a.scanned, a.alto_version)
     print("OK:", a.target)
 
 

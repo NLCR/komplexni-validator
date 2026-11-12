@@ -64,7 +64,42 @@ public class EpubSmokeTest {
      */
     @Test
     public void sep13VariantAWithOriginaldataIsValid() throws Exception {
-        assertValid(run("composed_perio_1.3/valid_a_pdf_originaldata/5e0b0003-0000-4000-8000-000000000131", Dmf.Type.COMPERIODICAL, "1.3"));
+        String log = run("composed_perio_1.3/valid_a_pdf_originaldata/5e0b0003-0000-4000-8000-000000000131", Dmf.Type.COMPERIODICAL, "1.3");
+        assertValid(log);
+        // obrazova pravidla varianty B nesmi u varianty A dat ani WARNING
+        assertNoLine(log, "WARNING:", "");
+    }
+
+    /**
+     * Skladane e-periodikum 1.3, varianta B (doskeny zpracovane jako obrazy, DMF 1.3 kap. 3.2): obalka jako dosken
+     * (mastercopy, usercopy, alto 4.4, txt, amd_mets strany s PREMIS a MIX), dva clanky v PDF, originaldata.
+     * Obrazova vetev se kontroluje (pravidla maji neprazdne seznamy), externi nastroje jsou vypnute.
+     */
+    @Test
+    public void sep13VariantBPdfWithOriginaldataIsValid() throws Exception {
+        String log = run("composed_perio_1.3/valid_b_pdf_originaldata/5e0b0003-0000-4000-8000-000000000136", Dmf.Type.COMPERIODICAL, "1.3");
+        assertValid(log);
+        assertNoLine(log, "WARNING:", "");
+    }
+
+    /**
+     * Varianta B se dvema doskeny a ALTO 2.0 (DMF 1.3 kap. 1.3 uvadi ALTO 2.0 a 4.4; XSD alto_2.0), clanek v EPUB.
+     */
+    @Test
+    public void sep13VariantBEpubAlto20IsValid() throws Exception {
+        String log = run("composed_perio_1.3/valid_b_epub_alto20/5e0b0003-0000-4000-8000-000000000137", Dmf.Type.COMPERIODICAL, "1.3");
+        assertValid(log);
+        assertNoLine(log, "WARNING:", "");
+    }
+
+    /**
+     * Varianta B, strany doskenu s ALTO 2.0 a 4.4: predpis OCR michani verzi neresi, jen varovani.
+     */
+    @Test
+    public void sep13VariantBAltoMixedVersionsWarns() throws Exception {
+        String log = run("composed_perio_1.3/b_alto_mixed_versions/5e0b0003-0000-4000-8000-000000000140", Dmf.Type.COMPERIODICAL, "1.3");
+        assertValid(log);
+        assertRuleProblem(log, "OCR-ALTO_FILES_SAME_VERSION", "WARNING:");
     }
 
     // ---- mutace: opravy z portu VEP (P4, P4b, P4c), ktere maji zustat validni
@@ -148,6 +183,44 @@ public class EpubSmokeTest {
         String log = run("composed_perio_1.3/missing_amdsec/5e0b0003-0000-4000-8000-000000000132", Dmf.Type.COMPERIODICAL, "1.3");
         assertRuleProblem(log, "SINGLE_SECONDARY-METS-DIR_FILE_FOUND", "ERROR:", "0 souborů");
         assertRuleProblem(log, "PRIMARY_METS_HEADER_MATCHES_PROFILE", "ERROR:", "mets:fileGrp[@ID='TECHMDGRP']");
+        assertInvalid(log);
+    }
+
+    /**
+     * Varianta B bez slozky alto (soubory, ALTOGRP, fptr i PREMIS ALTO konzistentne vynechane): engine neumi podminku
+     * "existuje-li mastercopy, musi existovat alto", ERROR da neuplna strana doskenu v hlavnim METS a vedlejsi METS strany.
+     */
+    @Test
+    public void sep13VariantBWithoutAltoDirIsInvalid() throws Exception {
+        String log = run("composed_perio_1.3/b_missing_alto_dir/5e0b0003-0000-4000-8000-000000000138", Dmf.Type.COMPERIODICAL, "1.3");
+        assertRuleProblem(log, "PRIMARY-METS_PHYSICAL_MAP_COMPLETE_PAGES_MASTER_COPY", "ERROR:", "mc_5e0b0003-0000-4000-8000-000000000138_0001.jp2");
+        assertRuleProblem(log, "SECONDARY-METS_FILESEC_ALL_FILEGROUPS_PRESENT", "ERROR:", "ALTOGRP");
+        assertRuleProblem(log, "PREMIS_OBJECT_FOR_ALTO_OCR_MATCHES_PROFILE", "ERROR:");
+        assertRuleProblem(log, "NUMBER_OF_FILES_IN_IMAGE_DIRS_MATCH", "WARNING:", "1 a 0");
+        assertInvalid(log);
+    }
+
+    /**
+     * Varianta B, posledni strana doskenu bez uzivatelske kopie: pocty souboru (WARNING) a neuplna strana (ERROR).
+     */
+    @Test
+    public void sep13VariantBMcUcCountMismatchIsInvalid() throws Exception {
+        String log = run("composed_perio_1.3/b_mc_uc_count_mismatch/5e0b0003-0000-4000-8000-000000000139", Dmf.Type.COMPERIODICAL, "1.3");
+        assertRuleProblem(log, "NUMBER_OF_FILES_IN_IMAGE_DIRS_MATCH", "WARNING:", "2 a 1");
+        assertRuleProblem(log, "PRIMARY-METS_PHYSICAL_MAP_COMPLETE_PAGES_MASTER_COPY", "ERROR:", "mc_5e0b0003-0000-4000-8000-000000000139_0002.jp2");
+        assertRuleProblem(log, "SECONDARY-METS_FILESEC_ALL_FILEGROUPS_PRESENT", "ERROR:", "UC_IMGGRP");
+        assertInvalid(log);
+    }
+
+    /**
+     * Varianta B, strana doskenu bez vedlejsiho METS (DMF 1.3 kap. 3.2: amd_mets pro kazdou stranu): pocet amd_mets
+     * (WARNING, N3) a neuplna strana (ERROR).
+     */
+    @Test
+    public void sep13VariantBPageAmdMetsMissingIsInvalid() throws Exception {
+        String log = run("composed_perio_1.3/b_page_amdmets_missing/5e0b0003-0000-4000-8000-000000000141", Dmf.Type.COMPERIODICAL, "1.3");
+        assertRuleProblem(log, "NUMBER_OF_SECONDARY-METS_FILES_MATCHES_ORIGINAL-COPY_AND_MASTER-COPY_FILES", "WARNING:", "1 a 2");
+        assertRuleProblem(log, "PRIMARY-METS_PHYSICAL_MAP_COMPLETE_PAGES_MASTER_COPY", "ERROR:", "mc_5e0b0003-0000-4000-8000-000000000141_0001.jp2");
         assertInvalid(log);
     }
 

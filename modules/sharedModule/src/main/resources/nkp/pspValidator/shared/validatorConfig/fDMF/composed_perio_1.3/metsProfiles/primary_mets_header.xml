@@ -505,7 +505,7 @@
             USE="master" a skupina vedlejších METS ID="TECHMDGRP" USE="Technical Metadata". Úvod kap. 5.6 uvádí pro
             nedělené periodikum ID="OC_EBGRP"; u skládaného periodika je to zřejmě pozůstatek (nejasnost N2, dotaz NK),
             proto se OC_EBGRP přijme s varováním (recommendedContent). Skupiny varianty B (MC_IMGGRP, UC_IMGGRP,
-            ALTOGRP, TXTGRP, kap. 5.6.2) zatím profil nezná (krok P4d), hlásí je jako neočekávané (WARNING).
+            ALTOGRP, TXTGRP, kap. 5.6.2) jsou nepovinné.
             Skupinu pro soubory z originaldata DMF nedefinuje (nejasnost N8, dotaz NK).-->
             <element name="mets:fileSec" mandatory="true" repeatable="false">
                 <expectedElements>
@@ -647,11 +647,296 @@
                             </element>
                         </expectedElements>
                     </element>
+                    <!--varianta B (doskeny zpracované jako obrazy, kap. 5.6.2, s. 90–91): nepovinné, ve variantě A chybějí
+                    (profil to hlásí jako INFO "nenalezen očekávaný doporučený element"). Úplnost proti souborům ve složkách
+                    kontrolují pravidla PRIMARY-METS_FILESEC_ALL_*_FILES_REFERENCED. SEQ DMF předepisuje u MC a UC, u ALTO
+                    a TXT ne.-->
+                    <element name="mets:fileGrp" specification="@ID='MC_IMGGRP'" mandatory="false" repeatable="false">
+                        <expectedAttributes>
+                            <attribute name="ID">
+                                <expectedContent>
+                                    <value>MC_IMGGRP</value>
+                                </expectedContent>
+                            </attribute>
+                            <attribute name="USE">
+                                <expectedContent>
+                                    <value>Images</value>
+                                </expectedContent>
+                            </attribute>
+                        </expectedAttributes>
+                        <expectedElements>
+                            <element name="mets:file">
+                                <expectedAttributes>
+                                    <attribute name="ID">
+                                        <expectedContent/>
+                                    </attribute>
+                                    <attribute name="MIMETYPE">
+                                        <expectedContent>
+                                            <value>image/jp2</value>
+                                        </expectedContent>
+                                    </attribute>
+                                    <attribute name="SIZE">
+                                        <expectedContent>
+                                            <regexp>[0-9]+</regexp>
+                                        </expectedContent>
+                                    </attribute>
+                                    <attribute name="CHECKSUMTYPE">
+                                        <expectedContent>
+                                            <value>MD5</value>
+                                        </expectedContent>
+                                    </attribute>
+                                    <attribute name="CHECKSUM">
+                                        <expectedContent/>
+                                    </attribute>
+                                    <attribute name="SEQ">
+                                        <expectedContent>
+                                            <regexp>[0-9]+</regexp>
+                                        </expectedContent>
+                                    </attribute>
+                                    <attribute name="CREATED">
+                                        <expectedContent>
+                                            <oneOf>
+                                                <!--ISO 8601 na úroveň alespoň sekund (basic format): např. 20190830T153501, 20190830T153530+01, 20190830T153544-23:30,20190830T153559.123-->
+                                                <regexp>^(?&lt;year&gt;[0-9]{4})(?&lt;month&gt;1[0-2]|0[1-9])(?&lt;day&gt;3[01]|0[1-9]|[12][0-9])T(?&lt;hour&gt;2[0-3]|[01][0-9])(?&lt;minute&gt;[0-5][0-9])(?&lt;second&gt;[0-5][0-9](.(?&lt;millis&gt;[0-9]{3}))?)?(?&lt;timezone&gt;Z|[+-](2[0-3]|[01][0-9])([0-5][0-9])?)?$</regexp>
+                                                <!--ISO 8601 na úroveň alespoň sekund (extended format): např. 2019-08-30T15:35:01+01:00, 2019-08-30T15:35:44-23:30, 2019-08-30T15:35:59.123Z -->
+                                                <regexp>^(?&lt;year&gt;[0-9]{4})-(?&lt;month&gt;1[0-2]|0[1-9])-(?&lt;day&gt;3[01]|0[1-9]|[12][0-9])T(?&lt;hour&gt;2[0-3]|[01][0-9]):(?&lt;minute&gt;[0-5][0-9])(:(?&lt;second&gt;[0-5][0-9])(.(?&lt;millis&gt;[0-9]{3}))?)?(?&lt;timezone&gt;Z|[+-](2[0-3]|[01][0-9])(:([0-5][0-9])?)?)?$</regexp>
+                                            </oneOf>
+                                        </expectedContent>
+                                    </attribute>
+                                </expectedAttributes>
+                                <expectedElements>
+                                    <element name="mets:FLocat" repeatable="false">
+                                        <expectedAttributes>
+                                            <attribute name="LOCTYPE">
+                                                <recommendedContent>
+                                                    <value>URL</value>
+                                                </recommendedContent>
+                                            </attribute>
+                                            <attribute name="xlink:href">
+                                                <expectedContent/>
+                                            </attribute>
+                                        </expectedAttributes>
+                                    </element>
+                                </expectedElements>
+                            </element>
+                        </expectedElements>
+                    </element>
+                    <element name="mets:fileGrp" specification="@ID='UC_IMGGRP'" mandatory="false" repeatable="false">
+                        <expectedAttributes>
+                            <attribute name="ID">
+                                <expectedContent>
+                                    <value>UC_IMGGRP</value>
+                                </expectedContent>
+                            </attribute>
+                            <attribute name="USE">
+                                <expectedContent>
+                                    <value>Images</value>
+                                </expectedContent>
+                            </attribute>
+                        </expectedAttributes>
+                        <expectedElements>
+                            <element name="mets:file">
+                                <expectedAttributes>
+                                    <attribute name="ID">
+                                        <expectedContent/>
+                                    </attribute>
+                                    <attribute name="MIMETYPE">
+                                        <expectedContent>
+                                            <value>image/jp2</value>
+                                        </expectedContent>
+                                    </attribute>
+                                    <attribute name="SIZE">
+                                        <expectedContent>
+                                            <regexp>[0-9]+</regexp>
+                                        </expectedContent>
+                                    </attribute>
+                                    <attribute name="CHECKSUMTYPE">
+                                        <expectedContent>
+                                            <value>MD5</value>
+                                        </expectedContent>
+                                    </attribute>
+                                    <attribute name="CHECKSUM">
+                                        <expectedContent/>
+                                    </attribute>
+                                    <attribute name="SEQ">
+                                        <expectedContent>
+                                            <regexp>[0-9]+</regexp>
+                                        </expectedContent>
+                                    </attribute>
+                                    <attribute name="CREATED">
+                                        <expectedContent>
+                                            <oneOf>
+                                                <!--ISO 8601 na úroveň alespoň sekund (basic format): např. 20190830T153501, 20190830T153530+01, 20190830T153544-23:30,20190830T153559.123-->
+                                                <regexp>^(?&lt;year&gt;[0-9]{4})(?&lt;month&gt;1[0-2]|0[1-9])(?&lt;day&gt;3[01]|0[1-9]|[12][0-9])T(?&lt;hour&gt;2[0-3]|[01][0-9])(?&lt;minute&gt;[0-5][0-9])(?&lt;second&gt;[0-5][0-9](.(?&lt;millis&gt;[0-9]{3}))?)?(?&lt;timezone&gt;Z|[+-](2[0-3]|[01][0-9])([0-5][0-9])?)?$</regexp>
+                                                <!--ISO 8601 na úroveň alespoň sekund (extended format): např. 2019-08-30T15:35:01+01:00, 2019-08-30T15:35:44-23:30, 2019-08-30T15:35:59.123Z -->
+                                                <regexp>^(?&lt;year&gt;[0-9]{4})-(?&lt;month&gt;1[0-2]|0[1-9])-(?&lt;day&gt;3[01]|0[1-9]|[12][0-9])T(?&lt;hour&gt;2[0-3]|[01][0-9]):(?&lt;minute&gt;[0-5][0-9])(:(?&lt;second&gt;[0-5][0-9])(.(?&lt;millis&gt;[0-9]{3}))?)?(?&lt;timezone&gt;Z|[+-](2[0-3]|[01][0-9])(:([0-5][0-9])?)?)?$</regexp>
+                                            </oneOf>
+                                        </expectedContent>
+                                    </attribute>
+                                </expectedAttributes>
+                                <expectedElements>
+                                    <element name="mets:FLocat" repeatable="false">
+                                        <expectedAttributes>
+                                            <attribute name="LOCTYPE">
+                                                <recommendedContent>
+                                                    <value>URL</value>
+                                                </recommendedContent>
+                                            </attribute>
+                                            <attribute name="xlink:href">
+                                                <expectedContent/>
+                                            </attribute>
+                                        </expectedAttributes>
+                                    </element>
+                                </expectedElements>
+                            </element>
+                        </expectedElements>
+                    </element>
+                    <element name="mets:fileGrp" specification="@ID='ALTOGRP'" mandatory="false" repeatable="false">
+                        <expectedAttributes>
+                            <attribute name="ID">
+                                <expectedContent>
+                                    <value>ALTOGRP</value>
+                                </expectedContent>
+                            </attribute>
+                            <attribute name="USE">
+                                <expectedContent>
+                                    <value>Layout</value>
+                                </expectedContent>
+                            </attribute>
+                        </expectedAttributes>
+                        <expectedElements>
+                            <element name="mets:file">
+                                <expectedAttributes>
+                                    <attribute name="ID">
+                                        <expectedContent/>
+                                    </attribute>
+                                    <attribute name="MIMETYPE">
+                                        <expectedContent>
+                                            <value>text/xml</value>
+                                        </expectedContent>
+                                    </attribute>
+                                    <attribute name="SIZE">
+                                        <expectedContent>
+                                            <regexp>[0-9]+</regexp>
+                                        </expectedContent>
+                                    </attribute>
+                                    <attribute name="CHECKSUMTYPE">
+                                        <expectedContent>
+                                            <value>MD5</value>
+                                        </expectedContent>
+                                    </attribute>
+                                    <attribute name="CHECKSUM">
+                                        <expectedContent/>
+                                    </attribute>
+                                    <attribute name="SEQ" mandatory="false">
+                                        <expectedContent>
+                                            <regexp>[0-9]+</regexp>
+                                        </expectedContent>
+                                    </attribute>
+                                    <attribute name="CREATED">
+                                        <expectedContent>
+                                            <oneOf>
+                                                <!--ISO 8601 na úroveň alespoň sekund (basic format): např. 20190830T153501, 20190830T153530+01, 20190830T153544-23:30,20190830T153559.123-->
+                                                <regexp>^(?&lt;year&gt;[0-9]{4})(?&lt;month&gt;1[0-2]|0[1-9])(?&lt;day&gt;3[01]|0[1-9]|[12][0-9])T(?&lt;hour&gt;2[0-3]|[01][0-9])(?&lt;minute&gt;[0-5][0-9])(?&lt;second&gt;[0-5][0-9](.(?&lt;millis&gt;[0-9]{3}))?)?(?&lt;timezone&gt;Z|[+-](2[0-3]|[01][0-9])([0-5][0-9])?)?$</regexp>
+                                                <!--ISO 8601 na úroveň alespoň sekund (extended format): např. 2019-08-30T15:35:01+01:00, 2019-08-30T15:35:44-23:30, 2019-08-30T15:35:59.123Z -->
+                                                <regexp>^(?&lt;year&gt;[0-9]{4})-(?&lt;month&gt;1[0-2]|0[1-9])-(?&lt;day&gt;3[01]|0[1-9]|[12][0-9])T(?&lt;hour&gt;2[0-3]|[01][0-9]):(?&lt;minute&gt;[0-5][0-9])(:(?&lt;second&gt;[0-5][0-9])(.(?&lt;millis&gt;[0-9]{3}))?)?(?&lt;timezone&gt;Z|[+-](2[0-3]|[01][0-9])(:([0-5][0-9])?)?)?$</regexp>
+                                            </oneOf>
+                                        </expectedContent>
+                                    </attribute>
+                                </expectedAttributes>
+                                <expectedElements>
+                                    <element name="mets:FLocat" repeatable="false">
+                                        <expectedAttributes>
+                                            <attribute name="LOCTYPE">
+                                                <recommendedContent>
+                                                    <value>URL</value>
+                                                </recommendedContent>
+                                            </attribute>
+                                            <attribute name="xlink:href">
+                                                <expectedContent/>
+                                            </attribute>
+                                        </expectedAttributes>
+                                    </element>
+                                </expectedElements>
+                            </element>
+                        </expectedElements>
+                    </element>
+                    <element name="mets:fileGrp" specification="@ID='TXTGRP'" mandatory="false" repeatable="false">
+                        <expectedAttributes>
+                            <attribute name="ID">
+                                <expectedContent>
+                                    <value>TXTGRP</value>
+                                </expectedContent>
+                            </attribute>
+                            <attribute name="USE">
+                                <expectedContent>
+                                    <value>Text</value>
+                                </expectedContent>
+                            </attribute>
+                        </expectedAttributes>
+                        <expectedElements>
+                            <element name="mets:file">
+                                <expectedAttributes>
+                                    <attribute name="ID">
+                                        <expectedContent/>
+                                    </attribute>
+                                    <attribute name="MIMETYPE">
+                                        <expectedContent>
+                                            <value>text/plain</value>
+                                        </expectedContent>
+                                    </attribute>
+                                    <attribute name="SIZE">
+                                        <expectedContent>
+                                            <regexp>[0-9]+</regexp>
+                                        </expectedContent>
+                                    </attribute>
+                                    <attribute name="CHECKSUMTYPE">
+                                        <expectedContent>
+                                            <value>MD5</value>
+                                        </expectedContent>
+                                    </attribute>
+                                    <attribute name="CHECKSUM">
+                                        <expectedContent/>
+                                    </attribute>
+                                    <attribute name="SEQ" mandatory="false">
+                                        <expectedContent>
+                                            <regexp>[0-9]+</regexp>
+                                        </expectedContent>
+                                    </attribute>
+                                    <attribute name="CREATED">
+                                        <expectedContent>
+                                            <oneOf>
+                                                <!--ISO 8601 na úroveň alespoň sekund (basic format): např. 20190830T153501, 20190830T153530+01, 20190830T153544-23:30,20190830T153559.123-->
+                                                <regexp>^(?&lt;year&gt;[0-9]{4})(?&lt;month&gt;1[0-2]|0[1-9])(?&lt;day&gt;3[01]|0[1-9]|[12][0-9])T(?&lt;hour&gt;2[0-3]|[01][0-9])(?&lt;minute&gt;[0-5][0-9])(?&lt;second&gt;[0-5][0-9](.(?&lt;millis&gt;[0-9]{3}))?)?(?&lt;timezone&gt;Z|[+-](2[0-3]|[01][0-9])([0-5][0-9])?)?$</regexp>
+                                                <!--ISO 8601 na úroveň alespoň sekund (extended format): např. 2019-08-30T15:35:01+01:00, 2019-08-30T15:35:44-23:30, 2019-08-30T15:35:59.123Z -->
+                                                <regexp>^(?&lt;year&gt;[0-9]{4})-(?&lt;month&gt;1[0-2]|0[1-9])-(?&lt;day&gt;3[01]|0[1-9]|[12][0-9])T(?&lt;hour&gt;2[0-3]|[01][0-9]):(?&lt;minute&gt;[0-5][0-9])(:(?&lt;second&gt;[0-5][0-9])(.(?&lt;millis&gt;[0-9]{3}))?)?(?&lt;timezone&gt;Z|[+-](2[0-3]|[01][0-9])(:([0-5][0-9])?)?)?$</regexp>
+                                            </oneOf>
+                                        </expectedContent>
+                                    </attribute>
+                                </expectedAttributes>
+                                <expectedElements>
+                                    <element name="mets:FLocat" repeatable="false">
+                                        <expectedAttributes>
+                                            <attribute name="LOCTYPE">
+                                                <recommendedContent>
+                                                    <value>URL</value>
+                                                </recommendedContent>
+                                            </attribute>
+                                            <attribute name="xlink:href">
+                                                <expectedContent/>
+                                            </attribute>
+                                        </expectedAttributes>
+                                    </element>
+                                </expectedElements>
+                            </element>
+                        </expectedElements>
+                    </element>
                 </expectedElements>
             </element>
 
             <!--fyzická strukturální mapa (kap. 5.7.1.1, s. 93–94): kořenový div TYPE="electronic_coll_journal",
-            v něm div pro každý článek a přílohu s fptr na archivní kopii a amd_mets. TYPE vnořeného divu je "typ
+            v něm div pro každý článek a přílohu s fptr na archivní kopii a amd_mets; u doskenu zpracovaného jako obrazy
+            (kap. 5.7.2.1, s. 97) s fptr na MC, UC, ALTO, TXT a amd_mets. TYPE vnořeného divu je "typ
             článku" (bez výčtu v DMF), ORDERLABEL jen u přílohy (nejasnost N6). Odkazy fptr kontrolují pravidla
             v sekci Strukturální mapy.-->
             <element name="mets:structMap" specification="@TYPE='PHYSICAL'" mandatory="true" repeatable="false">

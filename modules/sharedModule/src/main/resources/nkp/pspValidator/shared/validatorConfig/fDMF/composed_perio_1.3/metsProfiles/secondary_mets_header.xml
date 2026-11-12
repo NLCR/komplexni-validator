@@ -11,7 +11,7 @@
             Profil pro validaci elementu mets:mets ve vedlejším METSu (amd_mets) pro DMF Elektronické publikace (skládaná
             periodika) 1.3: kořenový element a hlavička mets:metsHdr mají obdobnou strukturu jako hlavní METS
             a jejich plnění je povinné (kap. 5.5, s. 65, změnový list 1.3, GH #68), dále amdSec (kap. 5.5), fileSec
-            (kap. 5.6.3) a fyzická strukturální mapa (kap. 5.7.1.1, varianta A). Obsah techMD a digiprovMD kontrolují
+            (kap. 5.6.3) a fyzická strukturální mapa (kap. 5.7.1.1 pro variantu A, 5.7.2.1 pro stránky doskenu ve variantě B). Obsah techMD a digiprovMD kontrolují
             profily v techProfiles.
         </text>
     </info>
@@ -145,12 +145,14 @@
                 </expectedElements>
             </element>
 
-            <!--fileSec vedlejšího METS (kap. 5.6.3, s. 92): jeden fileGrp s file pro každou reprezentaci. Text popisuje
-            jen variantu B (MC, ALTO XML, OCR.TXT); pro variantu A (archivní kopie PDF/EPUB) DMF ID ani USE skupiny
-            neuvádí, proto se kontroluje jen existence atributů (dotaz NK, viz N3).-->
+            <!--fileSec vedlejšího METS (kap. 5.6.3, s. 92): "jeden element fileGrp s vnořenými elementy file pro každou
+            reprezentaci stránky, tj. MC, ALTO XML a OCR.TXT". Pro variantu A (archivní kopie PDF/EPUB) DMF ID ani USE skupiny
+            neuvádí, proto se kontroluje jen existence atributů (dotaz NK, viz N3). Pro stránky doskenu (varianta B) KV
+            podle praxe Periodik očekává čtyři skupiny MC_IMGGRP, UC_IMGGRP, ALTOGRP a TXTGRP (pravidlo
+            SECONDARY-METS_FILESEC_ALL_FILEGROUPS_PRESENT, nejasnost N9), proto je fileGrp opakovatelný.-->
             <element name="mets:fileSec" mandatory="true" repeatable="false">
                 <expectedElements>
-                    <element name="mets:fileGrp" repeatable="false">
+                    <element name="mets:fileGrp" repeatable="true">
                         <expectedAttributes>
                             <attribute name="ID">
                                 <expectedContent/>
@@ -223,7 +225,8 @@
             </element>
 
             <!--fyzická strukturální mapa vedlejšího METS (kap. 5.7.1.1, s. 94 a 5.7.1.2, s. 96): jen TYPE="PHYSICAL",
-            jediný div TYPE="EPERIODICAL_ARTICLE" s odkazem fptr na archivní kopii (překlep ftpr v DMF, nejasnost N7)-->
+            jediný div TYPE="EPERIODICAL_ARTICLE" s odkazem fptr na archivní kopii (překlep ftpr v DMF, nejasnost N7);
+            u stránky doskenu (kap. 5.7.2.1, s. 97) s odkazy na MC, ALTO XML a OCR.TXT (a UC, viz N9)-->
             <element name="mets:structMap" mandatory="true" repeatable="false">
                 <expectedAttributes>
                     <attribute name="TYPE">

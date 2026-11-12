@@ -283,12 +283,220 @@
         </evaluation>
     </value-def>
 
+    <!--obrazová větev, varianta B (DMF Skládaná e-periodika 1.3, kap. 3.2, s. 8–10): mastercopy, usercopy, alto, txt-->
+
+    <!--MASTER-COPY-DIR (kap. 3.2.4, jen varianta B): null, když složka chybí (varianta A); navazující seznamy jsou pak
+    prázdné (errorIfDirNull=false) a pravidla obrazové větve nic nehlásí-->
+    <value-def name="MASTER-COPY-DIR_FILES" type="FILE_LIST">
+        <evaluation functionName="findFilesInDirByPattern">
+            <params>
+                <value name="dir" type="FILE">
+                    <value-ref name="PSP_DIR"/>
+                </value>
+                <pattern name="pattern">
+                    <pattern-ref name="MASTER-COPY-DIR_FILENAME"/>
+                </pattern>
+            </params>
+        </evaluation>
+    </value-def>
+
+    <value-def name="MASTER-COPY-DIR_FILE" type="FILE">
+        <evaluation functionName="getFirstFileFromFileList">
+            <params>
+                <value name="files" type="FILE_LIST">
+                    <value-ref name="MASTER-COPY-DIR_FILES"/>
+                </value>
+                <value name="returnNullIfEmpty" type="BOOLEAN">true</value>
+            </params>
+        </evaluation>
+    </value-def>
+
+    <value-def name="MASTER-COPY_FILES" type="FILE_LIST">
+        <evaluation functionName="findFilesInDirByPattern">
+            <params>
+                <value name="dir" type="FILE">
+                    <value-ref name="MASTER-COPY-DIR_FILE"/>
+                </value>
+                <value name="errorIfDirNull" type="BOOLEAN">false</value>
+                <pattern name="pattern">
+                    <pattern-ref name="MASTER-COPY_FILENAME"/>
+                </pattern>
+            </params>
+        </evaluation>
+    </value-def>
+
+    <!--USER-COPY-DIR (kap. 3.2.5, jen varianta B): null, když složka chybí (varianta A); navazující seznamy jsou pak
+    prázdné (errorIfDirNull=false) a pravidla obrazové větve nic nehlásí-->
+    <value-def name="USER-COPY-DIR_FILES" type="FILE_LIST">
+        <evaluation functionName="findFilesInDirByPattern">
+            <params>
+                <value name="dir" type="FILE">
+                    <value-ref name="PSP_DIR"/>
+                </value>
+                <pattern name="pattern">
+                    <pattern-ref name="USER-COPY-DIR_FILENAME"/>
+                </pattern>
+            </params>
+        </evaluation>
+    </value-def>
+
+    <value-def name="USER-COPY-DIR_FILE" type="FILE">
+        <evaluation functionName="getFirstFileFromFileList">
+            <params>
+                <value name="files" type="FILE_LIST">
+                    <value-ref name="USER-COPY-DIR_FILES"/>
+                </value>
+                <value name="returnNullIfEmpty" type="BOOLEAN">true</value>
+            </params>
+        </evaluation>
+    </value-def>
+
+    <value-def name="USER-COPY_FILES" type="FILE_LIST">
+        <evaluation functionName="findFilesInDirByPattern">
+            <params>
+                <value name="dir" type="FILE">
+                    <value-ref name="USER-COPY-DIR_FILE"/>
+                </value>
+                <value name="errorIfDirNull" type="BOOLEAN">false</value>
+                <pattern name="pattern">
+                    <pattern-ref name="USER-COPY_FILENAME"/>
+                </pattern>
+            </params>
+        </evaluation>
+    </value-def>
+
+    <!--OCR-ALTO-DIR (kap. 3.2.6, jen varianta B): null, když složka chybí (varianta A); navazující seznamy jsou pak
+    prázdné (errorIfDirNull=false) a pravidla obrazové větve nic nehlásí-->
+    <value-def name="OCR-ALTO-DIR_FILES" type="FILE_LIST">
+        <evaluation functionName="findFilesInDirByPattern">
+            <params>
+                <value name="dir" type="FILE">
+                    <value-ref name="PSP_DIR"/>
+                </value>
+                <pattern name="pattern">
+                    <pattern-ref name="OCR-ALTO-DIR_FILENAME"/>
+                </pattern>
+            </params>
+        </evaluation>
+    </value-def>
+
+    <value-def name="OCR-ALTO-DIR_FILE" type="FILE">
+        <evaluation functionName="getFirstFileFromFileList">
+            <params>
+                <value name="files" type="FILE_LIST">
+                    <value-ref name="OCR-ALTO-DIR_FILES"/>
+                </value>
+                <value name="returnNullIfEmpty" type="BOOLEAN">true</value>
+            </params>
+        </evaluation>
+    </value-def>
+
+    <value-def name="OCR-ALTO_FILES" type="FILE_LIST">
+        <evaluation functionName="findFilesInDirByPattern">
+            <params>
+                <value name="dir" type="FILE">
+                    <value-ref name="OCR-ALTO-DIR_FILE"/>
+                </value>
+                <value name="errorIfDirNull" type="BOOLEAN">false</value>
+                <pattern name="pattern">
+                    <pattern-ref name="OCR-ALTO_FILENAME"/>
+                </pattern>
+            </params>
+        </evaluation>
+    </value-def>
+
+    <!--OCR-TEXT-DIR (kap. 3.2.7, jen varianta B): null, když složka chybí (varianta A); navazující seznamy jsou pak
+    prázdné (errorIfDirNull=false) a pravidla obrazové větve nic nehlásí-->
+    <value-def name="OCR-TEXT-DIR_FILES" type="FILE_LIST">
+        <evaluation functionName="findFilesInDirByPattern">
+            <params>
+                <value name="dir" type="FILE">
+                    <value-ref name="PSP_DIR"/>
+                </value>
+                <pattern name="pattern">
+                    <pattern-ref name="OCR-TEXT-DIR_FILENAME"/>
+                </pattern>
+            </params>
+        </evaluation>
+    </value-def>
+
+    <value-def name="OCR-TEXT-DIR_FILE" type="FILE">
+        <evaluation functionName="getFirstFileFromFileList">
+            <params>
+                <value name="files" type="FILE_LIST">
+                    <value-ref name="OCR-TEXT-DIR_FILES"/>
+                </value>
+                <value name="returnNullIfEmpty" type="BOOLEAN">true</value>
+            </params>
+        </evaluation>
+    </value-def>
+
+    <value-def name="OCR-TEXT_FILES" type="FILE_LIST">
+        <evaluation functionName="findFilesInDirByPattern">
+            <params>
+                <value name="dir" type="FILE">
+                    <value-ref name="OCR-TEXT-DIR_FILE"/>
+                </value>
+                <value name="errorIfDirNull" type="BOOLEAN">false</value>
+                <pattern name="pattern">
+                    <pattern-ref name="OCR-TEXT_FILENAME"/>
+                </pattern>
+            </params>
+        </evaluation>
+    </value-def>
+
+    <!--Vedlejší METS se ve variantě B dělí na dvě skupiny (kap. 3.2, s. 9: amd_mets "pro každou stranu"; kap. 3.1.6 a 3.2.8:
+    "pro každý samostatný PDF soubor"). Podle názvu se rozlišit nedají (obě amd_mets_PSP-ID_XXXX.xml), proto se rozdělují
+    podle hlavního METS: amd_mets stránky doskenu je ve fyzické mapě ve stejném divu jako soubor ze skupiny MC_IMGGRP,
+    ostatní amd_mets ze skupiny TECHMDGRP patří archivním kopiím (original). Bez hlavního METS nebo bez TECHMDGRP jsou
+    oba seznamy prázdné; to hlásí pravidla sekcí Primární METS filesec a Strukturální mapy.-->
+    <value-def name="SECONDARY-METS_FILES_FOR_PAGES" type="FILE_LIST">
+        <evaluation functionName="getFileListByXpath">
+            <params>
+                <value name="psp_dir" type="FILE">
+                    <value-ref name="PSP_DIR"/>
+                </value>
+                <value name="xml_file" type="FILE">
+                    <value-ref name="PRIMARY-METS_FILE"/>
+                </value>
+                <value name="xpath" type="STRING">
+                    /mets:mets/mets:fileSec/mets:fileGrp[@ID='TECHMDGRP']/mets:file[@ID = /mets:mets/mets:structMap[@TYPE='PHYSICAL']/mets:div//mets:div[mets:fptr/@FILEID = /mets:mets/mets:fileSec/mets:fileGrp[@ID='MC_IMGGRP']/mets:file/@ID]/mets:fptr/@FILEID]/mets:FLocat[@LOCTYPE='URL']/@xlink:href
+                </value>
+            </params>
+        </evaluation>
+    </value-def>
+
+    <value-def name="SECONDARY-METS_FILES_FOR_ORIGINAL-COPY" type="FILE_LIST">
+        <evaluation functionName="getFileListByXpath">
+            <params>
+                <value name="psp_dir" type="FILE">
+                    <value-ref name="PSP_DIR"/>
+                </value>
+                <value name="xml_file" type="FILE">
+                    <value-ref name="PRIMARY-METS_FILE"/>
+                </value>
+                <value name="xpath" type="STRING">
+                    /mets:mets/mets:fileSec/mets:fileGrp[@ID='TECHMDGRP']/mets:file[not(@ID = /mets:mets/mets:structMap[@TYPE='PHYSICAL']/mets:div//mets:div[mets:fptr/@FILEID = /mets:mets/mets:fileSec/mets:fileGrp[@ID='MC_IMGGRP']/mets:file/@ID]/mets:fptr/@FILEID)]/mets:FLocat[@LOCTYPE='URL']/@xlink:href
+                </value>
+            </params>
+        </evaluation>
+    </value-def>
+
     <!--soubory XSD-->
 
     <value-def name="INFO_XSD_FILE" type="FILE">
         <evaluation functionName="getProvidedFile">
             <params>
                 <value name="file_id" type="STRING">INFO_XSD_FILE</value>
+            </params>
+        </evaluation>
+    </value-def>
+
+    <!--ALTO: XSD pro každý major (alto_2.0, alto_3.1, alto_4.4), výběr podle namespace (OCR-ALTO_FILES_VALID_BY_XSD)-->
+    <value-def name="ALTO_XSD_FILES" type="FILE_LIST">
+        <evaluation functionName="getProvidedFiles">
+            <params>
+                <value name="files_id" type="STRING">ALTO_XSD_FILES</value>
             </params>
         </evaluation>
     </value-def>

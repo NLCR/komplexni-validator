@@ -1,0 +1,481 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mets:mets xmlns:mets="http://www.loc.gov/METS/" xmlns:mods="http://www.loc.gov/mods/v3" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/" xmlns:premis="info:lc/xmlns/premis-v2" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" LABEL="A / Věda a výzkum, 9, 1" TYPE="electronic_coll_journal">
+  <mets:metsHdr CREATEDATE="2026-11-12T10:00:00" LASTMODDATE="2026-11-12T10:00:00">
+    <mets:agent ROLE="CREATOR" TYPE="ORGANIZATION">
+      <mets:name>ABA007</mets:name>
+    </mets:agent>
+    <mets:agent ROLE="ARCHIVIST" TYPE="ORGANIZATION">
+      <mets:name>ABA007</mets:name>
+    </mets:agent>
+  </mets:metsHdr>
+  <mets:amdSec ID="AMD_METS_0002">
+    <mets:techMD ID="OBJ_001">
+      <mets:mdWrap MDTYPE="PREMIS" MIMETYPE="text/xml">
+        <mets:xmlData>
+          <premis:object xsi:type="premis:file">
+            <premis:objectIdentifier>
+              <premis:objectIdentifierType>ObjectID</premis:objectIdentifierType>
+              <premis:objectIdentifierValue>ps_0002</premis:objectIdentifierValue>
+            </premis:objectIdentifier>
+            <premis:preservationLevel>
+              <premis:preservationLevelValue>deleted</premis:preservationLevelValue>
+              <premis:preservationLevelDateAssigned>2026-11-12</premis:preservationLevelDateAssigned>
+            </premis:preservationLevel>
+            <premis:objectCharacteristics>
+              <premis:compositionLevel>0</premis:compositionLevel>
+              <premis:fixity>
+                <premis:messageDigestAlgorithm>MD5</premis:messageDigestAlgorithm>
+                <premis:messageDigest>2274a2fc88e99d732010c09c52dc7d3e</premis:messageDigest>
+                <premis:messageDigestOriginator>JHOVE</premis:messageDigestOriginator>
+              </premis:fixity>
+              <premis:size>52</premis:size>
+              <premis:format>
+                <premis:formatDesignation>
+                  <premis:formatName>image/tiff</premis:formatName>
+                  <premis:formatVersion>6.0</premis:formatVersion>
+                </premis:formatDesignation>
+                <premis:formatRegistry>
+                  <premis:formatRegistryName>PRONOM</premis:formatRegistryName>
+                  <premis:formatRegistryKey>fmt/353</premis:formatRegistryKey>
+                </premis:formatRegistry>
+              </premis:format>
+              <premis:creatingApplication>
+                <premis:creatingApplicationName>Omniscan</premis:creatingApplicationName>
+                <premis:creatingApplicationVersion>1.0</premis:creatingApplicationVersion>
+                <premis:dateCreatedByApplication>2026-11-12T10:00:00</premis:dateCreatedByApplication>
+              </premis:creatingApplication>
+            </premis:objectCharacteristics>
+            <premis:originalName>sken_0002.tif</premis:originalName>
+            <premis:linkingEventIdentifier>
+              <premis:linkingEventIdentifierType>EventID</premis:linkingEventIdentifierType>
+              <premis:linkingEventIdentifierValue>event_001</premis:linkingEventIdentifierValue>
+            </premis:linkingEventIdentifier>
+          </premis:object>
+        </mets:xmlData>
+      </mets:mdWrap>
+    </mets:techMD>
+    <mets:techMD ID="OBJ_002">
+      <mets:mdWrap MDTYPE="PREMIS" MIMETYPE="text/xml">
+        <mets:xmlData>
+          <premis:object xsi:type="premis:file">
+            <premis:objectIdentifier>
+              <premis:objectIdentifierType>ObjectID</premis:objectIdentifierType>
+              <premis:objectIdentifierValue>mc_0002</premis:objectIdentifierValue>
+            </premis:objectIdentifier>
+            <premis:preservationLevel>
+              <premis:preservationLevelValue>logical preservation</premis:preservationLevelValue>
+              <premis:preservationLevelDateAssigned>2026-11-12</premis:preservationLevelDateAssigned>
+            </premis:preservationLevel>
+            <premis:objectCharacteristics>
+              <premis:compositionLevel>0</premis:compositionLevel>
+              <premis:fixity>
+                <premis:messageDigestAlgorithm>MD5</premis:messageDigestAlgorithm>
+                <premis:messageDigest>b563f819b949af5ae44e803254a237e0</premis:messageDigest>
+                <premis:messageDigestOriginator>JHOVE</premis:messageDigestOriginator>
+              </premis:fixity>
+              <premis:size>10736</premis:size>
+              <premis:format>
+                <premis:formatDesignation>
+                  <premis:formatName>image/jp2</premis:formatName>
+                  <premis:formatVersion>1.0</premis:formatVersion>
+                </premis:formatDesignation>
+                <premis:formatRegistry>
+                  <premis:formatRegistryName>PRONOM</premis:formatRegistryName>
+                  <premis:formatRegistryKey>x-fmt/392</premis:formatRegistryKey>
+                </premis:formatRegistry>
+              </premis:format>
+              <premis:creatingApplication>
+                <premis:creatingApplicationName>Kakadu kdu_compress</premis:creatingApplicationName>
+                <premis:creatingApplicationVersion>1.0</premis:creatingApplicationVersion>
+                <premis:dateCreatedByApplication>2026-11-12T10:00:00</premis:dateCreatedByApplication>
+              </premis:creatingApplication>
+            </premis:objectCharacteristics>
+            <premis:originalName>mc_5e0b0003-0000-4000-8000-000000000140_0002.jp2</premis:originalName>
+            <premis:relationship>
+              <premis:relationshipType>derivation</premis:relationshipType>
+              <premis:relationshipSubType>created from</premis:relationshipSubType>
+              <premis:relatedObjectIdentification>
+                <premis:relatedObjectIdentifierType>ObjectID</premis:relatedObjectIdentifierType>
+                <premis:relatedObjectIdentifierValue>ps_0002</premis:relatedObjectIdentifierValue>
+              </premis:relatedObjectIdentification>
+            </premis:relationship>
+            <premis:linkingEventIdentifier>
+              <premis:linkingEventIdentifierType>EventID</premis:linkingEventIdentifierType>
+              <premis:linkingEventIdentifierValue>event_002</premis:linkingEventIdentifierValue>
+            </premis:linkingEventIdentifier>
+          </premis:object>
+        </mets:xmlData>
+      </mets:mdWrap>
+    </mets:techMD>
+    <mets:techMD ID="OBJ_003">
+      <mets:mdWrap MDTYPE="PREMIS" MIMETYPE="text/xml">
+        <mets:xmlData>
+          <premis:object xsi:type="premis:file">
+            <premis:objectIdentifier>
+              <premis:objectIdentifierType>ObjectID</premis:objectIdentifierType>
+              <premis:objectIdentifierValue>alto_0002</premis:objectIdentifierValue>
+            </premis:objectIdentifier>
+            <premis:preservationLevel>
+              <premis:preservationLevelValue>logical preservation</premis:preservationLevelValue>
+              <premis:preservationLevelDateAssigned>2026-11-12</premis:preservationLevelDateAssigned>
+            </premis:preservationLevel>
+            <premis:objectCharacteristics>
+              <premis:compositionLevel>0</premis:compositionLevel>
+              <premis:fixity>
+                <premis:messageDigestAlgorithm>MD5</premis:messageDigestAlgorithm>
+                <premis:messageDigest>a06c70fd9358817f7665f98ac19ccb49</premis:messageDigest>
+                <premis:messageDigestOriginator>JHOVE</premis:messageDigestOriginator>
+              </premis:fixity>
+              <premis:size>1595</premis:size>
+              <premis:format>
+                <premis:formatDesignation>
+                  <premis:formatName>text/xml</premis:formatName>
+                  <premis:formatVersion>1.0</premis:formatVersion>
+                </premis:formatDesignation>
+                <premis:formatRegistry>
+                  <premis:formatRegistryName>PRONOM</premis:formatRegistryName>
+                  <premis:formatRegistryKey>fmt/101</premis:formatRegistryKey>
+                </premis:formatRegistry>
+              </premis:format>
+              <premis:creatingApplication>
+                <premis:creatingApplicationName>ABBYY FineReader Server</premis:creatingApplicationName>
+                <premis:creatingApplicationVersion>1.0</premis:creatingApplicationVersion>
+                <premis:dateCreatedByApplication>2026-11-12T10:00:00</premis:dateCreatedByApplication>
+              </premis:creatingApplication>
+            </premis:objectCharacteristics>
+            <premis:originalName>alto_5e0b0003-0000-4000-8000-000000000140_0002.xml</premis:originalName>
+            <premis:relationship>
+              <premis:relationshipType>derivation</premis:relationshipType>
+              <premis:relationshipSubType>created from</premis:relationshipSubType>
+              <premis:relatedObjectIdentification>
+                <premis:relatedObjectIdentifierType>ObjectID</premis:relatedObjectIdentifierType>
+                <premis:relatedObjectIdentifierValue>mc_0002</premis:relatedObjectIdentifierValue>
+              </premis:relatedObjectIdentification>
+            </premis:relationship>
+            <premis:linkingEventIdentifier>
+              <premis:linkingEventIdentifierType>EventID</premis:linkingEventIdentifierType>
+              <premis:linkingEventIdentifierValue>event_003</premis:linkingEventIdentifierValue>
+            </premis:linkingEventIdentifier>
+          </premis:object>
+        </mets:xmlData>
+      </mets:mdWrap>
+    </mets:techMD>
+    <mets:techMD ID="MIX_001">
+      <mets:mdWrap MDTYPE="NISOIMG" MIMETYPE="text/xml">
+        <mets:xmlData>
+          <mix:mix xmlns:mix="http://www.loc.gov/mix/v20">
+            <mix:BasicDigitalObjectInformation>
+              <mix:ObjectIdentifier>
+                <mix:objectIdentifierType>ObjectID</mix:objectIdentifierType>
+                <mix:objectIdentifierValue>ps_0002</mix:objectIdentifierValue>
+              </mix:ObjectIdentifier>
+              <mix:FormatDesignation>
+                <mix:formatName>image/tiff</mix:formatName>
+                <mix:formatVersion>6.0</mix:formatVersion>
+              </mix:FormatDesignation>
+              <mix:byteOrder>little endian</mix:byteOrder>
+              <mix:Compression>
+                <mix:compressionScheme>Uncompressed</mix:compressionScheme>
+              </mix:Compression>
+            </mix:BasicDigitalObjectInformation>
+            <mix:BasicImageInformation>
+              <mix:BasicImageCharacteristics>
+                <mix:imageWidth>1685</mix:imageWidth>
+                <mix:imageHeight>2806</mix:imageHeight>
+                <mix:PhotometricInterpretation>
+                  <mix:colorSpace>RGB</mix:colorSpace>
+                </mix:PhotometricInterpretation>
+              </mix:BasicImageCharacteristics>
+            </mix:BasicImageInformation>
+            <mix:ImageCaptureMetadata>
+              <mix:GeneralCaptureInformation>
+                <mix:dateTimeCreated>2026-11-12T10:00:00</mix:dateTimeCreated>
+                <mix:imageProducer>Národní knihovna ČR</mix:imageProducer>
+                <mix:captureDevice>reflection print scanner</mix:captureDevice>
+              </mix:GeneralCaptureInformation>
+              <mix:ScannerCapture>
+                <mix:scannerManufacturer>Zeutschel</mix:scannerManufacturer>
+                <mix:ScannerModel>
+                  <mix:scannerModelName>OS</mix:scannerModelName>
+                  <mix:scannerModelNumber>15000</mix:scannerModelNumber>
+                  <mix:scannerModelSerialNo>TEST-0001</mix:scannerModelSerialNo>
+                </mix:ScannerModel>
+                <mix:MaximumOpticalResolution>
+                  <mix:xOpticalResolution>600</mix:xOpticalResolution>
+                  <mix:yOpticalResolution>600</mix:yOpticalResolution>
+                  <mix:opticalResolutionUnit>in.</mix:opticalResolutionUnit>
+                </mix:MaximumOpticalResolution>
+                <mix:scannerSensor>ColorTriLinear</mix:scannerSensor>
+                <mix:ScanningSystemSoftware>
+                  <mix:scanningSoftwareName>Omniscan</mix:scanningSoftwareName>
+                  <mix:scanningSoftwareVersionNo>12.0</mix:scanningSoftwareVersionNo>
+                </mix:ScanningSystemSoftware>
+              </mix:ScannerCapture>
+              <mix:orientation>normal*</mix:orientation>
+            </mix:ImageCaptureMetadata>
+              <mix:ImageAssessmentMetadata>
+                <mix:SpatialMetrics>
+                  <mix:samplingFrequencyUnit>in.</mix:samplingFrequencyUnit>
+                  <mix:xSamplingFrequency>
+                    <mix:numerator>300</mix:numerator>
+                    <mix:denominator>1</mix:denominator>
+                  </mix:xSamplingFrequency>
+                  <mix:ySamplingFrequency>
+                    <mix:numerator>300</mix:numerator>
+                    <mix:denominator>1</mix:denominator>
+                  </mix:ySamplingFrequency>
+                </mix:SpatialMetrics>
+                <mix:ImageColorEncoding>
+                  <mix:BitsPerSample>
+                    <mix:bitsPerSampleValue>8</mix:bitsPerSampleValue>
+                    <mix:bitsPerSampleValue>8</mix:bitsPerSampleValue>
+                    <mix:bitsPerSampleValue>8</mix:bitsPerSampleValue>
+                    <mix:bitsPerSampleUnit>integer</mix:bitsPerSampleUnit>
+                  </mix:BitsPerSample>
+                  <mix:samplesPerPixel>3</mix:samplesPerPixel>
+                </mix:ImageColorEncoding>
+              </mix:ImageAssessmentMetadata>
+          </mix:mix>
+        </mets:xmlData>
+      </mets:mdWrap>
+    </mets:techMD>
+    <mets:techMD ID="MIX_002">
+      <mets:mdWrap MDTYPE="NISOIMG" MIMETYPE="text/xml">
+        <mets:xmlData>
+          <mix:mix xmlns:mix="http://www.loc.gov/mix/v20">
+            <mix:BasicDigitalObjectInformation>
+              <mix:ObjectIdentifier>
+                <mix:objectIdentifierType>ObjectID</mix:objectIdentifierType>
+                <mix:objectIdentifierValue>mc_0002</mix:objectIdentifierValue>
+              </mix:ObjectIdentifier>
+              <mix:FormatDesignation>
+                <mix:formatName>image/jp2</mix:formatName>
+                <mix:formatVersion>1.0</mix:formatVersion>
+              </mix:FormatDesignation>
+              <mix:byteOrder>big endian</mix:byteOrder>
+              <mix:Compression>
+                <mix:compressionScheme>JPEG 2000 Lossless</mix:compressionScheme>
+              </mix:Compression>
+            </mix:BasicDigitalObjectInformation>
+            <mix:BasicImageInformation>
+              <mix:BasicImageCharacteristics>
+                <mix:imageWidth>1685</mix:imageWidth>
+                <mix:imageHeight>2806</mix:imageHeight>
+                <mix:PhotometricInterpretation>
+                  <mix:colorSpace>RGB</mix:colorSpace>
+                </mix:PhotometricInterpretation>
+              </mix:BasicImageCharacteristics>
+              <mix:SpecialFormatCharacteristics>
+                <mix:JPEG2000>
+                  <mix:CodecCompliance>
+                    <mix:codec>Kakadu</mix:codec>
+                    <mix:codecVersion>8.5</mix:codecVersion>
+                    <mix:codestreamProfile>P1</mix:codestreamProfile>
+                    <mix:complianceClass>C1</mix:complianceClass>
+                  </mix:CodecCompliance>
+                  <mix:EncodingOptions>
+                    <mix:Tiles>
+                      <mix:tileWidth>4096</mix:tileWidth>
+                      <mix:tileHeight>4096</mix:tileHeight>
+                    </mix:Tiles>
+                    <mix:qualityLayers>1</mix:qualityLayers>
+                    <mix:resolutionLevels>5</mix:resolutionLevels>
+                  </mix:EncodingOptions>
+                </mix:JPEG2000>
+              </mix:SpecialFormatCharacteristics>
+            </mix:BasicImageInformation>
+              <mix:ImageAssessmentMetadata>
+                <mix:SpatialMetrics>
+                  <mix:samplingFrequencyUnit>in.</mix:samplingFrequencyUnit>
+                  <mix:xSamplingFrequency>
+                    <mix:numerator>300</mix:numerator>
+                    <mix:denominator>1</mix:denominator>
+                  </mix:xSamplingFrequency>
+                  <mix:ySamplingFrequency>
+                    <mix:numerator>300</mix:numerator>
+                    <mix:denominator>1</mix:denominator>
+                  </mix:ySamplingFrequency>
+                </mix:SpatialMetrics>
+                <mix:ImageColorEncoding>
+                  <mix:BitsPerSample>
+                    <mix:bitsPerSampleValue>8</mix:bitsPerSampleValue>
+                    <mix:bitsPerSampleValue>8</mix:bitsPerSampleValue>
+                    <mix:bitsPerSampleValue>8</mix:bitsPerSampleValue>
+                    <mix:bitsPerSampleUnit>integer</mix:bitsPerSampleUnit>
+                  </mix:BitsPerSample>
+                  <mix:samplesPerPixel>3</mix:samplesPerPixel>
+                </mix:ImageColorEncoding>
+              </mix:ImageAssessmentMetadata>
+            <mix:ChangeHistory>
+              <mix:ImageProcessing>
+                <mix:dateTimeProcessed>2026-11-12T10:00:00</mix:dateTimeProcessed>
+                <mix:sourceData>sken_0002.tif</mix:sourceData>
+              </mix:ImageProcessing>
+            </mix:ChangeHistory>
+          </mix:mix>
+        </mets:xmlData>
+      </mets:mdWrap>
+    </mets:techMD>
+    <mets:digiprovMD ID="EVT_001">
+      <mets:mdWrap MDTYPE="PREMIS" MIMETYPE="text/xml">
+        <mets:xmlData>
+          <premis:event>
+            <premis:eventIdentifier>
+              <premis:eventIdentifierType>EventID</premis:eventIdentifierType>
+              <premis:eventIdentifierValue>event_001</premis:eventIdentifierValue>
+            </premis:eventIdentifier>
+            <premis:eventType>capture</premis:eventType>
+            <premis:eventDateTime>2026-11-12T10:00:00</premis:eventDateTime>
+            <premis:eventDetail>capture</premis:eventDetail>
+            <premis:eventOutcomeInformation>
+              <premis:eventOutcome>successful</premis:eventOutcome>
+            </premis:eventOutcomeInformation>
+            <premis:linkingAgentIdentifier>
+              <premis:linkingAgentIdentifierType>AgentID</premis:linkingAgentIdentifierType>
+              <premis:linkingAgentIdentifierValue>agent_001</premis:linkingAgentIdentifierValue>
+              <premis:linkingAgentRole>software</premis:linkingAgentRole>
+            </premis:linkingAgentIdentifier>
+            <premis:linkingObjectIdentifier>
+              <premis:linkingObjectIdentifierType>ObjectID</premis:linkingObjectIdentifierType>
+              <premis:linkingObjectIdentifierValue>ps_0002</premis:linkingObjectIdentifierValue>
+            </premis:linkingObjectIdentifier>
+          </premis:event>
+        </mets:xmlData>
+      </mets:mdWrap>
+    </mets:digiprovMD>
+    <mets:digiprovMD ID="EVT_002">
+      <mets:mdWrap MDTYPE="PREMIS" MIMETYPE="text/xml">
+        <mets:xmlData>
+          <premis:event>
+            <premis:eventIdentifier>
+              <premis:eventIdentifierType>EventID</premis:eventIdentifierType>
+              <premis:eventIdentifierValue>event_002</premis:eventIdentifierValue>
+            </premis:eventIdentifier>
+            <premis:eventType>migration</premis:eventType>
+            <premis:eventDateTime>2026-11-12T10:00:00</premis:eventDateTime>
+            <premis:eventDetail>migration</premis:eventDetail>
+            <premis:eventOutcomeInformation>
+              <premis:eventOutcome>successful</premis:eventOutcome>
+            </premis:eventOutcomeInformation>
+            <premis:linkingAgentIdentifier>
+              <premis:linkingAgentIdentifierType>AgentID</premis:linkingAgentIdentifierType>
+              <premis:linkingAgentIdentifierValue>agent_002</premis:linkingAgentIdentifierValue>
+              <premis:linkingAgentRole>software</premis:linkingAgentRole>
+            </premis:linkingAgentIdentifier>
+            <premis:linkingObjectIdentifier>
+              <premis:linkingObjectIdentifierType>ObjectID</premis:linkingObjectIdentifierType>
+              <premis:linkingObjectIdentifierValue>ps_0002</premis:linkingObjectIdentifierValue>
+            </premis:linkingObjectIdentifier>
+            <premis:linkingObjectIdentifier>
+              <premis:linkingObjectIdentifierType>ObjectID</premis:linkingObjectIdentifierType>
+              <premis:linkingObjectIdentifierValue>mc_0002</premis:linkingObjectIdentifierValue>
+            </premis:linkingObjectIdentifier>
+          </premis:event>
+        </mets:xmlData>
+      </mets:mdWrap>
+    </mets:digiprovMD>
+    <mets:digiprovMD ID="EVT_003">
+      <mets:mdWrap MDTYPE="PREMIS" MIMETYPE="text/xml">
+        <mets:xmlData>
+          <premis:event>
+            <premis:eventIdentifier>
+              <premis:eventIdentifierType>EventID</premis:eventIdentifierType>
+              <premis:eventIdentifierValue>event_003</premis:eventIdentifierValue>
+            </premis:eventIdentifier>
+            <premis:eventType>capture</premis:eventType>
+            <premis:eventDateTime>2026-11-12T10:00:00</premis:eventDateTime>
+            <premis:eventDetail>capture</premis:eventDetail>
+            <premis:eventOutcomeInformation>
+              <premis:eventOutcome>successful</premis:eventOutcome>
+            </premis:eventOutcomeInformation>
+            <premis:linkingAgentIdentifier>
+              <premis:linkingAgentIdentifierType>AgentID</premis:linkingAgentIdentifierType>
+              <premis:linkingAgentIdentifierValue>agent_003</premis:linkingAgentIdentifierValue>
+              <premis:linkingAgentRole>software</premis:linkingAgentRole>
+            </premis:linkingAgentIdentifier>
+            <premis:linkingObjectIdentifier>
+              <premis:linkingObjectIdentifierType>ObjectID</premis:linkingObjectIdentifierType>
+              <premis:linkingObjectIdentifierValue>mc_0002</premis:linkingObjectIdentifierValue>
+            </premis:linkingObjectIdentifier>
+            <premis:linkingObjectIdentifier>
+              <premis:linkingObjectIdentifierType>ObjectID</premis:linkingObjectIdentifierType>
+              <premis:linkingObjectIdentifierValue>alto_0002</premis:linkingObjectIdentifierValue>
+            </premis:linkingObjectIdentifier>
+          </premis:event>
+        </mets:xmlData>
+      </mets:mdWrap>
+    </mets:digiprovMD>
+    <mets:digiprovMD ID="AGENT_001">
+      <mets:mdWrap MDTYPE="PREMIS" MIMETYPE="text/xml">
+        <mets:xmlData>
+          <premis:agent>
+            <premis:agentIdentifier>
+              <premis:agentIdentifierType>AgentID</premis:agentIdentifierType>
+              <premis:agentIdentifierValue>agent_001</premis:agentIdentifierValue>
+            </premis:agentIdentifier>
+            <premis:agentName>Zeutschel OS 15000</premis:agentName>
+            <premis:agentType>software</premis:agentType>
+          </premis:agent>
+        </mets:xmlData>
+      </mets:mdWrap>
+    </mets:digiprovMD>
+    <mets:digiprovMD ID="AGENT_002">
+      <mets:mdWrap MDTYPE="PREMIS" MIMETYPE="text/xml">
+        <mets:xmlData>
+          <premis:agent>
+            <premis:agentIdentifier>
+              <premis:agentIdentifierType>AgentID</premis:agentIdentifierType>
+              <premis:agentIdentifierValue>agent_002</premis:agentIdentifierValue>
+            </premis:agentIdentifier>
+            <premis:agentName>Kakadu 8.5</premis:agentName>
+            <premis:agentType>software</premis:agentType>
+          </premis:agent>
+        </mets:xmlData>
+      </mets:mdWrap>
+    </mets:digiprovMD>
+    <mets:digiprovMD ID="AGENT_003">
+      <mets:mdWrap MDTYPE="PREMIS" MIMETYPE="text/xml">
+        <mets:xmlData>
+          <premis:agent>
+            <premis:agentIdentifier>
+              <premis:agentIdentifierType>AgentID</premis:agentIdentifierType>
+              <premis:agentIdentifierValue>agent_003</premis:agentIdentifierValue>
+            </premis:agentIdentifier>
+            <premis:agentName>ABBYY FineReader Server 14</premis:agentName>
+            <premis:agentType>software</premis:agentType>
+          </premis:agent>
+        </mets:xmlData>
+      </mets:mdWrap>
+    </mets:digiprovMD>
+  </mets:amdSec>
+  <mets:fileSec>
+    <mets:fileGrp ID="MC_IMGGRP" USE="Images">
+      <mets:file ID="mc_5e0b0003-0000-4000-8000-000000000140_0002" MIMETYPE="image/jp2" SIZE="10736" CHECKSUMTYPE="MD5" CHECKSUM="b563f819b949af5ae44e803254a237e0" SEQ="1" CREATED="2026-11-12T10:00:00" ADMID="OBJ_002 MIX_002">
+        <mets:FLocat LOCTYPE="URL" xlink:href="/mastercopy/mc_5e0b0003-0000-4000-8000-000000000140_0002.jp2"/>
+      </mets:file>
+    </mets:fileGrp>
+    <mets:fileGrp ID="UC_IMGGRP" USE="Images">
+      <mets:file ID="uc_5e0b0003-0000-4000-8000-000000000140_0002" MIMETYPE="image/jp2" SIZE="8167" CHECKSUMTYPE="MD5" CHECKSUM="895bda600f4a32acd5343b2bc390ee38" SEQ="1" CREATED="2026-11-12T10:00:00">
+        <mets:FLocat LOCTYPE="URL" xlink:href="/usercopy/uc_5e0b0003-0000-4000-8000-000000000140_0002.jp2"/>
+      </mets:file>
+    </mets:fileGrp>
+    <mets:fileGrp ID="ALTOGRP" USE="Layout">
+      <mets:file ID="alto_5e0b0003-0000-4000-8000-000000000140_0002" MIMETYPE="text/xml" SIZE="1595" CHECKSUMTYPE="MD5" CHECKSUM="a06c70fd9358817f7665f98ac19ccb49" SEQ="1" CREATED="2026-11-12T10:00:00" ADMID="OBJ_003">
+        <mets:FLocat LOCTYPE="URL" xlink:href="/alto/alto_5e0b0003-0000-4000-8000-000000000140_0002.xml"/>
+      </mets:file>
+    </mets:fileGrp>
+    <mets:fileGrp ID="TXTGRP" USE="Text">
+      <mets:file ID="txt_5e0b0003-0000-4000-8000-000000000140_0002" MIMETYPE="text/plain" SIZE="92" CHECKSUMTYPE="MD5" CHECKSUM="15784ac183798710a4eec8c230a3c3c3" SEQ="1" CREATED="2026-11-12T10:00:00">
+        <mets:FLocat LOCTYPE="URL" xlink:href="/txt/txt_5e0b0003-0000-4000-8000-000000000140_0002.txt"/>
+      </mets:file>
+    </mets:fileGrp>
+  </mets:fileSec>
+  <mets:structMap TYPE="PHYSICAL" LABEL="Physical_Structure">
+    <mets:div ID="DIV_P_ART_0002" TYPE="EPERIODICAL_ARTICLE" ORDER="2">
+      <mets:fptr FILEID="mc_5e0b0003-0000-4000-8000-000000000140_0002"/>
+      <mets:fptr FILEID="uc_5e0b0003-0000-4000-8000-000000000140_0002"/>
+      <mets:fptr FILEID="alto_5e0b0003-0000-4000-8000-000000000140_0002"/>
+      <mets:fptr FILEID="txt_5e0b0003-0000-4000-8000-000000000140_0002"/>
+    </mets:div>
+  </mets:structMap>
+</mets:mets>

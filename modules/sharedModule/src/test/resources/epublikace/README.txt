@@ -10,6 +10,10 @@ Balíčky <fDMF>/<název>/<PSP-ID> vygenerované nástrojem src/test/tools/gen_e
 modules/sharedModule), příkaz: python3 src/test/tools/gen_epub_package.py src/test/resources/epublikace/<cesta> <parametry>.
 Seznam mutací: --list-mutations. Testy: EpubSmokeTest (bez nástrojů), EpubWithToolsTest (veraPDF, EPUBCheck).
 PSP-ID je název cílového adresáře: u e-monografie druhá část URN:NBN svazku, u e-periodik UUID čísla.
+Skládaná e-periodika: valid_a_* a mutace bez předpony b_ jsou varianta A (DMF 1.3 kap. 3.1), valid_b_* a b_* varianta B
+(doskeny zpracované jako obrazy, kap. 3.2): první --scanned články jsou doskeny (mastercopy, usercopy s JPEG 2000
+z src/test/tools/jp2, alto, txt, amd_mets strany s PREMIS a MIX), ostatní mají archivní kopii v original; pořadové číslo
+v názvech souborů je pořadí článku a je společné pro všechny soubory článku.
 
   emonograph_3.0/valid_pdf/aba007-p5m301                                           --type emo --version 3.0 --format pdf
   emonograph_3.0/valid_epub/aba007-p5m302                                          --type emo --version 3.0 --format epub
@@ -37,6 +41,12 @@ PSP-ID je název cílového adresáře: u e-monografie druhá část URN:NBN sva
   composed_perio_1.3/volume_urnnbn/5e0b0003-0000-4000-8000-000000000133            --type sep --version 1.3 --mutation volume-urnnbn
   composed_perio_1.3/oc_filegrp_ebgrp/5e0b0003-0000-4000-8000-000000000134         --type sep --version 1.3 --mutation oc-filegrp-ebgrp
   composed_perio_1.3/originaldata_bad_name/5e0b0003-0000-4000-8000-000000000135    --type sep --version 1.3 --with-originaldata --mutation originaldata-bad-name
+  composed_perio_1.3/valid_b_pdf_originaldata/5e0b0003-0000-4000-8000-000000000136 --type sep --version 1.3 --variant b --articles 3 --scanned 1 --with-originaldata
+  composed_perio_1.3/valid_b_epub_alto20/5e0b0003-0000-4000-8000-000000000137      --type sep --version 1.3 --variant b --format epub --articles 3 --scanned 2 --alto-version 2.0
+  composed_perio_1.3/b_missing_alto_dir/5e0b0003-0000-4000-8000-000000000138       --type sep --version 1.3 --variant b --mutation b-missing-alto-dir
+  composed_perio_1.3/b_mc_uc_count_mismatch/5e0b0003-0000-4000-8000-000000000139   --type sep --version 1.3 --variant b --articles 3 --scanned 2 --mutation b-mc-uc-count-mismatch
+  composed_perio_1.3/b_alto_mixed_versions/5e0b0003-0000-4000-8000-000000000140    --type sep --version 1.3 --variant b --articles 3 --scanned 2 --mutation b-alto-mixed-versions
+  composed_perio_1.3/b_page_amdmets_missing/5e0b0003-0000-4000-8000-000000000141   --type sep --version 1.3 --variant b --mutation b-page-amdmets-missing
   emonograph_3.0/pdf_not_pdfa/aba007-p5m305                                        --type emo --version 3.0 --pdf src/test/resources/epublikace/synteticky_bez_pdfa.pdf
 
 Pozitivní balíčky jsou bez ERROR (Resolver URN:NBN a externí nástroje vypnuté). Co tvrdí jednotlivé testy, je

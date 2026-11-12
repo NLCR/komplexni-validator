@@ -79,6 +79,58 @@
         <expression caseSensitive="true">conv_${PSP_ID}_[0-9]{4}\.xml</expression>
     </pattern-def>
 
+    <!--Varianta B (doskeny zpracované jako obrazy, DMF Skládaná e-periodika 1.3, kap. 3.2, s. 8–10): složky mastercopy,
+    usercopy, alto a txt jsou povinné jen v této variantě, ve variantě A (kap. 3.1) chybějí. Názvy souborů podle kap. 4,
+    s. 12: předpona, PSP-ID, pořadové číslo o čtyřech číslicích, přípona.-->
+
+    <pattern-def name="MASTER-COPY-DIR_FILENAME">
+        <description>Vzor pro jméno adresáře MASTER-COPY-DIR (kap. 3.2.4, s. 10, jen varianta B).</description>
+        <expression caseSensitive="true">mastercopy</expression>
+    </pattern-def>
+
+    <pattern-def name="USER-COPY-DIR_FILENAME">
+        <description>Vzor pro jméno adresáře USER-COPY-DIR (kap. 3.2.5, s. 10, jen varianta B).</description>
+        <expression caseSensitive="true">usercopy</expression>
+    </pattern-def>
+
+    <pattern-def name="OCR-ALTO-DIR_FILENAME">
+        <description>Vzor pro jméno adresáře OCR-ALTO-DIR (kap. 3.2.6, s. 10, jen varianta B).</description>
+        <expression caseSensitive="true">alto</expression>
+    </pattern-def>
+
+    <pattern-def name="OCR-TEXT-DIR_FILENAME">
+        <description>Vzor pro jméno adresáře OCR-TEXT-DIR (kap. 3.2.7, s. 10, jen varianta B).</description>
+        <expression caseSensitive="true">txt</expression>
+    </pattern-def>
+
+    <pattern-def name="MASTER-COPY_FILENAME">
+        <description>Vzor pro jména souborů MASTER-COPY (kap. 4, s. 12: předpona "mc", přípona .jp2, např.
+            mc_nk-00027x_0001.jp2).
+        </description>
+        <expression caseSensitive="true">mc_${PSP_ID}_[0-9]{4}\.jp2</expression>
+    </pattern-def>
+
+    <pattern-def name="USER-COPY_FILENAME">
+        <description>Vzor pro jména souborů USER-COPY (kap. 4, s. 12: předpona "uc", přípona .jp2, např.
+            uc_nk-00027x_0001.jp2).
+        </description>
+        <expression caseSensitive="true">uc_${PSP_ID}_[0-9]{4}\.jp2</expression>
+    </pattern-def>
+
+    <pattern-def name="OCR-ALTO_FILENAME">
+        <description>Vzor pro jména souborů OCR-ALTO (kap. 4, s. 12: předpona "alto", přípona .xml, např.
+            alto_nk-00027x_0001.xml).
+        </description>
+        <expression caseSensitive="true">alto_${PSP_ID}_[0-9]{4}\.xml</expression>
+    </pattern-def>
+
+    <pattern-def name="OCR-TEXT_FILENAME">
+        <description>Vzor pro jména souborů OCR-TEXT (kap. 4, s. 12: předpona "txt", přípona .txt, např.
+            txt_nk-00027x_0001.txt).
+        </description>
+        <expression caseSensitive="true">txt_${PSP_ID}_[0-9]{4}\.txt</expression>
+    </pattern-def>
+
     <pattern-def name="ANY_FILENAME">
         <description>Vzor pro libovolný soubor. Slouží k nalezení všech souborů v nepovinném adresáři ORIGINALDATA-DIR,
             aby se daly započítat do kontrolních součtů a seznamu souborů v INFO i se špatným názvem (ten hlásí
