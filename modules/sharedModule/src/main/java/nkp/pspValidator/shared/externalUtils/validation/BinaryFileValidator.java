@@ -5,9 +5,11 @@ import com.mycila.xmltool.XMLTag;
 import nkp.pspValidator.shared.NamespaceContextImpl;
 import nkp.pspValidator.shared.Version;
 import nkp.pspValidator.shared.XmlUtils;
+import nkp.pspValidator.shared.engine.Level;
 import nkp.pspValidator.shared.engine.exceptions.ValidatorConfigurationException;
 import nkp.pspValidator.shared.externalUtils.*;
 import nkp.pspValidator.shared.externalUtils.validation.extractions.AllNonemptyByRegexpDataExtraction;
+import nkp.pspValidator.shared.externalUtils.validation.extractions.AllNonemptyByXpathDataExctraction;
 import nkp.pspValidator.shared.externalUtils.validation.extractions.FirstNonemptyByRegexpDataExtraction;
 import nkp.pspValidator.shared.externalUtils.validation.extractions.FirstNonemptyByXpathDataExctraction;
 import nkp.pspValidator.shared.externalUtils.validation.rules.MustExistDR;
@@ -168,8 +170,16 @@ public class BinaryFileValidator {
     private DataExtraction buildXmlDataExtraction(NamespaceContextImpl nsContext, Element extractionEl) throws ValidatorConfigurationException {
         String resultTypeStr = extractionEl.getAttribute("resultType");
         ExtractionResultType resultType = ExtractionResultType.valueOf(resultTypeStr);
+        Element allNonemptyEl = XmlUtils.getFirstChildElementsByName(extractionEl, "allNonempty");
         Element firstNonemptyEl = XmlUtils.getFirstChildElementsByName(extractionEl, "firstNonempty");
-        if (firstNonemptyEl != null) {
+        if (allNonemptyEl != null) {
+            List<String> xpaths = new ArrayList<>();
+            List<Element> xpathEls = XmlUtils.getChildrenElementsByName(allNonemptyEl, "xpath");
+            for (Element xpathEl : xpathEls) {
+                xpaths.add(xpathEl.getTextContent().trim());
+            }
+            return new AllNonemptyByXpathDataExctraction(resultType, nsContext, xpaths);
+        } else if (firstNonemptyEl != null) {
             List<String> xpaths = new ArrayList<>();
             List<Element> xpathEls = XmlUtils.getChildrenElementsByName(firstNonemptyEl, "xpath");
             for (Element xpathEl : xpathEls) {
@@ -185,12 +195,14 @@ public class BinaryFileValidator {
         //mustNotExist
         //mustMatch
 
+        //volitelna uroven pravidla (atribut level), bez nej plati validation_problem_level z rules.xml
+        Level level = buildRuleLevel(ruleEl);
         switch (ruleEl.getTagName()) {
             case "mustExist": {
-                return new MustExistDR(validationName);
+                return new MustExistDR(validationName, level);
             }
             case "mustNotExist": {
-                return new MustNotExistDR(validationName);
+                return new MustNotExistDR(validationName, level);
             }
             case "mustMatchAny": {
                 List<Constraint> constraints = new ArrayList<>();
@@ -198,10 +210,22 @@ public class BinaryFileValidator {
                 for (Element constraintEl : constraintEls) {
                     constraints.add(buildConstraint(constraintEl));
                 }
-                return new MustMatchAnyDR(validationName, constraints);
+                return new MustMatchAnyDR(validationName, level, constraints);
             }
             default:
                 throw new ValidatorConfigurationException("nečekaný element %s", ruleEl.getTagName());
+        }
+    }
+
+    private Level buildRuleLevel(Element ruleEl) throws ValidatorConfigurationException {
+        String levelStr = ruleEl.getAttribute("level");
+        if (levelStr == null || levelStr.trim().isEmpty()) {
+            return null;
+        }
+        try {
+            return Level.valueOf(levelStr.trim());
+        } catch (IllegalArgumentException e) {
+            throw new ValidatorConfigurationException("neplatná úroveň pravidla %s: %s", ruleEl.getTagName(), levelStr);
         }
     }
 
@@ -215,6 +239,10 @@ public class BinaryFileValidator {
             case "endsWith": {
                 String suffix = constraintEl.getTextContent().trim();
                 return new EndsWithConstraint(suffix);
+            }
+            case "startsWith": {
+                String prefix = constraintEl.getTextContent().trim();
+                return new StartsWithConstraint(prefix);
             }
             case "isInFloatRange": {
                 Element minEl = XmlUtils.getFirstChildElementsByName(constraintEl, "min");

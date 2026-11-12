@@ -104,10 +104,12 @@
         <xs:sequence>
             <xs:element name="isExactly" type="xs:string" minOccurs="0" maxOccurs="unbounded"/>
             <xs:element name="endsWith" type="xs:string" minOccurs="0" maxOccurs="unbounded"/>
+            <xs:element name="startsWith" type="xs:string" minOccurs="0" maxOccurs="unbounded"/>
             <xs:element name="isInIntRange" type="bfp:intRangeType" minOccurs="0"/>
             <xs:element name="isInFloatRange" type="bfp:floatRangeType" minOccurs="0"/>
             <xs:element name="nTimesXRemainingY" type="bfp:nTimesXRemainingYType" minOccurs="0"/>
         </xs:sequence>
+        <xs:attribute name="level" type="bfp:levelType" use="optional"/>
     </xs:complexType>
 
     <xs:complexType name="intRangeType">
@@ -132,6 +134,17 @@
         </xs:sequence>
     </xs:complexType>
 
-    <xs:complexType name="emptyElementType"/>
+    <xs:complexType name="emptyElementType">
+        <xs:attribute name="level" type="bfp:levelType" use="optional"/>
+    </xs:complexType>
+
+    <!-- úroveň problémů pravidla (nkp.pspValidator.shared.engine.Level); bez atributu platí validation_problem_level z rules.xml -->
+    <xs:simpleType name="levelType">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="INFO"/>
+            <xs:enumeration value="WARNING"/>
+            <xs:enumeration value="ERROR"/>
+        </xs:restriction>
+    </xs:simpleType>
 
 </xs:schema>

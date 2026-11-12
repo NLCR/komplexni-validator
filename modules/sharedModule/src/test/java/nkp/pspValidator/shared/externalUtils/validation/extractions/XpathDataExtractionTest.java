@@ -215,6 +215,48 @@ public class XpathDataExtractionTest {
         }
     }
 
+    // allNonempty (profily EPUBCheck), vystup EPUBCheck 5.4.0
+
+    private static Object allNonempty(Document doc, String... xpaths) throws DataExtraction.ExtractionException {
+        return new AllNonemptyByXpathDataExctraction(ExtractionResultType.STRING_LIST, JHOVE_NS, Arrays.asList(xpaths)).extract(doc);
+    }
+
+    @Test
+    public void allNonemptyCollectsAllNodesOfAllXpaths() throws Exception {
+        Document sway = outputXml("epubcheck", "wellformed_epub2_Sway.xml");
+        assertEquals(Arrays.asList("image/jpeg", "application/xhtml+xml", "text/css", "application/x-dtbncx+xml"),
+                allNonempty(sway, "//j:repInfo/j:version[starts-with(text(),'2.')]/..//j:property/j:name[text()='MediaTypes']/../j:values/j:value"));
+        // vic XPath: vysledky za sebou v poradi vyrazu
+        assertEquals(Arrays.asList("2.0.1", "Well-formed", "image/jpeg"),
+                allNonempty(sway, "//j:repInfo/j:version", "//j:repInfo/j:status", "//j:values/j:value[text()='image/jpeg']"));
+    }
+
+    @Test
+    public void allNonemptyWithoutMatchIsEmptyList() throws Exception {
+        // EPUB 2: vyraz pro EPUB 3 nic nenajde, prazdny seznam (mustMatchAny pak projde, mustNotExist taky)
+        Document sway = outputXml("epubcheck", "wellformed_epub2_Sway.xml");
+        assertEquals(Collections.emptyList(),
+                allNonempty(sway, "//j:repInfo/j:version[starts-with(text(),'3.')]/..//j:property/j:name[text()='MediaTypes']/../j:values/j:value"));
+        assertEquals(Collections.emptyList(), allNonempty(sway, "//j:repInfo/j:messages/j:message"));
+    }
+
+    @Test
+    public void allNonemptyMessages() throws Exception {
+        List<?> messages = (List<?>) allNonempty(outputXml("epubcheck", "empty.xml"), "//j:repInfo/j:messages/j:message");
+        assertEquals(2, messages.size());
+        assertTrue(messages.get(0).toString(), messages.get(0).toString().startsWith("PKG-008, FATAL, [Unable to read file"));
+    }
+
+    @Test
+    public void allNonemptyInvalidXpathIsWrappedOnce() {
+        try {
+            allNonempty(jhoveMc, "//j:[");
+            fail();
+        } catch (DataExtraction.ExtractionException e) {
+            assertTrue(e.getMessage(), e.getMessage().startsWith("chyba v zápisu Xpath '//j:['"));
+        }
+    }
+
     @Test
     public void resultTypeIsKept() {
         List<String> paths = Collections.singletonList("/");

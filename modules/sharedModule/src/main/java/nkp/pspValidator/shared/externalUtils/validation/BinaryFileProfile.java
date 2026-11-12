@@ -1,5 +1,6 @@
 package nkp.pspValidator.shared.externalUtils.validation;
 
+import nkp.pspValidator.shared.engine.Level;
 import nkp.pspValidator.shared.engine.exceptions.ExternalUtilOutputParsingException;
 import nkp.pspValidator.shared.externalUtils.CliCommand;
 import nkp.pspValidator.shared.externalUtils.ExternalUtil;
@@ -29,28 +30,50 @@ public abstract class BinaryFileProfile {
         validations.add(validation);
     }
 
+    /**
+     * Texty problémů bez úrovní, viz {@link #validateProblems(String, File)}.
+     */
     public List<String> validate(String executionName, File imageFile) {
-        List<String> totalErrors = new ArrayList<>();
-        String toolRawOutput = null;
-        try {
-            toolRawOutput = runExternalUtil(executionName, imageFile);
-            Object processedOutput = processExternalUtilOutput(toolRawOutput, externalUtil);
-            for (Validation validation : validations) {
-                try {
-                    List<String> validationErrors = validation.validate(processedOutput);
-                    totalErrors.addAll(validationErrors);
-                } catch (DataExtraction.ExtractionException e) {
-                    e.printStackTrace();
-                    totalErrors.add(e.getMessage());
-                }
-            }
-        } catch (CliCommand.CliCommandException e) {
-            totalErrors.add(e.getMessage());
-        } catch (ExternalUtilOutputParsingException e) {
-            totalErrors.add(e.getMessage());
-        } finally {
-            return totalErrors;
+        List<String> messages = new ArrayList<>();
+        for (Validation.Problem problem : validateProblems(executionName, imageFile)) {
+            messages.add(problem.getMessage());
         }
+        return messages;
+    }
+
+    /**
+     * Spustí nástroj nad souborem a vyhodnotí všechny validace profilu.
+     * <p>
+     * Chyba spuštění nástroje, parsování výstupu nebo extrakce hodnoty je problém s úrovní null (úroveň z rules.xml).
+     * Neočekávaná výjimka (např. NullPointerException, ClassCastException při chybné konfiguraci profilu) se nepolyká:
+     * je to problém úrovně ERROR a ostatní validace se vyhodnotí dál.
+     */
+    public List<Validation.Problem> validateProblems(String executionName, File file) {
+        List<Validation.Problem> problems = new ArrayList<>();
+        Object processedOutput;
+        try {
+            String toolRawOutput = runExternalUtil(executionName, file);
+            processedOutput = processExternalUtilOutput(toolRawOutput, externalUtil);
+        } catch (CliCommand.CliCommandException | ExternalUtilOutputParsingException e) {
+            problems.add(new Validation.Problem(null, e.getMessage()));
+            return problems;
+        } catch (RuntimeException e) {
+            problems.add(new Validation.Problem(Level.ERROR,
+                    String.format("neočekávaná chyba při zpracování výstupu nástroje %s: %s", externalUtil.getUserFriendlyName(), e)));
+            return problems;
+        }
+        for (Validation validation : validations) {
+            try {
+                problems.addAll(validation.validate(processedOutput));
+            } catch (DataExtraction.ExtractionException e) {
+                e.printStackTrace();
+                problems.add(new Validation.Problem(null, e.getMessage()));
+            } catch (RuntimeException e) {
+                problems.add(new Validation.Problem(Level.ERROR,
+                        String.format("%s: neočekávaná chyba při vyhodnocení: %s", validation.getName(), e)));
+            }
+        }
+        return problems;
     }
 
     String runExternalUtil(String executionName, File imageFile) throws CliCommand.CliCommandException {

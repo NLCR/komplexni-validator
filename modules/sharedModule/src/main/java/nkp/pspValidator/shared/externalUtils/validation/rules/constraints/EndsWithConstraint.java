@@ -11,9 +11,8 @@ public class EndsWithConstraint implements Constraint {
 
     @Override
     public boolean matches(Object data) {
-        String dataStr = data.toString();
-        //System.out.println("data: '" + dataStr + "'");
-        return dataStr.endsWith(suffix);
+        //null = hodnota nenalezena, neodpovida
+        return data != null && data.toString().endsWith(suffix);
     }
 
     public String toString() {

@@ -36,16 +36,11 @@ public class ConstraintsTest {
     }
 
     @Test
-    public void isExactlyNullThrowsNpe() {
-        // známá vada: null (hodnota nenalezena) neni osetrena, matches(null) skonci NullPointerException.
-        // V profilech pred mustMatchAny vzdy stoji mustExist a Validation konci u prvniho pravidla s chybou,
-        // takze se null k omezeni v praxi nedostane.
-        try {
-            new IsExactlyConstraint("x").matches(null);
-            fail("očekávána NullPointerException");
-        } catch (NullPointerException e) {
-            // soucasne chovani
-        }
+    public void isExactlyNullDoesNotMatch() {
+        // null = hodnota nenalezena (napr. chybejici repInfo/version u necitelneho EPUB); driv NullPointerException
+        // (nalez 28), dnes nevyhovi a mustMatchAny nahlasi 'hodnota "null" neodpovídá ...'
+        assertFalse(new IsExactlyConstraint("x").matches(null));
+        assertFalse(new IsExactlyConstraint("null").matches(null));
     }
 
     @Test
@@ -78,19 +73,49 @@ public class ConstraintsTest {
     }
 
     @Test
-    public void endsWithNullThrowsNpe() {
-        // známá vada: stejne jako isExactly, null neni osetrena
-        try {
-            new EndsWithConstraint("x").matches(null);
-            fail("očekávána NullPointerException");
-        } catch (NullPointerException e) {
-            // soucasne chovani
-        }
+    public void endsWithNullDoesNotMatch() {
+        // stejne jako isExactly (nalez 28)
+        assertFalse(new EndsWithConstraint("x").matches(null));
+        assertFalse(new EndsWithConstraint("").matches(null));
     }
 
     @Test
     public void endsWithToString() {
         assertEquals("musí končit na '.jp2'", new EndsWithConstraint(".jp2").toString());
+    }
+
+    // startsWith
+
+    @Test
+    public void startsWithMatchesPrefixCaseSensitive() {
+        // profil veraPDF z VEP: startsWith "PDF/A-1B", veraPDF 1.30 ale vypisuje "PDF/A-1b validation profile" (riziko R1)
+        StartsWithConstraint c = new StartsWithConstraint("PDF/A-1B");
+        assertTrue(c.matches("PDF/A-1B validation profile"));
+        assertTrue(c.matches("PDF/A-1B"));
+        assertFalse(c.matches("PDF/A-1b validation profile"));
+        assertFalse(c.matches(" PDF/A-1B"));
+        assertFalse(c.matches(null));
+    }
+
+    @Test
+    public void startsWithUsesToStringOfData() {
+        assertTrue(new StartsWithConstraint("40").matches(4096));
+        assertTrue(new StartsWithConstraint("").matches("cokoli"));
+    }
+
+    @Test
+    public void startsWithToString() {
+        assertEquals("musí začínat na 'PDF/A-2U'", new StartsWithConstraint("PDF/A-2U").toString());
+    }
+
+    @Test
+    public void onlyNTimesXRemainingYAppliesToWholeList() {
+        assertTrue(new NTimesXRemainingYConstraint(1, "a", "b").appliesToWholeList());
+        assertFalse(new IsExactlyConstraint("a").appliesToWholeList());
+        assertFalse(new EndsWithConstraint("a").appliesToWholeList());
+        assertFalse(new StartsWithConstraint("a").appliesToWholeList());
+        assertFalse(new IsInIntRangeConstraint(1, 2).appliesToWholeList());
+        assertFalse(new IsInFloatRangeConstraint(1f, 2f).appliesToWholeList());
     }
 
     // isInIntRange

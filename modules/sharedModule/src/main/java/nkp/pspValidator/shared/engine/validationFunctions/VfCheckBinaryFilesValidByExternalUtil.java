@@ -11,6 +11,7 @@ import nkp.pspValidator.shared.externalUtils.ExternalUtilExecution;
 import nkp.pspValidator.shared.externalUtils.ResourceType;
 import nkp.pspValidator.shared.externalUtils.validation.BinaryFileProfile;
 import nkp.pspValidator.shared.externalUtils.validation.BinaryFileValidator;
+import nkp.pspValidator.shared.externalUtils.validation.Validation;
 
 import java.io.File;
 import java.util.List;
@@ -27,6 +28,8 @@ public class VfCheckBinaryFilesValidByExternalUtil extends ValidationFunction {
     public static final String PARAM_UTIL = "util";
     public static final String PARAM_EXECUTION = "execution";
     public static final String PARAM_VALIDATION_PROBLEM_LEVEL = "validation_problem_level";
+    //prazdny seznam souboru neni problem (napr. e-publikace ma soubor bud PDF, nebo EPUB, druhy seznam je prazdny)
+    public static final String PARAM_IGNORE_EMPTY_FILE_LIST = "ignore_empty_file_list";
 
     public VfCheckBinaryFilesValidByExternalUtil(String name, Engine engine) {
         super(name, engine, new Contract()
@@ -36,6 +39,7 @@ public class VfCheckBinaryFilesValidByExternalUtil extends ValidationFunction {
                 .withValueParam(PARAM_UTIL, ValueType.EXTERNAL_UTIL, 1, 1)
                 .withValueParam(PARAM_EXECUTION, ValueType.STRING, 1, 1)
                 .withValueParam(PARAM_VALIDATION_PROBLEM_LEVEL, ValueType.LEVEL, 0, 1)
+                .withValueParam(PARAM_IGNORE_EMPTY_FILE_LIST, ValueType.BOOLEAN, 0, 1)
         );
     }
 
@@ -51,11 +55,21 @@ public class VfCheckBinaryFilesValidByExternalUtil extends ValidationFunction {
                 noFilesProblemLevel = (Level) eval.getData();
             }
 
+            boolean ignoreEmptyFileList = false;
+            List<ValueParam> ignoreEmptyFileListParams = valueParams.getParams(PARAM_IGNORE_EMPTY_FILE_LIST);
+            if (ignoreEmptyFileListParams.size() == 1) {
+                ValueEvaluation eval = ignoreEmptyFileListParams.get(0).getEvaluation();
+                ignoreEmptyFileList = Boolean.TRUE.equals(eval.getData());
+            }
+
             ValueEvaluation paramFiles = valueParams.getParams(PARAM_FILES).get(0).getEvaluation();
             List<File> files = (List<File>) paramFiles.getData();
             if (files == null) {
                 return invalidValueParamNull(PARAM_FILES, paramFiles);
             } else if (files.isEmpty()) {
+                if (ignoreEmptyFileList) {
+                    return ValidationResult.ok();
+                }
                 return singlErrorResult(invalid(noFilesProblemLevel, null, "prázdný seznam souborů"));
             }
 
@@ -134,13 +148,15 @@ public class VfCheckBinaryFilesValidByExternalUtil extends ValidationFunction {
             for (File file : files) {
                 //System.out.println(String.format("validating (%s): %s", profile, file.getAbsolutePath()));
                 try {
-                    List<String> problems = profile.validate(execution.getName(), file);
-                    for (String problem : problems) {
+                    List<Validation.Problem> problems = profile.validateProblems(execution.getName(), file);
+                    for (Validation.Problem problem : problems) {
+                        //uroven pravidla z profilu (atribut level) ma prednost pred validation_problem_level
+                        Level levelApplied = problem.getLevel() != null ? problem.getLevel() : level;
                         result.addError(
                                 //invalid(level, file, "%s", problem)
-                                new ValidationProblem(level, problem)
+                                new ValidationProblem(levelApplied, problem.getMessage())
                                         .withReferencedFile(file)
-                                        .withSimpleMessage(problem)
+                                        .withSimpleMessage(problem.getMessage())
                                         .withToolName(execution.getUtil().getUserFriendlyName())
                         );
                     }

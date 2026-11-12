@@ -19,6 +19,11 @@ public class NTimesXRemainingYConstraint implements Constraint {
     }
 
     @Override
+    public boolean appliesToWholeList() {
+        return true;
+    }
+
+    @Override
     public boolean matches(Object data) {
         if (data == null) {
             return false;

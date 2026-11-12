@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jhove xmlns="http://schema.openpreservation.org/ois/xml/ns/jhove"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        date="2026-09-15"
+        name="epubcheck"
+        release="5.4.0"
+        xsi:schemaLocation="http://schema.openpreservation.org/ois/xml/ns/jhove https://schema.openpreservation.org/ois/xml/xsd/jhove/jhove.xsd">
+   <date>2026-11-12T13:28:01+01:00</date>
+   <repInfo uri="Sway.epub">
+      <created>2019-12-07T02:31:02Z</created>
+      <format>application/epub+zip</format>
+      <version>2.0.1</version>
+      <status>Well-formed</status>
+      <mimeType>application/epub+zip</mimeType>
+      <properties>
+         <property>
+            <name>FileName</name>
+            <values arity="Scalar" type="String">
+               <value>Sway.epub</value>
+            </values>
+         </property>
+         <property>
+            <name>CharacterCount</name>
+            <values arity="Scalar" type="Long">
+               <value>40121</value>
+            </values>
+         </property>
+         <property>
+            <name>Language</name>
+            <values arity="Scalar" type="String">
+               <value>en</value>
+            </values>
+         </property>
+         <property>
+            <name>Info</name>
+            <values arity="List" type="Property">
+               <property>
+                  <name>Identifier</name>
+                  <values arity="Scalar" type="String">
+                     <value>a242af33-73b7-434b-8cde-511565f4f860</value>
+                  </values>
+               </property>
+               <property>
+                  <name>CreationDate</name>
+                  <values arity="Scalar" type="Date">
+                     <value>2019-12-07T02:31:02Z</value>
+                  </values>
+               </property>
+               <property>
+                  <name>Title</name>
+                  <values arity="Scalar" type="String">
+                     <value>Sway</value>
+                  </values>
+               </property>
+               <property>
+                  <name>Creator</name>
+                  <values arity="Scalar" type="String">
+                     <value>Zachary Lazar</value>
+                  </values>
+               </property>
+               <property>
+                  <name>Contributor</name>
+                  <values arity="Scalar" type="String">
+                     <value>calibre (3.21.0) [http://calibre-ebook.com]</value>
+                  </values>
+               </property>
+               <property>
+                  <name>Date</name>
+                  <values arity="Scalar" type="String">
+                     <value>2008-01-07T00:00:00+00:00</value>
+                  </values>
+               </property>
+               <property>
+                  <name>Publisher</name>
+                  <values arity="Scalar" type="String">
+                     <value>Little, Brown and Company</value>
+                  </values>
+               </property>
+               <property>
+                  <name>Subject</name>
+                  <values arity="Scalar" type="String">
+                     <value>FIC000000</value>
+                  </values>
+               </property>
+               <property>
+                  <name>Rights</name>
+                  <values arity="Scalar" type="String">
+                     <value>WORLD ALL LANGUAGES</value>
+                  </values>
+               </property>
+            </values>
+         </property>
+         <property>
+            <name>References</name>
+            <values arity="List" type="Property">
+               <property>
+                  <name>Reference</name>
+                  <values arity="Scalar" type="String">
+                     <value>http://www.HachetteBookGroupUSA.com</value>
+                  </values>
+               </property>
+            </values>
+         </property>
+         <property>
+            <name>MediaTypes</name>
+            <values arity="Array" type="String">
+               <value>image/jpeg</value>
+               <value>application/xhtml+xml</value>
+               <value>text/css</value>
+               <value>application/x-dtbncx+xml</value>
+            </values>
+         </property>
+      </properties>
+   </repInfo>
+</jhove>

@@ -1,5 +1,7 @@
 package nkp.pspValidator.shared.externalUtils.validation;
 
+import nkp.pspValidator.shared.engine.Level;
+import nkp.pspValidator.shared.engine.exceptions.ValidatorConfigurationException;
 import nkp.pspValidator.shared.externalUtils.ExternalUtil;
 import nkp.pspValidator.shared.externalUtils.ExternalUtilExecution;
 import nkp.pspValidator.shared.externalUtils.ExternalUtilsTestSupport;
@@ -11,6 +13,9 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
 
+import javax.xml.XMLConstants;
+import javax.xml.transform.stream.StreamSource;
+import javax.xml.validation.SchemaFactory;
 import java.io.File;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
@@ -25,6 +30,9 @@ import static org.junit.Assert.*;
  * (BinaryFileValidator.registerProfile) a vyhodnocene nad ulozenymi vystupy nastroju bez spusteni procesu
  * (CannedOutputExternalUtilManager). Ocekavane chyby odpovidaji soucasnemu chovani pri vystupech
  * Jpylyzer 2.2.0, JHOVE 1.29, Kakadu 8.5 a ImageMagick 7.1 (viz src/test/resources/externalUtils/README.md).
+ * <p>
+ * Profily veraPDF a EPUBCheck jsou zatim fixture vep-2.4_emonograph_3.0 (kopie profilu VEP 2.4 s jmennym prostorem 3.0),
+ * vystupy veraPDF 1.30 a EPUBCheck 5.4.0.
  */
 public class BinaryFileProfileTest {
 
@@ -65,6 +73,10 @@ public class BinaryFileProfileTest {
                 return "kakadu";
             case IMAGE_MAGICK:
                 return "imageMagick";
+            case VERAPDF:
+                return "verapdf";
+            case EPUBCHECK:
+                return "epubcheck";
             default:
                 throw new IllegalArgumentException(util.name());
         }
@@ -255,27 +267,48 @@ public class BinaryFileProfileTest {
     }
 
     @Test
-    public void unexpectedExceptionIsSwallowed() throws Exception {
-        // známá vada: BinaryFileProfile.validate konci "finally { return totalErrors; }", ktery spolkne kazdou
-        // neocekavanou vyjimku (NullPointerException, ClassCastException ...). Soubor pak projde bez jedine chyby.
-        // Zde null vystup u XML profilu (NPE v XmlUtils.buildDocumentFromString).
+    public void unexpectedExceptionIsReported() throws Exception {
+        // drive "finally { return totalErrors; }" kazdou neocekavanou vyjimku spolkl a soubor prosel bez chyby (nalez 23);
+        // dnes je to problem urovne ERROR. Zde null vystup u XML profilu (NPE v XmlUtils.buildDocumentFromString).
         CannedOutputExternalUtilManager manager = new CannedOutputExternalUtilManager().withOutput(ExternalUtil.JPYLYZER, null);
         BinaryFileProfile profile = loadProfile(manager, FDMF, "mc", ExternalUtil.JPYLYZER);
-        assertEquals(Collections.emptyList(), profile.validate("jp2k", DUMMY_FILE));
+        List<Validation.Problem> problems = profile.validateProblems("jp2k", DUMMY_FILE);
+        assertEquals(problems.toString(), 1, problems.size());
+        assertEquals(Level.ERROR, problems.get(0).getLevel());
+        assertTrue(problems.get(0).getMessage(), problems.get(0).getMessage().startsWith("neočekávaná chyba při zpracování výstupu nástroje Jpylyzer: java.lang.NullPointerException"));
     }
 
     @Test
-    public void unexpectedExceptionInConstraintStopsValidationSilently() throws Exception {
-        // známá vada: chybne nakonfigurovane omezeni (isInIntRange nad resultType STRING) vyhodi ClassCastException,
-        // ta se spolkne (viz vyse) a dalsi validace se uz nevyhodnoti; chyba z prvni validace zustane
+    public void unexpectedExceptionInConstraintIsReportedAndOtherValidationsContinue() throws Exception {
+        // chybne nakonfigurovane omezeni (isInIntRange nad resultType STRING) vyhodi ClassCastException; drive se spolkla
+        // a dalsi validace se nevyhodnotily (nalez 23), dnes je to chyba ERROR teto validace a pokracuje se
         File profileFile = writeProfile("<fromText>"
                 + validationText("prvni", "(?m)^A.*$", "<mustNotExist/>")
                 + validationText("druha", "[0-9]+", "<mustMatchAny><isInIntRange><min>1</min></isInIntRange></mustMatchAny>")
                 + validationText("treti", "(?m)^C.*$", "<mustNotExist/>")
                 + "</fromText>");
         BinaryFileProfile profile = register(ExternalUtil.KAKADU, profileFile, "A1\n5\nC3");
-        assertEquals(Collections.singletonList("prvni: zakázaná hodnota nalezena: A1"),
-                profile.validate("jp2k", DUMMY_FILE));
+        List<Validation.Problem> problems = profile.validateProblems("jp2k", DUMMY_FILE);
+        assertEquals(problems.toString(), 3, problems.size());
+        assertEquals("prvni: zakázaná hodnota nalezena: A1", problems.get(0).toString());
+        assertEquals(Level.ERROR, problems.get(1).getLevel());
+        assertTrue(problems.get(1).getMessage(), problems.get(1).getMessage().startsWith("druha: neočekávaná chyba při vyhodnocení: java.lang.ClassCastException"));
+        assertEquals("treti: zakázaná hodnota nalezena: C3", problems.get(2).toString());
+    }
+
+    @Test
+    public void toolAndParsingProblemsHaveLevelFromRules() throws Exception {
+        // chyba spusteni nastroje, parsovani vystupu a extrakce: uroven null, tedy validation_problem_level z rules.xml
+        CannedOutputExternalUtilManager manager = new CannedOutputExternalUtilManager()
+                .withFailure(ExternalUtil.VERAPDF, "Cannot run program \"verapdf\": error=2, No such file or directory");
+        List<Validation.Problem> problems = loadProfile(manager, PDF_FIXTURE, "pdf", ExternalUtil.VERAPDF).validateProblems("pdf", DUMMY_FILE);
+        assertEquals(1, problems.size());
+        assertNull(problems.get(0).getLevel());
+        manager.withOutput(ExternalUtil.VERAPDF, "toto není xml");
+        problems = loadProfile(manager, PDF_FIXTURE, "pdf", ExternalUtil.VERAPDF).validateProblems("pdf", DUMMY_FILE);
+        assertEquals(1, problems.size());
+        assertNull(problems.get(0).getLevel());
+        assertTrue(problems.get(0).getMessage(), problems.get(0).getMessage().startsWith("chyba parsování xml (výstup nástroje VERAPDF)"));
     }
 
     @Test
@@ -325,12 +358,41 @@ public class BinaryFileProfileTest {
 
     @Test
     public void unknownConstraintFailsOnRegistration() throws Exception {
-        File profileFile = writeProfile("<fromText>" + validationFirst("x", "a", "<mustMatchAny><startsWith>a</startsWith></mustMatchAny>") + "</fromText>");
+        File profileFile = writeProfile("<fromText>" + validationFirst("x", "a", "<mustMatchAny><contains>a</contains></mustMatchAny>") + "</fromText>");
         try {
             new BinaryFileValidator(new CannedOutputExternalUtilManager()).registerProfile(ResourceType.IMAGE_MASTER_COPY, ExternalUtil.KAKADU, profileFile);
             fail();
         } catch (IllegalStateException e) {
-            assertEquals("unknown constraint startsWith", e.getMessage());
+            assertEquals("unknown constraint contains", e.getMessage());
+        }
+    }
+
+    @Test
+    public void startsWithAndLevelsInTextProfile() throws Exception {
+        File profileFile = writeProfile("<fromText>"
+                + validationFirst("verze", "(?m)^verze:.*$", "<mustExist level=\"ERROR\"/><mustMatchAny level=\"WARNING\"><startsWith>verze: 2.</startsWith></mustMatchAny>")
+                + validationText("hlasky", "(?m)^INFO.*$", "<mustNotExist level=\"INFO\"/>")
+                + validationText("chyby", "(?m)^E.*$", "<mustNotExist/>")
+                + "</fromText>");
+        assertEquals(Collections.emptyList(), register(ExternalUtil.KAKADU, profileFile, "verze: 2.1").validateProblems("jp2k", DUMMY_FILE));
+        assertEquals(Arrays.asList(
+                        "WARNING: verze: hodnota \"verze: 3.0\" neodpovídá žádnému z omezení: [musí začínat na 'verze: 2.']",
+                        "INFO: hlasky: zakázaná hodnota nalezena: INFO a",
+                        "chyby: zakázaná hodnota nalezena: E1"),
+                toStrings(register(ExternalUtil.KAKADU, profileFile, "verze: 3.0\nINFO a\nE1").validateProblems("jp2k", DUMMY_FILE)));
+        assertEquals(Collections.singletonList("ERROR: verze: kontrolovaná hodnota nenalezena"),
+                toStrings(register(ExternalUtil.KAKADU, profileFile, "nic").validateProblems("jp2k", DUMMY_FILE)));
+    }
+
+    @Test
+    public void invalidLevelFailsOnRegistration() throws Exception {
+        // XSD level nepusti (FdmfConfiguration profil validuje), parser to ale hlida i sam
+        File profileFile = writeProfile("<fromText>" + validationFirst("x", "a", "<mustExist level=\"FATAL\"/>") + "</fromText>");
+        try {
+            new BinaryFileValidator(new CannedOutputExternalUtilManager()).registerProfile(ResourceType.IMAGE_MASTER_COPY, ExternalUtil.KAKADU, profileFile);
+            fail();
+        } catch (ValidatorConfigurationException e) {
+            assertEquals("neplatná úroveň pravidla mustExist: FATAL", e.getMessage());
         }
     }
 
@@ -408,6 +470,141 @@ public class BinaryFileProfileTest {
             }
         }
         assertTrue("zkontrolováno: " + checked, checked >= 200);
+    }
+
+    // veraPDF 1.30 (fixture profilu vep-2.4_emonograph_3.0/pdf/veraPdf.xml)
+
+    private static final String PDF_FIXTURE = "vep-2.4_emonograph_3.0";
+    private static final String R1_WARNING = "WARNING: Soubor PDF/A by měl být v podporované verzi: hodnota \"%s\" neodpovídá žádnému z omezení: "
+            + "[musí začínat na 'PDF/A-1A',musí začínat na 'PDF/A-1B',musí začínat na 'PDF/A-2A',musí začínat na 'PDF/A-2B',musí začínat na 'PDF/A-2U']";
+    private static final String NOT_COMPLIANT = "Soubor musí být validní: hodnota \"false\" neodpovídá žádnému z omezení: [musí být přesně 'true']";
+
+    private static List<String> problems(ExternalUtil util, String copy, String outputName) throws Exception {
+        CannedOutputExternalUtilManager manager = new CannedOutputExternalUtilManager().withOutput(util, output(utilDir(util), outputName));
+        BinaryFileProfile profile = loadProfile(manager, PDF_FIXTURE, copy, util);
+        return toStrings(profile.validateProblems(copy, DUMMY_FILE));
+    }
+
+    private static List<String> toStrings(List<Validation.Problem> problems) {
+        List<String> result = new ArrayList<>();
+        for (Validation.Problem problem : problems) {
+            result.add(problem.toString());
+        }
+        return result;
+    }
+
+    @Test
+    public void veraPdfCompliantPdfA1bGetsWarningBecauseOfLowercaseLevel() throws Exception {
+        // riziko R1 (zafixovane dnesni chovani, oprava profilu je krok P4): veraPDF od 1.2x vypisuje "PDF/A-1b validation
+        // profile" s malym pismenem urovne, profil VEP ceka "PDF/A-1B" (startsWith rozlisuje velikost pismen), takze
+        // i vyhovujici PDF/A-1b dostane WARNING "nepodporovaná verze"
+        assertEquals(Collections.singletonList(String.format(R1_WARNING, "PDF/A-1b validation profile")),
+                problems(ExternalUtil.VERAPDF, "pdf", "compliant_PDFA-1B.xml"));
+        assertEquals(Collections.singletonList(String.format(R1_WARNING, "PDF/A-1a validation profile")),
+                problems(ExternalUtil.VERAPDF, "pdf", "compliant_PDFA-1A.xml"));
+        assertEquals(Collections.singletonList(String.format(R1_WARNING, "PDF/A-2b validation profile")),
+                problems(ExternalUtil.VERAPDF, "pdf", "compliant_PDFA-2B.xml"));
+        assertEquals(Collections.singletonList(String.format(R1_WARNING, "PDF/A-2u validation profile")),
+                problems(ExternalUtil.VERAPDF, "pdf", "compliant_PDFA-2U.xml"));
+    }
+
+    @Test
+    public void veraPdfCompliantPdfA3bIsUnsupportedVersion() throws Exception {
+        // PDF/A-3 profil VEP nepodporuje (zakomentovano), WARNING by byl i po oprave R1
+        assertEquals(Collections.singletonList(String.format(R1_WARNING, "PDF/A-3b validation profile")),
+                problems(ExternalUtil.VERAPDF, "pdf", "compliant_PDFA-3B.xml"));
+    }
+
+    @Test
+    public void veraPdfNonCompliant() throws Exception {
+        // bez urovne v profilu (mustMatchAny u isCompliant) plati validation_problem_level z rules.xml
+        assertEquals(Arrays.asList(NOT_COMPLIANT, String.format(R1_WARNING, "PDF/A-1b validation profile")),
+                problems(ExternalUtil.VERAPDF, "pdf", "noncompliant_dummy.xml"));
+        assertEquals(Arrays.asList(NOT_COMPLIANT, String.format(R1_WARNING, "PDF/A-2b validation profile")),
+                problems(ExternalUtil.VERAPDF, "pdf", "noncompliant_dummy_flavour_2b.xml"));
+        assertEquals(Arrays.asList(NOT_COMPLIANT, String.format(R1_WARNING, "PDF/A-3b validation profile")),
+                problems(ExternalUtil.VERAPDF, "pdf", "noncompliant_dummy_flavour_3b.xml"));
+    }
+
+    @Test
+    public void veraPdfEmptyOrUnreadableFile() throws Exception {
+        // prazdny nebo necitelny soubor: veraPDF vypise report bez validationReport (taskException PARSE)
+        List<String> expected = Arrays.asList(
+                "Soubor musí být validní: kontrolovaná hodnota nenalezena",
+                "Soubor PDF/A by měl být v podporované verzi: kontrolovaná hodnota nenalezena");
+        assertEquals(expected, problems(ExternalUtil.VERAPDF, "pdf", "empty.xml"));
+        assertEquals(expected, problems(ExternalUtil.VERAPDF, "pdf", "not_pdf.xml"));
+    }
+
+    // EPUBCheck 5.4.0 (fixture profilu vep-2.4_emonograph_3.0/epub/epubCheck.xml)
+
+    private static final String NOT_WELL_FORMED = "Soubor musí být validní: hodnota \"Not well-formed\" neodpovídá žádnému z omezení: [musí být přesně 'Well-formed']";
+
+    @Test
+    public void epubCheckWellFormedEpub2() throws Exception {
+        assertEquals(Collections.emptyList(), problems(ExternalUtil.EPUBCHECK, "epub", "wellformed_epub2_Sway.xml"));
+    }
+
+    @Test
+    public void epubCheckNotWellFormedEpub2() throws Exception {
+        assertEquals(Arrays.asList(NOT_WELL_FORMED,
+                        "WARNING: Detekce chybových hlášek: zakázaná hodnota nalezena: RSC-012, ERROR, [Fragment identifier is not defined.], toc.ncx (18-75)"),
+                problems(ExternalUtil.EPUBCHECK, "epub", "notwellformed_epub2_sample1.xml"));
+        // vzorek e-monografie 3.0 z official-samples: 48x RSC-005, kazda hlaska samostatny WARNING
+        List<String> emono = problems(ExternalUtil.EPUBCHECK, "epub", "notwellformed_epub2_emono30.xml");
+        assertEquals(49, emono.size());
+        assertEquals(NOT_WELL_FORMED, emono.get(0));
+        for (String problem : emono.subList(1, emono.size())) {
+            assertTrue(problem, problem.startsWith("WARNING: Detekce chybových hlášek: zakázaná hodnota nalezena: RSC-005, ERROR, "));
+        }
+    }
+
+    @Test
+    public void epubCheckEmptyOrUnreadableFile() throws Exception {
+        // necitelny EPUB nema repInfo/version; mustExist bez urovne -> uroven z rules.xml (nalez 28: null se k isExactly
+        // nedostane, zastavi ho mustExist; kdyby se dostal, isExactly vrati false misto NullPointerException)
+        for (String output : new String[]{"empty.xml", "not_epub.xml"}) {
+            List<String> problems = problems(ExternalUtil.EPUBCHECK, "epub", output);
+            assertEquals(output + ": " + problems, 4, problems.size());
+            assertEquals(NOT_WELL_FORMED, problems.get(0));
+            assertEquals("Soubor Epub by měl být v podporované verzi: kontrolovaná hodnota nenalezena", problems.get(1));
+            assertTrue(problems.get(2), problems.get(2).startsWith("WARNING: Detekce chybových hlášek: zakázaná hodnota nalezena: PKG-008, FATAL, "));
+            assertTrue(problems.get(3), problems.get(3).startsWith("WARNING: Detekce chybových hlášek: zakázaná hodnota nalezena: PKG-003, ERROR, "));
+        }
+    }
+
+    @Test
+    public void epubCheckEpub3VersionAndMediaTypes() throws Exception {
+        // syntetický EPUB 3.4 s fontem font/woff: verze neni 2.0.1 a font/woff neni v seznamu (profil ma
+        // "application/font‐wof" s U+2010 a preklepem, R3), kazdy nepovoleny typ media je samostatny WARNING
+        assertEquals(Arrays.asList(
+                        "WARNING: Soubor Epub by měl být v podporované verzi: hodnota \"3.4\" neodpovídá žádnému z omezení: [musí být přesně '2.0.1']",
+                        "WARNING: Kontrola typů obsažených objektů (Epub 3): hodnota \"font/woff\" neodpovídá žádnému z omezení: ["
+                                + "musí být přesně 'text/css',musí být přesně 'image/gif',musí být přesně 'image/jpeg',musí být přesně 'image/png',"
+                                + "musí být přesně 'image/svg+xml',musí být přesně 'application/xhtml+xml',musí být přesně 'application/xml',"
+                                + "musí být přesně 'application/x-dtbncx+xml',musí být přesně 'application/vnd.ms-opentype',"
+                                + "musí být přesně 'application/font‐wof',musí být přesně 'application/smil+xml',musí být přesně 'application/pls+xml',"
+                                + "musí být přesně 'audio/mpeg',musí být přesně 'audio/mp4']"),
+                problems(ExternalUtil.EPUBCHECK, "epub", "wellformed_epub3_synteticky.xml"));
+    }
+
+    @Test
+    public void epubCheckDrm() throws Exception {
+        // syntetický vystup s RSC-004 (EPUBCheck 5.4.0 ma RSC-004 jako INFO a do XML ho nevypise, viz README.md)
+        assertEquals(Arrays.asList(
+                        "ERROR: Kontrola na nepřítomnost DRM: zakázaná hodnota nalezena: RSC-004, ERROR, [File \"OEBPS/c1.xhtml\" could not be decrypted.], Sway.epub",
+                        "WARNING: Detekce chybových hlášek: zakázaná hodnota nalezena: RSC-004, ERROR, [File \"OEBPS/c1.xhtml\" could not be decrypted.], Sway.epub"),
+                problems(ExternalUtil.EPUBCHECK, "epub", "synteticky_drm_RSC-004.xml"));
+    }
+
+    @Test
+    public void ePublicationFixtureProfilesAreValidByXsd() throws Exception {
+        // FdmfConfiguration validuje profily proti binaryFileProfile.xsd (level, startsWith); fixture musi projit stejne
+        javax.xml.validation.Validator xsdValidator = SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI)
+                .newSchema(new File(ExternalUtilsTestSupport.VALIDATOR_CONFIG_DIR, "xsd/binaryFileProfile.xsd")).newValidator();
+        for (String[] copyAndUtil : new String[][]{{"pdf", "VERAPDF"}, {"epub", "EPUBCHECK"}}) {
+            xsdValidator.validate(new StreamSource(ExternalUtilsTestSupport.profileFile(PDF_FIXTURE, copyAndUtil[0], ExternalUtil.valueOf(copyAndUtil[1]))));
+        }
     }
 
     // pomocne metody pro vlastni profily

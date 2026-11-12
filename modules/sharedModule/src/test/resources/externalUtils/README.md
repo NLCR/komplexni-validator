@@ -3,12 +3,13 @@
 Vstupy pro testy parsování výstupů nástrojů bez samotných nástrojů (balíček
 `nkp.pspValidator.shared.externalUtils`, viz `ExternalUtilsTestSupport`). Testy vezmou uložený
 text, podstrčí ho místo spuštění procesu (`CannedOutputExternalUtilManager`) a vyhodnotí nad ním
-profily binárních souborů z fDMF (`binaryFileProfiles/{mc,uc}/*.xml`), extrakce a pravidla.
+profily binárních souborů z fDMF (`binaryFileProfiles/{mc,uc}/*.xml`, u veraPDF a EPUBCheck fixture
+v `profiles/`), extrakce a pravidla.
 
-Pořízeno 8. 11. 2026 na macOS (Apple Silicon). Absolutní cesty ve výstupech jsou nahrazené cestou
+Obrazové nástroje pořízeny 8. 11. 2026 na macOS (Apple Silicon), veraPDF a EPUBCheck 12. 11. 2026. Absolutní cesty ve výstupech jsou nahrazené cestou
 relativní k `modules/sharedModule` (např. `src/test/tools/jp2/mc.jp2`), jinak jsou výstupy beze změny.
 
-Názvy souborů: `<adresář vstupu>_<název vstupu>`, vstupy jsou v `src/test/resources/jpeg2000/<adresář>/`,
+Názvy souborů obrazových nástrojů: `<adresář vstupu>_<název vstupu>`, vstupy jsou v `src/test/resources/jpeg2000/<adresář>/`,
 `tools_mc` a `tools_uc` jsou `src/test/tools/jp2/mc.jp2` a `uc.jp2`.
 
 ## Jpylyzer (reálné výstupy)
@@ -51,6 +52,50 @@ Názvy souborů: `<adresář vstupu>_<název vstupu>`, vstupy jsou v `src/test/r
   s OpenJPEG u poškozeného souboru (`identify: ... @ warning/jp2.c/...`).
 - `synteticky_error_radek.txt`: **syntetický**, řádek začínající `Error`, na který míří první
   regulární výraz profilu `imageMagick.xml`.
+
+## veraPDF (reálné výstupy)
+
+- Pořízeno 12. 11. 2026 na macOS (Apple Silicon), Homebrew formule `verapdf` 1.30.2, Temurin 17.0.19.
+  `version.txt` je stdout `verapdf --version` (`veraPDF 1.30.0`: aplikační část má 1.30.0, knihovny 1.30.2, viz
+  `releaseDetails` ve výstupech; regulární výraz detekce verze `veraPDF [0-9\.]+`).
+- Příkaz: `verapdf <soubor>` (stdout, bez `--format`, jako spuštění `pdf` v `externalUtils.xml`). V elementu
+  `item/name` je místo absolutní cesty jen název souboru.
+- Vstupy `dummy*.pdf` jsou z test resources VEP (`validator-e-publikaci`, `modules/sharedModule/src/test/resources/pdf/`).
+- `compliant_PDFA-1A.xml`, `compliant_PDFA-1B.xml`, `compliant_PDFA-2B.xml`, `compliant_PDFA-2U.xml`,
+  `compliant_PDFA-3B.xml`: `dummy_PDFA-*.pdf`, `isCompliant="true"`, `profileName` s malým písmenem úrovně
+  (`PDF/A-1b validation profile`, riziko R1).
+- `noncompliant_dummy.xml`: `dummy.pdf` (bez PDF/A), veraPDF zvolí PDF/A-1b, `isCompliant="false"`, exit 1.
+- `noncompliant_dummy_flavour_2b.xml`, `noncompliant_dummy_flavour_3b.xml`: totéž s vynuceným profilem
+  `verapdf -f 2b`, resp. `-f 3b` (validátor `-f` nepoužívá, slouží jen jako nevyhovující PDF/A-2b a 3b).
+- `empty.xml` (prázdný soubor) a `not_pdf.xml` (textový soubor s příponou .pdf): bez `validationReport`,
+  `taskException type="PARSE"`, exit 7, varování na stderr.
+
+## EPUBCheck (reálné výstupy)
+
+- Pořízeno 12. 11. 2026 na macOS, Homebrew formule `epubcheck` 5.4.0, Temurin 17.0.19. `version.txt` je stdout
+  `java -jar epubcheck.jar --version`.
+- Příkaz: `java -jar epubcheck.jar --out - -q <soubor>` (stdout, jako spuštění `epub` v `externalUtils.xml`),
+  spuštěno v adresáři vstupu (v `repInfo/@uri` je relativní cesta). Exit 1 u chyb v EPUB.
+- `wellformed_epub2_Sway.xml`, `notwellformed_epub2_sample1.xml`: `Sway.epub` a `sample1.epub` z test resources VEP
+  (`modules/sharedModule/src/test/resources/epub/`).
+- `notwellformed_epub2_emono30.xml`: vzorek e-monografie 3.0 z `official-samples/epub` (`oc_aba007-0000f8.epub`,
+  213 kB), 48× RSC-005.
+- `wellformed_epub3_synteticky.xml`: syntetický EPUB 3 (`src/test/resources/epublikace/synteticky_epub3.epub`,
+  1,8 kB, font `font/woff`), EPUBCheck hlásí verzi 3.4.
+- `empty.xml` (prázdný soubor) a `not_epub.xml` (textový soubor s příponou .epub): Not well-formed, PKG-008
+  a PKG-003, bez `version`.
+- `synteticky_drm_RSC-004.xml`: **syntetický**, `wellformed_epub2_Sway.xml` s doplněnou hláškou RSC-004. EPUBCheck
+  5.4.0 má RSC-004 jako INFO („File … is encrypted, its content will not be checked“) a do XML výstupu ho
+  nevypíše (ověřeno se syntetickým EPUB s `META-INF/encryption.xml`), validace „Kontrola DRM“ profilu VEP proto
+  s aktuální verzí nic nenajde.
+
+## Profily e-publikací (fixture)
+
+`profiles/vep-2.4_emonograph_3.0/binaryFileProfiles/{pdf/veraPdf.xml,epub/epubCheck.xml}`: kopie profilů fDMF
+`emonograph_3.0` z VEP 2.4 (`.local/vep-2.4/validatorConfig`), změněn jen jmenný prostor
+(`http://www.nkp.cz/pspValidator/3.0/binaryFileProfile`) a `validatorVersion="3.0"`. Slouží testům, dokud fDMF
+e-publikací nejsou v `validatorConfig/fDMF` (krok P4); obsah včetně známých vad (R1, `application/font‐wof`) je
+beze změny.
 
 ## Obnovení
 

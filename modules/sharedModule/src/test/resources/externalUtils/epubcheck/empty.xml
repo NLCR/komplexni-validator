@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jhove xmlns="http://schema.openpreservation.org/ois/xml/ns/jhove"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        date="2026-09-15"
+        name="epubcheck"
+        release="5.4.0"
+        xsi:schemaLocation="http://schema.openpreservation.org/ois/xml/ns/jhove https://schema.openpreservation.org/ois/xml/xsd/jhove/jhove.xsd">
+   <date>2026-11-12T13:28:01+01:00</date>
+   <repInfo uri="empty.epub">
+      <format>application/octet-stream</format>
+      <status>Not well-formed</status>
+      <messages>
+         <message id="PKG-008" severity="error">PKG-008, FATAL, [Unable to read file "zip file is empty".], ./empty.epub</message>
+         <message id="PKG-003" severity="error">PKG-003, ERROR, [Unable to read EPUB file header.  This is likely a corrupted EPUB file.], ./empty.epub</message>
+      </messages>
+      <properties>
+         <property>
+            <name>FileName</name>
+            <values arity="Scalar" type="String">
+               <value>empty.epub</value>
+            </values>
+         </property>
+         <property>
+            <name>Info</name>
+            <values arity="List" type="Property"/>
+         </property>
+      </properties>
+   </repInfo>
+</jhove>

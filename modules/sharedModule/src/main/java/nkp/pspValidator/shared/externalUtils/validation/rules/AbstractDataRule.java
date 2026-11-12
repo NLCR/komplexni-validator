@@ -1,5 +1,6 @@
 package nkp.pspValidator.shared.externalUtils.validation.rules;
 
+import nkp.pspValidator.shared.engine.Level;
 import nkp.pspValidator.shared.engine.Utils;
 import nkp.pspValidator.shared.externalUtils.validation.DataRule;
 
@@ -12,13 +13,27 @@ import java.util.List;
  */
 public abstract class AbstractDataRule implements DataRule {
     private final String validationName;
+    private final Level level;
 
     public AbstractDataRule(String validationName) {
+        this(validationName, null);
+    }
+
+    /**
+     * @param level úroveň problémů pravidla, null = úroveň z rules.xml
+     */
+    public AbstractDataRule(String validationName, Level level) {
         this.validationName = validationName;
+        this.level = level;
     }
 
     public String getValidationName() {
         return validationName;
+    }
+
+    @Override
+    public Level getLevel() {
+        return level;
     }
 
     String error(String message) {

@@ -396,7 +396,9 @@
             <value name="util" type="EXTERNAL_UTIL"/>
             <value name="execution" type="STRING"/>
             <value name="validation_problem_level" type="LEVEL" minOccurs="0" maxOccurs="1"
-                   description="úroveň chybové hlášky pro samotnou validaci externím nástrojem, defaultně ERROR"/>
+                   description="úroveň chybové hlášky pro samotnou validaci externím nástrojem, defaultně ERROR; pravidlo profilu binárního souboru s atributem level má vlastní úroveň"/>
+            <value name="ignore_empty_file_list" type="BOOLEAN" minOccurs="0" maxOccurs="1"
+                   description="TRUE: prázdný seznam souborů není problém (např. e-publikace má soubor buď PDF, nebo EPUB), defaultně FALSE"/>
         </params-def>
     </validationFunction>
 

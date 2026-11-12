@@ -14,8 +14,8 @@ public class IsExactlyConstraint implements Constraint {
 
     @Override
     public boolean matches(Object data) {
-        String dataStr = data.toString();
-        return value.equals(dataStr);
+        //null = hodnota nenalezena, neodpovida
+        return data != null && value.equals(data.toString());
     }
 
     public String toString() {

@@ -27,15 +27,21 @@ import static org.junit.Assert.*;
  * v PATH, nebo v adresari ze systemove vlastnosti (jpylyzer.path, jhove.path, kakadu.path, imagemagick.path),
  * napr. {@code ./gradlew :modules:sharedModule:test --tests '*VfCheckBinaryFilesValidByExternalUtilTest' -Djhove.path=/opt/jhove}.
  * Dostupnost se overi detekci verze jako v aplikaci; kdyz nastroj chybi, je test preskoceny (Assume), ne zeleny.
- * Pozor: u Jpylyzeru na macOS a Linuxu se cesta pri detekci verze ignoruje (externalUtils.xml nema ${UTIL_PATH},
- * viz ExternalUtilManagerTest.jpylyzerPathIsIgnoredOnMac), jpylyzer proto musi byt v PATH.
  * <p>
- * Ocekavane vysledky jsou overene s Jpylyzer 2.2.0, JHOVE 1.29.0 a Kakadu 8.5 (8. 11. 2026).
+ * veraPDF a EPUBCheck (fixture profilu vep-2.4_emonograph_3.0, fDMF e-publikaci zatim v repu nejsou) nad
+ * src/test/resources/epublikace: veraPDF z PATH nebo -Dverapdf.path, EPUBCheck jen s -Depubcheck.path (adresar
+ * s epubcheck.jar, spousti se "java -jar"), napr. -Dverapdf.path=$(brew --prefix)/bin -Depubcheck.path=$(brew --prefix epubcheck)/libexec.
+ * Gradle predava systemove vlastnosti *.path testum (build.gradle sharedModule).
+ * <p>
+ * Ocekavane vysledky jsou overene s Jpylyzer 2.2.0, JHOVE 1.29.0 a Kakadu 8.5 (8. 11. 2026), veraPDF 1.30
+ * a EPUBCheck 5.4.0 (12. 11. 2026).
  */
 public class VfCheckBinaryFilesValidByExternalUtilTest {
 
     private static final File EXAMPLES_ROOT_DIR = new File("src/test/resources/jpeg2000");
     private static final File TOOLS_JP2_DIR = new File("src/test/tools/jp2");
+    private static final File EPUBLIKACE_DIR = new File("src/test/resources/epublikace");
+    private static final String EPUB_PROFILES_FIXTURE = "vep-2.4_emonograph_3.0";
     private static final Dmf DMF = new Dmf(Dmf.Type.FUND_UNIT, "0.2");
 
     private static final Map<ExternalUtil, String> PATH_PROPERTIES = new EnumMap<>(ExternalUtil.class);
@@ -45,11 +51,14 @@ public class VfCheckBinaryFilesValidByExternalUtilTest {
         PATH_PROPERTIES.put(ExternalUtil.JHOVE, "jhove.path");
         PATH_PROPERTIES.put(ExternalUtil.KAKADU, "kakadu.path");
         PATH_PROPERTIES.put(ExternalUtil.IMAGE_MAGICK, "imagemagick.path");
+        PATH_PROPERTIES.put(ExternalUtil.VERAPDF, "verapdf.path");
+        PATH_PROPERTIES.put(ExternalUtil.EPUBCHECK, "epubcheck.path");
     }
 
     private static final Map<ExternalUtil, String> versions = new EnumMap<>(ExternalUtil.class);
     private static final Map<ExternalUtil, String> unavailableReasons = new EnumMap<>(ExternalUtil.class);
     private static Engine engine;
+    private static Engine ePublicationEngine;
     private static ExternalUtilManager externalUtilManager;
     private static String imageMagickJp2Problem;
 
@@ -84,6 +93,13 @@ public class VfCheckBinaryFilesValidByExternalUtilTest {
         fdmfConfig.initBinaryFileProfiles(externalUtilManager);
         engine = new Engine(fdmfConfig.getBinaryFileValidator());
 
+        BinaryFileValidator ePublicationValidator = new BinaryFileValidator(externalUtilManager);
+        ePublicationValidator.registerProfile(ResourceType.ORIGINAL_COPY_PDF, ExternalUtil.VERAPDF,
+                ExternalUtilsTestSupport.profileFile(EPUB_PROFILES_FIXTURE, "pdf", ExternalUtil.VERAPDF));
+        ePublicationValidator.registerProfile(ResourceType.ORIGINAL_COPY_EPUB, ExternalUtil.EPUBCHECK,
+                ExternalUtilsTestSupport.profileFile(EPUB_PROFILES_FIXTURE, "epub", ExternalUtil.EPUBCHECK));
+        ePublicationEngine = new Engine(ePublicationValidator);
+
         if (externalUtilManager.isUtilAvailable(ExternalUtil.IMAGE_MAGICK)) {
             // ImageMagick bez JP2 delegata (napr. Homebrew bez OpenJPEG) hlasi u kazdeho JP2 "no decode delegate"
             String out = externalUtilManager.runUtilExecution(new ExternalUtilExecution("jp2k", ExternalUtil.IMAGE_MAGICK), new File(TOOLS_JP2_DIR, "mc.jp2"));
@@ -112,12 +128,20 @@ public class VfCheckBinaryFilesValidByExternalUtilTest {
     }
 
     private static ValidationFunction buildValidationFunction(Engine engine, ExternalUtil util, ResourceType type, List<File> files) {
-        return new VfCheckBinaryFilesValidByExternalUtil("test", engine)
-                .withValueParam(VfCheckBinaryFilesValidByExternalUtil.PARAM_FILES, ValueType.FILE_LIST, new ValueEvaluation(files))
-                .withValueParam(VfCheckBinaryFilesValidByExternalUtil.PARAM_VALIDATION_PROBLEM_LEVEL, ValueType.LEVEL, new ValueEvaluation(Level.WARNING))
+        return buildValidationFunction(engine, util, type, files, "jp2k", Level.WARNING);
+    }
+
+    private static ValidationFunction buildValidationFunction(Engine engine, ExternalUtil util, ResourceType type, List<File> files,
+                                                              String execution, Level validationProblemLevel) {
+        ValidationFunction function = new VfCheckBinaryFilesValidByExternalUtil("test", engine)
+                .withValueParam(VfCheckBinaryFilesValidByExternalUtil.PARAM_FILES, ValueType.FILE_LIST, new ValueEvaluation(files));
+        if (validationProblemLevel != null) {
+            function.withValueParam(VfCheckBinaryFilesValidByExternalUtil.PARAM_VALIDATION_PROBLEM_LEVEL, ValueType.LEVEL, new ValueEvaluation(validationProblemLevel));
+        }
+        return function
                 .withValueParam(VfCheckBinaryFilesValidByExternalUtil.PARAM_TYPE, ValueType.RESOURCE_TYPE, new ValueEvaluation(type))
                 .withValueParam(VfCheckBinaryFilesValidByExternalUtil.PARAM_UTIL, ValueType.EXTERNAL_UTIL, new ValueEvaluation(util))
-                .withValueParam(VfCheckBinaryFilesValidByExternalUtil.PARAM_EXECUTION, ValueType.STRING, new ValueEvaluation("jp2k"));
+                .withValueParam(VfCheckBinaryFilesValidByExternalUtil.PARAM_EXECUTION, ValueType.STRING, new ValueEvaluation(execution));
     }
 
     private static ValidationResult validate(ExternalUtil util, ResourceType type, List<File> files) {
@@ -249,6 +273,92 @@ public class VfCheckBinaryFilesValidByExternalUtilTest {
                 .validate();
         assertEquals(1, result.getProblems().size());
         assertTrue(result.getProblems().get(0).getFullMessage(), result.getProblems().get(0).getFullMessage().startsWith("nesplněn kontrakt validační funkce"));
+    }
+
+    // urovne z profilu a ignore_empty_file_list (pravidla VEP pro e-publikace)
+
+    private static Engine ePublicationEngineWith(ExternalUtilManager manager) throws Exception {
+        BinaryFileValidator validator = new BinaryFileValidator(manager);
+        validator.registerProfile(ResourceType.ORIGINAL_COPY_PDF, ExternalUtil.VERAPDF,
+                ExternalUtilsTestSupport.profileFile(EPUB_PROFILES_FIXTURE, "pdf", ExternalUtil.VERAPDF));
+        validator.registerProfile(ResourceType.ORIGINAL_COPY_EPUB, ExternalUtil.EPUBCHECK,
+                ExternalUtilsTestSupport.profileFile(EPUB_PROFILES_FIXTURE, "epub", ExternalUtil.EPUBCHECK));
+        return new Engine(validator);
+    }
+
+    private static List<String> levelsAndMessages(ValidationResult result) {
+        List<String> list = new ArrayList<>();
+        for (ValidationProblem problem : result.getProblems()) {
+            list.add(problem.getLevel() + ": " + problem.getFullMessage());
+        }
+        return list;
+    }
+
+    @Test
+    public void levelFromProfileOverridesValidationProblemLevel() throws Exception {
+        CannedOutputExternalUtilManager manager = new CannedOutputExternalUtilManager()
+                .withOutput(ExternalUtil.VERAPDF, ExternalUtilsTestSupport.output("verapdf", "noncompliant_dummy.xml"));
+        List<File> files = Collections.singletonList(new File("dummy.pdf"));
+        // rules.xml VEP validation_problem_level nezadava (ERROR); "PDF/A v podporované verzi" ma v profilu level="WARNING"
+        for (Level rulesLevel : new Level[]{null, Level.ERROR, Level.INFO}) {
+            ValidationResult result = buildValidationFunction(ePublicationEngineWith(manager), ExternalUtil.VERAPDF, ResourceType.ORIGINAL_COPY_PDF,
+                    files, "pdf", rulesLevel).validate();
+            Level expected = rulesLevel == null ? Level.ERROR : rulesLevel;
+            assertEquals(Arrays.asList(
+                    expected + ": Soubor musí být validní: hodnota \"false\" neodpovídá žádnému z omezení: [musí být přesně 'true']",
+                    "WARNING: Soubor PDF/A by měl být v podporované verzi: hodnota \"PDF/A-1b validation profile\" neodpovídá žádnému z omezení: "
+                            + "[musí začínat na 'PDF/A-1A',musí začínat na 'PDF/A-1B',musí začínat na 'PDF/A-2A',musí začínat na 'PDF/A-2B',musí začínat na 'PDF/A-2U']"
+            ), levelsAndMessages(result));
+            for (ValidationProblem problem : result.getProblems()) {
+                assertEquals("veraPDF", problem.getToolName());
+                assertEquals(files.get(0), problem.getReferencedFile());
+            }
+        }
+    }
+
+    private static ValidationFunction withIgnoreEmptyFileList(ValidationFunction function, Boolean ignore) {
+        if (ignore != null) {
+            function.withValueParam(VfCheckBinaryFilesValidByExternalUtil.PARAM_IGNORE_EMPTY_FILE_LIST, ValueType.BOOLEAN, new ValueEvaluation(ignore));
+        }
+        return function;
+    }
+
+    @Test
+    public void ignoreEmptyFileList() throws Exception {
+        // e-publikace ma soubor bud PDF, nebo EPUB; pravidla VEP maji u obou nastroju ignore_empty_file_list=TRUE
+        CannedOutputExternalUtilManager manager = new CannedOutputExternalUtilManager().withOutput(ExternalUtil.EPUBCHECK, "");
+        Engine engine = ePublicationEngineWith(manager);
+        assertFalse(withIgnoreEmptyFileList(buildValidationFunction(engine, ExternalUtil.EPUBCHECK, ResourceType.ORIGINAL_COPY_EPUB,
+                Collections.<File>emptyList(), "epub", null), true).validate().hasProblems());
+        assertSingleProblem(withIgnoreEmptyFileList(buildValidationFunction(engine, ExternalUtil.EPUBCHECK, ResourceType.ORIGINAL_COPY_EPUB,
+                Collections.<File>emptyList(), "epub", null), false).validate(), Level.ERROR, "prázdný seznam souborů");
+        assertSingleProblem(withIgnoreEmptyFileList(buildValidationFunction(engine, ExternalUtil.EPUBCHECK, ResourceType.ORIGINAL_COPY_EPUB,
+                Collections.<File>emptyList(), "epub", null), null).validate(), Level.ERROR, "prázdný seznam souborů");
+    }
+
+    @Test
+    public void ignoreEmptyFileListBeforeToolAvailability() throws Exception {
+        // prazdny seznam se posoudi drive nez dostupnost nastroje: balicek s PDF a bez EPUBCheck nedostane INFO za EPUB
+        CannedOutputExternalUtilManager manager = new CannedOutputExternalUtilManager().withOutput(ExternalUtil.EPUBCHECK, "");
+        manager.setUtilAvailable(ExternalUtil.EPUBCHECK, false);
+        Engine engine = ePublicationEngineWith(manager);
+        assertFalse(withIgnoreEmptyFileList(buildValidationFunction(engine, ExternalUtil.EPUBCHECK, ResourceType.ORIGINAL_COPY_EPUB,
+                Collections.<File>emptyList(), "epub", null), true).validate().hasProblems());
+        // neprazdny seznam a nedostupny nastroj: jedna INFO hlaska za pravidlo, ne chyba u kazdeho souboru (nalez 27)
+        assertSingleProblem(withIgnoreEmptyFileList(buildValidationFunction(engine, ExternalUtil.EPUBCHECK, ResourceType.ORIGINAL_COPY_EPUB,
+                Arrays.asList(new File("a.epub"), new File("b.epub")), "epub", null), true).validate(), Level.INFO, "nástroj EPUBCheck není dostupný");
+    }
+
+    @Test
+    public void unexpectedProfileExceptionIsErrorOfFile() throws Exception {
+        // null vystup u XML profilu: drive spolknuto (nalez 23), dnes ERROR u souboru
+        CannedOutputExternalUtilManager manager = new CannedOutputExternalUtilManager().withOutput(ExternalUtil.VERAPDF, null);
+        ValidationResult result = buildValidationFunction(ePublicationEngineWith(manager), ExternalUtil.VERAPDF, ResourceType.ORIGINAL_COPY_PDF,
+                Collections.singletonList(new File("a.pdf")), "pdf", Level.WARNING).validate();
+        assertEquals(1, result.getProblems().size());
+        assertEquals(Level.ERROR, result.getProblems().get(0).getLevel());
+        assertEquals(new File("a.pdf"), result.getProblems().get(0).getReferencedFile());
+        assertTrue(result.getProblems().get(0).getFullMessage(), result.getProblems().get(0).getFullMessage().startsWith("neočekávaná chyba při zpracování výstupu nástroje veraPDF"));
     }
 
     private static void assertSingleProblem(ValidationResult result, Level level, String message) {
@@ -468,5 +578,71 @@ public class VfCheckBinaryFilesValidByExternalUtilTest {
         for (ValidationProblem p : result.getProblems()) {
             assertFalse("neocekavana hlaska: " + p.getFullMessage(), p.getFullMessage().contains(fragment));
         }
+    }
+
+    // ---------------------------------------------------------------------------------------------------------------
+    // veraPDF a EPUBCheck (skutecne nastroje)
+
+    private static ValidationResult validateEPublication(ExternalUtil util, File file) {
+        boolean pdf = util == ExternalUtil.VERAPDF;
+        return buildValidationFunction(ePublicationEngine, util, pdf ? ResourceType.ORIGINAL_COPY_PDF : ResourceType.ORIGINAL_COPY_EPUB,
+                Collections.singletonList(file), pdf ? "pdf" : "epub", null).validate();
+    }
+
+    private File emptyFile(String name) throws Exception {
+        File dir = java.nio.file.Files.createTempDirectory("kv-epub").toFile();
+        dir.deleteOnExit();
+        File file = new File(dir, name);
+        assertTrue(file.createNewFile());
+        file.deleteOnExit();
+        return file;
+    }
+
+    @Test
+    public void veraPdfCompliantPdfA1b() {
+        assumeAvailable(ExternalUtil.VERAPDF);
+        // dummy_PDFA-1B.pdf (22 kB, z test resources VEP) je PDF/A-1b; WARNING je riziko R1 (profil VEP ceka "PDF/A-1B")
+        assertEquals(Collections.singletonList("WARNING: Soubor PDF/A by měl být v podporované verzi: hodnota \"PDF/A-1b validation profile\" neodpovídá žádnému z omezení: "
+                        + "[musí začínat na 'PDF/A-1A',musí začínat na 'PDF/A-1B',musí začínat na 'PDF/A-2A',musí začínat na 'PDF/A-2B',musí začínat na 'PDF/A-2U']"),
+                levelsAndMessages(validateEPublication(ExternalUtil.VERAPDF, new File(EPUBLIKACE_DIR, "dummy_PDFA-1B.pdf"))));
+    }
+
+    @Test
+    public void veraPdfPdfWithoutPdfA() {
+        assumeAvailable(ExternalUtil.VERAPDF);
+        // synteticky_bez_pdfa.pdf (329 B): platne PDF 1.4 bez PDF/A, veraPDF zvoli PDF/A-1b a soubor nevyhovi
+        List<String> problems = levelsAndMessages(validateEPublication(ExternalUtil.VERAPDF, new File(EPUBLIKACE_DIR, "synteticky_bez_pdfa.pdf")));
+        assertEquals(problems.toString(), 2, problems.size());
+        assertEquals("ERROR: Soubor musí být validní: hodnota \"false\" neodpovídá žádnému z omezení: [musí být přesně 'true']", problems.get(0));
+        assertTrue(problems.get(1), problems.get(1).startsWith("WARNING: Soubor PDF/A by měl být v podporované verzi: "));
+    }
+
+    @Test
+    public void veraPdfEmptyFile() throws Exception {
+        assumeAvailable(ExternalUtil.VERAPDF);
+        assertEquals(Arrays.asList(
+                        "ERROR: Soubor musí být validní: kontrolovaná hodnota nenalezena",
+                        "ERROR: Soubor PDF/A by měl být v podporované verzi: kontrolovaná hodnota nenalezena"),
+                levelsAndMessages(validateEPublication(ExternalUtil.VERAPDF, emptyFile("prazdny.pdf"))));
+    }
+
+    @Test
+    public void epubCheckSyntheticEpub3() {
+        assumeAvailable(ExternalUtil.EPUBCHECK);
+        // synteticky_epub3.epub (1,8 kB): Well-formed EPUB 3.4 s fontem font/woff
+        List<String> problems = levelsAndMessages(validateEPublication(ExternalUtil.EPUBCHECK, new File(EPUBLIKACE_DIR, "synteticky_epub3.epub")));
+        assertEquals(problems.toString(), 2, problems.size());
+        assertEquals("WARNING: Soubor Epub by měl být v podporované verzi: hodnota \"3.4\" neodpovídá žádnému z omezení: [musí být přesně '2.0.1']", problems.get(0));
+        assertTrue(problems.get(1), problems.get(1).startsWith("WARNING: Kontrola typů obsažených objektů (Epub 3): hodnota \"font/woff\""));
+    }
+
+    @Test
+    public void epubCheckEmptyFile() throws Exception {
+        assumeAvailable(ExternalUtil.EPUBCHECK);
+        List<String> problems = levelsAndMessages(validateEPublication(ExternalUtil.EPUBCHECK, emptyFile("prazdny.epub")));
+        assertEquals(problems.toString(), 4, problems.size());
+        assertEquals("ERROR: Soubor musí být validní: hodnota \"Not well-formed\" neodpovídá žádnému z omezení: [musí být přesně 'Well-formed']", problems.get(0));
+        assertEquals("ERROR: Soubor Epub by měl být v podporované verzi: kontrolovaná hodnota nenalezena", problems.get(1));
+        assertTrue(problems.get(2), problems.get(2).startsWith("WARNING: Detekce chybových hlášek: zakázaná hodnota nalezena: PKG-008, FATAL, "));
     }
 }

@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jhove xmlns="http://schema.openpreservation.org/ois/xml/ns/jhove"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        date="2026-09-15"
+        name="epubcheck"
+        release="5.4.0"
+        xsi:schemaLocation="http://schema.openpreservation.org/ois/xml/ns/jhove https://schema.openpreservation.org/ois/xml/xsd/jhove/jhove.xsd">
+   <date>2026-11-12T13:28:24+01:00</date>
+   <repInfo uri="oc_aba007-0000f8.epub">
+      <created>2022-01-21T09:40:48Z</created>
+      <format>application/epub+zip</format>
+      <version>2.0.1</version>
+      <status>Not well-formed</status>
+      <messages>
+         <message id="RSC-005" severity="error">RSC-005, ERROR, [Error while parsing file: value of attribute "lang" is invalid; must be an RFC 3066 language identifier], index_split_000.html (2-64)</message>
+         <message id="RSC-005" severity="error">RSC-005, ERROR, [Error while parsing file: value of attribute "lang" is invalid; must be an RFC 3066 language identifier], index_split_001.html (2-64)</message>
+         <message id="RSC-005" severity="error">RSC-005, ERROR, [Error while parsing file: value of attribute "lang" is invalid; must be an RFC 3066 language identifier], index_split_002.html (2-64)</message>
+         <message id="RSC-005" severity="error">RSC-005, ERROR, [Error while parsing file: value of attribute "lang" is invalid; must be an RFC 3066 language identifier], index_split_003.html (2-64)</message>
+         <message id="RSC-005" severity="error">RSC-005, ERROR, [Error while parsing file: value of attribute "lang" is invalid; must be an RFC 3066 language identifier], index_split_004.html (2-64)</message>
+         <message id="RSC-005" severity="error">RSC-005, ERROR, [Error while parsing file: value of attribute "xml:lang" is invalid; must be an RFC 3066 language identifier], index_split_000.html (2-64)</message>
+         <message id="RSC-005" severity="error">RSC-005, ERROR, [Error while parsing file: value of attribute "xml:lang" is invalid; must be an RFC 3066 language identifier], index_split_001.html (2-64)</message>
+         <message id="RSC-005" severity="error">RSC-005, ERROR, [Error while parsing file: value of attribute "xml:lang" is invalid; must be an RFC 3066 language identifier], index_split_002.html (2-64)</message>
+         <message id="RSC-005" severity="error">RSC-005, ERROR, [Error while parsing file: value of attribute "xml:lang" is invalid; must be an RFC 3066 language identifier], index_split_003.html (2-64)</message>
+         <message id="RSC-005" severity="error">RSC-005, ERROR, [Error while parsing file: value of attribute "xml:lang" is invalid; must be an RFC 3066 language identifier], index_split_004.html (2-64)</message>
+         <message id="RSC-005" severity="error">RSC-005, ERROR, [Error while parsing file: element "b" not allowed here; expected the element end-tag or element "address", "blockquote", "del", "div", "dl", "h1", "h2", "h3", "h4", "h5", "h6", "hr", "ins", "noscript", "ns:svg", "ol", "p", "pre", "script", "table" or "ul" (with xmlns:ns="http://www.w3.org/2000/svg")], index_split_000.html (21-480)</message>
+         <message id="RSC-005" severity="error">RSC-005, ERROR, [Error while parsing file: element "p" not allowed here; expected the element end-tag, text or element "a", "abbr", "acronym", "applet", "b", "bdo", "big", "br", "cite", "code", "del", "dfn", "em", "i", "iframe", "img", "ins", "kbd", "map", "noscript", "ns:svg", "object", "q", "samp", "script", "small", "span", "strong", "sub", "sup", "tt" or "var" (with xmlns:ns="http://www.w3.org/2000/svg")], index_split_000.html (22-21)</message>
+         <message id="RSC-005" severity="error">RSC-005, ERROR, [Error while parsing file: element "p" not allowed here; expected the element end-tag, text or element "a", "abbr", "acronym", "applet", "b", "bdo", "big", "br", "cite", "code", "del", "dfn", "em", "i", "iframe", "img", "ins", "kbd", "map", "noscript", "ns:svg", "object", "q", "samp", "script", "small", "span", "strong", "sub", "sup", "tt" or "var" (with xmlns:ns="http://www.w3.org/2000/svg")], index_split_000.html (23-21)</message>
+         <message id="RSC-005" severity="error">RSC-005, ERROR, [Error while parsing file: element "p" not allowed here; expected the element end-tag, text or element "a", "abbr", "acronym", "applet", "b", "bdo", "big", "br", "cite", "code", "del", "dfn", "em", "i", "iframe", "img", "ins", "kbd", "map", "noscript", "ns:svg", "object", "q", "samp", "script", "small", "span", "strong", "sub", "sup", "tt" or "var" (with xmlns:ns="http://www.w3.org/2000/svg")], index_split_000.html (24-21)</message>
+         <message id="RSC-005" severity="error">RSC-005, ERROR, [Error while parsing file: element "p" not allowed here; expected the element end-tag, text or element "a", "abbr", "acronym", "applet", "b", "bdo", "big", "br", "cite", "code", "del", "dfn", "em", "i", "iframe", "img", "ins", "kbd", "map", "noscript", "ns:svg", "object", "q", "samp", "script", "small", "span", "strong", "sub", "sup", "tt" or "var" (with xmlns:ns="http://www.w3.org/2000/svg")], index_split_000.html (25-21)</message>
+         <message id="RSC-005" severity="error">RSC-005, ERROR, [Error while parsing file: element "p" not allowed here; expected the element end-tag, text or element "a", "abbr", "acronym", "applet", "b", "bdo", "big", "br", "cite", "code", "del", "dfn", "em", "i", "iframe", "img", "ins", "kbd", "map", "noscript", "ns:svg", "object", "q", "samp", "script", "small", "span", "strong", "sub", "sup", "tt" or "var" (with xmlns:ns="http://www.w3.org/2000/svg")], index_split_000.html (26-21)</message>
+         <message id="RSC-005" severity="error">RSC-005, ERROR, [Error while parsing file: element "p" not allowed here; expected the element end-tag, text or element "a", "abbr", "acronym", "applet", "b", "bdo", "big", "br", "cite", "code", "del", "dfn", "em", "i", "iframe", "img", "ins", "kbd", "map", "noscript", "ns:svg", "object", "q", "samp", "script", "small", "span", "strong", "sub", "sup", "tt" or "var" (with xmlns:ns="http://www.w3.org/2000/svg")], index_split_000.html (27-21)</message>
+         <message id="RSC-005" severity="error">RSC-005, ERROR, [Error while parsing file: element "p" not allowed here; expected the element end-tag, text or element "a", "abbr", "acronym", "applet", "b", "bdo", "big", "br", "cite", "code", "del", "dfn", "em", "i", "iframe", "img", "ins", "kbd", "map", "noscript", "ns:svg", "object", "q", "samp", "script", "small", "span", "strong", "sub", "sup", "tt" or "var" (with xmlns:ns="http://www.w3.org/2000/svg")], index_split_000.html (28-21)</message>
+         <message id="RSC-005" severity="error">RSC-005, ERROR, [Error while parsing file: element "p" not allowed here; expected the element end-tag, text or element "a", "abbr", "acronym", "applet", "b", "bdo", "big", "br", "cite", "code", "del", "dfn", "em", "i", "iframe", "img", "ins", "kbd", "map", "noscript", "ns:svg", "object", "q", "samp", "script", "small", "span", "strong", "sub", "sup", "tt" or "var" (with xmlns:ns="http://www.w3.org/2000/svg")], index_split_000.html (29-21)</message>
+         <message id="RSC-005" severity="error">RSC-005, ERROR, [Error while parsing file: element "p" not allowed here; expected the element end-tag, text or element "a", "abbr", "acronym", "applet", "b", "bdo", "big", "br", "cite", "code", "del", "dfn", "em", "i", "iframe", "img", "ins", "kbd", "map", "noscript", "ns:svg", "object", "q", "samp", "script", "small", "span", "strong", "sub", "sup", "tt" or "var" (with xmlns:ns="http://www.w3.org/2000/svg")], index_split_000.html (30-21)</message>
+         <message id="RSC-005" severity="error">RSC-005, ERROR, [Error while parsing file: element "p" not allowed here; expected the element end-tag, text or element "a", "abbr", "acronym", "applet", "b", "bdo", "big", "br", "cite", "code", "del", "dfn", "em", "i", "iframe", "img", "ins", "kbd", "map", "noscript", "ns:svg", "object", "q", "samp", "script", "small", "span", "strong", "sub", "sup", "tt" or "var" (with xmlns:ns="http://www.w3.org/2000/svg")], index_split_000.html (31-21)</message>
+         <message id="RSC-005" severity="error">RSC-005, ERROR, [Error while parsing file: element "p" not allowed here; expected the element end-tag, text or element "a", "abbr", "acronym", "applet", "b", "bdo", "big", "br", "cite", "code", "del", "dfn", "em", "i", "iframe", "img", "ins", "kbd", "map", "noscript", "ns:svg", "object", "q", "samp", "script", "small", "span", "strong", "sub", "sup", "tt" or "var" (with xmlns:ns="http://www.w3.org/2000/svg")], index_split_000.html (32-21)</message>
+         <message id="RSC-005" severity="error">RSC-005, ERROR, [Error while parsing file: element "p" not allowed here; expected the element end-tag, text or element "a", "abbr", "acronym", "applet", "b", "bdo", "big", "br", "cite", "code", "del", "dfn", "em", "i", "iframe", "img", "ins", "kbd", "map", "noscript", "ns:svg", "object", "q", "samp", "script", "small", "span", "strong", "sub", "sup", "tt" or "var" (with xmlns:ns="http://www.w3.org/2000/svg")], index_split_000.html (33-21)</message>
+         <message id="RSC-005" severity="error">RSC-005, ERROR, [Error while parsing file: element "p" not allowed here; expected the element end-tag, text or element "a", "abbr", "acronym", "applet", "b", "bdo", "big", "br", "cite", "code", "del", "dfn", "em", "i", "iframe", "img", "ins", "kbd", "map", "noscript", "ns:svg", "object", "q", "samp", "script", "small", "span", "strong", "sub", "sup", "tt" or "var" (with xmlns:ns="http://www.w3.org/2000/svg")], index_split_000.html (34-21)</message>
+         <message id="RSC-005" severity="error">RSC-005, ERROR, [Error while parsing file: element "p" not allowed here; expected the element end-tag, text or element "a", "abbr", "acronym", "applet", "b", "bdo", "big", "br", "cite", "code", "del", "dfn", "em", "i", "iframe", "img", "ins", "kbd", "map", "noscript", "ns:svg", "object", "q", "samp", "script", "small", "span", "strong", "sub", "sup", "tt" or "var" (with xmlns:ns="http://www.w3.org/2000/svg")], index_split_000.html (35-21)</message>
+         <message id="RSC-005" severity="error">RSC-005, ERROR, [Error while parsing file: element "p" not allowed here; expected the element end-tag, text or element "a", "abbr", "acronym", "applet", "b", "bdo", "big", "br", "cite", "code", "del", "dfn", "em", "i", "iframe", "img", "ins", "kbd", "map", "noscript", "ns:svg", "object", "q", "samp", "script", "small", "span", "strong", "sub", "sup", "tt" or "var" (with xmlns:ns="http://www.w3.org/2000/svg")], index_split_000.html (36-21)</message>
+         <message id="RSC-005" severity="error">RSC-005, ERROR, [Error while parsing file: element "p" not allowed here; expected the element end-tag, text or element "a", "abbr", "acronym", "applet", "b", "bdo", "big", "br", "cite", "code", "del", "dfn", "em", "i", "iframe", "img", "ins", "kbd", "map", "noscript", "ns:svg", "object", "q", "samp", "script", "small", "span", "strong", "sub", "sup", "tt" or "var" (with xmlns:ns="http://www.w3.org/2000/svg")], index_split_000.html (37-21)</message>
+         <message id="RSC-005" severity="error">RSC-005, ERROR, [Error while parsing file: element "p" not allowed here; expected the element end-tag, text or element "a", "abbr", "acronym", "applet", "b", "bdo", "big", "br", "cite", "code", "del", "dfn", "em", "i", "iframe", "img", "ins", "kbd", "map", "noscript", "ns:svg", "object", "q", "samp", "script", "small", "span", "strong", "sub", "sup", "tt" or "var" (with xmlns:ns="http://www.w3.org/2000/svg")], index_split_000.html (38-21)</message>
+         <message id="RSC-005" severity="error">RSC-005, ERROR, [Error while parsing file: element "p" not allowed here; expected the element end-tag, text or element "a", "abbr", "acronym", "applet", "b", "bdo", "big", "br", "cite", "code", "del", "dfn", "em", "i", "iframe", "img", "ins", "kbd", "map", "noscript", "ns:svg", "object", "q", "samp", "script", "small", "span", "strong", "sub", "sup", "tt" or "var" (with xmlns:ns="http://www.w3.org/2000/svg")], index_split_000.html (39-21)</message>
+         <message id="RSC-005" severity="error">RSC-005, ERROR, [Error while parsing file: element "p" not allowed here; expected the element end-tag, text or element "a", "abbr", "acronym", "applet", "b", "bdo", "big", "br", "cite", "code", "del", "dfn", "em", "i", "iframe", "img", "ins", "kbd", "map", "noscript", "ns:svg", "object", "q", "samp", "script", "small", "span", "strong", "sub", "sup", "tt" or "var" (with xmlns:ns="http://www.w3.org/2000/svg")], index_split_000.html (40-21)</message>
+         <message id="RSC-005" severity="error">RSC-005, ERROR, [Error while parsing file: element "p" not allowed here; expected the element end-tag, text or element "a", "abbr", "acronym", "applet", "b", "bdo", "big", "br", "cite", "code", "del", "dfn", "em", "i", "iframe", "img", "ins", "kbd", "map", "noscript", "ns:svg", "object", "q", "samp", "script", "small", "span", "strong", "sub", "sup", "tt" or "var" (with xmlns:ns="http://www.w3.org/2000/svg")], index_split_000.html (41-21)</message>
+         <message id="RSC-005" severity="error">RSC-005, ERROR, [Error while parsing file: element "p" not allowed here; expected the element end-tag, text or element "a", "abbr", "acronym", "applet", "b", "bdo", "big", "br", "cite", "code", "del", "dfn", "em", "i", "iframe", "img", "ins", "kbd", "map", "noscript", "ns:svg", "object", "q", "samp", "script", "small", "span", "strong", "sub", "sup", "tt" or "var" (with xmlns:ns="http://www.w3.org/2000/svg")], index_split_000.html (42-21)</message>
+         <message id="RSC-005" severity="error">RSC-005, ERROR, [Error while parsing file: element "p" not allowed here; expected the element end-tag, text or element "a", "abbr", "acronym", "applet", "b", "bdo", "big", "br", "cite", "code", "del", "dfn", "em", "i", "iframe", "img", "ins", "kbd", "map", "noscript", "ns:svg", "object", "q", "samp", "script", "small", "span", "strong", "sub", "sup", "tt" or "var" (with xmlns:ns="http://www.w3.org/2000/svg")], index_split_000.html (43-21)</message>
+         <message id="RSC-005" severity="error">RSC-005, ERROR, [Error while parsing file: element "p" not allowed here; expected the element end-tag, text or element "a", "abbr", "acronym", "applet", "b", "bdo", "big", "br", "cite", "code", "del", "dfn", "em", "i", "iframe", "img", "ins", "kbd", "map", "noscript", "ns:svg", "object", "q", "samp", "script", "small", "span", "strong", "sub", "sup", "tt" or "var" (with xmlns:ns="http://www.w3.org/2000/svg")], index_split_000.html (44-21)</message>
+         <message id="RSC-005" severity="error">RSC-005, ERROR, [Error while parsing file: element "p" not allowed here; expected the element end-tag, text or element "a", "abbr", "acronym", "applet", "b", "bdo", "big", "br", "cite", "code", "del", "dfn", "em", "i", "iframe", "img", "ins", "kbd", "map", "noscript", "ns:svg", "object", "q", "samp", "script", "small", "span", "strong", "sub", "sup", "tt" or "var" (with xmlns:ns="http://www.w3.org/2000/svg")], index_split_000.html (45-21)</message>
+         <message id="RSC-005" severity="error">RSC-005, ERROR, [Error while parsing file: element "p" not allowed here; expected the element end-tag, text or element "a", "abbr", "acronym", "applet", "b", "bdo", "big", "br", "cite", "code", "del", "dfn", "em", "i", "iframe", "img", "ins", "kbd", "map", "noscript", "ns:svg", "object", "q", "samp", "script", "small", "span", "strong", "sub", "sup", "tt" or "var" (with xmlns:ns="http://www.w3.org/2000/svg")], index_split_000.html (46-21)</message>
+         <message id="RSC-005" severity="error">RSC-005, ERROR, [Error while parsing file: element "b" not allowed here; expected element "address", "blockquote", "del", "div", "dl", "h1", "h2", "h3", "h4", "h5", "h6", "hr", "ins", "noscript", "ns:svg", "ol", "p", "pre", "script", "table" or "ul" (with xmlns:ns="http://www.w3.org/2000/svg")], index_split_001.html (12-21)</message>
+         <message id="RSC-005" severity="error">RSC-005, ERROR, [Error while parsing file: element "b" not allowed here; expected element "address", "blockquote", "del", "div", "dl", "h1", "h2", "h3", "h4", "h5", "h6", "hr", "ins", "noscript", "ns:svg", "ol", "p", "pre", "script", "table" or "ul" (with xmlns:ns="http://www.w3.org/2000/svg")], index_split_002.html (12-21)</message>
+         <message id="RSC-005" severity="error">RSC-005, ERROR, [Error while parsing file: element "b" not allowed here; expected element "address", "blockquote", "del", "div", "dl", "h1", "h2", "h3", "h4", "h5", "h6", "hr", "ins", "noscript", "ns:svg", "ol", "p", "pre", "script", "table" or "ul" (with xmlns:ns="http://www.w3.org/2000/svg")], index_split_003.html (12-21)</message>
+         <message id="RSC-005" severity="error">RSC-005, ERROR, [Error while parsing file: element "b" not allowed here; expected element "address", "blockquote", "del", "div", "dl", "h1", "h2", "h3", "h4", "h5", "h6", "hr", "ins", "noscript", "ns:svg", "ol", "p", "pre", "script", "table" or "ul" (with xmlns:ns="http://www.w3.org/2000/svg")], index_split_004.html (12-21)</message>
+         <message id="RSC-005" severity="error">RSC-005, ERROR, [Error while parsing file: element "body" incomplete; expected element "address", "blockquote", "del", "div", "dl", "h1", "h2", "h3", "h4", "h5", "h6", "hr", "ins", "noscript", "ns:svg", "ol", "p", "pre", "script", "table" or "ul" (with xmlns:ns="http://www.w3.org/2000/svg")], index_split_001.html (1056-12)</message>
+         <message id="RSC-005" severity="error">RSC-005, ERROR, [Error while parsing file: element "body" incomplete; expected element "address", "blockquote", "del", "div", "dl", "h1", "h2", "h3", "h4", "h5", "h6", "hr", "ins", "noscript", "ns:svg", "ol", "p", "pre", "script", "table" or "ul" (with xmlns:ns="http://www.w3.org/2000/svg")], index_split_002.html (1057-12)</message>
+         <message id="RSC-005" severity="error">RSC-005, ERROR, [Error while parsing file: element "body" incomplete; expected element "address", "blockquote", "del", "div", "dl", "h1", "h2", "h3", "h4", "h5", "h6", "hr", "ins", "noscript", "ns:svg", "ol", "p", "pre", "script", "table" or "ul" (with xmlns:ns="http://www.w3.org/2000/svg")], index_split_003.html (1055-60)</message>
+         <message id="RSC-005" severity="error">RSC-005, ERROR, [Error while parsing file: element "body" incomplete; expected element "address", "blockquote", "del", "div", "dl", "h1", "h2", "h3", "h4", "h5", "h6", "hr", "ins", "noscript", "ns:svg", "ol", "p", "pre", "script", "table" or "ul" (with xmlns:ns="http://www.w3.org/2000/svg")], index_split_004.html (22-16)</message>
+         <message id="RSC-005" severity="error">RSC-005, ERROR, [Error while parsing file: element "img" missing required attribute "alt"], index_split_002.html (699-83)</message>
+         <message id="RSC-005" severity="error">RSC-005, ERROR, [Error while parsing file: element "img" missing required attribute "alt"], index_split_002.html (700-66)</message>
+         <message id="RSC-005" severity="error">RSC-005, ERROR, [Error while parsing file: element "h1" not allowed here; expected the element end-tag, text or element "a", "abbr", "acronym", "applet", "b", "bdo", "big", "br", "cite", "code", "del", "dfn", "em", "i", "iframe", "img", "ins", "kbd", "map", "noscript", "ns:svg", "object", "q", "samp", "script", "small", "span", "strong", "sub", "sup", "tt" or "var" (with xmlns:ns="http://www.w3.org/2000/svg")], index_split_004.html (14-40)</message>
+         <message id="RSC-005" severity="error">RSC-005, ERROR, [Error while parsing file: element "ul" not allowed here; expected the element end-tag, text or element "a", "abbr", "acronym", "applet", "b", "bdo", "big", "br", "cite", "code", "del", "dfn", "em", "i", "iframe", "img", "ins", "kbd", "map", "noscript", "ns:svg", "object", "q", "samp", "script", "small", "span", "strong", "sub", "sup", "tt" or "var" (with xmlns:ns="http://www.w3.org/2000/svg")], index_split_004.html (15-22)</message>
+      </messages>
+      <mimeType>application/epub+zip</mimeType>
+      <properties>
+         <property>
+            <name>FileName</name>
+            <values arity="Scalar" type="String">
+               <value>oc_aba007-0000f8.epub</value>
+            </values>
+         </property>
+         <property>
+            <name>CharacterCount</name>
+            <values arity="Scalar" type="Long">
+               <value>454936</value>
+            </values>
+         </property>
+         <property>
+            <name>Language</name>
+            <values arity="Scalar" type="String">
+               <value>en</value>
+            </values>
+         </property>
+         <property>
+            <name>Info</name>
+            <values arity="List" type="Property">
+               <property>
+                  <name>Identifier</name>
+                  <values arity="Scalar" type="String">
+                     <value>eaa4ccf9-6293-4856-ab4f-e5be754c41f3</value>
+                  </values>
+               </property>
+               <property>
+                  <name>CreationDate</name>
+                  <values arity="Scalar" type="Date">
+                     <value>2022-01-21T09:40:48Z</value>
+                  </values>
+               </property>
+               <property>
+                  <name>Title</name>
+                  <values arity="Scalar" type="String">
+                     <value>9b3b7477708b45e2910dc6aa590d23e0</value>
+                  </values>
+               </property>
+               <property>
+                  <name>Creator</name>
+                  <values arity="Scalar" type="String">
+                     <value>Unknown</value>
+                  </values>
+               </property>
+               <property>
+                  <name>Contributor</name>
+                  <values arity="Scalar" type="String">
+                     <value>calibre (4.99.4) [https://calibre-ebook.com]</value>
+                  </values>
+               </property>
+               <property>
+                  <name>Date</name>
+                  <values arity="Scalar" type="String">
+                     <value>2020-04-17T14:52:58+00:00</value>
+                  </values>
+               </property>
+            </values>
+         </property>
+         <property>
+            <name>MediaTypes</name>
+            <values arity="Array" type="String">
+               <value>application/xhtml+xml</value>
+               <value>image/png</value>
+               <value>text/css</value>
+               <value>application/x-dtbncx+xml</value>
+            </values>
+         </property>
+      </properties>
+   </repInfo>
+</jhove>

@@ -1,9 +1,11 @@
 package nkp.pspValidator.shared.externalUtils.validation.rules;
 
+import nkp.pspValidator.shared.engine.Level;
 import nkp.pspValidator.shared.externalUtils.validation.Constraint;
 import nkp.pspValidator.shared.externalUtils.validation.rules.constraints.IsExactlyConstraint;
 import nkp.pspValidator.shared.externalUtils.validation.rules.constraints.IsInIntRangeConstraint;
 import nkp.pspValidator.shared.externalUtils.validation.rules.constraints.NTimesXRemainingYConstraint;
+import nkp.pspValidator.shared.externalUtils.validation.rules.constraints.StartsWithConstraint;
 import org.junit.Test;
 
 import java.util.*;
@@ -117,6 +119,45 @@ public class DataRulesTest {
     public void mustMatchAnyWithoutConstraintsAlwaysFails() {
         MustMatchAnyDR rule = new MustMatchAnyDR("x", Collections.<Constraint>emptyList());
         assertEquals(Collections.singletonList("x: hodnota \"a\" neodpovídá žádnému z omezení: []"), rule.validate("a"));
+    }
+
+    @Test
+    public void mustMatchAnyValidatesEachListItem() {
+        // seznam z extrakce allNonempty (napr. typy medii EPUB): kazda nevyhovujici polozka je samostatna chyba
+        MustMatchAnyDR rule = new MustMatchAnyDR("Typy", Arrays.<Constraint>asList(new IsExactlyConstraint("text/css"), new IsExactlyConstraint("image/png")));
+        assertTrue(rule.validate(Arrays.asList("text/css", "image/png", "text/css")).isEmpty());
+        assertTrue(rule.validate(new ArrayList<String>()).isEmpty());
+        assertEquals(Arrays.asList(
+                "Typy: hodnota \"font/woff\" neodpovídá žádnému z omezení: [musí být přesně 'text/css',musí být přesně 'image/png']",
+                "Typy: hodnota \"audio/mpeg\" neodpovídá žádnému z omezení: [musí být přesně 'text/css',musí být přesně 'image/png']"
+        ), rule.validate(Arrays.asList("text/css", "font/woff", "audio/mpeg")));
+    }
+
+    @Test
+    public void mustMatchAnyPassesWholeListToWholeListConstraint() {
+        // nTimesXRemainingY posuzuje seznam jako celek (profily Jpylyzeru), polozky se nerozdeluji
+        MustMatchAnyDR rule = new MustMatchAnyDR("Velikost precincts (1)", Collections.<Constraint>singletonList(new NTimesXRemainingYConstraint(2, "256", "128")));
+        assertTrue(rule.validate(Arrays.asList("256", "256", "128", "128")).isEmpty());
+        assertEquals(1, rule.validate(Arrays.asList("256", "256", "256")).size());
+    }
+
+    @Test
+    public void rulesWithoutLevelUseLevelFromRules() {
+        // bez atributu level v profilu plati validation_problem_level z rules.xml (null)
+        assertNull(new MustExistDR("x").getLevel());
+        assertNull(new MustNotExistDR("x").getLevel());
+        assertNull(new MustMatchAnyDR("x", Collections.<Constraint>emptyList()).getLevel());
+        assertNull(new MustExistDR("x", null).getLevel());
+    }
+
+    @Test
+    public void rulesWithLevel() {
+        assertEquals(Level.WARNING, new MustExistDR("x", Level.WARNING).getLevel());
+        assertEquals(Level.ERROR, new MustNotExistDR("x", Level.ERROR).getLevel());
+        MustMatchAnyDR rule = new MustMatchAnyDR("PDF/A", Level.INFO, Collections.<Constraint>singletonList(new StartsWithConstraint("PDF/A-1B")));
+        assertEquals(Level.INFO, rule.getLevel());
+        assertEquals(Collections.singletonList("PDF/A: hodnota \"PDF/A-1b validation profile\" neodpovídá žádnému z omezení: [musí začínat na 'PDF/A-1B']"),
+                rule.validate("PDF/A-1b validation profile"));
     }
 
     @Test

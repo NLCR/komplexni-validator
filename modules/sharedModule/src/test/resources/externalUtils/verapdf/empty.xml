@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<report>
+  <buildInformation>
+    <releaseDetails id="core" version="1.30.2" buildDate="2026-06-03T10:42:00+02:00"></releaseDetails>
+    <releaseDetails id="validation-model" version="1.30.2" buildDate="2026-06-03T10:46:00+02:00"></releaseDetails>
+    <releaseDetails id="apps" version="1.30.0" buildDate="2026-06-03T13:47:00+02:00"></releaseDetails>
+  </buildInformation>
+  <jobs>
+    <job>
+      <item size="0">
+        <name>empty.pdf</name>
+      </item>
+      <taskException type="PARSE" isExecuted="true" isSuccess="false">
+        <duration start="1794486459884" finish="1794486459897">00:00:00.013</duration>
+        <exceptionMessage>Exception: Couldn't parse stream caused by exception: End of file is reached</exceptionMessage>
+      </taskException>
+      <duration start="1794486459884" finish="1794486459897">00:00:00.013</duration>
+    </job>
+  </jobs>
+  <batchSummary totalJobs="1" failedToParse="1" encrypted="0" outOfMemory="0" veraExceptions="0">
+    <validationReports compliant="0" nonCompliant="0" failedJobs="1">1</validationReports>
+    <featureReports failedJobs="0">0</featureReports>
+    <repairReports failedJobs="0">0</repairReports>
+    <duration start="1794486459880" finish="1794486459901">00:00:00.021</duration>
+  </batchSummary>
+</report>

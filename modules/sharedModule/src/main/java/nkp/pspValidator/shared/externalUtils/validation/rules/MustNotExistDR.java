@@ -1,5 +1,7 @@
 package nkp.pspValidator.shared.externalUtils.validation.rules;
 
+import nkp.pspValidator.shared.engine.Level;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -9,6 +11,10 @@ import java.util.List;
 public class MustNotExistDR extends AbstractDataRule {
     public MustNotExistDR(String validationName) {
         super(validationName);
+    }
+
+    public MustNotExistDR(String validationName, Level level) {
+        super(validationName, level);
     }
 
     @Override

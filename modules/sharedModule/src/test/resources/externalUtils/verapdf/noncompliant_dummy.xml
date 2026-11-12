@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<report>
+  <buildInformation>
+    <releaseDetails id="core" version="1.30.2" buildDate="2026-06-03T10:42:00+02:00"></releaseDetails>
+    <releaseDetails id="validation-model" version="1.30.2" buildDate="2026-06-03T10:46:00+02:00"></releaseDetails>
+    <releaseDetails id="apps" version="1.30.0" buildDate="2026-06-03T13:47:00+02:00"></releaseDetails>
+  </buildInformation>
+  <jobs>
+    <job>
+      <item size="13264">
+        <name>dummy.pdf</name>
+      </item>
+      <validationReport jobEndStatus="normal" profileName="PDF/A-1b validation profile" statement="PDF file is not compliant with Validation Profile requirements." isCompliant="false">
+        <details passedRules="122" failedRules="7" passedChecks="310" failedChecks="14">
+          <rule specification="ISO 19005-1:2005" clause="6.2.3.3" testNumber="1" status="failed" failedChecks="8">
+            <description>DeviceRGB may be used only if the file has a PDF/A-1 OutputIntent that uses an RGB colour space</description>
+            <object>PDDeviceRGB</object>
+            <test>gOutputCS != null &amp;&amp; gOutputCS == "RGB "</test>
+            <check status="failed">
+              <context>root/document[0]/pages[0](1 0 obj PDPage)/contentStream[0](2 0 obj PDContentStream)/operators[6]/colorSpace[0]</context>
+              <errorMessage>DeviceRGB colour space is used without RGB output intent profile</errorMessage>
+            </check>
+            <check status="failed">
+              <context>root/document[0]/pages[0](1 0 obj PDPage)/contentStream[0](2 0 obj PDContentStream)/operators[10]/fillCS[0]</context>
+              <errorMessage>DeviceRGB colour space is used without RGB output intent profile</errorMessage>
+            </check>
+            <check status="failed">
+              <context>root/document[0]/pages[0](1 0 obj PDPage)/contentStream[0](2 0 obj PDContentStream)/operators[12]/fillCS[0]</context>
+              <errorMessage>DeviceRGB colour space is used without RGB output intent profile</errorMessage>
+            </check>
+            <check status="failed">
+              <context>root/document[0]/pages[0](1 0 obj PDPage)/contentStream[0](2 0 obj PDContentStream)/operators[14]/fillCS[0]</context>
+              <errorMessage>DeviceRGB colour space is used without RGB output intent profile</errorMessage>
+            </check>
+            <check status="failed">
+              <context>root/document[0]/pages[0](1 0 obj PDPage)/contentStream[0](2 0 obj PDContentStream)/operators[16]/fillCS[0]</context>
+              <errorMessage>DeviceRGB colour space is used without RGB output intent profile</errorMessage>
+            </check>
+            <check status="failed">
+              <context>root/document[0]/pages[0](1 0 obj PDPage)/contentStream[0](2 0 obj PDContentStream)/operators[18]/fillCS[0]</context>
+              <errorMessage>DeviceRGB colour space is used without RGB output intent profile</errorMessage>
+            </check>
+            <check status="failed">
+              <context>root/document[0]/pages[0](1 0 obj PDPage)/contentStream[0](2 0 obj PDContentStream)/operators[20]/fillCS[0]</context>
+              <errorMessage>DeviceRGB colour space is used without RGB output intent profile</errorMessage>
+            </check>
+            <check status="failed">
+              <context>root/document[0]/pages[0](1 0 obj PDPage)/Group[0]/colorSpace[0]</context>
+              <errorMessage>DeviceRGB colour space is used without RGB output intent profile</errorMessage>
+            </check>
+          </rule>
+          <rule specification="ISO 19005-1:2005" clause="6.7.3" testNumber="7" status="failed" failedChecks="1">
+            <description>The value of Producer entry from the document information dictionary, if present, and its analogous XMP property "pdf:Producer" shall be equivalent</description>
+            <object>CosInfo</object>
+            <test>Producer == null || Producer == XMPProducer</test>
+            <check status="failed">
+              <context>root/trailer[0]/Info[0]</context>
+              <errorMessage>The value of Producer entry from the document Info dictionary and its matching XMP property "pdf:Producer" are not equivalent (Info /Producer = OpenOffice.org 2.1, XMP pdf:Producer = null)</errorMessage>
+            </check>
+          </rule>
+          <rule specification="ISO 19005-1:2005" clause="6.7.3" testNumber="1" status="failed" failedChecks="1">
+            <description>The value of CreationDate entry from the document information dictionary, if present, and its analogous XMP property "xmp:CreateDate" shall be equivalent</description>
+            <object>CosInfo</object>
+            <test>doCreationDatesMatch != false</test>
+            <check status="failed">
+              <context>root/trailer[0]/Info[0]</context>
+              <errorMessage>The value of CreationDate entry from the document Info dictionary and its matching XMP property "xmp:CreateDate" are not equivalent (Info /CreationDate = D:20070223175637+02'00', XMP xmp:CreateDate = null)</errorMessage>
+            </check>
+          </rule>
+          <rule specification="ISO 19005-1:2005" clause="6.7.3" testNumber="3" status="failed" failedChecks="1">
+            <description>The value of Author entry from the document information dictionary, if present, and its analogous XMP property "dc:creator" shall be equivalent. dc:creator shall contain exactly one entry</description>
+            <object>CosInfo</object>
+            <test>Author == null || (Author == XMPCreator &amp;&amp; XMPCreatorSize == 1)</test>
+            <check status="failed">
+              <context>root/trailer[0]/Info[0]</context>
+              <errorMessage>The value of Author entry from the document Info dictionary and its matching XMP property "dc:creator" are not equivalent (Info /Author = Evangelos Vlachogiannis, XMP dc:creator = null)</errorMessage>
+            </check>
+          </rule>
+          <rule specification="ISO 19005-1:2005" clause="6.4" testNumber="3" status="failed" failedChecks="1">
+            <description>A Group object with an S key with a value of Transparency shall not be included in a form XObject. A Group object with an S key with a value of Transparency shall not be included in a page dictionary</description>
+            <object>PDGroup</object>
+            <test>S != "Transparency"</test>
+            <check status="failed">
+              <context>root/document[0]/pages[0](1 0 obj PDPage)/Group[0]</context>
+              <errorMessage>A transparency group is present in a form XObject or page dictionary</errorMessage>
+            </check>
+          </rule>
+          <rule specification="ISO 19005-1:2005" clause="6.7.2" testNumber="1" status="failed" failedChecks="1">
+            <description>The document catalog dictionary of a conforming file shall contain the Metadata key. The metadata stream dictionary shall contain entry Type with value /Metadata and entry Subtype with value /XML</description>
+            <object>PDDocument</object>
+            <test>containsMetadata == true</test>
+            <check status="failed">
+              <context>root/document[0]</context>
+              <errorMessage>The document catalog dictionary doesn't contain metadata key or metadata stream dictionary does not contain either entry Type with value /Metadata or entry Subtype with value /XML</errorMessage>
+            </check>
+          </rule>
+          <rule specification="ISO 19005-1:2005" clause="6.7.3" testNumber="6" status="failed" failedChecks="1">
+            <description>The value of Creator entry from the document information dictionary, if present, and its analogous XMP property "xmp:CreatorTool" shall be equivalent</description>
+            <object>CosInfo</object>
+            <test>Creator == null || Creator == XMPCreatorTool</test>
+            <check status="failed">
+              <context>root/trailer[0]/Info[0]</context>
+              <errorMessage>The value of Creator entry from the document Info dictionary and its matching XMP property "xmp:CreatorTool" are not equivalent (Info /Creator = Writer, XMP xmp:CreatorTool = null)</errorMessage>
+            </check>
+          </rule>
+        </details>
+      </validationReport>
+      <duration start="1794486456827" finish="1794486456933">00:00:00.106</duration>
+    </job>
+  </jobs>
+  <batchSummary totalJobs="1" failedToParse="0" encrypted="0" outOfMemory="0" veraExceptions="0">
+    <validationReports compliant="0" nonCompliant="1" failedJobs="0">1</validationReports>
+    <featureReports failedJobs="0">0</featureReports>
+    <repairReports failedJobs="0">0</repairReports>
+    <duration start="1794486456803" finish="1794486456942">00:00:00.139</duration>
+  </batchSummary>
+</report>
