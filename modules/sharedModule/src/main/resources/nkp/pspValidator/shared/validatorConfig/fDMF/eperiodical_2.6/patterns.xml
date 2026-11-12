@@ -75,14 +75,14 @@
         <description>Vzor pro jména původních nearchivních souborů v rámci adresáře ORIGINALDATA-DIR: předpona "od",
             přípona podle původního formátu (např. od_nk-00027x.pdf).
         </description>
-        <expression caseSensitive="true">od.+\.[^.]+</expression>
+        <expression caseSensitive="true">od_.+\.[^.]+</expression>
     </pattern-def>
 
     <pattern-def name="ORIGINALDATA-CONV_FILENAME">
         <description>Vzor pro jména konverzních souborů v rámci adresáře ORIGINALDATA-DIR: předpona "conv", přípona
             .xml (např. conv_nk-00027x.xml).
         </description>
-        <expression caseSensitive="true">conv.+\.xml</expression>
+        <expression caseSensitive="true">conv_.+\.xml</expression>
     </pattern-def>
 
 </fDMF>
