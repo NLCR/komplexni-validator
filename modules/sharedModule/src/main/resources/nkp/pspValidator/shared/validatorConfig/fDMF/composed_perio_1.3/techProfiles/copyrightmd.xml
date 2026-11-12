@@ -8,7 +8,8 @@
 
     <info>
         <text>
-            Profil pro validaci Copyright MD záznamu stránky v sekundárním METSu pro DMF Elektronické publikace (periodika) 2.5.
+            Profil pro validaci Copyright MD záznamu pro DMF Elektronické publikace (skládaná periodika) 1.3 (kap. 5.9,
+            kompletně nepovinná). Převzato z VEP 2.4, pravidly zatím nepoužito.
         </text>
         <url description="popis formátu copyrightMD">http://www.cdlib.org/groups/rmg/</url>
         <url description="XSD pro copyrightMD 0.91">http://www.cdlib.org/groups/rmg/docs/copyrightMD.xsd</url>

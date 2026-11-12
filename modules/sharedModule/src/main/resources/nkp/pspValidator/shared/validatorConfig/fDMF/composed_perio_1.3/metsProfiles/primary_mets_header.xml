@@ -8,11 +8,10 @@
 
     <info>
         <text>
-            Profil pro validaci elementu mets:mets, zejména hlavičky mets:metsHdr v primárním METSu pro DMF Elektronické publikace (periodika) verze 2.4.
+            Profil pro validaci elementu mets:mets v primárním METSu pro DMF Elektronické publikace (skládaná periodika)
+            1.3: kořenový element a hlavička mets:metsHdr (kap. 5.2, 5.3), dmdSec (kap. 5.4), autorskoprávní
+            amdSec (kap. 5.9), fileSec (kap. 5.6.1) a strukturální mapy (kap. 5.7.1, varianta A).
         </text>
-        <url description="Definice metadatových formátů pro digitalizaci eborn periodik">
-            https://old.ndk.cz/standardy-digitalizace/DMF_ebornperiodika_2.4.pdf
-        </url>
     </info>
 
     <namespaces>
@@ -178,7 +177,10 @@
             </element>
 
             <!--úroveň svazek (POVINNÁ)-->
-            <element name="mets:dmdSec" specification="starts-with(@ID,'MODSMD_VOLUME')" mandatory="false">
+            <!--DMF Skládaná e-periodika 1.3, kap. 5.4, s. 16: číslo (ISSUE) je základní entita "kompletně rozdělená
+            na články" (ARTICLE) a "musí být obsaženy i nadřazené úrovně pro titul (TITLE) a ročník (VOLUME)", proto
+            jsou TITLE, VOLUME, ISSUE a ARTICLE povinné, SUPPLEMENT nepovinná úroveň.-->
+            <element name="mets:dmdSec" specification="starts-with(@ID,'MODSMD_VOLUME')" mandatory="true">
                 <expectedAttributes>
                     <attribute name="ID" mandatory="true">
                         <expectedContent>
@@ -212,7 +214,7 @@
                 </expectedElements>
             </element>
 
-            <element name="mets:dmdSec" specification="starts-with(@ID,'DCMD_VOLUME')" mandatory="false">
+            <element name="mets:dmdSec" specification="starts-with(@ID,'DCMD_VOLUME')" mandatory="true">
                 <expectedAttributes>
                     <attribute name="ID" mandatory="true">
                         <expectedContent>
@@ -247,7 +249,7 @@
             </element>
 
             <!--úroveň číslo (nepovinná)-->
-            <element name="mets:dmdSec" specification="starts-with(@ID,'MODSMD_ISSUE')" mandatory="false">
+            <element name="mets:dmdSec" specification="starts-with(@ID,'MODSMD_ISSUE')" mandatory="true">
                 <expectedAttributes>
                     <attribute name="ID" mandatory="true">
                         <expectedContent>
@@ -281,7 +283,7 @@
                 </expectedElements>
             </element>
 
-            <element name="mets:dmdSec" specification="starts-with(@ID,'DCMD_ISSUE')" mandatory="false">
+            <element name="mets:dmdSec" specification="starts-with(@ID,'DCMD_ISSUE')" mandatory="true">
                 <expectedAttributes>
                     <attribute name="ID" mandatory="true">
                         <expectedContent>
@@ -316,7 +318,7 @@
             </element>
 
             <!--úroveň článek (nepovinná)-->
-            <element name="mets:dmdSec" specification="starts-with(@ID,'MODSMD_ART')" mandatory="false">
+            <element name="mets:dmdSec" specification="starts-with(@ID,'MODSMD_ART')" mandatory="true">
                 <expectedAttributes>
                     <attribute name="ID" mandatory="true">
                         <expectedContent>
@@ -350,7 +352,7 @@
                 </expectedElements>
             </element>
 
-            <element name="mets:dmdSec" specification="starts-with(@ID,'DCMD_ART')" mandatory="false">
+            <element name="mets:dmdSec" specification="starts-with(@ID,'DCMD_ART')" mandatory="true">
                 <expectedAttributes>
                     <attribute name="ID" mandatory="true">
                         <expectedContent>
@@ -453,58 +455,11 @@
                 </expectedElements>
             </element>
 
-            <!--technická a administrativní metadata (strana 54)-->
-            <element name="mets:amdSec" specification="./mets:techMD|./mets:digiprovMD">
-                <expectedAttributes>
-                    <attribute name="ID" mandatory="true">
-                        <expectedContent/>
-                    </attribute>
-                </expectedAttributes>
-                <expectedElements>
-                    <element name="mets:techMD" mandatory="false">
-                        <expectedAttributes>
-                            <attribute name="ID" mandatory="true">
-                                <expectedContent/>
-                            </attribute>
-                        </expectedAttributes>
-                        <expectedElements>
-                            <element name="mets:mdWrap" ignoreUnexpectedAttributes="true">
-                                <expectedAttributes>
-                                    <attribute name="MDTYPE" mandatory="true">
-                                        <recommendedContent>
-                                            <value>PREMIS</value>
-                                        </recommendedContent>
-                                    </attribute>
-                                </expectedAttributes>
-                                <expectedElements>
-                                    <element name="mets:xmlData" ignoreUnexpectedChildElements="true"/>
-                                </expectedElements>
-                            </element>
-                        </expectedElements>
-                    </element>
-                    <element name="mets:digiprovMD" mandatory="false">
-                        <expectedAttributes>
-                            <attribute name="ID" mandatory="true">
-                                <expectedContent/>
-                            </attribute>
-                        </expectedAttributes>
-                        <expectedElements>
-                            <element name="mets:mdWrap" ignoreUnexpectedAttributes="true">
-                                <expectedAttributes>
-                                    <attribute name="MDTYPE" mandatory="true">
-                                        <expectedContent/>
-                                    </attribute>
-                                </expectedAttributes>
-                                <expectedElements>
-                                    <element name="mets:xmlData" ignoreUnexpectedChildElements="true"/>
-                                </expectedElements>
-                            </element>
-                        </expectedElements>
-                    </element>
-                </expectedElements>
-            </element>
+            <!--Technická a administrativní metadata nesmí být v hlavním METS (DMF Skládaná e-periodika 1.3, kap. 3.1,
+            s. 7 a kap. 5.5, s. 65), patří do vedlejších amd_mets. Element mets:amdSec s techMD nebo digiprovMD
+            v hlavním METS proto profil hlásí jako neočekávaný (WARNING).-->
 
-            <!--autorskoprávní metadata (strana 64)-->
+            <!--autorskoprávní metadata (kap. 5.9, s. 101, kompletně nepovinná)-->
             <element name="mets:amdSec" specification="./mets:rightsMD" mandatory="false">
                 <expectedAttributes>
                     <attribute name="ID" mandatory="true">
@@ -546,15 +501,20 @@
                 </expectedElements>
             </element>
 
-            <!--fileSec-->
-            <element name="mets:fileSec" mandatory="true">
+            <!--fileSec (DMF Skládaná e-periodika 1.3, kap. 5.6.1, s. 89): skupina archivních kopií ID="OC_EBSFL"
+            USE="master" a skupina vedlejších METS ID="TECHMDGRP" USE="Technical Metadata". Úvod kap. 5.6 uvádí pro
+            nedělené periodikum ID="OC_EBGRP"; u skládaného periodika je to zřejmě pozůstatek (nejasnost N2, dotaz NK),
+            proto se OC_EBGRP přijme s varováním (recommendedContent). Skupiny varianty B (MC_IMGGRP, UC_IMGGRP,
+            ALTOGRP, TXTGRP, kap. 5.6.2) zatím profil nezná (krok P4d), hlásí je jako neočekávané (WARNING).
+            Skupinu pro soubory z originaldata DMF nedefinuje (nejasnost N8, dotaz NK).-->
+            <element name="mets:fileSec" mandatory="true" repeatable="false">
                 <expectedElements>
-                    <element name="mets:fileGrp">
+                    <element name="mets:fileGrp" specification="@USE='master'" repeatable="false">
                         <expectedAttributes>
                             <attribute name="ID">
-                                <expectedContent>
-                                    <value>OC_EBGRP</value>
-                                </expectedContent>
+                                <recommendedContent>
+                                    <value>OC_EBSFL</value>
+                                </recommendedContent>
                             </attribute>
                             <attribute name="USE">
                                 <expectedContent>
@@ -572,7 +532,9 @@
                                         <expectedContent/>
                                     </attribute>
                                     <attribute name="SIZE">
-                                        <expectedContent/>
+                                        <expectedContent>
+                                            <regexp>[0-9]+</regexp>
+                                        </expectedContent>
                                     </attribute>
                                     <attribute name="CHECKSUMTYPE">
                                         <expectedContent>
@@ -599,7 +561,88 @@
                                     </attribute>
                                 </expectedAttributes>
                                 <expectedElements>
-                                    <element name="mets:FLocat" ignoreUnexpectedAttributes="true"/>
+                                    <element name="mets:FLocat" repeatable="false">
+                                        <expectedAttributes>
+                                            <attribute name="LOCTYPE">
+                                                <recommendedContent>
+                                                    <value>URL</value>
+                                                </recommendedContent>
+                                            </attribute>
+                                            <attribute name="xlink:href">
+                                                <expectedContent/>
+                                            </attribute>
+                                        </expectedAttributes>
+                                    </element>
+                                </expectedElements>
+                            </element>
+                        </expectedElements>
+                    </element>
+                    <element name="mets:fileGrp" specification="@ID='TECHMDGRP'" repeatable="false">
+                        <expectedAttributes>
+                            <attribute name="ID">
+                                <expectedContent>
+                                    <value>TECHMDGRP</value>
+                                </expectedContent>
+                            </attribute>
+                            <attribute name="USE">
+                                <expectedContent>
+                                    <value>Technical Metadata</value>
+                                </expectedContent>
+                            </attribute>
+                        </expectedAttributes>
+                        <expectedElements>
+                            <element name="mets:file">
+                                <expectedAttributes>
+                                    <attribute name="ID">
+                                        <expectedContent/>
+                                    </attribute>
+                                    <attribute name="MIMETYPE">
+                                        <expectedContent>
+                                            <value>text/xml</value>
+                                        </expectedContent>
+                                    </attribute>
+                                    <attribute name="SIZE">
+                                        <expectedContent>
+                                            <regexp>[0-9]+</regexp>
+                                        </expectedContent>
+                                    </attribute>
+                                    <attribute name="CHECKSUMTYPE">
+                                        <expectedContent>
+                                            <value>MD5</value>
+                                        </expectedContent>
+                                    </attribute>
+                                    <attribute name="CHECKSUM">
+                                        <expectedContent/>
+                                    </attribute>
+                                    <attribute name="SEQ">
+                                        <expectedContent>
+                                            <regexp>[0-9]+</regexp>
+                                        </expectedContent>
+                                    </attribute>
+                                    <attribute name="CREATED">
+                                        <expectedContent>
+                                            <oneOf>
+                                                <!--ISO 8601 na úroveň alespoň sekund (basic format): např. 20190830T153501, 20190830T153530+01, 20190830T153544-23:30,20190830T153559.123-->
+                                                <regexp>^(?&lt;year&gt;[0-9]{4})(?&lt;month&gt;1[0-2]|0[1-9])(?&lt;day&gt;3[01]|0[1-9]|[12][0-9])T(?&lt;hour&gt;2[0-3]|[01][0-9])(?&lt;minute&gt;[0-5][0-9])(?&lt;second&gt;[0-5][0-9](.(?&lt;millis&gt;[0-9]{3}))?)?(?&lt;timezone&gt;Z|[+-](2[0-3]|[01][0-9])([0-5][0-9])?)?$</regexp>
+                                                <!--ISO 8601 na úroveň alespoň sekund (extended format): např. 2019-08-30T15:35:01+01:00, 2019-08-30T15:35:44-23:30, 2019-08-30T15:35:59.123Z -->
+                                                <regexp>^(?&lt;year&gt;[0-9]{4})-(?&lt;month&gt;1[0-2]|0[1-9])-(?&lt;day&gt;3[01]|0[1-9]|[12][0-9])T(?&lt;hour&gt;2[0-3]|[01][0-9]):(?&lt;minute&gt;[0-5][0-9])(:(?&lt;second&gt;[0-5][0-9])(.(?&lt;millis&gt;[0-9]{3}))?)?(?&lt;timezone&gt;Z|[+-](2[0-3]|[01][0-9])(:([0-5][0-9])?)?)?$</regexp>
+                                            </oneOf>
+                                        </expectedContent>
+                                    </attribute>
+                                </expectedAttributes>
+                                <expectedElements>
+                                    <element name="mets:FLocat" repeatable="false">
+                                        <expectedAttributes>
+                                            <attribute name="LOCTYPE">
+                                                <recommendedContent>
+                                                    <value>URL</value>
+                                                </recommendedContent>
+                                            </attribute>
+                                            <attribute name="xlink:href">
+                                                <expectedContent/>
+                                            </attribute>
+                                        </expectedAttributes>
+                                    </element>
                                 </expectedElements>
                             </element>
                         </expectedElements>
@@ -607,28 +650,116 @@
                 </expectedElements>
             </element>
 
-            <!--strukturální mapa-->
-            <element name="mets:structMap" mandatory="true">
+            <!--fyzická strukturální mapa (kap. 5.7.1.1, s. 93–94): kořenový div TYPE="electronic_coll_journal",
+            v něm div pro každý článek a přílohu s fptr na archivní kopii a amd_mets. TYPE vnořeného divu je "typ
+            článku" (bez výčtu v DMF), ORDERLABEL jen u přílohy (nejasnost N6). Odkazy fptr kontrolují pravidla
+            v sekci Strukturální mapy.-->
+            <element name="mets:structMap" specification="@TYPE='PHYSICAL'" mandatory="true" repeatable="false">
+                <expectedAttributes>
+                    <attribute name="TYPE">
+                        <expectedContent>
+                            <value>PHYSICAL</value>
+                        </expectedContent>
+                    </attribute>
+                    <attribute name="LABEL">
+                        <recommendedContent>
+                            <value>Physical_Structure</value>
+                        </recommendedContent>
+                    </attribute>
+                    <attribute name="ID" mandatory="false"/>
+                </expectedAttributes>
                 <expectedElements>
-                    <!--TODO: tady to není možné lépe specifikovat a rozdělit podle hodnot TYPE,
-                        protože není jasné, zda má být třeba div[@TYPE='VOLUME'] přímo v structMap, nebo uvnitř div[@TYPE='DOCUMENT']-->
-                    <element name="mets:div" ignoreUnexpectedChildElements="true">
+                    <element name="mets:div" repeatable="false">
                         <expectedAttributes>
                             <attribute name="ID">
                                 <expectedContent/>
                             </attribute>
-                            <attribute name="DMDID" mandatory="false">
+                            <attribute name="TYPE">
+                                <expectedContent>
+                                    <value>electronic_coll_journal</value>
+                                </expectedContent>
+                            </attribute>
+                            <attribute name="LABEL" mandatory="false">
+                                <expectedContent/>
+                            </attribute>
+                            <attribute name="DMDID">
+                                <expectedContent/>
+                            </attribute>
+                            <attribute name="ADMID" mandatory="false">
+                                <expectedContent/>
+                            </attribute>
+                        </expectedAttributes>
+                        <expectedElements>
+                            <element name="mets:div">
+                                <expectedAttributes>
+                                    <attribute name="ID">
+                                        <expectedContent/>
+                                    </attribute>
+                                    <attribute name="TYPE">
+                                        <expectedContent/>
+                                    </attribute>
+                                    <attribute name="LABEL">
+                                        <expectedContent/>
+                                    </attribute>
+                                    <attribute name="ORDER">
+                                        <expectedContent>
+                                            <regexp>[0-9]+</regexp>
+                                        </expectedContent>
+                                    </attribute>
+                                    <attribute name="ORDERLABEL" mandatory="false">
+                                        <expectedContent/>
+                                    </attribute>
+                                    <attribute name="ADMID" mandatory="false">
+                                        <expectedContent/>
+                                    </attribute>
+                                </expectedAttributes>
+                                <expectedElements>
+                                    <element name="mets:fptr">
+                                        <expectedAttributes>
+                                            <attribute name="FILEID">
+                                                <expectedContent/>
+                                            </attribute>
+                                        </expectedAttributes>
+                                    </element>
+                                </expectedElements>
+                            </element>
+                        </expectedElements>
+                    </element>
+                </expectedElements>
+            </element>
+
+            <!--logická strukturální mapa (kap. 5.7.1.2, s. 94–96): hierarchii a povolené typy divů kontroluje pravidlo
+            PRIMARY-METS_LOGICAL_STRUCTURAL_MAP_CORRECT, profil jen kořenový div titulu.-->
+            <element name="mets:structMap" specification="@TYPE='LOGICAL'" mandatory="true" repeatable="false">
+                <expectedAttributes>
+                    <attribute name="TYPE">
+                        <expectedContent>
+                            <value>LOGICAL</value>
+                        </expectedContent>
+                    </attribute>
+                    <attribute name="LABEL">
+                        <recommendedContent>
+                            <value>Logical_Structure</value>
+                        </recommendedContent>
+                    </attribute>
+                    <attribute name="ID" mandatory="false"/>
+                </expectedAttributes>
+                <expectedElements>
+                    <element name="mets:div" repeatable="false" ignoreUnexpectedChildElements="true">
+                        <expectedAttributes>
+                            <attribute name="ID">
                                 <expectedContent/>
                             </attribute>
                             <attribute name="TYPE">
                                 <expectedContent>
-                                    <oneOf>
-                                        <value>TITLE</value>
-                                        <value>VOLUME</value>
-                                        <value>DOCUMENT</value>
-                                        <value>FILE</value>
-                                    </oneOf>
+                                    <value>PERIODICAL_TITLE</value>
                                 </expectedContent>
+                            </attribute>
+                            <attribute name="DMDID">
+                                <expectedContent/>
+                            </attribute>
+                            <attribute name="LABEL" mandatory="false">
+                                <expectedContent/>
                             </attribute>
                             <attribute name="ADMID" mandatory="false">
                                 <expectedContent/>
@@ -637,6 +768,9 @@
                     </element>
                 </expectedElements>
             </element>
+
+            <!--structLink (kap. 5.7.3, s. 99), obsah kontroluje pravidlo PRIMARY-METS_STRUCT_LINKS_CORRECT-->
+            <element name="mets:structLink" mandatory="true" repeatable="false" ignoreUnexpectedChildElements="true"/>
 
         </expectedElements>
     </rootElement>

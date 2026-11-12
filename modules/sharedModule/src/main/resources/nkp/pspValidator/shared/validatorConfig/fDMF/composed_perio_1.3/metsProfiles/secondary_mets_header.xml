@@ -1,0 +1,281 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<metadataProfile
+        xmlns="http://www.nkp.cz/pspValidator/3.0/metadataProfile"
+        name="Secondary METS header"
+        validatorVersion="3.0"
+        dmf="composed_perio_1.3"
+>
+
+    <info>
+        <text>
+            Profil pro validaci elementu mets:mets ve vedlejším METSu (amd_mets) pro DMF Elektronické publikace (skládaná
+            periodika) 1.3: kořenový element a hlavička mets:metsHdr mají obdobnou strukturu jako hlavní METS
+            a jejich plnění je povinné (kap. 5.5, s. 65, změnový list 1.3, GH #68), dále amdSec (kap. 5.5), fileSec
+            (kap. 5.6.3) a fyzická strukturální mapa (kap. 5.7.1.1, varianta A). Obsah techMD a digiprovMD kontrolují
+            profily v techProfiles.
+        </text>
+    </info>
+
+    <namespaces>
+        <namespace prefix="mets">http://www.loc.gov/METS/</namespace>
+    </namespaces>
+
+    <dictionaries>
+        <dictionary name="siglaInstitutionCodes"
+                    description="sigly knihoven"/>
+    </dictionaries>
+
+    <rootElement name="mets:mets">
+        <expectedAttributes>
+            <attribute name="LABEL" mandatory="true"/>
+            <!--"obdobná struktura" jako hlavní METS (kap. 5.5, s. 65); hodnotu TYPE pro vedlejší METS DMF výslovně
+            neuvádí, proto jen doporučená hodnota z kap. 5.2 (WARNING při odlišné hodnotě)-->
+            <attribute name="TYPE" mandatory="true">
+                <recommendedContent>
+                    <value>electronic_coll_journal</value>
+                </recommendedContent>
+            </attribute>
+            <attribute name="xsi:schemaLocation" mandatory="false"/>
+        </expectedAttributes>
+        <expectedElements>
+
+            <!--hlavička-->
+            <element name="mets:metsHdr">
+                <expectedAttributes>
+                    <attribute name="LASTMODDATE" mandatory="true">
+                        <expectedContent>
+                            <oneOf>
+                                <!--ISO 8601 na úroveň alespoň minut (basic format): např. 20190830T1535+01, 20190830T153544-23:30, 20190830T153559.123-->
+                                <regexp>^(?&lt;year&gt;[0-9]{4})(?&lt;month&gt;1[0-2]|0[1-9])(?&lt;day&gt;3[01]|0[1-9]|[12][0-9])T(?&lt;hour&gt;2[0-3]|[01][0-9])(?&lt;minute&gt;[0-5][0-9])(?&lt;second&gt;[0-5][0-9](.(?&lt;millis&gt;[0-9]{3}))?)?(?&lt;timezone&gt;Z|[+-](2[0-3]|[01][0-9])([0-5][0-9])?)?$</regexp>
+                                <!--ISO 8601 na úroveň alespoň minut (extended format): např. 2019-08-30T15:35+01:00, 2019-08-30T15:35:44-23:30, 2019-08-30T15:35:59.123Z -->
+                                <regexp>^(?&lt;year&gt;[0-9]{4})-(?&lt;month&gt;1[0-2]|0[1-9])-(?&lt;day&gt;3[01]|0[1-9]|[12][0-9])T(?&lt;hour&gt;2[0-3]|[01][0-9]):(?&lt;minute&gt;[0-5][0-9])(:(?&lt;second&gt;[0-5][0-9])(.(?&lt;millis&gt;[0-9]{3}))?)?(?&lt;timezone&gt;Z|[+-](2[0-3]|[01][0-9])(:([0-5][0-9])?)?)?$</regexp>
+                            </oneOf>
+                        </expectedContent>
+                    </attribute>
+                    <attribute name="CREATEDATE" mandatory="true">
+                        <expectedContent>
+                            <oneOf>
+                                <!--ISO 8601 na úroveň alespoň minut (basic format): např. 20190830T1535+01, 20190830T153544-23:30, 20190830T153559.123-->
+                                <regexp>^(?&lt;year&gt;[0-9]{4})(?&lt;month&gt;1[0-2]|0[1-9])(?&lt;day&gt;3[01]|0[1-9]|[12][0-9])T(?&lt;hour&gt;2[0-3]|[01][0-9])(?&lt;minute&gt;[0-5][0-9])(?&lt;second&gt;[0-5][0-9](.(?&lt;millis&gt;[0-9]{3}))?)?(?&lt;timezone&gt;Z|[+-](2[0-3]|[01][0-9])([0-5][0-9])?)?$</regexp>
+                                <!--ISO 8601 na úroveň alespoň minut (extended format): např. 2019-08-30T15:35+01:00, 2019-08-30T15:35:44-23:30, 2019-08-30T15:35:59.123Z -->
+                                <regexp>^(?&lt;year&gt;[0-9]{4})-(?&lt;month&gt;1[0-2]|0[1-9])-(?&lt;day&gt;3[01]|0[1-9]|[12][0-9])T(?&lt;hour&gt;2[0-3]|[01][0-9]):(?&lt;minute&gt;[0-5][0-9])(:(?&lt;second&gt;[0-5][0-9])(.(?&lt;millis&gt;[0-9]{3}))?)?(?&lt;timezone&gt;Z|[+-](2[0-3]|[01][0-9])(:([0-5][0-9])?)?)?$</regexp>
+                            </oneOf>
+                        </expectedContent>
+                    </attribute>
+                </expectedAttributes>
+
+                <expectedElements>
+                    <element name="mets:agent" specification="@ROLE='CREATOR'">
+                        <expectedAttributes>
+                            <attribute name="ROLE" mandatory="true">
+                                <expectedContent>
+                                    <value>CREATOR</value>
+                                </expectedContent>
+                            </attribute>
+                            <attribute name="TYPE" mandatory="true">
+                                <expectedContent>
+                                    <value>ORGANIZATION</value>
+                                </expectedContent>
+                            </attribute>
+                        </expectedAttributes>
+                        <expectedElements>
+                            <element name="mets:name" mandatory="true">
+                                <recommendedContent>
+                                    <fromDictionary name="siglaInstitutionCodes"/>
+                                </recommendedContent>
+                            </element>
+                        </expectedElements>
+                    </element>
+
+                    <element name="mets:agent" specification="@ROLE='ARCHIVIST'">
+                        <expectedAttributes>
+                            <attribute name="ROLE" mandatory="true">
+                                <expectedContent>
+                                    <value>ARCHIVIST</value>
+                                </expectedContent>
+                            </attribute>
+                            <attribute name="TYPE" mandatory="true">
+                                <expectedContent>
+                                    <value>ORGANIZATION</value>
+                                </expectedContent>
+                            </attribute>
+                        </expectedAttributes>
+                        <expectedElements>
+                            <element name="mets:name" mandatory="true">
+                                <recommendedContent>
+                                    <fromDictionary name="siglaInstitutionCodes"/>
+                                </recommendedContent>
+                            </element>
+                        </expectedElements>
+                    </element>
+                </expectedElements>
+            </element>
+
+            <!--technická a administrativní metadata (kap. 5.5, s. 65–66): amdSec s ID, vnořené techMD (PREMIS Object,
+            ve variantě B i MIX) a digiprovMD (PREMIS Event a Agent), oba s ID a mdWrap-->
+            <element name="mets:amdSec" mandatory="true" repeatable="false">
+                <expectedAttributes>
+                    <attribute name="ID" mandatory="true">
+                        <expectedContent/>
+                    </attribute>
+                </expectedAttributes>
+                <expectedElements>
+                    <element name="mets:techMD" mandatory="true" ignoreUnexpectedChildElements="true">
+                        <expectedAttributes>
+                            <attribute name="ID" mandatory="true">
+                                <expectedContent/>
+                            </attribute>
+                        </expectedAttributes>
+                    </element>
+                    <element name="mets:digiprovMD" mandatory="true" ignoreUnexpectedChildElements="true">
+                        <expectedAttributes>
+                            <attribute name="ID" mandatory="true">
+                                <expectedContent/>
+                            </attribute>
+                        </expectedAttributes>
+                    </element>
+                    <!--autorskoprávní metadata (kap. 5.9, nepovinná)-->
+                    <element name="mets:rightsMD" mandatory="false" ignoreUnexpectedChildElements="true">
+                        <expectedAttributes>
+                            <attribute name="ID" mandatory="true">
+                                <expectedContent/>
+                            </attribute>
+                        </expectedAttributes>
+                    </element>
+                </expectedElements>
+            </element>
+
+            <!--fileSec vedlejšího METS (kap. 5.6.3, s. 92): jeden fileGrp s file pro každou reprezentaci. Text popisuje
+            jen variantu B (MC, ALTO XML, OCR.TXT); pro variantu A (archivní kopie PDF/EPUB) DMF ID ani USE skupiny
+            neuvádí, proto se kontroluje jen existence atributů (dotaz NK, viz N3).-->
+            <element name="mets:fileSec" mandatory="true" repeatable="false">
+                <expectedElements>
+                    <element name="mets:fileGrp" repeatable="false">
+                        <expectedAttributes>
+                            <attribute name="ID">
+                                <expectedContent/>
+                            </attribute>
+                            <attribute name="USE">
+                                <expectedContent/>
+                            </attribute>
+                        </expectedAttributes>
+                        <expectedElements>
+                            <element name="mets:file">
+                                <expectedAttributes>
+                                    <attribute name="ID">
+                                        <expectedContent/>
+                                    </attribute>
+                                    <attribute name="MIMETYPE">
+                                        <expectedContent/>
+                                    </attribute>
+                                    <attribute name="SIZE">
+                                        <expectedContent>
+                                            <regexp>[0-9]+</regexp>
+                                        </expectedContent>
+                                    </attribute>
+                                    <attribute name="CHECKSUMTYPE">
+                                        <expectedContent>
+                                            <value>MD5</value>
+                                        </expectedContent>
+                                    </attribute>
+                                    <attribute name="CHECKSUM">
+                                        <expectedContent/>
+                                    </attribute>
+                                    <!--kap. 5.6.3, s. 92: ADMID s ID techMD, které reprezentaci popisují (u MC a ALTO ve
+                                    variantě B); u archivní kopie varianty A DMF neuvádí, proto nepovinný-->
+                                    <attribute name="ADMID" mandatory="false">
+                                        <expectedContent/>
+                                    </attribute>
+                                    <attribute name="SEQ" mandatory="false">
+                                        <expectedContent>
+                                            <regexp>[0-9]+</regexp>
+                                        </expectedContent>
+                                    </attribute>
+                                    <attribute name="CREATED">
+                                        <expectedContent>
+                                            <oneOf>
+                                                <!--ISO 8601 na úroveň alespoň sekund (basic format): např. 20190830T153501, 20190830T153530+01, 20190830T153544-23:30,20190830T153559.123-->
+                                                <regexp>^(?&lt;year&gt;[0-9]{4})(?&lt;month&gt;1[0-2]|0[1-9])(?&lt;day&gt;3[01]|0[1-9]|[12][0-9])T(?&lt;hour&gt;2[0-3]|[01][0-9])(?&lt;minute&gt;[0-5][0-9])(?&lt;second&gt;[0-5][0-9](.(?&lt;millis&gt;[0-9]{3}))?)?(?&lt;timezone&gt;Z|[+-](2[0-3]|[01][0-9])([0-5][0-9])?)?$</regexp>
+                                                <!--ISO 8601 na úroveň alespoň sekund (extended format): např. 2019-08-30T15:35:01+01:00, 2019-08-30T15:35:44-23:30, 2019-08-30T15:35:59.123Z -->
+                                                <regexp>^(?&lt;year&gt;[0-9]{4})-(?&lt;month&gt;1[0-2]|0[1-9])-(?&lt;day&gt;3[01]|0[1-9]|[12][0-9])T(?&lt;hour&gt;2[0-3]|[01][0-9]):(?&lt;minute&gt;[0-5][0-9])(:(?&lt;second&gt;[0-5][0-9])(.(?&lt;millis&gt;[0-9]{3}))?)?(?&lt;timezone&gt;Z|[+-](2[0-3]|[01][0-9])(:([0-5][0-9])?)?)?$</regexp>
+                                            </oneOf>
+                                        </expectedContent>
+                                    </attribute>
+                                </expectedAttributes>
+                                <expectedElements>
+                                    <element name="mets:FLocat" repeatable="false">
+                                        <expectedAttributes>
+                                            <attribute name="LOCTYPE">
+                                                <recommendedContent>
+                                                    <value>URL</value>
+                                                </recommendedContent>
+                                            </attribute>
+                                            <attribute name="xlink:href">
+                                                <expectedContent/>
+                                            </attribute>
+                                        </expectedAttributes>
+                                    </element>
+                                </expectedElements>
+                            </element>
+                        </expectedElements>
+                    </element>
+                </expectedElements>
+            </element>
+
+            <!--fyzická strukturální mapa vedlejšího METS (kap. 5.7.1.1, s. 94 a 5.7.1.2, s. 96): jen TYPE="PHYSICAL",
+            jediný div TYPE="EPERIODICAL_ARTICLE" s odkazem fptr na archivní kopii (překlep ftpr v DMF, nejasnost N7)-->
+            <element name="mets:structMap" mandatory="true" repeatable="false">
+                <expectedAttributes>
+                    <attribute name="TYPE">
+                        <expectedContent>
+                            <value>PHYSICAL</value>
+                        </expectedContent>
+                    </attribute>
+                    <attribute name="LABEL" mandatory="false">
+                        <recommendedContent>
+                            <value>Physical_Structure</value>
+                        </recommendedContent>
+                    </attribute>
+                    <attribute name="ID" mandatory="false"/>
+                </expectedAttributes>
+                <expectedElements>
+                    <element name="mets:div" repeatable="false">
+                        <expectedAttributes>
+                            <attribute name="TYPE">
+                                <expectedContent>
+                                    <value>EPERIODICAL_ARTICLE</value>
+                                </expectedContent>
+                            </attribute>
+                            <attribute name="ID" mandatory="false">
+                                <expectedContent/>
+                            </attribute>
+                            <attribute name="LABEL" mandatory="false">
+                                <expectedContent/>
+                            </attribute>
+                            <attribute name="ORDER" mandatory="false">
+                                <expectedContent/>
+                            </attribute>
+                            <attribute name="ORDERLABEL" mandatory="false">
+                                <expectedContent/>
+                            </attribute>
+                            <attribute name="ADMID" mandatory="false">
+                                <expectedContent/>
+                            </attribute>
+                        </expectedAttributes>
+                        <expectedElements>
+                            <element name="mets:fptr" mandatory="true">
+                                <expectedAttributes>
+                                    <attribute name="FILEID">
+                                        <expectedContent/>
+                                    </attribute>
+                                </expectedAttributes>
+                            </element>
+                        </expectedElements>
+                    </element>
+                </expectedElements>
+            </element>
+
+        </expectedElements>
+    </rootElement>
+
+</metadataProfile>

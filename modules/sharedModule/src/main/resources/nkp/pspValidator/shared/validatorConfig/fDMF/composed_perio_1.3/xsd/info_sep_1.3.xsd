@@ -1,5 +1,5 @@
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
-    <!--XML Schema pro soubor INFO pro DMF Eborn Periodika 2.5-->
+    <!--XML Schema pro soubor INFO pro DMF Elektronické publikace (skládaná periodika) 1.3, kap. 5.1, s. 14–15-->
 
     <!--METS Profile requirement id infoxml2-->
     <xs:element name="info">
@@ -14,11 +14,13 @@
                 <!--METS Profile requirement id infoxml6-->
                 <xs:element type="xs:string" name="mainmets"/>
                 <!--METS Profile requirement id infoxml7-->
-                <xs:element name="validation" minOccurs="0">
+                <!--DMF 1.3: validation MA (změnový list: R -> MA), atribut version M (R -> M); KV bere MA jako povinný
+                element (vzor info_per_2.2.xsd)-->
+                <xs:element name="validation">
                     <xs:complexType>
                         <xs:simpleContent>
                             <xs:extension base="xs:string">
-                                <xs:attribute name="version" type="xs:string"/>
+                                <xs:attribute name="version" type="xs:string" use="required"/>
                             </xs:extension>
                         </xs:simpleContent>
                     </xs:complexType>
@@ -28,7 +30,19 @@
                     <xs:complexType>
                         <xs:simpleContent>
                             <xs:extension base="xs:string">
+                                <!--DMF 1.3, kap. 5.1, s. 14: identifikátory z MODS úrovně TITLE, povinná hodnota uuid, další
+                                možné ccnb, issn, isbn; "příp. jiný interní identifikátor titulu periodika" výčet nepokrývá,
+                                pravidlo INFO_XML_VALID_BY_XSD je proto jen WARNING. urnnbn byl z výčtu odstraněn už
+                                v dřívější verzi DMF (na úrovni TITLE je zakázaný).-->
                                 <xs:attribute name="type" use="required">
+                                    <xs:simpleType>
+                                        <xs:restriction base="xs:string">
+                                            <xs:enumeration value="uuid"/>
+                                            <xs:enumeration value="ccnb"/>
+                                            <xs:enumeration value="issn"/>
+                                            <xs:enumeration value="isbn"/>
+                                        </xs:restriction>
+                                    </xs:simpleType>
                                 </xs:attribute>
                             </xs:extension>
                         </xs:simpleContent>
@@ -45,10 +59,10 @@
                 <!--TODO: kontrolovat tohle (samozrejme mimo XSD)?-->
                 <xs:element type="xs:int" name="size"/>
                 <!--METS Profile requirement id infoxml13-->
-                <xs:element name="itemlist">
+                <xs:element name="itemlist" maxOccurs="1" minOccurs="1">
                     <xs:complexType>
                         <xs:sequence>
-                            <xs:element type="xs:anyURI" name="item" maxOccurs="unbounded"/>
+                            <xs:element type="xs:anyURI" name="item" maxOccurs="unbounded" minOccurs="1"/>
                         </xs:sequence>
                         <xs:attribute type="xs:integer" name="itemtotal" use="required"/>
                     </xs:complexType>
@@ -78,7 +92,7 @@
 
     <xs:simpleType name="metadataVersion">
         <xs:restriction base="xs:string">
-            <!--tohle se lisi podle verze DMF (fDMF), jejiz soucasti je tenhle soubor-->
+            <!--tohle se lisi podle verze DMF (fDMF), jejiz soucasti je tenhle soubor; DMF 1.3, kap. 5.1, s. 14: 0.1, 1.0, 1.1, 1.2, 1.3-->
             <xs:enumeration value="1.3"/>
             <xs:enumeration value="1.2"/>
             <xs:enumeration value="1.1"/>

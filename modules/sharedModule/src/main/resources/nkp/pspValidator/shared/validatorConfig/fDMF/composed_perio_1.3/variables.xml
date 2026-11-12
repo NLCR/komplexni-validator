@@ -199,12 +199,86 @@
         </evaluation>
     </value-def>
     
+    <!--originaldata je nepovinná (DMF Skládaná e-periodika 1.3, kap. 3.1 a 3.1.3, s. 7), proto null, když chybí-->
     <value-def name="ORIGINALDATA-DIR_FILE" type="FILE">
         <evaluation functionName="getFirstFileFromFileList">
             <params>
                 <value name="files" type="FILE_LIST">
                     <value-ref name="ORIGINALDATA-DIR_FILES"/>
                 </value>
+                <value name="returnNullIfEmpty" type="BOOLEAN">true</value>
+            </params>
+        </evaluation>
+    </value-def>
+
+    <!--všechny soubory v adresáři originaldata bez ohledu na název (do md5 a itemlistu, kap. 3.1.3: "Soubory musí být
+    obsaženy v seznamech, které jsou součástí info.xml a v md5."); názvy kontroluje ORIGINALDATA_FILENAMES_VALID-->
+    <value-def name="ORIGINALDATA_FILES" type="FILE_LIST">
+        <evaluation functionName="findFilesInDirByPattern">
+            <params>
+                <value name="dir" type="FILE">
+                    <value-ref name="ORIGINALDATA-DIR_FILE"/>
+                </value>
+                <value name="errorIfDirNull" type="BOOLEAN">false</value>
+                <pattern name="pattern">
+                    <pattern-ref name="ANY_FILENAME"/>
+                </pattern>
+            </params>
+        </evaluation>
+    </value-def>
+
+    <!--soubory s názvem podle kap. 4 (od_*, conv_*)-->
+    <value-def name="ORIGINALDATA_FILES_BY_CONVENTION" type="FILE_LIST">
+        <evaluation functionName="findFilesInDirByPattern">
+            <params>
+                <value name="dir" type="FILE">
+                    <value-ref name="ORIGINALDATA-DIR_FILE"/>
+                </value>
+                <value name="errorIfDirNull" type="BOOLEAN">false</value>
+                <pattern name="pattern">
+                    <pattern-ref name="ORIGINALDATA_FILENAME"/>
+                </pattern>
+            </params>
+        </evaluation>
+    </value-def>
+
+    <!--amdsec (DMF Skládaná e-periodika 1.3, kap. 3.1.6 a 3.2.8, s. 8 a 10): vedlejší METS amd_mets_*.xml-->
+    <value-def name="SECONDARY-METS-DIR_FILES" type="FILE_LIST">
+        <evaluation functionName="findFilesInDirByPattern">
+            <params>
+                <value name="dir" type="FILE">
+                    <value-ref name="PSP_DIR"/>
+                </value>
+                <pattern name="pattern">
+                    <pattern-ref name="SECONDARY-METS-DIR_FILENAME"/>
+                </pattern>
+            </params>
+        </evaluation>
+    </value-def>
+
+    <!--null, když amdsec chybí: chybějící adresář hlásí jen SINGLE_SECONDARY-METS-DIR_FILE_FOUND (a počty, fileSec),
+    navazující pravidla dostanou prázdný seznam místo chyby vyhodnocení parametru-->
+    <value-def name="SECONDARY-METS-DIR_FILE" type="FILE">
+        <evaluation functionName="getFirstFileFromFileList">
+            <params>
+                <value name="files" type="FILE_LIST">
+                    <value-ref name="SECONDARY-METS-DIR_FILES"/>
+                </value>
+                <value name="returnNullIfEmpty" type="BOOLEAN">true</value>
+            </params>
+        </evaluation>
+    </value-def>
+
+    <value-def name="SECONDARY-METS_FILES" type="FILE_LIST">
+        <evaluation functionName="findFilesInDirByPattern">
+            <params>
+                <value name="dir" type="FILE">
+                    <value-ref name="SECONDARY-METS-DIR_FILE"/>
+                </value>
+                <value name="errorIfDirNull" type="BOOLEAN">false</value>
+                <pattern name="pattern">
+                    <pattern-ref name="SECONDARY-METS_FILENAME"/>
+                </pattern>
             </params>
         </evaluation>
     </value-def>
@@ -357,10 +431,12 @@
 
     <!--issue-->
     <value-def name="ID_TYPES_ISSUE_MANDATORY" type="STRING_LIST">
-        <description>seznam povinných typů identifikátorů pro úroveň VOLUME</description>
+        <!--urnnbn je u čísla M (DMF 2.6 kap. 5.4.3, DMF skládaná 1.3 kap. 5.4.3), VEP 2.4 ho měl jen jako volitelný; doplněno 12. 11. 2026-->
+        <description>seznam povinných typů identifikátorů pro úroveň ISSUE</description>
         <evaluation functionName="buildListOfStrings">
             <params>
                 <value name="string" type="STRING">uuid</value>
+                <value name="string" type="STRING">urnnbn</value>
             </params>
         </evaluation>
     </value-def>
@@ -372,7 +448,6 @@
             <params>
                 <value name="string" type="STRING">isbn</value>
                 <value name="string" type="STRING">issn</value>
-                <value name="string" type="STRING">urnnbn</value>
             </params>
         </evaluation>
     </value-def>

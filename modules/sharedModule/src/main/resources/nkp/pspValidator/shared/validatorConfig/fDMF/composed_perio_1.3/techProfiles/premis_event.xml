@@ -8,7 +8,9 @@
 
     <info>
         <text>
-            Profil pro validaci PREMIS Event záznamu stránky v sekundárním METSu pro DMF Elektronické publikace (periodika) 2.5.
+            Profil pro validaci PREMIS Event záznamu ve vedlejším METSu (amd_mets) pro DMF Elektronické publikace (skládaná
+            periodika) 1.3 (kap. 5.5.3, s. 87). DMF nemá u elementů povinnosti ("všechny elementy jsou povinné, pokud je
+            možné je vyplnit"), povinné jsou proto jen identifikace, typ, datum a odkazy na agenta a objekt.
         </text>
         <url description="popis formátu PREMIS">http://www.loc.gov/standards/premis/</url>
         <url description="XSD pro PREMIS 2.2">http://www.loc.gov/standards/premis/v2/premis-v2-2.xsd</url>
@@ -64,17 +66,12 @@
                                         </expectedElements>
                                     </element>
 
+                                    <!--kap. 5.5.3, s. 87: hodnoty jen příkladem ("validation", "virus check", "SIP creation",
+                                    "E-born creation"); ve variantě B (doskeny jako obrazy) i hodnoty pro obrazy (capture,
+                                    migration, derivation, deletion), proto bez výčtu-->
                                     <element name="premis:eventType" mandatory="true" repeatable="false">
-                                        <recommendedContent>
-                                            <oneOf>
-                                                <value>capture</value>
-                                                <value>migration</value>
-                                                <value>derivation</value>
-                                                <value>deletion</value>
-                                            </oneOf>
-                                        </recommendedContent>
+                                        <expectedContent/>
                                     </element>
-
                                     <element name="premis:eventDateTime" mandatory="true" repeatable="false">
                                         <expectedContent>
                                             <!--TODO: mozna regulernim vyrazem, resp. skupinou, protoze ten zapis muze byt dost ruzny - uz jenom oddelovace, viz. treba
@@ -83,31 +80,32 @@
                                         </expectedContent>
                                     </element>
 
-                                    <!--Neni jasna povinnost - konflikt povinnost=M a vyskyt=0-1. UPDATE z NK: má být povinné, opraveno na povinné-->
-                                    <element name="premis:eventDetail" mandatory="true" repeatable="false">
-                                        <recommendedContent>
-                                            <oneOf>
-                                                <value>capture/digitization</value>
-                                                <value>capture/XML_creation</value>
-                                                <value>capture/TXT_creation</value>
-                                                <value>migration/MC_creation</value>
-                                                <value>derivation/UC_creation</value>
-                                                <value>deletion/PS_deletion</value>
-                                                <!--Následující hodnota není uvedena v DMF, kde jsou uvedeny doporučené hodnoty (tj asi ne zcela povinné), ale v praxi se používá, přidána protože se jedná o akci která na datech reálně probíhá-->
-                                                <value>derivation/POSTPROCESSING_creation</value>
-                                            </oneOf>
-                                        </recommendedContent>
+                                    <element name="premis:eventDetail" mandatory="false" repeatable="false">
+                                        <expectedContent/>
                                     </element>
-
                                     <element name="premis:eventOutcomeInformation" mandatory="false" repeatable="true">
                                         <expectedElements>
-                                            <!--Neni jasna povinnost - konflikt povinnost=M a vyskyt=0-1. UPDATE z NK: má být povinné, opraveno na povinné-->
                                             <element name="premis:eventOutcome" mandatory="true" repeatable="false">
-                                                <expectedContent/>
+                                                <!--kap. 5.5.3, s. 87: povolené hodnoty "successful" nebo "failure"-->
+                                                <expectedContent>
+                                                    <oneOf>
+                                                        <value>successful</value>
+                                                        <value>failure</value>
+                                                    </oneOf>
+                                                </expectedContent>
+                                            </element>
+                                            <!--kap. 5.5.3, s. 87: pro případnou událost validace výpis výsledku-->
+                                            <element name="premis:eventOutcomeDetail" mandatory="false" repeatable="true">
+                                                <expectedElements>
+                                                    <element name="premis:eventOutcomeDetailNote" mandatory="false" repeatable="false">
+                                                        <expectedContent/>
+                                                    </element>
+                                                    <element name="premis:eventOutcomeDetailExtension" mandatory="false" repeatable="true"
+                                                             ignoreUnexpectedChildElements="true"/>
+                                                </expectedElements>
                                             </element>
                                         </expectedElements>
                                     </element>
-
                                     <!--Neni jasna povinnost - konflikt povinnost=M a vyskyt=0-n. UPDATE z NK: má být povinné, opraveno na povinné-->
                                     <element name="premis:linkingAgentIdentifier" mandatory="true" repeatable="true">
                                         <expectedElements>

@@ -54,6 +54,39 @@
         <expression caseSensitive="true">originaldata</expression>
     </pattern-def>
 
+    <pattern-def name="SECONDARY-METS-DIR_FILENAME">
+        <description>Vzor pro jméno adresáře SECONDARY-METS-DIR (DMF Skládaná e-periodika 1.3, kap. 3.1 a 3.1.6, s. 7–8:
+            složka amdsec je povinná v obou variantách balíčku).
+        </description>
+        <expression caseSensitive="true">amdsec</expression>
+    </pattern-def>
+
+    <pattern-def name="SECONDARY-METS_FILENAME">
+        <description>Vzor pro jména souborů SECONDARY-METS v rámci adresáře SECONDARY-METS-DIR (DMF Skládaná e-periodika
+            1.3, kap. 4, s. 12–13: předpona "amd_mets", pořadové číslo o čtyřech číslicích, přípona .xml, např.
+            amd_mets_nk-00027x_0001.xml).
+        </description>
+        <expression caseSensitive="true">amd_mets_${PSP_ID}_[0-9]{4}\.xml</expression>
+    </pattern-def>
+
+    <pattern-def name="ORIGINALDATA_FILENAME">
+        <description>Vzor pro jména souborů v adresáři ORIGINALDATA-DIR (DMF Skládaná e-periodika 1.3, kap. 3.1.3 a 4,
+            s. 7 a 12): nearchivní soubory s předponou "od" a příponou podle původního formátu, konverzní soubory
+            s předponou "conv" a příponou .xml, vždy s pořadovým číslem o čtyřech číslicích
+            (např. od_nk-00027x_0001.pdf, conv_nk-00027x_0001.xml).
+        </description>
+        <expression caseSensitive="true">od_${PSP_ID}_[0-9]{4}\.[a-z0-9]+</expression>
+        <expression caseSensitive="true">conv_${PSP_ID}_[0-9]{4}\.xml</expression>
+    </pattern-def>
+
+    <pattern-def name="ANY_FILENAME">
+        <description>Vzor pro libovolný soubor. Slouží k nalezení všech souborů v nepovinném adresáři ORIGINALDATA-DIR,
+            aby se daly započítat do kontrolních součtů a seznamu souborů v INFO i se špatným názvem (ten hlásí
+            samostatné pravidlo).
+        </description>
+        <expression caseSensitive="true">.+</expression>
+    </pattern-def>
+
     <pattern-def name="TOLERATED_TL_FILENAME">
         <description>Vzory pro jména tolerovaných souborů.</description>
         <expression caseSensitive="true">LTP_MD\.xml</expression>

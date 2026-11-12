@@ -214,6 +214,9 @@
                     <value name="file" type="FILE">
                         <value-ref name="ORIGINALDATA-DIR_FILE"/>
                     </value>
+                    <value name="file" type="FILE">
+                        <value-ref name="SECONDARY-METS-DIR_FILE"/>
+                    </value>
                 </params>
             </validation>
         </rule>
@@ -236,7 +239,52 @@
         </rule>
 
 
+        <rule name="SINGLE_SECONDARY-METS-DIR_FILE_FOUND">
+            <description>Musí být nalezen právě jeden adresář SECONDARY-METS-DIR (amdsec), DMF Skládaná e-periodika 1.3,
+                kap. 3.1 a 3.1.6, s. 7–8: povinný v obou variantách balíčku. Pokud nalezen není, je adresář špatně
+                pojmenován, nebo opravdu chybí.
+            </description>
+            <validation functionName="checkFilelistHasExactSize">
+                <params>
+                    <value name="files" type="FILE_LIST">
+                        <value-ref name="SECONDARY-METS-DIR_FILES"/>
+                    </value>
+                    <value name="size" type="INTEGER">1</value>
+                </params>
+            </validation>
+        </rule>
+
+        <rule name="SINGLE_ORIGINALDATA-DIR_FILE_FOUND">
+            <description>Adresář ORIGINALDATA-DIR je nepovinný (DMF Skládaná e-periodika 1.3, kap. 3.1 a 3.1.3, s. 7),
+                smí být nejvýše jeden.
+            </description>
+            <validation functionName="checkFilelistSizeInRange">
+                <params>
+                    <value name="files" type="FILE_LIST">
+                        <value-ref name="ORIGINALDATA-DIR_FILES"/>
+                    </value>
+                    <value name="min_size" type="INTEGER">0</value>
+                    <value name="max_size" type="INTEGER">1</value>
+                </params>
+            </validation>
+        </rule>
+
+
         <!--názvy top-level adresářů obsahují povolené znaky-->
+
+        <rule name="SECONDARY-METS-DIR_FILENAME_VALID">
+            <description>Název adresáře SECONDARY-METS-DIR musí obsahovat jen povolené znaky.</description>
+            <validation functionName="checkFilenameMatchesPattern">
+                <params>
+                    <value name="file" type="FILE">
+                        <value-ref name="SECONDARY-METS-DIR_FILE"/>
+                    </value>
+                    <pattern name="pattern">
+                        <pattern-ref name="FILENAME"/>
+                    </pattern>
+                </params>
+            </validation>
+        </rule>
 
         <rule name="ORIGINAL-DIR_FILE_VALID">
             <description>Název adresáře ORIGINAL musí obsahovat jen povolené znaky.</description>
@@ -267,15 +315,28 @@
         </rule>
 
 
-        <!--top-level adresáře jsou adresáře (ne obyčejné soubory)-->
 
-        <rule name="ORIGINAL-DIR_FILE_IS_DIR">
-            <description>Soubor ORIGINAL musí být adresář a ne obyčejný soubor.</description>
+        <rule name="SECONDARY-METS-DIR_IS_DIR">
+            <description>Soubor SECONDARY-METS-DIR musí být adresář a ne obyčejný soubor.</description>
             <validation functionName="checkFileIsDir">
                 <params>
                     <value name="file" type="FILE">
-                        <value-ref name="ORIGINAL-DIR_FILE"/>
+                        <value-ref name="SECONDARY-METS-DIR_FILE"/>
                     </value>
+                    <!--chybějící adresář hlásí SINGLE_SECONDARY-METS-DIR_FILE_FOUND-->
+                    <value name="ignoreIfFileIsNull" type="BOOLEAN">true</value>
+                </params>
+            </validation>
+        </rule>
+
+        <rule name="ORIGINALDATA-DIR_IS_DIR">
+            <description>Soubor ORIGINALDATA-DIR, pokud existuje, musí být adresář a ne obyčejný soubor.</description>
+            <validation functionName="checkFileIsDir">
+                <params>
+                    <value name="file" type="FILE">
+                        <value-ref name="ORIGINALDATA-DIR_FILE"/>
+                    </value>
+                    <value name="ignoreIfFileIsNull" type="BOOLEAN">true</value>
                 </params>
             </validation>
         </rule>
@@ -325,6 +386,107 @@
                                 </value>
                             </params>
                         </evaluation>
+                    </value>
+                </params>
+            </validation>
+        </rule>
+
+
+        <rule name="SECONDARY-METS_FILENAMES_VALID">
+            <description>Všechny soubory SECONDARY-METS musí obsahovat jen povolené znaky.</description>
+            <validation functionName="checkAllFilenamesMatchPattern">
+                <params>
+                    <value name="files" type="FILE_LIST">
+                        <value-ref name="SECONDARY-METS_FILES"/>
+                    </value>
+                    <pattern name="pattern">
+                        <pattern-ref name="FILENAME"/>
+                    </pattern>
+                </params>
+            </validation>
+        </rule>
+
+        <rule name="SECONDARY-METS_FILES_ARE_NOT_DIRS">
+            <description>Žádný soubor SECONDARY-METS nesmí být adresář.</description>
+            <validation functionName="checkNoFileIsDir">
+                <params>
+                    <value name="files" type="FILE_LIST">
+                        <value-ref name="SECONDARY-METS_FILES"/>
+                    </value>
+                </params>
+            </validation>
+        </rule>
+
+        <rule name="NO_EXTRA_FILES_IN_SECONDARY-METS-DIR">
+            <description>Kromě souborů SECONDARY-METS (amd_mets_PSP-ID_XXXX.xml, DMF Skládaná e-periodika 1.3, kap. 4,
+                s. 12–13) nesmí adresář SECONDARY-METS-DIR obsahovat žádné další soubory.
+            </description>
+            <validation functionName="checkNoOtherFilesInDir">
+                <params>
+                    <value name="root_dir" type="FILE">
+                        <value-ref name="SECONDARY-METS-DIR_FILE"/>
+                    </value>
+                    <value name="files" type="FILE_LIST">
+                        <value-ref name="SECONDARY-METS_FILES"/>
+                    </value>
+                </params>
+            </validation>
+        </rule>
+
+        <!--Varianta A (doskeny nejsou obrazy): kap. 3.1.6, s. 8 "pro každý samostatný PDF soubor 1 METS soubor",
+        kap. 5.5, s. 65 "pro každý soubor uložený ve složce original" (tedy i EPUB). Varianta B (doskeny jako obrazy,
+        krok P4d) má navíc amd_mets pro každou stranu (kap. 3.2, s. 9); počet a číslování tam nejsou jednoznačné
+        (nejasnost N3, dotaz NK), pravidlo se pro variantu B musí upravit. Funkce checkAllFileListsHaveSameSize hlásí
+        rozdíl vždy jako WARNING (úroveň je pevně v Javě); chybějící amdsec jako celek je ERROR z pravidla
+        SINGLE_SECONDARY-METS-DIR_FILE_FOUND a z profilu hlavičky (chybí fileGrp TECHMDGRP).-->
+        <rule name="NUMBER_OF_SECONDARY-METS_FILES_MATCHES_ORIGINAL-COPY_FILES">
+            <description>Počet souborů SECONDARY-METS musí odpovídat počtu souborů ORIGINAL-COPY: pro každý soubor v adresáři
+                original právě jeden vedlejší METS (DMF Skládaná e-periodika 1.3, kap. 3.1.6, s. 8 a kap. 5.5, s. 65).
+            </description>
+            <validation functionName="checkAllFileListsHaveSameSize">
+                <params>
+                    <value name="files" type="FILE_LIST">
+                        <value-ref name="SECONDARY-METS_FILES"/>
+                    </value>
+                    <value name="files" type="FILE_LIST">
+                        <evaluation functionName="mergeFiles">
+                            <params>
+                                <value name="file_list" type="FILE_LIST">
+                                    <value-ref name="ORIGINAL-COPY-PDF_FILES"/>
+                                </value>
+                                <value name="file_list" type="FILE_LIST">
+                                    <value-ref name="ORIGINAL-COPY-EPUB_FILES"/>
+                                </value>
+                            </params>
+                        </evaluation>
+                    </value>
+                </params>
+            </validation>
+        </rule>
+
+        <rule name="ORIGINALDATA_FILENAMES_VALID">
+            <description>Všechny soubory v adresáři ORIGINALDATA-DIR, pokud existuje, musí mít název podle názvové
+                konvence: od_PSP-ID_XXXX.přípona pro nearchivní soubory a conv_PSP-ID_XXXX.xml pro konverzní soubory
+                (DMF Skládaná e-periodika 1.3, kap. 3.1.3 a 4, s. 7 a 12).
+            </description>
+            <validation functionName="checkAllFilenamesMatchPattern">
+                <params>
+                    <value name="files" type="FILE_LIST">
+                        <value-ref name="ORIGINALDATA_FILES"/>
+                    </value>
+                    <pattern name="pattern">
+                        <pattern-ref name="ORIGINALDATA_FILENAME"/>
+                    </pattern>
+                </params>
+            </validation>
+        </rule>
+
+        <rule name="ORIGINALDATA_FILES_ARE_NOT_DIRS">
+            <description>Žádný soubor v adresáři ORIGINALDATA-DIR nesmí být adresář.</description>
+            <validation functionName="checkNoFileIsDir">
+                <params>
+                    <value name="files" type="FILE_LIST">
+                        <value-ref name="ORIGINALDATA_FILES"/>
                     </value>
                 </params>
             </validation>
@@ -381,6 +543,13 @@
                     </value>
                     <value name="files" type="FILE_LIST">
                         <value-ref name="ORIGINAL-COPY-EPUB_FILES"/>
+                    </value>
+                    <value name="files" type="FILE_LIST">
+                        <value-ref name="SECONDARY-METS_FILES"/>
+                    </value>
+                    <!--kap. 3.1.3, s. 7: soubory v originaldata musí být v md5 (issue VEP #19)-->
+                    <value name="files" type="FILE_LIST">
+                        <value-ref name="ORIGINALDATA_FILES"/>
                     </value>
                 </params>
             </validation>
@@ -494,6 +663,13 @@
                     </value>
                     <value name="files" type="FILE_LIST">
                         <value-ref name="ORIGINAL-COPY-EPUB_FILES"/>
+                    </value>
+                    <value name="files" type="FILE_LIST">
+                        <value-ref name="SECONDARY-METS_FILES"/>
+                    </value>
+                    <!--kap. 3.1.3, s. 7: soubory v originaldata musí být v itemlistu (issue VEP #19)-->
+                    <value name="files" type="FILE_LIST">
+                        <value-ref name="ORIGINALDATA_FILES"/>
                     </value>
                 </params>
             </validation>
@@ -1597,15 +1773,367 @@
             </validation>
         </rule>
 
+        <!--DMF Skládaná e-periodika 1.3, kap. 5.5, s. 65 (změnový list 1.3, GH #68): kořenový element a hlavička
+        vedlejších METS mají obdobnou strukturu jako hlavní METS (kap. 5.2 a 5.3) a jejich plnění je povinné.
+        Profil kontroluje i amdSec, fileSec a fyzickou strukturální mapu vedlejšího METS (kap. 5.6.3 a 5.7.1.1).-->
+        <rule name="SECONDARY_METS_HEADER_MATCH_PROFILE">
+            <description>Sekundární METS (amd_mets) musí obsahovat kořenový element a hlavičku metsHdr podle požadovaného
+                profilu (DMF Skládaná e-periodika 1.3, kap. 5.5, s. 65 a kap. 5.2, 5.3).
+            </description>
+            <validation functionName="checkMetsMatchProfile">
+                <params>
+                    <value name="mets_files" type="FILE_LIST">
+                        <value-ref name="SECONDARY-METS_FILES"/>
+                    </value>
+                    <value name="profile" type="STRING">secondary_mets_header</value>
+                </params>
+            </validation>
+        </rule>
+
     </rules-section>
 
-    <!--TODO: "Primární METS filesec"-->
+    <!--DMF Skládaná e-periodika 1.3, kap. 5.6.1, s. 89: kompletované periodikum má fileGrp ID="OC_EBSFL" USE="master"
+    pro archivní kopie a ID="TECHMDGRP" USE="Technical Metadata" pro amd_mets. Úvod kap. 5.6 uvádí pro nedělené
+    periodikum ID="OC_EBGRP"; skládané periodikum je vždy kompletované, OC_EBGRP je zřejmě pozůstatek (nejasnost N2,
+    dotaz NK). Pravidla proto berou obě hodnoty, profil hlavičky hlásí OC_EBGRP jako WARNING.
+    Varianta B (doskeny jako obrazy, kap. 5.6.2, s. 90–91) přidává MC_IMGGRP, UC_IMGGRP, ALTOGRP a TXTGRP: krok P4d.
+    Soubory z originaldata kap. 5.6 nezmiňuje (nejasnost N8, dotaz NK), fileSec je proto nekontroluje.-->
+    <rules-section name="Primární METS filesec" description="Kontrola odkazů z mets:fileSec v souboru PRIMARY-METS na soubory balíčku">
 
-    <!--TODO: "Strukturální mapy"-->
+        <rule name="PRIMARY-METS_FILESEC_ALL_ORIGINAL_COPY_FILES_REFERENCED">
+            <description>Element mets:fileSec v souboru PRIMARY-METS musí v elementu mets:fileGrp s atributem
+                ID="OC_EBSFL" obsahovat odkazy na všechny soubory ORIGINAL-COPY a žádné jiné (DMF Skládaná e-periodika
+                1.3, kap. 5.6.1, s. 89).
+            </description>
+            <validation functionName="checkFileListsMatch">
+                <params>
+                    <value name="expected_files" type="FILE_LIST">
+                        <evaluation functionName="mergeFiles">
+                            <params>
+                                <value name="file_list" type="FILE_LIST">
+                                    <value-ref name="ORIGINAL-COPY-PDF_FILES"/>
+                                </value>
+                                <value name="file_list" type="FILE_LIST">
+                                    <value-ref name="ORIGINAL-COPY-EPUB_FILES"/>
+                                </value>
+                            </params>
+                        </evaluation>
+                    </value>
+                    <value name="found_files" type="FILE_LIST">
+                        <evaluation functionName="getFileListByXpath">
+                            <params>
+                                <value name="psp_dir" type="FILE">
+                                    <value-ref name="PSP_DIR"/>
+                                </value>
+                                <value name="xml_file" type="FILE">
+                                    <value-ref name="PRIMARY-METS_FILE"/>
+                                </value>
+                                <value name="xpath" type="STRING">
+                                    /mets:mets/mets:fileSec/mets:fileGrp[@ID='OC_EBSFL' or @ID='OC_EBGRP']/mets:file/mets:FLocat[@LOCTYPE='URL']/@xlink:href
+                                </value>
+                            </params>
+                        </evaluation>
+                    </value>
+                </params>
+            </validation>
+        </rule>
 
-    <!--TODO: Technická metadata-->
+        <rule name="PRIMARY-METS_FILESEC_ALL_SECONDARY_METS_FILES_REFERENCED">
+            <description>Element mets:fileSec v souboru PRIMARY-METS musí v elementu mets:fileGrp s atributem
+                ID="TECHMDGRP" obsahovat odkazy na všechny soubory SECONDARY-METS a žádné jiné (DMF Skládaná e-periodika
+                1.3, kap. 5.5, s. 65 a kap. 5.6.1, s. 89).
+            </description>
+            <validation functionName="checkFileListsMatch">
+                <params>
+                    <value name="expected_files" type="FILE_LIST">
+                        <value-ref name="SECONDARY-METS_FILES"/>
+                    </value>
+                    <value name="found_files" type="FILE_LIST">
+                        <evaluation functionName="getFileListByXpath">
+                            <params>
+                                <value name="psp_dir" type="FILE">
+                                    <value-ref name="PSP_DIR"/>
+                                </value>
+                                <value name="xml_file" type="FILE">
+                                    <value-ref name="PRIMARY-METS_FILE"/>
+                                </value>
+                                <value name="xpath" type="STRING">
+                                    /mets:mets/mets:fileSec/mets:fileGrp[@ID='TECHMDGRP']/mets:file/mets:FLocat[@LOCTYPE='URL']/@xlink:href
+                                </value>
+                            </params>
+                        </evaluation>
+                    </value>
+                </params>
+            </validation>
+        </rule>
 
-    <!--TODO: "Autorskoprávní metadata"-->
+        <rule name="PRIMARY-METS_FILESEC_SIZES_MATCH">
+            <description>Velikosti souborů v bytech uvedené v atributu SIZE všech elementů mets:file se musí shodovat se
+                skutečnými velikostmi souborů odkazovaných v elementech mets:FLocat.
+            </description>
+            <validation functionName="checkMetsFilesecSizesMatch">
+                <params>
+                    <value name="psp_dir" type="FILE">
+                        <value-ref name="PSP_DIR"/>
+                    </value>
+                    <value name="mets_file" type="FILE">
+                        <value-ref name="PRIMARY-METS_FILE"/>
+                    </value>
+                </params>
+            </validation>
+        </rule>
+
+        <rule name="PRIMARY-METS_FILESEC_CHECKSUMS_MATCH">
+            <description>Kontrolní součty souborů uvedené v atributu CHECKSUM všech elementů mets:file se musí shodovat
+                s vypočítanými kontrolními součty souborů odkazovaných v elementech mets:FLocat.
+            </description>
+            <validation functionName="checkMetsFilesecChecksumsMatch">
+                <params>
+                    <value name="psp_dir" type="FILE">
+                        <value-ref name="PSP_DIR"/>
+                    </value>
+                    <value name="mets_file" type="FILE">
+                        <value-ref name="PRIMARY-METS_FILE"/>
+                    </value>
+                </params>
+            </validation>
+        </rule>
+
+    </rules-section>
+
+    <!--DMF Skládaná e-periodika 1.3, kap. 5.7.1, s. 93–96 (varianta A). Fyzická mapa: kořenový div
+    TYPE="electronic_coll_journal", v něm div pro každý článek (příp. přílohu) s fptr na archivní kopii a na
+    amd_mets. Funkce checkPrimaryMetsPhysicalMapOk se nepoužívá, protože vyžaduje ORDERLABEL u každého vnořeného
+    divu (DMF ho předepisuje jen u přílohy, nejasnost N6); odkazy se kontrolují přes fptr a fileSec, atributy
+    profilem hlavičky. Překlep <ftpr> v DMF (s. 94, 95, 96, 98) se čte jako <fptr> (nejasnost N7).-->
+    <rules-section name="Strukturální mapy"
+                   description="Kontrola fyzické a logické strukturální mapy a structLink v souboru PRIMARY-METS">
+
+        <rule name="PRIMARY-METS_PHYSICAL_MAP_REFERENCES_ALL_ORIGINAL_COPY_FILES">
+            <description>Divy článků ve fyzické strukturální mapě souboru PRIMARY-METS musí přes mets:fptr odkazovat na
+                všechny soubory ORIGINAL-COPY (DMF Skládaná e-periodika 1.3, kap. 5.7.1.1, s. 94: "div pro soubory stránky
+                vždy obsahují link fptr na original copy (archivní kopii) a na amd_mets.xml").
+            </description>
+            <validation functionName="checkFileListsMatch">
+                <params>
+                    <value name="expected_files" type="FILE_LIST">
+                        <evaluation functionName="mergeFiles">
+                            <params>
+                                <value name="file_list" type="FILE_LIST">
+                                    <value-ref name="ORIGINAL-COPY-PDF_FILES"/>
+                                </value>
+                                <value name="file_list" type="FILE_LIST">
+                                    <value-ref name="ORIGINAL-COPY-EPUB_FILES"/>
+                                </value>
+                            </params>
+                        </evaluation>
+                    </value>
+                    <value name="found_files" type="FILE_LIST">
+                        <evaluation functionName="getFileListByXpath">
+                            <params>
+                                <value name="psp_dir" type="FILE">
+                                    <value-ref name="PSP_DIR"/>
+                                </value>
+                                <value name="xml_file" type="FILE">
+                                    <value-ref name="PRIMARY-METS_FILE"/>
+                                </value>
+                                <value name="xpath" type="STRING">
+                                    /mets:mets/mets:fileSec/mets:fileGrp[@ID='OC_EBSFL' or @ID='OC_EBGRP']/mets:file[@ID = /mets:mets/mets:structMap[@TYPE='PHYSICAL']/mets:div/mets:div/mets:fptr/@FILEID]/mets:FLocat[@LOCTYPE='URL']/@xlink:href
+                                </value>
+                            </params>
+                        </evaluation>
+                    </value>
+                </params>
+            </validation>
+        </rule>
+
+        <rule name="PRIMARY-METS_PHYSICAL_MAP_REFERENCES_ALL_SECONDARY_METS_FILES">
+            <description>Divy článků ve fyzické strukturální mapě souboru PRIMARY-METS musí přes mets:fptr odkazovat na
+                všechny soubory SECONDARY-METS (DMF Skládaná e-periodika 1.3, kap. 5.7.1.1, s. 94).
+            </description>
+            <validation functionName="checkFileListsMatch">
+                <params>
+                    <value name="expected_files" type="FILE_LIST">
+                        <value-ref name="SECONDARY-METS_FILES"/>
+                    </value>
+                    <value name="found_files" type="FILE_LIST">
+                        <evaluation functionName="getFileListByXpath">
+                            <params>
+                                <value name="psp_dir" type="FILE">
+                                    <value-ref name="PSP_DIR"/>
+                                </value>
+                                <value name="xml_file" type="FILE">
+                                    <value-ref name="PRIMARY-METS_FILE"/>
+                                </value>
+                                <value name="xpath" type="STRING">
+                                    /mets:mets/mets:fileSec/mets:fileGrp[@ID='TECHMDGRP']/mets:file[@ID = /mets:mets/mets:structMap[@TYPE='PHYSICAL']/mets:div/mets:div/mets:fptr/@FILEID]/mets:FLocat[@LOCTYPE='URL']/@xlink:href
+                                </value>
+                            </params>
+                        </evaluation>
+                    </value>
+                </params>
+            </validation>
+        </rule>
+
+        <!--kap. 5.7.1.2, s. 94–96: text uvádí "čtyři základní typy", tabulka jich má sedm (nejasnost N4); hodnoty
+        atributu TYPE podle tabulky: TITLE -> PERIODICAL_TITLE, VOLUME -> PERIODICAL_VOLUME, ISSUE, SUPPLEMENT,
+        DOCUMENT, ARTICLE, FILE.-->
+        <rule name="PRIMARY-METS_LOGICAL_STRUCTURAL_MAP_CORRECT">
+            <description>Logická strukturální mapa v souboru PRIMARY-METS musí obsahovat jen povolené typy divů a DMDID
+                musí odkazovat na existující metadatové záznamy (DMF Skládaná e-periodika 1.3, kap. 5.7.1.2, s. 94–96).
+            </description>
+            <validation functionName="checkPrimaryMetsLogicalMapOk">
+                <params>
+                    <value name="primary-mets_file" type="FILE">
+                        <value-ref name="PRIMARY-METS_FILE"/>
+                    </value>
+                    <value name="div_types_allowed" type="STRING_LIST">
+                        <evaluation functionName="buildListOfStrings">
+                            <params>
+                                <value name="string" type="STRING">PERIODICAL_TITLE</value>
+                                <value name="string" type="STRING">PERIODICAL_VOLUME</value>
+                                <value name="string" type="STRING">ISSUE</value>
+                                <value name="string" type="STRING">SUPPLEMENT</value>
+                                <value name="string" type="STRING">DOCUMENT</value>
+                                <value name="string" type="STRING">ARTICLE</value>
+                                <value name="string" type="STRING">FILE</value>
+                            </params>
+                        </evaluation>
+                    </value>
+                </params>
+            </validation>
+        </rule>
+
+        <rule name="PRIMARY-METS_STRUCT_LINKS_CORRECT">
+            <description>Sekce structLink v souboru PRIMARY-METS musí přes elementy smLink propojovat objekty logické
+                strukturální mapy s články z fyzické strukturální mapy (DMF Skládaná e-periodika 1.3, kap. 5.7.3, s. 99).
+            </description>
+            <validation functionName="checkPrimaryMetsStructLinksOk">
+                <params>
+                    <value name="primary-mets_file" type="FILE">
+                        <value-ref name="PRIMARY-METS_FILE"/>
+                    </value>
+                </params>
+            </validation>
+        </rule>
+
+    </rules-section>
+
+    <!--DMF Skládaná e-periodika 1.3, kap. 5.5, s. 65–88. Technická metadata jen ve vedlejších METS (kap. 3.1, s. 7:
+    "nesmí být obsažena v hlavním METS záznamu"); v hlavním METS je hlásí profil primary_mets_header jako neočekávaný
+    element. MIX (kap. 5.5.2) a PREMIS Object pro MC a ALTO patří k variantě B (krok P4d), profily mix_mc, mix_ps,
+    premis_object_mc a premis_object_alto zatím pravidla nepoužívají. Objekty xsi:type="bitstream" (kap. 5.5.1,
+    s. 73–77, dobrovolné) se profilem nekontrolují, jen XSD.-->
+    <rules-section name="Technická metadata" description="Kontrola technických a administrativních (PREMIS) metadat ve vedlejších METS.">
+
+        <rule name="PREMIS_VALID_BY_XSD">
+            <description>Záznamy PREMIS v souborech SECONDARY-METS musí být validní podle XML Schema (premis_2.2.xsd).
+            </description>
+            <validation functionName="checkPremisIsValidByXsd">
+                <params>
+                    <value name="mets_files" type="FILE_LIST">
+                        <value-ref name="SECONDARY-METS_FILES"/>
+                    </value>
+                    <value name="xsd_file" type="FILE">
+                        <value-ref name="PREMIS_XSD_FILE"/>
+                    </value>
+                    <value name="level" type="LEVEL">ERROR</value>
+                </params>
+            </validation>
+        </rule>
+
+        <rule name="PREMIS_OBJECT_FOR_ORIGINAL_COPY_MATCHES_PROFILE">
+            <description>Každý soubor SECONDARY-METS musí obsahovat PREMIS Object archivní kopie (preservationLevelValue
+                "logical preservation") podle profilu (DMF Skládaná e-periodika 1.3, kap. 5.5.1, s. 67–73).
+            </description>
+            <validation functionName="checkMetsAmdsecElementsMatchProfile">
+                <params>
+                    <value name="mets_files" type="FILE_LIST">
+                        <value-ref name="SECONDARY-METS_FILES"/>
+                    </value>
+                    <value name="element_xpath" type="STRING">
+                        mets:techMD[starts-with(@ID, 'OBJ_') and
+                                    mets:mdWrap/mets:xmlData/premis:object/premis:preservationLevel/premis:preservationLevelValue[text() = 'logical preservation']
+                                    ]
+                    </value>
+                    <value name="element_must_exist" type="BOOLEAN">true</value>
+                    <value name="profile_id" type="STRING">premis_object_oc</value>
+                </params>
+            </validation>
+        </rule>
+
+        <!--kap. 5.5.1, s. 67: "deleted" pro soubory, které předcházely archivní kopii a v balíčku nejsou, "bit-level"
+        pro soubory ze složky originaldata. Zda má mít originaldata vlastní PREMIS Object a v kterém amd_mets, DMF
+        neříká (nejasnost N8, dotaz NK), proto element_must_exist=false.-->
+        <rule name="PREMIS_OBJECT_FOR_PREDECESSOR_MATCHES_PROFILE">
+            <description>Záznamy PREMIS Object v souborech SECONDARY-METS pro soubory předcházející archivní kopii
+                (preservationLevelValue "deleted" nebo "bit-level"), pokud existují, musí splňovat profil
+                (DMF Skládaná e-periodika 1.3, kap. 5.5.1, s. 67–73).
+            </description>
+            <validation functionName="checkMetsAmdsecElementsMatchProfile">
+                <params>
+                    <value name="mets_files" type="FILE_LIST">
+                        <value-ref name="SECONDARY-METS_FILES"/>
+                    </value>
+                    <value name="element_xpath" type="STRING">
+                        mets:techMD[starts-with(@ID, 'OBJ_') and
+                                    mets:mdWrap/mets:xmlData/premis:object/premis:preservationLevel/premis:preservationLevelValue[text() = 'deleted' or text() = 'bit-level']
+                                    ]
+                    </value>
+                    <value name="element_must_exist" type="BOOLEAN">false</value>
+                    <value name="profile_id" type="STRING">premis_object_od</value>
+                </params>
+            </validation>
+        </rule>
+
+        <rule name="PREMIS_EVENT_MATCHES_PROFILE">
+            <description>Záznamy PREMIS Event v souborech SECONDARY-METS musí splňovat profil (DMF Skládaná e-periodika 1.3,
+                kap. 5.5.3, s. 87).
+            </description>
+            <validation functionName="checkMetsAmdsecElementsMatchProfile">
+                <params>
+                    <value name="mets_files" type="FILE_LIST">
+                        <value-ref name="SECONDARY-METS_FILES"/>
+                    </value>
+                    <value name="element_xpath" type="STRING">mets:digiprovMD[starts-with(@ID,"EVT_")]</value>
+                    <value name="element_must_exist" type="BOOLEAN">true</value>
+                    <value name="profile_id" type="STRING">premis_event</value>
+                </params>
+            </validation>
+        </rule>
+
+        <rule name="PREMIS_AGENT_MATCHES_PROFILE">
+            <description>Záznamy PREMIS Agent v souborech SECONDARY-METS musí splňovat profil (DMF Skládaná e-periodika 1.3,
+                kap. 5.5.4, s. 88).
+            </description>
+            <validation functionName="checkMetsAmdsecElementsMatchProfile">
+                <params>
+                    <value name="mets_files" type="FILE_LIST">
+                        <value-ref name="SECONDARY-METS_FILES"/>
+                    </value>
+                    <value name="element_xpath" type="STRING">mets:digiprovMD[starts-with(@ID,"AGENT_")]</value>
+                    <value name="element_must_exist" type="BOOLEAN">true</value>
+                    <value name="profile_id" type="STRING">premis_agent</value>
+                </params>
+            </validation>
+        </rule>
+
+        <rule name="PREMIS_LINKING_CORRECT">
+            <description>Odkazy mezi PREMIS Objekty, Událostmi a Agenty v každém souboru SECONDARY-METS musí být korektní
+                a úplné.
+            </description>
+            <validation functionName="checkPremisLinks">
+                <params>
+                    <value name="mets_files" type="FILE_LIST">
+                        <value-ref name="SECONDARY-METS_FILES"/>
+                    </value>
+                </params>
+            </validation>
+        </rule>
+
+    </rules-section>
+
+    <!--TODO: "Autorskoprávní metadata" (kap. 5.9, kompletně nepovinná)-->
 
     <rules-section name="Bibliografická metadata"
                    description="validace obsahů bibliografických metadat v MODS a Dubline Core v souboru PRIMARY-METS">

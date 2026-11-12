@@ -3,7 +3,7 @@
     xmlns="http://www.nkp.cz/pspValidator/3.0/metadataProfile"
     name="MODS volume of composed periodical (RDA)"
     validatorVersion="3.0"
-    dmf="composed-perio_1.3"
+    dmf="composed_perio_1.3"
 >
     <info>
         <text>DMF Elektronické publikace (skládaná periodika) 1.3 očekává MODS verze 3.8. Dále se zde upřesňují očekávaná metadata pro ročník periodika pro záznamy zpracované podle katalogizačních pravidel RDA.</text>

@@ -586,7 +586,7 @@ public class BinaryFileProfileTest {
     public void epubCheckDrm() throws Exception {
         // syntetický vystup s RSC-004 (EPUBCheck 5.4.0 ma RSC-004 jako INFO a do XML ho nevypise, viz README.md)
         assertEquals(Arrays.asList(
-                        "ERROR: Kontrola na nepřítomnost DRM: zakázaná hodnota nalezena: RSC-004, ERROR, [File \"OEBPS/c1.xhtml\" could not be decrypted.], Sway.epub",
+                        "ERROR: Kontrola na přítomnost DRM: zakázaná hodnota nalezena: RSC-004, ERROR, [File \"OEBPS/c1.xhtml\" could not be decrypted.], Sway.epub",
                         "WARNING: Detekce chybových hlášek: zakázaná hodnota nalezena: RSC-004, ERROR, [File \"OEBPS/c1.xhtml\" could not be decrypted.], Sway.epub"),
                 problems(ExternalUtil.EPUBCHECK, "epub", "synteticky_drm_RSC-004.xml"));
     }

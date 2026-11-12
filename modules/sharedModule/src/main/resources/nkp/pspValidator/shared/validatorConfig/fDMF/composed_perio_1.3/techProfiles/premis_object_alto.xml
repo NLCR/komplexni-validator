@@ -8,7 +8,9 @@
 
     <info>
         <text>
-            Profil pro validaci PREMIS Object záznamu ALTO OCR stránky v sekundárním METSu pro DMF Elektronické publikace (periodika) 2.5.
+            Profil pro validaci PREMIS Object záznamu ALTO OCR stránky ve vedlejším METSu (amd_mets) pro DMF Elektronické publikace (skládaná periodika) 1.3,
+            varianta B (doskeny zpracované jako obrazy, kap. 3.2 a 5.5). Převzato z VEP 2.4, proti DMF 1.3 zatím neověřeno
+            a pravidly nepoužito (krok P4d).
         </text>
         <url description="popis formátu PREMIS">http://www.loc.gov/standards/premis/</url>
         <url description="XSD pro PREMIS 2.2">http://www.loc.gov/standards/premis/v2/premis-v2-2.xsd</url>
