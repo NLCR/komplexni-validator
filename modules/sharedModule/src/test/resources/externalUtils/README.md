@@ -64,6 +64,8 @@ Názvy souborů obrazových nástrojů: `<adresář vstupu>_<název vstupu>`, vs
 - `compliant_PDFA-1A.xml`, `compliant_PDFA-1B.xml`, `compliant_PDFA-2B.xml`, `compliant_PDFA-2U.xml`,
   `compliant_PDFA-3B.xml`: `dummy_PDFA-*.pdf`, `isCompliant="true"`, `profileName` s malým písmenem úrovně
   (`PDF/A-1b validation profile`, riziko R1).
+- `synteticky_compliant_PDFA-4.xml`: **syntetický**, `compliant_PDFA-2B.xml` s `profileName="PDF/A-4 validation profile"`
+  (veraPDF u PDF/A-4, 4e a 4f neuvádí písmeno úrovně); skutečný soubor PDF/A-4 ve vzorcích není.
 - `noncompliant_dummy.xml`: `dummy.pdf` (bez PDF/A), veraPDF zvolí PDF/A-1b, `isCompliant="false"`, exit 1.
 - `noncompliant_dummy_flavour_2b.xml`, `noncompliant_dummy_flavour_3b.xml`: totéž s vynuceným profilem
   `verapdf -f 2b`, resp. `-f 3b` (validátor `-f` nepoužívá, slouží jen jako nevyhovující PDF/A-2b a 3b).
@@ -81,7 +83,8 @@ Názvy souborů obrazových nástrojů: `<adresář vstupu>_<název vstupu>`, vs
 - `notwellformed_epub2_emono30.xml`: vzorek e-monografie 3.0 z `official-samples/epub` (`oc_aba007-0000f8.epub`,
   213 kB), 48× RSC-005.
 - `wellformed_epub3_synteticky.xml`: syntetický EPUB 3 (`src/test/resources/epublikace/synteticky_epub3.epub`,
-  1,8 kB, font `font/woff`), EPUBCheck hlásí verzi 3.4.
+  1,8 kB, font `font/woff`), EPUBCheck hlásí verzi 3.4. Do výčtu `MediaTypes` je **ručně doplněn** typ
+  `application/vnd.adobe-page-template+xml` (mimo core media types EPUB 3.3), aby měl test nepovolený typ.
 - `empty.xml` (prázdný soubor) a `not_epub.xml` (textový soubor s příponou .epub): Not well-formed, PKG-008
   a PKG-003, bez `version`.
 - `synteticky_drm_RSC-004.xml`: **syntetický**, `wellformed_epub2_Sway.xml` s doplněnou hláškou RSC-004. EPUBCheck

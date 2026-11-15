@@ -512,6 +512,14 @@ public class BinaryFileProfileTest {
     }
 
     @Test
+    public void veraPdfCompliantPdfA4IsUnsupportedVersion() throws Exception {
+        // PDF/A-4 (4, 4e, 4f): veraPDF hlasi "PDF/A-4 validation profile" bez pismene urovne; DMF doporucuje jen
+        // PDF/A-1 a PDF/A-2, proto WARNING (synteticky vystup, viz README.md; rozhodnuti NK, A4 R9)
+        assertEquals(Collections.singletonList(String.format(R1_WARNING, "PDF/A-4 validation profile")),
+                problems(ExternalUtil.VERAPDF, "pdf", "synteticky_compliant_PDFA-4.xml"));
+    }
+
+    @Test
     public void veraPdfNonCompliant() throws Exception {
         // bez urovne v profilu (mustMatchAny u isCompliant) plati validation_problem_level z rules.xml
         assertEquals(Collections.singletonList(NOT_COMPLIANT), problems(ExternalUtil.VERAPDF, "pdf", "noncompliant_dummy.xml"));
@@ -569,17 +577,20 @@ public class BinaryFileProfileTest {
 
     @Test
     public void epubCheckEpub3VersionAndMediaTypes() throws Exception {
-        // syntetický EPUB 3.4 s fontem font/woff: verze neni 2.0.1 a font/woff neni v seznamu (profil ma
-        // "application/font‐wof" s U+2010 a preklepem, R3), kazdy nepovoleny typ media je samostatny WARNING
-        assertEquals(Arrays.asList(
-                        "WARNING: Soubor Epub by měl být v podporované verzi: hodnota \"3.4\" neodpovídá žádnému z omezení: [musí být přesně '2.0.1']",
-                        "WARNING: Kontrola typů obsažených objektů (Epub 3): hodnota \"font/woff\" neodpovídá žádnému z omezení: ["
-                                + "musí být přesně 'text/css',musí být přesně 'image/gif',musí být přesně 'image/jpeg',musí být přesně 'image/png',"
-                                + "musí být přesně 'image/svg+xml',musí být přesně 'application/xhtml+xml',musí být přesně 'application/xml',"
-                                + "musí být přesně 'application/x-dtbncx+xml',musí být přesně 'application/vnd.ms-opentype',"
-                                + "musí být přesně 'application/font‐wof',musí být přesně 'application/smil+xml',musí být přesně 'application/pls+xml',"
-                                + "musí být přesně 'audio/mpeg',musí být přesně 'audio/mp4']"),
-                problems(ExternalUtil.EPUBCHECK, "epub", "wellformed_epub3_synteticky.xml"));
+        // syntetický EPUB 3.4 s fontem font/woff a typem application/vnd.adobe-page-template+xml: verze neni 2.0.1;
+        // font/woff je core media type EPUB 3.3 a projde (profil VEP mel preklep "application/font-wof" s U+2010, R3),
+        // typ mimo core media types je samostatny WARNING
+        List<String> problems = problems(ExternalUtil.EPUBCHECK, "epub", "wellformed_epub3_synteticky.xml");
+        assertEquals(problems.toString(), 2, problems.size());
+        assertEquals("WARNING: Soubor Epub by měl být v podporované verzi: hodnota \"3.4\" neodpovídá žádnému z omezení: [musí být přesně '2.0.1']", problems.get(0));
+        assertTrue(problems.get(1), problems.get(1).startsWith(
+                "WARNING: Kontrola typů obsažených objektů (Epub 3): hodnota \"application/vnd.adobe-page-template+xml\" neodpovídá žádnému z omezení: ["));
+        for (String allowed : new String[]{"font/woff", "font/woff2", "application/font-woff", "font/ttf", "font/otf", "image/webp", "audio/ogg; codecs=opus"}) {
+            assertTrue(allowed, problems.get(1).contains("musí být přesně '" + allowed + "'"));
+        }
+        assertFalse(problems.get(1), problems.get(1).contains("\u2010"));
+        // obecne audio/ogg (napr. Vorbis) core media type neni, jen "audio/ogg; codecs=opus"
+        assertFalse(problems.get(1), problems.get(1).contains("musí být přesně 'audio/ogg'"));
     }
 
     @Test

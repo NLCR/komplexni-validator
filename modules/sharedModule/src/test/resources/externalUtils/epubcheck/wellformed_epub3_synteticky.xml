@@ -89,6 +89,7 @@
                <value>application/xhtml+xml</value>
                <value>text/css</value>
                <value>font/woff</value>
+               <value>application/vnd.adobe-page-template+xml</value>
             </values>
          </property>
       </properties>

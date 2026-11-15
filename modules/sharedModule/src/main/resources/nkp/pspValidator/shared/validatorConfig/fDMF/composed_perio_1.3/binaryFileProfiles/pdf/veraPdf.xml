@@ -41,10 +41,12 @@
                     <startsWith>PDF/A-2U</startsWith>
                     <startsWith>PDF/A-2u</startsWith>
 
-                    <!--known unsupported versions -->
-                    <!--<startsWith>PDF/A-3A</startsWith>
-                    <startsWith>PDF/A-3B</startsWith>
-                    <startsWith>PDF/A-3U</startsWith>-->
+                    <!--DMF e-publikací (kap. 1.1): doporučené jsou PDF/A-1 a PDF/A-2. Známé nepodporované verze, které
+                        veraPDF validuje a profil hlásí jako WARNING: PDF/A-3 (3a, 3b, 3u; vložené soubory) a PDF/A-4
+                        (4, 4e, 4f; název profilu "PDF/A-4 validation profile" bez písmene úrovně). Zda PDF/A-4 tolerovat,
+                        rozhodne NK (A4 R9).-->
+                    <!--<startsWith>PDF/A-3</startsWith>
+                    <startsWith>PDF/A-4</startsWith>-->
                 </mustMatchAny>
             </rules>
         </validation>

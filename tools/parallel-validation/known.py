@@ -33,6 +33,16 @@ def register(K, INTENDED, VEP_FIX):
       'Hlášky, které KV vydá díky opravenému XPath (viz předchozí položka) a VEP je kvůli výjimce nevydá.',
       rule=r'^BIBLIOGRAPHIC_METADATA_MATCH_PROFILE_SUPPLEMENT$', side='kv', level=r'^(WARNING|ERROR)$',
       pkg=r'^E-monografie 2\.4_')
+    K('R3: core media types EPUB 3.3 a oprava překlepu WOFF', VEP_FIX,
+      'Profil EPUBCheck ve VEP má seznam povolených typů obsahu z r. 2021 s překlepem „application/font‐wof“ '
+      '(U+2010), takže každý font WOFF dává WARNING „Kontrola typů obsažených objektů (Epub 3)“. KV má seznam '
+      'podle core media types EPUB 3.3 (font/woff, font/woff2, application/font-woff, font/ttf, font/otf, '
+      'application/font-sfnt, image/webp, audio/ogg; codecs=opus, JavaScript) a u EPUB 2 navíc DTBook a OEB 1.x.',
+      rule=r'_VALID_BY_EPUBCHECK$', side='vep', msg=r'Kontrola typů obsažených objektů')
+    K('R3: core media types EPUB 3.3, jiný výčet omezení v hlášce KV', VEP_FIX,
+      'U typu, který zůstává nepovolený, se hláška KV liší od VEP jen vypsaným seznamem povolených hodnot '
+      '(hláška obsahuje celý výčet omezení).',
+      rule=r'_VALID_BY_EPUBCHECK$', side='kv', msg=r'Kontrola typů obsažených objektů')
     K('R1: úroveň PDF/A v obou velikostech písmen', VEP_FIX,
       'Profil veraPDF ve VEP očekává název profilu začínající velkým písmenem úrovně (PDF/A-2B), veraPDF 1.30 '
       'hlásí „PDF/A-2b validation profile“, takže VEP dává WARNING „Soubor PDF/A by měl být v podporované verzi“ '

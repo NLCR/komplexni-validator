@@ -630,11 +630,10 @@ public class VfCheckBinaryFilesValidByExternalUtilTest {
     @Test
     public void epubCheckSyntheticEpub3() {
         assumeAvailable(ExternalUtil.EPUBCHECK);
-        // synteticky_epub3.epub (1,8 kB): Well-formed EPUB 3.4 s fontem font/woff
+        // synteticky_epub3.epub (1,8 kB): Well-formed EPUB 3.4 s fontem font/woff (core media type EPUB 3.3, projde)
         List<String> problems = levelsAndMessages(validateEPublication(ExternalUtil.EPUBCHECK, new File(EPUBLIKACE_DIR, "synteticky_epub3.epub")));
-        assertEquals(problems.toString(), 2, problems.size());
+        assertEquals(problems.toString(), 1, problems.size());
         assertEquals("WARNING: Soubor Epub by měl být v podporované verzi: hodnota \"3.4\" neodpovídá žádnému z omezení: [musí být přesně '2.0.1']", problems.get(0));
-        assertTrue(problems.get(1), problems.get(1).startsWith("WARNING: Kontrola typů obsažených objektů (Epub 3): hodnota \"font/woff\""));
     }
 
     @Test
