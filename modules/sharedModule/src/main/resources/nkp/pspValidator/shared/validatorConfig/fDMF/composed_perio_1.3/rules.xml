@@ -2846,8 +2846,9 @@
     <rules-section name="OCR ALTO" description="Kontrola souborů ALTO (jen varianta B).">
 
         <rule name="OCR-ALTO_FILES_VALID_BY_XSD">
-            <description>Soubory OCR-ALTO musí být validní podle XML Schema pro verzi ALTO danou namespace kořenového elementu
-                (alto_2.0.xsd, alto_3.1.xsd, alto_4.4.xsd).
+            <description>Soubory OCR-ALTO musí být validní podle XML Schema pro verzi ALTO danou namespace kořenového elementu:
+                ns-v2# alto_2.0.xsd nebo alto_2.1.xsd (stačí jedno z nich, ALTO 2.1 na rozdíl od 2.0 vyžaduje
+                MeasurementUnit), ns-v3# alto_3.1.xsd, ns-v4# alto_4.4.xsd.
             </description>
             <validation functionName="checkXmlIsValidByXsdByNamespace">
                 <params>

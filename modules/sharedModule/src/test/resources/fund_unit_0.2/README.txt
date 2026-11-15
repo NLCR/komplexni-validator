@@ -45,3 +45,5 @@ jen ostatní parametry. Testy: FundUnitSmokeTest.
   source_series_no_origininfo/nk-00026e --mutation source-series-no-origininfo
   info_no_uuid/nk-00026d               --mutation info-no-uuid
   unit_dc_extra_model/nk-00026c        --mutation unit-dc-extra-model
+  valid_clipping_alto20_no_unit/nk-00026b --alto-version 2.0 --mutation alto20-no-measurement-unit
+  alto2_invalid_both/nk-00026a         --alto-version 2.0 --mutation alto2-invalid-both

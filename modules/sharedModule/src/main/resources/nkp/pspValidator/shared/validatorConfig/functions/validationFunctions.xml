@@ -157,10 +157,12 @@
     <validationFunction name="checkXmlIsValidByXsdByNamespace">
         <description>Zkontroluje, že soubory obsahují xml validní podle XML Schema (XSD), přičemž schéma se pro každý soubor
             vybere podle namespace jeho kořenového elementu (targetNamespace XSD). Pro formáty s více přípustnými verzemi
-            lišícími se namespace, např. ALTO 2.x/3.x/4.x. Soubor s namespace bez odpovídajícího XSD je chyba.
+            lišícími se namespace, např. ALTO 2.x/3.x/4.x. Soubor s namespace bez odpovídajícího XSD je chyba. Více XSD se
+            stejným targetNamespace jsou alternativy (např. ALTO 2.0 a 2.1 pro ns-v2#): soubor musí být validní aspoň
+            podle jednoho z nich.
         </description>
         <params-def>
-            <value name="xsd_files" type="FILE_LIST" description="Všechna přípustná XSD (každé s jiným targetNamespace)."/>
+            <value name="xsd_files" type="FILE_LIST" description="Všechna přípustná XSD; přiřazují se k namespace podle targetNamespace, více XSD se stejným targetNamespace jsou alternativy."/>
             <value name="xml_file" type="FILE"/>
             <value name="xml_files" type="FILE_LIST"/>
             <value name="level" type="LEVEL" description="Úroveň chybové hlášky (výchozí ERROR)." minOccurs="0" maxOccurs="1"/>

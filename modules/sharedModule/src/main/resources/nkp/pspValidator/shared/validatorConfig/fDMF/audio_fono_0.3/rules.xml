@@ -260,29 +260,31 @@
         </rule>
 
         <rule name="SINGLE_OCR-TEXT-DIR_FOUND">
-            <description>Musí být nalezen právě jeden adresář OCR-TEXT-DIR. Pokud nalezen není, je adresář
-                špatně pojmenován, nebo opravdu chybí.
+            <description>Adresář OCR-TEXT-DIR je nepovinný (DMF Zvuk, fonografické válečky: tab. kap. 5 „NE“, kap. 5.7 a 5.8 „Plnění je volitelné“), smí být nejvýše jeden. Pokud existuje,
+                platí pro něj a jeho soubory všechna ostatní pravidla.
             </description>
-            <validation functionName="checkFilelistHasExactSize">
+            <validation functionName="checkFilelistSizeInRange">
                 <params>
                     <value name="files" type="FILE_LIST">
                         <value-ref name="OCR-TEXT-DIR_FILES"/>
                     </value>
-                    <value name="size" type="INTEGER">1</value>
+                    <value name="min_size" type="INTEGER">0</value>
+                    <value name="max_size" type="INTEGER">1</value>
                 </params>
             </validation>
         </rule>
 
         <rule name="SINGLE_OCR-ALTO-DIR_FOUND">
-            <description>Musí být nalezen právě jeden adresář OCR-ALTO-DIR. Pokud nalezen není, je adresář
-                špatně pojmenován, nebo opravdu chybí.
+            <description>Adresář OCR-ALTO-DIR je nepovinný (DMF Zvuk, fonografické válečky: tab. kap. 5 „NE“, kap. 5.7 a 5.8 „Plnění je volitelné“), smí být nejvýše jeden. Pokud existuje,
+                platí pro něj a jeho soubory všechna ostatní pravidla.
             </description>
-            <validation functionName="checkFilelistHasExactSize">
+            <validation functionName="checkFilelistSizeInRange">
                 <params>
                     <value name="files" type="FILE_LIST">
                         <value-ref name="OCR-ALTO-DIR_FILES"/>
                     </value>
-                    <value name="size" type="INTEGER">1</value>
+                    <value name="min_size" type="INTEGER">0</value>
+                    <value name="max_size" type="INTEGER">1</value>
                 </params>
             </validation>
         </rule>
@@ -520,23 +522,25 @@
         </rule>
 
         <rule name="OCR-TEXT-DIR_IS_DIR">
-            <description>Soubor OCR-TEXT-DIR musí být adresář a ne obyčejný soubor.</description>
+            <description>Soubor OCR-TEXT-DIR, pokud existuje, musí být adresář a ne obyčejný soubor.</description>
             <validation functionName="checkFileIsDir">
                 <params>
                     <value name="file" type="FILE">
                         <value-ref name="OCR-TEXT-DIR_FILE"/>
                     </value>
+                    <value name="ignoreIfFileIsNull" type="BOOLEAN">true</value>
                 </params>
             </validation>
         </rule>
 
         <rule name="OCR-ALTO-DIR_IS_DIR">
-            <description>Soubor OCR-ALTO-DIR musí být adresář a ne obyčejný soubor.</description>
+            <description>Soubor OCR-ALTO-DIR, pokud existuje, musí být adresář a ne obyčejný soubor.</description>
             <validation functionName="checkFileIsDir">
                 <params>
                     <value name="file" type="FILE">
                         <value-ref name="OCR-ALTO-DIR_FILE"/>
                     </value>
+                    <value name="ignoreIfFileIsNull" type="BOOLEAN">true</value>
                 </params>
             </validation>
         </rule>
@@ -793,10 +797,10 @@
             <description>Počet souborů ve všech adresářích vztahujících se k stránkám se musí shodovat.</description>
             <validation functionName="checkAllFileListsHaveSameSize">
                 <params>
-                    <value name="files" type="FILE_LIST">
+                    <!--OCR je nepovinné: adresáře txt a alto mohou chybět, pak se do porovnání nezapočítají-->
+                    <value name="files_optional" type="FILE_LIST">
                         <value-ref name="OCR-TEXT_FILES"/>
                     </value>
-                    <!--adresář ALTO může chybět, jeho absenci hlásí SINGLE_OCR-ALTO-DIR_FOUND; tady by jen zdvojil chybu-->
                     <value name="files_optional" type="FILE_LIST">
                         <value-ref name="OCR-ALTO_FILES"/>
                     </value>
@@ -3220,7 +3224,10 @@
     <rules-section name="OCR ALTO" description="Kontrola souborů ALTO.">
 
         <rule name="OCR-ALTO_FILES_VALID_BY_XSD">
-            <description>Soubory OCR-ALTO musí být validní podle XML Schema pro verzi ALTO danou namespace kořenového elementu (alto_2.1.xsd, alto_3.1.xsd).</description>
+            <description>Soubory OCR-ALTO musí být validní podle XML Schema pro verzi ALTO danou namespace kořenového elementu:
+                ns-v2# alto_2.0.xsd nebo alto_2.1.xsd (stačí jedno z nich, ALTO 2.1 na rozdíl od 2.0 vyžaduje
+                MeasurementUnit), ns-v3# alto_3.1.xsd.
+            </description>
             <validation functionName="checkXmlIsValidByXsdByNamespace">
                 <params>
                     <value name="xml_files" type="FILE_LIST">
@@ -3236,7 +3243,7 @@
 
         <rule name="OCR-ALTO_FILES_SAME_VERSION">
             <description>Všechny soubory OCR-ALTO v balíčku by měly mít stejnou verzi ALTO (stejný namespace kořenového elementu).
-                Předpis OCR míchání verzí neřeší, proto jen WARNING (viz dotaz Q2 pro NK ČR).
+                Předpis OCR míchání verzí neřeší, proto jen WARNING.
             </description>
             <validation functionName="checkXmlFilesShareRootNamespace">
                 <params>
@@ -3386,7 +3393,8 @@
         </rule>
 
         <rule name="PREMIS_OBJECT_FOR_ALTO_OCR_MATCHES_PROFILE">
-            <description>Záznamy PREMIS Object v souborech SECONDARY-METS pro ALTO OCR musí splňovat profil.
+            <description>Záznamy PREMIS Object v souborech SECONDARY-METS pro ALTO OCR musí splňovat profil. Povinné jsou,
+                jen když balíček obsahuje soubory OCR-ALTO (OCR je nepovinné).
             </description>
             <validation functionName="checkMetsAmdsecElementsMatchProfile">
                 <params>
@@ -3397,7 +3405,15 @@
                         <value-ref name="SECONDARY-METS-AUDIO_FILES"/>
                     </value>-->
                     <value name="element_xpath" type="STRING">mets:techMD[@ID="OBJ_003"]</value>
-                    <value name="element_must_exist" type="BOOLEAN">true</value>
+                    <value name="element_must_exist" type="BOOLEAN">
+                        <evaluation functionName="isFileListNonEmpty">
+                            <params>
+                                <value name="files" type="FILE_LIST">
+                                    <value-ref name="OCR-ALTO_FILES"/>
+                                </value>
+                            </params>
+                        </evaluation>
+                    </value>
                     <value name="profile_id" type="STRING">premis_object_alto</value>
                 </params>
             </validation>

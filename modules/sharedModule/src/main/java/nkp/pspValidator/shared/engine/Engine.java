@@ -123,6 +123,8 @@ public class Engine {
                 return new EfGetProvidedInteger(name, this);
             case "getFirstFileFromFileList":
                 return new EfGetFirstFileFromFileList(name, this);
+            case "isFileListNonEmpty":
+                return new EfIsFileListNonEmpty(name, this);
             case "findFilesInDirByPattern":
                 return new EfFindFilesInDirByPattern(name, this);
             case "getStringByXpath":

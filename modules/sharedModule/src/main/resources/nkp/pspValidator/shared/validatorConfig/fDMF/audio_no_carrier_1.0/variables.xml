@@ -296,22 +296,26 @@
         </evaluation>
     </value-def>
 
+    <!--adresar je nepovinny (OCR u zvuku je nepovinne, DMF Zvuk 1.0, kap. 2 body 8 a 9, tab. kap. 5 „NE“, kap. 5.7, 5.8 a 7.9: plnění OCR je nepovinné), promenna muze obsahovat null-->
     <value-def name="OCR-TEXT-DIR_FILE" type="FILE">
         <evaluation functionName="getFirstFileFromFileList">
             <params>
                 <value name="files" type="FILE_LIST">
                     <value-ref name="OCR-TEXT-DIR_FILES"/>
                 </value>
+                <value name="returnNullIfEmpty" type="BOOLEAN">true</value>
             </params>
         </evaluation>
     </value-def>
 
+    <!--adresar je nepovinny (OCR u zvuku je nepovinne, DMF Zvuk 1.0, kap. 2 body 8 a 9, tab. kap. 5 „NE“, kap. 5.7, 5.8 a 7.9: plnění OCR je nepovinné), promenna muze obsahovat null-->
     <value-def name="OCR-ALTO-DIR_FILE" type="FILE">
         <evaluation functionName="getFirstFileFromFileList">
             <params>
                 <value name="files" type="FILE_LIST">
                     <value-ref name="OCR-ALTO-DIR_FILES"/>
                 </value>
+                <value name="returnNullIfEmpty" type="BOOLEAN">true</value>
             </params>
         </evaluation>
     </value-def>
@@ -415,6 +419,7 @@
                 <value name="dir" type="FILE">
                     <value-ref name="OCR-TEXT-DIR_FILE"/>
                 </value>
+                <value name="errorIfDirNull" type="BOOLEAN">false</value>
                 <pattern name="pattern">
                     <description>Vzor pro jména souborů OCR-TEXT v rámci adresáře OCR-TEXT-DIR.</description>
                     <expression caseSensitive="true">txt_${PSP_ID}_[0-9]+\.txt</expression>

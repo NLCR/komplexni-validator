@@ -2989,7 +2989,10 @@
     <rules-section name="OCR ALTO" description="Kontrola souborů ALTO.">
 
         <rule name="OCR-ALTO_FILES_VALID_BY_XSD">
-            <description>Soubory OCR-ALTO musí být validní podle XML Schema pro verzi ALTO danou namespace kořenového elementu (alto_2.1.xsd, alto_3.1.xsd, alto_4.4.xsd).</description>
+            <description>Soubory OCR-ALTO musí být validní podle XML Schema pro verzi ALTO danou namespace kořenového elementu:
+                ns-v2# alto_2.0.xsd nebo alto_2.1.xsd (stačí jedno z nich, ALTO 2.1 na rozdíl od 2.0 vyžaduje
+                MeasurementUnit), ns-v3# alto_3.1.xsd, ns-v4# alto_4.4.xsd.
+            </description>
             <validation functionName="checkXmlIsValidByXsdByNamespace">
                 <params>
                     <value name="xml_files" type="FILE_LIST">
@@ -3005,7 +3008,7 @@
 
         <rule name="OCR-ALTO_FILES_SAME_VERSION">
             <description>Všechny soubory OCR-ALTO v balíčku by měly mít stejnou verzi ALTO (stejný namespace kořenového elementu).
-                Předpis OCR míchání verzí neřeší, proto jen WARNING (viz dotaz Q2 pro NK ČR).
+                Předpis OCR míchání verzí neřeší, proto jen WARNING.
             </description>
             <validation functionName="checkXmlFilesShareRootNamespace">
                 <params>

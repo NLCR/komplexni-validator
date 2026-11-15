@@ -94,6 +94,15 @@
         </params-def>
     </evaluationFunction>
 
+    <evaluationFunction name="isFileListNonEmpty" resultType="BOOLEAN">
+        <description>Vrátí true, když aspoň jeden ze seznamů souborů není prázdný (seznam null se bere jako prázdný).
+            Pro podmíněnou povinnost u nepovinných adresářů, např. PREMIS Object pro ALTO jen tehdy, když balíček ALTO obsahuje.
+        </description>
+        <params-def>
+            <value name="files" type="FILE_LIST" maxOccurs="unbounded"/>
+        </params-def>
+    </evaluationFunction>
+
     <!--data from xml by xpath-->
 
     <evaluationFunction name="getStringByXpath" resultType="STRING">

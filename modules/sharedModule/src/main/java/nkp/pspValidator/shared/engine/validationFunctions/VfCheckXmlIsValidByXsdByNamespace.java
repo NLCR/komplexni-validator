@@ -20,6 +20,7 @@ import javax.xml.validation.Validator;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -31,6 +32,11 @@ import java.util.TreeSet;
  * pripustnymi verzemi, ktere se lisi namespace (ALTO 2.x ns-v2#, 3.x ns-v3#, 4.x ns-v4#). Parametr xsd_files nese
  * vsechna schemata; kazde XSD se priradi k namespace podle sveho targetNamespace. Soubor s namespace, pro ktery zadne
  * XSD neni, je chyba (uroven level), stejne jako soubor, ktery neni validni podle prirazeneho XSD.
+ * <p>
+ * Vice XSD se stejnym targetNamespace jsou alternativy (napr. alto_2.0.xsd a alto_2.1.xsd pro ns-v2#: ALTO 2.1 ma
+ * povinny MeasurementUnit, 2.0 ne). Soubor je validni, kdyz projde aspon jednim z nich (zkousi se v poradi parametru,
+ * tj. od nejnizsi verze); pri neuspechu hlaska uvede chyby proti vsem alternativam. S jednim XSD na namespace je
+ * chovani i text hlasky stejne jako drive.
  */
 public class VfCheckXmlIsValidByXsdByNamespace extends ValidationFunction {
 
@@ -119,11 +125,14 @@ public class VfCheckXmlIsValidByXsdByNamespace extends ValidationFunction {
 
     private ValidationResult validate(Set<File> xmlFiles, List<File> xsdFiles, Level level) {
         ValidationResult result = new ValidationResult();
-        //namespace -> XSD; pri kolizi vyhrava posledni (seznam je serazeny podle verze, tedy nejnovejsi)
-        Map<String, File> xsdByNamespace = new LinkedHashMap<>();
+        //namespace -> XSD (alternativy v poradi parametru, tedy od nejnizsi verze)
+        Map<String, List<File>> xsdByNamespace = new LinkedHashMap<>();
         for (File xsdFile : xsdFiles) {
             try {
-                xsdByNamespace.put(XmlNamespaceUtils.getXsdTargetNamespace(xsdFile), xsdFile);
+                List<File> alternatives = xsdByNamespace.computeIfAbsent(XmlNamespaceUtils.getXsdTargetNamespace(xsdFile), k -> new ArrayList<>());
+                if (!alternatives.contains(xsdFile)) {
+                    alternatives.add(xsdFile);
+                }
             } catch (IOException | XMLStreamException e) {
                 result.addError(new ValidationProblem(Level.ERROR,
                         String.format("nelze přečíst targetNamespace ze souboru XSD %s: %s", xsdFile.getAbsolutePath(), e.getMessage()))
@@ -132,14 +141,14 @@ public class VfCheckXmlIsValidByXsdByNamespace extends ValidationFunction {
                 return result;
             }
         }
-        Map<String, Schema> schemaCache = new LinkedHashMap<>();
+        Map<File, Schema> schemaCache = new HashMap<>();
         for (File xmlFile : xmlFiles) {
             validate(xmlFile, xsdByNamespace, schemaCache, level, result);
         }
         return result;
     }
 
-    private void validate(File xmlFile, Map<String, File> xsdByNamespace, Map<String, Schema> schemaCache, Level level, ValidationResult result) {
+    private void validate(File xmlFile, Map<String, List<File>> xsdByNamespace, Map<File, Schema> schemaCache, Level level, ValidationResult result) {
         String namespace;
         try {
             namespace = XmlNamespaceUtils.getRootElementNamespace(xmlFile);
@@ -153,8 +162,8 @@ public class VfCheckXmlIsValidByXsdByNamespace extends ValidationFunction {
             result.addError(Level.ERROR, xmlFile, "I/O chyba při čtení souboru: %s", e.getMessage());
             return;
         }
-        File xsdFile = xsdByNamespace.get(namespace);
-        if (xsdFile == null) {
+        List<File> xsdAlternatives = xsdByNamespace.get(namespace);
+        if (xsdAlternatives == null) {
             result.addError(new ValidationProblem(level,
                     String.format("soubor %s má nepodporovanou verzi formátu: namespace kořenového elementu '%s' neodpovídá žádnému z povolených schémat (%s)",
                             xmlFile, namespace, describeSchemas(xsdByNamespace)))
@@ -164,38 +173,76 @@ public class VfCheckXmlIsValidByXsdByNamespace extends ValidationFunction {
                     .withSimpleMessage("nepodporovaná verze formátu (namespace kořenového elementu)"));
             return;
         }
-        try {
-            Schema schema = schemaCache.get(namespace);
-            if (schema == null) {
-                SchemaFactory schemaFactory = SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
-                schema = schemaFactory.newSchema(xsdFile);
-                schemaCache.put(namespace, schema);
+        //chyby proti jednotlivym alternativam; soubor je validni, kdyz projde aspon jednou
+        Map<File, String> errors = new LinkedHashMap<>();
+        for (File xsdFile : xsdAlternatives) {
+            try {
+                Schema schema = schemaCache.get(xsdFile);
+                if (schema == null) {
+                    SchemaFactory schemaFactory = SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
+                    schema = schemaFactory.newSchema(xsdFile);
+                    schemaCache.put(xsdFile, schema);
+                }
+                Validator validator = schema.newValidator();
+                validator.validate(new StreamSource(xmlFile));
+                return;
+            } catch (SAXException e) {
+                errors.put(xsdFile, e.getMessage());
+            } catch (IOException e) {
+                result.addError(Level.ERROR, xmlFile, "I/O chyba při čtení souboru: %s", e.getMessage());
+                return;
             }
-            Validator validator = schema.newValidator();
-            validator.validate(new StreamSource(xmlFile));
-        } catch (SAXException e) {
+        }
+        if (errors.size() == 1) {
+            Map.Entry<File, String> error = errors.entrySet().iterator().next();
             result.addError(new ValidationProblem(level,
-                    String.format("obsah souboru %s není validní podle Xml schema ze souboru %s: %s", xmlFile, xsdFile.getAbsolutePath(), e.getMessage()))
+                    String.format("obsah souboru %s není validní podle Xml schema ze souboru %s: %s", xmlFile, error.getKey().getAbsolutePath(), error.getValue()))
                     .withFile(xmlFile)
-                    .withXsdFile(xsdFile)
-                    .withSimpleMessage("obsah souboru není validní podle XSD schématu: " + e.getMessage()));
-        } catch (IOException e) {
-            result.addError(Level.ERROR, xmlFile, "I/O chyba při čtení souboru: %s", e.getMessage());
+                    .withXsdFile(error.getKey())
+                    .withSimpleMessage("obsah souboru není validní podle XSD schématu: " + error.getValue()));
+        } else {
+            StringBuilder full = new StringBuilder();
+            StringBuilder simple = new StringBuilder();
+            File lastXsd = null;
+            for (Map.Entry<File, String> error : errors.entrySet()) {
+                if (full.length() > 0) {
+                    full.append("; ");
+                    simple.append("; ");
+                }
+                full.append(error.getKey().getAbsolutePath()).append(": ").append(error.getValue());
+                simple.append(versionOrName(error.getKey())).append(": ").append(error.getValue());
+                lastXsd = error.getKey();
+            }
+            result.addError(new ValidationProblem(level,
+                    String.format("obsah souboru %s není validní podle žádného z Xml schemat pro namespace '%s' (%s)", xmlFile, namespace, full))
+                    .withFile(xmlFile)
+                    .withXsdFile(lastXsd)
+                    .withSimpleMessage("obsah souboru není validní podle žádného z XSD schémat (" + simple + ")"));
         }
     }
 
+    private static String versionOrName(File xsdFile) {
+        String version = FdmfConfiguration.versionFromXsdName(xsdFile.getName());
+        return version.isEmpty() ? xsdFile.getName() : version;
+    }
+
     /**
-     * Napr. "2.0 (http://www.loc.gov/standards/alto/ns-v2#), 3.1 (…ns-v3#), 4.4 (…ns-v4#)".
+     * Napr. "2.0, 2.1 (http://www.loc.gov/standards/alto/ns-v2#), 3.1 (…ns-v3#), 4.4 (…ns-v4#)".
      */
-    static String describeSchemas(Map<String, File> xsdByNamespace) {
+    static String describeSchemas(Map<String, List<File>> xsdByNamespace) {
         StringBuilder sb = new StringBuilder();
-        for (Map.Entry<String, File> entry : xsdByNamespace.entrySet()) {
+        for (Map.Entry<String, List<File>> entry : xsdByNamespace.entrySet()) {
             if (sb.length() > 0) {
                 sb.append(", ");
             }
-            String version = FdmfConfiguration.versionFromXsdName(entry.getValue().getName());
-            sb.append(version.isEmpty() ? entry.getValue().getName() : version)
-                    .append(" (").append(entry.getKey()).append(")");
+            StringBuilder versions = new StringBuilder();
+            for (File xsdFile : entry.getValue()) {
+                if (versions.length() > 0) {
+                    versions.append(", ");
+                }
+                versions.append(versionOrName(xsdFile));
+            }
+            sb.append(versions).append(" (").append(entry.getKey()).append(")");
         }
         return sb.toString();
     }

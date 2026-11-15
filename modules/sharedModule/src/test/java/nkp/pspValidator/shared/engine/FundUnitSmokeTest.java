@@ -374,6 +374,27 @@ public class FundUnitSmokeTest {
     }
 
     /**
+     * ALTO 2.0 bez MeasurementUnit (ve 2.0 nepovinny, ve 2.1 povinny): pro namespace ns-v2# ma fDMF alto_2.0.xsd
+     * i alto_2.1.xsd a soubor staci validni proti jednomu z nich.
+     */
+    @Test
+    public void fundUnit02GeneratedClippingWithAlto20WithoutMeasurementUnitIsValid() throws Exception {
+        String log = runAndCheckNoCrash(new File("src/test/resources/fund_unit_0.2/valid_clipping_alto20_no_unit/nk-00026b"));
+        assertValid(log);
+    }
+
+    /**
+     * ALTO ns-v2# bez MeasurementUnit (chyba proti 2.1) a s Tags (chyba proti 2.0): nevalidni proti obema alternativam,
+     * jedna chyba na soubor s chybami proti obema XSD.
+     */
+    @Test
+    public void fundUnit02Alto2InvalidAgainstBothXsdsIsInvalid() throws Exception {
+        String log = runAndCheckNoCrash(new File("src/test/resources/fund_unit_0.2/alto2_invalid_both/nk-00026a"));
+        assertRuleProblem(log, "OCR-ALTO_FILES_VALID_BY_XSD", "ERROR:", "není validní podle žádného z", "alto_2.0.xsd: ", "alto_2.1.xsd: ");
+        assertEquals(2, countRuleProblems(log, "OCR-ALTO_FILES_VALID_BY_XSD", "ERROR:"));
+    }
+
+    /**
      * detail type="pageNumber" pod relatedItem/part zdroje: profil povoluje jen volume a issue.
      */
     @Test

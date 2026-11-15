@@ -885,6 +885,8 @@ MUTATIONS = {
     "no-unit-dmdsec": "chybí dmdSec UNIT (zůstává UNITCOLLECTION) -> test kolize UNIT/UNITCOLLECTION; MODS_MANDATORY_IDENTIFIERS_PRESENT_LEVEL_UNIT, PSP_ID_DERIVED_FROM_IE_ID, mapy",
     "alto-mixed": "prvni strana ALTO 2.0, ostatni podle --alto-version -> OCR-ALTO_FILES_SAME_VERSION (WARNING)",
     "alto-unknown-version": "ALTO v neexistujicim namespace ns-v9 -> OCR-ALTO_FILES_VALID_BY_XSD (nepodporovana verze)",
+    "alto20-no-measurement-unit": "(s --alto-version 2.0) ALTO 2.0 bez Description/MeasurementUnit (ve 2.0 nepovinny, ve 2.1 povinny) -> validni, ns-v2# prijima alto_2.0.xsd nebo alto_2.1.xsd",
+    "alto2-invalid-both": "(s --alto-version 2.0) ALTO ns-v2# bez MeasurementUnit a s Tags (jen 2.1) -> OCR-ALTO_FILES_VALID_BY_XSD (nevalidni proti 2.0 i 2.1)",
     "wrong-mets-type": "mets/@TYPE 'Monograph' -> DmfDetector rozpozná jako monografii (balík se validuje jinou fDMF)",
     "wrong-dc-type": "dc:type jednotky 'model:monograph' -> BIBLIOGRAPHIC_METADATA_MATCH_PROFILE_UNIT (DC)",
     "urnnbn-prohibited-on-collection": "urnnbn navíc na UNITCOLLECTION -> MODS_PROHIBITED_IDENTIFIERS_NOT_PRESENT_LEVEL_UNITCOLLECTION (WARNING)",
@@ -917,6 +919,20 @@ MUTATIONS = {
 }
 
 
+ALTO_MEASUREMENT_UNIT = "        <MeasurementUnit>pixel</MeasurementUnit>\n"
+ALTO_TAGS = '    <Tags>\n        <OtherTag ID="TAG_1" LABEL="test"/>\n    </Tags>\n'
+
+
+def alto_apply_mutations(xml: str, mutations: set) -> str:
+    if "alto20-no-measurement-unit" in mutations or "alto2-invalid-both" in mutations:
+        assert xml.count(ALTO_MEASUREMENT_UNIT) == 1
+        xml = xml.replace(ALTO_MEASUREMENT_UNIT, "")
+    if "alto2-invalid-both" in mutations:
+        assert xml.count("    <Layout>") == 1
+        xml = xml.replace("    <Layout>", ALTO_TAGS + "    <Layout>")
+    return xml
+
+
 def alto_version_for_page(page_no: int, alto_version: str, mutations: set) -> str:
     if "alto-unknown-version" in mutations:
         return "9.9"
@@ -946,6 +962,8 @@ def generate(target: str, variant: str, pages: int, with_directory: bool, standa
     if "origininfo-no-eventtype" in mutations and standard != "rda":
         sys.exit("mutace origininfo-no-eventtype potřebuje --standard rda")
     mets_type, genre, label, extent = VARIANTS[variant]
+    if {"alto20-no-measurement-unit", "alto2-invalid-both"} & mutations and alto_version != "2.0":
+        sys.exit("mutace alto20-no-measurement-unit a alto2-invalid-both vyžadují --alto-version 2.0")
     if "wrong-mets-type" in mutations:
         mets_type = "Monograph"
     if "wrong-genre" in mutations:
@@ -975,8 +993,8 @@ def generate(target: str, variant: str, pages: int, with_directory: bool, standa
         files = {
             "mc": put(f"mastercopy/mc_{psp}_{p}.jp2", open(jp2_mc, "rb").read() if jp2_mc else jp2_placeholder(f"mc{i}")),
             "uc": put(f"usercopy/uc_{psp}_{p}.jp2", open(jp2_uc, "rb").read() if jp2_uc else jp2_placeholder(f"uc{i}")),
-            "alto": put(f"alto/alto_{psp}_{p}.xml", alto_xml(i, alto_version_for_page(i, alto_version, mutations))
-                        .replace("{psp}", psp)),
+            "alto": put(f"alto/alto_{psp}_{p}.xml", alto_apply_mutations(
+                        alto_xml(i, alto_version_for_page(i, alto_version, mutations)), mutations).replace("{psp}", psp)),
             "txt": put(f"txt/txt_{psp}_{p}.txt", txt_content(i)),
         }
         amd = amd_mets_xml(psp, mets_type, label, i, files)
