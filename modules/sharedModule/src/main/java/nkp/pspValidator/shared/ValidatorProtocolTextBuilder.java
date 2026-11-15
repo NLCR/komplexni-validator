@@ -72,9 +72,41 @@ public class ValidatorProtocolTextBuilder {
     }
 
     public void logRuleError(Level errorElevel, String errorMessage) {
+        logRuleError(errorElevel, errorMessage, null);
+    }
+
+    /**
+     * @param referencedFile cesta k souboru, ke kteremu hlaska patri (relativni vuci korenu balicku), nebo null.
+     *                       Pripoji se na konec radku jako " (soubor: cesta)", pokud ji hlaska jeste neobsahuje.
+     */
+    public void logRuleError(Level errorElevel, String errorMessage, String referencedFile) {
         if (out != null) {
-            out.println(String.format("\t%s: %s", errorElevel, errorMessage));
+            String message = errorMessage;
+            if (referencedFile != null && !referencedFile.isEmpty()
+                    && (message == null || !message.contains(referencedFile))) {
+                message = message + " (soubor: " + referencedFile + ")";
+            }
+            out.println(String.format("\t%s: %s", errorElevel, message));
         }
+    }
+
+    /**
+     * Cesta k souboru relativne vuci korenu balicku (s lomitky '/'), mimo balicek jen nazev souboru.
+     */
+    public static String toPackageRelativePath(File packageRoot, File file) {
+        if (file == null) {
+            return null;
+        }
+        try {
+            java.nio.file.Path root = packageRoot.getAbsoluteFile().toPath().normalize();
+            java.nio.file.Path path = file.getAbsoluteFile().toPath().normalize();
+            if (path.startsWith(root) && !path.equals(root)) {
+                return root.relativize(path).toString().replace(File.separatorChar, '/');
+            }
+        } catch (RuntimeException e) {
+            //fallback nize
+        }
+        return file.getName();
     }
 
     public void logPackageSummary(Integer totalProblemsSum, Map<Level, Integer> totalProblemsByLevel, boolean valid) {
