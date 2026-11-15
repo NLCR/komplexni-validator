@@ -98,8 +98,28 @@ public class ExternalUtilManager {
                 return parsed.trim();
             }
         } else {
-            throw new CliCommand.CliCommandException("prázdný výstup");
+            throw new CliCommand.CliCommandException(emptyOutputMessage(result, stream));
         }
+    }
+
+    /**
+     * Hlaska pro prazdny sledovany vystup detekce verze: kdyz nastroj (nebo java -jar s chybejicim jarem) vypsal chybu
+     * na druhy stream, uvede se jeji prvni radek a navratovy kod, aby uzivatel videl pricinu a ne jen "prazdny vystup".
+     */
+    private static String emptyOutputMessage(CliCommand.Result result, Stream watched) {
+        String other = watched == Stream.STDOUT ? result.getStderr() : result.getStdout();
+        StringBuilder message = new StringBuilder("prázdný výstup");
+        if (other != null && !other.trim().isEmpty()) {
+            String firstLine = other.trim().split("\\r?\\n", 2)[0].trim();
+            message.append(" (").append(watched == Stream.STDOUT ? "stderr" : "stdout").append(": ").append(firstLine);
+            if (result.getExitValue() != 0) {
+                message.append(", návratový kód ").append(result.getExitValue());
+            }
+            message.append(')');
+        } else if (result.getExitValue() != 0) {
+            message.append(" (návratový kód ").append(result.getExitValue()).append(')');
+        }
+        return message.toString();
     }
 
     public String runUtilExecution(ExternalUtilExecution utilExecution, File targetFile) throws CliCommand.CliCommandException {

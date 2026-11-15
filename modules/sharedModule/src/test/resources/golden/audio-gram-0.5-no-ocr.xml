@@ -1,0 +1,1139 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<protocol xmlns="http://www.nkp.cz/pspValidator/3.0/validationProtocol" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" type="package" xsi:schemaLocation="http://www.nkp.cz/pspValidator/3.0/validationProtocol https://raw.githubusercontent.com/NLCR/komplexni-validator/master/modules/sharedModule/src/main/resources/nkp/pspValidator/shared/validatorConfig/xsd/validationProtocol.xsd">
+    <validator buildDate="[BUILD_DATE]" version="[VERZE]"/>
+    <fdmf type="Zvukové dokumenty (gramodesky)" version="0.5"/>
+    <package>
+        <file fileName="1234567890" parentDir="[TMP]/audio-gram-0.5-no-ocr"/>
+        <info collection="Digitalizace národní knihovny" created="2017-07-12T10:39:23" creator="ABA001" institution="Česká národní knihovna" metadataVersion="0.3" packageId="1234567890" sizeKB="999898" titleId_urnnbn="urn:nbn:cz:nk-0002s1"/>
+    </package>
+    <summary durationMs="[MS]" finishTime="[CAS]" startTime="[CAS]" verdict="INVALID">
+        <problems ERROR="51" INFO="160" WARNING="47" total="258"/>
+    </summary>
+    <sections>
+        <section description="Struktura PSP balíčku na úrovni souborů" name="Struktura souborů">
+            <summary durationMs="[MS]">
+                <problems ERROR="2" WARNING="1" total="3"/>
+            </summary>
+            <rule description="Název kořenového adresáře musí být shodný s PSP-ID." name="PSP_DIR_MATCHES_PSP_ID">
+                <summary durationMs="[MS]">
+                    <problems total="0"/>
+                </summary>
+            </rule>
+            <rule description="Musí být nalezen nanejvýše jeden soubor INFO. Pokud nalezen není, je soubor špatně pojmenován, nebo opravdu chybí." name="SINGLE_INFO_FILE_FOUND">
+                <summary durationMs="[MS]">
+                    <problems total="0"/>
+                </summary>
+            </rule>
+            <rule description="Musí být nalezen nanejvýše jeden soubor PRIMARY-METS. Pokud nalezen není, je soubor špatně pojmenován, nebo opravdu chybí." name="SINGLE_PRIMARY-METS_FILE_FOUND">
+                <summary durationMs="[MS]">
+                    <problems total="0"/>
+                </summary>
+            </rule>
+            <rule description="Musí být nalezen nanejvýše jeden soubor CHECKSUM. Pokud nalezen není, je soubor špatně pojmenován, nebo opravdu chybí." name="SINGLE_CHECKSUM_FILE_FOUND">
+                <summary durationMs="[MS]">
+                    <problems total="0"/>
+                </summary>
+            </rule>
+            <rule description="Název souboru INFO smí obsahovat jen povolené znaky." name="INFO_FILENAME_VALID">
+                <summary durationMs="[MS]">
+                    <problems total="0"/>
+                </summary>
+            </rule>
+            <rule description="Název souboru PRIMARY-METS smí obsahovat jen povolené znaky." name="PRIMARY-METS_FILENAME_VALID">
+                <summary durationMs="[MS]">
+                    <problems total="0"/>
+                </summary>
+            </rule>
+            <rule description="Název souboru CHECKSUM smí obsahovat jen povolené znaky." name="CHECKSUM_FILENAME_VALID">
+                <summary durationMs="[MS]">
+                    <problems total="0"/>
+                </summary>
+            </rule>
+            <rule description="Soubor INFO nesmí být adresář, ale obyčejný soubor." name="INFO_IS_NOT_DIR">
+                <summary durationMs="[MS]">
+                    <problems total="0"/>
+                </summary>
+            </rule>
+            <rule description="Soubor PRIMARY-METS nesmí být adresář, ale obyčejný soubor." name="PRIMARY-METS_IS_NOT_DIR">
+                <summary durationMs="[MS]">
+                    <problems total="0"/>
+                </summary>
+            </rule>
+            <rule description="Soubor CHECKSUM nesmí být adresář, ale obyčejný soubor." name="CHECKSUM_IS_NOT_DIR">
+                <summary durationMs="[MS]">
+                    <problems total="0"/>
+                </summary>
+            </rule>
+            <rule description="Žádný tolerovaný soubor v kořenovém adresáři nesmí být adresář." name="TOLERATED_TL_FILES_ARE_NOT_DIRS">
+                <summary durationMs="[MS]">
+                    <problems total="0"/>
+                </summary>
+            </rule>
+            <rule description="Ideálně by v kořenovém adresáři neměl být nalezen žádný tolerovaný soubor." name="NO_TOLERATED_TL_FILES_FOUND">
+                <summary durationMs="[MS]">
+                    <problems total="0"/>
+                </summary>
+            </rule>
+            <rule description="Kromě definovaných a tolerovaných souborů a adresářů nesmí být v kořenovém adresáři nalezen žádný další soubor nebo adresář." name="NO_OTHER_TL_FILES_FOUND">
+                <summary durationMs="[MS]">
+                    <problems total="0"/>
+                </summary>
+            </rule>
+            <rule description="Musí být nalezen právě jeden adresář SECONDARY-METS-DIR. Pokud nalezen není, je adresář špatně pojmenován, nebo opravdu chybí." name="SINGLE_SECONDARY-METS-DIR_FOUND">
+                <summary durationMs="[MS]">
+                    <problems total="0"/>
+                </summary>
+            </rule>
+            <rule description="Adresář OCR-TEXT-DIR je nepovinný (DMF Zvuk, gramofonové desky 0.5: tab. kap. 5 „NE“, kap. 5.7 a 5.8 „Tvoření je nepovinné“), smí být nejvýše jeden. Pokud existuje, platí pro něj a jeho soubory všechna ostatní pravidla." name="SINGLE_OCR-TEXT-DIR_FOUND">
+                <summary durationMs="[MS]">
+                    <problems total="0"/>
+                </summary>
+            </rule>
+            <rule description="Adresář OCR-ALTO-DIR je nepovinný (DMF Zvuk, gramofonové desky 0.5: tab. kap. 5 „NE“, kap. 5.7 a 5.8 „Tvoření je nepovinné“), smí být nejvýše jeden. Pokud existuje, platí pro něj a jeho soubory všechna ostatní pravidla." name="SINGLE_OCR-ALTO-DIR_FOUND">
+                <summary durationMs="[MS]">
+                    <problems total="0"/>
+                </summary>
+            </rule>
+            <rule description="Musí být nalezen právě jeden adresář MASTER-COPY-DIR. Pokud nalezen není, je adresář špatně pojmenován, nebo opravdu chybí." name="SINGLE_MASTER-COPY-DIR_FOUND">
+                <summary durationMs="[MS]">
+                    <problems total="0"/>
+                </summary>
+            </rule>
+            <rule description="Musí být nalezen právě jeden adresář USER-COPY-DIR. Pokud nalezen není, je adresář špatně pojmenován, nebo opravdu chybí." name="SINGLE_USER-COPY-DIR_FOUND">
+                <summary durationMs="[MS]">
+                    <problems total="0"/>
+                </summary>
+            </rule>
+            <rule description="Musí být nalezen právě jeden adresář SOURCE-AUDIO-DIR. Pokud nalezen není, je adresář špatně pojmenován, nebo opravdu chybí." name="SINGLE_SOURCE-AUDIO-DIR_FOUND">
+                <summary durationMs="[MS]">
+                    <problems total="0"/>
+                </summary>
+            </rule>
+            <rule description="Musí být nalezen nejvýše jeden adresář MASTER-COPY-AUDIO-DIR. Pokud nalezen není, je adresář špatně pojmenován, nebo opravdu chybí." name="SINGLE_MASTER-COPY-AUDIO-DIR_FOUND">
+                <summary durationMs="[MS]">
+                    <problems total="0"/>
+                </summary>
+            </rule>
+            <rule description="Musí být nalezen právě jeden adresář USER-COPY-AUDIO-DIR. Pokud nalezen není, je adresář špatně pojmenován, nebo opravdu chybí." name="SINGLE_USER-COPY-AUDIO-DIR_FOUND">
+                <summary durationMs="[MS]">
+                    <problems total="0"/>
+                </summary>
+            </rule>
+            <rule description="Musí být nalezen nejvýše jeden adresář CATALOG-ENTRY-DIR. Pokud nalezen není, je adresář špatně pojmenován, nebo opravdu chybí." name="SINGLE_CATALOG-ENTRY-DIR_FOUND">
+                <summary durationMs="[MS]">
+                    <problems total="0"/>
+                </summary>
+            </rule>
+            <rule description="Název adresáře SECONDARY-METS-DIR musí obsahovat jen povolené znaky." name="SECONDARY-METS-DIR_FILENAME_VALID">
+                <summary durationMs="[MS]">
+                    <problems total="0"/>
+                </summary>
+            </rule>
+            <rule description="Název adresáře OCR-TEXT-DIR musí obsahovat jen povolené znaky." name="OCR-TEXT-DIR_FILENAME_VALID">
+                <summary durationMs="[MS]">
+                    <problems total="0"/>
+                </summary>
+            </rule>
+            <rule description="Název adresáře OCR-ALTO-DIR musí obsahovat jen povolené znaky." name="OCR-ALTO-DIR_FILENAME_VALID">
+                <summary durationMs="[MS]">
+                    <problems total="0"/>
+                </summary>
+            </rule>
+            <rule description="Název adresáře MASTER-COPY-DIR musí obsahovat jen povolené znaky." name="MASTER-COPY-DIR_FILENAME_VALID">
+                <summary durationMs="[MS]">
+                    <problems total="0"/>
+                </summary>
+            </rule>
+            <rule description="Název adresáře USER-COPY-DIR musí obsahovat jen povolené znaky." name="USER-COPY-DIR_FILENAME_VALID">
+                <summary durationMs="[MS]">
+                    <problems total="0"/>
+                </summary>
+            </rule>
+            <rule description="Název adresáře SOURCE-AUDIO-DIR musí obsahovat jen povolené znaky." name="SOURCE-AUDIO-DIR_FILENAME_VALID">
+                <summary durationMs="[MS]">
+                    <problems total="0"/>
+                </summary>
+            </rule>
+            <rule description="Název adresáře MASTER-COPY-AUDIO-DIR musí obsahovat jen povolené znaky." name="MASTER-COPY-AUDIO-DIR_FILENAME_VALID">
+                <summary durationMs="[MS]">
+                    <problems total="0"/>
+                </summary>
+            </rule>
+            <rule description="Název adresáře USER-COPY-AUDIO-DIR musí obsahovat jen povolené znaky." name="USER-COPY-AUDIO-DIR_FILENAME_VALID">
+                <summary durationMs="[MS]">
+                    <problems total="0"/>
+                </summary>
+            </rule>
+            <rule description="Název adresáře CATALOG-ENTRY-DIR musí obsahovat jen povolené znaky." name="CATALOG-ENTRY-DIR_FILENAME_VALID">
+                <summary durationMs="[MS]">
+                    <problems total="0"/>
+                </summary>
+            </rule>
+            <rule description="Soubor SECONDARY-METS-DIR musí být adresář a ne obyčejný soubor." name="SECONDARY-METS-DIR_IS_DIR">
+                <summary durationMs="[MS]">
+                    <problems total="0"/>
+                </summary>
+            </rule>
+            <rule description="Soubor OCR-TEXT-DIR, pokud existuje, musí být adresář a ne obyčejný soubor." name="OCR-TEXT-DIR_IS_DIR">
+                <summary durationMs="[MS]">
+                    <problems total="0"/>
+                </summary>
+            </rule>
+            <rule description="Soubor OCR-ALTO-DIR, pokud existuje, musí být adresář a ne obyčejný soubor." name="OCR-ALTO-DIR_IS_DIR">
+                <summary durationMs="[MS]">
+                    <problems total="0"/>
+                </summary>
+            </rule>
+            <rule description="Soubor MASTER-COPY-DIR musí být adresář a ne obyčejný soubor." name="MASTER-COPY-DIR_IS_DIR">
+                <summary durationMs="[MS]">
+                    <problems total="0"/>
+                </summary>
+            </rule>
+            <rule description="Soubor USER-COPY-DIR musí být adresář a ne obyčejný soubor." name="USER-COPY-DIR_IS_DIR">
+                <summary durationMs="[MS]">
+                    <problems total="0"/>
+                </summary>
+            </rule>
+            <rule description="Soubor SOURCE-AUDIO-DIR musí být adresář a ne obyčejný soubor." name="SOURCE-AUDIO-DIR_IS_DIR">
+                <summary durationMs="[MS]">
+                    <problems total="0"/>
+                </summary>
+            </rule>
+            <rule description="Soubor MASTER-COPY-AUDIO-DIR musí být adresář a ne obyčejný soubor." name="MASTER-COPY-AUDIO-DIR_IS_DIR">
+                <summary durationMs="[MS]">
+                    <problems total="0"/>
+                </summary>
+            </rule>
+            <rule description="Soubor USER-COPY-AUDIO-DIR musí být adresář a ne obyčejný soubor." name="USER-COPY-DIR_IS_DIR">
+                <summary durationMs="[MS]">
+                    <problems total="0"/>
+                </summary>
+            </rule>
+            <rule description="Soubor CATALOG-ENTRY-DIR musí být adresář a ne obyčejný soubor." name="CATALOG-ENTRY-DIR_IS_DIR">
+                <summary durationMs="[MS]">
+                    <problems total="0"/>
+                </summary>
+            </rule>
+            <rule description="Názvy všech souborů SECONDARY-METS-IMAGE musí obsahovat jen povolené znaky." name="SECONDARY-METS-IMAGE_FILENAMES_VALID">
+                <summary durationMs="[MS]">
+                    <problems total="0"/>
+                </summary>
+            </rule>
+            <rule description="Názvy všech souborů SECONDARY-METS-AUDIO musí obsahovat jen povolené znaky." name="SECONDARY-METS-AUDIO_FILENAMES_VALID">
+                <summary durationMs="[MS]">
+                    <problems total="0"/>
+                </summary>
+            </rule>
+            <rule description="Názvy všech souborů OCR-TEXT musí obsahovat jen povolené znaky." name="OCR-TEXT_FILENAMES_VALID">
+                <summary durationMs="[MS]">
+                    <problems total="0"/>
+                </summary>
+            </rule>
+            <rule description="Názvy všech souborů OCR-ALTO musí obsahovat jen povolené znaky." name="OCR-ALTO_FILENAMES_VALID">
+                <summary durationMs="[MS]">
+                    <problems total="0"/>
+                </summary>
+            </rule>
+            <rule description="Názvy všech souborů MASTER-COPY musí obsahovat jen povolené znaky." name="MASTER-COPY_FILENAMES_VALID">
+                <summary durationMs="[MS]">
+                    <problems total="0"/>
+                </summary>
+            </rule>
+            <rule description="Názvy všech souborů USER-COPY musí obsahovat jen povolené znaky." name="USER-COPY_FILENAMES_VALID">
+                <summary durationMs="[MS]">
+                    <problems total="0"/>
+                </summary>
+            </rule>
+            <rule description="Názvy všech souborů SOURCE-AUDIO musí obsahovat jen povolené znaky." name="SOURCE-AUDIO_FILENAMES_VALID">
+                <summary durationMs="[MS]">
+                    <problems total="0"/>
+                </summary>
+            </rule>
+            <rule description="Názvy všech souborů MASTER-COPY-AUDIO musí obsahovat jen povolené znaky." name="MASTER-COPY-AUDIO_FILENAMES_VALID">
+                <summary durationMs="[MS]">
+                    <problems total="0"/>
+                </summary>
+            </rule>
+            <rule description="Názvy všech souborů USER-COPY-AUDIO musí obsahovat jen povolené znaky." name="USER-COPY-AUDIO_FILENAMES_VALID">
+                <summary durationMs="[MS]">
+                    <problems total="0"/>
+                </summary>
+            </rule>
+            <rule description="Názvy všech souborů CATALOG-ENTRY musí obsahovat jen povolené znaky." name="CATALOG-ENTRY_FILENAMES_VALID">
+                <summary durationMs="[MS]">
+                    <problems total="0"/>
+                </summary>
+            </rule>
+            <rule description="Počet souborů v adresáři SECONDARY-METS-DIR se musí shodovat s celkovým počtem souborů v adresářích SOURCE-AUDIO-DIR a MASTER-COPY-DIR. Neboli pro každý obraz i zvuk musí existovat sekundární METS soubor s technickými metadaty." name="NUMBER_OF_FILES_IN_SECONDARY-METS-DIRS_OK">
+                <summary durationMs="[MS]">
+                    <problems WARNING="1" total="1">
+                        <problem actualValue="např. 2 a 4" level="WARNING">nalezeny různé velikosti seznamů souborů</problem>
+                    </problems>
+                </summary>
+            </rule>
+            <rule description="Počet souborů ve všech adresářích vztahujících se k stránkám se musí shodovat." name="NUMBER_OF_FILES_IN_IMAGE-DIRS_MATCH">
+                <summary durationMs="[MS]">
+                    <problems total="0"/>
+                </summary>
+            </rule>
+            <rule description="Počet souborů ve všech adresářích vztahujících se k zvukům se musí shodovat." name="NUMBER_OF_FILES_IN_AUDIO-DIRS_MATCH">
+                <summary durationMs="[MS]">
+                    <problems total="0"/>
+                </summary>
+            </rule>
+            <rule description="Délky názvů všech souborů SECONDARY-METS-IMAGE musí být stejné. Tedy čísla stran jsou zarovnaná na stejný počet nul." name="SECONDARY-METS-IMAGE_FILENAMES_LENGTHS_SAME">
+                <summary durationMs="[MS]">
+                    <problems total="0"/>
+                </summary>
+            </rule>
+            <rule description="Délky názvů všech souborů SECONDARY-METS-AUDIO musí být stejné. Tedy čísla stran jsou zarovnaná na stejný počet nul." name="SECONDARY-METS-AUDIO_FILENAMES_LENGTHS_SAME">
+                <summary durationMs="[MS]">
+                    <problems total="0"/>
+                </summary>
+            </rule>
+            <rule description="Délky názvů všech souborů OCR-TEXT musí být stejné. Tedy čísla stran jsou zarovnaná na stejný počet nul." name="OCR-TEXT_FILENAMES_LENGTHS_SAME">
+                <summary durationMs="[MS]">
+                    <problems total="0"/>
+                </summary>
+            </rule>
+            <rule description="Délky názvů všech souborů OCR-ALTO musí být stejné. Tedy čísla stran jsou zarovnaná na stejný počet nul." name="OCR-ALTO_FILENAMES_LENGTHS_SAME">
+                <summary durationMs="[MS]">
+                    <problems total="0"/>
+                </summary>
+            </rule>
+            <rule description="Délky názvů všech souborů MASTER-COPY musí být stejné. Tedy čísla stran jsou zarovnaná na stejný počet nul." name="MASTER-COPY_FILENAMES_LENGTHS_SAME">
+                <summary durationMs="[MS]">
+                    <problems total="0"/>
+                </summary>
+            </rule>
+            <rule description="Délky názvů všech souborů USER-COPY musí být stejné. Tedy čísla stran jsou zarovnaná na stejný počet nul." name="USER-COPY_FILENAMES_LENGTHS_SAME">
+                <summary durationMs="[MS]">
+                    <problems total="0"/>
+                </summary>
+            </rule>
+            <rule description="Délky názvů všech souborů SOURCE-AUDIO musí být stejné. Tedy čísla desek a/nebo skladeb jsou zarovnaná na stejný počet nul." name="SOURCE-AUDIO_FILENAMES_LENGTHS_SAME">
+                <summary durationMs="[MS]">
+                    <problems total="0"/>
+                </summary>
+            </rule>
+            <rule description="Délky názvů všech souborů MASTER-COPY-AUDIO musí být stejné. Tedy čísla desek a/nebo skladeb jsou zarovnaná na stejný počet nul." name="MASTER-COPY-AUDIO_FILENAMES_LENGTHS_SAME">
+                <summary durationMs="[MS]">
+                    <problems total="0"/>
+                </summary>
+            </rule>
+            <rule description="Délky názvů všech souborů USER-COPY-AUDIO musí být stejné. Tedy čísla desek a/nebo skladeb jsou zarovnaná na stejný počet nul." name="USER-COPY-AUDIO_FILENAMES_LENGTHS_SAME">
+                <summary durationMs="[MS]">
+                    <problems total="0"/>
+                </summary>
+            </rule>
+            <rule description="Žádný soubor SECONDARY-METS-IMAGE nesmí být adresář." name="SECONDARY-METS-IMAGE_FILES_ARE_NOT_DIRS">
+                <summary durationMs="[MS]">
+                    <problems total="0"/>
+                </summary>
+            </rule>
+            <rule description="Žádný soubor SECONDARY-METS-AUDIO nesmí být adresář." name="SECONDARY-METS-AUDIO_FILES_ARE_NOT_DIRS">
+                <summary durationMs="[MS]">
+                    <problems total="0"/>
+                </summary>
+            </rule>
+            <rule description="Žádný soubor OCR-TEXT nesmí být adresář." name="OCR-TEXT_FILES_ARE_NOT_DIRS">
+                <summary durationMs="[MS]">
+                    <problems total="0"/>
+                </summary>
+            </rule>
+            <rule description="Žádný soubor OCR-ALTO nesmí být adresář." name="OCR-ALTO_FILES_ARE_NOT_DIRS">
+                <summary durationMs="[MS]">
+                    <problems total="0"/>
+                </summary>
+            </rule>
+            <rule description="Žádný soubor MASTER-COPY nesmí být adresář." name="MASTER-COPY_FILES_ARE_NOT_DIRS">
+                <summary durationMs="[MS]">
+                    <problems total="0"/>
+                </summary>
+            </rule>
+            <rule description="Žádný soubor USER-COPY nesmí být adresář." name="USER-COPY_FILES_ARE_NOT_DIRS">
+                <summary durationMs="[MS]">
+                    <problems total="0"/>
+                </summary>
+            </rule>
+            <rule description="Žádný soubor SOURCE-AUDIO nesmí být adresář." name="SOURCE-AUDIO_FILES_ARE_NOT_DIRS">
+                <summary durationMs="[MS]">
+                    <problems total="0"/>
+                </summary>
+            </rule>
+            <rule description="Žádný soubor MASTER-COPY-AUDIO nesmí být adresář." name="MASTER-COPY-AUDIO_FILES_ARE_NOT_DIRS">
+                <summary durationMs="[MS]">
+                    <problems total="0"/>
+                </summary>
+            </rule>
+            <rule description="Žádný soubor USER-COPY-AUDIO nesmí být adresář." name="USER-COPY-AUDIO_FILES_ARE_NOT_DIRS">
+                <summary durationMs="[MS]">
+                    <problems total="0"/>
+                </summary>
+            </rule>
+            <rule description="Kromě souborů SECONDARY-METS nesmí adresář SECONDARY-METS-DIR obsahovat žádné další soubory." name="NO_EXTRA_FILES_IN_SECONDARY-METS-DIR">
+                <summary durationMs="[MS]">
+                    <problems ERROR="2" total="2">
+                        <problem file="1234567890/amdsec/amd_mets_1234567890__0002.xml" level="ERROR">nalezen nečekaný soubor</problem>
+                        <problem file="1234567890/amdsec/amd_mets_1234567890__0001.xml" level="ERROR">nalezen nečekaný soubor</problem>
+                    </problems>
+                </summary>
+            </rule>
+            <rule description="Kromě souborů OCR-TEXT nesmí adresář OCR-TEXT-DIR obsahovat žádné další soubory." name="NO_EXTRA_FILES_IN_OCR-TEXT-DIR">
+                <summary durationMs="[MS]">
+                    <problems total="0"/>
+                </summary>
+            </rule>
+            <rule description="Kromě souborů OCR-ALTO nesmí adresář OCR-ALTO-DIR obsahovat žádné další soubory." name="NO_EXTRA_FILES_IN_OCR-ALTO-DIR">
+                <summary durationMs="[MS]">
+                    <problems total="0"/>
+                </summary>
+            </rule>
+            <rule description="Kromě souborů MASTER-COPY nesmí adresář MASTER-COPY-DIR obsahovat žádné další soubory." name="NO_EXTRA_FILES_IN_MASTER-COPY-DIR">
+                <summary durationMs="[MS]">
+                    <problems total="0"/>
+                </summary>
+            </rule>
+            <rule description="Kromě souborů USER-COPY nesmí adresář USER-COPY-DIR obsahovat žádné další soubory." name="NO_EXTRA_FILES_IN_USER-COPY-DIR">
+                <summary durationMs="[MS]">
+                    <problems total="0"/>
+                </summary>
+            </rule>
+            <rule description="Kromě souborů SOURCE-AUDIO nesmí adresář SOURCE-AUDIO-DIR obsahovat žádné další soubory." name="NO_EXTRA_FILES_IN_SOURCE-AUDIO-DIR">
+                <summary durationMs="[MS]">
+                    <problems total="0"/>
+                </summary>
+            </rule>
+            <rule description="Kromě souborů MASTER-COPY-AUDIO nesmí adresář MASTER-COPY-AUDIO-DIR obsahovat žádné další soubory." name="NO_EXTRA_FILES_IN_MASTER-COPY-AUDIO-DIR">
+                <summary durationMs="[MS]">
+                    <problems total="0"/>
+                </summary>
+            </rule>
+            <rule description="Kromě souborů USER-COPY-AUDIO nesmí adresář USER-COPY-AUDIO-DIR obsahovat žádné další soubory." name="NO_EXTRA_FILES_IN_USER-COPY-AUDIO-DIR">
+                <summary durationMs="[MS]">
+                    <problems total="0"/>
+                </summary>
+            </rule>
+            <rule description="Kromě souborů CATALOG-ENTRY nesmí adresář CATALOG-ENTRY-DIR obsahovat žádné další soubory." name="NO_EXTRA_FILES_IN_CATALOG-ENTRY-DIR">
+                <summary durationMs="[MS]">
+                    <problems total="0"/>
+                </summary>
+            </rule>
+        </section>
+        <section description="Kontrola souboru CHECKSUM, odkazů na další soubory a shody kontrolních součtů." name="Soubor CHECKSUM">
+            <summary durationMs="[MS]">
+                <problems ERROR="9" total="9"/>
+            </summary>
+            <rule description="Soubor CHECKSUM by měl být generován předepsanou ABNF gramatikou." name="CHECKSUM_FILE_GENERATED_BY_GRAMMAR">
+                <summary durationMs="[MS]">
+                    <problems total="0"/>
+                </summary>
+            </rule>
+            <rule description="Soubor CHECKSUM musí obsahovat záznamy pro každý uvedený soubor a žádný jiný." name="CHECKSUM_FILE_ALL_PATHS_MATCH_FILES">
+                <summary durationMs="[MS]">
+                    <problems ERROR="2" total="2">
+                        <problem file="1234567890/amdsec/amd_mets_1234567890__0001.xml" level="ERROR">nalezený soubor nebyl očekáván</problem>
+                        <problem file="1234567890/amdsec/amd_mets_1234567890__0002.xml" level="ERROR">nalezený soubor nebyl očekáván</problem>
+                    </problems>
+                </summary>
+            </rule>
+            <rule description="Všechny kontrolní součty v souborů odkazovaných v souboru CHECKSUM musí souhlasit." name="CHECKSUM_FILE_ALL_CHECKSUMS_MATCH">
+                <summary durationMs="[MS]">
+                    <problems ERROR="7" total="7">
+                        <problem actualValue="d41d8cd98f00b204e9800998ecf8427e" expectedValue="3B408677FB465F162069D6330F1553D0" file="1234567890/source_audio/sa_1234567890_0001.wav" level="ERROR">Kontrolní součet nesouhlasí</problem>
+                        <problem actualValue="d41d8cd98f00b204e9800998ecf8427e" expectedValue="FC2BF3D40E1C13EAB950B9AC84EC73E8" file="1234567890/source_audio/sa_1234567890_0002.wav" level="ERROR">Kontrolní součet nesouhlasí</problem>
+                        <problem actualValue="56b880eaa5cbcb2b066c4a98c92ecd7d" expectedValue="EB709C0D03E51BDE265FC067DA9AA69F" file="1234567890/amdsec/amd_mets_1234567890_0001.xml" level="ERROR">Kontrolní součet nesouhlasí</problem>
+                        <problem actualValue="34992564f167214c6b80019df0883073" expectedValue="B38400C80DF78C168F04D0B460160B89" file="1234567890/amdsec/amd_mets_1234567890_0002.xml" level="ERROR">Kontrolní součet nesouhlasí</problem>
+                        <problem actualValue="4d665bf741341ed9d7138a4254c87296" expectedValue="BE20A1E315D1A0EF21B94C0E19117AF3" file="1234567890/amdsec/amd_mets_1234567890__0001.xml" level="ERROR">Kontrolní součet nesouhlasí</problem>
+                        <problem actualValue="cf1daf0708ed3b811fd069cae27ddba2" expectedValue="0D798E78BAE4B7BC6AD2A38C905F3F1B" file="1234567890/amdsec/amd_mets_1234567890__0002.xml" level="ERROR">Kontrolní součet nesouhlasí</problem>
+                        <problem actualValue="b8b869a8999136d562ccbf3af5c44df9" expectedValue="B3111F4B235176DA1E2E797E806535C8" file="1234567890/main_mets_1234567890.xml" level="ERROR">Kontrolní součet nesouhlasí</problem>
+                    </problems>
+                </summary>
+            </rule>
+        </section>
+        <section description="Validace souboru INFO - odkazování na ostatní soubory, kontrolní součet pro soubor CHECKSUM, atd." name="Soubor INFO">
+            <summary durationMs="[MS]">
+                <problems ERROR="5" WARNING="1" total="6"/>
+            </summary>
+            <rule description="Soubor INFO musí být korektní (well-built) xml soubor." name="INFO_XML_WELL_BUILT">
+                <summary durationMs="[MS]">
+                    <problems total="0"/>
+                </summary>
+            </rule>
+            <rule description="Soubor INFO by měl být validní podle XML Schema (info_adg_0.5.xsd)." name="INFO_XML_VALID_BY_XSD">
+                <summary durationMs="[MS]">
+                    <problems WARNING="1" total="1">
+                        <problem file="1234567890/info_1234567890.xml" level="WARNING" xsdFile="[MODUL]/src/main/resources/nkp/pspValidator/shared/validatorConfig/fDMF/audio_gram_0.5/xsd/info_adg_0.5.xsd">obsah souboru není validní podle XSD schématu: cvc-pattern-valid: Value 'MD5' is not facet-valid with respect to pattern 'md5' for type 'checksumType'.</problem>
+                    </problems>
+                </summary>
+            </rule>
+            <rule description="Soubor INFO se musí odkazovat na soubor PRIMARY-METS přes element mainmets." name="INFO_REFERENCES_PRIMARY-METS">
+                <summary durationMs="[MS]">
+                    <problems total="0"/>
+                </summary>
+            </rule>
+            <rule description="V souboru INFO musí počet elementů item souhlasit s hodnotou atributu itemtotal elementu itemlist." name="INFO_ITEMTOTAL_MATCHES_ITEMS_COUNT">
+                <summary durationMs="[MS]">
+                    <problems total="0"/>
+                </summary>
+            </rule>
+            <rule description="Soubor INFO se musí odkazovat na všechny uvedené soubory přes elementy item a na žádné další." name="INFO_ITEMLIST_REFERENCES_ALL_FILES">
+                <summary durationMs="[MS]">
+                    <problems ERROR="4" total="4">
+                        <problem file="1234567890/info_1234567890.xml" level="ERROR" referencedFile="1234567890/amdsec/amd_mets_audio_1234567890_0001.xml">soubor INFO se odkazuje na neočekávaný soubor</problem>
+                        <problem file="1234567890/info_1234567890.xml" level="ERROR" referencedFile="1234567890/amdsec/amd_mets_audio_1234567890_0002.xml">soubor INFO se odkazuje na neočekávaný soubor</problem>
+                        <problem file="1234567890/info_1234567890.xml" level="ERROR" referencedFile="1234567890/mets_1234567890.xml">soubor INFO se odkazuje na neočekávaný soubor</problem>
+                        <problem file="1234567890/info_1234567890.xml" level="ERROR" referencedFile="1234567890/main_mets_1234567890.xml">soubor INFO se neodkazuje na očekávaný soubor</problem>
+                    </problems>
+                </summary>
+            </rule>
+            <rule description="Soubor INFO se musí odkazovat na existující soubor CHECKSUM přes element checksum a kontrolní součet se musí shodovat." name="INFO_CHECKSUM_FILE_CHECKSUM_MATCHES">
+                <summary durationMs="[MS]">
+                    <problems ERROR="1" total="1">
+                        <problem actualValue="25e17e0f612f3204434a8375b8374f82" expectedValue="E20A04D7D0DEB864B853223275FFB8A0" file="1234567890/md5_1234567890.md5" level="ERROR">Kontrolní součet nesouhlasí</problem>
+                    </problems>
+                </summary>
+            </rule>
+        </section>
+        <section name="Identifikátory">
+            <summary durationMs="[MS]">
+                <problems ERROR="7" INFO="2" WARNING="7" total="16"/>
+            </summary>
+            <rule description="Soubor INFO nesmí obsahovat duplikované identifikátory (tedy více identifikátorů stejného typu)." name="INFO_NO_DUPLICATE_IDENTIFIERS">
+                <summary durationMs="[MS]">
+                    <problems total="0"/>
+                </summary>
+            </rule>
+            <rule description="Identifikátory v souboru INFO by měly odpovídat identifikátorům na úrovni SOUNDCOLLECTION v záznamu MODS." name="INFO_INDENTIFIERS_MATCH_TOP_LEVEL_MODS_IDENTIFIERS">
+                <summary durationMs="[MS]">
+                    <problems total="0"/>
+                </summary>
+            </rule>
+            <rule description="Identifikátory v Dublin Core záznamech by neměly obsahovat bílé znaky." name="DC_IDENTIFIERS_NO_WHITE_SPACES">
+                <summary durationMs="[MS]">
+                    <problems INFO="1" total="1">
+                        <problem file="1234567890/main_mets_1234567890.xml" level="INFO" referencedValue="issue number:272027">identifikátor by neměl obsahovat bílé znaky</problem>
+                    </problems>
+                </summary>
+            </rule>
+            <rule description="Identifikátory v Dublin Core záznamech by měly obsahovat typ a hodnotu oddělěné dvojtečkou (např. barCode:2610161505)." name="DC_IDENTIFIERS_CONTAIN_TYPE_AND_VALUE">
+                <summary durationMs="[MS]">
+                    <problems total="0"/>
+                </summary>
+            </rule>
+            <rule description="Úroveň SOUNDCOLLECTION musí obsahovat všechny povinné identifikátory v záznamu Dublin Core." name="DC_MANDATORY_IDENTIFIERS_PRESENT_LEVEL_SOUNDCOLLECTION">
+                <summary durationMs="[MS]">
+                    <problems total="0"/>
+                </summary>
+            </rule>
+            <rule description="Úroveň SOUNDCOLLECTION nesmí obsahovat žádné zakázané identifikátory v záznamu Dublin Core." name="DC_PROHIBITED_IDENTIFIERS_NOT_PRESENT_LEVEL_SOUNDCOLLECTION">
+                <summary durationMs="[MS]">
+                    <problems total="0"/>
+                </summary>
+            </rule>
+            <rule description="Úroveň SOUNDRECORDING musí obsahovat všechny povinné identifikátory v záznamu Dublin Core." name="DC_MANDATORY_IDENTIFIERS_PRESENT_LEVEL_SOUNDRECORDING">
+                <summary durationMs="[MS]">
+                    <problems total="0"/>
+                </summary>
+            </rule>
+            <rule description="Úroveň SOUNDRECORDING nesmí obsahovat žádné zakázané identifikátory v záznamu Dublin Core." name="DC_PROHIBITED_IDENTIFIERS_NOT_PRESENT_LEVEL_SOUNDRECORDING">
+                <summary durationMs="[MS]">
+                    <problems total="0"/>
+                </summary>
+            </rule>
+            <rule description="Úroveň SOUNDPART musí obsahovat všechny povinné identifikátory v záznamu Dublin Core." name="DC_MANDATORY_IDENTIFIERS_PRESENT_LEVEL_SOUNDPART">
+                <summary durationMs="[MS]">
+                    <problems total="0"/>
+                </summary>
+            </rule>
+            <rule description="Úroveň SOUNDPART nesmí obsahovat žádné zakázané identifikátory v záznamu Dublin Core." name="DC_PROHIBITED_IDENTIFIERS_NOT_PRESENT_LEVEL_SOUNDPART">
+                <summary durationMs="[MS]">
+                    <problems total="0"/>
+                </summary>
+            </rule>
+            <rule description="Úroveň SUPPLEMENT musí obsahovat všechny povinné identifikátory v záznamu Dublin Core." name="DC_MANDATORY_IDENTIFIERS_PRESENT_LEVEL_SUPPLEMENT">
+                <summary durationMs="[MS]">
+                    <problems total="0"/>
+                </summary>
+            </rule>
+            <rule description="Úroveň SUPPLEMENT nesmí obsahovat žádné zakázané identifikátory v záznamu Dublin Core." name="DC_PROHIBITED_IDENTIFIERS_NOT_PRESENT_LEVEL_SUPPLEMENT">
+                <summary durationMs="[MS]">
+                    <problems total="0"/>
+                </summary>
+            </rule>
+            <rule description="Identifikátory v jednotlivých Dublin Core záznamech by měly mít unikátní typ. Neměly by se tedy objevit dva a více identikátorů stejného typu v jednom záznamu." name="DC_IDENTIFIERS_NO_DUPLICATES_WITHIN_DMDSEC">
+                <summary durationMs="[MS]">
+                    <problems total="0"/>
+                </summary>
+            </rule>
+            <rule description="Identifikátory napříč Dublin Core záznamy by měly být unikátní. Na různých úrovní popisu se tedy nesmí objevit dva totožné identifikátory (shodný typ i hodnota)." name="DC_IDENTIFIERS_NO_DUPLICATES_ACROSS_DMDSECS">
+                <summary durationMs="[MS]">
+                    <problems ERROR="2" total="2">
+                        <problem label="id_type=local" level="ERROR" referencedValue="local:1234567890">seznam obsahuje duplikovaný identifikátor</problem>
+                        <problem label="id_type=local" level="ERROR" referencedValue="local:1234567890">seznam obsahuje duplikovaný identifikátor</problem>
+                    </problems>
+                </summary>
+            </rule>
+            <rule description="Úroveň SOUNDCOLLECTION musí obsahovat všechny povinné identifikátory v záznamu MODS." name="MODS_MANDATORY_IDENTIFIERS_PRESENT_LEVEL_SOUNDCOLLECTION">
+                <summary durationMs="[MS]">
+                    <problems total="0"/>
+                </summary>
+            </rule>
+            <rule description="Úroveň SOUNDCOLLECTION nesmí obsahovat žádné zakázané identifikátory v záznamu MODS." name="MODS_PROHIBITED_IDENTIFIERS_NOT_PRESENT_LEVEL_SOUNDCOLLECTION">
+                <summary durationMs="[MS]">
+                    <problems total="0"/>
+                </summary>
+            </rule>
+            <rule description="Úroveň SOUNDRECORDING musí obsahovat všechny povinné identifikátory v záznamu MODS." name="MODS_MANDATORY_IDENTIFIERS_PRESENT_LEVEL_SOUNDRECORDING">
+                <summary durationMs="[MS]">
+                    <problems total="0"/>
+                </summary>
+            </rule>
+            <rule description="Úroveň SOUNDRECORDING nesmí obsahovat žádné zakázané identifikátory v záznamu MODS." name="MODS_PROHIBITED_IDENTIFIERS_NOT_PRESENT_LEVEL_SOUNDRECORDING">
+                <summary durationMs="[MS]">
+                    <problems total="0"/>
+                </summary>
+            </rule>
+            <rule description="Úroveň SOUNDPART musí obsahovat všechny povinné identifikátory v záznamu MODS." name="MODS_MANDATORY_IDENTIFIERS_PRESENT_LEVEL_SOUNDPART">
+                <summary durationMs="[MS]">
+                    <problems total="0"/>
+                </summary>
+            </rule>
+            <rule description="Úroveň SOUNDPART nesmí obsahovat žádné zakázané identifikátory v záznamu MODS." name="MODS_PROHIBITED_IDENTIFIERS_NOT_PRESENT_LEVEL_SOUNDPART">
+                <summary durationMs="[MS]">
+                    <problems total="0"/>
+                </summary>
+            </rule>
+            <rule description="Úroveň SUPPLEMENT musí obsahovat všechny povinné identifikátory v záznamu MODS." name="MODS_MANDATORY_IDENTIFIERS_PRESENT_LEVEL_SUPPLEMENT">
+                <summary durationMs="[MS]">
+                    <problems total="0"/>
+                </summary>
+            </rule>
+            <rule description="Úroveň SUPPLEMENT nesmí obsahovat žádné zakázané identifikátory v záznamu MODS." name="MODS_PROHIBITED_IDENTIFIERS_NOT_PRESENT_LEVEL_SUPPLEMENT">
+                <summary durationMs="[MS]">
+                    <problems total="0"/>
+                </summary>
+            </rule>
+            <rule description="Identifikátory v jednotlivých MODS záznamech by měly mít unikátní typ. Neměly by se tedy objevit dva a více identikátorů stejného typu v jednom záznamu." name="MODS_IDENTIFIERS_NO_DUPLICATES_WITHIN_DMDSEC">
+                <summary durationMs="[MS]">
+                    <problems total="0"/>
+                </summary>
+            </rule>
+            <rule description="Identifikátory napříč MODS záznamy by měly být unikátní. Na různých úrovní popisu se tedy nesmí objevit dva totožné identifikátory (shodný typ i hodnota)." name="MODS_IDENTIFIERS_NO_DUPLICATES_ACROSS_DMDSECS">
+                <summary durationMs="[MS]">
+                    <problems ERROR="5" total="5">
+                        <problem label="id_type=local" level="ERROR" referencedValue="local:1234567890">seznam obsahuje duplikovaný identifikátor</problem>
+                        <problem label="id_type=issue-number" level="ERROR" referencedValue="issue-number:272027">seznam obsahuje duplikovaný identifikátor</problem>
+                        <problem label="id_type=local" level="ERROR" referencedValue="local:1234567890">seznam obsahuje duplikovaný identifikátor</problem>
+                        <problem label="id_type=local" level="ERROR" referencedValue="local:1234567890">seznam obsahuje duplikovaný identifikátor</problem>
+                        <problem label="id_type=local" level="ERROR" referencedValue="local:1234567890">seznam obsahuje duplikovaný identifikátor</problem>
+                    </problems>
+                </summary>
+            </rule>
+            <rule description="Všechny identifikátory URN:NBN napříč MODS záznamy musí platnou podobu (např. urn:nbn:cz:abd005-00012z)." name="MODS_IDENTIFIERS_URN_NBN_VALID">
+                <summary durationMs="[MS]">
+                    <problems total="0"/>
+                </summary>
+            </rule>
+            <rule description="Všechny identifikátory URN:NBN napříč MODS záznamy musí být registrovány v URN:NBN Resolveru NKP a shodovat se ve vybraných metadatech" name="MODS_IDENTIFIERS_URN_NBN_REGISTERED">
+                <summary durationMs="[MS]">
+                    <problems INFO="1" total="1">
+                        <problem level="INFO">kontrola registrace URN:NBN v Resolveru přeskočena</problem>
+                    </problems>
+                </summary>
+            </rule>
+            <rule description="Identifikátory v DC se musí shodovat s identifikátory v MODS pro všechny úrovně popisu." name="PRIMARY-METS_DC_IDENTIFIER_MATCH_MODS_IDENTIFIERS">
+                <summary durationMs="[MS]">
+                    <problems WARNING="7" total="7">
+                        <problem label="SOUNDRECORDING_0001" level="WARNING" valueSpec="issue-number">nenalezen identifikátor daného typu v DC záznamu</problem>
+                        <problem label="SOUNDRECORDING_0001" level="WARNING" valueSpec="matrix-number">nenalezen identifikátor daného typu v DC záznamu</problem>
+                        <problem label="SOUNDRECORDING_0001" level="WARNING" valueSpec="local">nenalezen identifikátor daného typu v DC záznamu</problem>
+                        <problem label="SOUNDRECORDING_0002" level="WARNING" valueSpec="issue-number">nenalezen identifikátor daného typu v DC záznamu</problem>
+                        <problem label="SOUNDRECORDING_0002" level="WARNING" valueSpec="matrix-number">nenalezen identifikátor daného typu v DC záznamu</problem>
+                        <problem label="SOUNDRECORDING_0002" level="WARNING" valueSpec="local">nenalezen identifikátor daného typu v DC záznamu</problem>
+                        <problem actualValue="H1354" expectedValue="H 1354" label="SOUNDCOLLECTION_0001" level="WARNING" referencedValue="H 1354" valueSpec="matrix-number">hodnota jediného identifikátoru stejného typu se liší mezi MODS a DC</problem>
+                    </problems>
+                </summary>
+            </rule>
+        </section>
+        <section description="Kontrola hlaviček primárního a sekundárních METS záznamů" name="METS hlavičky">
+            <summary durationMs="[MS]">
+                <problems INFO="5" total="5"/>
+            </summary>
+            <rule description="Primární METS musí obsahovat hlavičku metsHdr, která musí splňovat požadovaný profil." name="PRIMARY_METS_HEADER_MATCHES_PROFILE">
+                <summary durationMs="[MS]">
+                    <problems INFO="1" total="1">
+                        <problem elementSpec="mets:amdSec" file="1234567890/main_mets_1234567890.xml" level="INFO" parentElementSpec="/mets:mets">nenalezen očekávaný doporučený element</problem>
+                    </problems>
+                </summary>
+            </rule>
+            <rule description="Sekundární METS (pro obrázek) musí obsahovat hlavičku metsHdr, která musí splňovat požadovaný profil." name="SECONDARY-METS-IMAGE_HEADER_MATCH_PROFILE">
+                <summary durationMs="[MS]">
+                    <problems INFO="4" total="4">
+                        <problem elementSpec="mets:dmdSec" file="1234567890/amdsec/amd_mets_1234567890_0001.xml" level="INFO" parentElementSpec="/mets:mets">nenalezen očekávaný doporučený element</problem>
+                        <problem elementSpec="mets:structLink" file="1234567890/amdsec/amd_mets_1234567890_0001.xml" level="INFO" parentElementSpec="/mets:mets">nenalezen očekávaný doporučený element</problem>
+                        <problem elementSpec="mets:dmdSec" file="1234567890/amdsec/amd_mets_1234567890_0002.xml" level="INFO" parentElementSpec="/mets:mets">nenalezen očekávaný doporučený element</problem>
+                        <problem elementSpec="mets:structLink" file="1234567890/amdsec/amd_mets_1234567890_0002.xml" level="INFO" parentElementSpec="/mets:mets">nenalezen očekávaný doporučený element</problem>
+                    </problems>
+                </summary>
+            </rule>
+            <rule description="Sekundární METS (pro audio) musí obsahovat hlavičku metsHdr, která musí splňovat požadovaný profil." name="SECONDARY-METS-AUDIO_HEADER_MATCH_PROFILE">
+                <summary durationMs="[MS]">
+                    <problems total="0"/>
+                </summary>
+            </rule>
+        </section>
+        <section description="Kontrola obrázků MASTER-COPY a USER-COPY v JPEG 2000 za pomocí externích nástrojů" name="Obrazová data">
+            <summary durationMs="[MS]">
+                <problems INFO="8" total="8"/>
+            </summary>
+            <rule description="Všechny soubory MASTER-COPY (jpeg 2000) musí být validní vůči profilu pro binární soubory pro nástroj Jpylyzer." name="MASTER-COPY_FILES_VALID_BY_JPYLYZER">
+                <summary durationMs="[MS]">
+                    <problems INFO="1" total="1">
+                        <problem level="INFO" toolName="Jpylyzer">nástroj je vypnutý</problem>
+                    </problems>
+                </summary>
+            </rule>
+            <rule description="Všechny soubory USER-COPY (jpeg 2000) musí být validní vůči profilu pro binární soubory pro nástroj Jpylyzer." name="USER-COPY_FILES_VALID_BY_JPYLYZER">
+                <summary durationMs="[MS]">
+                    <problems INFO="1" total="1">
+                        <problem level="INFO" toolName="Jpylyzer">nástroj je vypnutý</problem>
+                    </problems>
+                </summary>
+            </rule>
+            <rule description="Všechny soubory MASTER-COPY (jpeg 2000) musí být validní vůči profilu pro binární soubory pro nástroj JHOVE." name="MASTER-COPY_FILES_VALID_BY_JHOVE">
+                <summary durationMs="[MS]">
+                    <problems INFO="1" total="1">
+                        <problem level="INFO" toolName="JHOVE">nástroj je vypnutý</problem>
+                    </problems>
+                </summary>
+            </rule>
+            <rule description="Všechny soubory USER-COPY (jpeg 2000) musí být validní vůči profilu pro binární soubory pro nástroj JHOVE." name="USER-COPY_FILES_VALID_BY_JHOVE">
+                <summary durationMs="[MS]">
+                    <problems INFO="1" total="1">
+                        <problem level="INFO" toolName="JHOVE">nástroj je vypnutý</problem>
+                    </problems>
+                </summary>
+            </rule>
+            <rule description="Všechny soubory MASTER-COPY (jpeg 2000) musí být validní vůči profilu pro binární soubory pro nástroj Kakadu." name="MASTER-COPY_FILES_VALID_BY_KAKADU">
+                <summary durationMs="[MS]">
+                    <problems INFO="1" total="1">
+                        <problem level="INFO" toolName="Kakadu">nástroj je vypnutý</problem>
+                    </problems>
+                </summary>
+            </rule>
+            <rule description="Všechny soubory USER-COPY (jpeg 2000) musí být validní vůči profilu pro binární soubory pro nástroj Kakadu." name="USER-COPY_FILES_VALID_BY_KAKADU">
+                <summary durationMs="[MS]">
+                    <problems INFO="1" total="1">
+                        <problem level="INFO" toolName="Kakadu">nástroj je vypnutý</problem>
+                    </problems>
+                </summary>
+            </rule>
+            <rule description="Všechny soubory MASTER-COPY (jpeg 2000) musí být validní vůči profilu pro binární soubory pro nástroj ImageMagick." name="MASTER-COPY_FILES_VALID_BY_IMAGE_MAGICK">
+                <summary durationMs="[MS]">
+                    <problems INFO="1" total="1">
+                        <problem level="INFO" toolName="ImageMagick">nástroj je vypnutý</problem>
+                    </problems>
+                </summary>
+            </rule>
+            <rule description="Všechny soubory USER-COPY (jpeg 2000) musí být validní vůči profilu pro binární soubory pro nástroj ImageMagick." name="USER-COPY_FILES_VALID_BY_IMAGE_MAGICK">
+                <summary durationMs="[MS]">
+                    <problems INFO="1" total="1">
+                        <problem level="INFO" toolName="ImageMagick">nástroj je vypnutý</problem>
+                    </problems>
+                </summary>
+            </rule>
+        </section>
+        <section description="Kontrola zvukových souborů (MP3, WAV) za pomocí externích nástrojů" name="Zvuková data">
+            <summary durationMs="[MS]">
+                <problems INFO="6" total="6"/>
+            </summary>
+            <rule description="Všechny soubory SOURCE-AUDIO (wav) musí být validní vůči profilu pro binární soubory pro nástroj JHOVE." name="SOURCE-AUDIO_FILES_VALID_BY_JHOVE">
+                <summary durationMs="[MS]">
+                    <problems INFO="1" total="1">
+                        <problem level="INFO" toolName="JHOVE">nástroj je vypnutý</problem>
+                    </problems>
+                </summary>
+            </rule>
+            <rule description="Všechny soubory SOURCE-AUDIO (wav) musí být validní vůči profilu pro binární soubory pro nástroj shntool." name="SOURCE-AUDIO_FILES_VALID_BY_SHNTOOL">
+                <summary durationMs="[MS]">
+                    <problems INFO="1" total="1">
+                        <problem level="INFO" toolName="shntool">nástroj je vypnutý</problem>
+                    </problems>
+                </summary>
+            </rule>
+            <rule description="Všechny soubory MASTER-COPY-AUDIO (mp3) musí být validní vůči profilu pro binární soubory pro nástroj MP3val." name="MASTER-COPY-AUDIO_FILES_VALID_BY_MP3VAL">
+                <summary durationMs="[MS]">
+                    <problems INFO="1" total="1">
+                        <problem level="INFO">prázdný seznam souborů</problem>
+                    </problems>
+                </summary>
+            </rule>
+            <rule description="Všechny soubory MASTER-COPY-AUDIO (mp3) musí být validní vůči profilu pro binární soubory pro nástroj Checkmate." name="MASTER-COPY-AUDIO_FILES_VALID_BY_CHECKMATE">
+                <summary durationMs="[MS]">
+                    <problems INFO="1" total="1">
+                        <problem level="INFO">prázdný seznam souborů</problem>
+                    </problems>
+                </summary>
+            </rule>
+            <rule description="Všechny soubory USER-COPY-AUDIO (mp3) musí být validní vůči profilu pro binární soubory pro nástroj MP3val." name="USER-COPY-AUDIO_FILES_VALID_BY_MP3VAL">
+                <summary durationMs="[MS]">
+                    <problems INFO="1" total="1">
+                        <problem level="INFO" toolName="MP3val">nástroj je vypnutý</problem>
+                    </problems>
+                </summary>
+            </rule>
+            <rule description="Všechny soubory USER-COPY-AUDIO (mp3) musí být validní vůči profilu pro binární soubory pro nástroj Checkmate." name="USER-COPY-AUDIO_FILES_VALID_BY_CHECKMATE">
+                <summary durationMs="[MS]">
+                    <problems INFO="1" total="1">
+                        <problem level="INFO" toolName="Checkmate">nástroj je vypnutý</problem>
+                    </problems>
+                </summary>
+            </rule>
+        </section>
+        <section description="validace obsahů bibliografických metadat v MODS a Dubline Core v souboru PRIMARY-METS" name="Bibliografická metadata">
+            <summary durationMs="[MS]">
+                <problems ERROR="26" INFO="103" WARNING="38" total="167"/>
+            </summary>
+            <rule description="Bibliografická metadata pro entitu typu SOUNDCOLLECTION musí splňovat požadovaný profil pro záznamy v Dublin Core i MODS." name="BIBLIOGRAPHIC_METADATA_MATCH_PROFILE_SOUNDCOLLECTION">
+                <summary durationMs="[MS]">
+                    <problems ERROR="3" INFO="31" WARNING="8" total="42">
+                        <problem elementSpec="dc:type[text() = 'model:soundcollection']" file="1234567890/main_mets_1234567890.xml" label="DCMD_SOUNDCOLLECTION_0001" level="ERROR" parentElementSpec="/oai_dc:dc">nenalezen očekávaný povinný element</problem>
+                        <problem attributeSpec="" elementSpec="dc:type" file="1234567890/main_mets_1234567890.xml" label="DCMD_SOUNDCOLLECTION_0001" level="WARNING" parentElementSpec="/oai_dc:dc">nalezen neočekávaný element</problem>
+                        <problem attributeSpec="" elementSpec="dc:type" file="1234567890/main_mets_1234567890.xml" label="DCMD_SOUNDCOLLECTION_0001" level="WARNING" parentElementSpec="/oai_dc:dc">nalezen neočekávaný element</problem>
+                        <problem attributeSpec="" elementSpec="dc:coverage" file="1234567890/main_mets_1234567890.xml" label="DCMD_SOUNDCOLLECTION_0001" level="WARNING" parentElementSpec="/oai_dc:dc">nalezen neočekávaný element</problem>
+                        <problem attributeSpec="" elementSpec="dc:coverage" file="1234567890/main_mets_1234567890.xml" label="DCMD_SOUNDCOLLECTION_0001" level="WARNING" parentElementSpec="/oai_dc:dc">nalezen neočekávaný element</problem>
+                        <problem attributeSpec="" elementSpec="dc:coverage" file="1234567890/main_mets_1234567890.xml" label="DCMD_SOUNDCOLLECTION_0001" level="WARNING" parentElementSpec="/oai_dc:dc">nalezen neočekávaný element</problem>
+                        <problem attributeSpec="" elementSpec="dc:coverage" file="1234567890/main_mets_1234567890.xml" label="DCMD_SOUNDCOLLECTION_0001" level="WARNING" parentElementSpec="/oai_dc:dc">nalezen neočekávaný element</problem>
+                        <problem attributeSpec="" elementSpec="dc:coverage" file="1234567890/main_mets_1234567890.xml" label="DCMD_SOUNDCOLLECTION_0001" level="WARNING" parentElementSpec="/oai_dc:dc">nalezen neočekávaný element</problem>
+                        <problem attributeSpec="type" file="1234567890/main_mets_1234567890.xml" label="MODSMD_SOUNDCOLLECTION_0001" level="INFO" parentElementSpec="/mods:mods/mods:titleInfo">nenalezen doporučený atribut</problem>
+                        <problem elementSpec="mods:nonSort" file="1234567890/main_mets_1234567890.xml" label="MODSMD_SOUNDCOLLECTION_0001" level="INFO" parentElementSpec="/mods:mods/mods:titleInfo">nenalezen očekávaný doporučený element</problem>
+                        <problem elementSpec="mods:partNumber" file="1234567890/main_mets_1234567890.xml" label="MODSMD_SOUNDCOLLECTION_0001" level="INFO" parentElementSpec="/mods:mods/mods:titleInfo">nenalezen očekávaný doporučený element</problem>
+                        <problem elementSpec="mods:partName" file="1234567890/main_mets_1234567890.xml" label="MODSMD_SOUNDCOLLECTION_0001" level="INFO" parentElementSpec="/mods:mods/mods:titleInfo">nenalezen očekávaný doporučený element</problem>
+                        <problem elementSpec="mods:nameIdentifier" file="1234567890/main_mets_1234567890.xml" label="MODSMD_SOUNDCOLLECTION_0001" level="INFO" parentElementSpec="/mods:mods/mods:name[0]">nenalezen očekávaný doporučený element</problem>
+                        <problem elementSpec="mods:etal" file="1234567890/main_mets_1234567890.xml" label="MODSMD_SOUNDCOLLECTION_0001" level="INFO" parentElementSpec="/mods:mods/mods:name[0]">nenalezen očekávaný doporučený element</problem>
+                        <problem elementSpec="mods:nameIdentifier" file="1234567890/main_mets_1234567890.xml" label="MODSMD_SOUNDCOLLECTION_0001" level="INFO" parentElementSpec="/mods:mods/mods:name[1]">nenalezen očekávaný doporučený element</problem>
+                        <problem elementSpec="mods:etal" file="1234567890/main_mets_1234567890.xml" label="MODSMD_SOUNDCOLLECTION_0001" level="INFO" parentElementSpec="/mods:mods/mods:name[1]">nenalezen očekávaný doporučený element</problem>
+                        <problem elementSpec="mods:nameIdentifier" file="1234567890/main_mets_1234567890.xml" label="MODSMD_SOUNDCOLLECTION_0001" level="INFO" parentElementSpec="/mods:mods/mods:name[2]">nenalezen očekávaný doporučený element</problem>
+                        <problem elementSpec="mods:etal" file="1234567890/main_mets_1234567890.xml" label="MODSMD_SOUNDCOLLECTION_0001" level="INFO" parentElementSpec="/mods:mods/mods:name[2]">nenalezen očekávaný doporučený element</problem>
+                        <problem attributeSpec="type" file="1234567890/main_mets_1234567890.xml" label="MODSMD_SOUNDCOLLECTION_0001" level="INFO" parentElementSpec="/mods:mods/mods:name[3]/mods:namePart[0]">nenalezen doporučený atribut</problem>
+                        <problem attributeSpec="type" file="1234567890/main_mets_1234567890.xml" label="MODSMD_SOUNDCOLLECTION_0001" level="INFO" parentElementSpec="/mods:mods/mods:name[3]/mods:namePart[1]">nenalezen doporučený atribut</problem>
+                        <problem elementSpec="mods:nameIdentifier" file="1234567890/main_mets_1234567890.xml" label="MODSMD_SOUNDCOLLECTION_0001" level="INFO" parentElementSpec="/mods:mods/mods:name[3]">nenalezen očekávaný doporučený element</problem>
+                        <problem elementSpec="mods:etal" file="1234567890/main_mets_1234567890.xml" label="MODSMD_SOUNDCOLLECTION_0001" level="INFO" parentElementSpec="/mods:mods/mods:name[3]">nenalezen očekávaný doporučený element</problem>
+                        <problem attributeSpec="type" file="1234567890/main_mets_1234567890.xml" label="MODSMD_SOUNDCOLLECTION_0001" level="INFO" parentElementSpec="/mods:mods/mods:name[4]/mods:namePart[0]">nenalezen doporučený atribut</problem>
+                        <problem attributeSpec="type" file="1234567890/main_mets_1234567890.xml" label="MODSMD_SOUNDCOLLECTION_0001" level="INFO" parentElementSpec="/mods:mods/mods:name[4]/mods:namePart[1]">nenalezen doporučený atribut</problem>
+                        <problem elementSpec="mods:nameIdentifier" file="1234567890/main_mets_1234567890.xml" label="MODSMD_SOUNDCOLLECTION_0001" level="INFO" parentElementSpec="/mods:mods/mods:name[4]">nenalezen očekávaný doporučený element</problem>
+                        <problem elementSpec="mods:etal" file="1234567890/main_mets_1234567890.xml" label="MODSMD_SOUNDCOLLECTION_0001" level="INFO" parentElementSpec="/mods:mods/mods:name[4]">nenalezen očekávaný doporučený element</problem>
+                        <problem actualValue="sound recording" elementSpec="/mods:mods/mods:genre" file="1234567890/main_mets_1234567890.xml" label="MODSMD_SOUNDCOLLECTION_0001" level="ERROR" valueSpec="sound collection">hodnota neodpovídá očekávané/doporučené hodnotě</problem>
+                        <problem elementSpec="mods:originInfo[@eventType='production']" file="1234567890/main_mets_1234567890.xml" label="MODSMD_SOUNDCOLLECTION_0001" level="INFO" parentElementSpec="/mods:mods">nenalezen očekávaný doporučený element</problem>
+                        <problem attributeSpec="authority" file="1234567890/main_mets_1234567890.xml" label="MODSMD_SOUNDCOLLECTION_0001" level="INFO" parentElementSpec="/mods:mods/mods:originInfo[@eventType='publication']/mods:place/mods:placeTerm[1]">nenalezen doporučený atribut</problem>
+                        <problem attributeSpec="encoding" file="1234567890/main_mets_1234567890.xml" label="MODSMD_SOUNDCOLLECTION_0001" level="INFO" parentElementSpec="/mods:mods/mods:originInfo[@eventType='publication']/mods:dateIssued">nenalezen doporučený atribut</problem>
+                        <problem attributeSpec="point" file="1234567890/main_mets_1234567890.xml" label="MODSMD_SOUNDCOLLECTION_0001" level="INFO" parentElementSpec="/mods:mods/mods:originInfo[@eventType='publication']/mods:dateIssued">nenalezen doporučený atribut</problem>
+                        <problem attributeSpec="qualifier" file="1234567890/main_mets_1234567890.xml" label="MODSMD_SOUNDCOLLECTION_0001" level="INFO" parentElementSpec="/mods:mods/mods:originInfo[@eventType='publication']/mods:dateIssued">nenalezen doporučený atribut</problem>
+                        <problem elementSpec="mods:originInfo[@eventType='distribution']" file="1234567890/main_mets_1234567890.xml" label="MODSMD_SOUNDCOLLECTION_0001" level="INFO" parentElementSpec="/mods:mods">nenalezen očekávaný doporučený element</problem>
+                        <problem elementSpec="mods:originInfo[@eventType='manufacture']" file="1234567890/main_mets_1234567890.xml" label="MODSMD_SOUNDCOLLECTION_0001" level="INFO" parentElementSpec="/mods:mods">nenalezen očekávaný doporučený element</problem>
+                        <problem elementSpec="mods:originInfo[@eventType='copyright']" file="1234567890/main_mets_1234567890.xml" label="MODSMD_SOUNDCOLLECTION_0001" level="INFO" parentElementSpec="/mods:mods">nenalezen očekávaný doporučený element</problem>
+                        <problem attributeSpec="type" file="1234567890/main_mets_1234567890.xml" label="MODSMD_SOUNDCOLLECTION_0001" level="INFO" parentElementSpec="/mods:mods/mods:physicalDescription/mods:form[0]">nenalezen doporučený atribut</problem>
+                        <problem attributeSpec="type" file="1234567890/main_mets_1234567890.xml" label="MODSMD_SOUNDCOLLECTION_0001" level="INFO" parentElementSpec="/mods:mods/mods:note[0]">nenalezen doporučený atribut</problem>
+                        <problem attributeSpec="type" file="1234567890/main_mets_1234567890.xml" label="MODSMD_SOUNDCOLLECTION_0001" level="INFO" parentElementSpec="/mods:mods/mods:note[1]">nenalezen doporučený atribut</problem>
+                        <problem elementSpec="mods:relatedItem" file="1234567890/main_mets_1234567890.xml" label="MODSMD_SOUNDCOLLECTION_0001" level="INFO" parentElementSpec="/mods:mods">nenalezen očekávaný doporučený element</problem>
+                        <problem actualValue="2017-04-27T12:34 Z" elementSpec="/mods:mods/mods:recordInfo/mods:recordCreationDate" file="1234567890/main_mets_1234567890.xml" label="MODSMD_SOUNDCOLLECTION_0001" level="ERROR" valueSpec="[regulární výraz '^(?&lt;year&gt;[0-9]{4})(?&lt;month&gt;1[0-2]|0[1-9])(?&lt;day&gt;3[01]|0[1-9]|[12][0-9])T(?&lt;hour&gt;2[0-3]|[01][0-9])(?&lt;minute&gt;[0-5][0-9])(?&lt;second&gt;[0-5][0-9](.(?&lt;millis&gt;[0-9]{3}))?)?(?&lt;timezone&gt;Z|[+-](2[0-3]|[01][0-9])([0-5][0-9])?)?$',regulární výraz '^(?&lt;year&gt;[0-9]{4})-(?&lt;month&gt;1[0-2]|0[1-9])-(?&lt;day&gt;3[01]|0[1-9]|[12][0-9])T(?&lt;hour&gt;2[0-3]|[01][0-9]):(?&lt;minute&gt;[0-5][0-9])(:(?&lt;second&gt;[0-5][0-9])(.(?&lt;millis&gt;[0-9]{3}))?)?(?&lt;timezone&gt;Z|[+-](2[0-3]|[01][0-9])(:([0-5][0-9])?)?)?$']">hodnota nesplňuje žádnou ze specifikací</problem>
+                        <problem elementSpec="mods:recordIdentifier" file="1234567890/main_mets_1234567890.xml" label="MODSMD_SOUNDCOLLECTION_0001" level="INFO" parentElementSpec="/mods:mods/mods:recordInfo">nenalezen očekávaný doporučený element</problem>
+                        <problem attributeSpec="type" file="1234567890/main_mets_1234567890.xml" label="MODSMD_SOUNDCOLLECTION_0001" level="WARNING" parentElementSpec="/mods:mods/mods:recordInfo/mods:languageOfCataloging/mods:languageTerm">nalezen neočekávaný atribut</problem>
+                    </problems>
+                </summary>
+            </rule>
+            <rule description="Bibliografická metadata pro entitu typu SOUNDRECORDING musí splňovat požadovaný profil pro záznamy v Dublin Core i MODS." name="BIBLIOGRAPHIC_METADATA_MATCH_PROFILE_SOUNDRECORDING">
+                <summary durationMs="[MS]">
+                    <problems ERROR="9" INFO="44" WARNING="18" total="71">
+                        <problem elementSpec="dc:type[text() = 'model:soundrecording']" file="1234567890/main_mets_1234567890.xml" label="DCMD_SOUNDRECORDING_0002" level="ERROR" parentElementSpec="/oai_dc:dc">nenalezen očekávaný povinný element</problem>
+                        <problem elementSpec="dc:format" file="1234567890/main_mets_1234567890.xml" label="DCMD_SOUNDRECORDING_0002" level="ERROR" parentElementSpec="/oai_dc:dc">nenalezen očekávaný povinný element</problem>
+                        <problem elementSpec="dc:description" file="1234567890/main_mets_1234567890.xml" label="DCMD_SOUNDRECORDING_0002" level="INFO" parentElementSpec="/oai_dc:dc">nenalezen očekávaný doporučený element</problem>
+                        <problem attributeSpec="" elementSpec="dc:coverage" file="1234567890/main_mets_1234567890.xml" label="DCMD_SOUNDRECORDING_0002" level="WARNING" parentElementSpec="/oai_dc:dc">nalezen neočekávaný element</problem>
+                        <problem attributeSpec="" elementSpec="dc:coverage" file="1234567890/main_mets_1234567890.xml" label="DCMD_SOUNDRECORDING_0002" level="WARNING" parentElementSpec="/oai_dc:dc">nalezen neočekávaný element</problem>
+                        <problem attributeSpec="" elementSpec="dc:coverage" file="1234567890/main_mets_1234567890.xml" label="DCMD_SOUNDRECORDING_0002" level="WARNING" parentElementSpec="/oai_dc:dc">nalezen neočekávaný element</problem>
+                        <problem attributeSpec="" elementSpec="dc:identifier" file="1234567890/main_mets_1234567890.xml" label="DCMD_SOUNDRECORDING_0002" level="WARNING" parentElementSpec="/oai_dc:dc">nalezen neočekávaný element</problem>
+                        <problem attributeSpec="type" file="1234567890/main_mets_1234567890.xml" label="MODSMD_SOUNDRECORDING_0002" level="INFO" parentElementSpec="/mods:mods/mods:titleInfo">nenalezen doporučený atribut</problem>
+                        <problem elementSpec="mods:nonSort" file="1234567890/main_mets_1234567890.xml" label="MODSMD_SOUNDRECORDING_0002" level="INFO" parentElementSpec="/mods:mods/mods:titleInfo">nenalezen očekávaný doporučený element</problem>
+                        <problem elementSpec="mods:subTitle" file="1234567890/main_mets_1234567890.xml" label="MODSMD_SOUNDRECORDING_0002" level="INFO" parentElementSpec="/mods:mods/mods:titleInfo">nenalezen očekávaný doporučený element</problem>
+                        <problem elementSpec="mods:namePart[@type='termsOfAddress']" file="1234567890/main_mets_1234567890.xml" label="MODSMD_SOUNDRECORDING_0002" level="INFO" parentElementSpec="/mods:mods/mods:name">nenalezen očekávaný doporučený element</problem>
+                        <problem elementSpec="mods:namePart[not(@type)]" file="1234567890/main_mets_1234567890.xml" label="MODSMD_SOUNDRECORDING_0002" level="INFO" parentElementSpec="/mods:mods/mods:name">nenalezen očekávaný doporučený element</problem>
+                        <problem elementSpec="mods:nameIdentifier" file="1234567890/main_mets_1234567890.xml" label="MODSMD_SOUNDRECORDING_0002" level="INFO" parentElementSpec="/mods:mods/mods:name">nenalezen očekávaný doporučený element</problem>
+                        <problem attributeSpec="type" file="1234567890/main_mets_1234567890.xml" label="MODSMD_SOUNDRECORDING_0002" level="WARNING" parentElementSpec="/mods:mods/mods:genre">nalezen neočekávaný atribut</problem>
+                        <problem actualValue="soundrecording" elementSpec="/mods:mods/mods:genre" file="1234567890/main_mets_1234567890.xml" label="MODSMD_SOUNDRECORDING_0002" level="ERROR" valueSpec="sound recording">hodnota neodpovídá očekávané/doporučené hodnotě</problem>
+                        <problem elementSpec="mods:originInfo[@eventType='production']" file="1234567890/main_mets_1234567890.xml" label="MODSMD_SOUNDRECORDING_0002" level="INFO" parentElementSpec="/mods:mods">nenalezen očekávaný doporučený element</problem>
+                        <problem attributeSpec="authority" file="1234567890/main_mets_1234567890.xml" label="MODSMD_SOUNDRECORDING_0002" level="INFO" parentElementSpec="/mods:mods/mods:originInfo[@eventType='publication']/mods:place/mods:placeTerm[1]">nenalezen doporučený atribut</problem>
+                        <problem elementSpec="mods:originInfo[@eventType='distribution']" file="1234567890/main_mets_1234567890.xml" label="MODSMD_SOUNDRECORDING_0002" level="INFO" parentElementSpec="/mods:mods">nenalezen očekávaný doporučený element</problem>
+                        <problem elementSpec="mods:originInfo[@eventType='manufacture']" file="1234567890/main_mets_1234567890.xml" label="MODSMD_SOUNDRECORDING_0002" level="INFO" parentElementSpec="/mods:mods">nenalezen očekávaný doporučený element</problem>
+                        <problem elementSpec="mods:originInfo[@eventType='copyright']" file="1234567890/main_mets_1234567890.xml" label="MODSMD_SOUNDRECORDING_0002" level="INFO" parentElementSpec="/mods:mods">nenalezen očekávaný doporučený element</problem>
+                        <problem attributeSpec="objectPart" file="1234567890/main_mets_1234567890.xml" label="MODSMD_SOUNDRECORDING_0002" level="INFO" parentElementSpec="/mods:mods/mods:language">nenalezen doporučený atribut</problem>
+                        <problem elementSpec="mods:tableOfContents" file="1234567890/main_mets_1234567890.xml" label="MODSMD_SOUNDRECORDING_0002" level="INFO" parentElementSpec="/mods:mods">nenalezen očekávaný doporučený element</problem>
+                        <problem elementSpec="mods:note" file="1234567890/main_mets_1234567890.xml" label="MODSMD_SOUNDRECORDING_0002" level="INFO" parentElementSpec="/mods:mods">nenalezen očekávaný doporučený element</problem>
+                        <problem elementSpec="mods:geographic" file="1234567890/main_mets_1234567890.xml" label="MODSMD_SOUNDRECORDING_0002" level="INFO" parentElementSpec="/mods:mods/mods:subject">nenalezen očekávaný doporučený element</problem>
+                        <problem elementSpec="mods:temporal" file="1234567890/main_mets_1234567890.xml" label="MODSMD_SOUNDRECORDING_0002" level="INFO" parentElementSpec="/mods:mods/mods:subject">nenalezen očekávaný doporučený element</problem>
+                        <problem elementSpec="mods:name" file="1234567890/main_mets_1234567890.xml" label="MODSMD_SOUNDRECORDING_0002" level="INFO" parentElementSpec="/mods:mods/mods:subject">nenalezen očekávaný doporučený element</problem>
+                        <problem elementSpec="mods:titleInfo" file="1234567890/main_mets_1234567890.xml" label="MODSMD_SOUNDRECORDING_0002" level="INFO" parentElementSpec="/mods:mods/mods:subject">nenalezen očekávaný doporučený element</problem>
+                        <problem elementSpec="mods:genre" file="1234567890/main_mets_1234567890.xml" label="MODSMD_SOUNDRECORDING_0002" level="INFO" parentElementSpec="/mods:mods/mods:subject">nenalezen očekávaný doporučený element</problem>
+                        <problem elementSpec="mods:classification" file="1234567890/main_mets_1234567890.xml" label="MODSMD_SOUNDRECORDING_0002" level="INFO" parentElementSpec="/mods:mods">nenalezen očekávaný doporučený element</problem>
+                        <problem actualValue="263e8795-k54e-15e4-r789-824600127960" elementSpec="/mods:mods/mods:identifier[@type='uuid']" file="1234567890/main_mets_1234567890.xml" label="MODSMD_SOUNDRECORDING_0002" level="ERROR" valueSpec="^[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}$">hodnota neodpovídá regulárnímu výrazu</problem>
+                        <problem elementSpec="mods:identifier[@type='issue number']" file="1234567890/main_mets_1234567890.xml" label="MODSMD_SOUNDRECORDING_0002" level="INFO" parentElementSpec="/mods:mods">nenalezen očekávaný doporučený element</problem>
+                        <problem elementSpec="mods:identifier[@type='matrix number']" file="1234567890/main_mets_1234567890.xml" label="MODSMD_SOUNDRECORDING_0002" level="INFO" parentElementSpec="/mods:mods">nenalezen očekávaný doporučený element</problem>
+                        <problem attributeSpec="authority" file="1234567890/main_mets_1234567890.xml" label="MODSMD_SOUNDRECORDING_0002" level="WARNING" parentElementSpec="/mods:mods/mods:recordInfo/mods:recordContentSource">nalezen neočekávaný atribut</problem>
+                        <problem attributeSpec="type" file="1234567890/main_mets_1234567890.xml" label="MODSMD_SOUNDRECORDING_0002" level="WARNING" parentElementSpec="/mods:mods/mods:recordInfo/mods:languageOfCataloging/mods:languageTerm">nalezen neočekávaný atribut</problem>
+                        <problem attributeSpec="(type=&quot;matrix-number&quot;)" elementSpec="mods:identifier" file="1234567890/main_mets_1234567890.xml" label="MODSMD_SOUNDRECORDING_0002" level="WARNING" parentElementSpec="/mods:mods">nalezen neočekávaný element</problem>
+                        <problem attributeSpec="(type=&quot;issue-number&quot;)" elementSpec="mods:identifier" file="1234567890/main_mets_1234567890.xml" label="MODSMD_SOUNDRECORDING_0002" level="WARNING" parentElementSpec="/mods:mods">nalezen neočekávaný element</problem>
+                        <problem elementSpec="dc:type[text() = 'model:soundrecording']" file="1234567890/main_mets_1234567890.xml" label="DCMD_SOUNDRECORDING_0001" level="ERROR" parentElementSpec="/oai_dc:dc">nenalezen očekávaný povinný element</problem>
+                        <problem elementSpec="dc:format" file="1234567890/main_mets_1234567890.xml" label="DCMD_SOUNDRECORDING_0001" level="ERROR" parentElementSpec="/oai_dc:dc">nenalezen očekávaný povinný element</problem>
+                        <problem attributeSpec="" elementSpec="dc:coverage" file="1234567890/main_mets_1234567890.xml" label="DCMD_SOUNDRECORDING_0001" level="WARNING" parentElementSpec="/oai_dc:dc">nalezen neočekávaný element</problem>
+                        <problem attributeSpec="" elementSpec="dc:coverage" file="1234567890/main_mets_1234567890.xml" label="DCMD_SOUNDRECORDING_0001" level="WARNING" parentElementSpec="/oai_dc:dc">nalezen neočekávaný element</problem>
+                        <problem attributeSpec="" elementSpec="dc:coverage" file="1234567890/main_mets_1234567890.xml" label="DCMD_SOUNDRECORDING_0001" level="WARNING" parentElementSpec="/oai_dc:dc">nalezen neočekávaný element</problem>
+                        <problem attributeSpec="" elementSpec="dc:identifier" file="1234567890/main_mets_1234567890.xml" label="DCMD_SOUNDRECORDING_0001" level="WARNING" parentElementSpec="/oai_dc:dc">nalezen neočekávaný element</problem>
+                        <problem attributeSpec="type" file="1234567890/main_mets_1234567890.xml" label="MODSMD_SOUNDRECORDING_0001" level="INFO" parentElementSpec="/mods:mods/mods:titleInfo">nenalezen doporučený atribut</problem>
+                        <problem elementSpec="mods:nonSort" file="1234567890/main_mets_1234567890.xml" label="MODSMD_SOUNDRECORDING_0001" level="INFO" parentElementSpec="/mods:mods/mods:titleInfo">nenalezen očekávaný doporučený element</problem>
+                        <problem elementSpec="mods:subTitle" file="1234567890/main_mets_1234567890.xml" label="MODSMD_SOUNDRECORDING_0001" level="INFO" parentElementSpec="/mods:mods/mods:titleInfo">nenalezen očekávaný doporučený element</problem>
+                        <problem elementSpec="mods:namePart[@type='termsOfAddress']" file="1234567890/main_mets_1234567890.xml" label="MODSMD_SOUNDRECORDING_0001" level="INFO" parentElementSpec="/mods:mods/mods:name">nenalezen očekávaný doporučený element</problem>
+                        <problem elementSpec="mods:namePart[not(@type)]" file="1234567890/main_mets_1234567890.xml" label="MODSMD_SOUNDRECORDING_0001" level="INFO" parentElementSpec="/mods:mods/mods:name">nenalezen očekávaný doporučený element</problem>
+                        <problem elementSpec="mods:nameIdentifier" file="1234567890/main_mets_1234567890.xml" label="MODSMD_SOUNDRECORDING_0001" level="INFO" parentElementSpec="/mods:mods/mods:name">nenalezen očekávaný doporučený element</problem>
+                        <problem attributeSpec="type" file="1234567890/main_mets_1234567890.xml" label="MODSMD_SOUNDRECORDING_0001" level="WARNING" parentElementSpec="/mods:mods/mods:genre">nalezen neočekávaný atribut</problem>
+                        <problem actualValue="soundrecording" elementSpec="/mods:mods/mods:genre" file="1234567890/main_mets_1234567890.xml" label="MODSMD_SOUNDRECORDING_0001" level="ERROR" valueSpec="sound recording">hodnota neodpovídá očekávané/doporučené hodnotě</problem>
+                        <problem elementSpec="mods:originInfo[@eventType='production']" file="1234567890/main_mets_1234567890.xml" label="MODSMD_SOUNDRECORDING_0001" level="INFO" parentElementSpec="/mods:mods">nenalezen očekávaný doporučený element</problem>
+                        <problem attributeSpec="authority" file="1234567890/main_mets_1234567890.xml" label="MODSMD_SOUNDRECORDING_0001" level="INFO" parentElementSpec="/mods:mods/mods:originInfo[@eventType='publication']/mods:place/mods:placeTerm[1]">nenalezen doporučený atribut</problem>
+                        <problem elementSpec="mods:originInfo[@eventType='distribution']" file="1234567890/main_mets_1234567890.xml" label="MODSMD_SOUNDRECORDING_0001" level="INFO" parentElementSpec="/mods:mods">nenalezen očekávaný doporučený element</problem>
+                        <problem elementSpec="mods:originInfo[@eventType='manufacture']" file="1234567890/main_mets_1234567890.xml" label="MODSMD_SOUNDRECORDING_0001" level="INFO" parentElementSpec="/mods:mods">nenalezen očekávaný doporučený element</problem>
+                        <problem elementSpec="mods:originInfo[@eventType='copyright']" file="1234567890/main_mets_1234567890.xml" label="MODSMD_SOUNDRECORDING_0001" level="INFO" parentElementSpec="/mods:mods">nenalezen očekávaný doporučený element</problem>
+                        <problem attributeSpec="objectPart" file="1234567890/main_mets_1234567890.xml" label="MODSMD_SOUNDRECORDING_0001" level="INFO" parentElementSpec="/mods:mods/mods:language">nenalezen doporučený atribut</problem>
+                        <problem actualValue="contents" attributeSpec="displayLabel" file="1234567890/main_mets_1234567890.xml" label="MODSMD_SOUNDRECORDING_0001" level="ERROR" parentElementSpec="/mods:mods/mods:tableOfContents" valueSpec="[&quot;Contents&quot;,&quot;Incomplete contents&quot;,&quot;Partial contents&quot;]">hodnota nesplňuje žádnou ze specifikací</problem>
+                        <problem elementSpec="mods:note" file="1234567890/main_mets_1234567890.xml" label="MODSMD_SOUNDRECORDING_0001" level="INFO" parentElementSpec="/mods:mods">nenalezen očekávaný doporučený element</problem>
+                        <problem elementSpec="mods:geographic" file="1234567890/main_mets_1234567890.xml" label="MODSMD_SOUNDRECORDING_0001" level="INFO" parentElementSpec="/mods:mods/mods:subject">nenalezen očekávaný doporučený element</problem>
+                        <problem elementSpec="mods:temporal" file="1234567890/main_mets_1234567890.xml" label="MODSMD_SOUNDRECORDING_0001" level="INFO" parentElementSpec="/mods:mods/mods:subject">nenalezen očekávaný doporučený element</problem>
+                        <problem elementSpec="mods:name" file="1234567890/main_mets_1234567890.xml" label="MODSMD_SOUNDRECORDING_0001" level="INFO" parentElementSpec="/mods:mods/mods:subject">nenalezen očekávaný doporučený element</problem>
+                        <problem elementSpec="mods:titleInfo" file="1234567890/main_mets_1234567890.xml" label="MODSMD_SOUNDRECORDING_0001" level="INFO" parentElementSpec="/mods:mods/mods:subject">nenalezen očekávaný doporučený element</problem>
+                        <problem elementSpec="mods:genre" file="1234567890/main_mets_1234567890.xml" label="MODSMD_SOUNDRECORDING_0001" level="INFO" parentElementSpec="/mods:mods/mods:subject">nenalezen očekávaný doporučený element</problem>
+                        <problem elementSpec="mods:classification" file="1234567890/main_mets_1234567890.xml" label="MODSMD_SOUNDRECORDING_0001" level="INFO" parentElementSpec="/mods:mods">nenalezen očekávaný doporučený element</problem>
+                        <problem actualValue="321p7654-f32d-13d5-k654-798264310000" elementSpec="/mods:mods/mods:identifier[@type='uuid']" file="1234567890/main_mets_1234567890.xml" label="MODSMD_SOUNDRECORDING_0001" level="ERROR" valueSpec="^[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}$">hodnota neodpovídá regulárnímu výrazu</problem>
+                        <problem elementSpec="mods:identifier[@type='issue number']" file="1234567890/main_mets_1234567890.xml" label="MODSMD_SOUNDRECORDING_0001" level="INFO" parentElementSpec="/mods:mods">nenalezen očekávaný doporučený element</problem>
+                        <problem elementSpec="mods:identifier[@type='matrix number']" file="1234567890/main_mets_1234567890.xml" label="MODSMD_SOUNDRECORDING_0001" level="INFO" parentElementSpec="/mods:mods">nenalezen očekávaný doporučený element</problem>
+                        <problem attributeSpec="authority" file="1234567890/main_mets_1234567890.xml" label="MODSMD_SOUNDRECORDING_0001" level="WARNING" parentElementSpec="/mods:mods/mods:recordInfo/mods:recordContentSource">nalezen neočekávaný atribut</problem>
+                        <problem attributeSpec="type" file="1234567890/main_mets_1234567890.xml" label="MODSMD_SOUNDRECORDING_0001" level="WARNING" parentElementSpec="/mods:mods/mods:recordInfo/mods:languageOfCataloging/mods:languageTerm">nalezen neočekávaný atribut</problem>
+                        <problem attributeSpec="(type=&quot;issue-number&quot;)" elementSpec="mods:identifier" file="1234567890/main_mets_1234567890.xml" label="MODSMD_SOUNDRECORDING_0001" level="WARNING" parentElementSpec="/mods:mods">nalezen neočekávaný element</problem>
+                        <problem attributeSpec="(type=&quot;matrix-number&quot;)" elementSpec="mods:identifier" file="1234567890/main_mets_1234567890.xml" label="MODSMD_SOUNDRECORDING_0001" level="WARNING" parentElementSpec="/mods:mods">nalezen neočekávaný element</problem>
+                    </problems>
+                </summary>
+            </rule>
+            <rule description="Bibliografická metadata pro entitu typu SOUNDPART musí splňovat požadovaný profil pro záznamy v Dublin Core i MODS." name="BIBLIOGRAPHIC_METADATA_MATCH_PROFILE_SOUNDPART">
+                <summary durationMs="[MS]">
+                    <problems ERROR="6" INFO="12" WARNING="10" total="28">
+                        <problem elementSpec="dc:creator" file="1234567890/main_mets_1234567890.xml" label="DCMD_SOUNDPART_0002" level="INFO" parentElementSpec="/oai_dc:dc">nenalezen očekávaný doporučený element</problem>
+                        <problem elementSpec="dc:type[text() = 'model:soundpart']" file="1234567890/main_mets_1234567890.xml" label="DCMD_SOUNDPART_0002" level="ERROR" parentElementSpec="/oai_dc:dc">nenalezen očekávaný povinný element</problem>
+                        <problem elementSpec="dc:format" file="1234567890/main_mets_1234567890.xml" label="DCMD_SOUNDPART_0002" level="ERROR" parentElementSpec="/oai_dc:dc">nenalezen očekávaný povinný element</problem>
+                        <problem elementSpec="dc:description" file="1234567890/main_mets_1234567890.xml" label="DCMD_SOUNDPART_0002" level="INFO" parentElementSpec="/oai_dc:dc">nenalezen očekávaný doporučený element</problem>
+                        <problem attributeSpec="" elementSpec="dc:type" file="1234567890/main_mets_1234567890.xml" label="DCMD_SOUNDPART_0002" level="WARNING" parentElementSpec="/oai_dc:dc">nalezen neočekávaný element</problem>
+                        <problem attributeSpec="" elementSpec="dc:coverage" file="1234567890/main_mets_1234567890.xml" label="DCMD_SOUNDPART_0002" level="WARNING" parentElementSpec="/oai_dc:dc">nalezen neočekávaný element</problem>
+                        <problem attributeSpec="type" file="1234567890/main_mets_1234567890.xml" label="MODSMD_SOUNDPART_0002" level="INFO" parentElementSpec="/mods:mods/mods:titleInfo">nenalezen doporučený atribut</problem>
+                        <problem elementSpec="mods:nonSort" file="1234567890/main_mets_1234567890.xml" label="MODSMD_SOUNDPART_0002" level="INFO" parentElementSpec="/mods:mods/mods:titleInfo">nenalezen očekávaný doporučený element</problem>
+                        <problem elementSpec="mods:name" file="1234567890/main_mets_1234567890.xml" label="MODSMD_SOUNDPART_0002" level="INFO" parentElementSpec="/mods:mods">nenalezen očekávaný doporučený element</problem>
+                        <problem attributeSpec="type" file="1234567890/main_mets_1234567890.xml" label="MODSMD_SOUNDPART_0002" level="WARNING" parentElementSpec="/mods:mods/mods:genre">nalezen neočekávaný atribut</problem>
+                        <problem elementSpec="mods:note" file="1234567890/main_mets_1234567890.xml" label="MODSMD_SOUNDPART_0002" level="INFO" parentElementSpec="/mods:mods">nenalezen očekávaný doporučený element</problem>
+                        <problem actualValue="637i7920-n96m-23d1-g971-1356905478" elementSpec="/mods:mods/mods:identifier[@type='uuid']" file="1234567890/main_mets_1234567890.xml" label="MODSMD_SOUNDPART_0002" level="ERROR" valueSpec="^[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}$">hodnota neodpovídá regulárnímu výrazu</problem>
+                        <problem attributeSpec="authority" file="1234567890/main_mets_1234567890.xml" label="MODSMD_SOUNDPART_0002" level="WARNING" parentElementSpec="/mods:mods/mods:recordInfo/mods:recordContentSource">nalezen neočekávaný atribut</problem>
+                        <problem attributeSpec="type" file="1234567890/main_mets_1234567890.xml" label="MODSMD_SOUNDPART_0002" level="WARNING" parentElementSpec="/mods:mods/mods:recordInfo/mods:languageOfCataloging/mods:languageTerm">nalezen neočekávaný atribut</problem>
+                        <problem elementSpec="dc:creator" file="1234567890/main_mets_1234567890.xml" label="DCMD_SOUNDPART_0001" level="INFO" parentElementSpec="/oai_dc:dc">nenalezen očekávaný doporučený element</problem>
+                        <problem elementSpec="dc:type[text() = 'model:soundpart']" file="1234567890/main_mets_1234567890.xml" label="DCMD_SOUNDPART_0001" level="ERROR" parentElementSpec="/oai_dc:dc">nenalezen očekávaný povinný element</problem>
+                        <problem elementSpec="dc:format" file="1234567890/main_mets_1234567890.xml" label="DCMD_SOUNDPART_0001" level="ERROR" parentElementSpec="/oai_dc:dc">nenalezen očekávaný povinný element</problem>
+                        <problem elementSpec="dc:description" file="1234567890/main_mets_1234567890.xml" label="DCMD_SOUNDPART_0001" level="INFO" parentElementSpec="/oai_dc:dc">nenalezen očekávaný doporučený element</problem>
+                        <problem attributeSpec="" elementSpec="dc:type" file="1234567890/main_mets_1234567890.xml" label="DCMD_SOUNDPART_0001" level="WARNING" parentElementSpec="/oai_dc:dc">nalezen neočekávaný element</problem>
+                        <problem attributeSpec="" elementSpec="dc:coverage" file="1234567890/main_mets_1234567890.xml" label="DCMD_SOUNDPART_0001" level="WARNING" parentElementSpec="/oai_dc:dc">nalezen neočekávaný element</problem>
+                        <problem attributeSpec="type" file="1234567890/main_mets_1234567890.xml" label="MODSMD_SOUNDPART_0001" level="INFO" parentElementSpec="/mods:mods/mods:titleInfo">nenalezen doporučený atribut</problem>
+                        <problem elementSpec="mods:nonSort" file="1234567890/main_mets_1234567890.xml" label="MODSMD_SOUNDPART_0001" level="INFO" parentElementSpec="/mods:mods/mods:titleInfo">nenalezen očekávaný doporučený element</problem>
+                        <problem elementSpec="mods:name" file="1234567890/main_mets_1234567890.xml" label="MODSMD_SOUNDPART_0001" level="INFO" parentElementSpec="/mods:mods">nenalezen očekávaný doporučený element</problem>
+                        <problem attributeSpec="type" file="1234567890/main_mets_1234567890.xml" label="MODSMD_SOUNDPART_0001" level="WARNING" parentElementSpec="/mods:mods/mods:genre">nalezen neočekávaný atribut</problem>
+                        <problem elementSpec="mods:note" file="1234567890/main_mets_1234567890.xml" label="MODSMD_SOUNDPART_0001" level="INFO" parentElementSpec="/mods:mods">nenalezen očekávaný doporučený element</problem>
+                        <problem actualValue="581j6543-n32m-84e3-g750-849768265310" elementSpec="/mods:mods/mods:identifier[@type='uuid']" file="1234567890/main_mets_1234567890.xml" label="MODSMD_SOUNDPART_0001" level="ERROR" valueSpec="^[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}$">hodnota neodpovídá regulárnímu výrazu</problem>
+                        <problem attributeSpec="authority" file="1234567890/main_mets_1234567890.xml" label="MODSMD_SOUNDPART_0001" level="WARNING" parentElementSpec="/mods:mods/mods:recordInfo/mods:recordContentSource">nalezen neočekávaný atribut</problem>
+                        <problem attributeSpec="type" file="1234567890/main_mets_1234567890.xml" label="MODSMD_SOUNDPART_0001" level="WARNING" parentElementSpec="/mods:mods/mods:recordInfo/mods:languageOfCataloging/mods:languageTerm">nalezen neočekávaný atribut</problem>
+                    </problems>
+                </summary>
+            </rule>
+            <rule description="Bibliografická metadata pro entitu typu SUPPLEMENT musí splňovat požadovaný profil pro záznamy v Dublin Core i MODS." name="BIBLIOGRAPHIC_METADATA_MATCH_PROFILE_SUPPLEMENT">
+                <summary durationMs="[MS]">
+                    <problems ERROR="8" INFO="16" WARNING="2" total="26">
+                        <problem elementSpec="dc:creator" file="1234567890/main_mets_1234567890.xml" label="DCMD_SUPPL_0002" level="INFO" parentElementSpec="/oai_dc:dc">nenalezen očekávaný doporučený element</problem>
+                        <problem elementSpec="dc:description" file="1234567890/main_mets_1234567890.xml" label="DCMD_SUPPL_0002" level="INFO" parentElementSpec="/oai_dc:dc">nenalezen očekávaný doporučený element</problem>
+                        <problem attributeSpec="type" file="1234567890/main_mets_1234567890.xml" label="MODSMD_SUPPL_0002" level="INFO" parentElementSpec="/mods:mods/mods:titleInfo">nenalezen doporučený atribut</problem>
+                        <problem elementSpec="mods:subTitle" file="1234567890/main_mets_1234567890.xml" label="MODSMD_SUPPL_0002" level="INFO" parentElementSpec="/mods:mods/mods:titleInfo">nenalezen očekávaný doporučený element</problem>
+                        <problem elementSpec="mods:name" file="1234567890/main_mets_1234567890.xml" label="MODSMD_SUPPL_0002" level="INFO" parentElementSpec="/mods:mods">nenalezen očekávaný doporučený element</problem>
+                        <problem actualValue="model" attributeSpec="type" file="1234567890/main_mets_1234567890.xml" label="MODSMD_SUPPL_0002" level="ERROR" parentElementSpec="/mods:mods/mods:genre" valueSpec="[&quot;cover&quot;,&quot;booklet&quot;,&quot;imgdisc&quot;]">hodnota nesplňuje žádnou ze specifikací</problem>
+                        <problem actualValue="imgdisc" elementSpec="/mods:mods/mods:genre" file="1234567890/main_mets_1234567890.xml" label="MODSMD_SUPPL_0002" level="ERROR" valueSpec="supplement">hodnota neodpovídá očekávané/doporučené hodnotě</problem>
+                        <problem elementSpec="mods:note" file="1234567890/main_mets_1234567890.xml" label="MODSMD_SUPPL_0002" level="INFO" parentElementSpec="/mods:mods/mods:physicalDescription">nenalezen očekávaný doporučený element</problem>
+                        <problem elementSpec="mods:note" file="1234567890/main_mets_1234567890.xml" label="MODSMD_SUPPL_0002" level="INFO" parentElementSpec="/mods:mods">nenalezen očekávaný doporučený element</problem>
+                        <problem elementSpec="mods:partNumber" file="1234567890/main_mets_1234567890.xml" label="MODSMD_SUPPL_0002" level="INFO" parentElementSpec="/mods:mods/mods:relatedItem/mods:titleInfo">nenalezen očekávaný doporučený element</problem>
+                        <problem actualValue="soundcollection" elementSpec="/mods:mods/mods:relatedItem/mods:genre" file="1234567890/main_mets_1234567890.xml" label="MODSMD_SUPPL_0002" level="ERROR" valueSpec="sound collection">hodnota neodpovídá očekávané/doporučené hodnotě</problem>
+                        <problem actualValue="548t3695-r45s-63a5-v258-589146302570" elementSpec="/mods:mods/mods:identifier[@type='uuid']" file="1234567890/main_mets_1234567890.xml" label="MODSMD_SUPPL_0002" level="ERROR" valueSpec="^[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}$">hodnota neodpovídá regulárnímu výrazu</problem>
+                        <problem attributeSpec="type" file="1234567890/main_mets_1234567890.xml" label="MODSMD_SUPPL_0002" level="WARNING" parentElementSpec="/mods:mods/mods:recordInfo/mods:languageOfCataloging/mods:languageTerm">nalezen neočekávaný atribut</problem>
+                        <problem elementSpec="dc:creator" file="1234567890/main_mets_1234567890.xml" label="DCMD_SUPPL_0001" level="INFO" parentElementSpec="/oai_dc:dc">nenalezen očekávaný doporučený element</problem>
+                        <problem elementSpec="dc:description" file="1234567890/main_mets_1234567890.xml" label="DCMD_SUPPL_0001" level="INFO" parentElementSpec="/oai_dc:dc">nenalezen očekávaný doporučený element</problem>
+                        <problem attributeSpec="type" file="1234567890/main_mets_1234567890.xml" label="MODSMD_SUPPL_0001" level="INFO" parentElementSpec="/mods:mods/mods:titleInfo">nenalezen doporučený atribut</problem>
+                        <problem elementSpec="mods:subTitle" file="1234567890/main_mets_1234567890.xml" label="MODSMD_SUPPL_0001" level="INFO" parentElementSpec="/mods:mods/mods:titleInfo">nenalezen očekávaný doporučený element</problem>
+                        <problem elementSpec="mods:name" file="1234567890/main_mets_1234567890.xml" label="MODSMD_SUPPL_0001" level="INFO" parentElementSpec="/mods:mods">nenalezen očekávaný doporučený element</problem>
+                        <problem actualValue="model" attributeSpec="type" file="1234567890/main_mets_1234567890.xml" label="MODSMD_SUPPL_0001" level="ERROR" parentElementSpec="/mods:mods/mods:genre" valueSpec="[&quot;cover&quot;,&quot;booklet&quot;,&quot;imgdisc&quot;]">hodnota nesplňuje žádnou ze specifikací</problem>
+                        <problem actualValue="imgdisc" elementSpec="/mods:mods/mods:genre" file="1234567890/main_mets_1234567890.xml" label="MODSMD_SUPPL_0001" level="ERROR" valueSpec="supplement">hodnota neodpovídá očekávané/doporučené hodnotě</problem>
+                        <problem elementSpec="mods:note" file="1234567890/main_mets_1234567890.xml" label="MODSMD_SUPPL_0001" level="INFO" parentElementSpec="/mods:mods/mods:physicalDescription">nenalezen očekávaný doporučený element</problem>
+                        <problem elementSpec="mods:note" file="1234567890/main_mets_1234567890.xml" label="MODSMD_SUPPL_0001" level="INFO" parentElementSpec="/mods:mods">nenalezen očekávaný doporučený element</problem>
+                        <problem elementSpec="mods:partNumber" file="1234567890/main_mets_1234567890.xml" label="MODSMD_SUPPL_0001" level="INFO" parentElementSpec="/mods:mods/mods:relatedItem/mods:titleInfo">nenalezen očekávaný doporučený element</problem>
+                        <problem actualValue="soundcollection" elementSpec="/mods:mods/mods:relatedItem/mods:genre" file="1234567890/main_mets_1234567890.xml" label="MODSMD_SUPPL_0001" level="ERROR" valueSpec="sound collection">hodnota neodpovídá očekávané/doporučené hodnotě</problem>
+                        <problem actualValue="567o1234-g56s-23c9-ah793-7804659320" elementSpec="/mods:mods/mods:identifier[@type='uuid']" file="1234567890/main_mets_1234567890.xml" label="MODSMD_SUPPL_0001" level="ERROR" valueSpec="^[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}$">hodnota neodpovídá regulárnímu výrazu</problem>
+                        <problem attributeSpec="type" file="1234567890/main_mets_1234567890.xml" label="MODSMD_SUPPL_0001" level="WARNING" parentElementSpec="/mods:mods/mods:recordInfo/mods:languageOfCataloging/mods:languageTerm">nalezen neočekávaný atribut</problem>
+                    </problems>
+                </summary>
+            </rule>
+        </section>
+        <section description="Kontrola souborů ALTO." name="OCR ALTO">
+            <summary durationMs="[MS]">
+                <problems total="0"/>
+            </summary>
+            <rule description="Soubory OCR-ALTO musí být validní podle XML Schema pro verzi ALTO danou namespace kořenového elementu: ns-v2# alto_2.0.xsd nebo alto_2.1.xsd (stačí jedno z nich, ALTO 2.1 na rozdíl od 2.0 vyžaduje MeasurementUnit), ns-v3# alto_3.1.xsd." name="OCR-ALTO_FILES_VALID_BY_XSD">
+                <summary durationMs="[MS]">
+                    <problems total="0"/>
+                </summary>
+            </rule>
+            <rule description="Všechny soubory OCR-ALTO v balíčku by měly mít stejnou verzi ALTO (stejný namespace kořenového elementu). Předpis OCR míchání verzí neřeší, proto jen WARNING." name="OCR-ALTO_FILES_SAME_VERSION">
+                <summary durationMs="[MS]">
+                    <problems total="0"/>
+                </summary>
+            </rule>
+        </section>
+        <section description="Kontrola technických (MIX, PREMIS, AES57) metadat." name="Technická metadata">
+            <summary durationMs="[MS]">
+                <problems ERROR="2" INFO="36" total="38"/>
+            </summary>
+            <rule description="Záznamy MIX v souborech SECONDARY-METS-IMAGE musí být validní podle XML Schema (mix_2.0.xsd)." name="MIX_VALID_BY_XSD">
+                <summary durationMs="[MS]">
+                    <problems total="0"/>
+                </summary>
+            </rule>
+            <rule description="Záznamy MIX v souborech SECONDARY-METS-IMAGE pro původní skeny musí splňovat profil." name="MIX_FOR_ORIGINAL_SCAN_MATCHES_PROFILE">
+                <summary durationMs="[MS]">
+                    <problems INFO="10" total="10">
+                        <problem elementSpec="mix:ColorProfile" file="1234567890/amdsec/amd_mets_1234567890_0001.xml" label="MIX_001" level="INFO" parentElementSpec="/mets:techMD/mets:mdWrap/mets:xmlData/mix:mix/mix:BasicImageInformation/mix:BasicImageCharacteristics/mix:PhotometricInterpretation">nenalezen očekávaný doporučený element</problem>
+                        <problem elementSpec="mix:SourceInformation" file="1234567890/amdsec/amd_mets_1234567890_0001.xml" label="MIX_001" level="INFO" parentElementSpec="/mets:techMD/mets:mdWrap/mets:xmlData/mix:mix/mix:ImageCaptureMetadata">nenalezen očekávaný doporučený element</problem>
+                        <problem elementSpec="mix:DigitalCameraCapture" file="1234567890/amdsec/amd_mets_1234567890_0001.xml" label="MIX_001" level="INFO" parentElementSpec="/mets:techMD/mets:mdWrap/mets:xmlData/mix:mix/mix:ImageCaptureMetadata">nenalezen očekávaný doporučený element</problem>
+                        <problem elementSpec="mix:samplingFrequencyPlane" file="1234567890/amdsec/amd_mets_1234567890_0001.xml" label="MIX_001" level="INFO" parentElementSpec="/mets:techMD/mets:mdWrap/mets:xmlData/mix:mix/mix:ImageAssessmentMetadata/mix:SpatialMetrics">nenalezen očekávaný doporučený element</problem>
+                        <problem elementSpec="mix:bitsPerSampleUnit" file="1234567890/amdsec/amd_mets_1234567890_0001.xml" label="MIX_001" level="INFO" parentElementSpec="/mets:techMD/mets:mdWrap/mets:xmlData/mix:mix/mix:ImageAssessmentMetadata/mix:ImageColorEncoding/mix:BitsPerSample">nenalezen očekávaný doporučený element</problem>
+                        <problem elementSpec="mix:ColorProfile" file="1234567890/amdsec/amd_mets_1234567890_0002.xml" label="MIX_001" level="INFO" parentElementSpec="/mets:techMD/mets:mdWrap/mets:xmlData/mix:mix/mix:BasicImageInformation/mix:BasicImageCharacteristics/mix:PhotometricInterpretation">nenalezen očekávaný doporučený element</problem>
+                        <problem elementSpec="mix:SourceInformation" file="1234567890/amdsec/amd_mets_1234567890_0002.xml" label="MIX_001" level="INFO" parentElementSpec="/mets:techMD/mets:mdWrap/mets:xmlData/mix:mix/mix:ImageCaptureMetadata">nenalezen očekávaný doporučený element</problem>
+                        <problem elementSpec="mix:DigitalCameraCapture" file="1234567890/amdsec/amd_mets_1234567890_0002.xml" label="MIX_001" level="INFO" parentElementSpec="/mets:techMD/mets:mdWrap/mets:xmlData/mix:mix/mix:ImageCaptureMetadata">nenalezen očekávaný doporučený element</problem>
+                        <problem elementSpec="mix:samplingFrequencyPlane" file="1234567890/amdsec/amd_mets_1234567890_0002.xml" label="MIX_001" level="INFO" parentElementSpec="/mets:techMD/mets:mdWrap/mets:xmlData/mix:mix/mix:ImageAssessmentMetadata/mix:SpatialMetrics">nenalezen očekávaný doporučený element</problem>
+                        <problem elementSpec="mix:bitsPerSampleUnit" file="1234567890/amdsec/amd_mets_1234567890_0002.xml" label="MIX_001" level="INFO" parentElementSpec="/mets:techMD/mets:mdWrap/mets:xmlData/mix:mix/mix:ImageAssessmentMetadata/mix:ImageColorEncoding/mix:BitsPerSample">nenalezen očekávaný doporučený element</problem>
+                    </problems>
+                </summary>
+            </rule>
+            <rule description="Záznamy MIX v souborech SECONDARY-METS-IMAGE pro první verze archivních kopií musí splňovat profil." name="MIX_FOR_FIRST_MASTER_COPY_MATCHES_PROFILE">
+                <summary durationMs="[MS]">
+                    <problems INFO="10" total="10">
+                        <problem elementSpec="mix:ColorProfile" file="1234567890/amdsec/amd_mets_1234567890_0001.xml" label="MIX_002" level="INFO" parentElementSpec="/mets:techMD/mets:mdWrap/mets:xmlData/mix:mix/mix:BasicImageInformation/mix:BasicImageCharacteristics/mix:PhotometricInterpretation">nenalezen očekávaný doporučený element</problem>
+                        <problem elementSpec="mix:samplingFrequencyPlane" file="1234567890/amdsec/amd_mets_1234567890_0001.xml" label="MIX_002" level="INFO" parentElementSpec="/mets:techMD/mets:mdWrap/mets:xmlData/mix:mix/mix:ImageAssessmentMetadata/mix:SpatialMetrics">nenalezen očekávaný doporučený element</problem>
+                        <problem elementSpec="mix:bitsPerSampleUnit" file="1234567890/amdsec/amd_mets_1234567890_0001.xml" label="MIX_002" level="INFO" parentElementSpec="/mets:techMD/mets:mdWrap/mets:xmlData/mix:mix/mix:ImageAssessmentMetadata/mix:ImageColorEncoding/mix:BitsPerSample">nenalezen očekávaný doporučený element</problem>
+                        <problem elementSpec="mix:TargetData" file="1234567890/amdsec/amd_mets_1234567890_0001.xml" label="MIX_002" level="INFO" parentElementSpec="/mets:techMD/mets:mdWrap/mets:xmlData/mix:mix/mix:ImageAssessmentMetadata/mix:ImageColorEncoding">nenalezen očekávaný doporučený element</problem>
+                        <problem elementSpec="mix:processingAgency" file="1234567890/amdsec/amd_mets_1234567890_0001.xml" label="MIX_002" level="INFO" parentElementSpec="/mets:techMD/mets:mdWrap/mets:xmlData/mix:mix/mix:ChangeHistory/mix:ImageProcessing">nenalezen očekávaný doporučený element</problem>
+                        <problem elementSpec="mix:ColorProfile" file="1234567890/amdsec/amd_mets_1234567890_0002.xml" label="MIX_002" level="INFO" parentElementSpec="/mets:techMD/mets:mdWrap/mets:xmlData/mix:mix/mix:BasicImageInformation/mix:BasicImageCharacteristics/mix:PhotometricInterpretation">nenalezen očekávaný doporučený element</problem>
+                        <problem elementSpec="mix:samplingFrequencyPlane" file="1234567890/amdsec/amd_mets_1234567890_0002.xml" label="MIX_002" level="INFO" parentElementSpec="/mets:techMD/mets:mdWrap/mets:xmlData/mix:mix/mix:ImageAssessmentMetadata/mix:SpatialMetrics">nenalezen očekávaný doporučený element</problem>
+                        <problem elementSpec="mix:bitsPerSampleUnit" file="1234567890/amdsec/amd_mets_1234567890_0002.xml" label="MIX_002" level="INFO" parentElementSpec="/mets:techMD/mets:mdWrap/mets:xmlData/mix:mix/mix:ImageAssessmentMetadata/mix:ImageColorEncoding/mix:BitsPerSample">nenalezen očekávaný doporučený element</problem>
+                        <problem elementSpec="mix:TargetData" file="1234567890/amdsec/amd_mets_1234567890_0002.xml" label="MIX_002" level="INFO" parentElementSpec="/mets:techMD/mets:mdWrap/mets:xmlData/mix:mix/mix:ImageAssessmentMetadata/mix:ImageColorEncoding">nenalezen očekávaný doporučený element</problem>
+                        <problem elementSpec="mix:processingAgency" file="1234567890/amdsec/amd_mets_1234567890_0002.xml" label="MIX_002" level="INFO" parentElementSpec="/mets:techMD/mets:mdWrap/mets:xmlData/mix:mix/mix:ChangeHistory/mix:ImageProcessing">nenalezen očekávaný doporučený element</problem>
+                    </problems>
+                </summary>
+            </rule>
+            <rule description="Záznamy MIX v souborech SECONDARY-METS-IMAGE pro další verze archivních kopií, pokud existují, musí splňovat profil." name="MIX_FOR_OTHER_MASTER_COPIES_MATCHES_PROFILE">
+                <summary durationMs="[MS]">
+                    <problems total="0"/>
+                </summary>
+            </rule>
+            <rule description="Záznamy PREMIS v souborech SECONDARY-METS-IMAGE musí být validní podle XML Schema (premis_2.2.xsd)." name="PREMIS-IMAGE_VALID_BY_XSD">
+                <summary durationMs="[MS]">
+                    <problems total="0"/>
+                </summary>
+            </rule>
+            <rule description="Záznamy PREMIS v souborech SECONDARY-METS-IMAGE musí být validní podle XML Schema (premis_2.2.xsd)." name="PREMIS-AUDIO_VALID_BY_XSD">
+                <summary durationMs="[MS]">
+                    <problems total="0"/>
+                </summary>
+            </rule>
+            <rule description="Záznamy PREMIS Object v souborech SECONDARY-METS pro původní skeny musí splňovat profil." name="PREMIS_OBJECT_FOR_ORIGINAL_SCAN_MATCHES_PROFILE">
+                <summary durationMs="[MS]">
+                    <problems total="0"/>
+                </summary>
+            </rule>
+            <rule description="Záznamy PREMIS Object v souborech SECONDARY-METS pro archivní kopie musí splňovat profil." name="PREMIS_OBJECT_FOR_MASTER_COPY_MATCHES_PROFILE">
+                <summary durationMs="[MS]">
+                    <problems ERROR="2" total="2">
+                        <problem elementSpec="premis:linkingEventIdentifier" file="1234567890/amdsec/amd_mets_1234567890_0001.xml" label="OBJ_002" level="ERROR" parentElementSpec="/mets:techMD/mets:mdWrap/mets:xmlData/premis:object">nenalezen očekávaný povinný element</problem>
+                        <problem elementSpec="premis:linkingEventIdentifier" file="1234567890/amdsec/amd_mets_1234567890_0002.xml" label="OBJ_002" level="ERROR" parentElementSpec="/mets:techMD/mets:mdWrap/mets:xmlData/premis:object">nenalezen očekávaný povinný element</problem>
+                    </problems>
+                </summary>
+            </rule>
+            <rule description="Záznamy PREMIS Object v souborech SECONDARY-METS pro ALTO OCR musí splňovat profil. Povinné jsou, jen když balíček obsahuje soubory OCR-ALTO (OCR je nepovinné)." name="PREMIS_OBJECT_FOR_ALTO_OCR_MATCHES_PROFILE">
+                <summary durationMs="[MS]">
+                    <problems total="0"/>
+                </summary>
+            </rule>
+            <rule description="Záznamy PREMIS Event v souborech SECONDARY-METS musí splňovat profil." name="PREMIS_EVENT_MATCHES_PROFILE">
+                <summary durationMs="[MS]">
+                    <problems INFO="6" total="6">
+                        <problem elementSpec="premis:linkingAgentRole" file="1234567890/amdsec/amd_mets_1234567890_0001.xml" label="EVT_001" level="INFO" parentElementSpec="/mets:digiprovMD/mets:mdWrap/mets:xmlData/premis:event/premis:linkingAgentIdentifier">nenalezen očekávaný doporučený element</problem>
+                        <problem elementSpec="premis:linkingAgentRole" file="1234567890/amdsec/amd_mets_1234567890_0001.xml" label="EVT_002" level="INFO" parentElementSpec="/mets:digiprovMD/mets:mdWrap/mets:xmlData/premis:event/premis:linkingAgentIdentifier">nenalezen očekávaný doporučený element</problem>
+                        <problem elementSpec="premis:linkingAgentRole" file="1234567890/amdsec/amd_mets_1234567890_0001.xml" label="EVT_003" level="INFO" parentElementSpec="/mets:digiprovMD/mets:mdWrap/mets:xmlData/premis:event/premis:linkingAgentIdentifier">nenalezen očekávaný doporučený element</problem>
+                        <problem elementSpec="premis:linkingAgentRole" file="1234567890/amdsec/amd_mets_1234567890_0002.xml" label="EVT_001" level="INFO" parentElementSpec="/mets:digiprovMD/mets:mdWrap/mets:xmlData/premis:event/premis:linkingAgentIdentifier">nenalezen očekávaný doporučený element</problem>
+                        <problem elementSpec="premis:linkingAgentRole" file="1234567890/amdsec/amd_mets_1234567890_0002.xml" label="EVT_002" level="INFO" parentElementSpec="/mets:digiprovMD/mets:mdWrap/mets:xmlData/premis:event/premis:linkingAgentIdentifier">nenalezen očekávaný doporučený element</problem>
+                        <problem elementSpec="premis:linkingAgentRole" file="1234567890/amdsec/amd_mets_1234567890_0002.xml" label="EVT_003" level="INFO" parentElementSpec="/mets:digiprovMD/mets:mdWrap/mets:xmlData/premis:event/premis:linkingAgentIdentifier">nenalezen očekávaný doporučený element</problem>
+                    </problems>
+                </summary>
+            </rule>
+            <rule description="Záznamy PREMIS Event v souborech SECONDARY-METS musí splňovat profil." name="PREMIS_AGENT_MATCHES_PROFILE">
+                <summary durationMs="[MS]">
+                    <problems INFO="10" total="10">
+                        <problem elementSpec="premis:agentNote" file="1234567890/amdsec/amd_mets_1234567890_0001.xml" label="AGENT_001" level="INFO" parentElementSpec="/mets:digiprovMD/mets:mdWrap/mets:xmlData/premis:agent">nenalezen očekávaný doporučený element</problem>
+                        <problem elementSpec="premis:agentExtension" file="1234567890/amdsec/amd_mets_1234567890_0001.xml" label="AGENT_001" level="INFO" parentElementSpec="/mets:digiprovMD/mets:mdWrap/mets:xmlData/premis:agent">nenalezen očekávaný doporučený element</problem>
+                        <problem elementSpec="premis:agentNote" file="1234567890/amdsec/amd_mets_1234567890_0001.xml" label="AGENT_002" level="INFO" parentElementSpec="/mets:digiprovMD/mets:mdWrap/mets:xmlData/premis:agent">nenalezen očekávaný doporučený element</problem>
+                        <problem elementSpec="premis:agentExtension" file="1234567890/amdsec/amd_mets_1234567890_0001.xml" label="AGENT_002" level="INFO" parentElementSpec="/mets:digiprovMD/mets:mdWrap/mets:xmlData/premis:agent">nenalezen očekávaný doporučený element</problem>
+                        <problem elementSpec="premis:agentExtension" file="1234567890/amdsec/amd_mets_1234567890_0001.xml" label="AGENT_003" level="INFO" parentElementSpec="/mets:digiprovMD/mets:mdWrap/mets:xmlData/premis:agent">nenalezen očekávaný doporučený element</problem>
+                        <problem elementSpec="premis:agentNote" file="1234567890/amdsec/amd_mets_1234567890_0002.xml" label="AGENT_001" level="INFO" parentElementSpec="/mets:digiprovMD/mets:mdWrap/mets:xmlData/premis:agent">nenalezen očekávaný doporučený element</problem>
+                        <problem elementSpec="premis:agentExtension" file="1234567890/amdsec/amd_mets_1234567890_0002.xml" label="AGENT_001" level="INFO" parentElementSpec="/mets:digiprovMD/mets:mdWrap/mets:xmlData/premis:agent">nenalezen očekávaný doporučený element</problem>
+                        <problem elementSpec="premis:agentNote" file="1234567890/amdsec/amd_mets_1234567890_0002.xml" label="AGENT_002" level="INFO" parentElementSpec="/mets:digiprovMD/mets:mdWrap/mets:xmlData/premis:agent">nenalezen očekávaný doporučený element</problem>
+                        <problem elementSpec="premis:agentExtension" file="1234567890/amdsec/amd_mets_1234567890_0002.xml" label="AGENT_002" level="INFO" parentElementSpec="/mets:digiprovMD/mets:mdWrap/mets:xmlData/premis:agent">nenalezen očekávaný doporučený element</problem>
+                        <problem elementSpec="premis:agentExtension" file="1234567890/amdsec/amd_mets_1234567890_0002.xml" label="AGENT_003" level="INFO" parentElementSpec="/mets:digiprovMD/mets:mdWrap/mets:xmlData/premis:agent">nenalezen očekávaný doporučený element</problem>
+                    </problems>
+                </summary>
+            </rule>
+            <rule description="Odkazy mezi PREMIS Objekty, Událostmi a Agenty musí být korektní a úplné." name="PREMIS_LINKING_CORRECT">
+                <summary durationMs="[MS]">
+                    <problems total="0"/>
+                </summary>
+            </rule>
+            <rule description="Záznamy AES57 v souborech SECONDARY-METS-AUDIO musí být validní podle XML Schema (aes57_1.0.xsd)." name="AES57_VALID_BY_XSD">
+                <summary durationMs="[MS]">
+                    <problems total="0"/>
+                </summary>
+            </rule>
+        </section>
+        <section description="Kontrola autorskoprávních (CopyrightMD) metadat." name="Autorskoprávní metadata">
+            <summary durationMs="[MS]">
+                <problems total="0"/>
+            </summary>
+            <rule description="Záznamy CopyrightMD v souboru PRIMARY-METS a souborech SECONDARY-METS musí být validní podle XML Schema (cmd_0.91.xsd)." name="COPYRIGHTMD_VALID_BY_XSD">
+                <summary durationMs="[MS]">
+                    <problems total="0"/>
+                </summary>
+            </rule>
+            <rule description="Záznamy CopyrightMD v souborech SECONDARY-METS, pokud existují, musí splňovat profil." name="COPYRIGHTMD_IN_SECONDARY_METS_MATCH_PROFILE">
+                <summary durationMs="[MS]">
+                    <problems total="0"/>
+                </summary>
+            </rule>
+            <rule description="Záznamy CopyrightMD v souboru PRIMARY-METS, pokud existují, musí splňovat profil." name="COPYRIGHTMD_IN_PRIMARY_METS_MATCH_PROFILE">
+                <summary durationMs="[MS]">
+                    <problems total="0"/>
+                </summary>
+            </rule>
+        </section>
+    </sections>
+</protocol>

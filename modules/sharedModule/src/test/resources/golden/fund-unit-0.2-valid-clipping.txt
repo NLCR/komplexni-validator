@@ -407,54 +407,54 @@ Pravidlo MIX_VALID_BY_XSD: 0 problémů
 	Záznamy MIX v souborech SECONDARY-METS musí být validní podle XML Schema (mix_2.0.xsd).
 Pravidlo MIX_FOR_ORIGINAL_SCAN_MATCHES_PROFILE: 10 problémů (10x INFO)
 	Záznamy MIX v souborech SECONDARY-METS pro původní skeny musí splňovat profil.
-	INFO: amd_mets_nk-00027x_0002.xml: MIX_001: /mets:techMD/mets:mdWrap/mets:xmlData/mix:mix/mix:BasicDigitalObjectInformation: nenalezen očekávaný doporučený element 'mix:fileSize'
-	INFO: amd_mets_nk-00027x_0002.xml: MIX_001: /mets:techMD/mets:mdWrap/mets:xmlData/mix:mix/mix:BasicImageInformation/mix:BasicImageCharacteristics/mix:PhotometricInterpretation: nenalezen očekávaný doporučený element 'mix:ColorProfile'
-	INFO: amd_mets_nk-00027x_0002.xml: MIX_001: /mets:techMD/mets:mdWrap/mets:xmlData/mix:mix/mix:ImageCaptureMetadata: nenalezen očekávaný doporučený element 'mix:SourceInformation'
-	INFO: amd_mets_nk-00027x_0002.xml: MIX_001: /mets:techMD/mets:mdWrap/mets:xmlData/mix:mix/mix:ImageCaptureMetadata: nenalezen očekávaný doporučený element 'mix:DigitalCameraCapture'
-	INFO: amd_mets_nk-00027x_0002.xml: MIX_001: /mets:techMD/mets:mdWrap/mets:xmlData/mix:mix/mix:ImageAssessmentMetadata/mix:SpatialMetrics: nenalezen očekávaný doporučený element 'mix:samplingFrequencyPlane'
 	INFO: amd_mets_nk-00027x_0001.xml: MIX_001: /mets:techMD/mets:mdWrap/mets:xmlData/mix:mix/mix:BasicDigitalObjectInformation: nenalezen očekávaný doporučený element 'mix:fileSize'
 	INFO: amd_mets_nk-00027x_0001.xml: MIX_001: /mets:techMD/mets:mdWrap/mets:xmlData/mix:mix/mix:BasicImageInformation/mix:BasicImageCharacteristics/mix:PhotometricInterpretation: nenalezen očekávaný doporučený element 'mix:ColorProfile'
 	INFO: amd_mets_nk-00027x_0001.xml: MIX_001: /mets:techMD/mets:mdWrap/mets:xmlData/mix:mix/mix:ImageCaptureMetadata: nenalezen očekávaný doporučený element 'mix:SourceInformation'
 	INFO: amd_mets_nk-00027x_0001.xml: MIX_001: /mets:techMD/mets:mdWrap/mets:xmlData/mix:mix/mix:ImageCaptureMetadata: nenalezen očekávaný doporučený element 'mix:DigitalCameraCapture'
 	INFO: amd_mets_nk-00027x_0001.xml: MIX_001: /mets:techMD/mets:mdWrap/mets:xmlData/mix:mix/mix:ImageAssessmentMetadata/mix:SpatialMetrics: nenalezen očekávaný doporučený element 'mix:samplingFrequencyPlane'
+	INFO: amd_mets_nk-00027x_0002.xml: MIX_001: /mets:techMD/mets:mdWrap/mets:xmlData/mix:mix/mix:BasicDigitalObjectInformation: nenalezen očekávaný doporučený element 'mix:fileSize'
+	INFO: amd_mets_nk-00027x_0002.xml: MIX_001: /mets:techMD/mets:mdWrap/mets:xmlData/mix:mix/mix:BasicImageInformation/mix:BasicImageCharacteristics/mix:PhotometricInterpretation: nenalezen očekávaný doporučený element 'mix:ColorProfile'
+	INFO: amd_mets_nk-00027x_0002.xml: MIX_001: /mets:techMD/mets:mdWrap/mets:xmlData/mix:mix/mix:ImageCaptureMetadata: nenalezen očekávaný doporučený element 'mix:SourceInformation'
+	INFO: amd_mets_nk-00027x_0002.xml: MIX_001: /mets:techMD/mets:mdWrap/mets:xmlData/mix:mix/mix:ImageCaptureMetadata: nenalezen očekávaný doporučený element 'mix:DigitalCameraCapture'
+	INFO: amd_mets_nk-00027x_0002.xml: MIX_001: /mets:techMD/mets:mdWrap/mets:xmlData/mix:mix/mix:ImageAssessmentMetadata/mix:SpatialMetrics: nenalezen očekávaný doporučený element 'mix:samplingFrequencyPlane'
 Pravidlo MIX_FOR_FIRST_MASTER_COPY_MATCHES_PROFILE: 10 problémů (10x INFO)
 	Záznamy MIX v souborech SECONDARY-METS pro první verze archivních kopií musí splňovat profil.
-	INFO: amd_mets_nk-00027x_0002.xml: MIX_002: /mets:techMD/mets:mdWrap/mets:xmlData/mix:mix/mix:BasicDigitalObjectInformation: nenalezen očekávaný doporučený element 'mix:fileSize'
-	INFO: amd_mets_nk-00027x_0002.xml: MIX_002: /mets:techMD/mets:mdWrap/mets:xmlData/mix:mix/mix:BasicImageInformation/mix:BasicImageCharacteristics/mix:PhotometricInterpretation: nenalezen očekávaný doporučený element 'mix:ColorProfile'
-	INFO: amd_mets_nk-00027x_0002.xml: MIX_002: /mets:techMD/mets:mdWrap/mets:xmlData/mix:mix/mix:ImageAssessmentMetadata/mix:SpatialMetrics: nenalezen očekávaný doporučený element 'mix:samplingFrequencyPlane'
-	INFO: amd_mets_nk-00027x_0002.xml: MIX_002: /mets:techMD/mets:mdWrap/mets:xmlData/mix:mix/mix:ImageAssessmentMetadata/mix:ImageColorEncoding: nenalezen očekávaný doporučený element 'mix:TargetData'
-	INFO: amd_mets_nk-00027x_0002.xml: MIX_002: /mets:techMD/mets:mdWrap/mets:xmlData/mix:mix/mix:ChangeHistory/mix:ImageProcessing: nenalezen očekávaný doporučený element 'mix:processingAgency'
 	INFO: amd_mets_nk-00027x_0001.xml: MIX_002: /mets:techMD/mets:mdWrap/mets:xmlData/mix:mix/mix:BasicDigitalObjectInformation: nenalezen očekávaný doporučený element 'mix:fileSize'
 	INFO: amd_mets_nk-00027x_0001.xml: MIX_002: /mets:techMD/mets:mdWrap/mets:xmlData/mix:mix/mix:BasicImageInformation/mix:BasicImageCharacteristics/mix:PhotometricInterpretation: nenalezen očekávaný doporučený element 'mix:ColorProfile'
 	INFO: amd_mets_nk-00027x_0001.xml: MIX_002: /mets:techMD/mets:mdWrap/mets:xmlData/mix:mix/mix:ImageAssessmentMetadata/mix:SpatialMetrics: nenalezen očekávaný doporučený element 'mix:samplingFrequencyPlane'
 	INFO: amd_mets_nk-00027x_0001.xml: MIX_002: /mets:techMD/mets:mdWrap/mets:xmlData/mix:mix/mix:ImageAssessmentMetadata/mix:ImageColorEncoding: nenalezen očekávaný doporučený element 'mix:TargetData'
 	INFO: amd_mets_nk-00027x_0001.xml: MIX_002: /mets:techMD/mets:mdWrap/mets:xmlData/mix:mix/mix:ChangeHistory/mix:ImageProcessing: nenalezen očekávaný doporučený element 'mix:processingAgency'
+	INFO: amd_mets_nk-00027x_0002.xml: MIX_002: /mets:techMD/mets:mdWrap/mets:xmlData/mix:mix/mix:BasicDigitalObjectInformation: nenalezen očekávaný doporučený element 'mix:fileSize'
+	INFO: amd_mets_nk-00027x_0002.xml: MIX_002: /mets:techMD/mets:mdWrap/mets:xmlData/mix:mix/mix:BasicImageInformation/mix:BasicImageCharacteristics/mix:PhotometricInterpretation: nenalezen očekávaný doporučený element 'mix:ColorProfile'
+	INFO: amd_mets_nk-00027x_0002.xml: MIX_002: /mets:techMD/mets:mdWrap/mets:xmlData/mix:mix/mix:ImageAssessmentMetadata/mix:SpatialMetrics: nenalezen očekávaný doporučený element 'mix:samplingFrequencyPlane'
+	INFO: amd_mets_nk-00027x_0002.xml: MIX_002: /mets:techMD/mets:mdWrap/mets:xmlData/mix:mix/mix:ImageAssessmentMetadata/mix:ImageColorEncoding: nenalezen očekávaný doporučený element 'mix:TargetData'
+	INFO: amd_mets_nk-00027x_0002.xml: MIX_002: /mets:techMD/mets:mdWrap/mets:xmlData/mix:mix/mix:ChangeHistory/mix:ImageProcessing: nenalezen očekávaný doporučený element 'mix:processingAgency'
 Pravidlo MIX_FOR_OTHER_MASTER_COPIES_MATCHES_PROFILE: 0 problémů
 	Záznamy MIX v souborech SECONDARY-METS pro další verze archivních kopií, pokud existují, musí splňovat profil.
 Pravidlo PREMIS_OBJECT_FOR_ORIGINAL_SCAN_MATCHES_PROFILE: 2 problémy (2x INFO)
 	Záznamy PREMIS Object v souborech SECONDARY-METS pro původní skeny musí splňovat profil.
-	INFO: amd_mets_nk-00027x_0002.xml: OBJ_001: /mets:techMD/mets:mdWrap/mets:xmlData/premis:object: nenalezen očekávaný doporučený element 'premis:relationship'
 	INFO: amd_mets_nk-00027x_0001.xml: OBJ_001: /mets:techMD/mets:mdWrap/mets:xmlData/premis:object: nenalezen očekávaný doporučený element 'premis:relationship'
+	INFO: amd_mets_nk-00027x_0002.xml: OBJ_001: /mets:techMD/mets:mdWrap/mets:xmlData/premis:object: nenalezen očekávaný doporučený element 'premis:relationship'
 Pravidlo PREMIS_OBJECT_FOR_MASTER_COPY_MATCHES_PROFILE: 2 problémy (2x INFO)
 	Záznamy PREMIS Object v souborech SECONDARY-METS pro archivní kopie musí splňovat profil.
-	INFO: amd_mets_nk-00027x_0002.xml: OBJ_002: /mets:techMD/mets:mdWrap/mets:xmlData/premis:object/premis:relationship/premis:relatedEventIdentification: nenalezen očekávaný doporučený element 'premis:relatedEventSequence'
 	INFO: amd_mets_nk-00027x_0001.xml: OBJ_002: /mets:techMD/mets:mdWrap/mets:xmlData/premis:object/premis:relationship/premis:relatedEventIdentification: nenalezen očekávaný doporučený element 'premis:relatedEventSequence'
+	INFO: amd_mets_nk-00027x_0002.xml: OBJ_002: /mets:techMD/mets:mdWrap/mets:xmlData/premis:object/premis:relationship/premis:relatedEventIdentification: nenalezen očekávaný doporučený element 'premis:relatedEventSequence'
 Pravidlo PREMIS_OBJECT_FOR_ALTO_OCR_MATCHES_PROFILE: 2 problémy (2x INFO)
 	Záznamy PREMIS Object v souborech SECONDARY-METS pro ALTO OCR musí splňovat profil.
-	INFO: amd_mets_nk-00027x_0002.xml: OBJ_003: /mets:techMD/mets:mdWrap/mets:xmlData/premis:object/premis:relationship/premis:relatedEventIdentification: nenalezen očekávaný doporučený element 'premis:relatedEventSequence'
 	INFO: amd_mets_nk-00027x_0001.xml: OBJ_003: /mets:techMD/mets:mdWrap/mets:xmlData/premis:object/premis:relationship/premis:relatedEventIdentification: nenalezen očekávaný doporučený element 'premis:relatedEventSequence'
+	INFO: amd_mets_nk-00027x_0002.xml: OBJ_003: /mets:techMD/mets:mdWrap/mets:xmlData/premis:object/premis:relationship/premis:relatedEventIdentification: nenalezen očekávaný doporučený element 'premis:relatedEventSequence'
 Pravidlo PREMIS_EVENT_MATCHES_PROFILE: 0 problémů
 	Záznamy PREMIS Event v souborech SECONDARY-METS musí splňovat profil.
 Pravidlo PREMIS_AGENT_MATCHES_PROFILE: 8 problémů (8x INFO)
 	Záznamy PREMIS Event v souborech SECONDARY-METS musí splňovat profil.
-	INFO: amd_mets_nk-00027x_0002.xml: AGENT_001: /mets:digiprovMD/mets:mdWrap/mets:xmlData/premis:agent: nenalezen očekávaný doporučený element 'premis:agentNote'
-	INFO: amd_mets_nk-00027x_0002.xml: AGENT_002: /mets:digiprovMD/mets:mdWrap/mets:xmlData/premis:agent: nenalezen očekávaný doporučený element 'premis:agentNote'
-	INFO: amd_mets_nk-00027x_0002.xml: AGENT_003: /mets:digiprovMD/mets:mdWrap/mets:xmlData/premis:agent: nenalezen očekávaný doporučený element 'premis:agentNote'
-	INFO: amd_mets_nk-00027x_0002.xml: AGENT_004: /mets:digiprovMD/mets:mdWrap/mets:xmlData/premis:agent: nenalezen očekávaný doporučený element 'premis:agentNote'
 	INFO: amd_mets_nk-00027x_0001.xml: AGENT_001: /mets:digiprovMD/mets:mdWrap/mets:xmlData/premis:agent: nenalezen očekávaný doporučený element 'premis:agentNote'
 	INFO: amd_mets_nk-00027x_0001.xml: AGENT_002: /mets:digiprovMD/mets:mdWrap/mets:xmlData/premis:agent: nenalezen očekávaný doporučený element 'premis:agentNote'
 	INFO: amd_mets_nk-00027x_0001.xml: AGENT_003: /mets:digiprovMD/mets:mdWrap/mets:xmlData/premis:agent: nenalezen očekávaný doporučený element 'premis:agentNote'
 	INFO: amd_mets_nk-00027x_0001.xml: AGENT_004: /mets:digiprovMD/mets:mdWrap/mets:xmlData/premis:agent: nenalezen očekávaný doporučený element 'premis:agentNote'
+	INFO: amd_mets_nk-00027x_0002.xml: AGENT_001: /mets:digiprovMD/mets:mdWrap/mets:xmlData/premis:agent: nenalezen očekávaný doporučený element 'premis:agentNote'
+	INFO: amd_mets_nk-00027x_0002.xml: AGENT_002: /mets:digiprovMD/mets:mdWrap/mets:xmlData/premis:agent: nenalezen očekávaný doporučený element 'premis:agentNote'
+	INFO: amd_mets_nk-00027x_0002.xml: AGENT_003: /mets:digiprovMD/mets:mdWrap/mets:xmlData/premis:agent: nenalezen očekávaný doporučený element 'premis:agentNote'
+	INFO: amd_mets_nk-00027x_0002.xml: AGENT_004: /mets:digiprovMD/mets:mdWrap/mets:xmlData/premis:agent: nenalezen očekávaný doporučený element 'premis:agentNote'
 Pravidlo PREMIS_LINKING_CORRECT: 0 problémů
 	Odkazy mezi PREMIS Objekty, Událostmi a Agenty musí být korektní a úplné.
 

@@ -16,7 +16,7 @@ import javax.xml.xpath.XPathExpression;
 import javax.xml.xpath.XPathExpressionException;
 import java.io.File;
 import java.util.ArrayList;
-import java.util.HashSet;
+import java.util.TreeSet;
 import java.util.List;
 import java.util.Set;
 
@@ -60,7 +60,7 @@ public class VfCheckInfoFileItemlistReferencesAllFiles extends ValidationFunctio
                 return invalidValueParamNull(PARAM_LEVEL, paramLevel);
             }
 
-            Set<File> expectedFiles = new HashSet<>();
+            Set<File> expectedFiles = new TreeSet<>();
 
             List<ValueParam> fileParams = valueParams.getParams(PARAM_FILE);
             for (ValueParam fileParam : fileParams) {
@@ -114,7 +114,7 @@ public class VfCheckInfoFileItemlistReferencesAllFiles extends ValidationFunctio
                 }
             }
 
-            Set<File> foundFiles = new HashSet<>(foundFilesList.size());
+            Set<File> foundFiles = new TreeSet<>();
             foundFiles.addAll(foundFilesList);
             if (!foundFiles.equals(expectedFiles)) {//something is different
                 for (File foundFile : foundFiles) {

@@ -26,7 +26,7 @@ import javax.xml.xpath.XPathConstants;
 import javax.xml.xpath.XPathExpressionException;
 import java.io.File;
 import java.io.IOException;
-import java.util.HashSet;
+import java.util.TreeSet;
 import java.util.List;
 import java.util.Set;
 
@@ -89,7 +89,7 @@ public class VfCheckCopyrightmdIsValidByXsd extends ValidationFunction {
     }
 
     private Set<File> mergeAbsolutFilesFromParams() throws EmptyParamEvaluationException {
-        Set<File> result = new HashSet<>();
+        Set<File> result = new TreeSet<>();
         List<ValueParam> fileParams = valueParams.getParams(PARAM_METS_FILE);
         for (ValueParam param : fileParams) {
             ValueEvaluation evaluation = param.getEvaluation();

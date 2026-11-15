@@ -7,7 +7,7 @@ import nkp.pspValidator.shared.engine.exceptions.InvalidPathException;
 import nkp.pspValidator.shared.engine.params.ValueParam;
 
 import java.io.*;
-import java.util.HashSet;
+import java.util.TreeSet;
 import java.util.List;
 import java.util.Set;
 
@@ -58,7 +58,7 @@ public class VfCheckChecksumFileAllPathsMatchFiles extends ValidationFunction {
     }
 
     private Set<File> mergeAbsolutFilesFromParams() throws EmptyParamEvaluationException {
-        Set<File> result = new HashSet<>();
+        Set<File> result = new TreeSet<>();
         List<ValueParam> fileParams = valueParams.getParams(PARAM_FILE);
         for (ValueParam param : fileParams) {
             ValueEvaluation evaluation = param.getEvaluation();
@@ -102,7 +102,7 @@ public class VfCheckChecksumFileAllPathsMatchFiles extends ValidationFunction {
                 br = new BufferedReader(new InputStreamReader(fis));
 
                 String line;
-                Set<File> filesFromFile = new HashSet<>();
+                Set<File> filesFromFile = new TreeSet<>();
                 while ((line = br.readLine()) != null) {
                     String[] parts = line.split("[ \\t]");//space or tabulator
                     if (parts.length == 1) {

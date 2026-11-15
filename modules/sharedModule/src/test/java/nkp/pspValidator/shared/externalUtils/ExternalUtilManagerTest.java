@@ -269,6 +269,16 @@ public class ExternalUtilManagerTest {
         } catch (CliCommand.CliCommandException e) {
             assertEquals("verze nenalezena ve výstupu: neznámý výstup\n", e.getMessage());
         }
+        // prazdny stdout, chyba na stderr a nenulovy navratovy kod (napr. java -jar s chybejicim jarem): hlaska uvede
+        // prvni radek stderr a kod, aby uzivatel videl pricinu
+        fakeUtil(fakeUtilsDir, "mp3val", textFile(""), textFile("Error: Unable to access jarfile x.jar\ndalsi radek\n"), 1);
+        manager.setPath(ExternalUtil.MP3VAL, fakeUtilsDir);
+        try {
+            manager.runUtilVersionDetection(ExternalUtil.MP3VAL);
+            fail();
+        } catch (CliCommand.CliCommandException e) {
+            assertEquals("prázdný výstup (stderr: Error: Unable to access jarfile x.jar, návratový kód 1)", e.getMessage());
+        }
     }
 
     @Test

@@ -851,32 +851,32 @@
             <rule description="Záznamy MIX v souborech SECONDARY-METS pro původní skeny musí splňovat profil." name="MIX_FOR_ORIGINAL_SCAN_MATCHES_PROFILE">
                 <summary durationMs="[MS]">
                     <problems INFO="10" total="10">
-                        <problem elementSpec="mix:fileSize" file="nk-00027x/amdsec/amd_mets_nk-00027x_0002.xml" label="MIX_001" level="INFO" parentElementSpec="/mets:techMD/mets:mdWrap/mets:xmlData/mix:mix/mix:BasicDigitalObjectInformation">nenalezen očekávaný doporučený element</problem>
-                        <problem elementSpec="mix:ColorProfile" file="nk-00027x/amdsec/amd_mets_nk-00027x_0002.xml" label="MIX_001" level="INFO" parentElementSpec="/mets:techMD/mets:mdWrap/mets:xmlData/mix:mix/mix:BasicImageInformation/mix:BasicImageCharacteristics/mix:PhotometricInterpretation">nenalezen očekávaný doporučený element</problem>
-                        <problem elementSpec="mix:SourceInformation" file="nk-00027x/amdsec/amd_mets_nk-00027x_0002.xml" label="MIX_001" level="INFO" parentElementSpec="/mets:techMD/mets:mdWrap/mets:xmlData/mix:mix/mix:ImageCaptureMetadata">nenalezen očekávaný doporučený element</problem>
-                        <problem elementSpec="mix:DigitalCameraCapture" file="nk-00027x/amdsec/amd_mets_nk-00027x_0002.xml" label="MIX_001" level="INFO" parentElementSpec="/mets:techMD/mets:mdWrap/mets:xmlData/mix:mix/mix:ImageCaptureMetadata">nenalezen očekávaný doporučený element</problem>
-                        <problem elementSpec="mix:samplingFrequencyPlane" file="nk-00027x/amdsec/amd_mets_nk-00027x_0002.xml" label="MIX_001" level="INFO" parentElementSpec="/mets:techMD/mets:mdWrap/mets:xmlData/mix:mix/mix:ImageAssessmentMetadata/mix:SpatialMetrics">nenalezen očekávaný doporučený element</problem>
                         <problem elementSpec="mix:fileSize" file="nk-00027x/amdsec/amd_mets_nk-00027x_0001.xml" label="MIX_001" level="INFO" parentElementSpec="/mets:techMD/mets:mdWrap/mets:xmlData/mix:mix/mix:BasicDigitalObjectInformation">nenalezen očekávaný doporučený element</problem>
                         <problem elementSpec="mix:ColorProfile" file="nk-00027x/amdsec/amd_mets_nk-00027x_0001.xml" label="MIX_001" level="INFO" parentElementSpec="/mets:techMD/mets:mdWrap/mets:xmlData/mix:mix/mix:BasicImageInformation/mix:BasicImageCharacteristics/mix:PhotometricInterpretation">nenalezen očekávaný doporučený element</problem>
                         <problem elementSpec="mix:SourceInformation" file="nk-00027x/amdsec/amd_mets_nk-00027x_0001.xml" label="MIX_001" level="INFO" parentElementSpec="/mets:techMD/mets:mdWrap/mets:xmlData/mix:mix/mix:ImageCaptureMetadata">nenalezen očekávaný doporučený element</problem>
                         <problem elementSpec="mix:DigitalCameraCapture" file="nk-00027x/amdsec/amd_mets_nk-00027x_0001.xml" label="MIX_001" level="INFO" parentElementSpec="/mets:techMD/mets:mdWrap/mets:xmlData/mix:mix/mix:ImageCaptureMetadata">nenalezen očekávaný doporučený element</problem>
                         <problem elementSpec="mix:samplingFrequencyPlane" file="nk-00027x/amdsec/amd_mets_nk-00027x_0001.xml" label="MIX_001" level="INFO" parentElementSpec="/mets:techMD/mets:mdWrap/mets:xmlData/mix:mix/mix:ImageAssessmentMetadata/mix:SpatialMetrics">nenalezen očekávaný doporučený element</problem>
+                        <problem elementSpec="mix:fileSize" file="nk-00027x/amdsec/amd_mets_nk-00027x_0002.xml" label="MIX_001" level="INFO" parentElementSpec="/mets:techMD/mets:mdWrap/mets:xmlData/mix:mix/mix:BasicDigitalObjectInformation">nenalezen očekávaný doporučený element</problem>
+                        <problem elementSpec="mix:ColorProfile" file="nk-00027x/amdsec/amd_mets_nk-00027x_0002.xml" label="MIX_001" level="INFO" parentElementSpec="/mets:techMD/mets:mdWrap/mets:xmlData/mix:mix/mix:BasicImageInformation/mix:BasicImageCharacteristics/mix:PhotometricInterpretation">nenalezen očekávaný doporučený element</problem>
+                        <problem elementSpec="mix:SourceInformation" file="nk-00027x/amdsec/amd_mets_nk-00027x_0002.xml" label="MIX_001" level="INFO" parentElementSpec="/mets:techMD/mets:mdWrap/mets:xmlData/mix:mix/mix:ImageCaptureMetadata">nenalezen očekávaný doporučený element</problem>
+                        <problem elementSpec="mix:DigitalCameraCapture" file="nk-00027x/amdsec/amd_mets_nk-00027x_0002.xml" label="MIX_001" level="INFO" parentElementSpec="/mets:techMD/mets:mdWrap/mets:xmlData/mix:mix/mix:ImageCaptureMetadata">nenalezen očekávaný doporučený element</problem>
+                        <problem elementSpec="mix:samplingFrequencyPlane" file="nk-00027x/amdsec/amd_mets_nk-00027x_0002.xml" label="MIX_001" level="INFO" parentElementSpec="/mets:techMD/mets:mdWrap/mets:xmlData/mix:mix/mix:ImageAssessmentMetadata/mix:SpatialMetrics">nenalezen očekávaný doporučený element</problem>
                     </problems>
                 </summary>
             </rule>
             <rule description="Záznamy MIX v souborech SECONDARY-METS pro první verze archivních kopií musí splňovat profil." name="MIX_FOR_FIRST_MASTER_COPY_MATCHES_PROFILE">
                 <summary durationMs="[MS]">
                     <problems INFO="10" total="10">
-                        <problem elementSpec="mix:fileSize" file="nk-00027x/amdsec/amd_mets_nk-00027x_0002.xml" label="MIX_002" level="INFO" parentElementSpec="/mets:techMD/mets:mdWrap/mets:xmlData/mix:mix/mix:BasicDigitalObjectInformation">nenalezen očekávaný doporučený element</problem>
-                        <problem elementSpec="mix:ColorProfile" file="nk-00027x/amdsec/amd_mets_nk-00027x_0002.xml" label="MIX_002" level="INFO" parentElementSpec="/mets:techMD/mets:mdWrap/mets:xmlData/mix:mix/mix:BasicImageInformation/mix:BasicImageCharacteristics/mix:PhotometricInterpretation">nenalezen očekávaný doporučený element</problem>
-                        <problem elementSpec="mix:samplingFrequencyPlane" file="nk-00027x/amdsec/amd_mets_nk-00027x_0002.xml" label="MIX_002" level="INFO" parentElementSpec="/mets:techMD/mets:mdWrap/mets:xmlData/mix:mix/mix:ImageAssessmentMetadata/mix:SpatialMetrics">nenalezen očekávaný doporučený element</problem>
-                        <problem elementSpec="mix:TargetData" file="nk-00027x/amdsec/amd_mets_nk-00027x_0002.xml" label="MIX_002" level="INFO" parentElementSpec="/mets:techMD/mets:mdWrap/mets:xmlData/mix:mix/mix:ImageAssessmentMetadata/mix:ImageColorEncoding">nenalezen očekávaný doporučený element</problem>
-                        <problem elementSpec="mix:processingAgency" file="nk-00027x/amdsec/amd_mets_nk-00027x_0002.xml" label="MIX_002" level="INFO" parentElementSpec="/mets:techMD/mets:mdWrap/mets:xmlData/mix:mix/mix:ChangeHistory/mix:ImageProcessing">nenalezen očekávaný doporučený element</problem>
                         <problem elementSpec="mix:fileSize" file="nk-00027x/amdsec/amd_mets_nk-00027x_0001.xml" label="MIX_002" level="INFO" parentElementSpec="/mets:techMD/mets:mdWrap/mets:xmlData/mix:mix/mix:BasicDigitalObjectInformation">nenalezen očekávaný doporučený element</problem>
                         <problem elementSpec="mix:ColorProfile" file="nk-00027x/amdsec/amd_mets_nk-00027x_0001.xml" label="MIX_002" level="INFO" parentElementSpec="/mets:techMD/mets:mdWrap/mets:xmlData/mix:mix/mix:BasicImageInformation/mix:BasicImageCharacteristics/mix:PhotometricInterpretation">nenalezen očekávaný doporučený element</problem>
                         <problem elementSpec="mix:samplingFrequencyPlane" file="nk-00027x/amdsec/amd_mets_nk-00027x_0001.xml" label="MIX_002" level="INFO" parentElementSpec="/mets:techMD/mets:mdWrap/mets:xmlData/mix:mix/mix:ImageAssessmentMetadata/mix:SpatialMetrics">nenalezen očekávaný doporučený element</problem>
                         <problem elementSpec="mix:TargetData" file="nk-00027x/amdsec/amd_mets_nk-00027x_0001.xml" label="MIX_002" level="INFO" parentElementSpec="/mets:techMD/mets:mdWrap/mets:xmlData/mix:mix/mix:ImageAssessmentMetadata/mix:ImageColorEncoding">nenalezen očekávaný doporučený element</problem>
                         <problem elementSpec="mix:processingAgency" file="nk-00027x/amdsec/amd_mets_nk-00027x_0001.xml" label="MIX_002" level="INFO" parentElementSpec="/mets:techMD/mets:mdWrap/mets:xmlData/mix:mix/mix:ChangeHistory/mix:ImageProcessing">nenalezen očekávaný doporučený element</problem>
+                        <problem elementSpec="mix:fileSize" file="nk-00027x/amdsec/amd_mets_nk-00027x_0002.xml" label="MIX_002" level="INFO" parentElementSpec="/mets:techMD/mets:mdWrap/mets:xmlData/mix:mix/mix:BasicDigitalObjectInformation">nenalezen očekávaný doporučený element</problem>
+                        <problem elementSpec="mix:ColorProfile" file="nk-00027x/amdsec/amd_mets_nk-00027x_0002.xml" label="MIX_002" level="INFO" parentElementSpec="/mets:techMD/mets:mdWrap/mets:xmlData/mix:mix/mix:BasicImageInformation/mix:BasicImageCharacteristics/mix:PhotometricInterpretation">nenalezen očekávaný doporučený element</problem>
+                        <problem elementSpec="mix:samplingFrequencyPlane" file="nk-00027x/amdsec/amd_mets_nk-00027x_0002.xml" label="MIX_002" level="INFO" parentElementSpec="/mets:techMD/mets:mdWrap/mets:xmlData/mix:mix/mix:ImageAssessmentMetadata/mix:SpatialMetrics">nenalezen očekávaný doporučený element</problem>
+                        <problem elementSpec="mix:TargetData" file="nk-00027x/amdsec/amd_mets_nk-00027x_0002.xml" label="MIX_002" level="INFO" parentElementSpec="/mets:techMD/mets:mdWrap/mets:xmlData/mix:mix/mix:ImageAssessmentMetadata/mix:ImageColorEncoding">nenalezen očekávaný doporučený element</problem>
+                        <problem elementSpec="mix:processingAgency" file="nk-00027x/amdsec/amd_mets_nk-00027x_0002.xml" label="MIX_002" level="INFO" parentElementSpec="/mets:techMD/mets:mdWrap/mets:xmlData/mix:mix/mix:ChangeHistory/mix:ImageProcessing">nenalezen očekávaný doporučený element</problem>
                     </problems>
                 </summary>
             </rule>
@@ -888,24 +888,24 @@
             <rule description="Záznamy PREMIS Object v souborech SECONDARY-METS pro původní skeny musí splňovat profil." name="PREMIS_OBJECT_FOR_ORIGINAL_SCAN_MATCHES_PROFILE">
                 <summary durationMs="[MS]">
                     <problems INFO="2" total="2">
-                        <problem elementSpec="premis:relationship" file="nk-00027x/amdsec/amd_mets_nk-00027x_0002.xml" label="OBJ_001" level="INFO" parentElementSpec="/mets:techMD/mets:mdWrap/mets:xmlData/premis:object">nenalezen očekávaný doporučený element</problem>
                         <problem elementSpec="premis:relationship" file="nk-00027x/amdsec/amd_mets_nk-00027x_0001.xml" label="OBJ_001" level="INFO" parentElementSpec="/mets:techMD/mets:mdWrap/mets:xmlData/premis:object">nenalezen očekávaný doporučený element</problem>
+                        <problem elementSpec="premis:relationship" file="nk-00027x/amdsec/amd_mets_nk-00027x_0002.xml" label="OBJ_001" level="INFO" parentElementSpec="/mets:techMD/mets:mdWrap/mets:xmlData/premis:object">nenalezen očekávaný doporučený element</problem>
                     </problems>
                 </summary>
             </rule>
             <rule description="Záznamy PREMIS Object v souborech SECONDARY-METS pro archivní kopie musí splňovat profil." name="PREMIS_OBJECT_FOR_MASTER_COPY_MATCHES_PROFILE">
                 <summary durationMs="[MS]">
                     <problems INFO="2" total="2">
-                        <problem elementSpec="premis:relatedEventSequence" file="nk-00027x/amdsec/amd_mets_nk-00027x_0002.xml" label="OBJ_002" level="INFO" parentElementSpec="/mets:techMD/mets:mdWrap/mets:xmlData/premis:object/premis:relationship/premis:relatedEventIdentification">nenalezen očekávaný doporučený element</problem>
                         <problem elementSpec="premis:relatedEventSequence" file="nk-00027x/amdsec/amd_mets_nk-00027x_0001.xml" label="OBJ_002" level="INFO" parentElementSpec="/mets:techMD/mets:mdWrap/mets:xmlData/premis:object/premis:relationship/premis:relatedEventIdentification">nenalezen očekávaný doporučený element</problem>
+                        <problem elementSpec="premis:relatedEventSequence" file="nk-00027x/amdsec/amd_mets_nk-00027x_0002.xml" label="OBJ_002" level="INFO" parentElementSpec="/mets:techMD/mets:mdWrap/mets:xmlData/premis:object/premis:relationship/premis:relatedEventIdentification">nenalezen očekávaný doporučený element</problem>
                     </problems>
                 </summary>
             </rule>
             <rule description="Záznamy PREMIS Object v souborech SECONDARY-METS pro ALTO OCR musí splňovat profil." name="PREMIS_OBJECT_FOR_ALTO_OCR_MATCHES_PROFILE">
                 <summary durationMs="[MS]">
                     <problems INFO="2" total="2">
-                        <problem elementSpec="premis:relatedEventSequence" file="nk-00027x/amdsec/amd_mets_nk-00027x_0002.xml" label="OBJ_003" level="INFO" parentElementSpec="/mets:techMD/mets:mdWrap/mets:xmlData/premis:object/premis:relationship/premis:relatedEventIdentification">nenalezen očekávaný doporučený element</problem>
                         <problem elementSpec="premis:relatedEventSequence" file="nk-00027x/amdsec/amd_mets_nk-00027x_0001.xml" label="OBJ_003" level="INFO" parentElementSpec="/mets:techMD/mets:mdWrap/mets:xmlData/premis:object/premis:relationship/premis:relatedEventIdentification">nenalezen očekávaný doporučený element</problem>
+                        <problem elementSpec="premis:relatedEventSequence" file="nk-00027x/amdsec/amd_mets_nk-00027x_0002.xml" label="OBJ_003" level="INFO" parentElementSpec="/mets:techMD/mets:mdWrap/mets:xmlData/premis:object/premis:relationship/premis:relatedEventIdentification">nenalezen očekávaný doporučený element</problem>
                     </problems>
                 </summary>
             </rule>
@@ -917,14 +917,14 @@
             <rule description="Záznamy PREMIS Event v souborech SECONDARY-METS musí splňovat profil." name="PREMIS_AGENT_MATCHES_PROFILE">
                 <summary durationMs="[MS]">
                     <problems INFO="8" total="8">
-                        <problem elementSpec="premis:agentNote" file="nk-00027x/amdsec/amd_mets_nk-00027x_0002.xml" label="AGENT_001" level="INFO" parentElementSpec="/mets:digiprovMD/mets:mdWrap/mets:xmlData/premis:agent">nenalezen očekávaný doporučený element</problem>
-                        <problem elementSpec="premis:agentNote" file="nk-00027x/amdsec/amd_mets_nk-00027x_0002.xml" label="AGENT_002" level="INFO" parentElementSpec="/mets:digiprovMD/mets:mdWrap/mets:xmlData/premis:agent">nenalezen očekávaný doporučený element</problem>
-                        <problem elementSpec="premis:agentNote" file="nk-00027x/amdsec/amd_mets_nk-00027x_0002.xml" label="AGENT_003" level="INFO" parentElementSpec="/mets:digiprovMD/mets:mdWrap/mets:xmlData/premis:agent">nenalezen očekávaný doporučený element</problem>
-                        <problem elementSpec="premis:agentNote" file="nk-00027x/amdsec/amd_mets_nk-00027x_0002.xml" label="AGENT_004" level="INFO" parentElementSpec="/mets:digiprovMD/mets:mdWrap/mets:xmlData/premis:agent">nenalezen očekávaný doporučený element</problem>
                         <problem elementSpec="premis:agentNote" file="nk-00027x/amdsec/amd_mets_nk-00027x_0001.xml" label="AGENT_001" level="INFO" parentElementSpec="/mets:digiprovMD/mets:mdWrap/mets:xmlData/premis:agent">nenalezen očekávaný doporučený element</problem>
                         <problem elementSpec="premis:agentNote" file="nk-00027x/amdsec/amd_mets_nk-00027x_0001.xml" label="AGENT_002" level="INFO" parentElementSpec="/mets:digiprovMD/mets:mdWrap/mets:xmlData/premis:agent">nenalezen očekávaný doporučený element</problem>
                         <problem elementSpec="premis:agentNote" file="nk-00027x/amdsec/amd_mets_nk-00027x_0001.xml" label="AGENT_003" level="INFO" parentElementSpec="/mets:digiprovMD/mets:mdWrap/mets:xmlData/premis:agent">nenalezen očekávaný doporučený element</problem>
                         <problem elementSpec="premis:agentNote" file="nk-00027x/amdsec/amd_mets_nk-00027x_0001.xml" label="AGENT_004" level="INFO" parentElementSpec="/mets:digiprovMD/mets:mdWrap/mets:xmlData/premis:agent">nenalezen očekávaný doporučený element</problem>
+                        <problem elementSpec="premis:agentNote" file="nk-00027x/amdsec/amd_mets_nk-00027x_0002.xml" label="AGENT_001" level="INFO" parentElementSpec="/mets:digiprovMD/mets:mdWrap/mets:xmlData/premis:agent">nenalezen očekávaný doporučený element</problem>
+                        <problem elementSpec="premis:agentNote" file="nk-00027x/amdsec/amd_mets_nk-00027x_0002.xml" label="AGENT_002" level="INFO" parentElementSpec="/mets:digiprovMD/mets:mdWrap/mets:xmlData/premis:agent">nenalezen očekávaný doporučený element</problem>
+                        <problem elementSpec="premis:agentNote" file="nk-00027x/amdsec/amd_mets_nk-00027x_0002.xml" label="AGENT_003" level="INFO" parentElementSpec="/mets:digiprovMD/mets:mdWrap/mets:xmlData/premis:agent">nenalezen očekávaný doporučený element</problem>
+                        <problem elementSpec="premis:agentNote" file="nk-00027x/amdsec/amd_mets_nk-00027x_0002.xml" label="AGENT_004" level="INFO" parentElementSpec="/mets:digiprovMD/mets:mdWrap/mets:xmlData/premis:agent">nenalezen očekávaný doporučený element</problem>
                     </problems>
                 </summary>
             </rule>

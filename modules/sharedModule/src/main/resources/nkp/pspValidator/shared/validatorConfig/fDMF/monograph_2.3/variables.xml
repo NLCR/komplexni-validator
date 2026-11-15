@@ -442,12 +442,12 @@
         </evaluation>
     </value-def>
 
+    <!--DMF Monografie 2.3 kap. 4 (bod 6) a 7.4.2/7.4.3: ISSN je na úrovni svazku povolené (monografie vydaná v periodické řadě),
+    změnový list 2.3 ho doplnil na úroveň titulu i svazku; zákaz zděděný z monograph_2.2 odstraněn-->
     <value-def name="ID_TYPES_VOLUME_PROHIBITED" type="STRING_LIST">
         <description>seznam zakázaných typů identifikátorů pro úroveň VOLUME</description>
         <evaluation functionName="buildListOfStrings">
-            <params>
-                <value name="string" type="STRING">issn</value>
-            </params>
+            <params/>
         </evaluation>
     </value-def>
 

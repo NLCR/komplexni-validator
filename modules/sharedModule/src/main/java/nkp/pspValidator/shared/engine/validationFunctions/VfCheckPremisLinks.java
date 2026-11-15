@@ -51,7 +51,7 @@ public class VfCheckPremisLinks extends ValidationFunction {
     }
 
     private Set<File> mergeAbsolutFilesFromParams() throws EmptyParamEvaluationException {
-        Set<File> result = new HashSet<>();
+        Set<File> result = new TreeSet<>();
         List<ValueParam> fileParams = valueParams.getParams(PARAM_METS_FILE);
         for (ValueParam param : fileParams) {
             ValueEvaluation evaluation = param.getEvaluation();

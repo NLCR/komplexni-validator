@@ -7,7 +7,7 @@ import nkp.pspValidator.shared.engine.ValueType;
 import nkp.pspValidator.shared.engine.exceptions.ContractException;
 
 import java.io.File;
-import java.util.HashSet;
+import java.util.TreeSet;
 import java.util.List;
 import java.util.Set;
 
@@ -54,11 +54,11 @@ public class VfCheckFileListsMatch extends ValidationFunction {
 
     private ValidationResult validate(List<File> filesExpectedList, List<File> filesFoundList) {
         ValidationResult result = new ValidationResult();
-        Set<File> filesExpectedSet = new HashSet<>(filesExpectedList.size());
+        Set<File> filesExpectedSet = new TreeSet<>();
         for (File file : filesExpectedList) {
             filesExpectedSet.add(file.getAbsoluteFile());
         }
-        Set<File> filesFoundSet = new HashSet<>(filesFoundList.size());
+        Set<File> filesFoundSet = new TreeSet<>();
         for (File file : filesFoundList) {
             filesFoundSet.add(file.getAbsoluteFile());
         }

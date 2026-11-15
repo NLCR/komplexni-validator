@@ -15,7 +15,7 @@ import org.w3c.dom.Document;
 
 import javax.xml.xpath.XPathExpressionException;
 import java.io.File;
-import java.util.HashSet;
+import java.util.TreeSet;
 import java.util.List;
 import java.util.Set;
 
@@ -44,7 +44,7 @@ public class VfCheckMetsMatchProfile extends ValidationFunction {
 
             //mets files
             //TODO: this construct to merge files from multiple parameters is used multiple times - DRY
-            Set<File> metsFiles = new HashSet<>();
+            Set<File> metsFiles = new TreeSet<>();
 
             List<ValueParam> fileParams = valueParams.getParams(PARAM_METS_FILE);
             for (ValueParam fileParam : fileParams) {

@@ -13,6 +13,7 @@ import javax.xml.xpath.XPathExpression;
 import javax.xml.xpath.XPathExpressionException;
 import java.io.File;
 import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -242,7 +243,7 @@ public class MetadataProfileValidator {
     }
 
     private static void checkChildrenElements(XmlManager manager, File metadataFile, ValidationResult result, Element rootElement, String parentElementPath, List<ExpectedElementDefinition> expectedElementDefinitions, boolean ignoreUnexpectedElements, List<Element> chilrenElements, String errorLabel) throws InvalidXPathExpressionException, XPathExpressionException {
-        Set<Element> childrenRemaining = new HashSet<>();
+        Set<Element> childrenRemaining = new LinkedHashSet<>();
         childrenRemaining.addAll(chilrenElements);
         for (ExpectedElementDefinition elDef : expectedElementDefinitions) {
             String xpath = elDef.buildRelativeXpath();

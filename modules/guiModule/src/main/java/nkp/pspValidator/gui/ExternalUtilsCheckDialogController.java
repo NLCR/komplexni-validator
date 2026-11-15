@@ -465,7 +465,7 @@ public class ExternalUtilsCheckDialogController extends DialogController {
                 //show error stuff
                 utilsUi.imgError.setVisible(true);
                 utilsUi.statusLabel.setVisible(true);
-                utilsUi.statusLabel.setText("chyba: " + utilCheckResult.getMessage());
+                utilsUi.statusLabel.setText(utilCheckResult.getMessage());
                 utilsUi.btnRetry.setVisible(true);
                 utilsUi.btnInstall.setVisible(true);
                 utilsUi.btnSelectPath.setVisible(true);

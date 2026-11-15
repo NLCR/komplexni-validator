@@ -1,0 +1,607 @@
+
+Sekce Struktura souborů: 3 problémy (1x WARNING, 2x ERROR)
+----------------------------------------------------------
+Pravidlo PSP_DIR_MATCHES_PSP_ID: 0 problémů
+	Název kořenového adresáře musí být shodný s PSP-ID.
+Pravidlo SINGLE_INFO_FILE_FOUND: 0 problémů
+	Musí být nalezen nanejvýše jeden soubor INFO. Pokud nalezen není, je soubor špatně pojmenován, nebo opravdu chybí.
+Pravidlo SINGLE_PRIMARY-METS_FILE_FOUND: 0 problémů
+	Musí být nalezen nanejvýše jeden soubor PRIMARY-METS. Pokud nalezen není, je soubor špatně pojmenován, nebo opravdu chybí.
+Pravidlo SINGLE_CHECKSUM_FILE_FOUND: 0 problémů
+	Musí být nalezen nanejvýše jeden soubor CHECKSUM. Pokud nalezen není, je soubor špatně pojmenován, nebo opravdu chybí.
+Pravidlo INFO_FILENAME_VALID: 0 problémů
+	Název souboru INFO smí obsahovat jen povolené znaky.
+Pravidlo PRIMARY-METS_FILENAME_VALID: 0 problémů
+	Název souboru PRIMARY-METS smí obsahovat jen povolené znaky.
+Pravidlo CHECKSUM_FILENAME_VALID: 0 problémů
+	Název souboru CHECKSUM smí obsahovat jen povolené znaky.
+Pravidlo INFO_IS_NOT_DIR: 0 problémů
+	Soubor INFO nesmí být adresář, ale obyčejný soubor.
+Pravidlo PRIMARY-METS_IS_NOT_DIR: 0 problémů
+	Soubor PRIMARY-METS nesmí být adresář, ale obyčejný soubor.
+Pravidlo CHECKSUM_IS_NOT_DIR: 0 problémů
+	Soubor CHECKSUM nesmí být adresář, ale obyčejný soubor.
+Pravidlo TOLERATED_TL_FILES_ARE_NOT_DIRS: 0 problémů
+	Žádný tolerovaný soubor v kořenovém adresáři nesmí být adresář.
+Pravidlo NO_TOLERATED_TL_FILES_FOUND: 0 problémů
+	Ideálně by v kořenovém adresáři neměl být nalezen žádný tolerovaný soubor.
+Pravidlo NO_OTHER_TL_FILES_FOUND: 0 problémů
+	Kromě definovaných a tolerovaných souborů a adresářů nesmí být v kořenovém adresáři nalezen žádný další soubor nebo adresář.
+Pravidlo SINGLE_SECONDARY-METS-DIR_FOUND: 0 problémů
+	Musí být nalezen právě jeden adresář SECONDARY-METS-DIR. Pokud nalezen není, je adresář špatně pojmenován, nebo opravdu chybí.
+Pravidlo SINGLE_OCR-TEXT-DIR_FOUND: 0 problémů
+	Adresář OCR-TEXT-DIR je nepovinný (DMF Zvuk, gramofonové desky 0.5: tab. kap. 5 „NE“, kap. 5.7 a 5.8 „Tvoření je nepovinné“), smí být nejvýše jeden. Pokud existuje, platí pro něj a jeho soubory všechna ostatní pravidla.
+Pravidlo SINGLE_OCR-ALTO-DIR_FOUND: 0 problémů
+	Adresář OCR-ALTO-DIR je nepovinný (DMF Zvuk, gramofonové desky 0.5: tab. kap. 5 „NE“, kap. 5.7 a 5.8 „Tvoření je nepovinné“), smí být nejvýše jeden. Pokud existuje, platí pro něj a jeho soubory všechna ostatní pravidla.
+Pravidlo SINGLE_MASTER-COPY-DIR_FOUND: 0 problémů
+	Musí být nalezen právě jeden adresář MASTER-COPY-DIR. Pokud nalezen není, je adresář špatně pojmenován, nebo opravdu chybí.
+Pravidlo SINGLE_USER-COPY-DIR_FOUND: 0 problémů
+	Musí být nalezen právě jeden adresář USER-COPY-DIR. Pokud nalezen není, je adresář špatně pojmenován, nebo opravdu chybí.
+Pravidlo SINGLE_SOURCE-AUDIO-DIR_FOUND: 0 problémů
+	Musí být nalezen právě jeden adresář SOURCE-AUDIO-DIR. Pokud nalezen není, je adresář špatně pojmenován, nebo opravdu chybí.
+Pravidlo SINGLE_MASTER-COPY-AUDIO-DIR_FOUND: 0 problémů
+	Musí být nalezen nejvýše jeden adresář MASTER-COPY-AUDIO-DIR. Pokud nalezen není, je adresář špatně pojmenován, nebo opravdu chybí.
+Pravidlo SINGLE_USER-COPY-AUDIO-DIR_FOUND: 0 problémů
+	Musí být nalezen právě jeden adresář USER-COPY-AUDIO-DIR. Pokud nalezen není, je adresář špatně pojmenován, nebo opravdu chybí.
+Pravidlo SINGLE_CATALOG-ENTRY-DIR_FOUND: 0 problémů
+	Musí být nalezen nejvýše jeden adresář CATALOG-ENTRY-DIR. Pokud nalezen není, je adresář špatně pojmenován, nebo opravdu chybí.
+Pravidlo SECONDARY-METS-DIR_FILENAME_VALID: 0 problémů
+	Název adresáře SECONDARY-METS-DIR musí obsahovat jen povolené znaky.
+Pravidlo OCR-TEXT-DIR_FILENAME_VALID: 0 problémů
+	Název adresáře OCR-TEXT-DIR musí obsahovat jen povolené znaky.
+Pravidlo OCR-ALTO-DIR_FILENAME_VALID: 0 problémů
+	Název adresáře OCR-ALTO-DIR musí obsahovat jen povolené znaky.
+Pravidlo MASTER-COPY-DIR_FILENAME_VALID: 0 problémů
+	Název adresáře MASTER-COPY-DIR musí obsahovat jen povolené znaky.
+Pravidlo USER-COPY-DIR_FILENAME_VALID: 0 problémů
+	Název adresáře USER-COPY-DIR musí obsahovat jen povolené znaky.
+Pravidlo SOURCE-AUDIO-DIR_FILENAME_VALID: 0 problémů
+	Název adresáře SOURCE-AUDIO-DIR musí obsahovat jen povolené znaky.
+Pravidlo MASTER-COPY-AUDIO-DIR_FILENAME_VALID: 0 problémů
+	Název adresáře MASTER-COPY-AUDIO-DIR musí obsahovat jen povolené znaky.
+Pravidlo USER-COPY-AUDIO-DIR_FILENAME_VALID: 0 problémů
+	Název adresáře USER-COPY-AUDIO-DIR musí obsahovat jen povolené znaky.
+Pravidlo CATALOG-ENTRY-DIR_FILENAME_VALID: 0 problémů
+	Název adresáře CATALOG-ENTRY-DIR musí obsahovat jen povolené znaky.
+Pravidlo SECONDARY-METS-DIR_IS_DIR: 0 problémů
+	Soubor SECONDARY-METS-DIR musí být adresář a ne obyčejný soubor.
+Pravidlo OCR-TEXT-DIR_IS_DIR: 0 problémů
+	Soubor OCR-TEXT-DIR, pokud existuje, musí být adresář a ne obyčejný soubor.
+Pravidlo OCR-ALTO-DIR_IS_DIR: 0 problémů
+	Soubor OCR-ALTO-DIR, pokud existuje, musí být adresář a ne obyčejný soubor.
+Pravidlo MASTER-COPY-DIR_IS_DIR: 0 problémů
+	Soubor MASTER-COPY-DIR musí být adresář a ne obyčejný soubor.
+Pravidlo USER-COPY-DIR_IS_DIR: 0 problémů
+	Soubor USER-COPY-DIR musí být adresář a ne obyčejný soubor.
+Pravidlo SOURCE-AUDIO-DIR_IS_DIR: 0 problémů
+	Soubor SOURCE-AUDIO-DIR musí být adresář a ne obyčejný soubor.
+Pravidlo MASTER-COPY-AUDIO-DIR_IS_DIR: 0 problémů
+	Soubor MASTER-COPY-AUDIO-DIR musí být adresář a ne obyčejný soubor.
+Pravidlo USER-COPY-DIR_IS_DIR: 0 problémů
+	Soubor USER-COPY-AUDIO-DIR musí být adresář a ne obyčejný soubor.
+Pravidlo CATALOG-ENTRY-DIR_IS_DIR: 0 problémů
+	Soubor CATALOG-ENTRY-DIR musí být adresář a ne obyčejný soubor.
+Pravidlo SECONDARY-METS-IMAGE_FILENAMES_VALID: 0 problémů
+	Názvy všech souborů SECONDARY-METS-IMAGE musí obsahovat jen povolené znaky.
+Pravidlo SECONDARY-METS-AUDIO_FILENAMES_VALID: 0 problémů
+	Názvy všech souborů SECONDARY-METS-AUDIO musí obsahovat jen povolené znaky.
+Pravidlo OCR-TEXT_FILENAMES_VALID: 0 problémů
+	Názvy všech souborů OCR-TEXT musí obsahovat jen povolené znaky.
+Pravidlo OCR-ALTO_FILENAMES_VALID: 0 problémů
+	Názvy všech souborů OCR-ALTO musí obsahovat jen povolené znaky.
+Pravidlo MASTER-COPY_FILENAMES_VALID: 0 problémů
+	Názvy všech souborů MASTER-COPY musí obsahovat jen povolené znaky.
+Pravidlo USER-COPY_FILENAMES_VALID: 0 problémů
+	Názvy všech souborů USER-COPY musí obsahovat jen povolené znaky.
+Pravidlo SOURCE-AUDIO_FILENAMES_VALID: 0 problémů
+	Názvy všech souborů SOURCE-AUDIO musí obsahovat jen povolené znaky.
+Pravidlo MASTER-COPY-AUDIO_FILENAMES_VALID: 0 problémů
+	Názvy všech souborů MASTER-COPY-AUDIO musí obsahovat jen povolené znaky.
+Pravidlo USER-COPY-AUDIO_FILENAMES_VALID: 0 problémů
+	Názvy všech souborů USER-COPY-AUDIO musí obsahovat jen povolené znaky.
+Pravidlo CATALOG-ENTRY_FILENAMES_VALID: 0 problémů
+	Názvy všech souborů CATALOG-ENTRY musí obsahovat jen povolené znaky.
+Pravidlo NUMBER_OF_FILES_IN_SECONDARY-METS-DIRS_OK: 1 problém (1x WARNING)
+	Počet souborů v adresáři SECONDARY-METS-DIR se musí shodovat s celkovým počtem souborů v adresářích SOURCE-AUDIO-DIR a MASTER-COPY-DIR. Neboli pro každý obraz i zvuk musí existovat sekundární METS soubor s technickými metadaty.
+	WARNING: nalezeny různé velikosti seznamů souborů, např. 2 a 4
+Pravidlo NUMBER_OF_FILES_IN_IMAGE-DIRS_MATCH: 0 problémů
+	Počet souborů ve všech adresářích vztahujících se k stránkám se musí shodovat.
+Pravidlo NUMBER_OF_FILES_IN_AUDIO-DIRS_MATCH: 0 problémů
+	Počet souborů ve všech adresářích vztahujících se k zvukům se musí shodovat.
+Pravidlo SECONDARY-METS-IMAGE_FILENAMES_LENGTHS_SAME: 0 problémů
+	Délky názvů všech souborů SECONDARY-METS-IMAGE musí být stejné. Tedy čísla stran jsou zarovnaná na stejný počet nul.
+Pravidlo SECONDARY-METS-AUDIO_FILENAMES_LENGTHS_SAME: 0 problémů
+	Délky názvů všech souborů SECONDARY-METS-AUDIO musí být stejné. Tedy čísla stran jsou zarovnaná na stejný počet nul.
+Pravidlo OCR-TEXT_FILENAMES_LENGTHS_SAME: 0 problémů
+	Délky názvů všech souborů OCR-TEXT musí být stejné. Tedy čísla stran jsou zarovnaná na stejný počet nul.
+Pravidlo OCR-ALTO_FILENAMES_LENGTHS_SAME: 0 problémů
+	Délky názvů všech souborů OCR-ALTO musí být stejné. Tedy čísla stran jsou zarovnaná na stejný počet nul.
+Pravidlo MASTER-COPY_FILENAMES_LENGTHS_SAME: 0 problémů
+	Délky názvů všech souborů MASTER-COPY musí být stejné. Tedy čísla stran jsou zarovnaná na stejný počet nul.
+Pravidlo USER-COPY_FILENAMES_LENGTHS_SAME: 0 problémů
+	Délky názvů všech souborů USER-COPY musí být stejné. Tedy čísla stran jsou zarovnaná na stejný počet nul.
+Pravidlo SOURCE-AUDIO_FILENAMES_LENGTHS_SAME: 0 problémů
+	Délky názvů všech souborů SOURCE-AUDIO musí být stejné. Tedy čísla desek a/nebo skladeb jsou zarovnaná na stejný počet nul.
+Pravidlo MASTER-COPY-AUDIO_FILENAMES_LENGTHS_SAME: 0 problémů
+	Délky názvů všech souborů MASTER-COPY-AUDIO musí být stejné. Tedy čísla desek a/nebo skladeb jsou zarovnaná na stejný počet nul.
+Pravidlo USER-COPY-AUDIO_FILENAMES_LENGTHS_SAME: 0 problémů
+	Délky názvů všech souborů USER-COPY-AUDIO musí být stejné. Tedy čísla desek a/nebo skladeb jsou zarovnaná na stejný počet nul.
+Pravidlo SECONDARY-METS-IMAGE_FILES_ARE_NOT_DIRS: 0 problémů
+	Žádný soubor SECONDARY-METS-IMAGE nesmí být adresář.
+Pravidlo SECONDARY-METS-AUDIO_FILES_ARE_NOT_DIRS: 0 problémů
+	Žádný soubor SECONDARY-METS-AUDIO nesmí být adresář.
+Pravidlo OCR-TEXT_FILES_ARE_NOT_DIRS: 0 problémů
+	Žádný soubor OCR-TEXT nesmí být adresář.
+Pravidlo OCR-ALTO_FILES_ARE_NOT_DIRS: 0 problémů
+	Žádný soubor OCR-ALTO nesmí být adresář.
+Pravidlo MASTER-COPY_FILES_ARE_NOT_DIRS: 0 problémů
+	Žádný soubor MASTER-COPY nesmí být adresář.
+Pravidlo USER-COPY_FILES_ARE_NOT_DIRS: 0 problémů
+	Žádný soubor USER-COPY nesmí být adresář.
+Pravidlo SOURCE-AUDIO_FILES_ARE_NOT_DIRS: 0 problémů
+	Žádný soubor SOURCE-AUDIO nesmí být adresář.
+Pravidlo MASTER-COPY-AUDIO_FILES_ARE_NOT_DIRS: 0 problémů
+	Žádný soubor MASTER-COPY-AUDIO nesmí být adresář.
+Pravidlo USER-COPY-AUDIO_FILES_ARE_NOT_DIRS: 0 problémů
+	Žádný soubor USER-COPY-AUDIO nesmí být adresář.
+Pravidlo NO_EXTRA_FILES_IN_SECONDARY-METS-DIR: 2 problémy (2x ERROR)
+	Kromě souborů SECONDARY-METS nesmí adresář SECONDARY-METS-DIR obsahovat žádné další soubory.
+	ERROR: nalezen nečekaný soubor: amd_mets_1234567890__0002.xml
+	ERROR: nalezen nečekaný soubor: amd_mets_1234567890__0001.xml
+Pravidlo NO_EXTRA_FILES_IN_OCR-TEXT-DIR: 0 problémů
+	Kromě souborů OCR-TEXT nesmí adresář OCR-TEXT-DIR obsahovat žádné další soubory.
+Pravidlo NO_EXTRA_FILES_IN_OCR-ALTO-DIR: 0 problémů
+	Kromě souborů OCR-ALTO nesmí adresář OCR-ALTO-DIR obsahovat žádné další soubory.
+Pravidlo NO_EXTRA_FILES_IN_MASTER-COPY-DIR: 0 problémů
+	Kromě souborů MASTER-COPY nesmí adresář MASTER-COPY-DIR obsahovat žádné další soubory.
+Pravidlo NO_EXTRA_FILES_IN_USER-COPY-DIR: 0 problémů
+	Kromě souborů USER-COPY nesmí adresář USER-COPY-DIR obsahovat žádné další soubory.
+Pravidlo NO_EXTRA_FILES_IN_SOURCE-AUDIO-DIR: 0 problémů
+	Kromě souborů SOURCE-AUDIO nesmí adresář SOURCE-AUDIO-DIR obsahovat žádné další soubory.
+Pravidlo NO_EXTRA_FILES_IN_MASTER-COPY-AUDIO-DIR: 0 problémů
+	Kromě souborů MASTER-COPY-AUDIO nesmí adresář MASTER-COPY-AUDIO-DIR obsahovat žádné další soubory.
+Pravidlo NO_EXTRA_FILES_IN_USER-COPY-AUDIO-DIR: 0 problémů
+	Kromě souborů USER-COPY-AUDIO nesmí adresář USER-COPY-AUDIO-DIR obsahovat žádné další soubory.
+Pravidlo NO_EXTRA_FILES_IN_CATALOG-ENTRY-DIR: 0 problémů
+	Kromě souborů CATALOG-ENTRY nesmí adresář CATALOG-ENTRY-DIR obsahovat žádné další soubory.
+
+Sekce Soubor CHECKSUM: 9 problémů (9x ERROR)
+--------------------------------------------
+Pravidlo CHECKSUM_FILE_GENERATED_BY_GRAMMAR: 0 problémů
+	Soubor CHECKSUM by měl být generován předepsanou ABNF gramatikou.
+Pravidlo CHECKSUM_FILE_ALL_PATHS_MATCH_FILES: 2 problémy (2x ERROR)
+	Soubor CHECKSUM musí obsahovat záznamy pro každý uvedený soubor a žádný jiný.
+	ERROR: nalezený soubor nebyl očekáván: '[BALIK]/amdsec/amd_mets_1234567890__0001.xml'
+	ERROR: nalezený soubor nebyl očekáván: '[BALIK]/amdsec/amd_mets_1234567890__0002.xml'
+Pravidlo CHECKSUM_FILE_ALL_CHECKSUMS_MATCH: 7 problémů (7x ERROR)
+	Všechny kontrolní součty v souborů odkazovaných v souboru CHECKSUM musí souhlasit.
+	ERROR: uvedený kontrolní součet '3B408677FB465F162069D6330F1553D0' nesouhlasí s vypočítaným kontrolním součtem 'd41d8cd98f00b204e9800998ecf8427e' pro soubor [BALIK]/source_audio/sa_1234567890_0001.wav
+	ERROR: uvedený kontrolní součet 'FC2BF3D40E1C13EAB950B9AC84EC73E8' nesouhlasí s vypočítaným kontrolním součtem 'd41d8cd98f00b204e9800998ecf8427e' pro soubor [BALIK]/source_audio/sa_1234567890_0002.wav
+	ERROR: uvedený kontrolní součet 'EB709C0D03E51BDE265FC067DA9AA69F' nesouhlasí s vypočítaným kontrolním součtem '56b880eaa5cbcb2b066c4a98c92ecd7d' pro soubor [BALIK]/amdsec/amd_mets_1234567890_0001.xml
+	ERROR: uvedený kontrolní součet 'B38400C80DF78C168F04D0B460160B89' nesouhlasí s vypočítaným kontrolním součtem '34992564f167214c6b80019df0883073' pro soubor [BALIK]/amdsec/amd_mets_1234567890_0002.xml
+	ERROR: uvedený kontrolní součet 'BE20A1E315D1A0EF21B94C0E19117AF3' nesouhlasí s vypočítaným kontrolním součtem '4d665bf741341ed9d7138a4254c87296' pro soubor [BALIK]/amdsec/amd_mets_1234567890__0001.xml
+	ERROR: uvedený kontrolní součet '0D798E78BAE4B7BC6AD2A38C905F3F1B' nesouhlasí s vypočítaným kontrolním součtem 'cf1daf0708ed3b811fd069cae27ddba2' pro soubor [BALIK]/amdsec/amd_mets_1234567890__0002.xml
+	ERROR: uvedený kontrolní součet 'B3111F4B235176DA1E2E797E806535C8' nesouhlasí s vypočítaným kontrolním součtem 'b8b869a8999136d562ccbf3af5c44df9' pro soubor [BALIK]/main_mets_1234567890.xml
+
+Sekce Soubor INFO: 6 problémů (1x WARNING, 5x ERROR)
+----------------------------------------------------
+Pravidlo INFO_XML_WELL_BUILT: 0 problémů
+	Soubor INFO musí být korektní (well-built) xml soubor.
+Pravidlo INFO_XML_VALID_BY_XSD: 1 problém (1x WARNING)
+	Soubor INFO by měl být validní podle XML Schema (info_adg_0.5.xsd).
+	WARNING: obsah souboru [BALIK]/info_1234567890.xml není validní podle Xml schema ze souboru [MODUL]/src/main/resources/nkp/pspValidator/shared/validatorConfig/fDMF/audio_gram_0.5/xsd/info_adg_0.5.xsd: cvc-pattern-valid: Value 'MD5' is not facet-valid with respect to pattern 'md5' for type 'checksumType'.
+Pravidlo INFO_REFERENCES_PRIMARY-METS: 0 problémů
+	Soubor INFO se musí odkazovat na soubor PRIMARY-METS přes element mainmets.
+Pravidlo INFO_ITEMTOTAL_MATCHES_ITEMS_COUNT: 0 problémů
+	V souboru INFO musí počet elementů item souhlasit s hodnotou atributu itemtotal elementu itemlist.
+Pravidlo INFO_ITEMLIST_REFERENCES_ALL_FILES: 4 problémy (4x ERROR)
+	Soubor INFO se musí odkazovat na všechny uvedené soubory přes elementy item a na žádné další.
+	ERROR: soubor INFO se odkazuje na neočekávaný soubor: [BALIK]/amdsec/amd_mets_audio_1234567890_0001.xml
+	ERROR: soubor INFO se odkazuje na neočekávaný soubor: [BALIK]/amdsec/amd_mets_audio_1234567890_0002.xml
+	ERROR: soubor INFO se odkazuje na neočekávaný soubor: [BALIK]/mets_1234567890.xml
+	ERROR: soubor INFO se neodkazuje na očekávaný soubor: [BALIK]/main_mets_1234567890.xml
+Pravidlo INFO_CHECKSUM_FILE_CHECKSUM_MATCHES: 1 problém (1x ERROR)
+	Soubor INFO se musí odkazovat na existující soubor CHECKSUM přes element checksum a kontrolní součet se musí shodovat.
+	ERROR: uvedený kontrolní součet 'E20A04D7D0DEB864B853223275FFB8A0' nesouhlasí s vypočítaným kontrolním součtem '25e17e0f612f3204434a8375b8374f82' pro soubor [BALIK]/md5_1234567890.md5
+
+Sekce Identifikátory: 16 problémů (2x INFO, 7x WARNING, 7x ERROR)
+-----------------------------------------------------------------
+Pravidlo INFO_NO_DUPLICATE_IDENTIFIERS: 0 problémů
+	Soubor INFO nesmí obsahovat duplikované identifikátory (tedy více identifikátorů stejného typu).
+Pravidlo INFO_INDENTIFIERS_MATCH_TOP_LEVEL_MODS_IDENTIFIERS: 0 problémů
+	Identifikátory v souboru INFO by měly odpovídat identifikátorům na úrovni SOUNDCOLLECTION v záznamu MODS.
+Pravidlo DC_IDENTIFIERS_NO_WHITE_SPACES: 1 problém (1x INFO)
+	Identifikátory v Dublin Core záznamech by neměly obsahovat bílé znaky.
+	INFO: identifikátor 'issue number:272027' by neměl obsahovat bílé znaky
+Pravidlo DC_IDENTIFIERS_CONTAIN_TYPE_AND_VALUE: 0 problémů
+	Identifikátory v Dublin Core záznamech by měly obsahovat typ a hodnotu oddělěné dvojtečkou (např. barCode:2610161505).
+Pravidlo DC_MANDATORY_IDENTIFIERS_PRESENT_LEVEL_SOUNDCOLLECTION: 0 problémů
+	Úroveň SOUNDCOLLECTION musí obsahovat všechny povinné identifikátory v záznamu Dublin Core.
+Pravidlo DC_PROHIBITED_IDENTIFIERS_NOT_PRESENT_LEVEL_SOUNDCOLLECTION: 0 problémů
+	Úroveň SOUNDCOLLECTION nesmí obsahovat žádné zakázané identifikátory v záznamu Dublin Core.
+Pravidlo DC_MANDATORY_IDENTIFIERS_PRESENT_LEVEL_SOUNDRECORDING: 0 problémů
+	Úroveň SOUNDRECORDING musí obsahovat všechny povinné identifikátory v záznamu Dublin Core.
+Pravidlo DC_PROHIBITED_IDENTIFIERS_NOT_PRESENT_LEVEL_SOUNDRECORDING: 0 problémů
+	Úroveň SOUNDRECORDING nesmí obsahovat žádné zakázané identifikátory v záznamu Dublin Core.
+Pravidlo DC_MANDATORY_IDENTIFIERS_PRESENT_LEVEL_SOUNDPART: 0 problémů
+	Úroveň SOUNDPART musí obsahovat všechny povinné identifikátory v záznamu Dublin Core.
+Pravidlo DC_PROHIBITED_IDENTIFIERS_NOT_PRESENT_LEVEL_SOUNDPART: 0 problémů
+	Úroveň SOUNDPART nesmí obsahovat žádné zakázané identifikátory v záznamu Dublin Core.
+Pravidlo DC_MANDATORY_IDENTIFIERS_PRESENT_LEVEL_SUPPLEMENT: 0 problémů
+	Úroveň SUPPLEMENT musí obsahovat všechny povinné identifikátory v záznamu Dublin Core.
+Pravidlo DC_PROHIBITED_IDENTIFIERS_NOT_PRESENT_LEVEL_SUPPLEMENT: 0 problémů
+	Úroveň SUPPLEMENT nesmí obsahovat žádné zakázané identifikátory v záznamu Dublin Core.
+Pravidlo DC_IDENTIFIERS_NO_DUPLICATES_WITHIN_DMDSEC: 0 problémů
+	Identifikátory v jednotlivých Dublin Core záznamech by měly mít unikátní typ. Neměly by se tedy objevit dva a více identikátorů stejného typu v jednom záznamu.
+Pravidlo DC_IDENTIFIERS_NO_DUPLICATES_ACROSS_DMDSECS: 2 problémy (2x ERROR)
+	Identifikátory napříč Dublin Core záznamy by měly být unikátní. Na různých úrovní popisu se tedy nesmí objevit dva totožné identifikátory (shodný typ i hodnota).
+	ERROR: seznam obsahuje duplikovaný identifikátor 'local:1234567890'
+	ERROR: seznam obsahuje duplikovaný identifikátor 'local:1234567890'
+Pravidlo MODS_MANDATORY_IDENTIFIERS_PRESENT_LEVEL_SOUNDCOLLECTION: 0 problémů
+	Úroveň SOUNDCOLLECTION musí obsahovat všechny povinné identifikátory v záznamu MODS.
+Pravidlo MODS_PROHIBITED_IDENTIFIERS_NOT_PRESENT_LEVEL_SOUNDCOLLECTION: 0 problémů
+	Úroveň SOUNDCOLLECTION nesmí obsahovat žádné zakázané identifikátory v záznamu MODS.
+Pravidlo MODS_MANDATORY_IDENTIFIERS_PRESENT_LEVEL_SOUNDRECORDING: 0 problémů
+	Úroveň SOUNDRECORDING musí obsahovat všechny povinné identifikátory v záznamu MODS.
+Pravidlo MODS_PROHIBITED_IDENTIFIERS_NOT_PRESENT_LEVEL_SOUNDRECORDING: 0 problémů
+	Úroveň SOUNDRECORDING nesmí obsahovat žádné zakázané identifikátory v záznamu MODS.
+Pravidlo MODS_MANDATORY_IDENTIFIERS_PRESENT_LEVEL_SOUNDPART: 0 problémů
+	Úroveň SOUNDPART musí obsahovat všechny povinné identifikátory v záznamu MODS.
+Pravidlo MODS_PROHIBITED_IDENTIFIERS_NOT_PRESENT_LEVEL_SOUNDPART: 0 problémů
+	Úroveň SOUNDPART nesmí obsahovat žádné zakázané identifikátory v záznamu MODS.
+Pravidlo MODS_MANDATORY_IDENTIFIERS_PRESENT_LEVEL_SUPPLEMENT: 0 problémů
+	Úroveň SUPPLEMENT musí obsahovat všechny povinné identifikátory v záznamu MODS.
+Pravidlo MODS_PROHIBITED_IDENTIFIERS_NOT_PRESENT_LEVEL_SUPPLEMENT: 0 problémů
+	Úroveň SUPPLEMENT nesmí obsahovat žádné zakázané identifikátory v záznamu MODS.
+Pravidlo MODS_IDENTIFIERS_NO_DUPLICATES_WITHIN_DMDSEC: 0 problémů
+	Identifikátory v jednotlivých MODS záznamech by měly mít unikátní typ. Neměly by se tedy objevit dva a více identikátorů stejného typu v jednom záznamu.
+Pravidlo MODS_IDENTIFIERS_NO_DUPLICATES_ACROSS_DMDSECS: 5 problémů (5x ERROR)
+	Identifikátory napříč MODS záznamy by měly být unikátní. Na různých úrovní popisu se tedy nesmí objevit dva totožné identifikátory (shodný typ i hodnota).
+	ERROR: seznam obsahuje duplikovaný identifikátor 'local:1234567890'
+	ERROR: seznam obsahuje duplikovaný identifikátor 'issue-number:272027'
+	ERROR: seznam obsahuje duplikovaný identifikátor 'local:1234567890'
+	ERROR: seznam obsahuje duplikovaný identifikátor 'local:1234567890'
+	ERROR: seznam obsahuje duplikovaný identifikátor 'local:1234567890'
+Pravidlo MODS_IDENTIFIERS_URN_NBN_VALID: 0 problémů
+	Všechny identifikátory URN:NBN napříč MODS záznamy musí platnou podobu (např. urn:nbn:cz:abd005-00012z).
+Pravidlo MODS_IDENTIFIERS_URN_NBN_REGISTERED: 1 problém (1x INFO)
+	Všechny identifikátory URN:NBN napříč MODS záznamy musí být registrovány v URN:NBN Resolveru NKP a shodovat se ve vybraných metadatech
+	INFO: kontrola registrace URN:NBN v Resolveru přeskočena (systémová vlastnost kv.skipUrnNbnResolver=true), identifikátorů urn:nbn: 1
+Pravidlo PRIMARY-METS_DC_IDENTIFIER_MATCH_MODS_IDENTIFIERS: 7 problémů (7x WARNING)
+	Identifikátory v DC se musí shodovat s identifikátory v MODS pro všechny úrovně popisu.
+	WARNING: DC neobsahuje identifikátor typu issue-number pro SOUNDRECORDING_0001
+	WARNING: DC neobsahuje identifikátor typu matrix-number pro SOUNDRECORDING_0001
+	WARNING: DC neobsahuje identifikátor typu local pro SOUNDRECORDING_0001
+	WARNING: DC neobsahuje identifikátor typu issue-number pro SOUNDRECORDING_0002
+	WARNING: DC neobsahuje identifikátor typu matrix-number pro SOUNDRECORDING_0002
+	WARNING: DC neobsahuje identifikátor typu local pro SOUNDRECORDING_0002
+	WARNING: hodnota jediného identifikátoru typu matrix-number se liší mezi MODS (H 1354) a DC (H1354) pro SOUNDCOLLECTION_0001
+
+Sekce METS hlavičky: 5 problémů (5x INFO)
+-----------------------------------------
+Pravidlo PRIMARY_METS_HEADER_MATCHES_PROFILE: 1 problém (1x INFO)
+	Primární METS musí obsahovat hlavičku metsHdr, která musí splňovat požadovaný profil.
+	INFO: main_mets_1234567890.xml: null: /mets:mets: nenalezen očekávaný doporučený element 'mets:amdSec'
+Pravidlo SECONDARY-METS-IMAGE_HEADER_MATCH_PROFILE: 4 problémy (4x INFO)
+	Sekundární METS (pro obrázek) musí obsahovat hlavičku metsHdr, která musí splňovat požadovaný profil.
+	INFO: amd_mets_1234567890_0001.xml: null: /mets:mets: nenalezen očekávaný doporučený element 'mets:dmdSec'
+	INFO: amd_mets_1234567890_0001.xml: null: /mets:mets: nenalezen očekávaný doporučený element 'mets:structLink'
+	INFO: amd_mets_1234567890_0002.xml: null: /mets:mets: nenalezen očekávaný doporučený element 'mets:dmdSec'
+	INFO: amd_mets_1234567890_0002.xml: null: /mets:mets: nenalezen očekávaný doporučený element 'mets:structLink'
+Pravidlo SECONDARY-METS-AUDIO_HEADER_MATCH_PROFILE: 0 problémů
+	Sekundární METS (pro audio) musí obsahovat hlavičku metsHdr, která musí splňovat požadovaný profil.
+
+Sekce Obrazová data: 8 problémů (8x INFO)
+-----------------------------------------
+Pravidlo MASTER-COPY_FILES_VALID_BY_JPYLYZER: 1 problém (1x INFO)
+	Všechny soubory MASTER-COPY (jpeg 2000) musí být validní vůči profilu pro binární soubory pro nástroj Jpylyzer.
+	INFO: nástroj Jpylyzer je vypnutý
+Pravidlo USER-COPY_FILES_VALID_BY_JPYLYZER: 1 problém (1x INFO)
+	Všechny soubory USER-COPY (jpeg 2000) musí být validní vůči profilu pro binární soubory pro nástroj Jpylyzer.
+	INFO: nástroj Jpylyzer je vypnutý
+Pravidlo MASTER-COPY_FILES_VALID_BY_JHOVE: 1 problém (1x INFO)
+	Všechny soubory MASTER-COPY (jpeg 2000) musí být validní vůči profilu pro binární soubory pro nástroj JHOVE.
+	INFO: nástroj JHOVE je vypnutý
+Pravidlo USER-COPY_FILES_VALID_BY_JHOVE: 1 problém (1x INFO)
+	Všechny soubory USER-COPY (jpeg 2000) musí být validní vůči profilu pro binární soubory pro nástroj JHOVE.
+	INFO: nástroj JHOVE je vypnutý
+Pravidlo MASTER-COPY_FILES_VALID_BY_KAKADU: 1 problém (1x INFO)
+	Všechny soubory MASTER-COPY (jpeg 2000) musí být validní vůči profilu pro binární soubory pro nástroj Kakadu.
+	INFO: nástroj Kakadu je vypnutý
+Pravidlo USER-COPY_FILES_VALID_BY_KAKADU: 1 problém (1x INFO)
+	Všechny soubory USER-COPY (jpeg 2000) musí být validní vůči profilu pro binární soubory pro nástroj Kakadu.
+	INFO: nástroj Kakadu je vypnutý
+Pravidlo MASTER-COPY_FILES_VALID_BY_IMAGE_MAGICK: 1 problém (1x INFO)
+	Všechny soubory MASTER-COPY (jpeg 2000) musí být validní vůči profilu pro binární soubory pro nástroj ImageMagick.
+	INFO: nástroj ImageMagick je vypnutý
+Pravidlo USER-COPY_FILES_VALID_BY_IMAGE_MAGICK: 1 problém (1x INFO)
+	Všechny soubory USER-COPY (jpeg 2000) musí být validní vůči profilu pro binární soubory pro nástroj ImageMagick.
+	INFO: nástroj ImageMagick je vypnutý
+
+Sekce Zvuková data: 6 problémů (6x INFO)
+----------------------------------------
+Pravidlo SOURCE-AUDIO_FILES_VALID_BY_JHOVE: 1 problém (1x INFO)
+	Všechny soubory SOURCE-AUDIO (wav) musí být validní vůči profilu pro binární soubory pro nástroj JHOVE.
+	INFO: nástroj JHOVE je vypnutý
+Pravidlo SOURCE-AUDIO_FILES_VALID_BY_SHNTOOL: 1 problém (1x INFO)
+	Všechny soubory SOURCE-AUDIO (wav) musí být validní vůči profilu pro binární soubory pro nástroj shntool.
+	INFO: nástroj shntool je vypnutý
+Pravidlo MASTER-COPY-AUDIO_FILES_VALID_BY_MP3VAL: 1 problém (1x INFO)
+	Všechny soubory MASTER-COPY-AUDIO (mp3) musí být validní vůči profilu pro binární soubory pro nástroj MP3val.
+	INFO: prázdný seznam souborů
+Pravidlo MASTER-COPY-AUDIO_FILES_VALID_BY_CHECKMATE: 1 problém (1x INFO)
+	Všechny soubory MASTER-COPY-AUDIO (mp3) musí být validní vůči profilu pro binární soubory pro nástroj Checkmate.
+	INFO: prázdný seznam souborů
+Pravidlo USER-COPY-AUDIO_FILES_VALID_BY_MP3VAL: 1 problém (1x INFO)
+	Všechny soubory USER-COPY-AUDIO (mp3) musí být validní vůči profilu pro binární soubory pro nástroj MP3val.
+	INFO: nástroj MP3val je vypnutý
+Pravidlo USER-COPY-AUDIO_FILES_VALID_BY_CHECKMATE: 1 problém (1x INFO)
+	Všechny soubory USER-COPY-AUDIO (mp3) musí být validní vůči profilu pro binární soubory pro nástroj Checkmate.
+	INFO: nástroj Checkmate je vypnutý
+
+Sekce Bibliografická metadata: 167 problémů (103x INFO, 38x WARNING, 26x ERROR)
+-------------------------------------------------------------------------------
+Pravidlo BIBLIOGRAPHIC_METADATA_MATCH_PROFILE_SOUNDCOLLECTION: 42 problémů (31x INFO, 8x WARNING, 3x ERROR)
+	Bibliografická metadata pro entitu typu SOUNDCOLLECTION musí splňovat požadovaný profil pro záznamy v Dublin Core i MODS.
+	ERROR: main_mets_1234567890.xml: DCMD_SOUNDCOLLECTION_0001: /oai_dc:dc: nenalezen očekávaný povinný element 'dc:type[text() = 'model:soundcollection']'
+	WARNING: main_mets_1234567890.xml: DCMD_SOUNDCOLLECTION_0001: /oai_dc:dc: nalezen neočekávaný element 'dc:type' 
+	WARNING: main_mets_1234567890.xml: DCMD_SOUNDCOLLECTION_0001: /oai_dc:dc: nalezen neočekávaný element 'dc:type' 
+	WARNING: main_mets_1234567890.xml: DCMD_SOUNDCOLLECTION_0001: /oai_dc:dc: nalezen neočekávaný element 'dc:coverage' 
+	WARNING: main_mets_1234567890.xml: DCMD_SOUNDCOLLECTION_0001: /oai_dc:dc: nalezen neočekávaný element 'dc:coverage' 
+	WARNING: main_mets_1234567890.xml: DCMD_SOUNDCOLLECTION_0001: /oai_dc:dc: nalezen neočekávaný element 'dc:coverage' 
+	WARNING: main_mets_1234567890.xml: DCMD_SOUNDCOLLECTION_0001: /oai_dc:dc: nalezen neočekávaný element 'dc:coverage' 
+	WARNING: main_mets_1234567890.xml: DCMD_SOUNDCOLLECTION_0001: /oai_dc:dc: nalezen neočekávaný element 'dc:coverage' 
+	INFO: main_mets_1234567890.xml: MODSMD_SOUNDCOLLECTION_0001: /mods:mods/mods:titleInfo: nenalezen doporučený atribut 'type',
+	INFO: main_mets_1234567890.xml: MODSMD_SOUNDCOLLECTION_0001: /mods:mods/mods:titleInfo: nenalezen očekávaný doporučený element 'mods:nonSort'
+	INFO: main_mets_1234567890.xml: MODSMD_SOUNDCOLLECTION_0001: /mods:mods/mods:titleInfo: nenalezen očekávaný doporučený element 'mods:partNumber'
+	INFO: main_mets_1234567890.xml: MODSMD_SOUNDCOLLECTION_0001: /mods:mods/mods:titleInfo: nenalezen očekávaný doporučený element 'mods:partName'
+	INFO: main_mets_1234567890.xml: MODSMD_SOUNDCOLLECTION_0001: /mods:mods/mods:name[0]: nenalezen očekávaný doporučený element 'mods:nameIdentifier'
+	INFO: main_mets_1234567890.xml: MODSMD_SOUNDCOLLECTION_0001: /mods:mods/mods:name[0]: nenalezen očekávaný doporučený element 'mods:etal'
+	INFO: main_mets_1234567890.xml: MODSMD_SOUNDCOLLECTION_0001: /mods:mods/mods:name[1]: nenalezen očekávaný doporučený element 'mods:nameIdentifier'
+	INFO: main_mets_1234567890.xml: MODSMD_SOUNDCOLLECTION_0001: /mods:mods/mods:name[1]: nenalezen očekávaný doporučený element 'mods:etal'
+	INFO: main_mets_1234567890.xml: MODSMD_SOUNDCOLLECTION_0001: /mods:mods/mods:name[2]: nenalezen očekávaný doporučený element 'mods:nameIdentifier'
+	INFO: main_mets_1234567890.xml: MODSMD_SOUNDCOLLECTION_0001: /mods:mods/mods:name[2]: nenalezen očekávaný doporučený element 'mods:etal'
+	INFO: main_mets_1234567890.xml: MODSMD_SOUNDCOLLECTION_0001: /mods:mods/mods:name[3]/mods:namePart[0]: nenalezen doporučený atribut 'type',
+	INFO: main_mets_1234567890.xml: MODSMD_SOUNDCOLLECTION_0001: /mods:mods/mods:name[3]/mods:namePart[1]: nenalezen doporučený atribut 'type',
+	INFO: main_mets_1234567890.xml: MODSMD_SOUNDCOLLECTION_0001: /mods:mods/mods:name[3]: nenalezen očekávaný doporučený element 'mods:nameIdentifier'
+	INFO: main_mets_1234567890.xml: MODSMD_SOUNDCOLLECTION_0001: /mods:mods/mods:name[3]: nenalezen očekávaný doporučený element 'mods:etal'
+	INFO: main_mets_1234567890.xml: MODSMD_SOUNDCOLLECTION_0001: /mods:mods/mods:name[4]/mods:namePart[0]: nenalezen doporučený atribut 'type',
+	INFO: main_mets_1234567890.xml: MODSMD_SOUNDCOLLECTION_0001: /mods:mods/mods:name[4]/mods:namePart[1]: nenalezen doporučený atribut 'type',
+	INFO: main_mets_1234567890.xml: MODSMD_SOUNDCOLLECTION_0001: /mods:mods/mods:name[4]: nenalezen očekávaný doporučený element 'mods:nameIdentifier'
+	INFO: main_mets_1234567890.xml: MODSMD_SOUNDCOLLECTION_0001: /mods:mods/mods:name[4]: nenalezen očekávaný doporučený element 'mods:etal'
+	ERROR: main_mets_1234567890.xml: MODSMD_SOUNDCOLLECTION_0001: /mods:mods/mods:genre: hodnota 'sound recording' neodpovídá očekávané/doporučené hodnotě 'sound collection'
+	INFO: main_mets_1234567890.xml: MODSMD_SOUNDCOLLECTION_0001: /mods:mods: nenalezen očekávaný doporučený element 'mods:originInfo[@eventType='production']'
+	INFO: main_mets_1234567890.xml: MODSMD_SOUNDCOLLECTION_0001: /mods:mods/mods:originInfo[@eventType='publication']/mods:place/mods:placeTerm[1]: nenalezen doporučený atribut 'authority',
+	INFO: main_mets_1234567890.xml: MODSMD_SOUNDCOLLECTION_0001: /mods:mods/mods:originInfo[@eventType='publication']/mods:dateIssued: nenalezen doporučený atribut 'encoding',
+	INFO: main_mets_1234567890.xml: MODSMD_SOUNDCOLLECTION_0001: /mods:mods/mods:originInfo[@eventType='publication']/mods:dateIssued: nenalezen doporučený atribut 'point',
+	INFO: main_mets_1234567890.xml: MODSMD_SOUNDCOLLECTION_0001: /mods:mods/mods:originInfo[@eventType='publication']/mods:dateIssued: nenalezen doporučený atribut 'qualifier',
+	INFO: main_mets_1234567890.xml: MODSMD_SOUNDCOLLECTION_0001: /mods:mods: nenalezen očekávaný doporučený element 'mods:originInfo[@eventType='distribution']'
+	INFO: main_mets_1234567890.xml: MODSMD_SOUNDCOLLECTION_0001: /mods:mods: nenalezen očekávaný doporučený element 'mods:originInfo[@eventType='manufacture']'
+	INFO: main_mets_1234567890.xml: MODSMD_SOUNDCOLLECTION_0001: /mods:mods: nenalezen očekávaný doporučený element 'mods:originInfo[@eventType='copyright']'
+	INFO: main_mets_1234567890.xml: MODSMD_SOUNDCOLLECTION_0001: /mods:mods/mods:physicalDescription/mods:form[0]: nenalezen doporučený atribut 'type',
+	INFO: main_mets_1234567890.xml: MODSMD_SOUNDCOLLECTION_0001: /mods:mods/mods:note[0]: nenalezen doporučený atribut 'type',
+	INFO: main_mets_1234567890.xml: MODSMD_SOUNDCOLLECTION_0001: /mods:mods/mods:note[1]: nenalezen doporučený atribut 'type',
+	INFO: main_mets_1234567890.xml: MODSMD_SOUNDCOLLECTION_0001: /mods:mods: nenalezen očekávaný doporučený element 'mods:relatedItem'
+	ERROR: main_mets_1234567890.xml: MODSMD_SOUNDCOLLECTION_0001: /mods:mods/mods:recordInfo/mods:recordCreationDate: hodnota '2017-04-27T12:34 Z' nesplňuje žádnou ze specifikací [regulární výraz '^(?<year>[0-9]{4})(?<month>1[0-2]|0[1-9])(?<day>3[01]|0[1-9]|[12][0-9])T(?<hour>2[0-3]|[01][0-9])(?<minute>[0-5][0-9])(?<second>[0-5][0-9](.(?<millis>[0-9]{3}))?)?(?<timezone>Z|[+-](2[0-3]|[01][0-9])([0-5][0-9])?)?$',regulární výraz '^(?<year>[0-9]{4})-(?<month>1[0-2]|0[1-9])-(?<day>3[01]|0[1-9]|[12][0-9])T(?<hour>2[0-3]|[01][0-9]):(?<minute>[0-5][0-9])(:(?<second>[0-5][0-9])(.(?<millis>[0-9]{3}))?)?(?<timezone>Z|[+-](2[0-3]|[01][0-9])(:([0-5][0-9])?)?)?$']
+	INFO: main_mets_1234567890.xml: MODSMD_SOUNDCOLLECTION_0001: /mods:mods/mods:recordInfo: nenalezen očekávaný doporučený element 'mods:recordIdentifier'
+	WARNING: main_mets_1234567890.xml: MODSMD_SOUNDCOLLECTION_0001: /mods:mods/mods:recordInfo/mods:languageOfCataloging/mods:languageTerm: nalezen neočekávaný atribut 'type'
+Pravidlo BIBLIOGRAPHIC_METADATA_MATCH_PROFILE_SOUNDRECORDING: 71 problémů (44x INFO, 18x WARNING, 9x ERROR)
+	Bibliografická metadata pro entitu typu SOUNDRECORDING musí splňovat požadovaný profil pro záznamy v Dublin Core i MODS.
+	ERROR: main_mets_1234567890.xml: DCMD_SOUNDRECORDING_0002: /oai_dc:dc: nenalezen očekávaný povinný element 'dc:type[text() = 'model:soundrecording']'
+	ERROR: main_mets_1234567890.xml: DCMD_SOUNDRECORDING_0002: /oai_dc:dc: nenalezen očekávaný povinný element 'dc:format'
+	INFO: main_mets_1234567890.xml: DCMD_SOUNDRECORDING_0002: /oai_dc:dc: nenalezen očekávaný doporučený element 'dc:description'
+	WARNING: main_mets_1234567890.xml: DCMD_SOUNDRECORDING_0002: /oai_dc:dc: nalezen neočekávaný element 'dc:coverage' 
+	WARNING: main_mets_1234567890.xml: DCMD_SOUNDRECORDING_0002: /oai_dc:dc: nalezen neočekávaný element 'dc:coverage' 
+	WARNING: main_mets_1234567890.xml: DCMD_SOUNDRECORDING_0002: /oai_dc:dc: nalezen neočekávaný element 'dc:coverage' 
+	WARNING: main_mets_1234567890.xml: DCMD_SOUNDRECORDING_0002: /oai_dc:dc: nalezen neočekávaný element 'dc:identifier' 
+	INFO: main_mets_1234567890.xml: MODSMD_SOUNDRECORDING_0002: /mods:mods/mods:titleInfo: nenalezen doporučený atribut 'type',
+	INFO: main_mets_1234567890.xml: MODSMD_SOUNDRECORDING_0002: /mods:mods/mods:titleInfo: nenalezen očekávaný doporučený element 'mods:nonSort'
+	INFO: main_mets_1234567890.xml: MODSMD_SOUNDRECORDING_0002: /mods:mods/mods:titleInfo: nenalezen očekávaný doporučený element 'mods:subTitle'
+	INFO: main_mets_1234567890.xml: MODSMD_SOUNDRECORDING_0002: /mods:mods/mods:name: nenalezen očekávaný doporučený element 'mods:namePart[@type='termsOfAddress']'
+	INFO: main_mets_1234567890.xml: MODSMD_SOUNDRECORDING_0002: /mods:mods/mods:name: nenalezen očekávaný doporučený element 'mods:namePart[not(@type)]'
+	INFO: main_mets_1234567890.xml: MODSMD_SOUNDRECORDING_0002: /mods:mods/mods:name: nenalezen očekávaný doporučený element 'mods:nameIdentifier'
+	WARNING: main_mets_1234567890.xml: MODSMD_SOUNDRECORDING_0002: /mods:mods/mods:genre: nalezen neočekávaný atribut 'type'
+	ERROR: main_mets_1234567890.xml: MODSMD_SOUNDRECORDING_0002: /mods:mods/mods:genre: hodnota 'soundrecording' neodpovídá očekávané/doporučené hodnotě 'sound recording'
+	INFO: main_mets_1234567890.xml: MODSMD_SOUNDRECORDING_0002: /mods:mods: nenalezen očekávaný doporučený element 'mods:originInfo[@eventType='production']'
+	INFO: main_mets_1234567890.xml: MODSMD_SOUNDRECORDING_0002: /mods:mods/mods:originInfo[@eventType='publication']/mods:place/mods:placeTerm[1]: nenalezen doporučený atribut 'authority',
+	INFO: main_mets_1234567890.xml: MODSMD_SOUNDRECORDING_0002: /mods:mods: nenalezen očekávaný doporučený element 'mods:originInfo[@eventType='distribution']'
+	INFO: main_mets_1234567890.xml: MODSMD_SOUNDRECORDING_0002: /mods:mods: nenalezen očekávaný doporučený element 'mods:originInfo[@eventType='manufacture']'
+	INFO: main_mets_1234567890.xml: MODSMD_SOUNDRECORDING_0002: /mods:mods: nenalezen očekávaný doporučený element 'mods:originInfo[@eventType='copyright']'
+	INFO: main_mets_1234567890.xml: MODSMD_SOUNDRECORDING_0002: /mods:mods/mods:language: nenalezen doporučený atribut 'objectPart',
+	INFO: main_mets_1234567890.xml: MODSMD_SOUNDRECORDING_0002: /mods:mods: nenalezen očekávaný doporučený element 'mods:tableOfContents'
+	INFO: main_mets_1234567890.xml: MODSMD_SOUNDRECORDING_0002: /mods:mods: nenalezen očekávaný doporučený element 'mods:note'
+	INFO: main_mets_1234567890.xml: MODSMD_SOUNDRECORDING_0002: /mods:mods/mods:subject: nenalezen očekávaný doporučený element 'mods:geographic'
+	INFO: main_mets_1234567890.xml: MODSMD_SOUNDRECORDING_0002: /mods:mods/mods:subject: nenalezen očekávaný doporučený element 'mods:temporal'
+	INFO: main_mets_1234567890.xml: MODSMD_SOUNDRECORDING_0002: /mods:mods/mods:subject: nenalezen očekávaný doporučený element 'mods:name'
+	INFO: main_mets_1234567890.xml: MODSMD_SOUNDRECORDING_0002: /mods:mods/mods:subject: nenalezen očekávaný doporučený element 'mods:titleInfo'
+	INFO: main_mets_1234567890.xml: MODSMD_SOUNDRECORDING_0002: /mods:mods/mods:subject: nenalezen očekávaný doporučený element 'mods:genre'
+	INFO: main_mets_1234567890.xml: MODSMD_SOUNDRECORDING_0002: /mods:mods: nenalezen očekávaný doporučený element 'mods:classification'
+	ERROR: main_mets_1234567890.xml: MODSMD_SOUNDRECORDING_0002: /mods:mods/mods:identifier[@type='uuid']: hodnota '263e8795-k54e-15e4-r789-824600127960' neodpovídá regulárním výrazu '^[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}$'
+	INFO: main_mets_1234567890.xml: MODSMD_SOUNDRECORDING_0002: /mods:mods: nenalezen očekávaný doporučený element 'mods:identifier[@type='issue number']'
+	INFO: main_mets_1234567890.xml: MODSMD_SOUNDRECORDING_0002: /mods:mods: nenalezen očekávaný doporučený element 'mods:identifier[@type='matrix number']'
+	WARNING: main_mets_1234567890.xml: MODSMD_SOUNDRECORDING_0002: /mods:mods/mods:recordInfo/mods:recordContentSource: nalezen neočekávaný atribut 'authority'
+	WARNING: main_mets_1234567890.xml: MODSMD_SOUNDRECORDING_0002: /mods:mods/mods:recordInfo/mods:languageOfCataloging/mods:languageTerm: nalezen neočekávaný atribut 'type'
+	WARNING: main_mets_1234567890.xml: MODSMD_SOUNDRECORDING_0002: /mods:mods: nalezen neočekávaný element 'mods:identifier' (type="matrix-number")
+	WARNING: main_mets_1234567890.xml: MODSMD_SOUNDRECORDING_0002: /mods:mods: nalezen neočekávaný element 'mods:identifier' (type="issue-number")
+	ERROR: main_mets_1234567890.xml: DCMD_SOUNDRECORDING_0001: /oai_dc:dc: nenalezen očekávaný povinný element 'dc:type[text() = 'model:soundrecording']'
+	ERROR: main_mets_1234567890.xml: DCMD_SOUNDRECORDING_0001: /oai_dc:dc: nenalezen očekávaný povinný element 'dc:format'
+	WARNING: main_mets_1234567890.xml: DCMD_SOUNDRECORDING_0001: /oai_dc:dc: nalezen neočekávaný element 'dc:coverage' 
+	WARNING: main_mets_1234567890.xml: DCMD_SOUNDRECORDING_0001: /oai_dc:dc: nalezen neočekávaný element 'dc:coverage' 
+	WARNING: main_mets_1234567890.xml: DCMD_SOUNDRECORDING_0001: /oai_dc:dc: nalezen neočekávaný element 'dc:coverage' 
+	WARNING: main_mets_1234567890.xml: DCMD_SOUNDRECORDING_0001: /oai_dc:dc: nalezen neočekávaný element 'dc:identifier' 
+	INFO: main_mets_1234567890.xml: MODSMD_SOUNDRECORDING_0001: /mods:mods/mods:titleInfo: nenalezen doporučený atribut 'type',
+	INFO: main_mets_1234567890.xml: MODSMD_SOUNDRECORDING_0001: /mods:mods/mods:titleInfo: nenalezen očekávaný doporučený element 'mods:nonSort'
+	INFO: main_mets_1234567890.xml: MODSMD_SOUNDRECORDING_0001: /mods:mods/mods:titleInfo: nenalezen očekávaný doporučený element 'mods:subTitle'
+	INFO: main_mets_1234567890.xml: MODSMD_SOUNDRECORDING_0001: /mods:mods/mods:name: nenalezen očekávaný doporučený element 'mods:namePart[@type='termsOfAddress']'
+	INFO: main_mets_1234567890.xml: MODSMD_SOUNDRECORDING_0001: /mods:mods/mods:name: nenalezen očekávaný doporučený element 'mods:namePart[not(@type)]'
+	INFO: main_mets_1234567890.xml: MODSMD_SOUNDRECORDING_0001: /mods:mods/mods:name: nenalezen očekávaný doporučený element 'mods:nameIdentifier'
+	WARNING: main_mets_1234567890.xml: MODSMD_SOUNDRECORDING_0001: /mods:mods/mods:genre: nalezen neočekávaný atribut 'type'
+	ERROR: main_mets_1234567890.xml: MODSMD_SOUNDRECORDING_0001: /mods:mods/mods:genre: hodnota 'soundrecording' neodpovídá očekávané/doporučené hodnotě 'sound recording'
+	INFO: main_mets_1234567890.xml: MODSMD_SOUNDRECORDING_0001: /mods:mods: nenalezen očekávaný doporučený element 'mods:originInfo[@eventType='production']'
+	INFO: main_mets_1234567890.xml: MODSMD_SOUNDRECORDING_0001: /mods:mods/mods:originInfo[@eventType='publication']/mods:place/mods:placeTerm[1]: nenalezen doporučený atribut 'authority',
+	INFO: main_mets_1234567890.xml: MODSMD_SOUNDRECORDING_0001: /mods:mods: nenalezen očekávaný doporučený element 'mods:originInfo[@eventType='distribution']'
+	INFO: main_mets_1234567890.xml: MODSMD_SOUNDRECORDING_0001: /mods:mods: nenalezen očekávaný doporučený element 'mods:originInfo[@eventType='manufacture']'
+	INFO: main_mets_1234567890.xml: MODSMD_SOUNDRECORDING_0001: /mods:mods: nenalezen očekávaný doporučený element 'mods:originInfo[@eventType='copyright']'
+	INFO: main_mets_1234567890.xml: MODSMD_SOUNDRECORDING_0001: /mods:mods/mods:language: nenalezen doporučený atribut 'objectPart',
+	ERROR: main_mets_1234567890.xml: MODSMD_SOUNDRECORDING_0001: /mods:mods/mods:tableOfContents/@displayLabel: hodnota 'contents' nesplňuje žádnou ze specifikací ["Contents","Incomplete contents","Partial contents"]
+	INFO: main_mets_1234567890.xml: MODSMD_SOUNDRECORDING_0001: /mods:mods: nenalezen očekávaný doporučený element 'mods:note'
+	INFO: main_mets_1234567890.xml: MODSMD_SOUNDRECORDING_0001: /mods:mods/mods:subject: nenalezen očekávaný doporučený element 'mods:geographic'
+	INFO: main_mets_1234567890.xml: MODSMD_SOUNDRECORDING_0001: /mods:mods/mods:subject: nenalezen očekávaný doporučený element 'mods:temporal'
+	INFO: main_mets_1234567890.xml: MODSMD_SOUNDRECORDING_0001: /mods:mods/mods:subject: nenalezen očekávaný doporučený element 'mods:name'
+	INFO: main_mets_1234567890.xml: MODSMD_SOUNDRECORDING_0001: /mods:mods/mods:subject: nenalezen očekávaný doporučený element 'mods:titleInfo'
+	INFO: main_mets_1234567890.xml: MODSMD_SOUNDRECORDING_0001: /mods:mods/mods:subject: nenalezen očekávaný doporučený element 'mods:genre'
+	INFO: main_mets_1234567890.xml: MODSMD_SOUNDRECORDING_0001: /mods:mods: nenalezen očekávaný doporučený element 'mods:classification'
+	ERROR: main_mets_1234567890.xml: MODSMD_SOUNDRECORDING_0001: /mods:mods/mods:identifier[@type='uuid']: hodnota '321p7654-f32d-13d5-k654-798264310000' neodpovídá regulárním výrazu '^[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}$'
+	INFO: main_mets_1234567890.xml: MODSMD_SOUNDRECORDING_0001: /mods:mods: nenalezen očekávaný doporučený element 'mods:identifier[@type='issue number']'
+	INFO: main_mets_1234567890.xml: MODSMD_SOUNDRECORDING_0001: /mods:mods: nenalezen očekávaný doporučený element 'mods:identifier[@type='matrix number']'
+	WARNING: main_mets_1234567890.xml: MODSMD_SOUNDRECORDING_0001: /mods:mods/mods:recordInfo/mods:recordContentSource: nalezen neočekávaný atribut 'authority'
+	WARNING: main_mets_1234567890.xml: MODSMD_SOUNDRECORDING_0001: /mods:mods/mods:recordInfo/mods:languageOfCataloging/mods:languageTerm: nalezen neočekávaný atribut 'type'
+	WARNING: main_mets_1234567890.xml: MODSMD_SOUNDRECORDING_0001: /mods:mods: nalezen neočekávaný element 'mods:identifier' (type="issue-number")
+	WARNING: main_mets_1234567890.xml: MODSMD_SOUNDRECORDING_0001: /mods:mods: nalezen neočekávaný element 'mods:identifier' (type="matrix-number")
+Pravidlo BIBLIOGRAPHIC_METADATA_MATCH_PROFILE_SOUNDPART: 28 problémů (12x INFO, 10x WARNING, 6x ERROR)
+	Bibliografická metadata pro entitu typu SOUNDPART musí splňovat požadovaný profil pro záznamy v Dublin Core i MODS.
+	INFO: main_mets_1234567890.xml: DCMD_SOUNDPART_0002: /oai_dc:dc: nenalezen očekávaný doporučený element 'dc:creator'
+	ERROR: main_mets_1234567890.xml: DCMD_SOUNDPART_0002: /oai_dc:dc: nenalezen očekávaný povinný element 'dc:type[text() = 'model:soundpart']'
+	ERROR: main_mets_1234567890.xml: DCMD_SOUNDPART_0002: /oai_dc:dc: nenalezen očekávaný povinný element 'dc:format'
+	INFO: main_mets_1234567890.xml: DCMD_SOUNDPART_0002: /oai_dc:dc: nenalezen očekávaný doporučený element 'dc:description'
+	WARNING: main_mets_1234567890.xml: DCMD_SOUNDPART_0002: /oai_dc:dc: nalezen neočekávaný element 'dc:type' 
+	WARNING: main_mets_1234567890.xml: DCMD_SOUNDPART_0002: /oai_dc:dc: nalezen neočekávaný element 'dc:coverage' 
+	INFO: main_mets_1234567890.xml: MODSMD_SOUNDPART_0002: /mods:mods/mods:titleInfo: nenalezen doporučený atribut 'type',
+	INFO: main_mets_1234567890.xml: MODSMD_SOUNDPART_0002: /mods:mods/mods:titleInfo: nenalezen očekávaný doporučený element 'mods:nonSort'
+	INFO: main_mets_1234567890.xml: MODSMD_SOUNDPART_0002: /mods:mods: nenalezen očekávaný doporučený element 'mods:name'
+	WARNING: main_mets_1234567890.xml: MODSMD_SOUNDPART_0002: /mods:mods/mods:genre: nalezen neočekávaný atribut 'type'
+	INFO: main_mets_1234567890.xml: MODSMD_SOUNDPART_0002: /mods:mods: nenalezen očekávaný doporučený element 'mods:note'
+	ERROR: main_mets_1234567890.xml: MODSMD_SOUNDPART_0002: /mods:mods/mods:identifier[@type='uuid']: hodnota '637i7920-n96m-23d1-g971-1356905478' neodpovídá regulárním výrazu '^[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}$'
+	WARNING: main_mets_1234567890.xml: MODSMD_SOUNDPART_0002: /mods:mods/mods:recordInfo/mods:recordContentSource: nalezen neočekávaný atribut 'authority'
+	WARNING: main_mets_1234567890.xml: MODSMD_SOUNDPART_0002: /mods:mods/mods:recordInfo/mods:languageOfCataloging/mods:languageTerm: nalezen neočekávaný atribut 'type'
+	INFO: main_mets_1234567890.xml: DCMD_SOUNDPART_0001: /oai_dc:dc: nenalezen očekávaný doporučený element 'dc:creator'
+	ERROR: main_mets_1234567890.xml: DCMD_SOUNDPART_0001: /oai_dc:dc: nenalezen očekávaný povinný element 'dc:type[text() = 'model:soundpart']'
+	ERROR: main_mets_1234567890.xml: DCMD_SOUNDPART_0001: /oai_dc:dc: nenalezen očekávaný povinný element 'dc:format'
+	INFO: main_mets_1234567890.xml: DCMD_SOUNDPART_0001: /oai_dc:dc: nenalezen očekávaný doporučený element 'dc:description'
+	WARNING: main_mets_1234567890.xml: DCMD_SOUNDPART_0001: /oai_dc:dc: nalezen neočekávaný element 'dc:type' 
+	WARNING: main_mets_1234567890.xml: DCMD_SOUNDPART_0001: /oai_dc:dc: nalezen neočekávaný element 'dc:coverage' 
+	INFO: main_mets_1234567890.xml: MODSMD_SOUNDPART_0001: /mods:mods/mods:titleInfo: nenalezen doporučený atribut 'type',
+	INFO: main_mets_1234567890.xml: MODSMD_SOUNDPART_0001: /mods:mods/mods:titleInfo: nenalezen očekávaný doporučený element 'mods:nonSort'
+	INFO: main_mets_1234567890.xml: MODSMD_SOUNDPART_0001: /mods:mods: nenalezen očekávaný doporučený element 'mods:name'
+	WARNING: main_mets_1234567890.xml: MODSMD_SOUNDPART_0001: /mods:mods/mods:genre: nalezen neočekávaný atribut 'type'
+	INFO: main_mets_1234567890.xml: MODSMD_SOUNDPART_0001: /mods:mods: nenalezen očekávaný doporučený element 'mods:note'
+	ERROR: main_mets_1234567890.xml: MODSMD_SOUNDPART_0001: /mods:mods/mods:identifier[@type='uuid']: hodnota '581j6543-n32m-84e3-g750-849768265310' neodpovídá regulárním výrazu '^[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}$'
+	WARNING: main_mets_1234567890.xml: MODSMD_SOUNDPART_0001: /mods:mods/mods:recordInfo/mods:recordContentSource: nalezen neočekávaný atribut 'authority'
+	WARNING: main_mets_1234567890.xml: MODSMD_SOUNDPART_0001: /mods:mods/mods:recordInfo/mods:languageOfCataloging/mods:languageTerm: nalezen neočekávaný atribut 'type'
+Pravidlo BIBLIOGRAPHIC_METADATA_MATCH_PROFILE_SUPPLEMENT: 26 problémů (16x INFO, 2x WARNING, 8x ERROR)
+	Bibliografická metadata pro entitu typu SUPPLEMENT musí splňovat požadovaný profil pro záznamy v Dublin Core i MODS.
+	INFO: main_mets_1234567890.xml: DCMD_SUPPL_0002: /oai_dc:dc: nenalezen očekávaný doporučený element 'dc:creator'
+	INFO: main_mets_1234567890.xml: DCMD_SUPPL_0002: /oai_dc:dc: nenalezen očekávaný doporučený element 'dc:description'
+	INFO: main_mets_1234567890.xml: MODSMD_SUPPL_0002: /mods:mods/mods:titleInfo: nenalezen doporučený atribut 'type',
+	INFO: main_mets_1234567890.xml: MODSMD_SUPPL_0002: /mods:mods/mods:titleInfo: nenalezen očekávaný doporučený element 'mods:subTitle'
+	INFO: main_mets_1234567890.xml: MODSMD_SUPPL_0002: /mods:mods: nenalezen očekávaný doporučený element 'mods:name'
+	ERROR: main_mets_1234567890.xml: MODSMD_SUPPL_0002: /mods:mods/mods:genre/@type: hodnota 'model' nesplňuje žádnou ze specifikací ["cover","booklet","imgdisc"]
+	ERROR: main_mets_1234567890.xml: MODSMD_SUPPL_0002: /mods:mods/mods:genre: hodnota 'imgdisc' neodpovídá očekávané/doporučené hodnotě 'supplement'
+	INFO: main_mets_1234567890.xml: MODSMD_SUPPL_0002: /mods:mods/mods:physicalDescription: nenalezen očekávaný doporučený element 'mods:note'
+	INFO: main_mets_1234567890.xml: MODSMD_SUPPL_0002: /mods:mods: nenalezen očekávaný doporučený element 'mods:note'
+	INFO: main_mets_1234567890.xml: MODSMD_SUPPL_0002: /mods:mods/mods:relatedItem/mods:titleInfo: nenalezen očekávaný doporučený element 'mods:partNumber'
+	ERROR: main_mets_1234567890.xml: MODSMD_SUPPL_0002: /mods:mods/mods:relatedItem/mods:genre: hodnota 'soundcollection' neodpovídá očekávané/doporučené hodnotě 'sound collection'
+	ERROR: main_mets_1234567890.xml: MODSMD_SUPPL_0002: /mods:mods/mods:identifier[@type='uuid']: hodnota '548t3695-r45s-63a5-v258-589146302570' neodpovídá regulárním výrazu '^[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}$'
+	WARNING: main_mets_1234567890.xml: MODSMD_SUPPL_0002: /mods:mods/mods:recordInfo/mods:languageOfCataloging/mods:languageTerm: nalezen neočekávaný atribut 'type'
+	INFO: main_mets_1234567890.xml: DCMD_SUPPL_0001: /oai_dc:dc: nenalezen očekávaný doporučený element 'dc:creator'
+	INFO: main_mets_1234567890.xml: DCMD_SUPPL_0001: /oai_dc:dc: nenalezen očekávaný doporučený element 'dc:description'
+	INFO: main_mets_1234567890.xml: MODSMD_SUPPL_0001: /mods:mods/mods:titleInfo: nenalezen doporučený atribut 'type',
+	INFO: main_mets_1234567890.xml: MODSMD_SUPPL_0001: /mods:mods/mods:titleInfo: nenalezen očekávaný doporučený element 'mods:subTitle'
+	INFO: main_mets_1234567890.xml: MODSMD_SUPPL_0001: /mods:mods: nenalezen očekávaný doporučený element 'mods:name'
+	ERROR: main_mets_1234567890.xml: MODSMD_SUPPL_0001: /mods:mods/mods:genre/@type: hodnota 'model' nesplňuje žádnou ze specifikací ["cover","booklet","imgdisc"]
+	ERROR: main_mets_1234567890.xml: MODSMD_SUPPL_0001: /mods:mods/mods:genre: hodnota 'imgdisc' neodpovídá očekávané/doporučené hodnotě 'supplement'
+	INFO: main_mets_1234567890.xml: MODSMD_SUPPL_0001: /mods:mods/mods:physicalDescription: nenalezen očekávaný doporučený element 'mods:note'
+	INFO: main_mets_1234567890.xml: MODSMD_SUPPL_0001: /mods:mods: nenalezen očekávaný doporučený element 'mods:note'
+	INFO: main_mets_1234567890.xml: MODSMD_SUPPL_0001: /mods:mods/mods:relatedItem/mods:titleInfo: nenalezen očekávaný doporučený element 'mods:partNumber'
+	ERROR: main_mets_1234567890.xml: MODSMD_SUPPL_0001: /mods:mods/mods:relatedItem/mods:genre: hodnota 'soundcollection' neodpovídá očekávané/doporučené hodnotě 'sound collection'
+	ERROR: main_mets_1234567890.xml: MODSMD_SUPPL_0001: /mods:mods/mods:identifier[@type='uuid']: hodnota '567o1234-g56s-23c9-ah793-7804659320' neodpovídá regulárním výrazu '^[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}$'
+	WARNING: main_mets_1234567890.xml: MODSMD_SUPPL_0001: /mods:mods/mods:recordInfo/mods:languageOfCataloging/mods:languageTerm: nalezen neočekávaný atribut 'type'
+
+Sekce OCR ALTO: 0 problémů
+--------------------------
+Pravidlo OCR-ALTO_FILES_VALID_BY_XSD: 0 problémů
+	Soubory OCR-ALTO musí být validní podle XML Schema pro verzi ALTO danou namespace kořenového elementu: ns-v2# alto_2.0.xsd nebo alto_2.1.xsd (stačí jedno z nich, ALTO 2.1 na rozdíl od 2.0 vyžaduje MeasurementUnit), ns-v3# alto_3.1.xsd.
+Pravidlo OCR-ALTO_FILES_SAME_VERSION: 0 problémů
+	Všechny soubory OCR-ALTO v balíčku by měly mít stejnou verzi ALTO (stejný namespace kořenového elementu). Předpis OCR míchání verzí neřeší, proto jen WARNING.
+
+Sekce Technická metadata: 38 problémů (36x INFO, 2x ERROR)
+----------------------------------------------------------
+Pravidlo MIX_VALID_BY_XSD: 0 problémů
+	Záznamy MIX v souborech SECONDARY-METS-IMAGE musí být validní podle XML Schema (mix_2.0.xsd).
+Pravidlo MIX_FOR_ORIGINAL_SCAN_MATCHES_PROFILE: 10 problémů (10x INFO)
+	Záznamy MIX v souborech SECONDARY-METS-IMAGE pro původní skeny musí splňovat profil.
+	INFO: amd_mets_1234567890_0001.xml: MIX_001: /mets:techMD/mets:mdWrap/mets:xmlData/mix:mix/mix:BasicImageInformation/mix:BasicImageCharacteristics/mix:PhotometricInterpretation: nenalezen očekávaný doporučený element 'mix:ColorProfile'
+	INFO: amd_mets_1234567890_0001.xml: MIX_001: /mets:techMD/mets:mdWrap/mets:xmlData/mix:mix/mix:ImageCaptureMetadata: nenalezen očekávaný doporučený element 'mix:SourceInformation'
+	INFO: amd_mets_1234567890_0001.xml: MIX_001: /mets:techMD/mets:mdWrap/mets:xmlData/mix:mix/mix:ImageCaptureMetadata: nenalezen očekávaný doporučený element 'mix:DigitalCameraCapture'
+	INFO: amd_mets_1234567890_0001.xml: MIX_001: /mets:techMD/mets:mdWrap/mets:xmlData/mix:mix/mix:ImageAssessmentMetadata/mix:SpatialMetrics: nenalezen očekávaný doporučený element 'mix:samplingFrequencyPlane'
+	INFO: amd_mets_1234567890_0001.xml: MIX_001: /mets:techMD/mets:mdWrap/mets:xmlData/mix:mix/mix:ImageAssessmentMetadata/mix:ImageColorEncoding/mix:BitsPerSample: nenalezen očekávaný doporučený element 'mix:bitsPerSampleUnit'
+	INFO: amd_mets_1234567890_0002.xml: MIX_001: /mets:techMD/mets:mdWrap/mets:xmlData/mix:mix/mix:BasicImageInformation/mix:BasicImageCharacteristics/mix:PhotometricInterpretation: nenalezen očekávaný doporučený element 'mix:ColorProfile'
+	INFO: amd_mets_1234567890_0002.xml: MIX_001: /mets:techMD/mets:mdWrap/mets:xmlData/mix:mix/mix:ImageCaptureMetadata: nenalezen očekávaný doporučený element 'mix:SourceInformation'
+	INFO: amd_mets_1234567890_0002.xml: MIX_001: /mets:techMD/mets:mdWrap/mets:xmlData/mix:mix/mix:ImageCaptureMetadata: nenalezen očekávaný doporučený element 'mix:DigitalCameraCapture'
+	INFO: amd_mets_1234567890_0002.xml: MIX_001: /mets:techMD/mets:mdWrap/mets:xmlData/mix:mix/mix:ImageAssessmentMetadata/mix:SpatialMetrics: nenalezen očekávaný doporučený element 'mix:samplingFrequencyPlane'
+	INFO: amd_mets_1234567890_0002.xml: MIX_001: /mets:techMD/mets:mdWrap/mets:xmlData/mix:mix/mix:ImageAssessmentMetadata/mix:ImageColorEncoding/mix:BitsPerSample: nenalezen očekávaný doporučený element 'mix:bitsPerSampleUnit'
+Pravidlo MIX_FOR_FIRST_MASTER_COPY_MATCHES_PROFILE: 10 problémů (10x INFO)
+	Záznamy MIX v souborech SECONDARY-METS-IMAGE pro první verze archivních kopií musí splňovat profil.
+	INFO: amd_mets_1234567890_0001.xml: MIX_002: /mets:techMD/mets:mdWrap/mets:xmlData/mix:mix/mix:BasicImageInformation/mix:BasicImageCharacteristics/mix:PhotometricInterpretation: nenalezen očekávaný doporučený element 'mix:ColorProfile'
+	INFO: amd_mets_1234567890_0001.xml: MIX_002: /mets:techMD/mets:mdWrap/mets:xmlData/mix:mix/mix:ImageAssessmentMetadata/mix:SpatialMetrics: nenalezen očekávaný doporučený element 'mix:samplingFrequencyPlane'
+	INFO: amd_mets_1234567890_0001.xml: MIX_002: /mets:techMD/mets:mdWrap/mets:xmlData/mix:mix/mix:ImageAssessmentMetadata/mix:ImageColorEncoding/mix:BitsPerSample: nenalezen očekávaný doporučený element 'mix:bitsPerSampleUnit'
+	INFO: amd_mets_1234567890_0001.xml: MIX_002: /mets:techMD/mets:mdWrap/mets:xmlData/mix:mix/mix:ImageAssessmentMetadata/mix:ImageColorEncoding: nenalezen očekávaný doporučený element 'mix:TargetData'
+	INFO: amd_mets_1234567890_0001.xml: MIX_002: /mets:techMD/mets:mdWrap/mets:xmlData/mix:mix/mix:ChangeHistory/mix:ImageProcessing: nenalezen očekávaný doporučený element 'mix:processingAgency'
+	INFO: amd_mets_1234567890_0002.xml: MIX_002: /mets:techMD/mets:mdWrap/mets:xmlData/mix:mix/mix:BasicImageInformation/mix:BasicImageCharacteristics/mix:PhotometricInterpretation: nenalezen očekávaný doporučený element 'mix:ColorProfile'
+	INFO: amd_mets_1234567890_0002.xml: MIX_002: /mets:techMD/mets:mdWrap/mets:xmlData/mix:mix/mix:ImageAssessmentMetadata/mix:SpatialMetrics: nenalezen očekávaný doporučený element 'mix:samplingFrequencyPlane'
+	INFO: amd_mets_1234567890_0002.xml: MIX_002: /mets:techMD/mets:mdWrap/mets:xmlData/mix:mix/mix:ImageAssessmentMetadata/mix:ImageColorEncoding/mix:BitsPerSample: nenalezen očekávaný doporučený element 'mix:bitsPerSampleUnit'
+	INFO: amd_mets_1234567890_0002.xml: MIX_002: /mets:techMD/mets:mdWrap/mets:xmlData/mix:mix/mix:ImageAssessmentMetadata/mix:ImageColorEncoding: nenalezen očekávaný doporučený element 'mix:TargetData'
+	INFO: amd_mets_1234567890_0002.xml: MIX_002: /mets:techMD/mets:mdWrap/mets:xmlData/mix:mix/mix:ChangeHistory/mix:ImageProcessing: nenalezen očekávaný doporučený element 'mix:processingAgency'
+Pravidlo MIX_FOR_OTHER_MASTER_COPIES_MATCHES_PROFILE: 0 problémů
+	Záznamy MIX v souborech SECONDARY-METS-IMAGE pro další verze archivních kopií, pokud existují, musí splňovat profil.
+Pravidlo PREMIS-IMAGE_VALID_BY_XSD: 0 problémů
+	Záznamy PREMIS v souborech SECONDARY-METS-IMAGE musí být validní podle XML Schema (premis_2.2.xsd).
+Pravidlo PREMIS-AUDIO_VALID_BY_XSD: 0 problémů
+	Záznamy PREMIS v souborech SECONDARY-METS-IMAGE musí být validní podle XML Schema (premis_2.2.xsd).
+Pravidlo PREMIS_OBJECT_FOR_ORIGINAL_SCAN_MATCHES_PROFILE: 0 problémů
+	Záznamy PREMIS Object v souborech SECONDARY-METS pro původní skeny musí splňovat profil.
+Pravidlo PREMIS_OBJECT_FOR_MASTER_COPY_MATCHES_PROFILE: 2 problémy (2x ERROR)
+	Záznamy PREMIS Object v souborech SECONDARY-METS pro archivní kopie musí splňovat profil.
+	ERROR: amd_mets_1234567890_0001.xml: OBJ_002: /mets:techMD/mets:mdWrap/mets:xmlData/premis:object: nenalezen očekávaný povinný element 'premis:linkingEventIdentifier'
+	ERROR: amd_mets_1234567890_0002.xml: OBJ_002: /mets:techMD/mets:mdWrap/mets:xmlData/premis:object: nenalezen očekávaný povinný element 'premis:linkingEventIdentifier'
+Pravidlo PREMIS_OBJECT_FOR_ALTO_OCR_MATCHES_PROFILE: 0 problémů
+	Záznamy PREMIS Object v souborech SECONDARY-METS pro ALTO OCR musí splňovat profil. Povinné jsou, jen když balíček obsahuje soubory OCR-ALTO (OCR je nepovinné).
+Pravidlo PREMIS_EVENT_MATCHES_PROFILE: 6 problémů (6x INFO)
+	Záznamy PREMIS Event v souborech SECONDARY-METS musí splňovat profil.
+	INFO: amd_mets_1234567890_0001.xml: EVT_001: /mets:digiprovMD/mets:mdWrap/mets:xmlData/premis:event/premis:linkingAgentIdentifier: nenalezen očekávaný doporučený element 'premis:linkingAgentRole'
+	INFO: amd_mets_1234567890_0001.xml: EVT_002: /mets:digiprovMD/mets:mdWrap/mets:xmlData/premis:event/premis:linkingAgentIdentifier: nenalezen očekávaný doporučený element 'premis:linkingAgentRole'
+	INFO: amd_mets_1234567890_0001.xml: EVT_003: /mets:digiprovMD/mets:mdWrap/mets:xmlData/premis:event/premis:linkingAgentIdentifier: nenalezen očekávaný doporučený element 'premis:linkingAgentRole'
+	INFO: amd_mets_1234567890_0002.xml: EVT_001: /mets:digiprovMD/mets:mdWrap/mets:xmlData/premis:event/premis:linkingAgentIdentifier: nenalezen očekávaný doporučený element 'premis:linkingAgentRole'
+	INFO: amd_mets_1234567890_0002.xml: EVT_002: /mets:digiprovMD/mets:mdWrap/mets:xmlData/premis:event/premis:linkingAgentIdentifier: nenalezen očekávaný doporučený element 'premis:linkingAgentRole'
+	INFO: amd_mets_1234567890_0002.xml: EVT_003: /mets:digiprovMD/mets:mdWrap/mets:xmlData/premis:event/premis:linkingAgentIdentifier: nenalezen očekávaný doporučený element 'premis:linkingAgentRole'
+Pravidlo PREMIS_AGENT_MATCHES_PROFILE: 10 problémů (10x INFO)
+	Záznamy PREMIS Event v souborech SECONDARY-METS musí splňovat profil.
+	INFO: amd_mets_1234567890_0001.xml: AGENT_001: /mets:digiprovMD/mets:mdWrap/mets:xmlData/premis:agent: nenalezen očekávaný doporučený element 'premis:agentNote'
+	INFO: amd_mets_1234567890_0001.xml: AGENT_001: /mets:digiprovMD/mets:mdWrap/mets:xmlData/premis:agent: nenalezen očekávaný doporučený element 'premis:agentExtension'
+	INFO: amd_mets_1234567890_0001.xml: AGENT_002: /mets:digiprovMD/mets:mdWrap/mets:xmlData/premis:agent: nenalezen očekávaný doporučený element 'premis:agentNote'
+	INFO: amd_mets_1234567890_0001.xml: AGENT_002: /mets:digiprovMD/mets:mdWrap/mets:xmlData/premis:agent: nenalezen očekávaný doporučený element 'premis:agentExtension'
+	INFO: amd_mets_1234567890_0001.xml: AGENT_003: /mets:digiprovMD/mets:mdWrap/mets:xmlData/premis:agent: nenalezen očekávaný doporučený element 'premis:agentExtension'
+	INFO: amd_mets_1234567890_0002.xml: AGENT_001: /mets:digiprovMD/mets:mdWrap/mets:xmlData/premis:agent: nenalezen očekávaný doporučený element 'premis:agentNote'
+	INFO: amd_mets_1234567890_0002.xml: AGENT_001: /mets:digiprovMD/mets:mdWrap/mets:xmlData/premis:agent: nenalezen očekávaný doporučený element 'premis:agentExtension'
+	INFO: amd_mets_1234567890_0002.xml: AGENT_002: /mets:digiprovMD/mets:mdWrap/mets:xmlData/premis:agent: nenalezen očekávaný doporučený element 'premis:agentNote'
+	INFO: amd_mets_1234567890_0002.xml: AGENT_002: /mets:digiprovMD/mets:mdWrap/mets:xmlData/premis:agent: nenalezen očekávaný doporučený element 'premis:agentExtension'
+	INFO: amd_mets_1234567890_0002.xml: AGENT_003: /mets:digiprovMD/mets:mdWrap/mets:xmlData/premis:agent: nenalezen očekávaný doporučený element 'premis:agentExtension'
+Pravidlo PREMIS_LINKING_CORRECT: 0 problémů
+	Odkazy mezi PREMIS Objekty, Událostmi a Agenty musí být korektní a úplné.
+Pravidlo AES57_VALID_BY_XSD: 0 problémů
+	Záznamy AES57 v souborech SECONDARY-METS-AUDIO musí být validní podle XML Schema (aes57_1.0.xsd).
+
+Sekce Autorskoprávní metadata: 0 problémů
+-----------------------------------------
+Pravidlo COPYRIGHTMD_VALID_BY_XSD: 0 problémů
+	Záznamy CopyrightMD v souboru PRIMARY-METS a souborech SECONDARY-METS musí být validní podle XML Schema (cmd_0.91.xsd).
+Pravidlo COPYRIGHTMD_IN_SECONDARY_METS_MATCH_PROFILE: 0 problémů
+	Záznamy CopyrightMD v souborech SECONDARY-METS, pokud existují, musí splňovat profil.
+Pravidlo COPYRIGHTMD_IN_PRIMARY_METS_MATCH_PROFILE: 0 problémů
+	Záznamy CopyrightMD v souboru PRIMARY-METS, pokud existují, musí splňovat profil.
+
+Celkem: 258 problémů (160x INFO, 47x WARNING, 51x ERROR), balík je: nevalidní
+Validováno Komplexním Validátorem ve verzi [VERZE], build z [BUILD_DATE]
+
+Vytvářím xml export do souboru [TMP]/audio-gram-0.5-no-ocr.xml.
+Xml export vytvořen a uložen.

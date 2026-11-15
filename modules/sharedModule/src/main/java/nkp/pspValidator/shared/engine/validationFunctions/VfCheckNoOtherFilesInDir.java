@@ -10,7 +10,7 @@ import nkp.pspValidator.shared.engine.params.ValueParam;
 
 import java.io.File;
 import java.util.ArrayList;
-import java.util.HashSet;
+import java.util.TreeSet;
 import java.util.List;
 import java.util.Set;
 
@@ -65,7 +65,7 @@ public class VfCheckNoOtherFilesInDir extends ValidationFunction {
 
 
     private Set<File> mergeAbsoluteFilesFromParamsIgnoreNulls() throws EmptyParamEvaluationException {
-        Set<File> result = new HashSet<>();
+        Set<File> result = new TreeSet<>();
         List<ValueParam> fileParams = valueParams.getParams(PARAM_FILE);
         for (ValueParam param : fileParams) {
             ValueEvaluation evaluation = param.getEvaluation();

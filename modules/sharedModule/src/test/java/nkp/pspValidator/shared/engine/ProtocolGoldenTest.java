@@ -47,6 +47,10 @@ import static org.junit.Assert.*;
  * Vlastnost kv.updateGolden predava Gradle do testovaci JVM (sharedModule/build.gradle); misto ni lze nastavit promennou
  * prostredi KV_UPDATE_GOLDEN=true (napr. pri spusteni z IDE). V rezimu pregenerovani testy soubory zapisou a projdou;
  * zmeny je pak treba projit v git diff.
+ * <p>
+ * Balicek muze byt i odvozeny za behu (sloupec derive): audio-gram-0.5-no-ocr vznikne z audio_gram_0.3/1234567890 kopii do
+ * TemporaryFolder, prejmenovanim adresaru na nazvy podle DMF 0.4+ (amdsec, mastercopy, usercopy, usercopy_audio) a smazanim
+ * adresaru alto a txt; hlida, ze protokol gramodesek 0.4/0.5 bez OCR nehlasi chybejici OCR (18 MB balicek se nekopiruje do repa).
  */
 @RunWith(Parameterized.class)
 public class ProtocolGoldenTest {
@@ -66,20 +70,80 @@ public class ProtocolGoldenTest {
     @Parameterized.Parameters(name = "{0}")
     public static Collection<Object[]> packages() {
         return Arrays.asList(new Object[][]{
-                {"fund-unit-0.2-valid-clipping", "fund_unit_0.2/valid_clipping/nk-00027x", new Dmf(Dmf.Type.FUND_UNIT, "0.2")},
-                {"fund-unit-0.2-page-no-genre", "fund_unit_0.2/page_no_genre/nk-00027r", new Dmf(Dmf.Type.FUND_UNIT, "0.2")},
-                {"monograph-1.3.2", "monograph_1.3.2/b50eb6b0-f0a4-11e3-b72e-005056827e52", new Dmf(Dmf.Type.MONOGRAPH, "1.3.2")},
+                {"fund-unit-0.2-valid-clipping", "fund_unit_0.2/valid_clipping/nk-00027x", new Dmf(Dmf.Type.FUND_UNIT, "0.2"), null},
+                {"fund-unit-0.2-page-no-genre", "fund_unit_0.2/page_no_genre/nk-00027r", new Dmf(Dmf.Type.FUND_UNIT, "0.2"), null},
+                {"monograph-1.3.2", "monograph_1.3.2/b50eb6b0-f0a4-11e3-b72e-005056827e52", new Dmf(Dmf.Type.MONOGRAPH, "1.3.2"), null},
+                {"audio-gram-0.5-no-ocr", "audio_gram_0.3/1234567890", new Dmf(Dmf.Type.AUDIO_GRAM, "0.5"), DERIVE_AUDIO_NO_OCR},
         });
+    }
+
+    /**
+     * Odvozeni balicku za behu: ze zdrojoveho adresare v src/test/resources vytvori balicek v docasnem adresari.
+     */
+    interface Derivation {
+        File derive(File source, File tmpRoot) throws IOException;
+    }
+
+    static final Derivation DERIVE_AUDIO_NO_OCR = (source, tmpRoot) -> {
+        File target = new File(tmpRoot, source.getName());
+        copyDir(source.toPath(), target.toPath());
+        for (String[] rename : new String[][]{{"amd_sec", "amdsec"}, {"master_copy", "mastercopy"}, {"user_copy", "usercopy"}, {"user_copy_audio", "usercopy_audio"}}) {
+            Files.move(new File(target, rename[0]).toPath(), new File(target, rename[1]).toPath());
+        }
+        deleteDir(new File(target, "alto").toPath());
+        deleteDir(new File(target, "txt").toPath());
+        // md5 a itemlist v INFO: cesty s / (puvodni balicek ma \\, coz by v hlaskach dalo cesty zavisle na OS),
+        // prejmenovane adresare, bez OCR souboru (jinak by hlasky obsahovaly text chyby OS "No such file or directory")
+        for (String name : new String[]{"md5_1234567890.md5", "info_1234567890.xml"}) {
+            File f = new File(target, name);
+            String content = new String(Files.readAllBytes(f.toPath()), StandardCharsets.UTF_8);
+            StringBuilder out = new StringBuilder();
+            for (String line : content.split("(?<=\\n)")) {
+                if (line.contains("\\alto\\") || line.contains("\\txt\\")) {
+                    continue;
+                }
+                line = line.replace('\\', '/')
+                        .replace("/amd_sec/", "/amdsec/").replace("/master_copy/", "/mastercopy/")
+                        .replace("/user_copy_audio/", "/usercopy_audio/").replace("/user_copy/", "/usercopy/")
+                        .replace("itemtotal=\"19\"", "itemtotal=\"15\"");
+                out.append(line);
+            }
+            Files.write(f.toPath(), out.toString().getBytes(StandardCharsets.UTF_8));
+        }
+        return target;
+    };
+
+    private static void copyDir(java.nio.file.Path src, java.nio.file.Path dst) throws IOException {
+        try (java.util.stream.Stream<java.nio.file.Path> paths = Files.walk(src)) {
+            for (java.nio.file.Path p : (Iterable<java.nio.file.Path>) paths::iterator) {
+                java.nio.file.Path t = dst.resolve(src.relativize(p).toString());
+                if (Files.isDirectory(p)) {
+                    Files.createDirectories(t);
+                } else {
+                    Files.copy(p, t);
+                }
+            }
+        }
+    }
+
+    private static void deleteDir(java.nio.file.Path dir) throws IOException {
+        try (java.util.stream.Stream<java.nio.file.Path> paths = Files.walk(dir)) {
+            for (java.nio.file.Path p : (Iterable<java.nio.file.Path>) paths.sorted(Comparator.reverseOrder())::iterator) {
+                Files.delete(p);
+            }
+        }
     }
 
     private final String name;
     private final String packagePath;
     private final Dmf dmf;
+    private final Derivation derivation;
 
-    public ProtocolGoldenTest(String name, String packagePath, Dmf dmf) {
+    public ProtocolGoldenTest(String name, String packagePath, Dmf dmf, Derivation derivation) {
         this.name = name;
         this.packagePath = packagePath;
         this.dmf = dmf;
+        this.derivation = derivation;
     }
 
     private static final class Result {
@@ -100,6 +164,9 @@ public class ProtocolGoldenTest {
             if (result == null) {
                 File packageDir = new File("src/test/resources", packagePath).getAbsoluteFile();
                 assertTrue("chybi testovaci balicek " + packageDir, packageDir.isDirectory());
+                if (derivation != null) {
+                    packageDir = derivation.derive(packageDir, TMP.newFolder(name)).getAbsoluteFile();
+                }
                 File xmlFile = new File(TMP.getRoot(), name + ".xml");
                 String text = FdmfTestSupport.run(dmf, packageDir, 3, xmlFile);
                 assertTrue("XML protokol nevznikl: " + xmlFile, xmlFile.isFile());
