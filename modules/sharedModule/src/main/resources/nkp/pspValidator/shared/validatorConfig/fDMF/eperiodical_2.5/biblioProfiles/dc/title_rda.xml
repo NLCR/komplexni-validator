@@ -30,6 +30,16 @@
                 <expectedContent/>
             </element>
 
+            <!--DMF E-periodika 2.5 kap. 3.4.1 (RDA): languageTerm se mapuje do dc:language a physicalDescription/form
+                do dc:format (mapování doplněno ve verzi 2.5, viz změny DMF); VEP issue #17, KV #265-->
+            <element name="dc:language" mandatory="false">
+                <expectedContent/>
+            </element>
+
+            <element name="dc:format" mandatory="false">
+                <expectedContent/>
+            </element>
+
             <element name="dc:creator" mandatory="false">
                 <expectedContent/>
             </element>

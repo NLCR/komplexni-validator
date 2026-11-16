@@ -96,13 +96,13 @@
 
                 <expectedElements>
 
+                    <!--životopisná data se přebírají z katalogu tak, jak jsou (např. "1976-", "-1989", "asi 1850-1900");
+                        vzor RRRR-RRRR odstraněn (VEP issue #14, KV #262; stejně jako u ostatních úrovní a jako KV issue #212)-->
                     <element name="mods:namePart" specification="@type='date'" mandatory="false">
                         <expectedAttributes>
                             <attribute name="type"/>
                         </expectedAttributes>
-                        <expectedContent>
-                            <regexp>[0-9]{4}-[0-9]{4}</regexp>
-                        </expectedContent>
+                        <expectedContent/>
                     </element>
 
                     <element name="mods:namePart" specification="@type='family'" mandatory="false">
@@ -172,7 +172,8 @@
 
             <element name="mods:language" mandatory="false">
                 <expectedAttributes>
-                    <attribute name="objectPart">
+                    <!--DMF E-monografie 3.0 kap. 3.4.1: objectPart je volitelný (O); VEP issue #15, KV #263-->
+                    <attribute name="objectPart" mandatory="false">
                         <recommendedContent>
                             <value>translation</value>
                         </recommendedContent>
@@ -606,7 +607,8 @@
                         </recommendedContent>
                     </element>
 
-                    <element name="mods:languageOfCataloging">
+                    <!--DMF E-monografie 3.0 kap. 3.4.1: languageOfCataloging je doporučený (R); VEP issue #16, KV #264-->
+                    <element name="mods:languageOfCataloging" mandatory="false">
                         <expectedElements>
                             <element name="mods:languageTerm" mandatory="false">
                                 <expectedAttributes>
