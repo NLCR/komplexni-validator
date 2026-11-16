@@ -999,6 +999,8 @@
             </description>
             <validation functionName="checkStringDerivedFromUrnnbnOrUuid">
                 <params>
+                    <!--WARNING jako ve Validátoru e-publikací (ostatní fDMF mají výchozí ERROR)-->
+                    <value name="level" type="LEVEL">WARNING</value>
                     <value name="string" type="STRING">
                         <value-ref name="PSP_ID"/>
                     </value>

@@ -76,14 +76,15 @@ public class ValidatorProtocolTextBuilder {
     }
 
     /**
-     * @param referencedFile cesta k souboru, ke kteremu hlaska patri (relativni vuci korenu balicku), nebo null.
-     *                       Pripoji se na konec radku jako " (soubor: cesta)", pokud ji hlaska jeste neobsahuje.
+     * @param referencedFile cesta k souboru, ke kteremu hlaska patri (od adresare balicku vcetne, jako atributy file
+     *                       a referencedFile v XML protokolu), nebo null. Pripoji se na konec radku jako
+     *                       " (soubor: cesta)", pokud hlaska cestu (ani jeji cast uvnitr balicku) jeste neobsahuje.
      */
     public void logRuleError(Level errorElevel, String errorMessage, String referencedFile) {
         if (out != null) {
             String message = errorMessage;
             if (referencedFile != null && !referencedFile.isEmpty()
-                    && (message == null || !message.contains(referencedFile))) {
+                    && (message == null || !(message.contains(referencedFile) || message.contains(pathInsidePackage(referencedFile))))) {
                 message = message + " (soubor: " + referencedFile + ")";
             }
             out.println(String.format("\t%s: %s", errorElevel, message));
@@ -91,7 +92,17 @@ public class ValidatorProtocolTextBuilder {
     }
 
     /**
-     * Cesta k souboru relativne vuci korenu balicku (s lomitky '/'), mimo balicek jen nazev souboru.
+     * Cast cesty za nazvem adresare balicku ("balik/pdf/a.pdf" -> "pdf/a.pdf"); cesta bez lomitka se vraci cela.
+     */
+    private static String pathInsidePackage(String path) {
+        int slash = path.indexOf('/');
+        return slash >= 0 && slash < path.length() - 1 ? path.substring(slash + 1) : path;
+    }
+
+    /**
+     * Cesta k souboru od adresare balicku vcetne (napr. "nk-00027x/mastercopy/mc_0001.jp2"), tedy relativne vuci
+     * adresari, ve kterem balicek lezi; stejna podoba jako atributy file a referencedFile v XML protokolu, jen vzdy
+     * s lomitky '/'. Soubor mimo balicek se uvadi absolutni cestou (jako v XML protokolu).
      */
     public static String toPackageRelativePath(File packageRoot, File file) {
         if (file == null) {
@@ -100,13 +111,14 @@ public class ValidatorProtocolTextBuilder {
         try {
             java.nio.file.Path root = packageRoot.getAbsoluteFile().toPath().normalize();
             java.nio.file.Path path = file.getAbsoluteFile().toPath().normalize();
-            if (path.startsWith(root) && !path.equals(root)) {
-                return root.relativize(path).toString().replace(File.separatorChar, '/');
+            java.nio.file.Path parent = root.getParent();
+            if (parent != null && path.startsWith(root) && !path.equals(root)) {
+                return parent.relativize(path).toString().replace(File.separatorChar, '/');
             }
         } catch (RuntimeException e) {
             //fallback nize
         }
-        return file.getName();
+        return file.getAbsolutePath();
     }
 
     public void logPackageSummary(Integer totalProblemsSum, Map<Level, Integer> totalProblemsByLevel, boolean valid) {

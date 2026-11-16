@@ -14,8 +14,8 @@ def register(K, INTENDED, VEP_FIX):
       msg=r"neočekávaný element 'mets:dmdSec' \(ID=\"?(MODS|DC)MD_SUPPL")
     K('VEP #21: PSP-ID odvozené od identifikátorů intelektuální entity', VEP_FIX,
       'Pravidlo PSP_ID_DERIVED_FROM_TITLE_ID je v KV přejmenováno na PSP_ID_DERIVED_FROM_IE_ID, odvozuje PSP-ID '
-      'od identifikátorů intelektuální entity (u přílohy a čísla jejich vlastní, ne titulu) a má úroveň ERROR '
-      '(VEP WARNING). P4, VEP issue #21.',
+      'od identifikátorů intelektuální entity (u přílohy a čísla jejich vlastní, ne titulu). Úroveň je u e-publikací '
+      'WARNING jako ve VEP (od 16. 11. 2026). P4, VEP issue #21.',
       rule=r'^PSP_ID_DERIVED_FROM_IE_ID$')
     K('VEP #18: dc:creator svazku nepovinný v RDA', VEP_FIX,
       'VEP vyžaduje dc:creator u svazku i v RDA; KV ho podle DMF bere jako nepovinný (P4, VEP issue #18).',

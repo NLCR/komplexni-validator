@@ -14,12 +14,16 @@ public class VfCheckStringDerivedFromUrnnbnOrUuid extends ValidationFunction {
     public static final String PARAM_STRING = "string";
 
     public static final String PARAM_IDENTIFIERS = "identifiers";
+    // volitelna uroven hlasky "neni odvozen" a "nenalezen zadny identifikator", vychozi ERROR; fDMF e-publikaci maji
+    // WARNING jako Validator e-publikaci (pravidlo PSP_ID_DERIVED_FROM_TITLE_ID tam bylo WARNING)
+    public static final String PARAM_LEVEL = "level";
 
 
     public VfCheckStringDerivedFromUrnnbnOrUuid(String name, Engine engine) {
         super(name, engine, new Contract()
                 .withValueParam(PARAM_STRING, ValueType.STRING, 1, 1)
                 .withValueParam(PARAM_IDENTIFIERS, ValueType.IDENTIFIER_LIST, 1, 1)
+                .withValueParam(PARAM_LEVEL, ValueType.LEVEL, 0, 1)
         );
     }
 
@@ -49,7 +53,15 @@ public class VfCheckStringDerivedFromUrnnbnOrUuid extends ValidationFunction {
                     urnnbn = id.getValue();
                 }
             }
-            return validate(string, uuid, urnnbn);
+            Level level = Level.ERROR;
+            if (!valueParams.getParams(PARAM_LEVEL).isEmpty()) {
+                ValueEvaluation levelEval = valueParams.getParams(PARAM_LEVEL).get(0).getEvaluation();
+                if (levelEval.getData() == null) {
+                    return invalidValueParamNull(PARAM_LEVEL, levelEval);
+                }
+                level = (Level) levelEval.getData();
+            }
+            return validate(string, uuid, urnnbn, level);
         } catch (ContractException e) {
             return invalidContractNotMet(e);
         } catch (Throwable e) {
@@ -58,9 +70,13 @@ public class VfCheckStringDerivedFromUrnnbnOrUuid extends ValidationFunction {
     }
 
     ValidationResult validate(String string, String uuid, String urnnbn) {
+        return validate(string, uuid, urnnbn, Level.ERROR);
+    }
+
+    ValidationResult validate(String string, String uuid, String urnnbn, Level level) {
         ValidationResult result = new ValidationResult();
         if (uuid == null && urnnbn == null) {
-            return singlErrorResult(invalid(Level.ERROR, "nenalezen žádný z identifikátorů UUID ani URN:NBN"));
+            return singlErrorResult(invalid(level, "nenalezen žádný z identifikátorů UUID ani URN:NBN"));
         }
         if (uuid != null && uuid.startsWith("uuid:")) {
             result.addError(new ValidationProblem(Level.WARNING,
@@ -82,7 +98,7 @@ public class VfCheckStringDerivedFromUrnnbnOrUuid extends ValidationFunction {
             urnnbn = null; //not using this incorrect urnnbn for further validation
         }
         if (!stringIsDerivedFromUUid(string, uuid) && !stringIsDerivedFromUrnNbn(string, urnnbn)) {
-            result.addError(new ValidationProblem(Level.ERROR, String.format("řetězec '%s' není odvozen od UUID ani URN:NBN intelektuální entity", string))
+            result.addError(new ValidationProblem(level, String.format("řetězec '%s' není odvozen od UUID ani URN:NBN intelektuální entity", string))
                     .withSimpleMessage("řetězec není odvozen od UUID ani URN:NBN intelektuální entity")
                     .withReferencedValue(string));
         }

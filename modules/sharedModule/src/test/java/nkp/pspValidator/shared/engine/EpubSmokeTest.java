@@ -255,13 +255,14 @@ public class EpubSmokeTest {
     }
 
     /**
-     * VEP #21: PSP-ID musi byt odvozen od identifikatoru intelektualni entity (cislo), ne titulu.
+     * VEP #21: PSP-ID ma byt odvozen od identifikatoru intelektualni entity (cislo), ne titulu. U e-publikaci je to
+     * WARNING jako ve Validatoru e-publikaci (ostatni fDMF ERROR), balicek zustava validni.
      */
     @Test
-    public void epe26PspIdFromTitleUuidIsInvalid() throws Exception {
+    public void epe26PspIdFromTitleUuidIsWarning() throws Exception {
         String log = run("eperiodical_2.6/psp_id_from_title_id/5e0b0002-0000-4000-8000-000000000263", Dmf.Type.EPERIODICAL, "2.6");
-        assertRuleProblem(log, "PSP_ID_DERIVED_FROM_IE_ID", "ERROR:", "'5e0b0002-0000-4000-8000-000000000263' není odvozen");
-        assertEquals(1, countErrors(log));
+        assertRuleProblem(log, "PSP_ID_DERIVED_FROM_IE_ID", "WARNING:", "'5e0b0002-0000-4000-8000-000000000263' není odvozen");
+        assertEquals(0, countErrors(log));
     }
 
     /**

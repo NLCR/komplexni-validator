@@ -34,10 +34,17 @@ public class ValidatorProtocolTextBuilderTest {
     }
 
     @Test
+    public void cestaUvnitrBalickuVHlasceSeNeduplikuje() throws Exception {
+        assertEquals("ERROR: soubor pdf/a.pdf je vadný", log("soubor pdf/a.pdf je vadný", "balik/pdf/a.pdf"));
+        assertEquals("ERROR: hláška (soubor: balik/pdf/a.pdf)", log("hláška", "balik/pdf/a.pdf"));
+    }
+
+    @Test
     public void relativniCesta() {
         File root = new File("/tmp/balik");
-        assertEquals("pdf/a.pdf", ValidatorProtocolTextBuilder.toPackageRelativePath(root, new File("/tmp/balik/pdf/a.pdf")));
-        assertEquals("a.pdf", ValidatorProtocolTextBuilder.toPackageRelativePath(root, new File("/jinde/a.pdf")));
+        // od adresare balicku vcetne, jako v XML protokolu; mimo balicek absolutni cesta
+        assertEquals("balik/pdf/a.pdf", ValidatorProtocolTextBuilder.toPackageRelativePath(root, new File("/tmp/balik/pdf/a.pdf")));
+        assertEquals(new File("/jinde/a.pdf").getAbsolutePath(), ValidatorProtocolTextBuilder.toPackageRelativePath(root, new File("/jinde/a.pdf")));
         assertEquals(null, ValidatorProtocolTextBuilder.toPackageRelativePath(root, null));
     }
 }
