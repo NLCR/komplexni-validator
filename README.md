@@ -61,7 +61,7 @@ metadat, profily binárních souborů):
 
 Celkem 39 konfigurací. Když balíček verzi neuvádí, použije se výchozí (konstanty `DEFAULT_*_VERSION` v
 `DmfDetector.java`): monografie 2.3, periodika 2.2, gramodesky 1.0, fonoválečky 1.0, kompaktní disky 1.0, zvuk bez
-nosiče 1.0, datové disky 0.1, jednotky fondu 0.2, e-monografie 3.0, e-periodika 2.5, skládaná e-periodika 1.3.
+nosiče 1.0, datové disky 0.1, jednotky fondu 0.2, e-monografie 3.1, e-periodika 2.6, skládaná e-periodika 1.3.
 
 Typ DMF se určuje z METS `TYPE`, verze z `metadataversion` v info.xml. Pořadí: `--forced-dmf-<typ>-version`
 (vynutí verzi vždy), jinak `metadataversion` z info.xml, jinak `--preferred-dmf-<typ>-version`, jinak výchozí verze

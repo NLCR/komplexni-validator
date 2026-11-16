@@ -1088,6 +1088,8 @@
 
             <validation functionName="checkIdentifiersNoDuplicates">
                 <params>
+                    <!--WARNING jako ve Validátoru e-publikací (ostatní fDMF mají výchozí ERROR, issue #224)-->
+                    <value name="level" type="LEVEL">WARNING</value>
                     <value name="identifier_list" type="IDENTIFIER_LIST">
                         <!--spojeni vsech identifikatoru do jednoho seznamu-->
                         <evaluation functionName="mergeIdentifiers">
@@ -1543,6 +1545,8 @@
 
             <validation functionName="checkIdentifiersNoDuplicates">
                 <params>
+                    <!--WARNING jako ve Validátoru e-publikací (ostatní fDMF mají výchozí ERROR, issue #224)-->
+                    <value name="level" type="LEVEL">WARNING</value>
                     <value name="identifier_list" type="IDENTIFIER_LIST">
                         <!--spojeni vsech identifikatoru do jednoho seznamu-->
                         <evaluation functionName="mergeIdentifiers">

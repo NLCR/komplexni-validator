@@ -21,12 +21,15 @@ public class VfCheckIdentifiersNoDuplicates extends ValidationFunction {
     public static final String PARAM_IDENTIFIER_LIST = "identifier_list";
     public static final String PARAM_IDENTIFIER_LIST_LIST = "identifier_list_list";
     public static final String PARAM_IGNORED_TYPE_LIST = "ignored_type_list";
+    // volitelna uroven hlasky, vychozi ERROR (issue #224); fDMF e-publikaci maji WARNING jako Validator e-publikaci
+    public static final String PARAM_LEVEL = "level";
 
     public VfCheckIdentifiersNoDuplicates(String name, Engine engine) {
         super(name, engine, new Contract()
                 .withValueParam(PARAM_IDENTIFIER_LIST, ValueType.IDENTIFIER_LIST, 0, null)
                 .withValueParam(PARAM_IDENTIFIER_LIST_LIST, ValueType.IDENTIFIER_LIST_LIST, 0, null)
                 .withValueParam(PARAM_IGNORED_TYPE_LIST, ValueType.STRING_LIST, 0, 1)
+                .withValueParam(PARAM_LEVEL, ValueType.LEVEL, 0, 1)
         );
     }
 
@@ -70,7 +73,17 @@ public class VfCheckIdentifiersNoDuplicates extends ValidationFunction {
                 }
             }
 
-            return validate(idListList, ignoredTypes);
+            Level level = Level.ERROR;
+            List<ValueParam> levelParam = valueParams.getParams(PARAM_LEVEL);
+            if (!levelParam.isEmpty()) {
+                ValueEvaluation eval = levelParam.get(0).getEvaluation();
+                if (eval.getData() == null) {
+                    return invalidValueParamNull(PARAM_LEVEL, eval);
+                }
+                level = (Level) eval.getData();
+            }
+
+            return validate(idListList, ignoredTypes, level);
         } catch (ContractException e) {
             return invalidContractNotMet(e);
         } catch (Throwable e) {
@@ -79,6 +92,10 @@ public class VfCheckIdentifiersNoDuplicates extends ValidationFunction {
     }
 
     ValidationResult validate(List<List<Identifier>> idListList, List<String> ignoredTypes) {
+        return validate(idListList, ignoredTypes, Level.ERROR);
+    }
+
+    ValidationResult validate(List<List<Identifier>> idListList, List<String> ignoredTypes, Level level) {
         ValidationResult result = new ValidationResult();
         for (List<Identifier> idList : idListList) {
             // duplicita = stejny typ i hodnota; porovnava se se vsemi drivejsimi identifikatory tehoz typu, ne jen s prvnim
@@ -87,7 +104,7 @@ public class VfCheckIdentifiersNoDuplicates extends ValidationFunction {
             for (Identifier id : idList) {
                 if (!ignoredTypes.contains(id.getType())) {
                     if (!seen.add(id)) {
-                        result.addError(new ValidationProblem(Level.ERROR, String.format("seznam obsahuje duplikovaný identifikátor '%s'", id.toString()))
+                        result.addError(new ValidationProblem(level, String.format("seznam obsahuje duplikovaný identifikátor '%s'", id.toString()))
                                 .withSimpleMessage("seznam obsahuje duplikovaný identifikátor")
                                 .withLabel("id_type=" + id.getType())
                                 .withReferencedValue(id.toString())

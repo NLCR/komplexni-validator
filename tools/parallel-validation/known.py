@@ -50,10 +50,7 @@ def register(K, INTENDED, VEP_FIX):
       rule=r'_VALID_BY_VERAPDF$', side='vep', msg=r'PDF/A')
 
     # --- úmyslné rozdíly KV ---
-    K('KV #224: duplicitní identifikátory napříč dmdSec jako ERROR', INTENDED,
-      'KV hlásí duplicitní identifikátor napříč MODS záznamy jako ERROR (issue KV #224, Java '
-      'VfCheckIdentifiersNoDuplicates), VEP jako WARNING. Úroveň je natvrdo v Javě, ne ve fDMF.',
-      rule=r'^MODS_IDENTIFIERS_NO_DUPLICATES_ACROSS_DMDSECS$', side='level', level=r'^WARNING>ERROR$')
+    # (KV #224: od 16. 11. 2026 mají fDMF e-publikací u duplicitních identifikátorů WARNING jako VEP, rozdíl zanikl)
     K('KV: doporučené elementy a atributy jako INFO', INTENDED,
       'Validátor metadat KV hlásí chybějící doporučené (nepovinné) elementy a atributy jako INFO; VEP je nehlásí. '
       'Týká se profilů hlavičky METS a bibliografických metadat.',

@@ -29,8 +29,8 @@ public class DmfDetector {
     public static final String DEFAULT_AUDIO_NO_CARRIER_VERSION = "1.0";
     public static final String DEFAULT_DATA_DISC_VERSION = "0.1";
     public static final String DEFAULT_FUND_UNIT_VERSION = "0.2";
-    public static final String DEFAULT_EMONOGRAPH_VERSION = "3.0";
-    public static final String DEFAULT_EPERIODICAL_VERSION = "2.5";
+    public static final String DEFAULT_EMONOGRAPH_VERSION = "3.1";
+    public static final String DEFAULT_EPERIODICAL_VERSION = "2.6";
     public static final String DEFAULT_COMPERIODICAL_VERSION = "1.3";
 
 
