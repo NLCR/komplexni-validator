@@ -23,10 +23,16 @@ import java.io.File;
 public class VfCheckDcIdentifiersHaveTypeAndValue extends ValidationFunction {
 
     public static final String PARAM_PRIMARY_METS_FILE = "primary-mets_file";
+    // volitelne: u identifikatoru typu "uuid" navic overit tvar hodnoty podle RFC 4122 (8-4-4-4-12 hexadecimalnich
+    // znaku, velka i mala pismena); WARNING, protoze DMF tvar hodnoty v DC nepopisuji (issue #258). Vychozi false.
+    public static final String PARAM_CHECK_UUID_FORMAT = "check_uuid_format";
+    private static final String UUID_TYPE_PREFIX = "uuid:";
+    private static final String UUID_REGEXP = "[a-fA-F0-9]{8}(-[a-fA-F0-9]{4}){3}-[a-fA-F0-9]{12}";
 
     public VfCheckDcIdentifiersHaveTypeAndValue(String name, Engine engine) {
         super(name, engine, new Contract()
                 .withValueParam(PARAM_PRIMARY_METS_FILE, ValueType.FILE, 1, 1)
+                .withValueParam(PARAM_CHECK_UUID_FORMAT, ValueType.BOOLEAN, 0, 1)
         );
     }
 
@@ -45,7 +51,16 @@ public class VfCheckDcIdentifiersHaveTypeAndValue extends ValidationFunction {
                 return singlErrorResult(invalidCannotReadDir(file));
             }
 
-            return validate(file);
+            boolean checkUuidFormat = false;
+            if (!valueParams.getParams(PARAM_CHECK_UUID_FORMAT).isEmpty()) {
+                ValueEvaluation checkUuidEvaluation = valueParams.getParams(PARAM_CHECK_UUID_FORMAT).get(0).getEvaluation();
+                if (checkUuidEvaluation.getData() == null) {
+                    return invalidValueParamNull(PARAM_CHECK_UUID_FORMAT, checkUuidEvaluation);
+                }
+                checkUuidFormat = (Boolean) checkUuidEvaluation.getData();
+            }
+
+            return validate(file, checkUuidFormat);
         } catch (ContractException e) {
             return invalidContractNotMet(e);
         } catch (Throwable e) {
@@ -53,7 +68,7 @@ public class VfCheckDcIdentifiersHaveTypeAndValue extends ValidationFunction {
         }
     }
 
-    private ValidationResult validate(File file) {
+    private ValidationResult validate(File file, boolean checkUuidFormat) {
         ValidationResult result = new ValidationResult();
         try {
             Document doc = engine.getXmlDocument(file, true);
@@ -78,6 +93,14 @@ public class VfCheckDcIdentifiersHaveTypeAndValue extends ValidationFunction {
                         );
                     } else {
                         String first = tokens[0];
+                        if (checkUuidFormat && identifier.startsWith(UUID_TYPE_PREFIX)
+                                && !identifier.substring(UUID_TYPE_PREFIX.length()).matches(UUID_REGEXP)) {
+                            result.addError(new ValidationProblem(Level.WARNING, String.format("identifikátor \"%s\" typu uuid nemá hodnotu ve formátu UUID", identifier))
+                                    .withSimpleMessage("identifikátor typu uuid nemá hodnotu ve formátu UUID")
+                                    .withReferencedValue(identifier)
+                                    .withFile(file)
+                            );
+                        }
                         if (first.isEmpty()) {
                             result.addError(new ValidationProblem(Level.WARNING, String.format("identifikátor \"%s\" je složen z typu a hodnoty oddělených dvojtečkou, ale typ je prázdný", identifier))
                                     .withSimpleMessage("identifikátor je složen z typu a hodnoty oddělených dvojtečkou, ale typ je prázdný")

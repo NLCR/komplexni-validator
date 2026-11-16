@@ -315,7 +315,10 @@
                         </expectedContent>
                     </attribute>
                 </expectedAttributes>
-                <expectedContent/>
+                <!--tvar UUID podle RFC 4122, na které DMF odkazuje; velká i malá písmena, bez prefixu "uuid:" (issue #258)-->
+                <expectedContent>
+                    <regexp>^[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}$</regexp>
+                </expectedContent>
             </element>
 
             <element name="mods:identifier" specification="@type='isbn'" mandatory="false">

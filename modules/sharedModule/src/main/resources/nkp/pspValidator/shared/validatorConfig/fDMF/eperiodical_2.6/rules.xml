@@ -663,12 +663,16 @@
         <rule name="DC_IDENTIFIERS_CONTAIN_TYPE_AND_VALUE">
             <description>Identifikátory v Dublin Core záznamech by měly obsahovat typ a hodnotu oddělěné dvojtečkou
                 (např. barCode:2610161505).
+                Identifikátor typu uuid (např. uuid:21d5eff0-d9aa-11de-a7ba-000d606f5dc6) by měl mít hodnotu ve formátu UUID
+                podle RFC 4122.
             </description>
             <validation functionName="checkDcIdentifiersHaveTypeAndValue">
                 <params>
                     <value name="primary-mets_file" type="FILE">
                         <value-ref name="PRIMARY-METS_FILE"/>
                     </value>
+                    <!--DMF tvar hodnoty v DC nepopisují, proto jen WARNING (issue #258)-->
+                    <value name="check_uuid_format" type="BOOLEAN">true</value>
                 </params>
             </validation>
         </rule>

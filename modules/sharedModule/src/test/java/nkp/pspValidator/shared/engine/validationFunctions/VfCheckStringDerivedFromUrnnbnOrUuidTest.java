@@ -37,6 +37,27 @@ public class VfCheckStringDerivedFromUrnnbnOrUuidTest {
         assertFalse(vf.validate("b50eb6b0-f0a4-11e3-b72e-005056827e52", "b50eb6b0-f0a4-11e3-b72e-005056827e52", null).hasProblems());
     }
 
+    /**
+     * Issue #258: DMF odkazuji u UUID na RFC 4122 a velka pismena nezakazuji; UUID velkymi pismeny je platne a nazev
+     * balicku malymi pismeny je od nej odvozeny.
+     */
+    @Test
+    public void upperCaseUuidIsValidAndMatchesLowerCaseName() {
+        VfCheckStringDerivedFromUrnnbnOrUuid vf = new VfCheckStringDerivedFromUrnnbnOrUuid(VF_NAME, engine);
+        assertFalse(vf.validate("b50eb6b0-f0a4-11e3-b72e-005056827e52", "B50EB6B0-F0A4-11E3-B72E-005056827E52", null).hasProblems());
+        assertFalse(vf.validate("B50EB6B0-F0A4-11E3-B72E-005056827E52", "B50EB6B0-F0A4-11E3-B72E-005056827E52", null).hasProblems());
+    }
+
+    @Test
+    public void invalidUuidFormatIsError() {
+        VfCheckStringDerivedFromUrnnbnOrUuid vf = new VfCheckStringDerivedFromUrnnbnOrUuid(VF_NAME, engine);
+        for (String invalid : new String[]{"b50eb6b0-f0a4-11e3-b72e-005056827e5", "b50eb6b0-f0a4-11e3-b72e-005056827e5g"}) {
+            ValidationResult result = vf.validate(invalid, invalid, null);
+            assertEquals(Level.ERROR, result.getProblems().get(0).getLevel());
+            assertEquals("hodnota není ve formátu UUID", result.getProblems().get(0).getSimpleMessage());
+        }
+    }
+
     @Test
     public void derivedFromUuidWithPrefix() {
         VfCheckStringDerivedFromUrnnbnOrUuid vf = new VfCheckStringDerivedFromUrnnbnOrUuid(VF_NAME, engine);

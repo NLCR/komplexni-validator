@@ -51,6 +51,11 @@ def register(K, INTENDED, VEP_FIX):
 
     # --- úmyslné rozdíly KV ---
     # (KV #224: od 16. 11. 2026 mají fDMF e-publikací u duplicitních identifikátorů WARNING jako VEP, rozdíl zanikl)
+    K('KV #258: tvar UUID podle RFC 4122', INTENDED,
+      'KV kontroluje tvar UUID (8-4-4-4-12 hexadecimálních znaků) v MODS profilech všech e-fDMF (ERROR; VEP jen '
+      'u e-monografií 2.3, 2.4 a 3.0) a u hodnot dc:identifier typu uuid (WARNING, VEP vůbec). Všechny DMF pro '
+      'e-publikace odkazují u UUID na RFC 4122. Issue KV #258 (VEP #3).',
+      side='kv', msg=r"(uuid.*neodpovídá regulárním|typu uuid nemá hodnotu ve formátu UUID)")
     K('KV: doporučené elementy a atributy jako INFO', INTENDED,
       'Validátor metadat KV hlásí chybějící doporučené (nepovinné) elementy a atributy jako INFO; VEP je nehlásí. '
       'Týká se profilů hlavičky METS a bibliografických metadat.',

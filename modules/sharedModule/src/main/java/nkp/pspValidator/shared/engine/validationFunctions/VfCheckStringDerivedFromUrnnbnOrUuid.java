@@ -85,7 +85,8 @@ public class VfCheckStringDerivedFromUrnnbnOrUuid extends ValidationFunction {
                     .withReferencedValue(uuid));
             uuid = uuid.substring("uuid:".length());
         }
-        if (uuid != null && !uuid.matches("[a-f0-9]{8}(-[a-f0-9]{4}){3}-[a-f0-9]{12}")) {
+        // DMF odkazuji u UUID jen na RFC 4122 a velka pismena nezakazuji (issue #258); profily MODS je take prijimaji
+        if (uuid != null && !uuid.matches("[a-fA-F0-9]{8}(-[a-fA-F0-9]{4}){3}-[a-fA-F0-9]{12}")) {
             result.addError(new ValidationProblem(Level.ERROR, String.format("hodnota '%s' není ve formátu UUID", uuid))
                     .withSimpleMessage("hodnota není ve formátu UUID")
                     .withReferencedValue(uuid));
@@ -116,7 +117,8 @@ public class VfCheckStringDerivedFromUrnnbnOrUuid extends ValidationFunction {
         if (uuidWithoutPrefix == null) {
             return false;
         }
-        //aktuálně odvození znamená přesný match na obsah UUID bez prefixu "uuid:"
-        return string.equals(uuidWithoutPrefix);
+        //aktuálně odvození znamená match na obsah UUID bez prefixu "uuid:", bez ohledu na velikost písmen
+        //(názvy souborů a adresářů bývají malými písmeny, UUID v metadatech může být velkými)
+        return string.equalsIgnoreCase(uuidWithoutPrefix);
     }
 }
