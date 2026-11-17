@@ -40,6 +40,19 @@ public class ValidatorProtocolTextBuilderTest {
     }
 
     @Test
+    public void cestaKoncicLomitkemNemaCastUvnitrBalicku() throws Exception {
+        // za lomitkem nic neni, takze se hlaska porovnava jen s celou cestou a ta v ni neni
+        assertEquals("ERROR: hláška (soubor: balik/)", log("hláška", "balik/"));
+    }
+
+    @Test
+    public void absolutniCestaMimoBalicek() throws Exception {
+        // soubor mimo balicek se uvadi absolutni cestou; hlaska, ktera ji uz obsahuje, ji nedostane podruhe
+        assertEquals("ERROR: hláška (soubor: /jinde/a.pdf)", log("hláška", "/jinde/a.pdf"));
+        assertEquals("ERROR: soubor /jinde/a.pdf je vadný", log("soubor /jinde/a.pdf je vadný", "/jinde/a.pdf"));
+    }
+
+    @Test
     public void relativniCesta() {
         File root = new File("/tmp/balik");
         // od adresare balicku vcetne, jako v XML protokolu; mimo balicek absolutni cesta

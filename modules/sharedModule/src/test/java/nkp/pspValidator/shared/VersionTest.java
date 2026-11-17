@@ -1,6 +1,10 @@
 package nkp.pspValidator.shared;
 
 import nkp.pspValidator.shared.engine.exceptions.ValidatorConfigurationException;
+import nkp.pspValidator.shared.externalUtils.ExternalUtil;
+import nkp.pspValidator.shared.externalUtils.ExternalUtilsTestSupport.CannedOutputExternalUtilManager;
+import nkp.pspValidator.shared.externalUtils.ResourceType;
+import nkp.pspValidator.shared.externalUtils.validation.BinaryFileValidator;
 import nkp.pspValidator.shared.metadataProfile.DictionaryManager;
 import nkp.pspValidator.shared.metadataProfile.MetadataProfileParser;
 import org.junit.Rule;
@@ -10,6 +14,8 @@ import org.junit.rules.TemporaryFolder;
 import java.io.File;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
+import java.nio.file.Path;
+import java.util.stream.Stream;
 
 import static org.junit.Assert.*;
 
@@ -103,6 +109,72 @@ public class VersionTest {
         } catch (ValidatorConfigurationException e) {
             assertTrue(e.getMessage(), e.getMessage().contains("nesouhlasí verze validátoru"));
         }
+    }
+
+    @Test
+    public void binaryFileProfileUsesMajorCheck() throws Exception {
+        String major = Version.majorVersion(Version.VERSION_CODE).toString();
+
+        //stejny major, jina minor: projde
+        registerBinaryFileProfile(major + ".9");
+        //jiny major: neprojde
+        try {
+            registerBinaryFileProfile((Integer.parseInt(major) - 1) + ".9");
+            fail("profil binarniho souboru s jinou major verzi mel byt odmitnut");
+        } catch (ValidatorConfigurationException e) {
+            assertTrue(e.getMessage(), e.getMessage().contains("nesouhlasí verze validátoru"));
+        }
+    }
+
+    @Test
+    public void fdmfConfigurationUsesMajorCheck() throws Exception {
+        String major = Version.majorVersion(Version.VERSION_CODE).toString();
+        File configDir = new File("src/main/resources/nkp/pspValidator/shared/validatorConfig");
+        File xsdDir = new File(configDir, "xsd");
+        File fdmfConfigXsd = new File(xsdDir, "fdmfConfig.xsd");
+        File binaryFileProfileXsd = new File(xsdDir, "binaryFileProfile.xsd");
+        File metadataProfileXsd = new File(xsdDir, "metadataProfile.xsd");
+
+        //kopie fDMF beze zmeny: projde
+        File fdmfRoot = copyDir(new File(configDir, "fDMF/data_disc_0.1"), tmp.newFolder("data_disc_0.1"));
+        new FdmfConfiguration(fdmfRoot, fdmfConfigXsd, binaryFileProfileXsd, metadataProfileXsd);
+
+        //jiny major v jedinem konfiguracnim souboru: cela fDMF neprojde
+        File rules = new File(fdmfRoot, "rules.xml");
+        String original = new String(Files.readAllBytes(rules.toPath()), StandardCharsets.UTF_8);
+        String otherMajor = "validatorVersion=\"" + (Integer.parseInt(major) - 1) + ".9\"";
+        String changed = original.replaceFirst("validatorVersion=\"[^\"]*\"", otherMajor);
+        assertTrue("rules.xml nema atribut validatorVersion", changed.contains(otherMajor));
+        Files.write(rules.toPath(), changed.getBytes(StandardCharsets.UTF_8));
+        try {
+            new FdmfConfiguration(fdmfRoot, fdmfConfigXsd, binaryFileProfileXsd, metadataProfileXsd);
+            fail("fDMF s jinou major verzi v rules.xml mela byt odmitnuta");
+        } catch (ValidatorConfigurationException e) {
+            assertTrue(e.getMessage(), e.getMessage().contains("nesouhlasí verze validátoru"));
+            assertTrue(e.getMessage(), e.getMessage().contains(rules.getAbsolutePath()));
+        }
+    }
+
+    private void registerBinaryFileProfile(String validatorVersion) throws Exception {
+        File file = tmp.newFile();
+        String xml = "<binaryFileProfile xmlns=\"http://www.nkp.cz/pspValidator/3.0/binaryFileProfile\" validatorVersion=\""
+                + validatorVersion + "\" dmf=\"test\"><fromText/></binaryFileProfile>";
+        Files.write(file.toPath(), xml.getBytes(StandardCharsets.UTF_8));
+        new BinaryFileValidator(new CannedOutputExternalUtilManager()).registerProfile(ResourceType.IMAGE_MASTER_COPY, ExternalUtil.KAKADU, file);
+    }
+
+    private static File copyDir(File source, File target) throws Exception {
+        try (Stream<Path> paths = Files.walk(source.toPath())) {
+            for (Path path : (Iterable<Path>) paths::iterator) {
+                Path copy = target.toPath().resolve(source.toPath().relativize(path).toString());
+                if (Files.isDirectory(path)) {
+                    Files.createDirectories(copy);
+                } else {
+                    Files.copy(path, copy);
+                }
+            }
+        }
+        return target;
     }
 
     private File profile(String validatorVersion) throws Exception {
