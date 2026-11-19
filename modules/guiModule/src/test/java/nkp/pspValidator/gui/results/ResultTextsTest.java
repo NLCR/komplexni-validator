@@ -74,4 +74,20 @@ public class ResultTextsTest {
         assertEquals("Nástroje: 1 z 1 dostupného", ResultTexts.toolsAvailable(1, 1));
         assertEquals("Konfigurace: 39 fDMF", ResultTexts.fdmfCount(39));
     }
+
+    @Test
+    public void elapsedTicksByWholeSeconds() {
+        assertEquals("0:00", ResultTexts.elapsed(0));
+        assertEquals("0:00", ResultTexts.elapsed(999));
+        assertEquals("0:01", ResultTexts.elapsed(1000));
+        assertEquals("0:41", ResultTexts.elapsed(41_500));
+        assertEquals("0:59", ResultTexts.elapsed(59_999));
+        assertEquals("1:00", ResultTexts.elapsed(60_000));
+        assertEquals("12:05", ResultTexts.elapsed(725_000));
+        assertEquals("59:59", ResultTexts.elapsed(3_599_999));
+        assertEquals("1:00:00", ResultTexts.elapsed(3_600_000));
+        assertEquals("1:02:03", ResultTexts.elapsed(3_723_000));
+        //cas pred spustenim (posun hodin) se zobrazi jako nula
+        assertEquals("0:00", ResultTexts.elapsed(-5000));
+    }
 }

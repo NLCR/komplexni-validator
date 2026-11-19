@@ -8,8 +8,8 @@ import java.util.Map;
 
 /**
  * Obsah horní lišty hlavního okna (název balíku, podtitul, verdikt a počty problémů) v jednotlivých fázích validace.
- * Počty a verdikt se jen přebírají z jádra ({@code ValidationState.ProgressListener.onValidationsFinish}), nepočítají
- * se znovu. Bez JavaFX.
+ * Verdikt a celkové počty se jen přebírají z jádra ({@code ValidationState.ProgressListener.onValidationsFinish}),
+ * nepočítají se znovu; průběžné počty během běhu dodává {@link ValidationProgress}. Bez JavaFX.
  */
 public final class ResultHeader {
 
@@ -23,28 +23,28 @@ public final class ResultHeader {
     private final String subtitle;
     private final String verdictText;
     private final String verdictStyleClass;
-    private final int errors;
-    private final int warnings;
-    private final int infos;
+    /** null = počty se nezobrazují */
+    private final ProblemCounts counts;
 
     private ResultHeader(Phase phase, String title, String subtitle, String verdictText, String verdictStyleClass,
-                         int errors, int warnings, int infos) {
+                         ProblemCounts counts) {
         this.phase = phase;
         this.title = title;
         this.subtitle = subtitle;
         this.verdictText = verdictText;
         this.verdictStyleClass = verdictStyleClass;
-        this.errors = errors;
-        this.warnings = warnings;
-        this.infos = infos;
+        this.counts = counts;
     }
 
     /**
-     * @param dmf typ a verze, podle kterých se validuje, nebo null, dokud nejsou rozpoznány
+     * @param dmf       typ a verze, podle kterých se validuje, nebo null, dokud nejsou rozpoznány
+     * @param elapsedMs doba od spuštění validace (tiká po sekundách)
+     * @param found     průběžné počty problémů z dokončených pravidel, null před načtením pravidel (odznaky se skryjí)
      */
-    public static ResultHeader running(String packageName, Dmf dmf) {
-        String subtitle = dmf == null ? "Rozpoznávám typ balíku, validace běží" : dmf + ", validace běží";
-        return new ResultHeader(Phase.RUNNING, packageName, subtitle, null, null, 0, 0, 0);
+    public static ResultHeader running(String packageName, Dmf dmf, long elapsedMs, ProblemCounts found) {
+        String time = ResultTexts.elapsed(elapsedMs);
+        String subtitle = dmf == null ? "Rozpoznávám typ balíku, validace běží " + time : dmf + ", validace běží " + time;
+        return new ResultHeader(Phase.RUNNING, packageName, subtitle, null, null, found);
     }
 
     /**
@@ -55,29 +55,26 @@ public final class ResultHeader {
                                         long durationMs, LocalDateTime finishedAt) {
         String subtitle = dmf + ", validováno " + ResultTexts.dateTime(finishedAt) + ", trvalo " + ResultTexts.duration(durationMs);
         return new ResultHeader(Phase.FINISHED, packageName, subtitle,
-                valid ? "Validní" : "Nevalidní", valid ? "verdict-valid" : "verdict-invalid",
-                count(problemsByLevel, Level.ERROR), count(problemsByLevel, Level.WARNING), count(problemsByLevel, Level.INFO));
+                valid ? "Validní" : "Nevalidní", valid ? "verdict-valid" : "verdict-invalid", ProblemCounts.of(problemsByLevel));
     }
 
     /**
-     * Validace skončila výjimkou (například nerozpoznaný typ nebo chybějící fDMF); podrobnost je ve stavovém řádku.
+     * Validace skončila výjimkou (například nerozpoznaný typ, chybějící fDMF nebo chyba během pravidla); podrobnost
+     * je v hlášce v okně.
+     *
+     * @param found počty problémů z pravidel dokončených před chybou, null, když se pravidla nenačetla (odznaky se skryjí)
      */
-    public static ResultHeader failed(String packageName, Dmf dmf) {
+    public static ResultHeader failed(String packageName, Dmf dmf, ProblemCounts found) {
         String subtitle = dmf == null ? "Validace skončila chybou" : dmf + ", validace skončila chybou";
-        return new ResultHeader(Phase.FAILED, packageName, subtitle, "Chyba", "verdict-invalid", 0, 0, 0);
+        return new ResultHeader(Phase.FAILED, packageName, subtitle, "Chyba", "verdict-invalid", found);
     }
 
-    public static ResultHeader stopped(String packageName, Dmf dmf) {
+    /**
+     * @param found počty problémů z pravidel dokončených před zrušením, null, když se pravidla nenačetla (odznaky se skryjí)
+     */
+    public static ResultHeader stopped(String packageName, Dmf dmf, ProblemCounts found) {
         String subtitle = dmf == null ? "Validace zrušena" : dmf + ", validace zrušena";
-        return new ResultHeader(Phase.STOPPED, packageName, subtitle, "Zrušeno", "verdict-none", 0, 0, 0);
-    }
-
-    private static int count(Map<Level, Integer> byLevel, Level level) {
-        if (byLevel == null) {
-            return 0;
-        }
-        Integer count = byLevel.get(level);
-        return count == null ? 0 : count;
+        return new ResultHeader(Phase.STOPPED, packageName, subtitle, "Zrušeno", "verdict-none", found);
     }
 
     public Phase getPhase() {
@@ -102,33 +99,36 @@ public final class ResultHeader {
         return verdictStyleClass;
     }
 
-    /** Počty problémů se zobrazují jen u dokončené validace (jen tehdy jsou z jádra celkové počty). */
+    /**
+     * Počty problémů: u dokončené validace celkové z jádra, během běhu, po zrušení a po chybě průběžné (z dokončených
+     * pravidel); nezobrazují se, dokud jádro neohlásí pravidla.
+     */
     public boolean isCountsVisible() {
-        return phase == Phase.FINISHED;
+        return counts != null;
     }
 
     public int getErrors() {
-        return errors;
+        return counts == null ? 0 : counts.getErrors();
     }
 
     public int getWarnings() {
-        return warnings;
+        return counts == null ? 0 : counts.getWarnings();
     }
 
     public int getInfos() {
-        return infos;
+        return counts == null ? 0 : counts.getInfos();
     }
 
     public String getErrorsText() {
-        return ResultTexts.errors(errors);
+        return ResultTexts.errors(getErrors());
     }
 
     public String getWarningsText() {
-        return ResultTexts.warnings(warnings);
+        return ResultTexts.warnings(getWarnings());
     }
 
     public String getInfosText() {
-        return ResultTexts.infos(infos);
+        return ResultTexts.infos(getInfos());
     }
 
     /** „Validovat znovu“ jde jen mimo běh validace. */

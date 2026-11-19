@@ -505,6 +505,68 @@
     -fx-background-color: -kv-none;
 }
 
+/* panel prubehu validace pod horni listou (jen behem behu) */
+.progress-pane {
+    -fx-padding: 12 16 6 16;
+    -fx-spacing: 6;
+}
+
+.progress-line {
+    -fx-alignment: center-left;
+    -fx-spacing: 16;
+}
+
+.progress-title {
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-text-fill: -kv-text;
+}
+
+.progress-counts {
+    -fx-text-fill: -kv-text-muted;
+}
+
+.progress-main {
+    -fx-pref-height: 10;
+}
+
+.progress-main > .track {
+    -fx-background-color: -kv-border;
+    -fx-background-insets: 0;
+    -fx-background-radius: 5;
+}
+
+.progress-main > .bar {
+    -fx-background-color: -kv-primary;
+    -fx-background-insets: 0;
+    -fx-background-radius: 5;
+    -fx-padding: 5;
+}
+
+.progress-detail {
+    -fx-font-size: 12px;
+    -fx-text-fill: -kv-text-muted;
+}
+
+/* hlaska po zruseni nebo chybe validace nad dilcimi vysledky */
+.notice-bar {
+    -fx-padding: 10 16 0 16;
+}
+
+.notice-bar > .label {
+    -fx-background-radius: 5;
+    -fx-padding: 8 12 8 12;
+    -fx-text-fill: -kv-text;
+}
+
+.notice-bar.notice-stopped > .label {
+    -fx-background-color: -kv-warning-tint;
+}
+
+.notice-bar.notice-failed > .label {
+    -fx-background-color: -kv-error-tint;
+}
+
 /* prazdny stav a hlaska misto vysledku */
 .empty-state {
     -fx-alignment: center;
@@ -640,6 +702,15 @@
 .row-name-muted,
 .row-state {
     -fx-text-fill: -kv-text-muted;
+}
+
+/* bezici sekce nebo pravidlo */
+.row-name-running {
+    -fx-font-weight: bold;
+}
+
+.row-state-running {
+    -fx-text-fill: -kv-primary;
 }
 
 .count-error,

@@ -346,6 +346,10 @@ tasks.register('jpackage', Exec) {
 //  krok rerun pak "Validovat znovu", krok small zmensi hlavni okno na 1000 x 640 (vlastnost kv.snapshotValidate)
 //  -PsnapshotDisable=JHOVE,KAKADU - nastroje vypnute pro validaci v kroku results (vlastnost kv.snapshotDisable)
 //  -PsnapshotRunningMs=<ms> - v kroku results i snimek running.png za danou dobu od spusteni (vlastnost kv.snapshotRunningMs)
+//  krok progress: validace se pozastavi v definovanych bodech a vyfoti se prubeh (viz javadoc SnapshotMode);
+//  -PsnapshotPauseAt=0.5 - kde se pozastavi (podil pravidel nebo pocet pravidel, vlastnost kv.snapshotPauseAt),
+//  -PsnapshotProgressEnd=finish|cancel|fail - jak validace skonci (vlastnost kv.snapshotProgressEnd)
+//  krok stress: synteticke udalosti jadra, mereni odezvy UI (bez validatoru)
 //  -PsnapshotConfigFile=<soubor> - soubor nastaveni (vlastnost kv.configFile) misto vychoziho config.properties v pracovnim
 //  adresari modulu, aby snimky nezahrnovaly osobni nastaveni; soubor nemusi existovat (vznikne s vychozimi hodnotami),
 //  ale pri spusteni z Gradle musi obsahovat aspon validatorConfig.dir=<adresar validatorConfig> (a nejlepe validation.log_dir),
@@ -378,6 +382,12 @@ tasks.register('runSnapshots', JavaExec) {
     }
     if (project.hasProperty('snapshotRunningMs')) {
         systemProperty 'kv.snapshotRunningMs', project.property('snapshotRunningMs')
+    }
+    if (project.hasProperty('snapshotPauseAt')) {
+        systemProperty 'kv.snapshotPauseAt', project.property('snapshotPauseAt')
+    }
+    if (project.hasProperty('snapshotProgressEnd')) {
+        systemProperty 'kv.snapshotProgressEnd', project.property('snapshotProgressEnd')
     }
     if (project.hasProperty('maxDialogHeight')) { //simulace mensiho displeje
         systemProperty 'kv.maxDialogHeight', project.property('maxDialogHeight')

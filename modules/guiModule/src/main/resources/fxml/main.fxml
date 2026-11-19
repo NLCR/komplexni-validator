@@ -5,7 +5,8 @@
 <?import javafx.scene.layout.*?>
 
 <!--
-Hlavni okno: menu, horni lista se souhrnem validace (jen po spusteni validace), uprostred prazdny stav, hlaska
+Hlavni okno: menu, horni lista se souhrnem validace (jen po spusteni validace), pod ni behem behu panel prubehu
+a po zruseni nebo chybe hlaska, uprostred prazdny stav, hlaska
 (chyba nebo zruseni pred nactenim sekci) nebo vysledky (filtr, sekce, pravidla, problemy) a dole stavovy radek.
 Vzhled v base.css (trida main-root a nasledujici).
 -->
@@ -19,14 +20,14 @@ Vzhled v base.css (trida main-root a nasledujici).
                 <menus>
                     <Menu fx:id="menuValidate" text="Validovat">
                         <items>
-                            <MenuItem onAction="#showNewValidationDialog" text="Nová validace…" accelerator="Shortcut+N"/>
+                            <MenuItem fx:id="newValidationMenuItem" onAction="#showNewValidationDialog"
+                                      text="Nová validace…" accelerator="Shortcut+N"/>
                             <MenuItem fx:id="rerunMenuItem" onAction="#rerunValidation" text="Validovat znovu"
                                       accelerator="Shortcut+R" disable="true"/>
-                        </items>
-                    </Menu>
-                    <Menu fx:id="menuValidation" text="Validace" disable="true">
-                        <items>
-                            <MenuItem onAction="#stopValidation" text="Zrušit probíhající validaci"/>
+                            <SeparatorMenuItem/>
+                            <!--zkratka podle platformy (Cmd+. na macOS, jinde Esc) se nastavuje v MainController-->
+                            <MenuItem fx:id="cancelMenuItem" onAction="#stopValidation" text="Zrušit validaci"
+                                      disable="true"/>
                         </items>
                     </Menu>
                     <Menu fx:id="menuSettings" text="Nastavení">
@@ -73,6 +74,22 @@ Vzhled v base.css (trida main-root a nasledujici).
                         onAction="#rerunValidation"/>
                 <Button fx:id="cancelButton" text="Zrušit validaci" styleClass="button-secondary" minWidth="-Infinity"
                         onAction="#stopValidation"/>
+            </HBox>
+
+            <!--prubeh validace (jen behem behu): sekce, pocty pravidel, ukazatel a bezici pravidlo-->
+            <VBox fx:id="progressPane" styleClass="progress-pane" visible="false" managed="false">
+                <HBox styleClass="progress-line">
+                    <Label fx:id="progressTitle" styleClass="progress-title" minWidth="0" maxWidth="Infinity"
+                           HBox.hgrow="ALWAYS"/>
+                    <Label fx:id="progressCounts" styleClass="progress-counts" minWidth="-Infinity"/>
+                </HBox>
+                <ProgressBar fx:id="progressBar" styleClass="progress-main" maxWidth="Infinity" progress="-1"/>
+                <Label fx:id="progressDetail" styleClass="progress-detail" minWidth="0"/>
+            </VBox>
+
+            <!--hlaska po zruseni nebo chybe validace, kdyz uz jsou zobrazene dilci vysledky-->
+            <HBox fx:id="noticeBar" styleClass="notice-bar" visible="false" managed="false">
+                <Label fx:id="noticeText" wrapText="true" maxWidth="Infinity" HBox.hgrow="ALWAYS"/>
             </HBox>
         </VBox>
     </top>
@@ -147,7 +164,6 @@ Vzhled v base.css (trida main-root a nasledujici).
     <bottom>
         <HBox styleClass="status-bar">
             <StackPane styleClass="status-marker">
-                <ProgressIndicator fx:id="statusProgressIndicator" styleClass="row-spinner" visible="false"/>
                 <Region fx:id="statusDot" visible="false"/>
             </StackPane>
             <Label fx:id="statusText" minWidth="0"/>

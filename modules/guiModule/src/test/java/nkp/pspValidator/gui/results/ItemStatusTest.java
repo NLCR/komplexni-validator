@@ -17,6 +17,8 @@ public class ItemStatusTest {
         assertStatus(ItemStatus.RUNNING, "status-dot-running", "probíhá", ItemStatus.of(ProcessingState.RUNNING, 5, 5));
         assertStatus(ItemStatus.SKIPPED, "status-dot-none", "přeskočeno", ItemStatus.of(ProcessingState.SKIPPED, 0, 0));
         assertStatus(ItemStatus.CANCELED, "status-dot-none", "zrušeno", ItemStatus.of(ProcessingState.CANCELED, 1, 0));
+        //nedokonceno kvuli chybe validace: text misto poctu i s nalezenou chybou
+        assertStatus(ItemStatus.INTERRUPTED, "status-dot-none", "nedokončeno", ItemStatus.of(ProcessingState.INTERRUPTED, 1, 0));
     }
 
     @Test

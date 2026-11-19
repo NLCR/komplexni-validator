@@ -20,6 +20,8 @@
 .verdict,
 .empty-title,
 .panel-header,
-.level-badge {
+.level-badge,
+.progress-title,
+.row-name-running {
     -fx-font-family: "Arial";
 }

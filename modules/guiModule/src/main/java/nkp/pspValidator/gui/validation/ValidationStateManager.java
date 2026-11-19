@@ -68,10 +68,25 @@ public class ValidationStateManager {
         return sectionsObservable;
     }
 
+    /**
+     * Stav sekce. U přeskočené sekce dostanou stav „přeskočeno“ i její pravidla (jádro je jednotlivě nehlásí, jinak by
+     * zůstala „čeká“).
+     */
     public void updateSectionStatus(Integer sectionId, ProcessingState state) {
         SectionWithState section = sectionsById.get(sectionId);
         section.setState(state);
         updateSectionObservable(section);
+        if (state == ProcessingState.SKIPPED) {
+            ObservableList<RuleWithState> rules = rulesObservableBySectionId.get(sectionId);
+            if (rules != null) {
+                for (RuleWithState rule : rules) {
+                    if (rule.getState() == ProcessingState.WAITING) {
+                        rule.setState(ProcessingState.SKIPPED);
+                        updateRuleObservable(rule);
+                    }
+                }
+            }
+        }
     }
 
     private void updateSectionObservable(SectionWithState updated) {
@@ -162,6 +177,29 @@ public class ValidationStateManager {
         problemsObservableBySectionAndRuleId.put(new Pair<>(sectionId, ruleId), FXCollections.observableList(problems));
         //TODO: mozna prekreslit
         updateRuleObservable(rule);
+    }
+
+    /**
+     * Po zrušení nebo chybě validace: sekce a pravidla, která čekala nebo běžela, dostanou daný stav (zrušeno,
+     * nedokončeno). Dokončené a přeskočené položky se nemění. Volá se jednou na konci validace.
+     */
+    public void markUnfinished(ProcessingState state) {
+        for (SectionWithState section : sectionsById.values()) {
+            if (isUnfinished(section.getState())) {
+                section.setState(state);
+                updateSectionObservable(section);
+            }
+        }
+        for (RuleWithState rule : rulesByIds.values()) {
+            if (isUnfinished(rule.getState())) {
+                rule.setState(state);
+                updateRuleObservable(rule);
+            }
+        }
+    }
+
+    private static boolean isUnfinished(ProcessingState state) {
+        return state == ProcessingState.WAITING || state == ProcessingState.RUNNING;
     }
 
     /**

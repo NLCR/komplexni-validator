@@ -13,7 +13,8 @@ import nkp.pspValidator.gui.results.ResultTexts;
 
 /**
  * Společný řádek seznamu sekcí a pravidel v hlavním okně: tečka stavu (během běhu malý ukazatel), název a vpravo
- * počty problémů zobrazených úrovní, nebo stav („čeká“, „probíhá“, „přeskočeno“, „zrušeno“). Vzhled v base.css.
+ * počty problémů zobrazených úrovní, nebo stav („čeká“, „probíhá“, „přeskočeno“, „zrušeno“, „nedokončeno“). Běžící položka má tučný název. Vzhled
+ * v base.css.
  */
 class ResultRowSupport {
 
@@ -65,9 +66,15 @@ class ResultRowSupport {
         stateText.setText(showState ? status.getText() : null);
         stateText.setVisible(showState);
         stateText.setManaged(showState);
-        name.getStyleClass().remove("row-name-muted");
-        if (status == ItemStatus.WAITING || status == ItemStatus.SKIPPED || status == ItemStatus.CANCELED) {
+        name.getStyleClass().removeAll("row-name-muted", "row-name-running");
+        stateText.getStyleClass().remove("row-state-running");
+        if (status == ItemStatus.WAITING || status == ItemStatus.SKIPPED || status == ItemStatus.CANCELED
+                || status == ItemStatus.INTERRUPTED) {
             name.getStyleClass().add("row-name-muted");
+        } else if (running) {
+            //bezici polozka je zvyraznena, ale neni vybrana (vyber patri uzivateli)
+            name.getStyleClass().add("row-name-running");
+            stateText.getStyleClass().add("row-state-running");
         }
     }
 

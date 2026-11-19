@@ -59,6 +59,25 @@ public final class ResultTexts {
         return (minutes / 60) + " h " + (minutes % 60) + " min";
     }
 
+    /**
+     * Uplynulý čas běžící validace po celých sekundách (zaokrouhleno dolů, aby údaj tikal pravidelně): „0:41“,
+     * „12:05“, od hodiny „1:02:03“.
+     */
+    public static String elapsed(long millis) {
+        long seconds = Math.max(0, millis) / 1000;
+        long hours = seconds / 3600;
+        long minutes = (seconds % 3600) / 60;
+        long secs = seconds % 60;
+        if (hours > 0) {
+            return hours + ":" + twoDigits(minutes) + ":" + twoDigits(secs);
+        }
+        return minutes + ":" + twoDigits(secs);
+    }
+
+    private static String twoDigits(long value) {
+        return value < 10 ? "0" + value : String.valueOf(value);
+    }
+
     /** „19. 11. 2026 14:02“. */
     public static String dateTime(LocalDateTime time) {
         return DATE_TIME.format(time);

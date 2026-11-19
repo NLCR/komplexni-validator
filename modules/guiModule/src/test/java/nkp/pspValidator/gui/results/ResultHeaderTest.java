@@ -70,35 +70,63 @@ public class ResultHeaderTest {
 
     @Test
     public void running() {
-        ResultHeader beforeDetection = ResultHeader.running("nk-00027x", null);
+        ResultHeader beforeDetection = ResultHeader.running("nk-00027x", null, 3_000, null);
         assertEquals(ResultHeader.Phase.RUNNING, beforeDetection.getPhase());
         assertEquals("nk-00027x", beforeDetection.getTitle());
-        assertEquals("Rozpoznávám typ balíku, validace běží", beforeDetection.getSubtitle());
+        assertEquals("Rozpoznávám typ balíku, validace běží 0:03", beforeDetection.getSubtitle());
         assertNull(beforeDetection.getVerdictText());
         assertNull(beforeDetection.getVerdictStyleClass());
+        //pravidla jeste nejsou nactena: bez odznaku
         assertFalse(beforeDetection.isCountsVisible());
         assertTrue(beforeDetection.isRunning());
-        assertEquals("Jednotky fondu 0.2, validace běží", ResultHeader.running("nk-00027x", FUND_UNIT).getSubtitle());
+
+        ResultHeader withCounts = ResultHeader.running("nk-00027x", FUND_UNIT, 41_000, new ProblemCounts(2, 0, 5));
+        assertEquals("Jednotky fondu 0.2, validace běží 0:41", withCounts.getSubtitle());
+        assertTrue(withCounts.isCountsVisible());
+        assertNull(withCounts.getVerdictText());
+        assertEquals(2, withCounts.getErrors());
+        assertEquals(0, withCounts.getWarnings());
+        assertEquals(5, withCounts.getInfos());
+        assertEquals("2 chyby", withCounts.getErrorsText());
+        assertEquals("0 varování", withCounts.getWarningsText());
+        assertEquals("5 informací", withCounts.getInfosText());
     }
 
     @Test
     public void failedAndStopped() {
-        ResultHeader failed = ResultHeader.failed("b", null);
+        ResultHeader failed = ResultHeader.failed("b", null, null);
         assertEquals(ResultHeader.Phase.FAILED, failed.getPhase());
         assertEquals("Validace skončila chybou", failed.getSubtitle());
         assertEquals("Chyba", failed.getVerdictText());
         assertEquals("verdict-invalid", failed.getVerdictStyleClass());
         assertFalse(failed.isCountsVisible());
         assertFalse(failed.isRunning());
-        assertEquals("Jednotky fondu 0.2, validace skončila chybou", ResultHeader.failed("b", FUND_UNIT).getSubtitle());
+        assertEquals(0, failed.getErrors());
+        assertEquals("Jednotky fondu 0.2, validace skončila chybou", ResultHeader.failed("b", FUND_UNIT, null).getSubtitle());
 
-        ResultHeader stopped = ResultHeader.stopped("b", FUND_UNIT);
+        ResultHeader stopped = ResultHeader.stopped("b", FUND_UNIT, null);
         assertEquals(ResultHeader.Phase.STOPPED, stopped.getPhase());
         assertEquals("Jednotky fondu 0.2, validace zrušena", stopped.getSubtitle());
         assertEquals("Zrušeno", stopped.getVerdictText());
         assertEquals("verdict-none", stopped.getVerdictStyleClass());
         assertFalse(stopped.isCountsVisible());
         assertFalse(stopped.isRunning());
-        assertEquals("Validace zrušena", ResultHeader.stopped("b", null).getSubtitle());
+        assertEquals("Validace zrušena", ResultHeader.stopped("b", null, null).getSubtitle());
+    }
+
+    @Test
+    public void partialCountsAfterStopOrFailure() {
+        //po zruseni nebo chybe zustanou pocty z pravidel dokoncenych do te doby
+        ResultHeader stopped = ResultHeader.stopped("b", FUND_UNIT, new ProblemCounts(1, 3, 7));
+        assertTrue(stopped.isCountsVisible());
+        assertEquals("1 chyba", stopped.getErrorsText());
+        assertEquals("3 varování", stopped.getWarningsText());
+        assertEquals("7 informací", stopped.getInfosText());
+        assertEquals("Zrušeno", stopped.getVerdictText());
+
+        ResultHeader failed = ResultHeader.failed("b", FUND_UNIT, ProblemCounts.ZERO);
+        assertTrue(failed.isCountsVisible());
+        assertEquals("0 chyb", failed.getErrorsText());
+        assertEquals("Chyba", failed.getVerdictText());
     }
 }

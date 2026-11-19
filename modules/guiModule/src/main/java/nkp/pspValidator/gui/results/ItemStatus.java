@@ -11,6 +11,7 @@ public enum ItemStatus {
     RUNNING("status-dot-running", "probíhá"),
     SKIPPED("status-dot-none", "přeskočeno"),
     CANCELED("status-dot-none", "zrušeno"),
+    INTERRUPTED("status-dot-none", "nedokončeno"),
     OK("status-dot-ok", null),
     WARNING("status-dot-warning", null),
     ERROR("status-dot-error", null);
@@ -37,6 +38,8 @@ public enum ItemStatus {
                 return SKIPPED;
             case CANCELED:
                 return CANCELED;
+            case INTERRUPTED:
+                return INTERRUPTED;
             case FINISHED:
                 if (errors > 0) {
                     return ERROR;

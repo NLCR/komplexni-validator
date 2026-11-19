@@ -1,5 +1,7 @@
 package nkp.pspValidator.gui;
 
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.application.Platform;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
@@ -15,13 +17,16 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 import nkp.pspValidator.gui.newvalidation.DocumentTypes;
 import nkp.pspValidator.gui.newvalidation.ValidationRequest;
 import nkp.pspValidator.gui.newvalidation.ValidationSource;
+import nkp.pspValidator.gui.results.ProblemCounts;
 import nkp.pspValidator.gui.results.ProblemFilter;
 import nkp.pspValidator.gui.results.RerunState;
 import nkp.pspValidator.gui.results.ResultHeader;
 import nkp.pspValidator.gui.results.ResultTexts;
+import nkp.pspValidator.gui.results.ValidationProgress;
 import nkp.pspValidator.gui.validation.*;
 import nkp.pspValidator.shared.*;
 import nkp.pspValidator.shared.engine.Level;
@@ -40,10 +45,15 @@ import java.util.*;
 import java.util.logging.Logger;
 
 /**
- * Hlavní okno: prázdný stav, horní lišta se souhrnem validace („Validovat znovu“), filtr a tři panely výsledků
- * (sekce, pravidla vybrané sekce, problémy vybraného pravidla) a stavový řádek. Logika souhrnu, filtru a opakování
+ * Hlavní okno: prázdný stav, horní lišta se souhrnem validace („Validovat znovu“, během běhu „Zrušit validaci“
+ * a uplynulý čas), během běhu panel průběhu, po zrušení nebo chybě hláška, filtr a tři panely výsledků (sekce,
+ * pravidla vybrané sekce, problémy vybraného pravidla) a stavový řádek. Logika souhrnu, průběhu, filtru a opakování
  * validace je v balíčku {@code gui.results} (bez JavaFX), počty a stavy sekcí a pravidel dodává jádro přes
- * {@link ValidationState.ProgressListener} do {@link ValidationStateManager}.
+ * {@link ValidationState.ProgressListener} do {@link ValidationStateManager} a {@link ValidationProgress}.
+ * <p>
+ * Události jádra chodí z vlákna validace a do vlákna UI se předávají přes {@code Platform.runLater} v pořadí, v jakém
+ * přišly. Hotové sekce lze během běhu procházet: průběh výběr v seznamech nemění a seznam problémů se přestaví jen
+ * při změně výběru nebo při dokončení právě vybraného pravidla.
  * <p>
  * Created by Martin Řehánek on 9.12.16.
  */
@@ -66,9 +76,11 @@ public class MainController extends AbstractController implements ValidationStat
     @FXML
     Menu menuValidate;
     @FXML
+    MenuItem newValidationMenuItem;
+    @FXML
     MenuItem rerunMenuItem;
     @FXML
-    Menu menuValidation;
+    MenuItem cancelMenuItem;
     @FXML
     Menu menuSettings;
     @FXML
@@ -103,6 +115,22 @@ public class MainController extends AbstractController implements ValidationStat
     Button rerunButton;
     @FXML
     Button cancelButton;
+
+    //prubeh a hlaska po zruseni nebo chybe
+    @FXML
+    VBox progressPane;
+    @FXML
+    Label progressTitle;
+    @FXML
+    Label progressCounts;
+    @FXML
+    ProgressBar progressBar;
+    @FXML
+    Label progressDetail;
+    @FXML
+    HBox noticeBar;
+    @FXML
+    Label noticeText;
 
     //prazdny stav a hlaska
     @FXML
@@ -152,8 +180,6 @@ public class MainController extends AbstractController implements ValidationStat
     @FXML
     Label statusText;
     @FXML
-    ProgressIndicator statusProgressIndicator;
-    @FXML
     Region statusDot;
 
     //data probihajici nebo posledni validace
@@ -163,6 +189,13 @@ public class MainController extends AbstractController implements ValidationStat
     private RuleWithState selectedRule;
     private File pspDir;
     private volatile Dmf dmf;
+    /** průběh pro panel průběhu a průběžné počty, null do ohlášení pravidel jádrem */
+    private ValidationProgress progress;
+    private long runStartedAt;
+    /** tiká po sekundách během běhu (uplynulý čas v horní liště) */
+    private Timeline elapsedTimer;
+    /** jen pro SnapshotMode: zastavení vlákna validace v definovaném bodě */
+    private volatile RunHook runHook;
     private ValidationRequest currentRequest;
 
     private File logTxtFile;
@@ -217,8 +250,20 @@ public class MainController extends AbstractController implements ValidationStat
             box.selectedProperty().addListener((obs, oldValue, newValue) -> applyFilter());
         }
         initCopyActions();
+        cancelMenuItem.setAccelerator(cancelAccelerator());
+        elapsedTimer = new Timeline(new KeyFrame(Duration.seconds(1), e -> refreshRunningHeader()));
+        elapsedTimer.setCycleCount(Timeline.INDEFINITE);
         showCenter(emptyState);
         updateStatus("Připraveno", TotalState.IDLE);
+    }
+
+    /**
+     * Zkratka „Zrušit validaci“ podle zvyklostí platformy: na macOS Cmd+. (Esc tam zavírá okna a nabídky), jinde Esc.
+     * Ostatní zkratky hlavního okna jsou Cmd/Ctrl+N a Cmd/Ctrl+R, nekolidují.
+     */
+    private static KeyCombination cancelAccelerator() {
+        boolean mac = System.getProperty("os.name", "").toLowerCase().contains("mac");
+        return mac ? new KeyCodeCombination(KeyCode.PERIOD, KeyCombination.SHORTCUT_DOWN) : new KeyCodeCombination(KeyCode.ESCAPE);
     }
 
     private static Label placeholder(String text) {
@@ -344,6 +389,7 @@ public class MainController extends AbstractController implements ValidationStat
     private void initBeforeValidation() {
         //data spojena s konkretnim behem validace
         validationStateManager = null;
+        progress = null;
         pspDir = null;
         dmf = null;
         //stav validace
@@ -359,6 +405,7 @@ public class MainController extends AbstractController implements ValidationStat
         problemList.setItems(null);
         selectSection(null);
         showCenter(resultsPane);
+        hideNotice();
     }
 
     /**
@@ -368,18 +415,7 @@ public class MainController extends AbstractController implements ValidationStat
      */
     public void runPspDirValidation(File pspDir, DmfDetector.Params dmfDetectorParams, boolean createTxtLog, boolean createXmlLog,
                                     int verbosity, ValidationRequest request) {
-        initBeforeValidation();
-        this.pspDir = pspDir;
-        this.currentRequest = request;
-        this.logTxtFile = createTxtLog ? buildTxtLogFile(pspDir) : null;
-        this.logXmlFile = createXmlLog ? buildXmlLogFile(pspDir) : null;
-        this.cancelValidation = false;
-        this.validationTaskEntered = false;
-        this.pendingOutcome = null;
-        rerunState.validationStarted(request);
-        startedValidations++;
-        showHeader(ResultHeader.running(pspDir.getName(), null));
-        updateStatus(String.format("Inicializuji balík %s.", pspDir.getAbsolutePath()), TotalState.RUNNING);
+        startRun(pspDir, request, createTxtLog ? buildTxtLogFile(pspDir) : null, createXmlLog ? buildXmlLogFile(pspDir) : null);
 
         validationTask = new Task<Void>() {
 
@@ -449,6 +485,44 @@ public class MainController extends AbstractController implements ValidationStat
         new Thread(validationTask).start();
     }
 
+    /** Okno do stavu „běží“: data předchozí validace pryč, horní lišta, panel průběhu, uplynulý čas. */
+    private void startRun(File pspDir, ValidationRequest request, File logTxtFile, File logXmlFile) {
+        initBeforeValidation();
+        this.pspDir = pspDir;
+        this.currentRequest = request;
+        this.logTxtFile = logTxtFile;
+        this.logXmlFile = logXmlFile;
+        this.cancelValidation = false;
+        this.validationTaskEntered = false;
+        this.pendingOutcome = null;
+        rerunState.validationStarted(request);
+        startedValidations++;
+        runStartedAt = System.currentTimeMillis();
+        updateStatus(String.format("Inicializuji balík %s.", pspDir.getAbsolutePath()), TotalState.RUNNING);
+        refreshRunningHeader();
+        refreshProgress();
+        setVisibleManaged(progressPane, true);
+        elapsedTimer.playFromStart();
+    }
+
+    /**
+     * Jen pro SnapshotMode (měření výkonu UI): okno přejde do stavu „běží“ bez spuštění validátoru; události jádra pak
+     * posílá SnapshotMode sám přes metody {@link ValidationState.ProgressListener} a nakonec zavolá
+     * {@link #completeSyntheticRun()}.
+     */
+    void beginSyntheticRun(File fakePspDir) {
+        startRun(fakePspDir, null, null, null);
+    }
+
+    /** Jen pro SnapshotMode: zobrazí výsledek ohlášený událostmi (jako po návratu z validátoru). */
+    void completeSyntheticRun() {
+        Runnable outcome = pendingOutcome;
+        pendingOutcome = null;
+        if (outcome != null) {
+            Platform.runLater(outcome);
+        }
+    }
+
     /**
      * Nazvy sekci pouzite fDMF, ktere jsou v konfiguraci GUI oznacene k preskoceni (stejne jako dialog preskakovani:
      * jen sekce, ktere fDMF skutecne ma). Sekce se berou z uz postaveneho validatoru, neni potreba stavet validatory
@@ -468,23 +542,100 @@ public class MainController extends AbstractController implements ValidationStat
     }
 
     private void onFailed(String message) {
-        updateStatus(String.format("Chyba: %s.", message), TotalState.ERROR);
-        showHeader(ResultHeader.failed(pspDir.getName(), dmf));
+        endRunUi();
+        updateStatus(message == null ? "Validace skončila chybou." : String.format("Chyba: %s", message), TotalState.ERROR);
+        showHeader(ResultHeader.failed(pspDir.getName(), dmf, foundSoFar()));
         if (validationStateManager == null) {
             messageTitle.setText("Validace skončila chybou");
             messageText.setText(message == null ? "Podrobnosti jsou ve výpisu aplikace." : message);
             showCenter(messageState);
+        } else {
+            validationStateManager.markUnfinished(ProcessingState.INTERRUPTED);
+            refreshSelectedRule();
+            showNotice("notice-failed", "Validace skončila chybou: " + (message == null ? "podrobnosti jsou ve výpisu aplikace" : message)
+                    + "\nVýsledky jsou neúplné, sekce a pravidla, která nedoběhla, jsou označená „nedokončeno“.");
         }
     }
 
     private void onStopped() {
+        endRunUi();
         updateStatus("Validace balíku zrušena.", TotalState.STOPPED);
-        showHeader(ResultHeader.stopped(pspDir.getName(), dmf));
+        showHeader(ResultHeader.stopped(pspDir.getName(), dmf, foundSoFar()));
         if (validationStateManager == null) {
             messageTitle.setText("Validace zrušena");
             messageText.setText("Validace byla zrušena před kontrolou prvního pravidla.");
             showCenter(messageState);
+        } else {
+            validationStateManager.markUnfinished(ProcessingState.CANCELED);
+            refreshSelectedRule();
+            showNotice("notice-stopped", "Validace byla zrušena. Výsledky jsou neúplné, sekce a pravidla, která nedoběhla, jsou označená „zrušeno“.");
         }
+    }
+
+    /** Průběžné počty pro horní lištu po zrušení nebo chybě, null, když se pravidla nenačetla. */
+    private ProblemCounts foundSoFar() {
+        return progress == null ? null : progress.getFound();
+    }
+
+    /** Konec běhu: zastaví uplynulý čas a skryje panel průběhu. */
+    private void endRunUi() {
+        elapsedTimer.stop();
+        setVisibleManaged(progressPane, false);
+    }
+
+    /** Po změně stavu vybraného pravidla na konci validace (zástupný text seznamu problémů). */
+    private void refreshSelectedRule() {
+        if (selectedRule != null) {
+            selectRule(selectedRule);
+        } else {
+            updatePlaceholders();
+        }
+    }
+
+    private void showNotice(String styleClass, String text) {
+        noticeBar.getStyleClass().removeAll("notice-stopped", "notice-failed");
+        noticeBar.getStyleClass().add(styleClass);
+        noticeText.setText(text);
+        setVisibleManaged(noticeBar, true);
+    }
+
+    private void hideNotice() {
+        setVisibleManaged(noticeBar, false);
+        noticeText.setText(null);
+    }
+
+    // ===== prubeh =====
+
+    /** Horní lišta během běhu: podtitul s uplynulým časem a průběžné počty (volá se i každou sekundu). */
+    private void refreshRunningHeader() {
+        if (totalState != TotalState.RUNNING || pspDir == null) {
+            return;
+        }
+        showHeader(ResultHeader.running(pspDir.getName(), dmf, System.currentTimeMillis() - runStartedAt, foundSoFar()));
+    }
+
+    /** Panel průběhu: před ohlášením pravidel inicializace s neurčitým ukazatelem, pak sekce, pravidlo a podíl. */
+    private void refreshProgress() {
+        String title;
+        String counts;
+        String detail;
+        double fraction;
+        if (progress == null) {
+            title = ValidationProgress.INITIALIZING_TITLE;
+            counts = null;
+            detail = ValidationProgress.INITIALIZING_DETAIL;
+            fraction = ValidationProgress.INDETERMINATE;
+        } else {
+            title = progress.getTitle();
+            counts = progress.getCountsText();
+            detail = progress.getDetail();
+            fraction = progress.getFraction();
+        }
+        progressTitle.setText(title);
+        setTextOrHide(progressCounts, counts);
+        //radek zustava i bez textu, aby panel neposkakoval
+        progressDetail.setText(detail == null ? "" : detail);
+        progressBar.setProgress(fraction);
     }
 
     // ===== horni lista =====
@@ -493,7 +644,11 @@ public class MainController extends AbstractController implements ValidationStat
         header.setVisible(true);
         header.setManaged(true);
         headerTitle.setText(content.getTitle());
-        headerTitle.setTooltip(new Tooltip(sourceDescription()));
+        //bublina jen pri zmene (behem behu se lista obnovuje kazdou sekundu)
+        String source = sourceDescription();
+        if (headerTitle.getTooltip() == null || !source.equals(headerTitle.getTooltip().getText())) {
+            headerTitle.setTooltip(new Tooltip(source));
+        }
         headerSubtitle.setText(content.getSubtitle());
 
         boolean hasVerdict = content.getVerdictText() != null;
@@ -542,13 +697,12 @@ public class MainController extends AbstractController implements ValidationStat
         totalState = state;
         statusText.setText(text);
         boolean running = state == TotalState.RUNNING;
-        //menu
-        menuValidate.setDisable(running);
-        menuValidation.setDisable(!running);
+        //menu: Validovat zustava dostupne kvuli zruseni
+        newValidationMenuItem.setDisable(running);
+        cancelMenuItem.setDisable(!running);
         menuSettings.setDisable(running);
         menuShow.setDisable(running);
-        //stavovy radek
-        statusProgressIndicator.setVisible(running);
+        //stavovy radek (prubeh behem behu ukazuje panel prubehu)
         statusDot.getStyleClass().removeAll(STATUS_DOT_CLASSES);
         switch (state) {
             case FINISHED:
@@ -620,6 +774,7 @@ public class MainController extends AbstractController implements ValidationStat
         LocalDateTime finishedAt = LocalDateTime.now();
         Map<Level, Integer> byLevel = globalProblemsByLevel == null ? null : new HashMap<>(globalProblemsByLevel);
         pendingOutcome = () -> {
+            endRunUi();
             updateStatus(String.format("Validace balíku %s hotova.", pspDir.getAbsolutePath()), TotalState.FINISHED);
             showHeader(ResultHeader.finished(pspDir.getName(), dmf, byLevel, valid, duration, finishedAt));
             finishedValidations++;
@@ -637,15 +792,22 @@ public class MainController extends AbstractController implements ValidationStat
     @Override
     public void onInitialization(List<RulesSection> sections, Map<RulesSection, List<Rule>> rules) {
         ValidationStateManager manager = new ValidationStateManager(sections, rules);
+        ValidationProgress newProgress = ValidationProgress.of(sections, rules);
         Platform.runLater(() -> {
             validationStateManager = manager;
-            showHeader(ResultHeader.running(pspDir.getName(), dmf));
+            progress = newProgress;
+            refreshRunningHeader();
+            refreshProgress();
             filteredSections = new FilteredList<>(manager.getSectionsObservable(), filter::showSection);
             sectionList.setItems(filteredSections);
             updatePlaceholders();
             //fokus do seznamu sekci (ne na prvni zaskrtavatko filtru)
             sectionList.requestFocus();
         });
+        RunHook hook = runHook;
+        if (hook != null) {
+            hook.initialized(newProgress.getTotalRules());
+        }
     }
 
     @Override
@@ -659,6 +821,8 @@ public class MainController extends AbstractController implements ValidationStat
     public void onSectionSkipped(int sectionId) {
         Platform.runLater(() -> {
             validationStateManager.updateSectionStatus(sectionId, ProcessingState.SKIPPED);
+            progress.sectionSkipped(sectionId);
+            refreshProgress();
         });
     }
 
@@ -666,6 +830,8 @@ public class MainController extends AbstractController implements ValidationStat
     public void onSectionStart(int sectionId) {
         Platform.runLater(() -> {
             validationStateManager.updateSectionStatus(sectionId, ProcessingState.RUNNING);
+            progress.sectionStarted(sectionId);
+            refreshProgress();
         });
     }
 
@@ -688,6 +854,8 @@ public class MainController extends AbstractController implements ValidationStat
         Platform.runLater(() -> {
             validationStateManager.updateRuleState(sectionId, ruleId, ProcessingState.RUNNING);
             refreshSelectedRuleIf(sectionId, ruleId);
+            progress.ruleStarted(sectionId, ruleId);
+            refreshProgress();
         });
     }
 
@@ -700,7 +868,14 @@ public class MainController extends AbstractController implements ValidationStat
             validationStateManager.updateRuleState(sectionId, ruleId, ProcessingState.FINISHED);
             //aby se nacetly problemy prave dokonceneho vybraneho pravidla
             refreshSelectedRuleIf(sectionId, ruleId);
+            progress.ruleFinished(sectionId, ruleId, ProblemCounts.of(ruleProblemsByLevel));
+            refreshProgress();
+            refreshRunningHeader();
         });
+        RunHook hook = runHook;
+        if (hook != null) {
+            hook.ruleFinished();
+        }
     }
 
     @Override
@@ -809,6 +984,8 @@ public class MainController extends AbstractController implements ValidationStat
             problemList.setPlaceholder(new Label());
         } else if (selectedRule.getState() == ProcessingState.CANCELED) {
             problemList.setPlaceholder(placeholder("Kontrola pravidla byla zrušena."));
+        } else if (selectedRule.getState() == ProcessingState.INTERRUPTED) {
+            problemList.setPlaceholder(placeholder("Kontrola pravidla nebyla dokončena, validace skončila chybou."));
         } else {
             problemList.setPlaceholder(placeholder("Pravidlo se ještě nekontrolovalo."));
         }
@@ -821,12 +998,28 @@ public class MainController extends AbstractController implements ValidationStat
      * @return true, když se vybralo pravidlo s problémem
      */
     boolean selectFirstProblem() {
+        return selectFirstProblem(false);
+    }
+
+    /**
+     * @param finishedOnly jen mezi dokončenými sekcemi (pro SnapshotMode: procházení hotové sekce během běhu)
+     */
+    boolean selectFirstProblem(boolean finishedOnly) {
         if (filteredSections == null || filteredSections.isEmpty()) {
             return false;
         }
-        SectionWithState section = firstWithProblem(filteredSections, true);
+        List<SectionWithState> candidates = filteredSections;
+        if (finishedOnly) {
+            candidates = new ArrayList<>();
+            for (SectionWithState section : filteredSections) {
+                if (section.getState() == ProcessingState.FINISHED) {
+                    candidates.add(section);
+                }
+            }
+        }
+        SectionWithState section = firstWithProblem(candidates, true);
         if (section == null) {
-            section = firstWithProblem(filteredSections, false);
+            section = firstWithProblem(candidates, false);
         }
         if (section == null) {
             sectionList.getSelectionModel().select(filteredSections.get(0));
@@ -883,6 +1076,11 @@ public class MainController extends AbstractController implements ValidationStat
         main.launchValidation(rerunState.requestForRerun());
     }
 
+    /** Pro SnapshotMode: seznam zobrazený v panelu problémů (kontrola, že se při událostech nepřestavuje). */
+    ObservableList<ValidationProblem> getShownProblems() {
+        return problemList.getItems();
+    }
+
     boolean isValidationRunning() {
         return totalState == TotalState.RUNNING;
     }
@@ -914,6 +1112,9 @@ public class MainController extends AbstractController implements ValidationStat
     /** Popis zobrazeného výsledku pro výpis SnapshotMode. */
     String describeShownResult() {
         return "state=" + totalState
+                + (progressPane.isVisible() ? ", progress=[" + progressTitle.getText() + " | " + progressCounts.getText()
+                + " | " + progressDetail.getText() + " | " + String.format(Locale.ROOT, "%.2f", progressBar.getProgress()) + "]" : "")
+                + (noticeBar.isVisible() ? ", notice=" + noticeText.getText().replace('\n', ' ') : "")
                 + ", title=" + headerTitle.getText()
                 + ", subtitle=" + headerSubtitle.getText()
                 + ", verdict=" + (verdictBadge.isVisible() ? verdictBadge.getText() : "-")
@@ -923,6 +1124,21 @@ public class MainController extends AbstractController implements ValidationStat
                 + ", selectedSection=" + (selectedSection == null ? "-" : selectedSection.getName())
                 + ", selectedRule=" + (selectedRule == null ? "-" : selectedRule.getName())
                 + ", problemsShown=" + (problemList.getItems() == null ? 0 : problemList.getItems().size());
+    }
+
+    /** Pro SnapshotMode: háček volaný z vlákna validace (smí ho pozastavit). */
+    void setRunHook(RunHook hook) {
+        this.runHook = hook;
+    }
+
+    /**
+     * Háček pro SnapshotMode volaný z vlákna validace: po ohlášení pravidel a po každém dokončeném pravidle (události
+     * pro UI jsou už odeslané). Slouží k pozastavení validace v definovaném bodě; v běžném provozu není nastaven.
+     */
+    interface RunHook {
+        void initialized(int totalRules);
+
+        void ruleFinished();
     }
 
     // ===== dialogy =====
