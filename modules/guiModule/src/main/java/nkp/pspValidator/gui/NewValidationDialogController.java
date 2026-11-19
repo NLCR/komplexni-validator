@@ -96,8 +96,9 @@ public class NewValidationDialogController extends DialogController {
     /** zobrazit v sekci verzí tabulku všech typů i u rozpoznaného balíku */
     private boolean showAllTypes = false;
 
-    private final Map<ExternalUtil, ToolStatus> toolStatuses = new EnumMap<>(ExternalUtil.class);
-    private final Map<ExternalUtil, Long> toolCheckGeneration = new EnumMap<>(ExternalUtil.class);
+    private ToolChecks toolChecks;
+    /** stavy nástrojů z {@link #toolChecks} (pohled jen pro čtení) */
+    private Map<ExternalUtil, ToolStatus> toolStatuses = Collections.emptyMap();
     private final Set<ExternalUtil> uncheckedByUser = EnumSet.noneOf(ExternalUtil.class);
 
     private CollapsibleSection versionsSection;
@@ -121,6 +122,14 @@ public class NewValidationDialogController extends DialogController {
         ConfigurationManager config = getConfigurationManager();
         registry = main.getValidationDataManager().getFdmfRegistry();
         utilManager = main.getValidationDataManager().getExternalUtilManager();
+        //dostupnost zapisuje do manazeru i po zavreni dialogu, aby validace spustena pred dobehnutim kontroly znala
+        //skutecny stav (u nedostupneho nastroje hlasi INFO)
+        toolChecks = new ToolChecks(utilManager, "nova-validace-nastroj", (util, status) -> {
+            if (!closed) {
+                refreshToolsSection();
+            }
+        });
+        toolStatuses = toolChecks.getStatuses();
         versionSettings = new VersionSettings(config, registry);
         outputSettings = new OutputSettings(config);
         skippedSections = new SkippedSections(config, registry);
@@ -522,27 +531,7 @@ public class NewValidationDialogController extends DialogController {
     // ----- externi nastroje -----
 
     private void checkTools() {
-        for (ExternalUtil util : ExternalUtil.values()) {
-            long generation = toolCheckGeneration.getOrDefault(util, 0L) + 1;
-            toolCheckGeneration.put(util, generation);
-            toolStatuses.put(util, ToolStatus.checking());
-            Thread thread = new Thread(() -> {
-                ToolStatus status = ExternalTools.check(utilManager, util);
-                Platform.runLater(() -> {
-                    //i po zavreni dialogu, aby validace spustena pred dobehnutim kontroly znala skutecny stav
-                    if (toolCheckGeneration.get(util) == generation) {
-                        //stejne jako dialog externich nastroju: validace u nedostupneho nastroje hlasi INFO
-                        utilManager.setUtilAvailable(util, status.isAvailable());
-                    }
-                    if (!closed && toolCheckGeneration.get(util) == generation) {
-                        toolStatuses.put(util, status);
-                        refreshToolsSection();
-                    }
-                });
-            }, "nova-validace-" + util.name());
-            thread.setDaemon(true);
-            thread.start();
-        }
+        toolChecks.checkAll();
         refreshToolsSection();
     }
 

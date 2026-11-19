@@ -580,7 +580,8 @@ public class MainController extends AbstractController implements ValidationStat
     //DIALOGS
 
     public void showExternalUtilsCheckDialog(ActionEvent actionEvent) {
-        main.showExternalUtilsCheckDialog(false, "OK");
+        //zavreni krizkem tu aplikaci neukonci ani pri chybejicim nastroji
+        main.showExternalUtilsCheckDialog(false, "Zavřít", false);
     }
 
     public void showSkippingConfigurationDialog(ActionEvent actionEvent) {

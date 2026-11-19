@@ -63,4 +63,33 @@ public class ExternalToolsTest {
             assertFalse(util.name(), ExternalTools.description(util).isEmpty());
         }
     }
+
+    @Test
+    public void configKeysAsInConfigurationManager() {
+        //stejne klice cte ValidationDataManager pri startu
+        assertEquals("jhove.dir", ExternalTools.configKey(JHOVE));
+        assertEquals("jpylyzer.dir", ExternalTools.configKey(JPYLYZER));
+        assertEquals("imageMagick.dir", ExternalTools.configKey(IMAGE_MAGICK));
+        assertEquals("kakadu.dir", ExternalTools.configKey(KAKADU));
+        assertEquals("mp3val.dir", ExternalTools.configKey(MP3VAL));
+        assertEquals("shntool.dir", ExternalTools.configKey(SHNTOOL));
+        assertEquals("checkmate.dir", ExternalTools.configKey(CHECKMATE));
+        assertEquals("verapdf.dir", ExternalTools.configKey(VERAPDF));
+        assertEquals("epubcheck.dir", ExternalTools.configKey(EPUBCHECK));
+    }
+
+    @Test
+    public void installationUrls() {
+        String wiki = "https://github.com/NLCR/komplexni-validator/wiki/Instalace#";
+        assertEquals(wiki + "jhove", ExternalTools.installationUrl(JHOVE));
+        assertEquals(wiki + "jpylyzer", ExternalTools.installationUrl(JPYLYZER));
+        assertEquals(wiki + "imagemagick", ExternalTools.installationUrl(IMAGE_MAGICK));
+        assertEquals(wiki + "kakadu", ExternalTools.installationUrl(KAKADU));
+        assertEquals(wiki + "mp3val", ExternalTools.installationUrl(MP3VAL));
+        assertEquals(wiki + "shntool", ExternalTools.installationUrl(SHNTOOL));
+        assertEquals(wiki + "checkmate", ExternalTools.installationUrl(CHECKMATE));
+        assertEquals(wiki + "verapdf", ExternalTools.installationUrl(VERAPDF));
+        assertEquals(wiki + "epubcheck", ExternalTools.installationUrl(EPUBCHECK));
+        assertEquals(wiki + "instalace-n%C3%A1stroj%C5%AF-pro-validaci-obrazov%C3%BDch-soubor%C5%AF", ExternalTools.INSTALLATION_HELP_URL);
+    }
 }

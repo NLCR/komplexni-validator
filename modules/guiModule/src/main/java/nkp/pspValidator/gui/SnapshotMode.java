@@ -76,7 +76,7 @@ public class SnapshotMode {
         NewValidationDialog.Expand expand = parseExpand(System.getProperty(PROP_EXPAND));
         dialogs.put("newValidation", () -> new NewValidationDialog(dialogStage, main, psp, expand));
         dialogs.put("skipping", () -> new SkippingConfigurationDialog(dialogStage, main));
-        dialogs.put("externalUtils", () -> new ExternalUtilsCheckDialog(dialogStage, main, false, "Pokračovat"));
+        dialogs.put("externalUtils", () -> new ExternalUtilsCheckDialog(dialogStage, main, false, "Pokračovat", true));
         dialogs.put("about", () -> new AboutAppDialog(dialogStage, main));
         dialogs.put("dictionaries", () -> new DictionariesConfigurationDialog(dialogStage, main));
 

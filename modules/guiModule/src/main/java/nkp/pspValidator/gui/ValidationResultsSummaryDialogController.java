@@ -74,11 +74,6 @@ public class ValidationResultsSummaryDialogController extends DialogController {
         return null;
     }
 
-    public void continueInApp(ActionEvent actionEvent) {
-        boolean shown = getConfigurationManager().getBooleanOrDefault(ConfigurationManager.PROP_EXTERNAL_TOOLS_CHECK_SHOWN, false);
-        main.showExternalUtilsCheckDialog(shown, "Pokračovat");
-    }
-
     public void setFdmfsRootDir(ActionEvent actionEvent) {
         DirectoryChooser chooser = new DirectoryChooser();
         chooser.setTitle("Vyberte adresář s konfigurací Validátoru");

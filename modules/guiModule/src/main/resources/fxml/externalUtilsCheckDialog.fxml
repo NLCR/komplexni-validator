@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import nkp.pspValidator.gui.DialogFrame?>
+<!-- kostra dialogu Externí nástroje; řádky tabulky (jeden na nástroj z ExternalUtil) a souhrn v patičce doplňuje kontroler -->
+<DialogFrame xmlns:fx="http://javafx.com/fxml"
+             fx:controller="nkp.pspValidator.gui.ExternalUtilsCheckDialogController"
+             fx:id="container"
+             title="Externí nástroje"
+             subtitle="Nástroje jsou volitelné. Bez nástroje se kontroly souborů, které ho potřebují, přeskočí a protokol to uvede."
+>
+    <content>
+        <ScrollPane fitToWidth="true" hbarPolicy="NEVER" styleClass="dialog-scroll" VBox.vgrow="ALWAYS">
+            <VBox styleClass="dialog-scroll-content">
+                <VBox fx:id="toolsTable" styleClass="list-box"/>
+                <Hyperlink styleClass="link" text="Návod k instalaci nástrojů" onAction="#showHelp"/>
+            </VBox>
+        </ScrollPane>
+    </content>
+
+    <footerButtons>
+        <Button fx:id="recheckButton" styleClass="button-secondary" onAction="#recheckAll" text="Zkontrolovat znovu" minWidth="-Infinity"/>
+        <Button fx:id="mainButton" styleClass="button-primary" onAction="#continueInApp" text="Pokračovat" minWidth="110" defaultButton="true"/>
+    </footerButtons>
+</DialogFrame>

@@ -1,0 +1,129 @@
+package nkp.pspValidator.gui.newvalidation;
+
+import javafx.application.Platform;
+import nkp.pspValidator.shared.externalUtils.ExternalUtil;
+import nkp.pspValidator.shared.externalUtils.ExternalUtilManager;
+
+import java.util.Collections;
+import java.util.EnumMap;
+import java.util.Map;
+import java.util.WeakHashMap;
+import java.util.concurrent.Executor;
+import java.util.function.Function;
+
+/**
+ * Kontrola dostupnosti externích nástrojů pro dialogy Nová validace a Externí nástroje. Každý nástroj se zkontroluje
+ * v pracovním vlákně detekcí verze ({@link ExternalTools#check}) a výsledek se předá do vlákna UI. Tam se zapíše
+ * dostupnost do {@link ExternalUtilManager} (validace u nedostupného nástroje hlásí INFO) a ohlásí se posluchači,
+ * ale jen pro poslední spuštěnou kontrolu daného nástroje: zastaralý výsledek (nástroj se mezitím kontroluje znovu,
+ * například po změně cesty) se zahodí. Do manažeru, který drží dostupnost v obyčejné mapě, se tak zapisuje jen
+ * z jednoho vlákna.
+ * <p>
+ * Metody a stav ({@link #getStatuses()}) používat jen z vlákna UI.
+ */
+public class ToolChecks {
+
+    /** Posluchač platných výsledků kontroly (volá se ve vlákně UI). */
+    public interface Listener {
+        void onResult(ExternalUtil util, ToolStatus status);
+    }
+
+    private final ExternalUtilManager manager;
+    private final Function<ExternalUtil, ToolStatus> checker;
+    private final Executor workers;
+    private final Executor ui;
+    private final Listener listener;
+    private final Map<ExternalUtil, ToolStatus> statuses = new EnumMap<>(ExternalUtil.class);
+    private final Map<ExternalUtil, Long> generations = new EnumMap<>(ExternalUtil.class);
+
+    /**
+     * Pořadí naposledy spuštěné kontroly každého nástroje, společné pro všechny instance nad stejným manažerem.
+     * Manažer je sdílený mezi dialogy: bez toho by pomalá kontrola z jednoho dialogu přepsala dostupnost zjištěnou
+     * novější kontrolou z druhého (například po změně cesty k nástroji).
+     */
+    private static final Map<ExternalUtilManager, Map<ExternalUtil, Long>> LATEST_STARTED = new WeakHashMap<>();
+    private static long startCounter = 0;
+
+    private static synchronized long registerStart(ExternalUtilManager manager, ExternalUtil util) {
+        long order = ++startCounter;
+        LATEST_STARTED.computeIfAbsent(manager, m -> new EnumMap<>(ExternalUtil.class)).put(util, order);
+        return order;
+    }
+
+    private static synchronized boolean isLatestStarted(ExternalUtilManager manager, ExternalUtil util, long order) {
+        Map<ExternalUtil, Long> latest = LATEST_STARTED.get(manager);
+        return latest != null && latest.get(util) != null && latest.get(util) == order;
+    }
+
+    /**
+     * @param threadName základ názvu pracovních vláken (každá kontrola běží v novém vlákně démona)
+     */
+    public ToolChecks(ExternalUtilManager manager, String threadName, Listener listener) {
+        this(manager, util -> ExternalTools.check(manager, util), daemonThreads(threadName), Platform::runLater, listener);
+    }
+
+    ToolChecks(ExternalUtilManager manager, Function<ExternalUtil, ToolStatus> checker, Executor workers, Executor ui,
+               Listener listener) {
+        this.manager = manager;
+        this.checker = checker;
+        this.workers = workers;
+        this.ui = ui;
+        this.listener = listener;
+    }
+
+    private static Executor daemonThreads(String threadName) {
+        return task -> {
+            Thread thread = new Thread(task, threadName);
+            thread.setDaemon(true);
+            thread.start();
+        };
+    }
+
+    /** Spustí kontrolu všech nástrojů; jejich stav je do výsledku „kontroluji“. */
+    public void checkAll() {
+        for (ExternalUtil util : ExternalUtil.values()) {
+            check(util);
+        }
+    }
+
+    /** Spustí kontrolu jednoho nástroje; výsledek dřív spuštěné a dosud nedokončené kontroly se zahodí. */
+    public void check(ExternalUtil util) {
+        long generation = generations.getOrDefault(util, 0L) + 1;
+        generations.put(util, generation);
+        statuses.put(util, ToolStatus.checking());
+        long order = registerStart(manager, util);
+        workers.execute(() -> {
+            ToolStatus status;
+            try {
+                status = checker.apply(util);
+            } catch (Throwable e) {
+                //bez vysledku by nastroj zustal navzdy ve stavu "kontroluji"
+                e.printStackTrace();
+                status = ToolStatus.error(e.getMessage() != null ? e.getMessage() : e.toString());
+            }
+            ToolStatus result = status;
+            ui.execute(() -> deliver(util, generation, order, result));
+        });
+    }
+
+    private void deliver(ExternalUtil util, long generation, long order, ToolStatus status) {
+        if (generations.get(util) != generation) {
+            return;
+        }
+        if (isLatestStarted(manager, util, order)) {
+            manager.setUtilAvailable(util, status.isAvailable());
+        }
+        statuses.put(util, status);
+        listener.onResult(util, status);
+    }
+
+    /** Stav nástroje; před první kontrolou „kontroluji“. */
+    public ToolStatus getStatus(ExternalUtil util) {
+        return statuses.getOrDefault(util, ToolStatus.checking());
+    }
+
+    /** Stavy nástrojů, pro které už byla spuštěna kontrola (pohled jen pro čtení, mění se s dalšími výsledky). */
+    public Map<ExternalUtil, ToolStatus> getStatuses() {
+        return Collections.unmodifiableMap(statuses);
+    }
+}

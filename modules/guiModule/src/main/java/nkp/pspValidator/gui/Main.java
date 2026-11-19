@@ -155,8 +155,13 @@ public class Main extends Application {
         new ValidationDataInitializationDialog(dialogStage, this).show();
     }
 
-    public void showExternalUtilsCheckDialog(boolean closeWhenFinished, String mainButtonText) {
-        new ExternalUtilsCheckDialog(dialogStage, this, closeWhenFinished, mainButtonText).show();
+    /**
+     * Dialog externích nástrojů v hlavní úrovni oken (při startu aplikace a z menu Nastavení).
+     *
+     * @param exitAppOnCloseWithError zavření okna křížkem, když některý nástroj chybí, ukončí aplikaci (jen při startu)
+     */
+    public void showExternalUtilsCheckDialog(boolean closeWhenFinished, String mainButtonText, boolean exitAppOnCloseWithError) {
+        new ExternalUtilsCheckDialog(dialogStage, this, closeWhenFinished, mainButtonText, exitAppOnCloseWithError).show();
     }
 
     public void showSkippingConfigurationDialog() {
@@ -172,7 +177,7 @@ public class Main extends Application {
      * nástroji tady aplikaci neukončí, jen dialog zavře.
      */
     public void showExternalUtilsCheckDialogOverDialog() {
-        new ExternalUtilsCheckDialog(dialogStageLevel2, this, false, "OK", false).show();
+        new ExternalUtilsCheckDialog(dialogStageLevel2, this, false, "Zavřít", false).show();
     }
 
     /** Dialog přeskakování validací otevřený z dialogu Nová validace (druhá úroveň oken). */

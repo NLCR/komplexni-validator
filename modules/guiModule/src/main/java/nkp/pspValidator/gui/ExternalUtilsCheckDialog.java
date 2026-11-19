@@ -5,6 +5,9 @@ import javafx.stage.Stage;
 import java.net.URL;
 
 /**
+ * Dialog Externí nástroje: stav všech nástrojů v tabulce a nastavení jejich adresářů. Otevírá se při startu aplikace,
+ * z menu Nastavení a z dialogu Nová validace.
+ * <p>
  * Created by Martin Řehánek on 13.12.16.
  */
 public class ExternalUtilsCheckDialog extends AbstractDialog {
@@ -13,13 +16,11 @@ public class ExternalUtilsCheckDialog extends AbstractDialog {
     private final String mainButtonText;
     private final boolean exitAppOnCloseWithError;
 
-    public ExternalUtilsCheckDialog(Stage stage, Main main, boolean closeWhenFinished, String mainButtonText) {
-        this(stage, main, closeWhenFinished, mainButtonText, true);
-    }
-
     /**
-     * @param exitAppOnCloseWithError zavření okna, když některý nástroj chybí, ukončí aplikaci (dosavadní chování);
-     *                                false pro otevření z jiného dialogu, kde se má okno jen zavřít
+     * @param closeWhenFinished       zavřít dialog sám, jakmile jsou všechny nástroje dostupné
+     * @param mainButtonText          text hlavního tlačítka
+     * @param exitAppOnCloseWithError zavření okna křížkem, když některý nástroj chybí, ukončí aplikaci (dialog při
+     *                                startu aplikace); false: okno se jen zavře
      */
     public ExternalUtilsCheckDialog(Stage stage, Main main, boolean closeWhenFinished, String mainButtonText, boolean exitAppOnCloseWithError) {
         super(stage, main);
@@ -30,27 +31,26 @@ public class ExternalUtilsCheckDialog extends AbstractDialog {
 
     @Override
     public URL getFxmlResource() {
-        return getClass().getResource("/fxml/externalUtilsCheck.fxml");
+        return getClass().getResource("/fxml/externalUtilsCheckDialog.fxml");
     }
 
     @Override
     public int getWidth() {
-        return 790;
+        return 860;
     }
 
     @Override
     public int getHeight() {
-        return 800;
+        return 620;
     }
 
     @Override
     public String getTitle() {
-        return "Kontrola dostupnosti externích nástrojů";
+        return "Externí nástroje";
     }
 
     @Override
     public boolean isResizable() {
-        //TODO: just temporary, put all content into scroll view
         return true;
     }
 

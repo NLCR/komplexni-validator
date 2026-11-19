@@ -1,5 +1,6 @@
 package nkp.pspValidator.gui.newvalidation;
 
+import nkp.pspValidator.gui.ConfigurationManager;
 import nkp.pspValidator.shared.Dmf;
 import nkp.pspValidator.shared.FdmfRegistry;
 import nkp.pspValidator.shared.engine.exceptions.ValidatorConfigurationException;
@@ -13,12 +14,71 @@ import java.util.Map;
 import java.util.Set;
 
 /**
- * Externí nástroje v dialogu Nová validace: popis, zjištění stavu (detekce verze stejně jako v dialogu externích
- * nástrojů), nástroje relevantní pro fDMF a sada nástrojů vypnutých pro jednu validaci.
+ * Externí nástroje v dialozích Nová validace a Externí nástroje: popis, klíč nastavení s adresářem nástroje, návod
+ * k instalaci, zjištění stavu detekcí verze, nástroje relevantní pro fDMF a sada nástrojů vypnutých pro jednu validaci.
  */
 public final class ExternalTools {
 
+    /** Návod k instalaci nástrojů na wiki projektu. */
+    public static final String INSTALLATION_HELP_URL = "https://github.com/NLCR/komplexni-validator/wiki/Instalace#instalace-n%C3%A1stroj%C5%AF-pro-validaci-obrazov%C3%BDch-soubor%C5%AF";
+
+    private static final String INSTALLATION_URL_PREFIX = "https://github.com/NLCR/komplexni-validator/wiki/Instalace#";
+
     private ExternalTools() {
+    }
+
+    /** Klíč v {@link ConfigurationManager}, pod kterým je uložený adresář nástroje. */
+    public static String configKey(ExternalUtil util) {
+        switch (util) {
+            case JHOVE:
+                return ConfigurationManager.PROP_JHOVE_DIR;
+            case JPYLYZER:
+                return ConfigurationManager.PROP_JPYLYZER_DIR;
+            case IMAGE_MAGICK:
+                return ConfigurationManager.PROP_IMAGE_MAGICK_DIR;
+            case KAKADU:
+                return ConfigurationManager.PROP_KAKADU_DIR;
+            case MP3VAL:
+                return ConfigurationManager.PROP_MP3VAL_DIR;
+            case SHNTOOL:
+                return ConfigurationManager.PROP_SHNTOOL_DIR;
+            case CHECKMATE:
+                return ConfigurationManager.PROP_CHECKMATE_DIR;
+            case VERAPDF:
+                return ConfigurationManager.PROP_VERAPDF_DIR;
+            case EPUBCHECK:
+                return ConfigurationManager.PROP_EPUBCHECK_DIR;
+            default:
+                throw new IllegalArgumentException("unknown util " + util);
+        }
+    }
+
+    /** Návod k instalaci nástroje (oddíl stránky Instalace na wiki projektu). */
+    public static String installationUrl(ExternalUtil util) {
+        switch (util) {
+            case JHOVE:
+                return INSTALLATION_URL_PREFIX + "jhove";
+            case JPYLYZER:
+                return INSTALLATION_URL_PREFIX + "jpylyzer";
+            case IMAGE_MAGICK:
+                return INSTALLATION_URL_PREFIX + "imagemagick";
+            case KAKADU:
+                return INSTALLATION_URL_PREFIX + "kakadu";
+            // TODO: 2019-04-02 doplnit wiki
+            case MP3VAL:
+                return INSTALLATION_URL_PREFIX + "mp3val";
+            case SHNTOOL:
+                return INSTALLATION_URL_PREFIX + "shntool";
+            case CHECKMATE:
+                return INSTALLATION_URL_PREFIX + "checkmate";
+            // TODO: 2026-11-12 doplnit wiki (sekce veraPDF a EPUBCheck zatim na wiki nejsou)
+            case VERAPDF:
+                return INSTALLATION_URL_PREFIX + "verapdf";
+            case EPUBCHECK:
+                return INSTALLATION_URL_PREFIX + "epubcheck";
+            default:
+                throw new IllegalArgumentException("unknown util " + util);
+        }
     }
 
     /** Krátký popis, k čemu nástroj validace používá. */

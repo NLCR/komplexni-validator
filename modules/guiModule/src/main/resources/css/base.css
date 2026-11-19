@@ -59,7 +59,9 @@
     -fx-text-fill: -kv-text;
 }
 
-.dialog-subtitle {
+/* s .dialog-root, jinak prebije barvu pravidlo .dialog-root .label (vyssi specificita) */
+.dialog-subtitle,
+.dialog-root .dialog-subtitle {
     -fx-font-size: 13px;
     -fx-text-fill: -kv-text-muted;
 }
@@ -123,8 +125,15 @@
 
 /* ===== text ===== */
 
-.text-muted {
+/* s .dialog-root, jinak prebije barvu pravidlo .dialog-root .label (vyssi specificita) */
+.text-muted,
+.dialog-root .text-muted {
     -fx-text-fill: -kv-text-muted;
+}
+
+.text-error,
+.dialog-root .text-error {
+    -fx-text-fill: -kv-error;
 }
 
 .text-bold {
@@ -381,6 +390,11 @@
 
 .list-row.row-first {
     -fx-border-width: 0;
+}
+
+/* zahlavi tabulky slozene z radku seznamu (classes list-row row-first table-header tools-table-header) */
+.tools-table-header {
+    -fx-background-radius: 5 5 0 0;
 }
 
 .list-row .button-secondary {

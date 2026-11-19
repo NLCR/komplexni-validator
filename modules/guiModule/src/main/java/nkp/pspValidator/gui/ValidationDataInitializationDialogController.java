@@ -137,7 +137,7 @@ public class ValidationDataInitializationDialogController extends DialogControll
 
     public void continueInApp(ActionEvent actionEvent) {
         boolean shown = getConfigurationManager().getBooleanOrDefault(ConfigurationManager.PROP_EXTERNAL_TOOLS_CHECK_SHOWN, false);
-        main.showExternalUtilsCheckDialog(shown || ConfigurationManager.DEV_MODE, "Pokračovat");
+        main.showExternalUtilsCheckDialog(shown || ConfigurationManager.DEV_MODE, "Pokračovat", true);
     }
 
     public void setFdmfsRootDir(ActionEvent actionEvent) {
