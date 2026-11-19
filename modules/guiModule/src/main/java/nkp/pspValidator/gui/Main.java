@@ -11,13 +11,16 @@ import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import nkp.pspValidator.gui.dev.DevDialog;
+import nkp.pspValidator.gui.newvalidation.ValidationRequest;
 import nkp.pspValidator.gui.skipping.SkippingConfigurationDialog;
 import nkp.pspValidator.shared.DmfDetector;
 import nkp.pspValidator.shared.Platform;
 import nkp.pspValidator.shared.Version;
+import nkp.pspValidator.shared.externalUtils.ExternalUtil;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Set;
 import java.util.logging.Logger;
 
 public class Main extends Application {
@@ -32,6 +35,9 @@ public class Main extends Application {
 
     //controllers
     private MainController mainController;
+
+    /** Požadavek právě spouštěné validace (u ZIPu čeká na rozbalení), předá se hlavnímu oknu pro „Validovat znovu“. */
+    private ValidationRequest pendingRequest;
 
     public static void main(String[] args) {
         launch(args);
@@ -77,8 +83,9 @@ public class Main extends Application {
             //window size and position
             primaryStage.setResizable(true);
             Rectangle2D visualBounds = Screen.getPrimary().getVisualBounds();
-            int minWidth = 1200;
-            int minHeight = 600;
+            //okno musi byt pouzitelne od 1000 x 640 (vysledky ve trech panelech)
+            int minWidth = 1000;
+            int minHeight = 640;
             int preferredWidth = (int) (visualBounds.getWidth() * 0.85);
             int preferredHeight = (int) (visualBounds.getHeight() * 0.85);
             int width = Math.max(minWidth, preferredWidth);
@@ -87,9 +94,9 @@ public class Main extends Application {
             //int width = minWidth;
             //set size
             primaryStage.setHeight(height);
-            primaryStage.setMinHeight(minHeight);
+            primaryStage.setMinHeight(Math.min(minHeight, visualBounds.getHeight()));
             primaryStage.setWidth(width);
-            primaryStage.setMinWidth(minWidth);
+            primaryStage.setMinWidth(Math.min(minWidth, visualBounds.getWidth()));
             //center in screen
             primaryStage.setX((visualBounds.getMaxX() - width) / 2);
             primaryStage.setY((visualBounds.getMaxY() - height) / 2);
@@ -103,6 +110,7 @@ public class Main extends Application {
 
             MainController controller = loader.getController();
             controller.setMain(this);
+            controller.refreshEmptyStateInfo();
             return controller;
         } catch (IOException e) {
             throw new RuntimeException(e);
@@ -136,17 +144,50 @@ public class Main extends Application {
 
     public void setValidationDataManager(ValidationDataManager validationDataManager) {
         this.validationDataManager = validationDataManager;
+        mainController.refreshEmptyStateInfo();
+    }
+
+    MainController getMainController() {
+        return mainController;
+    }
+
+    /**
+     * Spustí validaci podle požadavku (z dialogu Nová validace i „Validovat znovu“): nastaví nástroje vypnuté pro tuto
+     * validaci a adresář validuje hned, ZIP nejdřív rozbalí.
+     */
+    public void launchValidation(ValidationRequest request) {
+        pendingRequest = request;
+        request.launch(new ValidationRequest.Launcher() {
+            @Override
+            public void setUtilsDisabled(Set<ExternalUtil> utils) {
+                validationDataManager.getExternalUtilManager().setUtilsDisabled(utils);
+            }
+
+            @Override
+            public void runPspDirValidation(File pspDir, DmfDetector.Params params, boolean createTxtLog, boolean createXmlLog, int verbosity) {
+                Main.this.runPspDirValidation(pspDir, params, createTxtLog, createXmlLog, verbosity);
+            }
+
+            @Override
+            public void unzipAndRunPspZipValidation(File pspZip, DmfDetector.Params params, boolean createTxtLog, boolean createXmlLog, int verbosity) {
+                Main.this.unzipAndRunPspZipValidation(pspZip, params, createTxtLog, createXmlLog, verbosity);
+            }
+        });
     }
 
     public void runPspDirValidation(File pspDir, DmfDetector.Params dmDetectorParams, boolean createTxtLog, boolean createXmlLog, int verbosity) {
 
         //because the possible unzip dialog cannot close it's parent dialog
         dialogStage.close();
-        mainController.runPspDirValidation(pspDir, dmDetectorParams, createTxtLog, createXmlLog, verbosity);
+        ValidationRequest request = pendingRequest;
+        pendingRequest = null;
+        mainController.runPspDirValidation(pspDir, dmDetectorParams, createTxtLog, createXmlLog, verbosity, request);
     }
 
     public void unzipAndRunPspZipValidation(File pspZip, DmfDetector.Params dmfDetectorParams, boolean createTxtLog, boolean createXmlLog, int verbosity) {
-        new UnzipAndValidateDialog(dialogStageLevel2, this, pspZip, dmfDetectorParams, createTxtLog, createXmlLog, verbosity).show();
+        //z dialogu Nova validace nad nim, pri „Validovat znovu“ (zadny dialog neni otevreny) v prvni urovni oken
+        Stage stage = dialogStage.isShowing() ? dialogStageLevel2 : dialogStage;
+        new UnzipAndValidateDialog(stage, this, pspZip, dmfDetectorParams, createTxtLog, createXmlLog, verbosity).show();
     }
 
     //DIALOGS
@@ -162,6 +203,8 @@ public class Main extends Application {
      */
     public void showExternalUtilsCheckDialog(boolean closeWhenFinished, String mainButtonText, boolean exitAppOnCloseWithError) {
         new ExternalUtilsCheckDialog(dialogStage, this, closeWhenFinished, mainButtonText, exitAppOnCloseWithError).show();
+        //dostupnost nastroju v prazdnem stavu hlavniho okna
+        mainController.refreshEmptyStateInfo();
     }
 
     public void showSkippingConfigurationDialog() {
@@ -183,10 +226,6 @@ public class Main extends Application {
     /** Dialog přeskakování validací otevřený z dialogu Nová validace (druhá úroveň oken). */
     public void showSkippingConfigurationDialogOverDialog() {
         new SkippingConfigurationDialog(dialogStageLevel2, this).show();
-    }
-
-    public void showValidationResultSummaryDialog(ValidationResultSummary summary) {
-        new ValidationResultSummaryDialog(dialogStage, this, summary).show();
     }
 
     public void showAboutAppDialog() {

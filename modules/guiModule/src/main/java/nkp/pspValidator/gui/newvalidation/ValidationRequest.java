@@ -11,6 +11,9 @@ import java.util.Set;
 /**
  * Požadavek na validaci z dialogu Nová validace: zdroj a cesta, parametry pro {@link DmfDetector} (vynucené
  * a preferované verze všech typů), výstupy a nástroje vypnuté jen pro tuto validaci.
+ * <p>
+ * Neměnná hodnota: parametry pro {@link DmfDetector} se při vytvoření, při čtení i při každém spuštění kopírují,
+ * takže stejný požadavek lze spustit znovu („Validovat znovu“) se stejným nastavením.
  */
 public class ValidationRequest {
 
@@ -37,7 +40,7 @@ public class ValidationRequest {
                              boolean createTxtLog, boolean createXmlLog, int verbosity, Set<ExternalUtil> disabledUtils) {
         this.source = source;
         this.file = file;
-        this.params = params;
+        this.params = DmfParamsBuilder.copy(params);
         this.createTxtLog = createTxtLog;
         this.createXmlLog = createXmlLog;
         this.verbosity = verbosity;
@@ -66,10 +69,10 @@ public class ValidationRequest {
         launcher.setUtilsDisabled(disabledUtils);
         switch (source) {
             case DIRECTORY:
-                launcher.runPspDirValidation(file, params, createTxtLog, createXmlLog, verbosity);
+                launcher.runPspDirValidation(file, DmfParamsBuilder.copy(params), createTxtLog, createXmlLog, verbosity);
                 break;
             case ZIP:
-                launcher.unzipAndRunPspZipValidation(file, params, createTxtLog, createXmlLog, verbosity);
+                launcher.unzipAndRunPspZipValidation(file, DmfParamsBuilder.copy(params), createTxtLog, createXmlLog, verbosity);
                 break;
             default:
                 throw new IllegalStateException();
@@ -84,8 +87,9 @@ public class ValidationRequest {
         return file;
     }
 
+    /** Kopie parametrů (změna vrácené hodnoty požadavek nezmění). */
     public DmfDetector.Params getParams() {
-        return params;
+        return DmfParamsBuilder.copy(params);
     }
 
     public boolean isCreateTxtLog() {

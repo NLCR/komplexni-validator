@@ -15,6 +15,11 @@
 .badge-info,
 .badge-ok,
 .text-bold,
-.collapsible-title {
+.collapsible-title,
+.main-title,
+.verdict,
+.empty-title,
+.panel-header,
+.level-badge {
     -fx-font-family: "Arial";
 }

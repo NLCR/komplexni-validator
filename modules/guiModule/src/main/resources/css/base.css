@@ -205,6 +205,8 @@
 
 .status-dot-ok,
 .status-dot-error,
+.status-dot-warning,
+.status-dot-running,
 .status-dot-none {
     -fx-min-width: 10;
     -fx-min-height: 10;
@@ -225,6 +227,14 @@
 
 .status-dot-none {
     -fx-background-color: -kv-none;
+}
+
+.status-dot-warning {
+    -fx-background-color: -kv-warning;
+}
+
+.status-dot-running {
+    -fx-background-color: -kv-primary;
 }
 
 /* ===== stitky (Label) ===== */
@@ -422,4 +432,297 @@
     -fx-background-radius: 5;
     -fx-padding: 8 12 8 12;
     -fx-text-fill: -kv-text;
+}
+
+/* ===== hlavni okno (main.fxml, koren main-root; neni DialogFrame, barvy stejne jako dialogy) ===== */
+
+.main-root {
+    -fx-background-color: -kv-bg;
+    -fx-font-size: 13px;
+}
+
+.main-root > .menu-bar,
+.main-root .menu-bar {
+    -fx-background-color: -kv-surface;
+    -fx-border-color: transparent transparent -kv-border transparent;
+    -fx-border-width: 0 0 1 0;
+}
+
+/* horni lista se souhrnem validace */
+.main-header {
+    -fx-background-color: -kv-surface;
+    -fx-border-color: transparent transparent -kv-border transparent;
+    -fx-border-width: 0 0 1 0;
+    -fx-padding: 12 16 12 16;
+    -fx-spacing: 10;
+    -fx-alignment: center-left;
+}
+
+.main-header-text {
+    -fx-spacing: 2;
+    -fx-alignment: center-left;
+}
+
+.main-header-links {
+    -fx-spacing: 14;
+    -fx-padding: 2 0 0 0;
+}
+
+.main-title {
+    -fx-font-size: 17px;
+    -fx-font-weight: bold;
+    -fx-text-fill: -kv-text;
+}
+
+.main-subtitle {
+    -fx-text-fill: -kv-text-muted;
+}
+
+.header-badge {
+    -fx-font-size: 13px;
+    -fx-padding: 3 10 3 10;
+    -fx-background-radius: 5;
+}
+
+/* verdikt v horni liste (Label) */
+.verdict {
+    -fx-font-size: 13px;
+    -fx-font-weight: bold;
+    -fx-padding: 3 10 3 10;
+    -fx-background-radius: 5;
+    -fx-text-fill: white;
+}
+
+.verdict-valid {
+    -fx-background-color: -kv-ok;
+}
+
+.verdict-invalid {
+    -fx-background-color: -kv-error;
+}
+
+.verdict-none {
+    -fx-background-color: -kv-none;
+}
+
+/* prazdny stav a hlaska misto vysledku */
+.empty-state {
+    -fx-alignment: center;
+    -fx-spacing: 14;
+    -fx-padding: 24;
+}
+
+.empty-title {
+    -fx-font-size: 20px;
+    -fx-font-weight: bold;
+    -fx-text-fill: -kv-text;
+}
+
+.empty-text {
+    -fx-text-fill: -kv-text-muted;
+    -fx-text-alignment: center;
+    -fx-alignment: center;
+}
+
+.empty-button {
+    -fx-font-size: 14px;
+    -fx-padding: 8 24 8 24;
+}
+
+.empty-info {
+    -fx-alignment: center;
+    -fx-spacing: 18;
+    -fx-padding: 6 0 0 0;
+}
+
+/* vysledky: filtr a tri panely */
+.results-pane {
+    -fx-padding: 0 16 12 16;
+}
+
+.filter-bar {
+    -fx-alignment: center-left;
+    -fx-spacing: 14;
+    -fx-padding: 10 0 10 0;
+}
+
+.filter-gap {
+    -fx-min-width: 14;
+}
+
+.results-split,
+.results-split > .split-pane-divider {
+    -fx-background-color: transparent;
+    -fx-padding: 0;
+    -fx-background-insets: 0;
+}
+
+.results-split > .split-pane-divider {
+    -fx-padding: 0 4 0 4;
+}
+
+.result-panel {
+    -fx-background-color: -kv-surface;
+    -fx-border-color: -kv-border;
+    -fx-border-radius: 6;
+    -fx-background-radius: 6;
+}
+
+.panel-header {
+    -fx-background-color: -kv-table-header;
+    -fx-background-radius: 6 6 0 0;
+    -fx-border-color: transparent transparent -kv-border transparent;
+    -fx-padding: 7 12 7 12;
+    -fx-font-weight: bold;
+    -fx-text-fill: -kv-text;
+}
+
+.panel-description {
+    -fx-padding: 8 12 8 12;
+    -fx-text-fill: -kv-text-muted;
+    -fx-border-color: transparent transparent -kv-border transparent;
+}
+
+.result-list {
+    -fx-background-color: transparent;
+    -fx-background-insets: 0;
+    -fx-padding: 0;
+    -fx-border-width: 0;
+}
+
+.result-list:focused {
+    -fx-background-color: transparent;
+}
+
+.result-list .list-cell {
+    -fx-background-color: -kv-surface;
+    -fx-border-color: transparent transparent #ececec transparent;
+    -fx-padding: 0;
+    -fx-text-fill: -kv-text;
+}
+
+.result-list .list-cell:empty {
+    -fx-border-color: transparent;
+}
+
+.result-list .list-cell:filled:hover {
+    -fx-background-color: #f6f9fd;
+}
+
+.result-list .list-cell:filled:selected,
+.result-list:focused .list-cell:filled:selected {
+    -fx-background-color: -kv-primary-tint;
+}
+
+/* radek sekce nebo pravidla */
+.result-row {
+    -fx-padding: 6 12 6 12;
+    -fx-spacing: 8;
+}
+
+.row-marker {
+    -fx-min-width: 14;
+    -fx-pref-width: 14;
+    -fx-max-width: 14;
+}
+
+.row-spinner {
+    -fx-pref-width: 14;
+    -fx-pref-height: 14;
+    -fx-max-width: 14;
+    -fx-max-height: 14;
+}
+
+.row-name {
+    -fx-text-fill: -kv-text;
+}
+
+.row-name-muted,
+.row-state {
+    -fx-text-fill: -kv-text-muted;
+}
+
+.count-error,
+.count-warning,
+.count-info {
+    -fx-font-size: 12px;
+}
+
+.count-error {
+    -fx-text-fill: -kv-error;
+}
+
+.count-warning {
+    -fx-text-fill: -kv-warning;
+}
+
+.count-info {
+    -fx-text-fill: -kv-info;
+}
+
+/* radek problemu */
+.problem-row {
+    -fx-padding: 8 12 8 12;
+}
+
+.problem-content {
+    -fx-spacing: 10;
+}
+
+.problem-message {
+    -fx-text-fill: -kv-text;
+}
+
+.level-badge {
+    -fx-font-size: 11px;
+    -fx-font-weight: bold;
+    -fx-padding: 1 6 1 6;
+    -fx-background-radius: 4;
+}
+
+.level-error {
+    -fx-background-color: -kv-error-tint;
+    -fx-text-fill: -kv-error;
+}
+
+.level-warning {
+    -fx-background-color: -kv-warning-tint;
+    -fx-text-fill: -kv-warning;
+}
+
+.level-info {
+    -fx-background-color: -kv-info-tint;
+    -fx-text-fill: -kv-info;
+}
+
+/* tlacitko Kopirovat se ukaze pri najeti mysi nebo u vybraneho radku */
+.problem-row .copy-button {
+    -fx-padding: 2 10 2 10;
+    -fx-font-size: 11px;
+    -fx-opacity: 0;
+}
+
+.list-cell:hover .problem-row .copy-button,
+.list-cell:selected .problem-row .copy-button {
+    -fx-opacity: 1;
+}
+
+/* stavovy radek */
+.status-bar {
+    -fx-background-color: -kv-surface;
+    -fx-border-color: -kv-border transparent transparent transparent;
+    -fx-border-width: 1 0 0 0;
+    -fx-padding: 5 16 5 16;
+    -fx-spacing: 8;
+    -fx-alignment: center-left;
+}
+
+.status-bar .label {
+    -fx-text-fill: -kv-text-muted;
+    -fx-font-size: 12px;
+}
+
+.status-marker {
+    -fx-min-width: 14;
+    -fx-pref-width: 14;
 }

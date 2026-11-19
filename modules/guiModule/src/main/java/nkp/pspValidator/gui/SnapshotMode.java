@@ -12,7 +12,13 @@ import javafx.stage.PopupWindow;
 import javafx.stage.Stage;
 import javafx.stage.Window;
 import javafx.util.Duration;
+import nkp.pspValidator.gui.newvalidation.OutputSettings;
+import nkp.pspValidator.gui.newvalidation.ValidationRequest;
+import nkp.pspValidator.gui.newvalidation.ValidationSource;
+import nkp.pspValidator.gui.newvalidation.VersionSettings;
 import nkp.pspValidator.gui.skipping.SkippingConfigurationDialog;
+import nkp.pspValidator.shared.FdmfRegistry;
+import nkp.pspValidator.shared.externalUtils.ExternalUtil;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
@@ -20,9 +26,11 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.EnumSet;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.function.Supplier;
 
 /**
@@ -37,6 +45,16 @@ import java.util.function.Supplier;
  * <p>
  * Dialog Nová validace lze otevřít s předvyplněnou cestou ({@code -Dkv.snapshotPsp=<adresář nebo soubor .zip>})
  * a rozbalenou sekcí ({@code -Dkv.snapshotExpand=versions|tools|skipped}), aby šly nasnímat všechny stavy.
+ * <p>
+ * Skutečná validace z GUI: {@code -Dkv.snapshotValidate=<adresář balíku nebo soubor .zip>} a v seznamu kroků
+ * {@code results} spustí validaci stejnou cestou jako dialog Nová validace (požadavek z uloženého nastavení verzí
+ * a výstupů, {@code Main.launchValidation}), počká na její konec, vybere první sekci a pravidlo s problémem a uloží
+ * snímek {@code results.png}. Volitelně {@code -Dkv.snapshotDisable=JHOVE,KAKADU} vypne nástroje pro tuto validaci
+ * (jako zaškrtávátka v dialogu) a {@code -Dkv.snapshotRunningMs=<ms>} uloží i snímek {@code running.png} během běhu.
+ * Krok {@code rerun} pak spustí „Validovat znovu“, počká na konec a uloží {@code rerun.png}; do výpisu napíše, zda
+ * se znovu spustil tentýž požadavek. Krok {@code small} zmenší hlavní okno na 1000 × 640 a uloží {@code small.png}
+ * (další kroky pak běží v malém okně). Krok {@code filtered} zapne filtr „chyby a varování, jen sekce a pravidla
+ * s problémy“, vybere první problém a uloží {@code filtered.png}. Výsledek každé validace se vypíše na standardní výstup.
  * <p>
  * Soubor nastavení se výchozně čte z obvyklého umístění (při spuštění z Gradle je to {@code config.properties}
  * v pracovním adresáři modulu), takže snímky odrážejí osobní nastavení vývojáře. Pro snímky nad čistým nastavením
@@ -55,6 +73,10 @@ public class SnapshotMode {
     public static final String PROP_DELAY_MS = "kv.snapshotDelayMs";
     public static final String PROP_PSP = "kv.snapshotPsp";
     public static final String PROP_EXPAND = "kv.snapshotExpand";
+    public static final String PROP_VALIDATE = "kv.snapshotValidate";
+    public static final String PROP_DISABLE = "kv.snapshotDisable";
+    public static final String PROP_RUNNING_MS = "kv.snapshotRunningMs";
+    private static final long VALIDATION_TIMEOUT_MS = 10 * 60 * 1000;
     public static final String ALL_DIALOGS = "main,mainMenu,newValidation,skipping,externalUtils,about,dictionaries";
 
     public static boolean isEnabled() {
@@ -124,6 +146,15 @@ public class SnapshotMode {
                 return;
             }
             String name = queue.remove(0);
+            if (!"rerun".equals(name) && !"results".equals(name)) {
+                //ostatni kroky ocekavaji klid (zadna bezici validace)
+                MainController controller = main.getMainController();
+                if (controller.isValidationRunning()) {
+                    queue.add(0, name);
+                    after(this::next);
+                    return;
+                }
+            }
             try {
                 if ("main".equals(name)) {
                     Stage stage = main.getPrimaryStage();
@@ -149,6 +180,29 @@ public class SnapshotMode {
                         menu.hide();
                         next();
                     });
+                } else if ("results".equals(name)) {
+                    runValidation(name);
+                } else if ("rerun".equals(name)) {
+                    rerun(name);
+                } else if ("filtered".equals(name)) {
+                    MainController controller = main.getMainController();
+                    controller.setFilterChecks(true, true, false, true);
+                    controller.selectFirstProblem();
+                    after(() -> {
+                        System.out.println("SNAPSHOT MODE: filtered: " + controller.describeShownResult());
+                        save(main.getPrimaryStage().getScene(), name);
+                        next();
+                    });
+                } else if ("small".equals(name)) {
+                    Stage stage = main.getPrimaryStage();
+                    stage.setWidth(1000);
+                    stage.setHeight(640);
+                    after(() -> {
+                        System.out.println("SNAPSHOT MODE: window " + (int) stage.getWidth() + "x" + (int) stage.getHeight()
+                                + ", scene " + (int) stage.getScene().getWidth() + "x" + (int) stage.getScene().getHeight());
+                        save(stage.getScene(), name);
+                        next();
+                    });
                 } else if (dialogs.containsKey(name)) {
                     AbstractDialog dialog = dialogs.get(name).get();
                     Stage stage = dialog.showNonBlocking();
@@ -158,7 +212,7 @@ public class SnapshotMode {
                         next();
                     });
                 } else {
-                    System.err.println("SNAPSHOT MODE: unknown dialog '" + name + "', known: main," + String.join(",", dialogs.keySet()));
+                    System.err.println("SNAPSHOT MODE: unknown dialog '" + name + "', known: main,mainMenu,results,rerun,filtered,small," + String.join(",", dialogs.keySet()));
                     failed = true;
                     next();
                 }
@@ -168,6 +222,104 @@ public class SnapshotMode {
                 failed = true;
                 next();
             }
+        }
+
+        private void runValidation(String name) {
+            String path = System.getProperty(PROP_VALIDATE);
+            if (path == null || path.trim().isEmpty()) {
+                System.err.println("SNAPSHOT MODE: step 'results' needs -D" + PROP_VALIDATE + "=<package dir or zip>");
+                failed = true;
+                next();
+                return;
+            }
+            ValidationSource source = path.trim().toLowerCase().endsWith(".zip") ? ValidationSource.ZIP : ValidationSource.DIRECTORY;
+            ConfigurationManager config = main.getConfigurationManager();
+            FdmfRegistry registry = main.getValidationDataManager().getFdmfRegistry();
+            ValidationRequest request = ValidationRequest.create(source, path, new VersionSettings(config, registry),
+                    new OutputSettings(config), parseDisabled(System.getProperty(PROP_DISABLE)));
+            System.out.println("SNAPSHOT MODE: validating " + describe(request));
+            MainController controller = main.getMainController();
+            int startedBefore = controller.getStartedValidations();
+            long started = System.currentTimeMillis();
+            //mimo animaci (u ZIPu se otevre modalni dialog rozbalovani)
+            Platform.runLater(() -> main.launchValidation(request));
+            String runningMs = System.getProperty(PROP_RUNNING_MS);
+            if (runningMs != null) {
+                PauseTransition pause = new PauseTransition(Duration.millis(Long.parseLong(runningMs)));
+                pause.setOnFinished(e -> {
+                    System.out.println("SNAPSHOT MODE: while running: " + controller.describeShownResult());
+                    save(main.getPrimaryStage().getScene(), "running");
+                });
+                pause.play();
+            }
+            waitForEnd(controller, startedBefore, started, () -> afterValidation(name, controller, started));
+        }
+
+        private void rerun(String name) {
+            MainController controller = main.getMainController();
+            ValidationRequest before = controller.getLastRequest();
+            boolean available = controller.canRerun();
+            System.out.println("SNAPSHOT MODE: rerun available=" + available + ", last request: " + (before == null ? "-" : describe(before)));
+            if (!available) {
+                failed = true;
+                next();
+                return;
+            }
+            int startedBefore = controller.getStartedValidations();
+            long started = System.currentTimeMillis();
+            Platform.runLater(() -> controller.rerunValidation(null));
+            waitForEnd(controller, startedBefore, started, () -> {
+                ValidationRequest after = controller.getLastRequest();
+                System.out.println("SNAPSHOT MODE: rerun used the same request object: " + (after == before)
+                        + ", request: " + (after == null ? "-" : describe(after)));
+                afterValidation(name, controller, started);
+            });
+        }
+
+        /** Čeká, až validace začne a skončí (dokončená, chyba nebo zrušení). */
+        private void waitForEnd(MainController controller, int startedBefore, long started, Runnable then) {
+            PauseTransition pause = new PauseTransition(Duration.millis(250));
+            pause.setOnFinished(e -> {
+                if (controller.getStartedValidations() > startedBefore && !controller.isValidationRunning()) {
+                    then.run();
+                } else if (System.currentTimeMillis() - started > VALIDATION_TIMEOUT_MS) {
+                    System.err.println("SNAPSHOT MODE: validation timeout");
+                    failed = true;
+                    next();
+                } else {
+                    waitForEnd(controller, startedBefore, started, then);
+                }
+            });
+            pause.play();
+        }
+
+        private void afterValidation(String name, MainController controller, long started) {
+            System.out.println("SNAPSHOT MODE: validation ended after " + (System.currentTimeMillis() - started) + " ms");
+            controller.selectFirstProblem();
+            after(() -> {
+                System.out.println("SNAPSHOT MODE: shown: " + controller.describeShownResult());
+                save(main.getPrimaryStage().getScene(), name);
+                next();
+            });
+        }
+
+        private static Set<ExternalUtil> parseDisabled(String value) {
+            Set<ExternalUtil> result = EnumSet.noneOf(ExternalUtil.class);
+            if (value != null) {
+                for (String item : value.split("\\s*,\\s*")) {
+                    if (!item.trim().isEmpty()) {
+                        result.add(ExternalUtil.valueOf(item.trim()));
+                    }
+                }
+            }
+            return result;
+        }
+
+        private static String describe(ValidationRequest request) {
+            return request.getSource() + " " + request.getFile().getAbsolutePath()
+                    + ", txtLog=" + request.isCreateTxtLog() + ", xmlLog=" + request.isCreateXmlLog()
+                    + ", verbosity=" + request.getVerbosity() + ", disabledTools=" + request.getDisabledUtils()
+                    + ", forcedFundUnit=" + request.getParams().forcedDmfFduVersion;
         }
 
         private static Menu findMenu(Scene scene, String text) {

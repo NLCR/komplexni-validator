@@ -16,7 +16,6 @@ import javafx.stage.WindowEvent;
 import javafx.util.Duration;
 import nkp.pspValidator.gui.newvalidation.*;
 import nkp.pspValidator.shared.Dmf;
-import nkp.pspValidator.shared.DmfDetector;
 import nkp.pspValidator.shared.FdmfRegistry;
 import nkp.pspValidator.shared.externalUtils.ExternalUtil;
 import nkp.pspValidator.shared.externalUtils.ExternalUtilManager;
@@ -747,22 +746,7 @@ public class NewValidationDialogController extends DialogController {
             closed = true;
             stage.hide();
         }
-        request.launch(new ValidationRequest.Launcher() {
-            @Override
-            public void setUtilsDisabled(Set<ExternalUtil> utils) {
-                utilManager.setUtilsDisabled(utils);
-            }
-
-            @Override
-            public void runPspDirValidation(File pspDir, DmfDetector.Params params, boolean createTxtLog, boolean createXmlLog, int verbosity) {
-                main.runPspDirValidation(pspDir, params, createTxtLog, createXmlLog, verbosity);
-            }
-
-            @Override
-            public void unzipAndRunPspZipValidation(File pspZip, DmfDetector.Params params, boolean createTxtLog, boolean createXmlLog, int verbosity) {
-                main.unzipAndRunPspZipValidation(pspZip, params, createTxtLog, createXmlLog, verbosity);
-            }
-        });
+        main.launchValidation(request);
     }
 
     // ===== pomocne =====

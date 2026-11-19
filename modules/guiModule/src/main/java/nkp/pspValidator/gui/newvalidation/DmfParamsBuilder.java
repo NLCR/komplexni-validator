@@ -3,6 +3,9 @@ package nkp.pspValidator.gui.newvalidation;
 import nkp.pspValidator.shared.Dmf;
 import nkp.pspValidator.shared.DmfDetector;
 
+import java.lang.reflect.Field;
+import java.lang.reflect.Modifier;
+
 /**
  * Sestaví {@link DmfDetector.Params} (vynucené a preferované verze pro všech 11 typů) z uloženého nastavení, stejně
  * jako je dřív plnily dialogy validace adresáře a ZIPu.
@@ -18,6 +21,27 @@ public final class DmfParamsBuilder {
             set(params, type, settings.forcedVersion(type), settings.preferredVersion(type));
         }
         return params;
+    }
+
+    /**
+     * Nezávislá kopie parametrů (všechna veřejná pole). {@link ValidationRequest} si drží kopii, aby šel požadavek
+     * spustit znovu se stejnými hodnotami, i kdyby někdo předaný objekt mezitím změnil.
+     */
+    public static DmfDetector.Params copy(DmfDetector.Params original) {
+        if (original == null) {
+            return null;
+        }
+        DmfDetector.Params copy = new DmfDetector.Params();
+        try {
+            for (Field field : DmfDetector.Params.class.getFields()) {
+                if (!Modifier.isStatic(field.getModifiers()) && !Modifier.isFinal(field.getModifiers())) {
+                    field.set(copy, field.get(original));
+                }
+            }
+        } catch (IllegalAccessException e) {
+            throw new IllegalStateException(e);
+        }
+        return copy;
     }
 
     private static void set(DmfDetector.Params params, Dmf.Type type, String forced, String preferred) {

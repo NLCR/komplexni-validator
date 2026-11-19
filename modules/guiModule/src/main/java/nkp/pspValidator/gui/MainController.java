@@ -1,33 +1,50 @@
 package nkp.pspValidator.gui;
 
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.application.Platform;
+import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
 import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.Node;
 import javafx.scene.control.*;
-import javafx.scene.image.ImageView;
-import javafx.scene.input.KeyEvent;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyCodeCombination;
+import javafx.scene.input.KeyCombination;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.Region;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-import javafx.stage.Window;
+import nkp.pspValidator.gui.newvalidation.DocumentTypes;
+import nkp.pspValidator.gui.newvalidation.ValidationRequest;
+import nkp.pspValidator.gui.newvalidation.ValidationSource;
+import nkp.pspValidator.gui.results.ProblemFilter;
+import nkp.pspValidator.gui.results.RerunState;
+import nkp.pspValidator.gui.results.ResultHeader;
+import nkp.pspValidator.gui.results.ResultTexts;
 import nkp.pspValidator.gui.validation.*;
 import nkp.pspValidator.shared.*;
 import nkp.pspValidator.shared.engine.Level;
 import nkp.pspValidator.shared.engine.Rule;
 import nkp.pspValidator.shared.engine.RulesSection;
 import nkp.pspValidator.shared.engine.validationFunctions.ValidationProblem;
+import nkp.pspValidator.shared.externalUtils.ExternalUtil;
+import nkp.pspValidator.shared.externalUtils.ExternalUtilManager;
 
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintStream;
 import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
 import java.util.*;
 import java.util.logging.Logger;
 
 /**
+ * Hlavní okno: prázdný stav, horní lišta se souhrnem validace („Validovat znovu“), filtr a tři panely výsledků
+ * (sekce, pravidla vybrané sekce, problémy vybraného pravidla) a stavový řádek. Logika souhrnu, filtru a opakování
+ * validace je v balíčku {@code gui.results} (bez JavaFX), počty a stavy sekcí a pravidel dodává jádro přes
+ * {@link ValidationState.ProgressListener} do {@link ValidationStateManager}.
+ * <p>
  * Created by Martin Řehánek on 9.12.16.
  */
 public class MainController extends AbstractController implements ValidationState.ProgressListener, ValidationState.ProgressController {
@@ -36,6 +53,9 @@ public class MainController extends AbstractController implements ValidationStat
 
     //TODO: nahradit konkretni wiki strankou
     private static final String URL_ONLINE_HELP = "https://github.com/NLCR/komplexni-validator/wiki";
+
+    private static final String[] STATUS_DOT_CLASSES = {"status-dot-ok", "status-dot-error", "status-dot-none"};
+    private static final String[] VERDICT_CLASSES = {"verdict-valid", "verdict-invalid", "verdict-none"};
 
     @FXML
     BorderPane container;
@@ -46,135 +66,328 @@ public class MainController extends AbstractController implements ValidationStat
     @FXML
     Menu menuValidate;
     @FXML
+    MenuItem rerunMenuItem;
+    @FXML
     Menu menuValidation;
     @FXML
     Menu menuSettings;
     @FXML
     Menu menuShow;
     @FXML
-    MenuItem showValidationResultSummaryDialogItem;
-    @FXML
     MenuItem showLogTxtMenuItem;
     @FXML
     MenuItem showLogXmlMenuItem;
 
-    //status bar
+    //horni lista
+    @FXML
+    HBox header;
+    @FXML
+    Label headerTitle;
+    @FXML
+    Label headerSubtitle;
+    @FXML
+    HBox headerLinks;
+    @FXML
+    Hyperlink xmlLogLink;
+    @FXML
+    Hyperlink txtLogLink;
+    @FXML
+    Label verdictBadge;
+    @FXML
+    Label errorsBadge;
+    @FXML
+    Label warningsBadge;
+    @FXML
+    Label infosBadge;
+    @FXML
+    Button rerunButton;
+    @FXML
+    Button cancelButton;
+
+    //prazdny stav a hlaska
+    @FXML
+    VBox emptyState;
+    @FXML
+    Label emptyTitle;
+    @FXML
+    Label emptyFdmfInfo;
+    @FXML
+    Label emptyToolsInfo;
+    @FXML
+    VBox messageState;
+    @FXML
+    Label messageTitle;
+    @FXML
+    Label messageText;
+
+    //vysledky
+    @FXML
+    VBox resultsPane;
+    @FXML
+    CheckBox filterErrors;
+    @FXML
+    CheckBox filterWarnings;
+    @FXML
+    CheckBox filterInfos;
+    @FXML
+    CheckBox filterOnlyWithProblems;
+    @FXML
+    ListView<SectionWithState> sectionList;
+    @FXML
+    Label rulesHeader;
+    @FXML
+    Label sectionDescription;
+    @FXML
+    ListView<RuleWithState> ruleList;
+    @FXML
+    Label problemsHeader;
+    @FXML
+    Label ruleDescription;
+    @FXML
+    ListView<ValidationProblem> problemList;
+    @FXML
+    ProgressIndicator problemsProgressIndicator;
+
+    //stavovy radek
     @FXML
     Label statusText;
     @FXML
     ProgressIndicator statusProgressIndicator;
     @FXML
-    ImageView statusImgFinished;
-    @FXML
-    ImageView statusImgError;
-    @FXML
-    ImageView statusImgStopped;
+    Region statusDot;
 
-    //sections
-    @FXML
-    ChoiceBox problemsFilterChoicebox;
-
-    @FXML
-    ListView<SectionWithState> sectionList;
-
-    //rules of section
-    @FXML
-    Label rulesSectionNameLbl;
-    @FXML
-    Label rulesSectionDescriptionLbl;
-    @FXML
-    ListView<RuleWithState> ruleList;
-
-    //problems of rule
-    @FXML
-    Node problemsContainer;
-    @FXML
-    Label problemsSectionNameLbl;
-    @FXML
-    Label problemsRuleNameLbl;
-    @FXML
-    Label problemsRuleDescriptionLbl;
-    @FXML
-    ProgressIndicator problemsProgressIndicator;
-    @FXML
-    ListView<ValidationProblem> problemList;
-
-    //other validation data
+    //data probihajici nebo posledni validace
     private Task validationTask;
     private ValidationStateManager validationStateManager = null;
     private SectionWithState selectedSection;
     private RuleWithState selectedRule;
     private File pspDir;
-    private Dmf dmf;
+    private volatile Dmf dmf;
+    private ValidationRequest currentRequest;
 
     private File logTxtFile;
     private File logXmlFile;
 
-    ValidationResultSummary validationResultSummary;
-    private boolean cancelValidation = false;
+    private volatile boolean cancelValidation = false;
+    /** vlakno validace uz vstoupilo do tela ulohy (zruseni pred tim se musi osetrit zvlast, telo se pak nespusti) */
+    private volatile boolean validationTaskEntered = false;
+    /**
+     * Zobrazeni vysledku ohlaseneho jadrem (hotovo nebo zruseno). Jadro ho hlasi jeste pred zapisem protokolu, proto se
+     * provede az po navratu z validatoru a uzavreni logu: teprve pak smi jit otevrit protokol a validovat znovu.
+     */
+    private volatile Runnable pendingOutcome = null;
+
+    private final RerunState rerunState = new RerunState();
+    private ProblemFilter filter = ProblemFilter.all();
+    private FilteredList<SectionWithState> filteredSections;
+    private FilteredList<RuleWithState> filteredRules;
+    private FilteredList<ValidationProblem> filteredProblems;
+    private TotalState totalState = TotalState.IDLE;
+    private int finishedValidations = 0;
+    private int startedValidations = 0;
 
     @Override
     public void start(Stage primaryStage) throws Exception {
     }
 
-    public void handleKeyInput(KeyEvent keyEvent) {
-        //TODO: zpracovani menu
+    @FXML
+    public void initialize() {
+        emptyTitle.setText("Komplexní validátor " + Version.VERSION_CODE);
+        sectionList.setCellFactory(list -> new SectionCell(() -> filter));
+        ruleList.setCellFactory(list -> new RuleCell(() -> filter));
+        problemList.setCellFactory(list -> new ProblemCell(problemList));
+        sectionList.setPlaceholder(placeholder("Sekce se načítají."));
+        ruleList.setPlaceholder(placeholder("Vyberte sekci."));
+        problemList.setPlaceholder(placeholder("Vyberte pravidlo."));
+        sectionList.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, nowSelected) -> {
+            if (nowSelected == null) {
+                selectSection(null);
+            } else if (!nowSelected.equals(selectedSection)) {
+                selectSection(nowSelected);
+            }
+        });
+        ruleList.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, nowSelected) -> {
+            if (nowSelected == null) {
+                selectRule(null);
+            } else if (!nowSelected.equals(selectedRule)) {
+                selectRule(nowSelected);
+            }
+        });
+        for (CheckBox box : new CheckBox[]{filterErrors, filterWarnings, filterInfos, filterOnlyWithProblems}) {
+            box.selectedProperty().addListener((obs, oldValue, newValue) -> applyFilter());
+        }
+        initCopyActions();
+        showCenter(emptyState);
+        updateStatus("Připraveno", TotalState.IDLE);
     }
 
-    private Window getWindow() {
-        return container.getScene().getWindow();
+    private static Label placeholder(String text) {
+        Label label = new Label(text);
+        label.getStyleClass().add("text-muted");
+        label.setWrapText(true);
+        return label;
     }
+
+    /** Kopírování do schránky: kontextové nabídky seznamů a Cmd/Ctrl+C v seznamu problémů. */
+    private void initCopyActions() {
+        MenuItem copyProblem = new MenuItem("Kopírovat problém");
+        copyProblem.setOnAction(e -> copySelectedProblem());
+        MenuItem copyAllProblems = new MenuItem("Kopírovat všechny zobrazené problémy");
+        copyAllProblems.setOnAction(e -> copyAllShownProblems());
+        problemList.setContextMenu(new ContextMenu(copyProblem, copyAllProblems));
+        KeyCombination copyKey = new KeyCodeCombination(KeyCode.C, KeyCombination.SHORTCUT_DOWN);
+        problemList.setOnKeyPressed(e -> {
+            if (copyKey.match(e)) {
+                copySelectedProblem();
+                e.consume();
+            }
+        });
+
+        MenuItem copyRule = new MenuItem("Kopírovat název a popis pravidla");
+        copyRule.setOnAction(e -> {
+            RuleWithState rule = ruleList.getSelectionModel().getSelectedItem();
+            if (rule != null) {
+                ProblemCell.copyToClipboard(nameAndDescription(rule.getName(), rule.getDescription()));
+            }
+        });
+        ruleList.setContextMenu(new ContextMenu(copyRule));
+
+        MenuItem copySection = new MenuItem("Kopírovat název a popis sekce");
+        copySection.setOnAction(e -> {
+            SectionWithState section = sectionList.getSelectionModel().getSelectedItem();
+            if (section != null) {
+                ProblemCell.copyToClipboard(nameAndDescription(section.getName(), section.getDescription()));
+            }
+        });
+        sectionList.setContextMenu(new ContextMenu(copySection));
+    }
+
+    private static String nameAndDescription(String name, String description) {
+        return description == null || description.trim().isEmpty() ? name : name + "\n" + description.trim();
+    }
+
+    private void copySelectedProblem() {
+        ValidationProblem problem = problemList.getSelectionModel().getSelectedItem();
+        if (problem != null) {
+            ProblemCell.copyToClipboard(problem.getFullMessage());
+        }
+    }
+
+    private void copyAllShownProblems() {
+        if (problemList.getItems() == null || problemList.getItems().isEmpty()) {
+            return;
+        }
+        StringBuilder text = new StringBuilder();
+        for (ValidationProblem problem : problemList.getItems()) {
+            text.append(problem.getLevel().name()).append(": ").append(problem.getFullMessage()).append('\n');
+        }
+        ProblemCell.copyToClipboard(text.toString());
+    }
+
+    // ===== prazdny stav =====
+
+    /**
+     * Doplní do prázdného stavu počet fDMF a dostupnost nástrojů (po inicializaci validačních dat a po kontrole
+     * nástrojů). Dokud nástroje nejsou zkontrolované, řádek o nástrojích se nezobrazí.
+     */
+    public void refreshEmptyStateInfo() {
+        ValidationDataManager data = main == null ? null : main.getValidationDataManager();
+        if (data == null) {
+            setTextOrHide(emptyFdmfInfo, null);
+            setTextOrHide(emptyToolsInfo, null);
+            return;
+        }
+        int fdmfs = 0;
+        if (data.getFdmfRegistry() != null) {
+            for (Dmf.Type type : Dmf.Type.values()) {
+                fdmfs += DocumentTypes.availableVersions(data.getFdmfRegistry(), type).size();
+            }
+        }
+        setTextOrHide(emptyFdmfInfo, fdmfs == 0 ? null : ResultTexts.fdmfCount(fdmfs));
+        Integer available = availableTools(data.getExternalUtilManager());
+        setTextOrHide(emptyToolsInfo, available == null ? null : ResultTexts.toolsAvailable(available, ExternalUtil.values().length));
+    }
+
+    /** Počet dostupných nástrojů, null, když některý ještě nebyl zkontrolován. */
+    private static Integer availableTools(ExternalUtilManager manager) {
+        if (manager == null) {
+            return null;
+        }
+        int available = 0;
+        for (ExternalUtil util : ExternalUtil.values()) {
+            try {
+                if (manager.isUtilAvailable(util)) {
+                    available++;
+                }
+            } catch (NullPointerException e) {
+                //dostupnost nastroje se jeste nezjistovala
+                return null;
+            }
+        }
+        return available;
+    }
+
+    private static void setTextOrHide(Label label, String text) {
+        label.setText(text);
+        label.setVisible(text != null);
+        label.setManaged(text != null);
+    }
+
+    private void showCenter(VBox pane) {
+        for (VBox candidate : new VBox[]{emptyState, messageState, resultsPane}) {
+            candidate.setVisible(candidate == pane);
+        }
+    }
+
+    // ===== spusteni validace =====
 
     private void initBeforeValidation() {
         //data spojena s konkretnim behem validace
         validationStateManager = null;
         pspDir = null;
         dmf = null;
-        validationResultSummary = null;
         //stav validace
         selectedSection = null;
         selectedRule = null;
-        //VIEWS
-        //status
-        statusText.setText(null);
-        //sections
+        filteredSections = null;
+        filteredRules = null;
+        filteredProblems = null;
+        //views
         sectionList.setItems(null);
-        //rules
-        rulesSectionNameLbl.setText(null);
-        rulesSectionDescriptionLbl.setText(null);
+        sectionList.setPlaceholder(placeholder("Sekce se načítají."));
         ruleList.setItems(null);
-        //problems of rule
-        problemsContainer.setVisible(false);
-        problemsProgressIndicator.setVisible(false);
-        problemsSectionNameLbl.setText(null);
-        problemsRuleNameLbl.setText(null);
-        problemsRuleDescriptionLbl.setText(null);
         problemList.setItems(null);
-        problemList.setVisible(false);
-        updateStatus("", TotalState.IDLE);
+        selectSection(null);
+        showCenter(resultsPane);
     }
 
     /**
-     * @param pspDir
-     * @param dmfDetectorParams
-     * @param createTxtLog
-     * @param createXmlLog
+     * Spustí validaci adresáře balíku (u ZIPu už rozbaleného).
+     *
+     * @param request požadavek, ze kterého validace vznikla (pro „Validovat znovu“), nebo null
      */
-    public void runPspDirValidation(File pspDir, DmfDetector.Params dmfDetectorParams, boolean createTxtLog, boolean createXmlLog, int verbosity) {
+    public void runPspDirValidation(File pspDir, DmfDetector.Params dmfDetectorParams, boolean createTxtLog, boolean createXmlLog,
+                                    int verbosity, ValidationRequest request) {
         initBeforeValidation();
         this.pspDir = pspDir;
+        this.currentRequest = request;
         this.logTxtFile = createTxtLog ? buildTxtLogFile(pspDir) : null;
         this.logXmlFile = createXmlLog ? buildXmlLogFile(pspDir) : null;
         this.cancelValidation = false;
+        this.validationTaskEntered = false;
+        this.pendingOutcome = null;
+        rerunState.validationStarted(request);
+        startedValidations++;
+        showHeader(ResultHeader.running(pspDir.getName(), null));
+        updateStatus(String.format("Inicializuji balík %s.", pspDir.getAbsolutePath()), TotalState.RUNNING);
 
         validationTask = new Task<Void>() {
 
             @Override
             protected Void call() throws Exception {
-                //System.out.println("validating " + pspDir.getAbsolutePath() + ", mon: " + focedMonographVersion + ", per: " + forcedPeriodicalVersion);
+                validationTaskEntered = true;
                 PrintStream out = null;
                 try {
-                    updateStatusFromWorkerThread(String.format("Inicializuji balík %s.", pspDir.getAbsolutePath()), TotalState.RUNNING);
                     dmf = new DmfDetector().resolveDmf(pspDir, dmfDetectorParams);
                     Validator validator = Utils.buildValidator(main.getValidationDataManager(), dmf, pspDir);
                     out = buildTxtLogPrintstream();
@@ -190,8 +403,9 @@ public class MainController extends AbstractController implements ValidationStat
                         devParams.getSectionsToRun().add("Primární METS filesec");
                         //devParams.getSectionsToRun().add("Obrazová data");
                     }
-                    //Thread.sleep(5000);
-                    if (isCancelled()) {
+                    if (isCancelled() || cancelValidation) {
+                        //zruseno pred spustenim validatoru (jadro pak onValidationsCancel nezavola)
+                        pendingOutcome = MainController.this::onStopped;
                         return null;
                     }
                     validator.run(pspDir,
@@ -201,18 +415,22 @@ public class MainController extends AbstractController implements ValidationStat
                             toSetOfSkippedSectionNames(validator, dmf),
                             MainController.this,
                             MainController.this, dmf);
-                    //updateStatus(String.format("Validace balíku %s hotova.", pspDir.getAbsolutePath()));
-                } /*catch (InterruptedException e) {
-                    updateStatusFromWorkerThread(String.format("Validace balíku zrušena."), TotalState.STOPPED);
-                } */ catch (Exception e) {
-                    updateStatusFromWorkerThread(String.format("Chyba: %s.", e.getMessage()), TotalState.ERROR);
+                } catch (Exception e) {
+                    String message = e.getMessage();
+                    //chyba az po ohlaseni vysledku (napr. pri zapisu protokolu) ma prednost pred vysledkem
+                    pendingOutcome = () -> onFailed(message);
                     e.printStackTrace();
                 } finally {
                     if (out != null) {
                         out.close();
                     }
-                    return null;
+                    Runnable outcome = pendingOutcome;
+                    pendingOutcome = null;
+                    if (outcome != null) {
+                        Platform.runLater(outcome);
+                    }
                 }
+                return null;
             }
 
             private PrintStream buildTxtLogPrintstream() {
@@ -249,100 +467,117 @@ public class MainController extends AbstractController implements ValidationStat
         return result;
     }
 
-    private void updateStatusFromWorkerThread(String text, TotalState state) {
-        Platform.runLater(() -> {
-            updateStatus(text, state);
-        });
-    }
-
-    private void updateStatus(String text, TotalState state) {
-        statusText.setText(text);
-        switch (state) {
-            case IDLE:
-                //menus
-                menuValidate.setDisable(false);
-                menuValidation.setDisable(true);
-                menuSettings.setDisable(false);
-                menuShow.setDisable(false);
-                //status bar
-                statusProgressIndicator.setVisible(false);
-                statusImgFinished.setVisible(false);
-                statusImgError.setVisible(false);
-                statusImgStopped.setVisible(false);
-                //logs through menu
-                showValidationResultSummaryDialogItem.setDisable(true);
-                showLogTxtMenuItem.setDisable(true);
-                showLogXmlMenuItem.setDisable(true);
-                break;
-            case RUNNING:
-                //menus
-                menuValidate.setDisable(true);
-                menuValidation.setDisable(false);
-                menuSettings.setDisable(true);
-                menuShow.setDisable(true);
-                //status bar
-                statusProgressIndicator.setVisible(true);
-                statusImgFinished.setVisible(false);
-                statusImgError.setVisible(false);
-                statusImgStopped.setVisible(false);
-                //logs through menu
-                showValidationResultSummaryDialogItem.setDisable(true);
-                showLogTxtMenuItem.setDisable(true);
-                showLogXmlMenuItem.setDisable(true);
-                break;
-            case FINISHED:
-                //menus
-                menuValidate.setDisable(false);
-                menuValidation.setDisable(true);
-                menuSettings.setDisable(false);
-                menuShow.setDisable(false);
-                //status bar
-                statusProgressIndicator.setVisible(false);
-                statusImgFinished.setVisible(true);
-                statusImgError.setVisible(false);
-                statusImgStopped.setVisible(false);
-                //logs through menu
-                showValidationResultSummaryDialogItem.setDisable(false);
-                showLogTxtMenuItem.setDisable(logTxtFile == null);
-                showLogXmlMenuItem.setDisable(logXmlFile == null);
-                break;
-            case ERROR:
-                //menus
-                menuValidate.setDisable(false);
-                menuValidation.setDisable(true);
-                menuSettings.setDisable(false);
-                menuShow.setDisable(false);
-                //status bar
-                statusProgressIndicator.setVisible(false);
-                statusImgFinished.setVisible(false);
-                statusImgError.setVisible(true);
-                statusImgStopped.setVisible(false);
-                //logs through menu
-                showValidationResultSummaryDialogItem.setDisable(true);
-                showLogTxtMenuItem.setDisable(true);
-                showLogXmlMenuItem.setDisable(true);
-                break;
-            case STOPPED:
-                //menus
-                menuValidate.setDisable(false);
-                menuValidation.setDisable(true);
-                menuSettings.setDisable(false);
-                menuShow.setDisable(false);
-                //status bar
-                statusProgressIndicator.setVisible(false);
-                statusImgFinished.setVisible(false);
-                statusImgError.setVisible(false);
-                statusImgStopped.setVisible(true);
-                //logs through menu
-                showValidationResultSummaryDialogItem.setDisable(true);
-                showLogTxtMenuItem.setDisable(true);
-                showLogXmlMenuItem.setDisable(true);
-                break;
+    private void onFailed(String message) {
+        updateStatus(String.format("Chyba: %s.", message), TotalState.ERROR);
+        showHeader(ResultHeader.failed(pspDir.getName(), dmf));
+        if (validationStateManager == null) {
+            messageTitle.setText("Validace skončila chybou");
+            messageText.setText(message == null ? "Podrobnosti jsou ve výpisu aplikace." : message);
+            showCenter(messageState);
         }
     }
 
+    private void onStopped() {
+        updateStatus("Validace balíku zrušena.", TotalState.STOPPED);
+        showHeader(ResultHeader.stopped(pspDir.getName(), dmf));
+        if (validationStateManager == null) {
+            messageTitle.setText("Validace zrušena");
+            messageText.setText("Validace byla zrušena před kontrolou prvního pravidla.");
+            showCenter(messageState);
+        }
+    }
+
+    // ===== horni lista =====
+
+    private void showHeader(ResultHeader content) {
+        header.setVisible(true);
+        header.setManaged(true);
+        headerTitle.setText(content.getTitle());
+        headerTitle.setTooltip(new Tooltip(sourceDescription()));
+        headerSubtitle.setText(content.getSubtitle());
+
+        boolean hasVerdict = content.getVerdictText() != null;
+        verdictBadge.setText(content.getVerdictText());
+        verdictBadge.getStyleClass().removeAll(VERDICT_CLASSES);
+        if (hasVerdict) {
+            verdictBadge.getStyleClass().add(content.getVerdictStyleClass());
+        }
+        setVisibleManaged(verdictBadge, hasVerdict);
+
+        boolean counts = content.isCountsVisible();
+        errorsBadge.setText(content.getErrorsText());
+        warningsBadge.setText(content.getWarningsText());
+        infosBadge.setText(content.getInfosText());
+        setVisibleManaged(errorsBadge, counts);
+        setVisibleManaged(warningsBadge, counts);
+        setVisibleManaged(infosBadge, counts);
+
+        boolean running = content.isRunning();
+        setVisibleManaged(cancelButton, running);
+        setVisibleManaged(rerunButton, !running);
+
+        //odkazy na vystupy, ktere si validace vyzadala (protokol XML jadro dopisuje az po ohlaseni konce validace)
+        boolean finished = content.getPhase() == ResultHeader.Phase.FINISHED;
+        setVisibleManaged(xmlLogLink, finished && logXmlFile != null);
+        setVisibleManaged(txtLogLink, finished && logTxtFile != null);
+        setVisibleManaged(headerLinks, finished && (logXmlFile != null || logTxtFile != null));
+    }
+
+    /** Bublina u názvu balíku: odkud se validovalo. */
+    private String sourceDescription() {
+        if (currentRequest != null && currentRequest.getSource() == ValidationSource.ZIP) {
+            return "Soubor ZIP: " + currentRequest.getFile().getAbsolutePath() + "\nRozbaleno do: " + pspDir.getAbsolutePath();
+        }
+        return "Adresář balíku: " + pspDir.getAbsolutePath();
+    }
+
+    private static void setVisibleManaged(javafx.scene.Node node, boolean visible) {
+        node.setVisible(visible);
+        node.setManaged(visible);
+    }
+
+    // ===== stav =====
+
+    private void updateStatus(String text, TotalState state) {
+        totalState = state;
+        statusText.setText(text);
+        boolean running = state == TotalState.RUNNING;
+        //menu
+        menuValidate.setDisable(running);
+        menuValidation.setDisable(!running);
+        menuSettings.setDisable(running);
+        menuShow.setDisable(running);
+        //stavovy radek
+        statusProgressIndicator.setVisible(running);
+        statusDot.getStyleClass().removeAll(STATUS_DOT_CLASSES);
+        switch (state) {
+            case FINISHED:
+                statusDot.getStyleClass().add("status-dot-ok");
+                break;
+            case ERROR:
+                statusDot.getStyleClass().add("status-dot-error");
+                break;
+            case STOPPED:
+                statusDot.getStyleClass().add("status-dot-none");
+                break;
+            default:
+                break;
+        }
+        statusDot.setVisible(state == TotalState.FINISHED || state == TotalState.ERROR || state == TotalState.STOPPED);
+        //logy v menu Zobrazit jen po dokoncene validaci
+        boolean finished = state == TotalState.FINISHED;
+        showLogTxtMenuItem.setDisable(!finished || logTxtFile == null);
+        showLogXmlMenuItem.setDisable(!finished || logXmlFile == null);
+        //Validovat znovu
+        if (!running && state != TotalState.IDLE) {
+            rerunState.validationEnded();
+        }
+        boolean canRerun = rerunState.canRerun();
+        rerunMenuItem.setDisable(!canRerun);
+        rerunButton.setDisable(!canRerun);
+    }
+
     private String buildValidationLogName(File pspDir) {
-        //SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy_MM_dd_HH_mm_ss_");
         Date date = new Date();
         return dateFormat.format(date) + pspDir.getName();
@@ -378,130 +613,39 @@ public class MainController extends AbstractController implements ValidationStat
         }
     }
 
+    // ===== udalosti z jadra (pracovni vlakno) =====
 
     @Override
     public void onValidationsFinish(int globalProblemsTotal, Map<Level, Integer> globalProblemsByLevel, boolean valid, long duration) {
-        Platform.runLater(() -> {
+        LocalDateTime finishedAt = LocalDateTime.now();
+        Map<Level, Integer> byLevel = globalProblemsByLevel == null ? null : new HashMap<>(globalProblemsByLevel);
+        pendingOutcome = () -> {
             updateStatus(String.format("Validace balíku %s hotova.", pspDir.getAbsolutePath()), TotalState.FINISHED);
-            //show dialog with summary
-            validationResultSummary = new ValidationResultSummary();
-            validationResultSummary.setPspDir(pspDir);
-            validationResultSummary.setDmf(dmf);
-            validationResultSummary.setGlobalProblemsTotal(globalProblemsTotal);
-            validationResultSummary.setGlobalProblemsByLevel(globalProblemsByLevel);
-            validationResultSummary.setValid(valid);
-            validationResultSummary.setTotalTime(duration);
-            main.showValidationResultSummaryDialog(validationResultSummary);
-        });
+            showHeader(ResultHeader.finished(pspDir.getName(), dmf, byLevel, valid, duration, finishedAt));
+            finishedValidations++;
+            if (selectedSection == null) {
+                selectFirstProblem();
+            }
+        };
     }
 
     @Override
     public void onValidationsCancel() {
-        Platform.runLater(() -> {
-            updateStatus(String.format("Validace balíku zrušena.", pspDir.getAbsolutePath()), TotalState.STOPPED);
-        });
+        pendingOutcome = this::onStopped;
     }
 
     @Override
     public void onInitialization(List<RulesSection> sections, Map<RulesSection, List<Rule>> rules) {
-        validationStateManager = new ValidationStateManager(sections, rules);
-
+        ValidationStateManager manager = new ValidationStateManager(sections, rules);
         Platform.runLater(() -> {
-
-            //sections
-            sectionList.setCellFactory(list -> new SectionListCell());
-            sectionList.setItems(validationStateManager.getSectionsObservable());
-            sectionList.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, nowSelectedSection) -> {
-                if (nowSelectedSection == null) {
-                    selectSection(null);
-                } else {
-                    if (!nowSelectedSection.equals(this.selectedSection)) {
-                        selectSection(nowSelectedSection);
-                    }
-                }
-            });
-
-            //rules
-            rulesSectionNameLbl.setText(null);
-            rulesSectionDescriptionLbl.setText(null);
-            ruleList.setItems(null);
-            ruleList.setCellFactory(list -> new RuleIListCell());
-            ruleList.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, nowSelectedRule) -> {
-                if (nowSelectedRule == null) {
-                    selectRule(null);
-                } else {
-                    if (!nowSelectedRule.equals(selectedRule)) {
-                        selectRule(nowSelectedRule);
-                    }
-                }
-            });
-
-            //problems
-            problemList.setItems(null);
-            problemList.setCellFactory(list -> new ProblemListCell(problemList));
-
+            validationStateManager = manager;
+            showHeader(ResultHeader.running(pspDir.getName(), dmf));
+            filteredSections = new FilteredList<>(manager.getSectionsObservable(), filter::showSection);
+            sectionList.setItems(filteredSections);
+            updatePlaceholders();
+            //fokus do seznamu sekci (ne na prvni zaskrtavatko filtru)
+            sectionList.requestFocus();
         });
-    }
-
-    private void selectRule(RuleWithState rule) {
-        if (rule != null && selectedSection != null) {
-            selectedRule = rule;
-            problemsContainer.setVisible(true);
-            problemsSectionNameLbl.setText(selectedSection.getName() + ": ");
-            problemsRuleNameLbl.setText(rule.getName());
-            problemsRuleDescriptionLbl.setText(rule.getDescription());
-            List<String> problemsFilterChoices = new ArrayList<>();
-            problemsFilterChoices.add("ERROR, WARNING, INFO");
-            problemsFilterChoices.add("ERROR, WARNING");
-            problemsFilterChoices.add("ERROR");
-            ObservableList<String> problemsFilterChoicesObservables = FXCollections.observableArrayList(problemsFilterChoices);
-            problemsFilterChoicebox.setItems(problemsFilterChoicesObservables);
-            problemsFilterChoicebox.getSelectionModel().select(0);
-            switch (rule.getState()) {
-                case FINISHED:
-                    problemsProgressIndicator.setVisible(false);
-                    problemList.setVisible(true);
-                    problemList.setItems(validationStateManager.getProblemsObservable(rule.getSectionId(), rule.getId(), "ERROR, WARNING, INFO"));
-                    problemList.refresh();
-                    problemsFilterChoicebox.setVisible(true);
-                    break;
-                case RUNNING:
-                    problemsProgressIndicator.setVisible(true);
-                    problemList.setVisible(false);
-                    problemsFilterChoicebox.setVisible(false);
-                    break;
-                case WAITING:
-                    problemsProgressIndicator.setVisible(false);
-                    problemList.setVisible(false);
-                    problemsFilterChoicebox.setVisible(false);
-                    break;
-            }
-        } else { //rule je null
-            selectedRule = null;
-            //hide problems
-            problemsContainer.setVisible(false);
-            problemsSectionNameLbl.setText(null);
-            problemsRuleNameLbl.setText(null);
-            problemsRuleDescriptionLbl.setText(null);
-            problemList.setVisible(false);
-            problemsProgressIndicator.setVisible(false);
-        }
-    }
-
-
-    private void selectSection(SectionWithState section) {
-        if (section != null) {
-            selectedSection = section;
-            rulesSectionNameLbl.setText(section.getName());
-            rulesSectionDescriptionLbl.setText(section.getDescription());
-            ruleList.setItems(validationStateManager.getRulesObervable(selectedSection.getId()));
-            ruleList.refresh();
-        } else {
-            selectedSection = null;
-            rulesSectionNameLbl.setText(null);
-            rulesSectionDescriptionLbl.setText(null);
-        }
-        selectRule(null);
     }
 
     @Override
@@ -510,7 +654,6 @@ public class MainController extends AbstractController implements ValidationStat
             updateStatus(String.format("Validuji balík %s.", pspDir.getAbsolutePath()), TotalState.RUNNING);
         });
     }
-
 
     @Override
     public void onSectionSkipped(int sectionId) {
@@ -544,6 +687,7 @@ public class MainController extends AbstractController implements ValidationStat
     public void onRuleStart(int sectionId, int ruleId) {
         Platform.runLater(() -> {
             validationStateManager.updateRuleState(sectionId, ruleId, ProcessingState.RUNNING);
+            refreshSelectedRuleIf(sectionId, ruleId);
         });
     }
 
@@ -551,10 +695,11 @@ public class MainController extends AbstractController implements ValidationStat
     public void onRuleFinish(int sectionId, Map<Level, Integer> sectionProblemsByLevel, int sectionProblemsTotal, int ruleId, Map<Level, Integer> ruleProblemsByLevel, int ruleProblemsTotal, List<ValidationProblem> problems) {
         Platform.runLater(() -> {
             validationStateManager.updateSectionProblems(sectionId, sectionProblemsByLevel);
-            validationStateManager.updateRuleState(sectionId, ruleId, ProcessingState.FINISHED);
+            //vysledky pred stavem: dokoncene pravidlo bez poctu by filtr "jen s problemy" na okamzik vyradil i s vyberem
             validationStateManager.setRuleResults(sectionId, ruleId, ruleProblemsByLevel, problems);
-            //so that problems are reloaded
-            selectRule(selectedRule);
+            validationStateManager.updateRuleState(sectionId, ruleId, ProcessingState.FINISHED);
+            //aby se nacetly problemy prave dokonceneho vybraneho pravidla
+            refreshSelectedRuleIf(sectionId, ruleId);
         });
     }
 
@@ -562,7 +707,14 @@ public class MainController extends AbstractController implements ValidationStat
     public void onRuleCancel(int sectionId, int ruleId) {
         Platform.runLater(() -> {
             validationStateManager.updateRuleState(sectionId, ruleId, ProcessingState.CANCELED);
+            refreshSelectedRuleIf(sectionId, ruleId);
         });
+    }
+
+    private void refreshSelectedRuleIf(int sectionId, int ruleId) {
+        if (selectedRule != null && selectedRule.getSectionId() == sectionId && selectedRule.getId() == ruleId) {
+            selectRule(selectedRule);
+        }
     }
 
     @Override
@@ -570,14 +722,210 @@ public class MainController extends AbstractController implements ValidationStat
         return cancelValidation;
     }
 
-    public void stopValidation(ActionEvent actionEvent) {
-        cancelValidation = true;
-        if (validationTask != null) {
-            validationTask.cancel();
+    // ===== vyber sekce a pravidla, filtr =====
+
+    private void selectSection(SectionWithState section) {
+        selectedSection = section;
+        if (section != null) {
+            rulesHeader.setText("Pravidla sekce " + section.getName());
+            setTextOrHide(sectionDescription, emptyToNull(section.getDescription()));
+            filteredRules = new FilteredList<>(validationStateManager.getRulesObervable(section.getId()), filter::showRule);
+            ruleList.setItems(filteredRules);
+        } else {
+            rulesHeader.setText("Pravidla");
+            setTextOrHide(sectionDescription, null);
+            filteredRules = null;
+            ruleList.setItems(null);
+        }
+        rulesHeader.setTooltip(new Tooltip(rulesHeader.getText()));
+        selectRule(null);
+        updatePlaceholders();
+    }
+
+    private void selectRule(RuleWithState rule) {
+        problemsProgressIndicator.setVisible(false);
+        filteredProblems = null;
+        if (rule != null && selectedSection != null) {
+            selectedRule = rule;
+            problemsHeader.setText("Problémy pravidla " + rule.getName());
+            setTextOrHide(ruleDescription, emptyToNull(rule.getDescription()));
+            ObservableList<ValidationProblem> problems = validationStateManager.getProblems(rule.getSectionId(), rule.getId());
+            if (rule.getState() == ProcessingState.FINISHED && problems != null) {
+                filteredProblems = new FilteredList<>(problems, problem -> filter.accepts(problem.getLevel()));
+                problemList.setItems(filteredProblems);
+            } else {
+                problemList.setItems(null);
+                problemsProgressIndicator.setVisible(rule.getState() == ProcessingState.RUNNING);
+            }
+        } else {
+            selectedRule = null;
+            problemsHeader.setText("Problémy");
+            setTextOrHide(ruleDescription, null);
+            problemList.setItems(null);
+        }
+        problemsHeader.setTooltip(new Tooltip(problemsHeader.getText()));
+        updatePlaceholders();
+    }
+
+    private static String emptyToNull(String text) {
+        return text == null || text.trim().isEmpty() ? null : text.trim();
+    }
+
+    private void applyFilter() {
+        filter = new ProblemFilter(filterErrors.isSelected(), filterWarnings.isSelected(), filterInfos.isSelected(),
+                filterOnlyWithProblems.isSelected());
+        if (filteredSections != null) {
+            filteredSections.setPredicate(filter::showSection);
+        }
+        if (filteredRules != null) {
+            filteredRules.setPredicate(filter::showRule);
+        }
+        if (filteredProblems != null) {
+            filteredProblems.setPredicate(problem -> filter.accepts(problem.getLevel()));
+        }
+        //pocty v radcich zavisi na filtru
+        sectionList.refresh();
+        ruleList.refresh();
+        updatePlaceholders();
+    }
+
+    private void updatePlaceholders() {
+        if (validationStateManager == null) {
+            sectionList.setPlaceholder(placeholder("Sekce se načítají."));
+        } else {
+            sectionList.setPlaceholder(placeholder("Žádná sekce nemá problémy zobrazených úrovní."));
+        }
+        if (selectedSection == null) {
+            ruleList.setPlaceholder(placeholder("Vyberte sekci."));
+        } else {
+            ruleList.setPlaceholder(placeholder("Žádné pravidlo nemá problémy zobrazených úrovní."));
+        }
+        if (selectedRule == null) {
+            problemList.setPlaceholder(placeholder("Vyberte pravidlo."));
+        } else if (selectedRule.getState() == ProcessingState.FINISHED) {
+            problemList.setPlaceholder(placeholder(selectedRule.getErrors() + selectedRule.getWarnings() + selectedRule.getInfos() == 0
+                    ? "Pravidlo nenašlo žádný problém." : "Pravidlo nemá problémy zobrazených úrovní."));
+        } else if (selectedRule.getState() == ProcessingState.RUNNING) {
+            problemList.setPlaceholder(new Label());
+        } else if (selectedRule.getState() == ProcessingState.CANCELED) {
+            problemList.setPlaceholder(placeholder("Kontrola pravidla byla zrušena."));
+        } else {
+            problemList.setPlaceholder(placeholder("Pravidlo se ještě nekontrolovalo."));
         }
     }
 
-    //DIALOGS
+    /**
+     * Vybere první zobrazenou sekci s problémem a v ní první pravidlo s problémem (chyby mají přednost); když problém
+     * není nikde, vybere první sekci.
+     *
+     * @return true, když se vybralo pravidlo s problémem
+     */
+    boolean selectFirstProblem() {
+        if (filteredSections == null || filteredSections.isEmpty()) {
+            return false;
+        }
+        SectionWithState section = firstWithProblem(filteredSections, true);
+        if (section == null) {
+            section = firstWithProblem(filteredSections, false);
+        }
+        if (section == null) {
+            sectionList.getSelectionModel().select(filteredSections.get(0));
+            return false;
+        }
+        sectionList.getSelectionModel().select(section);
+        sectionList.scrollTo(section);
+        if (filteredRules == null) {
+            return false;
+        }
+        for (boolean errorsOnly : new boolean[]{true, false}) {
+            for (RuleWithState rule : filteredRules) {
+                int count = errorsOnly ? rule.getErrors() : filter.visibleCount(rule.getErrors(), rule.getWarnings(), rule.getInfos());
+                if (count > 0) {
+                    ruleList.getSelectionModel().select(rule);
+                    ruleList.scrollTo(rule);
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    private SectionWithState firstWithProblem(List<SectionWithState> sections, boolean errorsOnly) {
+        for (SectionWithState section : sections) {
+            int count = errorsOnly ? section.getErrors() : filter.visibleCount(section.getErrors(), section.getWarnings(), section.getInfos());
+            if (count > 0) {
+                return section;
+            }
+        }
+        return null;
+    }
+
+    // ===== akce =====
+
+    public void stopValidation(ActionEvent actionEvent) {
+        cancelValidation = true;
+        if (validationTask != null) {
+            boolean cancelled = validationTask.cancel();
+            if (cancelled && !validationTaskEntered) {
+                //zruseno driv, nez vlakno validace zacalo: telo ulohy se uz nespusti a nikdo jiny by zruseni neohlasil
+                onStopped();
+            }
+        }
+    }
+
+    /**
+     * „Validovat znovu“ (issue #87): spustí validaci stejného zdroje se stejným požadavkem jako naposledy, bez dialogu.
+     */
+    public void rerunValidation(ActionEvent actionEvent) {
+        if (!rerunState.canRerun()) {
+            return;
+        }
+        main.launchValidation(rerunState.requestForRerun());
+    }
+
+    boolean isValidationRunning() {
+        return totalState == TotalState.RUNNING;
+    }
+
+    int getStartedValidations() {
+        return startedValidations;
+    }
+
+    int getFinishedValidations() {
+        return finishedValidations;
+    }
+
+    ValidationRequest getLastRequest() {
+        return currentRequest;
+    }
+
+    /** Nastaví zaškrtávátka filtru (jako uživatel); pro SnapshotMode. */
+    void setFilterChecks(boolean errors, boolean warnings, boolean infos, boolean onlyWithProblems) {
+        filterErrors.setSelected(errors);
+        filterWarnings.setSelected(warnings);
+        filterInfos.setSelected(infos);
+        filterOnlyWithProblems.setSelected(onlyWithProblems);
+    }
+
+    boolean canRerun() {
+        return rerunState.canRerun() && !rerunMenuItem.isDisable() && !rerunButton.isDisable();
+    }
+
+    /** Popis zobrazeného výsledku pro výpis SnapshotMode. */
+    String describeShownResult() {
+        return "state=" + totalState
+                + ", title=" + headerTitle.getText()
+                + ", subtitle=" + headerSubtitle.getText()
+                + ", verdict=" + (verdictBadge.isVisible() ? verdictBadge.getText() : "-")
+                + ", badges=" + (errorsBadge.isVisible() ? errorsBadge.getText() + " / " + warningsBadge.getText() + " / " + infosBadge.getText() : "-")
+                + ", status=" + statusText.getText()
+                + ", sections=" + (filteredSections == null ? 0 : filteredSections.size())
+                + ", selectedSection=" + (selectedSection == null ? "-" : selectedSection.getName())
+                + ", selectedRule=" + (selectedRule == null ? "-" : selectedRule.getName())
+                + ", problemsShown=" + (problemList.getItems() == null ? 0 : problemList.getItems().size());
+    }
+
+    // ===== dialogy =====
 
     public void showExternalUtilsCheckDialog(ActionEvent actionEvent) {
         //zavreni krizkem tu aplikaci neukonci ani pri chybejicim nastroji
@@ -596,17 +944,11 @@ public class MainController extends AbstractController implements ValidationStat
         main.showNewValidationDialog();
     }
 
-    public void showValidationResultSummaryDialog(ActionEvent actionEvent) {
-        if (validationResultSummary != null) {
-            main.showValidationResultSummaryDialog(validationResultSummary);
-        }
-    }
-
     public void showDictionariesConfigurationDialog(ActionEvent actionEvent) {
         main.showDictionariesConfigurationDialog();
     }
 
-    //OPENING URLS
+    // ===== odkazy =====
 
     public void showOnlineHelp(ActionEvent actionEvent) {
         if (ConfigurationManager.DEV_MODE) {
@@ -617,21 +959,18 @@ public class MainController extends AbstractController implements ValidationStat
     }
 
     public void showLogTxt(ActionEvent actionEvent) {
-        openUrl("file:" + logTxtFile.getAbsolutePath());
+        if (logTxtFile != null) {
+            openUrl(logTxtFile.toURI().toString());
+        }
     }
 
     public void showLogXml(ActionEvent actionEvent) {
-        openUrl("file:" + logXmlFile.getAbsolutePath());
+        if (logXmlFile != null) {
+            openUrl(logXmlFile.toURI().toString());
+        }
     }
-
 
     private enum TotalState {
         IDLE, RUNNING, FINISHED, ERROR, STOPPED;
-    }
-
-    public void problemsFilterChoiceboxChanged(ActionEvent actionEvent) {
-        String filter = (String) problemsFilterChoicebox.getSelectionModel().getSelectedItem();
-        problemList.setItems(validationStateManager.getProblemsObservable(this.selectedRule.getSectionId(), this.selectedRule.getId(), filter));
-        problemList.refresh();
     }
 }

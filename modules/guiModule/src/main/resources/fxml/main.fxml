@@ -1,202 +1,156 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
 
+<!--
+Hlavni okno: menu, horni lista se souhrnem validace (jen po spusteni validace), uprostred prazdny stav, hlaska
+(chyba nebo zruseni pred nactenim sekci) nebo vysledky (filtr, sekce, pravidla, problemy) a dole stavovy radek.
+Vzhled v base.css (trida main-root a nasledujici).
+-->
 <BorderPane xmlns:fx="http://javafx.com/fxml"
-            stylesheets="/css/main.css"
             fx:controller="nkp.pspValidator.gui.MainController"
             fx:id="container"
-            minHeight="300"
->
+            styleClass="main-root">
     <top>
-        <MenuBar fx:id="menuBar" onKeyPressed="#handleKeyInput" prefHeight="29.0" prefWidth="0.0">
-            <menus>
-                <Menu fx:id="menuValidate" text="Validovat">
-                    <items>
-                        <MenuItem onAction="#showNewValidationDialog" text="Nová validace…" accelerator="Shortcut+N"/>
-                    </items>
-                </Menu>
-                <Menu fx:id="menuValidation" text="Validace" disable="true">
-                    <items>
-                        <MenuItem onAction="#stopValidation" text="Zrušit probíhající validaci"/>
-                    </items>
-                </Menu>
-                <Menu fx:id="menuSettings" text="Nastavení">
-                    <items>
-                        <MenuItem text="Externí nástroje" onAction="#showExternalUtilsCheckDialog"/>
-                        <MenuItem text="Přeskakování validací" onAction="#showSkippingConfigurationDialog"
-                                  disable="false"/>
-                        <MenuItem text="Slovníky" onAction="#showDictionariesConfigurationDialog"
-                                  disable="false"/>
-                        <MenuItem text="Různé" disable="true"/>
-                    </items>
-                </Menu>
-                <Menu fx:id="menuShow" text="Zobrazit">
-                    <items>
-                        <MenuItem fx:id="showValidationResultSummaryDialogItem"
-                                  text="Sumarizace výsledku proběhlé validace" disable="true"
-                                  onAction="#showValidationResultSummaryDialog"/>
-                        <MenuItem fx:id="showLogTxtMenuItem" text="Textový log proběhlé validace" disable="true"
-                                  onAction="#showLogTxt"/>
-                        <MenuItem fx:id="showLogXmlMenuItem" text="XML log proběhlé validace" disable="true"
-                                  onAction="#showLogXml"/>
-                    </items>
-                </Menu>
-                <Menu text="Nápověda">
-                    <items>
-                        <MenuItem onAction="#showOnlineHelp" text="Online nápověda"/>
-                        <SeparatorMenuItem/>
-                        <MenuItem onAction="#showAboutAppDialog" text="O aplikaci"/>
-                    </items>
-                </Menu>
-            </menus>
-        </MenuBar>
+        <VBox>
+            <MenuBar fx:id="menuBar">
+                <menus>
+                    <Menu fx:id="menuValidate" text="Validovat">
+                        <items>
+                            <MenuItem onAction="#showNewValidationDialog" text="Nová validace…" accelerator="Shortcut+N"/>
+                            <MenuItem fx:id="rerunMenuItem" onAction="#rerunValidation" text="Validovat znovu"
+                                      accelerator="Shortcut+R" disable="true"/>
+                        </items>
+                    </Menu>
+                    <Menu fx:id="menuValidation" text="Validace" disable="true">
+                        <items>
+                            <MenuItem onAction="#stopValidation" text="Zrušit probíhající validaci"/>
+                        </items>
+                    </Menu>
+                    <Menu fx:id="menuSettings" text="Nastavení">
+                        <items>
+                            <MenuItem text="Externí nástroje" onAction="#showExternalUtilsCheckDialog"/>
+                            <MenuItem text="Přeskakování validací" onAction="#showSkippingConfigurationDialog"/>
+                            <MenuItem text="Slovníky" onAction="#showDictionariesConfigurationDialog"/>
+                            <MenuItem text="Různé" disable="true"/>
+                        </items>
+                    </Menu>
+                    <Menu fx:id="menuShow" text="Zobrazit">
+                        <items>
+                            <MenuItem fx:id="showLogXmlMenuItem" text="Protokol XML proběhlé validace" disable="true"
+                                      onAction="#showLogXml"/>
+                            <MenuItem fx:id="showLogTxtMenuItem" text="Textový log proběhlé validace" disable="true"
+                                      onAction="#showLogTxt"/>
+                        </items>
+                    </Menu>
+                    <Menu text="Nápověda">
+                        <items>
+                            <MenuItem onAction="#showOnlineHelp" text="Online nápověda"/>
+                            <SeparatorMenuItem/>
+                            <MenuItem onAction="#showAboutAppDialog" text="O aplikaci"/>
+                        </items>
+                    </Menu>
+                </menus>
+            </MenuBar>
+
+            <!--horni lista se souhrnem-->
+            <HBox fx:id="header" styleClass="main-header" visible="false" managed="false">
+                <VBox styleClass="main-header-text" HBox.hgrow="ALWAYS" minWidth="0">
+                    <Label fx:id="headerTitle" styleClass="main-title" minWidth="0"/>
+                    <Label fx:id="headerSubtitle" styleClass="main-subtitle" minWidth="0"/>
+                    <HBox fx:id="headerLinks" styleClass="main-header-links">
+                        <Hyperlink fx:id="xmlLogLink" text="Protokol XML" styleClass="link" onAction="#showLogXml"/>
+                        <Hyperlink fx:id="txtLogLink" text="Textový log" styleClass="link" onAction="#showLogTxt"/>
+                    </HBox>
+                </VBox>
+                <Label fx:id="verdictBadge" styleClass="verdict" minWidth="-Infinity"/>
+                <Label fx:id="errorsBadge" styleClass="badge-error,header-badge" minWidth="-Infinity"/>
+                <Label fx:id="warningsBadge" styleClass="badge-warning,header-badge" minWidth="-Infinity"/>
+                <Label fx:id="infosBadge" styleClass="badge-info,header-badge" minWidth="-Infinity"/>
+                <Button fx:id="rerunButton" text="Validovat znovu" styleClass="button-secondary" minWidth="-Infinity"
+                        onAction="#rerunValidation"/>
+                <Button fx:id="cancelButton" text="Zrušit validaci" styleClass="button-secondary" minWidth="-Infinity"
+                        onAction="#stopValidation"/>
+            </HBox>
+        </VBox>
     </top>
 
-    <!--validation -->
     <center>
-        <SplitPane orientation="VERTICAL" dividerPositions="0.38">
-            <items>
+        <StackPane>
+            <!--prazdny stav: zadna validace jeste neprobehla-->
+            <VBox fx:id="emptyState" styleClass="empty-state">
+                <ImageView fitWidth="88" fitHeight="88" preserveRatio="true" smooth="true">
+                    <image>
+                        <Image url="@/img/appIcon/appIcon.iconset/icon_128x128@2x.png"/>
+                    </image>
+                </ImageView>
+                <Label fx:id="emptyTitle" styleClass="empty-title"/>
+                <Label styleClass="empty-text" wrapText="true" maxWidth="460"
+                       text="Vyberte balík k validaci (adresář nebo soubor ZIP). Výsledek se zobrazí tady: sekce, pravidla a nalezené problémy."/>
+                <Button fx:id="emptyNewValidationButton" text="Nová validace…" styleClass="button-primary,empty-button"
+                        onAction="#showNewValidationDialog"/>
+                <HBox styleClass="empty-info">
+                    <Label fx:id="emptyFdmfInfo" styleClass="text-muted"/>
+                    <Label fx:id="emptyToolsInfo" styleClass="text-muted"/>
+                    <Hyperlink text="Zkontrolovat nástroje" styleClass="link" onAction="#showExternalUtilsCheckDialog"/>
+                </HBox>
+            </VBox>
 
-                <SplitPane orientation="HORIZONTAL"
-                           dividerPositions="0.38"
-                           minHeight="150"
-                >
+            <!--hlaska misto vysledku (chyba nebo zruseni pred nactenim sekci)-->
+            <VBox fx:id="messageState" styleClass="empty-state" visible="false">
+                <Label fx:id="messageTitle" styleClass="empty-title"/>
+                <Label fx:id="messageText" styleClass="empty-text" wrapText="true" maxWidth="560"/>
+            </VBox>
+
+            <!--vysledky-->
+            <VBox fx:id="resultsPane" styleClass="results-pane" visible="false">
+                <HBox styleClass="filter-bar">
+                    <Label text="Zobrazit" styleClass="text-muted"/>
+                    <CheckBox fx:id="filterErrors" text="chyby" selected="true"/>
+                    <CheckBox fx:id="filterWarnings" text="varování" selected="true"/>
+                    <CheckBox fx:id="filterInfos" text="informace" selected="true"/>
+                    <Region styleClass="filter-gap"/>
+                    <CheckBox fx:id="filterOnlyWithProblems" text="jen sekce a pravidla s problémy"/>
+                </HBox>
+                <SplitPane fx:id="resultsSplit" styleClass="results-split" VBox.vgrow="ALWAYS"
+                           dividerPositions="0.27, 0.6">
                     <items>
-
-                        <!--seznam sekci-->
-                        <VBox alignment="TOP_CENTER"
-                              minWidth="500"
-                              spacing="0">
-                            <children>
-                                <VBox spacing="5">
-                                    <padding>
-                                        <Insets bottom="10" left="10" right="10" top="10"/>
-                                    </padding>
-                                    <children>
-                                        <Label text="Validační sekce:"/>
-                                    </children>
-                                </VBox>
-                                <ListView fx:id="sectionList" minWidth="300"/>
-                            </children>
+                        <VBox styleClass="result-panel" minWidth="200">
+                            <Label text="Sekce" styleClass="panel-header" maxWidth="Infinity"/>
+                            <ListView fx:id="sectionList" styleClass="result-list" VBox.vgrow="ALWAYS"/>
                         </VBox>
-
-                        <!--seznam pravidel ve zvolene sekci-->
-                        <VBox alignment="TOP_CENTER"
-                              spacing="0"
-                              minWidth="500">
-                            <children>
-                                <VBox spacing="5">
-                                    <padding>
-                                        <Insets bottom="10" left="10" right="10" top="10"/>
-                                    </padding>
-                                    <children>
-                                        <Label fx:id="rulesSectionNameLbl"/>
-                                        <Label fx:id="rulesSectionDescriptionLbl"/>
-                                        <Label text="Pravidla:"/>
-                                    </children>
-                                </VBox>
-                                <ListView fx:id="ruleList" minWidth="350"/>
-                            </children>
+                        <VBox styleClass="result-panel" minWidth="240">
+                            <Label fx:id="rulesHeader" text="Pravidla" styleClass="panel-header" maxWidth="Infinity"/>
+                            <Label fx:id="sectionDescription" styleClass="panel-description" wrapText="true"
+                                   maxWidth="Infinity" minHeight="-Infinity"/>
+                            <ListView fx:id="ruleList" styleClass="result-list" VBox.vgrow="ALWAYS"/>
                         </VBox>
-
+                        <VBox styleClass="result-panel" minWidth="300">
+                            <Label fx:id="problemsHeader" text="Problémy" styleClass="panel-header" maxWidth="Infinity"/>
+                            <Label fx:id="ruleDescription" styleClass="panel-description" wrapText="true"
+                                   maxWidth="Infinity" minHeight="-Infinity"/>
+                            <StackPane VBox.vgrow="ALWAYS">
+                                <ListView fx:id="problemList" styleClass="result-list"/>
+                                <ProgressIndicator fx:id="problemsProgressIndicator" maxWidth="48" maxHeight="48"
+                                                   visible="false"/>
+                            </StackPane>
+                        </VBox>
                     </items>
                 </SplitPane>
-
-                <!--seznam chyb pro zvolene pravidlo-->
-
-
-                <VBox alignment="TOP_CENTER" spacing="0"
-                      minHeight="200"
-                      fx:id="problemsContainer"
-                      visible="false"
-                >
-                    <children>
-                        <VBox spacing="5">
-                            <padding>
-                                <Insets bottom="10" left="10" right="10" top="10"/>
-                            </padding>
-                            <children>
-                                <HBox spacing="5">
-                                    <children>
-                                        <Label fx:id="problemsSectionNameLbl"/>
-                                        <Label fx:id="problemsRuleNameLbl"/>
-                                        <!--TODO: jeste mozna pocet problemu podle levelu-->
-                                    </children>
-                                </HBox>
-
-                                <Label fx:id="problemsRuleDescriptionLbl"/>
-                                <Label text="Problémy:"/>
-                                <ChoiceBox fx:id="problemsFilterChoicebox" onAction="#problemsFilterChoiceboxChanged"/>
-                            </children>
-                        </VBox>
-                        <StackPane>
-                            <ListView fx:id="problemList"/>
-                            <ProgressIndicator fx:id="problemsProgressIndicator"
-                                               maxWidth="60"
-                                               maxHeight="60"
-                            />
-                        </StackPane>
-                    </children>
-                </VBox>
-
-
-            </items>
-        </SplitPane>
-
+            </VBox>
+        </StackPane>
     </center>
 
-
-    <!--status bar-->
+    <!--stavovy radek-->
     <bottom>
-        <!--TODO: Mozna zmenit zpet na jen HBox a odstranit Toolbar-->
-
-        <ToolBar minWidth="300">
-
-            <HBox spacing="15">
-                <padding>
-                    <Insets bottom="15" left="15" right="15" top="15"/>
-                </padding>
-
-                <StackPane>
-
-                    <ProgressIndicator fx:id="statusProgressIndicator"
-                                       prefWidth="20"
-                                       prefHeight="20"
-                                       visible="false"/>
-
-                    <ImageView fx:id="statusImgFinished" visible="false">
-                        <image>
-                            <Image url="@/img/Checkmark Filled-20.png"/>
-                        </image>
-                    </ImageView>
-
-                    <ImageView fx:id="statusImgError" visible="false">
-                        <image>
-                            <Image url="@/img/Error-20.png"/>
-                        </image>
-                    </ImageView>
-
-                    <ImageView fx:id="statusImgStopped" visible="false">
-                        <image>
-                            <Image url="@/img/Unavailable-20.png"/>
-                        </image>
-                    </ImageView>
-
-                </StackPane>
-
-                <Label fx:id="statusText"/>
-
-            </HBox>
-        </ToolBar>
-
+        <HBox styleClass="status-bar">
+            <StackPane styleClass="status-marker">
+                <ProgressIndicator fx:id="statusProgressIndicator" styleClass="row-spinner" visible="false"/>
+                <Region fx:id="statusDot" visible="false"/>
+            </StackPane>
+            <Label fx:id="statusText" minWidth="0"/>
+        </HBox>
     </bottom>
-
 </BorderPane>
-
-
-
-

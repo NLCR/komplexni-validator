@@ -342,6 +342,10 @@ tasks.register('jpackage', Exec) {
 //./gradlew :modules:guiModule:runSnapshots -PsnapshotDir=/tmp/snap [-Psnapshot=main,mainMenu,newValidation] [-PsnapshotDelayMs=800]
 //  -PsnapshotPsp=<adresar nebo .zip> - predvyplnena cesta v dialogu Nova validace (vlastnost kv.snapshotPsp)
 //  -PsnapshotExpand=versions|tools|skipped - rozbalena sekce dialogu Nova validace (vlastnost kv.snapshotExpand)
+//  -PsnapshotValidate=<adresar nebo .zip> - krok results provede skutecnou validaci balicku a vyfoti vysledky,
+//  krok rerun pak "Validovat znovu", krok small zmensi hlavni okno na 1000 x 640 (vlastnost kv.snapshotValidate)
+//  -PsnapshotDisable=JHOVE,KAKADU - nastroje vypnute pro validaci v kroku results (vlastnost kv.snapshotDisable)
+//  -PsnapshotRunningMs=<ms> - v kroku results i snimek running.png za danou dobu od spusteni (vlastnost kv.snapshotRunningMs)
 //  -PsnapshotConfigFile=<soubor> - soubor nastaveni (vlastnost kv.configFile) misto vychoziho config.properties v pracovnim
 //  adresari modulu, aby snimky nezahrnovaly osobni nastaveni; soubor nemusi existovat (vznikne s vychozimi hodnotami),
 //  ale pri spusteni z Gradle musi obsahovat aspon validatorConfig.dir=<adresar validatorConfig> (a nejlepe validation.log_dir),
@@ -365,6 +369,15 @@ tasks.register('runSnapshots', JavaExec) {
     }
     if (project.hasProperty('snapshotExpand')) {
         systemProperty 'kv.snapshotExpand', project.property('snapshotExpand')
+    }
+    if (project.hasProperty('snapshotValidate')) {
+        systemProperty 'kv.snapshotValidate', project.property('snapshotValidate')
+    }
+    if (project.hasProperty('snapshotDisable')) {
+        systemProperty 'kv.snapshotDisable', project.property('snapshotDisable')
+    }
+    if (project.hasProperty('snapshotRunningMs')) {
+        systemProperty 'kv.snapshotRunningMs', project.property('snapshotRunningMs')
     }
     if (project.hasProperty('maxDialogHeight')) { //simulace mensiho displeje
         systemProperty 'kv.maxDialogHeight', project.property('maxDialogHeight')
