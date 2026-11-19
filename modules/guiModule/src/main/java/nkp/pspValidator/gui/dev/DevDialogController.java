@@ -2,7 +2,8 @@ package nkp.pspValidator.gui.dev;
 
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.scene.text.Text;
+import javafx.event.ActionEvent;
+import javafx.scene.control.Label;
 import javafx.stage.WindowEvent;
 import nkp.pspValidator.gui.DialogController;
 
@@ -14,7 +15,7 @@ import java.io.File;
 public class DevDialogController extends DialogController {
 
     @FXML
-    Text text;
+    Label text;
 
     @Override
     public void startNow() {
@@ -30,6 +31,10 @@ public class DevDialogController extends DialogController {
                 //nothing, event not consumed, so just closes
             }
         };
+    }
+
+    public void closeDialog(ActionEvent actionEvent) {
+        stage.close();
     }
 
 }

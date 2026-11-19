@@ -15,9 +15,9 @@ import javafx.scene.layout.StackPane;
 import nkp.pspValidator.shared.engine.validationFunctions.ValidationProblem;
 
 /**
- * Řádek seznamu problémů vybraného pravidla: štítek úrovně, celé znění problému (zalamované) a tlačítko
- * „Kopírovat“ vpravo nahoře, které se ukáže při najetí myší nebo u vybraného řádku (base.css). Tlačítko leží
- * nad textem, takže skryté neubírá místo pro text.
+ * Řádek seznamu problémů vybraného pravidla: štítek úrovně (všechny stejně široké), celé znění problému
+ * (zalamované) a tlačítko „Kopírovat“ ve vlastním sloupci vpravo, které se ukáže při najetí myší nebo u vybraného
+ * řádku (base.css). Sloupec tlačítka je vyhrazený i u skrytého tlačítka, takže tlačítko nikdy nepřekryje text.
  */
 public class ProblemCell extends ListCell<ValidationProblem> {
 
@@ -35,12 +35,12 @@ public class ProblemCell extends ListCell<ValidationProblem> {
         content.getStyleClass().add("problem-content");
         content.setAlignment(Pos.TOP_LEFT);
         level.getStyleClass().add("level-badge");
-        level.setMinWidth(Region.USE_PREF_SIZE);
         message.getStyleClass().add("problem-message");
         message.setWrapText(true);
         message.setMinHeight(Region.USE_PREF_SIZE);
-        //sirka zpravy podle seznamu (bez stitku, odsazeni a posuvniku), jinak se text nezalomi
-        message.prefWidthProperty().bind(list.widthProperty().subtract(level.widthProperty()).subtract(60));
+        //sirka zpravy podle seznamu (bez stitku, tlacitka, mezer, odsazeni a posuvniku), jinak se text nezalomi
+        message.prefWidthProperty().bind(list.widthProperty().subtract(level.widthProperty())
+                .subtract(copyButton.widthProperty()).subtract(70));
         message.setMaxWidth(Double.MAX_VALUE);
         HBox.setHgrow(message, Priority.ALWAYS);
         copyButton.getStyleClass().addAll("button-secondary", "copy-button");
@@ -52,9 +52,8 @@ public class ProblemCell extends ListCell<ValidationProblem> {
                 copyToClipboard(getItem().getFullMessage());
             }
         });
-        content.getChildren().addAll(level, message);
-        StackPane.setAlignment(copyButton, Pos.TOP_RIGHT);
-        row.getChildren().addAll(content, copyButton);
+        content.getChildren().addAll(level, message, copyButton);
+        row.getChildren().add(content);
     }
 
     @Override

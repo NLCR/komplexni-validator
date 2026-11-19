@@ -90,7 +90,7 @@ public class ToolsOverviewTest {
 
     @Test
     public void summaryWhileChecking() {
-        assertEquals("Kontroluji nástroje, hotovo 0 z 9…", ToolsOverview.summary(new EnumMap<>(ExternalUtil.class)));
+        assertEquals("Zjišťuji dostupnost nástrojů, hotovo 0 z 9…", ToolsOverview.summary(new EnumMap<>(ExternalUtil.class)));
         Map<ExternalUtil, ToolStatus> statuses = new EnumMap<>(ExternalUtil.class);
         for (ExternalUtil util : ExternalUtil.values()) {
             statuses.put(util, ToolStatus.checking());
@@ -99,29 +99,97 @@ public class ToolsOverviewTest {
         statuses.put(KAKADU, ToolStatus.error("x"));
         statuses.put(MP3VAL, ToolStatus.notFound("x"));
         statuses.put(VERAPDF, ToolStatus.found("1.30.0"));
-        assertEquals("Kontroluji nástroje, hotovo 4 z 9…", ToolsOverview.summary(statuses));
+        assertEquals("Zjišťuji dostupnost nástrojů, hotovo 4 z 9…", ToolsOverview.summary(statuses));
         //posledni nastroj jeste bezi
         Map<ExternalUtil, ToolStatus> almost = allFound();
         almost.put(CHECKMATE, ToolStatus.checking());
-        assertEquals("Kontroluji nástroje, hotovo 8 z 9…", ToolsOverview.summary(almost));
+        assertEquals("Zjišťuji dostupnost nástrojů, hotovo 8 z 9…", ToolsOverview.summary(almost));
     }
 
     // ----- text stavu -----
 
     @Test
     public void statusTexts() {
-        assertEquals("kontroluji…", ToolsOverview.statusText(ToolStatus.checking()));
-        assertEquals("nalezen, 1.29", ToolsOverview.statusText(ToolStatus.found("1.29")));
-        assertEquals("nalezen", ToolsOverview.statusText(ToolStatus.found(null)));
-        assertEquals("nalezen", ToolsOverview.statusText(ToolStatus.found("")));
-        assertEquals("nenalezen", ToolsOverview.statusText(ToolStatus.notFound("Cannot run program \"jhove\"")));
-        assertEquals("chyba při spuštění", ToolsOverview.statusText(ToolStatus.error("prázdný výstup")));
+        //behem kontroly stejny text jako v dialogu Nova validace (ToolStatus)
+        assertEquals("zjišťuji…", ToolsOverview.statusText(JHOVE, ToolStatus.checking()));
+        assertEquals("nalezen, JHOVE 1.29", ToolsOverview.statusText(JHOVE, ToolStatus.found("1.29")));
+        assertEquals("nalezen", ToolsOverview.statusText(JHOVE, ToolStatus.found(null)));
+        assertEquals("nalezen", ToolsOverview.statusText(JHOVE, ToolStatus.found("")));
+        assertEquals("nenalezen", ToolsOverview.statusText(JHOVE, ToolStatus.notFound("Cannot run program \"jhove\"")));
+        assertEquals("chyba při spuštění", ToolsOverview.statusText(KAKADU, ToolStatus.error("prázdný výstup")));
     }
 
     @Test
-    public void longVersionIsTruncated() {
-        assertEquals("nalezen, ImageMagick 7.1.2-24…", ToolsOverview.statusText(ToolStatus.found(IMAGE_MAGICK_VERSION)));
-        assertEquals(30, ToolsOverview.statusText(ToolStatus.found(IMAGE_MAGICK_VERSION)).length());
+    public void longVersionIsShortenedToNameAndNumber() {
+        //dřív „nalezen, ImageMagick 7.1.2-24…“ (oříznuto na 30 znaků), teď název a číslo verze
+        assertEquals("nalezen, ImageMagick 7.1.2-24", ToolsOverview.statusText(IMAGE_MAGICK, ToolStatus.found(IMAGE_MAGICK_VERSION)));
+        assertEquals("nalezen, ImageMagick 7.1.1-21",
+                ToolsOverview.statusText(IMAGE_MAGICK, ToolStatus.found("ImageMagick 7.1.1-21 Q16-HDRI x64 2023-10-15")));
+    }
+
+    @Test
+    public void shortVersionOfRealOutputs() {
+        //vystupy podle regularnich vyrazu detekce verze v externalUtils.xml (macOS, Windows, Linux)
+        assertEquals("ImageMagick 7.1.2-24", ToolsOverview.shortVersion(IMAGE_MAGICK, "ImageMagick 7.1.2-24"));
+        assertEquals("ImageMagick 6.9.11-60", ToolsOverview.shortVersion(IMAGE_MAGICK, "ImageMagick 6.9.11-60 Q16"));
+        assertEquals("JHOVE 1.20.1", ToolsOverview.shortVersion(JHOVE, "Rel. 1.20.1"));
+        assertEquals("JHOVE 1.28.0", ToolsOverview.shortVersion(JHOVE, "Jhove (Rel. 1.28.0, 2023-05-18)"));
+        assertEquals("Kakadu 8.0.5", ToolsOverview.shortVersion(KAKADU, "v8.0.5"));
+        assertEquals("Kakadu 7.10.2", ToolsOverview.shortVersion(KAKADU, "Current core system version is v7.10.2"));
+        assertEquals("Jpylyzer 2.1.0", ToolsOverview.shortVersion(JPYLYZER, "2.1.0"));
+        //cely vystup (Linux): rozhoduje prvni radek
+        assertEquals("Jpylyzer 2.2.1", ToolsOverview.shortVersion(JPYLYZER, "2.2.1\nother line 3.4\n"));
+        assertEquals("MP3val 0.1.8", ToolsOverview.shortVersion(MP3VAL, "MP3val 0.1.8"));
+        assertEquals("shntool 3.0.10", ToolsOverview.shortVersion(SHNTOOL, "shntool 3.0.10"));
+        assertEquals("Checkmate 0.21", ToolsOverview.shortVersion(CHECKMATE, "mpck 0.21"));
+        assertEquals("veraPDF 1.30.0", ToolsOverview.shortVersion(VERAPDF, "veraPDF 1.30.0"));
+        assertEquals("EPUBCheck 5.1.0", ToolsOverview.shortVersion(EPUBCHECK, "EPUBCheck v5.1.0"));
+    }
+
+    @Test
+    public void shortVersionWithoutVersionNumberKeepsFirstLine() {
+        //cislo bez tecky neni cislo verze
+        assertEquals("mpck 2", ToolsOverview.shortVersion(CHECKMATE, "mpck 2"));
+        assertEquals("nějaký výstup", ToolsOverview.shortVersion(JHOVE, "  nějaký výstup  \ndruhý řádek 1.2"));
+        //cislo navazujici na pismeno nebo tecku neni samostatne cislo verze
+        assertEquals("x86_64abc1.2", ToolsOverview.shortVersion(JHOVE, "x86_64abc1.2"));
+        assertEquals("build.1.2", ToolsOverview.shortVersion(JHOVE, "build.1.2"));
+        //v hned za pismenem neni zacatek verze
+        assertEquals("Rev8.1", ToolsOverview.shortVersion(KAKADU, "Rev8.1"));
+    }
+
+    @Test
+    public void shortVersionTakesFirstNumberAndIsTruncated() {
+        assertEquals("JHOVE 1.2", ToolsOverview.shortVersion(JHOVE, "Rel. 1.2 (core 3.4.5)"));
+        //nazev a cislo delsi nez sirka sloupce se zkrati jako ostatni texty (cele v tooltipu)
+        String text = ToolsOverview.statusText(IMAGE_MAGICK, ToolStatus.found("ImageMagick 7.1.2-2400000"));
+        assertEquals("nalezen, ImageMagick 7.1.2-24…", text);
+        assertEquals(30, text.length());
+        String exact = ToolsOverview.statusText(IMAGE_MAGICK, ToolStatus.found("ImageMagick 7.1.2-240"));
+        assertEquals("nalezen, ImageMagick 7.1.2-240", exact);
+        assertEquals(30, exact.length());
+    }
+
+    @Test
+    public void compactStatusTextHasOnlyVersionNumber() {
+        //v uzke tabulce (Nastaveni) je nazev nastroje vlevo ve stejnem radku
+        assertEquals("nalezen, 7.1.2-24", ToolsOverview.compactStatusText(IMAGE_MAGICK, ToolStatus.found(IMAGE_MAGICK_VERSION)));
+        assertEquals("nalezen, 8.0.5", ToolsOverview.compactStatusText(KAKADU, ToolStatus.found("v8.0.5")));
+        //bez cisla verze jako siroka tabulka
+        assertEquals("nalezen, mpck 2", ToolsOverview.compactStatusText(CHECKMATE, ToolStatus.found("mpck 2")));
+        assertEquals("nalezen", ToolsOverview.compactStatusText(JHOVE, ToolStatus.found(null)));
+        assertEquals("nalezen", ToolsOverview.compactStatusText(JHOVE, ToolStatus.found("")));
+        assertEquals("zjišťuji…", ToolsOverview.compactStatusText(JHOVE, ToolStatus.checking()));
+        assertEquals("nenalezen", ToolsOverview.compactStatusText(JHOVE, ToolStatus.notFound("Cannot run program")));
+        assertEquals("chyba při spuštění", ToolsOverview.compactStatusText(KAKADU, ToolStatus.error("x")));
+    }
+
+    @Test
+    public void versionNumber() {
+        assertEquals("7.1.2-24", ToolsOverview.versionNumber("ImageMagick 7.1.2-24 Q16-HDRI"));
+        assertEquals("5.1.0", ToolsOverview.versionNumber("EPUBCheck v5.1.0"));
+        assertNull(ToolsOverview.versionNumber("mpck 2"));
+        assertNull(ToolsOverview.versionNumber(""));
     }
 
     @Test
@@ -153,7 +221,7 @@ public class ToolsOverviewTest {
                 ToolsOverview.statusTooltip(ToolStatus.error("prázdný výstup (stderr: Error: Unable to access jarfile epubcheck.jar, návratový kód 1)")));
         assertEquals("chyba při spuštění", ToolsOverview.statusTooltip(ToolStatus.error(null)));
         assertEquals("chyba při spuštění", ToolsOverview.statusTooltip(ToolStatus.error("")));
-        assertEquals("kontroluji…", ToolsOverview.statusTooltip(ToolStatus.checking()));
+        assertEquals("zjišťuji…", ToolsOverview.statusTooltip(ToolStatus.checking()));
     }
 
     // ----- vzhled -----

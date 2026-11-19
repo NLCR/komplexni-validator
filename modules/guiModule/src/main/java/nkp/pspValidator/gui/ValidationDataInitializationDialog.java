@@ -9,8 +9,21 @@ import java.net.URL;
  */
 public class ValidationDataInitializationDialog extends AbstractDialog {
 
+    private final boolean preview;
+    private final String previewError;
+
     public ValidationDataInitializationDialog(Stage stage, Main main) {
+        this(stage, main, false, null);
+    }
+
+    /**
+     * Náhled pro SnapshotMode: dialog jen ukáže stav (inicializace běží, nebo chyba {@code previewError}) a nic
+     * nenačítá.
+     */
+    ValidationDataInitializationDialog(Stage stage, Main main, boolean preview, String previewError) {
         super(stage, main);
+        this.preview = preview;
+        this.previewError = previewError;
     }
 
     @Override
@@ -20,12 +33,12 @@ public class ValidationDataInitializationDialog extends AbstractDialog {
 
     @Override
     public int getWidth() {
-        return 1000;
+        return 820;
     }
 
     @Override
     public int getHeight() {
-        return 300;
+        return 320;
     }
 
     @Override
@@ -40,7 +53,9 @@ public class ValidationDataInitializationDialog extends AbstractDialog {
 
     @Override
     public void setControllerData(DialogController controller) {
-        //nothing
+        if (preview) {
+            ((ValidationDataInitializationDialogController) controller).setPreview(previewError);
+        }
     }
 
 }

@@ -402,7 +402,11 @@ public class SettingsDialogController extends DialogController {
                 refreshVersionLabels[0].run();
                 updateFooter();
             };
-            HBox header = new HBox(10, headerLabel("Přeskočit"), headerLabel("Sekce"));
+            //zahlavi „Preskocit“ ma sirku sloupce zaskrtavatek, aby „Sekce“ licovala s nazvy sekci
+            Label skipHeader = headerLabel("Přeskočit");
+            fixWidth(skipHeader, SKIP_COLUMN_WIDTH);
+            skipHeader.setAlignment(Pos.CENTER);
+            HBox header = new HBox(10, skipHeader, headerLabel("Sekce"));
             header.getStyleClass().addAll("list-row", "row-first", "table-header", "tools-table-header");
             list.getChildren().add(header);
             List<CheckBox> checks = new ArrayList<>();
@@ -426,8 +430,7 @@ public class SettingsDialogController extends DialogController {
                 HBox.setHgrow(texts, Priority.ALWAYS);
                 //sloupec zaskrtavatek ma sirku zahlavi „Preskocit“
                 StackPane checkCell = new StackPane(check);
-                checkCell.setMinWidth(62);
-                checkCell.setPrefWidth(62);
+                fixWidth(checkCell, SKIP_COLUMN_WIDTH);
                 checkCell.setAlignment(Pos.TOP_CENTER);
                 HBox rowBox = new HBox(10, checkCell, texts);
                 rowBox.getStyleClass().add("list-row");
@@ -675,6 +678,15 @@ public class SettingsDialogController extends DialogController {
         label.getStyleClass().addAll("table-header", "text-bold");
         label.setMaxWidth(Double.MAX_VALUE);
         return label;
+    }
+
+    /** šířka sloupce zaškrtávátek „Přeskočit“ v záložce Přeskakovaná pravidla (záhlaví i řádky) */
+    private static final double SKIP_COLUMN_WIDTH = 62;
+
+    private static void fixWidth(Region region, double width) {
+        region.setMinWidth(width);
+        region.setPrefWidth(width);
+        region.setMaxWidth(width);
     }
 
     private static Label headerLabel(String text) {

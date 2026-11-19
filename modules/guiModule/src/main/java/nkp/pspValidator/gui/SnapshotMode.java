@@ -52,10 +52,16 @@ import java.util.function.Supplier;
  * a bez oprávnění ke snímání obrazovky; stejný příkaz lze pustit lokálně i v CI.
  * <p>
  * Zapíná se systémovou vlastností {@code -Dkv.snapshotDir=<adresář>}. Výběr dialogů volitelně přes
- * {@code -Dkv.snapshot=main,mainMenu,settingsMenu,newValidation,settings,externalUtils,about} (výchozí je vše),
+ * {@code -Dkv.snapshot=main,mainMenu,settingsMenu,newValidation,settings,externalUtils,toolDetails,about,dictionaryContent,
+ * dictionaryUpdate,init,initError,unzip,unzipError} (výchozí je vše; navíc {@code dev}, vývojářský dialog),
  * prodleva před snímkem přes {@code -Dkv.snapshotDelayMs} (výchozí 800 ms, aby proběhl layout a asynchronní
  * inicializace dialogu). {@code mainMenu} otevře v hlavním okně menu Validovat a uloží snímek jeho rozbalovací nabídky,
- * {@code settingsMenu} totéž pro menu Nastavení.
+ * {@code settingsMenu} totéž pro menu Nastavení. {@code toolDetails} je okno „Podrobnosti…“ u nenalezeného nástroje
+ * (JHOVE s pevným výstupem kontroly), {@code dictionaryContent} a {@code dictionaryUpdate} dialogy slovníku
+ * siglaInstitutionCodes. {@code init}, {@code initError}, {@code unzip} a {@code unzipError} jsou náhledy dialogů
+ * inicializace validačních dat a rozbalení ZIPu (běh a chyba): dialog jen ukáže stav, nic nenačítá ani nerozbaluje.
+ * Snímkovací režim přeskakuje dialog nástrojů při startu, proto při spuštění sám zkontroluje nástroje, aby prázdný
+ * stav hlavního okna neukazoval výchozí (nepravdivou) dostupnost.
  * <p>
  * Okno Nastavení (krok {@code settings}): záložky podle {@code -Dkv.snapshotTab=versions,tools,skipping,dictionaries,dirs}
  * (výchozí všechny), pro každou snímek {@code settings-<záložka>.png}. Krok {@code settingsSave} ověří propsání výchozí
@@ -129,7 +135,10 @@ public class SnapshotMode {
     public static final String PROP_TAB = "kv.snapshotTab";
     public static final String PROP_DEFAULT_VERSION = "kv.snapshotDefaultVersion";
     private static final long VALIDATION_TIMEOUT_MS = 10 * 60 * 1000;
-    public static final String ALL_DIALOGS = "main,mainMenu,settingsMenu,newValidation,settings,externalUtils,about";
+    public static final String ALL_DIALOGS = "main,mainMenu,settingsMenu,newValidation,settings,externalUtils,toolDetails,"
+            + "about,dictionaryContent,dictionaryUpdate,init,initError,unzip,unzipError";
+    /** slovník pro snímky dialogů obsahu a aktualizace slovníku */
+    private static final String SNAPSHOT_DICTIONARY = "siglaInstitutionCodes";
 
     public static boolean isEnabled() {
         return System.getProperty(PROP_DIR) != null;
@@ -151,7 +160,27 @@ public class SnapshotMode {
         dialogs.put("newValidation", () -> new NewValidationDialog(dialogStage, main, psp, expand, parseSource()));
         dialogs.put("externalUtils", () -> new ExternalUtilsCheckDialog(dialogStage, main, false, "Pokračovat", true));
         dialogs.put("about", () -> new AboutAppDialog(dialogStage, main));
+        ConfigurationManager config = main.getConfigurationManager();
+        dialogs.put("dictionaryContent", () -> new DictionaryContentDialog(dialogStage, main, SNAPSHOT_DICTIONARY,
+                config.getStringOrDefault(ConfigurationManager.propDictionaryDescription(SNAPSHOT_DICTIONARY), null),
+                config.getStringOrDefault(ConfigurationManager.propDictionarySpecUrl(SNAPSHOT_DICTIONARY), null)));
+        dialogs.put("dictionaryUpdate", () -> new DictionaryUpdateDialog(dialogStage, main, SNAPSHOT_DICTIONARY,
+                config.getStringOrDefault(ConfigurationManager.propDictionarySyncUrl(SNAPSHOT_DICTIONARY), null)));
+        //nahledy: dialogy jen ukazou stav, nic nenacitaji ani nerozbaluji
+        dialogs.put("init", () -> new ValidationDataInitializationDialog(dialogStage, main, true, null));
+        dialogs.put("initError", () -> new ValidationDataInitializationDialog(dialogStage, main, true,
+                "Není definován adresář s konfigurací Validátoru!"));
+        File zip = new File(psp != null && psp.toLowerCase().endsWith(".zip") ? psp : "/data/baliky/nk-00027e.zip");
+        File workDir = new File(System.getProperty("java.io.tmpdir"), "kv-rozbaleno-123456789");
+        dialogs.put("unzip", () -> new UnzipAndValidateDialog(dialogStage, main, zip, null, false, false, 0)
+                .preview(String.format("Rozbaluji %s do adresáře %s", zip.getAbsolutePath(),
+                        new File(workDir, zip.getName().replaceAll("\\.zip$", "")).getAbsolutePath()), false));
+        dialogs.put("unzipError", () -> new UnzipAndValidateDialog(dialogStage, main, zip, null, false, false, 0)
+                .preview(String.format("Chyba: Soubor %s není korektní ZIP: zip END header not found!", zip.getAbsolutePath()), true));
+        dialogs.put("dev", () -> new nkp.pspValidator.gui.dev.DevDialog(dialogStage, main));
 
+        //snimkovaci rezim preskakuje dialog nastroju pri startu; bez kontroly by prazdny stav neznal jejich dostupnost
+        main.getMainController().checkToolsForEmptyState();
         System.out.println("SNAPSHOT MODE: dir=" + dir.getAbsolutePath() + ", dialogs=" + names + ", delay=" + delayMs + " ms");
         new Runner(main, dir, delayMs, names, dialogs).next();
     }
@@ -240,6 +269,18 @@ public class SnapshotMode {
                         menu.hide();
                         next();
                     });
+                } else if ("toolDetails".equals(name)) {
+                    //okno Podrobnosti… u nenalezeneho nastroje (vystup kontroly je pevny, aby snimek nezavisel na stroji)
+                    Stage stage = ToolsTable.openDetails(main.getPrimaryStage(), ExternalUtil.JHOVE,
+                            nkp.pspValidator.gui.newvalidation.ToolStatus.notFound(
+                                    "Cannot run program \"jhove\": error=2, No such file or directory"),
+                            null, url -> {
+                            }, false);
+                    after(() -> {
+                        save(stage.getScene(), name);
+                        stage.close();
+                        next();
+                    });
                 } else if ("settingsMenu".equals(name)) {
                     saveMenu("Nastavení", name, this::next);
                 } else if ("settings".equals(name)) {
@@ -288,7 +329,7 @@ public class SnapshotMode {
                         next();
                     });
                 } else {
-                    System.err.println("SNAPSHOT MODE: unknown dialog '" + name + "', known: main,mainMenu,settingsMenu,settings,settingsSave,results,rerun,progress,stress,filtered,small,group,groupRerunOne,groupCancel," + String.join(",", dialogs.keySet()));
+                    System.err.println("SNAPSHOT MODE: unknown dialog '" + name + "', known: main,mainMenu,settingsMenu,settings,settingsSave,toolDetails,results,rerun,progress,stress,filtered,small,group,groupRerunOne,groupCancel," + String.join(",", dialogs.keySet()));
                     failed = true;
                     next();
                 }

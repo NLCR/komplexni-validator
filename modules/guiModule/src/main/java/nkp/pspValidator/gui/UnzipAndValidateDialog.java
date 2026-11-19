@@ -16,6 +16,9 @@ public class UnzipAndValidateDialog extends AbstractDialog {
     private final boolean createTxtLog;
     private final boolean createXmlLog;
     private final int verbosity;
+    /** náhled pro SnapshotMode: text stavu, nic se nerozbaluje; null = skutečné rozbalení */
+    private String previewMessage;
+    private boolean previewError;
 
     public UnzipAndValidateDialog(Stage stage, Main main, File pspZip, DmfDetector.Params dmfDetectorParams, boolean createTxtLog, boolean createXmlLog, int verbosity) {
         super(stage, main);
@@ -24,6 +27,13 @@ public class UnzipAndValidateDialog extends AbstractDialog {
         this.createTxtLog = createTxtLog;
         this.createXmlLog = createXmlLog;
         this.verbosity = verbosity;
+    }
+
+    /** Náhled pro SnapshotMode: dialog jen ukáže text stavu (u chyby bez ukazatele průběhu) a nic nerozbalí. */
+    UnzipAndValidateDialog preview(String message, boolean error) {
+        this.previewMessage = message;
+        this.previewError = error;
+        return this;
     }
 
     @Override
@@ -38,12 +48,12 @@ public class UnzipAndValidateDialog extends AbstractDialog {
 
     @Override
     public int getHeight() {
-        return 250;
+        return 260;
     }
 
     @Override
     public String getTitle() {
-        return "Rozbalení ZIP balíku před validací";
+        return "Rozbalení souboru ZIP";
     }
 
     @Override
@@ -54,5 +64,8 @@ public class UnzipAndValidateDialog extends AbstractDialog {
     @Override
     public void setControllerData(DialogController controller) {
         ((UnzipAndValidateDialogController) controller).setData(pspZip, dmfDetectorParams, createTxtLog, createXmlLog, verbosity);
+        if (previewMessage != null) {
+            ((UnzipAndValidateDialogController) controller).setPreview(previewMessage, previewError);
+        }
     }
 }

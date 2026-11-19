@@ -90,4 +90,21 @@ public class ResultTextsTest {
         //cas pred spustenim (posun hodin) se zobrazi jako nula
         assertEquals("0:00", ResultTexts.elapsed(-5000));
     }
+
+    @Test
+    public void toolsInfoWhileUnknown() {
+        assertEquals("Nástroje: zjišťuji…", ResultTexts.toolsInfo(null, 9));
+        assertEquals("Nástroje: 0 z 9 dostupných", ResultTexts.toolsInfo(0, 9));
+        assertEquals("Nástroje: 9 z 9 dostupných", ResultTexts.toolsInfo(9, 9));
+    }
+
+    @Test
+    public void zeroCountBadgeIsNeutral() {
+        assertEquals("badge-muted", ResultTexts.countBadgeClass(0, "badge-error"));
+        assertEquals("badge-error", ResultTexts.countBadgeClass(1, "badge-error"));
+        assertEquals("badge-warning", ResultTexts.countBadgeClass(2, "badge-warning"));
+        assertEquals("badge-ok", ResultTexts.countBadgeClass(137, "badge-ok"));
+        //zaporny pocet nenastava, ale nesmi dostat barvu urovne
+        assertEquals("badge-muted", ResultTexts.countBadgeClass(-1, "badge-error"));
+    }
 }

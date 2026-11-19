@@ -131,6 +131,21 @@ public final class ResultHeader {
         return ResultTexts.infos(getInfos());
     }
 
+    /** Třída odznaku chyb: červený jen při nenulovém počtu, jinak šedý. */
+    public String getErrorsStyleClass() {
+        return ResultTexts.countBadgeClass(getErrors(), "badge-error");
+    }
+
+    /** Třída odznaku varování: oranžový jen při nenulovém počtu, jinak šedý. */
+    public String getWarningsStyleClass() {
+        return ResultTexts.countBadgeClass(getWarnings(), "badge-warning");
+    }
+
+    /** Třída odznaku informací: modrý jen při nenulovém počtu, jinak šedý. */
+    public String getInfosStyleClass() {
+        return ResultTexts.countBadgeClass(getInfos(), "badge-info");
+    }
+
     /** „Validovat znovu“ jde jen mimo běh validace. */
     public boolean isRunning() {
         return phase == Phase.RUNNING;

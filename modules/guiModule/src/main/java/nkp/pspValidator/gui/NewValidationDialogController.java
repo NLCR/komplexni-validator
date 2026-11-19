@@ -222,10 +222,12 @@ public class NewValidationDialogController extends DialogController {
             }
             source = (ValidationSource) newValue.getUserData();
             pathLabel.setText(source.getPathLabel());
+            container.setSubtitle(source.getDialogSubtitle());
             updateValidateButton();
             recognize();
         });
         pathLabel.setText(source.getPathLabel());
+        container.setSubtitle(source.getDialogSubtitle());
     }
 
     public void selectPath(ActionEvent actionEvent) {
@@ -746,7 +748,7 @@ public class NewValidationDialogController extends DialogController {
             description.setTooltip(new Tooltip(description.getText()));
             Region dot = new Region();
             dot.getStyleClass().add(statusDotClass(status, unused));
-            Label statusText = new Label(status.getText());
+            Label statusText = new Label(ToolsOverview.statusText(util, status));
             statusText.setMinWidth(0);
             //verze bývá dlouhá (např. ImageMagick vypisuje i architekturu), celá je v tooltipu
             statusText.setTooltip(new Tooltip(status.getDetail() != null ? status.getDetail() : status.getText()));

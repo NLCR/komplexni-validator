@@ -800,11 +800,16 @@
     -fx-text-fill: -kv-text;
 }
 
+/* stitky ERROR, WARNING a INFO maji stejnou sirku, aby text problemu licoval */
 .level-badge {
     -fx-font-size: 11px;
     -fx-font-weight: bold;
     -fx-padding: 1 6 1 6;
     -fx-background-radius: 4;
+    -fx-min-width: 72;
+    -fx-pref-width: 72;
+    -fx-max-width: 72;
+    -fx-alignment: center;
 }
 
 .level-error {
@@ -822,7 +827,7 @@
     -fx-text-fill: -kv-info;
 }
 
-/* tlacitko Kopirovat se ukaze pri najeti mysi nebo u vybraneho radku */
+/* tlacitko Kopirovat se ukaze pri najeti mysi nebo u vybraneho radku; ma vlastni sloupec vpravo, text neprekryva */
 .problem-row .copy-button {
     -fx-padding: 2 10 2 10;
     -fx-font-size: 11px;

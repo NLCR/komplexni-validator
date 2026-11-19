@@ -88,6 +88,28 @@ public final class ResultTexts {
         return "Nástroje: " + available + " z " + total + " " + plural(total, "dostupného", "dostupných", "dostupných");
     }
 
+    /** Řádek pod tlačítkem v prázdném stavu, dokud se dostupnost nástrojů zjišťuje. */
+    public static final String TOOLS_CHECKING = "Nástroje: zjišťuji…";
+
+    /**
+     * Řádek o nástrojích v prázdném stavu: „Nástroje: 5 z 9 dostupných“, nebo {@link #TOOLS_CHECKING}, když
+     * dostupnost některého nástroje ještě žádná kontrola nezjistila ({@code available} je null).
+     */
+    public static String toolsInfo(Integer available, int total) {
+        return available == null ? TOOLS_CHECKING : toolsAvailable(available, total);
+    }
+
+    /** Třída šedého odznaku počtu, když je počet nulový (barva úrovně jen u nenulového počtu). */
+    public static final String BADGE_ZERO = "badge-muted";
+
+    /**
+     * Třída odznaku s počtem v horní liště: u nenulového počtu barva úrovně ({@code levelClass}, např.
+     * {@code badge-error}), u nuly šedý {@link #BADGE_ZERO}.
+     */
+    public static String countBadgeClass(int count, String levelClass) {
+        return count > 0 ? levelClass : BADGE_ZERO;
+    }
+
     /** „Konfigurace: 39 fDMF“. */
     public static String fdmfCount(int count) {
         return "Konfigurace: " + count + " fDMF";

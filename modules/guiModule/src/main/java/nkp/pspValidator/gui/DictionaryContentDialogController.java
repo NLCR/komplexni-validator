@@ -4,9 +4,9 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.Hyperlink;
-import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.stage.WindowEvent;
+import nkp.pspValidator.gui.settings.SettingsTexts;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -20,13 +20,10 @@ import java.util.Set;
 public class DictionaryContentDialogController extends DialogController {
 
     @FXML
+    DialogFrame container;
+
+    @FXML
     ListView<String> listView;
-
-    @FXML
-    Label lblItemsTotal;
-
-    @FXML
-    Label lblDescription;
 
     @FXML
     Hyperlink specHyperlink;
@@ -42,12 +39,14 @@ public class DictionaryContentDialogController extends DialogController {
         valuesSorted.addAll(values);
         Collections.sort(valuesSorted);
         listView.getItems().addAll(valuesSorted);
-        lblItemsTotal.setText("Celkem " + valuesSorted.size() + " hodnot");
-        lblDescription.setText(description);
+        container.setTitle(SettingsTexts.dictionaryTitle(description, dictionaryName));
+        container.setSubtitle(dictionaryName);
+        container.setFooterNote("Celkem " + SettingsTexts.dictionaryValues(valuesSorted.size()));
         if (specUrl != null && !specUrl.isEmpty()) {
             specHyperlink.setText(specUrl);
         } else {
             specHyperlink.setVisible(false);
+            specHyperlink.setManaged(false);
         }
     }
 

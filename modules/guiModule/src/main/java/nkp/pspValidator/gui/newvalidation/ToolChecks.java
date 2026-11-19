@@ -4,9 +4,13 @@ import javafx.application.Platform;
 import nkp.pspValidator.shared.externalUtils.ExternalUtil;
 import nkp.pspValidator.shared.externalUtils.ExternalUtilManager;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.EnumMap;
+import java.util.EnumSet;
+import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.WeakHashMap;
 import java.util.concurrent.Executor;
 import java.util.function.Function;
@@ -56,6 +60,38 @@ public class ToolChecks {
     }
 
     /**
+     * Nástroje, jejichž dostupnost už některá kontrola do manažeru zapsala. Manažer jádra má do první kontroly všechny
+     * nástroje „dostupné“, podle tohoto seznamu se pozná, že jde jen o výchozí hodnotu.
+     */
+    private static final Map<ExternalUtilManager, Set<ExternalUtil>> CHECKED = new WeakHashMap<>();
+
+    /** Posluchači zápisu dostupnosti do manažeru (hlavní okno, prázdný stav), volají se ve vlákně UI. */
+    private static final Map<ExternalUtilManager, List<Runnable>> AVAILABILITY_LISTENERS = new WeakHashMap<>();
+
+    private static synchronized void markChecked(ExternalUtilManager manager, ExternalUtil util) {
+        CHECKED.computeIfAbsent(manager, m -> EnumSet.noneOf(ExternalUtil.class)).add(util);
+    }
+
+    /** Zapsala už některá kontrola dostupnost nástroje {@code util} do manažeru? */
+    public static synchronized boolean isChecked(ExternalUtilManager manager, ExternalUtil util) {
+        Set<ExternalUtil> checked = CHECKED.get(manager);
+        return checked != null && checked.contains(util);
+    }
+
+    /**
+     * Posluchač, který se zavolá (ve vlákně UI) po každém zápisu dostupnosti nástroje do manažeru, z kterékoli
+     * kontroly nad ním.
+     */
+    public static synchronized void addAvailabilityListener(ExternalUtilManager manager, Runnable listener) {
+        AVAILABILITY_LISTENERS.computeIfAbsent(manager, m -> new ArrayList<>()).add(listener);
+    }
+
+    private static synchronized List<Runnable> availabilityListeners(ExternalUtilManager manager) {
+        List<Runnable> listeners = AVAILABILITY_LISTENERS.get(manager);
+        return listeners == null ? Collections.<Runnable>emptyList() : new ArrayList<>(listeners);
+    }
+
+    /**
      * @param threadName základ názvu pracovních vláken (každá kontrola běží v novém vlákně démona)
      */
     public ToolChecks(ExternalUtilManager manager, String threadName, Listener listener) {
@@ -79,7 +115,7 @@ public class ToolChecks {
         };
     }
 
-    /** Spustí kontrolu všech nástrojů; jejich stav je do výsledku „kontroluji“. */
+    /** Spustí kontrolu všech nástrojů; jejich stav je do výsledku „zjišťuji“. */
     public void checkAll() {
         for (ExternalUtil util : ExternalUtil.values()) {
             check(util);
@@ -97,7 +133,7 @@ public class ToolChecks {
             try {
                 status = checker.apply(util);
             } catch (Throwable e) {
-                //bez vysledku by nastroj zustal navzdy ve stavu "kontroluji"
+                //bez vysledku by nastroj zustal navzdy ve stavu "zjistuji"
                 e.printStackTrace();
                 status = ToolStatus.error(e.getMessage() != null ? e.getMessage() : e.toString());
             }
@@ -110,14 +146,21 @@ public class ToolChecks {
         if (generations.get(util) != generation) {
             return;
         }
-        if (isLatestStarted(manager, util, order)) {
+        boolean written = isLatestStarted(manager, util, order);
+        if (written) {
             manager.setUtilAvailable(util, status.isAvailable());
+            markChecked(manager, util);
         }
         statuses.put(util, status);
         listener.onResult(util, status);
+        if (written) {
+            for (Runnable availabilityListener : availabilityListeners(manager)) {
+                availabilityListener.run();
+            }
+        }
     }
 
-    /** Stav nástroje; před první kontrolou „kontroluji“. */
+    /** Stav nástroje; před první kontrolou „zjišťuji“. */
     public ToolStatus getStatus(ExternalUtil util) {
         return statuses.getOrDefault(util, ToolStatus.checking());
     }

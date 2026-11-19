@@ -1,49 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.*?>
-<?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.VBox?>
-<VBox xmlns:fx="http://javafx.com/fxml"
-      stylesheets="/css/dictionaryContentDialog.css"
-      fx:controller="nkp.pspValidator.gui.DictionaryContentDialogController"
-      minHeight="500"
-      minWidth="300"
-      alignment="CENTER_LEFT"
-      spacing="0"
+<?import javafx.scene.layout.*?>
+<?import nkp.pspValidator.gui.DialogFrame?>
+<!-- hodnoty slovníku (Nastavení, záložka Slovníky); nadpis, podtitul a počet hodnot v patičce doplňuje kontroler -->
+<DialogFrame xmlns:fx="http://javafx.com/fxml"
+             fx:controller="nkp.pspValidator.gui.DictionaryContentDialogController"
+             fx:id="container"
+             title="Slovník"
 >
+    <content>
+        <Hyperlink fx:id="specHyperlink" styleClass="link" onAction="#openHyperlink" wrapText="true"
+                   text="https://www.loc.gov/marc/relators/relaterm.html"/>
+        <ListView fx:id="listView" VBox.vgrow="ALWAYS"/>
+    </content>
 
-
-    <padding>
-        <Insets bottom="10" left="10" right="10" top="20"/>
-    </padding>
-
-    <children>
-
-        <Label fx:id="lblDescription" text="kódy insitutcí podle ISO-blabla"/>
-
-        <Hyperlink fx:id="specHyperlink" onAction="#openHyperlink"
-                   text="https://www.loc.gov/marc/relators/relaterm.html"
-                   maxWidth="250"
-                   wrapText="true"/>
-
-        <ListView fx:id="listView" prefHeight="350.0" prefWidth="200.0"/>
-
-        <VBox>
-            <padding>
-                <Insets bottom="20" left="0" right="10" top="10"/>
-            </padding>
-
-            <Label fx:id="lblItemsTotal" text="Celkem 0 hodnot"/>
-
-        </VBox>
-
-        <HBox alignment="CENTER" spacing="10">
-            <padding>
-                <Insets bottom="5" left="10" right="10" top="5"/>
-            </padding>
-            <Button onAction="#closeDialog" text="OK"/>
-        </HBox>
-
-    </children>
-</VBox>
+    <footerButtons>
+        <Button styleClass="button-primary" onAction="#closeDialog" text="Zavřít" minWidth="100"
+                defaultButton="true" cancelButton="true"/>
+    </footerButtons>
+</DialogFrame>

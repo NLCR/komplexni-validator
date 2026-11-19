@@ -1,46 +1,29 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.*?>
-<?import javafx.scene.image.Image?>
-<?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.StackPane?>
-<?import javafx.scene.layout.VBox?>
-<VBox xmlns:fx="http://javafx.com/fxml"
-      stylesheets="/css/validationDataInitialization.css"
-      fx:controller="nkp.pspValidator.gui.ValidationDataInitializationDialogController"
-      fx:id="container"
-      minWidth="1000"
-      minHeight="300"
-      alignment="CENTER"
-      spacing="20"
+<?import javafx.scene.layout.*?>
+<?import nkp.pspValidator.gui.DialogFrame?>
+<!-- inicializace validačních dat při startu aplikace: konfigurace validátoru a externí nástroje; při chybě hláška a výběr adresáře -->
+<DialogFrame xmlns:fx="http://javafx.com/fxml"
+             fx:controller="nkp.pspValidator.gui.ValidationDataInitializationDialogController"
+             fx:id="container"
+             title="Inicializace validačních dat"
+             subtitle="Načítá se konfigurace validátoru (fDMF, slovníky, externí nástroje)."
 >
-    <children>
+    <content>
+        <Label styleClass="group-label" text="Adresář s konfigurací validátoru"/>
+        <TextField fx:id="rootDirTextfield" editable="false" focusTraversable="false"/>
 
-        <Label fx:id="title" text="Adresář s konfigurací Validátoru:"/>
+        <HBox fx:id="progressBox" spacing="10" alignment="CENTER_LEFT">
+            <ProgressIndicator fx:id="progressIndicator" prefWidth="18" prefHeight="18" maxWidth="18" maxHeight="18"/>
+            <Label styleClass="text-muted" text="Načítám konfiguraci…"/>
+        </HBox>
 
-        <TextField fx:id="rootDirTextfield" editable="false"/>
+        <Label fx:id="errorLabel" styleClass="text-error" wrapText="true" minHeight="-Infinity" maxWidth="Infinity"/>
+    </content>
 
-        <StackPane>
-
-            <ProgressIndicator fx:id="progressIndicator"/>
-
-            <ImageView fx:id="imgError"
-                       styleClass="result-image"
-                       visible="false">
-                <image>
-                    <Image url="@/img/Error-48.png"/>
-                </image>
-            </ImageView>
-        </StackPane>
-
-        <Label fx:id="errorLabel" text="error"/>
-
-        <Button
-                fx:id="btnSetFdmfsRootDir"
-                onAction="#setFdmfsRootDir"
-                styleClass="global-button"
-                text="Nastavit adresář s konfigurací Validátoru"
-        />
-
-    </children>
-</VBox>
+    <footerButtons>
+        <Button fx:id="btnSetFdmfsRootDir" styleClass="button-primary" onAction="#setFdmfsRootDir"
+                text="Nastavit adresář s konfigurací…" minWidth="-Infinity" defaultButton="true"/>
+    </footerButtons>
+</DialogFrame>

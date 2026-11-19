@@ -1,51 +1,50 @@
 package nkp.pspValidator.gui.dev;
 
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.stage.Stage;
+import nkp.pspValidator.gui.AbstractDialog;
+import nkp.pspValidator.gui.DialogController;
 import nkp.pspValidator.gui.Main;
 
-import java.io.IOException;
+import java.net.URL;
 
 /**
+ * Vývojářský dialog (Nápověda → Online nápověda ve vývojářském módu): pracovní adresář aplikace.
+ * <p>
  * Created by Lenovo on 19.12.2016.
  */
-public class DevDialog {
-
-    private final Stage stage;
-    private final Main main;
+public class DevDialog extends AbstractDialog {
 
     public DevDialog(Stage stage, Main main) {
-        this.stage = stage;
-        this.main = main;
+        super(stage, main);
     }
 
-    public void show() {
-        stage.setTitle("Test");
-        int initialWidth = 650;
-        int initialHeight = 450;
+    @Override
+    public URL getFxmlResource() {
+        return getClass().getResource("/fxml/devDialog.fxml");
+    }
 
-        stage.setWidth(initialWidth);
-        stage.setMinWidth(initialWidth);
-        stage.setHeight(initialHeight);
-        stage.setMinHeight(initialHeight);
+    @Override
+    public int getWidth() {
+        return 650;
+    }
 
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/devDialog.fxml"));
-            Parent root = (Parent) loader.load();
-            stage.setScene(new Scene(root));
-            DevDialogController controller = loader.getController();
-            stage.setOnCloseRequest(controller.getOnCloseEventHandler());
-            controller.setMain(main);
-            controller.setStage(stage);
-            controller.startNow();
-        } catch (IOException e) {
-            //should never happen
-            throw new RuntimeException(e);
-        }
-        if (!stage.isShowing()) {
-            stage.showAndWait();
-        }
+    @Override
+    public int getHeight() {
+        return 260;
+    }
+
+    @Override
+    public String getTitle() {
+        return "Test";
+    }
+
+    @Override
+    public boolean isResizable() {
+        return false;
+    }
+
+    @Override
+    public void setControllerData(DialogController controller) {
+        //nothing
     }
 }

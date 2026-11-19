@@ -1,6 +1,7 @@
-initScreen (dialog inicializace validacnich dat)
-----------
-error (Error-48.png): https://icons8.com/web-app/12116/error
+initScreen (dialog inicializace validacnich dat): driv ikona chyby Error-48.png (https://icons8.com/web-app/12116/error);
+od 3.0 je dialog na spolecne kostre (DialogFrame) a chybu ukazuje cervenym textem, bez obrazku.
+
+Okno "Podrobnosti..." u nedostupneho nastroje (driv standardni Alert) je od 3.0 take na kostre DialogFrame, bez ikony.
 
 docasna ikona aplikace (puvodni, nahrazena ikonou v appIcon/)
 https://icons8.com/web-app/5252/check-file

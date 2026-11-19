@@ -111,7 +111,7 @@ Vzhled v base.css (trida main-root a nasledujici).
                 </ImageView>
                 <Label fx:id="emptyTitle" styleClass="empty-title"/>
                 <Label styleClass="empty-text" wrapText="true" maxWidth="460"
-                       text="Vyberte balík k validaci (adresář nebo soubor ZIP). Výsledek se zobrazí tady: sekce, pravidla a nalezené problémy."/>
+                       text="Vyberte balík k validaci (adresář nebo soubor ZIP) nebo skupinu balíků. Výsledek se zobrazí tady: sekce, pravidla a nalezené problémy."/>
                 <Button fx:id="emptyNewValidationButton" text="Nová validace…" styleClass="button-primary,empty-button"
                         onAction="#showNewValidationDialog"/>
                 <HBox styleClass="empty-info">

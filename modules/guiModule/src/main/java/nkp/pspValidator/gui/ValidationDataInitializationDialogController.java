@@ -5,11 +5,12 @@ import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ProgressIndicator;
 import javafx.scene.control.TextField;
-import javafx.scene.image.ImageView;
+import javafx.scene.layout.HBox;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.WindowEvent;
 import nkp.pspValidator.shared.FdmfRegistry;
@@ -30,13 +31,16 @@ public class ValidationDataInitializationDialogController extends DialogControll
 
 
     @FXML
+    DialogFrame container;
+
+    @FXML
     TextField rootDirTextfield;
 
     @FXML
     ProgressIndicator progressIndicator;
 
     @FXML
-    ImageView imgError;
+    HBox progressBox;
 
     @FXML
     Label errorLabel;
@@ -46,6 +50,15 @@ public class ValidationDataInitializationDialogController extends DialogControll
 
     //other data
     private DialogState state = DialogState.RUNNING;
+    /** náhled pro SnapshotMode: nic se nenačítá, jen se ukáže stav */
+    private boolean preview = false;
+    private String previewError;
+
+    /** Náhled pro SnapshotMode: s {@code error} chybový stav, jinak běžící inicializace. */
+    void setPreview(String error) {
+        this.preview = true;
+        this.previewError = error;
+    }
 
     @Override
     public EventHandler<WindowEvent> getOnCloseEventHandler() {
@@ -67,12 +80,20 @@ public class ValidationDataInitializationDialogController extends DialogControll
     @Override
     public void startNow() {
         state = DialogState.RUNNING;
+        container.setFooterNote("Po načtení se zkontroluje dostupnost externích nástrojů.");
         //show progress
-        progressIndicator.setVisible(true);
-        //hide images & buttons
-        errorLabel.setVisible(false);
-        imgError.setVisible(false);
-        btnSetFdmfsRootDir.setVisible(false);
+        setVisibleManaged(progressBox, true);
+        //hide error & button
+        setVisibleManaged(errorLabel, false);
+        setVisibleManaged(btnSetFdmfsRootDir, false);
+        if (preview) {
+            File dir = getConfigurationManager().getFileOrNull(ConfigurationManager.PROP_VALIDATOR_CONFIG_DIR);
+            rootDirTextfield.setText(dir == null ? "" : dir.getAbsolutePath());
+            if (previewError != null) {
+                showError(previewError);
+            }
+            return;
+        }
         getConfigurationManager();
 
         Task task = new Task<Void>() {
@@ -110,9 +131,8 @@ public class ValidationDataInitializationDialogController extends DialogControll
             }
 
             private void processResult(Result result) {
-                progressIndicator.setVisible(false);
                 Platform.runLater(() -> {
-                    progressIndicator.setVisible(false);
+                    setVisibleManaged(progressBox, false);
                     if (result.isOk()) {//ok
                         state = DialogState.FINISHED;
                         main.setValidationDataManager(validationDataManager);
@@ -123,16 +143,26 @@ public class ValidationDataInitializationDialogController extends DialogControll
                             continueInApp(null);
                         }
                     } else {//error
-                        state = DialogState.ERROR;
-                        imgError.setVisible(true);
-                        errorLabel.setVisible(true);
-                        errorLabel.setText(result.getError());
-                        btnSetFdmfsRootDir.setVisible(true);
+                        showError(result.getError());
                     }
                 });
             }
         };
         new Thread(task).start();
+    }
+
+    private void showError(String error) {
+        state = DialogState.ERROR;
+        setVisibleManaged(progressBox, false);
+        errorLabel.setText(error);
+        setVisibleManaged(errorLabel, true);
+        container.setFooterNote("Zavřením okna se aplikace ukončí.");
+        setVisibleManaged(btnSetFdmfsRootDir, true);
+    }
+
+    private static void setVisibleManaged(Node node, boolean visible) {
+        node.setVisible(visible);
+        node.setManaged(visible);
     }
 
     public void continueInApp(ActionEvent actionEvent) {

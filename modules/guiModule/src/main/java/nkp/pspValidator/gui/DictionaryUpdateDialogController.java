@@ -8,6 +8,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ProgressIndicator;
 import javafx.stage.WindowEvent;
+import nkp.pspValidator.gui.settings.SettingsTexts;
 import nkp.pspValidator.shared.engine.exceptions.ValidatorConfigurationException;
 import nkp.pspValidator.shared.metadataProfile.DictionaryManager;
 import org.joda.time.DateTime;
@@ -68,7 +69,9 @@ public class DictionaryUpdateDialogController extends DialogController {
 
     @Override
     public void startNow() {
-        lblDictName.setText(dictionaryName);
+        String description = getConfigMgr().getStringOrDefault(ConfigurationManager.propDictionaryDescription(dictionaryName), null);
+        String title = SettingsTexts.dictionaryTitle(description, dictionaryName);
+        lblDictName.setText(title.equals(dictionaryName) ? dictionaryName : title + " (" + dictionaryName + ")");
         updateUi();
     }
 
@@ -94,7 +97,8 @@ public class DictionaryUpdateDialogController extends DialogController {
 
     public void update(ActionEvent actionEvent) {
         updatingNow = true;
-        lblStatus.setText("Aktualizuji ...");
+        lblStatus.getStyleClass().remove("text-error");
+        lblStatus.setText("Aktualizuji…");
         updateUi();
         //https://docs.oracle.com/javafx/2/api/javafx/concurrent/Task.html
         Task task = new Task<Void>() {
@@ -161,8 +165,10 @@ public class DictionaryUpdateDialogController extends DialogController {
         task.messageProperty().addListener((observable, oldValue, newValue) -> {
             System.out.println(newValue);
             updatingNow = false;
+            lblStatus.getStyleClass().remove("text-error");
             if (newValue.startsWith("CHYBA")) {
                 lblStatus.setText(newValue);
+                lblStatus.getStyleClass().add("text-error");
             } else {
                 lblStatus.setText("Slovník byl úspěšně aktualizován!");
                 //update syncDate property
@@ -172,6 +178,7 @@ public class DictionaryUpdateDialogController extends DialogController {
                     getDictMgr().reload();
                 } catch (ValidatorConfigurationException e) {
                     lblStatus.setText("CHYBA: " + e.getMessage());
+                    lblStatus.getStyleClass().add("text-error");
                     e.printStackTrace();
                 }
             }
@@ -199,12 +206,12 @@ public class DictionaryUpdateDialogController extends DialogController {
         if (updatingNow) {
             btnUpdate.setDisable(true);
             btnCloseOrCancel.setText("Zrušit");
-            progressIndicator.setVisible(true);
         } else {
             btnUpdate.setDisable(false);
             btnCloseOrCancel.setText("Zavřít");
-            progressIndicator.setVisible(false);
         }
+        progressIndicator.setVisible(updatingNow);
+        progressIndicator.setManaged(updatingNow);
     }
 
     public void closeOrCancel(ActionEvent actionEvent) {

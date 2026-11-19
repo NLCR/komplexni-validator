@@ -1,82 +1,42 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-<VBox xmlns:fx="http://javafx.com/fxml"
-      stylesheets="/css/dictionaryUpdateDialog.css"
-      fx:controller="nkp.pspValidator.gui.DictionaryUpdateDialogController"
-      minHeight="300"
-      minWidth="400"
-      alignment="CENTER"
-      spacing="0"
+<?import nkp.pspValidator.gui.DialogFrame?>
+<!-- aktualizace slovníku ze sítě (Nastavení, záložka Slovníky); stav aktualizace doplňuje kontroler -->
+<DialogFrame xmlns:fx="http://javafx.com/fxml"
+             fx:controller="nkp.pspValidator.gui.DictionaryUpdateDialogController"
+             fx:id="container"
+             title="Aktualizace slovníku"
+             subtitle="Slovník se stáhne znovu z adresy v nastavení a nahradí místní soubor."
 >
+    <content>
+        <GridPane hgap="16" vgap="10">
+            <columnConstraints>
+                <ColumnConstraints minWidth="170" prefWidth="170"/>
+                <ColumnConstraints hgrow="ALWAYS"/>
+            </columnConstraints>
+            <Label styleClass="group-label" text="Slovník" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
+            <Label fx:id="lblDictName" text="siglaInstitutionCodes" GridPane.rowIndex="0" GridPane.columnIndex="1"/>
 
-    <padding>
-        <Insets bottom="10" left="10" right="10" top="20"/>
-    </padding>
+            <Label styleClass="group-label" text="Celkem hodnot" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
+            <Label fx:id="lblTotalValues" text="0" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
 
-    <children>
-
-        <GridPane alignment="CENTER" hgap="10" vgap="10">
-            <padding>
-                <Insets bottom="30" left="10" right="10" top="20"/>
-            </padding>
-
-            <Label text="Slovník"
-                   GridPane.rowIndex="0"
-                   GridPane.columnIndex="0"
-            />
-            <Label fx:id="lblDictName"
-                   text="siglaInstitutionCodes"
-                   GridPane.rowIndex="0"
-                   GridPane.columnIndex="1"
-            />
-
-            <Label text="Celkem hodnot"
-                   GridPane.rowIndex="1"
-                   GridPane.columnIndex="0"
-            />
-            <Label fx:id="lblTotalValues"
-                   text="0"
-                   GridPane.rowIndex="1"
-                   GridPane.columnIndex="1"
-            />
-
-            <Label text="Naposledy aktualizováno"
-                   GridPane.rowIndex="2"
-                   GridPane.columnIndex="0"
-            />
-            <Label fx:id="lblLastUpdated"
-                   text="-"
-                   GridPane.rowIndex="2"
-                   GridPane.columnIndex="1"
-            />
-
+            <Label styleClass="group-label" text="Naposledy aktualizováno" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
+            <Label fx:id="lblLastUpdated" text="-" GridPane.rowIndex="2" GridPane.columnIndex="1"/>
         </GridPane>
 
-        <VBox alignment="CENTER" spacing="10">
-            <children>
-                <ProgressIndicator fx:id="progressIndicator" visible="false"/>
-
-                <Label fx:id="lblStatus" wrapText="true"/>
-
-            </children>
-        </VBox>
-
-        <HBox alignment="CENTER" spacing="10">
-            <padding>
-                <Insets bottom="5" left="10" right="10" top="30"/>
-            </padding>
-            <Button fx:id="btnUpdate"
-                    onAction="#update"
-                    text="Aktualizovat"
-            />
-            <Button fx:id="btnCloseOrCancel"
-                    onAction="#closeOrCancel"
-                    text="Zavřít"
-            />
+        <HBox spacing="10" alignment="TOP_LEFT">
+            <ProgressIndicator fx:id="progressIndicator" visible="false" managed="false"
+                               prefWidth="18" prefHeight="18" maxWidth="18" maxHeight="18" minWidth="18"/>
+            <Label fx:id="lblStatus" wrapText="true" minHeight="-Infinity" maxWidth="Infinity" HBox.hgrow="ALWAYS"/>
         </HBox>
+    </content>
 
-    </children>
-</VBox>
+    <footerButtons>
+        <Button fx:id="btnCloseOrCancel" styleClass="button-secondary" onAction="#closeOrCancel" text="Zavřít"
+                minWidth="100" cancelButton="true"/>
+        <Button fx:id="btnUpdate" styleClass="button-primary" onAction="#update" text="Aktualizovat"
+                minWidth="110" defaultButton="true"/>
+    </footerButtons>
+</DialogFrame>

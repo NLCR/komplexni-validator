@@ -8,7 +8,6 @@
              fx:controller="nkp.pspValidator.gui.NewValidationDialogController"
              fx:id="container"
              title="Nová validace"
-             subtitle="Po výběru balíku se rozpozná jeho typ a verze."
              footerNote="Průběh a výsledek se zobrazí v hlavním okně."
 >
     <content>

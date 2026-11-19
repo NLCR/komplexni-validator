@@ -116,7 +116,7 @@ Soubory PDF a EPUB e-publikací kontrolují [veraPDF](https://verapdf.org/) (val
 výstupu), EPUBCheck 5.0 (EPUB 3.3); ověřeno s veraPDF 1.30 a EPUBCheck 5.4.0. Oba nástroje potřebují Javu
 (veraPDF 8, 11, 17 nebo 21, EPUBCheck 8 a novější).
 
-| nástroj | parametr CLI | adresář, který se zadává (CLI i dialog „Kontrola externích nástrojů“ v GUI) |
+| nástroj | parametr CLI | adresář, který se zadává (CLI i GUI: Nastavení → Externí nástroje, „Nastavit cestu…“) |
 |---|---|---|
 | veraPDF | `--verapdf-path` | instalační adresář se skriptem `verapdf` (Windows `verapdf.bat`) |
 | EPUBCheck | `--epubcheck-path` | rozbalený zip s `epubcheck.jar` a podadresářem `lib` |

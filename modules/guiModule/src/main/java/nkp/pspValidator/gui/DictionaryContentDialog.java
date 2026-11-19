@@ -1,7 +1,5 @@
 package nkp.pspValidator.gui;
 
-import javafx.event.ActionEvent;
-import javafx.scene.control.Hyperlink;
 import javafx.stage.Stage;
 
 import java.net.URL;
@@ -29,17 +27,17 @@ public class DictionaryContentDialog extends AbstractDialog {
 
     @Override
     public int getWidth() {
-        return 300;
+        return 480;
     }
 
     @Override
     public int getHeight() {
-        return 530;
+        return 600;
     }
 
     @Override
     public String getTitle() {
-        return "slovník " + dictionaryName;
+        return "Slovník " + dictionaryName;
     }
 
     @Override

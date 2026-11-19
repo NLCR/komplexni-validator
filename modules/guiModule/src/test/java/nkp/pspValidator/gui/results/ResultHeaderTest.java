@@ -129,4 +129,20 @@ public class ResultHeaderTest {
         assertEquals("0 chyb", failed.getErrorsText());
         assertEquals("Chyba", failed.getVerdictText());
     }
+
+    @Test
+    public void countBadgesAreColoredOnlyWhenNonZero() {
+        ResultHeader header = ResultHeader.finished("b", FUND_UNIT, counts(0, 1, 137), true, 500, AT);
+        assertEquals("badge-muted", header.getErrorsStyleClass());
+        assertEquals("badge-warning", header.getWarningsStyleClass());
+        assertEquals("badge-info", header.getInfosStyleClass());
+        ResultHeader invalid = ResultHeader.finished("b", FUND_UNIT, counts(30, 0, 0), false, 500, AT);
+        assertEquals("badge-error", invalid.getErrorsStyleClass());
+        assertEquals("badge-muted", invalid.getWarningsStyleClass());
+        assertEquals("badge-muted", invalid.getInfosStyleClass());
+        ResultHeader one = ResultHeader.finished("b", FUND_UNIT, counts(1, 1, 1), false, 500, AT);
+        assertEquals("badge-error", one.getErrorsStyleClass());
+        assertEquals("badge-warning", one.getWarningsStyleClass());
+        assertEquals("badge-info", one.getInfosStyleClass());
+    }
 }

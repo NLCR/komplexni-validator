@@ -215,4 +215,78 @@ public class ToolChecksTest {
         assertTrue("starší výsledek z jiné instance nesmí přepsat dostupnost", manager.isUtilAvailable(KAKADU));
         assertEquals(Collections.singletonList("KAKADU=NOT_FOUND"), reported);
     }
+
+    // ----- zjistena dostupnost pro prazdny stav hlavniho okna -----
+
+    @Test
+    public void toolIsCheckedOnlyAfterResultIsWritten() {
+        //manazer jadra ma do prvni kontroly vsechny nastroje "dostupne", to neni zjistena dostupnost
+        assertTrue(manager.isUtilAvailable(JHOVE));
+        assertFalse(ToolChecks.isChecked(manager, JHOVE));
+        nextResult.put(JHOVE, ToolStatus.notFound("Cannot run program \"jhove\""));
+        checks.check(JHOVE);
+        runAll(workerQueue);
+        assertFalse("výsledek ještě není ve vlákně UI", ToolChecks.isChecked(manager, JHOVE));
+        runAll(uiQueue);
+        assertTrue(ToolChecks.isChecked(manager, JHOVE));
+        assertFalse(manager.isUtilAvailable(JHOVE));
+        //ostatni nastroje se nekontrolovaly
+        assertFalse(ToolChecks.isChecked(manager, KAKADU));
+        //jiny manazer (jina inicializace validacnich dat) nic nezdedi
+        ExternalUtilManager otherManager = new ExternalUtilManager(Collections.emptyMap(), Collections.emptyMap());
+        assertFalse(ToolChecks.isChecked(otherManager, JHOVE));
+    }
+
+    @Test
+    public void staleResultDoesNotMarkToolChecked() {
+        List<Runnable> listenerCalls = new ArrayList<>();
+        ToolChecks.addAvailabilityListener(manager, () -> listenerCalls.add(null));
+        Map<ExternalUtil, ToolStatus> otherResult = new EnumMap<>(ExternalUtil.class);
+        ToolChecks other = new ToolChecks(manager, otherResult::get, workers, ui, (util, status) -> {
+        });
+        nextResult.put(KAKADU, ToolStatus.notFound("Cannot run program"));
+        checks.check(KAKADU);
+        List<Runnable> olderWorker = new ArrayList<>(workerQueue);
+        workerQueue.clear();
+        otherResult.put(KAKADU, ToolStatus.found("v8.0.5"));
+        other.check(KAKADU);
+        //starsi kontrola dobehne driv nez novejsi: jeji vysledek se do manazeru nezapise
+        for (Runnable runnable : olderWorker) {
+            runnable.run();
+        }
+        runAll(uiQueue);
+        assertFalse(ToolChecks.isChecked(manager, KAKADU));
+        assertTrue(listenerCalls.isEmpty());
+        runAll(workerQueue);
+        runAll(uiQueue);
+        assertTrue(ToolChecks.isChecked(manager, KAKADU));
+        assertTrue(manager.isUtilAvailable(KAKADU));
+        assertEquals(1, listenerCalls.size());
+    }
+
+    @Test
+    public void availabilityListenerIsCalledInUiThreadForEachWrittenResult() {
+        List<String> calls = new ArrayList<>();
+        ToolChecks.addAvailabilityListener(manager, () -> calls.add("zapsáno"));
+        for (ExternalUtil util : ExternalUtil.values()) {
+            nextResult.put(util, ToolStatus.found("1.0"));
+        }
+        checks.checkAll();
+        runAll(workerQueue);
+        assertTrue("posluchač se volá až ve vlákně UI", calls.isEmpty());
+        runAll(uiQueue);
+        assertEquals(ExternalUtil.values().length, calls.size());
+        for (ExternalUtil util : ExternalUtil.values()) {
+            assertTrue(ToolChecks.isChecked(manager, util));
+        }
+        //posluchac jineho manazeru se nevola
+        ExternalUtilManager otherManager = new ExternalUtilManager(Collections.emptyMap(), Collections.emptyMap());
+        List<String> otherCalls = new ArrayList<>();
+        ToolChecks.addAvailabilityListener(otherManager, () -> otherCalls.add("zapsáno"));
+        checks.check(JHOVE);
+        runAll(workerQueue);
+        runAll(uiQueue);
+        assertEquals(ExternalUtil.values().length + 1, calls.size());
+        assertTrue(otherCalls.isEmpty());
+    }
 }

@@ -6,7 +6,11 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
+import javafx.scene.Scene;
 import javafx.stage.DirectoryChooser;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import javafx.stage.Window;
 import javafx.util.Duration;
 import nkp.pspValidator.gui.newvalidation.ExternalTools;
@@ -17,7 +21,6 @@ import nkp.pspValidator.shared.externalUtils.ExternalUtil;
 import nkp.pspValidator.shared.externalUtils.ExternalUtilManager;
 
 import java.io.File;
-import java.net.URL;
 import java.util.EnumMap;
 import java.util.Map;
 import java.util.function.Consumer;
@@ -38,6 +41,9 @@ public class ToolsTable extends VBox {
     private static final double DESCRIPTION_WIDTH = 165;
     private static final double COMPACT_NAME_WIDTH = 170;
     private static final double ACTIONS_WIDTH = 225;
+    /** velikost okna s podrobnostmi kontroly nástroje */
+    private static final double DETAILS_WIDTH = 640;
+    private static final double DETAILS_HEIGHT = 400;
 
     private ConfigurationManager config;
     private ExternalUtilManager utilManager;
@@ -140,7 +146,7 @@ public class ToolsTable extends VBox {
     }
 
     private void updateRow(ExternalUtil util) {
-        rows.get(util).update(toolChecks.getStatus(util), configuredDir(util));
+        rows.get(util).update(util, toolChecks.getStatus(util), configuredDir(util));
     }
 
     // ----- cesta k nastroji -----
@@ -188,25 +194,53 @@ public class ToolsTable extends VBox {
     // ----- podrobnosti -----
 
     private void showDetails(ExternalUtil util) {
-        ToolStatus status = toolChecks.getStatus(util);
-        Alert alert = new Alert(Alert.AlertType.NONE, "", ButtonType.CLOSE);
-        alert.initOwner(owner.get());
-        alert.setTitle(util.getUserFriendlyName());
-        alert.setHeaderText(ToolsOverview.detailsTitle(util, status));
-        TextArea text = new TextArea(ToolsOverview.detailsText(status, configuredDir(util)));
+        openDetails(owner.get(), util, toolChecks.getStatus(util), configuredDir(util), urlOpener, true);
+    }
+
+    /**
+     * Okno s podrobnostmi kontroly nedostupného nástroje (odkaz „Podrobnosti…“).
+     *
+     * @param wait čekat na zavření okna (false jen pro SnapshotMode)
+     * @return okno s podrobnostmi
+     */
+    static Stage openDetails(Window owner, ExternalUtil util, ToolStatus status, File configuredDir,
+                             Consumer<String> urlOpener, boolean wait) {
+        Stage stage = new Stage(StageStyle.UTILITY);
+        stage.initOwner(owner);
+        stage.initModality(Modality.APPLICATION_MODAL);
+        stage.setTitle(util.getUserFriendlyName());
+
+        DialogFrame frame = new DialogFrame();
+        frame.setTitle(ToolsOverview.detailsTitle(util, status));
+        frame.setSubtitle("Výstup kontroly nástroje. Nástroj je volitelný, bez něj se kontroly, které ho potřebují, přeskočí.");
+        TextArea text = new TextArea(ToolsOverview.detailsText(status, configuredDir));
         text.setEditable(false);
         text.setWrapText(true);
-        text.setPrefColumnCount(60);
         text.setPrefRowCount(8);
+        VBox.setVgrow(text, Priority.ALWAYS);
         Hyperlink installation = new Hyperlink("Návod k instalaci nástroje " + util.getUserFriendlyName());
         installation.getStyleClass().add("link");
         installation.setOnAction(e -> urlOpener.accept(ExternalTools.installationUrl(util)));
-        alert.getDialogPane().setContent(new VBox(10, text, installation));
-        URL css = getClass().getResource(AbstractDialog.BASE_CSS);
-        if (css != null) {
-            alert.getDialogPane().getStylesheets().add(css.toExternalForm());
+        frame.getContent().addAll(text, installation);
+        Button close = new Button("Zavřít");
+        close.getStyleClass().add("button-primary");
+        close.setMinWidth(100);
+        close.setDefaultButton(true);
+        close.setCancelButton(true);
+        close.setOnAction(e -> stage.close());
+        frame.getFooterButtons().add(close);
+
+        Scene scene = new Scene(frame, DETAILS_WIDTH, DETAILS_HEIGHT);
+        AbstractDialog.addBaseStylesheet(scene);
+        stage.setScene(scene);
+        stage.setMinWidth(DETAILS_WIDTH);
+        stage.setMinHeight(DETAILS_HEIGHT);
+        if (wait) {
+            stage.showAndWait();
+        } else {
+            stage.show();
         }
-        alert.showAndWait();
+        return stage;
     }
 
     /** Řádek tabulky jednoho nástroje. */
@@ -275,9 +309,9 @@ public class ToolsTable extends VBox {
             }
         }
 
-        void update(ToolStatus status, File configuredDir) {
+        void update(ExternalUtil util, ToolStatus status, File configuredDir) {
             dot.getStyleClass().setAll(ToolsOverview.dotStyleClass(status));
-            statusText.setText(ToolsOverview.statusText(status));
+            statusText.setText(compact ? ToolsOverview.compactStatusText(util, status) : ToolsOverview.statusText(util, status));
             statusText.getStyleClass().removeAll("text-error", "text-muted");
             String textClass = ToolsOverview.textStyleClass(status);
             if (textClass != null) {

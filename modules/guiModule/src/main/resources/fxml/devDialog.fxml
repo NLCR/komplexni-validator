@@ -1,27 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.Insets?>
-<?import javafx.scene.layout.VBox?>
-<?import javafx.scene.text.Text?>
-<VBox xmlns:fx="http://javafx.com/fxml"
-      fx:controller="nkp.pspValidator.gui.dev.DevDialogController"
-      fx:id="container"
-      minHeight="400"
-      minWidth="700"
-      alignment="CENTER_LEFT"
-      spacing="0"
+<?import javafx.scene.control.*?>
+<?import nkp.pspValidator.gui.DialogFrame?>
+<!-- vývojářský dialog (jen ve vývojářském módu) -->
+<DialogFrame xmlns:fx="http://javafx.com/fxml"
+             fx:controller="nkp.pspValidator.gui.dev.DevDialogController"
+             fx:id="container"
+             title="Vývojářský dialog"
+             subtitle="Jen ve vývojářském módu."
 >
+    <content>
+        <Label fx:id="text" text="/tmp/neco/nekde" wrapText="true" minHeight="-Infinity" maxWidth="Infinity"/>
+    </content>
 
-    <padding>
-        <Insets bottom="10" left="10" right="10" top="20"/>
-    </padding>
-
-    <children>
-
-        <Text text="/tmp/neco/nekde"
-              fx:id="text"
-              wrappingWidth="400"
-        />
-
-    </children>
-</VBox>
+    <footerButtons>
+        <Button styleClass="button-primary" onAction="#closeDialog" text="Zavřít" minWidth="100"
+                defaultButton="true" cancelButton="true"/>
+    </footerButtons>
+</DialogFrame>

@@ -38,9 +38,26 @@ public class UnzipAndValidateDialogController extends DialogController {
     private boolean createTxtLog;
     private boolean createXmlLog;
     private int verbosity;
+    private String previewMessage;
+    private boolean previewError;
+
+    /** Náhled pro SnapshotMode: jen text stavu, nic se nerozbaluje. */
+    void setPreview(String message, boolean error) {
+        this.previewMessage = message;
+        this.previewError = error;
+    }
 
     @Override
     public void startNow() {
+        if (previewMessage != null) {
+            lblInfo.setText(previewMessage);
+            if (previewError) {
+                hideProgress();
+                lblInfo.getStyleClass().add("text-error");
+                btnCancelOrClose.setText("Zavřít");
+            }
+            return;
+        }
         task = new Task<Void>() {
 
             @Override
@@ -62,7 +79,7 @@ public class UnzipAndValidateDialogController extends DialogController {
             private void finishOkAndContinue(File pspDir) {
                 Platform.runLater(() -> {
                     lblInfo.setText("Soubor ZIP byl rozbalen do adresáře " + pspDir.getAbsolutePath());
-                    progressIndicator.setVisible(false);
+                    hideProgress();
                     task = null;
                     btnCancelOrClose.setText("Zavřít");
                     stage.close();
@@ -83,8 +100,8 @@ public class UnzipAndValidateDialogController extends DialogController {
             private void showError(String message) {
                 updateMessage(message);
                 Platform.runLater(() -> {
-                    //lblInfo.setText(message);
-                    progressIndicator.setVisible(false);
+                    lblInfo.getStyleClass().add("text-error");
+                    hideProgress();
                     task = null;
                     btnCancelOrClose.setText("Zavřít");
                 });
@@ -104,13 +121,18 @@ public class UnzipAndValidateDialogController extends DialogController {
                 super.cancelled();
                 updateMessage("Rozbalování ZIP souboru zrušeno");
                 Platform.runLater(() -> {
-                    progressIndicator.setVisible(false);
+                    hideProgress();
                     task = null;
                     btnCancelOrClose.setText("Zavřít");
                 });
             }
         };
         new Thread(task).start();
+    }
+
+    private void hideProgress() {
+        progressIndicator.setVisible(false);
+        progressIndicator.setManaged(false);
     }
 
     @Override

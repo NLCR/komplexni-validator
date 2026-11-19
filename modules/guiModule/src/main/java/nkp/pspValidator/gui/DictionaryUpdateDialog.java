@@ -25,17 +25,17 @@ public class DictionaryUpdateDialog extends AbstractDialog {
 
     @Override
     public int getWidth() {
-        return 400;
+        return 560;
     }
 
     @Override
     public int getHeight() {
-        return 300;
+        return 340;
     }
 
     @Override
     public String getTitle() {
-        return "aktualizace slovníku";
+        return "Aktualizace slovníku";
     }
 
     @Override

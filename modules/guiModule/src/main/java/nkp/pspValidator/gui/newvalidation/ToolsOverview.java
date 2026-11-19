@@ -4,6 +4,8 @@ import nkp.pspValidator.shared.externalUtils.ExternalUtil;
 
 import java.io.File;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * Texty a rozhodnutí pro dialog Externí nástroje (tabulka nástrojů): celkový stav, souhrn v patičce, text stavu
@@ -13,6 +15,12 @@ public final class ToolsOverview {
 
     /** Nejdelší text stavu v řádku tabulky, delší se zkrátí (celý je v tooltipu). */
     public static final int MAX_STATUS_LENGTH = 30;
+
+    /**
+     * Číslo verze ve výpisu nástroje: aspoň dvě čísla oddělená tečkou, volitelně s „v“ na začátku a s číslem sestavení
+     * za pomlčkou („7.1.2-24“, „v8.0.5“, „1.20.1“); nesmí navazovat na písmeno, číslici ani tečku.
+     */
+    private static final Pattern VERSION_NUMBER = Pattern.compile("(?<![\\p{L}\\d.])v?(\\d+(?:\\.\\d+)+(?:-\\d+)?)");
 
     /** Celkový stav kontroly všech nástrojů. */
     public enum State {
@@ -57,22 +65,59 @@ public final class ToolsOverview {
             }
         }
         if (done < all) {
-            return "Kontroluji nástroje, hotovo " + done + " " + Summaries.fromPreposition(all) + " " + all + "…";
+            return "Zjišťuji dostupnost nástrojů, hotovo " + done + " " + Summaries.fromPreposition(all) + " " + all + "…";
         }
         return available + " " + Summaries.fromPreposition(all) + " " + all + " nástrojů dostupných";
     }
 
-    /** Text stavu do řádku tabulky, zkrácený na {@link #MAX_STATUS_LENGTH} znaků. */
-    public static String statusText(ToolStatus status) {
-        if (status.getState() == ToolStatus.State.CHECKING) {
-            return "kontroluji…";
+    /**
+     * Text stavu do řádku tabulky: u nalezeného nástroje název a číslo verze ({@link #shortVersion}), zkrácený na
+     * {@link #MAX_STATUS_LENGTH} znaků.
+     */
+    public static String statusText(ExternalUtil util, ToolStatus status) {
+        if (status.getState() == ToolStatus.State.FOUND && status.getVersion() != null && !status.getVersion().isEmpty()) {
+            return truncate("nalezen, " + shortVersion(util, status.getVersion()), MAX_STATUS_LENGTH);
         }
         return truncate(status.getText(), MAX_STATUS_LENGTH);
     }
 
+    /**
+     * Text stavu do úzké tabulky (Nastavení), kde je název nástroje v tomtéž řádku vlevo: u nalezeného nástroje jen
+     * číslo verze („nalezen, 7.1.2-24“), jinak jako {@link #statusText}.
+     */
+    public static String compactStatusText(ExternalUtil util, ToolStatus status) {
+        if (status.getState() == ToolStatus.State.FOUND && status.getVersion() != null) {
+            String number = versionNumber(status.getVersion());
+            if (number != null) {
+                return truncate("nalezen, " + number, MAX_STATUS_LENGTH);
+            }
+        }
+        return statusText(util, status);
+    }
+
+    /**
+     * Krátký tvar verze nástroje: název nástroje a první číslo verze z výpisu, např. „ImageMagick 7.1.2-24“
+     * z „ImageMagick 7.1.2-24 Q16-HDRI aarch64“ nebo „JHOVE 1.20.1“ z „Rel. 1.20.1“. Když výpis číslo verze
+     * neobsahuje, vrátí první řádek výpisu beze změny (zkrátí se pak jako ostatní texty).
+     */
+    public static String shortVersion(ExternalUtil util, String version) {
+        String number = versionNumber(version);
+        return number != null ? util.getUserFriendlyName() + " " + number : firstLine(version);
+    }
+
+    /** První číslo verze z prvního řádku výpisu nástroje (bez „v“ na začátku), nebo null. */
+    public static String versionNumber(String version) {
+        Matcher matcher = VERSION_NUMBER.matcher(firstLine(version));
+        return matcher.find() ? matcher.group(1) : null;
+    }
+
+    private static String firstLine(String text) {
+        return text.trim().split("\\R", 2)[0].trim();
+    }
+
     /** Celý text stavu do tooltipu: u nalezeného nástroje celá verze, u nedostupného i výstup kontroly. */
     public static String statusTooltip(ToolStatus status) {
-        String text = status.getState() == ToolStatus.State.CHECKING ? "kontroluji…" : status.getText();
+        String text = status.getText();
         if (status.getDetail() != null && !status.getDetail().isEmpty()) {
             return text + ": " + status.getDetail();
         }

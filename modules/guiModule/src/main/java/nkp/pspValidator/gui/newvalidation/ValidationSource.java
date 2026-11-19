@@ -34,6 +34,13 @@ public enum ValidationSource {
         return pathLabel;
     }
 
+    /** Podtitul dialogu Nová validace pro tento zdroj. */
+    public String getDialogSubtitle() {
+        return this == GROUP
+                ? "Po výběru adresáře se rozpozná typ a verze každého balíku v něm."
+                : "Po výběru balíku se rozpozná jeho typ a verze.";
+    }
+
     /** Klíč v config.properties s naposledy vybranou cestou (stejný jako u dřívějších dialogů). */
     public String getLastPathKey() {
         return lastPathKey;

@@ -28,6 +28,7 @@ import nkp.pspValidator.gui.group.GroupRun;
 import nkp.pspValidator.gui.group.PackageStatus;
 import nkp.pspValidator.gui.newvalidation.DmfParamsBuilder;
 import nkp.pspValidator.gui.newvalidation.DocumentTypes;
+import nkp.pspValidator.gui.newvalidation.ToolChecks;
 import nkp.pspValidator.gui.newvalidation.ValidationRequest;
 import nkp.pspValidator.gui.newvalidation.ValidationSource;
 import nkp.pspValidator.gui.newvalidation.ZipUnpacker;
@@ -85,7 +86,11 @@ public class MainController extends AbstractController implements ValidationStat
     private static final String URL_ONLINE_HELP = "https://github.com/NLCR/komplexni-validator/wiki";
 
     private static final String[] STATUS_DOT_CLASSES = {"status-dot-ok", "status-dot-error", "status-dot-none"};
+    /** manažer nástrojů, u kterého je zaregistrovaný posluchač dostupnosti pro prázdný stav */
+    private ExternalUtilManager toolsListenerManager;
     private static final String[] VERDICT_CLASSES = {"verdict-valid", "verdict-invalid", "verdict-none"};
+    /** barvy odznaků s počty v horní liště (viz ResultTexts.countBadgeClass) */
+    private static final String[] BADGE_COLOR_CLASSES = {"badge-error", "badge-warning", "badge-info", "badge-ok", ResultTexts.BADGE_ZERO};
 
     @FXML
     BorderPane container;
@@ -431,24 +436,38 @@ public class MainController extends AbstractController implements ValidationStat
             }
         }
         setTextOrHide(emptyFdmfInfo, fdmfs == 0 ? null : ResultTexts.fdmfCount(fdmfs));
-        Integer available = availableTools(data.getExternalUtilManager());
-        setTextOrHide(emptyToolsInfo, available == null ? null : ResultTexts.toolsAvailable(available, ExternalUtil.values().length));
+        ExternalUtilManager manager = data.getExternalUtilManager();
+        if (manager == null) {
+            setTextOrHide(emptyToolsInfo, null);
+            return;
+        }
+        if (toolsListenerManager != manager) {
+            //pocet se obnovi s kazdym vysledkem kontroly nastroju (dialog pri startu, Nastaveni)
+            toolsListenerManager = manager;
+            ToolChecks.addAvailabilityListener(manager, this::refreshEmptyStateInfo);
+        }
+        setTextOrHide(emptyToolsInfo, ResultTexts.toolsInfo(availableTools(manager), ExternalUtil.values().length));
     }
 
-    /** Počet dostupných nástrojů, null, když některý ještě nebyl zkontrolován. */
+    /**
+     * Spustí kontrolu dostupnosti nástrojů pro prázdný stav (jen SnapshotMode, který dialog nástrojů při startu
+     * přeskakuje); výsledek se ukáže přes posluchače dostupnosti.
+     */
+    void checkToolsForEmptyState() {
+        ExternalUtilManager manager = main.getValidationDataManager().getExternalUtilManager();
+        new ToolChecks(manager, "prazdny-stav-nastroj", (util, status) -> {
+        }).checkAll();
+    }
+
+    /** Počet dostupných nástrojů, null, když dostupnost některého ještě žádná kontrola nezjistila. */
     private static Integer availableTools(ExternalUtilManager manager) {
-        if (manager == null) {
-            return null;
-        }
         int available = 0;
         for (ExternalUtil util : ExternalUtil.values()) {
-            try {
-                if (manager.isUtilAvailable(util)) {
-                    available++;
-                }
-            } catch (NullPointerException e) {
-                //dostupnost nastroje se jeste nezjistovala
+            if (!ToolChecks.isChecked(manager, util)) {
                 return null;
+            }
+            if (manager.isUtilAvailable(util)) {
+                available++;
             }
         }
         return available;
@@ -769,6 +788,9 @@ public class MainController extends AbstractController implements ValidationStat
         errorsBadge.setText(content.getErrorsText());
         warningsBadge.setText(content.getWarningsText());
         infosBadge.setText(content.getInfosText());
+        setBadgeClass(errorsBadge, content.getErrorsStyleClass());
+        setBadgeClass(warningsBadge, content.getWarningsStyleClass());
+        setBadgeClass(infosBadge, content.getInfosStyleClass());
         setVisibleManaged(errorsBadge, counts);
         setVisibleManaged(warningsBadge, counts);
         setVisibleManaged(infosBadge, counts);
@@ -785,6 +807,12 @@ public class MainController extends AbstractController implements ValidationStat
         setVisibleManaged(xmlLogLink, finished && logXmlFile != null);
         setVisibleManaged(txtLogLink, finished && logTxtFile != null);
         setVisibleManaged(headerLinks, finished && (logXmlFile != null || logTxtFile != null));
+    }
+
+    /** Barva odznaku s počtem (třída úrovně, nebo šedá při nule), ostatní třídy odznaku zůstávají. */
+    private static void setBadgeClass(Label badge, String styleClass) {
+        badge.getStyleClass().removeAll(BADGE_COLOR_CLASSES);
+        badge.getStyleClass().add(styleClass);
     }
 
     /** Bublina u názvu balíku: odkud se validovalo. */
@@ -1799,6 +1827,8 @@ public class MainController extends AbstractController implements ValidationStat
         groupValidBadge.setText(groupRun.validText());
         groupInvalidBadge.setText(groupRun.invalidText());
         groupErrorBadge.setText(groupRun.errorText());
+        setBadgeClass(groupValidBadge, ResultTexts.countBadgeClass(groupRun.count(PackageStatus.VALID), "badge-ok"));
+        setBadgeClass(groupInvalidBadge, ResultTexts.countBadgeClass(groupRun.count(PackageStatus.INVALID), "badge-error"));
         setVisibleManaged(groupValidBadge, true);
         setVisibleManaged(groupInvalidBadge, true);
         setVisibleManaged(groupErrorBadge, groupRun.count(PackageStatus.ERROR) > 0);
