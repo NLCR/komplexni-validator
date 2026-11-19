@@ -280,6 +280,7 @@ public class ExternalUtilsCheckDialogController extends DialogController {
 
     //other data
     private boolean closeWhenFinished;
+    private boolean exitAppOnCloseWithError = true;
     private ExternalUtilsCheckDialogControllerStateManager stateManager = new ExternalUtilsCheckDialogControllerStateManager();
     private Map<ExternalUtil, UtilsUi> utilsUi = new HashMap<>();
 
@@ -289,8 +290,9 @@ public class ExternalUtilsCheckDialogController extends DialogController {
 
     }
 
-    public void setData(boolean closeWhenFinished, String mainButtonText) {
+    public void setData(boolean closeWhenFinished, String mainButtonText, boolean exitAppOnCloseWithError) {
         this.closeWhenFinished = closeWhenFinished;
+        this.exitAppOnCloseWithError = exitAppOnCloseWithError;
         btnContinue.setText(mainButtonText);
     }
 
@@ -303,7 +305,9 @@ public class ExternalUtilsCheckDialogController extends DialogController {
                     event.consume();
                     break;
                 case ERROR:
-                    closeApp();
+                    if (exitAppOnCloseWithError) {
+                        closeApp();
+                    }
                     break;
                 case FINISHED:
                     event.consume();

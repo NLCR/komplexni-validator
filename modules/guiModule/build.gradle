@@ -339,7 +339,9 @@ tasks.register('jpackage', Exec) {
 //build.gradle ends here
 
 //runSnapshots - otevre dialogy GUI a ulozi jejich snimky do PNG (kontrola vzhledu, viz SnapshotMode)
-//./gradlew :modules:guiModule:runSnapshots -PsnapshotDir=/tmp/snap [-Psnapshot=main,pspDir,pspZip] [-PsnapshotDelayMs=800]
+//./gradlew :modules:guiModule:runSnapshots -PsnapshotDir=/tmp/snap [-Psnapshot=main,mainMenu,newValidation] [-PsnapshotDelayMs=800]
+//  -PsnapshotPsp=<adresar nebo .zip> - predvyplnena cesta v dialogu Nova validace (vlastnost kv.snapshotPsp)
+//  -PsnapshotExpand=versions|tools|skipped - rozbalena sekce dialogu Nova validace (vlastnost kv.snapshotExpand)
 //  -PsnapshotConfigFile=<soubor> - soubor nastaveni (vlastnost kv.configFile) misto vychoziho config.properties v pracovnim
 //  adresari modulu, aby snimky nezahrnovaly osobni nastaveni; soubor nemusi existovat (vznikne s vychozimi hodnotami),
 //  ale pri spusteni z Gradle musi obsahovat aspon validatorConfig.dir=<adresar validatorConfig> (a nejlepe validation.log_dir),
@@ -357,6 +359,12 @@ tasks.register('runSnapshots', JavaExec) {
     }
     if (project.hasProperty('snapshotDelayMs')) {
         systemProperty 'kv.snapshotDelayMs', project.property('snapshotDelayMs')
+    }
+    if (project.hasProperty('snapshotPsp')) {
+        systemProperty 'kv.snapshotPsp', project.property('snapshotPsp')
+    }
+    if (project.hasProperty('snapshotExpand')) {
+        systemProperty 'kv.snapshotExpand', project.property('snapshotExpand')
     }
     if (project.hasProperty('maxDialogHeight')) { //simulace mensiho displeje
         systemProperty 'kv.maxDialogHeight', project.property('maxDialogHeight')

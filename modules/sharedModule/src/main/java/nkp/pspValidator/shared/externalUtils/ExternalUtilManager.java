@@ -30,11 +30,22 @@ public class ExternalUtilManager {
         }
     }
 
-    public void setUtilDisabled(ExternalUtil util) {
+    public synchronized void setUtilDisabled(ExternalUtil util) {
         utilsDisabled.add(util);
     }
 
-    public boolean isUtilDisabled(ExternalUtil util) {
+    /**
+     * Nahradi celou sadu vypnutych nastroju (GUI: vypnuti nastroje jen pro spoustenou validaci, kazde spusteni sadu
+     * nastavi znovu). Vypnuty nastroj validace hlasi stejne jako CLI s --disable-...: INFO "nástroj ... je vypnutý".
+     */
+    public synchronized void setUtilsDisabled(Set<ExternalUtil> utils) {
+        utilsDisabled.clear();
+        if (utils != null) {
+            utilsDisabled.addAll(utils);
+        }
+    }
+
+    public synchronized boolean isUtilDisabled(ExternalUtil util) {
         return utilsDisabled.contains(util);
     }
 

@@ -249,3 +249,163 @@
     -fx-background-color: -kv-ok-tint;
     -fx-text-fill: -kv-ok;
 }
+
+/* ===== obsah dialogu s posuvnikem (DialogFrame s tridou dialog-scrolling, uvnitr ScrollPane dialog-scroll) ===== */
+
+.dialog-scrolling > .dialog-content {
+    -fx-padding: 0;
+}
+
+.dialog-scroll,
+.dialog-scroll > .viewport {
+    -fx-background-color: transparent;
+}
+
+.dialog-scroll {
+    -fx-padding: 0;
+    -fx-background-insets: 0;
+    -fx-border-width: 0;
+}
+
+.dialog-scroll-content {
+    -fx-background-color: -kv-bg;
+    -fx-padding: 20 24 20 24;
+    -fx-spacing: 14;
+}
+
+/* ===== segmentovany prepinac (HBox s ToggleButton; prvni a posledni maji tridu segment-first, segment-last) ===== */
+
+.segmented .toggle-button {
+    -fx-background-color: -kv-surface;
+    -fx-background-radius: 0;
+    -fx-border-color: -kv-border-strong;
+    -fx-border-width: 1 0 1 1;
+    -fx-border-radius: 0;
+    -fx-padding: 6 16 6 16;
+    -fx-text-fill: -kv-text;
+    -fx-cursor: hand;
+}
+
+.segmented .toggle-button.segment-first {
+    -fx-background-radius: 5 0 0 5;
+    -fx-border-radius: 5 0 0 5;
+}
+
+.segmented .toggle-button.segment-last {
+    -fx-background-radius: 0 5 5 0;
+    -fx-border-radius: 0 5 5 0;
+    -fx-border-width: 1;
+}
+
+.segmented .toggle-button.segment-first.segment-last {
+    -fx-background-radius: 5;
+    -fx-border-radius: 5;
+}
+
+.segmented .toggle-button:hover {
+    -fx-background-color: -kv-table-header;
+}
+
+.segmented .toggle-button:selected {
+    -fx-background-color: -kv-primary;
+    -fx-border-color: -kv-primary;
+    -fx-text-fill: white;
+}
+
+/* ===== sbalitelne sekce (CollapsibleSection ve VBox collapsible-group) ===== */
+
+.collapsible-group {
+    -fx-background-color: -kv-surface;
+    -fx-border-color: -kv-border;
+    -fx-border-radius: 6;
+    -fx-background-radius: 6;
+}
+
+.collapsible-section {
+    -fx-border-color: -kv-border transparent transparent transparent;
+    -fx-border-width: 1 0 0 0;
+}
+
+.collapsible-section.section-first {
+    -fx-border-width: 0;
+}
+
+.collapsible-header {
+    -fx-padding: 10 16 10 16;
+    -fx-spacing: 10;
+    -fx-alignment: center-left;
+    -fx-cursor: hand;
+}
+
+.collapsible-title {
+    -fx-font-weight: bold;
+    -fx-text-fill: -kv-text;
+}
+
+.collapsible-body {
+    -fx-padding: 0 16 14 40;
+    -fx-spacing: 10;
+}
+
+.chevron {
+    -fx-shape: "M1.5,0 L7,5.5 L1.5,11 L0,9.5 L4,5.5 L0,1.5 Z";
+    -fx-background-color: -kv-text-muted;
+    -fx-min-width: 7;
+    -fx-min-height: 11;
+    -fx-pref-width: 7;
+    -fx-pref-height: 11;
+    -fx-max-width: 7;
+    -fx-max-height: 11;
+}
+
+.collapsible-section.expanded .chevron {
+    -fx-rotate: 90;
+}
+
+/* ===== seznam v ramecku (radky s tlacitkem) a mrizka nastroju ===== */
+
+.list-box {
+    -fx-background-color: -kv-surface;
+    -fx-border-color: -kv-border;
+    -fx-border-radius: 5;
+    -fx-background-radius: 5;
+}
+
+.list-row {
+    -fx-padding: 8 12 8 12;
+    -fx-spacing: 10;
+    -fx-alignment: center-left;
+    -fx-border-color: -kv-border transparent transparent transparent;
+    -fx-border-width: 1 0 0 0;
+}
+
+.list-row.row-first {
+    -fx-border-width: 0;
+}
+
+.list-row .button-secondary {
+    -fx-padding: 3 12 3 12;
+    -fx-font-size: 12px;
+}
+
+/* popisek skupiny radku v tabulce (napr. TISTENE DOKUMENTY) */
+.table-group-label {
+    -fx-font-size: 11px;
+    -fx-text-fill: -kv-text-muted;
+    -fx-padding: 6 0 0 0;
+}
+
+/* radek, ktery se v aktualni situaci nepouziva (nastroj pro jiny typ dokumentu) */
+.row-unused .label,
+.row-unused .check-box {
+    -fx-text-fill: -kv-none;
+}
+
+/* ===== upozorneni ===== */
+
+.notice-warning {
+    -fx-background-color: -kv-warning-tint;
+    -fx-background-radius: 5;
+    -fx-padding: 8 12 8 12;
+    -fx-text-fill: -kv-text;
+}

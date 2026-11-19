@@ -11,11 +11,21 @@ public class ExternalUtilsCheckDialog extends AbstractDialog {
 
     private final boolean closeWhenFinished;
     private final String mainButtonText;
+    private final boolean exitAppOnCloseWithError;
 
     public ExternalUtilsCheckDialog(Stage stage, Main main, boolean closeWhenFinished, String mainButtonText) {
+        this(stage, main, closeWhenFinished, mainButtonText, true);
+    }
+
+    /**
+     * @param exitAppOnCloseWithError zavření okna, když některý nástroj chybí, ukončí aplikaci (dosavadní chování);
+     *                                false pro otevření z jiného dialogu, kde se má okno jen zavřít
+     */
+    public ExternalUtilsCheckDialog(Stage stage, Main main, boolean closeWhenFinished, String mainButtonText, boolean exitAppOnCloseWithError) {
         super(stage, main);
         this.closeWhenFinished = closeWhenFinished;
         this.mainButtonText = mainButtonText;
+        this.exitAppOnCloseWithError = exitAppOnCloseWithError;
     }
 
     @Override
@@ -46,7 +56,7 @@ public class ExternalUtilsCheckDialog extends AbstractDialog {
 
     @Override
     public void setControllerData(DialogController controller) {
-        ((ExternalUtilsCheckDialogController) controller).setData(closeWhenFinished, mainButtonText);
+        ((ExternalUtilsCheckDialogController) controller).setData(closeWhenFinished, mainButtonText, exitAppOnCloseWithError);
     }
 
 }

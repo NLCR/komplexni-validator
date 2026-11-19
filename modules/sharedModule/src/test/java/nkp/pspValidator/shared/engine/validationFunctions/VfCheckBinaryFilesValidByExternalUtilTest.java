@@ -229,6 +229,31 @@ public class VfCheckBinaryFilesValidByExternalUtilTest {
     }
 
     @Test
+    public void utilsDisabledAsSetGiveSameInfoAsSingleDisable() throws Exception {
+        //GUI vypina nastroje pro jednu validaci pres setUtilsDisabled, hlaska musi byt stejna jako po --disable-... v CLI
+        CannedOutputExternalUtilManager manager = new CannedOutputExternalUtilManager().withOutput(ExternalUtil.KAKADU, "");
+        manager.setUtilsDisabled(EnumSet.of(ExternalUtil.KAKADU, ExternalUtil.JHOVE));
+        ValidationResult result = buildValidationFunction(engineWith(manager, ExternalUtil.KAKADU, ResourceType.IMAGE_MASTER_COPY, null),
+                ExternalUtil.KAKADU, ResourceType.IMAGE_MASTER_COPY, Collections.singletonList(new File("a.jp2"))).validate();
+        assertSingleProblem(result, Level.INFO, "nástroj Kakadu je vypnutý");
+    }
+
+    @Test
+    public void utilsDisabledSetIsReplacedNotAccumulated() throws Exception {
+        CannedOutputExternalUtilManager manager = new CannedOutputExternalUtilManager();
+        manager.setUtilsDisabled(EnumSet.of(ExternalUtil.KAKADU, ExternalUtil.JHOVE));
+        assertTrue(manager.isUtilDisabled(ExternalUtil.KAKADU));
+        assertTrue(manager.isUtilDisabled(ExternalUtil.JHOVE));
+        manager.setUtilsDisabled(EnumSet.of(ExternalUtil.JHOVE));
+        assertFalse(manager.isUtilDisabled(ExternalUtil.KAKADU));
+        assertTrue(manager.isUtilDisabled(ExternalUtil.JHOVE));
+        manager.setUtilsDisabled(null);
+        for (ExternalUtil util : ExternalUtil.values()) {
+            assertFalse(util.name(), manager.isUtilDisabled(util));
+        }
+    }
+
+    @Test
     public void utilNotAvailable() throws Exception {
         CannedOutputExternalUtilManager manager = new CannedOutputExternalUtilManager().withOutput(ExternalUtil.JHOVE, "");
         manager.setUtilAvailable(ExternalUtil.JHOVE, false);

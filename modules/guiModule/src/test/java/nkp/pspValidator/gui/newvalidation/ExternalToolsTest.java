@@ -1,0 +1,66 @@
+package nkp.pspValidator.gui.newvalidation;
+
+import nkp.pspValidator.gui.GuiTestSupport;
+import nkp.pspValidator.shared.Dmf;
+import nkp.pspValidator.shared.FdmfRegistry;
+import nkp.pspValidator.shared.externalUtils.ExternalUtil;
+import org.junit.Test;
+
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.EnumMap;
+import java.util.EnumSet;
+import java.util.Map;
+
+import static nkp.pspValidator.shared.externalUtils.ExternalUtil.*;
+import static org.junit.Assert.*;
+
+/**
+ * Externí nástroje v dialogu Nová validace: relevantní nástroje podle pravidel fDMF, výběr nástrojů k vypnutí pro
+ * jednu validaci a rozlišení „nenalezen“ / „chyba při spuštění“.
+ */
+public class ExternalToolsTest {
+
+    @Test
+    public void relevantToolsFromFdmfRules() throws Exception {
+        FdmfRegistry registry = GuiTestSupport.registry();
+        assertEquals(EnumSet.of(IMAGE_MAGICK, JHOVE, JPYLYZER, KAKADU), ExternalTools.relevantFor(registry, new Dmf(Dmf.Type.FUND_UNIT, "0.2")));
+        assertEquals(EnumSet.of(IMAGE_MAGICK, JHOVE, JPYLYZER, KAKADU), ExternalTools.relevantFor(registry, new Dmf(Dmf.Type.PERIODICAL, "1.4")));
+        assertEquals(EnumSet.of(VERAPDF, EPUBCHECK), ExternalTools.relevantFor(registry, new Dmf(Dmf.Type.EMONOGRAPH, "3.1")));
+        assertEquals(EnumSet.of(IMAGE_MAGICK, JHOVE, JPYLYZER, KAKADU, MP3VAL, SHNTOOL, CHECKMATE),
+                ExternalTools.relevantFor(registry, new Dmf(Dmf.Type.AUDIO_FONO, "1.0")));
+        assertNull(ExternalTools.relevantFor(registry, new Dmf(Dmf.Type.FUND_UNIT, "9.9")));
+        assertNull(ExternalTools.relevantFor(registry, null));
+    }
+
+    @Test
+    public void toDisableOnlyUncheckedNotUnavailable() {
+        Map<ExternalUtil, ToolStatus> statuses = new EnumMap<>(ExternalUtil.class);
+        statuses.put(JHOVE, ToolStatus.found("1.29"));
+        statuses.put(KAKADU, ToolStatus.error("x"));
+        statuses.put(JPYLYZER, ToolStatus.notFound("x"));
+        statuses.put(IMAGE_MAGICK, ToolStatus.checking());
+        assertEquals(EnumSet.of(JHOVE, IMAGE_MAGICK),
+                ExternalTools.toDisable(Arrays.asList(JHOVE, KAKADU, JPYLYZER, IMAGE_MAGICK), statuses));
+        assertTrue(ExternalTools.toDisable(Collections.<ExternalUtil>emptySet(), statuses).isEmpty());
+    }
+
+    @Test
+    public void failureClassification() {
+        assertEquals(ToolStatus.State.NOT_FOUND,
+                ExternalTools.classifyFailure("Cannot run program \"kdu_expand\": error=2, No such file or directory").getState());
+        ToolStatus error = ExternalTools.classifyFailure("prázdný výstup (návratový kód 1)");
+        assertEquals(ToolStatus.State.ERROR, error.getState());
+        assertEquals("chyba při spuštění", error.getText());
+        assertEquals("prázdný výstup (návratový kód 1)", error.getDetail());
+        assertEquals("nalezen, 1.29", ToolStatus.found("1.29").getText());
+        assertEquals("nenalezen", ToolStatus.notFound(null).getText());
+    }
+
+    @Test
+    public void everyToolHasDescription() {
+        for (ExternalUtil util : ExternalUtil.values()) {
+            assertFalse(util.name(), ExternalTools.description(util).isEmpty());
+        }
+    }
+}

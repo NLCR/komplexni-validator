@@ -163,12 +163,21 @@ public class Main extends Application {
         new SkippingConfigurationDialog(dialogStage, this).show();
     }
 
-    public void showNewPspDirValidationConfigurationDialog() {
-        new PspDirValidationConfigurationDialog(dialogStage, this).show();
+    public void showNewValidationDialog() {
+        new NewValidationDialog(dialogStage, this).show();
     }
 
-    public void showNewPspZipValidationConfigurationDialog() {
-        new PspZipValidationConfigurationDialog(dialogStage, this).show();
+    /**
+     * Dialog externích nástrojů otevřený z dialogu Nová validace (druhá úroveň oken). Zavření okna při chybějícím
+     * nástroji tady aplikaci neukončí, jen dialog zavře.
+     */
+    public void showExternalUtilsCheckDialogOverDialog() {
+        new ExternalUtilsCheckDialog(dialogStageLevel2, this, false, "OK", false).show();
+    }
+
+    /** Dialog přeskakování validací otevřený z dialogu Nová validace (druhá úroveň oken). */
+    public void showSkippingConfigurationDialogOverDialog() {
+        new SkippingConfigurationDialog(dialogStageLevel2, this).show();
     }
 
     public void showValidationResultSummaryDialog(ValidationResultSummary summary) {

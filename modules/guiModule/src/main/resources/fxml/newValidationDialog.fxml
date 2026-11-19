@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import nkp.pspValidator.gui.DialogFrame?>
+<!-- kostra dialogu Nová validace; přepínač zdroje, řádky verzí, nástrojů a přeskočených sekcí doplňuje kontroler -->
+<DialogFrame xmlns:fx="http://javafx.com/fxml"
+             fx:controller="nkp.pspValidator.gui.NewValidationDialogController"
+             fx:id="container"
+             title="Nová validace"
+             subtitle="Po výběru balíku se rozpozná jeho typ a verze."
+             footerNote="Průběh a výsledek se zobrazí v hlavním okně."
+>
+    <content>
+        <ScrollPane fx:id="scrollPane" fitToWidth="true" hbarPolicy="NEVER" styleClass="dialog-scroll" VBox.vgrow="ALWAYS">
+            <VBox fx:id="scrollContent" styleClass="dialog-scroll-content">
+
+                <GridPane hgap="16" vgap="12">
+                    <columnConstraints>
+                        <ColumnConstraints minWidth="130" prefWidth="130"/>
+                        <ColumnConstraints hgrow="ALWAYS"/>
+                        <ColumnConstraints/>
+                    </columnConstraints>
+                    <Label styleClass="group-label" text="Zdroj" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
+                    <HBox fx:id="sourceSwitch" styleClass="segmented" GridPane.rowIndex="0" GridPane.columnIndex="1" GridPane.columnSpan="2"/>
+
+                    <Label fx:id="pathLabel" styleClass="group-label" text="Adresář balíku" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
+                    <TextField fx:id="pathField" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
+                    <Button styleClass="button-secondary" text="Vybrat…" onAction="#selectPath" minWidth="-Infinity"
+                            GridPane.rowIndex="1" GridPane.columnIndex="2"/>
+                </GridPane>
+
+                <VBox styleClass="card">
+                    <HBox spacing="10" alignment="CENTER_LEFT">
+                        <Label fx:id="recognitionTitle" styleClass="text-bold" minWidth="-Infinity"/>
+                        <Label fx:id="recognitionBadge" styleClass="badge-info"/>
+                        <ProgressIndicator fx:id="recognitionProgress" prefWidth="16" prefHeight="16" maxWidth="16" maxHeight="16"/>
+                    </HBox>
+                    <Label fx:id="recognitionDetail" styleClass="text-muted" wrapText="true" minHeight="-Infinity"/>
+                </VBox>
+
+                <VBox fx:id="sectionsBox" styleClass="collapsible-group"/>
+
+                <HBox spacing="16" alignment="CENTER_LEFT">
+                    <Label styleClass="group-label" text="Výstupy" minWidth="130" prefWidth="130"/>
+                    <CheckBox fx:id="createXmlLog" text="Protokol v XML" minWidth="-Infinity"/>
+                    <CheckBox fx:id="createTxtLog" text="Textový log" minWidth="-Infinity"/>
+                    <ComboBox fx:id="verbosityComboBox" prefWidth="320"/>
+                </HBox>
+            </VBox>
+        </ScrollPane>
+    </content>
+
+    <footerButtons>
+        <Button styleClass="button-secondary" onAction="#closeDialog" text="Zavřít" minWidth="90" cancelButton="true"/>
+        <Button fx:id="validateButton" styleClass="button-primary" onAction="#validate" text="Validovat" minWidth="110" defaultButton="true"/>
+    </footerButtons>
+</DialogFrame>

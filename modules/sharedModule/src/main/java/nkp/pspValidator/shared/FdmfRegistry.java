@@ -3,11 +3,16 @@ package nkp.pspValidator.shared;
 import nkp.pspValidator.shared.engine.ConfigProcessor;
 import nkp.pspValidator.shared.engine.RulesSection;
 import nkp.pspValidator.shared.engine.exceptions.ValidatorConfigurationException;
+import nkp.pspValidator.shared.externalUtils.ExternalUtil;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.NodeList;
 
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.EnumMap;
+import java.util.EnumSet;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -253,6 +258,43 @@ public class FdmfRegistry {
             copy.add(section.copy());
         }
         return copy;
+    }
+
+    /**
+     * Externi nastroje, ktere pravidla fDMF pouzivaji (hodnoty parametru typu EXTERNAL_UTIL v konfiguracnich souborech,
+     * dnes jen u funkce checkBinaryFilesValidByExternalUtil), bez nacteni a validace cele konfigurace a bez stavby
+     * validatoru. Slouzi jen pro zobrazeni (GUI ukazuje, ktere nastroje se pro dany typ dokumentu pouziji); vysledek
+     * validace neovlivnuje. Komentare v XML se ignoruji, sekce a pravidla se nefiltruji podle atributu enabled.
+     */
+    public Set<ExternalUtil> getExternalUtilsUsed(Dmf dmf) throws UnknownFdmfException, ValidatorConfigurationException {
+        File fdmfDir = dmf.getVersion() == null ? null : fdmfDirsByTypeAndVersion.get(dmf.getType()).get(dmf.getVersion());
+        if (fdmfDir == null) {
+            throw new UnknownFdmfException(dmf);
+        }
+        Set<ExternalUtil> result = EnumSet.noneOf(ExternalUtil.class);
+        for (String configFileName : FdmfConfiguration.CONFIG_FILE_NAMES) {
+            File configFile = new File(fdmfDir, configFileName);
+            FileUtils.checkFileExistAndReadable(configFile);
+            Document doc;
+            try {
+                doc = XmlUtils.buildDocumentFromFile(configFile, false);
+            } catch (Exception e) {
+                throw new ValidatorConfigurationException("konfigurační soubor %s nelze načíst: %s", configFile.getAbsolutePath(), e.getMessage());
+            }
+            NodeList values = doc.getElementsByTagName("value");
+            for (int i = 0; i < values.getLength(); i++) {
+                Element value = (Element) values.item(i);
+                if ("EXTERNAL_UTIL".equals(value.getAttribute("type"))) {
+                    String utilName = value.getTextContent().trim();
+                    try {
+                        result.add(ExternalUtil.valueOf(utilName));
+                    } catch (IllegalArgumentException e) {
+                        throw new ValidatorConfigurationException("konfigurační soubor %s obsahuje neznámý externí nástroj '%s'", configFile.getAbsolutePath(), utilName);
+                    }
+                }
+            }
+        }
+        return result;
     }
 
     public FdmfConfiguration getFdmfConfig(Dmf dmf) throws UnknownFdmfException, ValidatorConfigurationException {

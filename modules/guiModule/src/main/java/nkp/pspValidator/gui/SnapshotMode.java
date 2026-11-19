@@ -2,10 +2,15 @@ package nkp.pspValidator.gui;
 
 import javafx.animation.PauseTransition;
 import javafx.application.Platform;
+import javafx.scene.Node;
 import javafx.scene.Scene;
+import javafx.scene.control.Menu;
+import javafx.scene.control.MenuBar;
 import javafx.scene.image.PixelReader;
 import javafx.scene.image.WritableImage;
+import javafx.stage.PopupWindow;
 import javafx.stage.Stage;
+import javafx.stage.Window;
 import javafx.util.Duration;
 import nkp.pspValidator.gui.skipping.SkippingConfigurationDialog;
 
@@ -26,9 +31,12 @@ import java.util.function.Supplier;
  * a bez oprávnění ke snímání obrazovky; stejný příkaz lze pustit lokálně i v CI.
  * <p>
  * Zapíná se systémovou vlastností {@code -Dkv.snapshotDir=<adresář>}. Výběr dialogů volitelně přes
- * {@code -Dkv.snapshot=main,pspDir,pspZip,skipping,externalUtils,about,dictionaries} (výchozí je vše),
+ * {@code -Dkv.snapshot=main,mainMenu,newValidation,skipping,externalUtils,about,dictionaries} (výchozí je vše),
  * prodleva před snímkem přes {@code -Dkv.snapshotDelayMs} (výchozí 800 ms, aby proběhl layout a asynchronní
- * inicializace dialogu).
+ * inicializace dialogu). {@code mainMenu} otevře v hlavním okně menu Validovat a uloží snímek jeho rozbalovací nabídky.
+ * <p>
+ * Dialog Nová validace lze otevřít s předvyplněnou cestou ({@code -Dkv.snapshotPsp=<adresář nebo soubor .zip>})
+ * a rozbalenou sekcí ({@code -Dkv.snapshotExpand=versions|tools|skipped}), aby šly nasnímat všechny stavy.
  * <p>
  * Soubor nastavení se výchozně čte z obvyklého umístění (při spuštění z Gradle je to {@code config.properties}
  * v pracovním adresáři modulu), takže snímky odrážejí osobní nastavení vývojáře. Pro snímky nad čistým nastavením
@@ -45,7 +53,9 @@ public class SnapshotMode {
     public static final String PROP_DIR = "kv.snapshotDir";
     public static final String PROP_DIALOGS = "kv.snapshot";
     public static final String PROP_DELAY_MS = "kv.snapshotDelayMs";
-    public static final String ALL_DIALOGS = "main,pspDir,pspZip,skipping,externalUtils,about,dictionaries";
+    public static final String PROP_PSP = "kv.snapshotPsp";
+    public static final String PROP_EXPAND = "kv.snapshotExpand";
+    public static final String ALL_DIALOGS = "main,mainMenu,newValidation,skipping,externalUtils,about,dictionaries";
 
     public static boolean isEnabled() {
         return System.getProperty(PROP_DIR) != null;
@@ -62,8 +72,9 @@ public class SnapshotMode {
 
         Map<String, Supplier<AbstractDialog>> dialogs = new LinkedHashMap<>();
         Stage dialogStage = main.getDialogStage();
-        dialogs.put("pspDir", () -> new PspDirValidationConfigurationDialog(dialogStage, main));
-        dialogs.put("pspZip", () -> new PspZipValidationConfigurationDialog(dialogStage, main));
+        String psp = System.getProperty(PROP_PSP);
+        NewValidationDialog.Expand expand = parseExpand(System.getProperty(PROP_EXPAND));
+        dialogs.put("newValidation", () -> new NewValidationDialog(dialogStage, main, psp, expand));
         dialogs.put("skipping", () -> new SkippingConfigurationDialog(dialogStage, main));
         dialogs.put("externalUtils", () -> new ExternalUtilsCheckDialog(dialogStage, main, false, "Pokračovat"));
         dialogs.put("about", () -> new AboutAppDialog(dialogStage, main));
@@ -71,6 +82,23 @@ public class SnapshotMode {
 
         System.out.println("SNAPSHOT MODE: dir=" + dir.getAbsolutePath() + ", dialogs=" + names + ", delay=" + delayMs + " ms");
         new Runner(main, dir, delayMs, names, dialogs).next();
+    }
+
+    private static NewValidationDialog.Expand parseExpand(String value) {
+        if (value == null || value.trim().isEmpty()) {
+            return null;
+        }
+        switch (value.trim()) {
+            case "versions":
+                return NewValidationDialog.Expand.VERSIONS;
+            case "tools":
+                return NewValidationDialog.Expand.TOOLS;
+            case "skipped":
+                return NewValidationDialog.Expand.SKIPPED;
+            default:
+                System.err.println("SNAPSHOT MODE: unknown " + PROP_EXPAND + " '" + value + "', known: versions,tools,skipped");
+                return null;
+        }
     }
 
     private static class Runner {
@@ -103,6 +131,24 @@ public class SnapshotMode {
                         save(stage.getScene(), name);
                         next();
                     });
+                } else if ("mainMenu".equals(name)) {
+                    Menu menu = findMenu(main.getPrimaryStage().getScene(), "Validovat");
+                    if (menu == null) {
+                        System.err.println("SNAPSHOT MODE: menu Validovat not found");
+                        failed = true;
+                        next();
+                        return;
+                    }
+                    menu.show();
+                    after(() -> {
+                        for (Window window : new ArrayList<>(Window.getWindows())) {
+                            if (window instanceof PopupWindow && window.isShowing() && window.getScene() != null) {
+                                save(window.getScene(), name);
+                            }
+                        }
+                        menu.hide();
+                        next();
+                    });
                 } else if (dialogs.containsKey(name)) {
                     AbstractDialog dialog = dialogs.get(name).get();
                     Stage stage = dialog.showNonBlocking();
@@ -122,6 +168,19 @@ public class SnapshotMode {
                 failed = true;
                 next();
             }
+        }
+
+        private static Menu findMenu(Scene scene, String text) {
+            for (Node node : scene.getRoot().lookupAll(".menu-bar")) {
+                if (node instanceof MenuBar) {
+                    for (Menu menu : ((MenuBar) node).getMenus()) {
+                        if (text.equals(menu.getText())) {
+                            return menu;
+                        }
+                    }
+                }
+            }
+            return null;
         }
 
         private void after(Runnable action) {
