@@ -1,0 +1,251 @@
+/*
+ * Spolecny zaklad vzhledu GUI (Modena je zaklad, prepisuje se jen to potrebne). Nacita se do sceny kazdeho dialogu
+ * (AbstractDialog) a do hlavniho okna (Main); vlastni CSS konkretniho okna ma prednost.
+ * Reference: https://docs.oracle.com/javase/8/javafx/api/javafx/scene/doc-files/cssref.html
+ *
+ * Barvy jsou pojmenovane ("looked-up colors") na .root, aby se daly sladit s webem na jednom miste.
+ * Samotne .root nic nemeni na vzhledu neprestavenych oken, styly se aplikuji jen pres nize uvedene tridy.
+ */
+.root {
+    -kv-primary: #1565c0;
+    -kv-primary-hover: #0d47a1;
+    -kv-primary-tint: #e3f0fc;
+    -kv-bg: #f4f4f4;
+    -kv-surface: #ffffff;
+    -kv-border: #d4d4d4;
+    -kv-border-strong: #a8a8a8;
+    -kv-table-header: #ececec;
+    -kv-text: #262626;
+    -kv-text-muted: #5c5c5c;
+    -kv-link: #0d47a1;
+    -kv-ok: #2e7d32;
+    -kv-ok-tint: #e3f2e4;
+    -kv-error: #c62828;
+    -kv-error-tint: #fbe4e4;
+    -kv-warning: #b26a00;
+    -kv-warning-tint: #fff1d6;
+    -kv-info: #1565c0;
+    -kv-info-tint: #e3f0fc;
+    -kv-none: #9e9e9e;
+}
+
+/* ===== kostra dialogu (viz DialogFrame) ===== */
+
+.dialog-root {
+    -fx-background-color: -kv-bg;
+    -fx-font-size: 13px;
+    -fx-text-fill: -kv-text;
+}
+
+.dialog-root .label,
+.dialog-root .text,
+.dialog-root .check-box,
+.dialog-root .radio-button {
+    -fx-text-fill: -kv-text;
+}
+
+.dialog-header {
+    -fx-background-color: -kv-surface;
+    -fx-border-color: transparent transparent -kv-border transparent;
+    -fx-border-width: 0 0 1 0;
+    -fx-padding: 18 24 16 24;
+    -fx-spacing: 16;
+    -fx-alignment: center-left;
+}
+
+.dialog-title {
+    -fx-font-size: 17px;
+    -fx-font-weight: bold;
+    -fx-text-fill: -kv-text;
+}
+
+.dialog-subtitle {
+    -fx-font-size: 13px;
+    -fx-text-fill: -kv-text-muted;
+}
+
+.dialog-content {
+    -fx-background-color: -kv-bg;
+    -fx-padding: 20 24 20 24;
+    -fx-spacing: 14;
+}
+
+.dialog-footer {
+    -fx-background-color: -kv-surface;
+    -fx-border-color: -kv-border transparent transparent transparent;
+    -fx-border-width: 1 0 0 0;
+    -fx-padding: 14 24 14 24;
+    -fx-spacing: 10;
+    -fx-alignment: center-right;
+}
+
+/* ===== tlacitka ===== */
+
+.button-primary,
+.button-secondary {
+    -fx-background-radius: 5;
+    -fx-border-radius: 5;
+    -fx-padding: 6 18 6 18;
+    -fx-font-size: 13px;
+    -fx-cursor: hand;
+}
+
+.button-primary {
+    -fx-background-color: -kv-primary;
+    -fx-border-color: -kv-primary;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+}
+
+.button-primary:hover,
+.button-primary:focused {
+    -fx-background-color: -kv-primary-hover;
+    -fx-border-color: -kv-primary-hover;
+}
+
+.button-primary:disabled {
+    -fx-opacity: 0.45;
+}
+
+.button-secondary {
+    -fx-background-color: -kv-surface;
+    -fx-border-color: -kv-border-strong;
+    -fx-text-fill: -kv-text;
+}
+
+.button-secondary:hover {
+    -fx-background-color: -kv-table-header;
+}
+
+.button-secondary:disabled {
+    -fx-opacity: 0.5;
+}
+
+/* ===== text ===== */
+
+.text-muted {
+    -fx-text-fill: -kv-text-muted;
+}
+
+.text-bold {
+    -fx-font-weight: bold;
+}
+
+.group-label {
+    -fx-font-weight: bold;
+    -fx-text-fill: -kv-text;
+}
+
+.link {
+    -fx-text-fill: -kv-link;
+    -fx-underline: true;
+    -fx-cursor: hand;
+    -fx-border-color: transparent;
+    -fx-padding: 0;
+}
+
+.link:hover {
+    -fx-text-fill: -kv-primary;
+}
+
+/* ===== tabulky ===== */
+
+/* radek zahlavi tabulky slozene z vlastnich uzlu (HBox, GridPane) */
+.table-header {
+    -fx-background-color: -kv-table-header;
+    -fx-border-color: transparent transparent -kv-border transparent;
+    -fx-padding: 6 10 6 10;
+    -fx-font-weight: bold;
+}
+
+.dialog-root .table-view {
+    -fx-background-color: -kv-surface;
+    -fx-border-color: -kv-border;
+    -fx-border-radius: 5;
+    -fx-background-radius: 5;
+}
+
+.dialog-root .table-view .column-header-background {
+    -fx-background-color: -kv-table-header;
+}
+
+.dialog-root .table-view .column-header,
+.dialog-root .table-view .filler {
+    -fx-background-color: -kv-table-header;
+    -fx-border-color: transparent -kv-border -kv-border transparent;
+    -fx-size: 30;
+}
+
+.dialog-root .table-view .column-header .label {
+    -fx-font-weight: bold;
+    -fx-text-fill: -kv-text;
+}
+
+/* ===== karta (bily box s rameckem) ===== */
+
+.card {
+    -fx-background-color: -kv-surface;
+    -fx-border-color: -kv-border;
+    -fx-border-radius: 6;
+    -fx-background-radius: 6;
+    -fx-padding: 14 16 14 16;
+    -fx-spacing: 6;
+}
+
+/* ===== stavove tecky (Region 10 x 10) ===== */
+
+.status-dot-ok,
+.status-dot-error,
+.status-dot-none {
+    -fx-min-width: 10;
+    -fx-min-height: 10;
+    -fx-pref-width: 10;
+    -fx-pref-height: 10;
+    -fx-max-width: 10;
+    -fx-max-height: 10;
+    -fx-background-radius: 5;
+}
+
+.status-dot-ok {
+    -fx-background-color: -kv-ok;
+}
+
+.status-dot-error {
+    -fx-background-color: -kv-error;
+}
+
+.status-dot-none {
+    -fx-background-color: -kv-none;
+}
+
+/* ===== stitky (Label) ===== */
+
+.badge-error,
+.badge-warning,
+.badge-info,
+.badge-ok {
+    -fx-background-radius: 10;
+    -fx-padding: 1 9 1 9;
+    -fx-font-size: 12px;
+    -fx-font-weight: bold;
+}
+
+.badge-error {
+    -fx-background-color: -kv-error-tint;
+    -fx-text-fill: -kv-error;
+}
+
+.badge-warning {
+    -fx-background-color: -kv-warning-tint;
+    -fx-text-fill: -kv-warning;
+}
+
+.badge-info {
+    -fx-background-color: -kv-info-tint;
+    -fx-text-fill: -kv-info;
+}
+
+.badge-ok {
+    -fx-background-color: -kv-ok-tint;
+    -fx-text-fill: -kv-ok;
+}

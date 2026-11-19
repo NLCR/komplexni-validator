@@ -22,6 +22,10 @@ public abstract class AbstractDialog {
         this.main = main;
     }
 
+    /** Společné styly všech oken (barvy, kostra dialogu, tlačítka); vlastní CSS dialogu má přednost. */
+    public static final String BASE_CSS = "/css/base.css";
+    static final String BASE_MAC_CSS = "/css/base-mac.css";
+
     public abstract URL getFxmlResource();
 
     public abstract int getWidth();
@@ -52,6 +56,21 @@ public abstract class AbstractDialog {
         return stage;
     }
 
+    /** Přidá společný base.css do scény (stylesheety uzlů v FXML mají přednost před stylesheety scény). */
+    static void addBaseStylesheet(Scene scene) {
+        URL css = AbstractDialog.class.getResource(BASE_CSS);
+        if (css != null) {
+            scene.getStylesheets().add(css.toExternalForm());
+        }
+        //na macOS JavaFX 17 nevykresli tucny rez systemoveho pisma, viz base-mac.css
+        if (System.getProperty("os.name", "").toLowerCase().contains("mac")) {
+            URL macCss = AbstractDialog.class.getResource(BASE_MAC_CSS);
+            if (macCss != null) {
+                scene.getStylesheets().add(macCss.toExternalForm());
+            }
+        }
+    }
+
     private void prepare() {
         try {
             // FIXME: 10.4.18 nefunguje, u vetsiny dialogu vraci isResizable() false, presto se daji zvetsovat
@@ -76,7 +95,9 @@ public abstract class AbstractDialog {
 
             FXMLLoader loader = new FXMLLoader(getFxmlResource());
             Parent root = (Parent) loader.load();
-            stage.setScene(new Scene(root));
+            Scene scene = new Scene(root);
+            addBaseStylesheet(scene);
+            stage.setScene(scene);
             DialogController controller = loader.getController();
             stage.setOnCloseRequest(controller.getOnCloseEventHandler());
             controller.setMain(main);

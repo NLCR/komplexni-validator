@@ -1,0 +1,19 @@
+/*
+ * Doplnek k base.css jen pro macOS (pridava ho AbstractDialog.addBaseStylesheet podle os.name).
+ * JavaFX 17 na novejsich macOS nevykresli tucny rez vychoziho systemoveho pisma: -fx-font-weight: bold se u nej
+ * tise ignoruje (Font.font("System", BOLD) vrati rez se stejnymi metrikami jako bezny). Tucne prvky proto na macOS
+ * pouzivaji Arial, ktery tucny rez ma. Na Windows a Linuxu tucny rez vychoziho pisma funguje a tento soubor se nenacita.
+ * Po prechodu na novejsi JavaFX overit, zda je doplnek jeste potreba.
+ */
+.dialog-title,
+.button-primary,
+.group-label,
+.table-header,
+.dialog-root .table-view .column-header .label,
+.badge-error,
+.badge-warning,
+.badge-info,
+.badge-ok,
+.text-bold {
+    -fx-font-family: "Arial";
+}

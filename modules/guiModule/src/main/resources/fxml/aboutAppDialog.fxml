@@ -2,58 +2,58 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
-<VBox xmlns:fx="http://javafx.com/fxml"
-      stylesheets="/css/aboutAppDialog.css"
-      fx:controller="nkp.pspValidator.gui.AboutAppDialogController"
-      fx:id="container"
-      minHeight="450"
-      minWidth="800"
-      alignment="CENTER_LEFT"
-      spacing="0"
+<?import nkp.pspValidator.gui.DialogFrame?>
+<DialogFrame xmlns:fx="http://javafx.com/fxml"
+             fx:controller="nkp.pspValidator.gui.AboutAppDialogController"
+             fx:id="container"
+             title="Komplexní validátor"
+             subtitle="Validace balíků podle standardu Definice metadatových formátů pro digitalizaci"
 >
+    <headerGraphic>
+        <ImageView fitWidth="64" fitHeight="64" preserveRatio="true" smooth="true">
+            <image>
+                <Image url="@/img/appIcon/appIcon.iconset/icon_128x128.png"/>
+            </image>
+        </ImageView>
+    </headerGraphic>
 
-    <padding>
-        <Insets bottom="10" left="10" right="10" top="20"/>
-    </padding>
-
-    <children>
-
-        <Text styleClass="title"
-              wrappingWidth="750"
-              text="Komplexní validátor byl vyvinut pro Národní Knihovnu České republiky. Nástroj je určený k validaci PSP balíků podle standardu Definice metadatových formátů pro digitalizaci."
+    <content>
+        <Label styleClass="text-muted" wrapText="true" minHeight="-Infinity"
+               text="Komplexní validátor byl vyvinut pro Národní knihovnu České republiky. Nástroj je určený k validaci balíků (PSP a dalších) podle standardu Definice metadatových formátů pro digitalizaci."
         />
         <GridPane alignment="CENTER" hgap="10" vgap="10">
             <padding>
-                <Insets bottom="30" left="10" right="10" top="20"/>
+                <Insets bottom="0" left="0" right="0" top="6"/>
             </padding>
 
 
-            <Label text="Standardy pro metadata"
+            <Label styleClass="group-label" text="Standardy pro metadata"
                    GridPane.rowIndex="0"
                    GridPane.columnIndex="0"
                    minWidth="150"
             />
-            <Hyperlink text="http://www.ndk.cz/standardy-digitalizace/metadata"
+            <Hyperlink styleClass="link" text="http://www.ndk.cz/standardy-digitalizace/metadata"
                        GridPane.rowIndex="0"
                        GridPane.columnIndex="2"
                        GridPane.hgrow="ALWAYS"
                        onAction="#openHyperlink"
             />
 
-            <Label text="Web projektu"
+            <Label styleClass="group-label" text="Web projektu"
                    GridPane.rowIndex="1"
                    GridPane.columnIndex="0"
             />
-            <Hyperlink text="https://github.com/NLCR/komplexni-validator"
+            <Hyperlink styleClass="link" text="https://github.com/NLCR/komplexni-validator"
                        GridPane.rowIndex="1"
                        GridPane.columnIndex="2"
                        GridPane.hgrow="ALWAYS"
                        onAction="#openHyperlink"
             />
 
-            <Label text="Verze programu"
+            <Label styleClass="group-label" text="Verze programu"
                    GridPane.rowIndex="2"
                    GridPane.columnIndex="0"
             />
@@ -64,7 +64,7 @@
                   text="1.0"
             />
 
-            <Label text="Datum sestavení"
+            <Label styleClass="group-label" text="Datum sestavení"
                    GridPane.rowIndex="3"
                    GridPane.columnIndex="0"
             />
@@ -75,7 +75,7 @@
                   fx:id="buildDateText"
             />
 
-            <Label text="Konfigurační soubory"
+            <Label styleClass="group-label" text="Konfigurační soubory"
                    GridPane.rowIndex="4"
                    GridPane.columnIndex="0"
             />
@@ -87,6 +87,7 @@
                   wrappingWidth="400"
             />
             <Button
+                    styleClass="button-secondary"
                     text="Otevřít"
                     GridPane.rowIndex="4"
                     GridPane.columnIndex="3"
@@ -95,7 +96,7 @@
                     minWidth="65"
             />
 
-            <Label text="Adresář s logy"
+            <Label styleClass="group-label" text="Adresář s logy"
                    GridPane.rowIndex="5"
                    GridPane.columnIndex="0"
             />
@@ -108,6 +109,7 @@
             />
 
             <Button
+                    styleClass="button-secondary"
                     text="Otevřít"
                     GridPane.rowIndex="5"
                     GridPane.columnIndex="3"
@@ -117,6 +119,7 @@
             />
 
             <Button
+                    styleClass="button-secondary"
                     text="Změnit"
                     GridPane.rowIndex="5"
                     GridPane.columnIndex="4"
@@ -125,7 +128,7 @@
                     minWidth="65"
             />
 
-            <Label text="Vývojářský mód"
+            <Label styleClass="group-label" text="Vývojářský mód"
                    fx:id="devModeLabel"
                    GridPane.rowIndex="6"
                    GridPane.columnIndex="0"
@@ -138,13 +141,9 @@
             />
 
         </GridPane>
+    </content>
 
-        <HBox alignment="CENTER" spacing="10">
-            <padding>
-                <Insets bottom="5" left="10" right="10" top="5"/>
-            </padding>
-            <Button onAction="#closeDialog" text="OK" minWidth="100"/>
-        </HBox>
-
-    </children>
-</VBox>
+    <footerButtons>
+        <Button styleClass="button-primary" onAction="#closeDialog" text="OK" minWidth="100" defaultButton="true"/>
+    </footerButtons>
+</DialogFrame>

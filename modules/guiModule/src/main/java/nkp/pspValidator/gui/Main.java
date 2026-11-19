@@ -96,7 +96,9 @@ public class Main extends Application {
 
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/main.fxml"));
             Parent root = (Parent) loader.load();
-            primaryStage.setScene(new Scene(root));
+            Scene scene = new Scene(root);
+            AbstractDialog.addBaseStylesheet(scene);
+            primaryStage.setScene(scene);
             primaryStage.show();
 
             MainController controller = loader.getController();

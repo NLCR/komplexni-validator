@@ -19,6 +19,12 @@ public class ConfigurationManager {
     public static boolean DEV_MODE = false;
     public static boolean DEV_MODE_ONLY_SELECTED_SECTIONS = false;
 
+    /**
+     * Volitelná systémová vlastnost s cestou k souboru nastavení, který se použije místo výchozího umístění
+     * (například pro snímky dialogů nad čistým nastavením, viz SnapshotMode). Soubor ani jeho adresář nemusí existovat.
+     */
+    public static final String PROP_CONFIG_FILE = "kv.configFile";
+
     private static final String DEFAULT_LOG_DIR = "logs";
     private static final String VALIDATOR_CONFIG_DIR_NAME = "validatorConfig";
     private static final String USER_DATA_DIR_NAME = "KomplexniValidator";
@@ -195,6 +201,14 @@ public class ConfigurationManager {
     }
 
     private File selectConfigFile() {
+        String override = System.getProperty(PROP_CONFIG_FILE);
+        if (override != null && !override.trim().isEmpty()) {
+            File file = new File(override).getAbsoluteFile();
+            if (file.getParentFile() != null) {
+                file.getParentFile().mkdirs();
+            }
+            return file;
+        }
         if (DEV_MODE) {
             OperatingSystem os = platform.getOperatingSystem();
             if (os == null) {

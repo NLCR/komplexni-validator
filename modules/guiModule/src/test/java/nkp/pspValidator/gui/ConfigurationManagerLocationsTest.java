@@ -228,6 +228,25 @@ public class ConfigurationManagerLocationsTest {
         assertEquals(custom, manager.getFileOrNull(ConfigurationManager.PROP_VALIDATOR_CONFIG_DIR));
     }
 
+    @Test
+    public void configFileFromSystemProperty() throws IOException {
+        File jarDir = appJarDir("KomplexniValidator/app");
+        Locations loc = Locations.resolve(OperatingSystem.WINDOWS, true, jarDir, home, null, null, cwd);
+        Platform win = new Platform(OperatingSystem.WINDOWS, null, "Windows 11", "amd64");
+        File custom = new File(tmp.getRoot(), "clean/sub/config.properties");
+        String orig = System.getProperty(ConfigurationManager.PROP_CONFIG_FILE);
+        try {
+            System.setProperty(ConfigurationManager.PROP_CONFIG_FILE, custom.getPath());
+            ConfigurationManager manager = new ConfigurationManager(win, loc);
+            manager.setString("last.psp.dir", "/x");
+            assertTrue("soubor vznikl na zadané cestě", custom.isFile());
+            assertFalse("výchozí umístění se nepoužilo", new File(loc.userDataDir, "config.properties").exists());
+            assertEquals(loc.defaultValidatorConfigDir.getCanonicalFile(), manager.getFileOrNull(ConfigurationManager.PROP_VALIDATOR_CONFIG_DIR));
+        } finally {
+            restore(ConfigurationManager.PROP_CONFIG_FILE, orig);
+        }
+    }
+
     private static void writeValidatorConfigDir(File configFile, File dir) throws IOException {
         Properties props = new Properties();
         props.setProperty(ConfigurationManager.PROP_VALIDATOR_CONFIG_DIR, dir.getAbsolutePath());

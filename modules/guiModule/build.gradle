@@ -340,6 +340,10 @@ tasks.register('jpackage', Exec) {
 
 //runSnapshots - otevre dialogy GUI a ulozi jejich snimky do PNG (kontrola vzhledu, viz SnapshotMode)
 //./gradlew :modules:guiModule:runSnapshots -PsnapshotDir=/tmp/snap [-Psnapshot=main,pspDir,pspZip] [-PsnapshotDelayMs=800]
+//  -PsnapshotConfigFile=<soubor> - soubor nastaveni (vlastnost kv.configFile) misto vychoziho config.properties v pracovnim
+//  adresari modulu, aby snimky nezahrnovaly osobni nastaveni; soubor nemusi existovat (vznikne s vychozimi hodnotami),
+//  ale pri spusteni z Gradle musi obsahovat aspon validatorConfig.dir=<adresar validatorConfig> (a nejlepe validation.log_dir),
+//  jinak snimkovani uvizne v dialogu inicializace validacnich dat
 tasks.register('runSnapshots', JavaExec) {
     classpath = sourceSets.main.runtimeClasspath
     mainClass.set('nkp.pspValidator.gui.Launcher')
@@ -347,6 +351,9 @@ tasks.register('runSnapshots', JavaExec) {
     systemProperty 'kv.snapshotDir', dir
     if (project.hasProperty('snapshot')) {
         systemProperty 'kv.snapshot', project.property('snapshot')
+    }
+    if (project.hasProperty('snapshotConfigFile')) {
+        systemProperty 'kv.configFile', project.property('snapshotConfigFile')
     }
     if (project.hasProperty('snapshotDelayMs')) {
         systemProperty 'kv.snapshotDelayMs', project.property('snapshotDelayMs')
