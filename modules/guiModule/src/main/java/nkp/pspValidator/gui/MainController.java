@@ -37,6 +37,7 @@ import nkp.pspValidator.gui.results.RerunState;
 import nkp.pspValidator.gui.results.ResultHeader;
 import nkp.pspValidator.gui.results.ResultTexts;
 import nkp.pspValidator.gui.results.ValidationProgress;
+import nkp.pspValidator.gui.settings.SettingsTab;
 import nkp.pspValidator.gui.validation.*;
 import nkp.pspValidator.shared.*;
 import nkp.pspValidator.shared.engine.Level;
@@ -2029,13 +2030,14 @@ public class MainController extends AbstractController implements ValidationStat
 
     // ===== dialogy =====
 
-    public void showExternalUtilsCheckDialog(ActionEvent actionEvent) {
-        //zavreni krizkem tu aplikaci neukonci ani pri chybejicim nastroji
-        main.showExternalUtilsCheckDialog(false, "Zavřít", false);
+    /** Menu Nastavení → Nastavení… */
+    public void showSettings(ActionEvent actionEvent) {
+        main.showSettingsDialog(null);
     }
 
-    public void showSkippingConfigurationDialog(ActionEvent actionEvent) {
-        main.showSkippingConfigurationDialog();
+    /** Odkaz „Zkontrolovat nástroje“ v prázdném stavu: Nastavení na záložce Externí nástroje. */
+    public void showSettingsTools(ActionEvent actionEvent) {
+        main.showSettingsDialog(SettingsTab.TOOLS);
     }
 
     public void showAboutAppDialog(ActionEvent actionEvent) {
@@ -2044,10 +2046,6 @@ public class MainController extends AbstractController implements ValidationStat
 
     public void showNewValidationDialog(ActionEvent actionEvent) {
         main.showNewValidationDialog();
-    }
-
-    public void showDictionariesConfigurationDialog(ActionEvent actionEvent) {
-        main.showDictionariesConfigurationDialog();
     }
 
     // ===== odkazy =====

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import nkp.pspValidator.gui.DialogFrame?>
+<!-- kostra okna Nastavení: seznam záložek vlevo a obsah záložky vpravo (obojí doplňuje kontroler), v patičce
+     poznámka o neuložených změnách a tlačítka -->
+<DialogFrame xmlns:fx="http://javafx.com/fxml"
+             fx:controller="nkp.pspValidator.gui.SettingsDialogController"
+             fx:id="container"
+             title="Nastavení"
+>
+    <content>
+        <HBox styleClass="settings-body" VBox.vgrow="ALWAYS">
+            <VBox fx:id="nav" styleClass="settings-nav" minWidth="190" prefWidth="190" maxWidth="190"/>
+            <StackPane fx:id="pageHolder" styleClass="settings-page" HBox.hgrow="ALWAYS" minWidth="0"/>
+        </HBox>
+    </content>
+
+    <footerButtons>
+        <Button fx:id="cancelButton" styleClass="button-secondary" onAction="#cancel" text="Zavřít" minWidth="90" cancelButton="true"/>
+        <Button fx:id="saveButton" styleClass="button-primary" onAction="#save" text="Uložit" minWidth="90" disable="true"/>
+    </footerButtons>
+</DialogFrame>

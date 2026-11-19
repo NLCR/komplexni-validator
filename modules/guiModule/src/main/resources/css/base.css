@@ -434,6 +434,62 @@
     -fx-text-fill: -kv-text;
 }
 
+/* ===== okno Nastaveni (settingsDialog.fxml, DialogFrame s tridou settings-frame) ===== */
+
+.settings-frame > .dialog-content {
+    -fx-padding: 0;
+}
+
+/* seznam zalozek vlevo */
+.settings-nav {
+    -fx-background-color: -kv-surface;
+    -fx-border-color: transparent -kv-border transparent transparent;
+    -fx-border-width: 0 1 0 0;
+    -fx-padding: 8 0 8 0;
+}
+
+.settings-nav-item {
+    -fx-padding: 8 16 8 16;
+    -fx-font-size: 14px;
+    -fx-cursor: hand;
+}
+
+.settings-nav-item:hover {
+    -fx-background-color: -kv-table-header;
+}
+
+/* s .dialog-root, jinak prebije barvu pravidlo .dialog-root .label (vyssi specificita) */
+.settings-nav-item-selected,
+.settings-nav-item-selected:hover,
+.dialog-root .settings-nav-item-selected {
+    -fx-background-color: -kv-primary-tint;
+    -fx-text-fill: -kv-primary;
+    -fx-font-weight: bold;
+}
+
+/* obsah zalozky (uvnitr ScrollPane dialog-scroll) */
+.settings-page-content {
+    -fx-background-color: -kv-bg;
+    -fx-padding: 18 20 18 20;
+    -fx-spacing: 14;
+}
+
+/* bunky tabulky vychozich verzi */
+.settings-cell {
+    -fx-padding: 0 0 0 12;
+}
+
+.settings-group-label {
+    -fx-padding: 8 0 2 12;
+}
+
+/* upozorneni u radku (ulozena verze neni k dispozici apod.) */
+.settings-note,
+.dialog-root .settings-note {
+    -fx-text-fill: -kv-warning;
+    -fx-font-size: 12px;
+}
+
 /* ===== hlavni okno (main.fxml, koren main-root; neni DialogFrame, barvy stejne jako dialogy) ===== */
 
 .main-root {

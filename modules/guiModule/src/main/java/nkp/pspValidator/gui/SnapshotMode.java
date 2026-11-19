@@ -17,7 +17,10 @@ import nkp.pspValidator.gui.newvalidation.OutputSettings;
 import nkp.pspValidator.gui.newvalidation.ValidationRequest;
 import nkp.pspValidator.gui.newvalidation.ValidationSource;
 import nkp.pspValidator.gui.newvalidation.VersionSettings;
-import nkp.pspValidator.gui.skipping.SkippingConfigurationDialog;
+import nkp.pspValidator.gui.newvalidation.DmfParamsBuilder;
+import nkp.pspValidator.gui.settings.SettingsTab;
+import nkp.pspValidator.shared.Dmf;
+import nkp.pspValidator.shared.DmfDetector;
 import nkp.pspValidator.shared.FdmfRegistry;
 import nkp.pspValidator.shared.engine.Level;
 import nkp.pspValidator.shared.engine.Rule;
@@ -49,9 +52,17 @@ import java.util.function.Supplier;
  * a bez oprávnění ke snímání obrazovky; stejný příkaz lze pustit lokálně i v CI.
  * <p>
  * Zapíná se systémovou vlastností {@code -Dkv.snapshotDir=<adresář>}. Výběr dialogů volitelně přes
- * {@code -Dkv.snapshot=main,mainMenu,newValidation,skipping,externalUtils,about,dictionaries} (výchozí je vše),
+ * {@code -Dkv.snapshot=main,mainMenu,settingsMenu,newValidation,settings,externalUtils,about} (výchozí je vše),
  * prodleva před snímkem přes {@code -Dkv.snapshotDelayMs} (výchozí 800 ms, aby proběhl layout a asynchronní
- * inicializace dialogu). {@code mainMenu} otevře v hlavním okně menu Validovat a uloží snímek jeho rozbalovací nabídky.
+ * inicializace dialogu). {@code mainMenu} otevře v hlavním okně menu Validovat a uloží snímek jeho rozbalovací nabídky,
+ * {@code settingsMenu} totéž pro menu Nastavení.
+ * <p>
+ * Okno Nastavení (krok {@code settings}): záložky podle {@code -Dkv.snapshotTab=versions,tools,skipping,dictionaries,dirs}
+ * (výchozí všechny), pro každou snímek {@code settings-<záložka>.png}. Krok {@code settingsSave} ověří propsání výchozí
+ * verze: vypíše {@code DmfDetector.Params} z uloženého nastavení, v záložce Výchozí verze DMF vybere verzi podle
+ * {@code -Dkv.snapshotDefaultVersion=<TYP>:<verze>} (typ jako {@code Dmf.Type}, verze {@code default} = výchozí
+ * validátoru; výchozí {@code MONOGRAPH:1.4}) jako uživatel ({@code settings-changed.png}), uloží ji tlačítkem Uložit,
+ * vypíše {@code DmfDetector.Params} znovu, okno otevře znovu a uloží {@code settings-reopened.png}.
  * <p>
  * Dialog Nová validace lze otevřít s předvyplněnou cestou ({@code -Dkv.snapshotPsp=<adresář nebo soubor .zip>})
  * a rozbalenou sekcí ({@code -Dkv.snapshotExpand=versions|tools|skipped}), aby šly nasnímat všechny stavy.
@@ -115,8 +126,10 @@ public class SnapshotMode {
     public static final String PROP_PROGRESS_END = "kv.snapshotProgressEnd";
     public static final String PROP_SOURCE = "kv.snapshotSource";
     public static final String PROP_CSV = "kv.snapshotCsv";
+    public static final String PROP_TAB = "kv.snapshotTab";
+    public static final String PROP_DEFAULT_VERSION = "kv.snapshotDefaultVersion";
     private static final long VALIDATION_TIMEOUT_MS = 10 * 60 * 1000;
-    public static final String ALL_DIALOGS = "main,mainMenu,newValidation,skipping,externalUtils,about,dictionaries";
+    public static final String ALL_DIALOGS = "main,mainMenu,settingsMenu,newValidation,settings,externalUtils,about";
 
     public static boolean isEnabled() {
         return System.getProperty(PROP_DIR) != null;
@@ -136,10 +149,8 @@ public class SnapshotMode {
         String psp = System.getProperty(PROP_PSP);
         NewValidationDialog.Expand expand = parseExpand(System.getProperty(PROP_EXPAND));
         dialogs.put("newValidation", () -> new NewValidationDialog(dialogStage, main, psp, expand, parseSource()));
-        dialogs.put("skipping", () -> new SkippingConfigurationDialog(dialogStage, main));
         dialogs.put("externalUtils", () -> new ExternalUtilsCheckDialog(dialogStage, main, false, "Pokračovat", true));
         dialogs.put("about", () -> new AboutAppDialog(dialogStage, main));
-        dialogs.put("dictionaries", () -> new DictionariesConfigurationDialog(dialogStage, main));
 
         System.out.println("SNAPSHOT MODE: dir=" + dir.getAbsolutePath() + ", dialogs=" + names + ", delay=" + delayMs + " ms");
         new Runner(main, dir, delayMs, names, dialogs).next();
@@ -229,6 +240,12 @@ public class SnapshotMode {
                         menu.hide();
                         next();
                     });
+                } else if ("settingsMenu".equals(name)) {
+                    saveMenu("Nastavení", name, this::next);
+                } else if ("settings".equals(name)) {
+                    settings();
+                } else if ("settingsSave".equals(name)) {
+                    settingsSave();
                 } else if ("results".equals(name)) {
                     runValidation(name);
                 } else if ("rerun".equals(name)) {
@@ -271,7 +288,7 @@ public class SnapshotMode {
                         next();
                     });
                 } else {
-                    System.err.println("SNAPSHOT MODE: unknown dialog '" + name + "', known: main,mainMenu,results,rerun,progress,stress,filtered,small,group,groupRerunOne,groupCancel," + String.join(",", dialogs.keySet()));
+                    System.err.println("SNAPSHOT MODE: unknown dialog '" + name + "', known: main,mainMenu,settingsMenu,settings,settingsSave,results,rerun,progress,stress,filtered,small,group,groupRerunOne,groupCancel," + String.join(",", dialogs.keySet()));
                     failed = true;
                     next();
                 }
@@ -427,6 +444,106 @@ public class SnapshotMode {
                 }
             });
             pause.play();
+        }
+
+        // ===== nastaveni =====
+
+        /** Okno Nastavení, snímek každé záložky z {@code kv.snapshotTab} (výchozí všechny). */
+        private void settings() {
+            List<SettingsTab> tabs = new ArrayList<>();
+            String value = System.getProperty(PROP_TAB, "");
+            if (value.trim().isEmpty()) {
+                tabs.addAll(Arrays.asList(SettingsTab.values()));
+            } else {
+                for (String key : value.split("\\s*,\\s*")) {
+                    SettingsTab tab = SettingsTab.fromKey(key);
+                    if (tab == null) {
+                        System.err.println("SNAPSHOT MODE: unknown " + PROP_TAB + " '" + key + "', known: versions,tools,skipping,dictionaries,dirs");
+                        failed = true;
+                    } else {
+                        tabs.add(tab);
+                    }
+                }
+            }
+            if (tabs.isEmpty()) {
+                next();
+                return;
+            }
+            SettingsDialog dialog = new SettingsDialog(main.getDialogStage(), main, tabs.get(0), null);
+            Stage stage = dialog.showNonBlocking();
+            SettingsDialogController controller = (SettingsDialogController) dialog.getController();
+            settingsTabs(stage, controller, tabs, 0);
+        }
+
+        private void settingsTabs(Stage stage, SettingsDialogController controller, List<SettingsTab> tabs, int index) {
+            if (index >= tabs.size()) {
+                stage.close();
+                next();
+                return;
+            }
+            SettingsTab tab = tabs.get(index);
+            controller.showTab(tab);
+            after(() -> {
+                save(stage.getScene(), "settings-" + tab.getKey());
+                settingsTabs(stage, controller, tabs, index + 1);
+            });
+        }
+
+        /** Změna výchozí verze v Nastavení jako uživatel, uložení a výpis parametrů, které by se předaly validaci. */
+        private void settingsSave() {
+            String value = System.getProperty(PROP_DEFAULT_VERSION, "MONOGRAPH:1.4").trim();
+            int colon = value.indexOf(':');
+            Dmf.Type type;
+            String version;
+            try {
+                type = Dmf.Type.valueOf(value.substring(0, colon).trim());
+                version = value.substring(colon + 1).trim();
+            } catch (RuntimeException e) {
+                System.err.println("SNAPSHOT MODE: bad " + PROP_DEFAULT_VERSION + " '" + value + "', expected <TYPE>:<version|default>");
+                failed = true;
+                next();
+                return;
+            }
+            String selected = "default".equals(version) ? null : version;
+            System.out.println("SNAPSHOT MODE: params before: " + describeParams());
+            SettingsDialog dialog = new SettingsDialog(main.getDialogStage(), main, SettingsTab.VERSIONS, null);
+            Stage stage = dialog.showNonBlocking();
+            SettingsDialogController controller = (SettingsDialogController) dialog.getController();
+            if (!controller.selectDefaultVersionForSnapshot(type, selected)) {
+                System.err.println("SNAPSHOT MODE: version '" + version + "' not offered for " + type);
+                failed = true;
+            }
+            after(() -> {
+                save(stage.getScene(), "settings-changed");
+                controller.saveForSnapshot();
+                System.out.println("SNAPSHOT MODE: params after save: " + describeParams());
+                SettingsDialog reopened = new SettingsDialog(main.getDialogStage(), main, SettingsTab.VERSIONS, null);
+                Stage reopenedStage = reopened.showNonBlocking();
+                after(() -> {
+                    save(reopenedStage.getScene(), "settings-reopened");
+                    reopenedStage.close();
+                    next();
+                });
+            });
+        }
+
+        /** Vynucené a preferované verze, které by dialog Nová validace předal validaci (jen nenulové). */
+        private String describeParams() {
+            ConfigurationManager config = main.getConfigurationManager();
+            FdmfRegistry registry = main.getValidationDataManager().getFdmfRegistry();
+            DmfDetector.Params params = DmfParamsBuilder.build(new VersionSettings(config, registry));
+            StringBuilder text = new StringBuilder();
+            try {
+                for (java.lang.reflect.Field field : DmfDetector.Params.class.getFields()) {
+                    Object fieldValue = field.get(params);
+                    if (fieldValue != null && !java.lang.reflect.Modifier.isStatic(field.getModifiers())) {
+                        text.append(text.length() == 0 ? "" : ", ").append(field.getName()).append('=').append(fieldValue);
+                    }
+                }
+            } catch (IllegalAccessException e) {
+                return e.toString();
+            }
+            return text.length() == 0 ? "(nic nevynuceno ani preferováno)" : text.toString();
         }
 
         /** Rozbalí menu hlavního okna, uloží snímek nabídky a menu zavře. */

@@ -26,6 +26,7 @@
 .group-table .column-header .label,
 .status-badge,
 .badge-muted,
-.package-title {
+.package-title,
+.settings-nav-item-selected {
     -fx-font-family: "Arial";
 }

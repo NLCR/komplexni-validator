@@ -16,6 +16,8 @@ public abstract class AbstractDialog {
 
     final Stage stage;
     final Main main;
+    /** kontroler naposledy otevřeného dialogu (pro SnapshotMode) */
+    private DialogController controller;
 
     public AbstractDialog(Stage stage, Main main) {
         this.stage = stage;
@@ -54,6 +56,11 @@ public abstract class AbstractDialog {
             stage.show();
         }
         return stage;
+    }
+
+    /** Kontroler dialogu po {@link #show()} nebo {@link #showNonBlocking()}, jinak null. */
+    DialogController getController() {
+        return controller;
     }
 
     /** Přidá společný base.css do scény (stylesheety uzlů v FXML mají přednost před stylesheety scény). */
@@ -99,6 +106,7 @@ public abstract class AbstractDialog {
             addBaseStylesheet(scene);
             stage.setScene(scene);
             DialogController controller = loader.getController();
+            this.controller = controller;
             stage.setOnCloseRequest(controller.getOnCloseEventHandler());
             controller.setMain(main);
             controller.setStage(stage);

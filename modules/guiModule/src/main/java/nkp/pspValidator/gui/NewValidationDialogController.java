@@ -17,6 +17,7 @@ import javafx.util.Duration;
 import nkp.pspValidator.gui.group.GroupRecognition;
 import nkp.pspValidator.gui.group.GroupSummaries;
 import nkp.pspValidator.gui.newvalidation.*;
+import nkp.pspValidator.gui.settings.SettingsTab;
 import nkp.pspValidator.shared.Dmf;
 import nkp.pspValidator.shared.FdmfRegistry;
 import nkp.pspValidator.shared.externalUtils.ExternalUtil;
@@ -579,8 +580,8 @@ public class NewValidationDialogController extends DialogController {
         if (source == ValidationSource.GROUP) {
             //u skupiny vzdy tabulka vsech typu (i behem rozpoznavani, verze na rozpoznani nezavisi)
             body.getChildren().addAll(allTypesTable(), mutedWrapped("Každý balík se validuje podle svého typu. Vynucená verze platí "
-                    + "pro všechny balíky daného typu ve skupině; když balík verzi neuvádí, použije se preferovaná verze, a není-li "
-                    + "nastavena, výchozí verze validátoru."));
+                    + "pro všechny balíky daného typu ve skupině; když balík verzi neuvádí, použije se výchozí verze, kterou lze "
+                    + "změnit v Nastavení."), defaultVersionsLink());
             return;
         }
         if (recognizing) {
@@ -600,12 +601,12 @@ public class NewValidationDialogController extends DialogController {
             info.getStyleClass().add("text-muted");
             HBox row = new HBox(16, typeLabel, choiceBox, info);
             row.setAlignment(Pos.CENTER_LEFT);
-            Label note = mutedWrapped("Zobrazuje se jen typ rozpoznaný v balíku. Když balík verzi neuvádí, použije se preferovaná verze, a není-li nastavena, výchozí verze validátoru.");
+            Label note = mutedWrapped("Zobrazuje se jen typ rozpoznaný v balíku. Když balík verzi neuvádí, použije se výchozí verze, kterou lze změnit v Nastavení.");
             Hyperlink allTypes = link("Nastavit verze pro všechny typy dokumentů…", () -> {
                 showAllTypes = true;
                 refreshVersionsSection();
             });
-            body.getChildren().addAll(row, note, allTypes);
+            body.getChildren().addAll(row, note, new HBox(20, allTypes, defaultVersionsLink()));
         } else {
             body.getChildren().add(allTypesTable());
             if (recognized) {
@@ -617,6 +618,11 @@ public class NewValidationDialogController extends DialogController {
                 body.getChildren().add(mutedWrapped("Typ balíku zatím není rozpoznán, proto se zobrazují všechny typy dokumentů. Vynucená verze platí pro všechny balíky daného typu."));
             }
         }
+    }
+
+    /** Odkaz do Nastavení na záložku Výchozí verze DMF (preferované verze se nastavují tam). */
+    private Hyperlink defaultVersionsLink() {
+        return link("Změnit výchozí verze…", () -> showSettings(SettingsTab.VERSIONS));
     }
 
     private GridPane allTypesTable() {
@@ -775,12 +781,7 @@ public class NewValidationDialogController extends DialogController {
             body.getChildren().add(mutedWrapped("Zrušením zaškrtnutí se nástroj vypne jen pro tuto validaci, protokol to uvede."));
         }
         HBox links = new HBox(20,
-                link("Nastavit cesty k nástrojům…", () -> {
-                    main.showExternalUtilsCheckDialogOverDialog();
-                    if (!closed) {
-                        checkTools();
-                    }
-                }),
+                link("Nastavit cesty k nástrojům…", () -> showSettings(SettingsTab.TOOLS)),
                 link("Zkontrolovat znovu", this::checkTools));
         body.getChildren().add(links);
     }
@@ -853,12 +854,7 @@ public class NewValidationDialogController extends DialogController {
                 body.getChildren().add(skippedList(dmf, dmfSkipped));
             }
         }
-        HBox links = new HBox(20, link("Vybrat sekce k přeskočení…", () -> {
-            main.showSkippingConfigurationDialogOverDialog();
-            if (!closed) {
-                reloadDmfData();
-            }
-        }));
+        HBox links = new HBox(20, link("Vybrat sekce k přeskočení…", () -> showSettings(SettingsTab.SKIPPING)));
         if (anySkipped) {
             links.getChildren().add(link("Zrušit všechna", () -> {
                 for (Map.Entry<Dmf, List<String>> entry : byDmf.entrySet()) {
@@ -899,7 +895,37 @@ public class NewValidationDialogController extends DialogController {
         return list;
     }
 
+    // ===== nastaveni =====
+
+    /**
+     * Otevře Nastavení na záložce (nad tímto dialogem) a po jeho zavření dialog obnoví: stav nástrojů, výchozí verze
+     * (karta rozpoznání, sekce verzí a z verze odvozená fDMF), přeskočené sekce a výstupy.
+     */
+    private void showSettings(SettingsTab tab) {
+        Dmf dmf = effectiveDmf;
+        if (dmf == null && !groupDmfs.isEmpty()) {
+            dmf = groupDmfs.iterator().next();
+        }
+        main.showSettingsDialogOverDialog(tab, dmf);
+        if (closed) {
+            return;
+        }
+        checkTools();
+        updateRecognitionCard();
+        refreshVersionsSection();
+        reloadDmfData();
+        reloadOutputs();
+    }
+
     // ===== vystupy =====
+
+    /** Výstupy znovu z nastavení (mohly se změnit v Nastavení, záložka Adresáře a protokoly). */
+    private void reloadOutputs() {
+        createXmlLog.setSelected(outputSettings.isCreateXmlLog());
+        createTxtLog.setSelected(outputSettings.isCreateTxtLog());
+        verbosityComboBox.setValue(outputSettings.getVerbosity());
+        verbosityComboBox.setDisable(!createTxtLog.isSelected());
+    }
 
     private void initOutputs() {
         createXmlLog.setSelected(outputSettings.isCreateXmlLog());

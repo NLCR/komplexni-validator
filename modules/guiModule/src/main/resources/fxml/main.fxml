@@ -35,10 +35,8 @@ Vzhled v base.css (trida main-root a nasledujici).
                     </Menu>
                     <Menu fx:id="menuSettings" text="Nastavení">
                         <items>
-                            <MenuItem text="Externí nástroje" onAction="#showExternalUtilsCheckDialog"/>
-                            <MenuItem text="Přeskakování validací" onAction="#showSkippingConfigurationDialog"/>
-                            <MenuItem text="Slovníky" onAction="#showDictionariesConfigurationDialog"/>
-                            <MenuItem text="Různé" disable="true"/>
+                            <MenuItem fx:id="settingsMenuItem" text="Nastavení…" onAction="#showSettings"
+                                      accelerator="Shortcut+Comma"/>
                         </items>
                     </Menu>
                     <Menu fx:id="menuShow" text="Zobrazit">
@@ -119,7 +117,7 @@ Vzhled v base.css (trida main-root a nasledujici).
                 <HBox styleClass="empty-info">
                     <Label fx:id="emptyFdmfInfo" styleClass="text-muted"/>
                     <Label fx:id="emptyToolsInfo" styleClass="text-muted"/>
-                    <Hyperlink text="Zkontrolovat nástroje" styleClass="link" onAction="#showExternalUtilsCheckDialog"/>
+                    <Hyperlink text="Zkontrolovat nástroje" styleClass="link" onAction="#showSettingsTools"/>
                 </HBox>
             </VBox>
 

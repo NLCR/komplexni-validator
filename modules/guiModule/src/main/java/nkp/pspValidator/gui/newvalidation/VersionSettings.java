@@ -87,6 +87,30 @@ public class VersionSettings {
         }
     }
 
+    /** Je zapnutá preferovaná (výchozí) verze typu; uložená verze nemusí být k dispozici. */
+    public boolean isPreferenceEnabled(Dmf.Type type) {
+        return config.getBooleanOrDefault(DmfVersionKeys.of(type).preferredEnabled, false);
+    }
+
+    /** Uložená preferovaná verze tak, jak je v nastavení (i když je preferování vypnuté nebo verze neexistuje), nebo null. */
+    public String storedPreferredCode(Dmf.Type type) {
+        return config.getStringOrDefault(DmfVersionKeys.of(type).preferredCode, null);
+    }
+
+    /**
+     * Zapne preferovanou verzi (použije se, když balík verzi neuvádí), nebo ji při null vypne. Stejné klíče a stejný
+     * způsob uložení jako {@link #setForcedVersion}: při vypnutí zůstane naposledy vybraná verze uložená.
+     */
+    public void setPreferredVersion(Dmf.Type type, String version) {
+        DmfVersionKeys keys = DmfVersionKeys.of(type);
+        if (version == null) {
+            config.setBoolean(keys.preferredEnabled, false);
+        } else {
+            config.setString(keys.preferredCode, version);
+            config.setBoolean(keys.preferredEnabled, true);
+        }
+    }
+
     /** Počet typů s vynucenou verzí. */
     public int forcedTypesCount() {
         int count = 0;
@@ -134,7 +158,7 @@ public class VersionSettings {
     /**
      * Uložená verze, pokud je mezi dostupnými, jinak první dostupná (nejnovější), při žádné dostupné null.
      */
-    static String effectiveCode(String stored, List<String> available) {
+    public static String effectiveCode(String stored, List<String> available) {
         if (stored != null && available.contains(stored)) {
             return stored;
         }

@@ -118,15 +118,7 @@
                     minWidth="65"
             />
 
-            <Button
-                    styleClass="button-secondary"
-                    text="Změnit"
-                    GridPane.rowIndex="5"
-                    GridPane.columnIndex="4"
-                    GridPane.hgrow="ALWAYS"
-                    onAction="#changeLogsDir"
-                    minWidth="65"
-            />
+            <!--adresar s logy se meni v Nastaveni (zalozka Adresare a protokoly)-->
 
             <Label styleClass="group-label" text="Vývojářský mód"
                    fx:id="devModeLabel"

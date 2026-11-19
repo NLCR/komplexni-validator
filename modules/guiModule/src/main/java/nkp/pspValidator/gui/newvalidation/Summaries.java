@@ -71,8 +71,8 @@ public final class Summaries {
                 if (recognition.getVersionProblem() != null) {
                     text.append("Bez vynucené verze validace skončí chybou.");
                 } else {
-                    text.append("Použije se ").append(resolved.origin == VersionSettings.Origin.PREFERRED ? "preferovaná" : "výchozí")
-                            .append(" verze ").append(resolved.version).append('.');
+                    text.append("Použije se výchozí verze ").append(resolved.version)
+                            .append(resolved.origin == VersionSettings.Origin.PREFERRED ? " z Nastavení." : " validátoru.");
                 }
                 break;
             default:

@@ -339,7 +339,7 @@ tasks.register('jpackage', Exec) {
 //build.gradle ends here
 
 //runSnapshots - otevre dialogy GUI a ulozi jejich snimky do PNG (kontrola vzhledu, viz SnapshotMode)
-//./gradlew :modules:guiModule:runSnapshots -PsnapshotDir=/tmp/snap [-Psnapshot=main,mainMenu,newValidation] [-PsnapshotDelayMs=800]
+//./gradlew :modules:guiModule:runSnapshots -PsnapshotDir=/tmp/snap [-Psnapshot=main,mainMenu,newValidation,settings] [-PsnapshotDelayMs=800]
 //  -PsnapshotPsp=<adresar nebo .zip> - predvyplnena cesta v dialogu Nova validace (vlastnost kv.snapshotPsp)
 //  -PsnapshotExpand=versions|tools|skipped - rozbalena sekce dialogu Nova validace (vlastnost kv.snapshotExpand)
 //  -PsnapshotValidate=<adresar nebo .zip> - krok results provede skutecnou validaci balicku a vyfoti vysledky,
@@ -352,6 +352,10 @@ tasks.register('jpackage', Exec) {
 //  krok stress: synteticke udalosti jadra, mereni odezvy UI (bez validatoru)
 //  -PsnapshotSource=group - zdroj Skupina baliku v dialogu (-PsnapshotPsp) i ve validaci (-PsnapshotValidate = adresar skupiny);
 //  kroky group, groupRerunOne, groupCancel (viz javadoc SnapshotMode), -PsnapshotCsv=<soubor> - kam krok group exportuje CSV
+//  krok settings: okno Nastaveni, snimek kazde zalozky; -PsnapshotTab=versions,tools,skipping,dictionaries,dirs - ktere
+//  zalozky (vlastnost kv.snapshotTab, vychozi vsechny); krok settingsMenu: rozbalene menu Nastaveni; krok settingsSave:
+//  zmena vychozi verze v Nastaveni, ulozeni a vypis DmfDetector.Params, -PsnapshotDefaultVersion=MONOGRAPH:1.4
+//  (vlastnost kv.snapshotDefaultVersion, verze default = vychozi validatoru)
 //  -PsnapshotConfigFile=<soubor> - soubor nastaveni (vlastnost kv.configFile) misto vychoziho config.properties v pracovnim
 //  adresari modulu, aby snimky nezahrnovaly osobni nastaveni; soubor nemusi existovat (vznikne s vychozimi hodnotami),
 //  ale pri spusteni z Gradle musi obsahovat aspon validatorConfig.dir=<adresar validatorConfig> (a nejlepe validation.log_dir),
@@ -396,6 +400,12 @@ tasks.register('runSnapshots', JavaExec) {
     }
     if (project.hasProperty('snapshotCsv')) {
         systemProperty 'kv.snapshotCsv', project.property('snapshotCsv')
+    }
+    if (project.hasProperty('snapshotTab')) {
+        systemProperty 'kv.snapshotTab', project.property('snapshotTab')
+    }
+    if (project.hasProperty('snapshotDefaultVersion')) {
+        systemProperty 'kv.snapshotDefaultVersion', project.property('snapshotDefaultVersion')
     }
     if (project.hasProperty('maxDialogHeight')) { //simulace mensiho displeje
         systemProperty 'kv.maxDialogHeight', project.property('maxDialogHeight')

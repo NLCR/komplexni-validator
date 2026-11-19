@@ -12,7 +12,8 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import nkp.pspValidator.gui.dev.DevDialog;
 import nkp.pspValidator.gui.newvalidation.ValidationRequest;
-import nkp.pspValidator.gui.skipping.SkippingConfigurationDialog;
+import nkp.pspValidator.gui.settings.SettingsTab;
+import nkp.pspValidator.shared.Dmf;
 import nkp.pspValidator.shared.DmfDetector;
 import nkp.pspValidator.shared.Platform;
 import nkp.pspValidator.shared.Version;
@@ -30,6 +31,8 @@ public class Main extends Application {
     private Stage primaryStage;
     private Stage dialogStage;
     private Stage dialogStageLevel2;
+    /** nad Nastavením otevřeným z dialogu Nová validace (obsah slovníku, aktualizace slovníku) */
+    private Stage dialogStageLevel3;
     private ConfigurationManager configurationManager;
     private ValidationDataManager validationDataManager;
 
@@ -50,6 +53,7 @@ public class Main extends Application {
             this.primaryStage = stage;
             this.dialogStage = initDialogStage(primaryStage);
             this.dialogStageLevel2 = initDialogStage(dialogStage);
+            this.dialogStageLevel3 = initDialogStage(dialogStageLevel2);
             configurationManager = new ConfigurationManager(Platform.detectOs());
             mainController = openMainWindow();
             showValidationInitializationDialog();
@@ -210,9 +214,9 @@ public class Main extends Application {
     }
 
     /**
-     * Dialog externích nástrojů v hlavní úrovni oken (při startu aplikace a z menu Nastavení).
+     * Dialog externích nástrojů při startu aplikace (nástroje se dál nastavují v Nastavení, záložka Externí nástroje).
      *
-     * @param exitAppOnCloseWithError zavření okna křížkem, když některý nástroj chybí, ukončí aplikaci (jen při startu)
+     * @param exitAppOnCloseWithError zavření okna křížkem, když některý nástroj chybí, ukončí aplikaci
      */
     public void showExternalUtilsCheckDialog(boolean closeWhenFinished, String mainButtonText, boolean exitAppOnCloseWithError) {
         new ExternalUtilsCheckDialog(dialogStage, this, closeWhenFinished, mainButtonText, exitAppOnCloseWithError).show();
@@ -220,41 +224,52 @@ public class Main extends Application {
         mainController.refreshEmptyStateInfo();
     }
 
-    public void showSkippingConfigurationDialog() {
-        new SkippingConfigurationDialog(dialogStage, this).show();
-    }
-
     public void showNewValidationDialog() {
         new NewValidationDialog(dialogStage, this).show();
     }
 
     /**
-     * Dialog externích nástrojů otevřený z dialogu Nová validace (druhá úroveň oken). Zavření okna při chybějícím
-     * nástroji tady aplikaci neukončí, jen dialog zavře.
+     * Okno Nastavení z hlavního okna (menu, prázdný stav). Vrátí se po zavření okna; prázdný stav hlavního okna se pak
+     * obnoví (dostupnost nástrojů).
      */
-    public void showExternalUtilsCheckDialogOverDialog() {
-        new ExternalUtilsCheckDialog(dialogStageLevel2, this, false, "Zavřít", false).show();
+    public void showSettingsDialog(SettingsTab tab) {
+        new SettingsDialog(dialogStage, this, tab, null).show();
+        mainController.refreshEmptyStateInfo();
     }
 
-    /** Dialog přeskakování validací otevřený z dialogu Nová validace (druhá úroveň oken). */
-    public void showSkippingConfigurationDialogOverDialog() {
-        new SkippingConfigurationDialog(dialogStageLevel2, this).show();
+    /**
+     * Okno Nastavení otevřené z dialogu Nová validace (druhá úroveň oken). Vrátí se po zavření okna, volající si pak
+     * obnoví, co se mohlo změnit.
+     *
+     * @param dmf fDMF balíku v dialogu (záložka přeskakovaných pravidel ji ukáže první), nebo null
+     */
+    public void showSettingsDialogOverDialog(SettingsTab tab, Dmf dmf) {
+        new SettingsDialog(dialogStageLevel2, this, tab, dmf).show();
+        mainController.refreshEmptyStateInfo();
+    }
+
+    /** Okno pro dialog otevřený nad oknem {@code stage} (o úroveň výš). */
+    Stage stageAbove(Stage stage) {
+        if (stage == dialogStage) {
+            return dialogStageLevel2;
+        } else if (stage == dialogStageLevel2) {
+            return dialogStageLevel3;
+        }
+        throw new IllegalArgumentException("nad oknem " + stage.getTitle() + " už další úroveň oken není");
     }
 
     public void showAboutAppDialog() {
         new AboutAppDialog(dialogStage, this).show();
     }
 
-    public void showDictionariesConfigurationDialog() {
-        new DictionariesConfigurationDialog(dialogStage, this).show();
+    /** Obsah slovníku nad oknem {@code over} (záložka Slovníky v Nastavení). */
+    public void showDictionaryContentDialog(Stage over, String dictionaryName, String description, String specUrl) {
+        new DictionaryContentDialog(stageAbove(over), this, dictionaryName, description, specUrl).show();
     }
 
-    public void showDictionaryContentDialog(String dictionaryName, String description, String specUrl) {
-        new DictionaryContentDialog(dialogStageLevel2, this, dictionaryName, description, specUrl).show();
-    }
-
-    public void showDictionaryUpdateDialog(String dictionaryName, String syncUrl) {
-        new DictionaryUpdateDialog(dialogStageLevel2, this, dictionaryName, syncUrl).show();
+    /** Aktualizace slovníku nad oknem {@code over} (záložka Slovníky v Nastavení). */
+    public void showDictionaryUpdateDialog(Stage over, String dictionaryName, String syncUrl) {
+        new DictionaryUpdateDialog(stageAbove(over), this, dictionaryName, syncUrl).show();
     }
 
     public void showTestDialog() {

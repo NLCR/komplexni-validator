@@ -57,11 +57,11 @@ public class SummariesTest {
     public void missingVersionUsesPreferredOrDefault() {
         Recognition r = Recognition.recognized(Dmf.Type.MONOGRAPH, null, null);
         assertEquals("Monografie, verze neuvedena", Summaries.recognitionBadge(r));
-        assertEquals("Typ podle METS, balík verzi neuvádí. Použije se výchozí verze 2.3.", Summaries.recognitionDetail(r, versions));
+        assertEquals("Typ podle METS, balík verzi neuvádí. Použije se výchozí verze 2.3 validátoru.", Summaries.recognitionDetail(r, versions));
         assertEquals(new Dmf(Dmf.Type.MONOGRAPH, "2.3"), Summaries.effectiveDmf(r, versions));
         config.setBoolean(ConfigurationManager.PROP_PREFER_MON_VERSION_ENABLED, true);
         config.setString(ConfigurationManager.PROP_PREFER_MON_VERSION_CODE, "1.4");
-        assertEquals("Typ podle METS, balík verzi neuvádí. Použije se preferovaná verze 1.4.", Summaries.recognitionDetail(r, versions));
+        assertEquals("Typ podle METS, balík verzi neuvádí. Použije se výchozí verze 1.4 z Nastavení.", Summaries.recognitionDetail(r, versions));
         assertEquals(new Dmf(Dmf.Type.MONOGRAPH, "1.4"), Summaries.effectiveDmf(r, versions));
         assertEquals("1.4", versions.versionWhenMissing(Dmf.Type.MONOGRAPH));
     }

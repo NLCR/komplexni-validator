@@ -5,8 +5,9 @@ import javafx.stage.Stage;
 import java.net.URL;
 
 /**
- * Dialog Externí nástroje: stav všech nástrojů v tabulce a nastavení jejich adresářů. Otevírá se při startu aplikace,
- * z menu Nastavení a z dialogu Nová validace.
+ * Dialog Externí nástroje: stav všech nástrojů v tabulce ({@link ToolsTable}) a nastavení jejich adresářů. Otevírá se
+ * jen při startu aplikace; z menu a z dialogu Nová validace se nástroje nastavují v okně Nastavení (záložka Externí
+ * nástroje, stejná tabulka).
  * <p>
  * Created by Martin Řehánek on 13.12.16.
  */

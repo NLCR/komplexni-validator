@@ -6,9 +6,8 @@ docasna ikona aplikace (puvodni, nahrazena ikonou v appIcon/)
 https://icons8.com/web-app/5252/check-file
 https://icons8.com/web-app/11846/check-file
 
-slovníky:
-popup-16.png: https://icons8.com/icon/53198/popup
-synchronize-16.png: https://icons8.com/icon/47981/synchronize
+slovníky: driv ikony popup-16.png a synchronize-16.png na tlacitkach dialogu Slovniky; od 3.0 je seznam slovniku
+v okne Nastaveni (zalozka Slovniky) s tlacitky bez ikon.
 
 Stavy sekci, pravidel a problemu v hlavnim okne a stavovy radek (driv ikony Checkmark, Cancel, Error, Info,
 Unavailable, Copy) jsou od redesignu 3.0 kreslene v CSS (tecky a stitky v css/base.css), bez obrazku.
