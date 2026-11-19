@@ -350,6 +350,8 @@ tasks.register('jpackage', Exec) {
 //  -PsnapshotPauseAt=0.5 - kde se pozastavi (podil pravidel nebo pocet pravidel, vlastnost kv.snapshotPauseAt),
 //  -PsnapshotProgressEnd=finish|cancel|fail - jak validace skonci (vlastnost kv.snapshotProgressEnd)
 //  krok stress: synteticke udalosti jadra, mereni odezvy UI (bez validatoru)
+//  -PsnapshotSource=group - zdroj Skupina baliku v dialogu (-PsnapshotPsp) i ve validaci (-PsnapshotValidate = adresar skupiny);
+//  kroky group, groupRerunOne, groupCancel (viz javadoc SnapshotMode), -PsnapshotCsv=<soubor> - kam krok group exportuje CSV
 //  -PsnapshotConfigFile=<soubor> - soubor nastaveni (vlastnost kv.configFile) misto vychoziho config.properties v pracovnim
 //  adresari modulu, aby snimky nezahrnovaly osobni nastaveni; soubor nemusi existovat (vznikne s vychozimi hodnotami),
 //  ale pri spusteni z Gradle musi obsahovat aspon validatorConfig.dir=<adresar validatorConfig> (a nejlepe validation.log_dir),
@@ -388,6 +390,12 @@ tasks.register('runSnapshots', JavaExec) {
     }
     if (project.hasProperty('snapshotProgressEnd')) {
         systemProperty 'kv.snapshotProgressEnd', project.property('snapshotProgressEnd')
+    }
+    if (project.hasProperty('snapshotSource')) {
+        systemProperty 'kv.snapshotSource', project.property('snapshotSource')
+    }
+    if (project.hasProperty('snapshotCsv')) {
+        systemProperty 'kv.snapshotCsv', project.property('snapshotCsv')
     }
     if (project.hasProperty('maxDialogHeight')) { //simulace mensiho displeje
         systemProperty 'kv.maxDialogHeight', project.property('maxDialogHeight')

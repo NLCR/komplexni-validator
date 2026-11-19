@@ -778,6 +778,136 @@
     -fx-opacity: 1;
 }
 
+/* skupina baliku: tabulka baliku nad detailem vybraneho baliku */
+.group-split,
+.group-split > .split-pane-divider {
+    -fx-background-color: transparent;
+    -fx-padding: 0;
+    -fx-background-insets: 0;
+}
+
+.group-split > .split-pane-divider {
+    -fx-padding: 3 0 3 0;
+}
+
+.group-pane > .filter-bar {
+    -fx-padding: 6 0 6 0;
+}
+
+.group-table {
+    -fx-background-color: -kv-surface;
+    -fx-border-color: -kv-border;
+    -fx-border-radius: 6;
+    -fx-background-radius: 6;
+    -fx-padding: 0;
+}
+
+.group-table .column-header-background,
+.group-table .column-header,
+.group-table .filler {
+    -fx-background-color: -kv-table-header;
+}
+
+.group-table .column-header,
+.group-table .filler {
+    -fx-border-color: transparent -kv-border -kv-border transparent;
+    -fx-size: 28;
+}
+
+.group-table .column-header .label {
+    -fx-font-weight: bold;
+    -fx-text-fill: -kv-text;
+    -fx-alignment: center-left;
+    -fx-padding: 0 6 0 6;
+}
+
+.group-table .table-row-cell {
+    -fx-background-color: -kv-surface;
+    -fx-border-color: transparent transparent #ececec transparent;
+    -fx-cell-size: 28;
+}
+
+.group-table .table-row-cell:filled:hover {
+    -fx-background-color: #f6f9fd;
+}
+
+.group-table .table-row-cell:filled:selected {
+    -fx-background-color: -kv-primary-tint;
+}
+
+.group-table .table-cell {
+    -fx-text-fill: -kv-text;
+    -fx-padding: 0 8 0 8;
+    -fx-border-color: transparent;
+}
+
+.group-table .group-number {
+    -fx-alignment: center-right;
+}
+
+.group-table .group-muted {
+    -fx-text-fill: -kv-text-muted;
+}
+
+/* stav baliku v tabulce (Label v bunce) */
+.status-badge {
+    -fx-font-size: 12px;
+    -fx-font-weight: bold;
+    -fx-padding: 1 8 1 8;
+    -fx-background-radius: 4;
+    -fx-min-width: 96;
+}
+
+.status-valid {
+    -fx-background-color: -kv-ok;
+    -fx-text-fill: white;
+}
+
+.status-invalid {
+    -fx-background-color: -kv-error;
+    -fx-text-fill: white;
+}
+
+.status-error {
+    -fx-background-color: -kv-warning-tint;
+    -fx-text-fill: -kv-warning;
+}
+
+.status-running {
+    -fx-background-color: -kv-primary-tint;
+    -fx-text-fill: -kv-primary;
+}
+
+.status-waiting {
+    -fx-background-color: -kv-table-header;
+    -fx-text-fill: -kv-text-muted;
+}
+
+/* odznak "ceka" v horni liste skupiny */
+.badge-muted {
+    -fx-background-color: -kv-table-header;
+    -fx-text-fill: -kv-text-muted;
+    -fx-font-weight: bold;
+}
+
+/* vybrany balik nad jeho vysledky */
+.package-bar {
+    -fx-alignment: center-left;
+    -fx-spacing: 10;
+    -fx-padding: 6 0 0 0;
+}
+
+.package-title {
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-text-fill: -kv-text;
+}
+
+.package-message {
+    -fx-alignment: center;
+    -fx-padding: 24;
+}
+
 /* stavovy radek */
 .status-bar {
     -fx-background-color: -kv-surface;

@@ -1,12 +1,14 @@
 package nkp.pspValidator.gui;
 
 import javafx.stage.Stage;
+import nkp.pspValidator.gui.newvalidation.ValidationSource;
 
 import java.net.URL;
 
 /**
  * Dialog Nová validace: jeden dialog pro balík v adresáři i v souboru ZIP (nahradil dialogy PSP balík (adresář)
- * a PSP balík (zip)). Logika je v balíčku {@code nkp.pspValidator.gui.newvalidation}.
+ * a PSP balík (zip)) a pro skupinu balíků. Logika je v balíčcích {@code nkp.pspValidator.gui.newvalidation}
+ * a {@code nkp.pspValidator.gui.group}.
  */
 public class NewValidationDialog extends AbstractDialog {
 
@@ -17,19 +19,22 @@ public class NewValidationDialog extends AbstractDialog {
 
     private final String initialPath;
     private final Expand initialExpand;
+    private final ValidationSource initialSource;
 
     public NewValidationDialog(Stage stage, Main main) {
-        this(stage, main, null, null);
+        this(stage, main, null, null, null);
     }
 
     /**
      * @param initialPath   předvyplněná cesta (ZIP podle přípony .zip), nebo null
      * @param initialExpand rozbalená sekce, nebo null
+     * @param initialSource zdroj předvyplněné cesty, nebo null (podle cesty)
      */
-    public NewValidationDialog(Stage stage, Main main, String initialPath, Expand initialExpand) {
+    public NewValidationDialog(Stage stage, Main main, String initialPath, Expand initialExpand, ValidationSource initialSource) {
         super(stage, main);
         this.initialPath = initialPath;
         this.initialExpand = initialExpand;
+        this.initialSource = initialSource;
     }
 
     @Override
@@ -59,6 +64,6 @@ public class NewValidationDialog extends AbstractDialog {
 
     @Override
     public void setControllerData(DialogController controller) {
-        ((NewValidationDialogController) controller).setData(initialPath, initialExpand);
+        ((NewValidationDialogController) controller).setData(initialPath, initialExpand, initialSource);
     }
 }

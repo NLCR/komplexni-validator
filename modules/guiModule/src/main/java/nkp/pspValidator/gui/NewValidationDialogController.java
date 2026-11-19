@@ -14,6 +14,8 @@ import javafx.stage.DirectoryChooser;
 import javafx.stage.FileChooser;
 import javafx.stage.WindowEvent;
 import javafx.util.Duration;
+import nkp.pspValidator.gui.group.GroupRecognition;
+import nkp.pspValidator.gui.group.GroupSummaries;
 import nkp.pspValidator.gui.newvalidation.*;
 import nkp.pspValidator.shared.Dmf;
 import nkp.pspValidator.shared.FdmfRegistry;
@@ -29,8 +31,13 @@ import java.util.concurrent.Executors;
 /**
  * Kontroler dialogu Nová validace. Jen propojuje ovládací prvky s logikou v balíčku
  * {@code nkp.pspValidator.gui.newvalidation} (rozpoznání balíku, nastavení verzí a výstupů, nástroje, přeskočené
- * sekce, texty souhrnů, sestavení požadavku na validaci). Čtení balíku, zjišťování nástrojů a čtení fDMF běží
- * v pracovních vláknech; výsledky starších požadavků se zahazují podle pořadového čísla.
+ * sekce, texty souhrnů, sestavení požadavku na validaci), u skupiny balíků s logikou v balíčku {@code gui.group}.
+ * Čtení balíku, zjišťování nástrojů a čtení fDMF běží v pracovních vláknech; výsledky starších požadavků se zahazují
+ * podle pořadového čísla.
+ * <p>
+ * Skupina balíků: karta rozpoznání ukazuje počet balíků a rozpad podle typu a verze (rozpoznává se v pracovním vlákně
+ * s průběžným stavem, nejvýš {@link GroupRecognition#DEFAULT_LIMIT} balíků), sekce Verze DMF vždy tabulku všech typů,
+ * nástroje a přeskočená pravidla se vztahují ke všem fDMF rozpoznaným ve skupině.
  */
 public class NewValidationDialogController extends DialogController {
 
@@ -75,6 +82,7 @@ public class NewValidationDialogController extends DialogController {
 
     private String initialPath;
     private NewValidationDialog.Expand initialExpand;
+    private ValidationSource initialSource;
 
     private FdmfRegistry registry;
     private ExternalUtilManager utilManager;
@@ -86,7 +94,15 @@ public class NewValidationDialogController extends DialogController {
     private ValidationSource source = ValidationSource.DIRECTORY;
     private Recognition recognition;
     private boolean recognizing = false;
-    private long recognitionGeneration = 0;
+    /** čte ho i pracovní vlákno rozpoznávání skupiny (zda výsledek ještě platí) */
+    private volatile long recognitionGeneration = 0;
+    /** skupina balíků: výsledek rozpoznání (null během rozpoznávání nebo u jiného zdroje) a průběh */
+    private GroupRecognition groupRecognition;
+    private int groupRecognized;
+    private int groupToRecognize;
+    /** skupina balíků: fDMF rozpoznané ve skupině a z nich odvozené přeskočené sekce (hodnota null: fDMF chybí) */
+    private Set<Dmf> groupDmfs = Collections.emptySet();
+    private Map<Dmf, List<String>> groupSkipped;
     /** fDMF, proti které se bude validovat, a z ní odvozené údaje (null, když není známá) */
     private Dmf effectiveDmf;
     private Set<ExternalUtil> relevantUtils;
@@ -103,11 +119,15 @@ public class NewValidationDialogController extends DialogController {
     private CollapsibleSection versionsSection;
     private CollapsibleSection toolsSection;
     private CollapsibleSection skippedSection;
-    private boolean closed = false;
+    private volatile boolean closed = false;
 
-    public void setData(String initialPath, NewValidationDialog.Expand initialExpand) {
+    /**
+     * @param initialSource zdroj předvyplněné cesty, null = podle cesty (adresář, u přípony .zip soubor ZIP)
+     */
+    public void setData(String initialPath, NewValidationDialog.Expand initialExpand, ValidationSource initialSource) {
         this.initialPath = initialPath;
         this.initialExpand = initialExpand;
+        this.initialSource = initialSource;
     }
 
     @Override
@@ -133,7 +153,9 @@ public class NewValidationDialogController extends DialogController {
         outputSettings = new OutputSettings(config);
         skippedSections = new SkippedSections(config, registry);
 
-        if (initialPath != null && initialPath.toLowerCase(Locale.ROOT).endsWith(".zip")) {
+        if (initialSource != null) {
+            source = initialSource;
+        } else if (initialPath != null && initialPath.toLowerCase(Locale.ROOT).endsWith(".zip")) {
             source = ValidationSource.ZIP;
         }
         initSourceSwitch();
@@ -216,9 +238,9 @@ public class NewValidationDialogController extends DialogController {
             }
         }
         File selected;
-        if (source == ValidationSource.DIRECTORY) {
+        if (source == ValidationSource.DIRECTORY || source == ValidationSource.GROUP) {
             DirectoryChooser chooser = new DirectoryChooser();
-            chooser.setTitle("Vyberte kořenový adresář balíku");
+            chooser.setTitle(source == ValidationSource.GROUP ? "Vyberte adresář s balíky" : "Vyberte kořenový adresář balíku");
             if (initialDir != null) {
                 chooser.setInitialDirectory(initialDir);
             }
@@ -245,7 +267,9 @@ public class NewValidationDialogController extends DialogController {
     }
 
     private void updateValidateButton() {
-        validateButton.setDisable(source.checkPath(pathField.getText()) != null);
+        boolean emptyGroup = source == ValidationSource.GROUP && groupRecognition != null
+                && (!groupRecognition.isOk() || groupRecognition.getPackageCount() == 0);
+        validateButton.setDisable(source.checkPath(pathField.getText()) != null || emptyGroup);
     }
 
     // ===== rozpoznani =====
@@ -257,6 +281,9 @@ public class NewValidationDialogController extends DialogController {
     private void invalidateRecognition() {
         recognitionGeneration++;
         recognition = null;
+        groupRecognition = null;
+        groupRecognized = 0;
+        groupToRecognize = 0;
         showAllTypes = false;
         recognizing = true;
         updateRecognitionCard();
@@ -269,9 +296,14 @@ public class NewValidationDialogController extends DialogController {
         ValidationSource currentSource = source;
         String path = pathField.getText();
         String problem = currentSource.checkPath(path);
+        groupRecognition = null;
         if (problem != null) {
             recognizing = false;
             applyRecognition(Recognition.invalidPath(problem));
+            return;
+        }
+        if (currentSource == ValidationSource.GROUP) {
+            recognizeGroup(generation, path);
             return;
         }
         recognizing = true;
@@ -300,11 +332,57 @@ public class NewValidationDialogController extends DialogController {
         updateRecognitionCard();
         refreshVersionsSection();
         reloadDmfData();
+        updateValidateButton();
+    }
+
+    /** Skupina balíků: najde balíky a postupně je rozpozná; průběh i výsledek platí jen pro aktuální cestu. */
+    private void recognizeGroup(long generation, String path) {
+        recognition = null;
+        recognizing = true;
+        groupRecognized = 0;
+        groupToRecognize = 0;
+        updateRecognitionCard();
+        refreshVersionsSection();
+        reloadDmfData();
+        updateValidateButton();
+        File dir = new File(path.trim());
+        worker.submit(() -> {
+            GroupRecognition result;
+            try {
+                result = GroupRecognition.recognize(dir, GroupRecognition.DEFAULT_LIMIT,
+                        () -> generation != recognitionGeneration || closed,
+                        (done, toRecognize) -> Platform.runLater(() -> {
+                            if (generation == recognitionGeneration && !closed && recognizing) {
+                                groupRecognized = done;
+                                groupToRecognize = toRecognize;
+                                updateRecognitionCard();
+                            }
+                        }));
+            } catch (RuntimeException e) {
+                result = null;
+                e.printStackTrace();
+            }
+            GroupRecognition finalResult = result;
+            Platform.runLater(() -> {
+                if (generation == recognitionGeneration && !closed && finalResult != null) {
+                    recognizing = false;
+                    groupRecognition = finalResult;
+                    updateRecognitionCard();
+                    refreshVersionsSection();
+                    reloadDmfData();
+                    updateValidateButton();
+                }
+            });
+        });
     }
 
     private void updateRecognitionCard() {
         recognitionProgress.setVisible(recognizing);
         recognitionProgress.setManaged(recognizing);
+        if (source == ValidationSource.GROUP) {
+            updateGroupRecognitionCard();
+            return;
+        }
         if (recognizing) {
             recognitionTitle.setText("Rozpoznávám balík…");
             setBadge(null);
@@ -317,8 +395,31 @@ public class NewValidationDialogController extends DialogController {
             return;
         }
         recognitionTitle.setText(Summaries.recognitionTitle(recognition));
+        recognitionBadge.setWrapText(false);
+        recognitionBadge.setMinWidth(Region.USE_COMPUTED_SIZE);
         setBadge(Summaries.recognitionBadge(recognition));
         recognitionDetail.setText(Summaries.recognitionDetail(recognition, versionSettings));
+    }
+
+    private void updateGroupRecognitionCard() {
+        //rozpad skupiny byva dlouhy: stitek se zalomi (u jednoho baliku zustava na jednom radku)
+        recognitionBadge.setWrapText(true);
+        recognitionBadge.setMinWidth(0);
+        recognitionBadge.setMinHeight(Region.USE_PREF_SIZE);
+        if (recognizing) {
+            recognitionTitle.setText(GroupSummaries.recognizingTitle(groupRecognized, groupToRecognize));
+            setBadge(null);
+            recognitionDetail.setText("Hledám podadresáře a soubory ZIP a čtu jejich METS a info.xml.");
+        } else if (groupRecognition != null) {
+            recognitionTitle.setText(GroupSummaries.title(groupRecognition));
+            setBadge(GroupSummaries.breakdown(groupRecognition, versionSettings));
+            recognitionDetail.setText(GroupSummaries.detail(groupRecognition));
+        } else if (recognition != null) {
+            //neplatna cesta
+            recognitionTitle.setText("Adresář s balíky není vybrán");
+            setBadge(null);
+            recognitionDetail.setText(recognition.getMessage());
+        }
     }
 
     private void setBadge(String text) {
@@ -330,6 +431,12 @@ public class NewValidationDialogController extends DialogController {
     /** Znovu určí fDMF, proti které se bude validovat, a v pracovním vlákně načte její nástroje a přeskočené sekce. */
     private void reloadDmfData() {
         long generation = ++dmfGeneration;
+        if (source == ValidationSource.GROUP) {
+            reloadGroupDmfData(generation);
+            return;
+        }
+        groupDmfs = Collections.emptySet();
+        groupSkipped = null;
         Dmf dmf = recognizing ? null : Summaries.effectiveDmf(recognition, versionSettings);
         effectiveDmf = dmf;
         if (dmf == null) {
@@ -346,6 +453,43 @@ public class NewValidationDialogController extends DialogController {
                 if (generation == dmfGeneration && !closed) {
                     relevantUtils = relevant;
                     skipped = skippedNames;
+                    refreshToolsSection();
+                    refreshSkippedSection();
+                }
+            });
+        });
+    }
+
+    /** Skupina: nástroje relevantní pro kteroukoli fDMF ve skupině a přeskočené sekce každé z nich. */
+    private void reloadGroupDmfData(long generation) {
+        effectiveDmf = null;
+        Set<Dmf> dmfs = recognizing ? Collections.<Dmf>emptySet() : GroupSummaries.effectiveDmfs(groupRecognition, versionSettings);
+        groupDmfs = dmfs;
+        relevantUtils = null;
+        skipped = null;
+        groupSkipped = null;
+        refreshToolsSection();
+        refreshSkippedSection();
+        if (dmfs.isEmpty()) {
+            return;
+        }
+        worker.submit(() -> {
+            Set<ExternalUtil> relevant = EnumSet.noneOf(ExternalUtil.class);
+            boolean known = false;
+            Map<Dmf, List<String>> skippedByDmf = new LinkedHashMap<>();
+            for (Dmf dmf : dmfs) {
+                Set<ExternalUtil> utils = ExternalTools.relevantFor(registry, dmf);
+                if (utils != null) {
+                    relevant.addAll(utils);
+                    known = true;
+                }
+                skippedByDmf.put(dmf, skippedSections.skipped(dmf));
+            }
+            Set<ExternalUtil> finalRelevant = known ? relevant : null;
+            Platform.runLater(() -> {
+                if (generation == dmfGeneration && !closed) {
+                    relevantUtils = finalRelevant;
+                    groupSkipped = skippedByDmf;
                     refreshToolsSection();
                     refreshSkippedSection();
                 }
@@ -423,10 +567,22 @@ public class NewValidationDialogController extends DialogController {
         }
     }
 
+    private String versionsSummary() {
+        return source == ValidationSource.GROUP ? GroupSummaries.versionsSummary(versionSettings)
+                : Summaries.versionsSummary(recognition, versionSettings);
+    }
+
     private void refreshVersionsSection() {
-        versionsSection.setSummary(recognizing ? "" : Summaries.versionsSummary(recognition, versionSettings));
+        versionsSection.setSummary(recognizing ? "" : versionsSummary());
         VBox body = versionsSection.getBody();
         body.getChildren().clear();
+        if (source == ValidationSource.GROUP) {
+            //u skupiny vzdy tabulka vsech typu (i behem rozpoznavani, verze na rozpoznani nezavisi)
+            body.getChildren().addAll(allTypesTable(), mutedWrapped("Každý balík se validuje podle svého typu. Vynucená verze platí "
+                    + "pro všechny balíky daného typu ve skupině; když balík verzi neuvádí, použije se preferovaná verze, a není-li "
+                    + "nastavena, výchozí verze validátoru."));
+            return;
+        }
         if (recognizing) {
             return;
         }
@@ -519,7 +675,7 @@ public class NewValidationDialogController extends DialogController {
         choiceBox.valueProperty().addListener((obs, oldValue, newValue) -> {
             if (newValue != null) {
                 versionSettings.setForcedVersion(type, newValue.version);
-                versionsSection.setSummary(Summaries.versionsSummary(recognition, versionSettings));
+                versionsSection.setSummary(versionsSummary());
                 updateRecognitionCard();
                 reloadDmfData();
             }
@@ -535,7 +691,9 @@ public class NewValidationDialogController extends DialogController {
     }
 
     private void refreshToolsSection() {
-        String typeName = effectiveDmf == null ? null : DocumentTypes.name(effectiveDmf.getType());
+        boolean group = source == ValidationSource.GROUP;
+        String typeName = group ? (groupDmfs.isEmpty() ? null : "skupinu")
+                : effectiveDmf == null ? null : DocumentTypes.name(effectiveDmf.getType());
         toolsSection.setSummary(Summaries.toolsSummary(typeName, relevantUtils, toolStatuses, uncheckedByUser));
         VBox body = toolsSection.getBody();
         body.getChildren().clear();
@@ -576,7 +734,8 @@ public class NewValidationDialogController extends DialogController {
             });
             Label name = new Label(util.getUserFriendlyName());
             name.getStyleClass().add("text-bold");
-            Label description = new Label(ExternalTools.description(util) + (unused ? " (u tohoto typu se nepoužije)" : ""));
+            Label description = new Label(ExternalTools.description(util)
+                    + (unused ? group ? " (ve skupině se nepoužije)" : " (u tohoto typu se nepoužije)" : ""));
             description.setMinWidth(0);
             description.setTooltip(new Tooltip(description.getText()));
             Region dot = new Region();
@@ -606,7 +765,12 @@ public class NewValidationDialogController extends DialogController {
             body.getChildren().add(notice);
         }
         if (relevantUtils == null) {
-            body.getChildren().add(mutedWrapped("Které nástroje se použijí, závisí na typu balíku. Zrušením zaškrtnutí se nástroj vypne jen pro tuto validaci."));
+            body.getChildren().add(mutedWrapped(group
+                    ? "Které nástroje se použijí, závisí na typech balíků. Zrušením zaškrtnutí se nástroj vypne pro validaci celé skupiny."
+                    : "Které nástroje se použijí, závisí na typu balíku. Zrušením zaškrtnutí se nástroj vypne jen pro tuto validaci."));
+        } else if (group) {
+            body.getChildren().add(mutedWrapped("Relevantní jsou nástroje všech typů rozpoznaných ve skupině. Zrušením zaškrtnutí se nástroj "
+                    + "vypne pro validaci celé skupiny, protokoly to uvedou."));
         } else {
             body.getChildren().add(mutedWrapped("Zrušením zaškrtnutí se nástroj vypne jen pro tuto validaci, protokol to uvede."));
         }
@@ -646,42 +810,47 @@ public class NewValidationDialogController extends DialogController {
     // ----- preskocena pravidla -----
 
     private void refreshSkippedSection() {
-        Dmf dmf = effectiveDmf;
-        skippedSection.setSummary(recognizing ? "" : Summaries.skippedSummary(dmf, skipped));
+        boolean group = source == ValidationSource.GROUP;
+        //fDMF a jejich preskocene sekce (u jednoho balíku nejvys jedna fDMF)
+        Map<Dmf, List<String>> byDmf = new LinkedHashMap<>();
+        if (group) {
+            if (groupSkipped != null) {
+                byDmf.putAll(groupSkipped);
+            }
+            skippedSection.setSummary(recognizing ? "" : GroupSummaries.skippedSummary(groupDmfs.isEmpty() ? null
+                    : groupSkipped == null ? Collections.<Dmf, List<String>>emptyMap() : groupSkipped));
+        } else {
+            if (effectiveDmf != null) {
+                byDmf.put(effectiveDmf, skipped);
+            }
+            skippedSection.setSummary(recognizing ? "" : Summaries.skippedSummary(effectiveDmf, skipped));
+        }
         VBox body = skippedSection.getBody();
         body.getChildren().clear();
-        if (dmf == null) {
-            body.getChildren().add(mutedWrapped("Přeskakované sekce se nastavují pro typ a verzi DMF, zobrazí se po rozpoznání balíku."));
-        } else if (skipped == null) {
-            body.getChildren().add(mutedWrapped("Pro " + DocumentTypes.name(dmf.getType()) + " " + dmf.getVersion() + " není k dispozici fDMF."));
-        } else {
-            body.getChildren().add(mutedWrapped("Platí pro " + DocumentTypes.name(dmf.getType()) + " " + dmf.getVersion()
+        if (byDmf.isEmpty()) {
+            body.getChildren().add(mutedWrapped(group
+                    ? "Přeskakované sekce se nastavují pro typ a verzi DMF, zobrazí se po rozpoznání balíků."
+                    : "Přeskakované sekce se nastavují pro typ a verzi DMF, zobrazí se po rozpoznání balíku."));
+        }
+        boolean anySkipped = false;
+        for (Map.Entry<Dmf, List<String>> entry : byDmf.entrySet()) {
+            Dmf dmf = entry.getKey();
+            List<String> dmfSkipped = entry.getValue();
+            if (dmfSkipped == null) {
+                body.getChildren().add(mutedWrapped("Pro " + DocumentTypes.name(dmf.getType()) + " " + dmf.getVersion() + " není k dispozici fDMF."));
+                continue;
+            }
+            anySkipped |= !dmfSkipped.isEmpty();
+            if (group && dmfSkipped.isEmpty()) {
+                body.getChildren().add(mutedWrapped(DocumentTypes.name(dmf.getType()) + " " + dmf.getVersion() + ": nic se nepřeskakuje."));
+                continue;
+            }
+            body.getChildren().add(mutedWrapped(group
+                    ? DocumentTypes.name(dmf.getType()) + " " + dmf.getVersion() + ": přeskočené sekce se nevalidují."
+                    : "Platí pro " + DocumentTypes.name(dmf.getType()) + " " + dmf.getVersion()
                     + ". Přeskočené sekce se nevalidují. Přeskakovat lze jen celé sekce."));
-            if (!skipped.isEmpty()) {
-                VBox list = new VBox();
-                list.getStyleClass().add("list-box");
-                for (int i = 0; i < skipped.size(); i++) {
-                    String sectionName = skipped.get(i);
-                    Label label = new Label("Celá sekce: " + sectionName);
-                    label.getStyleClass().add("text-bold");
-                    label.setMinWidth(0);
-                    Region spacer = new Region();
-                    HBox.setHgrow(spacer, Priority.ALWAYS);
-                    Button cancel = new Button("Zrušit");
-                    cancel.getStyleClass().add("button-secondary");
-                    cancel.setMinWidth(Region.USE_PREF_SIZE);
-                    cancel.setOnAction(e -> {
-                        skippedSections.unskip(dmf, sectionName);
-                        reloadDmfData();
-                    });
-                    HBox row = new HBox(label, spacer, cancel);
-                    row.getStyleClass().add("list-row");
-                    if (i == 0) {
-                        row.getStyleClass().add("row-first");
-                    }
-                    list.getChildren().add(row);
-                }
-                body.getChildren().add(list);
+            if (!dmfSkipped.isEmpty()) {
+                body.getChildren().add(skippedList(dmf, dmfSkipped));
             }
         }
         HBox links = new HBox(20, link("Vybrat sekce k přeskočení…", () -> {
@@ -690,13 +859,44 @@ public class NewValidationDialogController extends DialogController {
                 reloadDmfData();
             }
         }));
-        if (dmf != null && skipped != null && !skipped.isEmpty()) {
+        if (anySkipped) {
             links.getChildren().add(link("Zrušit všechna", () -> {
-                skippedSections.unskipAll(dmf);
+                for (Map.Entry<Dmf, List<String>> entry : byDmf.entrySet()) {
+                    if (entry.getValue() != null && !entry.getValue().isEmpty()) {
+                        skippedSections.unskipAll(entry.getKey());
+                    }
+                }
                 reloadDmfData();
             }));
         }
         body.getChildren().add(links);
+    }
+
+    private VBox skippedList(Dmf dmf, List<String> dmfSkipped) {
+        VBox list = new VBox();
+        list.getStyleClass().add("list-box");
+        for (int i = 0; i < dmfSkipped.size(); i++) {
+            String sectionName = dmfSkipped.get(i);
+            Label label = new Label("Celá sekce: " + sectionName);
+            label.getStyleClass().add("text-bold");
+            label.setMinWidth(0);
+            Region spacer = new Region();
+            HBox.setHgrow(spacer, Priority.ALWAYS);
+            Button cancel = new Button("Zrušit");
+            cancel.getStyleClass().add("button-secondary");
+            cancel.setMinWidth(Region.USE_PREF_SIZE);
+            cancel.setOnAction(e -> {
+                skippedSections.unskip(dmf, sectionName);
+                reloadDmfData();
+            });
+            HBox row = new HBox(label, spacer, cancel);
+            row.getStyleClass().add("list-row");
+            if (i == 0) {
+                row.getStyleClass().add("row-first");
+            }
+            list.getChildren().add(row);
+        }
+        return list;
     }
 
     // ===== vystupy =====
@@ -741,7 +941,7 @@ public class NewValidationDialogController extends DialogController {
         }
         ValidationRequest request = ValidationRequest.create(source, path, versionSettings, outputSettings,
                 ExternalTools.toDisable(uncheckedByUser, toolStatuses));
-        if (source == ValidationSource.DIRECTORY) {
+        if (source == ValidationSource.DIRECTORY || source == ValidationSource.GROUP) {
             //stejne jako drivejsi dialog adresare; u ZIPu dialog zustava pod dialogem rozbalovani (pri chybe se k nemu lze vratit)
             closed = true;
             stage.hide();

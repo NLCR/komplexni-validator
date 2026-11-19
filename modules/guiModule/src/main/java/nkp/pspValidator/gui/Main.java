@@ -153,7 +153,7 @@ public class Main extends Application {
 
     /**
      * Spustí validaci podle požadavku (z dialogu Nová validace i „Validovat znovu“): nastaví nástroje vypnuté pro tuto
-     * validaci a adresář validuje hned, ZIP nejdřív rozbalí.
+     * validaci a adresář validuje hned, ZIP nejdřív rozbalí, skupinu balíků validuje v hlavním okně.
      */
     public void launchValidation(ValidationRequest request) {
         pendingRequest = request;
@@ -172,7 +172,20 @@ public class Main extends Application {
             public void unzipAndRunPspZipValidation(File pspZip, DmfDetector.Params params, boolean createTxtLog, boolean createXmlLog, int verbosity) {
                 Main.this.unzipAndRunPspZipValidation(pspZip, params, createTxtLog, createXmlLog, verbosity);
             }
+
+            @Override
+            public void runGroupValidation(File groupDir, DmfDetector.Params params, boolean createTxtLog, boolean createXmlLog, int verbosity) {
+                Main.this.runGroupValidation(groupDir, params, createTxtLog, createXmlLog, verbosity);
+            }
         });
+    }
+
+    /** Validace skupiny balíků v hlavním okně (ZIPy ve skupině se rozbalují bez dialogu). */
+    public void runGroupValidation(File groupDir, DmfDetector.Params params, boolean createTxtLog, boolean createXmlLog, int verbosity) {
+        dialogStage.close();
+        ValidationRequest request = pendingRequest;
+        pendingRequest = null;
+        mainController.runGroupValidation(groupDir, params, createTxtLog, createXmlLog, verbosity, request);
     }
 
     public void runPspDirValidation(File pspDir, DmfDetector.Params dmDetectorParams, boolean createTxtLog, boolean createXmlLog, int verbosity) {

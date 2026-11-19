@@ -10,14 +10,14 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ProgressIndicator;
 import javafx.stage.WindowEvent;
 import nkp.pspValidator.shared.DmfDetector;
-import nkp.pspValidator.shared.engine.Utils;
+import nkp.pspValidator.gui.newvalidation.ZipUnpacker;
 
 import java.io.File;
-import java.io.IOException;
-import java.util.zip.ZipException;
-import java.util.zip.ZipFile;
 
 /**
+ * Dialog rozbalování ZIPu před validací jednoho balíku. Samotné rozbalení je v {@link ZipUnpacker} (používá ho i běh
+ * skupiny balíků bez dialogu).
+ * <p>
  * Created by Martin Řehánek on 15.1.19.
  */
 public class UnzipAndValidateDialogController extends DialogController {
@@ -46,79 +46,17 @@ public class UnzipAndValidateDialogController extends DialogController {
             @Override
             protected Void call() throws Exception {
                 try {
-                    updateMessage("Zpracovávám soubor " + pspZip.getAbsolutePath());
-                    busyWait(2000);
-                    if (isCancelled()) {
-                        return null;
-                    }
-
-                    //check, that ok ZIP
-                    updateMessage(String.format("Kontroluji soubor %s", pspZip.getAbsolutePath()));
-                    ZipFile zipFile = new ZipFile(pspZip);
-                    busyWait(1000);
-                    if (isCancelled()) {
-                        return null;
-                    }
-
-                    //check tmp dir
-                    File tmpDir = new File(System.getProperty("java.io.tmpdir"));
-                    updateMessage(String.format("Kontroluji adresář %s", tmpDir.getAbsolutePath()));
-                    busyWait(1000);
-                    if (!tmpDir.exists()) {
-                        showError(String.format("Chyba: adresář %s neexistuje!", tmpDir.getAbsolutePath()));
-                        return null;
-                    } else if (!tmpDir.isDirectory()) {
-                        showError(String.format("Chyba: soubor %s není adresář!", tmpDir.getAbsolutePath()));
-                        return null;
-                    } else if (!tmpDir.canWrite()) {
-                        showError(String.format("Chyba: nemůžu zapisovat do adresáře %s!", tmpDir.getAbsolutePath()));
-                        return null;
-                    } else {
-                        File containerDir = new File(tmpDir, pspZip.getName().substring(0, pspZip.getName().length() - ".zip".length()));
-                        //System.out.println("container dir:" + containerDir.getAbsolutePath());
-                        if (isCancelled()) {
-                            return null;
-                        }
-
-                        //delete unzipped container dir from previous run
-                        if (containerDir.exists()) {
-                            updateMessage(String.format("Mažu adresář %s", containerDir.getAbsolutePath()));
-                            Utils.deleteNonemptyDir(containerDir);
-                            busyWait(2000);
-                            if (isCancelled()) {
-                                return null;
-                            }
-                        }
-
-                        //unzip into container dir
-                        updateMessage(String.format("Rozbaluji %s do adresáře %s", pspZip.getAbsolutePath(), containerDir.getAbsolutePath()));
-                        Utils.unzip(pspZip, containerDir);
+                    ZipUnpacker.Result result = new ZipUnpacker().unpack(pspZip, this::isCancelled, message -> {
+                        updateMessage(message);
                         busyWait(1000);
-                        if (isCancelled()) {
-                            return null;
-                        }
-
-                        File pspDir = containerDir;
-                        File[] filesInContainer = containerDir.listFiles();
-                        if (filesInContainer.length == 1) {
-                            pspDir = filesInContainer[0];
-                        }
-                        //System.out.println("psp dir: " + pspDir.getAbsolutePath());
-
-                        if (!isCancelled()) {
-                            finishOkAndContinue(pspDir);
-                        }
-                        return null;
+                    });
+                    if (result != null && !isCancelled()) {
+                        finishOkAndContinue(result.getPspDir());
                     }
-                } catch (ZipException e) {
-                    showError(String.format("Chyba: Soubor %s není korektní ZIP: %s!", pspZip.getAbsolutePath(), e.getMessage()));
-                    //e.printStackTrace();
-                    return null;
-                } catch (IOException e) {
-                    showError(String.format("Chyba zpracování ZIP souboru %s: %s!", pspZip.getAbsolutePath(), e.getMessage()));
-                    //e.printStackTrace();
-                    return null;
+                } catch (ZipUnpacker.UnpackException e) {
+                    showError(e.getMessage());
                 }
+                return null;
             }
 
             private void finishOkAndContinue(File pspDir) {

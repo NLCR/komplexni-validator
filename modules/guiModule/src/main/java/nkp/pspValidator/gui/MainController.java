@@ -16,11 +16,21 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+import nkp.pspValidator.gui.group.DetailRetention;
+import nkp.pspValidator.gui.group.GroupCsv;
+import nkp.pspValidator.gui.group.GroupDetailTexts;
+import nkp.pspValidator.gui.group.GroupItem;
+import nkp.pspValidator.gui.group.GroupPackages;
+import nkp.pspValidator.gui.group.GroupRun;
+import nkp.pspValidator.gui.group.PackageStatus;
+import nkp.pspValidator.gui.newvalidation.DmfParamsBuilder;
 import nkp.pspValidator.gui.newvalidation.DocumentTypes;
 import nkp.pspValidator.gui.newvalidation.ValidationRequest;
 import nkp.pspValidator.gui.newvalidation.ValidationSource;
+import nkp.pspValidator.gui.newvalidation.ZipUnpacker;
 import nkp.pspValidator.gui.results.ProblemCounts;
 import nkp.pspValidator.gui.results.ProblemFilter;
 import nkp.pspValidator.gui.results.RerunState;
@@ -38,6 +48,9 @@ import nkp.pspValidator.shared.externalUtils.ExternalUtilManager;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
 import java.io.PrintStream;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
@@ -50,6 +63,12 @@ import java.util.logging.Logger;
  * pravidla vybrané sekce, problémy vybraného pravidla) a stavový řádek. Logika souhrnu, průběhu, filtru a opakování
  * validace je v balíčku {@code gui.results} (bez JavaFX), počty a stavy sekcí a pravidel dodává jádro přes
  * {@link ValidationState.ProgressListener} do {@link ValidationStateManager} a {@link ValidationProgress}.
+ * <p>
+ * Skupina balíků: tabulka balíků nad stejnými třemi panely, které ukazují podrobné výsledky balíku vybraného
+ * v tabulce; balíky se validují postupně v jednom vlákně, každý stejně jako jeden balík (ZIP se rozbalí přes
+ * {@link ZipUnpacker} bez dialogu). Stav běhu a texty jsou v {@link GroupRun} (bez JavaFX), podrobné výsledky balíků
+ * ({@link ValidationStateManager}) se drží v {@link DetailRetention} s rozpočtem na počet problémů. Panely ukazují
+ * {@code shownManager}; události jádra mění {@code validationStateManager} běžícího balíku (u jednoho balíku je to totéž).
  * <p>
  * Události jádra chodí z vlákna validace a do vlákna UI se předávají přes {@code Platform.runLater} v pořadí, v jakém
  * přišly. Hotové sekce lze během běhu procházet: průběh výběr v seznamech nemění a seznam problémů se přestaví jen
@@ -82,6 +101,8 @@ public class MainController extends AbstractController implements ValidationStat
     @FXML
     MenuItem cancelMenuItem;
     @FXML
+    MenuItem exportCsvMenuItem;
+    @FXML
     Menu menuSettings;
     @FXML
     Menu menuShow;
@@ -111,6 +132,14 @@ public class MainController extends AbstractController implements ValidationStat
     Label warningsBadge;
     @FXML
     Label infosBadge;
+    @FXML
+    Label groupValidBadge;
+    @FXML
+    Label groupInvalidBadge;
+    @FXML
+    Label groupErrorBadge;
+    @FXML
+    Label groupWaitingBadge;
     @FXML
     Button rerunButton;
     @FXML
@@ -152,6 +181,36 @@ public class MainController extends AbstractController implements ValidationStat
     @FXML
     VBox resultsPane;
     @FXML
+    SplitPane groupSplit;
+    @FXML
+    VBox groupPane;
+    @FXML
+    CheckBox groupOnlyInvalid;
+    @FXML
+    Label groupShownText;
+    @FXML
+    Button exportCsvButton;
+    @FXML
+    TableView<GroupItem> groupTable;
+    @FXML
+    VBox detailPane;
+    @FXML
+    HBox packageBar;
+    @FXML
+    Label packageTitle;
+    @FXML
+    Label packageSubtitle;
+    @FXML
+    Hyperlink packageXmlLink;
+    @FXML
+    Hyperlink packageTxtLink;
+    @FXML
+    SplitPane resultsSplit;
+    @FXML
+    VBox packageMessagePane;
+    @FXML
+    Label packageMessage;
+    @FXML
     CheckBox filterErrors;
     @FXML
     CheckBox filterWarnings;
@@ -184,7 +243,10 @@ public class MainController extends AbstractController implements ValidationStat
 
     //data probihajici nebo posledni validace
     private Task validationTask;
+    /** výsledky běžícího (u jednoho balíku i zobrazeného) balíku, mění ho události jádra */
     private ValidationStateManager validationStateManager = null;
+    /** výsledky zobrazené v panelech sekcí, pravidel a problémů */
+    private ValidationStateManager shownManager = null;
     private SectionWithState selectedSection;
     private RuleWithState selectedRule;
     private File pspDir;
@@ -219,6 +281,23 @@ public class MainController extends AbstractController implements ValidationStat
     private int finishedValidations = 0;
     private int startedValidations = 0;
 
+    //skupina baliku (null mimo skupinu)
+    private GroupTable groupTableModel;
+    private GroupRun groupRun;
+    private GroupParams groupParams;
+    private final DetailRetention<GroupItem, ValidationStateManager> groupDetails = new DetailRetention<>(DetailRetention.DEFAULT_BUDGET);
+    /** balík vybraný v tabulce (jeho výsledky jsou v panelech) */
+    private GroupItem shownItem;
+    /** balík, jehož události jádra právě chodí (jen vlákno UI) */
+    private GroupItem runningItem;
+    private long packageStartedAt;
+    /** dokud uživatel nevybere balík sám, tabulka sleduje běžící balík */
+    private boolean followRunning = true;
+    /** výběr v tabulce mění program (ne uživatel) */
+    private boolean selectingProgrammatically = false;
+    /** balík, typ a výstupy běžícího balíku pro události jádra ve vlákně validace */
+    private volatile GroupPackageContext groupContext;
+
     @Override
     public void start(Stage primaryStage) throws Exception {
     }
@@ -250,10 +329,12 @@ public class MainController extends AbstractController implements ValidationStat
             box.selectedProperty().addListener((obs, oldValue, newValue) -> applyFilter());
         }
         initCopyActions();
+        initGroupTable();
         cancelMenuItem.setAccelerator(cancelAccelerator());
         elapsedTimer = new Timeline(new KeyFrame(Duration.seconds(1), e -> refreshRunningHeader()));
         elapsedTimer.setCycleCount(Timeline.INDEFINITE);
         showCenter(emptyState);
+        setGroupLayout(false);
         updateStatus("Připraveno", TotalState.IDLE);
     }
 
@@ -389,6 +470,7 @@ public class MainController extends AbstractController implements ValidationStat
     private void initBeforeValidation() {
         //data spojena s konkretnim behem validace
         validationStateManager = null;
+        shownManager = null;
         progress = null;
         pspDir = null;
         dmf = null;
@@ -415,6 +497,7 @@ public class MainController extends AbstractController implements ValidationStat
      */
     public void runPspDirValidation(File pspDir, DmfDetector.Params dmfDetectorParams, boolean createTxtLog, boolean createXmlLog,
                                     int verbosity, ValidationRequest request) {
+        leaveGroupMode();
         startRun(pspDir, request, createTxtLog ? buildTxtLogFile(pspDir) : null, createXmlLog ? buildXmlLogFile(pspDir) : null);
 
         validationTask = new Task<Void>() {
@@ -427,18 +510,7 @@ public class MainController extends AbstractController implements ValidationStat
                     dmf = new DmfDetector().resolveDmf(pspDir, dmfDetectorParams);
                     Validator validator = Utils.buildValidator(main.getValidationDataManager(), dmf, pspDir);
                     out = buildTxtLogPrintstream();
-                    //DEV
-                    Validator.DevParams devParams = null;
-                    if (ConfigurationManager.DEV_MODE && ConfigurationManager.DEV_MODE_ONLY_SELECTED_SECTIONS) {
-                        devParams = new Validator.DevParams();
-                        //devParams.getSectionsToRun().add("Bibliografická metadata");
-                        devParams.getSectionsToRun().add("Identifikátory");
-                        devParams.getSectionsToRun().add("Soubor CHECKSUM");
-                        devParams.getSectionsToRun().add("Soubor info");
-                        devParams.getSectionsToRun().add("Struktura souborů");
-                        devParams.getSectionsToRun().add("Primární METS filesec");
-                        //devParams.getSectionsToRun().add("Obrazová data");
-                    }
+                    Validator.DevParams devParams = devParams();
                     if (isCancelled() || cancelValidation) {
                         //zruseno pred spustenim validatoru (jadro pak onValidationsCancel nezavola)
                         pendingOutcome = MainController.this::onStopped;
@@ -485,6 +557,22 @@ public class MainController extends AbstractController implements ValidationStat
         new Thread(validationTask).start();
     }
 
+    /** Jen ve vývojovém režimu: validují se jen vybrané sekce. */
+    private static Validator.DevParams devParams() {
+        Validator.DevParams devParams = null;
+        if (ConfigurationManager.DEV_MODE && ConfigurationManager.DEV_MODE_ONLY_SELECTED_SECTIONS) {
+            devParams = new Validator.DevParams();
+            //devParams.getSectionsToRun().add("Bibliografická metadata");
+            devParams.getSectionsToRun().add("Identifikátory");
+            devParams.getSectionsToRun().add("Soubor CHECKSUM");
+            devParams.getSectionsToRun().add("Soubor info");
+            devParams.getSectionsToRun().add("Struktura souborů");
+            devParams.getSectionsToRun().add("Primární METS filesec");
+            //devParams.getSectionsToRun().add("Obrazová data");
+        }
+        return devParams;
+    }
+
     /** Okno do stavu „běží“: data předchozí validace pryč, horní lišta, panel průběhu, uplynulý čas. */
     private void startRun(File pspDir, ValidationRequest request, File logTxtFile, File logXmlFile) {
         initBeforeValidation();
@@ -511,6 +599,7 @@ public class MainController extends AbstractController implements ValidationStat
      * {@link #completeSyntheticRun()}.
      */
     void beginSyntheticRun(File fakePspDir) {
+        leaveGroupMode();
         startRun(fakePspDir, null, null, null);
     }
 
@@ -608,6 +697,10 @@ public class MainController extends AbstractController implements ValidationStat
 
     /** Horní lišta během běhu: podtitul s uplynulým časem a průběžné počty (volá se i každou sekundu). */
     private void refreshRunningHeader() {
+        if (groupRun != null) {
+            showGroupHeader();
+            return;
+        }
         if (totalState != TotalState.RUNNING || pspDir == null) {
             return;
         }
@@ -620,7 +713,19 @@ public class MainController extends AbstractController implements ValidationStat
         String counts;
         String detail;
         double fraction;
-        if (progress == null) {
+        if (groupRun != null) {
+            title = groupRun.progressTitle();
+            counts = groupRun.progressCounts();
+            if (groupRun.getCurrent() == null) {
+                detail = null;
+            } else if (progress == null) {
+                detail = groupRun.getCurrent().isZip() ? "Rozbaluji soubor ZIP, rozpoznávám typ a verzi balíku a připravuji validátor."
+                        : ValidationProgress.INITIALIZING_DETAIL;
+            } else {
+                detail = progress.getDetail() == null ? progress.getTitle() : progress.getTitle() + " – " + progress.getDetail();
+            }
+            fraction = groupRun.fraction(progress == null ? 0 : progress.getFraction());
+        } else if (progress == null) {
             title = ValidationProgress.INITIALIZING_TITLE;
             counts = null;
             detail = ValidationProgress.INITIALIZING_DETAIL;
@@ -666,6 +771,9 @@ public class MainController extends AbstractController implements ValidationStat
         setVisibleManaged(errorsBadge, counts);
         setVisibleManaged(warningsBadge, counts);
         setVisibleManaged(infosBadge, counts);
+        for (Label badge : new Label[]{groupValidBadge, groupInvalidBadge, groupErrorBadge, groupWaitingBadge}) {
+            setVisibleManaged(badge, false);
+        }
 
         boolean running = content.isRunning();
         setVisibleManaged(cancelButton, running);
@@ -680,6 +788,9 @@ public class MainController extends AbstractController implements ValidationStat
 
     /** Bublina u názvu balíku: odkud se validovalo. */
     private String sourceDescription() {
+        if (currentRequest != null && currentRequest.getSource() == ValidationSource.GROUP) {
+            return "Adresář skupiny: " + pspDir.getAbsolutePath();
+        }
         if (currentRequest != null && currentRequest.getSource() == ValidationSource.ZIP) {
             return "Soubor ZIP: " + currentRequest.getFile().getAbsolutePath() + "\nRozbaleno do: " + pspDir.getAbsolutePath();
         }
@@ -729,12 +840,36 @@ public class MainController extends AbstractController implements ValidationStat
         boolean canRerun = rerunState.canRerun();
         rerunMenuItem.setDisable(!canRerun);
         rerunButton.setDisable(!canRerun);
+        refreshGroupMenus();
     }
 
-    private String buildValidationLogName(File pspDir) {
+    /** naposledy pouzity zaklad nazvu vystupu a pocet jeho pouziti (pro odliseni vystupu se stejnym zakladem) */
+    private String lastLogNameBase = null;
+    private File lastLogNamePspDir = null;
+    private String lastLogName = null;
+
+    /**
+     * Nazev vystupu (protokol a log) pro validaci baliku: cas na sekundy a nazev adresare baliku. Protokol i log tehoz
+     * baliku dostanou stejny nazev. Kdyz by vystup se stejnym nazvem uz v adresari logu byl (dva baliky skupiny se
+     * stejne pojmenovanym adresarem validovane v teze sekunde), prida se poradove cislo, aby se neprepsal.
+     */
+    private synchronized String buildValidationLogName(File pspDir) {
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy_MM_dd_HH_mm_ss_");
-        Date date = new Date();
-        return dateFormat.format(date) + pspDir.getName();
+        String base = dateFormat.format(new Date()) + pspDir.getName();
+        if (base.equals(lastLogNameBase) && pspDir.equals(lastLogNamePspDir)) {
+            //druhy vystup (log k protokolu) teze validace
+            return lastLogName;
+        }
+        File logDir = getLogDir();
+        String name = base;
+        int order = 2;
+        while (logDir != null && (new File(logDir, name + ".xml").exists() || new File(logDir, name + ".txt").exists())) {
+            name = base + "_" + order++;
+        }
+        lastLogNameBase = base;
+        lastLogNamePspDir = pspDir;
+        lastLogName = name;
+        return name;
     }
 
     private File getLogDir() {
@@ -773,6 +908,12 @@ public class MainController extends AbstractController implements ValidationStat
     public void onValidationsFinish(int globalProblemsTotal, Map<Level, Integer> globalProblemsByLevel, boolean valid, long duration) {
         LocalDateTime finishedAt = LocalDateTime.now();
         Map<Level, Integer> byLevel = globalProblemsByLevel == null ? null : new HashMap<>(globalProblemsByLevel);
+        GroupPackageContext context = groupContext;
+        if (context != null) {
+            long packageDuration = System.currentTimeMillis() - context.startedAt;
+            pendingOutcome = () -> groupPackageFinished(context, ProblemCounts.of(byLevel), valid, packageDuration);
+            return;
+        }
         pendingOutcome = () -> {
             endRunUi();
             updateStatus(String.format("Validace balíku %s hotova.", pspDir.getAbsolutePath()), TotalState.FINISHED);
@@ -786,6 +927,12 @@ public class MainController extends AbstractController implements ValidationStat
 
     @Override
     public void onValidationsCancel() {
+        GroupPackageContext context = groupContext;
+        if (context != null) {
+            long packageDuration = System.currentTimeMillis() - context.startedAt;
+            pendingOutcome = () -> groupPackageCanceled(context.item, context.dmf, packageDuration);
+            return;
+        }
         pendingOutcome = this::onStopped;
     }
 
@@ -798,9 +945,11 @@ public class MainController extends AbstractController implements ValidationStat
             progress = newProgress;
             refreshRunningHeader();
             refreshProgress();
-            filteredSections = new FilteredList<>(manager.getSectionsObservable(), filter::showSection);
-            sectionList.setItems(filteredSections);
-            updatePlaceholders();
+            if (groupRun != null) {
+                groupPackageInitialized(manager, newProgress.getTotalRules());
+                return;
+            }
+            showManager(manager);
             //fokus do seznamu sekci (ne na prvni zaskrtavatko filtru)
             sectionList.requestFocus();
         });
@@ -813,6 +962,12 @@ public class MainController extends AbstractController implements ValidationStat
     @Override
     public void onValidationsStart() {
         Platform.runLater(() -> {
+            if (groupRun != null) {
+                if (runningItem != null) {
+                    updateStatus(groupPackageStatus(runningItem), TotalState.RUNNING);
+                }
+                return;
+            }
             updateStatus(String.format("Validuji balík %s.", pspDir.getAbsolutePath()), TotalState.RUNNING);
         });
     }
@@ -887,7 +1042,7 @@ public class MainController extends AbstractController implements ValidationStat
     }
 
     private void refreshSelectedRuleIf(int sectionId, int ruleId) {
-        if (selectedRule != null && selectedRule.getSectionId() == sectionId && selectedRule.getId() == ruleId) {
+        if (shownManager == validationStateManager && selectedRule != null && selectedRule.getSectionId() == sectionId && selectedRule.getId() == ruleId) {
             selectRule(selectedRule);
         }
     }
@@ -904,7 +1059,7 @@ public class MainController extends AbstractController implements ValidationStat
         if (section != null) {
             rulesHeader.setText("Pravidla sekce " + section.getName());
             setTextOrHide(sectionDescription, emptyToNull(section.getDescription()));
-            filteredRules = new FilteredList<>(validationStateManager.getRulesObervable(section.getId()), filter::showRule);
+            filteredRules = new FilteredList<>(shownManager.getRulesObervable(section.getId()), filter::showRule);
             ruleList.setItems(filteredRules);
         } else {
             rulesHeader.setText("Pravidla");
@@ -924,7 +1079,7 @@ public class MainController extends AbstractController implements ValidationStat
             selectedRule = rule;
             problemsHeader.setText("Problémy pravidla " + rule.getName());
             setTextOrHide(ruleDescription, emptyToNull(rule.getDescription()));
-            ObservableList<ValidationProblem> problems = validationStateManager.getProblems(rule.getSectionId(), rule.getId());
+            ObservableList<ValidationProblem> problems = shownManager.getProblems(rule.getSectionId(), rule.getId());
             if (rule.getState() == ProcessingState.FINISHED && problems != null) {
                 filteredProblems = new FilteredList<>(problems, problem -> filter.accepts(problem.getLevel()));
                 problemList.setItems(filteredProblems);
@@ -965,7 +1120,7 @@ public class MainController extends AbstractController implements ValidationStat
     }
 
     private void updatePlaceholders() {
-        if (validationStateManager == null) {
+        if (shownManager == null) {
             sectionList.setPlaceholder(placeholder("Sekce se načítají."));
         } else {
             sectionList.setPlaceholder(placeholder("Žádná sekce nemá problémy zobrazených úrovní."));
@@ -1053,10 +1208,732 @@ public class MainController extends AbstractController implements ValidationStat
         return null;
     }
 
+    // ===== skupina baliku =====
+
+    /** Nastavení validace skupiny z požadavku (pro všechny balíky i pro „Validovat znovu jen tento balík“). */
+    private static final class GroupParams {
+        final DmfDetector.Params params;
+        final boolean createTxtLog;
+        final boolean createXmlLog;
+        final int verbosity;
+
+        GroupParams(DmfDetector.Params params, boolean createTxtLog, boolean createXmlLog, int verbosity) {
+            this.params = DmfParamsBuilder.copy(params);
+            this.createTxtLog = createTxtLog;
+            this.createXmlLog = createXmlLog;
+            this.verbosity = verbosity;
+        }
+    }
+
+    /** Běžící balík skupiny pro události jádra (vlákno validace). */
+    private static final class GroupPackageContext {
+        final GroupItem item;
+        final File xmlProtocol;
+        final File txtLog;
+        final Dmf dmf;
+        final long startedAt;
+
+        GroupPackageContext(GroupItem item, File xmlProtocol, File txtLog, Dmf dmf, long startedAt) {
+            this.item = item;
+            this.xmlProtocol = xmlProtocol;
+            this.txtLog = txtLog;
+            this.dmf = dmf;
+            this.startedAt = startedAt;
+        }
+    }
+
+    private void initGroupTable() {
+        groupTableModel = new GroupTable(groupTable);
+        groupTable.setPlaceholder(placeholder("Žádný balík (podadresář nebo soubor ZIP) k zobrazení."));
+        groupTable.getSelectionModel().selectedItemProperty().addListener((obs, oldValue, nowSelected) -> {
+            if (selectingProgrammatically || nowSelected == null || nowSelected == shownItem) {
+                return;
+            }
+            //uzivatel vybral balik: tabulka uz nesleduje bezici balik
+            followRunning = false;
+            showPackage(nowSelected);
+        });
+        groupOnlyInvalid.selectedProperty().addListener((obs, oldValue, newValue) -> {
+            selectingProgrammatically = true;
+            try {
+                groupTableModel.setOnlyInvalid(newValue);
+                restoreGroupSelection();
+            } finally {
+                selectingProgrammatically = false;
+            }
+            refreshGroupShownText();
+        });
+        MenuItem rerunOne = new MenuItem("Validovat znovu jen tento balík");
+        rerunOne.setOnAction(e -> rerunPackage(groupTable.getSelectionModel().getSelectedItem()));
+        MenuItem openXml = new MenuItem("Otevřít protokol XML");
+        openXml.setOnAction(e -> openOutput(groupTable.getSelectionModel().getSelectedItem(), true));
+        MenuItem openTxt = new MenuItem("Otevřít textový log");
+        openTxt.setOnAction(e -> openOutput(groupTable.getSelectionModel().getSelectedItem(), false));
+        MenuItem copyPath = new MenuItem("Kopírovat cestu k balíku");
+        copyPath.setOnAction(e -> {
+            GroupItem item = groupTable.getSelectionModel().getSelectedItem();
+            if (item != null) {
+                ProblemCell.copyToClipboard(item.getFile().getAbsolutePath());
+            }
+        });
+        ContextMenu menu = new ContextMenu(rerunOne, new SeparatorMenuItem(), openXml, openTxt, copyPath);
+        menu.setOnShowing(e -> {
+            GroupItem item = groupTable.getSelectionModel().getSelectedItem();
+            boolean running = groupRun == null || groupRun.isRunning();
+            rerunOne.setDisable(item == null || running);
+            openXml.setDisable(item == null || !item.getStatus().isDone() || item.getXmlProtocol() == null);
+            openTxt.setDisable(item == null || !item.getStatus().isDone() || item.getTxtLog() == null);
+            copyPath.setDisable(item == null);
+        });
+        groupTable.setContextMenu(menu);
+    }
+
+    /**
+     * Uspořádání výsledků: u jednoho balíku jen panely výsledků (jako dřív), u skupiny tabulka balíků nad nimi
+     * a řádek s vybraným balíkem.
+     */
+    private void setGroupLayout(boolean group) {
+        if (group) {
+            if (!groupSplit.getItems().contains(detailPane)) {
+                resultsPane.getChildren().remove(detailPane);
+                groupSplit.getItems().setAll(groupPane, detailPane);
+                groupSplit.setDividerPositions(0.42);
+            }
+            if (!resultsPane.getChildren().contains(groupSplit)) {
+                resultsPane.getChildren().setAll(groupSplit);
+            }
+        } else {
+            groupSplit.getItems().remove(detailPane);
+            resultsPane.getChildren().setAll(detailPane);
+            VBox.setVgrow(detailPane, javafx.scene.layout.Priority.ALWAYS);
+        }
+        refreshPackageBar();
+    }
+
+    /** Konec režimu skupiny (spouští se validace jednoho balíku): data skupiny pryč, okno jako u jednoho balíku. */
+    private void leaveGroupMode() {
+        if (groupRun == null) {
+            return;
+        }
+        groupRun = null;
+        groupParams = null;
+        groupDetails.clear();
+        shownItem = null;
+        runningItem = null;
+        groupContext = null;
+        followRunning = true;
+        groupTableModel.setItems(Collections.<GroupItem>emptyList());
+        setGroupLayout(false);
+    }
+
+    /**
+     * Spustí validaci skupiny: přečte adresář (balíky jsou jeho podadresáře a soubory .zip) a validuje balíky postupně.
+     *
+     * @param request požadavek, ze kterého validace vznikla (pro „Validovat znovu“), nebo null
+     */
+    public void runGroupValidation(File groupDir, DmfDetector.Params dmfDetectorParams, boolean createTxtLog, boolean createXmlLog,
+                                   int verbosity, ValidationRequest request) {
+        GroupPackages.Listing listing;
+        try {
+            listing = GroupPackages.list(groupDir);
+        } catch (IOException e) {
+            failGroupStart(groupDir, request, e.getMessage());
+            return;
+        }
+        leaveGroupMode();
+        groupRun = new GroupRun(listing);
+        groupParams = new GroupParams(dmfDetectorParams, createTxtLog, createXmlLog, verbosity);
+        groupDetails.clear();
+        shownItem = null;
+        runningItem = null;
+        followRunning = true;
+        groupTableModel.setItems(groupRun.getItems());
+        setGroupLayout(true);
+        startGroupRun(groupRun.getItems(), request);
+    }
+
+    /** Adresář skupiny nejde přečíst: chyba jako u jednoho balíku, „Validovat znovu“ zůstane dostupné. */
+    private void failGroupStart(File groupDir, ValidationRequest request, String message) {
+        leaveGroupMode();
+        initBeforeValidation();
+        pspDir = groupDir;
+        currentRequest = request;
+        logTxtFile = null;
+        logXmlFile = null;
+        rerunState.validationStarted(request);
+        startedValidations++;
+        updateStatus(String.format("Chyba: %s", message), TotalState.ERROR);
+        showHeader(ResultHeader.failed(groupDir.getName(), null, null));
+        messageTitle.setText("Skupinu balíků nelze validovat");
+        messageText.setText(message);
+        showCenter(messageState);
+    }
+
+    /** Okno do stavu „běží“ a start vlákna, které balíky běhu validuje jeden po druhém. */
+    private void startGroupRun(List<GroupItem> toRun, ValidationRequest request) {
+        initBeforeValidation();
+        long now = System.currentTimeMillis();
+        currentRequest = request;
+        pspDir = groupRun.getGroupDir();
+        logTxtFile = null;
+        logXmlFile = null;
+        cancelValidation = false;
+        validationTaskEntered = false;
+        pendingOutcome = null;
+        groupContext = null;
+        runningItem = null;
+        for (GroupItem item : toRun) {
+            groupDetails.remove(item);
+        }
+        groupRun.runStarted(toRun, now);
+        rerunState.validationStarted(request);
+        startedValidations++;
+        runStartedAt = now;
+        for (GroupItem item : toRun) {
+            groupItemChanged(item);
+        }
+        updateStatus(String.format("Validuji skupinu %s.", groupRun.getGroupDir().getAbsolutePath()), TotalState.RUNNING);
+        showGroupHeader();
+        refreshProgress();
+        setVisibleManaged(progressPane, true);
+        elapsedTimer.playFromStart();
+        showPackage(shownItem);
+        refreshGroupShownText();
+
+        List<GroupItem> queue = new ArrayList<>(toRun);
+        GroupParams params = groupParams;
+        validationTask = new Task<Void>() {
+            @Override
+            protected Void call() {
+                validationTaskEntered = true;
+                try {
+                    for (int i = 0; i < queue.size(); i++) {
+                        if (cancelValidation) {
+                            break;
+                        }
+                        validateGroupPackage(queue.get(i), i + 1, queue.size(), params);
+                    }
+                } finally {
+                    groupContext = null;
+                    Platform.runLater(MainController.this::onGroupEnded);
+                }
+                return null;
+            }
+        };
+        new Thread(validationTask).start();
+    }
+
+    /**
+     * Validace jednoho balíku skupiny ve vlákně validace, stejně jako jednoho balíku (ZIP se rozbalí, typ a verze se
+     * rozpoznají, sestaví se validátor). Chyba balíku běh nezastaví: balík dostane stav „chyba“ s hláškou. Rozbalený
+     * ZIP se po validaci smaže.
+     */
+    private void validateGroupPackage(GroupItem item, int position, int total, GroupParams params) {
+        RunHook hook = runHook;
+        if (hook != null) {
+            hook.packageStarted(position, total);
+        }
+        long startedAt = System.currentTimeMillis();
+        Platform.runLater(() -> groupPackageStarted(item));
+        pendingOutcome = null;
+        groupContext = null;
+        ZipUnpacker.Result unpacked = null;
+        PrintStream out = null;
+        Dmf resolved = null;
+        try {
+            File dir;
+            if (item.isZip()) {
+                unpacked = new ZipUnpacker().unpack(item.getFile(), () -> cancelValidation, null);
+                dir = unpacked == null ? null : unpacked.getPspDir();
+            } else {
+                dir = item.getFile();
+            }
+            if (dir == null || cancelValidation) {
+                pendingOutcome = canceledOutcome(item, null, startedAt);
+            } else {
+                File xml = params.createXmlLog ? buildXmlLogFile(dir) : null;
+                File txt = params.createTxtLog ? buildTxtLogFile(dir) : null;
+                resolved = new DmfDetector().resolveDmf(dir, DmfParamsBuilder.copy(params.params));
+                Dmf resolvedDmf = resolved;
+                Platform.runLater(() -> groupPackageResolved(item, resolvedDmf));
+                Validator validator = Utils.buildValidator(main.getValidationDataManager(), resolved, dir);
+                out = openTxtLog(txt);
+                if (cancelValidation) {
+                    pendingOutcome = canceledOutcome(item, resolved, startedAt);
+                } else {
+                    groupContext = new GroupPackageContext(item, xml, txt, resolved, startedAt);
+                    validator.run(dir, xml, out, params.verbosity, devParams(), toSetOfSkippedSectionNames(validator, resolved),
+                            this, this, resolved);
+                }
+            }
+        } catch (ZipUnpacker.UnpackException e) {
+            pendingOutcome = failedOutcome(item, null, e.getMessage(), startedAt);
+        } catch (Exception e) {
+            e.printStackTrace();
+            //chyba az po ohlaseni vysledku (napr. pri zapisu protokolu) ma prednost pred vysledkem
+            pendingOutcome = failedOutcome(item, resolved, e.getMessage(), startedAt);
+        } finally {
+            if (out != null) {
+                out.close();
+            }
+            groupContext = null;
+            Runnable outcome = pendingOutcome;
+            pendingOutcome = null;
+            if (outcome == null) {
+                outcome = failedOutcome(item, resolved, "Validace skončila bez výsledku.", startedAt);
+            }
+            Platform.runLater(outcome);
+            if (unpacked != null) {
+                ZipUnpacker.deleteWorkDir(unpacked.getContainerDir());
+            }
+        }
+    }
+
+    private Runnable failedOutcome(GroupItem item, Dmf resolved, String message, long startedAt) {
+        long duration = System.currentTimeMillis() - startedAt;
+        return () -> groupPackageFailed(item, resolved, message, duration);
+    }
+
+    private Runnable canceledOutcome(GroupItem item, Dmf resolved, long startedAt) {
+        long duration = System.currentTimeMillis() - startedAt;
+        return () -> groupPackageCanceled(item, resolved, duration);
+    }
+
+    private static PrintStream openTxtLog(File txt) {
+        if (txt == null) {
+            return null;
+        }
+        try {
+            return new PrintStream(txt);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+
+    // ----- udalosti behu skupiny (vlakno UI) -----
+
+    private void groupPackageStarted(GroupItem item) {
+        runningItem = item;
+        validationStateManager = null;
+        progress = null;
+        dmf = null;
+        packageStartedAt = System.currentTimeMillis();
+        groupDetails.remove(item);
+        groupRun.packageStarted(item);
+        updatePins();
+        groupItemChanged(item);
+        if (followRunning) {
+            selectGroupItem(item);
+        } else if (item == shownItem) {
+            showPackage(item);
+        }
+        updateStatus(groupPackageStatus(item), TotalState.RUNNING);
+        refreshProgress();
+        showGroupHeader();
+    }
+
+    private String groupPackageStatus(GroupItem item) {
+        return String.format("Validuji balík %s (%d z %d).", item.getFile().getAbsolutePath(), groupRun.currentPosition(),
+                groupRun.getSession().size());
+    }
+
+    private void groupPackageResolved(GroupItem item, Dmf resolved) {
+        if (item != runningItem) {
+            return;
+        }
+        dmf = resolved;
+        groupRun.packageResolved(item, resolved);
+        groupItemChanged(item);
+    }
+
+    /** Jádro ohlásilo pravidla běžícího balíku: jeho výsledky se začnou plnit (a zobrazí se, je-li balík vybraný). */
+    private void groupPackageInitialized(ValidationStateManager manager, int totalRules) {
+        if (runningItem == null) {
+            return;
+        }
+        groupDetails.put(runningItem, manager, totalRules);
+        updatePins();
+        if (shownItem == runningItem) {
+            showManager(manager);
+            refreshPackageBar();
+        }
+    }
+
+    private void groupPackageFinished(GroupPackageContext context, ProblemCounts counts, boolean valid, long duration) {
+        groupRun.packageFinished(context.item, context.dmf, counts, valid, duration, context.xmlProtocol, context.txtLog);
+        storeDetail(context.item, counts);
+        afterGroupPackage(context.item);
+    }
+
+    private void groupPackageFailed(GroupItem item, Dmf resolved, String message, long duration) {
+        if (validationStateManager != null && item == runningItem) {
+            validationStateManager.markUnfinished(ProcessingState.INTERRUPTED);
+        }
+        ProblemCounts found = item == runningItem ? foundSoFar() : null;
+        groupRun.packageFailed(item, resolved, found, message, duration);
+        storeDetail(item, found);
+        afterGroupPackage(item);
+    }
+
+    private void groupPackageCanceled(GroupItem item, Dmf resolved, long duration) {
+        if (validationStateManager != null && item == runningItem) {
+            validationStateManager.markUnfinished(ProcessingState.CANCELED);
+        }
+        ProblemCounts found = item == runningItem ? foundSoFar() : null;
+        groupRun.packageCanceled(item, resolved, found, duration);
+        storeDetail(item, found);
+        afterGroupPackage(item);
+    }
+
+    /** Podrobné výsledky doběhlého balíku zůstávají v paměti s vahou podle počtu pravidel a problémů. */
+    private void storeDetail(GroupItem item, ProblemCounts counts) {
+        if (validationStateManager == null || item != runningItem) {
+            return;
+        }
+        long weight = (progress == null ? 0 : progress.getTotalRules())
+                + (counts == null ? 0 : (long) counts.getErrors() + counts.getWarnings() + counts.getInfos());
+        groupDetails.put(item, validationStateManager, weight);
+    }
+
+    private void afterGroupPackage(GroupItem item) {
+        boolean shown = item == shownItem && shownManager != null && shownManager == validationStateManager;
+        if (item == runningItem) {
+            runningItem = null;
+            validationStateManager = null;
+            progress = null;
+        }
+        updatePins();
+        groupItemChanged(item);
+        if (shown) {
+            refreshSelectedRule();
+        }
+        refreshProgress();
+        showGroupHeader();
+    }
+
+    /** Konec běhu skupiny (všechny balíky prošly nebo zrušení). */
+    private void onGroupEnded() {
+        if (groupRun == null || !groupRun.isRunning()) {
+            return;
+        }
+        groupRun.runEnded(System.currentTimeMillis(), LocalDateTime.now());
+        runningItem = null;
+        validationStateManager = null;
+        progress = null;
+        groupContext = null;
+        endRunUi();
+        for (GroupItem item : groupRun.getSession()) {
+            groupItemChanged(item);
+        }
+        boolean canceled = groupRun.isCanceled();
+        if (!canceled) {
+            finishedValidations++;
+        }
+        updateStatus(groupRun.statusText(), canceled ? TotalState.STOPPED : TotalState.FINISHED);
+        showGroupHeader();
+        //po zruseni zustava vybrany rozpracovany balik, jinak prvni nevalidni (pokud uzivatel sam nic nevybral)
+        if (followRunning && !canceled || shownItem == null) {
+            GroupItem first = groupTableModel.firstProblemOrFirst();
+            if (first != null) {
+                selectGroupItem(first);
+            }
+        }
+        refreshPackageBar();
+        updatePins();
+        if (canceled) {
+            showNotice("notice-stopped", "Validace skupiny byla zrušena. Rozpracovaný balík je označený „zrušeno“, balíky, na které "
+                    + "nedošla řada, „nevalidováno“; jejich výsledky v souhrnu chybí.");
+        }
+    }
+
+    private void stopGroupValidation() {
+        groupRun.cancelRequested();
+        updateStatus("Ruším validaci skupiny…", TotalState.RUNNING);
+        if (validationTask != null && !validationTaskEntered && validationTask.cancel()) {
+            //zruseno driv, nez vlakno zacalo: nikdo jiny konec behu neohlasi
+            onGroupEnded();
+        }
+        //jinak vlakno validace zrusi bezici balik pres shouldCancel a dalsi baliky uz nespusti (vlakno se neprerusuje,
+        //aby se rozpracovane cteni souboru neohlasilo jako chyba baliku)
+    }
+
+    /** „Validovat znovu jen tento balík“: nový běh jen s tímto balíkem, výsledky ostatních zůstávají. */
+    private void rerunPackage(GroupItem item) {
+        if (item == null || groupRun == null || groupRun.isRunning() || groupParams == null) {
+            return;
+        }
+        if (currentRequest != null) {
+            //stejne vypnute nastroje jako pri behu cele skupiny
+            main.getValidationDataManager().getExternalUtilManager().setUtilsDisabled(currentRequest.getDisabledUtils());
+        }
+        followRunning = false;
+        selectGroupItem(item);
+        startGroupRun(Collections.singletonList(item), currentRequest);
+    }
+
+    // ----- zobrazeni skupiny -----
+
+    /** Řádek balíku se změnil: překreslí se, přeřadí a přefiltruje, výběr zůstane. */
+    private void groupItemChanged(GroupItem item) {
+        selectingProgrammatically = true;
+        try {
+            groupTableModel.itemChanged(item);
+            restoreGroupSelection();
+        } finally {
+            selectingProgrammatically = false;
+        }
+        refreshGroupShownText();
+        if (item == shownItem) {
+            refreshPackageBar();
+        }
+    }
+
+    private void restoreGroupSelection() {
+        if (shownItem != null && groupTableModel.shownItems().contains(shownItem)
+                && groupTable.getSelectionModel().getSelectedItem() != shownItem) {
+            groupTable.getSelectionModel().select(shownItem);
+        }
+    }
+
+    /** Vybere balík v tabulce (programově, nemění sledování běžícího balíku) a zobrazí jeho výsledky. */
+    private void selectGroupItem(GroupItem item) {
+        selectingProgrammatically = true;
+        try {
+            if (groupTableModel.shownItems().contains(item)) {
+                groupTable.getSelectionModel().select(item);
+                groupTable.scrollTo(item);
+            } else {
+                groupTable.getSelectionModel().clearSelection();
+            }
+        } finally {
+            selectingProgrammatically = false;
+        }
+        showPackage(item);
+    }
+
+    /** Panely ukážou výsledky balíku (běžícího živě, hotového z paměti), nebo hlášku, když je balík nemá. */
+    private void showPackage(GroupItem item) {
+        shownItem = item;
+        updatePins();
+        ValidationStateManager manager = item == null ? null : item == runningItem ? validationStateManager : groupDetails.get(item);
+        if (manager == null || manager != shownManager) {
+            showManager(manager);
+        }
+        refreshPackageBar();
+    }
+
+    /** Panely sekcí, pravidel a problémů ukážou dané výsledky (výběr sekce a pravidla se zruší). */
+    private void showManager(ValidationStateManager manager) {
+        shownManager = manager;
+        selectedSection = null;
+        selectedRule = null;
+        filteredSections = manager == null ? null : new FilteredList<>(manager.getSectionsObservable(), filter::showSection);
+        sectionList.setItems(filteredSections);
+        selectSection(null);
+        updatePlaceholders();
+    }
+
+    private void updatePins() {
+        Set<GroupItem> pinned = new HashSet<>();
+        if (runningItem != null) {
+            pinned.add(runningItem);
+        }
+        if (shownItem != null) {
+            pinned.add(shownItem);
+        }
+        groupDetails.setPinned(pinned);
+    }
+
+    /** Řádek s vybraným balíkem nad výsledky a hláška místo výsledků (jen u skupiny). */
+    private void refreshPackageBar() {
+        boolean group = groupRun != null;
+        setVisibleManaged(packageBar, group && shownItem != null);
+        String message = null;
+        if (group && shownItem == null) {
+            message = groupRun.total() == 0 ? "Adresář neobsahuje žádný balík (podadresář nebo soubor ZIP)." : "Vyberte balík v tabulce.";
+        } else if (group) {
+            packageTitle.setText(shownItem.getName());
+            String subtitle = GroupDetailTexts.subtitle(shownItem);
+            packageSubtitle.setText(subtitle);
+            packageSubtitle.setTooltip(new Tooltip(subtitle));
+            boolean done = shownItem.getStatus().isDone();
+            setVisibleManaged(packageXmlLink, done && shownItem.getXmlProtocol() != null);
+            setVisibleManaged(packageTxtLink, done && shownItem.getTxtLog() != null);
+            message = GroupDetailTexts.message(shownItem, shownManager != null, groupDetails.wasEvicted(shownItem));
+        }
+        packageMessage.setText(message);
+        packageMessagePane.setVisible(message != null);
+        resultsSplit.setVisible(message == null);
+        refreshGroupMenus();
+    }
+
+    private void refreshGroupShownText() {
+        if (groupRun == null) {
+            return;
+        }
+        boolean filtered = groupTableModel.isOnlyInvalid();
+        groupShownText.setText(filtered ? nkp.pspValidator.gui.group.GroupColumns.shownText(groupTableModel.shownCount(), groupTableModel.totalCount()) : "");
+    }
+
+    /** Horní lišta skupiny: název adresáře, podtitul s průběhem nebo dobou a počty balíků podle výsledku. */
+    private void showGroupHeader() {
+        if (groupRun == null) {
+            return;
+        }
+        header.setVisible(true);
+        header.setManaged(true);
+        headerTitle.setText(groupRun.getTitle());
+        String source = "Adresář skupiny: " + groupRun.getGroupDir().getAbsolutePath();
+        if (headerTitle.getTooltip() == null || !source.equals(headerTitle.getTooltip().getText())) {
+            headerTitle.setTooltip(new Tooltip(source));
+        }
+        headerSubtitle.setText(groupRun.subtitle(System.currentTimeMillis()));
+        for (Label badge : new Label[]{verdictBadge, errorsBadge, warningsBadge, infosBadge}) {
+            setVisibleManaged(badge, false);
+        }
+        setVisibleManaged(headerLinks, false);
+        boolean running = groupRun.isRunning();
+        groupValidBadge.setText(groupRun.validText());
+        groupInvalidBadge.setText(groupRun.invalidText());
+        groupErrorBadge.setText(groupRun.errorText());
+        setVisibleManaged(groupValidBadge, true);
+        setVisibleManaged(groupInvalidBadge, true);
+        setVisibleManaged(groupErrorBadge, groupRun.count(PackageStatus.ERROR) > 0);
+        int waiting = groupRun.count(PackageStatus.WAITING) + groupRun.count(PackageStatus.RUNNING);
+        int notValidated = groupRun.count(PackageStatus.NOT_VALIDATED) + groupRun.count(PackageStatus.CANCELED);
+        if (running || waiting > 0) {
+            groupWaitingBadge.setText(groupRun.waitingText());
+            setVisibleManaged(groupWaitingBadge, true);
+        } else if (notValidated > 0) {
+            groupWaitingBadge.setText(groupRun.notValidatedText());
+            setVisibleManaged(groupWaitingBadge, true);
+        } else {
+            setVisibleManaged(groupWaitingBadge, false);
+        }
+        setVisibleManaged(cancelButton, running);
+        setVisibleManaged(rerunButton, !running);
+    }
+
+    private String groupBadgesText() {
+        StringBuilder text = new StringBuilder();
+        for (Label badge : new Label[]{groupValidBadge, groupInvalidBadge, groupErrorBadge, groupWaitingBadge}) {
+            if (badge.isVisible()) {
+                text.append(text.length() == 0 ? "" : " / ").append(badge.getText());
+            }
+        }
+        return text.toString();
+    }
+
+    /** Menu a tlačítko exportu, protokol a log v menu Zobrazit u skupiny podle vybraného balíku. */
+    private void refreshGroupMenus() {
+        boolean group = groupRun != null;
+        exportCsvMenuItem.setDisable(!group);
+        exportCsvButton.setDisable(!group);
+        if (group) {
+            boolean done = shownItem != null && shownItem.getStatus().isDone();
+            showLogXmlMenuItem.setDisable(!done || shownItem.getXmlProtocol() == null);
+            showLogTxtMenuItem.setDisable(!done || shownItem.getTxtLog() == null);
+        }
+    }
+
+    private File shownOutput(boolean xml) {
+        if (shownItem == null || !shownItem.getStatus().isDone()) {
+            return null;
+        }
+        return xml ? shownItem.getXmlProtocol() : shownItem.getTxtLog();
+    }
+
+    private void openOutput(GroupItem item, boolean xml) {
+        File file = item == null ? null : xml ? item.getXmlProtocol() : item.getTxtLog();
+        if (file != null) {
+            openUrl(file.toURI().toString());
+        }
+    }
+
+    /** „Exportovat souhrn do CSV…“: všechny balíky skupiny v pořadí ve skupině. */
+    public void exportGroupCsv(ActionEvent actionEvent) {
+        if (groupRun == null) {
+            return;
+        }
+        FileChooser chooser = new FileChooser();
+        chooser.setTitle("Exportovat souhrn skupiny do CSV");
+        chooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Soubory CSV", "*.csv"));
+        chooser.setInitialFileName(groupRun.getTitle() + "-souhrn.csv");
+        File parent = groupRun.getGroupDir().getParentFile();
+        if (parent != null && parent.isDirectory()) {
+            chooser.setInitialDirectory(parent);
+        }
+        File file = chooser.showSaveDialog(main.getPrimaryStage());
+        if (file != null) {
+            exportGroupCsvTo(file);
+        }
+    }
+
+    /** Zapíše souhrn skupiny do souboru; výsledek oznámí ve stavovém řádku. */
+    boolean exportGroupCsvTo(File file) {
+        try (OutputStream out = new FileOutputStream(file)) {
+            GroupCsv.write(groupRun.getItems(), out);
+            statusText.setText("Souhrn skupiny uložen do " + file.getAbsolutePath() + ".");
+            return true;
+        } catch (IOException e) {
+            statusText.setText("Souhrn skupiny nelze uložit: " + e.getMessage());
+            return false;
+        }
+    }
+
+    // ----- pro SnapshotMode -----
+
+    boolean isGroupMode() {
+        return groupRun != null;
+    }
+
+    /** Vybere první balík s daným stavem (jako uživatel), vrátí jeho název nebo null. */
+    String selectGroupPackage(PackageStatus status) {
+        for (GroupItem item : groupTableModel.shownItems()) {
+            if (item.getStatus() == status) {
+                groupTable.getSelectionModel().select(item);
+                groupTable.scrollTo(item);
+                return item.getName();
+            }
+        }
+        return null;
+    }
+
+    /** „Validovat znovu jen tento balík“ pro první balík s daným stavem; vrátí jeho název nebo null. */
+    String rerunGroupPackage(PackageStatus status) {
+        for (GroupItem item : groupRun.getItems()) {
+            if (item.getStatus() == status) {
+                rerunPackage(item);
+                return item.getName();
+            }
+        }
+        return null;
+    }
+
+    void setGroupOnlyInvalid(boolean onlyInvalid) {
+        groupOnlyInvalid.setSelected(onlyInvalid);
+    }
+
+    /** Počty a stavy balíků pro výpis SnapshotMode. */
+    String describeGroupItems() {
+        StringBuilder text = new StringBuilder();
+        for (GroupItem item : groupRun.getItems()) {
+            text.append("\n  ").append(item).append(item.getDurationMs() == null ? "" : ", " + item.getDurationMs() + " ms")
+                    .append(groupDetails.get(item) != null ? ", detail in memory" : "");
+        }
+        return text.toString();
+    }
+
     // ===== akce =====
 
     public void stopValidation(ActionEvent actionEvent) {
         cancelValidation = true;
+        if (groupRun != null) {
+            stopGroupValidation();
+            return;
+        }
         if (validationTask != null) {
             boolean cancelled = validationTask.cancel();
             if (cancelled && !validationTaskEntered) {
@@ -1112,6 +1989,11 @@ public class MainController extends AbstractController implements ValidationStat
     /** Popis zobrazeného výsledku pro výpis SnapshotMode. */
     String describeShownResult() {
         return "state=" + totalState
+                + (groupRun != null ? ", group=[" + headerSubtitle.getText() + " | badges " + groupBadgesText()
+                + " | table " + groupTableModel.shownCount() + "/" + groupTableModel.totalCount()
+                + (groupTableModel.isOnlyInvalid() ? " only invalid" : "")
+                + " | shown " + (shownItem == null ? "-" : shownItem.getName() + " " + shownItem.getStatus())
+                + (packageMessagePane.isVisible() ? " | message " + packageMessage.getText() : "") + "]" : "")
                 + (progressPane.isVisible() ? ", progress=[" + progressTitle.getText() + " | " + progressCounts.getText()
                 + " | " + progressDetail.getText() + " | " + String.format(Locale.ROOT, "%.2f", progressBar.getProgress()) + "]" : "")
                 + (noticeBar.isVisible() ? ", notice=" + noticeText.getText().replace('\n', ' ') : "")
@@ -1139,6 +2021,10 @@ public class MainController extends AbstractController implements ValidationStat
         void initialized(int totalRules);
 
         void ruleFinished();
+
+        /** Skupina balíků: začíná validace balíku (pořadí v běhu od 1). */
+        default void packageStarted(int position, int total) {
+        }
     }
 
     // ===== dialogy =====
@@ -1175,14 +2061,16 @@ public class MainController extends AbstractController implements ValidationStat
     }
 
     public void showLogTxt(ActionEvent actionEvent) {
-        if (logTxtFile != null) {
-            openUrl(logTxtFile.toURI().toString());
+        File file = groupRun != null ? shownOutput(false) : logTxtFile;
+        if (file != null) {
+            openUrl(file.toURI().toString());
         }
     }
 
     public void showLogXml(ActionEvent actionEvent) {
-        if (logXmlFile != null) {
-            openUrl(logXmlFile.toURI().toString());
+        File file = groupRun != null ? shownOutput(true) : logXmlFile;
+        if (file != null) {
+            openUrl(file.toURI().toString());
         }
     }
 

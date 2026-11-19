@@ -90,6 +90,15 @@ import java.util.function.Supplier;
  * {@code modules/sharedModule/src/main/resources/nkp/pspValidator/shared/validatorConfig}) a nejlépe i
  * {@code validation.log_dir}, jinak aplikace čeká v dialogu inicializace validačních dat.
  * <p>
+ * Skupina balíků: {@code -Dkv.snapshotSource=group} zapne zdroj Skupina balíků v dialogu Nová validace
+ * ({@code -Dkv.snapshotPsp} je pak adresář skupiny) i ve validaci ({@code -Dkv.snapshotValidate} je adresář skupiny).
+ * Krok {@code group} spustí validaci skupiny, pozastaví vlákno validace v polovině pravidel balíku v polovině skupiny
+ * ({@code group-running.png}), vybere hotový balík ({@code group-browse.png}), nechá skupinu doběhnout, vybere první
+ * nevalidní balík ({@code group-results.png}), zapne filtr „jen nevalidní“ ({@code group-filtered.png}, pak ho vypne)
+ * a vyexportuje souhrn do CSV ({@code -Dkv.snapshotCsv=<soubor>}, výchozí {@code group-souhrn.csv} v adresáři snímků).
+ * Krok {@code groupRerunOne} validuje znovu jen první nevalidní balík ({@code group-rerun-one.png}), krok
+ * {@code groupCancel} spustí skupinu znovu a v polovině ji zruší ({@code group-canceled.png}).
+ * <p>
  * Přes gradle: {@code ./gradlew :modules:guiModule:runSnapshots -PsnapshotDir=/tmp/snap [-PsnapshotConfigFile=/tmp/snap-config.properties]}.
  */
 public class SnapshotMode {
@@ -104,6 +113,8 @@ public class SnapshotMode {
     public static final String PROP_RUNNING_MS = "kv.snapshotRunningMs";
     public static final String PROP_PAUSE_AT = "kv.snapshotPauseAt";
     public static final String PROP_PROGRESS_END = "kv.snapshotProgressEnd";
+    public static final String PROP_SOURCE = "kv.snapshotSource";
+    public static final String PROP_CSV = "kv.snapshotCsv";
     private static final long VALIDATION_TIMEOUT_MS = 10 * 60 * 1000;
     public static final String ALL_DIALOGS = "main,mainMenu,newValidation,skipping,externalUtils,about,dictionaries";
 
@@ -124,7 +135,7 @@ public class SnapshotMode {
         Stage dialogStage = main.getDialogStage();
         String psp = System.getProperty(PROP_PSP);
         NewValidationDialog.Expand expand = parseExpand(System.getProperty(PROP_EXPAND));
-        dialogs.put("newValidation", () -> new NewValidationDialog(dialogStage, main, psp, expand));
+        dialogs.put("newValidation", () -> new NewValidationDialog(dialogStage, main, psp, expand, parseSource()));
         dialogs.put("skipping", () -> new SkippingConfigurationDialog(dialogStage, main));
         dialogs.put("externalUtils", () -> new ExternalUtilsCheckDialog(dialogStage, main, false, "Pokračovat", true));
         dialogs.put("about", () -> new AboutAppDialog(dialogStage, main));
@@ -132,6 +143,15 @@ public class SnapshotMode {
 
         System.out.println("SNAPSHOT MODE: dir=" + dir.getAbsolutePath() + ", dialogs=" + names + ", delay=" + delayMs + " ms");
         new Runner(main, dir, delayMs, names, dialogs).next();
+    }
+
+    /** Zdroj předvyplněné cesty v dialogu Nová validace: {@code group} = skupina balíků, jinak podle cesty. */
+    private static ValidationSource parseSource() {
+        return isGroupSource() ? ValidationSource.GROUP : null;
+    }
+
+    private static boolean isGroupSource() {
+        return "group".equals(System.getProperty(PROP_SOURCE, "").trim());
     }
 
     private static NewValidationDialog.Expand parseExpand(String value) {
@@ -174,7 +194,8 @@ public class SnapshotMode {
                 return;
             }
             String name = queue.remove(0);
-            if (!"rerun".equals(name) && !"results".equals(name) && !"progress".equals(name) && !"stress".equals(name)) {
+            if (!"rerun".equals(name) && !"results".equals(name) && !"progress".equals(name) && !"stress".equals(name)
+                    && !name.startsWith("group")) {
                 //ostatni kroky ocekavaji klid (zadna bezici validace)
                 MainController controller = main.getMainController();
                 if (controller.isValidationRunning()) {
@@ -216,6 +237,12 @@ public class SnapshotMode {
                     progress();
                 } else if ("stress".equals(name)) {
                     stress(name);
+                } else if ("group".equals(name)) {
+                    group();
+                } else if ("groupRerunOne".equals(name)) {
+                    groupRerunOne();
+                } else if ("groupCancel".equals(name)) {
+                    groupCancel();
                 } else if ("filtered".equals(name)) {
                     MainController controller = main.getMainController();
                     controller.setFilterChecks(true, true, false, true);
@@ -244,7 +271,7 @@ public class SnapshotMode {
                         next();
                     });
                 } else {
-                    System.err.println("SNAPSHOT MODE: unknown dialog '" + name + "', known: main,mainMenu,results,rerun,progress,stress,filtered,small," + String.join(",", dialogs.keySet()));
+                    System.err.println("SNAPSHOT MODE: unknown dialog '" + name + "', known: main,mainMenu,results,rerun,progress,stress,filtered,small,group,groupRerunOne,groupCancel," + String.join(",", dialogs.keySet()));
                     failed = true;
                     next();
                 }
@@ -264,7 +291,8 @@ public class SnapshotMode {
                 failed = true;
                 return null;
             }
-            ValidationSource source = path.trim().toLowerCase().endsWith(".zip") ? ValidationSource.ZIP : ValidationSource.DIRECTORY;
+            ValidationSource source = isGroupSource() ? ValidationSource.GROUP
+                    : path.trim().toLowerCase().endsWith(".zip") ? ValidationSource.ZIP : ValidationSource.DIRECTORY;
             ConfigurationManager config = main.getConfigurationManager();
             FdmfRegistry registry = main.getValidationDataManager().getFdmfRegistry();
             return ValidationRequest.create(source, path, new VersionSettings(config, registry),
@@ -421,6 +449,139 @@ public class SnapshotMode {
                 resetMenuBar(main.getPrimaryStage().getScene());
                 then.run();
             });
+        }
+
+        // ===== skupina baliku =====
+
+        private void group() {
+            ValidationRequest request = buildRequest("group");
+            if (request == null) {
+                next();
+                return;
+            }
+            System.out.println("SNAPSHOT MODE: group " + describe(request));
+            MainController controller = main.getMainController();
+            GroupGate gate = new GroupGate();
+            controller.setRunHook(gate);
+            int startedBefore = controller.getStartedValidations();
+            long started = System.currentTimeMillis();
+            FrameMonitor monitor = new FrameMonitor();
+            monitor.start();
+            Platform.runLater(() -> main.launchValidation(request));
+            whenGroupPaused(gate, started, () -> after(() -> {
+                System.out.println("SNAPSHOT MODE: group paused in package " + gate.position + " of " + gate.total
+                        + " after " + gate.finished.get() + " of " + gate.pauseAt * 2 + " rules");
+                System.out.println("SNAPSHOT MODE: group running: " + controller.describeShownResult());
+                save(main.getPrimaryStage().getScene(), "group-running");
+                String browsed = controller.selectGroupPackage(nkp.pspValidator.gui.group.PackageStatus.INVALID);
+                if (browsed == null) {
+                    browsed = controller.selectGroupPackage(nkp.pspValidator.gui.group.PackageStatus.VALID);
+                }
+                if (browsed != null) {
+                    controller.selectFirstProblem();
+                }
+                String selected = browsed;
+                after(() -> {
+                    System.out.println("SNAPSHOT MODE: group browse (" + selected + "): " + controller.describeShownResult());
+                    save(main.getPrimaryStage().getScene(), "group-browse");
+                    gate.resume();
+                    waitForEnd(controller, startedBefore, started, () -> {
+                        monitor.stop();
+                        controller.setRunHook(null);
+                        System.out.println("SNAPSHOT MODE: group ended after " + (System.currentTimeMillis() - started) + " ms; UI: " + monitor);
+                        String invalid = controller.selectGroupPackage(nkp.pspValidator.gui.group.PackageStatus.INVALID);
+                        controller.selectFirstProblem();
+                        after(() -> {
+                            System.out.println("SNAPSHOT MODE: group results (" + invalid + "): " + controller.describeShownResult()
+                                    + controller.describeGroupItems());
+                            save(main.getPrimaryStage().getScene(), "group-results");
+                            controller.setGroupOnlyInvalid(true);
+                            after(() -> {
+                                System.out.println("SNAPSHOT MODE: group filtered: " + controller.describeShownResult());
+                                save(main.getPrimaryStage().getScene(), "group-filtered");
+                                controller.setGroupOnlyInvalid(false);
+                                File csv = new File(System.getProperty(PROP_CSV, new File(dir, "group-souhrn.csv").getPath()));
+                                boolean ok = controller.exportGroupCsvTo(csv);
+                                System.out.println("SNAPSHOT MODE: group CSV " + (ok ? "written" : "FAILED") + ": " + csv.getAbsolutePath());
+                                if (!ok) {
+                                    failed = true;
+                                }
+                                next();
+                            });
+                        });
+                    });
+                });
+            }));
+        }
+
+        private void groupRerunOne() {
+            MainController controller = main.getMainController();
+            if (!controller.isGroupMode() || controller.isValidationRunning()) {
+                System.err.println("SNAPSHOT MODE: groupRerunOne needs a finished group");
+                failed = true;
+                next();
+                return;
+            }
+            String name = controller.rerunGroupPackage(nkp.pspValidator.gui.group.PackageStatus.INVALID);
+            System.out.println("SNAPSHOT MODE: group rerun one: " + name);
+            int startedBefore = controller.getStartedValidations() - 1;
+            long started = System.currentTimeMillis();
+            waitForEnd(controller, startedBefore, started, () -> {
+                controller.selectFirstProblem();
+                after(() -> {
+                    System.out.println("SNAPSHOT MODE: group rerun one done: " + controller.describeShownResult() + controller.describeGroupItems());
+                    save(main.getPrimaryStage().getScene(), "group-rerun-one");
+                    next();
+                });
+            });
+        }
+
+        private void groupCancel() {
+            ValidationRequest request = buildRequest("groupCancel");
+            if (request == null) {
+                next();
+                return;
+            }
+            MainController controller = main.getMainController();
+            GroupGate gate = new GroupGate();
+            controller.setRunHook(gate);
+            int startedBefore = controller.getStartedValidations();
+            long started = System.currentTimeMillis();
+            Platform.runLater(() -> main.launchValidation(request));
+            whenGroupPaused(gate, started, () -> after(() -> {
+                System.out.println("SNAPSHOT MODE: group cancel in package " + gate.position + " of " + gate.total);
+                controller.stopValidation(null);
+                gate.resume();
+                waitForEnd(controller, startedBefore, started, () -> {
+                    controller.setRunHook(null);
+                    after(() -> {
+                        System.out.println("SNAPSHOT MODE: group canceled: " + controller.describeShownResult() + controller.describeGroupItems());
+                        save(main.getPrimaryStage().getScene(), "group-canceled");
+                        next();
+                    });
+                });
+            }));
+        }
+
+        private void whenGroupPaused(GroupGate gate, long started, Runnable then) {
+            PauseTransition pause = new PauseTransition(Duration.millis(100));
+            pause.setOnFinished(e -> {
+                if (gate.paused) {
+                    then.run();
+                } else if (System.currentTimeMillis() - started > 2000 && !main.getMainController().isValidationRunning()) {
+                    System.err.println("SNAPSHOT MODE: group ended before the pause point");
+                    failed = true;
+                    main.getMainController().setRunHook(null);
+                    next();
+                } else if (System.currentTimeMillis() - started > VALIDATION_TIMEOUT_MS) {
+                    System.err.println("SNAPSHOT MODE: group pause timeout");
+                    failed = true;
+                    next();
+                } else {
+                    whenGroupPaused(gate, started, then);
+                }
+            });
+            pause.play();
         }
 
         // ===== syntheticka zatez =====
@@ -698,6 +859,56 @@ public class SnapshotMode {
             } finally {
                 paused = false;
             }
+        }
+    }
+
+    /**
+     * Háček pro skupinu: zastaví vlákno validace v polovině pravidel prvního balíku od poloviny skupiny, který dojde
+     * k pravidlům (balík, který není balíkem, pravidla nemá), dokud ho vlákno UI nepustí dál.
+     */
+    private static class GroupGate implements MainController.RunHook {
+        final AtomicInteger finished = new AtomicInteger();
+        private final Semaphore permits = new Semaphore(0);
+        volatile int position;
+        volatile int total;
+        volatile int pauseAt = -1;
+        volatile boolean paused;
+        private volatile boolean pausedOnce;
+
+        @Override
+        public void packageStarted(int position, int total) {
+            this.position = position;
+            this.total = total;
+            finished.set(0);
+            if (!pausedOnce) {
+                pauseAt = -1;
+            }
+        }
+
+        @Override
+        public void initialized(int totalRules) {
+            if (!pausedOnce && position >= (total + 1) / 2) {
+                pauseAt = Math.max(1, totalRules / 2);
+            }
+        }
+
+        @Override
+        public void ruleFinished() {
+            if (!pausedOnce && pauseAt > 0 && finished.incrementAndGet() == pauseAt) {
+                pausedOnce = true;
+                paused = true;
+                try {
+                    permits.acquire();
+                } catch (InterruptedException e) {
+                    //pokracuje
+                } finally {
+                    paused = false;
+                }
+            }
+        }
+
+        void resume() {
+            permits.release();
         }
     }
 

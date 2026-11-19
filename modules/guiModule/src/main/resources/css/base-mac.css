@@ -22,6 +22,10 @@
 .panel-header,
 .level-badge,
 .progress-title,
-.row-name-running {
+.row-name-running,
+.group-table .column-header .label,
+.status-badge,
+.badge-muted,
+.package-title {
     -fx-font-family: "Arial";
 }

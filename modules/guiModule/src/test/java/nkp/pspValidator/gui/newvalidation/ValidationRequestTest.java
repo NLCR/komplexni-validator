@@ -59,6 +59,12 @@ public class ValidationRequestTest {
             record(pspZip, params, createTxtLog, createXmlLog, verbosity);
         }
 
+        @Override
+        public void runGroupValidation(File groupDir, DmfDetector.Params params, boolean createTxtLog, boolean createXmlLog, int verbosity) {
+            calls.add("group");
+            record(groupDir, params, createTxtLog, createXmlLog, verbosity);
+        }
+
         private void record(File file, DmfDetector.Params params, boolean txt, boolean xml, int verbosity) {
             this.file = file;
             this.params = params;
@@ -115,6 +121,46 @@ public class ValidationRequestTest {
         assertFalse(launcher.txt);
         assertFalse(launcher.xml);
         assertEquals(3, launcher.verbosity);
+    }
+
+    @Test
+    public void groupRunsGroupValidationWithSettings() throws Exception {
+        File dir = tmp.newFolder("davka");
+        VersionSettings versions = new VersionSettings(config, registry);
+        versions.setForcedVersion(Dmf.Type.PERIODICAL, "1.6");
+        OutputSettings outputs = new OutputSettings(config);
+        outputs.setCreateXmlLog(true);
+        outputs.setCreateTxtLog(true);
+        outputs.setVerbosity(OutputSettings.Verbosity.SECTIONS_AND_RULES_WITH_ERRORS);
+        ValidationRequest request = ValidationRequest.create(ValidationSource.GROUP, dir.getPath(), versions, outputs,
+                EnumSet.of(ExternalUtil.JHOVE, ExternalUtil.KAKADU));
+        RecordingLauncher launcher = new RecordingLauncher();
+        request.launch(launcher);
+        assertEquals(java.util.Arrays.asList("disable", "group"), launcher.calls);
+        assertEquals(EnumSet.of(ExternalUtil.JHOVE, ExternalUtil.KAKADU), launcher.disabled);
+        assertEquals(dir, launcher.file);
+        assertEquals("1.6", launcher.params.forcedDmfPerVersion);
+        assertNull(launcher.params.forcedDmfMonVersion);
+        assertTrue(launcher.txt);
+        assertTrue(launcher.xml);
+        assertEquals(2, launcher.verbosity);
+    }
+
+    @Test
+    public void groupNeedsExistingDirectory() throws Exception {
+        File file = tmp.newFile("soubor.zip");
+        try {
+            ValidationRequest.create(ValidationSource.GROUP, file.getPath(), new VersionSettings(config, registry), new OutputSettings(config), null);
+            fail("soubor neni adresar skupiny");
+        } catch (IllegalArgumentException e) {
+            assertEquals(file.getPath() + " není adresář.", e.getMessage());
+        }
+        try {
+            ValidationRequest.create(ValidationSource.GROUP, "  ", new VersionSettings(config, registry), new OutputSettings(config), null);
+            fail("prazdna cesta");
+        } catch (IllegalArgumentException e) {
+            assertEquals("Vyberte adresář s balíky.", e.getMessage());
+        }
     }
 
     @Test(expected = IllegalArgumentException.class)

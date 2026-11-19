@@ -5,13 +5,14 @@ import nkp.pspValidator.gui.ConfigurationManager;
 import java.io.File;
 
 /**
- * Zdroj validace v dialogu Nová validace. Pořadí výčtu je pořadí přepínače; skupina balíků se přidá jako další
- * hodnota (etapa E5).
+ * Zdroj validace v dialogu Nová validace. Pořadí výčtu je pořadí přepínače. Skupina balíků je adresář, jehož přímé
+ * položky (podadresáře a soubory .zip) se validují jako samostatné balíky (viz {@code gui.group.GroupPackages}).
  */
 public enum ValidationSource {
 
     DIRECTORY("Adresář", "Adresář balíku", ConfigurationManager.PROP_LAST_PSP_DIR),
-    ZIP("Soubor ZIP", "Soubor ZIP balíku", ConfigurationManager.PROP_LAST_PSP_ZIP);
+    ZIP("Soubor ZIP", "Soubor ZIP balíku", ConfigurationManager.PROP_LAST_PSP_ZIP),
+    GROUP("Skupina balíků", "Adresář s balíky", ConfigurationManager.PROP_LAST_PSP_GROUP_DIR);
 
     private final String label;
     private final String pathLabel;
@@ -45,11 +46,19 @@ public enum ValidationSource {
      */
     public String checkPath(String pathText) {
         if (pathText == null || pathText.trim().isEmpty()) {
-            return this == DIRECTORY ? "Vyberte adresář balíku." : "Vyberte soubor ZIP s balíkem.";
+            switch (this) {
+                case DIRECTORY:
+                    return "Vyberte adresář balíku.";
+                case GROUP:
+                    return "Vyberte adresář s balíky.";
+                default:
+                    return "Vyberte soubor ZIP s balíkem.";
+            }
         }
         File file = new File(pathText.trim());
         switch (this) {
             case DIRECTORY:
+            case GROUP:
                 if (!file.exists()) {
                     return String.format("Adresář %s neexistuje.", file.getPath());
                 } else if (!file.isDirectory()) {

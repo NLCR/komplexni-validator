@@ -7,7 +7,8 @@
 <!--
 Hlavni okno: menu, horni lista se souhrnem validace (jen po spusteni validace), pod ni behem behu panel prubehu
 a po zruseni nebo chybe hlaska, uprostred prazdny stav, hlaska
-(chyba nebo zruseni pred nactenim sekci) nebo vysledky (filtr, sekce, pravidla, problemy) a dole stavovy radek.
+(chyba nebo zruseni pred nactenim sekci) nebo vysledky (filtr, sekce, pravidla, problemy; u skupiny baliku nad nimi
+tabulka baliku) a dole stavovy radek.
 Vzhled v base.css (trida main-root a nasledujici).
 -->
 <BorderPane xmlns:fx="http://javafx.com/fxml"
@@ -24,6 +25,8 @@ Vzhled v base.css (trida main-root a nasledujici).
                                       text="Nová validace…" accelerator="Shortcut+N"/>
                             <MenuItem fx:id="rerunMenuItem" onAction="#rerunValidation" text="Validovat znovu"
                                       accelerator="Shortcut+R" disable="true"/>
+                            <MenuItem fx:id="exportCsvMenuItem" onAction="#exportGroupCsv"
+                                      text="Exportovat souhrn do CSV…" disable="true"/>
                             <SeparatorMenuItem/>
                             <!--zkratka podle platformy (Cmd+. na macOS, jinde Esc) se nastavuje v MainController-->
                             <MenuItem fx:id="cancelMenuItem" onAction="#stopValidation" text="Zrušit validaci"
@@ -70,6 +73,11 @@ Vzhled v base.css (trida main-root a nasledujici).
                 <Label fx:id="errorsBadge" styleClass="badge-error,header-badge" minWidth="-Infinity"/>
                 <Label fx:id="warningsBadge" styleClass="badge-warning,header-badge" minWidth="-Infinity"/>
                 <Label fx:id="infosBadge" styleClass="badge-info,header-badge" minWidth="-Infinity"/>
+                <!--skupina baliku: pocty baliku podle vysledku-->
+                <Label fx:id="groupValidBadge" styleClass="badge-ok,header-badge" minWidth="-Infinity" visible="false" managed="false"/>
+                <Label fx:id="groupInvalidBadge" styleClass="badge-error,header-badge" minWidth="-Infinity" visible="false" managed="false"/>
+                <Label fx:id="groupErrorBadge" styleClass="badge-warning,header-badge" minWidth="-Infinity" visible="false" managed="false"/>
+                <Label fx:id="groupWaitingBadge" styleClass="badge-muted,header-badge" minWidth="-Infinity" visible="false" managed="false"/>
                 <Button fx:id="rerunButton" text="Validovat znovu" styleClass="button-secondary" minWidth="-Infinity"
                         onAction="#rerunValidation"/>
                 <Button fx:id="cancelButton" text="Zrušit validaci" styleClass="button-secondary" minWidth="-Infinity"
@@ -121,37 +129,71 @@ Vzhled v base.css (trida main-root a nasledujici).
                 <Label fx:id="messageText" styleClass="empty-text" wrapText="true" maxWidth="560"/>
             </VBox>
 
-            <!--vysledky-->
+            <!--vysledky: u jednoho baliku jen detailPane, u skupiny groupSplit s tabulkou baliku nad detailem vybraneho
+            baliku (usporadani prepina MainController)-->
             <VBox fx:id="resultsPane" styleClass="results-pane" visible="false">
-                <HBox styleClass="filter-bar">
-                    <Label text="Zobrazit" styleClass="text-muted"/>
-                    <CheckBox fx:id="filterErrors" text="chyby" selected="true"/>
-                    <CheckBox fx:id="filterWarnings" text="varování" selected="true"/>
-                    <CheckBox fx:id="filterInfos" text="informace" selected="true"/>
-                    <Region styleClass="filter-gap"/>
-                    <CheckBox fx:id="filterOnlyWithProblems" text="jen sekce a pravidla s problémy"/>
-                </HBox>
-                <SplitPane fx:id="resultsSplit" styleClass="results-split" VBox.vgrow="ALWAYS"
-                           dividerPositions="0.27, 0.6">
+                <SplitPane fx:id="groupSplit" styleClass="group-split" orientation="VERTICAL" VBox.vgrow="ALWAYS"
+                           dividerPositions="0.38">
                     <items>
-                        <VBox styleClass="result-panel" minWidth="200">
-                            <Label text="Sekce" styleClass="panel-header" maxWidth="Infinity"/>
-                            <ListView fx:id="sectionList" styleClass="result-list" VBox.vgrow="ALWAYS"/>
+                        <VBox fx:id="groupPane" styleClass="group-pane" minHeight="120">
+                            <HBox styleClass="filter-bar">
+                                <Label text="Zobrazit" styleClass="text-muted"/>
+                                <CheckBox fx:id="groupOnlyInvalid" text="jen nevalidní"/>
+                                <Label fx:id="groupShownText" styleClass="text-muted"/>
+                                <Region HBox.hgrow="ALWAYS"/>
+                                <Button fx:id="exportCsvButton" text="Exportovat souhrn do CSV…" styleClass="button-secondary"
+                                        minWidth="-Infinity" onAction="#exportGroupCsv"/>
+                            </HBox>
+                            <TableView fx:id="groupTable" styleClass="group-table" VBox.vgrow="ALWAYS"/>
                         </VBox>
-                        <VBox styleClass="result-panel" minWidth="240">
-                            <Label fx:id="rulesHeader" text="Pravidla" styleClass="panel-header" maxWidth="Infinity"/>
-                            <Label fx:id="sectionDescription" styleClass="panel-description" wrapText="true"
-                                   maxWidth="Infinity" minHeight="-Infinity"/>
-                            <ListView fx:id="ruleList" styleClass="result-list" VBox.vgrow="ALWAYS"/>
-                        </VBox>
-                        <VBox styleClass="result-panel" minWidth="300">
-                            <Label fx:id="problemsHeader" text="Problémy" styleClass="panel-header" maxWidth="Infinity"/>
-                            <Label fx:id="ruleDescription" styleClass="panel-description" wrapText="true"
-                                   maxWidth="Infinity" minHeight="-Infinity"/>
+                        <VBox fx:id="detailPane" minHeight="160">
+                            <!--skupina: vybrany balik-->
+                            <HBox fx:id="packageBar" styleClass="package-bar" visible="false" managed="false">
+                                <Label fx:id="packageTitle" styleClass="package-title" minWidth="-Infinity"/>
+                                <Label fx:id="packageSubtitle" styleClass="text-muted" minWidth="0" HBox.hgrow="ALWAYS"
+                                       maxWidth="Infinity"/>
+                                <Hyperlink fx:id="packageXmlLink" text="Protokol XML" styleClass="link" onAction="#showLogXml"
+                                           minWidth="-Infinity"/>
+                                <Hyperlink fx:id="packageTxtLink" text="Textový log" styleClass="link" onAction="#showLogTxt"
+                                           minWidth="-Infinity"/>
+                            </HBox>
+                            <HBox styleClass="filter-bar">
+                                <Label text="Zobrazit" styleClass="text-muted"/>
+                                <CheckBox fx:id="filterErrors" text="chyby" selected="true"/>
+                                <CheckBox fx:id="filterWarnings" text="varování" selected="true"/>
+                                <CheckBox fx:id="filterInfos" text="informace" selected="true"/>
+                                <Region styleClass="filter-gap"/>
+                                <CheckBox fx:id="filterOnlyWithProblems" text="jen sekce a pravidla s problémy"/>
+                            </HBox>
                             <StackPane VBox.vgrow="ALWAYS">
-                                <ListView fx:id="problemList" styleClass="result-list"/>
-                                <ProgressIndicator fx:id="problemsProgressIndicator" maxWidth="48" maxHeight="48"
-                                                   visible="false"/>
+                                <SplitPane fx:id="resultsSplit" styleClass="results-split" dividerPositions="0.27, 0.6">
+                                    <items>
+                                        <VBox styleClass="result-panel" minWidth="200">
+                                            <Label text="Sekce" styleClass="panel-header" maxWidth="Infinity"/>
+                                            <ListView fx:id="sectionList" styleClass="result-list" VBox.vgrow="ALWAYS"/>
+                                        </VBox>
+                                        <VBox styleClass="result-panel" minWidth="240">
+                                            <Label fx:id="rulesHeader" text="Pravidla" styleClass="panel-header" maxWidth="Infinity"/>
+                                            <Label fx:id="sectionDescription" styleClass="panel-description" wrapText="true"
+                                                   maxWidth="Infinity" minHeight="-Infinity"/>
+                                            <ListView fx:id="ruleList" styleClass="result-list" VBox.vgrow="ALWAYS"/>
+                                        </VBox>
+                                        <VBox styleClass="result-panel" minWidth="300">
+                                            <Label fx:id="problemsHeader" text="Problémy" styleClass="panel-header" maxWidth="Infinity"/>
+                                            <Label fx:id="ruleDescription" styleClass="panel-description" wrapText="true"
+                                                   maxWidth="Infinity" minHeight="-Infinity"/>
+                                            <StackPane VBox.vgrow="ALWAYS">
+                                                <ListView fx:id="problemList" styleClass="result-list"/>
+                                                <ProgressIndicator fx:id="problemsProgressIndicator" maxWidth="48" maxHeight="48"
+                                                                   visible="false"/>
+                                            </StackPane>
+                                        </VBox>
+                                    </items>
+                                </SplitPane>
+                                <!--skupina: misto vysledku hlaska, kdyz vybrany balik podrobnosti nema-->
+                                <VBox fx:id="packageMessagePane" styleClass="package-message" visible="false">
+                                    <Label fx:id="packageMessage" styleClass="empty-text" wrapText="true" maxWidth="560"/>
+                                </VBox>
                             </StackPane>
                         </VBox>
                     </items>

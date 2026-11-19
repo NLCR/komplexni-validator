@@ -62,6 +62,12 @@ public class RerunStateTest {
             record(pspZip, params, createTxtLog, createXmlLog, verbosity);
         }
 
+        @Override
+        public void runGroupValidation(File groupDir, DmfDetector.Params params, boolean createTxtLog, boolean createXmlLog, int verbosity) {
+            calls.add("group");
+            record(groupDir, params, createTxtLog, createXmlLog, verbosity);
+        }
+
         private void record(File file, DmfDetector.Params p, boolean txt, boolean xml, int verbosity) {
             files.add(file);
             params.add(p);

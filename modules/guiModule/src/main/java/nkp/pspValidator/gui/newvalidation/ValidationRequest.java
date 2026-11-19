@@ -26,6 +26,9 @@ public class ValidationRequest {
         void runPspDirValidation(File pspDir, DmfDetector.Params params, boolean createTxtLog, boolean createXmlLog, int verbosity);
 
         void unzipAndRunPspZipValidation(File pspZip, DmfDetector.Params params, boolean createTxtLog, boolean createXmlLog, int verbosity);
+
+        /** Validace skupiny balíků v adresáři (balíky se hledají až při spuštění, „Validovat znovu“ čte adresář znovu). */
+        void runGroupValidation(File groupDir, DmfDetector.Params params, boolean createTxtLog, boolean createXmlLog, int verbosity);
     }
 
     private final ValidationSource source;
@@ -64,7 +67,7 @@ public class ValidationRequest {
                 outputs.isCreateTxtLog(), outputs.isCreateXmlLog(), outputs.getVerbosity().getLevel(), disabledUtils);
     }
 
-    /** Spustí validaci stejnými metodami jako dřívější dialogy adresáře a ZIPu. */
+    /** Spustí validaci stejnými metodami jako dřívější dialogy adresáře a ZIPu, skupinu balíků jako skupinu. */
     public void launch(Launcher launcher) {
         launcher.setUtilsDisabled(disabledUtils);
         switch (source) {
@@ -73,6 +76,9 @@ public class ValidationRequest {
                 break;
             case ZIP:
                 launcher.unzipAndRunPspZipValidation(file, DmfParamsBuilder.copy(params), createTxtLog, createXmlLog, verbosity);
+                break;
+            case GROUP:
+                launcher.runGroupValidation(file, DmfParamsBuilder.copy(params), createTxtLog, createXmlLog, verbosity);
                 break;
             default:
                 throw new IllegalStateException();

@@ -295,6 +295,12 @@ public class Utils {
                 String outFileName = outFolder.getAbsolutePath() + File.separator + entryName;
                 //System.out.println("Unzip: " + outFileName);
                 File entryFile = new File(outFileName);
+                //polozka s cestou mimo cilovy adresar (napr. "../soubor") by prepsala cizi soubory
+                String outFolderCanonical = outFolder.getCanonicalPath();
+                String entryCanonical = entryFile.getCanonicalPath();
+                if (!entryCanonical.equals(outFolderCanonical) && !entryCanonical.startsWith(outFolderCanonical + File.separator)) {
+                    throw new IOException("položka '" + entryName + "' míří mimo cílový adresář");
+                }
                 if (entry.isDirectory()) {
                     // Make directories
                     entryFile.mkdirs();
