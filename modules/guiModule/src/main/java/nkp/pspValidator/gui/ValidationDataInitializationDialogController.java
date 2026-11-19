@@ -81,7 +81,6 @@ public class ValidationDataInitializationDialogController extends DialogControll
             @Override
             protected Void call() throws Exception {
                 try {
-                    Thread.sleep(300);
                     validationDataManager = new ValidationDataManager(getConfigurationManager());
                     File validatorConfigDir = getConfigurationManager().getFileOrNull(ConfigurationManager.PROP_VALIDATOR_CONFIG_DIR);
                     if (validatorConfigDir == null) {
@@ -92,6 +91,7 @@ public class ValidationDataInitializationDialogController extends DialogControll
                         //Thread.sleep(5000);
                         ExternalUtilManager externalUtilManager = new ExternalUtilManagerFactory(validatorConfigMgr.getExternalUtilsConfigFile()).buildExternalUtilManager(getConfigurationManager().getPlatform().getOperatingSystem());
                         validationDataManager.setExternalUtilManager(externalUtilManager);
+                        //konfigurace jednotlivych fDMF se nacitaji (a validuji) az pri prvnim pouziti
                         validationDataManager.setFdmfRegistry(new FdmfRegistry(validatorConfigMgr));
                         validationDataManager.setValidatorConfigMgr(validatorConfigMgr);
                         processResult(new Result(true, null));

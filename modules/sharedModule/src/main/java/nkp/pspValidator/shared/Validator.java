@@ -97,6 +97,8 @@ public class Validator {
         boolean sectionsUnlimitted = devParams == null || devParams.getSectionsToRun() == null || devParams.getSectionsToRun().isEmpty();
         boolean noSectionsSkipped = skippedSections == null || skippedSections.isEmpty();
 
+        //MD5 souboru se cachuji jen v ramci jednoho behu validace
+        engine.clearMd5Cache();
         ValidationState state = initState(progressListener);
         state.setPackageFile(packageFile);
         state.setInfoData(InfoExtractor.extract(packageFile));

@@ -73,7 +73,7 @@ public class VfCheckChecksumFileAllChecksumsMatch extends ValidationFunction {
                         String filepath = parts[1];
                         try {
                             File file = Utils.buildAbsoluteFile(pspRootDir, filepath);
-                            String hashComputed = Utils.computeHash(file);
+                            String hashComputed = engine.computeMd5(file);
                             if (!hashComputed.equalsIgnoreCase(hashExpected)) {
                                 result.addError(new ValidationProblem(Level.ERROR,
                                         String.format("uvedený kontrolní součet '%s' nesouhlasí s vypočítaným kontrolním součtem '%s' pro soubor %s", hashExpected, hashComputed, file.getAbsolutePath()))

@@ -3,10 +3,8 @@ package nkp.pspValidator.gui.skipping;
 import nkp.pspValidator.gui.ConfigurationManager;
 import nkp.pspValidator.gui.ValidationDataManager;
 import nkp.pspValidator.gui.VersionComparator;
-import nkp.pspValidator.gui.validation.Utils;
 import nkp.pspValidator.shared.Dmf;
 import nkp.pspValidator.shared.FdmfRegistry;
-import nkp.pspValidator.shared.Validator;
 import nkp.pspValidator.shared.engine.RulesSection;
 import nkp.pspValidator.shared.engine.exceptions.ValidatorConfigurationException;
 
@@ -133,21 +131,16 @@ public class SkippedManagerImpl implements SkippedManager {
     private Skipped buildSkipped(ValidationDataManager mgr, Dmf dmf) {
         try {
             Skipped result = new Skipped();
-            //inicializace fake validatoru pro ziskani pravidel
-            Validator validator = Utils.buildValidator(mgr, dmf, null);
-            List<RulesSection> sections = validator.getEngine().getRuleSections();
-            //pro jistotu hard copy to avoid memory leaks from references to Engine etc
-            List<RulesSection> sectionsCopy = new ArrayList<>(sections.size());
-            for (RulesSection section : sections) {
-                sectionsCopy.add(section.copy());
-            }
-            result.setAllSections(sectionsCopy);
+            //sekce primo z konfigurace fDMF (cache v FdmfRegistry), bez stavby validatoru; registr vraci vlastni kopie
+            //sekci, takze se nesdileji s validaci ani s jinym dialogem
+            List<RulesSection> sections = mgr.getFdmfRegistry().getRulesSections(dmf);
+            result.setAllSections(sections);
             return result;
         } catch (FdmfRegistry.UnknownFdmfException e) {
             //should never happen
             throw new RuntimeException(e);
         } catch (ValidatorConfigurationException e) {
-            throw new RuntimeException(e);
+            throw new RuntimeException(String.format("Nelze načíst sekce pravidel pro %s: %s", dmf, e.getMessage()), e);
         }
     }
 

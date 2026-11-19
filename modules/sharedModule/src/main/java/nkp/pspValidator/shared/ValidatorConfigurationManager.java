@@ -18,6 +18,8 @@ public class ValidatorConfigurationManager {
     private final File fdmfConfigXsd;
     private final File binaryFileProfileXsd;
     private final File metadataProfileXsd;
+    //zkompilovana konfiguracni XSD, sdilena pro nacitani vsech fDMF (viz FdmfRegistry)
+    private final XsdSchemaCache configSchemaCache = new XsdSchemaCache();
 
     public ValidatorConfigurationManager(File validatorConfigurationDir) throws ValidatorConfigurationException {
         checkDirExistAndReadable(validatorConfigurationDir);
@@ -66,6 +68,10 @@ public class ValidatorConfigurationManager {
 
     public File getMetadataProfileXsd() {
         return metadataProfileXsd;
+    }
+
+    public XsdSchemaCache getConfigSchemaCache() {
+        return configSchemaCache;
     }
 
     public void checkDirExistAndReadable(File dir) throws ValidatorConfigurationException {

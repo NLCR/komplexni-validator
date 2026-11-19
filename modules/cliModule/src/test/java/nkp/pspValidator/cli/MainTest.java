@@ -343,6 +343,49 @@ public class MainTest {
     }
 
     @Test
+    public void validatePspGroupPrintsIntroOnce() throws Exception {
+        // issue #166: konfigurace, detekce nastroju a registr fDMF se u skupiny inicializuji jednou, uvodni vypis
+        // (platforma, adresar konfigurace, nastroje) je jen jednou na zacatku, ne u kazdeho balicku
+        File group = tmp.newFolder("skupina");
+        copyDir(new File(CLIPPING_02).toPath(), new File(group, "nk-00027x").toPath());
+        copyDir(new File(RES + "fund_unit_0.2/valid_clipping_aacr/nk-00026q").toPath(), new File(group, "nk-00026q").toPath());
+        copyDir(new File(RES + "epublikace/eperiodical_2.6/valid_pdf_originaldata/5e0b0003-0000-4000-8000-000000000261").toPath(),
+                new File(group, "5e0b0003-0000-4000-8000-000000000261").toPath());
+        // JHOVE zapnuty s neexistujici cestou: detekce probehne (a selze) jen jednou
+        File missing = new File(tmp.getRoot(), "neexistuje");
+        String[] args = concat(noTools(), "--" + Params.ACTION, "VALIDATE_PSP_GROUP", "--" + Params.PSP_GROUP, group.getPath(),
+                "--" + Params.CONFIG_DIR, CONFIG, "-v", "1", "--" + Params.JHOVE_PATH, missing.getPath());
+        args = java.util.Arrays.stream(args).filter(a -> !a.equals("--" + Params.DISABLE_JHOVE)).toArray(String[]::new);
+        Main.main(null, args);
+        String o = stdout();
+        assertEquals(o, 1, count(o, "Platforma: "));
+        assertEquals(o, 1, count(o, "Kořenový adresář konfigurace validátoru: "));
+        assertEquals(o, 1, count(o, "Vypnuto použití nástroje ImageMagick."));
+        assertEquals(o, 1, count(o, "Kontroluji dostupnost nástroje JHOVE: nenalezen ("));
+        assertEquals(o, 3, count(o, "Zpracovávám PSP balík "));
+        assertEquals(o, 3, count(o, "Validátor inicializován, spouštím validace"));
+        assertEquals(o, 3, count(o, "balík je: validní"));
+        assertTrue(o, o.contains("Bude použita verze standardu Jednotky fondu 0.2"));
+        assertTrue(o, o.contains("Bude použita verze standardu E-periodika 2.6"));
+        // uvod je pred prvnim balikem
+        assertTrue(o, o.indexOf("Platforma: ") < o.indexOf("Zpracovávám PSP balík "));
+        assertTrue(o, o.indexOf("Kontroluji dostupnost nástroje JHOVE") < o.indexOf("Zpracovávám PSP balík "));
+    }
+
+    @Test
+    public void validatePspPrintsIntroOnce() throws Exception {
+        Main.main(null, validateArgs(CLIPPING_02));
+        String o = stdout();
+        assertEquals(o, 1, count(o, "Platforma: "));
+        assertEquals(o, 1, count(o, "Kořenový adresář konfigurace validátoru: "));
+        assertEquals(o, 1, count(o, "Zpracovávám PSP balík "));
+    }
+
+    private static int count(String text, String part) {
+        return text.split(java.util.regex.Pattern.quote(part), -1).length - 1;
+    }
+
+    @Test
     public void validatePspGroupZip() throws Exception {
         File group = tmp.newFolder("skupina");
         copyDir(new File(CLIPPING_02).toPath(), new File(group, "nk-00027x").toPath());

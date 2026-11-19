@@ -1,6 +1,8 @@
 package nkp.pspValidator.shared.engine;
 
+import nkp.pspValidator.shared.XsdSchemaCache;
 import nkp.pspValidator.shared.engine.evaluationFunctions.*;
+import nkp.pspValidator.shared.engine.exceptions.HashComputationException;
 import nkp.pspValidator.shared.engine.exceptions.InvalidXPathExpressionException;
 import nkp.pspValidator.shared.engine.exceptions.ValidatorConfigurationException;
 import nkp.pspValidator.shared.engine.exceptions.XmlFileParsingException;
@@ -17,6 +19,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentMap;
+import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * Created by Martin Řehánek on 20.10.16.
@@ -36,6 +41,12 @@ public class Engine {
 
     private final RulesManager rulesManager = new RulesManager();
     private final BinaryFileValidator binaryFileValidator;
+
+    //zkompilovana XSD schemata (PREMIS, MIX, CopyrightMD, AES57, dmdSec, ...), aby se nekompilovala pro kazdy element
+    private final XsdSchemaCache xsdSchemaCache = new XsdSchemaCache();
+    //MD5 souboru balicku v ramci jednoho behu validace (vycisti se na zacatku Validator.run), klic je absolutni cesta
+    private final ConcurrentMap<String, String> md5ByFilePath = new ConcurrentHashMap<>();
+    private final AtomicInteger md5Computations = new AtomicInteger();
 
     private BibliographicMetadataProfilesManager bibliographicMetadataProfilesManager;
     private TechnicalMetadataProfilesManager technicalMetadataProfilesManager;
@@ -456,6 +467,39 @@ public class Engine {
 
     public BinaryFileValidator getBinaryFileValidator() {
         return binaryFileValidator;
+    }
+
+    public XsdSchemaCache getXsdSchemaCache() {
+        return xsdSchemaCache;
+    }
+
+    /**
+     * MD5 souboru (hex, mala pismena jako Utils.computeHash). V ramci jednoho behu validace se pro kazdy soubor pocita jen
+     * jednou (pouziva ho kontrola souboru CHECKSUM i kontrola fileSec primarniho METS). Chyba vypoctu se necachuje.
+     */
+    public String computeMd5(File file) throws HashComputationException {
+        String key = file.getAbsolutePath();
+        String md5 = md5ByFilePath.get(key);
+        if (md5 == null) {
+            md5 = Utils.computeHash(file);
+            md5Computations.incrementAndGet();
+            md5ByFilePath.putIfAbsent(key, md5);
+        }
+        return md5;
+    }
+
+    /**
+     * Zahodi MD5 spocitane v predchozim behu validace (soubory se mezi behy mohou zmenit).
+     */
+    public void clearMd5Cache() {
+        md5ByFilePath.clear();
+    }
+
+    /**
+     * Pocet skutecnych vypoctu MD5 pres computeMd5 (pro testy).
+     */
+    public int getMd5ComputationCount() {
+        return md5Computations.get();
     }
 
 }

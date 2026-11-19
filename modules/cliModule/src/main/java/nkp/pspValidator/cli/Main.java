@@ -1239,6 +1239,8 @@ public class Main {
         ExternalUtilManager externalUtilManager = new ExternalUtilManagerFactory(validatorConfigManager.getExternalUtilsConfigFile()).buildExternalUtilManager(platform.getOperatingSystem());
         externalUtilManager.setPaths(utilsPaths);
         detectImageTools(out, externalUtilManager, utilsDisabled);
+        //konfigurace, detekce nastroju a registr fDMF jsou spolecne pro vsechny balicky skupiny (issue #166)
+        FdmfRegistry fdmfRegistry = new FdmfRegistry(validatorConfigManager);
 
 
         //pspDirOrZipFile dir or zip file?
@@ -1250,28 +1252,29 @@ public class Main {
                     throw new IllegalStateException(String.format("Nelze číst adresář %s", pspGroup.getAbsolutePath()));
                 }
                 validatePspGroupDir(pspGroup,
-                        configDir, tmpDir,
+                        tmpDir,
+                        externalUtilManager, validatorConfigManager, fdmfRegistry,
                         verbosity, out, err, xmlProtocolDir,
                         dmfDetectorParams,
-                        utilsPaths, utilsDisabled,
                         devParams);
             } else {
                 validatePspGroupZip(pspGroup,
-                        configDir, tmpDir,
+                        tmpDir,
+                        externalUtilManager, validatorConfigManager, fdmfRegistry,
                         verbosity, out, err, xmlProtocolDir,
                         dmfDetectorParams,
-                        utilsPaths, utilsDisabled,
                         devParams);
             }
         }
     }
 
     private static void validatePspGroupZip(File pspGroupFile,
-                                            File configDir, File tmpDir,
+                                            File tmpDir,
+                                            ExternalUtilManager externalUtilManager, ValidatorConfigurationManager validatorConfigManager,
+                                            FdmfRegistry fdmfRegistry,
                                             Integer verbosity, PrintStream out, PrintStream err,
                                             File xmlProtocolDir,
                                             DmfDetector.Params dmfDetectorParams,
-                                            Map<ExternalUtil, File> utilsPaths, Set<ExternalUtil> utilsDisabled,
                                             Validator.DevParams devParams) throws PspDataException, XmlFileParsingException, FdmfRegistry.UnknownFdmfException, ValidatorConfigurationException, InvalidXPathExpressionException {
         try {
             try {
@@ -1299,17 +1302,17 @@ public class Main {
                 File[] filesInContainer = containerDir.listFiles();
                 if (filesInContainer.length == 1 && filesInContainer[0].isDirectory()) {
                     validatePspGroupDir(filesInContainer[0],
-                            configDir, tmpDir,
+                            tmpDir,
+                            externalUtilManager, validatorConfigManager, fdmfRegistry,
                             verbosity, out, err, xmlProtocolDir,
                             dmfDetectorParams,
-                            utilsPaths, utilsDisabled,
                             devParams);
                 } else {
                     validatePspGroupDir(containerDir,
-                            configDir, tmpDir,
+                            tmpDir,
+                            externalUtilManager, validatorConfigManager, fdmfRegistry,
                             verbosity, out, err, xmlProtocolDir,
                             dmfDetectorParams,
-                            utilsPaths, utilsDisabled,
                             devParams);
                 }
             }
@@ -1319,20 +1322,21 @@ public class Main {
     }
 
     private static void validatePspGroupDir(File pspGroupDir,
-                                            File configDir, File tmpDir,
+                                            File tmpDir,
+                                            ExternalUtilManager externalUtilManager, ValidatorConfigurationManager validatorConfigManager,
+                                            FdmfRegistry fdmfRegistry,
                                             Integer verbosity, PrintStream out, PrintStream err,
                                             File xmlProtocolDir,
                                             DmfDetector.Params dmfDetectorParams,
-                                            Map<ExternalUtil, File> utilsPaths, Set<ExternalUtil> utilsDisabled,
                                             Validator.DevParams devParams) throws XmlFileParsingException, FdmfRegistry.UnknownFdmfException, PspDataException, ValidatorConfigurationException, InvalidXPathExpressionException {
         for (File pspDirOrZip : pspGroupDir.listFiles()) {
             //TODO: pocitat nevalidni baliky
-            validatePsp(pspDirOrZip,
-                    configDir, tmpDir,
+            validatePspDirOrZip(pspDirOrZip,
+                    tmpDir,
+                    externalUtilManager, validatorConfigManager, fdmfRegistry,
                     verbosity, out, err,
                     xmlProtocolDir, null,
                     dmfDetectorParams,
-                    utilsPaths, utilsDisabled,
                     devParams);
         }
     }
@@ -1353,7 +1357,28 @@ public class Main {
         ExternalUtilManager externalUtilManager = new ExternalUtilManagerFactory(validatorConfigManager.getExternalUtilsConfigFile()).buildExternalUtilManager(platform.getOperatingSystem());
         externalUtilManager.setPaths(utilsPaths);
         detectImageTools(out, externalUtilManager, utilsDisabled);
+        FdmfRegistry fdmfRegistry = new FdmfRegistry(validatorConfigManager);
 
+        validatePspDirOrZip(pspDirOrZipFile,
+                tmpDir,
+                externalUtilManager, validatorConfigManager, fdmfRegistry,
+                verbosity, out, err,
+                xmlProtocolDir, xmlProtocolFile,
+                dmfDetectorParams,
+                devParams);
+    }
+
+    /**
+     * Validace jednoho balicku (adresar nebo ZIP) s uz inicializovanou konfiguraci, nastroji a registrem fDMF.
+     */
+    private static void validatePspDirOrZip(File pspDirOrZipFile,
+                                            File tmpDir,
+                                            ExternalUtilManager externalUtilManager, ValidatorConfigurationManager validatorConfigManager,
+                                            FdmfRegistry fdmfRegistry,
+                                            Integer verbosity, PrintStream out, PrintStream err,
+                                            File xmlProtocolDir, File xmlProtocolFile,
+                                            DmfDetector.Params dmfDetectorParams,
+                                            Validator.DevParams devParams) throws ValidatorConfigurationException, FdmfRegistry.UnknownFdmfException, PspDataException, InvalidXPathExpressionException, XmlFileParsingException {
         //pspDirOrZipFile dir or zip file?
         if (!pspDirOrZipFile.exists()) {
             throw new IllegalStateException(String.format("Soubor %s neexistuje", pspDirOrZipFile.getAbsolutePath()));
@@ -1363,14 +1388,14 @@ public class Main {
                     throw new IllegalStateException(String.format("Nelze číst adresář %s", pspDirOrZipFile.getAbsolutePath()));
                 }
                 validatePspDir(pspDirOrZipFile,
-                        externalUtilManager, validatorConfigManager,
+                        externalUtilManager, validatorConfigManager, fdmfRegistry,
                         out, verbosity, xmlProtocolDir, xmlProtocolFile,
                         dmfDetectorParams,
                         devParams);
             } else {
                 validatePspZip(pspDirOrZipFile,
                         tmpDir,
-                        externalUtilManager, validatorConfigManager,
+                        externalUtilManager, validatorConfigManager, fdmfRegistry,
                         out, err, verbosity, xmlProtocolDir, xmlProtocolFile,
                         dmfDetectorParams,
                         devParams);
@@ -1381,6 +1406,7 @@ public class Main {
     private static void validatePspZip(File pspZipFile,
                                        File tmpDir,
                                        ExternalUtilManager externalUtilManager, ValidatorConfigurationManager validatorConfigManager,
+                                       FdmfRegistry fdmfRegistry,
                                        PrintStream out, PrintStream err, Integer verbosity,
                                        File xmlProtocolDir, File xmlProtocolFile,
                                        DmfDetector.Params dmfDetectorParams,
@@ -1411,13 +1437,13 @@ public class Main {
                 File[] filesInContainer = containerDir.listFiles();
                 if (filesInContainer.length == 1 && filesInContainer[0].isDirectory()) {
                     validatePspDir(filesInContainer[0],
-                            externalUtilManager, validatorConfigManager,
+                            externalUtilManager, validatorConfigManager, fdmfRegistry,
                             out, verbosity, xmlProtocolDir, xmlProtocolFile,
                             dmfDetectorParams,
                             devParams);
                 } else {
                     validatePspDir(containerDir,
-                            externalUtilManager, validatorConfigManager,
+                            externalUtilManager, validatorConfigManager, fdmfRegistry,
                             out, verbosity, xmlProtocolDir, xmlProtocolFile,
                             dmfDetectorParams,
                             devParams);
@@ -1430,6 +1456,7 @@ public class Main {
 
     private static void validatePspDir(File pspDir,
                                        ExternalUtilManager externalUtilManager, ValidatorConfigurationManager validatorConfigManager,
+                                       FdmfRegistry fdmfRegistry,
                                        PrintStream out, Integer verbosity,
                                        File xmlProtocolDir, File xmlProtocolFile,
                                        DmfDetector.Params dmfDetectorParams,
@@ -1443,7 +1470,7 @@ public class Main {
         out.println(String.format("Bude použita verze standardu %s", dmfResolved));
 
         //initializes j2k profiles according to selected fDMF
-        FdmfConfiguration fdmfConfig = new FdmfRegistry(validatorConfigManager).getFdmfConfig(dmfResolved);
+        FdmfConfiguration fdmfConfig = fdmfRegistry.getFdmfConfig(dmfResolved);
         fdmfConfig.initBinaryFileProfiles(externalUtilManager);
 
         //xml protocol file

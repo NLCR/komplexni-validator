@@ -389,14 +389,13 @@ public class ExternalUtilsCheckDialogController extends DialogController {
             protected Void call() throws Exception {
                 ExternalUtilManager utilManager = main.getValidationDataManager().getExternalUtilManager();
                 try {
-                    Thread.sleep(300);
                     //Thread.sleep(new Random().nextInt(1000));
                     if (!utilManager.isVersionDetectionDefined(util)) {
                         processResult(new UtilCheckResult(util, false, String.format("Detekce verze není definována pro %s!", util)));
                     } else {
                         String version = utilManager.runUtilVersionDetection(util);
                         //System.out.println(version);
-                        main.getValidationDataManager().getFdmfRegistry().initBinaryFileProfiles(utilManager);
+                        //profily binarnich souboru si inicializuje az validace pro pouzitou fDMF (validation.Utils.buildValidator)
                         utilManager.setUtilAvailable(util, true);
                         processResult(new UtilCheckResult(util, true, version));
                     }

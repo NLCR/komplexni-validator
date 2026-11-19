@@ -13,9 +13,6 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 import javafx.stage.Window;
-import nkp.pspValidator.gui.skipping.Skipped;
-import nkp.pspValidator.gui.skipping.SkippedManager;
-import nkp.pspValidator.gui.skipping.SkippedManagerImpl;
 import nkp.pspValidator.gui.validation.*;
 import nkp.pspValidator.shared.*;
 import nkp.pspValidator.shared.engine.Level;
@@ -174,8 +171,6 @@ public class MainController extends AbstractController implements ValidationStat
 
             @Override
             protected Void call() throws Exception {
-                SkippedManager skippedManager = new SkippedManagerImpl(main.getConfigurationManager(), main.getValidationDataManager());
-
                 //System.out.println("validating " + pspDir.getAbsolutePath() + ", mon: " + focedMonographVersion + ", per: " + forcedPeriodicalVersion);
                 PrintStream out = null;
                 try {
@@ -203,7 +198,7 @@ public class MainController extends AbstractController implements ValidationStat
                             logXmlFile, out,
                             verbosity,
                             devParams,
-                            toSetOfSkippedSectionNames(skippedManager, dmf),
+                            toSetOfSkippedSectionNames(validator, dmf),
                             MainController.this,
                             MainController.this, dmf);
                     //updateStatus(String.format("Validace balíku %s hotova.", pspDir.getAbsolutePath()));
@@ -236,12 +231,18 @@ public class MainController extends AbstractController implements ValidationStat
         new Thread(validationTask).start();
     }
 
-    private Set<String> toSetOfSkippedSectionNames(SkippedManager skippedManager, Dmf dmf) {
-        Skipped skipped = skippedManager.getSkippedForDmf(dmf);
-        List<RulesSection> sections = skipped.getAllSections();
+    /**
+     * Nazvy sekci pouzite fDMF, ktere jsou v konfiguraci GUI oznacene k preskoceni (stejne jako dialog preskakovani:
+     * jen sekce, ktere fDMF skutecne ma). Sekce se berou z uz postaveneho validatoru, neni potreba stavet validatory
+     * pro vsechny fDMF.
+     */
+    private Set<String> toSetOfSkippedSectionNames(Validator validator, Dmf dmf) {
+        ConfigurationManager configurationManager = main.getConfigurationManager();
+        Set<String> skippedInConfig = configurationManager.getStringSet(configurationManager.propSkippedValidationSections(dmf));
+        List<RulesSection> sections = validator.getEngine().getRuleSections();
         Set<String> result = new HashSet<>(sections.size());
         for (RulesSection section : sections) {
-            if (!section.isEnabled()) {
+            if (skippedInConfig.contains(section.getName())) {
                 result.add(section.getName());
             }
         }

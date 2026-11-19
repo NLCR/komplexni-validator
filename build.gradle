@@ -17,6 +17,17 @@ subprojects {
         options.release = 17
     }
 
+    // Po behu testu vypise jeden souhrnny radek na modul (Gradle sam pocty do terminalu nepise). Kdyz je uloha
+    // test "up-to-date", testy se nespousti a radek se nevypise; novy beh vynuti --rerun-tasks nebo cleanTest.
+    tasks.withType(Test).configureEach {
+        afterSuite { desc, result ->
+            if (desc.parent == null) {
+                println "Testy ${project.name}: ${result.testCount} celkem, ${result.failedTestCount} selhalo, " +
+                        "${result.skippedTestCount} preskoceno (${result.resultType})"
+            }
+        }
+    }
+
     dependencies {
         //testImplementation 'junit:junit:4.13.1'
     }

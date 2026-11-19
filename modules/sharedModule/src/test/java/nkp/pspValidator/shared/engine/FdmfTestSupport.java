@@ -28,8 +28,8 @@ final class FdmfTestSupport {
     }
 
     /**
-     * Jedna instance pro vsechny testy v JVM (lina inicializace). Nacteni konfigurace a stavba FdmfRegistry (XSD validace
-     * vsech fDMF) trva kolem 0,4 s a smoke testy ji jinak opakovaly v kazdem testu. Sdileni je bezpecne: ValidatorConfigurationManager,
+     * Jedna instance pro vsechny testy v JVM (lina inicializace). FdmfRegistry nacita a validuje konfiguraci fDMF az
+     * pri prvnim pouziti a nactenou drzi, takze ji smoke testy neopakuji v kazdem testu. Sdileni je bezpecne: ValidatorConfigurationManager,
      * DictionaryManager a FdmfConfiguration po inicializaci drzi jen soubory a slovniky, validace je nemeni; Engine,
      * profily metadat i ExternalUtilManager si kazdy beh stavi znovu (viz run, ValidatorFactory.buildValidator).
      * Vyjimka: FdmfConfiguration.initBinaryFileProfiles prepise BinaryFileValidator, run ho vola pred kazdym behem

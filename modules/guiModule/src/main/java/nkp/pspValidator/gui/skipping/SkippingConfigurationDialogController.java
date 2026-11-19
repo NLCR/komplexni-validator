@@ -33,6 +33,9 @@ public class SkippingConfigurationDialogController extends DialogController {
     TabPane tabPane;
 
     @FXML
+    Label errorLabel;
+
+    @FXML
     Button btnSave;
 
     private SkippedManager skippedManager;
@@ -65,11 +68,22 @@ public class SkippingConfigurationDialogController extends DialogController {
                     });
                 } catch (Throwable e) {
                     e.printStackTrace();
+                    //chyba se musi ukazat, jinak by se spinner tocil donekonecna
+                    String message = e.getMessage() != null ? e.getMessage() : e.getClass().getSimpleName();
+                    Platform.runLater(() -> showError(message));
                 } finally {
                     return null;
                 }
             }
         }).start();
+    }
+
+    private void showError(String message) {
+        progressIndicator.setVisible(false);
+        tabPane.setVisible(false);
+        errorLabel.setText(String.format("Seznam validačních sekcí nelze načíst: %s", message));
+        errorLabel.setVisible(true);
+        btnSave.setDisable(true);
     }
 
     private ListView<RulesSection> buildSectionList(Skipped skipped) {

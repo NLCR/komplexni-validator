@@ -13,7 +13,6 @@ import javax.xml.XMLConstants;
 import javax.xml.transform.Source;
 import javax.xml.transform.stream.StreamSource;
 import javax.xml.validation.Schema;
-import javax.xml.validation.SchemaFactory;
 import javax.xml.validation.Validator;
 import java.io.File;
 import java.io.IOException;
@@ -110,8 +109,8 @@ public class VfCheckXmlIsValidByXsd extends ValidationFunction {
     private void validate(File xmlFile, File xsdFile, Level level, ValidationResult result) {
         try {
             Source xmlFileSource = new StreamSource(xmlFile);
-            SchemaFactory schemaFactory = SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
-            Schema schema = schemaFactory.newSchema(xsdFile);
+            //zkompilovane schema je sdilene v ramci validace, Validator se vytvari pro kazde pouziti
+            Schema schema = engine.getXsdSchemaCache().getSchema(xsdFile);
             Validator validator = schema.newValidator();
             validator.validate(xmlFileSource);
         } catch (SAXException e) {

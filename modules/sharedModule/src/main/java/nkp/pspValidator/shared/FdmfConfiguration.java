@@ -7,12 +7,12 @@ import nkp.pspValidator.shared.externalUtils.ResourceType;
 import nkp.pspValidator.shared.externalUtils.validation.BinaryFileValidator;
 
 import com.mycila.xmltool.XMLDoc;
-import javax.xml.XMLConstants;
 import javax.xml.transform.stream.StreamSource;
 import javax.xml.validation.Schema;
-import javax.xml.validation.SchemaFactory;
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -42,6 +42,9 @@ public class FdmfConfiguration {
     private static final String DIR_TECH_PROFILES = "techProfiles";
     private static final String DIR_METS_PROFILES = "metsProfiles";
 
+    //konfiguracni soubory fDMF v poradi, v jakem je zpracovava Engine (jmenne prostory, vzory, promenne, pravidla)
+    public static final List<String> CONFIG_FILE_NAMES = Collections.unmodifiableList(Arrays.asList("namespaces.xml", "patterns.xml", "variables.xml", "rules.xml"));
+
     private final File fdmfRoot;
     private final File fdmfConfigXsd;
     private final File j2kProfileXsd;
@@ -56,14 +59,22 @@ public class FdmfConfiguration {
     private final List<File> techProfiles = new ArrayList<>();
     private List<File> metsProfiles = new ArrayList<>();
 
+    //zkompilovana konfiguracni XSD (fdmfConfig.xsd, metadataProfile.xsd, binaryFileProfile.xsd), sdilena mezi fDMF
+    private final XsdSchemaCache configSchemaCache;
+
     private BinaryFileValidator binaryFileValidator;
 
 
     public FdmfConfiguration(File fdmfRoot, File fdmfConfigXsd, File j2kProfileXsd, File metadataProfileXsd) throws ValidatorConfigurationException {
+        this(fdmfRoot, fdmfConfigXsd, j2kProfileXsd, metadataProfileXsd, new XsdSchemaCache());
+    }
+
+    public FdmfConfiguration(File fdmfRoot, File fdmfConfigXsd, File j2kProfileXsd, File metadataProfileXsd, XsdSchemaCache configSchemaCache) throws ValidatorConfigurationException {
         this.fdmfRoot = fdmfRoot;
         this.fdmfConfigXsd = fdmfConfigXsd;
         this.j2kProfileXsd = j2kProfileXsd;
         this.metadataProfileXsd = metadataProfileXsd;
+        this.configSchemaCache = configSchemaCache;
         init();
     }
 
@@ -89,10 +100,9 @@ public class FdmfConfiguration {
         providedFiles.put("AES57_XSD_FILE", findXsdFile(xsdRoot, "AES57", "aes57_[0-9]+(\\.([0-9])+)*\\.xsd"));
 
         //nacteni konfiguracnich souboru - jmennych prostoru, vzdoru, promennych, pravidel
-        validateAndRegisterFdmfConfig(fdmfRoot, "namespaces.xml");
-        validateAndRegisterFdmfConfig(fdmfRoot, "patterns.xml");
-        validateAndRegisterFdmfConfig(fdmfRoot, "variables.xml");
-        validateAndRegisterFdmfConfig(fdmfRoot, "rules.xml");
+        for (String configFileName : CONFIG_FILE_NAMES) {
+            validateAndRegisterFdmfConfig(fdmfRoot, configFileName);
+        }
 
         //inicializace profilu pro validaci metadat
         initBiblioProfiles();
@@ -152,9 +162,8 @@ public class FdmfConfiguration {
     }
 
     private void validateConfigFile(File configFile, File xsd) throws ValidatorConfigurationException {
-        SchemaFactory schemaFactory = SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
         try {
-            Schema schema = schemaFactory.newSchema(xsd);
+            Schema schema = configSchemaCache.getSchema(xsd);
             javax.xml.validation.Validator validator = schema.newValidator();
             validator.validate(new StreamSource(configFile));
         } catch (Exception e) {

@@ -13,6 +13,7 @@ import nkp.pspValidator.shared.externalUtils.ResourceType;
 import org.w3c.dom.Element;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -72,7 +73,29 @@ public class ConfigProcessor {
         }
     }
 
-    private void processRulesSectionDefinition(Engine engine, Element rulesSectionEl, Integer ruleId) throws ValidatorConfigurationException {
+    /**
+     * Jen sekce pravidel z konfiguracniho souboru (id, nazev, popis) ve stejnem poradi a se stejnymi id jako
+     * processConfigFile, bez stavby pravidel a validacnich funkci. Pouziva se pro seznam sekci (napr. dialog
+     * preskakovani sekci v GUI), kde neni potreba stavet cely validator.
+     */
+    public static List<RulesSection> readRulesSections(File configFile) throws ValidatorConfigurationException {
+        XMLTag doc;
+        try {
+            doc = XMLDoc.from(configFile, true);
+        } catch (RuntimeException e) {
+            throw new ValidatorConfigurationException("konfigurační soubor %s nelze načíst: %s", configFile.getAbsolutePath(), e.getMessage());
+        }
+        List<RulesSection> result = new ArrayList<>();
+        int ruleCounter = 0;
+        for (Element childEl : doc.getChildElement()) {
+            if ("rules-section".equals(childEl.getTagName())) {
+                result.add(buildRulesSection(childEl, ruleCounter++));
+            }
+        }
+        return result;
+    }
+
+    private static RulesSection buildRulesSection(Element rulesSectionEl, Integer ruleId) {
         String name = rulesSectionEl.getAttribute("name");
         //System.out.println(String.format("processing rule-section %s'", name));
         String description = null;
@@ -80,7 +103,11 @@ public class ConfigProcessor {
         if (descriptionFromEl != null && !descriptionFromEl.trim().isEmpty()) {
             description = descriptionFromEl.trim();
         }
-        RulesSection section = engine.buildRuleSection(ruleId, name, description);
+        return new RulesSection(ruleId, name, description);
+    }
+
+    private void processRulesSectionDefinition(Engine engine, Element rulesSectionEl, Integer ruleId) throws ValidatorConfigurationException {
+        RulesSection section = buildRulesSection(rulesSectionEl, ruleId);
         section.setEnabled(parseBooleanAttribute("enabled", true));
         engine.registerRuleSection(section);
         //rules

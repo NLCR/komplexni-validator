@@ -40,6 +40,11 @@
                                maxHeight="100" maxWidth="100"/>
 
             <TabPane fx:id="tabPane"/>
+
+            <Label fx:id="errorLabel"
+                   visible="false"
+                   wrapText="true"
+                   maxWidth="1000"/>
         </StackPane>
 
         <HBox

@@ -93,7 +93,7 @@ public class VfCheckMetsFilesecChecksumsMatch extends ValidationFunction {
         XPathExpression xpath = engine.buildXpath("mets:FLocat/@xlink:href");
         String filePath = (String) xpath.evaluate(fileEl, XPathConstants.STRING);
         File file = Utils.buildAbsoluteFile(pspdir, filePath);
-        String hashComputed = Utils.computeHash(file);
+        String hashComputed = engine.computeMd5(file);
         if (!hashComputed.equalsIgnoreCase(hashExpected)) {
             return new ValidationProblem(Level.ERROR,
                     String.format("uvedený kontrolní součet '%s' nesouhlasí s vypočítaným kontrolním součtem '%s' pro soubor %s", hashExpected, hashComputed, file.getAbsolutePath()))

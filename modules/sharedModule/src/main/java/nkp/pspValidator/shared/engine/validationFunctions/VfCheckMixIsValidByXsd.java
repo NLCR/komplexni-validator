@@ -1,7 +1,6 @@
 package nkp.pspValidator.shared.engine.validationFunctions;
 
 import nkp.pspValidator.shared.XmlUtils;
-import nkp.pspValidator.shared.XsdImportsResourceResolver;
 import nkp.pspValidator.shared.engine.Engine;
 import nkp.pspValidator.shared.engine.Level;
 import nkp.pspValidator.shared.engine.ValueEvaluation;
@@ -20,7 +19,6 @@ import javax.xml.XMLConstants;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.validation.Schema;
-import javax.xml.validation.SchemaFactory;
 import javax.xml.validation.Validator;
 import javax.xml.xpath.XPathConstants;
 import javax.xml.xpath.XPathExpression;
@@ -135,10 +133,8 @@ public class VfCheckMixIsValidByXsd extends ValidationFunction {
                 Document mixDoc = XmlUtils.elementToNewDocument(mixEl, true);
 
                 DOMSource source = new DOMSource(mixDoc);
-                SchemaFactory schemaFactory = SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
-                schemaFactory.setResourceResolver(new XsdImportsResourceResolver(xsdFile.getParentFile()));
-
-                Schema schema = schemaFactory.newSchema(xsdFile);
+                //zkompilovane schema je sdilene v ramci validace, Validator se vytvari pro kazde pouziti
+                Schema schema = engine.getXsdSchemaCache().getSchemaWithImportsResolver(xsdFile);
                 Validator validator = schema.newValidator();
                 validator.validate(source);
             }
