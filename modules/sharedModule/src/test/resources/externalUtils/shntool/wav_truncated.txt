@@ -1,0 +1,33 @@
+-------------------------------------------------------------------------------
+File name:                    mca_1234567890_0001.wav
+Handled by:                   wav format module
+Length:                       2:04.835
+WAVE format:                  0x0001 (Microsoft PCM)
+Channels:                     1
+Bits/sample:                  24
+Samples/sec:                  96000
+Average bytes/sec:            288000
+Rate (calculated):            288000
+Block align:                  3
+Header size:                  80 bytes
+Data size:                    35952456 bytes
+Chunk size:                   35953326 bytes
+Total size (chunk size + 8):  35953334 bytes
+Actual file size:             1000000
+File is compressed:           no
+Compression ratio:            0.0278
+CD-quality properties:
+  CD quality:                 no
+  Cut on sector boundary:     n/a
+  Sector misalignment:        n/a
+  Long enough to be burned:   n/a
+WAVE properties:
+  Non-canonical header:       yes
+  Extra RIFF chunks:          yes (798 bytes)
+Possible problems:
+  File contains ID3v2 tag:    no
+  Data chunk block-aligned:   yes
+  Inconsistent header:        no
+  File probably truncated:    yes (missing 34953334 bytes)
+  Junk appended to file:      no
+  Odd data size has pad byte: n/a

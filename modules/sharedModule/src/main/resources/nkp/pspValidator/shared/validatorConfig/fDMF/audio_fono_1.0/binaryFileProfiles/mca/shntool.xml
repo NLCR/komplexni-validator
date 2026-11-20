@@ -1,0 +1,98 @@
+<binaryFileProfile
+        xmlns="http://www.nkp.cz/pspValidator/3.0/binaryFileProfile"
+        validatorVersion="3.0"
+        dmf="audio_fono_1.0"
+>
+    <!--
+    Archivní kopie zvuku (MASTER-COPY-AUDIO), issue #104. DMF uvádí formát jen „např. WAV“ a parametry (96 kHz, 24 bit)
+    jen u SOURCE-AUDIO, proto se odchylka vzorkovací frekvence a bitové hloubky hlásí jako WARNING. Formát PCM
+    (pro WAV dle NDK, DMF Zvuk 1.0 kap. 7.5.4), komprese, hlavička a zkrácení souboru jako u SOURCE-AUDIO.
+    -->
+    <fromText>
+
+        <validation name="WAVE format musí mít hodnotu '(Microsoft PCM)'">
+            <textDataExtraction resultType="STRING">
+                <firstNonempty>
+                    <regexp>WAVE format:.*</regexp>
+                </firstNonempty>
+            </textDataExtraction>
+            <rules>
+                <mustExist/>
+                <mustMatchAny>
+                    <endsWith>(Microsoft PCM)</endsWith>
+                </mustMatchAny>
+            </rules>
+        </validation>
+
+        <validation name="Bits/sample by měl mít hodnotu '24'">
+            <textDataExtraction resultType="STRING">
+                <firstNonempty>
+                    <regexp>Bits/sample:.*</regexp>
+                </firstNonempty>
+            </textDataExtraction>
+            <rules>
+                <mustExist/>
+                <mustMatchAny level="WARNING">
+                    <endsWith>24</endsWith>
+                </mustMatchAny>
+            </rules>
+        </validation>
+
+        <validation name="Samples/sec by měl mít hodnotu '96000'">
+            <textDataExtraction resultType="STRING">
+                <firstNonempty>
+                    <regexp>Samples/sec:.*</regexp>
+                </firstNonempty>
+            </textDataExtraction>
+            <rules>
+                <mustExist/>
+                <mustMatchAny level="WARNING">
+                    <endsWith>96000</endsWith>
+                </mustMatchAny>
+            </rules>
+        </validation>
+
+        <validation name="File is compressed musí mít hodnotu 'no'">
+            <textDataExtraction resultType="STRING">
+                <firstNonempty>
+                    <regexp>File is compressed:.*</regexp>
+                </firstNonempty>
+            </textDataExtraction>
+            <rules>
+                <mustExist/>
+                <mustMatchAny>
+                    <endsWith>no</endsWith>
+                </mustMatchAny>
+            </rules>
+        </validation>
+
+        <validation name="Inconsistent header musí mít hodnotu 'no'">
+            <textDataExtraction resultType="STRING">
+                <firstNonempty>
+                    <regexp>Inconsistent header:.*</regexp>
+                </firstNonempty>
+            </textDataExtraction>
+            <rules>
+                <mustExist/>
+                <mustMatchAny>
+                    <endsWith>no</endsWith>
+                </mustMatchAny>
+            </rules>
+        </validation>
+
+        <validation name="File probably truncated musí mít hodnotu 'no'">
+            <textDataExtraction resultType="STRING">
+                <firstNonempty>
+                    <regexp>File probably truncated:.*</regexp>
+                </firstNonempty>
+            </textDataExtraction>
+            <rules>
+                <mustExist/>
+                <mustMatchAny>
+                    <endsWith>no</endsWith>
+                </mustMatchAny>
+            </rules>
+        </validation>
+
+    </fromText>
+</binaryFileProfile>

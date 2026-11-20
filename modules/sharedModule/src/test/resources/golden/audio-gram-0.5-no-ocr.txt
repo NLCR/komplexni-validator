@@ -326,11 +326,11 @@ Pravidlo SOURCE-AUDIO_FILES_VALID_BY_JHOVE: 1 problém (1x INFO)
 Pravidlo SOURCE-AUDIO_FILES_VALID_BY_SHNTOOL: 1 problém (1x INFO)
 	Všechny soubory SOURCE-AUDIO (wav) musí být validní vůči profilu pro binární soubory pro nástroj shntool.
 	INFO: nástroj shntool je vypnutý
-Pravidlo MASTER-COPY-AUDIO_FILES_VALID_BY_MP3VAL: 1 problém (1x INFO)
-	Všechny soubory MASTER-COPY-AUDIO (mp3) musí být validní vůči profilu pro binární soubory pro nástroj MP3val.
+Pravidlo MASTER-COPY-AUDIO_FILES_VALID_BY_JHOVE: 1 problém (1x INFO)
+	Všechny soubory MASTER-COPY-AUDIO (wav) musí být validní vůči profilu pro binární soubory pro nástroj JHOVE.
 	INFO: prázdný seznam souborů
-Pravidlo MASTER-COPY-AUDIO_FILES_VALID_BY_CHECKMATE: 1 problém (1x INFO)
-	Všechny soubory MASTER-COPY-AUDIO (mp3) musí být validní vůči profilu pro binární soubory pro nástroj Checkmate.
+Pravidlo MASTER-COPY-AUDIO_FILES_VALID_BY_SHNTOOL: 1 problém (1x INFO)
+	Všechny soubory MASTER-COPY-AUDIO (wav) musí být validní vůči profilu pro binární soubory pro nástroj shntool.
 	INFO: prázdný seznam souborů
 Pravidlo USER-COPY-AUDIO_FILES_VALID_BY_MP3VAL: 1 problém (1x INFO)
 	Všechny soubory USER-COPY-AUDIO (mp3) musí být validní vůči profilu pro binární soubory pro nástroj MP3val.

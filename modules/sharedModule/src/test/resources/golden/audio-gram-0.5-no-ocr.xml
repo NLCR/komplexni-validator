@@ -762,14 +762,14 @@
                     </problems>
                 </summary>
             </rule>
-            <rule description="Všechny soubory MASTER-COPY-AUDIO (mp3) musí být validní vůči profilu pro binární soubory pro nástroj MP3val." name="MASTER-COPY-AUDIO_FILES_VALID_BY_MP3VAL">
+            <rule description="Všechny soubory MASTER-COPY-AUDIO (wav) musí být validní vůči profilu pro binární soubory pro nástroj JHOVE." name="MASTER-COPY-AUDIO_FILES_VALID_BY_JHOVE">
                 <summary durationMs="[MS]">
                     <problems INFO="1" total="1">
                         <problem level="INFO">prázdný seznam souborů</problem>
                     </problems>
                 </summary>
             </rule>
-            <rule description="Všechny soubory MASTER-COPY-AUDIO (mp3) musí být validní vůči profilu pro binární soubory pro nástroj Checkmate." name="MASTER-COPY-AUDIO_FILES_VALID_BY_CHECKMATE">
+            <rule description="Všechny soubory MASTER-COPY-AUDIO (wav) musí být validní vůči profilu pro binární soubory pro nástroj shntool." name="MASTER-COPY-AUDIO_FILES_VALID_BY_SHNTOOL">
                 <summary durationMs="[MS]">
                     <problems INFO="1" total="1">
                         <problem level="INFO">prázdný seznam souborů</problem>

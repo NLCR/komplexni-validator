@@ -2993,8 +2993,8 @@
             </validation>
         </rule>
 
-        <rule name="MASTER-COPY-AUDIO_FILES_VALID_BY_MP3VAL">
-            <description>Všechny soubory MASTER-COPY-AUDIO (mp3) musí být validní vůči profilu pro binární soubory pro nástroj MP3val.
+        <rule name="MASTER-COPY-AUDIO_FILES_VALID_BY_JHOVE">
+            <description>Všechny soubory MASTER-COPY-AUDIO (wav) musí být validní vůči profilu pro binární soubory pro nástroj JHOVE.
             </description>
             <validation functionName="checkBinaryFilesValidByExternalUtil">
                 <params>
@@ -3003,14 +3003,14 @@
                         <value-ref name="MASTER-COPY-AUDIO_FILES"/>
                     </value>
                     <value name="type" type="RESOURCE_TYPE">AUDIO_MASTER_COPY</value>
-                    <value name="util" type="EXTERNAL_UTIL">MP3VAL</value>
-                    <value name="execution" type="STRING">mp3</value>
+                    <value name="util" type="EXTERNAL_UTIL">JHOVE</value>
+                    <value name="execution" type="STRING">wav</value>
                 </params>
             </validation>
         </rule>
 
-        <rule name="MASTER-COPY-AUDIO_FILES_VALID_BY_CHECKMATE">
-            <description>Všechny soubory MASTER-COPY-AUDIO (mp3) musí být validní vůči profilu pro binární soubory pro nástroj Checkmate.
+        <rule name="MASTER-COPY-AUDIO_FILES_VALID_BY_SHNTOOL">
+            <description>Všechny soubory MASTER-COPY-AUDIO (wav) musí být validní vůči profilu pro binární soubory pro nástroj shntool.
             </description>
             <validation functionName="checkBinaryFilesValidByExternalUtil">
                 <params>
@@ -3019,8 +3019,8 @@
                         <value-ref name="MASTER-COPY-AUDIO_FILES"/>
                     </value>
                     <value name="type" type="RESOURCE_TYPE">AUDIO_MASTER_COPY</value>
-                    <value name="util" type="EXTERNAL_UTIL">CHECKMATE</value>
-                    <value name="execution" type="STRING">mp3</value>
+                    <value name="util" type="EXTERNAL_UTIL">SHNTOOL</value>
+                    <value name="execution" type="STRING">wav</value>
                 </params>
             </validation>
         </rule>

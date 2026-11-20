@@ -3,7 +3,7 @@
 Vstupy pro testy parsování výstupů nástrojů bez samotných nástrojů (balíček
 `nkp.pspValidator.shared.externalUtils`, viz `ExternalUtilsTestSupport`). Testy vezmou uložený
 text, podstrčí ho místo spuštění procesu (`CannedOutputExternalUtilManager`) a vyhodnotí nad ním
-profily binárních souborů z fDMF (`binaryFileProfiles/{mc,uc}/*.xml`, u veraPDF a EPUBCheck
+profily binárních souborů z fDMF (`binaryFileProfiles/{mc,uc}/*.xml`, u WAV `binaryFileProfiles/mca/*.xml`, u veraPDF a EPUBCheck
 `binaryFileProfiles/{pdf,epub}/*.xml` z `emonograph_3.0`), extrakce a pravidla.
 
 Obrazové nástroje pořízeny 8. 11. 2026 na macOS (Apple Silicon), veraPDF a EPUBCheck 12. 11. 2026. Absolutní cesty ve výstupech jsou nahrazené cestou
@@ -30,6 +30,22 @@ Názvy souborů obrazových nástrojů: `<adresář vstupu>_<název vstupu>`, vs
 - `harvard_ns_rel1.6_mc.xml`: historický výstup JHOVE 1.6 (2011) se starým jmenným prostorem
   `http://hul.harvard.edu/ois/xml/ns/jhove`, převzatý z `modules/guiModule/src/main/xml/jhove_output_mc.xml`
   (obsahuje ruční komentáře SPEC/HODNOTY, data jsou původní).
+
+## JHOVE a shntool pro WAV (reálné výstupy, issue #104)
+
+- Pořízeno 20. 11. 2026 na macOS (Apple Silicon): JHOVE 1.34.0 (instalátor `jhove-installer-1.34.0.jar`), shntool
+  3.0.10 z Homebrew (`shntool/version.txt` je první řádek `shntool -v`, vypisuje se na STDERR).
+- Příkazy: `jhove -h XML -m WAVE-hul <soubor>` a `shntool info <soubor>` (stdout), odpovídají spuštěním `wav`
+  v `externalUtils.xml`. Spuštěno v adresáři vstupu, v `repInfo/@uri` a `File name` je jen název souboru.
+- Vstupy (nejsou v repozitáři): soubor `mastercopy_audio` vzorového balíku fonoválečků NK
+  (`official-samples/vzorovy_balicek_fonograficke_valecky.zip`, mono, 24 bit, 96 kHz), přejmenovaný na
+  `mca_1234567890_000N.wav`.
+- `wav_ok_24bit_96kHz.*`: celý soubor, JHOVE `Well-Formed and valid`, shntool bez problému.
+- `wav_truncated.*`: prvních 1 000 000 bajtů téhož souboru, JHOVE `Not well-formed` (WAVE-HUL-3), shntool
+  `File probably truncated: yes (missing 34953334 bytes)`.
+- `wav_16bit_44kHz.*`: syntetický vstup (stereo, 16 bit, 44,1 kHz, 0,1 s ticha, Python `wave`), výstupy reálné.
+- `wav_mp3_renamed.*`: MP3 z `usercopy_audio` téhož balíku s příponou `.wav`; JHOVE `Not well-formed` (WAVE-HUL-1),
+  shntool nic nevypíše na STDOUT (prázdný soubor), na STDERR `none of the builtin format modules handle input file`.
 
 ## Kakadu (reálné výstupy)
 

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jhove xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://schema.openpreservation.org/ois/xml/ns/jhove" xsi:schemaLocation="http://schema.openpreservation.org/ois/xml/ns/jhove https://schema.openpreservation.org/ois/xml/xsd/jhove/1.10/jhove.xsd" name="Jhove" release="1.34.0" date="2025-07-02">
+ <date>2026-11-20T10:49:17+01:00</date>
+ <repInfo uri="mca_1234567890_0002.wav">
+  <reportingModule release="1.8.3" date="2024-03-05">WAVE-hul</reportingModule>
+  <lastModified>2026-11-20T10:49:16+01:00</lastModified>
+  <size>4936320</size>
+  <status>Not well-formed</status>
+  <messages>
+   <message offset="0" severity="error" id="WAVE-HUL-1" infoLink="https://github.com/openpreserve/jhove/wiki/WAVE-hul-Messages#wave-hul-1">File does not start with RIFF header</message>
+  </messages>
+ </repInfo>
+</jhove>
