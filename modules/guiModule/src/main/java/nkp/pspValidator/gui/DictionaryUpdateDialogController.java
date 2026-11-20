@@ -115,33 +115,31 @@ public class DictionaryUpdateDialogController extends DialogController {
                         //nothing
                     }
                 }
-                Scanner reader = null;
-                PrintWriter writer = null;
+                File tmpFile = null;
                 try {
                     //download dictionary into temporary file
-                    File tmpFile = File.createTempFile(dictionaryName, ".tmp");
-                    writer = new PrintWriter(new FileWriter(tmpFile));
-                    reader = new Scanner(new URL(syncUrl).openStream());
-                    while (reader.hasNext()) {
-                        String line = reader.nextLine();
-                        writer.println(line);
+                    tmpFile = File.createTempFile(dictionaryName, ".tmp");
+                    //docasny soubor se musi zavrit driv, nez se kopiruje a maze: Windows otevreny soubor smazat
+                    //nedovoli ("Proces nemá přístup k souboru, protože jej využívá jiný proces")
+                    try (PrintWriter writer = new PrintWriter(new FileWriter(tmpFile));
+                         Scanner reader = new Scanner(new URL(syncUrl).openStream())) {
+                        while (reader.hasNext()) {
+                            String line = reader.nextLine();
+                            writer.println(line);
+                        }
+                        writer.flush();
                     }
-                    writer.flush();
 
                     //replace dictionary file
                     File dictFile = getDictMgr().getDictionaryFile(dictionaryName);
                     Files.copy(Paths.get(tmpFile.toURI()), Paths.get(dictFile.toURI()), StandardCopyOption.REPLACE_EXISTING);
-                    Files.delete(Paths.get(tmpFile.toURI()));
                     updateMessage("finished");
                 } catch (IOException ex) {
                     updateMessage("CHYBA: " + ex.getClass().getSimpleName() + ": " + ex.getMessage());
                     ex.printStackTrace();
                 } finally {
-                    if (reader != null) {
-                        reader.close();
-                    }
-                    if (writer != null) {
-                        writer.close();
+                    if (tmpFile != null && !tmpFile.delete()) {
+                        tmpFile.deleteOnExit();
                     }
                 }
                 return null;
