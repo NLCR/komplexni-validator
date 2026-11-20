@@ -106,8 +106,10 @@ Externí nástroje (ImageMagick, JHOVE, Jpylyzer, Kakadu, MP3val, shntool, Check
 adresářem (`--<nástroj>-path`, např. `--jhove-path`) nebo vypínají (`--disable-<nástroj>`); bez cesty se hledají
 v PATH. Validátor verze nástrojů nekontroluje, jen je vypíše. Nástroj, jehož verzi se nepodaří zjistit, se pro
 validaci vypne: pravidlo pak hlásí jednu informaci „nástroj … není dostupný“ (dříve CLI hlásilo chybu spuštění
-u každého souboru). Instalátory JHOVE a Jpylyzer jsou v adresáři `installers/` repozitáře (nejsou součástí
-vydaných zipů).
+u každého souboru). Nástroje se instalují z oficiálních zdrojů, například
+[JHOVE](https://jhove.openpreservation.org/) (doporučená verze 1.34.0, nejméně 1.28) a
+[Jpylyzer](https://jpylyzer.openpreservation.org/) (doporučená verze 2.2.1, nejméně 2.0); instalátory nejsou součástí
+repozitáře ani vydaných zipů.
 
 ### veraPDF a EPUBCheck (e-publikace)
 
