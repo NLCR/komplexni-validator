@@ -106,7 +106,11 @@ Externí nástroje (ImageMagick, JHOVE, Jpylyzer, Kakadu, MP3val, shntool, Check
 adresářem (`--<nástroj>-path`, např. `--jhove-path`) nebo vypínají (`--disable-<nástroj>`); bez cesty se hledají
 v PATH. Validátor verze nástrojů nekontroluje, jen je vypíše. Nástroj, jehož verzi se nepodaří zjistit, se pro
 validaci vypne: pravidlo pak hlásí jednu informaci „nástroj … není dostupný“ (dříve CLI hlásilo chybu spuštění
-u každého souboru). Nástroje se instalují z oficiálních zdrojů, například
+u každého souboru). Cesty k nástrojům i k balíkům smějí obsahovat mezery a českou diakritiku (ověřeno
+na Windows 11 a macOS se všemi nástroji kromě Kakadu). Na Windows ale JHOVE, shntool a MP3val nenajdou soubor, jehož
+cesta obsahuje znak mimo znakovou sadu systému (v českých Windows středoevropskou, tedy například řecké nebo ruské
+písmeno v názvu adresáře); validace pak u takového balíku hlásí chyby těchto nástrojů, i když soubory jsou
+v pořádku. Balíky proto na Windows ukládejte do cest bez takových znaků. Nástroje se instalují z oficiálních zdrojů, například
 [JHOVE](https://jhove.openpreservation.org/) (doporučená verze 1.34.0, nejméně 1.28) a
 [Jpylyzer](https://jpylyzer.openpreservation.org/) (doporučená verze 2.2.1, nejméně 2.0); instalátory nejsou součástí
 repozitáře ani vydaných zipů.
@@ -133,7 +137,8 @@ Homebrew formule veraPDF má verzi 1.30.2, `verapdf --version` ale vypíše `ver
 knihovny jsou 1.30.2); jde o stejnou instalaci. Jinde: veraPDF z https://software.verapdf.org/releases/verapdf-installer.zip
 (instalátor, spustit `java -jar` na rozbalený jar), EPUBCheck jako zip z https://github.com/w3c/epubcheck/releases.
 
-EPUBCheck se spouští příkazem `java -jar <adresář>/epubcheck.jar`, kde `java` je program z PATH, ne Java, ve které
+Adresář EPUBChecku smí mít v cestě mezery (například `C:\Program Files\epubcheck-5.4.0`), platí to na Windows
+i na macOS. EPUBCheck se spouští příkazem `java -jar <adresář>/epubcheck.jar`, kde `java` je program z PATH, ne Java, ve které
 běží validátor. Na stroji bez `java` v PATH (typicky GUI z instalátoru, které má vlastní přibalenou Javu) EPUBCheck
 nepoběží a validace ho ohlásí jako nedostupný; je potřeba nainstalovat Javu 8 nebo novější a přidat ji do PATH.
 
