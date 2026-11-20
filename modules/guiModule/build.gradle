@@ -171,6 +171,23 @@ def JPACKAGE_VENDOR = 'Narodni knihovna CR'
 def JPACKAGE_DESCRIPTION = 'Komplexni validator baliku PSP'
 def WIN_MENU_GROUP = 'Komplexní validátor'
 
+/*
+ * macOS: do hotové aplikace přidá českou lokalizaci názvu (Contents/Resources/cs.lproj/InfoPlist.strings), aby systém
+ * ve Finderu, v Docku a při přepínání aplikací ukazoval „Komplexní validátor“ místo názvu souboru. jpackage 17 neumí
+ * přidat soubor do Resources, proto se přidává až do hotového balíčku; tím přestane platit jeho podpis, takže se
+ * balíček znovu podepíše stejně jako to dělá jpackage bez certifikátu (ad hoc).
+ */
+def localizeMacApp = { File app ->
+    File lproj = new File(app, 'Contents/Resources/cs.lproj')
+    project.copy {
+        from file('src/main/jpackage/macos/cs.lproj')
+        into lproj
+    }
+    project.exec {
+        commandLine 'codesign', '--force', '--deep', '-s', '-', app.path
+    }
+}
+
 tasks.register('jpackage', Exec) {
     group = 'distribution'
     description = 'Sestaví instalátor nebo portable aplikaci GUI přes jpackage (viz komentář v build.gradle a release.md).'
@@ -278,17 +295,32 @@ tasks.register('jpackage', Exec) {
                     new File(outputDir, "${prefix}_installer.${packageType}"))
         }
 
-        commandLine([jpackageBin,
-                     '--type', packageType,
-                     '--dest', outputDir.path,
-                     '--name', appName,
-                     '--vendor', JPACKAGE_VENDOR,
-                     '--description', JPACKAGE_DESCRIPTION,
-                     '--input', inputDir.path,
-                     '--main-jar', mainJarName,
-                     '--main-class', mainClassName,
-                     '--icon', iconPath,
-                     '--app-version', appVersionNumeric] + platformOptions)
+        List<String> appOptions = ['--name', appName,
+                                   '--vendor', JPACKAGE_VENDOR,
+                                   '--description', JPACKAGE_DESCRIPTION,
+                                   '--input', inputDir.path,
+                                   '--main-jar', mainJarName,
+                                   '--main-class', mainClassName,
+                                   '--icon', iconPath,
+                                   '--app-version', appVersionNumeric] + platformOptions
+        if (platformLabel.startsWith('macOS') && packageType != 'app-image') {
+            // instalátor pro macOS ve dvou krocích: nejdřív aplikace, do ní lokalizace názvu, z ní instalátor
+            File stagingDir = layout.buildDirectory.dir('jpackage-macos-app').get().asFile
+            project.delete(stagingDir)
+            project.exec {
+                commandLine([jpackageBin, '--type', 'app-image', '--dest', stagingDir.path] + appOptions)
+            }
+            File stagedApp = new File(stagingDir, "${appName}.app")
+            localizeMacApp(stagedApp)
+            commandLine([jpackageBin,
+                         '--type', packageType,
+                         '--dest', outputDir.path,
+                         '--name', appName,
+                         '--app-version', appVersionNumeric,
+                         '--app-image', stagedApp.path])
+        } else {
+            commandLine([jpackageBin, '--type', packageType, '--dest', outputDir.path] + appOptions)
+        }
     }
 
     // pojmenování výstupu podle release.md
@@ -300,6 +332,7 @@ tasks.register('jpackage', Exec) {
                 // .app musí zůstat pojmenovaná KomplexniValidator.app (jinak ji Finder nebere jako aplikaci),
                 // do zipu jde tak, jak je
                 File app = new File(outputDir, "${appName}.app")
+                localizeMacApp(app)
                 project.exec {
                     workingDir outputDir
                     // -y: symlinky v runtime zachovat jako symlinky

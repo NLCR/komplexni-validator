@@ -136,6 +136,10 @@ podle tabulky výše. V `build.gradle` se před buildem nic ručně nemění. `v
    s češtinou jako lokalizací aplikace, aby systémové dialogy výběru souboru a adresáře měly česká tlačítka); kontrola
    `plutil -p KomplexniValidator.app/Contents/Info.plist` ukazuje `CFBundleDevelopmentRegion` = `cs`
    a `CFBundleLocalizations` = `cs` vedle verze, identifikátoru a ikony.
+   Název „Komplexní validátor“ ve Finderu, v Docku a při přepínání aplikací dodává lokalizace
+   `src/main/jpackage/macos/cs.lproj/InfoPlist.strings`: úloha `jpackage` ji přidá do hotové aplikace a znovu ji
+   podepíše (ad hoc), instalátor dmg proto staví ve dvou krocích. Při podpisu vlastním certifikátem se musí
+   podepisovat až po tomto kroku.
 3. Kontrola bez instalace a bez zápisu do domovského adresáře: dmg připojit (`hdiutil attach -readonly`), aplikaci
    zkopírovat do dočasného adresáře a spustit z `/` v režimu snímků:
 

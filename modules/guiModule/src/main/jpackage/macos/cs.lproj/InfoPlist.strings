@@ -1,0 +1,3 @@
+/* Název aplikace zobrazovaný systémem (Finder, Dock, přepínání aplikací, lišta nabídek). */
+"CFBundleDisplayName" = "Komplexní validátor";
+"CFBundleName" = "Komplexní validátor";

@@ -26,12 +26,15 @@ tlačítka. Při přechodu na jiné JDK porovnat se šablonou daného jpackage (
   <string>DEPLOY_BUNDLE_IDENTIFIER</string>
   <key>CFBundleInfoDictionaryVersion</key>
   <string>6.0</string>
-  <!-- Název zobrazovaný v liště nabídek, v Docku a při přepínání aplikací. Název balíčku (soubor .app, adresář
-       s nastavením) zůstává bez diakritiky a bez mezery podle volby jpackage name. -->
+  <!-- Název s diakritikou („Komplexní validátor“) dodává lokalizace cs.lproj/InfoPlist.strings, kterou do balíčku
+       přidává úloha jpackage v build.gradle. Systém lokalizovaný název použije jen tehdy, když se nelokalizovaný
+       název zde shoduje s názvem souboru .app, proto tu zůstává název balíčku bez diakritiky. -->
   <key>CFBundleName</key>
-  <string>Komplexní validátor</string>
+  <string>DEPLOY_BUNDLE_NAME</string>
   <key>CFBundleDisplayName</key>
-  <string>Komplexní validátor</string>
+  <string>DEPLOY_BUNDLE_NAME</string>
+  <key>LSHasLocalizedDisplayName</key>
+  <true/>
   <key>CFBundlePackageType</key>
   <string>APPL</string>
   <key>CFBundleShortVersionString</key>
