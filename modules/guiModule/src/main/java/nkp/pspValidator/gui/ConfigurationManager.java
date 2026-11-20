@@ -36,6 +36,11 @@ public class ConfigurationManager {
 
     //fdmf
     public static final String PROP_VALIDATOR_CONFIG_DIR = "validatorConfig.dir";
+    /**
+     * Adresář konfigurace validátoru zvolil uživatel v Nastavení (true): při startu se pak nenahrazuje výchozím, ani když
+     * leží v instalaci aplikace (pokud existuje). Výchozí adresář se tak neoznačuje.
+     */
+    public static final String PROP_VALIDATOR_CONFIG_DIR_CHOSEN = "validatorConfig.dir.chosenByUser";
 
     //external tools
     public static final String PROP_EXTERNAL_TOOLS_CHECK_SHOWN = "external_tools_check.shown";
@@ -163,12 +168,15 @@ public class ConfigurationManager {
         //validator config dir
         File validatorConfigDir = getFileOrNull(PROP_VALIDATOR_CONFIG_DIR);
         // konfigurace z instalace se bere vždy z právě spuštěné aplikace (jinak by nová verze nebo přesunutá aplikace
-        // použila pravidla ze staré instalace); vlastní existující adresář mimo instalaci zvolený uživatelem zůstává
-        if (validatorConfigDir != null && !DEV_MODE && locations.isStaleValidatorConfigDir(validatorConfigDir)) {
+        // použila pravidla ze staré instalace); vlastní existující adresář mimo instalaci zvolený uživatelem zůstává,
+        // adresář výslovně zvolený v Nastavení zůstává, i když leží v instalaci
+        boolean chosenByUser = getBooleanOrDefault(PROP_VALIDATOR_CONFIG_DIR_CHOSEN, false);
+        if (validatorConfigDir != null && !DEV_MODE && locations.isStaleValidatorConfigDir(validatorConfigDir, chosenByUser)) {
             validatorConfigDir = null;
         }
         if (validatorConfigDir == null) {
             validatorConfigDir = locations.defaultValidatorConfigDir;
+            properties.remove(PROP_VALIDATOR_CONFIG_DIR_CHOSEN);
             setFile(PROP_VALIDATOR_CONFIG_DIR, validatorConfigDir);
         }
         //log dir
@@ -367,8 +375,19 @@ public class ConfigurationManager {
          * jinam) nebo leží uvnitř instalace z jpackage (této nebo jiné verze, i macOS .app).
          */
         boolean isStaleValidatorConfigDir(File dir) {
+            return isStaleValidatorConfigDir(dir, false);
+        }
+
+        /**
+         * Jako {@link #isStaleValidatorConfigDir(File)}; adresář výslovně zvolený uživatelem v Nastavení
+         * ({@code chosenByUser}) se nahradí jen tehdy, když neexistuje.
+         */
+        boolean isStaleValidatorConfigDir(File dir, boolean chosenByUser) {
             if (!dir.isDirectory()) {
                 return true;
+            }
+            if (chosenByUser) {
+                return false;
             }
             if (!jpackage) {
                 // java -jar: existující adresář zvolený uživatelem se nikdy nepřepisuje
@@ -533,6 +552,40 @@ public class ConfigurationManager {
 
     public Platform getPlatform() {
         return platform;
+    }
+
+    /** Výchozí adresář konfigurace validátoru pro tento způsob spuštění (v instalaci, vedle jaru, v pracovním adresáři). */
+    public File getDefaultValidatorConfigDir() {
+        return locations.defaultValidatorConfigDir;
+    }
+
+    /**
+     * Uloží adresář konfigurace validátoru zvolený uživatelem v Nastavení. Jiný než výchozí adresář se označí jako
+     * zvolený uživatelem ({@link #PROP_VALIDATOR_CONFIG_DIR_CHOSEN}), aby ho start aplikace nenahradil výchozím; výchozí
+     * adresář se neoznačí, takže se po aktualizaci nebo přesunu aplikace dál bere z právě spuštěné instalace.
+     */
+    public void setValidatorConfigDirChosenByUser(File dir) {
+        if (dir == null) {
+            return;
+        }
+        if (sameFile(dir, locations.defaultValidatorConfigDir)) {
+            properties.remove(PROP_VALIDATOR_CONFIG_DIR_CHOSEN);
+        } else {
+            properties.setProperty(PROP_VALIDATOR_CONFIG_DIR_CHOSEN, Boolean.TRUE.toString());
+        }
+        setFile(PROP_VALIDATOR_CONFIG_DIR, dir);
+    }
+
+    /** Stejný soubor nebo adresář (po převodu na kanonickou cestu; když ji nelze zjistit, podle absolutní cesty). */
+    public static boolean sameFile(File a, File b) {
+        if (a == null || b == null) {
+            return a == b;
+        }
+        try {
+            return a.getCanonicalFile().equals(b.getCanonicalFile());
+        } catch (IOException e) {
+            return a.getAbsoluteFile().equals(b.getAbsoluteFile());
+        }
     }
 
 

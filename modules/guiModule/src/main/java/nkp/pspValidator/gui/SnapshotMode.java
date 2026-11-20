@@ -143,6 +143,22 @@ import java.util.function.Supplier;
  * dotaz „Uložit změny?“) a zvolí {@code -Dkv.snapshotPromptChoice=discard|save|back} (výchozí discard). Pak vypíše
  * uloženou hodnotu v nastavení a stav nástrojů a Nastavení otevře znovu ({@code settings-tool-after-<volba>.png}).
  * <p>
+ * Nastavení, adresář konfigurace validátoru: krok {@code settingsConfigDir} s
+ * {@code -Dkv.snapshotConfigDirs=<platný adresář><oddělovač cest><neplatný adresář>} (oddělovač {@code :}, na Windows
+ * {@code ;}) otevře záložku Adresáře a protokoly ({@code settings-config-dir.png}), vybere neplatný adresář jako
+ * „Změnit…“ ({@code settings-config-dir-invalid.png}), pak platný ({@code settings-config-dir-unsaved.png}), uloží
+ * ({@code settings-config-restart.png}, dotaz na restart), stiskne „Restartovat teď“ (ve snímkovacím režimu se jen
+ * vypíše příkaz) a Nastavení otevře znovu ({@code settings-config-dir-saved.png}, uloženo vs. používá se). Uložený
+ * adresář se zapíše do souboru nastavení, proto použít {@code -Dkv.configFile} s kopií nastavení.
+ * <p>
+ * Validace tlačítkem dialogu: krok {@code dialogValidate} otevře dialog Nová validace stejně jako menu (modálně),
+ * zapíše cestu z {@code -Dkv.snapshotPsp}, po rozpoznání a prodlevě {@code -Dkv.snapshotWaitMs} (výchozí 4 000 ms)
+ * stiskne Validovat podle {@code -Dkv.snapshotClick=fire|mouse|robot} (fire = {@code Button.fire()}, mouse = syntetické
+ * události myši, robot = skutečné kliknutí přes systém) a po konci validace uloží {@code dialog-validate.png}.
+ * <p>
+ * Po celý běh hlídá odezvu vlákna JavaFX {@link FxWatchdog}: když 15 s neodpoví, vypíše „FX FROZEN“, uloží výpis vláken
+ * do {@code fx-frozen-threads.txt} a ukončí proces kódem 3.
+ * <p>
  * Přes gradle: {@code ./gradlew :modules:guiModule:runSnapshots -PsnapshotDir=/tmp/snap [-PsnapshotConfigFile=/tmp/snap-config.properties]}.
  */
 public class SnapshotMode {
@@ -165,6 +181,9 @@ public class SnapshotMode {
     public static final String PROP_RERUN_PACKAGE = "kv.snapshotRerunPackage";
     public static final String PROP_TOOL_PATH = "kv.snapshotToolPath";
     public static final String PROP_PROMPT_CHOICE = "kv.snapshotPromptChoice";
+    public static final String PROP_CONFIG_DIRS = "kv.snapshotConfigDirs";
+    public static final String PROP_CLICK = "kv.snapshotClick";
+    public static final String PROP_WAIT_MS = "kv.snapshotWaitMs";
     private static final long VALIDATION_TIMEOUT_MS = 10 * 60 * 1000;
     public static final String ALL_DIALOGS = "main,mainMenu,settingsMenu,newValidation,settings,externalUtils,toolDetails,"
             + "about,dictionaryContent,dictionaryUpdate,init,initError,unzip,unzipError";
@@ -211,6 +230,8 @@ public class SnapshotMode {
         dialogs.put("dev", () -> new nkp.pspValidator.gui.dev.DevDialog(dialogStage, main));
 
         ignoreKeyboard();
+        //zamrznuti vlakna JavaFX (napr. zamek vykreslovani po vyjimce v JavaFX) ukonci beh s vypisem vlaken
+        FxWatchdog.start(dir);
         //snimkovaci rezim preskakuje dialog nastroju pri startu; bez kontroly by prazdny stav neznal jejich dostupnost
         main.getMainController().checkToolsForEmptyState();
         System.out.println("SNAPSHOT MODE: dir=" + dir.getAbsolutePath() + ", dialogs=" + names + ", delay=" + delayMs + " ms");
@@ -399,6 +420,10 @@ public class SnapshotMode {
                     externalUtilsClose();
                 } else if ("settingsToolDraft".equals(name)) {
                     settingsToolDraft();
+                } else if ("settingsConfigDir".equals(name)) {
+                    settingsConfigDir();
+                } else if ("dialogValidate".equals(name)) {
+                    dialogValidate(name);
                 } else if ("filtered".equals(name)) {
                     MainController controller = main.getMainController();
                     controller.setFilterChecks(true, true, false, true);
@@ -427,7 +452,7 @@ public class SnapshotMode {
                         next();
                     });
                 } else {
-                    System.err.println("SNAPSHOT MODE: unknown dialog '" + name + "', known: main,mainMenu,settingsMenu,setPreferred,helpMenu,showMenu,validateMenu,revealXml,settings,settingsSave,settingsToolDraft,toolDetails,dictionaryUpdateRun,results,rerun,progress,stress,filtered,small,group,groupRerunOne,groupCancel,groupUnpack,newValidationGroupMenu,externalUtilsClose," + String.join(",", dialogs.keySet()));
+                    System.err.println("SNAPSHOT MODE: unknown dialog '" + name + "', known: main,mainMenu,settingsMenu,setPreferred,helpMenu,showMenu,validateMenu,revealXml,settings,settingsSave,settingsToolDraft,toolDetails,dictionaryUpdateRun,dialogValidate,results,rerun,progress,stress,filtered,small,group,groupRerunOne,groupCancel,groupUnpack,newValidationGroupMenu,externalUtilsClose," + String.join(",", dialogs.keySet()));
                     failed = true;
                     next();
                 }
@@ -955,6 +980,158 @@ public class SnapshotMode {
             });
         }
 
+        // ===== dialog Nova validace: spusteni validace tlacitkem =====
+
+        /**
+         * Validace spuštěná z dialogu Nová validace jako uživatelem: dialog otevře stejná metoda jako menu (modální,
+         * {@code showAndWait}), cesta z {@code kv.snapshotPsp} se zapíše do pole, po rozpoznání balíku a prodlevě
+         * {@code kv.snapshotWaitMs} (výchozí 4 000 ms, kontrola nástrojů) se stiskne Validovat podle
+         * {@code kv.snapshotClick}: {@code fire} (výchozí, {@code Button.fire()} mimo pulz), {@code mouse} (syntetické
+         * události myši na tlačítku) nebo {@code robot} (skutečné kliknutí myší přes systém). Hlídač pak sleduje odezvu
+         * vlákna JavaFX (viz {@link FxWatchdog}); po konci validace uloží {@code dialog-validate.png}.
+         */
+        private void dialogValidate(String name) {
+            String psp = System.getProperty(PROP_PSP);
+            if (psp == null || psp.trim().isEmpty()) {
+                System.err.println("SNAPSHOT MODE: step '" + name + "' needs -D" + PROP_PSP + "=<package dir or zip>");
+                failed = true;
+                next();
+                return;
+            }
+            String click = System.getProperty(PROP_CLICK, "fire").trim();
+            long waitMs = Long.parseLong(System.getProperty(PROP_WAIT_MS, "4000").trim());
+            MainController controller = main.getMainController();
+            int startedBefore = controller.getStartedValidations();
+            long started = System.currentTimeMillis();
+            Stage dialogStage = main.getDialogStage();
+            //dialog se otevira modalne (showAndWait), dalsi kroky proto bezi z casovacu uvnitr jeho smycky udalosti
+            whenDialogReady(dialogStage, started, () -> {
+                Scene scene = dialogStage.getScene();
+                javafx.scene.control.TextField pathField = (javafx.scene.control.TextField) scene.lookup("#pathField");
+                javafx.scene.control.Button validate = (javafx.scene.control.Button) scene.lookup("#validateButton");
+                //zdroj jako uzivatel prepinacem (skupina podle kv.snapshotSource, ZIP podle pripony)
+                ValidationSource wanted = isGroupSource() ? ValidationSource.GROUP
+                        : psp.trim().toLowerCase().endsWith(".zip") ? ValidationSource.ZIP : ValidationSource.DIRECTORY;
+                for (Node node : ((javafx.scene.layout.Pane) scene.lookup("#sourceSwitch")).getChildren()) {
+                    if (node instanceof javafx.scene.control.ToggleButton && node.getUserData() == wanted
+                            && !((javafx.scene.control.ToggleButton) node).isSelected()) {
+                        ((javafx.scene.control.ToggleButton) node).fire();
+                    }
+                }
+                pathField.setText(psp.trim());
+                whenRecognized(scene, validate, started, () -> after(waitMs, () -> {
+                    System.out.println("SNAPSHOT MODE: " + name + ": recognized '" + ((javafx.scene.control.Label) scene.lookup("#recognitionTitle")).getText()
+                            + "', clicking Validovat (" + click + ")");
+                    long clickedAt = System.currentTimeMillis();
+                    FxWatchdog.armed("after Validovat (" + click + ")");
+                    Runnable then = () -> waitForEnd(controller, startedBefore, started, () -> {
+                        System.out.println("SNAPSHOT MODE: " + name + ": validation ended " + (System.currentTimeMillis() - clickedAt)
+                                + " ms after click, max FX response gap " + FxWatchdog.maxGapMs() + " ms");
+                        after(() -> {
+                            save(main.getPrimaryStage().getScene(), "dialog-validate");
+                            next();
+                        });
+                    });
+                    clickValidate(validate, click, then);
+                    after(20_000, () -> {
+                        if (controller.getStartedValidations() == startedBefore) {
+                            System.err.println("SNAPSHOT MODE: " + name + ": click did not start the validation, dialog showing="
+                                    + dialogStage.isShowing());
+                            Platform.exit();
+                        }
+                    });
+                }));
+            });
+            //mimo animaci: showAndWait v pulzu neni dovoleny (z menu se vola z obsluhy udalosti)
+            Platform.runLater(main::showNewValidationDialog);
+        }
+
+        private void clickValidate(javafx.scene.control.Button validate, String click, Runnable then) {
+            switch (click) {
+                case "mouse":
+                    Platform.runLater(() -> {
+                        javafx.geometry.Bounds b = validate.localToScene(validate.getBoundsInLocal());
+                        double x = b.getMinX() + b.getWidth() / 2;
+                        double y = b.getMinY() + b.getHeight() / 2;
+                        javafx.geometry.Point2D screen = validate.localToScreen(validate.getWidth() / 2, validate.getHeight() / 2);
+                        for (javafx.event.EventType<javafx.scene.input.MouseEvent> type : java.util.Arrays.asList(
+                                javafx.scene.input.MouseEvent.MOUSE_PRESSED, javafx.scene.input.MouseEvent.MOUSE_RELEASED,
+                                javafx.scene.input.MouseEvent.MOUSE_CLICKED)) {
+                            javafx.event.Event.fireEvent(validate, new javafx.scene.input.MouseEvent(type, x, y,
+                                    screen.getX(), screen.getY(), javafx.scene.input.MouseButton.PRIMARY, 1,
+                                    false, false, false, false, type == javafx.scene.input.MouseEvent.MOUSE_PRESSED,
+                                    false, false, true, false, true, null));
+                        }
+                        then.run();
+                    });
+                    break;
+                case "robot":
+                    Platform.runLater(() -> {
+                        javafx.geometry.Point2D screen = validate.localToScreen(validate.getWidth() / 2, validate.getHeight() / 2);
+                        javafx.scene.robot.Robot robot = new javafx.scene.robot.Robot();
+                        Stage owner = (Stage) validate.getScene().getWindow();
+                        System.out.println("SNAPSHOT MODE: robot click at " + screen + ", dialog at " + owner.getX() + "," + owner.getY()
+                                + ", focused=" + owner.isFocused());
+                        //jen vyrez kolem tlacitka (kontrola, ze je tlacitko na obrazovce navrchu)
+                        writeQuietly(robot.getScreenCapture(null, screen.getX() - 150, screen.getY() - 40, 300, 80), "robot-target");
+                        robot.mouseMove(screen.getX(), screen.getY());
+                        //kliknuti az po presunu (systemova udalost pohybu, pripadne bublina nad tlacitkem)
+                        after(300, () -> {
+                            robot.mouseClick(javafx.scene.input.MouseButton.PRIMARY);
+                            then.run();
+                        });
+                    });
+                    break;
+                default:
+                    Platform.runLater(() -> {
+                        validate.fire();
+                        then.run();
+                    });
+            }
+        }
+
+        private void writeQuietly(WritableImage image, String name) {
+            try {
+                writePng(image, new File(dir, name + ".png"));
+            } catch (IOException e) {
+                System.err.println("SNAPSHOT MODE: failed to save '" + name + "': " + e);
+            }
+        }
+
+        private void whenDialogReady(Stage dialogStage, long started, Runnable then) {
+            PauseTransition pause = new PauseTransition(Duration.millis(200));
+            pause.setOnFinished(e -> {
+                Scene scene = dialogStage.getScene();
+                if (dialogStage.isShowing() && scene != null && scene.lookup("#pathField") != null) {
+                    then.run();
+                } else if (System.currentTimeMillis() - started > 30_000) {
+                    System.err.println("SNAPSHOT MODE: dialog Nova validace not shown");
+                    failed = true;
+                    next();
+                } else {
+                    whenDialogReady(dialogStage, started, then);
+                }
+            });
+            pause.play();
+        }
+
+        private void whenRecognized(Scene scene, javafx.scene.control.Button validate, long started, Runnable then) {
+            PauseTransition pause = new PauseTransition(Duration.millis(200));
+            pause.setOnFinished(e -> {
+                Node progress = scene.lookup("#recognitionProgress");
+                if (!validate.isDisabled() && progress != null && !progress.isVisible()) {
+                    then.run();
+                } else if (System.currentTimeMillis() - started > 60_000) {
+                    System.err.println("SNAPSHOT MODE: package not recognized or Validovat disabled");
+                    failed = true;
+                    next();
+                } else {
+                    whenRecognized(scene, validate, started, then);
+                }
+            });
+            pause.play();
+        }
+
         // ===== dialog nastroju pri startu: zavreni krizkem =====
 
         private void externalUtilsClose() {
@@ -1081,6 +1258,92 @@ public class SnapshotMode {
                     });
                 });
             });
+        }
+
+        // ===== nastaveni: adresar konfigurace validatoru =====
+
+        private void settingsConfigDir() {
+            String[] dirs = System.getProperty(PROP_CONFIG_DIRS, "").split(java.util.regex.Pattern.quote(File.pathSeparator));
+            if (dirs.length != 2 || dirs[0].trim().isEmpty() || dirs[1].trim().isEmpty()) {
+                System.err.println("SNAPSHOT MODE: step 'settingsConfigDir' needs -D" + PROP_CONFIG_DIRS + "=<valid dir>"
+                        + File.pathSeparator + "<invalid dir>");
+                failed = true;
+                next();
+                return;
+            }
+            File valid = new File(dirs[0].trim());
+            File invalid = new File(dirs[1].trim());
+            ConfigurationManager config = main.getConfigurationManager();
+            String key = ConfigurationManager.PROP_VALIDATOR_CONFIG_DIR;
+            SettingsDialog dialog = new SettingsDialog(main.getDialogStage(), main, SettingsTab.DIRS, null);
+            Stage stage = dialog.showNonBlocking();
+            SettingsDialogController controller = (SettingsDialogController) dialog.getController();
+            after(() -> {
+                System.out.println("SNAPSHOT MODE: config dir before: " + controller.describeValidatorConfigForSnapshot());
+                save(stage.getScene(), "settings-config-dir");
+                controller.chooseValidatorConfigDirForSnapshot(invalid);
+                whenValidatorConfigChecked(controller, System.currentTimeMillis(), () -> after(() -> {
+                    System.out.println("SNAPSHOT MODE: config dir invalid: " + controller.describeValidatorConfigForSnapshot());
+                    save(stage.getScene(), "settings-config-dir-invalid");
+                    controller.chooseValidatorConfigDirForSnapshot(valid);
+                    whenValidatorConfigChecked(controller, System.currentTimeMillis(), () -> after(() -> {
+                        System.out.println("SNAPSHOT MODE: config dir unsaved: " + controller.describeValidatorConfigForSnapshot()
+                                + "; saved: " + config.getStringOrDefault(key, null));
+                        save(stage.getScene(), "settings-config-dir-unsaved");
+                        controller.saveForSnapshot();
+                        after(() -> {
+                            Stage prompt = controller.restartPromptForSnapshot();
+                            System.out.println("SNAPSHOT MODE: after save: saved " + config.getStringOrDefault(key, null)
+                                    + ", chosen flag " + config.getStringOrDefault(ConfigurationManager.PROP_VALIDATOR_CONFIG_DIR_CHOSEN, null)
+                                    + ", restart prompt " + (prompt != null));
+                            if (prompt == null) {
+                                failed = true;
+                                stage.close();
+                                next();
+                                return;
+                            }
+                            save(prompt.getScene(), "settings-config-restart");
+                            for (Node node : prompt.getScene().getRoot().lookupAll(".button")) {
+                                if (node instanceof javafx.scene.control.Button && "Restartovat teď".equals(((javafx.scene.control.Button) node).getText())) {
+                                    ((javafx.scene.control.Button) node).fire();
+                                }
+                            }
+                            after(() -> {
+                                System.out.println("SNAPSHOT MODE: after restart button: prompt showing=" + prompt.isShowing()
+                                        + ", settings showing=" + stage.isShowing());
+                                if (prompt.isShowing()) {
+                                    prompt.close();
+                                }
+                                SettingsDialog reopened = new SettingsDialog(main.getDialogStage(), main, SettingsTab.DIRS, null);
+                                Stage reopenedStage = reopened.showNonBlocking();
+                                SettingsDialogController reopenedController = (SettingsDialogController) reopened.getController();
+                                after(() -> {
+                                    System.out.println("SNAPSHOT MODE: config dir reopened: " + reopenedController.describeValidatorConfigForSnapshot());
+                                    save(reopenedStage.getScene(), "settings-config-dir-saved");
+                                    reopenedStage.close();
+                                    next();
+                                });
+                            });
+                        });
+                    }));
+                }));
+            });
+        }
+
+        private void whenValidatorConfigChecked(SettingsDialogController controller, long started, Runnable then) {
+            PauseTransition pause = new PauseTransition(Duration.millis(100));
+            pause.setOnFinished(e -> {
+                if (!controller.isValidatorConfigCheckRunningForSnapshot()) {
+                    then.run();
+                } else if (System.currentTimeMillis() - started > 60_000) {
+                    System.err.println("SNAPSHOT MODE: validator config check timeout");
+                    failed = true;
+                    next();
+                } else {
+                    whenValidatorConfigChecked(controller, started, then);
+                }
+            });
+            pause.play();
         }
 
         private void whenGroupPaused(GroupGate gate, long started, Runnable then) {
@@ -1341,7 +1604,11 @@ public class SnapshotMode {
         }
 
         private void after(Runnable action) {
-            PauseTransition pause = new PauseTransition(Duration.millis(delayMs));
+            after(delayMs, action);
+        }
+
+        private void after(long ms, Runnable action) {
+            PauseTransition pause = new PauseTransition(Duration.millis(ms));
             pause.setOnFinished(e -> action.run());
             pause.play();
         }
@@ -1517,6 +1784,104 @@ public class SnapshotMode {
 
         void resume() {
             permits.release();
+        }
+    }
+
+    /**
+     * Hlídač odezvy vlákna JavaFX (jen snímkovací režim): mimo vlákno JavaFX každou sekundu pošle
+     * {@code Platform.runLater} s časovým razítkem. Když vlákno JavaFX 15 s neodpoví, vypíše „FX FROZEN“, uloží výpis
+     * všech vláken včetně vlastníků zámků do {@code fx-frozen-threads.txt} v adresáři snímků a ukončí proces kódem 3
+     * ({@code Runtime.halt}), aby běh neuvízl.
+     */
+    static class FxWatchdog {
+        private static final long FROZEN_MS = 15_000;
+        private static volatile long lastAnswer;
+        private static volatile long maxGap;
+        private static volatile String phase = "started";
+        private static Thread thread;
+
+        static synchronized void start(File dir) {
+            lastAnswer = System.currentTimeMillis();
+            System.out.println("SNAPSHOT MODE: FX watchdog started");
+            if (thread != null) {
+                return;
+            }
+            thread = new Thread(() -> {
+                while (true) {
+                    try {
+                        Thread.sleep(1000);
+                    } catch (InterruptedException e) {
+                        return;
+                    }
+                    Platform.runLater(() -> {
+                        long now = System.currentTimeMillis();
+                        maxGap = Math.max(maxGap, now - lastAnswer);
+                        lastAnswer = now;
+                    });
+                    long silent = System.currentTimeMillis() - lastAnswer;
+                    if (silent > FROZEN_MS) {
+                        frozen(dir, silent);
+                    }
+                }
+            }, "kv-fx-watchdog");
+            thread.setDaemon(true);
+            thread.start();
+        }
+
+        static void armed(String newPhase) {
+            phase = newPhase;
+            maxGap = 0;
+        }
+
+        static long maxGapMs() {
+            return maxGap;
+        }
+
+        private static void frozen(File dir, long silent) {
+            File file = new File(dir, "fx-frozen-threads.txt");
+            StringBuilder text = new StringBuilder();
+            for (java.lang.management.ThreadInfo info : java.lang.management.ManagementFactory.getThreadMXBean().dumpAllThreads(true, true)) {
+                text.append(describe(info)).append('\n');
+            }
+            try {
+                java.nio.file.Files.write(file.toPath(), text.toString().getBytes(java.nio.charset.StandardCharsets.UTF_8));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            System.out.println("SNAPSHOT MODE: FX FROZEN (" + phase + "), no answer for " + silent + " ms, threads -> " + file.getAbsolutePath());
+            System.out.flush();
+            Runtime.getRuntime().halt(3);
+        }
+
+        /** Jako ThreadInfo.toString, ale s celým zásobníkem (toString ho zkracuje na 8 rámců). */
+        private static String describe(java.lang.management.ThreadInfo info) {
+            StringBuilder sb = new StringBuilder();
+            sb.append('"').append(info.getThreadName()).append("\" #").append(info.getThreadId()).append(' ').append(info.getThreadState());
+            if (info.getLockName() != null) {
+                sb.append(" on ").append(info.getLockName());
+            }
+            if (info.getLockOwnerName() != null) {
+                sb.append(" owned by \"").append(info.getLockOwnerName()).append("\" #").append(info.getLockOwnerId());
+            }
+            sb.append('\n');
+            java.lang.management.MonitorInfo[] monitors = info.getLockedMonitors();
+            StackTraceElement[] stack = info.getStackTrace();
+            for (int i = 0; i < stack.length; i++) {
+                sb.append("\tat ").append(stack[i]).append('\n');
+                for (java.lang.management.MonitorInfo monitor : monitors) {
+                    if (monitor.getLockedStackDepth() == i) {
+                        sb.append("\t- locked ").append(monitor).append('\n');
+                    }
+                }
+            }
+            java.lang.management.LockInfo[] synchronizers = info.getLockedSynchronizers();
+            if (synchronizers.length > 0) {
+                sb.append("\tLocked synchronizers:\n");
+                for (java.lang.management.LockInfo lock : synchronizers) {
+                    sb.append("\t- ").append(lock).append('\n');
+                }
+            }
+            return sb.toString();
         }
     }
 

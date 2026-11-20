@@ -1,11 +1,14 @@
 package nkp.pspValidator.gui;
 
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
+import javafx.stage.Window;
 
 import java.net.URL;
 
@@ -61,6 +64,31 @@ public abstract class AbstractDialog {
     /** Kontroler dialogu po {@link #show()} nebo {@link #showNonBlocking()}, jinak null. */
     DialogController getController() {
         return controller;
+    }
+
+    /**
+     * Spustí akci, až bude okno {@code window} úplně zavřené (tlačítkem, Esc i křížkem). Pro akce, které zavírají
+     * vlastníka okna (dotaz nad Nastavením zavře Nastavení), místo {@code setOnHidden}.
+     * <p>
+     * Událost {@code WINDOW_HIDDEN} JavaFX posílá uprostřed skrývání: nativní okno je už skryté, ale scéna a nativní okno
+     * se uvolní až po obsluhách. Zavře-li obsluha vlastníka, Windows s ním zruší i vlastněná nativní okna, takže
+     * dokončení skrytí (odpojení scény) hodí {@code IllegalStateException: The window has already been closed}
+     * a scéna dotazu zůstane registrovaná u neexistujícího okna. Při jejím dalším vykreslení se výjimka opakuje
+     * v {@code GlassScene.releaseSynchronization} dřív, než se uvolní zámek vykreslování ({@code ViewPainter.renderLock}),
+     * vlákno JavaFX si ho ponechá a vykreslovací vlákno na něm navždy čeká: celé GUI zamrzne. Posluchač vlastnosti
+     * {@code showing} se volá až po úplném zavření okna (uvolnění scény i nativního okna), tam už zavření vlastníka
+     * nevadí. Na macOS se vlastněná okna se zavřením vlastníka nativně neruší, proto se to tam neprojeví.
+     */
+    public static void whenClosed(Window window, Runnable action) {
+        window.showingProperty().addListener(new ChangeListener<Boolean>() {
+            @Override
+            public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
+                if (!newValue) {
+                    observable.removeListener(this);
+                    action.run();
+                }
+            }
+        });
     }
 
     /** Přidá společný base.css do scény (stylesheety uzlů v FXML mají přednost před stylesheety scény). */

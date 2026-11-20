@@ -40,6 +40,35 @@ public final class SettingsTexts {
         return text.append('.').toString();
     }
 
+    // ===== adresáře a protokoly =====
+
+    /** Text při ověřování vybraného adresáře konfigurace validátoru. */
+    public static final String VALIDATOR_CONFIG_CHECKING = "Ověřuji konfiguraci ve vybraném adresáři…";
+
+    /**
+     * Poznámka pod adresářem konfigurace validátoru na kartě, null když aplikace zobrazený adresář používá a je uložený.
+     *
+     * @param runningPath adresář, který běžící aplikace používá
+     */
+    public static String validatorConfigNote(DirsDraft.ValidatorConfigState state, String runningPath) {
+        switch (state) {
+            case UNSAVED:
+                return "Použije se po restartu aplikace. Do restartu se používá: " + runningPath;
+            case SAVED_PENDING_RESTART:
+                return "Uloženo, použije se po restartu aplikace. Do restartu se používá: " + runningPath;
+            case UNSAVED_BACK_TO_RUNNING:
+                return "Tento adresář aplikace právě používá; po uložení se bude používat i po restartu.";
+            case IN_USE:
+            default:
+                return null;
+        }
+    }
+
+    /** Chyba u karty Konfigurace validátoru: vybraný adresář nelze použít (nic se nezměnilo). */
+    public static String validatorConfigDirError(String path, String reason) {
+        return "Adresář " + path + " nelze použít. " + reason;
+    }
+
     // ===== přeskakovaná pravidla =====
 
     /** Položka výběru verze: „2.3“, s přeskočenými sekcemi „2.3 (přeskakují se 2)“. */

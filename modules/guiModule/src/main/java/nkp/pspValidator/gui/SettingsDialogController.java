@@ -41,6 +41,8 @@ import java.util.function.Consumer;
  * křížek) se zeptá „Uložit změny?“ ({@link CloseDecision}). Nová cesta k nástroji platí pro kontrolu hned
  * ({@link ToolPathsDraft}), při zahození změn se vrátí uložená a dotčené nástroje se zkontrolují znovu. Akce se
  * provedou hned a nejsou neuloženou změnou: kontrola nástrojů, aktualizace slovníku (vlastní dialog), otevření adresáře.
+ * Nový adresář konfigurace validátoru se po výběru ověří ({@link ValidatorConfigCheck}) a je neuloženou změnou; běžící
+ * aplikace ho nepoužije, po uložení se nabídne restart ({@link RestartPrompt}, {@link AppRestart}).
  */
 public class SettingsDialogController extends DialogController {
 
@@ -72,6 +74,16 @@ public class SettingsDialogController extends DialogController {
     private ToolPathsDraft toolPaths;
     /** otevřený dotaz „Uložit změny?“, jinak null */
     private Stage savePrompt;
+    /** otevřený dotaz na restart po uložení nového adresáře konfigurace validátoru, jinak null */
+    private Stage restartPrompt;
+    /** karta Konfigurace validátoru (po prvním zobrazení záložky Adresáře a protokoly) */
+    private Label validatorConfigPath;
+    private Label validatorConfigNote;
+    private Label validatorConfigError;
+    private HBox validatorConfigChecking;
+    private Button changeValidatorConfig;
+    /** probíhá ověření vybraného adresáře konfigurace validátoru */
+    private boolean validatorConfigCheckRunning;
     /** výběry výchozích verzí v záložce (po jejím prvním zobrazení) */
     private final Map<Dmf.Type, ChoiceBox<DefaultVersions.Choice>> versionBoxes = new EnumMap<>(Dmf.Type.class);
     private volatile boolean closed = false;
@@ -95,7 +107,7 @@ public class SettingsDialogController extends DialogController {
         container.getStyleClass().add("settings-frame");
         versionSettings = new VersionSettings(getConfigurationManager(), main.getValidationDataManager().getFdmfRegistry());
         defaultVersions = new DefaultVersions(versionSettings);
-        dirsDraft = new DirsDraft(getConfigurationManager());
+        dirsDraft = new DirsDraft(getConfigurationManager(), runningValidatorConfigDir());
         toolPaths = ToolPathsDraft.deferred(getConfigurationManager(), main.getValidationDataManager().getExternalUtilManager()::setPath);
         for (SettingsTab tab : SettingsTab.values()) {
             Label item = new Label(tab.getLabel());
@@ -192,13 +204,26 @@ public class SettingsDialogController extends DialogController {
     }
 
     public void save(ActionEvent actionEvent) {
+        saveAndClose();
+    }
+
+    /**
+     * Uloží změny a zavře okno. Když se uložil nový adresář konfigurace validátoru (jiný, než jaký aplikace používá),
+     * zeptá se nejdřív na restart aplikace a okno zavře až po odpovědi.
+     */
+    private void saveAndClose() {
+        boolean restartNeeded = dirsDraft.isRestartNeededAfterSave();
         saveChanges();
-        closeWindow();
+        if (restartNeeded) {
+            restartPrompt = openRestartPrompt();
+        } else {
+            closeWindow();
+        }
     }
 
     /** Zavření okna: bez neuložených změn hned, jinak dotaz „Uložit změny?“. */
     private void requestClose() {
-        if (savePrompt != null) {
+        if (savePrompt != null || restartPrompt != null) {
             return;
         }
         apply(CloseDecision.onCloseRequest(!changedParts().isEmpty()));
@@ -216,8 +241,7 @@ public class SettingsDialogController extends DialogController {
                 });
                 break;
             case SAVE_AND_CLOSE:
-                saveChanges();
-                closeWindow();
+                saveAndClose();
                 break;
             case DISCARD_AND_CLOSE:
                 discardChanges();
@@ -302,8 +326,8 @@ public class SettingsDialogController extends DialogController {
             prompt.close();
         });
         frame.getFooterButtons().addAll(back, discard, saveNow);
-        //volba se vyhodnoti az po zavreni dotazu (tlacitkem i krizkem)
-        prompt.setOnHidden(e -> onChoice.accept(chosen[0]));
+        //volba se vyhodnoti az po uplnem zavreni dotazu (tlacitkem i krizkem), ne v onHidden: viz AbstractDialog.whenClosed
+        AbstractDialog.whenClosed(prompt, () -> onChoice.accept(chosen[0]));
 
         Scene scene = new Scene(frame, SAVE_PROMPT_WIDTH, SAVE_PROMPT_HEIGHT);
         AbstractDialog.addBaseStylesheet(scene);
@@ -312,6 +336,87 @@ public class SettingsDialogController extends DialogController {
         saveNow.requestFocus();
         return prompt;
     }
+
+    /**
+     * Dotaz po uložení nového adresáře konfigurace validátoru: „Restartovat teď“ (nebo „Ukončit aplikaci“, když příkaz
+     * pro nové spuštění nejde sestavit) a „Později“ ({@link RestartPrompt}). Později, Esc i křížek zavřou dotaz
+     * i Nastavení, aplikace běží dál s dosavadní konfigurací.
+     */
+    private Stage openRestartPrompt() {
+        nkp.pspValidator.gui.desktop.RestartCommand.Plan plan = AppRestart.plan(main);
+        boolean validationRunning = main.getMainController() != null && main.getMainController().isValidationRunning();
+        RestartPrompt texts = RestartPrompt.of(plan != null, validationRunning);
+        if (SnapshotMode.isEnabled()) {
+            System.out.println("SNAPSHOT MODE: restart prompt " + texts.getKind() + ", validation running=" + validationRunning
+                    + ", command: " + (plan == null ? "none" : plan.toString()));
+        }
+
+        Stage prompt = new Stage(StageStyle.UTILITY);
+        prompt.initOwner(stage);
+        prompt.initModality(Modality.APPLICATION_MODAL);
+        prompt.setTitle("Nastavení");
+        prompt.setResizable(false);
+
+        DialogFrame frame = new DialogFrame();
+        frame.setTitle(texts.getTitle());
+        frame.setSubtitle(texts.getMessage());
+        Label path = pathLabel(dirsDraft.getValidatorConfigDir());
+        Label note = wrapped(texts.getNote(), "text-muted");
+        Label error = wrapped("", "text-error");
+        setShown(error, false);
+        frame.getContent().addAll(path, note, error);
+        Button later = new Button(texts.getLaterLabel());
+        later.getStyleClass().add("button-secondary");
+        later.setMinWidth(90);
+        later.setCancelButton(true);
+        Button primary = new Button(texts.getPrimaryLabel());
+        primary.getStyleClass().add("button-primary");
+        primary.setMinWidth(Region.USE_PREF_SIZE);
+        primary.setDisable(!texts.isPrimaryEnabled());
+        primary.setDefaultButton(texts.isPrimaryEnabled());
+        later.setOnAction(e -> prompt.close());
+        primary.setOnAction(e -> {
+            if (texts.getKind() == RestartPrompt.Kind.RESTART && plan != null) {
+                if (!AppRestart.restart(plan, message -> {
+                    //nova instance se nespustila: aplikace bezi dal, uzivatel ji ukonci a spusti sam
+                    error.setText("Aplikaci se nepodařilo spustit znovu (" + message + "). Ukončete aplikaci a spusťte ji znovu.");
+                    setShown(error, true);
+                    later.setDisable(false);
+                    primary.setText("Ukončit aplikaci");
+                    primary.setDisable(false);
+                    primary.setOnAction(e2 -> AppRestart.exit());
+                })) {
+                    //snimkovaci rezim: nic se nespustilo
+                    prompt.close();
+                    return;
+                }
+                later.setDisable(true);
+                primary.setDisable(true);
+                frame.setFooterNote("Spouštím aplikaci znovu…");
+            } else {
+                AppRestart.exit();
+                if (SnapshotMode.isEnabled()) {
+                    prompt.close();
+                }
+            }
+        });
+        frame.getFooterButtons().addAll(later, primary);
+        //zavre Nastaveni (vlastnika dotazu) az po uplnem zavreni dotazu, ne v onHidden: viz AbstractDialog.whenClosed
+        AbstractDialog.whenClosed(prompt, () -> {
+            restartPrompt = null;
+            closeWindow();
+        });
+
+        Scene scene = new Scene(frame, SAVE_PROMPT_WIDTH, RESTART_PROMPT_HEIGHT);
+        AbstractDialog.addBaseStylesheet(scene);
+        prompt.setScene(scene);
+        prompt.show();
+        (texts.isPrimaryEnabled() ? primary : later).requestFocus();
+        return prompt;
+    }
+
+    /** výška dotazu na restart */
+    private static final double RESTART_PROMPT_HEIGHT = 260;
 
     /** velikost dotazu „Uložit změny?“ */
     private static final double SAVE_PROMPT_WIDTH = 520;
@@ -489,8 +594,12 @@ public class SettingsDialogController extends DialogController {
         }
         ChoiceBox<Dmf.Type> typeBox = new ChoiceBox<>();
         typeBox.getItems().setAll(draft.types());
+        //nejdelsi nazev typu ("Zvukové dokumenty (zvuk bez nosiče)") se musi vejit cely: seznam typu se nezuzuje,
+        //ustupuje seznam verzi a kratsi popisek
+        typeBox.setMinWidth(Region.USE_PREF_SIZE);
         ComboBox<String> versionBox = new ComboBox<>();
-        versionBox.setPrefWidth(200);
+        versionBox.setPrefWidth(160);
+        versionBox.setMinWidth(110);
         Label summary = new Label();
         summary.getStyleClass().add("text-muted");
         Hyperlink unskipAll = link("Nepřeskakovat nic", () -> {
@@ -498,7 +607,7 @@ public class SettingsDialogController extends DialogController {
         VBox list = new VBox();
         list.getStyleClass().add("list-box");
 
-        Label typeLabel = new Label("Typ dokumentu");
+        Label typeLabel = new Label("Typ");
         typeLabel.getStyleClass().add("text-bold");
         typeLabel.setMinWidth(Region.USE_PREF_SIZE);
         Label versionLabel = new Label("Verze");
@@ -742,10 +851,25 @@ public class SettingsDialogController extends DialogController {
                 "Sem se ukládá protokol v XML a textový log, když se vytvářejí.",
                 logDirPath, openLogDir, changeLogDir));
 
-        content.getChildren().add(dirCard("Konfigurace validátoru",
-                "Pravidla validace (fDMF) a slovníky. Adresář se volí při startu aplikace, když konfigurace chybí.",
-                pathLabel(dirsDraft.getValidatorConfigDir()),
-                openDirButton(() -> dirsDraft.getValidatorConfigDir())));
+        validatorConfigPath = pathLabel(dirsDraft.getValidatorConfigDir());
+        changeValidatorConfig = secondaryButton("Změnit…", this::chooseValidatorConfigDir);
+        VBox configCard = dirCard("Konfigurace validátoru",
+                "Pravidla validace (fDMF), slovníky a popis externích nástrojů. Vybraný adresář se hned ověří; "
+                        + "použije se po uložení a restartu aplikace.",
+                validatorConfigPath, openDirButton(() -> dirsDraft.getValidatorConfigDir()), changeValidatorConfig);
+        validatorConfigNote = wrapped("", "text-muted");
+        ProgressIndicator checkingProgress = new ProgressIndicator();
+        checkingProgress.setMaxSize(18, 18);
+        Label checkingLabel = new Label(SettingsTexts.VALIDATOR_CONFIG_CHECKING);
+        checkingLabel.getStyleClass().add("text-muted");
+        validatorConfigChecking = new HBox(8, checkingProgress, checkingLabel);
+        validatorConfigChecking.setAlignment(Pos.CENTER_LEFT);
+        validatorConfigError = wrapped("", "text-error");
+        configCard.getChildren().addAll(validatorConfigNote, validatorConfigChecking, validatorConfigError);
+        setShown(validatorConfigChecking, false);
+        setShown(validatorConfigError, false);
+        refreshValidatorConfigCard();
+        content.getChildren().add(configCard);
 
         CheckBox xml = new CheckBox("Protokol v XML");
         xml.setSelected(dirsDraft.isCreateXmlLog());
@@ -783,6 +907,101 @@ public class SettingsDialogController extends DialogController {
         outputsCard.getStyleClass().add("card");
         content.getChildren().add(outputsCard);
         return page(content);
+    }
+
+    /** Adresář konfigurace, který běžící aplikace načetla při startu (null, když validační data ještě nejsou). */
+    private File runningValidatorConfigDir() {
+        ValidationDataManager data = main.getValidationDataManager();
+        if (data == null || data.getValidatorConfigMgr() == null) {
+            return null;
+        }
+        return data.getValidatorConfigMgr().getFdmfDir().getParentFile();
+    }
+
+    /** „Změnit…“ u konfigurace validátoru: výběr adresáře, pak ověření. */
+    private void chooseValidatorConfigDir() {
+        DirectoryChooser chooser = new DirectoryChooser();
+        chooser.setTitle("Vyberte adresář s konfigurací validátoru");
+        File current = dirsDraft.getValidatorConfigDir();
+        if (current != null && current.isDirectory()) {
+            chooser.setInitialDirectory(current);
+        }
+        File selected = chooser.showDialog(stage);
+        if (selected != null) {
+            checkValidatorConfigDir(selected);
+        }
+    }
+
+    /**
+     * Ověří vybraný adresář konfigurace validátoru v pracovním vlákně ({@link ValidatorConfigCheck}); platný se stane
+     * neuloženou změnou, u neplatného se na kartě ukáže důvod a nic se nezmění. Adresář, který aplikace používá, se
+     * neověřuje (je načtený).
+     */
+    private void checkValidatorConfigDir(File selected) {
+        if (validatorConfigCheckRunning) {
+            return;
+        }
+        setShown(validatorConfigError, false);
+        if (ConfigurationManager.sameFile(selected, dirsDraft.getRunningValidatorConfigDir())) {
+            applyValidatorConfigDir(selected);
+            return;
+        }
+        validatorConfigCheckRunning = true;
+        changeValidatorConfig.setDisable(true);
+        setShown(validatorConfigChecking, true);
+        nkp.pspValidator.shared.OperatingSystem os = getConfigurationManager().getPlatform().getOperatingSystem();
+        Thread thread = new Thread(() -> {
+            ValidatorConfigCheck.Result result;
+            try {
+                result = ValidatorConfigCheck.check(selected, os);
+            } catch (Throwable e) {
+                result = null;
+                e.printStackTrace();
+            }
+            ValidatorConfigCheck.Result finalResult = result;
+            Platform.runLater(() -> {
+                validatorConfigCheckRunning = false;
+                if (closed) {
+                    return;
+                }
+                changeValidatorConfig.setDisable(false);
+                setShown(validatorConfigChecking, false);
+                if (finalResult != null && finalResult.isOk()) {
+                    applyValidatorConfigDir(selected);
+                } else {
+                    String reason = finalResult != null ? finalResult.getError() : "Při ověřování nastala chyba.";
+                    validatorConfigError.setText(SettingsTexts.validatorConfigDirError(selected.getAbsolutePath(), reason));
+                    setShown(validatorConfigError, true);
+                }
+                if (SnapshotMode.isEnabled()) {
+                    System.out.println("SNAPSHOT MODE: validator config check " + selected + " -> "
+                            + (finalResult == null ? "exception" : finalResult.isOk() ? "ok, fDMF " + finalResult.getFdmfCount() : finalResult.getError()));
+                }
+            });
+        }, "validator-config-check");
+        thread.setDaemon(true);
+        thread.start();
+    }
+
+    private void applyValidatorConfigDir(File dir) {
+        dirsDraft.setValidatorConfigDir(dir);
+        refreshValidatorConfigCard();
+        updateFooter();
+    }
+
+    private void refreshValidatorConfigCard() {
+        File shown = dirsDraft.getValidatorConfigDir();
+        validatorConfigPath.setText(shown == null ? "nenastaveno" : shown.getAbsolutePath());
+        File running = dirsDraft.getRunningValidatorConfigDir();
+        String note = SettingsTexts.validatorConfigNote(dirsDraft.getValidatorConfigState(),
+                running == null ? "nenastaveno" : running.getAbsolutePath());
+        validatorConfigNote.setText(note == null ? "" : note);
+        setShown(validatorConfigNote, note != null);
+    }
+
+    private static void setShown(Node node, boolean shown) {
+        node.setVisible(shown);
+        node.setManaged(shown);
     }
 
     private VBox dirCard(String title, String description, Label path, Button... buttons) {
@@ -924,5 +1143,28 @@ public class SettingsDialogController extends DialogController {
     /** Uloží koncept jako tlačítko Uložit (snímky ověřují propsání výchozí verze do validace). */
     void saveForSnapshot() {
         save(null);
+    }
+
+    /** Vybere adresář konfigurace validátoru jako „Změnit…“ po výběru adresáře (záložka se zobrazí). */
+    void chooseValidatorConfigDirForSnapshot(File dir) {
+        showTab(SettingsTab.DIRS);
+        checkValidatorConfigDir(dir);
+    }
+
+    boolean isValidatorConfigCheckRunningForSnapshot() {
+        return validatorConfigCheckRunning;
+    }
+
+    /** Stav karty Konfigurace validátoru (pro výpis). */
+    String describeValidatorConfigForSnapshot() {
+        return "shown=" + dirsDraft.getValidatorConfigDir() + ", running=" + dirsDraft.getRunningValidatorConfigDir()
+                + ", state=" + dirsDraft.getValidatorConfigState() + ", note=" + validatorConfigNote.getText()
+                + ", error=" + (validatorConfigError.isVisible() ? validatorConfigError.getText() : "none")
+                + ", footer=" + container.getFooterNote();
+    }
+
+    /** Otevřený dotaz na restart, nebo null. */
+    Stage restartPromptForSnapshot() {
+        return restartPrompt;
     }
 }

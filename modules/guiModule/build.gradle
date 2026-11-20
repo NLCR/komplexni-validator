@@ -411,6 +411,11 @@ tasks.named('run', JavaExec) {
 //  groupCancel, groupUnpack (pauza v rozbalovani, -PsnapshotProgressEnd=finish|cancel), newValidationGroupMenu;
 //  krok externalUtilsClose (krizek dialogu nastroju pri startu), krok settingsToolDraft (neulozena cesta k nastroji
 //  a dotaz Ulozit zmeny?): -PsnapshotToolPath=IMAGE_MAGICK:/adresar|none, -PsnapshotPromptChoice=discard|save|back
+//  krok dialogValidate: dialog Nova validace jako z menu, cesta z -PsnapshotPsp, stisk Validovat podle
+//  -PsnapshotClick=fire|mouse|robot po rozpoznani a prodleve -PsnapshotWaitMs (vychozi 4000); hlidac odezvy vlakna JavaFX
+//  pri zamrznuti ulozi vypis vlaken do fx-frozen-threads.txt a ukonci proces kodem 3
+//  krok settingsConfigDir: adresar konfigurace validatoru v Nastaveni (neplatny, platny, ulozeni, dotaz na restart bez
+//  restartu), -PsnapshotConfigDirs=<platny adresar>:<neplatny adresar> (na Windows oddelene ;)
 //  -PsnapshotConfigFile=<soubor> - soubor nastaveni (vlastnost kv.configFile) misto vychoziho config.properties v pracovnim
 //  adresari modulu, aby snimky nezahrnovaly osobni nastaveni; soubor nemusi existovat (vznikne s vychozimi hodnotami),
 //  ale pri spusteni z Gradle musi obsahovat aspon validatorConfig.dir=<adresar validatorConfig> (a nejlepe validation.log_dir),
@@ -474,6 +479,15 @@ tasks.register('runSnapshots', JavaExec) {
     }
     if (project.hasProperty('snapshotPromptChoice')) {
         systemProperty 'kv.snapshotPromptChoice', project.property('snapshotPromptChoice')
+    }
+    if (project.hasProperty('snapshotClick')) {
+        systemProperty 'kv.snapshotClick', project.property('snapshotClick')
+    }
+    if (project.hasProperty('snapshotWaitMs')) {
+        systemProperty 'kv.snapshotWaitMs', project.property('snapshotWaitMs')
+    }
+    if (project.hasProperty('snapshotConfigDirs')) {
+        systemProperty 'kv.snapshotConfigDirs', project.property('snapshotConfigDirs')
     }
     if (project.hasProperty('maxDialogHeight')) { //simulace mensiho displeje
         systemProperty 'kv.maxDialogHeight', project.property('maxDialogHeight')

@@ -102,4 +102,22 @@ public class SettingsTextsTest {
         assertEquals("Specifikace", SettingsTexts.dictionaryLinkLabel("https://example.org/github.com/"));
         assertEquals("Specifikace", SettingsTexts.dictionaryLinkLabel(null));
     }
+
+    @Test
+    public void validatorConfigNote() {
+        assertNull(SettingsTexts.validatorConfigNote(DirsDraft.ValidatorConfigState.IN_USE, "/kv/validatorConfig"));
+        assertEquals("Použije se po restartu aplikace. Do restartu se používá: /kv/validatorConfig",
+                SettingsTexts.validatorConfigNote(DirsDraft.ValidatorConfigState.UNSAVED, "/kv/validatorConfig"));
+        assertEquals("Uloženo, použije se po restartu aplikace. Do restartu se používá: C:\\Program Files\\KV\\app\\validatorConfig",
+                SettingsTexts.validatorConfigNote(DirsDraft.ValidatorConfigState.SAVED_PENDING_RESTART, "C:\\Program Files\\KV\\app\\validatorConfig"));
+        assertEquals("Tento adresář aplikace právě používá; po uložení se bude používat i po restartu.",
+                SettingsTexts.validatorConfigNote(DirsDraft.ValidatorConfigState.UNSAVED_BACK_TO_RUNNING, "/kv/validatorConfig"));
+    }
+
+    @Test
+    public void validatorConfigDirError() {
+        assertEquals("Adresář /Users/uživatel/Stažené nelze použít. Adresář je prázdný.",
+                SettingsTexts.validatorConfigDirError("/Users/uživatel/Stažené", "Adresář je prázdný."));
+        assertEquals("Ověřuji konfiguraci ve vybraném adresáři…", SettingsTexts.VALIDATOR_CONFIG_CHECKING);
+    }
 }

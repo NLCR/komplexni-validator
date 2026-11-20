@@ -229,6 +229,117 @@ public class ConfigurationManagerLocationsTest {
     }
 
     @Test
+    public void staleValidatorConfigDirChosenByUser() throws IOException {
+        File jarDir = appJarDir("KomplexniValidator/app");
+        Locations loc = Locations.resolve(OperatingSystem.WINDOWS, true, jarDir, home, null, null, cwd);
+        File insideInstall = new File(tmp.getRoot(), "KomplexniValidator/my-config");
+        assertTrue(insideInstall.mkdirs());
+        File otherInstall = new File(tmp.getRoot(), "Old/KomplexniValidator.app/Contents/app/validatorConfig");
+        assertTrue(otherInstall.mkdirs());
+
+        assertFalse("zvolený uvnitř instalace zůstává", loc.isStaleValidatorConfigDir(insideInstall, true));
+        assertFalse("zvolený v jiné instalaci zůstává", loc.isStaleValidatorConfigDir(otherInstall, true));
+        assertFalse("zvolený výchozí zůstává", loc.isStaleValidatorConfigDir(loc.defaultValidatorConfigDir, true));
+        assertTrue("zvolený, ale neexistuje", loc.isStaleValidatorConfigDir(new File(tmp.getRoot(), "missing"), true));
+        File file = tmp.newFile("soubor");
+        assertTrue("zvolený, ale není adresář", loc.isStaleValidatorConfigDir(file, true));
+        //bez priznaku dnesni chovani
+        assertTrue(loc.isStaleValidatorConfigDir(insideInstall, false));
+        assertTrue(loc.isStaleValidatorConfigDir(otherInstall, false));
+        assertTrue(loc.isStaleValidatorConfigDir(file, false));
+    }
+
+    /** start aplikace: adresář zvolený v Nastavení se nenahradí výchozím, ani když leží v (jiné) instalaci */
+    @Test
+    public void managerKeepsDirChosenByUser() throws IOException {
+        File jarDir = appJarDir("KomplexniValidator/app");
+        Locations loc = Locations.resolve(OperatingSystem.WINDOWS, true, jarDir, home, null, null, cwd);
+        Platform win = new Platform(OperatingSystem.WINDOWS, null, "Windows 11", "amd64");
+        File otherInstall = new File(tmp.getRoot(), "Old/KomplexniValidator.app/Contents/app/validatorConfig");
+        assertTrue(otherInstall.mkdirs());
+
+        ConfigurationManager manager = new ConfigurationManager(win, loc);
+        manager.setValidatorConfigDirChosenByUser(otherInstall);
+        File configFile = new File(loc.userDataDir, "config.properties");
+        Properties stored = load(configFile);
+        assertEquals(otherInstall.getCanonicalPath(), stored.getProperty(ConfigurationManager.PROP_VALIDATOR_CONFIG_DIR));
+        assertEquals("true", stored.getProperty(ConfigurationManager.PROP_VALIDATOR_CONFIG_DIR_CHOSEN));
+
+        manager = new ConfigurationManager(win, loc);
+        assertEquals(otherInstall.getCanonicalFile(), manager.getFileOrNull(ConfigurationManager.PROP_VALIDATOR_CONFIG_DIR));
+        assertTrue(manager.getBooleanOrDefault(ConfigurationManager.PROP_VALIDATOR_CONFIG_DIR_CHOSEN, false));
+
+        // zvolený adresář zmizel: výchozí a příznak pryč (příště se zase řídí instalací)
+        java.nio.file.Files.delete(otherInstall.toPath());
+        manager = new ConfigurationManager(win, loc);
+        assertEquals(loc.defaultValidatorConfigDir.getCanonicalFile(), manager.getFileOrNull(ConfigurationManager.PROP_VALIDATOR_CONFIG_DIR));
+        assertFalse(manager.getBooleanOrDefault(ConfigurationManager.PROP_VALIDATOR_CONFIG_DIR_CHOSEN, false));
+        assertNull(load(configFile).getProperty(ConfigurationManager.PROP_VALIDATOR_CONFIG_DIR_CHOSEN));
+    }
+
+    /** bez příznaku (adresář z jiné instalace uložený dřívější verzí) se nahradí výchozím jako dosud */
+    @Test
+    public void managerReplacesOtherInstallWithoutChosenFlag() throws IOException {
+        File jarDir = appJarDir("KomplexniValidator/app");
+        Locations loc = Locations.resolve(OperatingSystem.WINDOWS, true, jarDir, home, null, null, cwd);
+        Platform win = new Platform(OperatingSystem.WINDOWS, null, "Windows 11", "amd64");
+        File otherInstall = new File(tmp.getRoot(), "Old/KomplexniValidator.app/Contents/app/validatorConfig");
+        assertTrue(otherInstall.mkdirs());
+        new ConfigurationManager(win, loc);
+        File configFile = new File(loc.userDataDir, "config.properties");
+        writeValidatorConfigDir(configFile, otherInstall);
+        ConfigurationManager manager = new ConfigurationManager(win, loc);
+        assertEquals(loc.defaultValidatorConfigDir.getCanonicalFile(), manager.getFileOrNull(ConfigurationManager.PROP_VALIDATOR_CONFIG_DIR));
+        //priznak jinak nez "true" se nebere
+        Properties props = new Properties();
+        props.setProperty(ConfigurationManager.PROP_VALIDATOR_CONFIG_DIR, otherInstall.getAbsolutePath());
+        props.setProperty(ConfigurationManager.PROP_VALIDATOR_CONFIG_DIR_CHOSEN, "false");
+        try (OutputStream out = new FileOutputStream(configFile)) {
+            props.store(out, null);
+        }
+        manager = new ConfigurationManager(win, loc);
+        assertEquals(loc.defaultValidatorConfigDir.getCanonicalFile(), manager.getFileOrNull(ConfigurationManager.PROP_VALIDATOR_CONFIG_DIR));
+        assertNull(load(configFile).getProperty(ConfigurationManager.PROP_VALIDATOR_CONFIG_DIR_CHOSEN));
+    }
+
+    /** výchozí adresář zvolený v Nastavení se jako zvolený neoznačí, jiný ano (a označení se zase zruší) */
+    @Test
+    public void chosenFlagOnlyForOtherThanDefault() throws IOException {
+        File jarDir = appJarDir("KomplexniValidator/app");
+        Locations loc = Locations.resolve(OperatingSystem.WINDOWS, true, jarDir, home, null, null, cwd);
+        ConfigurationManager manager = new ConfigurationManager(new Platform(OperatingSystem.WINDOWS, null, "Windows 11", "amd64"), loc);
+        File custom = tmp.newFolder("vlastní konfigurace");
+        manager.setValidatorConfigDirChosenByUser(custom);
+        assertEquals("true", manager.getStringOrDefault(ConfigurationManager.PROP_VALIDATOR_CONFIG_DIR_CHOSEN, null));
+        manager.setValidatorConfigDirChosenByUser(new File(jarDir, "validatorConfig"));
+        assertNull(manager.getStringOrDefault(ConfigurationManager.PROP_VALIDATOR_CONFIG_DIR_CHOSEN, null));
+        assertEquals(loc.defaultValidatorConfigDir.getCanonicalPath(), manager.getStringOrDefault(ConfigurationManager.PROP_VALIDATOR_CONFIG_DIR, null));
+        assertNull(load(new File(loc.userDataDir, "config.properties")).getProperty(ConfigurationManager.PROP_VALIDATOR_CONFIG_DIR_CHOSEN));
+        manager.setValidatorConfigDirChosenByUser(null);
+        assertEquals(loc.defaultValidatorConfigDir.getCanonicalPath(), manager.getStringOrDefault(ConfigurationManager.PROP_VALIDATOR_CONFIG_DIR, null));
+        assertEquals(loc.defaultValidatorConfigDir, manager.getDefaultValidatorConfigDir());
+    }
+
+    /** spuštění jarem: zvolený existující adresář zůstává s příznakem i bez něj */
+    @Test
+    public void jarKeepsChosenDir() throws IOException {
+        Locations jar = Locations.resolve(OperatingSystem.LINUX, false, tmp.newFolder("zip"), home, null, null, cwd);
+        File otherInstall = new File(tmp.getRoot(), "Old/KomplexniValidator.app/Contents/app/validatorConfig");
+        assertTrue(otherInstall.mkdirs());
+        assertFalse(jar.isStaleValidatorConfigDir(otherInstall, true));
+        assertFalse(jar.isStaleValidatorConfigDir(otherInstall, false));
+        assertTrue(jar.isStaleValidatorConfigDir(new File(tmp.getRoot(), "missing"), true));
+    }
+
+    private static Properties load(File file) throws IOException {
+        Properties props = new Properties();
+        try (java.io.InputStream in = new java.io.FileInputStream(file)) {
+            props.load(in);
+        }
+        return props;
+    }
+
+    @Test
     public void configFileFromSystemProperty() throws IOException {
         File jarDir = appJarDir("KomplexniValidator/app");
         Locations loc = Locations.resolve(OperatingSystem.WINDOWS, true, jarDir, home, null, null, cwd);
