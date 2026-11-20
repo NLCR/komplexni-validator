@@ -1,0 +1,4 @@
+# Soubory se ukládají a vydávají bajt po bajtu, bez převodu konců řádků. Testovací balíky a zlaté protokoly
+# mají kontrolní součty a porovnávají se přesně; s převodem (core.autocrlf na Windows) by testy selhaly
+# na nesouhlasících kontrolních součtech.
+* -text

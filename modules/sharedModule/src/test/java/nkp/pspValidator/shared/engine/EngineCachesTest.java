@@ -85,7 +85,9 @@ public class EngineCachesTest {
                 engine.computeMd5(missing);
                 fail("chybejici soubor mel vyhodit HashComputationException");
             } catch (nkp.pspValidator.shared.engine.exceptions.HashComputationException e) {
-                assertTrue(e.getMessage(), e.getMessage().contains("No such file"));
+                //text chyby je od operacniho systemu ("No such file or directory", na Windows v jazyce systemu),
+                //proto se jeho zneni neporovnava
+                assertTrue(e.getMessage() != null && !e.getMessage().isEmpty());
             }
         }
         assertEquals(0, engine.getMd5ComputationCount());

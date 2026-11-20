@@ -26,14 +26,21 @@ public final class FileManagerCommand {
 
     /** Otevře adresář ve správci souborů. */
     public static List<String> openDirectory(OperatingSystem os, File dir) {
-        String path = dir.getAbsolutePath();
+        return openDirectory(os, dir.getAbsolutePath());
+    }
+
+    /**
+     * Příkaz pro otevření adresáře; cesta už je absolutní a ve tvaru cílového systému (sestavení příkazu tak nezávisí
+     * na systému, na kterém se počítá).
+     */
+    static List<String> openDirectory(OperatingSystem os, String absolutePath) {
         switch (effective(os)) {
             case MAC:
-                return list("open", path);
+                return list("open", absolutePath);
             case WINDOWS:
-                return list("explorer", windowsQuoted(path));
+                return list("explorer", windowsQuoted(absolutePath));
             default:
-                return list("xdg-open", path);
+                return list("xdg-open", absolutePath);
         }
     }
 
@@ -42,15 +49,24 @@ public final class FileManagerCommand {
      */
     public static List<String> revealFile(OperatingSystem os, File file) {
         File absolute = file.getAbsoluteFile();
+        File parent = absolute.getParentFile();
+        return revealFile(os, absolute.getPath(), (parent != null ? parent : absolute).getPath());
+    }
+
+    /**
+     * Příkaz pro „Zobrazit ve složce“; cesty už jsou absolutní a ve tvaru cílového systému.
+     *
+     * @param parentPath adresář, ve kterém soubor je (u souboru v kořeni kořen)
+     */
+    static List<String> revealFile(OperatingSystem os, String absolutePath, String parentPath) {
         switch (effective(os)) {
             case MAC:
-                return list("open", "-R", absolute.getPath());
+                return list("open", "-R", absolutePath);
             case WINDOWS:
                 //explorer bere „/select,“ a cestu jako dva argumenty i s mezerou za čárkou
-                return list("explorer", "/select,", windowsQuoted(absolute.getPath()));
+                return list("explorer", "/select,", windowsQuoted(absolutePath));
             default:
-                File parent = absolute.getParentFile();
-                return list("xdg-open", (parent != null ? parent : absolute).getPath());
+                return list("xdg-open", parentPath);
         }
     }
 
