@@ -15,6 +15,7 @@ import java.nio.file.Files;
 
 import static junit.framework.TestCase.fail;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 /**
@@ -353,7 +354,9 @@ public class DmfDetectorTest {
             dmfDetector.detectDmfType(dir);
             fail();
         } catch (PspDataException e) {
-            assertTrue(e.getMessage(), e.getMessage().contains("nenalezen soubor PRIMARY-METS"));
+            assertTrue(e.getMessage(), e.getMessage().contains("nebyl nalezen soubor PRIMARY-METS"));
+            //hlaska nevyjmenovava typy dokumentu (drive zastaraly vycet tri typu)
+            assertFalse(e.getMessage(), e.getMessage().contains("gramodeska"));
         }
     }
 

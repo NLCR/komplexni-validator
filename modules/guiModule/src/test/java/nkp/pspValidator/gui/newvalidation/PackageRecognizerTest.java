@@ -64,7 +64,7 @@ public class PackageRecognizerTest {
     public void emptyDirectoryIsNotPackage() throws IOException {
         Recognition r = recognizer.recognize(ValidationSource.DIRECTORY, tmp.newFolder("prazdny").getPath());
         assertEquals(Recognition.Status.NOT_RECOGNIZED, r.getStatus());
-        assertTrue(r.getMessage(), r.getMessage().contains("nenalezen soubor PRIMARY-METS"));
+        assertTrue(r.getMessage(), r.getMessage().contains("nebyl nalezen soubor PRIMARY-METS"));
     }
 
     @Test
@@ -136,7 +136,7 @@ public class PackageRecognizerTest {
         File zip = zip(new File(FUND_UNIT, "alto"), "obal/alto/", "bez-balíku.zip");
         Recognition r = recognizer.recognize(ValidationSource.ZIP, zip.getPath());
         assertEquals(Recognition.Status.NOT_RECOGNIZED, r.getStatus());
-        assertTrue(r.getMessage(), r.getMessage().contains("nenalezen soubor PRIMARY-METS"));
+        assertTrue(r.getMessage(), r.getMessage().contains("nebyl nalezen soubor PRIMARY-METS"));
         //cesta k docasnemu adresari se do hlasky nedostane
         assertFalse(r.getMessage(), r.getMessage().contains("kv-rozpoznani"));
     }

@@ -108,7 +108,7 @@ public class DmfDetector {
                     String.format("nalezeno více možných souborů PRIMARY-METS (%s), není jasné, který použít pro zjištění typu dokumentu", names));
         } else if (metsCandidates.length == 0) {
             throw new PspDataException(pspRootDir,
-                    String.format("nenalezen soubor PRIMARY-METS pro zjištění typu dokumentu (monografie/periodikum/zvuk-gramodeska)"));
+                    "v kořenovém adresáři balíku nebyl nalezen soubor PRIMARY-METS, typ dokumentu proto nelze určit");
         } else {
             return metsCandidates[0];
         }
