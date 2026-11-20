@@ -293,7 +293,7 @@ public class SettingsDialogController extends DialogController {
                 () -> stage, this::openUrl, onChange, true, "nastaveni-nastroje");
         Region spacer = new Region();
         HBox.setHgrow(spacer, Priority.ALWAYS);
-        HBox bottom = new HBox(10, summary, spacer, link("Návod k instalaci nástrojů", () -> openUrl(ExternalTools.INSTALLATION_HELP_URL)), recheck);
+        HBox bottom = new HBox(10, summary, spacer, Links.markExternal(link("Návod k instalaci nástrojů", () -> openUrl(ExternalTools.INSTALLATION_HELP_URL))), recheck);
         bottom.setAlignment(Pos.CENTER_LEFT);
         content.getChildren().addAll(toolsTable, bottom);
         return page(content);
@@ -523,14 +523,18 @@ public class SettingsDialogController extends DialogController {
                     .append(SettingsTexts.dictionaryValues(dictionaryManager.getDictionaryValues(dictionary).size()));
             String lastSync = SettingsTexts.dictionaryLastSync(syncUrl, syncDate);
             if (lastSync != null) {
-                detail.append(", ").append(lastSync);
+                //udaj o aktualizaci se zalomi jako celek (datum nerozdelene)
+                detail.append(", ").append(lastSync.replace(' ', '\u00A0'));
             }
             Label detailLabel = new Label(detail.toString());
             detailLabel.getStyleClass().add("text-muted");
             detailLabel.setMinWidth(0);
+            //u slovniku s aktualizaci je radek delsi (datum), vedle jsou dve tlacitka
+            detailLabel.setWrapText(true);
+            detailLabel.setMinHeight(Region.USE_PREF_SIZE);
             VBox texts = new VBox(2, title, detailLabel);
             if (specUrl != null && !specUrl.trim().isEmpty()) {
-                Hyperlink spec = link("Specifikace", () -> openUrl(specUrl));
+                Hyperlink spec = Links.markExternal(link(SettingsTexts.dictionaryLinkLabel(specUrl), () -> openUrl(specUrl)));
                 spec.setTooltip(new Tooltip(specUrl));
                 texts.getChildren().add(spec);
             }
@@ -577,7 +581,7 @@ public class SettingsDialogController extends DialogController {
         VBox content = new VBox();
 
         Label logDirPath = pathLabel(dirsDraft.getLogDir());
-        Button openLogDir = secondaryButton("Otevřít", () -> openDir(dirsDraft.getLogDir()));
+        Button openLogDir = openDirButton(() -> dirsDraft.getLogDir());
         Button changeLogDir = secondaryButton("Změnit…", () -> {
             DirectoryChooser chooser = new DirectoryChooser();
             chooser.setTitle("Vyberte adresář pro protokoly a logy validace");
@@ -599,7 +603,7 @@ public class SettingsDialogController extends DialogController {
         content.getChildren().add(dirCard("Konfigurace validátoru",
                 "Pravidla validace (fDMF) a slovníky. Adresář se volí při startu aplikace, když konfigurace chybí.",
                 pathLabel(dirsDraft.getValidatorConfigDir()),
-                secondaryButton("Otevřít", () -> openDir(dirsDraft.getValidatorConfigDir()))));
+                openDirButton(() -> dirsDraft.getValidatorConfigDir())));
 
         CheckBox xml = new CheckBox("Protokol v XML");
         xml.setSelected(dirsDraft.isCreateXmlLog());
@@ -665,10 +669,11 @@ public class SettingsDialogController extends DialogController {
         return label;
     }
 
-    private void openDir(File dir) {
-        if (dir != null) {
-            openUrl(dir.toURI().toString());
-        }
+    /** „Otevřít“ u adresáře: ve správci souborů (Finder, Průzkumník), ne v prohlížeči. */
+    private static Button openDirButton(java.util.function.Supplier<File> dir) {
+        Button button = secondaryButton("Otevřít", () -> Links.openDirectory(dir.get()));
+        button.setTooltip(new Tooltip(Links.OPEN_DIRECTORY_TOOLTIP));
+        return button;
     }
 
     // ===== pomocné =====

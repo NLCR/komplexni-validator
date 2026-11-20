@@ -77,11 +77,8 @@ public class AboutAppDialogController extends DialogController {
     }
 
     private void openDirFromConfigProperty(String propertyName) {
-        File dirFile = getConfigurationManager().getFileOrNull(propertyName);
-        if (dirFile != null) {
-            String path = dirFile.getAbsolutePath();
-            openUrl("file://" + path);
-        }
+        //ve spravci souboru (Finder, Pruzkumnik), ne v prohlizeci
+        Links.openDirectory(getConfigurationManager().getFileOrNull(propertyName));
     }
 
 }

@@ -3,6 +3,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import nkp.pspValidator.gui.DialogFrame?>
+<?import nkp.pspValidator.gui.CopyableMessage?>
 <!-- aktualizace slovníku ze sítě (Nastavení, záložka Slovníky); stav aktualizace doplňuje kontroler -->
 <DialogFrame xmlns:fx="http://javafx.com/fxml"
              fx:controller="nkp.pspValidator.gui.DictionaryUpdateDialogController"
@@ -31,6 +32,8 @@
                                prefWidth="18" prefHeight="18" maxWidth="18" maxHeight="18" minWidth="18"/>
             <Label fx:id="lblStatus" wrapText="true" minHeight="-Infinity" maxWidth="Infinity" HBox.hgrow="ALWAYS"/>
         </HBox>
+        <!-- chyba aktualizace (text i s adresou jde označit a zkopírovat) -->
+        <CopyableMessage fx:id="errorMessage" error="true" visible="false" managed="false"/>
     </content>
 
     <footerButtons>

@@ -220,6 +220,7 @@ public class ToolsTable extends VBox {
         VBox.setVgrow(text, Priority.ALWAYS);
         Hyperlink installation = new Hyperlink("Návod k instalaci nástroje " + util.getUserFriendlyName());
         installation.getStyleClass().add("link");
+        Links.markExternal(installation);
         installation.setOnAction(e -> urlOpener.accept(ExternalTools.installationUrl(util)));
         frame.getContent().addAll(text, installation);
         Button close = new Button("Zavřít");

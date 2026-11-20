@@ -19,8 +19,11 @@ import java.util.Set;
  */
 public final class ExternalTools {
 
-    /** Návod k instalaci nástrojů na wiki projektu. */
-    public static final String INSTALLATION_HELP_URL = "https://github.com/NLCR/komplexni-validator/wiki/Instalace#instalace-n%C3%A1stroj%C5%AF-pro-validaci-obrazov%C3%BDch-soubor%C5%AF";
+    /**
+     * Návod k instalaci nástrojů na wiki projektu: oddíl „Instalace nástrojů pro validaci obrazových/zvukových
+     * souborů“ (GitHub v kotvě lomítko vypouští).
+     */
+    public static final String INSTALLATION_HELP_URL = "https://github.com/NLCR/komplexni-validator/wiki/Instalace#instalace-n%C3%A1stroj%C5%AF-pro-validaci-obrazov%C3%BDchzvukov%C3%BDch-soubor%C5%AF";
 
     private static final String INSTALLATION_URL_PREFIX = "https://github.com/NLCR/komplexni-validator/wiki/Instalace#";
 
@@ -64,14 +67,12 @@ public final class ExternalTools {
                 return INSTALLATION_URL_PREFIX + "imagemagick";
             case KAKADU:
                 return INSTALLATION_URL_PREFIX + "kakadu";
-            // TODO: 2019-04-02 doplnit wiki
             case MP3VAL:
                 return INSTALLATION_URL_PREFIX + "mp3val";
             case SHNTOOL:
                 return INSTALLATION_URL_PREFIX + "shntool";
             case CHECKMATE:
                 return INSTALLATION_URL_PREFIX + "checkmate";
-            // TODO: 2026-11-12 doplnit wiki (sekce veraPDF a EPUBCheck zatim na wiki nejsou)
             case VERAPDF:
                 return INSTALLATION_URL_PREFIX + "verapdf";
             case EPUBCHECK:

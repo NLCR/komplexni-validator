@@ -51,6 +51,9 @@ public class DictionaryUpdateDialogController extends DialogController {
     Label lblStatus;
 
     @FXML
+    CopyableMessage errorMessage;
+
+    @FXML
     Button btnUpdate;
 
     @FXML
@@ -97,7 +100,7 @@ public class DictionaryUpdateDialogController extends DialogController {
 
     public void update(ActionEvent actionEvent) {
         updatingNow = true;
-        lblStatus.getStyleClass().remove("text-error");
+        hideError();
         lblStatus.setText("Aktualizuji…");
         updateUi();
         //https://docs.oracle.com/javafx/2/api/javafx/concurrent/Task.html
@@ -165,10 +168,9 @@ public class DictionaryUpdateDialogController extends DialogController {
         task.messageProperty().addListener((observable, oldValue, newValue) -> {
             System.out.println(newValue);
             updatingNow = false;
-            lblStatus.getStyleClass().remove("text-error");
+            hideError();
             if (newValue.startsWith("CHYBA")) {
-                lblStatus.setText(newValue);
-                lblStatus.getStyleClass().add("text-error");
+                showError(newValue);
             } else {
                 lblStatus.setText("Slovník byl úspěšně aktualizován!");
                 //update syncDate property
@@ -177,14 +179,43 @@ public class DictionaryUpdateDialogController extends DialogController {
                 try {
                     getDictMgr().reload();
                 } catch (ValidatorConfigurationException e) {
-                    lblStatus.setText("CHYBA: " + e.getMessage());
-                    lblStatus.getStyleClass().add("text-error");
+                    showError("CHYBA: " + e.getMessage());
                     e.printStackTrace();
                 }
             }
             updateUi();
         });
         new Thread(task).start();
+    }
+
+    /** Chyba aktualizace: krátký stav a celý text (s adresou) v poli, ze kterého jde kopírovat. */
+    void showError(String message) {
+        lblStatus.setText("Aktualizace se nezdařila.");
+        lblStatus.getStyleClass().remove("text-error");
+        lblStatus.getStyleClass().add("text-error");
+        errorMessage.setText(message + "\nAdresa: " + syncUrl);
+        errorMessage.setVisible(true);
+        errorMessage.setManaged(true);
+    }
+
+    private void hideError() {
+        lblStatus.getStyleClass().remove("text-error");
+        errorMessage.setText(null);
+        errorMessage.setVisible(false);
+        errorMessage.setManaged(false);
+    }
+
+    /** Pro SnapshotMode: aktualizace právě běží. */
+    boolean isUpdatingNow() {
+        return updatingNow;
+    }
+
+    /** Pro SnapshotMode: stav dialogu. */
+    String describe() {
+        return "status=" + lblStatus.getText() + ", lastUpdated=" + lblLastUpdated.getText()
+                + ", values=" + lblTotalValues.getText()
+                + ", error=" + (errorMessage.isVisible() ? errorMessage.getText().replace('\n', ' ') : "-")
+                + ", copyShown=" + (errorMessage.isVisible() && errorMessage.isCopyShown());
     }
 
     private String todayDate() {
@@ -197,7 +228,7 @@ public class DictionaryUpdateDialogController extends DialogController {
         Set<String> values = getDictMgr().getDictionaryValues(dictionaryName);
         String syncDate = getConfigMgr().getStringOrDefault(ConfigurationManager.propDictionarySyncDate(dictionaryName), null);
         if (syncDate == null || syncDate.isEmpty()) {
-            lblLastUpdated.setText("-");
+            lblLastUpdated.setText("zatím neaktualizováno");
         } else {
             lblLastUpdated.setText(syncDate);
         }

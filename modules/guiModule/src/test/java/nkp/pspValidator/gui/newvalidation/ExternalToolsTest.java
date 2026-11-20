@@ -90,6 +90,9 @@ public class ExternalToolsTest {
         assertEquals(wiki + "checkmate", ExternalTools.installationUrl(CHECKMATE));
         assertEquals(wiki + "verapdf", ExternalTools.installationUrl(VERAPDF));
         assertEquals(wiki + "epubcheck", ExternalTools.installationUrl(EPUBCHECK));
-        assertEquals(wiki + "instalace-n%C3%A1stroj%C5%AF-pro-validaci-obrazov%C3%BDch-soubor%C5%AF", ExternalTools.INSTALLATION_HELP_URL);
+        //id nadpisu „Instalace nástrojů pro validaci obrazových/zvukových souborů“ ve wiki (GitHub lomítko vypouští),
+        //ověřeno v HTML stránky 20. 11. 2026
+        assertEquals(wiki + "instalace-n%C3%A1stroj%C5%AF-pro-validaci-obrazov%C3%BDchzvukov%C3%BDch-soubor%C5%AF",
+                ExternalTools.INSTALLATION_HELP_URL);
     }
 }

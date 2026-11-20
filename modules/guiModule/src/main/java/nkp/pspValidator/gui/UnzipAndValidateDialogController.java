@@ -5,6 +5,7 @@ import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ProgressIndicator;
@@ -24,6 +25,9 @@ public class UnzipAndValidateDialogController extends DialogController {
 
     @FXML
     Label lblInfo;
+
+    @FXML
+    CopyableMessage errorMessage;
 
     @FXML
     ProgressIndicator progressIndicator;
@@ -53,7 +57,7 @@ public class UnzipAndValidateDialogController extends DialogController {
             lblInfo.setText(previewMessage);
             if (previewError) {
                 hideProgress();
-                lblInfo.getStyleClass().add("text-error");
+                showErrorMessage(previewMessage);
                 btnCancelOrClose.setText("Zavřít");
             }
             return;
@@ -100,7 +104,7 @@ public class UnzipAndValidateDialogController extends DialogController {
             private void showError(String message) {
                 updateMessage(message);
                 Platform.runLater(() -> {
-                    lblInfo.getStyleClass().add("text-error");
+                    showErrorMessage(message);
                     hideProgress();
                     task = null;
                     btnCancelOrClose.setText("Zavřít");
@@ -128,6 +132,16 @@ public class UnzipAndValidateDialogController extends DialogController {
             }
         };
         new Thread(task).start();
+    }
+
+    /** Chyba místo řádku stavu: text jde označit a zkopírovat. */
+    private void showErrorMessage(String message) {
+        Node statusLine = lblInfo.getParent();
+        statusLine.setVisible(false);
+        statusLine.setManaged(false);
+        errorMessage.setText(message);
+        errorMessage.setVisible(true);
+        errorMessage.setManaged(true);
     }
 
     private void hideProgress() {

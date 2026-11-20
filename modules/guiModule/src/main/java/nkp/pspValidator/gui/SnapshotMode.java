@@ -58,7 +58,9 @@ import java.util.function.Supplier;
  * inicializace dialogu). {@code mainMenu} otevře v hlavním okně menu Validovat a uloží snímek jeho rozbalovací nabídky,
  * {@code settingsMenu} totéž pro menu Nastavení. {@code toolDetails} je okno „Podrobnosti…“ u nenalezeného nástroje
  * (JHOVE s pevným výstupem kontroly), {@code dictionaryContent} a {@code dictionaryUpdate} dialogy slovníku
- * siglaInstitutionCodes. {@code init}, {@code initError}, {@code unzip} a {@code unzipError} jsou náhledy dialogů
+ * siglaInstitutionCodes; krok {@code dictionaryUpdateRun} v dialogu aktualizace slovníku skutečně spustí aktualizaci
+ * z adresy v nastavení a vyfotí výsledek (soubor slovníku se přepíše, proto krok odmítne konfiguraci validátoru ve
+ * zdrojích repozitáře: {@code validatorConfig.dir} musí ukazovat na kopii). {@code init}, {@code initError}, {@code unzip} a {@code unzipError} jsou náhledy dialogů
  * inicializace validačních dat a rozbalení ZIPu (běh a chyba): dialog jen ukáže stav, nic nenačítá ani nerozbaluje.
  * Snímkovací režim přeskakuje dialog nástrojů při startu, proto při spuštění sám zkontroluje nástroje, aby prázdný
  * stav hlavního okna neukazoval výchozí (nepravdivou) dostupnost.
@@ -78,8 +80,13 @@ import java.util.function.Supplier;
  * a výstupů, {@code Main.launchValidation}), počká na její konec, vybere první sekci a pravidlo s problémem a uloží
  * snímek {@code results.png}. Volitelně {@code -Dkv.snapshotDisable=JHOVE,KAKADU} vypne nástroje pro tuto validaci
  * (jako zaškrtávátka v dialogu) a {@code -Dkv.snapshotRunningMs=<ms>} uloží i snímek {@code running.png} během běhu.
- * Krok {@code rerun} pak spustí „Validovat znovu“, počká na konec a uloží {@code rerun.png}; do výpisu napíše, zda
- * se znovu spustil tentýž požadavek. Krok {@code small} zmenší hlavní okno na 1000 × 640 a uloží {@code small.png}
+ * Krok {@code rerun} pak spustí „Validovat znovu“, počká na konec a uloží {@code rerun.png}; do výpisu napíše
+ * požadavek opakované validace. Krok {@code setPreferred} s {@code -Dkv.snapshotRerunPreferred=<TYP>:<verze>} (typ jako
+ * {@code Dmf.Type}, verze {@code default} = výchozí validátoru) změní výchozí verzi v nastavení, jako by ji uživatel
+ * uložil v Nastavení (následné „Validovat znovu“ ji má použít). Kroky {@code helpMenu}, {@code showMenu}
+ * a {@code validateMenu} vyfotí rozbalená menu Nápověda, Zobrazit a Validovat (u Validovat vypíše bublinu položky
+ * „Validovat znovu“), krok {@code revealXml} skutečně spustí „Zobrazit ve složce“ u protokolu XML zobrazené validace
+ * (otevře jedno okno správce souborů) a vypíše příkaz a výsledek. Krok {@code small} zmenší hlavní okno na 1000 × 640 a uloží {@code small.png}
  * (další kroky pak běží v malém okně). Krok {@code filtered} zapne filtr „chyby a varování, jen sekce a pravidla
  * s problémy“, vybere první problém a uloží {@code filtered.png}. Výsledek každé validace se vypíše na standardní výstup.
  * <p>
@@ -113,7 +120,8 @@ import java.util.function.Supplier;
  * ({@code group-running.png}), vybere hotový balík ({@code group-browse.png}), nechá skupinu doběhnout, vybere první
  * nevalidní balík ({@code group-results.png}), zapne filtr „jen nevalidní“ ({@code group-filtered.png}, pak ho vypne)
  * a vyexportuje souhrn do CSV ({@code -Dkv.snapshotCsv=<soubor>}, výchozí {@code group-souhrn.csv} v adresáři snímků).
- * Krok {@code groupRerunOne} validuje znovu jen první nevalidní balík ({@code group-rerun-one.png}), krok
+ * Krok {@code groupRerunOne} validuje znovu jen první nevalidní balík, s {@code -Dkv.snapshotRerunPackage=<název>} balík
+ * tohoto názvu ({@code group-rerun-one.png}), krok
  * {@code groupCancel} spustí skupinu znovu a v polovině ji zruší ({@code group-canceled.png}).
  * <p>
  * Přes gradle: {@code ./gradlew :modules:guiModule:runSnapshots -PsnapshotDir=/tmp/snap [-PsnapshotConfigFile=/tmp/snap-config.properties]}.
@@ -134,6 +142,8 @@ public class SnapshotMode {
     public static final String PROP_CSV = "kv.snapshotCsv";
     public static final String PROP_TAB = "kv.snapshotTab";
     public static final String PROP_DEFAULT_VERSION = "kv.snapshotDefaultVersion";
+    public static final String PROP_RERUN_PREFERRED = "kv.snapshotRerunPreferred";
+    public static final String PROP_RERUN_PACKAGE = "kv.snapshotRerunPackage";
     private static final long VALIDATION_TIMEOUT_MS = 10 * 60 * 1000;
     public static final String ALL_DIALOGS = "main,mainMenu,settingsMenu,newValidation,settings,externalUtils,toolDetails,"
             + "about,dictionaryContent,dictionaryUpdate,init,initError,unzip,unzipError";
@@ -283,10 +293,48 @@ public class SnapshotMode {
                     });
                 } else if ("settingsMenu".equals(name)) {
                     saveMenu("Nastavení", name, this::next);
+                } else if ("setPreferred".equals(name)) {
+                    //zmena vychozi verze v Nastaveni mezi behem a opakovanim (jako ulozeni v zalozce Vychozi verze DMF)
+                    String preferred = System.getProperty(PROP_RERUN_PREFERRED, "");
+                    String[] parts = preferred.trim().split(":", 2);
+                    if (parts.length != 2) {
+                        System.err.println("SNAPSHOT MODE: step '" + name + "' needs -D" + PROP_RERUN_PREFERRED + "=<TYPE>:<version|default>");
+                        failed = true;
+                    } else {
+                        Dmf.Type type = Dmf.Type.valueOf(parts[0]);
+                        String version = "default".equals(parts[1]) ? null : parts[1];
+                        new VersionSettings(main.getConfigurationManager(), main.getValidationDataManager().getFdmfRegistry())
+                                .setPreferredVersion(type, version);
+                        System.out.println("SNAPSHOT MODE: preferred version of " + type + " set to " + version);
+                    }
+                    next();
+                } else if ("helpMenu".equals(name)) {
+                    saveMenu("Nápověda", name, this::next);
+                } else if ("showMenu".equals(name)) {
+                    saveMenu("Zobrazit", name, this::next);
+                } else if ("validateMenu".equals(name)) {
+                    //menu Validovat po validaci (Validovat znovu dostupne) a kontrola bubliny polozky
+                    saveMenu("Validovat", name, () -> System.out.println("SNAPSHOT MODE: rerun menu item tooltip: "
+                            + main.getMainController().rerunMenuTooltip()), this::next);
+                } else if ("revealXml".equals(name)) {
+                    //„Zobrazit ve slozce“ u protokolu XML naposledy zobrazene validace: skutecne otevre spravce souboru
+                    File xml = main.getMainController().shownXmlProtocol();
+                    if (xml == null) {
+                        System.err.println("SNAPSHOT MODE: step '" + name + "' needs a finished validation with XML protocol");
+                        failed = true;
+                        next();
+                    } else {
+                        nkp.pspValidator.gui.desktop.FileManager.revealFile(xml, (command, error) -> Platform.runLater(() -> {
+                            System.out.println("SNAPSHOT MODE: reveal " + command + " -> " + (error == null ? "ok" : error));
+                            next();
+                        }));
+                    }
                 } else if ("settings".equals(name)) {
                     settings();
                 } else if ("settingsSave".equals(name)) {
                     settingsSave();
+                } else if ("dictionaryUpdateRun".equals(name)) {
+                    dictionaryUpdateRun(name);
                 } else if ("results".equals(name)) {
                     runValidation(name);
                 } else if ("rerun".equals(name)) {
@@ -329,7 +377,7 @@ public class SnapshotMode {
                         next();
                     });
                 } else {
-                    System.err.println("SNAPSHOT MODE: unknown dialog '" + name + "', known: main,mainMenu,settingsMenu,settings,settingsSave,toolDetails,results,rerun,progress,stress,filtered,small,group,groupRerunOne,groupCancel," + String.join(",", dialogs.keySet()));
+                    System.err.println("SNAPSHOT MODE: unknown dialog '" + name + "', known: main,mainMenu,settingsMenu,setPreferred,helpMenu,showMenu,validateMenu,revealXml,settings,settingsSave,toolDetails,dictionaryUpdateRun,results,rerun,progress,stress,filtered,small,group,groupRerunOne,groupCancel," + String.join(",", dialogs.keySet()));
                     failed = true;
                     next();
                 }
@@ -589,6 +637,11 @@ public class SnapshotMode {
 
         /** Rozbalí menu hlavního okna, uloží snímek nabídky a menu zavře. */
         private void saveMenu(String text, String name, Runnable then) {
+            saveMenu(text, name, null, then);
+        }
+
+        /** @param whileShown co udělat ještě při zobrazeném menu (po snímku), nebo null */
+        private void saveMenu(String text, String name, Runnable whileShown, Runnable then) {
             Menu menu = findMenu(main.getPrimaryStage().getScene(), text);
             if (menu == null) {
                 System.err.println("SNAPSHOT MODE: menu " + text + " not found");
@@ -603,9 +656,13 @@ public class SnapshotMode {
                         save(window.getScene(), name);
                     }
                 }
+                if (whileShown != null) {
+                    whileShown.run();
+                }
                 menu.hide();
                 resetMenuBar(main.getPrimaryStage().getScene());
-                then.run();
+                //dalsi menu se po obnoveni listy otevre az po vykresleni
+                after(then);
             });
         }
 
@@ -680,7 +737,8 @@ public class SnapshotMode {
                 next();
                 return;
             }
-            String name = controller.rerunGroupPackage(nkp.pspValidator.gui.group.PackageStatus.INVALID);
+            String name = controller.rerunGroupPackage(nkp.pspValidator.gui.group.PackageStatus.INVALID,
+                    System.getProperty(PROP_RERUN_PACKAGE));
             System.out.println("SNAPSHOT MODE: group rerun one: " + name);
             int startedBefore = controller.getStartedValidations() - 1;
             long started = System.currentTimeMillis();
@@ -849,8 +907,7 @@ public class SnapshotMode {
             Platform.runLater(() -> controller.rerunValidation(null));
             waitForEnd(controller, startedBefore, started, () -> {
                 ValidationRequest after = controller.getLastRequest();
-                System.out.println("SNAPSHOT MODE: rerun used the same request object: " + (after == before)
-                        + ", request: " + (after == null ? "-" : describe(after)));
+                System.out.println("SNAPSHOT MODE: rerun request: " + (after == null ? "-" : describe(after)));
                 afterValidation(name, controller, started);
             });
         }
@@ -898,7 +955,57 @@ public class SnapshotMode {
             return request.getSource() + " " + request.getFile().getAbsolutePath()
                     + ", txtLog=" + request.isCreateTxtLog() + ", xmlLog=" + request.isCreateXmlLog()
                     + ", verbosity=" + request.getVerbosity() + ", disabledTools=" + request.getDisabledUtils()
-                    + ", forcedFundUnit=" + request.getParams().forcedDmfFduVersion;
+                    + ", forcedFundUnit=" + request.getParams().forcedDmfFduVersion
+                    + ", preferredFundUnit=" + request.getParams().preferredDmfFduVersion
+                    + ", forcedMonograph=" + request.getParams().forcedDmfMonVersion
+                    + ", preferredMonograph=" + request.getParams().preferredDmfMonVersion;
+        }
+
+        /**
+         * Skutečná aktualizace slovníku z dialogu (tlačítko Aktualizovat) s adresou z nastavení; snímek výsledku
+         * (úspěch s datem, nebo chyba). Soubor slovníku se přepíše, proto krok odmítne konfiguraci ve zdrojích repozitáře.
+         */
+        private void dictionaryUpdateRun(String name) {
+            ConfigurationManager config = main.getConfigurationManager();
+            String url = config.getStringOrDefault(ConfigurationManager.propDictionarySyncUrl(SNAPSHOT_DICTIONARY), null);
+            File dictFile = main.getValidationDataManager().getValidatorConfigMgr().getDictionaryManager()
+                    .getDictionaryFile(SNAPSHOT_DICTIONARY);
+            System.out.println("SNAPSHOT MODE: dictionary update from " + url + " into " + dictFile.getAbsolutePath()
+                    + ", syncDate before=" + config.getStringOrDefault(ConfigurationManager.propDictionarySyncDate(SNAPSHOT_DICTIONARY), null));
+            if (dictFile.getAbsolutePath().replace('\\', '/').contains("/src/main/resources/")) {
+                System.err.println("SNAPSHOT MODE: step '" + name + "' refuses to overwrite dictionary in sources, use a copy of validatorConfig");
+                failed = true;
+                next();
+                return;
+            }
+            DictionaryUpdateDialog dialog = new DictionaryUpdateDialog(main.getDialogStage(), main, SNAPSHOT_DICTIONARY, url);
+            Stage stage = dialog.showNonBlocking();
+            DictionaryUpdateDialogController controller = (DictionaryUpdateDialogController) dialog.getController();
+            long started = System.currentTimeMillis();
+            controller.update(null);
+            waitForDictionary(controller, started, () -> after(() -> {
+                System.out.println("SNAPSHOT MODE: dictionary update: " + controller.describe()
+                        + ", syncDate after=" + config.getStringOrDefault(ConfigurationManager.propDictionarySyncDate(SNAPSHOT_DICTIONARY), null));
+                save(stage.getScene(), name);
+                stage.close();
+                next();
+            }));
+        }
+
+        private void waitForDictionary(DictionaryUpdateDialogController controller, long started, Runnable then) {
+            PauseTransition pause = new PauseTransition(Duration.millis(250));
+            pause.setOnFinished(e -> {
+                if (!controller.isUpdatingNow()) {
+                    then.run();
+                } else if (System.currentTimeMillis() - started > 60_000) {
+                    System.err.println("SNAPSHOT MODE: dictionary update timeout");
+                    failed = true;
+                    next();
+                } else {
+                    waitForDictionary(controller, started, then);
+                }
+            });
+            pause.play();
         }
 
         /**

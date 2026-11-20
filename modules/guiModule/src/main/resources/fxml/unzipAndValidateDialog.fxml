@@ -3,6 +3,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import nkp.pspValidator.gui.DialogFrame?>
+<?import nkp.pspValidator.gui.CopyableMessage?>
 <!-- rozbalení souboru ZIP před validací jednoho balíku; stav rozbalování nebo chybu doplňuje kontroler -->
 <DialogFrame xmlns:fx="http://javafx.com/fxml"
              fx:controller="nkp.pspValidator.gui.UnzipAndValidateDialogController"
@@ -16,6 +17,8 @@
             <Label fx:id="lblInfo" wrapText="true" minHeight="-Infinity" maxWidth="Infinity" HBox.hgrow="ALWAYS"
                    text="Rozbaluji soubor…"/>
         </HBox>
+        <!-- chyba rozbalení (text jde označit a zkopírovat) -->
+        <CopyableMessage fx:id="errorMessage" error="true" visible="false" managed="false"/>
     </content>
 
     <footerButtons>

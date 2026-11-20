@@ -12,6 +12,9 @@ import java.lang.reflect.Modifier;
  */
 public final class DmfParamsBuilder {
 
+    /** Předpona polí {@link DmfDetector.Params} s preferovanou verzí (ostatní pole jsou vynucené verze). */
+    private static final String PREFERRED_PREFIX = "preferred";
+
     private DmfParamsBuilder() {
     }
 
@@ -42,6 +45,29 @@ public final class DmfParamsBuilder {
             throw new IllegalStateException(e);
         }
         return copy;
+    }
+
+    /**
+     * Parametry pro opakovanou validaci („Validovat znovu“): vynucené verze z původních parametrů (volba dialogu Nová
+     * validace pro tuto validaci), preferované (výchozí) verze znovu z aktuálního nastavení, aby se projevila změna
+     * v Nastavení mezi během a opakováním.
+     */
+    public static DmfDetector.Params withCurrentPreferred(DmfDetector.Params original, VersionSettings settings) {
+        DmfDetector.Params result = build(settings);
+        if (original == null) {
+            return result;
+        }
+        try {
+            for (Field field : DmfDetector.Params.class.getFields()) {
+                if (!Modifier.isStatic(field.getModifiers()) && !Modifier.isFinal(field.getModifiers())
+                        && !field.getName().startsWith(PREFERRED_PREFIX)) {
+                    field.set(result, field.get(original));
+                }
+            }
+        } catch (IllegalAccessException e) {
+            throw new IllegalStateException(e);
+        }
+        return result;
     }
 
     private static void set(DmfDetector.Params params, Dmf.Type type, String forced, String preferred) {

@@ -215,7 +215,10 @@ tasks.register('jpackage', Exec) {
             // dmg: uživatel přetáhne aplikaci do Aplikací, nepotřebuje práva správce (pkg je vyžaduje)
             packageType = 'dmg'
             platformLabel = osArch == 'aarch64' ? 'macOS_AppleSilicon' : 'macOS_Intel'
-            platformOptions = ['--mac-package-identifier', 'cz.nkp.pspValidator.gui']
+            // vlastní Info.plist (šablona jpackage 17 s češtinou jako lokalizací aplikace, kvůli českým tlačítkům
+            // systémových dialogů), ostatní klíče dosadí jpackage stejně jako do vestavěné šablony
+            platformOptions = ['--mac-package-identifier', 'cz.nkp.pspValidator.gui',
+                               '--resource-dir', file('src/main/jpackage/macos').path]
         } else {
             throw new GradleException("jpackage: nepodporovaný operační systém '${System.getProperty('os.name')}', " +
                     "podporované jsou Windows, macOS a Linux.")
@@ -332,6 +335,17 @@ tasks.register('jpackage', Exec) {
 //run - spusti GUI
 //./gradlew :modules:guiModule:run
 
+// Vývojový běh na macOS (run, runSnapshots): bez balíčku .app je v Docku a v Cmd+Tab obecný proces „java“ s ikonou
+// spustitelného souboru. -Xdock:icon předá spouštěč Javy JavaFX (Glass ji nastaví jako ikonu aplikace v Docku).
+// Název zůstane „java“: -Xdock:name zpracovává jen AWT, JavaFX ho ignoruje (ověřeno přes lsappinfo, proto chybí).
+// V sestavené aplikaci určuje ikonu a název balíček .app (Info.plist, appIcon.icns), tam se volba nepoužije.
+def macDevJvmArgs = System.getProperty('os.name').toLowerCase().startsWith('mac')
+        ? ["-Xdock:icon=${file('src/main/resources/img/appIcon/appIcon.icns').path}".toString()]
+        : []
+tasks.named('run', JavaExec) {
+    jvmArgs macDevJvmArgs
+}
+
 //jpackage - build instalatoru nebo portable aplikace (viz komentar u ulohy jpackage)
 //./gradlew :modules:guiModule:jpackage [-PjpackageType=app-image]
 
@@ -356,6 +370,10 @@ tasks.register('jpackage', Exec) {
 //  zalozky (vlastnost kv.snapshotTab, vychozi vsechny); krok settingsMenu: rozbalene menu Nastaveni; krok settingsSave:
 //  zmena vychozi verze v Nastaveni, ulozeni a vypis DmfDetector.Params, -PsnapshotDefaultVersion=MONOGRAPH:1.4
 //  (vlastnost kv.snapshotDefaultVersion, verze default = vychozi validatoru)
+//  krok setPreferred: zmena vychozi verze pred "Validovat znovu", -PsnapshotRerunPreferred=FUND_UNIT:0.1;
+//  -PsnapshotRerunPackage=<nazev> - krok groupRerunOne validuje znovu tento balik skupiny;
+//  kroky helpMenu, showMenu, validateMenu (rozbalena menu), revealXml (Zobrazit ve slozce, otevre Finder),
+//  dictionaryUpdateRun (skutecna aktualizace slovniku, jen nad kopii validatorConfig)
 //  -PsnapshotConfigFile=<soubor> - soubor nastaveni (vlastnost kv.configFile) misto vychoziho config.properties v pracovnim
 //  adresari modulu, aby snimky nezahrnovaly osobni nastaveni; soubor nemusi existovat (vznikne s vychozimi hodnotami),
 //  ale pri spusteni z Gradle musi obsahovat aspon validatorConfig.dir=<adresar validatorConfig> (a nejlepe validation.log_dir),
@@ -363,6 +381,7 @@ tasks.register('jpackage', Exec) {
 tasks.register('runSnapshots', JavaExec) {
     classpath = sourceSets.main.runtimeClasspath
     mainClass.set('nkp.pspValidator.gui.Launcher')
+    jvmArgs macDevJvmArgs
     def dir = project.findProperty('snapshotDir') ?: "${rootDir}/build/gui-snapshots"
     systemProperty 'kv.snapshotDir', dir
     if (project.hasProperty('snapshot')) {
@@ -406,6 +425,12 @@ tasks.register('runSnapshots', JavaExec) {
     }
     if (project.hasProperty('snapshotDefaultVersion')) {
         systemProperty 'kv.snapshotDefaultVersion', project.property('snapshotDefaultVersion')
+    }
+    if (project.hasProperty('snapshotRerunPackage')) {
+        systemProperty 'kv.snapshotRerunPackage', project.property('snapshotRerunPackage')
+    }
+    if (project.hasProperty('snapshotRerunPreferred')) {
+        systemProperty 'kv.snapshotRerunPreferred', project.property('snapshotRerunPreferred')
     }
     if (project.hasProperty('maxDialogHeight')) { //simulace mensiho displeje
         systemProperty 'kv.maxDialogHeight', project.property('maxDialogHeight')

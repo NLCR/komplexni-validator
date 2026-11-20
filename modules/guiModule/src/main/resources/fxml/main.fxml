@@ -3,6 +3,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
+<?import nkp.pspValidator.gui.CopyableMessage?>
 
 <!--
 Hlavni okno: menu, horni lista se souhrnem validace (jen po spusteni validace), pod ni behem behu panel prubehu
@@ -43,13 +44,18 @@ Vzhled v base.css (trida main-root a nasledujici).
                         <items>
                             <MenuItem fx:id="showLogXmlMenuItem" text="Protokol XML proběhlé validace" disable="true"
                                       onAction="#showLogXml"/>
+                            <MenuItem fx:id="revealLogXmlMenuItem" text="Protokol XML ve složce"
+                                      onAction="#revealLogXml"/>
+                            <SeparatorMenuItem/>
                             <MenuItem fx:id="showLogTxtMenuItem" text="Textový log proběhlé validace" disable="true"
                                       onAction="#showLogTxt"/>
+                            <MenuItem fx:id="revealLogTxtMenuItem" text="Textový log ve složce"
+                                      onAction="#revealLogTxt"/>
                         </items>
                     </Menu>
                     <Menu text="Nápověda">
                         <items>
-                            <MenuItem onAction="#showOnlineHelp" text="Online nápověda"/>
+                            <MenuItem fx:id="onlineHelpMenuItem" onAction="#showOnlineHelp" text="Online nápověda"/>
                             <SeparatorMenuItem/>
                             <MenuItem onAction="#showAboutAppDialog" text="O aplikaci"/>
                         </items>
@@ -95,7 +101,7 @@ Vzhled v base.css (trida main-root a nasledujici).
 
             <!--hlaska po zruseni nebo chybe validace, kdyz uz jsou zobrazene dilci vysledky-->
             <HBox fx:id="noticeBar" styleClass="notice-bar" visible="false" managed="false">
-                <Label fx:id="noticeText" wrapText="true" maxWidth="Infinity" HBox.hgrow="ALWAYS"/>
+                <CopyableMessage fx:id="noticeText" HBox.hgrow="ALWAYS"/>
             </HBox>
         </VBox>
     </top>
@@ -124,7 +130,7 @@ Vzhled v base.css (trida main-root a nasledujici).
             <!--hlaska misto vysledku (chyba nebo zruseni pred nactenim sekci)-->
             <VBox fx:id="messageState" styleClass="empty-state" visible="false">
                 <Label fx:id="messageTitle" styleClass="empty-title"/>
-                <Label fx:id="messageText" styleClass="empty-text" wrapText="true" maxWidth="560"/>
+                <CopyableMessage fx:id="messageText" maxWidth="560"/>
             </VBox>
 
             <!--vysledky: u jednoho baliku jen detailPane, u skupiny groupSplit s tabulkou baliku nad detailem vybraneho

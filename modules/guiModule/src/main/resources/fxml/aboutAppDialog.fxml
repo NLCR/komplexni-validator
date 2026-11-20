@@ -35,7 +35,7 @@
                    GridPane.columnIndex="0"
                    minWidth="150"
             />
-            <Hyperlink styleClass="link" text="http://www.ndk.cz/standardy-digitalizace/metadata"
+            <Hyperlink styleClass="link,external-link" text="http://www.ndk.cz/standardy-digitalizace/metadata"
                        GridPane.rowIndex="0"
                        GridPane.columnIndex="2"
                        GridPane.hgrow="ALWAYS"
@@ -46,7 +46,7 @@
                    GridPane.rowIndex="1"
                    GridPane.columnIndex="0"
             />
-            <Hyperlink styleClass="link" text="https://github.com/NLCR/komplexni-validator"
+            <Hyperlink styleClass="link,external-link" text="https://github.com/NLCR/komplexni-validator"
                        GridPane.rowIndex="1"
                        GridPane.columnIndex="2"
                        GridPane.hgrow="ALWAYS"

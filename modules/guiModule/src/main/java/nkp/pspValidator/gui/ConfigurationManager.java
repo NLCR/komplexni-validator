@@ -102,6 +102,17 @@ public class ConfigurationManager {
     public static final String PROP_LOG_DIR = "validation.log_dir";
 
     //dictionaries
+    /** Adresa aktualizace slovníku kódů institucí (Sigla). */
+    public static final String SIGLA_SYNC_URL = "https://raw.githubusercontent.com/NLCR/komplexni-validator/master/modules/sharedModule/src/main/resources/nkp/pspValidator/shared/validatorConfig/dictionaries/siglaInstitutionCodes.dict";
+    /** Výchozí adresa ve verzích do 2.9 (cesta z doby před přesunem modulů do modules/), vrací 404; při startu se nahradí. */
+    static final String SIGLA_SYNC_URL_BEFORE_3_0 = "https://raw.githubusercontent.com/NLCR/komplexni-validator/master/sharedModule/src/main/resources/nkp/pspValidator/shared/validatorConfig/dictionaries/siglaInstitutionCodes.dict";
+
+    /**
+     * Seznam kódů institucí (Sigla) na GitHubu: stránka souboru slovníku, kde ho mohou pracovníci NK upravovat.
+     * V Nastavení se ukazuje na místě odkazu na specifikaci.
+     */
+    public static final String SIGLA_LIST_URL = "https://github.com/NLCR/komplexni-validator/blob/master/modules/sharedModule/src/main/resources/nkp/pspValidator/shared/validatorConfig/dictionaries/siglaInstitutionCodes.dict";
+
     public static final String propDictionarySpecUrl(String dictionary) {
         return "dictionary." + dictionary + ".specUrl";
     }
@@ -168,10 +179,11 @@ public class ConfigurationManager {
         }
         logDir.mkdirs();
         //dictionaries
+        replaceStringPropertyIfEquals(propDictionarySyncUrl("siglaInstitutionCodes"), SIGLA_SYNC_URL_BEFORE_3_0, SIGLA_SYNC_URL);
         initDictionary("siglaInstitutionCodes",
                 "kódy institucí (Sigla)",
-                null,
-                "https://raw.githubusercontent.com/NLCR/komplexni-validator/master/sharedModule/src/main/resources/nkp/pspValidator/shared/validatorConfig/dictionaries/siglaInstitutionCodes.dict");
+                SIGLA_LIST_URL,
+                SIGLA_SYNC_URL);
         initDictionary("iso31661Alpha2languageCodes",
                 "kódy zemí ISO3166-1 alpha-2",
                 "https://www.iso.org/iso-3166-country-codes.html",
@@ -190,6 +202,16 @@ public class ConfigurationManager {
         updateStringPropertyIfOldValueEmptyAndNewValueNot(propDictionaryDescription(name), description);
         updateStringPropertyIfOldValueEmptyAndNewValueNot(propDictionarySpecUrl(name), specUrl);
         updateStringPropertyIfOldValueEmptyAndNewValueNot(propDictionarySyncUrl(name), syncUrl);
+    }
+
+    /**
+     * Nahradí uloženou hodnotu, jen když je rovna dřívější výchozí hodnotě (oprava výchozích adres v existujících
+     * config.properties, kam se výchozí hodnota uložila při prvním startu); hodnotu změněnou uživatelem nechá.
+     */
+    private void replaceStringPropertyIfEquals(String key, String oldDefault, String newDefault) {
+        if (oldDefault.equals(getStringOrDefault(key, null))) {
+            setString(key, newDefault);
+        }
     }
 
     private void updateStringPropertyIfOldValueEmptyAndNewValueNot(String key, String newValue) {

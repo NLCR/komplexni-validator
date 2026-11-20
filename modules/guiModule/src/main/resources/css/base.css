@@ -157,6 +157,84 @@
     -fx-text-fill: -kv-primary;
 }
 
+/* hlaska, kterou jde oznacit a zkopirovat (CopyableMessage): pole bez ramecku a pozadi, vypada jako text */
+.copyable-message-text,
+.copyable-message-text:focused {
+    -fx-background-color: transparent;
+    -fx-background-insets: 0;
+    -fx-border-color: transparent;
+    -fx-padding: 0;
+    -fx-text-fill: -kv-text;
+    -fx-highlight-fill: -kv-primary-tint;
+    -fx-highlight-text-fill: -kv-text;
+    -fx-focus-color: transparent;
+    -fx-faint-focus-color: transparent;
+}
+
+.copyable-message-text .content {
+    -fx-background-color: transparent;
+    -fx-padding: 4;
+}
+
+.copyable-message-text .scroll-pane,
+.copyable-message-text .scroll-pane .viewport {
+    -fx-background-color: transparent;
+}
+
+.copyable-message-text.error {
+    -fx-text-fill: -kv-error;
+}
+
+/* znacka odkazu ven z aplikace (sipka z ramecku) a ikona „Zobrazit ve slozce“; tvar je SVG cesta */
+.external-link-icon {
+    -fx-shape: "M2 3 H6 V4 H3 V10 H9 V7 H10 V11 H2 Z M7 1 H12 V6 H11 V2.7 L6.4 7.3 L5.7 6.6 L10.3 2 H7 Z";
+    -fx-background-color: -kv-link;
+    -fx-min-width: 10;
+    -fx-pref-width: 10;
+    -fx-max-width: 10;
+    -fx-min-height: 10;
+    -fx-pref-height: 10;
+    -fx-max-height: 10;
+}
+
+.menu-item .external-link-icon {
+    -fx-background-color: -kv-text-muted;
+}
+
+.menu-item:focused .external-link-icon {
+    -fx-background-color: white;
+}
+
+.folder-icon {
+    -fx-shape: "M1 3 C1 2.4 1.4 2 2 2 H5 L6.5 3.5 H11 C11.6 3.5 12 3.9 12 4.5 V10 C12 10.6 11.6 11 11 11 H2 C1.4 11 1 10.6 1 10 Z";
+    -fx-background-color: -kv-link;
+    -fx-min-width: 14;
+    -fx-pref-width: 14;
+    -fx-max-width: 14;
+    -fx-min-height: 12;
+    -fx-pref-height: 12;
+    -fx-max-height: 12;
+}
+
+.menu-item .folder-icon {
+    -fx-background-color: -kv-text-muted;
+}
+
+.menu-item:focused .folder-icon {
+    -fx-background-color: white;
+}
+
+/* odkaz jen s ikonou slozky vedle odkazu na soubor (Zobrazit ve slozce) */
+.reveal-link {
+    -fx-padding: 0 2 0 2;
+    -fx-border-color: transparent;
+    -fx-cursor: hand;
+}
+
+.reveal-link:hover .folder-icon {
+    -fx-background-color: -kv-primary;
+}
+
 /* ===== tabulky ===== */
 
 /* radek zahlavi tabulky slozene z vlastnich uzlu (HBox, GridPane) */
@@ -609,17 +687,16 @@
     -fx-padding: 10 16 0 16;
 }
 
-.notice-bar > .label {
+.notice-bar > .copyable-message {
     -fx-background-radius: 5;
-    -fx-padding: 8 12 8 12;
-    -fx-text-fill: -kv-text;
+    -fx-padding: 6 8 6 8;
 }
 
-.notice-bar.notice-stopped > .label {
+.notice-bar.notice-stopped > .copyable-message {
     -fx-background-color: -kv-warning-tint;
 }
 
-.notice-bar.notice-failed > .label {
+.notice-bar.notice-failed > .copyable-message {
     -fx-background-color: -kv-error-tint;
 }
 

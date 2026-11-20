@@ -82,4 +82,15 @@ public class SettingsTextsTest {
         assertEquals("zatím neaktualizováno", SettingsTexts.dictionaryLastSync("https://x/y.dict", ""));
         assertEquals("aktualizováno 07. 01. 2019", SettingsTexts.dictionaryLastSync("https://x/y.dict", "07. 01. 2019"));
     }
+
+    @Test
+    public void dictionaryLinkLabel() {
+        assertEquals("Seznam na GitHubu", SettingsTexts.dictionaryLinkLabel(
+                "https://github.com/NLCR/komplexni-validator/blob/master/modules/sharedModule/src/main/resources/nkp/pspValidator/shared/validatorConfig/dictionaries/siglaInstitutionCodes.dict"));
+        assertEquals("Seznam na GitHubu", SettingsTexts.dictionaryLinkLabel(" HTTPS://GitHub.com/NLCR/x "));
+        assertEquals("Specifikace", SettingsTexts.dictionaryLinkLabel("https://www.loc.gov/marc/relators/relaterm.html"));
+        //adresa, ktera github.com jen obsahuje, neni seznam na GitHubu
+        assertEquals("Specifikace", SettingsTexts.dictionaryLinkLabel("https://example.org/github.com/"));
+        assertEquals("Specifikace", SettingsTexts.dictionaryLinkLabel(null));
+    }
 }

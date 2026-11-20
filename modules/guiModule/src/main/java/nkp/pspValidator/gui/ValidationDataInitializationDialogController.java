@@ -43,7 +43,7 @@ public class ValidationDataInitializationDialogController extends DialogControll
     HBox progressBox;
 
     @FXML
-    Label errorLabel;
+    CopyableMessage errorLabel;
 
     @FXML
     Button btnSetFdmfsRootDir;

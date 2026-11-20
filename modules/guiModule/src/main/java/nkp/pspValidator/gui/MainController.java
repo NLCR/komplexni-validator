@@ -8,6 +8,7 @@ import javafx.collections.transformation.FilteredList;
 import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyCodeCombination;
@@ -31,6 +32,7 @@ import nkp.pspValidator.gui.newvalidation.DocumentTypes;
 import nkp.pspValidator.gui.newvalidation.ToolChecks;
 import nkp.pspValidator.gui.newvalidation.ValidationRequest;
 import nkp.pspValidator.gui.newvalidation.ValidationSource;
+import nkp.pspValidator.gui.newvalidation.VersionSettings;
 import nkp.pspValidator.gui.newvalidation.ZipUnpacker;
 import nkp.pspValidator.gui.results.ProblemCounts;
 import nkp.pspValidator.gui.results.ProblemFilter;
@@ -84,6 +86,13 @@ public class MainController extends AbstractController implements ValidationStat
 
     //TODO: nahradit konkretni wiki strankou
     private static final String URL_ONLINE_HELP = "https://github.com/NLCR/komplexni-validator/wiki";
+    /** Bublina „Validovat znovu“ (tlačítko a položka menu). */
+    static final String RERUN_TOOLTIP = "Spustí validaci stejného zdroje znovu, bez dialogu. Z dialogu Nová validace se "
+            + "použijí stejné volby (vynucené verze, vypnuté nástroje, výstupy, podrobnost logu), z Nastavení aktuální "
+            + "hodnoty (výchozí verze DMF, přeskakovaná pravidla, adresář protokolů).";
+    /** Bublina „Validovat znovu jen tento balík“ v tabulce skupiny. */
+    static final String RERUN_ONE_TOOLTIP = "Validuje znovu jen vybraný balík se stejnými volbami dialogu Nová validace "
+            + "jako skupina a s aktuálním Nastavením; výsledky ostatních balíků zůstanou.";
 
     private static final String[] STATUS_DOT_CLASSES = {"status-dot-ok", "status-dot-error", "status-dot-none"};
     /** manažer nástrojů, u kterého je zaregistrovaný posluchač dostupnosti pro prázdný stav */
@@ -116,6 +125,15 @@ public class MainController extends AbstractController implements ValidationStat
     MenuItem showLogTxtMenuItem;
     @FXML
     MenuItem showLogXmlMenuItem;
+
+    @FXML
+    MenuItem revealLogXmlMenuItem;
+
+    @FXML
+    MenuItem revealLogTxtMenuItem;
+
+    @FXML
+    MenuItem onlineHelpMenuItem;
 
     //horni lista
     @FXML
@@ -165,7 +183,7 @@ public class MainController extends AbstractController implements ValidationStat
     @FXML
     HBox noticeBar;
     @FXML
-    Label noticeText;
+    CopyableMessage noticeText;
 
     //prazdny stav a hlaska
     @FXML
@@ -181,7 +199,7 @@ public class MainController extends AbstractController implements ValidationStat
     @FXML
     Label messageTitle;
     @FXML
-    Label messageText;
+    CopyableMessage messageText;
 
     //vysledky
     @FXML
@@ -336,12 +354,33 @@ public class MainController extends AbstractController implements ValidationStat
         }
         initCopyActions();
         initGroupTable();
+        initLinks();
         cancelMenuItem.setAccelerator(cancelAccelerator());
         elapsedTimer = new Timeline(new KeyFrame(Duration.seconds(1), e -> refreshRunningHeader()));
         elapsedTimer.setCycleCount(Timeline.INDEFINITE);
         showCenter(emptyState);
         setGroupLayout(false);
         updateStatus("Připraveno", TotalState.IDLE);
+    }
+
+    /**
+     * Odkazy: „Zobrazit ve složce“ u protokolu a logu (horní lišta, lišta balíku skupiny, menu Zobrazit), značka webu
+     * u online nápovědy, bubliny „Validovat znovu“.
+     */
+    private void initLinks() {
+        Links.addRevealLinkAfter(xmlLogLink, this::shownXmlProtocol);
+        Links.addRevealLinkAfter(txtLogLink, this::shownTxtLog);
+        Links.addRevealLinkAfter(packageXmlLink, this::shownXmlProtocol);
+        Links.addRevealLinkAfter(packageTxtLink, this::shownTxtLog);
+        revealLogXmlMenuItem.setGraphic(Links.folderIcon());
+        revealLogTxtMenuItem.setGraphic(Links.folderIcon());
+        revealLogXmlMenuItem.disableProperty().bind(showLogXmlMenuItem.disableProperty());
+        revealLogTxtMenuItem.disableProperty().bind(showLogTxtMenuItem.disableProperty());
+        Links.markExternal(onlineHelpMenuItem);
+        rerunButton.setTooltip(new Tooltip(RERUN_TOOLTIP));
+        rerunButton.getTooltip().setWrapText(true);
+        rerunButton.getTooltip().setMaxWidth(420);
+        Links.installTooltip(rerunMenuItem, RERUN_TOOLTIP);
     }
 
     /**
@@ -656,6 +695,7 @@ public class MainController extends AbstractController implements ValidationStat
         showHeader(ResultHeader.failed(pspDir.getName(), dmf, foundSoFar()));
         if (validationStateManager == null) {
             messageTitle.setText("Validace skončila chybou");
+            messageText.setError(true);
             messageText.setText(message == null ? "Podrobnosti jsou ve výpisu aplikace." : message);
             showCenter(messageState);
         } else {
@@ -672,6 +712,7 @@ public class MainController extends AbstractController implements ValidationStat
         showHeader(ResultHeader.stopped(pspDir.getName(), dmf, foundSoFar()));
         if (validationStateManager == null) {
             messageTitle.setText("Validace zrušena");
+            messageText.setError(false);
             messageText.setText("Validace byla zrušena před kontrolou prvního pravidla.");
             showCenter(messageState);
         } else {
@@ -1298,6 +1339,10 @@ public class MainController extends AbstractController implements ValidationStat
         openXml.setOnAction(e -> openOutput(groupTable.getSelectionModel().getSelectedItem(), true));
         MenuItem openTxt = new MenuItem("Otevřít textový log");
         openTxt.setOnAction(e -> openOutput(groupTable.getSelectionModel().getSelectedItem(), false));
+        MenuItem revealXml = Links.revealMenuItem("Zobrazit protokol XML ve složce",
+                () -> output(groupTable.getSelectionModel().getSelectedItem(), true));
+        MenuItem revealTxt = Links.revealMenuItem("Zobrazit textový log ve složce",
+                () -> output(groupTable.getSelectionModel().getSelectedItem(), false));
         MenuItem copyPath = new MenuItem("Kopírovat cestu k balíku");
         copyPath.setOnAction(e -> {
             GroupItem item = groupTable.getSelectionModel().getSelectedItem();
@@ -1305,16 +1350,20 @@ public class MainController extends AbstractController implements ValidationStat
                 ProblemCell.copyToClipboard(item.getFile().getAbsolutePath());
             }
         });
-        ContextMenu menu = new ContextMenu(rerunOne, new SeparatorMenuItem(), openXml, openTxt, copyPath);
+        ContextMenu menu = new ContextMenu(rerunOne, new SeparatorMenuItem(), openXml, revealXml, openTxt, revealTxt,
+                new SeparatorMenuItem(), copyPath);
         menu.setOnShowing(e -> {
             GroupItem item = groupTable.getSelectionModel().getSelectedItem();
             boolean running = groupRun == null || groupRun.isRunning();
             rerunOne.setDisable(item == null || running);
             openXml.setDisable(item == null || !item.getStatus().isDone() || item.getXmlProtocol() == null);
             openTxt.setDisable(item == null || !item.getStatus().isDone() || item.getTxtLog() == null);
+            revealXml.setDisable(openXml.isDisable());
+            revealTxt.setDisable(openTxt.isDisable());
             copyPath.setDisable(item == null);
         });
         groupTable.setContextMenu(menu);
+        Links.installTooltip(rerunOne, RERUN_ONE_TOOLTIP);
     }
 
     /**
@@ -1394,6 +1443,7 @@ public class MainController extends AbstractController implements ValidationStat
         updateStatus(String.format("Chyba: %s", message), TotalState.ERROR);
         showHeader(ResultHeader.failed(groupDir.getName(), null, null));
         messageTitle.setText("Skupinu balíků nelze validovat");
+        messageText.setError(true);
         messageText.setText(message);
         showCenter(messageState);
     }
@@ -1697,6 +1747,9 @@ public class MainController extends AbstractController implements ValidationStat
             //stejne vypnute nastroje jako pri behu cele skupiny
             main.getValidationDataManager().getExternalUtilManager().setUtilsDisabled(currentRequest.getDisabledUtils());
         }
+        //preferovane verze z aktualniho Nastaveni, ostatni volby z behu skupiny (stejne jako „Validovat znovu“)
+        groupParams = new GroupParams(DmfParamsBuilder.withCurrentPreferred(groupParams.params, currentVersionSettings()),
+                groupParams.createTxtLog, groupParams.createXmlLog, groupParams.verbosity);
         followRunning = false;
         selectGroupItem(item);
         startGroupRun(Collections.singletonList(item), currentRequest);
@@ -1876,11 +1929,12 @@ public class MainController extends AbstractController implements ValidationStat
         return xml ? shownItem.getXmlProtocol() : shownItem.getTxtLog();
     }
 
+    private static File output(GroupItem item, boolean xml) {
+        return item == null ? null : xml ? item.getXmlProtocol() : item.getTxtLog();
+    }
+
     private void openOutput(GroupItem item, boolean xml) {
-        File file = item == null ? null : xml ? item.getXmlProtocol() : item.getTxtLog();
-        if (file != null) {
-            openUrl(file.toURI().toString());
-        }
+        openInBrowser(output(item, xml));
     }
 
     /** „Exportovat souhrn do CSV…“: všechny balíky skupiny v pořadí ve skupině. */
@@ -1934,8 +1988,13 @@ public class MainController extends AbstractController implements ValidationStat
 
     /** „Validovat znovu jen tento balík“ pro první balík s daným stavem; vrátí jeho název nebo null. */
     String rerunGroupPackage(PackageStatus status) {
+        return rerunGroupPackage(status, null);
+    }
+
+    /** Jako {@link #rerunGroupPackage(PackageStatus)}, s {@code name} jen balík tohoto jména (stav pak nerozhoduje). */
+    String rerunGroupPackage(PackageStatus status, String name) {
         for (GroupItem item : groupRun.getItems()) {
-            if (item.getStatus() == status) {
+            if (name != null ? name.equals(item.getName()) : item.getStatus() == status) {
                 rerunPackage(item);
                 return item.getName();
             }
@@ -1975,13 +2034,19 @@ public class MainController extends AbstractController implements ValidationStat
     }
 
     /**
-     * „Validovat znovu“ (issue #87): spustí validaci stejného zdroje se stejným požadavkem jako naposledy, bez dialogu.
+     * „Validovat znovu“ (issue #87): spustí validaci stejného zdroje s volbami dialogu z naposledy spuštěné validace
+     * a s aktuálním Nastavením (preferované verze, přeskakované sekce, adresář logů), bez dialogu.
      */
     public void rerunValidation(ActionEvent actionEvent) {
         if (!rerunState.canRerun()) {
             return;
         }
-        main.launchValidation(rerunState.requestForRerun());
+        main.launchValidation(rerunState.requestForRerun().forRerun(currentVersionSettings()));
+    }
+
+    /** Verze DMF podle aktuálního nastavení (pro „Validovat znovu“). */
+    private VersionSettings currentVersionSettings() {
+        return new VersionSettings(main.getConfigurationManager(), main.getValidationDataManager().getFdmfRegistry());
     }
 
     /** Pro SnapshotMode: seznam zobrazený v panelu problémů (kontrola, že se při událostech nepřestavuje). */
@@ -2039,6 +2104,13 @@ public class MainController extends AbstractController implements ValidationStat
                 + ", problemsShown=" + (problemList.getItems() == null ? 0 : problemList.getItems().size());
     }
 
+    /** Pro SnapshotMode: bublina nainstalovaná na položce menu „Validovat znovu“ (při zobrazeném menu), nebo null. */
+    String rerunMenuTooltip() {
+        Node node = rerunMenuItem.getStyleableNode();
+        Object tooltip = node == null ? null : node.getProperties().get("javafx.scene.control.Tooltip");
+        return tooltip instanceof Tooltip ? ((Tooltip) tooltip).getText() : null;
+    }
+
     /** Pro SnapshotMode: háček volaný z vlákna validace (smí ho pozastavit). */
     void setRunHook(RunHook hook) {
         this.runHook = hook;
@@ -2088,18 +2160,37 @@ public class MainController extends AbstractController implements ValidationStat
         }
     }
 
-    public void showLogTxt(ActionEvent actionEvent) {
-        File file = groupRun != null ? shownOutput(false) : logTxtFile;
+    /** Textový log zobrazené validace (u skupiny vybraného balíku), nebo null. */
+    private File shownTxtLog() {
+        return groupRun != null ? shownOutput(false) : logTxtFile;
+    }
+
+    /** Protokol XML zobrazené validace (u skupiny vybraného balíku), nebo null. */
+    File shownXmlProtocol() {
+        return groupRun != null ? shownOutput(true) : logXmlFile;
+    }
+
+    /** Otevře soubor v prohlížeči (výchozí chování odkazů na protokol a log). */
+    private void openInBrowser(File file) {
         if (file != null) {
             openUrl(file.toURI().toString());
         }
     }
 
+    public void showLogTxt(ActionEvent actionEvent) {
+        openInBrowser(shownTxtLog());
+    }
+
     public void showLogXml(ActionEvent actionEvent) {
-        File file = groupRun != null ? shownOutput(true) : logXmlFile;
-        if (file != null) {
-            openUrl(file.toURI().toString());
-        }
+        openInBrowser(shownXmlProtocol());
+    }
+
+    public void revealLogTxt(ActionEvent actionEvent) {
+        Links.reveal(shownTxtLog());
+    }
+
+    public void revealLogXml(ActionEvent actionEvent) {
+        Links.reveal(shownXmlProtocol());
     }
 
     private enum TotalState {

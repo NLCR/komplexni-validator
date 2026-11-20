@@ -30,7 +30,7 @@ public class DictionaryUpdateDialog extends AbstractDialog {
 
     @Override
     public int getHeight() {
-        return 340;
+        return 400;
     }
 
     @Override

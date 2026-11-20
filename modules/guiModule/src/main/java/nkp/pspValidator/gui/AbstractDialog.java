@@ -102,6 +102,7 @@ public abstract class AbstractDialog {
 
             FXMLLoader loader = new FXMLLoader(getFxmlResource());
             Parent root = (Parent) loader.load();
+            Links.markExternalLinks(root);
             Scene scene = new Scene(root);
             addBaseStylesheet(scene);
             stage.setScene(scene);

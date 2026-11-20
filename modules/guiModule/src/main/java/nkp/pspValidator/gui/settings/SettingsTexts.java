@@ -96,6 +96,17 @@ public final class SettingsTexts {
         return count + " " + Summaries.plural(count, "hodnota", "hodnoty", "hodnot");
     }
 
+    /**
+     * Popisek odkazu u slovníku: u slovníku vedeného na GitHubu (kódy institucí) vede odkaz na seznam, který tam lze
+     * upravovat, u ostatních na specifikaci číselníku.
+     */
+    public static String dictionaryLinkLabel(String specUrl) {
+        if (specUrl != null && specUrl.trim().toLowerCase(java.util.Locale.ROOT).startsWith("https://github.com/")) {
+            return "Seznam na GitHubu";
+        }
+        return "Specifikace";
+    }
+
     /** Datum poslední aktualizace slovníku, nebo null, když se slovník neaktualizoval (nebo aktualizovat nejde). */
     public static String dictionaryLastSync(String syncUrl, String syncDate) {
         if (syncUrl == null || syncUrl.trim().isEmpty()) {

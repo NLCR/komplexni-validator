@@ -3,6 +3,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import nkp.pspValidator.gui.DialogFrame?>
+<?import nkp.pspValidator.gui.CopyableMessage?>
 <!-- inicializace validačních dat při startu aplikace: konfigurace validátoru a externí nástroje; při chybě hláška a výběr adresáře -->
 <DialogFrame xmlns:fx="http://javafx.com/fxml"
              fx:controller="nkp.pspValidator.gui.ValidationDataInitializationDialogController"
@@ -19,7 +20,7 @@
             <Label styleClass="text-muted" text="Načítám konfiguraci…"/>
         </HBox>
 
-        <Label fx:id="errorLabel" styleClass="text-error" wrapText="true" minHeight="-Infinity" maxWidth="Infinity"/>
+        <CopyableMessage fx:id="errorLabel" error="true"/>
     </content>
 
     <footerButtons>

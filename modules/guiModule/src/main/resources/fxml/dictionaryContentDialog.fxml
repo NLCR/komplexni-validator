@@ -10,7 +10,7 @@
              title="Slovník"
 >
     <content>
-        <Hyperlink fx:id="specHyperlink" styleClass="link" onAction="#openHyperlink" wrapText="true"
+        <Hyperlink fx:id="specHyperlink" styleClass="link,external-link" onAction="#openHyperlink" wrapText="true"
                    text="https://www.loc.gov/marc/relators/relaterm.html"/>
         <ListView fx:id="listView" VBox.vgrow="ALWAYS"/>
     </content>

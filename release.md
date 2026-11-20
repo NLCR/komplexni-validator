@@ -132,6 +132,10 @@ podle tabulky výše. V `build.gradle` se před buildem nic ručně nemění. `v
 2. `git checkout <tag>`, `JAVA_HOME=$(/usr/libexec/java_home -v 17) ./gradlew clean :modules:guiModule:jpackage`,
    výstup `modules/guiModule/build/jpackage/KomplexniValidatorGUI-<tag>_macOS_AppleSilicon_installer.dmg`.
    Dmg není podepsané ani notarizované (případný `codesign` a notarizace by šly ručně po buildu).
+   `Info.plist` aplikace vzniká z `modules/guiModule/src/main/jpackage/macos/Info.plist` (šablona jpackage 17
+   s češtinou jako lokalizací aplikace, aby systémové dialogy výběru souboru a adresáře měly česká tlačítka); kontrola
+   `plutil -p KomplexniValidator.app/Contents/Info.plist` ukazuje `CFBundleDevelopmentRegion` = `cs`
+   a `CFBundleLocalizations` = `cs` vedle verze, identifikátoru a ikony.
 3. Kontrola bez instalace a bez zápisu do domovského adresáře: dmg připojit (`hdiutil attach -readonly`), aplikaci
    zkopírovat do dočasného adresáře a spustit z `/` v režimu snímků:
 
