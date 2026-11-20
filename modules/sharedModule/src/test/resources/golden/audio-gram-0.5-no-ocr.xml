@@ -374,8 +374,8 @@
             <rule description="Kromě souborů SECONDARY-METS nesmí adresář SECONDARY-METS-DIR obsahovat žádné další soubory." name="NO_EXTRA_FILES_IN_SECONDARY-METS-DIR">
                 <summary durationMs="[MS]">
                     <problems ERROR="2" total="2">
-                        <problem file="1234567890/amdsec/amd_mets_1234567890__0002.xml" level="ERROR">nalezen nečekaný soubor</problem>
                         <problem file="1234567890/amdsec/amd_mets_1234567890__0001.xml" level="ERROR">nalezen nečekaný soubor</problem>
+                        <problem file="1234567890/amdsec/amd_mets_1234567890__0002.xml" level="ERROR">nalezen nečekaný soubor</problem>
                     </problems>
                 </summary>
             </rule>

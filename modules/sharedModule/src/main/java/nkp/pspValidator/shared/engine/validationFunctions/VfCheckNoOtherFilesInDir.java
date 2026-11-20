@@ -109,6 +109,8 @@ public class VfCheckNoOtherFilesInDir extends ValidationFunction {
 
     private List<File> listAbsoluteFiles(File rootDir) {
         File[] files = rootDir.listFiles();
+        //poradi z listFiles() zavisi na systemu souboru (NTFS vraci serazene, APFS ne); protokol ma byt vsude stejny
+        java.util.Arrays.sort(files);
         List<File> result = new ArrayList<>(files.length);
         for (File file : files) {
             result.add(file.getAbsoluteFile());

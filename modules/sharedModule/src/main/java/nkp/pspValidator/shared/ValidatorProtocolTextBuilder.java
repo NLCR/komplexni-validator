@@ -83,8 +83,10 @@ public class ValidatorProtocolTextBuilder {
     public void logRuleError(Level errorElevel, String errorMessage, String referencedFile) {
         if (out != null) {
             String message = errorMessage;
+            //hlaska na Windows obsahuje cestu se zpetnymi lomitky, referencedFile ma vzdy lomitka
+            String comparable = message == null ? null : message.replace('\\', '/');
             if (referencedFile != null && !referencedFile.isEmpty()
-                    && (message == null || !(message.contains(referencedFile) || message.contains(pathInsidePackage(referencedFile))))) {
+                    && (comparable == null || !(comparable.contains(referencedFile) || comparable.contains(pathInsidePackage(referencedFile))))) {
                 message = message + " (soubor: " + referencedFile + ")";
             }
             out.println(String.format("\t%s: %s", errorElevel, message));

@@ -146,8 +146,8 @@ Pravidlo USER-COPY-AUDIO_FILES_ARE_NOT_DIRS: 0 problémů
 	Žádný soubor USER-COPY-AUDIO nesmí být adresář.
 Pravidlo NO_EXTRA_FILES_IN_SECONDARY-METS-DIR: 2 problémy (2x ERROR)
 	Kromě souborů SECONDARY-METS nesmí adresář SECONDARY-METS-DIR obsahovat žádné další soubory.
-	ERROR: nalezen nečekaný soubor: amd_mets_1234567890__0002.xml
 	ERROR: nalezen nečekaný soubor: amd_mets_1234567890__0001.xml
+	ERROR: nalezen nečekaný soubor: amd_mets_1234567890__0002.xml
 Pravidlo NO_EXTRA_FILES_IN_OCR-TEXT-DIR: 0 problémů
 	Kromě souborů OCR-TEXT nesmí adresář OCR-TEXT-DIR obsahovat žádné další soubory.
 Pravidlo NO_EXTRA_FILES_IN_OCR-ALTO-DIR: 0 problémů
