@@ -27,7 +27,7 @@ public class ProblemCell extends ListCell<ValidationProblem> {
     private final HBox content = new HBox();
     private final Label level = new Label();
     private final Label message = new Label();
-    private final Button copyButton = new Button("Kopírovat");
+    private final Button copyButton = new Button();
 
     public ProblemCell(ListView<ValidationProblem> list) {
         setPrefWidth(0);
@@ -40,9 +40,13 @@ public class ProblemCell extends ListCell<ValidationProblem> {
         message.setMinHeight(Region.USE_PREF_SIZE);
         //sirka zpravy podle seznamu (bez stitku, tlacitka, mezer, odsazeni a posuvniku), jinak se text nezalomi
         message.prefWidthProperty().bind(list.widthProperty().subtract(level.widthProperty())
-                .subtract(copyButton.widthProperty()).subtract(70));
+                .subtract(copyButton.widthProperty()).subtract(62));
         message.setMaxWidth(Double.MAX_VALUE);
         HBox.setHgrow(message, Priority.ALWAYS);
+        Region copyIcon = new Region();
+        copyIcon.getStyleClass().add("copy-icon");
+        copyButton.setGraphic(copyIcon);
+        copyButton.setAccessibleText("Kopírovat problém do schránky");
         copyButton.getStyleClass().addAll("button-secondary", "copy-button");
         copyButton.setMinWidth(Region.USE_PREF_SIZE);
         copyButton.setTooltip(new Tooltip("Kopírovat problém do schránky"));

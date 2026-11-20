@@ -485,6 +485,12 @@
     -fx-background-radius: 5 5 0 0;
 }
 
+/* radky siroke tabulky nastroju (dialog pri startu): nizsi, aby se devet nastroju a odkaz na navod vesly do okna
+   i na Windows, kde zahlavi okna ubira z vysky vic nez na macOS */
+.tools-row-wide {
+    -fx-padding: 5 12 5 12;
+}
+
 .list-row .button-secondary {
     -fx-padding: 3 12 3 12;
     -fx-font-size: 12px;
@@ -905,10 +911,25 @@
 }
 
 /* tlacitko Kopirovat se ukaze pri najeti mysi nebo u vybraneho radku; ma vlastni sloupec vpravo, text neprekryva */
+/* tlacitko jen s ikonou (dva listy pres sebe), aby textu problemu nebralo sirku */
 .problem-row .copy-button {
-    -fx-padding: 2 10 2 10;
-    -fx-font-size: 11px;
+    -fx-padding: 4 6 4 6;
     -fx-opacity: 0;
+}
+
+.copy-icon {
+    -fx-shape: "M4 1 H11 V9 H10 V2 H4 Z M1 4 H8 V12 H1 Z M2 5 V11 H7 V5 Z";
+    -fx-background-color: -kv-text-muted;
+    -fx-min-width: 11;
+    -fx-pref-width: 11;
+    -fx-max-width: 11;
+    -fx-min-height: 12;
+    -fx-pref-height: 12;
+    -fx-max-height: 12;
+}
+
+.copy-button:hover .copy-icon {
+    -fx-background-color: -kv-primary;
 }
 
 .list-cell:hover .problem-row .copy-button,

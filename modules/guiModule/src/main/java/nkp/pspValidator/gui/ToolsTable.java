@@ -322,6 +322,7 @@ public class ToolsTable extends VBox {
                 fixWidth(nameBox, COMPACT_NAME_WIDTH);
                 box.getChildren().addAll(nameBox, status, actions);
             } else {
+                box.getStyleClass().add("tools-row-wide");
                 fixWidth(name, NAME_WIDTH);
                 fixWidth(description, DESCRIPTION_WIDTH);
                 box.getChildren().addAll(name, description, status, actions);
