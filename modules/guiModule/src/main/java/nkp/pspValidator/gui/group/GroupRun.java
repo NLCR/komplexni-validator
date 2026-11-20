@@ -22,6 +22,7 @@ import java.util.List;
 public class GroupRun {
 
     private final File groupDir;
+    private final File source;
     private final List<GroupItem> items;
     private final List<String> ignored;
 
@@ -37,6 +38,7 @@ public class GroupRun {
 
     public GroupRun(GroupPackages.Listing listing) {
         this.groupDir = listing.getGroupDir();
+        this.source = listing.getSource();
         List<GroupItem> list = new ArrayList<>();
         for (GroupPackages.Entry entry : listing.getPackages()) {
             list.add(new GroupItem(list.size(), entry));
@@ -45,13 +47,38 @@ public class GroupRun {
         this.ignored = listing.getIgnored();
     }
 
+    /** Adresář, ve kterém se balíky validují (u skupiny v ZIPu v rozbaleném archivu). */
     public File getGroupDir() {
         return groupDir;
     }
 
-    /** Název adresáře skupiny (nadpis horní lišty). */
+    /** Co uživatel vybral: adresář skupiny, nebo soubor ZIP se skupinou (nadpis, stavový řádek, bublina). */
+    public File getSource() {
+        return source;
+    }
+
+    /** Skupina ze souboru ZIP. */
+    public boolean isFromZip() {
+        return !source.equals(groupDir);
+    }
+
+    /** Název adresáře skupiny, nebo souboru ZIP se skupinou (nadpis horní lišty). */
     public String getTitle() {
-        return groupDir.getName();
+        return source.getName();
+    }
+
+    /** Bublina u nadpisu: „Adresář skupiny: …“, „Soubor ZIP se skupinou: …“. */
+    public String sourceDescription() {
+        return (isFromZip() ? "Soubor ZIP se skupinou: " : "Adresář skupiny: ") + source.getAbsolutePath();
+    }
+
+    /** Výchozí název souboru exportu CSV: „davka-souhrn.csv“ (u ZIPu bez přípony .zip). */
+    public String csvFileName() {
+        String name = source.getName();
+        if (isFromZip() && GroupPackages.isZipName(name)) {
+            name = name.substring(0, name.length() - ".zip".length());
+        }
+        return name + "-souhrn.csv";
     }
 
     public List<GroupItem> getItems() {
@@ -304,8 +331,8 @@ public class GroupRun {
     /** Řádek stavového řádku po skončení běhu. */
     public String statusText() {
         if (canceled) {
-            return "Validace skupiny " + groupDir.getAbsolutePath() + " zrušena.";
+            return "Validace skupiny " + source.getAbsolutePath() + " zrušena.";
         }
-        return "Validace skupiny " + groupDir.getAbsolutePath() + " hotova.";
+        return "Validace skupiny " + source.getAbsolutePath() + " hotova.";
     }
 }

@@ -7,10 +7,14 @@ import javafx.fxml.FXML;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.stage.DirectoryChooser;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import javafx.stage.WindowEvent;
 import nkp.pspValidator.gui.newvalidation.DocumentTypes;
 import nkp.pspValidator.gui.newvalidation.ExternalTools;
@@ -21,18 +25,22 @@ import nkp.pspValidator.gui.settings.*;
 import nkp.pspValidator.gui.skipping.SkippedManagerImpl;
 import nkp.pspValidator.shared.Dmf;
 import nkp.pspValidator.shared.engine.RulesSection;
+import nkp.pspValidator.shared.externalUtils.ExternalUtil;
 import nkp.pspValidator.shared.metadataProfile.DictionaryManager;
 
 import java.io.File;
 import java.util.*;
+import java.util.function.Consumer;
 
 /**
  * Kontroler okna Nastavení: seznam záložek vlevo, obsah vybrané záložky vpravo (vytváří se při prvním zobrazení).
  * Jen propojuje ovládací prvky s logikou v balíčku {@code nkp.pspValidator.gui.settings}.
  * <p>
- * Ukládání: výchozí verze DMF, přeskakovaná pravidla a adresáře a protokoly se drží v konceptu a uloží se až tlačítkem
- * Uložit (Zrušit, Esc i zavření okna křížkem je zahodí; stejně jako dřív tlačítko Uložit v dialogu přeskakování).
- * Cesty k externím nástrojům a aktualizace slovníku se projeví hned, stejně jako v dřívějších dialozích.
+ * Ukládání: všechna nastavení (výchozí verze DMF, cesty k externím nástrojům, přeskakovaná pravidla, adresáře
+ * a protokoly) se drží v konceptu a uloží se až tlačítkem Uložit. Zavření okna s neuloženými změnami (Zrušit, Esc,
+ * křížek) se zeptá „Uložit změny?“ ({@link CloseDecision}). Nová cesta k nástroji platí pro kontrolu hned
+ * ({@link ToolPathsDraft}), při zahození změn se vrátí uložená a dotčené nástroje se zkontrolují znovu. Akce se
+ * provedou hned a nejsou neuloženou změnou: kontrola nástrojů, aktualizace slovníku (vlastní dialog), otevření adresáře.
  */
 public class SettingsDialogController extends DialogController {
 
@@ -60,6 +68,10 @@ public class SettingsDialogController extends DialogController {
     /** null, dokud se sekce fDMF nenačtou (načítají se v pracovním vlákně při prvním zobrazení záložky) */
     private SkippingDraft skippingDraft;
     private ToolsTable toolsTable;
+    /** cesty k nástrojům (neuložené platí jen pro kontrolu, do nastavení se zapíší tlačítkem Uložit) */
+    private ToolPathsDraft toolPaths;
+    /** otevřený dotaz „Uložit změny?“, jinak null */
+    private Stage savePrompt;
     /** výběry výchozích verzí v záložce (po jejím prvním zobrazení) */
     private final Map<Dmf.Type, ChoiceBox<DefaultVersions.Choice>> versionBoxes = new EnumMap<>(Dmf.Type.class);
     private volatile boolean closed = false;
@@ -71,8 +83,11 @@ public class SettingsDialogController extends DialogController {
 
     @Override
     public EventHandler<WindowEvent> getOnCloseEventHandler() {
-        //krizek: neulozene zmeny se zahodi (jako Zrusit)
-        return event -> closed = true;
+        //krizek: jako Zrusit (s neulozenymi zmenami dotaz)
+        return event -> {
+            event.consume();
+            requestClose();
+        };
     }
 
     @Override
@@ -81,6 +96,7 @@ public class SettingsDialogController extends DialogController {
         versionSettings = new VersionSettings(getConfigurationManager(), main.getValidationDataManager().getFdmfRegistry());
         defaultVersions = new DefaultVersions(versionSettings);
         dirsDraft = new DirsDraft(getConfigurationManager());
+        toolPaths = ToolPathsDraft.deferred(getConfigurationManager(), main.getValidationDataManager().getExternalUtilManager()::setPath);
         for (SettingsTab tab : SettingsTab.values()) {
             Label item = new Label(tab.getLabel());
             item.getStyleClass().add("settings-nav-item");
@@ -143,10 +159,14 @@ public class SettingsDialogController extends DialogController {
 
     // ===== patička =====
 
-    private void updateFooter() {
+    /** Části nastavení s neuloženými změnami (v pořadí záložek). */
+    private List<SettingsTexts.Part> changedParts() {
         List<SettingsTexts.Part> changed = new ArrayList<>();
         if (defaultVersions.isChanged()) {
             changed.add(SettingsTexts.Part.VERSIONS);
+        }
+        if (toolPaths.isChanged()) {
+            changed.add(SettingsTexts.Part.TOOLS);
         }
         if (skippingDraft != null && skippingDraft.isChanged()) {
             changed.add(SettingsTexts.Part.SKIPPING);
@@ -154,6 +174,11 @@ public class SettingsDialogController extends DialogController {
         if (dirsDraft.isChanged()) {
             changed.add(SettingsTexts.Part.DIRS);
         }
+        return changed;
+    }
+
+    private void updateFooter() {
+        List<SettingsTexts.Part> changed = changedParts();
         String note = SettingsTexts.unsavedNote(changed);
         container.setFooterNote(note == null ? "" : note);
         saveButton.setDisable(changed.isEmpty());
@@ -161,14 +186,54 @@ public class SettingsDialogController extends DialogController {
         cancelButton.setText(changed.isEmpty() ? "Zavřít" : "Zrušit");
     }
 
+    /** Tlačítko Zrušit/Zavřít a Esc: jako křížek. */
     public void cancel(ActionEvent actionEvent) {
-        closed = true;
-        stage.close();
+        requestClose();
     }
 
     public void save(ActionEvent actionEvent) {
+        saveChanges();
+        closeWindow();
+    }
+
+    /** Zavření okna: bez neuložených změn hned, jinak dotaz „Uložit změny?“. */
+    private void requestClose() {
+        if (savePrompt != null) {
+            return;
+        }
+        apply(CloseDecision.onCloseRequest(!changedParts().isEmpty()));
+    }
+
+    private void apply(CloseDecision.Action action) {
+        switch (action) {
+            case CLOSE:
+                closeWindow();
+                break;
+            case ASK:
+                savePrompt = openSavePrompt(choice -> {
+                    savePrompt = null;
+                    apply(CloseDecision.afterPrompt(choice));
+                });
+                break;
+            case SAVE_AND_CLOSE:
+                saveChanges();
+                closeWindow();
+                break;
+            case DISCARD_AND_CLOSE:
+                discardChanges();
+                closeWindow();
+                break;
+            case STAY:
+                break;
+        }
+    }
+
+    private void saveChanges() {
         if (defaultVersions.isChanged()) {
             defaultVersions.save();
+        }
+        if (toolPaths.isChanged()) {
+            toolPaths.save();
         }
         if (skippingDraft != null && skippingDraft.isChanged()) {
             skippingDraft.save();
@@ -176,9 +241,81 @@ public class SettingsDialogController extends DialogController {
         if (dirsDraft.isChanged()) {
             dirsDraft.save();
         }
+    }
+
+    /**
+     * Zahodí neuložené změny. Koncepty verzí, přeskakování a adresářů se jen zapomenou, cesty k nástrojům se vrátí
+     * manažeru nástrojů na uložené a dotčené nástroje se zkontrolují znovu (výsledek dřívější kontroly s neuloženou
+     * cestou se zahodí, viz {@code ToolChecks}).
+     */
+    private void discardChanges() {
+        Set<ExternalUtil> reverted = toolPaths.discard();
+        if (!reverted.isEmpty() && toolsTable != null) {
+            toolsTable.recheck(reverted);
+        }
+    }
+
+    private void closeWindow() {
         closed = true;
         stage.close();
     }
+
+    /**
+     * Dotaz „Uložit změny?“ nad oknem Nastavení (modální, neblokuje volajícího). Zpět, Esc i křížek dotazu nechají
+     * Nastavení otevřené.
+     *
+     * @param onChoice volba (null = dotaz zavřen bez volby)
+     */
+    private Stage openSavePrompt(Consumer<CloseDecision.Choice> onChoice) {
+        Stage prompt = new Stage(StageStyle.UTILITY);
+        prompt.initOwner(stage);
+        prompt.initModality(Modality.APPLICATION_MODAL);
+        prompt.setTitle("Nastavení");
+        prompt.setResizable(false);
+        CloseDecision.Choice[] chosen = new CloseDecision.Choice[1];
+
+        DialogFrame frame = new DialogFrame();
+        frame.setTitle("Uložit změny?");
+        frame.setSubtitle(SettingsTexts.unsavedNote(changedParts()));
+        frame.getContent().add(wrapped("Neukládat: změny se zahodí a okno se zavře. Zpět: Nastavení zůstane otevřené.", "text-muted"));
+        Button back = new Button("Zpět");
+        back.getStyleClass().add("button-secondary");
+        back.setMinWidth(90);
+        back.setCancelButton(true);
+        Button discard = new Button("Neukládat");
+        discard.getStyleClass().add("button-secondary");
+        discard.setMinWidth(Region.USE_PREF_SIZE);
+        Button saveNow = new Button("Uložit");
+        saveNow.getStyleClass().add("button-primary");
+        saveNow.setMinWidth(90);
+        saveNow.setDefaultButton(true);
+        back.setOnAction(e -> {
+            chosen[0] = CloseDecision.Choice.BACK;
+            prompt.close();
+        });
+        discard.setOnAction(e -> {
+            chosen[0] = CloseDecision.Choice.DISCARD;
+            prompt.close();
+        });
+        saveNow.setOnAction(e -> {
+            chosen[0] = CloseDecision.Choice.SAVE;
+            prompt.close();
+        });
+        frame.getFooterButtons().addAll(back, discard, saveNow);
+        //volba se vyhodnoti az po zavreni dotazu (tlacitkem i krizkem)
+        prompt.setOnHidden(e -> onChoice.accept(chosen[0]));
+
+        Scene scene = new Scene(frame, SAVE_PROMPT_WIDTH, SAVE_PROMPT_HEIGHT);
+        AbstractDialog.addBaseStylesheet(scene);
+        prompt.setScene(scene);
+        prompt.show();
+        saveNow.requestFocus();
+        return prompt;
+    }
+
+    /** velikost dotazu „Uložit změny?“ */
+    private static final double SAVE_PROMPT_WIDTH = 520;
+    private static final double SAVE_PROMPT_HEIGHT = 220;
 
     // ===== výchozí verze DMF =====
 
@@ -271,7 +408,7 @@ public class SettingsDialogController extends DialogController {
     private Node buildToolsPage() {
         VBox content = new VBox();
         content.getChildren().add(wrapped("Nástroje jsou volitelné. Bez nástroje se kontroly souborů, které ho potřebují, "
-                + "přeskočí a protokol to uvede. Cesta k nástroji se uloží hned po výběru.", "text-muted"));
+                + "přeskočí a protokol to uvede. Nastavená cesta k nástroji se hned zkontroluje, uloží se tlačítkem Uložit.", "text-muted"));
         toolsTable = new ToolsTable();
         Label summary = new Label();
         summary.getStyleClass().add("text-muted");
@@ -288,8 +425,12 @@ public class SettingsDialogController extends DialogController {
                 //jako dialog nastroju: pri startu se pak dialog uz neukaze
                 getConfigurationManager().setBoolean(ConfigurationManager.PROP_EXTERNAL_TOOLS_CHECK_SHOWN, true);
             }
+            //nastavena nebo zrusena cesta je neulozena zmena
+            if (!closed) {
+                updateFooter();
+            }
         };
-        toolsTable.init(getConfigurationManager(), main.getValidationDataManager().getExternalUtilManager(),
+        toolsTable.init(getConfigurationManager(), main.getValidationDataManager().getExternalUtilManager(), toolPaths,
                 () -> stage, this::openUrl, onChange, true, "nastaveni-nastroje");
         Region spacer = new Region();
         HBox.setHgrow(spacer, Priority.ALWAYS);
@@ -496,7 +637,8 @@ public class SettingsDialogController extends DialogController {
     private Node buildDictionariesPage() {
         VBox content = new VBox();
         content.getChildren().add(wrapped("Slovníky hodnot, podle kterých validace kontroluje kódy v metadatech. "
-                + "Slovník s adresou pro aktualizaci lze stáhnout znovu.", "text-muted"));
+                + "Slovník s adresou pro aktualizaci lze stáhnout znovu; aktualizace proběhne hned ve vlastním okně, "
+                + "tlačítka Uložit se netýká.", "text-muted"));
         VBox list = new VBox();
         list.getStyleClass().add("list-box");
         content.getChildren().add(list);
@@ -746,6 +888,37 @@ public class SettingsDialogController extends DialogController {
             }
         }
         return false;
+    }
+
+    /** Nastaví cestu k nástroji v záložce Externí nástroje jako uživatel (záložka se zobrazí). */
+    void setToolPathForSnapshot(ExternalUtil util, File dir) {
+        showTab(SettingsTab.TOOLS);
+        toolsTable.setPathForSnapshot(util, dir);
+    }
+
+    /** Požadavek na zavření okna jako křížek; vrátí otevřený dotaz „Uložit změny?“, nebo null (okno se zavřelo). */
+    Stage requestCloseForSnapshot() {
+        requestClose();
+        return savePrompt;
+    }
+
+    /** Tabulka nástrojů (záložka se zobrazí). */
+    ToolsTable toolsTableForSnapshot() {
+        showTab(SettingsTab.TOOLS);
+        return toolsTable;
+    }
+
+    /** Stav nástrojů v záložce Externí nástroje (pro výpis), null, dokud se záložka neukázala. */
+    String describeToolsForSnapshot() {
+        if (toolsTable == null) {
+            return null;
+        }
+        StringBuilder text = new StringBuilder();
+        for (Map.Entry<ExternalUtil, nkp.pspValidator.gui.newvalidation.ToolStatus> entry : toolsTable.getStatuses().entrySet()) {
+            text.append(text.length() == 0 ? "" : ", ").append(entry.getKey()).append('=').append(entry.getValue().getState())
+                    .append(" (cesta ").append(toolPaths.getPath(entry.getKey())).append(')');
+        }
+        return text.toString();
     }
 
     /** Uloží koncept jako tlačítko Uložit (snímky ověřují propsání výchozí verze do validace). */

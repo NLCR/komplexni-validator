@@ -11,6 +11,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.Tooltip;
 import nkp.pspValidator.gui.group.GroupColumns;
+import nkp.pspValidator.gui.group.GroupDetailTexts;
 import nkp.pspValidator.gui.group.GroupItem;
 import nkp.pspValidator.gui.group.PackageStatus;
 
@@ -102,8 +103,7 @@ final class GroupTable {
                     case NAME:
                         setText(column.text(item));
                         setGraphic(null);
-                        setTooltip(new Tooltip((item.isZip() ? "Soubor ZIP: " : "Adresář: ") + item.getFile().getAbsolutePath()
-                                + (item.getMessage() == null ? "" : "\n" + item.getMessage())));
+                        setTooltip(new Tooltip(GroupDetailTexts.nameTooltip(item)));
                         break;
                     case TYPE:
                         setText(column.text(item));

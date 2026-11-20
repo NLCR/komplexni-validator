@@ -145,4 +145,15 @@ public class ResultHeaderTest {
         assertEquals("badge-warning", one.getWarningsStyleClass());
         assertEquals("badge-info", one.getInfosStyleClass());
     }
+
+    @Test
+    public void unpackingGroup() {
+        ResultHeader header = ResultHeader.unpackingGroup("davka.zip", 72_000);
+        assertEquals(ResultHeader.Phase.RUNNING, header.getPhase());
+        assertTrue(header.isRunning());
+        assertEquals("davka.zip", header.getTitle());
+        assertEquals("Skupina v souboru ZIP, rozbaluji, běží 1:12", header.getSubtitle());
+        assertNull(header.getVerdictText());
+        assertFalse(header.isCountsVisible());
+    }
 }

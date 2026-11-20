@@ -69,6 +69,14 @@ public class ToolsOverviewTest {
         assertEquals(ToolsOverview.State.SOME_UNAVAILABLE, ToolsOverview.state(statuses));
     }
 
+    /** Dialog nástrojů při startu: Pokračovat i zavření okna jen po kontrole, i když některý nástroj chybí. */
+    @Test
+    public void canContinueOnlyAfterCheck() {
+        assertFalse(ToolsOverview.canContinue(ToolsOverview.State.CHECKING));
+        assertTrue(ToolsOverview.canContinue(ToolsOverview.State.SOME_UNAVAILABLE));
+        assertTrue(ToolsOverview.canContinue(ToolsOverview.State.ALL_AVAILABLE));
+    }
+
     // ----- souhrn -----
 
     @Test

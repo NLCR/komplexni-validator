@@ -50,6 +50,14 @@ public final class ToolsOverview {
         return someUnavailable ? State.SOME_UNAVAILABLE : State.ALL_AVAILABLE;
     }
 
+    /**
+     * Jde dialog Externí nástroje při startu aplikace opustit (tlačítko Pokračovat, zavření okna)? Během kontroly ne,
+     * po ní ano, i když některý nástroj chybí (nástroje jsou volitelné, aplikace pokračuje do hlavního okna).
+     */
+    public static boolean canContinue(State state) {
+        return state != State.CHECKING;
+    }
+
     /** Souhrn do patičky, např. „5 z 9 nástrojů dostupných“, během kontroly „Kontroluji nástroje, hotovo 4 z 9…“. */
     public static String summary(Map<ExternalUtil, ToolStatus> statuses) {
         int all = ExternalUtil.values().length;

@@ -28,7 +28,10 @@ public class ValidationRequest {
 
         void unzipAndRunPspZipValidation(File pspZip, DmfDetector.Params params, boolean createTxtLog, boolean createXmlLog, int verbosity);
 
-        /** Validace skupiny balíků v adresáři (balíky se hledají až při spuštění, „Validovat znovu“ čte adresář znovu). */
+        /**
+         * Validace skupiny balíků v adresáři nebo v souboru ZIP (balíky se hledají až při spuštění, „Validovat znovu“
+         * čte adresář znovu, ZIP znovu rozbalí).
+         */
         void runGroupValidation(File groupDir, DmfDetector.Params params, boolean createTxtLog, boolean createXmlLog, int verbosity);
     }
 

@@ -7,6 +7,8 @@ import javafx.scene.control.Button;
 import javafx.stage.WindowEvent;
 import nkp.pspValidator.gui.newvalidation.ExternalTools;
 import nkp.pspValidator.gui.newvalidation.ToolsOverview;
+import nkp.pspValidator.gui.settings.ToolPathsDraft;
+import nkp.pspValidator.shared.externalUtils.ExternalUtilManager;
 
 
 /**
@@ -25,36 +27,23 @@ public class ExternalUtilsCheckDialogController extends DialogController {
     Button mainButton;
 
     private boolean closeWhenFinished;
-    private boolean exitAppOnCloseWithError;
 
     /**
-     * @param closeWhenFinished       zavřít dialog sám, jakmile jsou všechny nástroje dostupné
-     * @param mainButtonText          text hlavního tlačítka („Pokračovat“, „Zavřít“)
-     * @param exitAppOnCloseWithError zavření okna křížkem, když některý nástroj chybí, ukončí aplikaci (jen dialog
-     *                                při startu aplikace)
+     * @param closeWhenFinished zavřít dialog sám, jakmile jsou všechny nástroje dostupné
+     * @param mainButtonText    text hlavního tlačítka („Pokračovat“)
      */
-    public void setData(boolean closeWhenFinished, String mainButtonText, boolean exitAppOnCloseWithError) {
+    public void setData(boolean closeWhenFinished, String mainButtonText) {
         this.closeWhenFinished = closeWhenFinished;
-        this.exitAppOnCloseWithError = exitAppOnCloseWithError;
         mainButton.setText(mainButtonText);
     }
 
+    /** Zavření okna (křížek) je totéž jako „Pokračovat“; během kontroly nástrojů okno zavřít nejde (ani tlačítkem). */
     @Override
     public EventHandler<WindowEvent> getOnCloseEventHandler() {
         return event -> {
-            switch (toolsTable.getState()) {
-                case CHECKING:
-                    event.consume();
-                    break;
-                case SOME_UNAVAILABLE:
-                    if (exitAppOnCloseWithError) {
-                        closeApp();
-                    }
-                    break;
-                case ALL_AVAILABLE:
-                    event.consume();
-                    continueInApp(null);
-                    break;
+            event.consume();
+            if (ToolsOverview.canContinue(toolsTable.getState())) {
+                continueInApp(null);
             }
         };
     }
@@ -62,7 +51,9 @@ public class ExternalUtilsCheckDialogController extends DialogController {
     @Override
     public void startNow() {
         container.getStyleClass().add("dialog-scrolling");
-        toolsTable.init(getConfigurationManager(), main.getValidationDataManager().getExternalUtilManager(),
+        ExternalUtilManager utilManager = main.getValidationDataManager().getExternalUtilManager();
+        //dialog nema tlacitko Ulozit: cesta k nastroji se uklada hned po vyberu
+        toolsTable.init(getConfigurationManager(), utilManager, ToolPathsDraft.immediate(getConfigurationManager(), utilManager::setPath),
                 () -> stage, this::openUrl, this::updateOverall, false, "externi-nastroje");
     }
 
@@ -81,24 +72,16 @@ public class ExternalUtilsCheckDialogController extends DialogController {
     /** Souhrn v patičce a tlačítka podle celkového stavu (jako dosud: během kontroly nejde pokračovat). */
     private void updateOverall() {
         container.setFooterNote(ToolsOverview.summary(toolsTable.getStatuses()));
-        switch (toolsTable.getState()) {
-            case CHECKING:
-                mainButton.setDisable(true);
-                recheckButton.setDisable(true);
-                break;
-            case ALL_AVAILABLE:
-                getConfigurationManager().setBoolean(ConfigurationManager.PROP_EXTERNAL_TOOLS_CHECK_SHOWN, true);
-                mainButton.setDisable(false);
-                recheckButton.setDisable(false);
-                mainButton.requestFocus();
-                if (closeWhenFinished) {
-                    continueInApp(null);
-                }
-                break;
-            case SOME_UNAVAILABLE:
-                mainButton.setDisable(false);
-                recheckButton.setDisable(false);
-                break;
+        ToolsOverview.State state = toolsTable.getState();
+        boolean canContinue = ToolsOverview.canContinue(state);
+        mainButton.setDisable(!canContinue);
+        recheckButton.setDisable(!canContinue);
+        if (state == ToolsOverview.State.ALL_AVAILABLE) {
+            getConfigurationManager().setBoolean(ConfigurationManager.PROP_EXTERNAL_TOOLS_CHECK_SHOWN, true);
+            mainButton.requestFocus();
+            if (closeWhenFinished) {
+                continueInApp(null);
+            }
         }
     }
 }

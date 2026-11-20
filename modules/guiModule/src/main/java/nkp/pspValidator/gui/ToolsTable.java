@@ -17,10 +17,12 @@ import nkp.pspValidator.gui.newvalidation.ExternalTools;
 import nkp.pspValidator.gui.newvalidation.ToolChecks;
 import nkp.pspValidator.gui.newvalidation.ToolStatus;
 import nkp.pspValidator.gui.newvalidation.ToolsOverview;
+import nkp.pspValidator.gui.settings.ToolPathsDraft;
 import nkp.pspValidator.shared.externalUtils.ExternalUtil;
 import nkp.pspValidator.shared.externalUtils.ExternalUtilManager;
 
 import java.io.File;
+import java.util.Collection;
 import java.util.EnumMap;
 import java.util.Map;
 import java.util.function.Consumer;
@@ -30,8 +32,9 @@ import java.util.function.Supplier;
  * Tabulka externích nástrojů (jeden řádek na nástroj z {@link ExternalUtil}): název, k čemu slouží, stav, nastavení
  * a zrušení adresáře nástroje, u nedostupného nástroje odkaz na podrobnosti. Používá ji dialog Externí nástroje (při
  * startu aplikace) i záložka Externí nástroje v Nastavení. Kontrola nástrojů běží v pracovních vláknech
- * ({@link ToolChecks}), texty a rozhodnutí jsou v {@link ToolsOverview}. Cesta k nástroji se ukládá hned po výběru
- * (stejné klíče {@link ConfigurationManager} a {@link ExternalUtilManager#setPath} jako dřív).
+ * ({@link ToolChecks}), texty a rozhodnutí jsou v {@link ToolsOverview}. Nastavená nebo zrušená cesta k nástroji platí
+ * pro kontrolu hned; do nastavení se zapíše podle {@link ToolPathsDraft} hned (dialog při startu aplikace), nebo až
+ * tlačítkem Uložit (okno Nastavení).
  * <p>
  * V úzkém rozložení ({@code compact}) je popis nástroje pod jeho názvem, ne ve vlastním sloupci.
  */
@@ -46,7 +49,7 @@ public class ToolsTable extends VBox {
     private static final double DETAILS_HEIGHT = 400;
 
     private ConfigurationManager config;
-    private ExternalUtilManager utilManager;
+    private ToolPathsDraft paths;
     private Supplier<Window> owner;
     private Consumer<String> urlOpener;
     private Runnable onChange;
@@ -61,15 +64,16 @@ public class ToolsTable extends VBox {
     /**
      * Sestaví řádky a spustí kontrolu všech nástrojů.
      *
+     * @param paths      cesty k nástrojům (kdy se zapisují do nastavení, viz {@link ToolPathsDraft})
      * @param owner      okno pro výběr adresáře a okno s podrobnostmi
      * @param urlOpener  otevření odkazu (návod k instalaci)
      * @param onChange   po každé změně stavu některého nástroje (souhrn, tlačítka okna), ve vlákně UI
      * @param threadName základ názvu pracovních vláken kontroly
      */
-    public void init(ConfigurationManager config, ExternalUtilManager utilManager, Supplier<Window> owner,
+    public void init(ConfigurationManager config, ExternalUtilManager utilManager, ToolPathsDraft paths, Supplier<Window> owner,
                      Consumer<String> urlOpener, Runnable onChange, boolean compact, String threadName) {
         this.config = config;
-        this.utilManager = utilManager;
+        this.paths = paths;
         this.owner = owner;
         this.urlOpener = urlOpener;
         this.onChange = onChange;
@@ -86,6 +90,16 @@ public class ToolsTable extends VBox {
     public void checkAll() {
         toolChecks.checkAll();
         refreshAll();
+    }
+
+    /**
+     * Zkontroluje znovu dané nástroje (po vrácení cesty na uloženou hodnotu); výsledky dřívějších, dosud nedokončených
+     * kontrol těchto nástrojů se zahodí.
+     */
+    public void recheck(Collection<ExternalUtil> utils) {
+        for (ExternalUtil util : utils) {
+            recheck(util);
+        }
     }
 
     /** Stavy nástrojů (pohled jen pro čtení, mění se s výsledky kontrol). */
@@ -151,12 +165,12 @@ public class ToolsTable extends VBox {
 
     // ----- cesta k nastroji -----
 
+    /** Platná cesta k nástroji (v Nastavení i neuložená). */
     private File configuredDir(ExternalUtil util) {
-        return config.getFileOrNull(ExternalTools.configKey(util));
+        return paths.getPath(util);
     }
 
     private void selectPath(ExternalUtil util) {
-        String property = ExternalTools.configKey(util);
         File defaultDir = null;
         switch (config.getPlatform().getOperatingSystem()) {
             case WINDOWS:
@@ -165,7 +179,7 @@ public class ToolsTable extends VBox {
         }
         DirectoryChooser chooser = new DirectoryChooser();
         chooser.setTitle(String.format("Vyberte adresář se spustitelnými soubory %s", util.getUserFriendlyName()));
-        File currentDir = config.getFileOrNull(property);
+        File currentDir = paths.getPath(util);
         if (currentDir != null && currentDir.exists()) {
             chooser.setInitialDirectory(currentDir);
         } else if (defaultDir != null && defaultDir.exists()) {
@@ -173,15 +187,19 @@ public class ToolsTable extends VBox {
         }
         File selectedDirectory = chooser.showDialog(owner.get());
         if (selectedDirectory != null) {
-            config.setFile(property, selectedDirectory);
-            utilManager.setPath(util, selectedDirectory);
+            paths.setPath(util, selectedDirectory);
             recheck(util);
         }
     }
 
+    /** Pro SnapshotMode: nastaví cestu k nástroji jako výběr adresáře (null = Zrušit cestu). */
+    void setPathForSnapshot(ExternalUtil util, File dir) {
+        paths.setPath(util, dir);
+        recheck(util);
+    }
+
     private void removePath(ExternalUtil util) {
-        config.setFile(ExternalTools.configKey(util), null);
-        utilManager.setPath(util, null);
+        paths.setPath(util, null);
         recheck(util);
     }
 

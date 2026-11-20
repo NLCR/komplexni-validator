@@ -62,6 +62,11 @@ public final class GroupItem {
         return entry.isZip();
     }
 
+    /** Cesta pro uživatele (tabulka, CSV, stavový řádek), viz {@link GroupPackages.Entry#getDisplayPath()}. */
+    public String getDisplayPath() {
+        return entry.getDisplayPath();
+    }
+
     public PackageStatus getStatus() {
         return status;
     }

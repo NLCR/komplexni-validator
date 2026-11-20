@@ -21,13 +21,19 @@ public class Recognition {
     private final String versionInPackage;
     private final String versionProblem;
     private final String message;
+    private final boolean deferred;
 
     private Recognition(Status status, Dmf.Type type, String versionInPackage, String versionProblem, String message) {
+        this(status, type, versionInPackage, versionProblem, message, false);
+    }
+
+    private Recognition(Status status, Dmf.Type type, String versionInPackage, String versionProblem, String message, boolean deferred) {
         this.status = status;
         this.type = type;
         this.versionInPackage = versionInPackage;
         this.versionProblem = versionProblem;
         this.message = message;
+        this.deferred = deferred;
     }
 
     public static Recognition invalidPath(String message) {
@@ -36,6 +42,14 @@ public class Recognition {
 
     public static Recognition notRecognized(String message) {
         return new Recognition(Status.NOT_RECOGNIZED, null, null, null, message);
+    }
+
+    /**
+     * Balík se v dialogu nerozpoznává, rozpozná se až při validaci (ZIP uvnitř skupiny v souboru ZIP: čtení ZIPu
+     * v ZIPu by znamenalo ho celý vybalit). Stav je {@link Status#NOT_RECOGNIZED}, ale nejde o chybu.
+     */
+    public static Recognition deferred(String message) {
+        return new Recognition(Status.NOT_RECOGNIZED, null, null, null, message, true);
     }
 
     /**
@@ -67,6 +81,11 @@ public class Recognition {
     /** Proč nešlo verzi přečíst (validace pak bez vynucené verze skončí chybou), jinak null. */
     public String getVersionProblem() {
         return versionProblem;
+    }
+
+    /** Rozpozná se až při validaci ({@link #deferred(String)}). */
+    public boolean isDeferred() {
+        return deferred;
     }
 
     /** Chyba pro stavy INVALID_PATH a NOT_RECOGNIZED. */

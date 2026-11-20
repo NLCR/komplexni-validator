@@ -34,10 +34,13 @@ public final class GroupSummaries {
         return toRecognize <= 0 ? "Hledám balíky…" : "Rozpoznávám balíky… " + done + " z " + toRecognize;
     }
 
-    /** „Nalezen 1 balík“, „Nalezeny 3 balíky“, „Nalezeno 12 balíků“, „Adresář neobsahuje žádný balík“. */
+    /**
+     * „Nalezen 1 balík“, „Nalezeny 3 balíky“, „Nalezeno 12 balíků“, „Adresář neobsahuje žádný balík“; u skupiny
+     * v souboru ZIP s chybou „Soubor ZIP nelze použít jako skupinu“.
+     */
     public static String title(GroupRecognition group) {
         if (!group.isOk()) {
-            return "Adresář nelze přečíst";
+            return group.isZip() ? "Soubor ZIP nelze použít jako skupinu" : "Adresář nelze přečíst";
         }
         int n = group.getPackageCount();
         if (n == 0) {
@@ -52,8 +55,9 @@ public final class GroupSummaries {
     }
 
     /**
-     * Rozpad rozpoznaných balíků: „9× Monografie 2.2, 2× Periodika 2.1, 1 nerozpoznán“. Pořadí podle počtu (sestupně),
-     * při shodě podle typu a verze; nerozpoznané balíky jsou vždy na konci. Null, když není co ukázat.
+     * Rozpad rozpoznaných balíků: „9× Monografie 2.2, 2× Periodika 2.1, 1 nerozpoznán, 2 se rozpoznají při validaci“.
+     * Pořadí podle počtu (sestupně), při shodě podle typu a verze; nerozpoznané balíky a balíky, které se rozpoznají až
+     * při validaci (ZIP ve skupině v souboru ZIP), jsou vždy na konci. Null, když není co ukázat.
      */
     public static String breakdown(GroupRecognition group, VersionSettings versions) {
         if (!group.isOk() || group.getRecognitions().isEmpty()) {
@@ -62,7 +66,12 @@ public final class GroupSummaries {
         Map<Dmf, Integer> byDmf = new LinkedHashMap<>();
         Map<Dmf.Type, Integer> withoutVersion = new LinkedHashMap<>();
         int notRecognized = 0;
+        int deferred = 0;
         for (Recognition recognition : group.getRecognitions()) {
+            if (recognition.isDeferred()) {
+                deferred++;
+                continue;
+            }
             if (!recognition.isRecognized()) {
                 notRecognized++;
                 continue;
@@ -96,6 +105,10 @@ public final class GroupSummaries {
             text.append(text.length() == 0 ? "" : ", ").append(notRecognized).append(' ')
                     .append(Summaries.plural(notRecognized, "nerozpoznán", "nerozpoznány", "nerozpoznáno"));
         }
+        if (deferred > 0) {
+            text.append(text.length() == 0 ? "" : ", ").append(deferred).append(' ')
+                    .append(Summaries.plural(deferred, "se rozpozná", "se rozpoznají", "se rozpozná")).append(" při validaci");
+        }
         return text.toString();
     }
 
@@ -109,6 +122,9 @@ public final class GroupSummaries {
             text.append("Balíkem je každý podadresář a soubor ZIP přímo v adresáři.");
         } else {
             text.append("Každý balík se validuje podle svého typu a verze, postupně jeden po druhém.");
+        }
+        if (group.isZip()) {
+            text.append(" Soubor ZIP se před validací celý rozbalí do dočasného adresáře.");
         }
         int ignored = group.getIgnored().size();
         if (ignored > 0) {

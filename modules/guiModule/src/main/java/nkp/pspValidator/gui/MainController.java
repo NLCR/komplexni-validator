@@ -26,10 +26,12 @@ import nkp.pspValidator.gui.group.GroupDetailTexts;
 import nkp.pspValidator.gui.group.GroupItem;
 import nkp.pspValidator.gui.group.GroupPackages;
 import nkp.pspValidator.gui.group.GroupRun;
+import nkp.pspValidator.gui.group.GroupZipLayout;
 import nkp.pspValidator.gui.group.PackageStatus;
 import nkp.pspValidator.gui.newvalidation.DmfParamsBuilder;
 import nkp.pspValidator.gui.newvalidation.DocumentTypes;
 import nkp.pspValidator.gui.newvalidation.ToolChecks;
+import nkp.pspValidator.gui.newvalidation.UnpackProgress;
 import nkp.pspValidator.gui.newvalidation.ValidationRequest;
 import nkp.pspValidator.gui.newvalidation.ValidationSource;
 import nkp.pspValidator.gui.newvalidation.VersionSettings;
@@ -59,6 +61,7 @@ import java.io.PrintStream;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.util.*;
+import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.logging.Logger;
 
 /**
@@ -70,7 +73,10 @@ import java.util.logging.Logger;
  * <p>
  * Skupina balíků: tabulka balíků nad stejnými třemi panely, které ukazují podrobné výsledky balíku vybraného
  * v tabulce; balíky se validují postupně v jednom vlákně, každý stejně jako jeden balík (ZIP se rozbalí přes
- * {@link ZipUnpacker} bez dialogu). Stav běhu a texty jsou v {@link GroupRun} (bez JavaFX), podrobné výsledky balíků
+ * {@link ZipUnpacker} bez dialogu). Skupina v jednom souboru ZIP se nejdřív celá rozbalí do nového pracovního adresáře
+ * (průběh v panelu průběhu, zrušit jde i rozbalování) a pak se validuje jako skupina v adresáři; balíky určí
+ * {@link GroupZipLayout}. Pracovní adresář zůstává, dokud se skupina zobrazuje („Validovat znovu jen tento balík“), smaže
+ * se při další validaci, jinak při ukončení aplikace. Stav běhu a texty jsou v {@link GroupRun} (bez JavaFX), podrobné výsledky balíků
  * ({@link ValidationStateManager}) se drží v {@link DetailRetention} s rozpočtem na počet problémů. Panely ukazují
  * {@code shownManager}; události jádra mění {@code validationStateManager} běžícího balíku (u jednoho balíku je to totéž).
  * <p>
@@ -321,6 +327,13 @@ public class MainController extends AbstractController implements ValidationStat
     private boolean selectingProgrammatically = false;
     /** balík, typ a výstupy běžícího balíku pro události jádra ve vlákně validace */
     private volatile GroupPackageContext groupContext;
+    /** skupina ze souboru ZIP během rozbalování (jinak null) */
+    private File groupUnpackZip;
+    /** poslední hlášený průběh rozbalování skupiny (null před prvním hlášením) */
+    private volatile UnpackProgress groupUnpackProgress;
+    private final AtomicBoolean groupUnpackRefreshScheduled = new AtomicBoolean();
+    /** pracovní adresář s rozbalenou skupinou ze ZIPu (smaže se před další validací, jinak při ukončení aplikace) */
+    private File groupWorkDir;
 
     @Override
     public void start(Stage primaryStage) throws Exception {
@@ -557,6 +570,7 @@ public class MainController extends AbstractController implements ValidationStat
     public void runPspDirValidation(File pspDir, DmfDetector.Params dmfDetectorParams, boolean createTxtLog, boolean createXmlLog,
                                     int verbosity, ValidationRequest request) {
         leaveGroupMode();
+        discardGroupWorkDir();
         startRun(pspDir, request, createTxtLog ? buildTxtLogFile(pspDir) : null, createXmlLog ? buildXmlLogFile(pspDir) : null);
 
         validationTask = new Task<Void>() {
@@ -659,6 +673,7 @@ public class MainController extends AbstractController implements ValidationStat
      */
     void beginSyntheticRun(File fakePspDir) {
         leaveGroupMode();
+        discardGroupWorkDir();
         startRun(fakePspDir, null, null, null);
     }
 
@@ -765,6 +780,10 @@ public class MainController extends AbstractController implements ValidationStat
         if (totalState != TotalState.RUNNING || pspDir == null) {
             return;
         }
+        if (groupUnpackZip != null) {
+            showHeader(ResultHeader.unpackingGroup(groupUnpackZip.getName(), System.currentTimeMillis() - runStartedAt));
+            return;
+        }
         showHeader(ResultHeader.running(pspDir.getName(), dmf, System.currentTimeMillis() - runStartedAt, foundSoFar()));
     }
 
@@ -774,7 +793,14 @@ public class MainController extends AbstractController implements ValidationStat
         String counts;
         String detail;
         double fraction;
-        if (groupRun != null) {
+        if (groupUnpackZip != null) {
+            UnpackProgress unpack = groupUnpackProgress;
+            title = UnpackProgress.groupTitle(unpack);
+            counts = null;
+            detail = unpack == null ? "Čtu seznam položek souboru ZIP " + groupUnpackZip.getName() + "."
+                    : "Soubor ZIP " + groupUnpackZip.getName() + " se rozbaluje do dočasného adresáře, potom se balíky validují jeden po druhém.";
+            fraction = UnpackProgress.groupFraction(unpack);
+        } else if (groupRun != null) {
             title = groupRun.progressTitle();
             counts = groupRun.progressCounts();
             if (groupRun.getCurrent() == null) {
@@ -859,7 +885,7 @@ public class MainController extends AbstractController implements ValidationStat
     /** Bublina u názvu balíku: odkud se validovalo. */
     private String sourceDescription() {
         if (currentRequest != null && currentRequest.getSource() == ValidationSource.GROUP) {
-            return "Adresář skupiny: " + pspDir.getAbsolutePath();
+            return (pspDir.isFile() ? "Soubor ZIP se skupinou: " : "Adresář skupiny: ") + pspDir.getAbsolutePath();
         }
         if (currentRequest != null && currentRequest.getSource() == ValidationSource.ZIP) {
             return "Soubor ZIP: " + currentRequest.getFile().getAbsolutePath() + "\nRozbaleno do: " + pspDir.getAbsolutePath();
@@ -1347,7 +1373,7 @@ public class MainController extends AbstractController implements ValidationStat
         copyPath.setOnAction(e -> {
             GroupItem item = groupTable.getSelectionModel().getSelectedItem();
             if (item != null) {
-                ProblemCell.copyToClipboard(item.getFile().getAbsolutePath());
+                ProblemCell.copyToClipboard(item.getDisplayPath());
             }
         });
         ContextMenu menu = new ContextMenu(rerunOne, new SeparatorMenuItem(), openXml, revealXml, openTxt, revealTxt,
@@ -1406,11 +1432,17 @@ public class MainController extends AbstractController implements ValidationStat
 
     /**
      * Spustí validaci skupiny: přečte adresář (balíky jsou jeho podadresáře a soubory .zip) a validuje balíky postupně.
+     * Soubor ZIP se skupinou se nejdřív rozbalí ({@link #runGroupZipValidation}).
      *
      * @param request požadavek, ze kterého validace vznikla (pro „Validovat znovu“), nebo null
      */
     public void runGroupValidation(File groupDir, DmfDetector.Params dmfDetectorParams, boolean createTxtLog, boolean createXmlLog,
                                    int verbosity, ValidationRequest request) {
+        discardGroupWorkDir();
+        if (groupDir.isFile()) {
+            runGroupZipValidation(groupDir, new GroupParams(dmfDetectorParams, createTxtLog, createXmlLog, verbosity), request);
+            return;
+        }
         GroupPackages.Listing listing;
         try {
             listing = GroupPackages.list(groupDir);
@@ -1427,7 +1459,164 @@ public class MainController extends AbstractController implements ValidationStat
         followRunning = true;
         groupTableModel.setItems(groupRun.getItems());
         setGroupLayout(true);
-        startGroupRun(groupRun.getItems(), request);
+        startGroupRun(groupRun.getItems(), request, true);
+    }
+
+    /**
+     * Skupina v souboru ZIP: ve vlákně validace určí balíky ze seznamu položek ({@link GroupZipLayout}; chyba se ukáže
+     * dřív, než se cokoli rozbalí), archiv celý rozbalí do nového pracovního adresáře s průběhem v panelu průběhu a pak
+     * pokračuje jako skupina v adresáři. Zrušení během rozbalování rozbalování přeruší a pracovní adresář smaže.
+     */
+    private void runGroupZipValidation(File zip, GroupParams params, ValidationRequest request) {
+        leaveGroupMode();
+        initBeforeValidation();
+        pspDir = zip;
+        currentRequest = request;
+        logTxtFile = null;
+        logXmlFile = null;
+        cancelValidation = false;
+        validationTaskEntered = false;
+        pendingOutcome = null;
+        groupUnpackZip = zip;
+        groupUnpackProgress = null;
+        rerunState.validationStarted(request);
+        startedValidations++;
+        runStartedAt = System.currentTimeMillis();
+        updateStatus(String.format("Rozbaluji skupinu %s.", zip.getAbsolutePath()), TotalState.RUNNING);
+        refreshRunningHeader();
+        refreshProgress();
+        setVisibleManaged(progressPane, true);
+        elapsedTimer.playFromStart();
+
+        validationTask = new Task<Void>() {
+            @Override
+            protected Void call() {
+                validationTaskEntered = true;
+                try {
+                    GroupZipLayout layout;
+                    try {
+                        layout = GroupZipLayout.read(zip);
+                    } catch (IOException e) {
+                        String message = GroupZipLayout.readErrorMessage(zip, e);
+                        Platform.runLater(() -> groupUnpackFailed(zip, message));
+                        return null;
+                    }
+                    if (!layout.isOk()) {
+                        Platform.runLater(() -> groupUnpackFailed(zip, layout.errorMessage()));
+                        return null;
+                    }
+                    RunHook hook = runHook;
+                    ZipUnpacker.Result unpacked = new ZipUnpacker().unpack(zip, () -> cancelValidation, null, progress -> {
+                        publishUnpackProgress(progress);
+                        if (hook != null) {
+                            hook.unpacking(progress);
+                        }
+                    });
+                    if (unpacked == null || cancelValidation) {
+                        if (unpacked != null) {
+                            ZipUnpacker.deleteWorkDir(unpacked.getContainerDir());
+                        }
+                        Platform.runLater(() -> groupUnpackCanceled(zip));
+                        return null;
+                    }
+                    GroupPackages.Listing listing = GroupPackages.inZip(zip, layout, unpacked.getExtractDir());
+                    Platform.runLater(() -> groupUnpacked(zip, unpacked.getContainerDir(), listing, params, request));
+                } catch (ZipUnpacker.UnpackException e) {
+                    Platform.runLater(() -> groupUnpackFailed(zip, e.getMessage()));
+                } catch (RuntimeException e) {
+                    e.printStackTrace();
+                    String message = e.getMessage() == null ? e.toString() : e.getMessage();
+                    Platform.runLater(() -> groupUnpackFailed(zip, message));
+                }
+                return null;
+            }
+        };
+        new Thread(validationTask).start();
+    }
+
+    /** Průběh rozbalování z vlákna validace: panel průběhu se obnoví nejvýš jednou za snímek UI. */
+    private void publishUnpackProgress(UnpackProgress progress) {
+        groupUnpackProgress = progress;
+        if (groupUnpackRefreshScheduled.compareAndSet(false, true)) {
+            Platform.runLater(() -> {
+                groupUnpackRefreshScheduled.set(false);
+                if (groupUnpackZip != null) {
+                    refreshProgress();
+                }
+            });
+        }
+    }
+
+    /** Skupina ze ZIPu je rozbalená: dál jako skupina v adresáři (stejný běh, „Validovat znovu“ se nepočítá znovu). */
+    private void groupUnpacked(File zip, File workDir, GroupPackages.Listing listing, GroupParams params, ValidationRequest request) {
+        if (groupUnpackZip != zip) {
+            ZipUnpacker.deleteWorkDir(workDir);
+            return;
+        }
+        if (cancelValidation) {
+            //zruseno po rozbaleni, pred startem validace baliku
+            ZipUnpacker.deleteWorkDir(workDir);
+            groupUnpackCanceled(zip);
+            return;
+        }
+        groupUnpackZip = null;
+        groupUnpackProgress = null;
+        groupWorkDir = workDir;
+        groupRun = new GroupRun(listing);
+        groupParams = params;
+        groupDetails.clear();
+        shownItem = null;
+        runningItem = null;
+        followRunning = true;
+        groupTableModel.setItems(groupRun.getItems());
+        setGroupLayout(true);
+        startGroupRun(groupRun.getItems(), request, false);
+    }
+
+    /** Rozbalování skupiny zrušeno: pracovní adresář je smazaný ({@link ZipUnpacker}), okno ve stavu „zrušeno“. */
+    private void groupUnpackCanceled(File zip) {
+        if (groupUnpackZip != zip) {
+            return;
+        }
+        groupUnpackZip = null;
+        groupUnpackProgress = null;
+        endRunUi();
+        updateStatus(String.format("Validace skupiny %s zrušena.", zip.getAbsolutePath()), TotalState.STOPPED);
+        showHeader(ResultHeader.stopped(zip.getName(), null, null));
+        messageTitle.setText("Validace zrušena");
+        messageText.setError(false);
+        messageText.setText("Validace skupiny byla zrušena během rozbalování souboru ZIP. Rozbalené soubory byly smazány.");
+        showCenter(messageState);
+    }
+
+    /** Soubor ZIP se skupinou nejde použít nebo rozbalit (nic nezůstalo na disku). */
+    private void groupUnpackFailed(File zip, String message) {
+        if (groupUnpackZip != zip) {
+            return;
+        }
+        groupUnpackZip = null;
+        groupUnpackProgress = null;
+        endRunUi();
+        updateStatus(String.format("Chyba: %s", message), TotalState.ERROR);
+        showHeader(ResultHeader.failed(zip.getName(), null, null));
+        messageTitle.setText("Skupinu balíků nelze validovat");
+        messageText.setError(true);
+        messageText.setText(message);
+        showCenter(messageState);
+    }
+
+    /**
+     * Smaže pracovní adresář skupiny ze ZIPu z předchozí validace (spouští se nová validace; „Validovat znovu jen tento
+     * balík“ ho ještě potřebuje, proto se maže až tady). Maže se v pozadí, velká skupina by jinak zdržela okno.
+     */
+    private void discardGroupWorkDir() {
+        File dir = groupWorkDir;
+        groupWorkDir = null;
+        if (dir != null) {
+            Thread thread = new Thread(() -> ZipUnpacker.deleteWorkDir(dir), "kv-mazani-rozbalene-skupiny");
+            thread.setDaemon(false);
+            thread.start();
+        }
     }
 
     /** Adresář skupiny nejde přečíst: chyba jako u jednoho balíku, „Validovat znovu“ zůstane dostupné. */
@@ -1448,8 +1637,12 @@ public class MainController extends AbstractController implements ValidationStat
         showCenter(messageState);
     }
 
-    /** Okno do stavu „běží“ a start vlákna, které balíky běhu validuje jeden po druhém. */
-    private void startGroupRun(List<GroupItem> toRun, ValidationRequest request) {
+    /**
+     * Okno do stavu „běží“ a start vlákna, které balíky běhu validuje jeden po druhém.
+     *
+     * @param newRun nový běh (false: pokračování běhu, který začal rozbalením skupiny ze ZIPu)
+     */
+    private void startGroupRun(List<GroupItem> toRun, ValidationRequest request, boolean newRun) {
         initBeforeValidation();
         long now = System.currentTimeMillis();
         currentRequest = request;
@@ -1465,13 +1658,15 @@ public class MainController extends AbstractController implements ValidationStat
             groupDetails.remove(item);
         }
         groupRun.runStarted(toRun, now);
-        rerunState.validationStarted(request);
-        startedValidations++;
+        if (newRun) {
+            rerunState.validationStarted(request);
+            startedValidations++;
+        }
         runStartedAt = now;
         for (GroupItem item : toRun) {
             groupItemChanged(item);
         }
-        updateStatus(String.format("Validuji skupinu %s.", groupRun.getGroupDir().getAbsolutePath()), TotalState.RUNNING);
+        updateStatus(String.format("Validuji skupinu %s.", groupRun.getSource().getAbsolutePath()), TotalState.RUNNING);
         showGroupHeader();
         refreshProgress();
         setVisibleManaged(progressPane, true);
@@ -1614,7 +1809,7 @@ public class MainController extends AbstractController implements ValidationStat
     }
 
     private String groupPackageStatus(GroupItem item) {
-        return String.format("Validuji balík %s (%d z %d).", item.getFile().getAbsolutePath(), groupRun.currentPosition(),
+        return String.format("Validuji balík %s (%d z %d).", item.getDisplayPath(), groupRun.currentPosition(),
                 groupRun.getSession().size());
     }
 
@@ -1752,7 +1947,7 @@ public class MainController extends AbstractController implements ValidationStat
                 groupParams.createTxtLog, groupParams.createXmlLog, groupParams.verbosity);
         followRunning = false;
         selectGroupItem(item);
-        startGroupRun(Collections.singletonList(item), currentRequest);
+        startGroupRun(Collections.singletonList(item), currentRequest, true);
     }
 
     // ----- zobrazeni skupiny -----
@@ -1867,7 +2062,7 @@ public class MainController extends AbstractController implements ValidationStat
         header.setVisible(true);
         header.setManaged(true);
         headerTitle.setText(groupRun.getTitle());
-        String source = "Adresář skupiny: " + groupRun.getGroupDir().getAbsolutePath();
+        String source = groupRun.sourceDescription();
         if (headerTitle.getTooltip() == null || !source.equals(headerTitle.getTooltip().getText())) {
             headerTitle.setTooltip(new Tooltip(source));
         }
@@ -1945,8 +2140,8 @@ public class MainController extends AbstractController implements ValidationStat
         FileChooser chooser = new FileChooser();
         chooser.setTitle("Exportovat souhrn skupiny do CSV");
         chooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Soubory CSV", "*.csv"));
-        chooser.setInitialFileName(groupRun.getTitle() + "-souhrn.csv");
-        File parent = groupRun.getGroupDir().getParentFile();
+        chooser.setInitialFileName(groupRun.csvFileName());
+        File parent = groupRun.getSource().getParentFile();
         if (parent != null && parent.isDirectory()) {
             chooser.setInitialDirectory(parent);
         }
@@ -2020,6 +2215,14 @@ public class MainController extends AbstractController implements ValidationStat
 
     public void stopValidation(ActionEvent actionEvent) {
         cancelValidation = true;
+        if (groupUnpackZip != null) {
+            //rozbalovani skupiny: vlakno se neprerusuje, rozbalovani se zastavi pres cancelValidation a adresar smaze
+            updateStatus("Ruším rozbalování skupiny…", TotalState.RUNNING);
+            if (validationTask != null && !validationTaskEntered && validationTask.cancel()) {
+                groupUnpackCanceled(groupUnpackZip);
+            }
+            return;
+        }
         if (groupRun != null) {
             stopGroupValidation();
             return;
@@ -2085,6 +2288,7 @@ public class MainController extends AbstractController implements ValidationStat
     /** Popis zobrazeného výsledku pro výpis SnapshotMode. */
     String describeShownResult() {
         return "state=" + totalState
+                + (groupWorkDir != null ? ", groupWorkDir=" + groupWorkDir.getName() + (groupWorkDir.exists() ? " (exists)" : " (missing)") : "")
                 + (groupRun != null ? ", group=[" + headerSubtitle.getText() + " | badges " + groupBadgesText()
                 + " | table " + groupTableModel.shownCount() + "/" + groupTableModel.totalCount()
                 + (groupTableModel.isOnlyInvalid() ? " only invalid" : "")
@@ -2127,6 +2331,10 @@ public class MainController extends AbstractController implements ValidationStat
 
         /** Skupina balíků: začíná validace balíku (pořadí v běhu od 1). */
         default void packageStarted(int position, int total) {
+        }
+
+        /** Skupina v souboru ZIP: průběh rozbalování (smí vlákno pozastavit). */
+        default void unpacking(UnpackProgress progress) {
         }
     }
 

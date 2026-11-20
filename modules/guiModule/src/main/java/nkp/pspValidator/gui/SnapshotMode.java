@@ -124,6 +124,25 @@ import java.util.function.Supplier;
  * tohoto názvu ({@code group-rerun-one.png}), krok
  * {@code groupCancel} spustí skupinu znovu a v polovině ji zruší ({@code group-canceled.png}).
  * <p>
+ * Skupina v souboru ZIP ({@code -Dkv.snapshotSource=group}, {@code -Dkv.snapshotValidate} je soubor ZIP): kroky
+ * {@code group}, {@code groupRerunOne} a {@code groupCancel} fungují stejně (ZIP se nejdřív rozbalí). Krok
+ * {@code groupUnpack} pozastaví rozbalování v polovině souborů ({@code group-unpacking.png}, panel průběhu
+ * „Rozbaluji skupinu: N z M souborů“), pak podle {@code -Dkv.snapshotProgressEnd} buď rozbalování zruší
+ * ({@code cancel}, {@code group-unpack-canceled.png}), nebo nechá skupinu doběhnout ({@code finish},
+ * {@code group-zip-results.png}, export CSV jako krok {@code group}); vypíše pracovní adresáře {@code kv-rozbaleno-*}
+ * v adresáři pro dočasné soubory před a po. Krok {@code newValidationGroupMenu} otevře dialog Nová validace se zdrojem
+ * Skupina balíků a vyfotí nabídku tlačítka „Vybrat…“ ({@code new-validation-group-menu.png}).
+ * <p>
+ * Dialog Externí nástroje při startu: krok {@code externalUtilsClose} otevře dialog, počká na kontrolu nástrojů
+ * ({@code external-utils-before-close.png}), pošle oknu požadavek na zavření jako křížek a vyfotí hlavní okno
+ * ({@code external-utils-after-close.png}); vypíše, zda se dialog zavřel a aplikace běží dál.
+ * <p>
+ * Nastavení, neuložená cesta k nástroji: krok {@code settingsToolDraft} v záložce Externí nástroje nastaví cestu podle
+ * {@code -Dkv.snapshotToolPath=<NÁSTROJ>:<adresář|none>} (výchozí {@code IMAGE_MAGICK:<java.io.tmpdir>}, none = Zrušit
+ * cestu) jako uživatel ({@code settings-tool-unsaved.png}), zavře okno jako křížek ({@code settings-close-prompt.png},
+ * dotaz „Uložit změny?“) a zvolí {@code -Dkv.snapshotPromptChoice=discard|save|back} (výchozí discard). Pak vypíše
+ * uloženou hodnotu v nastavení a stav nástrojů a Nastavení otevře znovu ({@code settings-tool-after-<volba>.png}).
+ * <p>
  * Přes gradle: {@code ./gradlew :modules:guiModule:runSnapshots -PsnapshotDir=/tmp/snap [-PsnapshotConfigFile=/tmp/snap-config.properties]}.
  */
 public class SnapshotMode {
@@ -144,6 +163,8 @@ public class SnapshotMode {
     public static final String PROP_DEFAULT_VERSION = "kv.snapshotDefaultVersion";
     public static final String PROP_RERUN_PREFERRED = "kv.snapshotRerunPreferred";
     public static final String PROP_RERUN_PACKAGE = "kv.snapshotRerunPackage";
+    public static final String PROP_TOOL_PATH = "kv.snapshotToolPath";
+    public static final String PROP_PROMPT_CHOICE = "kv.snapshotPromptChoice";
     private static final long VALIDATION_TIMEOUT_MS = 10 * 60 * 1000;
     public static final String ALL_DIALOGS = "main,mainMenu,settingsMenu,newValidation,settings,externalUtils,toolDetails,"
             + "about,dictionaryContent,dictionaryUpdate,init,initError,unzip,unzipError";
@@ -168,7 +189,7 @@ public class SnapshotMode {
         String psp = System.getProperty(PROP_PSP);
         NewValidationDialog.Expand expand = parseExpand(System.getProperty(PROP_EXPAND));
         dialogs.put("newValidation", () -> new NewValidationDialog(dialogStage, main, psp, expand, parseSource()));
-        dialogs.put("externalUtils", () -> new ExternalUtilsCheckDialog(dialogStage, main, false, "Pokračovat", true));
+        dialogs.put("externalUtils", () -> new ExternalUtilsCheckDialog(dialogStage, main, false, "Pokračovat"));
         dialogs.put("about", () -> new AboutAppDialog(dialogStage, main));
         ConfigurationManager config = main.getConfigurationManager();
         dialogs.put("dictionaryContent", () -> new DictionaryContentDialog(dialogStage, main, SNAPSHOT_DICTIONARY,
@@ -189,10 +210,31 @@ public class SnapshotMode {
                 .preview(String.format("Chyba: Soubor %s není korektní ZIP: zip END header not found!", zip.getAbsolutePath()), true));
         dialogs.put("dev", () -> new nkp.pspValidator.gui.dev.DevDialog(dialogStage, main));
 
+        ignoreKeyboard();
         //snimkovaci rezim preskakuje dialog nastroju pri startu; bez kontroly by prazdny stav neznal jejich dostupnost
         main.getMainController().checkToolsForEmptyState();
         System.out.println("SNAPSHOT MODE: dir=" + dir.getAbsolutePath() + ", dialogs=" + names + ", delay=" + delayMs + " ms");
         new Runner(main, dir, delayMs, names, dialogs).next();
+    }
+
+    /**
+     * Okna snímkovacího režimu se otevírají na obrazovce a berou si fokus: klávesy, které uživatel mezitím píše jinam,
+     * by v nich stiskly tlačítko (například otevřely výběr adresáře nebo zvolily „Uložit“ v dotazu). Snímkovací režim
+     * proto klávesnici ve všech svých oknech ignoruje; kroky ovládají okna programově.
+     */
+    private static void ignoreKeyboard() {
+        javafx.event.EventHandler<javafx.scene.input.KeyEvent> swallow = javafx.event.Event::consume;
+        javafx.collections.ListChangeListener<Window> onWindows = change -> {
+            while (change.next()) {
+                for (Window window : change.getAddedSubList()) {
+                    window.addEventFilter(javafx.scene.input.KeyEvent.ANY, swallow);
+                }
+            }
+        };
+        for (Window window : Window.getWindows()) {
+            window.addEventFilter(javafx.scene.input.KeyEvent.ANY, swallow);
+        }
+        Window.getWindows().addListener(onWindows);
     }
 
     /** Zdroj předvyplněné cesty v dialogu Nová validace: {@code group} = skupina balíků, jinak podle cesty. */
@@ -349,6 +391,14 @@ public class SnapshotMode {
                     groupRerunOne();
                 } else if ("groupCancel".equals(name)) {
                     groupCancel();
+                } else if ("groupUnpack".equals(name)) {
+                    groupUnpack();
+                } else if ("newValidationGroupMenu".equals(name)) {
+                    newValidationGroupMenu(name);
+                } else if ("externalUtilsClose".equals(name)) {
+                    externalUtilsClose();
+                } else if ("settingsToolDraft".equals(name)) {
+                    settingsToolDraft();
                 } else if ("filtered".equals(name)) {
                     MainController controller = main.getMainController();
                     controller.setFilterChecks(true, true, false, true);
@@ -377,7 +427,7 @@ public class SnapshotMode {
                         next();
                     });
                 } else {
-                    System.err.println("SNAPSHOT MODE: unknown dialog '" + name + "', known: main,mainMenu,settingsMenu,setPreferred,helpMenu,showMenu,validateMenu,revealXml,settings,settingsSave,toolDetails,dictionaryUpdateRun,results,rerun,progress,stress,filtered,small,group,groupRerunOne,groupCancel," + String.join(",", dialogs.keySet()));
+                    System.err.println("SNAPSHOT MODE: unknown dialog '" + name + "', known: main,mainMenu,settingsMenu,setPreferred,helpMenu,showMenu,validateMenu,revealXml,settings,settingsSave,settingsToolDraft,toolDetails,dictionaryUpdateRun,results,rerun,progress,stress,filtered,small,group,groupRerunOne,groupCancel,groupUnpack,newValidationGroupMenu,externalUtilsClose," + String.join(",", dialogs.keySet()));
                     failed = true;
                     next();
                 }
@@ -779,6 +829,260 @@ public class SnapshotMode {
             }));
         }
 
+        // ===== skupina v souboru ZIP =====
+
+        private void groupUnpack() {
+            ValidationRequest request = buildRequest("groupUnpack");
+            if (request == null) {
+                next();
+                return;
+            }
+            String end = System.getProperty(PROP_PROGRESS_END, "finish").trim();
+            System.out.println("SNAPSHOT MODE: group unpack (end=" + end + ") " + describe(request));
+            System.out.println("SNAPSHOT MODE: work dirs before: " + workDirs());
+            MainController controller = main.getMainController();
+            UnpackGate gate = new UnpackGate();
+            controller.setRunHook(gate);
+            int startedBefore = controller.getStartedValidations();
+            long started = System.currentTimeMillis();
+            Platform.runLater(() -> main.launchValidation(request));
+            whenUnpackPaused(gate, started, () -> after(() -> {
+                System.out.println("SNAPSHOT MODE: unpacking paused at " + gate.pausedAt);
+                System.out.println("SNAPSHOT MODE: unpacking: " + controller.describeShownResult());
+                System.out.println("SNAPSHOT MODE: work dirs while unpacking: " + workDirs());
+                save(main.getPrimaryStage().getScene(), "group-unpacking");
+                if ("cancel".equals(end)) {
+                    controller.stopValidation(null);
+                }
+                gate.resume();
+                waitForEnd(controller, startedBefore, started, () -> {
+                    controller.setRunHook(null);
+                    controller.selectFirstProblem();
+                    after(() -> {
+                        System.out.println("SNAPSHOT MODE: group unpack ended: " + controller.describeShownResult()
+                                + (controller.isGroupMode() ? controller.describeGroupItems() : ""));
+                        System.out.println("SNAPSHOT MODE: work dirs after: " + workDirs());
+                        if ("cancel".equals(end)) {
+                            save(main.getPrimaryStage().getScene(), "group-unpack-canceled");
+                            next();
+                            return;
+                        }
+                        String invalid = controller.selectGroupPackage(nkp.pspValidator.gui.group.PackageStatus.INVALID);
+                        controller.selectFirstProblem();
+                        after(() -> {
+                            System.out.println("SNAPSHOT MODE: group zip results (" + invalid + "): " + controller.describeShownResult());
+                            save(main.getPrimaryStage().getScene(), "group-zip-results");
+                            File csv = new File(System.getProperty(PROP_CSV, new File(dir, "group-zip-souhrn.csv").getPath()));
+                            boolean ok = controller.exportGroupCsvTo(csv);
+                            System.out.println("SNAPSHOT MODE: group CSV " + (ok ? "written" : "FAILED") + ": " + csv.getAbsolutePath());
+                            if (!ok) {
+                                failed = true;
+                            }
+                            next();
+                        });
+                    });
+                });
+            }));
+        }
+
+        private void whenUnpackPaused(UnpackGate gate, long started, Runnable then) {
+            PauseTransition pause = new PauseTransition(Duration.millis(100));
+            pause.setOnFinished(e -> {
+                if (gate.paused) {
+                    then.run();
+                } else if (System.currentTimeMillis() - started > 2000 && !main.getMainController().isValidationRunning()) {
+                    System.err.println("SNAPSHOT MODE: unpacking ended before the pause point: " + main.getMainController().describeShownResult());
+                    failed = true;
+                    main.getMainController().setRunHook(null);
+                    next();
+                } else if (System.currentTimeMillis() - started > VALIDATION_TIMEOUT_MS) {
+                    System.err.println("SNAPSHOT MODE: unpack pause timeout");
+                    failed = true;
+                    next();
+                } else {
+                    whenUnpackPaused(gate, started, then);
+                }
+            });
+            pause.play();
+        }
+
+        /** Pracovní adresáře rozbalených ZIPů v adresáři pro dočasné soubory. */
+        private String workDirs() {
+            File[] dirs = new File(System.getProperty("java.io.tmpdir")).listFiles((d, n) -> n.startsWith("kv-rozbaleno-"));
+            if (dirs == null || dirs.length == 0) {
+                return "(žádné)";
+            }
+            Arrays.sort(dirs);
+            StringBuilder text = new StringBuilder();
+            for (File workDir : dirs) {
+                text.append(text.length() == 0 ? "" : ", ").append(workDir.getName());
+            }
+            return text.toString();
+        }
+
+        /** Dialog Nová validace se zdrojem Skupina balíků a rozbalenou nabídkou tlačítka „Vybrat…“. */
+        private void newValidationGroupMenu(String name) {
+            NewValidationDialog dialog = new NewValidationDialog(main.getDialogStage(), main, System.getProperty(PROP_PSP), null, ValidationSource.GROUP);
+            Stage stage = dialog.showNonBlocking();
+            NewValidationDialogController controller = (NewValidationDialogController) dialog.getController();
+            after(() -> {
+                javafx.scene.control.Button select = null;
+                for (Node node : stage.getScene().getRoot().lookupAll(".button")) {
+                    if (node instanceof javafx.scene.control.Button && "Vybrat…".equals(((javafx.scene.control.Button) node).getText())) {
+                        select = (javafx.scene.control.Button) node;
+                    }
+                }
+                if (select == null) {
+                    System.err.println("SNAPSHOT MODE: button Vybrat… not found");
+                    failed = true;
+                    stage.close();
+                    next();
+                    return;
+                }
+                javafx.scene.control.ContextMenu menu = controller.groupSourceMenu();
+                menu.show(select, javafx.geometry.Side.BOTTOM, 0, 0);
+                after(() -> {
+                    save(stage.getScene(), "new-validation-group");
+                    for (Window window : new ArrayList<>(Window.getWindows())) {
+                        if (window instanceof PopupWindow && window.isShowing() && window.getScene() != null) {
+                            save(window.getScene(), "new-validation-group-menu");
+                        }
+                    }
+                    menu.hide();
+                    stage.close();
+                    next();
+                });
+            });
+        }
+
+        // ===== dialog nastroju pri startu: zavreni krizkem =====
+
+        private void externalUtilsClose() {
+            ExternalUtilsCheckDialog dialog = new ExternalUtilsCheckDialog(main.getDialogStage(), main, false, "Pokračovat");
+            Stage stage = dialog.showNonBlocking();
+            ExternalUtilsCheckDialogController controller = (ExternalUtilsCheckDialogController) dialog.getController();
+            long started = System.currentTimeMillis();
+            whenToolsChecked(controller.toolsTable, started, () -> after(() -> {
+                System.out.println("SNAPSHOT MODE: tools state before close: " + controller.toolsTable.getState());
+                save(stage.getScene(), "external-utils-before-close");
+                //jako krizek okna
+                stage.fireEvent(new javafx.stage.WindowEvent(stage, javafx.stage.WindowEvent.WINDOW_CLOSE_REQUEST));
+                after(() -> {
+                    System.out.println("SNAPSHOT MODE: after close request: dialog showing=" + stage.isShowing()
+                            + ", main window showing=" + main.getPrimaryStage().isShowing());
+                    if (stage.isShowing()) {
+                        failed = true;
+                        stage.close();
+                    }
+                    save(main.getPrimaryStage().getScene(), "external-utils-after-close");
+                    next();
+                });
+            }));
+        }
+
+        private void whenToolsChecked(ToolsTable table, long started, Runnable then) {
+            PauseTransition pause = new PauseTransition(Duration.millis(200));
+            pause.setOnFinished(e -> {
+                if (table.getState() != nkp.pspValidator.gui.newvalidation.ToolsOverview.State.CHECKING) {
+                    then.run();
+                } else if (System.currentTimeMillis() - started > 60_000) {
+                    System.err.println("SNAPSHOT MODE: tool check timeout");
+                    failed = true;
+                    next();
+                } else {
+                    whenToolsChecked(table, started, then);
+                }
+            });
+            pause.play();
+        }
+
+        // ===== nastaveni: neulozena cesta k nastroji =====
+
+        private void settingsToolDraft() {
+            String spec = System.getProperty(PROP_TOOL_PATH, "IMAGE_MAGICK:" + System.getProperty("java.io.tmpdir")).trim();
+            int colon = spec.indexOf(':');
+            ExternalUtil util;
+            File path;
+            try {
+                util = ExternalUtil.valueOf(spec.substring(0, colon).trim());
+                String value = spec.substring(colon + 1).trim();
+                path = "none".equals(value) ? null : new File(value);
+            } catch (RuntimeException e) {
+                System.err.println("SNAPSHOT MODE: bad " + PROP_TOOL_PATH + " '" + spec + "', expected <TOOL>:<dir|none>");
+                failed = true;
+                next();
+                return;
+            }
+            String choice = System.getProperty(PROP_PROMPT_CHOICE, "discard").trim();
+            String buttonText = "save".equals(choice) ? "Uložit" : "back".equals(choice) ? "Zpět" : "Neukládat";
+            ConfigurationManager config = main.getConfigurationManager();
+            String key = nkp.pspValidator.gui.newvalidation.ExternalTools.configKey(util);
+            System.out.println("SNAPSHOT MODE: tool draft " + util + " -> " + path + ", choice " + choice
+                    + "; saved before: " + config.getStringOrDefault(key, null));
+            SettingsDialog dialog = new SettingsDialog(main.getDialogStage(), main, SettingsTab.TOOLS, null);
+            Stage stage = dialog.showNonBlocking();
+            SettingsDialogController controller = (SettingsDialogController) dialog.getController();
+            after(() -> {
+                System.out.println("SNAPSHOT MODE: tools before: " + controller.describeToolsForSnapshot());
+                controller.setToolPathForSnapshot(util, path);
+                after(() -> {
+                    System.out.println("SNAPSHOT MODE: tools with unsaved path: " + controller.describeToolsForSnapshot()
+                            + "; saved: " + config.getStringOrDefault(key, null)
+                            + "; manager available=" + main.getValidationDataManager().getExternalUtilManager().isUtilAvailable(util));
+                    save(stage.getScene(), "settings-tool-unsaved");
+                    Stage prompt = controller.requestCloseForSnapshot();
+                    if (prompt == null) {
+                        System.err.println("SNAPSHOT MODE: no save prompt (settings closed without asking)");
+                        failed = true;
+                        next();
+                        return;
+                    }
+                    after(() -> {
+                        save(prompt.getScene(), "settings-close-prompt");
+                        javafx.scene.control.Button button = null;
+                        for (Node node : prompt.getScene().getRoot().lookupAll(".button")) {
+                            if (node instanceof javafx.scene.control.Button && buttonText.equals(((javafx.scene.control.Button) node).getText())) {
+                                button = (javafx.scene.control.Button) node;
+                            }
+                        }
+                        if (button == null) {
+                            System.err.println("SNAPSHOT MODE: prompt button " + buttonText + " not found");
+                            failed = true;
+                            prompt.close();
+                            stage.close();
+                            next();
+                            return;
+                        }
+                        button.fire();
+                        //kontrola nastroje s vracenou cestou bezi v pozadi
+                        PauseTransition wait = new PauseTransition(Duration.millis(Math.max(delayMs, 3000)));
+                        wait.setOnFinished(e -> {
+                            System.out.println("SNAPSHOT MODE: after " + choice + ": settings showing=" + stage.isShowing()
+                                    + ", saved: " + config.getStringOrDefault(key, null)
+                                    + ", manager available=" + main.getValidationDataManager().getExternalUtilManager().isUtilAvailable(util)
+                                    + ", tools: " + controller.describeToolsForSnapshot());
+                            if (stage.isShowing()) {
+                                save(stage.getScene(), "settings-tool-after-" + choice);
+                                stage.close();
+                                next();
+                                return;
+                            }
+                            SettingsDialog reopened = new SettingsDialog(main.getDialogStage(), main, SettingsTab.TOOLS, null);
+                            Stage reopenedStage = reopened.showNonBlocking();
+                            SettingsDialogController reopenedController = (SettingsDialogController) reopened.getController();
+                            whenToolsChecked(reopenedController.toolsTableForSnapshot(), System.currentTimeMillis(), () -> after(() -> {
+                                System.out.println("SNAPSHOT MODE: reopened: " + reopenedController.describeToolsForSnapshot());
+                                save(reopenedStage.getScene(), "settings-tool-after-" + choice);
+                                reopenedStage.close();
+                                next();
+                            }));
+                        });
+                        wait.play();
+                    });
+                });
+            });
+        }
+
         private void whenGroupPaused(GroupGate gate, long started, Runnable then) {
             PauseTransition pause = new PauseTransition(Duration.millis(100));
             pause.setOnFinished(e -> {
@@ -1161,6 +1465,45 @@ public class SnapshotMode {
         public void ruleFinished() {
             if (!pausedOnce && pauseAt > 0 && finished.incrementAndGet() == pauseAt) {
                 pausedOnce = true;
+                paused = true;
+                try {
+                    permits.acquire();
+                } catch (InterruptedException e) {
+                    //pokracuje
+                } finally {
+                    paused = false;
+                }
+            }
+        }
+
+        void resume() {
+            permits.release();
+        }
+    }
+
+    /**
+     * Háček pro skupinu v souboru ZIP: jednou pozastaví rozbalování, když je hotová aspoň polovina souborů, dokud ho
+     * vlákno UI nepustí dál.
+     */
+    private static class UnpackGate implements MainController.RunHook {
+        private final Semaphore permits = new Semaphore(0);
+        volatile boolean paused;
+        volatile String pausedAt;
+        private volatile boolean pausedOnce;
+
+        @Override
+        public void initialized(int totalRules) {
+        }
+
+        @Override
+        public void ruleFinished() {
+        }
+
+        @Override
+        public void unpacking(nkp.pspValidator.gui.newvalidation.UnpackProgress progress) {
+            if (!pausedOnce && progress.getFilesTotal() > 0 && progress.getFilesDone() * 2 >= progress.getFilesTotal()) {
+                pausedOnce = true;
+                pausedAt = progress.toString();
                 paused = true;
                 try {
                     permits.acquire();

@@ -65,7 +65,6 @@ public class PackageRecognizer {
     }
 
     private Recognition recognizeZip(File zipFile) {
-        Path tmpDir = null;
         try (ZipFile zip = new ZipFile(zipFile)) {
             Set<String> topLevel = new LinkedHashSet<>();
             Set<String> topLevelDirs = new LinkedHashSet<>();
@@ -91,7 +90,24 @@ public class PackageRecognizer {
                 }
                 prefix = only + "/";
             }
-            tmpDir = Files.createTempDirectory("kv-rozpoznani");
+            return recognizeInZip(zip, prefix);
+        } catch (ZipException e) {
+            return Recognition.notRecognized(String.format("Soubor není platný ZIP (%s).", e.getMessage()));
+        } catch (IOException e) {
+            return Recognition.notRecognized(String.format("Soubor ZIP nelze přečíst (%s).", e.getMessage()));
+        } catch (IllegalArgumentException e) {
+            return Recognition.notRecognized(String.format("Názvy souborů v ZIPu nelze přečíst (%s).", e.getMessage()));
+        }
+    }
+
+    /**
+     * Rozpozná balík, jehož kořen je v otevřeném archivu pod {@code prefix} („“ = kořen archivu, „davka/nk-01/“): do
+     * dočasného adresáře vybalí jen soubory XML přímo v kořeni balíku a pustí nad nimi {@link DmfDetector}. Dočasný
+     * adresář hned smaže. Používá ho i rozpoznání skupiny balíků v jednom ZIPu.
+     */
+    public Recognition recognizeInZip(ZipFile zip, String prefix) throws IOException {
+        Path tmpDir = Files.createTempDirectory("kv-rozpoznani");
+        try {
             for (Enumeration<? extends ZipEntry> en = zip.entries(); en.hasMoreElements(); ) {
                 ZipEntry entry = en.nextElement();
                 String name = entry.getName();
@@ -108,10 +124,6 @@ public class PackageRecognizer {
                 }
             }
             return recognizeDir(tmpDir.toFile(), tmpDir.toFile());
-        } catch (ZipException e) {
-            return Recognition.notRecognized(String.format("Soubor není platný ZIP (%s).", e.getMessage()));
-        } catch (IOException e) {
-            return Recognition.notRecognized(String.format("Soubor ZIP nelze přečíst (%s).", e.getMessage()));
         } finally {
             deleteQuietly(tmpDir);
         }

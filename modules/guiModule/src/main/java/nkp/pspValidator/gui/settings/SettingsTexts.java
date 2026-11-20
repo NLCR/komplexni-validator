@@ -17,6 +17,7 @@ public final class SettingsTexts {
     /** Části nastavení, které se ukládají až tlačítkem Uložit (v pořadí záložek). */
     public enum Part {
         VERSIONS("výchozí verze DMF"),
+        TOOLS("cesty k externím nástrojům"),
         SKIPPING("přeskakovaná pravidla"),
         DIRS("adresáře a protokoly");
 

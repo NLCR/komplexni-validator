@@ -7,6 +7,7 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.geometry.Side;
 import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
@@ -230,7 +231,29 @@ public class NewValidationDialogController extends DialogController {
         container.setSubtitle(source.getDialogSubtitle());
     }
 
+    /**
+     * „Vybrat…“: u adresáře a ZIPu systémový dialog výběru, u skupiny balíků nabídka „Adresář s balíky…“ a „Soubor ZIP
+     * se skupinou…“ (systémový dialog neumí vybrat adresář i soubor najednou).
+     */
     public void selectPath(ActionEvent actionEvent) {
+        if (source == ValidationSource.GROUP && actionEvent != null && actionEvent.getSource() instanceof Node) {
+            groupSourceMenu().show((Node) actionEvent.getSource(), Side.BOTTOM, 0, 0);
+            return;
+        }
+        choosePath(source == ValidationSource.ZIP);
+    }
+
+    /** Nabídka tlačítka „Vybrat…“ u skupiny balíků. */
+    ContextMenu groupSourceMenu() {
+        MenuItem dir = new MenuItem("Adresář s balíky…");
+        dir.setOnAction(e -> choosePath(false));
+        MenuItem zip = new MenuItem("Soubor ZIP se skupinou…");
+        zip.setOnAction(e -> choosePath(true));
+        return new ContextMenu(dir, zip);
+    }
+
+    /** Systémový dialog výběru adresáře, nebo souboru ZIP ({@code zipFile}). */
+    private void choosePath(boolean zipFile) {
         ConfigurationManager config = getConfigurationManager();
         File last = config.getFileOrNull(source.getLastPathKey());
         File initialDir = null;
@@ -240,17 +263,18 @@ public class NewValidationDialogController extends DialogController {
                 initialDir = parent;
             }
         }
+        boolean group = source == ValidationSource.GROUP;
         File selected;
-        if (source == ValidationSource.DIRECTORY || source == ValidationSource.GROUP) {
+        if (!zipFile) {
             DirectoryChooser chooser = new DirectoryChooser();
-            chooser.setTitle(source == ValidationSource.GROUP ? "Vyberte adresář s balíky" : "Vyberte kořenový adresář balíku");
+            chooser.setTitle(group ? "Vyberte adresář s balíky" : "Vyberte kořenový adresář balíku");
             if (initialDir != null) {
                 chooser.setInitialDirectory(initialDir);
             }
             selected = chooser.showDialog(stage);
         } else {
             FileChooser chooser = new FileChooser();
-            chooser.setTitle("Vyberte soubor ZIP s balíkem");
+            chooser.setTitle(group ? "Vyberte soubor ZIP se skupinou balíků" : "Vyberte soubor ZIP s balíkem");
             chooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Soubory ZIP", "*.zip"));
             if (initialDir != null) {
                 chooser.setInitialDirectory(initialDir);
@@ -412,14 +436,16 @@ public class NewValidationDialogController extends DialogController {
         if (recognizing) {
             recognitionTitle.setText(GroupSummaries.recognizingTitle(groupRecognized, groupToRecognize));
             setBadge(null);
-            recognitionDetail.setText("Hledám podadresáře a soubory ZIP a čtu jejich METS a info.xml.");
+            recognitionDetail.setText(pathField.getText() != null && new File(pathField.getText().trim()).isFile()
+                    ? "Čtu seznam položek souboru ZIP a METS a info.xml balíků v něm (soubor se nerozbaluje)."
+                    : "Hledám podadresáře a soubory ZIP a čtu jejich METS a info.xml.");
         } else if (groupRecognition != null) {
             recognitionTitle.setText(GroupSummaries.title(groupRecognition));
             setBadge(GroupSummaries.breakdown(groupRecognition, versionSettings));
             recognitionDetail.setText(GroupSummaries.detail(groupRecognition));
         } else if (recognition != null) {
             //neplatna cesta
-            recognitionTitle.setText("Adresář s balíky není vybrán");
+            recognitionTitle.setText("Skupina balíků není vybrána");
             setBadge(null);
             recognitionDetail.setText(recognition.getMessage());
         }

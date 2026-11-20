@@ -46,7 +46,7 @@ public final class GroupCsv {
         ProblemCounts counts = item.getCounts();
         return Arrays.asList(
                 item.getName(),
-                item.getFile().getAbsolutePath(),
+                item.getDisplayPath(),
                 item.getDmf() == null ? "" : DocumentTypes.name(item.getDmf().getType()),
                 item.getDmf() == null ? "" : item.getDmf().getVersion(),
                 item.getStatus().getLabel(),

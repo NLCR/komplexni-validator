@@ -18,6 +18,15 @@ public class SettingsTextsTest {
                 SettingsTexts.unsavedNote(Collections.singletonList(SettingsTexts.Part.VERSIONS)));
         assertEquals("Neuložené změny: výchozí verze DMF, přeskakovaná pravidla, adresáře a protokoly.",
                 SettingsTexts.unsavedNote(Arrays.asList(SettingsTexts.Part.VERSIONS, SettingsTexts.Part.SKIPPING, SettingsTexts.Part.DIRS)));
+        assertEquals("Neuložené změny: cesty k externím nástrojům.",
+                SettingsTexts.unsavedNote(Collections.singletonList(SettingsTexts.Part.TOOLS)));
+    }
+
+    /** Části v patičce jsou v pořadí záložek Nastavení (nástroje za verzemi, před přeskakováním). */
+    @Test
+    public void partsInTabOrder() {
+        assertEquals(Arrays.asList(SettingsTexts.Part.VERSIONS, SettingsTexts.Part.TOOLS, SettingsTexts.Part.SKIPPING,
+                SettingsTexts.Part.DIRS), Arrays.asList(SettingsTexts.Part.values()));
     }
 
     @Test

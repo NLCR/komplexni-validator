@@ -407,6 +407,10 @@ tasks.named('run', JavaExec) {
 //  -PsnapshotRerunPackage=<nazev> - krok groupRerunOne validuje znovu tento balik skupiny;
 //  kroky helpMenu, showMenu, validateMenu (rozbalena menu), revealXml (Zobrazit ve slozce, otevre Finder),
 //  dictionaryUpdateRun (skutecna aktualizace slovniku, jen nad kopii validatorConfig)
+//  skupina v souboru ZIP (-PsnapshotSource=group, -PsnapshotValidate=<soubor .zip>): kroky group, groupRerunOne,
+//  groupCancel, groupUnpack (pauza v rozbalovani, -PsnapshotProgressEnd=finish|cancel), newValidationGroupMenu;
+//  krok externalUtilsClose (krizek dialogu nastroju pri startu), krok settingsToolDraft (neulozena cesta k nastroji
+//  a dotaz Ulozit zmeny?): -PsnapshotToolPath=IMAGE_MAGICK:/adresar|none, -PsnapshotPromptChoice=discard|save|back
 //  -PsnapshotConfigFile=<soubor> - soubor nastaveni (vlastnost kv.configFile) misto vychoziho config.properties v pracovnim
 //  adresari modulu, aby snimky nezahrnovaly osobni nastaveni; soubor nemusi existovat (vznikne s vychozimi hodnotami),
 //  ale pri spusteni z Gradle musi obsahovat aspon validatorConfig.dir=<adresar validatorConfig> (a nejlepe validation.log_dir),
@@ -464,6 +468,12 @@ tasks.register('runSnapshots', JavaExec) {
     }
     if (project.hasProperty('snapshotRerunPreferred')) {
         systemProperty 'kv.snapshotRerunPreferred', project.property('snapshotRerunPreferred')
+    }
+    if (project.hasProperty('snapshotToolPath')) {
+        systemProperty 'kv.snapshotToolPath', project.property('snapshotToolPath')
+    }
+    if (project.hasProperty('snapshotPromptChoice')) {
+        systemProperty 'kv.snapshotPromptChoice', project.property('snapshotPromptChoice')
     }
     if (project.hasProperty('maxDialogHeight')) { //simulace mensiho displeje
         systemProperty 'kv.maxDialogHeight', project.property('maxDialogHeight')

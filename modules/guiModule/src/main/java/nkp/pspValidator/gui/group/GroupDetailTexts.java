@@ -13,6 +13,15 @@ public final class GroupDetailTexts {
     }
 
     /**
+     * Bublina u názvu balíku v tabulce: „Adresář: /data/davka/nk-01“, „Soubor ZIP: /data/davka/nk-02.zip“, u skupiny
+     * v souboru ZIP cesta k souboru ZIP a balíku v něm; u chyby na dalším řádku hláška.
+     */
+    public static String nameTooltip(GroupItem item) {
+        return (item.isZip() ? "Soubor ZIP: " : "Adresář: ") + item.getDisplayPath()
+                + (item.getMessage() == null ? "" : "\n" + item.getMessage());
+    }
+
+    /**
      * Souhrn vybraného balíku: „Monografie 2.2, nevalidní, 12 chyb, 3 varování, 5 informací, trvalo 3,4 s“; u chyby
      * na konci hláška.
      */

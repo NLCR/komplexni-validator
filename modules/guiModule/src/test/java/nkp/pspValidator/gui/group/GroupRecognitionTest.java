@@ -143,6 +143,159 @@ public class GroupRecognitionTest {
         assertEquals("Nalezen 1 balík", GroupSummaries.title(result));
     }
 
+    // ===== skupina v souboru ZIP =====
+
+    /** Skupina v ZIPu s balíky v kořeni: stejné rozpoznání jako adresář, vnořený ZIP se rozpozná až při validaci. */
+    @Test
+    public void zipGroupWithPackagesInRoot() throws IOException {
+        File zip = new File(tmp.newFolder("zipy"), "davka.zip");
+        try (ZipOutputStream out = new ZipOutputStream(new FileOutputStream(zip))) {
+            addFiles(out, FUND_UNIT, "a-fond/");
+            addFiles(out, MONOGRAPH, "c-mono/");
+            addFiles(out, WRONG_TYPE, "d-spatny-typ/");
+            addEntry(out, "e-prazdny/", null);
+            addEntry(out, "b-fond.zip", "nezkoumá se".getBytes());
+            addEntry(out, "poznamky.txt", "x".getBytes());
+        }
+        List<String> progress = new ArrayList<>();
+        GroupRecognition result = GroupRecognition.recognize(zip, 200, () -> false, (done, total) -> progress.add(done + "/" + total));
+        assertTrue(result.isOk());
+        assertTrue(result.isZip());
+        assertEquals(zip, result.getGroupDir());
+        assertEquals(5, result.getPackageCount());
+        assertEquals(Arrays.asList("0/5", "1/5", "2/5", "3/5", "4/5"), progress);
+        assertEquals("Nalezeno 5 balíků", GroupSummaries.title(result));
+        //a-fond, b-fond.zip (pri validaci), c-mono, d-spatny-typ (nerozpoznan), e-prazdny (nerozpoznan);
+        //pri stejnem poctu poradi typu ve vyctu (monografie pred jednotkami fondu)
+        assertEquals("1× Monografie 1.2, 1× Jednotky fondu 0.2, 2 nerozpoznány, 1 se rozpozná při validaci",
+                GroupSummaries.breakdown(result, versions()));
+        assertEquals("Každý balík se validuje podle svého typu a verze, postupně jeden po druhém. Soubor ZIP se před "
+                + "validací celý rozbalí do dočasného adresáře. Ignorováno: 1 soubor, který není ZIP (poznamky.txt).",
+                GroupSummaries.detail(result));
+        Recognition nested = result.getRecognitions().get(1);
+        assertTrue(nested.isDeferred());
+        assertFalse(nested.isRecognized());
+        assertEquals("Balík v souboru ZIP uvnitř skupiny se rozpozná až při validaci.", nested.getMessage());
+        assertFalse(result.getRecognitions().get(0).isDeferred());
+        //cesty v dialogu: soubor ZIP a balik v nem
+        assertEquals(new File(zip, "a-fond").getAbsolutePath(), result.getListing().getPackages().get(0).getDisplayPath());
+        assertEquals(Arrays.asList(new Dmf(Dmf.Type.MONOGRAPH, "1.2"), new Dmf(Dmf.Type.FUND_UNIT, "0.2")),
+                new ArrayList<>(GroupSummaries.effectiveDmfs(result, versions())));
+        //docasne adresare rozpoznani se smazaly
+        assertNoRecognitionTmpDirsLeft();
+    }
+
+    /** Jediný kořenový adresář s balíky (s diakritikou a mezerou v názvu). */
+    @Test
+    public void zipGroupWithSingleRootDirectory() throws IOException {
+        File zip = new File(tmp.newFolder("zipy"), "Dávka 1.zip");
+        try (ZipOutputStream out = new ZipOutputStream(new FileOutputStream(zip))) {
+            addEntry(out, "Dávka 1/", null);
+            addFiles(out, MONOGRAPH, "Dávka 1/Monografie č. 1/");
+            addFiles(out, FUND_UNIT, "Dávka 1/fond/");
+        }
+        GroupRecognition result = GroupRecognition.recognize(zip, 200, () -> false, null);
+        assertTrue(result.isOk());
+        assertEquals(2, result.getPackageCount());
+        assertEquals("1× Monografie 1.2, 1× Jednotky fondu 0.2", GroupSummaries.breakdown(result, versions()));
+        assertEquals(new File(zip, "Dávka 1/Monografie č. 1").getAbsolutePath(), result.getListing().getPackages().get(1).getDisplayPath());
+    }
+
+    @Test
+    public void zipGroupLimit() throws IOException {
+        File zip = new File(tmp.newFolder("zipy"), "davka.zip");
+        try (ZipOutputStream out = new ZipOutputStream(new FileOutputStream(zip))) {
+            addFiles(out, MONOGRAPH, "a/");
+            addFiles(out, MONOGRAPH, "b/");
+            addFiles(out, MONOGRAPH, "c/");
+        }
+        GroupRecognition result = GroupRecognition.recognize(zip, 2, () -> false, null);
+        assertEquals(3, result.getPackageCount());
+        assertEquals(2, result.getRecognitions().size());
+        assertEquals(1, result.getNotRecognizedDueToLimit());
+        assertEquals("2× Monografie 1.2", GroupSummaries.breakdown(result, versions()));
+    }
+
+    @Test
+    public void zipGroupCanceled() throws IOException {
+        File zip = new File(tmp.newFolder("zipy"), "davka.zip");
+        try (ZipOutputStream out = new ZipOutputStream(new FileOutputStream(zip))) {
+            addFiles(out, MONOGRAPH, "a/");
+            addFiles(out, MONOGRAPH, "b/");
+        }
+        int[] calls = {0};
+        assertNull(GroupRecognition.recognize(zip, 200, () -> calls[0]++ >= 1, null));
+    }
+
+    @Test
+    public void zipGroupErrors() throws IOException {
+        File dir = tmp.newFolder("chyby");
+        File notZip = new File(dir, "nezip.zip");
+        Files.write(notZip.toPath(), "toto neni zip".getBytes());
+        GroupRecognition result = GroupRecognition.recognize(notZip, 200, () -> false, null);
+        assertFalse(result.isOk());
+        assertTrue(result.isZip());
+        assertEquals("Soubor ZIP nelze použít jako skupinu", GroupSummaries.title(result));
+        assertTrue(result.getError(), result.getError().startsWith("Soubor nezip.zip není platný ZIP ("));
+        assertEquals(result.getError(), GroupSummaries.detail(result));
+        assertNull(GroupSummaries.breakdown(result, versions()));
+        assertEquals(0, result.getPackageCount());
+
+        File empty = new File(dir, "prazdny.zip");
+        try (ZipOutputStream out = new ZipOutputStream(new FileOutputStream(empty))) {
+            //bez polozek ZipOutputStream zapise jen konec centralniho adresare
+            out.finish();
+        }
+        assertEquals("Soubor ZIP je prázdný.", GroupRecognition.recognize(empty, 200, () -> false, null).getError());
+
+        File noPackages = new File(dir, "bez-baliku.zip");
+        try (ZipOutputStream out = new ZipOutputStream(new FileOutputStream(noPackages))) {
+            addEntry(out, "a.txt", "x".getBytes());
+        }
+        assertEquals("Soubor ZIP neobsahuje žádný balík (adresář nebo soubor ZIP).",
+                GroupRecognition.recognize(noPackages, 200, () -> false, null).getError());
+
+        File single = new File(dir, "jeden.zip");
+        try (ZipOutputStream out = new ZipOutputStream(new FileOutputStream(single))) {
+            addFiles(out, MONOGRAPH, "b50eb6b0/");
+        }
+        assertEquals("Soubor ZIP obsahuje jeden balík, ne skupinu balíků. Zvolte zdroj „Soubor ZIP“.",
+                GroupRecognition.recognize(single, 200, () -> false, null).getError());
+
+        File outside = new File(dir, "unik.zip");
+        try (ZipOutputStream out = new ZipOutputStream(new FileOutputStream(outside))) {
+            addFiles(out, MONOGRAPH, "a/");
+            addEntry(out, "../unik.txt", "x".getBytes());
+        }
+        assertEquals("Soubor ZIP obsahuje položku mířící mimo cílový adresář (../unik.txt), nelze ho bezpečně rozbalit.",
+                GroupRecognition.recognize(outside, 200, () -> false, null).getError());
+    }
+
+    private static void addFiles(ZipOutputStream out, File packageDir, String prefix) throws IOException {
+        addEntry(out, prefix, null);
+        File[] files = packageDir.listFiles(File::isFile);
+        assertNotNull(files);
+        for (File file : files) {
+            addEntry(out, prefix + file.getName(), Files.readAllBytes(file.toPath()));
+        }
+    }
+
+    private static void addEntry(ZipOutputStream out, String name, byte[] content) throws IOException {
+        out.putNextEntry(new ZipEntry(name));
+        if (content != null) {
+            out.write(content);
+        }
+        out.closeEntry();
+    }
+
+    private static void assertNoRecognitionTmpDirsLeft() {
+        //PackageRecognizer vytvari kv-rozpoznani* v java.io.tmpdir a hned je maze; zadny nesmi byt mladsi nez test
+        File[] left = new File(System.getProperty("java.io.tmpdir")).listFiles((d, n) -> n.startsWith("kv-rozpoznani")
+                && new File(d, n).lastModified() > System.currentTimeMillis() - 60_000);
+        assertNotNull(left);
+        assertEquals(Arrays.toString(left), 0, left.length);
+    }
+
     // ===== texty bez cteni disku =====
 
     @Test
@@ -180,6 +333,24 @@ public class GroupRecognitionTest {
                 + "které nejsou ZIP (s0.txt, …).", GroupSummaries.detail(fake(1, 3)));
         assertEquals("Každý balík se validuje podle svého typu a verze, postupně jeden po druhém. Ignorováno: 5 souborů, "
                 + "které nejsou ZIP (s0.txt, …).", GroupSummaries.detail(fake(1, 5)));
+    }
+
+    @Test
+    public void deferredPlurals() {
+        List<Recognition> recognitions = new ArrayList<>();
+        recognitions.add(Recognition.recognized(Dmf.Type.MONOGRAPH, "2.2", null));
+        for (int i = 0; i < 2; i++) {
+            recognitions.add(Recognition.deferred("x"));
+        }
+        assertEquals("1× Monografie 2.2, 2 se rozpoznají při validaci",
+                GroupSummaries.breakdown(GroupRecognition.of(listing(3, 0), recognitions), versions()));
+        for (int i = 0; i < 3; i++) {
+            recognitions.add(Recognition.deferred("x"));
+        }
+        assertEquals("1× Monografie 2.2, 5 se rozpozná při validaci",
+                GroupSummaries.breakdown(GroupRecognition.of(listing(6, 0), recognitions), versions()));
+        assertEquals("1 se rozpozná při validaci", GroupSummaries.breakdown(GroupRecognition.of(listing(1, 0),
+                Collections.singletonList(Recognition.deferred("x"))), versions()));
     }
 
     @Test

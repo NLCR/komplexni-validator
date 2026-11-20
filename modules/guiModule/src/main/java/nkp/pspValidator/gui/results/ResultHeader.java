@@ -47,6 +47,12 @@ public final class ResultHeader {
         return new ResultHeader(Phase.RUNNING, packageName, subtitle, null, null, found);
     }
 
+    /** Skupina ze souboru ZIP se rozbaluje: „Skupina v souboru ZIP, rozbaluji, běží 0:12“. */
+    public static ResultHeader unpackingGroup(String zipName, long elapsedMs) {
+        return new ResultHeader(Phase.RUNNING, zipName, "Skupina v souboru ZIP, rozbaluji, běží " + ResultTexts.elapsed(elapsedMs),
+                null, null, null);
+    }
+
     /**
      * @param problemsByLevel počty problémů podle úrovně z jádra (chybějící úroveň znamená 0)
      * @param valid           verdikt z jádra

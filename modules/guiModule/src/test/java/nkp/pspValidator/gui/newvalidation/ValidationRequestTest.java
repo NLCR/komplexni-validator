@@ -13,6 +13,7 @@ import org.junit.rules.TemporaryFolder;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.EnumSet;
 import java.util.List;
 import java.util.Set;
@@ -146,20 +147,28 @@ public class ValidationRequestTest {
         assertEquals(2, launcher.verbosity);
     }
 
+    /** Skupina je adresář nebo soubor ZIP se skupinou (rozhodnutí O14); neexistující a prázdná cesta se odmítne. */
     @Test
-    public void groupNeedsExistingDirectory() throws Exception {
-        File file = tmp.newFile("soubor.zip");
+    public void groupNeedsExistingDirectoryOrFile() throws Exception {
+        File file = tmp.newFile("skupina.zip");
+        ValidationRequest request = ValidationRequest.create(ValidationSource.GROUP, file.getPath(), new VersionSettings(config, registry),
+                new OutputSettings(config), null);
+        RecordingLauncher launcher = new RecordingLauncher();
+        request.launch(launcher);
+        assertEquals(Arrays.asList("disable", "group"), launcher.calls);
+        assertEquals(file, launcher.file);
+        File missing = new File(tmp.getRoot(), "neni.zip");
         try {
-            ValidationRequest.create(ValidationSource.GROUP, file.getPath(), new VersionSettings(config, registry), new OutputSettings(config), null);
-            fail("soubor neni adresar skupiny");
+            ValidationRequest.create(ValidationSource.GROUP, missing.getPath(), new VersionSettings(config, registry), new OutputSettings(config), null);
+            fail("neexistujici skupina");
         } catch (IllegalArgumentException e) {
-            assertEquals(file.getPath() + " není adresář.", e.getMessage());
+            assertEquals(missing.getPath() + " neexistuje.", e.getMessage());
         }
         try {
             ValidationRequest.create(ValidationSource.GROUP, "  ", new VersionSettings(config, registry), new OutputSettings(config), null);
             fail("prazdna cesta");
         } catch (IllegalArgumentException e) {
-            assertEquals("Vyberte adresář s balíky.", e.getMessage());
+            assertEquals("Vyberte adresář s balíky nebo soubor ZIP se skupinou balíků.", e.getMessage());
         }
     }
 

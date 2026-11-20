@@ -184,7 +184,7 @@ public class Main extends Application {
         });
     }
 
-    /** Validace skupiny balíků v hlavním okně (ZIPy ve skupině se rozbalují bez dialogu). */
+    /** Validace skupiny balíků v hlavním okně (adresář nebo soubor ZIP se skupinou; ZIPy se rozbalují bez dialogu). */
     public void runGroupValidation(File groupDir, DmfDetector.Params params, boolean createTxtLog, boolean createXmlLog, int verbosity) {
         dialogStage.close();
         ValidationRequest request = pendingRequest;
@@ -215,11 +215,10 @@ public class Main extends Application {
 
     /**
      * Dialog externích nástrojů při startu aplikace (nástroje se dál nastavují v Nastavení, záložka Externí nástroje).
-     *
-     * @param exitAppOnCloseWithError zavření okna křížkem, když některý nástroj chybí, ukončí aplikaci
+     * Zavření okna je totéž jako „Pokračovat“, aplikace se neukončí.
      */
-    public void showExternalUtilsCheckDialog(boolean closeWhenFinished, String mainButtonText, boolean exitAppOnCloseWithError) {
-        new ExternalUtilsCheckDialog(dialogStage, this, closeWhenFinished, mainButtonText, exitAppOnCloseWithError).show();
+    public void showExternalUtilsCheckDialog(boolean closeWhenFinished, String mainButtonText) {
+        new ExternalUtilsCheckDialog(dialogStage, this, closeWhenFinished, mainButtonText).show();
         //dostupnost nastroju v prazdnem stavu hlavniho okna
         mainController.refreshEmptyStateInfo();
     }

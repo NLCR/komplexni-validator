@@ -115,16 +115,69 @@ public class ZipUnpackerTest {
         assertArrayEquals(new String[]{"cizi"}, tmpDir.list());
     }
 
-    /** Zrušení až po rozbalení: rozbalený obsah nesmí zůstat na disku. */
+    /** Zrušení až po rozbalení všech souborů: rozbalený obsah nesmí zůstat na disku. */
     @Test
     public void canceledAfterExtractionLeavesNothing() throws Exception {
         File tmpDir = tmp.newFolder("tmp");
-        File zip = zip("balik.zip", "nk-1/", "nk-1/mets.xml");
-        //dotazy na zruseni: pred kontrolou ZIPu, po ni, pred rozbalenim (ne), po rozbaleni (ano)
-        int[] calls = {0};
-        assertNull(new ZipUnpacker(tmpDir).unpack(zip, () -> ++calls[0] >= 4, null));
-        assertEquals(4, calls[0]);
+        File zip = zip("balik.zip", "nk-1/", "nk-1/mets.xml", "nk-1/info.xml");
+        boolean[] cancel = {false};
+        List<String> progress = new ArrayList<>();
+        assertNull(new ZipUnpacker(tmpDir).unpack(zip, () -> cancel[0], null, p -> {
+            progress.add(p.getFilesDone() + "/" + p.getFilesTotal());
+            if (p.getFilesDone() == p.getFilesTotal()) {
+                cancel[0] = true;
+            }
+        }));
+        //rozbalilo se vse, zruseni prislo az pak
+        assertEquals(Arrays.asList("0/2", "1/2", "2/2"), progress);
         assertArrayEquals(new String[0], tmpDir.list());
+    }
+
+    /** Zrušení během rozbalování rozbalování přeruší (další soubory se už nerozbalí) a pracovní adresář smaže. */
+    @Test
+    public void canceledDuringExtractionStopsAndLeavesNothing() throws Exception {
+        File tmpDir = tmp.newFolder("tmp");
+        File zip = zip("skupina.zip", "a/1.txt", "a/2.txt", "b/3.txt", "b/4.txt");
+        boolean[] cancel = {false};
+        List<String> progress = new ArrayList<>();
+        assertNull(new ZipUnpacker(tmpDir).unpack(zip, () -> cancel[0], null, p -> {
+            progress.add(p.getFilesDone() + "/" + p.getFilesTotal());
+            if (p.getFilesDone() == 1) {
+                cancel[0] = true;
+            }
+        }));
+        assertEquals(Arrays.asList("0/4", "1/4"), progress);
+        assertArrayEquals(new String[0], tmpDir.list());
+    }
+
+    /** Průběh: na začátku 0 z N souborů, pak po každém souboru; adresáře se nepočítají, bajty jsou velikosti souborů. */
+    @Test
+    public void progressPerFileWithBytes() throws Exception {
+        File tmpDir = tmp.newFolder("tmp");
+        //obsah polozky je jeji nazev: "a/mets.xml" 10, "a/info.xml" 10, "b/x.txt" 7 bajtu
+        File zip = zip("skupina.zip", "a/", "a/mets.xml", "a/info.xml", "b/x.txt");
+        List<String> progress = new ArrayList<>();
+        ZipUnpacker.Result result = new ZipUnpacker(tmpDir).unpack(zip, () -> false, null, p -> progress.add(p.toString()));
+        assertEquals(Arrays.asList("0/3 files, 0/27 B", "1/3 files, 10/27 B", "2/3 files, 20/27 B", "3/3 files, 27/27 B"), progress);
+        assertEquals(new File(result.getContainerDir(), "skupina"), result.getExtractDir());
+        assertTrue(new File(result.getExtractDir(), "a/mets.xml").isFile());
+        assertTrue(new File(result.getExtractDir(), "b/x.txt").isFile());
+        ZipUnpacker.deleteWorkDir(result.getContainerDir());
+    }
+
+    /** Položka mimo cíl se pozná dřív, než se cokoli zapíše (ani platné položky před ní). */
+    @Test
+    public void entryOutsideTargetIsFoundBeforeWriting() throws Exception {
+        File zip = zip("balik.zip", "nk-1/mets.xml", "nk-1/info.xml", "../unik.txt");
+        File out = new File(tmp.newFolder("cil"), "rozbaleno");
+        try {
+            ZipUnpacker.extract(zip, out, () -> false, null);
+            fail("položka mimo cílový adresář");
+        } catch (IOException e) {
+            assertEquals("položka '../unik.txt' míří mimo cílový adresář", e.getMessage());
+        }
+        assertArrayEquals(new String[0], out.list());
+        assertFalse(new File(out.getParentFile(), "unik.txt").exists());
     }
 
     /** Položka ZIPu s cestou mimo cílový adresář: chyba, nic se nezapíše mimo a nic nezůstane. */
@@ -189,5 +242,23 @@ public class ZipUnpackerTest {
         assertEquals("balik", ZipUnpacker.extractDirName(new File("/a/balik.zip")));
         assertEquals("balik", ZipUnpacker.extractDirName(new File("/a/balik.Zip")));
         assertEquals("balik.tar", ZipUnpacker.extractDirName(new File("/a/balik.tar")));
+        //nazvy, ze kterych by vznikl prazdny nazev, "." nebo "..": rozbalovalo by se mimo pracovni adresar
+        assertEquals("rozbaleno", ZipUnpacker.extractDirName(new File("/a/.zip")));
+        assertEquals("rozbaleno", ZipUnpacker.extractDirName(new File("/a/..zip")));
+        assertEquals("rozbaleno", ZipUnpacker.extractDirName(new File("/a/...zip")));
+        assertEquals("...", ZipUnpacker.extractDirName(new File("/a/....zip")));
+    }
+
+    /** Archiv pojmenovaný „...zip“ se musí rozbalit do vlastního pracovního adresáře, ne o úroveň výš. */
+    @Test
+    public void zipNamedWithDotsStaysInsideWorkDir() throws Exception {
+        File tmpDir = tmp.newFolder("tmp");
+        File zip = zip("...zip", "a/mets.xml", "b/mets.xml");
+        ZipUnpacker.Result result = new ZipUnpacker(tmpDir).unpack(zip, () -> false, null);
+        File workDir = result.getContainerDir();
+        assertEquals(tmpDir, workDir.getParentFile());
+        assertTrue(new File(workDir, "rozbaleno/a/mets.xml").isFile());
+        assertFalse(new File(tmpDir, "a").exists());
+        assertArrayEquals(new String[]{workDir.getName()}, tmpDir.list());
     }
 }
