@@ -27,6 +27,16 @@ public final class ExternalTools {
 
     private static final String INSTALLATION_URL_PREFIX = "https://github.com/NLCR/komplexni-validator/wiki/Instalace#";
 
+    /**
+     * Podporované (ověřené) verze nástrojů: oddíl „Podporované verze nástrojů“ v README na větvi master, jediné místo,
+     * kde se vedou (aplikace vlastní popis verzí nemá, bublina u nástroje jen čte konfiguraci). Kotva je id nadpisu
+     * podle pravidel GitHubu, zakódované pro URL.
+     */
+    public static final String SUPPORTED_VERSIONS_URL = "https://github.com/NLCR/komplexni-validator/blob/master/README.md#podporovan%C3%A9-verze-n%C3%A1stroj%C5%AF";
+
+    /** Text odkazu na {@link #SUPPORTED_VERSIONS_URL}. */
+    public static final String SUPPORTED_VERSIONS_LINK_TEXT = "Podporované verze nástrojů";
+
     private ExternalTools() {
     }
 

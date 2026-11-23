@@ -4,6 +4,7 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.Hyperlink;
 import javafx.stage.WindowEvent;
 import nkp.pspValidator.gui.newvalidation.ExternalTools;
 import nkp.pspValidator.gui.newvalidation.ToolsOverview;
@@ -25,8 +26,21 @@ public class ExternalUtilsCheckDialogController extends DialogController {
     Button recheckButton;
     @FXML
     Button mainButton;
+    @FXML
+    Hyperlink installationLink;
+    @FXML
+    Hyperlink supportedVersionsLink;
 
     private boolean closeWhenFinished;
+
+    @FXML
+    private void initialize() {
+        supportedVersionsLink.setText(ExternalTools.SUPPORTED_VERSIONS_LINK_TEXT);
+        //odkazy jsou v obsahu ScrollPane, ktery Links.markExternalLinks po nacteni FXML jeste nevidi (bez skinu nema
+        //potomky): znacku odkazu ven proto doplnit tady
+        Links.markExternal(installationLink);
+        Links.markExternal(supportedVersionsLink);
+    }
 
     /**
      * @param closeWhenFinished zavřít dialog sám, jakmile jsou všechny nástroje dostupné
@@ -67,6 +81,10 @@ public class ExternalUtilsCheckDialogController extends DialogController {
 
     public void showHelp(ActionEvent actionEvent) {
         openUrl(ExternalTools.INSTALLATION_HELP_URL);
+    }
+
+    public void showSupportedVersions(ActionEvent actionEvent) {
+        openUrl(ExternalTools.SUPPORTED_VERSIONS_URL);
     }
 
     /** Souhrn v patičce a tlačítka podle celkového stavu (jako dosud: během kontroly nejde pokračovat). */

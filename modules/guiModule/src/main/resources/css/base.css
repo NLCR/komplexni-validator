@@ -157,6 +157,12 @@
     -fx-text-fill: -kv-primary;
 }
 
+/* rada odkazu vedle sebe (napr. Navod k instalaci nastroju a Podporovane verze nastroju) */
+.link-row {
+    -fx-spacing: 16;
+    -fx-alignment: center-left;
+}
+
 /* hlaska, kterou jde oznacit a zkopirovat (CopyableMessage): pole bez ramecku a pozadi, vypada jako text */
 .copyable-message-text,
 .copyable-message-text:focused {

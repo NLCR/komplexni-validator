@@ -66,7 +66,7 @@ public class ToolsTable extends VBox {
      *
      * @param paths      cesty k nástrojům (kdy se zapisují do nastavení, viz {@link ToolPathsDraft})
      * @param owner      okno pro výběr adresáře a okno s podrobnostmi
-     * @param urlOpener  otevření odkazu (návod k instalaci)
+     * @param urlOpener  otevření odkazu (návod k instalaci, podporované verze)
      * @param onChange   po každé změně stavu některého nástroje (souhrn, tlačítka okna), ve vlákně UI
      * @param threadName základ názvu pracovních vláken kontroly
      */
@@ -240,7 +240,13 @@ public class ToolsTable extends VBox {
         installation.getStyleClass().add("link");
         Links.markExternal(installation);
         installation.setOnAction(e -> urlOpener.accept(ExternalTools.installationUrl(util)));
-        frame.getContent().addAll(text, installation);
+        Hyperlink versions = new Hyperlink(ExternalTools.SUPPORTED_VERSIONS_LINK_TEXT);
+        versions.getStyleClass().add("link");
+        Links.markExternal(versions);
+        versions.setOnAction(e -> urlOpener.accept(ExternalTools.SUPPORTED_VERSIONS_URL));
+        HBox links = new HBox(installation, versions);
+        links.getStyleClass().add("link-row");
+        frame.getContent().addAll(text, links);
         Button close = new Button("Zavřít");
         close.getStyleClass().add("button-primary");
         close.setMinWidth(100);

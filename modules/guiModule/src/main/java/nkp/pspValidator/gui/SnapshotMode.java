@@ -66,7 +66,8 @@ import java.util.function.Supplier;
  * stav hlavního okna neukazoval výchozí (nepravdivou) dostupnost.
  * <p>
  * Okno Nastavení (krok {@code settings}): záložky podle {@code -Dkv.snapshotTab=versions,tools,skipping,dictionaries,dirs}
- * (výchozí všechny), pro každou snímek {@code settings-<záložka>.png}. Krok {@code settingsSave} ověří propsání výchozí
+ * (výchozí všechny), pro každou snímek {@code settings-<záložka>.png}; s {@code -Dkv.snapshotScrollBottom=true} navíc
+ * snímek záložky posunuté na konec ({@code settings-<záložka>-dole.png}). Krok {@code settingsSave} ověří propsání výchozí
  * verze: vypíše {@code DmfDetector.Params} z uloženého nastavení, v záložce Výchozí verze DMF vybere verzi podle
  * {@code -Dkv.snapshotDefaultVersion=<TYP>:<verze>} (typ jako {@code Dmf.Type}, verze {@code default} = výchozí
  * validátoru; výchozí {@code MONOGRAPH:1.4}) jako uživatel ({@code settings-changed.png}), uloží ji tlačítkem Uložit,
@@ -176,6 +177,7 @@ public class SnapshotMode {
     public static final String PROP_SOURCE = "kv.snapshotSource";
     public static final String PROP_CSV = "kv.snapshotCsv";
     public static final String PROP_TAB = "kv.snapshotTab";
+    public static final String PROP_SCROLL_BOTTOM = "kv.snapshotScrollBottom";
     public static final String PROP_DEFAULT_VERSION = "kv.snapshotDefaultVersion";
     public static final String PROP_RERUN_PREFERRED = "kv.snapshotRerunPreferred";
     public static final String PROP_RERUN_PACKAGE = "kv.snapshotRerunPackage";
@@ -659,7 +661,17 @@ public class SnapshotMode {
             controller.showTab(tab);
             after(() -> {
                 save(stage.getScene(), "settings-" + tab.getKey());
-                settingsTabs(stage, controller, tabs, index + 1);
+                if (Boolean.getBoolean(PROP_SCROLL_BOTTOM)) {
+                    for (Node node : stage.getScene().getRoot().lookupAll(".scroll-pane")) {
+                        ((javafx.scene.control.ScrollPane) node).setVvalue(1);
+                    }
+                    after(() -> {
+                        save(stage.getScene(), "settings-" + tab.getKey() + "-dole");
+                        settingsTabs(stage, controller, tabs, index + 1);
+                    });
+                } else {
+                    settingsTabs(stage, controller, tabs, index + 1);
+                }
             });
         }
 

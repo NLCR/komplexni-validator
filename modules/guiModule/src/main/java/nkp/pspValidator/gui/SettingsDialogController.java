@@ -539,9 +539,13 @@ public class SettingsDialogController extends DialogController {
                 () -> stage, this::openUrl, onChange, true, "nastaveni-nastroje");
         Region spacer = new Region();
         HBox.setHgrow(spacer, Priority.ALWAYS);
-        HBox bottom = new HBox(10, summary, spacer, Links.markExternal(link("Návod k instalaci nástrojů", () -> openUrl(ExternalTools.INSTALLATION_HELP_URL))), recheck);
+        HBox bottom = new HBox(10, summary, spacer, recheck);
         bottom.setAlignment(Pos.CENTER_LEFT);
-        content.getChildren().addAll(toolsTable, bottom);
+        //odkazy pod tabulkou jako v dialogu nastroju pri startu; vedle souhrnu a tlacitka by se nevesly
+        HBox links = new HBox(Links.markExternal(link("Návod k instalaci nástrojů", () -> openUrl(ExternalTools.INSTALLATION_HELP_URL))),
+                Links.markExternal(link(ExternalTools.SUPPORTED_VERSIONS_LINK_TEXT, () -> openUrl(ExternalTools.SUPPORTED_VERSIONS_URL))));
+        links.getStyleClass().add("link-row");
+        content.getChildren().addAll(toolsTable, links, bottom);
         return page(content);
     }
 

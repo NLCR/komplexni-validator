@@ -109,12 +109,13 @@ u každého souboru). Cesty k nástrojům i k balíkům smějí obsahovat mezery
 na Windows 11 a macOS se všemi nástroji kromě Kakadu). Na Windows ale JHOVE, shntool a MP3val nenajdou soubor, jehož
 cesta obsahuje znak mimo znakovou sadu systému (v českých Windows středoevropskou, tedy například řecké nebo ruské
 písmeno v názvu adresáře); validace pak u takového balíku hlásí chyby těchto nástrojů, i když soubory jsou
-v pořádku. Balíky proto na Windows ukládejte do cest bez takových znaků. Nástroje se instalují z oficiálních zdrojů, například
-[JHOVE](https://jhove.openpreservation.org/) (doporučená verze 1.34.0, nejméně 1.28) a
-[Jpylyzer](https://jpylyzer.openpreservation.org/) (doporučená verze 2.2.1, nejméně 2.0); instalátory nejsou součástí
-repozitáře ani vydaných zipů.
+v pořádku. Balíky proto na Windows ukládejte do cest bez takových znaků. Podporované verze nástrojů a odkud je brát:
+[Podporované verze nástrojů](#podporované-verze-nástrojů).
 
-### Ověřené verze nástrojů
+### Podporované verze nástrojů
+
+<!-- Na tento nadpis (kotva #podporované-verze-nástrojů) odkazuje aplikace (ExternalTools.SUPPORTED_VERSIONS_URL)
+a wiki, nadpis neměnit. Podporované verze nástrojů se vedou jen tady. -->
 
 Výstup nástroje (a tedy i to, jak ho validátor čte) se může mezi verzemi lišit. Validátor proto zná ověřené řady
 verzí každého nástroje podle platformy: řada 7.1 znamená libovolnou verzi 7.1.x (například 7.1.2-35 i 7.1.3-1),
@@ -126,6 +127,8 @@ lišit“. Validace přitom běží dál a výsledky ani verdikt se nemění. Se
 (`validatorConfig/externalUtils.xml`, element `verifiedVersions`) a aktualizuje se s novou verzí validátoru;
 konfigurace bez seznamu (starší nebo vlastní) nic neoznačuje. Ověřené řady (v závorce přesná verze, na které se
 ověřovalo):
+
+<!-- overene-verze:zacatek (tabulku hlídá test ReadmeVerifiedVersionsTest proti externalUtils.xml) -->
 
 | nástroj | macOS | Windows | Linux |
 |---|---|---|---|
@@ -139,15 +142,39 @@ ověřovalo):
 | veraPDF | 1.30 (1.30.2) | 1.30 (1.30.4) | jako macOS |
 | EPUBCheck | 5.4 (5.4.0) | 5.4 (5.4.0) | jako macOS |
 
+<!-- overene-verze:konec -->
+
 Na Linuxu zatím nikdo verze neověřil, platí proto řady ověřené na macOS; CLI i GUI u takové verze uvádějí „ověřeno
 na macOS“ (jen jako poznámku, do protokolu se nic nepíše).
+
+Požadavky zjištěné při ověřování:
+
+- ImageMagick musí umět JPEG 2000: ve výpisu `magick -version` (na Linuxu a macOS `convert -version`) obsahuje řádek
+  `Delegates` hodnotu `jp2`. Bez ní validátor hlásí chybu u každého souboru JP2. Běžná formule Homebrew `imagemagick`
+  JPEG 2000 neumí, formule `imagemagick-full` ano. Na Windows validátor volá `magick.exe` (ImageMagick 7), na Linuxu
+  a macOS příkazy `convert` a `identify`.
+- JHOVE nejméně 1.28. Běží na Javě (8 nebo novější).
+- Jpylyzer řady 2.x: výstup Jpylyzeru 1.x validátor nepřečte. Spouští se příkaz `jpylyzer` (Windows `jpylyzer.exe`),
+  ne skript `jpylyzer.py`.
+- Kakadu je komerční software: potřebuje vlastní licenci, nebo demo od výrobce s jeho podmínkami použití. Nástroj je
+  volitelný, soubory JPEG 2000 kontrolují i JHOVE, Jpylyzer a ImageMagick.
+- veraPDF nejméně 1.24 (sjednocený formát XML výstupu), EPUBCheck nejméně 5.0 (EPUB 3.3). Oba potřebují Javu (veraPDF
+  8, 11, 17 nebo 21, EPUBCheck 8 nebo novější), EPUBCheck ji bere z PATH (viz
+  [veraPDF a EPUBCheck](#verapdf-a-epubcheck-e-publikace)).
+
+Nástroje se instalují z oficiálních stránek projektů: [ImageMagick](https://imagemagick.org/),
+[JHOVE](https://jhove.openpreservation.org/), [Jpylyzer](https://jpylyzer.openpreservation.org/),
+[Kakadu](https://kakadusoftware.com/), [MP3val](https://mp3val.sourceforge.net/),
+[shntool](http://shnutils.freeshell.org/shntool/), [Checkmate](https://github.com/Sjord/checkmate),
+[veraPDF](https://verapdf.org/), [EPUBCheck](https://github.com/w3c/epubcheck); instalátory nejsou součástí
+repozitáře ani vydaných zipů. Postup instalace pro Windows, macOS a Linux je na wiki, stránka
+[Instalace](https://github.com/NLCR/komplexni-validator/wiki/Instalace).
 
 ### veraPDF a EPUBCheck (e-publikace)
 
 Soubory PDF a EPUB e-publikací kontrolují [veraPDF](https://verapdf.org/) (validace PDF/A) a
-[EPUBCheck](https://github.com/w3c/epubcheck). Doporučené minimální verze: veraPDF 1.24 (sjednocený formát XML
-výstupu), EPUBCheck 5.0 (EPUB 3.3); ověřeno s veraPDF 1.30 a EPUBCheck 5.4.0. Oba nástroje potřebují Javu
-(veraPDF 8, 11, 17 nebo 21, EPUBCheck 8 a novější).
+[EPUBCheck](https://github.com/w3c/epubcheck). Podporované verze a potřebná Java:
+[Podporované verze nástrojů](#podporované-verze-nástrojů).
 
 | nástroj | parametr CLI | adresář, který se zadává (CLI i GUI: Nastavení → Externí nástroje, „Nastavit cestu…“) |
 |---|---|---|
@@ -161,8 +188,8 @@ Instalace na macOS přes Homebrew (`brew install verapdf epubcheck`):
 
 U EPUBCheck se nesmí zadat `$(brew --prefix)/bin`: je tam jen spouštěcí skript `epubcheck` bez `epubcheck.jar`.
 Homebrew formule veraPDF má verzi 1.30.2, `verapdf --version` ale vypíše `veraPDF 1.30.0` (verze aplikační části,
-knihovny jsou 1.30.2); jde o stejnou instalaci. Jinde: veraPDF z https://software.verapdf.org/releases/verapdf-installer.zip
-(instalátor, spustit `java -jar` na rozbalený jar), EPUBCheck jako zip z https://github.com/w3c/epubcheck/releases.
+knihovny jsou 1.30.2); jde o stejnou instalaci. Jinde: veraPDF instalátorem ze stránky projektu (spustit `java -jar`
+na rozbalený jar), EPUBCheck jako zip ze stránky vydání projektu na GitHubu.
 
 Adresář EPUBChecku smí mít v cestě mezery (například `C:\Program Files\epubcheck-5.4.0`), platí to na Windows
 i na macOS. EPUBCheck se spouští příkazem `java -jar <adresář>/epubcheck.jar`, kde `java` je program z PATH, ne Java, ve které

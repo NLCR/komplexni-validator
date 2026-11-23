@@ -400,7 +400,8 @@ tasks.named('run', JavaExec) {
 //  -PsnapshotSource=group - zdroj Skupina baliku v dialogu (-PsnapshotPsp) i ve validaci (-PsnapshotValidate = adresar skupiny);
 //  kroky group, groupRerunOne, groupCancel (viz javadoc SnapshotMode), -PsnapshotCsv=<soubor> - kam krok group exportuje CSV
 //  krok settings: okno Nastaveni, snimek kazde zalozky; -PsnapshotTab=versions,tools,skipping,dictionaries,dirs - ktere
-//  zalozky (vlastnost kv.snapshotTab, vychozi vsechny); krok settingsMenu: rozbalene menu Nastaveni; krok settingsSave:
+//  zalozky (vlastnost kv.snapshotTab, vychozi vsechny), -PsnapshotScrollBottom=true - navic snimek zalozky posunute na konec
+//  (settings-<zalozka>-dole.png); krok settingsMenu: rozbalene menu Nastaveni; krok settingsSave:
 //  zmena vychozi verze v Nastaveni, ulozeni a vypis DmfDetector.Params, -PsnapshotDefaultVersion=MONOGRAPH:1.4
 //  (vlastnost kv.snapshotDefaultVersion, verze default = vychozi validatoru)
 //  krok setPreferred: zmena vychozi verze pred "Validovat znovu", -PsnapshotRerunPreferred=FUND_UNIT:0.1;
@@ -464,6 +465,9 @@ tasks.register('runSnapshots', JavaExec) {
     }
     if (project.hasProperty('snapshotTab')) {
         systemProperty 'kv.snapshotTab', project.property('snapshotTab')
+    }
+    if (project.hasProperty('snapshotScrollBottom')) {
+        systemProperty 'kv.snapshotScrollBottom', project.property('snapshotScrollBottom')
     }
     if (project.hasProperty('snapshotDefaultVersion')) {
         systemProperty 'kv.snapshotDefaultVersion', project.property('snapshotDefaultVersion')

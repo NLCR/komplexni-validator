@@ -15,7 +15,10 @@
         <ScrollPane fitToWidth="true" hbarPolicy="NEVER" styleClass="dialog-scroll" VBox.vgrow="ALWAYS">
             <VBox styleClass="dialog-scroll-content">
                 <ToolsTable fx:id="toolsTable"/>
-                <Hyperlink styleClass="link,external-link" text="Návod k instalaci nástrojů" onAction="#showHelp"/>
+                <HBox styleClass="link-row">
+                    <Hyperlink fx:id="installationLink" styleClass="link,external-link" text="Návod k instalaci nástrojů" onAction="#showHelp"/>
+                    <Hyperlink fx:id="supportedVersionsLink" styleClass="link,external-link" onAction="#showSupportedVersions"/>
+                </HBox>
             </VBox>
         </ScrollPane>
     </content>
