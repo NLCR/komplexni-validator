@@ -219,7 +219,11 @@ public class SnapshotMode {
         //nahledy: dialogy jen ukazou stav, nic nenacitaji ani nerozbaluji
         dialogs.put("init", () -> new ValidationDataInitializationDialog(dialogStage, main, true, null));
         dialogs.put("initError", () -> new ValidationDataInitializationDialog(dialogStage, main, true,
-                "Není definován adresář s konfigurací Validátoru!"));
+                //nejdelsi hlaska, jaka muze nastat (nahrazeny adresar a chyba nacteni): dialog se na ni musi vejit
+                ConfigurationManager.replacedDirNotice(
+                        new File("C:\\Users\\uzivatel\\Dokumenty\\Komplexni validator\\vlastni konfigurace\\validatorConfig"),
+                        new File("C:\\Users\\uzivatel\\AppData\\Local\\KomplexniValidator\\app\\validatorConfig"))
+                        + "\nkonfigurační adresář neexistuje: C:\\Users\\uzivatel\\AppData\\Local\\KomplexniValidator\\app\\validatorConfig"));
         File zip = new File(psp != null && psp.toLowerCase().endsWith(".zip") ? psp : "/data/baliky/nk-00027e.zip");
         File workDir = new File(System.getProperty("java.io.tmpdir"), "kv-rozbaleno-123456789");
         dialogs.put("unzip", () -> new UnzipAndValidateDialog(dialogStage, main, zip, null, false, false, 0)

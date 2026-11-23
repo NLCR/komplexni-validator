@@ -38,7 +38,7 @@ public class ValidationDataInitializationDialog extends AbstractDialog {
 
     @Override
     public int getHeight() {
-        return 320;
+        return 420;
     }
 
     @Override

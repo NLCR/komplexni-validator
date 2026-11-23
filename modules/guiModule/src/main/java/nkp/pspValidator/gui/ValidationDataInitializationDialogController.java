@@ -48,6 +48,12 @@ public class ValidationDataInitializationDialogController extends DialogControll
     @FXML
     Button btnSetFdmfsRootDir;
 
+    @FXML
+    Label noticeLabel;
+
+    @FXML
+    Button btnContinue;
+
     //other data
     private DialogState state = DialogState.RUNNING;
     /** náhled pro SnapshotMode: nic se nenačítá, jen se ukáže stav */
@@ -86,6 +92,8 @@ public class ValidationDataInitializationDialogController extends DialogControll
         //hide error & button
         setVisibleManaged(errorLabel, false);
         setVisibleManaged(btnSetFdmfsRootDir, false);
+        setVisibleManaged(noticeLabel, false);
+        setVisibleManaged(btnContinue, false);
         if (preview) {
             File dir = getConfigurationManager().getFileOrNull(ConfigurationManager.PROP_VALIDATOR_CONFIG_DIR);
             rootDirTextfield.setText(dir == null ? "" : dir.getAbsolutePath());
@@ -139,6 +147,14 @@ public class ValidationDataInitializationDialogController extends DialogControll
                         if (SnapshotMode.isEnabled()) {
                             stage.close();
                             SnapshotMode.start(main);
+                        } else if (replacedDirNotice() != null && !noticeShown) {
+                            //konfigurace se nacetla, ale z jineho adresare, nez mel uzivatel nastaveny: rict mu to
+                            noticeShown = true;
+                            noticeLabel.setText(replacedDirNotice() + " Adresář můžete změnit v Nastavení.");
+                            setVisibleManaged(noticeLabel, true);
+                            setVisibleManaged(btnContinue, true);
+                            container.setFooterNote("");
+                            btnContinue.requestFocus();
                         } else {
                             continueInApp(null);
                         }
@@ -154,10 +170,26 @@ public class ValidationDataInitializationDialogController extends DialogControll
     private void showError(String error) {
         state = DialogState.ERROR;
         setVisibleManaged(progressBox, false);
-        errorLabel.setText(error);
+        String notice = replacedDirNotice();
+        errorLabel.setText(notice == null || noticeShown ? error : notice + "\n" + error);
         setVisibleManaged(errorLabel, true);
         container.setFooterNote("Zavřením okna se aplikace ukončí.");
         setVisibleManaged(btnSetFdmfsRootDir, true);
+    }
+
+    /** upozornění na nahrazený adresář se ukazuje jen jednou (po výběru jiného adresáře už neplatí) */
+    private boolean noticeShown = false;
+
+    /**
+     * Text o tom, že adresář konfigurace uložený v nastavení při startu neexistoval a aplikace použila výchozí;
+     * null, když se nic nenahrazovalo.
+     */
+    private String replacedDirNotice() {
+        File missing = getConfigurationManager().getReplacedMissingValidatorConfigDir();
+        if (missing == null) {
+            return null;
+        }
+        return ConfigurationManager.replacedDirNotice(missing, getConfigurationManager().getDefaultValidatorConfigDir());
     }
 
     private static void setVisibleManaged(Node node, boolean visible) {
@@ -179,6 +211,7 @@ public class ValidationDataInitializationDialogController extends DialogControll
         }
         File selectedDirectory = chooser.showDialog(stage);
         if (selectedDirectory != null) {
+            noticeShown = true;
             getConfigurationManager().setFile(ConfigurationManager.PROP_VALIDATOR_CONFIG_DIR, selectedDirectory);
             startNow();
         }

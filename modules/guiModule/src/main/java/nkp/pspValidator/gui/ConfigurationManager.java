@@ -41,6 +41,8 @@ public class ConfigurationManager {
      * leží v instalaci aplikace (pokud existuje). Výchozí adresář se tak neoznačuje.
      */
     public static final String PROP_VALIDATOR_CONFIG_DIR_CHOSEN = "validatorConfig.dir.chosenByUser";
+    /** konfigurace validátoru ve zdrojích, relativně k pracovnímu adresáři modulu GUI při běhu z vývojového stromu */
+    static final String DEV_VALIDATOR_CONFIG_DIR = "../sharedModule/src/main/resources/nkp/pspValidator/shared/validatorConfig";
 
     //external tools
     public static final String PROP_EXTERNAL_TOOLS_CHECK_SHOWN = "external_tools_check.shown";
@@ -145,6 +147,7 @@ public class ConfigurationManager {
 
     private final Platform platform;
     private final Locations locations;
+    private File replacedMissingValidatorConfigDir;
     private final File configFile;
     private final Properties properties = new Properties();
 
@@ -171,6 +174,7 @@ public class ConfigurationManager {
         // použila pravidla ze staré instalace); vlastní existující adresář mimo instalaci zvolený uživatelem zůstává,
         // adresář výslovně zvolený v Nastavení zůstává, i když leží v instalaci
         boolean chosenByUser = getBooleanOrDefault(PROP_VALIDATOR_CONFIG_DIR_CHOSEN, false);
+        File storedDir = validatorConfigDir;
         if (validatorConfigDir != null && !DEV_MODE && locations.isStaleValidatorConfigDir(validatorConfigDir, chosenByUser)) {
             validatorConfigDir = null;
         }
@@ -178,6 +182,11 @@ public class ConfigurationManager {
             validatorConfigDir = locations.defaultValidatorConfigDir;
             properties.remove(PROP_VALIDATOR_CONFIG_DIR_CHOSEN);
             setFile(PROP_VALIDATOR_CONFIG_DIR, validatorConfigDir);
+            //ulozeny adresar zmizel (smazany, prejmenovany, odpojeny disk): start to ma uzivateli rict, ne jen
+            //tise prejit na vychozi konfiguraci
+            if (storedDir != null && !storedDir.isDirectory() && !sameFile(storedDir, validatorConfigDir)) {
+                replacedMissingValidatorConfigDir = storedDir;
+            }
         }
         //log dir
         File logDir = getFileOrNull(PROP_LOG_DIR);
@@ -342,10 +351,20 @@ public class ConfigurationManager {
                         userDataDir, workingDir);
             }
             File validatorConfigDir = new File(VALIDATOR_CONFIG_DIR_NAME);
+            boolean found = false;
             if (appJarDir != null) {
                 File besideJar = new File(appJarDir, VALIDATOR_CONFIG_DIR_NAME);
                 if (besideJar.isDirectory()) {
                     validatorConfigDir = besideJar.getAbsoluteFile();
+                    found = true;
+                }
+            }
+            // běh z vývojového stromu (Gradle, IDE; pracovní adresář modules/guiModule): konfigurace je ve zdrojích
+            // modulu sharedModule, vedle aplikace žádná není
+            if (!found && workingDir != null && !new File(workingDir, VALIDATOR_CONFIG_DIR_NAME).isDirectory()) {
+                File inSources = new File(workingDir, DEV_VALIDATOR_CONFIG_DIR);
+                if (inSources.isDirectory()) {
+                    validatorConfigDir = inSources.toPath().toAbsolutePath().normalize().toFile();
                 }
             }
             return new Locations(false, appJarDir, validatorConfigDir, new File(DEFAULT_LOG_DIR), null, workingDir);
@@ -555,6 +574,20 @@ public class ConfigurationManager {
     }
 
     /** Výchozí adresář konfigurace validátoru pro tento způsob spuštění (v instalaci, vedle jaru, v pracovním adresáři). */
+    /**
+     * Adresář konfigurace validátoru uložený v nastavení, který při tomto startu neexistoval a byl proto nahrazen
+     * výchozím; null, když se nic nenahrazovalo.
+     */
+    public File getReplacedMissingValidatorConfigDir() {
+        return replacedMissingValidatorConfigDir;
+    }
+
+    /** Věta pro uživatele o nahrazení neexistujícího adresáře konfigurace výchozím. */
+    public static String replacedDirNotice(File missing, File usedInstead) {
+        return "Dříve nastavený adresář konfigurace validátoru " + missing.getAbsolutePath()
+                + " už neexistuje, použil se výchozí adresář " + usedInstead.getAbsolutePath() + ".";
+    }
+
     public File getDefaultValidatorConfigDir() {
         return locations.defaultValidatorConfigDir;
     }

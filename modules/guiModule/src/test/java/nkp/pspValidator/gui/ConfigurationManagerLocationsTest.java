@@ -358,6 +358,90 @@ public class ConfigurationManagerLocationsTest {
         }
     }
 
+    /**
+     * Běh z vývojového stromu: vedle aplikace konfigurace není, pracovní adresář je modules/guiModule a konfigurace
+     * je ve zdrojích modulu sharedModule. Bez toho by výchozí adresář (validatorConfig v pracovním adresáři) neexistoval.
+     */
+    @Test
+    public void devRunUsesValidatorConfigFromSources() throws IOException {
+        File root = tmp.newFolder("repo");
+        File guiModule = new File(root, "modules/guiModule");
+        assertTrue(guiModule.mkdirs());
+        File inSources = new File(root, "modules/sharedModule/src/main/resources/nkp/pspValidator/shared/validatorConfig");
+        File classes = new File(guiModule, "build/classes/java/main");
+        assertTrue(classes.mkdirs());
+
+        //zdroje jeste nejsou: vychozi zustava relativni validatorConfig jako dosud
+        Locations loc = Locations.resolve(OperatingSystem.WINDOWS, false, classes, home, null, null, guiModule);
+        assertEquals(new File("validatorConfig"), loc.defaultValidatorConfigDir);
+
+        assertTrue(inSources.mkdirs());
+        loc = Locations.resolve(OperatingSystem.WINDOWS, false, classes, home, null, null, guiModule);
+        assertEquals(inSources.getCanonicalFile(), loc.defaultValidatorConfigDir.getCanonicalFile());
+        assertTrue(loc.defaultValidatorConfigDir.isAbsolute());
+        assertFalse("cesta má být normalizovaná", loc.defaultValidatorConfigDir.getPath().contains(".."));
+
+        //konfigurace primo v pracovnim adresari ma prednost (zip distribuce spoustena z vlastniho adresare)
+        assertTrue(new File(guiModule, "validatorConfig").mkdirs());
+        loc = Locations.resolve(OperatingSystem.WINDOWS, false, classes, home, null, null, guiModule);
+        assertEquals(new File("validatorConfig"), loc.defaultValidatorConfigDir);
+
+        //konfigurace vedle jaru ma prednost pred zdroji
+        assertTrue(new File(guiModule, "validatorConfig").delete());
+        File besideJar = new File(classes, "validatorConfig");
+        assertTrue(besideJar.mkdirs());
+        loc = Locations.resolve(OperatingSystem.WINDOWS, false, classes, home, null, null, guiModule);
+        assertEquals(besideJar.getAbsoluteFile(), loc.defaultValidatorConfigDir);
+    }
+
+    /** Uložený adresář konfigurace při startu neexistuje: nahradí se výchozím a správce si pamatuje, který to byl. */
+    @Test
+    public void managerRemembersReplacedMissingDir() throws IOException {
+        File jarDir = appJarDir("KomplexniValidator/app");
+        Locations loc = Locations.resolve(OperatingSystem.WINDOWS, true, jarDir, home, null, null, cwd);
+        Platform win = new Platform(OperatingSystem.WINDOWS, null, "Windows 11", "amd64");
+        //kanonicka cesta: nastaveni uklada kanonickou (na macOS je docasny adresar za symbolickym odkazem)
+        File chosen = tmp.newFolder("vlastni-konfigurace").getCanonicalFile();
+
+        ConfigurationManager manager = new ConfigurationManager(win, loc);
+        assertNull("první start: nic se nenahrazovalo", manager.getReplacedMissingValidatorConfigDir());
+        manager.setValidatorConfigDirChosenByUser(chosen);
+
+        //adresar existuje: nic se nenahrazuje
+        manager = new ConfigurationManager(win, loc);
+        assertNull(manager.getReplacedMissingValidatorConfigDir());
+        assertEquals(chosen.getCanonicalFile(), manager.getFileOrNull(ConfigurationManager.PROP_VALIDATOR_CONFIG_DIR));
+
+        //adresar zmizel
+        assertTrue(chosen.delete());
+        manager = new ConfigurationManager(win, loc);
+        assertEquals(chosen.getCanonicalFile(), manager.getReplacedMissingValidatorConfigDir().getCanonicalFile());
+        assertEquals(loc.defaultValidatorConfigDir.getCanonicalFile(), manager.getFileOrNull(ConfigurationManager.PROP_VALIDATOR_CONFIG_DIR));
+        assertEquals("Dříve nastavený adresář konfigurace validátoru " + chosen.getAbsolutePath()
+                        + " už neexistuje, použil se výchozí adresář " + loc.defaultValidatorConfigDir.getAbsolutePath() + ".",
+                ConfigurationManager.replacedDirNotice(manager.getReplacedMissingValidatorConfigDir(), manager.getDefaultValidatorConfigDir()));
+
+        //dalsi start uz ma ulozeny vychozi adresar: upozorneni se neopakuje
+        manager = new ConfigurationManager(win, loc);
+        assertNull(manager.getReplacedMissingValidatorConfigDir());
+    }
+
+    /** Adresář ze staré instalace nahrazený výchozím, který ale existuje, není „zmizelý“: bez upozornění jako dosud. */
+    @Test
+    public void staleExistingDirIsReplacedWithoutNotice() throws IOException {
+        File jarDir = appJarDir("KomplexniValidator/app");
+        Locations loc = Locations.resolve(OperatingSystem.WINDOWS, true, jarDir, home, null, null, cwd);
+        Platform win = new Platform(OperatingSystem.WINDOWS, null, "Windows 11", "amd64");
+        File otherInstall = new File(tmp.getRoot(), "Old/KomplexniValidator.app/Contents/app/validatorConfig");
+        assertTrue(otherInstall.mkdirs());
+        assertTrue(loc.userDataDir.mkdirs());
+        writeValidatorConfigDir(new File(loc.userDataDir, "config.properties"), otherInstall);
+
+        ConfigurationManager manager = new ConfigurationManager(win, loc);
+        assertEquals(loc.defaultValidatorConfigDir.getCanonicalFile(), manager.getFileOrNull(ConfigurationManager.PROP_VALIDATOR_CONFIG_DIR));
+        assertNull(manager.getReplacedMissingValidatorConfigDir());
+    }
+
     private static void writeValidatorConfigDir(File configFile, File dir) throws IOException {
         Properties props = new Properties();
         props.setProperty(ConfigurationManager.PROP_VALIDATOR_CONFIG_DIR, dir.getAbsolutePath());

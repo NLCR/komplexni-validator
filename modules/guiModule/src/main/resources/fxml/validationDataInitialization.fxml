@@ -20,10 +20,15 @@
             <Label styleClass="text-muted" text="Načítám konfiguraci…"/>
         </HBox>
 
+        <Label fx:id="noticeLabel" styleClass="notice-warning" wrapText="true" maxWidth="Infinity" minHeight="-Infinity"
+               visible="false" managed="false"/>
+
         <CopyableMessage fx:id="errorLabel" error="true"/>
     </content>
 
     <footerButtons>
+        <Button fx:id="btnContinue" styleClass="button-primary" onAction="#continueInApp" text="Pokračovat"
+                minWidth="100" visible="false" managed="false"/>
         <Button fx:id="btnSetFdmfsRootDir" styleClass="button-primary" onAction="#setFdmfsRootDir"
                 text="Nastavit adresář s konfigurací…" minWidth="-Infinity" defaultButton="true"/>
     </footerButtons>
