@@ -128,6 +128,38 @@ public class ToolChecksTest {
     }
 
     @Test
+    public void versionIsWrittenWithAvailabilityAndClearedWhenUnavailable() {
+        nextResult.put(JHOVE, ToolStatus.found("Jhove (Rel. 1.36.0, 2026-01-15)"));
+        checks.check(JHOVE);
+        runAll(workerQueue);
+        //pracovni vlakno verzi nezapisuje
+        assertNull(manager.getUtilVersion(JHOVE));
+        runAll(uiQueue);
+        assertEquals("Jhove (Rel. 1.36.0, 2026-01-15)", manager.getUtilVersion(JHOVE));
+
+        nextResult.put(JHOVE, ToolStatus.notFound("Cannot run program \"jhove\""));
+        checks.check(JHOVE);
+        runAll(workerQueue);
+        runAll(uiQueue);
+        assertNull(manager.getUtilVersion(JHOVE));
+        assertFalse(manager.isUtilAvailable(JHOVE));
+    }
+
+    @Test
+    public void staleResultDoesNotWriteVersion() {
+        nextResult.put(JHOVE, ToolStatus.found("Rel. 1.34.0"));
+        checks.check(JHOVE);
+        runAll(workerQueue);
+        checks.check(JHOVE);
+        runAll(uiQueue);
+        assertNull(manager.getUtilVersion(JHOVE));
+        nextResult.put(JHOVE, ToolStatus.found("Rel. 1.36.0"));
+        runAll(workerQueue);
+        runAll(uiQueue);
+        assertEquals("Rel. 1.36.0", manager.getUtilVersion(JHOVE));
+    }
+
+    @Test
     public void foundToolBecomesAvailableAgain() {
         manager.setUtilAvailable(EPUBCHECK, false);
         nextResult.put(EPUBCHECK, ToolStatus.found("5.1.0"));

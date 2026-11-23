@@ -9,6 +9,7 @@ import nkp.pspValidator.shared.engine.params.ValueParam;
 import nkp.pspValidator.shared.externalUtils.ExternalUtil;
 import nkp.pspValidator.shared.externalUtils.ExternalUtilExecution;
 import nkp.pspValidator.shared.externalUtils.ResourceType;
+import nkp.pspValidator.shared.externalUtils.VersionCheck;
 import nkp.pspValidator.shared.externalUtils.validation.BinaryFileProfile;
 import nkp.pspValidator.shared.externalUtils.validation.BinaryFileValidator;
 import nkp.pspValidator.shared.externalUtils.validation.Validation;
@@ -135,6 +136,18 @@ public class VfCheckBinaryFilesValidByExternalUtil extends ValidationFunction {
         } else {
             ValidationResult result = new ValidationResult();
             BinaryFileProfile profile = validator.getProfile(type, execution.getUtil());
+            //neoverena nebo nerozpoznana verze nastroje: jedna INFO na pravidlo (ne na soubor), ostatni vysledky se nemeni;
+            //XML protokol nese kratkou hlasku, verzi (actualValue) a overene rady (valueSpec)
+            VersionCheck versionCheck = validator.getVersionCheck(execution.getUtil());
+            if (profile != null && versionCheck != null && versionCheck.isWarning()) {
+                result.addError(
+                        new ValidationProblem(Level.INFO, versionCheck.protocolMessage(execution.getUtil().getUserFriendlyName()))
+                                .withSimpleMessage(versionCheck.protocolSimpleMessage())
+                                .withToolName(execution.getUtil().getUserFriendlyName())
+                                .withActualValue(versionCheck.protocolActualValue())
+                                .withValueSpec(versionCheck.seriesPhrase())
+                );
+            }
             if (profile == null) {
                 return singlErrorResult(
                         //invalid(Level.ERROR, "nenalezen profil binárního souboru pro typ %s a nástroj %s", type, execution)

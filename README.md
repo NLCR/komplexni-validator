@@ -104,8 +104,7 @@ závislostmi (`KomplexniValidatorCLI.jar`) a adresář `validatorConfig`.
 
 Externí nástroje (ImageMagick, JHOVE, Jpylyzer, Kakadu, MP3val, shntool, Checkmate, veraPDF, EPUBCheck) se zadávají
 adresářem (`--<nástroj>-path`, např. `--jhove-path`) nebo vypínají (`--disable-<nástroj>`); bez cesty se hledají
-v PATH. Validátor verze nástrojů nekontroluje, jen je vypíše. Nástroj, jehož verzi se nepodaří zjistit, se pro
-validaci vypne: pravidlo pak hlásí jednu informaci „nástroj … není dostupný“ (dříve CLI hlásilo chybu spuštění
+v PATH. Nástroj, jehož verzi se nepodaří zjistit, se pro validaci vypne: pravidlo pak hlásí jednu informaci „nástroj … není dostupný“ (dříve CLI hlásilo chybu spuštění
 u každého souboru). Cesty k nástrojům i k balíkům smějí obsahovat mezery a českou diakritiku (ověřeno
 na Windows 11 a macOS se všemi nástroji kromě Kakadu). Na Windows ale JHOVE, shntool a MP3val nenajdou soubor, jehož
 cesta obsahuje znak mimo znakovou sadu systému (v českých Windows středoevropskou, tedy například řecké nebo ruské
@@ -114,6 +113,34 @@ v pořádku. Balíky proto na Windows ukládejte do cest bez takových znaků. N
 [JHOVE](https://jhove.openpreservation.org/) (doporučená verze 1.34.0, nejméně 1.28) a
 [Jpylyzer](https://jpylyzer.openpreservation.org/) (doporučená verze 2.2.1, nejméně 2.0); instalátory nejsou součástí
 repozitáře ani vydaných zipů.
+
+### Ověřené verze nástrojů
+
+Výstup nástroje (a tedy i to, jak ho validátor čte) se může mezi verzemi lišit. Validátor proto zná ověřené řady
+verzí každého nástroje podle platformy: řada 7.1 znamená libovolnou verzi 7.1.x (například 7.1.2-35 i 7.1.3-1),
+ne 7.10 ani 7.2. Zjištěná verze, která do žádné ověřené řady nepatří (nebo kterou nejde z výstupu nástroje rozpoznat),
+se označí jako neověřená: CLI to vypíše pod řádkem s verzí nástroje, GUI ukáže u nástroje „neověřená verze“ a žlutou
+tečku a protokol validace má u každého pravidla, které nástroj používá, jednu informaci (INFO), například „nástroj
+JHOVE je ve verzi 1.36.0, která nebyla s validátorem ověřena (ověřené řady: 1.29, 1.34); výsledky kontroly se mohou
+lišit“. Validace přitom běží dál a výsledky ani verdikt se nemění. Seznam je v konfiguraci validátoru
+(`validatorConfig/externalUtils.xml`, element `verifiedVersions`) a aktualizuje se s novou verzí validátoru;
+konfigurace bez seznamu (starší nebo vlastní) nic neoznačuje. Ověřené řady (v závorce přesná verze, na které se
+ověřovalo):
+
+| nástroj | macOS | Windows | Linux |
+|---|---|---|---|
+| ImageMagick | 7.1 (7.1.2-35) | 7.1 (7.1.2-35) | jako macOS |
+| JHOVE | 1.29 (1.29.0-SNAPSHOT), 1.34 (1.34.0) | 1.34 (1.34.0) | jako macOS |
+| Jpylyzer | 2.2 (2.2.1) | 2.2 (2.2.1) | jako macOS |
+| Kakadu | 8.5 (8.5) | žádná | jako macOS |
+| MP3val | 0.1 (0.1.8) | 0.1 (0.1.8) | jako macOS |
+| shntool | 3.0 (3.0.10) | 3.0 (3.0.10) | jako macOS |
+| Checkmate | 0.22 (0.22) | 0.22 (0.22) | jako macOS |
+| veraPDF | 1.30 (1.30.2) | 1.30 (1.30.4) | jako macOS |
+| EPUBCheck | 5.4 (5.4.0) | 5.4 (5.4.0) | jako macOS |
+
+Na Linuxu zatím nikdo verze neověřil, platí proto řady ověřené na macOS; CLI i GUI u takové verze uvádějí „ověřeno
+na macOS“ (jen jako poznámku, do protokolu se nic nepíše).
 
 ### veraPDF a EPUBCheck (e-publikace)
 

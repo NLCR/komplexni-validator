@@ -115,7 +115,8 @@ public final class ExternalTools {
             return ToolStatus.error("detekce verze není definována");
         }
         try {
-            return ToolStatus.found(manager.runUtilVersionDetection(util));
+            String version = manager.runUtilVersionDetection(util);
+            return ToolStatus.found(version, manager.checkVersion(util, version));
         } catch (CliCommand.CliCommandException e) {
             return classifyFailure(e.getMessage());
         } catch (RuntimeException e) {

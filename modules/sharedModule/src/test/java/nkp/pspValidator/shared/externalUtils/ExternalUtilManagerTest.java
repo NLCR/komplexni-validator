@@ -267,6 +267,8 @@ public class ExternalUtilManagerTest {
         ExternalUtilManager manager = manager(OperatingSystem.MAC);
         manager.setPath(ExternalUtil.EPUBCHECK, epubcheckDir);
         assertEquals("EPUBCheck v5.4.0", manager.runUtilVersionDetection(ExternalUtil.EPUBCHECK));
+        // EPUBCheck 5.4.0 je overeny na macOS (rada 5.4)
+        assertEquals(VersionCheck.Status.VERIFIED, manager.checkVersion(ExternalUtil.EPUBCHECK, "EPUBCheck v5.4.0").getStatus());
 
         // spusteni: argumenty --out - -q <soubor>, XML se cte ze stdout, exit kod (1 u chyb v EPUB) se ignoruje
         fakeJar(epubcheckDir, "epubcheck.jar", outputFile("epubcheck", "notwellformed_epub2_sample1.xml"));

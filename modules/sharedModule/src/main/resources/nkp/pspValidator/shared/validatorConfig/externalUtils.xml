@@ -3,9 +3,29 @@
     Available variables are:
     ${UTIL_PATH} - in version detection and execution will be replaced by whole path to given util, if the path is set, and with empty string otherwise
     ${TARGET_FILE} - in execution will be replaced by target file, with absolute path
+
+    verifiedVersions: ověřené řady verzí nástroje podle platformy. Verze z ověřené řady (řada 7.1 platí pro 7.1.x
+    včetně 7.1.2-35, ne pro 7.10 ani 7.2) se bere jako ověřená. Jiná verze, nebo verze, kterou nejde z výstupu detekce
+    rozpoznat, se označí: v protokolu jedna INFO u každého pravidla, které nástroj používá, ve výpisu nástrojů v CLI
+    a ve stavu nástroje v GUI; validace běží dál a výsledky se nemění.
+    - series: řada (čísla oddělená tečkou), atribut verifiedWith je přesná verze, na které se ověřovalo (jen pro zobrazení);
+    - operatingSystem bez series: na platformě není ověřena žádná verze (každá verze je neověřená);
+    - operatingSystem s inheritsFrom="MAC": platí seznam jiné platformy s poznámkou „ověřeno na macOS“ (Linux zatím
+      nikdo neověřil);
+    - platforma, která chybí (nebo nástroj bez verifiedVersions): seznam není, verze se neoznačuje.
+    Seznam se aktualizuje s novou verzí validátoru podle testů s nástroji na Windows a macOS.
 -->
 <externalUtils>
     <util name="JPYLYZER">
+        <verifiedVersions>
+            <operatingSystem name="MAC">
+                <series verifiedWith="2.2.1">2.2</series>
+            </operatingSystem>
+            <operatingSystem name="WINDOWS">
+                <series verifiedWith="2.2.1">2.2</series>
+            </operatingSystem>
+            <operatingSystem name="LINUX" inheritsFrom="MAC"/>
+        </verifiedVersions>
         <versionDetection>
             <!--jpylyzer 1.17-->
             <!--
@@ -93,6 +113,15 @@
     </util>
 
     <util name="IMAGE_MAGICK">
+        <verifiedVersions>
+            <operatingSystem name="MAC">
+                <series verifiedWith="7.1.2-35">7.1</series>
+            </operatingSystem>
+            <operatingSystem name="WINDOWS">
+                <series verifiedWith="7.1.2-35">7.1</series>
+            </operatingSystem>
+            <operatingSystem name="LINUX" inheritsFrom="MAC"/>
+        </verifiedVersions>
         <versionDetection>
             <!--https://gist.github.com/Lammerink/3926636-->
             <operatingSystem name="LINUX">
@@ -151,6 +180,16 @@
 
     <util name="JHOVE">
         <!-- instalace: https://github.com/NLCR/komplexni-validator/wiki/Instalace#jhove -->
+        <verifiedVersions>
+            <operatingSystem name="MAC">
+                <series verifiedWith="1.29.0-SNAPSHOT">1.29</series>
+                <series verifiedWith="1.34.0">1.34</series>
+            </operatingSystem>
+            <operatingSystem name="WINDOWS">
+                <series verifiedWith="1.34.0">1.34</series>
+            </operatingSystem>
+            <operatingSystem name="LINUX" inheritsFrom="MAC"/>
+        </verifiedVersions>
         <versionDetection>
             <operatingSystem name="LINUX">
                 <command>${UTIL_PATH}jhove --version</command>
@@ -226,6 +265,14 @@
     </util>
 
     <util name="KAKADU">
+        <verifiedVersions>
+            <operatingSystem name="MAC">
+                <series verifiedWith="8.5">8.5</series>
+            </operatingSystem>
+            <!-- na Windows zatím neověřeno (demo Kakadu jen přes formulář), každá verze je neověřená -->
+            <operatingSystem name="WINDOWS"/>
+            <operatingSystem name="LINUX" inheritsFrom="MAC"/>
+        </verifiedVersions>
         <versionDetection>
             <operatingSystem name="LINUX">
                 <command>${UTIL_PATH}kdu_expand -version</command>
@@ -279,6 +326,15 @@
     </util>
 
     <util name="MP3VAL">
+        <verifiedVersions>
+            <operatingSystem name="MAC">
+                <series verifiedWith="0.1.8">0.1</series>
+            </operatingSystem>
+            <operatingSystem name="WINDOWS">
+                <series verifiedWith="0.1.8">0.1</series>
+            </operatingSystem>
+            <operatingSystem name="LINUX" inheritsFrom="MAC"/>
+        </verifiedVersions>
         <versionDetection>
             <operatingSystem name="LINUX">
                 <command>${UTIL_PATH}mp3val -v</command>
@@ -328,6 +384,15 @@
     </util>
 
     <util name="SHNTOOL">
+        <verifiedVersions>
+            <operatingSystem name="MAC">
+                <series verifiedWith="3.0.10">3.0</series>
+            </operatingSystem>
+            <operatingSystem name="WINDOWS">
+                <series verifiedWith="3.0.10">3.0</series>
+            </operatingSystem>
+            <operatingSystem name="LINUX" inheritsFrom="MAC"/>
+        </verifiedVersions>
         <versionDetection>
             <operatingSystem name="LINUX">
                 <command>${UTIL_PATH}shntool -v</command>
@@ -377,6 +442,15 @@
     </util>
 
     <util name="CHECKMATE">
+        <verifiedVersions>
+            <operatingSystem name="MAC">
+                <series verifiedWith="0.22">0.22</series>
+            </operatingSystem>
+            <operatingSystem name="WINDOWS">
+                <series verifiedWith="0.22">0.22</series>
+            </operatingSystem>
+            <operatingSystem name="LINUX" inheritsFrom="MAC"/>
+        </verifiedVersions>
         <versionDetection>
             <operatingSystem name="LINUX">
                 <command>${UTIL_PATH}mpck -V</command>
@@ -428,6 +502,16 @@
     <util name="VERAPDF">
         <!-- instalace: https://github.com/NLCR/komplexni-validator/wiki/Instalace#verapdf -->
         <!-- ${UTIL_PATH} je instalační adresář veraPDF (se skriptem verapdf, resp. verapdf.bat), u Homebrew na macOS např. /opt/homebrew/bin -->
+        <verifiedVersions>
+            <operatingSystem name="MAC">
+                <!-- Homebrew 1.30.2, detekce verze ale vypíše „veraPDF 1.30.0“ (verze aplikační části) -->
+                <series verifiedWith="1.30.2">1.30</series>
+            </operatingSystem>
+            <operatingSystem name="WINDOWS">
+                <series verifiedWith="1.30.4">1.30</series>
+            </operatingSystem>
+            <operatingSystem name="LINUX" inheritsFrom="MAC"/>
+        </verifiedVersions>
         <versionDetection>
             <operatingSystem name="LINUX">
                 <command>${UTIL_PATH}verapdf --version</command>
@@ -479,6 +563,15 @@
     <util name="EPUBCHECK">
         <!-- instalace: https://github.com/NLCR/komplexni-validator/wiki/Instalace#epubcheck -->
         <!-- ${UTIL_PATH} je adresář s epubcheck.jar (a podadresářem lib), u Homebrew na macOS např. /opt/homebrew/opt/epubcheck/libexec; java se bere z PATH -->
+        <verifiedVersions>
+            <operatingSystem name="MAC">
+                <series verifiedWith="5.4.0">5.4</series>
+            </operatingSystem>
+            <operatingSystem name="WINDOWS">
+                <series verifiedWith="5.4.0">5.4</series>
+            </operatingSystem>
+            <operatingSystem name="LINUX" inheritsFrom="MAC"/>
+        </verifiedVersions>
         <versionDetection>
             <operatingSystem name="LINUX">
                 <command>java -jar ${UTIL_PATH}epubcheck.jar --version</command>

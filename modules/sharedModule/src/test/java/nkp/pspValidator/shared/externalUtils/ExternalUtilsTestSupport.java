@@ -112,6 +112,11 @@ public final class ExternalUtilsTestSupport {
             super(new HashMap<>(), new HashMap<>());
         }
 
+        /** S ověřenými řadami verzí (jako manažer z konfigurace pro jednu platformu). */
+        public CannedOutputExternalUtilManager(Map<ExternalUtil, VerifiedVersions> verifiedVersions) {
+            super(new HashMap<>(), new HashMap<>(), verifiedVersions);
+        }
+
         public CannedOutputExternalUtilManager withOutput(ExternalUtil util, String output) {
             outputs.put(util, output);
             failures.remove(util);

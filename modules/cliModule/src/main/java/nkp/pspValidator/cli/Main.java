@@ -13,6 +13,7 @@ import nkp.pspValidator.shared.externalUtils.CliCommand;
 import nkp.pspValidator.shared.externalUtils.ExternalUtil;
 import nkp.pspValidator.shared.externalUtils.ExternalUtilManager;
 import nkp.pspValidator.shared.externalUtils.ExternalUtilManagerFactory;
+import nkp.pspValidator.shared.externalUtils.VersionCheck;
 import nkp.pspValidator.shared.metadataProfile.DictionaryManager;
 import nkp.pspValidator.shared.metadataProfile.MetadataProfile;
 import nkp.pspValidator.shared.metadataProfile.MetadataProfileParser;
@@ -1490,7 +1491,13 @@ public class Main {
     }
 
 
-    private static void detectImageTools(PrintStream out, ExternalUtilManager externalUtilManager, Set<ExternalUtil> utilsDisabled) {
+    /**
+     * Zjisti dostupnost a verzi nastroju a vypise je. Radky "Kontroluji dostupnost nastroje X: nalezen, verze: ..."
+     * zustavaji beze zmeny (muze je cist webovy validator); u neoverene nebo nerozpoznane verze a u verze overene
+     * na jine platforme (Linux podle macOS) nasleduje dalsi radek s poznamkou odsazeny ctyrmi mezerami
+     * ({@link VersionCheck#cliNote()}), overena verze poznamku nema.
+     */
+    static void detectImageTools(PrintStream out, ExternalUtilManager externalUtilManager, Set<ExternalUtil> utilsDisabled) {
         for (ExternalUtil util : ExternalUtil.values()) {
             if (utilsDisabled.contains(util)) {
                 out.println(String.format("Vypnuto použití nástroje %s.", util.getUserFriendlyName()));
@@ -1507,7 +1514,12 @@ public class Main {
                         String version = externalUtilManager.runUtilVersionDetection(util);
                         if (version != null) {
                             externalUtilManager.setUtilAvailable(util, true);
+                            externalUtilManager.setUtilVersion(util, version);
                             out.println("nalezen, verze: " + version);
+                            String note = externalUtilManager.checkVersion(util, version).cliNote();
+                            if (note != null) {
+                                out.println("    " + note);
+                            }
                         } else {
                             externalUtilManager.setUtilAvailable(util, false);
                             out.println("nenalezen");

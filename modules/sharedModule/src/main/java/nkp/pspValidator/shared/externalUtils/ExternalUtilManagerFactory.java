@@ -7,6 +7,8 @@ import nkp.pspValidator.shared.engine.exceptions.ValidatorConfigurationException
 import org.w3c.dom.Element;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.EnumMap;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -25,6 +27,7 @@ public class ExternalUtilManagerFactory {
 
     private final Map<OperatingSystem, Map<ExternalUtil, UtilHandler>> utilVersionDetectionInfoByOs = new HashMap<>();
     private final Map<OperatingSystem, Map<ExternalUtilExecution, UtilHandler>> utilExecutionInfoByOs = new HashMap<>();
+    private final Map<OperatingSystem, Map<ExternalUtil, VerifiedVersions>> verifiedVersionsByOs = new EnumMap<>(OperatingSystem.class);
 
     public ExternalUtilManagerFactory(File configFile) throws ValidatorConfigurationException {
         XMLTag doc = XMLDoc.from(configFile, true);
@@ -34,6 +37,11 @@ public class ExternalUtilManagerFactory {
         List<Element> utilEls = getChildrenElementsByName(doc.getCurrentTag(), "util");
         for (Element utilEl : utilEls) {
             ExternalUtil util = ExternalUtil.valueOf(utilEl.getAttribute("name"));
+
+            Element verifiedVersionsEl = getFirstChildElementsByName(utilEl, "verifiedVersions");
+            if (verifiedVersionsEl != null) {
+                addVerifiedVersions(util, verifiedVersionsEl);
+            }
 
             Element versionDetectionEl = getFirstChildElementsByName(utilEl, "versionDetection");
             List<Element> versionDetectionsEls = getChildrenElementsByName(versionDetectionEl, "operatingSystem");
@@ -65,6 +73,69 @@ public class ExternalUtilManagerFactory {
         }
     }
 
+    /**
+     * Ověřené řady verzí nástroje podle platformy (element verifiedVersions):
+     * <pre>
+     * &lt;verifiedVersions&gt;
+     *     &lt;operatingSystem name="MAC"&gt;
+     *         &lt;series verifiedWith="1.34.0"&gt;1.34&lt;/series&gt;
+     *     &lt;/operatingSystem&gt;
+     *     &lt;operatingSystem name="WINDOWS"/&gt;             (na platformě není ověřena žádná verze)
+     *     &lt;operatingSystem name="LINUX" inheritsFrom="MAC"/&gt; (platí seznam macOS s poznámkou „ověřeno na macOS“)
+     * &lt;/verifiedVersions&gt;
+     * </pre>
+     * Platforma, která v seznamu chybí (nebo nástroj bez elementu verifiedVersions), seznam nemá a verze se na ní
+     * neoznačuje. Převzít lze jen vlastní seznam jiné platformy, ne převzatý.
+     */
+    private void addVerifiedVersions(ExternalUtil util, Element verifiedVersionsEl) throws ValidatorConfigurationException {
+        Map<OperatingSystem, VerifiedVersions> own = new EnumMap<>(OperatingSystem.class);
+        Map<OperatingSystem, OperatingSystem> inheriting = new EnumMap<>(OperatingSystem.class);
+        for (Element osEl : getChildrenElementsByName(verifiedVersionsEl, "operatingSystem")) {
+            OperatingSystem os = parseOs(util, osEl.getAttribute("name"));
+            if (own.containsKey(os) || inheriting.containsKey(os)) {
+                throw new ValidatorConfigurationException("%s: ověřené verze pro %s jsou uvedeny dvakrát", util, os);
+            }
+            List<Element> seriesEls = getChildrenElementsByName(osEl, "series");
+            String inheritsFrom = osEl.getAttribute("inheritsFrom");
+            if (inheritsFrom != null && !inheritsFrom.trim().isEmpty()) {
+                if (!seriesEls.isEmpty()) {
+                    throw new ValidatorConfigurationException("%s: platforma %s přebírá ověřené verze z %s, nesmí mít vlastní řady", util, os, inheritsFrom);
+                }
+                inheriting.put(os, parseOs(util, inheritsFrom.trim()));
+                continue;
+            }
+            List<VerifiedVersions.Series> series = new ArrayList<>();
+            for (Element seriesEl : seriesEls) {
+                String value = seriesEl.getTextContent().trim();
+                if (!UtilVersion.isValidSeries(value)) {
+                    throw new ValidatorConfigurationException("%s: neplatná řada verzí pro %s: '%s'", util, os, value);
+                }
+                String verifiedWith = seriesEl.getAttribute("verifiedWith");
+                series.add(new VerifiedVersions.Series(value, verifiedWith == null || verifiedWith.trim().isEmpty() ? null : verifiedWith.trim()));
+            }
+            own.put(os, new VerifiedVersions(series, null));
+        }
+        for (Map.Entry<OperatingSystem, OperatingSystem> entry : inheriting.entrySet()) {
+            VerifiedVersions source = own.get(entry.getValue());
+            if (source == null) {
+                throw new ValidatorConfigurationException("%s: platforma %s přebírá ověřené verze z %s, ta ale vlastní seznam nemá", util, entry.getKey(), entry.getValue());
+            }
+            verifiedVersionsByOs.computeIfAbsent(entry.getKey(), os -> new EnumMap<>(ExternalUtil.class))
+                    .put(util, source.inheritedFrom(entry.getValue()));
+        }
+        for (Map.Entry<OperatingSystem, VerifiedVersions> entry : own.entrySet()) {
+            verifiedVersionsByOs.computeIfAbsent(entry.getKey(), os -> new EnumMap<>(ExternalUtil.class)).put(util, entry.getValue());
+        }
+    }
+
+    private static OperatingSystem parseOs(ExternalUtil util, String name) throws ValidatorConfigurationException {
+        try {
+            return OperatingSystem.valueOf(name);
+        } catch (IllegalArgumentException e) {
+            throw new ValidatorConfigurationException("%s: neznámý operační systém v ověřených verzích: '%s'", util, name);
+        }
+    }
+
     private void addVersionDetection(OperatingSystem os, ExternalUtil util, String rawCommand, Stream outStream, String outRegexp) {
         if (!utilVersionDetectionInfoByOs.containsKey(os)) {
             utilVersionDetectionInfoByOs.put(os, new HashMap<>());
@@ -92,7 +163,9 @@ public class ExternalUtilManagerFactory {
 
 
     public ExternalUtilManager buildExternalUtilManager(OperatingSystem os) {
-        return new ExternalUtilManager(utilVersionDetectionInfoByOs.get(os), utilExecutionInfoByOs.get(os));
+        Map<ExternalUtil, VerifiedVersions> verified = verifiedVersionsByOs.get(os);
+        return new ExternalUtilManager(utilVersionDetectionInfoByOs.get(os), utilExecutionInfoByOs.get(os),
+                verified == null ? new EnumMap<>(ExternalUtil.class) : verified);
     }
 
 }

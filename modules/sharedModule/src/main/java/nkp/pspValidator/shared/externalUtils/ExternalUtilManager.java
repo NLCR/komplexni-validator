@@ -4,10 +4,13 @@ import nkp.pspValidator.shared.externalUtils.UtilHandler.CommandData;
 import nkp.pspValidator.shared.externalUtils.UtilHandler.Parser;
 
 import java.io.File;
+import java.util.Collections;
+import java.util.EnumMap;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -19,15 +22,71 @@ public class ExternalUtilManager {
     private final Map<ExternalUtil, UtilHandler> utilVersionDetectionHandlers;
     private final Map<ExternalUtilExecution, UtilHandler> utilExecutionHandlers;
     private final Map<String, Boolean> utilAvailable = new HashMap<>();
+    /** ověřené řady verzí pro platformu manažeru; nástroj bez záznamu seznam nemá (VersionCheck.Status.NO_LIST) */
+    private final Map<ExternalUtil, VerifiedVersions> verifiedVersions;
+    /** text detekce verze zapsaný CLI nebo GUI po úspěšné detekci (čte ho validace v jiném vlákně) */
+    private final Map<ExternalUtil, String> detectedVersions = new ConcurrentHashMap<>();
 
     private final Set<ExternalUtil> utilsDisabled = new HashSet<>();
 
+    /** Manažer bez seznamů ověřených verzí (žádná verze se neoznačuje). */
     public ExternalUtilManager(Map<ExternalUtil, UtilHandler> utilVersionDetectionHandlers, Map<ExternalUtilExecution, UtilHandler> utilExecutionHandlers) {
+        this(utilVersionDetectionHandlers, utilExecutionHandlers, Collections.<ExternalUtil, VerifiedVersions>emptyMap());
+    }
+
+    /**
+     * @param verifiedVersions ověřené řady verzí nástrojů pro platformu manažeru (nástroj bez záznamu seznam nemá)
+     */
+    public ExternalUtilManager(Map<ExternalUtil, UtilHandler> utilVersionDetectionHandlers, Map<ExternalUtilExecution, UtilHandler> utilExecutionHandlers,
+                               Map<ExternalUtil, VerifiedVersions> verifiedVersions) {
         this.utilVersionDetectionHandlers = utilVersionDetectionHandlers;
         this.utilExecutionHandlers = utilExecutionHandlers;
+        this.verifiedVersions = verifiedVersions.isEmpty()
+                ? Collections.<ExternalUtil, VerifiedVersions>emptyMap()
+                : Collections.unmodifiableMap(new EnumMap<>(verifiedVersions));
         for (ExternalUtil util : ExternalUtil.values()) {
             utilAvailable.put(util.name(), true);
         }
+    }
+
+    /** Ověřené řady verzí nástroje pro platformu manažeru, nebo null, když je konfigurace neuvádí. */
+    public VerifiedVersions getVerifiedVersions(ExternalUtil util) {
+        return verifiedVersions.get(util);
+    }
+
+    /**
+     * Porovná text detekce verze nástroje s ověřenými řadami (nic nespouští ani nemění, lze volat z kteréhokoli
+     * vlákna).
+     */
+    public VersionCheck checkVersion(ExternalUtil util, String detectionText) {
+        return VersionCheck.evaluate(verifiedVersions.get(util), detectionText);
+    }
+
+    /**
+     * Zapíše text detekce verze dostupného nástroje (CLI a GUI po úspěšné detekci, null zápis zruší). Podle něj validace
+     * u pravidel nástroje ohlásí neověřenou verzi ({@link #getVersionCheck}). {@link #runUtilVersionDetection} verzi
+     * sama nezapisuje: v GUI běží v pracovním vlákně a o platnosti výsledku rozhoduje až volající.
+     */
+    public void setUtilVersion(ExternalUtil util, String detectionText) {
+        if (detectionText == null) {
+            detectedVersions.remove(util);
+        } else {
+            detectedVersions.put(util, detectionText);
+        }
+    }
+
+    /** Zapsaný text detekce verze nástroje, nebo null. */
+    public String getUtilVersion(ExternalUtil util) {
+        return detectedVersions.get(util);
+    }
+
+    /**
+     * Porovnání zapsané verze nástroje ({@link #setUtilVersion}) s ověřenými řadami, nebo null, když verze zapsaná
+     * není.
+     */
+    public VersionCheck getVersionCheck(ExternalUtil util) {
+        String detectionText = detectedVersions.get(util);
+        return detectionText == null ? null : checkVersion(util, detectionText);
     }
 
     public synchronized void setUtilDisabled(ExternalUtil util) {

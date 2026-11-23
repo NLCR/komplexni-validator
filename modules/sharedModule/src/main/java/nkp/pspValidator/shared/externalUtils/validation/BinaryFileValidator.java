@@ -45,6 +45,11 @@ public class BinaryFileValidator {
         return externalUtilManager.isUtilAvailable(util);
     }
 
+    /** Porovnání zjištěné verze nástroje s ověřenými řadami, nebo null, když verze zapsaná není. */
+    public VersionCheck getVersionCheck(ExternalUtil util) {
+        return externalUtilManager.getVersionCheck(util);
+    }
+
     public boolean isUtilExecutionDefined(ExternalUtilExecution exec) {
         return externalUtilManager.isUtilExecutionDefined(exec);
     }

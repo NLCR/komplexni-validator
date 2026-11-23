@@ -10,9 +10,13 @@ import nkp.pspValidator.shared.externalUtils.ExternalUtilsTestSupport.CannedOutp
 import nkp.pspValidator.shared.externalUtils.validation.BinaryFileValidator;
 import org.junit.Assume;
 import org.junit.BeforeClass;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.TemporaryFolder;
 
 import java.io.File;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
 import java.util.*;
 
 import static org.junit.Assert.*;
@@ -340,6 +344,216 @@ public class VfCheckBinaryFilesValidByExternalUtilTest {
             for (ValidationProblem problem : result.getProblems()) {
                 assertEquals("veraPDF", problem.getToolName());
                 assertEquals(files.get(0), problem.getReferencedFile());
+            }
+        }
+    }
+
+    // neoverena verze nastroje: jedna INFO na pravidlo, ostatni vysledky beze zmeny
+
+    @Rule
+    public TemporaryFolder tmp = new TemporaryFolder();
+
+    private static final String VERAPDF_INVALID = "ERROR: Soubor musí být validní: hodnota \"false\" neodpovídá žádnému z omezení: [musí být přesně 'true']";
+    private static final String VERAPDF_FLAVOUR = "WARNING: Soubor PDF/A by měl být v podporované verzi: hodnota \"PDF/A-3b validation profile\" "
+            + "neodpovídá žádnému z omezení: " + PDFA_CONSTRAINTS;
+    private static final List<File> TWO_PDFS = Arrays.asList(new File("a.pdf"), new File("b.pdf"));
+
+    private static Map<ExternalUtil, VerifiedVersions> veraPdfVerified(OperatingSystem inheritedFrom) {
+        Map<ExternalUtil, VerifiedVersions> map = new EnumMap<>(ExternalUtil.class);
+        map.put(ExternalUtil.VERAPDF, new VerifiedVersions(Collections.singletonList(new VerifiedVersions.Series("1.30", "1.30.2")), inheritedFrom));
+        return map;
+    }
+
+    private static CannedOutputExternalUtilManager veraPdfManager(Map<ExternalUtil, VerifiedVersions> verified, String output) throws Exception {
+        CannedOutputExternalUtilManager manager = verified == null ? new CannedOutputExternalUtilManager() : new CannedOutputExternalUtilManager(verified);
+        return manager.withOutput(ExternalUtil.VERAPDF, ExternalUtilsTestSupport.output("verapdf", output));
+    }
+
+    private static ValidationResult validateTwoPdfs(ExternalUtilManager manager) throws Exception {
+        return buildValidationFunction(ePublicationEngineWith(manager), ExternalUtil.VERAPDF, ResourceType.ORIGINAL_COPY_PDF,
+                TWO_PDFS, "pdf", null).validate();
+    }
+
+    /** Úroveň a text každého problému s názvem souboru (nebo „-“ bez souboru). */
+    private static List<String> levelsMessagesAndFiles(ValidationResult result) {
+        List<String> list = new ArrayList<>();
+        for (ValidationProblem problem : result.getProblems()) {
+            list.add((problem.getReferencedFile() == null ? "-" : problem.getReferencedFile().getName()) + " "
+                    + problem.getLevel() + ": " + problem.getFullMessage());
+        }
+        return list;
+    }
+
+    @Test
+    public void unverifiedVersionGivesOneInfoPerRuleAndKeepsResults() throws Exception {
+        CannedOutputExternalUtilManager manager = veraPdfManager(veraPdfVerified(null), "noncompliant_dummy_flavour_3b.xml");
+        manager.setUtilVersion(ExternalUtil.VERAPDF, "veraPDF 1.31.0");
+        ValidationResult result = validateTwoPdfs(manager);
+        assertEquals(Arrays.asList(
+                "- INFO: nástroj veraPDF je ve verzi 1.31.0, která nebyla s validátorem ověřena (ověřená řada: 1.30); výsledky kontroly se mohou lišit",
+                "a.pdf " + VERAPDF_INVALID,
+                "a.pdf " + VERAPDF_FLAVOUR,
+                "b.pdf " + VERAPDF_INVALID,
+                "b.pdf " + VERAPDF_FLAVOUR
+        ), levelsMessagesAndFiles(result));
+        ValidationProblem info = result.getProblems().get(0);
+        assertEquals("veraPDF", info.getToolName());
+        assertEquals("neověřená verze nástroje", info.getSimpleMessage());
+        assertEquals("1.31.0", info.getActualValue());
+        assertEquals("ověřená řada: 1.30", info.getValueSpec());
+        assertNull(info.getReferencedFile());
+    }
+
+    @Test
+    public void verifiedVersionGivesNoInfo() throws Exception {
+        CannedOutputExternalUtilManager manager = veraPdfManager(veraPdfVerified(null), "noncompliant_dummy_flavour_3b.xml");
+        // Homebrew veraPDF 1.30.2 vypise 1.30.0; Windows 1.30.4
+        for (String version : new String[]{"veraPDF 1.30.0", "veraPDF 1.30.4"}) {
+            manager.setUtilVersion(ExternalUtil.VERAPDF, version);
+            assertEquals(version, Arrays.asList(
+                    "a.pdf " + VERAPDF_INVALID,
+                    "a.pdf " + VERAPDF_FLAVOUR,
+                    "b.pdf " + VERAPDF_INVALID,
+                    "b.pdf " + VERAPDF_FLAVOUR
+            ), levelsMessagesAndFiles(validateTwoPdfs(manager)));
+        }
+    }
+
+    @Test
+    public void versionVerifiedOnOtherPlatformGivesNoInfo() throws Exception {
+        CannedOutputExternalUtilManager manager = veraPdfManager(veraPdfVerified(OperatingSystem.MAC), "compliant_PDFA-2B.xml");
+        manager.setUtilVersion(ExternalUtil.VERAPDF, "veraPDF 1.30.0");
+        assertEquals(Collections.emptyList(), levelsMessagesAndFiles(validateTwoPdfs(manager)));
+    }
+
+    @Test
+    public void unverifiedOnInheritingPlatformSaysWhereVerified() throws Exception {
+        CannedOutputExternalUtilManager manager = veraPdfManager(veraPdfVerified(OperatingSystem.MAC), "compliant_PDFA-2B.xml");
+        manager.setUtilVersion(ExternalUtil.VERAPDF, "veraPDF 1.28.1");
+        assertEquals(Collections.singletonList(
+                "- INFO: nástroj veraPDF je ve verzi 1.28.1, která nebyla s validátorem ověřena (ověřená řada na macOS: 1.30); výsledky kontroly se mohou lišit"
+        ), levelsMessagesAndFiles(validateTwoPdfs(manager)));
+    }
+
+    @Test
+    public void unrecognizedVersionGivesOneInfo() throws Exception {
+        CannedOutputExternalUtilManager manager = veraPdfManager(veraPdfVerified(null), "compliant_PDFA-2B.xml");
+        manager.setUtilVersion(ExternalUtil.VERAPDF, "veraPDF (vývojová verze)");
+        ValidationResult result = validateTwoPdfs(manager);
+        assertEquals(Collections.singletonList(
+                "- INFO: verzi nástroje veraPDF nelze rozpoznat z výstupu „veraPDF (vývojová verze)“ (ověřená řada: 1.30); výsledky kontroly se mohou lišit"
+        ), levelsMessagesAndFiles(result));
+        assertEquals("verzi nástroje nelze rozpoznat", result.getProblems().get(0).getSimpleMessage());
+        assertEquals("veraPDF (vývojová verze)", result.getProblems().get(0).getActualValue());
+        assertEquals("ověřená řada: 1.30", result.getProblems().get(0).getValueSpec());
+    }
+
+    @Test
+    public void configWithoutListGivesNoInfo() throws Exception {
+        // starsi externalUtils.xml bez verifiedVersions: nic se neoznacuje, ani nerozpoznana verze
+        CannedOutputExternalUtilManager manager = veraPdfManager(null, "compliant_PDFA-2B.xml");
+        for (String version : new String[]{"veraPDF 1.31.0", "veraPDF (vývojová verze)"}) {
+            manager.setUtilVersion(ExternalUtil.VERAPDF, version);
+            assertEquals(version, Collections.emptyList(), levelsMessagesAndFiles(validateTwoPdfs(manager)));
+        }
+    }
+
+    @Test
+    public void versionNotRecordedGivesNoInfo() throws Exception {
+        // verzi zapisuje CLI a GUI po detekci; bez ni (napr. testy, vlastni pouziti jadra) se nic neoznacuje
+        CannedOutputExternalUtilManager manager = veraPdfManager(veraPdfVerified(null), "compliant_PDFA-2B.xml");
+        assertEquals(Collections.emptyList(), levelsMessagesAndFiles(validateTwoPdfs(manager)));
+        manager.setUtilVersion(ExternalUtil.VERAPDF, "veraPDF 1.31.0");
+        manager.setUtilVersion(ExternalUtil.VERAPDF, null);
+        assertEquals(Collections.emptyList(), levelsMessagesAndFiles(validateTwoPdfs(manager)));
+    }
+
+    @Test
+    public void unverifiedVersionOfOtherToolGivesNoInfo() throws Exception {
+        Map<ExternalUtil, VerifiedVersions> verified = veraPdfVerified(null);
+        verified.put(ExternalUtil.EPUBCHECK, new VerifiedVersions(Collections.singletonList(new VerifiedVersions.Series("5.4", "5.4.0")), null));
+        CannedOutputExternalUtilManager manager = veraPdfManager(verified, "compliant_PDFA-2B.xml");
+        manager.setUtilVersion(ExternalUtil.VERAPDF, "veraPDF 1.30.4");
+        manager.setUtilVersion(ExternalUtil.EPUBCHECK, "EPUBCheck v5.5.0");
+        assertEquals(Collections.emptyList(), levelsMessagesAndFiles(validateTwoPdfs(manager)));
+    }
+
+    @Test
+    public void unavailableDisabledAndEmptyListWinOverVersion() throws Exception {
+        CannedOutputExternalUtilManager manager = veraPdfManager(veraPdfVerified(null), "compliant_PDFA-2B.xml");
+        manager.setUtilVersion(ExternalUtil.VERAPDF, "veraPDF 1.31.0");
+
+        manager.setUtilAvailable(ExternalUtil.VERAPDF, false);
+        assertEquals(Collections.singletonList("- INFO: nástroj veraPDF není dostupný"), levelsMessagesAndFiles(validateTwoPdfs(manager)));
+        manager.setUtilAvailable(ExternalUtil.VERAPDF, true);
+
+        manager.setUtilDisabled(ExternalUtil.VERAPDF);
+        assertEquals(Collections.singletonList("- INFO: nástroj veraPDF je vypnutý"), levelsMessagesAndFiles(validateTwoPdfs(manager)));
+        manager.setUtilsDisabled(null);
+
+        // prazdny seznam souboru: nastroj se nepouzije, o verzi se nic nehlasi
+        Engine engine = ePublicationEngineWith(manager);
+        assertEquals(Collections.singletonList("- ERROR: prázdný seznam souborů"), levelsMessagesAndFiles(buildValidationFunction(engine,
+                ExternalUtil.VERAPDF, ResourceType.ORIGINAL_COPY_PDF, Collections.<File>emptyList(), "pdf", null).validate()));
+        assertEquals(Collections.emptyList(), levelsMessagesAndFiles(withIgnoreEmptyFileList(buildValidationFunction(engine,
+                ExternalUtil.VERAPDF, ResourceType.ORIGINAL_COPY_PDF, Collections.<File>emptyList(), "pdf", null), true).validate()));
+    }
+
+    @Test
+    public void missingProfileWinsOverVersion() throws Exception {
+        CannedOutputExternalUtilManager manager = veraPdfManager(veraPdfVerified(null), "compliant_PDFA-2B.xml");
+        manager.setUtilVersion(ExternalUtil.VERAPDF, "veraPDF 1.31.0");
+        ValidationResult result = buildValidationFunction(engineWith(manager, ExternalUtil.VERAPDF, ResourceType.ORIGINAL_COPY_PDF, null),
+                ExternalUtil.VERAPDF, ResourceType.ORIGINAL_COPY_PDF, TWO_PDFS, "pdf", null).validate();
+        assertEquals(1, result.getProblems().size());
+        assertEquals(Level.ERROR, result.getProblems().get(0).getLevel());
+        assertTrue(result.getProblems().get(0).getFullMessage().startsWith("nenalezen profil binárního souboru"));
+    }
+
+    /**
+     * Skutečná konfigurace a falešný JHOVE ({@link FakeExternalUtils}, na Windows dávka): detekce verze jako v CLI
+     * (zápis verze do manažeru), pak validace dvou JP2 profilem fund_unit_0.2/mc nad výstupem s nálezy. Neověřená
+     * verze přidá právě jednu INFO před nálezy, ověřená (i převzatá z macOS na Linuxu) žádnou; nálezy jsou ve všech
+     * případech stejné jako bez zapsané verze.
+     */
+    @Test
+    public void unverifiedJhoveWithFakeToolOnEveryOsConfig() throws Exception {
+        File config = FakeExternalUtils.hostConfig(ExternalUtilsTestSupport.EXTERNAL_UTILS_CONFIG, tmp.getRoot());
+        List<File> files = Arrays.asList(new File("x.jp2"), new File("y.jp2"));
+        String unverifiedInfo = "- INFO: nástroj JHOVE je ve verzi 1.36.0, která nebyla s validátorem ověřena (ověřené řady: 1.29, 1.34); výsledky kontroly se mohou lišit";
+        String unverifiedInfoWindows = "- INFO: nástroj JHOVE je ve verzi 1.36.0, která nebyla s validátorem ověřena (ověřená řada: 1.34); výsledky kontroly se mohou lišit";
+        String unverifiedInfoLinux = "- INFO: nástroj JHOVE je ve verzi 1.36.0, která nebyla s validátorem ověřena (ověřené řady na macOS: 1.29, 1.34); výsledky kontroly se mohou lišit";
+        Map<OperatingSystem, String> expectedInfo = new EnumMap<>(OperatingSystem.class);
+        expectedInfo.put(OperatingSystem.MAC, unverifiedInfo);
+        expectedInfo.put(OperatingSystem.WINDOWS, unverifiedInfoWindows);
+        expectedInfo.put(OperatingSystem.LINUX, unverifiedInfoLinux);
+        for (OperatingSystem os : OperatingSystem.values()) {
+            String program = os == OperatingSystem.WINDOWS ? "jhove.bat" : "jhove";
+            File dir = tmp.newFolder("jhove-" + os.name());
+            ExternalUtilManager manager = new ExternalUtilManagerFactory(config).buildExternalUtilManager(os);
+            manager.setPath(ExternalUtil.JHOVE, dir);
+            Engine engine = engineWith(manager, ExternalUtil.JHOVE, ResourceType.IMAGE_MASTER_COPY,
+                    ExternalUtilsTestSupport.profileFile("fund_unit_0.2", "mc", ExternalUtil.JHOVE));
+            FakeExternalUtils.create(dir, program, ExternalUtilsTestSupport.outputFile("jhove", "odlis_od_prof_mc_LRCP.xml"), null, 0);
+            List<String> baseline = levelsMessagesAndFiles(buildValidationFunction(engine, ExternalUtil.JHOVE, ResourceType.IMAGE_MASTER_COPY, files).validate());
+            assertFalse(os.name(), baseline.isEmpty());
+            for (String line : baseline) {
+                assertTrue(os + ": " + line, line.startsWith("x.jp2 WARNING: ") || line.startsWith("y.jp2 WARNING: "));
+            }
+
+            for (String version : new String[]{"1.34.0", "1.36.0"}) {
+                File versionOut = tmp.newFile();
+                Files.write(versionOut.toPath(), ("Jhove (Rel. " + version + ", 2026-01-15)\n").getBytes(StandardCharsets.UTF_8));
+                FakeExternalUtils.create(dir, program, versionOut, null, 0);
+                manager.setUtilVersion(ExternalUtil.JHOVE, manager.runUtilVersionDetection(ExternalUtil.JHOVE));
+                FakeExternalUtils.create(dir, program, ExternalUtilsTestSupport.outputFile("jhove", "odlis_od_prof_mc_LRCP.xml"), null, 0);
+                List<String> actual = levelsMessagesAndFiles(buildValidationFunction(engine, ExternalUtil.JHOVE, ResourceType.IMAGE_MASTER_COPY, files).validate());
+                List<String> expected = new ArrayList<>();
+                if (version.equals("1.36.0")) {
+                    expected.add(expectedInfo.get(os));
+                }
+                expected.addAll(baseline);
+                assertEquals(os + " " + version, expected, actual);
             }
         }
     }

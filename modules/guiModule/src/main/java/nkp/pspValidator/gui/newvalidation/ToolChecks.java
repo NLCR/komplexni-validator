@@ -18,9 +18,9 @@ import java.util.function.Function;
 /**
  * Kontrola dostupnosti externích nástrojů pro dialogy Nová validace a Externí nástroje. Každý nástroj se zkontroluje
  * v pracovním vlákně detekcí verze ({@link ExternalTools#check}) a výsledek se předá do vlákna UI. Tam se zapíše
- * dostupnost do {@link ExternalUtilManager} (validace u nedostupného nástroje hlásí INFO) a ohlásí se posluchači,
- * ale jen pro poslední spuštěnou kontrolu daného nástroje: zastaralý výsledek (nástroj se mezitím kontroluje znovu,
- * například po změně cesty) se zahodí. Do manažeru, který drží dostupnost v obyčejné mapě, se tak zapisuje jen
+ * dostupnost a verze do {@link ExternalUtilManager} (validace u nedostupného nástroje a u neověřené verze hlásí INFO)
+ * a ohlásí se posluchači, ale jen pro poslední spuštěnou kontrolu daného nástroje: zastaralý výsledek (nástroj
+ * se mezitím kontroluje znovu, například po změně cesty) se zahodí. Do manažeru, který drží dostupnost v obyčejné mapě, se tak zapisuje jen
  * z jednoho vlákna.
  * <p>
  * Metody a stav ({@link #getStatuses()}) používat jen z vlákna UI.
@@ -149,6 +149,8 @@ public class ToolChecks {
         boolean written = isLatestStarted(manager, util, order);
         if (written) {
             manager.setUtilAvailable(util, status.isAvailable());
+            //podle zapsane verze validace u pravidel nastroje ohlasi neoverenou verzi (INFO)
+            manager.setUtilVersion(util, status.isAvailable() ? status.getVersion() : null);
             markChecked(manager, util);
         }
         statuses.put(util, status);

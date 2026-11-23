@@ -774,10 +774,15 @@ public class NewValidationDialogController extends DialogController {
             description.setTooltip(new Tooltip(description.getText()));
             Region dot = new Region();
             dot.getStyleClass().add(statusDotClass(status, unused));
-            Label statusText = new Label(ToolsOverview.statusText(util, status));
+            //nazev nastroje je v prvnim sloupci; u neoverene verze kratky tvar, aby se oznaceni veslo cele
+            Label statusText = new Label(status.isVersionWarning()
+                    ? ToolsOverview.compactStatusText(util, status) : ToolsOverview.statusText(util, status));
             statusText.setMinWidth(0);
             //verze bývá dlouhá (např. ImageMagick vypisuje i architekturu), celá je v tooltipu
-            statusText.setTooltip(new Tooltip(status.getDetail() != null ? status.getDetail() : status.getText()));
+            Tooltip statusTooltip = new Tooltip(status.getDetail() != null ? status.getDetail() : ToolsOverview.statusTooltip(status));
+            statusTooltip.setWrapText(true);
+            statusTooltip.setMaxWidth(500);
+            statusText.setTooltip(statusTooltip);
             HBox statusBox = new HBox(8, dot, statusText);
             statusBox.setAlignment(Pos.CENTER_LEFT);
 
@@ -818,7 +823,11 @@ public class NewValidationDialogController extends DialogController {
         if (unused || status.getState() == ToolStatus.State.CHECKING) {
             return "status-dot-none";
         }
-        return status.isAvailable() ? "status-dot-ok" : "status-dot-error";
+        if (!status.isAvailable()) {
+            return "status-dot-error";
+        }
+        //neoverena verze: zluta tecka, nastroj se ale pouzije
+        return status.isVersionWarning() ? "status-dot-warning" : "status-dot-ok";
     }
 
     private String unavailableNotice(List<ExternalUtil> utils) {
