@@ -83,8 +83,12 @@ public class RepoPackagesSmokeTest {
      * monograph_1.2, b50eb6b0: zmenseny balicek (jp2 nahrazene 25B soubory, navic *.jp2.bak), METS upravene bez
      * prepoctu souctu. Hlavni chyby: PREMIS agentNote prazdne (32x), nesouhlas checksumu ve fileSec (10x) a v md5 (3x),
      * extra soubory .jp2.bak, logicka mapa s TYPE 'Monograph', INFO s titleid typu uuid (XSD 1.2 ho nezna).
+     * Sekundarni METS odkazuji na soubory jinou velikosti pismen (masterCopy/MC_…, userCopy/UC_…, ALTO/ALTO_…, TXT/TXT_…,
+     * na disku mastercopy/mc_… atd.): 4 skupiny x 8 stran = 32 ERROR v SECONDARY-METS_FILESEC_*_FILE_REFERENCED.
+     * Od 23. 11. 2026 se velikost pismen v odkazech rozlisuje na vsech systemech (drive jen na Linuxu, na macOS
+     * a Windows tu bylo 49 ERROR, na Linuxu 81).
      */
-    private static final int MON_1_2_ERRORS = 49;
+    private static final int MON_1_2_ERRORS = 81;
     private static final int MON_1_2_WARNINGS = 25;
 
     /**
@@ -118,8 +122,10 @@ public class RepoPackagesSmokeTest {
     /**
      * periodical_1.6, 7033d800: PREMIS agentNote prazdne (60x), duplicitni identifikatory agentu (PREMIS_LINKING 20x),
      * smLink na neexistujici ISSUE_1 (10x), nesouhlas checksumu ve fileSec (10x), duplicitni URN:NBN v DC i MODS.
+     * Sekundarni METS odkazuji na soubory jinou velikosti pismen (masterCopy/MC_… atd.): 4 skupiny x 10 stran = 40 ERROR
+     * v SECONDARY-METS_FILESEC_*_FILE_REFERENCED; od 23. 11. 2026 na vsech systemech (drive 107 na macOS a Windows, 147 na Linuxu).
      */
-    private static final int PER_1_6_ERRORS = 107;
+    private static final int PER_1_6_ERRORS = 147;
     private static final int PER_1_6_WARNINGS = 29;
 
     /**
@@ -160,7 +166,8 @@ public class RepoPackagesSmokeTest {
                         msg("NO_EXTRA_FILES_IN_MASTER-COPY-DIR", "ERROR: nalezen nečekaný soubor: mc_b50eb6b0-f0a4-11e3-b72e-005056827e52_0004.jp2.bak"),
                         msg("PRIMARY-METS_FILESEC_SIZES_MATCH", "WARNING: uvedená velikost (6039375 B) se liší od zjištěné velikosti (25 B) souboru mc_b50eb6b0-f0a4-11e3-b72e-005056827e52_0004.jp2"),
                         msg("PRIMARY-METS_LOGICAL_STRUCTURAL_MAP_CORRECT", "ERROR: /mets:mets/mets:structMap[@TYPE='LOGICAL']/mets:div[ID='MONOGRAPH_0001']: nepovolená hodnota atributu TYPE: 'Monograph'"),
-                        msg("INFO_XML_VALID_BY_XSD", "Value 'uuid' is not facet-valid")),
+                        msg("INFO_XML_VALID_BY_XSD", "Value 'uuid' is not facet-valid"),
+                        msg("SECONDARY-METS_FILESEC_MASTER_COPY_FILE_REFERENCED", "ERROR: fileSec/fileGrp s ID 'MC_IMGGRP': odkazovaný soubor (masterCopy/MC_b50eb6b0-f0a4-11e3-b72e-005056827e52_0001.jp2) není mezi očekávanými soubory (sekundární mets amdsec/amd_mets_b50eb6b0-f0a4-11e3-b72e-005056827e52_0001.xml); v balíku je soubor mastercopy/mc_b50eb6b0-f0a4-11e3-b72e-005056827e52_0001.jp2, jehož název se liší velikostí písmen")),
                 pkg("monograph_1.2_map", "monograph_1.2/map/6e9a7000-65c0-11e6-85af-005056827e52",
                         Dmf.Type.MONOGRAPH, "1.2", MON_1_2_MAP_ERRORS, MON_1_2_MAP_WARNINGS,
                         msg("NO_TOLERATED_TL_FILES_FOUND", "WARNING: nalezen neočekávaný soubor: "),
@@ -186,7 +193,8 @@ public class RepoPackagesSmokeTest {
                         Dmf.Type.PERIODICAL, "1.6", PER_1_6_ERRORS, PER_1_6_WARNINGS,
                         msg("PRIMARY-METS_STRUCT_LINKS_CORRECT", "ERROR: nalezen element smLink s hodnotou atributu xlink:from (ISSUE_1), která neodpovídá žádnému atributu mets:div/@ID"),
                         msg("DC_IDENTIFIERS_NO_DUPLICATES_ACROSS_DMDSECS", "ERROR: seznam obsahuje duplikovaný identifikátor 'urnnbn:urn:nbn:cz:nk-0016ke'"),
-                        msg("PREMIS_LINKING_CORRECT", "Agenti 'AGENT_004' a 'AGENT_002' mají stejný identifikátor")),
+                        msg("PREMIS_LINKING_CORRECT", "Agenti 'AGENT_004' a 'AGENT_002' mají stejný identifikátor"),
+                        msg("SECONDARY-METS_FILESEC_OCR-TEXT_FILE_REFERENCED", "ERROR: fileSec/fileGrp s ID 'TXTGRP': odkazovaný soubor (TXT/TXT_7033d800-0935-11e4-beed-5ef3fc9ae867_0001.txt) není mezi očekávanými soubory (sekundární mets amdsec/amd_mets_7033d800-0935-11e4-beed-5ef3fc9ae867_0001.xml); v balíku je soubor txt/txt_7033d800-0935-11e4-beed-5ef3fc9ae867_0001.txt, jehož název se liší velikostí písmen")),
                 pkg("periodical_1.7.1", "periodical_1.7.1/df53c210-d3f7-11e6-a1de-001018b3eb4c",
                         Dmf.Type.PERIODICAL, "1.7.1", PER_1_7_1_ERRORS, PER_1_7_1_WARNINGS,
                         msg("INFO_ITEMTOTAL_MATCHES_ITEMS_COUNT", "ERROR: počet elementů item (18) nesouhlasí s obsahem atributu itemtotal/ITEMTOTAL (203)"),

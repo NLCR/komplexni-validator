@@ -7,6 +7,7 @@ import nkp.pspValidator.shared.engine.exceptions.ContractException;
 import nkp.pspValidator.shared.engine.exceptions.InvalidPathException;
 import nkp.pspValidator.shared.engine.exceptions.InvalidXPathExpressionException;
 import nkp.pspValidator.shared.engine.exceptions.XmlFileParsingException;
+import nkp.pspValidator.shared.engine.utils.PackageFileLookup;
 import org.w3c.dom.Document;
 import org.w3c.dom.NodeList;
 
@@ -110,11 +111,14 @@ public class VfCheckSecondaryMetsFilegroupReferencesSingleFile extends Validatio
                     String path = nodes.item(0).getNodeValue();
                     //System.err.println("path: " + path);
                     File referencedFile = Utils.buildAbsoluteFile(pspRootDir, path);
-                    if (!contains(referencedFiles, referencedFile)) {//check if referenced file in candidate files set
+                    if (!contains(referencedFiles, referencedFile, pspRootDir)) {//check if referenced file in candidate files set
                         /*result.addError(Level.ERROR, secondaryMetsFile,
                                 "fileSec/fileGrp s ID '%s': odkazovaný soubor (%s) není mezi očekávanými soubory (sekundární mets %s)",
                                 filegroupId, path, FileUtils.toLimitedPath(secondaryMetsFile, 1));*/
-                        result.addError(new ValidationProblem(Level.ERROR, String.format("fileSec/fileGrp s ID '%s': odkazovaný soubor (%s) není mezi očekávanými soubory (sekundární mets %s)", filegroupId, path, FileUtils.toLimitedPath(secondaryMetsFile, 1)))
+                        //odkaz lisici se jen velikosti pismen: chyba na vsech systemech, hlaska uvede skutecny nazev
+                        PackageFileLookup.Result lookup = engine.getPackageFileLookup().lookup(pspRootDir, referencedFile);
+                        String hint = lookup.isCaseDiffers() ? PackageFileLookup.actualFileHint(lookup.getActualRelativePath()) : "";
+                        result.addError(new ValidationProblem(Level.ERROR, String.format("fileSec/fileGrp s ID '%s': odkazovaný soubor (%s) není mezi očekávanými soubory (sekundární mets %s)%s", filegroupId, path, FileUtils.toLimitedPath(secondaryMetsFile, 1), hint))
                                 .withSimpleMessage("odkazovaný soubor není mezi očekávanými soubory")
                                 .withLabel(label)
                                 .withFile(secondaryMetsFile)
@@ -147,8 +151,6 @@ public class VfCheckSecondaryMetsFilegroupReferencesSingleFile extends Validatio
                 result.addError(Level.ERROR, secondaryMetsFile, e.getMessage());
             } catch (InvalidPathException e) {
                 result.addError(Level.ERROR, secondaryMetsFile, e.getMessage());
-            } catch (IOException e) {
-                result.addError(Level.ERROR, secondaryMetsFile, e.getMessage());
             }
         }
         return result;
@@ -163,13 +165,38 @@ public class VfCheckSecondaryMetsFilegroupReferencesSingleFile extends Validatio
         return tokens[tokens.length - 2].endsWith(pageId);
     }
 
-    private boolean contains(List<File> list, File file) throws IOException {
+    /**
+     * Porovnani cest s rozlisenim velikosti pismen na vsech systemech. Drive pres getCanonicalPath(), ktera na Windows
+     * a macOS vraci skutecnou velikost pismen existujiciho souboru, takze odkaz s jinou velikosti pismen tam prosel
+     * a na Linuxu ne. Normalizace (normalize) zachovava dosavadni vyhodnoceni slozek '.' a '..'.
+     * Odkaz pres symbolicky odkaz (jina cesta k temuz souboru) plati jako dosud, pokud jeho nazvy presne odpovidaji
+     * skutecnym nazvum v baliku.
+     */
+    private boolean contains(List<File> list, File file, File pspRootDir) {
+        String key = normalizedPath(file);
         for (File fileFromList : list) {
-            if (fileFromList.getCanonicalPath().equals(file.getCanonicalPath())) {
+            if (normalizedPath(fileFromList).equals(key)) {
                 return true;
             }
         }
+        if (engine.getPackageFileLookup().lookup(pspRootDir, file).getStatus() != PackageFileLookup.Status.FOUND_EXACT) {
+            return false;
+        }
+        try {
+            String canonical = file.getCanonicalPath();
+            for (File fileFromList : list) {
+                if (fileFromList.getCanonicalPath().equals(canonical)) {
+                    return true;
+                }
+            }
+        } catch (IOException e) {
+            //nelze urcit, odkaz se bere jako neodpovidajici
+        }
         return false;
+    }
+
+    private static String normalizedPath(File file) {
+        return file.getAbsoluteFile().toPath().normalize().toString();
     }
 
     private String extractPageId(File secondaryMetsFile) {

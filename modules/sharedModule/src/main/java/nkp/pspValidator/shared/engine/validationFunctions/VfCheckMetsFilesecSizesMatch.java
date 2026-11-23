@@ -3,6 +3,7 @@ package nkp.pspValidator.shared.engine.validationFunctions;
 
 import nkp.pspValidator.shared.engine.*;
 import nkp.pspValidator.shared.engine.exceptions.*;
+import nkp.pspValidator.shared.engine.utils.PackageFileLookup;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
@@ -63,7 +64,12 @@ public class VfCheckMetsFilesecSizesMatch extends ValidationFunction {
             NodeList fileElements = (NodeList) xpath.evaluate(doc, XPathConstants.NODESET);
             for (int i = 0; i < fileElements.getLength(); i++) {
                 try {
-                    checkFile(pspdir, (Element) fileElements.item(i));
+                    ValidationProblem caseProblem = checkFileNameCase(pspdir, (Element) fileElements.item(i), metsFile);
+                    if (caseProblem != null) {
+                        result.addError(caseProblem);
+                    } else {
+                        checkFile(pspdir, (Element) fileElements.item(i));
+                    }
                 } catch (SizeDifferenceException e) {
                     result.addError(new ValidationProblem(Level.WARNING, e.getMessage())
                             .withSimpleMessage(e.getSimpleMessage())
@@ -84,6 +90,24 @@ public class VfCheckMetsFilesecSizesMatch extends ValidationFunction {
         } finally {
             return result;
         }
+    }
+
+    /**
+     * Odkaz na soubor, ktery existuje jen s jinou velikosti pismen: varovani na vsech systemech. Velikost se nezjistuje
+     * (na Windows a macOS by se zjistila velikost skutecneho souboru, na Linuxu 0 B a varovani o rozdilu velikosti).
+     */
+    private ValidationProblem checkFileNameCase(File pspdir, Element fileEl, File metsFile) throws InvalidXPathExpressionException, XPathExpressionException, InvalidPathException {
+        XPathExpression xpath = engine.buildXpath("mets:FLocat/@xlink:href");
+        String filePath = (String) xpath.evaluate(fileEl, XPathConstants.STRING);
+        File file = Utils.buildAbsoluteFile(pspdir, filePath);
+        PackageFileLookup.Result lookup = engine.getPackageFileLookup().lookup(pspdir, file);
+        if (!lookup.isCaseDiffers()) {
+            return null;
+        }
+        return new ValidationProblem(Level.WARNING, lookup.caseDiffersMessage())
+                .withSimpleMessage("název souboru se liší velikostí písmen")
+                .withReferencedFile(file)
+                .withFile(metsFile);
     }
 
     private void checkFile(File pspdir, Element fileEl) throws InvalidXPathExpressionException, XPathExpressionException, InvalidPathException, SizeDifferenceException {

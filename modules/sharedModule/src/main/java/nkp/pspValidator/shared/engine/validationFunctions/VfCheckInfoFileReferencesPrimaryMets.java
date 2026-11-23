@@ -92,7 +92,9 @@ public class VfCheckInfoFileReferencesPrimaryMets extends ValidationFunction {
                         .withReferencedFile(primaryMetsFile)
                 );
             } else if (!primaryMetsFilenameFound.equals(primaryMetsFile.getName())) {
-                result.addError(new ValidationProblem(Level.ERROR, String.format("nalezený název souboru PRIMARY-METS (%s) se neshoduje se skutečným názvem (%s)", primaryMetsFilenameFound, primaryMetsFile.getName()))
+                //porovnani retezcu rozlisuje velikost pismen vsude; hlaska jen upozorni, kdyz je to jediny rozdil
+                String hint = primaryMetsFilenameFound.equalsIgnoreCase(primaryMetsFile.getName()) ? "; názvy se liší jen velikostí písmen" : "";
+                result.addError(new ValidationProblem(Level.ERROR, String.format("nalezený název souboru PRIMARY-METS (%s) se neshoduje se skutečným názvem (%s)%s", primaryMetsFilenameFound, primaryMetsFile.getName(), hint))
                         .withSimpleMessage("název souboru PRIMARY-METS v INFO se neshoduje se skutečným názvem")
                         .withFile(infoFile)
                         .withExpectedAndActualValues(primaryMetsFile.getName(), primaryMetsFilenameFound)

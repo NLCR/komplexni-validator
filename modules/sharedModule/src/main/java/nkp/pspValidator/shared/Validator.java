@@ -99,6 +99,8 @@ public class Validator {
 
         //MD5 souboru se cachuji jen v ramci jednoho behu validace
         engine.clearMd5Cache();
+        //stejne tak vypisy adresaru pro kontrolu velikosti pismen v odkazech na soubory
+        engine.clearPackageFileLookupCache();
         ValidationState state = initState(progressListener);
         state.setPackageFile(packageFile);
         state.setInfoData(InfoExtractor.extract(packageFile));

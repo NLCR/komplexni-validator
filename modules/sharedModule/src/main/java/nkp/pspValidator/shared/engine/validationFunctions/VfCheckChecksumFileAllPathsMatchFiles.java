@@ -6,10 +6,16 @@ import nkp.pspValidator.shared.engine.exceptions.EmptyParamEvaluationException;
 import nkp.pspValidator.shared.engine.exceptions.InvalidPathException;
 import nkp.pspValidator.shared.engine.params.ValueParam;
 
+import nkp.pspValidator.shared.engine.utils.PackageFileLookup;
+
 import java.io.*;
-import java.util.TreeSet;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
+import java.util.Map;
+import java.util.TreeMap;
 import java.util.Set;
+import java.util.LinkedHashSet;
 
 
 /**
@@ -58,7 +64,7 @@ public class VfCheckChecksumFileAllPathsMatchFiles extends ValidationFunction {
     }
 
     private Set<File> mergeAbsolutFilesFromParams() throws EmptyParamEvaluationException {
-        Set<File> result = new TreeSet<>();
+        Set<File> result = new LinkedHashSet<>();
         List<ValueParam> fileParams = valueParams.getParams(PARAM_FILE);
         for (ValueParam param : fileParams) {
             ValueEvaluation evaluation = param.getEvaluation();
@@ -102,7 +108,9 @@ public class VfCheckChecksumFileAllPathsMatchFiles extends ValidationFunction {
                 br = new BufferedReader(new InputStreamReader(fis));
 
                 String line;
-                Set<File> filesFromFile = new TreeSet<>();
+                //seznam, ne mnozina souboru: File.equals na Windows nerozlisuje velikost pismen a druhy zaznam lisici se
+                //jen velikosti pismen by se ztratil driv, nez se cesty porovnaji jako retezce
+                List<File> filesFromFile = new ArrayList<>();
                 while ((line = br.readLine()) != null) {
                     String[] parts = line.split("[ \\t]");//space or tabulator
                     if (parts.length == 1) {
@@ -150,25 +158,46 @@ public class VfCheckChecksumFileAllPathsMatchFiles extends ValidationFunction {
         return result;
     }
 
-    private void checkSetsAreSame(ValidationResult result, Set<File> filesFromParams, Set<File> filesFromFile) {
-        for (File file : filesFromParams) {
-            if (!filesFromFile.contains(file)) {
-                result.addError(
-                    new ValidationProblem(Level.ERROR, String.format("nenalezen záznam pro soubor: '%s'", file))
-                        .withSimpleMessage("nenalezen záznam pro soubor")
-                        .withFile(file)
-                );
+    /**
+     * Porovnani podle absolutni cesty jako retezce (PackageFileLookup.pathKey), tedy s rozlisenim velikosti pismen na vsech
+     * systemech (TreeSet&lt;File&gt; ji na Windows nerozlisoval).
+     */
+    private void checkSetsAreSame(ValidationResult result, Collection<File> filesFromParams, Collection<File> filesFromFile) {
+        Map<String, File> fromParams = PackageFileLookup.byPathKey(filesFromParams);
+        Map<String, File> fromFile = PackageFileLookup.byPathKey(filesFromFile);
+        List<File> withoutRecord = new ArrayList<>();
+        for (Map.Entry<String, File> entry : fromParams.entrySet()) {
+            if (!fromFile.containsKey(entry.getKey())) {
+                withoutRecord.add(entry.getValue());
+            }
+        }
+        List<File> notExpected = new ArrayList<>();
+        for (Map.Entry<String, File> entry : fromFile.entrySet()) {
+            if (!fromParams.containsKey(entry.getKey())) {
+                notExpected.add(entry.getValue());
             }
         }
 
-        for (File file : filesFromFile) {
-            if (!filesFromParams.contains(file)) {
-                result.addError(
-                    new ValidationProblem(Level.ERROR, String.format("nalezený soubor nebyl očekáván: '%s'", file))
-                        .withSimpleMessage("nalezený soubor nebyl očekáván")
-                        .withFile(file)
-                );
-            }
+        Map<String, TreeMap<String, File>> withoutRecordIndex = PackageFileLookup.caseVariantIndex(withoutRecord);
+        Map<String, TreeMap<String, File>> notExpectedIndex = PackageFileLookup.caseVariantIndex(notExpected);
+        for (File file : withoutRecord) {
+            File variant = PackageFileLookup.findCaseVariant(file, notExpectedIndex);
+            String hint = variant == null ? "" : PackageFileLookup.referenceHint(variant.getAbsolutePath());
+            result.addError(
+                new ValidationProblem(Level.ERROR, String.format("nenalezen záznam pro soubor: '%s'%s", file, hint))
+                    .withSimpleMessage("nenalezen záznam pro soubor")
+                    .withFile(file)
+            );
+        }
+
+        for (File file : notExpected) {
+            File variant = PackageFileLookup.findCaseVariant(file, withoutRecordIndex);
+            String hint = variant == null ? "" : PackageFileLookup.actualFileHint(variant.getAbsolutePath());
+            result.addError(
+                new ValidationProblem(Level.ERROR, String.format("nalezený soubor nebyl očekáván: '%s'%s", file, hint))
+                    .withSimpleMessage("nalezený soubor nebyl očekáván")
+                    .withFile(file)
+            );
         }
     }
 

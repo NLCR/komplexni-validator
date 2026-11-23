@@ -1,6 +1,7 @@
 package nkp.pspValidator.shared.engine;
 
 import nkp.pspValidator.shared.XsdSchemaCache;
+import nkp.pspValidator.shared.engine.utils.PackageFileLookup;
 import nkp.pspValidator.shared.engine.evaluationFunctions.*;
 import nkp.pspValidator.shared.engine.exceptions.HashComputationException;
 import nkp.pspValidator.shared.engine.exceptions.InvalidXPathExpressionException;
@@ -47,6 +48,7 @@ public class Engine {
     //MD5 souboru balicku v ramci jednoho behu validace (vycisti se na zacatku Validator.run), klic je absolutni cesta
     private final ConcurrentMap<String, String> md5ByFilePath = new ConcurrentHashMap<>();
     private final AtomicInteger md5Computations = new AtomicInteger();
+    private final PackageFileLookup packageFileLookup = new PackageFileLookup();
 
     private BibliographicMetadataProfilesManager bibliographicMetadataProfilesManager;
     private TechnicalMetadataProfilesManager technicalMetadataProfilesManager;
@@ -454,6 +456,12 @@ public class Engine {
 
 
     public Document getXmlDocument(File file, boolean nsAware) throws XmlFileParsingException {
+        PackageFileLookup.Result lookup = lookupPackageFile(file);
+        if (lookup != null && lookup.isCaseDiffers()) {
+            //soubor existuje jen s jinou velikosti pismen: necist ho pod spatnym jmenem (na Windows a macOS by se precetl,
+            //na Linuxu ne), vysledek ma byt vsude stejny
+            throw new XmlFileParsingException(file, String.format("chyba čtení v souboru %s: %s", file.getAbsolutePath(), lookup.caseDiffersMessage()));
+        }
         return xmlManager.getXmlDocument(file, nsAware);
     }
 
@@ -478,6 +486,11 @@ public class Engine {
      * jednou (pouziva ho kontrola souboru CHECKSUM i kontrola fileSec primarniho METS). Chyba vypoctu se necachuje.
      */
     public String computeMd5(File file) throws HashComputationException {
+        PackageFileLookup.Result lookup = lookupPackageFile(file);
+        if (lookup != null && lookup.isCaseDiffers()) {
+            //viz getXmlDocument: soubor, jehoz nazev se lisi velikosti pismen, se necte na zadnem systemu
+            throw new HashComputationException(file, lookup.caseDiffersMessage());
+        }
         String key = file.getAbsolutePath();
         String md5 = md5ByFilePath.get(key);
         if (md5 == null) {
@@ -493,6 +506,32 @@ public class Engine {
      */
     public void clearMd5Cache() {
         md5ByFilePath.clear();
+    }
+
+    /**
+     * Hledani souboru baliku podle cesty z metadat se shodou velikosti pismen (viz PackageFileLookup). Vypisy adresaru
+     * se pamatuji do clearPackageFileLookupCache().
+     */
+    public PackageFileLookup getPackageFileLookup() {
+        return packageFileLookup;
+    }
+
+    /**
+     * Vyhleda soubor uvnitr adresare baliku (poskytnuta promenna PSP_DIR). Null, pokud PSP_DIR neni zadan.
+     */
+    public PackageFileLookup.Result lookupPackageFile(File file) {
+        File pspDir = providedVarsManager.getProvidedFile("PSP_DIR");
+        if (pspDir == null || file == null) {
+            return null;
+        }
+        return packageFileLookup.lookup(pspDir, file);
+    }
+
+    /**
+     * Zahodi vypisy adresaru z predchoziho behu validace (soubory se mezi behy mohou zmenit).
+     */
+    public void clearPackageFileLookupCache() {
+        packageFileLookup.clear();
     }
 
     /**

@@ -6,10 +6,13 @@ import nkp.pspValidator.shared.engine.ValueEvaluation;
 import nkp.pspValidator.shared.engine.ValueType;
 import nkp.pspValidator.shared.engine.exceptions.ContractException;
 
+import nkp.pspValidator.shared.engine.utils.PackageFileLookup;
+
 import java.io.File;
-import java.util.TreeSet;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
+import java.util.Map;
+import java.util.TreeMap;
 
 /**
  * Created by Martin Řehánek on 27.10.16.
@@ -52,29 +55,42 @@ public class VfCheckFileListsMatch extends ValidationFunction {
         }
     }
 
+    /**
+     * Porovnani podle absolutni cesty jako retezce (PackageFileLookup.pathKey): velikost pismen se rozlisuje na vsech
+     * systemech. Drive pres TreeSet&lt;File&gt;, ktery ji na Windows nerozlisoval (File.compareTo), takze odkaz z metadat
+     * s jinou velikosti pismen tam prosel a na macOS a Linuxu ne.
+     */
     private ValidationResult validate(List<File> filesExpectedList, List<File> filesFoundList) {
         ValidationResult result = new ValidationResult();
-        Set<File> filesExpectedSet = new TreeSet<>();
-        for (File file : filesExpectedList) {
-            filesExpectedSet.add(file.getAbsoluteFile());
-        }
-        Set<File> filesFoundSet = new TreeSet<>();
-        for (File file : filesFoundList) {
-            filesFoundSet.add(file.getAbsoluteFile());
-        }
+        Map<String, File> filesExpected = PackageFileLookup.byPathKey(filesExpectedList);
+        Map<String, File> filesFound = PackageFileLookup.byPathKey(filesFoundList);
 
-        if (!filesExpectedSet.equals(filesFoundSet)) {//something is different
-            for (File foundFile : filesFoundSet) {
-                if (!filesExpectedSet.contains(foundFile)) {
-                    result.addError(invalid(Level.ERROR, "nalezen neočekávaný soubor %s", foundFile.getAbsolutePath())
-                            .withFile(foundFile).withSimpleMessage("nalezen neočekávaný soubor"));
+        if (!filesExpected.keySet().equals(filesFound.keySet())) {//something is different
+            List<File> unexpected = new ArrayList<>();
+            for (Map.Entry<String, File> found : filesFound.entrySet()) {
+                if (!filesExpected.containsKey(found.getKey())) {
+                    unexpected.add(found.getValue());
                 }
             }
-            for (File expectedFile : filesExpectedSet) {
-                if (!filesFoundSet.contains(expectedFile)) {
-                    result.addError(invalid(Level.ERROR, "nenalezen očekávaný soubor %s", expectedFile.getAbsolutePath())
-                            .withFile(expectedFile).withSimpleMessage("nenalezen očekávaný soubor"));
+            List<File> missing = new ArrayList<>();
+            for (Map.Entry<String, File> expected : filesExpected.entrySet()) {
+                if (!filesFound.containsKey(expected.getKey())) {
+                    missing.add(expected.getValue());
                 }
+            }
+            Map<String, TreeMap<String, File>> unexpectedIndex = PackageFileLookup.caseVariantIndex(unexpected);
+            Map<String, TreeMap<String, File>> missingIndex = PackageFileLookup.caseVariantIndex(missing);
+            for (File foundFile : unexpected) {
+                File variant = PackageFileLookup.findCaseVariant(foundFile, missingIndex);
+                String hint = variant == null ? "" : PackageFileLookup.actualFileHint(variant.getAbsolutePath());
+                result.addError(invalid(Level.ERROR, "nalezen neočekávaný soubor %s%s", foundFile.getAbsolutePath(), hint)
+                        .withFile(foundFile).withSimpleMessage("nalezen neočekávaný soubor"));
+            }
+            for (File expectedFile : missing) {
+                File variant = PackageFileLookup.findCaseVariant(expectedFile, unexpectedIndex);
+                String hint = variant == null ? "" : PackageFileLookup.referenceHint(variant.getAbsolutePath());
+                result.addError(invalid(Level.ERROR, "nenalezen očekávaný soubor %s%s", expectedFile.getAbsolutePath(), hint)
+                        .withFile(expectedFile).withSimpleMessage("nenalezen očekávaný soubor"));
             }
         }
         return result;

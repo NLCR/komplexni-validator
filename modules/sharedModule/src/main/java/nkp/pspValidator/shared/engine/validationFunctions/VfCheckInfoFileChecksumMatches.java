@@ -3,12 +3,14 @@ package nkp.pspValidator.shared.engine.validationFunctions;
 
 import nkp.pspValidator.shared.engine.*;
 import nkp.pspValidator.shared.engine.exceptions.*;
+import nkp.pspValidator.shared.engine.utils.PackageFileLookup;
 import org.w3c.dom.Document;
 
 import javax.xml.xpath.XPathConstants;
 import javax.xml.xpath.XPathExpression;
 import javax.xml.xpath.XPathExpressionException;
 import java.io.File;
+import java.util.Collections;
 
 /**
  * Created by Martin Řehánek on 1.11.16.
@@ -66,10 +68,13 @@ public class VfCheckInfoFileChecksumMatches extends ValidationFunction {
             XPathExpression checksumFileExp = engine.buildXpath("/info/checksum");
             String checksumFilePath = ((String) checksumFileExp.evaluate(infoDoc, XPathConstants.STRING)).trim();
             File checksumFileFound = Utils.buildAbsoluteFile(infoFile.getParentFile(), checksumFilePath);
-            if (!checksumFileFound.equals(checksumFileExisting.getAbsoluteFile())) {
+            //porovnani s rozlisenim velikosti pismen na vsech systemech (File.equals ji na Windows nerozlisuje)
+            if (!PackageFileLookup.samePath(checksumFileFound, checksumFileExisting)) {
+                String hint = PackageFileLookup.findCaseVariant(checksumFileFound, Collections.singletonList(checksumFileExisting)) == null
+                        ? "" : "; názvy se liší jen velikostí písmen";
                 result.addError(
-                        new ValidationProblem(Level.ERROR, String.format("element checksum obsahuje cestu ke špatnému souboru: namísto (%s) obsahuje (%s)",
-                                checksumFileExisting.getAbsolutePath(), checksumFileFound.getAbsolutePath()))
+                        new ValidationProblem(Level.ERROR, String.format("element checksum obsahuje cestu ke špatnému souboru: namísto (%s) obsahuje (%s)%s",
+                                checksumFileExisting.getAbsolutePath(), checksumFileFound.getAbsolutePath(), hint))
                                 .withFile(infoFile)
                                 .withSimpleMessage("element checksum obsahuje cestu ke špatnému souboru")
                                 .withExpectedAndActualValues(checksumFileExisting.getName(), checksumFilePath)

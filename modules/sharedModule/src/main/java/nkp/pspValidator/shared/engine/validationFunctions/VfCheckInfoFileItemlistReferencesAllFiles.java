@@ -14,10 +14,14 @@ import org.w3c.dom.NodeList;
 import javax.xml.xpath.XPathConstants;
 import javax.xml.xpath.XPathExpression;
 import javax.xml.xpath.XPathExpressionException;
+import nkp.pspValidator.shared.engine.utils.PackageFileLookup;
+
 import java.io.File;
 import java.util.ArrayList;
-import java.util.TreeSet;
+import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Map;
+import java.util.TreeMap;
 import java.util.Set;
 
 /**
@@ -60,7 +64,7 @@ public class VfCheckInfoFileItemlistReferencesAllFiles extends ValidationFunctio
                 return invalidValueParamNull(PARAM_LEVEL, paramLevel);
             }
 
-            Set<File> expectedFiles = new TreeSet<>();
+            Set<File> expectedFiles = new LinkedHashSet<>();
 
             List<ValueParam> fileParams = valueParams.getParams(PARAM_FILE);
             for (ValueParam fileParam : fileParams) {
@@ -114,26 +118,42 @@ public class VfCheckInfoFileItemlistReferencesAllFiles extends ValidationFunctio
                 }
             }
 
-            Set<File> foundFiles = new TreeSet<>();
-            foundFiles.addAll(foundFilesList);
-            if (!foundFiles.equals(expectedFiles)) {//something is different
-                for (File foundFile : foundFiles) {
-                    if (!expectedFiles.contains(foundFile)) {
-                        result.addError(new ValidationProblem(level, String.format("soubor INFO se odkazuje na neočekávaný soubor: %s", foundFile.getAbsolutePath()))
-                                .withSimpleMessage("soubor INFO se odkazuje na neočekávaný soubor")
-                                .withFile(infoFile)
-                                .withReferencedFile(foundFile)
-                        );
+            //porovnani podle absolutni cesty jako retezce (PackageFileLookup.pathKey), tedy s rozlisenim velikosti pismen
+            //na vsech systemech (TreeSet<File> ji na Windows nerozlisoval)
+            Map<String, File> found = PackageFileLookup.byPathKey(foundFilesList);
+            Map<String, File> expected = PackageFileLookup.byPathKey(expectedFiles);
+            if (!found.keySet().equals(expected.keySet())) {//something is different
+                List<File> unexpected = new ArrayList<>();
+                for (Map.Entry<String, File> entry : found.entrySet()) {
+                    if (!expected.containsKey(entry.getKey())) {
+                        unexpected.add(entry.getValue());
                     }
                 }
-                for (File expectedFile : expectedFiles) {
-                    if (!foundFiles.contains(expectedFile)) {
-                        result.addError(new ValidationProblem(level, String.format("soubor INFO se neodkazuje na očekávaný soubor: %s", expectedFile.getAbsolutePath()))
-                                .withSimpleMessage("soubor INFO se neodkazuje na očekávaný soubor")
-                                .withFile(infoFile)
-                                .withReferencedFile(expectedFile)
-                        );
+                List<File> missing = new ArrayList<>();
+                for (Map.Entry<String, File> entry : expected.entrySet()) {
+                    if (!found.containsKey(entry.getKey())) {
+                        missing.add(entry.getValue());
                     }
+                }
+                Map<String, TreeMap<String, File>> unexpectedIndex = PackageFileLookup.caseVariantIndex(unexpected);
+                Map<String, TreeMap<String, File>> missingIndex = PackageFileLookup.caseVariantIndex(missing);
+                for (File foundFile : unexpected) {
+                    File variant = PackageFileLookup.findCaseVariant(foundFile, missingIndex);
+                    String hint = variant == null ? "" : PackageFileLookup.actualFileHint(variant.getAbsolutePath());
+                    result.addError(new ValidationProblem(level, String.format("soubor INFO se odkazuje na neočekávaný soubor: %s%s", foundFile.getAbsolutePath(), hint))
+                            .withSimpleMessage("soubor INFO se odkazuje na neočekávaný soubor")
+                            .withFile(infoFile)
+                            .withReferencedFile(foundFile)
+                    );
+                }
+                for (File expectedFile : missing) {
+                    File variant = PackageFileLookup.findCaseVariant(expectedFile, unexpectedIndex);
+                    String hint = variant == null ? "" : PackageFileLookup.referenceHint(variant.getAbsolutePath());
+                    result.addError(new ValidationProblem(level, String.format("soubor INFO se neodkazuje na očekávaný soubor: %s%s", expectedFile.getAbsolutePath(), hint))
+                            .withSimpleMessage("soubor INFO se neodkazuje na očekávaný soubor")
+                            .withFile(infoFile)
+                            .withReferencedFile(expectedFile)
+                    );
                 }
             }
         } catch (XmlFileParsingException e) {
