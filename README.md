@@ -158,6 +158,9 @@ Požadavky zjištěné při ověřování:
   ne skript `jpylyzer.py`.
 - Kakadu je komerční software: potřebuje vlastní licenci, nebo demo od výrobce s jeho podmínkami použití. Nástroj je
   volitelný, soubory JPEG 2000 kontrolují i JHOVE, Jpylyzer a ImageMagick.
+  Knihovny dodané s nástrojem (u Kakadu adresář `lib/<platforma>` vedle `bin/<platforma>`, nebo přímo vedle
+  programu) si validátor na macOS a Linuxu najde sám, stačí zadat adresář s programem `kdu_expand`; proměnnou
+  `DYLD_LIBRARY_PATH` ani `LD_LIBRARY_PATH` není potřeba nastavovat.
 - veraPDF nejméně 1.24 (sjednocený formát XML výstupu), EPUBCheck nejméně 5.0 (EPUB 3.3). Oba potřebují Javu (veraPDF
   8, 11, 17 nebo 21, EPUBCheck 8 nebo novější), EPUBCheck ji bere z PATH (viz
   [veraPDF a EPUBCheck](#verapdf-a-epubcheck-e-publikace)).

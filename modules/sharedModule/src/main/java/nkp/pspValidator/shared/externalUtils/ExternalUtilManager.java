@@ -1,5 +1,7 @@
 package nkp.pspValidator.shared.externalUtils;
 
+import nkp.pspValidator.shared.OperatingSystem;
+import nkp.pspValidator.shared.Platform;
 import nkp.pspValidator.shared.externalUtils.UtilHandler.CommandData;
 import nkp.pspValidator.shared.externalUtils.UtilHandler.Parser;
 
@@ -143,10 +145,20 @@ public class ExternalUtilManager {
         }
     }
 
+    /**
+     * Cesta ke knihovnám nástroje pro spouštěný proces: nástroj se zadaným adresářem dostane v proměnné prostředí
+     * svůj adresář a obvyklá umístění knihoven vedle něj (viz {@link LibraryPathEnvironment}).
+     */
+    private static Map<String, String> libraryEnvironment(UtilHandler.CommandData commandData) {
+        OperatingSystem os = Platform.detectOs().getOperatingSystem();
+        String variable = LibraryPathEnvironment.variableName(os);
+        return LibraryPathEnvironment.forUtil(os, commandData.getPath(), variable == null ? null : System.getenv(variable));
+    }
+
     public String runUtilVersionDetection(ExternalUtil util) throws CliCommand.CliCommandException {
         UtilHandler versionDetection = utilVersionDetectionHandlers.get(util);
         String[] command = buildCommand(versionDetection.getCommandData(), null);
-        CliCommand.Result result = new CliCommand(command).execute();
+        CliCommand.Result result = new CliCommand(command, libraryEnvironment(versionDetection.getCommandData())).execute();
         String rawOutput = null;
         Parser parser = versionDetection.getParser();
         Stream stream = parser.getStream();
@@ -195,7 +207,7 @@ public class ExternalUtilManager {
     public String runUtilExecution(ExternalUtilExecution utilExecution, File targetFile) throws CliCommand.CliCommandException {
         UtilHandler utilHandler = utilExecutionHandlers.get(utilExecution);
         String[] command = buildCommand(utilHandler.getCommandData(), targetFile);
-        CliCommand.Result result = new CliCommand(command).execute();
+        CliCommand.Result result = new CliCommand(command, libraryEnvironment(utilHandler.getCommandData())).execute();
         String rawOutput = null;
         Stream stream = utilHandler.getParser().getStream();
         switch (stream) {

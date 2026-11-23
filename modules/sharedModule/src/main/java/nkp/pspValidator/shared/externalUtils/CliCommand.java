@@ -4,6 +4,8 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.Map;
 
 /**
  * Created by Martin Řehánek on 29.9.16.
@@ -11,15 +13,27 @@ import java.util.Arrays;
 public class CliCommand {
 
     private final String[] command;
+    private final Map<String, String> extraEnvironment;
 
     public CliCommand(String[] command) {
+        this(command, Collections.emptyMap());
+    }
+
+    /**
+     * @param extraEnvironment proměnné prostředí nastavené spouštěnému procesu navíc k prostředí validátoru
+     *                         (např. cesta ke knihovnám nástroje, viz {@link LibraryPathEnvironment})
+     */
+    public CliCommand(String[] command, Map<String, String> extraEnvironment) {
         this.command = command;
+        this.extraEnvironment = extraEnvironment == null ? Collections.emptyMap() : extraEnvironment;
     }
 
     public Result execute() throws CliCommandException {
         try {
             //System.out.println("command: " + this);
-            Process process = Runtime.getRuntime().exec(command);
+            ProcessBuilder builder = new ProcessBuilder(command);
+            builder.environment().putAll(extraEnvironment);
+            Process process = builder.start();
             //TODO: perhaps thread pooling here
 
             //read standard error stream in separate thread
