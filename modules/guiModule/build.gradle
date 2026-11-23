@@ -486,6 +486,9 @@ tasks.register('runSnapshots', JavaExec) {
     if (project.hasProperty('snapshotWaitMs')) {
         systemProperty 'kv.snapshotWaitMs', project.property('snapshotWaitMs')
     }
+    if (project.hasProperty('snapshotFocusDmf')) {
+        systemProperty 'kv.snapshotFocusDmf', project.property('snapshotFocusDmf')
+    }
     if (project.hasProperty('snapshotConfigDirs')) {
         systemProperty 'kv.snapshotConfigDirs', project.property('snapshotConfigDirs')
     }

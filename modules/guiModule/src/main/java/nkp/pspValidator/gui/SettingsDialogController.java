@@ -596,6 +596,9 @@ public class SettingsDialogController extends DialogController {
         typeBox.getItems().setAll(draft.types());
         //nejdelsi nazev typu ("Zvukové dokumenty (zvuk bez nosiče)") se musi vejit cely: seznam typu se nezuzuje,
         //ustupuje seznam verzi a kratsi popisek
+        //pevna sirka: vychozi sirka seznamu pocita s textem polozky, ale ne se sipkou a okraji, takze nejdelsi
+        //nazev by se o par znaku nevesel
+        typeBox.setPrefWidth(290);
         typeBox.setMinWidth(Region.USE_PREF_SIZE);
         ComboBox<String> versionBox = new ComboBox<>();
         versionBox.setPrefWidth(160);

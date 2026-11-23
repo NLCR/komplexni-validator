@@ -633,7 +633,13 @@ public class SnapshotMode {
                 next();
                 return;
             }
-            SettingsDialog dialog = new SettingsDialog(main.getDialogStage(), main, tabs.get(0), null);
+            //kv.snapshotFocusDmf=TYP:verze predvybere fDMF na zalozce preskakovani (napr. AUDIO_NO_CARRIER:1.0)
+            Dmf focusDmf = null;
+            String focus = System.getProperty("kv.snapshotFocusDmf", "").trim();
+            if (focus.contains(":")) {
+                focusDmf = new Dmf(Dmf.Type.valueOf(focus.substring(0, focus.indexOf(':'))), focus.substring(focus.indexOf(':') + 1));
+            }
+            SettingsDialog dialog = new SettingsDialog(main.getDialogStage(), main, tabs.get(0), focusDmf);
             Stage stage = dialog.showNonBlocking();
             SettingsDialogController controller = (SettingsDialogController) dialog.getController();
             settingsTabs(stage, controller, tabs, 0);
