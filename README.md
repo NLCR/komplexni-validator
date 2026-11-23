@@ -169,6 +169,17 @@ Požadavky zjištěné při ověřování:
 - veraPDF nejméně 1.24 (sjednocený formát XML výstupu), EPUBCheck nejméně 5.0 (EPUB 3.3). Oba potřebují Javu (veraPDF
   8, 11, 17 nebo 21, EPUBCheck 8 nebo novější), EPUBCheck ji bere z PATH (viz
   [veraPDF a EPUBCheck](#verapdf-a-epubcheck-e-publikace)).
+- Linux, nástroje z oficiálních instalátorů: veraPDF (instalátor, např. do `/opt/verapdf`) a EPUBCheck (rozbalený zip) a
+  Kakadu v `PATH` nejsou. CLI hlásí veraPDF jako nenalezený (`Cannot run program "verapdf"`) a EPUBCheck se bez cesty hledá
+  jako `epubcheck.jar` v pracovním adresáři, tedy také nenajde. Adresář proto vždy zadejte, například
+  `--verapdf-path /opt/verapdf --epubcheck-path /opt/epubcheck-5.4.0 --kakadu-path <adresář s kdu_expand>`; v GUI
+  Nastavení → Externí nástroje. Nástroje z balíčků distribuce (ImageMagick, JHOVE, MP3val, shntool) bývají v `/usr/bin`
+  a v `PATH` jsou.
+- Linux, výpis CLI a kódování: spouštějte s UTF-8 locale, například `LANG=C.UTF-8 java -jar KomplexniValidatorCLI.jar …`.
+  V locale `C` nebo `POSIX` (kontejner, služba, cron) se česká diakritika ve výpisu zobrazí jako otazníky a Java
+  nenajde ani balík, jehož cesta obsahuje diakritiku. Výpis (ne cesty) opraví i volba
+  `-Dstdout.encoding=UTF-8` (ověřeno s Javou 21); `-Dfile.encoding=UTF-8` samotná nestačí. XML protokol (`--xml-protocol-file`) je v UTF-8
+  vždy, bez ohledu na locale.
 
 Nástroje se instalují z oficiálních stránek projektů: [ImageMagick](https://imagemagick.org/),
 [JHOVE](https://jhove.openpreservation.org/), [Jpylyzer](https://jpylyzer.openpreservation.org/),
