@@ -200,18 +200,22 @@ public class ConstraintsTest {
     }
 
     @Test
-    public void isInFloatRangeToStringDependsOnLocale() {
-        // známá vada (kosmeticka): String.format bez Locale, desetinny oddelovac podle systemu
-        // (v ceskem prostredi "musí být alespoň 6,000000", v anglickem "6.000000")
+    public void isInFloatRangeToStringIndependentOfLocale() {
+        // nalez N4: drive String.format bez Locale (cesky "6,000000", anglicky "6.000000"); ted vzdy desetinna carka
+        // jako dosud v ceskem prostredi, bez oddelovace tisicu, v jakemkoli vychozim locale
         Locale original = Locale.getDefault();
         try {
-            Locale.setDefault(Locale.ROOT);
-            assertEquals("musí být alespoň 6.000000", new IsInFloatRangeConstraint(6.0f, null).toString());
-            assertEquals("musí být nejvýše 35.000000", new IsInFloatRangeConstraint(null, 35.0f).toString());
-            assertEquals("musí být v intervalu <6.000000, 35.000000>", new IsInFloatRangeConstraint(6.0f, 35.0f).toString());
-            assertEquals("musí být číslo (float)", new IsInFloatRangeConstraint(null, null).toString());
-            Locale.setDefault(new Locale("cs", "CZ"));
-            assertEquals("musí být alespoň 6,000000", new IsInFloatRangeConstraint(6.0f, null).toString());
+            for (Locale locale : Arrays.asList(Locale.US, new Locale("cs", "CZ"), Locale.ROOT, Locale.GERMANY, Locale.FRANCE)) {
+                Locale.setDefault(locale);
+                String context = locale.toString();
+                assertEquals(context, "musí být alespoň 6,000000", new IsInFloatRangeConstraint(6.0f, null).toString());
+                assertEquals(context, "musí být nejvýše 35,000000", new IsInFloatRangeConstraint(null, 35.0f).toString());
+                assertEquals(context, "musí být v intervalu <6,000000, 35,000000>", new IsInFloatRangeConstraint(6.0f, 35.0f).toString());
+                assertEquals(context, "musí být alespoň 11732,000000", new IsInFloatRangeConstraint(11732.0f, null).toString());
+                assertEquals(context, "musí být alespoň 1234567,000000", new IsInFloatRangeConstraint(1234567.0f, null).toString());
+                assertEquals(context, "musí být v intervalu <-1,500000, 0,250000>", new IsInFloatRangeConstraint(-1.5f, 0.25f).toString());
+                assertEquals(context, "musí být číslo (float)", new IsInFloatRangeConstraint(null, null).toString());
+            }
         } finally {
             Locale.setDefault(original);
         }

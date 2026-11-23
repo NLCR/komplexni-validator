@@ -46,9 +46,10 @@ public class BinaryFileProfileTest {
 
     @Before
     public void setLocale() {
-        // hlaseni isInFloatRange zavisi na Locale (viz ConstraintsTest)
+        // hlaseni isInFloatRange nesmi zaviset na Locale (nalez N4, viz ConstraintsTest): anglicke locale ma desetinnou
+        // tecku, ocekavane hodnoty maji carku
         originalLocale = Locale.getDefault();
-        Locale.setDefault(Locale.ROOT);
+        Locale.setDefault(Locale.US);
     }
 
     @After
@@ -97,17 +98,33 @@ public class BinaryFileProfileTest {
     @Test
     public void jpylyzerMcOnLrcp() throws Exception {
         assertEquals(Arrays.asList(
-                "Rozlišení vertik.: hodnota \"39.37\" neodpovídá žádnému z omezení: [musí být alespoň 11732.000000]",
-                "Rozlišení horiz.: hodnota \"39.37\" neodpovídá žádnému z omezení: [musí být alespoň 11732.000000]",
+                "Rozlišení vertik.: hodnota \"39.37\" neodpovídá žádnému z omezení: [musí být alespoň 11732,000000]",
+                "Rozlišení horiz.: hodnota \"39.37\" neodpovídá žádnému z omezení: [musí být alespoň 11732,000000]",
                 "Order: hodnota \"LRCP\" neodpovídá žádnému z omezení: [musí být přesně 'RPCL']"
         ), validate(ExternalUtil.JPYLYZER, "mc", "odlis_od_prof_mc_LRCP.xml"));
+    }
+
+    @Test
+    public void decimalNumbersInMessagesDoNotDependOnLocale() throws Exception {
+        // stejny balik ma dat stejne texty na macOS, Windows i Linuxu s LANG=C.UTF-8 (nalez N4)
+        List<String> expected = Arrays.asList(
+                "Rozlišení vertik.: hodnota \"39.37\" neodpovídá žádnému z omezení: [musí být alespoň 11732,000000]",
+                "Rozlišení horiz.: hodnota \"39.37\" neodpovídá žádnému z omezení: [musí být alespoň 11732,000000]",
+                "Order: hodnota \"LRCP\" neodpovídá žádnému z omezení: [musí být přesně 'RPCL']");
+        for (Locale locale : Arrays.asList(Locale.US, new Locale("cs", "CZ"))) {
+            Locale.setDefault(locale);
+            assertEquals(locale.toString(), expected, validate(ExternalUtil.JPYLYZER, "mc", "odlis_od_prof_mc_LRCP.xml"));
+            assertEquals(locale.toString(), Collections.singletonList(
+                    "Kompresní poměr: hodnota \"2.67\" neodpovídá žádnému z omezení: [musí být alespoň 6,000000]"
+            ), validate(ExternalUtil.JPYLYZER, "uc", "ok_uc_UC1.xml"));
+        }
     }
 
     @Test
     public void jpylyzerUcOnUc1CompressionRatio() throws Exception {
         // ok_uc/UC1.jp2 ma kompresni pomer 2.67, profil UC vyzaduje alespon 6
         assertEquals(Collections.singletonList(
-                "Kompresní poměr: hodnota \"2.67\" neodpovídá žádnému z omezení: [musí být alespoň 6.000000]"
+                "Kompresní poměr: hodnota \"2.67\" neodpovídá žádnému z omezení: [musí být alespoň 6,000000]"
         ), validate(ExternalUtil.JPYLYZER, "uc", "ok_uc_UC1.xml"));
     }
 

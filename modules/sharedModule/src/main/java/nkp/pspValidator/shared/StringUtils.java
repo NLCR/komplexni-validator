@@ -1,5 +1,7 @@
 package nkp.pspValidator.shared;
 
+import java.util.Locale;
+
 /**
  * Created by Martin Řehánek on 11.11.16.
  */
@@ -16,6 +18,16 @@ public class StringUtils {
             default:
                 return errors + " problémů";
         }
+    }
+
+    /**
+     * Desetinné číslo pro text hlášek validace a protokolu: šest desetinných míst (jako {@code %f}), desetinná čárka,
+     * bez oddělovače tisíců. Výsledek nezávisí na jazyce systému ani na tom, zda má Java lokalizační data
+     * (dřív {@code String.format("%f")} s výchozím locale: čárka v českém prostředí, tečka v anglickém nebo {@code C}).
+     * Čárka odpovídá dosavadnímu tvaru v českém prostředí (macOS, Windows), např. „11732,000000“.
+     */
+    public static String formatDecimal(double value) {
+        return String.format(Locale.ROOT, "%f", value).replace('.', ',');
     }
 
     public static String formatMilliseconds(long ms) {

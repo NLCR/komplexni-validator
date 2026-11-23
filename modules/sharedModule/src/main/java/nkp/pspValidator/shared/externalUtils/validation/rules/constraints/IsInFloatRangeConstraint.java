@@ -1,5 +1,6 @@
 package nkp.pspValidator.shared.externalUtils.validation.rules.constraints;
 
+import nkp.pspValidator.shared.StringUtils;
 import nkp.pspValidator.shared.externalUtils.validation.Constraint;
 
 /**
@@ -33,11 +34,11 @@ public class IsInFloatRangeConstraint implements Constraint {
 
     public String toString() {
         if (min != null && max != null) {
-            return String.format("musí být v intervalu <%f, %f>", min, max);
+            return "musí být v intervalu <" + StringUtils.formatDecimal(min) + ", " + StringUtils.formatDecimal(max) + ">";
         } else if (min != null) {
-            return String.format("musí být alespoň %f", min);
+            return "musí být alespoň " + StringUtils.formatDecimal(min);
         } else if (max != null) {
-            return String.format("musí být nejvýše %f", max);
+            return "musí být nejvýše " + StringUtils.formatDecimal(max);
         } else {
             return "musí být číslo (float)";
         }
