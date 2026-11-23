@@ -16,5 +16,18 @@
             </rules>
         </validation>
 
+        <!-- soubor, který kdu_expand nemůže otevřít, nevypíše Kakadu Core Error, ale Error in Kakadu File Format Support:
+             Unable to open input file; chyba je vždy ERROR, soubor se nezkontroloval -->
+        <validation name="soubor nelze otevřít (neexistuje, není čitelný, nebo na Windows cesta obsahuje znak mimo znakovou sadu systému)">
+            <textDataExtraction resultType="STRING_LIST">
+                <allNonempty>
+                    <regexp>(?ms)Error in Kakadu File Format Support:\s*Unable to open input file((?!Kakadu Core Error|Error in Kakadu).)*</regexp>
+                </allNonempty>
+            </textDataExtraction>
+            <rules>
+                <mustNotExist level="ERROR"/>
+            </rules>
+        </validation>
+
     </fromText>
 </binaryFileProfile>

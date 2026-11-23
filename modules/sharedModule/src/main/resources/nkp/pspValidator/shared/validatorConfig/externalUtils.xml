@@ -10,10 +10,10 @@
     a ve stavu nástroje v GUI; validace běží dál a výsledky se nemění.
     - series: řada (čísla oddělená tečkou), atribut verifiedWith je přesná verze, na které se ověřovalo (jen pro zobrazení);
     - operatingSystem bez series: na platformě není ověřena žádná verze (každá verze je neověřená);
-    - operatingSystem s inheritsFrom="MAC": platí seznam jiné platformy s poznámkou „ověřeno na macOS“ (Linux zatím
-      nikdo neověřil);
+    - operatingSystem s inheritsFrom="MAC": platí seznam jiné platformy s poznámkou „ověřeno na macOS“ (mechanismus
+      pro platformu, kterou zatím nikdo neověřil; dnes ho žádný nástroj nepoužívá, Linux má vlastní seznamy);
     - platforma, která chybí (nebo nástroj bez verifiedVersions): seznam není, verze se neoznačuje.
-    Seznam se aktualizuje s novou verzí validátoru podle testů s nástroji na Windows a macOS.
+    Seznam se aktualizuje s novou verzí validátoru podle testů s nástroji na Windows, macOS a Linuxu.
 -->
 <externalUtils>
     <util name="JPYLYZER">
@@ -24,7 +24,9 @@
             <operatingSystem name="WINDOWS">
                 <series verifiedWith="2.2.1">2.2</series>
             </operatingSystem>
-            <operatingSystem name="LINUX" inheritsFrom="MAC"/>
+            <operatingSystem name="LINUX">
+                <series verifiedWith="2.2.1">2.2</series>
+            </operatingSystem>
         </verifiedVersions>
         <versionDetection>
             <!--jpylyzer 1.17-->
@@ -120,7 +122,10 @@
             <operatingSystem name="WINDOWS">
                 <series verifiedWith="7.1.2-35">7.1</series>
             </operatingSystem>
-            <operatingSystem name="LINUX" inheritsFrom="MAC"/>
+            <operatingSystem name="LINUX">
+                <series verifiedWith="7.1.1-43">7.1</series>
+                <!-- 6.9 (6.9.12-98, Ubuntu 24.04) zatím ne: spuštěný z PATH píše chyby s prefixem identify-im6.q16:, který profil nezachytí -->
+            </operatingSystem>
         </verifiedVersions>
         <versionDetection>
             <!--https://gist.github.com/Lammerink/3926636-->
@@ -188,7 +193,10 @@
             <operatingSystem name="WINDOWS">
                 <series verifiedWith="1.34.0">1.34</series>
             </operatingSystem>
-            <operatingSystem name="LINUX" inheritsFrom="MAC"/>
+            <operatingSystem name="LINUX">
+                <series verifiedWith="1.28.0">1.28</series>
+                <series verifiedWith="1.34.0">1.34</series>
+            </operatingSystem>
         </verifiedVersions>
         <versionDetection>
             <operatingSystem name="LINUX">
@@ -268,10 +276,20 @@
         <verifiedVersions>
             <operatingSystem name="MAC">
                 <series verifiedWith="8.5">8.5</series>
+                <series verifiedWith="8.7">8.7</series>
             </operatingSystem>
-            <!-- na Windows zatím neověřeno (demo Kakadu jen přes formulář), každá verze je neověřená -->
-            <operatingSystem name="WINDOWS"/>
-            <operatingSystem name="LINUX" inheritsFrom="MAC"/>
+            <operatingSystem name="WINDOWS">
+                <series verifiedWith="7.9.1">7.9</series>
+                <series verifiedWith="8.5">8.5</series>
+                <series verifiedWith="8.7">8.7</series>
+            </operatingSystem>
+            <operatingSystem name="LINUX">
+                <series verifiedWith="8.1">8.1</series>
+                <series verifiedWith="8.5">8.5</series>
+                <series verifiedWith="8.6.2">8.6</series>
+                <series verifiedWith="8.7">8.7</series>
+                <!-- 8.2 (8.2.1) ne: při vícevláknovém dekódování hlásí falešný deadlock jako Kakadu Core Error -->
+            </operatingSystem>
         </verifiedVersions>
         <versionDetection>
             <operatingSystem name="LINUX">
@@ -333,7 +351,9 @@
             <operatingSystem name="WINDOWS">
                 <series verifiedWith="0.1.8">0.1</series>
             </operatingSystem>
-            <operatingSystem name="LINUX" inheritsFrom="MAC"/>
+            <operatingSystem name="LINUX">
+                <series verifiedWith="0.1.8">0.1</series>
+            </operatingSystem>
         </verifiedVersions>
         <versionDetection>
             <operatingSystem name="LINUX">
@@ -391,7 +411,9 @@
             <operatingSystem name="WINDOWS">
                 <series verifiedWith="3.0.10">3.0</series>
             </operatingSystem>
-            <operatingSystem name="LINUX" inheritsFrom="MAC"/>
+            <operatingSystem name="LINUX">
+                <series verifiedWith="3.0.10">3.0</series>
+            </operatingSystem>
         </verifiedVersions>
         <versionDetection>
             <operatingSystem name="LINUX">
@@ -449,7 +471,9 @@
             <operatingSystem name="WINDOWS">
                 <series verifiedWith="0.22">0.22</series>
             </operatingSystem>
-            <operatingSystem name="LINUX" inheritsFrom="MAC"/>
+            <operatingSystem name="LINUX">
+                <series verifiedWith="0.22">0.22</series>
+            </operatingSystem>
         </verifiedVersions>
         <versionDetection>
             <operatingSystem name="LINUX">
@@ -510,7 +534,9 @@
             <operatingSystem name="WINDOWS">
                 <series verifiedWith="1.30.4">1.30</series>
             </operatingSystem>
-            <operatingSystem name="LINUX" inheritsFrom="MAC"/>
+            <operatingSystem name="LINUX">
+                <series verifiedWith="1.30.4">1.30</series>
+            </operatingSystem>
         </verifiedVersions>
         <versionDetection>
             <operatingSystem name="LINUX">
@@ -570,7 +596,9 @@
             <operatingSystem name="WINDOWS">
                 <series verifiedWith="5.4.0">5.4</series>
             </operatingSystem>
-            <operatingSystem name="LINUX" inheritsFrom="MAC"/>
+            <operatingSystem name="LINUX">
+                <series verifiedWith="5.4.0">5.4</series>
+            </operatingSystem>
         </verifiedVersions>
         <versionDetection>
             <operatingSystem name="LINUX">

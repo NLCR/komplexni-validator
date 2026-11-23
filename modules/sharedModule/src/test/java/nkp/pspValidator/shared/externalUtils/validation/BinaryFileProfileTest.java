@@ -214,6 +214,46 @@ public class BinaryFileProfileTest {
         assertEquals(2, validate(ExternalUtil.KAKADU, "mc", "synteticky_dve_chyby.txt").size());
     }
 
+    /**
+     * Soubor, který kdu_expand nemůže otevřít (neexistuje, není čitelný, na Windows cesta se znakem mimo znakovou sadu
+     * systému): Kakadu nevypíše „Kakadu Core Error“, ale „Error in Kakadu File Format Support: Unable to open input
+     * file“ (nález N2 z ověření 23. 11. 2026). Má to být jedna chyba úrovně ERROR se srozumitelným popisem, v mc i uc.
+     */
+    @Test
+    public void kakaduCannotOpenFile() throws Exception {
+        String name = "soubor nelze otevřít (neexistuje, není čitelný, nebo na Windows cesta obsahuje znak mimo znakovou sadu systému)";
+        Map<String, String> expected = new LinkedHashMap<>();
+        expected.put("nelze_otevrit_neexistuje.txt", name + ": zakázaná hodnota nalezena: Error in Kakadu File Format Support:\n"
+                + "Unable to open input file,\n\"src/test/resources/jpeg2000/nevalidni/neexistuje.jp2\".");
+        expected.put("nelze_otevrit_dlouha_cesta.txt", name + ": zakázaná hodnota nalezena: Error in Kakadu File Format Support:\n"
+                + "Unable to open input file, \"src/test/resources/jpeg2000/adresář s mezerou a\n"
+                + "dlouhým názvem/neexistující soubor.jp2\".");
+        expected.put("nelze_otevrit_windows_znakova_sada.txt", name + ": zakázaná hodnota nalezena: Error in Kakadu File Format Support:\n"
+                + "Unable to open input file,\n\"src\\test\\resources\\jpeg2000\\nevalidni\\??????.jp2\".");
+        for (Map.Entry<String, String> entry : expected.entrySet()) {
+            for (String copy : Arrays.asList("mc", "uc")) {
+                CannedOutputExternalUtilManager manager = new CannedOutputExternalUtilManager()
+                        .withOutput(ExternalUtil.KAKADU, output("kakadu", entry.getKey()));
+                List<Validation.Problem> problems = loadProfile(manager, FDMF, copy, ExternalUtil.KAKADU).validateProblems("jp2k", DUMMY_FILE);
+                String context = copy + "/" + entry.getKey() + ": " + problems;
+                assertEquals(context, 1, problems.size());
+                assertEquals(context, Level.ERROR, problems.get(0).getLevel());
+                assertEquals(context, entry.getValue(), problems.get(0).getMessage());
+            }
+        }
+    }
+
+    @Test
+    public void kakaduCoreErrorIsNotReportedAsCannotOpen() throws Exception {
+        // chyba dekodovani zustava jen u no_errors s urovni z rules.xml (null), ne u nove validace
+        CannedOutputExternalUtilManager manager = new CannedOutputExternalUtilManager()
+                .withOutput(ExternalUtil.KAKADU, output("kakadu", "detekce_poskozeni_w0352gUC.txt"));
+        List<Validation.Problem> problems = loadProfile(manager, FDMF, "uc", ExternalUtil.KAKADU).validateProblems("jp2k", DUMMY_FILE);
+        assertEquals(problems.toString(), 1, problems.size());
+        assertNull(problems.get(0).getLevel());
+        assertTrue(problems.get(0).getMessage(), problems.get(0).getMessage().startsWith("no_errors: zakázaná hodnota nalezena: Kakadu Core Error:"));
+    }
+
     // ImageMagick
 
     @Test
@@ -235,7 +275,7 @@ public class BinaryFileProfileTest {
         profile.validate("jp2k", DUMMY_FILE);
         assertEquals(new ExternalUtilExecution("jp2k", ExternalUtil.KAKADU), manager.getLastExecution());
         assertEquals(DUMMY_FILE, manager.getLastTargetFile());
-        assertTrue(profile.toString(), profile.toString().startsWith("BinaryFileProfile{externalUtil=KAKADU, validations=1"));
+        assertTrue(profile.toString(), profile.toString().startsWith("BinaryFileProfile{externalUtil=KAKADU, validations=2"));
     }
 
     @Test

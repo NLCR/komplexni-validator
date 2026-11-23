@@ -56,6 +56,12 @@ Názvy souborů obrazových nástrojů: `<adresář vstupu>_<název vstupu>`, vs
 - `nevalidni_w7200f.txt`: SOP marker mimo pořadí.
 - `synteticky_dve_chyby.txt`: **syntetický**, dvě chybové hlášky za sebou (spojení dvou reálných
   hlášek), pro ověření, že regulární výraz profilu rozdělí výstup na dvě položky.
+- `nelze_otevrit_neexistuje.txt`, `nelze_otevrit_dlouha_cesta.txt`: pořízeno 23. 11. 2026 na macOS, `kdu_expand` v8.5
+  nad neexistujícím souborem (spuštěno v `modules/sharedModule` s relativní cestou), `Error in Kakadu File Format
+  Support: Unable to open input file`. Kakadu text zalamuje na šířku řádku (v dlouhé cestě místo mezery).
+- `nelze_otevrit_windows_znakova_sada.txt`: výstup `kdu_expand.exe` 8.7 na Windows 11 (ověření 23. 11. 2026) u souboru
+  `隨機中國文字.jp2`, jehož cesta obsahuje znaky mimo znakovou sadu systému (Kakadu je dostane jako `?`). Konce řádků
+  CRLF jako v originálu; absolutní cesta je zkrácená na relativní a zalomení uvnitř cesty odstraněno, ostatní beze změny.
 
 ## ImageMagick
 

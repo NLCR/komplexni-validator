@@ -184,8 +184,9 @@ public class VerifiedVersionsConfigTest {
     // ----- skutecna konfigurace -----
 
     /**
-     * Ověřené řady ve skutečném externalUtils.xml: seznam z ověření 20. 11. 2026 na macOS a Windows (rozhodnutí
-     * uživatele 23. 11. 2026), Linux přebírá macOS. Vypsáno ručně, ne odvozeno z kódu.
+     * Ověřené řady ve skutečném externalUtils.xml: seznam z ověření 20. 11. 2026 na macOS a Windows a z ověření
+     * 23. 11. 2026 na Linuxu a Kakadu na všech platformách (rozhodnutí uživatele 23. 11. 2026); Linux má vlastní
+     * seznamy, nic se nepřebírá. Vypsáno ručně, ne odvozeno z kódu.
      */
     @Test
     public void repositoryConfigContainsVerifiedList() throws Exception {
@@ -193,7 +194,7 @@ public class VerifiedVersionsConfigTest {
         mac.put(IMAGE_MAGICK, "7.1 (7.1.2-35)");
         mac.put(JHOVE, "1.29 (1.29.0-SNAPSHOT), 1.34 (1.34.0)");
         mac.put(JPYLYZER, "2.2 (2.2.1)");
-        mac.put(KAKADU, "8.5 (8.5)");
+        mac.put(KAKADU, "8.5 (8.5), 8.7 (8.7)");
         mac.put(MP3VAL, "0.1 (0.1.8)");
         mac.put(SHNTOOL, "3.0 (3.0.10)");
         mac.put(CHECKMATE, "0.22 (0.22)");
@@ -203,22 +204,22 @@ public class VerifiedVersionsConfigTest {
         windows.put(IMAGE_MAGICK, "7.1 (7.1.2-35)");
         windows.put(JHOVE, "1.34 (1.34.0)");
         windows.put(JPYLYZER, "2.2 (2.2.1)");
-        windows.put(KAKADU, "");
+        windows.put(KAKADU, "7.9 (7.9.1), 8.5 (8.5), 8.7 (8.7)");
         windows.put(MP3VAL, "0.1 (0.1.8)");
         windows.put(SHNTOOL, "3.0 (3.0.10)");
         windows.put(CHECKMATE, "0.22 (0.22)");
         windows.put(VERAPDF, "1.30 (1.30.4)");
         windows.put(EPUBCHECK, "5.4 (5.4.0)");
         Map<ExternalUtil, String> linux = new EnumMap<>(ExternalUtil.class);
-        linux.put(IMAGE_MAGICK, "7.1 (7.1.2-35) z MAC");
-        linux.put(JHOVE, "1.29 (1.29.0-SNAPSHOT), 1.34 (1.34.0) z MAC");
-        linux.put(JPYLYZER, "2.2 (2.2.1) z MAC");
-        linux.put(KAKADU, "8.5 (8.5) z MAC");
-        linux.put(MP3VAL, "0.1 (0.1.8) z MAC");
-        linux.put(SHNTOOL, "3.0 (3.0.10) z MAC");
-        linux.put(CHECKMATE, "0.22 (0.22) z MAC");
-        linux.put(VERAPDF, "1.30 (1.30.2) z MAC");
-        linux.put(EPUBCHECK, "5.4 (5.4.0) z MAC");
+        linux.put(IMAGE_MAGICK, "7.1 (7.1.1-43)");
+        linux.put(JHOVE, "1.28 (1.28.0), 1.34 (1.34.0)");
+        linux.put(JPYLYZER, "2.2 (2.2.1)");
+        linux.put(KAKADU, "8.1 (8.1), 8.5 (8.5), 8.6 (8.6.2), 8.7 (8.7)");
+        linux.put(MP3VAL, "0.1 (0.1.8)");
+        linux.put(SHNTOOL, "3.0 (3.0.10)");
+        linux.put(CHECKMATE, "0.22 (0.22)");
+        linux.put(VERAPDF, "1.30 (1.30.4)");
+        linux.put(EPUBCHECK, "5.4 (5.4.0)");
 
         ExternalUtilManagerFactory factory = new ExternalUtilManagerFactory(ExternalUtilsTestSupport.EXTERNAL_UTILS_CONFIG);
         assertList(mac, factory.buildExternalUtilManager(OperatingSystem.MAC));

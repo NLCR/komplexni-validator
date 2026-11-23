@@ -17,7 +17,8 @@ import static org.junit.Assert.*;
 /**
  * Celá cesta od výstupu nástroje k ověření verze: skutečná externalUtils.xml (příkaz, proud a regulární výraz
  * detekce verze pro každý OS, ověřené řady), falešné nástroje ({@link FakeExternalUtils}, na Windows dávky .bat)
- * s výstupy verzí, které nástroje vypsaly při ověření 20. 11. 2026 na macOS a na Windows. EPUBCheck (java -jar)
+ * s výstupy verzí, které nástroje vypsaly při ověření 20. 11. 2026 na macOS a na Windows (Linux a Kakadu ověřeny
+ * 23. 11. 2026). EPUBCheck (java -jar)
  * je v {@link ExternalUtilManagerTest#epubCheckRunsThroughJavaJar}.
  */
 public class VersionDetectionCheckTest {
@@ -88,14 +89,14 @@ public class VersionDetectionCheckTest {
     }
 
     @Test
-    public void windowsVersionsAreVerifiedExceptKakadu() throws Exception {
+    public void windowsVersionsAreVerified() throws Exception {
         ExternalUtilManager manager = managerWithFakes(OperatingSystem.WINDOWS);
         VersionCheck.Status ok = VersionCheck.Status.VERIFIED;
         assertDetection(manager, JPYLYZER, "2.2.1", "2.2.1", ok);
         assertDetection(manager, IMAGE_MAGICK, "ImageMagick 7.1.2-35", "7.1.2", ok);
         assertDetection(manager, JHOVE, "Rel. 1.34.0", "1.34.0", ok);
-        // Kakadu na Windows nikdo neoveril: kazda verze je neoverena
-        assertDetection(manager, KAKADU, "v8.5", "8.5", VersionCheck.Status.UNVERIFIED);
+        // Kakadu na Windows overeno 23. 11. 2026 (7.9, 8.5, 8.7)
+        assertDetection(manager, KAKADU, "v8.5", "8.5", ok);
         assertDetection(manager, MP3VAL, "MP3val 0.1.8", "0.1.8", ok);
         assertDetection(manager, SHNTOOL, "shntool 3.0.10", "3.0.10", ok);
         assertDetection(manager, CHECKMATE, "mpck 0.22", "0.22", ok);
@@ -103,22 +104,43 @@ public class VersionDetectionCheckTest {
     }
 
     @Test
-    public void linuxVersionsAreVerifiedOnMac() throws Exception {
+    public void linuxVersionsAreVerified() throws Exception {
+        // Linux ma od 23. 11. 2026 vlastni seznam (nic neprebira z macOS)
         ExternalUtilManager manager = managerWithFakes(OperatingSystem.LINUX);
-        VersionCheck.Status mac = VersionCheck.Status.VERIFIED_ON_OTHER_PLATFORM;
-        assertDetection(manager, JPYLYZER, "2.2.1", "2.2.1", mac);
-        assertDetection(manager, IMAGE_MAGICK, "ImageMagick 7.1.2-35", "7.1.2", mac);
-        assertDetection(manager, JHOVE, "Rel. 1.34.0", "1.34.0", mac);
-        assertDetection(manager, KAKADU, "v8.5", "8.5", mac);
-        assertDetection(manager, MP3VAL, "MP3val 0.1.8", "0.1.8", mac);
-        assertDetection(manager, SHNTOOL, "shntool 3.0.10", "3.0.10", mac);
-        assertDetection(manager, CHECKMATE, "mpck 0.22", "0.22", mac);
-        assertDetection(manager, VERAPDF, "veraPDF 1.30.0", "1.30.0", mac);
+        VersionCheck.Status ok = VersionCheck.Status.VERIFIED;
+        assertDetection(manager, JPYLYZER, "2.2.1", "2.2.1", ok);
+        assertDetection(manager, IMAGE_MAGICK, "ImageMagick 7.1.2-35", "7.1.2", ok);
+        assertDetection(manager, JHOVE, "Rel. 1.34.0", "1.34.0", ok);
+        assertDetection(manager, KAKADU, "v8.5", "8.5", ok);
+        assertDetection(manager, MP3VAL, "MP3val 0.1.8", "0.1.8", ok);
+        assertDetection(manager, SHNTOOL, "shntool 3.0.10", "3.0.10", ok);
+        assertDetection(manager, CHECKMATE, "mpck 0.22", "0.22", ok);
+        assertDetection(manager, VERAPDF, "veraPDF 1.30.0", "1.30.0", ok);
+    }
+
+    @Test
+    public void linuxSpecificSeries() throws Exception {
+        // rady z overeni na Linuxu 23. 11. 2026: JHOVE 1.28 z distribuce ano, ImageMagick 6.9 a Kakadu 8.2 ne
+        // (vystupy verzi zkracene na radek, ktery cte regularni vyraz)
+        ExternalUtilManager manager = managerWithFakes(OperatingSystem.LINUX);
+        File dir = tmp.newFolder("linux-rady");
+        manager.setPath(JHOVE, dir);
+        manager.setPath(IMAGE_MAGICK, dir);
+        manager.setPath(KAKADU, dir);
+        FakeExternalUtils.create(dir, "jhove", text("Jhove (Rel. 1.28.0, 2023-07-15)\n"), null, 0);
+        FakeExternalUtils.create(dir, "convert", text("Version: ImageMagick 6.9.12-98 Q16 aarch64 18038 https://legacy.imagemagick.org\n"), null, 0);
+        FakeExternalUtils.create(dir, "kdu_expand", text("This is Kakadu's \"kdu_expand\" application.\n"
+                + "    Compiled against the Kakadu core system, version v8.2.1\n    Current core system version is v8.2.1\n"), null, 0);
+        assertDetection(manager, JHOVE, "Rel. 1.28.0", "1.28.0", VersionCheck.Status.VERIFIED);
+        assertDetection(manager, IMAGE_MAGICK, "ImageMagick 6.9.12-98", "6.9.12", VersionCheck.Status.UNVERIFIED);
+        assertDetection(manager, KAKADU, "v8.2.1", "8.2.1", VersionCheck.Status.UNVERIFIED);
+        FakeExternalUtils.create(dir, "kdu_expand", text("    Compiled against the Kakadu core system, version v8.6.2\n"), null, 0);
+        assertDetection(manager, KAKADU, "v8.6.2", "8.6.2", VersionCheck.Status.VERIFIED);
     }
 
     @Test
     public void jhoveSnapshotOnEveryOs() throws Exception {
-        // 1.29.0-SNAPSHOT: macOS rada 1.29 overena; Windows overil jen 1.34; Linux prebira macOS. Regexp pro Linux
+        // 1.29.0-SNAPSHOT: macOS rada 1.29 overena; Windows overil jen 1.34, Linux 1.28 a 1.34. Regexp pro Linux
         // a Windows -SNAPSHOT odrizne, na verzi to nic nemeni.
         Map<OperatingSystem, String> text = new EnumMap<>(OperatingSystem.class);
         text.put(OperatingSystem.MAC, "Jhove (Rel. 1.29.0-SNAPSHOT, 2024-02-18)");
@@ -127,7 +149,7 @@ public class VersionDetectionCheckTest {
         Map<OperatingSystem, VersionCheck.Status> status = new EnumMap<>(OperatingSystem.class);
         status.put(OperatingSystem.MAC, VersionCheck.Status.VERIFIED);
         status.put(OperatingSystem.WINDOWS, VersionCheck.Status.UNVERIFIED);
-        status.put(OperatingSystem.LINUX, VersionCheck.Status.VERIFIED_ON_OTHER_PLATFORM);
+        status.put(OperatingSystem.LINUX, VersionCheck.Status.UNVERIFIED);
         for (OperatingSystem os : OperatingSystem.values()) {
             ExternalUtilManager manager = managerWithFakes(os);
             File dir = tmp.newFolder("jhove129-" + os.name());

@@ -106,7 +106,7 @@ Externí nástroje (ImageMagick, JHOVE, Jpylyzer, Kakadu, MP3val, shntool, Check
 adresářem (`--<nástroj>-path`, např. `--jhove-path`) nebo vypínají (`--disable-<nástroj>`); bez cesty se hledají
 v PATH. Nástroj, jehož verzi se nepodaří zjistit, se pro validaci vypne: pravidlo pak hlásí jednu informaci „nástroj … není dostupný“ (dříve CLI hlásilo chybu spuštění
 u každého souboru). Cesty k nástrojům i k balíkům smějí obsahovat mezery a českou diakritiku (ověřeno
-na Windows 11 a macOS se všemi nástroji kromě Kakadu). Na Windows ale JHOVE, shntool a MP3val nenajdou soubor, jehož
+na Windows 11 a macOS se všemi nástroji kromě Kakadu). Na Windows ale JHOVE, shntool, MP3val a Kakadu nenajdou soubor, jehož
 cesta obsahuje znak mimo znakovou sadu systému (v českých Windows středoevropskou, tedy například řecké nebo ruské
 písmeno v názvu adresáře); validace pak u takového balíku hlásí chyby těchto nástrojů, i když soubory jsou
 v pořádku. Balíky proto na Windows ukládejte do cest bez takových znaků. Podporované verze nástrojů a odkud je brát:
@@ -132,20 +132,25 @@ ověřovalo):
 
 | nástroj | macOS | Windows | Linux |
 |---|---|---|---|
-| ImageMagick | 7.1 (7.1.2-35) | 7.1 (7.1.2-35) | jako macOS |
-| JHOVE | 1.29 (1.29.0-SNAPSHOT), 1.34 (1.34.0) | 1.34 (1.34.0) | jako macOS |
-| Jpylyzer | 2.2 (2.2.1) | 2.2 (2.2.1) | jako macOS |
-| Kakadu | 8.5 (8.5) | žádná | jako macOS |
-| MP3val | 0.1 (0.1.8) | 0.1 (0.1.8) | jako macOS |
-| shntool | 3.0 (3.0.10) | 3.0 (3.0.10) | jako macOS |
-| Checkmate | 0.22 (0.22) | 0.22 (0.22) | jako macOS |
-| veraPDF | 1.30 (1.30.2) | 1.30 (1.30.4) | jako macOS |
-| EPUBCheck | 5.4 (5.4.0) | 5.4 (5.4.0) | jako macOS |
+| ImageMagick | 7.1 (7.1.2-35) | 7.1 (7.1.2-35) | 7.1 (7.1.1-43) |
+| JHOVE | 1.29 (1.29.0-SNAPSHOT), 1.34 (1.34.0) | 1.34 (1.34.0) | 1.28 (1.28.0), 1.34 (1.34.0) |
+| Jpylyzer | 2.2 (2.2.1) | 2.2 (2.2.1) | 2.2 (2.2.1) |
+| Kakadu | 8.5 (8.5), 8.7 (8.7) | 7.9 (7.9.1), 8.5 (8.5), 8.7 (8.7) | 8.1 (8.1), 8.5 (8.5), 8.6 (8.6.2), 8.7 (8.7) |
+| MP3val | 0.1 (0.1.8) | 0.1 (0.1.8) | 0.1 (0.1.8) |
+| shntool | 3.0 (3.0.10) | 3.0 (3.0.10) | 3.0 (3.0.10) |
+| Checkmate | 0.22 (0.22) | 0.22 (0.22) | 0.22 (0.22) |
+| veraPDF | 1.30 (1.30.2) | 1.30 (1.30.4) | 1.30 (1.30.4) |
+| EPUBCheck | 5.4 (5.4.0) | 5.4 (5.4.0) | 5.4 (5.4.0) |
 
 <!-- overene-verze:konec -->
 
-Na Linuxu zatím nikdo verze neověřil, platí proto řady ověřené na macOS; CLI i GUI u takové verze uvádějí „ověřeno
-na macOS“ (jen jako poznámku, do protokolu se nic nepíše).
+Linux je ověřený na Debianu 13 (arm64 a x86-64) a Ubuntu 24.04 (arm64) s nástroji z distribuce, kde v ní jsou (ImageMagick,
+JHOVE 1.28, MP3val, shntool), jinak s oficiálními balíky a instalátory (JHOVE 1.34, Jpylyzer, Checkmate, veraPDF,
+EPUBCheck). ImageMagick řady 6.9 (Ubuntu 22.04 a 24.04, Debian 12) na Linuxu ověřený není: spuštěný z PATH hlásí
+chyby JPEG 2000 pod jiným názvem programu a validátor je nezachytí. Kdo ho přesto používá, má adresář zadat výslovně
+(`/usr/bin`). Kakadu je ověřené na sestaveních ze zdrojového SDK výrobce (s licencí), demo binárky výrobce ověřené
+nejsou. Řada Kakadu 8.2 na Linuxu nevyhovuje: při vícevláknovém dekódování hlásí i u bezvadných souborů falešnou
+chybu („System is entering deadlock“).
 
 Požadavky zjištěné při ověřování:
 

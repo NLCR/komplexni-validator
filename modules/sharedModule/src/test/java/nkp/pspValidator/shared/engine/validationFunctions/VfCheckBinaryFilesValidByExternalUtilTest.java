@@ -213,6 +213,27 @@ public class VfCheckBinaryFilesValidByExternalUtilTest {
         }
     }
 
+    private static final String KAKADU_CANNOT_OPEN = "soubor nelze otevřít (neexistuje, není čitelný, nebo na Windows cesta obsahuje "
+            + "znak mimo znakovou sadu systému): zakázaná hodnota nalezena: Error in Kakadu File Format Support:\nUnable to open input file,";
+
+    @Test
+    public void cannedKakaduCannotOpenFileIsErrorEvenWithWarningLevel() throws Exception {
+        // N2: soubor, ktery Kakadu neotevre, nesmi projit; pravidlo ma uroven WARNING, tahle chyba je vzdy ERROR
+        CannedOutputExternalUtilManager manager = new CannedOutputExternalUtilManager()
+                .withOutput(ExternalUtil.KAKADU, ExternalUtilsTestSupport.output("kakadu", "nelze_otevrit_windows_znakova_sada.txt"));
+        Engine engine = engineWith(manager, ExternalUtil.KAKADU, ResourceType.IMAGE_MASTER_COPY,
+                ExternalUtilsTestSupport.profileFile("fund_unit_0.2", "mc", ExternalUtil.KAKADU));
+        File file = new File("nevalidni/隨機中國文字.jp2");
+        ValidationResult result = buildValidationFunction(engine, ExternalUtil.KAKADU, ResourceType.IMAGE_MASTER_COPY,
+                Collections.singletonList(file)).validate();
+        assertEquals(result.getProblems().toString(), 1, result.getProblems().size());
+        ValidationProblem problem = result.getProblems().get(0);
+        assertEquals(Level.ERROR, problem.getLevel());
+        assertEquals(file, problem.getReferencedFile());
+        assertEquals("Kakadu", problem.getToolName());
+        assertEquals(KAKADU_CANNOT_OPEN + "\n\"src\\test\\resources\\jpeg2000\\nevalidni\\??????.jp2\".", problem.getFullMessage());
+    }
+
     @Test
     public void cannedOutputWithoutProblems() throws Exception {
         CannedOutputExternalUtilManager manager = new CannedOutputExternalUtilManager()
@@ -513,7 +534,7 @@ public class VfCheckBinaryFilesValidByExternalUtilTest {
     /**
      * Skutečná konfigurace a falešný JHOVE ({@link FakeExternalUtils}, na Windows dávka): detekce verze jako v CLI
      * (zápis verze do manažeru), pak validace dvou JP2 profilem fund_unit_0.2/mc nad výstupem s nálezy. Neověřená
-     * verze přidá právě jednu INFO před nálezy, ověřená (i převzatá z macOS na Linuxu) žádnou; nálezy jsou ve všech
+     * verze přidá právě jednu INFO před nálezy, ověřená žádnou; nálezy jsou ve všech
      * případech stejné jako bez zapsané verze.
      */
     @Test
@@ -522,7 +543,7 @@ public class VfCheckBinaryFilesValidByExternalUtilTest {
         List<File> files = Arrays.asList(new File("x.jp2"), new File("y.jp2"));
         String unverifiedInfo = "- INFO: nástroj JHOVE je ve verzi 1.36.0, která nebyla s validátorem ověřena (ověřené řady: 1.29, 1.34); výsledky kontroly se mohou lišit";
         String unverifiedInfoWindows = "- INFO: nástroj JHOVE je ve verzi 1.36.0, která nebyla s validátorem ověřena (ověřená řada: 1.34); výsledky kontroly se mohou lišit";
-        String unverifiedInfoLinux = "- INFO: nástroj JHOVE je ve verzi 1.36.0, která nebyla s validátorem ověřena (ověřené řady na macOS: 1.29, 1.34); výsledky kontroly se mohou lišit";
+        String unverifiedInfoLinux = "- INFO: nástroj JHOVE je ve verzi 1.36.0, která nebyla s validátorem ověřena (ověřené řady: 1.28, 1.34); výsledky kontroly se mohou lišit";
         Map<OperatingSystem, String> expectedInfo = new EnumMap<>(OperatingSystem.class);
         expectedInfo.put(OperatingSystem.MAC, unverifiedInfo);
         expectedInfo.put(OperatingSystem.WINDOWS, unverifiedInfoWindows);
@@ -769,8 +790,44 @@ public class VfCheckBinaryFilesValidByExternalUtilTest {
     public void kakaduInvalid() {
         // Kakadu dekoduje i vetsinu souboru, ktere Jpylyzer/JHOVE odmitnou; chybu hlasi jen u nekterych
         assumeAvailable(ExternalUtil.KAKADU);
-        Map<String, List<String>> problems = problemsByFile(validate(ExternalUtil.KAKADU, ResourceType.IMAGE_MASTER_COPY, filesInDir("nevalidni")));
+        List<File> files = new ArrayList<>(filesInDir("nevalidni"));
+        File chinese = file("nevalidni", "隨機中國文字.jp2");
+        files.remove(chinese);
+        Map<String, List<String>> problems = problemsByFile(validate(ExternalUtil.KAKADU, ResourceType.IMAGE_MASTER_COPY, files));
         assertEquals(new TreeSet<>(Arrays.asList("u5463f.jp2", "w1282h.jp2", "w7200f.jp2")), problems.keySet());
+        // 隨機中國文字.jp2 Kakadu dekoduje bez chyby; na Windows s kodovou strankou bez techto znaku ho ale neotevre
+        // (overeni 23. 11. 2026, N2) a profil to hlasi jako ERROR
+        List<ValidationProblem> chineseProblems = validate(ExternalUtil.KAKADU, ResourceType.IMAGE_MASTER_COPY, Collections.singletonList(chinese)).getProblems();
+        if (Platform.detectOs().getOperatingSystem() != OperatingSystem.WINDOWS) {
+            assertEquals(chineseProblems.toString(), Collections.emptyList(), chineseProblems);
+        } else if (!chineseProblems.isEmpty()) {
+            assertEquals(chineseProblems.toString(), 1, chineseProblems.size());
+            assertEquals(Level.ERROR, chineseProblems.get(0).getLevel());
+            assertTrue(chineseProblems.get(0).getFullMessage(), chineseProblems.get(0).getFullMessage().startsWith(KAKADU_CANNOT_OPEN));
+        }
+    }
+
+    @Test
+    public void kakaduNonexistentFileIsError() {
+        // skutecny kdu_expand nad souborem, ktery neexistuje: "Error in Kakadu File Format Support: Unable to open
+        // input file" (N2); dva soubory, aby bylo videt, ze chyba patri ke kazdemu zvlast
+        assumeAvailable(ExternalUtil.KAKADU);
+        File dir = new File(EXAMPLES_ROOT_DIR, "nevalidni");
+        List<File> files = Arrays.asList(new File(dir, "neexistuje.jp2"), new File(dir, "neexistuje ani tento.jp2"));
+        for (File missing : files) {
+            assertFalse(missing.getPath(), missing.exists());
+        }
+        ValidationResult result = validate(ExternalUtil.KAKADU, ResourceType.IMAGE_MASTER_COPY, files);
+        assertEquals(result.getProblems().toString(), 2, result.getProblems().size());
+        for (int i = 0; i < files.size(); i++) {
+            ValidationProblem problem = result.getProblems().get(i);
+            assertEquals(Level.ERROR, problem.getLevel());
+            assertEquals(files.get(i), problem.getReferencedFile());
+            String message = problem.getFullMessage();
+            assertTrue(message, message.startsWith(KAKADU_CANNOT_OPEN));
+            // nazev souboru je v hlaseni (Kakadu dlouhou cestu zalomi i uprostred slova, porovnava se bez bilych znaku)
+            assertTrue(message, message.replaceAll("\\s", "").contains(files.get(i).getName().replaceAll("\\s", "") + "\"."));
+        }
     }
 
     @Test
