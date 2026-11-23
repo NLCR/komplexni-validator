@@ -1,0 +1,11 @@
+identify: Expected SOP marker
+ `OpenJP2' @ warning/jp2.c/JP2WarningHandler/256.
+identify: Expected EPH marker
+ `OpenJP2' @ error/jp2.c/JP2ErrorHandler/213.
+identify: Failed to decode.
+ `OpenJP2' @ error/jp2.c/JP2ErrorHandler/213.
+identify: Failed to decode tile 1/8
+ `OpenJP2' @ error/jp2.c/JP2ErrorHandler/213.
+identify: Failed to decode the codestream in the JP2 file
+ `OpenJP2' @ error/jp2.c/JP2ErrorHandler/213.
+identify: unable to decode image file `src/test/resources/jpeg2000/detekce_poskozeni/w0352gUC.jp2' @ error/jp2.c/ReadJP2Image/446.

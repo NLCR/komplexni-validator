@@ -9,7 +9,7 @@
             <textDataExtraction resultType="STRING_LIST">
                 <allNonempty>
                     <regexp>(?m)^Error.*$</regexp>
-                    <regexp>(?ms)identify:((?!identify).)*</regexp>
+                    <regexp>(?ms)^identify(?:-[\w.]+)?:.*?(?=^identify(?:-[\w.]+)?:|\z)</regexp>
                 </allNonempty>
             </textDataExtraction>
             <rules>

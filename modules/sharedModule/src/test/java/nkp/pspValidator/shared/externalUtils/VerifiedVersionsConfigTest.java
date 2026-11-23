@@ -211,7 +211,7 @@ public class VerifiedVersionsConfigTest {
         windows.put(VERAPDF, "1.30 (1.30.4)");
         windows.put(EPUBCHECK, "5.4 (5.4.0)");
         Map<ExternalUtil, String> linux = new EnumMap<>(ExternalUtil.class);
-        linux.put(IMAGE_MAGICK, "7.1 (7.1.1-43)");
+        linux.put(IMAGE_MAGICK, "6.9 (6.9.12-98), 7.1 (7.1.1-43)");
         linux.put(JHOVE, "1.28 (1.28.0), 1.34 (1.34.0)");
         linux.put(JPYLYZER, "2.2 (2.2.1)");
         linux.put(KAKADU, "8.1 (8.1), 8.5 (8.5), 8.6 (8.6.2), 8.7 (8.7)");

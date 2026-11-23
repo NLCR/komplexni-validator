@@ -123,8 +123,9 @@
                 <series verifiedWith="7.1.2-35">7.1</series>
             </operatingSystem>
             <operatingSystem name="LINUX">
+                <!-- 6.9.12-98 z Ubuntu 24.04; z PATH píše chyby s názvem programu identify-im6.q16:, profily imageMagick.xml ho zachytí -->
+                <series verifiedWith="6.9.12-98">6.9</series>
                 <series verifiedWith="7.1.1-43">7.1</series>
-                <!-- 6.9 (6.9.12-98, Ubuntu 24.04) zatím ne: spuštěný z PATH píše chyby s prefixem identify-im6.q16:, který profil nezachytí -->
             </operatingSystem>
         </verifiedVersions>
         <versionDetection>

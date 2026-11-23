@@ -74,6 +74,20 @@ Názvy souborů obrazových nástrojů: `<adresář vstupu>_<název vstupu>`, vs
   s OpenJPEG u poškozeného souboru (`identify: ... @ warning/jp2.c/...`).
 - `synteticky_error_radek.txt`: **syntetický**, řádek začínající `Error`, na který míří první
   regulární výraz profilu `imageMagick.xml`.
+- `im69_*.txt`, `im71_*.txt` (reálné výstupy, ověření na Linuxu 23. 11. 2026, nález N1, test `ImageMagickProfileTest`):
+  pořízeno v Dockeru, ImageMagick 6.9.12-98 Q16 z Ubuntu 24.04 (`imagemagick` 8:6.9.12.98+dfsg1-5.2build2, OpenJPEG
+  2.5.0; první řádek `convert -version`: `Version: ImageMagick 6.9.12-98 Q16 aarch64 18038 https://legacy.imagemagick.org`)
+  a 7.1.1-43 Q16 z Debianu 13 (OpenJPEG 2.5.3). Příkaz
+  `identify -verbose <soubor>` spuštěný v `modules/sharedModule` s relativní cestou, ukládá se stderr, beze změny.
+  - `im69_path_detekce_poskozeni_w0352gUC.txt`: 6.9 spuštěný z PATH (`identify`), hlášky začínají
+    `identify-im6.q16:`. Ověřeno: spuštění absolutní cestou (`/usr/bin/identify`, `/etc/alternatives/identify`)
+    dává `identify:`, spuštění názvem z PATH nebo relativní cestou (`./identify`) `identify-im6.q16:`, tedy název
+    skutečného programu, na který vede odkaz `/usr/bin/identify` přes alternatives.
+  - `im69_absolutni_cesta_detekce_poskozeni_w0352gUC.txt`: 6.9 spuštěný jako `/usr/bin/identify` (validátor se
+    zadaným adresářem), hlášky začínají `identify:`.
+  - `im69_path_tools_mc.txt`: 6.9 z PATH nad bezvadným `src/test/tools/jp2/mc.jp2`, prázdný stderr.
+  - `im71_detekce_poskozeni_w0352gUC.txt`: 7.1 z PATH, hlášky `identify:` (stejně jako `magick identify`, absolutní
+    cesta i 7.1.2-35 na macOS).
 
 ## veraPDF (reálné výstupy)
 

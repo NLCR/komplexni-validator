@@ -120,7 +120,8 @@ public class VersionDetectionCheckTest {
 
     @Test
     public void linuxSpecificSeries() throws Exception {
-        // rady z overeni na Linuxu 23. 11. 2026: JHOVE 1.28 z distribuce ano, ImageMagick 6.9 a Kakadu 8.2 ne
+        // rady z overeni na Linuxu 23. 11. 2026: JHOVE 1.28 z distribuce ano, Kakadu 8.2 ne; ImageMagick 6.9 ano
+        // (po oprave profilu imageMagick.xml pro hlasky "identify-im6.q16:", nalez N1)
         // (vystupy verzi zkracene na radek, ktery cte regularni vyraz)
         ExternalUtilManager manager = managerWithFakes(OperatingSystem.LINUX);
         File dir = tmp.newFolder("linux-rady");
@@ -132,7 +133,7 @@ public class VersionDetectionCheckTest {
         FakeExternalUtils.create(dir, "kdu_expand", text("This is Kakadu's \"kdu_expand\" application.\n"
                 + "    Compiled against the Kakadu core system, version v8.2.1\n    Current core system version is v8.2.1\n"), null, 0);
         assertDetection(manager, JHOVE, "Rel. 1.28.0", "1.28.0", VersionCheck.Status.VERIFIED);
-        assertDetection(manager, IMAGE_MAGICK, "ImageMagick 6.9.12-98", "6.9.12", VersionCheck.Status.UNVERIFIED);
+        assertDetection(manager, IMAGE_MAGICK, "ImageMagick 6.9.12-98", "6.9.12", VersionCheck.Status.VERIFIED);
         assertDetection(manager, KAKADU, "v8.2.1", "8.2.1", VersionCheck.Status.UNVERIFIED);
         FakeExternalUtils.create(dir, "kdu_expand", text("    Compiled against the Kakadu core system, version v8.6.2\n"), null, 0);
         assertDetection(manager, KAKADU, "v8.6.2", "8.6.2", VersionCheck.Status.VERIFIED);

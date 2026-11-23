@@ -132,7 +132,7 @@ ověřovalo):
 
 | nástroj | macOS | Windows | Linux |
 |---|---|---|---|
-| ImageMagick | 7.1 (7.1.2-35) | 7.1 (7.1.2-35) | 7.1 (7.1.1-43) |
+| ImageMagick | 7.1 (7.1.2-35) | 7.1 (7.1.2-35) | 6.9 (6.9.12-98), 7.1 (7.1.1-43) |
 | JHOVE | 1.29 (1.29.0-SNAPSHOT), 1.34 (1.34.0) | 1.34 (1.34.0) | 1.28 (1.28.0), 1.34 (1.34.0) |
 | Jpylyzer | 2.2 (2.2.1) | 2.2 (2.2.1) | 2.2 (2.2.1) |
 | Kakadu | 8.5 (8.5), 8.7 (8.7) | 7.9 (7.9.1), 8.5 (8.5), 8.7 (8.7) | 8.1 (8.1), 8.5 (8.5), 8.6 (8.6.2), 8.7 (8.7) |
@@ -146,9 +146,9 @@ ověřovalo):
 
 Linux je ověřený na Debianu 13 (arm64 a x86-64) a Ubuntu 24.04 (arm64) s nástroji z distribuce, kde v ní jsou (ImageMagick,
 JHOVE 1.28, MP3val, shntool), jinak s oficiálními balíky a instalátory (JHOVE 1.34, Jpylyzer, Checkmate, veraPDF,
-EPUBCheck). ImageMagick řady 6.9 (Ubuntu 22.04 a 24.04, Debian 12) na Linuxu ověřený není: spuštěný z PATH hlásí
-chyby JPEG 2000 pod jiným názvem programu a validátor je nezachytí. Kdo ho přesto používá, má adresář zadat výslovně
-(`/usr/bin`). Kakadu je ověřené na sestaveních ze zdrojového SDK výrobce (s licencí), demo binárky výrobce ověřené
+EPUBCheck). ImageMagick řady 6.9 je ověřený na Ubuntu 24.04 (6.9.12-98), z PATH i se zadaným adresářem `/usr/bin`
+(validátor od verze 3.0 zachytí i hlášky s názvem programu `identify-im6.q16`, který ImageMagick 6 z Debianu
+a Ubuntu vypisuje při spuštění z PATH). Kakadu je ověřené na sestaveních ze zdrojového SDK výrobce (s licencí), demo binárky výrobce ověřené
 nejsou. Řada Kakadu 8.2 na Linuxu nevyhovuje: při vícevláknovém dekódování hlásí i u bezvadných souborů falešnou
 chybu („System is entering deadlock“).
 

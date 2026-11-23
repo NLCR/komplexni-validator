@@ -838,7 +838,7 @@ public class VfCheckBinaryFilesValidByExternalUtilTest {
     }
 
     // ---------------------------------------------------------------------------------------------------------------
-    // ImageMagick (s JP2 delegatem neovereno, na Macu pri psani testu byl jen ImageMagick bez OpenJPEG)
+    // ImageMagick (bez JP2 delegata i s nim: ImageMagick 7.1 na macOS a Linuxu, 6.9 na Linuxu)
 
     private static void assumeImageMagickWithJp2() {
         assumeAvailable(ExternalUtil.IMAGE_MAGICK);
@@ -865,10 +865,21 @@ public class VfCheckBinaryFilesValidByExternalUtilTest {
         assumeImageMagickWithJp2();
         List<File> files = filesInDir("detekce_poskozeni");
         assertFalse("adresar detekce_poskozeni musi obsahovat soubory", files.isEmpty());
-        ValidationResult result = validate(ExternalUtil.IMAGE_MAGICK, ResourceType.IMAGE_USER_COPY, files);
-        assertTrue(result.hasProblems());
-        // neoverene (ImageMagick s JP2 delegatem na tomto stroji chybi): poskozeni ma hlasit profil imageMagick.xml
-        // pres zakazanou hodnotu v no_errors, ne chyba spusteni nastroje
+        ValidationResult result = buildValidationFunction(engine, ExternalUtil.IMAGE_MAGICK, ResourceType.IMAGE_USER_COPY, files,
+                "jp2k", Level.ERROR).validate();
+        // kazdy poskozeny soubor ma ERROR z profilu imageMagick.xml (zakazana hodnota v no_errors s hlaskou ImageMagicku);
+        // nestaci libovolny problem (napr. INFO o neoverene verzi). Nalez N1: ImageMagick 6.9 z PATH pise
+        // "identify-im6.q16:" a profil s puvodnim vzorem "identify:" nenasel nic
+        for (File file : files) {
+            List<String> errors = new ArrayList<>();
+            for (ValidationProblem problem : result.getProblems()) {
+                if (problem.getLevel() == Level.ERROR && file.equals(problem.getReferencedFile())
+                        && problem.getFullMessage().startsWith("no_errors: zakázaná hodnota nalezena: identify")) {
+                    errors.add(problem.getFullMessage());
+                }
+            }
+            assertFalse("bez ERROR z profilu: " + file.getName() + ", problémy: " + levelsMessagesAndFiles(result), errors.isEmpty());
+        }
         assertNoProblemContains(result, "Cannot run program");
         assertNoProblemContains(result, "nesplněn kontrakt");
     }
