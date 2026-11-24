@@ -54,7 +54,8 @@ public class FileUtils {
         StringBuilder builder = new StringBuilder();
         for (int i = parents.size() - 1; i >= 0; i--) {
             builder.append(parents.get(i));
-            builder.append(File.separatorChar);
+            // v hláškách vždy „/“, na všech systémech stejně
+            builder.append('/');
         }
         //append file name
         builder.append(file.getName());

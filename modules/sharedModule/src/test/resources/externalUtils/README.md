@@ -113,6 +113,9 @@ Názvy souborů obrazových nástrojů: `<adresář vstupu>_<název vstupu>`, vs
   a `Elapsed Time` jsou z pořízení). Měření 23. 11.: nad prázdným souborem skončí `identify -verbose` ve všech
   třech verzích kódem 1 bez jakéhokoli výstupu, ImageMagick 6.9 bez Ghostscriptu stejně tak nad PDF s příponou
   `.jp2`; řádek `Geometry:` vypíše jen po načtení obrázku.
+  `im712_windows.txt`: stdout `magick.exe identify -verbose` 7.1.2-35 Q16-HDRI x64 na Windows 11 (24. 11. 2026) nad
+  jiným bezvadným JP2, konce řádků CRLF, absolutní cesta ke vstupu nahrazena názvem souboru. Stejné měření: prázdný
+  soubor kód 1 bez výstupu, chybové hlášky začínají `identify:`.
 
 ## veraPDF (reálné výstupy)
 

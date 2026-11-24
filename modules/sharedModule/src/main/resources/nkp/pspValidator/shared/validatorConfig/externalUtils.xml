@@ -25,7 +25,7 @@
       Když ve výstupu chybí, chyba se ohlásí, jen pokud profil binárního souboru nenašel žádný problém (poškozený
       soubor, u kterého nástroj vypíše chybu, tak dostane jen hlášky profilu).
     - bez elementů (konfigurace starší než 3.0) se nic z toho neposuzuje.
-    Běžné kódy jsou změřené na macOS a Linuxu (Debian 13, Ubuntu 24.04); na Windows zatím jen pád.
+    Běžné kódy jsou změřené na macOS, Linuxu (Debian 13, Ubuntu 24.04) a Windows 11.
 -->
 <externalUtils>
     <util name="JPYLYZER">
@@ -106,8 +106,8 @@
                     <stream>STDOUT</stream>
                     <regexp>(?s).*</regexp>
                 </parser>
-                <!-- Windows: kódy neověřeny, jen pád (NTSTATUS 0xC0000000–0xEFFFFFFF) -->
-                <exitCodes/>
+                <!-- jpylyzer: 0 i u nevalidního JP2; -7, když nemá co kontrolovat (soubor neexistuje) -->
+                <exitCodes normal="0"/>
             </operatingSystem>
 
             <!--jpylyzer 1.17-->
@@ -192,8 +192,9 @@
                     <stream>STDERR</stream>
                     <regexp>(?s).*</regexp>
                 </parser>
-                <!-- Windows: kódy neověřeny, jen pád (NTSTATUS 0xC0000000–0xEFFFFFFF) -->
-                <exitCodes/>
+                <!-- magick identify: 0 bez chyby, 1 při chybě čtení (hlášky na stderr hledá profil); u prázdného souboru skončí 1 bez jediné hlášky, proto znak zpracování „Geometry:“ na stdout -->
+                <exitCodes normal="0 1"/>
+                <processedFileEvidence stream="STDOUT">(?m)^\s*Geometry: [0-9]</processedFileEvidence>
             </operatingSystem>
             <operatingSystem name="MAC">
                 <command>${UTIL_PATH}identify -verbose ${TARGET_FILE}</command>
@@ -267,8 +268,8 @@
                     <stream>STDOUT</stream>
                     <regexp>(?s)&lt;\?xml.*$</regexp>
                 </parser>
-                <!-- Windows: kódy neověřeny, jen pád (NTSTATUS 0xC0000000–0xEFFFFFFF) -->
-                <exitCodes/>
+                <!-- JHOVE 1.34: vždy 0, výsledek je v XML -->
+                <exitCodes normal="0"/>
             </operatingSystem>
             <operatingSystem name="MAC">
                 <command>${UTIL_PATH}jhove -h XML -m jpeg2000-hul -k ${TARGET_FILE}</command>
@@ -296,8 +297,8 @@
                     <stream>STDOUT</stream>
                     <regexp>(?s)&lt;\?xml.*$</regexp>
                 </parser>
-                <!-- Windows: kódy neověřeny, jen pád (NTSTATUS 0xC0000000–0xEFFFFFFF) -->
-                <exitCodes/>
+                <!-- JHOVE 1.34: vždy 0, výsledek je v XML -->
+                <exitCodes normal="0"/>
             </operatingSystem>
             <operatingSystem name="MAC">
                 <command>${UTIL_PATH}jhove -h XML -m WAVE-hul ${TARGET_FILE}</command>
@@ -373,8 +374,8 @@
                     <stream>STDERR</stream>
                     <regexp>(?s).*</regexp>
                 </parser>
-                <!-- Windows: kódy neověřeny, jen pád (NTSTATUS 0xC0000000–0xEFFFFFFF) -->
-                <exitCodes/>
+                <!-- kdu_expand: 0 bez chyby, -1 při chybě (na Linuxu a macOS 255) -->
+                <exitCodes normal="0 -1"/>
                 <processedFileEvidence stream="STDOUT">Consumed [0-9,]+ tile-part\(s\)</processedFileEvidence>
             </operatingSystem>
             <!--demo app does not work in macOS 10.12 Sierra, so not tested-->
@@ -442,8 +443,8 @@
                     <stream>STDOUT</stream>
                     <regexp>(?s).*</regexp>
                 </parser>
-                <!-- Windows: kódy neověřeny, jen pád (NTSTATUS 0xC0000000–0xEFFFFFFF) -->
-                <exitCodes/>
+                <!-- mp3val: vždy 0, i u vadného nebo neexistujícího souboru -->
+                <exitCodes normal="0"/>
             </operatingSystem>
             <operatingSystem name="MAC">
                 <command>${UTIL_PATH}mp3val ${TARGET_FILE}</command>
@@ -508,8 +509,8 @@
                     <stream>STDOUT</stream>
                     <regexp>(?s).*</regexp>
                 </parser>
-                <!-- Windows: kódy neověřeny, jen pád (NTSTATUS 0xC0000000–0xEFFFFFFF) -->
-                <exitCodes/>
+                <!-- shntool info: 0 bez chyby, 1 u souboru, který nepřečte (prázdný WAV, jiný formát) -->
+                <exitCodes normal="0 1"/>
             </operatingSystem>
             <operatingSystem name="MAC">
                 <command>${UTIL_PATH}shntool info ${TARGET_FILE}</command>
@@ -574,8 +575,8 @@
                     <stream>STDOUT</stream>
                     <regexp>(?s).*</regexp>
                 </parser>
-                <!-- Windows: kódy neověřeny, jen pád (NTSTATUS 0xC0000000–0xEFFFFFFF) -->
-                <exitCodes/>
+                <!-- mpck 0.22 pro Windows: kód o výsledku nevypovídá (1 u dobrého i vadného souboru, 0 u neexistujícího), výsledek je ve výstupu -->
+                <exitCodes normal="0 1"/>
             </operatingSystem>
             <operatingSystem name="MAC">
                 <command>${UTIL_PATH}mpck ${TARGET_FILE}</command>
@@ -643,8 +644,8 @@
                     <stream>STDOUT</stream>
                     <regexp>(?s).*</regexp>
                 </parser>
-                <!-- Windows: kódy neověřeny, jen pád (NTSTATUS 0xC0000000–0xEFFFFFFF) -->
-                <exitCodes/>
+                <!-- veraPDF: 0 vyhovuje, 1 nevyhovuje, 7 PDF nejde zpracovat, 8 šifrované PDF (u všech je výsledek v XML); 4 žádný soubor; verapdf.bat kód Javy předá -->
+                <exitCodes normal="0 1 7 8"/>
             </operatingSystem>
             <operatingSystem name="MAC">
                 <command>${UTIL_PATH}verapdf ${TARGET_FILE}</command>
@@ -711,8 +712,8 @@
                     <stream>STDOUT</stream>
                     <regexp>(?s).*</regexp>
                 </parser>
-                <!-- Windows: kódy neověřeny, jen pád (NTSTATUS 0xC0000000–0xEFFFFFFF) -->
-                <exitCodes/>
+                <!-- EPUBCheck: 0 bez chyb, 1 chyby v publikaci (i u prázdného nebo jiného souboru) -->
+                <exitCodes normal="0 1"/>
             </operatingSystem>
             <operatingSystem name="MAC">
                 <command>java -jar ${UTIL_PATH}epubcheck.jar --out - -q ${TARGET_FILE}</command>

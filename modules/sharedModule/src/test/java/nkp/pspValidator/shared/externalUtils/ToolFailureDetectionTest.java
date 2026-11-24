@@ -117,8 +117,8 @@ public class ToolFailureDetectionTest {
     // konfigurace externalUtils.xml
 
     /**
-     * Běžné kódy změřené 23. 11. 2026 na macOS a v Debianu 13 a Ubuntu 24.04 (viz README.md v externalUtils); na Windows
-     * jen pád (kódy neověřeny). Hodnoty ručně podle měření, ne z konfigurace.
+     * Běžné kódy změřené 23. 11. 2026 na macOS a v Debianu 13 a Ubuntu 24.04 a 24. 11. 2026 na Windows 11 (viz README.md
+     * v externalUtils). Na Windows se liší jen Kakadu (-1 místo 255). Hodnoty ručně podle měření, ne z konfigurace.
      */
     @Test
     public void configHasExitCodesForEveryExecution() throws Exception {
@@ -140,7 +140,10 @@ public class ToolFailureDetectionTest {
                 ExitCodePolicy policy = handler.getExitCodePolicy();
                 assertNotNull(os + "/" + entry.getKey(), policy);
                 assertEquals(os + "/" + entry.getKey(), os, policy.getOs());
-                assertEquals(os + "/" + entry.getKey(), os == OperatingSystem.WINDOWS ? null : entry.getValue(), policy.getNormalCodes());
+                Set<Integer> expected = os == OperatingSystem.WINDOWS && entry.getKey().equals("KAKADU/jp2k")
+                        ? new TreeSet<>(Arrays.asList(-1, 0))
+                        : entry.getValue();
+                assertEquals(os + "/" + entry.getKey(), expected, policy.getNormalCodes());
             }
         }
     }
@@ -161,12 +164,11 @@ public class ToolFailureDetectionTest {
                         assertNotNull(where, evidence);
                         assertEquals(where, Stream.STDOUT, evidence.getStream());
                         assertEquals(where, "Consumed [0-9,]+ tile-part\\(s\\)", evidence.getRegexp());
-                    } else if (util == ExternalUtil.IMAGE_MAGICK && os != OperatingSystem.WINDOWS) {
+                    } else if (util == ExternalUtil.IMAGE_MAGICK) {
                         assertNotNull(where, evidence);
                         assertEquals(where, Stream.STDOUT, evidence.getStream());
                         assertEquals(where, "(?m)^\\s*Geometry: [0-9]", evidence.getRegexp());
                     } else {
-                        // ImageMagick na Windows: výstup neověřen, znak zpracování se nekontroluje
                         assertNull(where, evidence);
                     }
                 }
@@ -406,8 +408,14 @@ public class ToolFailureDetectionTest {
         String damaged = output("kakadu", "detekce_poskozeni_w0352gUC.txt");
         assertEquals(Collections.singletonList("no_errors: zakázaná hodnota nalezena: Kakadu Core Error:\nExpected to find EPH marker following packet header.  Found 0x0 instead."),
                 problems(OperatingSystem.WINDOWS, ExternalUtil.KAKADU, FDMF, "uc", new CliCommand.Result(-1, "", damaged)));
-        // ImageMagick na Windows bez znaku zpracování (výstup neověřen): prázdný výstup s kódem 1 projde jako dřív
-        assertEquals(Collections.emptyList(), problems(OperatingSystem.WINDOWS, ExternalUtil.IMAGE_MAGICK, FDMF, "mc", new CliCommand.Result(1, "", "")));
+        // magick identify nad prázdným souborem: kód 1 bez výstupu (ověřeno na Windows 24. 11. 2026), chybí znak zpracování
+        assertEquals(Collections.singletonList("ERROR: " + IMAGE_MAGICK_NO_EVIDENCE_1),
+                problems(OperatingSystem.WINDOWS, ExternalUtil.IMAGE_MAGICK, FDMF, "mc", new CliCommand.Result(1, "", "")));
+        // kód mimo běžné kódy nástroje na Windows: Kakadu 255 (běžné jsou 0 a -1), Jpylyzer -7 (soubor neexistuje)
+        assertEquals(Collections.singletonList("ERROR: nástroj Kakadu soubor nezkontroloval: skončil s kódem 255 (neočekávaný kód, běžné jsou -1, 0), bez výstupu"),
+                problems(OperatingSystem.WINDOWS, ExternalUtil.KAKADU, FDMF, "mc", new CliCommand.Result(255, "", "")));
+        assertEquals(Collections.singletonList("ERROR: nástroj Jpylyzer soubor nezkontroloval: skončil s kódem -7 (neočekávaný kód, běžné jsou 0), bez výstupu"),
+                problems(OperatingSystem.WINDOWS, ExternalUtil.JPYLYZER, FDMF, "mc", new CliCommand.Result(-7, "", "")));
     }
 
     // -----------------------------------------------------------------------------------------------------------------
@@ -437,7 +445,7 @@ public class ToolFailureDetectionTest {
         List<String[]> profiles = fdmfCopies(ExternalUtil.IMAGE_MAGICK);
         assertEquals(78, profiles.size());
         List<String> outputs = storedOutputs("imageMagick");
-        assertEquals(Arrays.asList("im69_ubuntu2404.txt", "im711_debian13.txt", "im712_macos.txt"), outputs);
+        assertEquals(Arrays.asList("im69_ubuntu2404.txt", "im711_debian13.txt", "im712_macos.txt", "im712_windows.txt"), outputs);
         for (OperatingSystem os : OperatingSystem.values()) {
             for (String name : outputs) {
                 CliCommand.Result result = new CliCommand.Result(0, output("imageMagick", "uspech_stdout/" + name), "");
@@ -453,9 +461,6 @@ public class ToolFailureDetectionTest {
     public void everyKakaduProfileReportsFailures() throws Exception {
         CliCommand.Result libraryNotLoaded = new CliCommand.Result(134, "", LIBRARY_NOT_LOADED);
         CliCommand.Result emptyOutput = new CliCommand.Result(0, "", "");
-        CliCommand.Result damaged = new CliCommand.Result(255, "", output("kakadu", "detekce_poskozeni_w0352gUC.txt"));
-        CliCommand.Result noCodestream = new CliCommand.Result(255, "", output("kakadu", "bez_kodoveho_proudu.txt"));
-        CliCommand.Result cannotOpen = new CliCommand.Result(255, "", output("kakadu", "nelze_otevrit_neexistuje.txt"));
         for (String[] profile : fdmfCopies(ExternalUtil.KAKADU)) {
             for (OperatingSystem os : new OperatingSystem[]{OperatingSystem.MAC, OperatingSystem.LINUX}) {
                 String where = os + "/" + profile[0] + "/" + profile[1];
@@ -464,6 +469,11 @@ public class ToolFailureDetectionTest {
             }
             for (OperatingSystem os : OperatingSystem.values()) {
                 String where = os + "/" + profile[0] + "/" + profile[1];
+                // kdu_expand při chybě: 255 na Linuxu a macOS, -1 na Windows (měřeno 23. a 24. 11. 2026)
+                int errorCode = os == OperatingSystem.WINDOWS ? -1 : 255;
+                CliCommand.Result damaged = new CliCommand.Result(errorCode, "", output("kakadu", "detekce_poskozeni_w0352gUC.txt"));
+                CliCommand.Result noCodestream = new CliCommand.Result(errorCode, "", output("kakadu", "bez_kodoveho_proudu.txt"));
+                CliCommand.Result cannotOpen = new CliCommand.Result(errorCode, "", output("kakadu", "nelze_otevrit_neexistuje.txt"));
                 assertEquals(where, Collections.singletonList("ERROR: " + KAKADU_NO_EVIDENCE),
                         problems(os, ExternalUtil.KAKADU, profile[0], profile[1], emptyOutput));
                 assertEquals(where, Collections.singletonList("no_errors: zakázaná hodnota nalezena: Kakadu Core Error:\nExpected to find EPH marker following packet header.  Found 0x0 instead."),

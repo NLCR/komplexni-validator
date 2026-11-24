@@ -892,10 +892,8 @@ public class VfCheckBinaryFilesValidByExternalUtilTest {
     @Test
     public void imageMagickEmptyFileIsNotChecked() throws Exception {
         // identify -verbose nad prázdným souborem skončí kódem 1 bez jakéhokoli výstupu (ImageMagick 7.1 macOS a Debian,
-        // 6.9 Ubuntu, měřeno 23. 11. 2026); dřív 0 problémů, od 3.0 jedna chyba ERROR. Na Windows se znak zpracování
-        // souboru (Geometry) nekontroluje, výstup tam není ověřen.
+        // 6.9 Ubuntu, měřeno 23. 11. 2026, 7.1 Windows 24. 11. 2026); dřív 0 problémů, od 3.0 jedna chyba ERROR.
         assumeImageMagickWithJp2();
-        Assume.assumeTrue("na Windows znak zpracování souboru není nastaven", Platform.detectOs().getOperatingSystem() != OperatingSystem.WINDOWS);
         File file = new File(tmp.newFolder(), "prazdny.jp2");
         Files.write(file.toPath(), new byte[0]);
         List<ValidationProblem> problems = validate(ExternalUtil.IMAGE_MAGICK, ResourceType.IMAGE_MASTER_COPY, Collections.singletonList(file)).getProblems();
