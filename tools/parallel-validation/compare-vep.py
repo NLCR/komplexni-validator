@@ -80,8 +80,8 @@ def normalize(msg, ctx):
     m = re.sub(r'^[a-z][A-Za-z0-9]+: ', '', m)
     # prefix souboru a chybějícího ID záznamu (KV: "mets_x.xml: null: ", "mets_x.xml: MODSMD_...: ")
     m = re.sub(r'^[^\s:]+\.xml: (null: )?(?=[A-Z][A-Z0-9_]*_\d{4}: |/)', '', m)
-    # VEP připojuje k hláškám binárních profilů "(soubor <cesta>)", KV ne (soubor je jen v XML protokolu)
-    m = re.sub(r' \(soubor [^()]*\)$', '', m)
+    # VEP připojuje k hláškám binárních profilů "(soubor <cesta>)", KV v textovém protokolu "(soubor: <cesta v balíku>)"
+    m = re.sub(r' \(soubor:? [^()]*\)$', '', m)
     # názvy XSD se v KV liší (info_eper2.5.xsd -> info_epe_2.5.xsd)
     m = re.sub(r'<CFG>/fDMF/[^/\s]+/xsd/[^\s:]+\.xsd', '<XSD>', m)
     # názvy fDMF v KV zkráceny (Elektronické monografie -> E-monografie)
@@ -140,6 +140,11 @@ def parse(path, ctx):
         txt = '\n'.join(lines)
         if os.path.exists(err):
             txt += '\n' + open(err, encoding='utf-8', errors='replace').read()
+        # KV 3.0 vypisuje u nedefinované fDMF podrobnější hlášku (verze, podporované verze, volba pro vynucení)
+        # a končí kódem 1; pro porovnání s VEP se převede na tvar VEP
+        m = re.search(r'verzi standardu (.+?) není definována fDMF', txt)
+        if m:
+            txt = f'Není definována fDMF (formalizovaná DMF) pro: {m.group(1)}\n' + txt
         m = re.search(r'(Není definována fDMF[^\n]*|[A-Za-z.]*Exception[^\n]*)', txt)
         r['fail'] = normalize(m.group(1), ctx) if m else '?'
     return r

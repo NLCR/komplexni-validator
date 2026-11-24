@@ -44,12 +44,30 @@ public class Main {
 
     public static int DEFAULT_VERBOSITY = 2;
 
+    /** Běžné ukončení (i když balík validací neprošel, výsledek je v protokolu). */
+    static final int EXIT_OK = 0;
+    /**
+     * Balík se nezvalidoval a protokol nevznikl, protože pro zjištěný typ a verzi DMF není definovaná fDMF. Stejný kód
+     * jako u neexistujícího balíku (neodchycená výjimka, JVM skončí kódem 1).
+     */
+    static final int EXIT_PSP_NOT_VALIDATED = 1;
+
     public static void main(String[] args) throws PspDataException, XmlFileParsingException, InvalidXPathExpressionException, FdmfRegistry.UnknownFdmfException, ValidatorConfigurationException, FdmfRegistry.UnknownFdmfException {
-        main(null, args);
+        int exitCode = run(null, args);
         //XsdValidator.testXsds();
+        if (exitCode != EXIT_OK) {
+            System.exit(exitCode);
+        }
     }
 
+    /**
+     * Jako {@link #run(Validator.DevParams, String[])}, návratový kód se zahodí (testy a volání bez ukončení JVM).
+     */
     public static void main(Validator.DevParams devParams, String[] args) {
+        run(devParams, args);
+    }
+
+    static int run(Validator.DevParams devParams, String[] args) {
         /*if (true) {
             Properties properties = System.getProperties();
             properties.list(System.out);
@@ -550,7 +568,7 @@ public class Main {
                 if (!line.hasOption(Params.ACTION)) {
                     System.err.println(String.format("Chyba: prázdný parametr %s!", Params.ACTION));
                     printHelp(options);
-                    return;
+                    return EXIT_OK;
                 }
                 String actionStr = line.getOptionValue(Params.ACTION);
                 Action action;
@@ -559,7 +577,7 @@ public class Main {
                 } catch (java.lang.IllegalArgumentException e) {
                     System.err.println(String.format("Chyba: neznámá akce %s!", actionStr));
                     printHelp(options);
-                    return;
+                    return EXIT_OK;
                 }
 
                 //config dir
@@ -571,7 +589,7 @@ public class Main {
                         if (!line.hasOption(Params.CONFIG_DIR)) {
                             System.err.println(String.format("Chyba: pro akci %s je parametr --%s povinný!", action, Params.CONFIG_DIR));
                             printHelp(options);
-                            return;
+                            return EXIT_OK;
                         }
                         configDir = new File(line.getOptionValue(Params.CONFIG_DIR));
                 }
@@ -585,7 +603,7 @@ public class Main {
                         if (!line.hasOption(Params.PSP)) {
                             System.err.println(String.format("Chyba: pro akci %s je parametr --%s povinný!", action, Params.PSP));
                             printHelp(options);
-                            return;
+                            return EXIT_OK;
                         } else {
                             psp = new File(line.getOptionValue(Params.PSP));
                             break;
@@ -595,7 +613,7 @@ public class Main {
                         if (!line.hasOption(Params.PSP_GROUP)) {
                             System.err.println(String.format("Chyba: pro akci %s je parametr --%s povinný!", action, Params.PSP_GROUP));
                             printHelp(options);
-                            return;
+                            return EXIT_OK;
                         } else {
                             pspGroup = new File(line.getOptionValue(Params.PSP_GROUP));
                             break;
@@ -609,7 +627,7 @@ public class Main {
                         if (!line.hasOption(Params.MINIFIED_PSP_DIR)) {
                             System.err.println(String.format("Chyba: pro akci %s je parametr --%s povinný!", action, Params.MINIFIED_PSP_DIR));
                             printHelp(options);
-                            return;
+                            return EXIT_OK;
                         } else {
                             minifiedPspDir = new File(line.getOptionValue(Params.MINIFIED_PSP_DIR));
                             break;
@@ -640,14 +658,14 @@ public class Main {
                         if (!line.hasOption(Params.METADATA_PROFILE_ID)) {
                             System.err.println(String.format("Chyba: pro akci %s je parametr --%s povinný!", action, Params.METADATA_PROFILE_ID));
                             printHelp(options);
-                            return;
+                            return EXIT_OK;
                         } else {
                             metadataProfileId = line.getOptionValue(Params.METADATA_PROFILE_ID);
                         }
                         if (!line.hasOption(Params.METADATA_FILE)) {
                             System.err.println(String.format("Chyba: pro akci %s je parametr --%s povinný!", action, Params.METADATA_FILE));
                             printHelp(options);
-                            return;
+                            return EXIT_OK;
                         } else {
                             metadataFile = new File(line.getOptionValue(Params.METADATA_FILE));
                         }
@@ -664,12 +682,12 @@ public class Main {
                         if (quitAfterInvalidPsps < 1) {
                             System.err.println(String.format("Chyba: hodnota parametru --%s musí být celé kladné číslo!", Params.QUIT_AFTER_NTH_INVALID_PSP));
                             printHelp(options);
-                            return;
+                            return EXIT_OK;
                         }
                     } catch (NumberFormatException e) {
                         System.err.println(String.format("Chyba: hodnota parametru --%s musí být celé kladné číslo!", Params.QUIT_AFTER_NTH_INVALID_PSP));
                         printHelp(options);
-                        return;
+                        return EXIT_OK;
                     }
                 }*/
 
@@ -755,7 +773,7 @@ public class Main {
                     } catch (IllegalArgumentException e) {
                         System.err.println(String.format("Chyba: %s!", e.getMessage()));
                         printHelp(options);
-                        return;
+                        return EXIT_OK;
                     }
                 }
 
@@ -767,12 +785,12 @@ public class Main {
                         if (verbosity < 0 || verbosity > 3) {
                             System.err.println(String.format("Chyba: hodnota parametru --%s musí být číslo (0-3)!", Params.VERBOSITY));
                             printHelp(options);
-                            return;
+                            return EXIT_OK;
                         }
                     } catch (NumberFormatException e) {
                         System.err.println(String.format("Chyba: hodnota parametru --%s musí být číslo (0-3)!", Params.VERBOSITY));
                         printHelp(options);
-                        return;
+                        return EXIT_OK;
                     }
                 }
 
@@ -934,9 +952,14 @@ public class Main {
             System.err.println("Chyba:" + e.getMessage());
         } catch (FdmfRegistry.UnknownFdmfException e) {
             System.err.println("Chyba:" + e.getMessage());
+            return EXIT_PSP_NOT_VALIDATED;
+        } catch (PspNotValidatedException e) {
+            System.err.println(e.getMessage());
+            return EXIT_PSP_NOT_VALIDATED;
         } catch (InvalidXPathExpressionException e) {
             System.err.println("Chyba:" + e.getMessage());
         }
+        return EXIT_OK;
     }
 
     private static ValidationResult validateMetadataByProfile(File validatorConfigDir, String profileId, File metadataFile) {
@@ -1471,7 +1494,12 @@ public class Main {
         out.println(String.format("Bude použita verze standardu %s", dmfResolved));
 
         //initializes j2k profiles according to selected fDMF
-        FdmfConfiguration fdmfConfig = fdmfRegistry.getFdmfConfig(dmfResolved);
+        FdmfConfiguration fdmfConfig;
+        try {
+            fdmfConfig = fdmfRegistry.getFdmfConfig(dmfResolved);
+        } catch (FdmfRegistry.UnknownFdmfException e) {
+            throw new PspNotValidatedException(unknownFdmfMessage(dmfResolved, fdmfRegistry, dmfDetectorParams));
+        }
         fdmfConfig.initBinaryFileProfiles(externalUtilManager);
 
         //xml protocol file
@@ -1531,6 +1559,148 @@ public class Main {
                 }
             }
         }
+    }
+
+    /**
+     * Balík se nezvalidoval (pro zjištěný typ a verzi DMF není fDMF), hláška je určená uživateli. CLI skončí kódem
+     * {@link #EXIT_PSP_NOT_VALIDATED}.
+     */
+    static class PspNotValidatedException extends RuntimeException {
+        PspNotValidatedException(String message) {
+            super(message);
+        }
+    }
+
+    /**
+     * Srozumitelná hláška k balíku, pro jehož typ a verzi DMF není definovaná fDMF: zjištěná (nebo vynucená) verze,
+     * podporované verze daného typu a volba, kterou lze verzi vynutit.
+     */
+    static String unknownFdmfMessage(Dmf dmf, FdmfRegistry registry, DmfDetector.Params params) {
+        String code = dmfTypeOptionCode(dmf.getType());
+        String forcedOption = "--forced-dmf-" + code + "-version";
+        boolean forced = dmf.getVersion() != null && dmf.getVersion().equals(forcedVersion(dmf.getType(), params));
+        StringBuilder message = new StringBuilder();
+        message.append(String.format("Chyba: balík nebyl zvalidován a protokol nevznikl. Pro %s verzi standardu %s není definována fDMF (formalizovaná DMF).",
+                forced ? "vynucenou (" + forcedOption + " " + dmf.getVersion() + ")" : "zjištěnou", dmf));
+        message.append(System.lineSeparator());
+        message.append(String.format("Podporované verze (%s): %s.", dmf.getType(), String.join(", ", sortVersions(supportedVersions(dmf.getType(), registry)))));
+        message.append(System.lineSeparator());
+        if (forced) {
+            message.append(String.format("Zadejte ve volbě %s jednu z podporovaných verzí.", forcedOption));
+        } else {
+            message.append(String.format("Pokud balík odpovídá jiné verzi, lze ji vynutit volbou %s VERZE (verzi v balíku zjišťuje validátor z info.xml, element metadataversion).", forcedOption));
+        }
+        return message.toString();
+    }
+
+    /** Zkratka typu ve volbách --forced-dmf-…-version a --preferred-dmf-…-version (viz {@link Params}). */
+    static String dmfTypeOptionCode(Dmf.Type type) {
+        switch (type) {
+            case MONOGRAPH:
+                return "mon";
+            case PERIODICAL:
+                return "per";
+            case AUDIO_GRAM:
+                return "adg";
+            case AUDIO_FONO:
+                return "adf";
+            case AUDIO_DISC:
+                return "adi";
+            case AUDIO_NO_CARRIER:
+                return "adn";
+            case DATA_DISC:
+                return "dad";
+            case FUND_UNIT:
+                return "fdu";
+            case EMONOGRAPH:
+                return "emo";
+            case EPERIODICAL:
+                return "epe";
+            case COMPERIODICAL:
+                return "sep";
+            default:
+                throw new IllegalStateException("neznámý typ " + type);
+        }
+    }
+
+    private static String forcedVersion(Dmf.Type type, DmfDetector.Params params) {
+        switch (type) {
+            case MONOGRAPH:
+                return params.forcedDmfMonVersion;
+            case PERIODICAL:
+                return params.forcedDmfPerVersion;
+            case AUDIO_GRAM:
+                return params.forcedDmfAdgVersion;
+            case AUDIO_FONO:
+                return params.forcedDmfAdfVersion;
+            case AUDIO_DISC:
+                return params.forcedDmfAdiVersion;
+            case AUDIO_NO_CARRIER:
+                return params.forcedDmfAdnVersion;
+            case DATA_DISC:
+                return params.forcedDmfDadVersion;
+            case FUND_UNIT:
+                return params.forcedDmfFduVersion;
+            case EMONOGRAPH:
+                return params.forcedDmfEmoVersion;
+            case EPERIODICAL:
+                return params.forcedDmfEpeVersion;
+            case COMPERIODICAL:
+                return params.forcedDmfSepVersion;
+            default:
+                return null;
+        }
+    }
+
+    private static Set<String> supportedVersions(Dmf.Type type, FdmfRegistry registry) {
+        switch (type) {
+            case MONOGRAPH:
+                return registry.getMonographFdmfVersions();
+            case PERIODICAL:
+                return registry.getPeriodicalFdmfVersions();
+            case AUDIO_GRAM:
+                return registry.getAudioGramFdmfVersions();
+            case AUDIO_FONO:
+                return registry.getAudioFonoFdmfVersions();
+            case AUDIO_DISC:
+                return registry.getAudioDiscFdmfVersions();
+            case AUDIO_NO_CARRIER:
+                return registry.getAudioNoCarrierFdmfVersions();
+            case DATA_DISC:
+                return registry.getDataDiscFdmfVersions();
+            case FUND_UNIT:
+                return registry.getFundUnitFdmfVersions();
+            case EMONOGRAPH:
+                return registry.getEmonographFdmfVersions();
+            case EPERIODICAL:
+                return registry.getEperiodicalFdmfVersions();
+            case COMPERIODICAL:
+                return registry.getComposedPeriodicalFdmfVersions();
+            default:
+                return Collections.emptySet();
+        }
+    }
+
+    /** Verze seřazené číselně po částech (1.3 &lt; 1.3.1 &lt; 1.10), nečíselné části textově. */
+    static List<String> sortVersions(Collection<String> versions) {
+        List<String> sorted = new ArrayList<>(versions);
+        sorted.sort((a, b) -> {
+            String[] pa = a.split("\\.");
+            String[] pb = b.split("\\.");
+            for (int i = 0; i < Math.min(pa.length, pb.length); i++) {
+                int c;
+                try {
+                    c = Integer.compare(Integer.parseInt(pa[i]), Integer.parseInt(pb[i]));
+                } catch (NumberFormatException e) {
+                    c = pa[i].compareTo(pb[i]);
+                }
+                if (c != 0) {
+                    return c;
+                }
+            }
+            return Integer.compare(pa.length, pb.length);
+        });
+        return sorted;
     }
 
     private static void checkReadableDir(File file) {
