@@ -1,0 +1,649 @@
+<?xml version="1.0" encoding="utf-8"?>
+<report>
+  <buildInformation>
+    <releaseDetails id="core" version="1.30.2" buildDate="2026-06-03T10:42:00+02:00"></releaseDetails>
+    <releaseDetails id="validation-model" version="1.30.2" buildDate="2026-06-03T10:46:00+02:00"></releaseDetails>
+    <releaseDetails id="apps" version="1.30.0" buildDate="2026-06-03T13:47:00+02:00"></releaseDetails>
+  </buildInformation>
+  <jobs>
+    <job>
+      <item size="4100303">
+        <name>231594b9d4b13f3cf3f12ebef70e2fc7.pdf</name>
+      </item>
+      <validationReport jobEndStatus="normal" profileName="PDF/A-1b validation profile" statement="PDF file is not compliant with Validation Profile requirements." isCompliant="false">
+        <details passedRules="122" failedRules="7" passedChecks="2533009" failedChecks="21908">
+          <rule specification="ISO 19005-1:2005" clause="6.2.3.3" testNumber="2" status="failed" failedChecks="21861">
+            <description>DeviceCMYK may be used only if the file has a PDF/A-1 OutputIntent that uses a CMYK colour space</description>
+            <object>PDDeviceCMYK</object>
+            <test>gOutputCS != null &amp;&amp; gOutputCS == "CMYK"</test>
+            <check status="failed">
+              <context>root/document[0]/pages[0](959 0 obj PDPage)/contentStream[0]/operators[29]/colorSpace[0]</context>
+              <errorMessage>DeviceCMYK colour space is used without CMYK output intent profile</errorMessage>
+            </check>
+            <check status="failed">
+              <context>root/document[0]/pages[0](959 0 obj PDPage)/contentStream[0]/operators[36]/fillCS[0]</context>
+              <errorMessage>DeviceCMYK colour space is used without CMYK output intent profile</errorMessage>
+            </check>
+            <check status="failed">
+              <context>root/document[0]/pages[0](959 0 obj PDPage)/contentStream[0]/operators[37]/colorSpace[0]</context>
+              <errorMessage>DeviceCMYK colour space is used without CMYK output intent profile</errorMessage>
+            </check>
+            <check status="failed">
+              <context>root/document[0]/pages[0](959 0 obj PDPage)/contentStream[0]/operators[43]/fillCS[0]</context>
+              <errorMessage>DeviceCMYK colour space is used without CMYK output intent profile</errorMessage>
+            </check>
+            <check status="failed">
+              <context>root/document[0]/pages[0](959 0 obj PDPage)/contentStream[0]/operators[46]/colorSpace[0]</context>
+              <errorMessage>DeviceCMYK colour space is used without CMYK output intent profile</errorMessage>
+            </check>
+            <check status="failed">
+              <context>root/document[0]/pages[0](959 0 obj PDPage)/contentStream[0]/operators[54]/fillCS[0]</context>
+              <errorMessage>DeviceCMYK colour space is used without CMYK output intent profile</errorMessage>
+            </check>
+            <check status="failed">
+              <context>root/document[0]/pages[0](959 0 obj PDPage)/contentStream[0]/operators[55]/colorSpace[0]</context>
+              <errorMessage>DeviceCMYK colour space is used without CMYK output intent profile</errorMessage>
+            </check>
+            <check status="failed">
+              <context>root/document[0]/pages[0](959 0 obj PDPage)/contentStream[0]/operators[68]/strokeCS[0]</context>
+              <errorMessage>DeviceCMYK colour space is used without CMYK output intent profile</errorMessage>
+            </check>
+            <check status="failed">
+              <context>root/document[0]/pages[0](959 0 obj PDPage)/contentStream[0]/operators[75]/fillCS[0]</context>
+              <errorMessage>DeviceCMYK colour space is used without CMYK output intent profile</errorMessage>
+            </check>
+            <check status="failed">
+              <context>root/document[0]/pages[0](959 0 obj PDPage)/contentStream[0]/operators[83]/strokeCS[0]</context>
+              <errorMessage>DeviceCMYK colour space is used without CMYK output intent profile</errorMessage>
+            </check>
+            <check status="failed">
+              <context>root/document[0]/pages[0](959 0 obj PDPage)/contentStream[0]/operators[90]/fillCS[0]</context>
+              <errorMessage>DeviceCMYK colour space is used without CMYK output intent profile</errorMessage>
+            </check>
+            <check status="failed">
+              <context>root/document[0]/pages[0](959 0 obj PDPage)/contentStream[0]/operators[106]/strokeCS[0]</context>
+              <errorMessage>DeviceCMYK colour space is used without CMYK output intent profile</errorMessage>
+            </check>
+            <check status="failed">
+              <context>root/document[0]/pages[0](959 0 obj PDPage)/contentStream[0]/operators[113]/fillCS[0]</context>
+              <errorMessage>DeviceCMYK colour space is used without CMYK output intent profile</errorMessage>
+            </check>
+            <check status="failed">
+              <context>root/document[0]/pages[0](959 0 obj PDPage)/contentStream[0]/operators[121]/strokeCS[0]</context>
+              <errorMessage>DeviceCMYK colour space is used without CMYK output intent profile</errorMessage>
+            </check>
+            <check status="failed">
+              <context>root/document[0]/pages[0](959 0 obj PDPage)/contentStream[0]/operators[128]/fillCS[0]</context>
+              <errorMessage>DeviceCMYK colour space is used without CMYK output intent profile</errorMessage>
+            </check>
+            <check status="failed">
+              <context>root/document[0]/pages[0](959 0 obj PDPage)/contentStream[0]/operators[136]/strokeCS[0]</context>
+              <errorMessage>DeviceCMYK colour space is used without CMYK output intent profile</errorMessage>
+            </check>
+            <check status="failed">
+              <context>root/document[0]/pages[0](959 0 obj PDPage)/contentStream[0]/operators[138]/colorSpace[0]</context>
+              <errorMessage>DeviceCMYK colour space is used without CMYK output intent profile</errorMessage>
+            </check>
+            <check status="failed">
+              <context>root/document[0]/pages[0](959 0 obj PDPage)/contentStream[0]/operators[148]/fillCS[0]</context>
+              <errorMessage>DeviceCMYK colour space is used without CMYK output intent profile</errorMessage>
+            </check>
+            <check status="failed">
+              <context>root/document[0]/pages[0](959 0 obj PDPage)/contentStream[0]/operators[150]/fillCS[0]</context>
+              <errorMessage>DeviceCMYK colour space is used without CMYK output intent profile</errorMessage>
+            </check>
+            <check status="failed">
+              <context>root/document[0]/pages[0](959 0 obj PDPage)/contentStream[0]/operators[152]/fillCS[0]</context>
+              <errorMessage>DeviceCMYK colour space is used without CMYK output intent profile</errorMessage>
+            </check>
+            <check status="failed">
+              <context>root/document[0]/pages[0](959 0 obj PDPage)/contentStream[0]/operators[153]/fillCS[0]</context>
+              <errorMessage>DeviceCMYK colour space is used without CMYK output intent profile</errorMessage>
+            </check>
+            <check status="failed">
+              <context>root/document[0]/pages[0](959 0 obj PDPage)/contentStream[0]/operators[156]/colorSpace[0]</context>
+              <errorMessage>DeviceCMYK colour space is used without CMYK output intent profile</errorMessage>
+            </check>
+            <check status="failed">
+              <context>root/document[0]/pages[0](959 0 obj PDPage)/contentStream[0]/operators[166]/fillCS[0]</context>
+              <errorMessage>DeviceCMYK colour space is used without CMYK output intent profile</errorMessage>
+            </check>
+            <check status="failed">
+              <context>root/document[0]/pages[0](959 0 obj PDPage)/contentStream[0]/operators[167]/colorSpace[0]</context>
+              <errorMessage>DeviceCMYK colour space is used without CMYK output intent profile</errorMessage>
+            </check>
+            <check status="failed">
+              <context>root/document[0]/pages[0](959 0 obj PDPage)/contentStream[0]/operators[181]/fillCS[0]</context>
+              <errorMessage>DeviceCMYK colour space is used without CMYK output intent profile</errorMessage>
+            </check>
+            <check status="failed">
+              <context>root/document[0]/pages[0](959 0 obj PDPage)/contentStream[0]/operators[187]/fillCS[0]</context>
+              <errorMessage>DeviceCMYK colour space is used without CMYK output intent profile</errorMessage>
+            </check>
+            <check status="failed">
+              <context>root/document[0]/pages[0](959 0 obj PDPage)/contentStream[0]/operators[193]/fillCS[0]</context>
+              <errorMessage>DeviceCMYK colour space is used without CMYK output intent profile</errorMessage>
+            </check>
+            <check status="failed">
+              <context>root/document[0]/pages[0](959 0 obj PDPage)/contentStream[0]/operators[203]/fillCS[0]</context>
+              <errorMessage>DeviceCMYK colour space is used without CMYK output intent profile</errorMessage>
+            </check>
+            <check status="failed">
+              <context>root/document[0]/pages[0](959 0 obj PDPage)/contentStream[0]/operators[214]/fillCS[0]</context>
+              <errorMessage>DeviceCMYK colour space is used without CMYK output intent profile</errorMessage>
+            </check>
+            <check status="failed">
+              <context>root/document[0]/pages[0](959 0 obj PDPage)/contentStream[0]/operators[220]/fillCS[0]</context>
+              <errorMessage>DeviceCMYK colour space is used without CMYK output intent profile</errorMessage>
+            </check>
+            <check status="failed">
+              <context>root/document[0]/pages[0](959 0 obj PDPage)/contentStream[0]/operators[221]/colorSpace[0]</context>
+              <errorMessage>DeviceCMYK colour space is used without CMYK output intent profile</errorMessage>
+            </check>
+            <check status="failed">
+              <context>root/document[0]/pages[0](959 0 obj PDPage)/contentStream[0]/operators[227]/fillCS[0]</context>
+              <errorMessage>DeviceCMYK colour space is used without CMYK output intent profile</errorMessage>
+            </check>
+            <check status="failed">
+              <context>root/document[0]/pages[0](959 0 obj PDPage)/contentStream[0]/operators[237]/fillCS[0]</context>
+              <errorMessage>DeviceCMYK colour space is used without CMYK output intent profile</errorMessage>
+            </check>
+            <check status="failed">
+              <context>root/document[0]/pages[0](959 0 obj PDPage)/contentStream[0]/operators[238]/colorSpace[0]</context>
+              <errorMessage>DeviceCMYK colour space is used without CMYK output intent profile</errorMessage>
+            </check>
+            <check status="failed">
+              <context>root/document[0]/pages[0](959 0 obj PDPage)/contentStream[0]/operators[252]/fillCS[0]</context>
+              <errorMessage>DeviceCMYK colour space is used without CMYK output intent profile</errorMessage>
+            </check>
+            <check status="failed">
+              <context>root/document[0]/pages[0](959 0 obj PDPage)/contentStream[0]/operators[258]/fillCS[0]</context>
+              <errorMessage>DeviceCMYK colour space is used without CMYK output intent profile</errorMessage>
+            </check>
+            <check status="failed">
+              <context>root/document[0]/pages[0](959 0 obj PDPage)/contentStream[0]/operators[264]/fillCS[0]</context>
+              <errorMessage>DeviceCMYK colour space is used without CMYK output intent profile</errorMessage>
+            </check>
+            <check status="failed">
+              <context>root/document[0]/pages[0](959 0 obj PDPage)/contentStream[0]/operators[274]/fillCS[0]</context>
+              <errorMessage>DeviceCMYK colour space is used without CMYK output intent profile</errorMessage>
+            </check>
+            <check status="failed">
+              <context>root/document[0]/pages[0](959 0 obj PDPage)/contentStream[0]/operators[285]/fillCS[0]</context>
+              <errorMessage>DeviceCMYK colour space is used without CMYK output intent profile</errorMessage>
+            </check>
+            <check status="failed">
+              <context>root/document[0]/pages[0](959 0 obj PDPage)/contentStream[0]/operators[291]/fillCS[0]</context>
+              <errorMessage>DeviceCMYK colour space is used without CMYK output intent profile</errorMessage>
+            </check>
+            <check status="failed">
+              <context>root/document[0]/pages[0](959 0 obj PDPage)/contentStream[0]/operators[292]/colorSpace[0]</context>
+              <errorMessage>DeviceCMYK colour space is used without CMYK output intent profile</errorMessage>
+            </check>
+            <check status="failed">
+              <context>root/document[0]/pages[0](959 0 obj PDPage)/contentStream[0]/operators[298]/fillCS[0]</context>
+              <errorMessage>DeviceCMYK colour space is used without CMYK output intent profile</errorMessage>
+            </check>
+            <check status="failed">
+              <context>root/document[0]/pages[0](959 0 obj PDPage)/contentStream[0]/operators[299]/colorSpace[0]</context>
+              <errorMessage>DeviceCMYK colour space is used without CMYK output intent profile</errorMessage>
+            </check>
+            <check status="failed">
+              <context>root/document[0]/pages[0](959 0 obj PDPage)/contentStream[0]/operators[305]/fillCS[0]</context>
+              <errorMessage>DeviceCMYK colour space is used without CMYK output intent profile</errorMessage>
+            </check>
+            <check status="failed">
+              <context>root/document[0]/pages[0](959 0 obj PDPage)/contentStream[0]/operators[313]/strokeCS[0]</context>
+              <errorMessage>DeviceCMYK colour space is used without CMYK output intent profile</errorMessage>
+            </check>
+            <check status="failed">
+              <context>root/document[0]/pages[0](959 0 obj PDPage)/contentStream[0]/operators[340]/fillCS[0]</context>
+              <errorMessage>DeviceCMYK colour space is used without CMYK output intent profile</errorMessage>
+            </check>
+            <check status="failed">
+              <context>root/document[0]/pages[0](959 0 obj PDPage)/contentStream[0]/operators[368]/strokeCS[0]</context>
+              <errorMessage>DeviceCMYK colour space is used without CMYK output intent profile</errorMessage>
+            </check>
+            <check status="failed">
+              <context>root/document[0]/pages[0](959 0 obj PDPage)/contentStream[0]/operators[375]/fillCS[0]</context>
+              <errorMessage>DeviceCMYK colour space is used without CMYK output intent profile</errorMessage>
+            </check>
+            <check status="failed">
+              <context>root/document[0]/pages[0](959 0 obj PDPage)/contentStream[0]/operators[383]/strokeCS[0]</context>
+              <errorMessage>DeviceCMYK colour space is used without CMYK output intent profile</errorMessage>
+            </check>
+            <check status="failed">
+              <context>root/document[0]/pages[0](959 0 obj PDPage)/contentStream[0]/operators[394]/fillCS[0]</context>
+              <errorMessage>DeviceCMYK colour space is used without CMYK output intent profile</errorMessage>
+            </check>
+            <check status="failed">
+              <context>root/document[0]/pages[0](959 0 obj PDPage)/contentStream[0]/operators[406]/strokeCS[0]</context>
+              <errorMessage>DeviceCMYK colour space is used without CMYK output intent profile</errorMessage>
+            </check>
+            <check status="failed">
+              <context>root/document[0]/pages[0](959 0 obj PDPage)/contentStream[0]/operators[413]/fillCS[0]</context>
+              <errorMessage>DeviceCMYK colour space is used without CMYK output intent profile</errorMessage>
+            </check>
+            <check status="failed">
+              <context>root/document[0]/pages[0](959 0 obj PDPage)/contentStream[0]/operators[421]/strokeCS[0]</context>
+              <errorMessage>DeviceCMYK colour space is used without CMYK output intent profile</errorMessage>
+            </check>
+            <check status="failed">
+              <context>root/document[0]/pages[0](959 0 obj PDPage)/contentStream[0]/operators[432]/fillCS[0]</context>
+              <errorMessage>DeviceCMYK colour space is used without CMYK output intent profile</errorMessage>
+            </check>
+            <check status="failed">
+              <context>root/document[0]/pages[0](959 0 obj PDPage)/contentStream[0]/operators[444]/strokeCS[0]</context>
+              <errorMessage>DeviceCMYK colour space is used without CMYK output intent profile</errorMessage>
+            </check>
+            <check status="failed">
+              <context>root/document[0]/pages[0](959 0 obj PDPage)/contentStream[0]/operators[457]/fillCS[0]</context>
+              <errorMessage>DeviceCMYK colour space is used without CMYK output intent profile</errorMessage>
+            </check>
+            <check status="failed">
+              <context>root/document[0]/pages[0](959 0 obj PDPage)/contentStream[0]/operators[471]/strokeCS[0]</context>
+              <errorMessage>DeviceCMYK colour space is used without CMYK output intent profile</errorMessage>
+            </check>
+            <check status="failed">
+              <context>root/document[0]/pages[0](959 0 obj PDPage)/contentStream[0]/operators[478]/fillCS[0]</context>
+              <errorMessage>DeviceCMYK colour space is used without CMYK output intent profile</errorMessage>
+            </check>
+            <check status="failed">
+              <context>root/document[0]/pages[0](959 0 obj PDPage)/contentStream[0]/operators[486]/strokeCS[0]</context>
+              <errorMessage>DeviceCMYK colour space is used without CMYK output intent profile</errorMessage>
+            </check>
+            <check status="failed">
+              <context>root/document[0]/pages[0](959 0 obj PDPage)/contentStream[0]/operators[494]/fillCS[0]</context>
+              <errorMessage>DeviceCMYK colour space is used without CMYK output intent profile</errorMessage>
+            </check>
+            <check status="failed">
+              <context>root/document[0]/pages[0](959 0 obj PDPage)/contentStream[0]/operators[503]/strokeCS[0]</context>
+              <errorMessage>DeviceCMYK colour space is used without CMYK output intent profile</errorMessage>
+            </check>
+            <check status="failed">
+              <context>root/document[0]/pages[0](959 0 obj PDPage)/contentStream[0]/operators[511]/fillCS[0]</context>
+              <errorMessage>DeviceCMYK colour space is used without CMYK output intent profile</errorMessage>
+            </check>
+            <check status="failed">
+              <context>root/document[0]/pages[0](959 0 obj PDPage)/contentStream[0]/operators[520]/strokeCS[0]</context>
+              <errorMessage>DeviceCMYK colour space is used without CMYK output intent profile</errorMessage>
+            </check>
+            <check status="failed">
+              <context>root/document[0]/pages[0](959 0 obj PDPage)/contentStream[0]/operators[531]/fillCS[0]</context>
+              <errorMessage>DeviceCMYK colour space is used without CMYK output intent profile</errorMessage>
+            </check>
+            <check status="failed">
+              <context>root/document[0]/pages[0](959 0 obj PDPage)/contentStream[0]/operators[543]/strokeCS[0]</context>
+              <errorMessage>DeviceCMYK colour space is used without CMYK output intent profile</errorMessage>
+            </check>
+            <check status="failed">
+              <context>root/document[0]/pages[0](959 0 obj PDPage)/contentStream[0]/operators[557]/fillCS[0]</context>
+              <errorMessage>DeviceCMYK colour space is used without CMYK output intent profile</errorMessage>
+            </check>
+            <check status="failed">
+              <context>root/document[0]/pages[0](959 0 obj PDPage)/contentStream[0]/operators[572]/strokeCS[0]</context>
+              <errorMessage>DeviceCMYK colour space is used without CMYK output intent profile</errorMessage>
+            </check>
+            <check status="failed">
+              <context>root/document[0]/pages[0](959 0 obj PDPage)/contentStream[0]/operators[579]/fillCS[0]</context>
+              <errorMessage>DeviceCMYK colour space is used without CMYK output intent profile</errorMessage>
+            </check>
+            <check status="failed">
+              <context>root/document[0]/pages[0](959 0 obj PDPage)/contentStream[0]/operators[587]/strokeCS[0]</context>
+              <errorMessage>DeviceCMYK colour space is used without CMYK output intent profile</errorMessage>
+            </check>
+            <check status="failed">
+              <context>root/document[0]/pages[0](959 0 obj PDPage)/contentStream[0]/operators[594]/fillCS[0]</context>
+              <errorMessage>DeviceCMYK colour space is used without CMYK output intent profile</errorMessage>
+            </check>
+            <check status="failed">
+              <context>root/document[0]/pages[0](959 0 obj PDPage)/contentStream[0]/operators[602]/strokeCS[0]</context>
+              <errorMessage>DeviceCMYK colour space is used without CMYK output intent profile</errorMessage>
+            </check>
+            <check status="failed">
+              <context>root/document[0]/pages[0](959 0 obj PDPage)/contentStream[0]/operators[609]/fillCS[0]</context>
+              <errorMessage>DeviceCMYK colour space is used without CMYK output intent profile</errorMessage>
+            </check>
+            <check status="failed">
+              <context>root/document[0]/pages[0](959 0 obj PDPage)/contentStream[0]/operators[617]/strokeCS[0]</context>
+              <errorMessage>DeviceCMYK colour space is used without CMYK output intent profile</errorMessage>
+            </check>
+            <check status="failed">
+              <context>root/document[0]/pages[0](959 0 obj PDPage)/contentStream[0]/operators[644]/fillCS[0]</context>
+              <errorMessage>DeviceCMYK colour space is used without CMYK output intent profile</errorMessage>
+            </check>
+            <check status="failed">
+              <context>root/document[0]/pages[0](959 0 obj PDPage)/contentStream[0]/operators[672]/strokeCS[0]</context>
+              <errorMessage>DeviceCMYK colour space is used without CMYK output intent profile</errorMessage>
+            </check>
+            <check status="failed">
+              <context>root/document[0]/pages[0](959 0 obj PDPage)/contentStream[0]/operators[679]/fillCS[0]</context>
+              <errorMessage>DeviceCMYK colour space is used without CMYK output intent profile</errorMessage>
+            </check>
+            <check status="failed">
+              <context>root/document[0]/pages[0](959 0 obj PDPage)/contentStream[0]/operators[687]/strokeCS[0]</context>
+              <errorMessage>DeviceCMYK colour space is used without CMYK output intent profile</errorMessage>
+            </check>
+            <check status="failed">
+              <context>root/document[0]/pages[0](959 0 obj PDPage)/contentStream[0]/operators[698]/fillCS[0]</context>
+              <errorMessage>DeviceCMYK colour space is used without CMYK output intent profile</errorMessage>
+            </check>
+            <check status="failed">
+              <context>root/document[0]/pages[0](959 0 obj PDPage)/contentStream[0]/operators[710]/strokeCS[0]</context>
+              <errorMessage>DeviceCMYK colour space is used without CMYK output intent profile</errorMessage>
+            </check>
+            <check status="failed">
+              <context>root/document[0]/pages[0](959 0 obj PDPage)/contentStream[0]/operators[717]/fillCS[0]</context>
+              <errorMessage>DeviceCMYK colour space is used without CMYK output intent profile</errorMessage>
+            </check>
+            <check status="failed">
+              <context>root/document[0]/pages[0](959 0 obj PDPage)/contentStream[0]/operators[725]/strokeCS[0]</context>
+              <errorMessage>DeviceCMYK colour space is used without CMYK output intent profile</errorMessage>
+            </check>
+            <check status="failed">
+              <context>root/document[0]/pages[0](959 0 obj PDPage)/contentStream[0]/operators[736]/fillCS[0]</context>
+              <errorMessage>DeviceCMYK colour space is used without CMYK output intent profile</errorMessage>
+            </check>
+            <check status="failed">
+              <context>root/document[0]/pages[0](959 0 obj PDPage)/contentStream[0]/operators[748]/strokeCS[0]</context>
+              <errorMessage>DeviceCMYK colour space is used without CMYK output intent profile</errorMessage>
+            </check>
+            <check status="failed">
+              <context>root/document[0]/pages[0](959 0 obj PDPage)/contentStream[0]/operators[761]/fillCS[0]</context>
+              <errorMessage>DeviceCMYK colour space is used without CMYK output intent profile</errorMessage>
+            </check>
+            <check status="failed">
+              <context>root/document[0]/pages[0](959 0 obj PDPage)/contentStream[0]/operators[775]/strokeCS[0]</context>
+              <errorMessage>DeviceCMYK colour space is used without CMYK output intent profile</errorMessage>
+            </check>
+            <check status="failed">
+              <context>root/document[0]/pages[0](959 0 obj PDPage)/contentStream[0]/operators[782]/fillCS[0]</context>
+              <errorMessage>DeviceCMYK colour space is used without CMYK output intent profile</errorMessage>
+            </check>
+            <check status="failed">
+              <context>root/document[0]/pages[0](959 0 obj PDPage)/contentStream[0]/operators[790]/strokeCS[0]</context>
+              <errorMessage>DeviceCMYK colour space is used without CMYK output intent profile</errorMessage>
+            </check>
+            <check status="failed">
+              <context>root/document[0]/pages[0](959 0 obj PDPage)/contentStream[0]/operators[798]/fillCS[0]</context>
+              <errorMessage>DeviceCMYK colour space is used without CMYK output intent profile</errorMessage>
+            </check>
+            <check status="failed">
+              <context>root/document[0]/pages[0](959 0 obj PDPage)/contentStream[0]/operators[807]/strokeCS[0]</context>
+              <errorMessage>DeviceCMYK colour space is used without CMYK output intent profile</errorMessage>
+            </check>
+            <check status="failed">
+              <context>root/document[0]/pages[0](959 0 obj PDPage)/contentStream[0]/operators[815]/fillCS[0]</context>
+              <errorMessage>DeviceCMYK colour space is used without CMYK output intent profile</errorMessage>
+            </check>
+            <check status="failed">
+              <context>root/document[0]/pages[0](959 0 obj PDPage)/contentStream[0]/operators[824]/strokeCS[0]</context>
+              <errorMessage>DeviceCMYK colour space is used without CMYK output intent profile</errorMessage>
+            </check>
+            <check status="failed">
+              <context>root/document[0]/pages[0](959 0 obj PDPage)/contentStream[0]/operators[835]/fillCS[0]</context>
+              <errorMessage>DeviceCMYK colour space is used without CMYK output intent profile</errorMessage>
+            </check>
+            <check status="failed">
+              <context>root/document[0]/pages[0](959 0 obj PDPage)/contentStream[0]/operators[847]/strokeCS[0]</context>
+              <errorMessage>DeviceCMYK colour space is used without CMYK output intent profile</errorMessage>
+            </check>
+            <check status="failed">
+              <context>root/document[0]/pages[0](959 0 obj PDPage)/contentStream[0]/operators[861]/fillCS[0]</context>
+              <errorMessage>DeviceCMYK colour space is used without CMYK output intent profile</errorMessage>
+            </check>
+            <check status="failed">
+              <context>root/document[0]/pages[0](959 0 obj PDPage)/contentStream[0]/operators[876]/strokeCS[0]</context>
+              <errorMessage>DeviceCMYK colour space is used without CMYK output intent profile</errorMessage>
+            </check>
+            <check status="failed">
+              <context>root/document[0]/pages[0](959 0 obj PDPage)/contentStream[0]/operators[883]/fillCS[0]</context>
+              <errorMessage>DeviceCMYK colour space is used without CMYK output intent profile</errorMessage>
+            </check>
+            <check status="failed">
+              <context>root/document[0]/pages[0](959 0 obj PDPage)/contentStream[0]/operators[891]/strokeCS[0]</context>
+              <errorMessage>DeviceCMYK colour space is used without CMYK output intent profile</errorMessage>
+            </check>
+            <check status="failed">
+              <context>root/document[0]/pages[0](959 0 obj PDPage)/contentStream[0]/operators[898]/fillCS[0]</context>
+              <errorMessage>DeviceCMYK colour space is used without CMYK output intent profile</errorMessage>
+            </check>
+            <check status="failed">
+              <context>root/document[0]/pages[0](959 0 obj PDPage)/contentStream[0]/operators[906]/strokeCS[0]</context>
+              <errorMessage>DeviceCMYK colour space is used without CMYK output intent profile</errorMessage>
+            </check>
+            <check status="failed">
+              <context>root/document[0]/pages[0](959 0 obj PDPage)/contentStream[0]/operators[913]/fillCS[0]</context>
+              <errorMessage>DeviceCMYK colour space is used without CMYK output intent profile</errorMessage>
+            </check>
+          </rule>
+          <rule specification="ISO 19005-1:2005" clause="6.3.5" testNumber="3" status="failed" failedChecks="34">
+            <description>For all CIDFont subsets referenced within a conforming file, the font descriptor dictionary shall include a CIDSet stream identifying which CIDs are present in the embedded CIDFont file, as described in PDF Reference Table 5.20</description>
+            <object>PDCIDFont</object>
+            <test>fontName.search(/[A-Z]{6}\+/) != 0 || (containsCIDSet == true &amp;&amp; cidSetListsAllGlyphs == true)</test>
+            <check status="failed">
+              <context>root/document[0]/pages[0](959 0 obj PDPage)/contentStream[0]/operators[148]/font[0](UMBIKX+AGaramondPro-Semibold)/DescendantFonts[0](UMBIKX+AGaramondPro-Semibold)</context>
+              <errorMessage>A CIDSet entry in the Font descriptor is missing or does not correctly identify all glyphs present in the embedded font subset and used for rendering</errorMessage>
+            </check>
+            <check status="failed">
+              <context>root/document[0]/pages[0](959 0 obj PDPage)/contentStream[0]/operators[1971]/font[0](TERCWZ+AGaramondPro-Semibold)/DescendantFonts[0](TERCWZ+AGaramondPro-Semibold)</context>
+              <errorMessage>A CIDSet entry in the Font descriptor is missing or does not correctly identify all glyphs present in the embedded font subset and used for rendering</errorMessage>
+            </check>
+            <check status="failed">
+              <context>root/document[0]/pages[0](959 0 obj PDPage)/contentStream[0]/operators[4573]/font[0](SWHWIB+PlantagenetCherokee)/DescendantFonts[0](SWHWIB+PlantagenetCherokee)</context>
+              <errorMessage>A CIDSet entry in the Font descriptor is missing or does not correctly identify all glyphs present in the embedded font subset and used for rendering</errorMessage>
+            </check>
+            <check status="failed">
+              <context>root/document[0]/pages[0](959 0 obj PDPage)/contentStream[0]/operators[6636]/font[0](ROXQUD+Helvetica)/DescendantFonts[0](ROXQUD+Helvetica)</context>
+              <errorMessage>A CIDSet entry in the Font descriptor is missing or does not correctly identify all glyphs present in the embedded font subset and used for rendering</errorMessage>
+            </check>
+            <check status="failed">
+              <context>root/document[0]/pages[1](1 0 obj PDPage)/contentStream[0](558 0 obj PDContentStream)/operators[19]/font[0](VFYTYV+MyriadPro-Bold)/DescendantFonts[0](VFYTYV+MyriadPro-Bold)</context>
+              <errorMessage>A CIDSet entry in the Font descriptor is missing or does not correctly identify all glyphs present in the embedded font subset and used for rendering</errorMessage>
+            </check>
+            <check status="failed">
+              <context>root/document[0]/pages[2](11 0 obj PDPage)/contentStream[0](12 0 obj PDContentStream)/operators[123]/font[0](PJQJSH+MyriadPro-Regular)/DescendantFonts[0](PJQJSH+MyriadPro-Regular)</context>
+              <errorMessage>A CIDSet entry in the Font descriptor is missing or does not correctly identify all glyphs present in the embedded font subset and used for rendering</errorMessage>
+            </check>
+            <check status="failed">
+              <context>root/document[0]/pages[4](16 0 obj PDPage)/contentStream[0](17 0 obj PDContentStream)/operators[19]/font[0](LDCLOP+MyriadPro-Semibold)/DescendantFonts[0](LDCLOP+MyriadPro-Semibold)</context>
+              <errorMessage>A CIDSet entry in the Font descriptor is missing or does not correctly identify all glyphs present in the embedded font subset and used for rendering</errorMessage>
+            </check>
+            <check status="failed">
+              <context>root/document[0]/pages[6](20 0 obj PDPage)/contentStream[0](21 0 obj PDContentStream)/operators[36]/font[0](JNIZMT+NimbusRomanDOT-Regular)/DescendantFonts[0](JNIZMT+NimbusRomanDOT-Regular)</context>
+              <errorMessage>A CIDSet entry in the Font descriptor is missing or does not correctly identify all glyphs present in the embedded font subset and used for rendering</errorMessage>
+            </check>
+            <check status="failed">
+              <context>root/document[0]/pages[8](24 0 obj PDPage)/contentStream[0](25 0 obj PDContentStream)/operators[173]/font[0](HXONKX+NimbusRomanDOT-RegularItalic)/DescendantFonts[0](HXONKX+NimbusRomanDOT-RegularItalic)</context>
+              <errorMessage>A CIDSet entry in the Font descriptor is missing or does not correctly identify all glyphs present in the embedded font subset and used for rendering</errorMessage>
+            </check>
+            <check status="failed">
+              <context>root/document[0]/pages[25](58 0 obj PDPage)/contentStream[0](59 0 obj PDContentStream)/operators[335]/font[0](EZKVUD+MyriadPro-Regular)/DescendantFonts[0](EZKVUD+MyriadPro-Regular)</context>
+              <errorMessage>A CIDSet entry in the Font descriptor is missing or does not correctly identify all glyphs present in the embedded font subset and used for rendering</errorMessage>
+            </check>
+            <check status="failed">
+              <context>root/document[0]/pages[27](66 0 obj PDPage)/contentStream[0](67 0 obj PDContentStream)/operators[654]/font[0](EZKVUD+MyriadPro-Regular)/DescendantFonts[0](EZKVUD+MyriadPro-Regular)</context>
+              <errorMessage>A CIDSet entry in the Font descriptor is missing or does not correctly identify all glyphs present in the embedded font subset and used for rendering</errorMessage>
+            </check>
+            <check status="failed">
+              <context>root/document[0]/pages[30](76 0 obj PDPage)/contentStream[0](77 0 obj PDContentStream)/operators[476]/font[0](DRAPGF+MyriadPro-Regular)/DescendantFonts[0](DRAPGF+MyriadPro-Regular)</context>
+              <errorMessage>A CIDSet entry in the Font descriptor is missing or does not correctly identify all glyphs present in the embedded font subset and used for rendering</errorMessage>
+            </check>
+            <check status="failed">
+              <context>root/document[0]/pages[31](82 0 obj PDPage)/contentStream[0](83 0 obj PDContentStream)/operators[143]/font[0](CJQJSH+MyriadPro-Regular)/DescendantFonts[0](CJQJSH+MyriadPro-Regular)</context>
+              <errorMessage>A CIDSet entry in the Font descriptor is missing or does not correctly identify all glyphs present in the embedded font subset and used for rendering</errorMessage>
+            </check>
+            <check status="failed">
+              <context>root/document[0]/pages[35](94 0 obj PDPage)/contentStream[0](95 0 obj PDContentStream)/operators[421]/font[0](BBGDEJ+MyriadPro-Regular)/DescendantFonts[0](BBGDEJ+MyriadPro-Regular)</context>
+              <errorMessage>A CIDSet entry in the Font descriptor is missing or does not correctly identify all glyphs present in the embedded font subset and used for rendering</errorMessage>
+            </check>
+            <check status="failed">
+              <context>root/document[0]/pages[36](100 0 obj PDPage)/contentStream[0](101 0 obj PDContentStream)/operators[266]/font[0](ATWXQL+MyriadPro-Regular)/DescendantFonts[0](ATWXQL+MyriadPro-Regular)</context>
+              <errorMessage>A CIDSet entry in the Font descriptor is missing or does not correctly identify all glyphs present in the embedded font subset and used for rendering</errorMessage>
+            </check>
+            <check status="failed">
+              <context>root/document[0]/pages[38](108 0 obj PDPage)/contentStream[0](109 0 obj PDContentStream)/operators[108]/font[0](ZLMRCN+NimbusRomanNo9LOT-Medi)/DescendantFonts[0](ZLMRCN+NimbusRomanNo9LOT-Medi)</context>
+              <errorMessage>A CIDSet entry in the Font descriptor is missing or does not correctly identify all glyphs present in the embedded font subset and used for rendering</errorMessage>
+            </check>
+            <check status="failed">
+              <context>root/document[0]/pages[39](110 0 obj PDPage)/contentStream[0](111 0 obj PDContentStream)/operators[154]/font[0](YDCLOP+MyriadPro-Regular)/DescendantFonts[0](YDCLOP+MyriadPro-Regular)</context>
+              <errorMessage>A CIDSet entry in the Font descriptor is missing or does not correctly identify all glyphs present in the embedded font subset and used for rendering</errorMessage>
+            </check>
+            <check status="failed">
+              <context>root/document[0]/pages[40](116 0 obj PDPage)/contentStream[0](117 0 obj PDContentStream)/operators[95]/font[0](YDCLOP+TimesNewRomanPSMT)/DescendantFonts[0](YDCLOP+TimesNewRomanPSMT)</context>
+              <errorMessage>A CIDSet entry in the Font descriptor is missing or does not correctly identify all glyphs present in the embedded font subset and used for rendering</errorMessage>
+            </check>
+            <check status="failed">
+              <context>root/document[0]/pages[40](116 0 obj PDPage)/contentStream[0](117 0 obj PDContentStream)/operators[212]/font[0](XQSFAR+MyriadPro-Regular)/DescendantFonts[0](XQSFAR+MyriadPro-Regular)</context>
+              <errorMessage>A CIDSet entry in the Font descriptor is missing or does not correctly identify all glyphs present in the embedded font subset and used for rendering</errorMessage>
+            </check>
+            <check status="failed">
+              <context>root/document[0]/pages[40](116 0 obj PDPage)/contentStream[0](117 0 obj PDContentStream)/operators[743]/font[0](WIIZMT+MyriadPro-Regular)/DescendantFonts[0](WIIZMT+MyriadPro-Regular)</context>
+              <errorMessage>A CIDSet entry in the Font descriptor is missing or does not correctly identify all glyphs present in the embedded font subset and used for rendering</errorMessage>
+            </check>
+            <check status="failed">
+              <context>root/document[0]/pages[41](127 0 obj PDPage)/contentStream[0](128 0 obj PDContentStream)/operators[519]/font[0](VAYTYV+MyriadPro-Regular)/DescendantFonts[0](VAYTYV+MyriadPro-Regular)</context>
+              <errorMessage>A CIDSet entry in the Font descriptor is missing or does not correctly identify all glyphs present in the embedded font subset and used for rendering</errorMessage>
+            </check>
+            <check status="failed">
+              <context>root/document[0]/pages[42](133 0 obj PDPage)/contentStream[0](134 0 obj PDContentStream)/operators[653]/font[0](VAYTYV+MyriadPro-Regular)/DescendantFonts[0](VAYTYV+MyriadPro-Regular)</context>
+              <errorMessage>A CIDSet entry in the Font descriptor is missing or does not correctly identify all glyphs present in the embedded font subset and used for rendering</errorMessage>
+            </check>
+            <check status="failed">
+              <context>root/document[0]/pages[46](145 0 obj PDPage)/contentStream[0](146 0 obj PDContentStream)/operators[638]/font[0](USONKX+MyriadPro-Regular)/DescendantFonts[0](USONKX+MyriadPro-Regular)</context>
+              <errorMessage>A CIDSet entry in the Font descriptor is missing or does not correctly identify all glyphs present in the embedded font subset and used for rendering</errorMessage>
+            </check>
+            <check status="failed">
+              <context>root/document[0]/pages[47](151 0 obj PDPage)/contentStream[0](152 0 obj PDContentStream)/operators[893]/font[0](TKEHWZ+MyriadPro-Regular)/DescendantFonts[0](TKEHWZ+MyriadPro-Regular)</context>
+              <errorMessage>A CIDSet entry in the Font descriptor is missing or does not correctly identify all glyphs present in the embedded font subset and used for rendering</errorMessage>
+            </check>
+            <check status="failed">
+              <context>root/document[0]/pages[48](157 0 obj PDPage)/contentStream[0](158 0 obj PDContentStream)/operators[577]/font[0](TKEHWZ+MyriadPro-Regular)/DescendantFonts[0](TKEHWZ+MyriadPro-Regular)</context>
+              <errorMessage>A CIDSet entry in the Font descriptor is missing or does not correctly identify all glyphs present in the embedded font subset and used for rendering</errorMessage>
+            </check>
+            <check status="failed">
+              <context>root/document[0]/pages[112](289 0 obj PDPage)/contentStream[0](290 0 obj PDContentStream)/operators[302]/font[0](SCUBIB+Wingdings)/DescendantFonts[0](SCUBIB+Wingdings)</context>
+              <errorMessage>A CIDSet entry in the Font descriptor is missing or does not correctly identify all glyphs present in the embedded font subset and used for rendering</errorMessage>
+            </check>
+            <check status="failed">
+              <context>root/document[0]/pages[130](325 0 obj PDPage)/contentStream[0](326 0 obj PDContentStream)/operators[38]/font[0](RUKVUD+MyriadPro-It)/DescendantFonts[0](RUKVUD+MyriadPro-It)</context>
+              <errorMessage>A CIDSet entry in the Font descriptor is missing or does not correctly identify all glyphs present in the embedded font subset and used for rendering</errorMessage>
+            </check>
+            <check status="failed">
+              <context>root/document[0]/pages[134](333 0 obj PDPage)/contentStream[0](334 0 obj PDContentStream)/operators[67]/font[0](OWGDEJ+Times-Roman)/DescendantFonts[0](OWGDEJ+Times-Roman)</context>
+              <errorMessage>A CIDSet entry in the Font descriptor is missing or does not correctly identify all glyphs present in the embedded font subset and used for rendering</errorMessage>
+            </check>
+            <check status="failed">
+              <context>root/document[0]/pages[134](333 0 obj PDPage)/contentStream[0](334 0 obj PDContentStream)/operators[72]/font[0](LYCLOP+Arial-BoldItalicMT)/DescendantFonts[0](LYCLOP+Arial-BoldItalicMT)</context>
+              <errorMessage>A CIDSet entry in the Font descriptor is missing or does not correctly identify all glyphs present in the embedded font subset and used for rendering</errorMessage>
+            </check>
+            <check status="failed">
+              <context>root/document[0]/pages[134](333 0 obj PDPage)/contentStream[0](334 0 obj PDContentStream)/operators[85]/font[0](KQSFAR+SymbolMT)/DescendantFonts[0](KQSFAR+SymbolMT)</context>
+              <errorMessage>A CIDSet entry in the Font descriptor is missing or does not correctly identify all glyphs present in the embedded font subset and used for rendering</errorMessage>
+            </check>
+            <check status="failed">
+              <context>root/document[0]/pages[134](333 0 obj PDPage)/contentStream[0](334 0 obj PDContentStream)/operators[90]/font[0](JIIZMT+Verdana)/DescendantFonts[0](JIIZMT+Verdana)</context>
+              <errorMessage>A CIDSet entry in the Font descriptor is missing or does not correctly identify all glyphs present in the embedded font subset and used for rendering</errorMessage>
+            </check>
+            <check status="failed">
+              <context>root/document[0]/pages[134](333 0 obj PDPage)/contentStream[0](334 0 obj PDContentStream)/operators[149]/font[0](HSONKX+TimesNewRomanPS-ItalicMT)/DescendantFonts[0](HSONKX+TimesNewRomanPS-ItalicMT)</context>
+              <errorMessage>A CIDSet entry in the Font descriptor is missing or does not correctly identify all glyphs present in the embedded font subset and used for rendering</errorMessage>
+            </check>
+            <check status="failed">
+              <context>root/document[0]/pages[134](333 0 obj PDPage)/contentStream[0](334 0 obj PDContentStream)/operators[194]/font[0](FCUBIB+Verdana-Bold)/DescendantFonts[0](FCUBIB+Verdana-Bold)</context>
+              <errorMessage>A CIDSet entry in the Font descriptor is missing or does not correctly identify all glyphs present in the embedded font subset and used for rendering</errorMessage>
+            </check>
+            <check status="failed">
+              <context>root/document[0]/pages[134](333 0 obj PDPage)/contentStream[0](334 0 obj PDContentStream)/operators[887]/font[0](DMAPGF+Verdana-BoldItalic)/DescendantFonts[0](DMAPGF+Verdana-BoldItalic)</context>
+              <errorMessage>A CIDSet entry in the Font descriptor is missing or does not correctly identify all glyphs present in the embedded font subset and used for rendering</errorMessage>
+            </check>
+          </rule>
+          <rule specification="ISO 19005-1:2005" clause="6.7.3" testNumber="2" status="failed" failedChecks="1">
+            <description>The value of Title entry from the document information dictionary, if present, and its analogous XMP property "dc:title['x-default']" shall be equivalent</description>
+            <object>CosInfo</object>
+            <test>Title == null || Title == XMPTitle</test>
+            <check status="failed">
+              <context>root/trailer[0]/Info[0]</context>
+              <errorMessage>The value of Title entry from the document Info dictionary and its matching XMP property "dc:title['x-default']" are not equivalent (Info /Title = "", XMP dc:title['x-default'] = null)</errorMessage>
+            </check>
+          </rule>
+          <rule specification="ISO 19005-1:2005" clause="6.7.11" testNumber="1" status="failed" failedChecks="1">
+            <description>The PDF/A version and conformance level of a file shall be specified using the PDF/A Identification extension schema</description>
+            <object>MainXMPPackage</object>
+            <test>containsPDFAIdentification == true</test>
+            <check status="failed">
+              <context>root/document[0]/metadata[0](554 0 obj PDMetadata)/XMPPackage[0]</context>
+              <errorMessage>The document metadata stream doesn't contain PDF/A Identification Schema</errorMessage>
+            </check>
+          </rule>
+          <rule specification="ISO 19005-1:2005" clause="6.3.3.2" testNumber="1" status="failed" failedChecks="9">
+            <description>For all Type 2 CIDFonts that are used for rendering, the CIDFont dictionary shall contain a CIDToGIDMap entry that shall be a stream mapping from CIDs to glyph indices or the name Identity, as described in PDF Reference Table 5.13</description>
+            <object>PDCIDFont</object>
+            <test>Subtype != "CIDFontType2" || CIDToGIDMap != null || renderingMode == 3</test>
+            <check status="failed">
+              <context>root/document[0]/pages[0](959 0 obj PDPage)/contentStream[0]/operators[6636]/font[0](ROXQUD+Helvetica)/DescendantFonts[0](ROXQUD+Helvetica)</context>
+              <errorMessage>A Type 2 CIDFont dictionary has missing or invalid CIDToGIDMap entry</errorMessage>
+            </check>
+            <check status="failed">
+              <context>root/document[0]/pages[112](289 0 obj PDPage)/contentStream[0](290 0 obj PDContentStream)/operators[302]/font[0](SCUBIB+Wingdings)/DescendantFonts[0](SCUBIB+Wingdings)</context>
+              <errorMessage>A Type 2 CIDFont dictionary has missing or invalid CIDToGIDMap entry</errorMessage>
+            </check>
+            <check status="failed">
+              <context>root/document[0]/pages[134](333 0 obj PDPage)/contentStream[0](334 0 obj PDContentStream)/operators[67]/font[0](OWGDEJ+Times-Roman)/DescendantFonts[0](OWGDEJ+Times-Roman)</context>
+              <errorMessage>A Type 2 CIDFont dictionary has missing or invalid CIDToGIDMap entry</errorMessage>
+            </check>
+            <check status="failed">
+              <context>root/document[0]/pages[134](333 0 obj PDPage)/contentStream[0](334 0 obj PDContentStream)/operators[72]/font[0](LYCLOP+Arial-BoldItalicMT)/DescendantFonts[0](LYCLOP+Arial-BoldItalicMT)</context>
+              <errorMessage>A Type 2 CIDFont dictionary has missing or invalid CIDToGIDMap entry</errorMessage>
+            </check>
+            <check status="failed">
+              <context>root/document[0]/pages[134](333 0 obj PDPage)/contentStream[0](334 0 obj PDContentStream)/operators[85]/font[0](KQSFAR+SymbolMT)/DescendantFonts[0](KQSFAR+SymbolMT)</context>
+              <errorMessage>A Type 2 CIDFont dictionary has missing or invalid CIDToGIDMap entry</errorMessage>
+            </check>
+            <check status="failed">
+              <context>root/document[0]/pages[134](333 0 obj PDPage)/contentStream[0](334 0 obj PDContentStream)/operators[90]/font[0](JIIZMT+Verdana)/DescendantFonts[0](JIIZMT+Verdana)</context>
+              <errorMessage>A Type 2 CIDFont dictionary has missing or invalid CIDToGIDMap entry</errorMessage>
+            </check>
+            <check status="failed">
+              <context>root/document[0]/pages[134](333 0 obj PDPage)/contentStream[0](334 0 obj PDContentStream)/operators[149]/font[0](HSONKX+TimesNewRomanPS-ItalicMT)/DescendantFonts[0](HSONKX+TimesNewRomanPS-ItalicMT)</context>
+              <errorMessage>A Type 2 CIDFont dictionary has missing or invalid CIDToGIDMap entry</errorMessage>
+            </check>
+            <check status="failed">
+              <context>root/document[0]/pages[134](333 0 obj PDPage)/contentStream[0](334 0 obj PDContentStream)/operators[194]/font[0](FCUBIB+Verdana-Bold)/DescendantFonts[0](FCUBIB+Verdana-Bold)</context>
+              <errorMessage>A Type 2 CIDFont dictionary has missing or invalid CIDToGIDMap entry</errorMessage>
+            </check>
+            <check status="failed">
+              <context>root/document[0]/pages[134](333 0 obj PDPage)/contentStream[0](334 0 obj PDContentStream)/operators[887]/font[0](DMAPGF+Verdana-BoldItalic)/DescendantFonts[0](DMAPGF+Verdana-BoldItalic)</context>
+              <errorMessage>A Type 2 CIDFont dictionary has missing or invalid CIDToGIDMap entry</errorMessage>
+            </check>
+          </rule>
+          <rule specification="ISO 19005-1:2005" clause="6.2.3.3" testNumber="3" status="failed" failedChecks="1">
+            <description>If an uncalibrated colour space is used in a file then that file shall contain a PDF/A-1 OutputIntent, as defined in 6.2.2</description>
+            <object>PDDeviceGray</object>
+            <test>gOutputCS != null</test>
+            <check status="failed">
+              <context>root/document[0]/pages[0](959 0 obj PDPage)/contentStream[0]/operators[5774]/colorSpace[0](980 0 obj PDSeparation)/alternate[0]</context>
+              <errorMessage>DeviceGray colour space is used without output intent profile</errorMessage>
+            </check>
+          </rule>
+          <rule specification="ISO 19005-1:2005" clause="6.1.4" testNumber="3" status="failed" failedChecks="1">
+            <description>Xref streams shall not be used</description>
+            <object>PDDocument</object>
+            <test>containsXRefStream == false</test>
+            <check status="failed">
+              <context>root/document[0]</context>
+              <errorMessage>The document uses xref streams</errorMessage>
+            </check>
+          </rule>
+        </details>
+      </validationReport>
+      <duration start="1795472171278" finish="1795472173311">00:00:02.033</duration>
+    </job>
+  </jobs>
+  <batchSummary totalJobs="1" failedToParse="0" encrypted="0" outOfMemory="0" veraExceptions="0">
+    <validationReports compliant="0" nonCompliant="1" failedJobs="0">1</validationReports>
+    <featureReports failedJobs="0">0</featureReports>
+    <repairReports failedJobs="0">0</repairReports>
+    <duration start="1795472171226" finish="1795472173327">00:00:02.101</duration>
+  </batchSummary>
+</report>

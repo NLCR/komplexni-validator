@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<report>
+  <buildInformation>
+    <releaseDetails id="core" version="1.30.2" buildDate="2026-06-03T10:42:00+02:00"></releaseDetails>
+    <releaseDetails id="validation-model" version="1.30.2" buildDate="2026-06-03T10:46:00+02:00"></releaseDetails>
+    <releaseDetails id="apps" version="1.30.0" buildDate="2026-06-03T13:47:00+02:00"></releaseDetails>
+  </buildInformation>
+  <jobs>
+    <job>
+      <item size="5000">
+        <name>useknute.pdf</name>
+      </item>
+      <taskException type="PARSE" isExecuted="true" isSuccess="false">
+        <duration start="1795472204997" finish="1795472205013">00:00:00.016</duration>
+        <exceptionMessage>Exception: Couldn't parse stream caused by exception: Document doesn't contain startxref keyword in the last 1024 bytes</exceptionMessage>
+      </taskException>
+      <duration start="1795472204997" finish="1795472205013">00:00:00.016</duration>
+    </job>
+  </jobs>
+  <batchSummary totalJobs="1" failedToParse="1" encrypted="0" outOfMemory="0" veraExceptions="0">
+    <validationReports compliant="0" nonCompliant="0" failedJobs="1">1</validationReports>
+    <featureReports failedJobs="0">0</featureReports>
+    <repairReports failedJobs="0">0</repairReports>
+    <duration start="1795472204992" finish="1795472205019">00:00:00.027</duration>
+  </batchSummary>
+</report>

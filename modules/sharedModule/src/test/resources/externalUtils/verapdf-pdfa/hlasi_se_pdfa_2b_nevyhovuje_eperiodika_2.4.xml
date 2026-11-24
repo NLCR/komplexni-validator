@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<report>
+  <buildInformation>
+    <releaseDetails id="core" version="1.30.2" buildDate="2026-06-03T10:42:00+02:00"></releaseDetails>
+    <releaseDetails id="validation-model" version="1.30.2" buildDate="2026-06-03T10:46:00+02:00"></releaseDetails>
+    <releaseDetails id="apps" version="1.30.0" buildDate="2026-06-03T13:47:00+02:00"></releaseDetails>
+  </buildInformation>
+  <jobs>
+    <job>
+      <item size="287410273">
+        <name>89f250dbc142c3aa7093cac255f1ec95.pdf</name>
+      </item>
+      <validationReport jobEndStatus="normal" profileName="PDF/A-2b validation profile" statement="PDF file is not compliant with Validation Profile requirements." isCompliant="false">
+        <details passedRules="143" failedRules="1" passedChecks="740288" failedChecks="2">
+          <rule specification="ISO 19005-2:2011" clause="6.2.4.4" testNumber="2" status="failed" failedChecks="2">
+            <description>All Separation arrays within a single PDF/A-2 file (including those in Colorants dictionaries) that have the same name shall have the same tintTransform and alternateSpace. In evaluating equivalence, the PDF objects shall be compared, rather than the computational result of the use of those PDF objects. Compression and whether or not an object is direct or indirect shall be ignored</description>
+            <object>PDSeparation</object>
+            <test>areTintAndAlternateConsistent == true</test>
+            <check status="failed">
+              <context>root/document[0]/pages[74](1060 0 obj PDPage)/contentStream[0](1061 0 obj PDContentStream)/operators[23504]/colorSpace[0](1068 0 obj PDSeparation)</context>
+              <errorMessage>Several occurrences of a Separation colour space with the same name are not consistent</errorMessage>
+            </check>
+            <check status="failed">
+              <context>root/document[0]/pages[74](1060 0 obj PDPage)/contentStream[0](1061 0 obj PDContentStream)/operators[23524]/colorSpace[0](1070 0 obj PDSeparation)</context>
+              <errorMessage>Several occurrences of a Separation colour space with the same name are not consistent</errorMessage>
+            </check>
+          </rule>
+        </details>
+      </validationReport>
+      <duration start="1795472175207" finish="1795472176095">00:00:00.888</duration>
+    </job>
+  </jobs>
+  <batchSummary totalJobs="1" failedToParse="0" encrypted="0" outOfMemory="0" veraExceptions="0">
+    <validationReports compliant="0" nonCompliant="1" failedJobs="0">1</validationReports>
+    <featureReports failedJobs="0">0</featureReports>
+    <repairReports failedJobs="0">0</repairReports>
+    <duration start="1795472175164" finish="1795472176105">00:00:00.941</duration>
+  </batchSummary>
+</report>

@@ -14,6 +14,8 @@ import java.util.List;
 public abstract class AbstractDataRule implements DataRule {
     private final String validationName;
     private final Level level;
+    //vlastni text problemu z profilu (atribut message), null = text pravidla
+    private String message;
 
     public AbstractDataRule(String validationName) {
         this(validationName, null);
@@ -27,6 +29,15 @@ public abstract class AbstractDataRule implements DataRule {
         this.level = level;
     }
 
+    /**
+     * Vlastní text problému (atribut message pravidla v profilu) místo textu pravidla, např. „soubor není ve formátu
+     * PDF/A“ místo „zakázaná hodnota nalezena: …“. Před textem zůstává název validace. Null = text pravidla.
+     */
+    public AbstractDataRule withMessage(String message) {
+        this.message = message;
+        return this;
+    }
+
     public String getValidationName() {
         return validationName;
     }
@@ -37,7 +48,7 @@ public abstract class AbstractDataRule implements DataRule {
     }
 
     String error(String message) {
-        return String.format("%s: %s", validationName, message);
+        return String.format("%s: %s", validationName, this.message != null ? this.message : message);
     }
 
     List<String> singleError(String error) {

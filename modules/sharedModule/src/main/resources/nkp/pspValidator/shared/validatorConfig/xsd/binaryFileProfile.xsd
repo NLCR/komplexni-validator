@@ -44,6 +44,8 @@
 
     <xs:complexType name="validationType">
         <xs:sequence>
+            <!-- volitelná podmínka (jen fromXml): validace se vyhodnotí, jen když výraz XPath 1.0 (boolean) platí -->
+            <xs:element name="condition" type="bfp:conditionType" minOccurs="0"/>
             <xs:choice minOccurs="0">
                 <xs:element name="xmlDataExtraction" type="bfp:xmlDataExtractionType"/>
                 <xs:element name="textDataExtraction" type="bfp:textDataExtractionType"/>
@@ -51,6 +53,12 @@
             <xs:element name="rules" type="bfp:rulesType"/>
         </xs:sequence>
         <xs:attribute name="name" type="xs:string" use="optional"/>
+    </xs:complexType>
+
+    <xs:complexType name="conditionType">
+        <xs:sequence>
+            <xs:element name="xpath" type="xs:string"/>
+        </xs:sequence>
     </xs:complexType>
 
     <xs:complexType name="textDataExtractionType">
@@ -110,6 +118,7 @@
             <xs:element name="nTimesXRemainingY" type="bfp:nTimesXRemainingYType" minOccurs="0"/>
         </xs:sequence>
         <xs:attribute name="level" type="bfp:levelType" use="optional"/>
+        <xs:attribute name="message" type="xs:string" use="optional"/>
     </xs:complexType>
 
     <xs:complexType name="intRangeType">
@@ -136,6 +145,8 @@
 
     <xs:complexType name="emptyElementType">
         <xs:attribute name="level" type="bfp:levelType" use="optional"/>
+        <!-- vlastní text problému místo textu pravidla (před ním zůstává název validace) -->
+        <xs:attribute name="message" type="xs:string" use="optional"/>
     </xs:complexType>
 
     <!-- úroveň problémů pravidla (nkp.pspValidator.shared.engine.Level); bez atributu platí validation_problem_level z rules.xml -->

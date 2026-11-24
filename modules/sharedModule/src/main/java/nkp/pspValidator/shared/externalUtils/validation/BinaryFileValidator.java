@@ -12,6 +12,7 @@ import nkp.pspValidator.shared.externalUtils.validation.extractions.AllNonemptyB
 import nkp.pspValidator.shared.externalUtils.validation.extractions.AllNonemptyByXpathDataExctraction;
 import nkp.pspValidator.shared.externalUtils.validation.extractions.FirstNonemptyByRegexpDataExtraction;
 import nkp.pspValidator.shared.externalUtils.validation.extractions.FirstNonemptyByXpathDataExctraction;
+import nkp.pspValidator.shared.externalUtils.validation.extractions.XpathCondition;
 import nkp.pspValidator.shared.externalUtils.validation.rules.MustExistDR;
 import nkp.pspValidator.shared.externalUtils.validation.rules.MustMatchAnyDR;
 import nkp.pspValidator.shared.externalUtils.validation.rules.MustNotExistDR;
@@ -95,6 +96,9 @@ public class BinaryFileValidator {
         List<Element> validationEls = XmlUtils.getChildrenElementsByName(rootEl, "validation");
         for (Element validationEl : validationEls) {
             String validationName = validationEl.getAttribute("name");
+            if (XmlUtils.getFirstChildElementsByName(validationEl, "condition") != null) {
+                throw new ValidatorConfigurationException("podmínka validace (condition) je podporovaná jen v profilech fromXml: %s", validationName);
+            }
             //extraction
             Element xmlDataExtractionEl = XmlUtils.getFirstChildElementsByName(validationEl, "textDataExtraction");
             DataExtraction dataExtraction = buildTextDataExtraction(xmlDataExtractionEl);
@@ -131,6 +135,16 @@ public class BinaryFileValidator {
         List<Element> validationEls = XmlUtils.getChildrenElementsByName(rootEl, "validation");
         for (Element validationEl : validationEls) {
             String validationName = validationEl.getAttribute("name");
+            //volitelna podminka: validace se vyhodnoti, jen kdyz XPath (boolean) plati
+            ValidationCondition condition = null;
+            Element conditionEl = XmlUtils.getFirstChildElementsByName(validationEl, "condition");
+            if (conditionEl != null) {
+                Element xpathEl = XmlUtils.getFirstChildElementsByName(conditionEl, "xpath");
+                if (xpathEl == null) {
+                    throw new ValidatorConfigurationException("podmínka validace %s nemá xpath", validationName);
+                }
+                condition = new XpathCondition(profile.getNamespaceContext(), xpathEl.getTextContent().trim());
+            }
             //extraction
             Element xmlDataExtractionEl = XmlUtils.getFirstChildElementsByName(validationEl, "xmlDataExtraction");
             DataExtraction dataExtraction = buildXmlDataExtraction(profile.getNamespaceContext(), xmlDataExtractionEl);
@@ -141,7 +155,7 @@ public class BinaryFileValidator {
             for (Element ruleEl : ruleEls) {
                 dataRules.add(buildRule(validationName, ruleEl));
             }
-            Validation validation = new Validation(validationName, dataExtraction, dataRules);
+            Validation validation = new Validation(validationName, condition, dataExtraction, dataRules);
             profile.addValidation(validation);
         }
         return profile;
@@ -202,12 +216,14 @@ public class BinaryFileValidator {
 
         //volitelna uroven pravidla (atribut level), bez nej plati validation_problem_level z rules.xml
         Level level = buildRuleLevel(ruleEl);
+        //volitelny vlastni text problemu (atribut message), bez nej text pravidla
+        String message = ruleEl.hasAttribute("message") ? ruleEl.getAttribute("message").trim() : null;
         switch (ruleEl.getTagName()) {
             case "mustExist": {
-                return new MustExistDR(validationName, level);
+                return new MustExistDR(validationName, level).withMessage(message);
             }
             case "mustNotExist": {
-                return new MustNotExistDR(validationName, level);
+                return new MustNotExistDR(validationName, level).withMessage(message);
             }
             case "mustMatchAny": {
                 List<Constraint> constraints = new ArrayList<>();
@@ -215,7 +231,7 @@ public class BinaryFileValidator {
                 for (Element constraintEl : constraintEls) {
                     constraints.add(buildConstraint(constraintEl));
                 }
-                return new MustMatchAnyDR(validationName, level, constraints);
+                return new MustMatchAnyDR(validationName, level, constraints).withMessage(message);
             }
             default:
                 throw new ValidatorConfigurationException("nečekaný element %s", ruleEl.getTagName());

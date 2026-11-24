@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<report>
+  <buildInformation>
+    <releaseDetails id="core" version="1.30.2" buildDate="2026-06-03T10:42:00+02:00"></releaseDetails>
+    <releaseDetails id="validation-model" version="1.30.2" buildDate="2026-06-03T10:46:00+02:00"></releaseDetails>
+    <releaseDetails id="apps" version="1.30.0" buildDate="2026-06-03T13:47:00+02:00"></releaseDetails>
+  </buildInformation>
+  <jobs>
+    <job>
+      <item size="37124">
+        <name>typ_metadata_spatne.pdf</name>
+      </item>
+      <validationReport jobEndStatus="normal" profileName="PDF/A-1b validation profile" statement="PDF file is not compliant with Validation Profile requirements." isCompliant="false">
+        <details passedRules="127" failedRules="2" passedChecks="383" failedChecks="2">
+          <rule specification="ISO 19005-1:2005" clause="6.1.7" testNumber="1" status="failed" failedChecks="1">
+            <description>The value of the Length key specified in the stream dictionary shall match the number of bytes in the file following the LINE FEED character after the stream keyword and preceding the EOL marker before the endstream keyword</description>
+            <object>CosStream</object>
+            <test>Length == realLength</test>
+            <check status="failed">
+              <context>root/indirectObjects[3](20 0)/directObject[0]</context>
+              <errorMessage>Actual length of the stream (449 byte(s)) does not match the value of the Length key in the Stream dictionary (450 byte(s))</errorMessage>
+            </check>
+          </rule>
+          <rule specification="ISO 19005-1:2005" clause="6.7.2" testNumber="1" status="failed" failedChecks="1">
+            <description>The document catalog dictionary of a conforming file shall contain the Metadata key. The metadata stream dictionary shall contain entry Type with value /Metadata and entry Subtype with value /XML</description>
+            <object>PDDocument</object>
+            <test>containsMetadata == true</test>
+            <check status="failed">
+              <context>root/document[0]</context>
+              <errorMessage>The document catalog dictionary doesn't contain metadata key or metadata stream dictionary does not contain either entry Type with value /Metadata or entry Subtype with value /XML</errorMessage>
+            </check>
+          </rule>
+        </details>
+      </validationReport>
+      <duration start="1795472239232" finish="1795472239340">00:00:00.108</duration>
+    </job>
+  </jobs>
+  <batchSummary totalJobs="1" failedToParse="0" encrypted="0" outOfMemory="0" veraExceptions="0">
+    <validationReports compliant="0" nonCompliant="1" failedJobs="0">1</validationReports>
+    <featureReports failedJobs="0">0</featureReports>
+    <repairReports failedJobs="0">0</repairReports>
+    <duration start="1795472239204" finish="1795472239348">00:00:00.144</duration>
+  </batchSummary>
+</report>

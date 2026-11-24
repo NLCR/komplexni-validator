@@ -13,14 +13,24 @@ public class Validation {
     private final String name;
     private final DataExtraction dataExtraction;
     private final List<DataRule> dataRules;
+    //volitelna podminka (element condition), null = validace se vyhodnoti vzdy
+    private final ValidationCondition condition;
 
     public Validation(String name, DataExtraction dataExtraction, List<DataRule> dataRules) {
+        this(name, null, dataExtraction, dataRules);
+    }
+
+    public Validation(String name, ValidationCondition condition, DataExtraction dataExtraction, List<DataRule> dataRules) {
         this.name = name;
+        this.condition = condition;
         this.dataExtraction = dataExtraction;
         this.dataRules = dataRules;
     }
 
     public List<Problem> validate(Object processedOutput) throws DataExtraction.ExtractionException {
+        if (condition != null && !condition.holds(processedOutput)) {
+            return Collections.emptyList();
+        }
         Object data = dataExtraction.extract(processedOutput);
         for (DataRule rule : dataRules) {
             List<String> ruleErros = rule.validate(data);

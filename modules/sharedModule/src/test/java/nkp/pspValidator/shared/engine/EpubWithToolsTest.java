@@ -36,16 +36,16 @@ public class EpubWithToolsTest {
     }
 
     /**
-     * Archivní kopie není PDF/A (synteticky_bez_pdfa.pdf): bez nástrojů je balíček validní (EpubSmokeTest ho nemá
-     * mezi pozitivními jen proto, že rozdíl dělá veraPDF), s veraPDF ERROR "Soubor musí být validní".
+     * Archivní kopie není PDF/A (synteticky_bez_pdfa.pdf, k PDF/A se nehlásí): s veraPDF jen WARNING „Formát PDF/A“
+     * (DMF PDF/A jen doporučuje; odchylka od VEP 2.4, kde je to ERROR), balíček zůstává validní.
      */
     @Test
-    public void emo30PdfNotPdfaIsInvalidByVeraPdf() throws Exception {
+    public void emo30PdfNotPdfaIsWarningByVeraPdf() throws Exception {
         File dir = new File(RES + "emonograph_3.0/pdf_not_pdfa/aba007-p5m305");
         assertValid(FdmfTestSupport.run(new DmfDetector().resolveDmf(dir, new DmfDetector.Params()), dir));
         String log = runWithTools(dir, ExternalUtil.VERAPDF);
-        assertHasLineInRule(log, "ORIGINAL-COPY-PDF_FILES_VALID_BY_VERAPDF", "ERROR:", "Soubor musí být validní");
-        assertTrue("balik ma byt nevalidni", log.contains("balík je: nevalidní"));
+        assertHasLineInRule(log, "ORIGINAL-COPY-PDF_FILES_VALID_BY_VERAPDF", "WARNING:", "Formát PDF/A: soubor není ve formátu PDF/A (DMF doporučuje PDF/A-1 nebo PDF/A-2)");
+        assertValid(log);
     }
 
     /**

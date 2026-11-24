@@ -5,7 +5,19 @@
 >
     <fromXml>
 
+        <!--Soubor, který se k PDF/A nehlásí (nemá v XMP identifikaci PDF/A pdfaid:part, pdfaid:conformance): DMF e-monografie 2.4 (2. 6. 2023), kap. 1.1: „předpokládá zpracovávání dokumentů ve formátech .epub, PDF a PDF/A, přičemž doporučené jsou verze .epub 2.0.1 a PDF/A-1 a -2“.
+            Takový soubor je jen WARNING „Formát PDF/A“ a validace „Soubor musí být validní“ a „Soubor PDF/A by měl být
+            v podporované verzi“ se u něj nevyhodnocují. Soubor, který se k PDF/A hlásí a nevyhovuje, zůstává ERROR.
+            Odchylka od Validátoru e-publikací 2.4 (tam ERROR), viz tools/parallel-validation/known.py.
+            Jak se pozná: veraPDF (spuštění bez -f, automatická detekce podle pdfaid:part) u souboru bez identifikace
+            PDF/A použije výchozí profil PDF/A-1b a mezi porušenými pravidly ISO 19005-1 je 6.7.11 test 1 (XMP bez
+            identifikace PDF/A) nebo 6.7.2 test 1 (katalog nemá metadata XMP, nebo slovník metadat nemá Type /Metadata
+            a Subtype /XML). Ověřeno s veraPDF 1.30. Mez: soubor s identifikací PDF/A-1, jehož slovník metadat nemá
+            Type nebo Subtype, se pozná jako nehlásící se (WARNING), PDF/A-2 a vyšší s touž vadou zůstává ERROR.-->
         <validation name="Soubor musí být validní">
+            <condition>
+                <xpath>not(//validationReport[starts-with(@profileName, 'PDF/A-1')]/details/rule[@status='failed' and starts-with(@specification, 'ISO 19005-1') and @testNumber='1' and (@clause='6.7.11' or @clause='6.7.2')])</xpath>
+            </condition>
             <xmlDataExtraction resultType="STRING">
                 <firstNonempty>
                     <xpath>//validationReport/@isCompliant</xpath>
@@ -20,6 +32,9 @@
         </validation>
 
         <validation name="Soubor PDF/A by měl být v podporované verzi">
+            <condition>
+                <xpath>not(//validationReport[starts-with(@profileName, 'PDF/A-1')]/details/rule[@status='failed' and starts-with(@specification, 'ISO 19005-1') and @testNumber='1' and (@clause='6.7.11' or @clause='6.7.2')])</xpath>
+            </condition>
             <xmlDataExtraction resultType="STRING">
                 <firstNonempty>
                     <xpath>//validationReport/@profileName</xpath>
@@ -48,6 +63,20 @@
                     <!--<startsWith>PDF/A-3</startsWith>
                     <startsWith>PDF/A-4</startsWith>-->
                 </mustMatchAny>
+            </rules>
+        </validation>
+
+        <validation name="Formát PDF/A">
+            <condition>
+                <xpath>boolean(//validationReport[starts-with(@profileName, 'PDF/A-1')]/details/rule[@status='failed' and starts-with(@specification, 'ISO 19005-1') and @testNumber='1' and (@clause='6.7.11' or @clause='6.7.2')])</xpath>
+            </condition>
+            <xmlDataExtraction resultType="STRING">
+                <firstNonempty>
+                    <xpath>//validationReport/@profileName</xpath>
+                </firstNonempty>
+            </xmlDataExtraction>
+            <rules>
+                <mustNotExist level="WARNING" message="soubor není ve formátu PDF/A (DMF doporučuje PDF/A-1 nebo PDF/A-2)"/>
             </rules>
         </validation>
 

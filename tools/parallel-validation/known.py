@@ -56,6 +56,17 @@ def register(K, INTENDED, VEP_FIX):
       'u e-monografií 2.3, 2.4 a 3.0) a u hodnot dc:identifier typu uuid (WARNING, VEP vůbec). Všechny DMF pro '
       'e-publikace odkazují u UUID na RFC 4122. Issue KV #258 (VEP #3).',
       side='kv', msg=r"(uuid.*neodpovídá regulárním|typu uuid nemá hodnotu ve formátu UUID)")
+    K('KV: PDF, které se k PDF/A nehlásí, je WARNING (VEP: ERROR)', INTENDED,
+      'DMF e-monografií a e-periodik (kap. 1.1, např. e-monografie 3.0 z 13. 6. 2024: „předpokládá zpracovávání '
+      'dokumentů ve formátech .epub, PDF a PDF/A, přičemž doporučené jsou verze .epub 2.0.1 a PDF/A-1 a PDF/A-2“) '
+      'připouští i obyčejné PDF. KV u souboru bez identifikace PDF/A (veraPDF použije výchozí PDF/A-1b a porušeno je '
+      'ISO 19005-1 6.7.11 test 1 nebo 6.7.2 test 1) hlásí jen WARNING „Formát PDF/A: soubor není ve formátu PDF/A“ '
+      'a validitu ani verzi nehlásí; VEP dává ERROR „Soubor musí být validní“. Soubor, který se k PDF/A hlásí '
+      'a nevyhovuje, je ERROR v obou. Rozhodnutí uživatele 24. 11. 2026, vzorky e-monografií a e-periodik 2.3.',
+      rule=r'_VALID_BY_VERAPDF$', side='vep', level=r'^ERROR$', msg=r'^Soubor musí být validní: hodnota false ')
+    K('KV: PDF, které se k PDF/A nehlásí, je WARNING (hláška KV)', INTENDED,
+      'Hláška KV k předchozí položce (strana KV).',
+      rule=r'_VALID_BY_VERAPDF$', side='kv', level=r'^WARNING$', msg=r'^Formát PDF/A: soubor není ve formátu PDF/A')
     K('KV: doporučené elementy a atributy jako INFO', INTENDED,
       'Validátor metadat KV hlásí chybějící doporučené (nepovinné) elementy a atributy jako INFO; VEP je nehlásí. '
       'Týká se profilů hlavičky METS a bibliografických metadat.',

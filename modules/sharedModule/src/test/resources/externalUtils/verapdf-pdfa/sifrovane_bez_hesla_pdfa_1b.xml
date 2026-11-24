@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<report>
+  <buildInformation>
+    <releaseDetails id="core" version="1.30.2" buildDate="2026-06-03T10:42:00+02:00"></releaseDetails>
+    <releaseDetails id="validation-model" version="1.30.2" buildDate="2026-06-03T10:46:00+02:00"></releaseDetails>
+    <releaseDetails id="apps" version="1.30.0" buildDate="2026-06-03T13:47:00+02:00"></releaseDetails>
+  </buildInformation>
+  <jobs>
+    <job>
+      <item size="20825">
+        <name>sifrovane_bez_hesla.pdf</name>
+      </item>
+      <validationReport jobEndStatus="normal" profileName="PDF/A-1b validation profile" statement="PDF file is not compliant with Validation Profile requirements." isCompliant="false">
+        <details passedRules="126" failedRules="3" passedChecks="493" failedChecks="9">
+          <rule specification="ISO 19005-1:2005" clause="6.1.7" testNumber="2" status="failed" failedChecks="7">
+            <description>The stream keyword shall be followed either by a CARRIAGE RETURN (0Dh) and LINE FEED (0Ah) character sequence or by a single LINE FEED character. The endstream keyword shall be preceded by an EOL marker</description>
+            <object>CosStream</object>
+            <test>streamKeywordCRLFCompliant == true &amp;&amp; endstreamKeywordEOLCompliant == true</test>
+            <check status="failed">
+              <context>root/indirectObjects[1](17 0)/directObject[0]</context>
+              <errorMessage>Extra spacings or missing EOL characters around keywords 'stream' and 'endstream'</errorMessage>
+            </check>
+            <check status="failed">
+              <context>root/indirectObjects[2](16 0)/directObject[0]</context>
+              <errorMessage>Extra spacings or missing EOL characters around keywords 'stream' and 'endstream'</errorMessage>
+            </check>
+            <check status="failed">
+              <context>root/indirectObjects[5](13 0)/directObject[0]</context>
+              <errorMessage>Extra spacings or missing EOL characters around keywords 'stream' and 'endstream'</errorMessage>
+            </check>
+            <check status="failed">
+              <context>root/indirectObjects[8](10 0)/directObject[0]</context>
+              <errorMessage>Extra spacings or missing EOL characters around keywords 'stream' and 'endstream'</errorMessage>
+            </check>
+            <check status="failed">
+              <context>root/indirectObjects[13](5 0)/directObject[0]</context>
+              <errorMessage>Extra spacings or missing EOL characters around keywords 'stream' and 'endstream'</errorMessage>
+            </check>
+            <check status="failed">
+              <context>root/indirectObjects[15](3 0)/directObject[0]</context>
+              <errorMessage>Extra spacings or missing EOL characters around keywords 'stream' and 'endstream'</errorMessage>
+            </check>
+            <check status="failed">
+              <context>root/document[0]/metadata[0](3 0 obj PDMetadata)/stream[0]</context>
+              <errorMessage>Extra spacings or missing EOL characters around keywords 'stream' and 'endstream'</errorMessage>
+            </check>
+          </rule>
+          <rule specification="ISO 19005-1:2005" clause="6.7.2" testNumber="2" status="failed" failedChecks="1">
+            <description>The Metadata object stream dictionary in the document’s catalog shall not contain the Filter key</description>
+            <object>PDMetadata</object>
+            <test>isCatalogMetadata == false || Filter == null</test>
+            <check status="failed">
+              <context>root/document[0]/metadata[0](3 0 obj PDMetadata)</context>
+              <errorMessage>The catalog metadata object stream dictionary contains the Filter key</errorMessage>
+            </check>
+          </rule>
+          <rule specification="ISO 19005-1:2005" clause="6.1.3" testNumber="2" status="failed" failedChecks="1">
+            <description>The keyword Encrypt shall not be used in the trailer dictionary</description>
+            <object>CosTrailer</object>
+            <test>isEncrypted != true</test>
+            <check status="failed">
+              <context>root/trailer[0]</context>
+              <errorMessage>Encrypt keyword is present in the trailer dictionary</errorMessage>
+            </check>
+          </rule>
+        </details>
+      </validationReport>
+      <duration start="1795472204484" finish="1795472204608">00:00:00.124</duration>
+    </job>
+  </jobs>
+  <batchSummary totalJobs="1" failedToParse="0" encrypted="0" outOfMemory="0" veraExceptions="0">
+    <validationReports compliant="0" nonCompliant="1" failedJobs="0">1</validationReports>
+    <featureReports failedJobs="0">0</featureReports>
+    <repairReports failedJobs="0">0</repairReports>
+    <duration start="1795472204422" finish="1795472204617">00:00:00.195</duration>
+  </batchSummary>
+</report>
