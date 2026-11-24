@@ -143,8 +143,7 @@ public class BinaryFileProfileTest {
         assertEquals("Rozlišení vertik.: kontrolovaná hodnota nenalezena", errors.get(0));
         assertEquals("Velikost dlaždic (1): hodnota \"1685\" neodpovídá žádnému z omezení: [musí být přesně '1024']", errors.get(2));
         assertEquals("Precincts (regiony): hodnota \"default\" neodpovídá žádnému z omezení: [musí být přesně 'Yes',musí být přesně 'yes',musí být přesně 'user defined']", errors.get(4));
-        // známá vada: NTimesXRemainingYConstraint nema toString(), hlaseni obsahuje nazev tridy a hash
-        assertTrue(errors.get(5), errors.get(5).startsWith("Velikost precincts (1): hodnota \"[32768,32768,32768,32768,32768,32768]\" neodpovídá žádnému z omezení: [nkp.pspValidator.shared.externalUtils.validation.rules.constraints.NTimesXRemainingYConstraint@"));
+        assertEquals("Velikost precincts (1): hodnota \"[32768,32768,32768,32768,32768,32768]\" neodpovídá žádnému z omezení: [musí obsahovat nejvýše 2× '256', ostatní hodnoty '128']", errors.get(5));
         assertTrue(errors.get(6), errors.get(6).startsWith("Velikost precincts (2): "));
         assertEquals("Layers: hodnota \"8\" neodpovídá žádnému z omezení: [musí být přesně '12']", errors.get(7));
         assertEquals("Bypass: hodnota \"no\" neodpovídá žádnému z omezení: [musí být přesně 'Yes',musí být přesně 'yes']", errors.get(8));
@@ -292,15 +291,21 @@ public class BinaryFileProfileTest {
         profile.validate("jp2k", DUMMY_FILE);
         assertEquals(new ExternalUtilExecution("jp2k", ExternalUtil.KAKADU), manager.getLastExecution());
         assertEquals(DUMMY_FILE, manager.getLastTargetFile());
-        assertTrue(profile.toString(), profile.toString().startsWith("BinaryFileProfile{externalUtil=KAKADU, validations=2"));
+        // Core Error, nelze otevrit, ostatni chyby Kakadu (Error in Kakadu …, od 3.0)
+        assertTrue(profile.toString(), profile.toString().startsWith("BinaryFileProfile{externalUtil=KAKADU, validations=3"));
     }
 
     @Test
     public void toolFailureIsSingleError() throws Exception {
+        // nastroj nejde spustit: jedina chyba ERROR, soubor se nezkontroloval (od 3.0 s nazvem nastroje, driv jen text vyjimky)
         CannedOutputExternalUtilManager manager = new CannedOutputExternalUtilManager()
                 .withFailure(ExternalUtil.JPYLYZER, "Cannot run program \"jpylyzer\": error=2, No such file or directory");
         BinaryFileProfile profile = loadProfile(manager, FDMF, "mc", ExternalUtil.JPYLYZER);
-        assertEquals(Collections.singletonList("Cannot run program \"jpylyzer\": error=2, No such file or directory"), profile.validate("jp2k", DUMMY_FILE));
+        List<Validation.Problem> problems = profile.validateProblems("jp2k", DUMMY_FILE);
+        assertEquals(problems.toString(), 1, problems.size());
+        assertEquals(Level.ERROR, problems.get(0).getLevel());
+        assertEquals("nástroj Jpylyzer soubor nezkontroloval: nejde spustit: Cannot run program \"jpylyzer\": error=2, No such file or directory",
+                problems.get(0).getMessage());
     }
 
     @Test
@@ -355,12 +360,13 @@ public class BinaryFileProfileTest {
 
     @Test
     public void toolAndParsingProblemsHaveLevelFromRules() throws Exception {
-        // chyba spusteni nastroje, parsovani vystupu a extrakce: uroven null, tedy validation_problem_level z rules.xml
+        // chyba parsovani vystupu a extrakce: uroven null, tedy validation_problem_level z rules.xml; nastroj, ktery
+        // nejde spustit, soubor nezkontroloval: od 3.0 vzdy ERROR (driv take uroven z rules.xml)
         CannedOutputExternalUtilManager manager = new CannedOutputExternalUtilManager()
                 .withFailure(ExternalUtil.VERAPDF, "Cannot run program \"verapdf\": error=2, No such file or directory");
         List<Validation.Problem> problems = loadProfile(manager, PDF_FIXTURE, "pdf", ExternalUtil.VERAPDF).validateProblems("pdf", DUMMY_FILE);
         assertEquals(1, problems.size());
-        assertNull(problems.get(0).getLevel());
+        assertEquals(Level.ERROR, problems.get(0).getLevel());
         manager.withOutput(ExternalUtil.VERAPDF, "toto není xml");
         problems = loadProfile(manager, PDF_FIXTURE, "pdf", ExternalUtil.VERAPDF).validateProblems("pdf", DUMMY_FILE);
         assertEquals(1, problems.size());
@@ -579,7 +585,8 @@ public class BinaryFileProfileTest {
     @Test
     public void veraPdfNonCompliant() throws Exception {
         // bez urovne v profilu (mustMatchAny u isCompliant) plati validation_problem_level z rules.xml
-        assertEquals(Collections.singletonList(NOT_COMPLIANT), problems(ExternalUtil.VERAPDF, "pdf", "noncompliant_dummy.xml"));
+        // dummy.pdf se k PDF/A nehlasi (bez XMP): jen WARNING (DMF PDF/A jen doporucuje), viz VeraPdfPdfaClaimTest
+        assertEquals(Collections.singletonList("WARNING: Formát PDF/A: soubor není ve formátu PDF/A (DMF doporučuje PDF/A-1 nebo PDF/A-2)"), problems(ExternalUtil.VERAPDF, "pdf", "noncompliant_dummy.xml"));
         assertEquals(Collections.singletonList(NOT_COMPLIANT), problems(ExternalUtil.VERAPDF, "pdf", "noncompliant_dummy_flavour_2b.xml"));
         assertEquals(Arrays.asList(NOT_COMPLIANT, String.format(R1_WARNING, "PDF/A-3b validation profile")),
                 problems(ExternalUtil.VERAPDF, "pdf", "noncompliant_dummy_flavour_3b.xml"));

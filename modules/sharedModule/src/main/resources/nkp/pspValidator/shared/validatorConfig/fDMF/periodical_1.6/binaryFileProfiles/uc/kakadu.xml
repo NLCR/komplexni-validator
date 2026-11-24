@@ -29,5 +29,19 @@
             </rules>
         </validation>
 
+        <!-- ostatní chyby mimo jádro Kakadu (Error in Kakadu File Format Support, Error in Kakadu Compressed I/O Support,
+             Kakadu Error), např. JP2 bez kódového proudu („JPX data source appears to contain no codestreams at all“);
+             soubor se nezkontroloval, chyba je vždy ERROR; „Unable to open input file“ hlásí validace výše -->
+        <validation name="chyba Kakadu při čtení souboru (soubor se nezkontroloval)">
+            <textDataExtraction resultType="STRING_LIST">
+                <allNonempty>
+                    <regexp>(?ms)(?:Error in Kakadu(?! File Format Support:\s*Unable to open input file)|Kakadu Error:)((?!Kakadu Core Error|Error in Kakadu|Kakadu Error:).)*</regexp>
+                </allNonempty>
+            </textDataExtraction>
+            <rules>
+                <mustNotExist level="ERROR"/>
+            </rules>
+        </validation>
+
     </fromText>
 </binaryFileProfile>

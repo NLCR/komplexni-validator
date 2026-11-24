@@ -1,0 +1,2 @@
+Error in Kakadu File Format Support:
+JPX data source appears to contain no codestreams at all.

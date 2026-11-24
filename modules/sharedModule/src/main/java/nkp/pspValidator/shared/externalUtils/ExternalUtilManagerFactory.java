@@ -12,6 +12,7 @@ import java.util.EnumMap;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.regex.PatternSyntaxException;
 
 import static nkp.pspValidator.shared.XmlUtils.getChildrenElementsByName;
 import static nkp.pspValidator.shared.XmlUtils.getFirstChildElementsByName;
@@ -67,7 +68,9 @@ public class ExternalUtilManagerFactory {
                     Stream stream = Stream.valueOf(streamEl.getTextContent().trim());
                     //System.err.println(String.format("execution: os: %s, util: %s, name: %s, stream: %s", os, util, executionName, stream));
                     String regexp = getFirstChildElementsByName(parserEl, "regexp").getTextContent().trim();
-                    addUtilityExecution(os, util, executionName, command, stream, regexp);
+                    ExitCodePolicy exitCodePolicy = parseExitCodes(util, executionName, os, getFirstChildElementsByName(osEl, "exitCodes"));
+                    UtilHandler.ProcessedEvidence evidence = parseProcessedEvidence(util, executionName, os, getFirstChildElementsByName(osEl, "processedFileEvidence"));
+                    addUtilityExecution(os, util, executionName, command, stream, regexp, exitCodePolicy, evidence);
                 }
             }
         }
@@ -136,6 +139,51 @@ public class ExternalUtilManagerFactory {
         }
     }
 
+    /**
+     * Posouzení návratového kódu spuštění nad souborem (element exitCodes, volitelný):
+     * <pre>
+     * &lt;exitCodes normal="0 255"/&gt;  (pád i každý jiný kód než 0 a 255 je selhání)
+     * &lt;exitCodes/&gt;                (jen pád nebo nespuštění nástroje je selhání, viz {@link ExitCodePolicy})
+     * </pre>
+     * Bez elementu se kód neposuzuje (konfigurace starší než 3.0).
+     */
+    private static ExitCodePolicy parseExitCodes(ExternalUtil util, String executionName, OperatingSystem os, Element exitCodesEl) throws ValidatorConfigurationException {
+        if (exitCodesEl == null) {
+            return null;
+        }
+        try {
+            return new ExitCodePolicy(os, ExitCodePolicy.parseCodes(exitCodesEl.getAttribute("normal")));
+        } catch (IllegalArgumentException e) {
+            throw new ValidatorConfigurationException("%s, spuštění %s, %s: exitCodes: %s", util, executionName, os, e.getMessage());
+        }
+    }
+
+    /**
+     * Znak zpracování souboru (element processedFileEvidence, volitelný): regexp, který musí být v daném proudu
+     * výstupu, např. &lt;processedFileEvidence stream="STDOUT"&gt;Consumed [0-9,]+ tile-part&lt;/processedFileEvidence&gt;.
+     */
+    private static UtilHandler.ProcessedEvidence parseProcessedEvidence(ExternalUtil util, String executionName, OperatingSystem os, Element evidenceEl) throws ValidatorConfigurationException {
+        if (evidenceEl == null) {
+            return null;
+        }
+        String where = String.format("%s, spuštění %s, %s: processedFileEvidence", util, executionName, os);
+        Stream stream;
+        try {
+            stream = Stream.valueOf(evidenceEl.getAttribute("stream").trim());
+        } catch (IllegalArgumentException e) {
+            throw new ValidatorConfigurationException("%s: neplatný proud '%s' (STDOUT nebo STDERR)", where, evidenceEl.getAttribute("stream"));
+        }
+        String regexp = evidenceEl.getTextContent().trim();
+        if (regexp.isEmpty()) {
+            throw new ValidatorConfigurationException("%s: chybí regulární výraz", where);
+        }
+        try {
+            return new UtilHandler.ProcessedEvidence(stream, regexp);
+        } catch (PatternSyntaxException e) {
+            throw new ValidatorConfigurationException("%s: neplatný regulární výraz: %s", where, e.getDescription());
+        }
+    }
+
     private void addVersionDetection(OperatingSystem os, ExternalUtil util, String rawCommand, Stream outStream, String outRegexp) {
         if (!utilVersionDetectionInfoByOs.containsKey(os)) {
             utilVersionDetectionInfoByOs.put(os, new HashMap<>());
@@ -148,7 +196,8 @@ public class ExternalUtilManagerFactory {
         );
     }
 
-    private void addUtilityExecution(OperatingSystem os, ExternalUtil util, String executionName, String rawCommand, Stream outStream, String outRegexp) {
+    private void addUtilityExecution(OperatingSystem os, ExternalUtil util, String executionName, String rawCommand, Stream outStream, String outRegexp,
+                                     ExitCodePolicy exitCodePolicy, UtilHandler.ProcessedEvidence evidence) {
         ExternalUtilExecution execution = new ExternalUtilExecution(executionName, util);
         if (!utilExecutionInfoByOs.containsKey(os)) {
             utilExecutionInfoByOs.put(os, new HashMap<>());
@@ -156,7 +205,9 @@ public class ExternalUtilManagerFactory {
         utilExecutionInfoByOs.get(os).put(execution,
                 new UtilHandler(
                         new UtilHandler.CommandData(rawCommand),
-                        new UtilHandler.Parser(outStream, outRegexp)
+                        new UtilHandler.Parser(outStream, outRegexp),
+                        exitCodePolicy,
+                        evidence
                 )
         );
     }

@@ -1,0 +1,6 @@
+
+Consumed 1 tile-part(s) from a total of 1 tile(s).
+Consumed 10,649 codestream bytes (excluding any file format) = 0.018018
+bits/pel.
+Processed using the multi-threaded environment, with
+    8 parallel threads of execution

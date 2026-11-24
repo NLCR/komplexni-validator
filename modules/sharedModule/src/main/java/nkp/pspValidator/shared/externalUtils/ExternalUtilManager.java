@@ -13,8 +13,6 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 /**
  * Created by Martin Řehánek on 14.11.16.
@@ -204,28 +202,40 @@ public class ExternalUtilManager {
         return message.toString();
     }
 
+    /**
+     * Spustí nástroj nad souborem a vrátí výstup vybraný parserem; návratový kód ani znak zpracování souboru
+     * neposuzuje (viz {@link #runUtilExecutionChecked}).
+     */
     public String runUtilExecution(ExternalUtilExecution utilExecution, File targetFile) throws CliCommand.CliCommandException {
         UtilHandler utilHandler = utilExecutionHandlers.get(utilExecution);
-        String[] command = buildCommand(utilHandler.getCommandData(), targetFile);
-        CliCommand.Result result = new CliCommand(command, libraryEnvironment(utilHandler.getCommandData())).execute();
-        String rawOutput = null;
-        Stream stream = utilHandler.getParser().getStream();
-        switch (stream) {
-            case STDERR:
-                rawOutput = result.getStderr();
-                break;
-            case STDOUT:
-                rawOutput = result.getStdout();
-                break;
-            default:
-                throw new IllegalStateException("unexpected stream " + stream);
-        }
-        if (rawOutput != null) {
-            String parsed = parseData(rawOutput, utilHandler.getParser());
-            return parsed == null || parsed.isEmpty() ? "" : parsed.trim();
-        } else {
+        CliCommand.Result result = execute(utilHandler, targetFile);
+        String parsed = utilHandler.parseOutput(result);
+        if (parsed == null) {
             throw new CliCommand.CliCommandException("chybí výstup");
         }
+        return parsed;
+    }
+
+    /**
+     * Spustí nástroj nad souborem pro profil binárního souboru a posoudí, zda soubor opravdu zkontroloval (návratový
+     * kód a znak zpracování souboru podle externalUtils.xml, viz {@link UtilHandler#evaluateExecution}).
+     *
+     * @throws CliCommand.CliCommandException když nástroj nejde spustit
+     */
+    public ExecutionOutcome runUtilExecutionChecked(ExternalUtilExecution utilExecution, File targetFile) throws CliCommand.CliCommandException {
+        UtilHandler utilHandler = utilExecutionHandlers.get(utilExecution);
+        CliCommand.Result result = execute(utilHandler, targetFile);
+        return utilHandler.evaluateExecution(result);
+    }
+
+    /** Nastavení spuštění nástroje (příkaz, parser, posouzení výsledku), nebo null, když spuštění není definováno. */
+    public UtilHandler getExecutionHandler(ExternalUtilExecution utilExecution) {
+        return utilExecutionHandlers.get(utilExecution);
+    }
+
+    private CliCommand.Result execute(UtilHandler utilHandler, File targetFile) throws CliCommand.CliCommandException {
+        String[] command = buildCommand(utilHandler.getCommandData(), targetFile);
+        return new CliCommand(command, libraryEnvironment(utilHandler.getCommandData())).execute();
     }
 
     private String[] buildCommand(CommandData commandData, File targetFile) {
@@ -245,22 +255,7 @@ public class ExternalUtilManager {
     }
 
     private String parseData(String rawOutput, Parser parser) {
-        if (parser.getRegexp() == null) {
-            //System.err.println("regexp is null");
-            return rawOutput;
-        } else {
-            //System.out.println("raw output: " + rawOutput);
-            Matcher m = Pattern.compile(parser.getRegexp()).matcher(rawOutput);
-            if (m.find()) {
-                //first appearance
-                String result = m.group(0);
-                //System.err.println("match: "  + result);
-                return result;
-            } else {
-                //System.err.println("no match");
-                return null;
-            }
-        }
+        return parser.parse(rawOutput);
     }
 
 }

@@ -3,6 +3,7 @@ package nkp.pspValidator.shared.externalUtils.validation;
 import nkp.pspValidator.shared.engine.Level;
 import nkp.pspValidator.shared.engine.exceptions.ExternalUtilOutputParsingException;
 import nkp.pspValidator.shared.externalUtils.CliCommand;
+import nkp.pspValidator.shared.externalUtils.ExecutionOutcome;
 import nkp.pspValidator.shared.externalUtils.ExternalUtil;
 import nkp.pspValidator.shared.externalUtils.ExternalUtilExecution;
 import nkp.pspValidator.shared.externalUtils.ExternalUtilManager;
@@ -44,17 +45,31 @@ public abstract class BinaryFileProfile {
     /**
      * Spustí nástroj nad souborem a vyhodnotí všechny validace profilu.
      * <p>
-     * Chyba spuštění nástroje, parsování výstupu nebo extrakce hodnoty je problém s úrovní null (úroveň z rules.xml).
+     * Když nástroj soubor prokazatelně nezkontroloval (nejde spustit, spadl, skončil neočekávaným kódem podle
+     * externalUtils.xml), je to jediný problém úrovně ERROR „nástroj … soubor nezkontroloval: …“ a validace profilu
+     * se nevyhodnocují. Když nástroj skončil běžně, ale ve výstupu chybí znak zpracování souboru, vyhodnotí se
+     * validace profilu a hláška o nezkontrolovaném souboru (ERROR) se přidá, jen když profil žádný problém nenašel
+     * (u poškozeného souboru tak nevznikne druhá, matoucí chyba).
+     * <p>
+     * Chyba parsování výstupu nebo extrakce hodnoty je problém s úrovní null (úroveň z rules.xml).
      * Neočekávaná výjimka (např. NullPointerException, ClassCastException při chybné konfiguraci profilu) se nepolyká:
      * je to problém úrovně ERROR a ostatní validace se vyhodnotí dál.
      */
     public List<Validation.Problem> validateProblems(String executionName, File file) {
         List<Validation.Problem> problems = new ArrayList<>();
+        ExecutionOutcome outcome;
         Object processedOutput;
         try {
-            String toolRawOutput = runExternalUtil(executionName, file);
-            processedOutput = processExternalUtilOutput(toolRawOutput, externalUtil);
-        } catch (CliCommand.CliCommandException | ExternalUtilOutputParsingException e) {
+            outcome = runExternalUtil(executionName, file);
+            if (outcome.getFailure() != null) {
+                problems.add(new Validation.Problem(Level.ERROR, notCheckedMessage(outcome.getFailure())));
+                return problems;
+            }
+            processedOutput = processExternalUtilOutput(outcome.getOutput(), externalUtil);
+        } catch (CliCommand.CliCommandException e) {
+            problems.add(new Validation.Problem(Level.ERROR, notCheckedMessage("nejde spustit: " + e.getMessage())));
+            return problems;
+        } catch (ExternalUtilOutputParsingException e) {
             problems.add(new Validation.Problem(null, e.getMessage()));
             return problems;
         } catch (RuntimeException e) {
@@ -73,11 +88,18 @@ public abstract class BinaryFileProfile {
                         String.format("%s: neočekávaná chyba při vyhodnocení: %s", validation.getName(), e)));
             }
         }
+        if (problems.isEmpty() && outcome.getMissingEvidence() != null) {
+            problems.add(new Validation.Problem(Level.ERROR, notCheckedMessage(outcome.getMissingEvidence())));
+        }
         return problems;
     }
 
-    String runExternalUtil(String executionName, File imageFile) throws CliCommand.CliCommandException {
-        return externalUtilManager.runUtilExecution(new ExternalUtilExecution(executionName, externalUtil), imageFile);
+    private String notCheckedMessage(String reason) {
+        return String.format("nástroj %s soubor nezkontroloval: %s", externalUtil.getUserFriendlyName(), reason);
+    }
+
+    ExecutionOutcome runExternalUtil(String executionName, File imageFile) throws CliCommand.CliCommandException {
+        return externalUtilManager.runUtilExecutionChecked(new ExternalUtilExecution(executionName, externalUtil), imageFile);
     }
 
     abstract Object processExternalUtilOutput(String toolRawOutput, ExternalUtil util) throws ExternalUtilOutputParsingException;

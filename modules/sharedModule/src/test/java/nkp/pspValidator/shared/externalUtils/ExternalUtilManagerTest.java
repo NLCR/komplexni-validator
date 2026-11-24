@@ -257,7 +257,7 @@ public class ExternalUtilManagerTest {
         assertTrue(parsed.startsWith("<?xml"));
         assertTrue(parsed.endsWith("</report>"));
         List<String> errors = loadProfile(manager, "emonograph_3.0", "pdf", ExternalUtil.VERAPDF).validate("pdf", new File("dummy.pdf"));
-        assertTrue(errors.toString(), errors.contains("Soubor musí být validní: hodnota \"false\" neodpovídá žádnému z omezení: [musí být přesně 'true']"));
+        assertTrue(errors.toString(), errors.contains("Formát PDF/A: soubor není ve formátu PDF/A (DMF doporučuje PDF/A-1 nebo PDF/A-2)"));
     }
 
     @Test
@@ -368,14 +368,20 @@ public class ExternalUtilManagerTest {
 
     @Test
     public void jhoveWithoutXmlGivesEmptyOutput() throws Exception {
-        fakeUtil(fakeUtilsDir, "jhove", textFile("Exception in thread \"main\"\n"), null, 1);
+        fakeUtil(fakeUtilsDir, "jhove", textFile("Exception in thread \"main\"\n"), null, 0);
         ExternalUtilManager manager = manager(OperatingSystem.MAC);
         manager.setPath(ExternalUtil.JHOVE, fakeUtilsDir);
         assertEquals("", manager.runUtilExecution(new ExternalUtilExecution("jp2k", ExternalUtil.JHOVE), new File("x.jp2")));
-        // prazdny vystup pak profil hlasi jako chybu parsovani XML
+        // prazdny vystup s beznym kodem 0 pak profil hlasi jako chybu parsovani XML
         List<String> errors = loadProfile(manager, "fund_unit_0.2", "mc", ExternalUtil.JHOVE).validate("jp2k", new File("x.jp2"));
         assertEquals(1, errors.size());
         assertTrue(errors.get(0), errors.get(0).startsWith("chyba parsování xml (výstup nástroje JHOVE)"));
+
+        // JHOVE konci vzdy kodem 0; kod 1 (napr. vyjimka v Jave) znamena, ze soubor nezkontroloval (od 3.0)
+        fakeUtil(fakeUtilsDir, "jhove", textFile("Exception in thread \"main\"\n"), null, 1);
+        assertEquals("", manager.runUtilExecution(new ExternalUtilExecution("jp2k", ExternalUtil.JHOVE), new File("x.jp2")));
+        assertEquals(Collections.singletonList("nástroj JHOVE soubor nezkontroloval: skončil s kódem 1 (neočekávaný kód, běžné jsou 0), výstup: Exception in thread \"main\""),
+                loadProfile(manager, "fund_unit_0.2", "mc", ExternalUtil.JHOVE).validate("jp2k", new File("x.jp2")));
     }
 
     @Test

@@ -830,6 +830,41 @@ public class VfCheckBinaryFilesValidByExternalUtilTest {
         }
     }
 
+    /**
+     * Kopie src/test/tools/jp2/mc.jp2 jen s boxy před kódovým proudem (bez boxu jp2c), soubor useknutý za hlavičkou.
+     */
+    private File jp2WithoutCodestream() throws Exception {
+        byte[] data = Files.readAllBytes(new File(TOOLS_JP2_DIR, "mc.jp2").toPath());
+        int offset = 0;
+        while (offset + 8 <= data.length) {
+            long length = ((data[offset] & 0xFFL) << 24) | ((data[offset + 1] & 0xFFL) << 16) | ((data[offset + 2] & 0xFFL) << 8) | (data[offset + 3] & 0xFFL);
+            String type = new String(data, offset + 4, 4, StandardCharsets.US_ASCII);
+            if ("jp2c".equals(type)) {
+                break;
+            }
+            assertTrue("box " + type, length >= 8);
+            offset += (int) length;
+        }
+        assertEquals("mc.jp2: box jp2c za 77 bajty hlavičky", 77, offset);
+        File file = new File(tmp.newFolder(), "bez_kodoveho_proudu.jp2");
+        Files.write(file.toPath(), Arrays.copyOf(data, offset));
+        return file;
+    }
+
+    @Test
+    public void kakaduFileWithoutCodestreamIsError() throws Exception {
+        // nález z 23. 11. 2026: kdu_expand vypíše „Error in Kakadu File Format Support: JPX data source appears to contain
+        // no codestreams at all.“ (kód 255); dřív 0 problémů, od 3.0 jedna chyba ERROR (validace profilu)
+        assumeAvailable(ExternalUtil.KAKADU);
+        File file = jp2WithoutCodestream();
+        List<ValidationProblem> problems = validate(ExternalUtil.KAKADU, ResourceType.IMAGE_MASTER_COPY, Collections.singletonList(file)).getProblems();
+        assertEquals(problems.toString(), 1, problems.size());
+        assertEquals(Level.ERROR, problems.get(0).getLevel());
+        assertEquals(file, problems.get(0).getReferencedFile());
+        assertEquals("chyba Kakadu při čtení souboru (soubor se nezkontroloval): zakázaná hodnota nalezena: Error in Kakadu File Format Support:\n"
+                + "JPX data source appears to contain no codestreams at all.", problems.get(0).getFullMessage());
+    }
+
     @Test
     public void kakaduIncorrectPasses() {
         // soubory v uplne_spatne Kakadu dekoduje bez chyby (vady jsou jen v parametrech komprese)
@@ -852,6 +887,22 @@ public class VfCheckBinaryFilesValidByExternalUtilTest {
         List<File> files = filesInDir("ok_mc");
         assertEveryFileHasProblem(files, validate(ExternalUtil.IMAGE_MAGICK, ResourceType.IMAGE_MASTER_COPY, files),
                 "no_errors: zakázaná hodnota nalezena: identify: no decode delegate for this image format");
+    }
+
+    @Test
+    public void imageMagickEmptyFileIsNotChecked() throws Exception {
+        // identify -verbose nad prázdným souborem skončí kódem 1 bez jakéhokoli výstupu (ImageMagick 7.1 macOS a Debian,
+        // 6.9 Ubuntu, měřeno 23. 11. 2026); dřív 0 problémů, od 3.0 jedna chyba ERROR. Na Windows se znak zpracování
+        // souboru (Geometry) nekontroluje, výstup tam není ověřen.
+        assumeImageMagickWithJp2();
+        Assume.assumeTrue("na Windows znak zpracování souboru není nastaven", Platform.detectOs().getOperatingSystem() != OperatingSystem.WINDOWS);
+        File file = new File(tmp.newFolder(), "prazdny.jp2");
+        Files.write(file.toPath(), new byte[0]);
+        List<ValidationProblem> problems = validate(ExternalUtil.IMAGE_MAGICK, ResourceType.IMAGE_MASTER_COPY, Collections.singletonList(file)).getProblems();
+        assertEquals(problems.toString(), 1, problems.size());
+        assertEquals(Level.ERROR, problems.get(0).getLevel());
+        assertEquals("nástroj ImageMagick soubor nezkontroloval: ve výstupu chybí údaj o zpracování souboru (kód 1), bez výstupu",
+                problems.get(0).getFullMessage());
     }
 
     @Test
@@ -920,8 +971,8 @@ public class VfCheckBinaryFilesValidByExternalUtilTest {
     public void veraPdfPdfWithoutPdfA() {
         assumeAvailable(ExternalUtil.VERAPDF);
         // synteticky_bez_pdfa.pdf (329 B): platne PDF 1.4 bez PDF/A, veraPDF zvoli PDF/A-1b a soubor nevyhovi
-        // (verze "PDF/A-1b" je po oprave R1 podporovana, zustava jen chyba validity)
-        assertEquals(Collections.singletonList("ERROR: Soubor musí být validní: hodnota \"false\" neodpovídá žádnému z omezení: [musí být přesně 'true']"),
+        // soubor se k PDF/A nehlasi (nema metadata XMP): jen WARNING, DMF PDF/A jen doporucuje
+        assertEquals(Collections.singletonList("WARNING: Formát PDF/A: soubor není ve formátu PDF/A (DMF doporučuje PDF/A-1 nebo PDF/A-2)"),
                 levelsAndMessages(validateEPublication(ExternalUtil.VERAPDF, new File(EPUBLIKACE_DIR, "synteticky_bez_pdfa.pdf"))));
     }
 

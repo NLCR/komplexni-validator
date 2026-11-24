@@ -20,10 +20,12 @@ import java.util.Map;
  * Ulozene vystupy jsou v src/test/resources/externalUtils/&lt;nastroj&gt;/, popis (verze, prikaz, datum, synteticke vystupy)
  * v README.md tamtez.
  * <p>
- * Misto pro podstrceni hotoveho vystupu: ExternalUtilManager.runUtilExecution(ExternalUtilExecution, File) je verejna
- * a neni final, BinaryFileProfile.validate ji vola pres runExternalUtil. Podtrida {@link CannedOutputExternalUtilManager}
- * vraci ulozeny vystup misto spusteni procesu, takze profil z fDMF (BinaryFileValidator.registerProfile) i extrakce
- * a pravidla bezi nad realnym textem bez zmeny produkcniho kodu.
+ * Misto pro podstrceni hotoveho vystupu: BinaryFileProfile.validate vola ExternalUtilManager.runUtilExecutionChecked
+ * (verejna, neni final). Podtrida {@link CannedOutputExternalUtilManager} vraci ulozeny vystup misto spusteni procesu
+ * (pres runUtilExecution, kterou lze v testech dal prepsat), takze profil z fDMF (BinaryFileValidator.registerProfile)
+ * i extrakce a pravidla bezi nad realnym textem bez zmeny produkcniho kodu. Ulozeny cely vysledek procesu (stdout,
+ * stderr, navratovy kod) s nastavenim spusteni z externalUtils.xml posoudi stejne jako aplikace
+ * ({@link CannedOutputExternalUtilManager#withResult}).
  */
 public final class ExternalUtilsTestSupport {
 
@@ -105,6 +107,8 @@ public final class ExternalUtilsTestSupport {
     public static class CannedOutputExternalUtilManager extends ExternalUtilManager {
         private final Map<ExternalUtil, String> outputs = new EnumMap<>(ExternalUtil.class);
         private final Map<ExternalUtil, String> failures = new EnumMap<>(ExternalUtil.class);
+        private final Map<ExternalUtil, CliCommand.Result> results = new EnumMap<>(ExternalUtil.class);
+        private final Map<ExternalUtil, UtilHandler> resultHandlers = new EnumMap<>(ExternalUtil.class);
         private ExternalUtilExecution lastExecution;
         private File lastTargetFile;
 
@@ -129,9 +133,32 @@ public final class ExternalUtilsTestSupport {
             return this;
         }
 
+        /**
+         * Cely vysledek procesu (stdout, stderr, navratovy kod), ktery se posoudi nastavenim spusteni handler
+         * (napr. z externalUtils.xml pro dany OS, ExternalUtilManager.getExecutionHandler) stejne jako v aplikaci.
+         */
+        public CannedOutputExternalUtilManager withResult(ExternalUtil util, UtilHandler handler, CliCommand.Result result) {
+            results.put(util, result);
+            resultHandlers.put(util, handler);
+            outputs.remove(util);
+            failures.remove(util);
+            return this;
+        }
+
         @Override
         public boolean isUtilExecutionDefined(ExternalUtilExecution execution) {
-            return outputs.containsKey(execution.getUtil()) || failures.containsKey(execution.getUtil());
+            return outputs.containsKey(execution.getUtil()) || failures.containsKey(execution.getUtil()) || results.containsKey(execution.getUtil());
+        }
+
+        @Override
+        public ExecutionOutcome runUtilExecutionChecked(ExternalUtilExecution utilExecution, File targetFile) throws CliCommand.CliCommandException {
+            ExternalUtil util = utilExecution.getUtil();
+            if (results.containsKey(util)) {
+                lastExecution = utilExecution;
+                lastTargetFile = targetFile;
+                return resultHandlers.get(util).evaluateExecution(results.get(util));
+            }
+            return ExecutionOutcome.completed(runUtilExecution(utilExecution, targetFile));
         }
 
         @Override

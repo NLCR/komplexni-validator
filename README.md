@@ -105,7 +105,10 @@ závislostmi (`KomplexniValidatorCLI.jar`) a adresář `validatorConfig`.
 Externí nástroje (ImageMagick, JHOVE, Jpylyzer, Kakadu, MP3val, shntool, Checkmate, veraPDF, EPUBCheck) se zadávají
 adresářem (`--<nástroj>-path`, např. `--jhove-path`) nebo vypínají (`--disable-<nástroj>`); bez cesty se hledají
 v PATH. Nástroj, jehož verzi se nepodaří zjistit, se pro validaci vypne: pravidlo pak hlásí jednu informaci „nástroj … není dostupný“ (dříve CLI hlásilo chybu spuštění
-u každého souboru). Cesty k nástrojům i k balíkům smějí obsahovat mezery a českou diakritiku (ověřeno
+u každého souboru). Když nástroj při kontrole souboru spadne, nespustí se nebo skončí neobvyklým návratovým kódem
+(běžné kódy každého nástroje uvádí `validatorConfig/externalUtils.xml`, element `exitCodes`), validace u souboru
+ohlásí chybu „nástroj … soubor nezkontroloval“ s kódem a začátkem výstupu nástroje; dříve mohl takový soubor projít bez
+hlášky. Cesty k nástrojům i k balíkům smějí obsahovat mezery a českou diakritiku (ověřeno
 na Windows 11 a macOS se všemi nástroji kromě Kakadu). Na Windows ale JHOVE, shntool, MP3val a Kakadu nenajdou soubor, jehož
 cesta obsahuje znak mimo znakovou sadu systému (v českých Windows středoevropskou, tedy například řecké nebo ruské
 písmeno v názvu adresáře); validace pak u takového balíku hlásí chyby těchto nástrojů, i když soubory jsou

@@ -62,6 +62,22 @@ Názvy souborů obrazových nástrojů: `<adresář vstupu>_<název vstupu>`, vs
 - `nelze_otevrit_windows_znakova_sada.txt`: výstup `kdu_expand.exe` 8.7 na Windows 11 (ověření 23. 11. 2026) u souboru
   `隨機中國文字.jp2`, jehož cesta obsahuje znaky mimo znakovou sadu systému (Kakadu je dostane jako `?`). Konce řádků
   CRLF jako v originálu; absolutní cesta je zkrácená na relativní a zalomení uvnitř cesty odstraněno, ostatní beze změny.
+- `bez_kodoveho_proudu.txt`: pořízeno 23. 11. 2026 (nález z 23. 11.), stderr `kdu_expand -i` nad JP2 jen s boxy
+  před kódovým proudem (`src/test/tools/jp2/mc.jp2` useknutý za 77 bajty, bez boxu `jp2c`): `Error in Kakadu File
+  Format Support: JPX data source appears to contain no codestreams at all.`, návratový kód 255. Bajtově shodné
+  v 8.5 a 8.7 na macOS a v 8.1, 8.5, 8.6.2 a 8.7 na Linuxu arm64.
+- `uspech_stdout/*.txt` (test `ToolFailureDetectionTest`): **stdout** `kdu_expand -i src/test/tools/jp2/mc.jp2`
+  s návratovým kódem 0 (stderr prázdný), pro kontrolu znaku zpracování souboru (`processedFileEvidence` v
+  `externalUtils.xml`, řádek `Consumed … tile-part(s)`). Beze změny, jen přejmenované:
+  - `linux_x64_<verze>.txt`: 7.9.1, 7.10.7 (archiv `v7_A_7`), 8.0.3, 8.1, 8.2.1, 8.5, 8.6.2, 8.7, vlastní sestavení
+    pro Linux x86-64 (ověření Kakadu 23. 11. 2026);
+  - `linux_arm64_<verze>.txt`: 8.1, 8.5, 8.6.2, 8.7 pro Linux arm64 (totéž);
+  - `windows_x64_<verze>.txt`: 7.9.1, 8.5, 8.7, `kdu_expand.exe` na Windows 11 (23. 11. 2026), konce řádků CRLF
+    jako v originálu;
+  - `mac_arm64_8.5.txt` (sestavení uživatele, dynamické) a `mac_arm64_8.7.txt` (statické), macOS 23. 11. 2026.
+  Počet vláken v posledním řádku se liší podle stroje. V přímém porovnání nad 67 JP2 (všechny uvedené verze
+  a platformy) měl řádek `Consumed … tile-part(s)` každý soubor s kódem 0 a žádný soubor s chybou (kód 255, na
+  Windows -1).
 
 ## ImageMagick
 
@@ -88,6 +104,15 @@ Názvy souborů obrazových nástrojů: `<adresář vstupu>_<název vstupu>`, vs
   - `im69_path_tools_mc.txt`: 6.9 z PATH nad bezvadným `src/test/tools/jp2/mc.jp2`, prázdný stderr.
   - `im71_detekce_poskozeni_w0352gUC.txt`: 7.1 z PATH, hlášky `identify:` (stejně jako `magick identify`, absolutní
     cesta i 7.1.2-35 na macOS).
+
+- `uspech_stdout/*.txt` (test `ToolFailureDetectionTest`): **stdout** `identify -verbose` nad bezvadným
+  `src/test/tools/jp2/mc.jp2` (kód 0, stderr prázdný), pořízeno 23. 11. 2026, pro kontrolu znaku zpracování souboru
+  (řádek `Geometry:`): `im712_macos.txt` ImageMagick 7.1.2-35 Q16-HDRI z Homebrew (`imagemagick-full`),
+  `im711_debian13.txt` 7.1.1-43 z Debianu 13 a `im69_ubuntu2404.txt` 6.9.12-98 z Ubuntu 24.04 (kontejnery z ověření
+  na Linuxu). Absolutní cesta ke vstupu nahrazena `src/test/tools/jp2/mc.jp2`, jinak beze změny (data `date:*`
+  a `Elapsed Time` jsou z pořízení). Měření 23. 11.: nad prázdným souborem skončí `identify -verbose` ve všech
+  třech verzích kódem 1 bez jakéhokoli výstupu, ImageMagick 6.9 bez Ghostscriptu stejně tak nad PDF s příponou
+  `.jp2`; řádek `Geometry:` vypíše jen po načtení obrázku.
 
 ## veraPDF (reálné výstupy)
 

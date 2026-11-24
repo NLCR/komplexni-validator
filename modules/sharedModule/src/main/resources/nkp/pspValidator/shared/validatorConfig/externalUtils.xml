@@ -14,6 +14,18 @@
       pro platformu, kterou zatím nikdo neověřil; dnes ho žádný nástroj nepoužívá, Linux má vlastní seznamy);
     - platforma, která chybí (nebo nástroj bez verifiedVersions): seznam není, verze se neoznačuje.
     Seznam se aktualizuje s novou verzí validátoru podle testů s nástroji na Windows, macOS a Linuxu.
+
+    Spuštění nad souborem (execution) může u každého operatingSystem posoudit, zda nástroj soubor opravdu
+    zkontroloval. Když ne, validace ohlásí u souboru jednu chybu (ERROR) „nástroj … soubor nezkontroloval: …“.
+    - exitCodes: návratový kód. Pád nebo nespuštění nástroje je selhání vždy (Linux a macOS: 126, 127 a 129–159,
+      tj. ukončení signálem, např. 134 SIGABRT, 139 SIGSEGV; Windows: kódy NTSTATUS 0xC0000000–0xEFFFFFFF, např.
+      0xC0000005 pád, 0xC0000135 chybí DLL). Atribut normal (kódy oddělené mezerou) uvádí běžné kódy nástroje,
+      každý jiný kód je pak také selhání. Výstup nástroje se při selhání nevyhodnocuje.
+    - processedFileEvidence (atribut stream STDOUT nebo STDERR, obsah regexp): znak, že nástroj soubor zpracoval.
+      Když ve výstupu chybí, chyba se ohlásí, jen pokud profil binárního souboru nenašel žádný problém (poškozený
+      soubor, u kterého nástroj vypíše chybu, tak dostane jen hlášky profilu).
+    - bez elementů (konfigurace starší než 3.0) se nic z toho neposuzuje.
+    Běžné kódy jsou změřené na macOS a Linuxu (Debian 13, Ubuntu 24.04); na Windows zatím jen pád.
 -->
 <externalUtils>
     <util name="JPYLYZER">
@@ -85,6 +97,8 @@
                     <stream>STDOUT</stream>
                     <regexp>(?s).*</regexp>
                 </parser>
+                <!-- jpylyzer: 0 i u nevalidního JP2; 249, když nemá co kontrolovat (soubor neexistuje) -->
+                <exitCodes normal="0"/>
             </operatingSystem>
             <operatingSystem name="WINDOWS">
                 <command>${UTIL_PATH}jpylyzer.exe jp2In ${TARGET_FILE}</command>
@@ -92,6 +106,8 @@
                     <stream>STDOUT</stream>
                     <regexp>(?s).*</regexp>
                 </parser>
+                <!-- Windows: kódy neověřeny, jen pád (NTSTATUS 0xC0000000–0xEFFFFFFF) -->
+                <exitCodes/>
             </operatingSystem>
 
             <!--jpylyzer 1.17-->
@@ -110,6 +126,8 @@
                     <stream>STDOUT</stream>
                     <regexp>(?s).*</regexp>
                 </parser>
+                <!-- jpylyzer: 0 i u nevalidního JP2; 249, když nemá co kontrolovat (soubor neexistuje) -->
+                <exitCodes normal="0"/>
             </operatingSystem>
         </execution>
     </util>
@@ -164,6 +182,9 @@
                     <stream>STDERR</stream>
                     <regexp>(?s).*</regexp>
                 </parser>
+                <!-- identify: 0 bez chyby, 1 při chybě čtení (hlášky na stderr hledá profil); u prázdného souboru nebo bez dekodéru skončí 1 bez jediné hlášky, proto znak zpracování „Geometry:“ na stdout -->
+                <exitCodes normal="0 1"/>
+                <processedFileEvidence stream="STDOUT">(?m)^\s*Geometry: [0-9]</processedFileEvidence>
             </operatingSystem>
             <operatingSystem name="WINDOWS">
                 <command>${UTIL_PATH}magick.exe identify -verbose ${TARGET_FILE}</command>
@@ -171,6 +192,8 @@
                     <stream>STDERR</stream>
                     <regexp>(?s).*</regexp>
                 </parser>
+                <!-- Windows: kódy neověřeny, jen pád (NTSTATUS 0xC0000000–0xEFFFFFFF) -->
+                <exitCodes/>
             </operatingSystem>
             <operatingSystem name="MAC">
                 <command>${UTIL_PATH}identify -verbose ${TARGET_FILE}</command>
@@ -180,6 +203,9 @@
                     <!--<stream>STDOUT</stream>-->
                     <regexp>(?s).*</regexp>
                 </parser>
+                <!-- identify: 0 bez chyby, 1 při chybě čtení (hlášky na stderr hledá profil); u prázdného souboru nebo bez dekodéru skončí 1 bez jediné hlášky, proto znak zpracování „Geometry:“ na stdout -->
+                <exitCodes normal="0 1"/>
+                <processedFileEvidence stream="STDOUT">(?m)^\s*Geometry: [0-9]</processedFileEvidence>
             </operatingSystem>
         </execution>
     </util>
@@ -232,6 +258,8 @@
                     <stream>STDOUT</stream>
                     <regexp>(?s)&lt;\?xml.*$</regexp>
                 </parser>
+                <!-- JHOVE (1.28 i 1.34): vždy 0, výsledek je v XML -->
+                <exitCodes normal="0"/>
             </operatingSystem>
             <operatingSystem name="WINDOWS">
                 <command>${UTIL_PATH}jhove.bat -h XML -m jpeg2000-hul -k ${TARGET_FILE}</command>
@@ -239,6 +267,8 @@
                     <stream>STDOUT</stream>
                     <regexp>(?s)&lt;\?xml.*$</regexp>
                 </parser>
+                <!-- Windows: kódy neověřeny, jen pád (NTSTATUS 0xC0000000–0xEFFFFFFF) -->
+                <exitCodes/>
             </operatingSystem>
             <operatingSystem name="MAC">
                 <command>${UTIL_PATH}jhove -h XML -m jpeg2000-hul -k ${TARGET_FILE}</command>
@@ -246,6 +276,8 @@
                     <stream>STDOUT</stream>
                     <regexp>(?s)&lt;\?xml.*$</regexp>
                 </parser>
+                <!-- JHOVE (1.28 i 1.34): vždy 0, výsledek je v XML -->
+                <exitCodes normal="0"/>
             </operatingSystem>
         </execution>
         <execution name="wav">
@@ -255,6 +287,8 @@
                     <stream>STDOUT</stream>
                     <regexp>(?s)&lt;\?xml.*$</regexp>
                 </parser>
+                <!-- JHOVE (1.28 i 1.34): vždy 0, výsledek je v XML -->
+                <exitCodes normal="0"/>
             </operatingSystem>
             <operatingSystem name="WINDOWS">
                 <command>${UTIL_PATH}jhove.bat -h XML -m WAVE-hul ${TARGET_FILE}</command>
@@ -262,6 +296,8 @@
                     <stream>STDOUT</stream>
                     <regexp>(?s)&lt;\?xml.*$</regexp>
                 </parser>
+                <!-- Windows: kódy neověřeny, jen pád (NTSTATUS 0xC0000000–0xEFFFFFFF) -->
+                <exitCodes/>
             </operatingSystem>
             <operatingSystem name="MAC">
                 <command>${UTIL_PATH}jhove -h XML -m WAVE-hul ${TARGET_FILE}</command>
@@ -269,6 +305,8 @@
                     <stream>STDOUT</stream>
                     <regexp>(?s)&lt;\?xml.*$</regexp>
                 </parser>
+                <!-- JHOVE (1.28 i 1.34): vždy 0, výsledek je v XML -->
+                <exitCodes normal="0"/>
             </operatingSystem>
         </execution>
     </util>
@@ -325,6 +363,9 @@
                     <stream>STDERR</stream>
                     <regexp>(?s).*</regexp>
                 </parser>
+                <!-- kdu_expand: 0 bez chyby, 255 při chybě (Kakadu Core Error, Error in Kakadu …; na Windows -1); řádek „Consumed … tile-part(s)“ na stdout vypíše jen po zpracování souboru (řady 7.9 až 8.7) -->
+                <exitCodes normal="0 255"/>
+                <processedFileEvidence stream="STDOUT">Consumed [0-9,]+ tile-part\(s\)</processedFileEvidence>
             </operatingSystem>
             <operatingSystem name="WINDOWS">
                 <command>${UTIL_PATH}kdu_expand.exe -i ${TARGET_FILE}</command>
@@ -332,6 +373,9 @@
                     <stream>STDERR</stream>
                     <regexp>(?s).*</regexp>
                 </parser>
+                <!-- Windows: kódy neověřeny, jen pád (NTSTATUS 0xC0000000–0xEFFFFFFF) -->
+                <exitCodes/>
+                <processedFileEvidence stream="STDOUT">Consumed [0-9,]+ tile-part\(s\)</processedFileEvidence>
             </operatingSystem>
             <!--demo app does not work in macOS 10.12 Sierra, so not tested-->
             <operatingSystem name="MAC">
@@ -340,6 +384,9 @@
                     <stream>STDERR</stream>
                     <regexp>(?s).*</regexp>
                 </parser>
+                <!-- kdu_expand: 0 bez chyby, 255 při chybě (Kakadu Core Error, Error in Kakadu …; na Windows -1); řádek „Consumed … tile-part(s)“ na stdout vypíše jen po zpracování souboru (řady 7.9 až 8.7) -->
+                <exitCodes normal="0 255"/>
+                <processedFileEvidence stream="STDOUT">Consumed [0-9,]+ tile-part\(s\)</processedFileEvidence>
             </operatingSystem>
         </execution>
     </util>
@@ -386,6 +433,8 @@
                     <stream>STDOUT</stream>
                     <regexp>(?s).*</regexp>
                 </parser>
+                <!-- mp3val: vždy 0, i u vadného nebo neexistujícího souboru -->
+                <exitCodes normal="0"/>
             </operatingSystem>
             <operatingSystem name="WINDOWS">
                 <command>${UTIL_PATH}mp3val ${TARGET_FILE}</command>
@@ -393,6 +442,8 @@
                     <stream>STDOUT</stream>
                     <regexp>(?s).*</regexp>
                 </parser>
+                <!-- Windows: kódy neověřeny, jen pád (NTSTATUS 0xC0000000–0xEFFFFFFF) -->
+                <exitCodes/>
             </operatingSystem>
             <operatingSystem name="MAC">
                 <command>${UTIL_PATH}mp3val ${TARGET_FILE}</command>
@@ -400,6 +451,8 @@
                     <stream>STDOUT</stream>
                     <regexp>(?s).*</regexp>
                 </parser>
+                <!-- mp3val: vždy 0, i u vadného nebo neexistujícího souboru -->
+                <exitCodes normal="0"/>
             </operatingSystem>
         </execution>
     </util>
@@ -446,6 +499,8 @@
                     <stream>STDOUT</stream>
                     <regexp>(?s).*</regexp>
                 </parser>
+                <!-- shntool info: 0 bez chyby, 1 u souboru, který nepřečte (prázdný WAV, jiný formát) -->
+                <exitCodes normal="0 1"/>
             </operatingSystem>
             <operatingSystem name="WINDOWS">
                 <command>${UTIL_PATH}shntool.exe info ${TARGET_FILE}</command>
@@ -453,6 +508,8 @@
                     <stream>STDOUT</stream>
                     <regexp>(?s).*</regexp>
                 </parser>
+                <!-- Windows: kódy neověřeny, jen pád (NTSTATUS 0xC0000000–0xEFFFFFFF) -->
+                <exitCodes/>
             </operatingSystem>
             <operatingSystem name="MAC">
                 <command>${UTIL_PATH}shntool info ${TARGET_FILE}</command>
@@ -460,6 +517,8 @@
                     <stream>STDOUT</stream>
                     <regexp>(?s).*</regexp>
                 </parser>
+                <!-- shntool info: 0 bez chyby, 1 u souboru, který nepřečte (prázdný WAV, jiný formát) -->
+                <exitCodes normal="0 1"/>
             </operatingSystem>
         </execution>
     </util>
@@ -506,6 +565,8 @@
                     <stream>STDOUT</stream>
                     <regexp>(?s).*</regexp>
                 </parser>
+                <!-- mpck: 0 dobrý, 1 vadný soubor („Bad“), 2 soubor nejde otevřít -->
+                <exitCodes normal="0 1"/>
             </operatingSystem>
             <operatingSystem name="WINDOWS">
                 <command>${UTIL_PATH}mpck.exe ${TARGET_FILE}</command>
@@ -513,6 +574,8 @@
                     <stream>STDOUT</stream>
                     <regexp>(?s).*</regexp>
                 </parser>
+                <!-- Windows: kódy neověřeny, jen pád (NTSTATUS 0xC0000000–0xEFFFFFFF) -->
+                <exitCodes/>
             </operatingSystem>
             <operatingSystem name="MAC">
                 <command>${UTIL_PATH}mpck ${TARGET_FILE}</command>
@@ -520,6 +583,8 @@
                     <stream>STDOUT</stream>
                     <regexp>(?s).*</regexp>
                 </parser>
+                <!-- mpck: 0 dobrý, 1 vadný soubor („Bad“), 2 soubor nejde otevřít -->
+                <exitCodes normal="0 1"/>
             </operatingSystem>
         </execution>
     </util>
@@ -569,6 +634,8 @@
                     <stream>STDOUT</stream>
                     <regexp>(?s).*</regexp>
                 </parser>
+                <!-- veraPDF: 0 vyhovuje, 1 nevyhovuje, 7 PDF nejde zpracovat, 8 šifrované PDF (u všech je výsledek v XML); 2 chybné parametry, 3 nedostatek paměti, 4 žádný soubor, 6 chyba čtení, 9 a další výjimka -->
+                <exitCodes normal="0 1 7 8"/>
             </operatingSystem>
             <operatingSystem name="WINDOWS">
                 <command>${UTIL_PATH}verapdf.bat ${TARGET_FILE}</command>
@@ -576,6 +643,8 @@
                     <stream>STDOUT</stream>
                     <regexp>(?s).*</regexp>
                 </parser>
+                <!-- Windows: kódy neověřeny, jen pád (NTSTATUS 0xC0000000–0xEFFFFFFF) -->
+                <exitCodes/>
             </operatingSystem>
             <operatingSystem name="MAC">
                 <command>${UTIL_PATH}verapdf ${TARGET_FILE}</command>
@@ -583,6 +652,8 @@
                     <stream>STDOUT</stream>
                     <regexp>(?s).*</regexp>
                 </parser>
+                <!-- veraPDF: 0 vyhovuje, 1 nevyhovuje, 7 PDF nejde zpracovat, 8 šifrované PDF (u všech je výsledek v XML); 2 chybné parametry, 3 nedostatek paměti, 4 žádný soubor, 6 chyba čtení, 9 a další výjimka -->
+                <exitCodes normal="0 1 7 8"/>
             </operatingSystem>
         </execution>
     </util>
@@ -631,6 +702,8 @@
                     <stream>STDOUT</stream>
                     <regexp>(?s).*</regexp>
                 </parser>
+                <!-- EPUBCheck: 0 bez chyb, 1 chyby v publikaci (i u prázdného nebo jiného souboru) -->
+                <exitCodes normal="0 1"/>
             </operatingSystem>
             <operatingSystem name="WINDOWS">
                 <command>java -jar ${UTIL_PATH}epubcheck.jar --out - -q ${TARGET_FILE}</command>
@@ -638,6 +711,8 @@
                     <stream>STDOUT</stream>
                     <regexp>(?s).*</regexp>
                 </parser>
+                <!-- Windows: kódy neověřeny, jen pád (NTSTATUS 0xC0000000–0xEFFFFFFF) -->
+                <exitCodes/>
             </operatingSystem>
             <operatingSystem name="MAC">
                 <command>java -jar ${UTIL_PATH}epubcheck.jar --out - -q ${TARGET_FILE}</command>
@@ -645,6 +720,8 @@
                     <stream>STDOUT</stream>
                     <regexp>(?s).*</regexp>
                 </parser>
+                <!-- EPUBCheck: 0 bez chyb, 1 chyby v publikaci (i u prázdného nebo jiného souboru) -->
+                <exitCodes normal="0 1"/>
             </operatingSystem>
         </execution>
     </util>
