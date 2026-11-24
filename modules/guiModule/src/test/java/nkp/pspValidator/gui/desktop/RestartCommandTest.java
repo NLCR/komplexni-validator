@@ -28,12 +28,15 @@ public class RestartCommandTest {
     // ===== jpackage =====
 
     @Test
-    public void jpackageWindowsRunsLauncherAgain() {
+    public void jpackageWindowsHandsLauncherOverToExplorer() {
+        // spouštěč spuštěný přímo z běžící aplikace skončí spolu s ní (ověřeno na Windows 11, 24. 11. 2026), proto se
+        // předává Průzkumníku; explorer.exe skončí hned a vrací 1 i při úspěchu
         RestartCommand.Plan plan = RestartCommand.build(jpackage(OperatingSystem.WINDOWS,
                 "C:\\Users\\Uživatel\\AppData\\Local\\Komplexní validátor\\KomplexniValidator.exe", "C:\\Users\\Uživatel\\Dokumenty"));
-        assertEquals(Arrays.asList("C:\\Users\\Uživatel\\AppData\\Local\\Komplexní validátor\\KomplexniValidator.exe"), plan.getCommand());
-        assertEquals("C:\\Users\\Uživatel\\Dokumenty", plan.getWorkingDir());
-        assertFalse(plan.exitsAfterHandOver());
+        assertEquals(Arrays.asList("explorer.exe", "C:\\Users\\Uživatel\\AppData\\Local\\Komplexní validátor\\KomplexniValidator.exe"), plan.getCommand());
+        assertNull(plan.getWorkingDir());
+        assertTrue(plan.exitsAfterHandOver());
+        assertFalse(plan.exitCodeTellsResult());
     }
 
     @Test
@@ -53,6 +56,8 @@ public class RestartCommandTest {
         assertEquals(Arrays.asList("open", "-n", "/Users/uživatel/Aplikace KV/KomplexniValidator.app"), plan.getCommand());
         assertNull(plan.getWorkingDir());
         assertTrue(plan.exitsAfterHandOver());
+        // open -n vrací nenulový kód, když balíček nejde otevřít
+        assertTrue(plan.exitCodeTellsResult());
     }
 
     /** spouštěč mimo balíček .app (neobvyklé): spustí se přímo */

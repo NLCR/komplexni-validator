@@ -15,8 +15,11 @@ import java.util.regex.Pattern;
  * příkazu z údajů o běžícím procesu ({@link Environment}), bez JavaFX a bez spouštění (spouští {@link Restarter}).
  * <ul>
  * <li>Aplikace z jpackage (instalátor, portable; spouštěč nastavuje systémovou vlastnost {@code jpackage.app-path}
- * na cestu ke spouštěči): Windows a Linux spustí znovu tentýž spouštěč ({@code KomplexniValidator.exe},
- * {@code bin/KomplexniValidator}) se stejným pracovním adresářem. Na macOS je spouštěč binárka uvnitř balíčku
+ * na cestu ke spouštěči): Linux spustí znovu tentýž spouštěč ({@code bin/KomplexniValidator}) se stejným pracovním
+ * adresářem. Na Windows se spouštěč ({@code KomplexniValidator.exe}) předá Průzkumníku ({@code explorer.exe <spouštěč>}),
+ * tedy stejně jako při spuštění poklepáním: proces spuštěný přímo z běžící aplikace by skončil spolu s ní (ověřeno
+ * 24. 11. 2026 na Windows 11 s instalátorem z jpackage 17: nová instance se objevila a po ukončení staré zmizela).
+ * {@code explorer.exe} skončí hned a jeho návratový kód o výsledku nevypovídá (vrací 1 i při úspěchu). Na macOS je spouštěč binárka uvnitř balíčku
  * ({@code KomplexniValidator.app/Contents/MacOS/KomplexniValidator}); spouští se přes {@code open -n <balíček.app>}, tedy
  * přes LaunchServices jako při spuštění z Finderu nebo Docku: nová instance je samostatná aplikace (není potomkem
  * končícího procesu, dostane Dock, nabídky a fokus jako běžně spuštěná aplikace), {@code -n} otevře novou instanci
@@ -117,11 +120,25 @@ public final class RestartCommand {
         private final List<String> command;
         private final String workingDir;
         private final boolean exitsAfterHandOver;
+        private final boolean exitCodeTellsResult;
 
         Plan(List<String> command, String workingDir, boolean exitsAfterHandOver) {
+            this(command, workingDir, exitsAfterHandOver, true);
+        }
+
+        Plan(List<String> command, String workingDir, boolean exitsAfterHandOver, boolean exitCodeTellsResult) {
             this.command = Collections.unmodifiableList(command);
             this.workingDir = workingDir;
             this.exitsAfterHandOver = exitsAfterHandOver;
+            this.exitCodeTellsResult = exitCodeTellsResult;
+        }
+
+        /**
+         * U příkazu, který jen předá spuštění systému: nenulový návratový kód znamená chybu ({@code open -n}); false,
+         * když kód o výsledku nevypovídá ({@code explorer.exe}).
+         */
+        public boolean exitCodeTellsResult() {
+            return exitCodeTellsResult;
         }
 
         public List<String> getCommand() {
@@ -162,6 +179,9 @@ public final class RestartCommand {
             if (bundle.matches()) {
                 return new Plan(list("open", "-n", bundle.group(1)), null, true);
             }
+        }
+        if (env.os == OperatingSystem.WINDOWS) {
+            return new Plan(list("explorer.exe", launcher), null, true, false);
         }
         return new Plan(list(launcher), env.workingDir, false);
     }

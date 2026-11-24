@@ -54,7 +54,7 @@ public final class Restarter {
                     return null;
                 }
                 int exit = process.exitValue();
-                return exit == 0 ? null : "návratový kód " + exit;
+                return exit == 0 || !plan.exitCodeTellsResult() ? null : "návratový kód " + exit;
             }
             if (process.waitFor(ALIVE_CHECK_MS, TimeUnit.MILLISECONDS)) {
                 return "nová instance skončila hned po spuštění (návratový kód " + process.exitValue() + ")";
