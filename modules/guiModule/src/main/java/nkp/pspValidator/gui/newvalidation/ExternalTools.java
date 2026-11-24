@@ -134,9 +134,13 @@ public final class ExternalTools {
         }
     }
 
-    /** Proces nejde spustit (program neexistuje) je „nenalezen“, ostatní selhání „chyba při spuštění“. */
+    /**
+     * Proces nejde spustit (program neexistuje) je „nenalezen“, ostatní selhání „chyba při spuštění“. Nenalezený je
+     * i nástroj spouštěný Javou (EPUBCheck, {@code java -jar epubcheck.jar}), když Java jeho jar nenajde: Java se
+     * spustí a skončí hláškou „Error: Unable to access jarfile …“, typicky u nástroje bez nastavené cesty.
+     */
     static ToolStatus classifyFailure(String message) {
-        if (message != null && message.contains("Cannot run program")) {
+        if (message != null && (message.contains("Cannot run program") || message.contains("Unable to access jarfile"))) {
             return ToolStatus.notFound(message);
         }
         return ToolStatus.error(message);

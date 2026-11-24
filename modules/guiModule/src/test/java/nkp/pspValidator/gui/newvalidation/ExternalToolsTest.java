@@ -49,6 +49,15 @@ public class ExternalToolsTest {
     public void failureClassification() {
         assertEquals(ToolStatus.State.NOT_FOUND,
                 ExternalTools.classifyFailure("Cannot run program \"kdu_expand\": error=2, No such file or directory").getState());
+        // EPUBCheck bez nastavené cesty: Java se spustí, ale jar nenajde (hláška z Windows 11, 24. 11. 2026)
+        ToolStatus missingJar = ExternalTools.classifyFailure(
+                "prázdný výstup (stderr: Error: Unable to access jarfile epubcheck.jar, návratový kód 1)");
+        assertEquals(ToolStatus.State.NOT_FOUND, missingJar.getState());
+        assertEquals("nenalezen", missingJar.getText());
+        assertEquals("prázdný výstup (stderr: Error: Unable to access jarfile epubcheck.jar, návratový kód 1)", missingJar.getDetail());
+        // jiná chyba Javy zůstává chybou při spuštění
+        assertEquals(ToolStatus.State.ERROR,
+                ExternalTools.classifyFailure("prázdný výstup (stderr: Error: Invalid or corrupt jarfile epubcheck.jar, návratový kód 1)").getState());
         ToolStatus error = ExternalTools.classifyFailure("prázdný výstup (návratový kód 1)");
         assertEquals(ToolStatus.State.ERROR, error.getState());
         assertEquals("chyba při spuštění", error.getText());
