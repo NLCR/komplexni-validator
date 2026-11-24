@@ -240,7 +240,8 @@
             </rules>
         </validation>
 
-        <validation name="Velikost dlaždic (1)">
+        <!--DMF gramodesky 0.5 (10. 10. 2022), kap. 5.5: „Produkce obrazových dat by se měla řídit doporučenými standardy pro digitalizaci“; parametry kódování JPEG 2000 DMF nepředepisuje, proto WARNING.-->
+        <validation name="Velikost dlaždic (1) (doporučení DMF)">
             <xmlDataExtraction resultType="INTEGER">
                 <firstNonempty>
                     <xpath>
@@ -252,14 +253,15 @@
                 </firstNonempty>
             </xmlDataExtraction>
             <rules>
-                <mustExist/>
-                <mustMatchAny>
+                <mustExist level="WARNING"/>
+                <mustMatchAny level="WARNING">
                     <isExactly>4096</isExactly>
                 </mustMatchAny>
             </rules>
         </validation>
 
-        <validation name="Velikost dlaždic (2)">
+        <!--DMF gramodesky 0.5 (10. 10. 2022), kap. 5.5: „Produkce obrazových dat by se měla řídit doporučenými standardy pro digitalizaci“; parametry kódování JPEG 2000 DMF nepředepisuje, proto WARNING.-->
+        <validation name="Velikost dlaždic (2) (doporučení DMF)">
             <xmlDataExtraction resultType="INTEGER">
                 <firstNonempty>
                     <xpath>
@@ -271,14 +273,15 @@
                 </firstNonempty>
             </xmlDataExtraction>
             <rules>
-                <mustExist/>
-                <mustMatchAny>
+                <mustExist level="WARNING"/>
+                <mustMatchAny level="WARNING">
                     <isExactly>4096</isExactly>
                 </mustMatchAny>
             </rules>
         </validation>
 
-        <validation name="Order">
+        <!--DMF gramodesky 0.5 (10. 10. 2022), kap. 5.5: „Produkce obrazových dat by se měla řídit doporučenými standardy pro digitalizaci“; parametry kódování JPEG 2000 DMF nepředepisuje, proto WARNING.-->
+        <validation name="Order (doporučení DMF)">
             <xmlDataExtraction resultType="STRING">
                 <firstNonempty>
                     <xpath>//j:property[j:name='ProgressionOrder']/j:values/j:value</xpath>
@@ -286,14 +289,15 @@
                 </firstNonempty>
             </xmlDataExtraction>
             <rules>
-                <mustExist/>
-                <mustMatchAny>
+                <mustExist level="WARNING"/>
+                <mustMatchAny level="WARNING">
                     <isExactly>2</isExactly>
                 </mustMatchAny>
             </rules>
         </validation>
 
-        <validation name="Layers">
+        <!--DMF gramodesky 0.5 (10. 10. 2022), kap. 5.5: „Produkce obrazových dat by se měla řídit doporučenými standardy pro digitalizaci“; parametry kódování JPEG 2000 DMF nepředepisuje, proto WARNING.-->
+        <validation name="Layers (doporučení DMF)">
             <xmlDataExtraction resultType="STRING">
                 <firstNonempty>
                     <xpath>//j:property[j:name='NumberOfLayers']/j:values/j:value</xpath>
@@ -301,14 +305,15 @@
                 </firstNonempty>
             </xmlDataExtraction>
             <rules>
-                <mustExist/>
-                <mustMatchAny>
+                <mustExist level="WARNING"/>
+                <mustMatchAny level="WARNING">
                     <isExactly>1</isExactly>
                 </mustMatchAny>
             </rules>
         </validation>
 
-        <validation name="Levels">
+        <!--DMF gramodesky 0.5 (10. 10. 2022), kap. 5.5: „Produkce obrazových dat by se měla řídit doporučenými standardy pro digitalizaci“; parametry kódování JPEG 2000 DMF nepředepisuje, proto WARNING.-->
+        <validation name="Levels (doporučení DMF)">
             <xmlDataExtraction resultType="STRING">
                 <firstNonempty>
                     <xpath>//j:property[j:name='NumberDecompositionLevels']/j:values/j:value</xpath>
@@ -316,15 +321,16 @@
                 </firstNonempty>
             </xmlDataExtraction>
             <rules>
-                <mustExist/>
-                <mustMatchAny>
+                <mustExist level="WARNING"/>
+                <mustMatchAny level="WARNING">
                     <isExactly>5</isExactly>
                     <isExactly>6</isExactly>
                 </mustMatchAny>
             </rules>
         </validation>
 
-        <validation name="Code block width">
+        <!--DMF gramodesky 0.5 (10. 10. 2022), kap. 5.5: „Produkce obrazových dat by se měla řídit doporučenými standardy pro digitalizaci“; parametry kódování JPEG 2000 DMF nepředepisuje, proto WARNING.-->
+        <validation name="Code block width (doporučení DMF)">
             <xmlDataExtraction resultType="STRING">
                 <firstNonempty>
                     <xpath>//j:property[j:name='CodeBlockWidth']/j:values/j:value</xpath>
@@ -332,14 +338,15 @@
                 </firstNonempty>
             </xmlDataExtraction>
             <rules>
-                <mustExist/>
-                <mustMatchAny>
+                <mustExist level="WARNING"/>
+                <mustMatchAny level="WARNING">
                     <isExactly>4</isExactly>
                 </mustMatchAny>
             </rules>
         </validation>
 
-        <validation name="Code block height">
+        <!--DMF gramodesky 0.5 (10. 10. 2022), kap. 5.5: „Produkce obrazových dat by se měla řídit doporučenými standardy pro digitalizaci“; parametry kódování JPEG 2000 DMF nepředepisuje, proto WARNING.-->
+        <validation name="Code block height (doporučení DMF)">
             <xmlDataExtraction resultType="STRING">
                 <firstNonempty>
                     <xpath>//j:property[j:name='CodeBlockHeight']/j:values/j:value</xpath>
@@ -347,8 +354,8 @@
                 </firstNonempty>
             </xmlDataExtraction>
             <rules>
-                <mustExist/>
-                <mustMatchAny>
+                <mustExist level="WARNING"/>
+                <mustMatchAny level="WARNING">
                     <isExactly>4</isExactly>
                 </mustMatchAny>
             </rules>

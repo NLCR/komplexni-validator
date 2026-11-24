@@ -1,0 +1,144 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<jpylyzer xmlns="http://openpreservation.org/ns/jpylyzer/v2/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://openpreservation.org/ns/jpylyzer/v2/ http://jpylyzer.openpreservation.org/jpylyzer-v-2-2.xsd">
+<toolInfo>
+    <toolName>jpylyzer</toolName>
+    <toolVersion>2.2.1</toolVersion>
+</toolInfo>
+<file>
+    <fileInfo>
+        <fileName>mc_08c4cf2c-5e8c-4a18-9513-9585cb44771e_0002.jp2</fileName>
+        <filePath>mc_08c4cf2c-5e8c-4a18-9513-9585cb44771e_0002.jp2</filePath>
+        <fileSizeInBytes>8098418</fileSizeInBytes>
+        <fileLastModified>2026-11-23T23:21:03.346510</fileLastModified>
+    </fileInfo>
+    <statusInfo>
+        <success>True</success>
+    </statusInfo>
+    <isValid format="jp2">True</isValid>
+    <tests/>
+    <properties>
+        <signatureBox/>
+        <fileTypeBox>
+            <br>jp2 </br>
+            <minV>0</minV>
+            <cL>jp2 </cL>
+        </fileTypeBox>
+        <jp2HeaderBox>
+            <imageHeaderBox>
+                <height>3333</height>
+                <width>5000</width>
+                <nC>3</nC>
+                <bPCSign>unsigned</bPCSign>
+                <bPCDepth>8</bPCDepth>
+                <c>jpeg2000</c>
+                <unkC>no</unkC>
+                <iPR>no</iPR>
+            </imageHeaderBox>
+            <colourSpecificationBox>
+                <meth>Enumerated</meth>
+                <prec>0</prec>
+                <approx>0</approx>
+                <enumCS>sRGB</enumCS>
+            </colourSpecificationBox>
+        </jp2HeaderBox>
+        <contiguousCodestreamBox>
+            <siz>
+                <lsiz>47</lsiz>
+                <rsiz>0</rsiz>
+                <capability>ISO/IEC 15444-1</capability>
+                <xsiz>5000</xsiz>
+                <ysiz>3333</ysiz>
+                <xOsiz>0</xOsiz>
+                <yOsiz>0</yOsiz>
+                <xTsiz>5000</xTsiz>
+                <yTsiz>3333</yTsiz>
+                <xTOsiz>0</xTOsiz>
+                <yTOsiz>0</yTOsiz>
+                <numberOfTiles>1</numberOfTiles>
+                <csiz>3</csiz>
+                <ssizSign>unsigned</ssizSign>
+                <ssizDepth>8</ssizDepth>
+                <xRsiz>1</xRsiz>
+                <yRsiz>1</yRsiz>
+                <ssizSign>unsigned</ssizSign>
+                <ssizDepth>8</ssizDepth>
+                <xRsiz>1</xRsiz>
+                <yRsiz>1</yRsiz>
+                <ssizSign>unsigned</ssizSign>
+                <ssizDepth>8</ssizDepth>
+                <xRsiz>1</xRsiz>
+                <yRsiz>1</yRsiz>
+            </siz>
+            <qcd>
+                <lqcd>25</lqcd>
+                <qStyle>no quantization</qStyle>
+                <guardBits>2</guardBits>
+                <epsilon>8</epsilon>
+                <epsilon>9</epsilon>
+                <epsilon>9</epsilon>
+                <epsilon>10</epsilon>
+                <epsilon>9</epsilon>
+                <epsilon>9</epsilon>
+                <epsilon>10</epsilon>
+            </qcd>
+            <cod>
+                <lcod>12</lcod>
+                <precincts>default</precincts>
+                <sop>no</sop>
+                <eph>no</eph>
+                <order>LRCP</order>
+                <layers>1</layers>
+                <multipleComponentTransformation>yes</multipleComponentTransformation>
+                <levels>7</levels>
+                <codeBlockWidth>64</codeBlockWidth>
+                <codeBlockHeight>64</codeBlockHeight>
+                <codingBypass>no</codingBypass>
+                <resetOnBoundaries>no</resetOnBoundaries>
+                <termOnEachPass>no</termOnEachPass>
+                <vertCausalContext>no</vertCausalContext>
+                <predTermination>no</predTermination>
+                <segmentationSymbols>no</segmentationSymbols>
+                <transformation>5-3 reversible</transformation>
+                <precinctSizeX>32768</precinctSizeX>
+                <precinctSizeY>32768</precinctSizeY>
+                <precinctSizeX>32768</precinctSizeX>
+                <precinctSizeY>32768</precinctSizeY>
+                <precinctSizeX>32768</precinctSizeX>
+                <precinctSizeY>32768</precinctSizeY>
+                <precinctSizeX>32768</precinctSizeX>
+                <precinctSizeY>32768</precinctSizeY>
+                <precinctSizeX>32768</precinctSizeX>
+                <precinctSizeY>32768</precinctSizeY>
+                <precinctSizeX>32768</precinctSizeX>
+                <precinctSizeY>32768</precinctSizeY>
+                <precinctSizeX>32768</precinctSizeX>
+                <precinctSizeY>32768</precinctSizeY>
+                <precinctSizeX>32768</precinctSizeX>
+                <precinctSizeY>32768</precinctSizeY>
+            </cod>
+            <com>
+                <lcom>14</lcom>
+                <rcom>ISO/IEC 8859-15 (Latin)</rcom>
+                <comment>LT_JP2_220</comment>
+            </com>
+            <ppmCount>0</ppmCount>
+            <plmCount>0</plmCount>
+            <tileParts>
+                <tilePart>
+                    <sot>
+                        <lsot>10</lsot>
+                        <isot>0</isot>
+                        <psot>8098223</psot>
+                        <tpsot>0</tpsot>
+                        <tnsot>1</tnsot>
+                    </sot>
+                    <pltCount>0</pltCount>
+                    <pptCount>0</pptCount>
+                </tilePart>
+            </tileParts>
+        </contiguousCodestreamBox>
+        <compressionRatio>6.17</compressionRatio>
+    </properties>
+    <warnings/>
+</file>
+</jpylyzer>

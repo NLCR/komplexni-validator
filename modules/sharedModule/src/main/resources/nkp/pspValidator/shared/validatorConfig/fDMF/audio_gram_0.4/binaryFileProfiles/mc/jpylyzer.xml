@@ -168,7 +168,8 @@
             </rules>
         </validation>-->
 
-        <validation name="Rozlišení vertik.">
+        <!--DMF gramodesky 0.4 (18. 12. 2020), kap. 2, bod 4.2: „doporučené rozlišení je 300 PPI a více“ (minimum 300 PPI v bodě 4.3 platí jen „pro dokumenty (knihy, periodika)“); uživatelská kopie má stejné rozlišení jako archivní. Proto WARNING, i když údaj o rozlišení v JP2 chybí.-->
+        <validation name="Rozlišení vertik. (doporučení DMF)">
             <xmlDataExtraction resultType="FLOAT">
                 <!--muze se nachazet na nekolika mistech, pouzije se prvni dostupna hodnota-->
                 <firstNonempty>
@@ -179,9 +180,9 @@
                 </firstNonempty>
             </xmlDataExtraction>
             <rules>
-                <mustExist/>
+                <mustExist level="WARNING"/>
                 <!--rozsah hodnot, zde realná čísla-->
-                <mustMatchAny>
+                <mustMatchAny level="WARNING">
                     <isInFloatRange>
                         <min>11732.0</min>
                     </isInFloatRange>
@@ -189,7 +190,8 @@
             </rules>
         </validation>
 
-        <validation name="Rozlišení horiz.">
+        <!--DMF gramodesky 0.4 (18. 12. 2020), kap. 2, bod 4.2: „doporučené rozlišení je 300 PPI a více“ (minimum 300 PPI v bodě 4.3 platí jen „pro dokumenty (knihy, periodika)“); uživatelská kopie má stejné rozlišení jako archivní. Proto WARNING, i když údaj o rozlišení v JP2 chybí.-->
+        <validation name="Rozlišení horiz. (doporučení DMF)">
             <xmlDataExtraction resultType="FLOAT">
                 <firstNonempty>
                     <xpath>//j:properties/j:jp2HeaderBox/j:resolutionBox/j:captureResolutionBox/j:hRescInPixelsPerMeter
@@ -199,8 +201,8 @@
                 </firstNonempty>
             </xmlDataExtraction>
             <rules>
-                <mustExist/>
-                <mustMatchAny>
+                <mustExist level="WARNING"/>
+                <mustMatchAny level="WARNING">
                     <isInFloatRange>
                         <min>11732.0</min>
                     </isInFloatRange>
@@ -226,43 +228,46 @@
             </rules>
         </validation>
 
-        <validation name="Velikost dlaždic (1)">
+        <!--DMF gramodesky 0.4 (18. 12. 2020), kap. 5.5: „Produkce obrazových dat by se měla řídit doporučenými standardy pro digitalizaci“; parametry kódování JPEG 2000 DMF nepředepisuje, proto WARNING.-->
+        <validation name="Velikost dlaždic (1) (doporučení DMF)">
             <xmlDataExtraction resultType="INTEGER">
                 <firstNonempty>
                     <xpath>//j:properties/j:contiguousCodestreamBox/j:siz/j:xTsiz</xpath>
                 </firstNonempty>
             </xmlDataExtraction>
             <rules>
-                <mustExist/>
-                <mustMatchAny>
+                <mustExist level="WARNING"/>
+                <mustMatchAny level="WARNING">
                     <isExactly>4096</isExactly>
                 </mustMatchAny>
             </rules>
         </validation>
 
-        <validation name="Velikost dlaždic (2)">
+        <!--DMF gramodesky 0.4 (18. 12. 2020), kap. 5.5: „Produkce obrazových dat by se měla řídit doporučenými standardy pro digitalizaci“; parametry kódování JPEG 2000 DMF nepředepisuje, proto WARNING.-->
+        <validation name="Velikost dlaždic (2) (doporučení DMF)">
             <xmlDataExtraction resultType="INTEGER">
                 <firstNonempty>
                     <xpath>//j:properties/j:contiguousCodestreamBox/j:siz/j:yTsiz</xpath>
                 </firstNonempty>
             </xmlDataExtraction>
             <rules>
-                <mustExist/>
-                <mustMatchAny>
+                <mustExist level="WARNING"/>
+                <mustMatchAny level="WARNING">
                     <isExactly>4096</isExactly>
                 </mustMatchAny>
             </rules>
         </validation>
 
-        <validation name="Precincts (regiony)">
+        <!--DMF gramodesky 0.4 (18. 12. 2020), kap. 5.5: „Produkce obrazových dat by se měla řídit doporučenými standardy pro digitalizaci“; parametry kódování JPEG 2000 DMF nepředepisuje, proto WARNING.-->
+        <validation name="Precincts (regiony) (doporučení DMF)">
             <xmlDataExtraction resultType="STRING">
                 <firstNonempty>
                     <xpath>//j:properties/j:contiguousCodestreamBox/j:cod/j:precincts</xpath>
                 </firstNonempty>
             </xmlDataExtraction>
             <rules>
-                <mustExist/>
-                <mustMatchAny>
+                <mustExist level="WARNING"/>
+                <mustMatchAny level="WARNING">
                     <isExactly>Yes</isExactly>
                     <isExactly>yes</isExactly>
                     <isExactly>user defined</isExactly>
@@ -270,16 +275,17 @@
             </rules>
         </validation>
 
-        <validation name="Velikost precincts (1)">
+        <!--DMF gramodesky 0.4 (18. 12. 2020), kap. 5.5: „Produkce obrazových dat by se měla řídit doporučenými standardy pro digitalizaci“; parametry kódování JPEG 2000 DMF nepředepisuje, proto WARNING.-->
+        <validation name="Velikost precincts (1) (doporučení DMF)">
             <xmlDataExtraction resultType="STRING_LIST">
                 <firstNonempty>
                     <xpath>//j:properties/j:contiguousCodestreamBox/j:cod/j:precinctSizeX</xpath>
                 </firstNonempty>
             </xmlDataExtraction>
             <rules>
-                <mustExist/>
+                <mustExist level="WARNING"/>
                 <!--2krát hodnota 256; zbylé hodnoty 128-->
-                <mustMatchAny>
+                <mustMatchAny level="WARNING">
                     <nTimesXRemainingY>
                         <n>2</n>
                         <x>256</x>
@@ -289,16 +295,17 @@
             </rules>
         </validation>
 
-        <validation name="Velikost precincts (2)">
+        <!--DMF gramodesky 0.4 (18. 12. 2020), kap. 5.5: „Produkce obrazových dat by se měla řídit doporučenými standardy pro digitalizaci“; parametry kódování JPEG 2000 DMF nepředepisuje, proto WARNING.-->
+        <validation name="Velikost precincts (2) (doporučení DMF)">
             <xmlDataExtraction resultType="STRING_LIST">
                 <firstNonempty>
                     <xpath>//j:properties/j:contiguousCodestreamBox/j:cod/j:precinctSizeY</xpath>
                 </firstNonempty>
             </xmlDataExtraction>
             <rules>
-                <mustExist/>
+                <mustExist level="WARNING"/>
                 <!--2krát hodnota 256; zbylé hodnoty 128-->
-                <mustMatchAny>
+                <mustMatchAny level="WARNING">
                     <nTimesXRemainingY>
                         <n>2</n>
                         <x>256</x>
@@ -308,30 +315,32 @@
             </rules>
         </validation>
 
-        <validation name="Sop">
+        <!--DMF gramodesky 0.4 (18. 12. 2020), kap. 5.5: „Produkce obrazových dat by se měla řídit doporučenými standardy pro digitalizaci“; parametry kódování JPEG 2000 DMF nepředepisuje, proto WARNING.-->
+        <validation name="Sop (doporučení DMF)">
             <xmlDataExtraction resultType="STRING">
                 <firstNonempty>
                     <xpath>//j:properties/j:contiguousCodestreamBox/j:cod/j:sop</xpath>
                 </firstNonempty>
             </xmlDataExtraction>
             <rules>
-                <mustExist/>
-                <mustMatchAny>
+                <mustExist level="WARNING"/>
+                <mustMatchAny level="WARNING">
                     <isExactly>Yes</isExactly>
                     <isExactly>yes</isExactly>
                 </mustMatchAny>
             </rules>
         </validation>
 
-        <validation name="Eph">
+        <!--DMF gramodesky 0.4 (18. 12. 2020), kap. 5.5: „Produkce obrazových dat by se měla řídit doporučenými standardy pro digitalizaci“; parametry kódování JPEG 2000 DMF nepředepisuje, proto WARNING.-->
+        <validation name="Eph (doporučení DMF)">
             <xmlDataExtraction resultType="STRING">
                 <firstNonempty>
                     <xpath>//j:properties/j:contiguousCodestreamBox/j:cod/j:eph</xpath>
                 </firstNonempty>
             </xmlDataExtraction>
             <rules>
-                <mustExist/>
-                <mustMatchAny>
+                <mustExist level="WARNING"/>
+                <mustMatchAny level="WARNING">
                     <isExactly>Yes</isExactly>
                     <isExactly>yes</isExactly>
                     <isExactly>YES</isExactly>
@@ -339,86 +348,92 @@
             </rules>
         </validation>
 
-        <validation name="Order">
+        <!--DMF gramodesky 0.4 (18. 12. 2020), kap. 5.5: „Produkce obrazových dat by se měla řídit doporučenými standardy pro digitalizaci“; parametry kódování JPEG 2000 DMF nepředepisuje, proto WARNING.-->
+        <validation name="Order (doporučení DMF)">
             <xmlDataExtraction resultType="STRING">
                 <firstNonempty>
                     <xpath>//j:properties/j:contiguousCodestreamBox/j:cod/j:order</xpath>
                 </firstNonempty>
             </xmlDataExtraction>
             <rules>
-                <mustExist/>
-                <mustMatchAny>
+                <mustExist level="WARNING"/>
+                <mustMatchAny level="WARNING">
                     <isExactly>RPCL</isExactly>
                 </mustMatchAny>
             </rules>
         </validation>
 
-        <validation name="Layers">
+        <!--DMF gramodesky 0.4 (18. 12. 2020), kap. 5.5: „Produkce obrazových dat by se měla řídit doporučenými standardy pro digitalizaci“; parametry kódování JPEG 2000 DMF nepředepisuje, proto WARNING.-->
+        <validation name="Layers (doporučení DMF)">
             <xmlDataExtraction resultType="STRING">
                 <firstNonempty>
                     <xpath>//j:properties/j:contiguousCodestreamBox/j:cod/j:layers</xpath>
                 </firstNonempty>
             </xmlDataExtraction>
             <rules>
-                <mustExist/>
-                <mustMatchAny>
+                <mustExist level="WARNING"/>
+                <mustMatchAny level="WARNING">
                     <isExactly>1</isExactly>
                 </mustMatchAny>
             </rules>
         </validation>
 
-        <validation name="Levels">
+        <!--DMF gramodesky 0.4 (18. 12. 2020), kap. 5.5: „Produkce obrazových dat by se měla řídit doporučenými standardy pro digitalizaci“; parametry kódování JPEG 2000 DMF nepředepisuje, proto WARNING.-->
+        <validation name="Levels (doporučení DMF)">
             <xmlDataExtraction resultType="STRING">
                 <firstNonempty>
                     <xpath>//j:properties/j:contiguousCodestreamBox/j:cod/j:levels</xpath>
                 </firstNonempty>
             </xmlDataExtraction>
             <rules>
-                <mustExist/>
-                <mustMatchAny>
+                <mustExist level="WARNING"/>
+                <mustMatchAny level="WARNING">
                     <isExactly>5</isExactly>
                     <isExactly>6</isExactly>
                 </mustMatchAny>
             </rules>
         </validation>
 
-        <validation name="Code block width">
+        <!--DMF gramodesky 0.4 (18. 12. 2020), kap. 5.5: „Produkce obrazových dat by se měla řídit doporučenými standardy pro digitalizaci“; parametry kódování JPEG 2000 DMF nepředepisuje, proto WARNING.-->
+        <validation name="Code block width (doporučení DMF)">
             <xmlDataExtraction resultType="STRING">
                 <firstNonempty>
                     <xpath>//j:properties/j:contiguousCodestreamBox/j:cod/j:codeBlockWidth</xpath>
                 </firstNonempty>
             </xmlDataExtraction>
             <rules>
-                <mustExist/>
-                <mustMatchAny>
+                <mustExist level="WARNING"/>
+                <mustMatchAny level="WARNING">
                     <isExactly>64</isExactly>
                 </mustMatchAny>
             </rules>
         </validation>
 
-        <validation name="Code block height">
+        <!--DMF gramodesky 0.4 (18. 12. 2020), kap. 5.5: „Produkce obrazových dat by se měla řídit doporučenými standardy pro digitalizaci“; parametry kódování JPEG 2000 DMF nepředepisuje, proto WARNING.-->
+        <validation name="Code block height (doporučení DMF)">
             <xmlDataExtraction resultType="STRING">
                 <firstNonempty>
                     <xpath>//j:properties/j:contiguousCodestreamBox/j:cod/j:codeBlockHeight</xpath>
                 </firstNonempty>
             </xmlDataExtraction>
             <rules>
-                <mustExist/>
-                <mustMatchAny>
+                <mustExist level="WARNING"/>
+                <mustMatchAny level="WARNING">
                     <isExactly>64</isExactly>
                 </mustMatchAny>
             </rules>
         </validation>
 
-        <validation name="Bypass">
+        <!--DMF gramodesky 0.4 (18. 12. 2020), kap. 5.5: „Produkce obrazových dat by se měla řídit doporučenými standardy pro digitalizaci“; parametry kódování JPEG 2000 DMF nepředepisuje, proto WARNING.-->
+        <validation name="Bypass (doporučení DMF)">
             <xmlDataExtraction resultType="STRING">
                 <firstNonempty>
                     <xpath>//j:properties/j:contiguousCodestreamBox/j:cod/j:codingBypass</xpath>
                 </firstNonempty>
             </xmlDataExtraction>
             <rules>
-                <mustExist/>
-                <mustMatchAny>
+                <mustExist level="WARNING"/>
+                <mustMatchAny level="WARNING">
                     <isExactly>Yes</isExactly>
                     <isExactly>yes</isExactly>
                 </mustMatchAny>
