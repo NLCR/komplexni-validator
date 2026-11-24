@@ -47,4 +47,15 @@ public class NTimesXRemainingYConstraint implements Constraint {
             return true;
         }
     }
+
+    /**
+     * Popis omezení do hlášky (MustMatchAnyDR): hodnota x smí být v seznamu nejvýše n-krát (n je horní mez, ne přesný
+     * počet), všechny ostatní položky musí být y. Při n = 0 hodnota x není povolená vůbec.
+     */
+    public String toString() {
+        if (n == 0) {
+            return String.format("musí obsahovat jen hodnoty '%s'", y);
+        }
+        return String.format("musí obsahovat nejvýše %d× '%s', ostatní hodnoty '%s'", n, x, y);
+    }
 }

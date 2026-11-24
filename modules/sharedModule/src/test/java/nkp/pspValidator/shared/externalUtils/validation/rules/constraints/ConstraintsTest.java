@@ -1,5 +1,6 @@
 package nkp.pspValidator.shared.externalUtils.validation.rules.constraints;
 
+import nkp.pspValidator.shared.externalUtils.validation.rules.MustMatchAnyDR;
 import org.junit.Test;
 
 import java.util.Arrays;
@@ -258,10 +259,37 @@ public class ConstraintsTest {
     }
 
     @Test
-    public void nTimesXRemainingYHasNoReadableToString() {
-        // známá vada: chybi toString(), v hlaseni MustMatchAnyDR se proto objevi nazev tridy a hash
-        // ("neodpovídá žádnému z omezení: [nkp...NTimesXRemainingYConstraint@1b2c3d]"), viz BinaryFileProfileTest
-        String s = new NTimesXRemainingYConstraint(2, "256", "128").toString();
-        assertTrue(s, s.startsWith(NTimesXRemainingYConstraint.class.getName() + "@"));
+    public void nTimesXRemainingYToStringDescribesUpperBoundAndRemainingValue() {
+        // profil Velikost precincts (1), (2): <n>2</n> <x>256</x> <y>128</y>; "n" je horni mez (viz test vyse)
+        assertEquals("musí obsahovat nejvýše 2× '256', ostatní hodnoty '128'",
+                new NTimesXRemainingYConstraint(2, "256", "128").toString());
+    }
+
+    @Test
+    public void nTimesXRemainingYToStringForOneAndZero() {
+        assertEquals("musí obsahovat nejvýše 1× '256', ostatní hodnoty '128'",
+                new NTimesXRemainingYConstraint(1, "256", "128").toString());
+        // n = 0: hodnota x neni povolena vubec, vsechny polozky musi byt y
+        assertEquals("musí obsahovat jen hodnoty '128'", new NTimesXRemainingYConstraint(0, "256", "128").toString());
+    }
+
+    @Test
+    public void nTimesXRemainingYBoundaryMatchesForOneAndZero() {
+        NTimesXRemainingYConstraint one = new NTimesXRemainingYConstraint(1, "256", "128");
+        assertTrue(one.matches(Arrays.asList("256", "128")));
+        assertFalse(one.matches(Arrays.asList("256", "256", "128")));
+        NTimesXRemainingYConstraint zero = new NTimesXRemainingYConstraint(0, "256", "128");
+        assertTrue(zero.matches(Arrays.asList("128", "128")));
+        assertFalse(zero.matches(Arrays.asList("128", "256")));
+    }
+
+    @Test
+    public void nTimesXRemainingYMessageInMustMatchAny() {
+        // hlaseni pravidla tak, jak ho uvidi uzivatel (drive "[nkp...NTimesXRemainingYConstraint@58ea606c]")
+        MustMatchAnyDR rule = new MustMatchAnyDR("Velikost precincts (1)",
+                Collections.singletonList(new NTimesXRemainingYConstraint(2, "256", "128")));
+        assertEquals(Collections.singletonList("Velikost precincts (1): hodnota \"[32768,32768,32768]\" neodpovídá žádnému z omezení: "
+                        + "[musí obsahovat nejvýše 2× '256', ostatní hodnoty '128']"),
+                rule.validate(Arrays.asList("32768", "32768", "32768")));
     }
 }
