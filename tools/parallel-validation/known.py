@@ -33,6 +33,15 @@ def register(K, INTENDED, VEP_FIX):
       'Hlášky, které KV vydá díky opravenému XPath (viz předchozí položka) a VEP je kvůli výjimce nevydá.',
       rule=r'^BIBLIOGRAPHIC_METADATA_MATCH_PROFILE_SUPPLEMENT$', side='kv', level=r'^(WARNING|ERROR)$',
       pkg=r'^E-monografie 2\.4_')
+    K('E-monografie 2.3 a 2.4 (RDA): titleInfo/@type svazku nepovinný', VEP_FIX,
+      'VEP vyžaduje u hlavního názvu svazku atribut mods:titleInfo/@type; podle DMF e-monografií 2.3 (kap. 5.4.3) '
+      'je hlavní název bez type. KV atribut bere jako nepovinný.',
+      rule=r'^BIBLIOGRAPHIC_METADATA_MATCH_PROFILE_VOLUME$', side='vep', msg=r"mods:titleInfo: nenalezen povinný atribut 'type'",
+      pkg=r'^(E-monografie 2\.4|eborn_monografie_2\.3)_')
+    K('VEP #17: dc:language a dc:format u titulu e-periodik 2.5 (RDA)', VEP_FIX,
+      'VEP hlásí dc:language a dc:format u titulu jako neočekávané (WARNING); KV je nehlásí (issue KV #265, VEP #17).',
+      rule=r'^BIBLIOGRAPHIC_METADATA_MATCH_PROFILE_TITLE$', side='vep', level=r'^WARNING$',
+      msg=r"nalezen neočekávaný element 'dc:(format|language)'", pkg=r'^e-periodika_2\.5_')
     K('R3: core media types EPUB 3.3 a oprava překlepu WOFF', VEP_FIX,
       'Profil EPUBCheck ve VEP má seznam povolených typů obsahu z r. 2021 s překlepem „application/font‐wof“ '
       '(U+2010), takže každý font WOFF dává WARNING „Kontrola typů obsažených objektů (Epub 3)“. KV má seznam '
