@@ -18,7 +18,7 @@ import java.util.regex.Pattern;
  * je tedy gradle.properties. Pri behu z IDE bez Gradle buildu resource chybi a pouziji se fallbacky
  * {@value #FALLBACK_VERSION_CODE} a {@value #FALLBACK_BUILD_DATE}.
  * <p>
- * Version code muze obsahovat jednu pomlcku oddelujici vlastni verzi od suffixu (dev, alpha.0, beta apod.).
+ * Version code muze obsahovat jednu pomlcku oddelujici vlastni verzi od suffixu (dev, alpha, beta2, rc1; konvence v gradle/app-version.gradle).
  * Atribut validatorVersion v konfiguracnich souborech (fDMF, profily) se porovnava jen s major verzi,
  * viz {@link #checkConfigValidatorVersion(String, File)}.
  */
@@ -33,7 +33,7 @@ public class Version {
     private static final Pattern MAJOR = Pattern.compile("^\\s*(\\d+)(\\.\\d+)*\\s*$");
 
     /**
-     * Verze aplikace, napr. 3.0-alpha.0, 3.0, 3.0.1.
+     * Verze aplikace, napr. 3.0-alpha, 3.0, 3.0.1.
      */
     public static final String VERSION_CODE;
     /**
@@ -71,7 +71,7 @@ public class Version {
     }
 
     /**
-     * Major cast verze: vse pred pomlckou, z toho cislo pred prvni teckou (3.0-alpha.0 -> 3, 3.0.1 -> 3, 3 -> 3).
+     * Major cast verze: vse pred pomlckou, z toho cislo pred prvni teckou (3.0-alpha -> 3, 3.0.1 -> 3, 3 -> 3).
      *
      * @return major verze, nebo null, kdyz verze neni ve tvaru cislo[.cislo...]
      */
@@ -93,7 +93,7 @@ public class Version {
     }
 
     /**
-     * Porovnava se jen major verze: aplikace 3.0-alpha.0, 3.0.1 nebo 3.2 nacte konfiguraci s validatorVersion "3.0"
+     * Porovnava se jen major verze: aplikace 3.0-alpha, 3.0.1 nebo 3.2 nacte konfiguraci s validatorVersion "3.0"
      * i "3.1", ale ne "2.9". Atribut nese verzi aplikace platnou pri vzniku konfigurace a meni se hromadne az se
      * zmenou major verze. Pri behu bez version.properties (fallback {@value #FALLBACK_VERSION_CODE}) se kontrola
      * vypne s varovanim, jinak by z IDE neprosla zadna konfigurace.

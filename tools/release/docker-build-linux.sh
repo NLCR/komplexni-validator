@@ -24,8 +24,9 @@ cd /w/src
 
 LIBS=modules/guiModule/build/libs
 cp -R modules/sharedModule/src/main/resources/nkp/pspValidator/shared/validatorConfig "$LIBS/"
-# jpackage bere jen čísla: 2.8-beta -> 2.8
-APP_VERSION="$(echo "$VERSION" | sed -E 's/[^0-9]+/./g; s/^\.+|\.+$//g')"
+# jpackage bere jen čísla; na Linuxu se podle verze nic neporovnává, přípona předvydání se proto zahodí stejně jako
+# v gradle/app-version.gradle: 3.0-beta2 -> 3.0, 3.0.1 -> 3.0.1
+APP_VERSION="${VERSION%%-*}"
 
 # ikona: od 2.9 appIcon-256.png (generuje tools/release/make-icons.sh), starší tagy mají jen 48px PNG
 ICON=modules/guiModule/src/main/resources/img/appIcon/appIcon-256.png

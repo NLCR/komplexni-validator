@@ -116,6 +116,20 @@ dependencies {
     */
 }
 
+// Konvence verze a převod na číselnou verzi instalátoru (gradle/app-version.gradle): kontrola na ručně určených
+// příkladech, běží s testy modulu.
+tasks.register('checkAppVersionConvention') {
+    group = 'verification'
+    description = 'Ověří konvenci appVersion a převod na verzi instalátoru na příkladech.'
+    doLast {
+        rootProject.ext.checkAppVersionConvention()
+        println "Konvence verze: appVersion ${project.version}, instalátor Windows " +
+                "${rootProject.ext.installerVersion(project.version.toString(), true)}, macOS a Linux " +
+                "${rootProject.ext.installerVersion(project.version.toString(), false)}"
+    }
+}
+tasks.named('test') { dependsOn 'checkAppVersionConvention' }
+
 tasks.register('printRuntimeClasspath') {
     doLast {
         configurations.runtimeClasspath.each { println it }
@@ -271,16 +285,10 @@ tasks.register('jpackage', Exec) {
             platformOptions = withoutWin
         }
 
-        // jpackage chce číselnou verzi x.y.z: "3.0" -> "3.0.0", "3.0-alpha.0" -> "3.0.0", "3.0-beta" -> "3.0.0",
-        // "3.0.1" -> "3.0.1". Suffix za první pomlčkou (i s čísly, alpha.0) se zahodí, chybějící složky doplní nula.
-        // Omezení MSI (Windows): stejná verze znamená „už nainstalováno“, beta a finální verze téže verze mají stejné
-        // číslo a liší se jen obsahem; před instalací finální verze přes betu je proto nutné betu odinstalovat.
-        // macOS (CFBundleVersion) i Windows (MSI) přijímají tři složky, první musí být nenulová.
-        def m = appVersionString.split('-', 2)[0] =~ /^(\d+)(?:\.(\d+))?(?:\.(\d+))?$/
-        if (!m.find()) {
-            throw new GradleException("jpackage: appVersion '${appVersionString}' nemá před pomlčkou číselnou verzi x[.y[.z]].")
-        }
-        appVersionNumeric = [m.group(1), m.group(2) ?: '0', m.group(3) ?: '0'].join('.')
+        // jpackage chce číselnou verzi x.y.z. macOS a Linux: MAJOR.MINOR.PATCH bez přípony. Windows: třetí složka nese
+        // i stupeň předvydání (3.0-alpha -> 3.0.101, 3.0 -> 3.0.900), aby instalátor každého dalšího sestavení téže
+        // verze nahradil to starší; převod a příklady jsou v gradle/app-version.gradle.
+        appVersionNumeric = rootProject.ext.installerVersion(appVersionString, osName.startsWith('windows'))
 
         String javaHome = System.getenv('JAVA_HOME')
         String exeSuffix = osName.startsWith('windows') ? '.exe' : ''

@@ -1,3 +1,9 @@
+apply from: 'gradle/app-version.gradle'
+// appVersion musí odpovídat konvenci (běh bez appVersion má verzi 0.0.0 a nekontroluje se)
+if (findProperty('appVersion') != null) {
+    parseAppVersion(findProperty('appVersion').toString())
+}
+
 allprojects {
     repositories {
         mavenCentral()

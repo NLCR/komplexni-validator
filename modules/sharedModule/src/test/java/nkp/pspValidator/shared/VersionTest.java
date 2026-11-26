@@ -42,8 +42,14 @@ public class VersionTest {
 
     @Test
     public void majorVersion() {
-        assertEquals(Integer.valueOf(3), Version.majorVersion("3.0-alpha.0"));
+        assertEquals(Integer.valueOf(3), Version.majorVersion("3.0-alpha"));
+        assertEquals(Integer.valueOf(3), Version.majorVersion("3.0-alpha2"));
         assertEquals(Integer.valueOf(3), Version.majorVersion("3.0-beta"));
+        assertEquals(Integer.valueOf(3), Version.majorVersion("3.0-beta2"));
+        assertEquals(Integer.valueOf(3), Version.majorVersion("3.0-rc1"));
+        assertEquals(Integer.valueOf(3), Version.majorVersion("3.1-dev"));
+        // dřívější tvar s tečkou v příponě (3.0-alpha.0) konvenci neodpovídá, major se z něj ale přečte
+        assertEquals(Integer.valueOf(3), Version.majorVersion("3.0-alpha.0"));
         assertEquals(Integer.valueOf(3), Version.majorVersion("3.0.1"));
         assertEquals(Integer.valueOf(3), Version.majorVersion("3.1"));
         assertEquals(Integer.valueOf(3), Version.majorVersion("3"));
@@ -56,7 +62,7 @@ public class VersionTest {
 
     @Test
     public void sameMajorPasses() throws ValidatorConfigurationException {
-        for (String app : new String[]{"3.0-alpha.0", "3.0-beta", "3.0", "3.0.1", "3.1", "3.2.5-dev"}) {
+        for (String app : new String[]{"3.0-alpha", "3.0-alpha2", "3.0-beta", "3.0-rc1", "3.0", "3.0.1", "3.1", "3.2.5-dev"}) {
             Version.checkConfigValidatorVersion(app, "3.0", CONFIG);
             Version.checkConfigValidatorVersion(app, "3.1", CONFIG);
             Version.checkConfigValidatorVersion(app, "3", CONFIG);
@@ -65,7 +71,7 @@ public class VersionTest {
 
     @Test
     public void differentMajorFails() {
-        assertFails("3.0-alpha.0", "2.9");
+        assertFails("3.0-alpha", "2.9");
         assertFails("3.0", "2.0");
         assertFails("3.0.1", "4.0");
         assertFails("2.9", "3.0");
@@ -80,9 +86,9 @@ public class VersionTest {
 
     @Test
     public void messageSaysWhatIsExpected() {
-        String message = assertFails("3.0-alpha.0", "2.9");
+        String message = assertFails("3.0-alpha", "2.9");
         assertTrue(message, message.contains("validatorVersion='2.9'"));
-        assertTrue(message, message.contains("3.0-alpha.0"));
+        assertTrue(message, message.contains("3.0-alpha"));
         assertTrue(message, message.contains("major verzí 3"));
         assertTrue(message, message.contains(CONFIG.getAbsolutePath()));
     }

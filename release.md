@@ -25,7 +25,8 @@ nakopíruje do cílového adresáře. Konfigurace validace je uvnitř v `app/val
 
 **Windows instalátor** instaluje jen pro přihlášeného uživatele, bez práv správce, do
 `%LOCALAPPDATA%\KomplexniValidator` (adresář lze v průvodci změnit). Vytvoří zástupce v nabídce Start (složka
-„Komplexní validátor“) a na ploše (průvodce se zeptá). Instalace vyšší verze starou verzi sama odinstaluje.
+„Komplexní validátor“) a na ploše (průvodce se zeptá). Instalace novější verze starší nahradí, i mezi předvydáními
+téže verze (alpha, beta, finální), viz číselná verze instalátoru v kap. 1.
 
 **macOS dmg** obsahuje aplikaci `KomplexniValidator.app` s vlastní Javou, uživatel ji přetáhne do Aplikací (práva
 správce nejsou potřeba). Konfigurace validace je v bundlu (`Contents/app/validatorConfig`), `config.properties` a logy
@@ -35,13 +36,22 @@ Intel se nevydává nic (lze použít GUI zip s Javou s JavaFX).
 
 ## 1. Příprava verze
 
+- **Konvence verze:** `MAJOR.MINOR[.PATCH]` a volitelná přípona předvydání `-alpha[N]`, `-beta[N]`, `-rc[N]` nebo `-dev`:
+  `3.0-alpha`, `3.0-alpha2`, `3.0-beta`, `3.0-beta2`, `3.0-rc1`, `3.0`, `3.0.1`. První předvydání daného stupně je bez
+  čísla, další se číslují od 2. Přípona `-dev` označuje rozpracovaný stav mezi vydáními a nikdy se netaguje. Tag je
+  vždy `v<appVersion>` (`v3.0-alpha`, `v3.0`). Jiný tvar sestavení odmítne (`gradle/app-version.gradle`).
+- **Číselná verze instalátoru** se z `appVersion` odvozuje sama. macOS a Linux: `MAJOR.MINOR.PATCH` bez přípony
+  (`3.0-beta2` → 3.0.0). Windows: třetí složka je `PATCH × 1000 + stupeň` (`-dev` 0, alpha 100 + N, beta 200 + N,
+  rc 300 + N, finální 900), tedy `3.0-alpha` → 3.0.101, `3.0-beta2` → 3.0.202, `3.0` → 3.0.900, `3.0.1` → 3.0.1900.
+  Windows tak každé další sestavení téže verze bere jako novější a starší při instalaci nahradí; číslo je vidět
+  v Nastavení → Aplikace. Kvůli tomu je PATCH nejvýš 64 a název ani výrobce produktu v instalátoru se nesmí měnit.
 - `gradle.properties`: `appVersion`, např. `3.0-beta` nebo `3.0.1`. Je to jediné místo s verzí aplikace: Gradle
   z něj při buildu vygeneruje `version.properties` (verze a datum buildu, v `modules/sharedModule/build/generated/`,
   ne v gitu) a z něj ji čte `Version` (`VERSION_CODE`, `BUILD_DATE`) pro CLI `--version`, GUI a protokoly. Datum
   buildu je den sestavení, ručně se nenastavuje. Při běhu z IDE bez Gradle buildu je verze `0.0.0-dev`, datum
   „neznámé“ a kontrola `validatorVersion` je vypnutá.
 - Atribut `validatorVersion` konfiguračních souborů (fDMF, profily metadat, profily binárních souborů) se porovnává
-  jen s **major** verzí aplikace: aplikace 3.x (3.0-alpha.0, 3.0, 3.0.1, 3.2) načte konfiguraci s `validatorVersion`
+  jen s **major** verzí aplikace: aplikace 3.x (3.0-alpha, 3.0, 3.0.1, 3.2) načte konfiguraci s `validatorVersion`
   „3.0“ i „3.1“, s „2.9“ ne. Nové konfigurace nesou verzi platnou při vzniku (dnes „3.0“), při minor a patch vydání
   se atribut nemění.
 - Hromadná změna (atribut `validatorVersion` a namespace `pspValidator/X.Y/` v konfiguraci, XSD a protokolu, vzor:
@@ -120,8 +130,9 @@ podle tabulky výše. V `build.gradle` se před buildem nic ručně nemění. `v
    správce), aplikace je v nabídce Start ve složce „Komplexní validátor“ (a na ploše, pokud byl zástupce zvolen),
    spustí se, „O aplikaci“ ukazuje verzi, datum buildu a cestu ke konfiguraci v instalaci
    (`...\KomplexniValidator\app\validatorConfig`), validace balíčku proběhne. Odinstalace přes Nastavení → Aplikace.
-   Instalace vyšší verze přes nižší starou nahradí; stejná verze (beta a finální mají stejné číslo `x.y.0`) hlásí, že
-   je produkt už nainstalovaný, betu je pak nutné nejdřív odinstalovat.
+   Instalace novějšího sestavení přes starší ho nahradí, protože číselná verze instalátoru roste i mezi
+   předvydáními (kap. 1). Sestavení se stejnou číselnou verzí se přes sebe neinstalují: starší je nutné nejdřív
+   odinstalovat (dvě různá sestavení téže verze se proto nevydávají).
 5. Kontrola portable: zip rozbalit jinam, spustit `Komplexní validátor.exe`, „O aplikaci“ jako výše.
 
 ### macOS dmg (ručně na Macu s Apple Silicon)
@@ -170,6 +181,6 @@ Položky ideálně s odkazem na issue (`issue #123: ...`).
 ## 6. Po vydání
 
 - Finální verze po betě: zopakovat kroky 1 až 5 s verzí bez přípony (`appVersion`, `XSD_URL` na nový tag).
-- Po finálním vydání vrátit `XSD_URL` na větev `master` a `appVersion` na další předvydání (např. `3.1-alpha.0`).
+- Po finálním vydání vrátit `XSD_URL` na větev `master` a `appVersion` na vývojovou verzi další verze (např. `3.1-dev`).
 - Webový validátor (repozitáře `komplexni-validator-web-backend` a `-frontend`) spouští CLI jar s adresářem
   `validatorConfig` na serveru: nasadit obsah CLI zipu a ověřit, že backend čte namespace protokolu nové verze.
