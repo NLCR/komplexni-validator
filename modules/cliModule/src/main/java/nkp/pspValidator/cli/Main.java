@@ -1225,27 +1225,36 @@ public class Main {
                 "Validuje PSP balík/sadu PSP balíků podle DMF*, nebo vyrobí minifikovaný PSP balík.\n\n" +
                 "Validace:\n" +
                 "--------\n" +
-                "Typ DMF (Monografie/Periodikum/Zvuk-gramodeska) se odvozuje z dat jednotlivých PSP balíků." +
-                " Verze DMF použité pro validaci lze ovlivnit parametry" +
-                " --" + Params.PREFERRED_DMF_MON_VERSION + "," +
-                " --" + Params.PREFERRED_DMF_PER_VERSION + "," +
-                " --" + Params.PREFERRED_DMF_ADG_VERSION + "," +
-                " --" + Params.FORCED_DMF_MON_VERSION + "," +
-                " --" + Params.FORCED_DMF_PER_VERSION + " a" +
-                " --" + Params.FORCED_DMF_ADG_VERSION + "." +
+                "Typ DMF se odvozuje z dat jednotlivých PSP balíků. Verze DMF použité pro validaci lze ovlivnit" +
+                " parametry --preferred-dmf-<typ>-version (preferovaná verze, použije se, když data balíku" +
+                " neobsahují informaci o vhodné verzi) a --forced-dmf-<typ>-version (vynucená verze)," +
+                " kde <typ> je zkratka typu:\n" +
+                "  mon: Monografie\n" +
+                "  per: Periodikum\n" +
+                "  adg: Zvuk – gramodeska\n" +
+                "  adf: Zvuk – fonoválec\n" +
+                "  adi: Zvuk – disk\n" +
+                "  adn: Zvuk – bez nosiče\n" +
+                "  dad: Datové disky\n" +
+                "  fdu: Jednotka fondu\n" +
+                "  emo: E-monografie\n" +
+                "  epe: E-periodikum\n" +
+                "  sep: Skládané e-periodikum\n" +
+                "Zastaralé aliasy emon, eper a comper (z Validátoru e-publikací) jsou přijímány," +
+                " nahrazují zkratky emo, epe a sep.\n" +
                 " Dále je potřeba pomocí --config-dir uvést adresář, který obsahuje definice fDMF," +
-                " např. monograph_2.1, periodical_2.0, nebo audio_gram_0.5.\n" +
+                " např. monograph_2.1, periodical_2.0, audio_gram_0.5 nebo emonograph_3.1.\n" +
                 "\n" +
                 "Výroba minifikovaného balíku:\n" +
                 "----------------------------\n" +
                 "Bude vyrobena kopie balíku s tím, že textové a obrazové soubory budou nahrazny prázdnými soubory se stejným jménem." +
                 "\n\n");
-        String footer = replaceUmlaut("\n*Definice metadatových formátů. Více na http://www.ndk.cz/standardy-digitalizace/metadata.\n" +
+        String footer = replaceUmlaut("\n*Definice metadatových formátů. Více na https://standardy.ndk.cz/.\n" +
                 "Více informací o validátoru najdete na https://github.com/NLCR/komplexni-validator.");
         HelpFormatter formatter = new HelpFormatter();
         formatter.setWidth(100);
         formatter.setOptionComparator(null);
-        formatter.printHelp("java -jar KomplexniValidator.jar", header, options, footer, true);
+        formatter.printHelp("java -jar KomplexniValidatorCLI.jar", header, options, footer, true);
     }
 
     private static void validatePspGroup(File pspGroup,

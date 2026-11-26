@@ -3,10 +3,11 @@
 Nástroj Národní knihovny ČR pro validaci SIP balíčků digitalizovaných dokumentů podle Definic metadatových formátů
 (DMF) Standardu NDK. Kontroluje strukturu balíčku, soubor info.xml, METS, bibliografická metadata (MODS, DC),
 technická a administrativní metadata (MIX, PREMIS, copyrightMD), soubory ALTO a OCR TXT a pomocí externích nástrojů
-i obrazové a zvukové soubory. Výstupem je textový výpis a XML protokol.
+i obrazové a zvukové soubory. Od verze 3.0 validuje také e-publikace (e-monografie, e-periodika a skládaná
+e-periodika): soubory PDF kontroluje veraPDF a soubory EPUB EPUBCheck. Výstupem je textový výpis a XML protokol.
 
 Vydání, instalátory a seznamy změn: https://github.com/NLCR/komplexni-validator/releases. Standardy:
-https://standardy.ndk.cz/. Hlášení chyb a dotazy: GitHub issues.
+https://standardy.ndk.cz/. Uživatelská dokumentace je ve wiki: https://github.com/NLCR/komplexni-validator/wiki. Hlášení chyb a dotazy: GitHub issues.
 
 ## Instalace a spuštění
 
@@ -229,8 +230,12 @@ verzi jako aplikace (konfigurace „3.0“ i „3.1“ projde s validátorem 3.x
 ## Verze
 
 Verze aplikace je jen v `gradle.properties` (`appVersion`), verzi a datum buildu z ní při buildu generuje Gradle
-pro třídu `Version`. Vydání se značí tagem `vX.Y` a publikuje jako GitHub release; postup vydání, assets a jejich
-sestavení (`tools/release/build-assets.sh`): viz [release.md](release.md).
+pro třídu `Version`. Vydání se značí tagem `v<appVersion>` (například `v3.0-alpha`, `v3.0`, `v3.0.1`) a publikuje jako GitHub release; postup vydání, assets a jejich
+sestavení (`tools/release/build-assets.sh`): viz [release.md](release.md). Konvence verze (včetně předvydání
+a číselné verze instalátoru) je popsaná v `gradle/app-version.gradle`.
+
+Předvydání (`-alpha`, `-beta`, `-rc`) jsou určená k testování a mají na GitHubu příznak předvydání. Mohou obsahovat
+chyby; nalezené chyby prosím hlaste jako issue na https://github.com/NLCR/komplexni-validator/issues.
 
 ## Licence
 

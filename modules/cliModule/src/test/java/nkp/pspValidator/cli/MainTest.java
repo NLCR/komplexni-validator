@@ -79,6 +79,22 @@ public class MainTest {
     }
 
     @Test
+    public void helpNamesEveryDocumentTypeAbbreviation() throws Exception {
+        Main.main(null, new String[]{"--" + Params.HELP});
+        String o = stdout();
+        //rucne urceny seznam zkratek typu dokumentu (ne z Params), vcetne popisu z hlavicky napovedy
+        String[][] types = {{"mon", "Monografie"}, {"per", "Periodikum"}, {"adg", "gramodeska"}, {"adf", "fonovalec"},
+                {"adi", "Zvuk \u2013 disk"}, {"adn", "Zvuk \u2013 bez nosice"}, {"dad", "Datove disky"}, {"fdu", "Jednotka fondu"},
+                {"emo", "E-monografie"}, {"epe", "E-periodikum"}, {"sep", "Skladane e-periodikum"}};
+        for (String[] type : types) {
+            assertTrue(type[0] + " / " + type[1] + "\n" + o, o.contains("\n  " + type[0] + ": ") && o.contains(type[1]));
+        }
+        assertTrue(o, o.replaceAll("\\s+", " ").contains("aliasy emon, eper a comper"));
+        assertTrue(o, o.contains("KomplexniValidatorCLI.jar"));
+        assertTrue(o, o.contains("https://standardy.ndk.cz/"));
+    }
+
+    @Test
     public void versionPrintsVersion() throws Exception {
         Main.main(null, new String[]{"--" + Params.VERSION});
         assertTrue(stdout().contains("Komplexni validator CLI verze"));
