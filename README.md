@@ -15,7 +15,7 @@ Vydání obsahuje šest souborů (podrobně v [release.md](release.md)):
 | soubor | pro koho | Java |
 |---|---|---|
 | `KomplexniValidatorGUI-<verze>_Windows_x86_64_installer.exe` | instalátor GUI pro Windows x64, instaluje pro přihlášeného uživatele bez práv správce do `%LOCALAPPDATA%\KomplexniValidator` | nemusí být nainstalovaná |
-| `KomplexniValidatorGUI-<verze>_Windows_x86_64_portable.zip` | GUI pro Windows x64 bez instalace: rozbalit a spustit `KomplexniValidator.exe` | nemusí být nainstalovaná |
+| `KomplexniValidatorGUI-<verze>_Windows_x86_64_portable.zip` | GUI pro Windows x64 bez instalace: rozbalit a spustit `Komplexní validátor.exe` | nemusí být nainstalovaná |
 | `KomplexniValidatorGUI-<verze>_macOS_AppleSilicon_installer.dmg` | instalátor GUI pro macOS na Apple Silicon: aplikaci přetáhnout do Aplikací | nemusí být nainstalovaná |
 | `KomplexniValidatorGUI-<verze>_Linux_x64_portable.zip` | GUI pro Linux x64 bez instalace: rozbalit a spustit `bin/KomplexniValidator` | nemusí být nainstalovaná |
 | `KomplexniValidatorGUI-<verze>.zip` | GUI jako jar (`KomplexniValidatorGUI.jar`) a `validatorConfig/`, pro ostatní platformy | Java 17 nebo novější s JavaFX |

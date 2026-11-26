@@ -170,6 +170,8 @@ def WIN_UPGRADE_UUID = 'ee66a593-8af0-330e-8ca6-6eba6842a038'
 def JPACKAGE_VENDOR = 'Narodni knihovna CR'
 def JPACKAGE_DESCRIPTION = 'Komplexni validator baliku PSP'
 def WIN_MENU_GROUP = 'Komplexní validátor'
+def WIN_APP_NAME = 'Komplexní validátor'
+def WIN_INSTALL_DIR = 'KomplexniValidator'
 
 /*
  * macOS: do hotové aplikace přidá českou lokalizaci názvu (Contents/Resources/cs.lproj/InfoPlist.strings), aby systém
@@ -193,7 +195,10 @@ tasks.register('jpackage', Exec) {
     description = 'Sestaví instalátor nebo portable aplikaci GUI přes jpackage (viz komentář v build.gradle a release.md).'
     dependsOn 'shadowJar', 'syncValidatorConfigForJpackage'
 
-    def appName = 'KomplexniValidator'
+    // Na Windows se spouštěč jmenuje „Komplexní validátor.exe“: jpackage 17 bere název zástupce v nabídce Start a na
+    // ploše z názvu spouštěče (jinak by se zástupce jmenoval „KomplexniValidator“). Adresář instalace zůstává
+    // KomplexniValidator (--install-dir). Na Linuxu a macOS se název nemění (macOS má český název v cs.lproj).
+    def appName = System.getProperty('os.name').toLowerCase().startsWith('windows') ? WIN_APP_NAME : 'KomplexniValidator'
     def outputDir = layout.buildDirectory.dir('jpackage').get().asFile
     def inputDir = jpackageInputDir.get().asFile
     def appVersionString = project.version.toString()
@@ -221,7 +226,8 @@ tasks.register('jpackage', Exec) {
             platformOptions = ['--win-per-user-install', '--win-dir-chooser',
                                '--win-menu', '--win-menu-group', WIN_MENU_GROUP,
                                '--win-shortcut', '--win-shortcut-prompt',
-                               '--win-upgrade-uuid', WIN_UPGRADE_UUID]
+                               '--win-upgrade-uuid', WIN_UPGRADE_UUID,
+                               '--install-dir', WIN_INSTALL_DIR]
         } else if (osName.startsWith('linux')) {
             // stejná ikona jako v tools/release/docker-build-linux.sh
             iconPath = 'src/main/resources/img/appIcon/appIcon-256.png'
@@ -256,6 +262,8 @@ tasks.register('jpackage', Exec) {
                     if (opt in ['--win-menu-group', '--win-upgrade-uuid']) {
                         i++
                     }
+                } else if (opt == '--install-dir') {
+                    i++
                 } else {
                     withoutWin << opt
                 }
@@ -345,7 +353,8 @@ tasks.register('jpackage', Exec) {
                     throw new GradleException("jpackage: nelze přejmenovat ${appName} na ${dir.name}")
                 }
                 if (platformLabel.startsWith('Windows')) {
-                    ant.zip(destfile: zipFile, basedir: outputDir, includes: "${dir.name}/**")
+                    // UTF-8: název spouštěče má diakritiku
+                    ant.zip(destfile: zipFile, basedir: outputDir, includes: "${dir.name}/**", encoding: 'UTF-8')
                 } else {
                     project.exec {
                         workingDir outputDir

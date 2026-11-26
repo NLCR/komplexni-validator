@@ -16,7 +16,7 @@ import java.util.regex.Pattern;
  * <ul>
  * <li>Aplikace z jpackage (instalátor, portable; spouštěč nastavuje systémovou vlastnost {@code jpackage.app-path}
  * na cestu ke spouštěči): Linux spustí znovu tentýž spouštěč ({@code bin/KomplexniValidator}) se stejným pracovním
- * adresářem. Na Windows se spouštěč ({@code KomplexniValidator.exe}) předá Průzkumníku ({@code explorer.exe <spouštěč>}),
+ * adresářem. Na Windows se spouštěč ({@code Komplexní validátor.exe}) předá Průzkumníku ({@code explorer.exe <spouštěč>}),
  * tedy stejně jako při spuštění poklepáním: proces spuštěný přímo z běžící aplikace by skončil spolu s ní (ověřeno
  * 24. 11. 2026 na Windows 11 s instalátorem z jpackage 17: nová instance se objevila a po ukončení staré zmizela).
  * {@code explorer.exe} skončí hned a jeho návratový kód o výsledku nevypovídá (vrací 1 i při úspěchu). Na macOS je spouštěč binárka uvnitř balíčku

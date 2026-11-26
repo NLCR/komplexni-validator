@@ -16,7 +16,7 @@ Každý release má šest souborů, `<tag>` je např. `v2.8`:
 | `KomplexniValidatorGUI-<tag>_Windows_x86_64_installer.exe` | instalátor pro Windows x64 | ručně na Windows |
 | `KomplexniValidatorGUI-<tag>_macOS_AppleSilicon_installer.dmg` | instalátor pro macOS na Apple Silicon (arm64) | ručně na Macu s Apple Silicon |
 
-**Portable** je aplikace, která se neinstaluje: zip se rozbalí kamkoli a spustí se `KomplexniValidator.exe` (Windows)
+**Portable** je aplikace, která se neinstaluje: zip se rozbalí kamkoli a spustí se `Komplexní validátor.exe` (Windows)
 nebo `bin/KomplexniValidator` (Linux). Obsahuje vlastní Javu (adresář `runtime`), na stroji tedy nemusí být Java
 a nejsou potřeba práva správce. Technicky jde o výstup `jpackage --type app-image`, tedy totéž, co instalátor
 nakopíruje do cílového adresáře. Konfigurace validace je uvnitř v `app/validatorConfig` (Linux `lib/app/validatorConfig`),
@@ -122,7 +122,7 @@ podle tabulky výše. V `build.gradle` se před buildem nic ručně nemění. `v
    (`...\KomplexniValidator\app\validatorConfig`), validace balíčku proběhne. Odinstalace přes Nastavení → Aplikace.
    Instalace vyšší verze přes nižší starou nahradí; stejná verze (beta a finální mají stejné číslo `x.y.0`) hlásí, že
    je produkt už nainstalovaný, betu je pak nutné nejdřív odinstalovat.
-5. Kontrola portable: zip rozbalit jinam, spustit `KomplexniValidator.exe`, „O aplikaci“ jako výše.
+5. Kontrola portable: zip rozbalit jinam, spustit `Komplexní validátor.exe`, „O aplikaci“ jako výše.
 
 ### macOS dmg (ručně na Macu s Apple Silicon)
 
