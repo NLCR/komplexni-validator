@@ -89,7 +89,7 @@ public class ExternalToolsTest {
 
     @Test
     public void installationUrls() {
-        String wiki = "https://github.com/NLCR/komplexni-validator/wiki/Instalace#";
+        String wiki = "https://github.com/NLCR/komplexni-validator/wiki/Instalace-3.0-beta#";
         assertEquals(wiki + "jhove", ExternalTools.installationUrl(JHOVE));
         assertEquals(wiki + "jpylyzer", ExternalTools.installationUrl(JPYLYZER));
         assertEquals(wiki + "imagemagick", ExternalTools.installationUrl(IMAGE_MAGICK));

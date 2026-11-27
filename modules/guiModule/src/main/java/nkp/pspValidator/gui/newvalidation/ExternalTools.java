@@ -22,10 +22,14 @@ public final class ExternalTools {
     /**
      * Návod k instalaci nástrojů na wiki projektu: oddíl „Instalace nástrojů pro validaci obrazových/zvukových
      * souborů“ (GitHub v kotvě lomítko vypouští).
+     * <p>
+     * DOČASNĚ PRO BETU 3.0: odkazy míří na stránky wiki s příponou {@code -3.0-beta}; hlavní stránky wiki zůstávají do
+     * vydání finální 3.0 pro verzi 2.9. Před finální 3.0 vrátit na {@code wiki/Instalace} (hlídá test
+     * {@code WikiLinksTest}: u verze bez přípony předvydání selže).
      */
-    public static final String INSTALLATION_HELP_URL = "https://github.com/NLCR/komplexni-validator/wiki/Instalace#instalace-n%C3%A1stroj%C5%AF-pro-validaci-obrazov%C3%BDchzvukov%C3%BDch-soubor%C5%AF";
+    public static final String INSTALLATION_HELP_URL = "https://github.com/NLCR/komplexni-validator/wiki/Instalace-3.0-beta#instalace-n%C3%A1stroj%C5%AF-pro-validaci-obrazov%C3%BDchzvukov%C3%BDch-soubor%C5%AF";
 
-    private static final String INSTALLATION_URL_PREFIX = "https://github.com/NLCR/komplexni-validator/wiki/Instalace#";
+    private static final String INSTALLATION_URL_PREFIX = "https://github.com/NLCR/komplexni-validator/wiki/Instalace-3.0-beta#";
 
     /**
      * Podporované (ověřené) verze nástrojů: oddíl „Podporované verze nástrojů“ v README na větvi master, jediné místo,

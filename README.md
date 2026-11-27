@@ -200,7 +200,7 @@ Nástroje se instalují z oficiálních stránek projektů: [ImageMagick](https:
 [shntool](http://shnutils.freeshell.org/shntool/), [Checkmate](https://github.com/Sjord/checkmate),
 [veraPDF](https://verapdf.org/), [EPUBCheck](https://github.com/w3c/epubcheck); instalátory nejsou součástí
 repozitáře ani vydaných zipů. Postup instalace pro Windows, macOS a Linux je na wiki, stránka
-[Instalace](https://github.com/NLCR/komplexni-validator/wiki/Instalace).
+[Instalace](https://github.com/NLCR/komplexni-validator/wiki/Instalace-3.0-beta).
 
 ### veraPDF a EPUBCheck (e-publikace)
 

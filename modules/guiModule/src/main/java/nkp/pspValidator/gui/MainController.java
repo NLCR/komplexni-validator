@@ -92,7 +92,8 @@ public class MainController extends AbstractController implements ValidationStat
     private static Logger LOG = Logger.getLogger(MainController.class.getSimpleName());
 
     //TODO: nahradit konkretni wiki strankou
-    private static final String URL_ONLINE_HELP = "https://github.com/NLCR/komplexni-validator/wiki";
+    /** DOČASNĚ PRO BETU 3.0: úvodní stránka dokumentace bety; před finální 3.0 vrátit na kořen wiki (hlídá WikiLinksTest). */
+    static final String URL_ONLINE_HELP = "https://github.com/NLCR/komplexni-validator/wiki/Home-3.0-beta";
     /** Bublina „Validovat znovu“ (tlačítko a položka menu). */
     static final String RERUN_TOOLTIP = "Spustí validaci stejného zdroje znovu, bez dialogu. Z dialogu Nová validace se "
             + "použijí stejné volby (vynucené verze, vypnuté nástroje, výstupy, podrobnost logu), z Nastavení aktuální "
