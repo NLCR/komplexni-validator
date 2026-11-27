@@ -84,13 +84,15 @@ public class MainTest {
         String o = stdout();
         //rucne urceny seznam zkratek typu dokumentu (ne z Params), vcetne popisu z hlavicky napovedy
         String[][] types = {{"mon", "Monografie"}, {"per", "Periodikum"}, {"adg", "gramodeska"}, {"adf", "fonovalec"},
-                {"adi", "Zvuk \u2013 disk"}, {"adn", "Zvuk \u2013 bez nosice"}, {"dad", "Datove disky"}, {"fdu", "Jednotka fondu"},
+                {"adi", "Zvuk - disk"}, {"adn", "Zvuk - bez nosice"}, {"dad", "Datove disky"}, {"fdu", "Jednotka fondu"},
                 {"emo", "E-monografie"}, {"epe", "E-periodikum"}, {"sep", "Skladane e-periodikum"}};
         for (String[] type : types) {
             assertTrue(type[0] + " / " + type[1] + "\n" + o, o.contains("\n  " + type[0] + ": ") && o.contains(type[1]));
         }
         assertTrue(o, o.replaceAll("\\s+", " ").contains("aliasy emon, eper a comper"));
         assertTrue(o, o.contains("KomplexniValidatorCLI.jar"));
+        //napoveda se vypisuje ve vychozim kodovani systemu (na Windows cp1250, konzole cp852), proto jen ASCII
+        assertTrue(o, o.matches("\\p{ASCII}*"));
         assertTrue(o, o.contains("https://standardy.ndk.cz/"));
     }
 
@@ -422,17 +424,14 @@ public class MainTest {
     }
 
     /**
-     * Zname chovani: neexistujici --psp konci neodchycenou IllegalStateException (zadna uzivatelska hlaska).
-     * Test fixuje soucasny stav.
+     * Neexistujici balik: srozumitelna hlaska na chybovy vystup, zadna vyjimka (do 27. 11. 2026 IllegalStateException
+     * a vypis zasobniku). Navratovy kod overuje ExitCodesTest.
      */
     @Test
-    public void validatePspNonexistentPspThrowsIllegalState() throws Exception {
-        try {
-            Main.main(null, validateArgs(new File(tmp.getRoot(), "neexistuje").getPath()));
-            fail("ocekavana IllegalStateException");
-        } catch (IllegalStateException e) {
-            assertTrue(e.getMessage(), e.getMessage().contains("neexistuje"));
-        }
+    public void validatePspNonexistentPspReportsError() throws Exception {
+        File missing = new File(tmp.getRoot(), "neexistuje");
+        Main.main(null, validateArgs(missing.getPath()));
+        assertEquals("Chyba: bal\u00edk " + missing.getAbsolutePath() + " neexistuje!", stderr().trim());
     }
 
     @Test

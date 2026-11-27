@@ -44,13 +44,27 @@ public class Main {
 
     public static int DEFAULT_VERBOSITY = 2;
 
-    /** Běžné ukončení (i když balík validací neprošel, výsledek je v protokolu). */
+    /**
+     * CLI doběhlo: validace proběhla a protokol vznikl (balík může být validní i nevalidní, verdikt je v protokolu
+     * a na výstupu), nebo byla vyžádána nápověda či verze.
+     */
     static final int EXIT_OK = 0;
     /**
-     * Balík se nezvalidoval a protokol nevznikl, protože pro zjištěný typ a verzi DMF není definovaná fDMF. Stejný kód
-     * jako u neexistujícího balíku (neodchycená výjimka, JVM skončí kódem 1).
+     * Balík (nebo aspoň jeden balík skupiny) se nezvalidoval a protokol nevznikl: pro zjištěný typ a verzi DMF není
+     * definovaná fDMF, balík nejde přečíst nebo rozbalit, nebo jeho data nejdou zpracovat. Stejný kód jako u
+     * neodchycené výjimky (např. neexistující balík), kdy JVM skončí kódem 1.
      */
     static final int EXIT_PSP_NOT_VALIDATED = 1;
+    /**
+     * Chyba použití: chybějící nebo neznámý parametr či akce, chybná hodnota parametru, chyba parsování parametrů.
+     * Vypíše se hláška na chybový výstup a nápověda.
+     */
+    static final int EXIT_USAGE_ERROR = 2;
+    /**
+     * Chyba konfigurace validátoru ({@link ValidatorConfigurationException}): adresář konfigurace neexistuje, chybí
+     * v něm manifest.properties, má jinou hlavní verzi nebo je konfigurace jinak vadná.
+     */
+    static final int EXIT_CONFIG_ERROR = 3;
 
     public static void main(String[] args) throws PspDataException, XmlFileParsingException, InvalidXPathExpressionException, FdmfRegistry.UnknownFdmfException, ValidatorConfigurationException, FdmfRegistry.UnknownFdmfException {
         int exitCode = run(null, args);
@@ -568,7 +582,7 @@ public class Main {
                 if (!line.hasOption(Params.ACTION)) {
                     System.err.println(String.format("Chyba: prázdný parametr %s!", Params.ACTION));
                     printHelp(options);
-                    return EXIT_OK;
+                    return EXIT_USAGE_ERROR;
                 }
                 String actionStr = line.getOptionValue(Params.ACTION);
                 Action action;
@@ -577,7 +591,7 @@ public class Main {
                 } catch (java.lang.IllegalArgumentException e) {
                     System.err.println(String.format("Chyba: neznámá akce %s!", actionStr));
                     printHelp(options);
-                    return EXIT_OK;
+                    return EXIT_USAGE_ERROR;
                 }
 
                 //config dir
@@ -589,7 +603,7 @@ public class Main {
                         if (!line.hasOption(Params.CONFIG_DIR)) {
                             System.err.println(String.format("Chyba: pro akci %s je parametr --%s povinný!", action, Params.CONFIG_DIR));
                             printHelp(options);
-                            return EXIT_OK;
+                            return EXIT_USAGE_ERROR;
                         }
                         configDir = new File(line.getOptionValue(Params.CONFIG_DIR));
                 }
@@ -603,9 +617,14 @@ public class Main {
                         if (!line.hasOption(Params.PSP)) {
                             System.err.println(String.format("Chyba: pro akci %s je parametr --%s povinný!", action, Params.PSP));
                             printHelp(options);
-                            return EXIT_OK;
+                            return EXIT_USAGE_ERROR;
                         } else {
                             psp = new File(line.getOptionValue(Params.PSP));
+                            if (!psp.exists()) {
+                                // srozumitelná hláška místo neodchycené výjimky z pozdější kontroly
+                                System.err.println(String.format("Chyba: balík %s neexistuje!", psp.getAbsolutePath()));
+                                return EXIT_PSP_NOT_VALIDATED;
+                            }
                             break;
                         }
                     }
@@ -613,9 +632,13 @@ public class Main {
                         if (!line.hasOption(Params.PSP_GROUP)) {
                             System.err.println(String.format("Chyba: pro akci %s je parametr --%s povinný!", action, Params.PSP_GROUP));
                             printHelp(options);
-                            return EXIT_OK;
+                            return EXIT_USAGE_ERROR;
                         } else {
                             pspGroup = new File(line.getOptionValue(Params.PSP_GROUP));
+                            if (!pspGroup.exists()) {
+                                System.err.println(String.format("Chyba: skupina balíků %s neexistuje!", pspGroup.getAbsolutePath()));
+                                return EXIT_PSP_NOT_VALIDATED;
+                            }
                             break;
                         }
                     }
@@ -627,7 +650,7 @@ public class Main {
                         if (!line.hasOption(Params.MINIFIED_PSP_DIR)) {
                             System.err.println(String.format("Chyba: pro akci %s je parametr --%s povinný!", action, Params.MINIFIED_PSP_DIR));
                             printHelp(options);
-                            return EXIT_OK;
+                            return EXIT_USAGE_ERROR;
                         } else {
                             minifiedPspDir = new File(line.getOptionValue(Params.MINIFIED_PSP_DIR));
                             break;
@@ -658,14 +681,14 @@ public class Main {
                         if (!line.hasOption(Params.METADATA_PROFILE_ID)) {
                             System.err.println(String.format("Chyba: pro akci %s je parametr --%s povinný!", action, Params.METADATA_PROFILE_ID));
                             printHelp(options);
-                            return EXIT_OK;
+                            return EXIT_USAGE_ERROR;
                         } else {
                             metadataProfileId = line.getOptionValue(Params.METADATA_PROFILE_ID);
                         }
                         if (!line.hasOption(Params.METADATA_FILE)) {
                             System.err.println(String.format("Chyba: pro akci %s je parametr --%s povinný!", action, Params.METADATA_FILE));
                             printHelp(options);
-                            return EXIT_OK;
+                            return EXIT_USAGE_ERROR;
                         } else {
                             metadataFile = new File(line.getOptionValue(Params.METADATA_FILE));
                         }
@@ -682,12 +705,12 @@ public class Main {
                         if (quitAfterInvalidPsps < 1) {
                             System.err.println(String.format("Chyba: hodnota parametru --%s musí být celé kladné číslo!", Params.QUIT_AFTER_NTH_INVALID_PSP));
                             printHelp(options);
-                            return EXIT_OK;
+                            return EXIT_USAGE_ERROR;
                         }
                     } catch (NumberFormatException e) {
                         System.err.println(String.format("Chyba: hodnota parametru --%s musí být celé kladné číslo!", Params.QUIT_AFTER_NTH_INVALID_PSP));
                         printHelp(options);
-                        return EXIT_OK;
+                        return EXIT_USAGE_ERROR;
                     }
                 }*/
 
@@ -773,7 +796,7 @@ public class Main {
                     } catch (IllegalArgumentException e) {
                         System.err.println(String.format("Chyba: %s!", e.getMessage()));
                         printHelp(options);
-                        return EXIT_OK;
+                        return EXIT_USAGE_ERROR;
                     }
                 }
 
@@ -785,12 +808,12 @@ public class Main {
                         if (verbosity < 0 || verbosity > 3) {
                             System.err.println(String.format("Chyba: hodnota parametru --%s musí být číslo (0-3)!", Params.VERBOSITY));
                             printHelp(options);
-                            return EXIT_OK;
+                            return EXIT_USAGE_ERROR;
                         }
                     } catch (NumberFormatException e) {
                         System.err.println(String.format("Chyba: hodnota parametru --%s musí být číslo (0-3)!", Params.VERBOSITY));
                         printHelp(options);
-                        return EXIT_OK;
+                        return EXIT_USAGE_ERROR;
                     }
                 }
 
@@ -890,25 +913,22 @@ public class Main {
 
                 switch (action) {
                     case VALIDATE_PSP:
-                        validatePsp(psp,
+                        return validatePsp(psp,
                                 configDir, tmpDir,
                                 verbosity, out, err, xmlProtocolDir, xmlProtocolFile,
                                 dmfDetectorParams,
                                 utilsPaths, utilsDisabled,
                                 devParams);
-                        break;
                     case VALIDATE_PSP_GROUP:
-                        validatePspGroup(pspGroup,
+                        return validatePspGroup(pspGroup,
                                 configDir, tmpDir,
                                 verbosity, out, err, xmlProtocolDir,
                                 dmfDetectorParams,
                                 utilsPaths, utilsDisabled,
                                 devParams);
-                        break;
                     case BUILD_MINIFIED_PACKAGE:
                         //TODO: level validace do CLI
-                        buildMinifiedPackage(psp, minifiedPspDir, 3);
-                        break;
+                        return buildMinifiedPackage(psp, minifiedPspDir, 3);
                     case VALIDATE_METADATA_BY_PROFILE:
                         long startTime = System.currentTimeMillis();
                         ValidationResult result = validateMetadataByProfile(configDir, metadataProfileId, metadataFile);
@@ -934,6 +954,9 @@ public class Main {
                             } else {
                                 System.out.println("Nenalezeny žádné problémy po validaci souboru " + metadataFile.getName() + " oproti profilu " + metadataProfileId);
                             }
+                        } else {
+                            //nevalidni identifikator profilu (hlaska je uz vypsana), nic se nevalidovalo
+                            return EXIT_USAGE_ERROR;
                         }
                         break;
                     case DEV:
@@ -944,12 +967,17 @@ public class Main {
         } catch (ParseException exp) {
             System.err.println("Chyba parsování parametrů: " + exp.getMessage());
             printHelp(options);
+            return EXIT_USAGE_ERROR;
         } catch (XmlFileParsingException e) {
+            //konfigurace se nacita jen pres ValidatorConfigurationException, tady jde vzdy o XML balíku
             System.err.println("Chyba:" + e.getMessage());
+            return EXIT_PSP_NOT_VALIDATED;
         } catch (ValidatorConfigurationException e) {
             System.err.println("Chyba:" + e.getMessage());
+            return EXIT_CONFIG_ERROR;
         } catch (PspDataException e) {
             System.err.println("Chyba:" + e.getMessage());
+            return EXIT_PSP_NOT_VALIDATED;
         } catch (FdmfRegistry.UnknownFdmfException e) {
             System.err.println("Chyba:" + e.getMessage());
             return EXIT_PSP_NOT_VALIDATED;
@@ -958,11 +986,14 @@ public class Main {
             return EXIT_PSP_NOT_VALIDATED;
         } catch (InvalidXPathExpressionException e) {
             System.err.println("Chyba:" + e.getMessage());
+            return EXIT_PSP_NOT_VALIDATED;
         }
         return EXIT_OK;
     }
 
-    private static ValidationResult validateMetadataByProfile(File validatorConfigDir, String profileId, File metadataFile) {
+    private static ValidationResult validateMetadataByProfile(File validatorConfigDir, String profileId, File metadataFile) throws ValidatorConfigurationException {
+        // tato akce nenačítá celou konfiguraci přes ValidatorConfigurationManager, manifest se proto kontroluje tady
+        nkp.pspValidator.shared.ConfigManifest.check(validatorConfigDir);
         try {
             System.out.println("Validuji oproti profilu " + profileId + " soubor " + metadataFile);
             String[] profileTokens = profileId.split(":");
@@ -1026,8 +1057,6 @@ public class Main {
                     System.out.println("Neznámý typ profilu: " + profileTokens[1] + " (fDmf=" + profileTokens[0] + ")");
                     return null;
             }
-        } catch (ValidatorConfigurationException e) {
-            throw new RuntimeException(e);
         } catch (XPathExpressionException e) {
             throw new RuntimeException(e);
         } catch (ParserConfigurationException e) {
@@ -1046,16 +1075,20 @@ public class Main {
         nkp.pspValidator.shared.Main.templateTest();
     }
 
-    private static void buildMinifiedPackage(File pspDirOrZipFile, File minifiedPspDir, int level) {
+    /** @return {@link #EXIT_OK}, {@link #EXIT_USAGE_ERROR} (nepoužitelný cílový adresář) nebo {@link #EXIT_PSP_NOT_VALIDATED} (balík nejde zpracovat) */
+    private static int buildMinifiedPackage(File pspDirOrZipFile, File minifiedPspDir, int level) {
         System.out.println("Vyrábím minifikovaný psp balík ze zdrojového balíku " + pspDirOrZipFile.getAbsolutePath());
         System.out.println("Výsledek bude uložen do adresáře " + minifiedPspDir.getAbsolutePath());
         //checkou minifiedPspDir
         if (!minifiedPspDir.exists()) {
             System.err.println(String.format("Chyba: adresář %s neexistuje!", minifiedPspDir.getAbsolutePath()));
+            return EXIT_USAGE_ERROR;
         } else if (!minifiedPspDir.isDirectory()) {
             System.err.println(String.format("Chyba: soubor %s není adresář!", minifiedPspDir.getAbsolutePath()));
+            return EXIT_USAGE_ERROR;
         } else if (!minifiedPspDir.canWrite()) {
             System.err.println(String.format("Chyba: nemůžu zapisovat do adresáře %s!", minifiedPspDir.getAbsolutePath()));
+            return EXIT_USAGE_ERROR;
         } else if (!pspDirOrZipFile.exists()) {
             throw new IllegalStateException(String.format("Soubor %s neexistuje", pspDirOrZipFile.getAbsolutePath()));
         } else {
@@ -1065,31 +1098,37 @@ public class Main {
                         throw new IllegalStateException(String.format("Nelze číst adresář %s", pspDirOrZipFile.getAbsolutePath()));
                     }
                     minifyPspDir(pspDirOrZipFile, minifiedPspDir, level);
-                } else {
-                    minifyPspZip(pspDirOrZipFile, minifiedPspDir, minifiedPspDir, level);
+                } else if (!minifyPspZip(pspDirOrZipFile, minifiedPspDir, minifiedPspDir, level)) {
+                    return EXIT_PSP_NOT_VALIDATED;
                 }
             } catch (IOException e) {
                 throw new IllegalStateException("Chyba při minifikaci ", e);
             }
         }
+        return EXIT_OK;
     }
 
-    private static void minifyPspZip(File pspZipFile, File tmpRootDir, File minifiedRootDir, int level) throws IOException {
+    /** @return {@code true}, pokud se balík zminifikoval */
+    private static boolean minifyPspZip(File pspZipFile, File tmpRootDir, File minifiedRootDir, int level) throws IOException {
         try {
             try {
                 new ZipFile(pspZipFile);
             } catch (ZipException e) {
                 System.out.println(String.format("Soubor %s není adresář ani soubor ZIP, ignoruji.", pspZipFile.getAbsolutePath()));
-                return;
+                return false;
             }
             if (tmpRootDir == null) {
                 System.err.println(String.format("Chyba: prázdný parametr --%s: adresář pro dočasné soubory je potřeba pro rozbalení ZIP souboru %s!", Params.TMP_DIR, pspZipFile.getAbsolutePath()));
+                return false;
             } else if (!tmpRootDir.exists()) {
                 System.err.println(String.format("Chyba: adresář %s neexistuje!", pspZipFile.getAbsolutePath()));
+                return false;
             } else if (!tmpRootDir.isDirectory()) {
                 System.err.println(String.format("Chyba: soubor %s není adresář!", pspZipFile.getAbsolutePath()));
+                return false;
             } else if (!tmpRootDir.canWrite()) {
                 System.err.println(String.format("Chyba: nemůžu zapisovat do adresáře %s!", pspZipFile.getAbsolutePath()));
+                return false;
             } else {
                 File tmpPspDir = new File(tmpRootDir, pspZipFile.getName() + "_extracted");
                 if (tmpPspDir.exists()) {
@@ -1104,7 +1143,9 @@ public class Main {
             }
         } catch (IOException e) {
             System.out.println(String.format("Chyba zpracování ZIP souboru %s: %s!", pspZipFile.getAbsolutePath(), e.getMessage()));
+            return false;
         }
+        return true;
     }
 
     /**
@@ -1190,6 +1231,10 @@ public class Main {
         replacements.put("Ů", "U");
         replacements.put("ú", "u");
         replacements.put("Ú", "U");
+        replacements.put("ý", "y");
+        replacements.put("Ý", "Y");
+        // pomlčka: nápověda se vypisuje ve výchozím kódování systému, na Windows by z ní vznikl nečitelný znak
+        replacements.put("–", "-");
 
         replacements.put("č", "c");
         replacements.put("Č", "C");
@@ -1248,7 +1293,17 @@ public class Main {
                 "Výroba minifikovaného balíku:\n" +
                 "----------------------------\n" +
                 "Bude vyrobena kopie balíku s tím, že textové a obrazové soubory budou nahrazny prázdnými soubory se stejným jménem." +
-                "\n\n");
+                "\n\n" +
+                "Návratové kódy:\n" +
+                "--------------\n" +
+                "  0: validace proběhla a protokol vznikl (balík může být validní i nevalidní, verdikt je ve výpisu a v protokolu)," +
+                " nebo byla vyžádána nápověda či verze\n" +
+                "  1: balík (u skupiny aspoň jeden balík) se nezvalidoval, např. pro jeho typ a verzi DMF není fDMF, balík neexistuje" +
+                " nebo nejde přečíst či rozbalit\n" +
+                "  2: chyba použití, tj. chybějící nebo neznámý parametr či akce, chybná hodnota parametru\n" +
+                "  3: chyba konfigurace validátoru (adresář --config-dir neexistuje, chybí v něm manifest.properties," +
+                " má jinou hlavní verzi nebo je vadný)\n" +
+                "\n");
         String footer = replaceUmlaut("\n*Definice metadatových formátů. Více na https://standardy.ndk.cz/.\n" +
                 "Více informací o validátoru najdete na https://github.com/NLCR/komplexni-validator.");
         HelpFormatter formatter = new HelpFormatter();
@@ -1265,7 +1320,18 @@ public class Main {
         }
     }
 
-    private static void validatePspGroup(File pspGroup,
+    /** Výsledek zpracování jednoho balíku (adresáře nebo ZIPu). */
+    private enum PspOutcome {
+        /** Validace proběhla a protokol vznikl (pokud byl požadován). */
+        VALIDATED,
+        /** Soubor, který není adresář ani ZIP, se přeskočil (ve skupině balíků to není chyba). */
+        IGNORED,
+        /** Balík se nezvalidoval. */
+        NOT_VALIDATED
+    }
+
+    /** @return {@link #EXIT_OK}, nebo {@link #EXIT_PSP_NOT_VALIDATED}, pokud se aspoň jeden balík skupiny nezvalidoval */
+    private static int validatePspGroup(File pspGroup,
                                          File configDir, File tmpDir,
                                          Integer verbosity, PrintStream out, PrintStream err,
                                          File xmlProtocolDir,
@@ -1293,24 +1359,29 @@ public class Main {
                 if (!pspGroup.canRead()) {
                     throw new IllegalStateException(String.format("Nelze číst adresář %s", pspGroup.getAbsolutePath()));
                 }
-                validatePspGroupDir(pspGroup,
+                return exitCode(validatePspGroupDir(pspGroup,
                         tmpDir,
                         externalUtilManager, validatorConfigManager, fdmfRegistry,
                         verbosity, out, err, xmlProtocolDir,
                         dmfDetectorParams,
-                        devParams);
+                        devParams));
             } else {
-                validatePspGroupZip(pspGroup,
+                return exitCode(validatePspGroupZip(pspGroup,
                         tmpDir,
                         externalUtilManager, validatorConfigManager, fdmfRegistry,
                         verbosity, out, err, xmlProtocolDir,
                         dmfDetectorParams,
-                        devParams);
+                        devParams));
             }
         }
     }
 
-    private static void validatePspGroupZip(File pspGroupFile,
+    private static int exitCode(boolean allValidated) {
+        return allValidated ? EXIT_OK : EXIT_PSP_NOT_VALIDATED;
+    }
+
+    /** @return {@code false}, pokud se nějaký balík nezvalidoval */
+    private static boolean validatePspGroupZip(File pspGroupFile,
                                             File tmpDir,
                                             ExternalUtilManager externalUtilManager, ValidatorConfigurationManager validatorConfigManager,
                                             FdmfRegistry fdmfRegistry,
@@ -1323,16 +1394,20 @@ public class Main {
                 new ZipFile(pspGroupFile);
             } catch (ZipException e) {
                 out.println(String.format("Soubor %s není adresář ani soubor ZIP, ignoruji.", pspGroupFile.getAbsolutePath()));
-                return;
+                return false;
             }
             if (tmpDir == null) {
                 err.println(String.format("Chyba: prázdný parametr --%s: adresář pro dočasné soubory je potřeba pro rozbalení ZIP souboru %s!", Params.TMP_DIR, pspGroupFile.getAbsolutePath()));
+                return false;
             } else if (!tmpDir.exists()) {
                 err.println(String.format("Chyba: adresář %s neexistuje!", tmpDir.getAbsolutePath()));
+                return false;
             } else if (!tmpDir.isDirectory()) {
                 err.println(String.format("Chyba: soubor %s není adresář!", tmpDir.getAbsolutePath()));
+                return false;
             } else if (!tmpDir.canWrite()) {
                 err.println(String.format("Chyba: nemůžu zapisovat do adresáře %s!", tmpDir.getAbsolutePath()));
+                return false;
             } else {
                 File containerDir = new File(tmpDir, pspGroupFile.getName() + "_extracted");
                 if (containerDir.exists()) {
@@ -1343,14 +1418,14 @@ public class Main {
                 Utils.unzip(pspGroupFile, containerDir);
                 File[] filesInContainer = containerDir.listFiles();
                 if (filesInContainer.length == 1 && filesInContainer[0].isDirectory()) {
-                    validatePspGroupDir(filesInContainer[0],
+                    return validatePspGroupDir(filesInContainer[0],
                             tmpDir,
                             externalUtilManager, validatorConfigManager, fdmfRegistry,
                             verbosity, out, err, xmlProtocolDir,
                             dmfDetectorParams,
                             devParams);
                 } else {
-                    validatePspGroupDir(containerDir,
+                    return validatePspGroupDir(containerDir,
                             tmpDir,
                             externalUtilManager, validatorConfigManager, fdmfRegistry,
                             verbosity, out, err, xmlProtocolDir,
@@ -1360,10 +1435,12 @@ public class Main {
             }
         } catch (IOException e) {
             out.println(String.format("Chyba zpracování ZIP souboru %s: %s!", pspGroupFile.getAbsolutePath(), e.getMessage()));
+            return false;
         }
     }
 
-    private static void validatePspGroupDir(File pspGroupDir,
+    /** @return {@code false}, pokud se nějaký balík nezvalidoval (ostatní se zvalidují dál) */
+    private static boolean validatePspGroupDir(File pspGroupDir,
                                             File tmpDir,
                                             ExternalUtilManager externalUtilManager, ValidatorConfigurationManager validatorConfigManager,
                                             FdmfRegistry fdmfRegistry,
@@ -1371,19 +1448,25 @@ public class Main {
                                             File xmlProtocolDir,
                                             DmfDetector.Params dmfDetectorParams,
                                             Validator.DevParams devParams) throws XmlFileParsingException, FdmfRegistry.UnknownFdmfException, PspDataException, ValidatorConfigurationException, InvalidXPathExpressionException {
+        boolean allValidated = true;
         for (File pspDirOrZip : pspGroupDir.listFiles()) {
             //TODO: pocitat nevalidni baliky
-            validatePspDirOrZip(pspDirOrZip,
+            PspOutcome outcome = validatePspDirOrZip(pspDirOrZip,
                     tmpDir,
                     externalUtilManager, validatorConfigManager, fdmfRegistry,
                     verbosity, out, err,
                     xmlProtocolDir, null,
                     dmfDetectorParams,
                     devParams);
+            if (outcome == PspOutcome.NOT_VALIDATED) {
+                allValidated = false;
+            }
         }
+        return allValidated;
     }
 
-    private static void validatePsp(File pspDirOrZipFile,
+    /** @return {@link #EXIT_OK}, nebo {@link #EXIT_PSP_NOT_VALIDATED}, pokud se balík nezvalidoval */
+    private static int validatePsp(File pspDirOrZipFile,
                                     File configDir, File tmpDir,
                                     Integer verbosity, PrintStream out, PrintStream err,
                                     File xmlProtocolDir, File xmlProtocolFile,
@@ -1402,19 +1485,20 @@ public class Main {
         detectImageTools(out, externalUtilManager, utilsDisabled);
         FdmfRegistry fdmfRegistry = new FdmfRegistry(validatorConfigManager);
 
-        validatePspDirOrZip(pspDirOrZipFile,
+        PspOutcome outcome = validatePspDirOrZip(pspDirOrZipFile,
                 tmpDir,
                 externalUtilManager, validatorConfigManager, fdmfRegistry,
                 verbosity, out, err,
                 xmlProtocolDir, xmlProtocolFile,
                 dmfDetectorParams,
                 devParams);
+        return outcome == PspOutcome.VALIDATED ? EXIT_OK : EXIT_PSP_NOT_VALIDATED;
     }
 
     /**
      * Validace jednoho balicku (adresar nebo ZIP) s uz inicializovanou konfiguraci, nastroji a registrem fDMF.
      */
-    private static void validatePspDirOrZip(File pspDirOrZipFile,
+    private static PspOutcome validatePspDirOrZip(File pspDirOrZipFile,
                                             File tmpDir,
                                             ExternalUtilManager externalUtilManager, ValidatorConfigurationManager validatorConfigManager,
                                             FdmfRegistry fdmfRegistry,
@@ -1430,13 +1514,13 @@ public class Main {
                 if (!pspDirOrZipFile.canRead()) {
                     throw new IllegalStateException(String.format("Nelze číst adresář %s", pspDirOrZipFile.getAbsolutePath()));
                 }
-                validatePspDir(pspDirOrZipFile,
+                return validatePspDir(pspDirOrZipFile,
                         externalUtilManager, validatorConfigManager, fdmfRegistry,
                         out, verbosity, xmlProtocolDir, xmlProtocolFile,
                         dmfDetectorParams,
                         devParams);
             } else {
-                validatePspZip(pspDirOrZipFile,
+                return validatePspZip(pspDirOrZipFile,
                         tmpDir,
                         externalUtilManager, validatorConfigManager, fdmfRegistry,
                         out, err, verbosity, xmlProtocolDir, xmlProtocolFile,
@@ -1446,7 +1530,7 @@ public class Main {
         }
     }
 
-    private static void validatePspZip(File pspZipFile,
+    private static PspOutcome validatePspZip(File pspZipFile,
                                        File tmpDir,
                                        ExternalUtilManager externalUtilManager, ValidatorConfigurationManager validatorConfigManager,
                                        FdmfRegistry fdmfRegistry,
@@ -1459,16 +1543,20 @@ public class Main {
                 new ZipFile(pspZipFile);
             } catch (ZipException e) {
                 out.println(String.format("Soubor %s není adresář ani soubor ZIP, ignoruji.", pspZipFile.getAbsolutePath()));
-                return;
+                return PspOutcome.IGNORED;
             }
             if (tmpDir == null) {
                 err.println(String.format("Chyba: prázdný parametr --%s: adresář pro dočasné soubory je potřeba pro rozbalení ZIP souboru %s!", Params.TMP_DIR, pspZipFile.getAbsolutePath()));
+                return PspOutcome.NOT_VALIDATED;
             } else if (!tmpDir.exists()) {
                 err.println(String.format("Chyba: adresář %s neexistuje!", pspZipFile.getAbsolutePath()));
+                return PspOutcome.NOT_VALIDATED;
             } else if (!tmpDir.isDirectory()) {
                 err.println(String.format("Chyba: soubor %s není adresář!", pspZipFile.getAbsolutePath()));
+                return PspOutcome.NOT_VALIDATED;
             } else if (!tmpDir.canWrite()) {
                 err.println(String.format("Chyba: nemůžu zapisovat do adresáře %s!", pspZipFile.getAbsolutePath()));
+                return PspOutcome.NOT_VALIDATED;
             } else {
                 File containerDir = new File(tmpDir, pspZipFile.getName() + "_extracted");
                 if (containerDir.exists()) {
@@ -1479,13 +1567,13 @@ public class Main {
                 Utils.unzip(pspZipFile, containerDir);
                 File[] filesInContainer = containerDir.listFiles();
                 if (filesInContainer.length == 1 && filesInContainer[0].isDirectory()) {
-                    validatePspDir(filesInContainer[0],
+                    return validatePspDir(filesInContainer[0],
                             externalUtilManager, validatorConfigManager, fdmfRegistry,
                             out, verbosity, xmlProtocolDir, xmlProtocolFile,
                             dmfDetectorParams,
                             devParams);
                 } else {
-                    validatePspDir(containerDir,
+                    return validatePspDir(containerDir,
                             externalUtilManager, validatorConfigManager, fdmfRegistry,
                             out, verbosity, xmlProtocolDir, xmlProtocolFile,
                             dmfDetectorParams,
@@ -1494,10 +1582,11 @@ public class Main {
             }
         } catch (IOException e) {
             out.println(String.format("Chyba zpracování ZIP souboru %s: %s!", pspZipFile.getAbsolutePath(), e.getMessage()));
+            return PspOutcome.NOT_VALIDATED;
         }
     }
 
-    private static void validatePspDir(File pspDir,
+    private static PspOutcome validatePspDir(File pspDir,
                                        ExternalUtilManager externalUtilManager, ValidatorConfigurationManager validatorConfigManager,
                                        FdmfRegistry fdmfRegistry,
                                        PrintStream out, Integer verbosity,
@@ -1535,6 +1624,11 @@ public class Main {
         out.println(String.format("Validátor inicializován, spouštím validace"));
         ValidationState.ProgressListener progressListener = null;
         validator.run(pspDir, xmlProtocolFile, out, verbosity, devParams, null, progressListener, null, dmfResolved);
+        //protokol je pozadovan, ale nevznikl (napr. nezapisovatelny adresar): hlasku uz vypsal validator na stderr
+        if (xmlProtocolFile != null && !xmlProtocolFile.isFile()) {
+            return PspOutcome.NOT_VALIDATED;
+        }
+        return PspOutcome.VALIDATED;
     }
 
 

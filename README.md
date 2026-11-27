@@ -103,6 +103,15 @@ Akce (`-a`, `--action`): `VALIDATE_PSP`, `VALIDATE_PSP_GROUP` (`--psp-group`), `
 `--tmp-dir` (`-t`). Podrobnost výpisu `-v` (`--verbosity`, 0 až 3, výchozí 2). Vydaný CLI zip obsahuje jar se všemi
 závislostmi (`KomplexniValidatorCLI.jar`) a adresář `validatorConfig`.
 
+Návratové kódy CLI:
+
+| kód | význam |
+|-----|--------|
+| `0` | validace proběhla a protokol vznikl (balíček může být validní i nevalidní, verdikt je ve výpisu a v protokolu), nebo byla vyžádána nápověda či verze |
+| `1` | balíček (u skupiny aspoň jeden) se nezvalidoval: pro jeho typ a verzi DMF není fDMF, nejde přečíst nebo rozbalit, nebo jeho data nejdou zpracovat; neexistuje; stejný kód dává i neodchycená chyba |
+| `2` | chyba použití: chybějící nebo neznámý parametr či akce, chybná hodnota parametru |
+| `3` | chyba konfigurace validátoru: adresář `--config-dir` neexistuje, chybí v něm `manifest.properties`, má jinou hlavní verzi nebo je vadný |
+
 Externí nástroje (ImageMagick, JHOVE, Jpylyzer, Kakadu, MP3val, shntool, Checkmate, veraPDF, EPUBCheck) se zadávají
 adresářem (`--<nástroj>-path`, např. `--jhove-path`) nebo vypínají (`--disable-<nástroj>`); bez cesty se hledají
 v PATH. Nástroj, jehož verzi se nepodaří zjistit, se pro validaci vypne: pravidlo pak hlásí jednu informaci „nástroj … není dostupný“ (dříve CLI hlásilo chybu spuštění
