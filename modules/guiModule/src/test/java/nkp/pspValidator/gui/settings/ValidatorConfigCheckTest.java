@@ -1,7 +1,10 @@
 package nkp.pspValidator.gui.settings;
 
 import nkp.pspValidator.gui.GuiTestSupport;
+import nkp.pspValidator.shared.ConfigManifest;
 import nkp.pspValidator.shared.OperatingSystem;
+import nkp.pspValidator.shared.Version;
+import org.junit.Assume;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -34,6 +37,7 @@ public class ValidatorConfigCheckTest {
         copy(new File(GuiTestSupport.VALIDATOR_CONFIG_DIR, "dictionaries"), new File(config, "dictionaries"));
         copy(new File(GuiTestSupport.VALIDATOR_CONFIG_DIR, "xsd"), new File(config, "xsd"));
         copy(new File(GuiTestSupport.VALIDATOR_CONFIG_DIR, "externalUtils.xml"), new File(config, "externalUtils.xml"));
+        copy(new File(GuiTestSupport.VALIDATOR_CONFIG_DIR, ConfigManifest.FILE_NAME), new File(config, ConfigManifest.FILE_NAME));
         copy(new File(GuiTestSupport.VALIDATOR_CONFIG_DIR, "fDMF/monograph_2.3"), new File(config, "fDMF/monograph_2.3"));
         copy(new File(GuiTestSupport.VALIDATOR_CONFIG_DIR, "fDMF/periodical_2.2"), new File(config, "fDMF/periodical_2.2"));
     }
@@ -69,6 +73,38 @@ public class ValidatorConfigCheckTest {
         ValidatorConfigCheck.Result result = check(GuiTestSupport.VALIDATOR_CONFIG_DIR);
         assertTrue(result.getError(), result.isOk());
         assertTrue(result.getFdmfCount() > 2);
+    }
+
+    /** konfigurace 2.x (bez manifestu, jinak úplná): hlásí se verze, ne obecnější chyba */
+    @Test
+    public void configWithoutManifest() throws IOException {
+        Assume.assumeFalse("záložní verze aplikace, kontrola manifestu je vypnutá", "0.0.0-dev".equals(Version.VERSION_CODE));
+        delete(new File(config, ConfigManifest.FILE_NAME));
+        ValidatorConfigCheck.Result result = check(config);
+        assertFalse(result.isOk());
+        assertTrue(result.getError(), result.getError().startsWith("Adresář konfigurace " + config.getAbsolutePath()
+                + " neobsahuje soubor manifest.properties. "));
+        assertEquals(0, result.getFdmfCount());
+    }
+
+    @Test
+    public void configOfOtherMajorVersion() throws IOException {
+        Assume.assumeFalse("záložní verze aplikace, kontrola manifestu je vypnutá", "0.0.0-dev".equals(Version.VERSION_CODE));
+        Files.write(new File(config, ConfigManifest.FILE_NAME).toPath(), "configVersion=2.9\n".getBytes(StandardCharsets.UTF_8));
+        String major = Version.VERSION_CODE.split("[.-]")[0];
+        assertError("Adresář konfigurace " + config.getAbsolutePath() + " obsahuje konfiguraci verze 2.9. Validátor verze "
+                + Version.VERSION_CODE + " potřebuje konfiguraci verze " + major + ".x.", check(config));
+    }
+
+    /** konfigurace 2.x s chybějící částí: vyhraje hláška o verzi, ne „není úplná“ */
+    @Test
+    public void manifestErrorWinsOverIncompleteConfig() throws IOException {
+        Assume.assumeFalse("záložní verze aplikace, kontrola manifestu je vypnutá", "0.0.0-dev".equals(Version.VERSION_CODE));
+        delete(new File(config, ConfigManifest.FILE_NAME));
+        delete(new File(config, "dictionaries"));
+        ValidatorConfigCheck.Result result = check(config);
+        assertFalse(result.isOk());
+        assertTrue(result.getError(), result.getError().contains("neobsahuje soubor manifest.properties"));
     }
 
     @Test

@@ -11,6 +11,7 @@ public class ValidationDataInitializationDialog extends AbstractDialog {
 
     private final boolean preview;
     private final String previewError;
+    private final boolean previewManifestError;
 
     public ValidationDataInitializationDialog(Stage stage, Main main) {
         this(stage, main, false, null);
@@ -21,9 +22,15 @@ public class ValidationDataInitializationDialog extends AbstractDialog {
      * nenačítá.
      */
     ValidationDataInitializationDialog(Stage stage, Main main, boolean preview, String previewError) {
+        this(stage, main, preview, previewError, false);
+    }
+
+    /** Jako výše; {@code previewManifestError} ukáže u chyby i tlačítko „Použít konfiguraci dodanou s aplikací“. */
+    ValidationDataInitializationDialog(Stage stage, Main main, boolean preview, String previewError, boolean previewManifestError) {
         super(stage, main);
         this.preview = preview;
         this.previewError = previewError;
+        this.previewManifestError = previewManifestError;
     }
 
     @Override
@@ -54,7 +61,7 @@ public class ValidationDataInitializationDialog extends AbstractDialog {
     @Override
     public void setControllerData(DialogController controller) {
         if (preview) {
-            ((ValidationDataInitializationDialogController) controller).setPreview(previewError);
+            ((ValidationDataInitializationDialogController) controller).setPreview(previewError, previewManifestError);
         }
     }
 

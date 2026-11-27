@@ -168,6 +168,7 @@ public class FdmfRegistryLazyTest {
         copyDir(new File(CONFIG_DIR, "xsd"), new File(target, "xsd"));
         copyDir(new File(CONFIG_DIR, "dictionaries"), new File(target, "dictionaries"));
         Files.copy(new File(CONFIG_DIR, "externalUtils.xml").toPath(), new File(target, "externalUtils.xml").toPath());
+        Files.copy(new File(CONFIG_DIR, ConfigManifest.FILE_NAME).toPath(), new File(target, ConfigManifest.FILE_NAME).toPath());
         for (String name : fdmfDirNames) {
             copyDir(new File(CONFIG_DIR, "fDMF/" + name), new File(target, "fDMF/" + name));
         }

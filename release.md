@@ -54,6 +54,11 @@ Intel se nevydává nic (lze použít GUI zip s Javou s JavaFX).
   jen s **major** verzí aplikace: aplikace 3.x (3.0-alpha, 3.0, 3.0.1, 3.2) načte konfiguraci s `validatorVersion`
   „3.0“ i „3.1“, s „2.9“ ne. Nové konfigurace nesou verzi platnou při vzniku (dnes „3.0“), při minor a patch vydání
   se atribut nemění.
+- **Manifest konfigurace:** `modules/sharedModule/src/main/resources/nkp/pspValidator/shared/validatorConfig/manifest.properties`
+  nese `configVersion=MAJOR.MINOR` (bez PATCH a přípony předvydání). Při změně **MINOR** nebo **MAJOR** verze aplikace
+  ho uprav na novou hodnotu (3.0-beta → 3.0 ji nemění, 3.0 → 3.1 ano); hlídá to test `ConfigManifestVersionTest`.
+  Validátor při načtení adresáře konfigurace manifest kontroluje: jiná major verze, chybějící nebo neplatný manifest je
+  chyba, jiná minor verze jen varování.
 - Hromadná změna (atribut `validatorVersion` a namespace `pspValidator/X.Y/` v konfiguraci, XSD a protokolu, vzor:
   commit 36094cb5 „set version to 2.9“) je potřeba jen při změně **major** verze, příště u 4.0.
 - `ValidatorProtocolXmlBuilder.XSD_URL`: předvydání (alpha, beta) odkazují na větev `master`

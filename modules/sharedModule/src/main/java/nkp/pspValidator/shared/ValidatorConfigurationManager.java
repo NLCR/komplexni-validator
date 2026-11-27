@@ -20,9 +20,13 @@ public class ValidatorConfigurationManager {
     private final File metadataProfileXsd;
     //zkompilovana konfiguracni XSD, sdilena pro nacitani vsech fDMF (viz FdmfRegistry)
     private final XsdSchemaCache configSchemaCache = new XsdSchemaCache();
+    //vysledek kontroly manifestu (verze konfigurace); OLDER_MINOR a NEWER_MINOR nejsou chyba, varovani resi GUI
+    private final ConfigManifest.Result manifestResult;
 
     public ValidatorConfigurationManager(File validatorConfigurationDir) throws ValidatorConfigurationException {
         checkDirExistAndReadable(validatorConfigurationDir);
+        //verze konfigurace se overuje hned, jeste pred ostatnimi kontrolami (konfigurace 2.x ma jinou strukturu)
+        manifestResult = ConfigManifest.check(validatorConfigurationDir);
         fdmfDir = new File(validatorConfigurationDir, "fDMF");
         checkDirExistAndReadable(fdmfDir);
         externalUtilsConfigFile = new File(validatorConfigurationDir, "externalUtils.xml");
@@ -40,6 +44,14 @@ public class ValidatorConfigurationManager {
         checkFileExistAndReadable(binaryFileProfileXsd);
         metadataProfileXsd = new File(xsdDir, "metadataProfile.xsd");
         checkFileExistAndReadable(metadataProfileXsd);
+    }
+
+    /**
+     * Výsledek kontroly manifestu konfigurace: stav OK, nebo OLDER_MINOR či NEWER_MINOR (varování pro uživatele,
+     * konfigurace se přesto načte). Ostatní stavy ukončí konstruktor výjimkou.
+     */
+    public ConfigManifest.Result getManifestResult() {
+        return manifestResult;
     }
 
     public File getExternalUtilsConfigFile() {

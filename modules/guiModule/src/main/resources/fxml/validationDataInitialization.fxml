@@ -29,6 +29,8 @@
     <footerButtons>
         <Button fx:id="btnContinue" styleClass="button-primary" onAction="#continueInApp" text="Pokračovat"
                 minWidth="100" visible="false" managed="false"/>
+        <Button fx:id="btnUseDefaultConfig" styleClass="button-secondary" onAction="#useDefaultConfig"
+                text="Použít konfiguraci dodanou s aplikací" minWidth="-Infinity" visible="false" managed="false"/>
         <Button fx:id="btnSetFdmfsRootDir" styleClass="button-primary" onAction="#setFdmfsRootDir"
                 text="Nastavit adresář s konfigurací…" minWidth="-Infinity" defaultButton="true"/>
     </footerButtons>

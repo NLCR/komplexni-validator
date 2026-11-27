@@ -227,6 +227,12 @@ Pravidla jsou datová (XML) a jsou popsaná přímo v souborech fDMF: `rules.xml
 vypsané ve `validatorConfig/functions/`. Atribut `validatorVersion` konfiguračních souborů musí mít stejnou major
 verzi jako aplikace (konfigurace „3.0“ i „3.1“ projde s validátorem 3.x).
 
+Adresář konfigurace obsahuje soubor `manifest.properties` s klíčem `configVersion` (MAJOR.MINOR verze validátoru, se
+kterou byla konfigurace vydána, např. `3.0`). Validátor ho kontroluje hned při načtení adresáře: validátor 3.x načte
+jen konfiguraci 3.x. Konfigurace z verze 2.x a starší manifest nemá, takže ji validátor odmítne s hláškou, jakou
+verzi potřebuje. Kdo má vlastní kopii konfigurace z verze 2.x, musí ji nahradit konfigurací z verze 3.x (nebo ji
+převést ručně a doplnit manifest). Jiná minor verze (např. konfigurace 3.0 pro validátor 3.1) není chyba.
+
 ## Verze
 
 Verze aplikace je jen v `gradle.properties` (`appVersion`), verzi a datum buildu z ní při buildu generuje Gradle

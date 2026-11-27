@@ -1,6 +1,7 @@
 package nkp.pspValidator.gui.settings;
 
 import nkp.pspValidator.gui.newvalidation.DocumentTypes;
+import nkp.pspValidator.shared.ConfigManifest;
 import nkp.pspValidator.shared.Dmf;
 import nkp.pspValidator.shared.FdmfRegistry;
 import nkp.pspValidator.shared.OperatingSystem;
@@ -94,6 +95,12 @@ public final class ValidatorConfigCheck {
             }
             return Result.error("Adresář neobsahuje konfiguraci validátoru (podadresáře fDMF, dictionaries, xsd "
                     + "a soubor externalUtils.xml).");
+        }
+        //verze konfigurace jde před kontrolou úplnosti: konfigurace 2.x se pozná podle chybějícího manifestu a uživatel
+        //má dostat hlášku o verzi, ne obecnější o chybějících částech
+        ConfigManifest.Result manifest = ConfigManifest.evaluate(dir);
+        if (manifest.getStatus().isError()) {
+            return Result.error(manifest.getMessage());
         }
         if (!missing.isEmpty()) {
             return Result.error("Konfigurace není úplná, chybí: " + String.join(", ", missing) + ".");
