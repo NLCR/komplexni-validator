@@ -230,7 +230,7 @@ verzi jako aplikace (konfigurace „3.0“ i „3.1“ projde s validátorem 3.x
 ## Verze
 
 Verze aplikace je jen v `gradle.properties` (`appVersion`), verzi a datum buildu z ní při buildu generuje Gradle
-pro třídu `Version`. Vydání se značí tagem `v<appVersion>` (například `v3.0-alpha`, `v3.0`, `v3.0.1`) a publikuje jako GitHub release; postup vydání, assets a jejich
+pro třídu `Version`. Vydání se značí tagem `v<appVersion>` (například `v3.0-beta`, `v3.0`, `v3.0.1`) a publikuje jako GitHub release; postup vydání, assets a jejich
 sestavení (`tools/release/build-assets.sh`): viz [release.md](release.md). Konvence verze (včetně předvydání
 a číselné verze instalátoru) je popsaná v `gradle/app-version.gradle`.
 

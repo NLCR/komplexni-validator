@@ -39,7 +39,7 @@ Intel se nevydává nic (lze použít GUI zip s Javou s JavaFX).
 - **Konvence verze:** `MAJOR.MINOR[.PATCH]` a volitelná přípona předvydání `-alpha[N]`, `-beta[N]`, `-rc[N]` nebo `-dev`:
   `3.0-alpha`, `3.0-alpha2`, `3.0-beta`, `3.0-beta2`, `3.0-rc1`, `3.0`, `3.0.1`. První předvydání daného stupně je bez
   čísla, další se číslují od 2. Přípona `-dev` označuje rozpracovaný stav mezi vydáními a nikdy se netaguje. Tag je
-  vždy `v<appVersion>` (`v3.0-alpha`, `v3.0`). Jiný tvar sestavení odmítne (`gradle/app-version.gradle`).
+  vždy `v<appVersion>` (`v3.0-beta`, `v3.0`). Jiný tvar sestavení odmítne (`gradle/app-version.gradle`).
 - **Číselná verze instalátoru** se z `appVersion` odvozuje sama. macOS a Linux: `MAJOR.MINOR.PATCH` bez přípony
   (`3.0-beta2` → 3.0.0). Windows: třetí složka je `PATCH × 1000 + stupeň` (`-dev` 0, alpha 100 + N, beta 200 + N,
   rc 300 + N, finální 900), tedy `3.0-alpha` → 3.0.101, `3.0-beta2` → 3.0.202, `3.0` → 3.0.900, `3.0.1` → 3.0.1900.
