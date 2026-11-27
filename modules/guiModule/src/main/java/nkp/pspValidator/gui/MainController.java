@@ -42,6 +42,7 @@ import nkp.pspValidator.gui.results.RerunState;
 import nkp.pspValidator.gui.results.ResultHeader;
 import nkp.pspValidator.gui.results.ResultTexts;
 import nkp.pspValidator.gui.results.ValidationProgress;
+import nkp.pspValidator.gui.settings.ConfigWarnings;
 import nkp.pspValidator.gui.settings.SettingsTab;
 import nkp.pspValidator.gui.validation.*;
 import nkp.pspValidator.shared.*;
@@ -487,7 +488,18 @@ public class MainController extends AbstractController implements ValidationStat
                 fdmfs += DocumentTypes.availableVersions(data.getFdmfRegistry(), type).size();
             }
         }
-        setTextOrHide(emptyFdmfInfo, fdmfs == 0 ? null : ResultTexts.fdmfCount(fdmfs));
+        ConfigManifest.Result manifest = data.getValidatorConfigMgr() == null ? null : data.getValidatorConfigMgr().getManifestResult();
+        String versionWarning = manifest == null ? null : ConfigWarnings.warning(manifest.getStatus(), manifest.getMessage());
+        setTextOrHide(emptyFdmfInfo, fdmfs == 0 ? null : manifest == null ? ResultTexts.fdmfCount(fdmfs)
+                : ResultTexts.fdmfCount(fdmfs, manifest.getStatus(), manifest.getConfigVersion(), ConfigManifest.majorMinor(Version.VERSION_CODE)));
+        if (versionWarning == null) {
+            emptyFdmfInfo.setTooltip(null);
+        } else {
+            Tooltip tooltip = new Tooltip(versionWarning);
+            tooltip.setWrapText(true);
+            tooltip.setMaxWidth(420);
+            emptyFdmfInfo.setTooltip(tooltip);
+        }
         ExternalUtilManager manager = data.getExternalUtilManager();
         if (manager == null) {
             setTextOrHide(emptyToolsInfo, null);

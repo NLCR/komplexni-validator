@@ -40,18 +40,28 @@ public final class ValidatorConfigCheck {
     public static final class Result {
         private final String error;
         private final int fdmfCount;
+        private final String warning;
 
-        private Result(String error, int fdmfCount) {
+        private Result(String error, int fdmfCount, String warning) {
             this.error = error;
             this.fdmfCount = fdmfCount;
+            this.warning = warning;
         }
 
-        static Result ok(int fdmfCount) {
-            return new Result(null, fdmfCount);
+        static Result ok(int fdmfCount, String warning) {
+            return new Result(null, fdmfCount, warning);
         }
 
         static Result error(String error) {
-            return new Result(error, 0);
+            return new Result(error, 0, null);
+        }
+
+        /**
+         * Upozornění k platnému adresáři (konfigurace jiné vedlejší verze než aplikace, viz {@link ConfigWarnings}),
+         * null když není. Adresář je přesto platný a jde uložit.
+         */
+        public String getWarning() {
+            return warning;
         }
 
         public boolean isOk() {
@@ -116,7 +126,7 @@ public final class ValidatorConfigCheck {
             if (count == 0) {
                 return Result.error("V podadresáři fDMF nejsou žádná pravidla validace (adresáře jako monograph_2.4).");
             }
-            return Result.ok(count);
+            return Result.ok(count, ConfigWarnings.warning(manifest.getStatus(), manifest.getMessage()));
         } catch (ValidatorConfigurationException e) {
             return Result.error("Konfiguraci nelze načíst: " + e.getMessage());
         } catch (RuntimeException e) {

@@ -13,6 +13,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.WindowEvent;
+import nkp.pspValidator.gui.settings.ConfigWarnings;
 import nkp.pspValidator.shared.ConfigManifest;
 import nkp.pspValidator.shared.FdmfRegistry;
 import nkp.pspValidator.shared.ValidatorConfigurationManager;
@@ -64,6 +65,7 @@ public class ValidationDataInitializationDialogController extends DialogControll
     private boolean preview = false;
     private String previewError;
     private boolean previewManifestError;
+    private String previewWarning;
     /** chyba načtení vznikla kvůli manifestu konfigurace (chybí, neplatný, jiná major verze): nabídne se výchozí konfigurace */
     private boolean manifestError = false;
 
@@ -75,6 +77,11 @@ public class ValidationDataInitializationDialogController extends DialogControll
         this.preview = true;
         this.previewError = error;
         this.previewManifestError = manifestError;
+    }
+
+    /** Náhled pro SnapshotMode: konfigurace se „načetla“ s upozorněním na jinou vedlejší verzi (text {@code warning}). */
+    void setPreviewWarning(String warning) {
+        this.previewWarning = warning;
     }
 
     @Override
@@ -112,6 +119,10 @@ public class ValidationDataInitializationDialogController extends DialogControll
             if (previewError != null) {
                 manifestError = previewManifestError;
                 showError(previewError);
+            } else if (previewWarning != null) {
+                setVisibleManaged(progressBox, false);
+                state = DialogState.FINISHED;
+                showStartNotice(ConfigWarnings.startNotice(replacedDirNoticeText(), previewWarning), true);
             }
             return;
         }
@@ -162,16 +173,22 @@ public class ValidationDataInitializationDialogController extends DialogControll
                         if (SnapshotMode.isEnabled()) {
                             stage.close();
                             SnapshotMode.start(main);
-                        } else if (replacedDirNotice() != null && !noticeShown) {
-                            //konfigurace se nacetla, ale z jineho adresare, nez mel uzivatel nastaveny: rict mu to
-                            noticeShown = true;
-                            noticeLabel.setText(replacedDirNotice() + " Adresář můžete změnit v Nastavení.");
-                            setVisibleManaged(noticeLabel, true);
-                            setVisibleManaged(btnContinue, true);
-                            container.setFooterNote("");
-                            btnContinue.requestFocus();
                         } else {
-                            continueInApp(null);
+                            //upozorneni se neblokuji: ukazou se a uzivatel pokracuje tlacitkem (okno se nezavre samo).
+                            //Nahrazeny adresar: konfigurace se nacetla z jineho adresare, nez mel uzivatel nastaveny.
+                            //Jina vedlejsi verze konfigurace: nacetla se, ale muze se lisit od aplikace.
+                            String replaced = replacedDirNoticeText();
+                            ConfigManifest.Result manifest = validationDataManager.getValidatorConfigMgr().getManifestResult();
+                            String versionWarning = ConfigWarnings.warning(manifest.getStatus(), manifest.getMessage());
+                            String notice = ConfigWarnings.startNotice(replaced, versionWarning);
+                            if (notice == null) {
+                                continueInApp(null);
+                            } else {
+                                if (replaced != null) {
+                                    noticeShown = true;
+                                }
+                                showStartNotice(notice, versionWarning != null);
+                            }
                         }
                     } else {//error
                         showError(result.getError());
@@ -180,6 +197,22 @@ public class ValidationDataInitializationDialogController extends DialogControll
             }
         };
         new Thread(task).start();
+    }
+
+    /** Neblokující upozornění: text s tlačítkem „Pokračovat“; u upozornění na verzi i nabídka výchozí konfigurace. */
+    private void showStartNotice(String text, boolean offerDefaultConfig) {
+        noticeLabel.setText(text);
+        setVisibleManaged(noticeLabel, true);
+        setVisibleManaged(btnContinue, true);
+        setVisibleManaged(btnUseDefaultConfig, offerDefaultConfig && (preview || canUseDefaultConfig()));
+        container.setFooterNote("");
+        btnContinue.requestFocus();
+    }
+
+    /** Upozornění na nahrazený adresář (s odkazem na Nastavení) pro dosud neukázaný případ, jinak null. */
+    private String replacedDirNoticeText() {
+        String notice = noticeShown ? null : replacedDirNotice();
+        return notice == null ? null : notice + " Adresář můžete změnit v Nastavení.";
     }
 
     private void showError(String error) {

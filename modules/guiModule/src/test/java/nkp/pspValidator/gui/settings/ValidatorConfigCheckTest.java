@@ -50,6 +50,7 @@ public class ValidatorConfigCheckTest {
         assertFalse(result.isOk());
         assertEquals(expected, result.getError());
         assertEquals(0, result.getFdmfCount());
+        assertNull(result.getWarning());
     }
 
     @Test
@@ -58,6 +59,55 @@ public class ValidatorConfigCheckTest {
         assertTrue(result.getError(), result.isOk());
         assertNull(result.getError());
         assertEquals(2, result.getFdmfCount());
+        assertNull("stejná verze konfigurace: bez upozornění", result.getWarning());
+    }
+
+    private static int[] appMajorMinor() {
+        String[] parts = Version.VERSION_CODE.split("-")[0].split("\\.");
+        return new int[]{Integer.parseInt(parts[0]), parts.length > 1 ? Integer.parseInt(parts[1]) : 0};
+    }
+
+    private void writeConfigVersion(String version) throws IOException {
+        Files.write(new File(config, ConfigManifest.FILE_NAME).toPath(), ("configVersion=" + version + "\n").getBytes(StandardCharsets.UTF_8));
+    }
+
+    /** novější vedlejší verze konfigurace: adresář je platný (jde uložit), ale nese upozornění */
+    @Test
+    public void newerMinorIsValidWithWarning() throws IOException {
+        Assume.assumeFalse("záložní verze aplikace, kontrola manifestu je vypnutá", "0.0.0-dev".equals(Version.VERSION_CODE));
+        int major = appMajorMinor()[0];
+        writeConfigVersion(major + ".99");
+        ValidatorConfigCheck.Result result = check(config);
+        assertTrue(result.getError(), result.isOk());
+        assertNull(result.getError());
+        assertEquals(2, result.getFdmfCount());
+        assertEquals("Adresář konfigurace " + config.getAbsolutePath() + " obsahuje konfiguraci verze " + major
+                + ".99, která je novější než validátor verze " + Version.VERSION_CODE
+                + ". Některé její části validátor nemusí umět načíst.", result.getWarning());
+    }
+
+    /** starší vedlejší verze konfigurace (jen když má aplikace minor aspoň 1) */
+    @Test
+    public void olderMinorIsValidWithWarning() throws IOException {
+        Assume.assumeFalse("záložní verze aplikace, kontrola manifestu je vypnutá", "0.0.0-dev".equals(Version.VERSION_CODE));
+        int[] app = appMajorMinor();
+        Assume.assumeTrue("aplikace s vedlejší verzí 0 nemá starší vedlejší verzi konfigurace", app[1] > 0);
+        writeConfigVersion(app[0] + "." + (app[1] - 1));
+        ValidatorConfigCheck.Result result = check(config);
+        assertTrue(result.getError(), result.isOk());
+        assertEquals(2, result.getFdmfCount());
+        assertEquals("Adresář konfigurace " + config.getAbsolutePath() + " obsahuje konfiguraci verze " + app[0] + "."
+                + (app[1] - 1) + ", validátor má verzi " + Version.VERSION_CODE
+                + ". Typy dokumentů a verze DMF přidané v novějších verzích validátoru v ní chybějí.", result.getWarning());
+    }
+
+    /** upozornění nezakryje chybu: konfigurace jiné minor verze, které chybí část, je neplatná a bez upozornění */
+    @Test
+    public void differentMinorButIncompleteIsErrorWithoutWarning() throws IOException {
+        Assume.assumeFalse("záložní verze aplikace, kontrola manifestu je vypnutá", "0.0.0-dev".equals(Version.VERSION_CODE));
+        writeConfigVersion(appMajorMinor()[0] + ".99");
+        delete(new File(config, "dictionaries"));
+        assertError("Konfigurace není úplná, chybí: dictionaries.", check(config));
     }
 
     @Test

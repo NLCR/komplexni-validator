@@ -53,7 +53,7 @@ import java.util.function.Supplier;
  * <p>
  * Zapíná se systémovou vlastností {@code -Dkv.snapshotDir=<adresář>}. Výběr dialogů volitelně přes
  * {@code -Dkv.snapshot=main,mainMenu,settingsMenu,newValidation,settings,externalUtils,toolDetails,about,dictionaryContent,
- * dictionaryUpdate,init,initError,initManifestError,unzip,unzipError} (výchozí je vše; navíc {@code dev}, vývojářský dialog),
+ * dictionaryUpdate,init,initError,initManifestError,initManifestWarning,unzip,unzipError} (výchozí je vše; navíc {@code dev}, vývojářský dialog),
  * prodleva před snímkem přes {@code -Dkv.snapshotDelayMs} (výchozí 800 ms, aby proběhl layout a asynchronní
  * inicializace dialogu). {@code mainMenu} otevře v hlavním okně menu Validovat a uloží snímek jeho rozbalovací nabídky,
  * {@code settingsMenu} totéž pro menu Nastavení. {@code toolDetails} je okno „Podrobnosti…“ u nenalezeného nástroje
@@ -188,7 +188,7 @@ public class SnapshotMode {
     public static final String PROP_WAIT_MS = "kv.snapshotWaitMs";
     private static final long VALIDATION_TIMEOUT_MS = 10 * 60 * 1000;
     public static final String ALL_DIALOGS = "main,mainMenu,settingsMenu,newValidation,settings,externalUtils,toolDetails,"
-            + "about,dictionaryContent,dictionaryUpdate,init,initError,initManifestError,unzip,unzipError";
+            + "about,dictionaryContent,dictionaryUpdate,init,initError,initManifestError,initManifestWarning,unzip,unzipError";
     /** slovník pro snímky dialogů obsahu a aktualizace slovníku */
     private static final String SNAPSHOT_DICTIONARY = "siglaInstitutionCodes";
 
@@ -231,6 +231,16 @@ public class SnapshotMode {
                 "Adresář konfigurace C:\\Users\\uzivatel\\Dokumenty\\Komplexni validator\\vlastni konfigurace\\validatorConfig "
                         + "neobsahuje soubor manifest.properties. Jde o konfiguraci pro verzi validátoru starší než 3.0, "
                         + "nebo to není adresář konfigurace validátoru. Validátor verze 3.0 potřebuje konfiguraci verze 3.x.", true));
+        //upozorneni na jinou vedlejsi verzi konfigurace spolecne s upozornenim na nahrazeny adresar (nejdelsi mozny text)
+        dialogs.put("initManifestWarning", () -> new ValidationDataInitializationDialog(dialogStage, main,
+                nkp.pspValidator.gui.settings.ConfigWarnings.startNotice(
+                        ConfigurationManager.replacedDirNotice(
+                                new File("C:\\Users\\uzivatel\\Dokumenty\\Komplexni validator\\vlastni konfigurace\\validatorConfig"),
+                                new File("C:\\Users\\uzivatel\\AppData\\Local\\KomplexniValidator\\app\\validatorConfig"))
+                                + " Adresář můžete změnit v Nastavení.",
+                        "Adresář konfigurace C:\\Users\\uzivatel\\AppData\\Local\\KomplexniValidator\\app\\validatorConfig "
+                                + "obsahuje konfiguraci verze 3.0, validátor má verzi 3.1. "
+                                + "Typy dokumentů a verze DMF přidané v novějších verzích validátoru v ní chybějí.")));
         File zip = new File(psp != null && psp.toLowerCase().endsWith(".zip") ? psp : "/data/baliky/nk-00027e.zip");
         File workDir = new File(System.getProperty("java.io.tmpdir"), "kv-rozbaleno-123456789");
         dialogs.put("unzip", () -> new UnzipAndValidateDialog(dialogStage, main, zip, null, false, false, 0)

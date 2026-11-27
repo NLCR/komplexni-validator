@@ -1,5 +1,6 @@
 package nkp.pspValidator.gui.results;
 
+import nkp.pspValidator.shared.ConfigManifest;
 import org.junit.Test;
 
 import java.time.LocalDateTime;
@@ -73,6 +74,20 @@ public class ResultTextsTest {
         assertEquals("Nástroje: 0 z 9 dostupných", ResultTexts.toolsAvailable(0, 9));
         assertEquals("Nástroje: 1 z 1 dostupného", ResultTexts.toolsAvailable(1, 1));
         assertEquals("Konfigurace: 39 fDMF", ResultTexts.fdmfCount(39));
+    }
+
+    @Test
+    public void fdmfCountWithConfigVersion() {
+        ConfigManifest.Status ok = ConfigManifest.Status.OK;
+        assertEquals("Konfigurace: 39 fDMF", ResultTexts.fdmfCount(39, ok, "3.1", "3.1"));
+        assertEquals("Konfigurace: 39 fDMF", ResultTexts.fdmfCount(39, ok, null, null));
+        assertEquals("Konfigurace: 39 fDMF (verze 3.0, aplikace 3.1)",
+                ResultTexts.fdmfCount(39, ConfigManifest.Status.OLDER_MINOR, "3.0", "3.1"));
+        assertEquals("Konfigurace: 39 fDMF (verze 3.2, aplikace 3.1)",
+                ResultTexts.fdmfCount(39, ConfigManifest.Status.NEWER_MINOR, "3.2", "3.1"));
+        //chybí-li údaj o verzi, dovětek se nepřidá (nevypisovat „verze null“)
+        assertEquals("Konfigurace: 39 fDMF", ResultTexts.fdmfCount(39, ConfigManifest.Status.NEWER_MINOR, null, "3.1"));
+        assertEquals("Konfigurace: 39 fDMF", ResultTexts.fdmfCount(39, ConfigManifest.Status.OLDER_MINOR, "3.0", null));
     }
 
     @Test

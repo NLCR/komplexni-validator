@@ -171,6 +171,12 @@ public final class ConfigManifest {
         return value.trim();
     }
 
+    /** MAJOR.MINOR verze aplikace pro zobrazení (3.0-beta -> 3.0, 3.1.2 -> 3.1), nebo null, když verze nemá platný tvar. */
+    public static String majorMinor(String version) {
+        int[] parsed = parseMajorMinor(version);
+        return parsed == null ? null : parsed[0] + "." + parsed[1];
+    }
+
     /**
      * Major a minor z verze: vše před pomlčkou, čísla oddělená tečkou (3.0-beta -> [3,0], 3.1.2 -> [3,1], 3 -> [3,0]).
      *

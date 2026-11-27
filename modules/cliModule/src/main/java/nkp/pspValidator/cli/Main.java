@@ -1257,6 +1257,14 @@ public class Main {
         formatter.printHelp("java -jar KomplexniValidatorCLI.jar", header, options, footer, true);
     }
 
+    /** Konfigurace jiné vedlejší verze než aplikace (3.0 pro 3.1 a naopak) není chyba: jen upozornění, validace pokračuje. */
+    private static void printConfigManifestWarning(PrintStream out, ValidatorConfigurationManager validatorConfigManager) {
+        ConfigManifest.Result manifest = validatorConfigManager.getManifestResult();
+        if (manifest.getStatus() == ConfigManifest.Status.OLDER_MINOR || manifest.getStatus() == ConfigManifest.Status.NEWER_MINOR) {
+            out.println("Upozornění: " + manifest.getMessage());
+        }
+    }
+
     private static void validatePspGroup(File pspGroup,
                                          File configDir, File tmpDir,
                                          Integer verbosity, PrintStream out, PrintStream err,
@@ -1269,6 +1277,7 @@ public class Main {
         //validator configuration
         out.println(String.format("Kořenový adresář konfigurace validátoru: %s", configDir.getAbsolutePath()));
         ValidatorConfigurationManager validatorConfigManager = new ValidatorConfigurationManager(configDir);
+        printConfigManifestWarning(out, validatorConfigManager);
         ExternalUtilManager externalUtilManager = new ExternalUtilManagerFactory(validatorConfigManager.getExternalUtilsConfigFile()).buildExternalUtilManager(platform.getOperatingSystem());
         externalUtilManager.setPaths(utilsPaths);
         detectImageTools(out, externalUtilManager, utilsDisabled);
@@ -1387,6 +1396,7 @@ public class Main {
         //validator configuration
         out.println(String.format("Kořenový adresář konfigurace validátoru: %s", configDir.getAbsolutePath()));
         ValidatorConfigurationManager validatorConfigManager = new ValidatorConfigurationManager(configDir);
+        printConfigManifestWarning(out, validatorConfigManager);
         ExternalUtilManager externalUtilManager = new ExternalUtilManagerFactory(validatorConfigManager.getExternalUtilsConfigFile()).buildExternalUtilManager(platform.getOperatingSystem());
         externalUtilManager.setPaths(utilsPaths);
         detectImageTools(out, externalUtilManager, utilsDisabled);

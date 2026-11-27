@@ -80,6 +80,9 @@ public class SettingsDialogController extends DialogController {
     private Label validatorConfigPath;
     private Label validatorConfigNote;
     private Label validatorConfigError;
+    /** upozornění k adresáři zobrazenému na kartě (jiná vedlejší verze konfigurace), null když není */
+    private Label validatorConfigWarning;
+    private String validatorConfigWarningText;
     private HBox validatorConfigChecking;
     private Button changeValidatorConfig;
     /** probíhá ověření vybraného adresáře konfigurace validátoru */
@@ -871,10 +874,15 @@ public class SettingsDialogController extends DialogController {
         checkingLabel.getStyleClass().add("text-muted");
         validatorConfigChecking = new HBox(8, checkingProgress, checkingLabel);
         validatorConfigChecking.setAlignment(Pos.CENTER_LEFT);
+        validatorConfigWarning = wrapped("", "notice-warning");
         validatorConfigError = wrapped("", "text-error");
-        configCard.getChildren().addAll(validatorConfigNote, validatorConfigChecking, validatorConfigError);
+        configCard.getChildren().addAll(validatorConfigNote, validatorConfigWarning, validatorConfigChecking, validatorConfigError);
         setShown(validatorConfigChecking, false);
         setShown(validatorConfigError, false);
+        // upozornění na jinou vedlejší verzi i u adresáře, který aplikace právě používá (zobrazený při otevření Nastavení)
+        if (ConfigurationManager.sameFile(dirsDraft.getValidatorConfigDir(), dirsDraft.getRunningValidatorConfigDir())) {
+            validatorConfigWarningText = runningValidatorConfigWarning();
+        }
         refreshValidatorConfigCard();
         content.getChildren().add(configCard);
 
@@ -925,6 +933,16 @@ public class SettingsDialogController extends DialogController {
         return data.getValidatorConfigMgr().getFdmfDir().getParentFile();
     }
 
+    /** Upozornění na jinou vedlejší verzi konfigurace, kterou běžící aplikace načetla při startu (null, když není). */
+    private String runningValidatorConfigWarning() {
+        ValidationDataManager data = main.getValidationDataManager();
+        if (data == null || data.getValidatorConfigMgr() == null) {
+            return null;
+        }
+        nkp.pspValidator.shared.ConfigManifest.Result manifest = data.getValidatorConfigMgr().getManifestResult();
+        return manifest == null ? null : nkp.pspValidator.gui.settings.ConfigWarnings.warning(manifest.getStatus(), manifest.getMessage());
+    }
+
     /** „Změnit…“ u konfigurace validátoru: výběr adresáře, pak ověření. */
     private void chooseValidatorConfigDir() {
         DirectoryChooser chooser = new DirectoryChooser();
@@ -950,7 +968,7 @@ public class SettingsDialogController extends DialogController {
         }
         setShown(validatorConfigError, false);
         if (ConfigurationManager.sameFile(selected, dirsDraft.getRunningValidatorConfigDir())) {
-            applyValidatorConfigDir(selected);
+            applyValidatorConfigDir(selected, runningValidatorConfigWarning());
             return;
         }
         validatorConfigCheckRunning = true;
@@ -974,7 +992,7 @@ public class SettingsDialogController extends DialogController {
                 changeValidatorConfig.setDisable(false);
                 setShown(validatorConfigChecking, false);
                 if (finalResult != null && finalResult.isOk()) {
-                    applyValidatorConfigDir(selected);
+                    applyValidatorConfigDir(selected, finalResult.getWarning());
                 } else {
                     String reason = finalResult != null ? finalResult.getError() : "Při ověřování nastala chyba.";
                     validatorConfigError.setText(SettingsTexts.validatorConfigDirError(selected.getAbsolutePath(), reason));
@@ -990,8 +1008,9 @@ public class SettingsDialogController extends DialogController {
         thread.start();
     }
 
-    private void applyValidatorConfigDir(File dir) {
+    private void applyValidatorConfigDir(File dir, String warning) {
         dirsDraft.setValidatorConfigDir(dir);
+        validatorConfigWarningText = warning;
         refreshValidatorConfigCard();
         updateFooter();
     }
@@ -1004,6 +1023,8 @@ public class SettingsDialogController extends DialogController {
                 running == null ? "nenastaveno" : running.getAbsolutePath());
         validatorConfigNote.setText(note == null ? "" : note);
         setShown(validatorConfigNote, note != null);
+        validatorConfigWarning.setText(validatorConfigWarningText == null ? "" : validatorConfigWarningText);
+        setShown(validatorConfigWarning, validatorConfigWarningText != null);
     }
 
     private static void setShown(Node node, boolean shown) {

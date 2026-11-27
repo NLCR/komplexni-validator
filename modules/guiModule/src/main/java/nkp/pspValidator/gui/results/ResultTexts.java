@@ -114,4 +114,21 @@ public final class ResultTexts {
     public static String fdmfCount(int count) {
         return "Konfigurace: " + count + " fDMF";
     }
+
+    /**
+     * Jako {@link #fdmfCount(int)}; u konfigurace jiné vedlejší verze než aplikace (OLDER_MINOR, NEWER_MINOR) s dovětkem
+     * „Konfigurace: 39 fDMF (verze 3.0, aplikace 3.1)“. Ve stavu OK nebo bez známé verze se text nemění.
+     *
+     * @param configVersion   verze konfigurace z manifestu (MAJOR.MINOR)
+     * @param appMajorMinor   verze aplikace (MAJOR.MINOR)
+     */
+    public static String fdmfCount(int count, nkp.pspValidator.shared.ConfigManifest.Status status, String configVersion,
+                                   String appMajorMinor) {
+        boolean differentMinor = status == nkp.pspValidator.shared.ConfigManifest.Status.OLDER_MINOR
+                || status == nkp.pspValidator.shared.ConfigManifest.Status.NEWER_MINOR;
+        if (!differentMinor || configVersion == null || appMajorMinor == null) {
+            return fdmfCount(count);
+        }
+        return fdmfCount(count) + " (verze " + configVersion + ", aplikace " + appMajorMinor + ")";
+    }
 }

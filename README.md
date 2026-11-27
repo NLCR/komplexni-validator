@@ -231,7 +231,7 @@ Adresář konfigurace obsahuje soubor `manifest.properties` s klíčem `configVe
 kterou byla konfigurace vydána, např. `3.0`). Validátor ho kontroluje hned při načtení adresáře: validátor 3.x načte
 jen konfiguraci 3.x. Konfigurace z verze 2.x a starší manifest nemá, takže ji validátor odmítne s hláškou, jakou
 verzi potřebuje. Kdo má vlastní kopii konfigurace z verze 2.x, musí ji nahradit konfigurací z verze 3.x (nebo ji
-převést ručně a doplnit manifest). Jiná minor verze (např. konfigurace 3.0 pro validátor 3.1) není chyba.
+převést ručně a doplnit manifest). Jiná minor verze (např. konfigurace 3.0 pro validátor 3.1) není chyba: validátor na ni upozorní (GUI při startu a v Nastavení, CLI řádkem „Upozornění:“) a pokračuje.
 
 ## Verze
 

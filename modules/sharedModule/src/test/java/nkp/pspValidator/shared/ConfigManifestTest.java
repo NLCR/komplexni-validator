@@ -251,6 +251,17 @@ public class ConfigManifestTest {
         ConfigManifest.evaluate("tri", dirWithVersion("3.0"));
     }
 
+    // ---- majorMinor (zobrazení verze aplikace)
+
+    @Test
+    public void majorMinorForDisplay() {
+        assertEquals("3.0", ConfigManifest.majorMinor("3.0-beta"));
+        assertEquals("3.1", ConfigManifest.majorMinor("3.1.2"));
+        assertEquals("3.0", ConfigManifest.majorMinor("3"));
+        assertNull(ConfigManifest.majorMinor("abc"));
+        assertNull(ConfigManifest.majorMinor(null));
+    }
+
     // ---- parseMajorMinor
 
     @Test
