@@ -1,8 +1,5 @@
 package nkp.pspValidator.shared;
 
-import nkp.pspValidator.shared.engine.exceptions.ValidatorConfigurationException;
-
-import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
@@ -19,8 +16,7 @@ import java.util.regex.Pattern;
  * {@value #FALLBACK_VERSION_CODE} a {@value #FALLBACK_BUILD_DATE}.
  * <p>
  * Version code muze obsahovat jednu pomlcku oddelujici vlastni verzi od suffixu (dev, alpha, beta2, rc1; konvence v gradle/app-version.gradle).
- * Atribut validatorVersion v konfiguracnich souborech (fDMF, profily) se porovnava jen s major verzi,
- * viz {@link #checkConfigValidatorVersion(String, File)}.
+ * Verzi konfigurace kontroluje {@link ConfigManifest} (major verze z manifest.properties).
  */
 public class Version {
 
@@ -82,40 +78,5 @@ public class Version {
         String pure = version.split("-", 2)[0];
         Matcher m = MAJOR.matcher(pure);
         return m.matches() ? Integer.valueOf(m.group(1)) : null;
-    }
-
-    /**
-     * Zkontroluje atribut validatorVersion konfiguracniho souboru (fDMF, profil metadat, profil binarniho souboru)
-     * proti verzi aplikace {@link #VERSION_CODE}.
-     */
-    public static void checkConfigValidatorVersion(String versionFromConfig, File configFile) throws ValidatorConfigurationException {
-        checkConfigValidatorVersion(VERSION_CODE, versionFromConfig, configFile);
-    }
-
-    /**
-     * Porovnava se jen major verze: aplikace 3.0-alpha, 3.0.1 nebo 3.2 nacte konfiguraci s validatorVersion "3.0"
-     * i "3.1", ale ne "2.9". Atribut nese verzi aplikace platnou pri vzniku konfigurace a meni se hromadne az se
-     * zmenou major verze. Pri behu bez version.properties (fallback {@value #FALLBACK_VERSION_CODE}) se kontrola
-     * vypne s varovanim, jinak by z IDE neprosla zadna konfigurace.
-     */
-    static void checkConfigValidatorVersion(String appVersion, String versionFromConfig, File configFile) throws ValidatorConfigurationException {
-        String path = configFile == null ? "?" : configFile.getAbsolutePath();
-        if (FALLBACK_VERSION_CODE.equals(appVersion)) {
-            LOG.fine(String.format("verze aplikace neznámá (%s), kontrola validatorVersion souboru %s vypnuta", appVersion, path));
-            return;
-        }
-        Integer appMajor = majorVersion(appVersion);
-        if (appMajor == null) {
-            throw new IllegalStateException(String.format("neplatná verze aplikace '%s'", appVersion));
-        }
-        if (versionFromConfig == null || versionFromConfig.trim().isEmpty()) {
-            throw new ValidatorConfigurationException("chybí atribut validatorVersion v souboru %s: očekávána verze s major %d (např. '%d.0'), protože validátor má verzi %s",
-                    path, appMajor, appMajor, appVersion);
-        }
-        Integer configMajor = majorVersion(versionFromConfig);
-        if (configMajor == null || !configMajor.equals(appMajor)) {
-            throw new ValidatorConfigurationException("nesouhlasí verze validátoru: soubor %s má validatorVersion='%s', validátor ve verzi %s načte jen konfiguraci s major verzí %d (např. validatorVersion='%d.0')",
-                    path, versionFromConfig, appVersion, appMajor, appMajor);
-        }
     }
 }

@@ -28,7 +28,7 @@ import java.util.regex.Pattern;
  * Soubor se čte jako UTF-8, hodnota {@code configVersion} se ořezává o okolní mezery, jinak musí mít přesně tvar
  * MAJOR.MINOR (dvě čísla oddělená tečkou; {@code 3}, {@code 3.0.1} ani {@code 3.0-beta} neplatí).
  * Verze aplikace se bere z {@link Version#VERSION_CODE}; při záložní verzi (běh bez version.properties) se kontrola
- * vypne stejně jako u {@link Version#checkConfigValidatorVersion(String, File)}.
+ * vypne s varováním.
  */
 public final class ConfigManifest {
 

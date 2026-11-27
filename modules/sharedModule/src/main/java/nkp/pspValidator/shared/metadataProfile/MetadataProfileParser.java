@@ -2,7 +2,6 @@ package nkp.pspValidator.shared.metadataProfile;
 
 import com.mycila.xmltool.XMLDoc;
 import com.mycila.xmltool.XMLTag;
-import nkp.pspValidator.shared.Version;
 import nkp.pspValidator.shared.XmlUtils;
 import nkp.pspValidator.shared.engine.exceptions.ValidatorConfigurationException;
 import org.w3c.dom.Element;
@@ -30,8 +29,6 @@ public class MetadataProfileParser {
         MetadataProfile metadataProfile = new MetadataProfile();
         XMLTag doc = XMLDoc.from(profileXmlFile, true); //ignoring namespaces
         metadataProfile.setDmf(doc.getAttribute("dmf"));
-        metadataProfile.setValidatorVersion(doc.findAttribute("validatorVersion"));
-        Version.checkConfigValidatorVersion(metadataProfile.getValidatorVersion(), profileXmlFile);
         //TODO: podobne testovat dmf
 
         for (Element childEl : doc.getChildElement()) {

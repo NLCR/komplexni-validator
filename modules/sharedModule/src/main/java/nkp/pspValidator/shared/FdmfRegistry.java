@@ -22,8 +22,8 @@ import java.util.Set;
  * Created by Martin Řehánek on 2.11.16.
  * <p>
  * Registr fDMF z adresare validatorConfig/fDMF. Pri vytvoreni se jen projdou adresare fDMF (typ a verze z nazvu
- * adresare), konfigurace konkretni fDMF (FdmfConfiguration vcetne XSD validace konfiguracnich souboru, profilu
- * a kontroly validatorVersion) se nacte az pri prvnim getFdmfConfig a pak se drzi v registru. Chyba v konfiguraci
+ * adresare), konfigurace konkretni fDMF (FdmfConfiguration vcetne XSD validace konfiguracnich souboru a profilu)
+ * se nacte az pri prvnim getFdmfConfig a pak se drzi v registru. Chyba v konfiguraci
  * se proto ohlasi az pri prvnim pouziti dane fDMF, se stejnou hlaskou jako drive pri startu (ValidatorConfigurationException
  * z FdmfConfiguration). Kontrolu vsech vydavanych fDMF dela AllFdmfSmokeTest.
  * <p>

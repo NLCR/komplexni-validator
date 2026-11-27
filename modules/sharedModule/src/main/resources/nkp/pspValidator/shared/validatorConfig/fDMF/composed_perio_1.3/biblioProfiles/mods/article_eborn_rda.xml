@@ -2,7 +2,6 @@
 <metadataProfile
     xmlns="http://www.nkp.cz/pspValidator/3.0/metadataProfile"
     name="MODS born-digital article of composed periodical (RDA)"
-    validatorVersion="3.0"
     dmf="composed_perio_1.3"
 >
     <info>

@@ -82,7 +82,6 @@
             </xs:sequence>
 
             <xs:attribute name="name" type="xs:string" use="optional"/>
-            <xs:attribute name="validatorVersion" type="xs:string" use="required"/>
             <xs:attribute name="dmf" type="xs:string"/>
         </xs:complexType>
     </xs:element>

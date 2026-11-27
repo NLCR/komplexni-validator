@@ -2,7 +2,6 @@
 <metadataProfile
         xmlns="http://www.nkp.cz/pspValidator/3.0/metadataProfile"
         name="DC sound recording (AACR2)"
-        validatorVersion="3.0"
         dmf="audio_gram_0.3"
 >
     <info>

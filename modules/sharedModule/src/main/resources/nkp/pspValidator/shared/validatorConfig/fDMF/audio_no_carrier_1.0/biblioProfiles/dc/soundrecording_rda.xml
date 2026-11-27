@@ -1,7 +1,6 @@
 <metadataProfile
         xmlns="http://www.nkp.cz/pspValidator/3.0/metadataProfile"
         name="DC sound recording (RDA)"
-        validatorVersion="3.0"
         dmf="audio_no_carrier_1.0"
 >
 

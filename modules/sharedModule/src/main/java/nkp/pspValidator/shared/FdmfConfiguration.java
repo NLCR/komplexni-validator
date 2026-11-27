@@ -6,7 +6,6 @@ import nkp.pspValidator.shared.externalUtils.ExternalUtilManager;
 import nkp.pspValidator.shared.externalUtils.ResourceType;
 import nkp.pspValidator.shared.externalUtils.validation.BinaryFileValidator;
 
-import com.mycila.xmltool.XMLDoc;
 import javax.xml.transform.stream.StreamSource;
 import javax.xml.validation.Schema;
 import java.io.File;
@@ -157,7 +156,6 @@ public class FdmfConfiguration {
         File configFile = new File(fdmfRoot, fileName);
         checkFileExistAndReadable(configFile);
         validateConfigFile(configFile, fdmfConfigXsd);
-        Version.checkConfigValidatorVersion(XMLDoc.from(configFile, true).findAttribute("validatorVersion"), configFile);
         fdmfConfigFiles.add(configFile);
     }
 

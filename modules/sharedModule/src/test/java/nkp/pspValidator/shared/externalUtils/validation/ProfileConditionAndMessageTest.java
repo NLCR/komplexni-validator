@@ -92,7 +92,7 @@ public class ProfileConditionAndMessageTest {
 
     @Test
     public void conditionInTextProfileIsConfigurationError() throws Exception {
-        String profile = "<binaryFileProfile xmlns=\"http://www.nkp.cz/pspValidator/3.0/binaryFileProfile\" validatorVersion=\"3.0\" dmf=\"x\">"
+        String profile = "<binaryFileProfile xmlns=\"http://www.nkp.cz/pspValidator/3.0/binaryFileProfile\" dmf=\"x\">"
                 + "<fromText><validation name=\"T\"><condition><xpath>true()</xpath></condition>"
                 + "<textDataExtraction resultType=\"STRING\"><firstNonempty><regexp>x</regexp></firstNonempty></textDataExtraction>"
                 + "<rules><mustExist/></rules></validation></fromText></binaryFileProfile>";
@@ -105,7 +105,7 @@ public class ProfileConditionAndMessageTest {
     }
 
     private static String profile(String... validations) {
-        return "<binaryFileProfile xmlns=\"http://www.nkp.cz/pspValidator/3.0/binaryFileProfile\" validatorVersion=\"3.0\" dmf=\"x\">"
+        return "<binaryFileProfile xmlns=\"http://www.nkp.cz/pspValidator/3.0/binaryFileProfile\" dmf=\"x\">"
                 + "<fromXml>" + String.join("", validations) + "</fromXml></binaryFileProfile>";
     }
 

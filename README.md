@@ -224,8 +224,8 @@ nepoběží a validace ho ohlásí jako nedostupný; je potřeba nainstalovat Ja
 Pravidla jsou datová (XML) a jsou popsaná přímo v souborech fDMF: `rules.xml` (pravidla), `variables.xml`
 (proměnné), `patterns.xml` (vzory názvů souborů), `namespaces.xml`, adresáře `xsd/`, `biblioProfiles/`,
 `techProfiles/`, `metsProfiles/`, `binaryFileProfiles/`. Dostupné validační a evaluační funkce s parametry jsou
-vypsané ve `validatorConfig/functions/`. Atribut `validatorVersion` konfiguračních souborů musí mít stejnou major
-verzi jako aplikace (konfigurace „3.0“ i „3.1“ projde s validátorem 3.x).
+vypsané ve `validatorConfig/functions/`. Jednotlivé soubory konfigurace verzi nenesou, verzi celé konfigurace určuje
+jen `manifest.properties` (viz níže).
 
 Adresář konfigurace obsahuje soubor `manifest.properties` s klíčem `configVersion` (MAJOR.MINOR verze validátoru, se
 kterou byla konfigurace vydána, např. `3.0`). Validátor ho kontroluje hned při načtení adresáře: validátor 3.x načte

@@ -3,7 +3,6 @@ package nkp.pspValidator.shared.externalUtils.validation;
 import com.mycila.xmltool.XMLDoc;
 import com.mycila.xmltool.XMLTag;
 import nkp.pspValidator.shared.NamespaceContextImpl;
-import nkp.pspValidator.shared.Version;
 import nkp.pspValidator.shared.XmlUtils;
 import nkp.pspValidator.shared.engine.Level;
 import nkp.pspValidator.shared.engine.exceptions.ValidatorConfigurationException;
@@ -64,7 +63,6 @@ public class BinaryFileValidator {
 
     public void registerProfile(ResourceType type, ExternalUtil util, File profileDefinitionFile) throws ValidatorConfigurationException {
         XMLTag doc = XMLDoc.from(profileDefinitionFile, true);
-        Version.checkConfigValidatorVersion(doc.findAttribute("validatorVersion"), profileDefinitionFile);
         BinaryFileProfile profile = buildProfile(util, doc.getCurrentTag());
         if (getProfilesByType(type).containsKey(util)) {
             // TODO: 2019-04-02 vyresit, docasne bude jen warning

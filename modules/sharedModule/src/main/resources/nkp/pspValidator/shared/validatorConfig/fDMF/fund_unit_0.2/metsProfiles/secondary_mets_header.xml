@@ -2,7 +2,6 @@
 <metadataProfile
         xmlns="http://www.nkp.cz/pspValidator/3.0/metadataProfile"
         name="Secondary METS header"
-        validatorVersion="3.0"
         dmf="fund_unit_0.2"
 >
 

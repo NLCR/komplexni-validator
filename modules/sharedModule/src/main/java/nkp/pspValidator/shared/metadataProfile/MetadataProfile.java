@@ -10,7 +10,6 @@ import java.util.Set;
 public class MetadataProfile {
 
     private String name;
-    private String validatorVersion;
     private String dmf;
 
     private Map<String, String> namespaces;
@@ -47,14 +46,6 @@ public class MetadataProfile {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public String getValidatorVersion() {
-        return validatorVersion;
-    }
-
-    public void setValidatorVersion(String validatorVersion) {
-        this.validatorVersion = validatorVersion;
     }
 
     public String getDmf() {

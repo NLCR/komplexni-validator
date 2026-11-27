@@ -101,26 +101,6 @@ public class FdmfRegistryLazyTest {
     }
 
     @Test
-    public void validatorVersionIsCheckedOnFirstUse() throws Exception {
-        String major = Version.majorVersion(Version.VERSION_CODE).toString();
-        File configDir = configWith("data_disc_0.1");
-        File patterns = new File(configDir, "fDMF/data_disc_0.1/patterns.xml");
-        String otherMajor = "validatorVersion=\"" + (Integer.parseInt(major) - 1) + ".9\"";
-        String changed = read(patterns).replaceFirst("validatorVersion=\"[^\"]*\"", otherMajor);
-        assertTrue("patterns.xml nema atribut validatorVersion", changed.contains(otherMajor));
-        Files.write(patterns.toPath(), changed.getBytes(StandardCharsets.UTF_8));
-
-        FdmfRegistry registry = new FdmfRegistry(new ValidatorConfigurationManager(configDir));
-        try {
-            registry.getFdmfConfig(DATA_DISC_01);
-            fail("fDMF s jinou major verzi mela byt odmitnuta");
-        } catch (ValidatorConfigurationException e) {
-            assertTrue(e.getMessage(), e.getMessage().contains("nesouhlasí verze validátoru"));
-            assertTrue(e.getMessage(), e.getMessage().contains(patterns.getAbsolutePath()));
-        }
-    }
-
-    @Test
     public void concurrentFirstUseLoadsOneInstance() throws Exception {
         FdmfRegistry registry = new FdmfRegistry(new ValidatorConfigurationManager(CONFIG_DIR));
         ExecutorService executor = Executors.newFixedThreadPool(6);

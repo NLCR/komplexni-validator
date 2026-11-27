@@ -690,7 +690,7 @@ public class BinaryFileProfileTest {
 
     private File writeProfile(String body) throws Exception {
         File file = tmp.newFile();
-        String xml = "<binaryFileProfile xmlns=\"http://www.nkp.cz/pspValidator/3.0/binaryFileProfile\" validatorVersion=\"3.0\" dmf=\"test\">" + body + "</binaryFileProfile>";
+        String xml = "<binaryFileProfile xmlns=\"http://www.nkp.cz/pspValidator/3.0/binaryFileProfile\" dmf=\"test\">" + body + "</binaryFileProfile>";
         Files.write(file.toPath(), xml.getBytes(StandardCharsets.UTF_8));
         return file;
     }
